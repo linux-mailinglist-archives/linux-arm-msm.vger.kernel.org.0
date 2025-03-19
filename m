@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-51948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD170A68BF8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 12:42:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11AD5A68C0C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 12:45:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A16616F7CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 11:39:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 45A2F4604EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 11:42:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F078725523A;
-	Wed, 19 Mar 2025 11:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45325254AED;
+	Wed, 19 Mar 2025 11:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lkm8xoUT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JTxYJ1/q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330B4253F21;
-	Wed, 19 Mar 2025 11:39:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D40C254860;
+	Wed, 19 Mar 2025 11:42:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742384347; cv=none; b=OsTafWZoRnZjVDoI955dJQ5SH2Uvy8PXPgocK1Sn12JeGdQuaWNc52K6zagCas6tKBCLQrPUOtXhGAKppmGzJGDYWqArBE8HsiiLv3Jtl3+loOEE9m09hB8fpaPfwKw+csbCnYm7ysAwhbA8X4lFa5YH9EIgURkH4wF/SzavNTg=
+	t=1742384524; cv=none; b=JkCkjJRoZLPRVcwK4ozklDBcN05Rd25SdS8Wspn3cDJzweGPm377FavlwX99l/sdnguWJj6Hhw7WF/xwNDQhFeWkAuPe20OkQJlT/MRkUa6QKmMu8U/hJ9PUGKZXBpu/So6c5B4PQXjTFTG5WroaKrtebMLbY6+EZKHUUn7HC0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742384347; c=relaxed/simple;
-	bh=YgB8hf2iolWIUfIlPZLhZxKEx2ip6jdR/HD25QOJOYw=;
+	s=arc-20240116; t=1742384524; c=relaxed/simple;
+	bh=2K804DlnfHJBC1iz5uN9VvwcF1NWwpdu3Ut4OczOKjE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q1if+N5452vIC1l4xzFKzQJtuxigi+9RIDXtEFoh6qygSqq2/kaelHAhhBGKlv6YbLAn+aU1L679+uPqc87caNfpi5UfaZ6b7FnPQQUqu+Nh/gIr+qW4rlgxV2+JL03md7AIJs5omAgCVDPqwawD4JO5V5pYd4/NHdrAoh+V4SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lkm8xoUT; arc=none smtp.client-ip=209.85.128.50
+	 In-Reply-To:Content-Type; b=B6q8Zkrzwac8Pq1oH0NxEMM2YVIo2IcZsAX2/bfFgv0CISPrFN8+1JPObTbkhoOK0lGESJuq65KP+rc8Kdbppc9jXAZtOSSG8kTA9jZyZnYbzkFvAtNeTVRbP0j+LFyA8RhXeoyHskKuW5hrZfKUStipTGIkgld77xxidq3TB6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JTxYJ1/q; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43cf0d787eeso45738045e9.3;
-        Wed, 19 Mar 2025 04:39:04 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4394345e4d5so31084805e9.0;
+        Wed, 19 Mar 2025 04:42:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742384343; x=1742989143; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1742384521; x=1742989321; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=23Zzwx8dQ7ApD2OL+JFkf/rOuLI+b6JbK1FtVimJKeY=;
-        b=lkm8xoUTCbcBk9YdbWCMNsRFqAsfAisBUhAjleFTET+HsXkqPopCDUzeQYi7Jfnosp
-         VcxoWLGW5rljsYceH7DNaWpfh/QVl8MIEAy+08B1RIIUBGHe5gQmXbp8s6itW29cTyjA
-         fa9b5B219HWvdH1chNkDlCpw41pySYOMpnJlY/ypcrcDyD7Wvw3zeEe/+1JtdVUW6kV3
-         N7W1z0loHvlIT/irC3wmHVsHvmBZhVKAcOQgoZFNpbyfBMbNMf1zHl0VY8uUscDgoA9N
-         te+0ZOdbgceI7X0kXig6yEf53Oa4dBVlWL7dsGXmifkb6bjU+U6cqIbPj5CIQdnefZh6
-         e8Mw==
+        bh=4+TU65vbu1/jXurIViozymomrJ8y6tyjAhqqoeO6eX0=;
+        b=JTxYJ1/qGLpdeW1tY/X5cAahR3C3C64sisWZsvxybGY1dnQgq1xJSWop0xJz2m+xkp
+         BdQI22A8fxsuZitQWs/HpLgAqRuvJntGA7fMfwKCTkD8CnL8WnkH5OqS/c23hscbXhQa
+         r6RgAAWXsL+noptxEnuWIr7j2XAp8W4aoKBwr0UsqKeAFC64+XTZpvaoUWz9FuNETsy5
+         mB+uR6fZxv1lhV+YI0k8ZWEXbWD+xSjsMlczl7+AAW3P009m50UvAuG4cqdxNhlwagzu
+         LF9QzQak2FnMHudoBsqh6T9HPqmSd8XSO+dDYjF9jTXAchIwqZ7zww/0G+25kMaMbxOf
+         BgYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742384343; x=1742989143;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1742384521; x=1742989321;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=23Zzwx8dQ7ApD2OL+JFkf/rOuLI+b6JbK1FtVimJKeY=;
-        b=kC/cCrgNycHKLby4Mh0poorVTLPVeD74lKy8ULvIn84vTEgzY7QV1xIXIf/fhlthLI
-         GzG6kB4fLKnEzyvg7cTIDZ1TshMVUhB72T5ik2f/Nf+WEdKw8VpPIjDuqjK4mPULqdLY
-         n2K5/gAwAWr8ZoYOBv2D42HejKyQhhbZlSMUUuuLL+79iCIavauszFSfIafEbu8H28eZ
-         zBEtWv8xR201RKO1YipLR1hOF2pqW+5tyx11CeqlmOXO4Vu1wkT7Y+Jr1GXH/hWwWsVw
-         rMu+UPWaXuPYACIubZBA6SaNLgYMrPfk+qEH+lr5QYbTU+f7i7aMoujVc5Zn90sTffRI
-         kZrg==
-X-Forwarded-Encrypted: i=1; AJvYcCUlf7Nn5wSQD7H4FbT4rpy0V0mQt+AInSn3Qh+9D/sCJHgbjXxh9D4flSSkRas1wNx9POyx50hESECwFE7THw==@vger.kernel.org, AJvYcCUrLXleo00692tSmNfFL6w5TI2hA+9ptF2Z67O+gWPkFQGxcaSEYQe1YEbazIRBWi59UOR5wPc/OFccF524@vger.kernel.org, AJvYcCX5y/6BBaNuKg2+l+ywcHkQkYEU1J9DA/bppo/oxpkM0u03J9tL1RXSQeUquIdxJZ7U/s0LYjJfSoiE@vger.kernel.org, AJvYcCXUDCD0jqoEkyQxUJhOKMV/tZHS1WSOp7KqChoBRPviVP0fnxMi+GuzWHGitk4NrWK6/A7wB5TN/A4e4v27UuTxdQk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4LIEWH8OWLT2bkSnDWgZhYpWmmkjtdKZH5AYfqJLJMrCXlEZv
-	cbIK5Jpt3OQEqfWc04xH56Zv/WVXXcXSzly1p14trwwUgIXj/vvy
-X-Gm-Gg: ASbGncumDz8norpbGubEBBJa57/SpXRnGv8ELFoIWAjVm5IEb/eTZyc1tFwj0SmbAXy
-	xiZtV7GHBz2G8/hqefy//AMKkQH1tQBKOour4I3a9dUu5T/mSaND+3BEf7+mNyNjwElbRtdpVFA
-	/Cg+WcrfRpj9PjCfob8OYA7vymd6Stcu6dOJlko/AIGRO4b+ePM5MyAQxiWtmAv6Q9kZLXiWB3o
-	ggCDaZJ/eXwU3YpMEeaZ0TQXKAgUDOy6jWeJpMXRYmjCSfzGkuGQLjyewrdwYLa1MPuv7ZWubVZ
-	FtYvNSQeOxreyRpaUFf8Q+rMzVHZPfG4CZBZUUcRgGQhzU4w4sQTPLnxHOj/S/5lVwt8XW/hBeL
-	70Jr++qS2fQovCoexIsnLW/w=
-X-Google-Smtp-Source: AGHT+IG/uReUa1PFDrYRs3h2HIwVSGTu7IcnjWIZm5iEXhoFmvhyCo2Cbk7y/wuCyXozf5+5PQwOzQ==
-X-Received: by 2002:a05:600c:a4c:b0:43c:f63c:babb with SMTP id 5b1f17b1804b1-43d4378163cmr13761135e9.1.1742384343101;
-        Wed, 19 Mar 2025 04:39:03 -0700 (PDT)
+        bh=4+TU65vbu1/jXurIViozymomrJ8y6tyjAhqqoeO6eX0=;
+        b=jD3l/TVDGLiawlLQMXosilAF+bqf1gIP5uMV9NbJShotq0CXuA99UjIUBSw2+jlHt5
+         GJwi6biYD/wG7NxOvNI74aCSYsWIT7m13x/bVvVKHMXqexyQpJPoK1yenSIwJuHf4dP/
+         7w9EDpaVGtVkpjLaO7JfdOMJkh75fhnlw/1dMDYU17d9I642rfELCAJjZ5ltjl82kCKp
+         IiAMnE0+hWbyzlvdO1421LVeQ64O8B9UaZZk81ABMlzPYlfJlU89RD4Ct4jYq4V+ZGGN
+         QqE4l9y+Ng2Glp+8R7ryrFh8CoRKkqTvHnce+Yzp4aUPlzZlNL2JjHMQDEq7dNUKK0s5
+         nN2g==
+X-Forwarded-Encrypted: i=1; AJvYcCUP/f8hdngsmuDG74oUKvBVUlJzveN79glc2TlaBTuCe/8WAY7/Nn4Nv1WiccZu3VBa6ehyuhg6J07tDdFUbg==@vger.kernel.org, AJvYcCVbzRFdsa9ckxadnKtttvpqOJeXsVpsY1dqeedsVh9UDoUqrto2k1JAFas3+XsgSbVvYBI15iQvL0T0+9kX@vger.kernel.org, AJvYcCXFblPVLHKCzv3KP9Mm0fYrr0hiDcrwzX7dv6WENV1nkntXpvsxGu+hKzdmubi07+1F0q2XI8kl6hdD@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2Qn8pQOW3/PytNgSWVVU6eHYunM/KCN3lzj07ezRTCwQvjZqo
+	125K3wX3kdU8OOyJS4+jRu2n8fhkR+CUa7QN3YJBeYrZlmBmXanl
+X-Gm-Gg: ASbGncuvhsjmpVGFB5GpPTuqpW2/i/vt+iKMcOCh0+mCl3RYKHFryzdqmN2ceD04x5v
+	n6RTxUjogmSp7HMoIKJDc3BYm0gEhl/jJ2/mdEd9R1stM0hZD8VfxStweBhO62DW8yJT5h1y+vZ
+	WPppnougA9dZTC7rNBot15oHXAZ+KlZKM+U9DK/NGLBL8wWGIx0LVzbxhwF8pIBYaJMT368vjmz
+	2CnOU6Q6/5XvHnNH0b3V0fa51mkl5mk5pVFdAwpUXMrKw2x53O00T1/pN/9w5irEoe3HSSlpmXI
+	v7mc37BwFXprJrCaL3+ekVOOyb/IuAA3UedH10Njv6nr5jOpnzVXl2D069mSlx/NASlSawSxduA
+	gXJUpxODStyEis1n/nnQ2XCw=
+X-Google-Smtp-Source: AGHT+IFywsl9y7ebNfImSsuSeRCQjDn2pZoC89iOcbWE3Jn5XpbRxM2xF4kr9OnVwSO3zLjsCDSNow==
+X-Received: by 2002:a05:600c:35d2:b0:43d:5ec:b2f4 with SMTP id 5b1f17b1804b1-43d437930eemr18264585e9.10.1742384520414;
+        Wed, 19 Mar 2025 04:42:00 -0700 (PDT)
 Received: from [192.168.1.105] (91-139-201-119.stz.ddns.bulsat.com. [91.139.201.119])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d3ae04a94sm23904475e9.0.2025.03.19.04.39.01
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c7df33aasm20407235f8f.2.2025.03.19.04.41.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Mar 2025 04:39:02 -0700 (PDT)
-Message-ID: <8e8bbcde-8ed4-4239-ad96-6cffd8b9d65c@gmail.com>
-Date: Wed, 19 Mar 2025 13:39:00 +0200
+        Wed, 19 Mar 2025 04:42:00 -0700 (PDT)
+Message-ID: <295bd48c-940a-4944-ab3b-ab7cd46e4fef@gmail.com>
+Date: Wed, 19 Mar 2025 13:41:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,63 +82,95 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] phy: phy-snps-eusb2: make repeater optional
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Abel Vesa <abel.vesa@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
- <20250223122227.725233-6-ivo.ivanov.ivanov1@gmail.com>
- <sxrae5pmykx6ul2y7uc24fss2kdeezkkom7ev7mavt3fbc6ckv@tghyp3whuxnu>
+Subject: Re: [PATCH 1/2] phy: qcom: phy-qcom-snps-eusb2: Make repeater
+ optional
 Content-Language: en-US
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ bjorn.andersson@oss.qualcomm.com
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20250318-xps13-fingerprint-v1-0-fbb02d5a34a7@oss.qualcomm.com>
+ <20250318-xps13-fingerprint-v1-1-fbb02d5a34a7@oss.qualcomm.com>
+ <6yykvszzbhonc3dkwhva55arsdvp4hv4p2fo2vv6ftwr46httm@wnofgs4jaqaa>
+ <Z9qd1GJ1418CbaOt@linaro.org>
 From: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-In-Reply-To: <sxrae5pmykx6ul2y7uc24fss2kdeezkkom7ev7mavt3fbc6ckv@tghyp3whuxnu>
+In-Reply-To: <Z9qd1GJ1418CbaOt@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 3/19/25 13:08, Dmitry Baryshkov wrote:
-> On Sun, Feb 23, 2025 at 02:22:24PM +0200, Ivaylo Ivanov wrote:
->> Some platforms initialize their eUSB2 to USB repeater in the previous
->> stage bootloader and leave it in a working state for linux. Make the
->> repeater optional in order to allow for reusing that state until
->> proper repeater drivers are introduced.
-> Generally "works as it is setup by the bootloader" is a very invalid
-> justification. Please don't do that. We should not be depending on the
-> way the bootlader sets up the devices, unless that _really_ makes sense.
+On 3/19/25 12:35, Stephan Gerhold wrote:
+> On Wed, Mar 19, 2025 at 12:20:07PM +0200, Dmitry Baryshkov wrote:
+>> On Tue, Mar 18, 2025 at 10:22:56PM -0500, Bjorn Andersson via B4 Relay wrote:
+>>> From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+>>>
+>>> In a multiport configuration based on the SNPS eUSB2 PHY it's not
+>>> necessary that all ports are connected to something.
+>>>
+>>> While this is allowed by the Devicetree binding, the implementation
+>>> current fails probing for such PHYs, which also prevents the multiport
+>>> controller from probing.
+>>>
+>>> The lack of repeater does not alter the fact that the PHY is there and
+>>> attempts at describing only the used PHYs in Devicetree results in
+>>> failures to initialize the USB controller.
+>>>
+>>> Make the repeater optional, to allow the these PHYs to be described in
+>>> the DeviceTree and for the associated multiport controller to operate
+>>> the other ports.
+>>>
+>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+>>> ---
+>>>  drivers/phy/qualcomm/phy-qcom-snps-eusb2.c | 10 +++++++---
+>>>  1 file changed, 7 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c b/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
+>>> index 1484691a41d59a7eaf257ef44300827c668bf7e0..8897d2072ccfcaa5b4a510c17761dcdeed5bad0f 100644
+>>> --- a/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
+>>> +++ b/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
+>>> @@ -401,9 +401,13 @@ static int qcom_snps_eusb2_hsphy_probe(struct platform_device *pdev)
+>>>  				     "failed to get regulator supplies\n");
+>>>  
+>>>  	phy->repeater = devm_of_phy_get_by_index(dev, np, 0);
+>>> -	if (IS_ERR(phy->repeater))
+>>> -		return dev_err_probe(dev, PTR_ERR(phy->repeater),
+>>> -				     "failed to get repeater\n");
+>>> +	if (IS_ERR(phy->repeater)) {
+>>> +		if (PTR_ERR(phy->repeater) == -ENODEV)
+>>> +			phy->repeater = NULL;
+>>> +		else
+>>> +			return dev_err_probe(dev, PTR_ERR(phy->repeater),
+>>> +					     "failed to get repeater\n");
+>> Can you use devm_of_phy_optional_get() or devm_phy_optional_get()
+>> instead?
+>>
+> There is such a patch from Ivaylo already [1].
+>
+> @Ivaylo: Are you planning to re-spin that patch set?
 
-It does, doesn't it? We still don't even have i2c up on Exynos2200, so bringing up
-the repeater before this patchset gets merged is a no-go. Either way, we should
-follow what bindings say. I will change the commit description a bit.
+Yes. I've spent the past week digging deeper into how my hardware works,
+as well as improving the patchset.
+
+>  Might be even worth
+> putting that patch first / sending it separately, since Neil pointed out
+> there that the bindings already have the repeater as non-required.
+
+That's going to be... quite a bit of work. I have around 6-7 patches for this
+driver alone, including moving the whole driver to ../, so moving this patch
+to the front will be annoying.
 
 Best regards,
 Ivaylo
 
 >
->> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->> ---
->>  drivers/phy/phy-snps-eusb2.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/phy/phy-snps-eusb2.c b/drivers/phy/phy-snps-eusb2.c
->> index 4e5914a76..dcc69c00a 100644
->> --- a/drivers/phy/phy-snps-eusb2.c
->> +++ b/drivers/phy/phy-snps-eusb2.c
->> @@ -461,7 +461,7 @@ static int snps_eusb2_hsphy_probe(struct platform_device *pdev)
->>  		return dev_err_probe(dev, ret,
->>  				     "failed to get regulator supplies\n");
->>  
->> -	phy->repeater = devm_of_phy_get_by_index(dev, np, 0);
->> +	phy->repeater = devm_of_phy_optional_get(dev, np, 0);
->>  	if (IS_ERR(phy->repeater))
->>  		return dev_err_probe(dev, PTR_ERR(phy->repeater),
->>  				     "failed to get repeater\n");
->> -- 
->> 2.43.0
->>
+> Thanks,
+> Stephan
+>
+> [1]: https://lore.kernel.org/linux-arm-msm/20250223122227.725233-6-ivo.ivanov.ivanov1@gmail.com/
 
 
