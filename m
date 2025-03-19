@@ -1,102 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-51973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F41C5A69229
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 16:03:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 98D3CA69231
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 16:04:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 90EC946632B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 14:57:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0CFA516D344
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 14:58:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D78521C7013;
-	Wed, 19 Mar 2025 14:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA5D815574E;
+	Wed, 19 Mar 2025 14:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gkS6uoRk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LaiYqdAG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294E41B2194;
-	Wed, 19 Mar 2025 14:54:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495961F09BB;
+	Wed, 19 Mar 2025 14:54:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742396089; cv=none; b=jaFqMz1d5e9jsdsVNVL85LJ6iGaLeoNOBlSy/q7cDoxOkkUMTpT2Tb/ClcM2H8OIdBIlvzn5QNy5lloB0+zLkUSq90LvREbhqN3emAgFZrYxRRQQktJWUiD/u9wD6ETlllHYfddqxwhUB3FG+1/jzDaHzMrCQ3dURTm8N5iQKeY=
+	t=1742396094; cv=none; b=aiEEMSh5fMUFGDMcRndGJxTp2gukOjezgxBAv0T5vetss506RFfseky/S6MQiwKisu5VUOpZKMsob+9GnRo862IJEYESx6q/OTUNvqTV3UUCXCx6Ex+LhHcbpwyHjfE1UaUfqNp47P+9qDW93t/YEuUomXw1U6T7Nkj0op9Ljpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742396089; c=relaxed/simple;
-	bh=AGyODwLobG1NCgwCezUM+zv2QHG0aN1ehA3R8olmM0U=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iP6ljMKhYYk25cu0ipBYMvRX/TjZYLnm05mgD1bBh77FOYO0QTi3yiC8vLQLEdKDfQlXeUSV8w/oQ+TWpp9/I6L5jWLIWAg+g02Icj7R72b9wE/tymJwhxVaQ9TDy35WZl0/sm5oVwqmiCrXVkBtCZyWcudHGI8q37WO6ByffEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gkS6uoRk; arc=none smtp.client-ip=209.85.214.171
+	s=arc-20240116; t=1742396094; c=relaxed/simple;
+	bh=ye/Ha1gh841KfwNkbqX4DU3M51WIxb+TjhNn0UjruMU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hVP4HToPV8sHpuZ6kJXtz57WJTf5HoDzOpx8pXLnf/dkj8alI0WZm138PnPoZeZgTRJ3Gjs8rzD0bUavFpJQFeQE/0BSF49yrmsKFc4wX8eSw3tCaXUSrNtgpZ3wSLpzAX2gGLgwcjObGY87tpIoomOVkS+PIeeuQpSuffsn4WI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LaiYqdAG; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-225fbdfc17dso71123155ad.3;
-        Wed, 19 Mar 2025 07:54:47 -0700 (PDT)
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-226185948ffso71182945ad.0;
+        Wed, 19 Mar 2025 07:54:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742396087; x=1743000887; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VqnqIl7gzMI6XYAL9+ESVwKY9TAcHFNVEaABvSsYd58=;
-        b=gkS6uoRk6h3bF095rWyO+W04ChQuNUCRRZ+XyYJw1T8WtVPuH5qoO2IgXkZ7o23Fz6
-         MqoWfh+hTB8/3rColi2pv+18qRcNqG+/TBIj/0cygVkwoyEp+zNYriIfxtxhPJvfvEJg
-         2uJArTilr9P9Hhi3VoTQ7oSEwPMguxd7Qd3WbIseW8+RoqEhn1LgxeNDsVICGLrQbNiE
-         AuZyM7iBXrGBwA3LK2wVHO2/4T7XvRAiplYPVcrWwc27t7x5XTYApZe+Y/Pe3tMvPGmr
-         Uqzh8+jyfZBwz42qHNWDIVR9gKoRCjsUNNmNuAd/84X95W23Fcvtc2OJ9706RUs/oFkh
-         UNag==
+        d=gmail.com; s=20230601; t=1742396091; x=1743000891; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aYQYwB4Q+56fcPRL5nHTiaN7xyPn+dVSiWbH+JLh+2I=;
+        b=LaiYqdAGjHqwL+GOw7PvabP9zF+bpyygjU7tHsbCetF3W50jiDvi4oP4yh5AEgh0Eo
+         3K4A10k+TA6suDMnLo8rgKNW+YXATGc25BcySAUti6GKifqh+a46DqBns91JFClQddr0
+         hwtOUqAjodJsv8HdozL7U+XM3ONw/pbsSDDixcSrCCIq9ytwyeZY+4oKcI4Tu/McBpns
+         +poPmLWAbQ1gIHDBeX7g6SnVKTuRpyP7Ny5xAM4gI1W7P+SdB0yzInBVrlk4z6AIkPkp
+         IAUE+hjT3kVFY08aFvIMIRKqSDZNqLq1PdRa820dm/egaXkQVHFg9r5f3z+ohee4i8n4
+         spGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742396087; x=1743000887;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VqnqIl7gzMI6XYAL9+ESVwKY9TAcHFNVEaABvSsYd58=;
-        b=wcyp6SPS6IorWxaIC3keFad43JxC1+r7xEJczR5CiQkqi0AGO46SsqsoIGjvHP9a64
-         09KirHB9grq5ltu/tyG4N0d+JO8rzhgIUa+iXe2wVTt77Htgg3mP5FNa7eA9WTB7WK+B
-         oL4W5uhPgyo3R7kHda3s05Os0W677niCjB0Pem5NQ/BqasxYI/4MOgZtw3Gjluqn7Tv0
-         jnUwGonv+31W6btE4tUWGfSkBxlnQm1BQD/j+Xhf9RZEAaDlJPdHUUSGPcYYKFxbm3H5
-         5mwNch+y9fh6/xSt4ud9VuD2aGIuSqJ8LdNMoyopb7zMAJ1rG+sZpo8K7AXC5ioj9o+8
-         937Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUoglUHbJTTlRKVDSLRSFtIi2AjFSTty/xb8V/yrga52kdlrKqtxKBaLeM2iRW81rNIDY+42hi3W8vX4bA=@vger.kernel.org, AJvYcCVN2BoRiTnqMqyeSDQi7yuJ5RZpx6xe5JFnk7TBPeWoSU3oFmOePrMEWlHIKHU/TP2UtAKPa6SqnH54XxNt@vger.kernel.org, AJvYcCWJ7maI/f/n98IUOmxxWpU0SBV8Oy1RAsQsYOWmMRgW0/bHPyVxSoSf+dyZPvZGFQilGIe5k1nIrMHFR/wY@vger.kernel.org
-X-Gm-Message-State: AOJu0YyVujuweXjvdWCrHm5T7hg4fkqf2K4RSyK2UJOebGTEC+Bm6uN8
-	FIjQ4he6jEE4UJn+1R7fr+3vN1oa+UF90Xdo93g9kz4g6pHDDZAL
-X-Gm-Gg: ASbGncsqCk59bgB3R0XLc0AnPlG8Ujz3IObHlUldiGycwtfIQG0f5mu8xJShmSN7M1D
-	nuxgCOfFFYrkmPuRvQ4KJgivPgxQXvBDDXw63GuUXb1l8uzx2ylbXzbZ5Hf/GyZrtvEsS8A0bLh
-	2ydIF8NNh1+MdY7BeRUidAEUbmGQLHxEs2VTBdui47xOXQa0F2CnUOlKZwXPgef8+DX2vYSOF+k
-	nKmBWPcwJhfBB+d+zhZytUKSmE7LEMiF2JGTPnhcn0pGexb52SA6uR5Q6DNzueOhb6Nl9243M+Y
-	mmSAmSnOlLne0EJuJngn7d7jR/qqg/QTyPzEj+qxUO10nfX97IfBNtijbpnD0vr675mAZoRvyKj
-	JQ1GG9egEspqwDIs53SM=
-X-Google-Smtp-Source: AGHT+IEM2Aydh8wQyAb3fV9+udMGx+2FPS+SU7qcCCvi4qn6KMqVbM+eGzMKYXiVBUkhhnlIU/lnAg==
-X-Received: by 2002:a05:6a20:12d5:b0:1ee:e2ac:5159 with SMTP id adf61e73a8af0-1fbebc87101mr5465045637.19.1742396087191;
-        Wed, 19 Mar 2025 07:54:47 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742396091; x=1743000891;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aYQYwB4Q+56fcPRL5nHTiaN7xyPn+dVSiWbH+JLh+2I=;
+        b=EbFwMh+2SShvacEu/bC4BX0XH1pRmaAuSa51xJAIR1lEntBchrKEpdUeVDEI6AuSc6
+         OWHEPmYf1cCpEkHF0HU3oITOageUwloAWi819ysWD1qUw25V7Q2D56uaZiYVzHMXeCLC
+         VcjI+OjVsVoipVaO2iXzO1HQ86T6TRU8xnikxBg5Be4tQIN0uxzvjZsORoFYHsCTzCac
+         +XZRT+2RI72jrAmTi9eJWgjs4iwVbTFxrqbGzq+hlApjVp9pO3pYdTs3Z8Fn7iiK6DTm
+         ymqjAGu5MI0p/N94uFk5N2nslpO0VFsIJ5iiTfRwFaNx8QTnWqL+AO6yXu3YWVbtjRw5
+         J2aQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU9vr6yhIXdBv8lXKO8eL5FWnY8ixhppULi9zEV7ywBB6xrrWWz5tAFkiQNcLpE3Yxxef7Jx3ZeUDRPzXvz@vger.kernel.org, AJvYcCVc8tkibrg6eIpjAGzrZqBmDSmhy7He2sbzF3o/nW0jabiQawSgd46I5t4FJID2ninO1m8gYWecfu1LOA4l@vger.kernel.org
+X-Gm-Message-State: AOJu0YzvQWfWvjRa8rwcP0yYM0WC1mAP78v8k4EYoDXi5j9k5HDsyCYH
+	XfpKm07QQtUqfWVSstrZyPngIZrasz8rYlU5hZaEwWgW4An2vzbe
+X-Gm-Gg: ASbGncv/MrpQX8eCHr+47WcnGsBzrZi2gegn4jHng4QPLvt0vani8xozBUvqW948PIE
+	Nii9Mn2fZuPyszfXqZU17LInBGxNWiADCH+33cq/6CFyjj5UtJUWBVrHwh74iJoP1Fp3jE3UMpV
+	92dsGT5W2t75tfdsxswqqwClaPwbEyLHyj6SrCSdBoQ0wBr4fQfEh3KNBR+w6zrrI83nZYbb/8B
+	b6AwmYRT/RCYFon+PeVde0cuDr85onRimFmNVhdFCrmXQQFxonrXV1Nwb+xiibSFfpXKGXSvhy9
+	538XCRqLNzVrywMlt/6lm2TJ48BAUS/6SOr7JS4j94OGgcLqq7xcJ9roL1q7qGa/4qAnilv+HVl
+	wEFjggu/SmkTYmxKNHlg=
+X-Google-Smtp-Source: AGHT+IE+lJUACMy/jDtMWHtB7qfzX6V/KZu/qqIx8l4Z/A67DfiqQ7vwjT+eCEkpsRZkdL/7NBCcXQ==
+X-Received: by 2002:a17:902:ea07:b0:224:e2a:9ff5 with SMTP id d9443c01a7336-22649800955mr49641495ad.9.1742396091394;
+        Wed, 19 Mar 2025 07:54:51 -0700 (PDT)
 Received: from localhost ([2a00:79e0:3e00:2601:3afc:446b:f0df:eadc])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af56e9fe51asm10978709a12.36.2025.03.19.07.54.46
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-301bf63589dsm1681568a91.41.2025.03.19.07.54.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Mar 2025 07:54:46 -0700 (PDT)
+        Wed, 19 Mar 2025 07:54:50 -0700 (PDT)
 From: Rob Clark <robdclark@gmail.com>
 To: dri-devel@lists.freedesktop.org
 Cc: freedreno@lists.freedesktop.org,
 	linux-arm-msm@vger.kernel.org,
 	Rob Clark <robdclark@chromium.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
-	Christopher Snowhill <chris@kode54.net>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Eugene Lepshy <fekz115@gmail.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING FRAMEWORK:Keyword:\bdma_(?:buf|fence|resv)\b),
-	linux-kernel@vger.kernel.org (open list),
-	linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK:Keyword:\bdma_(?:buf|fence|resv)\b),
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Sean Paul <sean@poorly.run>
-Subject: [PATCH v2 00/34] drm/msm: sparse / "VM_BIND" support
-Date: Wed, 19 Mar 2025 07:52:12 -0700
-Message-ID: <20250319145425.51935-1-robdclark@gmail.com>
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 02/34] drm/gpuvm: Remove bogus lock assert
+Date: Wed, 19 Mar 2025 07:52:14 -0700
+Message-ID: <20250319145425.51935-3-robdclark@gmail.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250319145425.51935-1-robdclark@gmail.com>
+References: <20250319145425.51935-1-robdclark@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,139 +100,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Rob Clark <robdclark@chromium.org>
 
-Conversion to DRM GPU VA Manager[1], and adding support for Vulkan Sparse
-Memory[2] in the form of:
+If the driver is using an external mutex to synchronize vm access, it
+doesn't need to hold vm->r_obj->resv.  And if the driver is already
+holding obj->resv, then needing to pointlessly grab vm->r_obj->resv will
+be seen by lockdep as nested locking.
 
-1. A new VM_BIND submitqueue type for executing VM MSM_SUBMIT_BO_OP_MAP/
-   MAP_NULL/UNMAP commands
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/drm_gpuvm.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-2. Extending the SUBMIT ioctl to allow submitting batches of one or more
-   MAP/MAP_NULL/UNMAP commands to a VM_BIND submitqueue
-
-The UABI takes a slightly different approach from what other drivers have
-done, and what would make sense if starting from a clean sheet, ie separate
-VM_BIND and EXEC ioctls.  But since we have to maintain support for the
-existing SUBMIT ioctl, and because the fence, syncobj, and BO pinning is
-largely the same between legacy "BO-table" style SUBMIT ioctls, and new-
-style VM updates submitted to a VM_BIND submitqueue, I chose to go the
-route of extending the existing `SUBMIT` ioctl rather than adding a new
-ioctl.
-
-I also did not implement support for synchronous VM_BIND commands.  Since
-userspace could just immediately wait for the `SUBMIT` to complete, I don't
-think we need this extra complexity in the kernel.  Synchronous/immediate
-VM_BIND operations could be implemented with a 2nd VM_BIND submitqueue.
-
-The corresponding mesa MR: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/32533
-
-This series can be found in MR form, if you prefer:
-https://gitlab.freedesktop.org/drm/msm/-/merge_requests/144
-
-Changes in v2:
-- Dropped Bibek Kumar Patro's arm-smmu patches[3], which have since been
-  merged.
-- Pre-allocate all the things, and drop HACK patch which disabled shrinker.
-  This includes ensuring that vm_bo objects are allocated up front, pre-
-  allocating VMA objects, and pre-allocating pages used for pgtable updates.
-  The latter utilizes io_pgtable_cfg callbacks for pgtable alloc/free, that
-  were initially added for panthor. 
-- Add back support for BO dumping for devcoredump.
-- Link to v1 (RFC): https://lore.kernel.org/dri-devel/20241207161651.410556-1-robdclark@gmail.com/T/#t
-
-[1] https://www.kernel.org/doc/html/next/gpu/drm-mm.html#drm-gpuvm
-[2] https://docs.vulkan.org/spec/latest/chapters/sparsemem.html
-[3] https://patchwork.kernel.org/project/linux-arm-kernel/list/?series=909700
-
-Rob Clark (34):
-  drm/gpuvm: Don't require obj lock in destructor path
-  drm/gpuvm: Remove bogus lock assert
-  drm/gpuvm: Allow VAs to hold soft reference to BOs
-  drm/gpuvm: Add drm_gpuvm_sm_unmap_va()
-  drm/msm: Rename msm_file_private -> msm_context
-  drm/msm: Improve msm_context comments
-  drm/msm: Rename msm_gem_address_space -> msm_gem_vm
-  drm/msm: Remove vram carveout support
-  drm/msm: Collapse vma allocation and initialization
-  drm/msm: Collapse vma close and delete
-  drm/msm: drm_gpuvm conversion
-  drm/msm: Use drm_gpuvm types more
-  drm/msm: Split submit_pin_objects()
-  drm/msm: Lazily create context VM
-  drm/msm: Add opt-in for VM_BIND
-  drm/msm: Mark VM as unusable on faults
-  drm/msm: Extend SUBMIT ioctl for VM_BIND
-  drm/msm: Add VM_BIND submitqueue
-  drm/msm: Add _NO_SHARE flag
-  drm/msm: Split out helper to get iommu prot flags
-  drm/msm: Add mmu support for non-zero offset
-  drm/msm: Add PRR support
-  drm/msm: Rename msm_gem_vma_purge() -> _unmap()
-  drm/msm: Split msm_gem_vma_new()
-  drm/msm: Pre-allocate VMAs
-  drm/msm: Pre-allocate vm_bo objects
-  drm/msm: Pre-allocate pages for pgtable entries
-  drm/msm: Wire up gpuvm ops
-  drm/msm: Wire up drm_gpuvm debugfs
-  drm/msm: Crashdump prep for sparse mappings
-  drm/msm: rd dumping prep for sparse mappings
-  drm/msm: Crashdec support for sparse
-  drm/msm: rd dumping support for sparse
-  drm/msm: Bump UAPI version
-
- drivers/gpu/drm/drm_gpuvm.c                   | 141 ++--
- drivers/gpu/drm/msm/Kconfig                   |   1 +
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c         |  25 +-
- drivers/gpu/drm/msm/adreno/a2xx_gpummu.c      |   5 +-
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c         |  17 +-
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c         |  17 +-
- drivers/gpu/drm/msm/adreno/a5xx_debugfs.c     |   4 +-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |  24 +-
- drivers/gpu/drm/msm/adreno/a5xx_power.c       |   2 +-
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c     |  10 +-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c         |  32 +-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h         |   2 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c         |  51 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c   |   6 +-
- drivers/gpu/drm/msm/adreno/a6xx_preempt.c     |  10 +-
- drivers/gpu/drm/msm/adreno/adreno_device.c    |   4 -
- drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  84 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.h       |  23 +-
- .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  14 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   |  18 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h   |   2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  18 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |  14 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h     |   4 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c     |   6 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c      |  28 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c    |  12 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c     |   4 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      |  19 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c    |  12 +-
- drivers/gpu/drm/msm/dsi/dsi_host.c            |  14 +-
- drivers/gpu/drm/msm/msm_debugfs.c             |  20 +
- drivers/gpu/drm/msm/msm_drv.c                 | 176 ++---
- drivers/gpu/drm/msm/msm_drv.h                 |  35 +-
- drivers/gpu/drm/msm/msm_fb.c                  |  18 +-
- drivers/gpu/drm/msm/msm_fbdev.c               |   2 +-
- drivers/gpu/drm/msm/msm_gem.c                 | 437 +++++-----
- drivers/gpu/drm/msm/msm_gem.h                 | 226 ++++--
- drivers/gpu/drm/msm/msm_gem_prime.c           |  15 +
- drivers/gpu/drm/msm/msm_gem_submit.c          | 234 +++++-
- drivers/gpu/drm/msm/msm_gem_vma.c             | 748 ++++++++++++++++--
- drivers/gpu/drm/msm/msm_gpu.c                 | 146 ++--
- drivers/gpu/drm/msm/msm_gpu.h                 | 132 +++-
- drivers/gpu/drm/msm/msm_iommu.c               | 285 ++++++-
- drivers/gpu/drm/msm/msm_kms.c                 |  18 +-
- drivers/gpu/drm/msm/msm_kms.h                 |   2 +-
- drivers/gpu/drm/msm/msm_mmu.h                 |  38 +-
- drivers/gpu/drm/msm/msm_rd.c                  |  62 +-
- drivers/gpu/drm/msm/msm_ringbuffer.c          |   4 +-
- drivers/gpu/drm/msm/msm_submitqueue.c         |  86 +-
- include/drm/drm_gpuvm.h                       |  14 +-
- include/uapi/drm/msm_drm.h                    |  98 ++-
- 52 files changed, 2359 insertions(+), 1060 deletions(-)
-
+diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
+index 1e89a98caad4..c9bf18119a86 100644
+--- a/drivers/gpu/drm/drm_gpuvm.c
++++ b/drivers/gpu/drm/drm_gpuvm.c
+@@ -1505,9 +1505,6 @@ drm_gpuvm_bo_destroy(struct kref *kref)
+ 	struct drm_gem_object *obj = vm_bo->obj;
+ 	bool lock = !drm_gpuvm_resv_protected(gpuvm);
+ 
+-	if (!lock)
+-		drm_gpuvm_resv_assert_held(gpuvm);
+-
+ 	drm_gpuvm_bo_list_del(vm_bo, extobj, lock);
+ 	drm_gpuvm_bo_list_del(vm_bo, evict, lock);
+ 
 -- 
 2.48.1
 
