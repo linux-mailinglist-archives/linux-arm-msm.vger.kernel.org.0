@@ -1,156 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-51943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11B4BA68B31
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 12:19:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC991A68B45
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 12:22:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73BCE1750B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 11:18:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8CE4E7A3846
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 11:21:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CC3A257AC2;
-	Wed, 19 Mar 2025 11:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAC2E253F14;
+	Wed, 19 Mar 2025 11:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="a+2BTofQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k0Iq+qFx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A0E25522C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 11:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E100253351
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 11:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742382529; cv=none; b=L1Sn7hwktcM2BCkwc8EkGifM6pP7QSK/iSl9WsXjYLgLQcqZ/EmpNtkVKqPSrSORSfVAMUwbRlG24fkIReJfY0qYilrsqb506tfmx3VTixAcJ2hKGx0aiiPHxYCkoz6C94aZJXDqJUDtAp8X6FykQUg2UNbLMXGI5O7zepV4ZyQ=
+	t=1742383333; cv=none; b=BP/qAhleB/DIxmY8viETysyMA5khXYdc1yuMEU+0BGkm+ks+mrD48CGWxQJDHLeArKYJKqqu1+OdIYx1DQgRiN85aCaXcLr0MwHfjYeAzC1rFx8cZa+NjuXfPIlCQOiLLIDzdZZ14voN3Ewj14xYxyBWqzrndSaSocoQVZTUwAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742382529; c=relaxed/simple;
-	bh=7kVuE2yalymm0zGrNn2VhxNQO2hWeUQJHMGJHJYEtkQ=;
+	s=arc-20240116; t=1742383333; c=relaxed/simple;
+	bh=wpfSTsZnDE2gZ7cG2F7LWwVO4Apgpg3Tg9uLofpVtMU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DyBrIg6lcL5Ytpqx3QiahBDekSYzLAEFkxBjmaJgEwaDaMKUQILISHYfpqvuBW75HdtEue61C9s1yND0M7M9zfV5xRNN46vdnOR3HSB1ZhmabUn1VNmORlT1U3HMUwDL1LRqzkH9496a0IvGts4CaOkt2FpgRt7+XUD7ybb9pk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=a+2BTofQ; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=jhaWkCWrkkI/90iHVxm6jAgi5VqfGcGMfu9h0vVuFsC4MFA6FWanhOjg5GoWDxltId5KpkDT/4WZnJ6nMJWVyl+z0wzL2l2tz3e9bpreKlKzWozFIi5HJhS/1VKRJyqifZY1HFD03S85hi/t1dWQf5edtJkZDQT0e4PUpXBkfzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k0Iq+qFx; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52J4lhxW020636
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 11:08:47 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52J4lhVa020628
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 11:22:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=WzyptaVYzzRiiqOe580gou9y
-	L5Xd/cRhnh+9PDrH8JE=; b=a+2BTofQxHcdNpEBdZY25rpiValaCN5Ck0hEsoDN
-	7Sp9HN/LZYdY3nxuL9e9qiQ3dTFCh3eRiUyvjMQnlknVkikcOrOId0Jeng7OHVYG
-	TZgx15kJvxNXIFVh7t3a1qPsepi2b3jV4aa6dQQa5SDt2k7X2TjxCcZF2rWtfSa+
-	n1G644PvPuqe0AgbIVdio2W4kt7vRpAau/DnpkLGiKa/aYlcn21GFkJQ4pzaMb4z
-	c8vrrK9RRelTkYLkgFAsbEJWZY/01y/PZbScZ/gVTb12/kh9A4pYtlCbu64CB4ed
-	yfWlYtiR+EtpCnGsIn19tdDmWiytNvFgPnBn26ERnvEbMQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45exx353f6-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	/0dOj9OasG6gKfLcIcSynk60sDQkoKoKVnyPghbAjvw=; b=k0Iq+qFxXEO6zeAH
+	xvrnbFAMBnTZ+mZFOiFhSuzOCeEDrO8UzKKBhbAgTGkxQ5ENyE9BEpXmk4RVV4ns
+	NNoCLRBVKY0stkKl82Ylmq4Kc8IUomQm4PdrDWNY3luuNu42rGQw3f6q6eu1e6y2
+	2/3PP0vZXSbnmz+xUWq9kWfY7E7do8ICq+svKLmuoV3Gyr3mD9MbR8NCJLTcDZzR
+	sZU1JbF5Kh/vargUZK15AKVhSRAQ/CQUPOKeHup2+6b5Do4MUoUn/eBgCaH+fugy
+	uIBoSIqEwbQy1Fix9UZjUTQGc5M9XbbeDuuutqntHe48NvIyrrUIkkZlg89/zotW
+	Rj9j7w==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45exx354r9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 11:08:47 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c0b0cf53f3so1077308885a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 04:08:47 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 11:22:10 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6e905e89798so100744336d6.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 04:22:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742382526; x=1742987326;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WzyptaVYzzRiiqOe580gou9yL5Xd/cRhnh+9PDrH8JE=;
-        b=cm9jiihwTaN9pJpZOpUu64K22C24lcXzfrbr54zynwzh2j+ZLR7ry0FPYepdbs0GXw
-         gRrGUh5VXwb5pKPUYkPSS14sawh5KLhvyCVGzeQX9uAUSOWf3skfy9BB+pZV3ufda3Zw
-         f1XW50k7px8sgR/Ntlrh/srZZPvEypOWPfvNd9VxveRxBt4GB9NhAqXrTLUYHk3ZqM8N
-         ix5JWu+O2nh7E3tmOAYfbGl4nw3cKM8q6DwMAer4QJ0p/fYea+6tveKze2msTjHkE5FQ
-         Eon1aBOBHtLHGL4XB1ZioQNv02vbiYutOk7RpglvwJ1LUb2Ue6mol042nYDheg45gupt
-         f69g==
-X-Forwarded-Encrypted: i=1; AJvYcCW7Bvzn5oysvzOOyr/rsMTKO5bKbWUMv/vLLqtG7v2GCDvL5I/2LdLRpTDgkkftx8B1hAq7sGp6BCgaaDRv@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4jMiekigEMpHQxU8Q/Tkl4OKf2+Ue1g6OL7ai+TUMUTPYSQVu
-	ZJbHDWizQbqPI5W6AHljrq9e0EFDPq5fcHcTmXqqD0bFGbj1dFgfjLmenTZQFJldmPnWekpoyu/
-	aAu473i3Pg/5oAdAcYm+gi/Try/+9QqvotmIZ3ceaJ5FK8cHea6Lr469fHTDWRE2u
-X-Gm-Gg: ASbGncsX8qYfGi/TC5bFaR7dg3KEaw7jY6ZVnaHYTj6nXsv9/MkYzm5AV1QLn29ty4O
-	p93LPJEaQCqsFECf9wXW0RZunmJzOxHJ1/6s3fIkK5WJlmHzHBnNtQFMOWMml1RmE1BExikgxOu
-	6rBWFlDQYlFL+63wlEnJP4cMiuZZ0yEdtEieRtcWw5YygoDk8FCf+ay35rx3N4uPXdcnWksQyPP
-	YEXe6rscQVfRxE4uJrUFt8lz0ckZNnGcIqqt8UbrHYdDH4q5XVQailQlqs3CHH96IfQEY5/u0WY
-	iw21AaqRXJsaRLz/vB4fbS+iqIqH+eg7sL0zwbX6QU/N8iNzpBix3V8r08PT+Jvq0dcXedW9vkU
-	dZxw=
-X-Received: by 2002:a05:620a:2a02:b0:7c5:5cc4:ca5c with SMTP id af79cd13be357-7c5a838ec42mr250545585a.14.1742382526263;
-        Wed, 19 Mar 2025 04:08:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZcIi2ghP6ESmSAMRKD4aGrSgNmlI2K/vEMqdFO+ac+ilM5F3UbWyPluESd1UDuKYaE54d9w==
-X-Received: by 2002:a05:620a:2a02:b0:7c5:5cc4:ca5c with SMTP id af79cd13be357-7c5a838ec42mr250541485a.14.1742382525800;
-        Wed, 19 Mar 2025 04:08:45 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742383329; x=1742988129;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/0dOj9OasG6gKfLcIcSynk60sDQkoKoKVnyPghbAjvw=;
+        b=JM2dwvYi6+2Eu3Ma/ECQ9VvqTHIpCo5XgGtymi10P+6egITL8CIVi484gJ4/vo/63z
+         UtPwswjzGuNuVkEGhwwrLLeKOCPMWzrULLQ7aRSXp3L8kymVk1/y8j9T5lB3u7qztEu9
+         j17lt49O2RO1I70Ch8aKD6vHS7gbpR/OIoslRP2ZHx3W+LvrIEvGKhNeIqblU32vBMTI
+         2GoJpbgn7kUvOzPYvTPmTCXXxRNop89sZNhQepyv7OvzOdL3endJJa8o7Hl+J5AvlId4
+         c3DXR3U2PruKyKc/ZOlVKGli8zrgBwK8VkxSrLPndPKksUCWva3V2tYnDvqHkncR3XM+
+         6oSw==
+X-Forwarded-Encrypted: i=1; AJvYcCWI+8vmNEE4L6kri1WLaxoIc0cBYFgum0WaUO2kMDbU/lZUHJjSo0qndetL/U409KJfr6IrCk4P44KP5cBl@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy0HMCweOlkhxSPXhln/cH7mexP8EN1lrUxxFxCL+rrAdt3HLg3
+	RlY9/9nQT2PtE5aoELa2GcgVDIUJqVde+MF5xiwx1epXZpBhE/e9GTuh/vsG1I3HkGOYy76fTa9
+	Nkvzt+vhb3tnXZPZM4GUkS0CUFqlb0NGXdssucAt8GqwF2ZLuhAyJDE1zMtlNYrIT
+X-Gm-Gg: ASbGnctsNBYgXnKsxFiNvSSQKBDso+KjoSaylBkN4iT7yJNGLYp6NroHWh9QonBSqG5
+	c8sZMfdkOVX1Xs91VKI1lwz+GE5w7CPbe7poXJAAMcaLsA1pSDMO5MzC1I8meOgz8noXdCS/Ic3
+	iC/XHM48uc/d4Dc8m+r5dmQMy9/PsnhCv4qvdFlpvh455nydb6I4b0j5Viwn1ubcloHXkUBg0e1
+	ymOzUdLA7NDfoeFY8EJarwvgdmWiIZsP6H8+feCgG2zqSfPLvrzb69wrrUFqCNZn/+MKHRtxjff
+	2zKYTTNV55ZpU9A5auGf+MXq84sDOwxNscCWqB9CO2hVdUypa35zn0BxBqIMszJwEEughzExz6N
+	toMk=
+X-Received: by 2002:a05:6214:f04:b0:6e6:6506:af59 with SMTP id 6a1803df08f44-6eb293a85d3mr38241536d6.15.1742383329584;
+        Wed, 19 Mar 2025 04:22:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHCw1YsChezouQrX0CQTaQf7FoaYQwINmikZafgVoFKKRYnvBgLn+4C+qNfNmpsI3oGmG0vVQ==
+X-Received: by 2002:a05:6214:f04:b0:6e6:6506:af59 with SMTP id 6a1803df08f44-6eb293a85d3mr38240976d6.15.1742383329114;
+        Wed, 19 Mar 2025 04:22:09 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549ba864c12sm1988818e87.157.2025.03.19.04.08.42
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549ba7c3d7dsm1923219e87.102.2025.03.19.04.22.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Mar 2025 04:08:43 -0700 (PDT)
-Date: Wed, 19 Mar 2025 13:08:40 +0200
+        Wed, 19 Mar 2025 04:22:07 -0700 (PDT)
+Date: Wed, 19 Mar 2025 13:22:05 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/8] phy: phy-snps-eusb2: make repeater optional
-Message-ID: <sxrae5pmykx6ul2y7uc24fss2kdeezkkom7ev7mavt3fbc6ckv@tghyp3whuxnu>
-References: <20250223122227.725233-1-ivo.ivanov.ivanov1@gmail.com>
- <20250223122227.725233-6-ivo.ivanov.ivanov1@gmail.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: neil.armstrong@linaro.org, Baochen Qiang <quic_bqiang@quicinc.com>,
+        Vasanthakumar Thiagarajan <quic_vthiagar@quicinc.com>,
+        Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        Aditya Kumar Singh <quic_adisi@quicinc.com>,
+        linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH net] wifi: ath12k: properly set single_chip_mlo_supp to
+ true in ath12k_core_alloc()
+Message-ID: <ybhc2ogdrbzadqzukupqqd2mnouuy7ggjifnpecu4ydnktgwe3@iwahgjhydhyo>
+References: <20250303-topic-ath12k-fix-crash-v1-1-f871d4e4d968@linaro.org>
+ <24b2f1f8-97bd-423a-acbd-9a5cd45e4a40@oss.qualcomm.com>
+ <7901d7f0-d6d0-4bf3-89ad-d710e88477b7@linaro.org>
+ <7b4b598f-bc13-aa4b-8677-71477e1f5434@quicinc.com>
+ <a5ebfdfb-107f-407f-b557-522b074c904f@linaro.org>
+ <38cd738c-1a2a-4382-80f8-d57feb7c829d@quicinc.com>
+ <6717d816-02b3-4d27-848b-620398808076@linaro.org>
+ <4pidr33bvbtykyufw35ubfr7mut2ypqmoiydgjlcsyxolqteze@j2xhigdoxqhp>
+ <89a71ef3-518e-4a69-b959-5bd03f0624d5@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250223122227.725233-6-ivo.ivanov.ivanov1@gmail.com>
-X-Authority-Analysis: v=2.4 cv=b+uy4sGx c=1 sm=1 tr=0 ts=67daa5bf cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=pGLkceISAAAA:8 a=XJ2MQsQTle-X_OudA-YA:9 a=CjuIK1q_8ugA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: rWYwhwnoo0tjbXzyPRU74WHNWiRohiCx
-X-Proofpoint-GUID: rWYwhwnoo0tjbXzyPRU74WHNWiRohiCx
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <89a71ef3-518e-4a69-b959-5bd03f0624d5@kernel.org>
+X-Authority-Analysis: v=2.4 cv=b+uy4sGx c=1 sm=1 tr=0 ts=67daa8e3 cx=c_pps a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10 a=Vs1iUdzkB0EA:10 a=KKAkSRfTAAAA:8 a=Ea8lILSLKeBfcNHBp3oA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: dOAMr1xIBaEXnzZJcwoXWzwOw7er_Dkq
+X-Proofpoint-GUID: dOAMr1xIBaEXnzZJcwoXWzwOw7er_Dkq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-19_03,2025-03-19_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
- bulkscore=0 clxscore=1015 mlxlogscore=814 priorityscore=1501 mlxscore=0
+ bulkscore=0 clxscore=1015 mlxlogscore=999 priorityscore=1501 mlxscore=0
  lowpriorityscore=0 malwarescore=0 impostorscore=0 adultscore=0
  suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503190077
+ definitions=main-2503190078
 
-On Sun, Feb 23, 2025 at 02:22:24PM +0200, Ivaylo Ivanov wrote:
-> Some platforms initialize their eUSB2 to USB repeater in the previous
-> stage bootloader and leave it in a working state for linux. Make the
-> repeater optional in order to allow for reusing that state until
-> proper repeater drivers are introduced.
+On Wed, Mar 19, 2025 at 11:33:41AM +0100, Krzysztof Kozlowski wrote:
+> On 19/03/2025 11:18, Dmitry Baryshkov wrote:
+> > On Wed, Mar 19, 2025 at 11:00:34AM +0100, neil.armstrong@linaro.org wrote:
+> >> Hi,
+> >>
+> >> On 19/03/2025 10:46, Baochen Qiang wrote:
+> >>>
+> >>>
+> >>> On 3/19/2025 5:12 PM, neil.armstrong@linaro.org wrote:
+> >>>> Hi,
+> >>>>
+> >>>> On 19/03/2025 10:06, Vasanthakumar Thiagarajan wrote:
+> >>>>>
+> >>>>>
+> >>>>> On 3/19/2025 1:34 PM, Neil Armstrong wrote:
+> >>>>>> On 18/03/2025 17:35, Jeff Johnson wrote:
+> >>>>>>> On 3/3/2025 7:00 AM, Neil Armstrong wrote:
+> >>>>>>>> In commit 46d16f7e1d14 ("wifi: ath12k: rename mlo_capable_flags to
+> >>>>>>>> single_chip_mlo_supp")
+> >>>>>>>> the line:
+> >>>>>>>>      ab->mlo_capable_flags = ATH12K_INTRA_DEVICE_MLO_SUPPORT;
+> >>>>>>>> was incorrectly updated to:
+> >>>>>>>>      ab->single_chip_mlo_supp = false;
+> >>>>>>>> leading to always disabling INTRA_DEVICE_MLO even if the device supports it.
+> >>>>>>>>
+> >>>>>>>> The firmware "WLAN.HMT.1.1.c5-00156-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1"
+> >>>>>>>> crashes on driver initialization with:
+> >>>>>>>>    ath12k_pci 0000:01:00.0: chip_id 0x2 chip_family 0x4 board_id 0x3d soc_id 0x40170200
+> >>>>>>>>    ath12k_pci 0000:01:00.0: fw_version 0x110f009c fw_build_timestamp 2024-05-30 11:35
+> >>>>>>>> fw_build_id QC_IMAGE_VERSION_STRING=WLAN.HMT.1.1.c5-00156-
+> >>>>>>>> QCAHMTSWPL_V1.0_V2.0_SILICONZ-1
+> >>>
+> >>> this FW version is not upstream yet, why are you testing with it?
+> >>
+> >> I was not aware the driver supported only a small subset of firmwares.
+> > 
+> > Yes, this has been communicated by Kalle (and now by Jeff) for ages:
+> > using any firmware outside of linux-firmware is not supported, unless
+> > you have been explicitly told to use a particular binary. Firmware
+> > coming from the Android / Mobile might use different knobs and have
+> > different expectations regarding driver behaviour.
+> Sure, fine, but that's not what is happening here. Look at the replies
+> from Qualcomm - not responding to actual issue here but instantly
+> rejecting a patch for regression just on basis of:
+> 
+> 1. "series under internal review to address MLO issues"
+> 2. "when all the necessary driver changes
+> (in development, public posting in near future)"
 
-Generally "works as it is setup by the bootloader" is a very invalid
-justification. Please don't do that. We should not be depending on the
-way the bootlader sets up the devices, unless that _really_ makes sense.
+These two are invalid, I agree here.
 
+> 3. "Generally we only support upstrmea driver + upstream FW."
+
+This one is valid. Different firmware versions have different behaviour.
+Android drivers, WIP drivers, etc. might have different behaviour, which
+works with a particular firmware build. Upstream driver is not expected
+to work with those firmware builds. At Linaro we have had these kind of
+issues and the response from Kalle has always been the same: use the
+supported firmware if you are reporting issues.
+
+> Instead of talking about actual problem, I see only avoidance of
+> responsibility and just sticking to whatever they have planned internally.
 > 
-> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-> ---
->  drivers/phy/phy-snps-eusb2.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> That's not how work with upstream is done and is really disappointing to
+> see.
+>
+> Remember Tuxedo computers folks who said we want to control usptream
+> process, thus we will release source code under incompatible license to
+> prohibit community from working on their own.
 > 
-> diff --git a/drivers/phy/phy-snps-eusb2.c b/drivers/phy/phy-snps-eusb2.c
-> index 4e5914a76..dcc69c00a 100644
-> --- a/drivers/phy/phy-snps-eusb2.c
-> +++ b/drivers/phy/phy-snps-eusb2.c
-> @@ -461,7 +461,7 @@ static int snps_eusb2_hsphy_probe(struct platform_device *pdev)
->  		return dev_err_probe(dev, ret,
->  				     "failed to get regulator supplies\n");
->  
-> -	phy->repeater = devm_of_phy_get_by_index(dev, np, 0);
-> +	phy->repeater = devm_of_phy_optional_get(dev, np, 0);
->  	if (IS_ERR(phy->repeater))
->  		return dev_err_probe(dev, PTR_ERR(phy->repeater),
->  				     "failed to get repeater\n");
-> -- 
-> 2.43.0
-> 
+> This is the same Qualcomm behavior.
+
+It's a different story. If the commit in question has caused driver
+issues (e.g. kernel crash), it would have been a valid issue. It causes
+an issue in the firmware, which is not supported. If I were working on
+ath drivers, asking to reproduce the issue with the supported firmware
+would be one of the first items.
+
+First reponses are disappointing, I agree.
 
 -- 
 With best wishes
