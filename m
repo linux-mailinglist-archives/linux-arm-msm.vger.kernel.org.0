@@ -1,87 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-51958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDDA4A68EE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 15:22:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60C28A6902C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 15:45:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A6E5C427A45
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 14:17:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 951071899DBF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 14:20:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5CE9192D87;
-	Wed, 19 Mar 2025 14:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BDDB1D5CF9;
+	Wed, 19 Mar 2025 14:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iwyeT2z4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H5iwi2Oq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3010134BD;
-	Wed, 19 Mar 2025 14:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523EA1D5CD1;
+	Wed, 19 Mar 2025 14:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742393848; cv=none; b=lG/NmeGLLudXGR3fRkqAV1ZyVgLlj6DlJmiUVEEmt1tT+kwoOFcRyASj8+TyaaecinCb0tpNJL29dx7BaVD6u2Wl64O1gbaCVCH+4Ihwf4oDhWdd55hoFKQuZR3M63d6HWT9U86N4qWE2YtNxfQo52WeXHfePzeqk2EMhlEp9q0=
+	t=1742393952; cv=none; b=Da/I125uJ/5vGPTd2yi6C8AG94eKkwQ4ERj49HZhOwLmOYaC5E3GTca+nvYb163VrfKqyK5+hlT1l6NYLxzG1g0f+hKHUosOZF+pKPnbgr8721mkgwNcbofgsNfwCCqhKWO83cEmpVq9KE1ikvB3qJr4iFAGy6kd3fXjErqpxQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742393848; c=relaxed/simple;
-	bh=mDtA3gGdRl8PPc41t++JV1w8XqYO37gXYMhQwSj/Rzs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rf21W4uE43NACKmyJPBCC6W2qLrzm59BMEWemLBiwOIbSV1niaadD4KIciKWljBdNgUbiFTpx1GImIeEj40Dq6Drizlspq7S6AgjX4BfeRLWfoSNBmUZ5lQ4ydp+UEFjbD0ETAgKeuCFL2JfPajpoPuZNdKgGmEB3xflRrJfmTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iwyeT2z4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA70C4CEE4;
-	Wed, 19 Mar 2025 14:17:26 +0000 (UTC)
+	s=arc-20240116; t=1742393952; c=relaxed/simple;
+	bh=9ApM2Yr8qFcdHesbkDhT7WqN3ZLUjNfLaL0DDOHFqo8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=b0Ev6z1eSPM3zIMXH2CpdCBZds+P36OiE2Ri2965i913r6LtuIvMvXgU7F9Q8ciONoc6m8hU5Uqo8U9HyY4+M7w0Bg8y+W4nv6ytSVdohrmQWLQVwOV27kaNahZVIPBNlHyw/NujkpGaqFMd6r3/jfL0HcbuZCfiN6FHE4yO2wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H5iwi2Oq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33884C4CEE4;
+	Wed, 19 Mar 2025 14:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742393848;
-	bh=mDtA3gGdRl8PPc41t++JV1w8XqYO37gXYMhQwSj/Rzs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iwyeT2z4i3KYR/l9yujACoL3VqGZUN5Ypf0q9UAV2eg9jabiSUrxF2uwMVM/jXhU3
-	 RFZJgpYHLh2GDc21/I4ZjkJNd6eFa3DcSJpEHzFrU37KDzayAgwL4zgp9o/xn+bRAy
-	 2//QgkWIizaKKs/wNxrJzQBkbgWKkLtxcJEidxivOSugXhA5t2l127kM51TKYEInlc
-	 TwEfE3GdHEz2hXtounEK4jW9W7nm5drcGFFVQrpwwocbflQDJ4zSUR0gRoMW1ZV3cL
-	 ApogGo9Hic0RM3Zxcxzo+b+X8u6Mo0QeXJBjjmbskwkFVhsbVqiBOi1Zz6A4h+LpTB
-	 w5RzEVxB9jsoA==
-Date: Wed, 19 Mar 2025 09:17:25 -0500
+	s=k20201202; t=1742393951;
+	bh=9ApM2Yr8qFcdHesbkDhT7WqN3ZLUjNfLaL0DDOHFqo8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=H5iwi2OqONoPlsDTIcFW1OC2i4YYHy4xn6Qgg6U1RTQeaeR8d50ntRfwQD6GmXWMx
+	 Kk9+trbXHFshZXeeNLPertcklC/nJxwfaWGdLxuP5zeRDTx8lPu1xuiBYZuCeZ6VSL
+	 leJWDwfzJZhg2/bWD4aHrrEueiNLhO5iZZpBia/3DWtFYURiWVy6fMhH9J06HVkK51
+	 ozo/rzwkrb5fp/xIdkvIrwSNuEmlF02xHAeLpusjKYEFnejn07uRmz22sBDlUbtB6H
+	 WbLxEblsI+YknKb/nmM46/brPUZGeTd2wzmxhi58S42SbFg1bQC73excr2y0t8Zfu2
+	 WW8jGuIiSu9/Q==
 From: Bjorn Andersson <andersson@kernel.org>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
-	devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>, linux-kernel@vger.kernel.org, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, linux-usb@vger.kernel.org, Frank Li <Frank.li@nxp.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Saravana Kannan <saravanak@google.com>, 
-	linux-arm-msm@vger.kernel.org, Felipe Balbi <balbi@kernel.org>, 
-	Wesley Cheng <quic_wcheng@quicinc.com>, Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH v5 0/7] usb: dwc3: qcom: Flatten dwc3 structure
-Message-ID: <ovcwe4r4bb7cubpvqgbh7kiqoomu4qpfnoqi5dkhfojwx6ng32@f2ezf22gtld6>
-References: <20250318-dwc3-refactor-v5-0-90ea6e5b3ba4@oss.qualcomm.com>
- <174233664011.4094337.15532864486999752175.robh@kernel.org>
+To: Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Cc: Abel Vesa <abel.vesa@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: defconfig: Enable USB retimer and redriver
+Date: Wed, 19 Mar 2025 09:19:08 -0500
+Message-ID: <174239394606.2278051.11144638961266854595.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250318-xelite-retimer-redriver-v1-1-b3e85a37d294@oss.qualcomm.com>
+References: <20250318-xelite-retimer-redriver-v1-1-b3e85a37d294@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <174233664011.4094337.15532864486999752175.robh@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 18, 2025 at 05:26:02PM -0500, Rob Herring (Arm) wrote:
-> New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250318-dwc3-refactor-v5-0-90ea6e5b3ba4@oss.qualcomm.com:
+
+On Tue, 18 Mar 2025 22:11:37 -0500, Bjorn Andersson wrote:
+> Several boards based on the Qualcomm X Elite platform uses the NXP
+> PTN3222 USB redriver and the Parade PS883x USB Type-C retimer. Without
+> these USB, and in some cases display, doesn't probe successfully, so
+> enable them.
 > 
-> arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: usb@a800000: #address-cells: 1 was expected
-> 	from schema $id: http://devicetree.org/schemas/usb/qcom,snps-dwc3.yaml#
-> arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: usb@a800000: #size-cells: 0 was expected
-> 	from schema $id: http://devicetree.org/schemas/usb/qcom,snps-dwc3.yaml#
-> arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: usb@a800000: Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'dr_mode', 'phy-names', 'phys', 'ports', 'ranges', 'snps,dis-u1-entry-quirk', 'snps,dis-u2-entry-quirk' were unexpected)
-> 	from schema $id: http://devicetree.org/schemas/usb/qcom,snps-dwc3.yaml#
+> 
 
-I lost the hunk that removes #address-cells, #size-cells, and ranges
-from &usb_1 in patch 7. So, this error report is correct, but does not
-affect the implementation.
+Applied, thanks!
 
-Thanks for catching this, Rob.
+[1/1] arm64: defconfig: Enable USB retimer and redriver
+      commit: dd20903cc09ac40e71096370a9564e6523e87c22
 
-Regards,
-Bjorn
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
