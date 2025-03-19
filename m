@@ -1,78 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-51913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E7CAA687C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 10:20:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FAEAA687C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 10:20:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 97CE7882A85
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 09:18:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F0ADE16F593
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 09:18:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC4D3253B74;
-	Wed, 19 Mar 2025 09:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59E82253F24;
+	Wed, 19 Mar 2025 09:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v0GRtoYq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fqvb9XcT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1B325334F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 09:17:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DE4253B6E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 09:17:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742375876; cv=none; b=e9M+OlrdB44fBMvf3DGUg+n4ThgnakcjGsrDMDWxk5NbJ2/MHz/VKUWeuHUR2eujH1zWx2s01cX41KavrDrQ87a8/j5UHoD7v2ijcFz//cZUkfBVol/NfOfmBtoP8Q4/t+OVgcND+BlCxC5Lb0/mROaFZ50lSr7mvoFo1oGWQbg=
+	t=1742375878; cv=none; b=qFBFadmPtTiFtBleEZG66no5oc5d/qDCD21CrWuPrtReRl4yQF6qHCtocfu7IE9FXQABCfZlkedHD/FnyqbkLEwfp3D62y3fEEYqBtGe5rKEwnk2QMrzo4WcWVeuSlVzPYGxcL0tZgxKnCAKxqvLAS0wyXh0ErYRa+QZqSQJ+gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742375876; c=relaxed/simple;
-	bh=ULRWIRzW3ClVMbPCwKcuXk3yCqOKBA/uzUXVWNbco5U=;
+	s=arc-20240116; t=1742375878; c=relaxed/simple;
+	bh=G/PQgzYwrYLYsv/3Tx21aVxfqG3KRo86XzpWAbXD6Ow=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=iKLqlshMdsnZhg8ISYFVoipe4Rfm80Nm9uyKWNb2gtulrqMDZ2CDjBwLTNNjI7WeotWpYtRKgAzoL2SGJp7DaY5Z49mDnkpxs9pYiT2UA49t4yoTco0lhhyC2w82k0fUMlwvBhE4odOQs16pr6jdQScdR6WVONl11ANVUqeETHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=v0GRtoYq; arc=none smtp.client-ip=209.85.128.43
+	 MIME-Version; b=UV1n7BmIMngNlFpids56lngTSIhroEariWJGWboBBEx2+GK26OdQIOp6qtqSMXWjc/l0xM/Mc2qOrEqH3GRl642F1eNXODxgF3GwP0PPXkmZd9cZZoVwig25UZ9XsObPvA0j9UIFJhNMmiwjDWrLfJFgi4HetJ5wXuk2fmK3DXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fqvb9XcT; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43cfba466b2so42973795e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 02:17:53 -0700 (PDT)
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3914a5def6bso3595745f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Mar 2025 02:17:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742375872; x=1742980672; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1742375874; x=1742980674; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+ySdR3tj80pBDLvsU4QQMajiIPqzNIK+BJx1XMf8UJs=;
-        b=v0GRtoYqQoO0WTUTIXqtbK/IeO4I9Wco8GvnRvjcB4nxyblIwdeAbaguhXo/Z+Lcv+
-         p4dnXhZM8Ai5AZtPmOEzVMDSCEaK5uVvQMhtr+bWd5AqFgyf3PbhrxB73ufXBk1qiLKL
-         roeEsLl7hlgtKM7ltpWdophjkSshDavruRqDif7dGE4ITQAKNBmSM7MkGvKOnwOY+amj
-         qqmNgNIK6b0Ub82dz+8GghTxHeItl+xfLmpAwRVVTD66dkBjnJTvq+DaWAkWwX9XRdDg
-         4DjeueOtZmW3RmAt/HjOBU+kYNmJPUnTLr9x2cYzErnXBwRDDIGiow2XIHsUPhbpjWGp
-         lRoA==
+        bh=MatIsPF8IuzJGTj4rqzD5SEaynR7KV/+RlpqBdYnhsQ=;
+        b=Fqvb9XcTfRzkbiNj7uB2sd1ZrN6eRfgSSOON3qcypf101Ons81bD8YEM8P7fFkJ+vv
+         Dr/inQ4V6bcHc/bSBZ84L6lDcyYqdv7jXDQ4VNN2Unn/YQpaOEmATo+DBH9+RNPFz8bU
+         ZteylGpRguI1b/1xiBL12YoM5SIOaRL51uVqkLKvjpeaAdK6aRnb7rHBQ6LsNUHAooAs
+         PQHmecUOutNRbF4Z9SPLBbhnCSvp1NT2KXA4ob7emNTSb45kvhdkasbKok0PDU6Djk5G
+         Svb52qxVJf2rjyXt/kCqdz8amF6Bq5k9EqrUBhxUFH6k9OEIHy/nE79/Vd50GqyvBp4e
+         MYXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742375872; x=1742980672;
+        d=1e100.net; s=20230601; t=1742375874; x=1742980674;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+ySdR3tj80pBDLvsU4QQMajiIPqzNIK+BJx1XMf8UJs=;
-        b=b0lliAJNYgxqVKtZT61YZ+RUm7GJR9RkWu1pnSxCecHLo6koKBse71Ql+GHLNlNAkd
-         ravdJxSJ8BesBVgowTEpHZf43qkBE2AYx93Cr1uRkZB9qa4qC4U0VjaWOIx9NogYsLwv
-         3aL60G0u65RNNIgXXzn/TanWvM1YLTIZtI1qCNyj0ONiusiGhJfKmVNZaNAmq/yDMCTb
-         lp4dXbnDz4iSnEMKyhLWI/T3aLxkPFuH7puTyKhZQF7oqXpK0P/qlKRo4EDVtNw7jj+h
-         e27O8TY7saUsxDBbX40nRl2ON3HWqECho3aN549TONPxCLVfwOlqyfw2M1q95WLR/aKv
-         rPxA==
-X-Forwarded-Encrypted: i=1; AJvYcCXWu008i1cTwhdjVPlcLWwoOQnPI0TbTfkJXv21Gn8tfXeAKsDpCJ2YbemeuAXIIPfpdb6lt/7XMHaxyg5Y@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyj8z2Io1noFaMDoGt7V739LEkcjAj19CVAhgMOOkjuMrqMMFyV
-	qcQkIrwk5VLe/ZTk0ekmTNzDDyjYUoVsm394xxf3JDswZz5mUZn5vbtaJPh19WI=
-X-Gm-Gg: ASbGnctrmCnJAaaRKOZ5IIUhUgFCpE5ooV+xATbASjEWd4RVC1kgzbuu1oE7NsyGixF
-	dYZPcLGbwcYCIXnbhNdZd+xzZdVp27LutN6rGQDsIIhgpGMNxy1gspn1YLIOXTbhngHwHjzum44
-	0HzmqS5TkAFwMmbC09SV8BTmCEtSOYHvKFQdPvc5lw2HcpImmh3xET7bBqJ7l/dn+oWGEuza5BK
-	fB8mYuxs4pSwrc8gYyhsSs3WhAsRwizTkMF/awiP24KJDtqhE0KlwIXVFrs2S58XRCq6DLJPhYp
-	5+ERElNW1IfS6hmONwheyy5X+66PA9yQdXPC9/imsC7OwX8KfczzZhr5k6AXhvcX1xJhMoZrNTu
-	zhfon
-X-Google-Smtp-Source: AGHT+IFGBgrP9XrQ3f2uafyicjPKMzKkkhYZU6En9bbVWfY5B2AqCcmoR4UU0JrQIUMOQW0ppC9i4g==
-X-Received: by 2002:a5d:5f91:0:b0:390:ee34:228b with SMTP id ffacd0b85a97d-399739cbbd6mr1493601f8f.24.1742375872457;
-        Wed, 19 Mar 2025 02:17:52 -0700 (PDT)
+        bh=MatIsPF8IuzJGTj4rqzD5SEaynR7KV/+RlpqBdYnhsQ=;
+        b=iQuO8hMhQoyFml7mjTXTyfD7Nad2a6y/giFH+S16mEVYzNFyibXkwUt7+F96BcjRCT
+         wfD5vRGsbT+RfOgHZe9+dW2spfCTAz+gwOSxzgGWeOMClaDJTtn1Qsl1JAKkGnkxmJps
+         2XGWPwEvGXXS1N/6ifQczbZu5IEIsUzOJNZUNGC9CJwX2Ws4O3GQ7YI59PmRL6gauchX
+         +FhpCokyNirfWp7jJuI6SLm3//KDG/WMuJ7ds/5sAHg5HZcc6vV3Mr0abqlZuSyvfZTw
+         HTHuYHxpdIagGgnWiGiWmmmZo7MByURsUrOElRVPS9DbdH8hDi6+h0dkdqziVAtXKFOD
+         cfSw==
+X-Forwarded-Encrypted: i=1; AJvYcCUaFDfBs4lL/Yk2CipoPELPyX1IRE5Z+X2CFk0AFzax6+gPyQdEWevqGK/A02Vw9urHHX/KIRgN2FlTZz8X@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/TVI/67hd9duC4k1mL3oGgxhRu36csmixXMeCLiWTH8ZoLv2B
+	zObS0lh41QfW4JMyU8cTV1x3I7GzDtXs9z0w1MFerpHtgq1q2D9nAdYQIb/Rhh4=
+X-Gm-Gg: ASbGnctH/2bOGCk7tZuHtB8Uvb+BYkfsKwnREkOdwheBaSoef0N1cmbnuWKW9ucEf0T
+	DXYrkudXTEkhySjrJhYaXu3LQCx/iIQdTLv20K8dDzvXEB/gnGg8BWHERkiQng518agux7rKCNm
+	XMn9HrZnKmwE+BpvdU4PM6Wn2/0woIkQCtmMngvQ2xLwkO5FefKaejW5ydnV1Eum5/TAwkyr0s5
+	1rJ8dGHLXH/35lKGy0vwkKL9UaaZhEPItoeyrD5rKmTutkFv8uWux3AmbDclkhqVoKh+FTd7gjm
+	3ksaXvUiU/b42dPC/vfdeaz9RbQODOSey1hU7qwAQBsfykml3OMZQ6IRey7SbPskpXS37A==
+X-Google-Smtp-Source: AGHT+IF2OI4R8vpQRvrvPUiz9MYuf6mjmby8aJEe+xnR6Wn2dDxTXW6xtohznPik5sEd2lnjFnvXNQ==
+X-Received: by 2002:a05:6000:2c7:b0:391:4674:b10f with SMTP id ffacd0b85a97d-39973af9236mr1231112f8f.36.1742375873640;
+        Wed, 19 Mar 2025 02:17:53 -0700 (PDT)
 Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c82c255bsm20023810f8f.23.2025.03.19.02.17.50
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c82c255bsm20023810f8f.23.2025.03.19.02.17.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Mar 2025 02:17:51 -0700 (PDT)
+        Wed, 19 Mar 2025 02:17:52 -0700 (PDT)
 From: srinivas.kandagatla@linaro.org
 To: broonie@kernel.org,
 	andersson@kernel.org
@@ -90,9 +89,9 @@ Cc: lgirdwood@gmail.com,
 	linux-kernel@vger.kernel.org,
 	johan+linaro@kernel.org,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 2/3] ASoC: codecs: wcd938x: add support power on hp audio switch
-Date: Wed, 19 Mar 2025 09:16:36 +0000
-Message-Id: <20250319091637.4505-3-srinivas.kandagatla@linaro.org>
+Subject: [PATCH 3/3] arm64: dts: qcom: x1e78100-t14s: Enable audio headset support
+Date: Wed, 19 Mar 2025 09:16:37 +0000
+Message-Id: <20250319091637.4505-4-srinivas.kandagatla@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250319091637.4505-1-srinivas.kandagatla@linaro.org>
 References: <20250319091637.4505-1-srinivas.kandagatla@linaro.org>
@@ -106,35 +105,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-On some platforms to minimise pop and click during switching between
-CTIA and OMTP headset an additional HiFi Switch is used. Most common
-case is that this switch is switched on by default, but on some
-platforms this needs a regulator enable. Enable this regulator if
-platform is setup with regulator.
+On Lenovo ThinkPad T14s, the headset is connected via a HiFi Switch to
+support CTIA and OMTP headsets. This switch is used to minimise pop and
+click during headset type switching.
+
+Enable the regulator required to power this switch along with wiring up
+gpio that control the headset switching.
+
+Without this, headset audio will be very noisy and might see headset
+detection errors.
 
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- sound/soc/codecs/wcd938x.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
-index f2a4f3262bdb..a00845089e13 100644
---- a/sound/soc/codecs/wcd938x.c
-+++ b/sound/soc/codecs/wcd938x.c
-@@ -3267,6 +3267,13 @@ static int wcd938x_populate_dt_data(struct wcd938x_priv *wcd938x, struct device
- 		return dev_err_probe(dev, PTR_ERR(wcd938x->us_euro_gpio),
- 				     "us-euro swap Control GPIO not found\n");
+diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+index b2c2347f54fa..f39c51c809e8 100644
+--- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
++++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+@@ -22,7 +22,7 @@ / {
+ 	wcd938x: audio-codec {
+ 		compatible = "qcom,wcd9385-codec";
  
-+	ret = devm_regulator_get_enable_optional(dev, "vdd-hp-switch");
-+	if (ret && ret != -ENODEV) {
-+		if (ret != -EPROBE_DEFER)
-+			dev_err(dev, "Couldn't retrieve/enable audio switch supply\n");
-+		return ret;
-+	}
+-		pinctrl-0 = <&wcd_default>;
++		pinctrl-0 = <&wcd_default>, <&us_euro_hs_sel>;
+ 		pinctrl-names = "default";
+ 
+ 		qcom,micbias1-microvolt = <1800000>;
+@@ -36,11 +36,13 @@ wcd938x: audio-codec {
+ 		qcom,tx-device = <&wcd_tx>;
+ 
+ 		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
++		us-euro-gpios = <&tlmm 68 GPIO_ACTIVE_HIGH>;
+ 
+ 		vdd-buck-supply = <&vreg_l15b_1p8>;
+ 		vdd-rxtx-supply = <&vreg_l15b_1p8>;
+ 		vdd-io-supply = <&vreg_l15b_1p8>;
+ 		vdd-mic-bias-supply = <&vreg_bob1>;
++		vdd-hp-switch-supply = <&vreg_l16b_2p5>;
+ 
+ 		#sound-dai-cells = <1>;
+ 	};
+@@ -367,6 +369,13 @@ vreg_l15b_1p8: ldo15 {
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
++		vreg_l16b_2p5: ldo16 {
++			regulator-name = "vreg_l6b_2p5";
++			regulator-min-microvolt = <2504000>;
++			regulator-max-microvolt = <2504000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
 +
- 	cfg->swap_gnd_mic = wcd938x_swap_gnd_mic;
+ 		vreg_l17b_2p5: ldo17 {
+ 			regulator-name = "vreg_l17b_2p5";
+ 			regulator-min-microvolt = <2504000>;
+@@ -942,6 +951,13 @@ int-n-pins {
+ 		};
+ 	};
  
- 	wcd938x->supplies[0].supply = "vdd-rxtx";
++	us_euro_hs_sel: us-euro-hs-sel-state {
++		pins = "gpio68";
++		function = "gpio";
++		bias-pull-down;
++		drive-strength = <2>;
++	};
++
+ 	kybd_default: kybd-default-state {
+ 		pins = "gpio67";
+ 		function = "gpio";
 -- 
 2.39.5
 
