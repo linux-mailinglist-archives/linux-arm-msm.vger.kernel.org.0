@@ -1,124 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-51860-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-51884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A272EA681E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 01:55:00 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D22EA68374
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 04:11:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 805A43BD66D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 00:53:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 81E6A19C3433
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Mar 2025 03:11:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D58241C5D6A;
-	Wed, 19 Mar 2025 00:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FB3A20AF7C;
+	Wed, 19 Mar 2025 03:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="glVSwiBs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QW+/Sk6T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A9914D43D;
-	Wed, 19 Mar 2025 00:52:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2700A42A80;
+	Wed, 19 Mar 2025 03:11:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742345536; cv=none; b=WyQe6zuDwxYMjwLzl17H4CvR6w16VM6Rgki5HdOSpWugywGh6Bj5n3snmszBI+loNucf1wKYUEHLDxOAs5wxtKiwtJegYINV6QUdxFQQ6sC2uOddT0tn854sUhb3E+xMTL6bKM5UGrjORvcFTSHBihRYZqLwnJnzGQnX3HTssqI=
+	t=1742353901; cv=none; b=ZiK7+BsNJgSWBGs9UIIec3YMhIupwq5P0YV2meSN8Ip6Kg1KEGVCqwVuvgH3x6YU5YgbOA0Bmd+6PKAKEg4dDgud/Oklco11NZqXLwuEq7l7kPTfEYlw4QQADF9QryrI3eFzlZEzGCLO9N254HOBp+h/v6+WSb56yO8+FiXm4ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742345536; c=relaxed/simple;
-	bh=tHcXDwbmG9clKLv81IEEz9Giw5qRYs1/YjdseAv9Dbg=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LXWQVmz9Cscr+HfeR78Lwf3O9D4/x4q1D+KQVbUVFWYTBA725N/bGPMtPTuGCUpQfFXBNzbbnXQovuNbqwjVliS2Ydkkk739f7WDsmlLBQlDfeUrLZV1dAGozmuixtCMkPTh1gdjYjGZ7+7ZGTOWjhF4p+TP19oCmbk3SETCi6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=glVSwiBs; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52IJienq022737;
-	Wed, 19 Mar 2025 00:52:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Z7WMBFHQhktNaf8pql7zKR7DGPBcFESHbjhgEvWcI5U=; b=glVSwiBs6djJpD0c
-	J40hbl/sivkbLZgY0lnEe0f59K7hzB4Ts44HQ8HkD5zuCl5lLL2Pi/2v/M4sOkHS
-	+squSiEQe9NHmJkHuI1gPBFJOOgNEt7LV3jlYmdSk5u42ox2WGYdQyQuvty0AYVo
-	hI5Ehi8FFvlCFgUp3pNnUrO/cIpUKghlCOTZmsPNtTVGl+w5cHI+cHjPpAp6oVy+
-	0zxFQx2MJOYT6tBu8g+XQhT8hrTPTktSl3bXPS0QhkXtI7fXXOyDvY8WTnAgdtXZ
-	Vi6uvq/rQEodBUJdfCKEwWw8Uyt6jcy+ijs0PaYIiDyQeEGejRz4P3uGrpn90zO9
-	t7zmMQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45exwx3hrn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Mar 2025 00:52:00 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52J0q0Bt006594
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Mar 2025 00:52:00 GMT
-Received: from hu-wcheng-lv.qualcomm.com (10.49.16.6) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 18 Mar 2025 17:51:59 -0700
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
-        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: [PATCH v36 31/31] ALSA: usb-audio: qcom: Notify USB audio devices on USB offload probing
-Date: Tue, 18 Mar 2025 17:51:41 -0700
-Message-ID: <20250319005141.312805-32-quic_wcheng@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250319005141.312805-1-quic_wcheng@quicinc.com>
-References: <20250319005141.312805-1-quic_wcheng@quicinc.com>
+	s=arc-20240116; t=1742353901; c=relaxed/simple;
+	bh=ypMMkKsvJ/Uf1JkZqtuKEEF9Wh2K7iXsnqGck2sa5Tc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=M52ycLznpd+wzXTO8uZ2ZqRMcLVDbnYsijm3tC5eSeCe5IHuvdigge9vlFGOchVSA9dqZyltq7S8+LbF55WJPFgjnoecEwBybJcDi7tAWX0jbGNNZH4NjuwY2OYs79YI0iiE5Tx8DqHKV1Mt6arNT7X2m8DHFFABxLC5d+pt1uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QW+/Sk6T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 7D3AEC4CEDD;
+	Wed, 19 Mar 2025 03:11:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742353900;
+	bh=ypMMkKsvJ/Uf1JkZqtuKEEF9Wh2K7iXsnqGck2sa5Tc=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=QW+/Sk6TG/tyl45glLfkBo0I9mHv8we/xZ/4e7Nuza4pXnAvE1LLVgR65DO8ccfA/
+	 Q9ePt3tQaM7GITBXloHMavASTgxbpiuZ6wNOquijCmWbKZ/5tAvcLSOEWBBFignAFE
+	 YU9wz+/6K7R0yRujRXPbJTq55kIoKfo045+CDftZCBk2hSI/xghXfQAuvQ2L1YQgKV
+	 GThcAmjPIKcVLC9oPWh/rkDH2XKa+pogs3A9/p5sGG7eF1ic6+x2mshIesYz7ne4fE
+	 Mu6KB0hut4iiR27oGtpesckY9yHhQJJsEe7h804s7N2ZwET47ZWPud1BS7l8L+YOHb
+	 NObrOeeePxyew==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F86BC28B2F;
+	Wed, 19 Mar 2025 03:11:40 +0000 (UTC)
+From: Bjorn Andersson via B4 Relay <devnull+bjorn.andersson.oss.qualcomm.com@kernel.org>
+Date: Tue, 18 Mar 2025 22:11:37 -0500
+Subject: [PATCH] arm64: defconfig: Enable USB retimer and redriver
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jkD5seBvxtpwfKY3v3DbjE-nNgIK8KL-
-X-Authority-Analysis: v=2.4 cv=INICChvG c=1 sm=1 tr=0 ts=67da1530 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=3H110R4YSZwA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=0R9NKns1a96QCZ5VGfgA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: jkD5seBvxtpwfKY3v3DbjE-nNgIK8KL-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-18_10,2025-03-17_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 clxscore=1015
- mlxlogscore=999 impostorscore=0 phishscore=0 mlxscore=0 spamscore=0
- bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503190003
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250318-xelite-retimer-redriver-v1-1-b3e85a37d294@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAOg12mcC/x2MSQqAQBADvyJ9dkDH3a+IB3WiNrjRIyKIf7fxl
+ BRU8pCHMDzVwUOCiz3vm0IcBjTM3TbBsFMmG9ksSuLS3Fj4hBGcvEI0nfClpbB9mqvgqtySrg/
+ ByPf/3LTv+wG9RjTJaQAAAA==
+X-Change-ID: 20250318-xelite-retimer-redriver-72b46318d962
+To: Catalin Marinas <catalin.marinas@arm.com>, 
+ Will Deacon <will@kernel.org>, andersson@kernel.org
+Cc: Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1742353900; l=1300;
+ i=bjorn.andersson@oss.qualcomm.com; s=20250318; h=from:subject:message-id;
+ bh=xRKqtaffSGX6Pjvc76vk0LWObAmQZMRTKBjP4UwTEzw=;
+ b=Ilmlg9Ibvz3XH1u7sHItyqo0EvVlOztOyFwXe0QY5EL4PoQ3fG04ma3H4a+kPHGcJiDdNdsXI
+ mtCbAkXJSrHDMh8WKqLwGa1D7rgtQzEq8O5nIjRiu3pOy0p6HnKDzu2
+X-Developer-Key: i=bjorn.andersson@oss.qualcomm.com; a=ed25519;
+ pk=rD3O9C9Erg+mUPBRBNw91AGaIaDVqquHZbnn6N6xh6s=
+X-Endpoint-Received: by B4 Relay for
+ bjorn.andersson@oss.qualcomm.com/20250318 with auth_id=362
+X-Original-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Reply-To: bjorn.andersson@oss.qualcomm.com
 
-If the vendor USB offload class driver is not ready/initialized before USB
-SND discovers attached devices, utilize snd_usb_rediscover_devices() to
-find all currently attached devices, so that the ASoC entities are notified
-on available USB audio devices.
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Several boards based on the Qualcomm X Elite platform uses the NXP
+PTN3222 USB redriver and the Parade PS883x USB Type-C retimer. Without
+these USB, and in some cases display, doesn't probe successfully, so
+enable them.
+
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 ---
- sound/usb/qcom/qc_audio_offload.c | 2 ++
+ arch/arm64/configs/defconfig | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index 31624753284e..1a3688cc83d6 100644
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -1966,6 +1966,8 @@ static int __init qc_usb_audio_offload_init(void)
- 	if (ret < 0)
- 		goto release_qmi;
- 
-+	snd_usb_rediscover_devices();
-+
- 	return 0;
- 
- release_qmi:
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index e8dfbe22db68d9aa24df5af0786a2eeb8f33bf3c..5bb8f09422a22116781169611482179b10798c14 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1153,6 +1153,7 @@ CONFIG_TYPEC_HD3SS3220=m
+ CONFIG_TYPEC_MUX_FSA4480=m
+ CONFIG_TYPEC_MUX_GPIO_SBU=m
+ CONFIG_TYPEC_MUX_NB7VPQ904M=m
++CONFIG_TYPEC_MUX_PS883X=m
+ CONFIG_TYPEC_MUX_WCD939X_USBSS=m
+ CONFIG_TYPEC_DP_ALTMODE=m
+ CONFIG_MMC=y
+@@ -1573,6 +1574,7 @@ CONFIG_RESET_RZG2L_USBPHY_CTRL=y
+ CONFIG_RESET_TI_SCI=y
+ CONFIG_PHY_XGENE=y
+ CONFIG_PHY_CAN_TRANSCEIVER=m
++CONFIG_PHY_NXP_PTN3222=m
+ CONFIG_PHY_SUN4I_USB=y
+ CONFIG_PHY_CADENCE_TORRENT=m
+ CONFIG_PHY_CADENCE_DPHY_RX=m
+
+---
+base-commit: c4d4884b67802c41fd67399747165d65c770621a
+change-id: 20250318-xelite-retimer-redriver-72b46318d962
+
+Best regards,
+-- 
+Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+
+
 
