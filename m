@@ -1,82 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-52072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE9EEA6A360
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 11:15:04 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48B50A6A3A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 11:30:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4352C7AB747
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 10:14:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 28E743BF4F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 10:28:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41C14223707;
-	Thu, 20 Mar 2025 10:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B2FB22423D;
+	Thu, 20 Mar 2025 10:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fv71Bc/F"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="h4cj1sGn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CDE223326
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 10:14:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C173E215783
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 10:28:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742465698; cv=none; b=FCNQ1nw9bNM2TZ4bltojB55AJ3xgL79xKXF9k3Pb9A+ikLLG0oLbb4Tvc4X8kXEeaSwQ3cLfhdR0RMF0g2J6SRz5Zr1HID86W846iHLmtdbD/lTFsYy1linq4Uzd1FNfMwZF0spmVjVz5kAK2isrXgjeF6SQxzuQCNf0BQfJg/Q=
+	t=1742466527; cv=none; b=ChddBPelMA1OSxY+ESJPy7mIJFDUOU5MQ3+Qn5AZamHTIx7TB51quWI+i+WAnHTPExW7otbY5lOZfsoeAOw0J/6UUag+M/YeblcjpaS2pY3bXEs/hTx/xQnBbPvZZPHiTWzfGdz70e+5oX4wRuiDteFLGLkAs5U2AmjbmiJ36X0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742465698; c=relaxed/simple;
-	bh=mad9TF6HWlzgsDYW0Xw2B9cirt0EV2aKRdW2jLlXXxQ=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lbP4yDNceNeM1epaX02f/5InaZ4H3t7s98ER5aY9JsXvXeXG3xnAsP8v8CWtS3kqOKOBFQJEh/WuD3UqNI3FGESnV4PHWbhs77H15+A883zI10vKDTHwkMbLdSeAQsb9JDZ4c+WV+AuuGEZycyEYb3oVovFykKADKDO7sIIJUDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fv71Bc/F; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43cfe63c592so6038135e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 03:14:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742465694; x=1743070494; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KsTKzQd+0EkTWpAX3OmSlSj7NCNCv0EtzNWUjH+/fWo=;
-        b=Fv71Bc/FD3d6wsQD+D34W5hZ+qkWPMI92bhpQx4fOqmzLWzQBv75oEX1O/XOWhLOiv
-         QNKA1uHtgThbFPCNI+6XbpiwgFh7ZGY6xnkGjBBP2tApKYaugGJCLK2pMob6GwxkdPT9
-         3LvdMJPKS9YSAroLlyqNnlPaGySd3HRVy0DMyjahz012dyGPD2zsd9rH4I9qeU5vdg0C
-         yrLtINAhO7VZicm9UtY4dfZW3+dC7LsS9oUJqBRwlG8e3EEjMIuRfekOeaT8DiqEEVdT
-         95Y3epCUDLz+Sf5s2xFppVlgSZlQpOXtM7RbflYw4L7h80J5dnZ9OTvVs2H8vHpTlAce
-         x+rg==
+	s=arc-20240116; t=1742466527; c=relaxed/simple;
+	bh=uKLOxDij7c7sdT8Zk1Ksoy8JUZVDpgomJWrglxeAbhM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ClYGG/wh4t8Cb71MCa63ikbZea8f/+I6lv74T/LJyXhNFAiy0Wa4AcTJopYFHbHNmjaDHBLotDnZ0Xumh1bDJuP/KjTFX+4C7IMnKI4TCH0QvSR0gEt0ha/cGGAUni+q5aZLjQlczHxxHx1EzVWWQXhkQVKc7D7C08p4keQb2mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=h4cj1sGn; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52K6ZFUt006094
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 10:28:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	t7JCFxJENGct7M1n7Kf+6tvuHHB4HK4sMdAZpytvjcM=; b=h4cj1sGnX3jHFcpd
+	Y/V7raEGTWPOS9mM35u/HRsKdiQTSCVklabyqD8TAGASorLC+Dg1/kC44VeoObuQ
+	vDLZBz20Ebgb3lwitOAHGVcYqT88UgSNgqw8eZarU4esArZwCnGaDKzo7CZA5hRt
+	GQRjwY4CulEsIhndQBRBwQlRUS1ImEgfHZ+YOgInELBwT7jU68wChIwYqHbHXQKH
+	Do/nW565edG7cVdUXf0KdnxebtOsFkoVNQTmy1Hnq78DOVMX7SPuLg6i8CQS/5n3
+	OsDhKN2gGzMW0351kW1ex3uvoxkNkhg0Z3RWvKfJ1Q1o+so5hrQdv0Qoxi2WuZTY
+	Tc76Aw==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45etmc157e-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 10:28:43 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6e8fec7ab4dso1326536d6.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 03:28:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742465694; x=1743070494;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=KsTKzQd+0EkTWpAX3OmSlSj7NCNCv0EtzNWUjH+/fWo=;
-        b=xOgt6vhqYb6leF0HzY/aH4zPOjwhN8hXrJzRRo7FRepQi6YfmAlBbsyYC5W4O3AyyY
-         Fb2PrS5KDFm7RnK35b8KW4m7LqtjJlwzmMvkwHI+t8wpQEMZO8E92NSPpeptThEus9d+
-         9y+hzAaFtqrcAazXdp05HOhqcO9dKD8K4vchVyOBNRYFlcyEKPJMUWo5qZBVk+rAcEQR
-         GXDTOsK1jxGMGcplssRnuNO6lpbB2At9kKy/IfwcK9D9JgwlzJoKdBmIF18QZDhgHqNE
-         wftCBoxNbOJwThzKbGoUEsofHUUQ6DQtm/AyHeeDl6/Kreq2RESmjKDuJvfhUGMy+F9u
-         sVEg==
-X-Forwarded-Encrypted: i=1; AJvYcCUHrZbOgOf3InDIfg5leqEh98V2L6F7TGdqlFyo1kQZ29nVkJvVmI+wcBAe6XF3eOx5YlqtoBD9YHOtfcao@vger.kernel.org
-X-Gm-Message-State: AOJu0YypF+CabbwORx+NMSbI+EMD8abwJTwqlIPIisDqj1vOU77c8sUS
-	jFCnJKEQ00oc8u54PdNJSzT5UGbB8hNHnc/IUG1j4POv7Ee5L+JXQRYVzEy6TlU=
-X-Gm-Gg: ASbGncsQ9pgMCdkWOBr9680+8f7jHycTtveXliLip9M6IcIB3sQk2EB+KmWcr+tJt0+
-	6rTKy9ZowE6gUUBlf0p/fGZeU/VqVe3TnQFQomWR2bjXaJhJDKss6u0Gcmht54Zj31STGbQW5MZ
-	8tZjHPvu37kX50vI/L/TEYunEvmEsSVRmciRNAx5YZFlsdB/tPFMvQB/hPXEUBi/UpWtsDuJiRl
-	VRFJCaUCy/mgQRxQXjm0ZjIU35nRLlYuYdfonmo7UazigiWFmRvRo7DRKqpmv+53LcHLkLQUYwI
-	TYOlD6ZuNQUxC4fr4K1236ELbtf8DZvlvnW2HrAeezblUcWdiRQVFADydH0c0fLKZy/uSWLVQ6Y
-	XZxOXkBaEdUg1ijDb
-X-Google-Smtp-Source: AGHT+IFim8WXF4Bw641hmtsIGi/r9529B0IxX/j4bUMRvtVtznNxhRUIgBVI1Lkw4lHn3sf2W9z0JA==
-X-Received: by 2002:a5d:59ae:0:b0:398:9e96:e798 with SMTP id ffacd0b85a97d-399795a8cb5mr3197534f8f.13.1742465694455;
-        Thu, 20 Mar 2025 03:14:54 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:3bd:568:f697:d1a2? ([2a01:e0a:3d9:2080:3bd:568:f697:d1a2])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c83b7656sm22861868f8f.40.2025.03.20.03.14.53
+        d=1e100.net; s=20230601; t=1742466522; x=1743071322;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=t7JCFxJENGct7M1n7Kf+6tvuHHB4HK4sMdAZpytvjcM=;
+        b=ZJ4T7vMrsPbxSmyfJY+vcbtgiTbYAwZVNwV4t4KwQ80/a7IbDSFP+LpbbKfdGcwYWU
+         5hVaLm9TcAV0MVJwMrQ5xWFFy5U8lzPy0E84GcU27JWVjBKjow80YSuQW+XPOlhEIHnW
+         4sf3P/zTdzXSiMSVAwuKzJDzY1gXIiSD7nDS0SUiVg5cKF/6p6jeZmmvsfxbu4FD/5cV
+         2sLkjvW8V6rTBQhFaGhRAMMMsaBoi1mERr1sy/DIC5fB4y7/RfqPeRuNypV7z6gSlQMl
+         MA/auXPpioVHKxWpaiyemBQ05//dI/RNC0mP56rXmxdUd5UyjZ/DRlU+N0YWxTS+ZW6n
+         4aNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV2JQXTnqkl5b+m5wxQcq49dB9QmWZM9PcnG6t5PwtJjqp2nS97Hf+UfniQUX5m4al7geBDz4+772XkBJ9/@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNAdnC2ErstFrqXp3GRAu+xX8ymByWpUbQNdyAT9P776wjboAV
+	z0uDmg4qku8DY150yVt9ZJY9Hs4IHBRGjNTnGwTS71q0mV4NZh7XjM+7WhZ6pc8zFuPwKvNd1IV
+	qnQaz+3K6KoEkasrtfA16b6L4+Vr1HKjuoiM6typ4F/9vHXHpLXmGcFeQgd/wZecW
+X-Gm-Gg: ASbGncunxDbaM76+2EriyJsYHOXA/fxeZMIjl96CCqBbGcnpc0NyoaYM9bAuZbUPOt5
+	Uox1u6Xk6Otho9rqw1ScniE9d05dUTcgmELYeh2FVb6DxFMe5nkEVanqzMhXuNK6uCST+LsPNiV
+	QLk/1aHNfuy1DYfen3uWFuu3ENijCrL3DniOKQ3xgo0035dFZJ6tuFlgUDtdcYuIuMgrRViM9pm
+	/nS+3Cb1eN+aOWr4ZnMDqtRV8NYS+XDrHc3hLK40RKfwrud5ZHQ/VNKvZJkr1sMpNWg4zrQ2Fx4
+	7KVN4C+5dOWONlQgpruAYVhPEJh48Lcy0lkioGsCRsTbywI+ozsYOWgYFv98oM0+jLrQfA==
+X-Received: by 2002:a05:6214:23cd:b0:6e6:62fb:3504 with SMTP id 6a1803df08f44-6eb2ba0c59cmr29712136d6.8.1742466522647;
+        Thu, 20 Mar 2025 03:28:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENDiGX/C/TqtQC7A30JrTt6Srt5dzpSfvmRqIWtJNoV+GAAS2k4SYx2YUt3qrXWOs29AJnUw==
+X-Received: by 2002:a05:6214:23cd:b0:6e6:62fb:3504 with SMTP id 6a1803df08f44-6eb2ba0c59cmr29711986d6.8.1742466522225;
+        Thu, 20 Mar 2025 03:28:42 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3149ce9a9sm1138534066b.110.2025.03.20.03.28.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Mar 2025 03:14:54 -0700 (PDT)
-Message-ID: <2fafed58-4959-41ca-b0e1-c10a8da60aa1@linaro.org>
-Date: Thu, 20 Mar 2025 11:14:53 +0100
+        Thu, 20 Mar 2025 03:28:41 -0700 (PDT)
+Message-ID: <3b4c816d-d7e7-4029-917d-f519a75149d6@oss.qualcomm.com>
+Date: Thu, 20 Mar 2025 11:28:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,121 +89,81 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH net] wifi: ath12k: properly set single_chip_mlo_supp to
- true in ath12k_core_alloc()
-To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzk@kernel.org>,
- Vasanthakumar Thiagarajan <quic_vthiagar@quicinc.com>,
- Johannes Berg <johannes@sipsolutions.net>, Jeff Johnson
- <jjohnson@kernel.org>, Aditya Kumar Singh <quic_adisi@quicinc.com>
-Cc: linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20250303-topic-ath12k-fix-crash-v1-1-f871d4e4d968@linaro.org>
- <24b2f1f8-97bd-423a-acbd-9a5cd45e4a40@oss.qualcomm.com>
- <7901d7f0-d6d0-4bf3-89ad-d710e88477b7@linaro.org>
- <7b4b598f-bc13-aa4b-8677-71477e1f5434@quicinc.com>
- <8b05760b-db99-4b43-8444-d655b18d3699@kernel.org>
- <770daf27-ae9c-4ed5-87d0-aadcc3b74bbd@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <770daf27-ae9c-4ed5-87d0-aadcc3b74bbd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 2/2] misc: fastrpc: add support for gpdsp remoteproc
+To: Ling Xu <quic_lxu5@quicinc.com>, andersson@kernel.org,
+        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, srinivas.kandagatla@linaro.org,
+        amahesh@qti.qualcomm.com, arnd@arndb.de, gregkh@linuxfoundation.org
+Cc: quic_kuiw@quicinc.com, quic_ekangupt@quicinc.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20250320051645.2254904-1-quic_lxu5@quicinc.com>
+ <20250320051645.2254904-3-quic_lxu5@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250320051645.2254904-3-quic_lxu5@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: o-B0-4ASAe6lg0xkUd0TMHoCdLhynFBz
+X-Proofpoint-GUID: o-B0-4ASAe6lg0xkUd0TMHoCdLhynFBz
+X-Authority-Analysis: v=2.4 cv=aMLwqa9m c=1 sm=1 tr=0 ts=67dbeddb cx=c_pps a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=0IcnB8eo5JocWn4U3IUA:9 a=QEXdDO2ut3YA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-20_03,2025-03-19_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0 mlxscore=0
+ suspectscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503200064
 
-Hi Jeff,
-
-On 19/03/2025 19:32, Jeff Johnson wrote:
-> On 3/19/2025 3:27 AM, Krzysztof Kozlowski wrote:
->> On 19/03/2025 10:06, Vasanthakumar Thiagarajan wrote:
->>>>>> ---
->>>>>> base-commit: 7eb172143d5508b4da468ed59ee857c6e5e01da6
->>>>>> change-id: 20250303-topic-ath12k-fix-crash-49e9055c61a1
->>>>>>
->>>>>> Best regards,
->>>>>
->>>>> NAK since this will break QCN
->>>>> There is a series under internal review to address MLO issues for WCN chipsets
->>>>
->>>> ???
->>>>
->>>> The original commit is wrong, this fixes the conversion, nothing else.
->>>
->>> Nope. Driver changes to enable MLO with WCN chipset are not there yet.
->>> Setting the mlo capability flag without having required driver changes
->>> for WCN chipset will likely result in firmware crash. So the recommendation
->>> is to enable MLO (in WCN) only when all the necessary driver changes
->>> (in development, public posting in near future) are in place.
->> Really, these are your answers? There is regression and first reply is
->> upstream should wait for whatever you do internally. Second answer is
->> the same - public posting in near future?
->>
->> Can you start working with the upstream instead?
+On 3/20/25 6:16 AM, Ling Xu wrote:
+> The fastrpc driver has support for 5 types of remoteprocs. There are
+> some products which support GPDSP remoteprocs. Add changes to support
+> GPDSP remoteprocs.
 > 
-> There is a lot going on in this thread. I want to address the big picture. It
-> is no secret that Qualcomm has historically focused on downstream drivers, and
-> upstream was mostly an afterthought. But that mindset has changed. Qualcomm is
-> fully embracing upstream kernel development, and has actively recruited (and
-> is still recruiting!) experienced upstream Linux Kernel engineers. And in
-> places where there are shortcoming, Qualcomm has partnered with companies like
-> Linaro to bring in needed support. So Qualcomm is very much "working with the
-> upstream." We may not be working well sometimes, but many of us are still
-> inexperienced with working with the upstream. We are coming up to speed.
-> Specifically for Wi-Fi, we have a large number of engineers who have primarily
-> worked on downstream code who are now working on upstream (including me!). And
-> we still have the issue that many of the products we are shipping now still
-> have a lot of downstream DNA, especially when it comes to firmware interfaces.
-> So please bear with us as we learn and evolve.
+> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
+> ---
+>  drivers/misc/fastrpc.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 > 
-> Please keep the constructive feedback coming. And remember, the more detailed
-> the feedback, the easier it is to incorporate the feedback.
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 7b7a22c91fe4..80aa554b3042 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -28,7 +28,9 @@
+>  #define SDSP_DOMAIN_ID (2)
+>  #define CDSP_DOMAIN_ID (3)
+>  #define CDSP1_DOMAIN_ID (4)
+> -#define FASTRPC_DEV_MAX		5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
+> +#define GDSP0_DOMAIN_ID (5)
+> +#define GDSP1_DOMAIN_ID (6)
+> +#define FASTRPC_DEV_MAX		7 /* adsp, mdsp, slpi, cdsp, cdsp1, gdsp0, gdsp1 */
 
-Thanks for all the feedback, all this escalated mainly because the 46d16f7e1d14
-commit doesn't do what is written in the commit message, and there were no clear
-sign MLO support with WCN firmares would be removed shortly and redeveloped later.
+This sounds like a good enum candidate
 
-As final note for this patch, do you have any timeline for when MLO would be enabled
-again on WCN chips ?
+>  #define FASTRPC_MAX_SESSIONS	14
+>  #define FASTRPC_MAX_VMIDS	16
+>  #define FASTRPC_ALIGN		128
+> @@ -107,7 +109,9 @@
+>  #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
+>  
+>  static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
+> -						"sdsp", "cdsp", "cdsp1" };
+> +						"sdsp", "cdsp",
+> +						"cdsp1", "gdsp0",
+> +						"gdsp1" };
 
-I'm happy Qualcomm is embracing mainline development, but Qualcomm still ships
-hundreds of different incompatible firmware and downstream drivers variant in the
-field, and this makes system integration very hard.
+And this could become
 
-And as you mention the partnership with Linaro, we are very happy to help
-and support your mainline development over time by reviewing, testing and
-reporting.
+*domains[FASTRPC_DEV_MAX] = {
+	...
+	[CDSP_DOMAIN_ID] = "cdsp"
+	...
+};
 
-Thanks,
-Neil
+etc.
 
-> 
-> Thanks!
-> /jeff
-> 
-
+Konrad
 
