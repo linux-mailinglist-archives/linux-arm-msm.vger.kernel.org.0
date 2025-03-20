@@ -1,172 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-52044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39D0DA69F8A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 06:54:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 17211A69F8C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 06:55:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8487517F21C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 05:54:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4FBC917F5A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 05:55:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 099E81B4138;
-	Thu, 20 Mar 2025 05:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27DA21C5F18;
+	Thu, 20 Mar 2025 05:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="k5DGo+qc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WKeSPZHR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514DFB665;
-	Thu, 20 Mar 2025 05:54:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F18B665;
+	Thu, 20 Mar 2025 05:55:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742450082; cv=none; b=NhNZfoPOCBNIqxHPs8VdEekBG2SVJibJkSh9TD87Rj6oPBBSwMqOqJAvzhWZM4O9GxK55POj53qQwVjugknxe/qFnKMp2FBiXwTEOSIqPj3ZbAKECQ5zVRt2Y21prsCfvf289Cgg+wi4QBGQTNqIBVZqIODP+NA6sVJbb7qQpyo=
+	t=1742450126; cv=none; b=UCf1gdl28EDl0rPiFzDgkoXQLZOhG+drA0zRQqYfvNwECIXxejqEvd75icqB2BTTCqrEomp/34nwKBNQ3nKI1HrMgiEr2COpkO3RDAAQA4vLLXdtsrzZEMaBYw+XLvyzjcBKLtBVq1yKToSjfiogfOBmoLS8Zuaf+boscL0knNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742450082; c=relaxed/simple;
-	bh=+UVD9XcHmk2wP+4+garp3liRC7Duw5aMQnCzObyrhZI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ZBhBZFkIOY3FmV5vO9CSr5B5taPR0v6+hwMvnbdBYf0YyGoAFYki0AKYtYFeLLcf7/Sc4XyrlWfOOeZIeNiUHXYZy6OJVCF1tgtUUSVlgLgvbnUXEDwZrvi/KtK7hkpleOqFkz3QJ0oaQag3y+T3uIJO+EKclS3e/9RCmvKGqwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=k5DGo+qc; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1742450126; c=relaxed/simple;
+	bh=ibxelGpFYvcsGMgDYGSxpnzRQVZuOaq/Q18SykBjlDo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=YwBFjChWCDs0KQlVFaN3d1/8r/L7ZVagYw+IFo745VI6n//Oh0hTVuqNpXD8Meh67hAlGhUMvgQcJF7ikkt3pGAs5jaIfpKMS08eYCog2+Hyw6ys69p1G0oY/1VtFAah5Tw+1OWUnGQ2x9+Bwo102H3d9/0kv5cp9rInMt0AgRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WKeSPZHR; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52JJ5ade023163;
-	Thu, 20 Mar 2025 05:54:22 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52K43L97019418;
+	Thu, 20 Mar 2025 05:55:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	TzirwVH5VU4gkjCscgdngjuwWlXChLjrl0qrdi6aS78=; b=k5DGo+qcQA5VoK+l
-	SKIN2wF1BASs3C4lQ/I5GLMdNpWvkBYMbyt38BheotCASL6H52EdCEylc7WriCbF
-	3NDVfeOMeVAnsQU9MKIl8p7HR5rLfUSGO2kkb6dS1rfmTXMkCKPe88QufymUHb1P
-	EzmBu6H0rr2IFZ6OGdkW+GSfOAKZTEcPDH7cGSenukEEwK6wAW9MxTW2v+ttSn3b
-	j/ziSRWqUb7KzF1kwyIn1FB4lnKKlWepSX6kyo/++ZVT46pe+80YUwgtt7hb1MfO
-	5LFtessw4yeI+9QTD29lHGDb36VR3T6twBtap4mKmGJrmG0XxuM1WcM4A3elRx+C
-	hyqzeQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45g3sf18yc-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=98ppjxfWNpFbfctkdmOJ5sGhNIkR0/DgBgl
+	VJBiMLt0=; b=WKeSPZHR1xGv47g0LL0r84Fd8u2dNESx1lKBQaon09v2Xeotv4R
+	E2Pbue4IkMpDG5MmI4HyyUVdApHJDopxJ2O+iySJbCiqe3LDG91Ab1FPITSrXX7N
+	J3cduPOtjvM3mjZZs7Km0rfyp5wp+8CyBTbULqCBb46BqralFxer+z72SvrxXCJO
+	TEvGhikt75Tmac5nTqBSjqMpg+DsAu0sVWAEjh/IYLdjvhqBvsLY2F3UyStlB3b0
+	ko0Zam6MsiGFMe47LpYmlTUCZ2DTF6pFVe7m9KFx91TEvrBkiE0nR44gzhgoqHAf
+	IrY9DsPNKUDJC+ODY5LOJUx2XrIHY5WyCiw==
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45gbngg6r9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Mar 2025 05:54:22 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52K5sL8C024503
+	Thu, 20 Mar 2025 05:55:10 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 52K5t844001137;
+	Thu, 20 Mar 2025 05:55:08 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 45dk9w97c1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Mar 2025 05:54:21 GMT
-Received: from [10.152.201.53] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 19 Mar
- 2025 22:54:17 -0700
-Message-ID: <004c7c4a-69b4-c6f6-14c2-eb62672a7125@quicinc.com>
-Date: Thu, 20 Mar 2025 11:23:40 +0530
+	Thu, 20 Mar 2025 05:55:08 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 52K5t8oR001130;
+	Thu, 20 Mar 2025 05:55:08 GMT
+Received: from cbsp-sh-gv.ap.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 52K5t7OA001129
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Mar 2025 05:55:08 +0000
+Received: by cbsp-sh-gv.ap.qualcomm.com (Postfix, from userid 4635958)
+	id A686340BF8; Thu, 20 Mar 2025 13:55:03 +0800 (CST)
+From: Wenbin Yao <quic_wenbyao@quicinc.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        catalin.marinas@arm.com, will@kernel.org, quic_qianyu@quicinc.com,
+        sfr@canb.auug.org.au, linux-arm-kernel@lists.infradead.org
+Cc: quic_wenbyao@quicinc.com
+Subject: [PATCH v1 0/3] arm64: qcom: x1e80100-qcp: Add power supply and sideband signals config for PCIe3
+Date: Thu, 20 Mar 2025 13:54:59 +0800
+Message-Id: <20250320055502.274849-1-quic_wenbyao@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v3 1/4] mtd: rawnand: qcom: Pass 18 bit offset from QPIC
- base address to BAM
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-        <broonie@kernel.org>, <bbrezillon@kernel.org>,
-        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-spi@vger.kernel.org>
-References: <20250310120906.1577292-1-quic_mdalam@quicinc.com>
- <20250310120906.1577292-2-quic_mdalam@quicinc.com>
- <20250318073332.guylcyqjmfq5nyyr@thinkpad>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <20250318073332.guylcyqjmfq5nyyr@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NeLOEPrrhpzlC8lvWZInxmyJwq0KE6zi
-X-Proofpoint-ORIG-GUID: NeLOEPrrhpzlC8lvWZInxmyJwq0KE6zi
-X-Authority-Analysis: v=2.4 cv=R9IDGcRX c=1 sm=1 tr=0 ts=67dbad8e cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=nuhMKF8qPs2EJ1YYQfUA:9 a=EmiLsFTZwY_euXZu:21 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: iK5GldEBxZYqyFOTGGLzZadHVGdOCQRo
+X-Authority-Analysis: v=2.4 cv=MJ5gmNZl c=1 sm=1 tr=0 ts=67dbadbe cx=c_pps a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17 a=Vs1iUdzkB0EA:10 a=oy1NtThjofowiJkyXhQA:9
+X-Proofpoint-ORIG-GUID: iK5GldEBxZYqyFOTGGLzZadHVGdOCQRo
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-20_01,2025-03-19_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0 adultscore=0
- suspectscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 malwarescore=0
- mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=702 clxscore=1011
+ spamscore=0 priorityscore=1501 mlxscore=0 adultscore=0 phishscore=0
+ lowpriorityscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2503200035
 
+The first patch enable the PCI Power Control driver to control the power
+state of PCI slots. The second patch add the bus topology of PCIe domain 3
+on x1e80100 platform. The third patch add perst, wake and clkreq sideband
+signals, and describe the regulators powering the rails of the PCI slots in
+the devicetree for PCIe3 controller and PHY device.
+
+Qiang Yu (3):
+  arm64: defconfig: enable PCI Power Control for PCIe3
+  arm64: dts: qcom: x1e80100: add bus topology for PCIe domain 3
+  arm64: dts: qcom: x1e80100-qcp: Add power control and sideband signals
+    for PCIe3
+
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 119 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi    |  10 ++
+ arch/arm64/configs/defconfig              |   1 +
+ 3 files changed, 130 insertions(+)
 
 
-On 3/18/2025 1:03 PM, Manivannan Sadhasivam wrote:
-> On Mon, Mar 10, 2025 at 05:39:03PM +0530, Md Sadre Alam wrote:
->> Currently we are configuring lower 24 bits of address in descriptor
->> whereas QPIC design expects 18 bit register offset from QPIC base
->> address to be configured in cmd descriptors. This is leading to a
->> different address actually being used in HW, leading to wrong value
->> read.
->>
->> the actual issue is that the NANDc base address is different from the
->> QPIC base address. But the driver doesn't take it into account and just
->> used the QPIC base as the NANDc base. This used to work as the NANDc IP
->> only considers the lower 18 bits of the address passed by the driver to
->> derive the register offset. Since the base address of QPIC used to contain
->> all 0 for lower 18 bits (like 0x07980000), the driver ended up passing the
-> 
-> What is this address? Is it coming from DT?
-> 
->> actual register offset in it and NANDc worked properly. But on newer SoCs
->> like SDX75, the QPIC base address doesn't contain all 0 for lower 18 bits
->> (like 0x01C98000). So NANDc sees wrong offset as per the current logic
->>
->> The address should be passed to BAM 0x30000 + offset. In older targets
-> 
-> You gave no explanation on how this 0x30000 offset came into picture. I gave the
-> reasoning in v2:
-> 
-> "SDX55's NANDc base is 0x01b30000 and it has bits 17 and 18 set corresponding to
-> 0x30000. So it is correct that the IP only considers lower 18 bits and it used
-> to work as the driver ended up passing 0x3000 + register offset."
-> 
-> Then you replied:
-> 
-> "This address 0x30000 is the address from QPIC_BASE to QPIC_EBI2NAND
-> e.g for SDX55 and SDX65 the QPIC_BASE is 0x01B00000. So here lower 18-bits
-> are zero only."
-> 
-> No one outside Qcom knows what QPIC_BASE and QPIC_EBI2NAND are. We just know the
-> NANDc address mentioned in DT, which corresponds to 0x01b30000 for SDX55.
-> 
-> Please reword the commit message to present the full picture and not half baked
-> info. This is v3, I see no improvement in the commit message, sorry.
-> 
->> the lower 18-bits are zero so that correct address being paased. But
->> in newer targets the lower 18-bits are non-zero in QPIC base so that
->> 0x300000 + offset giving the wrong value.
->>
->> SDX75 : QPIC_QPIC | 0x01C98000 (Lower 18 bits are non zero)
->> SDX55 : QPIC_QPIC | 0x1B00000 (Lower 18 bits are zero) Same for
-> 
-> There is no address as '0x1B00000' in DT.
+base-commit: 0a2f889128969dab41861b6e40111aa03dc57014
+-- 
+2.34.1
 
-Mani,
-
-Please see if this commit message would be acceptable?
-
-	The BAM command descriptor provides only 18 bits to specify
-	the NAND register offset. Additionally, in the BAM command
-	descriptor, the NAND register offset is supposed to be
-	specified as "(NANDc offset - BAM base offset) + reg_off".
-	Since, the nand driver isn't aware of the BAM base offset,
-	have the value of "NANDc offset - BAM base offset" in a new
-	field 'nandc_offset' in the NAND properties structure and use
-	it while preparing the descriptor.
-
-	Previously, the NAND driver was incorrectly specifying the
-	NAND register offset directly in the BAM descriptor.
-
-Thanks
-Alam
 
