@@ -1,80 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-52054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46E25A6A066
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 08:26:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D172FA6A0A5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 08:43:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9ACDF8A053A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 07:26:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FCDD189C7B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 07:43:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1B881EF396;
-	Thu, 20 Mar 2025 07:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2383F1F78F3;
+	Thu, 20 Mar 2025 07:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rDuc7jov"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F/1Fu0DN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90351E378C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 07:26:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD961C3BF1;
+	Thu, 20 Mar 2025 07:43:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742455585; cv=none; b=LKvJhIYdesxU9eICi26dJjzd9LEjKvDYsiDKbqjMbB8gEqUvUqu3xGPUuU1C7KAqqWDqYRLFQ19QaQE4dCrWVbM8xv9HidWH2z+b+qNxcJUNVN3IPwXI8co6SJLy6cXtlTjR7Lfwm+UNRcynXp53O+21gdHx/lFXR418J1ZjgFc=
+	t=1742456602; cv=none; b=h9nj0ziLViqkHEMn/IOb1uH/b4dCIJmuad104FpFl18mEFRnD6Pfa+vOV2qCTEE2sPHwcxVQAn5WXj++f4FSp0Iy7wThsgNqrw0B382EbFEHvsrExcnShsxqi6oA2Uzovhqd0W0RMFp64RpCQGzstTXNg0BvYy/i+aaXDyS4XDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742455585; c=relaxed/simple;
-	bh=g5RlrhwmM3WvmKofjVGTUhjSY5S5m5Xae1FzzM//IUA=;
+	s=arc-20240116; t=1742456602; c=relaxed/simple;
+	bh=3lhO2km3yhcGSETOKtDVVVI/E/SbtDk4dNbH6wGgta8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g5l6VsnxvY+PM2jB4o/oMGqh43bAObznXZ+ybuUg1ixXFp9zzIR7PnsIzTbfgV4cIHLuq/MpaeHVoDAGK6q9c3+lUV9hZPIz4zlNhKygA0nL+c2UyvE5XAYp7yZu2DIZsaETd6MQT9XMm6xran/24J0KDsnNWJxZs9UkcvCIy/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rDuc7jov; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-391324ef4a0so58777f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 00:26:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742455582; x=1743060382; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9ND/9PBI/YCdvg4euUorct1cNUM5u3eXjAVZKzvHwQM=;
-        b=rDuc7jovu0AIqloFPfLNX/QiEQzhLKE6JxS8fb0k8FPXwpyDZIX3MAZHZhW0L7WGcM
-         VUotMyEgj2yfUJXDXUJTSLjxAFxYX6NqzWZ231D8xyLthZ80NwWm19yfZLJFhaskK3g7
-         rPrRWIWwJoUHjAb49n7+i31NRBra0KJRf1rVmnBpTKk6gsFn6rzbfYwd+zHuxrL66AjR
-         HeyPggEAzC3jjR32FgHkueqN56HmE3GU9VI17fj91cRGsK0iTcEAji1FPOms9K1Q02Yq
-         SsZjOD5NIlkgBDtGRvKRD0CNrt4uTzDtwCV8Xfc3V9VTivEzmF09yiSLf1/vC515aV1a
-         Zlyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742455582; x=1743060382;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9ND/9PBI/YCdvg4euUorct1cNUM5u3eXjAVZKzvHwQM=;
-        b=S6BoLq46kELIemEqczPfGLfjD1D8l3GhlVeMp3j+0CzP2OkuUegyT2NXcc8OvZFSAt
-         xhY5RcSVuW7DbNWfPEUJTY1tLHSt2k0VudcpKHU9x98leT91OUnP4/+LJB5mfYErvsZK
-         MOyutAp5YGOJ++2U3XwjWUhLP4izt8hupjK6zzFNuQvRHTHxRKyrfSfi8h7LHSxEF5Q7
-         mhdIPFVsftHzNPpI2CVz2xLtg+J8C9YlekuRqwJCPLmLJAcpj6YhZF43FikXVChC2z9F
-         S41+26lv+jA//qQEVjbhKa8DmkDFcAdsj8muHjXgYG9I/4kjVjpx/UkBDuQf9X5z272t
-         KLkA==
-X-Gm-Message-State: AOJu0Yydra5VneeumNU4y5k2kn0b/UL3ddaTzJAWxP5z3dkU9yJt293I
-	cfmAsP9/2aORzM697DO1XkYczk/7pYKCaHAL/13Xah9aa/NT3oJ98CYD9bKJuqY=
-X-Gm-Gg: ASbGncu3FO1Yfg2PPAsifTnrLNHWkeM4IcsXp1+YWPZzyFCx0qyW7OcwZRIXoFfYU1t
-	Wp6n4M2Q5+J52fqfnB1Sw9pKQJztMVCGk7gXgzeR6QxBAet3zAkyo2qOkZNIQuypHfMEzcZ15C0
-	paM4sJ27r93aOO+1icWw2p/+SzEBjrIusJPwY1eA1eqMulbCoIpRKL9o32wJabudqIj+ToswzmF
-	RA2uYV4yWshUP7RLlAe1Y5PeygBuJRcNFwqKABKc5aBM/V7so0rSwEsOtuvqiA5HutSfo+mCxQN
-	SngKYe5xf9bqAaCNnZM3HFy+F8xOy3PyF1xYmo5g1AvKW1Fn+GQ00efNxqeO+nKUQjk5Bixtrw=
-	=
-X-Google-Smtp-Source: AGHT+IGb95vY8nBsA1JEFRE5a+DX/wv5efFdVsN0XNBo8btgTlnU2mKcx2lqxAoydFeAQGEw8xmFGw==
-X-Received: by 2002:a05:600c:1c88:b0:439:9909:c785 with SMTP id 5b1f17b1804b1-43d46f6afbcmr16886635e9.7.1742455581881;
-        Thu, 20 Mar 2025 00:26:21 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.198.86])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3978f185c6esm18862073f8f.94.2025.03.20.00.26.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Mar 2025 00:26:20 -0700 (PDT)
-Message-ID: <e41292ab-3911-4031-bb91-ad458cdc5691@linaro.org>
-Date: Thu, 20 Mar 2025 08:26:14 +0100
+	 In-Reply-To:Content-Type; b=Pd1pcQ/EKrKoVlkLI59KEZtN83UBu1PpiJ99DVDnKenTXdmzHJbPBNMfTf3SRQHx4NancK8QtJdgYrAJYZCrR0k4/gQB92n0uzRMT7esRqHgdHyMB/R2Yj4Z0eoIBsoOKrBg7i4wJB1HjEbHtcZqHLqqsHmI52lHSBgZHyYu/WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F/1Fu0DN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9130DC4CEDD;
+	Thu, 20 Mar 2025 07:43:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742456601;
+	bh=3lhO2km3yhcGSETOKtDVVVI/E/SbtDk4dNbH6wGgta8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=F/1Fu0DNTO+aUXRxtvQqDJNt41yR39mSH4xCP+YjAHBACAaH5T6UnI+j8FSs5TdVN
+	 cJauPdKvFY9B1URplLoJ+EnZbtDwTF1MvVgQc6rsIMagDBbjipA9vdZ0hmmRJe39K1
+	 XV0dxV2BtqjjTF0TuStum2rmo1jCmFe2wUlDRkemh4d3I950avsIkuw41JEqGAbK+7
+	 WaWC9xV+EW4asyhno2NKeAGHfP/qOEX4swMrf0ZNeeLN+Kt61GPTSbWRZq6OwdLLr/
+	 KVeaaJP9oxt7lSsmyGDRBfBMbFnriefdhHewcbrOLPePpdrY3Gw75dA717kHuoJ4Zk
+	 rthG+rixVVsVw==
+Message-ID: <8665e99f-8d04-42fe-a81a-dfadf494cf6e@kernel.org>
+Date: Thu, 20 Mar 2025 08:43:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,39 +50,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [GIT PULL] Qualcomm Arm64 DeviceTree updates for v6.15
-To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
- Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson <andersson@kernel.org>,
- arm <arm@kernel.org>, soc@kernel.org,
- Johannes Berg <johannes@sipsolutions.net>
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Neil Armstrong <neil.armstrong@linaro.org>, Chukun Pan <amadeus@jmu.edu.cn>,
- Stephan Gerhold <stephan.gerhold@linaro.org>,
- Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Luca Weiss <luca@lucaweiss.eu>, Pengyu Luo <mitltlatltl@gmail.com>,
- Alexey Minnekhanov <alexeymin@postmarketos.org>,
- Danila Tikhonov <danila@jiaxyga.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
- Nikita Travkin <nikita@trvn.ru>, Praveenkumar I <quic_ipkumar@quicinc.com>,
- Tingguo Cheng <quic_tingguoc@quicinc.com>,
- Cheng Jiang <quic_chejiang@quicinc.com>,
- Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
- Konrad Dybcio <konradybcio@kernel.org>, Lijuan Gao
- <quic_lijuang@quicinc.com>, Luca Weiss <luca.weiss@fairphone.com>,
- Mark Kettenis <kettenis@openbsd.org>,
- Maulik Shah <maulik.shah@oss.qualcomm.com>,
- Rajendra Nayak <quic_rjendra@quicinc.com>,
- Rakesh Kota <quic_kotarake@quicinc.com>,
- Viken Dadhaniya <quic_vdadhani@quicinc.com>,
- Wojciech Slenska <wojciech.slenska@gmail.com>
-References: <20250317215921.2031880-1-andersson@kernel.org>
- <a2132f78-f113-460a-b7ea-022a39e4e64b@app.fastmail.com>
- <fe56b19d-6ec0-4b0e-a47d-9e4dc8d798a5@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-tuxedo-14: add sound support
+To: srinivas.kandagatla@linaro.org, andersson@kernel.org,
+ konradybcio@kernel.org
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, ggo@tuxedocomputers.com,
+ ettore.chimenti@linaro.org
+References: <20250319143613.11177-1-srinivas.kandagatla@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
  JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
@@ -124,95 +70,130 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
  vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
  Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <fe56b19d-6ec0-4b0e-a47d-9e4dc8d798a5@oss.qualcomm.com>
+ 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 fv0=
+In-Reply-To: <20250319143613.11177-1-srinivas.kandagatla@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20/03/2025 01:27, Jeff Johnson wrote:
-> On 3/19/2025 2:10 PM, Arnd Bergmann wrote:
->> On Mon, Mar 17, 2025, at 22:59, Bjorn Andersson wrote:
->>>
->>> Krzysztof Kozlowski (17):
->>>       arm64: dts: qcom: sa8775p: Partially revert "arm64: dts: qcom: 
->>> sa8775p: add QCrypto nodes"
->>>       arm64: dts: qcom: qcs8300: Partially revert "arm64: dts: qcom: 
->>> qcs8300: add QCrypto nodes"
->>>       arm64: dts: qcom: x1e80100-slim7x: Drop incorrect 
->>> qcom,ath12k-calibration-variant
->>>       arm64: dts: qcom: msm8998: Switch to undeprecated 
->>> qcom,calibration-variant
->>>       arm64: dts: qcom: qrb2210-rb1: Switch to undeprecated 
->>> qcom,calibration-variant
->>>       arm64: dts: qcom: qrb4210-rb2: Switch to undeprecated 
->>> qcom,calibration-variant
->>>       arm64: dts: qcom: sc7180: Switch to undeprecated 
->>> qcom,calibration-variant
->>>       arm64: dts: qcom: sdm845: Switch to undeprecated 
->>> qcom,calibration-variant
->>>       arm64: dts: qcom: sda660-ifc6560: Switch to undeprecated 
->>> qcom,calibration-variant
->>>       arm64: dts: qcom: sm6115: Switch to undeprecated 
->>> qcom,calibration-variant
->>>       arm64: dts: qcom: sm8150-hdk: Switch to undeprecated 
->>> qcom,calibration-variant
->>>       arm64: dts: qcom: qcm6490: Switch to undeprecated 
->>> qcom,calibration-variant
->>>       arm64: dts: qcom: sa8775p-ride: Switch to undeprecated 
->>> qcom,calibration-variant
->>>       arm64: dts: qcom: sc8280xp: Switch to undeprecated 
->>> qcom,calibration-variant
->>>       arm64: dts: qcom: sm8250-elish: Switch to undeprecated 
->>> qcom,calibration-variant
->>
->> This seeems to remove the properties that the drivers expect
->> even in 6.14-rc7, so the branch is currently broken and I'll
->> skip it for 6.15. Let's see how we should handle this properly
->> in the next cycle, since it's too late now to fix it.
->>
->>       Arnd
->>
+On 19/03/2025 15:36, srinivas.kandagatla@linaro.org wrote:
+> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > 
-> The driver changes are in wireless-next.
-> +Johannes will you issue a wireless-next => net-next PR this week?
+> This patch adds sound support for this platform,
+> support includes
+> 	- 2x Speakers.
+> 	- 2x dmic
+> 	- Headset
 > 
-> Seems like there should be a way to orchestrate these into v6.15.
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+> 
+> This patch depends on
+> "arm64: dts: qcom: Add device tree for TUXEDO Elite 14 Gen1" patch
+>  https://lkml.org/lkml/2025/3/6/867
+> 
+> ucm changes:
+> https://github.com/Srinivas-Kandagatla/alsa-ucm-conf/tree/x1e80100-tuxedo
+> 
+> tplg changes:
+> https://github.com/Srinivas-Kandagatla/audioreach-topology/tree/tuxedo-elite-14
+> 
+>  .../qcom/x1e80100-tuxedo-elite-14-gen1.dts    | 190 ++++++++++++++++++
+>  1 file changed, 190 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+> index 86bdec4a2dd8..465221b8a3fa 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+> @@ -20,6 +20,34 @@ aliases {
+>  		serial0 = &uart21;
+>  	};
+>  
+> +
 
-It does not matter, it would not make history bisectable. Just like I
-explained in this patchset, it should wait for next cycle.
+No need for blank line
+
+> +	wcd938x: audio-codec {
+> +		compatible = "qcom,wcd9385-codec";
+> +
+> +		pinctrl-0 = <&wcd_default>;
+> +		pinctrl-names = "default";
+> +
+> +		qcom,micbias1-microvolt = <1800000>;
+> +		qcom,micbias2-microvolt = <1800000>;
+> +		qcom,micbias3-microvolt = <1800000>;
+> +		qcom,micbias4-microvolt = <1800000>;
+> +		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
+> +		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
+> +		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
+> +		qcom,rx-device = <&wcd_rx>;
+> +		qcom,tx-device = <&wcd_tx>;
+> +
+> +		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
+> +
+> +		vdd-buck-supply = <&vreg_l15b_1p8>;
+> +		vdd-rxtx-supply = <&vreg_l15b_1p8>;
+> +		vdd-io-supply = <&vreg_l15b_1p8>;
+> +		vdd-mic-bias-supply = <&vreg_bob1>;
+> +
+> +
+
+Here only one as well
+
+> +		#sound-dai-cells = <1>;
+> +	};
+> +
+
+...
+
+> +&swr0 {
+> +	status = "okay";
+> +
+> +	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
+> +	pinctrl-names = "default";
+> +
+> +	/* WSA8845, Left Speaker */
+> +	left_spkr: speaker@0,0 {
+> +		compatible = "sdw20217020400";
+> +		reg = <0 0>;
+> +		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
+Interesting that on X1E even two-speaker configurations share the reset
+GPIO. Typical two-speaker setups like MTP and QRD use two different GPIOs.
+
+Assuming this is not a copy-paste and with blank line fixes:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
