@@ -1,206 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-52127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A226CA6B0A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 23:20:57 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 455F3A6B0F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 23:33:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DC2D67B0FCF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 22:19:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B20C4A2CBB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 22:33:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A8D922A4E5;
-	Thu, 20 Mar 2025 22:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 546F622B5B8;
+	Thu, 20 Mar 2025 22:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="hR0yA7Jw"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DOVyL94X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88D3229B2C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 22:20:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983C522B586
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 22:31:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742509249; cv=none; b=kAEioyzs60Gjt2axVAeQvd1da73I0+ENuFDiule7i85pNT10xegPqevKiGl2ucee/yjWmyyvmtYrER48V/HmZdwfpZEpb8F0MwdHB7WH+A60OPCIoUK1nZ3NYOg56xtncdvErgAQcLVQlR5GWSs+PXTDUfcColmWrApx8HCx43A=
+	t=1742509896; cv=none; b=QpeAtaK8SWcDgUU840bx0gCfh+Kb7W/ZRkQcYmKu0PkXk20em1NHE+7XftP73rolPYsiiRnqip9ZaJRvGQq+/25jfbDAnHWrm9fjmajpEwQfysq7MsOr1pFdq3XTiv2rQX2+gR1z5UrQjtxBLReg+zGWq/eOEKvtfWttl/u5vTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742509249; c=relaxed/simple;
-	bh=+2qG8+3DECwZv3aAOMzlkgKolqnp6+4JTj8Ia17yVMM=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fzXVo7FVHNNF5dq4LFNc6kzo8AhkdH3MM1iWKl60QzxOsJj0cyLGawFODPdfB/HAsxsRpHzzVNzBirPfrFGXG7z1eEJJ/VqYHX6GzDNbKgIrGlu5L+X3WrHQ+zDd2KQ3lePmELjUHqxvvrHGv7z+JWoRpq/cyJOVFB3vKqPMvCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=hR0yA7Jw; arc=none smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6e8f05acc13so14484976d6.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 15:20:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1742509246; x=1743114046; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Az0r/TWDgp850iHhb9eHID4HVESO6vqcKLNQrrl8rcc=;
-        b=hR0yA7Jwn/LFN4q7yoiORDOCOGF+mPWooJK7cg0ZelMSOyH1O+wuwsdLXIWObGCKlt
-         C3ij26aNaHGliMSpx39I6MCa3e5AgOMzQX0lAXtMiSkQqJLqJRPmIfrraEL4ftaAHzgF
-         wCEw0VgmkAZMCi223WJKImVTNv4FmLBY0gNYU=
+	s=arc-20240116; t=1742509896; c=relaxed/simple;
+	bh=Sri02rWay4yWnrWOUnvaBo7qNS64gKGp0Y21t7cRIxw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XLVoUykaleXz69cQDbeBPzIXJ/XAlnhcbTX4TBQ1Oi2ru3in+KX2lzlTuinuMcHF4oM46gMHkhPU/m8CR80zqtGJsJw1oqxeNKGJDjPjkfpxnZnNH9cpivKRRAyxb6DoSTGlgUC7QOPKDzwPq67rcT6KRusZKoGijVQgzZ4WU7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DOVyL94X; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52KEZRCt020652
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 22:31:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	a25CfM+uY8eLtxCuzHlyZWmCc3tXtmlCI+TwfBFX8U0=; b=DOVyL94XIDO3MmPy
+	2Q+lPsgY0i0fwIL3f6G2JTbYwdq07Gbkl01YFJg71VMow0NZ9vP9Mb3lMNfvBB+P
+	fJUGC0vyhO9IqmPGxIrT26kWDHElP2ltxDLGQIF6CXqiUSRid8epNst/1UYFElER
+	BGb+mhpkxTNdurfrm+zNt84/I6C2G5d0W4Mk/512isZMT0udnkcOi6ygJrGU/Xu2
+	4jPe9fpUM+eopxl5dQ41/PUelyaz7zG2ymWAOMuhhukzp7sy673fY+qYe+iKq034
+	4r6la4gCP9Em777B91RlgrBQNaf02YH5Y75hhUtJXe1OcCYFTC+N2BpnwSgWOHT1
+	TpemHw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45g3sf41dr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 22:31:32 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c54be4b03aso30187085a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 15:31:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742509246; x=1743114046;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Az0r/TWDgp850iHhb9eHID4HVESO6vqcKLNQrrl8rcc=;
-        b=as0IgNMZ3U9FvkvC2dehYaw4OQ4g9ugFeetb8htw4SPHqJRLPDQxEuf9aEoArOrP2Z
-         uQ2uwmzvpS8EOVItBa9EDsvQtUNdWWDVemkyBpDtFV6YzmQEqYd6pzEpJrbsxrjMGrdp
-         1imU3OWv3gD9/zmSDi7UwhieOEwDP0uSasbOE5EznB54STxEhRoumt77x1dzL6XPV5fM
-         ZKeV3sY4Gjd6RH1MK4jNfrlsQO5bonhRdK4ZGb4KoStqOVsMWye6we0cNMcVuJZTA7Xy
-         ZUz1ObngNNoDbvAyVwSpO/xTN3fKJ1EXyF5JMAf2o0gZ2bOxNStGXXmzIxGbubPf1Iwf
-         p6Ug==
-X-Forwarded-Encrypted: i=1; AJvYcCXnaVuxiurgpaamOR8FjUy03+rDTap1856a22BchURlCf20eJfSDVqTteUN4xd2GLMLa1Ol5ZCzbJkpDy/8@vger.kernel.org
-X-Gm-Message-State: AOJu0YyIAioQ2AyXU89baF+758wNNv5Mjr4xGVG43R+ukWmN31HW0xwq
-	+AFi4gj4lE+dCB4lxh35Avuz5szqfA6t9ZNaPWtQazy2d9xy9czLe1u6i/OnJ5dal4cp42FQvjL
-	v+8Hb4MR6VLeksii2MB990Uu9r4sYgYKs/phjNg4M010NrJ8=
-X-Gm-Gg: ASbGncstt7+CtJ7p31tUmW04CLKAS9GUsrTuA0ePrkYQ3jWmOI+02kfkLIQBbQ4JNnL
-	nYxx3PChrus28/JXr2sruH8gp/EaeuuEi4sU+oZIam7mA3Zho7YZIn8YAYZrT0WK8u+6AnH8Uil
-	ukmLPt1H0aMiNU1iWnEyNrutM3v3+vWVCpwsMqv8EbqxPnwu+rvAcGsg==
-X-Google-Smtp-Source: AGHT+IFPqQhanvZUvGP0TzFL/eR5WoiUrUoN+q34bzdllgTplWUh5VMehzNTX2VYoMxRc5JUWn6sBTz6PVMB3FxU2po=
-X-Received: by 2002:a05:6214:2a87:b0:6eb:28e4:8519 with SMTP id
- 6a1803df08f44-6eb3f2e9925mr16199696d6.21.1742509246356; Thu, 20 Mar 2025
- 15:20:46 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Mar 2025 17:20:45 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Mar 2025 17:20:45 -0500
+        d=1e100.net; s=20230601; t=1742509891; x=1743114691;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a25CfM+uY8eLtxCuzHlyZWmCc3tXtmlCI+TwfBFX8U0=;
+        b=F9GMBDQYTiIIU1abcGrjuTtGCmsaBxZAyvDJjO4GdCXtlrSg2ZzwsAOq8jsdXNq8w6
+         rgA6K+DDh+FIcleS9XUUK68ULrRH8DK0wBgCdNznKZRp6DscH6/RlFqfVUXmf7yGYFe+
+         2UeaLf0rkfZFAgvw4adlWBiTELUwzAde0caHMIobksoal4VwIX0xOcsN4V6qTHJLf7FT
+         XMb0nnHEX/4iB6gvPoSvbyE2F1gyH9kvYHp/cRd4XMu0QSrCOvkyHvNi9s4RnsYcni+Y
+         5i7W6aCTw0xM+BY0lstvPJN77HedmzrSKzVsc5CKLXNE2Cqf6k0xGf/BNZ7f++4ayt7W
+         bbRw==
+X-Forwarded-Encrypted: i=1; AJvYcCWxXJJ1wotCBbB7T7FoRFUrX4JAWzEuWwYo9k09xlNB/Ges2cWdCU6TdQZsv1tXKDihPF9mTIJtYevekMip@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxQ0hpcpgN+F31tm0lZpBP0IL2CLZL9ABYl9M8zy1Zn7azYNbv
+	rytEIR8WmCG/6aIMKG6PtPKk4UivepAbcqd+2/jBUb/Yws+S+wKivJyZRW3u/7W9zJTCpMwN9YL
+	6vdEuGSe9XdYVqbsn0/zkoS386PMhIbOrmeJ41A3jABGPEHPLLucm9RuH0YqiQ51g
+X-Gm-Gg: ASbGncs/5tMamdhLsOHW2PX2vHrtD6epzGEU+dsFUq7PJbNfIJVU29liVrYGFunkWei
+	CvAdwOTxS75cshPfCEEJiD8SHMkxcFSpVRG1yen0Qss2BQ5R3PcRRbRB4f1nNVVZMFafp63hQH5
+	vJqEVudrJa6PwnnRrL9lFVIM6ewH6sk02+acOyZZia0I+roPksF6fOFe9hJ18F+pMepOxuVzMNt
+	SydW53yOGMvgGhU2ZHWFjswQj7SSSHyPXAz341fdHcOtegW4v4wBswNMCrguTHXdAIEOkVwJjdi
+	PRsakG4w5iVENpoUxemHRDE9cAPQmZKyniFcMJZhyD9tT/gb1WwBTUJbbyXxw2cfiVtpjA==
+X-Received: by 2002:a05:620a:c50:b0:7c3:c340:70bf with SMTP id af79cd13be357-7c5bb18ef62mr18889185a.14.1742509891475;
+        Thu, 20 Mar 2025 15:31:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEjzMvQb9cedBVQrK1BfeEBN6u4FDFVS4wW2Tu8HCGvYiFw2UGkUEDhYmlUC2VQVs6+5CNutw==
+X-Received: by 2002:a05:620a:c50:b0:7c3:c340:70bf with SMTP id af79cd13be357-7c5bb18ef62mr18886985a.14.1742509891026;
+        Thu, 20 Mar 2025 15:31:31 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3efd24f6esm40486266b.154.2025.03.20.15.31.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Mar 2025 15:31:30 -0700 (PDT)
+Message-ID: <07984029-7d6e-41dc-b0c7-e4843664cd39@oss.qualcomm.com>
+Date: Thu, 20 Mar 2025 23:31:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <eu4zyuikust6o6ybmk4f6mxbygxa3rxijylfmskxe3q7kv7d3v@bf56p3esuvqc>
-References: <20250312-pinctrl-msm-type-latch-v1-1-ce87c561d3d7@linaro.org>
- <CAE-0n50siGEgY+NQvqBdjqg-7FaqzOUR7L9u24UiUhux1uMZcw@mail.gmail.com> <eu4zyuikust6o6ybmk4f6mxbygxa3rxijylfmskxe3q7kv7d3v@bf56p3esuvqc>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.12.dev8+g17a99a841c4b
-Date: Thu, 20 Mar 2025 17:20:45 -0500
-X-Gm-Features: AQ5f1JrIyWLHcKzBqnY8aufiDIsXgNc5mt__zW6a8a9K4H11a4VtcQKPhPTSVDA
-Message-ID: <CAE-0n51R3B4HfD9dFqu4k5z6iD5dp_RGHMC5GBwqrEmx_E2fBg@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: Clear latched interrupt status when
- changing IRQ type
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Douglas Anderson <dianders@chromium.org>, Maulik Shah <quic_mkshah@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-hp-omnibook-x14: Enable
+ SMB2360 0 and 1
+To: Juerg Haefliger <juerg.haefliger@canonical.com>, andersson@kernel.org,
+        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org, jens.glathe@oldschoolsolutions.biz
+References: <20250319160509.1812805-1-juerg.haefliger@canonical.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250319160509.1812805-1-juerg.haefliger@canonical.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: 4v4HgivfR4n24wGYK0utRZhrQ9F3NO_z
+X-Proofpoint-ORIG-GUID: 4v4HgivfR4n24wGYK0utRZhrQ9F3NO_z
+X-Authority-Analysis: v=2.4 cv=R9IDGcRX c=1 sm=1 tr=0 ts=67dc9744 cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=DfNHnWVPAAAA:8 a=EUspDBNiAAAA:8 a=RJAiKtZsp2GhsKZY2HMA:9
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=rjTVMONInIDnV1a_A2c_:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-20_08,2025-03-20_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0 adultscore=0
+ suspectscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 malwarescore=0
+ mlxlogscore=615 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503200146
 
-Quoting Bjorn Andersson (2025-03-16 19:49:01)
-> On Sat, Mar 15, 2025 at 12:07:14AM -0700, Stephen Boyd wrote:
-> > Quoting Stephan Gerhold (2025-03-12 06:19:27)
-> > >
-> > > Whether to report interrupts that came in while the IRQ was unclaimed
-> > > doesn't seem to be well-defined in the Linux IRQ API. However, looking
-> > > closer at these specific cases, we're actually reporting events that do not
-> > > match the interrupt type requested by the driver:
-> > >
-> > >  1. After "ok 1 tlmm_test_silent_rising", the GPIO is in low state and
-> > >     configured for IRQF_TRIGGER_RISING.
-> > >
-> > >  2. (a) In preparation for "tlmm_test_silent_falling", the GPIO is switched
-> > >         to high state. The rising interrupt gets latched.
-> >
-> > Is the interrupt unmasked here while the test is driving the GPIO line
-> > high and the interrupt trigger is IRQF_TRIGGER_RISING? If so, this is
-> > correct behavior.
-> >
-> > Why wouldn't the trigger be set to IRQF_TRIGGER_FALLING, then the GPIO
-> > driven high, and then the GPIO driven low for the test to confirm
-> > falling edges work?
-> >
->
-> So you're saying that the interrupt consumer needs to take into
-> consideration any previous interrupt handler being setup for this GPIO?
+On 3/19/25 5:05 PM, Juerg Haefliger wrote:
+> Commit d37e2646c8a5 ("arm64: dts: qcom: x1e80100-pmics: Enable all SMB2360
+> separately") disables all SMB2360s and let the board DTS explicitly enable
+> them. The HP OmniBook DTS is from before this change and is missing the
+> explicit enabling. Add that to get all USB root ports.
+> 
+> Fixes: 6f18b8d4142c ("arm64: dts: qcom: x1e80100-hp-x14: dt for HP Omnibook X Laptop 14")
+> Cc: stable@vger.kernel.org      # 6.14
+> Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+> ---
 
-No.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
->
-> Test #1 request the interrupt as rising then releases the interrupt,
-> then before initiating test #2 the GPIO line is driven high, the
-> interrupt is requested FALLING and the test is that we don't get any
-> interrupts.
-
-Ok. In this case maybe we should mask the irq in struct
-irq_chip::irq_shutdown() and clear out any interrupt that comes in
-because we touched the TLMM hardware. I don't see why we want to
-continue to monitor the GPIO when the interrupt handler is removed.
-
->
-> > Have you seen the big comment in msm_gpio_irq_mask() and how it says we
-> > want to latch edge interrupts even when the interrupt is masked?
-> >
->
-> So if the bootloader (or hardware default?) configures an interrupt for
-> e.g. RISING, and sometime during boot there's a rising edge, then a
-> client driver should expect to get a spurious interrupt?
-
-No? If there isn't an interrupt handler registered we shouldn't be
-latching the interrupt.
-
->
-> > >     (b) The GPIO is re-configured for IRQF_TRIGGER_FALLING, but the latched
-> > >         interrupt isn't cleared.
-> > >     (c) The IRQ handler is called for the latched interrupt, but there
-> > >         wasn't any falling edge.
-> > >
-> > >  3. (a) For "tlmm_test_silent_low", the GPIO remains in high state.
-> > >     (b) The GPIO is re-configured for IRQF_TRIGGER_LOW. This seems to
-> > >         result in a phantom interrupt that gets latched.
-> > >     (c) The IRQ handler is called for the latched interrupt, but the GPIO
-> > >         isn't in low state.
-> >
-> > Is the test causing phantom behavior by writing to the interrupt
-> > hardware?
-> >
-> > >
-> > >  4. (a) For "tlmm_test_silent_high", the GPIO is switched to low state.
-> > >     (b) This doesn't result in a latched interrupt, because RAW_STATUS_EN
-> > >         was cleared when masking the level-triggered interrupt.
-> > >
-> > > Fix this by clearing the interrupt state whenever making any changes to the
-> > > interrupt configuration. This includes previously disabled interrupts, but
-> > > also any changes to interrupt polarity or detection type.
-> >
-> > How do we avoid the case where an interrupt happens to come in while the
-> > polarity is being changed? Won't we ignore such an interrupt now? If
-> > these are edge interrupts that's quite bad because we may never see the
-> > interrupt again.
-> >
->
-> Are you referring to the "both edge"-detection dance we're doing in the
-> driver?
-
-No I'm thinking of gpio-keys driver where it changes the irq type during
-suspend to get the wakeup event. I worry that the gpio-keys driver is
-going to miss the edge now that there's a possibility the interrupt is
-going to be ignored and we'll never wakeup. But maybe that isn't a
-problem because PDC behavior works per your tests?
-
->
-> > I think we erred on the side of caution here and let extra edge
-> > interrupts through because a rising or falling edge usually means the
-> > interrupt handler just wants to run when there's some event and it will
-> > do the work to find out if it was spurious or not. It's been years
-> > though so I may have forgotten how this hardware works. It just makes me
-> > very nervous that we're going to miss edges now that we always clear the
-> > interrupt.
->
-> I'm not saying that you're wrong, or that your concerns are unwarranted.
-> I wrote some simple tests to validate the behavior I expected to see. I
-> didn't expect to see different results between wakeup (PDC) GPIOs and
-> non-wakeup GPIOs, and now both passes the test case as written.
->
-
-I suspect PDC based GPIOs are working better because PDC sits in between
-the GIC and the TLMM hardware and we actually mask the interrupts in PDC
-properly instead of letting the summary line toggle all the time. Thanks
-for writing hardware tests in KUnit, it's nice.
+Konrad
 
