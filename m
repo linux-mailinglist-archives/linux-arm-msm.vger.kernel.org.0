@@ -1,64 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-52106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A878A6ACDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 19:09:49 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AD34A6ACED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 19:13:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4CECB3A379F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 18:08:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 51EFB1897281
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 18:12:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6153C22687C;
-	Thu, 20 Mar 2025 18:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FEFF1EB184;
+	Thu, 20 Mar 2025 18:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="k7xI2OcO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nT2xM0mp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2360226173;
-	Thu, 20 Mar 2025 18:07:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54341DED4B;
+	Thu, 20 Mar 2025 18:12:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742494075; cv=none; b=LiLv73o4A3PbZS3Ex0N34N0Nn1+n3hqMREGccpo8JtzW7+EdcJGwfzhxJPA2pVMc/ZUATwtHOHSlOp4m/ZJYW/JsVCIfit7pUCrXUEsAmMfvl1UdPUVBRzLsp1M+DRHO5MZavN+nh0OegGCO7VCYoGaBxNxKsIAq0g6OJKDIL4o=
+	t=1742494341; cv=none; b=hZZwcdjm4CLOlRM1b01MabJwEOY0gGipOFc4Pv3jfbuQEIbFyUnNKDdFj1ZZ8Zzn2J8Yg0udJbpBbn8hzuVWFSlWm1dLKnSc5MBn4QeKZAU6N0qJ9LNXckRGFYjE146qtwNzFFp9NrFzmCvnhyHfGHgw8UxY7zQj5upNXHqXTYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742494075; c=relaxed/simple;
-	bh=MyYwYiUKfjKvtKRG1e57M8Jd9KMobIEzWzuYGkh2LhY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=VTZBPGN88irN7lCj8Uqn+2vxLkguzyjIr7l/UQxVApsyYhbJcbSmIcP4KOaMjP/itg4R3waIGJhJnyGPG5q32KUgpDGaqAQZME2yMrk7800LA1ECApVTS5rHVpQyENdM+tGNuKYr/2LarKNSZb5pkwEvCnkFro71efSJSEy0MpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=k7xI2OcO; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52KEGkhv009820;
-	Thu, 20 Mar 2025 18:07:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xXKR3eljLFjx6YaEbWF1v8H/hd7o2Ij8ZFwALZ21R5E=; b=k7xI2OcOTBRlbv63
-	TwmBzmRaosfzbs+GZkONHK3B9IKxtwoxpKBZZh3qHGQ4F5ZqdI04SNXbg4YBvaRv
-	iLQYRiTDoyWPPSO18PnktnYboJ+hwPZ56W4/loEKGmLnQbD9RZ5nNXPOPW7phoUf
-	FQkipB1VW/t7yeFEMzyr+Nk/IB/rSVAQJ1xY1b8aTvE5x6d3bISakjto+wNdAn2X
-	tKnlGRiFMGbh/TozDghKbZ5pkvAhbwMS8c2YBqlW0d6+WjqvdNIy2BsC1T85vq3N
-	0//zBpNjaEYZY7zFVsqD9cTvXZdu7i7oFAdGzrgyBo6caOud8F8Sp2P7hL+3EQLG
-	2eQkFg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45exwx9v9a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Mar 2025 18:07:50 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52KI7oMn006941
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Mar 2025 18:07:50 GMT
-Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 20 Mar 2025 11:07:46 -0700
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-Date: Thu, 20 Mar 2025 23:36:52 +0530
-Subject: [PATCH v3 3/3] arm64: dts: qcom: sa8775p-ride: enable video
+	s=arc-20240116; t=1742494341; c=relaxed/simple;
+	bh=nvjPdX71LGd7inkaVZszmyMyYxdINYEkosCxlU1kpvw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=kN1HHDNUWyXOT62flNSu28rrayOX+4ZrdUAyRBzcuw0XMyYzmpOBVDZSicaKfR/uqjPmYSJ5JNfKZ3VeeAwlq3QCAXaI2cCzCUNO5NVdqWcx0yavrZYy5qKwX6UIAVEXvjY8kXjisoG9z9jyoroVuQD5XKwkJF2S5z4WrrPXU0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nT2xM0mp; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43948021a45so9478935e9.1;
+        Thu, 20 Mar 2025 11:12:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742494338; x=1743099138; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=DAj8w99nfg2slGXPfJ5zVyi4hbC1dv2j2JscG9r1JDg=;
+        b=nT2xM0mpKI2nHl5DsOknORFGkuxHYYps4MTSHAnyoHLV9TcbY9Xe82D291odPKqswo
+         66CrgyxJCsAob5q2uKDJYtnY39w87TqEtlHF2uCNExFAL1iKOuG2bwS0hCEDalQM4+ul
+         HPoalkz6Qd40aUx4tuNH3A8+PsPfDCD899iP96f//topntbbfSBnFxzM/pGorTWoRkTs
+         Rz5vLiStrZ9si9IGGdcbTd8dj/GAFJt3L4199W7QTSh9zcixdQKS/tK03oLEAGoQ3Iqg
+         mS6SeMmU9ctKgnyfJduq5KhZiMSinU855n35GfezGo+LC8261Ncko9G4/sxGvlfQNzyV
+         OuyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742494338; x=1743099138;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DAj8w99nfg2slGXPfJ5zVyi4hbC1dv2j2JscG9r1JDg=;
+        b=GqhQ59JbsSqRN0qac4jlmnDYQJ5Hh/IWvYkNZa/DO6hOZROk0g50NYQN9lnG1ybuw4
+         bMdZPLUybFkl5lEoFq6ypInxpHJqr0cZQhOvFTPJrFenSArgOHugEid6QjlPK75obl3B
+         Qm+OoXukP4cTyz54yfsnbngI5lu2fFqVndFF3lxkH3btwHy9CfADQL6yfwaqzFbqIwT0
+         vbmq+x0jU/pBlQFYoPFXe8laj8Y+iof9CJdzyOfL1Dqa8H76+Rt1v0E2cdsFtg6cV3Tz
+         GhyPGuC970kt8HPzr/7DyelC3OAXQKzq/9TZqiCBLHED4kNMqW0CtN/qCPgmjHD4T2wS
+         CyJA==
+X-Forwarded-Encrypted: i=1; AJvYcCUF+XyoVym3SaBcgfJwrWIMaZdmeL7cPBeaRXrk3/xa5RZ+IB9tAiTM7LvVpuEMkcu0EBfo8ZXs+Ig3bkZ4@vger.kernel.org, AJvYcCUVZFoJifunnYkjpVBnbmn05FLsbo9AXsMZRZmg92MUgNF6X10nKWh2hEwKaIay7s9ONCTp6HqWgvpd4qnv@vger.kernel.org, AJvYcCX+HtJRKyA28Hjj6HlCoDEQswrl3Drc0RricFMcZ7eiG3XGhrohIuVD2Kmoex7k34BXUU9H9JG1xGW2@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTNhaVu/zuabCPOZRbCcSRelAd+dMJcC6eA0aI8m7+gOaADsKp
+	slFU44rf7aMHt7ICt7fkB2eTkliJqgnaHnk1Nd/eEYqiXJxUBmCV
+X-Gm-Gg: ASbGncsSYySAOsHmxr7oblUgHzlEPtEx1LbWEcLzWhA+HV71MIC+oxPHiyRE0ydTldK
+	s8idrFQTkpl3TeyflNSPdcs1pHLGKFP3ktCL+Hl2AGZdW5Mt21X9V7/CCkMvVerjknLDko5sqng
+	b1lroKurEZ9W3MXq40fU14YxecRlKTA97CoEI9Bg1sEqOgoEJek8SISEN/fjDMddlyL6+Q/Sq4F
+	kSD93Z1fiIZiRPNzsNVrEVi8Wg6EQXgj2MO12NEmdCg5e9wFLCsxCBcxnzcuOaDxykfeHCB8lGl
+	Ko0NRrnGbMZW37j+xfTFcSYBg9AjEGxYMBlinraMOmduEw+ixQRSrgv/lAIJjxN3xfsIoLC/URH
+	Bf1Rn8jFJ
+X-Google-Smtp-Source: AGHT+IFO7iQjH9/emMYq4Rm2sLpWs0UGB0cabmOue8uCKayYG0tr9zTuXMmtVUGNfuO0SoFF75D25g==
+X-Received: by 2002:a5d:588b:0:b0:391:4282:f60e with SMTP id ffacd0b85a97d-3997f91d8e1mr508399f8f.32.1742494337662;
+        Thu, 20 Mar 2025 11:12:17 -0700 (PDT)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3997f9e6544sm236209f8f.68.2025.03.20.11.12.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Mar 2025 11:12:17 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Thu, 20 Mar 2025 19:11:59 +0100
+Subject: [PATCH next] spi: spi-qpic-snand: use kmalloc() for OOB buffer
+ allocation
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,77 +83,50 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250320-dtbinding-v3-3-2a16fced51d5@quicinc.com>
-References: <20250320-dtbinding-v3-0-2a16fced51d5@quicinc.com>
-In-Reply-To: <20250320-dtbinding-v3-0-2a16fced51d5@quicinc.com>
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konradybcio@kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@oss.qualcomm.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <sumit.garg@oss.qualcomm.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>
+Message-Id: <20250320-qpic-snand-kmalloc-v1-1-94e267550675@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAG9a3GcC/x3MQQqDMBBA0avIrB2ICbXFq4iLdJzYoTpqIkUI3
+ r3B5Vv8nyFxFE7QVRki/yTJqgVNXQF9vE6MMhaDNfZhnDW4b0KY1OuI38XP80roQktNeLf0ejo
+ o4RY5yHlPe1A+Dxiu6w8mnKgFagAAAA==
+X-Change-ID: 20250320-qpic-snand-kmalloc-3f6c1fb6c873
+To: Mark Brown <broonie@kernel.org>
+Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, linux-spi@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1742494052; l=813;
- i=quic_vgarodia@quicinc.com; s=20241104; h=from:subject:message-id;
- bh=MyYwYiUKfjKvtKRG1e57M8Jd9KMobIEzWzuYGkh2LhY=;
- b=UcaIKBt5oR71TCWHPM85/AvX4F/PwttDwDs6k+LSdAvUSaLSKZRkHsFJfIltKfpndKNqsletU
- Hy7tHdcQIRCAY8d18FQZpSJ5CfzZ63NxsLu383pVfUEtWgstKoP7H5M
-X-Developer-Key: i=quic_vgarodia@quicinc.com; a=ed25519;
- pk=LY9Eqp4KiHWxzGNKGHbwRFEJOfRCSzG/rxQNmvZvaKE=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PETL29jIOWlXFblKR90nLz1-Epsi0s-8
-X-Authority-Analysis: v=2.4 cv=INICChvG c=1 sm=1 tr=0 ts=67dc5977 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=bnThFhelgDCT6RDeMd8A:9
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: PETL29jIOWlXFblKR90nLz1-Epsi0s-8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-20_05,2025-03-20_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 clxscore=1015
- mlxlogscore=761 impostorscore=0 phishscore=0 mlxscore=0 spamscore=0
- bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503200117
 
-Enable video nodes on the sa8775p-ride board and point to the
-appropriate firmware files.
+The qcom_spi_ecc_init_ctx_pipelined() function allocates zeroed
+memory for the OOB buffer, then it fills the buffer with '0xff'
+bytes right after the allocation. In this case zeroing the memory
+during allocation is superfluous, so use kmalloc() instead of
+kzalloc() to avoid that.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/spi-qpic-snand.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index 175f8b1e3b2ded15fc3265ac8c26b14473b618f6..ec3fa2739e1df2d5aebee7184c15e996a71b4550 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -1038,3 +1038,9 @@ &usb_2_hsphy {
- &xo_board_clk {
- 	clock-frequency = <38400000>;
- };
-+
-+&iris {
-+	firmware-name = "qcom/vpu/vpu30_p4_s6.mbn";
-+
-+	status = "okay";
-+};
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index fbba7741a9bf336deed1c07eab8d5a94204878d7..b60f5c3fd1db84e66f9263404a52251460a4afec 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -261,7 +261,7 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
+ 	ecc_cfg = kzalloc(sizeof(*ecc_cfg), GFP_KERNEL);
+ 	if (!ecc_cfg)
+ 		return -ENOMEM;
+-	snandc->qspi->oob_buf = kzalloc(mtd->writesize + mtd->oobsize,
++	snandc->qspi->oob_buf = kmalloc(mtd->writesize + mtd->oobsize,
+ 					GFP_KERNEL);
+ 	if (!snandc->qspi->oob_buf) {
+ 		kfree(ecc_cfg);
 
+---
+base-commit: ad4488845193e81549c11903a5083b4c9cc19785
+change-id: 20250320-qpic-snand-kmalloc-3f6c1fb6c873
+
+Best regards,
 -- 
-2.34.1
+Gabor Juhos <j4g8y7@gmail.com>
 
 
