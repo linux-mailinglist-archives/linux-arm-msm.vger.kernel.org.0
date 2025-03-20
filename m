@@ -1,312 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-52103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D887A6ABB4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 18:11:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 91292A6ACAA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 19:04:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B28C3BD439
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 17:11:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3DE853A8C2C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 18:02:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 293A522155C;
-	Thu, 20 Mar 2025 17:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECA1A224B13;
+	Thu, 20 Mar 2025 18:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CU16RTa8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FExZuvSg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1234721CA00
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 17:11:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B369F1E5702;
+	Thu, 20 Mar 2025 18:02:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742490686; cv=none; b=cAYriicJFnzDpJMuHAKAXvFdmv6uW/sMYI8ho85N54NC5G7P+o+RndEqUkKWSrqZsppxUlNwARgGDnoyM7p4tXwXgmkDMYA90IP4wvRMkenYllSgwW6JLut1qMyeSCtD0i7HYrozxzJb5iAZMO9Rgqa2FrNk56Hxb2o1NOIfyVU=
+	t=1742493744; cv=none; b=O8pIEU/+JYc2AWEi4gKAVz/JqXUPjoXvg9CFNAsxXCgJUmwBQ+u3ztfhZansq3pX13FWunI9sC+xTq72IhAplhMHWfnsJJ5lmiQExGNjAXhF1PFZmj0t2sxmsZipALA9AXxxeWpZpUcLlLEfDx2HDoh+w+e9xnYqszkLkYkBua8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742490686; c=relaxed/simple;
-	bh=oZH8Uuel0+yRQNWORDr6kA9v0JoudJDsYXEqg521FJ0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ECj/q+00/AZg3oO9zKCf6ArfjisOnJFSIjz6rLRSVHXZ5wQbjmn8HaE/WC2c2rQ73L+pRRZ8g4loW4DhdeT6bkcTeya5RGvnNvSjsyY1136LsYg6515RUzBiBJwEezwB4Zyu1sH9btsQaWTQ1rbgGSOIZgD+dZTpPpMvMSQMIv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CU16RTa8; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-399744f74e9so720330f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 10:11:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742490682; x=1743095482; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LszHKVAAmbCzrn3xqUVYloX7G0EimqlzgJrGy2gnmsI=;
-        b=CU16RTa8IzquEBjkWTq+yFWD+PIH0VXwCjaipYXfgilEGI89OUY0r8D+qvJxRb6w5R
-         +1IETKEwo9MgelgMzuwk5m77viHOJW54nVrU+vNJs3aNOGxf5w/6cXF38a9hG972fexy
-         Ve5lNjevrs0uOTk7ffOlAe976IbXabIzdP8y2L5c0ArOXId8Z6Vc4b9k2Paj6jEb2HE+
-         atirNc62tvlSgYfNz8yzo3414dqgJf2IxYFb7dnEGFlyn03CQYEvQau5QiPs9t15Xv/a
-         /SehLLUtdC9t+4PxcOXwceXDAOCMhD7xDLmx7wk2gt0KY0Xebm5HkVVm4jarRZMeFQwy
-         mQSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742490682; x=1743095482;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LszHKVAAmbCzrn3xqUVYloX7G0EimqlzgJrGy2gnmsI=;
-        b=ThPgiFjSd/hZg1nbZSCi+mkx1evTSqCiiqJASNhO8aLAVPn9knel+zCkFQwRHFYq0J
-         ZYlKtav19PhPKgql+NR0GP9mKbaP41u01HMyQQf1+xjmWRs4XrKD47U6//hdvk5H6hIa
-         M61Mxh7KJsis5tPjGnGO9mjipkasfCIKMMM3t1DGT+K9qCS5UPNnOxUtJNzmWGhsp/+p
-         F666H4LO3scSdNjE7n3hKasDF017US7+5rNxi0dxyhd2khDlb4787Xf2q0HSz/3DNrVq
-         ijhPWIAM2xzJOBsVCXKIALg3EjGZGgfs8GlyPlKB2oywsqui1ZfsMn+aV27tngKnB9yp
-         R5Hg==
-X-Forwarded-Encrypted: i=1; AJvYcCVBKXfjlqvOeqYQBRyEmBT+G1X6QdYosIl7Oe10tRvkbX1eAFNGMX93S1JOgB3QigppJ+Qf1AE7J7vVH84W@vger.kernel.org
-X-Gm-Message-State: AOJu0YwIGasIV6mWY5ARlxcJiJzvu0Le+pwJtLxscvZdGAF+IlfAHgSF
-	DhVWTX9VUdIcQj5gYChFLJ4ToxkpbLMGcsdKKiYRQHzDDBbgEv4EIkgF/UNWuY0=
-X-Gm-Gg: ASbGnctHwJcpde6V2v2BLLJigx4XL1dGzwfLf9rpDPdckVHVZeLWhcI+ZNludSQqFzF
-	bU56V9Oj/30lyNnZFaDfhAaiMqbLVuHO5r3nHZ1xFgP62+odvN7DWiBZ5E+J/m4FjfTUxgTxOM0
-	36Ge5kRUcdgibu5XeEVr+Zz10wjQ3+svVTBmJnV8H3cawwhhk8EgHeO+7u/DdCVh6BYmrwmYLWz
-	/1Xm/txdfLC5uQuMDBf8K+F4XNmzez/hlvwRNvSJuWjrYzuNN8i1PR+OQj6G04tCd1jfgaIdTsD
-	H5XEP+7S2wIwW8j5zX+djcNEUmgO2VSQS+0IqM4NwO6qPkOusqgeZMs58pha1QQ=
-X-Google-Smtp-Source: AGHT+IEEqmDyc13593/QHHJ/rxN/j2FUptO7R/XTlEXHlWVEHh3gZS6BqeAIdYMHPC2w1m3aWmzwvQ==
-X-Received: by 2002:a5d:6c67:0:b0:391:30f0:1704 with SMTP id ffacd0b85a97d-3997f9008d9mr339289f8f.4.1742490682128;
-        Thu, 20 Mar 2025 10:11:22 -0700 (PDT)
-Received: from [192.168.68.117] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3997f9a3f6bsm141041f8f.39.2025.03.20.10.11.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Mar 2025 10:11:21 -0700 (PDT)
-Message-ID: <30bba296-8e6f-41ee-880e-2d5ecc8fe5a4@linaro.org>
-Date: Thu, 20 Mar 2025 17:11:20 +0000
+	s=arc-20240116; t=1742493744; c=relaxed/simple;
+	bh=y9R11PCeG0aC7T4yQOMfIHSqYCQ5IC3utAoKlffVDss=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fOhUeJIrJT9aR+HMYK2KC94vdPIdwRupXTGWygMtl86eBn7nqW3DI8WjOpfY+FRsHzEbtTmnRjc40EUfYYfbD9RTranfwQA6IqIgpVu7fRApKdDKyB8oESdjcXFr6vCNh5kxfsCljfCt4/p+pqG0GcqaAf1D5681japx93cJEBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FExZuvSg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA3FC4AF0B;
+	Thu, 20 Mar 2025 18:02:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742493744;
+	bh=y9R11PCeG0aC7T4yQOMfIHSqYCQ5IC3utAoKlffVDss=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=FExZuvSgG7lQ0nphnU46uCB3BITIfCUTFx/gRRNQECKgcsiWtNME41GgHctBairTj
+	 L2E4xjss89M+TnVQmJP3gNRjnUYvu3j22ltM8HOhpjuVYuimADN8rrVXMdfbsEwg/o
+	 FedshALdXFQlmmCNDqhhTbjSuJm60rHbMJpBjvugGcJ75Z77+vWHqHsj1ileqG8Pb/
+	 WqFwlWO8YJmUHunQSgj7i4OOkw4X//d/uscB7e10Kegh3pry9R0esBPLI1F4sswS9F
+	 qyRVrIrrc1RN+zEOhuXNUCBBuH9upKVbOG96on8DouTIArXT0b80FQXG77FldV3Nth
+	 1Bvi4yL9YGukA==
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5e535e6739bso1759377a12.1;
+        Thu, 20 Mar 2025 11:02:24 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVVpH5sA2wEbcB13Cto88FlUplJ7M1Ec0dHoaugJ/nM6M5ZzybEDTa+HVnFRRPygOVj1g+vfCeNjgtup5P7M8Thvg==@vger.kernel.org, AJvYcCVvobix/lWW9/zjL0xlteV0CHldEuvm02mz5y6Px4Byj/rcuhkOYjFKYm5bOsmQk4axEhMpaJWeMejj@vger.kernel.org, AJvYcCXDQXBl10fZhdfJhcMFYVWnCI6xyoPGsJGaId2tR8CNbQ4dAcZixfnqcqYc0PovJ9XF+2ZRn11Fu4aF2VyIkw==@vger.kernel.org, AJvYcCXmdJATqwmBCH1z4yipDMsDBOOptEz72S+Ahn4M/VnzJVbFfo+Q/Xn3j0R5MxOdnN1LM70ra2gzcPk+qw2y@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+GPyQChxriQT5LAmUgwxq89OVAglPQaPup22TOOqbyxc62DLu
+	yOAoXOy43GoGX2MmM/3nsyRiPdnB8OwY1gKLAWIp4oh4gzbRnIWxp7sAks70cXL8j2m4EWvplBq
+	jbgC47SOgSW6uKysvKbr6ZB2/9A==
+X-Google-Smtp-Source: AGHT+IHQN97QVgyFz09nfrYtWbO3Ru8zTNvSZPoniI5opPgH/pEzb20TQeGjO3i0k0wm7am1Inl8y3sD3mZZgGtCBU4=
+X-Received: by 2002:a05:6402:13d6:b0:5de:aa54:dc30 with SMTP id
+ 4fb4d7f45d1cf-5ebcd40b7d9mr238445a12.5.1742493742665; Thu, 20 Mar 2025
+ 11:02:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] misc: fastrpc: add support for gpdsp remoteproc
-To: Ling Xu <quic_lxu5@quicinc.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, amahesh@qti.qualcomm.com, arnd@arndb.de,
- gregkh@linuxfoundation.org
-Cc: quic_kuiw@quicinc.com, quic_ekangupt@quicinc.com,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20250320091446.3647918-1-quic_lxu5@quicinc.com>
- <20250320091446.3647918-3-quic_lxu5@quicinc.com>
-Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20250320091446.3647918-3-quic_lxu5@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250317232426.952188-1-robh@kernel.org> <20250317232426.952188-4-robh@kernel.org>
+ <26e72cb2-c355-4c40-bb98-fc0ff267bf4f@foss.st.com> <CAL_Jsq+7ZhMWgbFDvPB+3BG7YfiS9PweybOGNY3r=d40RbGHJA@mail.gmail.com>
+ <130d61a8-6f03-46dc-94ca-f098bc09babc@foss.st.com>
+In-Reply-To: <130d61a8-6f03-46dc-94ca-f098bc09babc@foss.st.com>
+From: Rob Herring <robh@kernel.org>
+Date: Thu, 20 Mar 2025 13:02:11 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJZkEpx26=ro_y8hHA2x1Zm6z_SFOQHjQ-WzUa-gy+s0w@mail.gmail.com>
+X-Gm-Features: AQ5f1Jr2DWg_p_3pOGaFM-d8b9OA-WiVr1l9JRvSP10bkvbhKAdr3MGldt734ck
+Message-ID: <CAL_JsqJZkEpx26=ro_y8hHA2x1Zm6z_SFOQHjQ-WzUa-gy+s0w@mail.gmail.com>
+Subject: Re: [Linux-stm32] [PATCH 3/3] remoteproc: Use of_reserved_mem_region_*
+ functions for "memory-region"
+To: Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Cc: Saravana Kannan <saravanak@google.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	devicetree@vger.kernel.org, imx@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Mar 20, 2025 at 4:23=E2=80=AFAM Arnaud POULIQUEN
+<arnaud.pouliquen@foss.st.com> wrote:
+>
+>
+>
+> On 3/20/25 00:04, Rob Herring wrote:
+> > On Wed, Mar 19, 2025 at 10:26=E2=80=AFAM Arnaud POULIQUEN
+> > <arnaud.pouliquen@foss.st.com> wrote:
+> >>
+> >> Hello Rob,
+> >>
+> >> On 3/18/25 00:24, Rob Herring (Arm) wrote:
+> >>> Use the newly added of_reserved_mem_region_to_resource() and
+> >>> of_reserved_mem_region_count() functions to handle "memory-region"
+> >>> properties.
+> >>>
+> >>> The error handling is a bit different in some cases. Often
+> >>> "memory-region" is optional, so failed lookup is not an error. But th=
+en
+> >>> an error in of_reserved_mem_lookup() is treated as an error. However,
+> >>> that distinction is not really important. Either the region is availa=
+ble
+> >>> and usable or it is not. So now, it is just
+> >>> of_reserved_mem_region_to_resource() which is checked for an error.
+> >>>
+> >>> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> >>> ---
+> >>> For v6.16
+> >>>
+> >
+> > [...]
+> >
+> >>> diff --git a/drivers/remoteproc/stm32_rproc.c b/drivers/remoteproc/st=
+m32_rproc.c
+> >>> index b02b36a3f515..9d2bd8904c49 100644
+> >>> --- a/drivers/remoteproc/stm32_rproc.c
+> >>> +++ b/drivers/remoteproc/stm32_rproc.c
+> >>> @@ -213,52 +213,46 @@ static int stm32_rproc_prepare(struct rproc *rp=
+roc)
+> >>>  {
+> >>>       struct device *dev =3D rproc->dev.parent;
+> >>>       struct device_node *np =3D dev->of_node;
+> >>> -     struct of_phandle_iterator it;
+> >>>       struct rproc_mem_entry *mem;
+> >>> -     struct reserved_mem *rmem;
+> >>>       u64 da;
+> >>> -     int index =3D 0;
+> >>> +     int index =3D 0, mr =3D 0;
+> >>>
+> >>>       /* Register associated reserved memory regions */
+> >>> -     of_phandle_iterator_init(&it, np, "memory-region", NULL, 0);
+> >>> -     while (of_phandle_iterator_next(&it) =3D=3D 0) {
+> >>> -             rmem =3D of_reserved_mem_lookup(it.node);
+> >>> -             if (!rmem) {
+> >>> -                     of_node_put(it.node);
+> >>> -                     dev_err(dev, "unable to acquire memory-region\n=
+");
+> >>> -                     return -EINVAL;
+> >>> -             }
+> >>> +     while (1) {
+> >>> +             struct resource res;
+> >>> +             int ret;
+> >>> +
+> >>> +             ret =3D of_reserved_mem_region_to_resource(np, mr++, &r=
+es);
+> >>> +             if (ret)
+> >>> +                     return 0;
+> >>>
+> >>> -             if (stm32_rproc_pa_to_da(rproc, rmem->base, &da) < 0) {
+> >>> -                     of_node_put(it.node);
+> >>> -                     dev_err(dev, "memory region not valid %pa\n",
+> >>> -                             &rmem->base);
+> >>> +             if (stm32_rproc_pa_to_da(rproc, res.start, &da) < 0) {
+> >>> +                     dev_err(dev, "memory region not valid %pR\n", &=
+res);
+> >>>                       return -EINVAL;
+> >>>               }
+> >>>
+> >>>               /*  No need to map vdev buffer */
+> >>> -             if (strcmp(it.node->name, "vdev0buffer")) {
+> >>> +             if (strcmp(res.name, "vdev0buffer")) {
+> >>
+> >> I tested your patches
+> >
+> > Thank you.
+> >
+> >> The update introduces a regression here. The strcmp function never ret=
+urns 0.
+> >> Indeed, it.node->name stores the memory region label "vdev0buffer," wh=
+ile
+> >> res.name stores the memory region name "vdev0buffer@10042000."
+> >>
+> >> Several remoteproc drivers may face the same issue as they embed simil=
+ar code.
+> >
+> > Indeed. I confused myself because node 'name' is without the
+> > unit-address, but this is using the full name. I've replaced the
+> > strcmp's with strstarts() to address this. I've updated my branch with
+> > the changes.
+>
+> This is not enough as the remoteproc core function rproc_find_carveout_by=
+_name()
+> also compares the memory names. With the following additional fix, it is =
+working
+> on my STM32MP15-DK board.
+>
+> @@ -309,11 +309,11 @@ rproc_find_carveout_by_name(struct rproc *rproc, co=
+nst
+> char *name, ...)
+>         vsnprintf(_name, sizeof(_name), name, args);
+>         va_end(args);
+>
+>         list_for_each_entry(carveout, &rproc->carveouts, node) {
+>                 /* Compare carveout and requested names */
+> -               if (!strcmp(carveout->name, _name)) {
+> +               if (strstarts(carveout->name, _name)) {
+>                         mem =3D carveout;
+>                         break;
+>                 }
+>         }
+>
+> I just wonder if would not be more suitable to address this using the
+> "memory-region-names" field.
 
+That would be better as you shouldn't really care what a provider node
+name is where-as "memory-region-names" is meaningful to the driver.
 
-On 20/03/2025 09:14, Ling Xu wrote:
-> The fastrpc driver has support for 5 types of remoteprocs. There are
-> some products which support GPDSP remoteprocs. Add changes to support
-> GPDSP remoteprocs.
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
-> ---
->   drivers/misc/fastrpc.c | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 7b7a22c91fe4..80aa554b3042 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -28,7 +28,9 @@
->   #define SDSP_DOMAIN_ID (2)
->   #define CDSP_DOMAIN_ID (3)
->   #define CDSP1_DOMAIN_ID (4)
-> -#define FASTRPC_DEV_MAX		5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
-> +#define GDSP0_DOMAIN_ID (5)
-> +#define GDSP1_DOMAIN_ID (6)
+>
+> The drawback is that we would break compatibility with legacy boards...
 
-We have already made the driver look silly here, Lets not add domain ids 
-for each instance, which is not a scalable.
+So not an option.
 
-Domain ids are strictly for a domain not each instance.
+I think I'll have to fix this within the reserved mem code storing the
+name or do something like the diff below. I'd like to avoid the
+former. Using the original device_node.name is also problematic
+because I want to get rid of it. We redundantly store the node name
+with and without the unit-address. There's a lot of places like this
+one where we hand out the pointer with no lifetime.
 
+diff --git a/drivers/remoteproc/stm32_rproc.c b/drivers/remoteproc/stm32_rp=
+roc.c
+index 1e949694d365..cdee87c6ffe0 100644
+--- a/drivers/remoteproc/stm32_rproc.c
++++ b/drivers/remoteproc/stm32_rproc.c
+@@ -239,7 +239,7 @@ static int stm32_rproc_prepare(struct rproc *rproc)
+                                                   resource_size(&res), da,
+                                                   stm32_rproc_mem_alloc,
+                                                   stm32_rproc_mem_release,
+-                                                  res.name);
++                                                  "%.*s",
+strchrnul(res.name, '@') - res.name, res.name);
 
-> +#define FASTRPC_DEV_MAX		7 /* adsp, mdsp, slpi, cdsp, cdsp1, gdsp0, gdsp1 */
->   #define FASTRPC_MAX_SESSIONS	14
->   #define FASTRPC_MAX_VMIDS	16
->   #define FASTRPC_ALIGN		128
-> @@ -107,7 +109,9 @@
->   #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
->   
->   static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
-> -						"sdsp", "cdsp", "cdsp1" };
-> +						"sdsp", "cdsp",
-> +						"cdsp1", "gdsp0",
-> +						"gdsp1" };
->   struct fastrpc_phy_page {
->   	u64 addr;		/* physical address */
->   	u64 size;		/* size of contiguous region */
-> @@ -2338,6 +2342,8 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->   		break;
->   	case CDSP_DOMAIN_ID:
->   	case CDSP1_DOMAIN_ID:
-> +	case GDSP0_DOMAIN_ID:
-> +	case GDSP1_DOMAIN_ID:
->   		data->unsigned_support = true;
->   		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
->   		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
+                        if (mem)
+                                rproc_coredump_add_segment(rproc, da,
+@@ -249,7 +249,7 @@ static int stm32_rproc_prepare(struct rproc *rproc)
+                        mem =3D rproc_of_resm_mem_entry_init(dev, index,
+                                                           resource_size(&r=
+es),
+                                                           res.start,
+-                                                          res.name);
++                                                          "vdev0buffer");
+                }
 
-
-Can you try this patch: only compile tested.
-
----------------------------------->cut<---------------------------------------
- From 3f8607557162e16673b26fa253d11cafdc4444cf Mon Sep 17 00:00:00 2001
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Date: Thu, 20 Mar 2025 17:07:05 +0000
-Subject: [PATCH] misc: fastrpc: cleanup the domain names
-
-Currently the domain ids are added for each instance of domain, this is
-totally not scalable approch.
-
-Clean this mess and create domain ids for only domains not its
-instances.
-This patch also moves the domain ids to uapi header as this is required
-for FASTRPC_IOCTL_GET_DSP_INFO ioctl.
-
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
-  drivers/misc/fastrpc.c      | 45 ++++++++++++++++++++-----------------
-  include/uapi/misc/fastrpc.h |  7 ++++++
-  2 files changed, 32 insertions(+), 20 deletions(-)
-
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 7b7a22c91fe4..b3932897a437 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -23,12 +23,6 @@
-  #include <uapi/misc/fastrpc.h>
-  #include <linux/of_reserved_mem.h>
-
--#define ADSP_DOMAIN_ID (0)
--#define MDSP_DOMAIN_ID (1)
--#define SDSP_DOMAIN_ID (2)
--#define CDSP_DOMAIN_ID (3)
--#define CDSP1_DOMAIN_ID (4)
--#define FASTRPC_DEV_MAX		5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
-  #define FASTRPC_MAX_SESSIONS	14
-  #define FASTRPC_MAX_VMIDS	16
-  #define FASTRPC_ALIGN		128
-@@ -106,8 +100,6 @@
-
-  #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, 
-miscdev)
-
--static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
--						"sdsp", "cdsp", "cdsp1" };
-  struct fastrpc_phy_page {
-  	u64 addr;		/* physical address */
-  	u64 size;		/* size of contiguous region */
-@@ -1769,7 +1761,7 @@ static int fastrpc_get_dsp_info(struct 
-fastrpc_user *fl, char __user *argp)
-  		return  -EFAULT;
-
-  	cap.capability = 0;
--	if (cap.domain >= FASTRPC_DEV_MAX) {
-+	if (cap.domain >= FASTRPC_DOMAIN_MAX) {
-  		dev_err(&fl->cctx->rpdev->dev, "Error: Invalid domain id:%d, err:%d\n",
-  			cap.domain, err);
-  		return -ECHRNG;
-@@ -2255,6 +2247,24 @@ static int fastrpc_device_register(struct device 
-*dev, struct fastrpc_channel_ct
-  	return err;
-  }
-
-+static int fastrpc_get_domain_id(const char *domain)
-+{
-+	if (strncmp(domain, "adsp", 4) == 0) {
-+		return ADSP_DOMAIN_ID;
-+	} else	if (strncmp(domain, "cdsp", 4) == 0) {
-+		return CDSP_DOMAIN_ID;
-+	} else if (strncmp(domain, "mdsp", 4) ==0) {
-+		return MDSP_DOMAIN_ID;
-+	} else if (strncmp(domain, "sdsp", 4) ==0) {
-+		return SDSP_DOMAIN_ID;
-+	} else if (strncmp(domain, "gdsp", 4) ==0) {
-+		return GDSP_DOMAIN_ID;
-+	}
-+
-+	return -EINVAL;
-+
-+}
-+
-  static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
-  {
-  	struct device *rdev = &rpdev->dev;
-@@ -2272,15 +2282,10 @@ static int fastrpc_rpmsg_probe(struct 
-rpmsg_device *rpdev)
-  		return err;
-  	}
-
--	for (i = 0; i < FASTRPC_DEV_MAX; i++) {
--		if (!strcmp(domains[i], domain)) {
--			domain_id = i;
--			break;
--		}
--	}
-+	domain_id = fastrpc_get_domain_id(domain);
-
-  	if (domain_id < 0) {
--		dev_info(rdev, "FastRPC Invalid Domain ID %d\n", domain_id);
-+		dev_info(rdev, "FastRPC Domain %s not supported\n", domain);
-  		return -EINVAL;
-  	}
-
-@@ -2332,19 +2337,19 @@ static int fastrpc_rpmsg_probe(struct 
-rpmsg_device *rpdev)
-  	case SDSP_DOMAIN_ID:
-  		/* Unsigned PD offloading is only supported on CDSP and CDSP1 */
-  		data->unsigned_support = false;
--		err = fastrpc_device_register(rdev, data, secure_dsp, 
-domains[domain_id]);
-+		err = fastrpc_device_register(rdev, data, secure_dsp, domain);
-  		if (err)
-  			goto fdev_error;
-  		break;
-  	case CDSP_DOMAIN_ID:
--	case CDSP1_DOMAIN_ID:
-+	case GDSP_DOMAIN_ID:
-  		data->unsigned_support = true;
-  		/* Create both device nodes so that we can allow both Signed and 
-Unsigned PD */
--		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
-+		err = fastrpc_device_register(rdev, data, true, domain);
-  		if (err)
-  			goto fdev_error;
-
--		err = fastrpc_device_register(rdev, data, false, domains[domain_id]);
-+		err = fastrpc_device_register(rdev, data, false, domain);
-  		if (err)
-  			goto populate_error;
-  		break;
-diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
-index f33d914d8f46..89516abd258f 100644
---- a/include/uapi/misc/fastrpc.h
-+++ b/include/uapi/misc/fastrpc.h
-@@ -133,6 +133,13 @@ struct fastrpc_mem_unmap {
-  	__s32 reserved[5];
-  };
-
-+#define ADSP_DOMAIN_ID (0)
-+#define MDSP_DOMAIN_ID (1)
-+#define SDSP_DOMAIN_ID (2)
-+#define CDSP_DOMAIN_ID (3)
-+#define GDSP_DOMAIN_ID (4)
-+
-+#define FASTRPC_DOMAIN_MAX	4
-  struct fastrpc_ioctl_capability {
-  	__u32 domain;
-  	__u32 attribute_id;
--- 
-2.25.1
-
-
----------------------------------->cut<---------------------------------------
+                if (!mem) {
 
