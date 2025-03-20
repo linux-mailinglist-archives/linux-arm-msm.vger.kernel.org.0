@@ -1,248 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-52068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C2E2A6A2D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 10:40:53 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A243A6A310
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 10:59:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C640046326A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 09:40:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C0B84189FA19
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 09:59:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C7F5222572;
-	Thu, 20 Mar 2025 09:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB8302222CA;
+	Thu, 20 Mar 2025 09:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="LPBc6Cie"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="I0xkYI16"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx08-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2063.outbound.protection.outlook.com [40.107.102.63])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5511A5BBA;
-	Thu, 20 Mar 2025 09:40:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.207.212.93
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742463606; cv=none; b=QmCSmsnDUell7tI+zEJI1VGCFfgFdRgUkH4lVjRHeODxpAoLt39cSmlS8ZsdPSLntryewB5B7VFjxjqQ50objisrRF4jmyiRinfcU3ZjxprD5vYJ1PjdQLfm9NHcFROIp+BtnSUq7boAM2dm+ZdEFexB+a/xkqPogMoUFnykQKs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742463606; c=relaxed/simple;
-	bh=YPSv+cPLzN2mLw9R5RCtzikphK6zub3UgEqVaeZdzmc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=JJ6zMQSrweMbgOlCKVz63g1D7B1whMB4xJF/Ns4d4+jvcDzYm3+FocoKVm45igg/G3y60qWhl8aj6ye07kwoAXe4tSLpugMFR215msoHxlf6gCvbh+NrN6PJKiMi9++yWmpzhQugPU/0C/jJa+qYLfIaOUnK6NCFta27jqPbGUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=LPBc6Cie; arc=none smtp.client-ip=91.207.212.93
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
-Received: from pps.filterd (m0369457.ppops.net [127.0.0.1])
-	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52K8rIOx025746;
-	Thu, 20 Mar 2025 10:39:45 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=selector1; bh=
-	20q7a2xxFrdIQirIJS+Dwfid39JttP9IZBfIWTznNdo=; b=LPBc6CieKwit8O/y
-	R3I9ufssXRDSwEOS8S1oSZIoTBa/vOxiHu/7kvnSsCb3eL1j3cKvMGUgaARi+qax
-	fHD8FRlKwg2uBhkv2kScO/nn9NUdqecxDxqQHNwVOe39yTNW1fmiReyhmGHIKnlJ
-	Y5x58LHPPPVTs9RmcMKue/MLSsWzyI14JbRnmGWHcJhVx0KO7nN0a8dvNeyGkGQO
-	l7m5+Bgwgv87wT947Bwd9+X7F61gKGAyJLEIUIhv8OMjdM/DsQj1ucYqu0n+LDMg
-	wbKtdfRZSw2ijUtvVJ4t22eOU6fstQIyQpQXtLRe2fWdGeDzsWiEOYjb7u3UN6xl
-	bSvh2g==
-Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
-	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 45fuc8mxdb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Mar 2025 10:39:45 +0100 (CET)
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 2C44140059;
-	Thu, 20 Mar 2025 10:38:20 +0100 (CET)
-Received: from Webmail-eu.st.com (eqndag1node6.st.com [10.75.129.135])
-	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 5EAF07CB7B1;
-	Thu, 20 Mar 2025 10:37:15 +0100 (CET)
-Received: from SAFDAG1NODE1.st.com (10.75.90.17) by EQNDAG1NODE6.st.com
- (10.75.129.135) with Microsoft SMTP Server (version=TLS1_2,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0009A21481B;
+	Thu, 20 Mar 2025 09:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.102.63
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1742464766; cv=fail; b=AHcdWMxkehZoQ5j8c191muDrQ6Aq6VOHrl6EfrU061+RHzXqYB2uAQRmfI1tKUrzmk2mu3OD+JJVLxTw8rU3OD7wAdou1ICu4OQRuhmX3WojOWKpC62jUgmJIIl6sB49X7IGFAc+WY/O4m5gxYM72E8F34G0jpAZlXfAWUr6tbM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1742464766; c=relaxed/simple;
+	bh=PANvXJOSaULYWWcjUQueSEII3T0SW/mSi2jHWw4MnPo=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Bm4n3i0NuD5XOZSFe9sYiqXdL3BR2O7vWq2BrvvQ79EvKJNb1BRVAG2RjTGqI718cQzT+bLqscIhBADFD6oael9jtspA5fQjUgcIi5ltZfzFveRILdSvX5C6gsALJ65osGepXGHIM4Id0CYEDTdmxo+5gCQHBODP9e8aWRkgrVU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=I0xkYI16; arc=fail smtp.client-ip=40.107.102.63
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=u45a4wujZF00zz+XE6sUV8Zt/W9HQIF/V5D1Xoaq350CdYu0+Iy6J8Uz5jJvqBEoR9DX0OIUM1haqc3PidPeq2doMy0sMM0cGjOHGbOLUUafpMBQIf/uwoyD0hZCv9PZVXFdtkuzOy7bz+uMXELhStwVV+GNxATCPiG/77vAmtvP9OaVRVXNb1xeEh+Sj03AP2wiBK3UD4xrAHZf9tkzu87z2KJodzDwKYosRg2gqeHB/0R2LTcQ0xRabAjPjSOG/v48aa+k7I4Ka/tIwkKCaAgKy5MyihjlwQ7CO3Xymeb32DTYlt5YqL4/CcGLVVDIKB5WeUKmdjbXrqoD2EBJMw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uySjzVi0W3/hhvNq8nPGaasAt9phfmlmdxD4j+aHs/0=;
+ b=WjSQ7BMdUMonauBGdqRM+CvP24fImXwyu6bmzruonnEpVpXkFkYtcpFLhnLWssYJlhMuxLtS/1cGsaoJwlVeE7raeMTWABzYzJxJX3CgYI+kAUe1/vQPjh65/5SJ+IGGiJTPPPZ3L/bZjFaTjKMgg2DkMwnSPt9qppQE5DrazCYrsa2bDpnI1ckB1XXaidDGZRinPPfxq1sapIyNrePoxnLpbxW1DRm6mMHzNTRXvswlC6u7NJU1Ps5PQDl0HmhPFfKv/+01A5jBlCsDTPDuNcSSEqi24XTvtXhH3Wn/Y2CeHj2y2bsEFCkDiXftqitL3zibdjl7f9jIoZ5ioUoW7w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.freedesktop.org smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uySjzVi0W3/hhvNq8nPGaasAt9phfmlmdxD4j+aHs/0=;
+ b=I0xkYI16vsUSsw0HD8Qd8f3Y5fOwAfBZRVGzPMUDACF6BWrW9oUlUZ3DK5yIZs6WOFBkDAnExqj4BOHPlxLYU47Qtd+G6GRRtH7hJuaEyXTkKMjLXI+WXHfsgQxgbZNmGvipz1jDzzuLaitqs57fqqIQ0V9Re58zUVP2AZoNHgg=
+Received: from BL0PR0102CA0054.prod.exchangelabs.com (2603:10b6:208:25::31) by
+ DS0PR12MB7535.namprd12.prod.outlook.com (2603:10b6:8:13a::20) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8534.34; Thu, 20 Mar 2025 09:59:21 +0000
+Received: from BL02EPF0001A0F9.namprd03.prod.outlook.com
+ (2603:10b6:208:25:cafe::31) by BL0PR0102CA0054.outlook.office365.com
+ (2603:10b6:208:25::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.36 via Frontend Transport; Thu,
+ 20 Mar 2025 09:59:20 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BL02EPF0001A0F9.mail.protection.outlook.com (10.167.242.100) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8534.20 via Frontend Transport; Thu, 20 Mar 2025 09:59:20 +0000
+Received: from FRAPPELLOUX01.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 20 Mar
- 2025 10:37:15 +0100
-Received: from [10.252.18.22] (10.252.18.22) by SAFDAG1NODE1.st.com
- (10.75.90.17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 20 Mar
- 2025 10:37:14 +0100
-Message-ID: <05adb008-c4f0-4003-aef4-6ce6dbbfd392@foss.st.com>
-Date: Thu, 20 Mar 2025 10:37:13 +0100
+ 2025 04:59:18 -0500
+From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+To:
+CC: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	<amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
+	<etnaviv@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+	<intel-xe@lists.freedesktop.org>, <lima@lists.freedesktop.org>,
+	<linaro-mm-sig@lists.linaro.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-media@vger.kernel.org>, <nouveau@lists.freedesktop.org>
+Subject: [PATCH v8 00/10] Improve gpu_scheduler trace events + UAPI
+Date: Thu, 20 Mar 2025 10:57:56 +0100
+Message-ID: <20250320095818.40622-1-pierre-eric.pelloux-prayer@amd.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Linux-stm32] [PATCH 3/3] remoteproc: Use
- of_reserved_mem_region_* functions for "memory-region"
-From: Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-To: Rob Herring <robh@kernel.org>
-CC: Maxime Coquelin <mcoquelin.stm32@gmail.com>, <imx@lists.linux.dev>,
-        Saravana Kannan <saravanak@google.com>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        <devicetree@vger.kernel.org>, Fabio Estevam
-	<festevam@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Pengutronix Kernel Team
-	<kernel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, Shawn Guo
-	<shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>, <linux-kernel@vger.kernel.org>
-References: <20250317232426.952188-1-robh@kernel.org>
- <20250317232426.952188-4-robh@kernel.org>
- <26e72cb2-c355-4c40-bb98-fc0ff267bf4f@foss.st.com>
- <CAL_Jsq+7ZhMWgbFDvPB+3BG7YfiS9PweybOGNY3r=d40RbGHJA@mail.gmail.com>
- <130d61a8-6f03-46dc-94ca-f098bc09babc@foss.st.com>
-Content-Language: en-US
-Organization: STMicroelectronics
-In-Reply-To: <130d61a8-6f03-46dc-94ca-f098bc09babc@foss.st.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SHFCAS1NODE1.st.com (10.75.129.72) To SAFDAG1NODE1.st.com
- (10.75.90.17)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-20_03,2025-03-19_01,2024-11-22_01
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A0F9:EE_|DS0PR12MB7535:EE_
+X-MS-Office365-Filtering-Correlation-Id: 91573c50-aabf-4281-e7f7-08dd6795e297
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|82310400026|36860700013|376014|7416014|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?U0R3VFN5QzF3RXNFQWJxZ3RzK2VlN3NRQUltb1hzVFh0SGl2VmExVjdxK2J4?=
+ =?utf-8?B?dldPQkc4Q1p3TlZQcE1WOFJFTWFyZDFoZWxLYm1UekZ5OFY0SE9WdkV3S3Y3?=
+ =?utf-8?B?UHhwVUtLVEFkRnYyUWJOVWZoVzB2bG8rZFRENmF4Z2Z0Rjh0ZlUwcWpobEtr?=
+ =?utf-8?B?MVZEQytMMjNSc3BmR3RuSlc5cnNreXhERnNOYzViMHAveURmamcvL1ZJSHBP?=
+ =?utf-8?B?TllZTXozOWRDK1BXZ3MxYWZVUi9OSlFZMFh1cDhvbGFkVVZsclQvcHdxRUhp?=
+ =?utf-8?B?QmttcDYzbmhwS2hNLzQwL2gyZEo3V3V5OHN2RXV2cnJWbjBHTnZac3RkNDdJ?=
+ =?utf-8?B?V01DREJrZXpxME8wWWI5NDBROGswRlhQRU84RnBDa3VubE9ySHN6SU9nbjE2?=
+ =?utf-8?B?T2RDTG9HeW01RngvSUhFMkMzL1hQOUZQd3BHQjJHTkt6amVTN0Z4RDJLQUhz?=
+ =?utf-8?B?L1FLc3B4K2UySnpIWGsxS0pKdmxsN3RzcG5BR1VZeXFoR0hSN1ZESXRHRkpm?=
+ =?utf-8?B?eXNTTGpma013alJkbnAwMmxueHFBL2RneXQyZjVxajl1S0JmYnVDVG9sZUdR?=
+ =?utf-8?B?Y0RRVk5pUFBhTXVDOTdPR05rVjZEV2c2ZzRNbERHRStRQ3JIbnVQT3paczll?=
+ =?utf-8?B?blN0M3laeFptVzVSbnNUanpyUXpnazFpc0V0RXoyZnUwUW5TbllJUER0ZzBW?=
+ =?utf-8?B?TWJUMFh1M29rUjZtenlzUGU5YTNBUzdGR3hYeUx1SnZzOG52NkZhSWpRVVh3?=
+ =?utf-8?B?T21icHAzMXpnMFlkdDN2K0VUWUlGR1laYVJmZDNLdEk0V1RwdGdaOGxvYUpk?=
+ =?utf-8?B?WW9lZ2dGTVNnMjdWbE9uN281eHV2QkJ0cVBrQTJEZ1Y4dXZIZ1FUL1FKd29L?=
+ =?utf-8?B?MHN0QWk2RUhCQ0lJNGp5aC9nVWFoc1kzdVhDcTJ2NndFa0MwU2VMd1FGamN1?=
+ =?utf-8?B?dG1QUWNaR0dUTTlBYS9hdm5oTGZxMlNsZTIwVHhKOTgvY3l2WHlpRm5hSTEw?=
+ =?utf-8?B?UGlESktTczlqQlU3VG9uQTV2a1Avb21UNXd2K0t6ZjQrWTlpeW1xZ2FDZ1JI?=
+ =?utf-8?B?QTlIQTZqR24rVlJyMERtSzIrTmhHN3UyRGszclhPc0xzd1BLUHNsVUlGbFl6?=
+ =?utf-8?B?VkdQOS9Cb04yY2k1Nm8xOXJWd0ZXbnZUYWloKzlhMFBGbG1qeDRXKzd1VkpK?=
+ =?utf-8?B?bGJUNkhZd0doK2ZSLzhiT0dtTkg5Wk5MNEtvUzdHZlU4b0hoT3dKZ2U5U3Zl?=
+ =?utf-8?B?VE9tZkJnR2REUjZ6NVkvd0ZxeFJVUkQ5eFZlNUtkZlFDaVpWOEJ4VnE2L3p1?=
+ =?utf-8?B?QWQyaWczOEpvaU13N0hmZFZsaTk3dnF2Y2pZVGl6NGd0WXh4WEtrSk1LK1VO?=
+ =?utf-8?B?U1V0RXoyM0IzeExhL1FGQ2NzZm1lTmRtRTFBcTVDbmpvRStBVnFoOFRNS0RC?=
+ =?utf-8?B?M0cyRnBhbjZDVXBDWEpEc2UxdUM1aEt2TktwR1JzMEN2ekoxOFhlbWhoeVBZ?=
+ =?utf-8?B?UVYwMUNxaE4yeTRwUmZ6K2R1cVpUaEpBa08xRjNPTWNOQ3VtTTFzSldEMEFa?=
+ =?utf-8?B?UGcrYkJKYTlqRHJBbHEzR0pUZjE1QmdzbFdiZmRMd2JQMFMyVmQ2cC9Pc3Nr?=
+ =?utf-8?B?TW04MFhqbGxmSWtld0JSbWdnQWQzWmJnYWRNdytGOWxOQm85dkoxSVVJSVpU?=
+ =?utf-8?B?V2NoTGpPRXhUY3hhVzh6WndDbG1ieHNUSXhWSndZOE5hMDl4TEdmcDUwQ1l6?=
+ =?utf-8?B?WDl4eDAxTVI2QnRiZHdYaDE2QUF5aUgzSzIxM2NmdUQzeXZGc0M1WUZIcVdG?=
+ =?utf-8?B?cWV0VGp2Y0ZGMUsxLzA4RHFjRHRpREFLR0MwYlNZYkt5K2MybERqVEh0S3lY?=
+ =?utf-8?B?M3ZETWpWQlFXcWYyUmRYVE5LcW1MUlJQN1dnSThrTUpMQ245Y1czNlUwRU5Q?=
+ =?utf-8?Q?HxAh+1GFWA0=3D?=
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014)(7416014)(13003099007);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2025 09:59:20.5403
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 91573c50-aabf-4281-e7f7-08dd6795e297
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL02EPF0001A0F9.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7535
 
+Hi,
 
+The initial goal of this series was to improve the drm and amdgpu
+trace events to be able to expose more of the inner workings of
+the scheduler and drivers to developers via tools.
 
-On 3/20/25 10:21, Arnaud POULIQUEN wrote:
-> 
-> 
-> On 3/20/25 00:04, Rob Herring wrote:
->> On Wed, Mar 19, 2025 at 10:26 AM Arnaud POULIQUEN
->> <arnaud.pouliquen@foss.st.com> wrote:
->>>
->>> Hello Rob,
->>>
->>> On 3/18/25 00:24, Rob Herring (Arm) wrote:
->>>> Use the newly added of_reserved_mem_region_to_resource() and
->>>> of_reserved_mem_region_count() functions to handle "memory-region"
->>>> properties.
->>>>
->>>> The error handling is a bit different in some cases. Often
->>>> "memory-region" is optional, so failed lookup is not an error. But then
->>>> an error in of_reserved_mem_lookup() is treated as an error. However,
->>>> that distinction is not really important. Either the region is available
->>>> and usable or it is not. So now, it is just
->>>> of_reserved_mem_region_to_resource() which is checked for an error.
->>>>
->>>> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
->>>> ---
->>>> For v6.16
->>>>
->>
->> [...]
->>
->>>> diff --git a/drivers/remoteproc/stm32_rproc.c b/drivers/remoteproc/stm32_rproc.c
->>>> index b02b36a3f515..9d2bd8904c49 100644
->>>> --- a/drivers/remoteproc/stm32_rproc.c
->>>> +++ b/drivers/remoteproc/stm32_rproc.c
->>>> @@ -213,52 +213,46 @@ static int stm32_rproc_prepare(struct rproc *rproc)
->>>>  {
->>>>       struct device *dev = rproc->dev.parent;
->>>>       struct device_node *np = dev->of_node;
->>>> -     struct of_phandle_iterator it;
->>>>       struct rproc_mem_entry *mem;
->>>> -     struct reserved_mem *rmem;
->>>>       u64 da;
->>>> -     int index = 0;
->>>> +     int index = 0, mr = 0;
->>>>
->>>>       /* Register associated reserved memory regions */
->>>> -     of_phandle_iterator_init(&it, np, "memory-region", NULL, 0);
->>>> -     while (of_phandle_iterator_next(&it) == 0) {
->>>> -             rmem = of_reserved_mem_lookup(it.node);
->>>> -             if (!rmem) {
->>>> -                     of_node_put(it.node);
->>>> -                     dev_err(dev, "unable to acquire memory-region\n");
->>>> -                     return -EINVAL;
->>>> -             }
->>>> +     while (1) {
->>>> +             struct resource res;
->>>> +             int ret;
->>>> +
->>>> +             ret = of_reserved_mem_region_to_resource(np, mr++, &res);
->>>> +             if (ret)
->>>> +                     return 0;
->>>>
->>>> -             if (stm32_rproc_pa_to_da(rproc, rmem->base, &da) < 0) {
->>>> -                     of_node_put(it.node);
->>>> -                     dev_err(dev, "memory region not valid %pa\n",
->>>> -                             &rmem->base);
->>>> +             if (stm32_rproc_pa_to_da(rproc, res.start, &da) < 0) {
->>>> +                     dev_err(dev, "memory region not valid %pR\n", &res);
->>>>                       return -EINVAL;
->>>>               }
->>>>
->>>>               /*  No need to map vdev buffer */
->>>> -             if (strcmp(it.node->name, "vdev0buffer")) {
->>>> +             if (strcmp(res.name, "vdev0buffer")) {
->>>
->>> I tested your patches
->>
->> Thank you.
->>
->>> The update introduces a regression here. The strcmp function never returns 0.
->>> Indeed, it.node->name stores the memory region label "vdev0buffer," while
->>> res.name stores the memory region name "vdev0buffer@10042000."
->>>
->>> Several remoteproc drivers may face the same issue as they embed similar code.
->>
->> Indeed. I confused myself because node 'name' is without the
->> unit-address, but this is using the full name. I've replaced the
->> strcmp's with strstarts() to address this. I've updated my branch with
->> the changes.
-> 
-> This is not enough as the remoteproc core function rproc_find_carveout_by_name()
-> also compares the memory names. With the following additional fix, it is working
-> on my STM32MP15-DK board.
-> 
-> @@ -309,11 +309,11 @@ rproc_find_carveout_by_name(struct rproc *rproc, const
-> char *name, ...)
->  	vsnprintf(_name, sizeof(_name), name, args);
->  	va_end(args);
-> 
->  	list_for_each_entry(carveout, &rproc->carveouts, node) {
->  		/* Compare carveout and requested names */
-> -		if (!strcmp(carveout->name, _name)) {
-> +		if (strstarts(carveout->name, _name)) {
->  			mem = carveout;
->  			break;
->  		}
->  	}
-> 
-> I just wonder if would not be more suitable to address this using the
-> "memory-region-names" field.
-> 
-> The drawback is that we would break compatibility with legacy boards...
+Then, the series evolved to become focused only on gpu_scheduler.
+The changes around vblank events will be part of a different
+series, as well as the amdgpu ones.
 
-Errata:
-The drawback is that we would break compatibility with legacy DTs...
+Moreover Sima suggested to make some trace events stable uAPI,
+so tools can rely on them long term.
 
-> 
-> I let Mathieu and Bjorn review and comment
-> 
-> 
-> Else with the fix in rproc_find_carveout_by_name(),
-> 
-> -for the stm32_rproc:
-> reviewed-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-> tested-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-> 
-> - for the st_remoteproc
-> reviewed-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-> 
-> Thanks,
-> Arnaud
-> 
-> 
->>
->> Rob
-> _______________________________________________
-> Linux-stm32 mailing list
-> Linux-stm32@st-md-mailman.stormreply.com
-> https://st-md-mailman.stormreply.com/mailman/listinfo/linux-stm32
+The first patches extend and cleanup the gpu scheduler events,
+then add a documentation entry in drm-uapi.rst.
+
+The last 2 patches are new in v8. One is based on a suggestion
+from Tvrtko and gets rid of drm_sched_job::id. The other is a
+cleanup of amdgpu trace events to use the fence=%llu:%llu format.
+
+The drm_sched_job patches don't affect gpuvis which has code to parse
+the gpu_scheduler events but these events are not enabled.
+
+Changes since v7:
+* uint64_t -> u64
+* reworked dependencies tracing (Tvrtko)
+* use common name prefix for all events (Tvrtko)
+* dropped drm_sched_job::id (Tvrtko)
+
+Useful links:
+- userspace tool using the updated events:
+https://gitlab.freedesktop.org/tomstdenis/umr/-/merge_requests/37
+- v7:
+https://lists.freedesktop.org/archives/dri-devel/2025-January/488117.html
+
+Pierre-Eric Pelloux-Prayer (10):
+  drm/debugfs: output client_id in in drm_clients_info
+  drm/sched: store the drm client_id in drm_sched_fence
+  drm/sched: add device name to the drm_sched_process_job event
+  drm/sched: cleanup gpu_scheduler trace events
+  drm/sched: trace dependencies for gpu jobs
+  drm/sched: add the drm_client_id to the drm_sched_run/exec_job events
+  drm/sched: cleanup event names
+  drm/doc: document some tracepoints as uAPI
+  drm: get rid of drm_sched_job::id
+  drm/amdgpu: update trace format to match gpu_scheduler_trace
+
+ Documentation/gpu/drm-uapi.rst                |  19 ++++
+ drivers/accel/amdxdna/aie2_ctx.c              |   3 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c    |   2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c        |   3 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c       |   8 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.h       |   3 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_trace.h     |  32 ++----
+ drivers/gpu/drm/drm_debugfs.c                 |  10 +-
+ drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c  |   2 +-
+ drivers/gpu/drm/imagination/pvr_job.c         |   2 +-
+ drivers/gpu/drm/imagination/pvr_queue.c       |   5 +-
+ drivers/gpu/drm/imagination/pvr_queue.h       |   2 +-
+ drivers/gpu/drm/lima/lima_gem.c               |   2 +-
+ drivers/gpu/drm/lima/lima_sched.c             |   6 +-
+ drivers/gpu/drm/lima/lima_sched.h             |   3 +-
+ drivers/gpu/drm/msm/msm_gem_submit.c          |   8 +-
+ drivers/gpu/drm/nouveau/nouveau_sched.c       |   3 +-
+ drivers/gpu/drm/panfrost/panfrost_drv.c       |   2 +-
+ drivers/gpu/drm/panthor/panthor_drv.c         |   3 +-
+ drivers/gpu/drm/panthor/panthor_mmu.c         |   2 +-
+ drivers/gpu/drm/panthor/panthor_sched.c       |   5 +-
+ drivers/gpu/drm/panthor/panthor_sched.h       |   3 +-
+ .../gpu/drm/scheduler/gpu_scheduler_trace.h   | 103 +++++++++++++-----
+ drivers/gpu/drm/scheduler/sched_entity.c      |  16 ++-
+ drivers/gpu/drm/scheduler/sched_fence.c       |   4 +-
+ drivers/gpu/drm/scheduler/sched_internal.h    |   2 +-
+ drivers/gpu/drm/scheduler/sched_main.c        |  11 +-
+ drivers/gpu/drm/v3d/v3d_submit.c              |   2 +-
+ drivers/gpu/drm/xe/xe_sched_job.c             |   3 +-
+ include/drm/gpu_scheduler.h                   |  13 ++-
+ 30 files changed, 186 insertions(+), 96 deletions(-)
+
+-- 
+2.43.0
+
 
