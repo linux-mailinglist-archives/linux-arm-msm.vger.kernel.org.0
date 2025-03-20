@@ -1,138 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-52093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32306A6A82F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 15:16:40 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5550AA6A823
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 15:15:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD8F21889EFC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 14:10:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1CD97B174A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 14:14:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9C9C224236;
-	Thu, 20 Mar 2025 14:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 864FB22155E;
+	Thu, 20 Mar 2025 14:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="f+//xFNG"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mEWDKUOq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2C0224224
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 14:10:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC25211C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 14:15:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742479818; cv=none; b=ZKw6Ex+rXFKHfQLV62Yyw/moloLwAeCojaQ2MgOOqQ5lMlg+6QiSRFr9KX9NPyjwaLgKsl980ETwC6eS1Jdr7owm/+3a0KFOdNDS696UtmQcf57rw2BlY0KZrtHWMR3uPe0WWMu72xlZpztQ5IKgX5UPwOJOHKu2y5PnL9kiysU=
+	t=1742480145; cv=none; b=V+3K4mLKIOCm3KLwRaifWWJtenDQK6hpUC3Q3BM1t+NH8ACiDni0t/rRZ6bzi/V3a/gW9DHtiwF1vFqUItCktF3SxIcpGFRbZjUK4D7TEW/2v9ZK+D6SlX4vNWFxs7n5lFaJia+SWu12XlwKP/fUcQYBUpiTtG5OPuuwqzH+Oas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742479818; c=relaxed/simple;
-	bh=s9l2NK29FWKMvXALTznvduzAySe6UJPpHquolLsiQd4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YD6+cZ7Jf1K440P5jf08CfHv45t/6JhhY/TN6yNlbag6JB4uo+ZbmDZRyeqGFOOVhgJGAakTvPHbI9pmzI1nUx7DO50PLQ7urlG973MoeYWaptdSkxiqL7sY8wP1Gzw5ufgrkRJt3IPzpLwxvT4mt3P1EyBNZb4LahiCCdPvC2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=f+//xFNG; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5497590ffbbso969789e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 07:10:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1742479813; x=1743084613; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s9l2NK29FWKMvXALTznvduzAySe6UJPpHquolLsiQd4=;
-        b=f+//xFNGGZvxwxj+Vv383dFinOad8cYAxDRm2hYWi9ZpiYh5IcwqheYJu+jwyDvaQD
-         ue7jTqQG0doCfezleeJzCE56D/D4eNgXs1vy8qg8YwivgN/EdjQ1T65XPtvJ3bmALPLn
-         NBmEHKeGt8VKue9m3UTIxwalqA+Xozx5KPDec=
+	s=arc-20240116; t=1742480145; c=relaxed/simple;
+	bh=5ronVJq9UU0bG8QY1CBNRyXP7cs7CbWkOrSQ2Epye3c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cik32gk6tkWcd0ia6AG0xiJ9yYfIhrDcgkgf7lftd89n0zx9euPamTYv4W8kxxTXAp73R+O0vcADHSvxDnSBAeMGDhG9ZCoCn3hkT/OwCDWuCRO7QOdl5onnGJlGyc2pW31oub0ZwL91zlAomR7twg4EHBqMUKqQmt2E8Co/z2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mEWDKUOq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52KD5g6e014467
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 14:15:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=8aBcQrbNTmhrIz1gphJsGN9i
+	CmDPwX8fWpWm652biE8=; b=mEWDKUOqGxp05cdXm3S6yhSf8ONNGMBYxDsDK3sU
+	MVdPOQ/6Gqjga9+mP69soGUeqKvkc38Ln2Qm0tYUrQcB3kOG6uVAugysIaGkDBWN
+	jg6R3HpHiiYvEGTjuiB2m5dgQ6Vf8Y3jk2QCG8fpWXtMvwVY43gTeaxVfbUkAC5j
+	Pj+sqBQBBBQ693Zsi9+rNRCHsVtUoDGTM1+aRjfdSjZrEdNjq2g0m8i/PG0Xanpg
+	GLMpcQ/6UbOvp+SrD9feYs0iUXrTkYoDNoEfCrlVonI/zgY9HxZItctrSsM7vbbK
+	GSx5xfrn5YhAAj6PUBDrhrwZgxu7ePAzUyA+q9+5LPa8Yg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45exwtsgcf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 14:15:41 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7bb849aa5fbso257036185a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 07:15:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742479813; x=1743084613;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=s9l2NK29FWKMvXALTznvduzAySe6UJPpHquolLsiQd4=;
-        b=NTQSfw4SWt/mA0T/EWsgvyjzBk1tXLzAoItlYNklDzcuHrndSND02nkz199JE4PB3v
-         QQx9SfC3SQr1xJjn+s2pdu++8pviB+LVwGDBJm2ulR1IQDzhyGzvyTegR4eYrkNSakJc
-         1q8HDkv/shV6TN+P0FsHwntElxLyDWxOtRQl6c94DxnZ3ySa5q3+yvLKdSSsI+CI2VJR
-         B00n7ETsQ0Do/F+kmZ4OFvbgbAjkGzviWXltKvGmUKb7qxwA+hIKzaWnYOIcTdkM/ql0
-         jS7i7ezaaaTeIPpjgK8e3jO1HDyV5liYo+9e8Lr7mzbhE/l7jeg1c47OiLrRBOgfpypm
-         nKpw==
-X-Forwarded-Encrypted: i=1; AJvYcCV+aBUubPBt3CMhlBhRIxgtC3z9yvK8coTYEpULcWfFeDafrnWT5ERmMkmIVSro+HYL/iQISyBmMReXo+cY@vger.kernel.org
-X-Gm-Message-State: AOJu0YzhZNZTJxhQwi0Zl/77rgwVUrUk7fs7lidgfhIhGeM9yW2DR1EY
-	wLHgYJEyWCV53SawI0UAexW4nM5DPqM1NIhlcCLv43fIqimZ+mC1QVIl+GQyXOQaU2EbDr9vDjm
-	H3A==
-X-Gm-Gg: ASbGncvLCqEUD6T/LHKsDf68rCHbdJTvg1iDf/Bp6xyZN/H5chOW+SXX9waYxNZN/0U
-	eiuZJIxH5CasEgne9PUXV+Mnr32UbciUe7PFvMboIArslsHXjC+q/JQTF54FUlqWvr2/QLQSLiI
-	QZnZsLv8uhqpSU9CJFzQI82vGf7yI3UuxwwAOi2XVCQ1F1KUD474kf1l3gjlfIxyBXcjEKYqFHB
-	aRgqA/Er5rTx7ykLMBJHGj7kPfmUyg5YmejukWRhCYGeYriFJZ9JeBqo9yZ2DMaEJY8kBjQ0fiZ
-	nOUbI25KCZ1Im2np1WunG3w7KQ9WMY18xcU1kz4fRG7CAjtlz+LIfnMygNsOP/icKhKNhFuSj5l
-	RE0eeNOgu
-X-Google-Smtp-Source: AGHT+IFvnCuMjKfsbZMOTSMFxSmUjYr5J+inZFbFJxPm5O1+AyBO5JQXQMwvztNXj/hgDDddogBbuQ==
-X-Received: by 2002:a05:6512:2255:b0:549:4416:df02 with SMTP id 2adb3069b0e04-54ad0678646mr1192165e87.41.1742479813081;
-        Thu, 20 Mar 2025 07:10:13 -0700 (PDT)
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com. [209.85.167.52])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30d6b32979bsm5268541fa.83.2025.03.20.07.10.12
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Mar 2025 07:10:12 -0700 (PDT)
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5497590ffbbso969718e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 07:10:12 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVGLeMjnQ5gqCRt3/2tDwtJhmsDPD9VmCqVd9M2ZtVqHXtxvMGFdCLnSdZhhPbhdlGk132s+fyh/ZfJHYOx@vger.kernel.org
-X-Received: by 2002:a05:6512:1312:b0:549:4f0e:8e28 with SMTP id
- 2adb3069b0e04-54ad062b20dmr1419150e87.15.1742479811664; Thu, 20 Mar 2025
- 07:10:11 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742480140; x=1743084940;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8aBcQrbNTmhrIz1gphJsGN9iCmDPwX8fWpWm652biE8=;
+        b=Oj2vWMMuvKyjOlVGkhniXDeZQGHZQTHmgUOqlT08EnwmYxd6PEkyH7i6XDIFLHyAGe
+         RSnafTxAWKeZnbgLKbGnbR6sCRwa4fEFV0CJRNshAqrdp6ElyE9xg97YKpBm/Qu4CqbS
+         Mz1rubw4BKZzlENwPdHvVA69UOUOu2iRVxMWm4ea37a+EsyC5VkDle9r5+RrtFw9AF1N
+         2RMC9zaDSovLkmgANmZoT7s6oac+ugPk0nKfM1CYtrNb5h2YMI+CK3oM4M/FSxyaJGGA
+         F6MjbPk1pawPrwlXWSNJq6eSgfpn4FwVZgce/jE98J2ZRP7mjZ+z/BkwoKIvGKX57xql
+         DSuw==
+X-Forwarded-Encrypted: i=1; AJvYcCUB5EeDEFbUO87vdg1LDULur2ItTLgANRJK7gOEBlKTreT6ibDb/L7q9PKEu96Uo08RNm1NaUn5ITg/3sx3@vger.kernel.org
+X-Gm-Message-State: AOJu0YyYbNY+ijzU1jSwfBiZIeU9eZNMUt/QeNhesGe9eH1NIVovM+2c
+	mSQA1+NZCOgDN3sM3qjIU1QuYEWxYb3Qz1cGBhzwGHtP+6wKgnxPz0RJyOw6GRAUG9UFbzvJuPd
+	dclbDhrso3iXuS6z/AZnRWvV79Mr2QiWVgfx3mCH2ntJESAs6ouXwSL3wbVoD5Hod
+X-Gm-Gg: ASbGncuUQnH/DqgTEluPJRn4pyqeYA5HQ8egyaDOA7s9LmZTxf4cLSPMz25k/qDU5RS
+	sftW0EG27S67dluJq8gfGgqaCzMd2yiOf2bpoKUPdTNFi4xNLivVff21H3mIelSvHvdOEiCi1dx
+	IRv6wZWBEVSuFSUjxBnpvNfAKD+csUkf8De0ClNh460QkmATsJOzV6+qVrwXlspQL27Iu9RkLGH
+	2Tx1c9dsrybKPWGLG+11zzh012DUzE9QfgJvvUhyX4s1jNGC8aai5T3bzD50zKwti267VdPDASS
+	1dbb/TvtkEpkzXzYou3GuS7fKTZY1/HDcWjft5Opl/ONB4m5DW3IGNwCxOq7WV5Z5tHWvZGKbx+
+	LexQ=
+X-Received: by 2002:a05:620a:1707:b0:7c5:4eee:5405 with SMTP id af79cd13be357-7c5b0d07bc3mr500717085a.35.1742480140596;
+        Thu, 20 Mar 2025 07:15:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF48Z8OdEGRPlkLUazNGK2qg1AZCI2lznykkVH1S8wwNrf4UsdJLlA4Yst7O0bQCuVa+zPlpA==
+X-Received: by 2002:a05:620a:1707:b0:7c5:4eee:5405 with SMTP id af79cd13be357-7c5b0d07bc3mr500709485a.35.1742480139998;
+        Thu, 20 Mar 2025 07:15:39 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549ba7c07b0sm2209494e87.79.2025.03.20.07.15.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Mar 2025 07:15:39 -0700 (PDT)
+Date: Thu, 20 Mar 2025 16:15:36 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+        dri-devel@lists.freedesktop.org, arnd@arndb.de
+Subject: Re: [PATCH v2 4/5] misc: fastrpc: Add polling mode support for
+ fastRPC driver
+Message-ID: <2k6573yrw3dyn3rpwqz4asdpx3nlmj4ornm7kmxv3f4jlc6hzg@qkwn7gqduwri>
+References: <20250127044239.578540-1-quic_ekangupt@quicinc.com>
+ <20250127044239.578540-5-quic_ekangupt@quicinc.com>
+ <hgox77a7e6zzriltwhzzciau6u2pmil4y3rl5o2l6zkp4fmlmp@q2dai5fxcvtq>
+ <49295da9-82d4-45a0-a2a4-fdaa6600c70d@quicinc.com>
+ <an4cvztdkqmrt7w2iaziihlxf4tbox65ze362v2lmycjnqg26y@jizjmh2ki34z>
+ <939fcff6-fb93-487b-995b-88e3ff020784@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250320-wip-obbardc-qcom-t14s-oled-panel-v1-1-05bc4bdcd82a@linaro.org>
- <zgzivcjcygbi272q3dmkff767cb45uoffwtx37ij23pi2g5ubi@j5bxjdbgqaqz>
-In-Reply-To: <zgzivcjcygbi272q3dmkff767cb45uoffwtx37ij23pi2g5ubi@j5bxjdbgqaqz>
-From: Doug Anderson <dianders@chromium.org>
-Date: Thu, 20 Mar 2025 07:10:00 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Xn2cEKQ+Uj5Okemo4_RJ-1uJ_SQ5X5TycJs5bYdNpcBQ@mail.gmail.com>
-X-Gm-Features: AQ5f1JqCwIwBUwu1Y1sQAJLBekmg4FIUOmSSxOrj8jLfvkFWDtf9gs7NC20D47E
-Message-ID: <CAD=FV=Xn2cEKQ+Uj5Okemo4_RJ-1uJ_SQ5X5TycJs5bYdNpcBQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/panel-edp: Add panel used by T14s Gen6 Snapdragon (OLED)
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Christopher Obbard <christopher.obbard@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <939fcff6-fb93-487b-995b-88e3ff020784@oss.qualcomm.com>
+X-Proofpoint-GUID: wvG1Le-eq8-HXLli9C5-fD8nIDQvCH0q
+X-Proofpoint-ORIG-GUID: wvG1Le-eq8-HXLli9C5-fD8nIDQvCH0q
+X-Authority-Analysis: v=2.4 cv=UoJjN/wB c=1 sm=1 tr=0 ts=67dc230d cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=NEAV23lmAAAA:8 a=I9Tj63J92sXnRp7HOM8A:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-20_03,2025-03-20_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ impostorscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999
+ phishscore=0 adultscore=0 clxscore=1015 spamscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503200088
 
-Hi,
-
-On Thu, Mar 20, 2025 at 6:47=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On Thu, Mar 20, 2025 at 12:47:09PM +0000, Christopher Obbard wrote:
-> > The Lenovo Thinkpad T14s Gen6 Snapdragon OLED model has a Samsung
-> > panel. The kernel currently prints a warning due to not having the
-> > correct timings.
+On Thu, Mar 20, 2025 at 07:19:31PM +0530, Ekansh Gupta wrote:
+> 
+> 
+> On 1/29/2025 4:10 PM, Dmitry Baryshkov wrote:
+> > On Wed, Jan 29, 2025 at 11:12:16AM +0530, Ekansh Gupta wrote:
+> >>
+> >>
+> >> On 1/29/2025 4:59 AM, Dmitry Baryshkov wrote:
+> >>> On Mon, Jan 27, 2025 at 10:12:38AM +0530, Ekansh Gupta wrote:
+> >>>> For any remote call to DSP, after sending an invocation message,
+> >>>> fastRPC driver waits for glink response and during this time the
+> >>>> CPU can go into low power modes. Adding a polling mode support
+> >>>> with which fastRPC driver will poll continuously on a memory
+> >>>> after sending a message to remote subsystem which will eliminate
+> >>>> CPU wakeup and scheduling latencies and reduce fastRPC overhead.
+> >>>> With this change, DSP always sends a glink response which will
+> >>>> get ignored if polling mode didn't time out.
+> >>> Is there a chance to implement actual async I/O protocol with the help
+> >>> of the poll() call instead of hiding the polling / wait inside the
+> >>> invoke2?
+> >> This design is based on the implementation on DSP firmware as of today:
+> >> Call flow: https://github.com/quic-ekangupt/fastrpc/blob/invokev2/Docs/invoke_v2.md#5-polling-mode
+> >>
+> >> Can you please give some reference to the async I/O protocol that you've
+> >> suggested? I can check if it can be implemented here.
+> > As with the typical poll() call implementation:
+> > - write some data using ioctl
+> > - call poll() / select() to wait for the data to be processed
+> > - read data using another ioctl
 > >
-> > This panel appears to work with the default conservative timings,
-> > so add the OLED panel to the list of supported panels with default
-> > timings.
->
-> Are you sure that this panel can be handled by panel-edp.c correctly and
-> it doesn't require a workaround implemented in
-> panel-samsung-atna33xc20.c?
+> > Getting back to your patch. from you commit message it is not clear,
+> > which SoCs support this feature. Reminding you that we are supporting
+> > all kinds of platforms, including the ones that are EoLed by Qualcomm.
+> >
+> > Next, you wrote that in-driver polling eliminates CPU wakeup and
+> > scheduling. However this should also increase power consumption. Is
+> > there any measurable difference in the latencies, granted that you
+> > already use ioctl() syscall, as such there will be two context switches.
+> > What is the actual impact?
+> 
+> Hi Dmitry,
+> 
+> Thank you for your feedback.
+> 
+> I'm currently reworking this change and adding testing details. Regarding the SoC
+> support, I'll add all the necessary information.
 
-Yeah, I'd agree with Dmitry here. To the last person who wanted to add
-a Samsung OLED panel, I replied [1]
+Please make sure that both the kernel and the userspace can handle the
+'non-supported' case properly.
 
-It's much more likely that this should use the
-`panel-samsung-atna33xc20.c` driver, which gets the timings more
-correct for Samsung OLED panels (there's an extra GPIO it needs to
-manage). To use that driver, you'll actually just need to need to add
-a new compatible and use the existing one as a fallback. See recent
-changes to:
+> For now, with in-driver
+> polling, we are seeing significant performance improvements for calls
+> with different sized buffers. On polling supporting platform, I've observed an
+> ~80us improvement in latency. You can find more details in the test
+> results here: 
+> https://github.com/quic/fastrpc/pull/134/files#diff-7dbc6537cd3ade7fea5766229cf585db585704e02730efd72e7afc9b148e28ed
 
-Documentation/devicetree/bindings/display/panel/samsung,atna33xc20.yaml
+Does the improvement come from the CPU not goint to idle or from the
+glink response processing?
 
-[1] https://lore.kernel.org/r/CAD=3DFV=3DX+WnSKZTFhzdXEFfpKCEqfPDc77h7oG=3D=
-ZU6Nqq6XHOmA@mail.gmail.com
+> Regarding your concerns about power consumption, while in-driver polling
+> eliminates CPU wakeup and scheduling, it does increase power consumption.
+> However, the performance gains seem to outweigh this increase.
+> 
+> Do you think the poll implementation that you suggested above could provide similar
+> improvements?
+
+No, I agree here. I was more concentrated on userspace polling rather
+than hw polling.
+
+-- 
+With best wishes
+Dmitry
 
