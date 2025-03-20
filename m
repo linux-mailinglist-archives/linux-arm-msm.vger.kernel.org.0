@@ -1,277 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-52079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70E32A6A555
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 12:50:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC4BFA6A5A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 13:00:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 35F638A0B48
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 11:48:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B710E1892729
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 11:56:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82356227B8E;
-	Thu, 20 Mar 2025 11:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F82121D5B0;
+	Thu, 20 Mar 2025 11:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g5MJi3Ke"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Qdxths+v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEEB226CF4;
-	Thu, 20 Mar 2025 11:45:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE0617A2E2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 11:56:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742471142; cv=none; b=NCNcN18DnuH4SNvEb3aHVz+m5LOdhD65YgZacaFVWe2zVNN7ZURI/mWLmlWy5ppwvZXUsMtSYyit7ix88Z4INCDuaprkBHWzz2QhTdnp+ZQTPnUmFv7MQFhcQVqEeejNSHTZAdo2Olw75y+jPl4q/0Ki66TTQDiNhne3/TXoyAY=
+	t=1742471803; cv=none; b=UdqHU6JyX89Cl9JxvTcbBXFmOY9iQoVorTlJJKRRl79fX+Dg70xOK4byxMfXxZl3Q8ZtCcfH9RzlXY3zSjdZG0ztR2VOFeA9xTm2hukaikjdheXkg7nDmRjkpep4xcg3u8hQoX0RkxRyaduEcpQSDrkcfCo2pzvS5wFFQJsUE1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742471142; c=relaxed/simple;
-	bh=AiG8zpJ+4Lzdhs3ZkkOdbU49oRwheNJ+GLQss5hysdI=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EvGOr6vrleXrhLSpGKqhZk0JH6/ZybU6Hjzl9eaFBEuv64qabM/JPJmGedVEAToCIzb+WN+777F/1ovr5XwwWLFZFL5qxR+9jZK68k6Uig30WwTMErXDtLnLgJLYV2dSU34FulMS/gm4ACzLsVVUics758TWEWpb12di8oenv7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g5MJi3Ke; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52K6Z6EL014273;
-	Thu, 20 Mar 2025 11:45:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=PVBeExWVDEEnGUKR4gEguT4G
-	uIAycJmRZQQVissjodY=; b=g5MJi3KeqHzpf9S+Fe2RzqjwApOawCQ1yQ5vzFpv
-	zezgbjNWdYOo0e6xYphqVfQBt3gyM87u7z6waBu0TmwkHITcwUDEOG4SQN3zcQ2f
-	+k0+WqRbLaV0iEZucTBHMsrRdM5nYJf1013CY3MjO5wRmDKCHa8Mo9sMMq2uFyGx
-	Lztw0XDgnjF++OgyK7HIZ+slSWAy+2yHfN/XOCdTQbQjjD24gU6R6O7DnjtxWSPC
-	q1ftPTY+X/bbg7+8ENJiT2IK3ir7jvYswkAN0DatmmkOUQOFeC0MZZh3fQnPLBDQ
-	vZQzEytQ5JWH2b6NvTuSy1jpsMCnpVNpnIS5y8yER17Qng==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45g09f2ytc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Mar 2025 11:45:36 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52KBjZT5014641
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Mar 2025 11:45:35 GMT
-Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 20 Mar 2025 04:45:28 -0700
-Date: Thu, 20 Mar 2025 17:15:19 +0530
-From: Wasim Nazir <quic_wasimn@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
- Ride-r3
-Message-ID: <Z9v/z/i6OyWXXe7N@hu-wasimn-hyd.qualcomm.com>
-References: <67b888fb-2207-4da5-b52e-ce84a53ae1f9@kernel.org>
- <Z3/hmncCDG8OzVkc@hu-wasimn-hyd.qualcomm.com>
- <b0b08c81-0295-4edb-ad97-73715a88bea6@kernel.org>
- <Z4dMRjK5I8s2lT3k@hu-wasimn-hyd.qualcomm.com>
- <80e59b3b-2160-4e24-93f2-ab183a7cbc74@kernel.org>
- <Z8AWHiVu05s0RJws@hu-wasimn-hyd.qualcomm.com>
- <a8991221-88b2-4a39-a51b-587c4cdeebe4@kernel.org>
- <Z8laCxtHOdNm3rRu@hu-wasimn-hyd.qualcomm.com>
- <Z8lb889QrqluPXXl@hu-wasimn-hyd.qualcomm.com>
- <e00a7061-5283-4809-b652-5f6c5e1e4496@kernel.org>
+	s=arc-20240116; t=1742471803; c=relaxed/simple;
+	bh=BMShRTcWJEQSaIviUcz1ALmaZ6O0uj4o+VfvJ359y5E=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CocslQuvJECu6/2Dt+S5hhfQAM9fv5KRgaWspDGK1bUymMWyMewwFd0M2mq+FcIM2wFymBsPVxYouwTwpA9BSpHj/P4heEJWMhgdiYPrkTfk6vNJIcqNA0dLmhYRwuV9ct9VCZtwbGXz6r+ancCV5kyv5Z+dWjcKitz3mH8QUE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Qdxths+v; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43690d4605dso4247535e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 04:56:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1742471800; x=1743076600; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BX8azcuPUPcGmYXdX3K49oOlARId2JPIzgFIvQ9dQ4g=;
+        b=Qdxths+vOfIaseJUEsulczxWszpVXnki9fEhPVxKbaTIn84YNKsgTCXEKx7xkIgs8M
+         k28IWfLxjLeTRf0SOcTGf08a2AAkb6LdI+6WYWZxkTrekAP57Bsn1qV22PeNscObkjAk
+         qZXVfNdMOMASggAZD7FcHcIl40E4bhW9XyT4lbpEC6F+c6+HSI2/nKLoRP/ZURFAVJDA
+         +7ZCi9y/hrbqVc5Jc/Fn9hKIBF19eJcoXafVOv1degNtNiwp7+w3qML1p7wkylTgwQa4
+         RHx1KHWVZ2QPFaGGpk664pUObT8zcXkAh5f6O1+iQEl5hbqgs/W5w26iy/IDPMK3Q+3F
+         ExWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742471800; x=1743076600;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BX8azcuPUPcGmYXdX3K49oOlARId2JPIzgFIvQ9dQ4g=;
+        b=Oh5eisYxMmZUyA92fiULV+KrNZLiy1PERxu+jIoqtn55Fuljiz6T5cH9xxfWMe5P2W
+         2n5iGKiNP3i8ja3DbAwtiNW47TfyjY54E7yg/hFAj9pWRCacaKcz2E4nb8Q5WSyqumLl
+         qr6pF46q3O2l0K9cO5ytwXZeZkpKC0j9SvBLMlud4l7Gi2u1rm6ZuRBIo/LNorAtxo1g
+         /Fbzxi6L3V3/QqlqM+fc4Rhw29L9k8ET2uiHfbcKsD4OxBroQtQNLqDwjj+rGDu8eFA1
+         vIO76tgk/3cbSRYBiRtgHv9is9053DmJa/q6qxkAH5E14o3Q/yzyH9S5GfwAnCP4TRRB
+         KDzA==
+X-Forwarded-Encrypted: i=1; AJvYcCU4KPLku8REljBn2Gk0/3h8/7YRcsKBskoKZw+CwWO7t4tiyTxtFkZl2TGx2KJhFkDWKQmBuUT1ITDGUgQA@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIxbV90AjHygE05k8AVHEaW6YBu089YH8IgUtFmFnM8c/g7yFU
+	QVW3Gf3rH/GjGS9DHASv8PR53IsNxjUafukgMkTjf97IFk7zvJaUxIvLWgdojUs=
+X-Gm-Gg: ASbGncuSMtpAG6AmFVQmGISXKMVLqSg2SQODIO69lSyfYQB2kjwu9dUnqVFG3nut86v
+	eb7YasJPGCFRidRH+aJ+BrN75xkFnSiRbsB33x9Rb8CjpDEA02xjEZPu9fuQF436f4aCjN7wF8j
+	/Zj94BwTuzR8lBGSro8ItuXf7N65nnf63FmLKoRRVsvMr9nHV/5qt1izbv3FYZVtAqjQXwvNWoO
+	y2oqhP9w3Z33TUlv1WfG/q6I/kl5KId5E0UkTBWvlrcadfIFWl7/fzRS5wCvFXcOuZ0JNujI8F7
+	y18vMxUxgIPzAn22K/LlMEN/YrhPwKV8+VSllLUZU4UHhNk3fMfL9bEEXadaisvtU5w8Ug==
+X-Google-Smtp-Source: AGHT+IFuA3/VMVKcDf3fFvwvPD1gU5PkZBOsrXrba5zDC7lgg5k/5Q4hY20InWuM7OSFEj3sUpm5YQ==
+X-Received: by 2002:a05:6000:2cd:b0:391:2fe3:24ec with SMTP id ffacd0b85a97d-399739bc8c0mr6784071f8f.14.1742471800069;
+        Thu, 20 Mar 2025 04:56:40 -0700 (PDT)
+Received: from localhost.localdomain ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c888117csm23257857f8f.44.2025.03.20.04.56.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Mar 2025 04:56:39 -0700 (PDT)
+From: srinivas.kandagatla@linaro.org
+To: peda@axentia.se,
+	broonie@kernel.org,
+	andersson@kernel.org,
+	krzk+dt@kernel.org
+Cc: ivprusov@salutedevices.com,
+	luca.ceresoli@bootlin.com,
+	zhoubinbin@loongson.cn,
+	paulha@opensource.cirrus.com,
+	lgirdwood@gmail.com,
+	robh@kernel.org,
+	conor+dt@kernel.org,
+	konradybcio@kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	dmitry.baryshkov@oss.qualcomm.com,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	johan+linaro@kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v2 0/5] ASoC: wcd938x: enable t14s audio headset
+Date: Thu, 20 Mar 2025 11:56:28 +0000
+Message-Id: <20250320115633.4248-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <e00a7061-5283-4809-b652-5f6c5e1e4496@kernel.org>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=BvKdwZX5 c=1 sm=1 tr=0 ts=67dbffe0 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=YMAUWDJ-R26CST9i6d4A:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: PllAftRfbZnpMCrct6k3NwDDmHFYS3YS
-X-Proofpoint-GUID: PllAftRfbZnpMCrct6k3NwDDmHFYS3YS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-20_03,2025-03-19_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 bulkscore=0 impostorscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 suspectscore=0 phishscore=0
- mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503200071
+Content-Transfer-Encoding: 8bit
 
-Hi Krzysztof,
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-> >>
-> >> Which piece of actual hardware is represented in qcom-ride-common?
-> >>
-> > 
-> > All daughter cards like SOC-card, display, camera, ethernet, pcie, sensor, etc.
-> 
-> No, I asked about the name of the hardware, datasheet, ID or picture.
-> Common DTSI represents somoething, not just because you wanted to add
-> something you had in downstream.
-> 
+On Lenovo ThinkPad T14s, the headset is connected via a HiFi Switch to
+support CTIA and OMTP headsets. This switch is used to minimise pop and
+click during headset type switching.
 
-Currently we don't have any datasheet or document which is publicly
-available, so I will try my best to describe our HW.
+This patchset adds required bindings and changes to codec and dts to   
+tnable the regulator required to power this switch along with wiring up
+gpio that control the headset switching.
 
-Ride is a modular hardware system with several smaller daughter cards
-connected to single backplane board and each daughter card is stacked on
-top of each other. I will try to explain each daughter card with HW
-components and how it is connected to construct the ride-hw.
+Without this patchset, there will be lots of noise on headset and mic
+will not we functional.
+   
 
-Backplane board:
-  - It contains an MCU (Aurix TC397), CAN/LIN transceiver,
-	Audio/GNSS/IMU-I2C signals, Fan header
-  - It holds & connects all the daughter cards.
+Changes since v1:
+	- moved to using mux-controls.
+	- fixed typo in regulator naming.
 
-SoC card:
-  - It contains:
-    - SoM:
-      - One of QCS9075M/QCS9100M/QAM8775p SoM.
-	  - Each SoM is composed of either qcs9075/qcs9100/sa8775p SoC, along
-		with DDR & PMICs.
-      - Each SoM can be mounted to same SoC-daughter card of ride-hw.
-    - In addition to SoM, it also has
-      - 4x UART, 2x USB 3.1 & 1x USB 2.0
-      - Memory: 1x OSPI, 2x UFS-3.1
-      - Debug: JTAG/QDSS header
-      - PCIe0, PCIe1 & Display signals
-      - Reset button
-  - It is connected to backplain board via B2B connector.
+Srinivas Kandagatla (5):
+  dt-bindings: mux: add optional regulator binding to gpio mux
+  mux: gpio: add optional regulator support
+  ASoC: dt-bindings: wcd93xx: add bindings for audio mux controlling hp
+  ASoC: codecs: wcd938x: add mux control support for hp audio mux
+  arm64: dts: qcom: x1e78100-t14s: Enable audio headset support
 
-Display card:
-  - It contains:
-    - 4 eDP ports & 2 DSI-DP bridge
-    - I2C GPIO expander & I2C switch
-  - It is connected to SoC-card via B2B connector.
+ .../devicetree/bindings/mux/gpio-mux.yaml     |  4 ++
+ .../bindings/sound/qcom,wcd938x.yaml          |  7 +++-
+ .../qcom/x1e78100-lenovo-thinkpad-t14s.dts    | 25 ++++++++++++
+ drivers/mux/gpio.c                            |  8 ++++
+ sound/soc/codecs/Kconfig                      |  2 +
+ sound/soc/codecs/wcd938x.c                    | 38 +++++++++++++++----
+ 6 files changed, 75 insertions(+), 9 deletions(-)
 
-Camera card:
-  - It contains:
-    - 4 Quad DE-serializer, each supporting 4 MIPI CSI inputs
-    - Total upto 16 Cameras ports are supported.
-  - It is connected to backplain board via B2B connector.
+-- 
+2.39.5
 
-Ethernet card:
-  - There are two variants of ethernet card each with different
-	capabilities:
-    - [Ethernet-v1] card contains:
-      - 2x 1G RGMII phy, 2x 1G SGMII phy(enabled currently)
-	  - Total 4 phy supported, only 2 phy are enabled and it is used in
-		ride.
-    - [Ethernet-v2] card contains:
-	  - 2x 1G RGMII phy, 2x 2.5G HSGMII(enabled currently) & 10G PCIe based
-		MAC+PHY controller
-	  - Total 5 phy supported, only 2 phy are enabled and it is used in
-		ride-r3.
-  - Either [Ethernet-v1] or [Ethernet-v2] is connected to backplain board
-	via B2B connector.
-
-PCIe card:
-  - It contains:
-    - PCIe connections to SoC-card
-	- NVME, 2x WLBT module QCA6696/QCA6698 (Wi-Fi & bluetooth solution) &
-	  GNSS module
-  - It is connected to backplain board via B2B connector & PCIe signals are
-	connected to SoC card via flyover cables.
-
-Sensor Card:
-  - It contains 3-Axix compass & 6-Axis 3D IMU (accel/gyro) module which
-	are communicating via I2C
-  - It is connected to backplain board via B2B connector.
-
-Front panel card:
-  - It does not contain any active circuitry, only ports are available
-    - Audio-in/out ports
-    - USB hub ports
-    - CAN/LIN ports
-    - 12V power off switch
-  - It is connected to backplain board via ribbon cable.
-
-> 
-> > 
-
-> >> |             |                      | +-------------------------+-----------------------+-----------------< sa8775p-ride-common.dtsi           |
-> 
-> 
-> There is no ride-common hardware. If there is, send us any proof of its
-> existence. all your statements here show you want to create some
-> structure because you like it. I don't think you get my questions. You
-> painted diagram of DTS, not hardware.
-> 
-> We talk about hardware. Not your DTS. Drop all DTSI, DTS, DTSO from here
-> and show us the hardware.
-> 
-
-Considering outlined h/w description, following are ride configuration
-variation each platform supporting:
-
-Between qcs9075, qcs9100 & sa8775p ride/ride-r3 boards, SoM is changing;
-And between ride & ride-r3 ethernet is changing.
-Excluding these differences all other cards i.e SoC, display, camera, PCIe,
-sensor, front & backplain are same and are refactored in ride-common.
-If any variant of these cards comes up in future we need to refactor
-ride-common accordingly. I will try to outline this as clearly as possible
-in next commit log.
-
-Considering current outlines of all daughter cards, following defines
-ride/ride-r3 variant boards:
-  - sa8775p ride    : QAM8775p SoM + [Ethernet-v1] + other daughter cards
-  - sa8775p ride-r3 : QAM8775p SoM + [Ethernet-v2] + other daughter cards
-  - qcs9100 ride-r3 : QCS9100M SoM + [Ethernet-v2] + other daughter cards
-  - qcs9075 ride-r3 : QCS9075M SoM + [Ethernet-v2] + other daughter cards
-
-Since we don't have a document yet which formally describes
-qcs9075/qcs9100 ride board with [Ethernet-v1] card, I shall be dropping
-this particular variant in next patch series and re-send after complete
-documentation is available.
-
-> > Actually we are not including dts here instead *.dtso file will be
-> > overlayed to *-ride.dts to generate *-ride-r3.dts.
-> > 
-> > Below is the correct arrow sequence.
-> 
-> And the overlay represents what exactly? Different board? No, that's not
-> how overlays should be used.
-> 
-> You have different board, you have different DTS.
-> 
-
-No the overlay is not a different ride board. This overlay represents
-[Ethernet-v2] card which is different than [Ethernet-v1] card.
-
-We thought of using overlay as otherwise we have to create separate board
-DTS to support [Ethernet-v2] cards.
-
-> 
-> > 
-
-
-> >> |                                    +-------------------------+-----------------------+-------------------< sa8775p-ride-ethernet-aqr115c.dtso |
-> 
-> How does "sa8775p-ride-ethernet-aqr115c" hardware look like?
-> 
-
-Here sa8775p-ride-ethernet-aqr115c.dtso is representing [Ethernet-v2] card.
-
-> 
-> Several companies solved it - most of NXP vendors, many Renesas etc. I
-> really do not get why this needs so much talk and you cannot learn from
-> their architecture how SoM should be represented.
-> 
-
-Our SoM is separate HW which is reusable in ride-hw. Can you share more
-details on what we can improve here?
-
-
-Thanks & regards,
-Wasim
 
