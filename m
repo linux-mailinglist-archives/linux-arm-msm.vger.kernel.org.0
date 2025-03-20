@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-52123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60135A6B046
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 23:06:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65641A6B052
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 23:09:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C583F7A2D9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 22:05:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EF947460F0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 22:09:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B34D822A1F1;
-	Thu, 20 Mar 2025 22:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49E0A221F03;
+	Thu, 20 Mar 2025 22:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VFEcz5p5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uOPawomh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DC6227E80
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 22:06:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB94F227EB2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 22:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742508396; cv=none; b=EM7nGl5SKbghPP71mwDBNYkmBz+xo2Y+rxUdmVUyy53ZRRSfdUZU2fD7BbNqRigzi8aGXpFEIbCYDYq3P05VMbaqIJdbmNPEJEDd6PO1vYwxDxUG6+Zu9KE71i3oLaXjcb54X38NeYiexb3d4bxDodi3GCmuR9WJk4PBtuthveg=
+	t=1742508526; cv=none; b=tRxQWuSzuEWkdE/DPI0DpulywTTe2r2lawVpOYNW/BYdd9aaEZ8gWgN45RSBwJZsyaFxqQI/qX6wlfK2cRlMzmFH4t1VvlIarDSdE3eRG0hkdgUKd4NlzS0rYgSk4WYCN+A39nm02sjoQiTRSyMeYEv9H3cEcqXLsA0qUp0TFdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742508396; c=relaxed/simple;
-	bh=wVNswW8rL4OetwqeJVEiR14YDddt4iIFHENN5BwD65c=;
+	s=arc-20240116; t=1742508526; c=relaxed/simple;
+	bh=8m18k/YVZXwaT6cjdUBIoBsH0d1LYOwkxCZPIfG+MK4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=a6YEJMkIWvpm5xEdxlupUqygcNoVfFY/6A/gt48nmbGgtl+0ICpJZtGJBISN+JpR4PDYRsROvE+oTtYpdBECm32zDQEfGhUf7cw5O/Cnik3QXMRh+Mj0yEuYEumIP5870caVXEw8+3anwMUVZAC6iDYOY3POEW6t/grHvTgtdpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VFEcz5p5; arc=none smtp.client-ip=209.85.128.53
+	 In-Reply-To:Content-Type; b=YXF39Ezs2dI5jY79DtkUTJ7iwXYUHHkh7jpznW3jf8evNihOmtmWsG6LOFyXkIjPQHxOT/xDHvkFN1N56bW+MUSQsOCI1aLWa6kdc+SP15rAvzqvfSVoy1PjQtxmsV3n/eKk1TmeOG+aRjHyA8TBeEKzh649F+cHMMUg+9Z1VIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uOPawomh; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43cfebc343dso9631955e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 15:06:34 -0700 (PDT)
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-391342fc0b5so1132244f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 15:08:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742508393; x=1743113193; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1742508521; x=1743113321; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=S+DKgKKe0d2S0aLSGa2DZ5AxLYPiZ/5bN97M2PhD9xQ=;
-        b=VFEcz5p5PxWd8KE8AHf+jggrtqzwlB6lwxj5zzG3vL5xcaCcDITZdhKZtDetK3//j3
-         eX9s+1QTYJp6MbncUPplXY7t4h2kmKo+AJQ2at43n7B6qUTr4v3rLpBGVc8ZvjrretAa
-         ApziytqIYQR/gAmUS5c/DYYh3KQn7gFsHtFMb4gDiY4WgD9JD00OYMHSTiVbpz6OHXrs
-         bQ8H1Rxc0EGieHZiXyNkN9pHjnQqApZBDTsvrdLW+aIlTIa1jrsaedhh7WBjVc7YMTOS
-         tIhTLUwuNlZdoW3F7x8coZ5tRCjDUaMGqp3eWbshyLThFNAG7pInnaZBJKe/lkt0vWRK
-         UP3w==
+        bh=b51iP35KFG1CIl36iu8PXktEtqpi3MNuLw8E+xpgKP4=;
+        b=uOPawomhDsS/Q+lyamKZdGR/UI4feiY862gA+XgsPVub/HbO3FiqqqcnGHsHwOnQvn
+         wwSnGIW4YWsb5sKQxvRdT+lIoGWZ6PsFF29MQFowAky9DEchw+YxZMN+AcZvRKGE5tML
+         JH9UK4pByQEru5awUc6SKolQz7ILaNskHt42UrpUcXxx0gcJ6jaWUCssUQgyHmCw5eC8
+         q3D528/cOzC+r7XJqudWXuPSqilZdjDK8YB9Gd47ubn6Xx9+lMWE0TiM6nCaXhxBkSnH
+         TNWHmFeV+9bMO5PVzs/Mzn4yOfE/7eAt95+mp1CijTKQLl32qYgU0SZLHYgUfiqfRPLK
+         NKAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742508393; x=1743113193;
+        d=1e100.net; s=20230601; t=1742508521; x=1743113321;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=S+DKgKKe0d2S0aLSGa2DZ5AxLYPiZ/5bN97M2PhD9xQ=;
-        b=rhkmxF8IkyMSa/xV4WmtySuvtag7sTuw0xFPJeHxUHAWbgfyokNjfNKIL8zPxP13VT
-         V8ChX3Qeps/5/kMGFMO5ggqyF9PiGDgmX2fgf8seANm/oIIY1m4y6jJ2twjETzHjk1MU
-         dZ+C9+6T90yvcV2+6+ResmpRCw6Z762UDYDZQsYoLvqWWaPj9U5dXWDosAvOZX6J3v/e
-         sx5Qe4fXOKDjmRhTjyCCBB+LUOQFhWtQ4o+uYAvDRNdXNWwuXS8kH69hr9vQFUX2RFLh
-         2H1i11O3bJZ5WAwgC9Lhu5ncjmK/BMbYfrSQUdA1lTAoda8FoGvBfrDzpn8YBSegg4eo
-         bGIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVUBZ1MEiE6FAM+rX05kMe1EGw0ztdK70hm8ghkO64/g0ztAi8WEO0pt3DYoBGyiCrW/WZ9zlHRso0rT4sg@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXvyXhz6Z7NshgvgRp2UvuvbP5Id30EmP3MG2JF25Y1XIS6hpG
-	/28wlIop9ylLck5N+1k8V+6jOLLo10ETOqJ8fdWzyS7F+9YsocwdR5Jaqo4i5Qw=
-X-Gm-Gg: ASbGncu8kHdTJs2NC0FFxDZrFFPvm+995hDeuw5kiA69+xNJcTrpauAf4B1SI7NSsoK
-	FzB8e628UNFe711TdAlwCj/T2GWu2va+ZxQvfb/mEck8nMReu5rna8WIzgqxWyNNF3X+R8ETQ8t
-	7JrUtznm/REOcJd9G0QJspz83w0e4P/9xq5nhkQdHC1yDsAsCcnjloXwCYQkkjuqFtcOev0GBI1
-	PZPPrmuCKNpCXpnVbfiVnG2W/mLEeYzmXvgpHtZNDCDsyEd1/rxT2mwu2Wo7peL4b7KajTEyiCC
-	O8L4O8onfioWvpD6bMu28sAMbeXj+3CdpzhVprlOfVEHV431TQBheUzZfbeoyYH7S/LH0zJD0Pb
-	bKY/tdVprXw==
-X-Google-Smtp-Source: AGHT+IF666w+fhi7xMb+8oGJRC8UIY8sQphK9beWqbHC+xtVyIDPE6027D6kLOQ0WtAFbDSaxhPr2Q==
-X-Received: by 2002:a05:600c:4584:b0:43b:cc42:c54f with SMTP id 5b1f17b1804b1-43d509f433amr7194745e9.14.1742508392863;
-        Thu, 20 Mar 2025 15:06:32 -0700 (PDT)
+        bh=b51iP35KFG1CIl36iu8PXktEtqpi3MNuLw8E+xpgKP4=;
+        b=ERu4Vw3+3BpTJ5f7Z6IB/umGw5nrA6AQOTHxxvS9k3P7tvLMNVctsIgPvQSMPG8506
+         YX1dCi+dp0A7dIRPMCIRT+7YNO8J4ic4t5nijqLmDJ2TJzrXIHGBZ3EEZThb6rQhOuMS
+         dWCzlrB80AOHC8wJm5dZiV3DgXFk+H0b0djQX/6KIz3NAGtoKn8khP0P4O4/vAB+o3Jl
+         soj7gopOOwl01fQbjCGPZNf3eK5Bs30mmUcHkuWuZWt6NZInsbuuD+n282ALx0JC460O
+         VCsCY9kBWPJdQM+KjpXD6yQ53RuAFj/UN3mbsuwPy334LJcfQxoITTmckJKp7PTV0czm
+         i3YQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVeKnwR2FgN22aHO/MBvv9oAYbntLc1k/r/mp4inPfx+jEZZRFOJ3wYa8pqAqDBcqz4Cw7hnVl6P4pXwZvI@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXvZoiSPAam/+hkhOQrotvjfwxRYP7mTLHuD6nPCLBeM9Z49ZP
+	Ok1Res00VY51rpDmF8kqiD+lEKYGdI8sok82jBiQYZvjGpRlOu84Xp3jybTHBzQ=
+X-Gm-Gg: ASbGncsZT5hTH7Z3LGjMmTbbjqlCzp+WuRrV6Pd7s9ULj1kYgFN8SeMKJm7ZmTFxPvx
+	IMf8BPHoVxmSkDXStDRWbNW3Hen1+9BG4W3ZOs22up9lfh2n9gQ02SSD6BsX1mYWykoDGWqR29W
+	+TJ0esEvFqvyEamrVLNMjszDoxDlW9Ebz5yT1/B7WeccfQ1vNpZq9AgvyXjXXve6VTIXzfJ50hn
+	dF0aLZx3B7sBlo2m8TA2w1JVBpDQwEtG1wWRHEipZE8TeCxmb5M8wr+SMRVT6ywKrP/dcCyqXUP
+	KY8FdH8Uo0L9YnqPQKKnIZToznkA/TWeNmEIsRFj5xN5SWVIwz0k9EhAkGtMzyDVKr6f40pA/Sk
+	vwH9OivldTg==
+X-Google-Smtp-Source: AGHT+IG6cZVwmLEZurTazZCr7atPJy2iNnHxLpGHe6xlII+3K7WFRsUslXpp2g67TeBOVTtPbGFAyQ==
+X-Received: by 2002:a05:6000:400e:b0:391:2a9a:4796 with SMTP id ffacd0b85a97d-3997f901786mr1265282f8f.18.1742508521013;
+        Thu, 20 Mar 2025 15:08:41 -0700 (PDT)
 Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9e64casm662410f8f.73.2025.03.20.15.06.31
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9a50c1sm692749f8f.38.2025.03.20.15.08.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Mar 2025 15:06:32 -0700 (PDT)
-Message-ID: <7dc8700f-0d53-45f5-bfff-2bec71c7053e@linaro.org>
-Date: Thu, 20 Mar 2025 22:06:31 +0000
+        Thu, 20 Mar 2025 15:08:39 -0700 (PDT)
+Message-ID: <54c588be-d630-4901-8885-a042b477f168@linaro.org>
+Date: Thu, 20 Mar 2025 22:08:38 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,8 +82,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/3] arm64: dts: qcom: x1e80100: add bus topology for
- PCIe domain 3
+Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: x1e80100-qcp: Add power control
+ and sideband signals for PCIe3
 To: Wenbin Yao <quic_wenbyao@quicinc.com>, andersson@kernel.org,
  konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
@@ -91,58 +91,183 @@ To: Wenbin Yao <quic_wenbyao@quicinc.com>, andersson@kernel.org,
  catalin.marinas@arm.com, will@kernel.org, quic_qianyu@quicinc.com,
  sfr@canb.auug.org.au, linux-arm-kernel@lists.infradead.org
 References: <20250320055502.274849-1-quic_wenbyao@quicinc.com>
- <U9NTFHDe_r-uUozJFJGmc7VpxMDx39onKby4M3B_sy0jJ2fr7-iXkS801m2slu8PXanf7Y7faBxuZ8fzWiKxTg==@protonmail.internalid>
- <20250320055502.274849-3-quic_wenbyao@quicinc.com>
+ <w7mbnqG7DHPCH6hVoSu4E2p8pV7Rw6uvurlK-CUxF7TYQ53fFyagxmLUCmCTfG0DOUgIQn7GdppXgBlq8Gyv9Q==@protonmail.internalid>
+ <20250320055502.274849-4-quic_wenbyao@quicinc.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250320055502.274849-3-quic_wenbyao@quicinc.com>
+In-Reply-To: <20250320055502.274849-4-quic_wenbyao@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 20/03/2025 05:55, Wenbin Yao wrote:
 > From: Qiang Yu <quic_qianyu@quicinc.com>
 > 
-> Add pcie3port node to represent the PCIe bridge of PCIe3 so that PCI slot
-> voltage rails can be described under this node in the board's dts.
+> Add perst, wake and clkreq sideband signals and required regulators in
+> PCIe3 controller and PHY device tree node. Describe the voltage rails of
+> the x8 PCI slots for PCIe3 port.
 > 
 > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 > Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
 > ---
->   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 10 ++++++++++
->   1 file changed, 10 insertions(+)
+>   arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 119 ++++++++++++++++++++++
+>   1 file changed, 119 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index 46b79fce9..32e8d400a 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -3287,6 +3287,16 @@ opp-128000000 {
->   					opp-peak-kBps = <15753000 1>;
->   				};
->   			};
-> +			pcie3port: pcie@0 { 
-
-Missing newline, please check your dtb checks.
-
-
-> +				device_type = "pci";
-> +				compatible = "pciclass,0604";
-> +				reg = <0x0 0x0 0x0 0x0 0x0>;
-> +				bus-range = <0x01 0xff>;
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+> index 28086a2bc..9cd313802 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+> @@ -318,6 +318,48 @@ vreg_wcn_3p3: regulator-wcn-3p3 {
+>   		regulator-boot-on;
+>   	};
+> 
+> +	vreg_pcie_12v: regulator-pcie_12v {
+> +		compatible = "regulator-fixed";
 > +
-> +				#address-cells = <3>;
-> +				#size-cells = <2>;
-> +				ranges;
-> +			};
->   		};
-
-Why is pice3port the only port to be enabled ?
-
-What about the other ports ?
->   		pcie3_phy: phy@1be0000 {
+> +		regulator-name = "VREG_PCIE_12V";
+> +		regulator-min-microvolt = <12000000>;
+> +		regulator-max-microvolt = <12000000>;
+> +
+> +		gpio = <&pm8550ve_8_gpios 8 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&pcie_x8_12v>;
+> +	};
+> +
+> +	vreg_pcie_3v3_aux: regulator-pcie_3v3_aux {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_PCIE_3P3_AUX";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&pmc8380_3_gpios 8 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&pm_sde7_aux_3p3_en>;
+> +	};
+> +
+> +	vreg_pcie_3v3: regulator-pcie_3v3 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_PCIE_3P3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&pmc8380_3_gpios 6 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&pm_sde7_main_3p3_en>;
+> +};
+> +
+>   	usb-1-ss0-sbu-mux {
+>   		compatible = "onnn,fsusb42", "gpio-sbu-mux";
+> 
+> @@ -907,6 +949,60 @@ &mdss_dp3_phy {
+>   	status = "okay";
+>   };
+> 
+> +&pm8550ve_8_gpios {
+> +	pcie_x8_12v: pcie-12v-default-state {
+> +		pins = "gpio8";
+> +		function = "normal";
+> +		output-enable;
+> +		output-high;
+> +		bias-pull-down;
+> +		power-source = <0>;
+> +	};
+> +};
+> +
+> +&pmc8380_3_gpios {
+> +	pm_sde7_aux_3p3_en: pcie-aux-3p3-default-state {
+> +		pins = "gpio8";
+> +		function = "normal";
+> +		output-enable;
+> +		output-high;
+> +		bias-pull-down;
+> +		power-source = <0>;
+> +	};
+> +
+> +	pm_sde7_main_3p3_en: pcie-main-3p3-default-state {
+> +		pins = "gpio6";
+> +		function = "normal";
+> +		output-enable;
+> +		output-high;
+> +		bias-pull-down;
+> +		power-source = <0>;
+> +	};
+> +};
+> +
+> +&pcie3 {
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie3_default>;
+> +	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
+> +	status = "okay";
+> +};
+> +
+> +&pcie3_phy {
+> +	vdda-phy-supply = <&vreg_l3j_0p8>;
+> +	vdda-pll-supply = <&vreg_l3e_1p2>;
+> +	vdda-qref-supply = <&vreg_l3c_0p8>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie3port {
+> +	vpcie12v-supply = <&vreg_pcie_12v>;
+> +	vpcie3v3-supply = <&vreg_pcie_3v3>;
+> +	vpcie3v3aux-supply = <&vreg_pcie_3v3_aux>;
+> +};
+> +
+>   &pcie4 {
+>   	perst-gpios = <&tlmm 146 GPIO_ACTIVE_LOW>;
+>   	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
+> @@ -1118,6 +1214,29 @@ nvme_reg_en: nvme-reg-en-state {
+>   		bias-disable;
+>   	};
+> 
+> +	pcie3_default: pcie3-default-state {
+> +		clkreq-n-pins {
+> +			pins = "gpio144";
+> +			function = "pcie3_clk";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		perst-n-pins {
+> +			pins = "gpio143";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-down;
+> +		};
+> +
+> +		wake-n-pins {
+> +		       pins = "gpio145";
+> +		       function = "gpio";
+> +		       drive-strength = <2>;
+> +		       bias-pull-up;
+> +		};
+> +	};
+> +
+>   	pcie4_default: pcie4-default-state {
+>   		clkreq-n-pins {
+>   			pins = "gpio147";
 > --
 > 2.34.1
 > 
 > 
+
+Recommend breaking this patch into at least two patches @ the and
+
+-> Add power control
+-> Add sideband signals
+
+if your patch title requires an and its usually a good indicator of a 
+place to break that patch into different parts.
 
 ---
 bod
