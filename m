@@ -1,93 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-52043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64532A69F3B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 06:17:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39D0DA69F8A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 06:54:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 759D61893A32
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 05:17:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8487517F21C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 05:54:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 704791EEA48;
-	Thu, 20 Mar 2025 05:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 099E81B4138;
+	Thu, 20 Mar 2025 05:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BBfqS6R2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="k5DGo+qc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CA91EE7AB;
-	Thu, 20 Mar 2025 05:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514DFB665;
+	Thu, 20 Mar 2025 05:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742447846; cv=none; b=d4waZGiUBwqgq1TN2YT/8wuLBCjn8nDbucEuY5U0zXhYN7teQW3zFnpvHbg7EuMK6TWRSqYXzGardR4ST1quDc3p3pN4RG11XbDzIre3REemn+ZGLCmvdinFcyF5fKw3qFksSK5GDEkETpIzY92JF5j6QbJBeJt/dWYeMjiiVwk=
+	t=1742450082; cv=none; b=NhNZfoPOCBNIqxHPs8VdEekBG2SVJibJkSh9TD87Rj6oPBBSwMqOqJAvzhWZM4O9GxK55POj53qQwVjugknxe/qFnKMp2FBiXwTEOSIqPj3ZbAKECQ5zVRt2Y21prsCfvf289Cgg+wi4QBGQTNqIBVZqIODP+NA6sVJbb7qQpyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742447846; c=relaxed/simple;
-	bh=olQycrouNTDNhexwbVRBMjP/LgJ44xkJH1oYMhVMmj0=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aU2xZCzw+9LwpKHJbIENS0sVMdh7ws94vH3kCRfO4F+0w8HhKcn1aFHj+P3wQh/Rb4bfD935/ILK7kqKF8KNyfUy5gu/6MXTAYTDooglBjdqeW6rxk3Wnp9tv38zLeUCkQcjmEsiHv6cAqYpvPwa6XfTIh2rJJ8xjx5elA+AmZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BBfqS6R2; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1742450082; c=relaxed/simple;
+	bh=+UVD9XcHmk2wP+4+garp3liRC7Duw5aMQnCzObyrhZI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ZBhBZFkIOY3FmV5vO9CSr5B5taPR0v6+hwMvnbdBYf0YyGoAFYki0AKYtYFeLLcf7/Sc4XyrlWfOOeZIeNiUHXYZy6OJVCF1tgtUUSVlgLgvbnUXEDwZrvi/KtK7hkpleOqFkz3QJ0oaQag3y+T3uIJO+EKclS3e/9RCmvKGqwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=k5DGo+qc; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52JJ5jvp023324;
-	Thu, 20 Mar 2025 05:17:18 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52JJ5ade023163;
+	Thu, 20 Mar 2025 05:54:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0Yl0ka2uEzSqHnoUUOIMr16N0zcsT8p0UIIXiwgmVos=; b=BBfqS6R2LPPONVMc
-	FJ0as+crRxGHntS5Q6Y6qk07B3PIqddIaNsmGyxJAtMh1vBojaEaxbbtcPUut//7
-	FpYI/pHM6LuxQGukYmIykAlduI1gmyh/rWOyV509kGO97iaeJ+8KWUGNJlZuOsKA
-	xTUvjHT6e49XZxEcIsUnuW5u7Fsd2ECBlHdmnhWxEKLUNn6SnWqkvGbTzT3o0Z/q
-	rGeHJ7XRz6JfZujxRxX91nNpkS4PLZ4ydWRGnJ92P4Y180UQVwA8Er8haUNFPWDF
-	ZGRGQd8/OGmJ1x6op840+ernv4fjEXJV4aTpxrc0U3OcjM0/5lt4pWoXHBAkrSqw
-	me+x2Q==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45g3sf16gy-1
+	TzirwVH5VU4gkjCscgdngjuwWlXChLjrl0qrdi6aS78=; b=k5DGo+qcQA5VoK+l
+	SKIN2wF1BASs3C4lQ/I5GLMdNpWvkBYMbyt38BheotCASL6H52EdCEylc7WriCbF
+	3NDVfeOMeVAnsQU9MKIl8p7HR5rLfUSGO2kkb6dS1rfmTXMkCKPe88QufymUHb1P
+	EzmBu6H0rr2IFZ6OGdkW+GSfOAKZTEcPDH7cGSenukEEwK6wAW9MxTW2v+ttSn3b
+	j/ziSRWqUb7KzF1kwyIn1FB4lnKKlWepSX6kyo/++ZVT46pe+80YUwgtt7hb1MfO
+	5LFtessw4yeI+9QTD29lHGDb36VR3T6twBtap4mKmGJrmG0XxuM1WcM4A3elRx+C
+	hyqzeQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45g3sf18yc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Mar 2025 05:17:18 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52K5HHCt006825
+	Thu, 20 Mar 2025 05:54:22 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52K5sL8C024503
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Mar 2025 05:17:17 GMT
-Received: from hu-lxu5-sha.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 19 Mar 2025 22:17:13 -0700
-From: Ling Xu <quic_lxu5@quicinc.com>
-To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <srinivas.kandagatla@linaro.org>, <amahesh@qti.qualcomm.com>,
-        <arnd@arndb.de>, <gregkh@linuxfoundation.org>
-CC: <quic_kuiw@quicinc.com>, <quic_ekangupt@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        Ling Xu
-	<quic_lxu5@quicinc.com>
-Subject: [PATCH 2/2] misc: fastrpc: add support for gpdsp remoteproc
-Date: Thu, 20 Mar 2025 10:46:45 +0530
-Message-ID: <20250320051645.2254904-3-quic_lxu5@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250320051645.2254904-1-quic_lxu5@quicinc.com>
-References: <20250320051645.2254904-1-quic_lxu5@quicinc.com>
+	Thu, 20 Mar 2025 05:54:21 GMT
+Received: from [10.152.201.53] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 19 Mar
+ 2025 22:54:17 -0700
+Message-ID: <004c7c4a-69b4-c6f6-14c2-eb62672a7125@quicinc.com>
+Date: Thu, 20 Mar 2025 11:23:40 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 1/4] mtd: rawnand: qcom: Pass 18 bit offset from QPIC
+ base address to BAM
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
+        <broonie@kernel.org>, <bbrezillon@kernel.org>,
+        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-spi@vger.kernel.org>
+References: <20250310120906.1577292-1-quic_mdalam@quicinc.com>
+ <20250310120906.1577292-2-quic_mdalam@quicinc.com>
+ <20250318073332.guylcyqjmfq5nyyr@thinkpad>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <20250318073332.guylcyqjmfq5nyyr@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZlAL_Z7NJggFYLO7Hbfa6hwHGrYa6Ubi
-X-Proofpoint-ORIG-GUID: ZlAL_Z7NJggFYLO7Hbfa6hwHGrYa6Ubi
-X-Authority-Analysis: v=2.4 cv=R9IDGcRX c=1 sm=1 tr=0 ts=67dba4de cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=9gs4tqHRUIolnm82HfMA:9 a=0bXxn9q0MV6snEgNplNhOjQmxlI=:19
- a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: NeLOEPrrhpzlC8lvWZInxmyJwq0KE6zi
+X-Proofpoint-ORIG-GUID: NeLOEPrrhpzlC8lvWZInxmyJwq0KE6zi
+X-Authority-Analysis: v=2.4 cv=R9IDGcRX c=1 sm=1 tr=0 ts=67dbad8e cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=nuhMKF8qPs2EJ1YYQfUA:9 a=EmiLsFTZwY_euXZu:21 a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-20_01,2025-03-19_01,2024-11-22_01
@@ -96,53 +96,77 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 imposto
  suspectscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 malwarescore=0
  mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503200030
+ definitions=main-2503200035
 
-The fastrpc driver has support for 5 types of remoteprocs. There are
-some products which support GPDSP remoteprocs. Add changes to support
-GPDSP remoteprocs.
 
-Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
----
- drivers/misc/fastrpc.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 7b7a22c91fe4..80aa554b3042 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -28,7 +28,9 @@
- #define SDSP_DOMAIN_ID (2)
- #define CDSP_DOMAIN_ID (3)
- #define CDSP1_DOMAIN_ID (4)
--#define FASTRPC_DEV_MAX		5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
-+#define GDSP0_DOMAIN_ID (5)
-+#define GDSP1_DOMAIN_ID (6)
-+#define FASTRPC_DEV_MAX		7 /* adsp, mdsp, slpi, cdsp, cdsp1, gdsp0, gdsp1 */
- #define FASTRPC_MAX_SESSIONS	14
- #define FASTRPC_MAX_VMIDS	16
- #define FASTRPC_ALIGN		128
-@@ -107,7 +109,9 @@
- #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
- 
- static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
--						"sdsp", "cdsp", "cdsp1" };
-+						"sdsp", "cdsp",
-+						"cdsp1", "gdsp0",
-+						"gdsp1" };
- struct fastrpc_phy_page {
- 	u64 addr;		/* physical address */
- 	u64 size;		/* size of contiguous region */
-@@ -2338,6 +2342,8 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 		break;
- 	case CDSP_DOMAIN_ID:
- 	case CDSP1_DOMAIN_ID:
-+	case GDSP0_DOMAIN_ID:
-+	case GDSP1_DOMAIN_ID:
- 		data->unsigned_support = true;
- 		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
- 		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
--- 
-2.34.1
+On 3/18/2025 1:03 PM, Manivannan Sadhasivam wrote:
+> On Mon, Mar 10, 2025 at 05:39:03PM +0530, Md Sadre Alam wrote:
+>> Currently we are configuring lower 24 bits of address in descriptor
+>> whereas QPIC design expects 18 bit register offset from QPIC base
+>> address to be configured in cmd descriptors. This is leading to a
+>> different address actually being used in HW, leading to wrong value
+>> read.
+>>
+>> the actual issue is that the NANDc base address is different from the
+>> QPIC base address. But the driver doesn't take it into account and just
+>> used the QPIC base as the NANDc base. This used to work as the NANDc IP
+>> only considers the lower 18 bits of the address passed by the driver to
+>> derive the register offset. Since the base address of QPIC used to contain
+>> all 0 for lower 18 bits (like 0x07980000), the driver ended up passing the
+> 
+> What is this address? Is it coming from DT?
+> 
+>> actual register offset in it and NANDc worked properly. But on newer SoCs
+>> like SDX75, the QPIC base address doesn't contain all 0 for lower 18 bits
+>> (like 0x01C98000). So NANDc sees wrong offset as per the current logic
+>>
+>> The address should be passed to BAM 0x30000 + offset. In older targets
+> 
+> You gave no explanation on how this 0x30000 offset came into picture. I gave the
+> reasoning in v2:
+> 
+> "SDX55's NANDc base is 0x01b30000 and it has bits 17 and 18 set corresponding to
+> 0x30000. So it is correct that the IP only considers lower 18 bits and it used
+> to work as the driver ended up passing 0x3000 + register offset."
+> 
+> Then you replied:
+> 
+> "This address 0x30000 is the address from QPIC_BASE to QPIC_EBI2NAND
+> e.g for SDX55 and SDX65 the QPIC_BASE is 0x01B00000. So here lower 18-bits
+> are zero only."
+> 
+> No one outside Qcom knows what QPIC_BASE and QPIC_EBI2NAND are. We just know the
+> NANDc address mentioned in DT, which corresponds to 0x01b30000 for SDX55.
+> 
+> Please reword the commit message to present the full picture and not half baked
+> info. This is v3, I see no improvement in the commit message, sorry.
+> 
+>> the lower 18-bits are zero so that correct address being paased. But
+>> in newer targets the lower 18-bits are non-zero in QPIC base so that
+>> 0x300000 + offset giving the wrong value.
+>>
+>> SDX75 : QPIC_QPIC | 0x01C98000 (Lower 18 bits are non zero)
+>> SDX55 : QPIC_QPIC | 0x1B00000 (Lower 18 bits are zero) Same for
+> 
+> There is no address as '0x1B00000' in DT.
 
+Mani,
+
+Please see if this commit message would be acceptable?
+
+	The BAM command descriptor provides only 18 bits to specify
+	the NAND register offset. Additionally, in the BAM command
+	descriptor, the NAND register offset is supposed to be
+	specified as "(NANDc offset - BAM base offset) + reg_off".
+	Since, the nand driver isn't aware of the BAM base offset,
+	have the value of "NANDc offset - BAM base offset" in a new
+	field 'nandc_offset' in the NAND properties structure and use
+	it while preparing the descriptor.
+
+	Previously, the NAND driver was incorrectly specifying the
+	NAND register offset directly in the BAM descriptor.
+
+Thanks
+Alam
 
