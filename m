@@ -1,195 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-52094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5550AA6A823
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 15:15:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 390AAA6A865
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 15:24:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1CD97B174A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 14:14:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 983BA486CFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Mar 2025 14:22:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 864FB22155E;
-	Thu, 20 Mar 2025 14:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CE7822259C;
+	Thu, 20 Mar 2025 14:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mEWDKUOq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fb2xLXAr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC25211C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 14:15:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49680222560
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 14:21:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742480145; cv=none; b=V+3K4mLKIOCm3KLwRaifWWJtenDQK6hpUC3Q3BM1t+NH8ACiDni0t/rRZ6bzi/V3a/gW9DHtiwF1vFqUItCktF3SxIcpGFRbZjUK4D7TEW/2v9ZK+D6SlX4vNWFxs7n5lFaJia+SWu12XlwKP/fUcQYBUpiTtG5OPuuwqzH+Oas=
+	t=1742480495; cv=none; b=MQG0lcsuRXWpQT9VxoEYP8G5jkXVzyJUyNDbG1a0J8T0JiKK2C/iSZQH6ZKVCPQZXiUhcllFiZ1En50TlgnnGMl0I1MCnl7A/70LmsAlore1Xz/yBCs7hICwdBspkFkTQWRfS51qyo/OlZBLIqfhR4lKrJpD6rlIdP3hJ9Rg24s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742480145; c=relaxed/simple;
-	bh=5ronVJq9UU0bG8QY1CBNRyXP7cs7CbWkOrSQ2Epye3c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cik32gk6tkWcd0ia6AG0xiJ9yYfIhrDcgkgf7lftd89n0zx9euPamTYv4W8kxxTXAp73R+O0vcADHSvxDnSBAeMGDhG9ZCoCn3hkT/OwCDWuCRO7QOdl5onnGJlGyc2pW31oub0ZwL91zlAomR7twg4EHBqMUKqQmt2E8Co/z2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mEWDKUOq; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52KD5g6e014467
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 14:15:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=8aBcQrbNTmhrIz1gphJsGN9i
-	CmDPwX8fWpWm652biE8=; b=mEWDKUOqGxp05cdXm3S6yhSf8ONNGMBYxDsDK3sU
-	MVdPOQ/6Gqjga9+mP69soGUeqKvkc38Ln2Qm0tYUrQcB3kOG6uVAugysIaGkDBWN
-	jg6R3HpHiiYvEGTjuiB2m5dgQ6Vf8Y3jk2QCG8fpWXtMvwVY43gTeaxVfbUkAC5j
-	Pj+sqBQBBBQ693Zsi9+rNRCHsVtUoDGTM1+aRjfdSjZrEdNjq2g0m8i/PG0Xanpg
-	GLMpcQ/6UbOvp+SrD9feYs0iUXrTkYoDNoEfCrlVonI/zgY9HxZItctrSsM7vbbK
-	GSx5xfrn5YhAAj6PUBDrhrwZgxu7ePAzUyA+q9+5LPa8Yg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45exwtsgcf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 14:15:41 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7bb849aa5fbso257036185a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 07:15:41 -0700 (PDT)
+	s=arc-20240116; t=1742480495; c=relaxed/simple;
+	bh=KM4ZCMaCLFfkTKaneHhDJ+FlPOOBtprvWKZvUFRSOko=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=besQvpxUMexKimeVhhdUFMCIcm/0UefIrUBe5TC9RhVY8rq0ratnX8KRvKB8MCYqKze4ebOQoj1WDL/flhJVjo42DIncMLmfoK1sypWH9x03n2LK9X4IIA17f2Ug/sA1JtZ1zWFFd7nDtTgVz3uUVvReW+14mox7CCbK7IFWY/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fb2xLXAr; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4393dc02b78so5688055e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Mar 2025 07:21:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1742480491; x=1743085291; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NZbg94QK7tAjZ4eqQ8xaJAIEHJ1PEfH8AojbdclcFGM=;
+        b=fb2xLXArsFgmWyCE/nONlc1OHxH2mimygwuFvOqkfuAW6gq7uLAN1Lqi0Tc3vfF4Pm
+         uYak3CDFRnZCLS+eXxZJIqZ2pn8TcX8kIfdbaXheLA+TE5POblR6NkdUYpdD4jX0xvdu
+         g+O7qM3OWN3TqM+c7lWBp9mZ17HhI3QFsjVlXqd3V5P20S2wIH7X3L5GODYEU5Ovf7CY
+         JjDrIHsP6o1I7uBnvbKBE1Ii84xgzodvbwHNybjeAgIPtQVtPBM73uyETVDLfL4Tdh8u
+         AbyBd+s8dMvS+LlM98MXBVXYWmkLE1lUGOfCrVSh4XXkze2k+6L6sQUonSiSLGjLCyXt
+         c36Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742480140; x=1743084940;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8aBcQrbNTmhrIz1gphJsGN9iCmDPwX8fWpWm652biE8=;
-        b=Oj2vWMMuvKyjOlVGkhniXDeZQGHZQTHmgUOqlT08EnwmYxd6PEkyH7i6XDIFLHyAGe
-         RSnafTxAWKeZnbgLKbGnbR6sCRwa4fEFV0CJRNshAqrdp6ElyE9xg97YKpBm/Qu4CqbS
-         Mz1rubw4BKZzlENwPdHvVA69UOUOu2iRVxMWm4ea37a+EsyC5VkDle9r5+RrtFw9AF1N
-         2RMC9zaDSovLkmgANmZoT7s6oac+ugPk0nKfM1CYtrNb5h2YMI+CK3oM4M/FSxyaJGGA
-         F6MjbPk1pawPrwlXWSNJq6eSgfpn4FwVZgce/jE98J2ZRP7mjZ+z/BkwoKIvGKX57xql
-         DSuw==
-X-Forwarded-Encrypted: i=1; AJvYcCUB5EeDEFbUO87vdg1LDULur2ItTLgANRJK7gOEBlKTreT6ibDb/L7q9PKEu96Uo08RNm1NaUn5ITg/3sx3@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYbNY+ijzU1jSwfBiZIeU9eZNMUt/QeNhesGe9eH1NIVovM+2c
-	mSQA1+NZCOgDN3sM3qjIU1QuYEWxYb3Qz1cGBhzwGHtP+6wKgnxPz0RJyOw6GRAUG9UFbzvJuPd
-	dclbDhrso3iXuS6z/AZnRWvV79Mr2QiWVgfx3mCH2ntJESAs6ouXwSL3wbVoD5Hod
-X-Gm-Gg: ASbGncuUQnH/DqgTEluPJRn4pyqeYA5HQ8egyaDOA7s9LmZTxf4cLSPMz25k/qDU5RS
-	sftW0EG27S67dluJq8gfGgqaCzMd2yiOf2bpoKUPdTNFi4xNLivVff21H3mIelSvHvdOEiCi1dx
-	IRv6wZWBEVSuFSUjxBnpvNfAKD+csUkf8De0ClNh460QkmATsJOzV6+qVrwXlspQL27Iu9RkLGH
-	2Tx1c9dsrybKPWGLG+11zzh012DUzE9QfgJvvUhyX4s1jNGC8aai5T3bzD50zKwti267VdPDASS
-	1dbb/TvtkEpkzXzYou3GuS7fKTZY1/HDcWjft5Opl/ONB4m5DW3IGNwCxOq7WV5Z5tHWvZGKbx+
-	LexQ=
-X-Received: by 2002:a05:620a:1707:b0:7c5:4eee:5405 with SMTP id af79cd13be357-7c5b0d07bc3mr500717085a.35.1742480140596;
-        Thu, 20 Mar 2025 07:15:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF48Z8OdEGRPlkLUazNGK2qg1AZCI2lznykkVH1S8wwNrf4UsdJLlA4Yst7O0bQCuVa+zPlpA==
-X-Received: by 2002:a05:620a:1707:b0:7c5:4eee:5405 with SMTP id af79cd13be357-7c5b0d07bc3mr500709485a.35.1742480139998;
-        Thu, 20 Mar 2025 07:15:39 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-549ba7c07b0sm2209494e87.79.2025.03.20.07.15.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Mar 2025 07:15:39 -0700 (PDT)
-Date: Thu, 20 Mar 2025 16:15:36 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
-        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
-        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-        dri-devel@lists.freedesktop.org, arnd@arndb.de
-Subject: Re: [PATCH v2 4/5] misc: fastrpc: Add polling mode support for
- fastRPC driver
-Message-ID: <2k6573yrw3dyn3rpwqz4asdpx3nlmj4ornm7kmxv3f4jlc6hzg@qkwn7gqduwri>
-References: <20250127044239.578540-1-quic_ekangupt@quicinc.com>
- <20250127044239.578540-5-quic_ekangupt@quicinc.com>
- <hgox77a7e6zzriltwhzzciau6u2pmil4y3rl5o2l6zkp4fmlmp@q2dai5fxcvtq>
- <49295da9-82d4-45a0-a2a4-fdaa6600c70d@quicinc.com>
- <an4cvztdkqmrt7w2iaziihlxf4tbox65ze362v2lmycjnqg26y@jizjmh2ki34z>
- <939fcff6-fb93-487b-995b-88e3ff020784@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1742480491; x=1743085291;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=NZbg94QK7tAjZ4eqQ8xaJAIEHJ1PEfH8AojbdclcFGM=;
+        b=A+ldi6FNiDhaLrRbKCmDXJaNX9yyDYaqgFh6ZWOPM8B3OPwjE4sFk++LpaTpiHy4ID
+         fEgzTddbKJqfZIkicr4gVn3/8N6tAVEutA9B2bXHyC8eYvfMzmn1cY5Dih7QyCdJlh68
+         q2istvgzIAdPbbJCtk/Dcslkqu1ef0ELkniyXT1kQVRf7RF7/dchDibENO3Miw5eMxxc
+         yywmmAjP9WhULpSWohsuQ/PWjEYlCocjbsBpnU9Dfc/fmT3SZrgSdt41a9dBYsf7QvF4
+         mWC9xRZ/8gcscYSTakeSaRgPKLWZzWKTRB3YPguO1Q69qHW6fGPLFci1XCvARN3Jbw8C
+         Rd4g==
+X-Gm-Message-State: AOJu0YwZiLVNa3JPHnVs8ee7sNPaL3wIzHW4Z/9/NPbo7nnt1KMlZZr0
+	+hnjW5pBZGAnluX41JYdGDjbZyK+l+En5QI7lNMjwMrxrTN1sWpsnwmuayE3qsQ=
+X-Gm-Gg: ASbGncssiTM90sQlSI5R1UwQMdEPG2LsjFxfXT7AE+ilgEx6DqMfa46uNy0J2WiodKf
+	87Cn6JyDb/WODF4q/YM3vNKHFVCNX5kynrj92PvJDGSxHtdB2Nv1eRaCPwmiYMO5a+QlN6tWtu1
+	FWhkfocqzydb2c+TP7LvbLJvMlpe1OFAprYIe/LO+5csCSwkgjpjaFpw/oZgM9YMbN3CIRYnh/b
+	6Yp6A3WkJM92WQX450Fe2CActxedA/cCzh9wpYRV4Hv9I75AgfViKEtFz3D00NUBHlVzmFsTsi8
+	MqC03yimh6cCmIhbLxEL1BaPQV/YxOAthczS4EAqeMUCswbnP0m5nxG+27peipSvwEHPNJN3r2v
+	kWmKAs1BqtUy31qBQ
+X-Google-Smtp-Source: AGHT+IHwKg3G7PLtrFm8wWRV8MxbX7wu9hl+TgEb8GtAYHTVjykg6cpeFV88/xcw1UY02BI2wxLzKw==
+X-Received: by 2002:a7b:c314:0:b0:43b:cc3c:60bc with SMTP id 5b1f17b1804b1-43d43793107mr56231295e9.15.1742480491447;
+        Thu, 20 Mar 2025 07:21:31 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:3bd:568:f697:d1a2? ([2a01:e0a:3d9:2080:3bd:568:f697:d1a2])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395cb40fab8sm24634233f8f.63.2025.03.20.07.21.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Mar 2025 07:21:31 -0700 (PDT)
+Message-ID: <9cdd8ed8-082f-4b17-94a0-e8ee61b9da9c@linaro.org>
+Date: Thu, 20 Mar 2025 15:21:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <939fcff6-fb93-487b-995b-88e3ff020784@oss.qualcomm.com>
-X-Proofpoint-GUID: wvG1Le-eq8-HXLli9C5-fD8nIDQvCH0q
-X-Proofpoint-ORIG-GUID: wvG1Le-eq8-HXLli9C5-fD8nIDQvCH0q
-X-Authority-Analysis: v=2.4 cv=UoJjN/wB c=1 sm=1 tr=0 ts=67dc230d cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=NEAV23lmAAAA:8 a=I9Tj63J92sXnRp7HOM8A:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-20_03,2025-03-20_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- impostorscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999
- phishscore=0 adultscore=0 clxscore=1015 spamscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503200088
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v5 2/7] dt-bindings: usb: Introduce qcom,snps-dwc3
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
+ Wesley Cheng <quic_wcheng@quicinc.com>,
+ Saravana Kannan <saravanak@google.com>,
+ Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.li@nxp.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250318-dwc3-refactor-v5-0-90ea6e5b3ba4@oss.qualcomm.com>
+ <20250318-dwc3-refactor-v5-2-90ea6e5b3ba4@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250318-dwc3-refactor-v5-2-90ea6e5b3ba4@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 20, 2025 at 07:19:31PM +0530, Ekansh Gupta wrote:
+Hi,
+
+On 18/03/2025 20:05, Bjorn Andersson wrote:
+> The Qualcomm USB glue is not separate of the Synopsys DWC3 core and
+> several of the snps,dwc3 properties (such as clocks and reset) conflicts
+> in expectation with the Qualcomm integration.
 > 
+> Using the newly split out Synopsys DWC3 core properties, describe the
+> Qualcomm USB block in a single block. The new binding is a copy of
+> qcom,dwc3 with the needed modifications.
 > 
-> On 1/29/2025 4:10 PM, Dmitry Baryshkov wrote:
-> > On Wed, Jan 29, 2025 at 11:12:16AM +0530, Ekansh Gupta wrote:
-> >>
-> >>
-> >> On 1/29/2025 4:59 AM, Dmitry Baryshkov wrote:
-> >>> On Mon, Jan 27, 2025 at 10:12:38AM +0530, Ekansh Gupta wrote:
-> >>>> For any remote call to DSP, after sending an invocation message,
-> >>>> fastRPC driver waits for glink response and during this time the
-> >>>> CPU can go into low power modes. Adding a polling mode support
-> >>>> with which fastRPC driver will poll continuously on a memory
-> >>>> after sending a message to remote subsystem which will eliminate
-> >>>> CPU wakeup and scheduling latencies and reduce fastRPC overhead.
-> >>>> With this change, DSP always sends a glink response which will
-> >>>> get ignored if polling mode didn't time out.
-> >>> Is there a chance to implement actual async I/O protocol with the help
-> >>> of the poll() call instead of hiding the polling / wait inside the
-> >>> invoke2?
-> >> This design is based on the implementation on DSP firmware as of today:
-> >> Call flow: https://github.com/quic-ekangupt/fastrpc/blob/invokev2/Docs/invoke_v2.md#5-polling-mode
-> >>
-> >> Can you please give some reference to the async I/O protocol that you've
-> >> suggested? I can check if it can be implemented here.
-> > As with the typical poll() call implementation:
-> > - write some data using ioctl
-> > - call poll() / select() to wait for the data to be processed
-> > - read data using another ioctl
-> >
-> > Getting back to your patch. from you commit message it is not clear,
-> > which SoCs support this feature. Reminding you that we are supporting
-> > all kinds of platforms, including the ones that are EoLed by Qualcomm.
-> >
-> > Next, you wrote that in-driver polling eliminates CPU wakeup and
-> > scheduling. However this should also increase power consumption. Is
-> > there any measurable difference in the latencies, granted that you
-> > already use ioctl() syscall, as such there will be two context switches.
-> > What is the actual impact?
+> It would have been convenient to retain the two structures with the same
+> compatibles, but as there exist no way to select a binding based on the
+> absence of a subnode/patternProperty, a new generic compatible is
+> introduced to describe this binding.
 > 
-> Hi Dmitry,
+> To avoid redefining all the platform-specific compatibles, "select" is
+> used to tell the DeviceTree validator which binding to use solely on the
+> generic compatible. (Otherwise if the specific compatible matches during
+> validation, the generic one must match as well)
 > 
-> Thank you for your feedback.
+> Mark qcom,dwc3 deprecated, to favor expressing future platforms using
+> the new combined binding.
 > 
-> I'm currently reworking this change and adding testing details. Regarding the SoC
-> support, I'll add all the necessary information.
-
-Please make sure that both the kernel and the userspace can handle the
-'non-supported' case properly.
-
-> For now, with in-driver
-> polling, we are seeing significant performance improvements for calls
-> with different sized buffers. On polling supporting platform, I've observed an
-> ~80us improvement in latency. You can find more details in the test
-> results here: 
-> https://github.com/quic/fastrpc/pull/134/files#diff-7dbc6537cd3ade7fea5766229cf585db585704e02730efd72e7afc9b148e28ed
-
-Does the improvement come from the CPU not goint to idle or from the
-glink response processing?
-
-> Regarding your concerns about power consumption, while in-driver polling
-> eliminates CPU wakeup and scheduling, it does increase power consumption.
-> However, the performance gains seem to outweigh this increase.
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> ---
+>   .../devicetree/bindings/usb/qcom,dwc3.yaml         |  13 +-
+>   .../devicetree/bindings/usb/qcom,snps-dwc3.yaml    | 620 +++++++++++++++++++++
+>   2 files changed, 632 insertions(+), 1 deletion(-)
 > 
-> Do you think the poll implementation that you suggested above could provide similar
-> improvements?
 
-No, I agree here. I was more concentrated on userspace polling rather
-than hw polling.
+When converting sm8550 and sm8650, I get:
+usb@a600000: Unevaluated properties are not allowed ('dma-coherent' was unexpected)
+         from schema $id: http://devicetree.org/schemas/usb/qcom,snps-dwc3.yaml#
 
--- 
-With best wishes
-Dmitry
+So I guess it should be added.
+
+Neil
 
