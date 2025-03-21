@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-52152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5FB6A6B758
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 10:29:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A93FAA6B765
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 10:30:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A7B261892C34
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 09:29:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CDEBF18946CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 09:31:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06AA81F03F4;
-	Fri, 21 Mar 2025 09:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFC571F0E5D;
+	Fri, 21 Mar 2025 09:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E2ZCZNg/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fHHcXUqQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D23282F1;
-	Fri, 21 Mar 2025 09:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B804417C210;
+	Fri, 21 Mar 2025 09:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742549365; cv=none; b=U088Ec3/0tSH1EmFfhAiDrqhQKBZDeREjKoi9oB2ZY0+bIZzoSbhOv+0p3a/QUB7e3hifuwY8VogB3IBQuz5xNFU0X/2ON1g92PxE2WI/aPzhuxDLNq3SRBjmOpaxFk+hGG1FaoJAfGpdKIrofg8m5STvMTPgbxa00gm0vPlJJ4=
+	t=1742549453; cv=none; b=BX+pgpyC3mnQ79nAmeoHoFNlABzf/LWAFfJO2NcWLce/T6QSrawby/2x4sU2PPcISMiFJsX+1NGdh6924aZSQ/mZX7F7PG8lgg5brtT3GkXlmeg89IpZdBaIBtgD1x2wdjxPOwWWSYB0nSfFCzWRVXO11jEGbr71G6Fxb/zTKDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742549365; c=relaxed/simple;
-	bh=GqP6Ze9/M/BzfVnPCnx0Ww+HeAOZAmrid0pWuHlf9UU=;
+	s=arc-20240116; t=1742549453; c=relaxed/simple;
+	bh=FfNrQneL0il+vdm2h03fRP3O7TKXx09uBk/Pz49MhWY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tBCmbkRevxlks/D4e5McGVDjf+e6zIPCJAPkhkKVjCZYnR8QZCL/E6pxaF+45dFNHHYvD0Vg09Va2Rr/CTxx2SURWQJcQPuLn6UpLGFnVb1uSgHapqQreFLkSb20oiOJgw/EkZER6g/FRFsEB7zQgBnuiy9FCWwM4cVXLYjlWs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E2ZCZNg/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DAFC4CEE3;
-	Fri, 21 Mar 2025 09:29:18 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=sDVd33aBZRHrPnlnCpHqFfkyPPb0hsYh7d7pBuLS88yVCJWvFYhCYSk7rF+eUoGR3MeA1cupwQyVtUGUJVccAvxYKN/Q3hlEwWUVdOsHANOMfEiHOCPnQ4HWcvTZr1I8Mb70xn4bmY02lPNopjqNhSCYajZrLTOpH603eNQiTlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fHHcXUqQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69672C4CEE8;
+	Fri, 21 Mar 2025 09:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742549365;
-	bh=GqP6Ze9/M/BzfVnPCnx0Ww+HeAOZAmrid0pWuHlf9UU=;
+	s=k20201202; t=1742549453;
+	bh=FfNrQneL0il+vdm2h03fRP3O7TKXx09uBk/Pz49MhWY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=E2ZCZNg/NfP4DHXbV3Wdm4Sfspa5hH2ejwLvwM2flKeYV8elquh5AKgCQc2md/wHc
-	 ykD4KGPhYwbGW0PgSM0Cg5ybbAni0zqpA8qi8WrAWj9uxRWIoidjF9LvnDdp/co0ey
-	 KEdIezENHX2j7OsbfjVIvqqVLTOp9QPpG3VZ2BxeXnfOBEIVl6hcvnxcnZM2XrTkCQ
-	 Kj4msy5JMeU69PpIo+5Ah332sxgajprkdDVPTVa/qPEkpYAK0rfPkxqR04Q2cJlZhW
-	 Kwrk3ufBxEjYc/oBKeoFg3HgXZDQzxldISDWZHFWVdgNg3cs5cbhqXdfX1eAT/RYCs
-	 51VYZ5qkjt5Tg==
-Message-ID: <e2dc0587-28c1-4294-9bce-e18952ba645d@kernel.org>
-Date: Fri, 21 Mar 2025 10:29:15 +0100
+	b=fHHcXUqQ+0VQ0PtW5YDZxZKIw4r+7ekJpTmaeeGGxKM0KMYwS4Nnm6X+5MMu1S6yY
+	 4CxaF74cMHzeu4D8L5xgsG+mwUF5L2QR/Z87WF/zyJzlf7FC6p/yMYewW9NLda/VEH
+	 njDb+FGaamKIPxjatD07rdkBNhiFs4liwY2BWYsD5zzatIOEk63JEidIozkuJ7yAWI
+	 6F3fwrQve+N+rqKnKCHC+cK85T4DYnfFJb/MVzQzkyoSRbYneRAKP+vw15vDGjGjn1
+	 oqDUwoGwvXuPyXMfcK79MvllG1sdYaHYj/z98VyOIG8k7O2BSzhXCsb7JFQfAkPwjs
+	 kRhkduyNJrx4Q==
+Message-ID: <51a40f06-caa0-49bd-a64d-5249dd50445e@kernel.org>
+Date: Fri, 21 Mar 2025 10:30:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] ASoC: dt-bindings: wcd93xx: add bindings for audio
- mux controlling hp
+Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: x1e78100-t14s: Enable audio
+ headset support
 To: srinivas.kandagatla@linaro.org, peda@axentia.se, broonie@kernel.org,
  andersson@kernel.org, krzk+dt@kernel.org
 Cc: ivprusov@salutedevices.com, luca.ceresoli@bootlin.com,
@@ -62,7 +62,7 @@ Cc: ivprusov@salutedevices.com, luca.ceresoli@bootlin.com,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  johan+linaro@kernel.org
 References: <20250320115633.4248-1-srinivas.kandagatla@linaro.org>
- <20250320115633.4248-4-srinivas.kandagatla@linaro.org>
+ <20250320115633.4248-6-srinivas.kandagatla@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,36 +108,38 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250320115633.4248-4-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20250320115633.4248-6-srinivas.kandagatla@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 20/03/2025 12:56, srinivas.kandagatla@linaro.org wrote:
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml
-> index 10531350c336..e7aa00a9c59a 100644
-> --- a/Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml
-> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml
-> @@ -23,8 +23,13 @@ properties:
->        - qcom,wcd9380-codec
->        - qcom,wcd9385-codec
+>  1 file changed, 25 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+> index b2c2347f54fa..b40775c20493 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+> @@ -19,6 +19,16 @@ / {
+>  	compatible = "lenovo,thinkpad-t14s", "qcom,x1e78100", "qcom,x1e80100";
+>  	chassis-type = "laptop";
 >  
-> +  mux-controls:
-> +    description: A reference to the audio mux switch for
-> +      switching CTIA/OMTP Headset types
+> +	/* two muxes together support CTIA and OMTP switching */
+> +	us_euro_mux_ctrl: mux-controller {
+
+This goes somewhere after audio-codec, because nodes are ordered by node
+name.
+
+> +		compatible = "gpio-mux";
+> +		pinctrl-0 = <&us_euro_hs_sel>;
+> +		pinctrl-names = "default";
+> +		mux-supply = <&vreg_l16b_2p5>;
+> +		#mux-control-cells = <0>;
+> +		mux-gpios = <&tlmm 68 GPIO_ACTIVE_HIGH>;
+> +	};
 > +
->    us-euro-gpios:
-> -    description: GPIO spec for swapping gnd and mic segments
-> +    description: GPIO spec for swapping gnd and mic segments.
-> +      This property is considered obsolete, recommended to use mux-controls.
->      maxItems: 1
+With placement fixed:
 
-
-Assuming intention is to really obsolete/deprecate, then please add:
-
-  deprecated: true
-
-
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
