@@ -1,63 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-52226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4964FA6BFC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 17:23:41 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FC11A6BFDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 17:27:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ADB7D7A8024
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 16:19:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 35BA9188EC8F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 16:24:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07DAE22AE76;
-	Fri, 21 Mar 2025 16:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9CD522B8C4;
+	Fri, 21 Mar 2025 16:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="OJLKm1cE"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XJO5KoRi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 003.mia.mailroute.net (003.mia.mailroute.net [199.89.3.6])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8F91DEFC5;
-	Fri, 21 Mar 2025 16:20:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.3.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C171E3774
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:23:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742574026; cv=none; b=nEspUjzhewhcSd+R6OrCPf/eEJSaVH5OcMzTI2NaZVjwz6zZL8LrCpa85uFjXv4wzCxN6JE8wkkpHMojcUGXqM5AX74QJFb2tD1ZxdH4ZjJoTFdiEGIs2NEQaKd1B4vUgr/NEAk+DSfnYczdfwkCJ1CIa9P96VAv4nIe2PrUC7k=
+	t=1742574231; cv=none; b=UeZpd2XM0q9nzC0Ygxq6mKykC1b6YY61Ip7FxqrMaIk29rcYl/gayo4CCSUMJcjolSWRpUrhG9l1jJy+4qL9IHVZxh5kVTlm0K+y4ue/XXdxOMM9htTtCM6uCkrupDuT1i1MO7Ee884XLSm/CDCxeQoS6COcE8kEd4eXqj/DLhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742574026; c=relaxed/simple;
-	bh=pw+m5se+pQEuMCaFj9AWsSaNGo1mpEzijJ6omJch4sk=;
+	s=arc-20240116; t=1742574231; c=relaxed/simple;
+	bh=nNTfSGXw2geS8UBiT4FK+yp5IGwsYzhIrt8si9K/yUY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pZw8xYc77qLugaTKKbjo0LkF5GzmMjfpHIYLvl+GdbTG+fHw6VcaKgRoOSpkHYG4Q448rBo/9ncAxGR9F5tuBNg+7goZ+BcqYo0pzDpvfdeekMK68sF/R/6R5vfw8q7nWe56eZw/tNnILN5cxKT//4bSuvLZ0hlK95vlLuEUd60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=OJLKm1cE; arc=none smtp.client-ip=199.89.3.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 003.mia.mailroute.net (Postfix) with ESMTP id 4ZK72p0r5hzltM4s;
-	Fri, 21 Mar 2025 16:20:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1742574016; x=1745166017; bh=9dyI6yv0FfobA2AHnFPAlTAe
-	x+wUcJGo91eWOYIZ7lo=; b=OJLKm1cENVXpFRHwXA6qt/2+2Kb/cQQIz7Lc4ZQD
-	5cvdfGq4C2wei0I7AY3lc2HgvODlhZ6bsMGL1mUpQGseJI46FLpx6nLaHUPH9ojw
-	hJa8OnC+MVaHQyTn1cgmzHHs6QcarLwyPT7dXYC+digMu0+cEvcD8b0Ub3I7Oo13
-	buLUy+NPtASuGkwZlwwKzleSh3I/Y775FuZRGaAM8qBhudSN1chrnmkBH9namIKS
-	4wTYvsX9c0WUpjufKPwLIyHuXnLciCIy24oWGgDjGpob+1yGohVJ6RnfXXP7pQoY
-	upB/iDOvS4R6PfBk+yHR0HBrGEF2Lx4Eeiq039J/lBoe5A==
-X-Virus-Scanned: by MailRoute
-Received: from 003.mia.mailroute.net ([127.0.0.1])
- by localhost (003.mia [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id GnBwmSn9tA2a; Fri, 21 Mar 2025 16:20:16 +0000 (UTC)
-Received: from [100.66.154.22] (unknown [104.135.204.82])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 003.mia.mailroute.net (Postfix) with ESMTPSA id 4ZK72c26gLzlschZ;
-	Fri, 21 Mar 2025 16:20:06 +0000 (UTC)
-Message-ID: <31b46812-72d5-4f9d-b55d-16a6e10afe7d@acm.org>
-Date: Fri, 21 Mar 2025 09:20:05 -0700
+	 In-Reply-To:Content-Type; b=KFohutLrW5aUwqVBOOAu1L8q2Fdaf8pLPfg3NPdR5lsHT7X3AE60m0uTC5ZS9riMbzCgWvSuC0yeD8mDVM+YPNaTZ/5k2sjyjAmyJwPe9JrEpKnDAq71SJhDQLJR7TDY7Yp3H5RisEAbXr8K+1wvsclvOuZpMT1/rQGeG8G6ZXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XJO5KoRi; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52LCS6CL025461
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:23:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ld8OromtzDWpFiO+c4IGRa2KeSsgIr6PZMN7pzdN+fc=; b=XJO5KoRioUxrMPY4
+	LdIxKld/w8KboUIHZN9dbUw2v0iGIt2zOjFInfDioVQ8W7H2L3oMRmM8UToM/CmG
+	0tBbjuCnFbcISLSPD6lNA8BZCzwK2CvgxT5WtCy8UEyxbW2rZu+XddpgKEBL/0M7
+	wfUujxFJ3apZY33qnBgXBzfZyFxxcL9vAwJmDPfxlxjVkX0yNw7s2mtpdM3dtiG+
+	mKOOiT1v0dTpQoWC5CEsRuSptW+TsncfI7vNd53WQXjinNjsyB4DgEXXkzOfsuqt
+	icfnKpZaiVqdtGVIIf68MkgIDy361x87W/Z+JETZ0PpSlQC1WHplNx2bvXzAhblK
+	7gqJqQ==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45h854gmxs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:23:49 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6e8a04e1f91so53961326d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 09:23:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742574228; x=1743179028;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ld8OromtzDWpFiO+c4IGRa2KeSsgIr6PZMN7pzdN+fc=;
+        b=hsdEODn15YoQEzYZIquyZFWq8YkEFb5RY/gAsEAWExEKpMQCKjhLDiTs1WychJjZTz
+         Unj/Czk8ww1/oIQvvkwO+8Z2y7vT83pEq7vtxHb1TIEes5tDNGHUmuo1blwOnUINNUjJ
+         ne+opjjrRX1L7V1rZGHKfqbBjaf/DLS29gWJmWSB+Khc/sjfprOaaIRmHd0DWY3j44bn
+         1yJkyOE1rhF2oYdwc2cptfCLoZjf+y1SxCqdyyke1WhoHbqVIHsAwwVZVi7gFY1i34tc
+         JBRlNpCjTL6U+cBAliw2ItCOOOZ/1/LMk7iYyymsIuEGs8+3R1P2VGyAVp6Y7N8toCSx
+         WAew==
+X-Forwarded-Encrypted: i=1; AJvYcCVdcH/wmFwWvKPiM/NgTVItAPWsacKD3bGgFkoL1EI3K3aDPXC7+zJnz1qkwXgBH7TN+XZ6lnZBvO+zC2lu@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCDLGBUmnHf6rlknKIzre+Fks3Xo/ggWA8H9YVg5d/r1IEgF/e
+	XO1jsZswhMNTMdegR6G8HGVo/leeRg2XqVCk4G9CCXgVFDB/3AqqfsstC/3UMzDLLbxXjDMNk25
+	9qJJ21+YhlmJ5/BwfP9S/kbs2ebmoMwqc9WeHieHZuSJbj8QTeJA4TOb74gm8wHMY
+X-Gm-Gg: ASbGncvjHrO2gT7NkoHOZMFpHMJhsMrt5sn+/tzz3m1aJKWC9v7+Udcy9Jp5gNeicGo
+	QMB2ND5Hf+hS2OYygQ2U+9i1dMmS8mNwXN9/+zfnxUYxdbHrg2XUlkg5V48os18la4eIapOteI6
+	jwGU8VCREDJc52Rq/jKKnEy454poeogLF1gK7E7bCbGX5X9jIWU9q76SkbHk3cuI4Zk8pxUK0wP
+	6S74+prR5OIvXjqKDvyJ1VC9zaXQyun6eTsW2Gqv4I9bneAiKdiH/7/mZFqQIDZJKqv3rNLmffQ
+	iOVHLL00H7sqq4DsS0Fcis41gBkKYUA6UbRVzYK6jVuBD4vVHvsAqW6STuHU92ArBs3TnHowvP5
+	mrec5NZrfxDo7MKLFp1PIeTzV2WcFDD7Un63TlIlDZUgfwDokj3WKRTDMTaSRSB9fcui5
+X-Received: by 2002:a05:6214:766:b0:6d4:dae:6250 with SMTP id 6a1803df08f44-6eb3f36c428mr55377336d6.34.1742574228048;
+        Fri, 21 Mar 2025 09:23:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGX98Iv6fQ9nBxZLEJQNiNCADCajpNV88gT+BPE+tv7DjRfCojEFyMDyypb7cv/sb1yB5O5Ig==
+X-Received: by 2002:a05:6214:766:b0:6d4:dae:6250 with SMTP id 6a1803df08f44-6eb3f36c428mr55376986d6.34.1742574227570;
+        Fri, 21 Mar 2025 09:23:47 -0700 (PDT)
+Received: from ?IPV6:2001:14bb:c2:310f:a0b3:1d12:b116:f8e6? (2001-14bb-c2-310f-a0b3-1d12-b116-f8e6.rev.dnainternet.fi. [2001:14bb:c2:310f:a0b3:1d12:b116:f8e6])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30d7d910e70sm2720771fa.105.2025.03.21.09.23.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Mar 2025 09:23:46 -0700 (PDT)
+Message-ID: <dbdc13ec-13ca-4d80-8c96-26e5e7b4ab3e@oss.qualcomm.com>
+Date: Fri, 21 Mar 2025 18:23:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,177 +90,103 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] ufs: delegate the interrupt service routine to a
- threaded irq handler
-To: Neil Armstrong <neil.armstrong@linaro.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250321-topic-ufs-use-threaded-irq-v1-1-7a55816a4b1d@linaro.org>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm6350: Add video clock controller
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250321-sm6350-videocc-v1-0-c5ce1f1483ee@fairphone.com>
+ <20250321-sm6350-videocc-v1-3-c5ce1f1483ee@fairphone.com>
+ <wjq7sxdc5enfu6zhp4d53mpyevzbuwm6qc73kwiu2v3v5p4zkk@mevxbzosjai5>
+ <D8M2U2EUF169.MWRPXFYRBXMM@fairphone.com>
 Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20250321-topic-ufs-use-threaded-irq-v1-1-7a55816a4b1d@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+In-Reply-To: <D8M2U2EUF169.MWRPXFYRBXMM@fairphone.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: UC6SnHFTts8evORxaGOmy6OnD6QJLRsR
+X-Authority-Analysis: v=2.4 cv=ZtHtK87G c=1 sm=1 tr=0 ts=67dd9295 cx=c_pps a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=6H0WHjuAAAAA:8 a=5zAZ7Tx_SugcLKjGGPAA:9 a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+ a=Soq9LBFxuPC4vsCAQt-j:22
+X-Proofpoint-GUID: UC6SnHFTts8evORxaGOmy6OnD6QJLRsR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-21_05,2025-03-21_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ mlxlogscore=999 spamscore=0 clxscore=1015 malwarescore=0 suspectscore=0
+ phishscore=0 priorityscore=1501 impostorscore=0 adultscore=0 bulkscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503210120
 
-On 3/21/25 9:08 AM, Neil Armstrong wrote:
-> On systems with a large number request slots and unavailable MCQ,
-> the current design of the interrupt handler can delay handling of
-> other subsystems interrupts causing display artifacts, GPU stalls
-> or system firmware requests timeouts.
+On 21/03/2025 18:15, Luca Weiss wrote:
+> Hi Dmitry,
 > 
-> Since the interrupt routine can take quite some time, it's
-> preferable to move it to a threaded handler and leave the
-> hard interrupt handler save the status and disable the irq
-> until processing is finished in the thread.
+> On Fri Mar 21, 2025 at 4:56 PM CET, Dmitry Baryshkov wrote:
+>> On Fri, Mar 21, 2025 at 03:45:01PM +0100, Luca Weiss wrote:
+>>> Add a node for the videocc found on the SM6350 SoC.
+>>>
+>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sm6350.dtsi | 14 ++++++++++++++
+>>>   1 file changed, 14 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+>>> index 00ad1d09a19558d9e2bc61f1a81a36d466adc88e..ab7118b4f8f8cea56a3957e9df67ee1cd74820a6 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+>>> @@ -1952,6 +1952,20 @@ usb_1_dwc3_ss_out: endpoint {
+>>>   			};
+>>>   		};
+>>>   
+>>> +		videocc: clock-controller@aaf0000 {
+>>> +			compatible = "qcom,sm6350-videocc";
+>>> +			reg = <0 0x0aaf0000 0 0x10000>;
+>>
+>> 0x0, please.
 > 
-> This fixes all encountered issued when running FIO tests
-> on the Qualcomm SM8650 platform.
+> There's currently 80 cases of 0 and 20 of 0x0 in this file, is 0x0
+> the preferred way nowadays?
 > 
-> Example of errors reported on a loaded system:
->   [drm:dpu_encoder_frame_done_timeout:2706] [dpu error]enc32 frame done timeout
->   msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.20.1: hangcheck detected gpu lockup rb 2!
->   msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.20.1:     completed fence: 74285
->   msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.20.1:     submitted fence: 74286
->   Error sending AMC RPMH requests (-110)
-> 
-> Reported bandwidth is not affected on various tests.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   drivers/ufs/core/ufshcd.c | 43 ++++++++++++++++++++++++++++++++++++-------
->   include/ufs/ufshcd.h      |  2 ++
->   2 files changed, 38 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index 0534390c2a35d0671156d79a4b1981a257d2fbfa..0fa3cb48ce0e39439afb0f6d334b835d9e496387 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -6974,7 +6974,7 @@ static irqreturn_t ufshcd_sl_intr(struct ufs_hba *hba, u32 intr_status)
->   }
->   
->   /**
-> - * ufshcd_intr - Main interrupt service routine
-> + * ufshcd_intr - Threaded interrupt service routine
->    * @irq: irq number
->    * @__hba: pointer to adapter instance
->    *
-> @@ -6982,7 +6982,7 @@ static irqreturn_t ufshcd_sl_intr(struct ufs_hba *hba, u32 intr_status)
->    *  IRQ_HANDLED - If interrupt is valid
->    *  IRQ_NONE    - If invalid interrupt
->    */
-> -static irqreturn_t ufshcd_intr(int irq, void *__hba)
-> +static irqreturn_t ufshcd_threaded_intr(int irq, void *__hba)
->   {
->   	u32 intr_status, enabled_intr_status = 0;
->   	irqreturn_t retval = IRQ_NONE;
-> @@ -6990,8 +6990,6 @@ static irqreturn_t ufshcd_intr(int irq, void *__hba)
->   	int retries = hba->nutrs;
->   
->   	intr_status = ufshcd_readl(hba, REG_INTERRUPT_STATUS);
-> -	hba->ufs_stats.last_intr_status = intr_status;
-> -	hba->ufs_stats.last_intr_ts = local_clock();
->   
->   	/*
->   	 * There could be max of hba->nutrs reqs in flight and in worst case
-> @@ -7000,8 +6998,7 @@ static irqreturn_t ufshcd_intr(int irq, void *__hba)
->   	 * again in a loop until we process all of the reqs before returning.
->   	 */
->   	while (intr_status && retries--) {
-> -		enabled_intr_status =
-> -			intr_status & ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
-> +		enabled_intr_status = intr_status & hba->intr_en;
->   		ufshcd_writel(hba, intr_status, REG_INTERRUPT_STATUS);
->   		if (enabled_intr_status)
->   			retval |= ufshcd_sl_intr(hba, enabled_intr_status);
-> @@ -7020,9 +7017,40 @@ static irqreturn_t ufshcd_intr(int irq, void *__hba)
->   		ufshcd_dump_regs(hba, 0, UFSHCI_REG_SPACE_SIZE, "host_regs: ");
->   	}
->   
-> +	ufshcd_writel(hba, hba->intr_en, REG_INTERRUPT_ENABLE);
-> +
->   	return retval;
->   }
->   
-> +/**
-> + * ufshcd_intr - Main interrupt service routine
-> + * @irq: irq number
-> + * @__hba: pointer to adapter instance
-> + *
-> + * Return:
-> + *  IRQ_WAKE_THREAD - If interrupt is valid
-> + *  IRQ_NONE	    - If invalid interrupt
-> + */
-> +static irqreturn_t ufshcd_intr(int irq, void *__hba)
-> +{
-> +	u32 intr_status, enabled_intr_status = 0;
-> +	irqreturn_t retval = IRQ_NONE;
-> +	struct ufs_hba *hba = __hba;
-> +	int retries = hba->nutrs;
-> +
-> +	intr_status = ufshcd_readl(hba, REG_INTERRUPT_STATUS);
-> +	hba->ufs_stats.last_intr_status = intr_status;
-> +	hba->ufs_stats.last_intr_ts = local_clock();
-> +
-> +	if (unlikely(!intr_status))
-> +		return IRQ_NONE;
-> +
-> +	hba->intr_en = ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
-> +	ufshcd_writel(hba, 0, REG_INTERRUPT_ENABLE);
-> +
-> +	return IRQ_WAKE_THREAD;
-> +}
-> +
->   static int ufshcd_clear_tm_cmd(struct ufs_hba *hba, int tag)
->   {
->   	int err = 0;
-> @@ -10581,7 +10609,8 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
->   	ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
->   
->   	/* IRQ registration */
-> -	err = devm_request_irq(dev, irq, ufshcd_intr, IRQF_SHARED, UFSHCD, hba);
-> +	err = devm_request_threaded_irq(dev, irq, ufshcd_intr, ufshcd_threaded_intr,
-> +					IRQF_SHARED, UFSHCD, hba);
->   	if (err) {
->   		dev_err(hba->dev, "request irq failed\n");
->   		goto out_disable;
-> diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-> index e3909cc691b2a854a270279901edacaa5c5120d6..03a7216b89fd63c297479422d1213e497ce85d8e 100644
-> --- a/include/ufs/ufshcd.h
-> +++ b/include/ufs/ufshcd.h
-> @@ -893,6 +893,7 @@ enum ufshcd_mcq_opr {
->    * @ufshcd_state: UFSHCD state
->    * @eh_flags: Error handling flags
->    * @intr_mask: Interrupt Mask Bits
-> + * @intr_en: Saved Interrupt Enable Bits
->    * @ee_ctrl_mask: Exception event control mask
->    * @ee_drv_mask: Exception event mask for driver
->    * @ee_usr_mask: Exception event mask for user (set via debugfs)
-> @@ -1040,6 +1041,7 @@ struct ufs_hba {
->   	enum ufshcd_state ufshcd_state;
->   	u32 eh_flags;
->   	u32 intr_mask;
-> +	u32 intr_en;
->   	u16 ee_ctrl_mask;
->   	u16 ee_drv_mask;
->   	u16 ee_usr_mask;
+> If so, shall I also change 0 to 0x0 for reg in a separate patch?
 
-I don't like this patch because:
-- It reduces performance (IOPS) for systems on which MCQ is supported
-   and enabled. Please only use threaded interrupts if MCQ is not used.
-- It introduces race conditions on the REG_INTERRUPT_ENABLE register.
-   There are plenty of ufshcd_(enable|disable)_intr() calls in the UFS
-   driver. Please remove all code that modifies REG_INTERRUPT_ENABLE
-   from this patch.
-- Instead of retaining hba->ufs_stats.last_intr_status and
-   hba->ufs_stats.last_intr_ts, please remove both members and also
-   the debug code that reports the values of these member variables.
-   Please also remove hba->intr_en.
+I'd say, yes, please, if Bjorn / Konrad do not object.
 
-Thanks,
+> 
+> Regards
+> Luca
+> 
+>>
+>>> +			clocks = <&gcc GCC_VIDEO_AHB_CLK>,
+>>> +				 <&rpmhcc RPMH_CXO_CLK>,
+>>> +				 <&sleep_clk>;
+>>> +			clock-names = "iface",
+>>> +				      "bi_tcxo",
+>>> +				      "sleep_clk";
+>>> +			#clock-cells = <1>;
+>>> +			#reset-cells = <1>;
+>>> +			#power-domain-cells = <1>;
+>>> +		};
+>>> +
+>>>   		cci0: cci@ac4a000 {
+>>>   			compatible = "qcom,sm6350-cci", "qcom,msm8996-cci";
+>>>   			reg = <0 0x0ac4a000 0 0x1000>;
+>>>
+>>> -- 
+>>> 2.49.0
+>>>
+> 
 
-Bart.
+
+-- 
+With best wishes
+Dmitry
 
