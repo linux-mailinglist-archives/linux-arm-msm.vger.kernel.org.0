@@ -1,266 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-52162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05080A6B8FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 11:43:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC76BA6B9BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 12:18:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6CA703A7521
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 10:43:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 400997A2C14
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 11:17:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 124791F12ED;
-	Fri, 21 Mar 2025 10:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3547F20B7FB;
+	Fri, 21 Mar 2025 11:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="KN52eEkj"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="P8YlAQG1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12olkn2069.outbound.protection.outlook.com [40.92.23.69])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2956B1EA7E3;
-	Fri, 21 Mar 2025 10:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.23.69
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742553802; cv=fail; b=uWgHtQHPsuImdvM4yAmtD+EoR1LpQ6ddz9wTvc/A/dBXhyUNxdVFZ64pIsoFtAyNnzzyzSlr97WRGih9tWkim2BlQfnbo/tDleE36bB+ne9ccBbhjWvnQcX9zTg0qwQCJl7vBjrb6VJPfP87gw5kNYJTeNfkBuBIgHhExvw8NRk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742553802; c=relaxed/simple;
-	bh=DPxRnpHJBt0XXcbRajc5AMzx7of1jgl4cp6DMkddHS4=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=SpQ7kN9dTW+XeoX/F/iwvugq4xoeaJPN/WgA7TltEIX/9nXSnXEVsmnQu9vfG5FJl6riET/2cs7YGeNJGG7UT4NT6CKlNdNsQnV7eIGXg1k3QuTgCNaRxiD8BwQnEAzrRIepI7VfJRk4w6G8LHsDyQwDhTYwWPbHdqJq6jUO5GY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=KN52eEkj; arc=fail smtp.client-ip=40.92.23.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pvKViWEimxjOSlFoMgJHE7Lb9/N0Z0Ny20ZgddXN20fqWge0IBtEg9snX2C4m/6NG3wo/V/EtX4P5FJkyMZeXs54or5CdCbF/JlX0qh4SARrjonN+bEa/8YEUSWjM63EI9CJI09Dfu+gSNrR9luDe/PdMo/SNz36MmaT/aWI8ZoCRGHHL7TAdN/k9NNxLpHRMAj1IIKGa+SDQZFa7b6Hh98e8HOQ4xm6T1bQgBJd93gbQEwzlW7Qh2cEShGga5XV5M+YUxLPSU2KrW1qBDOdH18+6FhAL+N1GWGag/hxeNW+o+pUEx2cicNv8+w57uEacfDNbVmbuT0Wttvc7ZvXiw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RXWE34v/94HAzIh87jCWB44OUISv/X6wy/WcUS/EwBQ=;
- b=cCeFXJS2ZtQOxksoFv7zoRam85P8T/uMIGfKBabDjWT2orozVA4slCXBV6OTil7A9psAk0csw7PooIf+ac+LBfR/wYbj3TozJOfQJudVY1r3NVyrwICzNYrwC4s5m/MPIPvi6ZOw0FG6UVyqs63uPV/zLTyy9393ygBuvLxkaT3H5JPIUeBH30oQ4eaQitehHrMaQT/NlnoaOGo6lsug9qPcCvPsiyqxoZuHzfFTr0UHJpE5Z4UI78QIqPC5hV0oDmp2yhVZL6haubfa9yRqO82lXkpAjrBu5zXpsS2ewhxRJT8NeLWV9PlPTvPmlO6BeR3n7HXR/+nYygShl98zZQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RXWE34v/94HAzIh87jCWB44OUISv/X6wy/WcUS/EwBQ=;
- b=KN52eEkjQcjBMEvtiIgijJIFqgodtOLc1B7wUpilWrGn4GOedUlCPDPAGw7aDQpjzXw2WhGBHshf+ltdQaWLKei/bAW3K+yZqUVVxYWasnZRZwPQzxAclPyOPnDmWQ7Difm0xF2oYtVye1HIly1c0uDgapNLzI4JHwds02yCCbX8eU3J5A+JcpKn3U2qdI2yY5GX/dmuIvUsR54+9MNc5005XjDbNbSFbATJ97q/ZIyFFVCA6G80UxWvRRg+rTYfXro3CFv07zAIF97IIw/hZPYhn/Caj6LdEfG/TIkloYeU0N2828ryz7Bz8jlBIjU9OeLOfROmZn2FFnWrrLZKOA==
-Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
- by DS7PR19MB4613.namprd19.prod.outlook.com (2603:10b6:5:2c9::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.34; Fri, 21 Mar
- 2025 10:43:18 +0000
-Received: from DS7PR19MB8883.namprd19.prod.outlook.com
- ([fe80::e0c2:5b31:534:4305]) by DS7PR19MB8883.namprd19.prod.outlook.com
- ([fe80::e0c2:5b31:534:4305%6]) with mapi id 15.20.8534.036; Fri, 21 Mar 2025
- 10:43:18 +0000
-Message-ID:
- <DS7PR19MB8883D5940E9B1AD153C6415A9DDB2@DS7PR19MB8883.namprd19.prod.outlook.com>
-Date: Fri, 21 Mar 2025 14:43:05 +0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/6] dt-bindings: phy: qcom: uniphy-pcie: Add ipq5018
- compatible
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Nitheesh Sekar <quic_nsekar@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- 20250317100029.881286-2-quic_varada@quicinc.com,
- Varadarajan Narayanan <quic_varada@quicinc.com>, devicetree@vger.kernel.org,
- linux-pci@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-phy@lists.infradead.org,
- linux-kernel@vger.kernel.org,
- Sricharan Ramabadhran <quic_srichara@quicinc.com>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- linux-arm-msm@vger.kernel.org, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?=
- <kw@linux.com>
-References: <20250321-ipq5018-pcie-v5-0-aae2caa1f418@outlook.com>
- <20250321-ipq5018-pcie-v5-1-aae2caa1f418@outlook.com>
- <174255332861.2810991.11878697286839237760.robh@kernel.org>
-Content-Language: en-US
-From: George Moussalem <george.moussalem@outlook.com>
-In-Reply-To: <174255332861.2810991.11878697286839237760.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-ClientProxiedBy: DX0P273CA0062.AREP273.PROD.OUTLOOK.COM
- (2603:1086:300:59::10) To DS7PR19MB8883.namprd19.prod.outlook.com
- (2603:10b6:8:253::16)
-X-Microsoft-Original-Message-ID:
- <2eeae784-4b03-408b-a77e-1b5abb3ced0b@outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BCA1F0E49
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 11:18:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1742555886; cv=none; b=kycHHkmP+o70dQTiVbNHIOMYFZGN3/ke32Me9TUvOXRgg3EdZvJKh6inMgyyLz7hDwssrlmJvmDjlUSaGCdMXKZF0ZNT55q6OeADHwLgjoyK8Q1FPMlLPDgY2EKiGSf5sAOBSyop1p65vO3Bc/v2IkX6OR7Ta/PzBj/YHUINDUc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1742555886; c=relaxed/simple;
+	bh=f1rXoMSurkAvAixN8mEIRxqVUGV9fiv0n2OqrybEd6Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gchttFntWQvbV9pUzkQdOovjrzYqBaTfJmOoysVI4Hd+kaoO/H5mFi/1/p0e5P0nJ4ohYkPx94i7BX3BbpwQVXXlMrJG+3CJVfvE7KqSSjS8hCDcZq4qVdLSVDG90fo97aQ1idLHoYPbLgCoCY3eh5aDnXRbxwObu2q7Ww5Ig98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=P8YlAQG1; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52LATCcP011435
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 11:18:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=DKUSYoHR6fJ9Gx9eEsTaF2oL
+	MprzdUw0AcuNtKcNv44=; b=P8YlAQG1SDRbzIqC2q4Nfz0GyHgq+0u+Rc0ZNDHJ
+	1ICrxaboFhd5fjVpf9lZzZ6WTjuELXkaX/JUhMlMEAq4+gWgJ61Rrb+GN92V2MRu
+	g9DJ1rDQFs4UmkS8mcpS5ZzZJrUMtNqQH2R2tzs0uAF2gvhSpMPidNRKKINUsObh
+	tM1v+JOAwJp4pn8lNWXwF0PTJoYDxD62nOyQt3ZtVyDMN87OZ7PCyQAEn8GMHZc6
+	su66goVlKESiOHIzaX6T5yyMK0R55ijnjRm/Cux2EzAe6VhKSuodhhT+uKnFibPE
+	wxUZFTSndipA94ZqJVY0WIxJTNMB6yOa8waVxqORqC8tag==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45g15y67dv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 11:18:02 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3011c150130so2969656a91.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 04:18:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742555882; x=1743160682;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DKUSYoHR6fJ9Gx9eEsTaF2oLMprzdUw0AcuNtKcNv44=;
+        b=GcKh5EcOmwz/D1CK/nRzJL8iBEg9SFzfmZu6WYsqKocs5d7iAHlFtZf41XNOtmUqKt
+         0hOmBxx97woZ0MpMpntyh2OeN7rxItQXGFzRPcOFA4GNRaAmLR0qU1g3zuXugTulXS3v
+         lCzyookJlKy04wAKSO7AV/6vcD8c6Bg3HtjYemZ+Sfpy14t3FbiuAVUfwruBAVciNq5p
+         XV4MEH/kwf5k5WgOUDTX2xY3GT6Z2fSxyM4K0yhp/vE0XKjiI+i5WOEqkxZq9JIo6y4V
+         NXDOHbpHOHv6aJVJ/HkNAfu8ECK5eu7zJLDYaOx7n35ZCUqP+Uv13UlcTvaYjxs7srIZ
+         b+1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUpbCps1UX1w+XYMvp0p/s6rTriil5+ULtA2C8sFJKR7YMVQcKG1Z9Hj9JAbZvwahEY6Tjt9yV8kfuOxP9B@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx9lEyB80l1hBkzcEeJiqfH1watNJNxz0IpL+rF/toDsAIP6WHd
+	6YyA27KBLI4m6mpG6PjhPE0zMoiCLFtr+LSlbtThksQAbFabAz0CmwQEdb/1bxRrBtSGLllXKt2
+	JBARJWMfWPxzrdxK83gMBptzJRXIviyhkCWIQPIzSGknQ/mZU7010RJIpSW/xjho2VXbI9GYvd0
+	worjDBxNrWF66mjSQeEht1aPXyNhppfn9T2Z/L0c8=
+X-Gm-Gg: ASbGnctgcEdKTny7fP64WHgozXq7CUIT/Aeni48a5uVuc9wkfXx4lMZWussaw4IDqJq
+	XDeXKXZgt7r74yALJomeJkHticJA9rg0ABujezzc1+VPr8SYELiYO9pJ/O4MTHLifGPcX7He9pj
+	B5uAuAYnpirXkFQUyBdwPzkKMMOvKB
+X-Received: by 2002:a17:90b:53c3:b0:2fe:afbc:cd53 with SMTP id 98e67ed59e1d1-3030ff108camr4495964a91.28.1742555881133;
+        Fri, 21 Mar 2025 04:18:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFYUrRBiFxt4TF2dj2f7+rt3svO89e0vefSuFBivuUS0vkcM09QvsSAFZQaqgBo6AsU157kO11HvgGAwjzYsvk=
+X-Received: by 2002:a17:90b:53c3:b0:2fe:afbc:cd53 with SMTP id
+ 98e67ed59e1d1-3030ff108camr4495906a91.28.1742555880604; Fri, 21 Mar 2025
+ 04:18:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|DS7PR19MB4613:EE_
-X-MS-Office365-Filtering-Correlation-Id: 760103e8-ddbd-44df-1b3d-08dd68653086
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|6090799003|8060799006|19110799003|5072599009|461199028|15080799006|7092599003|10035399004|4302099013|3412199025|440099028|1602099012;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?ZUZUdmwzQURwWUhXbnovUS9sZ3VUdHZ0YXgzZE1RaEcvNlI2OG9SdjlNS3J3?=
- =?utf-8?B?R3E2MWFVUXJkdGFXcExmM3ZMc0Nic3ptNWc3NWw0cldrc1hHSTUzWjlSb1o1?=
- =?utf-8?B?ZEdmZ2NzTTVxZVU5U25kUm84bVlWVFRhd2psMG5RaGV0SExscW5lNkh6Uk5Z?=
- =?utf-8?B?SndWYTdKWEl0TTFCMnhncXBNNjM2WFF5dEhZWWxmTjNXRWJ6dXB3bC9hUGp3?=
- =?utf-8?B?K0I5TERmWjZSVC9ZbHlmdmd2MHRueUpqRWEzbUFoZWgxRnlVRGVGRHFuK2tJ?=
- =?utf-8?B?aTFMNTd6WlBpNkNGMXAxOTFUNHhWZS83RE5CTmZBU3lLY2VXZFdZd1RuTE1l?=
- =?utf-8?B?aU5UOFQ4ZlRIMldnUFh5S1duZFFCeWg2N2d2ak9SUmhnUCtTYldBeHR6bkFN?=
- =?utf-8?B?bkJ1Yi95OVJwS3JBOGlmOFlIRnVzKzZKN3lNK2l2R0hTeUR2K3dqWGFkdmlU?=
- =?utf-8?B?T0JEWTRTMmExckx6Z0lWY0lEQ21tb2ZTNm1jcGl4V2NPL3hISUZoMm5LYnZm?=
- =?utf-8?B?dTB4eW8xaWpPeENFNWtLbUpISFRHVENHRDM1bVJmWVpIaGdHUVNtcnV3SFVT?=
- =?utf-8?B?V3VMSXNwSDMyRy9CRVkwb3ltMCs1cmw4L2M2WDVkeFNHQ0NCb3dLSXVQL1BM?=
- =?utf-8?B?MW40VXNFbWUrRVFxc3hlU1hEMWNyZnIvRWg0dXVDSHoxQ3RLSkpVYVVMZnRZ?=
- =?utf-8?B?T1k3OXlHSlhFNVRibGxsMXcxKy9lU0UwRmF0c0ZCNldKZ2Y2WW51M0RuVGNR?=
- =?utf-8?B?dk51NlkzQ292TlRmUjBwVzU4dldEMEtSUnBXNTAvNlFpdHpBUnc1ZzBlVUFD?=
- =?utf-8?B?dkRITkxBNFg0dUVROXE5eGFMYXVjeXF1NnFlUkNlcVdtMFZocXJUejJTZ05M?=
- =?utf-8?B?bXVBVXg5clBsVWFLeWI2Mm0yWEdjcWZKTTgzZzMyOVIvMjNld2pyejRZZDRt?=
- =?utf-8?B?V21ZRDIxaytpWjNUdGZLTEdlK0hPeUl5YTJVc3BoUElva0FaLzFabVo0c1ZL?=
- =?utf-8?B?VnozcnhjelpPRi9zUmEzUjRHK3JRNUxzeXU1aG94djlDaEJtWDlxVVpQamdy?=
- =?utf-8?B?UEc2UGxzSDJreW9zRTJKTHNKMXlwaDgvUjFSRnU1b2haekY5QTZ5Q1dsZU1D?=
- =?utf-8?B?UFBwYTZqbnE0eTJXNGQxR25nKzR2STZEb2VndVZBSS9TdlBib2VFUXFOQTRV?=
- =?utf-8?B?dkNnTGRjQkFGdWlFZkR6Mi81Mmx2MDhVOW00cEpaT3FTK0RBb0YyQ0lmcFhl?=
- =?utf-8?B?T1ViSWZ2NW82MzBCcFkzTWdqNlpaOW1zL1Q5a09CbDlMTy9nQ3VSZlpFblhK?=
- =?utf-8?B?VnhZRWRweVY3SW1wUUtyNDErLzd0akZ0YkN6MTBET2pBRUpGL0FmcStJNzhG?=
- =?utf-8?B?bHR5ci9SSzNRYlJWd0cyNHRXWlRsTWo1dXpaVngvTEE4akx6YjdMeFFqc0RH?=
- =?utf-8?B?aWlxZ1JOMVlXaWRFaGRMbm1Oa0JJUmtKSGdCS2xnS1RzUzRaOWtxUFJ0L01L?=
- =?utf-8?B?Z1FnejZvSXZiR21YcG56Q2hDeUt5SlFoQjQvVU9neWpqM0V2dVpjc05scWJi?=
- =?utf-8?B?K3d3YUFYaEZiSzNiZ0E1am90ZkFXWGlqWUQwZ0hsYzBacUtMZjdlbThyL3l0?=
- =?utf-8?B?NGVrb3F3OWJpTWIwL2JBeUZyVEZqcy83Z2RwWmdiZWVqRkVhbTlLbkFoK1Jo?=
- =?utf-8?Q?/WqiYLa72rfAPfgUuu0O?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?V0lnUkxCWUdQaG1vd3ZqUHM3RXZQQnEzNnlRQUlJL2ZzUDdaUVRZd0tTWmc3?=
- =?utf-8?B?Z3VUckZBVGpBcUxZeG1pVWFHM29aS3locDR6TU04NFh2OGhKZWY4djUrOXpT?=
- =?utf-8?B?V0prYjFJQVloOEpXRjBreVg5cEdoMWFvdUtTdkk2VkdIcFRFZUF0dmtqWXRS?=
- =?utf-8?B?Wm83Uzh4cVdBSmRlb0h5SnJqZklCOG5nM2FCQW1FbzRzTjNRVmtoN1VET0JE?=
- =?utf-8?B?OFJ4NjhhZjZmOGgrVHFuY09NR1E4TFllSi9WcHdsZ3JiY1VLYmo3a2hCR1dz?=
- =?utf-8?B?SXc4a3hqNUo1MnJTUGlrR2s3eHg0WTJHRlpXUVJIUXdXYy9VR0k4ZlUxSWI3?=
- =?utf-8?B?WjlDZTZFMThOOWZ4RW1uVUxrZDVYWDNiU2dmaG1ocGR2Rk1LdUdSMWNhbTBs?=
- =?utf-8?B?emxhQnQ4UVpMSk05NTRQRmMvSGpXMzRORFBjR2llOFovblZ4L3NHeVdXSVFJ?=
- =?utf-8?B?V2JxN3lsL1B6NFRKM2tQaVRrVTE4U040TDA0ZDNScVZXbi9VcFZPek9jRUVF?=
- =?utf-8?B?YVE0UUN0Zm1kVS9haWFrRitXeUxaM01DVzNYWG9RM0hJaWNjUXp0MnFjOWh3?=
- =?utf-8?B?UUtONjdUZUtKTU11YUdOUHRNVXBmNXg2Qm9sdkRGTmhxK1lPNHRsczIvZGF3?=
- =?utf-8?B?UlNZL0ZqS2E4NmNpbGI0eTdUQXJ0bGI3STJ3M0hYNXN3Y1NuRzRNd0loNVlU?=
- =?utf-8?B?TGowRmJYSXlyM3cybC9vRDQ3eERHZ0NsQVVPRDZ0RXllOWFJOTRaOVVtc1hF?=
- =?utf-8?B?RHQ5WHZZNExRVXplM1JvcGx5d2hpYUJhMEZyczFuRnNhempmVEo5dXJXNFcx?=
- =?utf-8?B?ekYvbjVsNWdveXFoNENhSUdVbHoxdlFpZlo2NzN1UG5VckR4d3JKSlFXK2Rz?=
- =?utf-8?B?dGhiMlJiZ0tHV0UrcjBQOXh4by85QldxYzlPbXNyZlVRYzE0Nm8zUzJQeno5?=
- =?utf-8?B?a3Q4NTZXNFdtdVo0enVDaFpYa0VReWhCbFo3azdlUVV3VjJpdFZrK0Q0ZkxT?=
- =?utf-8?B?M3dmZkxMckhYa01kY29vdzdlQW10YVh3KzJIUW0rZ0VnTHIzZlVITTFSNSta?=
- =?utf-8?B?SGJ3QnA2TktXQ3NDUG5IQ2dER2Jzb2IvK2ZRU1RTY2VyZ0hlUEE4MzdIZ2hQ?=
- =?utf-8?B?OWNBNHR1MXBsQkFJUzQyQ3dZVnhBTThrbjl0am1UV2lCK1dST3l1MmlSa1pn?=
- =?utf-8?B?ZkxUS1BUZ3cxMzlDUlVsZ2QwZ0tvZVZWY09JTFlvOEU0QnRVTm9FVW1LMXAz?=
- =?utf-8?B?UGVBekF3eXhsK01OUSszK1JtS1B6MngxSksrUC91Z3QrZkM3MjZnZWJxYVNN?=
- =?utf-8?B?N1FuYzh5NjRrR0YxUVI1c0FKeUVNbGt0MUZxalhwc0RVV0U0bGtjeThxWjZv?=
- =?utf-8?B?Vk95YnVHZnhHQjExc0FENFZnV3BMN0RYemVMTDMwTjh3OHIwZVdleklvSFZY?=
- =?utf-8?B?eWlwd0NkN3E4WUswTzg3QTRpUFR3ZURuME9rVUpqZnZIVzhqcStNc1pwby9m?=
- =?utf-8?B?emhZaEt5MS9xaGwvVDQ0VHVpQmRBSVZTQWl6Q1dwWlFyc1dVWWMzQ25xbnYz?=
- =?utf-8?B?OVF1ZDcwcDQ3aTdERXhoa3NkTEw3ckxtQ2c0NURxQk5NUG9VZ1FzaFY4Qml0?=
- =?utf-8?B?WkJoRFVyQi9odmI4STNxWTVDNjc2VzlzWG51RkdPcTVFMnJEc1hxSm51WG40?=
- =?utf-8?Q?K17+psHO7n2OZsf4S10b?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 760103e8-ddbd-44df-1b3d-08dd68653086
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR19MB8883.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Mar 2025 10:43:18.0289
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR19MB4613
+References: <20250127044239.578540-1-quic_ekangupt@quicinc.com>
+ <20250127044239.578540-5-quic_ekangupt@quicinc.com> <hgox77a7e6zzriltwhzzciau6u2pmil4y3rl5o2l6zkp4fmlmp@q2dai5fxcvtq>
+ <49295da9-82d4-45a0-a2a4-fdaa6600c70d@quicinc.com> <an4cvztdkqmrt7w2iaziihlxf4tbox65ze362v2lmycjnqg26y@jizjmh2ki34z>
+ <939fcff6-fb93-487b-995b-88e3ff020784@oss.qualcomm.com> <2k6573yrw3dyn3rpwqz4asdpx3nlmj4ornm7kmxv3f4jlc6hzg@qkwn7gqduwri>
+ <e46be95c-ca8d-48ce-a616-5f068bd28ebc@oss.qualcomm.com> <4ca8776c-3cc7-4266-8248-4a595fa19e7f@oss.qualcomm.com>
+In-Reply-To: <4ca8776c-3cc7-4266-8248-4a595fa19e7f@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Fri, 21 Mar 2025 13:17:49 +0200
+X-Gm-Features: AQ5f1Jqtw8pLC3Jce_RInf4WAkyM5BsJM6J6o4bkxV8dEDbjppN-Wyx9DCzNbwI
+Message-ID: <CAO9ioeXVyN+gn=tHP4HsRTs=4AFrrqiyRJw3byxhrcgu4+Quqw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] misc: fastrpc: Add polling mode support for
+ fastRPC driver
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+        dri-devel@lists.freedesktop.org, arnd@arndb.de
+Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-GUID: 03gRhVZtKogdlr-vSnVpw7iaYUrnHpp7
+X-Proofpoint-ORIG-GUID: 03gRhVZtKogdlr-vSnVpw7iaYUrnHpp7
+X-Authority-Analysis: v=2.4 cv=VaD3PEp9 c=1 sm=1 tr=0 ts=67dd4aeb cx=c_pps a=RP+M6JBNLl+fLTcSJhASfg==:117 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=EdpeIRtKRTEnfPEYN64A:9 a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-21_04,2025-03-20_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ bulkscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=999 phishscore=0
+ spamscore=0 priorityscore=1501 suspectscore=0 mlxscore=0 malwarescore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503210083
+
+On Fri, 21 Mar 2025 at 12:18, Ekansh Gupta
+<ekansh.gupta@oss.qualcomm.com> wrote:
+>
+>
+>
+> On 3/20/2025 9:27 PM, Ekansh Gupta wrote:
+> >
+> > On 3/20/2025 7:45 PM, Dmitry Baryshkov wrote:
+> >> On Thu, Mar 20, 2025 at 07:19:31PM +0530, Ekansh Gupta wrote:
+> >>> On 1/29/2025 4:10 PM, Dmitry Baryshkov wrote:
+> >>>> On Wed, Jan 29, 2025 at 11:12:16AM +0530, Ekansh Gupta wrote:
+> >>>>> On 1/29/2025 4:59 AM, Dmitry Baryshkov wrote:
+> >>>>>> On Mon, Jan 27, 2025 at 10:12:38AM +0530, Ekansh Gupta wrote:
+> >>>>>>> For any remote call to DSP, after sending an invocation message,
+> >>>>>>> fastRPC driver waits for glink response and during this time the
+> >>>>>>> CPU can go into low power modes. Adding a polling mode support
+> >>>>>>> with which fastRPC driver will poll continuously on a memory
+> >>>>>>> after sending a message to remote subsystem which will eliminate
+> >>>>>>> CPU wakeup and scheduling latencies and reduce fastRPC overhead.
+> >>>>>>> With this change, DSP always sends a glink response which will
+> >>>>>>> get ignored if polling mode didn't time out.
+> >>>>>> Is there a chance to implement actual async I/O protocol with the help
+> >>>>>> of the poll() call instead of hiding the polling / wait inside the
+> >>>>>> invoke2?
+> >>>>> This design is based on the implementation on DSP firmware as of today:
+> >>>>> Call flow: https://github.com/quic-ekangupt/fastrpc/blob/invokev2/Docs/invoke_v2.md#5-polling-mode
+> >>>>>
+> >>>>> Can you please give some reference to the async I/O protocol that you've
+> >>>>> suggested? I can check if it can be implemented here.
+> >>>> As with the typical poll() call implementation:
+> >>>> - write some data using ioctl
+> >>>> - call poll() / select() to wait for the data to be processed
+> >>>> - read data using another ioctl
+> >>>>
+> >>>> Getting back to your patch. from you commit message it is not clear,
+> >>>> which SoCs support this feature. Reminding you that we are supporting
+> >>>> all kinds of platforms, including the ones that are EoLed by Qualcomm.
+> >>>>
+> >>>> Next, you wrote that in-driver polling eliminates CPU wakeup and
+> >>>> scheduling. However this should also increase power consumption. Is
+> >>>> there any measurable difference in the latencies, granted that you
+> >>>> already use ioctl() syscall, as such there will be two context switches.
+> >>>> What is the actual impact?
+> >>> Hi Dmitry,
+> >>>
+> >>> Thank you for your feedback.
+> >>>
+> >>> I'm currently reworking this change and adding testing details. Regarding the SoC
+> >>> support, I'll add all the necessary information.
+> >> Please make sure that both the kernel and the userspace can handle the
+> >> 'non-supported' case properly.
+> > Yes, I will include changes to handle in both userspace and kernel.
+>
+> I am seeking additional suggestions on handling "non-supported" cases before making the
+> changes.
+>
+> Userspace: To enable DSP side polling, a remote call is made as defined in the DSP image.
+> If this call fails, polling mode will not be enabled from userspace.
+
+No. Instead userspace should check with the kernel, which capabilities
+are supported. Don't perform API calls which knowingly can fail.
+
+>
+> Kernel: Since this is a DSP-specific feature, I plan to add a devicetree property, such
+> as "qcom,polling-supported," under the fastrpc node if the DSP supports polling mode.
+
+This doesn't sound like a logical solution. The kernel already knows
+the hardware that it is running on. As such, there should be no need
+to further describe the hardware in DT. If the DSP firmware can report
+its capabilities, use that. If not, extend the schema to add an
+SoC-specific compatibility string. As a last resort we can use
+of_machine_is_compatible().
+
+>
+> Does this approach seem appropriate, or is there a better way to handle this?
+>
+> Thanks,
+> Ekansh
+>
+> >
+> >>> For now, with in-driver
+> >>> polling, we are seeing significant performance improvements for calls
+> >>> with different sized buffers. On polling supporting platform, I've observed an
+> >>> ~80us improvement in latency. You can find more details in the test
+> >>> results here:
+> >>> https://github.com/quic/fastrpc/pull/134/files#diff-7dbc6537cd3ade7fea5766229cf585db585704e02730efd72e7afc9b148e28ed
+> >> Does the improvement come from the CPU not goint to idle or from the
+> >> glink response processing?
+> > Although both are contributing to performance improvement, the major
+> > improvement is coming from CPU not going to idle state.
+> >
+> > Thanks,
+> > Ekansh
+> >
+> >>> Regarding your concerns about power consumption, while in-driver polling
+> >>> eliminates CPU wakeup and scheduling, it does increase power consumption.
+> >>> However, the performance gains seem to outweigh this increase.
+> >>>
+> >>> Do you think the poll implementation that you suggested above could provide similar
+> >>> improvements?
+> >> No, I agree here. I was more concentrated on userspace polling rather
+> >> than hw polling.
+> >>
+>
 
 
-
-On 3/21/25 14:35, Rob Herring (Arm) wrote:
-> 
-> On Fri, 21 Mar 2025 13:09:50 +0400, George Moussalem wrote:
->> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
->>
->> The IPQ5018 SoC contains a Gen2 1 and 2-lane PCIe UNIPHY which is the
->> same as the one found in IPQ5332. As such, add IPQ5018 compatible.
->>
->> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
->> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
->> ---
->>   .../bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml | 57 +++++++++++++++++++---
->>   1 file changed, 49 insertions(+), 8 deletions(-)
->>
-> 
-> My bot found errors running 'make dt_binding_check' on your patch:
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:0:then:properties:clocks: {'minItems': 1, 'maxItems': 1, 'items': [{'description': 'pcie pipe clock'}]} should not be valid under {'required': ['maxItems']}
-> 	hint: "maxItems" is not needed with an "items" list
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:0:then:properties:clocks: 'oneOf' conditional failed, one must be fixed:
-> 	[{'description': 'pcie pipe clock'}] is too short
-> 	False schema does not allow 1
-> 	hint: "minItems" is only needed if less than the "items" list length
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:0:then:properties:resets: {'minItems': 2, 'maxItems': 2, 'items': [{'description': 'phy reset'}, {'description': 'cfg reset'}]} should not be valid under {'required': ['maxItems']}
-> 	hint: "maxItems" is not needed with an "items" list
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:0:then:properties:resets: 'oneOf' conditional failed, one must be fixed:
-> 	[{'description': 'phy reset'}, {'description': 'cfg reset'}] is too long
-> 	[{'description': 'phy reset'}, {'description': 'cfg reset'}] is too short
-> 	False schema does not allow 2
-> 	1 was expected
-> 	hint: "minItems" is only needed if less than the "items" list length
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:1:then:properties:clocks: {'minItems': 2, 'maxItems': 2, 'items': [{'description': 'pcie pipe clock'}, {'description': 'pcie ahb clock'}]} should not be valid under {'required': ['maxItems']}
-> 	hint: "maxItems" is not needed with an "items" list
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:1:then:properties:clocks: 'oneOf' conditional failed, one must be fixed:
-> 	[{'description': 'pcie pipe clock'}, {'description': 'pcie ahb clock'}] is too long
-> 	[{'description': 'pcie pipe clock'}, {'description': 'pcie ahb clock'}] is too short
-> 	False schema does not allow 2
-> 	1 was expected
-> 	hint: "minItems" is only needed if less than the "items" list length
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:1:then:properties:resets: {'minItems': 3, 'maxItems': 3, 'items': [{'description': 'phy reset'}, {'description': 'ahb reset'}, {'description': 'cfg reset'}]} should not be valid under {'required': ['maxItems']}
-> 	hint: "maxItems" is not needed with an "items" list
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:1:then:properties:resets: 'oneOf' conditional failed, one must be fixed:
-> 	[{'description': 'phy reset'}, {'description': 'ahb reset'}, {'description': 'cfg reset'}] is too long
-> 	[{'description': 'phy reset'}, {'description': 'ahb reset'}, {'description': 'cfg reset'}] is too short
-> 	False schema does not allow 3
-> 	1 was expected
-> 	3 is greater than the maximum of 2
-> 	hint: "minItems" is only needed if less than the "items" list length
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250321-ipq5018-pcie-v5-1-aae2caa1f418@outlook.com
-> 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-
-thanks, did the upgrade and see the errors. Will fix in next version.
-much appreciated!
-
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-> 
-
-Best regards,
-George
-
+-- 
+With best wishes
+Dmitry
 
