@@ -1,115 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-52156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A49DFA6B7FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 10:48:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F28DA6B87A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 11:06:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F24E97A456C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 09:47:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1013F189AF17
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 10:06:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5F231F09A1;
-	Fri, 21 Mar 2025 09:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17D631F152E;
+	Fri, 21 Mar 2025 10:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YC6O89GI"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="jw03Jjnd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9381E990B;
-	Fri, 21 Mar 2025 09:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7C0B1EBFF0;
+	Fri, 21 Mar 2025 10:06:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742550487; cv=none; b=rw3OrsadRAph8WhXN3Y2GIJ/xtNSeGp6KJlvhx0cRiYUsgWfOfH4JCoIjZqh2pOuT8ZPIBepvgTwyVSNal3JzFmUzziUSyoKIQZ2MLy1WlZ0/FakyO7xRZLZkWWK1wvQlRHHZvDCXDMM3mKf7w7mcl0zAFdV5jC2poWgnRDovlY=
+	t=1742551606; cv=none; b=GdRyHzVY6CNQgrATPZJZiKCUeKLYR1NOp90dBMkRzn3XEykVlK3Vd6GIGdrMDq2EjHI/zme6a7koFlRlsxMHgihZt7NC5nSp2eQwedIDo5tu2O7kJ0swsqbp+SNTJHm9m5q/1Gyg0snRKGjN2EwW+JedKgABPHkOdwKZmw8RDNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742550487; c=relaxed/simple;
-	bh=FSX5wgQpGviIl9j796MwaDns+PlHxhknGnllWqJ5QFo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HrxyYLzSpffga0C6FN68mDW9hhu+nnF9rOIUrSrLGeBsBz7pMkX5wvJzc6gajqJDz2yR4B1nM0KlBX94K4SKbL6Ppfr18Ne+jMeIbzi50OXq4eW5xd5+rd9jKTwztSG8kK5diu45KcLKueOty96D4d+9w8em629wzHQ2oY4z4/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YC6O89GI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97055C4CEE3;
-	Fri, 21 Mar 2025 09:48:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742550487;
-	bh=FSX5wgQpGviIl9j796MwaDns+PlHxhknGnllWqJ5QFo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YC6O89GIBcbRsW6Izy2UHgotEkBbGnaE7WgDaDacZyyegTLmDQPxZK7S3etURRpmF
-	 2UH5HK0hgXJHnTFNougjY4BhmGu/Ig1xTRwBSWKeXxjaxORlBvZR7GYPRU8EfhHTH8
-	 RqpsYyJq9tSpcgr/7Wgc1JxNvoaO3jq+PHw+EQMRtmpi/sck9wm2K2xKhTnsRk9PBv
-	 GTCLPlogntytBZvoc40lVDVWEmtobMORdjfPDB6LFlsf8W0L/TP2ZhxKeklAZ4tPU2
-	 7CBf6zI7sYum3ZCfog82hNbwhzW+ix4AOo85OAviirHqthe58lRSNKfC+Dbu7pVq4A
-	 C1N7G4QGC1TmA==
-Date: Fri, 21 Mar 2025 10:48:04 +0100
-From: Maxime Ripard <mripard@kernel.org>
-To: Andy Yan <andyshrk@163.com>
-Cc: lumag@kernel.org, neil.armstrong@linaro.org, 
-	dri-devel@lists.freedesktop.org, dianders@chromium.org, jani.nikula@intel.com, lyude@redhat.com, 
-	jonathanh@nvidia.com, p.zabel@pengutronix.de, simona@ffwll.ch, victor.liu@nxp.com, 
-	rfoss@kernel.org, chunkuang.hu@kernel.org, cristian.ciocaltea@collabora.com, 
-	Laurent.pinchart@ideasonboard.com, linux-arm-msm@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	Andy Yan <andy.yan@rock-chips.com>
-Subject: Re: [PATCH 1/1] drm/bridge: Pass down connector to drm bridge detect
- hook
-Message-ID: <20250321-optimistic-prompt-civet-bdcdba@houat>
+	s=arc-20240116; t=1742551606; c=relaxed/simple;
+	bh=xf5jgePRVrNAPJgRFo3kE61x88rMoUTorU0wBcZPvs8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=t5DLGTmfib+2mBq1FCrKJa+5+N38hSMcbjHTyJqIkLECBtYtFctAFaka6J6yKQebrcZh8j30rJGdcc8zt6dlHqirc86q4Ydc1fXSo4NqjG2hv91IS9HezVqv4Z2jWK+8GJHPI5ybXlinAUmsdFRpXTGQCs9N9h7biFqGv5b/Fao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=jw03Jjnd reason="signature verification failed"; arc=none smtp.client-ip=220.197.31.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=taNGpSsT9yLqZwW/7TUK635vZZQRd6sl6eS/ZIQodwA=; b=j
+	w03JjndOyDU0V9XCF5Ag4w3qmFyQkKqaU3kNqxmn/cFJi4OFpH51NkPQnYRIqHqa
+	CxmaXjUO3jSwlm3LGwfN9yOltaMRuOSK9NjDjSCH1k5ikhaKyfcNICpKydysyEgE
+	vSjXCLy0yB+QX4ztKnRbPouB5dVR6pkXfe0Jrttrqo=
+Received: from andyshrk$163.com ( [58.22.7.114] ) by
+ ajax-webmail-wmsvr-40-111 (Coremail) ; Fri, 21 Mar 2025 18:05:33 +0800
+ (CST)
+Date: Fri, 21 Mar 2025 18:05:33 +0800 (CST)
+From: "Andy Yan" <andyshrk@163.com>
+To: "Maxime Ripard" <mripard@kernel.org>
+Cc: lumag@kernel.org, neil.armstrong@linaro.org,
+	dri-devel@lists.freedesktop.org, dianders@chromium.org,
+	jani.nikula@intel.com, lyude@redhat.com, jonathanh@nvidia.com,
+	p.zabel@pengutronix.de, simona@ffwll.ch, victor.liu@nxp.com,
+	rfoss@kernel.org, chunkuang.hu@kernel.org,
+	cristian.ciocaltea@collabora.com, Laurent.pinchart@ideasonboard.com,
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+	linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
+	"Andy Yan" <andy.yan@rock-chips.com>
+Subject: Re:Re: [PATCH 1/1] drm/bridge: Pass down connector to drm bridge
+ detect hook
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
+ Copyright (c) 2002-2025 www.mailtech.cn 163com
+In-Reply-To: <20250321-optimistic-prompt-civet-bdcdba@houat>
 References: <20250321085345.136380-1-andyshrk@163.com>
  <20250321085345.136380-2-andyshrk@163.com>
+ <20250321-optimistic-prompt-civet-bdcdba@houat>
+X-NTES-SC: AL_Qu2fAPmevk0o5SWebOkfmkcVgOw9UcO5v/Qk3oZXOJF8jDjp4xEhV2B6MH/20uOCARCyuyGufh9t7txYW6d3eJ0gIXOvsAZyJ0cP6n6VjAxo3w==
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="psdl227jg277o23m"
-Content-Disposition: inline
-In-Reply-To: <20250321085345.136380-2-andyshrk@163.com>
+Message-ID: <5a6bffa.a00e.195b82a4808.Coremail.andyshrk@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:bygvCgD3T37tOd1nOPOCAA--.44580W
+X-CM-SenderInfo: 5dqg52xkunqiywtou0bp/1tbiqAMXXmfdMFz-jgABsE
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-
---psdl227jg277o23m
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 1/1] drm/bridge: Pass down connector to drm bridge detect
- hook
-MIME-Version: 1.0
-
-On Fri, Mar 21, 2025 at 04:53:38PM +0800, Andy Yan wrote:
-> From: Andy Yan <andy.yan@rock-chips.com>
->=20
-> In some application scenarios, we hope to get the corresponding
-> connector when the bridge's detect hook is invoked.
->=20
-> In most cases, we can get the connector by drm_atomic_get_connector_for_e=
-ncoder
-> if the encoder attached to the bridge is enabled, however there will
-> still be some scenarios where the detect hook of the bridge is called
-> but the corresponding encoder has not been enabled yet. For instance,
-> this occurs when the device is hot plug in for the first time.
->=20
-> Since the call to bridge's detect is initiated by the connector, passing
-> down the corresponding connector directly will make things simpler.
->=20
-> Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-
-FTR, I'm against it and would have appreciated that you wait for a
-meaningful closure to the discussion we've had on this.
-
-Maxime
-
---psdl227jg277o23m
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZ9010wAKCRAnX84Zoj2+
-dpUPAX9qG8wGWX/jIylnSMvlLPoWW5QTzLixBoLyAKtU+LQ4ih9kDaR+T2+Jw3ZK
-sF/MmZQBfivyGBZWnETXE8ErmIijVVrG0Ds9DeKvJyKxigYqbXaEmWDvYU2tYiyP
-IaXj31fvOQ==
-=X15G
------END PGP SIGNATURE-----
-
---psdl227jg277o23m--
+CkhpIE1heGltZe+8jAoKQXQgMjAyNS0wMy0yMSAxNzo0ODowNCwgIk1heGltZSBSaXBhcmQiIDxt
+cmlwYXJkQGtlcm5lbC5vcmc+IHdyb3RlOgo+T24gRnJpLCBNYXIgMjEsIDIwMjUgYXQgMDQ6NTM6
+MzhQTSArMDgwMCwgQW5keSBZYW4gd3JvdGU6Cj4+IEZyb206IEFuZHkgWWFuIDxhbmR5LnlhbkBy
+b2NrLWNoaXBzLmNvbT4KPj4gCj4+IEluIHNvbWUgYXBwbGljYXRpb24gc2NlbmFyaW9zLCB3ZSBo
+b3BlIHRvIGdldCB0aGUgY29ycmVzcG9uZGluZwo+PiBjb25uZWN0b3Igd2hlbiB0aGUgYnJpZGdl
+J3MgZGV0ZWN0IGhvb2sgaXMgaW52b2tlZC4KPj4gCj4+IEluIG1vc3QgY2FzZXMsIHdlIGNhbiBn
+ZXQgdGhlIGNvbm5lY3RvciBieSBkcm1fYXRvbWljX2dldF9jb25uZWN0b3JfZm9yX2VuY29kZXIK
+Pj4gaWYgdGhlIGVuY29kZXIgYXR0YWNoZWQgdG8gdGhlIGJyaWRnZSBpcyBlbmFibGVkLCBob3dl
+dmVyIHRoZXJlIHdpbGwKPj4gc3RpbGwgYmUgc29tZSBzY2VuYXJpb3Mgd2hlcmUgdGhlIGRldGVj
+dCBob29rIG9mIHRoZSBicmlkZ2UgaXMgY2FsbGVkCj4+IGJ1dCB0aGUgY29ycmVzcG9uZGluZyBl
+bmNvZGVyIGhhcyBub3QgYmVlbiBlbmFibGVkIHlldC4gRm9yIGluc3RhbmNlLAo+PiB0aGlzIG9j
+Y3VycyB3aGVuIHRoZSBkZXZpY2UgaXMgaG90IHBsdWcgaW4gZm9yIHRoZSBmaXJzdCB0aW1lLgo+
+PiAKPj4gU2luY2UgdGhlIGNhbGwgdG8gYnJpZGdlJ3MgZGV0ZWN0IGlzIGluaXRpYXRlZCBieSB0
+aGUgY29ubmVjdG9yLCBwYXNzaW5nCj4+IGRvd24gdGhlIGNvcnJlc3BvbmRpbmcgY29ubmVjdG9y
+IGRpcmVjdGx5IHdpbGwgbWFrZSB0aGluZ3Mgc2ltcGxlci4KPj4gCj4+IFNpZ25lZC1vZmYtYnk6
+IEFuZHkgWWFuIDxhbmR5LnlhbkByb2NrLWNoaXBzLmNvbT4KPgo+RlRSLCBJJ20gYWdhaW5zdCBp
+dCBhbmQgd291bGQgaGF2ZSBhcHByZWNpYXRlZCB0aGF0IHlvdSB3YWl0IGZvciBhCj5tZWFuaW5n
+ZnVsIGNsb3N1cmUgdG8gdGhlIGRpc2N1c3Npb24gd2UndmUgaGFkIG9uIHRoaXMuCgpObyBwcm9i
+bGVtLiBJIGp1c3Qgd2FudCB0byBrbm93IGhvdyB0byBwcm9jZWVkIHdpdGggdGhpcy4KCgo+Cj5N
+YXhpbWUK
 
