@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-52136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9298A6B528
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 08:37:07 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3526AA6B52F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 08:40:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B08F3B6805
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 07:36:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7C0F37A9618
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 07:39:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18CBE1EB9F7;
-	Fri, 21 Mar 2025 07:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B64501EDA01;
+	Fri, 21 Mar 2025 07:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cd1FHXuH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iiAJLk7j"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CFD2AF1B;
-	Fri, 21 Mar 2025 07:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897012AF1B;
+	Fri, 21 Mar 2025 07:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742542623; cv=none; b=utR4IxURURks6yYNcSHZW7SbXhWexDl5/25bHGWyujf4DDAqzwOIQdjv0fXj1kIT8AMP47DnjK7YrXFdfNIAn0+81DM1dI3De9S7JzTZIDBy8mpOeZexDHVa508IhoFDot6drKUGL18Jq1Aal6SUz3UcM/nyvfzogArQXVvJM/w=
+	t=1742542755; cv=none; b=MH9dzIbzf1Cq2uu2QyuzgWfA79q4xl22eaPz0SaJ29LZYHgIsHS2A+dqoUZuE4cnLS93Oke8F4uhmH7+RbD0/RxhD6kESrSY9sPyoQFoTOkekQPur+nQqJEa7I1Bp6b1EbhblUl2SkQrYC19LbmF3HXJoktiRaU4QIXKtiWsrd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742542623; c=relaxed/simple;
-	bh=ZN4fY3qBa64kKOgf9/J48hNmsZOH4oNNmJUEdRDqg3o=;
+	s=arc-20240116; t=1742542755; c=relaxed/simple;
+	bh=nlD8UfHxL6A1SIXp/p6NoZR/pJlgm3rdkZfgohR3koA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=UW23xvFzIBijPQW3omWoV6CZ4Q0NGCDuTXJ8WDztHqwoGJexVZraYOSHkKscxhTNfj9qPfxBrzgDvFNXRmxAc69VbALI0CcndUlknxgdn4ntP/7WT2kSXXmBPrxPiX9jJRb5QpCkK3npLyesLkVl4tlQ7esAdRXLa4x+XnwFAnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cd1FHXuH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944EBC4CEE3;
-	Fri, 21 Mar 2025 07:36:56 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=jDOYaefkkFeosO3SkI1WNF6N5GtlwiBCv9YoLguTMZtJGE0s/TfbI7OhKsUXzCkotk3BTJsux/50cIeZ8JVZWER3utGvQPpWzb4pDyXGZkS8EOuzBJoVVASGHY+CdasIO4nnClLL9aV2O01KHV6D8pKrt7yry372dp48fMvl5do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iiAJLk7j; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9813C4CEE3;
+	Fri, 21 Mar 2025 07:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742542622;
-	bh=ZN4fY3qBa64kKOgf9/J48hNmsZOH4oNNmJUEdRDqg3o=;
+	s=k20201202; t=1742542754;
+	bh=nlD8UfHxL6A1SIXp/p6NoZR/pJlgm3rdkZfgohR3koA=;
 	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=cd1FHXuHXSMTB4yHbYGVoPYpvHnR+9jgxm4JaRppEPUXydPW2erdM1sfDEdcCJq43
-	 wFqmRhuMhpq+1x83I6f9TtF16LJF4FdV38/2sXSXUeklDdaHWBkZjYsNYXRNzu217n
-	 iHkA1F7MKPz1jt8p8UwpBauC38y6rUzaNjFOUxF7FiZ5G1HvdRxELZjRNwSDAXQXNi
-	 4oX7nW49V08jydoPBlNSiAdSxfESpz/Av8MRMG5e/PH9BVkeDwwWZDP7h/2vcCsCi4
-	 C0BgOBmjy2aK+ho373FWp2oDTpzbVfeRijoywpxwHCPuCiFuzmC2kc5gPZRFtFzf2S
-	 UzibkGuyyjrkQ==
-Message-ID: <694b6638-92b2-4ac0-a175-bd29aea6cba9@kernel.org>
-Date: Fri, 21 Mar 2025 08:36:53 +0100
+	b=iiAJLk7jR0FpJGamwJFBBypXRf8QpNqTnJd0fQHgdjcI0kroUJxPhMBEIB6wIHY1W
+	 6w3FD2J5ttYVIuroG49qYG1RLqLgKLvPSVp3r3GSObHsfZCEGYqS6LtNWHBg89L1Nq
+	 XNRwZfzYxC6Szkp0rKk42wng4CJwP75O7nqjXJdKmq7Nk7HE7LqLEDeYvTXbiUH9x2
+	 wnNlfwVJAgA6H/yuQHmCx34ca7TWJFU6MMbxYRmCvITdHvORAKRDlHVldbvvTstHuP
+	 EcgTqlvKHF/hbiORCRKvFPvlWoSKMX4hNZ+KsvBK7Y7YZYSxeW0RmqBHe8M75BtIWx
+	 Z3PbIf83k25qw==
+Message-ID: <8379e009-9619-4c2b-986a-8ccb9ebaa083@kernel.org>
+Date: Fri, 21 Mar 2025 08:39:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] arm64: defconfig: enable PCI Power Control for
- PCIe3
+Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: x1e80100-qcp: Add power control
+ and sideband signals for PCIe3
 To: Wenbin Yao <quic_wenbyao@quicinc.com>, andersson@kernel.org,
  konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  catalin.marinas@arm.com, will@kernel.org, quic_qianyu@quicinc.com,
- sfr@canb.auug.org.au, linux-arm-kernel@lists.infradead.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+ sfr@canb.auug.org.au, linux-arm-kernel@lists.infradead.org
 References: <20250320055502.274849-1-quic_wenbyao@quicinc.com>
- <20250320055502.274849-2-quic_wenbyao@quicinc.com>
+ <20250320055502.274849-4-quic_wenbyao@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,37 +105,41 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250320055502.274849-2-quic_wenbyao@quicinc.com>
+In-Reply-To: <20250320055502.274849-4-quic_wenbyao@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 20/03/2025 06:55, Wenbin Yao wrote:
 > From: Qiang Yu <quic_qianyu@quicinc.com>
 > 
-> Enable the pwrctrl driver, which is utilized to manage the power supplies
-> of the devices connected to the PCI slots. This ensures that the voltage
-> rails of the x8 PCI slots on the X1E80100 - QCP can be correctly turned
-> on/off if they are described under PCIe port device tree node.
+> Add perst, wake and clkreq sideband signals and required regulators in
+> PCIe3 controller and PHY device tree node. Describe the voltage rails of
+> the x8 PCI slots for PCIe3 port.
 > 
 > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 > Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
 > ---
->  arch/arm64/configs/defconfig | 1 +
->  1 file changed, 1 insertion(+)
+>  arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 119 ++++++++++++++++++++++
+>  1 file changed, 119 insertions(+)
 > 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 85ec2fba1..de86d1121 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -245,6 +245,7 @@ CONFIG_PCIE_LAYERSCAPE_GEN4=y
->  CONFIG_PCI_ENDPOINT=y
->  CONFIG_PCI_ENDPOINT_CONFIGFS=y
->  CONFIG_PCI_EPF_TEST=m
-> +CONFIG_PCI_PWRCTL_SLOT=y
-Bartosz,
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+> index 28086a2bc..9cd313802 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+> @@ -318,6 +318,48 @@ vreg_wcn_3p3: regulator-wcn-3p3 {
+>  		regulator-boot-on;
+>  	};
+>  
+> +	vreg_pcie_12v: regulator-pcie_12v {
 
-Wasn't the intention to select it the same way as PCI_PWRCTL_PWRSEQ is
-selected?
+Don't send the downstream code.
+
+Underscore are not allowed in node names plus:
+
+Please use name for all fixed regulators which matches current format
+recommendation: 'regulator-[0-9]v[0-9]'
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml?h=v6.11-rc1#n46
 
 Best regards,
 Krzysztof
