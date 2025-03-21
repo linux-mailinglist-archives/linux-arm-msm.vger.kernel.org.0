@@ -1,225 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-52163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC76BA6B9BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 12:18:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 583B8A6BA68
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 13:16:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 400997A2C14
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 11:17:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0266D174F65
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 12:14:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3547F20B7FB;
-	Fri, 21 Mar 2025 11:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99B3022577D;
+	Fri, 21 Mar 2025 12:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="P8YlAQG1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fo7LJsD6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BCA1F0E49
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 11:18:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DB91EA7D3;
+	Fri, 21 Mar 2025 12:14:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742555886; cv=none; b=kycHHkmP+o70dQTiVbNHIOMYFZGN3/ke32Me9TUvOXRgg3EdZvJKh6inMgyyLz7hDwssrlmJvmDjlUSaGCdMXKZF0ZNT55q6OeADHwLgjoyK8Q1FPMlLPDgY2EKiGSf5sAOBSyop1p65vO3Bc/v2IkX6OR7Ta/PzBj/YHUINDUc=
+	t=1742559286; cv=none; b=bYwhQOI8F7JZ4+wz0lNtACFCBvAGpB+3Avwp8RiCiIIgkNSuvD5wCkcMRXPxrv0aygF2TZZ64SEAWW1oGo7lqHsrWfK40hHMbnwuVemsmAHhlO0/dkWILLZ07siKf9cYezyfolszQPM6cyC5o+/HQLj4pCFu+toefqPI5VNvVSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742555886; c=relaxed/simple;
-	bh=f1rXoMSurkAvAixN8mEIRxqVUGV9fiv0n2OqrybEd6Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gchttFntWQvbV9pUzkQdOovjrzYqBaTfJmOoysVI4Hd+kaoO/H5mFi/1/p0e5P0nJ4ohYkPx94i7BX3BbpwQVXXlMrJG+3CJVfvE7KqSSjS8hCDcZq4qVdLSVDG90fo97aQ1idLHoYPbLgCoCY3eh5aDnXRbxwObu2q7Ww5Ig98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=P8YlAQG1; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52LATCcP011435
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 11:18:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=DKUSYoHR6fJ9Gx9eEsTaF2oL
-	MprzdUw0AcuNtKcNv44=; b=P8YlAQG1SDRbzIqC2q4Nfz0GyHgq+0u+Rc0ZNDHJ
-	1ICrxaboFhd5fjVpf9lZzZ6WTjuELXkaX/JUhMlMEAq4+gWgJ61Rrb+GN92V2MRu
-	g9DJ1rDQFs4UmkS8mcpS5ZzZJrUMtNqQH2R2tzs0uAF2gvhSpMPidNRKKINUsObh
-	tM1v+JOAwJp4pn8lNWXwF0PTJoYDxD62nOyQt3ZtVyDMN87OZ7PCyQAEn8GMHZc6
-	su66goVlKESiOHIzaX6T5yyMK0R55ijnjRm/Cux2EzAe6VhKSuodhhT+uKnFibPE
-	wxUZFTSndipA94ZqJVY0WIxJTNMB6yOa8waVxqORqC8tag==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45g15y67dv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 11:18:02 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3011c150130so2969656a91.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 04:18:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742555882; x=1743160682;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DKUSYoHR6fJ9Gx9eEsTaF2oLMprzdUw0AcuNtKcNv44=;
-        b=GcKh5EcOmwz/D1CK/nRzJL8iBEg9SFzfmZu6WYsqKocs5d7iAHlFtZf41XNOtmUqKt
-         0hOmBxx97woZ0MpMpntyh2OeN7rxItQXGFzRPcOFA4GNRaAmLR0qU1g3zuXugTulXS3v
-         lCzyookJlKy04wAKSO7AV/6vcD8c6Bg3HtjYemZ+Sfpy14t3FbiuAVUfwruBAVciNq5p
-         XV4MEH/kwf5k5WgOUDTX2xY3GT6Z2fSxyM4K0yhp/vE0XKjiI+i5WOEqkxZq9JIo6y4V
-         NXDOHbpHOHv6aJVJ/HkNAfu8ECK5eu7zJLDYaOx7n35ZCUqP+Uv13UlcTvaYjxs7srIZ
-         b+1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUpbCps1UX1w+XYMvp0p/s6rTriil5+ULtA2C8sFJKR7YMVQcKG1Z9Hj9JAbZvwahEY6Tjt9yV8kfuOxP9B@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx9lEyB80l1hBkzcEeJiqfH1watNJNxz0IpL+rF/toDsAIP6WHd
-	6YyA27KBLI4m6mpG6PjhPE0zMoiCLFtr+LSlbtThksQAbFabAz0CmwQEdb/1bxRrBtSGLllXKt2
-	JBARJWMfWPxzrdxK83gMBptzJRXIviyhkCWIQPIzSGknQ/mZU7010RJIpSW/xjho2VXbI9GYvd0
-	worjDBxNrWF66mjSQeEht1aPXyNhppfn9T2Z/L0c8=
-X-Gm-Gg: ASbGnctgcEdKTny7fP64WHgozXq7CUIT/Aeni48a5uVuc9wkfXx4lMZWussaw4IDqJq
-	XDeXKXZgt7r74yALJomeJkHticJA9rg0ABujezzc1+VPr8SYELiYO9pJ/O4MTHLifGPcX7He9pj
-	B5uAuAYnpirXkFQUyBdwPzkKMMOvKB
-X-Received: by 2002:a17:90b:53c3:b0:2fe:afbc:cd53 with SMTP id 98e67ed59e1d1-3030ff108camr4495964a91.28.1742555881133;
-        Fri, 21 Mar 2025 04:18:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFYUrRBiFxt4TF2dj2f7+rt3svO89e0vefSuFBivuUS0vkcM09QvsSAFZQaqgBo6AsU157kO11HvgGAwjzYsvk=
-X-Received: by 2002:a17:90b:53c3:b0:2fe:afbc:cd53 with SMTP id
- 98e67ed59e1d1-3030ff108camr4495906a91.28.1742555880604; Fri, 21 Mar 2025
- 04:18:00 -0700 (PDT)
+	s=arc-20240116; t=1742559286; c=relaxed/simple;
+	bh=m1VPIuo5vZSZGVGPIyjDJGkECuuIKNQjt+mSRkRxpoQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=uhH38QP0uUZsJY4NGI0zsmwfATShH4R9hFcmT3OUEsIExgUp/p711JIk0CWuwTLTK2BjhCfVG0WgI5xRJporVuS8CtuQWJHLLF4ljA7gYJb4fTb772n+tlz+703u/TG0TXKki2jjGZ3IXEditSnnzB1VOfrxbdArv1w7VpariIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fo7LJsD6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C4653C4CEE3;
+	Fri, 21 Mar 2025 12:14:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742559285;
+	bh=m1VPIuo5vZSZGVGPIyjDJGkECuuIKNQjt+mSRkRxpoQ=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=Fo7LJsD65aFXCdaMWiR9wJYJcNAQqRSEOTuFc5M7mDsESsGaj8KzuOIWrPLWZmrEd
+	 8qqO1NMzwYxIh/ilmv78vLmFL6KHZtMTblNq2XvaGicKcnq7pB7U8i3q5i3iB2JunR
+	 jMjq2QiKx4sboOlL2HZSCtFkthXCVoBBVjG0AM5HdFMInZHz+0bNk7F/+bT3SzJUFL
+	 tYoUqlTtsmzKYpqZ+IYHlqjASn5kznabs6RVUoQBb5+UVCN3z8ND8tkOmnr5qlhQ9c
+	 y2L6X25Rj9SxcVJBadXlS/v1SeilCqmN+ivienXZ6U4fafCi8ByUnRT5n7Blb0lKQu
+	 6yRL2coZCMZ6Q==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA5CBC35FFF;
+	Fri, 21 Mar 2025 12:14:45 +0000 (UTC)
+From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
+Subject: [PATCH v6 0/6] Enable IPQ5018 PCI support
+Date: Fri, 21 Mar 2025 16:14:38 +0400
+Message-Id: <20250321-ipq5018-pcie-v6-0-b7d659a76205@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250127044239.578540-1-quic_ekangupt@quicinc.com>
- <20250127044239.578540-5-quic_ekangupt@quicinc.com> <hgox77a7e6zzriltwhzzciau6u2pmil4y3rl5o2l6zkp4fmlmp@q2dai5fxcvtq>
- <49295da9-82d4-45a0-a2a4-fdaa6600c70d@quicinc.com> <an4cvztdkqmrt7w2iaziihlxf4tbox65ze362v2lmycjnqg26y@jizjmh2ki34z>
- <939fcff6-fb93-487b-995b-88e3ff020784@oss.qualcomm.com> <2k6573yrw3dyn3rpwqz4asdpx3nlmj4ornm7kmxv3f4jlc6hzg@qkwn7gqduwri>
- <e46be95c-ca8d-48ce-a616-5f068bd28ebc@oss.qualcomm.com> <4ca8776c-3cc7-4266-8248-4a595fa19e7f@oss.qualcomm.com>
-In-Reply-To: <4ca8776c-3cc7-4266-8248-4a595fa19e7f@oss.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Fri, 21 Mar 2025 13:17:49 +0200
-X-Gm-Features: AQ5f1Jqtw8pLC3Jce_RInf4WAkyM5BsJM6J6o4bkxV8dEDbjppN-Wyx9DCzNbwI
-Message-ID: <CAO9ioeXVyN+gn=tHP4HsRTs=4AFrrqiyRJw3byxhrcgu4+Quqw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/5] misc: fastrpc: Add polling mode support for
- fastRPC driver
-To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
-        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
-        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-        dri-devel@lists.freedesktop.org, arnd@arndb.de
-Content-Type: text/plain; charset="UTF-8"
-X-Proofpoint-GUID: 03gRhVZtKogdlr-vSnVpw7iaYUrnHpp7
-X-Proofpoint-ORIG-GUID: 03gRhVZtKogdlr-vSnVpw7iaYUrnHpp7
-X-Authority-Analysis: v=2.4 cv=VaD3PEp9 c=1 sm=1 tr=0 ts=67dd4aeb cx=c_pps a=RP+M6JBNLl+fLTcSJhASfg==:117 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=EdpeIRtKRTEnfPEYN64A:9 a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-21_04,2025-03-20_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- bulkscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=999 phishscore=0
- spamscore=0 priorityscore=1501 suspectscore=0 mlxscore=0 malwarescore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503210083
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAC5Y3WcC/22OwQ6CMBBEf8X0bEl3oVI8AaI3E6NH46FCkUalt
+ SjREP5d4Gbi8U123mxHGuW0ashy1hGnWt1oUw+wmM9IXsn6oqguBibIkDMfgWr74AwEtblWFIo
+ gkOeSKSw5GSrWqVK/J93xNHClm6dxn8newpiS7BDu9hBtUyGEv0HuiyQJMxaEa/BXwDCNsgwx/
+ jnzanm3roDIs84Unnk9b8ZcvdzcybjS8sn8/8WWU0alVJhLCWUAIv6p933/BTWaCY4EAQAA
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Nitheesh Sekar <quic_nsekar@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Bjorn Helgaas <bhelgaas@google.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-pci@vger.kernel.org, George Moussalem <george.moussalem@outlook.com>, 
+ 20250317100029.881286-2-quic_varada@quicinc.com, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1742559282; l=4765;
+ i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
+ bh=m1VPIuo5vZSZGVGPIyjDJGkECuuIKNQjt+mSRkRxpoQ=;
+ b=tFK4Yh9hIxkOVHYsz+sbGqZw75VR3chKQwuSFrMLNjiMt+SM8beXcxTOxA7Gi5lkZliFIIvJ6
+ POKuhvr00yTAwodqbTjgnrtpDAnCpsnvwyPO66X67JzNXalJUjWsu/a
+X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
+ pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
+X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
+ with auth_id=364
+X-Original-From: George Moussalem <george.moussalem@outlook.com>
+Reply-To: george.moussalem@outlook.com
 
-On Fri, 21 Mar 2025 at 12:18, Ekansh Gupta
-<ekansh.gupta@oss.qualcomm.com> wrote:
->
->
->
-> On 3/20/2025 9:27 PM, Ekansh Gupta wrote:
-> >
-> > On 3/20/2025 7:45 PM, Dmitry Baryshkov wrote:
-> >> On Thu, Mar 20, 2025 at 07:19:31PM +0530, Ekansh Gupta wrote:
-> >>> On 1/29/2025 4:10 PM, Dmitry Baryshkov wrote:
-> >>>> On Wed, Jan 29, 2025 at 11:12:16AM +0530, Ekansh Gupta wrote:
-> >>>>> On 1/29/2025 4:59 AM, Dmitry Baryshkov wrote:
-> >>>>>> On Mon, Jan 27, 2025 at 10:12:38AM +0530, Ekansh Gupta wrote:
-> >>>>>>> For any remote call to DSP, after sending an invocation message,
-> >>>>>>> fastRPC driver waits for glink response and during this time the
-> >>>>>>> CPU can go into low power modes. Adding a polling mode support
-> >>>>>>> with which fastRPC driver will poll continuously on a memory
-> >>>>>>> after sending a message to remote subsystem which will eliminate
-> >>>>>>> CPU wakeup and scheduling latencies and reduce fastRPC overhead.
-> >>>>>>> With this change, DSP always sends a glink response which will
-> >>>>>>> get ignored if polling mode didn't time out.
-> >>>>>> Is there a chance to implement actual async I/O protocol with the help
-> >>>>>> of the poll() call instead of hiding the polling / wait inside the
-> >>>>>> invoke2?
-> >>>>> This design is based on the implementation on DSP firmware as of today:
-> >>>>> Call flow: https://github.com/quic-ekangupt/fastrpc/blob/invokev2/Docs/invoke_v2.md#5-polling-mode
-> >>>>>
-> >>>>> Can you please give some reference to the async I/O protocol that you've
-> >>>>> suggested? I can check if it can be implemented here.
-> >>>> As with the typical poll() call implementation:
-> >>>> - write some data using ioctl
-> >>>> - call poll() / select() to wait for the data to be processed
-> >>>> - read data using another ioctl
-> >>>>
-> >>>> Getting back to your patch. from you commit message it is not clear,
-> >>>> which SoCs support this feature. Reminding you that we are supporting
-> >>>> all kinds of platforms, including the ones that are EoLed by Qualcomm.
-> >>>>
-> >>>> Next, you wrote that in-driver polling eliminates CPU wakeup and
-> >>>> scheduling. However this should also increase power consumption. Is
-> >>>> there any measurable difference in the latencies, granted that you
-> >>>> already use ioctl() syscall, as such there will be two context switches.
-> >>>> What is the actual impact?
-> >>> Hi Dmitry,
-> >>>
-> >>> Thank you for your feedback.
-> >>>
-> >>> I'm currently reworking this change and adding testing details. Regarding the SoC
-> >>> support, I'll add all the necessary information.
-> >> Please make sure that both the kernel and the userspace can handle the
-> >> 'non-supported' case properly.
-> > Yes, I will include changes to handle in both userspace and kernel.
->
-> I am seeking additional suggestions on handling "non-supported" cases before making the
-> changes.
->
-> Userspace: To enable DSP side polling, a remote call is made as defined in the DSP image.
-> If this call fails, polling mode will not be enabled from userspace.
+This patch series adds the relevant phy and controller
+DT configurations for enabling PCI gen2 support
+on IPQ5018. IPQ5018 has two phys and two controllers, 
+one dual-lane and one single-lane.
 
-No. Instead userspace should check with the kernel, which capabilities
-are supported. Don't perform API calls which knowingly can fail.
+Last patch series (v3) submitted dates back to August 30, 2024.
+As I've worked to add IPQ5018 platform support in OpenWrt, I'm
+continuing the efforts to add Linux kernel support.
 
->
-> Kernel: Since this is a DSP-specific feature, I plan to add a devicetree property, such
-> as "qcom,polling-supported," under the fastrpc node if the DSP supports polling mode.
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+Changes in v6:
+- Fixed issues reported by 'make dt_bindings_check' as per Rob's bot
+- Removed Krzysztof's Ack-tag on  
+- Link to v5: https://lore.kernel.org/r/20250321-ipq5018-pcie-v5-0-aae2caa1f418@outlook.com
 
-This doesn't sound like a logical solution. The kernel already knows
-the hardware that it is running on. As such, there should be no need
-to further describe the hardware in DT. If the DSP firmware can report
-its capabilities, use that. If not, extend the schema to add an
-SoC-specific compatibility string. As a last resort we can use
-of_machine_is_compatible().
+Changes in v5:
+- Re-ordered reg and reg-names in dt-bindings and dts to align with
+  other IPQ SoCs
+- Corrected nr of interrupts in dt-bindings: phy: qcom: Add IPQ5018 SoC
+- Corrected ranges property of pcie controller nodes
+- Removed newlines between cells properties in pcie phy nodes
+- Modified dt bindings to add descriptions and separate conditions for
+  ipq5018 and ipq5332 as they have different nr of clocks and resets
+  As such, also removed Krzysztof's RB tag for validation
+- Ran dtbs_check and fixed:
+  interrupt-map property in pcie nodes:
+  /soc@0/pcie@80000000:interrupt-map: Cell 13 is not a phandle(0)
+  /soc@0/pcie@a0000000:interrupt-map: Cell 13 is not a phandle(0)
+- Added missing gpio header file to ipq5018-rdp432-c2.dts
+- Added MHI register requirement to bindings and to PCIe nodes as per:
+  Depends-on: <20250317100029.881286-2-quic_varada@quicinc.com>
+- Link to v4: https://lore.kernel.org/all/DS7PR19MB8883F2538AA7D047E13C102B9DD22@DS7PR19MB8883.namprd19.prod.outlook.com/
 
->
-> Does this approach seem appropriate, or is there a better way to handle this?
->
-> Thanks,
-> Ekansh
->
-> >
-> >>> For now, with in-driver
-> >>> polling, we are seeing significant performance improvements for calls
-> >>> with different sized buffers. On polling supporting platform, I've observed an
-> >>> ~80us improvement in latency. You can find more details in the test
-> >>> results here:
-> >>> https://github.com/quic/fastrpc/pull/134/files#diff-7dbc6537cd3ade7fea5766229cf585db585704e02730efd72e7afc9b148e28ed
-> >> Does the improvement come from the CPU not goint to idle or from the
-> >> glink response processing?
-> > Although both are contributing to performance improvement, the major
-> > improvement is coming from CPU not going to idle state.
-> >
-> > Thanks,
-> > Ekansh
-> >
-> >>> Regarding your concerns about power consumption, while in-driver polling
-> >>> eliminates CPU wakeup and scheduling, it does increase power consumption.
-> >>> However, the performance gains seem to outweigh this increase.
-> >>>
-> >>> Do you think the poll implementation that you suggested above could provide similar
-> >>> improvements?
-> >> No, I agree here. I was more concentrated on userspace polling rather
-> >> than hw polling.
-> >>
->
+Changes in v4:
+- removed dependency as the following have been applied:
+	dt-bindings: phy: qcom,uniphy-pcie: Document PCIe uniphy
+	phy: qcom: Introduce PCIe UNIPHY 28LP driver
+	dt-bindings: PCI: qcom: Document the IPQ5332 PCIe controller
+  Link: https://lore.kernel.org/all/20250313080600.1719505-1-quic_varada@quicinc.com/
+- added Mani's RB tag to: PCI: qcom: Add support for IPQ5018
+- Removed power-domains property requirement in dt-bindings for IPQ5018
+  and removed Krzysztof's RB tag from:
+  dt-bindings: PCI: qcom: Add IPQ5018 SoC
+- fixed author chain and retained Sricharan Ramabadhran in SoB tags and
+  kept Nitheesh Sekar as the original author
+- Removed comments as per Konrad's comment in:
+  arm64: dts: qcom: ipq5018: Add PCIe related nodes
+- Link to v3 submitted by Sricharan Ramabadhran:
+  Link: https://lore.kernel.org/all/20240830081132.4016860-1-quic_srichara@quicinc.com/
+- Link to v3, incorrectly versioned:
+  Link: https://lore.kernel.org/all/DS7PR19MB8883BC190797BECAA78EC50F9DCB2@DS7PR19MB8883.namprd19.prod.outlook.com/
 
+Changes in v3 (incorrectly versioned):
+- Depends on
+  Link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20250220094251.230936-1-quic_varada@quicinc.com/
+- Added 8 MSI SPI and 1 global interrupts (Thanks Mani for confirming)
+- Added hw revision (internal/synopsys) and nr of lanes in patch 4
+  commit msg
+- Sorted reg addresses and moved PCIe nodes accordingly
+- Moved to GIC based interrupts
+- Added rootport node in controller nodes
+- Tested on Linksys devices (MX5500/SPNMX56)
+- Link to v2: https://lore.kernel.org/all/20240827045757.1101194-1-quic_srichara com/
 
+Changes in v3:
+ - Added Reviewed-by tag for patch#1.
+ - Fixed dev_err_probe usage in patch#3.
+ - Added pinctrl/wak pins for pcie1 in patch#6.
+
+Changes in v2:
+ - Fixed all review comments from Krzysztof, Robert Marko,
+   Dmitry Baryshkov, Manivannan Sadhasivam, Konrad Dybcio.
+ - Updated the respective patches for their changes.
+ - Link to v1: https://lore.kernel.org/lkml/32389b66-48f3-8ee8-e2f1-1613feed3cc7@gmail.com/T/
+
+---
+Nitheesh Sekar (6):
+      dt-bindings: phy: qcom: uniphy-pcie: Add ipq5018 compatible
+      phy: qualcomm: qcom-uniphy-pcie 28LP add support for IPQ5018
+      dt-bindings: PCI: qcom: Add IPQ5018 SoC
+      PCI: qcom: Add support for IPQ5018
+      arm64: dts: qcom: ipq5018: Add PCIe related nodes
+      arm64: dts: qcom: ipq5018: Enable PCIe
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml         |  50 +++++
+ .../bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml |  49 ++++-
+ arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts     |  40 ++++
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi              | 234 ++++++++++++++++++++-
+ drivers/pci/controller/dwc/pcie-qcom.c             |   1 +
+ drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c   |  45 ++++
+ 6 files changed, 409 insertions(+), 10 deletions(-)
+---
+base-commit: 5744a64fddfc33629f3bcc9a06a646f7443077a7
+change-id: 20250321-ipq5018-pcie-1d44abf0e2f5
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+George Moussalem <george.moussalem@outlook.com>
+
+
 
