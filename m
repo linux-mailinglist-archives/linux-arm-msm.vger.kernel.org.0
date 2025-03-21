@@ -1,203 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-52237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D9DFA6C3E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 21:07:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FC7DA6C3F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 21:09:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C84F6468AC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 20:07:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1AEC53B7E72
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 20:09:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC31622FE13;
-	Fri, 21 Mar 2025 20:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DFD522FDEE;
+	Fri, 21 Mar 2025 20:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lzwYbugI"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="szvwozRf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E880622DFA6;
-	Fri, 21 Mar 2025 20:07:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBAA01EEA3C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 20:09:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742587639; cv=none; b=ew9FzrS1M/NMp0fKAmXA97Aw9YLF7KH2CL5ElIv/lM7ChagPWm3DWZMWm4mclN5dB8eNMaQaR+l6ZHDJqjdhjRgQgCxSMnHZadP5BM/9XKRN8aOSA3B14qc14QVPZB3TT0je9xcOUmUD0UsWgctAgpDf0N3q6KcDzmIY/c4df2M=
+	t=1742587779; cv=none; b=nG45u+pf+EgruO4mdl5IpRAN3R3gZlRX9WRFRDg+bA2y0XbgvtVKM7UuX3bmDEGkuBBUUuZTI8zaL3ThG2H1SuyQ/7C215u5y+OMQ/t7M0IoAybQmt4QUPuoKLHzT5X5RutGG6HUVlOvMvjeagbxqMSnF1O9R8VUjSzCpDkD78s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742587639; c=relaxed/simple;
-	bh=19oUotyDOCLDkmDdkLpuedsgL2cIAvuGUJEHwHnOgLQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Cvi5Fgg/bodmrxfmk+C85EL4y0gPd+J1XKZicKr2i47rDQlgWEG/s8vPBGLePcpXbcbdLdv5Fsa5LjJxsRT+Vg2Udxix6rElIBViHsB3bo0l1oJmHzXj7J4KVEpJk1DLIkMtoxozonyB2940cFcY9fhGdssdqp8SsOcSj9RaGYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lzwYbugI; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52LAT9tR022053;
-	Fri, 21 Mar 2025 20:06:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BAZWiy3q1WUqRoaiLvI9dIJslrFXt+ABgbRRNuix8fQ=; b=lzwYbugIwJgPebOs
-	BZR/l5K91Y2wuiUb0UD3Gi7Gp32OKbT04rL0j0kY2MF0WH8SVRX2CbYm6IcqVEjr
-	UID4lkN8eXiMXF/SQFE2TQX0ARLW71+kODkzxdwYzQguDZ1sl9M3Tbnuku2fclWR
-	XwKEWoejSh+d/reKnd9s6JZaVnBQy9G2DALzyxBFZafiZqYuhNxWMalDgW+aVIAT
-	siR2Wu0TpyOlc8YgHvTYzJq3cdlECYH1/Pk6wolEN0E/98dxw3JzPf27VlCdu8Ka
-	a3ftzIEA5yAs9xy8FjeOS//ZCL0XT3viLGRdbVAb935rNz8sCjkGrWvlbLTe/3ev
-	EQ9ZYA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45h4wphrb5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Mar 2025 20:06:50 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52LK6nCH020958
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Mar 2025 20:06:49 GMT
-Received: from [10.71.113.245] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 21 Mar
- 2025 13:06:49 -0700
-Message-ID: <5ba0912a-4d8c-4321-9fa4-0bac89af8224@quicinc.com>
-Date: Fri, 21 Mar 2025 13:06:43 -0700
+	s=arc-20240116; t=1742587779; c=relaxed/simple;
+	bh=j7v4UyN3Lp06V7pnTSO7Y60kFvGuFMETg8UlG/4uups=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZWEb7RaonsgMBrGZjfuKn2kkJ5pqJ2Fw6MjixPp+ZM7iZc+y6bfoWovPgpZgRzAwbVnPzlaT/kvYCxLiJ0J/5akonIneTFxBqdV3L8OdBlwVQ4PKEDoYmKxwV/5HXeLKodtxsS8uLf9MCXP5sG9Zl/hyeG6p47RNW7anw9pdm14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=szvwozRf; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2240aad70f2so53905ad.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 13:09:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1742587777; x=1743192577; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OOafnUEiyJ1Gb55WuZtMSsEWQiRaElw+RW4n0rhAEXA=;
+        b=szvwozRfWB1grVVyT/c9RDVTC1ET42xEP4iJo4c8YjiGcRzYKpcDI1e1HZQ2USUPbF
+         JrFVHwfe+fAxVBig+UD8HTBxs5NUeyNRZdf/bqusEu322/HwBHm9BP7JzLBx3qFWRY3T
+         E93TCKWRJX0qMxkKG3R0Amitjdvu486yRYvw1eWLFijogyzV1APC1v93DYPTV/M2xbxl
+         rvlT+3ZgowlaINKibrJkC2WUUsAz2yb4nvvAGeMQ+Vlo77Bcr9AG4wI+5yu0CtXrYKtW
+         +GluraDVDHwbZFLann+YMJFgB5iSldf8gZ5XfJhKKJ/gQhvhg1E08Yy4tZie1oF9f5zk
+         KONw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742587777; x=1743192577;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OOafnUEiyJ1Gb55WuZtMSsEWQiRaElw+RW4n0rhAEXA=;
+        b=CyQdVbfNovmImqSFj2GGRllTK/6YLJZyqA3IBaqERB0nUBCw/MUmUN1SVVtTUPIKZF
+         IumI5a1QYqYgOnUytE9zZWFF+jcV1wSi5U9yrTzyn40UrwpS5SeZ4KrATPCCCwqTag7s
+         nxluLrN0MRtdf9KM9MG4y1drZLS3rQguGz1bXP1K488AwEmH43Ex2IsyyRhwoaTViYkZ
+         lpcqnkZ4iDzBR0c3aidZUe/9wXTSGavZbfoEiFDQLUIgNionjp3q1OuGwi8394USYGaq
+         zrf0BF2Y3oAFgvqIgWKTekuc9NW1HGUo7rc3KJ1uuWzJ1+85pPBoRMaDXpqo5HdK3oBt
+         yxjA==
+X-Forwarded-Encrypted: i=1; AJvYcCVqNiNOPoRYtdizMyVFoWvSJnGEbyUmKWpsPNTmsiheVcIKPVDwA2xicvn3bjo92nteDDRqwG5fzLxXJs2x@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLS4H6om8DvU3HfZZySJ8UxYMnzF9LrPcjfJyRSQ6zRtIP7acg
+	TVen5b3LiRx32P0y1oKjhNNACTdG1OxL9kO+13RfE17SBKf+LTehLB4FRc2M36NHxEJp60yCpfM
+	IcU59T7rxCEcmF5ZR9yqMOSJB4llRIyvJMghm
+X-Gm-Gg: ASbGncsLuVnj0vvJUzjbv5l0vtwVe5sGbuAIOqcq4Vi7hmQYZ3NdSFY9IRSiIc1MTsQ
+	2ltUMvUrwK4lb7dkA+DbxuEiyLKtk19Ee2fU7FuiC1ATD+q8iyVptjk87RzK4i+5XjlWstyYG3z
+	4HdqtyS+uGMfooBONf3Dqnbrt3jo9YDwFmW1KJevbh30MHYtbqtRtRBIMj
+X-Google-Smtp-Source: AGHT+IGvpFGTBfp+MabVEeRllxzafgiPZ/ufd88zI3l9ZzdBHzykrz1eH56xXT4l0ISQ7CCp7LJf4v9pVr8aBdYDYqU=
+X-Received: by 2002:a17:902:9a48:b0:216:4d90:47af with SMTP id
+ d9443c01a7336-2279877f21amr402005ad.29.1742587776587; Fri, 21 Mar 2025
+ 13:09:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v36 00/31] Introduce QC USB SND audio offloading support
-To: Luca Weiss <luca.weiss@fairphone.com>, <srinivas.kandagatla@linaro.org>,
-        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
-        <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <broonie@kernel.org>,
-        <lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
-        <pierre-louis.bossart@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
-        <tiwai@suse.com>, <robh@kernel.org>, <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>
-References: <20250319005141.312805-1-quic_wcheng@quicinc.com>
- <D8LYYEQJ2W4L.1H7FPF4140BVS@fairphone.com>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <D8LYYEQJ2W4L.1H7FPF4140BVS@fairphone.com>
+References: <20250318162046.4016367-1-tabba@google.com> <20250318162046.4016367-6-tabba@google.com>
+In-Reply-To: <20250318162046.4016367-6-tabba@google.com>
+From: Vishal Annapurve <vannapurve@google.com>
+Date: Fri, 21 Mar 2025 13:09:24 -0700
+X-Gm-Features: AQ5f1JrkVc_diymZ4izcsLOGZymRKApPTUtoUgAcDro_HwSXX5c65PWftGZjJzo
+Message-ID: <CAGtprH-aoUrAPAdTho7yeZL1dqz0yqvr0-v_-U1R9f+dTxOkMA@mail.gmail.com>
+Subject: Re: [PATCH v6 5/7] KVM: guest_memfd: Restore folio state after final folio_put()
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8zEwo_wZhHpbeBVNYzwvKCMZbXs1_InH
-X-Proofpoint-GUID: 8zEwo_wZhHpbeBVNYzwvKCMZbXs1_InH
-X-Authority-Analysis: v=2.4 cv=ZN3XmW7b c=1 sm=1 tr=0 ts=67ddc6db cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=qC_FGOx9AAAA:8 a=NEAV23lmAAAA:8 a=XwCJkI7jc2rzYGe07aMA:9
- a=QEXdDO2ut3YA:10 a=fsdK_YakeE02zTmptMdW:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-21_06,2025-03-21_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=999 clxscore=1011 phishscore=0 adultscore=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 spamscore=0 mlxscore=0 priorityscore=1501
- bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503210149
+Content-Transfer-Encoding: quoted-printable
 
-Hi Luca,
+On Tue, Mar 18, 2025 at 9:20=E2=80=AFAM Fuad Tabba <tabba@google.com> wrote=
+:
+> ...
+> +/*
+> + * Callback function for __folio_put(), i.e., called once all references=
+ by the
+> + * host to the folio have been dropped. This allows gmem to transition t=
+he state
+> + * of the folio to shared with the guest, and allows the hypervisor to c=
+ontinue
+> + * transitioning its state to private, since the host cannot attempt to =
+access
+> + * it anymore.
+> + */
+>  void kvm_gmem_handle_folio_put(struct folio *folio)
+>  {
+> -       WARN_ONCE(1, "A placeholder that shouldn't trigger. Work in progr=
+ess.");
+> +       struct address_space *mapping;
+> +       struct xarray *shared_offsets;
+> +       struct inode *inode;
+> +       pgoff_t index;
+> +       void *xval;
+> +
+> +       mapping =3D folio->mapping;
+> +       if (WARN_ON_ONCE(!mapping))
+> +               return;
+> +
+> +       inode =3D mapping->host;
+> +       index =3D folio->index;
+> +       shared_offsets =3D &kvm_gmem_private(inode)->shared_offsets;
+> +       xval =3D xa_mk_value(KVM_GMEM_GUEST_SHARED);
+> +
+> +       filemap_invalidate_lock(inode->i_mapping);
 
-On 3/21/2025 6:13 AM, Luca Weiss wrote:
-> Hi Wesley,
-> 
-> On Wed Mar 19, 2025 at 1:51 AM CET, Wesley Cheng wrote:
->> Requesting to see if we can get some Acked-By tags, and merge on usb-next.
->>
->> Several Qualcomm based chipsets can support USB audio offloading to a
->> dedicated audio DSP, which can take over issuing transfers to the USB
->> host controller.  The intention is to reduce the load on the main
->> processors in the SoC, and allow them to be placed into lower power modes.
->> There are several parts to this design:
->>   1. Adding ASoC binding layer
->>   2. Create a USB backend for Q6DSP
->>   3. Introduce XHCI interrupter support
->>   4. Create vendor ops for the USB SND driver
->>
-> 
-> I was able to test this series (v35) on SM6350/SM7225 Fairphone 4
-> smartphone and it appears to work as expected!
+As discussed in the guest_memfd upstream, folio_put can happen from
+atomic context [1], so we need a way to either defer the work outside
+kvm_gmem_handle_folio_put() (which is very likely needed to handle
+hugepages and merge operation) or ensure to execute the logic using
+synchronization primitives that will not sleep.
 
-Thank you for taking the time to testing this :), much appreciated.
+[1] https://elixir.bootlin.com/linux/v6.14-rc6/source/include/linux/mm.h#L1=
+483
 
-> 
-> Based on the sm8350 branch you shared[0] I added similar dts bits for my
-> device, I've pushed that branch here[1] for reference.
-> 
-> [0] https://git.codelinaro.org/clo/linux-kernel/kernel-qcom/-/commits/usb_audio_offload/
-> [1] https://github.com/sm6350-mainline/linux/commits/sm6350-6.14-wip-usb-snd-offload/
-> 
-> And I've used these commands to test:
-> 
-> fairphone-4:~$ amixer -c0 cset name='USB Mixer MultiMedia2' On
-> 
-> fairphone-4:~$ aplay -l
-> **** List of PLAYBACK Hardware Devices ****
-> card 0: F4 [Fairphone 4], device 0: MultiMedia1 (*) []
-> Subdevices: 1/1
-> Subdevice #0: subdevice #0
-> card 0: F4 [Fairphone 4], device 1: MultiMedia2 (*) []
-> Subdevices: 1/1
-> Subdevice #0: subdevice #0
-> card 1: Audio [Hi-Res Audio], device 0: USB Audio [USB Audio]
-> Subdevices: 1/1
-> Subdevice #0: subdevice #0
-> 
-> fairphone-4:~$ ffmpeg -i test.m4a -acodec pcm_s16le test.wav
-> 
-> fairphone-4:~$ aplay --device=plughw:0,1 Music/test.wav
-> Playing WAVE 'Music/test.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Stereo
-> 
-> And then music was coming out of these headphones connected via a USB-C
-> to 3.5mm dongle.
-> 
-> Every time I'm starting playback this error appears in dmesg, do you
-> also see this on your test setup?
-> 
-> [ 1336.081525] q6afe-dai 3000000.remoteproc:glink-edge:apr:service@4:dais: AFE Port already open
-> 
-
-The print is coming because the Q6 USB backend DAI link is utilizing the
-q6afe_port_get_from_id() API to fetch the proper AFE port to issue commands
-to.  IMO, that log level should be decreased to at least dev_info() instead
-of an error, but we can probably take that discussion into a different series.
-
-To add, I also see this on my set up.
-
-> 
-> And if I'm not mistaken it's possible to check that actually the offload
-> path is getting used by checking the interrupt counts of the xhci-hcd
-> interrupt.
-> 
-> With regular USB audio card playback there's many interrupts per second
-> happening:
-> 
-> fairphone-4:~$ aplay --device=plughw:1,0 Music/test.wav # regular USB
-> fairphone-4:~$ cat /proc/interrupts | grep -i usb
-> 188:     137524          0          0          0          0          0          0          0    GICv3 165 Level     xhci-hcd:usb1
-> fairphone-4:~$ cat /proc/interrupts | grep -i usb
-> 188:     137591          0          0          0          0          0          0          0    GICv3 165 Level     xhci-hcd:usb1
-> 
-> And with the offload card during playback there's no interrupts
-> happening (just a few when initially starting playback):
-> 
-> fairphone-4:~$ aplay --device=plughw:0,1 Music/test.wav # offload
-> fairphone-4:~$ cat /proc/interrupts | grep -i usb
-> 188:     141947          0          0          0          0          0          0          0    GICv3 165 Level     xhci-hcd:usb1
-> fairphone-4:~$ cat /proc/interrupts | grep -i usb
-> 188:     141947          0          0          0          0          0          0          0    GICv3 165 Level     xhci-hcd:usb1
-> 
-
-This is correct.  With offload enabled, you should probably only see a few
-interrupts from xHCI from the initial USB headset enumeration and control
-transfers, but the data packets itself should result in no increase of the
-xHCI IRQ.
-
-Thanks
-Wesley Cheng
+> +       folio_lock(folio);
+> +       kvm_gmem_restore_pending_folio(folio, inode);
+> +       folio_unlock(folio);
+> +       WARN_ON_ONCE(xa_err(xa_store(shared_offsets, index, xval, GFP_KER=
+NEL)));
+> +       filemap_invalidate_unlock(inode->i_mapping);
+>  }
+>  EXPORT_SYMBOL_GPL(kvm_gmem_handle_folio_put);
+>
+> --
+> 2.49.0.rc1.451.g8f38331e32-goog
+>
 
