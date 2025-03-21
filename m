@@ -1,88 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-52227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FC11A6BFDE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 17:27:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C003CA6BFD6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 17:26:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 35BA9188EC8F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 16:24:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C63DB486475
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 16:24:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9CD522B8C4;
-	Fri, 21 Mar 2025 16:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A8821CF8B;
+	Fri, 21 Mar 2025 16:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XJO5KoRi"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RjqwbgxZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C171E3774
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE73522AE5D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742574231; cv=none; b=UeZpd2XM0q9nzC0Ygxq6mKykC1b6YY61Ip7FxqrMaIk29rcYl/gayo4CCSUMJcjolSWRpUrhG9l1jJy+4qL9IHVZxh5kVTlm0K+y4ue/XXdxOMM9htTtCM6uCkrupDuT1i1MO7Ee884XLSm/CDCxeQoS6COcE8kEd4eXqj/DLhQ=
+	t=1742574282; cv=none; b=Fvn93xXsr8DW5zn+I2pQyJOvECw2494NqbF64JimZwhqP5K8B1njd5bAxkFw4Sbyncsgoct+xPyBG2Px9oZSU9X/yGc7joZaI6e0LMd4sIyOdGBUeSelMl+31Y3f9xgd97H9tJ4Y2FzNNZsyGYqgBfX5hedT6cb10IvBnNhJ8gQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742574231; c=relaxed/simple;
-	bh=nNTfSGXw2geS8UBiT4FK+yp5IGwsYzhIrt8si9K/yUY=;
+	s=arc-20240116; t=1742574282; c=relaxed/simple;
+	bh=Ce6T8nTMLn8tjbpqvuysX6/kEuTvXxlLF287vhRVScg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KFohutLrW5aUwqVBOOAu1L8q2Fdaf8pLPfg3NPdR5lsHT7X3AE60m0uTC5ZS9riMbzCgWvSuC0yeD8mDVM+YPNaTZ/5k2sjyjAmyJwPe9JrEpKnDAq71SJhDQLJR7TDY7Yp3H5RisEAbXr8K+1wvsclvOuZpMT1/rQGeG8G6ZXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XJO5KoRi; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=UWp6RiVdKDx0LNT4/GmoofGWiGnOvyHji4lIfADJnDuBLE6Rubm2DbxyNUDmhxiG20SY61ybfQewo0c3EQIEqizyJL+29hOZz8bAkQ2EsRa9qsqjLuey4SugyffWS5prOVk6WkXYjKgBIUg0jMGrbfGMAoifL6c+SpE9pgszYiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RjqwbgxZ; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52LCS6CL025461
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:23:49 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52LAThla032660
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:24:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ld8OromtzDWpFiO+c4IGRa2KeSsgIr6PZMN7pzdN+fc=; b=XJO5KoRioUxrMPY4
-	LdIxKld/w8KboUIHZN9dbUw2v0iGIt2zOjFInfDioVQ8W7H2L3oMRmM8UToM/CmG
-	0tBbjuCnFbcISLSPD6lNA8BZCzwK2CvgxT5WtCy8UEyxbW2rZu+XddpgKEBL/0M7
-	wfUujxFJ3apZY33qnBgXBzfZyFxxcL9vAwJmDPfxlxjVkX0yNw7s2mtpdM3dtiG+
-	mKOOiT1v0dTpQoWC5CEsRuSptW+TsncfI7vNd53WQXjinNjsyB4DgEXXkzOfsuqt
-	icfnKpZaiVqdtGVIIf68MkgIDy361x87W/Z+JETZ0PpSlQC1WHplNx2bvXzAhblK
-	7gqJqQ==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45h854gmxs-1
+	2RGD55MDUFhr8V4lJtueWfpvxPXNIdGp5Dh8bbN/ZqQ=; b=RjqwbgxZ3vz9ILNP
+	+rBY9JZUDFaDCa//YDcl+iaj2jPTqsNscHEep4eOCQL2h2ng5PDa+zptx1iOAVFb
+	JEOVJGp2KRjrEH0LuFyjOyfL1kAuLwOssMGCFVA9xd/68QgMHxvaqyri5E58skY0
+	AknAMDTPAiKPD5Qy5r5xoaq3R9g8gXEfcTA30Ez2t+kC5K5GnK+cA1uDsQk/IB4k
+	KN1x3OepabeCmTt6ErZkFZ4MGoXK/0IlD5gfs2ErpyCgVBIGmhd6y3aZ+r/eiCoL
+	43HVb/uJn+ehodw+f6ozxpF5w/Su4ti9JCIRKG5PuW7evMxp5Kk98EgBgPgnxahP
+	OqGBGw==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45gt5kjqya-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:23:49 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6e8a04e1f91so53961326d6.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 09:23:49 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:24:39 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-2ff52e1c56fso5347545a91.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 09:24:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742574228; x=1743179028;
+        d=1e100.net; s=20230601; t=1742574279; x=1743179079;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ld8OromtzDWpFiO+c4IGRa2KeSsgIr6PZMN7pzdN+fc=;
-        b=hsdEODn15YoQEzYZIquyZFWq8YkEFb5RY/gAsEAWExEKpMQCKjhLDiTs1WychJjZTz
-         Unj/Czk8ww1/oIQvvkwO+8Z2y7vT83pEq7vtxHb1TIEes5tDNGHUmuo1blwOnUINNUjJ
-         ne+opjjrRX1L7V1rZGHKfqbBjaf/DLS29gWJmWSB+Khc/sjfprOaaIRmHd0DWY3j44bn
-         1yJkyOE1rhF2oYdwc2cptfCLoZjf+y1SxCqdyyke1WhoHbqVIHsAwwVZVi7gFY1i34tc
-         JBRlNpCjTL6U+cBAliw2ItCOOOZ/1/LMk7iYyymsIuEGs8+3R1P2VGyAVp6Y7N8toCSx
-         WAew==
-X-Forwarded-Encrypted: i=1; AJvYcCVdcH/wmFwWvKPiM/NgTVItAPWsacKD3bGgFkoL1EI3K3aDPXC7+zJnz1qkwXgBH7TN+XZ6lnZBvO+zC2lu@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCDLGBUmnHf6rlknKIzre+Fks3Xo/ggWA8H9YVg5d/r1IEgF/e
-	XO1jsZswhMNTMdegR6G8HGVo/leeRg2XqVCk4G9CCXgVFDB/3AqqfsstC/3UMzDLLbxXjDMNk25
-	9qJJ21+YhlmJ5/BwfP9S/kbs2ebmoMwqc9WeHieHZuSJbj8QTeJA4TOb74gm8wHMY
-X-Gm-Gg: ASbGncvjHrO2gT7NkoHOZMFpHMJhsMrt5sn+/tzz3m1aJKWC9v7+Udcy9Jp5gNeicGo
-	QMB2ND5Hf+hS2OYygQ2U+9i1dMmS8mNwXN9/+zfnxUYxdbHrg2XUlkg5V48os18la4eIapOteI6
-	jwGU8VCREDJc52Rq/jKKnEy454poeogLF1gK7E7bCbGX5X9jIWU9q76SkbHk3cuI4Zk8pxUK0wP
-	6S74+prR5OIvXjqKDvyJ1VC9zaXQyun6eTsW2Gqv4I9bneAiKdiH/7/mZFqQIDZJKqv3rNLmffQ
-	iOVHLL00H7sqq4DsS0Fcis41gBkKYUA6UbRVzYK6jVuBD4vVHvsAqW6STuHU92ArBs3TnHowvP5
-	mrec5NZrfxDo7MKLFp1PIeTzV2WcFDD7Un63TlIlDZUgfwDokj3WKRTDMTaSRSB9fcui5
-X-Received: by 2002:a05:6214:766:b0:6d4:dae:6250 with SMTP id 6a1803df08f44-6eb3f36c428mr55377336d6.34.1742574228048;
-        Fri, 21 Mar 2025 09:23:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGX98Iv6fQ9nBxZLEJQNiNCADCajpNV88gT+BPE+tv7DjRfCojEFyMDyypb7cv/sb1yB5O5Ig==
-X-Received: by 2002:a05:6214:766:b0:6d4:dae:6250 with SMTP id 6a1803df08f44-6eb3f36c428mr55376986d6.34.1742574227570;
-        Fri, 21 Mar 2025 09:23:47 -0700 (PDT)
-Received: from ?IPV6:2001:14bb:c2:310f:a0b3:1d12:b116:f8e6? (2001-14bb-c2-310f-a0b3-1d12-b116-f8e6.rev.dnainternet.fi. [2001:14bb:c2:310f:a0b3:1d12:b116:f8e6])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30d7d910e70sm2720771fa.105.2025.03.21.09.23.46
+        bh=2RGD55MDUFhr8V4lJtueWfpvxPXNIdGp5Dh8bbN/ZqQ=;
+        b=kioR4BtNnvBejCFzePwZIZx4ZLYm7aywJHkbdsm3gq0xacHTEFoGNOp00V4Vmr4IX+
+         FPoKSfLeioSU8YxSinY7iqVKfTuOytD0JahkaztUg7XJU82576t7w2vYHByJKLEzNno+
+         F0hsp0J+gfoXDBhHC0mkXoJirsZ4432s0L73QjM32xc2qvYwHzI0plL6GYTE1/Jn0XzR
+         q7S2XvNucn6wzMdGBc1mY5iJAgw37QzmuF+HXJMWxMIta6Qc46gnt/LHraV+3gTRP2W5
+         m2EFD32KfpMGyknoLenK933+qP8YnBIWRnk4odbtBxMXkbdROpvw2Zc8+YeuxCBvjnik
+         pbEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXUfui3EdyzD9JRBwz2ZBUSVd9OuAuBpNPxXed3mmPP6aRXrIASZqLSvw23cWQeXwzZVQd4f8DoyFYYmX3I@vger.kernel.org
+X-Gm-Message-State: AOJu0YwHi7J642VvVeKwYcdhtnry1FvUD6jjQNIOxLjFJkrHkrK1ruW8
+	ciVxOxXQ/UsX88oawMo8LNCPvxINMaKDU549Tm9DkHIJ+GS8p5EAi3NXD/143iE+8UMjij8yG67
+	GU2DuUOjgBIzN1uhpyEhxeM4aqkuLpPYOD1hgEft5Lq/rGGxT7VSqcFpG4v92Ey5b
+X-Gm-Gg: ASbGncurpkXIpxK/P+qDbyNQui5fjklNT+3yaeswQMjd0UvQwN2ML3+e/8BCKvCWmUh
+	L9X1RQ51/Yn5ZaK/8lrb7srpVfvnl8eC2nbZfWmL2szD3XJLY1uTrW+4qBaYsLtrqHrzeKKMjhf
+	mk0MWKJdmakp2CBSE9tAtOhq0wny/qtdCRZooZQRt5Y4CvOzVZMN+SqY9ICWn/ljh4hSNi/Am+B
+	w28oat3QWJSN6MkrzVbH+kiQF6MSjJ8DB8Iv67YbFB2fhd6ycyDZzR458lw79ayuFJCCY813Etm
+	+08P/sfXkHoFbn4X9Ru1XoXCzwl/fDYAJkOYrX0Ldg222nTTua1wWALaSS65UPwtzA==
+X-Received: by 2002:a05:6a21:7011:b0:1f5:902e:1e8c with SMTP id adf61e73a8af0-1fe4344e87dmr6878285637.42.1742574278862;
+        Fri, 21 Mar 2025 09:24:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGVKyG7jIu8ESkFtrQyVslWXHLnITCP9fIR0F65ogdSO80Eb9WUOondzucd95eBbq1SZEDlHA==
+X-Received: by 2002:a05:6a21:7011:b0:1f5:902e:1e8c with SMTP id adf61e73a8af0-1fe4344e87dmr6878227637.42.1742574278294;
+        Fri, 21 Mar 2025 09:24:38 -0700 (PDT)
+Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-739061592b9sm2122068b3a.152.2025.03.21.09.24.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Mar 2025 09:23:46 -0700 (PDT)
-Message-ID: <dbdc13ec-13ca-4d80-8c96-26e5e7b4ab3e@oss.qualcomm.com>
-Date: Fri, 21 Mar 2025 18:23:45 +0200
+        Fri, 21 Mar 2025 09:24:37 -0700 (PDT)
+Message-ID: <4c803828-79d5-4bfb-aea9-d5735c8eeee8@oss.qualcomm.com>
+Date: Fri, 21 Mar 2025 10:24:36 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,103 +89,106 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm6350: Add video clock controller
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250321-sm6350-videocc-v1-0-c5ce1f1483ee@fairphone.com>
- <20250321-sm6350-videocc-v1-3-c5ce1f1483ee@fairphone.com>
- <wjq7sxdc5enfu6zhp4d53mpyevzbuwm6qc73kwiu2v3v5p4zkk@mevxbzosjai5>
- <D8M2U2EUF169.MWRPXFYRBXMM@fairphone.com>
+Subject: Re: [PATCH] bus: mhi: host: Address conflict between power_up and
+ syserr
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: quic_carlv@quicinc.com, quic_thanson@quicinc.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, Jeffrey Hugo <quic_jhugo@quicinc.com>
+References: <20250306173226.857335-1-jeff.hugo@oss.qualcomm.com>
+ <20250314054651.iu6t3q3o5za2zrjs@thinkpad>
+ <6df3f39d-d736-4142-8123-b9afbe8a9848@oss.qualcomm.com>
+ <20250318103728.enrcf6mwuxznhgbq@thinkpad>
 Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <D8M2U2EUF169.MWRPXFYRBXMM@fairphone.com>
+From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+In-Reply-To: <20250318103728.enrcf6mwuxznhgbq@thinkpad>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: UC6SnHFTts8evORxaGOmy6OnD6QJLRsR
-X-Authority-Analysis: v=2.4 cv=ZtHtK87G c=1 sm=1 tr=0 ts=67dd9295 cx=c_pps a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=6H0WHjuAAAAA:8 a=5zAZ7Tx_SugcLKjGGPAA:9 a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
- a=Soq9LBFxuPC4vsCAQt-j:22
-X-Proofpoint-GUID: UC6SnHFTts8evORxaGOmy6OnD6QJLRsR
+X-Proofpoint-GUID: 4up9S9aNEdE2wLBjHcj4Dg8GS1jFKISd
+X-Proofpoint-ORIG-GUID: 4up9S9aNEdE2wLBjHcj4Dg8GS1jFKISd
+X-Authority-Analysis: v=2.4 cv=PsuTbxM3 c=1 sm=1 tr=0 ts=67dd92c7 cx=c_pps a=vVfyC5vLCtgYJKYeQD43oA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=XiIw4SY5avMduIS90OoA:9 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-21_05,2025-03-21_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- mlxlogscore=999 spamscore=0 clxscore=1015 malwarescore=0 suspectscore=0
- phishscore=0 priorityscore=1501 impostorscore=0 adultscore=0 bulkscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 adultscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
+ bulkscore=0 clxscore=1015 malwarescore=0 suspectscore=0 impostorscore=0
+ mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2503210120
 
-On 21/03/2025 18:15, Luca Weiss wrote:
-> Hi Dmitry,
-> 
-> On Fri Mar 21, 2025 at 4:56 PM CET, Dmitry Baryshkov wrote:
->> On Fri, Mar 21, 2025 at 03:45:01PM +0100, Luca Weiss wrote:
->>> Add a node for the videocc found on the SM6350 SoC.
+On 3/18/2025 4:37 AM, Manivannan Sadhasivam wrote:
+> On Fri, Mar 14, 2025 at 11:47:43AM -0600, Jeff Hugo wrote:
+>> On 3/13/2025 11:46 PM, Manivannan Sadhasivam wrote:
+>>> On Thu, Mar 06, 2025 at 10:32:26AM -0700, Jeff Hugo wrote:
+>>>> From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+>>>>
+>>>> mhi_async_power_up() enables IRQs, at which point we can receive a syserr
+>>>> notification from the device.  The syserr notification queues a work item
+>>>> that cannot execute until the pm_mutex is released.
+>>>>
+>>>> If we receive a syserr notification at the right time during
+>>>> mhi_async_power_up(), we will fail to initialize the device.
+>>>>
+>>>> The syserr work item will be pending.  If mhi_async_power_up() detects the
+>>>> syserr, it will handle it.  If the device is in PBL, then the PBL state
+>>>> transition event will be queued, resulting in a work item after the
+>>>> pending syserr work item.  Once mhi_async_power_up() releases the pm_mutex
+>>>> the syserr work item can run.  It will blindly attempt to reset the MHI
+>>>> state machine, which is the recovery action for syserr.  PBL/SBL are not
+>>>> interrupt driven and will ignore the MHI Reset unless syserr is actively
+>>>> advertised.  This will cause the syserr work item to timeout waiting for
+>>>> Reset to be cleared, and will leave the host state in syserr processing.
+>>>> The PBL transition work item will then run, and immediately fail because
+>>>> syserr processing is not a valid state for PBL transition.
+>>>>
+>>>> This leaves the device uninitialized.
+>>>>
+>>>> This issue has a fairly unique signature in the kernel log:
+>>>>
+>>>> [  909.803598] mhi mhi3: Requested to power ON
+>>>> [  909.803775] Qualcomm Cloud AI 100 0000:36:00.0: Fatal error received from device.  Attempting to recover
+>>>> [  909.803945] mhi mhi3: Power on setup success
+>>>> [  911.808444] mhi mhi3: Device failed to exit MHI Reset state
+>>>> [  911.808448] mhi mhi3: Device MHI is not in valid state
+>>>>
+>>>> We cannot remove the syserr handling from mhi_async_power_up() because the
+>>>> device may be in the syserr state, but we missed the notification as the
+>>>> irq was fired before irqs were enabled.  We also can't queue the syserr
+>>>> work item from mhi_async_power_up() if syserr is detected because that may
+>>>> result in a duplicate work item, and cause the same issue since the
+>>>> duplicate item will blindly issue MHI Reset even if syserr is no longer
+>>>> active.
+>>>>
+>>>> Instead, add a check in the syserr work item to make sure that the device
+>>>> is in the syserr state if the device is in the PBL or SBL EEs.
+>>>>
 >>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sm6350.dtsi | 14 ++++++++++++++
->>>   1 file changed, 14 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
->>> index 00ad1d09a19558d9e2bc61f1a81a36d466adc88e..ab7118b4f8f8cea56a3957e9df67ee1cd74820a6 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
->>> @@ -1952,6 +1952,20 @@ usb_1_dwc3_ss_out: endpoint {
->>>   			};
->>>   		};
->>>   
->>> +		videocc: clock-controller@aaf0000 {
->>> +			compatible = "qcom,sm6350-videocc";
->>> +			reg = <0 0x0aaf0000 0 0x10000>;
+>>> Don't we need a Fixes tag?
 >>
->> 0x0, please.
+>> I don't recall seeing documentation saying that Fixes tags are mandatory.
 > 
-> There's currently 80 cases of 0 and 20 of 0x0 in this file, is 0x0
-> the preferred way nowadays?
+> It is the standard practice to add the Fixes tag if the bug was introduced by a
+> specific commit. But...
 > 
-> If so, shall I also change 0 to 0x0 for reg in a separate patch?
-
-I'd say, yes, please, if Bjorn / Konrad do not object.
-
-> 
-> Regards
-> Luca
-> 
+>> Yes, I agree, they are helpful and should exist.
 >>
->>> +			clocks = <&gcc GCC_VIDEO_AHB_CLK>,
->>> +				 <&rpmhcc RPMH_CXO_CLK>,
->>> +				 <&sleep_clk>;
->>> +			clock-names = "iface",
->>> +				      "bi_tcxo",
->>> +				      "sleep_clk";
->>> +			#clock-cells = <1>;
->>> +			#reset-cells = <1>;
->>> +			#power-domain-cells = <1>;
->>> +		};
->>> +
->>>   		cci0: cci@ac4a000 {
->>>   			compatible = "qcom,sm6350-cci", "qcom,msm8996-cci";
->>>   			reg = <0 0x0ac4a000 0 0x1000>;
->>>
->>> -- 
->>> 2.49.0
->>>
+>> I am finding it difficult to point to a single commit that I can say
+>> introduced this issue. I believe we started seeing it with "bus: mhi: host:
+>> Add MHI_PM_SYS_ERR_FAIL state", but I don't think that commit actually
+>> introduced this issue. It seems like a coincidence that the issue was first
+>> observed with that commit.  I suspect that this issue has been a problem
+>> since the introduction of MHI, but I am not confident since the relevant
+>> code paths have radically changed since then.
+>>
+>> Given I don't feel confident in identifying a commit, I felt it was perhaps
+>> better to not list one at all.
+>>
+>> Do you have any suggestions?
+>>
 > 
+> Fine with me. In that case, it would have been helpful if mentioned in the
+> changelog area.
 
-
--- 
-With best wishes
-Dmitry
+Ah, that is a good idea. I'll add something with v2.
 
