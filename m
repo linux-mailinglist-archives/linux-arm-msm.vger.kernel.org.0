@@ -1,108 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-52160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECBDDA6B8C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 11:27:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2BA8A6B8D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 11:35:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7104E188AEF5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 10:27:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F28213B6B13
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 10:35:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AD65210F53;
-	Fri, 21 Mar 2025 10:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6480215770;
+	Fri, 21 Mar 2025 10:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b="TdZlsUHs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P2E3Xc0i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A531F91CD
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 10:27:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D8778F5B;
+	Fri, 21 Mar 2025 10:35:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742552827; cv=none; b=lR9F+gCFNopheG5dAkLVeHVj/1/6qssNMp6v5WAsTm1Dn+DIb7yJ1b4IKVqEESLbohhmuuNihCQgSjh/nOyijClgtJubYwXv1IJ5h5jKOHftYu2EK7IYVRTkAHFohdHXkHU8eMNpgNM8XTRfaFBN3rKwWF6qxVQ278Xw4eDvALc=
+	t=1742553330; cv=none; b=aewxmlJaOq5qZN9uH9r/CDYwH7txYENuIB504a/2Ha2qimVnkW9Ndw+cwQt/ElgQMr9+TacBYK1td0/6UvIm5aA4AEKlzOY2y6tZPqc2YDXl1ydD8i2hP5fylq/qYrKdg/QVSuP+RP8jgmNrD+lFzQU2Re9gNY7Vy2MRmmeCiww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742552827; c=relaxed/simple;
-	bh=C6XBFDQAIe6jgF6F40xRB15uQkrbHzlxj9SySg4AP08=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fA2Tw2xcOH56CdVHS9AEHMtOJMOrmngFDiZ4J51zpXcb91hOJ6q89/bBdumoGpXvw+SdTK3Qhqk196idlInrlLWhP96M2vEPSGKch6nYn1MAkBnAqSqdA9Sge6WbSzfO1wy8g9IF+MHWiPpjmS5GyivogGTLQUGKUsljrExvE+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org; spf=pass smtp.mailfrom=fooishbar.org; dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b=TdZlsUHs; arc=none smtp.client-ip=209.85.222.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fooishbar.org
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c5ba363f1aso106925885a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 03:27:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fooishbar.org; s=google; t=1742552823; x=1743157623; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=C6XBFDQAIe6jgF6F40xRB15uQkrbHzlxj9SySg4AP08=;
-        b=TdZlsUHsbgNrvFWKr74ib1rO52+3/liwAwS1JFqwx6yapEeDkX3o9P8hqbxg4TWr87
-         70MyY/R5x2Tom9e/G9Du9krSwiYhS3PpQlCLIuDQ8Kpcibsr7kl7i3+mL2f/5eIal170
-         pvfI6WO93waEO1YCmhromQZ8XjMKa5pytw+HplISM6cIZ3Jyc8FWLZ7i4lKIJ0EExGbZ
-         LqL9h1XwDRbi1qN5IavNQBl7pF/liW2j5ZbkZ+6vKEwh242vW6XCL5kaHH1+4HDcVZqC
-         MDDlqXfQ9iW0jfpRsd4WAeRqtHHRFhz+BNdJ3oyo/P6PqeyPLo9ogk86aLgGZSrfhuRZ
-         HE9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742552823; x=1743157623;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C6XBFDQAIe6jgF6F40xRB15uQkrbHzlxj9SySg4AP08=;
-        b=HZhfzVEJY91kPG/hqSicotgdT5z7JcDGlgg5I7lPIK70Wq7CxHbOKePAFd+V5+H68v
-         gfX+naHX6XiLtxVJME/AaZ20DLeCAE0lD+PGAZtKnRHDx9YSfkFNgkS4fIgLKf0UCAsI
-         m+bs2wsHqXjE8iSOz/BmyUE37+w0Kisncbgr6iMIZgNv7xygONnRPOCdhM4cqw1nDE6G
-         AlcYfD3vyT9/kqIToBuowBqvMnTv5U62S7HMOnXXf5izJtuwvu7eEXr01Y/ycolhOJYs
-         Ci9TtCUZLgiytBLFUWQ+MIKEfGWnIbZK8q8cNh3L/7LGZRTxeWVXiF7I+DLw+gf5cL6f
-         plvQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXvgvgN6rtcqP7+v10NIyIVPMK7NXhiYwHESfwVWfEqiEXn8xH7tWwDje8ebtBBRQ+fStVR+jw1IZPPFTKj@vger.kernel.org
-X-Gm-Message-State: AOJu0YxFfDEOkRmeyIRtOLsjTKRTt7DyQdrRFz4Li+Vt4TGdO/Uz0L84
-	zRrwQwlGXjR9aW1hi5mS5xxd3GJIPKA28VMuTWO7kK8KEU2aPyvbGleE3dB013fa9DPvsRWEadh
-	JwISULtwspzFxNraU/dPnM3mqAk2FvKSkub9VFQ==
-X-Gm-Gg: ASbGncsO3MPn4udbG9hDUkbJU0CFR/VVpE30xYhbXQj8z5kEife13etuHPOFRxlobfg
-	dr3TmwDYIieZNOThpnh1bNArmMB0mjZv88jo1l2amyq2GcJB5B4A1qZnMhK1xhMg/jzTWp6Xydn
-	MdCfzoljeUKNlTY2dlx/sX80sN
-X-Google-Smtp-Source: AGHT+IGtKZxKAoZgtR0aBlIVmyFJdz4vLgELnLl5z6u4LuYLjXNoyuq0UVrTF+CIIc7xPDTVRmAHZ+SRVPvG/7TyZXI=
-X-Received: by 2002:a05:620a:4055:b0:7c5:a423:f5b0 with SMTP id
- af79cd13be357-7c5ba13361dmr406693385a.7.1742552823192; Fri, 21 Mar 2025
- 03:27:03 -0700 (PDT)
+	s=arc-20240116; t=1742553330; c=relaxed/simple;
+	bh=M38TozFdZmDwbMggCWzdf6+Uy65GEd34MS0QwbTZJZc=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=bjVksbcRj1mhzJ5Si5ZBKG1MOVaZuuCxOKYZuSAp4kIBSXL8BdCy92YSmKfx0WKrXAirk7n6SylaMYJivBITyiGf2s173Va+YwprwDO2XBnG3O35+mw9BAEokBqq/asdHk8o7HI1Gp8n/n2qAyB0lfFg9jOzeU8f4QSsdUuUFyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P2E3Xc0i; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C97DC4CEE3;
+	Fri, 21 Mar 2025 10:35:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742553329;
+	bh=M38TozFdZmDwbMggCWzdf6+Uy65GEd34MS0QwbTZJZc=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=P2E3Xc0i0Sk5jGWUFUfaZDF8yPFrugsZoR5m5uFXw6JGMB1qT4FrSCUZimP44PjQB
+	 5w/7CM/cM0+OQut8Y1qrXPPeKJhpn9SjLCqsbVezuGmHyR2aBI4LyLAAn6yujp7Z1p
+	 w/MyIX5Q2rKSvoM/d/UNj+0dV0EV/bKQejOfFT+lf5kR+bKSvYmNAKH40kgBg7os4K
+	 5eZQLBH4msUkmXQs502Cou46mS1ZMJVhHftYe71iSiwR/VB3N1xWdJEXka0cIHoNQp
+	 Zx7PBP17DLctq3mFU1oBeTkPAnZ+3SWhiESFDyrG2aZUStBW4CUcR8WCoQqZAVh4l9
+	 jomkRFy0kUHIA==
+Date: Fri, 21 Mar 2025 05:35:28 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250314085858.39328-1-vignesh.raman@collabora.com> <20250314085858.39328-2-vignesh.raman@collabora.com>
-In-Reply-To: <20250314085858.39328-2-vignesh.raman@collabora.com>
-From: Daniel Stone <daniel@fooishbar.org>
-Date: Fri, 21 Mar 2025 10:26:52 +0000
-X-Gm-Features: AQ5f1JpymW7UP78_0g_Z-sNByprYGBFX-xYqr_OlbVrsK0-Hob7Zk88vIu6Znbc
-Message-ID: <CAPj87rMjF84yyPqBshuGu=8qx6Xhq9Z-HgEnQe=tRtbu3E8OtQ@mail.gmail.com>
-Subject: Re: [PATCH v1 1/3] drm/ci: uprev mesa
-To: Vignesh Raman <vignesh.raman@collabora.com>
-Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com, 
-	helen.fornazier@gmail.com, airlied@gmail.com, simona.vetter@ffwll.ch, 
-	robdclark@gmail.com, guilherme.gallo@collabora.com, 
-	sergi.blanch.torne@collabora.com, valentine.burley@collabora.com, 
-	lumag@kernel.org, quic_abhinavk@quicinc.com, mripard@kernel.org, 
-	jani.nikula@linux.intel.com, linux-mediatek@lists.infradead.org, 
-	linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	intel-gfx@lists.freedesktop.org, virtualization@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Nitheesh Sekar <quic_nsekar@quicinc.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ 20250317100029.881286-2-quic_varada@quicinc.com, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, devicetree@vger.kernel.org, 
+ linux-pci@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Bjorn Helgaas <bhelgaas@google.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-phy@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+ linux-arm-msm@vger.kernel.org, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>
+To: George Moussalem <george.moussalem@outlook.com>
+In-Reply-To: <20250321-ipq5018-pcie-v5-1-aae2caa1f418@outlook.com>
+References: <20250321-ipq5018-pcie-v5-0-aae2caa1f418@outlook.com>
+ <20250321-ipq5018-pcie-v5-1-aae2caa1f418@outlook.com>
+Message-Id: <174255332861.2810991.11878697286839237760.robh@kernel.org>
+Subject: Re: [PATCH v5 1/6] dt-bindings: phy: qcom: uniphy-pcie: Add
+ ipq5018 compatible
 
-Hi Vignesh,
 
-On Fri, 14 Mar 2025 at 08:59, Vignesh Raman <vignesh.raman@collabora.com> wrote:
-> LAVA was recently patched [1] with a fix on how parameters are parsed in
-> `lava-test-case`, so we don't need to repeat quotes to send the
-> arguments properly to it. Uprev mesa to fix this issue.
+On Fri, 21 Mar 2025 13:09:50 +0400, George Moussalem wrote:
+> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> 
+> The IPQ5018 SoC contains a Gen2 1 and 2-lane PCIe UNIPHY which is the
+> same as the one found in IPQ5332. As such, add IPQ5018 compatible.
+> 
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+> ---
+>  .../bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml | 57 +++++++++++++++++++---
+>  1 file changed, 49 insertions(+), 8 deletions(-)
+> 
 
-Thanks a lot; the series is:
-Acked-by: Daniel Stone <daniels@collabora.com>
+My bot found errors running 'make dt_binding_check' on your patch:
 
-Cheers,
-Daniel
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:0:then:properties:clocks: {'minItems': 1, 'maxItems': 1, 'items': [{'description': 'pcie pipe clock'}]} should not be valid under {'required': ['maxItems']}
+	hint: "maxItems" is not needed with an "items" list
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:0:then:properties:clocks: 'oneOf' conditional failed, one must be fixed:
+	[{'description': 'pcie pipe clock'}] is too short
+	False schema does not allow 1
+	hint: "minItems" is only needed if less than the "items" list length
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:0:then:properties:resets: {'minItems': 2, 'maxItems': 2, 'items': [{'description': 'phy reset'}, {'description': 'cfg reset'}]} should not be valid under {'required': ['maxItems']}
+	hint: "maxItems" is not needed with an "items" list
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:0:then:properties:resets: 'oneOf' conditional failed, one must be fixed:
+	[{'description': 'phy reset'}, {'description': 'cfg reset'}] is too long
+	[{'description': 'phy reset'}, {'description': 'cfg reset'}] is too short
+	False schema does not allow 2
+	1 was expected
+	hint: "minItems" is only needed if less than the "items" list length
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:1:then:properties:clocks: {'minItems': 2, 'maxItems': 2, 'items': [{'description': 'pcie pipe clock'}, {'description': 'pcie ahb clock'}]} should not be valid under {'required': ['maxItems']}
+	hint: "maxItems" is not needed with an "items" list
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:1:then:properties:clocks: 'oneOf' conditional failed, one must be fixed:
+	[{'description': 'pcie pipe clock'}, {'description': 'pcie ahb clock'}] is too long
+	[{'description': 'pcie pipe clock'}, {'description': 'pcie ahb clock'}] is too short
+	False schema does not allow 2
+	1 was expected
+	hint: "minItems" is only needed if less than the "items" list length
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:1:then:properties:resets: {'minItems': 3, 'maxItems': 3, 'items': [{'description': 'phy reset'}, {'description': 'ahb reset'}, {'description': 'cfg reset'}]} should not be valid under {'required': ['maxItems']}
+	hint: "maxItems" is not needed with an "items" list
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml: allOf:1:then:properties:resets: 'oneOf' conditional failed, one must be fixed:
+	[{'description': 'phy reset'}, {'description': 'ahb reset'}, {'description': 'cfg reset'}] is too long
+	[{'description': 'phy reset'}, {'description': 'ahb reset'}, {'description': 'cfg reset'}] is too short
+	False schema does not allow 3
+	1 was expected
+	3 is greater than the maximum of 2
+	hint: "minItems" is only needed if less than the "items" list length
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250321-ipq5018-pcie-v5-1-aae2caa1f418@outlook.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
