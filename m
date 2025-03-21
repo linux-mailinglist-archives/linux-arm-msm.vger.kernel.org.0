@@ -1,132 +1,241 @@
-Return-Path: <linux-arm-msm+bounces-52225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB1CAA6BF8A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 17:18:06 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4964FA6BFC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 17:23:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 266AC3BA8BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 16:17:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ADB7D7A8024
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 16:19:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10B7522B590;
-	Fri, 21 Mar 2025 16:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07DAE22AE76;
+	Fri, 21 Mar 2025 16:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jtSoBD0t"
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="OJLKm1cE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from 003.mia.mailroute.net (003.mia.mailroute.net [199.89.3.6])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7796B22A1FA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:16:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8F91DEFC5;
+	Fri, 21 Mar 2025 16:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.3.6
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742573803; cv=none; b=enGKdXCcUqzcq4eAXzdYY3sSMFHvf3z+Xuq3FbOQETVYfoCLCsku2Ca1FXM3/V3+KQdaGVIbMIyvA+tTqo+9egjMChF+JAXx8jcVmCSTrGC1tZVGc2s6uRTaxTo7CudkaifH2O2uSj0AmSpJ/UHEkyIvm58xFDpcjeBz4iXc/QU=
+	t=1742574026; cv=none; b=nEspUjzhewhcSd+R6OrCPf/eEJSaVH5OcMzTI2NaZVjwz6zZL8LrCpa85uFjXv4wzCxN6JE8wkkpHMojcUGXqM5AX74QJFb2tD1ZxdH4ZjJoTFdiEGIs2NEQaKd1B4vUgr/NEAk+DSfnYczdfwkCJ1CIa9P96VAv4nIe2PrUC7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742573803; c=relaxed/simple;
-	bh=sX4muvpyzWlipm3+edEVZE9OiBEpH0DByrdbnIKMYr0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jxZkkHWrpM+i3G1J4MI5YifyUKxDpdxg7h0SbUUxi4+yO9fv3iyZwE8Tjo8dZVjVsJbuUeJ6YjtowNsaiEDju7cv6t1MNJRxg/bRZYTa1yHgx4Ent3xSPQ9yQQcrkFE/GRubyr6KeHjswYvCJBajY3TprcYpyXEiuF2UCany0kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jtSoBD0t; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52LATB3x014996
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:16:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=KC691n78UfcfnBIMAEEZOgix
-	8UerazMGS6DJH8rBSes=; b=jtSoBD0ttl3RR0OcVWAiU/nuCCHpxHsJRs8T718P
-	mPp0eDBxxTQce9+Dar557Zlf9gKMXJGcgJSLUZZjaCzrI59/MGrbjO+ecn6sR5P4
-	/CkzAuySTJIRr7YNmt92bvIlxVqquRB717Kxu5nbZ+5rvED+3XClwt5jMx6jH5rw
-	vDT25pWCuY07CXEUk2jmFMo98CLkWqP99IDOjgamiXKg1GUO8176ikjn/rnPwrOh
-	6wSDPq5uxAB3qEhypBM9JT0wsNGqq2upSh2fSZVEsrCyUiqpels8zshaow4M/B9D
-	d7/iONRXmp4uXex3oCuC3NI9Vvr6lmCqgGrU9Gu59p1Ghg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45gbngnj9m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:16:41 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c0b0cf53f3so328383585a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 09:16:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742573800; x=1743178600;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KC691n78UfcfnBIMAEEZOgix8UerazMGS6DJH8rBSes=;
-        b=GqLh2R7761HJ7GhIIWKopU/s4xZe61Qw8CnGHpY2Qfz92mISklAhnm/kPNpY+zshLj
-         k1ij7wAss36ULgRIm4CB/jXcpqEFwVJ0iu/dk3BnjC9pQHfJjiwgiwYPG8pcF0rEtq6Z
-         BAybX8dzZowTiA1zqucb6/3ocoNL5Et05u6vsB11tzwmkhYum4Fkc8e500L/32LNW4HQ
-         vMWXRAoFglaEpty4KZJaeK0glLiby1phL549USpQADao2ybNnIv8szj0Zrg7O6HyKzcE
-         iqBpTwEEalGp93GHfyDZbA7Xzx9/4b1S9ZTZBU8J7OYGjFppTIoxgCFtQHsfu9p9cRC/
-         HQoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV8GqkVMzGOMDRSQlYuW9ZOUijTCXQfPQtkqQSfdAPXvqSD/OWuHUtRZLlg0cOvKcEJmW6YSXoXt/8IKha1@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/n+GVxB/HmsoCUqqZ4KDRS17NhS1hfm9ModDsHjWLTYmoioPG
-	PVl90ezKa28rEhXJwJFlwkvPV3iKZAYXgIahVMYQ4dJg4g7jYHeJMLVqh7F3uVHlaDALNbok06H
-	eOVGneMMTgKVBbb6m2BeEepjWHqo5Qc/5z8g2i9PQls6nOxPXhzgDqlODnKuc8yL+
-X-Gm-Gg: ASbGncvuDcAGTFA2AcvGhyavtsbdY690eRx3IxxyMsWFNNhiXzdOg8M+Pr4AIED4vF2
-	0ixKwggkwk3rkAXr0b7id+4om4M3o9WaVOPcIxLRgSXcxs9YK4s9dab7FOXnE35XM2NjpWZXax7
-	rL2VnI/tVTywwKUPm1pvjb18zGcMZSS25LQC2jFv6B7kEPO3CddpT0Cm2KV3E4h+1oKSYWNc498
-	lGTuRfGyPKyGRu521fdQxcn4RshRJmjbITij1wobjaGQ8i+tZWfjr4HNYQ1QIki5ciiIvnVVgBb
-	LSWknVT7vKQkb8A4/BHLvng84vBqUyAnsTZHhEnTHzhgfttQxYAc7Z+jEESIrUP0hKj2AiF3wdZ
-	x8Uc=
-X-Received: by 2002:a05:620a:394a:b0:7c5:4a6c:eb8d with SMTP id af79cd13be357-7c5ba200eb2mr484939585a.58.1742573799926;
-        Fri, 21 Mar 2025 09:16:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGCnw0RuPGGAcRXmxyrZFcq6Uvyn0JUfRhjB0xBqWfhqbZS/bLEaIZ6/ICcRwJQBMDqvBgROA==
-X-Received: by 2002:a05:620a:394a:b0:7c5:4a6c:eb8d with SMTP id af79cd13be357-7c5ba200eb2mr484933985a.58.1742573799445;
-        Fri, 21 Mar 2025 09:16:39 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ad647c79dsm212119e87.70.2025.03.21.09.16.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Mar 2025 09:16:38 -0700 (PDT)
-Date: Fri, 21 Mar 2025 18:16:37 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] remoteproc: sysmon: Update qcom_add_sysmon_subdev()
- comment
-Message-ID: <ytbcjcbzwftajmovkun3x44tvmfyljthzcsrml3vbwyvkd7glg@enfp7qfhtzkq>
-References: <77a6b65b-5f3f-4a21-a837-7a4a7e09b099@stanley.mountain>
+	s=arc-20240116; t=1742574026; c=relaxed/simple;
+	bh=pw+m5se+pQEuMCaFj9AWsSaNGo1mpEzijJ6omJch4sk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pZw8xYc77qLugaTKKbjo0LkF5GzmMjfpHIYLvl+GdbTG+fHw6VcaKgRoOSpkHYG4Q448rBo/9ncAxGR9F5tuBNg+7goZ+BcqYo0pzDpvfdeekMK68sF/R/6R5vfw8q7nWe56eZw/tNnILN5cxKT//4bSuvLZ0hlK95vlLuEUd60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=OJLKm1cE; arc=none smtp.client-ip=199.89.3.6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+Received: from localhost (localhost [127.0.0.1])
+	by 003.mia.mailroute.net (Postfix) with ESMTP id 4ZK72p0r5hzltM4s;
+	Fri, 21 Mar 2025 16:20:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1742574016; x=1745166017; bh=9dyI6yv0FfobA2AHnFPAlTAe
+	x+wUcJGo91eWOYIZ7lo=; b=OJLKm1cENVXpFRHwXA6qt/2+2Kb/cQQIz7Lc4ZQD
+	5cvdfGq4C2wei0I7AY3lc2HgvODlhZ6bsMGL1mUpQGseJI46FLpx6nLaHUPH9ojw
+	hJa8OnC+MVaHQyTn1cgmzHHs6QcarLwyPT7dXYC+digMu0+cEvcD8b0Ub3I7Oo13
+	buLUy+NPtASuGkwZlwwKzleSh3I/Y775FuZRGaAM8qBhudSN1chrnmkBH9namIKS
+	4wTYvsX9c0WUpjufKPwLIyHuXnLciCIy24oWGgDjGpob+1yGohVJ6RnfXXP7pQoY
+	upB/iDOvS4R6PfBk+yHR0HBrGEF2Lx4Eeiq039J/lBoe5A==
+X-Virus-Scanned: by MailRoute
+Received: from 003.mia.mailroute.net ([127.0.0.1])
+ by localhost (003.mia [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id GnBwmSn9tA2a; Fri, 21 Mar 2025 16:20:16 +0000 (UTC)
+Received: from [100.66.154.22] (unknown [104.135.204.82])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 003.mia.mailroute.net (Postfix) with ESMTPSA id 4ZK72c26gLzlschZ;
+	Fri, 21 Mar 2025 16:20:06 +0000 (UTC)
+Message-ID: <31b46812-72d5-4f9d-b55d-16a6e10afe7d@acm.org>
+Date: Fri, 21 Mar 2025 09:20:05 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <77a6b65b-5f3f-4a21-a837-7a4a7e09b099@stanley.mountain>
-X-Proofpoint-GUID: HTXhqe2K4UMvweshkrxihSCIUT7cERi8
-X-Authority-Analysis: v=2.4 cv=MJ5gmNZl c=1 sm=1 tr=0 ts=67dd90e9 cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=Oz3NjKvTjiMZACM5Y-cA:9 a=CjuIK1q_8ugA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: HTXhqe2K4UMvweshkrxihSCIUT7cERi8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-21_05,2025-03-21_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=714 clxscore=1015
- spamscore=0 priorityscore=1501 mlxscore=0 adultscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503210119
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC] ufs: delegate the interrupt service routine to a
+ threaded irq handler
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250321-topic-ufs-use-threaded-irq-v1-1-7a55816a4b1d@linaro.org>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20250321-topic-ufs-use-threaded-irq-v1-1-7a55816a4b1d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Mar 21, 2025 at 05:35:44PM +0300, Dan Carpenter wrote:
-> The comment says the qcom_add_sysmon_subdev() returns NULL on error but
-> it actually returns error pointers.
+On 3/21/25 9:08 AM, Neil Armstrong wrote:
+> On systems with a large number request slots and unavailable MCQ,
+> the current design of the interrupt handler can delay handling of
+> other subsystems interrupts causing display artifacts, GPU stalls
+> or system firmware requests timeouts.
 > 
-> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+> Since the interrupt routine can take quite some time, it's
+> preferable to move it to a threaded handler and leave the
+> hard interrupt handler save the status and disable the irq
+> until processing is finished in the thread.
+> 
+> This fixes all encountered issued when running FIO tests
+> on the Qualcomm SM8650 platform.
+> 
+> Example of errors reported on a loaded system:
+>   [drm:dpu_encoder_frame_done_timeout:2706] [dpu error]enc32 frame done timeout
+>   msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.20.1: hangcheck detected gpu lockup rb 2!
+>   msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.20.1:     completed fence: 74285
+>   msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.20.1:     submitted fence: 74286
+>   Error sending AMC RPMH requests (-110)
+> 
+> Reported bandwidth is not affected on various tests.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
->  drivers/remoteproc/qcom_sysmon.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>   drivers/ufs/core/ufshcd.c | 43 ++++++++++++++++++++++++++++++++++++-------
+>   include/ufs/ufshcd.h      |  2 ++
+>   2 files changed, 38 insertions(+), 7 deletions(-)
 > 
+> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+> index 0534390c2a35d0671156d79a4b1981a257d2fbfa..0fa3cb48ce0e39439afb0f6d334b835d9e496387 100644
+> --- a/drivers/ufs/core/ufshcd.c
+> +++ b/drivers/ufs/core/ufshcd.c
+> @@ -6974,7 +6974,7 @@ static irqreturn_t ufshcd_sl_intr(struct ufs_hba *hba, u32 intr_status)
+>   }
+>   
+>   /**
+> - * ufshcd_intr - Main interrupt service routine
+> + * ufshcd_intr - Threaded interrupt service routine
+>    * @irq: irq number
+>    * @__hba: pointer to adapter instance
+>    *
+> @@ -6982,7 +6982,7 @@ static irqreturn_t ufshcd_sl_intr(struct ufs_hba *hba, u32 intr_status)
+>    *  IRQ_HANDLED - If interrupt is valid
+>    *  IRQ_NONE    - If invalid interrupt
+>    */
+> -static irqreturn_t ufshcd_intr(int irq, void *__hba)
+> +static irqreturn_t ufshcd_threaded_intr(int irq, void *__hba)
+>   {
+>   	u32 intr_status, enabled_intr_status = 0;
+>   	irqreturn_t retval = IRQ_NONE;
+> @@ -6990,8 +6990,6 @@ static irqreturn_t ufshcd_intr(int irq, void *__hba)
+>   	int retries = hba->nutrs;
+>   
+>   	intr_status = ufshcd_readl(hba, REG_INTERRUPT_STATUS);
+> -	hba->ufs_stats.last_intr_status = intr_status;
+> -	hba->ufs_stats.last_intr_ts = local_clock();
+>   
+>   	/*
+>   	 * There could be max of hba->nutrs reqs in flight and in worst case
+> @@ -7000,8 +6998,7 @@ static irqreturn_t ufshcd_intr(int irq, void *__hba)
+>   	 * again in a loop until we process all of the reqs before returning.
+>   	 */
+>   	while (intr_status && retries--) {
+> -		enabled_intr_status =
+> -			intr_status & ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
+> +		enabled_intr_status = intr_status & hba->intr_en;
+>   		ufshcd_writel(hba, intr_status, REG_INTERRUPT_STATUS);
+>   		if (enabled_intr_status)
+>   			retval |= ufshcd_sl_intr(hba, enabled_intr_status);
+> @@ -7020,9 +7017,40 @@ static irqreturn_t ufshcd_intr(int irq, void *__hba)
+>   		ufshcd_dump_regs(hba, 0, UFSHCI_REG_SPACE_SIZE, "host_regs: ");
+>   	}
+>   
+> +	ufshcd_writel(hba, hba->intr_en, REG_INTERRUPT_ENABLE);
+> +
+>   	return retval;
+>   }
+>   
+> +/**
+> + * ufshcd_intr - Main interrupt service routine
+> + * @irq: irq number
+> + * @__hba: pointer to adapter instance
+> + *
+> + * Return:
+> + *  IRQ_WAKE_THREAD - If interrupt is valid
+> + *  IRQ_NONE	    - If invalid interrupt
+> + */
+> +static irqreturn_t ufshcd_intr(int irq, void *__hba)
+> +{
+> +	u32 intr_status, enabled_intr_status = 0;
+> +	irqreturn_t retval = IRQ_NONE;
+> +	struct ufs_hba *hba = __hba;
+> +	int retries = hba->nutrs;
+> +
+> +	intr_status = ufshcd_readl(hba, REG_INTERRUPT_STATUS);
+> +	hba->ufs_stats.last_intr_status = intr_status;
+> +	hba->ufs_stats.last_intr_ts = local_clock();
+> +
+> +	if (unlikely(!intr_status))
+> +		return IRQ_NONE;
+> +
+> +	hba->intr_en = ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
+> +	ufshcd_writel(hba, 0, REG_INTERRUPT_ENABLE);
+> +
+> +	return IRQ_WAKE_THREAD;
+> +}
+> +
+>   static int ufshcd_clear_tm_cmd(struct ufs_hba *hba, int tag)
+>   {
+>   	int err = 0;
+> @@ -10581,7 +10609,8 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
+>   	ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
+>   
+>   	/* IRQ registration */
+> -	err = devm_request_irq(dev, irq, ufshcd_intr, IRQF_SHARED, UFSHCD, hba);
+> +	err = devm_request_threaded_irq(dev, irq, ufshcd_intr, ufshcd_threaded_intr,
+> +					IRQF_SHARED, UFSHCD, hba);
+>   	if (err) {
+>   		dev_err(hba->dev, "request irq failed\n");
+>   		goto out_disable;
+> diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+> index e3909cc691b2a854a270279901edacaa5c5120d6..03a7216b89fd63c297479422d1213e497ce85d8e 100644
+> --- a/include/ufs/ufshcd.h
+> +++ b/include/ufs/ufshcd.h
+> @@ -893,6 +893,7 @@ enum ufshcd_mcq_opr {
+>    * @ufshcd_state: UFSHCD state
+>    * @eh_flags: Error handling flags
+>    * @intr_mask: Interrupt Mask Bits
+> + * @intr_en: Saved Interrupt Enable Bits
+>    * @ee_ctrl_mask: Exception event control mask
+>    * @ee_drv_mask: Exception event mask for driver
+>    * @ee_usr_mask: Exception event mask for user (set via debugfs)
+> @@ -1040,6 +1041,7 @@ struct ufs_hba {
+>   	enum ufshcd_state ufshcd_state;
+>   	u32 eh_flags;
+>   	u32 intr_mask;
+> +	u32 intr_en;
+>   	u16 ee_ctrl_mask;
+>   	u16 ee_drv_mask;
+>   	u16 ee_usr_mask;
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+I don't like this patch because:
+- It reduces performance (IOPS) for systems on which MCQ is supported
+   and enabled. Please only use threaded interrupts if MCQ is not used.
+- It introduces race conditions on the REG_INTERRUPT_ENABLE register.
+   There are plenty of ufshcd_(enable|disable)_intr() calls in the UFS
+   driver. Please remove all code that modifies REG_INTERRUPT_ENABLE
+   from this patch.
+- Instead of retaining hba->ufs_stats.last_intr_status and
+   hba->ufs_stats.last_intr_ts, please remove both members and also
+   the debug code that reports the values of these member variables.
+   Please also remove hba->intr_en.
 
--- 
-With best wishes
-Dmitry
+Thanks,
+
+Bart.
 
