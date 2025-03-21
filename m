@@ -1,146 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-52137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3526AA6B52F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 08:40:11 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0B6FA6B5D2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 09:13:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7C0F37A9618
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 07:39:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E8BF481F1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 08:13:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B64501EDA01;
-	Fri, 21 Mar 2025 07:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD02F1EF080;
+	Fri, 21 Mar 2025 08:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iiAJLk7j"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="PV2nzyzq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897012AF1B;
-	Fri, 21 Mar 2025 07:39:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52161EBFE3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 08:13:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742542755; cv=none; b=MH9dzIbzf1Cq2uu2QyuzgWfA79q4xl22eaPz0SaJ29LZYHgIsHS2A+dqoUZuE4cnLS93Oke8F4uhmH7+RbD0/RxhD6kESrSY9sPyoQFoTOkekQPur+nQqJEa7I1Bp6b1EbhblUl2SkQrYC19LbmF3HXJoktiRaU4QIXKtiWsrd4=
+	t=1742544792; cv=none; b=cPb9eNDg4BSQq47OuuA7KxG+Bm5pJ1rrGhwAYcvFp0O9pT7VdQ/hpkrKiGIx0UpkIINNISPCbQMFa+jmW6T5qoupOV4mQK61jXB7q990eIKYZd8KUBvgpfjadwJLn3GkrwOUX9DbcD6RcqmscMvakfEPDyau0fn7v6cVrc3rgfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742542755; c=relaxed/simple;
-	bh=nlD8UfHxL6A1SIXp/p6NoZR/pJlgm3rdkZfgohR3koA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=jDOYaefkkFeosO3SkI1WNF6N5GtlwiBCv9YoLguTMZtJGE0s/TfbI7OhKsUXzCkotk3BTJsux/50cIeZ8JVZWER3utGvQPpWzb4pDyXGZkS8EOuzBJoVVASGHY+CdasIO4nnClLL9aV2O01KHV6D8pKrt7yry372dp48fMvl5do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iiAJLk7j; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9813C4CEE3;
-	Fri, 21 Mar 2025 07:39:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742542754;
-	bh=nlD8UfHxL6A1SIXp/p6NoZR/pJlgm3rdkZfgohR3koA=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=iiAJLk7jR0FpJGamwJFBBypXRf8QpNqTnJd0fQHgdjcI0kroUJxPhMBEIB6wIHY1W
-	 6w3FD2J5ttYVIuroG49qYG1RLqLgKLvPSVp3r3GSObHsfZCEGYqS6LtNWHBg89L1Nq
-	 XNRwZfzYxC6Szkp0rKk42wng4CJwP75O7nqjXJdKmq7Nk7HE7LqLEDeYvTXbiUH9x2
-	 wnNlfwVJAgA6H/yuQHmCx34ca7TWJFU6MMbxYRmCvITdHvORAKRDlHVldbvvTstHuP
-	 EcgTqlvKHF/hbiORCRKvFPvlWoSKMX4hNZ+KsvBK7Y7YZYSxeW0RmqBHe8M75BtIWx
-	 Z3PbIf83k25qw==
-Message-ID: <8379e009-9619-4c2b-986a-8ccb9ebaa083@kernel.org>
-Date: Fri, 21 Mar 2025 08:39:07 +0100
+	s=arc-20240116; t=1742544792; c=relaxed/simple;
+	bh=i9GzDoeYHWXocHTV/J92qBEXkO6eo++ROgOYxc2baOo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=WpkXHUYiy9T1y4htQY27KV3V10yPzKar0xO3ONohC2Rp9Qvnk6tGQyauGjy+Qw15XkwYe9OwLLSmFZNuXKxhC4hsIB23u3MNL+Kmo68ltZnxtk9OC435b1JpBolAyQDqdtd1y2amxRMe6Y4V2EsPw03V/CEeUCr8ZDooDKHua4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=PV2nzyzq; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ac345bd8e13so299319666b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 01:13:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1742544789; x=1743149589; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jev2S5q0Uq23ZefU3EZw33sQyKB4WKTRkFhU4RqrJYc=;
+        b=PV2nzyzqpCInw/j8dN5reUbNXmuyRJVSHtBjUVWZlHRERuG+05StQwoHTfQOd3sqIr
+         svmiqYAfkvoo0q7QrZgBma9ZFAxk6i2NJdmb+4DRt4jWX30NXLPbZy+UGkcl/HV2J0Fd
+         jOzfA5XPfIafql8pTAiFXHOwYh/G72VYJRsJx2i6LAd0tcQLtWj4OCyQLw1+V/w3JNiG
+         VWdhgX4Mmbit61r9RlDwHBNNk6w4+UkP+/Z7n2hakfVqp5xyFSEG6h8dR276lFHZds4q
+         JIknrllwIIkWLYhN5HaeNywvBP7TfelEfxt7uYW7qjVxLePR/NSURNVU+wH6tTI4uHsS
+         8Z1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742544789; x=1743149589;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jev2S5q0Uq23ZefU3EZw33sQyKB4WKTRkFhU4RqrJYc=;
+        b=OVxbPeCl6vdfw1dAILkDkKTfDP60d1Ej2OD9YQ6Wbhe/4yjWeGPGbKMJdXs7ZVtMgn
+         k/L2PjJNsciySRSgZLTbH5iHxZYPm1qhwG+sDKLoe57XmPL0s39eAWqBRaU8ULDzrGp+
+         aLsHMw2Nx5tQPRJPTXoV+9FW2c4GSK8lyvQTcp5NHJ6N0Nt2ILIf0eauFp6vc5NQLm7z
+         28kHO0EW6aBIE83zDVZdTuaAAvR5JCJ1c5cHga/HTyTfBpeZ2sBuHy9h5T/GdS7EN4iR
+         RQD9dyaKbRpsDvk2BTjCncZbDiQmHWeBz81D8oEcao+z5xoPDymLHm7BpzlmCPh1yIcJ
+         F+Vw==
+X-Forwarded-Encrypted: i=1; AJvYcCUiVOAgIew29vOgbs2hHBHBGmGZJRsn0qLuOS4htxEvG/0ROuNjNkR924/BhljBUTvXR6PQOYuqJq2yZqpl@vger.kernel.org
+X-Gm-Message-State: AOJu0YyAjlbmRKQL4ZqLe+6xV2TZOq9gHyvuaT5OlsxKejczsiobrT7Q
+	plHGOKl9bp29cQqH6RkU7YpOZLXjuqCyIyPWKhHKMZ2byx2EtaAhrJddPy2rVl4=
+X-Gm-Gg: ASbGncuU92B371qalPpD26FGy7+QpikJY8Ip1GH2Nteo7tqtx32ZOFolEu8ny0C3ULf
+	eX8UsyvEKz6+GyFQvPtSiAZvAnW/iN8R6N24dd7U43n5v4YF3aa/qZzlVIi2jVGjonW9lAEkXjT
+	0fgGdYUPq8ryEOOk7BmXe25sgrsfQ/F2N2kgE0NdNKpM+s0xUay8KaYS9J8XZNEcv4mTEHAWWsP
+	fYo5BWdEeC2LDI4roUjZg8DMfvwOuNFKENF2kMirjdOQNHW9wIlHUh4DKcQBUd7Yjg6mV/yw1uf
+	rOnhCBcagY9ieC09OswpyZ1llxs/BaYveqioTdlqL/wi8PKXuxGFYM4zpjlnFisiY0ptaxNuQ4e
+	TjZtUuRJEa+/bzOnjdw==
+X-Google-Smtp-Source: AGHT+IGAzC8uX4v7JqMexA3WN+wQ+YLOprWk5/TUdTQL46LPhqZiEkYuSKewAa1iYNwiAYxSSLKZaQ==
+X-Received: by 2002:a17:907:da0c:b0:ac3:f683:c842 with SMTP id a640c23a62f3a-ac3f683c845mr175817866b.42.1742544788929;
+        Fri, 21 Mar 2025 01:13:08 -0700 (PDT)
+Received: from [100.64.0.4] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3efdaccc0sm104891066b.185.2025.03.21.01.13.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Mar 2025 01:13:08 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Date: Fri, 21 Mar 2025 09:12:57 +0100
+Subject: [PATCH] arm64: dts: qcom: sm6350: add APR and some audio-related
+ services
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: x1e80100-qcp: Add power control
- and sideband signals for PCIe3
-To: Wenbin Yao <quic_wenbyao@quicinc.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- catalin.marinas@arm.com, will@kernel.org, quic_qianyu@quicinc.com,
- sfr@canb.auug.org.au, linux-arm-kernel@lists.infradead.org
-References: <20250320055502.274849-1-quic_wenbyao@quicinc.com>
- <20250320055502.274849-4-quic_wenbyao@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250320055502.274849-4-quic_wenbyao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20250321-sm6350-apr-v1-1-7805ce7b4dcf@fairphone.com>
+X-B4-Tracking: v=1; b=H4sIAIgf3WcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDYyND3eJcM2NTA93EgiJdQ9M041TzVJNU0+REJaCGgqLUtMwKsGHRsbW
+ 1ABDZ8zZcAAAA
+X-Change-ID: 20250321-sm6350-apr-15f3e7e4e5ca
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.2
 
-On 20/03/2025 06:55, Wenbin Yao wrote:
-> From: Qiang Yu <quic_qianyu@quicinc.com>
-> 
-> Add perst, wake and clkreq sideband signals and required regulators in
-> PCIe3 controller and PHY device tree node. Describe the voltage rails of
-> the x8 PCI slots for PCIe3 port.
-> 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 119 ++++++++++++++++++++++
->  1 file changed, 119 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-> index 28086a2bc..9cd313802 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-> @@ -318,6 +318,48 @@ vreg_wcn_3p3: regulator-wcn-3p3 {
->  		regulator-boot-on;
->  	};
->  
-> +	vreg_pcie_12v: regulator-pcie_12v {
+Add the APR node and its associated services required for audio on
+the SM6350 SoC.
 
-Don't send the downstream code.
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 59 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-Underscore are not allowed in node names plus:
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 00ad1d09a19558d9e2bc61f1a81a36d466adc88e..30d5658665339bdfd803246054878fcb932a4a9d 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -18,7 +18,9 @@
+ #include <dt-bindings/mailbox/qcom-ipcc.h>
+ #include <dt-bindings/phy/phy-qcom-qmp.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
++#include <dt-bindings/soc/qcom,apr.h>
+ #include <dt-bindings/soc/qcom,rpmh-rsc.h>
++#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+ #include <dt-bindings/thermal/thermal.h>
+ 
+ / {
+@@ -1319,6 +1321,63 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+ 				label = "lpass";
+ 				qcom,remote-pid = <2>;
+ 
++				apr {
++					compatible = "qcom,apr-v2";
++					qcom,glink-channels = "apr_audio_svc";
++					qcom,domain = <APR_DOMAIN_ADSP>;
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					service@3 {
++						reg = <APR_SVC_ADSP_CORE>;
++						compatible = "qcom,q6core";
++						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
++					};
++
++					q6afe: service@4 {
++						compatible = "qcom,q6afe";
++						reg = <APR_SVC_AFE>;
++						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
++
++						q6afedai: dais {
++							compatible = "qcom,q6afe-dais";
++							#address-cells = <1>;
++							#size-cells = <0>;
++							#sound-dai-cells = <1>;
++						};
++
++						q6afecc: clock-controller {
++							compatible = "qcom,q6afe-clocks";
++							#clock-cells = <2>;
++						};
++					};
++
++					q6asm: service@7 {
++						compatible = "qcom,q6asm";
++						reg = <APR_SVC_ASM>;
++						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
++
++						q6asmdai: dais {
++							compatible = "qcom,q6asm-dais";
++							#address-cells = <1>;
++							#size-cells = <0>;
++							#sound-dai-cells = <1>;
++							iommus = <&apps_smmu 0x1001 0x0>;
++						};
++					};
++
++					q6adm: service@8 {
++						compatible = "qcom,q6adm";
++						reg = <APR_SVC_ADM>;
++						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
++
++						q6routing: routing {
++							compatible = "qcom,q6adm-routing";
++							#sound-dai-cells = <0>;
++						};
++					};
++				};
++
+ 				fastrpc {
+ 					compatible = "qcom,fastrpc";
+ 					qcom,glink-channels = "fastrpcglink-apps-dsp";
 
-Please use name for all fixed regulators which matches current format
-recommendation: 'regulator-[0-9]v[0-9]'
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml?h=v6.11-rc1#n46
+---
+base-commit: 73b8c1dbc2508188e383023080ce6a582ff5f279
+change-id: 20250321-sm6350-apr-15f3e7e4e5ca
 
 Best regards,
-Krzysztof
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
+
 
