@@ -1,363 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-52236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09D88A6C2CF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 19:55:11 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D9DFA6C3E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 21:07:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 98ED63B2DF5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 18:54:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C84F6468AC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 20:07:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF8F61E766F;
-	Fri, 21 Mar 2025 18:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC31622FE13;
+	Fri, 21 Mar 2025 20:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y5mNr0ai"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lzwYbugI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059581E4929;
-	Fri, 21 Mar 2025 18:54:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E880622DFA6;
+	Fri, 21 Mar 2025 20:07:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742583291; cv=none; b=hjcwJdOm2zpKPiBtwT44VlF7osMdrk4siqouUlkMbNCWR0dwLLXuaWPcmHWNPXGafw5lRP7cTdEaPPbCdkT8hlRq3niAhg6l1gXCcQINFbpg2KhFRyI9Rhv7hqMRd79vS2N15LQGcv4D4HY2C/vXzebNzCI5b/4XhVDcAYgierA=
+	t=1742587639; cv=none; b=ew9FzrS1M/NMp0fKAmXA97Aw9YLF7KH2CL5ElIv/lM7ChagPWm3DWZMWm4mclN5dB8eNMaQaR+l6ZHDJqjdhjRgQgCxSMnHZadP5BM/9XKRN8aOSA3B14qc14QVPZB3TT0je9xcOUmUD0UsWgctAgpDf0N3q6KcDzmIY/c4df2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742583291; c=relaxed/simple;
-	bh=t0ZHaxmV5cOkCSEt5AJnxYkZkzDjcnMSfUD0lDgYxNY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sNMLHsHBgEk/K4qS8h5mQqfNpzoFLoaG6M4e3xsN4HjfGpzww/VevCtoAgCJJCLisYCLkzMiKIYUGB9G4uuJe7zrsJoDV50bctQsblaXBKdmyLI94WDpEVycToHJ+U+JbT3aN9AjF89+bjctQO2uls3gAxv0EnYEGFygbv0HSkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y5mNr0ai; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-22622ddcc35so24513945ad.2;
-        Fri, 21 Mar 2025 11:54:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742583289; x=1743188089; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kuWrbcuvodyfwyDX9ovNtAfDuo8x7JtH0NBDGtHQx3E=;
-        b=Y5mNr0aiR5MmZf9Vdn80NreckloCljBgDeHQGfNJKOCzuWVDzgd+RzzYFJ/9BuWUKu
-         JqNF37jhUA58aiP4KpNkAhBMBhF1ovWZLxyXFZK3T3dcSSaS8yOjVqLvav4pXVYS7zvQ
-         w/tSF9SkIkroXXaaazN66qm7ChtRCsxHRmENTWueE3pM748Lb8G5MrsROymZpxH/QHZI
-         z1+gL1Bnoomk7F4Xc+CdZald/w1ZDNavWr7YeliqeCZAbMDdGMlJ7ZAYKrXql6TC+zDk
-         jvpGSwXyPIP+brhJkwDUlpHhLyFgM/N/kFPeN1O4ltfMlsyUNjv68s8lHYmsD3l73wfl
-         qb+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742583289; x=1743188089;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kuWrbcuvodyfwyDX9ovNtAfDuo8x7JtH0NBDGtHQx3E=;
-        b=q/KNmphCExPHR4IcDSFRD61x1Q2sH99pdTuZWh+09s49sIGM12isSWyZGe+BiX8wsh
-         D3NRMDzBM5RztWR7bayZTtDm8PPnJYAPxOh1UqbdH7dikCfnJEDhqVCSROXhpRIEe7Op
-         ivkqfQHb7Opiq5qNELSVoZ4CnbiRDzHA9DdBX3BsgzFMMwHLN+bqdEMboFvEDIb+N32s
-         cwg7otZRtA/ZYU6dSp7RYBe5Ch/EeqyJmsn9mmbuvPrnj7fM7zjRbfQK5sgsOGyt0fxG
-         S6Dt4Vi0bnelsv8TseOFiaGg300O/CaPzDBQ40TTRb9duFbdsnq3Qoj+d9WD1oqrh/+d
-         vxwg==
-X-Forwarded-Encrypted: i=1; AJvYcCUCHy5eT7Kf9hFOb3Vd65Zw4T8DrBiIDjMYhGSypQe3rmLRe8i/Oit0825GD9ndQkJUs9PhxkxhyE075DA5@vger.kernel.org, AJvYcCV9obKOsTU60I/5zE0GaDew2LvHO9iPrO7cZGGOt6ByiVxEw6BiexnlBPX34etd5Rk1QK3fMeI1hjz1OUv2@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMSC+GSrQEOf3mpYxcIM71W/iRD288KeNgEhoOXpGCuaw64Ue3
-	ObkI5J2arxeDZ8+yKnCs2Z0PYI2dXyDB1VpmthUXH7ZZg0YxL4Vs
-X-Gm-Gg: ASbGncuV/hhgeYtVLQADN9wLal3Nnqpkl56c0Eeof3IuEX5r0kJTudM17VgnEVtJdvP
-	bhRX1bqYbESYUuUtFnfHMr/jhUN3vshAEMzX+QFoNK6ySsSbXe0R5Rox0nzIV3DpK8Zvso282Kh
-	6TcLnmDGLMWXgHOoCZeZ27roYmFDYH5XzdFoXK+2YVDZq+HYfcEHFxfzvVE6tueCGXLuc70eRLx
-	iHS6TXGfiDAt/jelMzaIYPnXqUvMU4ZHc0xRcwjBPTjO5YuQrSJN2SPeOqoWRHuxmotEuWaePej
-	eBvHBKK6rGXLVAk5TdX+97xkMe90TpT9CrDIli0x3KX5I588t6n1uzxV2T2ryCLJCQhjm7BcVnX
-	iKOCc0wzHN+iLrMED+jQ=
-X-Google-Smtp-Source: AGHT+IENwJPy3NZ2JgeNry3ajUMcfwlItfAMwMe80EXJa+Ja58OE0NniLaywafeM20eG0xAejI6Hpg==
-X-Received: by 2002:a17:902:ce05:b0:223:fd7f:2752 with SMTP id d9443c01a7336-22780d9325amr73936175ad.29.1742583289057;
-        Fri, 21 Mar 2025 11:54:49 -0700 (PDT)
-Received: from localhost ([2a00:79e0:3e00:2601:3afc:446b:f0df:eadc])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22780f4c4easm20943485ad.84.2025.03.21.11.54.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Mar 2025 11:54:48 -0700 (PDT)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/adreno: Drop fictional address_space_size
-Date: Fri, 21 Mar 2025 11:54:37 -0700
-Message-ID: <20250321185437.5890-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.49.0
+	s=arc-20240116; t=1742587639; c=relaxed/simple;
+	bh=19oUotyDOCLDkmDdkLpuedsgL2cIAvuGUJEHwHnOgLQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Cvi5Fgg/bodmrxfmk+C85EL4y0gPd+J1XKZicKr2i47rDQlgWEG/s8vPBGLePcpXbcbdLdv5Fsa5LjJxsRT+Vg2Udxix6rElIBViHsB3bo0l1oJmHzXj7J4KVEpJk1DLIkMtoxozonyB2940cFcY9fhGdssdqp8SsOcSj9RaGYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lzwYbugI; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52LAT9tR022053;
+	Fri, 21 Mar 2025 20:06:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	BAZWiy3q1WUqRoaiLvI9dIJslrFXt+ABgbRRNuix8fQ=; b=lzwYbugIwJgPebOs
+	BZR/l5K91Y2wuiUb0UD3Gi7Gp32OKbT04rL0j0kY2MF0WH8SVRX2CbYm6IcqVEjr
+	UID4lkN8eXiMXF/SQFE2TQX0ARLW71+kODkzxdwYzQguDZ1sl9M3Tbnuku2fclWR
+	XwKEWoejSh+d/reKnd9s6JZaVnBQy9G2DALzyxBFZafiZqYuhNxWMalDgW+aVIAT
+	siR2Wu0TpyOlc8YgHvTYzJq3cdlECYH1/Pk6wolEN0E/98dxw3JzPf27VlCdu8Ka
+	a3ftzIEA5yAs9xy8FjeOS//ZCL0XT3viLGRdbVAb935rNz8sCjkGrWvlbLTe/3ev
+	EQ9ZYA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45h4wphrb5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 21 Mar 2025 20:06:50 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52LK6nCH020958
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 21 Mar 2025 20:06:49 GMT
+Received: from [10.71.113.245] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 21 Mar
+ 2025 13:06:49 -0700
+Message-ID: <5ba0912a-4d8c-4321-9fa4-0bac89af8224@quicinc.com>
+Date: Fri, 21 Mar 2025 13:06:43 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v36 00/31] Introduce QC USB SND audio offloading support
+To: Luca Weiss <luca.weiss@fairphone.com>, <srinivas.kandagatla@linaro.org>,
+        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
+        <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <broonie@kernel.org>,
+        <lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
+        <pierre-louis.bossart@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
+        <tiwai@suse.com>, <robh@kernel.org>, <gregkh@linuxfoundation.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-input@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>
+References: <20250319005141.312805-1-quic_wcheng@quicinc.com>
+ <D8LYYEQJ2W4L.1H7FPF4140BVS@fairphone.com>
+Content-Language: en-US
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <D8LYYEQJ2W4L.1H7FPF4140BVS@fairphone.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 8zEwo_wZhHpbeBVNYzwvKCMZbXs1_InH
+X-Proofpoint-GUID: 8zEwo_wZhHpbeBVNYzwvKCMZbXs1_InH
+X-Authority-Analysis: v=2.4 cv=ZN3XmW7b c=1 sm=1 tr=0 ts=67ddc6db cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=qC_FGOx9AAAA:8 a=NEAV23lmAAAA:8 a=XwCJkI7jc2rzYGe07aMA:9
+ a=QEXdDO2ut3YA:10 a=fsdK_YakeE02zTmptMdW:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-21_06,2025-03-21_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 clxscore=1011 phishscore=0 adultscore=0 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 spamscore=0 mlxscore=0 priorityscore=1501
+ bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503210149
 
-From: Rob Clark <robdclark@chromium.org>
+Hi Luca,
 
-Really the only purpose of this was to limit the address space size to
-4GB to avoid 32b rollover problems in 64b pointer math in older sqe fw.
-So replace the address_space_size with a quirk limiting the address
-space to 4GB.  In all other cases, use the SMMU input address size (IAS)
-to determine the address space size.
+On 3/21/2025 6:13 AM, Luca Weiss wrote:
+> Hi Wesley,
+> 
+> On Wed Mar 19, 2025 at 1:51 AM CET, Wesley Cheng wrote:
+>> Requesting to see if we can get some Acked-By tags, and merge on usb-next.
+>>
+>> Several Qualcomm based chipsets can support USB audio offloading to a
+>> dedicated audio DSP, which can take over issuing transfers to the USB
+>> host controller.  The intention is to reduce the load on the main
+>> processors in the SoC, and allow them to be placed into lower power modes.
+>> There are several parts to this design:
+>>   1. Adding ASoC binding layer
+>>   2. Create a USB backend for Q6DSP
+>>   3. Introduce XHCI interrupter support
+>>   4. Create vendor ops for the USB SND driver
+>>
+> 
+> I was able to test this series (v35) on SM6350/SM7225 Fairphone 4
+> smartphone and it appears to work as expected!
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 33 +++++++++++------------
- drivers/gpu/drm/msm/adreno/adreno_gpu.c   | 19 ++++++++++---
- drivers/gpu/drm/msm/adreno/adreno_gpu.h   |  2 +-
- 3 files changed, 33 insertions(+), 21 deletions(-)
+Thank you for taking the time to testing this :), much appreciated.
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-index 53e2ff4406d8..f85b7e89bafb 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-@@ -681,6 +681,7 @@ static const struct adreno_info a6xx_gpus[] = {
- 			[ADRENO_FW_SQE] = "a630_sqe.fw",
- 		},
- 		.gmem = (SZ_128K + SZ_4K),
-+		.quirks = ADRENO_QUIRK_4GB_VA,
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
- 		.init = a6xx_gpu_init,
- 		.zapfw = "a610_zap.mdt",
-@@ -713,6 +714,7 @@ static const struct adreno_info a6xx_gpus[] = {
- 			[ADRENO_FW_GMU] = "a630_gmu.bin",
- 		},
- 		.gmem = SZ_512K,
-+		.quirks = ADRENO_QUIRK_4GB_VA,
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
- 		.init = a6xx_gpu_init,
- 		.zapfw = "a615_zap.mdt",
-@@ -743,7 +745,8 @@ static const struct adreno_info a6xx_gpus[] = {
- 		},
- 		.gmem = SZ_512K,
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
--		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT,
-+		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
-+			  ADRENO_QUIRK_4GB_VA,
- 		.init = a6xx_gpu_init,
- 		.zapfw = "a615_zap.mbn",
- 		.a6xx = &(const struct a6xx_info) {
-@@ -769,7 +772,8 @@ static const struct adreno_info a6xx_gpus[] = {
- 		},
- 		.gmem = SZ_512K,
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
--		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT,
-+		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
-+			  ADRENO_QUIRK_4GB_VA,
- 		.init = a6xx_gpu_init,
- 		.a6xx = &(const struct a6xx_info) {
- 			.protect = &a630_protect,
-@@ -791,6 +795,7 @@ static const struct adreno_info a6xx_gpus[] = {
- 			[ADRENO_FW_GMU] = "a619_gmu.bin",
- 		},
- 		.gmem = SZ_512K,
-+		.quirks = ADRENO_QUIRK_4GB_VA,
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
- 		.init = a6xx_gpu_init,
- 		.zapfw = "a615_zap.mdt",
-@@ -815,6 +820,7 @@ static const struct adreno_info a6xx_gpus[] = {
- 			[ADRENO_FW_GMU] = "a619_gmu.bin",
- 		},
- 		.gmem = SZ_512K,
-+		.quirks = ADRENO_QUIRK_4GB_VA,
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
- 		.init = a6xx_gpu_init,
- 		.zapfw = "a615_zap.mdt",
-@@ -838,8 +844,9 @@ static const struct adreno_info a6xx_gpus[] = {
- 			[ADRENO_FW_GMU] = "a619_gmu.bin",
- 		},
- 		.gmem = SZ_512K,
-+		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
-+			  ADRENO_QUIRK_4GB_VA,
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
--		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT,
- 		.init = a6xx_gpu_init,
- 		.zapfw = "a615_zap.mdt",
- 		.a6xx = &(const struct a6xx_info) {
-@@ -874,7 +881,6 @@ static const struct adreno_info a6xx_gpus[] = {
- 			.gmu_cgc_mode = 0x00020200,
- 			.prim_fifo_threshold = 0x00010000,
- 		},
--		.address_space_size = SZ_16G,
- 		.speedbins = ADRENO_SPEEDBINS(
- 			{ 0, 0 },
- 			{ 137, 1 },
-@@ -907,7 +913,6 @@ static const struct adreno_info a6xx_gpus[] = {
- 				{ /* sentinel */ },
- 			},
- 		},
--		.address_space_size = SZ_16G,
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(
- 			0x06030001,
-@@ -920,8 +925,9 @@ static const struct adreno_info a6xx_gpus[] = {
- 			[ADRENO_FW_GMU] = "a630_gmu.bin",
- 		},
- 		.gmem = SZ_1M,
-+		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
-+			  ADRENO_QUIRK_4GB_VA,
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
--		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT,
- 		.init = a6xx_gpu_init,
- 		.zapfw = "a630_zap.mdt",
- 		.a6xx = &(const struct a6xx_info) {
-@@ -939,8 +945,9 @@ static const struct adreno_info a6xx_gpus[] = {
- 			[ADRENO_FW_GMU] = "a640_gmu.bin",
- 		},
- 		.gmem = SZ_1M,
-+		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
-+			  ADRENO_QUIRK_4GB_VA,
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
--		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT,
- 		.init = a6xx_gpu_init,
- 		.zapfw = "a640_zap.mdt",
- 		.a6xx = &(const struct a6xx_info) {
-@@ -973,7 +980,6 @@ static const struct adreno_info a6xx_gpus[] = {
- 			.gmu_cgc_mode = 0x00020202,
- 			.prim_fifo_threshold = 0x00300200,
- 		},
--		.address_space_size = SZ_16G,
- 		.speedbins = ADRENO_SPEEDBINS(
- 			{ 0, 0 },
- 			{ 1, 1 },
-@@ -1000,7 +1006,6 @@ static const struct adreno_info a6xx_gpus[] = {
- 			.gmu_cgc_mode = 0x00020000,
- 			.prim_fifo_threshold = 0x00300200,
- 		},
--		.address_space_size = SZ_16G,
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(0x06060300),
- 		.family = ADRENO_6XX_GEN4,
-@@ -1019,7 +1024,6 @@ static const struct adreno_info a6xx_gpus[] = {
- 			.gmu_cgc_mode = 0x00020200,
- 			.prim_fifo_threshold = 0x00300200,
- 		},
--		.address_space_size = SZ_16G,
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(0x06030500),
- 		.family = ADRENO_6XX_GEN4,
-@@ -1039,7 +1043,6 @@ static const struct adreno_info a6xx_gpus[] = {
- 			.gmu_cgc_mode = 0x00020202,
- 			.prim_fifo_threshold = 0x00200200,
- 		},
--		.address_space_size = SZ_16G,
- 		.speedbins = ADRENO_SPEEDBINS(
- 			{ 0,   0 },
- 			{ 117, 0 },
-@@ -1056,8 +1059,9 @@ static const struct adreno_info a6xx_gpus[] = {
- 			[ADRENO_FW_GMU] = "a640_gmu.bin",
- 		},
- 		.gmem = SZ_2M,
-+		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
-+			  ADRENO_QUIRK_4GB_VA,
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
--		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT,
- 		.init = a6xx_gpu_init,
- 		.zapfw = "a640_zap.mdt",
- 		.a6xx = &(const struct a6xx_info) {
-@@ -1085,7 +1089,6 @@ static const struct adreno_info a6xx_gpus[] = {
- 			.gmu_cgc_mode = 0x00020200,
- 			.prim_fifo_threshold = 0x00800200,
- 		},
--		.address_space_size = SZ_16G,
- 	}
- };
- DECLARE_ADRENO_GPULIST(a6xx);
-@@ -1395,7 +1398,6 @@ static const struct adreno_info a7xx_gpus[] = {
- 			.pwrup_reglist = &a7xx_pwrup_reglist,
- 			.gmu_cgc_mode = 0x00020000,
- 		},
--		.address_space_size = SZ_16G,
- 		.preempt_record_size = 2860 * SZ_1K,
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(0x43050a01), /* "C510v2" */
-@@ -1429,7 +1431,6 @@ static const struct adreno_info a7xx_gpus[] = {
- 				{ /* sentinel */ },
- 			},
- 		},
--		.address_space_size = SZ_16G,
- 		.preempt_record_size = 4192 * SZ_1K,
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(0x43050c01), /* "C512v2" */
-@@ -1451,7 +1452,6 @@ static const struct adreno_info a7xx_gpus[] = {
- 			.gmu_chipid = 0x7050001,
- 			.gmu_cgc_mode = 0x00020202,
- 		},
--		.address_space_size = SZ_256G,
- 		.preempt_record_size = 4192 * SZ_1K,
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(0x43051401), /* "C520v2" */
-@@ -1484,7 +1484,6 @@ static const struct adreno_info a7xx_gpus[] = {
- 				{ /* sentinel */ },
- 			},
- 		},
--		.address_space_size = SZ_16G,
- 		.preempt_record_size = 3572 * SZ_1K,
- 	}
- };
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index bac6cd3afe37..b07c785d3aee 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -236,14 +236,27 @@ adreno_iommu_create_vm(struct msm_gpu *gpu,
- u64 adreno_private_vm_size(struct msm_gpu *gpu)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(&gpu->pdev->dev);
-+	const struct io_pgtable_cfg *ttbr1_cfg;
- 
- 	if (address_space_size)
- 		return address_space_size;
- 
--	if (adreno_gpu->info->address_space_size)
--		return adreno_gpu->info->address_space_size;
-+	if (adreno_gpu->info->quirks & ADRENO_QUIRK_4GB_VA)
-+		return SZ_4G;
-+
-+	if (!adreno_smmu || !adreno_smmu->get_ttbr1_cfg)
-+		return SZ_4G;
-+
-+	ttbr1_cfg = adreno_smmu->get_ttbr1_cfg(adreno_smmu->cookie);
- 
--	return SZ_4G;
-+	/*
-+	 * Userspace VM is actually using TTBR0, but both are the same size,
-+	 * with b48 (sign bit) selecting which TTBRn to use.  So if IAS is
-+	 * 48, the total (kernel+user) address space size is effectively
-+	 * 49 bits.  But what userspace is control of is the lower 48.
-+	 */
-+	return BIT(ttbr1_cfg->ias);
- }
- 
- void adreno_check_and_reenable_stall(struct adreno_gpu *adreno_gpu)
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index a76f4c62deee..ec58dd2ff208 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -56,6 +56,7 @@ enum adreno_family {
- #define ADRENO_QUIRK_HAS_HW_APRIV		BIT(3)
- #define ADRENO_QUIRK_HAS_CACHED_COHERENT	BIT(4)
- #define ADRENO_QUIRK_PREEMPTION			BIT(5)
-+#define ADRENO_QUIRK_4GB_VA			BIT(6)
- 
- /* Helper for formating the chip_id in the way that userspace tools like
-  * crashdec expect.
-@@ -103,7 +104,6 @@ struct adreno_info {
- 	union {
- 		const struct a6xx_info *a6xx;
- 	};
--	u64 address_space_size;
- 	/**
- 	 * @speedbins: Optional table of fuse to speedbin mappings
- 	 *
--- 
-2.49.0
+> 
+> Based on the sm8350 branch you shared[0] I added similar dts bits for my
+> device, I've pushed that branch here[1] for reference.
+> 
+> [0] https://git.codelinaro.org/clo/linux-kernel/kernel-qcom/-/commits/usb_audio_offload/
+> [1] https://github.com/sm6350-mainline/linux/commits/sm6350-6.14-wip-usb-snd-offload/
+> 
+> And I've used these commands to test:
+> 
+> fairphone-4:~$ amixer -c0 cset name='USB Mixer MultiMedia2' On
+> 
+> fairphone-4:~$ aplay -l
+> **** List of PLAYBACK Hardware Devices ****
+> card 0: F4 [Fairphone 4], device 0: MultiMedia1 (*) []
+> Subdevices: 1/1
+> Subdevice #0: subdevice #0
+> card 0: F4 [Fairphone 4], device 1: MultiMedia2 (*) []
+> Subdevices: 1/1
+> Subdevice #0: subdevice #0
+> card 1: Audio [Hi-Res Audio], device 0: USB Audio [USB Audio]
+> Subdevices: 1/1
+> Subdevice #0: subdevice #0
+> 
+> fairphone-4:~$ ffmpeg -i test.m4a -acodec pcm_s16le test.wav
+> 
+> fairphone-4:~$ aplay --device=plughw:0,1 Music/test.wav
+> Playing WAVE 'Music/test.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Stereo
+> 
+> And then music was coming out of these headphones connected via a USB-C
+> to 3.5mm dongle.
+> 
+> Every time I'm starting playback this error appears in dmesg, do you
+> also see this on your test setup?
+> 
+> [ 1336.081525] q6afe-dai 3000000.remoteproc:glink-edge:apr:service@4:dais: AFE Port already open
+> 
 
+The print is coming because the Q6 USB backend DAI link is utilizing the
+q6afe_port_get_from_id() API to fetch the proper AFE port to issue commands
+to.  IMO, that log level should be decreased to at least dev_info() instead
+of an error, but we can probably take that discussion into a different series.
+
+To add, I also see this on my set up.
+
+> 
+> And if I'm not mistaken it's possible to check that actually the offload
+> path is getting used by checking the interrupt counts of the xhci-hcd
+> interrupt.
+> 
+> With regular USB audio card playback there's many interrupts per second
+> happening:
+> 
+> fairphone-4:~$ aplay --device=plughw:1,0 Music/test.wav # regular USB
+> fairphone-4:~$ cat /proc/interrupts | grep -i usb
+> 188:     137524          0          0          0          0          0          0          0    GICv3 165 Level     xhci-hcd:usb1
+> fairphone-4:~$ cat /proc/interrupts | grep -i usb
+> 188:     137591          0          0          0          0          0          0          0    GICv3 165 Level     xhci-hcd:usb1
+> 
+> And with the offload card during playback there's no interrupts
+> happening (just a few when initially starting playback):
+> 
+> fairphone-4:~$ aplay --device=plughw:0,1 Music/test.wav # offload
+> fairphone-4:~$ cat /proc/interrupts | grep -i usb
+> 188:     141947          0          0          0          0          0          0          0    GICv3 165 Level     xhci-hcd:usb1
+> fairphone-4:~$ cat /proc/interrupts | grep -i usb
+> 188:     141947          0          0          0          0          0          0          0    GICv3 165 Level     xhci-hcd:usb1
+> 
+
+This is correct.  With offload enabled, you should probably only see a few
+interrupts from xHCI from the initial USB headset enumeration and control
+transfers, but the data packets itself should result in no increase of the
+xHCI IRQ.
+
+Thanks
+Wesley Cheng
 
