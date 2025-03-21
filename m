@@ -1,149 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-52224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A228EA6BF90
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 17:18:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB1CAA6BF8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 17:18:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 28BA97AA25C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 16:15:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 266AC3BA8BC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 16:17:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CA431E008B;
-	Fri, 21 Mar 2025 16:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10B7522B590;
+	Fri, 21 Mar 2025 16:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="uGVAE8PB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jtSoBD0t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE8429D0B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:16:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7796B22A1FA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:16:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742573772; cv=none; b=FNpSRsIYwQWafhxeqX1Q1cR5H/0SpM/lApInGdx4829ed4KR59n/fNZ2IQ7xbjsuf4LApNmGcWrkf9DpuA0pP/JByYzzhhGntHAz8tkuMjMmvPuIwxP+Fjn1AiRxl7vhEAxMndu93m6kvwNH1Bc5hQpTvCxqnQmZNPiYLc7GReM=
+	t=1742573803; cv=none; b=enGKdXCcUqzcq4eAXzdYY3sSMFHvf3z+Xuq3FbOQETVYfoCLCsku2Ca1FXM3/V3+KQdaGVIbMIyvA+tTqo+9egjMChF+JAXx8jcVmCSTrGC1tZVGc2s6uRTaxTo7CudkaifH2O2uSj0AmSpJ/UHEkyIvm58xFDpcjeBz4iXc/QU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742573772; c=relaxed/simple;
-	bh=Qmq+IIeW7g+9CyCIBj9m9ESzvYm18bl+IM9u6txU21A=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=V3H2lrZ9nK5FrRuamhIVzYgEWmfaSwaWBIYmYpyKeRr4AYY2BBLh6t+dZFYqut2PgvMUC7VuF0PLJHjT3sjQ+cFHAyD0Skiy58WS/ydwvuN3ue3VmLrwmq2mnDdIXuHUkcdncmihJZE4LXqDqaUdjmN2T2057G7CEPRT3pfeD70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=uGVAE8PB; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5e5dce099f4so2978131a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 09:16:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1742573769; x=1743178569; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ltF0A24cHxopXYW1+MzGLMtAYxZ2JVfXqEYIh6iUalE=;
-        b=uGVAE8PBGtIQNltl5ur9C2SCvBKHnGvJWqZVkx2fdW+Yw9VfyVb8d47R5lnI+EEe8P
-         iF2a3m1+JYI5UgPh4dDWlzWQLgRR0fqmUT7pXaQO5PkCttrFZR29gEzU61ev9pL9NlzI
-         TAF6k9k/WrM6OTuDnRpYK23Y+OoxfkE9EdcVYlbPIq2e+BhFXvG5idRF4+2q9mHgtCi3
-         G9O5d5iKhVnQIVcu4/aDjldJUsBpmL0SVYgkiCgTObVahuyBQRX6HMPOKkK6dmU2NMBn
-         qXc22r2qAtS5UvP/k22r9jdBBWr86Ryy4uXj091wr8Db7nR+WaqAnnFWypyZQLq6H+k9
-         9OcA==
+	s=arc-20240116; t=1742573803; c=relaxed/simple;
+	bh=sX4muvpyzWlipm3+edEVZE9OiBEpH0DByrdbnIKMYr0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jxZkkHWrpM+i3G1J4MI5YifyUKxDpdxg7h0SbUUxi4+yO9fv3iyZwE8Tjo8dZVjVsJbuUeJ6YjtowNsaiEDju7cv6t1MNJRxg/bRZYTa1yHgx4Ent3xSPQ9yQQcrkFE/GRubyr6KeHjswYvCJBajY3TprcYpyXEiuF2UCany0kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jtSoBD0t; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52LATB3x014996
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:16:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=KC691n78UfcfnBIMAEEZOgix
+	8UerazMGS6DJH8rBSes=; b=jtSoBD0ttl3RR0OcVWAiU/nuCCHpxHsJRs8T718P
+	mPp0eDBxxTQce9+Dar557Zlf9gKMXJGcgJSLUZZjaCzrI59/MGrbjO+ecn6sR5P4
+	/CkzAuySTJIRr7YNmt92bvIlxVqquRB717Kxu5nbZ+5rvED+3XClwt5jMx6jH5rw
+	vDT25pWCuY07CXEUk2jmFMo98CLkWqP99IDOjgamiXKg1GUO8176ikjn/rnPwrOh
+	6wSDPq5uxAB3qEhypBM9JT0wsNGqq2upSh2fSZVEsrCyUiqpels8zshaow4M/B9D
+	d7/iONRXmp4uXex3oCuC3NI9Vvr6lmCqgGrU9Gu59p1Ghg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45gbngnj9m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 16:16:41 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c0b0cf53f3so328383585a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 09:16:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742573769; x=1743178569;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ltF0A24cHxopXYW1+MzGLMtAYxZ2JVfXqEYIh6iUalE=;
-        b=KnHCnjXe5e0WkqdPJ8lVWAgYbk1fq/dSOu8B6rHdah3CTaCm642LYomoYllm7JtsIa
-         eC0j1QXhMfyprZV9m16QAXzIpKpfSxjXtR2eGtAiwKq0P3TFHuF7mXAYs5o8p/PcatMP
-         OQrTAY5JorIPmfxW+81oR4qdoB2P65Ntb7oj22tW5ikDrmOEaT6xQpYw2yRp1zukDmsB
-         ZKcRHJZASfD//hsJn9UBTtRgrzPQh0L0+hjZfG64L74b5b8EVJbMP0XvEN9qhKo28lfS
-         FTfmkvjnC6c51UH9z+bwZ3WcD29FbVXggiwxmPf2zQxtvxCkB90mZpT0tfcJoyCgkJGj
-         QavA==
-X-Forwarded-Encrypted: i=1; AJvYcCXA35CfbaeKQBhFc/ttWTCVg6zjtMLQwewaNf/2nepWcl/dFfq6cMbYjZ3FNWq9InNYfDvYnild1eZzniLw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6T6PdJqrGr8K/PK4nmbunDnYnLglyS8feu7OYga2PLcw4mMYo
-	/vyzv8ZFya1XN8Q12AiN2LuWeLslMwP7YJfAOo1fpHeNxf1Gni7zux6ukbZzJAM=
-X-Gm-Gg: ASbGncs1E0gMVykh+juR6wBjxcf2cUGLx1j4pCM69O0A3/HjLBGTNvW73OFMbjjdZtJ
-	SMsDl5QIoS/9QZEiJZqDSuDDLV/0RlWgGB1Nv4A5ZG3dA/0W3r3Gvr2C5itbs64Qzxvet3plLnt
-	fWE8834J3asBXq5vJGSh5lzdz6YL2WdEIXdZA0jcbkieHJ9zEf+BfIhOgjhUiP2PoFZQtO4gTmf
-	LCyx5AD6XRLpB7923R0j1sigs0BXCkA8u2tXyKDLkQz7WxDp+XS0K3FIURu6p89xNuWW0bYY6EY
-	gyp2l69Jga2JPpkZcgQiCHztiHLxoyCgLuxFYG/56ri4Fp0hErKJjG22a6hJeUUsrGGml6W8b69
-	3z8s/ouazorxNoiHjE3jY82Yc
-X-Google-Smtp-Source: AGHT+IFmQRpczSkNyyOfrjuw6J3EmbsHDKfFAxtFhB+1mO1JwxQr4UBgvHRHJp6Da2DG5aHbMNCDNA==
-X-Received: by 2002:a17:906:4795:b0:ac1:e6b9:57ce with SMTP id a640c23a62f3a-ac3f208ab90mr381700166b.7.1742573768555;
-        Fri, 21 Mar 2025 09:16:08 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5ebcd0dfe4esm1546076a12.73.2025.03.21.09.16.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Mar 2025 09:16:08 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742573800; x=1743178600;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KC691n78UfcfnBIMAEEZOgix8UerazMGS6DJH8rBSes=;
+        b=GqLh2R7761HJ7GhIIWKopU/s4xZe61Qw8CnGHpY2Qfz92mISklAhnm/kPNpY+zshLj
+         k1ij7wAss36ULgRIm4CB/jXcpqEFwVJ0iu/dk3BnjC9pQHfJjiwgiwYPG8pcF0rEtq6Z
+         BAybX8dzZowTiA1zqucb6/3ocoNL5Et05u6vsB11tzwmkhYum4Fkc8e500L/32LNW4HQ
+         vMWXRAoFglaEpty4KZJaeK0glLiby1phL549USpQADao2ybNnIv8szj0Zrg7O6HyKzcE
+         iqBpTwEEalGp93GHfyDZbA7Xzx9/4b1S9ZTZBU8J7OYGjFppTIoxgCFtQHsfu9p9cRC/
+         HQoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV8GqkVMzGOMDRSQlYuW9ZOUijTCXQfPQtkqQSfdAPXvqSD/OWuHUtRZLlg0cOvKcEJmW6YSXoXt/8IKha1@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx/n+GVxB/HmsoCUqqZ4KDRS17NhS1hfm9ModDsHjWLTYmoioPG
+	PVl90ezKa28rEhXJwJFlwkvPV3iKZAYXgIahVMYQ4dJg4g7jYHeJMLVqh7F3uVHlaDALNbok06H
+	eOVGneMMTgKVBbb6m2BeEepjWHqo5Qc/5z8g2i9PQls6nOxPXhzgDqlODnKuc8yL+
+X-Gm-Gg: ASbGncvuDcAGTFA2AcvGhyavtsbdY690eRx3IxxyMsWFNNhiXzdOg8M+Pr4AIED4vF2
+	0ixKwggkwk3rkAXr0b7id+4om4M3o9WaVOPcIxLRgSXcxs9YK4s9dab7FOXnE35XM2NjpWZXax7
+	rL2VnI/tVTywwKUPm1pvjb18zGcMZSS25LQC2jFv6B7kEPO3CddpT0Cm2KV3E4h+1oKSYWNc498
+	lGTuRfGyPKyGRu521fdQxcn4RshRJmjbITij1wobjaGQ8i+tZWfjr4HNYQ1QIki5ciiIvnVVgBb
+	LSWknVT7vKQkb8A4/BHLvng84vBqUyAnsTZHhEnTHzhgfttQxYAc7Z+jEESIrUP0hKj2AiF3wdZ
+	x8Uc=
+X-Received: by 2002:a05:620a:394a:b0:7c5:4a6c:eb8d with SMTP id af79cd13be357-7c5ba200eb2mr484939585a.58.1742573799926;
+        Fri, 21 Mar 2025 09:16:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGCnw0RuPGGAcRXmxyrZFcq6Uvyn0JUfRhjB0xBqWfhqbZS/bLEaIZ6/ICcRwJQBMDqvBgROA==
+X-Received: by 2002:a05:620a:394a:b0:7c5:4a6c:eb8d with SMTP id af79cd13be357-7c5ba200eb2mr484933985a.58.1742573799445;
+        Fri, 21 Mar 2025 09:16:39 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ad647c79dsm212119e87.70.2025.03.21.09.16.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Mar 2025 09:16:38 -0700 (PDT)
+Date: Fri, 21 Mar 2025 18:16:37 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH] remoteproc: sysmon: Update qcom_add_sysmon_subdev()
+ comment
+Message-ID: <ytbcjcbzwftajmovkun3x44tvmfyljthzcsrml3vbwyvkd7glg@enfp7qfhtzkq>
+References: <77a6b65b-5f3f-4a21-a837-7a4a7e09b099@stanley.mountain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 21 Mar 2025 17:16:07 +0100
-Message-Id: <D8M2UHJQ86Q5.2EKUIIDRE3P73@fairphone.com>
-Cc: "Bjorn Andersson" <andersson@kernel.org>, "Michael Turquette"
- <mturquette@baylibre.com>, "Stephen Boyd" <sboyd@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Taniya Das" <quic_tdas@quicinc.com>,
- "Konrad Dybcio" <konradybcio@kernel.org>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/3] clk: qcom: Add video clock controller driver for
- SM6350
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a
-References: <20250321-sm6350-videocc-v1-0-c5ce1f1483ee@fairphone.com>
- <20250321-sm6350-videocc-v1-2-c5ce1f1483ee@fairphone.com>
- <pzevgib37fgdupythk3mawmeuki6dflpw5bze4ujb6jcjvj7ar@jmjuzeabvq7y>
-In-Reply-To: <pzevgib37fgdupythk3mawmeuki6dflpw5bze4ujb6jcjvj7ar@jmjuzeabvq7y>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <77a6b65b-5f3f-4a21-a837-7a4a7e09b099@stanley.mountain>
+X-Proofpoint-GUID: HTXhqe2K4UMvweshkrxihSCIUT7cERi8
+X-Authority-Analysis: v=2.4 cv=MJ5gmNZl c=1 sm=1 tr=0 ts=67dd90e9 cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=Oz3NjKvTjiMZACM5Y-cA:9 a=CjuIK1q_8ugA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: HTXhqe2K4UMvweshkrxihSCIUT7cERi8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-21_05,2025-03-21_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=714 clxscore=1015
+ spamscore=0 priorityscore=1501 mlxscore=0 adultscore=0 phishscore=0
+ lowpriorityscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503210119
 
-On Fri Mar 21, 2025 at 4:55 PM CET, Dmitry Baryshkov wrote:
-> On Fri, Mar 21, 2025 at 03:45:00PM +0100, Luca Weiss wrote:
->> From: Konrad Dybcio <konradybcio@kernel.org>
->>=20
->> Add support for the video clock controller found on SM6350 based
->> devices.
->>=20
->> Signed-off-by: Konrad Dybcio <konradybcio@kernel.org>
->> Co-developed-by: Luca Weiss <luca.weiss@fairphone.com>
->> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->> ---
->>  drivers/clk/qcom/Kconfig          |   9 +
->>  drivers/clk/qcom/Makefile         |   1 +
->>  drivers/clk/qcom/videocc-sm6350.c | 355 +++++++++++++++++++++++++++++++=
-+++++++
->>  3 files changed, 365 insertions(+)
->>=20
->> +
->> +/* 600 MHz */
->> +static const struct alpha_pll_config video_pll0_config =3D {
->> +	.l =3D 0x1F,
->
-> Nit: lowercase hex please. No need to repost just for the sake of this
-> single line.
+On Fri, Mar 21, 2025 at 05:35:44PM +0300, Dan Carpenter wrote:
+> The comment says the qcom_add_sysmon_subdev() returns NULL on error but
+> it actually returns error pointers.
+> 
+> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+> ---
+>  drivers/remoteproc/qcom_sysmon.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-Sounds like there'll be a v2 anyways with dts changes, so I'll fix it!
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-Regards
-Luca
-
->
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->
->
->> +	.alpha =3D 0x4000,
->> +	.config_ctl_val =3D 0x20485699,
->> +	.config_ctl_hi_val =3D 0x00002067,
->> +	.test_ctl_val =3D 0x40000000,
->> +	.test_ctl_hi_val =3D 0x00000002,
->> +	.user_ctl_val =3D 0x00000101,
->> +	.user_ctl_hi_val =3D 0x00004005,
->> +};
->> +
->>=20
-
+-- 
+With best wishes
+Dmitry
 
