@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-52150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55528A6B73B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 10:27:23 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B27AA6B749
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 10:28:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D22813AEA39
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 09:27:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 87A7D7A4F98
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 09:27:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C86B1F03D4;
-	Fri, 21 Mar 2025 09:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D472C1F03D8;
+	Fri, 21 Mar 2025 09:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U0nUmxzc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E0eV2yUN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129281EEA39;
-	Fri, 21 Mar 2025 09:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A570D282F1;
+	Fri, 21 Mar 2025 09:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742549238; cv=none; b=JtKJkhki80J0Yx3lWVnSqwvCLAm2stxOCSiLB2hNLBvbfs2RmfatQ4OZRQizxI6pXcRci4vdrEjcl46o7J6We5eNhatSgegDbPgz8pzjqxHN6MlE1pRJfnR5OZEm3GzFh5yqfU7MWmpO1FQG1wXUyX9ZQnYj0+tqUegwgNgK9Pc=
+	t=1742549310; cv=none; b=NEPhyJ3dQgcbMhnMeknIszuLUbDsZpCipgId1IffdiTKcAHwlJQ/dBymsgQduCkqKOkTeN2QmMa+G6nlONpcmNyXbv3Vrm7NazyG8IDA/kRmTrm1hYfTkUfuzcFsu9WV3xNKAKD8aosc4Etqg84nZhrxogexYE+j87P0At5MqWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742549238; c=relaxed/simple;
-	bh=1lGvQzLP6e2ohzFJ3H7iK1moFYJuclsfqBmNbZxldy4=;
+	s=arc-20240116; t=1742549310; c=relaxed/simple;
+	bh=rn8M5YGSzOQfmZmqAcdgCQxT0IXo4GjDjihFaCRaAS8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t5H5EjIGdWBeAgQzSXRSpwHSMl/LLxQFWXquqTdMsy/YsZqbEUChn4HrDZqb80LAm4JiNV2KADsOXPfzTBTL7Ia0d/NJH8XytILLjB6vw9x5S53Op4yCLzIKy9HWOzYW7o1FY53Wf/jqpWHb0iWYdYws2lq/otOJg6DLSxKp8A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U0nUmxzc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DA1C4CEE3;
-	Fri, 21 Mar 2025 09:27:08 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=uWAURSLIZ0OiUlB5IrwulTllpFy3vuNS2q6A7EV170bEq1aWk4EckwBURzIw7d8t7eLN7mXhU72m2wDia5Mz7ous3Ku3nZZQgPFpVlwn6QrktPRFHXsfGNdEPgOAdrW2S5OFw31R/EbG6jL2OAXBrhYtCDh8ve0EX+xFPvKD0IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E0eV2yUN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E39C4CEE8;
+	Fri, 21 Mar 2025 09:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742549236;
-	bh=1lGvQzLP6e2ohzFJ3H7iK1moFYJuclsfqBmNbZxldy4=;
+	s=k20201202; t=1742549310;
+	bh=rn8M5YGSzOQfmZmqAcdgCQxT0IXo4GjDjihFaCRaAS8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=U0nUmxzcguxj8eoiR1V6qQahX9ftyAhDmWHJp89re8qSzrGnFca7q0flMvdYBfg/2
-	 R0MzaldYM1IedveCO/94nqKXY0oZxAw0aOyNuG9RGixA9EfDnTyLHvnf8gqnkB1CCt
-	 gvtWJEba97dHxe4wxHaL159jN7Bo1dFRoG79BgGba831shZHU6lOyY7pwS6a8O63Vl
-	 bHuNPBG04D6Q9yXq/7E5Jt8Hp3y/rFkRf9AfBakpVdY3ggWjZThJgwpP+6TwOGci3Y
-	 7O3KYTNx1qbG4N46QtnR9wZZp+phMfWq3dsaR+/Sy3ufvqoRVjxaqcc1LLeRb3Xu5V
-	 DfhFabINqtufg==
-Message-ID: <d9ac99e2-1933-420f-81e3-c3a2946b99fb@kernel.org>
-Date: Fri, 21 Mar 2025 10:27:06 +0100
+	b=E0eV2yUNfjVqGfYPTK6P/UnHgvW0psstGCtbnTneAa7PdV30YrikVqrXHfAIt6aOI
+	 dmRNDpaK/OIOG74qDnvh1NZvg6jfmFvOY966caSWSNcCwrCiMv2edLsyUp0xvSwvkU
+	 wix3PbsOuzKN0cnFVcQpvr68aLuA5u6XmeX2AwZkTaB0e8poV62LB3zE/nseQckX1u
+	 94CbtaAH4FD6j0yRIEOAeI6k5x2gsDft5kO7GH5JAZn8blDMhfa7ShxnSicRJzVQbt
+	 cGd5826hrnIVTIW2+e3AF7h6FRK8K3PHcN4p0rbc2YJVeKoat7ayHsmUyzueaZ6o2C
+	 wnBLVPgFaGVRw==
+Message-ID: <b366b6c4-e09e-431b-be18-5a3ad3e26f7e@kernel.org>
+Date: Fri, 21 Mar 2025 10:28:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] mux: gpio: add optional regulator support
+Subject: Re: [PATCH v2 1/5] dt-bindings: mux: add optional regulator binding
+ to gpio mux
 To: srinivas.kandagatla@linaro.org, peda@axentia.se, broonie@kernel.org,
  andersson@kernel.org, krzk+dt@kernel.org
 Cc: ivprusov@salutedevices.com, luca.ceresoli@bootlin.com,
@@ -61,7 +62,7 @@ Cc: ivprusov@salutedevices.com, luca.ceresoli@bootlin.com,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  johan+linaro@kernel.org
 References: <20250320115633.4248-1-srinivas.kandagatla@linaro.org>
- <20250320115633.4248-3-srinivas.kandagatla@linaro.org>
+ <20250320115633.4248-2-srinivas.kandagatla@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,25 +108,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250320115633.4248-3-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20250320115633.4248-2-srinivas.kandagatla@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 20/03/2025 12:56, srinivas.kandagatla@linaro.org wrote:
->  struct mux_gpio {
->  	struct gpio_descs *gpios;
-> @@ -82,6 +83,13 @@ static int mux_gpio_probe(struct platform_device *pdev)
->  		mux_chip->mux->idle_state = idle_state;
->  	}
->  
-> +	ret = devm_regulator_get_enable_optional(dev, "mux");
-> +	if (ret && ret != -ENODEV) {
-> +		if (ret != -EPROBE_DEFER)
-> +			dev_err(dev, "Couldn't retrieve/enable gpio mux supply\n");
+> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> 
+> On some platforms to minimise pop and click during switching between
+> CTIA and OMTP headset an additional HiFi Mux Switch is used. Most common
+> case is that this switch is switched on by default, but on some
+> platforms this needs a regulator enable. One such platform is Lenovo
+> T14s.
+> 
+> This patch adds required bindings in gpio-mux to add such optional regulator.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/mux/gpio-mux.yaml | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
 
-return dev_err_probe
-
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
