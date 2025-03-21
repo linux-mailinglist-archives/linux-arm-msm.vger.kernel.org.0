@@ -1,138 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-52211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC5D6A6BD82
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 15:49:41 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90C80A6BDEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 16:05:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0AC8A3AEE96
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 14:45:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8BE677A5040
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Mar 2025 15:04:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B2A01DDA09;
-	Fri, 21 Mar 2025 14:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7187F1DA62E;
+	Fri, 21 Mar 2025 15:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="WDvwZhNp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="APwaGSfd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508E11A256B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 14:45:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D85B1D86FF;
+	Fri, 21 Mar 2025 15:05:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742568354; cv=none; b=naNGBWh7mTjUVh/QO9K8MI6bFgkgnKEnuEdRPxCi64oGUTpS8wwgwLGWwSTuu1XzNGlFBAM+lN8TgutRi5Ef/mwaJ4yXDDrU0SkjE9K+qGGGZpRpuBuF3ISwIptsWk2g7w+B/Drpg14129aqW1qdxn6WriIna1QXoq7YnRAna6w=
+	t=1742569536; cv=none; b=AB5RMa1AzfJGfY3ckTeU0/JQIoKtEhkl3AQ0f1BUOVhv/FIB9zvuWWrRZv2+ZsvpV/SrVSKvefzvMDS96/TkFbJanKL+5VlW2Vv/YBWNXr0ej51BeXug9qdCgk9bYslnmlrVvY7DoyMAru8OrlJHSHk0UU6tjfcvv68hbd0jr5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742568354; c=relaxed/simple;
-	bh=fBxL88tfFgu4vPWkBQ8cd2kEnZv6myN9L9eGEfufx8o=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gZGALV0t4vTSp0e0XUSr65UgArBYynzzodu30izNhMWOAKSluoDGvcT+loDUoORG+B1tmegnQhueIUpXQhyXy7RdYABnvRskQ4ljaYUv4AcFYNej4MpqR2qfFr0dc/nF3seaQUH4P6NRFUg+nWrtYWwqLyFTKVnboZ9/rKZH0x4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=WDvwZhNp; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ac297cbe017so558189566b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 07:45:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1742568350; x=1743173150; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vhNOdkQVVIt/vsEdwwj+oY1HmQH9nhKvG0mvmibQd4s=;
-        b=WDvwZhNpsJb6BbvFCAM8o5mO/cHO1kPWkTMYi6YWlhOrReYiI106WddcOwvB32k+p7
-         cRoSsHCHgpXbrIElznEMSHUNzn9skdzxuSvSYlpqZFYZmIi+lL26OZXYCK008sRiFaaI
-         dcigaJFLuRHbGVGHXKXRd2gP4x4xFDP0o27qo15SFRMsBEi/Ey43J6R+ezzN3dd23xrW
-         6gu1OT7MUx5CeRcN8UWuuUKax7UmNpa4TmFac+NemSAi+Oi8oupIoqxI0uRF93rb15fq
-         tVNekQHdkEjNV0VfEnpHCFJRRc8tE7eoQD0m3Q1OeiPzNaK+DULdIWstjBf4FqLxylib
-         nTsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742568350; x=1743173150;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vhNOdkQVVIt/vsEdwwj+oY1HmQH9nhKvG0mvmibQd4s=;
-        b=k4MGa5b+VIRsFROtond4LGF7NrjFbFttEkpVBQUKd9agKuGTfc/aUPP8Hd+5VEWsza
-         oojBRtSF5ClA/VR0CutHCqEEeEJO8aHoC8AiVIGbz9a7cMf6y7/NT6tu7WuJ6pJ/h7k/
-         itHAxdgX3/mxtBhkxZeFWZcJ01IHp43qojsFDGAwJEa09ZUdu7mzGJKILV0vgy5BnSy+
-         5kfRoOIbgvcGjiSqwDVlYxbM9W4EJkfqwmg/hSWvSNH9XV1IyJCH19V1O9Fo/E1uLr9a
-         E4KmwPmBlVN1XADbEeIFPiOa/4MyoP6cod9eyixzY3vgS+zJhCQ/J9DKPEIDV/YFChuz
-         xSzg==
-X-Forwarded-Encrypted: i=1; AJvYcCXeRBh4Cu03lYoe6H+uMwtQG9NmNEd0NSzx9YFmFMC32ITUrDLW/fjnyc4tdHsH1gYjmg22ieWBdaa0oVse@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2tQYsvXGsYJwGh44lB0B5gyzZ/MPXKFimMhR35y0O/YyIHnkC
-	iFr95Nt4vTfK3MwrWgs9fG3gUvyzRyaKjKjUbmvmWRhdPtCbFy7oP1uzPlfjVMc=
-X-Gm-Gg: ASbGncuT/wkyuyb8aVADo24mQeGJMZta66VievOqF1rPBPgojm9HA7rvRXui6DC9MnG
-	yH8d60PfwrJIu0bG368XqUfNQJk5sV8L+myndvo94mDBS6memJOnNcDsSRGPFYoltS/0YbSHz63
-	tpVKQ3EUWzVROzpdSYE9SYan78ySuxCzSYqRymtF7Axe/3hhN8aSfIv/c1GORylrMqyWDc21QKD
-	akSKyAIUXnFFnCuwV0gVEsIzD8CbGouYS5BM9bpbiXqvXAGaI+P8vgJXgQsFb8I7zwjozAGYNoN
-	00M5/KToaUsAziBcXvoKw8sK09UF2Rc877dtOdd8/KUVOb7ZavGr/mkG0s4DkUZiOnXG8F4aEdL
-	o5akLnXwXDNJNQtLpjg==
-X-Google-Smtp-Source: AGHT+IFrUo+XVApUPF24P18d3jsX7lNPxWfJoO0tS8bgXcfA90A6ILqy0CEkprg7D7hHpF5FLLZltg==
-X-Received: by 2002:a17:907:d84d:b0:ac3:4228:6e00 with SMTP id a640c23a62f3a-ac3f00b2ef4mr438441866b.6.1742568350254;
-        Fri, 21 Mar 2025 07:45:50 -0700 (PDT)
-Received: from [100.64.0.4] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3efb648acsm168092466b.98.2025.03.21.07.45.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Mar 2025 07:45:49 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 21 Mar 2025 15:45:01 +0100
-Subject: [PATCH 3/3] arm64: dts: qcom: sm6350: Add video clock controller
+	s=arc-20240116; t=1742569536; c=relaxed/simple;
+	bh=LDK5i2JsWcIPqbJqtViwb+7u1TmV0WXlcCRoTF0x1ks=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=S+5l+Ht1LA64kDei+SwvXNbHgavHcVqCAASXrvSJKfkBn+HgF2+dRcrvIvtoI2f4xcjXz3eN9iYQy0I4Z247ttGgsTGpEPbWJ/w2t6l6zrBlRuHfQ2rAuAbqS6KKqC/vCCewG5o1zbCi+/af3EaW/GzGPt7u5de0bCn3OJtlSo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=APwaGSfd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCD3C4CEE3;
+	Fri, 21 Mar 2025 15:05:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742569535;
+	bh=LDK5i2JsWcIPqbJqtViwb+7u1TmV0WXlcCRoTF0x1ks=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=APwaGSfdOEZrLVz5s3iLIusVTnKNqhTX6atbo8GEnSd/YOyeb04Bc8bgUQ1oxbRE/
+	 r9zNcRcV9lbtb/V3eXCaZZwaQqc9o5d5js5Bup1jPoR69+wzM9SwBfFAJwM4IymAaR
+	 G41weHV5ez+olm0xsIB3vIb7nmDoQ6tru4GSboK7TCIhZHnS8bbirWxn6qvGCQ8gry
+	 LUCfa83Cv8aQk3qp3Oua8U46noRp2YuWCaw4fA3730xOquBLgd6WpxO9s0lvNyGyrl
+	 5U0mQDzaJKDHnCq/2QANzTpK0a59FQs2sc9tHcZ3wVh9SbjObtio6ygYYluqOXoqKT
+	 vTHQhJl6C+D9A==
+Date: Fri, 21 Mar 2025 10:05:34 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250321-sm6350-videocc-v1-3-c5ce1f1483ee@fairphone.com>
-References: <20250321-sm6350-videocc-v1-0-c5ce1f1483ee@fairphone.com>
-In-Reply-To: <20250321-sm6350-videocc-v1-0-c5ce1f1483ee@fairphone.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.14.2
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+ Nitheesh Sekar <quic_nsekar@quicinc.com>, linux-phy@lists.infradead.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ 20250317100029.881286-2-quic_varada@quicinc.com, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Bjorn Helgaas <bhelgaas@google.com>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: George Moussalem <george.moussalem@outlook.com>
+In-Reply-To: <20250321-ipq5018-pcie-v6-0-b7d659a76205@outlook.com>
+References: <20250321-ipq5018-pcie-v6-0-b7d659a76205@outlook.com>
+Message-Id: <174256796512.3336836.9071668590061212281.robh@kernel.org>
+Subject: Re: [PATCH v6 0/6] Enable IPQ5018 PCI support
 
-Add a node for the videocc found on the SM6350 SoC.
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+On Fri, 21 Mar 2025 16:14:38 +0400, George Moussalem wrote:
+> This patch series adds the relevant phy and controller
+> DT configurations for enabling PCI gen2 support
+> on IPQ5018. IPQ5018 has two phys and two controllers,
+> one dual-lane and one single-lane.
+> 
+> Last patch series (v3) submitted dates back to August 30, 2024.
+> As I've worked to add IPQ5018 platform support in OpenWrt, I'm
+> continuing the efforts to add Linux kernel support.
+> 
+> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+> ---
+> Changes in v6:
+> - Fixed issues reported by 'make dt_bindings_check' as per Rob's bot
+> - Removed Krzysztof's Ack-tag on
+> - Link to v5: https://lore.kernel.org/r/20250321-ipq5018-pcie-v5-0-aae2caa1f418@outlook.com
+> 
+> Changes in v5:
+> - Re-ordered reg and reg-names in dt-bindings and dts to align with
+>   other IPQ SoCs
+> - Corrected nr of interrupts in dt-bindings: phy: qcom: Add IPQ5018 SoC
+> - Corrected ranges property of pcie controller nodes
+> - Removed newlines between cells properties in pcie phy nodes
+> - Modified dt bindings to add descriptions and separate conditions for
+>   ipq5018 and ipq5332 as they have different nr of clocks and resets
+>   As such, also removed Krzysztof's RB tag for validation
+> - Ran dtbs_check and fixed:
+>   interrupt-map property in pcie nodes:
+>   /soc@0/pcie@80000000:interrupt-map: Cell 13 is not a phandle(0)
+>   /soc@0/pcie@a0000000:interrupt-map: Cell 13 is not a phandle(0)
+> - Added missing gpio header file to ipq5018-rdp432-c2.dts
+> - Added MHI register requirement to bindings and to PCIe nodes as per:
+>   Depends-on: <20250317100029.881286-2-quic_varada@quicinc.com>
+> - Link to v4: https://lore.kernel.org/all/DS7PR19MB8883F2538AA7D047E13C102B9DD22@DS7PR19MB8883.namprd19.prod.outlook.com/
+> 
+> Changes in v4:
+> - removed dependency as the following have been applied:
+> 	dt-bindings: phy: qcom,uniphy-pcie: Document PCIe uniphy
+> 	phy: qcom: Introduce PCIe UNIPHY 28LP driver
+> 	dt-bindings: PCI: qcom: Document the IPQ5332 PCIe controller
+>   Link: https://lore.kernel.org/all/20250313080600.1719505-1-quic_varada@quicinc.com/
+> - added Mani's RB tag to: PCI: qcom: Add support for IPQ5018
+> - Removed power-domains property requirement in dt-bindings for IPQ5018
+>   and removed Krzysztof's RB tag from:
+>   dt-bindings: PCI: qcom: Add IPQ5018 SoC
+> - fixed author chain and retained Sricharan Ramabadhran in SoB tags and
+>   kept Nitheesh Sekar as the original author
+> - Removed comments as per Konrad's comment in:
+>   arm64: dts: qcom: ipq5018: Add PCIe related nodes
+> - Link to v3 submitted by Sricharan Ramabadhran:
+>   Link: https://lore.kernel.org/all/20240830081132.4016860-1-quic_srichara@quicinc.com/
+> - Link to v3, incorrectly versioned:
+>   Link: https://lore.kernel.org/all/DS7PR19MB8883BC190797BECAA78EC50F9DCB2@DS7PR19MB8883.namprd19.prod.outlook.com/
+> 
+> Changes in v3 (incorrectly versioned):
+> - Depends on
+>   Link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20250220094251.230936-1-quic_varada@quicinc.com/
+> - Added 8 MSI SPI and 1 global interrupts (Thanks Mani for confirming)
+> - Added hw revision (internal/synopsys) and nr of lanes in patch 4
+>   commit msg
+> - Sorted reg addresses and moved PCIe nodes accordingly
+> - Moved to GIC based interrupts
+> - Added rootport node in controller nodes
+> - Tested on Linksys devices (MX5500/SPNMX56)
+> - Link to v2: https://lore.kernel.org/all/20240827045757.1101194-1-quic_srichara com/
+> 
+> Changes in v3:
+>  - Added Reviewed-by tag for patch#1.
+>  - Fixed dev_err_probe usage in patch#3.
+>  - Added pinctrl/wak pins for pcie1 in patch#6.
+> 
+> Changes in v2:
+>  - Fixed all review comments from Krzysztof, Robert Marko,
+>    Dmitry Baryshkov, Manivannan Sadhasivam, Konrad Dybcio.
+>  - Updated the respective patches for their changes.
+>  - Link to v1: https://lore.kernel.org/lkml/32389b66-48f3-8ee8-e2f1-1613feed3cc7@gmail.com/T/
+> 
+> ---
+> Nitheesh Sekar (6):
+>       dt-bindings: phy: qcom: uniphy-pcie: Add ipq5018 compatible
+>       phy: qualcomm: qcom-uniphy-pcie 28LP add support for IPQ5018
+>       dt-bindings: PCI: qcom: Add IPQ5018 SoC
+>       PCI: qcom: Add support for IPQ5018
+>       arm64: dts: qcom: ipq5018: Add PCIe related nodes
+>       arm64: dts: qcom: ipq5018: Enable PCIe
+> 
+>  .../devicetree/bindings/pci/qcom,pcie.yaml         |  50 +++++
+>  .../bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml |  49 ++++-
+>  arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts     |  40 ++++
+>  arch/arm64/boot/dts/qcom/ipq5018.dtsi              | 234 ++++++++++++++++++++-
+>  drivers/pci/controller/dwc/pcie-qcom.c             |   1 +
+>  drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c   |  45 ++++
+>  6 files changed, 409 insertions(+), 10 deletions(-)
+> ---
+> base-commit: 5744a64fddfc33629f3bcc9a06a646f7443077a7
+> change-id: 20250321-ipq5018-pcie-1d44abf0e2f5
+> 
+> Best regards,
+> --
+> George Moussalem <george.moussalem@outlook.com>
+> 
+> 
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 00ad1d09a19558d9e2bc61f1a81a36d466adc88e..ab7118b4f8f8cea56a3957e9df67ee1cd74820a6 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -1952,6 +1952,20 @@ usb_1_dwc3_ss_out: endpoint {
- 			};
- 		};
- 
-+		videocc: clock-controller@aaf0000 {
-+			compatible = "qcom,sm6350-videocc";
-+			reg = <0 0x0aaf0000 0 0x10000>;
-+			clocks = <&gcc GCC_VIDEO_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&sleep_clk>;
-+			clock-names = "iface",
-+				      "bi_tcxo",
-+				      "sleep_clk";
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		cci0: cci@ac4a000 {
- 			compatible = "qcom,sm6350-cci", "qcom,msm8996-cci";
- 			reg = <0 0x0ac4a000 0 0x1000>;
 
--- 
-2.49.0
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250321-ipq5018-pcie-v6-0-b7d659a76205@outlook.com:
+
+arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dtb: pcie@80000000: reg: [[2147483648, 3869], [2147487520, 168], [2147487744, 4096], [491520, 12288], [2148532224, 4096], [503808, 4096]] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
+arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dtb: pcie@80000000: reg-names: ['dbi', 'elbi', 'atu', 'parf', 'config', 'mhi'] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
+arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dtb: pcie@a0000000: reg: [[2684354560, 3869], [2684358432, 168], [2684358656, 4096], [524288, 12288], [2685403136, 4096], [536576, 4096]] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
+arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dtb: pcie@a0000000: reg-names: ['dbi', 'elbi', 'atu', 'parf', 'config', 'mhi'] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
+arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: pcie@80000000: reg: [[2147483648, 3869], [2147487520, 168], [2147487744, 4096], [491520, 12288], [2148532224, 4096], [503808, 4096]] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
+arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: pcie@80000000: reg-names: ['dbi', 'elbi', 'atu', 'parf', 'config', 'mhi'] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
+arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: pcie@a0000000: reg: [[2684354560, 3869], [2684358432, 168], [2684358656, 4096], [524288, 12288], [2685403136, 4096], [536576, 4096]] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
+arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: pcie@a0000000: reg-names: ['dbi', 'elbi', 'atu', 'parf', 'config', 'mhi'] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
+
+
+
+
 
 
