@@ -1,414 +1,300 @@
-Return-Path: <linux-arm-msm+bounces-52249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6736EA6C757
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Mar 2025 04:01:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0A13A6CA57
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Mar 2025 14:35:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CCD0246409C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Mar 2025 03:01:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1D50B179DE3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Mar 2025 13:34:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60A931519AE;
-	Sat, 22 Mar 2025 03:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B4CF1D5CD4;
+	Sat, 22 Mar 2025 13:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LBPHggUd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bSFNrSWo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8779D1487F4
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Mar 2025 03:01:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340331C6BE;
+	Sat, 22 Mar 2025 13:34:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742612473; cv=none; b=clnl38VW7dnhm+wlGVHWuhbO+s9VNajd3FdwTNqVNgnUV6vNAulmhkZjvef4JbzBFfnay6FLXtnoYK3IU9Wt3atpCmY5T7XdFnxdU+UyDH+leJl5MV4C1ljVnJq9STGTDWAVlJ5Y+ay4gMym9kgx6TFx9vQi18GZrRgzOQ9qAGI=
+	t=1742650496; cv=none; b=jptWqTJq8/DqQsleaNX/vtVHE8lIkeQH7SB0DYrCDzTI3kvobAZ+rPKwdaasGDTOEw7JxqIr86byIVTLyhgCngZu4I1w3PVz7KhsqEhIyv1LJMA/aJfrDCcd6/kPeWtc/rohn8Vig3DsxJA4hITZjpahh1RjYUFylO3NFzncYXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742612473; c=relaxed/simple;
-	bh=OcsIuznLjZUAtjrb/hnQscAcM6N2IyI9O79LK0QxW3c=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=N6/ux0JJWIz/wmkbYVj0dfwMYT9JseGpx/i1NKLYi0RDral1rYqbh5rJ6QKq5XVZzmffZhcEnsUNbwNHaZJEC6vWtVBtALuauiQtsQc8BuxJqfDdLAQpmHOUzWGD3PhO/nKx9Vd6L0TZk4FWp/E5ih5KUOCBT4XPbt84MzeGcog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LBPHggUd; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52M0K3s5006439
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Mar 2025 03:01:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5TuaKD5nu/QplYVB4AwEHfIcahKIDJ4Ugxxeg3cp2iQ=; b=LBPHggUd2DVv923a
-	WbFGLv5IL9sspzXjpzvMZOMni5WM6HiRGXa8kadOxxAL2YR/Y3Slf1Ds8UvRP5mX
-	/aJ1dsnep4cZvpPTofvzrRzEkCfagVz6qz80noNY9sDjchB7jDiDHW/C7j4F7b96
-	VBPmdVCK0A92jkxgXgD/d8P3tJQ97BD0JmPuS3FX+eAtuVhIvpXjAqk8X0GlmKl3
-	3eyn7pjaEFOER6BNz0kM++XFBAlrF4TrTRXZfCFbOK0tnpFO81/msvr8YABwCNAN
-	3j7BouKWFOdNCLXmsMtNrcgzxvYohS5VtgDwm6NVtimUDhJQTHvcwqebqELQbKU7
-	MXywIA==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45hjjng6fb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Mar 2025 03:01:10 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2262051205aso27820375ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Mar 2025 20:01:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742612469; x=1743217269;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5TuaKD5nu/QplYVB4AwEHfIcahKIDJ4Ugxxeg3cp2iQ=;
-        b=W/HYvT4RWRSz+fxasFc+b0EC/HzI+EgsAmGYqTZeZo8Zlp9CkRuH1IBzkL749mPEhg
-         mLm7fY6gARcqRsqubqElx4Wct5AO6wdWfqgzegsYYFJk1tLbzCgJD9io5JILcideRCX4
-         uCrMZ6MUwadNIOFP3kgjBvdYw1BeZ6/L6cu9bW3des3w/BFkLOo2qkkwQLvdPsn+1Ui5
-         Hdm9qI3VMgHdo7+m1hAdwRJi93j5qji6teEIA2OYtdP7osAQl61d2fvO8iZ1i4ROW+Vg
-         94Mp7LGkYv+IWSBuPtNEHeRngvBc/TU+y1/508Hhirv2ddMIUu77qXZUjM8tUubl15Wm
-         zGmA==
-X-Gm-Message-State: AOJu0YyTLZYjlXEFw5ryxkISZmNX23A1oe0WpsK4F+hKITVGf3zIWctX
-	qSkMqc3j3OhwOFevpygiW+5oTFSjyH3qPg6z25wDxPm2iE5FtWMSwzlnSCRZ2LNMNKW/OW4Pkz5
-	ppeJYxp91wd1vulSdytXfFhkmd579+WMxsj3lLZa7/7S9XNTGnpXZH5+LVXNIYTzg
-X-Gm-Gg: ASbGncuRLAfFCYupjc61Bpo5qFI8awF4BJAS562EmeHjj4TiL/B6e3odHkRINRsIhWX
-	etAFLkx9JBMyePNXoxo05Q5Xr2i1UmoEvfe8s8vXJQqWotyzAPSL+XewUzNuJDvnS3xrfbwFMme
-	EPXE5yAH6XAjmHP1aUoa1yaJeeET4kKlzHmuRAub5CoJGKVWFYVzWbftjVaeQwhyTtFshpfGP4+
-	To86fdje7+YMi4TJSlNvfumP3gZJMU0kmIrfqvlIopcL34AbVdqM+169fXZxeUPjMqJbQDUPVut
-	oVEiPqTAGLWq46MPSXkWzPxVWgo0mRo9fAGBVRbqEVDfYsjiMqs=
-X-Received: by 2002:a17:903:2286:b0:224:249f:9723 with SMTP id d9443c01a7336-22780e38317mr77072425ad.51.1742612468558;
-        Fri, 21 Mar 2025 20:01:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEX0JuJ42Nry6a84KPdNyBZiNsGh22KBCKMNjpKA+L5XS01gQs1OjBDyxnkz6m4y+Kr0dA+Iw==
-X-Received: by 2002:a17:903:2286:b0:224:249f:9723 with SMTP id d9443c01a7336-22780e38317mr77072075ad.51.1742612468111;
-        Fri, 21 Mar 2025 20:01:08 -0700 (PDT)
-Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-227811bdca7sm25859945ad.137.2025.03.21.20.01.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Mar 2025 20:01:07 -0700 (PDT)
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Date: Sat, 22 Mar 2025 08:30:45 +0530
-Subject: [PATCH 3/3] PCI: qcom: Add support for multi-root port
+	s=arc-20240116; t=1742650496; c=relaxed/simple;
+	bh=sa27Dr3nj8EtkcJIe4rcNumqN4yoVa4yO9/KIgGTsYw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mIovWHzFBQFUObAlWDmN+cBSQGETPErJqJIrSrfpjrm3Nt1QWP10Y0yt4E5NPhluB12EA2SlNQEHJI1uAKqxfk02WRhCTGJuf6DbH2fQ+1XUaNj/ipB/VDqkIQFSIrBgl3fdYs/UINyv6kqsMueHMsyrYBO0xC+sGwl1HoIFLKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bSFNrSWo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A75FC4CEDD;
+	Sat, 22 Mar 2025 13:34:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742650495;
+	bh=sa27Dr3nj8EtkcJIe4rcNumqN4yoVa4yO9/KIgGTsYw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=bSFNrSWoQVf0GnThmgCrx/ycC9c7Eny7DLlpThLZFwUTfHuunjBFmhNPbzfTBfkkb
+	 Dz6/3xHcx6VUBULwxJwDrLFxg6t8vr8h+3B0mRhiF9asY/XUdeDYJSTDaQ942LNHVm
+	 AcCvyS/w6unQL0+T9vHWW42X2vG5/7oT2PiZSSBaMZxrhgn6BE6LqdJuA+tRkefvXl
+	 vmh5MjTGNBUklWA5x3MoKoreEk0dtRrYJc64ez42Ec9/Ht8h7GrA+1m1I/P8hI6vpZ
+	 h7N8ieX4TdUf/8r4IP4kXFLnKZbNi6qtVFOxv+od/4KHNFGIWcJCpLLThbnwmWVyGW
+	 r6wPSEWAJTTHQ==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Stephen Boyd <sboyd@kernel.org>,
+	linux-clk@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Devi Priya <quic_devipriy@quicinc.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Daniil Titov <daniilt971@gmail.com>,
+	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Ajit Pandey <quic_ajipan@quicinc.com>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
+	Jordan Crouse <jorcrous@amazon.com>,
+	Karl Chan <exxxxkc@getgoogleoff.me>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vladimir Lypak <vladimir.lypak@gmail.com>
+Subject: [GIT PULL] Qualcomm clock updates for v6.15
+Date: Sat, 22 Mar 2025 08:34:50 -0500
+Message-ID: <20250322133453.2723879-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250322-perst-v1-3-e5e4da74a204@oss.qualcomm.com>
-References: <20250322-perst-v1-0-e5e4da74a204@oss.qualcomm.com>
-In-Reply-To: <20250322-perst-v1-0-e5e4da74a204@oss.qualcomm.com>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com,
-        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1742612448; l=7891;
- i=krishna.chundru@oss.qualcomm.com; s=20230907; h=from:subject:message-id;
- bh=OcsIuznLjZUAtjrb/hnQscAcM6N2IyI9O79LK0QxW3c=;
- b=RBHOJiWkUKfaiWLxbUruJ9FvxtO4bp2bHH/7LUto9+ZwmBoOiS83AiN/jDW0Dj8b56pjtz2Jd
- k6A1tL/zwuhDVwrpJ3FLJD8F0WZqXI99izQHe3DrizktGict+45wrpA
-X-Developer-Key: i=krishna.chundru@oss.qualcomm.com; a=ed25519;
- pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-Authority-Analysis: v=2.4 cv=fNc53Yae c=1 sm=1 tr=0 ts=67de27f6 cx=c_pps a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=EUspDBNiAAAA:8 a=KZ4ZsdeBRq2BojHjq4kA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-ORIG-GUID: 6lMm9rflOdwgycKTiIAyDx5cDKUUET1A
-X-Proofpoint-GUID: 6lMm9rflOdwgycKTiIAyDx5cDKUUET1A
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-22_01,2025-03-21_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- lowpriorityscore=0 mlxlogscore=999 priorityscore=1501 mlxscore=0
- adultscore=0 spamscore=0 bulkscore=0 suspectscore=0 phishscore=0
- malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503220019
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Move phy, perst handling to root port and provide a way to have multi-port
-logic.
 
-Currently, qcom controllers only support single port, and all properties
-are present in the controller node itself. This is incorrect, as
-properties like phy, perst, wake, etc. can vary per port and should be
-present in the root port node.
+The following changes since commit 2014c95afecee3e76ca4a56956a936e23283f05b:
 
-pci-bus-common.yaml uses reset-gpios property for representing PERST, use
-same property instead of perst-gpios.
+  Linux 6.14-rc1 (2025-02-02 15:39:26 -0800)
 
-Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 149 +++++++++++++++++++++++++++------
- 1 file changed, 123 insertions(+), 26 deletions(-)
+are available in the Git repository at:
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index e4d3366ead1f..6424dcfd3e1b 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -262,6 +262,11 @@ struct qcom_pcie_cfg {
- 	bool no_l0s;
- };
- 
-+struct qcom_pcie_port {
-+	struct list_head list;
-+	struct gpio_desc *reset;
-+	struct phy *phy;
-+};
- struct qcom_pcie {
- 	struct dw_pcie *pci;
- 	void __iomem *parf;			/* DT parf */
-@@ -276,21 +281,36 @@ struct qcom_pcie {
- 	struct dentry *debugfs;
- 	bool suspended;
- 	bool use_pm_opp;
-+	struct list_head ports;
- };
- 
- #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
- 
- static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
- {
--	gpiod_set_value_cansleep(pcie->reset, 1);
-+	struct qcom_pcie_port *port, *tmp;
-+
-+	if (list_empty(&pcie->ports))
-+		gpiod_set_value_cansleep(pcie->reset, 1);
-+	else
-+		list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+			gpiod_set_value_cansleep(port->reset, 1);
-+
- 	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
- }
- 
- static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
- {
-+	struct qcom_pcie_port *port, *tmp;
-+
- 	/* Ensure that PERST has been asserted for at least 100 ms */
- 	msleep(100);
--	gpiod_set_value_cansleep(pcie->reset, 0);
-+	if (list_empty(&pcie->ports))
-+		gpiod_set_value_cansleep(pcie->reset, 0);
-+	else
-+		list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+			gpiod_set_value_cansleep(port->reset, 0);
-+
- 	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
- }
- 
-@@ -1229,10 +1249,19 @@ static int qcom_pcie_link_up(struct dw_pcie *pci)
- 	return !!(val & PCI_EXP_LNKSTA_DLLLA);
- }
- 
-+static void qcom_pcie_port_phy_off(struct qcom_pcie *pcie)
-+{
-+	struct qcom_pcie_port *port, *tmp;
-+
-+	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+		phy_power_off(port->phy);
-+}
-+
- static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- {
- 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
- 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-+	struct qcom_pcie_port *port, *tmp;
- 	int ret;
- 
- 	qcom_ep_reset_assert(pcie);
-@@ -1241,13 +1270,27 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 	if (ret)
- 		return ret;
- 
--	ret = phy_set_mode_ext(pcie->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
--	if (ret)
--		goto err_deinit;
-+	if (list_empty(&pcie->ports)) {
-+		ret = phy_set_mode_ext(pcie->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
-+		if (ret)
-+			goto err_deinit;
- 
--	ret = phy_power_on(pcie->phy);
--	if (ret)
--		goto err_deinit;
-+		ret = phy_power_on(pcie->phy);
-+		if (ret)
-+			goto err_deinit;
-+	} else {
-+		list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
-+			ret = phy_set_mode_ext(port->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
-+			if (ret)
-+				goto err_deinit;
-+
-+			ret = phy_power_on(port->phy);
-+			if (ret) {
-+				qcom_pcie_port_phy_off(pcie);
-+				goto err_deinit;
-+			}
-+		}
-+	}
- 
- 	if (pcie->cfg->ops->post_init) {
- 		ret = pcie->cfg->ops->post_init(pcie);
-@@ -1268,7 +1311,10 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- err_assert_reset:
- 	qcom_ep_reset_assert(pcie);
- err_disable_phy:
--	phy_power_off(pcie->phy);
-+	if (list_empty(&pcie->ports))
-+		phy_power_off(pcie->phy);
-+	else
-+		qcom_pcie_port_phy_off(pcie);
- err_deinit:
- 	pcie->cfg->ops->deinit(pcie);
- 
-@@ -1281,7 +1327,10 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
- 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
- 
- 	qcom_ep_reset_assert(pcie);
--	phy_power_off(pcie->phy);
-+	if (list_empty(&pcie->ports))
-+		phy_power_off(pcie->phy);
-+	else
-+		qcom_pcie_port_phy_off(pcie);
- 	pcie->cfg->ops->deinit(pcie);
- }
- 
-@@ -1579,11 +1628,41 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
- 	return IRQ_HANDLED;
- }
- 
-+static int qcom_pcie_parse_port(struct qcom_pcie *pcie, struct device_node *node)
-+{
-+	struct device *dev = pcie->pci->dev;
-+	struct qcom_pcie_port *port;
-+	struct gpio_desc *reset;
-+	struct phy *phy;
-+
-+	reset = devm_fwnode_gpiod_get(dev, of_fwnode_handle(node),
-+				      "reset", GPIOD_OUT_HIGH, "PERST#");
-+	if (IS_ERR(reset))
-+		return PTR_ERR(reset);
-+
-+	phy = devm_of_phy_get(dev, node, "pciephy");
-+	if (IS_ERR(phy))
-+		return PTR_ERR(phy);
-+
-+	port = devm_kzalloc(dev, sizeof(*port), GFP_KERNEL);
-+	if (!port)
-+		return -ENOMEM;
-+
-+	port->reset = reset;
-+	port->phy = phy;
-+	INIT_LIST_HEAD(&port->list);
-+	list_add_tail(&port->list, &pcie->ports);
-+
-+	return 0;
-+}
-+
- static int qcom_pcie_probe(struct platform_device *pdev)
- {
- 	const struct qcom_pcie_cfg *pcie_cfg;
- 	unsigned long max_freq = ULONG_MAX;
-+	struct qcom_pcie_port *port, *tmp;
- 	struct device *dev = &pdev->dev;
-+	struct device_node *of_port;
- 	struct dev_pm_opp *opp;
- 	struct qcom_pcie *pcie;
- 	struct dw_pcie_rp *pp;
-@@ -1611,6 +1690,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		goto err_pm_runtime_put;
- 
-+	INIT_LIST_HEAD(&pcie->ports);
-+
- 	pci->dev = dev;
- 	pci->ops = &dw_pcie_ops;
- 	pp = &pci->pp;
-@@ -1619,12 +1700,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 
- 	pcie->cfg = pcie_cfg;
- 
--	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
--	if (IS_ERR(pcie->reset)) {
--		ret = PTR_ERR(pcie->reset);
--		goto err_pm_runtime_put;
--	}
--
- 	pcie->parf = devm_platform_ioremap_resource_byname(pdev, "parf");
- 	if (IS_ERR(pcie->parf)) {
- 		ret = PTR_ERR(pcie->parf);
-@@ -1647,12 +1722,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 		}
- 	}
- 
--	pcie->phy = devm_phy_optional_get(dev, "pciephy");
--	if (IS_ERR(pcie->phy)) {
--		ret = PTR_ERR(pcie->phy);
--		goto err_pm_runtime_put;
--	}
--
- 	/* OPP table is optional */
- 	ret = devm_pm_opp_of_add_table(dev);
- 	if (ret && ret != -ENODEV) {
-@@ -1699,9 +1768,31 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 
- 	pp->ops = &qcom_pcie_dw_ops;
- 
--	ret = phy_init(pcie->phy);
--	if (ret)
--		goto err_pm_runtime_put;
-+	for_each_child_of_node(dev->of_node, of_port) {
-+		ret = qcom_pcie_parse_port(pcie, of_port);
-+		of_node_put(of_port);
-+		if (ret)
-+			break;
-+	}
-+
-+	/* Fallback to previous method */
-+	if (ret) {
-+		pcie->phy = devm_phy_optional_get(dev, "pciephy");
-+		if (IS_ERR(pcie->phy)) {
-+			ret = PTR_ERR(pcie->phy);
-+			goto err_pm_runtime_put;
-+		}
-+
-+		pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
-+		if (IS_ERR(pcie->reset)) {
-+			ret = PTR_ERR(pcie->reset);
-+			goto err_pm_runtime_put;
-+		}
-+
-+		ret = phy_init(pcie->phy);
-+		if (ret)
-+			goto err_pm_runtime_put;
-+	}
- 
- 	platform_set_drvdata(pdev, pcie);
- 
-@@ -1746,10 +1837,16 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- err_host_deinit:
- 	dw_pcie_host_deinit(pp);
- err_phy_exit:
--	phy_exit(pcie->phy);
-+	if (list_empty(&pcie->ports))
-+		phy_exit(pcie->phy);
-+	else
-+		list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+			phy_exit(port->phy);
- err_pm_runtime_put:
- 	pm_runtime_put(dev);
- 	pm_runtime_disable(dev);
-+	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+		list_del(&port->list);
- 
- 	return ret;
- }
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-clk-for-6.15
 
--- 
-2.34.1
+for you to fetch changes up to 9bf3684e0f7e65298ff844fd81e6dc5105c67354:
 
+  clk: qcom: Add NSS clock Controller driver for IPQ9574 (2025-03-17 10:11:45 -0500)
+
+----------------------------------------------------------------
+Qualcomm clock updates for v6.15
+
+Support is introduced for associating GDSCs with multiple power-domains,
+in order to handle the cases where both (some form of) CX and MX needs
+to be voted for.
+
+New support for IPQ9574 NSS clock controller, QCS8300 GPU and video
+clock controllers are added, as is RPM clocks for SDM429. LPASS resets
+are added for QCM6490.
+
+Branch clock halt halt check is corrected for clocks with voted halt
+state.
+
+SM8250 camera clocks are moved to rcg2_shared_ops, to make sure they are
+parked when disabled. Missing SDCC resets are added for SDM660. SM8750
+global clock controller regmap is adjusted to not trigger a security
+violation if the regmap is dumped.
+
+On SM8650 USB GDSCs are moved to retain the state during power down.
+
+The GPU AHB clock and display XO clock are removed from Linux's control
+for X Elite, as they shouldn't be managed by the OS.
+
+A few smaller improvements and corrections to the GDSC implementation.
+
+UART frequencies for IPQ5424 are corrected to fix issues with UART flow
+control, SDCC apps frequency table is corrected to make the SDCC clock
+tick at the expected frequency. IPQ5018 global clock controller is being
+allowed to be built on Arm32 as well.
+
+----------------------------------------------------------------
+Ajit Pandey (1):
+      clk: qcom: clk-branch: Fix invert halt status bit check for votable clocks
+
+Alexey Minnekhanov (3):
+      dt-bindings: clock: gcc-sdm660: Add missing SDCC resets
+      dt-bindings: clock: gcc-sdm660: Add missing SDCC resets
+      clk: qcom: gcc-sdm660: Add missing SDCC block resets
+
+Barnabás Czémán (1):
+      clk: qcom: mmcc-sdm660: fix stuck video_subcore0 clock
+
+Bjorn Andersson (4):
+      Merge branch '20250212-sdm429-rpm-v1-1-0a24ac19a478@mainlining.org' into clk-for-6.15
+      Merge branch '20250203063427.358327-2-alexeymin@postmarketos.org' into clk-for-6.15
+      Merge branch '20250109-qcs8300-mm-patches-new-v4-0-63e8ac268b02@quicinc.com' into clk-for-6.15
+      Merge branch '20250313110359.242491-1-quic_mmanikan@quicinc.com' into clk-for-6.15
+
+Bryan O'Donoghue (4):
+      clk: qcom: gdsc: Release pm subdomains in reverse add order
+      clk: qcom: gdsc: Capture pm_genpd_add_subdomain result code
+      clk: qcom: common: Add support for power-domain attachment
+      clk: qcom: Support attaching GDSCs to multiple parents
+
+Daniil Titov (2):
+      dt-bindings: clock: qcom,rpmcc: Add SDM429
+      clk: qcom: smd-rpm: Add clocks for SDM429
+
+Devi Priya (4):
+      dt-bindings: clock: gcc-ipq9574: Add definition for GPLL0_OUT_AUX
+      dt-bindings: clock: Add ipq9574 NSSCC clock and reset definitions
+      clk: qcom: gcc-ipq9574: Add support for gpll0_out_aux clock
+      clk: qcom: Add NSS clock Controller driver for IPQ9574
+
+Imran Shaik (5):
+      dt-bindings: clock: qcom: Add GPU clocks for QCS8300
+      dt-bindings: clock: qcom: Add CAMCC clocks for QCS8300
+      dt-bindings: clock: qcom: Add QCS8300 video clock controller
+      clk: qcom: Add support for GPU Clock Controller on QCS8300
+      clk: qcom: Add support for Video Clock Controller on QCS8300
+
+Jordan Crouse (1):
+      clk: qcom: camcc-sm8250: Use clk_rcg2_shared_ops for some RCGs
+
+Karl Chan (1):
+      clk: qcom: ipq5018: allow it to be bulid on arm32
+
+Konrad Dybcio (1):
+      clk: qcom: gcc-x1e80100: Unregister GCC_GPU_CFG_AHB_CLK/GCC_DISP_XO_CLK
+
+Krzysztof Kozlowski (8):
+      clk: qcom: clk-alpha-pll: Do not use random stack value for recalc rate
+      clk: qcom: Drop unused header includes
+      clk: qcom: Add missing header includes
+      clk: qcom: dispcc-sm8750: Allow dumping regmap
+      clk: qcom: camcc: Constify 'struct qcom_cc_desc'
+      clk: qcom: dispcc: Constify 'struct qcom_cc_desc'
+      clk: qcom: gpucc: Constify 'struct qcom_cc_desc'
+      clk: qcom: videocc: Constify 'struct qcom_cc_desc'
+
+Manikanta Mylavarapu (2):
+      clk: qcom: ipq5424: fix software and hardware flow control error of UART
+      drivers: clk: qcom: ipq5424: fix the freq table of sdcc1_apps clock
+
+Neil Armstrong (1):
+      clk: qcom: gcc-sm8650: Do not turn off USB GDSCs during gdsc_disable()
+
+Taniya Das (4):
+      clk: qcom: gdsc: Set retain_ff before moving to HW CTRL
+      clk: qcom: gdsc: Update the status poll timeout for GDSC
+      dt-bindings: clock: qcom: Add compatible for QCM6490 boards
+      clk: qcom: lpassaudiocc-sc7280: Add support for LPASS resets for QCM6490
+
+Vladimir Lypak (1):
+      clk: qcom: gcc-msm8953: fix stuck venus0_core0 clock
+
+Vladimir Zapolskiy (2):
+      dt-bindings: clock: qcom: sm8450-camcc: Remove qcom,x1e80100-camcc leftover
+      dt-bindings: clock: qcom,x1e80100-camcc: Fix the list of required-opps
+
+ .../devicetree/bindings/clock/qcom,gpucc.yaml      |    3 +
+ .../bindings/clock/qcom,ipq9574-nsscc.yaml         |   98 +
+ .../devicetree/bindings/clock/qcom,rpmcc.yaml      |    2 +
+ .../bindings/clock/qcom,sa8775p-camcc.yaml         |    6 +-
+ .../bindings/clock/qcom,sa8775p-videocc.yaml       |    1 +
+ .../bindings/clock/qcom,sc7280-lpasscorecc.yaml    |    5 +-
+ .../bindings/clock/qcom,sm8450-camcc.yaml          |    1 -
+ .../bindings/clock/qcom,x1e80100-camcc.yaml        |    9 +-
+ drivers/clk/qcom/Kconfig                           |    9 +-
+ drivers/clk/qcom/Makefile                          |    1 +
+ drivers/clk/qcom/camcc-sa8775p.c                   |    3 +-
+ drivers/clk/qcom/camcc-sc7180.c                    |    2 +-
+ drivers/clk/qcom/camcc-sc7280.c                    |    2 +-
+ drivers/clk/qcom/camcc-sc8280xp.c                  |    2 +-
+ drivers/clk/qcom/camcc-sdm845.c                    |    1 +
+ drivers/clk/qcom/camcc-sm4450.c                    |    3 +-
+ drivers/clk/qcom/camcc-sm6350.c                    |    1 +
+ drivers/clk/qcom/camcc-sm7150.c                    |    1 -
+ drivers/clk/qcom/camcc-sm8150.c                    |    4 +-
+ drivers/clk/qcom/camcc-sm8250.c                    |   58 +-
+ drivers/clk/qcom/camcc-sm8550.c                    |    2 +-
+ drivers/clk/qcom/camcc-sm8650.c                    |    2 +-
+ drivers/clk/qcom/clk-alpha-pll.c                   |   52 +-
+ drivers/clk/qcom/clk-branch.c                      |    4 +-
+ drivers/clk/qcom/clk-smd-rpm.c                     |   32 +
+ drivers/clk/qcom/common.c                          |    6 +
+ drivers/clk/qcom/dispcc-qcm2290.c                  |    3 +-
+ drivers/clk/qcom/dispcc-sc7180.c                   |    1 +
+ drivers/clk/qcom/dispcc-sc7280.c                   |    1 +
+ drivers/clk/qcom/dispcc-sc8280xp.c                 |    7 +-
+ drivers/clk/qcom/dispcc-sdm845.c                   |    2 +-
+ drivers/clk/qcom/dispcc-sm4450.c                   |    3 +-
+ drivers/clk/qcom/dispcc-sm6115.c                   |    3 +-
+ drivers/clk/qcom/dispcc-sm6125.c                   |    1 +
+ drivers/clk/qcom/dispcc-sm6350.c                   |    1 +
+ drivers/clk/qcom/dispcc-sm6375.c                   |    1 +
+ drivers/clk/qcom/dispcc-sm7150.c                   |    1 -
+ drivers/clk/qcom/dispcc-sm8250.c                   |    2 +-
+ drivers/clk/qcom/dispcc-sm8450.c                   |    5 +-
+ drivers/clk/qcom/dispcc-sm8550.c                   |    5 +-
+ drivers/clk/qcom/dispcc-sm8750.c                   |    4 +-
+ drivers/clk/qcom/dispcc0-sa8775p.c                 |    3 +-
+ drivers/clk/qcom/dispcc1-sa8775p.c                 |    3 +-
+ drivers/clk/qcom/gcc-ipq5424.c                     |   24 +-
+ drivers/clk/qcom/gcc-ipq9574.c                     |   15 +
+ drivers/clk/qcom/gcc-msm8953.c                     |    2 +-
+ drivers/clk/qcom/gcc-msm8960.c                     |    1 -
+ drivers/clk/qcom/gcc-msm8974.c                     |    1 -
+ drivers/clk/qcom/gcc-sdm660.c                      |    2 +
+ drivers/clk/qcom/gcc-sm8650.c                      |    4 +-
+ drivers/clk/qcom/gcc-x1e80100.c                    |   30 -
+ drivers/clk/qcom/gdsc.c                            |   98 +-
+ drivers/clk/qcom/gdsc.h                            |    1 +
+ drivers/clk/qcom/gpucc-msm8998.c                   |    3 +-
+ drivers/clk/qcom/gpucc-sa8775p.c                   |   49 +-
+ drivers/clk/qcom/gpucc-sar2130p.c                  |    1 +
+ drivers/clk/qcom/gpucc-sc7180.c                    |    1 +
+ drivers/clk/qcom/gpucc-sc7280.c                    |    1 +
+ drivers/clk/qcom/gpucc-sc8280xp.c                  |    3 +-
+ drivers/clk/qcom/gpucc-sdm660.c                    |    5 +-
+ drivers/clk/qcom/gpucc-sdm845.c                    |    1 +
+ drivers/clk/qcom/gpucc-sm4450.c                    |    1 -
+ drivers/clk/qcom/gpucc-sm6350.c                    |    1 +
+ drivers/clk/qcom/gpucc-sm8150.c                    |    1 +
+ drivers/clk/qcom/gpucc-sm8250.c                    |    1 +
+ drivers/clk/qcom/gpucc-sm8350.c                    |    2 +-
+ drivers/clk/qcom/gpucc-x1p42100.c                  |    2 +-
+ drivers/clk/qcom/kpss-xcc.c                        |    1 -
+ drivers/clk/qcom/krait-cc.c                        |    1 -
+ drivers/clk/qcom/lpassaudiocc-sc7280.c             |   23 +-
+ drivers/clk/qcom/lpasscc-sdm845.c                  |    1 -
+ drivers/clk/qcom/lpasscorecc-sc7180.c              |    1 -
+ drivers/clk/qcom/lpasscorecc-sc7280.c              |    1 -
+ drivers/clk/qcom/mmcc-apq8084.c                    |    2 +-
+ drivers/clk/qcom/mmcc-msm8960.c                    |    4 +-
+ drivers/clk/qcom/mmcc-msm8974.c                    |    2 +-
+ drivers/clk/qcom/mmcc-msm8994.c                    |    3 +-
+ drivers/clk/qcom/mmcc-msm8996.c                    |    4 +-
+ drivers/clk/qcom/mmcc-msm8998.c                    |    3 +-
+ drivers/clk/qcom/mmcc-sdm660.c                     |    8 +-
+ drivers/clk/qcom/nsscc-ipq9574.c                   | 3110 ++++++++++++++++++++
+ drivers/clk/qcom/videocc-sa8775p.c                 |   10 +-
+ drivers/clk/qcom/videocc-sm8350.c                  |    2 +-
+ drivers/clk/qcom/videocc-sm8450.c                  |    2 +-
+ drivers/clk/qcom/videocc-sm8550.c                  |    2 +-
+ include/dt-bindings/clock/qcom,gcc-sdm660.h        |    2 +
+ include/dt-bindings/clock/qcom,ipq9574-gcc.h       |    1 +
+ include/dt-bindings/clock/qcom,ipq9574-nsscc.h     |  152 +
+ include/dt-bindings/clock/qcom,qcs8300-camcc.h     |   16 +
+ include/dt-bindings/clock/qcom,qcs8300-gpucc.h     |   17 +
+ include/dt-bindings/clock/qcom,rpmcc.h             |    4 +
+ include/dt-bindings/reset/qcom,ipq9574-nsscc.h     |  134 +
+ 92 files changed, 3913 insertions(+), 199 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
+ create mode 100644 drivers/clk/qcom/nsscc-ipq9574.c
+ create mode 100644 include/dt-bindings/clock/qcom,ipq9574-nsscc.h
+ create mode 100644 include/dt-bindings/clock/qcom,qcs8300-camcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,qcs8300-gpucc.h
+ create mode 100644 include/dt-bindings/reset/qcom,ipq9574-nsscc.h
 
