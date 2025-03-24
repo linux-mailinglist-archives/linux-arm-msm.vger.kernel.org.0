@@ -1,246 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-52352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1161EA6DC9B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 15:08:56 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85F85A6DCAE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 15:16:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3CF8A16A23C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 14:08:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B23053AFD26
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 14:15:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 621FC25F96E;
-	Mon, 24 Mar 2025 14:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B62B125F7BB;
+	Mon, 24 Mar 2025 14:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Id7Qyvyw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GN+L7Yfj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9811EDA31
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 14:08:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5382F5A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 14:15:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742825318; cv=none; b=kOEjJOXgrioqbA/Bl33oLbePP87GRiyAlInv4xBbTUy0F3eiCgrvGagcWIjR9cNHmUTEKrtk0VBA/7jLJsXrEy9HgUeW74Jn+ecE0M63cdMXR8/YDWTeFoW6WKUtfLwLUSlcKqz+GnXIPODuf+GifMdyrmao/bFEj9ECXtLs39Q=
+	t=1742825758; cv=none; b=ImN/oH+e/FPvPm7k6gCmVmcW9iycBNZg6CXBOeTOmd2FSnVKxk0Nqe29HFYa//0zn/yX3piDKpQBaYPs+45tDulM8t2AA7hC0YYbIwZ1n80EQnqIbqiRv0MV7QMKkNhZUQh49nqaOEpYEC0HOV2iYcGIsQMVtZu2kTPl9GkQMu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742825318; c=relaxed/simple;
-	bh=k9auSPKt0xDsiEz8cyRI0UCs31hNeF6aYfn1A9QhgOg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=OxgRYXXCD65OE62fCkPwDS83NnuDBeHLTWMCU3No+JsQE1TNPSX19VkdAxWlk/cZZheD4+umc4jd19dv2+CdcTBubUdsKvmJjkTivtWGjhXDY8OH+GgHA72tqzr2ISB+eEPLS1rEqOB97MQezVMplq8LkAAWXYDpYIYvAzlT+rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Id7Qyvyw; arc=none smtp.client-ip=209.85.218.51
+	s=arc-20240116; t=1742825758; c=relaxed/simple;
+	bh=/YTUkjHZHGEAKDUjwWiEYmGKnaxSbNIbQRJt9OczQAk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=m33P6zuQ3cmzb3IDhhAdTW5srTavBqvSw2u8sHbbXVWSwEVhT2uynYRgPq+VOOVFt+lxuO8btyBoUFVdy/+C64DxSJjaGC5EzylJzyYQ9w6tCx6z7taRcpwtPBRXg0dgqg05SmPhVvqEMehI7LyOJQj/AY9dupGOpFIqV0CIi3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GN+L7Yfj; arc=none smtp.client-ip=209.85.219.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ab771575040so1066196866b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 07:08:35 -0700 (PDT)
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6eb16dfa988so46572846d6.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 07:15:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742825314; x=1743430114; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LTS81nyVkU32wlX4TnObp+0zngaZswbVsK7/OVV7Vtw=;
-        b=Id7Qyvyw9KnqSa+jTLthIgiUDfC4Ws6i5ZHQ2V0A5dlbx/fHOlcRwKO5OzESlEr1JB
-         0xZ5tAWjBA0eGXcnVlbJkLbQnIMvQCgKcQJYcGQ+s5XqWTLSJABTLTRtc/ARNpuyN1cZ
-         ciNwoqTOUva7wRjeGRHd11wnFX1Yr9OBGsuxGZpoOp2Gjl1uouj38TK0NLrFX9CURDOE
-         39kyAcYv560FpYJwPJl57k4VKjN+yLOGzimAOGpQUfcUZI4yv2M8fAtY8hD/KX/Jnb23
-         XBjEX5mHW1ndtcED0iBIWzUICrb/KcUPfgrxNgOYVHrJE0uU/JbQJYoF+HpmnNvp3S85
-         6Rxg==
+        d=linaro.org; s=google; t=1742825756; x=1743430556; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/YTUkjHZHGEAKDUjwWiEYmGKnaxSbNIbQRJt9OczQAk=;
+        b=GN+L7YfjxZe7gPnoaU/SnVIDd2ynb7r2hh94MPSlSNKXu8wOzbAc9hbHt7KSM7ccOT
+         E60pAgTOcML0uvQ96KrXxI7a7pLHd9eHwZzs7h77Lg/m1rOQ3ag7cFMMSJa9CjT1ESOP
+         Dbu7Y9uKV0WFaXur95wbrXE7s1LfVQIa/x2k0uepE4tBCwhQxHn0Ts/NfRQegKiFbs6l
+         BT934IiYJ6WY8rcoYyexZCdpnMu/4hWls/gYWmlYTuTszmMzwOanogCpfTMdxoQyNyT0
+         JDQvlpRhHOhXFYRd+wA4dHYOdLZzU5qUoIdYofuBHItAaYEMT6PULm9/gS3OzfgTNBCK
+         Ilvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742825314; x=1743430114;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1742825756; x=1743430556;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LTS81nyVkU32wlX4TnObp+0zngaZswbVsK7/OVV7Vtw=;
-        b=jNa/cma5XkRYaeSLY5DEOXgGWSFfciyWyNl6j2juHxj1JHOlpFxw6Eo2IZ+mLV8z/W
-         yRB2tvzLoW5nrY9N8U7aO4eSvIzIN1zwkEYqTJo3tvJhvV+QCh4aAyd19s2WT82U1dQz
-         r4AC6ZwJr/Us8SceVfgNxRnPIDIA5O6K7ASPNwJzdiQmV04uYp5Hblx8GjRTaHTRqVNS
-         CQ67MPNKir6Z3NsRipQubVjL9kLQ2OyA6SYghfpIRV6K2OMTC7xudYPvIjfaNJJ6b9sq
-         /BXDNLPnYdSW6exyliIfcjexYUZW3FZO6bbc3s+gLLgUVCX59MRC/UT26eKN+PKO0s90
-         4qYA==
-X-Forwarded-Encrypted: i=1; AJvYcCWcNEL2yA6UE6wwWJMGhXqY6/n8abM6Hl+SewcQk+sKQQFn870Ym+bt/xuEEK98yGCFggcW6bn2WRo9onTn@vger.kernel.org
-X-Gm-Message-State: AOJu0YwRjhvgMnw/bHuL0cdhCl1ecULxnT4ka1ThjtSe+9OOByN7qLmy
-	TzmN87fcwlx0aSmmhn51I1f2V+s7gjg2dWVgCp0lJf2fwn6uetlwNC4BL2lT6h4gKdkLLACOnJO
-	Y
-X-Gm-Gg: ASbGncuEZRXmtOBmppB3m1+EAJ3O6u3sMGia3+cVRDPkFlza9dkZskf//BJ5FgtMogn
-	7rVe6mTPXSTbRFEp2dveWPKMBfb5Sa/FqL3Tmo7+6NkGNyZiQf9VTb3l44r0TQQ+s2NNEaBTR5Q
-	0Gmetzu7tusFZY/veOsOGh6PZmPcRC/35wr/uCq2n7ukN8is0i2Y3w4koggCaZib0y0UJOmnrGV
-	f34aMakilp3J+r5wwe2TNGWpvpBvdWXMjrScShGLoKzMPesYud9I17DulydqKlxP9nbAo19rzu1
-	HPSKDpUCG/jRQDJPs0Fwlruy+fd4KhddTLIMj4wPxzo=
-X-Google-Smtp-Source: AGHT+IFqz3+P/LzojKK63DKoN5LiDg2sAGczirpJQaykGYju35Pl96ChoHFNJWnrKSlYuL1pdxITnQ==
-X-Received: by 2002:a17:907:958a:b0:ac1:e45f:9c71 with SMTP id a640c23a62f3a-ac3f00b7260mr1203497566b.1.1742825313578;
-        Mon, 24 Mar 2025 07:08:33 -0700 (PDT)
-Received: from [127.0.1.1] ([62.231.96.41])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3efda474bsm682381066b.183.2025.03.24.07.08.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Mar 2025 07:08:32 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Mon, 24 Mar 2025 16:08:19 +0200
-Subject: [PATCH] arm64: dts: qcom: x1e001de-devkit: Enable support for both
- Type-A USB ports
+        bh=/YTUkjHZHGEAKDUjwWiEYmGKnaxSbNIbQRJt9OczQAk=;
+        b=iqneHIwSa1pUA6YViV+2lPiurbWgOEWTmTfpVWENjPP/ArGPZj89Ge+dxv7/dig+I8
+         zGmKzgPvWr4yDCajfpOFDZO/eL6ncnjcNN9hcVlmuHCw17R8ofdMy533LImZ3ldjQlGK
+         izAOlBtslQbEmPGPrgr6AeIji5uLDhssIgxqEujT53nZbdw/5AlLQ+JXSMPFnALztekA
+         +zaCxiEH4mcZqwkTyyX9JPLHt1CPpKbZcekdjuhTvaGfga4k3yu3Z47I9FHuREEcFfEo
+         YwsmJrSkRZnkfc5RK4UG+TkKmUT7YF+Um9+Az82p4Ab+3ftebuCZFscqucuWxL43XpAW
+         vZ9g==
+X-Forwarded-Encrypted: i=1; AJvYcCU4JLp/7IjwSGrzwTQ/Ha8iFf37XbX6xxqua/sv8hzsstNcUm/UCsiRCm6/rI+X8VD+L7OI/lJUnahg66Yb@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6Q5aQUji2Qu3z9Tt9AD8XAUuOal9VjGAqKkVZbL69P039sv7V
+	S427dSBYsLTc6tYsW57+EHJRO+xErVr4zW0haHI0kJkZxymVL58gsSL4NjkJpgzauJzmFftmFK1
+	kDfVex6Rv/wa20fF0+44rBt0sSQ52yg0KOD4Vvg==
+X-Gm-Gg: ASbGncvPsqsglSUIWf4Yz+M2ma8/k6lMUV4ryxJdSl9lZoZMBKm62Boyd6Wyfalcsyi
+	8IhyQIgbSuov8SCO86NJJ74ki6csHNPKmu5jCMW9DJOA9NLJ0ZSDPCIbQlkAvJIEP+5tSvrf4ln
+	IL0+XY7n+dGbhPXVxKqGURDLzpJmswB6I6j0Ru
+X-Google-Smtp-Source: AGHT+IET01HrGYkfdsNQwuLGnPKedTxLw+MZzq0YOj9OYp+aXXjQ99ek0X4dg6AMPBw2zvLeAvxl7AVAjVE/wKcQkdg=
+X-Received: by 2002:a05:6214:21e8:b0:6e6:6ba9:9e84 with SMTP id
+ 6a1803df08f44-6eb3f2e89e9mr158682316d6.26.1742825755791; Mon, 24 Mar 2025
+ 07:15:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250324-x1e001de-devkit-dts-enable-usb-a-ports-v1-1-81153b2d1edf@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAFJn4WcC/x2NwQqDMBAFf0X23IUkphb7K6WHxH1tl5YoiRVB/
- HeDx5nDzEYFWVHo3myUsWjRMVWwl4aGT0hvsEplcsZdTes8rxbGWAELlq/OLHNhpBB/4H+JHHg
- ac1WddPB964fY36jGpoyXrufo8dz3A4lU1W14AAAA
-X-Change-ID: 20250324-x1e001de-devkit-dts-enable-usb-a-ports-6d6e4934cb97
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3076; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=k9auSPKt0xDsiEz8cyRI0UCs31hNeF6aYfn1A9QhgOg=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBn4Wda/npmRyJzqsiQLvERIxYU+ZFunlFl8/clm
- am7qA1/oNGJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ+FnWgAKCRAbX0TJAJUV
- VpQ/EACl6/HG8ZoSuTu/f5fQ9UpouXKp+0BZNsYTrlPiAlfni/n5A3sulz9mZa4JzmmzvR74vOT
- tkpYbvh2JqGZSNvQaGe4zhoRPuAu3Vt+ZEzqiKczPJtM7B3GplN+KMTdQfp/chpibwbc9TponPM
- qcm1P+XjkY3mSirvzOYO53lu4cjKIcxBFEVj+iLMgJLWn65hmHXuBv4jUx+4Epe3fTiwDaLoaqP
- 6hJabslNejFMTEnpQMHik5PUrz/lPKctbcxhVQaOgkVlMYhEo6hmwUp+KIlzG0n8dq+uOZMUpLs
- ea/IICQr0BjESSzEGt6wBp1fYy+UW+/24TT9ewmumQz3nqGH1cud24arriyJc3W06YhvnqBHDwM
- g0Mm7bcsX5sOMsWvhJsTHAVl5LS2bbOVHMVMj8Kdy4pg0WW7UyZ7TICFkKmT78VvS1zZ1moG9j0
- eCuLY3SXfdGRxY/JAdDSZgy6JckPKgV5oESRtUS0Mae1ovFlgijSFhwfwT49BKXKemi8ZjqA1wv
- D7Az4vIKoaqhwZ4XXO5Uaa6dN5wRsgSDS2YFJbCnbGE36OQuxPK29bf3Kwvm8wF1+IfUceqgYwU
- Kfly5+HyrYMjGM7oaaRV6M9oOa9RzmbAv130wpQBum6DLZLAAg8cnTTNHB9NrQ/+vfJHL/OUm/z
- FoQE8qqrqpbo93A==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+References: <20250318-xps13-fingerprint-v1-0-fbb02d5a34a7@oss.qualcomm.com> <20250318-xps13-fingerprint-v1-2-fbb02d5a34a7@oss.qualcomm.com>
+In-Reply-To: <20250318-xps13-fingerprint-v1-2-fbb02d5a34a7@oss.qualcomm.com>
+From: Stefan Schmidt <stefan.schmidt@linaro.org>
+Date: Mon, 24 Mar 2025 15:15:45 +0100
+X-Gm-Features: AQ5f1JpC0RoI-SQpmS4z7rQW8vsesIlMQfF1ceo6NxFQog8bjicko6I-EYu81x0
+Message-ID: <CAEvtbuuyz_5xm1=juJFW5nOo+xL71TeuY-SV=YbTnAOsHW5yeg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-dell-xps13-9345: Enable
+ fingerprint sensor
+To: bjorn.andersson@oss.qualcomm.com
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-The Qualcomm X Elite Devkit has 2 USB-A ports, both connected to the USB
-multiport controller, each one via a separate NXP PTN3222 eUSB2-to-USB2
-redriver to the eUSB2 PHY for High-Speed support, with a dedicated QMP
-PHY for SuperSpeed support.
+Hello Bjorn,
 
-Describe each redriver and then enable each pair of PHYs and the
-USB controller itself, in order to enable support for the 2 USB-A ports.
+On Wed, 19 Mar 2025 at 04:23, Bjorn Andersson via B4 Relay
+<devnull+bjorn.andersson.oss.qualcomm.com@kernel.org> wrote:
+>
+> From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+>
+> The fingerprint sensor, hidden in the power button, is connected to one
+> of the USB multiport ports; while the other port is unused.
+>
+> Describe the USB controller, the four phys and the repeater involved to
+> make the fingerprint sensor operational.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- arch/arm64/boot/dts/qcom/x1e001de-devkit.dts | 86 ++++++++++++++++++++++++++++
- 1 file changed, 86 insertions(+)
+Goodix Fingerprint USB Device fingerprint device shows up on my XPS 9345 now.
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-index 74911861a3bf2606add8cf4aaa3816542e837513..643ab2876222b00bfd60b74b20dd79f105a43143 100644
---- a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-@@ -877,6 +877,40 @@ retimer_ss0_con_sbu_out: endpoint {
- 	};
- };
- 
-+&i2c5 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	eusb3_repeater: redriver@47 {
-+		compatible = "nxp,ptn3222";
-+		reg = <0x47>;
-+		#phy-cells = <0>;
-+
-+		vdd3v3-supply = <&vreg_l13b_3p0>;
-+		vdd1v8-supply = <&vreg_l4b_1p8>;
-+
-+		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&eusb3_reset_n>;
-+		pinctrl-names = "default";
-+	};
-+
-+	eusb6_repeater: redriver@4f {
-+		compatible = "nxp,ptn3222";
-+		reg = <0x4f>;
-+		#phy-cells = <0>;
-+
-+		vdd3v3-supply = <&vreg_l13b_3p0>;
-+		vdd1v8-supply = <&vreg_l4b_1p8>;
-+
-+		reset-gpios = <&tlmm 184 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&eusb6_reset_n>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
- &i2c7 {
- 	clock-frequency = <400000>;
- 
-@@ -1129,6 +1163,22 @@ wcd_tx: codec@0,3 {
- &tlmm {
- 	gpio-reserved-ranges = <44 4>; /* SPI (TPM) */
- 
-+	eusb3_reset_n: eusb3-reset-n-state {
-+		pins = "gpio6";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+
-+	eusb6_reset_n: eusb6-reset-n-state {
-+		pins = "gpio184";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+
- 	nvme_reg_en: nvme-reg-en-state {
- 		pins = "gpio18";
- 		function = "gpio";
-@@ -1371,3 +1421,39 @@ &usb_1_ss2_dwc3_hs {
- &usb_1_ss2_qmpphy_out {
- 	remote-endpoint = <&retimer_ss2_ss_in>;
- };
-+
-+&usb_mp {
-+	status = "okay";
-+};
-+
-+&usb_mp_hsphy0 {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	phys = <&eusb6_repeater>;
-+
-+	status = "okay";
-+};
-+
-+&usb_mp_hsphy1 {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	phys = <&eusb3_repeater>;
-+
-+	status = "okay";
-+};
-+
-+&usb_mp_qmpphy0 {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l3c_0p8>;
-+
-+	status = "okay";
-+};
-+
-+&usb_mp_qmpphy1 {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l3c_0p8>;
-+
-+	status = "okay";
-+};
+Tested-by: Stefan Schmidt <stefan.schmidt@linaro.org>
 
----
-base-commit: 9388ec571cb1adba59d1cded2300eeb11827679c
-change-id: 20250324-x1e001de-devkit-dts-enable-usb-a-ports-6d6e4934cb97
-
-Best regards,
--- 
-Abel Vesa <abel.vesa@linaro.org>
-
+regards
+Stefan Schmidt
 
