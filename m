@@ -1,185 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-52270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1CF3A6D505
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 08:25:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 628FFA6D517
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 08:30:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44F8B3B211F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 07:23:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D9B741653DE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 07:30:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 179BA2512C8;
-	Mon, 24 Mar 2025 07:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E546E2512D1;
+	Mon, 24 Mar 2025 07:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZY/ipM75"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XBC7nYxi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EBB250C17;
-	Mon, 24 Mar 2025 07:23:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3882713B797
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 07:30:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742801005; cv=none; b=Ulfym+WtmLKCb44syBeTfskJ+cNp7Rnwv0V5RMI1ZY6Iyk/80Us/st3NnJIObOG1M5VsqMTHQlQA2N5D0DrUUV4frBqIv8p5e1jdSH/HQhv8yAw6d0lY8gUqAP3RERpRCzM/XSgkAOtJVObJkUSLiQuK91AUJerdY58kJ7cTajU=
+	t=1742801425; cv=none; b=IG6oZ4HP/ZytdDdEWR6irfbasbFIxC01ZXGNEKgx3UAbfniqsQmTcis9Eit5EY/zS1x1KQBQCQoH+oHSVaXfiy/DemzwxSE9HI9DV9RoXWQhCmZxPz3RTwayoub88/U+j/zwfk45WdoNO4KxtKWiUWkP21sSQA1OMV4bMQHbzCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742801005; c=relaxed/simple;
-	bh=YXWjgc+LtkFVwK54Fq+jXzkI+tzud1ifstmjVonNXxM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ISySjJaAjVqImEEK0xA8zOynXmDZBbQUZfipsYlMX9RhDSGGvLI1ttWQIjZqrIlRwof9TvuEeE/7+myFcQIi1sAJQyIrlqae4XURHC/KKaQTIJkAHimf4zVRY6PnyDnP+2hh5EvGQe8gtqi0wUSJvuIFqs22aCB9aAziRDgjm0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZY/ipM75; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52O6d8sN001035;
-	Mon, 24 Mar 2025 07:23:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JRHqQk8vUkI56yBzwoURTXxt6b+rm+AdYrcH5GWCykg=; b=ZY/ipM75hRxFjndJ
-	WRie34kRmlLI2ceLJYsZutZR8H4zwdhT5OvEY9vWQ2vkegMA2nJFGwmaKsVIWT/Y
-	amGijDHnVKlFenb7y5RllIK08iYONXuFfsQjtGxY618+YD6mvg4uqfgnbHIWvwu2
-	wip6pxpvuwSnb3E78wD/qfsULdvBPK+PKiEDUO6JlfutzTFnNeEnlCxhhL9S/LZW
-	w9JYqd730wAG3edcGDwyeXBnKtl2NxPHsanznF0F6zH7VDtrYMm0RbzctaQY1uwQ
-	vZju2rN/t4h7SWscE+kAYfR+R5hEPOLDTqIxw8rn03cnr5wUkZyrUczUyd6AaclJ
-	Cj63gA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45hne5ucta-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Mar 2025 07:23:14 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52O7NExn022764
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Mar 2025 07:23:14 GMT
-Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 24 Mar
- 2025 00:23:10 -0700
-Message-ID: <b9f8dc30-7f6a-ecd5-16d1-678d9f2004cd@quicinc.com>
-Date: Mon, 24 Mar 2025 12:53:07 +0530
+	s=arc-20240116; t=1742801425; c=relaxed/simple;
+	bh=lwS7fGyY3ghDEpokPLpMM0HJbUP8WS4SiI9P4rR2lGM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NE/N13/nt3FSHXb7RgF6SDmfgMHKvHe0KfyCJUxvgt1nn5/IS24aUTYvSNHgPU7q38o1cD+OX5pe45hF3I+l64DbJja3mHxuk+arLr6RDp3UdCGtSwZ25nls8VEJRO/ZOCWRrV0cFgN+KAN+3JdJ1i9wvFwjlS3BBy6sNH9X5II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XBC7nYxi; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30795988ebeso41585131fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 00:30:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1742801421; x=1743406221; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NU2FVsh97m7TP1y3tfx9WOUJoAfHylfE9LhCzm81iVg=;
+        b=XBC7nYxixEpGkdQEk1CarDA23eFeP3hhNPALtj/79IGhZfdG/WZqb/O+OcvDs8AWOT
+         JImPnpBeQxipOwB8UqIZmkW8GGgemZGiMjpdg/ftg3QLL9w44/C7BS9vYZS4RlMdPJj7
+         5EVmG9Io3vIk5h7RpP39kDVnAaHpckTCBAoQsKbLmCy9jj91kXYODrLMTIdjwX/8VmvU
+         Y5aPydeYBpvv7zIQYAewVkGuDtk7bqL9RSFlA55cEVehR3pK5JFvKP89yDw8IQVKS+lJ
+         FtlmSnv4fx8yjV7F5bKSUy2OZbYhJ7lZt6scHGutTXBtfl7GHaGLSDGXmZePLhvO8iuZ
+         cXVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742801421; x=1743406221;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NU2FVsh97m7TP1y3tfx9WOUJoAfHylfE9LhCzm81iVg=;
+        b=SPRWrC9LqLd1mHSSco85ryJaRVxC0Y3Zn7mtXnMo07ZU7MDKq/l1j0HPz4Y0Bcni4R
+         WatM1hiA4NhgTKN3/+xIQfZXfKhekGxIz7nj7ZDszKszJO5k2QNvjh2bMa+/uiKewx3N
+         usqgxEaTMVY9z83k/O1IOE4dt1fDhvQ8usQnuY0dNW4XrM75J/UpSMbgZQTIno3CetB0
+         7G8f9InXBRkdyijkroEwH771E0fdN+clISqb2i9X7VCe8XhB7Gdx1Udw2JlIE0Cb5F/S
+         FwAMDkmO4T1G997TpFKHUueMCFwK3OAMf9FdyIPRLns6TsXfqAY+Fygxwff1xdpjzO7F
+         KBHg==
+X-Forwarded-Encrypted: i=1; AJvYcCXt520wVq48gHTmNLoeGEqMwrEOkZF45U5M41VaYJ8CCSLvLX/WB/UiwUsu7qPPTLWPGqUaSV4p7AESQgg1@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxg+89vZ9O7W/GWtRUkhS6hhO+P38VR86wjmPWgmI80fePBfzjT
+	8SpKqeyfziwLLE3Uweq+vhicIfSXzLoTGSltL+ddQY3Oh16jcsSxXn/7CxPRSXMw2MdORLaSKWI
+	lhAyak9pwXl+5t5Ts0ynEHYj3LWJq2RK24Bhrmw==
+X-Gm-Gg: ASbGncsLIUOWmB+tojHFhDWXBrW/sa681GmEmdXN124YDdx8rGMMckMUf8SP1qPaSh3
+	o/dszRfZj61WIuxTeb0LRBXKq+n3yHzIf9dNIT0G7wDZn0eCTaGyq4qNvPZKMba2giwAp5Cm7SD
+	Kv/HBrl5PSZ+SElrxrrnELT4A=
+X-Google-Smtp-Source: AGHT+IE7ElI0Wie88BjvIx4/nAvhgrv4C9qAG+SVDsK5xNXRaCwIrYfp4uSH7h+9tbFwPhfRFVhl7PG+FIJIC44x9zQ=
+X-Received: by 2002:a05:6512:318c:b0:549:8f06:8225 with SMTP id
+ 2adb3069b0e04-54ad6512f29mr3163266e87.53.1742801421294; Mon, 24 Mar 2025
+ 00:30:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 1/7] dt-bindings: media: qcom,sm8550-iris: document
- SM8650 IRIS accelerator
-Content-Language: en-US
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Dikshita Agarwal
-	<quic_dikshita@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250305-topic-sm8x50-iris-v10-v2-0-bd65a3fc099e@linaro.org>
- <20250305-topic-sm8x50-iris-v10-v2-1-bd65a3fc099e@linaro.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20250305-topic-sm8x50-iris-v10-v2-1-bd65a3fc099e@linaro.org>
+References: <20250324-wcd-gpiod-v1-0-27afa472e331@nxp.com> <20250324-wcd-gpiod-v1-1-27afa472e331@nxp.com>
+In-Reply-To: <20250324-wcd-gpiod-v1-1-27afa472e331@nxp.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Mon, 24 Mar 2025 08:30:09 +0100
+X-Gm-Features: AQ5f1Jp89LHUfGV1BvkWIJcCi8kryB-sXnI19w6Nw7WZk7DWQ3yMLvoYji6l6JQ
+Message-ID: <CACRpkda=gb=u94CqYC8LuBtqg7x0eUVyJnuixLuyNonZ0=X3Kg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] ASoC: codec: wcd939x: Convert to GPIO descriptors
+To: "Peng Fan (OSS)" <peng.fan@oss.nxp.com>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, linux-sound@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Peng Fan <peng.fan@nxp.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 30eiHm5MOBdHn0bwt5wRAuxAG4EPuWXS
-X-Proofpoint-ORIG-GUID: 30eiHm5MOBdHn0bwt5wRAuxAG4EPuWXS
-X-Authority-Analysis: v=2.4 cv=JvPxrN4C c=1 sm=1 tr=0 ts=67e10862 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8
- a=EHIPYe3-PrpxJ9E0mfMA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-24_03,2025-03-21_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- malwarescore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- suspectscore=0 phishscore=0 impostorscore=0 adultscore=0 clxscore=1015
- mlxscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503240052
+Content-Transfer-Encoding: quoted-printable
 
+Hi Peng,
 
-On 3/6/2025 12:35 AM, Neil Armstrong wrote:
-> Document the IRIS video decoder and encoder accelerator found in the
-> SM8650 platform, it requires 2 more reset lines in addition to the
-> properties required for the SM8550 platform.
-> 
-> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  .../bindings/media/qcom,sm8550-iris.yaml           | 33 ++++++++++++++++++----
->  1 file changed, 28 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> index e424ea84c211f473a799481fd5463a16580187ed..536cf458dcb08141e5a1ec8c3df964196e599a57 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> @@ -14,12 +14,11 @@ description:
->    The iris video processing unit is a video encode and decode accelerator
->    present on Qualcomm platforms.
->  
-> -allOf:
-> -  - $ref: qcom,venus-common.yaml#
-> -
->  properties:
->    compatible:
-> -    const: qcom,sm8550-iris
-> +    enum:
-> +      - qcom,sm8550-iris
-> +      - qcom,sm8650-iris
->  
->    power-domains:
->      maxItems: 4
-> @@ -49,11 +48,15 @@ properties:
->        - const: video-mem
->  
->    resets:
-> -    maxItems: 1
-> +    minItems: 1
-> +    maxItems: 3
->  
->    reset-names:
-> +    minItems: 1
->      items:
->        - const: bus
-> +      - const: xo
-> +      - const: core
->  
->    iommus:
->      maxItems: 2
-> @@ -75,6 +78,26 @@ required:
->    - iommus
->    - dma-coherent
->  
-> +allOf:
-> +  - $ref: qcom,venus-common.yaml#
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          enum:
-> +            - qcom,sm8650-iris
-> +    then:
-> +      properties:
-> +        resets:
-> +          minItems: 3
-> +        reset-names:
-> +          minItems: 3
-> +    else:
-> +      properties:
-> +        resets:
-> +          maxItems: 1
-> +        reset-names:
-> +          maxItems: 1
-> +
->  unevaluatedProperties: false
->  
->  examples:
-> 
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+thanks for your patch, and thanks a *LOT* for working on the gpio descripto=
+r
+task!!
+
+On Mon, Mar 24, 2025 at 3:28=E2=80=AFAM Peng Fan (OSS) <peng.fan@oss.nxp.co=
+m> wrote:
+
+> From: Peng Fan <peng.fan@nxp.com>
+>
+> of_gpio.h is deprecated, update the driver to use GPIO descriptors.
+>  - Use dev_gpiod_get to get GPIO descriptor.
+>  - Use gpiod_set_value to configure output value.
+>
+> With legacy of_gpio API, the driver set gpio value 0 to assert reset,
+> and 1 to deassert reset. And the reset-gpios use GPIO_ACTIVE_LOW flag in
+> DTS, so set GPIOD_ASIS when get GPIO descriptors, and set value 1 means
+> output low, set value 0 means output high with gpiod API.
+>
+> Signed-off-by: Peng Fan <peng.fan@nxp.com>
+
+The patch as such is perfect:
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+
+However we need to watch out for users:
+$ git grep qcom,wcd939
+arch/arm64/boot/dts/qcom/sm8650-hdk.dts:                compatible =3D
+"qcom,wcd9395-codec", "qcom,wcd9390-codec";
+arch/arm64/boot/dts/qcom/sm8650-hdk.dts:                compatible =3D
+"qcom,wcd9395-usbss", "qcom,wcd9390-usbss";
+
+reset-gpios =3D <&tlmm 107 GPIO_ACTIVE_LOW>;
+
+arch/arm64/boot/dts/qcom/sm8650-qrd.dts:                compatible =3D
+"qcom,wcd9395-codec", "qcom,wcd9390-codec";
+arch/arm64/boot/dts/qcom/sm8650-qrd.dts:                compatible =3D
+"qcom,wcd9395-usbss", "qcom,wcd9390-usbss";
+
+reset-gpios =3D <&tlmm 107 GPIO_ACTIVE_LOW>;
+
+Mention in the commit message that the in-tree DTS files have the right
+polarity set up already so we can expect this to "just work".
+
+I would also mention that the current code in the driver is quite ugly:
+it doesn't even request the GPIO before starting to use it :/
+
+Yours,
+Linus Walleij
 
