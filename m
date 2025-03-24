@@ -1,182 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-52262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63179A6D35A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 04:41:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AF87A6D469
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 07:51:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B292416FBBC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 03:41:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05D471890C40
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 06:51:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5ED7044C7C;
-	Mon, 24 Mar 2025 03:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50859204845;
+	Mon, 24 Mar 2025 06:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="RXVTcCwB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g27OB5To"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683481D540
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 03:41:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2212202C22;
+	Mon, 24 Mar 2025 06:51:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742787666; cv=none; b=VoBBBVqvaChrIdM48lZS0X2iQye+ZX5kbuPd7lX8VDcRzNPihF46WPxHuP2H1aQ3cDIxIEI7547h1gGbgHlyRrIGrXuub/q831g33pCwUiuKKkOudeEQsp+b3F6mYj84dW29KMCXOw1MlBfLVbtR1CtqObpiJaSKJSwcdI/W2Gk=
+	t=1742799104; cv=none; b=G0gav9s2vgjOfPLnPWjHfFeagoNXGTr4gI/G3pFYYdhQcMuMqMAQIUisGsdY4H9SHaOYq8v7VYLvViKzQQHsAkTBrKjMeJ3EWsbDSqN6nxfdD+5LPPQNu+ItrbIaCQ8X88w9SAyhPQ+zBjzfVW453zss4ruHvHhoV71mt/EKG/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742787666; c=relaxed/simple;
-	bh=YTOyujB6HV49uiuieNmfjMnZV25DYjCLt8LZ3xZbu44=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oeap+YoVaH1NGOkbni6TgZAaPryhhBbJeMexjMiQ+PlwdNtc1rkNaz3gR9YgEnsvwbfAGTS5aQ5fDsghTNKXNd9eVk8kPsYs9ATkHgvr4HVkkX6WunLozpNk/RSB7EJAXi2WnoY7c2jx41fjJeM9LWszaByC+1MlywfZ5hwuB/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=RXVTcCwB; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5e5b6f3025dso5848884a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Mar 2025 20:41:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1742787663; x=1743392463; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vqAdn5drDLdHVQt7mXUZCWV+B5j9LdmitoQylJry1D4=;
-        b=RXVTcCwBTGC7PGGBMPuP8GDVhCGVAqVuRgz5hpEqRVQZVIY7nxxcd6xjXjhqsKlUy/
-         BRFwW/KZqkDsHKszDi7QdXGXNGWRDqUUCMmvtGtT3ANAKjcp9nsva2mBo2j4CbSkjOZs
-         mR7bmwX+hkapREK2a8G+AUW8G47rxeJuHMEvSGrZqjdCHVY4eBUWNoyiPTBbrfX6Hnwk
-         NnflVn6e03a3BtrYU2cKFt+YRGsBIQDH13rpkPx5OwZGxyKd2EmGhNUVdkgL+Odz6Hag
-         Quon4Kwc0uBToN8H8STp0HKPM9lNnaLseQ91POCoqrx4wjtXHrr1Q4q0RUYYuBozMdyt
-         v/CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742787663; x=1743392463;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vqAdn5drDLdHVQt7mXUZCWV+B5j9LdmitoQylJry1D4=;
-        b=R0//q0tmTwL3o1YUyLHu8kXx0gcLFOa3JIKFYytpVtv1919FTm9GNY2C9FKqcuKaf/
-         h+OC7xCmhKv+e2gtvmq1LoyBt5QO59Z+2RIqVLKha0Q0cBhms2uRplvMDXjw5zMXrazT
-         r5SWzSI4iviRM6b0LNtzZDTJamtBwoSk+RTCqoBxBkcVcT7/inQChybPWHBIBs6B8JfF
-         H8Kck5jjLk5QaGxg/GdXsoa/+ohANROjyLLkBmmtYZFNzUV4a/2m6IRPG6Oe1dtuHP8C
-         4qx1joHfqMsjb/4uOsB+0IZB4RaX4+9iwropAPjY4wk7MPk0dFHK6+6inZABkdcxbBrN
-         bdtA==
-X-Forwarded-Encrypted: i=1; AJvYcCW0w/DQWoLGWH3lGM1BODQ/FS3unZuMnb7mD6HWWttg1/0gZ7ljAaraoC5AaRmbbRxye8nsiAACP5NEwGP7@vger.kernel.org
-X-Gm-Message-State: AOJu0YwVMgcmdrrxFM7iuvLUTcV/+EOnzS5kPoVcD+71tJXzOVUCf1vp
-	WDalp1h+Ua+PW+y1Y7C0F6QKkdpOLr+pdwUiwJ+eBPOBLFNKc3aD8rc84PZZwmIbEYgxdY2rRwE
-	hxhLA83/J+Hh4ChIykppU1ZGNeWq2DFo586HCkA==
-X-Gm-Gg: ASbGncuMwS6OynD3dPmZD86BhypNdk6wQbOw5Rxafn3R9KwJdJ2GRzanccVz2UWypc7
-	9JJvyt1fs352oMsNPGVsLjoC7DNo+dRb7ynpYQIum4CEHPZKY0ajCEkGYXVtS9TQCeYU7Hoz7Qp
-	0Alr9FidFkXc9L+Lq16kXNKRL9Kdg=
-X-Google-Smtp-Source: AGHT+IEf4WGbQ3qxvrIMk05GS8LR6ITHlULcjaOKtIwGgAmn7Z7RZxqOJXmb4UVfsxdcask06dK+SKmvNHb4sJYQXxw=
-X-Received: by 2002:a05:6402:90c:b0:5e7:9d01:109d with SMTP id
- 4fb4d7f45d1cf-5ebcd528857mr8535251a12.32.1742787662737; Sun, 23 Mar 2025
- 20:41:02 -0700 (PDT)
+	s=arc-20240116; t=1742799104; c=relaxed/simple;
+	bh=t4/X8HBCn2/0xGw0ibwZxd+D7K/W6+woZ236EKPJF94=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=KUhDUogbFTVlYUWeTkeIM5g+C4evqbamBsNIMh0VOXNy9747J4VddiGK4fKTgbMu9bOv438qc08ro8vT7OHmz29SgvumtGzOT7iKzfPPBapkg+8X0QMCGVhTBw8k1eWocJEVdjWQgo6RPvOBf8iCMXeSruMBnk3UswcSmlFOLRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g27OB5To; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52O6bw3k031457;
+	Mon, 24 Mar 2025 06:51:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2BmV3u593lkICMeXn4dWt/GaEgIv7UlyJbMeXZJm6fI=; b=g27OB5ToXp+PQrY+
+	uet1pFN++tbqHinlKlJOwvgVxw8+n0w5cupMhw5ysx8kK3Tw9FUHru3wDSM4nWmu
+	u44rhtaMxPcCuG2XRi03plqdqXBny3fm5TeQAjtFViTCYirAZ0e8Spq/LbIva50t
+	+F9cpNMnf0/fVTAR5Y6v9zvOwc6aKVDG6cGRmn8RBppfAL+2+lC9ldtYk/PpWCoM
+	qd+jQvnljfjuzphhqpme71/teR8m6LzFmfzvq0MrseotDxYxJHYkD6jYF1Ta94ns
+	e5rtZI8MyCYk7PJs19uEQKBW8rdQlA9M7yw4N6/BztnjrNQ6vCIP56H0e6U+uPqX
+	Ec1JuA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45hne5ua6n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Mar 2025 06:51:23 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52O6pNJ6004644
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Mar 2025 06:51:23 GMT
+Received: from [10.233.19.224] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 23 Mar
+ 2025 23:51:18 -0700
+Message-ID: <f4cc9d3e-0079-47a4-bee7-32221b37df65@quicinc.com>
+Date: Mon, 24 Mar 2025 14:51:16 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250324-wcd-gpiod-v1-0-27afa472e331@nxp.com> <20250324-wcd-gpiod-v1-2-27afa472e331@nxp.com>
-In-Reply-To: <20250324-wcd-gpiod-v1-2-27afa472e331@nxp.com>
-From: Steev Klimaszewski <steev@kali.org>
-Date: Sun, 23 Mar 2025 22:40:51 -0500
-X-Gm-Features: AQ5f1Jrs3YNxuyzEK2PKwShWt84XVzo4wlyPswgCV-soNnQk2eSI4Vg06XK4Sdo
-Message-ID: <CAKXuJqht5ZiFyt2uWXwPSEdszYQWKHm22+mAQCPQXn8b7AbL-w@mail.gmail.com>
-Subject: Re: [PATCH 2/3] ASoC: codec: wcd938x: Convert to GPIO descriptors
-To: "Peng Fan (OSS)" <peng.fan@oss.nxp.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, linux-sound@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Peng Fan <peng.fan@nxp.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/3] arm64: dts: qcom: x1e80100: add bus topology for
+ PCIe domain 3
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <quic_qianyu@quicinc.com>, <sfr@canb.auug.org.au>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20250320055502.274849-1-quic_wenbyao@quicinc.com>
+ <U9NTFHDe_r-uUozJFJGmc7VpxMDx39onKby4M3B_sy0jJ2fr7-iXkS801m2slu8PXanf7Y7faBxuZ8fzWiKxTg==@protonmail.internalid>
+ <20250320055502.274849-3-quic_wenbyao@quicinc.com>
+ <7dc8700f-0d53-45f5-bfff-2bec71c7053e@linaro.org>
+Content-Language: en-US
+From: "Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>
+In-Reply-To: <7dc8700f-0d53-45f5-bfff-2bec71c7053e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4bZ011oTBBWHLyE3D42KmUuTLccUKLHG
+X-Proofpoint-ORIG-GUID: 4bZ011oTBBWHLyE3D42KmUuTLccUKLHG
+X-Authority-Analysis: v=2.4 cv=JvPxrN4C c=1 sm=1 tr=0 ts=67e100eb cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=Upqwyp-cVDBhw83K_eoA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-24_03,2025-03-21_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ malwarescore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ suspectscore=0 phishscore=0 impostorscore=0 adultscore=0 clxscore=1011
+ mlxscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503240049
 
-Hi Peng Fan,
+On 3/21/2025 6:06 AM, Bryan O'Donoghue wrote:
+> On 20/03/2025 05:55, Wenbin Yao wrote:
+>> From: Qiang Yu <quic_qianyu@quicinc.com>
+>>
+>> Add pcie3port node to represent the PCIe bridge of PCIe3 so that PCI 
+>> slot
+>> voltage rails can be described under this node in the board's dts.
+>>
+>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi 
+>> b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>> index 46b79fce9..32e8d400a 100644
+>> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>> @@ -3287,6 +3287,16 @@ opp-128000000 {
+>>                       opp-peak-kBps = <15753000 1>;
+>>                   };
+>>               };
+>> +            pcie3port: pcie@0 { 
+>
+> Missing newline, please check your dtb checks.
 
-On Sun, Mar 23, 2025 at 9:28=E2=80=AFPM Peng Fan (OSS) <peng.fan@oss.nxp.co=
-m> wrote:
+Will fix in the next version.
+
 >
-> From: Peng Fan <peng.fan@nxp.com>
 >
-> of_gpio.h is deprecated, update the driver to use GPIO descriptors.
->  - Use dev_gpiod_get to get GPIO descriptor.
->  - Use gpiod_set_value to configure output value.
+>> +                device_type = "pci";
+>> +                compatible = "pciclass,0604";
+>> +                reg = <0x0 0x0 0x0 0x0 0x0>;
+>> +                bus-range = <0x01 0xff>;
+>> +
+>> +                #address-cells = <3>;
+>> +                #size-cells = <2>;
+>> +                ranges;
+>> +            };
+>>           };
 >
-> With legacy of_gpio API, the driver set gpio value 0 to assert reset,
-> and 1 to deassert reset. And the reset-gpios use GPIO_ACTIVE_LOW flag in
-> DTS, so set GPIOD_ASIS when get GPIO descriptors, and set value 1 means
-> output low, set value 0 means output high with gpiod API.
+> Why is pice3port the only port to be enabled ?
 >
-> Signed-off-by: Peng Fan <peng.fan@nxp.com>
+> What about the other ports ?
+
+Only PCIe3 requires PCI slot power driver to power on its slots, other
+ports don‘t need it.
+
+>>           pcie3_phy: phy@1be0000 {
+>> -- 
+>> 2.34.1
+>>
+>>
+>
 > ---
->  sound/soc/codecs/wcd938x.c | 13 ++++++-------
->  1 file changed, 6 insertions(+), 7 deletions(-)
->
-> diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
-> index 1ae498c323912ed799dcc033e7777936d90c9284..c70da29406f36883e4926eca4=
-0ab5ba5df02c383 100644
-> --- a/sound/soc/codecs/wcd938x.c
-> +++ b/sound/soc/codecs/wcd938x.c
-> @@ -11,7 +11,6 @@
->  #include <linux/pm_runtime.h>
->  #include <linux/component.h>
->  #include <sound/tlv.h>
-> -#include <linux/of_gpio.h>
->  #include <linux/of.h>
->  #include <sound/jack.h>
->  #include <sound/pcm.h>
-> @@ -171,7 +170,7 @@ struct wcd938x_priv {
->         int flyback_cur_det_disable;
->         int ear_rx_path;
->         int variant;
-> -       int reset_gpio;
-> +       struct gpio_desc *reset_gpio;
->         struct gpio_desc *us_euro_gpio;
->         u32 micb1_mv;
->         u32 micb2_mv;
-> @@ -3251,9 +3250,9 @@ static int wcd938x_populate_dt_data(struct wcd938x_=
-priv *wcd938x, struct device
->         struct wcd_mbhc_config *cfg =3D &wcd938x->mbhc_cfg;
->         int ret;
->
-> -       wcd938x->reset_gpio =3D of_get_named_gpio(dev->of_node, "reset-gp=
-ios", 0);
-> -       if (wcd938x->reset_gpio < 0)
-> -               return dev_err_probe(dev, wcd938x->reset_gpio,
-> +       wcd938x->reset_gpio =3D devm_gpiod_get(dev, "reset", GPIOD_ASIS);
-> +       if (IS_ERR(wcd938x->reset_gpio))
-> +               return dev_err_probe(dev, PTR_ERR(wcd938x->reset_gpio),
->                                      "Failed to get reset gpio\n");
->
->         wcd938x->us_euro_gpio =3D devm_gpiod_get_optional(dev, "us-euro",
-> @@ -3297,10 +3296,10 @@ static int wcd938x_populate_dt_data(struct wcd938=
-x_priv *wcd938x, struct device
->
->  static int wcd938x_reset(struct wcd938x_priv *wcd938x)
->  {
-> -       gpio_direction_output(wcd938x->reset_gpio, 0);
-> +       gpiod_set_value(wcd938x->reset_gpio, 1);
->         /* 20us sleep required after pulling the reset gpio to LOW */
->         usleep_range(20, 30);
-> -       gpio_set_value(wcd938x->reset_gpio, 1);
-> +       gpiod_set_value(wcd938x->reset_gpio, 0);
->         /* 20us sleep required after pulling the reset gpio to HIGH */
->         usleep_range(20, 30);
->
->
-> --
-> 2.37.1
->
->
+> bod
 
-With this patchset applied, the wcd938x codec used in the Thinkpad
-X13s stops working:
+-- 
+With best wishes
+Wenbin
 
-wcd938x_codec audio-codec: soundwire device init timeout
-wcd938x_codec audio-codec: ASoC: error at snd_soc_component_probe on
-audio-codec: -110
-snd-sc8280xp sound: ASoC: failed to instantiate card -110
-snd-sc8280xp sound: probe with driver snd-sc8280xp failed with error -110
-
--- steev
 
