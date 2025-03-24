@@ -1,220 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-52347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 248C1A6DB78
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 14:29:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 955D7A6DC1A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 14:51:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 90C1F3B409E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 13:29:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9250716EBE1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 13:50:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 619FD25F793;
-	Mon, 24 Mar 2025 13:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5AA625F78F;
+	Mon, 24 Mar 2025 13:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FBQ0IH7L"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="A77I0csl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6252625EFB5
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 13:29:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE6114F9FB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 13:50:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742822975; cv=none; b=KasxP8c0SQoNS/nolmGmG0jsop6B5KCmiu4ecU559sS6TirLTfean+oXs2L4lI1wyamoOlXWr5cQimbjeIT4LPSvxb9ezvFieperA9gF3SG1fJkMg68ZTuT/GMyT+A+s/S8bl/l5b7LrF7stk2g5rcNJdsIxenny9gqSmN1ORfM=
+	t=1742824236; cv=none; b=Z5z55fyZq7ApiFuX6Rd9lqGnl9fY3j3ky0QgNOKViE6w5c19QQJaekhpCsEYumE3/onQULX3wPg4WlA2t2uxhnzx9il+U4K0fOnaL5P1ut+suCQHIhLAXPFReny6ObkGmGABzM1DL6yu2YlAK0C3xHmyMiYEk+AqNUTW0WH5CP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742822975; c=relaxed/simple;
-	bh=ToQFGwDDDePBcLj0Tl6e42Pcn77uyEQUZi/Zk7Ze/gY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=akf4hSHS7KXdm/5JtMheCzO8g0tQvuausrZmiT73hHA4yqov/BD6WpPHbnhQsXl3JeGD06RshqvRoi+xSh7DZ3o17pk7dydxIydDxjKG9h4zGkI4v1hQQwjLhEAbh4eGt91FG+H+f9xBmto3ZtCuzuJpoebkMqrVKKQDwLDEfE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FBQ0IH7L; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5e5dce099f4so5887455a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 06:29:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742822972; x=1743427772; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wTTdxiEXTLI0RB3J4azgwISZcRhYfAuhdc+KevBi5vw=;
-        b=FBQ0IH7Lil4t9nylwAriL9+AADyK4D7SWkKRjsG5xi2VT33mg92IGpF2cykNROCn8O
-         lJ6+ME1dBfD8L3JFQlJAqqod+S0Jv3EegET70RAB8WqXIT0GKNzdQiAAcnFYZRY78khY
-         Nav4G2mzWCl2GjoU64fyhBhGqRpn4svcfpH2CrFDXm/byrSDLnoNizxS6FS/ix0njbeI
-         +BCrEqbckeqoybCo5eqE35sy9XNeIf22lEaoP/L3y4G1JNe9y628aD5cdgbkIfbEzST4
-         MnwkxEuVcO46+zVaOgJdpNb8Rv7uDxFzM1AJpg/+9WzshEim0fjjkvEwLWB/PYgw54/O
-         XgCQ==
+	s=arc-20240116; t=1742824236; c=relaxed/simple;
+	bh=KH2AbP8hEOSyv2dSdRRqSFbyC0F8lwz0bs994ri1ioI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eeizKftIIhunPYcCR0LwKqMoC3p6Pt9dbidowQRB5ZNO/8avxJnewotWVISmpGJgzgMkys7T+Fy454W61ZB74r8577Gury8dxxg9ezqnVIc6VYyFYsIUL15hXP2Wgr2OWWzaL6NX+7S3ozlI8W0qftl2dm1UpEJvacxT8UbAAd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=A77I0csl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52O9PN4d004786
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 13:50:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=95hHTOgsDguSuXKORfoFD7vr
+	/pR9Ww99EDSaRcdphmo=; b=A77I0cslgUO6KN1avRSTcNvcEdxDhvbGDnAqsWYS
+	1DiN3GG84OOsuDBjFqoch3J503z+vt58vf1Rc/tDcNA9XObdukHQnckRyuBcqpzH
+	tgcM4NmzogXkGji8gdLnlZviqjw7uVtRXUuJevXmd0LZLAEnLqUEXsmKxwhvQhka
+	lhnnlnSQFjC1MQzGeuod661zZAOxbxqds4j3GEkDmI4oVigs4DGXERU284JXsOFB
+	ykEMTns9kINH7EmDXwAKgV8iAFeJCssaVwZmpbFO0xQru/sHuHcfvv+7QJDBJSlj
+	LhB99VFEMtQcnDasXkeVRXP65bRkF1/kWRj5eXJlqsorCQ==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45hm79mm9m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 13:50:33 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-2ff68033070so6938594a91.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 06:50:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742822972; x=1743427772;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wTTdxiEXTLI0RB3J4azgwISZcRhYfAuhdc+KevBi5vw=;
-        b=gzyNntsUX883HqIPjsxiPNzt7y2/GrFG/b/OxxoRjftALUW3/cZCKUE/m+n9lvBJCx
-         Ue7mypwSO0utfP3W42kD5o5rCKnOk+LKXYn45sHfyZ/ifRrzTjbL6Mx6rlgefmoVmpCa
-         DUkhXr6John96gLDB+hRBxBf7wQvMAEwXgXlXu23shYO2cq48pbyJ2TbQwAm6dxujRJE
-         6/tt7Nfp1eGKJTdbjsvPIIjCQuEyooZtY3x92s+H5xkiNicMdwRB+KGdvvBH/nTwIsVE
-         qTs+LF+56uscELCzPv70vlaLuXr4JG4HbMjrXvqxfTBmNkiGK8r5g0IjqUq4OIM3LkSY
-         TWfw==
-X-Forwarded-Encrypted: i=1; AJvYcCUYejflhV5nGKka26EIYXaltHXsV0BGkWi6bOOn2VRm56txsEfu0pLBP3kqYwVeFV/nWrMy11/5lc9op6ra@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfRD7DfQYA4htVG2Kbu2lt4+bcucZUQEFw1d1gqkg9s40c9Eu+
-	PosJUDRkBDvq/SjStT07lUQ5R1rWHjiGNrS32+QNHUUyvhsur96hPMY2Pm7xssM=
-X-Gm-Gg: ASbGncuYWwFsel7h0SoeW1L+bxUK4V+tLboQ015u9Q9Lj0cWA1bHzS+Fp3j0feASk9C
-	YHqd1xmGBxUqMhhkNnYNN4fMvfmRiOr+CKqNvEB9hdAMSrKvxJ23G1BzYCWlPSzQHsR1HShxaSK
-	NoT8z5ted6R99ffWcl2ck2l2kA0Pkc9mt6fbY6YlZTyQw5nMUQTsIpASBzdafWHM3MwfcxynsDm
-	hCDJ33eZdD8q4n6Kv1N5PIaGDwhwhDtRbx4fEOu9P3fFs61iJJQpVPE/22cS2vFTL5Pm2fd9kvJ
-	HZ3X5VnKCn0nraLUOoW017of43ah72A9FXXpNT+VI/4J5dLBikbZGJ1ZZ2sr8VA=
-X-Google-Smtp-Source: AGHT+IH+XEdLXnQX6nhvXQgyxnwEG52GJc4c2uceRNSxMxazFeWfoa7SI9NnS80gXy0yOwDc7i3hHg==
-X-Received: by 2002:a17:907:9482:b0:ac3:10e3:7fa5 with SMTP id a640c23a62f3a-ac3f20f51cbmr1074443466b.21.1742822971571;
-        Mon, 24 Mar 2025 06:29:31 -0700 (PDT)
-Received: from [192.168.68.117] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ac3efbdc78esm682685766b.134.2025.03.24.06.29.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Mar 2025 06:29:31 -0700 (PDT)
-Message-ID: <90f2bcab-d89f-40c0-9851-7ff25f2c1eda@linaro.org>
-Date: Mon, 24 Mar 2025 13:29:30 +0000
+        d=1e100.net; s=20230601; t=1742824232; x=1743429032;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=95hHTOgsDguSuXKORfoFD7vr/pR9Ww99EDSaRcdphmo=;
+        b=oSx/Vyt4eY2vlkPMmz1TFSzbUujgLDg8M7wdXM54kWXBRT5FC4w3LnSC3b82106UN4
+         ZSbGo2pRyzLOnP+tezejP+EVEkXfJTVzbZt0sFxD56fJf65RttHSYKsnEOC1CW0gnnNe
+         Jm/MDYUdzHyegVOCNpqujAIOeh7+TcYVCp2WZrtK54dTpxeBawufWBVNjBQOYNJi7qN+
+         QDlEXZkhfWLS+bgpfJds0wT2DezF1oyEm1a7g+KkD53CPTEpJHtohmDa9BQMuYt/C8av
+         LUc0/BmTSiapr9e3Cx2cB+dWcefUGUTerTvmYYJl0sv1JG3WMXzLriA4lMRvw2lMIx/Q
+         TbzA==
+X-Forwarded-Encrypted: i=1; AJvYcCWKVjYoYu4w+Qnk3BJCaKfMvjwD45r2OyWYJlQmY0o0uXVAqPK8N2X5RDNcQ4+B6KF+DUDYp2SrcLwxhMQJ@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywp42+jIwLcSB6MIi8Ep6jSi4+ZD1uhqOHFzguxuUrKPxanBqzA
+	S0J+mGb5ZzqyaNbfsW1Ll8BEyaYCAaP8iftiRMRdBj0K0xpDK1qndvHjGxPEG2r8nXlKmmMKTe6
+	STfSh/2CVPPWIBQx1t9xdVDcu2vRWDs0gjJkNJGkeWDQUWTNqSZiRpjluOGEdDMIVM5kYAXUeQp
+	mfsFAGBt6dIVnnbNUKSmpQdj1da8t9VNV4IHv6csNkPuR18WY=
+X-Gm-Gg: ASbGncvX23KzhlVzEzvDYXIp0Z04EyjOJTfgdlj71ZmxoHhbTTHawgMOmhb2A7Uz8Td
+	tyLwqz1IJkLoLBd1peJ2JXkxYy1c2yAj6DVuzSnILKT1Dg3sXNjCsAt4JD3r0Z1lq6vfkblwQVs
+	KxS0oDd7kn5nb3Yx0BbBK8qvrt/wx81A==
+X-Received: by 2002:a17:90b:4c0f:b0:2fe:99cf:f579 with SMTP id 98e67ed59e1d1-3030fe5b15bmr20207264a91.4.1742824231625;
+        Mon, 24 Mar 2025 06:50:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHXMOsAoGpdtih1+0ssF5i40YdS6JFQsTc0IGSXQBUtJaK2Mm+GfER10JaDD1Nn24M59aGXBRi9MPLEp7Jiixs=
+X-Received: by 2002:a17:90b:4c0f:b0:2fe:99cf:f579 with SMTP id
+ 98e67ed59e1d1-3030fe5b15bmr20207201a91.4.1742824231062; Mon, 24 Mar 2025
+ 06:50:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] misc: fastrpc: add support for gpdsp remoteproc
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Ling Xu <quic_lxu5@quicinc.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, amahesh@qti.qualcomm.com, arnd@arndb.de,
- gregkh@linuxfoundation.org, quic_kuiw@quicinc.com,
- quic_ekangupt@quicinc.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- dri-devel@lists.freedesktop.org
-References: <20250320091446.3647918-1-quic_lxu5@quicinc.com>
- <20250320091446.3647918-3-quic_lxu5@quicinc.com>
- <30bba296-8e6f-41ee-880e-2d5ecc8fe5a4@linaro.org>
- <5r72xrv5rtw6bemh5onygkroyasroviijlta4hvwgm5c5hzvax@3icylchlufu3>
-Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <5r72xrv5rtw6bemh5onygkroyasroviijlta4hvwgm5c5hzvax@3icylchlufu3>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250324130057.4855-1-srinivas.kandagatla@linaro.org> <20250324130057.4855-6-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20250324130057.4855-6-srinivas.kandagatla@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Mon, 24 Mar 2025 15:50:20 +0200
+X-Gm-Features: AQ5f1JqiwDly8jNyPcDcoChNoCMpD8WkI2T1QYMZRnXTR-tMOVaIet3UtcOHoEE
+Message-ID: <CAO9ioeX9RTBAeL3+9STn+=oEYR0wtaF6yoa=esNddEvqLQyO9Q@mail.gmail.com>
+Subject: Re: [PATCH v4 5/6] ASoC: codecs: wcd938x: add mux control support for
+ hp audio mux
+To: srinivas.kandagatla@linaro.org
+Cc: peda@axentia.se, broonie@kernel.org, andersson@kernel.org,
+        krzk+dt@kernel.org, ivprusov@salutedevices.com,
+        luca.ceresoli@bootlin.com, zhoubinbin@loongson.cn,
+        paulha@opensource.cirrus.com, lgirdwood@gmail.com, robh@kernel.org,
+        conor+dt@kernel.org, konradybcio@kernel.org, perex@perex.cz,
+        tiwai@suse.com, linux-sound@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, johan+linaro@kernel.org,
+        Christopher Obbard <christopher.obbard@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-GUID: Y8OiqEU-JYxGBgxZu2jCRjj9j5u9yL73
+X-Proofpoint-ORIG-GUID: Y8OiqEU-JYxGBgxZu2jCRjj9j5u9yL73
+X-Authority-Analysis: v=2.4 cv=IKYCChvG c=1 sm=1 tr=0 ts=67e16329 cx=c_pps a=0uOsjrqzRL749jD1oC5vDA==:117 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=KKAkSRfTAAAA:8 a=OAj1MUjZvtZXw01r514A:9 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-24_04,2025-03-21_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ phishscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 spamscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503240100
+
+On Mon, 24 Mar 2025 at 15:01, <srinivas.kandagatla@linaro.org> wrote:
+>
+> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>
+> On some platforms to minimise pop and click during switching between
+> CTIA and OMTP headset an additional HiFi mux is used. Most common
+> case is that this switch is switched on by default, but on some
+> platforms this needs a regulator enable.
+>
+> move to using mux control to enable both regulator and handle gpios,
+> deprecate the usage of gpio.
+>
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
+> ---
+>  sound/soc/codecs/Kconfig   |  1 +
+>  sound/soc/codecs/wcd938x.c | 50 +++++++++++++++++++++++++++++---------
+>  2 files changed, 40 insertions(+), 11 deletions(-)
+>
+> diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+> index ee35f3aa5521..a2829d76e108 100644
+> --- a/sound/soc/codecs/Kconfig
+> +++ b/sound/soc/codecs/Kconfig
+> @@ -2226,6 +2226,7 @@ config SND_SOC_WCD938X
+>         tristate
+>         depends on SOUNDWIRE || !SOUNDWIRE
+>         select SND_SOC_WCD_CLASSH
+> +       select MULTIPLEXER
+>
+>  config SND_SOC_WCD938X_SDW
+>         tristate "WCD9380/WCD9385 Codec - SDW"
+> diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
+> index dfaa3de31164..88c758efe40d 100644
+> --- a/sound/soc/codecs/wcd938x.c
+> +++ b/sound/soc/codecs/wcd938x.c
+> @@ -19,6 +19,7 @@
+>  #include <linux/regmap.h>
+>  #include <sound/soc.h>
+>  #include <sound/soc-dapm.h>
+> +#include <linux/mux/consumer.h>
+>  #include <linux/regulator/consumer.h>
+>
+>  #include "wcd-clsh-v2.h"
+> @@ -178,6 +179,8 @@ struct wcd938x_priv {
+>         int variant;
+>         int reset_gpio;
+>         struct gpio_desc *us_euro_gpio;
+> +       struct mux_control *us_euro_mux;
+> +       u32 mux_state;
+>         u32 micb1_mv;
+>         u32 micb2_mv;
+>         u32 micb3_mv;
+> @@ -3235,17 +3238,31 @@ static void wcd938x_dt_parse_micbias_info(struct device *dev, struct wcd938x_pri
+>                 dev_info(dev, "%s: Micbias4 DT property not found\n", __func__);
+>  }
+>
+> -static bool wcd938x_swap_gnd_mic(struct snd_soc_component *component)
+> +static int wcd938x_select_mux_state(struct device *dev, struct wcd938x_priv *wcd938x, int state)
+>  {
+> -       int value;
+> +       int ret = mux_control_try_select(wcd938x->us_euro_mux, state);
+
+Hmm. Does this really work? You have selected the mux in probe
+function, now you are trying to select it again. If I'm reading the
+code correctly, you will get -EBUSY here.
+
+>
+> -       struct wcd938x_priv *wcd938x;
+> +       if (ret) {
+> +               dev_err(dev, "Error (%d) Unable to select us/euro mux state\n", ret);
+> +               return ret;
+> +       }
+>
+> -       wcd938x = snd_soc_component_get_drvdata(component);
+> +       wcd938x->mux_state = state;
+> +       mux_control_deselect(wcd938x->us_euro_mux);
+> +
+> +       return 0;
+> +}
+>
+> -       value = gpiod_get_value(wcd938x->us_euro_gpio);
+> +static bool wcd938x_swap_gnd_mic(struct snd_soc_component *component)
+> +{
+> +       struct wcd938x_priv *wcd938x = snd_soc_component_get_drvdata(component);
+>
+> -       gpiod_set_value(wcd938x->us_euro_gpio, !value);
+> +       if (wcd938x->us_euro_mux) {
+> +               if (wcd938x_select_mux_state(component->dev, wcd938x, !wcd938x->mux_state))
+> +                       return false;
+> +       } else {
+> +               gpiod_set_value(wcd938x->us_euro_gpio, !wcd938x->mux_state);
+> +       }
+>
+>         return true;
+>  }
+> @@ -3261,11 +3278,22 @@ static int wcd938x_populate_dt_data(struct wcd938x_priv *wcd938x, struct device
+>                 return dev_err_probe(dev, wcd938x->reset_gpio,
+>                                      "Failed to get reset gpio\n");
+>
+> -       wcd938x->us_euro_gpio = devm_gpiod_get_optional(dev, "us-euro",
+> -                                               GPIOD_OUT_LOW);
+> -       if (IS_ERR(wcd938x->us_euro_gpio))
+> -               return dev_err_probe(dev, PTR_ERR(wcd938x->us_euro_gpio),
+> -                                    "us-euro swap Control GPIO not found\n");
+> +       wcd938x->us_euro_mux = devm_mux_control_get(dev, NULL);
+> +       if (IS_ERR(wcd938x->us_euro_mux)) {
+> +               if (PTR_ERR(wcd938x->us_euro_mux) == -EPROBE_DEFER)
+> +                       return -EPROBE_DEFER;
+> +
+> +               /* mux is optional and now fallback to using gpio */
+> +               wcd938x->us_euro_mux = NULL;
+> +               wcd938x->us_euro_gpio = devm_gpiod_get_optional(dev, "us-euro", GPIOD_OUT_LOW);
+> +               if (IS_ERR(wcd938x->us_euro_gpio))
+> +                       return dev_err_probe(dev, PTR_ERR(wcd938x->us_euro_gpio),
+> +                                            "us-euro swap Control GPIO not found\n");
+> +       } else {
+> +               ret = wcd938x_select_mux_state(dev, wcd938x, wcd938x->mux_state);
+> +               if (ret)
+> +                       return ret;
+> +       }
+>
+>         cfg->swap_gnd_mic = wcd938x_swap_gnd_mic;
+>
+> --
+> 2.39.5
+>
 
 
-
-On 21/03/2025 14:07, Dmitry Baryshkov wrote:
-> On Thu, Mar 20, 2025 at 05:11:20PM +0000, Srinivas Kandagatla wrote:
->>
->>
->> On 20/03/2025 09:14, Ling Xu wrote:
->>> The fastrpc driver has support for 5 types of remoteprocs. There are
->>> some products which support GPDSP remoteprocs. Add changes to support
->>> GPDSP remoteprocs.
->>>
->>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
->>> ---
->>>    drivers/misc/fastrpc.c | 10 ++++++++--
->>>    1 file changed, 8 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->>> index 7b7a22c91fe4..80aa554b3042 100644
->>> --- a/drivers/misc/fastrpc.c
->>> +++ b/drivers/misc/fastrpc.c
->>> @@ -28,7 +28,9 @@
->>>    #define SDSP_DOMAIN_ID (2)
->>>    #define CDSP_DOMAIN_ID (3)
->>>    #define CDSP1_DOMAIN_ID (4)
->>> -#define FASTRPC_DEV_MAX		5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
->>> +#define GDSP0_DOMAIN_ID (5)
->>> +#define GDSP1_DOMAIN_ID (6)
->>
->> We have already made the driver look silly here, Lets not add domain ids for
->> each instance, which is not a scalable.
->>
->> Domain ids are strictly for a domain not each instance.
->>
->>
->>> +#define FASTRPC_DEV_MAX		7 /* adsp, mdsp, slpi, cdsp, cdsp1, gdsp0, gdsp1 */
->>>    #define FASTRPC_MAX_SESSIONS	14
->>>    #define FASTRPC_MAX_VMIDS	16
->>>    #define FASTRPC_ALIGN		128
->>> @@ -107,7 +109,9 @@
->>>    #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
->>>    static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
->>> -						"sdsp", "cdsp", "cdsp1" };
->>> +						"sdsp", "cdsp",
->>> +						"cdsp1", "gdsp0",
->>> +						"gdsp1" };
->>>    struct fastrpc_phy_page {
->>>    	u64 addr;		/* physical address */
->>>    	u64 size;		/* size of contiguous region */
->>> @@ -2338,6 +2342,8 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>>    		break;
->>>    	case CDSP_DOMAIN_ID:
->>>    	case CDSP1_DOMAIN_ID:
->>> +	case GDSP0_DOMAIN_ID:
->>> +	case GDSP1_DOMAIN_ID:
->>>    		data->unsigned_support = true;
->>>    		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
->>>    		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
->>
->>
->> Can you try this patch: only compile tested.
->>
->> ---------------------------------->cut<---------------------------------------
->>  From 3f8607557162e16673b26fa253d11cafdc4444cf Mon Sep 17 00:00:00 2001
->> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> Date: Thu, 20 Mar 2025 17:07:05 +0000
->> Subject: [PATCH] misc: fastrpc: cleanup the domain names
->>
->> Currently the domain ids are added for each instance of domain, this is
->> totally not scalable approch.
->>
->> Clean this mess and create domain ids for only domains not its
->> instances.
->> This patch also moves the domain ids to uapi header as this is required
->> for FASTRPC_IOCTL_GET_DSP_INFO ioctl.
->>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> ---
->>   drivers/misc/fastrpc.c      | 45 ++++++++++++++++++++-----------------
->>   include/uapi/misc/fastrpc.h |  7 ++++++
->>   2 files changed, 32 insertions(+), 20 deletions(-)
->>
-> 
-> 
->> diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
->> index f33d914d8f46..89516abd258f 100644
->> --- a/include/uapi/misc/fastrpc.h
->> +++ b/include/uapi/misc/fastrpc.h
->> @@ -133,6 +133,13 @@ struct fastrpc_mem_unmap {
->>   	__s32 reserved[5];
->>   };
->>
->> +#define ADSP_DOMAIN_ID (0)
->> +#define MDSP_DOMAIN_ID (1)
->> +#define SDSP_DOMAIN_ID (2)
->> +#define CDSP_DOMAIN_ID (3)
->> +#define GDSP_DOMAIN_ID (4)
-> 
-> Why are you adding these to uAPI? How are they going to be used by the
-> userspace?
-> 
->> +
->> +#define FASTRPC_DOMAIN_MAX	4
->>   struct fastrpc_ioctl_capability {
->>   	__u32 domain;
-
-here, in domain value of fastrpc_ioctl_capability.
-
-
-
->>   	__u32 attribute_id;
->> -- 
->> 2.25.1
->>
->>
->> ---------------------------------->cut<---------------------------------------
-> 
+-- 
+With best wishes
+Dmitry
 
