@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-52280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08286A6D563
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 08:47:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 98C64A6D570
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 08:50:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9506E188A78E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 07:47:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E5F8188C222
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 07:50:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6824325C6E9;
-	Mon, 24 Mar 2025 07:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16ED6257AD5;
+	Mon, 24 Mar 2025 07:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D0tyseSF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SgJNRZsl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346DC25A2B0;
-	Mon, 24 Mar 2025 07:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC6818DB34;
+	Mon, 24 Mar 2025 07:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742802461; cv=none; b=i3GYazYzCdodkkcJ9hgCt8h04+1KsS1skNkz63C5tHc9nAjo9KuExGSCJLheAo8OVLCLtDi19/HGISmsW6rduZf6C/y7IbqyMTKdC73SuSvnY+qOXPATmVBRjNUNB+Z74FGOYkYYMyWYz/fYe0ktcFnxpndq99QLpeTSsP4nPyg=
+	t=1742802626; cv=none; b=HO2x2QgRK0XlY11sxK2Wq+g7GYWnyBpQzpD7NXBJK2MAmI7+uJqhtcCaO7yoiGQM6Y2O6YdDmZ96ppWTFzhLhza44uosGI5rSWKyC0BJGmuPR9oz+Wogm8jhSTANy/zrBvGy49TEp5QHPPo0T26GXlPuN4C0fpo5K4GE6nhRPyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742802461; c=relaxed/simple;
-	bh=6SxKcj4gUIOYK9hOLL2QqT3WFOWrHJL1z+V3xAU4HWY=;
+	s=arc-20240116; t=1742802626; c=relaxed/simple;
+	bh=mCJVEVFLift9Eye+00vD3JluUEBLGyRiq6JmsMqAy80=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tIN9u1AqD19Bs5SdamlOdp+wuJB/ZwKF6seMf0zjmlpzCQWpogS8wcXjmspPSaeJA8nSMxgz3NMhR5Lk7IqtS97d1eeD+20jj9It1O0D7BHoLeCuvncUUpRDwzv4I0f5bfzvB+Aqpe0yNWIpKX+m5EjvQwMRfazu+Zve7M582CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D0tyseSF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27FDC4CEDD;
-	Mon, 24 Mar 2025 07:47:38 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=nn3HvLfyxM5Bc0UfI/gYBgTDyD9zneZZ9j9ytC2s9h/LIGMuePNvok5IPNoCkgeeI/AqcKUgY9OM9plKhCC/pIAIg+rI7wvpIQC0sIlTHa2MDGfskPpvv608kidsdx+aITJ+koxPFAgMZ5278co9eXVQybiPePul/zUtu89NPGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SgJNRZsl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85DDCC4CEDD;
+	Mon, 24 Mar 2025 07:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742802459;
-	bh=6SxKcj4gUIOYK9hOLL2QqT3WFOWrHJL1z+V3xAU4HWY=;
+	s=k20201202; t=1742802625;
+	bh=mCJVEVFLift9Eye+00vD3JluUEBLGyRiq6JmsMqAy80=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=D0tyseSFxU48myJcXGHrQB2TW2AnkXD2C/jDngzz5RL/CNYsjCJnGs57CZNZ34y5q
-	 /I2syGM1xIJ3kXqKyUCe9ITk9r69JaTQZisUvY3nm8tE1mKmjNyy75RDgeHeMAzQoC
-	 DQ416BwJ4gUyFp2J2WKlmjf4kUw3P5K/x8CIgZt1/4cIhamVL4iFzQDA9AKmJIUdJ+
-	 JFuJHbtc/NK0kF3A3nu9bqdRDTD0+qbsd06WEZAAp17AJmUeDsz1XxUwU+s/AMIj24
-	 c10wvpKsyPMQ8y0dBSQvSBqDwMlZUz6DPCGTPB5bMGzPcdAGV/5wAzeB3uVpidCGuH
-	 LsvdFyPrtK/gg==
-Date: Mon, 24 Mar 2025 08:47:35 +0100
+	b=SgJNRZslYyer7oKuYSsTjXGy1I4wrYapQgM6QroZKKtU744GwQt2AxYm2jlybjnTe
+	 9LCAAaB7pbrysnlu63ECR6CCSo9G8Xc66PUniMWfpifID6HcJYm5RD60CSGqXld6b+
+	 ozBBXRnuUcKzqFcATV5sMNGeiwuYuQhxidL+y50muiese0tAckpa/id3TEcw5oLoAI
+	 RprEF96GKpzUKkNpjHnJcLlVzgSe6virir95NAmgRzx8IXZMLL7kx7EuwXW8ZIDE0b
+	 VQfZMa4riUf9mhUDvQtOAQHYDpn5lOPVsMEwbXjyJlajOylPCQWENskA89z5S3Md1S
+	 iP2xYpDuCF8WQ==
+Date: Mon, 24 Mar 2025 08:50:21 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: George Moussalem <george.moussalem@outlook.com>
 Cc: Vinod Koul <vkoul@kernel.org>, 
@@ -54,9 +54,10 @@ Cc: Vinod Koul <vkoul@kernel.org>,
 	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
 	20250317100029.881286-2-quic_varada@quicinc.com, Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Subject: Re: [PATCH v6 0/6] Enable IPQ5018 PCI support
-Message-ID: <20250324-shrew-of-total-philosophy-4fddc2@krzk-bin>
+Subject: Re: [PATCH v6 3/6] dt-bindings: PCI: qcom: Add IPQ5018 SoC
+Message-ID: <20250324-knowing-vagabond-grebe-fa0a00@krzk-bin>
 References: <20250321-ipq5018-pcie-v6-0-b7d659a76205@outlook.com>
+ <20250321-ipq5018-pcie-v6-3-b7d659a76205@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,36 +66,24 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250321-ipq5018-pcie-v6-0-b7d659a76205@outlook.com>
+In-Reply-To: <20250321-ipq5018-pcie-v6-3-b7d659a76205@outlook.com>
 
-On Fri, Mar 21, 2025 at 04:14:38PM +0400, George Moussalem wrote:
-> This patch series adds the relevant phy and controller
-> DT configurations for enabling PCI gen2 support
-> on IPQ5018. IPQ5018 has two phys and two controllers, 
-> one dual-lane and one single-lane.
+On Fri, Mar 21, 2025 at 04:14:41PM +0400, George Moussalem wrote:
+> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
 > 
-> Last patch series (v3) submitted dates back to August 30, 2024.
-> As I've worked to add IPQ5018 platform support in OpenWrt, I'm
-> continuing the efforts to add Linux kernel support.
+> Add support for the PCIe controller on the Qualcomm
+> IPQ5108 SoC to the bindings.
 > 
+> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 > Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 > ---
-> Changes in v6:
-> - Fixed issues reported by 'make dt_bindings_check' as per Rob's bot
-> - Removed Krzysztof's Ack-tag on  
+>  .../devicetree/bindings/pci/qcom,pcie.yaml         | 50 ++++++++++++++++++++++
+>  1 file changed, 50 insertions(+)
 
-Why?
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Again, I cannot compare this serie:
-
-  b4 diff '20250321-ipq5018-pcie-v6-0-b7d659a76205@outlook.com'
-  Grabbing thread from lore.kernel.org/all/20250321-ipq5018-pcie-v6-0-b7d659a76205@outlook.com/t.mbox.gz
-  Checking for older revisions
-  Grabbing search results from lore.kernel.org
-  Nothing matching that query.
-  ---
-  Analyzing 12 messages in the thread
-  Could not find lower series to compare against.
-
+Best regards,
+Krzysztof
 
 
