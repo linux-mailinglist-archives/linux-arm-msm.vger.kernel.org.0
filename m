@@ -1,63 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-52367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10593A6E013
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 17:44:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EEB02A6E031
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 17:51:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C47016CD61
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 16:44:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D21FE16E17F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 16:50:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C493263C82;
-	Mon, 24 Mar 2025 16:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E41A2641CD;
+	Mon, 24 Mar 2025 16:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BRHwpmNI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GByonw+x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7CD261570;
-	Mon, 24 Mar 2025 16:44:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407072641C0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 16:49:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742834657; cv=none; b=HEb9Wgs3m7vOiz+xqY5zE5ocQBYHhqAZ5xEW8rmNbdbefQqSq+23O/S/8q5eeZAiG8d6I0j5IYQgq3IUdeyRKNv8MqUDUR/dTj/Vnx1UBy9OlhOwbFUHHMezXcdZVIx4YQPtPbRoLp0dJyOuwlXNbFbtl9O8waREJOpqJjYQh4g=
+	t=1742834995; cv=none; b=Kbpe0W3lHVx9TF3HgC8HRLp69oeejsn2d9oCDiDzzfIS1DVq6WIE9PWF4pxuu1mL3z+G6LwfsrytmHRyCzoAPfJY7b+4FYbR6Y1Y6PZtFN2f0fdRMZed/FwvKIHI0oR5lRY7Hym7gr5Hw2SoJPPzm92N6Gkpc9f3yZ7IkWxD0CE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742834657; c=relaxed/simple;
-	bh=WlcHSCuCE+B5oPFbUZhbIX6BCUYFF/YgHjdqP/AExfE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=VktPFj7DiTmrEvBrwYPBAk8PWjOiA8PWkA5tIlu5JVAWOF/X2Rx0nsdq1SNrF3i9sZ7wwJNBc+wU2vcF72jztSWBnpr4jV36AATIK3m/F/66jjgXJPIChrSmPDYDwRh4A+k9nBLrCoe13OLYVDkiF0xYOGJetu3H8apj7HIhyOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BRHwpmNI; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52O9PSxE015755;
-	Mon, 24 Mar 2025 16:44:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1DIxwp36ktfPlrjG2+HU7c3QBj3w7DAkJ+2V61M5xr8=; b=BRHwpmNIv6Y9u5Pq
-	sZoEL9PS4NEn24D3RJzk52AMNmTuXPUct77oFCpgLemkPpA4LztENVzJepovqHSz
-	1U6eS63TL0y3VRQ2Szg9uRAXvS1+AN8hAu+4tGAP264Ri/L7uthr3MnT05aet7k5
-	Tw8NH5VpV56CtHw0Jh9wPrO9l89KytBhih6Rx2mwq7ta0FCmgKxaMk6maUeUPSIl
-	+hg+6Iz4jMratxWDxQK9DmU0RaWpCFh4tt8IB96MATRcvgwW0zg7QQR1PDpsv7F5
-	ug5SdoYUnwMCVkRIcJXuTdGqXdTqVGxzyhpaV7ig3mS2BqVU9WlzNqfwcb/wQUAe
-	PEFZ6g==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45hn9wcyr8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Mar 2025 16:44:11 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52OGiAYl027527
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Mar 2025 16:44:10 GMT
-Received: from [10.216.17.237] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 24 Mar
- 2025 09:44:06 -0700
-Message-ID: <f565fee7-b222-4e6b-b022-68aed9a7d9ea@quicinc.com>
-Date: Mon, 24 Mar 2025 22:14:03 +0530
+	s=arc-20240116; t=1742834995; c=relaxed/simple;
+	bh=LviRtfZ2Zkhdvc1v2tQGyN26tUVva3KWP4SpMnY0qFM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ku7Fjp+3x8MCyhmJlVDTvMw2EI6027lvXkongqD9q+J3nLvDEG+x1mEgI7R6eZ2pk70RH/FTXYyiCMTijKUC9RhcD3V5wkHClClpux+GjRXitzm3Rq8GTqy5SLsaj746j+aurUBEmkF+shO9uxSGklGRVi2s+4qlhcJOVr8NiQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GByonw+x; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-399744f74e9so2839385f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 09:49:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1742834991; x=1743439791; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PKZOx3qp50UyeT4k9CXml4Zn6aQsxicd61ejBpyhlHw=;
+        b=GByonw+x/a/1AjebGTc6VSwGRiKm7N6ggsMu7tsYjwDCnzPoQ3pTN+GwxNg+BQeKbb
+         R4joKHKJNfmX6J4sEklmxh+ZaCVdghWhObGMgPQkCva8cJIUsi+ZtNO4Iu1yabCQ5xBe
+         iGBYkJYT18sflhoL5FkDkvAwddFWLehrTTJtGrv5fvCbfQueDreLBYO8aUkGedaY2Q1p
+         bqx/BwS2alQ3YIpxljP0GrlRJ/ncNXIoV4c46Ka5SgWsEYaGJAiSg65bc8LI3BXiycWz
+         WWc9UNK0u1qN/uzTeZkfZRz+vUJXZBH4hshzOIjTttoMoUqj2+djiYxdfzdBRH3+8AGs
+         iRiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742834991; x=1743439791;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PKZOx3qp50UyeT4k9CXml4Zn6aQsxicd61ejBpyhlHw=;
+        b=shjKvuGKLih1ohiDZ5iTiC1XjXLMlmwgYEdeNCTmaYvX5yZCsLZZQ9c28JH8Cu/yPd
+         DOOXQM6+rJjzTGbxSWwPA2a6Rp90Q9Cn10zDxF084xcI6Hz3FlYzuQe5gpAH1XsNx36f
+         1JL0TWfcPIlsOxxZeYz5EezaUZrgBt3KNhdvLW1iWwyBuAcxHK9XmPw3TdccnYvlTuOJ
+         1YpOFS1KXwqx+avjDOeUg82jMPCUjGVUgTt/CTc6cAvAbYNFlPQ8en6xQ7KxAbnyOyyV
+         hYjU/TKfsfbsRAStr6A4h6bFgB6ifY8p5AZZ7O/Wnv/ANKUqOX7czahPwF/Hzu1P0CLL
+         3A4g==
+X-Forwarded-Encrypted: i=1; AJvYcCVfLjLFnbhrzRLYcEwnWs0UF14tZrXW/+J+ct330sd0sPAiVG+BnLe41CssUSW+IUGdxn35zz1xbAaIpjO/@vger.kernel.org
+X-Gm-Message-State: AOJu0YxILZqFoJCEX2+Sz5VUmkFVCHmuvLjsqabFhT38KMh6yym25iRY
+	PUwSK+SL+wxp07eWVBkiHLxrHWyAHDtfF4q3o1eFYOJCMQV+s/bgw0Hf4JSR3bc=
+X-Gm-Gg: ASbGnct/mQPxdP7RquQ/gu708sP47O0p7PH3Xhfs2pwWvXS/71c6+iLYxMEgA/sNcwV
+	JuAA+barN4sIYTAdPZmvMCL4ZcA/LsiZA0MPSfmozX7xUpP1VB4Ze0+a/CHhfNhfYD+yBlKDCXO
+	PNPOo/z2tSly7eoOWhDwwlw+FPKqdZab3EKJcj6NGPYloS8WjPhCgBRpYaXL/RrCYTxnNr5mm03
+	RHQ/j16dnZCxUkQKY0mtbSgv2iobvk52XDGSyFpZWfcbXCfrhbWARMJwkA8X3xlBm/F2up4NIBB
+	3vuQt7XKQjpBSo4B/weEA9EJPSFBerzZsnAtp5Espan9ynuKnYKblBpfVr8Ur0DjTsqhKOx3aA=
+	=
+X-Google-Smtp-Source: AGHT+IEgPD+xDa6jr2Is2O2+Xj32Sel7N6UWscGct1y1fK9hAAcLY0xxiUzIYdVwngw880A7Z6/vOw==
+X-Received: by 2002:a5d:6da5:0:b0:391:2f71:bbb3 with SMTP id ffacd0b85a97d-3997f958f34mr10938614f8f.46.1742834991401;
+        Mon, 24 Mar 2025 09:49:51 -0700 (PDT)
+Received: from [192.168.68.117] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3997f9e6450sm11505850f8f.70.2025.03.24.09.49.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Mar 2025 09:49:50 -0700 (PDT)
+Message-ID: <1f090804-2ad6-4ab4-a6a3-aa5d482f320b@linaro.org>
+Date: Mon, 24 Mar 2025 16:49:50 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,78 +82,84 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] arm64: dts: qcom: sa8775p: Add default pin
- configurations for QUP SEs
-To: Bjorn Andersson <andersson@kernel.org>
-CC: <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_msavaliy@quicinc.com>, <quic_anupkulk@quicinc.com>
-References: <20250225154136.3052757-1-quic_vdadhani@quicinc.com>
- <keszvik5mrobfkdpgdz5rnl5l7tihgbpyd4en3dflmaflyl7io@d4my7wdrtkyg>
+Subject: Re: [PATCH v4 5/6] ASoC: codecs: wcd938x: add mux control support for
+ hp audio mux
+To: Peter Rosin <peda@axentia.se>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: broonie@kernel.org, andersson@kernel.org, krzk+dt@kernel.org,
+ ivprusov@salutedevices.com, luca.ceresoli@bootlin.com,
+ zhoubinbin@loongson.cn, paulha@opensource.cirrus.com, lgirdwood@gmail.com,
+ robh@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
+ perex@perex.cz, tiwai@suse.com, linux-sound@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, johan+linaro@kernel.org,
+ Christopher Obbard <christopher.obbard@linaro.org>
+References: <20250324130057.4855-1-srinivas.kandagatla@linaro.org>
+ <20250324130057.4855-6-srinivas.kandagatla@linaro.org>
+ <CAO9ioeX9RTBAeL3+9STn+=oEYR0wtaF6yoa=esNddEvqLQyO9Q@mail.gmail.com>
+ <e4e94fbf-172f-4cfd-becc-cb2836ac1fb1@linaro.org>
+ <ctcqkdbv6zh2rabkkr7tlhxlcfsn5nazjfbsnbbu4l4blyakft@pejdsvnazfh6>
+ <324d5789-6309-4a64-bbfa-3afa0632e7ff@linaro.org>
+ <8fbc8cd7-f8e7-e33b-74df-cdea389ac9a4@axentia.se>
 Content-Language: en-US
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-In-Reply-To: <keszvik5mrobfkdpgdz5rnl5l7tihgbpyd4en3dflmaflyl7io@d4my7wdrtkyg>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ikxVXsEEZAd1-hjUiVAsxZMkQpXz-xsw
-X-Proofpoint-ORIG-GUID: ikxVXsEEZAd1-hjUiVAsxZMkQpXz-xsw
-X-Authority-Analysis: v=2.4 cv=CPoqXQrD c=1 sm=1 tr=0 ts=67e18bdb cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=Fu_YwIdgIx9_JamtqNsA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-24_04,2025-03-21_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=988
- spamscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 mlxscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 phishscore=0
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503240120
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <8fbc8cd7-f8e7-e33b-74df-cdea389ac9a4@axentia.se>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 
 
-On 3/4/2025 10:05 AM, Bjorn Andersson wrote:
-> On Tue, Feb 25, 2025 at 09:11:36PM +0530, Viken Dadhaniya wrote:
->> Default pinctrl configurations for all QUP (Qualcomm Universal Peripheral)
->> Serial Engines (SEs) are missing in the SoC device tree. These
->> configurations are required by client teams when enabling any SEs as I2C,
->> SPI, or Serial protocols.
->>
->> Add default pin configurations for Serial Engines (SEs) for all supported
->> protocols, including I2C, SPI, and UART, to the sa8775p device tree.  This
->> change facilitates slave device driver clients to enable usecase with
->> minimal modifications.
->>
->> Additionally, move default pin configurations from target-specific files to
->> the SoC device tree file, as all possible pin configurations are now
->> comprehensively included in the SoC device tree, similar to other SoCs.
->>
->> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi |  88 --
->>   arch/arm64/boot/dts/qcom/sa8775p.dtsi      | 908 +++++++++++++++++++++
->>   2 files changed, 908 insertions(+), 88 deletions(-)
->>
-> [..]
->> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> [..]
->> +			qup_i2c0_default: qup-i2c0-state {
->> +				pins = "gpio20", "gpio21";
->> +				function = "qup0_se0";
->> +				drive-strength = <2>;
->> +				bias-pull-up;
+On 24/03/2025 16:33, Peter Rosin wrote:
+> Hi!
 > 
-> Look at other examples, such as sc7280.dtsi, and you will see that
-> drive-strength and bias are considered board-specific properties and
-> should thereby not go in the soc.dtsi file.
+> 2025-03-24 at 16:58, Srinivas Kandagatla wrote:
+>>
+>>
+>> On 24/03/2025 15:18, Dmitry Baryshkov wrote:
+>>> On Mon, Mar 24, 2025 at 01:58:06PM +0000, Srinivas Kandagatla wrote:
+>>>>
+>>>>
+>>>> On 24/03/2025 13:50, Dmitry Baryshkov wrote:
+>>>>> On Mon, 24 Mar 2025 at 15:01, <srinivas.kandagatla@linaro.org> wrote:
+>>>>>>
+>>>>>> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > 
+> *snip*
+> 
+>>>>>> +       int ret = mux_control_try_select(wcd938x->us_euro_mux, state);
+>>>>>
+>>>>> Hmm. Does this really work? You have selected the mux in probe
+>>>>> function, now you are trying to select it again. If I'm reading the
+>>>>> code correctly, you will get -EBUSY here.
+>>>>
+>>>> On successful selection of mux state, the mux will be kept available
+>>>> (mux_control_deselect) for any new callers.
+>>>>
+>>>> So we will not get EBUSY for the second caller.
+>>>
+>>> No. wcd938x_populate_dt_data() selects the state by calling
+>>> wcd938x_select_mux_state().
+>>
+>> At this point we also released it (both in success and error case).
+>>
+>> This will hold on to the previous state unless we have defined a fallback idle-state.
+>>
+>>
+>>   Then you call mux_control_try_select() here.
+>>> As far as I understand, it will return -EBUSY as the sempahore is > already taken. Moreover, this is not how the MUX API is supposed to be
+>>> used. The driver is supposed to hold a state while it is still in use.
+> 
+> Dmitry is correct. A mux consumer is supposed to keep the mux selected
+> while it needs the mux to remain in a certain state. Relying on details
+> such as idle as-is and that no other consumer butts in and clobbers the
+> state is fragile. Mux access is not exclusive, at least not until a
+> mux state is selected.
+Thanks Peter,  I agree that its fragile to depend on idle as-is flags.
 
-Removed drive-strength and bias in v2.
+Will update accordingly.
 
-> Thanks,
-> Bjorn
+--srini
+> 
+> Cheers,
+> Peter
 
