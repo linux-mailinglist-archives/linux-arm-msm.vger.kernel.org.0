@@ -1,192 +1,571 @@
-Return-Path: <linux-arm-msm+bounces-52344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14309A6DAB6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 14:03:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64912A6DAB9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 14:03:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 82F5A1893F1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 13:02:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3353D3AE9D1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 13:02:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C65B25EFBD;
-	Mon, 24 Mar 2025 13:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAB7425E466;
+	Mon, 24 Mar 2025 13:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XMXdQK2o"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="m0ljeSYU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABD625FA25
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 13:01:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90A912E5D;
+	Mon, 24 Mar 2025 13:01:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742821278; cv=none; b=nEGRp+ePctXJ2M+0DFc9ER+L93dv0iY0D9ogeKy++GH7YwRgbKusCW71nbyHYyBK3cWwy/Dr+I1BzRRKxELfl3X4pitJv1UnV9HnX72G6l41tUcqx2ooTFuRl556tfNvine/jUijpgXmebukzd+urU38hDmicQJ/Lb9qKgCn42I=
+	t=1742821318; cv=none; b=CF6Jm64nqhh3U7HYX8ICmOYJ9nwfS1/+FqSD7SBIxi5DIZpCSFQUrORkRjn1uSlxDgwwCJlxXLlZozIK3TJ/e8oG4zMj0iZ7CdodmkkPjvd5Z0Tq1ftxQi01KNK3lZsS8XFVsNtVEJIKM1GjfjsjadYsKGs2F/DB9dhEk/5kdak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742821278; c=relaxed/simple;
-	bh=4hK5NwvGZj3PELV41E3//V4IRXz5oGNBj9IGYps+vOQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=cM3mrGbd/i807HQh3ko0Eixn7uImp8YFruxfg+u83Ib6jbXFWWyKbaONml7CIYrfWN+FqK/5nd/LUBQca+F/qTDBdr3RriR5D4bKH5IUGCparMVhONUHGlrgI6oXBVTQTcO+vKxdyPBs+QfsHU44eSZDzUYhUXvvJZ866+pj4bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XMXdQK2o; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43d0782d787so30999125e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 06:01:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742821274; x=1743426074; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LHH3q92f3jVI2cl1PwT0LmA+qhtDvCooULm9gmNkwck=;
-        b=XMXdQK2omOUAqBS6EweSRdMI3k/1gGcvPb6WOQc8Mjus2qXhQOBdeqyWhLcS/GzjU1
-         SWuaZ3OY/S4zYpHL+/8fAolcDm10TWkV4hNUVTl1eRQBf65GU8cTCtCFMRzU+JUqFzzW
-         fq6TQl/Tf129BO1EjQJtHN16JJKLJADIRBOtaT4f1RK2fQXxJ2WC5USqCN629qefqPiQ
-         YTk+21Mdv+sZJHMOQR5wok3IuSLXqAl1pHReg0Vrl2JDxqWRU33NEIfSx8+TaM7DIPk7
-         IN6SpT1jResUy1qWDzIsPqr+g/FHZUmOmOFgp0NAWEuJbUzDaFi+/5gFrKCBBQXEqtuG
-         2fMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742821274; x=1743426074;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LHH3q92f3jVI2cl1PwT0LmA+qhtDvCooULm9gmNkwck=;
-        b=ux3BqqUSoYUFKGk1EY6vIZxT5XMoM4+FD0wcqQuE7JpFEpj0GO8K3s9PKmhbLNI0eA
-         9LrQSidOB7pC6zfqE+Dol58X/O/0p7SVCl740FtDymDS7dvThrBtQDHQUeZKM3TzD5ug
-         lNlMaacDA/Ijf+mrjIwAmHKPY24+ScJa7qLhLu6pCplDOF6HdzG0Eab88WjHTgK6zx4N
-         9+omAtJXg3t1hTT9Bw+EVH6q1SIFS7o5JqSBDeTx7ivrDELDNdtBJCjBc7A1j/TuRi5r
-         VfGa/Ml1XRcUGmg7XLUS7ORa3TXlLNBO4zL4gTZDmT7nwvAxK++Qw02Z+8HRIR4JRieS
-         ljoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWp+Ehtl+Z7e43yYrb8p40XxSa041sE74WWMiWogSRCq7Vg4awu/QLAaa6IG41i1Z5pMQNJxtlK9jOOQnIl@vger.kernel.org
-X-Gm-Message-State: AOJu0YxP+1lsEDk/UXib47waHl/B1TS2vI03hwPPeGtTHhktZczdy9xA
-	ASJErTYMeD3hVootyvK3sc274ClbiXp1mv6R+KOMvGILowtPR5O4T+ekSZGtRsM=
-X-Gm-Gg: ASbGncuric1O28mibD9vLOqzUqck7vQQJBUXT4lyGsiyA8QXfpWZPBTr/Aj/yx3F4Aw
-	fQKbgJNuV+C3XKj0OjG50xQnxoYjUt5Tq4fmulFnnLsv8Rtxmt/febQL0EDpb4l2UbH7Shdp4DC
-	nrUfcRyZxedchNlMTzT1Juj2c6cpSWL43VvrRDs77bI5JkqZ/yJjL2rBHA81D6yTDIgE2dFE8p+
-	qPDcd+HB7UieafhakxQznjjetPEpz14SBMRfSU4dEQqKOY2uWSZ8fuQvk+9Yvx3vfYmG/1gJjdB
-	U2nZ9PL8fxe7l8J2+EvF24T4q/yV7hKwYfJvSiDmJDcwskMe6BncL+QhQmNKZ7Vm+LFaIA==
-X-Google-Smtp-Source: AGHT+IGeenGXBUxGWQuSKN6iBis1h2PL0x44PYgwRi+E3q/OLy/gfMO1oiAs9uaXyCp/vP0FDPrvPw==
-X-Received: by 2002:a05:600c:3110:b0:43c:f44c:72a6 with SMTP id 5b1f17b1804b1-43d509e3394mr108748655e9.2.1742821272912;
-        Mon, 24 Mar 2025 06:01:12 -0700 (PDT)
-Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d4fdbd1c7sm122275975e9.40.2025.03.24.06.01.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Mar 2025 06:01:11 -0700 (PDT)
-From: srinivas.kandagatla@linaro.org
-To: peda@axentia.se,
-	broonie@kernel.org,
-	andersson@kernel.org,
-	krzk+dt@kernel.org
-Cc: ivprusov@salutedevices.com,
-	luca.ceresoli@bootlin.com,
-	zhoubinbin@loongson.cn,
-	paulha@opensource.cirrus.com,
-	lgirdwood@gmail.com,
-	robh@kernel.org,
-	conor+dt@kernel.org,
-	konradybcio@kernel.org,
-	perex@perex.cz,
-	tiwai@suse.com,
-	dmitry.baryshkov@oss.qualcomm.com,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	johan+linaro@kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Christopher Obbard <christopher.obbard@linaro.org>
-Subject: [PATCH v4 6/6] arm64: dts: qcom: x1e78100-t14s: Enable audio headset support
-Date: Mon, 24 Mar 2025 13:00:57 +0000
-Message-Id: <20250324130057.4855-7-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250324130057.4855-1-srinivas.kandagatla@linaro.org>
-References: <20250324130057.4855-1-srinivas.kandagatla@linaro.org>
+	s=arc-20240116; t=1742821318; c=relaxed/simple;
+	bh=ihBBmgUT3W5CaMbV4NU7zDMRbH2bfP7HN3NG9B1tM4o=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=bM22Gty/xB1caynvisEKFeBTvPKqGecyMTt5IUxlbUz0Ju2LF9HSivz9H6sf2ucsr9uHc8EzTiHl88L72qE8VU8ROO5qeJL44u786YsISuGJNOYjeeVIvbQrc3or602oEjPZC92KynthLQe2WIC3lzmv9NQjUwLw/OsiO54RMYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=m0ljeSYU; arc=none smtp.client-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1742821317; x=1774357317;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=ihBBmgUT3W5CaMbV4NU7zDMRbH2bfP7HN3NG9B1tM4o=;
+  b=m0ljeSYU8+PPQZFybrcYyr8rJ7cdt9vxZn3wNhUwp7HfnAwnKQhhlH51
+   cKhXWA2XfDEkjzjzyT59wJMzHzNdKm06SvNZS2fw2jEJByhFDjutFMGea
+   RGL5UyDA28Asbisb9f4P0DYj69bz45deD4ZaYkCLoluUnLbrxM0v5agkj
+   Erqaqk+4H/JYBIZZoDW6eqCMgyLTCYWjgMSPUZx1b/nyF4QoI+54x5S1B
+   vsuBnsNIANswKSKbxi7YfgmXAhwNebwnXoNydsAvmSZ6XDf/q4LriR+kA
+   HUr/iUNpfKzXWC/0vfMmwS/qrF5GmmD5bB7ROwNUV4Gp+y5rzP0thkkyJ
+   w==;
+X-CSE-ConnectionGUID: NWQNh7G8Qg+j15nMAkKNOw==
+X-CSE-MsgGUID: lfGwjyZdQoWYsRn98hK1qw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11383"; a="54228959"
+X-IronPort-AV: E=Sophos;i="6.14,272,1736841600"; 
+   d="scan'208";a="54228959"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Mar 2025 06:01:55 -0700
+X-CSE-ConnectionGUID: DJT30I4WRZu2KAgoYAKwog==
+X-CSE-MsgGUID: OLzwkDmvRRaCtgyeTtuRUw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,272,1736841600"; 
+   d="scan'208";a="124055961"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.251])
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Mar 2025 06:01:53 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Mon, 24 Mar 2025 15:01:49 +0200 (EET)
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kw@linux.com>, 
+    Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+    Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org, 
+    linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] PCI: Add sysfs support for exposing PTM context
+In-Reply-To: <20250324-pcie-ptm-v2-1-c7d8c3644b4a@linaro.org>
+Message-ID: <b76aaf39-1a03-ffbf-ae44-66dd01753bc7@linux.intel.com>
+References: <20250324-pcie-ptm-v2-0-c7d8c3644b4a@linaro.org> <20250324-pcie-ptm-v2-1-c7d8c3644b4a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+On Mon, 24 Mar 2025, Manivannan Sadhasivam via B4 Relay wrote:
 
-On Lenovo ThinkPad T14s, the headset is connected via a HiFi mux to
-support CTIA and OMTP headsets. This switch is used to minimise pop and
-click during headset type switching.
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> Precision Time Management (PTM) mechanism defined in PCIe spec r6.0,
+> sec 6.22 allows precise coordination of timing information across multiple
+> components in a PCIe hierarchy with independent local time clocks.
 
-Enable the mux controls required to power this switch along with wiring up
-gpio that control the headset switching.
+Hi Mani,
 
-Without this, headset audio will be very noisy and might see headset
-detection errors.
+PCIe r6.0.1 sec 6.22 is about Readiness Notification (RN) and PTM is 6.21, 
+did you perhaps mistype the section number?
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
----
- .../qcom/x1e78100-lenovo-thinkpad-t14s.dtsi   | 25 +++++++++++++++++++
- 1 file changed, 25 insertions(+)
+> PCI core already supports enabling PTM in the root port and endpoint
+> devices through PTM Extended Capability registers. But the PTM context
+> supported by the PTM capable components such as Root Complex (RC) and
+> Endpoint (EP) controllers were not exposed as of now.
+> 
+> Hence, add the sysfs support to expose the PTM context to userspace from
+> both PCIe RC and EP controllers. Controller drivers are expected to call
+> pcie_ptm_create_sysfs() to create the sysfs attributes for the PTM context
+> and call pcie_ptm_destroy_sysfs() to destroy them. The drivers should also
+> populate the relevant callbacks in the 'struct pcie_ptm_ops' structure
+> based on the controller implementation.
+> 
+> Below PTM context are exposed through sysfs:
+> 
+> PCIe RC
+> =======
+> 
+> 1. PTM Local clock
+> 2. PTM T2 timestamp
+> 3. PTM T3 timestamp
+> 4. PTM Context valid
+> 
+> PCIe EP
+> =======
+> 
+> 1. PTM Local clock
+> 2. PTM T1 timestamp
+> 3. PTM T4 timestamp
+> 4. PTM Master clock
+> 5. PTM Context update
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  Documentation/ABI/testing/sysfs-platform-pcie-ptm |  70 ++++++
+>  MAINTAINERS                                       |   1 +
+>  drivers/pci/pcie/ptm.c                            | 268 ++++++++++++++++++++++
+>  include/linux/pci.h                               |  35 +++
+>  4 files changed, 374 insertions(+)
+> 
+> diff --git a/Documentation/ABI/testing/sysfs-platform-pcie-ptm b/Documentation/ABI/testing/sysfs-platform-pcie-ptm
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..010c3e32e2b8eaf352a8e1aad7420d8a3e948dae
+> --- /dev/null
+> +++ b/Documentation/ABI/testing/sysfs-platform-pcie-ptm
+> @@ -0,0 +1,70 @@
+> +What:		/sys/devices/platform/*/ptm/local_clock
+> +Date:		February 2025
+> +Contact:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +Description:
+> +		(RO) PTM local clock in nanoseconds. Applicable for both Root
+> +		Complex and Endpoint controllers.
+> +
+> +What:		/sys/devices/platform/*/ptm/master_clock
+> +Date:		February 2025
+> +Contact:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +Description:
+> +		(RO) PTM master clock in nanoseconds. Applicable only for
+> +		Endpoint controllers.
+> +
+> +What:		/sys/devices/platform/*/ptm/t1
+> +Date:		February 2025
+> +Contact:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +Description:
+> +		(RO) PTM T1 timestamp in nanoseconds. Applicable only for
+> +		Endpoint controllers.
+> +
+> +What:		/sys/devices/platform/*/ptm/t2
+> +Date:		February 2025
+> +Contact:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +Description:
+> +		(RO) PTM T2 timestamp in nanoseconds. Applicable only for
+> +		Root Complex controllers.
+> +
+> +What:		/sys/devices/platform/*/ptm/t3
+> +Date:		February 2025
+> +Contact:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +Description:
+> +		(RO) PTM T3 timestamp in nanoseconds. Applicable only for
+> +		Root Complex controllers.
+> +
+> +What:		/sys/devices/platform/*/ptm/t4
+> +Date:		February 2025
+> +Contact:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +Description:
+> +		(RO) PTM T4 timestamp in nanoseconds. Applicable only for
+> +		Endpoint controllers.
+> +
+> +What:		/sys/devices/platform/*/ptm/context_update
+> +Date:		February 2025
+> +Contact:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +Description:
+> +		(RW) Control the PTM context update mode. Applicable only for
+> +		Endpoint controllers.
+> +
+> +		Following values are supported:
+> +
+> +		* auto = PTM context auto update trigger for every 10ms
+> +
+> +		* manual = PTM context manual update. Writing 'manual' to this
+> +			   file triggers PTM context update (default)
+> +
+> +What:		/sys/devices/platform/*/ptm/context_valid
+> +Date:		February 2025
+> +Contact:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +Description:
+> +		(RW) Control the PTM context validity (local clock timing).
+> +		Applicable only for Root Complex controllers. PTM context is
+> +		invalidated by hardware if the Root Complex enters low power
+> +		mode or changes link frequency.
+> +
+> +		Following values are supported:
+> +
+> +		* 0 = PTM context invalid (default)
+> +
+> +		* 1 = PTM context valid
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b4d09d52a750b320f689c1365791cdfa6e719fde..f1bac092877df739328347481bd14f6701a7df19 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -18213,6 +18213,7 @@ Q:	https://patchwork.kernel.org/project/linux-pci/list/
+>  B:	https://bugzilla.kernel.org
+>  C:	irc://irc.oftc.net/linux-pci
+>  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git
+> +F:	Documentation/ABI/testing/sysfs-platform-pcie-ptm
+>  F:	Documentation/devicetree/bindings/pci/
+>  F:	drivers/pci/controller/
+>  F:	drivers/pci/pci-bridge-emul.c
+> diff --git a/drivers/pci/pcie/ptm.c b/drivers/pci/pcie/ptm.c
+> index 7cfb6c0d5dcb6de2a759b56d6877c95102b3d10f..bfa632b76a87ad304e966a8edfb5dba14d58a23c 100644
+> --- a/drivers/pci/pcie/ptm.c
+> +++ b/drivers/pci/pcie/ptm.c
+> @@ -10,6 +10,8 @@
+>  #include <linux/pci.h>
+>  #include "../pci.h"
+>  
+> +struct device *ptm_device;
+> +
+>  /*
+>   * If the next upstream device supports PTM, return it; otherwise return
+>   * NULL.  PTM Messages are local, so both link partners must support it.
+> @@ -252,3 +254,269 @@ bool pcie_ptm_enabled(struct pci_dev *dev)
+>  	return dev->ptm_enabled;
+>  }
+>  EXPORT_SYMBOL(pcie_ptm_enabled);
+> +
+> +static ssize_t context_update_store(struct device *dev,
+> +			      struct device_attribute *attr,
+> +			      const char *buf, size_t count)
+> +{
+> +	struct pcie_ptm *ptm = dev_get_drvdata(dev);
+> +	int ret;
+> +
+> +	if (!ptm->ops->context_update_store)
+> +		return -EOPNOTSUPP;
+> +
+> +	ret = ptm->ops->context_update_store(ptm->pdata, buf);
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-index afea82616bc4..34d1d8927484 100644
---- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-@@ -41,6 +41,7 @@ wcd938x: audio-codec {
- 		qcom,tx-device = <&wcd_tx>;
- 
- 		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
-+		mux-controls = <&us_euro_mux_ctrl>;
- 
- 		vdd-buck-supply = <&vreg_l15b_1p8>;
- 		vdd-rxtx-supply = <&vreg_l15b_1p8>;
-@@ -149,6 +150,16 @@ pmic_glink_ss1_con_sbu_in: endpoint {
- 		};
- 	};
- 
-+	/* two muxes together support CTIA and OMTP switching */
-+	us_euro_mux_ctrl: mux-controller {
-+		compatible = "gpio-mux";
-+		pinctrl-0 = <&us_euro_hs_sel>;
-+		pinctrl-names = "default";
-+		mux-supply = <&vreg_l16b_2p5>;
-+		#mux-control-cells = <0>;
-+		mux-gpios = <&tlmm 68 GPIO_ACTIVE_HIGH>;
-+	};
-+
- 	reserved-memory {
- 		linux,cma {
- 			compatible = "shared-dma-pool";
-@@ -604,6 +615,13 @@ vreg_l15b_1p8: ldo15 {
- 			regulator-always-on;
- 		};
- 
-+		vreg_l16b_2p5: ldo16 {
-+			regulator-name = "vreg_l16b_2p5";
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2504000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l17b_2p5: ldo17 {
- 			regulator-name = "vreg_l17b_2p5";
- 			regulator-min-microvolt = <2504000>;
-@@ -1461,6 +1479,13 @@ rtmr1_default: rtmr1-reset-n-active-state {
- 		bias-disable;
- 	};
- 
-+	us_euro_hs_sel: us-euro-hs-sel-state {
-+		pins = "gpio68";
-+		function = "gpio";
-+		bias-pull-down;
-+		drive-strength = <2>;
-+	};
-+
- 	usb1_pwr_1p15_reg_en: usb1-pwr-1p15-reg-en-state {
- 		pins = "gpio188";
- 		function = "gpio";
+Do these store funcs need some locking? Who is responsible about it?
+
+Why isn't buf parsed here and converted to some define/enum values, what 
+is the advantage of passing it on as char *?
+
 -- 
-2.39.5
+ i.
 
+> +	if (ret)
+> +		return ret;
+> +
+> +	return count;
+> +}
+> +
+> +static ssize_t context_update_show(struct device *dev,
+> +			      struct device_attribute *attr, char *buf)
+> +{
+> +	struct pcie_ptm *ptm = dev_get_drvdata(dev);
+> +
+> +	if (!ptm->ops->context_update_show)
+> +		return -EOPNOTSUPP;
+> +
+> +	return ptm->ops->context_update_show(ptm->pdata, buf);
+> +}
+> +
+> +static ssize_t context_valid_store(struct device *dev,
+> +			      struct device_attribute *attr,
+> +			      const char *buf, size_t count)
+> +{
+> +	struct pcie_ptm *ptm = dev_get_drvdata(dev);
+> +	unsigned long arg;
+> +	int ret;
+> +
+> +	if (kstrtoul(buf, 0, &arg) < 0)
+> +		return -EINVAL;
+> +
+> +	if (!ptm->ops->context_valid_store)
+> +		return -EOPNOTSUPP;
+> +
+> +	ret = ptm->ops->context_valid_store(ptm->pdata, !!arg);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return count;
+> +}
+> +
+> +static ssize_t context_valid_show(struct device *dev,
+> +			      struct device_attribute *attr, char *buf)
+> +{
+> +	struct pcie_ptm *ptm = dev_get_drvdata(dev);
+> +
+> +	if (!ptm->ops->context_valid_show)
+> +		return -EOPNOTSUPP;
+> +
+> +	return ptm->ops->context_valid_show(ptm->pdata, buf);
+> +}
+> +
+> +static ssize_t local_clock_show(struct device *dev,
+> +			      struct device_attribute *attr, char *buf)
+> +{
+> +	struct pcie_ptm *ptm = dev_get_drvdata(dev);
+> +
+> +	if (!ptm->ops->local_clock_show)
+> +		return -EOPNOTSUPP;
+> +
+> +	return ptm->ops->local_clock_show(ptm->pdata, buf);
+> +}
+> +
+> +static ssize_t master_clock_show(struct device *dev,
+> +			      struct device_attribute *attr, char *buf)
+> +{
+> +	struct pcie_ptm *ptm = dev_get_drvdata(dev);
+> +
+> +	if (!ptm->ops->master_clock_show)
+> +		return -EOPNOTSUPP;
+> +
+> +	return ptm->ops->master_clock_show(ptm->pdata, buf);
+> +}
+> +
+> +static ssize_t t1_show(struct device *dev,
+> +			      struct device_attribute *attr, char *buf)
+> +{
+> +	struct pcie_ptm *ptm = dev_get_drvdata(dev);
+> +
+> +	if (!ptm->ops->t1_show)
+> +		return -EOPNOTSUPP;
+> +
+> +	return ptm->ops->t1_show(ptm->pdata, buf);
+> +}
+> +
+> +static ssize_t t2_show(struct device *dev,
+> +			      struct device_attribute *attr, char *buf)
+> +{
+> +	struct pcie_ptm *ptm = dev_get_drvdata(dev);
+> +
+> +	if (!ptm->ops->t2_show)
+> +		return -EOPNOTSUPP;
+> +
+> +	return ptm->ops->t2_show(ptm->pdata, buf);
+> +}
+> +
+> +static ssize_t t3_show(struct device *dev,
+> +			      struct device_attribute *attr, char *buf)
+> +{
+> +	struct pcie_ptm *ptm = dev_get_drvdata(dev);
+> +
+> +	if (!ptm->ops->t3_show)
+> +		return -EOPNOTSUPP;
+> +
+> +	return ptm->ops->t3_show(ptm->pdata, buf);
+> +}
+> +
+> +static ssize_t t4_show(struct device *dev,
+> +			      struct device_attribute *attr, char *buf)
+> +{
+> +	struct pcie_ptm *ptm = dev_get_drvdata(dev);
+> +
+> +	if (!ptm->ops->t4_show)
+> +		return -EOPNOTSUPP;
+> +
+> +	return ptm->ops->t4_show(ptm->pdata, buf);
+> +}
+> +
+> +static DEVICE_ATTR_RW(context_update);
+> +static DEVICE_ATTR_RW(context_valid);
+> +static DEVICE_ATTR_RO(local_clock);
+> +static DEVICE_ATTR_RO(master_clock);
+> +static DEVICE_ATTR_RO(t1);
+> +static DEVICE_ATTR_RO(t2);
+> +static DEVICE_ATTR_RO(t3);
+> +static DEVICE_ATTR_RO(t4);
+> +
+> +static struct attribute *pcie_ptm_attrs[] = {
+> +	&dev_attr_context_update.attr,
+> +	&dev_attr_context_valid.attr,
+> +	&dev_attr_local_clock.attr,
+> +	&dev_attr_master_clock.attr,
+> +	&dev_attr_t1.attr,
+> +	&dev_attr_t2.attr,
+> +	&dev_attr_t3.attr,
+> +	&dev_attr_t4.attr,
+> +	NULL
+> +};
+> +
+> +static umode_t pcie_ptm_attr_visible(struct kobject *kobj, struct attribute *attr,
+> +				int n)
+> +{
+> +	struct device *dev = container_of(kobj, struct device, kobj);
+> +	struct pcie_ptm *ptm = dev_get_drvdata(dev);
+> +
+> +	if ((attr == &dev_attr_t1.attr && ptm->ops->t1_visible &&
+> +	     ptm->ops->t1_visible(ptm->pdata)) ||
+> +	    (attr == &dev_attr_t2.attr && ptm->ops->t2_visible &&
+> +	     ptm->ops->t2_visible(ptm->pdata)) ||
+> +	    (attr == &dev_attr_t3.attr && ptm->ops->t3_visible &&
+> +	     ptm->ops->t3_visible(ptm->pdata)) ||
+> +	    (attr == &dev_attr_t4.attr && ptm->ops->t4_visible &&
+> +	     ptm->ops->t4_visible(ptm->pdata)) ||
+> +	    (attr == &dev_attr_local_clock.attr &&
+> +	     ptm->ops->local_clock_visible &&
+> +	     ptm->ops->local_clock_visible(ptm->pdata)) ||
+> +	    (attr == &dev_attr_master_clock.attr &&
+> +	     ptm->ops->master_clock_visible &&
+> +	     ptm->ops->master_clock_visible(ptm->pdata)) ||
+> +	    (attr == &dev_attr_context_update.attr &&
+> +	     ptm->ops->context_update_visible &&
+> +	     ptm->ops->context_update_visible(ptm->pdata)) ||
+> +	    (attr == &dev_attr_context_valid.attr &&
+> +	     ptm->ops->context_valid_visible &&
+> +	     ptm->ops->context_valid_visible(ptm->pdata)))
+> +		return attr->mode;
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct attribute_group pcie_ptm_attr_group = {
+> +	.attrs = pcie_ptm_attrs,
+> +	.is_visible = pcie_ptm_attr_visible,
+> +};
+> +
+> +static const struct attribute_group *pcie_ptm_attr_groups[] = {
+> +	&pcie_ptm_attr_group,
+> +	NULL,
+> +};
+> +
+> +static void pcie_ptm_release(struct device *dev)
+> +{
+> +	struct pcie_ptm *ptm = container_of(dev, struct pcie_ptm, dev);
+> +
+> +	kfree(ptm);
+> +}
+> +
+> +/*
+> + * pcie_ptm_create_sysfs() - Create sysfs entries for the PTM context
+> + * @dev: PTM capable component device
+> + * @pdata: Private data of the PTM capable component device
+> + * @ops: PTM callback structure
+> + *
+> + * Create sysfs entries for exposing the PTM context of the PTM capable
+> + * components such as Root Complex and Endpoint controllers.
+> + */
+> +int pcie_ptm_create_sysfs(struct device *dev, void *pdata,
+> +			  struct pcie_ptm_ops *ops)
+> +{
+> +	struct pcie_ptm *ptm;
+> +	int ret;
+> +
+> +	/* Caller must provide check_capability() callback */
+> +	if (!ops->check_capability)
+> +		return -EINVAL;
+> +
+> +	/* Check for PTM capability before creating sysfs attrbutes */
+> +	ret = ops->check_capability(pdata);
+> +	if (!ret) {
+> +		dev_dbg(dev, "PTM capability not present\n");
+> +		return -ENODATA;
+> +	}
+> +
+> +	ptm = kzalloc(sizeof(*ptm), GFP_KERNEL);
+> +	if (!ptm)
+> +		return -ENOMEM;
+> +
+> +	ptm->pdata = pdata;
+> +	ptm->ops = ops;
+> +
+> +	device_initialize(&ptm->dev);
+> +	ptm->dev.groups = pcie_ptm_attr_groups;
+> +	ptm->dev.release = pcie_ptm_release;
+> +	ptm->dev.parent = dev;
+> +	dev_set_drvdata(&ptm->dev, ptm);
+> +	device_set_pm_not_required(&ptm->dev);
+> +
+> +	ret = dev_set_name(&ptm->dev, "ptm");
+> +	if (ret)
+> +		goto err_put_device;
+> +
+> +	ret = device_add(&ptm->dev);
+> +	if (ret)
+> +		goto err_put_device;
+> +
+> +	ptm_device = &ptm->dev;
+> +
+> +	return 0;
+> +
+> +err_put_device:
+> +	put_device(&ptm->dev);
+> +
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL(pci_ptm_init);
+> +
+> +/*
+> + * pcie_ptm_destroy_sysfs() - Destroy sysfs entries for the PTM context
+> + */
+> +void pcie_ptm_destroy_sysfs(void)
+> +{
+> +	if (ptm_device) {
+> +		device_unregister(ptm_device);
+> +		ptm_device = NULL;
+> +	}
+> +}
+> +EXPORT_SYMBOL(pcie_ptm_destroy_sysfs);
+> diff --git a/include/linux/pci.h b/include/linux/pci.h
+> index 47b31ad724fa5bf7abd7c3dc572947551b0f2148..42bb3cf0212e96fd65a1f01410ef70c82491c9eb 100644
+> --- a/include/linux/pci.h
+> +++ b/include/linux/pci.h
+> @@ -1857,16 +1857,51 @@ static inline bool pci_aer_available(void) { return false; }
+>  
+>  bool pci_ats_disabled(void);
+>  
+> +struct pcie_ptm_ops {
+> +	int (*check_capability)(void *drvdata);
+> +	int (*context_update_store)(void *drvdata, const char *buf);
+> +	ssize_t (*context_update_show)(void *drvdata, char *buf);
+> +	int (*context_valid_store)(void *drvdata, bool valid);
+> +	ssize_t (*context_valid_show)(void *drvdata, char *buf);
+> +	ssize_t (*local_clock_show)(void *drvdata, char *buf);
+> +	ssize_t (*master_clock_show)(void *drvdata, char *buf);
+> +	ssize_t (*t1_show)(void *drvdata, char *buf);
+> +	ssize_t (*t2_show)(void *drvdata, char *buf);
+> +	ssize_t (*t3_show)(void *drvdata, char *buf);
+> +	ssize_t (*t4_show)(void *drvdata, char *buf);
+> +
+> +	bool (*context_update_visible)(void *drvdata);
+> +	bool (*context_valid_visible)(void *drvdata);
+> +	bool (*local_clock_visible)(void *drvdata);
+> +	bool (*master_clock_visible)(void *drvdata);
+> +	bool (*t1_visible)(void *drvdata);
+> +	bool (*t2_visible)(void *drvdata);
+> +	bool (*t3_visible)(void *drvdata);
+> +	bool (*t4_visible)(void *drvdata);
+> +};
+> +
+> +struct pcie_ptm {
+> +	struct device dev;
+> +	struct pcie_ptm_ops *ops;
+> +	void *pdata;
+> +};
+> +
+>  #ifdef CONFIG_PCIE_PTM
+>  int pci_enable_ptm(struct pci_dev *dev, u8 *granularity);
+>  void pci_disable_ptm(struct pci_dev *dev);
+>  bool pcie_ptm_enabled(struct pci_dev *dev);
+> +int pcie_ptm_create_sysfs(struct device *dev, void *pdata, struct pcie_ptm_ops *ops);
+> +void pcie_ptm_destroy_sysfs(void);
+>  #else
+>  static inline int pci_enable_ptm(struct pci_dev *dev, u8 *granularity)
+>  { return -EINVAL; }
+>  static inline void pci_disable_ptm(struct pci_dev *dev) { }
+>  static inline bool pcie_ptm_enabled(struct pci_dev *dev)
+>  { return false; }
+> +static inline int pcie_ptm_create_sysfs(struct device *dev, void *pdata,
+> +				 struct pcie_ptm_ops *ops)
+> +{ return 0; }
+> +static inline void pcie_ptm_destroy_sysfs(void) { }
+>  #endif
+>  
+>  void pci_cfg_access_lock(struct pci_dev *dev);
+> 
+> 
 
