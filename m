@@ -1,109 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-52308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F896A6D8CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 12:02:43 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 020D1A6D8D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 12:06:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2FA8316AC52
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 11:02:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 87E1416952C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Mar 2025 11:06:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 217DA1487D1;
-	Mon, 24 Mar 2025 11:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8945A25C703;
+	Mon, 24 Mar 2025 11:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="yOI7/oRW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fYvT1/Ls"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 003.mia.mailroute.net (003.mia.mailroute.net [199.89.3.6])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA252C80;
-	Mon, 24 Mar 2025 11:02:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.3.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31851E3DE5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 11:06:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742814160; cv=none; b=bWC6rx4e3O+0lS/t9n9LfCoZmFgf4BV4GsIoCMwqoXaLyAC1CsKW4P9BvTT0hc+AU3QA6sRAaoj1nOOdLkAHnTFKr9VBMCg7C335rF/NOMyRB466XnSy8CCwGlLS0eAKN+k+b8BEC0whvZmWAZOcZN3cXt6Dt1JNiRxA+q4IVf4=
+	t=1742814381; cv=none; b=DYiKIBc3FGV2d3bdAUtQ1ssDL7bDeOOfxmbE6NYG/N+GN+2N+NpHwcrkSw7KQclcnmKSBOgFqyd5qSE5Sfm5SxypLF1WSfMDlGe4FKGiwuXJVpSJAVZT6+/1i4oKy922qMAq7+BwHgF3XGczEM5zZHofDKvgR+sU94gr5y6oM5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742814160; c=relaxed/simple;
-	bh=1JesYhBF8Hs5fgCeMj1bwvbhhCqj11DO9tdHIVFb1Do=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BUg+qhRjEF/aoeNSQzbpNmxIgveuNr8fmx+Zl7GoapYBY9riOZ/XoN2lN4n7HubKnvsX/3Y5GXMshR+1lKsLxjHt9BwqJXQrwMC6jrFdUe55Xy/0B6TYvnMreBcKj6tARvqAvPRrAqTBeOrBDuVSgvtSh6Qi1e1iOd138Wwty1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=yOI7/oRW; arc=none smtp.client-ip=199.89.3.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 003.mia.mailroute.net (Postfix) with ESMTP id 4ZLqrs2LSTzlrnRb;
-	Mon, 24 Mar 2025 11:02:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1742814155; x=1745406156; bh=AHVZb8o6xuG6edhOIrcokBGX
-	1qq9SAaDQUp+MtVAobs=; b=yOI7/oRWbEdY8h+Q2AzHj84P2zpRfC8oEyrPGWLr
-	RdHKQYpLEX7Knunn/C6wVaby9+vXfAjkqXwLa9+ZT9T2F3xsuqBBV0eSH4uzEr8W
-	7vf7rZczG/+wz4WZN2GHs95Dk91ZP09uxYatS1giQIJJnhbsmfdhlg8q4f+fCUmN
-	hqPY0Zp6DpD85Ld/snXwHs0s626II3qnciP1kfwCB3QBTddHZH0X2cDrwIRS23uD
-	X+009ZfA92wyuZAR8O+F63ENcQLhvD/F9QFYiBoPfmS6iLaBfdXdSadWiyQQASte
-	sfx1lihrPUK2UOzLM3PtEBiYYwIsf+ulPHqXGa1bFWBZlA==
-X-Virus-Scanned: by MailRoute
-Received: from 003.mia.mailroute.net ([127.0.0.1])
- by localhost (003.mia [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id Sv3ohFgoL4sO; Mon, 24 Mar 2025 11:02:35 +0000 (UTC)
-Received: from [172.22.32.156] (unknown [99.209.85.25])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 003.mia.mailroute.net (Postfix) with ESMTPSA id 4ZLqrh17H8zm8kvP;
-	Mon, 24 Mar 2025 11:02:26 +0000 (UTC)
-Message-ID: <e9f33f59-da1f-426b-8bdd-3c47397abf29@acm.org>
-Date: Mon, 24 Mar 2025 07:02:25 -0400
+	s=arc-20240116; t=1742814381; c=relaxed/simple;
+	bh=Fajt6GQE8QH5YN/HGXfsUTV/hu9B35JpoBIyhgJYBZI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Dv/FWImD8uKW54ujd+r/QaagjWxM3p0HGEGVsjItLXcYp6qfV6VTEsUItdjPIcpHWaERNqzoZ7jokKA5dNzuf5aYdackz5qNY9a8h1Zig3zZDaru1+LDr3ooXcapocQdC2MjY6Z2ZTWpYmtqMqjh4IWDpKelj5gGvvEuCGnaVW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fYvT1/Ls; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43948021a45so34566675e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 04:06:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1742814378; x=1743419178; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3WP0bnIzPp/bKVB6iCB93JUW+VRZsKoHPmvfeJJHBNw=;
+        b=fYvT1/LsLbI6OxTYIU6p7yL4L3OgGeAHqF011CqWDGii24eCK4/QBfrpT5W4bdOsmv
+         RODIMrgPASe4Tj2/7d7HPA4BO0jUhWMS/Izvf9Hlq9OawvC2NIbrs8JgvKdsq4xYZ4xR
+         gVx/3TAXsmNbTJbWVzLz9OHQVicrxa/u7HGgtrOec0i+Up+q+weYUfrHsvuPudrcZxQU
+         Afr9S8H/S0xDr9hzrBvXrKyf8U2g1uW65pjPcewGf52DYMk3s52zQaja5q+nvqYJJXNv
+         igWcCs5yu9yTexvAvf7LPJk7OzLZyeTdagnP+frY09aEsifH3KqOJt75nHiuwk79491a
+         4cbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742814378; x=1743419178;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3WP0bnIzPp/bKVB6iCB93JUW+VRZsKoHPmvfeJJHBNw=;
+        b=F1dmVyleUhpt6Mqbqhsafnx9MUGNIS60fAIhdU3EfDWKQbIzvgN9lzwFjGchSYdeE+
+         OtwR6H9pohB8ynFvCGHSPDH2nJMsrYh6ERDDPk87EErFMfPJ8ZtIZY2xnTceCmuEksWi
+         a/uv/DUO58pawvYg6aOtIpXsl+DkRy+pdfb8SMxwM+AKdXgiYCQcr3l3QBvvUDi5X46j
+         9Mh0vEP56vW6O4HyG+0r2ZSYCu7AS9oXfPL0jjuIUdbqnOD0WhjZyDdiXqnSjL+lwFc5
+         cR9G2pXbLqhcj0/at47aIFhbDkAl6jilpkpXh8WOA6jiI5V2SH7mvwIwHnGAm/Mah0eU
+         pbLg==
+X-Forwarded-Encrypted: i=1; AJvYcCUc/y+hFEbjudB9YEc309KHF74joLl/uviNafhbpeQPosl4OQvz7KmLdkTyLPHJarRvDlgoT1YldUm9vTlS@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVLXk7b0csuz5ROrWTjqwAZVpGpf4PfYY2TBt9YUMCXfxWAxwm
+	jVyqLmpSdP9nRQYFhRsCFzyBvpP0lkV9z5dmCeJSXIkdmrJcvzwUWNkloDRxfIg=
+X-Gm-Gg: ASbGncuBwxPds9Rfius5RkxeC7WZA/9dKJaqaWm0OMl/SB0TCf0myCknr7E7auSzaPn
+	Qduc1+ZF+ksCnjVISfrNM9CrFq2PmtqFyCFd6v4+fA2zoxwUFwgIkP3caJDcmrbHC2X11vn8Nuz
+	jbSCnHLapiU7aIspQnPffBb2Xu/OnEj6bsPSy4YSVQGFnpboZ2t3laVipQ8asDbo9Bk5kBnywYE
+	SZGxP3czc25IdFAqY2fjVkP35ksVAOir3ezG7FfgYC5lZukFPR4AXZgjezBAUDAdl59+vBLIC8f
+	0g9DHs+OhHh+oVZ+lapLvn816L0WLo/TtsTxtTRvLeNi6uxl+lqXPj5jrGSEYT0LWN5C1ibx5oo
+	/2v+B
+X-Google-Smtp-Source: AGHT+IGW+HXesDe2Nb6k7C43YiVAVslLNYvXirFy+tXP9WmjZ+UJP/9gumiDNsak+/cyJra/6fapvg==
+X-Received: by 2002:a05:6000:1566:b0:391:3291:e416 with SMTP id ffacd0b85a97d-3997f903a53mr11643747f8f.19.1742814377893;
+        Mon, 24 Mar 2025 04:06:17 -0700 (PDT)
+Received: from localhost.localdomain ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d4fd28a46sm117236055e9.24.2025.03.24.04.06.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Mar 2025 04:06:17 -0700 (PDT)
+From: srinivas.kandagatla@linaro.org
+To: peda@axentia.se,
+	broonie@kernel.org,
+	andersson@kernel.org,
+	krzk+dt@kernel.org
+Cc: ivprusov@salutedevices.com,
+	luca.ceresoli@bootlin.com,
+	zhoubinbin@loongson.cn,
+	paulha@opensource.cirrus.com,
+	lgirdwood@gmail.com,
+	robh@kernel.org,
+	conor+dt@kernel.org,
+	konradybcio@kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	dmitry.baryshkov@oss.qualcomm.com,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	johan+linaro@kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v3 0/6] ASoC: wcd938x: enable t14s audio headset
+Date: Mon, 24 Mar 2025 11:06:00 +0000
+Message-Id: <20250324110606.32001-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] ufs: delegate the interrupt service routine to a
- threaded irq handler
-To: neil.armstrong@linaro.org, Alim Akhtar <alim.akhtar@samsung.com>,
- Avri Altman <avri.altman@wdc.com>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250321-topic-ufs-use-threaded-irq-v1-1-7a55816a4b1d@linaro.org>
- <31b46812-72d5-4f9d-b55d-16a6e10afe7d@acm.org>
- <d084e50e-8b2b-4820-a5e7-25ec440d128e@linaro.org>
-Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <d084e50e-8b2b-4820-a5e7-25ec440d128e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On 3/24/25 5:31 AM, Neil Armstrong wrote:
-> On 21/03/2025 17:20, Bart Van Assche wrote:
->> - Instead of retaining hba->ufs_stats.last_intr_status and
->> =C2=A0=C2=A0 hba->ufs_stats.last_intr_ts, please remove both members a=
-nd also
->> =C2=A0=C2=A0 the debug code that reports the values of these member va=
-riables.
->> =C2=A0=C2=A0 Please also remove hba->intr_en.
->=20
-> Hmm ok so no need for the IRQ debug code anymore ? I guess this should
-> be in a separate cleanup patch.
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-Hi Neil,
+On Lenovo ThinkPad T14s, the headset is connected via a HiFi Switch to
+support CTIA and OMTP headsets. This switch is used to minimise pop and
+click during headset type switching.
 
-There are two reasons why I propose to remove that code:
-- I don't think that it is possible to keep that code and switch to
-   threaded interrupts without a measurable negative performance impact.
-- That debug code is primarily useful for hardware (SoC) debugging,
-   something that falls outside the scope of the UFS driver.
+This patchset adds required bindings and changes to codec and dts to   
+tnable the regulator required to power this switch along with wiring up
+gpio that control the headset switching.
 
-Thanks,
+Without this patchset, there will be lots of noise on headset and mic
+will not we functional.
+   
+Changes since v2:
+	- udpated bindings as suggested by Rob and Krzysztof
+	- cleaned up swap_gnd_mic callback
+	- updated mux gpio to use dev_err_probe.
+	- added Tested-by and reviewed-by tags 
 
-Bart.
+Changes since v1:
+	- moved to using mux-controls.
+	- fixed typo in regulator naming.
+
+Srinivas Kandagatla (6):
+  dt-bindings: mux: add optional regulator binding to gpio mux
+  mux: gpio: add optional regulator support
+  ASoC: codecs: wcd-mbhc: cleanup swap_gnd_mic api
+  ASoC: dt-bindings: wcd93xx: add bindings for audio mux controlling hp
+  ASoC: codecs: wcd938x: add mux control support for hp audio mux
+  arm64: dts: qcom: x1e78100-t14s: Enable audio headset support
+
+ .../devicetree/bindings/mux/gpio-mux.yaml     |  4 ++
+ .../bindings/sound/qcom,wcd938x.yaml          |  6 +++
+ .../qcom/x1e78100-lenovo-thinkpad-t14s.dtsi   | 25 ++++++++++++
+ drivers/mux/gpio.c                            |  5 +++
+ sound/soc/codecs/Kconfig                      |  1 +
+ sound/soc/codecs/wcd-mbhc-v2.c                |  2 +-
+ sound/soc/codecs/wcd-mbhc-v2.h                |  2 +-
+ sound/soc/codecs/wcd937x.c                    |  2 +-
+ sound/soc/codecs/wcd938x.c                    | 40 ++++++++++++++-----
+ sound/soc/codecs/wcd939x.c                    |  2 +-
+ 10 files changed, 76 insertions(+), 13 deletions(-)
+
+-- 
+2.39.5
+
 
