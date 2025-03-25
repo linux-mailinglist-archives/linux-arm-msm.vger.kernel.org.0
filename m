@@ -1,86 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-52479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9870A7075F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 17:50:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D6F6A70767
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 17:53:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F6253B2A05
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 16:46:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0647D1885A4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 16:53:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7B4125D8E1;
-	Tue, 25 Mar 2025 16:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD35E25EF9B;
+	Tue, 25 Mar 2025 16:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qKjnQa8r"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nDMqUQSp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3050E18024
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 16:46:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9B125A322
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 16:53:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742921177; cv=none; b=gE25N3RB5ZPBdp+373+q/D/O3TRfxUSgheRKv1WkVK9Ted45AuMGh9FW5pQ3xlCbBYz4WZGXQ5sFvNg3uBcAizXomckc2CuGBuTatqh15weAi429eAvxRZk1BdYRGP0zW/VPN4l5S8OxKYsPIa/6sQKUAyMRoeUF6QDadrOAY3Q=
+	t=1742921600; cv=none; b=Mqx7TIi6kEn54ML/kDBQqkyjfNDn6PckuyPXsvHVcptry5e7A8NDQvochtOff/UxDj8RGlsjtKD8lpqnDtXHG0g6/5Qv9gFF2e32CzIztEhttZ608cdPIi88S8KyVRoNLuoxMyEGIUCK9Z55BoS6AiNVxjS9+JQBuDxmm3wU4W0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742921177; c=relaxed/simple;
-	bh=PhqQStmK99zRFqxR0TfEaXzpR+Gv3G8u4vQUCtpkidk=;
+	s=arc-20240116; t=1742921600; c=relaxed/simple;
+	bh=hrscfi/ZD9RvG2QzoVS3y13ZwZsl/TSjrSnTmcB0MJ4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R1dwybmasGrSGpol6rQGzNxT8k2Vr7S+XR6YdHgVpcLv2p38ZEcTmsBIpcr/2ODaBVrCYda6fC22eK3vgm/6cgsiNnExKU2S17kyzzhVkzMdeM96J1AeILIsO73w/jyVWV9Avz8of6RkHwRH21UXSNjEJ+5Rgv2s2UrjIW5JN/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qKjnQa8r; arc=none smtp.client-ip=209.85.214.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=O9PSJfhPtwFz4Xs2B/Ed9wzo3RzZy9KatEjq/xVreP9bJ/ZDJaJhoEP8V2/NEGqvEqpu65nH36ujhELKITqzmdTuBOWO4qfsJiYOtC0GmgNxF79fPOJia7kEPQ6s8NzoSYi9GBbLhmFhvDrHWklMdCpmS+K+wwPdSCKTh0tMBGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nDMqUQSp; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-225df540edcso538185ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 09:46:15 -0700 (PDT)
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2255003f4c6so114812345ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 09:53:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742921175; x=1743525975; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1742921598; x=1743526398; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=2AwclbRWFB5ImJN7AMO8pqC0UbctCtqhTP13PdSj48k=;
-        b=qKjnQa8r/L99Um6bb5xaAjFugrnuAIL2mmfCNt4iGCBC6IQfjtDWBo0l7FsYbexQeS
-         nR9CIT9l5mg06mlU5/fNmAfaMiCjiVfcwDXh0W6nPiD6YaFuPW/nBIWEFMjbdmIgjKEB
-         l5sUfapt25MqkqvGmopL6mXd6MrsXDB68w66+xOJnRpgU+9vIWjl1tiej8XR/jTL3jlS
-         Zxn69M3TMTjylTgDof8dCSoZdvNvJXNSOsglbpd1Dw9CpjvOQLzKmku41bOixGGrQ1el
-         MI08D4OMcL3pbdqrE7GJS1AUMscoJUs7WxGLMqxpWsdfkPXLFpiCc7e+eFleNII2ZJbF
-         POfw==
+        bh=5L9ZiZQAjB02Svt4Qm10JSTX6pFY5X9IvVK51QfXpvc=;
+        b=nDMqUQSpqbcDSUT9SnxNOPxIdm6kapAuQhQ/X5K+TlsJ+AsHOtayWKo2q9UYXi2OkB
+         WrTmXMwXIpMuGage6hzq4Rda5mVpldQMr1dzmai8EJH+GbO3mby25kxBseyA5C4WE9+6
+         vzG8/eKaMHGJrhlyzv8voZ4fDViCZNAXZqTD4uO+kZPEU1OjHxjPBw9AGQvyQG4PqfHq
+         80cwL9i1QU2BHvbO9Gj5U40vTFfmHiN8BVdAcPt4kyEggUvylkZdE0QBU9K5q9Z90LnF
+         6IgBFZjWpj3U0z/U73wYtBE7c557Qbip86rENTDuMrX0B8I2fGoYvfyRm/jWUC6Tc+zE
+         VLTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742921175; x=1743525975;
+        d=1e100.net; s=20230601; t=1742921598; x=1743526398;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2AwclbRWFB5ImJN7AMO8pqC0UbctCtqhTP13PdSj48k=;
-        b=Kou659tVasbptl/n5W5GYwIjZLCC+x3WyMpethjuxldUI23HmHsSHDDZQvWWd8DbBA
-         7GPa5gxxIOzSYaLuESsUUklOoV51RpI5cFeCiVtqxzk5NWyyn40fqJkNz9RqAARH/nSH
-         W6hY5wl/+YNG2I/WpJOfLstxuIRbpDID1pNluRtf+J3hnIbV7+9XcLCc5yQHYMDPgqtA
-         +5rYaijC9yPfRVp8Ot5TCxFIcFQR9vIyTpGrvLwGQ8RflsxfJ0zjCdDG3DCLN3h790yT
-         ZcTetFXLgni1KiTn4yfqO1MItw61Exvefpvt8Gmi86S8K+1IDlyp8w5rp/5H2nrMkCUv
-         KjqQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXBggyvdLOK8Oz0olA8dXpCGKgLkFCJLJnGCBj05RY2+N38tvp4jD3pzvpRNpsPn24rpUk48CmByuH94Y1I@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2R3II+UqCPX1Vg2hQdIp5hI/rgcNVSyEeVkoZmy2lGcHAXcmb
-	YD3MVtc7Q1/qXiJ8sXUUVYP2/mL3k6evXeFLAceW3k8WJRk5TZr4uLw+8ySDLQ==
-X-Gm-Gg: ASbGncvMLpdNUg2vBprc4rYlDWEPLW73N//ogqtni7PUWeVvK8cEG8TN4agCxjzP3sV
-	lDRaxSebqbxW4UgI+jMj6L9Vtk/2YqiJblEuR3S+UTnfO1cxYU33CNUxuFC9oo+wWLh3Mru5RCn
-	BAY0ITdu7jhqVPddhRBDwoOgr1Ci6saQIeSrol1o3qXTJjx5yyx8OnQT8SRcNY5gTS96lYD0Xmd
-	AYlaVJ7usNMoOKe61mM2c+RFtSGEIuzDmG/+IkSf9LvUnTXtHrsyB64HEjCtoQV3majhIXzJMdf
-	zkSAgDGEVNexZ4RNanQq+Km659EyPV7Km7aPde1L7mDWSLArwl5lGWlX
-X-Google-Smtp-Source: AGHT+IGF2u4p8hAt8ijmeOgX9TZ9IQO6ey+7L6eIaIHfrVxD5Bj3R4Onn4T4FBqmWoKsa+LrolaswQ==
-X-Received: by 2002:a05:6a00:170c:b0:736:4d05:2e35 with SMTP id d2e1a72fcca58-739514f5ddemr613780b3a.3.1742921175228;
-        Tue, 25 Mar 2025 09:46:15 -0700 (PDT)
+        bh=5L9ZiZQAjB02Svt4Qm10JSTX6pFY5X9IvVK51QfXpvc=;
+        b=ZwAvkPRPX1B2B/k4XfN29viNpiY280beQRyM3nQ2w5JdolYa/IRw72IDdAwUAh3k17
+         hirEyMg3XWENhKA5eakEArptrBVoMNwDzN0GOe8PBKQvYpkLB/SYwVOM2a7SWPRQoKuf
+         hMM68qb5efaeNBGfdJs4e3z1DHxzOpqXvG0aORmnSEHEOt+D6c/QMf7prUuRrzn5h0Et
+         kKinTq4j6004cLzONeYlTW12+jILC0/lgUe6HcaQlMdaF7cnPNCFMeWaGDJTjQhdfSVh
+         iidNzjE9iM/xlHa+s5SfJ4UctG8EtdN6+Uem7FR8NG1OSpBa2mZzl9TU0t2UA/uH5nVi
+         mQ/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVMLMIFmOGDsjduc2OzJ0RVoFyCG9fhEvFsyY1kyNHxO+tFb7MObTM0fafI//3ecF3tJaPDIS6VI5WYsom9@vger.kernel.org
+X-Gm-Message-State: AOJu0YxOuNmtpTA1Bs91WDCFjEvRA/Pz6dCHiauWrBnLzkmAIyqSFYV4
+	YIgiC6zQ41BcEOOUoK01hNFSW+r4Z/QpCY68HHGuGAOlbSVaC8Gs4vd7F0SgOw==
+X-Gm-Gg: ASbGncsHzqOJ6YCtUhm+iLfUdOVp5C4T2SUbQL+s0nE4eqtOl4oDiPAXZficOOfRU67
+	S4xnmMwnShMPf3ORbnyufcBsIbJZ/boy/TDY9pc8kRdZMKsjVnk05TW7G0Cw2bjBvFhi8+Psjm1
+	Q9d1snNV4dme88r/WKgOGgUBKCvEm6qULzwTqNrn9iqYhVxd78VgEdF23LcLxZhrq+ej6e47hxk
+	sEl2A7TwMfK3UHIWiAbB989dlHSKGwop1368KDZjipoQSAuOlAb7FsVqc4pu1+CaXdyEl14opDs
+	Wli8pebWhhZ/ChSlEe7EQmmgPEUPAugIikYfQ2/Q565ZuMVjBtDJ0uJA
+X-Google-Smtp-Source: AGHT+IE9jFkoNlNzUIhIhtPYr1hz43laKNyex5k4hiZRJylP0309zHaG4irN98J58MRDRzo0Phd2MA==
+X-Received: by 2002:a05:6a00:84d:b0:736:a540:c9b5 with SMTP id d2e1a72fcca58-73905a2763bmr24061167b3a.22.1742921598338;
+        Tue, 25 Mar 2025 09:53:18 -0700 (PDT)
 Received: from thinkpad ([120.60.136.104])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73906159dd5sm10649396b3a.135.2025.03.25.09.46.12
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af8a28059e8sm9333330a12.20.2025.03.25.09.53.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Mar 2025 09:46:14 -0700 (PDT)
-Date: Tue, 25 Mar 2025 22:16:10 +0530
+        Tue, 25 Mar 2025 09:53:17 -0700 (PDT)
+Date: Tue, 25 Mar 2025 22:23:10 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Cc: quic_carlv@quicinc.com, quic_thanson@quicinc.com, mhi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: Re: [PATCH v2] bus: mhi: host: Address conflict between power_up and
- syserr
-Message-ID: <tuztnikrnmgkh3ssrncpjnt6y745zccg4mowuxntbhseyudo6v@qny7w5u4ycie>
-References: <20250321174005.4077683-1-jeff.hugo@oss.qualcomm.com>
+To: Praveenkumar I <quic_ipkumar@quicinc.com>
+Cc: george.moussalem@outlook.com, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Nitheesh Sekar <quic_nsekar@quicinc.com>, Varadarajan Narayanan <quic_varada@quicinc.com>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
+	20250317100029.881286-2-quic_varada@quicinc.com, Sricharan R <quic_srichara@quicinc.com>
+Subject: Re: [PATCH v6 5/6] arm64: dts: qcom: ipq5018: Add PCIe related nodes
+Message-ID: <ycv74l5nop5mptj6uobuacffnwho2gvznh4dhxagupt5gh6x4k@vgik7ouydy6f>
+References: <20250321-ipq5018-pcie-v6-0-b7d659a76205@outlook.com>
+ <20250321-ipq5018-pcie-v6-5-b7d659a76205@outlook.com>
+ <a4n3w62bg6x2iux4z7enu3po56hr5pcavjfmvtzdcwv2w4ptrr@ssvfdrltfg5y>
+ <6fa2bd30-762b-4a3a-b94f-8798c027764a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,121 +99,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250321174005.4077683-1-jeff.hugo@oss.qualcomm.com>
+In-Reply-To: <6fa2bd30-762b-4a3a-b94f-8798c027764a@quicinc.com>
 
-On Fri, Mar 21, 2025 at 11:40:05AM -0600, Jeff Hugo wrote:
-> From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+On Mon, Mar 24, 2025 at 04:48:34PM +0530, Praveenkumar I wrote:
 > 
-> mhi_async_power_up() enables IRQs, at which point we can receive a syserr
-> notification from the device.  The syserr notification queues a work item
-> that cannot execute until the pm_mutex is released.
 > 
-> If we receive a syserr notification at the right time during
-> mhi_async_power_up(), we will fail to initialize the device.
-> 
-> The syserr work item will be pending.  If mhi_async_power_up() detects the
-> syserr, it will handle it.  If the device is in PBL, then the PBL state
-> transition event will be queued, resulting in a work item after the
-> pending syserr work item.  Once mhi_async_power_up() releases the pm_mutex
-> the syserr work item can run.  It will blindly attempt to reset the MHI
-> state machine, which is the recovery action for syserr.  PBL/SBL are not
-> interrupt driven and will ignore the MHI Reset unless syserr is actively
-> advertised.  This will cause the syserr work item to timeout waiting for
-> Reset to be cleared, and will leave the host state in syserr processing.
-> The PBL transition work item will then run, and immediately fail because
-> syserr processing is not a valid state for PBL transition.
-> 
-> This leaves the device uninitialized.
-> 
-> This issue has a fairly unique signature in the kernel log:
-> 
-> [  909.803598] mhi mhi3: Requested to power ON
-> [  909.803775] Qualcomm Cloud AI 100 0000:36:00.0: Fatal error received from device.  Attempting to recover
-> [  909.803945] mhi mhi3: Power on setup success
-> [  911.808444] mhi mhi3: Device failed to exit MHI Reset state
-> [  911.808448] mhi mhi3: Device MHI is not in valid state
-> 
-> We cannot remove the syserr handling from mhi_async_power_up() because the
-> device may be in the syserr state, but we missed the notification as the
-> irq was fired before irqs were enabled.  We also can't queue the syserr
-> work item from mhi_async_power_up() if syserr is detected because that may
-> result in a duplicate work item, and cause the same issue since the
-> duplicate item will blindly issue MHI Reset even if syserr is no longer
-> active.
-> 
-> Instead, add a check in the syserr work item to make sure that the device
-> is in the syserr state if the device is in the PBL or SBL EEs.
-> 
-> It is unknown when this issue was introduced. It was first observed with
-> commit bce3f770684c ("bus: mhi: host: Add MHI_PM_SYS_ERR_FAIL state") but
-> that commit does not appear to introduce the issue per code inspection.
-> This issue is suspected to trace back to the introduction of MHI, but the
-> relevant code paths have drastically changed since then. Therefore, do
-> not identify a specific commit in a Fixes tag as confidence is low that
-> such a commit would be correctly identified.
-> 
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-> Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
-> ---
-> 
-> v2:
-> -Move comment to reset_device condition
-> -Rename cur_statemachine_state to cur_state
-> -Amend commit text to explain the lack of a Fixes:
-> 
->  drivers/bus/mhi/host/pm.c | 18 +++++++++++++++++-
->  1 file changed, 17 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> index 11c0e751f223..5e608436775f 100644
-> --- a/drivers/bus/mhi/host/pm.c
-> +++ b/drivers/bus/mhi/host/pm.c
-> @@ -602,6 +602,7 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
->  	struct mhi_cmd *mhi_cmd;
->  	struct mhi_event_ctxt *er_ctxt;
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> +	bool reset_device = false;
->  	int ret, i;
->  
->  	dev_dbg(dev, "Transitioning from PM state: %s to: %s\n",
-> @@ -630,8 +631,23 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
->  	/* Wake up threads waiting for state transition */
->  	wake_up_all(&mhi_cntrl->state_event);
->  
-> -	/* Trigger MHI RESET so that the device will not access host memory */
->  	if (MHI_REG_ACCESS_VALID(prev_state)) {
-> +		enum mhi_state cur_state = mhi_get_mhi_state(mhi_cntrl);
-> +		enum mhi_ee_type cur_ee = mhi_get_exec_env(mhi_cntrl);
-> +
-> +		if (cur_state == MHI_STATE_SYS_ERR)
-> +			reset_device = true;
-> +		else if (cur_ee != MHI_EE_PBL && cur_ee != MHI_EE_SBL)
-> +			reset_device = true;
-> +	}
-> +
-> +	/*
-> +	 * Trigger MHI RESET so that the device will not access host memory.
-> +	 * If the device is in PBL or SBL, it will only respond to RESET if
-> +	 * the device is in SYSERR state.  SYSERR might already be cleared
-> +	 * at this point.
+> On 3/24/2025 1:26 PM, Manivannan Sadhasivam wrote:
+> > On Fri, Mar 21, 2025 at 04:14:43PM +0400, George Moussalem via B4 Relay wrote:
+> > > From: Nitheesh Sekar<quic_nsekar@quicinc.com>
+> > > 
+> > > Add phy and controller nodes for a 2-lane Gen2 and
+> > Controller is Gen 3 capable but you are limiting it to Gen 2.
+> > 
+> > > a 1-lane Gen2 PCIe bus. IPQ5018 has 8 MSI SPI interrupts and
+> > > one global interrupt.
+> > > 
+> > > Signed-off-by: Nitheesh Sekar<quic_nsekar@quicinc.com>
+> > > Signed-off-by: Sricharan R<quic_srichara@quicinc.com>
+> > > Signed-off-by: George Moussalem<george.moussalem@outlook.com>
+> > One comment below. With that addressed,
+> > 
+> > Reviewed-by: Manivannan Sadhasivam<manivannan.sadhasivam@linaro.org>
+> > 
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/ipq5018.dtsi | 234 +++++++++++++++++++++++++++++++++-
+> > >   1 file changed, 232 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+> > > index 8914f2ef0bc4..d08034b57e80 100644
+> > > --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+> > > @@ -147,6 +147,40 @@ usbphy0: phy@5b000 {
+> > >   			status = "disabled";
+> > >   		};
+> > > +		pcie1_phy: phy@7e000{
+> > > +			compatible = "qcom,ipq5018-uniphy-pcie-phy";
+> > > +			reg = <0x0007e000 0x800>;
+> > > +
+> > > +			clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
+> > > +
+> > > +			resets = <&gcc GCC_PCIE1_PHY_BCR>,
+> > > +				 <&gcc GCC_PCIE1PHY_PHY_BCR>;
+> > > +
+> > > +			#clock-cells = <0>;
+> > > +			#phy-cells = <0>;
+> > > +
+> > > +			num-lanes = <1>;
+> > > +
+> > > +			status = "disabled";
+> > > +		};
+> > > +
+> > > +		pcie0_phy: phy@86000{
+> > > +			compatible = "qcom,ipq5018-uniphy-pcie-phy";
+> > > +			reg = <0x00086000 0x800>;
+> > > +
+> > > +			clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
+> > > +
+> > > +			resets = <&gcc GCC_PCIE0_PHY_BCR>,
+> > > +				 <&gcc GCC_PCIE0PHY_PHY_BCR>;
+> > > +
+> > > +			#clock-cells = <0>;
+> > > +			#phy-cells = <0>;
+> > > +
+> > > +			num-lanes = <2>;
+> > > +
+> > > +			status = "disabled";
+> > > +		};
+> > > +
+> > >   		tlmm: pinctrl@1000000 {
+> > >   			compatible = "qcom,ipq5018-tlmm";
+> > >   			reg = <0x01000000 0x300000>;
+> > > @@ -170,8 +204,8 @@ gcc: clock-controller@1800000 {
+> > >   			reg = <0x01800000 0x80000>;
+> > >   			clocks = <&xo_board_clk>,
+> > >   				 <&sleep_clk>,
+> > > -				 <0>,
+> > > -				 <0>,
+> > > +				 <&pcie0_phy>,
+> > > +				 <&pcie1_phy>,
+> > >   				 <0>,
+> > >   				 <0>,
+> > >   				 <0>,
+> > > @@ -387,6 +421,202 @@ frame@b128000 {
+> > >   				status = "disabled";
+> > >   			};
+> > >   		};
+> > > +
+> > > +		pcie1: pcie@80000000 {
+> > > +			compatible = "qcom,pcie-ipq5018";
+> > > +			reg = <0x80000000 0xf1d>,
+> > > +			      <0x80000f20 0xa8>,
+> > > +			      <0x80001000 0x1000>,
+> > > +			      <0x00078000 0x3000>,
+> > > +			      <0x80100000 0x1000>,
+> > > +			      <0x0007b000 0x1000>;
+> > > +			reg-names = "dbi",
+> > > +				    "elbi",
+> > > +				    "atu",
+> > > +				    "parf",
+> > > +				    "config",
+> > > +				    "mhi";
+> > > +			device_type = "pci";
+> > > +			linux,pci-domain = <0>;
+> > > +			bus-range = <0x00 0xff>;
+> > > +			num-lanes = <1>;
+> > > +			max-link-speed = <2>;
+> > This still needs some justification. If Qcom folks didn't reply, atleast move
+> > this to board dts with a comment saying that the link is not coming up with
+> > Gen3.
+> > 
+> > - Mani
+> The IPQ5018 PCIe controller can support Gen3, but the PCIe phy is limited
+> Gen2 and does not supported Gen3.
 
-Oops... I asked you to move only the existing comment below and keep the rest as
-is. Like,
+Hmm, so if a Gen 3 capable device is connected, the link will not work at Gen 2?
+It seems so from the error that George shared previously.
 
-	if (MHI_REG_ACCESS_VALID(prev_state)) {
-		/*
-		 * If the device is in PBL or SBL, it will only respond to RESET
-		 * if the device is in SYSERR state.  SYSERR might already be
-		 * cleared at this point.
-		 */
-		...
+> Hence, it is restricted using the DTSI property.
+> 
 
-	/* Trigger MHI RESET so that the device will not access host memory */
-	if (reset_device) {
-		,,,
-
-Sorry if I was not clear.
+Ok. George, please add a comment for the property stating the reason.
 
 - Mani
 
