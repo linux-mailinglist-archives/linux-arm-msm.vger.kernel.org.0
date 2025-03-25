@@ -1,196 +1,256 @@
-Return-Path: <linux-arm-msm+bounces-52418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEB27A6E79A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 01:35:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 712ADA6E7E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 02:13:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0663D3B57BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 00:35:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B4FEB3B044C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 01:13:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1AA778F4C;
-	Tue, 25 Mar 2025 00:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52836149E16;
+	Tue, 25 Mar 2025 01:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="cliV89z5"
+	dkim=pass (1024-bit key) header.d=ieee.org header.i=@ieee.org header.b="fS/TbaFe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11011006.outbound.protection.outlook.com [52.101.65.6])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7ED28F4;
-	Tue, 25 Mar 2025 00:35:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.6
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742862944; cv=fail; b=E4CFOJ4XcAkXJVtKZIT+pmP+9F7HPekDZ4L/kEMVvwEe1z42+MGAquXMKp1hzi6ZtQR48AAjy1Kiwc7xZyND3FQcXCvY0mGcBoun4TKOv6kZJraxwAYdc+CY9majbnCOSrfaIE5Pw5DSZ2kU6Vg+n5tFNmdxW9/NgzzFG6+Z22w=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742862944; c=relaxed/simple;
-	bh=UGoVr3ik7YmPMPDsaRsLpfB/scwYPgLG4kn6vVbxX5A=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=CmL7c4wo0Rzp2mRK371XXkpmkeLSHXdddYlqJf6LsFUN9eLaPtwL0IXHeTBO7C/onMifP1I06rVAQfLvy4bm+VpJnKbrdAR6tswac6rXDD3Gy3p24XJar3RR18CPnng5LZYTY8pIcJyVrib/IKdgSY1FsKGNIAr/BZXAVIDiWZY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=cliV89z5; arc=fail smtp.client-ip=52.101.65.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FDcwlb8H/V37TCMiz92kts5y7FkD5qtCjOUCtfR7qZYs7cD+rHZEuj+OjOfxw7W4DeNQ4MJMjlDkggatzdLFlzQebf4cdoW31GAhSI0E2SQm9X5Gfgh6XgKnC9VqYdKaE3GzwdHN/vmX0f8JqkNWicXgQvGWZnpdWYKSbUw8VX0d5kQrnSrmTVVwrsPPOsUUuxRXWjurqws5TTlPSbVrzXVz7SqnFdurDm0pr4NYf+4mVYF/U5IQWWftJr7bX5zhY1JQsuGl6lSH+hmnRIUrAtx6BUtnkjDImro0O24Xzd4RseQupv5EjSFps4ZlK4lS56DkwqXT51s5cN922KuLtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UGoVr3ik7YmPMPDsaRsLpfB/scwYPgLG4kn6vVbxX5A=;
- b=nYwX+cveX2+RhrjXdLifewRWqAqMVGQXfGsRdxFPNruCWNbyk8sqmtlljWDnarSaf5x13dRCruUditH8uGASMwvfgbfLCEWNP5l7Ek9cIZYLV2JidyFHw33n+EY19cJTZhw5LoRguqzBb3UDN/TPnXECGQHm4z0c34jWRexXxcFOopgP2F3nvI4m2jCy8qmKh982s7Ag9U0MGbf6Jn6J5doiQkv1gnw2of5fPqrJ1bblDHB5Ie7rASCf1iPzCMqpHHU8yZ2g1nwMNsa0c7L/7e9u2rsxv86cQAarnwy4W/1waGn/f7F/dgoSHTg+NrYCNRInuTjQH2qPCLdX3ERzvg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UGoVr3ik7YmPMPDsaRsLpfB/scwYPgLG4kn6vVbxX5A=;
- b=cliV89z5gUerW4PgFkwlUvqiSeo0P45F3OTt+gQYpFTlNX18TRxpY9W5jQaYnEqKSd3H5imrO6LLK36t4mdzkc+IqGz4uZtxg8y1VHt4xYGiHgjxeMt7dv9Y3GpUwYihMZtZ65yR0lDN6kHlby9IhWtAVLdJr11h4tFpR2gPzvm/CnL84XOFDKZkhYwTaxZXUrz0rhEbj3hJNEL+NnTwHrbypeVin8yi5on8GsrOyLV1zcZlqAwnIvY4txt2LmhSZcCIwHpu7frzZeF2DymgQxPG7NQXdf2r6leoa4JKxCIYPjRR/CxaPgVbT5nGr8bjkGxeUY9/L4PTcVDt55y0VQ==
-Received: from PAXPR04MB8459.eurprd04.prod.outlook.com (2603:10a6:102:1da::15)
- by PA1PR04MB10698.eurprd04.prod.outlook.com (2603:10a6:102:492::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.42; Tue, 25 Mar
- 2025 00:35:38 +0000
-Received: from PAXPR04MB8459.eurprd04.prod.outlook.com
- ([fe80::165a:30a2:5835:9630]) by PAXPR04MB8459.eurprd04.prod.outlook.com
- ([fe80::165a:30a2:5835:9630%5]) with mapi id 15.20.8534.040; Tue, 25 Mar 2025
- 00:35:38 +0000
-From: Peng Fan <peng.fan@nxp.com>
-To: Steev Klimaszewski <steev@kali.org>
-CC: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Linus
- Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Johan Hovold
-	<johan@kernel.org>, "linux-sound@vger.kernel.org"
-	<linux-sound@vger.kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-gpio@vger.kernel.org"
-	<linux-gpio@vger.kernel.org>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>
-Subject: RE: [PATCH v2 2/3] ASoC: codec: wcd938x: Convert to GPIO descriptors
-Thread-Topic: [PATCH v2 2/3] ASoC: codec: wcd938x: Convert to GPIO descriptors
-Thread-Index: AQHbnLM+najNIffuE0KhHBiuIgiisLOCbEqAgACVj2A=
-Date: Tue, 25 Mar 2025 00:35:38 +0000
-Message-ID:
- <PAXPR04MB84598509B6FEC940C88CBBF788A72@PAXPR04MB8459.eurprd04.prod.outlook.com>
-References: <20250324-wcd-gpiod-v2-0-773f67ce3b56@nxp.com>
- <20250324-wcd-gpiod-v2-2-773f67ce3b56@nxp.com>
- <CAKXuJqiwWzC9Zhnnujq+EugJw75EqYL=AmDUUMs8LHOnbBNsyw@mail.gmail.com>
-In-Reply-To:
- <CAKXuJqiwWzC9Zhnnujq+EugJw75EqYL=AmDUUMs8LHOnbBNsyw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PAXPR04MB8459:EE_|PA1PR04MB10698:EE_
-x-ms-office365-filtering-correlation-id: cf1352f5-1a71-4154-a908-08dd6b34f72f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|7416014|366016|376014|1800799024|38070700018;
-x-microsoft-antispam-message-info:
- =?utf-8?B?bFpBRytNZHExS2dxZ1Zxb3FnYzRHbWx6SWtybmxxTk45LysrWE8ydis4Yy9F?=
- =?utf-8?B?TGdYcHZtQi9HTEpHdU9NQmtBU3ZZK0tMcXZVeStscVpTYjFZeEY2MHdFcXI0?=
- =?utf-8?B?UE5oMjlYOE0ySXpJQWJjbXZpcCs3bmhOQTNRNHFSZStxMXlPZmxvZ0VxSTQ3?=
- =?utf-8?B?S3RwYlpNQUEzRGgxK0VlUTQ0aDlOSUtabzFTUFZSL3J4aEZaa1d1VlVwRHEz?=
- =?utf-8?B?eTFrRVB5K3E4YXRsMWxWeHAvRXc2VURINm9CUHVpMzhXblhqcnhIbnlOT1Ez?=
- =?utf-8?B?dnozOXJOaTh4MTRyaWZ4ZlNSeWRvOEJuRElNMVFkUGZHZ2FyYlkvaTRqWk01?=
- =?utf-8?B?ZjJqTEdZN2Rrc2xFb0NHbjYxVXhhd2JpMW4xaHJNTUYxR2pLd2dlQmV5TDdm?=
- =?utf-8?B?a21Xd0gwaitwU2FHMmtpK2xqY1hTVTJ4ZGo3VFR5amtoUGpyanlmWlE3TmFB?=
- =?utf-8?B?QkMyQzdkWGd0NlEyT2hpN0xZQURIYnpOK2lVYUcvQzFjUnNldXNmZDNWRXhl?=
- =?utf-8?B?Qlp6WWRUY1BRRDc0eDVVekpqaVNDZVgzeUtzaFlMbi9raVdCN0ovZmVBNnlE?=
- =?utf-8?B?OHZtdkhEUnBhb2M4aEs5S01XUEdtUFN5UnZUVS9EYVp5V3djNFJ3d09tS0d6?=
- =?utf-8?B?Z29YZG1iL1VpbC9kWGlsY1RQZi9pdFZPY1BpUUdMc2NsR1VvMW4zbDN0aFln?=
- =?utf-8?B?VGlxc2JFNXNjQm1WbjV2d2RkTmpEc1kzUU1uL01YNnF6RFYwWVRQYzVNRUln?=
- =?utf-8?B?Z3FZNXYzRG9vUi9CQWoxdFJVazhFa0Ftcks5Q2o3cVNKTHo1U0I5OWU0Zk51?=
- =?utf-8?B?V2pMSjRZdStqeWNaeUJjSCs2MzhPd3FWYTB5Z0NETG5PT29BVTJuVEtjYWhU?=
- =?utf-8?B?Q3EzS2RUbm5tZ1ZuVmNDenVxQjZzN000QWlNRVVWMkpEbDRhNENpQWE5V05L?=
- =?utf-8?B?UmFuS3hnUGRWVzRDSEJ6dHErcE4zaE8yODNYNjlna3E5T3oyU3VTK0pXUDZM?=
- =?utf-8?B?b3gxSE9qSEQ0VDEybWxGSVJJT1dpNmZjM2ZobVVROXErdmJ6ZHp6V0g4Um81?=
- =?utf-8?B?eXZzdnZGb0xFMG14TWZBd3FpUnVDZ1hhVDNtQm9TUUVLYTFQU1p1cFpJci9t?=
- =?utf-8?B?dlNTVVJDeXA0VktFcFlNMitNQzFGVTdzaWs0aW4yQUpSdDJRZ2NlbEliTWlU?=
- =?utf-8?B?YUJLcWc2MXhSS3o2YVV5U0hRY3FQekFnS3JKdmpneEg4TDNkR2xUQmE0ak0z?=
- =?utf-8?B?ZTFmWCs5RitmVVcrTmFwQUVXZWwyNnM5RUgxRENDWHRnMW1xTHRCSnBXbis2?=
- =?utf-8?B?dWh0WFhVZTl0ditVM2hKWko3NmNrYTFaa2NXRGlCb1RMRUNCdm92Z3h4aFJx?=
- =?utf-8?B?QlhIUlRSbzFheTMxczM0WmNpOEp2Y0FDSS9qQndaaUJxeHE2VUZ3TE1ueU9o?=
- =?utf-8?B?L0ZtNUtycHVDMnBuYmFLSVdoTERRSHZHditBQmxJRkdnTm90K1pVNG1DeEVE?=
- =?utf-8?B?eE10OTBjMFRCakY1blRHTFhzUHRqM1hUNUljZi9nQUZvT0pwRjc1dG5IUWw0?=
- =?utf-8?B?UzJNME9HNG9GTmRndER3djhmQmJKUitqR3dRRWRCMFVCdlkxTGVTU2xwOTNW?=
- =?utf-8?B?WC9Ba3BBeXdJNnk3NU5tSVFNK3d0bERJNEQ3djNPTDFCRTlLSkRpeUpjK2dw?=
- =?utf-8?B?djVJeHJ2TnhleXorU2VDR3hKRWF2dlUzS0swUDhEaWdqRHNGd0pMSDQzUThE?=
- =?utf-8?B?K0cwRHpwZjVBRWU4bVBFakFRZ2VnbFp0b1FTT0IyaDNhZFFRcXZabzZ2MVl1?=
- =?utf-8?B?a1d3RlBScEpKMytPWWljVld6YU0yNVdoeXROQVltSUFtNUpNMXlVcUlEbWFM?=
- =?utf-8?B?MjQ1VW5QV0tUYmlpVEZXSkNGcS9oSHhub1Q1TGc0NlZiTlh2QkUwekZNRVVt?=
- =?utf-8?Q?D/AQK2/XHwaOF2WaRJeIF/bbIeVZ0gFf?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB8459.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(366016)(376014)(1800799024)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?UmVybHQyQ01kQmZFdmVZMXN2WmJlbkd1QnNka09Cc1UydzhZNkJIZ0F3WldS?=
- =?utf-8?B?M0gxdldUdHB5dko5SWpUUEFTTjBCUThLRkVhVk5OSTFDNy9MT0hFL29sZ3Vm?=
- =?utf-8?B?dFN3V1BjU01XSXJwQnV1MnV1K2cwbGN0QkZHbkFPbEUzQ0IzK1RSY25ZNlda?=
- =?utf-8?B?UjhteHZxcVpTdWNFQWRHSlhYaXpqS2F2ODM0WU95a1JHeHNkYjg2bDVPUm5E?=
- =?utf-8?B?RmlPUXFHT205bjN1dExlRXpqWlBCTzc4Tk9ITUd3UmRKZ2dCc2t3RUJwdGNY?=
- =?utf-8?B?KzgxUE1oWUltVDVONy9sMzJFcEc0dEtBOEFJdWdSNjFsem9FYkFadWV0SFVr?=
- =?utf-8?B?UWY5NnZMK0dsVUNuYU9PZDhoVGJnUS9Qc1RXTFdPN0hEcm50RHBjcTU0RTh1?=
- =?utf-8?B?dktiQ09YcU1NNGNEN2l1YVVQckxuTjlDRWV4cS9rc1Bsc005QTdMSW1mNE9n?=
- =?utf-8?B?WXBoaCs2Tjh0RUdLOFNSMTl4T29SVlJFdWJIZGFaRkh1ZlJWVVJ1V3IyNlFk?=
- =?utf-8?B?RHpsYzRSK3ZMU2VIa2FCSTlHb3RnNFBzcTNzRys3N0hrQUwyd25TdWNQU3I4?=
- =?utf-8?B?Znc4d0t0cjRmNFdLMUxxbXhFLzl6L0JzanNrQUJ6SHpmNTJVZGRYNk1LTGVo?=
- =?utf-8?B?TlBVcitBbjB1bkZnL0w2THFEQjErMFR0UmNzYWljWWJTamdhY1NyYnZYZEo1?=
- =?utf-8?B?M01tdDZRR2dwa3k0cW42UmJWemV5MFI0L0VvbEhXUjgzWnM0TWpUSzlRTU5l?=
- =?utf-8?B?MzBSNnc2VWNiUnRtb2xqSFBuQWxrM2RiUytPQkFlcVNvR2gvTk4vTG50Y0k1?=
- =?utf-8?B?Mjh0NnM0bWdqYUtHVjAyYW5QbGdlaEtEVVVlaW8rNExJSVZUa3ZWcUZTb0hH?=
- =?utf-8?B?RXozRTQzVnA2R3NyOE05endOYkZMMEZ4eXJ6M0phMzFnanhOSVlqWTNTOFln?=
- =?utf-8?B?YXNRNitQbDVRd0lwSWkxT3Z3amtuRDl3M1ZMNVdlTyswRlAzNXlRR0tSTG1E?=
- =?utf-8?B?OC80bWlYSTJFb0VPZ1JIVGlmaTB4ai9lbVp3cHNCUkZmdldmQjRjZnJ3Tkor?=
- =?utf-8?B?aDJtU1lmMFNVbUFxTFVlT2tGNWFXbkN5RUtYWW1MT1pGTFlZcDJ4bjBLSnN0?=
- =?utf-8?B?Wmt6bGJUb2RWblZQaGZGSXBNMms0UHBYS0ZwZFdBKzRtT2YrY2MvVTVEc2ZM?=
- =?utf-8?B?RTNXQlJld1h5VlJ2eGxpbzlKajdIbHVqakZUbzE1dXJmQVRkcVNsazlxL3Nu?=
- =?utf-8?B?WlRxZ3NmUGRBcWdxQ2RIM1E0VEd6dlZ5T2VEZURKMnNuTndFWjY0L1BxZWNU?=
- =?utf-8?B?Q3d4ckJEVXlQKzh6S3o5SUFGWnZJaUh6MlZmQXQzUG5PYlNhb2VsZmU2QlZM?=
- =?utf-8?B?b3pCTU9xZHdycXFFUWYwaENycnBLT2ovaHNGL2FIT2tzYWEyNkg1cGw0bzBa?=
- =?utf-8?B?MjFvVHVXZWNxcEtOS0p3Q3NZVUhCTkt2WkFhdTJFSmF6WXUzUVdwcW1WV0Nq?=
- =?utf-8?B?RDVwMjA2dy94OWp1WjVDNXF6ZE9WZldzdjIyeDg0dU9CaDZvWFJTdmN1Q1hj?=
- =?utf-8?B?cFNRVlNvMTRtWnhkWkx6OThHd2kyQWFDWEo5U1RBd2VWeWQzekpHYW1Zd245?=
- =?utf-8?B?N1l3K0g4aGVsWks3NjB1L3kycjhBUHpFUm1DTUxQWVJiZC92RUtSMjZiUjVy?=
- =?utf-8?B?YTBLTjJzbTVJb0ExKzFuVG4wTjh2V1hEQjgzakRvUWlKUDBUbmtnVFQyRlhi?=
- =?utf-8?B?QTI4ZE50VVp1V0d1U2p2MzdyUVJUVXY2bHRGVzBYOGpCcGVZYktwYkdYZ0Zj?=
- =?utf-8?B?NndMMklpRWVTM29HU0hnVlJtOW9nUGcxN0k3RWorcnFGWVdGd25BUkUzZzlW?=
- =?utf-8?B?R2wrVUZwWFR2NXJEcmxnd01qOVJWaXR0c2IzZ2FDa0thUW01SHRoYmdEaFhu?=
- =?utf-8?B?cGg0YnJZMk5WL2pBMGdFSlh2Si9UV2dyVmJUMENNL3VSby9XV3JwNHlKZm1j?=
- =?utf-8?B?K0o3eHIrOGsxRHFKbEYwOTdDNnhjTHByUnY0OWcrVVBPWnlPd0Q1Uk82NFlD?=
- =?utf-8?B?T3IrNC9ZVzFjODFCeEhJUXphRFJXZksyeFVud2p0aFo3UTFQSVZjb3JQVUZq?=
- =?utf-8?Q?PnTg=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B20713D89D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 01:13:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1742865187; cv=none; b=IlBnYsXr9DlkdiuTUbdudr58zdtYrWXAtIDb1O4qLuGL08GkKprM0AE3hvBRXD3UR8fTeXhE8XcAwLIjDWIs7F6mDNkFBqRZS2JezRWcveD4aXq/TzxDmbBC+A3yxcCZW+6ZQDmyzNzfxM8jlyRZVHYjTyF9qc5YCRr2pwTNJs8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1742865187; c=relaxed/simple;
+	bh=59b8GxSKdHIoohtTVvoh6d2qSq20IxVL/ynPTXhEdgk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=gXj8dxW+zgfVmYrEwqR0QL3iDO2k6dapUddoQz4WqdiahQhwFBpd4MCIWvLVPJa6PwJXXfGdUbqhHEVbMBmF47oUh9Gw9uIW4Z/C0N6SYhGSSaYHGmA1lw6bx06puZxql25MTssDUSJlFSsucsR29U2Nz5GJ6Xzm/61N0D8lkh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieee.org; spf=pass smtp.mailfrom=ieee.org; dkim=pass (1024-bit key) header.d=ieee.org header.i=@ieee.org header.b=fS/TbaFe; arc=none smtp.client-ip=209.85.166.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieee.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ieee.org
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3d46693a5e9so45119475ab.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Mar 2025 18:13:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ieee.org; s=google; t=1742865184; x=1743469984; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=tilX7QnvKAF8sEocr5hjC3RCRlvcCP2GLlCgaOM9mZU=;
+        b=fS/TbaFeyrcMwOU69Oifk/aTtztKozl07K1xH4DNdY0LmOgvVJGesuaitLdkPnFQXj
+         ostoAvOyzLeLEJ5gZxtwj8IQAP9CYrYpSqz/Cb7VQsm6YIGRPf0YzpBRiWfkPxlcN2L8
+         GWmITUYWEkdYPEqIP+xdcRLv2WPgrMDxlJw3U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742865184; x=1743469984;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tilX7QnvKAF8sEocr5hjC3RCRlvcCP2GLlCgaOM9mZU=;
+        b=IMZoNinvGvNki2Luh7setRsX7a4a834/+6btV4xZGSFyUnWppsw619WQ85r6aH6bsG
+         vW8dkWfnrrykoLUVajELdeDpq8t+HnfHoZhO/syhGV5QripRULiG4ZFHljGKS9uBwNbl
+         JOgFC7jmG0C8BLsL5Ssd08GPYdOUdgtGZyQjxS6BrFZA/Gm+oBO2LsWDoV+/Tvskp2mf
+         egsV+w5lIL5igafIibjyQGbOxr9G6VdsYQMWIddDj/aXTYsTbbQOyOKp9hMbf+iWwsa3
+         K+ZD6Tj/jcP/GfPoqKIt5dec9PvocByPN27AP9xERPpyQ9gJyEdNu81h9/2zxWO6UV7l
+         6BEg==
+X-Forwarded-Encrypted: i=1; AJvYcCXv4KdWZUvzS2DtBa5Mam1jahAwJpetqfd9ayy5QGcfbE6fvOo00EqX4tQ3v7h+BHe4Cp+XLgvWCpTnbRXV@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx01wbuztQMfxNjL7WNXWL1hrD+bma6tm5/r20SGCJIXTlMtbgo
+	cP7dfRDN2O2McEjJXG2+gYUcz+n9P4nsXPYZAbMBnsBaoQ4lHu2x3jbM+ugFog==
+X-Gm-Gg: ASbGncsU91IUojLIOBAGQ2DRDu96NXVleXjReFcusGulxUzuWv/Ct3rYK0/mk9rFXra
+	TEAQHBEctUUWgp1JzbqRYeb7u9kOZk8NSOLKoa57GuqXgiRIvWuFb9EVEWPgB82atAr8kzLgGdm
+	YBv7zGOSGvi15b3eflE8h72D23dGiB4APqCUjA231w1dUqx+ftDk1Olcjk+Xxid8QN9Q95z/RTd
+	pgZh+xOJCK8WFt+qhupg5BsJ9034HtiaDIw7Eh5etPW6xT6QU7u/V9+GwtLOqvK+Fwgs9iS0I98
+	OStfIiWyot1rSUt2xZRFgDXNXLBKzaJ5kq1VpLBuMI4Dt0bVmqixCmCPYar7nA34V5MBSa4sBKH
+	pcuGzo/IAfXhg
+X-Google-Smtp-Source: AGHT+IGSsAzB0Of7YOYUV68uvoK6ZCJ/6KJgHQicf12+sgaAuVAWuoM864+T45bF4b0vuJZt/1JG6w==
+X-Received: by 2002:a05:6e02:3904:b0:3d4:4010:4eff with SMTP id e9e14a558f8ab-3d596164076mr128011515ab.13.1742865183547;
+        Mon, 24 Mar 2025 18:13:03 -0700 (PDT)
+Received: from [10.211.55.5] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.googlemail.com with ESMTPSA id e9e14a558f8ab-3d59606ee04sm20819565ab.6.2025.03.24.18.13.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Mar 2025 18:13:02 -0700 (PDT)
+Message-ID: <5c8fa538-6c04-4fcf-bcad-21fc1e2a0a9b@ieee.org>
+Date: Mon, 24 Mar 2025 20:12:59 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB8459.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cf1352f5-1a71-4154-a908-08dd6b34f72f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Mar 2025 00:35:38.5487
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: yofaHEaYIXiwGPdB4SkQ6xYuH1iQn82p2MphYP0BMbyZsPNk+3WOjUsH6ZjB2IX7YIC+l/8u5hJMzFnZQmOvgw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB10698
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt-bindings: net: qcom,ipa: Correct indentation and style
+ in DTS example
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Alex Elder <elder@kernel.org>,
+ linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250324125222.82057-1-krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+From: Alex Elder <elder@ieee.org>
+In-Reply-To: <20250324125222.82057-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-PiBTdWJqZWN0OiBSZTogW1BBVENIIHYyIDIvM10gQVNvQzogY29kZWM6IHdjZDkzOHg6IENvbnZl
-cnQgdG8gR1BJTw0KPiBkZXNjcmlwdG9ycw0KPiANCg0KLi4uDQo+ID4NCj4gSSBjYW4gdmVyaWZ5
-IHRoYXQgd2l0aCB2MiBhcHBsaWVkLCBJIGRvIHN0aWxsIGhhdmUgd29ya2luZyBhdWRpbyBvbiB0
-aGUNCj4gVGhpbmtwYWQgWDEzcy4gIEFwb2xvZ2llcyBmb3Igbm90IHJlcGx5aW5nIGVhcmxpZXIs
-IGl0IHdhcyB1bmZvcnR1bmF0ZWx5DQo+IG15IG5pZ2h0IHRpbWUuICBGb3IgdGhlIHJlY29yZCB0
-aG91Z2gsIEkgZG8gbm90IHVzZSB0aGUgZmlybXdhcmUgZHRiDQo+IGZpbGVzLCBidXQgZXhwbGlj
-aXRseSBsaXN0IHRoZSBrZXJuZWwgdGhhdCBJIGFtIHVzaW5nIGFuZC9vciB0ZXN0aW5nIHRvIGJl
-DQo+IHVzZWQgb24gZWFjaCBib290Lg0KPiANCj4gVGVzdGVkLWJ5OiBTdGVldiBLbGltYXN6ZXdz
-a2kgPHN0ZWV2QGthbGkub3JnPg0KDQpBcHByZWNpYXRlIGZvciBoZWxwaW5nIHRlc3QuDQoNClRo
-YW5rcywNClBlbmcuDQoNCj4gDQo+IFRoYW5rcyENCj4gLS0gc3RlZXYNCg==
+On 3/24/25 7:52 AM, Krzysztof Kozlowski wrote:
+> DTS example in the bindings should be indented with 2- or 4-spaces and
+> aligned with opening '- |', so correct any differences like 3-spaces or
+> mixtures 2- and 4-spaces in one binding.
+> 
+> No functional changes here, but saves some comments during reviews of
+> new patches built on existing code.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Looks identical with the exception of the white space change.
+Thanks Krzysztof.
+
+Reviewed-by: Alex Elder <elder@riscstar.com>
+
+> ---
+>   .../devicetree/bindings/net/qcom,ipa.yaml     | 124 +++++++++---------
+>   1 file changed, 62 insertions(+), 62 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+> index 1a46d80a66e8..b4a79912d473 100644
+> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+> @@ -210,70 +210,70 @@ additionalProperties: false
+>   
+>   examples:
+>     - |
+> -        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> -        #include <dt-bindings/clock/qcom,rpmh.h>
+> -        #include <dt-bindings/interconnect/qcom,sdm845.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +    #include <dt-bindings/interconnect/qcom,sdm845.h>
+>   
+> -        smp2p-mpss {
+> -                compatible = "qcom,smp2p";
+> -                interrupts = <GIC_SPI 576 IRQ_TYPE_EDGE_RISING>;
+> -                mboxes = <&apss_shared 6>;
+> -                qcom,smem = <94>, <432>;
+> -                qcom,local-pid = <0>;
+> -                qcom,remote-pid = <5>;
+> +    smp2p-mpss {
+> +        compatible = "qcom,smp2p";
+> +        interrupts = <GIC_SPI 576 IRQ_TYPE_EDGE_RISING>;
+> +        mboxes = <&apss_shared 6>;
+> +        qcom,smem = <94>, <432>;
+> +        qcom,local-pid = <0>;
+> +        qcom,remote-pid = <5>;
+>   
+> -                ipa_smp2p_out: ipa-ap-to-modem {
+> -                        qcom,entry-name = "ipa";
+> -                        #qcom,smem-state-cells = <1>;
+> -                };
+> -
+> -                ipa_smp2p_in: ipa-modem-to-ap {
+> -                        qcom,entry-name = "ipa";
+> -                        interrupt-controller;
+> -                        #interrupt-cells = <2>;
+> -                };
+> +        ipa_smp2p_out: ipa-ap-to-modem {
+> +                qcom,entry-name = "ipa";
+> +                #qcom,smem-state-cells = <1>;
+>           };
+>   
+> -        ipa@1e40000 {
+> -                compatible = "qcom,sc7180-ipa";
+> -
+> -                qcom,gsi-loader = "self";
+> -                memory-region = <&ipa_fw_mem>;
+> -                firmware-name = "qcom/sc7180-trogdor/modem/modem.mbn";
+> -
+> -                iommus = <&apps_smmu 0x440 0x0>,
+> -                         <&apps_smmu 0x442 0x0>;
+> -                reg = <0x1e40000 0x7000>,
+> -                      <0x1e47000 0x2000>,
+> -                      <0x1e04000 0x2c000>;
+> -                reg-names = "ipa-reg",
+> -                            "ipa-shared",
+> -                            "gsi";
+> -
+> -                interrupts-extended = <&intc GIC_SPI 311 IRQ_TYPE_EDGE_RISING>,
+> -                                      <&intc GIC_SPI 432 IRQ_TYPE_LEVEL_HIGH>,
+> -                                      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> -                                      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
+> -                interrupt-names = "ipa",
+> -                                  "gsi",
+> -                                  "ipa-clock-query",
+> -                                  "ipa-setup-ready";
+> -
+> -                clocks = <&rpmhcc RPMH_IPA_CLK>;
+> -                clock-names = "core";
+> -
+> -                interconnects =
+> -                        <&aggre2_noc MASTER_IPA 0 &mc_virt SLAVE_EBI1 0>,
+> -                        <&aggre2_noc MASTER_IPA 0 &system_noc SLAVE_IMEM 0>,
+> -                        <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_IPA_CFG 0>;
+> -                interconnect-names = "memory",
+> -                                     "imem",
+> -                                     "config";
+> -
+> -                qcom,qmp = <&aoss_qmp>;
+> -
+> -                qcom,smem-states = <&ipa_smp2p_out 0>,
+> -                                   <&ipa_smp2p_out 1>;
+> -                qcom,smem-state-names = "ipa-clock-enabled-valid",
+> -                                        "ipa-clock-enabled";
+> +        ipa_smp2p_in: ipa-modem-to-ap {
+> +                qcom,entry-name = "ipa";
+> +                interrupt-controller;
+> +                #interrupt-cells = <2>;
+>           };
+> +    };
+> +
+> +    ipa@1e40000 {
+> +        compatible = "qcom,sc7180-ipa";
+> +
+> +        qcom,gsi-loader = "self";
+> +        memory-region = <&ipa_fw_mem>;
+> +        firmware-name = "qcom/sc7180-trogdor/modem/modem.mbn";
+> +
+> +        iommus = <&apps_smmu 0x440 0x0>,
+> +                 <&apps_smmu 0x442 0x0>;
+> +        reg = <0x1e40000 0x7000>,
+> +              <0x1e47000 0x2000>,
+> +              <0x1e04000 0x2c000>;
+> +        reg-names = "ipa-reg",
+> +                    "ipa-shared",
+> +                    "gsi";
+> +
+> +        interrupts-extended = <&intc GIC_SPI 311 IRQ_TYPE_EDGE_RISING>,
+> +                              <&intc GIC_SPI 432 IRQ_TYPE_LEVEL_HIGH>,
+> +                              <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> +                              <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
+> +        interrupt-names = "ipa",
+> +                          "gsi",
+> +                          "ipa-clock-query",
+> +                          "ipa-setup-ready";
+> +
+> +        clocks = <&rpmhcc RPMH_IPA_CLK>;
+> +        clock-names = "core";
+> +
+> +        interconnects =
+> +                <&aggre2_noc MASTER_IPA 0 &mc_virt SLAVE_EBI1 0>,
+> +                <&aggre2_noc MASTER_IPA 0 &system_noc SLAVE_IMEM 0>,
+> +                <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_IPA_CFG 0>;
+> +        interconnect-names = "memory",
+> +                             "imem",
+> +                             "config";
+> +
+> +        qcom,qmp = <&aoss_qmp>;
+> +
+> +        qcom,smem-states = <&ipa_smp2p_out 0>,
+> +                           <&ipa_smp2p_out 1>;
+> +        qcom,smem-state-names = "ipa-clock-enabled-valid",
+> +                                "ipa-clock-enabled";
+> +    };
+
 
