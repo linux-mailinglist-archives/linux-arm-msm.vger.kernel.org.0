@@ -1,148 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-52488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 048B9A70C4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 22:43:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 633BEA70CA9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 23:13:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C08613BB01E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 21:39:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF5C0189FAF6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 22:11:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C901269B0D;
-	Tue, 25 Mar 2025 21:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA8B0269D1A;
+	Tue, 25 Mar 2025 22:10:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QrY6guO4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="egAyl6g+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CBD269AFA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 21:39:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCF1269D04;
+	Tue, 25 Mar 2025 22:10:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742938749; cv=none; b=LSBIpI3JUAQMzu3z5kd8+djnMh3aF0myBRbE7t6vglAzSF2kU4f8uEY+Bk2iwLRWI4w26+GARu9Y+Hu9Vwn4WG6oaM6bR9bPYdcjnNwi9SzJqnBIBVWY3niPmVhFEIvt0cvhOmFTevmPfp6r066gPP2TJMp20+7EM4LoG+k02+c=
+	t=1742940636; cv=none; b=baAFS2pH745+H9IZv74GtcmtgET4IIG2MqDVI1lpoyDsNzGHMDcqOND8idqFZEigjHBwrtOuyf0Qc6C83M8hrV38qAW36ZmgE/ioqI9t9KoUZ8qkvoqMzDutzJsImgu0zfSbrYkiznMYxYhw8v7cUJwQWZXtJwboSo3RN1F3594=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742938749; c=relaxed/simple;
-	bh=/Av7Cs+KayrhjqQVeFvAhc1FGTigGOhOF01svNTvIus=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fTorhO/U07AttzXSP6rcV2aL6R8n1oUD5ilwQvDAczundfns+NyrcaouvjBh0MCn3VxjeOE2+01JHPYmz4d8P/BqZvlMC3j3na8i/sxB8PmUzjF4YLxwbmgu4S8H6EqqaA6p/LIvzU0ceot1iu8YzeVdxuk9ak3G8nXrqlXt3U8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QrY6guO4; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43cec5cd73bso39230155e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 14:39:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742938745; x=1743543545; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xnMQy1sIVhjqG8H+P2Ah/U7DzsWvzK3schCpJEGDS6w=;
-        b=QrY6guO4MSCbhtUAsvnLTopZBN1hnxhvumdYrSzzhufCRIld1u4Kfeqy6uLt10OewQ
-         TPYAl3cQ16TAsE2qxnmpMb/aZDbBDMW0K1V7AFkvgjDSBmHMqPbulTcXck6UI4YeiyuF
-         fInFIWgAHwdidLH83pEU7sht+PCrC20dNuQ9U4hOdi8fH6cm1Lo2VjoUIsEg/3LJdhcH
-         ocDM6MGsUJjAO8n1k4H/xU0e6ymGApVRs+oQQ1hRsuoYkQ+XA23C119iGk9BuRYcfQ3A
-         KwW0dhtfnlYSJ2bH6jQUlocQvCTRKF35qdUkODREzNdcvqMfsWhZQYl8Qp3chcb4baKU
-         zsPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742938745; x=1743543545;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xnMQy1sIVhjqG8H+P2Ah/U7DzsWvzK3schCpJEGDS6w=;
-        b=Tyjy0GxtfRmcZyQP/MG6DjWIC6bIXI/dTcesY4COMyGWEeJuEDYiGGONecSKIZYVs0
-         uDdsyz9IMjO8UexX8LoEZi5S9mccx7EcAzDTcQCmMlcYfooYY2bDI3gPK6Yq7UcEnf66
-         baLiRfORbm9C/DrVyiMqN5MuOAFRclPoujrBq9sSpqk6hlpP734sG+ZkLRZprTl3wc1n
-         DAYbcom2vAP5OlYTbwFD+50CduOTFngXz+1QSOl/y/rN1km9iDw3wC+Q2Kgxwg+pvkNt
-         SfUjX+ClH8VfOCiiRfigU1oVmgvRNUGPGeBt/CiJ6RhFmGR7YI3NtqTYkJlEdzf4w4EA
-         bWBw==
-X-Forwarded-Encrypted: i=1; AJvYcCWM70yrNhxAX9zUUfO54rjnx2r/LWphnXh7DMqeKVQAbhJuqeAKcZdNOm6X49H9hpS3abgAU18qhhlrXc8C@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOACMGftCi0HvxMWjhuLjVKMhaiW6i4xiscfBjdlr8JEkANnMt
-	c7HwKeECfF5W5Xc5BRPl2xeNetyDvmhqT0sBIQWcd86SjCSd8vZyIttTcep4oDo=
-X-Gm-Gg: ASbGncvR7HtT7qx8kV5HQtf1tB4kYyL44+1/tCH/hMtuo1Kp7LPVWrI6YdmSYXh7SJz
-	n7IUzGwP8kQH0dwYx1wbf7M0tcjutCLTkYYnvPkAp5+uOfTYiAr2wG+Bx51V+TNYa5YN/dtcf7v
-	zvpEi2k2oL0SFJKxCgAqXYz9mqv76vCq/xfiXFNYt03zrMLEBu5dSlSIXPqFSxA4xw73GvlboEx
-	MqBIZfRwUbqaIqBjWA2To8oFJk4l5jTc7Z6k2CCZbJAbNYzmuRpeu1bQ5w+uNuP79O0nmaak9No
-	yiQb13oqHouR/U3HFn8ukssrnbc2e5Dcyoox4zRP0iFSQwE+rgDwtNgz0EW2RrQ=
-X-Google-Smtp-Source: AGHT+IEyyd8PC7FCDHlQIj4U+vOvGRq0sCf16YMi7BW8ixBJXbdk2VE9H7MgdgqHwWDw9UD6p4dY2Q==
-X-Received: by 2002:a05:600c:1ca4:b0:43c:ec28:d301 with SMTP id 5b1f17b1804b1-43d50a3c7b5mr147764445e9.26.1742938745377;
-        Tue, 25 Mar 2025 14:39:05 -0700 (PDT)
-Received: from [192.168.68.117] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-43d43f332cfsm216861645e9.6.2025.03.25.14.39.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Mar 2025 14:39:04 -0700 (PDT)
-Message-ID: <b993c7a4-ff3e-4e79-bde8-2b5bdf3f2fff@linaro.org>
-Date: Tue, 25 Mar 2025 21:39:04 +0000
+	s=arc-20240116; t=1742940636; c=relaxed/simple;
+	bh=cTquolJn+rUh2RRuwDkxwlWODcI2LbtYrc6pA6KyL3Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RBsOChrAw3uoIWYAN75+hTUbV+9OkFHtV6AV0fukQrTzNQLROYZ18HoAa5SkRz4Q3099/NsdcTiRmCd7VEQrA5ve/mpX4rdGvZFslVxWTeJ9p72z13rP/6+aVGHqcVuVx5BvFypkfjuGYutKSv8wUWsT25q6s+r8ePnyCd7iQhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=egAyl6g+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E415C4CEE4;
+	Tue, 25 Mar 2025 22:10:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742940636;
+	bh=cTquolJn+rUh2RRuwDkxwlWODcI2LbtYrc6pA6KyL3Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=egAyl6g+iVGFzIBxy/6KPAEBc337m16BX37IGGjA9YtzkJcfDkBGaXUQB7e/W++fN
+	 GFjtLBvBkTsC/xkKm0hxxUA6i7BDN4NsGhkJQRq5BysJ5C0/gbzFk5EiB2TiajQzH1
+	 UXK56JTAeyPzRSL7Q1qvfOA0hPKvtumQxcqlXIcp+pJBVVgwjJNBsiEU+QNIBgJCjT
+	 IDa03BQbxpC0xQiqqVfh2Wlrl5Bl1NB9GgctLBHQyF/bwT3HHUd/ZF6kqeP6PWN4ry
+	 /Q0/KgMvoVSdwb3IGTOsMHHl3Gd5xmcp43/jG+OlH6eiNAoW0hbw3FW5yw+6xqMwQb
+	 yuOag9KE32bmg==
+Date: Tue, 25 Mar 2025 17:10:33 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Prashanth K <prashanth.k@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 0/5] Add snps,dis_u3_susphy_quirk for some QC targets
+Message-ID: <5k45tcntn2bhxqt35quzfm2dsq6eug3hgqdcrta25oy47zuqja@4jclvspwob5x>
+References: <20250325123019.597976-1-prashanth.k@oss.qualcomm.com>
+ <ee0848ea-7a06-4f4e-9115-5e3c0ab8bf95@oss.qualcomm.com>
+ <7029a455-47be-475d-b429-98031d227653@oss.qualcomm.com>
+ <db0bbc62-ecf2-4f72-a0c9-462fbaadebc4@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/6] ASoC: codecs: wcd938x: add mux control support for
- hp audio mux
-To: Peter Rosin <peda@axentia.se>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: broonie@kernel.org, andersson@kernel.org, krzk+dt@kernel.org,
- ivprusov@salutedevices.com, luca.ceresoli@bootlin.com,
- zhoubinbin@loongson.cn, paulha@opensource.cirrus.com, lgirdwood@gmail.com,
- robh@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
- perex@perex.cz, tiwai@suse.com, linux-sound@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, johan+linaro@kernel.org,
- Christopher Obbard <christopher.obbard@linaro.org>
-References: <20250325114058.12083-1-srinivas.kandagatla@linaro.org>
- <20250325114058.12083-6-srinivas.kandagatla@linaro.org>
- <vmhrs62ygu2xozcabc6tgy37ta5qskeyks5j3ldponzfijicl4@nudcmxonq7qj>
- <4654f21b-bf61-4b41-b073-407fab4bff6a@linaro.org>
- <14b7f2cb-6f40-f8b8-b3de-fe99080e6e40@axentia.se>
-Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <14b7f2cb-6f40-f8b8-b3de-fe99080e6e40@axentia.se>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <db0bbc62-ecf2-4f72-a0c9-462fbaadebc4@oss.qualcomm.com>
 
-Thanks Peter,
-
-On 25/03/2025 20:13, Peter Rosin wrote:
-> Hi!
+On Tue, Mar 25, 2025 at 05:31:28PM +0100, Konrad Dybcio wrote:
+> On 3/25/25 4:01 PM, Prashanth K wrote:
+> > 
+> > 
+> > On 25-03-25 08:11 pm, Konrad Dybcio wrote:
+> >> On 3/25/25 1:30 PM, Prashanth K wrote:
+> >>> During device mode initialization on certain QC targets, before the
+> >>> runstop bit is set, sometimes it's observed that the GEVNTADR{LO/HI}
+> >>> register write fails. As a result, GEVTADDR registers are still 0x0.
+> >>> Upon setting runstop bit, DWC3 controller attempts to write the new
+> >>> events to address 0x0, causing an SMMU fault and system crash. More
+> >>> info about the crash at [1].
+> >>>
+> >>> This was initially observed on SM8450 and later reported on few
+> >>> other targets as well. As suggested by Qualcomm HW team, clearing
+> >>> the GUSB3PIPECTL.SUSPHY bit resolves the issue by preventing register
+> >>> write failures. Address this by setting the snps,dis_u3_susphy_quirk
+> >>> to keep the GUSB3PIPECTL.SUSPHY bit cleared. This change was tested
+> >>> on multiple targets (SM8350, SM8450 QCS615 etc.) for over an year
+> >>> and hasn't exhibited any side effects.
+> >>>
+> >>> [1]: https://lore.kernel.org/all/fa94cbc9-e637-ba9b-8ec8-67c6955eca98@quicinc.com/
+> >>>
+> >>> Prashanth K (3):
+> >>>   arm64: dts: qcom: sm8150: Add snps,dis_u3_susphy_quirk
+> >>>   arm64: dts: qcom: sm8350: Add snps,dis_u3_susphy_quirk
+> >>>   arm64: dts: qcom: sm8450: Add snps,dis_u3_susphy_quirk
+> >>>
+> >>> Pratham Pratap (2):
+> >>>   arm64: dts: qcom: qcs615: Add snps,dis_u3_susphy_quirk
+> >>>   arm64: dts: qcom: qdu1000: Add snps,dis_u3_susphy_quirk
+> >>
+> >> Are there more targets affected, from the list of the ones currently
+> >> supported upstream?
+> >>
+> >> Konrad
+> > 
+> > My initial plan was to add it for all the QC platforms, but wasn't
+> > confident enough about it. Because we have seen the issue only on these
+> > targets and hence tested only on these.
 > 
-> 2025-03-25 at 19:04, Srinivas Kandagatla wrote:
->> I wish we could be taken care in mux-core or even in the deselect api
+> Okay, let's proceed with these and in the meantime please query internally
+> whether it could be applicable to others too
 > 
-> It is not easily done. A mux is a shared resource. How can the mux core
-> know if it is consumer A or consumer B that deselects the mux if both
-> ignore failures when calling select? Mux select is backed by a semaphore
-> and there is no guarantee that a consumer selects/deselects from the
-> same thread or anything like that. The onus is on the consumer to get
-> this right and only deselect when select is successful.
 
-Should deselect fail if there was no previous mux selected?
+But if it applies to all qcom targets, wouldn't it make more sense to
+add the property in the qcom glue driver?
 
+Regards,
+Bjorn
+
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> I believe the documentation is clear on this topic: "do not call
-> mux_control_deselect() if mux_control_select() fails".
-
-True, the documentation is pretty clear about this behavior.
-> 
-> One thing can be done from the mux core, and that is to provide a new
-> API where consumers get a mux that is exclusive so that the consumer
-> can call select/deselect without involving a lock in the core. There
-> need not even be a requirement to call deselect between selects in that
-> case. Such an API is what many consumers want, I think, but it is of
-> course not really compatible with the existing API, which is totally
-> focused on the need to share a mux among multiple consumers.
-> 
-exclusive apis would simplify the consumer side of code for sure.
-
-> And, of course, someone has to do it.
-
-Yes, I can give it a go and see how it will turn out.
-
---srini
-> 
-> Cheers,
-> Peter
+> Konrad
 
