@@ -1,193 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-52468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7AD8DA703C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 15:33:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46946A703EC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 15:39:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B934E7A22D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 14:32:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5AE5716C4D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 14:39:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 440C6258CFD;
-	Tue, 25 Mar 2025 14:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FFF225A64A;
+	Tue, 25 Mar 2025 14:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BvXM8LVe"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oXVWegIH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974BF257ADB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 14:33:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFC625A631
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 14:39:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742913182; cv=none; b=nLxxtCbYKIKKOh25PSCtEThLsY0Z9liHFqrgrohoYQqhTeSXyTThR+X6LZsY0k4x6m3UkqAwl1DfxlP+RGzkizi23TdUR9RqUntymKcgtlL9h4PUamX2Nl28ZT3/ET2mM1BdleZANHz+0mXF2oDzKNUO9ZQJ3dGuqKOnP8cbxng=
+	t=1742913563; cv=none; b=vBfkU+Haq3US36SDswigqOmPX9nz7VL92zoEUftFznYnwnO5vnURVlxWYoiveRF0vIGLuwP0myFGdxlW9YbDe6mTaVwYoIs55alop9LA6aus3m/ljB7HSMl2igVGu9DOjsL/56cjR7lV1P9kr7DguH4uET9f7kIeBdE0JnVI1jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742913182; c=relaxed/simple;
-	bh=m0zKd5ydXx6oxCg5WUGcqC9H5SeZXiPlfiQFHbhUVtM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dS/LWIljQL32cQ+xarpUCn24k7Ne7uffQpyZ7lBEq+sbMen4DDMq7QC5iofwZ/h1J+5VFGgjfc/bDGGjNJUAPjYzej8IGzKoL2nzSCQgav7dMwzVNYAor7kk4aKQQOXqwyZ8u0KP9jhkmHPuEoYkCCccWtmHUPKBR23T2jCN6pE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BvXM8LVe; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2ff799d99dcso9528943a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 07:33:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742913180; x=1743517980; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=OKRABh44uDFI70lZVbe1fR/gjcdCuWiPeTV+hZF44Lg=;
-        b=BvXM8LVeE/IXEpPesgsWAWCG1sw+C605d9mnCx7TYnTY8y+6+2It4Yhl8Rby4lfrq7
-         gMiyo3XV+cCgUjo6AeRyrSOgnop4TBxvaHsPL2+2F+rdT28YSmUj4M5yKJnPnELwo1Vj
-         1PPorv5aGRpCS2LqMGlzYlRrIysFqizfxAuuUgxjSBV2GTMO3D3gKFck3CwNrUyHPkVm
-         9vcrAquem+DctcD6HSuRKkA+MN8XsGGeUpp74yutH0hOUfNSHk+gP7ZSXl1Slk5VJLzO
-         z9KnfjovJY3HtBHU/eMhGMo036e+1uz0iYkb/rTux5iYUsuivknRVBpLtXbI1Ko4KCOn
-         vqng==
+	s=arc-20240116; t=1742913563; c=relaxed/simple;
+	bh=BF/9SLoL0/eahxTrlHrP7+kk6jiwP3IV1YiE0RpH0aU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OKIGv3eeu2KM4TkV2JlbGURRQzaISDmRAH7lDRgQssOrKtMRrWjXiiLXQnPdPazCIknkUUE+oV7vYqnDhI78+j+2+GXJTkhZnbEoYUjPbQQBOX0clx/zIDYpP8pKrHqtHMm0wKfD0Q86oeh2K6FCeJToDMxyWiUaej5XsjHZoZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oXVWegIH; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52PCjVw9017697
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 14:39:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2AR9DLJxuAX5J+vUj9fnqNV1djjf7QFzxQNMwmMHS4A=; b=oXVWegIHey1D7hgo
+	mRkBBDvrEh3YomsjH1AECYJXa3PCMVCFzndXKb1l2dzhimMHtvRcxtM8lIFdL4Mt
+	g1cUvzhOZj4137q2hxw7GCPS0TgV7uzVS0UgOTT46SKIcJTYuZEsLoeUyi5GvM/h
+	j8cEit6MisUlo3SNqKHqLYp5ZQIqMgxvENZhEMN0BUJ7VeM2VCsTmWN8QTzNL6f3
+	payQVb0iXgpdb4FL8UyODIMlWBHBWHj2T9z2inD1BR+6IfL8aYQLfdev5ArrKEd6
+	RFMN63VayVKplC8gdDqA8ckGC3pH1fFbW3iCZXtBc7RoO9UwBWPMOb/gABePN+bh
+	G/Cjrg==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45kmcy9x37-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 14:39:17 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4768b27fef3so12028511cf.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 07:39:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742913180; x=1743517980;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1742913556; x=1743518356;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OKRABh44uDFI70lZVbe1fR/gjcdCuWiPeTV+hZF44Lg=;
-        b=C95lzbixrMmBv3mU8dM/IflTmbv+fWdFsarUC1d2X0asZxTgpAJEFRzjRJdKIRIrpC
-         CNmKMpwpFOmHGQhQ8AfJnO0F/5wEL2aCuyxfhup0HxP7FZgQmktDBNLzuLG0/fJfIKPI
-         Xr3HpgY1YxPlV8gzJRVFsC8AqfOwpCNHZUixZJS1bLqNOdp1kHpjsmRIF7TCY6o+rFKM
-         zQX/cHazseJFilDVZiadsGSs1McsWhy57TbsL9enD01puo09XU/z2Xy1/bJh2jyIy51T
-         nk/+ROTIlOTIkQiALN6jJUj6WVTUK7FnJoLdr56SDcIdGHypDcsmfWTmFVFOTRaQKi7Z
-         w0gA==
-X-Forwarded-Encrypted: i=1; AJvYcCWM8fkIzCaafM1dOFFMvpUi475lRfJduOqPwe/1jn8rdJaErL6jyWlGzTSym/SR+A2BT04cMbGlDajF3nuJ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy7D+BO5JUlaQP9opEUhy8RomKwdhHJATPlGkn83QsxQ3DTo6Mp
-	RZuOKXeAefOsIEyihcqfSx/eiNZOpP/5p6dikICyguQvm+/fDTKDAUodIuqhqg==
-X-Gm-Gg: ASbGncvnUaEk3491HxFb+lsd6LB2fpBtJshXndnqONfL15kf572dhMpRxVS+4jDB4jg
-	lN9Z5bnup/DPgIE6FrZJq60x9WPJzcI9YAXzUq5FmvT9kZA4Czxv+bS1fCnI7ySznuO5W4in16s
-	ggdwDxnnsbrLFAPz7Qm2RhUkTDPukmJmt/Crour/nLm76G3cr8Yb8d/t/vDhyVFlDbYtjSck6zI
-	8PRkWBZ+CauRsjHNw8lnTFg9FkQ9HipxG0+42mz4kzd+dkt4t4HQ3RN1yN/z3wlfej/d9yZ3RwR
-	UnuGRDqt7xAq9KB8D+Prrx0yhafmm+OIF7+6pcMpfYlAfd0d8o93H9eu
-X-Google-Smtp-Source: AGHT+IEB+XaCO6duAN2wp0HmjUzHuf7tiQOHA3Esz/U9fWrPnrUspdywgNu7CbKOFz9lwCKIl8JtAA==
-X-Received: by 2002:a17:90b:5450:b0:301:6343:1626 with SMTP id 98e67ed59e1d1-3030fe58e5bmr25896303a91.1.1742913179728;
-        Tue, 25 Mar 2025 07:32:59 -0700 (PDT)
-Received: from thinkpad ([120.60.136.104])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-301bf64aca3sm14431313a91.49.2025.03.25.07.32.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Mar 2025 07:32:59 -0700 (PDT)
-Date: Tue, 25 Mar 2025 20:02:54 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com, 
-	broonie@kernel.org, bbrezillon@kernel.org, linux-mtd@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
-Subject: Re: [PATCH v3 1/4] mtd: rawnand: qcom: Pass 18 bit offset from QPIC
- base address to BAM
-Message-ID: <bu2msy7ngxzjk54rdq3fmgvww5rrn5ogjm4uq2vt2pwp6toxfw@ytvk6x6wcgi5>
-References: <20250310120906.1577292-1-quic_mdalam@quicinc.com>
- <20250310120906.1577292-2-quic_mdalam@quicinc.com>
- <20250318073332.guylcyqjmfq5nyyr@thinkpad>
- <004c7c4a-69b4-c6f6-14c2-eb62672a7125@quicinc.com>
+        bh=2AR9DLJxuAX5J+vUj9fnqNV1djjf7QFzxQNMwmMHS4A=;
+        b=pEmTadKsmu4drQmif/fLkTZZRLUy1F+AlViadBCoh4I2HGEuudf+gK4hCbdocA86vF
+         LEktqes/Smb+S8DrulYi6aq27jQwXPv4gtME7I8lMqYGRCkPHCoVHMXaR6GJ0E3gKQ/b
+         YhsxRpr9QulGcr6wFiuAhybydTotmrF4t3hUm2+lqHlt5UUc/KD3+ToJcG2quDOKia8d
+         WAu+VcKvJDPxalVy+EZC98Qnbgcr1/EQomY6TIf7QwxsflhU+XvE1Ui7s5s/vu8RhdzQ
+         Z7vS7XMdss5LwGDutCb3XPYoU+07DII0wZ7oFRsi34soZNiSeILpboj7XC5IsRajDeo5
+         vpLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUVkUMgIih4ijc/wA6a65nUjNvezkrtYRjc6d7kjbnq+8VFzZ/+tnNxLpM5bhJQcw92LkBvp0zbR3CkkiK9@vger.kernel.org
+X-Gm-Message-State: AOJu0YyiEvHHMWKdpPbuEIs6l3tqJJVdJQgKfy3YKkX1ggoEgNGeEqEe
+	ul/Ted++F75ln3oLmYyEOSEupRPdOdA+pLQ8ZkkqYD0YyxHdIosP9KlH5gR7Fscc7GsHZSUlS9H
+	S1dTDOairAig5prvlS7yxSPdgs4Lfp6mIQjKWFmQXPdV2SxoYAMLMmid7eEZBh7jn
+X-Gm-Gg: ASbGncsBcQsltzHjb22E7tulcUDFvpdMQMqV0jffyCUnmlTM4XCIT1gw/ol1jzIddsr
+	6ym2uQ51ynIrQIFH+1SFbCx3EVoFCBOomuAt0d5cvcNLBP+SlSLmZ3bZwfGzFQDQm5OwilA7n0W
+	usZSQRVcVaM5ZrS1jVt7EfLiHKFUko/h8lBLrhFxy4SVMw++GqO4ZtAXGZ6g2i/BKxbubmaqlFO
+	uF2gL9x62yznCTnkX/GHpegfSGXm0ArKZuEPO0jyoLvxtrni7/TwXBJwRpLbW3fplQBxIpM72E6
+	xknVA7RltyB6azkOe9Dko+WNPWfhliIjIFK296GPE0uV7/lwyPk5opA0j1rbXY4LOJVmoA==
+X-Received: by 2002:a05:622a:1a97:b0:476:af54:503f with SMTP id d75a77b69052e-4771dd6226bmr92953521cf.2.1742913556340;
+        Tue, 25 Mar 2025 07:39:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGR7ZJxcn2AD4UVzPlapOFAWeZjSCT60qNnDD/c5K+/WhuOlamYQaCR57BDtBgMf8xGuiCSWQ==
+X-Received: by 2002:a05:622a:1a97:b0:476:af54:503f with SMTP id d75a77b69052e-4771dd6226bmr92953231cf.2.1742913555748;
+        Tue, 25 Mar 2025 07:39:15 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5ebcd0c7759sm7850418a12.51.2025.03.25.07.39.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Mar 2025 07:39:15 -0700 (PDT)
+Message-ID: <0f700f59-3cbd-424a-84a0-0d23db0ca581@oss.qualcomm.com>
+Date: Tue, 25 Mar 2025 15:39:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <004c7c4a-69b4-c6f6-14c2-eb62672a7125@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: x1e001de-devkit: Add Wi-Fi and
+ Bluetooth pwrseq
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250324-x1e001de-devkit-dts-pwrseq-v1-1-530f69b39a16@linaro.org>
+ <Z-KuG0aOwEnxuhp9@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <Z-KuG0aOwEnxuhp9@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=EZ3IQOmC c=1 sm=1 tr=0 ts=67e2c015 cx=c_pps a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=KKAkSRfTAAAA:8 a=RC_zNtMqMYb_0QXlmi0A:9 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: K3H1foeQGLDvY9fIumznYKZGjnY492Sa
+X-Proofpoint-GUID: K3H1foeQGLDvY9fIumznYKZGjnY492Sa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-25_06,2025-03-25_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ adultscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503250103
 
-On Thu, Mar 20, 2025 at 11:23:40AM +0530, Md Sadre Alam wrote:
+On 3/25/25 2:22 PM, Stephan Gerhold wrote:
+> On Mon, Mar 24, 2025 at 04:24:01PM +0200, Abel Vesa wrote:
+>> The Qualcomm X Elite Devkit comes with a WCN7850 combo chip which provides
+>> Wi-fi and Bluetooth, similar to the CRD and QCP.
+>>
+>> Describe the nodes for the Wi-Fi, Bluetooth, the related regulators and
+>> the PMU.
+>>
+>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/x1e001de-devkit.dts | 144 +++++++++++++++++++++++++++
+>>  1 file changed, 144 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+>> index 74911861a3bf2606add8cf4aaa3816542e837513..8f288a138c4cb6e21725fdf726eb2a2489bfbc38 100644
+>> --- a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+>> +++ b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+>> @@ -17,6 +17,7 @@ / {
+>>  
+>>  	aliases {
+>>  		serial0 = &uart21;
+>> +		serial1 = &uart14;
+>>  	};
+>>  
+>>  	wcd938x: audio-codec {
+>> @@ -392,6 +393,42 @@ vph_pwr: regulator-vph-pwr {
+>>  		regulator-boot-on;
+>>  	};
+>>  
+>> +	vreg_wcn_0p95: regulator-wcn-0p95 {
+>> +		compatible = "regulator-fixed";
+>> +
+>> +		regulator-name = "VREG_WCN_0P95";
+>> +		regulator-min-microvolt = <950000>;
+>> +		regulator-max-microvolt = <950000>;
+>> +
+>> +		vin-supply = <&vreg_wcn_3p3>;
+>> +	};
+>> +
+>> +	vreg_wcn_1p9: regulator-wcn-1p9 {
+>> +		compatible = "regulator-fixed";
+>> +
+>> +		regulator-name = "VREG_WCN_1P9";
+>> +		regulator-min-microvolt = <1900000>;
+>> +		regulator-max-microvolt = <1900000>;
+>> +
+>> +		vin-supply = <&vreg_wcn_3p3>;
+>> +	};
 > 
+> Hm, on CRD and T14s there is a TODO comment above these two, which is
+> also why I haven't posted these upstream yet:
 > 
-> On 3/18/2025 1:03 PM, Manivannan Sadhasivam wrote:
-> > On Mon, Mar 10, 2025 at 05:39:03PM +0530, Md Sadre Alam wrote:
-> > > Currently we are configuring lower 24 bits of address in descriptor
-> > > whereas QPIC design expects 18 bit register offset from QPIC base
-> > > address to be configured in cmd descriptors. This is leading to a
-> > > different address actually being used in HW, leading to wrong value
-> > > read.
-> > > 
-> > > the actual issue is that the NANDc base address is different from the
-> > > QPIC base address. But the driver doesn't take it into account and just
-> > > used the QPIC base as the NANDc base. This used to work as the NANDc IP
-> > > only considers the lower 18 bits of the address passed by the driver to
-> > > derive the register offset. Since the base address of QPIC used to contain
-> > > all 0 for lower 18 bits (like 0x07980000), the driver ended up passing the
-> > 
-> > What is this address? Is it coming from DT?
-> > 
-> > > actual register offset in it and NANDc worked properly. But on newer SoCs
-> > > like SDX75, the QPIC base address doesn't contain all 0 for lower 18 bits
-> > > (like 0x01C98000). So NANDc sees wrong offset as per the current logic
-> > > 
-> > > The address should be passed to BAM 0x30000 + offset. In older targets
-> > 
-> > You gave no explanation on how this 0x30000 offset came into picture. I gave the
-> > reasoning in v2:
-> > 
-> > "SDX55's NANDc base is 0x01b30000 and it has bits 17 and 18 set corresponding to
-> > 0x30000. So it is correct that the IP only considers lower 18 bits and it used
-> > to work as the driver ended up passing 0x3000 + register offset."
-> > 
-> > Then you replied:
-> > 
-> > "This address 0x30000 is the address from QPIC_BASE to QPIC_EBI2NAND
-> > e.g for SDX55 and SDX65 the QPIC_BASE is 0x01B00000. So here lower 18-bits
-> > are zero only."
-> > 
-> > No one outside Qcom knows what QPIC_BASE and QPIC_EBI2NAND are. We just know the
-> > NANDc address mentioned in DT, which corresponds to 0x01b30000 for SDX55.
-> > 
-> > Please reword the commit message to present the full picture and not half baked
-> > info. This is v3, I see no improvement in the commit message, sorry.
-> > 
-> > > the lower 18-bits are zero so that correct address being paased. But
-> > > in newer targets the lower 18-bits are non-zero in QPIC base so that
-> > > 0x300000 + offset giving the wrong value.
-> > > 
-> > > SDX75 : QPIC_QPIC | 0x01C98000 (Lower 18 bits are non zero)
-> > > SDX55 : QPIC_QPIC | 0x1B00000 (Lower 18 bits are zero) Same for
-> > 
-> > There is no address as '0x1B00000' in DT.
+> We still haven't come to a conclusion unfortunately how to model the M.2
+> WiFi/BT cards. QCP doesn't have M.2, which is why it is upstream
+> already. These two regulators don't actually exist on the devkit itself,
+> they are (probably) part of the M.2 card.
 > 
-> Mani,
+> The devkit only provides the 3.3V and 1.8V supply to the M.2 card.
 > 
-> Please see if this commit message would be acceptable?
-> 
-> 	The BAM command descriptor provides only 18 bits to specify
-> 	the NAND register offset. Additionally, in the BAM command
-> 	descriptor, the NAND register offset is supposed to be
-> 	specified as "(NANDc offset - BAM base offset) + reg_off".
+> We should really find some way forward for this, but just omitting any
+> mention of this is not the best way. :-)
 
-Isn't it, (NANDc base - BAM base)? 'offset' is not valid here.
+Now that we have a PCI port pwrseq driver, perhaps that could work..
 
-And also, you are just mixing the names everywhere. Here you say, NANDc base
-and BAM base, but in patch 4:
-
-"NAND register addresses to be computed based on the NAND register offset from
-QPIC base". So the second address is BAM or QPIC?
-
-Please be consistent with naming.
-
-> 	Since, the nand driver isn't aware of the BAM base offset,
-> 	have the value of "NANDc offset - BAM base offset" in a new
-> 	field 'nandc_offset' in the NAND properties structure and use
-> 	it while preparing the descriptor.
-> 
-
-And what about 'nandc_offset'? NANDc is already the term used for NAND
-controller which has the base address of 0x01b30000 in DT. So clearly, the name
-of the offset variable is not correct.
-
-> 	Previously, the NAND driver was incorrectly specifying the
-> 	NAND register offset directly in the BAM descriptor.
-> 
-
-No. Previously, the driver was specifying the NANDc base address in the BAM
-descriptor. You are now trying to pass the register offset.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Konrad
 
