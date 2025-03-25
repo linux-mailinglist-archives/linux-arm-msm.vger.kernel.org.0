@@ -1,176 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-52467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0987A703AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 15:29:43 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AD8DA703C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 15:33:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 49DFF3B80A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 14:22:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B934E7A22D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 14:32:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23A802561DF;
-	Tue, 25 Mar 2025 14:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 440C6258CFD;
+	Tue, 25 Mar 2025 14:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TO/ZQV6Z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BvXM8LVe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3242E3382
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 14:22:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974BF257ADB
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 14:33:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742912523; cv=none; b=FCP4hw8MEt+uGOQshDu9YnOXxCDerhd5KQx3aBOw+hKcnuW250hUNSs9M+ShwEvda5I4F3rWhAbGeHmD1fYhUSRwCGjT6E/FNXsersD7GMYz6wgmhuavX2mpo4GHcdI0fnKIyrglD4pVWfW0BG7jd7yFfw8emPLfMerOfkMiZHs=
+	t=1742913182; cv=none; b=nLxxtCbYKIKKOh25PSCtEThLsY0Z9liHFqrgrohoYQqhTeSXyTThR+X6LZsY0k4x6m3UkqAwl1DfxlP+RGzkizi23TdUR9RqUntymKcgtlL9h4PUamX2Nl28ZT3/ET2mM1BdleZANHz+0mXF2oDzKNUO9ZQJ3dGuqKOnP8cbxng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742912523; c=relaxed/simple;
-	bh=B2b0gdsxPlJ0aPkDZGIODju9MnfkVruUd7LTAIJth4c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DAHa9lGd8joTMrxEdI7thKNZ5OS8o+T9ZflT2dQxa7zq2zGxYIlFbuXzF2explZd2/f9mXBg5aeVfbZF9/9+bEipUgZvbCXcYVfa0pfjL5gsLTgFKlYHrMZJfRx+6WkJ5shojNXVxnau/LTnmD8Y0WfAcQZGsaNK8YzYLiz4RcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TO/ZQV6Z; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52PD3mAq024738
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 14:22:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Kp3yGWdT4AV6kkrdyjO2FJdT8nOV4kJcKTIpcQc7Pgs=; b=TO/ZQV6ZSOOIQO6/
-	EtuY3avalnKyKRDIYJ5L4diQO64ei0GCwfEGLTRLRfVAUZ/dzhogZfZsGwr9LOfG
-	6TsfxYd6uqNSrVZNUlLTFuv07jCOec/l3ioo50XpUDWxWIYIRkN7L3dr850X+yIj
-	HNHk3Gu+WKCv8y5y1u+nxfPs/LGlnGX5jev1//5a2WihdrtiE8NxMe1Blu7DCzR1
-	am8P3+vZrj7jB6YzVh40dx/1uVJIwXjjB4hDQKb5Dx190G4OrLdmfaSNIRlfSgM8
-	7HORa5z9tbLv2cqroJ8L3F7PUPAVoqWOGQp3NkI4MSprpbK3KVzwcDLasnSUFOLz
-	ygOT8w==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45k7qjbtcr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 14:22:00 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c3c5e92d41so945590985a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 07:22:00 -0700 (PDT)
+	s=arc-20240116; t=1742913182; c=relaxed/simple;
+	bh=m0zKd5ydXx6oxCg5WUGcqC9H5SeZXiPlfiQFHbhUVtM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dS/LWIljQL32cQ+xarpUCn24k7Ne7uffQpyZ7lBEq+sbMen4DDMq7QC5iofwZ/h1J+5VFGgjfc/bDGGjNJUAPjYzej8IGzKoL2nzSCQgav7dMwzVNYAor7kk4aKQQOXqwyZ8u0KP9jhkmHPuEoYkCCccWtmHUPKBR23T2jCN6pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BvXM8LVe; arc=none smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2ff799d99dcso9528943a91.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 07:33:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1742913180; x=1743517980; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=OKRABh44uDFI70lZVbe1fR/gjcdCuWiPeTV+hZF44Lg=;
+        b=BvXM8LVeE/IXEpPesgsWAWCG1sw+C605d9mnCx7TYnTY8y+6+2It4Yhl8Rby4lfrq7
+         gMiyo3XV+cCgUjo6AeRyrSOgnop4TBxvaHsPL2+2F+rdT28YSmUj4M5yKJnPnELwo1Vj
+         1PPorv5aGRpCS2LqMGlzYlRrIysFqizfxAuuUgxjSBV2GTMO3D3gKFck3CwNrUyHPkVm
+         9vcrAquem+DctcD6HSuRKkA+MN8XsGGeUpp74yutH0hOUfNSHk+gP7ZSXl1Slk5VJLzO
+         z9KnfjovJY3HtBHU/eMhGMo036e+1uz0iYkb/rTux5iYUsuivknRVBpLtXbI1Ko4KCOn
+         vqng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742912519; x=1743517319;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Kp3yGWdT4AV6kkrdyjO2FJdT8nOV4kJcKTIpcQc7Pgs=;
-        b=Obo0bJFcXcAKWRqc4WKILCpBOZNMQJ8/xujpwdudYbEnarPaizL42N/ZpOEg8+R/qR
-         JuWDg8IkQcPhXS71s7W7kXdQY3c0Ga/pN6477/NfBFnX7boJFYiQG3mWMMR0oIIQby+e
-         8YURxPUZfzFy1jL49Gk7kMmKVbIV3TE51v6L0NmjsMsGatU3lOKDjCQm7zsWMmwXm+6I
-         MAVGJZHiZ2X8sm4VJvkPjQPo2SAZOeCys4GL2JMaf4rxo7Jql9IYVBdho5w9T0V1ysnw
-         2YXyx7oAN6DDg3thOotWy2fZ9ypI2UML6ljdOKoPCtIltEk//iejxjFttkkDoDuNLFtc
-         YZag==
-X-Forwarded-Encrypted: i=1; AJvYcCWltIPkRjB1HRPcTtzlpvlJNreLfWjP9/+0dxuKixma5d9viWLLrNfcYXTUkreccxvj5fGDSC0woINzwGf9@vger.kernel.org
-X-Gm-Message-State: AOJu0YyU+w87qv4tO5UDcoML7yhDoHfq0SWvxM24w6Xa+C2G8PuB4NKM
-	L8skWx8qfCYDfDJPl6L7TdpEroqAJB3wE18zCapnrus0LUWX1epZoF78LccOQlxGQinDDqksOoJ
-	1ZU0ggUhaL1K1PwJ16uj7ALdczA/Kdvbov1pKBDDMlUSfg8s382nKmK6DTDcD+DIe
-X-Gm-Gg: ASbGncuIAYf+R8gcEHPdBjn0Dg/L9L8uJX9o8HNynu0DyKD1MEOP7GdEzirRHals/t7
-	p/zzN+zupR1eNITsCdkDibq87TRmpC4pCBhDicbMtz+SF2r8rpukNQu+6JHMld0wEHo367lv4vN
-	y3Q54rIGr8ML0qONPMUjMikCcnMxyCTaeww57T5hipPMKUmPRhwNP/kaJLMoAaz08dyIzVcW9Lp
-	uHvOg1TQstlD/oYM664B6jQNyGQNOgpt/MZBBM/JAtr05n80vr2ih1RrIIpUezcqmIpFc6IOhPu
-	GDPukbhZtCYbvKhYhOJiFySp6JAgI1svDF/lSo4hs2O4uWfxYHmtFkWhuK72EuBvi2w=
-X-Received: by 2002:a05:620a:4082:b0:7c5:4194:bbcc with SMTP id af79cd13be357-7c5ba1a5851mr2078823485a.29.1742912519059;
-        Tue, 25 Mar 2025 07:21:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHE3gf2K5kIjZtYjJH4qhQtLNFCQgnGxwMyKEgZu4Q/N9eWpJ5iD6eXdGIpzuGP7y89fDMGrg==
-X-Received: by 2002:a05:620a:4082:b0:7c5:4194:bbcc with SMTP id af79cd13be357-7c5ba1a5851mr2078805785a.29.1742912517757;
-        Tue, 25 Mar 2025 07:21:57 -0700 (PDT)
-Received: from eriador.lan (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ad65083e4sm1508348e87.171.2025.03.25.07.21.56
+        d=1e100.net; s=20230601; t=1742913180; x=1743517980;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OKRABh44uDFI70lZVbe1fR/gjcdCuWiPeTV+hZF44Lg=;
+        b=C95lzbixrMmBv3mU8dM/IflTmbv+fWdFsarUC1d2X0asZxTgpAJEFRzjRJdKIRIrpC
+         CNmKMpwpFOmHGQhQ8AfJnO0F/5wEL2aCuyxfhup0HxP7FZgQmktDBNLzuLG0/fJfIKPI
+         Xr3HpgY1YxPlV8gzJRVFsC8AqfOwpCNHZUixZJS1bLqNOdp1kHpjsmRIF7TCY6o+rFKM
+         zQX/cHazseJFilDVZiadsGSs1McsWhy57TbsL9enD01puo09XU/z2Xy1/bJh2jyIy51T
+         nk/+ROTIlOTIkQiALN6jJUj6WVTUK7FnJoLdr56SDcIdGHypDcsmfWTmFVFOTRaQKi7Z
+         w0gA==
+X-Forwarded-Encrypted: i=1; AJvYcCWM8fkIzCaafM1dOFFMvpUi475lRfJduOqPwe/1jn8rdJaErL6jyWlGzTSym/SR+A2BT04cMbGlDajF3nuJ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy7D+BO5JUlaQP9opEUhy8RomKwdhHJATPlGkn83QsxQ3DTo6Mp
+	RZuOKXeAefOsIEyihcqfSx/eiNZOpP/5p6dikICyguQvm+/fDTKDAUodIuqhqg==
+X-Gm-Gg: ASbGncvnUaEk3491HxFb+lsd6LB2fpBtJshXndnqONfL15kf572dhMpRxVS+4jDB4jg
+	lN9Z5bnup/DPgIE6FrZJq60x9WPJzcI9YAXzUq5FmvT9kZA4Czxv+bS1fCnI7ySznuO5W4in16s
+	ggdwDxnnsbrLFAPz7Qm2RhUkTDPukmJmt/Crour/nLm76G3cr8Yb8d/t/vDhyVFlDbYtjSck6zI
+	8PRkWBZ+CauRsjHNw8lnTFg9FkQ9HipxG0+42mz4kzd+dkt4t4HQ3RN1yN/z3wlfej/d9yZ3RwR
+	UnuGRDqt7xAq9KB8D+Prrx0yhafmm+OIF7+6pcMpfYlAfd0d8o93H9eu
+X-Google-Smtp-Source: AGHT+IEB+XaCO6duAN2wp0HmjUzHuf7tiQOHA3Esz/U9fWrPnrUspdywgNu7CbKOFz9lwCKIl8JtAA==
+X-Received: by 2002:a17:90b:5450:b0:301:6343:1626 with SMTP id 98e67ed59e1d1-3030fe58e5bmr25896303a91.1.1742913179728;
+        Tue, 25 Mar 2025 07:32:59 -0700 (PDT)
+Received: from thinkpad ([120.60.136.104])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-301bf64aca3sm14431313a91.49.2025.03.25.07.32.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Mar 2025 07:21:56 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Lyude Paul <lyude@redhat.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Yongqin Liu <yongqin.liu@linaro.org>, John Stultz <jstultz@google.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jani Nikula <jani.nikula@intel.com>
-Subject: Re: [RFC PATCH RESEND v4 0/6] drm/display: dp: add new DPCD access functions
-Date: Tue, 25 Mar 2025 16:21:55 +0200
-Message-ID: <174291251084.2000243.209850835590674876.b4-ty@oss.qualcomm.com>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250324-drm-rework-dpcd-access-v4-0-e80ff89593df@oss.qualcomm.com>
-References: <20250324-drm-rework-dpcd-access-v4-0-e80ff89593df@oss.qualcomm.com>
+        Tue, 25 Mar 2025 07:32:59 -0700 (PDT)
+Date: Tue, 25 Mar 2025 20:02:54 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com, 
+	broonie@kernel.org, bbrezillon@kernel.org, linux-mtd@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
+Subject: Re: [PATCH v3 1/4] mtd: rawnand: qcom: Pass 18 bit offset from QPIC
+ base address to BAM
+Message-ID: <bu2msy7ngxzjk54rdq3fmgvww5rrn5ogjm4uq2vt2pwp6toxfw@ytvk6x6wcgi5>
+References: <20250310120906.1577292-1-quic_mdalam@quicinc.com>
+ <20250310120906.1577292-2-quic_mdalam@quicinc.com>
+ <20250318073332.guylcyqjmfq5nyyr@thinkpad>
+ <004c7c4a-69b4-c6f6-14c2-eb62672a7125@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 6uH66jrNxdjg3qFSwrTDK1UMn-Cgpaoy
-X-Proofpoint-GUID: 6uH66jrNxdjg3qFSwrTDK1UMn-Cgpaoy
-X-Authority-Analysis: v=2.4 cv=feOty1QF c=1 sm=1 tr=0 ts=67e2bc08 cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=DZoDOQWOqP-ft6bgs5oA:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-25_06,2025-03-25_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 clxscore=1015 phishscore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 mlxscore=0
- mlxlogscore=999 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503250101
+In-Reply-To: <004c7c4a-69b4-c6f6-14c2-eb62672a7125@quicinc.com>
 
-On Mon, 24 Mar 2025 13:51:18 +0200, Dmitry Baryshkov wrote:
-> Existing DPCD access functions return an error code or the number of
-> bytes being read / write in case of partial access. However a lot of
-> drivers either (incorrectly) ignore partial access or mishandle error
-> codes. In other cases this results in a boilerplate code which compares
-> returned value with the size.
+On Thu, Mar 20, 2025 at 11:23:40AM +0530, Md Sadre Alam wrote:
 > 
-> As suggested by Jani implement new set of DPCD access helpers, which
-> ignore partial access, always return 0 or an error code. Implement
-> new helpers using existing functions to ensure backwards compatibility
-> and to assess necessity to handle incomplete reads on a global scale.
-> Currently only one possible place has been identified, dp-aux-dev, which
-> needs to handle possible holes in DPCD.
 > 
-> [...]
+> On 3/18/2025 1:03 PM, Manivannan Sadhasivam wrote:
+> > On Mon, Mar 10, 2025 at 05:39:03PM +0530, Md Sadre Alam wrote:
+> > > Currently we are configuring lower 24 bits of address in descriptor
+> > > whereas QPIC design expects 18 bit register offset from QPIC base
+> > > address to be configured in cmd descriptors. This is leading to a
+> > > different address actually being used in HW, leading to wrong value
+> > > read.
+> > > 
+> > > the actual issue is that the NANDc base address is different from the
+> > > QPIC base address. But the driver doesn't take it into account and just
+> > > used the QPIC base as the NANDc base. This used to work as the NANDc IP
+> > > only considers the lower 18 bits of the address passed by the driver to
+> > > derive the register offset. Since the base address of QPIC used to contain
+> > > all 0 for lower 18 bits (like 0x07980000), the driver ended up passing the
+> > 
+> > What is this address? Is it coming from DT?
+> > 
+> > > actual register offset in it and NANDc worked properly. But on newer SoCs
+> > > like SDX75, the QPIC base address doesn't contain all 0 for lower 18 bits
+> > > (like 0x01C98000). So NANDc sees wrong offset as per the current logic
+> > > 
+> > > The address should be passed to BAM 0x30000 + offset. In older targets
+> > 
+> > You gave no explanation on how this 0x30000 offset came into picture. I gave the
+> > reasoning in v2:
+> > 
+> > "SDX55's NANDc base is 0x01b30000 and it has bits 17 and 18 set corresponding to
+> > 0x30000. So it is correct that the IP only considers lower 18 bits and it used
+> > to work as the driver ended up passing 0x3000 + register offset."
+> > 
+> > Then you replied:
+> > 
+> > "This address 0x30000 is the address from QPIC_BASE to QPIC_EBI2NAND
+> > e.g for SDX55 and SDX65 the QPIC_BASE is 0x01B00000. So here lower 18-bits
+> > are zero only."
+> > 
+> > No one outside Qcom knows what QPIC_BASE and QPIC_EBI2NAND are. We just know the
+> > NANDc address mentioned in DT, which corresponds to 0x01b30000 for SDX55.
+> > 
+> > Please reword the commit message to present the full picture and not half baked
+> > info. This is v3, I see no improvement in the commit message, sorry.
+> > 
+> > > the lower 18-bits are zero so that correct address being paased. But
+> > > in newer targets the lower 18-bits are non-zero in QPIC base so that
+> > > 0x300000 + offset giving the wrong value.
+> > > 
+> > > SDX75 : QPIC_QPIC | 0x01C98000 (Lower 18 bits are non zero)
+> > > SDX55 : QPIC_QPIC | 0x1B00000 (Lower 18 bits are zero) Same for
+> > 
+> > There is no address as '0x1B00000' in DT.
+> 
+> Mani,
+> 
+> Please see if this commit message would be acceptable?
+> 
+> 	The BAM command descriptor provides only 18 bits to specify
+> 	the NAND register offset. Additionally, in the BAM command
+> 	descriptor, the NAND register offset is supposed to be
+> 	specified as "(NANDc offset - BAM base offset) + reg_off".
 
-Applied to drm-misc-next, thanks!
+Isn't it, (NANDc base - BAM base)? 'offset' is not valid here.
 
-[1/6] drm/display: dp: implement new access helpers
-      commit: d8343e115658fb35115e0720f4761ffa0147329a
-[2/6] drm/display: dp: change drm_dp_dpcd_read_link_status() return value
-      commit: fcbb93f1e48a150159534a1e6ec19e6fdf9196df
-[3/6] drm/display: dp: use new DCPD access helpers
-      commit: af67978ee37e543e62d6d3f7eba58f8f259423a7
-[4/6] drm/display: dp-cec: use new DCPD access helpers
-      commit: 97f37939881327e118d6252289973c186377a075
-[5/6] drm/display: dp-mst-topology: use new DCPD access helpers
-      commit: 2554da0de3e8312c7149d03d702ddc6c1ff5e3de
-[6/6] drm/display: dp-tunnel: use new DCPD access helpers
-      commit: 95c4ea2e0329b370a53a041a19227f8da3f47481
+And also, you are just mixing the names everywhere. Here you say, NANDc base
+and BAM base, but in patch 4:
 
-Best regards,
+"NAND register addresses to be computed based on the NAND register offset from
+QPIC base". So the second address is BAM or QPIC?
+
+Please be consistent with naming.
+
+> 	Since, the nand driver isn't aware of the BAM base offset,
+> 	have the value of "NANDc offset - BAM base offset" in a new
+> 	field 'nandc_offset' in the NAND properties structure and use
+> 	it while preparing the descriptor.
+> 
+
+And what about 'nandc_offset'? NANDc is already the term used for NAND
+controller which has the base address of 0x01b30000 in DT. So clearly, the name
+of the offset variable is not correct.
+
+> 	Previously, the NAND driver was incorrectly specifying the
+> 	NAND register offset directly in the BAM descriptor.
+> 
+
+No. Previously, the driver was specifying the NANDc base address in the BAM
+descriptor. You are now trying to pass the register offset.
+
+- Mani
+
 -- 
-With best wishes
-Dmitry
-
+மணிவண்ணன் சதாசிவம்
 
