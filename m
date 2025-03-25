@@ -1,246 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-52481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52482-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57FB1A708BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 19:04:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CFB6A70A3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 20:23:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7A1DF7A20CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 18:03:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A28E3AF8C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 19:21:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFEC825E802;
-	Tue, 25 Mar 2025 18:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BBDE1E633C;
+	Tue, 25 Mar 2025 19:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="q2SXiKEe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gyVsavqr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F3426460B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 18:04:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F444198E63
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 19:21:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742925869; cv=none; b=YtLeXlCihxe9lqjmbkvyFUMYlDUeL2VsKnAI4FA8ElNGstITr/znaaO4bE+wAxpAiK0pZ3vQWQSCNxopJwgUEew/AO8DUtnMDtL9sMbyzAYt6yEigeIOdCvQIXbqhzcKC9ey4kgrONSj7viTEXuiaUl5vxFqT6MEJM5zyOv5ATA=
+	t=1742930506; cv=none; b=Isx9O8KSsp8KQ9GVBsmnBtzauV4y9K9SIVkohLd2ZiKwGhkxmVyvAuO0SbdZO9FNzBSb09gApWZSF+E1mOsQE1qbM9BxdFRkGzOWFpF6P99TgEPHai+WK207RnIuFsR3U/Yg9XDKpQ+2M09OST9t3/yPBkGO2/CMN8blMcJ8nX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742925869; c=relaxed/simple;
-	bh=rTjTJEKZGu08Y3nV5h6fqKxC03MuFdMFJiI+QY7DgyQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qbyotYVsN6rD3bIAm/VLbx456iio1ujp3PIE/f+dYWTZtW5z2KaV6dokLwkPE7PcwMXCdWuT7KDwZbM4hIsIIXCc7EpWo4cII5T88wd2aVfdc8Y7x+RpUvAYz2eiQLyCemUMSleV+vh4FlsKcDMWHPMVY7lvd/COzUQgt8yp2+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=q2SXiKEe; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1742930506; c=relaxed/simple;
+	bh=md+Nvy/friY/gG6k6yqPyGwrpTI8eWyHK4kFwy43AdQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XZZropA2Uxtejl6PXzimFY3DMQjYjluaY+LBDpwsQmotB+sIas0cnUCu5YNo7uFET1QFNzFNpCYUQmV2KstLsppIIBPCblPkZJ3EM0aAHThUiSp6AFSqtXMZMMxREfPO3inYH4bhfU+u+Ll7hLa4YMOM4PW+mgXi0v6YCoemHJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gyVsavqr; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so41604505e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 11:04:27 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-39ac9aea656so947265f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 12:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742925866; x=1743530666; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N0CayCPCDi0c+eScMJRQeYXJLtxxGmBOFsr527xiD2I=;
-        b=q2SXiKEes9KsWr887jneMZxZmF8Q287lcGXd6u5hjBhhVhxdqqjqEt0q9QP5dT/Vjw
-         eyJP7ZQfb5q5UUNWdH2loSxVtNwgnDvBio7wL9cc9hPEDjtSxn0FElP+vM/38GiVGASY
-         M8bzQ581adiXGeUpe81YqUGS/BPQgcBtDYiK6ARNSVhWNayLCcYLy1ufbAP3OOtYZrgQ
-         HBpzLFNnjxOwwTWRpEdBQiRQZhylS0k/z0wP5zOHlastdOnwj0OODziQBw9c0HkzpNPc
-         bp9f21zcQeG3CfCuFTrdJPDdeIBHk8FkkpSE/HHWQAd1k1gZTjvBSubdU/QpHFnWGR5r
-         vNsQ==
+        d=linaro.org; s=google; t=1742930502; x=1743535302; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=i04oqWV50VZLFwP1WBYwkjJ9UvrcYxbthnWBqIqEM+M=;
+        b=gyVsavqr3JUX38dr82SidarWyXt7U5HJqMtvAXsuaYyHdXEKp4U8yHa2MxWjxX2NpF
+         59ppWmMN5yP/QsBUzdiDB1WGsqOx3MMUsHN7ToFOBbMDUi6tfqtRG93hRUl4Z11TkS+K
+         vWpRMkALnI7K8KVcDLjyYLi92jyCWxC3Qd+tjP3T6kW3L5ER3pBg0kLoYmUc25xyx2Ix
+         1jbX8iTotXWzUewdNS2XBVRch/cGaXLIWTui6ErPIazRybnkg9A6dOj/1UXaqPyPoOni
+         vfh7txSJF0sfaGq298WtlZDF7TC+3MWd1oqoiA89dcG8+AAxSbDgZnvM1WK8HYszrNY5
+         VU5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742925866; x=1743530666;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N0CayCPCDi0c+eScMJRQeYXJLtxxGmBOFsr527xiD2I=;
-        b=gFwlZrcWUJqf11btb3ZXcbISlTwOygOsoxHEW9Gneg4c6X6zuruOM1ZbHupIbS41I4
-         3orB5iDw8xjpe3sqn1C+9FKM3XI9rGV38qlI2HVfaOZZHCq/DOSAXPMHb+KYrBM2X9Q7
-         FS/t8XWWzIGq6OlFIu61Ep5yMJ7kW4G3+Sr3rDs0+fBlg08q8rY2NpYdSm0AoAXi3EaT
-         UQvX+Kd+Z5jRqf/p0uED19g5G7H6X6ySPLA5L0AD0uAKkokK8p1Y+kTu0MXc7Tr3CbsH
-         cRhS8RhUOKesHmUovBg9P5SvfO6OUt6g7jSorr8cbqAmhkV/NDP44XgP3cCtziYbJlGh
-         5sJg==
-X-Forwarded-Encrypted: i=1; AJvYcCWX0gWJ1I40O3VdayUchgRKU/9xCIDgpagWgVnHvrPun3R0TAi136IpohbDKh8PJdylpC4uZTGfpBJpPv45@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQG8vVGtdr/5wsvLvjJU7HFhqGPTkUEmrDFV683LwEexqdR7DX
-	vAieaZDOMygxllP/U//RYOwCBLOnmjSXRFRFSlGwLiWEsNLS5wM7sqDwXxHMGuQ=
-X-Gm-Gg: ASbGnctTZtvqhsAaUSn7sllQlu6MAmpSxVuMTxjuAwGfGEkD0ruRC45i1wu2yBdH3HK
-	MOVV+zjflA8oUAB6WK+YSO9XMF33rD+4S9cHMX/e391SMf0QLcrIJetzepGCp21bjvRmZJRjhDL
-	jq69hhwIMBsB9gu2X2hzXvqPFwQbNTDqc9cTTnKVZ4DiZJ/+Qvz5Cm4wOk7Mt8XcoxJZZnlkwG9
-	mS4kVdbabHKTj8w5a+KNWpys/gY6u7PkwicsHXZnlU0BhBWCztEKM4Va2/eZAkgr25Cu8eeL9uB
-	pG+pwZs5ZsmvGkApTe9b5zAa+bc6Ee6+nWLF3J8QdRgUzT+3Mv0zKnGfI3cLdac=
-X-Google-Smtp-Source: AGHT+IH/PB6BVarMqT4SU3RviqfCTKK1Z7vJ2U4Ut/r5poNYG8tGZE1NVFEihed/kHkNIgYqkBvHXg==
-X-Received: by 2002:a05:600c:692:b0:43d:17f1:2640 with SMTP id 5b1f17b1804b1-43d58db54c7mr71879365e9.26.1742925865894;
-        Tue, 25 Mar 2025 11:04:25 -0700 (PDT)
-Received: from [192.168.68.117] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3997f9b565bsm14550986f8f.58.2025.03.25.11.04.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Mar 2025 11:04:25 -0700 (PDT)
-Message-ID: <4654f21b-bf61-4b41-b073-407fab4bff6a@linaro.org>
-Date: Tue, 25 Mar 2025 18:04:24 +0000
+        d=1e100.net; s=20230601; t=1742930502; x=1743535302;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i04oqWV50VZLFwP1WBYwkjJ9UvrcYxbthnWBqIqEM+M=;
+        b=Ap6knwDs5fl0k/QJrYsA/mwYKoXBz4wX1whWE20FmtYo64wR0czmK6uibFTlTvIv9/
+         TR8o1iFfib0eXKrG3aXt86gSmCI+z+KbnC72AZJF+rfI6VlXUfy7b1uUyVmEiu25PmsL
+         wgbSYgbjkifeXS6s8SIGtf4Myi5xxdexpt8PvKRiOFVdnLyGyTlQOUhYRRn4QVLVGfCC
+         bPqKXF0/mFXRkj1zqSqdXt+pST57RZg3zeTbkwKCwjEwpXs+Rh4WaInIjzo2LKC8N8/x
+         ML98trQ9VoHd1NkScHiA4LxVR588i3SsIj2HiCnHoZtqqgyJbf1H5eH4Zlr9Qd9wBLmK
+         fylQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU6FbsbC2UXnVJSpIyOPRAgSbqqx3w6ZnPrEmIyWUkBEtzvT6jr/LoyI82uERg1iXyqjgfUtml1Ub7k9x3d@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1B15yLwu1Anp9dMydAQTnuNdGyp0LLWIXCmBvWSB3OTaql+Hd
+	cUj1mJ4x5AiiMPJw1ED+LUGmEbola9/BeW4rKaHcOB8DEVl9n7UIEXrK47HZtUk=
+X-Gm-Gg: ASbGncs8FGd6V/LoC2kCLXI14HotzEmvvh3e7kItUs72B/9lSKcyFCjDmSrvN0ZgUDi
+	hHOZyi7m9lqahVNuBvus4ZH62lWYx5NlmBge4DWgYZ8x7A7ND8NzkwdCOAOK4nMFzJae81ruckZ
+	1TdnElhSHwVV/KyOz3S/d4O3BJFkiSuBwoqH3lOUgS0lTSd7bk+hTclokjXqyh/7GEzGEawwswh
+	YLeylvHBX9j5APjnEcxz2TVJxyoFNOuffyJl4eiNTAjlbmITFjiAIBnFURaqOeHAy2eDrTsFCRs
+	IlcFSXZUhpjA1bACA2Ywm2sHepJtEdwrGShx6yhjnXXVJs6auxzJ7soJ
+X-Google-Smtp-Source: AGHT+IEZF7k07Jx1ad5ysjRNAg5B+AJzjdfZigdy2MLueMpoQ8j3EXhwNoIeB55rhCmkG2CbsETXjg==
+X-Received: by 2002:a5d:6482:0:b0:390:fe4b:70b9 with SMTP id ffacd0b85a97d-3997f908ce3mr19247979f8f.21.1742930502174;
+        Tue, 25 Mar 2025 12:21:42 -0700 (PDT)
+Received: from localhost ([2a00:23c8:b70a:ae01:9cf7:b69:fc50:980f])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3997f9a3f81sm14773053f8f.35.2025.03.25.12.21.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Mar 2025 12:21:41 -0700 (PDT)
+From: Christopher Obbard <christopher.obbard@linaro.org>
+Subject: [PATCH v2 0/4] Add support for OLED panel used on Snapdragon
+ Lenovo T14s Gen6
+Date: Tue, 25 Mar 2025 19:21:25 +0000
+Message-Id: <20250325-wip-obbardc-qcom-t14s-oled-panel-v2-0-e9bc7c9d30cc@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/6] ASoC: codecs: wcd938x: add mux control support for
- hp audio mux
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: peda@axentia.se, broonie@kernel.org, andersson@kernel.org,
- krzk+dt@kernel.org, ivprusov@salutedevices.com, luca.ceresoli@bootlin.com,
- zhoubinbin@loongson.cn, paulha@opensource.cirrus.com, lgirdwood@gmail.com,
- robh@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
- perex@perex.cz, tiwai@suse.com, linux-sound@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, johan+linaro@kernel.org,
- Christopher Obbard <christopher.obbard@linaro.org>
-References: <20250325114058.12083-1-srinivas.kandagatla@linaro.org>
- <20250325114058.12083-6-srinivas.kandagatla@linaro.org>
- <vmhrs62ygu2xozcabc6tgy37ta5qskeyks5j3ldponzfijicl4@nudcmxonq7qj>
-Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <vmhrs62ygu2xozcabc6tgy37ta5qskeyks5j3ldponzfijicl4@nudcmxonq7qj>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADUC42cC/5WNQQ6CMBAAv2J6dk1bQY0n/2E4tN0FNsEutgQ1h
+ L9b+YHHmcPMojIlpqyuu0UlmjmzxAJ2v1Ohd7EjYCysrLa1PloNLx5BvHcJAzyDPGAyVQYZCGF
+ 0kQbw56oltAZPWquSGRO1/N4W96Zwz3mS9NmOs/nZP+KzAQO69qHyGPBi3W3g6JIcJHWqWdf1C
+ 33XxtvRAAAA
+X-Change-ID: 20250320-wip-obbardc-qcom-t14s-oled-panel-b74fed21d600
+To: Douglas Anderson <dianders@chromium.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <quic_jesszhan@quicinc.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
+ Rui Miguel Silva <rui.silva@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, 
+ devicetree@vger.kernel.org, 
+ Christopher Obbard <christopher.obbard@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2859;
+ i=christopher.obbard@linaro.org; h=from:subject:message-id;
+ bh=md+Nvy/friY/gG6k6yqPyGwrpTI8eWyHK4kFwy43AdQ=;
+ b=owEBbQKS/ZANAwAKAWNNxPBocEb4AcsmYgBn4wJA5S31TTOVHN/v6jFBnPQPIFmt24PojTU3r
+ GzCNEMBFGeJAjMEAAEKAB0WIQTxi9yLbCX5CqI9UXRjTcTwaHBG+AUCZ+MCQAAKCRBjTcTwaHBG
+ +LgID/9Ca9OBPpTaa3Uaky7aiCgjrixN5V4DB83M/leY7itaG4Gy8fLKMFlQsjm6WcSlffEonsj
+ cqANrY1LTbyV5uIcPrTAfgRPN8vx9yhb4KRHMwI+LjNzG0UaNFmIhWnggtPwx3RqLn9XOVHZvHP
+ ZGOllCayiqwTnNi/GnD0JqTi2Ow4afPdys9Ym++9V5FqKdsaex1dC+tnpiuvfRlXZDyYj7+tQ16
+ YGRV8EgSRCIwWJMxTjOSDDYX68urtiuzsEydMEHgRZt4iHaqq8t9iKW9k3e8gBduXyHXy+sMy8v
+ q2UpEPIpLSJ0Hp7RidGbuVbH00DNE1sPiFh19u+hOQomqQhN6yUn710EOP3Z7Cr5F4Rzt+9V2F5
+ sqAvu+/Ri8/WUJGka0qsaDlD+BNIGFpUQyH/Sq6s2atdA6zBhpfcGcohZG7AnBk+vwPHEs0+pLK
+ JkVoBtDT0aPe5TDI1ZNrhYYfKhStxamyq22vVPZMO3hfqGUiP3dc5d2JIF2fhmEJXQgGo89LeIQ
+ wc8t0Rx9WWuQpskQtixI+lb1G+2Dxmdx0bNUT5WDlfN/e9Yw0xmExLwYqX+mcuXS28ZyjowSXrZ
+ RI1ClvJAA4bIx7hPzYOQLfnZZ6qpirB7nUMjy2wyzZic4mWLe243LO/G781tzhPNXUX2HQ0cA5d
+ vW6LO6FITQk6scQ==
+X-Developer-Key: i=christopher.obbard@linaro.org; a=openpgp;
+ fpr=F18BDC8B6C25F90AA23D5174634DC4F0687046F8
 
+The Snapdragon Lenovo T14s Gen6 can be bought with a number of different
+panels. This patch series adds support for the OLED model which has a
+Samsung ATNA40YK20 panel.
 
+The first patch documents the panel in the existing driver.
 
-On 25/03/2025 13:36, Dmitry Baryshkov wrote:
-> On Tue, Mar 25, 2025 at 11:40:57AM +0000, srinivas.kandagatla@linaro.org wrote:
->> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>
->> On some platforms to minimise pop and click during switching between
->> CTIA and OMTP headset an additional HiFi mux is used. Most common
->> case is that this switch is switched on by default, but on some
->> platforms this needs a regulator enable.
->>
->> move to using mux control to enable both regulator and handle gpios,
->> deprecate the usage of gpio.
->>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
->> ---
->>   sound/soc/codecs/Kconfig   |  1 +
->>   sound/soc/codecs/wcd938x.c | 50 +++++++++++++++++++++++++++++---------
->>   2 files changed, 39 insertions(+), 12 deletions(-)
->>
->> diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
->> index ee35f3aa5521..a2829d76e108 100644
->> --- a/sound/soc/codecs/Kconfig
->> +++ b/sound/soc/codecs/Kconfig
->> @@ -2226,6 +2226,7 @@ config SND_SOC_WCD938X
->>   	tristate
->>   	depends on SOUNDWIRE || !SOUNDWIRE
->>   	select SND_SOC_WCD_CLASSH
->> +	select MULTIPLEXER
->>   
->>   config SND_SOC_WCD938X_SDW
->>   	tristate "WCD9380/WCD9385 Codec - SDW"
->> diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
->> index dfaa3de31164..209d0b64c8be 100644
->> --- a/sound/soc/codecs/wcd938x.c
->> +++ b/sound/soc/codecs/wcd938x.c
->> @@ -19,6 +19,7 @@
->>   #include <linux/regmap.h>
->>   #include <sound/soc.h>
->>   #include <sound/soc-dapm.h>
->> +#include <linux/mux/consumer.h>
->>   #include <linux/regulator/consumer.h>
->>   
->>   #include "wcd-clsh-v2.h"
->> @@ -178,6 +179,8 @@ struct wcd938x_priv {
->>   	int variant;
->>   	int reset_gpio;
->>   	struct gpio_desc *us_euro_gpio;
->> +	struct mux_control *us_euro_mux;
->> +	unsigned int mux_state;
->>   	u32 micb1_mv;
->>   	u32 micb2_mv;
->>   	u32 micb3_mv;
->> @@ -3237,15 +3240,22 @@ static void wcd938x_dt_parse_micbias_info(struct device *dev, struct wcd938x_pri
->>   
->>   static bool wcd938x_swap_gnd_mic(struct snd_soc_component *component)
->>   {
->> -	int value;
->> -
->> -	struct wcd938x_priv *wcd938x;
->> -
->> -	wcd938x = snd_soc_component_get_drvdata(component);
->> +	struct wcd938x_priv *wcd938x = snd_soc_component_get_drvdata(component);
->> +	struct device *dev = component->dev;
->> +	int ret;
->>   
->> -	value = gpiod_get_value(wcd938x->us_euro_gpio);
->> +	if (wcd938x->us_euro_mux) {
->> +		mux_control_deselect(wcd938x->us_euro_mux);
->> +		ret = mux_control_try_select(wcd938x->us_euro_mux, !wcd938x->mux_state);
->> +		if (ret) {
->> +			dev_err(dev, "Error (%d) Unable to select us/euro mux state\n", ret);
->> +			return false;
-> 
-> 
-> I really don't see any improvement here. If mux_control_try_select()
-> fails, then on the next toggle mux_control_deselect() would still try to
-> deselect the mux, although the driver no longer owns it.
-TBH, if the first select fails, there is no guarantee that next select 
-will pass,
+The second patch adds the missing HPD gpio to the T14s devicetree. I
+think that this patch could be split into two; one patch for the pinctrl
+addition and one patch for adding the hpd-gpio property to the T14s
+panel. But that can come in V3.
 
-Something like this to conditionally check before deselecting should 
-address some of your concerns:
+The third patch adds the eDP panel to the T14s OLED devicetree.
 
----------------------------->cut<-----------------------------------
-if (wcd938x->us_euro_mux) {
-	if (wcd938x->mux_setup_done)
-		mux_control_deselect(wcd938x->us_euro_mux);
+The fourth (and final) patch works around a problem when reading the
+eDP panel's maximum backlight value. Without this patch, the maximum
+brightness is detected as 0, thus meaning the backlight is never enabled.
+I expect this patch to need a few rounds of rework/testing on other
+devices!
 
-	ret = mux_control_try_select(wcd938x->us_euro_mux, !wcd938x->mux_state);
-	if (ret) {
-		dev_err(dev, "Error (%d) Unable to select us/euro mux state\n", ret);
-		wcd938x->mux_setup_done = false;
-		return false;
-	}
-} else {
-	gpiod_set_value(wcd938x->us_euro_gpio, !wcd938x->mux_state);
-}
+The raw EDID of the panel is:
 
-wcd938x->mux_state = !wcd938x->mux_state;
-wcd938x->mux_setup_done = true;
----------------------------->cut<-----------------------------------
+00 ff ff ff ff ff ff 00 4c 83 9f 41 00 00 00 00
+00 21 01 04 b5 1e 13 78 02 0c f1 ae 52 3c b9 23
+0c 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 ca fe 40 64 b0 08 18 70 20 08
+88 00 2e bd 10 00 00 1b ca fe 40 64 b0 08 38 77
+08 20 88 00 2e bd 10 00 00 1b 00 00 00 fe 00 53
+44 43 20 20 20 20 20 20 20 20 20 20 00 00 00 fe
+00 41 54 4e 41 34 30 59 4b 32 30 2d 30 20 01 cf
+02 03 0f 00 e3 05 80 00 e6 06 05 01 74 60 07 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 b7
 
-I wish we could be taken care in mux-core or even in the deselect api
+Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
+---
+Changes in v2:
+- Use the existing atna33xc20 driver rather than panel-edp.
+- Add eDP panel into OLED devicetree.
+- Add patch to read the correct maximum brightness from the eDP panel.
+- Link to v1: https://lore.kernel.org/r/20250320-wip-obbardc-qcom-t14s-oled-panel-v1-1-05bc4bdcd82a@linaro.org
 
---srini
+---
+Christopher Obbard (4):
+      dt-bindings: display: panel: samsung,atna40yk20: document ATNA40YK20
+      arm64: dts: qcom: x1e78100-t14s: add hpd gpio to LCD panel
+      arm64: dts: qcom: x1e78100-t14s-oled: add eDP panel
+      drm/dp: fallback to maximum when PWM bit count is zero
 
-  Likewise in the
-> remove path the mux_control_deselect() is called unconditionally. I
-> understand that this driver is the only user of the MUX, so currently
-> there seems to be no need for any special handling. However if the
-> hardware design gets more complicated, we can easily face the situation
-> when selecting the MUX state errors out.
-> 
->> +		}
->> +	} else {
->> +		gpiod_set_value(wcd938x->us_euro_gpio, !wcd938x->mux_state);
->> +	}
->>   
->> -	gpiod_set_value(wcd938x->us_euro_gpio, !value);
->> +	wcd938x->mux_state = !wcd938x->mux_state;
->>   
->>   	return true;
->>   }
-> 
-> [...]
-> 
->> @@ -3581,6 +3604,9 @@ static void wcd938x_remove(struct platform_device *pdev)
->>   	pm_runtime_set_suspended(dev);
->>   	pm_runtime_dont_use_autosuspend(dev);
->>   
->> +	if (wcd938x->us_euro_mux)
->> +		mux_control_deselect(wcd938x->us_euro_mux);
->> +
->>   	regulator_bulk_disable(WCD938X_MAX_SUPPLY, wcd938x->supplies);
->>   	regulator_bulk_free(WCD938X_MAX_SUPPLY, wcd938x->supplies);
->>   }
->> -- 
->> 2.39.5
->>
-> 
+ .../bindings/display/panel/samsung,atna33xc20.yaml |  2 +
+ .../qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts    | 10 +++++
+ .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi    | 11 +++++
+ drivers/gpu/drm/display/drm_dp_helper.c            | 51 ++++++++++++++--------
+ 4 files changed, 57 insertions(+), 17 deletions(-)
+---
+base-commit: b6ae34803e82511009e2b78dc4fd154330ecdc2d
+change-id: 20250320-wip-obbardc-qcom-t14s-oled-panel-b74fed21d600
+
+Best regards,
+-- 
+Christopher Obbard <christopher.obbard@linaro.org>
+
 
