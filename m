@@ -1,151 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-52470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A22BBA703FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 15:41:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCFF3A70448
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 15:51:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F2A027A2D4D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 14:40:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D69E23A3B84
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Mar 2025 14:51:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AD1F255E3E;
-	Tue, 25 Mar 2025 14:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 637C925A322;
+	Tue, 25 Mar 2025 14:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="M9BrBb3r"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iWECJYTA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E90EC4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 14:41:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3370125A350;
+	Tue, 25 Mar 2025 14:51:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742913715; cv=none; b=Oy/+K/HVbmWsjPDVRmUnNP6oSSpMavIpL5F67UonMuR0ekY7b5fGP+qvLVQW/OoEyg6urIJQNwuhcMvOOVChXvXXxQ/UUN6ruTdtX2NdpkP06YA8z0edyzzOCqnrzI2ubNQWm1h2R21sBAYwy7w80kSfOCTEue0gj/d1ENRTZqM=
+	t=1742914313; cv=none; b=iF2dOa3l0C3QxpCP0xKXFiviKUQhqwuRfVS4MVWInlv0+FFlq6to6qyyzeGJaGS1Fcb2mqaoiEKKOfYjDWxdrTjsLJuNlSGvO6Uyubmj00Bv9oFbPUBJ+Vka0Qau3vy/s7T9Iu6JK5R1pvlBKM9svLwPnJQuYUBsz5pYJ8gBIhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742913715; c=relaxed/simple;
-	bh=2f4ro3GZ++Q7Zec6pZNdUDsAEaH0Uur1K/JUTnjFnCY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dPSPn0hwY6RZ+UPgPU3yPymONrIY4jqRiR4YkJl1SqHFFpuZGnNCZOiSfOtDGC/KBKzYcfJs/biXDP3GZ2ksL7XIin8fd5ylL6jrJQcG8ROPXFlT9tRA+npMgAXFY6ErUhtdGzZXuuw0Gegh3Ty2UHIK/Kp9VgCrB3+XrzRv9DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=M9BrBb3r; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52PE3ctG024776
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 14:41:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ew60TyXQdh4DHZ+Yc2NouknLu2P9TPtXk2XEkLEC8Cs=; b=M9BrBb3rNk/hnG4/
-	HQ7HyGxv7wgKBAAiqryEgLWL8lyPcOJ8hJANVgf/fh+if1c7QJ5tFnRM3ZHV7YQs
-	SWY5hwg70OPI192WZAC+OsAfZHCkin+Zf0p5kLHJ6qYmMjW4/d2fQgaQ9G2qDBzn
-	kCLrq5/RXTVzYqmKzlr6R6hrUiTpLcI4GjIWUFyPKFEAa/2d5RDY6x/XLOg0jfoA
-	/fC8k7K6hmwP+rkne/8HcHCHp6vHR0wTIWPfWFfy+8SEkryU3A51TUlwn5fd1/KW
-	pXDOR8Rd0apZu94lX8IXngK5B8yC1ykJSnF56H0l/p5uLPBiDeurdBiZ4YoFr0C3
-	3+e62w==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45k7qjbvxx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 14:41:52 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6e8fd4ef023so10771956d6.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Mar 2025 07:41:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742913711; x=1743518511;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ew60TyXQdh4DHZ+Yc2NouknLu2P9TPtXk2XEkLEC8Cs=;
-        b=I58N/D12AzbEG9I1cueZJ7wgq2zCTSwDjGcjV+9jIIVJ22CKwzHhoZdAYvkeoQv0lK
-         a5o44c2h+xyEnoGuwVZfeOhXqItEOEYgxLZGKwllG0ob4frRDE0KtBaOkwHXJsO5Tnjz
-         iDDnBK5sFmKhIwlHLNG/VLo6KTRiwgeoOboArJIGrXSmrlNILmWXHW9Cj6xLEqyf+/Iy
-         Tjax7KL/UZ0Igx8ZaQZr0odFZShH9hnNpXjjW/MOC94Kva1Dd0vgnExNq5WX+tOVa51g
-         SuCULWevCbhAgaW16OQ1RM8L6MfUQzu2uDl15oHX5Y8O9CnvB99FTGmbCHZ1qhGdzZfW
-         6sxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVk6JI/FMtggFo8Q8ax9fY+p6wLxDpuu8FW/zXdgAlO+yP8tr4S/P+OpI3Rqy/41EhmX6BIulGe/hbjhCGM@vger.kernel.org
-X-Gm-Message-State: AOJu0YylHyU/E/1byltfJCyiK7tisOr1h0uMvM9a637nj27ZV73ds/K8
-	i30mo2RF99QAS6vC1JujBVyAiHlGS0+UgHh4s7humFWhvWciPFonGRvqUALoNe8soeWClZgE5Fs
-	R7ry9wiCyYs5fKIES93Xw+154OO+/Z5efspli7ZR99BvCn/4E52Wnq2WvQJHKm8PG
-X-Gm-Gg: ASbGncsKIQmhPzFyjS6Mo2UCdUiAySjxT2ybxZrrgjPp7Y+VFr1BQwI8vxfLiHPZDec
-	rfNtHGz9gBaeLuilQv70BG8n6iCmFD54XeNSUbVyWXC7nd2jMu/3gKOZ71XCQCMGwIDMm+VI5pG
-	y38kPY/S45QNniXuuCTzVmB8X7JiJqiJVR6nt34lm8XG6GzVYShxFN0FbX5Z06Bu5Odsht2paJc
-	oswTNV/BO+eluyvbA/AnqHXqWV2YiaqCkz4AaWhYX5PSWUs9yIfTlcZM+gMu5iWfsS0R+je7mzf
-	RTSEqmThpnRYrRJRd1qEfb6W6Bi6407fTiJeO7z9nqCvaFTBzwi1+yZsfTIxbxi8JyuIRg==
-X-Received: by 2002:a05:620a:4051:b0:7c0:b018:5941 with SMTP id af79cd13be357-7c5ba1807c4mr909798385a.7.1742913711269;
-        Tue, 25 Mar 2025 07:41:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFsfgq/Tn5WCGypWfv9KcLl0QC5q6oicbG/Q1ZRYPNw4LHjtBxlo7pAAmaAld+huPsudZZdQA==
-X-Received: by 2002:a05:620a:4051:b0:7c0:b018:5941 with SMTP id af79cd13be357-7c5ba1807c4mr909796585a.7.1742913710665;
-        Tue, 25 Mar 2025 07:41:50 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3ef8d3ee9sm880947766b.67.2025.03.25.07.41.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Mar 2025 07:41:50 -0700 (PDT)
-Message-ID: <ee0848ea-7a06-4f4e-9115-5e3c0ab8bf95@oss.qualcomm.com>
-Date: Tue, 25 Mar 2025 15:41:48 +0100
+	s=arc-20240116; t=1742914313; c=relaxed/simple;
+	bh=/PavQz/eXylSe2TedCVsIr+A+211iUQV/s4NVc1PtSA=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=F2YfqmtLflJyeXF/G8FVrIhRoZHfvIZ2UE91FvXdoJgLkVLwY8S5ySEbWbrA1pWopHWwQMFWtkHRFz+SZUmPU1oiY8EtS/1+KtGcHa8OyGeqvPhd6aVHcfEtm/I6KYvr03LWFYTdjx8QL6YhLBf4El7mgsH1DKLjygKjS1oG6Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iWECJYTA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51FFC4CEE4;
+	Tue, 25 Mar 2025 14:51:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742914313;
+	bh=/PavQz/eXylSe2TedCVsIr+A+211iUQV/s4NVc1PtSA=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=iWECJYTABeZXC9pDQLlKwGyMWEClnKDy7OSHavl07yCDJYV1DO8O3M6EZE14KFYfN
+	 gyAarIm3Hqh7xIcyr71eubk38iQ9tcfYDYd1Onw1CrT2bekbYzdf6gguEw5+MQJNFy
+	 yNAB8BIDHQK3h2DfIqY8bzBTLwhnH9k+CVQNSheqksJp9xmmnLYNb0dcQwZVtfSv8X
+	 4aLoWnZDeZ5CjCBbIqXXdYIwShzIu7d4ncbv/fgJC47d1GCoDtphd3r6uMwNGlOeXI
+	 ViL6E7ygRjo5MYyEpMMGrL0z7Jb8DBPHAjDLb60lRL8mbaNZC57kOTqRwdbipTDDmz
+	 c0Vtz+9SfI4yg==
+Date: Tue, 25 Mar 2025 09:51:51 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/5] Add snps,dis_u3_susphy_quirk for some QC targets
-To: Prashanth K <prashanth.k@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250325123019.597976-1-prashanth.k@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250325123019.597976-1-prashanth.k@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: ts1k2XUXNnymNp0IdRQ1Ji8tV4077eCK
-X-Proofpoint-GUID: ts1k2XUXNnymNp0IdRQ1Ji8tV4077eCK
-X-Authority-Analysis: v=2.4 cv=feOty1QF c=1 sm=1 tr=0 ts=67e2c0b0 cx=c_pps a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=-hWUoSwDaZ0JBn50UMYA:9 a=QEXdDO2ut3YA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-25_06,2025-03-25_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 clxscore=1015 phishscore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 mlxscore=0
- mlxlogscore=880 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503250103
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: quic_miaoqing@quicinc.com, quic_zhichen@quicinc.com, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konradybcio@kernel.org>, quic_yuzha@quicinc.com, 
+ Conor Dooley <conor+dt@kernel.org>
+To: Stone Zhang <quic_stonez@quicinc.com>
+In-Reply-To: <20250325075331.1662306-1-quic_stonez@quicinc.com>
+References: <20250325075331.1662306-1-quic_stonez@quicinc.com>
+Message-Id: <174291413850.2015559.6111022802000539082.robh@kernel.org>
+Subject: Re: [PATCH v4 0/2] Enable WLAN for qcs8300-ride
 
-On 3/25/25 1:30 PM, Prashanth K wrote:
-> During device mode initialization on certain QC targets, before the
-> runstop bit is set, sometimes it's observed that the GEVNTADR{LO/HI}
-> register write fails. As a result, GEVTADDR registers are still 0x0.
-> Upon setting runstop bit, DWC3 controller attempts to write the new
-> events to address 0x0, causing an SMMU fault and system crash. More
-> info about the crash at [1].
-> 
-> This was initially observed on SM8450 and later reported on few
-> other targets as well. As suggested by Qualcomm HW team, clearing
-> the GUSB3PIPECTL.SUSPHY bit resolves the issue by preventing register
-> write failures. Address this by setting the snps,dis_u3_susphy_quirk
-> to keep the GUSB3PIPECTL.SUSPHY bit cleared. This change was tested
-> on multiple targets (SM8350, SM8450 QCS615 etc.) for over an year
-> and hasn't exhibited any side effects.
-> 
-> [1]: https://lore.kernel.org/all/fa94cbc9-e637-ba9b-8ec8-67c6955eca98@quicinc.com/
-> 
-> Prashanth K (3):
->   arm64: dts: qcom: sm8150: Add snps,dis_u3_susphy_quirk
->   arm64: dts: qcom: sm8350: Add snps,dis_u3_susphy_quirk
->   arm64: dts: qcom: sm8450: Add snps,dis_u3_susphy_quirk
-> 
-> Pratham Pratap (2):
->   arm64: dts: qcom: qcs615: Add snps,dis_u3_susphy_quirk
->   arm64: dts: qcom: qdu1000: Add snps,dis_u3_susphy_quirk
 
-Are there more targets affected, from the list of the ones currently
-supported upstream?
+On Tue, 25 Mar 2025 15:53:29 +0800, Stone Zhang wrote:
+> Enable the WLAN subsystem of the qcs8300 ride board. The WCN6855 wireless
+> chip is attached to PCIe interface 0.
+> 
+> This patch series depends on:
+> - PCIe
+> https://lore.kernel.org/all/20250310063103.3924525-1-quic_ziyuzhan@quicinc.com/
+> - PCIe SMMU
+> https://lore.kernel.org/all/20250206-qcs8300-pcie-smmu-v1-1-8eee0e3585bc@quicinc.com/
+> 
+> Changes in v4:
+> - Rename the symbol pcieport0 to pcie0_port0 (Konrad)
+> - Adjust the property order in node pcie0_port0 (Konrad)
+> - Add to the commit message mentioning FW and BDF used by QCS8300 (Dmitry)
+> - Specify the calibration data using the correct variant (Dmitry)
+> - Link to v3: https://lore.kernel.org/all/20250318093350.2682132-1-quic_stonez@quicinc.com/
+> 
+> Changes in v3:
+> - Complete the nodes property definitions according to DTS binding requirements (Bjorn)
+> - Link to v2: https://lore.kernel.org/all/20250227065439.1407230-1-quic_stonez@quicinc.com/
+> 
+> Changes in v2:
+> - Rename the nodes name according to DTS coding style (Konrad & Krzysztof)
+> - Provide regulator-min/max-microvolt to the regulators (Konrad)
+> - Link to v1: https://lore.kernel.org/all/20250210062910.3618336-1-quic_stonez@quicinc.com/
+> 
+> Stone Zhang (2):
+>   arm64: dts: qcom: qcs8300: add a PCIe port for WLAN
+>   arm64: dts: qcom: qcs8300-ride: enable WLAN on qcs8300-ride
+> 
+>  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 108 ++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/qcs8300.dtsi     |   9 ++
+>  2 files changed, 117 insertions(+)
+> 
+> 
+> base-commit: da920b7df701770e006928053672147075587fb2
+> prerequisite-patch-id: c87e5f1cb29568c24566e8a960d6c8dd0be5969d
+> prerequisite-patch-id: f80a486c6e34dfb62f09faf0eb3fae586cda85ec
+> prerequisite-patch-id: 0e2cb7a4d8779539a58261111deea6bd6b750f6f
+> prerequisite-patch-id: 8b9034fca96bd8edb5c4eca5b88811df7206120c
+> prerequisite-patch-id: bb6ec99692ade9d7c89f91b5507cc0ee248e43dd
+> prerequisite-patch-id: 32c051e9f77de6b53a4f4539ce49dde9859002ea
+> prerequisite-patch-id: ccfa56b7d00a1139fbbdccdc13496bfc98440d5e
+> --
+> 2.34.1
+> 
+> 
+> 
 
-Konrad
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250325075331.1662306-1-quic_stonez@quicinc.com:
+
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: pci@1c00000: interrupts: [[0, 307, 4], [0, 308, 4], [0, 309, 4], [0, 312, 4], [0, 313, 4], [0, 314, 4], [0, 374, 4], [0, 375, 4], [0, 306, 4]] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sa8775p.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: pci@1c00000: interrupt-names: ['msi0', 'msi1', 'msi2', 'msi3', 'msi4', 'msi5', 'msi6', 'msi7', 'global'] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sa8775p.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: pci@1c00000: resets: [[49, 1], [49, 2]] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sa8775p.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: pci@1c00000: reset-names: ['pci', 'link_down'] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sa8775p.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c04000: clock-names:0: 'aux' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c04000: clock-names:1: 'cfg_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c04000: clock-names:2: 'ref' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c04000: clock-names:3: 'pipe' is not one of ['rchng', 'refgen']
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c04000: clock-names:4: 'pipe' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c04000: clock-names:5: 'pipediv2' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c04000: clocks: [[49, 54], [49, 80], [49, 58], [49, 60], [49, 63], [49, 56]] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c04000: clock-names: ['cfg_ahb', 'ref', 'rchng', 'pipe', 'pipediv2', 'phy_aux'] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: pci@1c10000: interrupts: [[0, 519, 4], [0, 140, 4], [0, 141, 4], [0, 142, 4], [0, 143, 4], [0, 144, 4], [0, 145, 4], [0, 146, 4], [0, 518, 4]] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sa8775p.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: pci@1c10000: interrupt-names: ['msi0', 'msi1', 'msi2', 'msi3', 'msi4', 'msi5', 'msi6', 'msi7', 'global'] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sa8775p.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: pci@1c10000: resets: [[49, 6], [49, 7]] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sa8775p.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: pci@1c10000: reset-names: ['pci', 'link_down'] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sa8775p.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c14000: clock-names:0: 'aux' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c14000: clock-names:1: 'cfg_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c14000: clock-names:2: 'ref' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c14000: clock-names:3: 'pipe' is not one of ['rchng', 'refgen']
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c14000: clock-names:4: 'pipe' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c14000: clock-names:5: 'pipediv2' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c14000: clocks: [[49, 68], [49, 80], [49, 72], [49, 74], [49, 77], [49, 70]] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: phy@1c14000: clock-names: ['cfg_ahb', 'ref', 'rchng', 'pipe', 'pipediv2', 'phy_aux'] is too short
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+
+
+
+
+
 
