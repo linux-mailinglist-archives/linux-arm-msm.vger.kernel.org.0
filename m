@@ -1,236 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-52501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DA2CA710B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 07:44:55 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 649ABA7111F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 08:10:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B481517276E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 06:44:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5EF783B61CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 07:10:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41C7019066B;
-	Wed, 26 Mar 2025 06:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14608199230;
+	Wed, 26 Mar 2025 07:10:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mGexHaIg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mhkpZlNx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F13823DE;
-	Wed, 26 Mar 2025 06:44:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50661C8FE;
+	Wed, 26 Mar 2025 07:10:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742971491; cv=none; b=pkuZUmLSglBQjuEtK0BR0NkpOCSz9AOaDlilSAwqswd9YBDw7V082I6+F436L4PuWuPt9FGI3R7Zcg+9p2qVvpdaCoz+BN9ChWw7JECGb4fGC48WzUDBNSHUqbtLnVu7YOGXMi8RJvlI8J0kCFqcczMrgr4ZcEoYxmHCIjjpGTQ=
+	t=1742973036; cv=none; b=Pum87A8YySTH/X8NcjZO0nFKQdMR3w2XRcJVr2AfJSbgiEKDptHZLa77+/A19Xz+6i1HyCLaT27fn7XE50eNiYCCvex0ZwPzxmRJDPWSwnLPNEuQ+IRJZ5xCAKY2xSbBsHir/Gl6EB3+M96osfQZU+vjppRr/Hxx6EcyMDzXJD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742971491; c=relaxed/simple;
-	bh=N+Le9MFtc/k1LZ1LVkIPmZk2oGdIyqo4T5HKb+AHZPQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qUT15Ve5bPs/JkfsZl+Xe1j0zLM4JT4Dof5SrRG7BubS+VRqM15ohoiDIv/lIgkp4OJqhOHMQjBIZmqECFn22dVpRABz61K04O8qWC0kB2NgzdKSOVudimx6xy8Eta/41KjjWKWfrHGMgFCqlx7LHxfXPcYcI4nC/Sy2gAxUW+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mGexHaIg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876BAC4CEED;
-	Wed, 26 Mar 2025 06:44:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742971490;
-	bh=N+Le9MFtc/k1LZ1LVkIPmZk2oGdIyqo4T5HKb+AHZPQ=;
-	h=References:In-Reply-To:Reply-To:From:Date:Subject:To:Cc:From;
-	b=mGexHaIgLbSTRVHs1aAeFQlPGcyoCZW7ra4H38PmdGzDelCOcdKx1PSXmCzV7zHg4
-	 t4BXlaPJZl4M++7SmdtJc6OS8JjvQRphtWZwBCWtmx/alHR1Io5/u7TZToVoyJOSou
-	 96VjLRob86BRO7cjMzROfgRLhBnxIvMMr+R4vtlIUeOGTcng2xdyftnauroj5ZowGD
-	 xzqLtB/oFZyge5ZZJr/oxGRcBJ2TtgorNnVd6M4vPVwtA8/remvhxw2JO6w5AmNBGW
-	 LWfgRtD9plTNy/EtRrTL21OA4Ltzhsl8gLg9J9a66/mPT8tJvI+frlHwy6w6//C7jk
-	 Cj6THAiU6V/PQ==
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30c416cdcc0so66700351fa.2;
-        Tue, 25 Mar 2025 23:44:50 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVrmuqXy0K9cajr0azmFL4+Pf6aBWNe3qYxGW0g2O/hfr5Lcj66UTi8OLbcqOmB7DfRjc364FcBdqT0@vger.kernel.org, AJvYcCVzTu2309+2Q4uD9wIfI0yq+XWdKBq62p4IY1yhlVgcrkjs4Un9AgSf6K+qZdYcbD250UTVuZaDIL+hAmrm@vger.kernel.org, AJvYcCX22mXorEkFKLJ0KozHNYfK+7KjiR4EBG+qA1xn9QhQlKOXnXQtUG8QdEHbLtbg6PPMdD3QsDhmvpMIDy2o2w==@vger.kernel.org, AJvYcCXYa84ydnApj4NIDQwClnlzVJFosKZsXWTnNOmUfwvoEU0a4sWVpF75yBx/u8AoGKfUlIbOOopmxiNh5S8cz+gpAg==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzw67eBUdY2FzEQWUbBU42acRzwWpawS/ryPLQQDkLkF/ciZTNz
-	TqXDmz9tVm++JqWhZNtWsy7wowpNTCfQlT1Hyhh5q25YpcDoM2rLyc6HqKjshjkIcQeaM53LvlU
-	9ZZ8DqpW8UUdaVRffXvNXDqT7qpk=
-X-Google-Smtp-Source: AGHT+IGMF6j2X+Jr6WCvccPSUBNATvTU7YZt+i3mWvl9VVSwRgH7cCtIrbRrCInxLepNvpLKepp5tmas4mw+ODC5pdo=
-X-Received: by 2002:a05:651c:201c:b0:30b:f924:3554 with SMTP id
- 38308e7fff4ca-30d7e236c49mr59160551fa.21.1742971488912; Tue, 25 Mar 2025
- 23:44:48 -0700 (PDT)
+	s=arc-20240116; t=1742973036; c=relaxed/simple;
+	bh=eVOuDLsGbzGfXXNLVoe91/fIxbJ86kKBaQL/DLx1KYU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=g1sU6jCn8eZCrLAeKU29meSwSEIYGdM12nrwTLSjus9xFar/l+Phee097f3+noC/z2HA+OYlu//2//HY1TeIWHDoZ7I1LtoXdXLJ5feV1ZGuGS7dltYIjEAqtLeSa0qzTEIm06NieuOI3SFFxXNOKLzK2UPAJjbrvEdiC5ADmLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mhkpZlNx; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52Q73H4O026884;
+	Wed, 26 Mar 2025 07:10:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Lp+AanYNpBXVQJd/FYZc8LhN+GUrk+Zl95cszDC493I=; b=mhkpZlNxXqYq727w
+	PVcLGLMgk+bgmcSbHHtLHXFdiPHhpj+kWa9vuFluEgZ3CHi1dHyQ8KQoMIjnjZi3
+	0ReVa1N4jGXgb6AOXG+XR34WbfiaGyzBVqfvvCMlzk2YHezafzuVzTBPO5upIqDv
+	l/QNjp3IHgJVpXpUZghE/V/4FxOjOTVqDwRiSnpklaJIMWfDL+K2ABtQNfsGNmRU
+	zpxKQRlAQ+Nf69+7YK294JTc1VoTThurx8CKPix/d8AnG/V1xnksukt9vRGrscYK
+	5NfFSPzg4rKPe9DbE0YdWPLiGN/Kn7dWgn7CLDr1IkrgOQ06DHn4NA+WcIdkSQbO
+	i/jhbQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45m0xdshcb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Mar 2025 07:10:29 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52Q7ASm4004973
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Mar 2025 07:10:28 GMT
+Received: from [10.253.12.41] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 26 Mar
+ 2025 00:10:24 -0700
+Message-ID: <08874014-3685-4446-82c0-e14ab57d304e@quicinc.com>
+Date: Wed, 26 Mar 2025 15:10:21 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250317232426.952188-1-robh@kernel.org> <20250317232426.952188-3-robh@kernel.org>
-In-Reply-To: <20250317232426.952188-3-robh@kernel.org>
-Reply-To: wens@kernel.org
-From: Chen-Yu Tsai <wens@kernel.org>
-Date: Wed, 26 Mar 2025 14:44:36 +0800
-X-Gmail-Original-Message-ID: <CAGb2v65djD5DLQnjQrp9kSHTQYVd9p_vP9WySj2Cx81rHmh5Mw@mail.gmail.com>
-X-Gm-Features: AQ5f1Jq6AIDujd8iNXwgSFrroWq7EbdFM1zyiw-quoSbfHrKnBQnEEqsHIIoRaI
-Message-ID: <CAGb2v65djD5DLQnjQrp9kSHTQYVd9p_vP9WySj2Cx81rHmh5Mw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] of: Simplify of_dma_set_restricted_buffer() to use of_for_each_phandle()
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Saravana Kannan <saravanak@google.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-remoteproc@vger.kernel.org, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-On Tue, Mar 18, 2025 at 7:29=E2=80=AFAM Rob Herring (Arm) <robh@kernel.org>=
- wrote:
->
-> Simplify of_dma_set_restricted_buffer() by using of_property_present()
-> and of_for_each_phandle() iterator.
->
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> ---
->  drivers/of/device.c | 34 +++++++++++++---------------------
->  1 file changed, 13 insertions(+), 21 deletions(-)
->
-> diff --git a/drivers/of/device.c b/drivers/of/device.c
-> index edf3be197265..bb4a47d58249 100644
-> --- a/drivers/of/device.c
-> +++ b/drivers/of/device.c
-> @@ -35,44 +35,36 @@ EXPORT_SYMBOL(of_match_device);
->  static void
->  of_dma_set_restricted_buffer(struct device *dev, struct device_node *np)
->  {
-> -       struct device_node *node, *of_node =3D dev->of_node;
-> -       int count, i;
-> +       struct device_node *of_node =3D dev->of_node;
-> +       struct of_phandle_iterator it;
-> +       int rc, i =3D 0;
->
->         if (!IS_ENABLED(CONFIG_DMA_RESTRICTED_POOL))
->                 return;
->
-> -       count =3D of_property_count_elems_of_size(of_node, "memory-region=
-",
-> -                                               sizeof(u32));
->         /*
->          * If dev->of_node doesn't exist or doesn't contain memory-region=
-, try
->          * the OF node having DMA configuration.
->          */
-> -       if (count <=3D 0) {
-> +       if (!of_property_present(of_node, "memory-region"))
->                 of_node =3D np;
-> -               count =3D of_property_count_elems_of_size(
-> -                       of_node, "memory-region", sizeof(u32));
-> -       }
->
-> -       for (i =3D 0; i < count; i++) {
-> -               node =3D of_parse_phandle(of_node, "memory-region", i);
-> +       of_for_each_phandle(&it, rc, of_node, "memory-region", NULL, 0) {
->                 /*
->                  * There might be multiple memory regions, but only one
->                  * restricted-dma-pool region is allowed.
->                  */
-> -               if (of_device_is_compatible(node, "restricted-dma-pool") =
-&&
-> -                   of_device_is_available(node)) {
-> -                       of_node_put(node);
-> -                       break;
-> +               if (of_device_is_compatible(it.node, "restricted-dma-pool=
-") &&
-> +                   of_device_is_available(it.node)) {
-> +                       if (!of_reserved_mem_device_init_by_idx(dev, of_n=
-ode, i)) {
-> +                               of_node_put(it.node);
-> +                               return;
-> +                       }
->                 }
-> -               of_node_put(node);
-> +               i++;
->         }
->
-> -       /*
-> -        * Attempt to initialize a restricted-dma-pool region if one was =
-found.
-> -        * Note that count can hold a negative error code.
-> -        */
-> -       if (i < count && of_reserved_mem_device_init_by_idx(dev, of_node,=
- i))
-> -               dev_warn(dev, "failed to initialise \"restricted-dma-pool=
-\" memory node\n");
-> +       dev_warn(dev, "failed to initialise \"restricted-dma-pool\" memor=
-y node\n");
-
-This changes the behavior. Before this patch, it was:
-
-    if a restricted dma pool was found, but initializing it failed, print
-    a warning.
-
-Whereas now it has become:
-
-     print a warning unless a restricted dma pool was found and successfull=
-y
-     initialized.
-
-This change causes the kernel to print out the warning for devices that
-don't even do DMA:
-
-simple-pm-bus soc: failed to initialise "restricted-dma-pool" memory node
-simple-pm-bus 10006000.syscon: failed to initialise
-"restricted-dma-pool" memory node
-mtk-tphy soc:t-phy@11c80000: failed to initialise
-"restricted-dma-pool" memory node
-mtk-tphy soc:t-phy@11ca0000: failed to initialise
-"restricted-dma-pool" memory node
-mediatek-mipi-tx 11cc0000.dsi-phy: failed to initialise
-"restricted-dma-pool" memory node
-mediatek-mipi-tx 11cc0000.dsi-phy: can't get nvmem_cell_get, ignore it
-clk-mt8186-apmixed 1000c000.syscon: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-topck 10000000.syscon: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-infra-ao 10001000.syscon: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-cam 1a000000.clock-controller: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-cam 1a04f000.clock-controller: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-cam 1a06f000.clock-controller: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-img 15020000.clock-controller: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-img 15820000.clock-controller: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-imp_iic_wrap 11017000.clock-controller: failed to
-initialise "restricted-dma-pool" memory node
-clk-mt8186-ipe 1c000000.clock-controller: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-mcu c53a000.syscon: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-mdp 1b000000.clock-controller: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-mfg 13000000.clock-controller: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-vdec 1602f000.clock-controller: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-venc 17000000.clock-controller: failed to initialise
-"restricted-dma-pool" memory node
-clk-mt8186-wpe 14020000.clock-controller: failed to initialise
-"restricted-dma-pool" memory node
-mt-pmic-pwrap 1000d000.pwrap: failed to initialise
-"restricted-dma-pool" memory node
-platform 1000d000.pwrap:pmic: failed to initialise
-"restricted-dma-pool" memory node
-mtk-svs 1100bc00.svs: failed to initialise "restricted-dma-pool" memory nod=
-e
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] dt-bindings: clock: qcom: Add CMN PLL support for
+ IPQ5424 SoC
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
+        <quic_pavir@quicinc.com>, <quic_linchen@quicinc.com>,
+        <quic_leiwei@quicinc.com>
+References: <20250321-qcom_ipq5424_cmnpll-v1-0-3ea8e5262da4@quicinc.com>
+ <20250321-qcom_ipq5424_cmnpll-v1-1-3ea8e5262da4@quicinc.com>
+ <55eada15-222e-4b97-a519-95b5e3aa7c23@oss.qualcomm.com>
+ <ba6cbf94-3e78-4c77-8c4f-908d3d90a1b1@oss.qualcomm.com>
+ <20250325-victorious-flamingo-of-destiny-c778a3@krzk-bin>
+Content-Language: en-US
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <20250325-victorious-flamingo-of-destiny-c778a3@krzk-bin>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: OZaeH7oXE_p9PnmCxB5ub83L0K5hUB5R
+X-Proofpoint-GUID: OZaeH7oXE_p9PnmCxB5ub83L0K5hUB5R
+X-Authority-Analysis: v=2.4 cv=Q43S452a c=1 sm=1 tr=0 ts=67e3a865 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=4zMwUWS1HWHBw9p5HkkA:9 a=QEXdDO2ut3YA:10 a=RVmHIydaz68A:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-25_10,2025-03-26_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0 adultscore=0
+ mlxlogscore=887 malwarescore=0 mlxscore=0 priorityscore=1501 clxscore=1015
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503260041
 
 
-ChenYu
->  }
->
->  /**
-> --
-> 2.47.2
->
->
+
+On 3/25/2025 4:22 PM, Krzysztof Kozlowski wrote:
+>>>> --- a/include/dt-bindings/clock/qcom,ipq-cmn-pll.h
+>>>> +++ b/include/dt-bindings/clock/qcom,ipq-cmn-pll.h
+>>>> @@ -1,6 +1,6 @@
+>>>>   /* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+>>>>   /*
+>>>> - * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>>>> + * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+>>>>    */
+>>>>   
+>>>>   #ifndef _DT_BINDINGS_CLK_QCOM_IPQ_CMN_PLL_H
+>>>> @@ -19,4 +19,12 @@
+>>>>   #define ETH1_50MHZ_CLK			7
+>>>>   #define ETH2_50MHZ_CLK			8
+>>>>   #define ETH_25MHZ_CLK			9
+>>>> +
+>>>> +/*
+>>>> + * The CMN PLL output clock rates that are specifically applicable for IPQ5424
+>>>> + * SoC. For IPQ5424, the other output clocks and their rates are same as IPQ9574.
+>>>> + */
+>>>> +#define NSS_300MHZ_CLK			4
+>>>> +#define PPE_375MHZ_CLK			5
+>>> Not a huge fan of this, such differences are only relevant to the driver
+>>> part in my view - bindings only let a consumer reference a specific piece
+>>> of hardware
+>> Oh I the bindings are stepping into the frequency department already,
+>> hmm.. Then I suppose it's fine if the dt-bindings maintainers don't have any
+>> concerns
+> 
+> Nooooo, it was said these are output clocks, not rates. If these are
+> rates, then NAK.
+> 
+> Best regards,
+> Krzysztof
+
+Yes, rates themselves are not defined here, they are defined in the
+driver data structure.
+
+The output clocks of CMN PLL are always fixed clock rate, so the clock
+frequency was added into the clock specifier macro names defined in
+this header file for clarity.
+
 
