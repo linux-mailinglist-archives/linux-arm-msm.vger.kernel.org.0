@@ -1,166 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-52533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4E2FA71861
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 15:23:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38997A71869
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 15:25:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F6A5188292B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 14:23:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1584A3B357A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 14:24:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3DCB1EDA13;
-	Wed, 26 Mar 2025 14:23:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GDRz6Osh"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69F471F3FF3;
+	Wed, 26 Mar 2025 14:24:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF41125DF;
-	Wed, 26 Mar 2025 14:23:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220981F130F;
+	Wed, 26 Mar 2025 14:24:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742998995; cv=none; b=fZTe8nCIh4VJVI8xyTW4z6UXfA2YnsjNm1B5dCLwHMoBplqmuy4lgsqlTImbFzBX4DBLICecJI0/km/s7W9GkvVSX6AP4rkIEtoWnHtVZ+mPkJYnEQU63sXk/HPDyfFfARnJkHOnCYCk7aA3mF10m7Uszj9mJZ8t5JjclMIvK0s=
+	t=1742999065; cv=none; b=cVlJ9+IbsUZkQKbr9syQTyo+GABuK8KCnYyZHmfW3vLbpqx64YfW+F1+Z1HKAmAXQMmaZ0L9sqTbysTzD34r5aH9qmeAWj3YApO0X/zpQmMu2JmMs6olBIe9hg9hNZCF+bKsv3E6r0aFsuvAIQdH/n7fWJBnvtivGyZX6FzVmwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742998995; c=relaxed/simple;
-	bh=WQ0b71CG/gabc41E0ZForUJsrM85iCe9NgjgnbPMmXI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nrQAjJGC/yL8XgAGopMG5vAYaKuetTRsMGbJSdR7l7lN4pQLctMwWiKkR52Yr4MA48iByFxuMjAvp54EJJim5Gb2zBbYc5/BBZHm6+fBEjztIuXCFmum/8zHeejI/JKP92MphWZwyHIeazCfmYpWO83Hxy5Krzl0HXxPvGTDFHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GDRz6Osh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C50EC4CEE2;
-	Wed, 26 Mar 2025 14:23:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742998995;
-	bh=WQ0b71CG/gabc41E0ZForUJsrM85iCe9NgjgnbPMmXI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=GDRz6Oshx5vLkIg9AKxG0OnPbCeoeYAyOGUzVuiUSE8KSmepryBW/5HaKra8v1cVB
-	 v24SD/nmL8Gu2ey1mRF+Bf/4I1x8F/3/b6361QZaBAb3iybsYMVP2BO1hLxaEDak2E
-	 teeMKMaPwiJGn/uEgDFmwO9uADFbPt7Y6oz/y0cQ6t7c/QnS+W9i2vL11+OLftNnXf
-	 2A1Q0eASWexDGmuIL8yrrz2MUQmtY1y0xO2jBkCSDqhNAm3wc64PYnjOV0JDQUjq4J
-	 eGLsc88p/M3Bwh9Tz8rZHUuh+yz3XR4Aw7cPSGKdYwkKcHdvReFyLdSrok+thViU+u
-	 gQaoQ7+nIZ5+Q==
-Message-ID: <991b0652-76f2-40d6-b49b-1e6f76e254ac@kernel.org>
-Date: Wed, 26 Mar 2025 15:23:08 +0100
+	s=arc-20240116; t=1742999065; c=relaxed/simple;
+	bh=D0XE0U9hTYqwj+ZqvSvbVixtiOEZJy8Two0uLDbB068=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Jp5SL8whgkC9BKGH+nyxYvrf8TM+AHgXF4n2KOLdYcvYgj3ExexA1slDz41uJ3mAJyAWeHzBq1AHLNPk5BtOGdYBOi1vuzdFSF+RKjBfjiOo2oVKslFtk/xMgILjLFyzMRs1ulX5YUpKJnLYMkdQLN3yQyaSQm5HDdbmBJAQ5lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ac2dfdf3c38so1056161166b.3;
+        Wed, 26 Mar 2025 07:24:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742999060; x=1743603860;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yVeEr5fe+QcsB1CPbzMqouy4dYpCMr7o6TNfEQFa78s=;
+        b=EJdpioYAp4sxUg6Gy9QBX5ND3ig0AnUkk6HqmR2WTSUJ7eVFofPi9lqa74bh17CITv
+         w3U5Jsx+aYu7Z0a6eNb9yO16BwpHm/VVtnG+6xPYHaQeMjM//MJJrJeUDYcCvyvrhz4b
+         M1fCwm5wk8glKzqq6NMVejC9d/QHyFNqT12eeFRNt0gRaNIirYZjeiVEc7ps9JME3C0D
+         uL0GRDzujceQHXpfXtqppiulAgrwMfGrkdfK51eaTrvwN/FHQqCGdi48qOwYySdyYOZE
+         idvyh7gu68pVQ53TI/SRBtca5iZDnnOL6BPJA1dFknLN0+mV+tywLI3+3VLVagDV3E5X
+         THhA==
+X-Forwarded-Encrypted: i=1; AJvYcCUuCX0DvCyiB9hSCLhAXJrGQxFjpNU4qnqNQ5FixTVdftmDu7OAxapC2hctdNPCmBy7YyDs4fDNGCJDEJEpsg==@vger.kernel.org, AJvYcCVFha8rcuGlmcFC0bDrZKWQolT9jE479AZsCgNUbPfuHx9FoK+6Lhv8+wl2zjEOnc8Xk8uQVQcD+NdzVS07@vger.kernel.org, AJvYcCXQfcXiVP/nFoPPX+zyc6IZZVrUoPPaLWjYntelzztOe7vUOcypJ99IJtJ67zRSpt9928HLMvOg3G8w@vger.kernel.org, AJvYcCXblz8j8yd1VFkgJkhHJX4pAyF/1zBFvhkSyAc1pKoC4BCG3lG0AM9Ngj1+u9G1f82q6Y9otchxbgEy@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzqSmOS4hq587N0bw2tdQ0ESzdQ3oLCWnaznLd3hqT7eDXBOEV
+	ggFg7LQ9j7dmPqZAZ5UhHhS9eeDzFi27Av9gjuAuceaMylA+qDX/ejf1XvTA4S0=
+X-Gm-Gg: ASbGncvzeVC3BhZaeWxwPAWw6vzje3WI6kaFc0O2R8QrTbqi8nysgCEmn3bBjFSzkWD
+	RkMoJwbgHjX3YCt3m0EJGIV+ppI357GqbzI8s21XTAcic+OeYhST8vdEZpbN0izE4mGmfQ5w4v5
+	WJWHgSdrHZTbnEX13uLH3SNKY7uL/25mdgUCvpEVQkmnXXxtMhTD0p9dQFdfRDds3K97tUMvM99
+	wKf2ElZS3cMY7kttJ0IaYOy9Cm9MDwN7v7WNaRPkECN7gffC52z+qN7qcHsHf+S51SFcra45h1y
+	eWrDGtAg2uUuCYfzdOoCu4ER+p+6PcaM5uafkNvZEdNSijgaKuWgRqPlvg7gffQ8KZwfyMOCOqM
+	p6hgnix4=
+X-Google-Smtp-Source: AGHT+IHevpX0MztgdxgQP65bcyqlFoyoncWQIdo3b8lo6c/zWSh1PXSiDKD4RSc1XPxWaoRvZZaTzg==
+X-Received: by 2002:a17:907:6095:b0:ac3:4138:6ae5 with SMTP id a640c23a62f3a-ac3f24c852dmr2117901666b.46.1742999059504;
+        Wed, 26 Mar 2025 07:24:19 -0700 (PDT)
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com. [209.85.208.54])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3ef8675a9sm1040126366b.28.2025.03.26.07.24.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Mar 2025 07:24:17 -0700 (PDT)
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5e6194e9d2cso12502952a12.2;
+        Wed, 26 Mar 2025 07:24:17 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUBuYlf29oV0/BivZZ+e9rW6qeMCtDiIAKxBcN2J8mfaLf4+zo3A2G0D3Mxk4cDjzhpTYSXqWw//t+ukCPC@vger.kernel.org, AJvYcCV9QsnLqq5CQkCrHhtCqQ1vQ58643Xi9XuKbLM4uAQqBwCpvxq9jrWzAC6yu8SJ6UDdwtMcdYd7W6pe@vger.kernel.org, AJvYcCVN6QUb+dYaIWZ5FxxtG9OZhG666CGxLEvgin/ukmPeQWtumwwl4P4FM5EAlgky7frkQHUfSMlMw/UVFsNGoA==@vger.kernel.org, AJvYcCWDZT7rO2qk6WyhsBtjHlaYa9Ppww5N6qoTdXji6KuEyLrBszqkfn+h+yCAssiePSqM6MwhVOQBIGQP@vger.kernel.org
+X-Received: by 2002:a05:6402:210d:b0:5ed:2762:727a with SMTP id
+ 4fb4d7f45d1cf-5ed27627ba1mr4923443a12.11.1742999057224; Wed, 26 Mar 2025
+ 07:24:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: i3c: Add Qualcomm I3C master
- controller
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
- alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, jarkko.nikula@linux.intel.com,
- linux-i3c@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: andersson@kernel.org, konradybcio@kernel.org
-References: <20250326141641.3471906-1-quic_msavaliy@quicinc.com>
- <20250326141641.3471906-2-quic_msavaliy@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250326141641.3471906-2-quic_msavaliy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250224111414.2809669-1-quic_mdalam@quicinc.com> <20250224111414.2809669-3-quic_mdalam@quicinc.com>
+In-Reply-To: <20250224111414.2809669-3-quic_mdalam@quicinc.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Wed, 26 Mar 2025 15:24:03 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdUOt8PxbRt-vGfeD5=uEtMVV0TLPUridu=nCkzX9iP24Q@mail.gmail.com>
+X-Gm-Features: AQ5f1JrfbKrmBiixGhwve_DBCFWEH-PHEu3H-5oG_9hBLQTIaQ4FX125IicniZo
+Message-ID: <CAMuHMdUOt8PxbRt-vGfeD5=uEtMVV0TLPUridu=nCkzX9iP24Q@mail.gmail.com>
+Subject: Re: [PATCH v15 2/2] spi: spi-qpic: add driver for QCOM SPI NAND flash Interface
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, miquel.raynal@bootlin.com, richard@nod.at, 
+	vigneshr@ti.com, linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-mtd@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 26/03/2025 15:16, Mukesh Kumar Savaliya wrote:
-> Add device tree bindings for the Qualcomm I3C controller. This includes
-> the necessary documentation and properties required to describe the
-> hardware in the device tree.
-> 
-> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> ---
->  .../bindings/i3c/qcom,i3c-master.yaml         | 60 +++++++++++++++++++
->  1 file changed, 60 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml b/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
-> new file mode 100644
-> index 000000000000..af6b393f2327
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
+Hi,
 
-Naming: nothing improved.
+On Mon, 24 Feb 2025 at 12:15, Md Sadre Alam <quic_mdalam@quicinc.com> wrote:
+> This driver implements support for the SPI-NAND mode of QCOM NAND Flash
+> Interface as a SPI-MEM controller with pipelined ECC capability.
+>
+> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
 
-> @@ -0,0 +1,60 @@
-> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/i3c/qcom,i3c-master.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Geni based QUP I3C Controller
-> +
-> +maintainers:
-> +  - Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> +
-> +description:
-> +  I3C in master mode supports up to 12.5MHz, SDR mode data transfer in mixed
-> +  bus mode (I2C and I3C target devices on same i3c bus). It also supports
-> +  hotjoin, IBI mechanism.
-> +
-> +  I3C Controller nodes must be child of GENI based Qualcomm Universal
-> +  Peripharal. Please refer GENI based QUP wrapper controller node bindings
-> +  described in Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml.
-> +
-> +allOf:
-> +  - $ref: i3c.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,i3c-master
+Thanks for your patch, which is now commit 7304d1909080ef0c
+("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
+upstream.
 
-And this got worse. It makes also no sense either: how can you claim
-that this covers all possible future I3C masters from Qualcomm?
+> Change in [v11]
+>
+> * Changed "depends on MTD" to "select MTD" in
+>   drivers/spi/Kconfig file
 
-What was the resolution of previous discussion?
+Why? This is the only driver that selects MTD instead of depending on it.
 
-Best regards,
-Krzysztof
+> Change in [v7]
+>
+> * Made CONFIG_SPI_QPIC_SNAND as bool
+
+Why? The driver uses MODULE_*, so a janitor may remove the latter.
+
+> --- a/drivers/spi/Kconfig
+> +++ b/drivers/spi/Kconfig
+> @@ -936,6 +936,15 @@ config SPI_QCOM_QSPI
+>         help
+>           QSPI(Quad SPI) driver for Qualcomm QSPI controller.
+>
+> +config SPI_QPIC_SNAND
+> +       bool "QPIC SNAND controller"
+> +       depends on ARCH_QCOM || COMPILE_TEST
+> +       select MTD
+
+As SPI_QPIC_SNAND is bool, this forces MTD (and various related symbols)
+to be built-in, as seen in an allmodconfig kernel.
+
+So I think SPI_QPIC_SNAND should be tristate, and it should depend on
+MTD to avoid circular dependency issues.
+
+> +       help
+> +         QPIC_SNAND (QPIC SPI NAND) driver for Qualcomm QPIC controller.
+> +         QPIC controller supports both parallel nand and serial nand.
+> +         This config will enable serial nand driver for QPIC controller.
+> +
+>  config SPI_QUP
+>         tristate "Qualcomm SPI controller with QUP interface"
+>         depends on ARCH_QCOM || COMPILE_TEST
+
+--- /dev/null
++++ b/drivers/spi/spi-qpic-snand.c
+
+> +static const struct of_device_id qcom_snandc_of_match[] = {
+> +       {
+> +               .compatible = "qcom,ipq9574-snand",
+> +               .data = &ipq9574_snandc_props,
+> +       },
+> +       {}
+> +}
+
+Missing semicolon, so that's why you are forcing the driver built-in? ;-)
+
+> +MODULE_DEVICE_TABLE(of, qcom_snandc_of_match);
+> +
+> +static struct platform_driver qcom_spi_driver = {
+> +       .driver = {
+> +               .name           = "qcom_snand",
+> +               .of_match_table = qcom_snandc_of_match,
+> +       },
+> +       .probe = qcom_spi_probe,
+> +       .remove = qcom_spi_remove,
+> +};
+> +module_platform_driver(qcom_spi_driver);
+> +
+> +MODULE_DESCRIPTION("SPI driver for QPIC QSPI cores");
+> +MODULE_AUTHOR("Md Sadre Alam <quic_mdalam@quicinc.com>");
+> +MODULE_LICENSE("GPL");
+
+I have sent a patch to fix these issues
+https://lore.kernel.org/b63db431cbf35223a4400e44c296293d32c4543c.1742998909.git.geert+renesas@glider.be
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
 
