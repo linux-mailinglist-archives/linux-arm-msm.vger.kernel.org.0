@@ -1,199 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-52528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 490E5A717D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 14:53:48 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70495A7183E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 15:17:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 755467A2B7A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 13:52:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F2860172513
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 14:17:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18ECF1EEA29;
-	Wed, 26 Mar 2025 13:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF10D1F099F;
+	Wed, 26 Mar 2025 14:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="F2G1EAew"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MhlLYrHl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF94189919
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Mar 2025 13:53:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A711EA7F9;
+	Wed, 26 Mar 2025 14:17:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742997222; cv=none; b=EGxumxM8aQHkgQaB1knKf/6jQGvp/CKSGp+oEN9Ao20EpyxO7oQYTuA/ujB+oLtqb02ANR+wrL2HjnShcaj0mrtWsQzlYFFYc5SwY20+/wTGHWlFL6ps46Y6pmk8s0KwrCX2SpdFKSmbfnKbWmCD8C+xogTYcrjY9s291JmZ7LA=
+	t=1742998666; cv=none; b=CfRvS+vkYZdtEUsgSLqF8CbFhf52E7sVl8PByR8uwnHCQDKbsSkrlJn/Pk0wk+ttSNmcOH1xEIWtG8pTbWAo5NE4Lq6OuodHkkYwi2qANtRu9VGSCkcC52cFK0RpM7xd/T7si5Aoabjs7Vbfy3fUiwN5njz9UrCWCh8FJy0tXGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742997222; c=relaxed/simple;
-	bh=9L4xyxr7xMH9Dp2nmEgv5JEeMQO/tlZYPdy5nK9XB7Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ctA6/e03NE6FMeZQPhrGUHXLYHENPQgNKarIYvTOX8FwVy8ZmxC8l3l8TnxntWUyOoo+HnwEfrCK9JWiQEVp4EfhfymAt2I9lvK3peX5xoUID8MZKdYxzHaSnwNrqJQXhqsoX+UDTICRfh+//FEYE/DU969b/LlUEJDab/ZGfmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=F2G1EAew; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52Q739wu006167
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Mar 2025 13:53:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7BA33c04zG/s0Ltuw12G0cx/mbnPEXUJh7lFeBxmokg=; b=F2G1EAewDGFCeXUe
-	zYCYQ4MFvBNdSbLz1+sxBAGV1Fvb2D74YEjtBVRXVpwdp6tyIRuQnKsH6TYxzohh
-	7TXFcPtpeO6L6mYN4m0w2u02BTvLU8ItT5nMlPL2JSdKkRkZHaIP/TTCn1afVpxF
-	avNnVqgowFb+IXIag40RSd8wdJScS0y8OL6bYfG224bGRqICLwQhHsuWGthOu/Ev
-	dSWFmo+a6Wj1r1O8sDdGsRIaQOqug6H7a88MuBWjOwKnQJ5462hsaMFpsacHjWs/
-	6NQHt9LW0vCgMYQUdeigzDw6gBEkFLPfihAqa2PGV9iUrS0Qyt5TqCWUPuuR7Ati
-	BnmhvQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45manj1gyc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Mar 2025 13:53:39 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-476a4a83106so1838871cf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Mar 2025 06:53:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742997218; x=1743602018;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7BA33c04zG/s0Ltuw12G0cx/mbnPEXUJh7lFeBxmokg=;
-        b=kJUHOA9/J/7kuNCGHqegN9j5Hz2sxQ33BM1KnFA+p2t7KXQoB+eqtBRiBxgjggmYtn
-         /ZsbjV3/Vppw8ESpaO09t13dIGr1CFgRrC48DMh8NOVihlah9/fzbZBq/Yz5vkcGdFeW
-         uG46AoJfHipgwhPCQhJCQauO4UuJAfn4N18eo6zKL7vJEJJ37tjVkLR6PitDehiV7Y+c
-         lgTH1iDXcYH9Vh4TbcqQG0ywwbER1tgEehbVsfL45VCfrKOMt6GGINO932cx2oJKxS1u
-         cXxIoHswuQpok/eE1dbE0MmOm9W3co1y/HapLhJz7ZBGrYU1I2jrRstGkzuya3xOm8sS
-         wAlQ==
-X-Gm-Message-State: AOJu0YxOe8G12nxhU6H3r7JliHi/VwdNdte5x0TyKxY/chMuhWtNo2xB
-	DbKo0l5462U/D5qIsi3Q0rPK1azSuDxT67EiG12ouEpn9lhdsSMX/rNrPpdzTzn/pL6FHU5ft//
-	h/uDS/lzv4e4PYP2+pkDRvLHkW3380Nd4SYBlNKkd01wUoCYxZPYqXvZH1EOBDaf3
-X-Gm-Gg: ASbGnctKg8EW6LTl8qindSnrFOKl3yPRA+5P+yCaEk7bZcW9qN3ZCh79Dmw5Yp9Oxas
-	z2Ukl+2TVf6RSHoiRdEY+t1qKtjqpDqux2nqZpVopymTIIelng5A4nWnLLHqFx2RvbvngNuAxJQ
-	OWVUq5jIb4yQ+Ey7eZoe3qgdg804nJPZfQK7BO7dP62xjFEHLB9f2S/UfsBPE2ils7ruLgt0t5N
-	Wb3zgOBSnRh1pNnP95EiqwbK5Jk6bO+X6BvMBw0ZKPBUwf5Yv6BHlB2jcHgKIWkMywmbq0yprig
-	QtJq4WBpMAzw+DXQGew4sIhjDu8U/DzwLdRKYpZy89mnVsteglmTLm/aok25OU2/IKDxzA==
-X-Received: by 2002:ac8:5894:0:b0:474:bc4a:edc8 with SMTP id d75a77b69052e-4775121d71dmr35379691cf.0.1742997218275;
-        Wed, 26 Mar 2025 06:53:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHebjyONIhZv+DeY46JivB3zqnPTztA+Se1h9eQ9cmVWaA0E0xMl/fWl7R8P3vHJk6AzYv29A==
-X-Received: by 2002:ac8:5894:0:b0:474:bc4a:edc8 with SMTP id d75a77b69052e-4775121d71dmr35379341cf.0.1742997217624;
-        Wed, 26 Mar 2025 06:53:37 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5ebcd0c6f47sm9303266a12.52.2025.03.26.06.53.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Mar 2025 06:53:36 -0700 (PDT)
-Message-ID: <5895ecc9-68c0-4ea2-b351-c48ed7a593a9@oss.qualcomm.com>
-Date: Wed, 26 Mar 2025 14:53:33 +0100
+	s=arc-20240116; t=1742998666; c=relaxed/simple;
+	bh=lByxWeBSIVrb0ws9XFF0Bg0Rx++75l6NWJmxnKRvy2U=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=d/Vsd5VYhHR8WuRTV+bpQRiAnIA6tH4OIZnQoEdXfd99Glh6Qk4PWbn+c1vjR+D4jDDZRbAsepqNk0PaYxBO0Hi434ajX81QF8wL+8QZt49RAmcVuFfE1XCjaGq6D8MXfRZz0d5ZHSAyurPc18v+A7ToVMpDyvQls8kutNR947E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MhlLYrHl; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52Q73XmL006819;
+	Wed, 26 Mar 2025 14:17:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=rEfrfle6P+tbGDZRFOhPeJQ12TYfKbo/Vwr
+	VYSh0mHM=; b=MhlLYrHlI6tPXrHvqDNIjqJ3eJEXD3Q9NV7JixhS2OMeCmsPrFi
+	AokJPTWD8S5BgLJGRmh5e+rg7vmF0wqrxe1rnMAnDJgASvA0iIFk+VwDtqkqbZf9
+	X+mJimbIAd3YEE9vtSLArNSSX3GYO/7G6M2EiY4ngHIOMU2rQhnWVKyRYQHeVm8u
+	DOEJ62PP8f7zTQaF2GUjE2AwDSAvvH2ljcMXd778nBFofSfTEgWx1y6O1MzyG6Vy
+	gHjIc9iV5M4qadUQqSCMS6zP6vAgUwEaAH1qBtxapsKqzj5RubDp4OMvmex+Bqu0
+	f/YazwX+m0PVGW65asxha0C8zr921W9ECew==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45k7qjf74q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Mar 2025 14:17:34 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 52QEHV9e025684;
+	Wed, 26 Mar 2025 14:17:31 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 45hp9mdsfx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Mar 2025 14:17:31 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 52QEHVDp025679;
+	Wed, 26 Mar 2025 14:17:31 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.213.110.207])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 52QEHUgU025675
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Mar 2025 14:17:31 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 429934)
+	id BD3082343B; Wed, 26 Mar 2025 19:47:29 +0530 (+0530)
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+To: alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, jarkko.nikula@linux.intel.com,
+        linux-i3c@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: andersson@kernel.org, konradybcio@kernel.org,
+        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Subject: [PATCH v2 0/3] Add Qualcomm i3c master controller driver support
+Date: Wed, 26 Mar 2025 19:46:38 +0530
+Message-Id: <20250326141641.3471906-1-quic_msavaliy@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/9] phy: qcom: Add M31 based eUSB2 PHY driver
-To: Wesley Cheng <quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20250304-sm8750_usb_master-v2-0-a698a2e68e06@quicinc.com>
- <20250304-sm8750_usb_master-v2-6-a698a2e68e06@quicinc.com>
- <69fa7f33-e957-4dac-93dc-6fd40167873c@oss.qualcomm.com>
- <1956a94e-b231-4458-a1c1-6d9f158da669@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <1956a94e-b231-4458-a1c1-6d9f158da669@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: VHnLIs1ihs8s6mhCuVGZCXmg6ipCqhcp
-X-Proofpoint-ORIG-GUID: VHnLIs1ihs8s6mhCuVGZCXmg6ipCqhcp
-X-Authority-Analysis: v=2.4 cv=KvJN2XWN c=1 sm=1 tr=0 ts=67e406e3 cx=c_pps a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=O-TZl5gO0o4KVnlI8YMA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22 a=TjNXssC_j7lpFel5tvFf:22
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: HfHidhlvta_4sPddPN0KeByV1WKRskuw
+X-Proofpoint-GUID: HfHidhlvta_4sPddPN0KeByV1WKRskuw
+X-Authority-Analysis: v=2.4 cv=feOty1QF c=1 sm=1 tr=0 ts=67e40c7e cx=c_pps a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=swcVkCHeNRsN2Py2pQoA:9 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-26_06,2025-03-26_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- malwarescore=0 priorityscore=1501 clxscore=1015 mlxscore=0 spamscore=0
- impostorscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503260084
+ definitions=2025-03-26_07,2025-03-26_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 clxscore=1015 phishscore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 mlxscore=0
+ mlxlogscore=999 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503260087
 
-On 3/19/25 8:03 PM, Wesley Cheng wrote:
-> Hi Konrad,
-> 
-> On 3/11/2025 4:19 AM, Konrad Dybcio wrote:
->> On 3/4/25 10:56 PM, Melody Olvera wrote:
->>> From: Wesley Cheng <quic_wcheng@quicinc.com>
->>>
->>> SM8750 utilizes an eUSB2 PHY from M31.  Add the initialization
->>> sequences to bring it out of reset and into an operational state.  This
->>> differs to the M31 USB driver, in that the M31 eUSB2 driver will
->>> require a connection to an eUSB2 repeater.  This PHY driver will handle
->>> the initialization of the associated eUSB2 repeater when required.
->>>
->>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->>> ---
->>
->> [...]
->>
->>> +static int msm_m31_eusb2_write_readback(void __iomem *base, u32 offset,
->>> +					const u32 mask, u32 val)
->>> +{
->>> +	u32 write_val;
->>> +	u32 tmp;
->>> +
->>> +	tmp = readl_relaxed(base + offset);
->>> +	tmp &= ~mask;
->>> +	write_val = tmp | val;
->>> +
->>> +	writel_relaxed(write_val, base + offset);
->>> +
->>> +	tmp = readl_relaxed(base + offset);
->>> +	tmp &= mask;
->>> +
->>> +	if (tmp != val) {
->>> +		pr_err("write: %x to offset: %x FAILED\n", val, offset);
->>> +		return -EINVAL;
->>> +	}
->>> +
->>> +	return 0;
->>
->> Is there a reason we need to read back every write?
->>
->> Does this have to do with some funny write buffering?
->>
-> 
-> Probably because its just a form of write synchronization, since we're
-> using the relaxed variants.  If desired I can switch to just using writel
-> and remove the readback.
+This patchset adds i3c controller support for the qualcomm's QUPV3 based 
+Serial engine (SE) hardware controller. 
 
-non-relaxed variants are defined something like:
+The I3C SE(Serial Engine) controller implements I3C master functionality
+as defined in the MIPI Specifications for I3C, Version 1.0. 
+
+This patchset was tested on Kailua SM8550 MTP device and data transfer
+has been tested in I3C SDR mode.
 
 
-writel(foo) {
-	writel_relaxed(foo);
-	wmb();
-}
+Features tested and supported :
+  Standard CCC commands.
+  I3C SDR mode private transfers in PIO mode.
+  I2C transfers in PIO mode.
 
-with readbacks enforcing much stronger ordering (via a data/address
-dependency) than a barrier, i.e. if you write to an address and read back the
-register, the write must have arrived at the destination hardware (which is
-not a given otherwise, see:
+Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+----
+Link to v1: https://lore.kernel.org/lkml/20250205143109.2955321-1-quic_msavaliy@quicinc.com/
 
-2f8cf2c3f3e3 ("clk: qcom: reset: Ensure write completion on reset de/assertion")
+Changes in V3:
+ - Removed bindings word from subject title of dt-bindings patch.
+ - Use Controller name instead of Master as per MIPI alliance guidance and updated title.
+ - Added description field for the i3c master into dt-bindings.
+ - Changed title to "Qualcomm Geni based QUP I3C Controller".
+ - Changed compatible to "qcom,i3c-master" matching dt-binding file and driver.
+ - Changed "interrupts-extended" property to "interrupts" as suggested by krzysztof.
+ - Dropped reg, clock minItems and added maxItems similar to other dt-bindings.
+ - Removed clock-names property from dt-bindings suggested by Krzysztof, Bjorn.
+ - Set "se-clock-frequency"  set it within drivers as suggested by Rob.
+ - Removed "dfs-index" property and manage it within driver as suggested by Rob.
+ - Removed "interrupts" maxItems as we need only 1 interrupt in this change.
+ - Added comment for mutex lock mentioning purpose in sruct geni_i3c_dev .
+ - Return with dev_err_probe() instead of error log and then return -ENXIO from probe().
+ - Removed dev_dbg(&pdev->dev, "Geni I3C probed\n") print log as suggested by krzysztof.
+ - Removed CONFIG_PM and else part around runtime PM operations following other drivers.
+ - Removed Module alias MODULE_ALIAS("platform:geni_i3c_master").
+ - Replaced MASTER with GENI in the Title of MAINTAINER file.
+ - Removed duplications from the commit log and removed unwanted statement.
+ - Formatted license and copyright similar to other files.
+ - Removed SLV_ADDR_MSK and used FIELD_PREP/FIELD_GET instead of local bit shifting operations.
+ - Used direct bit positions for each internal Error bit of DM_I3C_CB_ERR.
+ - Removed Unused SLV_ADDR_MSK and added SLAVE_ADDR_MASK as GENMASK(15,9).
+ - Renamed spinlock as irq_lock.
+ - Removed dfs_idx from geni_i3c_dev and made it local inside qcom_geni_i3c_conf().
+ - Use boolean cur_is_write instead of enum i3c_trans_dir/gi3c->cur_rnw.
+ - Used DECLARE_BITMAP and related set/clear_bit APIs instead of manual operation.
+ - Inline the error messages from geni_i3c_err_log directly to improve readability
+   and avoid unnecessary jumps caused by the geni_i3c_err_code enum.
+ - Converted clk_src_freq of struct geni_i3c_clk_settings to HZ.
+ - Removed unwanted debug logs from geni_i3c_clk_map_idx().
+ - clk_od_fld and itr renamed to clk_od_idx and clk_idx respectively to map actual usage.
+ - Added se-clock-frequency to be read from DTSI, if none, then default to 100MHz source.
+ - Changed Error log during bus_init() if OD and PP mode frequencies avaiable or not.
+ - Used FIELD_PREP and standard BIT operations inside qcom_geni_i3c_conf() instead manual shifting.
+ - Removed unnecessary parentheses from geni_i3c_irq().
+ - Moved geni_se_abort_m_cmd() implementation to a new helper function geni_i3c_abort_xfer().
+ - Removed unwanted reinitialization of cur_len, cur_idx, cur_rnw from _i3c_geni_execute_command().
+ - Removed dev_dbg logs which were meant for developmental debug purpose.
+ - Removed unnecessary check nxfers <= 0 from geni_i3c_master_priv_xfers().
+ - Replaced devm_kzalloc() by kzalloc() inside geni_i3c_master_attach_i2c_dev() to use
+   kfree() from counter function geni_i3c_master_detach_i2c_dev().
+ - Replaced devm_kzalloc() by kzalloc() inside geni_i3c_master_attach_i3c_dev() to use
+   kfree() from counter function geni_i3c_master_detach_i3c_dev().   
+ - Removed geni_i3c_master_reattach_i3c_dev() function as default returns 0.
+ - Removed goto label from geni_i3c_master_bus_init() by reorganizing internal code.
+   Also used i3c_geni_runtime_get_mutex_lock()/unlock() instead of get_sync() similar to other places.
+ - Added indent to fallthrough for switch cases inside geni_i3c_master_supports_ccc_cmd().
+ - Renamed i3c_geni_rsrcs_init() to i3c_geni_resources_init().
+ - Changed devm_ioremap_resource() to devm_platform_ioremap_resource(), removed platform_get_resource().
+ - Replaced dev_err() with dev_err_probe() for core clock named se-clk.
+ - Removed development debug prints for votings from gi3c->se.icc_paths.
+ - Probe(): Changed all dev_err() to dev_error_probe() with proper log messages.
+ - Probe(): Moved static resource allocation immediately after gi3c object allocation.
+ - Probe(): Disabled PM if i3c master registration fails during probe().
+ - Remove(): Unregister master first and then added Disable of PM as opposite to probe().
+ - Removed I3C_CCC_ENTHDR support as it's not supported.
+---
+Mukesh Kumar Savaliya (3):
+  dt-bindings: i3c: Add Qualcomm I3C master controller
+  i3c: master: Add Qualcomm I3C controller driver
+  MAINTAINERS: Add maintainer for Qualcomm's I3C driver
 
-Konrad
+ .../bindings/i3c/qcom,i3c-master.yaml         |   60 +
+ MAINTAINERS                                   |    8 +
+ drivers/i3c/master/Kconfig                    |   12 +
+ drivers/i3c/master/Makefile                   |    1 +
+ drivers/i3c/master/qcom-i3c-master.c          | 1107 +++++++++++++++++
+ 5 files changed, 1188 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
+ create mode 100644 drivers/i3c/master/qcom-i3c-master.c
+
+-- 
+2.25.1
+
 
