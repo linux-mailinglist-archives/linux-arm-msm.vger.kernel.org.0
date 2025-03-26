@@ -1,152 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-52555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64A3EA71E2C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 19:19:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8F68A71EAF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 19:53:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E0BB03A403B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 18:18:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57A6E17A963
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 18:53:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F17124EF81;
-	Wed, 26 Mar 2025 18:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDC2D245015;
+	Wed, 26 Mar 2025 18:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="ZoVD5wBG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="snLlwT1B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A3582D98;
-	Wed, 26 Mar 2025 18:18:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898DA215058;
+	Wed, 26 Mar 2025 18:53:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743013098; cv=none; b=RwPNS4XAL5DlqwvpzCRasRZ0hPeigX2JyCMIA2FTw6DRVY4rnvXBOMnCFKpvwospDSIgGXnr1iOvdt+FKRRavEcQgb8/Fo+kKsfCB6svhWF8mX+Yd1ksBuUrpPsGzQUbe1MehHyboB72ANVzNyHPfWl6IwoM6UkcADNiMd+4kKs=
+	t=1743015182; cv=none; b=WZFxFyMHwiw1ExweVc3H5qjGAWR2tDkFwYpp+eQM36RWtb5bGSbm0KZNn4kkjKCFMyFxZuC3YZhlbPfgmF5blK8aKtMMkI8cruGtb1UMdHSCy1aFf7PKnEPg5zIp/w2SpcnDVFiV+ooiKSeYbaNmHCFAG6UfPDw5EZgvHSsr85w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743013098; c=relaxed/simple;
-	bh=OjPr7Ip23T18evhoNwNXNFsyhpBrB+kLX/JvPys7vEc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=gEBsr+/ZgeVugkdXvB0Es0vRz3uI7AhmHXpDvEC1jgc+fAT8PvNa1mOHASDVmxbfMtefPl6xm9hisyBaG3rhRa0txHITxS+RgKZdWmeRpz41M9fs2zBOkdpaxDN5ttFMOBwEtMtYcsfa8M3O0xcsrRNVkOAMhWeJpDKiEE4R9yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=ZoVD5wBG; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1743012596; bh=OjPr7Ip23T18evhoNwNXNFsyhpBrB+kLX/JvPys7vEc=;
-	h=From:Date:Subject:To:Cc;
-	b=ZoVD5wBGvk1Giun7Jk54yr2ZB5kP6Vt5f3YZtkzfhLNxq3bmyE+xSm9ZX7FdzfI/m
-	 wpBlZj2ZdLh3Gs0ANlrHro/PiHZv3aXq/Ohc8nSbDQRNBnA6ltigAYstE8vdn7xI6Q
-	 lZJVCVl7XHtOIlIQQxQAvVdDI3VzSa1kazcCiYqM=
-From: Luca Weiss <luca@lucaweiss.eu>
-Date: Wed, 26 Mar 2025 19:09:29 +0100
-Subject: [PATCH v3] rpmsg: qcom_smd: Improve error handling for
- qcom_smd_parse_edge
+	s=arc-20240116; t=1743015182; c=relaxed/simple;
+	bh=7tnbCUTKMpPo8aoqQiYW410Hhe5LPNkwVR28/52KUGY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CR63jnP6nLxtdHeFRa7TEtEaikeVTIesVTzKY4GhAp/L4QsNnTZAjyRmIQAygariWrzHBGXMKELn30Lf4gZkWFtbRf1c4CL513oQiWY4p7nSrFzGUgpcX0yfa2F0Z+ACn/gpMBd8U+8VEKfG9FqH7CgSVqarrXYeNV9/Gzd6h4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=snLlwT1B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD20C4CEF0;
+	Wed, 26 Mar 2025 18:53:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743015182;
+	bh=7tnbCUTKMpPo8aoqQiYW410Hhe5LPNkwVR28/52KUGY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=snLlwT1ByOOZ8VDdLTGeiVAiEWrHtg3EvWVkctlzQIGFZzDT7XBzN2DIIFpHVRuA4
+	 QWSXjBNoMYxPNGrYI7EhmcSj0AeKKRNkXc7ncCYbP0fslp4P4+jMIkZIAktw92xzl9
+	 f/6pVTEXC4NSXGu4xof5rtvBej+C0GDqtW1wkGhV6Wi2YRwu2jpb0Lyghf8UlzytoG
+	 WwQ6DMNodUQHQk2VpoXa2/y89pLaPCLpwF+ISbR4hp6cRaabZWfTVWMtcr/ZSfSmh8
+	 jwKqvjyFp2FKpKOIs73vDRG4Rw8NplM2rXgHf/zkk7H07J9bPh8EYwSA5OcJVoLYAh
+	 Co5wZxznPQ7aQ==
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5ec9d24acfbso2301933a12.0;
+        Wed, 26 Mar 2025 11:53:01 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCULByM3gBBPd93iQ9H5PkPbQbq7kXP4TicXA1aaKhpWmsdmWepvEb/nR3B7VV16xeV0U8PGJHJ71U9hqUh0@vger.kernel.org, AJvYcCV0d2Z38X05xlfAoQnlAoZYMTdejD+bwfDdVf4t6X70lo65Ix3nQfiLBMxWgNglM7M+DaMcWLb4EbLRlJGfbCueqA==@vger.kernel.org, AJvYcCVaZjgj5CxrS201Md3PY0KWIUM4WMPBMgXlS68gXmX22VfTcNNKcFVNXWo7DmkmVQtfSlaoYxgYhpC9Umww2g==@vger.kernel.org, AJvYcCXMybBh7e9IkBvVBDeMDF9I/TjndgEwHovuHdgD3YhIS/H8HejuG/wk5Ih3Kgjbq5p5QyA4ZSWNDsFO@vger.kernel.org
+X-Gm-Message-State: AOJu0YzwgTrQephHReQ0rUXSL3XoX0/ynn3bV+dKHD38pxVRGzvA7F8i
+	E8yfNBpgf+FpHTUnpv27E5mPywKuwkadqEsZ6DjrVrBP7R43zceG3JYesxfKEOckx44bmFER8AN
+	kNIKYWD8g6TfjOeM7Koee1qsmbQ==
+X-Google-Smtp-Source: AGHT+IEi/FLkb6+pDXS2OgDct0wDDLVjgAusO19cQUp3SH7xeV/KwpO2rct7/toV7PxXM7MD6oHfl5OWID6sUvuLyTI=
+X-Received: by 2002:a17:907:7295:b0:ac2:26a6:febf with SMTP id
+ a640c23a62f3a-ac6e0d3384emr557164766b.20.1743015180452; Wed, 26 Mar 2025
+ 11:53:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250326-apcs-mboxes-v3-1-e20f39e125f2@lucaweiss.eu>
-X-B4-Tracking: v=1; b=H4sIANhC5GcC/1XMSw6CMBSF4a2Qjr2mty+DI/dhHNB6kQ4E0mLDI
- +zdQmLU4TnJ/y0sUvAU2blYWKDko+/aPOShYK6p2geBv+fNBBeKKyGh6l2Ep+1GioCCyDiOlba
- S5aIPVPtx1663vBsfhy5MO55wez+O+nMSAgejtXHq5KzmeJllO7yO4zSzzUni2xpu/lsBCAptS
- SVSXVvz267r+gZdref64gAAAA==
-X-Change-ID: 20240423-apcs-mboxes-12ee6c01a5b3
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Dmitry Baryshkov <lumag@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca@lucaweiss.eu>, 
- Dmitry Baryshkov <lumag@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2392; i=luca@lucaweiss.eu;
- h=from:subject:message-id; bh=OjPr7Ip23T18evhoNwNXNFsyhpBrB+kLX/JvPys7vEc=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBn5ELm2hRtGJAMUx/QXM8ZmQ8hf/CEJS4B64ECA
- DXdjnNi25WJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ+RC5gAKCRBy2EO4nU3X
- VvsfEACtU+8tTVqDqzW1orNBIWSPkjXminHc/lGD4/mkvEa4Lj13u1t46ZT6iQUdz3HruKAH7NO
- p8/txeaHpKX8JH0fkDNN6ghfjCY4ctl83CHTQKQBLJpGOBgGcTJ+ecNgHb7xFHqfvLKj1+/t56G
- /Eu8wyVCcclR8zltqQP9j/ONTLw7GE//PV7QDPiy/qxECgejSNx8ARM4T95PCutZ3nRgpO2NKEh
- 3q76LBLsR4yIN9vHDiGhMPBH/3lXD5DxedmaZ2VvnwW5glby8qolKo49DuvO5zk6xZ4jlwsEPLM
- /YmzHynj/o2UpD7Q0IygQ3+T1a8hKo2YR4EzfwEwq4BXmZomzkcp0lrlNdChvnP7w6Gs5CsLFn2
- q/6lROm4e7VJAjIMEFPSd/vE2GPH43LKnM11mHN6dDyLNFHzFXxKKdCvS1mXGhj6MJOHoMSeLEF
- zrBezh8ZmWqU1qg8NFeGtFbH3dNGPl9jMP6totha1Jzu7REXNJDmu93uV1hqByUMhX5/9cAG3bY
- LDWjs0N13fHnhVAUHAn6KPA7NJOONovVATqn9VJdEktx4kY8hFMef65AUet2ZgjjITgNknfx1r6
- HEtLHyZb95ETwK/TUhFCVOa2qJRtlH8Q+4m11k2Xmw+QlpvEX6y3AVzMJ1kAXTn9mqtC0aGT3/c
- VB+9pOY7IXFaGMw==
-X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+References: <20250317232426.952188-1-robh@kernel.org> <20250317232426.952188-3-robh@kernel.org>
+ <CAGb2v65djD5DLQnjQrp9kSHTQYVd9p_vP9WySj2Cx81rHmh5Mw@mail.gmail.com>
+In-Reply-To: <CAGb2v65djD5DLQnjQrp9kSHTQYVd9p_vP9WySj2Cx81rHmh5Mw@mail.gmail.com>
+From: Rob Herring <robh@kernel.org>
+Date: Wed, 26 Mar 2025 13:52:49 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqLoJAwPeWjXyQYK1rvVzn6Meapz3iS9gW+QqYpYKuJkBQ@mail.gmail.com>
+X-Gm-Features: AQ5f1Jqmc05lmNw-rFmLFhT71JwYvVm4xio8OJGuHie4RorDqomqBJbJolJsSNo
+Message-ID: <CAL_JsqLoJAwPeWjXyQYK1rvVzn6Meapz3iS9gW+QqYpYKuJkBQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] of: Simplify of_dma_set_restricted_buffer() to use of_for_each_phandle()
+To: wens@kernel.org
+Cc: Saravana Kannan <saravanak@google.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, imx@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When the mailbox driver has not probed yet, the error message "failed to
-parse smd edge" is just going to confuse users, so improve the error
-prints a bit.
+On Wed, Mar 26, 2025 at 1:44=E2=80=AFAM Chen-Yu Tsai <wens@kernel.org> wrot=
+e:
+>
+> Hi,
+>
+> On Tue, Mar 18, 2025 at 7:29=E2=80=AFAM Rob Herring (Arm) <robh@kernel.or=
+g> wrote:
+> >
+> > Simplify of_dma_set_restricted_buffer() by using of_property_present()
+> > and of_for_each_phandle() iterator.
+> >
+> > Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> > ---
+> >  drivers/of/device.c | 34 +++++++++++++---------------------
+> >  1 file changed, 13 insertions(+), 21 deletions(-)
+> >
+> > diff --git a/drivers/of/device.c b/drivers/of/device.c
+> > index edf3be197265..bb4a47d58249 100644
+> > --- a/drivers/of/device.c
+> > +++ b/drivers/of/device.c
+> > @@ -35,44 +35,36 @@ EXPORT_SYMBOL(of_match_device);
+> >  static void
+> >  of_dma_set_restricted_buffer(struct device *dev, struct device_node *n=
+p)
+> >  {
+> > -       struct device_node *node, *of_node =3D dev->of_node;
+> > -       int count, i;
+> > +       struct device_node *of_node =3D dev->of_node;
+> > +       struct of_phandle_iterator it;
+> > +       int rc, i =3D 0;
+> >
+> >         if (!IS_ENABLED(CONFIG_DMA_RESTRICTED_POOL))
+> >                 return;
+> >
+> > -       count =3D of_property_count_elems_of_size(of_node, "memory-regi=
+on",
+> > -                                               sizeof(u32));
+> >         /*
+> >          * If dev->of_node doesn't exist or doesn't contain memory-regi=
+on, try
+> >          * the OF node having DMA configuration.
+> >          */
+> > -       if (count <=3D 0) {
+> > +       if (!of_property_present(of_node, "memory-region"))
+> >                 of_node =3D np;
+> > -               count =3D of_property_count_elems_of_size(
+> > -                       of_node, "memory-region", sizeof(u32));
+> > -       }
+> >
+> > -       for (i =3D 0; i < count; i++) {
+> > -               node =3D of_parse_phandle(of_node, "memory-region", i);
+> > +       of_for_each_phandle(&it, rc, of_node, "memory-region", NULL, 0)=
+ {
+> >                 /*
+> >                  * There might be multiple memory regions, but only one
+> >                  * restricted-dma-pool region is allowed.
+> >                  */
+> > -               if (of_device_is_compatible(node, "restricted-dma-pool"=
+) &&
+> > -                   of_device_is_available(node)) {
+> > -                       of_node_put(node);
+> > -                       break;
+> > +               if (of_device_is_compatible(it.node, "restricted-dma-po=
+ol") &&
+> > +                   of_device_is_available(it.node)) {
+> > +                       if (!of_reserved_mem_device_init_by_idx(dev, of=
+_node, i)) {
+> > +                               of_node_put(it.node);
+> > +                               return;
+> > +                       }
+> >                 }
+> > -               of_node_put(node);
+> > +               i++;
+> >         }
+> >
+> > -       /*
+> > -        * Attempt to initialize a restricted-dma-pool region if one wa=
+s found.
+> > -        * Note that count can hold a negative error code.
+> > -        */
+> > -       if (i < count && of_reserved_mem_device_init_by_idx(dev, of_nod=
+e, i))
+> > -               dev_warn(dev, "failed to initialise \"restricted-dma-po=
+ol\" memory node\n");
+> > +       dev_warn(dev, "failed to initialise \"restricted-dma-pool\" mem=
+ory node\n");
+>
+> This changes the behavior. Before this patch, it was:
+>
+>     if a restricted dma pool was found, but initializing it failed, print
+>     a warning.
+>
+> Whereas now it has become:
+>
+>      print a warning unless a restricted dma pool was found and successfu=
+lly
+>      initialized.
+>
+> This change causes the kernel to print out the warning for devices that
+> don't even do DMA:
 
-Cover the last remaining exits from qcom_smd_parse_edge with proper
-error prints, especially the one for the mbox_chan deserved
-dev_err_probe to handle EPROBE_DEFER nicely. And add one for ipc_regmap
-also to be complete.
+Thanks. I fixed it up to only warn if i is non-zero.
 
-With this done, we can remove the outer print completely.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
----
-Changes in v3:
-- Pick up tags
-- Update my email
-- Link to v2: https://lore.kernel.org/r/20240606-apcs-mboxes-v2-1-41b9e91effb6@z3ntu.xyz
-
-Changes in v2:
-- Rebase on qcom for-next, drop dts patches which have been applied
-- Improve error printing situation (Bjorn)
-- Link to v1: https://lore.kernel.org/r/20240424-apcs-mboxes-v1-0-6556c47cb501@z3ntu.xyz
----
- drivers/rpmsg/qcom_smd.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-index 40d386809d6b78e209861c23d934e1b9fd743606..9b5fa9d36998a84be9424d8726c5d7d1bffe36b1 100644
---- a/drivers/rpmsg/qcom_smd.c
-+++ b/drivers/rpmsg/qcom_smd.c
-@@ -1369,7 +1369,8 @@ static int qcom_smd_parse_edge(struct device *dev,
- 	edge->mbox_chan = mbox_request_channel(&edge->mbox_client, 0);
- 	if (IS_ERR(edge->mbox_chan)) {
- 		if (PTR_ERR(edge->mbox_chan) != -ENODEV) {
--			ret = PTR_ERR(edge->mbox_chan);
-+			ret = dev_err_probe(dev, PTR_ERR(edge->mbox_chan),
-+					    "failed to acquire IPC mailbox\n");
- 			goto put_node;
- 		}
- 
-@@ -1386,6 +1387,7 @@ static int qcom_smd_parse_edge(struct device *dev,
- 		of_node_put(syscon_np);
- 		if (IS_ERR(edge->ipc_regmap)) {
- 			ret = PTR_ERR(edge->ipc_regmap);
-+			dev_err(dev, "failed to get regmap from syscon: %d\n", ret);
- 			goto put_node;
- 		}
- 
-@@ -1501,10 +1503,8 @@ struct qcom_smd_edge *qcom_smd_register_edge(struct device *parent,
- 	}
- 
- 	ret = qcom_smd_parse_edge(&edge->dev, node, edge);
--	if (ret) {
--		dev_err(&edge->dev, "failed to parse smd edge\n");
-+	if (ret)
- 		goto unregister_dev;
--	}
- 
- 	ret = qcom_smd_create_chrdev(edge);
- 	if (ret) {
-
----
-base-commit: ee2653e1e7f4e50d0814e7a61242c86616108c48
-change-id: 20240423-apcs-mboxes-12ee6c01a5b3
-
-Best regards,
--- 
-Luca Weiss <luca@lucaweiss.eu>
-
+Rob
 
