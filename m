@@ -1,59 +1,45 @@
-Return-Path: <linux-arm-msm+bounces-52554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97866A71DE8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 19:01:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 64A3EA71E2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 19:19:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D9D93A7D41
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 18:00:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E0BB03A403B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Mar 2025 18:18:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAFD1241678;
-	Wed, 26 Mar 2025 18:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F17124EF81;
+	Wed, 26 Mar 2025 18:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rjp16ML4"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="ZoVD5wBG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2C824111D;
-	Wed, 26 Mar 2025 18:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A3582D98;
+	Wed, 26 Mar 2025 18:18:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743012030; cv=none; b=C5psZr32A+UWX2hKO36daHWOwk5MxyT/AnoFaQ3xthMpo2Gyw3/txnCe0gjdvej+JoDUA+HmyKv2fVu9CeFja9VckWwQXI9g+4ecam+Ls92SoWc/ob14KHrMGNE2UySnW2bWL2guz2vBPfF/3jXd04mVrSfcNYAj75G4zmSICHY=
+	t=1743013098; cv=none; b=RwPNS4XAL5DlqwvpzCRasRZ0hPeigX2JyCMIA2FTw6DRVY4rnvXBOMnCFKpvwospDSIgGXnr1iOvdt+FKRRavEcQgb8/Fo+kKsfCB6svhWF8mX+Yd1ksBuUrpPsGzQUbe1MehHyboB72ANVzNyHPfWl6IwoM6UkcADNiMd+4kKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743012030; c=relaxed/simple;
-	bh=+9mdqXTserWpJh+sMmzr1OcLYPE8C10aqKYmDg6mrWg=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=IcQri7AGiG/f5b7UZ5VAmYgG0sfnqtcEty/4R6VnyQIRodNWWEjAsFcc7sQfHgXHYLbCg7GCnHSyVwteQ/vVNNwW0wWL+GjJJuk0HZkKzQD3IU1/9qMTzKhmDcFeOUqpAfufP671H+J4nGJ09/ZR9xJu/ijvntcrtlXifPC9+Ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rjp16ML4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673FBC4CEE2;
-	Wed, 26 Mar 2025 18:00:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743012029;
-	bh=+9mdqXTserWpJh+sMmzr1OcLYPE8C10aqKYmDg6mrWg=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=Rjp16ML46Sst6EvTVgU/5p6wmfqFqZ7k0dJ0MTmKF5xlvPtAPDevWium1Z1R+1X0T
-	 JV+D5BJJcnIYt7oKRR8xAVLa5aEjfY7ClNelOugV7FYRw9d1PzMOh/71K6q6ODVLET
-	 bYrIhqBF8fQMIR9ja7CWSSXwMQTNw6adWME5JvMOOu9h5mf4Ho7ia8ngHIQ3YxeWOy
-	 W8zjZE8GcMdktp/MKUDoFB1X1JVKuEmv7I8+6yI3tp0DLC6/z8nL1HxrYvu/826mJo
-	 yOHo3i+lw5gKoUm5+wCnIrH8vlj5OftDImMkqFaiq1AovizHz/iytRocce3K8ZzKcd
-	 Pa5oO/8ItVLpA==
-From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20250312-asoc-wsa88xx-visense-v1-0-9ca705881122@linaro.org>
-References: <20250312-asoc-wsa88xx-visense-v1-0-9ca705881122@linaro.org>
-Subject: Re: [PATCH 0/2] ASoC: codecs: wsa88xx: Correct VI sense channel
- mask
-Message-Id: <174301202814.134636.3486543506033559539.b4-ty@kernel.org>
-Date: Wed, 26 Mar 2025 18:00:28 +0000
+	s=arc-20240116; t=1743013098; c=relaxed/simple;
+	bh=OjPr7Ip23T18evhoNwNXNFsyhpBrB+kLX/JvPys7vEc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=gEBsr+/ZgeVugkdXvB0Es0vRz3uI7AhmHXpDvEC1jgc+fAT8PvNa1mOHASDVmxbfMtefPl6xm9hisyBaG3rhRa0txHITxS+RgKZdWmeRpz41M9fs2zBOkdpaxDN5ttFMOBwEtMtYcsfa8M3O0xcsrRNVkOAMhWeJpDKiEE4R9yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=ZoVD5wBG; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1743012596; bh=OjPr7Ip23T18evhoNwNXNFsyhpBrB+kLX/JvPys7vEc=;
+	h=From:Date:Subject:To:Cc;
+	b=ZoVD5wBGvk1Giun7Jk54yr2ZB5kP6Vt5f3YZtkzfhLNxq3bmyE+xSm9ZX7FdzfI/m
+	 wpBlZj2ZdLh3Gs0ANlrHro/PiHZv3aXq/Ohc8nSbDQRNBnA6ltigAYstE8vdn7xI6Q
+	 lZJVCVl7XHtOIlIQQxQAvVdDI3VzSa1kazcCiYqM=
+From: Luca Weiss <luca@lucaweiss.eu>
+Date: Wed, 26 Mar 2025 19:09:29 +0100
+Subject: [PATCH v3] rpmsg: qcom_smd: Improve error handling for
+ qcom_smd_parse_edge
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,47 +48,105 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-1b0d6
+Message-Id: <20250326-apcs-mboxes-v3-1-e20f39e125f2@lucaweiss.eu>
+X-B4-Tracking: v=1; b=H4sIANhC5GcC/1XMSw6CMBSF4a2Qjr2mty+DI/dhHNB6kQ4E0mLDI
+ +zdQmLU4TnJ/y0sUvAU2blYWKDko+/aPOShYK6p2geBv+fNBBeKKyGh6l2Ep+1GioCCyDiOlba
+ S5aIPVPtx1663vBsfhy5MO55wez+O+nMSAgejtXHq5KzmeJllO7yO4zSzzUni2xpu/lsBCAptS
+ SVSXVvz267r+gZdref64gAAAA==
+X-Change-ID: 20240423-apcs-mboxes-12ee6c01a5b3
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Dmitry Baryshkov <lumag@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca@lucaweiss.eu>, 
+ Dmitry Baryshkov <lumag@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2392; i=luca@lucaweiss.eu;
+ h=from:subject:message-id; bh=OjPr7Ip23T18evhoNwNXNFsyhpBrB+kLX/JvPys7vEc=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBn5ELm2hRtGJAMUx/QXM8ZmQ8hf/CEJS4B64ECA
+ DXdjnNi25WJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ+RC5gAKCRBy2EO4nU3X
+ VvsfEACtU+8tTVqDqzW1orNBIWSPkjXminHc/lGD4/mkvEa4Lj13u1t46ZT6iQUdz3HruKAH7NO
+ p8/txeaHpKX8JH0fkDNN6ghfjCY4ctl83CHTQKQBLJpGOBgGcTJ+ecNgHb7xFHqfvLKj1+/t56G
+ /Eu8wyVCcclR8zltqQP9j/ONTLw7GE//PV7QDPiy/qxECgejSNx8ARM4T95PCutZ3nRgpO2NKEh
+ 3q76LBLsR4yIN9vHDiGhMPBH/3lXD5DxedmaZ2VvnwW5glby8qolKo49DuvO5zk6xZ4jlwsEPLM
+ /YmzHynj/o2UpD7Q0IygQ3+T1a8hKo2YR4EzfwEwq4BXmZomzkcp0lrlNdChvnP7w6Gs5CsLFn2
+ q/6lROm4e7VJAjIMEFPSd/vE2GPH43LKnM11mHN6dDyLNFHzFXxKKdCvS1mXGhj6MJOHoMSeLEF
+ zrBezh8ZmWqU1qg8NFeGtFbH3dNGPl9jMP6totha1Jzu7REXNJDmu93uV1hqByUMhX5/9cAG3bY
+ LDWjs0N13fHnhVAUHAn6KPA7NJOONovVATqn9VJdEktx4kY8hFMef65AUet2ZgjjITgNknfx1r6
+ HEtLHyZb95ETwK/TUhFCVOa2qJRtlH8Q+4m11k2Xmw+QlpvEX6y3AVzMJ1kAXTn9mqtC0aGT3/c
+ VB+9pOY7IXFaGMw==
+X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-On Wed, 12 Mar 2025 20:24:58 +0100, Krzysztof Kozlowski wrote:
-> VI sense port on WSA883x and WSA884x speaker takes only one channel, so
-> correct the mask.  At least this works during my tests on different
-> devices with both speakers.  With original mask (0x3) I get
-> noise/garbage.
-> 
-> Best regards,
-> Krzysztof
-> 
-> [...]
+When the mailbox driver has not probed yet, the error message "failed to
+parse smd edge" is just going to confuse users, so improve the error
+prints a bit.
 
-Applied to
+Cover the last remaining exits from qcom_smd_parse_edge with proper
+error prints, especially the one for the mbox_chan deserved
+dev_err_probe to handle EPROBE_DEFER nicely. And add one for ipc_regmap
+also to be complete.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+With this done, we can remove the outer print completely.
 
-Thanks!
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+---
+Changes in v3:
+- Pick up tags
+- Update my email
+- Link to v2: https://lore.kernel.org/r/20240606-apcs-mboxes-v2-1-41b9e91effb6@z3ntu.xyz
 
-[1/2] ASoC: codecs: wsa883x: Correct VI sense channel mask
-      commit: ed3b274abc4008efffebf1997968a3f2720a86d3
-[2/2] ASoC: codecs: wsa884x: Correct VI sense channel mask
-      commit: 060fac202eb8e5c83961f0e0bf6dad8ab6e46643
+Changes in v2:
+- Rebase on qcom for-next, drop dts patches which have been applied
+- Improve error printing situation (Bjorn)
+- Link to v1: https://lore.kernel.org/r/20240424-apcs-mboxes-v1-0-6556c47cb501@z3ntu.xyz
+---
+ drivers/rpmsg/qcom_smd.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
+index 40d386809d6b78e209861c23d934e1b9fd743606..9b5fa9d36998a84be9424d8726c5d7d1bffe36b1 100644
+--- a/drivers/rpmsg/qcom_smd.c
++++ b/drivers/rpmsg/qcom_smd.c
+@@ -1369,7 +1369,8 @@ static int qcom_smd_parse_edge(struct device *dev,
+ 	edge->mbox_chan = mbox_request_channel(&edge->mbox_client, 0);
+ 	if (IS_ERR(edge->mbox_chan)) {
+ 		if (PTR_ERR(edge->mbox_chan) != -ENODEV) {
+-			ret = PTR_ERR(edge->mbox_chan);
++			ret = dev_err_probe(dev, PTR_ERR(edge->mbox_chan),
++					    "failed to acquire IPC mailbox\n");
+ 			goto put_node;
+ 		}
+ 
+@@ -1386,6 +1387,7 @@ static int qcom_smd_parse_edge(struct device *dev,
+ 		of_node_put(syscon_np);
+ 		if (IS_ERR(edge->ipc_regmap)) {
+ 			ret = PTR_ERR(edge->ipc_regmap);
++			dev_err(dev, "failed to get regmap from syscon: %d\n", ret);
+ 			goto put_node;
+ 		}
+ 
+@@ -1501,10 +1503,8 @@ struct qcom_smd_edge *qcom_smd_register_edge(struct device *parent,
+ 	}
+ 
+ 	ret = qcom_smd_parse_edge(&edge->dev, node, edge);
+-	if (ret) {
+-		dev_err(&edge->dev, "failed to parse smd edge\n");
++	if (ret)
+ 		goto unregister_dev;
+-	}
+ 
+ 	ret = qcom_smd_create_chrdev(edge);
+ 	if (ret) {
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+---
+base-commit: ee2653e1e7f4e50d0814e7a61242c86616108c48
+change-id: 20240423-apcs-mboxes-12ee6c01a5b3
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Best regards,
+-- 
+Luca Weiss <luca@lucaweiss.eu>
 
 
