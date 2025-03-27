@@ -1,213 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-52665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C69FA7361B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 16:55:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A116A7361F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 16:55:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2AB93BEE66
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 15:54:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB36E3BDFAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 15:54:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46E5819DFA7;
-	Thu, 27 Mar 2025 15:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 670791A5B98;
+	Thu, 27 Mar 2025 15:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zS8Gooq0"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="SPw0/0q7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E20419F11F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 15:53:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8862F19CC11
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 15:54:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743090805; cv=none; b=szLkCF+3TbtObT9ihvJ6PpZZjFBhvkJ+eqB/n/0WpH2RrBtB1OiDyAA4I4tQgMstIeC4Q9lZ3v/R0no6ZTcUGAEC0Rjo2xuKgWQ3LytuaaeprrQcbZVUH8haZboc9q8D5yTwOSontcxU8YqarCDtCP38QUKFp0waBy83xMIK4u4=
+	t=1743090864; cv=none; b=bSBAcQpZw+w22h/wDNdHnL/h+L7n0qkjqxwqNfjNRwzHeygsiJiYwaAsqrbF/yzJ+VOFqXHD8qbrwGait00K4ymOsISmGLu9b9tiIajd4J+ZnylFX6cQAN9Xj2pms5IP+Jn6BOmRXnfmXHn6NbhGwPXkw2i0RPNlB9TAXbmhOxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743090805; c=relaxed/simple;
-	bh=aZI0D9GByNS5niy1zG4DskkgaZ8o9N1YGuTSEvk42eE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E5oxWXBwsTcNnWZSpvqm44aGR69kldroRq3e1phWChccEX9Bbjt5vc+55F/1+cWdSLLERH9gd5h/jQFExdMcu/XGMzb+ynULKR2/lYNt7HDTIr5MEHi5hiz+yKgOJsJpwFosdpSl+dvaqXZNdzirO1JnqbSrj+gKWQ4URlJLcGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zS8Gooq0; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43cfa7e7f54so7783785e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 08:53:22 -0700 (PDT)
+	s=arc-20240116; t=1743090864; c=relaxed/simple;
+	bh=Xn+hqAJcwF4LrOcw3aw2H3+w6fmBJDHufrOGSfYCVhY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RR4aSkAHAN+9EaQqKVc+WmjzdMJJPg0tMsotvG7Nebfwe0TRcYoDrwN1UbvP/FiO8wOVXrOYHdDNcFoy5vb5fWlAmMJAqgDLOCV0hsHGIX60rwMSdd+mgDMsGhMWfshHTamJlZtny6kfCYkrzfig8CQOlu2/psqyhEgWnihLCrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=SPw0/0q7; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-307bc125e2eso11088021fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 08:54:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743090801; x=1743695601; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tPWPL7yKTAtHpN1GHn1lwbAF2Bxssj4X5B+0T4l0yZA=;
-        b=zS8Gooq08D4tUgk+wHsCFwNDiCiLYi6fvV33yAcYX5MLip6vsYcqiXWXHu5USx7Tyv
-         xT2o08RNyfDKI8Wc3INXuaHBx113BNTJ1jnY+beZFianwEXdH/Byxv8h/3x0mf/ABZjw
-         H2EXTikR3PwkvheNahDYIanMq4ZggPx2wASppHVm98jGO1S5SgcV4DupkcSFNqsf2Fvt
-         h/5jiBbPrcX7sdvCWOjT0R9mq0s3QsEbunibAiZwNRvazAZm1MF3mjjsRZZp9MpnpBkk
-         ZMzc0bWPFMIp1BGaFIdymvc3LEFMzwRcj3LlMbZvjw4msm78JfaQxNIosHD9sE1vAvZP
-         BbAg==
+        d=chromium.org; s=google; t=1743090858; x=1743695658; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CZv00/ePRkrRXDyY8uRk/fzDNtpq9RLmjZL7rRlPdfo=;
+        b=SPw0/0q7EZ69fGBoGxpE8lzfVCkaePV1/wnhmNA4XMTr4GumSPL9oJGIgUtvh4Pkhn
+         KumNI8+I2ziu9ioj9bVHZwCnYxXfD7RhEywfsxIXToJWIAzKBNlGamgUWMOXKkS82Ptf
+         TYGTUIgv/mdGDh3oDv1QVzJ+9WCVoIUc0Ra8w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743090801; x=1743695601;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tPWPL7yKTAtHpN1GHn1lwbAF2Bxssj4X5B+0T4l0yZA=;
-        b=s04la94oMccX2eXR7kDQPyzByDeJcgSEI7K6WrAtQZZq1ebhGPoDxf5YAf9MtWnFnb
-         EqMobi4qYORDSc4yHzk03OQJagYRsDNrYzOd51SCzkanqeYqdBC/kIxIafhuNBzTyG6F
-         QVvTtQYgkfUhBrfrY57xM02ngm+FLzUxkzdGgnhAvgP8SLqP1pNlUF7LVex8ff3iVDVS
-         kSClx4m9Wmd5YcCsyGlOnScnyKk6af5pKihzSiAJwWc0LliDmzS+XJ6lmUYRHsfwW6hI
-         Z27aqpTTBMYpKCQC5trG+N/m7fnJ4V/F05kyawR6fW56orADyB74qu4QVP9CnQR0+i2l
-         7zvw==
-X-Forwarded-Encrypted: i=1; AJvYcCV+2tz1jfE1ON/2MMnJ1/1F3G3UnS37BD+1RY/zqYH1xI9JS9mMA0WtNUiiA5whNVrpfrMSduaNBagKkvc7@vger.kernel.org
-X-Gm-Message-State: AOJu0YxshD2zTx4qwdx/3KcYUqiawUOEv95ZCcp6TR61jqUIoi/FxmK5
-	VuYl8c4uroKy+SUYdoY3rMZqPR8iAfpKBbbLhf0iv4xsAyHW23FZNHmeNzbT2aQ=
-X-Gm-Gg: ASbGncu5v2JVdhHH7N3ZDh3tM+Ov3wbSTqoJ28rn362XyCPAHHEsR2vrGSYEU/pJ4cH
-	5TTjSMGsog2SPDxabntTylRi6dN9MDXjzCIu43wN5p6yitEdKK1qa+OA/LlunxY8SBgPgeyeYNl
-	0EeJgo146vLu89+JzjWJhCGhIPbxtaog4dhhcDVGiSV5wh/w0UtbllbcjlABWpn8Uqpb+t5+0cF
-	IiEuj96HtLWdTl/Smzwx5i9V21sN8jbHYRoSC2/gM5Cr5v5do/af21e8ELlQcM4ZPxoBO68rDjm
-	6moKYuQRlouSdID+1okXtNGujIRBgVUeUaurL9s1BpYcObxaZVXvVOB1Cv92G8aaVzFXQMyS+Q=
-	=
-X-Google-Smtp-Source: AGHT+IF0rsorn2DDVURJzAnXZcks95g4PPd1N+aY2Afsm9tUg7aUDyfar1m2VXFCygEcTyP952h82g==
-X-Received: by 2002:a05:600c:1e16:b0:43c:f680:5c2e with SMTP id 5b1f17b1804b1-43d8e6c0616mr7183295e9.13.1743090801523;
-        Thu, 27 Mar 2025 08:53:21 -0700 (PDT)
-Received: from [192.168.68.117] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-39acf3a9105sm5001550f8f.101.2025.03.27.08.53.18
+        d=1e100.net; s=20230601; t=1743090858; x=1743695658;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CZv00/ePRkrRXDyY8uRk/fzDNtpq9RLmjZL7rRlPdfo=;
+        b=kyj1hhp8Y06lVUh9T0ZaEo2Vk8m2F9Hmq/aEQDAoZ9aL6IwR+DdCLVjkud9XOxWE3h
+         8vLd0E4L0Umy3oJ0puACstDTXAm5AnnD6dzeKgDasLJuuq7mGpAhfTu3JIHNSX5PYFex
+         irxiNCtUzN6R4YkJgJhU0YphwFEZa7sP1/yRY31XojffqREhfgwQpBu5J2dqPepLN1P/
+         XMyeNw2KJykD/KmmAZHL1l3+Y+S1CrobQlRbdJ5t4u9yVqIzxJ/fK7Rec9xApimri0lo
+         q5qmzRkxAOYAwSi/gi2dsiGBCEbAPMZTBoHykD0rP+4ygnN23+EOEOU0LIGm/u963HeS
+         gA0g==
+X-Forwarded-Encrypted: i=1; AJvYcCXqWsMk830wGsEHwB6dcvFn3qiVi6wMInUfaUJRINQWBGmwz8ISNokX+8tWlac2EIQ3aT8/AFTIr3HpjrHN@vger.kernel.org
+X-Gm-Message-State: AOJu0YyuMnXWgGRVUcj2WNFsUzdndwfBzOOIOQzBw5vBhXiCo1OAkFNL
+	pW5RRj/wRXOctbmArhT9kzI37H5uOSJMyNb/WcD3BeHy6MjTlHL6qNIUwN0LOPHcgg2UY2sK1IQ
+	Hxw==
+X-Gm-Gg: ASbGncuVitEyQlitBCPWhsD8918BDs0D3V5v92UrICepK+M4fieeVtCQnqWDxp3HKi3
+	gcPLlRltimUUYOtAoqQix+PiPaNtZ/fROz2Dq80fX1MRkLS1P33lj+N6jgJc9s1ui53pFF16dNh
+	0RJHD4PFl4M/6CV4F+oSdGeNVBp+qXTJDfo+4RfLIuqofc1gAG2dYGZ7wrJYD1OuW9dvfoQGOqN
+	OwVIorfywRSz60ZM7jjS2Q07fq+hdxtv5h4MH47PdUXCcz5H2EkFR9MmXCHxhsub9QdqpX7Jow4
+	YC5lsd7BmkO72AAOf+MIRJV7hD3MRhhLBO7MvlzX6hUEKpFDhiNtMSmAI1pKNgZFHWCtWwQGcJX
+	lbo5GiB732AxH
+X-Google-Smtp-Source: AGHT+IEdPhicm7PTQ1hd0Xk3NF0j7ViyJPLV75IqqF2FSu9pFyuNqrCtkXpIJvfo21IBOouiGCgrbQ==
+X-Received: by 2002:a05:6512:3086:b0:549:91c6:96a8 with SMTP id 2adb3069b0e04-54b011ce297mr1681096e87.7.1743090858093;
+        Thu, 27 Mar 2025 08:54:18 -0700 (PDT)
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com. [209.85.208.174])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30d7d910dbbsm25349361fa.95.2025.03.27.08.54.15
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Mar 2025 08:53:19 -0700 (PDT)
-Message-ID: <e7c3ea4a-1103-46ff-aa9a-bc0da3bdf1b2@linaro.org>
-Date: Thu, 27 Mar 2025 15:53:18 +0000
+        Thu, 27 Mar 2025 08:54:17 -0700 (PDT)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-30db3f3c907so12181911fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 08:54:15 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVzqnQfERHaJ8gUSqUBna5gJ9ze8eoPD6jF94YOUsD/U7qBhHXSmRTRaL6+qgMSO2SHpMICgdrmDR/cHsJK@vger.kernel.org
+X-Received: by 2002:a05:6512:23a9:b0:549:8f21:bc0e with SMTP id
+ 2adb3069b0e04-54b012201cemr1799007e87.32.1743090855396; Thu, 27 Mar 2025
+ 08:54:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ASoC: qdsp6: q6asm-dai: fix q6asm_dai_compr_set_params
- error path
-To: Alexey Klimov <alexey.klimov@linaro.org>, broonie@kernel.org,
- linux-sound@vger.kernel.org
-Cc: lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com,
- krzysztof.kozlowski@linaro.org, pierre-louis.bossart@linux.dev,
- vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org,
- dmitry.baryshkov@oss.qualcomm.com
-References: <20250327154650.337404-1-alexey.klimov@linaro.org>
-Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20250327154650.337404-1-alexey.klimov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250325-wip-obbardc-qcom-t14s-oled-panel-v2-0-e9bc7c9d30cc@linaro.org>
+ <20250325-wip-obbardc-qcom-t14s-oled-panel-v2-1-e9bc7c9d30cc@linaro.org> <20250326-foxhound-of-nonstop-temperance-6f5a67@krzk-bin>
+In-Reply-To: <20250326-foxhound-of-nonstop-temperance-6f5a67@krzk-bin>
+From: Doug Anderson <dianders@chromium.org>
+Date: Thu, 27 Mar 2025 08:54:03 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=V4bA-kGs+qBfTJ2+zayGr1ndDMiT6Gc0d8ZCxxYLCZVQ@mail.gmail.com>
+X-Gm-Features: AQ5f1Jr0GBzGsFAxBQlSMWFiKpwbfZWxF1im_nyKl3vKfJiviUfLFt-4zl7_mZE
+Message-ID: <CAD=FV=V4bA-kGs+qBfTJ2+zayGr1ndDMiT6Gc0d8ZCxxYLCZVQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] dt-bindings: display: panel: samsung,atna40yk20:
+ document ATNA40YK20
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Christopher Obbard <christopher.obbard@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, dri-devel@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Johan Hovold <johan@kernel.org>, Rui Miguel Silva <rui.silva@linaro.org>, 
+	Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi,
 
+On Wed, Mar 26, 2025 at 1:08=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel.or=
+g> wrote:
+>
+> On Tue, Mar 25, 2025 at 07:21:26PM +0000, Christopher Obbard wrote:
+> > The Samsung ATNA40YK20 panel is a 14" AMOLED eDP panel. It is
+> > similar to the ATNA33XC20 except that it is larger and has a
+> > different resolution.
+> >
+> > Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/display/panel/samsung,atna33xc20.yam=
+l | 2 ++
+> >  1 file changed, 2 insertions(+)
+>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-On 27/03/2025 15:46, Alexey Klimov wrote:
-> In case of attempts to compress playback something, for instance,
-> when audio routing is not set up correctly, the audio DSP is left in
-> inconsistent state because we are not doing the correct things in
-> the error path of q6asm_dai_compr_set_params().
-> 
-> So, when routing is not set up and compress playback is attempted
-> the following errors are present (simplified log):
-> 
-> q6routing routing: Routing not setup for MultiMedia-1 Session
-> q6asm-dai dais: Stream reg failed ret:-22
-> q6asm-dai dais: ASoC error (-22): at snd_soc_component_compr_set_params()
-> on 17300000.remoteproc:glink-edge:apr:service@7:dais
-> 
-> After setting the correct routing the compress playback will always fail:
-> 
-> q6asm-dai dais: cmd = 0x10db3 returned error = 0x9
-> q6asm-dai dais: DSP returned error[9]
-> q6asm-dai dais: q6asm_open_write failed
-> q6asm-dai dais: ASoC error (-22): at snd_soc_component_compr_set_params()
-> on 17300000.remoteproc:glink-edge:apr:service@7:dais
-> 
-> 0x9 here means "Operation is already processed". The CMD_OPEN here was
-> sent the second time hence DSP responds that it was already done.
-> 
-> Turns out the CMD_CLOSE should be sent after the q6asm_open_write()
-> succeeded but something failed after that, for instance, routing
-> setup.
-> 
-> Fix this by slightly reworking the error path in
-> q6asm_dai_compr_set_params().
-> 
-> Tested on QRB5165 RB5 and SDM845 RB3 boards.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 5b39363e54cc ("ASoC: q6asm-dai: prepare set params to accept profile change")
-> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-> ---
+Pushed this patch to drm-misc-next:
 
-thanks for the patch,
-
-This is now pretty much inline with what we have in non-compressed patch.
-
-LGTM.
-
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
---srini
->   sound/soc/qcom/qdsp6/q6asm-dai.c | 19 +++++++++++++------
->   1 file changed, 13 insertions(+), 6 deletions(-)
-> 
-> diff --git a/sound/soc/qcom/qdsp6/q6asm-dai.c b/sound/soc/qcom/qdsp6/q6asm-dai.c
-> index 045100c94352..a400c9a31fea 100644
-> --- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-> +++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-> @@ -892,9 +892,7 @@ static int q6asm_dai_compr_set_params(struct snd_soc_component *component,
->   
->   		if (ret < 0) {
->   			dev_err(dev, "q6asm_open_write failed\n");
-> -			q6asm_audio_client_free(prtd->audio_client);
-> -			prtd->audio_client = NULL;
-> -			return ret;
-> +			goto open_err;
->   		}
->   	}
->   
-> @@ -903,7 +901,7 @@ static int q6asm_dai_compr_set_params(struct snd_soc_component *component,
->   			      prtd->session_id, dir);
->   	if (ret) {
->   		dev_err(dev, "Stream reg failed ret:%d\n", ret);
-> -		return ret;
-> +		goto q6_err;
->   	}
->   
->   	ret = __q6asm_dai_compr_set_codec_params(component, stream,
-> @@ -911,7 +909,7 @@ static int q6asm_dai_compr_set_params(struct snd_soc_component *component,
->   						 prtd->stream_id);
->   	if (ret) {
->   		dev_err(dev, "codec param setup failed ret:%d\n", ret);
-> -		return ret;
-> +		goto q6_err;
->   	}
->   
->   	ret = q6asm_map_memory_regions(dir, prtd->audio_client, prtd->phys,
-> @@ -920,12 +918,21 @@ static int q6asm_dai_compr_set_params(struct snd_soc_component *component,
->   
->   	if (ret < 0) {
->   		dev_err(dev, "Buffer Mapping failed ret:%d\n", ret);
-> -		return -ENOMEM;
-> +		ret = -ENOMEM;
-> +		goto q6_err;
->   	}
->   
->   	prtd->state = Q6ASM_STREAM_RUNNING;
->   
->   	return 0;
-> +
-> +q6_err:
-> +	q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
-> +
-> +open_err:
-> +	q6asm_audio_client_free(prtd->audio_client);
-> +	prtd->audio_client = NULL;
-> +	return ret;
->   }
->   
->   static int q6asm_dai_compr_set_metadata(struct snd_soc_component *component,
+[1/4] dt-bindings: display: panel: samsung,atna40yk20: document ATNA40YK20
+      commit: 1822532477cb5f007313de4c70079c09aaa270d5
 
