@@ -1,192 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-52623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBB90A72D5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 11:08:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F599A72D66
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 11:09:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 042C0188F816
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 10:08:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C9A53B9885
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 10:08:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5D6521149F;
-	Thu, 27 Mar 2025 10:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E62F220E33A;
+	Thu, 27 Mar 2025 10:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iEVf4+1Z"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XSr+DglZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0114D211290
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 10:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4811420E330
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 10:08:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743070013; cv=none; b=is2BM3t0XIQs/Jax2JOS+E/OYOWR1/zvNOQ+etvXbn/XEtcKAkNUPb1LLlVC6eqZelM8s9XTYR5+OIi9g1u1sQzVG5HVYUlEjfVGpmHZ5jv45VIGEN5trrn0z0lej80ghk1D8SD5BB8exYLV49Qd6g0K8MUrLARs7dTfaItPQeo=
+	t=1743070093; cv=none; b=ZzPlzKHbYByeOEnyfkpLEwT5ZrTU/BXOVXgiWPzpnUMKmKtU64W9ZIb6KNnrC3sCCQGOdT5tBHz5393jKGkKhm7ueWQOMIVE/1vz90nmX6t5jxdcCSD7SouOp5yqEJPb+LWIG+KY1j7+zqk1ndNAavi+MkoR7dMqbJQA+MCMYEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743070013; c=relaxed/simple;
-	bh=4hK5NwvGZj3PELV41E3//V4IRXz5oGNBj9IGYps+vOQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ellgpMvxyYVFq4J6SNu0uud6YZItLJ0zfkewxGqFFAKf0jeF98LTUuedjNBTPuAp8Rmds5qlb5TmVksPV+/QMaW0DDl1nLrsrH1agE3fZTmZhf0N0h7gb6seK2kIxB6yJRlI21lGqMczqLS+5xG3UTgcUfG8WGhGH1ySuvEvmFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iEVf4+1Z; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4394345e4d5so5031285e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 03:06:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743070010; x=1743674810; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LHH3q92f3jVI2cl1PwT0LmA+qhtDvCooULm9gmNkwck=;
-        b=iEVf4+1Z2VQoEpbsRejOLlpWR5/4oHbTwAxdZR9VhPZFx3E9raWHIDxVXhaApuC8/W
-         L42GPG+WMryR5DP5TULzBtVtWakLInnFCa8GmFrD5nL+EFeAYXR2VBQvanwoz8DFfzpq
-         u9Ur40z32K8/6JGco30L0lkOC1IpwMg+lB9VaxMFjNkpfmNFopGrEGbAtBT6jAFyUc9a
-         AFdjP80yx0es6rUY5sWaavNXbs7mAh3xvIanz8LWMk5LOMz55Yv0n06aEni20LLqGpI/
-         r66OsXkS1zWM72v65/fd9t9GyzBSbUBidfi8XM2eeqeQunhMWLd0s+eYz12ortzjWT1K
-         dFHw==
+	s=arc-20240116; t=1743070093; c=relaxed/simple;
+	bh=lmxrzIS+d76Qh3zL9kdazJJMQfZpNeJz82hwqqtwmOI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KLYK2v1CnSJJKdl6mZjqJOXgOeYr2kRxLicljYWMRlhJXZ04ufDW3tIL18fSjgpuRRxBX1KzRZCVV7Htwe1Yj5JxQIJHMYFETxpMIJTaDqkmL3EfhRAs0tLWXBRcjxG5uHGl2nPovWs2tFl3nG1ATy9+DBQpz+XZ6BjGoBcPDPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XSr+DglZ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52R5jF8i012437
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 10:08:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=v9Zn3NFoa6qbW13srYFRWI0q
+	FLJJSbYP/Owvwt3xu9A=; b=XSr+DglZxUlwrJiiVO6p2cbRjHyH9VV5LZH6k+Fv
+	2GhmzyQyJcpVvaTm0RUMLq/Hc9lJV81nRU1PSfzhvOm3h4bw1r5Lek1WRZwP/OQD
+	TIVgqX4HH6ZU+6cniNZbXxsd4NtVY1PQDiplHWWDJCHFqM5XT+o4TpbkYjt8NGpI
+	S8f24e5OKX2Fdb156tPJx53nE6gEgK+Md1zndI8/nmTvTrY9m+EHaWFJ2nSuqw/3
+	W/1mfodS6oxPlaLK474YWT6DPmXOzgy6EyRDbmSaqTk7wWN4eHjkw0x88alqs/vw
+	M+li+dQx4KOk7njtoU1o5wJnpgy5cKFD5XxCmM2GDziF1w==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45mmutjh6w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 10:08:11 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c544d2c34fso108962885a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 03:08:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743070010; x=1743674810;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LHH3q92f3jVI2cl1PwT0LmA+qhtDvCooULm9gmNkwck=;
-        b=sd5tAnxTORzfRh9RM3/toSxHi8hU8xYXOvlZC+kxp60BaqmXUqV/tVML25Kci9kY0D
-         owHcva3/sh0mt3wNn6HSER6aAeb8+pXp6BW/G9NucQ+Nj1VVpov16bDIGDhhA9NdI1Zh
-         ZEJib/CtLonou7tG+YNJ+9C0bxJrtBl/iZREOc61DM5IS1vwSrMq1tzu23XqB8HJ1VW5
-         a0KOIVYq2DlKwHT2jBxoav6RJERGiORMQM7ABDoFKZbpcSDb5QzPiEEqs7ne8RNco9Sb
-         DoohBfu6u63iLmAKrc7fDcG62IpY0pf5NBTpC/ezAeVKx06adNV3dTWJT25IGtVbkuQL
-         RtzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU2UO+uwAapxJQtH4H/70tsKVlNyl1onYlmJzyZELwnwV/vwT0Wd9Zc3uWN7O0++JCXXsIhTEN7ZgkO0Mzk@vger.kernel.org
-X-Gm-Message-State: AOJu0YyqZGUC3LzCL5y5GYS+OvkXoou9PJd2/9XvAMjCs/P1nUDC4VqI
-	EyxlKd2tTwwPgnOzGMnPtqaqqizoYjDrKHpWTkLjzWQM2xZdWYPVni8tjJOt4Z0=
-X-Gm-Gg: ASbGnctAJIP2j4rGpY2ufJv9BO5p+vXU4xBJ4Z2cV8/JCyfF+nta5Xdclupm0gZnUKo
-	2CFdag5/TyJSJVdfVVWoMziEZEZH1pPpvA9FDAiilYEslpfVEkcToLGodwKj3ndg/iW6TCYcbPH
-	AM5JkxwnlrvNAvvxDDMI9HVW1xWObaNf26UTkCm7K4G0diVWcZ9RMQJ5uJ9MxZc9WOrTP+bpoOZ
-	z7aVOsi0fL/uuPB4hGfgHdk5015raXEBQ/v7UWmq+Xh2r+bDcWFIxubWeGap2784zslQ8+f3kRW
-	GcIyCTHXT5gnR9see9U+af+TD1qCT6IOB16WPfD6mfqJ42NCcMHxFZHTmQaYn/1B4mUczA==
-X-Google-Smtp-Source: AGHT+IGE/wvSmulXQdHaG0FP4h3r9RIUwRb2WD87idgq+VFnWxcnjSgEdf+KyFgQDYVFnJMa6Q5vdQ==
-X-Received: by 2002:a5d:5f85:0:b0:38d:d9bd:18a6 with SMTP id ffacd0b85a97d-39ad1782022mr2444990f8f.42.1743070010288;
-        Thu, 27 Mar 2025 03:06:50 -0700 (PDT)
-Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39ac3ce3dd1sm10843204f8f.88.2025.03.27.03.06.49
+        d=1e100.net; s=20230601; t=1743070090; x=1743674890;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=v9Zn3NFoa6qbW13srYFRWI0qFLJJSbYP/Owvwt3xu9A=;
+        b=JeFqnzwhnB+BQDD2LPKXRjXhjBIY8M7ELkpFJt92fppPpgpuK7tA4HQRi8T5xxv1xW
+         IX3KzLTNyekau6nbZmmT+51MuFj+qWzjxcAuwmFlZPWbq/qP5uNEB6fBUIZ7AGZHloWr
+         x+GirGmc+1FP1HVeDliZ5HWo1HMVFGVATIQ5Vg2zU6iREaLagLg9DpvfduAer9U1aRBw
+         4T6w6OmWJ1FaS0cec+mVJQa5ZQ9tv2rydvKXsutIY0vge1LvMwGrckS9I4E8vNzk/0u5
+         cMEeuTJ2XkrbivBb7Zm9E9yD2aEguSrdVF0Y1//BRFpKLPhMC09gDSAGz08LQrx/0zAC
+         njog==
+X-Forwarded-Encrypted: i=1; AJvYcCXGOE9A15lmoR0d2nD5W1gYOKTRAsKtYOXlPc/c1FioOrAaZPHdWM9IqkreuQMBIBJx3PDtTqWnyLPYgxec@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/sBMIFqdXamNWEH7Bx1qj5yYCJshBN3V7LuWyZlVEIwa0Uxja
+	9PBUcmX6ykyyItAkz1d75o27eXWG9XkotSEZiri9yf1qghEXcFkIGFEvNvRJ5maKWGMWXybXwxs
+	3QDK5AeXUB+WupjO9i/tjwcv4eGUAbMVTiJp9z0wplOD/VmA8OYRTgXhQzcv0r4B/
+X-Gm-Gg: ASbGncvpIhPNlL4GJEsqUhGWyIKZSfSxMTJ9VoTHSXtCa9aDpq8mW5b1PSOk6MxX4jl
+	vRlhK5zAvjGHP+347k4IdsaAxNnMkalUb3nm8s6wsV9Y8kSSChQ7NCjpe6K5nZlH7y5LOkDG1pg
+	tUwa9rrQoCJb3Vx8ecC9SAi3omSVbIMYXTFDCRNnBCV9IZzPVv2yDC2Ia9eEiGESfn0Ej3ZyGYN
+	VytVBTRffFeRVsVsJdOQnMXNQvDN5LLzMsvxSD/vqmvI/bBqrNvd25MclFtPz8BEsyNMg7Xr/Cm
+	8pkJRXfVcN/3Qr5qCLnVErVeehh9UWUDBWelrE0s5xnt+6lOJdUVPqtH9PuPujlYjAg73NCJ1yO
+	Q9Do=
+X-Received: by 2002:a05:620a:31a2:b0:7c5:5e9f:eb30 with SMTP id af79cd13be357-7c5ed9fd929mr351143685a.15.1743070089903;
+        Thu, 27 Mar 2025 03:08:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFfo1HINB6YcRjR3qV8lWRD2r7J0TP04aAmHGCotilIOFQMpC4PSzHQ5mqIDTl1lKVyghovcg==
+X-Received: by 2002:a05:620a:31a2:b0:7c5:5e9f:eb30 with SMTP id af79cd13be357-7c5ed9fd929mr351139785a.15.1743070089450;
+        Thu, 27 Mar 2025 03:08:09 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ad647b635sm2029989e87.63.2025.03.27.03.08.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Mar 2025 03:06:49 -0700 (PDT)
-From: srinivas.kandagatla@linaro.org
-To: peda@axentia.se,
-	broonie@kernel.org,
-	andersson@kernel.org,
-	krzk+dt@kernel.org
-Cc: ivprusov@salutedevices.com,
-	luca.ceresoli@bootlin.com,
-	zhoubinbin@loongson.cn,
-	paulha@opensource.cirrus.com,
-	lgirdwood@gmail.com,
-	robh@kernel.org,
-	conor+dt@kernel.org,
-	konradybcio@kernel.org,
-	perex@perex.cz,
-	tiwai@suse.com,
-	dmitry.baryshkov@oss.qualcomm.com,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	johan+linaro@kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Christopher Obbard <christopher.obbard@linaro.org>
-Subject: [PATCH v6 6/6] arm64: dts: qcom: x1e78100-t14s: Enable audio headset support
-Date: Thu, 27 Mar 2025 10:06:33 +0000
-Message-Id: <20250327100633.11530-7-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250327100633.11530-1-srinivas.kandagatla@linaro.org>
-References: <20250327100633.11530-1-srinivas.kandagatla@linaro.org>
+        Thu, 27 Mar 2025 03:08:08 -0700 (PDT)
+Date: Thu, 27 Mar 2025 12:08:05 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org,
+        Marc Gonzalez <mgonzalez@freebox.fr>,
+        Dmitry Baryshkov <lumag@kernel.org>, Arnaud Vrac <avrac@freebox.fr>,
+        Sayali Lokhande <quic_sayalil@quicinc.com>,
+        Xin Liu <quic_liuxin@quicinc.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2 09/12] arm64: dts: qcom: sm6350-pdx213: Wire up USB
+ regulators
+Message-ID: <voosrd5xx72gh2p5qbsp6ghdkm2jo4m5psrm5h2gmzi7rrmsmo@53qpvewgzd5t>
+References: <20250327-topic-more_dt_bindings_fixes-v2-0-b763d958545f@oss.qualcomm.com>
+ <20250327-topic-more_dt_bindings_fixes-v2-9-b763d958545f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250327-topic-more_dt_bindings_fixes-v2-9-b763d958545f@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: yjr_Jg3f9pcMgdMrYMJfBptvcxte4GlC
+X-Authority-Analysis: v=2.4 cv=MqlS63ae c=1 sm=1 tr=0 ts=67e5238b cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=EUspDBNiAAAA:8 a=iXEU_j0xfCFYBHAbzAYA:9 a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-GUID: yjr_Jg3f9pcMgdMrYMJfBptvcxte4GlC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-26_09,2025-03-26_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 mlxlogscore=627 mlxscore=0 bulkscore=0 adultscore=0
+ malwarescore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
+ phishscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503270068
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+On Thu, Mar 27, 2025 at 02:47:11AM +0100, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> Wire up the regulators based on the downstream release to appease the
+> devicetree checker.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dts | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
 
-On Lenovo ThinkPad T14s, the headset is connected via a HiFi mux to
-support CTIA and OMTP headsets. This switch is used to minimise pop and
-click during headset type switching.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-Enable the mux controls required to power this switch along with wiring up
-gpio that control the headset switching.
-
-Without this, headset audio will be very noisy and might see headset
-detection errors.
-
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
----
- .../qcom/x1e78100-lenovo-thinkpad-t14s.dtsi   | 25 +++++++++++++++++++
- 1 file changed, 25 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-index afea82616bc4..34d1d8927484 100644
---- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-@@ -41,6 +41,7 @@ wcd938x: audio-codec {
- 		qcom,tx-device = <&wcd_tx>;
- 
- 		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
-+		mux-controls = <&us_euro_mux_ctrl>;
- 
- 		vdd-buck-supply = <&vreg_l15b_1p8>;
- 		vdd-rxtx-supply = <&vreg_l15b_1p8>;
-@@ -149,6 +150,16 @@ pmic_glink_ss1_con_sbu_in: endpoint {
- 		};
- 	};
- 
-+	/* two muxes together support CTIA and OMTP switching */
-+	us_euro_mux_ctrl: mux-controller {
-+		compatible = "gpio-mux";
-+		pinctrl-0 = <&us_euro_hs_sel>;
-+		pinctrl-names = "default";
-+		mux-supply = <&vreg_l16b_2p5>;
-+		#mux-control-cells = <0>;
-+		mux-gpios = <&tlmm 68 GPIO_ACTIVE_HIGH>;
-+	};
-+
- 	reserved-memory {
- 		linux,cma {
- 			compatible = "shared-dma-pool";
-@@ -604,6 +615,13 @@ vreg_l15b_1p8: ldo15 {
- 			regulator-always-on;
- 		};
- 
-+		vreg_l16b_2p5: ldo16 {
-+			regulator-name = "vreg_l16b_2p5";
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2504000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l17b_2p5: ldo17 {
- 			regulator-name = "vreg_l17b_2p5";
- 			regulator-min-microvolt = <2504000>;
-@@ -1461,6 +1479,13 @@ rtmr1_default: rtmr1-reset-n-active-state {
- 		bias-disable;
- 	};
- 
-+	us_euro_hs_sel: us-euro-hs-sel-state {
-+		pins = "gpio68";
-+		function = "gpio";
-+		bias-pull-down;
-+		drive-strength = <2>;
-+	};
-+
- 	usb1_pwr_1p15_reg_en: usb1-pwr-1p15-reg-en-state {
- 		pins = "gpio188";
- 		function = "gpio";
 -- 
-2.39.5
-
+With best wishes
+Dmitry
 
