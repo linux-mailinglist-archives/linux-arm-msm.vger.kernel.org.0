@@ -1,139 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-52636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50D3BA7313E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 12:56:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF23FA73214
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 13:12:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 23A343A59DC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 11:56:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6A920188A1EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 12:10:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 648071F5608;
-	Thu, 27 Mar 2025 11:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 093392135BC;
+	Thu, 27 Mar 2025 12:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="JpIE6Y+1"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="c6YSwswC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 003.mia.mailroute.net (003.mia.mailroute.net [199.89.3.6])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D87E82899;
-	Thu, 27 Mar 2025 11:56:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.3.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5DB1B960
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 12:10:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743076598; cv=none; b=ctbC3h1/duG9EQRNdMPh6JHMcInOHUDwMvYZU40zPHszmRjQIdQIwuZg0shXzQgm21Xq3tPPyMTIIaZhzELxo4d1pClkl3k4pDdoCZAIEwVoXbWtM1lZFKRWDqzys9GgiOIFwXTXLrOujCcnpR6VQV89PM+ipgiQrwujcT30Zsk=
+	t=1743077440; cv=none; b=mZX2SKajTvNRzwuzaeKSGvotnW83hl42dRXpnxnouLqcDNl1xCDTHEy5XnFKnbxDsm6PIfUAOBJ1xgA37VS3e0ldTrpnCL4itCpEu4CAIjeByARM4PVGT3dK9ECKDTDhDfj1UuUD4IL9vlsVaBYhp4N5RcneZK5XwdXOX7naGxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743076598; c=relaxed/simple;
-	bh=JqNoGpDZMpdGpjjIIyFPNugOaRil30Ig20t2hFZZh14=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p5fZ1clpzMIxKCyjX6ADPDH46O8Kpb5/mn+NuTgugC5Skms0kuLsCzuZklm5li+P6Oj34deNJzMGna7PLO2onPfKrCaSDU+cNU6ifCvavpecie4pqB9Mae/3EzLsQm4vM0vrzpPa2tobQeI5iPdGC5q08AV8hWC4dTjErZZbuLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=JpIE6Y+1; arc=none smtp.client-ip=199.89.3.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 003.mia.mailroute.net (Postfix) with ESMTP id 4ZNhvl2ptHzlpkbG;
-	Thu, 27 Mar 2025 11:56:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1743076593; x=1745668594; bh=J0svyj8py/sA2SHp7NuyHlYK
-	G4FlhF/w8aZRngyNxsE=; b=JpIE6Y+1HUvxFVMemZEuWYW4X/so/27rXT3IT70e
-	lV0yEebRHFGawFJTg0ppYV82orvT3adfszCfperJv+acpk6lCc9TTWMes4h2+Hm0
-	/NO/+s4DqC7MtyNj94jI5OPOCVgrMH7f6LIwJHNHBilTGnQwCn9ikiBGmp5xLKcd
-	Ac19199lHXSI/8qS5nuEmegU+qlrO/bxUyzTte+v3E5LwdY85Nwm3kRUuCZC3sJg
-	484sKcmB6eNoL6Chz9O0ZK6Ro6CNVzeIF9cDEYUMeMjHGItA6ogfbgua8FWIP8CC
-	0a3jJ1OdphLM3cYCW03YOGc6PwmT9hfrqSoHavZVFl9B3g==
-X-Virus-Scanned: by MailRoute
-Received: from 003.mia.mailroute.net ([127.0.0.1])
- by localhost (003.mia [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id qZSZvcHf-mBU; Thu, 27 Mar 2025 11:56:33 +0000 (UTC)
-Received: from [10.47.187.167] (unknown [91.223.100.87])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 003.mia.mailroute.net (Postfix) with ESMTPSA id 4ZNhvW0m0Yzlmm8F;
-	Thu, 27 Mar 2025 11:56:21 +0000 (UTC)
-Message-ID: <4a5efc8e-ec61-40c8-9b36-59e185b0fdd5@acm.org>
-Date: Thu, 27 Mar 2025 07:56:15 -0400
+	s=arc-20240116; t=1743077440; c=relaxed/simple;
+	bh=QzAPxhXt0HlkANWcKnu4lkLD3TuSa6KfrV2FLU/JKiQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n7wKrdMOiyg47aK+9bVzOtg1rpWr3SqJrpXn2wNlawG726pOMdlV3sgizn3S3/vvlfh6IpgUHvx8fP0qMUH/nnru+gQtQT09A9cmRbJ84HySBanF+qFYNNKxlAzWyB/+t5vEmtW0eJ0IojB2jfDvqx0FR7ysHSCvFF2vZN8eawI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=c6YSwswC; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52R5jECf011621
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 12:10:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=6EWAFArYwvzkFk/yEjG4XOoe
+	Jfm7qgVUEY77C7aSLEE=; b=c6YSwswCYNti2vZRCxbqBFLrKWmuGe9vYVIvyM95
+	ggwy/8jNjD/9NgdsN54FZZwrpqR6BNAps8wvo08EeEdk/LhzzHRbVjgHkOgOSkcQ
+	cgC3glN83bZsRpsdVEvf9k8/sa9oLoJl17ozWspnMSeoUJGZ++aqHHVmNz8ccifJ
+	utfTqdEEoUFzAbYjUCa/BCQfCPS0t92BylHAY6NsWlvPdiz+7zZ9FNxb5uDZjLpr
+	2hdEr0yGQbqMv7UNFZd5h8V0XPf1U6Ty0U6M6FX/y76bMrVFVmF9vfHxxy0laP29
+	YV//kJFJgNK3uFc4VD+xoURKiLuP8fWbDZDYfhXi7w9Vow==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45manj4ud9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 12:10:38 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c3c8f8ab79so137486185a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 05:10:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743077429; x=1743682229;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6EWAFArYwvzkFk/yEjG4XOoeJfm7qgVUEY77C7aSLEE=;
+        b=P4welUztKhC1vbJIU32ek+FJ8nIGXqC9eRvX4Je22ERZu82xwPxa9x/5twvWVSWL3f
+         n5k0CRHQy9shNXa0IDcG5BlPJmgfvDDkky+UODiDVc/oXoc1oBh8jeeu7OSIcu0NGq6i
+         gRkLf/oICX3TCTPAkqmNbT/beKlBCiv7i03zd6wgVPWOd99I4q6q1UaErNL32bixzggK
+         1Sylz9WOcAN8e0fau/HQr4S72rxRlmfsnwcsGowqAfCnJPhzydYzNn8hY0KSGLhZTtz3
+         ZMivSgEUfPJ6ZfRcccKH2mWtkyMZYf91XMcFCU8XjUAO57M+XLWuY8JF92TUO0lPXH3o
+         T3rw==
+X-Forwarded-Encrypted: i=1; AJvYcCXe0AbAFGQv8nspIGWvNbzRciu6937fL35oWGNLK/n4G68K69a4478CyXsgF4gqDlYfKfa6oex2rRb5WyDD@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIvw+0MjjpEgu/59eMguZE81+SHy4ZdEfJymUd1YKFCBz5+Rs7
+	FmDknv/C0iGScod5rAiWBBWRqaceU4TMsZaRxYFfGspGTtMguRL2PRYRLTeF3OM6A2n86tquXy7
+	sXNo4gpDrTLqYpyx6yRritsMiS7UhnwCHzQhCRJ0iFwwPnr+IrR2lLVFjG8XT+aQF
+X-Gm-Gg: ASbGncuPiyC3qxqOpGNYdHkKp0tfXKKOkKbb3fscCxg3EnO6cJo0sLLICOnvPzOHl5K
+	um8vTb0WP1NWnPaa1JtA9H03/BlzMhInL7mDmar9fdVNcAt+T8iXX2OiybIjfl8q0JjnrUTYzH1
+	HC2hFkt1ZEFEZDNwcezVnOxJiUOBh8TysUDS9b3xNTmXQivj6vsreKD41awPwWFeW1kHw3me55G
+	EyQjidKSvfMZuoLLFQApTyuY4+g2JCyTpEkTUcIkpPQfVMdluVVAnXvCE+6jPGY/LXmZoeSuE1H
+	GsNOHeSR5D8b1ThGRMW2mblod8ZMGh33dYVwXIYEJy/y3MzBb8xwmqCZl07VWxRnUJYr4DCYppN
+	0xdA=
+X-Received: by 2002:a05:620a:25cf:b0:7c5:4caa:21af with SMTP id af79cd13be357-7c5eda818eemr550056385a.53.1743077429233;
+        Thu, 27 Mar 2025 05:10:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEQDaxxY1c1JIWPv4Vpd7ya8lrOIR4YdlP6XXz7ASiHvYbTcShWybxOIgvCu8n6tJpJQuRsg==
+X-Received: by 2002:a05:620a:25cf:b0:7c5:4caa:21af with SMTP id af79cd13be357-7c5eda818eemr550049585a.53.1743077428725;
+        Thu, 27 Mar 2025 05:10:28 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30d7d910e36sm24064021fa.93.2025.03.27.05.10.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Mar 2025 05:10:27 -0700 (PDT)
+Date: Thu, 27 Mar 2025 14:10:25 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org,
+        Marc Gonzalez <mgonzalez@freebox.fr>,
+        Dmitry Baryshkov <lumag@kernel.org>, Arnaud Vrac <avrac@freebox.fr>,
+        Sayali Lokhande <quic_sayalil@quicinc.com>,
+        Xin Liu <quic_liuxin@quicinc.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2 10/12] arm64: dts: qcom: msm8996-oneplus: Add SLPI
+ VDD_PX
+Message-ID: <unolvsafjyty4vgfygedyf6otd42nqigzikwoqwawbj7ks6bgq@shz5b3v6fchh>
+References: <20250327-topic-more_dt_bindings_fixes-v2-0-b763d958545f@oss.qualcomm.com>
+ <20250327-topic-more_dt_bindings_fixes-v2-10-b763d958545f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 2/2] ufs: core: delegate the interrupt service
- routine to a threaded irq handler
-To: Neil Armstrong <neil.armstrong@linaro.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250326-topic-ufs-use-threaded-irq-v2-0-7b3e8a5037e6@linaro.org>
- <20250326-topic-ufs-use-threaded-irq-v2-2-7b3e8a5037e6@linaro.org>
-Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20250326-topic-ufs-use-threaded-irq-v2-2-7b3e8a5037e6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250327-topic-more_dt_bindings_fixes-v2-10-b763d958545f@oss.qualcomm.com>
+X-Proofpoint-GUID: IjMgPHS2LoMa8NwG3KK_wetqFY0HBBq8
+X-Proofpoint-ORIG-GUID: IjMgPHS2LoMa8NwG3KK_wetqFY0HBBq8
+X-Authority-Analysis: v=2.4 cv=KvJN2XWN c=1 sm=1 tr=0 ts=67e5403e cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=Vs1iUdzkB0EA:10 a=EUspDBNiAAAA:8 a=ApomA1EUvWpH6PII-98A:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-27_01,2025-03-26_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=689
+ malwarescore=0 priorityscore=1501 clxscore=1015 mlxscore=0 spamscore=0
+ impostorscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
+ adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503270084
 
-On 3/26/25 4:36 AM, Neil Armstrong wrote:
- > When MCQ & Interrupt Aggregation are supported, the interrupt
- > are directly handled in the "hard" interrupt routine to
- > keep IOPs high since queues handling is done in separate
- > per-queue interrupt routines.
+On Thu, Mar 27, 2025 at 02:47:12AM +0100, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> The PX line powers some hardware related to sensors. Assume the board
+> doesn't reinvent what MTP has established and hook up LVS2 @ 1.8V as
+> such.
+> 
+> This fixes the 'is required' type of bindings validator errors.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi | 5 +++++
+>  arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts        | 2 ++
+>  arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts       | 2 ++
+>  3 files changed, 9 insertions(+)
+> 
 
-The above explanation suggests that I/O completions are handled by the
-modified interrupt handler. This is not necessarily the case. With MCQ,
-I/O completions are either handled by dedicated interrupts or by the
-legacy interrupt handler.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-> Reported bandwidth is not affected on various tests.
-
-This kind of patch can only affect command completion latency but not
-the bandwidth, isn't it?
-
-> +/**
-> + * ufshcd_intr - Main interrupt service routine
-> + * @irq: irq number
-> + * @__hba: pointer to adapter instance
-> + *
-> + * Return:
-> + *  IRQ_HANDLED     - If interrupt is valid
-> + *  IRQ_WAKE_THREAD - If handling is moved to threaded handled
-> + *  IRQ_NONE        - If invalid interrupt
-> + */
-> +static irqreturn_t ufshcd_intr(int irq, void *__hba)
-> +{
-> +	struct ufs_hba *hba = __hba;
-> +
-> +	/*
-> +	 * Move interrupt handling to thread when MCQ is not supported
-> +	 * or when Interrupt Aggregation is not supported, leading to
-> +	 * potentially longer interrupt handling.
-> +	 */
-> +	if (!is_mcq_supported(hba) || !ufshcd_is_intr_aggr_allowed(hba))
-> +		return IRQ_WAKE_THREAD;
-> +
-> +	/* Directly handle interrupts since MCQ handlers does the hard job */
-> +	return ufshcd_sl_intr(hba, ufshcd_readl(hba, REG_INTERRUPT_STATUS) &
-> +				   ufshcd_readl(hba, REG_INTERRUPT_ENABLE));
-> +}
-
-Where has ufshcd_is_intr_aggr_allowed() been defined? I can't find this
-function.
-
-For the MCQ case, this patch removes the loop from around
-ufshcd_sl_intr() without explaining in the patch description why this 
-change has been made. Please explain all changes in the patch
-description.
-
-Thanks,
-
-Bart.
+-- 
+With best wishes
+Dmitry
 
