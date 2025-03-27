@@ -1,59 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-52682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA3D9A73DDB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 19:18:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84EBBA73DDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 19:18:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 886693B3028
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 18:18:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5105F3B31B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 18:18:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBC02218EB3;
-	Thu, 27 Mar 2025 18:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D540121ABBA;
+	Thu, 27 Mar 2025 18:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VPylJq5T"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mWMofBzU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110B4F4F1;
-	Thu, 27 Mar 2025 18:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1177A21A931;
+	Thu, 27 Mar 2025 18:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743099495; cv=none; b=IwFD/nPVLUwycFK+4qdob5j1BDPZ2Bb/5myHCxei2ZLgBBaz/FB/tcKxBted4vtGGwOWEKe5dWsdmnFqjTCT3BrJeE9ziGOFSBFKDZhFvPclnMT9GhMzJKg5k7fKv8yqCvYXoqm8jVYqYuemocl/pa8EAW+hNyuL12OTRY0SdRU=
+	t=1743099498; cv=none; b=REFVTnYFJMyvfh9VCkNzxSJnM+7fkCQQu+6pHidkUYS+5OaKayGnJGcJPre4R9jGCkZBux89zN8p5xPd60UDEIqEqrhHQv9g2l8X4C0r/9fd3jaGHFq4OU+aodjcwMswfmsmWycKiEdPNgvrPddgLkROecpikZLcXUSvdl6RvC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743099495; c=relaxed/simple;
-	bh=8JxaSWuthSaViqbX0fDFNTw3ryDMiF9+V70gp0o3VSk=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bexGXtEFnvbMOc8ILmM6KOWPuzTq1KbupozrixQDftUvgfmDjT91lvSU1FJUokbqJGy5f0nRAPZ2quNf35wRgC76CueUJLz3OLRSSea2wEc0giWfoK5FRcQ5yIbm3yRxbf5LI4W8TZVMB3mOzYoto/JjJBEEcGFpJ7j3FR3an1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VPylJq5T; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1743099498; c=relaxed/simple;
+	bh=3Ut/gNGkU2XyQtJrgjLB2PYYQNoOTLDsoT7cYLOwaVs=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Mp9Fd2OeqWHuW04hio2BGtE0yKJ9Phy4ypg3KOCf7cogflt9TtlW4DQ2smPvuKewx7SzYr+C4ucAjquN1HXdnMRI2xEkIeFlFj5r38vBMB1G/T86l1lI+heKSPQc8Z+205N8ZiIESrc7Ld7doNK8tv7F8dyq3m/6ZUj7UGNx/hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mWMofBzU; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52REvWfL013783;
-	Thu, 27 Mar 2025 18:18:09 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52REcx3q002259;
+	Thu, 27 Mar 2025 18:18:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=Ba5a6yDtKCMqnVyaSqmH1R
-	WgQM/kBX+jQhoqYjWLYrA=; b=VPylJq5T4nG5SeQUmdEOYDI8Bt83GRbxHqS7zN
-	BIfDEsmmHMkWcfDLi0+fzLofRIA0vVvMj1wKDpiOIplC2YC49AsEeAsolKtd5ygh
-	cp8lGnYFRkpxprSLoh5SLHmUM8kOtlzyYElMIHdiegC/483nwm7cApD4j2DRH/FJ
-	9FCJ1t96w/lamWGkvmcZ5GChVqx37sW+fpMkSi9vnUqKB0hUebkqUDhER6QKnKc+
-	tUgAfDsVypwUHU29bzavXWhbLjKNJMII0sWMiWcQA+1WvfBKmveIVwTFUt+0jpWC
-	SiNnIGj1tX9nZmw/tGbefxOGMNsheXPLMV3db0lxI3BGFynQ==
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	O0FSQxyKT416D3aRAeudmvPZKevVEBRKqHlW0BEb560=; b=mWMofBzU9WqVCFng
+	FtWWXqiu8hPhE3oyVBfw9AbaC8ipXNCbxe5N7M8g5pFr3lNchQSlVJ2hjdao2cWq
+	kGDKWtWhkwef4gUtcwC8st5iTb7KLF5FJ73CbWcqQNRqwgtJWT/mLShHLZaSLrDl
+	JXPbVYza1jG22/lsflQ3I+S+130uzmBhNgr/oUO6OG/BmVRQbq4e+WHxM/sAPryu
+	xxoB8IkyYxO73YXqzouBa/LZE0M4PaZ2PGFLGROpKRAmmK6XwQ17xZp1Fsu70gdH
+	oSQznqQog5tpmxAy9sy7gyVwKntihvWeetCWiw8Tw1upcrGvonc/6XHmMGx53i6R
+	Pj1IBw==
 Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45mffcmx39-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45m0xdy5mx-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Mar 2025 18:18:08 +0000 (GMT)
+	Thu, 27 Mar 2025 18:18:12 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52RII7oU001723
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52RIIBcl001809
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Mar 2025 18:18:07 GMT
+	Thu, 27 Mar 2025 18:18:11 GMT
 Received: from hu-srichara-blr.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 27 Mar 2025 11:18:04 -0700
+ 15.2.1544.9; Thu, 27 Mar 2025 11:18:07 -0700
 From: Sricharan R <quic_srichara@quicinc.com>
 To: <jassisinghbrar@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
         <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
@@ -61,10 +63,12 @@ To: <jassisinghbrar@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
         <andersson@kernel.org>, <konradybcio@kernel.org>,
         <manivannan.sadhasivam@linaro.org>, <dmitry.baryshkov@linaro.org>,
         <quic_srichara@quicinc.com>
-Subject: [PATCH V4 0/2] mailbox: tmel-qmp: Introduce QCOM TMEL QMP mailbox driver
-Date: Thu, 27 Mar 2025 23:47:48 +0530
-Message-ID: <20250327181750.3733881-1-quic_srichara@quicinc.com>
+Subject: [PATCH V4 1/2] dt-bindings: mailbox: Document qcom,ipq5424-tmel
+Date: Thu, 27 Mar 2025 23:47:49 +0530
+Message-ID: <20250327181750.3733881-2-quic_srichara@quicinc.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250327181750.3733881-1-quic_srichara@quicinc.com>
+References: <20250327181750.3733881-1-quic_srichara@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,42 +81,45 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=CdgI5Krl c=1 sm=1 tr=0 ts=67e59660 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=5MEtDE70NAJr5NbrjzMA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: iOoRtSf4JhTeQ1edWKCRafYxbePItd6H
-X-Proofpoint-ORIG-GUID: iOoRtSf4JhTeQ1edWKCRafYxbePItd6H
+X-Proofpoint-ORIG-GUID: QFh0-fd7pjwgOJZJVEYg8Uu0Q-Yl7pOi
+X-Proofpoint-GUID: QFh0-fd7pjwgOJZJVEYg8Uu0Q-Yl7pOi
+X-Authority-Analysis: v=2.4 cv=Q43S452a c=1 sm=1 tr=0 ts=67e59664 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=Vs1iUdzkB0EA:10 a=gEfo2CItAAAA:8 a=COk6AnOGAAAA:8 a=1RJauMYTzl87JpOh4HIA:9 a=sptkURWiP4Gy88Gu7hUp:22
+ a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-27_03,2025-03-26_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
- spamscore=0 mlxlogscore=999 lowpriorityscore=0 suspectscore=0 phishscore=0
- clxscore=1015 bulkscore=0 impostorscore=0 adultscore=0 priorityscore=1501
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0 adultscore=0
+ mlxlogscore=999 malwarescore=0 mlxscore=0 priorityscore=1501 clxscore=1015
  classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2503270125
 
 From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 
-The QMP mailbox is the primary means of communication between TMEL
-(Trust Management Engine Lite) SS and other subsystem on the SoC.
-A dedicated pair of inbound and outbound mailboxes is implemented for
-each subsystem/external execution environment which needs to communicate
-with TMEL for security services. The inbound mailboxes are used to send
-IPC requests to TME-L, which are then processed by TME-L firmware and
-accordingly the responses are sent to the requestor via outbound
+TMEL(Trust Management Engine Lite) subsystem provides different kinds of
+services like secureboot, remote image authentication, key management,
+crypto, OEM provisioning etc.
+
+The QMP mailbox is the primary means of communication between TMEL SS and
+other subsystem on the SoC. A dedicated pair of inbound and outbound
+mailboxes is implemented for each subsystem/external execution environment
+which needs to communicate with TMEL for security services. The inbound
+mailboxes are used to send IPC requests to TMEL, which are then processed
+by TMEL firmware and accordingly the responses are sent back via outbound
 mailboxes.
 
-It is an IPC transport protocol which is light weight and supports
-a subset of API's. It handles link initialization, negotiation,
-establishment and communication across client(APPSS/BTSS/AUDIOSS)
-and server(TME-L SS).
+It is an IPC transport protocol which is light weight and supports a subset
+of API's. It handles link initialization, negotiation, establishment and
+communication across client(CPU/BTSS/AUDIOSS) and server(TMEL SS).
 
    -----------------------------------------------       ---------------------------------------------------
   |                                              |       |                                                 |
-  |                 SOC  CLIENT                  | SOC   |                TME-L  SS                        |
+  |                 SOC  CLIENT                  | SOC   |                TMEL  SS                         |
   |                                              | AHB   |                                                 |
   |     ----------    ---------   ---------      |       | ------    -------     --------    ------------  |
   |     |        |    |       |   |       |      | WO    | |     | R |     |     |      |    |SERVICES   | |
-  |     | APPS   |<-->| TMEL  |<->|       |------------->| | IN  |-->|     |     | TMEL |    |--------   | |
+  |     | CPU    |<-->| TMEL  |<->|       |------------->| | IN  |-->|     |     | TMEL |    |--------   | |
   |     |        |    | COM   |   | QMP   |      | RO    | |     | W | QMP |<--->| COM  |<-->| a) ATTEST | |
   |     |        |    |       |   |       |<-------------| | OUT |<--|     |     |      |    | b) CRYPTO | |
   |     |        |    |       |   |       |      |       | |     |   |     |     |      |    | .. more   | |
@@ -120,103 +127,105 @@ and server(TME-L SS).
   |                                              |       |                                                 |
    -----------------------------------------------       --------------------------------------------------
 
-TME-L SS provides different kinds of services like secureboot,
-remote image authentication, key management, crypto, OEM provisioning etc.
-This patch adds support for remote image authentication.
-Support for rest of the services can be added.
+This binding describes the component responsible for communication between
+the TMEL subsystem and the TMEL client (CPU/BTSS/AUDIOSS),
+used for security services like secure image authentication, enable/disable
+efuses, crypto services. Each client in the SoC has its own block of message
+RAM and IRQ for communication with the TMEL SS.
 
-Remote proc driver subscribes to this mailbox and uses the
-mbox_send_message to use TME-L to securely authenticate/teardown the
-images.
-
-Since clients like same rproc driver use SCM/TMEL across socs, the goal
-here was to abstract the TMEL-QMP SS functionality, so that clients should
-be able to connect and send messages with a common API.
-
-[V4]
-
-        Fixed TME-L naming in all places and expanded it.
-        Folded tmel_work in tmel.
-        Added more kernel doc as relevant.
-        Removed __packed in all places, as not required.
-        Renamed all functions to have tmel_ prefixes.
-        Used readl/writel in all places.
-	Added Inline for all required functions.
-        Removed redundant type conversions.
-        Removed redundant 'goto's
-        Added __free macro
-        Fixed Linux std errno in tmel_sec_boot_auth/teardown
-        Added spinlock in qmp_startup
-        Used of_mbox_index_xlate and dropped the tmel_qmp_mbox_xlate
-        Updated header file to have only mbox consumer required and moved rest to .c file
-        Fixed the TMEL_MSG macros to use standard GENMASK
-        Moved the irq registration to end of probe
-
-    Following tests were done and no issues.
-
-       *)  Checkpatch
-       *)  Codespell
-       *)  Sparse
-       *)  kerneldoc check
-       *)  Kernel lock debugging
-       *)  dt_binding_check and dtbs_check
+Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+---
+[v4]
+	Fixed TMEL naming and added expansion
+        Fixed wrappings for 80 columns
 
 [V3]
+        Fixed wrappings.
+        Made mailbox-cells as a required property and changed value to '1'.
+        Fixed to use compatible as filename.
+        Renamed compatible as per Krzystof's comments.
+        Dropped unused label.
 
-        Fixed wrong code/comments wrappings.
-        Fixed Kconfig and Makefile entries to right place.
-        Removed unused headers inclusion.
-        Fixed locking, removed the mutexes and having only tx spinlock.
-        Removed the use of global ptr for tmel, made it as device specific.
-        Replaced pr_err/pr_debug with dev_err/dev_dbg in all places.
-        Fixed usage of dev_err_probe.
-        Fixed xlate callback as per comments.
-        Used devm equivalents and kcalloc version as per comments.
-        Removed all un-nessecary wrapper macros for register access, inlined it
-        as per comments.
-        Re-organised the function layout as per comments and make it more readable.
-        Removed the pictures in headers files as per comments.
-        Used Field_prep/get as per comments.
-        Fixed Kernel test reported issues.
-        Fixed all other comments as well.
+[V2]
+        Added HW description as per comments.
+        Removed the fallback compatible.
+        Fixed naming convention to TME-L in all places.
+        Fixed indendation for example.
+        Removed the 'description' for some items.
 
-    Following tests were done and no issues.
+[V1]
+	RFC Post.
 
-       *)  Checkpatch
-       *)  Codespell
-       *)  Sparse
-       *)  kerneldoc check
-       *)  Kernel lock debugging
-       *)  dt_binding_check and dtbs_check
-
-[v2]
-     Added HW description in the bindings patch.
-     Fixed review comments for bindings from Krzysztof and Dmitry
-     Changed patch#2 driver to add work for mailbox tx processing
-     Cleaned up patch#2 for some checkpatch warnings.
-     There are some checkpatch [CHECK] like below, which looks like false positive.
-
-	CHECK: Macro argument 'm' may be better as '(m)' to avoid precedence issues
-	#1072: FILE: include/linux/mailbox/tmelcom-qmp.h:40:
-	+#define TMEL_MSG_UID_CREATE(m, a)      ((u32)(((m & 0xff) << 8) | (a & 0xff)))
-
-[v1]
-      RFC Post
-
-Sricharan Ramabadhran (2):
-  dt-bindings: mailbox: Document qcom,ipq5424-tmel
-  mailbox: tmelite-qmp: Introduce TMEL QMP mailbox driver
-
- .../bindings/mailbox/qcom,ipq5424-tmel.yaml   |  60 ++
- drivers/mailbox/Kconfig                       |  10 +
- drivers/mailbox/Makefile                      |   2 +
- drivers/mailbox/qcom-tmel-qmp.c               | 947 ++++++++++++++++++
- include/linux/mailbox/tmelcom-qmp.h           |  65 ++
- 5 files changed, 1084 insertions(+)
+ .../bindings/mailbox/qcom,ipq5424-tmel.yaml   | 60 +++++++++++++++++++
+ 1 file changed, 60 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml
- create mode 100644 drivers/mailbox/qcom-tmel-qmp.c
- create mode 100644 include/linux/mailbox/tmelcom-qmp.h
 
+diff --git a/Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml b/Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml
+new file mode 100644
+index 000000000000..5bdeab166a1f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/mailbox/qcom,ipq5424-tmel.yaml
+@@ -0,0 +1,60 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/mailbox/qcom,ipq5424-tmel.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm TMEL IPCC channel
++
++maintainers:
++  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
++
++description:
++  TMEL(Trust Management Engine Lite) SS provides different kinds of services
++  like secureboot, remote image authentication, key management, crypto, OEM
++  provisioning etc.
++
++  The QMP mailbox is the primary means of communication between TMEL SS and
++  other subsystem on the SoC. A dedicated pair of inbound and outbound mailbox
++  is implemented for each subsystem/external execution environment which needs
++  to communicate with TMEL for security services. The inbound mailboxes are used
++  to send IPC requests to TMEL, which are then processed by TMEL firmware and
++  accordingly the responses are sent back via outbound mailboxes.
++
++properties:
++  compatible:
++    items:
++      - enum:
++          - qcom,ipq5424-tmel
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  mboxes:
++    maxItems: 1
++
++  "#mbox-cells":
++    const: 1
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - mboxes
++  - "#mbox-cells"
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++
++    mailbox@32090000 {
++        compatible = "qcom,ipq5424-tmel";
++        reg = <0x32090000 0x2000>;
++        interrupts = <GIC_SPI 126 IRQ_TYPE_EDGE_RISING>;
++        mboxes = <&apcs_glb 20>;
++        #mbox-cells = <1>;
++    };
 -- 
 2.34.1
 
