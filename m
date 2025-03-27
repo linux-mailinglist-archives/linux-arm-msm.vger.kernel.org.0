@@ -1,63 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-52675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1914FA73787
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 17:58:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F35D7A73A34
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 18:13:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9703B1773E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 16:58:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 90E66188C7CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 17:13:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA51B21ADC2;
-	Thu, 27 Mar 2025 16:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C0B91B424D;
+	Thu, 27 Mar 2025 17:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bwdWCnbY"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oFObRSTT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8102621ADB0;
-	Thu, 27 Mar 2025 16:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D531A8418
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 17:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743094657; cv=none; b=J5tBMM98wX0QBy6UrM7jNXsiwFnsIbQvwDVsFRfAwyrupbF5YK4iih48WLFeJ+i/tafQCr0ETs0VL7RcJz2VglYBApyqCs8M1lLFRrfIPpGIaYWHm4ifLF2cnU+0XMrBqRBxogpBtLOdK8D37Qk6QlJYaNg4u8qmYHYpRepugog=
+	t=1743095617; cv=none; b=SUDkAlioeypZLWqAGLSBd5b1vUNWikxBGGh/yAJ7rinQawgsbXuEfDRyFTgX24BILkTzOjml4nH4frZtNi3jsqphHiS9bg5lv4zOl3nRQtZquGg7dxSzOuSFIfXRKFkGWPFbKuccRpdCPNN8ihJ5fvLRXi+k4w8k5qt+q9J4rmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743094657; c=relaxed/simple;
-	bh=AZX1Or+x8+6v/YDLWOvRsG1FF7eKETUU83uAxoDtF/g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=CTwVcYwOuymKy3z6ddGRuUtk3BbeIXg394vM+wHIAObKMjnNqyH7NQj7DjAb+sixevGNY/mhBZb84r7tKvAQD8Uoj1mQawMNe0gSpdMoLjvhQNqL9RmUMMXipbjIfpjMWF2YfpQ3jur2hw9k/GZDVLRTY24poWv9q1sftJ8VMAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bwdWCnbY; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52REpk82022921;
-	Thu, 27 Mar 2025 16:57:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1743095617; c=relaxed/simple;
+	bh=Ry2ql3oYn0+PXs++SMI2qhXTuxptcdhdy+H9lwOmsdg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XRfLRvUqtrJIhX78hMEDC5/SUE2teRI0fnfzkWNAauqth1Hg56pfh2vn8GNaWRc2sZA6ns6L9OD/sZ5vgl74XVUOPjIlFDFdM4cjqdkMIa5RGLEpQyp19KUTOuZcyGo0mAQW075BkBczU4e3sjdhSTZ7iS2TQWaEDSZ3v/cNLnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oFObRSTT; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52RETqI7021230
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 17:13:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	92sK7cCp7zVhCpZpBhfo5LH7uiy75I2qjhTgVHZv/B4=; b=bwdWCnbY4dO42pt3
-	p7AknPI+nx2dFGZ0EyopLFqfnSR5AnPVb2U1QTn1DsF3WwVTmlsjxdyUV62XZmVw
-	DLkP4Az9ZwDfxeuY4+lBv5kBANpDqDNFrKC2zxKV8HfOrhUBUvNCopoK43Pz1QKt
-	mBESLoL0Oq2UfxB8F171pgCJNAwu9R9+g4DD4wpGDkbp6o29VlNdExaux8W0h2HE
-	iw680lNApF2mxOAmUus3/TnJrzWi9Ul9fBMqTGQafsYnnxn0AhVHqNazB76SIPX7
-	LNR9KRVHA/jdUyUkxD+cGzKXrQibDicouvaBZyY2KCJ5lX6GaDOfs9hoGQ6zCfcP
-	cZ71pQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45mb9mwgj0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Mar 2025 16:57:16 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52RGvFW3006021
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Mar 2025 16:57:15 GMT
-Received: from [10.71.114.104] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 27 Mar
- 2025 09:57:15 -0700
-Message-ID: <4a243fd0-ce1c-42b8-948d-93a8ce5b0c09@quicinc.com>
-Date: Thu, 27 Mar 2025 09:57:14 -0700
+	nZNnq/2n+A+VOod1fjxwK/OJhSfOHOhjsmc4N6VyA3A=; b=oFObRSTTJLII0Xwl
+	2bBaLR/gf1iwr0hdOsJeTOcJxU6plM3mQYjUSLT9QaCijm0z8A7INDile9r4aQsC
+	KdZ3gk30FQwgRqNPTD07RG9s8DgRFVF+8Q+FmoeJCbg8KsmcPcwWVeskuRfqQkrZ
+	Ez0Vhuc7h4GAFPan8v8KNCETVkIi5JgWycGLH3+9xeOcs8fLafz3acLOLEpSFF6L
+	m0NNJTtqU/Weo04YrA7hhvWdwx23oH1LBmDA1o26SEQdH1F4kqv3Z06RBx9NAhkA
+	CBnmKs3BzhnoVCnr52od7xDKFMOuy90WCjxejaqi5P/cQ5YacY+hrMoMSsrOZxpO
+	xK+nZg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45kyr9q4ke-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 17:13:34 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c5ad42d6bcso29530485a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 10:13:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743095613; x=1743700413;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nZNnq/2n+A+VOod1fjxwK/OJhSfOHOhjsmc4N6VyA3A=;
+        b=FqGDIItL9vZMWIOb+6GoMOX+/xiypjKuNAVUH/BCf8m+3RM5mqv54gmjgA0OiWJ3ro
+         IqMko58DQjwPSN27LKX8NvSQ4BovaHd7Jz0bwmeQohtZm6+P9qsjBybi6m3OFqavo3pY
+         u/ANAwJDtdUHqWzyX98LXQOE86FKIUtzA8e4VUmeLkCruAiZBb52FjBJLQ1ViS3drvgR
+         OEFKSKkyhnbatNOPvwhCoYR9kppV2vbD3HTn6MmJ5EXr1mfVslcLElyt8t4OCAX1YXGH
+         m41zWJfPYXIBG5ens6BPPT5i/0WY52W2sbSUIm4sgZYmfV3iYrOuLCrVQbNBuJzqGrjU
+         1Bbw==
+X-Forwarded-Encrypted: i=1; AJvYcCVa3xnZX8bCysM9Lkl6pYnNNn4l9OoiNNwwc0CHkZx6vjRBZ8SlTcCh8vIB8i+p2fzRSvnEZ/MTXGxFBdW8@vger.kernel.org
+X-Gm-Message-State: AOJu0YwG6sv6md0xAM6WpwRdwUEVMk2pzVQLd7xH8US0h+jq1eI7SU+l
+	o68hItMKYVpx4d2nP+C0UTBLb/pmNKag8v7qzutKphgK5MOKno2o2GC5Azh9YXVdjHtQonflOqg
+	WcIemG0h4uhUuF4uEiZQw4Cd8qW82MqAQ3STmOq5A1y/9mImu3maY9MoVDpkNJjIU
+X-Gm-Gg: ASbGncvPs8hEeB/yNV7apjD30nuRLnlD9eT7h5NFw3O99I3slaqP43SrppDXWEI1CJw
+	MEc3AISFM5lsDM1yex6Uhq93qHQWN06VzVg+0F7gvr2JgI5CyLxrV2eegzcSQeMPj/TtUoQhrT6
+	//47fUpjUiuTi9+tIZaC3TvGrZMyhel3+kQrN3TAXy5doYNqXkh4COY+0lqCtC09FTcT9VlDWo4
+	uhaHWGTXIzMjs92f6UnsT9ElR4AjI02euHUuNA+wqNz6UT09g4Kg/6dr1r8Ag/MQDePSgW/K95C
+	PGXDtjIk22N9cI28zTtGuL0H0werU7DmXZCByQ4rG9wL4JEsLw8TkfQNan8e75t8qoB9QA==
+X-Received: by 2002:a05:620a:24c1:b0:7c5:75ad:5c3a with SMTP id af79cd13be357-7c5f7c2662fmr20089485a.8.1743095611592;
+        Thu, 27 Mar 2025 10:13:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHtb3fH9DtqhD3xsA7DIKr92vSXeiPbO4fQg4BdyVVvqQIp1LaEpYpP1zSRICVWP4L8cnvlVg==
+X-Received: by 2002:a05:620a:24c1:b0:7c5:75ad:5c3a with SMTP id af79cd13be357-7c5f7c2662fmr20087585a.8.1743095611113;
+        Thu, 27 Mar 2025 10:13:31 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac71961f9absm22821366b.103.2025.03.27.10.13.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Mar 2025 10:13:30 -0700 (PDT)
+Message-ID: <12e011f2-1aa3-4e95-a081-bf81e00912c2@oss.qualcomm.com>
+Date: Thu, 27 Mar 2025 18:13:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,222 +89,80 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v36 28/31] ALSA: usb-audio: qcom: Introduce QC USB SND
- offloading support
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
-        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <linux-input@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        Luca Weiss
-	<luca.weiss@fairphone.com>
-References: <20250319005141.312805-1-quic_wcheng@quicinc.com>
- <20250319005141.312805-29-quic_wcheng@quicinc.com>
- <Z-J7n8qLMPVxpwuV@linaro.org>
- <5a7442c9-493d-4c23-a179-128f02a29f73@quicinc.com>
- <Z-PSSXt8WY3yVFM4@linaro.org>
+Subject: Re: [PATCH] arm64: dts: qcom: qcm2290: Add crypto engine
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20250327142842.1138203-1-loic.poulain@oss.qualcomm.com>
+ <h3ol4qc242w7h3u7uiywxyc2v6op6cvxhzuk2dx5q5dvhitolp@pb6c53ki3cag>
 Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <Z-PSSXt8WY3yVFM4@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <h3ol4qc242w7h3u7uiywxyc2v6op6cvxhzuk2dx5q5dvhitolp@pb6c53ki3cag>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=cs+bk04i c=1 sm=1 tr=0 ts=67e5836d cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=G7wdeb9s_eWl5evOme8A:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: n3ivPuyTnuDhHgEAM8GNVFIK9vf8WT5f
-X-Proofpoint-ORIG-GUID: n3ivPuyTnuDhHgEAM8GNVFIK9vf8WT5f
+X-Proofpoint-GUID: iuKEOmoxQGFB2Mo1ckK4GzSJAvVsStw3
+X-Authority-Analysis: v=2.4 cv=UblRSLSN c=1 sm=1 tr=0 ts=67e5873e cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=EUspDBNiAAAA:8 a=L3SEVPxwON1qY0H_nQ8A:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: iuKEOmoxQGFB2Mo1ckK4GzSJAvVsStw3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-27_02,2025-03-26_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- bulkscore=0 mlxlogscore=999 malwarescore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0
- mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 priorityscore=1501 phishscore=0 mlxscore=0 impostorscore=0
+ adultscore=0 clxscore=1015 mlxlogscore=999 bulkscore=0 malwarescore=0
+ spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
  adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503270116
+ definitions=main-2503270117
 
-Hi Stephan,
-
-On 3/26/2025 3:09 AM, Stephan Gerhold wrote:
-> On Tue, Mar 25, 2025 at 06:32:14PM -0700, Wesley Cheng wrote:
->> On 3/25/2025 2:47 AM, Stephan Gerhold wrote:
->>> On Tue, Mar 18, 2025 at 05:51:38PM -0700, Wesley Cheng wrote:
->>>> Several Qualcomm SoCs have a dedicated audio DSP, which has the ability to
->>>> support USB sound devices.  This vendor driver will implement the required
->>>> handshaking with the DSP, in order to pass along required resources that
->>>> will be utilized by the DSP's USB SW.  The communication channel used for
->>>> this handshaking will be using the QMI protocol.  Required resources
->>>> include:
->>>> - Allocated secondary event ring address
->>>> - EP transfer ring address
->>>> - Interrupter number
->>>>
->>>> The above information will allow for the audio DSP to execute USB transfers
->>>> over the USB bus.  It will also be able to support devices that have an
->>>> implicit feedback and sync endpoint as well.  Offloading these data
->>>> transfers will allow the main/applications processor to enter lower CPU
->>>> power modes, and sustain a longer duration in those modes.
->>>>
->>>> Audio offloading is initiated with the following sequence:
->>>> 1. Userspace configures to route audio playback to USB backend and starts
->>>> playback on the platform soundcard.
->>>> 2. The Q6DSP AFE will communicate to the audio DSP to start the USB AFE
->>>> port.
->>>> 3. This results in a QMI packet with a STREAM enable command.
->>>> 4. The QC audio offload driver will fetch the required resources, and pass
->>>> this information as part of the QMI response to the STREAM enable command.
->>>> 5. Once the QMI response is received the audio DSP will start queuing data
->>>> on the USB bus.
->>>>
->>>> As part of step#2, the audio DSP is aware of the USB SND card and pcm
->>>> device index that is being selected, and is communicated as part of the QMI
->>>> request received by QC audio offload.  These indices will be used to handle
->>>> the stream enable QMI request.
->>>>
->>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>>> ---
->>>>  sound/usb/Kconfig                 |   14 +
->>>>  sound/usb/Makefile                |    2 +-
->>>>  sound/usb/qcom/Makefile           |    2 +
->>>>  sound/usb/qcom/qc_audio_offload.c | 1988 +++++++++++++++++++++++++++++
->>>>  4 files changed, 2005 insertions(+), 1 deletion(-)
->>>>  create mode 100644 sound/usb/qcom/Makefile
->>>>  create mode 100644 sound/usb/qcom/qc_audio_offload.c
->>>>
->>>> diff --git a/sound/usb/Kconfig b/sound/usb/Kconfig
->>>> index 4a9569a3a39a..6daa551738da 100644
->>>> --- a/sound/usb/Kconfig
->>>> +++ b/sound/usb/Kconfig
->>>> @@ -176,6 +176,20 @@ config SND_BCD2000
->>>>  	  To compile this driver as a module, choose M here: the module
->>>>  	  will be called snd-bcd2000.
->>>>  
->>>> +config SND_USB_AUDIO_QMI
->>>> +	tristate "Qualcomm Audio Offload driver"
->>>> +	depends on QCOM_QMI_HELPERS && SND_USB_AUDIO && USB_XHCI_SIDEBAND && SND_SOC_USB
->>>> +	help
->>>> +	  Say Y here to enable the Qualcomm USB audio offloading feature.
->>>> +
->>>> +	  This module sets up the required QMI stream enable/disable
->>>> +	  responses to requests generated by the audio DSP.  It passes the
->>>> +	  USB transfer resource references, so that the audio DSP can issue
->>>> +	  USB transfers to the host controller.
->>>> +
->>>> +	  To compile this driver as a module, choose M here: the module
->>>> +	  will be called snd-usb-audio-qmi.
->>>> [...]
->>>> diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
->>>> new file mode 100644
->>>> index 000000000000..3319363a0fd0
->>>> --- /dev/null
->>>> +++ b/sound/usb/qcom/qc_audio_offload.c
->>>> @@ -0,0 +1,1988 @@
->>>> [...]
->>>> +static int __init qc_usb_audio_offload_init(void)
->>>> +{
->>>> +	struct uaudio_qmi_svc *svc;
->>>> +	int ret;
->>>> +
->>>> +	svc = kzalloc(sizeof(*svc), GFP_KERNEL);
->>>> +	if (!svc)
->>>> +		return -ENOMEM;
->>>> +
->>>> +	svc->uaudio_svc_hdl = kzalloc(sizeof(*svc->uaudio_svc_hdl), GFP_KERNEL);
->>>> +	if (!svc->uaudio_svc_hdl) {
->>>> +		ret = -ENOMEM;
->>>> +		goto free_svc;
->>>> +	}
->>>> +
->>>> +	ret = qmi_handle_init(svc->uaudio_svc_hdl,
->>>> +			      QMI_UAUDIO_STREAM_REQ_MSG_V01_MAX_MSG_LEN,
->>>> +			      &uaudio_svc_ops_options,
->>>> +			      &uaudio_stream_req_handlers);
->>>> +	ret = qmi_add_server(svc->uaudio_svc_hdl, UAUDIO_STREAM_SERVICE_ID_V01,
->>>> +			     UAUDIO_STREAM_SERVICE_VERS_V01, 0);
->>>> +
->>>> +	uaudio_svc = svc;
->>>> +
->>>> +	ret = snd_usb_register_platform_ops(&offload_ops);
->>>> +	if (ret < 0)
->>>> +		goto release_qmi;
->>>> +
->>>> +	return 0;
->>>> +
->>>> +release_qmi:
->>>> +	qmi_handle_release(svc->uaudio_svc_hdl);
->>>> +free_svc:
->>>> +	kfree(svc);
->>>> +
->>>> +	return ret;
->>>> +}
->>>> +
->>>> +static void __exit qc_usb_audio_offload_exit(void)
->>>> +{
->>>> +	struct uaudio_qmi_svc *svc = uaudio_svc;
->>>> +	int idx;
->>>> +
->>>> +	/*
->>>> +	 * Remove all connected devices after unregistering ops, to ensure
->>>> +	 * that no further connect events will occur.  The disconnect routine
->>>> +	 * will issue the QMI disconnect indication, which results in the
->>>> +	 * external DSP to stop issuing transfers.
->>>> +	 */
->>>> +	snd_usb_unregister_platform_ops();
->>>> +	for (idx = 0; idx < SNDRV_CARDS; idx++)
->>>> +		qc_usb_audio_offload_disconnect(uadev[idx].chip);
->>>> +
->>>> +	qmi_handle_release(svc->uaudio_svc_hdl);
->>>> +	kfree(svc);
->>>> +	uaudio_svc = NULL;
->>>> +}
->>>> +
->>>> +module_init(qc_usb_audio_offload_init);
->>>> +module_exit(qc_usb_audio_offload_exit);
->>>> +
->>>> +MODULE_DESCRIPTION("QC USB Audio Offloading");
->>>> +MODULE_LICENSE("GPL");
->>>
->>> What will trigger loading this if this code is built as module?
->>>
->>> Testing suggests nothing does at the moment: If this is built as module,
->>> playback via USB_RX will fail until you manually modprobe
->>> snd-usb-audio-qmi.
->>>
+On 3/27/25 4:05 PM, Dmitry Baryshkov wrote:
+> On Thu, Mar 27, 2025 at 03:28:42PM +0100, Loic Poulain wrote:
+>> Add Qualcomm Crypto Engine (QCE) and BAM related nodes for this SoC.
 >>
->> Yes, it would only get triggered on a modprobe.  I think the more important
->> part is when snd_usb_register_platform_ops() is called.  This is what would
->> register the vendor USB offload driver callbacks for USB connect/disconnect
->> events.
+>> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/qcm2290.dtsi | 28 +++++++++++++++++++++++++++
+>>  1 file changed, 28 insertions(+)
 >>
->>> I think the easiest way to solve this would be to drop the
->>> module_init()/module_exit() and instead call into these init/exit
->>> functions from one of the other audio modules. This would also ensure
->>> that the QMI server is only registered if we actually need it (if the
->>> board sound card actually has a USB DAI link).
->>>
->>
->> It would be difficult from the perspective of USB SND, because if we got
->> rid of the vendor ops, it would be messy, since the USB offload vendor
->> driver will be specific for every SoC.
->>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+>> index f0746123e594..c9ac06164d43 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+>> @@ -749,6 +749,34 @@ config_noc: interconnect@1900000 {
+>>  			#interconnect-cells = <2>;
+>>  		};
+>>  
+>> +		cryptobam: dma@1b04000 {
+>> +			compatible = "qcom,bam-v1.7.0";
+>> +			reg = <0x0 0x01b04000 0x0 0x24000>;
+>> +			interrupts = <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>;
+>> +			clocks = <&rpmcc RPM_SMD_CE1_CLK>;
+>> +			clock-names = "bam_clk";
+>> +			#dma-cells = <1>;
+>> +			qcom,ee = <0>;
+>> +			qcom,controlled-remotely;
+>> +			iommus = <&apps_smmu 0x0084 0x0011>,
+>> +				 <&apps_smmu 0x0086 0x0011>,
+>> +				 <&apps_smmu 0x0094 0x0011>,
+>> +				 <&apps_smmu 0x0096 0x0011>;
+>> +		};
+>> +
+>> +		crypto: crypto@1b3a000 {
+>> +			compatible = "qcom,qcm2290-qce", "qcom,qce";
+>> +			reg = <0x0 0x01b3a000 0x0 0x6000>;
+>> +			clocks = <&rpmcc RPM_SMD_CE1_CLK>;
+>> +			clock-names = "core";
+>> +			dmas = <&cryptobam 6>, <&cryptobam 7>;
+>> +			dma-names = "rx", "tx";
+>> +			iommus = <&apps_smmu 0x0084 0x0011>,
+>> +				 <&apps_smmu 0x0086 0x0011>,
+>> +				 <&apps_smmu 0x0094 0x0011>,
+>> +				 <&apps_smmu 0x0096 0x0011>;
 > 
-> What I meant is calling qc_usb_audio_offload_init() from any of the
-> other drivers that are involved, e.g. q6usb. Or register an auxilliary
-> device like in qcom_pd_mapper, so the modules don't need to link
-> together directly. That shouldn't get too messy.
-> 
+> Don't these fall into the previous entries + mask? The same question
+> applies to BAM SMMU entries.
 
-Thanks for clarifying.  I took a look and implemented the auxiliary path,
-and it works pretty well :).  Wasn't aware of the aux bus...very useful.
+(effective sid = e.g. 0x0084 & ~0x0011)
 
-Thanks
-Wesley Cheng
+Konrad
 
