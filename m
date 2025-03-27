@@ -1,144 +1,239 @@
-Return-Path: <linux-arm-msm+bounces-52596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CE15A72C1E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 10:11:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D81AA72CD0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 10:53:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2EE03173FCF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 09:11:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D62293A5FFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 09:53:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42D7920B7F4;
-	Thu, 27 Mar 2025 09:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3C3E20D4E1;
+	Thu, 27 Mar 2025 09:53:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BrtF0Ngx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B56A286A9;
-	Thu, 27 Mar 2025 09:11:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FEB1FF7D1;
+	Thu, 27 Mar 2025 09:53:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743066671; cv=none; b=SqddGtyuHiARQOFdD1zQCW7q3CfZWqPGI+UUCNJPx/sFXOeHbvUJkHNWDnS4XMK/hDEzne9aMVMDFpmDxoOa/5iYlIIVhv2nbk7qYhInAi/QO8gRFiEAN3KQec1bT52NGRVSwyjq0lD7w6byKvVWUXDOttDrFq/F03gHsHX7Pgw=
+	t=1743069212; cv=none; b=Y6+8bXYaBowQfKvvEq8ZkkzK2rop1eeutXM4JJioVyZm+j1MLK+aztpTp0qAhzgZnmquvi5tDpfHwXk/08k08FTyend04NCept3n3e8Q9JUiaddkVSgRrwCIQamugdaEijxlAmpDR7lacyeRigHLZjxjt6BQGLQOVkYrwC7Kzpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743066671; c=relaxed/simple;
-	bh=y7axKAJliHD2zTOIYFEFVrRu7lE1cQmDkIumIcuNBvc=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=giHTuDJiJqnC5zz+XuJNbCumQ4c/pgfzarzqGYzmNmjBRHDVu9b5ySdKUIMto7EPx+bYiV1TRDz3Q41I5wqFFuac8BDOiC9p+rDcM3zhKFkL0KXSIRULR8P60kwPYRDk6A9jVQ78HQg16FW+iIddA6kYEBdUUHMtyd9s2pt3ZCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52R5wYMm005249;
-	Thu, 27 Mar 2025 02:10:32 -0700
-Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45hvqkde3b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Thu, 27 Mar 2025 02:10:31 -0700 (PDT)
-Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Thu, 27 Mar 2025 02:10:31 -0700
-Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Thu, 27 Mar 2025 02:10:26 -0700
-From: <jianqi.ren.cn@windriver.com>
-To: <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
-        <mani@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <jejb@linux.ibm.com>,
-        <martin.petersen@oracle.com>, <bvanassche@acm.org>,
-        <quic_asutoshd@quicinc.com>, <quic_cang@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <manivannan.sadhasivam@linaro.org>, <beanhuo@micron.com>
-Subject: [PATCH 6.6.y] scsi: ufs: qcom: Only free platform MSIs when ESI is enabled
-Date: Thu, 27 Mar 2025 17:10:26 +0800
-Message-ID: <20250327091026.1239657-1-jianqi.ren.cn@windriver.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1743069212; c=relaxed/simple;
+	bh=96Owb78E2thV3EIFE/KrSP3invlfWid/GqlZPJEoYaY=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=XULR8DFhi3aKuwLn67MnGVaAUK32AIVXy6DOKMTE33KbI73WE7ZUD6jQwr72DCGyhng6gt2q3EUVphV8N98l6oATRW09oMp3XDljZVz5jVw7Yir1jbRMRtshQFq08a3RbNx/NfEhBFBuR39zOCY9xjlw2O0YjUA1t27fTbPEB70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BrtF0Ngx; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52R5jV48011085;
+	Thu, 27 Mar 2025 09:53:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=g3S0SIvq+yC3F431lcipLT
+	399sAgU5MgM45kpSQ/k7I=; b=BrtF0Ngxq9NQ+GMew7i/7azXbQ1TAJ3keGhe/X
+	YAF5L+XUzlsG27qlmgkOiAs2T4PL59J1FqoisIVUf45/+6mmrXGcAhqs+26BteCa
+	XXEBOb0D/D4DeKMKl9ScEOiOGBUKYmirM0Sl0v4OfqFpHb5YH1TZCSTczEXAQw0r
+	BFk4KyqR9G9bvGs31x9J1xeZBVjVmvOuixKU1tL0tS2A9Dvewlg92uT6lx9IlK8m
+	B/fsn0ZNN0ZqxV0scMz4Kfi4LsSIqmPrY7Py+GJXDtevS3rpiYjj4MT/pL10kyhK
+	o5Qux2fU+ZbCptny4IJqklYAmDAD1gCsd4JKsme0D6cIoveA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45n0kqgp9g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 27 Mar 2025 09:53:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52R9rOja013232
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 27 Mar 2025 09:53:24 GMT
+Received: from [10.213.98.28] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 27 Mar
+ 2025 02:53:18 -0700
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+Subject: [PATCH v3 00/18] clk: qcom: Add support to attach multiple power
+ domains in cc probe
+Date: Thu, 27 Mar 2025 15:22:20 +0530
+Message-ID: <20250327-videocc-pll-multi-pd-voting-v3-0-895fafd62627@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Authority-Analysis: v=2.4 cv=XNkwSRhE c=1 sm=1 tr=0 ts=67e51607 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=PY6Zn8H8AAAA:8 a=N54-gffFAAAA:8 a=yPCof4ZbAAAA:8 a=t7CeM3EgAAAA:8
- a=5s8WT1kodU2SEgI5n5gA:9 a=cvBusfyB2V15izCimMoJ:22 a=ySS05r0LPNlNiX1MMvNp:22 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-GUID: Gqh5IStRisjoFhxzw3k-prtDyJR8ytRv
-X-Proofpoint-ORIG-GUID: Gqh5IStRisjoFhxzw3k-prtDyJR8ytRv
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANQf5WcC/43Nuw6CQBCF4VchWztmdlEEK9/DWMDsAJMgi1w2G
+ sK7u9AYG2P5n+I7sxq4Fx7UOZpVz14GcW2IeBcpqvO2YhAbWhk0RzQ6BS+WHRF0TQP3qRkFOgv
+ ejdJWYBN9sMSZRj6pIHQ9l/Lc9OstdC3D6PrXdub1uv7neg0IVHJi0oxzkxWXxyQkLe3J3dUqe
+ /PRYkx+ayZoSBYx0aYg5G9tWZY3EASiWxYBAAA=
+X-Change-ID: 20250218-videocc-pll-multi-pd-voting-d614dce910e7
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Vladimir
+ Zapolskiy" <vladimir.zapolskiy@linaro.org>,
+        Dmitry Baryshkov
+	<lumag@kernel.org>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        "Satya Priya
+ Kakitapalli" <quic_skakitap@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Dmitry Baryshkov
+	<lumag@kernel.org>
+X-Mailer: b4 0.14.2
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: EKFtdZ8DHgAmCVqubKwFqgZ0tq1Q6YW0
+X-Authority-Analysis: v=2.4 cv=FrcF/3rq c=1 sm=1 tr=0 ts=67e52015 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8
+ a=Ow-QB-rqKcuzJRoLveoA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: EKFtdZ8DHgAmCVqubKwFqgZ0tq1Q6YW0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-26_09,2025-03-26_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
- mlxscore=0 impostorscore=0 adultscore=0 spamscore=0 phishscore=0
- mlxlogscore=999 malwarescore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
- definitions=main-2503270061
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
+ clxscore=1011 suspectscore=0 malwarescore=0 adultscore=0 impostorscore=0
+ mlxscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503270066
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+In recent QCOM chipsets, PLLs require more than one power domain to be
+kept ON to configure the PLL. But the current code doesn't enable all
+the required power domains while configuring the PLLs, this leads to
+functional issues due to suboptimal settings of PLLs.
 
-commit 64506b3d23a337e98a74b18dcb10c8619365f2bd upstream.
+To address this, add support for handling runtime power management,
+configuring plls and enabling critical clocks from qcom_cc_really_probe.
+The clock controller can specify PLLs, critical clocks, and runtime PM
+requirements in the descriptor data. The code in qcom_cc_really_probe()
+ensures all necessary power domains are enabled before configuring PLLs
+or critical clocks.
 
-Otherwise, it will result in a NULL pointer dereference as below:
+This series fixes the below warning reported in SM8550 venus testing due
+to video_cc_pll0 not properly getting configured during videocc probe
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
-Call trace:
- mutex_lock+0xc/0x54
- platform_device_msi_free_irqs_all+0x14/0x20
- ufs_qcom_remove+0x34/0x48 [ufs_qcom]
- platform_remove+0x28/0x44
- device_remove+0x4c/0x80
- device_release_driver_internal+0xd8/0x178
- driver_detach+0x50/0x9c
- bus_remove_driver+0x6c/0xbc
- driver_unregister+0x30/0x60
- platform_driver_unregister+0x14/0x20
- ufs_qcom_pltform_exit+0x18/0xb94 [ufs_qcom]
- __arm64_sys_delete_module+0x180/0x260
- invoke_syscall+0x44/0x100
- el0_svc_common.constprop.0+0xc0/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x34/0xdc
- el0t_64_sync_handler+0xc0/0xc4
- el0t_64_sync+0x190/0x194
+[   46.535132] Lucid PLL latch failed. Output may be unstable!
 
-Cc: stable@vger.kernel.org # 6.3
-Fixes: 519b6274a777 ("scsi: ufs: qcom: Add MCQ ESI config vendor specific ops")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20241111-ufs_bug_fix-v1-2-45ad8b62f02e@linaro.org
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+The patch adding support to configure the PLLs from common code is
+picked from below series and updated it.
+https://lore.kernel.org/all/20250113-support-pll-reconfigure-v1-0-1fae6bc1062d@quicinc.com/
+
+This series is dependent on bindings patch in below Vladimir's series, hence
+included the Vladimir's series patches also in this series and updated them.
+https://lore.kernel.org/all/20250303225521.1780611-1-vladimir.zapolskiy@linaro.org/
+
+Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
 ---
-Verified the build test
----
- drivers/ufs/host/ufs-qcom.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Changes in v3:
+ - Updated the videocc bindings patch to add required-opps for MXC power domain [Dmitry]
+   and added Bryan & Rob R/A-By tags received for this patch on v1.
+ - Included the Vladimir's bindings patch for SM8450 camcc bindings to
+   add multiple PD support and updated them to fix the bot warnings.
+ - Moved SC8280XP camcc bindings to SA8775P camcc since SC8280XP only
+   require single MMCX power domain
+ - Split runtime PM and PLL configuration to separate patches [Dmitry]
+ - Removed direct regmap_update_bits to configure clock CBCR's and
+   using clock helpers to configure the CBCR registers [Dmitry, Bryan]
+ - Added new helpers to configure all PLLs & update misc clock
+   register settings from common code [Dmitry, Bryan]
+ - Updated the name of qcom_clk_cfg structure to qcom_clk_reg_setting [Konrad]
+ - Updated the fields in structure from unsigned int to u32 and added
+   val field to this structure [Konrad]
+ - Added a new u32 array for cbcr branch clocks & num_clk_cbcrs fields
+   to maintain the list of critical clock cbcrs in clock controller
+   descriptor [Konrad]
+ - Updated the plls field to alpha_plls in descriptor structure [Konrad]
+ - Added WARN() in PLL configure function if PLL type passed is not
+   supported. The suggestion is to use BUG(), but updated it to
+   WARN() to avoid checkpatch warning. [Bjorn]
+ - Moved the pll configure and helper macros to PLL code from common code [Bjorn]
+ - Updated camcc drivers for SM8450, SM8550, SM8650 and X1E80100 targets
+   with support to configure PLLs from common code and added MXC power
+   domain in corresponding camcc DT nodes. [Bryan]
+ - Added Dmitry and Bryan R-By tags received on videocc DT node changes in v1
+ - Link to v2: https://lore.kernel.org/r/20250306-videocc-pll-multi-pd-voting-v2-0-0cd00612bc0e@quicinc.com
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index c5a6b133d364..51ed40529f9a 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1918,10 +1918,12 @@ static int ufs_qcom_probe(struct platform_device *pdev)
- static int ufs_qcom_remove(struct platform_device *pdev)
- {
- 	struct ufs_hba *hba =  platform_get_drvdata(pdev);
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
- 
- 	pm_runtime_get_sync(&(pdev)->dev);
- 	ufshcd_remove(hba);
--	platform_msi_domain_free_irqs(hba->dev);
-+	if (host->esi_enabled)
-+		platform_msi_domain_free_irqs(hba->dev);
- 	return 0;
- }
- 
+Changes in v2:
+ - Added support to handle rpm, PLL configuration and enable critical
+   clocks from qcom_cc_really_probe() in common code as per v1 commments
+   from Bryan, Konrad and Dmitry
+ - Added patches to configure PLLs from common code
+ - Updated the SM8450, SM8550 videocc patches to use the newly
+   added support to handle rpm, configure PLLs from common code
+ - Split the DT change for each target separately as per
+   Dmitry comments
+ - Added R-By and A-By tags received on v1
+- Link to v1: https://lore.kernel.org/r/20250218-videocc-pll-multi-pd-voting-v1-0-cfe6289ea29b@quicinc.com
+
+---
+Jagadeesh Kona (15):
+      dt-bindings: clock: qcom,sm8450-videocc: Add MXC power domain
+      dt-bindings: clock: qcom: Update sc8280xp camcc bindings
+      clk: qcom: common: Handle runtime power management in qcom_cc_really_probe
+      clk: qcom: common: Add support to configure clk regs in qcom_cc_really_probe
+      clk: qcom: videocc-sm8450: Move PLL & clk configuration to really probe
+      clk: qcom: videocc-sm8550: Move PLL & clk configuration to really probe
+      clk: qcom: camcc-sm8450: Move PLL & clk configuration to really probe
+      clk: qcom: camcc-sm8550: Move PLL & clk configuration to really probe
+      clk: qcom: camcc-sm8650: Move PLL & clk configuration to really probe
+      clk: qcom: camcc-x1e80100: Move PLL & clk configuration to really probe
+      arm64: dts: qcom: Add MXC power domain to videocc node on SM8450
+      arm64: dts: qcom: Add MXC power domain to videocc node on SM8550
+      arm64: dts: qcom: Add MXC power domain to videocc node on SM8650
+      arm64: dts: qcom: Add MXC power domain to camcc node on SM8450
+      arm64: dts: qcom: Add MXC power domain to camcc node on SM8650
+
+Taniya Das (1):
+      clk: qcom: clk-alpha-pll: Add support for common PLL configuration function
+
+Vladimir Zapolskiy (2):
+      dt-bindings: clock: qcom: sm8450-camcc: Allow to specify two power domains
+      arm64: dts: qcom: sm8550: Additionally manage MXC power domain in camcc
+
+ .../bindings/clock/qcom,sa8775p-camcc.yaml         |  2 +
+ .../bindings/clock/qcom,sm8450-camcc.yaml          | 20 +++--
+ .../bindings/clock/qcom,sm8450-videocc.yaml        | 18 +++--
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               | 12 ++-
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               | 12 ++-
+ arch/arm64/boot/dts/qcom/sm8650.dtsi               |  6 +-
+ drivers/clk/qcom/camcc-sm8450.c                    | 85 ++++++++++------------
+ drivers/clk/qcom/camcc-sm8550.c                    | 81 ++++++++++-----------
+ drivers/clk/qcom/camcc-sm8650.c                    | 79 ++++++++++----------
+ drivers/clk/qcom/camcc-x1e80100.c                  | 63 +++++++---------
+ drivers/clk/qcom/clk-alpha-pll.c                   | 63 ++++++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.h                   |  3 +
+ drivers/clk/qcom/common.c                          | 65 ++++++++++++++---
+ drivers/clk/qcom/common.h                          | 20 +++++
+ drivers/clk/qcom/videocc-sm8450.c                  | 54 ++++++--------
+ drivers/clk/qcom/videocc-sm8550.c                  | 55 ++++++--------
+ 16 files changed, 377 insertions(+), 261 deletions(-)
+---
+base-commit: 138cfc44b3c4a5fb800388c6e27be169970fb9f7
+change-id: 20250218-videocc-pll-multi-pd-voting-d614dce910e7
+
+Best regards,
 -- 
-2.25.1
+Jagadeesh Kona <quic_jkona@quicinc.com>
 
 
