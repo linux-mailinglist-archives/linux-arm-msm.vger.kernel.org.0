@@ -1,162 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-52662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05525A735CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 16:40:48 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7A97A735E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 16:47:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2953E189D1EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 15:39:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B4611798C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 15:47:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C88981925BF;
-	Thu, 27 Mar 2025 15:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D9B0155C83;
+	Thu, 27 Mar 2025 15:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fiNAEZ/d"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XO6E1K9K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DB112C7FD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 15:39:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E971DA3D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 15:46:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743089953; cv=none; b=JKwZsMHt5YCzLNYmxCmc2DnbBX+FyX9gc/VD1QnXiGarZCLTcl95fyO1MEyHJJnF5lnKYkczJui/GJgQs0+A2fwDqqH9sdG/RCTuVzP6WJJqat+9YNZ0Q9rIbF7gd72i+KE3MUAh2yn+eCXuOoKATGrAqfh7f4TObU74MNB2FT8=
+	t=1743090416; cv=none; b=ZhI/vEn4ciHx+/Hwl24EBKcaY0pBVSXtE62vQMVusoUaNnqZgtAZca2OsKpro2EgW+V/27te132Clq8xCbinK/epIxPYQGXeCLXFZT8SuseicgNSaeg9GlBUTfZqoX29fWPx1rgdX3jue9HnLD/sdhV3yTaw8b0sFm7aWUijRTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743089953; c=relaxed/simple;
-	bh=iAOo3qQbFdHRPvpiwQ6URvgLoftj9WyyrxLOyXzy7dE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=asuRYsB/tumGoJecpnra5apU3vAe+tkwsXhx2p9Hq8keFAloUfO7TaQam4q9iZfywrQezqnZa2auLOxw5Qgs6ZMHMO3nGBGWPfWKRiuzWwAuI+ksuFF2HarxizVS5F1XS+kOhT869KWkbzI5WP7eoUWmlcRtiF3HXyreq/Ps6hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fiNAEZ/d; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1743090416; c=relaxed/simple;
+	bh=LPH7fmB2piYJTlMhDGZnc6I3l1pOMgZFoEBi543qq+s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HzjiFAg/Totdb48nuu1tNSFhMurqVsIBpjTeT1pwlaub0pGY1UlWC9+WBB80FS9VMKhD+KIdM0Vh/V4RqqezAAb977M19IbV9FYbgzpecNl2UZO5UvlBo3qHnGvqgO6yaD5aba4IOQ42QV6kL7iwsYcf9laGOmwLS6trmEDLGb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XO6E1K9K; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3914aba1ce4so940683f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 08:39:11 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43cfebc343dso9350585e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Mar 2025 08:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743089950; x=1743694750; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ymoLsASUKMBlyvnyVSwfPY6l90pScenHxGprvSvqScE=;
-        b=fiNAEZ/d9tALL/K9+gx5dOddzfLq5Ka6+AHb1oYBXgOqvuO+GmvaI5suqkj0y6nhWA
-         rlPePQSuOl4Mgm3bIO8kWfEH1OhRa1SHZ9ZfyFveQeqo6XXylGeHbgLgkTafHw5f3sny
-         QPUll3C09sHHs0p8HsKSZ5SlIMu4Ih76lzUMb6uAFTmZAAGyCRixOXoPD3PSHekIWqQX
-         d4fRPi6GOaRiUWBIhhfPrTDZQ6Gyzmzrz8O/m7aA2ihMkEqM27raNKJYIcmkhv3oNrEg
-         oeWQ6rY7ritNZzpPCQadUgqB42Ha3OyZaSRdhiTZ4vqtHsXQS24+Q+d0IG+bXr0wCnlv
-         UdoA==
+        d=linaro.org; s=google; t=1743090411; x=1743695211; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tA2zJWv1o+75nzP8/krgasVJF7/Bs9xLeh0TRybxqLI=;
+        b=XO6E1K9KBKFAlkpvoa6b0HjQWU6bAXd8PE2o4jWs5h21l+Ayfus4yWTQYC0Tf23w/3
+         oZdXcrQBVP2Gznv5foI/iIsk0dvsWLRJk7k4ouCuVy7/MxLuOvjnEtcpUHx8t47JJgSE
+         iKdMXxQKJuXD/wul5EuiFJxBiqb0/KvDF0xN5wU1v3S0MKxjLlOz5gHcUDQYP5YqX6Ic
+         Q3O6ZsFT3e9lEI/KbdfDEEhDT+lE3ui27Q+VGwr+epSUva1m87kWp8QGqrH0tx3wpL8w
+         hTep97GrN9dw79lU/XvF0mlw4ffv/TBS9UTYAPKOFbXQrJ8GmXYHWfT7bPLyOZ3vJgLB
+         uquQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743089950; x=1743694750;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ymoLsASUKMBlyvnyVSwfPY6l90pScenHxGprvSvqScE=;
-        b=rI0ujuykue2PgrGzIEUZpiZgvmLwEbt7QraMW05ruptd7gYXjCnzw2UYADIEQ09J8t
-         DI0YDdHQeDTSnKSNdm58fbEUSNen4T7qb0Loe74Wop2j/Qf5jvwBVaMlfcCo8FRiYAGy
-         ZLr0RWnys6MzyHqrBhQMKy2zr+NY8pfaYq8a8vQive91qHsRimW/oESWclZT6LoPMfjg
-         6yXfrTNznJRIbvACuy6yW85qb3i6jIx3oJNOWKs4Qfl8jIWiNwdmka21DW4yWpb37CwR
-         eCiq5IKJ9yvCF+wnVQIr1zENXf7M1KStm2HAm18M700KHBnzITSYA0IJU7wKhTaH2lP2
-         t6rQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUH1HSgZqA5Kd6XPOD459bg/B/hk/8N9PzmkIG6cKUYOPnix5v5d2b7/YUHeo3MaDGZyuIrx2oGnMIsZ9Hi@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCysjHlhKUbAhHjlrYIFYlPr3dG5EF+qK1mYrDvYDFlvN+UD4b
-	qIEQ+c7yxTzMbk4daszC3jxBhpkGKarS9gz+6iNl8sRHtBwe6fUHEJ3ETTWpbWs=
-X-Gm-Gg: ASbGncs7fwgSkhjrXFbTqlaZMw55sUgJg8oN6DEuaA1WDkMn1o4IX0GwI79BZI4vTWc
-	i/QPFoC/r35LMJOtB23QRnlCynFXFn+zTA7T6VUjzL3p8xeTDxCcUjsVPKYKNBhaUnntSumEQ5u
-	B3/Tt9s9g9vmk01qXu03KXxZELPdMd1aMatugmHc/MBzZgbfGpMDxwjJGKg07g8DrROB4sfanls
-	lrb/e8H9P6YRzkqdBQ7lKBzBfcXgM+kkP2BSl8/G5KmR7NHOY3FS4pvHJXIqmULIQfgCHbo5BK5
-	cHLzbOyt4NZAs6lcdYxbIYFOVOQCzbOsrnq7vEWucFP4u7xFQ0C+502F4DvIqH41eiAtuQ0qvw0
-	aaVGtIbqYj9WvhNkfYHhu
-X-Google-Smtp-Source: AGHT+IGyrq8BLj3GNTEbMeK2aMER+K+7T12e75iuTsRmZkET3cjw7uq2dfr/7idg5JtEdGKRe48sdg==
-X-Received: by 2002:a05:6000:2a1:b0:391:466f:314e with SMTP id ffacd0b85a97d-39ad1741a73mr3848575f8f.16.1743089950131;
-        Thu, 27 Mar 2025 08:39:10 -0700 (PDT)
-Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9ef16csm20195844f8f.86.2025.03.27.08.39.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Mar 2025 08:39:09 -0700 (PDT)
-Message-ID: <8721c38b-3414-4635-871d-2bd142fd23ab@linaro.org>
-Date: Thu, 27 Mar 2025 15:39:08 +0000
+        d=1e100.net; s=20230601; t=1743090411; x=1743695211;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tA2zJWv1o+75nzP8/krgasVJF7/Bs9xLeh0TRybxqLI=;
+        b=aNJoFAScGaNWMPmn7BrKyCaHuA/mU7pF/R3S++2jVC7wI+VvE0NK9jisG2hZivFOFw
+         436dcjHX4TMpNXRt3YhFrVU8djg2spZuQYWy5AX4pCI1KI1Myp6GzjCC81qz44SjaQ1+
+         bF1ab4SGrE3qNhlGGcFVYMNjVoTc9D9U8OQiKfWhrT3yL6llLLI57AHdl2/LFc6qIVdc
+         k8faqI6ybCNgNKYYEuCwqEV41QaYDqHIHM1v9D2SFAQZLx7T7hvAxO/NGDBXxhhe1cUl
+         uuWdegwST8tv9GeRTWtz2b96aAWLgqPEr6Qw9YBekwDH1wAUDDBoXPC5GL5WcP+3DS0D
+         VBfA==
+X-Forwarded-Encrypted: i=1; AJvYcCUkjL5uUR6U8yOekthYhW7tRtgt3hl8ZK2wSpEWa8kb+drimDNS1TlxyT7NAEKYPo52woqQUYUSb3BPuoJm@vger.kernel.org
+X-Gm-Message-State: AOJu0YwkrMPkwzlVdwGXkh6Ovrdj4UWNUQtZDsK08vMRNeyS30yJbefL
+	gnD8vEOwhwjlf92sHrROklA9vSOUc7TlCTTQSB58cicXpFAas9jNQCPSsqE5sLQ=
+X-Gm-Gg: ASbGncsrPt53jPHQ2iXM5yOw+DBvTz+baBTc/xawToEx/+xQWZyP7h2QFFDLw64Bfbh
+	dEj47YwtpI2VEEP5WuYiEVx4p5kU+3jX+jX7SR919QGin6Aqlv1hTx2RYKgs1ZTirn4KdX9pARz
+	56oXVd/JV8HQU7QSQs34MUor+ITT7pmaXd9JzcU19BqMYlRWMroN+sipjBunbPZDuztWICBO/MW
+	M7Tjgaa6o/3qmNalfwP2dxEA+0v7vtH9WeYz1CGcw1esRJMrhNj0tf3dIUv7fFQtMgPL3eE4S76
+	rnHsbHk/zW/wuLQ+ufQSyN4nzEc9ah5B79hyhf13Opx1qHOe0Lnfou+L7wwZpXUuglU=
+X-Google-Smtp-Source: AGHT+IEQdOD49ykeAMjyB/w/AZwjJja6wbJrFyDzakLR4KdkXKrN6xLOpUaq5nSdkDLMVtpBUCPPHg==
+X-Received: by 2002:a05:600c:458e:b0:43c:e9d0:9ee5 with SMTP id 5b1f17b1804b1-43d84fc181emr43722905e9.18.1743090411433;
+        Thu, 27 Mar 2025 08:46:51 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:c7c:7213:c700:e992:6869:474c:a63f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d82dedde6sm41768545e9.5.2025.03.27.08.46.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Mar 2025 08:46:51 -0700 (PDT)
+From: Alexey Klimov <alexey.klimov@linaro.org>
+To: broonie@kernel.org,
+	srinivas.kandagatla@linaro.org,
+	linux-sound@vger.kernel.org
+Cc: lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	krzysztof.kozlowski@linaro.org,
+	pierre-louis.bossart@linux.dev,
+	vkoul@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org,
+	dmitry.baryshkov@oss.qualcomm.com
+Subject: [PATCH] ASoC: qdsp6: q6asm-dai: fix q6asm_dai_compr_set_params error path
+Date: Thu, 27 Mar 2025 15:46:50 +0000
+Message-ID: <20250327154650.337404-1-alexey.klimov@linaro.org>
+X-Mailer: git-send-email 2.47.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/18] dt-bindings: clock: qcom: Update sc8280xp camcc
- bindings
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Dmitry Baryshkov <lumag@kernel.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20250327-videocc-pll-multi-pd-voting-v3-0-895fafd62627@quicinc.com>
- <20250327-videocc-pll-multi-pd-voting-v3-2-895fafd62627@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250327-videocc-pll-multi-pd-voting-v3-2-895fafd62627@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 27/03/2025 09:52, Jagadeesh Kona wrote:
-> Move SC8280XP camcc bindings from SM8450 to SA8775P camcc.
-> SC8280XP camcc only requires the MMCX power domain, unlike
-> SM8450 camcc which will now support both MMCX and MXC power
-> domains.
-> 
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> ---
->   Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml | 2 ++
->   Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml  | 2 --
->   2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
-> index 81623f59d11d73839e5c551411a52427e2f28415..127c369dd452608e5e7a52c7297b6b343d1c1bf8 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
-> @@ -17,12 +17,14 @@ description: |
->     See also:
->       include/dt-bindings/clock/qcom,qcs8300-camcc.h
->       include/dt-bindings/clock/qcom,sa8775p-camcc.h
-> +    include/dt-bindings/clock/qcom,sc8280xp-camcc.h
->   
->   properties:
->     compatible:
->       enum:
->         - qcom,qcs8300-camcc
->         - qcom,sa8775p-camcc
-> +      - qcom,sc8280xp-camcc
->   
->     clocks:
->       items:
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> index 9e79f8fec437b9aecb5103092f6ff2ad1cd42626..883f12e3d11fa16384108434f6de120162226a28 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> @@ -15,7 +15,6 @@ description: |
->     domains on SM8450.
->   
->     See also:
-> -    include/dt-bindings/clock/qcom,sc8280xp-camcc.h
->       include/dt-bindings/clock/qcom,sm8450-camcc.h
->       include/dt-bindings/clock/qcom,sm8550-camcc.h
->       include/dt-bindings/clock/qcom,sm8650-camcc.h
-> @@ -23,7 +22,6 @@ description: |
->   properties:
->     compatible:
->       enum:
-> -      - qcom,sc8280xp-camcc
->         - qcom,sm8450-camcc
->         - qcom,sm8475-camcc
->         - qcom,sm8550-camcc
-> 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In case of attempts to compress playback something, for instance,
+when audio routing is not set up correctly, the audio DSP is left in
+inconsistent state because we are not doing the correct things in
+the error path of q6asm_dai_compr_set_params().
+
+So, when routing is not set up and compress playback is attempted
+the following errors are present (simplified log):
+
+q6routing routing: Routing not setup for MultiMedia-1 Session
+q6asm-dai dais: Stream reg failed ret:-22
+q6asm-dai dais: ASoC error (-22): at snd_soc_component_compr_set_params()
+on 17300000.remoteproc:glink-edge:apr:service@7:dais
+
+After setting the correct routing the compress playback will always fail:
+
+q6asm-dai dais: cmd = 0x10db3 returned error = 0x9
+q6asm-dai dais: DSP returned error[9]
+q6asm-dai dais: q6asm_open_write failed
+q6asm-dai dais: ASoC error (-22): at snd_soc_component_compr_set_params()
+on 17300000.remoteproc:glink-edge:apr:service@7:dais
+
+0x9 here means "Operation is already processed". The CMD_OPEN here was
+sent the second time hence DSP responds that it was already done.
+
+Turns out the CMD_CLOSE should be sent after the q6asm_open_write()
+succeeded but something failed after that, for instance, routing
+setup.
+
+Fix this by slightly reworking the error path in
+q6asm_dai_compr_set_params().
+
+Tested on QRB5165 RB5 and SDM845 RB3 boards.
+
+Cc: stable@vger.kernel.org
+Fixes: 5b39363e54cc ("ASoC: q6asm-dai: prepare set params to accept profile change")
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+---
+ sound/soc/qcom/qdsp6/q6asm-dai.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
+
+diff --git a/sound/soc/qcom/qdsp6/q6asm-dai.c b/sound/soc/qcom/qdsp6/q6asm-dai.c
+index 045100c94352..a400c9a31fea 100644
+--- a/sound/soc/qcom/qdsp6/q6asm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
+@@ -892,9 +892,7 @@ static int q6asm_dai_compr_set_params(struct snd_soc_component *component,
+ 
+ 		if (ret < 0) {
+ 			dev_err(dev, "q6asm_open_write failed\n");
+-			q6asm_audio_client_free(prtd->audio_client);
+-			prtd->audio_client = NULL;
+-			return ret;
++			goto open_err;
+ 		}
+ 	}
+ 
+@@ -903,7 +901,7 @@ static int q6asm_dai_compr_set_params(struct snd_soc_component *component,
+ 			      prtd->session_id, dir);
+ 	if (ret) {
+ 		dev_err(dev, "Stream reg failed ret:%d\n", ret);
+-		return ret;
++		goto q6_err;
+ 	}
+ 
+ 	ret = __q6asm_dai_compr_set_codec_params(component, stream,
+@@ -911,7 +909,7 @@ static int q6asm_dai_compr_set_params(struct snd_soc_component *component,
+ 						 prtd->stream_id);
+ 	if (ret) {
+ 		dev_err(dev, "codec param setup failed ret:%d\n", ret);
+-		return ret;
++		goto q6_err;
+ 	}
+ 
+ 	ret = q6asm_map_memory_regions(dir, prtd->audio_client, prtd->phys,
+@@ -920,12 +918,21 @@ static int q6asm_dai_compr_set_params(struct snd_soc_component *component,
+ 
+ 	if (ret < 0) {
+ 		dev_err(dev, "Buffer Mapping failed ret:%d\n", ret);
+-		return -ENOMEM;
++		ret = -ENOMEM;
++		goto q6_err;
+ 	}
+ 
+ 	prtd->state = Q6ASM_STREAM_RUNNING;
+ 
+ 	return 0;
++
++q6_err:
++	q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
++
++open_err:
++	q6asm_audio_client_free(prtd->audio_client);
++	prtd->audio_client = NULL;
++	return ret;
+ }
+ 
+ static int q6asm_dai_compr_set_metadata(struct snd_soc_component *component,
+-- 
+2.47.2
+
 
