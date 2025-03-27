@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-52603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 151F4A72CF1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 10:56:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EA8BA72CF5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 10:56:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 34791189CEB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 09:55:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D731189530E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Mar 2025 09:55:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DD9120E00F;
-	Thu, 27 Mar 2025 09:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76DEF20F08A;
+	Thu, 27 Mar 2025 09:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bMI/hcbH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gesjYa6r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6CC20D50C;
-	Thu, 27 Mar 2025 09:54:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D7A20D50C;
+	Thu, 27 Mar 2025 09:54:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743069246; cv=none; b=s0j43EvYQS0hBzUxnO2Xv9dh5KJuiGXNxEZK40JFCd0ThIlfhteEM/GjefTOsMPNPgkaHI8Fpy8tzn1qh4ZU9qJSiGGz2HWRuoocSvgUvy0cBLHzXSdZO4PTRAsxHGhj4NX98REE9ZvnIc3cJqjUsQhvx8x/WEvbIzAq6SNGQXI=
+	t=1743069251; cv=none; b=W64GcmWUfSfARCSLSBAXVC9HLEfrbUvNiYFmZe5KfNnSui+jvO+I5SgluAYkM8e2LanDedTSDu8CWICwQysogJxM7Roxn3QLNzOKsMaZ6kXUN/UjcgyAV9HMFP9jbcKwK7QFgAF0UMLjMBA9rAWTDR/dVFe6Uzx1U1x0Wk3mL2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743069246; c=relaxed/simple;
-	bh=BbdT+VS2aQhhlTcdaylJsI5mJSvaMzgR8V+K3HVdzBA=;
+	s=arc-20240116; t=1743069251; c=relaxed/simple;
+	bh=n+yBW6XU+DvrGgW2oSPempC544Rm8Jj4C4Y3nyTou90=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=EnLPQBlZMLLsIzkO8WIpKjKMKXiqcTzmADBDT1beGPm0WQurEayhOieMBb5WRpsfSovKrreVKVCUZXoNCSNp/YtGZjc7mv8BpnR35AX4Jxc36iPSUFTUOCyBxI6dF96sOYWP91X6Erm0yJmWvNPTB3C6mBnJtBqNupCm4bm5/uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bMI/hcbH; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:CC; b=kHjKyx/3MNYH8mqnjbmoJ4HgNdHp5s4AC3tFL39HJj0GwFeyud6+jEByxeoUkHPUuO4chYzDV5/el/kP1Cbr2tBm3XNV6/uLPtu9Bnrdas9MEzIjP9nAHTNBf9D/JaUSUzUY69RRRTFPn5K+6F//J8DLIRrZip45V9+7YuUUUYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gesjYa6r; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52R5jGJf022939;
-	Thu, 27 Mar 2025 09:54:00 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52R5jc5d011052;
+	Thu, 27 Mar 2025 09:54:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KHEe4Jo8oSWX427JYqNXFdmO3q7G/WUNb6A64+7siDY=; b=bMI/hcbHow3dNv6Q
-	4xVHwPp+3RX2Suyw0TUq7i85oC6GyEhRS5M172/0E+Y0A+6nZ16qA+xWQxBits9i
-	+va604jAdmSLfKb6Z+RvAsqoeThN93l/+74k0aEEiGBEdyRbQsetdHEDdGJCJ0qb
-	sr62YuIX08AHZdn/mNvevpZ48TKvWYsOscnW+LEICT85hpf4wnf3Y+Wf4XYABaFc
-	MEbFAfYcwS7NBHLjnjaUwYZZO6Xi7pAOUYMYC8isEV3QnymC1GQe9Rp8nr9KYjBn
-	IP1p0RZ6h8CqvH/ZYqZRy9Y0ucNFiRPF2eVjPjM9FBs6tKolXKkCi4dkCwJz0DLc
-	H+WfHg==
+	JyxlTf89lZD3fi5MKVckAa1EUwAOLCn6eieTl49Zeyg=; b=gesjYa6rsAxN3EJa
+	1L7sLbCrg+a3Jj3CqPNePY2NoY8goLHmEJvjCYMk9rkME1ry+yZAvXAdXTAoob9A
+	9eGefQkf5m/O0QGGyEsc5jyHTGOFoqGsRK4W7Ol2GS5SwHWC3RXcZr2QdZxu87EE
+	du0cAknOEe69REk0tBoiANRww7hhDUQRo8oYtGnQfnSibUDkdSaiaq/KL7qTiyWv
+	QCCAV1cLGG4vCzB9iAtjd/OYMQHlPpauJBjgclLQri6Uh7NXWmNR6XSequ+moFhq
+	wjszZZ79lNJZ20JHq/ITHPxZ3BhiBzlU/o2gkVtpbPhHYHWWclKMFRzaJGNMNTjn
+	cqWWDg==
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45mb9mv9xy-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45kmcyg4kx-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Mar 2025 09:54:00 +0000 (GMT)
+	Thu, 27 Mar 2025 09:54:05 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52R9rxY2019134
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52R9s59q019401
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Mar 2025 09:53:59 GMT
+	Thu, 27 Mar 2025 09:54:05 GMT
 Received: from [10.213.98.28] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 27 Mar
- 2025 02:53:53 -0700
+ 2025 02:53:59 -0700
 From: Jagadeesh Kona <quic_jkona@quicinc.com>
-Date: Thu, 27 Mar 2025 15:22:26 +0530
-Subject: [PATCH v3 06/18] clk: qcom: common: Add support to configure clk
- regs in qcom_cc_really_probe
+Date: Thu, 27 Mar 2025 15:22:27 +0530
+Subject: [PATCH v3 07/18] clk: qcom: videocc-sm8450: Move PLL & clk
+ configuration to really probe
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250327-videocc-pll-multi-pd-voting-v3-6-895fafd62627@quicinc.com>
+Message-ID: <20250327-videocc-pll-multi-pd-voting-v3-7-895fafd62627@quicinc.com>
 References: <20250327-videocc-pll-multi-pd-voting-v3-0-895fafd62627@quicinc.com>
 In-Reply-To: <20250327-videocc-pll-multi-pd-voting-v3-0-895fafd62627@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -101,121 +101,140 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=cs+bk04i c=1 sm=1 tr=0 ts=67e52038 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=VTlJxEOIkQDSKMlf4IcA:9 a=QEXdDO2ut3YA:10
+X-Authority-Analysis: v=2.4 cv=EZ3IQOmC c=1 sm=1 tr=0 ts=67e5203d cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=NSTayzwvANHeSgS_AzkA:9 a=QEXdDO2ut3YA:10
  a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: pgFN-Ti0TQNH_A8gRJ41bIcNAXV98Rtd
-X-Proofpoint-ORIG-GUID: pgFN-Ti0TQNH_A8gRJ41bIcNAXV98Rtd
+X-Proofpoint-ORIG-GUID: Bkwoq_L-hcf_LHiCmZB_UA2MCHeFsI8B
+X-Proofpoint-GUID: Bkwoq_L-hcf_LHiCmZB_UA2MCHeFsI8B
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-26_09,2025-03-26_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- bulkscore=0 mlxlogscore=999 malwarescore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0
- mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ adultscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2503270066
 
-Add support to configure PLLS and clk registers in qcom_cc_really_probe().
-This ensures all required power domains are enabled and kept ON by runtime
-PM code in qcom_cc_really_probe() before configuring the PLLS or clock
-registers.
+Video PLLs on SM8450/SM8475 require both MMCX and MXC rails to be kept ON
+to configure the PLLs properly. Hence move runtime power management, PLL
+configuration and enable critical clocks to qcom_cc_really_probe() which
+ensures all required power domains are in enabled state before configuring
+the PLLs or enabling the clocks.
 
 Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
 ---
- drivers/clk/qcom/common.c | 28 ++++++++++++++++++++++++++++
- drivers/clk/qcom/common.h | 19 +++++++++++++++++++
- 2 files changed, 47 insertions(+)
+ drivers/clk/qcom/videocc-sm8450.c | 54 +++++++++++++++------------------------
+ 1 file changed, 21 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-index 9cbf1c5296dad3ee5477a2f5a445488707663b9d..c4d980c6145834969fada14863360ee81c9aa251 100644
---- a/drivers/clk/qcom/common.c
-+++ b/drivers/clk/qcom/common.c
-@@ -14,6 +14,8 @@
- #include <linux/of.h>
+diff --git a/drivers/clk/qcom/videocc-sm8450.c b/drivers/clk/qcom/videocc-sm8450.c
+index 2e11dcffb6646d47b298c27ef68635a465dd728e..50259374273d04dcf1486ea59915347340b6f2aa 100644
+--- a/drivers/clk/qcom/videocc-sm8450.c
++++ b/drivers/clk/qcom/videocc-sm8450.c
+@@ -7,7 +7,6 @@
+ #include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+-#include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
  
- #include "common.h"
-+#include "clk-alpha-pll.h"
-+#include "clk-branch.h"
- #include "clk-rcg.h"
- #include "clk-regmap.h"
- #include "reset.h"
-@@ -285,6 +287,29 @@ static int qcom_cc_icc_register(struct device *dev,
- 						     desc->num_icc_hws, icd);
- }
+ #include <dt-bindings/clock/qcom,sm8450-videocc.h>
+@@ -63,6 +62,7 @@ static const struct alpha_pll_config sm8475_video_cc_pll0_config = {
  
-+static void qcom_cc_clk_pll_configure(const struct qcom_cc_desc *desc,
-+				      struct regmap *regmap)
-+{
-+	int i;
-+
-+	for (i = 0; i < desc->num_alpha_plls; i++)
-+		qcom_clk_alpha_pll_configure(desc->alpha_plls[i], regmap);
-+}
-+
-+static void qcom_cc_clk_regs_configure(const struct qcom_cc_desc *desc,
-+				       struct regmap *regmap)
-+{
-+	struct qcom_clk_reg_setting *clk_regs = desc->clk_regs;
-+	int i;
-+
-+	for (i = 0; i < desc->num_clk_cbcrs; i++)
-+		qcom_branch_set_clk_en(regmap, desc->clk_cbcrs[i]);
-+
-+	for (i = 0 ; i < desc->num_clk_regs; i++)
-+		regmap_update_bits(regmap, clk_regs[i].offset,
-+				   clk_regs[i].mask, clk_regs[i].val);
-+}
-+
- int qcom_cc_really_probe(struct device *dev,
- 			 const struct qcom_cc_desc *desc, struct regmap *regmap)
- {
-@@ -315,6 +340,9 @@ int qcom_cc_really_probe(struct device *dev,
- 			return ret;
- 	}
+ static struct clk_alpha_pll video_cc_pll0 = {
+ 	.offset = 0x0,
++	.config = &video_cc_pll0_config,
+ 	.vco_table = lucid_evo_vco,
+ 	.num_vco = ARRAY_SIZE(lucid_evo_vco),
+ 	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+@@ -106,6 +106,7 @@ static const struct alpha_pll_config sm8475_video_cc_pll1_config = {
  
-+	qcom_cc_clk_pll_configure(desc, regmap);
-+	qcom_cc_clk_regs_configure(desc, regmap);
-+
- 	reset = &cc->reset;
- 	reset->rcdev.of_node = dev->of_node;
- 	reset->rcdev.ops = &qcom_reset_ops;
-diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
-index 9c10bc8c197cd7dfa25ccd245763ad6acb081523..01b1ae52f2dc580350409d6244578944cce571f0 100644
---- a/drivers/clk/qcom/common.h
-+++ b/drivers/clk/qcom/common.h
-@@ -25,6 +25,19 @@ struct qcom_icc_hws_data {
- 	int clk_id;
+ static struct clk_alpha_pll video_cc_pll1 = {
+ 	.offset = 0x1000,
++	.config = &video_cc_pll1_config,
+ 	.vco_table = lucid_evo_vco,
+ 	.num_vco = ARRAY_SIZE(lucid_evo_vco),
+ 	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+@@ -407,6 +408,17 @@ static const struct qcom_reset_map video_cc_sm8450_resets[] = {
+ 	[VIDEO_CC_MVS1C_CLK_ARES] = { .reg = 0x808c, .bit = 2, .udelay = 1000 },
  };
  
-+/**
-+ * struct qcom_clk_reg_setting - Represents miscellaneous clock register settings
-+ * @offset: address offset for the clock register
-+ * @mask: bit mask indicating the bits to be updated
-+ * @val: Encoded value to be set within the specified bit mask
-+ *       (e.g., if writing 7 to bits 4-7, mask = 0xF0 and val = 0x70)
-+ */
-+struct qcom_clk_reg_setting {
-+	u32 offset;
-+	u32 mask;
-+	u32 val;
++static struct clk_alpha_pll *video_cc_sm8450_plls[] = {
++	&video_cc_pll0,
++	&video_cc_pll1,
 +};
 +
- struct qcom_cc_desc {
- 	const struct regmap_config *config;
- 	struct clk_regmap **clks;
-@@ -38,6 +51,12 @@ struct qcom_cc_desc {
- 	const struct qcom_icc_hws_data *icc_hws;
- 	size_t num_icc_hws;
- 	unsigned int icc_first_node_id;
-+	u32 *clk_cbcrs;
-+	size_t num_clk_cbcrs;
-+	struct clk_alpha_pll **alpha_plls;
-+	size_t num_alpha_plls;
-+	struct qcom_clk_reg_setting *clk_regs;
-+	size_t num_clk_regs;
- 	bool use_rpm;
++static u32 video_cc_sm8450_critical_cbcrs[] = {
++	0x80e4, /* VIDEO_CC_AHB_CLK */
++	0x8114, /* VIDEO_CC_XO_CLK */
++	0x8130, /* VIDEO_CC_SLEEP_CLK */
++};
++
+ static const struct regmap_config video_cc_sm8450_regmap_config = {
+ 	.reg_bits = 32,
+ 	.reg_stride = 4,
+@@ -423,6 +435,11 @@ static const struct qcom_cc_desc video_cc_sm8450_desc = {
+ 	.num_resets = ARRAY_SIZE(video_cc_sm8450_resets),
+ 	.gdscs = video_cc_sm8450_gdscs,
+ 	.num_gdscs = ARRAY_SIZE(video_cc_sm8450_gdscs),
++	.alpha_plls = video_cc_sm8450_plls,
++	.num_alpha_plls = ARRAY_SIZE(video_cc_sm8450_plls),
++	.clk_cbcrs = video_cc_sm8450_critical_cbcrs,
++	.num_clk_cbcrs = ARRAY_SIZE(video_cc_sm8450_critical_cbcrs),
++	.use_rpm = true,
  };
  
+ static const struct of_device_id video_cc_sm8450_match_table[] = {
+@@ -434,23 +451,6 @@ MODULE_DEVICE_TABLE(of, video_cc_sm8450_match_table);
+ 
+ static int video_cc_sm8450_probe(struct platform_device *pdev)
+ {
+-	struct regmap *regmap;
+-	int ret;
+-
+-	ret = devm_pm_runtime_enable(&pdev->dev);
+-	if (ret)
+-		return ret;
+-
+-	ret = pm_runtime_resume_and_get(&pdev->dev);
+-	if (ret)
+-		return ret;
+-
+-	regmap = qcom_cc_map(pdev, &video_cc_sm8450_desc);
+-	if (IS_ERR(regmap)) {
+-		pm_runtime_put(&pdev->dev);
+-		return PTR_ERR(regmap);
+-	}
+-
+ 	if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8475-videocc")) {
+ 		/* Update VideoCC PLL0 */
+ 		video_cc_pll0.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE];
+@@ -458,23 +458,11 @@ static int video_cc_sm8450_probe(struct platform_device *pdev)
+ 		/* Update VideoCC PLL1 */
+ 		video_cc_pll1.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE];
+ 
+-		clk_lucid_ole_pll_configure(&video_cc_pll0, regmap, &sm8475_video_cc_pll0_config);
+-		clk_lucid_ole_pll_configure(&video_cc_pll1, regmap, &sm8475_video_cc_pll1_config);
+-	} else {
+-		clk_lucid_evo_pll_configure(&video_cc_pll0, regmap, &video_cc_pll0_config);
+-		clk_lucid_evo_pll_configure(&video_cc_pll1, regmap, &video_cc_pll1_config);
++		video_cc_pll0.config = &sm8475_video_cc_pll0_config;
++		video_cc_pll1.config = &sm8475_video_cc_pll1_config;
+ 	}
+ 
+-	/* Keep some clocks always-on */
+-	qcom_branch_set_clk_en(regmap, 0x80e4); /* VIDEO_CC_AHB_CLK */
+-	qcom_branch_set_clk_en(regmap, 0x8130); /* VIDEO_CC_SLEEP_CLK */
+-	qcom_branch_set_clk_en(regmap, 0x8114); /* VIDEO_CC_XO_CLK */
+-
+-	ret = qcom_cc_really_probe(&pdev->dev, &video_cc_sm8450_desc, regmap);
+-
+-	pm_runtime_put(&pdev->dev);
+-
+-	return ret;
++	return qcom_cc_probe(pdev, &video_cc_sm8450_desc);
+ }
+ 
+ static struct platform_driver video_cc_sm8450_driver = {
 
 -- 
 2.34.1
