@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-52768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43736A74A80
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 14:20:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FFEFA74AAD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 14:34:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F33BB3B000A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 13:19:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7392217834D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 13:32:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7409D145A18;
-	Fri, 28 Mar 2025 13:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67EE022256D;
+	Fri, 28 Mar 2025 13:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="QRVsdUjm"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="V+ct6d2a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.17.12])
+Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A048D136349;
-	Fri, 28 Mar 2025 13:19:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31632222C7;
+	Fri, 28 Mar 2025 13:28:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743167996; cv=none; b=rnoEg3Z3zb+bVl7NQsBphT/vBBrle8Vn4aSPe3jhApj+TEubyjFcodb+gxzWqnOvoX812A4Bwg7/1LOBeal2m26Z5CqAddDqBTgJ0lzoVHXGY1NAgIRFIdP7NPFRFiChYsxcqCs6ZRcy4HD4TSc+Df2DhQl5cuoEcUqE3W0KZzQ=
+	t=1743168513; cv=none; b=SFGz4ur9oJLm2ekkZGLUSX9hUp1yEdK7gkb8kNHTJoYf14FepacRGPkjy1flRBz6+ZbRSon6yjguMeFI5kwbi1IW1jBsgrkaqPIk6xrUiK5Iz4bsiwqmW3niudd7RRpy25seeJFBHrjcX7lSSgG6HJ+rWHoJuTSmx2CXFJFMQcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743167996; c=relaxed/simple;
-	bh=KYahm6JG0YdSuBaXvOJHhPaJFRhvQDkrJRy2sOWzvqM=;
+	s=arc-20240116; t=1743168513; c=relaxed/simple;
+	bh=AmiIbt/wN7iOY/s7foyX8kzAk2TSDj8J5sMRc0KGCao=;
 	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=EQq6j9GmKQqslTC3oh3lc/syGqSYkSp/V5qE6knHXCqycmBPi1E60fFCC+bufwAaUOGYeIr4szd3QI5pXUFe8s88XzbQDJlDWx+6QCkH5NEyhXNSixv3NXOysPfyxQUrKRjmHCshCS4jHsQH8ffg4fE9+5SXUi278ZtHW+rhfgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=QRVsdUjm; arc=none smtp.client-ip=212.227.17.12
+	 In-Reply-To:Content-Type; b=EnKoUnHmXU1NpmlA/MOw4VsKGn+PbJYWxi/qe3/58Tk83j+3J39QXkg/L+aIw3uE9r7CbeAnTo9MR8sWea58IXfgOzRNroD0cnYm6sYy7uplr4OpYF+QpDyrg0Wz48JsLNklTHVrCXDGNdyYpyCdfcCtcA46yJs0Hl144T70Wxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=V+ct6d2a; arc=none smtp.client-ip=217.72.192.78
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1743167982; x=1743772782; i=markus.elfring@web.de;
-	bh=DP88rPq/JYCBhLpHyj7Uu+ctiTC9ho6e5ZWTcc8Bw3Y=;
+	s=s29768273; t=1743168496; x=1743773296; i=markus.elfring@web.de;
+	bh=IpfDNgazgXXBhb3QCNRjJJD4rFulvC5l9bpTYHKG/4I=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
 	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=QRVsdUjma2+1dnIp75j/U9u+t2iVo0DXPSWp4hxiuKRWlqk6Bpw7spBrkW3o2ncd
-	 AgwMLcZyOFXh/yzMD3+GNnZyLvPvsq5kSWjWRj2+CFfhEcdfxMZMcYZm6kVyQOLiM
-	 /dxj5Sq0L+8Xg/PfOeHzDI2EEsiGKCZVFl66Umj3FxCER8Qk6XayU+pm7+TIZdr9c
-	 uORxocmB8fcKv6CZUwYb0Yicu/9DrrbldvtrjtLJfcVoOiCof6Kml4UKuNk0kYw5E
-	 TX49xQZxnNo/FGxAMqtYZQOHGMByyzel3uF3wU01Zkd2BD1abfvkEUb2JYN9pVEuD
-	 RVkrdoRamHhc9JULHA==
+	b=V+ct6d2aiYPipLyNzTJIGp5xE3blwGV4MJzi71wDjLMjqIfaEpauAS4lUBBc5IKw
+	 PesrvwSg3KCuHnHl8neZQscEK+QbLdvVIAUvuB5OZUf/URsJbSYX1TkJpUMe1FA99
+	 0R6TwfI5+RTbgePAExWvKb0Re2vN8hGvn4fJ76nqPyJGRGVhU4aCwZ469b3bX5mrU
+	 SkgVnvlZKcZVFVcl9DMGo99gU8qW6MVw3CccwZCHB3CxT+EhkvVhSngO8uVstH1qC
+	 vEhRT7Zc9nYWmEGvlCqNwXaYlxyg+AB9AdIY0skgqo/g1GieSj9mdujNl/kM0mDWV
+	 2/tQyNylINfPRKsyIg==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([94.31.93.33]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M2ggX-1tyzdB3EC7-003uVq; Fri, 28
- Mar 2025 14:19:42 +0100
-Message-ID: <66d344b9-5cc6-4060-86ff-8100a00de477@web.de>
-Date: Fri, 28 Mar 2025 14:19:39 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MeDMb-1tNRlH03Md-00b2Hg; Fri, 28
+ Mar 2025 14:28:16 +0100
+Message-ID: <06545fa2-7f82-4154-a882-faddb53df4d9@web.de>
+Date: Fri, 28 Mar 2025 14:28:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,51 +73,45 @@ From: Markus Elfring <Markus.Elfring@web.de>
 In-Reply-To: <20250326141641.3471906-3-quic_msavaliy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:D1NZ9DZicC+HG+7dw0RV49Ulr4osReyhCq4fkq4n5AWuD2f3hEf
- O8AW59tx/bkU6DXG855XMR/FShgvgFnQgTfzSIt4PTvv/HfxCzZnwgjmdeYDQqOnZU621FC
- 5/5aEmCtC9aexJcQqoQEB6SkHr6pST6dVCrjEj4VfXis/YBZtT7FlcZaTOkyDrWql6gJDmB
- plqdGAcGlgAPC5yWyC6kA==
+X-Provags-ID: V03:K1:cT4tjGtvJXvSRL+OUV0lx2UA5LnpeNz7q6/InzNnyiHEeviRrrT
+ J5NFpTF815mDYWMO4nPeGSD+QWvucLhYGTqXjab/uxjKLQs+S+00/gVECE65Ll0VkcaBJ13
+ 3O69z7LlI/4kiHqQB0J/15AuLEWqpqTotzAjYKo7DSXrGgpATtje3q3pelLnJc74ZIWTwWK
+ 5bbY3ik9lh+qlhh2hkwCA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:UUnc3BLpdwc=;2HmWBbEzTvCxzVkzd7w3vzCQtA2
- dGrGy5TnXmVcsyDq8Jm/zF3NKOHdVDLVmL8/1H+iuVUTCUuP53GvR4C1dLOcO9NXIkzSxVFoK
- sd9JfKlHFOLAAbHG8XgTHB/nfqer+TNUucb8xJoGwQzdCAHaH6i/Ps5jke3bXjPRzyN0pL/3e
- jJCaBMZbTEsmXPYpOJMcUXRSOTr7x3Hy9ct3qd8IKQZePIkufLuirQZiXpF6GRjeZ9mMMYIub
- RtebDjtQjZCt686TC4Ih1xJpm4oCKVmGwVdl9GpTTyUmu2hv0FBY8xCBQ0STTbDpMCKx70x1b
- b2I8iqmpeDRVSRNbodKFxb41DwU5VY2fQPfzGDODHo1wfG8GRNYwhHvYSx8IWYD7aaG4gwe7V
- 3iHrhGg7nyNt53m6DRHTL2gMznhlIpvpcblEpshAp44UhSmxYO+ekOhNUyhscmgryK8+jczSE
- UcjhW4RWEV8z6KzCcrSPrt4URfjHwW3gdeyUQfpkRa5l50drQXDJaJN44JwharRQ7X8uMDEA3
- ARnp2eekcSvTe5gHMOypqyxG3d5UGimLhR1nM3JwMu6WPhBbqV/nBv2PLwZkJ2h2oofjyzP76
- Uro+2uRalPVRQaFgBKHlLWUllZznrrgPueEbGc+ZNZ+31ZwfOeLyJMnZyUF7qFWXe8R2GJ8uX
- tszXRUo7oC6NnjozCOFmk3l04BO7PyF6TtG8ipH/6LseqOdyScvHsWXlHKPJWrU/nWfSTJpbk
- E76XFXlWwv6tyTSZpgs76q9WzZStFJTQFB73UyRkARyAtN4cEVvwSsJ+2jxH5ABeyMuxAzJzD
- sZULWr5xBd+/a0L4nPCKUx3hM7QyTvk1UMwA3djDumxx/J7spzVuQJwBXBFfegmAAjdxtQcaG
- 09LwVfppReIGVpCdAwGfwlVvJSG4DNC97zJALoytIXJcbjq3GFVfjLUH9dsJ4O3Tj9SY/f2d9
- blDt2GCiBLuYj1jBvWkgeqdRYFgtv8HEy9AdNAUW+OdIT2XegWe9CTQVVdi9FHvL5RYSZ80jr
- kVFG7Jv6pW3Pjqzipc//luk9j357oV17xeXCQaixF3+xCIr8BD3JxfTf2OuWEneXyZwuRVvdD
- 9ruJx1Jp9PnEXXg+i+WzNhnFVSo5pNNvTEMCwit50yk4iBH140gAcGklqEdfBELAb/IMMGABb
- 3+k6yLAqBkYl0QuGhqM//GJIReW2jR4+8RdqSUo3Co67XTaQD7xZ9rh82m2jV9qUXTPW2ve2N
- SNE+3NMFpm5hlkqUS3SKcrvUXC6ECSbFG2RNuhGFHRk3grAunB259ifLPqbZHBMBgg9X2pe4h
- L5DV46toqXxDodtEktSyZWMYTOHi3vMYJKAmiofLJAaPqt6jedWdv9jPrk8Aa135+Ltc5FgL8
- jiy30UquXyU2Q85K54o1iDAPphuR0lVsi1awwvMBAp2lpsjxgRGFpNtx+Z8R21veJvIyCmXBX
- qoDoM7YhGhRecODVykv4nWrYLRwZEN9bk85A751DMGWDfd636
+UI-OutboundReport: notjunk:1;M01:P0:VOlzgvrPiWw=;l+7eWe+iFzWKRZ3mRi7dimYU2oq
+ grhkx9vsw/VEsjtCEXy54VQHpRClnNXV+HsR9CxvgANjp4EF3yKVRZOHULbMauoT8pJnnaooT
+ 26PitrDifSc990DwYDszXFag//F4MEJqvQFvQATnpP63nvBnufBWMaJ9lAfeD/W8HqNNa9QFp
+ Wv4UUqLu5ospDIjmuWKH1ztIa6nRdFA4aSH77Cfrrea7EFQC4Yfhq99WXoI04ntItmb5LpWwr
+ p3XiEo5ga1keYYYM5/g8ystw+oZWrIzac4taLPppQQSZMkXHg1i1a0I7+0ZLUpbrUgJcZLzXO
+ 5tR5w7hc6ierey3WTEXDSwEmn4G/LrevpBdHbCPbdq9ZF0BVnaHyjnK5HVXVdUcpW2xigWnaw
+ /aWWZ3N9Q8lx1wUhvCcpdlULI+BdHafdtv5DttCKdGPvXn3bSGNpisCZk1eRvXCQTSo9AD3X3
+ iJvTzfdgV3N7fU9fpJbvExMIQQKfMqApC+aXhE/u/hI8w9MBvl9UKh7zxk0rfN1mRKrGPD3Ay
+ LBOpYj36D536AY0oUl/iVwgBiwI+uCMvO5/rRMbcTcRO6OwAPl0cit1RTyOQTnp7Zxcu38VHX
+ 9a2x3tvW6MnCiRVtLm63UNVzza4gPL7tLr1g/JNC1BPO+xNfEW7HV6JttUvUminTVKYw4WT6F
+ kM+VnT++9dayUzuzO0zugVmwl02ktS7qWjNhFKFQwfHVh4Z1dDiCK40teZbGA57CREoYXPD0s
+ PaswK4GWhPRj2JijkOdxI+cyIDafIfVblEzE2bJMQ4X78MOmp5yKFT/vl0AGp9Bts8kBZENLg
+ sN38PcnpJXVZsAGGODKy+sKtRsCd6VPdO7L5GeKe6qUTwsaSNyTux6jZTZpMtxHSHPgwI0dJq
+ 1ucUB5aSYQ39vjc7k/LrH8GeHQMdeyoJjGsLFqxrEpAAV6mzM/S0asiXAVjsGdZ2P0zR1y2AZ
+ PmYGR6kidtZy+1PlaFWBaG/XZLzz4XwvOqxJukKRxEscdnaRypUufwnfWXeJtOH8vn+t+99C/
+ E4YuQq7a93OA3XFC6Sv5MRzbFjLN9jluFbuWR6iYF4bHvQiERfh80Tom2mhKwm9ED8NuBrxvu
+ 7oIPpZ7UgcGx8mwYDi6A39hw4JojweAt+HoBteW4kYoHRDIZvoMtzG/d7gMZbZo+f7Kq+BQCH
+ wmSjV6WcqsG6r7vSt0ApWNjislltguxytljGvqGFIX7RBLDOk8D3Rg6SEtFkCrGf7NOJnhUPo
+ d/kKoneAZ6TfdgqD7vZbRvfgdrWJcIo6AHRt7E5IM802j0a8Ndylp7MNeKh8ERifVzWx5GOTS
+ tHV5e2/sh04YF//+YEfFTL/TvC8N51HOE4W+TAcQLQ3VeEMnI2OF2Y37YeqHmPWgFbMLnnti5
+ toB+RCOs+2qe5s7SPYCbAuSfxuRtNcZZvsR7b9t5BY6kLbYjfTtw39fGX33e4aN9eB4L34HC/
+ FIAzafpxCJg0qAp0Lsa25iy08tYcpQ0T3C0242WpeAmb4Aao4
 
 =E2=80=A6
 > +++ b/drivers/i3c/master/qcom-i3c-master.c
 > @@ -0,0 +1,1107 @@
 =E2=80=A6
-> +static void geni_i3c_abort_xfer(struct geni_i3c_dev *gi3c)
-> +{
-=E2=80=A6
-> +	spin_lock_irqsave(&gi3c->irq_lock, flags);
-> +	geni_i3c_handle_err(gi3c, GENI_TIMEOUT);
-> +	geni_se_abort_m_cmd(&gi3c->se);
-> +	spin_unlock_irqrestore(&gi3c->irq_lock, flags);
+> +/* M_CMD OP codes for I2C/I3C */
+> +#define I3C_READ_IBI_HW          0
+> +#define I2C_WRITE                1
+> +#define I2C_READ                 2
 =E2=80=A6
 
-Under which circumstances would you become interested to apply a statement
-like =E2=80=9Cguard(spinlock_irqsave)(&gi3c->irq_lock);=E2=80=9D?
-https://elixir.bootlin.com/linux/v6.14-rc6/source/include/linux/spinlock.h=
-#L572
+Can an enumeration become helpful here?
 
 Regards,
 Markus
