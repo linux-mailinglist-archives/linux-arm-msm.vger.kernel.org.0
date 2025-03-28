@@ -1,175 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-52741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44251A7460B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 10:11:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C80F3A74646
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 10:22:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 31B277A70E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 09:10:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA5703BB31D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 09:22:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63F7E21324F;
-	Fri, 28 Mar 2025 09:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BFDB214209;
+	Fri, 28 Mar 2025 09:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NlYHQI0E"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Nw6sNeId"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0F11D5170;
-	Fri, 28 Mar 2025 09:11:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC9F213E60
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 09:22:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743153104; cv=none; b=FL6vnyyPC35qK66x55h5jyq6UQrue1uixxLE39e/LiClUcU+kPyvQrqciMK+vGQQKAePOKY5vJeNO97Vlejao/mKtDeDPoa2IP6kiVa88vj3oeZrODR1qhXRpGVg545Gz4bsIyAmsf+9kC5RICGUU+spaPculhHHw0tbnV55Csw=
+	t=1743153739; cv=none; b=QVtcUTTk3rI8DOzVAnCfsQCHooAqzkw+F02hOh+bpedsNX3kD43PZ4SX6RJNMcJk+oduSI14VmVErzbfYe9APrYloosl8mKQueuoCLzTETFTGbeNaqLaA6QDPmbsLtkWgvVXIA0DuFoKYlONfXsEUYfef1Ho7+6JIHJMS1VHMcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743153104; c=relaxed/simple;
-	bh=/fQ2l7cD/isQx2nupZb1macgcLB2IW4AcXV0qJ4AiJ0=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=acNnqPcu+7vGddqdrxBMYy7WtmnYSzSLjmW3FE8WVuN1OweHsm9Z0b1mKOsAnFGBwsBH9jDKHDASQ6igIk4FUafy/4QlWAgzTsQ0MXOjp7kfgGL+fF6lv8ev0pbfdsF0o4v6xm4eX+rBuCbIkbGsMTrdGhm3zu08UlRqutEDtos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NlYHQI0E; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3E4C4CEE4;
-	Fri, 28 Mar 2025 09:11:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743153103;
-	bh=/fQ2l7cD/isQx2nupZb1macgcLB2IW4AcXV0qJ4AiJ0=;
-	h=Date:From:To:Cc:Subject:From;
-	b=NlYHQI0E0t3V6LAxmMvMQTx0CTpo8GWONUz65LhA7mSzdh4aMvEu9b5G0/GIubz1z
-	 ieNbbIGsDPqPe15+rCNGbUTE2kVQjZeQEXf9r4jMUbvdGyZnfZGIHk52MFb4hfCWSP
-	 J2FXnc9IKO1Q7tTO1U0vlf9ga5hDZwV6IOTCyc1mDVB7tXAMPma70yEi0Rt2ZxpbPK
-	 7uakO5uQ3t6ttEBACHaXqyiN5V0D7cmraP0wNlw+jFtNwunrgeDnAEVRxN4SM6rhNY
-	 avdqubYgKzuilui0sKZhUPBShJpn3dLx2rDEnDviA5mRRhsJzj0Ws8B80wE7Eqm9ZQ
-	 vfMV/8QAOAF7g==
-Date: Fri, 28 Mar 2025 10:11:13 +0100
-From: Joel Granados <joel.granados@kernel.org>
-To: iommu@lists.linux.dev
-Cc: David Woodhouse <dwmw2@infradead.org>, 
-	Jason Gunthorpe <jgg@nvidia.com>, Jean-Philippe Brucker <jean-philippe@linaro.org>, 
-	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>, 
-	Lu Baolu <baolu.lu@linux.intel.com>, Marek Szyprowski <m.szyprowski@samsung.com>, 
-	Matthew Rosato <mjrosato@linux.ibm.com>, Niklas Schnelle <schnelle@linux.ibm.com>, 
-	Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>, 
-	Thierry Reding <thierry.reding@gmail.com>, Tomasz Jeznach <tjeznach@rivosinc.com>, 
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Will Deacon <will@kernel.org>, Yong Wu <yong.wu@mediatek.com>, 
-	virtualization@lists.linux.dev, iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org, linux-tegra@vger.kernel.org
-Subject: RFC iommutests_: Testing software for everything IOMMU
-Message-ID: <5zoh5r6eovbpijic22htkqik6mvyfbma5w7kjzcpz7kgbjufd2@yw6ymwy2a54s>
+	s=arc-20240116; t=1743153739; c=relaxed/simple;
+	bh=3n5NcSWbMxNV65pkiH8xO7XiulAHfo9FuvZJ/52Zbn0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=brpdNJoCYBqjjAZqDNAiQV1+iBVlxz3VRjV/GKBVfW1vl0rbEkB8Li2LVAFRf8T2/cuf60Fk2fdNhq1FcAB7ABJ6i6Ysq8q2H1W2srTDhC8twmEVfd1fkLgkqdTcPQGVdnVHJaJDVLtb31mRufxNCdoREI+E35piAdlQuKC+1q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Nw6sNeId; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ac34257295dso371026766b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 02:22:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1743153734; x=1743758534; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=S8F6/Mi5t6CvVa6NbJV7qdkNj8IUB4iUseQrodXPdQU=;
+        b=Nw6sNeIdeMenm31Ozp9zvLFT4ZPDxWlDC0/xuDM4AlHNphNItUXe8s+cE5Ten/Jf69
+         lTK8JwKSd7JXPFYmWERLVFTRRn4LGyUbgnkKXaiqaazYrFgvrwzKyuMEgiz7m4chXGAU
+         5N20ifyoLnKHscaGLth7Y9yFv7HumouRleXmhuRc3yhhJm67NE7tijwNiHeOd0tn6u1m
+         cdkjp+A+a7jA0ktPZ+DV5kX0+hXu5Ro1/0OA0mc17+iwFk06Vb4P88Lv703IcLwJn/NQ
+         PYqvyMTjeJIf+TChxT+uTbJDOvMEFRCW4YwP41mlxLSPqR+XHMWjY0UjmkRJjKKqbAMQ
+         b3gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743153734; x=1743758534;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S8F6/Mi5t6CvVa6NbJV7qdkNj8IUB4iUseQrodXPdQU=;
+        b=B+As+IPerdGWLJp9q9Ddx/AdHRv/7tdqDhs4XQ4ZXpDL/ylbQsQLwRAylZR1AVCiGg
+         Dj1w3n1U6PgHXckkCB12LHdKEjJMiSYGzLlfR+lAg+A0CoA7ZxaIQK2pLr8GCpR1rOk7
+         IqWAvYcUBCw/IXv5YMfXep/yakWaGCg6vy7kuEyKAM/yfrVWtr4iISW8e2MpAT+jbUEx
+         9RSh0Wa4WYSs+ojhuOTSvVlGMO6pt2Qsr9KscYr2t9MGWcNK1jx4dsAH+Oc0DczcVikr
+         dQ+FFGNRqesAUFRAc90UdtaZxODHSDVPHyu5AJbAeRhFg59FvQYgJCcYvHf4MJ0pXJFX
+         a/Vw==
+X-Forwarded-Encrypted: i=1; AJvYcCWf8wK4uQ++4ar9RDtGfhw7UQSIV0P/0wxcR693I1nEw1Z3D6cH1EwPQ3hq7OAJp8AW2NM7ouHkOoC5b8vA@vger.kernel.org
+X-Gm-Message-State: AOJu0YxRG6hA7pOmKo93Lfvrpapd41/5WBT9Z0HFXWk+wTmLK9+c7v/h
+	fxf5Xqeh27j+nvA41xzOxxtCLdyTM+paentuGRcht1k8ubs3jM0V95LiJ8p3Mfg=
+X-Gm-Gg: ASbGncsbcozvVFnZcrPHZ1DZRt5kfB06m/OmnbLmylpoeRq4iuryK01zWhUGGcKJdAC
+	MHg1BHS5avUWNR8ZBTdS38AUFpYYnsE7qrkShNaZup8V/39tVS1MpZoEePMOc/Cw+qfdgSbcY0T
+	8kupHYvpstWndsdXhMkbFWqaBge+HBW6Gs+4P9T1uczsMs2EYWAePbh3uN/Iye1sLCyZGgHgj6Y
+	AsK4UZZUlXJLpo3B8vTBoSAErp5iSE76SwNuQ7geFI4WvKuaJfXRlnHwaA9g2BCVjW0N/vfMoFN
+	fduZHuU0pz5TY0b9gB5h+wolmmDt5NhncC9oE38HxA==
+X-Google-Smtp-Source: AGHT+IGqVO5GOBdKSR0UHnmKwqXfKTUeeVTD7NtsjeXDRVx37M2iiHUK4xT403SV1qcakAEOpZYu7A==
+X-Received: by 2002:a17:906:c153:b0:ac3:4227:139c with SMTP id a640c23a62f3a-ac6faf2eefemr758055966b.24.1743153734352;
+        Fri, 28 Mar 2025 02:22:14 -0700 (PDT)
+Received: from linaro.org ([62.231.96.41])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac71971bf3fsm126205666b.182.2025.03.28.02.22.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Mar 2025 02:22:13 -0700 (PDT)
+Date: Fri, 28 Mar 2025 11:22:11 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-hp-x14: drop bogus USB retimer
+Message-ID: <Z+ZqQ4pU/YHEI2M5@linaro.org>
+References: <20250328084154.16759-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250328084154.16759-1-johan+linaro@kernel.org>
 
-Hello everyone
-
-This is a Request For Comment (RFC) describing a new testing infra
-called iommutests. It is motivated by interest expressed during the "IO
-Page Fault for all" [1] talk in LPC 2024 [2]. At the end of that
-presentation in the "VFIO/IOMMU/PCI MC" microconference, There was a
-clear "yes please" after asking if it made sense to have an
-infrastructure that could evaluate the full spectrum of IOMMU
-interactions — from host software to IOMMU in hardware and in emulated
-environments.
-
-What is iommutests?
---------------------
-The primary goal of iommutests [3] is to provide a modular framework to
-test IOMMU-mediated Direct Memory Access (DMA). It is meant to run
-PASS/NO_PASS tests for the interaction between kernel subsystems and
-hardware/virtual devices. All this in the hope of clarifying which IOMMU
-features are working correctly and which are not. You can find the
-project in github : https://github.com/SamsungDS/iommutests
-
-* Test Orchestration:
-  This component is implemented in pytest [4], a testing framework where
-  tests can be parametrized, filtered and implemented concisely and
-  easily. Additionally, pyudev [5] is employed for device enumeration
-  and monitoring, as well as querying device properties and attributes.
-
-* Test Executables:
-  For the creation and execution of tests, iommutests leans heavily on
-  libvfn [6], a zero-dependency C library designed for interacting with
-  PCIe-based devices from user-space using the Linux kernel user API.
-  The libvfn library can be used to abstract away common lower-level
-  interactions which can then be re-used through out.
-
-A Working Demonstration
------------------------
-To better illustrate how everything fits together, There’s a demo script
-[7], with some demo notes [8] explaining the setup and output. It does
-the following:
-
-1. Sets up a custom qemu [9] virtual machine environment using a custom
-   test device.
-2. Builds both libvfn and iommutests.
-3. Runs a pair of example tests (one of them always fails to show how
-   how that would look like)
-
-This demo shows how everything comes together to give the pass/no-pass
-IOMMU testing results. It is there for anyone interested in trying it
-out or contributing. To run it, you need to pass it a local ssh key and
-linux kernel compiled with VFIO support
-
-Custom qemu device: pci-ats-testdev
--------------------------------------
-To support IOMMU testing under qemu, the pci-ats-testdev [10]
-(different from pci-testdev [11]) was used to emulate DMA transactions.
-It is a full fledged pci device capable of executing emulated DMA
-accesses. It was originally intended to test Linux kernel interactions
-with devices that had a working Address Translation Cache (ATC) but can
-become a platform capable of testing anything PCI/IOMMU related if
-needed.
-
-Feedback
---------
-This is a first draft, and many implementation details are still open to
-refinement. I would appreciate your thoughts on any part of the project
-— its design, scope, implementation language choices, or usability.
-These are however some of the questions that are still outstanding from
-my POV:
-
-Q1: Beyond binary testing:
-    Would iommutests be used for something other than pass/no-pass
-    tests? Like performance? Stress testing?
-
-Q2: Kernel Integration:
-    Should iommutests interact with the already existing IOMMU linux
-    kernel unit tests? Since it is an orchestration framework, then it
-    can execute the unit tests in some way. This could actually be the
-    next step, if found useful.
-
-Thanks for your time
-Best regards,
-
--- 
-
-Joel Granados
-
-[1] https://www.youtube.com/watch?v=UFrAjJ5TUf4
-[2] https://lpc.events/event/18/timetable/#20240918
-[3] https://github.com/SamsungDS/iommutests
-[4] https://docs.pytest.org/en/stable/
-[5] https://github.com/pyudev/pyudev
-[6] https://github.com/SamsungDS/libvfn
-[7] https://github.com/SamsungDS/iommutests/blob/master/docs/demo0_debian.sh
-[8] https://github.com/SamsungDS/iommutests/blob/master/docs/demo0.md
-[9] https://github.com/Joelgranados/qemu/tree/pcie-testdev
-[10] https://github.com/Joelgranados/qemu/blob/pcie-testdev/hw/misc/pcie-ats-testdev.c
-[11] https://github.com/Joelgranados/qemu/blob/pcie-testdev/hw/misc/pci-testdev.c
-
-PS:
-  Apologies for the long CC list. I always try to include the ppl that I
-  think will be interested, but its not always easy to know who you are
-  :). In this case, you are included because you appear as "M" under a
-  subsystem that contains the string "IOMMU" in the MAINTAINERS file. Feel
-  free to shoot me a mail if you don't want to be included in the future,
-  I'll try my best to remove you.
-
-
+On 25-03-28 09:41:54, Johan Hovold wrote:
+> Jens reported that the sanity checks added to the new ps883x USB retimer
+> driver breaks USB and display on the HP X14. Turns out the X14 only has
+> a retimer on one of the ports, but this initially went unnoticed due to
+> the missing sanity check (and error handling) in the retimer driver.
+> 
+> Drop the non-existing retimer from the devicetree to enable the second
+> USB port and the display subsystem.
+> 
+> Note that this also matches the ACPI tables.
+> 
+> Fixes: 6f18b8d4142c ("arm64: dts: qcom: x1e80100-hp-x14: dt for HP Omnibook X Laptop 14")
+> Cc: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+ 
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
