@@ -1,218 +1,331 @@
-Return-Path: <linux-arm-msm+bounces-52790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EE57A74E94
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 17:35:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A459BA74E9D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 17:39:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 120363BA3C7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 16:35:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 315BD188D0CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 16:39:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AE6217A309;
-	Fri, 28 Mar 2025 16:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9172819992C;
+	Fri, 28 Mar 2025 16:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="h7HP4n/h"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A4UAWOYh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5AF2AEED
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 16:35:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1457017CA12
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 16:39:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743179748; cv=none; b=eZF5d+l3GwAje1Y/XaOhnduJCpFJ4m9qMSEAtt+XQDnUiIR6zPlqVUoNLrPxZqxnhm1CKazulRSGMDtApdH5+J3k7EU8Mtc5sxYCVAznYaNUtUiP55ZUahCUTT5ZiJLwLQVL77OnTcsjTtvkQzRloKffGyTDEiJCTsoT6ww6su0=
+	t=1743179980; cv=none; b=sDx11+irrEFnX3VE/eLgCbNIeF44AHXfYoN7fvHHeR3Rt9FTz3fdOPKGqcs7JoDqd/YfsIdmAD8pbh0+szQdsOYihHsnaS4Pe6fZ4xNXzTbXn0YDocSt03dB/n6sQUZFVo6KuQBglEliYceXGvA3nBA9S843hR+UT7XRw3241Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743179748; c=relaxed/simple;
-	bh=HRjsSgTq5W/9KDRw6tCiSSZcem1vOE2VhOdBd3nbUTQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=uVaCaw00KWgopdHhmCtrKEn6CFlpSEjrCm3cwr/7XeHcCF0Zcj4UAxv1zl8m+WyiBEKxMfxHt33W/ksX9jvDEFm/V0FVkqI+HjxS37Z4/iW+ONm0VdS4fgS3/PC6N2RRXnc44GueC9vBvFq3Tc6puGzGYQjjp7vZdURdAXamJno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=h7HP4n/h; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52SGYt9Q011176
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 16:35:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=f5uBqZqHWsZAkyJQgUXt65TcEJ15BS2eWtk
-	mBtYGP/8=; b=h7HP4n/hMWuxMd+Diht2lZfkTMVTowvhUc9o6oDI7q3nH9zTRpy
-	I/Hcyp0hjY6z4AHGr/PoVBMIeYbB7T+azisk7BWKBo5cvKQsvDREAYHo+XV3YbrF
-	kkoXgDkz7Nf4x87YZq5wlnLZKMSF50cwECyS/7omtB9wO7L+zmOpwhavZERDfVOR
-	WlwrvQjL5bFU6YCL+pHn7bK0GQo5b74FLDCkO4z+jL9tacKtgw/lmv5zvqmV6QxP
-	4nW4pls9/FDU2e2CVRGgVOC3AO0ctzUqnJaPRQmDmYAQ+pU3FwNyl3EbuqbYs5I9
-	yeeArib1p6cR09CWnz3Xx8YdVIJN8SoNNxQ==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45nqxuhhg2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 16:35:45 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-227ed471999so38043195ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 09:35:45 -0700 (PDT)
+	s=arc-20240116; t=1743179980; c=relaxed/simple;
+	bh=YdVHPUjP3h5SyzwWfd97qASBG10VxKeoU6DT59be9XA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=ulFuqbjMvgoQSlzdfCeIjWxl3dv1SWaeRTscY2yHF55HInLJZOeFARhxAmDrldGeMklk3265c79bhhTUjA6HinWToZmxp5AhahcEL4eTV3gBvza5H8bx3heH+aiDa+eTBkPTKKYrShKH43c8MuO5wmpH3vSBiB11LA4sKCt437c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A4UAWOYh; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-39c0e0bc733so586153f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 09:39:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1743179976; x=1743784776; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=+hOXTmExdfC88ujIBURdRUnCcYxWTOg4zUW1tQN4nmg=;
+        b=A4UAWOYhJGEqAxpSJ+XuNa1wUy36qWKuSHNqKzyNQ7wa1squZIabn18wO1b9np0I5V
+         HrLTw60ao5N9I3Db8ORtljGDP/owKqnVXUMkK3PINUqYXtHI6ygJW6sa92ZJC2Dne82L
+         ObwAP6nsnD4zedxgvivXv2z2HS0pUhM2vOjXGOALMFaZlLJD3YaJ4ETiEl/b2vJZ8kGR
+         oOutVc1LM4UgyHmooZH2FlN1dADBN9/gX4PabmvpSKrsZ6+vHN3yAO1N0e/650aruHL6
+         mx6ofc+wqtrWX9wZX+eIm/rK7C9uMJMc2Ts1+agPaH8OEsLIFlI9SSK2hOmf35s67v5X
+         dqRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743179731; x=1743784531;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f5uBqZqHWsZAkyJQgUXt65TcEJ15BS2eWtkmBtYGP/8=;
-        b=QAakz1Aryn1y8B7i9gOCeH8QHdGOx5rakVSRVKX0PQeTw8u8mbAmqWCQSPxk00Y6U2
-         GqDyZJg8pXqDPCG7Z7EgWa8woZDGvFoyoZKXvuHlty/LRbrqKcz49BBoPPUr2jaBexs5
-         NGQbkhtDbcD1P3EwcoxPjt4nVQHE0QlK7/Lseol2IzmTPq2gsUA/4sZWP7e4goWox0bh
-         Ob1BhFtcdb9fZn2NQEaPcDxVydWT2+BQmq3flmU1j7Hz51K02gsr+Ud3lLZbMBk++to/
-         0PCLyqqAY/kkVUulEmgOMjVPonSP2gV72sjH1KsavRmynQPYld/2IE5tzsMNiuMXyx6Q
-         NlxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX2Ttbtx4jicrmWDhLiSUz2DI8IgHAlo8aGHFU51u/te1Yvqi7aNeZ7cb9ofuFtItCwYbq2CG9yrQai1CsV@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDYJ7kZfTgrtwQCh7mMdErH6kPxnR8U+HwwVtfIDrEuKOxeo4v
-	72INof6fERLEUs6EE7AxzH4J0O5yuevZWGTsHVpeP4VbXaQk3P4P0iqJ34XGfQLW9Bu1STbuJxp
-	ZFV1UcP15+7ePUtUwpvOGj2kViJ8X1WHGTr/1rjxPIw8PRmMx2OY23gK21HCxacp6
-X-Gm-Gg: ASbGnctPCongp8pVDarm/vklH7XFJbMsQpbXJSROyEZx0xe1gxU/e+7YznLV120WpbT
-	+Z0e/AXTAsB6yjFiGpeN9XBsoQmVG14nxrXvHGbSX1DJm/Lg/uS1nv59SDwVF2/b6ILvfeP0nJ6
-	1AnLKVduZQkqgIGUskKRTqpO7QDfEoSeJIqkSnTQfIlsqofGP89zJV+IlmsLVprHsCjLdp+skt6
-	4KiIGONhM5nxDjzgcdFmAJS+5pLFyZ5xYr4bJ0IRFS6Fim8+p3b9GdYOEM8vOArnz8K/7BH4qZa
-	P5Vym02QuOVVsM/4JYtt/MAjvoS4wLvDo3zguonzzCp9iRyj5iYhNX80Dg5MLpCO
-X-Received: by 2002:a17:903:32c6:b0:223:5c77:7ef1 with SMTP id d9443c01a7336-228048778b5mr120223345ad.21.1743179730934;
-        Fri, 28 Mar 2025 09:35:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGsadb1ZkmyuGZ6xkHYTmklTe/SlrpLu7GSX8XMOMFtakAIkec6H9aZWbz98gqp3YvO8l2gnw==
-X-Received: by 2002:a17:903:32c6:b0:223:5c77:7ef1 with SMTP id d9443c01a7336-228048778b5mr120222915ad.21.1743179730359;
-        Fri, 28 Mar 2025 09:35:30 -0700 (PDT)
-Received: from jhugo-lnx.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2291f1dee06sm20276215ad.179.2025.03.28.09.35.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Mar 2025 09:35:29 -0700 (PDT)
-From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-To: quic_carlv@quicinc.com, quic_thanson@quicinc.com,
-        manivannan.sadhasivam@linaro.org
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Subject: [PATCH v3] bus: mhi: host: Address conflict between power_up and syserr
-Date: Fri, 28 Mar 2025 10:35:26 -0600
-Message-Id: <20250328163526.3365497-1-jeff.hugo@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1743179976; x=1743784776;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+hOXTmExdfC88ujIBURdRUnCcYxWTOg4zUW1tQN4nmg=;
+        b=LiNBDFvHp8pOjZouxHkwPzDAIDTCfPNyFh3aDCGD/MoGRTSFVKPtwXOYV7jODb/hEi
+         E+xVKKgE+8OFUUbwrEeZVPZUpHrYHkHsjaWVslJ/Bgl5heK7Lz5cEUd4NgQTdi38zpq4
+         TiPKp8nFDHjxKk58vAF5jE4kQtewL3mS0lU2kaj2He0XFQcDDlb7rakqV72wMQn1sB/x
+         Eik0qDCh5LpwxK+098x1hh6ChCJPz1fbKbWLmDp5K7Mhw/CMQEs8StLuhm2EdgNmD7gf
+         EPsaQpxlaXHRWuE21CBSPl2qDONrhn7P9m669nz9umLbIjNDxnMVkZei1fWU98ydBitv
+         UFvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWhesJgnZD8b8kuKjTJRvyOfwM4doOPz1VI6dVBB0Hnifzgois/r0Bmi8gRxXk1hB4VAwwAMImdA3DtWgl6@vger.kernel.org
+X-Gm-Message-State: AOJu0YwUDLaHRFo7LBnz8jYv36RkCmgy9bh3UWax+NRjTOE3Ft2xCp9o
+	/Jr77rk40i54Lrw+ZEPFffsrYTBkQPV7JMQweVMcJWM3ags4TtYkiVDNQ8cqjasINQxDQVn3sZd
+	QZQA=
+X-Gm-Gg: ASbGncvi9V97bub24VuoGWGKnCrtRuqqVUlRRDZwmH4yUcICdP4vwoucQ7tAwU/KNrB
+	GB8ep+/M12BTnnt/PpnMQm/r4wFbI3ua3nj84j/J5sA/SuG4dx7P7cJXXRsRjrC0KkRcXMxTfI+
+	HerbnWQgmrafG7qvq/bxFEu2fftTt2hx25w8kaPK3l5R4H1cme6Zl1T+BlR1nVY54IQee5X9hiP
+	gIoHGXXqLvD5KG4vfmBxaj+pLEGIqtUqBocl3VkDqigZHp4FOiuQTqU6uWyqItixe2lCKwUHhDP
+	BonHqkjDJLKLQoSKsgxxscHMfMFJtNs0ksYVF4LOVdMUFGNjEZlJtJgofZ58RcT5pNg5SKyUnng
+	wjWaSgdIZuQ==
+X-Google-Smtp-Source: AGHT+IHA3r1oZli2t5XDbjRwJh4S/4m8wCAROQweWFJl6NB7iP2fyGR3UzI9BtWNYWzZmpx/8AxZdA==
+X-Received: by 2002:a05:6000:2102:b0:39c:dcc:fa29 with SMTP id ffacd0b85a97d-39c0dccfc48mr1713795f8f.17.1743179976093;
+        Fri, 28 Mar 2025 09:39:36 -0700 (PDT)
+Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b663860sm3133448f8f.39.2025.03.28.09.39.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Mar 2025 09:39:35 -0700 (PDT)
+Message-ID: <6ae076fc-e30a-431e-b75e-7f9b9d7bff08@linaro.org>
+Date: Fri, 28 Mar 2025 16:39:34 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: YeP5qPAC2CqqNQvmiY0niwqUVOARHyOg
-X-Authority-Analysis: v=2.4 cv=e7QGSbp/ c=1 sm=1 tr=0 ts=67e6cfe1 cx=c_pps a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=-JrBQj99mACPpmNC3zgA:9 a=GvdueXVYPmCkWapjIL-Q:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: YeP5qPAC2CqqNQvmiY0niwqUVOARHyOg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-28_08,2025-03-27_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- malwarescore=0 spamscore=0 bulkscore=0 mlxlogscore=999 lowpriorityscore=0
- priorityscore=1501 adultscore=0 impostorscore=0 suspectscore=0
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503280115
+User-Agent: Mozilla Thunderbird
+Subject: Re: Venus probe issues on SM6350 SoC
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org
+References: <6P5iXJOUxv3jsPGI11XbeZOagg2ht2Ws-WbN2HjXSFC_xeFgWyGM3a9T6y30gmys3KSxJF9Tv3f7jAehZ6AlOQ==@protonmail.internalid>
+ <D8S03CCD8LGW.TA2FRY4CKEGT@fairphone.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <D8S03CCD8LGW.TA2FRY4CKEGT@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+On 28/03/2025 15:22, Luca Weiss wrote:
+> Hi all, and Vikash and Dikshita,
+> 
+> Konrad Dybcio was suggesting I write an email here, maybe someone has a
+> good idea what I can try.
+> 
+> I've been working on bringup for SM6350/SM7225 ("lagoon") for the
+> Fairphone 4 smartphone but have been stuck on getting Venus working for
+> a long time (~January 2022). Essentially, whatever I try probe fails
+> with the following error:
+> 
+> [   41.939451] qcom-venus aa00000.video-codec: non legacy binding
+> [   42.162105] qcom-venus aa00000.video-codec: wait for cpu and video core idle fail (-110)
+> [   42.167037] qcom-venus aa00000.video-codec: probe with driver qcom-venus failed with error -110
+> 
+> I've double checked the videocc driver against downstream, the videocc
+> GDSCs and their flags, compared dts bits, checked basic driver bits but
+> I couldn't find anything to get further than this.
+> 
+> For driver / compatible, it doesn't seem to matter if I use sm8250 or
+> sc7280 compatible or actually the struct I created for sm6350.
+> 
+> I'll attach the log with some extra debug prints below.
+> 
+> My git branch for reference: https://github.com/z3ntu/linux/commits/sm6350-6.14.y-wip-venus/
+> 
+> I didn't try the new Iris driver yet, mostly because as far as I can
+> tell, VPU_VERSION_IRIS2_1 is not yet supported there, just IRIS2
+> (sm8250) and IRIS3 (sm8550). But I'm also happy to try something there.
+> 
+> Regards
+> Luca
+> 
+> 
+> [   56.572306] qcom-venus aa00000.video-codec: non legacy binding
+> [   56.573348] venus_hfi_create:1708
+> [   56.573990] venus_probe:450
+> [   56.573993] venus_probe:453
+> [   56.574000] venus_runtime_resume:649
+> [   56.574150] venus_probe:464
+> [   56.575453] venus_probe:469
+> [   56.575458] venus_probe:474
+> [   56.609600] qcom-venus aa00000.video-codec: loaded video firmware! qcom/sm7225/fairphone4/venus.mbn size=5242880, phys=2258632704
+> [   56.621821] qcom-venus aa00000.video-codec: venus_boot ok
+> [   56.621837] venus_probe:479
+> [   56.621935] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.622961] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.623979] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.625002] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.626026] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.627035] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.628045] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.629054] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.630062] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.631070] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.632080] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.633088] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.634096] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.635094] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.636374] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.637532] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.638642] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.639683] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.640723] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=0
+> [   56.641757] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_status=40000001
+> [   56.642789] qcom-venus aa00000.video-codec: VenusLow : venus hw version 6.40.0
+> [   56.642801] venus_probe:484
+> [   56.643008] venus_probe:489
+> [   56.643011] qcom-venus aa00000.video-codec: VenusLow : F/W version: 14:VIDEO.VPU.1.2-00043-PROD-1, major 1, minor 2, revision 43
+> [   56.643013] venus_probe:494
+> [   57.667128] venus_probe:502
+> [   57.667177] venus_runtime_suspend:590
+> [   57.718537] venus_runtime_suspend:592
+> [   57.718573] qcom-venus aa00000.video-codec: venus_suspend_3xx:1574 DBG
+> [   57.718588] qcom-venus aa00000.video-codec: venus_suspend_3xx:1581 DBG
+> [   57.718603] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.719144] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.720705] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.722262] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.723117] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.724668] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.726237] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.727129] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.728685] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.730245] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.731157] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.732717] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.734271] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.735163] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.736713] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.738260] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.739130] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.743158] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.744729] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.746293] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.747148] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.753709] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.755146] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.759147] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.760747] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.762338] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.763271] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.767142] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.768722] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.773201] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.774780] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.779133] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.780721] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.782285] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.783163] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.787151] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.788715] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.790282] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.791130] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.796389] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.797973] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.800924] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.802489] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.803128] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.808778] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.810356] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.811134] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.812694] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.814246] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.815188] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.816762] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.818334] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.819151] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.820692] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.822242] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.823110] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.824675] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.826248] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.827117] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.828704] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.830334] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.831149] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.832798] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.834389] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.835171] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.836729] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.838272] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.839147] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.840703] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.842284] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.843147] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.844784] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.846427] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.847117] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.848668] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.850239] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.851131] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.852694] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.854249] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.855178] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.856731] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.858286] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.859211] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.860792] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.862382] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.863310] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.864863] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.866408] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.867122] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.868663] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.868683] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idle:1535 cpu_status=0 (OK 0) ctrl_status=1 (OK 0)
+> [   57.868690] qcom-venus aa00000.video-codec: wait for cpu and video core idle fail (-110)
+> [   57.868699] venus_probe:505 ret=-110
+> [   57.873495] venus_hfi_destroy:1690
+> [   57.873519] qcom-venus aa00000.video-codec: probe with driver qcom-venus failed with error -110
+> 
+> 
 
-mhi_async_power_up() enables IRQs, at which point we can receive a syserr
-notification from the device.  The syserr notification queues a work item
-that cannot execute until the pm_mutex is released.
+Have you matched the GDSC flags ?
 
-If we receive a syserr notification at the right time during
-mhi_async_power_up(), we will fail to initialize the device.
+sm6350:
 
-The syserr work item will be pending.  If mhi_async_power_up() detects the
-syserr, it will handle it.  If the device is in PBL, then the PBL state
-transition event will be queued, resulting in a work item after the
-pending syserr work item.  Once mhi_async_power_up() releases the pm_mutex
-the syserr work item can run.  It will blindly attempt to reset the MHI
-state machine, which is the recovery action for syserr.  PBL/SBL are not
-interrupt driven and will ignore the MHI Reset unless syserr is actively
-advertised.  This will cause the syserr work item to timeout waiting for
-Reset to be cleared, and will leave the host state in syserr processing.
-The PBL transition work item will then run, and immediately fail because
-syserr processing is not a valid state for PBL transition.
+static struct gdsc mvsc_gdsc = {
+         .gdscr = 0x2004,
+         .en_rest_wait_val = 0x2,
+         .en_few_wait_val = 0x2,
+         .clk_dis_wait_val = 0x6,
+         .pd = {
+                 .name = "mvsc_gdsc",
+         },
+         .pwrsts = PWRSTS_OFF_ON,
+};
 
-This leaves the device uninitialized.
+static struct gdsc mvs0_gdsc = {
+         .gdscr = 0x3004,
+         .en_rest_wait_val = 0x2,
+         .en_few_wait_val = 0x2,
+         .clk_dis_wait_val = 0x6,
+         .pd = {
+                 .name = "mvs0_gdsc",
+         },
+         .pwrsts = PWRSTS_OFF_ON,
+         .flags = HW_CTRL_TRIGGER,
+};
 
-This issue has a fairly unique signature in the kernel log:
+sc7280:
+static struct gdsc mvsc_gdsc = {
+         .gdscr = 0x2004,
+         .en_rest_wait_val = 0x2,
+         .en_few_wait_val = 0x2,
+         .clk_dis_wait_val = 0x6,
+         .pd = {
+                 .name = "mvsc_gdsc",
+         },
+         .flags = RETAIN_FF_ENABLE,
+         .pwrsts = PWRSTS_OFF_ON,
+};
 
-[  909.803598] mhi mhi3: Requested to power ON
-[  909.803775] Qualcomm Cloud AI 100 0000:36:00.0: Fatal error received from device.  Attempting to recover
-[  909.803945] mhi mhi3: Power on setup success
-[  911.808444] mhi mhi3: Device failed to exit MHI Reset state
-[  911.808448] mhi mhi3: Device MHI is not in valid state
+static struct gdsc mvs0_gdsc = {
+         .gdscr = 0x3004,
+         .en_rest_wait_val = 0x2,
+         .en_few_wait_val = 0x2,
+         .clk_dis_wait_val = 0x6,
+         .pd = {
+                 .name = "mvs0_gdsc",
+         },
+         .pwrsts = PWRSTS_OFF_ON,
+         .flags = HW_CTRL_TRIGGER | RETAIN_FF_ENABLE,
+};
 
-We cannot remove the syserr handling from mhi_async_power_up() because the
-device may be in the syserr state, but we missed the notification as the
-irq was fired before irqs were enabled.  We also can't queue the syserr
-work item from mhi_async_power_up() if syserr is detected because that may
-result in a duplicate work item, and cause the same issue since the
-duplicate item will blindly issue MHI Reset even if syserr is no longer
-active.
+Also why not turn those apss_smmu entires you have commented out back on ?
 
-Instead, add a check in the syserr work item to make sure that the device
-is in the syserr state if the device is in the PBL or SBL EEs.
+https://github.com/z3ntu/linux/commit/281d07ae965ce0101bdb528e98bf8c00c94f86ec#diff-ea117dfbd122406c02e5b143ee0969a3de21416b6c192e3b5ad024571f6e4bffR2016
 
-It is unknown when this issue was introduced. It was first observed with
-commit bce3f770684c ("bus: mhi: host: Add MHI_PM_SYS_ERR_FAIL state") but
-that commit does not appear to introduce the issue per code inspection.
-This issue is suspected to trace back to the introduction of MHI, but the
-relevant code paths have drastically changed since then. Therefore, do
-not identify a specific commit in a Fixes tag as confidence is low that
-such a commit would be correctly identified.
-
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
 ---
-
-v3:
--Fix the moved comment due to misunderstanding the initial feedback
-
-v2:
--Move comment to reset_device condition
--Rename cur_statemachine_state to cur_state
--Amend commit text to explain the lack of a Fixes:
-
- drivers/bus/mhi/host/pm.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-index 11c0e751f223..e567a356f136 100644
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -602,6 +602,7 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
- 	struct mhi_cmd *mhi_cmd;
- 	struct mhi_event_ctxt *er_ctxt;
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	bool reset_device = false;
- 	int ret, i;
- 
- 	dev_dbg(dev, "Transitioning from PM state: %s to: %s\n",
-@@ -630,8 +631,23 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
- 	/* Wake up threads waiting for state transition */
- 	wake_up_all(&mhi_cntrl->state_event);
- 
--	/* Trigger MHI RESET so that the device will not access host memory */
- 	if (MHI_REG_ACCESS_VALID(prev_state)) {
-+		/*
-+		 * If the device is in PBL or SBL, it will only respond to
-+		 * RESET if the device is in SYSERR state.  SYSERR might
-+		 * already be cleared at this point.
-+		 */
-+		enum mhi_state cur_state = mhi_get_mhi_state(mhi_cntrl);
-+		enum mhi_ee_type cur_ee = mhi_get_exec_env(mhi_cntrl);
-+
-+		if (cur_state == MHI_STATE_SYS_ERR)
-+			reset_device = true;
-+		else if (cur_ee != MHI_EE_PBL && cur_ee != MHI_EE_SBL)
-+			reset_device = true;
-+	}
-+
-+	/* Trigger MHI RESET so that the device will not access host memory */
-+	if (reset_device) {
- 		u32 in_reset = -1;
- 		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
- 
--- 
-2.34.1
+bod
 
 
