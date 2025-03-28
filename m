@@ -1,162 +1,380 @@
-Return-Path: <linux-arm-msm+bounces-52777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A37C5A74CDB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 15:37:10 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5034A74DA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 16:22:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 472091880A1A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 14:35:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8007F3ADDB0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 15:22:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9802422094;
-	Fri, 28 Mar 2025 14:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A314DDC5;
+	Fri, 28 Mar 2025 15:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AgzTQ3Js"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="mZxoWo/H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E6C4409;
-	Fri, 28 Mar 2025 14:35:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5EE3C0C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 15:22:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743172541; cv=none; b=auIp4IW96km+fytkPJ6kdoYxCm8hm8LzmnXCUg9JlP2GICm8Kjj9pdOilpr1JiMcwU14Ki61mMfkAnrqAeGYKg3sV07+dChYF3TVRH4lyawppeQGWFDxmoTQfh2NWU7AMB8yTkvCJg0EXvqmGD0CH0mdUmW0K8yF5qxLGJ6jAQ4=
+	t=1743175364; cv=none; b=l5fXii99TtT6ovnKLdNyWZiWwL5LKtBbDcOyLp7yTyyiguE9nZ8xI18hkCAw5NGabtK9iPvR1G3zm1oeWgjhpfESsOw8j18QzG1eTu4VcPLVNe3SH1u7Of6BttKAWbN0vjztF2KY8rXvJncvAox3kKBOFCy8bH8oV50NLMwbscc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743172541; c=relaxed/simple;
-	bh=zZoRKx1reyu52zSadHX/1iq2fuwZTSCw3M9uyqj0sg0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tddk2sG0rvGWjz2G6srgCW8HhB/0MQAkuG1RyAAHVyzwVYAOCTHO1EYuLdE25PktBHL8g2wtnhhP0NFF84PxNX0a8oZyZLHHviGaF81WqwwU8fTlfPnOWcv4LRO2VdjwYM2+oGbodxeQe+j3EnE1sKTLJevAbyGxJMkgWubwcSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AgzTQ3Js; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFB6C4CEE4;
-	Fri, 28 Mar 2025 14:35:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743172539;
-	bh=zZoRKx1reyu52zSadHX/1iq2fuwZTSCw3M9uyqj0sg0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AgzTQ3Jsjg5tRHobxq9/PynT9M4alLGRG8VyI9rROgFGWfiVeeO3tK8W8gGW/h9ab
-	 zCPilDPPXz8ccLg/44yf2YF2dJPTTvGloaq7927PLjCUBwUuytSYlpxBHqfD5Hgel/
-	 gryPyQovI2RnAGIADxE0Uh7sbNbr/V+iSZFp5QXEh/R6Gz3biO4Q9uTXFg6rrm7li/
-	 clfbG0fZntC1Mr1KgAA33q1krfi1x+GtoR9SVdu1iVTEz06D2C0baVqOM+6SYw6ZzL
-	 2+Zr+vZOq3qf5ZyIS9xwkXg+jvIRjyOlzoZDKzaK/+bOk7t4hKQmHN8rkWIa5plLvZ
-	 OA0TQqfSXl5Cw==
-Message-ID: <f0bb768d-ee4e-46c1-b8cc-5d1c3627063e@kernel.org>
-Date: Fri, 28 Mar 2025 15:35:32 +0100
+	s=arc-20240116; t=1743175364; c=relaxed/simple;
+	bh=Gi34vieMXSRVS+Iqe7plNA+Z/GwWw17RO6Fqh0sTklw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To; b=t9Da+R2RwlhksGIx/PQrhDh+Nh8ICmflJ9lz1Me5Jghmut2uGqiiqZwmgzAWUIpkiaGQxYDOAIgvZoH6+v2FeNS3AFvLm9pII6n1DojHLC3WDwdV/dcZeuQ/6eHzfP06uqlBo828wgMsJNdgUV12fW9OQsP6Eu8TAuXHZ8heev8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=mZxoWo/H; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-aaecf50578eso389676066b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 08:22:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1743175360; x=1743780160; darn=vger.kernel.org;
+        h=to:from:subject:message-id:date:content-transfer-encoding
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jDosYwgJO0p8ryK/p/FbZtQdh1dImCHEzbIBk2gNw3U=;
+        b=mZxoWo/HJ9sKdQvGnsuFJyS999/MOYW8DCUnJqRpTBrf4ifnOQsic7CEX9VHgGxS6H
+         Ht87ZiZHTcYwdjAk9X3TNg20XU6oPnE9YYKczwGytyWioAAEV3qbOoofg27Arw7A4MoA
+         Otyyoz87DNEvp2GfcOPi112QihCi5aZuamouA3qo0j+/fZtjA8uX54k6YMc/8etZyDcS
+         BJ+Nh+AozpCQKtD0WUIhKT1cW1lEk6D4gkXt6o4OKNUwCBbZ/zn7QEWhqTxxZelZ6v29
+         bhGYTM8J7A33ZNb+SXiVNYf7bp54MrJ7ZN3c31U9Gbq4GvWI5xYGB97VmfZMk1ejmqjZ
+         p4ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743175360; x=1743780160;
+        h=to:from:subject:message-id:date:content-transfer-encoding
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jDosYwgJO0p8ryK/p/FbZtQdh1dImCHEzbIBk2gNw3U=;
+        b=TZXAdm0uT+g+CKzT/WWoPKz84MmFIRkmTxEoRbV3Zg7GUljcnOxcvoqxWQ0IbiVT3g
+         zjX1f4M34o/2CnFbQedRCeOCsmKroPVzpaN1UWRgQO/F4xVJioHgYGJjpXJ0lOPVLuYs
+         PUkSEzRGL8RA7cSbwSb2oUsZUag15S+irlRza4R5wcZzL85k/0NUV8o1ePQy/sonjFAn
+         40Jou4Ps6Dm08/umVE0eh1oalvMlK6412zlVUR+jIYJ+loep3HZA3hLwyoGW3z9bPMdy
+         Jt6nrt5SO25QJ3HOKfLpMadI1xGJFOdWLALcFv3J8Dbvt+s5JG1WUr+cmFpvYLIzKySb
+         LQnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXhibyyVOLrBZ3SZX4HbYlYLQdmBYQOBq3TXK8xNMhoY6wfsfsuEYkndN4ZYBxSH7e73T/lmqdm4F1mAn4N@vger.kernel.org
+X-Gm-Message-State: AOJu0YzlC5LmiIBBHdl9r/1XENvhzC7ezuqs/DXsnaQKIou5919cSc7o
+	yx1ACpNPlEUDxLTpokEzFj3VkPtiqxAEp+aDO/SsRkJuxPGIuU//BynT2dITnKo=
+X-Gm-Gg: ASbGnctwnLDbIcmM/D3zNCcJKvVmQxqSBqjg13cjRlNSts1tCbfGqtRTuOpHWhccKjE
+	Hz0WghPIBtlgLd6nlkjinRjfODEiMLNlsYr2jfuU1HqmZKbW/DsYs47ykUQuhH5Kxx5FC8criTb
+	/hhWjfGfLM2qHaTor/prpGdpGCpuPp5JYl7hYHEwYT24BMnCfq8NM+NrxzoLAquGBahhLFlDcdo
+	6K6QaSUK0LkmyexciDfJIBD1T8/Z0PCdn6yxqgw5uP3rcBHdUvu2SRgBR803ZDA8AXNxYZlAYqo
+	essZ9jKPkbPi1zS5Pu4qhTrFmOjbqQ1MsZ0jDLLN2UJTNSI1GaHxhfZ4LEoGW+Roe1XAOat0w4h
+	vWJjROwC8aUcMm8JgvbdwVclAckwa0Ay/61FIsPjkywYbB/lhvzEJ2X5W
+X-Google-Smtp-Source: AGHT+IGizFyzpYKVf71NOo5mNUlSLUCfdG3AzDfytpaiEuXZCrcMZptrDBhJuJB0+mj+GKSQcMhFQg==
+X-Received: by 2002:a17:907:7da5:b0:ac3:45c1:34be with SMTP id a640c23a62f3a-ac6fae48ademr702195866b.9.1743175359800;
+        Fri, 28 Mar 2025 08:22:39 -0700 (PDT)
+Received: from localhost (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5edc16ef8c7sm1560219a12.39.2025.03.28.08.22.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Mar 2025 08:22:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] i3c: master: Add Qualcomm I3C controller driver
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
- alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, jarkko.nikula@linux.intel.com,
- linux-i3c@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Trilok Soni <quic_tsoni@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org
-References: <20250326141641.3471906-1-quic_msavaliy@quicinc.com>
- <20250326141641.3471906-3-quic_msavaliy@quicinc.com>
- <d0b178ab-ad22-4230-a790-6a19a6abfd89@kernel.org>
- <f6b0cec1-a20d-4ed8-84b2-06d464ae5e0c@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <f6b0cec1-a20d-4ed8-84b2-06d464ae5e0c@quicinc.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Fri, 28 Mar 2025 16:22:38 +0100
+Message-Id: <D8S03CCD8LGW.TA2FRY4CKEGT@fairphone.com>
+Subject: Venus probe issues on SM6350 SoC
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Vikash Garodia" <quic_vgarodia@quicinc.com>, "Dikshita Agarwal"
+ <quic_dikshita@quicinc.com>, "Konrad Dybcio" <konradybcio@kernel.org>,
+ <linux-arm-msm@vger.kernel.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
 
-On 28/03/2025 15:28, Mukesh Kumar Savaliya wrote:
-> Thanks Krzysztof for correcting !
-> 
-> On 3/26/2025 7:58 PM, Krzysztof Kozlowski wrote:
->> On 26/03/2025 15:16, Mukesh Kumar Savaliya wrote:
->>> +
->>> +static int i3c_geni_resources_init(struct geni_i3c_dev *gi3c, struct platform_device *pdev)
->>> +{
->>> +	int ret;
->>> +
->>> +	gi3c->se.base = devm_platform_ioremap_resource(pdev, 0);
->>> +	if (IS_ERR(gi3c->se.base))
->>> +		return PTR_ERR(gi3c->se.base);
->>> +
->>> +	gi3c->se.clk = devm_clk_get(&pdev->dev, "se-clk");
->>
->> Never tested.
->>
-> sorry, i ran and i got below error now:
+Hi all, and Vikash and Dikshita,
 
-Please do the tests *before* you post changes You do not need community
-reviewer to tell you to do static/compile time checks on your code.
+Konrad Dybcio was suggesting I write an email here, maybe someone has a
+good idea what I can try.
 
-> i3c@884000: Unevaluated properties are not allowed ('clock-names', 
-> 'interrupts' were unexpected).
-> 
-> so i have made below change and ran dt_binding_check + dtbs_check, i 
-> could fix the issue. Let me have this review internally specific to 
-> dt-binding and will post next patch after internal review. So i can 
-> avoid such misses.
-> 
-> yaml :
-> +  clock-names:
-> +    const: se
-> +
-> -  - interrupts-extended
-> +  - interrupts
-> 
-> example:
-> clock-names = "se";
+I've been working on bringup for SM6350/SM7225 ("lagoon") for the
+Fairphone 4 smartphone but have been stuck on getting Venus working for
+a long time (~January 2022). Essentially, whatever I try probe fails
+with the following error:
 
-No, drop clock names entirely, not really useful for one entry using
-block's name. Just get the first clock, like most of the drivers.
-> 
+[   41.939451] qcom-venus aa00000.video-codec: non legacy binding
+[   42.162105] qcom-venus aa00000.video-codec: wait for cpu and video core =
+idle fail (-110)
+[   42.167037] qcom-venus aa00000.video-codec: probe with driver qcom-venus=
+ failed with error -110
+
+I've double checked the videocc driver against downstream, the videocc
+GDSCs and their flags, compared dts bits, checked basic driver bits but
+I couldn't find anything to get further than this.
+
+For driver / compatible, it doesn't seem to matter if I use sm8250 or
+sc7280 compatible or actually the struct I created for sm6350.
+
+I'll attach the log with some extra debug prints below.
+
+My git branch for reference: https://github.com/z3ntu/linux/commits/sm6350-=
+6.14.y-wip-venus/
+
+I didn't try the new Iris driver yet, mostly because as far as I can
+tell, VPU_VERSION_IRIS2_1 is not yet supported there, just IRIS2
+(sm8250) and IRIS3 (sm8550). But I'm also happy to try something there.
+
+Regards
+Luca
 
 
-Best regards,
-Krzysztof
+[   56.572306] qcom-venus aa00000.video-codec: non legacy binding
+[   56.573348] venus_hfi_create:1708
+[   56.573990] venus_probe:450
+[   56.573993] venus_probe:453
+[   56.574000] venus_runtime_resume:649
+[   56.574150] venus_probe:464
+[   56.575453] venus_probe:469
+[   56.575458] venus_probe:474
+[   56.609600] qcom-venus aa00000.video-codec: loaded video firmware! qcom/=
+sm7225/fairphone4/venus.mbn size=3D5242880, phys=3D2258632704
+[   56.621821] qcom-venus aa00000.video-codec: venus_boot ok
+[   56.621837] venus_probe:479
+[   56.621935] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.622961] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.623979] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.625002] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.626026] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.627035] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.628045] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.629054] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.630062] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.631070] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.632080] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.633088] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.634096] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.635094] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.636374] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.637532] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.638642] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.639683] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.640723] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D0
+[   56.641757] qcom-venus aa00000.video-codec: venus_boot_core:482 ctrl_sta=
+tus=3D40000001
+[   56.642789] qcom-venus aa00000.video-codec: VenusLow : venus hw version =
+6.40.0
+[   56.642801] venus_probe:484
+[   56.643008] venus_probe:489
+[   56.643011] qcom-venus aa00000.video-codec: VenusLow : F/W version: 14:V=
+IDEO.VPU.1.2-00043-PROD-1, major 1, minor 2, revision 43
+[   56.643013] venus_probe:494
+[   57.667128] venus_probe:502
+[   57.667177] venus_runtime_suspend:590
+[   57.718537] venus_runtime_suspend:592
+[   57.718573] qcom-venus aa00000.video-codec: venus_suspend_3xx:1574 DBG
+[   57.718588] qcom-venus aa00000.video-codec: venus_suspend_3xx:1581 DBG
+[   57.718603] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.719144] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.720705] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.722262] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.723117] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.724668] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.726237] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.727129] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.728685] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.730245] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.731157] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.732717] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.734271] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.735163] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.736713] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.738260] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.739130] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.743158] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.744729] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.746293] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.747148] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.753709] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.755146] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.759147] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.760747] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.762338] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.763271] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.767142] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.768722] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.773201] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.774780] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.779133] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.780721] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.782285] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.783163] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.787151] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.788715] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.790282] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.791130] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.796389] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.797973] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.800924] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.802489] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.803128] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.808778] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.810356] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.811134] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.812694] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.814246] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.815188] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.816762] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.818334] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.819151] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.820692] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.822242] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.823110] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.824675] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.826248] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.827117] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.828704] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.830334] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.831149] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.832798] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.834389] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.835171] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.836729] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.838272] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.839147] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.840703] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.842284] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.843147] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.844784] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.846427] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.847117] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.848668] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.850239] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.851131] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.852694] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.854249] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.855178] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.856731] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.858286] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.859211] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.860792] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.862382] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.863310] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.864863] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.866408] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.867122] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.868663] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.868683] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
+e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+[   57.868690] qcom-venus aa00000.video-codec: wait for cpu and video core =
+idle fail (-110)
+[   57.868699] venus_probe:505 ret=3D-110
+[   57.873495] venus_hfi_destroy:1690
+[   57.873519] qcom-venus aa00000.video-codec: probe with driver qcom-venus=
+ failed with error -110
+
 
