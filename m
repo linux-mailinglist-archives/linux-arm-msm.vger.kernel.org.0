@@ -1,97 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-52739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DCBFA745F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 10:05:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B87C2A74603
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 10:10:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 504011897B44
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 09:05:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4DBA61688DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 09:10:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DE7B1C84CA;
-	Fri, 28 Mar 2025 09:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B3902116ED;
+	Fri, 28 Mar 2025 09:10:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uSUANAlK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mxhk.zte.com.cn (mxhk.zte.com.cn [63.216.63.35])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B56817BA3;
-	Fri, 28 Mar 2025 09:05:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.216.63.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6831D5170;
+	Fri, 28 Mar 2025 09:10:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743152721; cv=none; b=WTVDD8qa40ExbihziNd9cVd/7Q5iOxGbCzYCZN2uVFINtlhTHgoC99V2sDh5vy32NUCQZGx1dyHcpy+Cu+MYoa1KpIUhWMeXxEpZkVyOmk6KZShsIBu7mSDsKUUxTeiwEhBDcCqW41nSo4umazOthYZHJM+/swK4/CZs+DEi1MQ=
+	t=1743153007; cv=none; b=neirHMDbvKT3jCfEI+PiIDmrP/rhf7WqOFlgsgZG+B/SIBdVjPPD48VybNgYJ+CMO5TEbwaG7N45k/XrA4B3RnAv1YTI0uiJtsdQNyYJ7vj0OrlGkKk9U68Lp6tSwamnGD1yoKT9E0X9r+1DMOu+jwD0uppStCRajbVDq0qdu2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743152721; c=relaxed/simple;
-	bh=Z0NePWjC0usRfphBp4RYVUXKLMLWOyek6WqP11WZt3M=;
-	h=Date:Message-ID:Mime-Version:From:To:Cc:Subject:Content-Type; b=oSZCJhXhqJiGT7okEfeW5MEDKHmNJY8OGneHqT9rf7Ox9pnNtkKGiqJFxz1CTY8Nu6YEcE6+RucbuPJiJsdU3cfDr7X2HL1dTCLAM6NrAAimSPo7vIJYI6rwzSyHJd873nxWG1dwBY6mcK0sAadEl7hb2n7j10kFA8xQuCucaGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zte.com.cn; spf=pass smtp.mailfrom=zte.com.cn; arc=none smtp.client-ip=63.216.63.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zte.com.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zte.com.cn
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mxhk.zte.com.cn (FangMail) with ESMTPS id 4ZPF3f34lyz5B1Jd;
-	Fri, 28 Mar 2025 17:05:18 +0800 (CST)
-Received: from xaxapp05.zte.com.cn ([10.99.98.109])
-	by mse-fl2.zte.com.cn with SMTP id 52S958Sd007615;
-	Fri, 28 Mar 2025 17:05:08 +0800 (+08)
-	(envelope-from shao.mingyin@zte.com.cn)
-Received: from mapi (xaxapp05[null])
-	by mapi (Zmail) with MAPI id mid32;
-	Fri, 28 Mar 2025 17:05:10 +0800 (CST)
-Date: Fri, 28 Mar 2025 17:05:10 +0800 (CST)
-X-Zmail-TransId: 2afc67e66646ffffffffca3-c3901
-X-Mailer: Zmail v1.0
-Message-ID: <20250328170510996P1Sd9KSFJn1p08vc0LXHX@zte.com.cn>
+	s=arc-20240116; t=1743153007; c=relaxed/simple;
+	bh=CK74oiFd8Lt9pvGCt8PX1xWQ/8O4B+iUVrHW4iQ6Y/c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RTjNs5MxF9/PMqgIzdnDkgOc4EceG3kdo/SwS/5jChePfKTUvJaBwJ7lSBEof5T7p/yCaxYtJ5t9liLWloam4uedZ0zDARP5m6dB7RzAelARiqlqsPMOjmZ0tBNZ1bvOV1ETzusOoBUdNUydlgnyp+f47BRzNXfUEuy7yAM+6Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uSUANAlK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B9CC4CEE4;
+	Fri, 28 Mar 2025 09:10:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743153006;
+	bh=CK74oiFd8Lt9pvGCt8PX1xWQ/8O4B+iUVrHW4iQ6Y/c=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=uSUANAlKyjNR9xOUXTB7nXEYjjXGkdghJfc5pBD7aea9EVwgfwz924OL76cCm9Kok
+	 Q28CAraw21zD3eb0ClmeL1T31EvVcDEglLUMQQSVovfZ0Zd0oONWSyRwn9egvsuS4z
+	 uLz6FDozlLEENqxQ2+Xcp7vp62nXB/3KLvY/SwIBilKP+s0bplriQS4lH+4mOyHBoi
+	 13Gf1BfqsbfOgs9WgoDyI5n9Npi3z616kBn9sdKCSR4kKF/1RmGnhf9C6jCewHgXTN
+	 OUxaTTeZLU1zwtpTJ46IqvQlPqkLyvqqBaxom1jC6V7xTUT9wffHBor0Ua/bCTFZfn
+	 gVIoj5bJQKR3g==
+Message-ID: <aaf21b5e-e910-4e03-b9a9-f37b7dd118bb@kernel.org>
+Date: Fri, 28 Mar 2025 10:09:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-From: <shao.mingyin@zte.com.cn>
-To: <robert.marko@sartura.hr>
-Cc: <luka.perkov@sartura.hr>, <vkoul@kernel.org>, <kishon@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <yang.yang29@zte.com.cn>,
-        <xu.xin16@zte.com.cn>, <ye.xingchen@zte.com.cn>
-Subject: =?UTF-8?B?W1BBVENIXSBwaHkvcXVhbGNvbW06IHBoeS1xY29tLWlwcTQwMTktdXNiOiBVc2UgZGV2X2Vycl9wcm9iZSgp?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL:mse-fl2.zte.com.cn 52S958Sd007615
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 67E6664E.001/4ZPF3f34lyz5B1Jd
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sa8775p: add QCrypto node
+To: Yuvaraj Ranganathan <quic_yrangana@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250227180817.3386795-1-quic_yrangana@quicinc.com>
+ <ea79cee4-8c47-4054-bd17-2097ada4e583@kernel.org>
+ <b57fa204-d3d2-4b74-8834-3f2d93726a99@quicinc.com>
+ <73ed6108-27ab-43ac-abd3-82656693404d@kernel.org>
+ <4a205725-af49-4f28-ab78-7059451d66c8@quicinc.com>
+ <29f41232-28fc-439d-bb35-7b9cd1e4be16@kernel.org>
+ <6ccf4cad-a99b-4168-b4d7-577112c011e1@quicinc.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <6ccf4cad-a99b-4168-b4d7-577112c011e1@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: Zhang Enpei <zhang.enpei@zte.com.cn>
+On 28/03/2025 09:32, Yuvaraj Ranganathan wrote:
+> 
+> 
+> On 3/28/2025 12:47 PM, Krzysztof Kozlowski wrote:
+>> On 28/03/2025 07:04, Yuvaraj Ranganathan wrote:
+>>>>>> Use commit SHA syntax (see submitting patches, checkpatch).
+>>>>>>
+>>>>>>> because of the build warning,
+>>>>>>>
+>>>>>>>   sa8775p-ride.dtb: crypto@1dfa000: compatible: 'oneOf' conditional failed, one must be fixed:
+>>>>>>>     ...
+>>>>>>>     'qcom,sa8775p-qce' is not one of ['qcom,ipq4019-qce', 'qcom,sm8150-qce']
+>>>>>>
+>>>>>> Not relevant warning.
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>> Best regards,
+>>>>>> Krzysztof
+>>>>>
+>>>>> Are you saying this is not the warning seen at merging?
+>>>> Tell me how it is relevant? Tell me how can I reproduce it.
+>>>>
+>>>> Best regards,
+>>>> Krzysztof
+>>>
+>>> Below commands will show the above warnings without the fix,
+>>> make clean && make qcom/qcs9100-ride.dtb CHECK_DTBS=1
+>>> make clean && make qcom/qcs8300-ride.dtb CHECK_DTBS=1
+>>
+>> As I suspected, not possible to reproduce.
+>>
+>> Best regards,
+>> Krzysztof
+> 
+> I'm able to reproduce without this fix, I hope you are discussing about
+> this failure only,
+> 
+> 	from schema $id:
+> http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+I suspect you work on outdated tree. I followed your instructions on my
+tree (you did not specify which) and did not see these errors.
 
-Replace the open-code with dev_err_probe() to simplify the code.
+I bet you reply now third time, without any more details claiming the
+same but it's just waste of my time.
 
-Signed-off-by: Zhang Enpei <zhang.enpei@zte.com.cn>
-Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
----
- drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
-index da6f290af722..738b3015747f 100644
---- a/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
-@@ -109,11 +109,9 @@ static int ipq4019_usb_phy_probe(struct platform_device *pdev)
- 	}
-
- 	phy->por_rst = devm_reset_control_get(phy->dev, "por_rst");
--	if (IS_ERR(phy->por_rst)) {
--		if (PTR_ERR(phy->por_rst) != -EPROBE_DEFER)
--			dev_err(dev, "POR reset is missing\n");
--		return PTR_ERR(phy->por_rst);
--	}
-+	if (IS_ERR(phy->por_rst))
-+		return dev_err_probe(dev, PTR_ERR(phy->por_rst),
-+				     "POR reset is missing\n");
-
- 	phy->srif_rst = devm_reset_control_get_optional(phy->dev, "srif_rst");
- 	if (IS_ERR(phy->srif_rst))
--- 
-2.25.1
+Best regards,
+Krzysztof
 
