@@ -1,369 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-52795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AD7EA75087
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 19:46:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C8BB7A7509D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 20:05:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8855F18950D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 18:47:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D0E77189517F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 19:05:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB6381DF24D;
-	Fri, 28 Mar 2025 18:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04A3F1C5D4C;
+	Fri, 28 Mar 2025 19:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QYcBzHLF"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="L0QLwyUy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1D114A0BC;
-	Fri, 28 Mar 2025 18:46:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE561482EF;
+	Fri, 28 Mar 2025 19:05:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743187610; cv=none; b=MykrBH4KHkejVuN9PTzS0cbt6Yx7EzDO+wxu88txP1mMEsIwU9VjpgGTWX5DHGTFiwAgwqyoKYGHYLcXIl4axDA4C4K5e023pkiNVvrzLtrYMS2PvH3bdwX/lcT6CtcyyzviUMK7Eg7sUV5LwqELLRFMEXQMiLDbiw+lVePpFNA=
+	t=1743188721; cv=none; b=nCbAq5HFkdU/7i4ma3/TL/bgF+MCfiCJaiqca0t6bBArqsUL6W1GXSDzWvUjlOONY775esMQxWDgMwjGxAHq/dZCaPKzP/3dVQT+rapmzj8TV1t0C4qlcz3DH8fhf9tfpZyywziAXaXgRAV4DArzggk7FzucLTDTZtwVPdH2Q4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743187610; c=relaxed/simple;
-	bh=VHJsVHFJzhYTuQ7je/5WMk5khxEyqjjoPSkq9jJ3m9w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=qrTL5JP7CjSfyG0yH46MX7Jhh0jtD1nSfs94R65pYF5526erDFU1+g5mYU23iW/Hbl0xX8x7l6H6hY+NmY/U0LV69IvIn9adTkzZduY8JPzbjbgYfPkLDV0iPaJ+p1VLYSUONpjPDu/9PzGc9lLyBqFCHS+rcZ4s+LPpH8z78V8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QYcBzHLF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0E2C5C4CEE4;
-	Fri, 28 Mar 2025 18:46:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743187610;
-	bh=VHJsVHFJzhYTuQ7je/5WMk5khxEyqjjoPSkq9jJ3m9w=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=QYcBzHLFmTEjJZbLsiZde+CEV7GupoFkicqzytGEYhoIqgjhta13yu3hWPFNuRKI7
-	 11LYx8z6yiC0g2dgIQD0sT68T0jx2F5OB/MjhlKpLIFrIjOKQ/mC23edqf8rXhrP8d
-	 c7Om5M8H51E6SHp/nelet9gnDq4G4C8tckk7d7rWjtNlMZCwMsLDumqdGsVhVPkrzT
-	 bGLY0ubcHWyjD48VsElDPpTe3Hkbjk+4Fbo9vlkeinfUZFUib47VQFWZLuM0MBFjWx
-	 a/VX3c2q1kBOpuyU5Y1NiZ+FlzWbOl28JaP2gChXqAV7UcVtqD4DpZxUSBUOT1rWoo
-	 eOkYh35RaF1Lg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFFD6C28B20;
-	Fri, 28 Mar 2025 18:46:49 +0000 (UTC)
-From: Maud Spierings via B4 Relay <devnull+maud_spierings.hotmail.com@kernel.org>
-Date: Fri, 28 Mar 2025 19:46:45 +0100
-Subject: [PATCH v7] arm64: dts: qcom: x1e80100-vivobook-s15: Add bluetooth
+	s=arc-20240116; t=1743188721; c=relaxed/simple;
+	bh=jOsXkiN4zS8kiwV3cwiwixj57c5f74/Oq2sxAMpeJuM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k01/qppbKfA8yXcIigZEMjAC5kh6stxENgKLBP2pgExumMklbwTRlShQTIwQXI7ctPZZIiuBEvVIPOujAXK7x58btVFUcujgIzmpmZJYIPspwYEfQvNpeBDJigFoy/ukvnlYdSa6AoC5EfKR/d8SjgYFi9qq4y/DI46q/pI/ew8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=L0QLwyUy; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1743188698; x=1743793498; i=markus.elfring@web.de;
+	bh=jOsXkiN4zS8kiwV3cwiwixj57c5f74/Oq2sxAMpeJuM=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=L0QLwyUyTR0EqrGx9YUwLuZmfmdlI8Hpb5sG96NM4+zNuDkJNA71s4EeyXxj0wuE
+	 mqWz/z9oeFnd60z/beEb6si2p4BhTtPMaSGlCA4HzivGcGTPwKVxy/BX/lxygsBR9
+	 nzJU6bdh4Puw4ZINNYs4APKD9s/fmzZ2oogYFOYB06DdMv8ldxaQIIc7CyCJp8dtp
+	 nZoXcAVSbftqoFl6Ksh/QOAiHuNo4DYjizjJSZDnfOpHlUGQsp2okXITmVT02OW7P
+	 r4SYk+E1l+AKUGdHZ0Gf1FoUI7mF8ogFxoaK7exgl58LC7bwbWSEwmhMVMvUewOTH
+	 02SIyC8kyDSYEoCoPQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([94.31.93.33]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MKdLK-1thgb02RWm-00LIxN; Fri, 28
+ Mar 2025 20:04:58 +0100
+Message-ID: <e32324c8-1888-451b-8621-0e468ca61fd9@web.de>
+Date: Fri, 28 Mar 2025 20:04:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250328-asus_qcom_display-v7-1-322d2bff937d@hotmail.com>
-X-B4-Tracking: v=1; b=H4sIAJTu5mcC/4XQ22rDMAwG4Fcpvp6HLZ/iXu09RilKbC+GtuniL
- rSUvPvUMlhGDLsx/Eb6hHRnJY45Frbd3NkYp1zycKLgXjas6/H0EXkOlBkI0FJKy7F8lf1nNxz
- 3IZfzAW+8iyYlB14pLRj1nceY8vVpvu8o97lchvH2HDHJx++PBqqiTZIL3hj0KXnQAvGtHy5Hz
- IdXqmIPb4J/DSADRZtSY5ylurWhloauGYoMIaB1oFrpQawNvTRMzdBkWIk6oLS0jF0b5tegp2Y
- YMqIIyhmgM8u0NuzSqO5iyfBSON+FBpSOf415nr8BnJ0TRwgCAAA=
-X-Change-ID: 20241116-asus_qcom_display-ce5ff7293340
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Maud Spierings <maud_spierings@hotmail.com>, 
- Dmitry Baryshkov <lumag@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1743187609; l=8153;
- i=maud_spierings@hotmail.com; s=20241110; h=from:subject:message-id;
- bh=lrfh6d5f8dXOFO6Fr6yu9DWe+YdNi/MddlVyp3D4nHw=;
- b=dimc4PITJh12KTxadUeLDyqJ/lval89wQE7jaMxvr3nz+W1yOw5l+R3tG/evERXqD6f6lxD4O
- 12Ps0Vo/pwSDlLzDy8+bK3Mr2gurIjD6X/CFexoG+NYi0ZAalQvmee9
-X-Developer-Key: i=maud_spierings@hotmail.com; a=ed25519;
- pk=CeFKVnZvRfX2QjB1DpdiAe2N+MEjwLEB9Yhx/OAcxRc=
-X-Endpoint-Received: by B4 Relay for maud_spierings@hotmail.com/20241110
- with auth_id=273
-X-Original-From: Maud Spierings <maud_spierings@hotmail.com>
-Reply-To: maud_spierings@hotmail.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [v2 2/3] i3c: master: Add Qualcomm I3C controller driver
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+ linux-i3c@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+Cc: LKML <linux-kernel@vger.kernel.org>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>
+References: <20250326141641.3471906-3-quic_msavaliy@quicinc.com>
+ <66d344b9-5cc6-4060-86ff-8100a00de477@web.de>
+ <4161e6de-b16f-4371-be41-cc12adb3e9b8@quicinc.com>
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <4161e6de-b16f-4371-be41-cc12adb3e9b8@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:T7u3qxPI3WBz+9O34BuV/2Jv5KTEmCEu3iKfSY+G+o7DSm/aCvE
+ pp9v/ic4W/McvGc0YbBtKGV0sx46UwVZOKFTGJtD5tIfv0ZPDXOgFDo7uiGWOhJM1h9BYYt
+ rguY95Sbvn/Lp5K9m2BG0uWoqUoHvbAOK6G5a/IoY4JhBPofvSov9N/amDUniGxzNcFPEth
+ nM/mqP4koheEiCN9ujjuA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:qqse1amEUSE=;K+dmILupNtAQj8PPVB/oOTWLo6J
+ NgMcVA52rk2boJxbQv2e7z86py5jTwh1bHYS4fNvLZ2iYoQtPzTaTQe9J0h4zE5j9DEB5T7Qi
+ +6pppXVxwy5pL+s5rllEPHZ4faiyNOqBjUmUDY0nQxvdYI8cdonvWVj1VQDEdpRKMVWVU+PLj
+ 2yV79OgvPz6W9GOv8kA9rcym6K+ZPObg+ZtBN2jZIeCH6xpMii1t5Qb0vPX8/8DGNKM8PJ6OD
+ 0ARGOeA8x3HzLI2gCmG6XqNhILgpVmOmprROMevRHCqEq2TqlMW3afyF5fp+SI2AztUrMZMAF
+ j9j4VgJDVVuHRpR+6WAdZRGlZYKgNsPF4cfd4YYU9IhYj6osUMr8iTv1klJGzxsajIQJkZqtj
+ FDMBpWGIyFH786GSDaOf9BqLoNiWz8FVxGws/LgLh3m/fkgBhxGkdXqjX8gb8BGBGMqCgG8gd
+ xCbjMdekPsthLdBZZP8PuBTBAvBEbzhkheUK83cV4PiT/iZQWIxEE1tk13mtsqa2hoHs20eFY
+ JaiSXm85mpSMHNpbf+H8LKC7rku0PThBBEikRL9ioZ1722uXpsAXIlhxNdHIbNhHa5bJnjKfo
+ 90IOS3Gu9abBx926bEiT+BL6XgRr6VVAzQ082VpXvBFZTC+QCUyzPWGKoPVM033KSYCt+EAti
+ /W0cPAxxBfR1RHQlMw+1qTN9NGBZW96iBpWC8HjR3t98U60IFxz55a6inQ79zKwXpVXuYMyJ1
+ vzFQVCgwXCPLzJrrKKuZH2ANUDWD+qkuNiW22mdKNsBiUIp+ZLMR/xDwA4mU77SOmiy7cRNSQ
+ 4W8gtZywIgYXXoVK5UCvNVlYHrKX1eJqfGN9lSO17WgN/CQPZPAUqXtNerJg2gBOY8LhlsuPp
+ I9udimlR/xi7GidGqEegpdvjxQYYJfMk4Rz07fMlDP1STL+K+VV6tybqrpOmJfhE82kRhx+Yv
+ YVK17s2BUbRSaUObPANgSehzpR+Pa7cwAKMYCPcbgMAJcxhwi/dYp2DV/FYr+u/Gu8yu1uqXn
+ 5j8kd+/daaRFOovanpki+ON7XlMJLOT5ModkYAaWqN9AW+Sa55W0vBxUGocJRmAtnrt16SsHM
+ /KX/spQGB3PU/rE6SSXICgxbzmGWxMP4z0QIovrw8e47jsascIVeH34Ouk+PrmpGSD1GH5nsm
+ 9229f8Kh+VacDqjINAyx68IWyXBvgeCpWUPCaL+zsyAFIsLKCA10jdBTw0ybo0OnTTkWgHe2B
+ 5RTWq4/Xs3xKi3OqoOuN47MxuzKqhTCA5FKWh5KluAaH46Jz13a1BJfkgRSGjdTLEnSnOd3AX
+ mIDx7xO4snEzi5k0KI+hoeCarGCZ4GY6xkjoIUt5UKZCuacH2OqkVKXxrUjmT5mPIxVV4+JWo
+ JYxO5cdMTgTufhjZrCEMlFtGeiz+605EOHWdBKrvT8HueRSXD4FOg94L5DoHmWtie9StJN9ze
+ lnxz8GpFee7EtwUKM/M2YzplUkIJipmCGICx56NxAFQeiYF5d
 
-From: Maud Spierings <maud_spierings@hotmail.com>
+>> Under which circumstances would you become interested to apply a statem=
+ent
+>> like =E2=80=9Cguard(spinlock_irqsave)(&gi3c->irq_lock);=E2=80=9D?
+> Didn't get, hence a question.=C2=A0 Do you suggest to use DEFINE_LOCK_GU=
+ARD_1 instead of existing method ?
+I propose to pick further opportunities up for benefits from scope-based r=
+esource management.
 
-Add bluetooth for the asus vivobook s15
-Describe wlan configuration
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Maud Spierings <maud_spierings@hotmail.com>
----
-Improves several parts of the devicetree:
-1. The eDP panel bindings
-2. Add a lid switch
-3. Add bluetooth and describe wlan (depends on [1])
-
-A big part of the bluetooth/wifi patch was copied from [1] as it is
-mostly boiler plate regulator definitions
-[1]: https://lore.kernel.org/all/20241007-x1e80100-pwrseq-qcp-v1-0-f7166510ab17@linaro.org/
----
-Changes in v7:
-- Add todo comment for the bluetooth/wifi regulators
-- Rebase on new next tag
-- Link to v6: https://lore.kernel.org/r/20241204-asus_qcom_display-v6-0-91079cd8234e@hotmail.com
-
-I seem to get a warning that the pci17cb vendor is undocumented (wlan)
-I can find this compatible in
-Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
-But pci17cb doesn't really seem like a vendor name to me, I have ignored
-this warning for now.
-
-Changes in v6:
-- Use the proper define for the pmic-gpio drive-strength in the panel
-  driver patch
-- Add a comment about the voltage to the pmic-gpio power-source in the
-  panel driver patch
-- Remove the alias for the not (yet) existing debug uart in the bt/wifi
-  patch
-- Remove output-low from the bt_en gpio in the bt/wifi patch
-- Add wcn- prefix to the bt-en and wlan-en gpio node names in the
-  bt/wifi patch
-- Link to v5: https://lore.kernel.org/r/20241202-asus_qcom_display-v5-0-e0d3752ff71f@hotmail.com
-
-Changes in v5:
-- Fix the pinctrl-# definition in the wcn7850-pmu node in the
-  bluetooth/wifi patch
-- Link to v4: https://lore.kernel.org/r/20241125-asus_qcom_display-v4-0-61a4da162406@hotmail.com
-
-Changes in v4:
-- Fixed the pin parameters for the backlight enable pin
-- Fixed the wcn_sw_en drive-strength, this was not in the acpi table I
-  checked.
-- Fixed the ordering of several nodes in the bluetooth/wifi patch
-- Link to v3: https://lore.kernel.org/r/20241124-asus_qcom_display-v3-0-002b723b1920@hotmail.com
-
-Changes in v3:
-- Fixed commit message formatting (line wrapping)
-- Fixed bad indentation (lid switch pinctrl)
-- Fixed bluetooth addition and added wifi description
-- Link to v2: https://lore.kernel.org/r/20241123-asus_qcom_display-v2-0-a0bff8576024@hotmail.com
-
-Changes in v2:
-- Add missing gpiokeys include in the lid switch patch
-- Add depends on for the bluetooth patch
-- Link to v1: https://lore.kernel.org/r/20241123-asus_qcom_display-v1-0-85a9ff9240aa@hotmail.com
----
- .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 167 +++++++++++++++++++++
- 1 file changed, 167 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index fb9567817be6f887c9214cafbfbabda8b8cb8203..d5ce5388b13d1b3250b16b4ba81ed7f87a51dc0e 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -19,6 +19,10 @@ / {
- 	compatible = "asus,vivobook-s15", "qcom,x1e80100";
- 	chassis-type = "laptop";
- 
-+	aliases {
-+		serial1 = &uart14;
-+	};
-+
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 		pinctrl-0 = <&hall_int_n_default>;
-@@ -153,6 +157,107 @@ vph_pwr: regulator-vph-pwr {
- 		regulator-always-on;
- 		regulator-boot-on;
- 	};
-+
-+	/*
-+	 * TODO: These two regulators are actually part of the removable M.2
-+	 * card and not the CRD mainboard. Need to describe this differently.
-+	 * Functionally it works correctly, because all we need to do is to
-+	 * turn on the actual 3.3V supply above.
-+	 */
-+	vreg_wcn_0p95: regulator-wcn-0p95 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_WCN_0P95";
-+		regulator-min-microvolt = <950000>;
-+		regulator-max-microvolt = <950000>;
-+
-+		vin-supply = <&vreg_wcn_3p3>;
-+	};
-+
-+	vreg_wcn_1p9: regulator-wcn-1p9 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_WCN_1P9";
-+		regulator-min-microvolt = <1900000>;
-+		regulator-max-microvolt = <1900000>;
-+
-+		vin-supply = <&vreg_wcn_3p3>;
-+	};
-+
-+	vreg_wcn_3p3: regulator-wcn-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_WCN_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&wcn_sw_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	wcn7850-pmu {
-+		compatible = "qcom,wcn7850-pmu";
-+
-+		vdd-supply = <&vreg_wcn_0p95>;
-+		vddio-supply = <&vreg_l15b_1p8>;
-+		vddaon-supply = <&vreg_wcn_0p95>;
-+		vdddig-supply = <&vreg_wcn_0p95>;
-+		vddrfa1p2-supply = <&vreg_wcn_1p9>;
-+		vddrfa1p8-supply = <&vreg_wcn_1p9>;
-+
-+		wlan-enable-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
-+		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&wcn_wlan_en>, <&wcn_bt_en>;
-+		pinctrl-names = "default";
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p8: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_1p8";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -212,6 +317,13 @@ vreg_l14b_3p0: ldo14 {
- 			regulator-max-microvolt = <3072000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
-+
-+		vreg_l15b_1p8: ldo15 {
-+			regulator-name = "vreg_l15b_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
- 	};
- 
- 	regulators-1 {
-@@ -539,6 +651,23 @@ &pcie4_phy {
- 	status = "okay";
- };
- 
-+&pcie4_port0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1107";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+	};
-+};
-+
- &pcie6a {
- 	perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
- 	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
-@@ -720,6 +849,44 @@ tpad_default: tpad-default-state {
- 		function = "gpio";
- 		bias-disable;
- 	};
-+
-+	wcn_bt_en: wcn-bt-en-state {
-+		pins = "gpio116";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-pull-down;
-+	};
-+
-+	wcn_sw_en: wcn-sw-en-state {
-+		pins = "gpio214";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
-+	wcn_wlan_en: wcn-wlan-en-state {
-+		pins = "gpio117";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+};
-+
-+&uart14 {
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn7850-bt";
-+		max-speed = <3200000>;
-+
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
-+	};
- };
- 
- &usb_1_ss0_hsphy {
-
----
-base-commit: e21edb1638e82460f126a6e49bcdd958d452929c
-change-id: 20241116-asus_qcom_display-ce5ff7293340
-
-Best regards,
--- 
-Maud Spierings <maud_spierings@hotmail.com>
-
-
+Regards,
+Markus
 
