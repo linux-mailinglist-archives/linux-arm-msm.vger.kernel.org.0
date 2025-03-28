@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-52775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCB0FA74CAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 15:31:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19EB7A74CCC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 15:35:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EA95E7A507F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 14:30:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB9E23AD18A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 14:33:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4649C21CA1E;
-	Fri, 28 Mar 2025 14:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEDA31B4257;
+	Fri, 28 Mar 2025 14:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HX7LarGh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iRMLU2dQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E461B6CE9;
-	Fri, 28 Mar 2025 14:29:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08701B0F33;
+	Fri, 28 Mar 2025 14:33:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743172198; cv=none; b=O+gH/B1CnCSNDJiLBpnt4mkppjs9qGmX0IGjNuoI2RMqC6o55H4Rue8+GOX0MtHuU20L/0H1d2i+GLyJC6HuEE4N2HmvX0nBbpAhH2RVstuFmCofBwdmfGyoRHM1C4Bsi3KrIaX7cfMtiwjuk1jZWKXTqkt1lOvP5S5AxQMMKfw=
+	t=1743172407; cv=none; b=Y5kCc7A34fm9siDf8sCTLau8o46XDtIIeqxr9glrzAlZZdYdGashIv3sXA+Ycb7kR7kAUbtQYtFDuPKvHB2DlksBV8UjDavWVfug7x6/DMzCqmeNasF2oE4cEN5EVQC4PE5esglrDb0oRZvVrzqS3LP+6DRbdBRDX9Hk50/yf8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743172198; c=relaxed/simple;
-	bh=RwZ5YwgUNnnXeLBrvfwirxjAxpKvpg/B9osFizHPDQ8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LIV7bXfTqVaYfIym1/I6LzRbqSUw5EjYXzCiBMpl74NUxeCjUjF9h4NC1Z5NXgqV8ESJ1EmWmAdQqvihZA2WPt5WSNAyafsCfPwkECJkZ0ee3snm37tVPBZBxYizQJDW5IUjs6GXNSQa9TRhOAeDa3I+orFmMzZiZnE0mtVuvY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HX7LarGh; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52S854Nh011163;
-	Fri, 28 Mar 2025 14:29:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	U2ZeZUzTk5a04ubvS8T+jiIL1tuL9iQXCN7CriC5p+A=; b=HX7LarGh0076PUB4
-	9Jmtro+Hq0B6flLszL7NxMtfbzgDS/coHDXnFqsWudiZBtdbsrxW2p59uxoaLQiZ
-	q2b+S1YX0UqRx4DF4p8aCDCyWd8xLy+sV3C/5sku4853DzVKY5+Czudvxc615pJI
-	MNJpFazZLp3bo1vUqAD7saCrhVA8tXXPaNNqQ3eADDNQkFg4qOnbbZ3QiSNjXk6e
-	6LbgjHxCmKCQNV5GvXdcJKTvcf8autmV4yoOoNt8UrwpY0ImRuDutDzUcVK338fq
-	uOs8IxhXa1gYtdywYxLX6EczE2l0Xey6RrTd8wY5A9BVOG8+OzMVbNZEy61jGKTv
-	tKL2LA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45nqxuh523-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Mar 2025 14:29:48 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52SETmcF012836
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Mar 2025 14:29:48 GMT
-Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 28 Mar
- 2025 07:29:44 -0700
-Message-ID: <172b9848-0af6-44fc-83c2-8d2b94b74d51@quicinc.com>
-Date: Fri, 28 Mar 2025 19:59:44 +0530
+	s=arc-20240116; t=1743172407; c=relaxed/simple;
+	bh=sF3tJHSziQD5AA7cOPlYPBrdvLxoYRT3GRg4H0Au7yg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DBgDTSgDNb8fTcaleMfJUe0hjLz2g7nWBhnQh4AzRmU+4fRW7nU7xOXVsW+mw7ZdMaxopL6DFKOoJGey6Noxgw7tK1zrD7jutwJo/TnuRwZn9oNrnxLnIrus84P+mtyp2VKsDf0h6fTO1n1Y1XmPkP5XMsHyBjaOj9YgbaQ72NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iRMLU2dQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C3AC4CEE4;
+	Fri, 28 Mar 2025 14:33:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743172407;
+	bh=sF3tJHSziQD5AA7cOPlYPBrdvLxoYRT3GRg4H0Au7yg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=iRMLU2dQLM58a8dfdSf36UYDIW3nIdzAau0oAmAWE49Z0bv/Vox9l+kFPP3sYV4cL
+	 AKefUbRCcq4RJoqQiuzZN+bkBgMwMdi95TUop/7LzuO/uqSnJZX+FRmKYAAQAiX1wx
+	 fMwk28l5REC6yampCFF3uXXw7Z/1WuT8NqZ3jE2V4iUEjIPJIku7DTgrD6xhUFvDPJ
+	 /cbdVDYVjq/uBkP5X5JoQAONdNBDoUljNn31SFEEURFqoBSAfb5Q+xDQw4XepRKyIy
+	 fEhRoNS5aR0uC69YPQzr3uT/jx4vw3KbvybxLB6+f02vezW+iGiufpzeQ+7QFIvix/
+	 XOpwfgCQIRs1Q==
+Message-ID: <36b67f9c-5905-4fa6-8190-ab980850b3a2@kernel.org>
+Date: Fri, 28 Mar 2025 15:33:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,61 +50,166 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] i3c: master: Add Qualcomm I3C controller driver
-To: Markus Elfring <Markus.Elfring@web.de>, <linux-i3c@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-CC: LKML <linux-kernel@vger.kernel.org>,
-        Alexandre Belloni
-	<alexandre.belloni@bootlin.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Jarkko Nikula
-	<jarkko.nikula@linux.intel.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh@kernel.org>
-References: <20250326141641.3471906-3-quic_msavaliy@quicinc.com>
- <06545fa2-7f82-4154-a882-faddb53df4d9@web.de>
+Subject: Re: [PATCH v2 1/3] dt-bindings: i3c: Add Qualcomm I3C master
+ controller
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+ alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, jarkko.nikula@linux.intel.com,
+ linux-i3c@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: andersson@kernel.org, konradybcio@kernel.org
+References: <20250326141641.3471906-1-quic_msavaliy@quicinc.com>
+ <20250326141641.3471906-2-quic_msavaliy@quicinc.com>
+ <991b0652-76f2-40d6-b49b-1e6f76e254ac@kernel.org>
+ <661e1a21-0f3a-497a-9b3b-fab284e30d19@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <06545fa2-7f82-4154-a882-faddb53df4d9@web.de>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VSxSHSvFQRNvTX_tHRLOmTT2ShDwNYhA
-X-Authority-Analysis: v=2.4 cv=e7QGSbp/ c=1 sm=1 tr=0 ts=67e6b25c cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=kyHiy3vJXLV0Zq-jrsYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: VSxSHSvFQRNvTX_tHRLOmTT2ShDwNYhA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-28_07,2025-03-27_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- malwarescore=0 spamscore=0 bulkscore=0 mlxlogscore=972 lowpriorityscore=0
- priorityscore=1501 adultscore=0 impostorscore=0 suspectscore=0
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503280100
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <661e1a21-0f3a-497a-9b3b-fab284e30d19@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Markus, Thanks for review !
-
-On 3/28/2025 6:58 PM, Markus Elfring wrote:
-> …
->> +++ b/drivers/i3c/master/qcom-i3c-master.c
->> @@ -0,0 +1,1107 @@
-> …
->> +/* M_CMD OP codes for I2C/I3C */
->> +#define I3C_READ_IBI_HW          0
->> +#define I2C_WRITE                1
->> +#define I2C_READ                 2
-> …
+On 28/03/2025 15:28, Mukesh Kumar Savaliya wrote:
+> Thanks Krzysztof for immediate review !
 > 
-> Can an enumeration become helpful here?
+> On 3/26/2025 7:53 PM, Krzysztof Kozlowski wrote:
+>> On 26/03/2025 15:16, Mukesh Kumar Savaliya wrote:
+>>> Add device tree bindings for the Qualcomm I3C controller. This includes
+>>> the necessary documentation and properties required to describe the
+>>> hardware in the device tree.
+>>>
+>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>> ---
+>>>   .../bindings/i3c/qcom,i3c-master.yaml         | 60 +++++++++++++++++++
+>>>   1 file changed, 60 insertions(+)
+>>>   create mode 100644 Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml b/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
+>>> new file mode 100644
+>>> index 000000000000..af6b393f2327
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/i3c/qcom,i3c-master.yaml
+>>
+>> Naming: nothing improved.
+>>
+> Sorry, i didn't get exactly. To your comment "Filename matching 
+> compatible." i have Changed the compatible string to "qcom,i3c-master" 
+> and now it's matching to file name.
 > 
-No, these are hardware program defined op-codes not created for any 
-software purpose. so Macro define looks fine to me.
-> Regards,
-> Markus
+> shall i make filename as qcom,i3c-master-qcom.yaml ? If this is wrong, 
+> please suggest.
+> 
+> Removed "bindings" from the subject line too. I have removed "master" 
+> from the description, shall i remove from subject also and keep only 
+> controller ? I kept master controller thinking it may be good as "master 
+> controller" instead "controller".
 
+I still see the "master" in the compatible and filename.
+
+> 
+> 
+>>> @@ -0,0 +1,60 @@
+>>> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/i3c/qcom,i3c-master.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm Geni based QUP I3C Controller
+>>> +
+>>> +maintainers:
+>>> +  - Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>> +
+>>> +description:
+>>> +  I3C in master mode supports up to 12.5MHz, SDR mode data transfer in mixed
+>>> +  bus mode (I2C and I3C target devices on same i3c bus). It also supports
+>>> +  hotjoin, IBI mechanism.
+>>> +
+>>> +  I3C Controller nodes must be child of GENI based Qualcomm Universal
+>>> +  Peripharal. Please refer GENI based QUP wrapper controller node bindings
+>>> +  described in Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml.
+>>> +
+>>> +allOf:
+>>> +  - $ref: i3c.yaml#
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,i3c-master
+>>
+>> And this got worse. It makes also no sense either: how can you claim
+>> that this covers all possible future I3C masters from Qualcomm?
+>>
+>> What was the resolution of previous discussion?
+>>
+> Below was my understanding and reply.
+> "
+> I think i should remove const. kept it for now as no other compatible to 
+> be added as of now.
+> let me remove const.
+> SoC name is not required, as this compatible is generic to all the SOCs.
+
+I don't see any talks about const, what are you referring to?
+
+> "
+> 
+> But i realized i missed to remove const, sorry for that.
+> 
+> 
+> I have also checked for qcom,spi-geni-qcom.yaml, it has below :
+> properties:
+>    compatible:
+>      const: qcom,geni-spi
+> 
+> Let me know if i can correct for SPI in separate new patch ?
+
+I love such arguments - let's find whatever old bindings and whatever
+antipattern.
+
+What was the outcome of the discussion? I think was about geni, no? What
+did Rob write? So how did it became i3c-master?
+
+Best regards,
+Krzysztof
 
