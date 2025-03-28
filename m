@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-52770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36A31A74C69
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 15:22:35 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E5FEA74CA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 15:30:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D161E1670A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 14:22:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1788B7A35BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 14:29:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0695C149DF0;
-	Fri, 28 Mar 2025 14:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 258591BFE00;
+	Fri, 28 Mar 2025 14:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tnbx2GGm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NSlzbK1t"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC371F5E6;
-	Fri, 28 Mar 2025 14:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA1F1B4F15;
+	Fri, 28 Mar 2025 14:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743171752; cv=none; b=N/Pq8nemZ4Atn3FgVnIQYmzXKsrgXJDF3dwI1xPSiazQ32B/ASz05+DuKFJs9NQVMzPbunJtlmrGokj7q+gLEc1mZoYCNnZ2BTyCRY+bD1RtQ+K8hm5VV4LgrCTY6sun3VWZtrKASniQeI9Aiy0l9n3ySlSGePfsVBKx+tTsT9M=
+	t=1743172112; cv=none; b=ZkHnwdv+mDtCnVaX0Dkmo6x2LWSVvoMZ0YwIQMsPDABFcMFhgNxIUK0IWI+bS3/9doHCJK0IoQNe8KnUhxfR09gZ94Mh2YEGIw/AfJg71L2sWmsJqPirAf9PGALrvcueL/Kh7UKv8zugLcZ/EmHMvUPSrgd/2up0utsjAXxjXVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743171752; c=relaxed/simple;
-	bh=qTfOkbTeo0qeogF3XjLPC5Lo/aAWCuY3TM41Gwn6zKE=;
+	s=arc-20240116; t=1743172112; c=relaxed/simple;
+	bh=h1KAMVHgEmCXUU78TKdWT4vGzNAZ5q84G0ZmdwV8ScA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N0i17VplBPWUKe2JMs1IU3TVD8s2qANdLyL7x4yruvMVqICFbyDfXPXADfkvo8BkznZ3V1sK50M6rCBgLAPZJkrZK2IDEyWHFUjZuWDT9sBOm3J+FBTT5R9HqRKnMI3YH1XJgjvZ9ReNutjTMHMjWdf+ZeGcAq54b0RvQ0wlimM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tnbx2GGm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24ECC4CEE4;
-	Fri, 28 Mar 2025 14:22:22 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=XPtua12Oi3RnP8lIF7r4UoKQLqPvCxGqsVmziIH1y8w4iTvXHX8UeEuaopvp+NfLHbhV3bVIKsPt4Xk9wMHjpqmdKQEHvqmGPfgJ4fPpNvL1Y91wl/bjg+D5O95WabNZ3OKzRDIoN8Mc/kogTb+jvd/S/p0uUDQAdj1PobWgW/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NSlzbK1t; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABC2C4CEEB;
+	Fri, 28 Mar 2025 14:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743171752;
-	bh=qTfOkbTeo0qeogF3XjLPC5Lo/aAWCuY3TM41Gwn6zKE=;
+	s=k20201202; t=1743172111;
+	bh=h1KAMVHgEmCXUU78TKdWT4vGzNAZ5q84G0ZmdwV8ScA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tnbx2GGmLOkAsi9k9QxvSnHKK0FFJywfel+G+yTuWbasVWWjbvjklYYnPhcSbDXML
-	 ZFErjX0yLD+CP5jTsXa4TqM4zGExtEDcbqZc31UH0Q+LqHUdjVZISuEj9ersYIY9w8
-	 E5ryx6YTKs1mbtp5cEZypQVUgzgHPtpaTFg/bE3ICpco9/k4PCvUgMyk1TUAkKlJGy
-	 chKNgLJW66sL15tRsXvdLQnleMKz1UB2h9cino6ntwNoVHiOVHVAEXtkShLWWd5Kwu
-	 wN76GWhNy+cUxK3JMXTPjmkSiaKALCdpVHhS/UYWhKK3VVi7NMFRStttQD0zQy/iW6
-	 flGcKSs2/CtaQ==
-Message-ID: <d09fe2f8-fdfa-474c-a742-b6cd2f8662e1@kernel.org>
-Date: Fri, 28 Mar 2025 15:22:20 +0100
+	b=NSlzbK1tQztp2g3yu0BhAqerg2RRdSjEj4+yFnkyRPdsDduGpkbovNpjNzp11GPrU
+	 U3SX2p/uEAUiITeCTWEcwmk0JnH9gVi8FPraEBFIZGhgWe4FFdMoKjnDHqzC2/aEaV
+	 McmjVxul0AdCAG9Ss+Kiv/j+XXqVP33GVE5dJgQnMsebhr7KxHQwBr1XM0NZsts3Zw
+	 TW9uFOT6zjyWukBYBHw+pcADHY+ucCBPjZneESxSc6VifDVpebhNmTs9MIuUPB8cot
+	 uyqRIheGp4pM7A9YLDHTiWFBvmoLuTRXVTRzzhqCkkeIf/tElIRIYMiHIbAA/+OzmV
+	 IFl8LPaRfb6aQ==
+Message-ID: <4aebd1f6-5098-4548-adae-843db8f45aa5@kernel.org>
+Date: Fri, 28 Mar 2025 15:28:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,8 +52,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 07/10] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
  to DP bridge nodes
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Ayushi Makhija <quic_amakhija@quicinc.com>
+To: Ayushi Makhija <quic_amakhija@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, robdclark@gmail.com,
@@ -69,8 +68,6 @@ References: <20250311122445.3597100-1-quic_amakhija@quicinc.com>
  <20250311122445.3597100-8-quic_amakhija@quicinc.com>
  <20250312-athletic-cockle-of-happiness-e88a3a@krzk-bin>
  <d64bf3b3-7c4d-490e-8bd7-1ad889aa7472@quicinc.com>
- <0220605f-3ff6-4ea3-88e3-09e602962a61@quicinc.com>
- <zzcd4pv7laryb2c5wkuwrhj2ih3lciqgxfyefj4qmi5clxftbi@ykpy42anl4jm>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -116,32 +113,36 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <zzcd4pv7laryb2c5wkuwrhj2ih3lciqgxfyefj4qmi5clxftbi@ykpy42anl4jm>
+In-Reply-To: <d64bf3b3-7c4d-490e-8bd7-1ad889aa7472@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28/03/2025 13:45, Dmitry Baryshkov wrote:
-> On Fri, Mar 28, 2025 at 03:13:57PM +0530, Ayushi Makhija wrote:
->>> These both above commented from Dmitry I have addressed in the version 2 of patch 7 of the series.
->>> I have squash patch 8 into patch 7 of version 1 into patch 7 of version 2 of the series.
->>>
->>>
->>> Thanks,
->>> Ayushi
->>
->> Hi Krzysztof,
->>
->> I hope this message finds you well. I wanted to follow up on the reply I sent. Your feedback is invaluable to us, and we would greatly appreciate any further insights or comments you might have.
->>
+On 13/03/2025 13:10, Ayushi Makhija wrote:
+
+...
+
 > 
-> Granted the lack of response, please make sure that you've addressed all
-> the comments and proceed with the next iteration of the patchset.
+>> +
+>> +			anx_bridge_1: anx7625@58 {
+> 
+> Node names should be generic. See also an explanation and list of
+> examples (not exhaustive) in DT specification:
+> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+> 
+> In this I have changed the node name as anx_bridge1 : anx7625@58.
 
-Just to clarify, I did not plan to respond here, because email style
-which tries to respond to my comments is unreadable. It's impossible to
-find what is quote, what is the comment and what is the response.
+Except that it is difficult to understand what is what, let's recap.
 
-I expected inline responses to the original emails and detailed changelog.
+Original code was:
+	anx_bridge_1: anx7625@58 {
+
+You said you changed it to:
+
+	anx_bridge1 : anx7625@58.
+
+and now I give my offer: I offer to buy a beer (or tee/coffee/juice) to
+anyone who will spot the difference(s) between these two node names,
+IOW, tell me what changed here.
 
 Best regards,
 Krzysztof
