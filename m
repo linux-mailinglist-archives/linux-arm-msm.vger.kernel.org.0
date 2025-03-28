@@ -1,70 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-52785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48CDEA74DD5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 16:32:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B659BA74DD7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 16:32:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A57C0188D71B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 15:32:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 120AF188EC16
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 15:32:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDE4014A627;
-	Fri, 28 Mar 2025 15:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E73801D88D7;
+	Fri, 28 Mar 2025 15:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="2aYYOI0K"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lfIR6uGP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04691D88AC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 15:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128D21DA0E0
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 15:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743175907; cv=none; b=dFtJq6SDHy59qrt2xbnYoGLLe+OvnnfeeaXYc+VlsooDja3ELj65rQnFIGH9KaPh8ZpFLgeuykKfHOrouf2boB9tRhr2mUhcEiZA/uREDuZpvODtSK/O7koTsOnlrrIawBKTyST2bVwLgpC1Es96XiQTPeina7d6raoByUEqqcE=
+	t=1743175909; cv=none; b=J3u0dJRlHLbZVgzI7LL8o3Gru3biZeASHpO6dfZPNBFG/C6KVQ6FUtuWYiBfz16+jxPDoEOV3gYSu8NC3kw5cyMkjRL12uwt8ToKpDrWm+PNOX8yCA6Z33Itvzub8XwwDyDriPpBcAfWdYpUelPMT9495pBPd0pBQhRln0h2+SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743175907; c=relaxed/simple;
-	bh=FNZ5rbF/GwQ04BpQvSx2eGZdOReGNlh9r02eIimMdjs=;
+	s=arc-20240116; t=1743175909; c=relaxed/simple;
+	bh=ywIBAiOIC5j43YjmiU9xRCcK2knCGG5rRQ+rKgEbt1M=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=azpGcLXTw3qvJtewtksi3iMH/4nKGx9/n8J/Ji8rLs4QxsblVDieCdSgUrEoksb+JWgMV4aHcGvxhFg9McGdwOqkkBCsjMNmYnPEM5BPu6q3+/H+sN8bUqQG+Qhv/EeFIn8Y1H4KqeMyZp5F4Yrr+WFbI/G7TGu5k3D/iCYYdRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=2aYYOI0K; arc=none smtp.client-ip=209.85.128.74
+	 To:Cc:Content-Type; b=cc5XvyfFKisZWGfOcy2ixeS68GTfwBO8H88xGD7LhefmJmLVCQXBOfs2Q/xdH5lQbMiDX+zF8yqQzSexQNVpa9jGLRaE80xtl5qY+XrmGYJplyo9fgsCGvwMvo+dfnVl+r4ZNSq74hHaoGuzfouEXSKsguuwtX2u5JYYQhUbTpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=lfIR6uGP; arc=none smtp.client-ip=209.85.128.74
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
-Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-4394040fea1so12110695e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 08:31:45 -0700 (PDT)
+Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-43d08915f61so14529665e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 08:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1743175904; x=1743780704; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1743175906; x=1743780706; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jBMUpGqTWD4UpO2EN6fhtj6WpgPcfU+elgx/+TqNl3U=;
-        b=2aYYOI0KPANBxjlszDqd/xXP/bSZ6k0VyLFVb2g3Hjwfjip072qB5SQ47pKumhA/wi
-         /NKDhMQ8odpO2gBmkDm91ir0EEk/pKon2pTIJioYRZaZDBmT6uOm2YAiNh2/6b+8h59m
-         1SGvh8At4SnqpqFin24IehveOR4TFHYji+OKdlCdqhOFb6QxmwogndJ01crbb9UGlqIt
-         Xwrv3BwBPc8ozKG29f/GeGyrFPUWm/2i9SSc3h/Q0EmsMlo3S3/tiPS78BXynrMIYXqO
-         9u98XKkOGXEq29yLrMHLP04DgyuyugmcQoDQ015OKmnirrkejeTAkie7K5JTFgTaSGGs
-         VSmw==
+        bh=R3RfnojiUTVQNcoqz4Ca2o/3ssUHr85YnTpv1JDxiLk=;
+        b=lfIR6uGPfN2HOTgxBayHKok3VaXEvBPAySJRHP9nep9xHAxnjHA8EjNXO958ZFmkRo
+         TTOhptQQoZIl+nXOMT58OJKWuS3oua26LqeF6VAcZ3F7AkDG/UqkvRnhlsTR6gyPUGUE
+         7uh99DPOIAht2Qvp6v85vsP697K5SkuBccOYxv9UPaR1gt1jJorqGnTqcrLUYOLMpqBC
+         Ak1q0shoC+4X+oTwLGc2rHDLPUhgcQ9vJW0qTkkO1w+u+6QeyogVnsr2yQxN4NsBWepT
+         CffPfPTds3uc//bA4rWMQKahHcGsqcrRmYSquhBa4aBZecAA8QPZ/iIhVcVQXLxhKvAZ
+         nRXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743175904; x=1743780704;
+        d=1e100.net; s=20230601; t=1743175906; x=1743780706;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jBMUpGqTWD4UpO2EN6fhtj6WpgPcfU+elgx/+TqNl3U=;
-        b=PMC+Rc493MunSiWBMmXzarLgHv6Q/kPInDdbg1MHQkWO0q15D7Y65hXIJmXS4fWP0c
-         M7EIS2Z0Pgg4bSuTcqTfwp+UeXzxaU2h0N7pNpGezLjyFU81OYuNU+uXuhsOykVFXDjL
-         uCTSMz6shqL61Tcv853gZ6iau5/woKKBYpheUmWEUKPZyW+mWdyBCbFmDZUJbQiyhPrA
-         1JhtcwHabO+tTrDUQ5OJLeMBv63CFIH7/wMk8//GffZWQLnNsSKGQV/sIR6fCXewUeaR
-         lP4OeAanGQAee6+7DL26FtiI4F9mzl0ZH0c2eLOePi6BR+IIjqtU+uRgmF7s5n4X3UFv
-         WWoA==
-X-Forwarded-Encrypted: i=1; AJvYcCXCGID1w80aaNeCNcc7jCOKdsApJH3oJNQsxDbcJw987t9JaN4/WAYPjPius1SLpXWeD5nu8TUMnsYZZbGx@vger.kernel.org
-X-Gm-Message-State: AOJu0YxgQiVMSvQ9yVRS7tzKYHT9rgqrZHHlvPlZBazjXClLsWzB6BJA
-	09VDvWfGSk9rAKt4uJdloUmyM+wYKm2a8uiJ3qvxZCtLHmf3ELb14aCL5LB+J99d1WMWsXkJqg=
+        bh=R3RfnojiUTVQNcoqz4Ca2o/3ssUHr85YnTpv1JDxiLk=;
+        b=O5crVb99bh6iegXFSmI55kmmyFiepaCZqm0lv7zVzoOjQZt3SRl5pwgk9Y4JRJPRZO
+         0nwpc8A7gecwtATk4613AZzzYH40Tzkg7Kx+SN9wb5gAZdpMk/p8P0x1KzBOqEOFmx2a
+         eFcqMocgxjBxxdolLNwRuXet092Dg6jGDGaLwtCsoIOk8FLRnKk2yAOx9jdc5/Ybh+d2
+         AiOxG7fj0yUl9Le6hbMqByJjdOUJexlaFeyOLuS5n8x3NDavR9HmWd3+rfvv0M69jDc0
+         eLTOD1dlKl0ef8kscXCzgde+E34ADAA61LblfwAHy76uW7dPS9fHUBnOY2Nk8ytQL5RK
+         vlYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWXctMQL0tOZplB7TXyR5+YfetGG3iVLTZ0KVKqZOd95LywOVvUFhPiwVX/NjPgvDOyRx+TAwNzOcgE5SKM@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfwHw26ghWY4ZNLA65aj2ul0Jp/bOCbz6mgllF5hL4VbtwYKsQ
+	VcMyiLeZWwP4m0YWcYfUW4jEVn9VYq8Dl9lUSsgs8qh0ozSkaszJf8PlxW5sP2+q7GvaBZtQ+g=
 	=
-X-Google-Smtp-Source: AGHT+IGsVvvboBRAyzbhN+VadIQHCOH8PGYVPxU5z0Lyav96vZClKVh4KR5eyXtOx0aT0txiHrEbB6kiHg==
-X-Received: from wmrn12.prod.google.com ([2002:a05:600c:500c:b0:43d:41a2:b768])
- (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:6dca:b0:43c:f509:2bbf
- with SMTP id 5b1f17b1804b1-43d911902efmr30762195e9.15.1743175904477; Fri, 28
- Mar 2025 08:31:44 -0700 (PDT)
-Date: Fri, 28 Mar 2025 15:31:31 +0000
+X-Google-Smtp-Source: AGHT+IH5o8XkmQE16RpA7JAnMr7kPBXwGpQkyy1fEQJArMIbsDhiWMuAir53k+JzjSmedSowM4jfKUSd+w==
+X-Received: from wmbay1.prod.google.com ([2002:a05:600c:1e01:b0:43d:9f1:31a9])
+ (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:4e52:b0:43c:fc04:6d34
+ with SMTP id 5b1f17b1804b1-43d9489777emr25843765e9.20.1743175906450; Fri, 28
+ Mar 2025 08:31:46 -0700 (PDT)
+Date: Fri, 28 Mar 2025 15:31:32 +0000
 In-Reply-To: <20250328153133.3504118-1-tabba@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -74,8 +74,8 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <20250328153133.3504118-1-tabba@google.com>
 X-Mailer: git-send-email 2.49.0.472.ge94155a9ec-goog
-Message-ID: <20250328153133.3504118-6-tabba@google.com>
-Subject: [PATCH v7 5/7] KVM: guest_memfd: Restore folio state after final folio_put()
+Message-ID: <20250328153133.3504118-7-tabba@google.com>
+Subject: [PATCH v7 6/7] KVM: guest_memfd: Handle invalidation of shared memory
 From: Fuad Tabba <tabba@google.com>
 To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
 Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
@@ -100,223 +100,104 @@ Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
 	tabba@google.com
 Content-Type: text/plain; charset="UTF-8"
 
-Before transitioning a guest_memfd folio to unshared, thereby
-disallowing access by the host and allowing the hypervisor to transition
-its view of the guest page as private, we need to ensure that the host
-doesn't have any references to the folio.
-
-This patch uses the guest_memfd folio type to register a callback that
-informs the guest_memfd subsystem when the last reference is dropped,
-therefore knowing that the host doesn't have any remaining references.
+When guest_memfd backed memory is invalidated, e.g., on punching holes,
+releasing, ensure that the sharing states are updated and that any
+folios in a transient state are restored to an appropriate state.
 
 Signed-off-by: Fuad Tabba <tabba@google.com>
 ---
-The function kvm_slot_gmem_register_callback() isn't used in this
-series. It will be used later in code that performs unsharing of
-memory. I have tested it with pKVM, based on downstream code [*].
-It's included in this RFC since it demonstrates the plan to
-handle unsharing of private folios.
+ virt/kvm/guest_memfd.c | 57 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
 
-[*] https://android-kvm.googlesource.com/linux/+/refs/heads/tabba/guestmem-6.13-v7-pkvm
----
- include/linux/kvm_host.h |   6 ++
- virt/kvm/guest_memfd.c   | 143 ++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 148 insertions(+), 1 deletion(-)
-
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index bf82faf16c53..d9d9d72d8beb 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -2607,6 +2607,7 @@ int kvm_gmem_slot_set_shared(struct kvm_memory_slot *slot, gfn_t start,
- int kvm_gmem_slot_clear_shared(struct kvm_memory_slot *slot, gfn_t start,
- 			       gfn_t end);
- bool kvm_gmem_slot_is_guest_shared(struct kvm_memory_slot *slot, gfn_t gfn);
-+int kvm_gmem_slot_register_callback(struct kvm_memory_slot *slot, gfn_t gfn);
- void kvm_gmem_handle_folio_put(struct folio *folio);
- #else
- static inline int kvm_gmem_set_shared(struct kvm *kvm, gfn_t start, gfn_t end)
-@@ -2638,6 +2639,11 @@ static inline bool kvm_gmem_slot_is_guest_shared(struct kvm_memory_slot *slot,
- 	WARN_ON_ONCE(1);
- 	return false;
- }
-+static inline int kvm_gmem_slot_register_callback(struct kvm_memory_slot *slot, gfn_t gfn)
-+{
-+	WARN_ON_ONCE(1);
-+	return -EINVAL;
-+}
- #endif /* CONFIG_KVM_GMEM_SHARED_MEM */
- 
- #endif
 diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index 3b4d724084a8..ce19bd6c2031 100644
+index ce19bd6c2031..eec9d5e09f09 100644
 --- a/virt/kvm/guest_memfd.c
 +++ b/virt/kvm/guest_memfd.c
-@@ -392,6 +392,27 @@ enum folio_shareability {
- 	KVM_GMEM_NONE_SHARED	= 0b11, /* Not shared, transient state. */
- };
- 
-+/*
-+ * Unregisters the __folio_put() callback from the folio.
-+ *
-+ * Restores a folio's refcount after all pending references have been released,
-+ * and removes the folio type, thereby removing the callback. Now the folio can
-+ * be freed normaly once all actual references have been dropped.
-+ *
-+ * Must be called with the folio locked and the offsets_lock write lock held.
-+ */
-+static void kvm_gmem_restore_pending_folio(struct folio *folio, struct inode *inode)
-+{
-+	rwlock_t *offsets_lock = &kvm_gmem_private(inode)->offsets_lock;
-+
-+	lockdep_assert_held_write(offsets_lock);
-+	WARN_ON_ONCE(!folio_test_locked(folio));
-+	WARN_ON_ONCE(!folio_test_guestmem(folio));
-+
-+	__folio_clear_guestmem(folio);
-+	folio_ref_add(folio, folio_nr_pages(folio));
-+}
-+
- static int kvm_gmem_offset_set_shared(struct inode *inode, pgoff_t index)
- {
- 	struct xarray *shared_offsets = &kvm_gmem_private(inode)->shared_offsets;
-@@ -400,6 +421,24 @@ static int kvm_gmem_offset_set_shared(struct inode *inode, pgoff_t index)
- 
- 	lockdep_assert_held_write(offsets_lock);
- 
-+	/*
-+	 * If the folio is NONE_SHARED, it indicates that it is transitioning to
-+	 * private (GUEST_SHARED). Transition it to shared (ALL_SHARED)
-+	 * immediately, and remove the callback.
-+	 */
-+	if (xa_to_value(xa_load(shared_offsets, index)) == KVM_GMEM_NONE_SHARED) {
-+		struct folio *folio = filemap_lock_folio(inode->i_mapping, index);
-+
-+		if (WARN_ON_ONCE(IS_ERR(folio)))
-+			return PTR_ERR(folio);
-+
-+		if (folio_test_guestmem(folio))
-+			kvm_gmem_restore_pending_folio(folio, inode);
-+
-+		folio_unlock(folio);
-+		folio_put(folio);
-+	}
-+
- 	return xa_err(xa_store(shared_offsets, index, xval, GFP_KERNEL));
+@@ -118,6 +118,16 @@ static struct folio *kvm_gmem_get_folio(struct inode *inode, pgoff_t index)
+ 	return filemap_grab_folio(inode->i_mapping, index);
  }
  
-@@ -503,9 +542,111 @@ static int kvm_gmem_offset_range_clear_shared(struct inode *inode,
++#ifdef CONFIG_KVM_GMEM_SHARED_MEM
++static void kvm_gmem_offset_range_invalidate_shared(struct inode *inode,
++						    pgoff_t start, pgoff_t end);
++#else
++static inline void kvm_gmem_offset_range_invalidate_shared(struct inode *inode,
++							   pgoff_t start, pgoff_t end)
++{
++}
++#endif
++
+ static void kvm_gmem_invalidate_begin(struct kvm_gmem *gmem, pgoff_t start,
+ 				      pgoff_t end)
+ {
+@@ -127,6 +137,7 @@ static void kvm_gmem_invalidate_begin(struct kvm_gmem *gmem, pgoff_t start,
+ 	unsigned long index;
+ 
+ 	xa_for_each_range(&gmem->bindings, index, slot, start, end - 1) {
++		struct file *file = READ_ONCE(slot->gmem.file);
+ 		pgoff_t pgoff = slot->gmem.pgoff;
+ 
+ 		struct kvm_gfn_range gfn_range = {
+@@ -146,6 +157,16 @@ static void kvm_gmem_invalidate_begin(struct kvm_gmem *gmem, pgoff_t start,
+ 		}
+ 
+ 		flush |= kvm_mmu_unmap_gfn_range(kvm, &gfn_range);
++
++		/*
++		 * If this gets called after kvm_gmem_unbind() it means that all
++		 * in-flight operations are gone, and the file has been closed.
++		 */
++		if (file) {
++			kvm_gmem_offset_range_invalidate_shared(file_inode(file),
++								gfn_range.start,
++								gfn_range.end);
++		}
+ 	}
+ 
+ 	if (flush)
+@@ -512,6 +533,42 @@ static int kvm_gmem_offset_clear_shared(struct inode *inode, pgoff_t index)
  	return r;
  }
  
 +/*
-+ * Registers a callback to __folio_put(), so that gmem knows that the host does
-+ * not have any references to the folio. The callback itself is registered by
-+ * setting the folio type to guestmem.
++ * Callback when invalidating memory that is potentially shared.
 + *
-+ * Returns 0 if a callback was registered or already has been registered, or
-+ * -EAGAIN if the host has references, indicating a callback wasn't registered.
-+ *
-+ * Must be called with the folio locked and the offsets_lock write lock held.
++ * Must be called with the offsets_lock write lock held.
 + */
-+static int kvm_gmem_register_callback(struct folio *folio, struct inode *inode, pgoff_t index)
++static void kvm_gmem_offset_range_invalidate_shared(struct inode *inode,
++						    pgoff_t start, pgoff_t end)
 +{
 +	struct xarray *shared_offsets = &kvm_gmem_private(inode)->shared_offsets;
 +	rwlock_t *offsets_lock = &kvm_gmem_private(inode)->offsets_lock;
-+	void *xval_guest = xa_mk_value(KVM_GMEM_GUEST_SHARED);
-+	int refcount;
-+	int r = 0;
++	pgoff_t i;
 +
 +	lockdep_assert_held_write(offsets_lock);
-+	WARN_ON_ONCE(!folio_test_locked(folio));
 +
-+	if (folio_test_guestmem(folio))
-+		return 0;
++	for (i = start; i < end; i++) {
++		/*
++		 * If the folio is NONE_SHARED, it indicates that it's
++		 * transitioning to private (GUEST_SHARED). Transition it to
++		 * shared (ALL_SHARED) and remove the callback.
++		 */
++		if (xa_to_value(xa_load(shared_offsets, i)) == KVM_GMEM_NONE_SHARED) {
++			struct folio *folio = filemap_lock_folio(inode->i_mapping, i);
 +
-+	if (folio_mapped(folio))
-+		return -EAGAIN;
++			if (!WARN_ON_ONCE(IS_ERR(folio))) {
++				if (folio_test_guestmem(folio))
++					kvm_gmem_restore_pending_folio(folio, inode);
 +
-+	refcount = folio_ref_count(folio);
-+	if (!folio_ref_freeze(folio, refcount))
-+		return -EAGAIN;
++				folio_unlock(folio);
++				folio_put(folio);
++			}
++		}
 +
-+	/*
-+	 * Register callback by setting the folio type and subtracting gmem's
-+	 * references for it to trigger once outstanding references are dropped.
-+	 */
-+	if (refcount > 1) {
-+		__folio_set_guestmem(folio);
-+		refcount -= folio_nr_pages(folio);
-+	} else {
-+		/* No outstanding references, transition it to guest shared. */
-+		r = WARN_ON_ONCE(xa_err(xa_store(shared_offsets, index, xval_guest, GFP_KERNEL)));
++		xa_erase(shared_offsets, i);
 +	}
-+
-+	folio_ref_unfreeze(folio, refcount);
-+	return r;
 +}
 +
-+int kvm_gmem_slot_register_callback(struct kvm_memory_slot *slot, gfn_t gfn)
-+{
-+	unsigned long pgoff = slot->gmem.pgoff + gfn - slot->base_gfn;
-+	struct inode *inode = file_inode(READ_ONCE(slot->gmem.file));
-+	rwlock_t *offsets_lock = &kvm_gmem_private(inode)->offsets_lock;
-+	struct folio *folio;
-+	int r;
-+
-+	write_lock(offsets_lock);
-+
-+	folio = filemap_lock_folio(inode->i_mapping, pgoff);
-+	if (WARN_ON_ONCE(IS_ERR(folio))) {
-+		write_unlock(offsets_lock);
-+		return PTR_ERR(folio);
-+	}
-+
-+	r = kvm_gmem_register_callback(folio, inode, pgoff);
-+
-+	folio_unlock(folio);
-+	folio_put(folio);
-+	write_unlock(offsets_lock);
-+
-+	return r;
-+}
-+EXPORT_SYMBOL_GPL(kvm_gmem_slot_register_callback);
-+
-+/*
-+ * Callback function for __folio_put(), i.e., called once all references by the
-+ * host to the folio have been dropped. This allows gmem to transition the state
-+ * of the folio to shared with the guest, and allows the hypervisor to continue
-+ * transitioning its state to private, since the host cannot attempt to access
-+ * it anymore.
-+ */
- void kvm_gmem_handle_folio_put(struct folio *folio)
- {
--	WARN_ONCE(1, "A placeholder that shouldn't trigger. Work in progress.");
-+	struct address_space *mapping;
-+	struct xarray *shared_offsets;
-+	rwlock_t *offsets_lock;
-+	struct inode *inode;
-+	pgoff_t index;
-+	void *xval;
-+
-+	mapping = folio->mapping;
-+	if (WARN_ON_ONCE(!mapping))
-+		return;
-+
-+	inode = mapping->host;
-+	index = folio->index;
-+	shared_offsets = &kvm_gmem_private(inode)->shared_offsets;
-+	offsets_lock = &kvm_gmem_private(inode)->offsets_lock;
-+	xval = xa_mk_value(KVM_GMEM_GUEST_SHARED);
-+
-+	write_lock(offsets_lock);
-+	folio_lock(folio);
-+	kvm_gmem_restore_pending_folio(folio, inode);
-+	folio_unlock(folio);
-+	WARN_ON_ONCE(xa_err(xa_store(shared_offsets, index, xval, GFP_KERNEL)));
-+	write_unlock(offsets_lock);
- }
- EXPORT_SYMBOL_GPL(kvm_gmem_handle_folio_put);
- 
+ /*
+  * Marks the range [start, end) as not shared with the host. If the host doesn't
+  * have any references to a particular folio, then that folio is marked as
 -- 
 2.49.0.472.ge94155a9ec-goog
 
