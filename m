@@ -1,113 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-52743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D938A74661
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 10:30:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F520A7468E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 10:44:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5BC7C17CAD9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 09:30:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1192C3B3B6C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 09:44:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEEC5213E74;
-	Fri, 28 Mar 2025 09:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37BAB2144A0;
+	Fri, 28 Mar 2025 09:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B1KNts01"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hC2HIV3y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6922213E81
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 09:29:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5546A214213;
+	Fri, 28 Mar 2025 09:44:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743154200; cv=none; b=qwsnIlDZirqPnfwxJgRRXRMqe9nR6c0b6KmK/8TuJxA8knxtLR96U7fflV37bhw2VQAP5EjgcKOJr0SB90vyQ4+gRWrwuhacCbNxzp12rXzzzS79G8Y1/j9XoRnpp4k11eDJAAe9zvHv/wzk6/BZsuOOEJdXWLdDvj+7q2UkRZE=
+	t=1743155066; cv=none; b=qDDHmXJHlMOb3rN99OeB87LQsxDDNT7SSJiv4MkAC/P/z5l8bGSaNDM3P+beQU0RBvLoYGKp27YXt3eFAl9HsbRA3+42MFYwihK8ooNB276i2UT/PQpG6G+wSthdOsx8b3vS3Y94qGZF/R7dyLiPQpIlIVv8GZJNfmQb2EpkWog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743154200; c=relaxed/simple;
-	bh=8Vu9wccvRJP8ukJq1AmbQm1pxBvfrY2JQJAGM24f+qs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dlVCbrr8a1Zy13Rogv7d1cWx6w36KK5aGiFTvLJR4opOl3zbMM8H4BXYfRPrKTmxxrkrkK91S/PlWVmazQhMNAdd9l0WAEv5hYmE+0Hl35C+cqcAAeXUVQvdNvlBvUGFwIF73r35kqFbF8mmN69ibQaTZ119PmBwcT7MdqX+JWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B1KNts01; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5dca468c5e4so3441927a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 02:29:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743154197; x=1743758997; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MqSShgXJw3PA+4hUdB5QsWQTuvezZ525Q5xMzwXN2rc=;
-        b=B1KNts01BRgg0aJXETm7M6ea9egioMTZOIPIYRmp8obe2y+Rtl1ox9bvusii+2cWI5
-         HMbh4bl3aimUyn8yB0+Kn2tyKR6qxXDci0DUZS9ccyou4jT+ndhhQKULxSxmKYd8/wXd
-         mUnWj1GokpFp2BWgdTbcRz15DVGkb5KEgfdOv5kRLsXuNMtvArhaKpJ85HyfebojAmKp
-         Af3+OI3+AqVjV4O0wfB5Nv6NN2+YSJ2x0ntpHQtZNkXZ0EUs+zmxy+Lcsy/pDQAbvJ15
-         X1MPVzOAXR0dh+vfMyZLWO2q2WRTjAnCgd3ccinl1LdnbBoDUW6dBBPyauRrA2+b+d8E
-         CcjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743154197; x=1743758997;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MqSShgXJw3PA+4hUdB5QsWQTuvezZ525Q5xMzwXN2rc=;
-        b=cc7WgTSQDDKAGpS/xpxe6hJjrP63J8SFQMY8iCZigtJ1SWGxRUaXC1fUTEt5UvE55x
-         5cTI5YRE1FuvYGG0ZGs6AWB7RRuRZApc9thw/qR+7aVlVcDfhf9gmz8FMD1uXnQNHe0e
-         FdFBL240gSa3dE8h7BZ0t8nw9cXDTZ0vPN7/HBYnT2pbb6MhvcrXkFypz84e9LqrKiQ/
-         UVYNjAdGTasgq847mcIE90Nr9M7471XXojtGQN45sVXWWN0oLhhBwHIOy90cJKvk15uY
-         xNUs9i+V1/yYBwBTU0T9PNAQ93YRGKyEnLg5nVUwV6oWIQIOqeCzP6qNM2uuWCjPLkte
-         0ZIg==
-X-Forwarded-Encrypted: i=1; AJvYcCUCg7sF98XSkl/D593l4qg7E5eMTwEY+EYdSjE47QSi3tkm8pz031sDCwghXmeJwuamiRhdmOw+fPFaOuiB@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywe3KbS3AsPmPCo8XSMZlYrBC9Vw0CXKmYiREsuVf6FFICtOmNv
-	BJ0FnSvVTxyUjJp7FkUTXsTuzy8zJird+53Wgq+I9r+2UDhpg7U0bO+UvzDXOuk=
-X-Gm-Gg: ASbGncuEqVohEcDNuJFyKWANfSkr3wUcjXIzPe1irL4SzVFD8N6ykv3IyKFOM2OeTzV
-	p7MMthcr5rgmCrbY0BMwMFmXHGJ4tTbgNmE9QbXwIKzHIgzpotd6HNbIr6idlCdS0Q6HfSU3cQH
-	DWQ27fOIQSbqBdhKndYPLHSp+mx0HP23klXs7GkqmpkeJ/k2PX2/aAILV/jMdOYgk2uZuh1zndd
-	Of5IRqfarWQQfxKPtiPjjhIAphnw0vndBmpKRIlymMu61xIjL3DgLZM2WgNXxipMlCEW9ucMTDA
-	pv1ka2E+XnWuenIMBEyeJ0Oyf9ogCtQzBGhmyIolHQ==
-X-Google-Smtp-Source: AGHT+IHfluKIRr7jH95wATbLlb3zKl9uT5b3dRjhMmF+OXcjSLOy4S6m1p6fE0ADRn8ZZaTWKhlyrQ==
-X-Received: by 2002:a05:6402:90a:b0:5e5:e78a:c4d7 with SMTP id 4fb4d7f45d1cf-5ed8e387bbcmr7030250a12.12.1743154197144;
-        Fri, 28 Mar 2025 02:29:57 -0700 (PDT)
-Received: from linaro.org ([62.231.96.41])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5edc18030afsm1108964a12.81.2025.03.28.02.29.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Mar 2025 02:29:56 -0700 (PDT)
-Date: Fri, 28 Mar 2025 11:29:55 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Dennis Gilmore <dgilmore@redhat.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: x1e78100-t14s: enable SDX62 modem
-Message-ID: <Z+ZsE1wm87GfVanE@linaro.org>
-References: <20250327081427.19693-1-johan+linaro@kernel.org>
+	s=arc-20240116; t=1743155066; c=relaxed/simple;
+	bh=lCH6JJxjNaQa3teANM2/ZsrcH0FwzDmtw0XPeQUYyrg=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=DFsFg0iPkCNIzJeoVEQGhFhWiHbfZNRtJfngY/gF9M9ilN044H+scF9725XGQ3LrruLNz9zkS53STd1u3mdHsqogbawnOziNC9k7Un4cyTHk/SMWsSvoLlcM6MiVhaMTRjw7grmyk/K15miNpdLl3ntVeoY0HV2g2nqGNbEKHq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hC2HIV3y; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52S0Pfh1006996;
+	Fri, 28 Mar 2025 09:44:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Q6szw+ntz9VDczTlnbIDkDQ5IY9zguQ76RZzJB69Xis=; b=hC2HIV3yU8oM7wWx
+	2+h8sQKqaWJxMK3RAgdmL+FYQz5iTHee6JXB6vEMRq5zKTRUs2LG7uHtTltpm5VV
+	MuACHJl6AqNCapeQg/uXP9YGOuscMbJ7kl3LSR6GwzmF94VEMJ8veVzZ771tPUBr
+	HlFcJB6F5Z+2fKaPjcaQPbKaqjIwqsF+G86xmUls/t9YGdf21+EfusALwOwnRxyF
+	z6sooYa6DO6tJ2te1xMMOStNT5geuTisDHFOVdrosXutz7owmmapHtEfSBZF9k1M
+	oEo2Y1K+nlPiSeedd9C+vPatAIwkIdWdYmd1739LQDQSYDRLf0r5orfkRRApq1Ag
+	5n7xrw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45manj8123-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Mar 2025 09:44:09 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52S9i81S006558
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Mar 2025 09:44:08 GMT
+Received: from [10.206.97.61] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 28 Mar
+ 2025 02:44:00 -0700
+Message-ID: <0220605f-3ff6-4ea3-88e3-09e602962a61@quicinc.com>
+Date: Fri, 28 Mar 2025 15:13:57 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250327081427.19693-1-johan+linaro@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/10] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
+ to DP bridge nodes
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
+        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
+        <marijn.suijten@somainline.org>, <andersson@kernel.org>,
+        <robh@kernel.org>, <robh+dt@kernel.org>, <krzk+dt@kernel.org>,
+        <konradybcio@kernel.org>, <conor+dt@kernel.org>,
+        <andrzej.hajda@intel.com>, <neil.armstrong@linaro.org>,
+        <rfoss@kernel.org>, <Laurent.pinchart@ideasonboard.com>,
+        <jonas@kwiboo.se>, <jernej.skrabec@gmail.com>,
+        <quic_abhinavk@quicinc.com>, <quic_rajeevny@quicinc.com>,
+        <quic_vproddut@quicinc.com>, <quic_jesszhan@quicinc.com>
+References: <20250311122445.3597100-1-quic_amakhija@quicinc.com>
+ <20250311122445.3597100-8-quic_amakhija@quicinc.com>
+ <20250312-athletic-cockle-of-happiness-e88a3a@krzk-bin>
+ <d64bf3b3-7c4d-490e-8bd7-1ad889aa7472@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <d64bf3b3-7c4d-490e-8bd7-1ad889aa7472@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: crYXy3p45ra23Jg3L43TFwAy1c04P9hK
+X-Proofpoint-ORIG-GUID: crYXy3p45ra23Jg3L43TFwAy1c04P9hK
+X-Authority-Analysis: v=2.4 cv=KvJN2XWN c=1 sm=1 tr=0 ts=67e66f69 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=Bf3lAFkBa5TPtOYeXToA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-28_04,2025-03-27_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=990
+ malwarescore=0 priorityscore=1501 clxscore=1015 mlxscore=0 spamscore=0
+ impostorscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
+ adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503280065
 
-On 25-03-27 09:14:27, Johan Hovold wrote:
-> Enable PCIe5 and the SDX62 modem present on some T14s.
+> These both above commented from Dmitry I have addressed in the version 2 of patch 7 of the series.
+> I have squash patch 8 into patch 7 of version 1 into patch 7 of version 2 of the series.
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
 > 
-> I don't have a modem in my T14s, but this is based on the work I did to
-> enable the modem on the CRD reference design and the T14s schematics.
-> 
+> Thanks,
+> Ayushi
 
-What happens with T14s variants that do not have the WWAN ?
+Hi Krzysztof,
 
-Is it OK to enable it on those, HW-wise ?
+I hope this message finds you well. I wanted to follow up on the reply I sent. Your feedback is invaluable to us, and we would greatly appreciate any further insights or comments you might have.
 
-(Hope we don't have to split the devicetree again, like we did for the
-panel)
+Thanks,
+Ayushi
+
 
