@@ -1,164 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-52740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B87C2A74603
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 10:10:11 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44251A7460B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 10:11:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4DBA61688DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 09:10:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 31B277A70E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 09:10:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B3902116ED;
-	Fri, 28 Mar 2025 09:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63F7E21324F;
+	Fri, 28 Mar 2025 09:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uSUANAlK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NlYHQI0E"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6831D5170;
-	Fri, 28 Mar 2025 09:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0F11D5170;
+	Fri, 28 Mar 2025 09:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743153007; cv=none; b=neirHMDbvKT3jCfEI+PiIDmrP/rhf7WqOFlgsgZG+B/SIBdVjPPD48VybNgYJ+CMO5TEbwaG7N45k/XrA4B3RnAv1YTI0uiJtsdQNyYJ7vj0OrlGkKk9U68Lp6tSwamnGD1yoKT9E0X9r+1DMOu+jwD0uppStCRajbVDq0qdu2Q=
+	t=1743153104; cv=none; b=FL6vnyyPC35qK66x55h5jyq6UQrue1uixxLE39e/LiClUcU+kPyvQrqciMK+vGQQKAePOKY5vJeNO97Vlejao/mKtDeDPoa2IP6kiVa88vj3oeZrODR1qhXRpGVg545Gz4bsIyAmsf+9kC5RICGUU+spaPculhHHw0tbnV55Csw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743153007; c=relaxed/simple;
-	bh=CK74oiFd8Lt9pvGCt8PX1xWQ/8O4B+iUVrHW4iQ6Y/c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RTjNs5MxF9/PMqgIzdnDkgOc4EceG3kdo/SwS/5jChePfKTUvJaBwJ7lSBEof5T7p/yCaxYtJ5t9liLWloam4uedZ0zDARP5m6dB7RzAelARiqlqsPMOjmZ0tBNZ1bvOV1ETzusOoBUdNUydlgnyp+f47BRzNXfUEuy7yAM+6Mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uSUANAlK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B9CC4CEE4;
-	Fri, 28 Mar 2025 09:10:02 +0000 (UTC)
+	s=arc-20240116; t=1743153104; c=relaxed/simple;
+	bh=/fQ2l7cD/isQx2nupZb1macgcLB2IW4AcXV0qJ4AiJ0=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=acNnqPcu+7vGddqdrxBMYy7WtmnYSzSLjmW3FE8WVuN1OweHsm9Z0b1mKOsAnFGBwsBH9jDKHDASQ6igIk4FUafy/4QlWAgzTsQ0MXOjp7kfgGL+fF6lv8ev0pbfdsF0o4v6xm4eX+rBuCbIkbGsMTrdGhm3zu08UlRqutEDtos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NlYHQI0E; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3E4C4CEE4;
+	Fri, 28 Mar 2025 09:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743153006;
-	bh=CK74oiFd8Lt9pvGCt8PX1xWQ/8O4B+iUVrHW4iQ6Y/c=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uSUANAlKyjNR9xOUXTB7nXEYjjXGkdghJfc5pBD7aea9EVwgfwz924OL76cCm9Kok
-	 Q28CAraw21zD3eb0ClmeL1T31EvVcDEglLUMQQSVovfZ0Zd0oONWSyRwn9egvsuS4z
-	 uLz6FDozlLEENqxQ2+Xcp7vp62nXB/3KLvY/SwIBilKP+s0bplriQS4lH+4mOyHBoi
-	 13Gf1BfqsbfOgs9WgoDyI5n9Npi3z616kBn9sdKCSR4kKF/1RmGnhf9C6jCewHgXTN
-	 OUxaTTeZLU1zwtpTJ46IqvQlPqkLyvqqBaxom1jC6V7xTUT9wffHBor0Ua/bCTFZfn
-	 gVIoj5bJQKR3g==
-Message-ID: <aaf21b5e-e910-4e03-b9a9-f37b7dd118bb@kernel.org>
-Date: Fri, 28 Mar 2025 10:09:59 +0100
+	s=k20201202; t=1743153103;
+	bh=/fQ2l7cD/isQx2nupZb1macgcLB2IW4AcXV0qJ4AiJ0=;
+	h=Date:From:To:Cc:Subject:From;
+	b=NlYHQI0E0t3V6LAxmMvMQTx0CTpo8GWONUz65LhA7mSzdh4aMvEu9b5G0/GIubz1z
+	 ieNbbIGsDPqPe15+rCNGbUTE2kVQjZeQEXf9r4jMUbvdGyZnfZGIHk52MFb4hfCWSP
+	 J2FXnc9IKO1Q7tTO1U0vlf9ga5hDZwV6IOTCyc1mDVB7tXAMPma70yEi0Rt2ZxpbPK
+	 7uakO5uQ3t6ttEBACHaXqyiN5V0D7cmraP0wNlw+jFtNwunrgeDnAEVRxN4SM6rhNY
+	 avdqubYgKzuilui0sKZhUPBShJpn3dLx2rDEnDviA5mRRhsJzj0Ws8B80wE7Eqm9ZQ
+	 vfMV/8QAOAF7g==
+Date: Fri, 28 Mar 2025 10:11:13 +0100
+From: Joel Granados <joel.granados@kernel.org>
+To: iommu@lists.linux.dev
+Cc: David Woodhouse <dwmw2@infradead.org>, 
+	Jason Gunthorpe <jgg@nvidia.com>, Jean-Philippe Brucker <jean-philippe@linaro.org>, 
+	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>, 
+	Lu Baolu <baolu.lu@linux.intel.com>, Marek Szyprowski <m.szyprowski@samsung.com>, 
+	Matthew Rosato <mjrosato@linux.ibm.com>, Niklas Schnelle <schnelle@linux.ibm.com>, 
+	Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>, 
+	Thierry Reding <thierry.reding@gmail.com>, Tomasz Jeznach <tjeznach@rivosinc.com>, 
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Will Deacon <will@kernel.org>, Yong Wu <yong.wu@mediatek.com>, 
+	virtualization@lists.linux.dev, iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: RFC iommutests_: Testing software for everything IOMMU
+Message-ID: <5zoh5r6eovbpijic22htkqik6mvyfbma5w7kjzcpz7kgbjufd2@yw6ymwy2a54s>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sa8775p: add QCrypto node
-To: Yuvaraj Ranganathan <quic_yrangana@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250227180817.3386795-1-quic_yrangana@quicinc.com>
- <ea79cee4-8c47-4054-bd17-2097ada4e583@kernel.org>
- <b57fa204-d3d2-4b74-8834-3f2d93726a99@quicinc.com>
- <73ed6108-27ab-43ac-abd3-82656693404d@kernel.org>
- <4a205725-af49-4f28-ab78-7059451d66c8@quicinc.com>
- <29f41232-28fc-439d-bb35-7b9cd1e4be16@kernel.org>
- <6ccf4cad-a99b-4168-b4d7-577112c011e1@quicinc.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <6ccf4cad-a99b-4168-b4d7-577112c011e1@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-On 28/03/2025 09:32, Yuvaraj Ranganathan wrote:
-> 
-> 
-> On 3/28/2025 12:47 PM, Krzysztof Kozlowski wrote:
->> On 28/03/2025 07:04, Yuvaraj Ranganathan wrote:
->>>>>> Use commit SHA syntax (see submitting patches, checkpatch).
->>>>>>
->>>>>>> because of the build warning,
->>>>>>>
->>>>>>>   sa8775p-ride.dtb: crypto@1dfa000: compatible: 'oneOf' conditional failed, one must be fixed:
->>>>>>>     ...
->>>>>>>     'qcom,sa8775p-qce' is not one of ['qcom,ipq4019-qce', 'qcom,sm8150-qce']
->>>>>>
->>>>>> Not relevant warning.
->>>>>>
->>>>>>
->>>>>>
->>>>>> Best regards,
->>>>>> Krzysztof
->>>>>
->>>>> Are you saying this is not the warning seen at merging?
->>>> Tell me how it is relevant? Tell me how can I reproduce it.
->>>>
->>>> Best regards,
->>>> Krzysztof
->>>
->>> Below commands will show the above warnings without the fix,
->>> make clean && make qcom/qcs9100-ride.dtb CHECK_DTBS=1
->>> make clean && make qcom/qcs8300-ride.dtb CHECK_DTBS=1
->>
->> As I suspected, not possible to reproduce.
->>
->> Best regards,
->> Krzysztof
-> 
-> I'm able to reproduce without this fix, I hope you are discussing about
-> this failure only,
-> 
-> 	from schema $id:
-> http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
-I suspect you work on outdated tree. I followed your instructions on my
-tree (you did not specify which) and did not see these errors.
+Hello everyone
 
-I bet you reply now third time, without any more details claiming the
-same but it's just waste of my time.
+This is a Request For Comment (RFC) describing a new testing infra
+called iommutests. It is motivated by interest expressed during the "IO
+Page Fault for all" [1] talk in LPC 2024 [2]. At the end of that
+presentation in the "VFIO/IOMMU/PCI MC" microconference, There was a
+clear "yes please" after asking if it made sense to have an
+infrastructure that could evaluate the full spectrum of IOMMU
+interactions — from host software to IOMMU in hardware and in emulated
+environments.
 
+What is iommutests?
+--------------------
+The primary goal of iommutests [3] is to provide a modular framework to
+test IOMMU-mediated Direct Memory Access (DMA). It is meant to run
+PASS/NO_PASS tests for the interaction between kernel subsystems and
+hardware/virtual devices. All this in the hope of clarifying which IOMMU
+features are working correctly and which are not. You can find the
+project in github : https://github.com/SamsungDS/iommutests
+
+* Test Orchestration:
+  This component is implemented in pytest [4], a testing framework where
+  tests can be parametrized, filtered and implemented concisely and
+  easily. Additionally, pyudev [5] is employed for device enumeration
+  and monitoring, as well as querying device properties and attributes.
+
+* Test Executables:
+  For the creation and execution of tests, iommutests leans heavily on
+  libvfn [6], a zero-dependency C library designed for interacting with
+  PCIe-based devices from user-space using the Linux kernel user API.
+  The libvfn library can be used to abstract away common lower-level
+  interactions which can then be re-used through out.
+
+A Working Demonstration
+-----------------------
+To better illustrate how everything fits together, There’s a demo script
+[7], with some demo notes [8] explaining the setup and output. It does
+the following:
+
+1. Sets up a custom qemu [9] virtual machine environment using a custom
+   test device.
+2. Builds both libvfn and iommutests.
+3. Runs a pair of example tests (one of them always fails to show how
+   how that would look like)
+
+This demo shows how everything comes together to give the pass/no-pass
+IOMMU testing results. It is there for anyone interested in trying it
+out or contributing. To run it, you need to pass it a local ssh key and
+linux kernel compiled with VFIO support
+
+Custom qemu device: pci-ats-testdev
+-------------------------------------
+To support IOMMU testing under qemu, the pci-ats-testdev [10]
+(different from pci-testdev [11]) was used to emulate DMA transactions.
+It is a full fledged pci device capable of executing emulated DMA
+accesses. It was originally intended to test Linux kernel interactions
+with devices that had a working Address Translation Cache (ATC) but can
+become a platform capable of testing anything PCI/IOMMU related if
+needed.
+
+Feedback
+--------
+This is a first draft, and many implementation details are still open to
+refinement. I would appreciate your thoughts on any part of the project
+— its design, scope, implementation language choices, or usability.
+These are however some of the questions that are still outstanding from
+my POV:
+
+Q1: Beyond binary testing:
+    Would iommutests be used for something other than pass/no-pass
+    tests? Like performance? Stress testing?
+
+Q2: Kernel Integration:
+    Should iommutests interact with the already existing IOMMU linux
+    kernel unit tests? Since it is an orchestration framework, then it
+    can execute the unit tests in some way. This could actually be the
+    next step, if found useful.
+
+Thanks for your time
 Best regards,
-Krzysztof
+
+-- 
+
+Joel Granados
+
+[1] https://www.youtube.com/watch?v=UFrAjJ5TUf4
+[2] https://lpc.events/event/18/timetable/#20240918
+[3] https://github.com/SamsungDS/iommutests
+[4] https://docs.pytest.org/en/stable/
+[5] https://github.com/pyudev/pyudev
+[6] https://github.com/SamsungDS/libvfn
+[7] https://github.com/SamsungDS/iommutests/blob/master/docs/demo0_debian.sh
+[8] https://github.com/SamsungDS/iommutests/blob/master/docs/demo0.md
+[9] https://github.com/Joelgranados/qemu/tree/pcie-testdev
+[10] https://github.com/Joelgranados/qemu/blob/pcie-testdev/hw/misc/pcie-ats-testdev.c
+[11] https://github.com/Joelgranados/qemu/blob/pcie-testdev/hw/misc/pci-testdev.c
+
+PS:
+  Apologies for the long CC list. I always try to include the ppl that I
+  think will be interested, but its not always easy to know who you are
+  :). In this case, you are included because you appear as "M" under a
+  subsystem that contains the string "IOMMU" in the MAINTAINERS file. Feel
+  free to shoot me a mail if you don't want to be included in the future,
+  I'll try my best to remove you.
+
+
 
