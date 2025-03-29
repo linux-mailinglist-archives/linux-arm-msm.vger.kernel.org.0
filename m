@@ -1,115 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-52822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC311A7565F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Mar 2025 14:16:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DF44A75683
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Mar 2025 14:54:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 794D17A397E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Mar 2025 13:15:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B31153A7A5D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Mar 2025 13:54:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B6F1199237;
-	Sat, 29 Mar 2025 13:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 663FB192B82;
+	Sat, 29 Mar 2025 13:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="r5NlGNOS"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="ON2HE2nC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161C56FBF;
-	Sat, 29 Mar 2025 13:16:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5874C2940F;
+	Sat, 29 Mar 2025 13:54:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743254187; cv=none; b=pIUuwoFhaQUODDqw1ir5zF63z8TDYjZ+2+/mp9NdIEVXgDE8JRORJF5EeWPx+odr5IKsfiVDGR/EN4JOKwF8hEuE0iuueqD45wKkg67e+QS7nvJQpIj+lwvOwNpTuMuFwFH9hISvgI+EeTKStxR7xPJt2VfeO3Pd8X2fc11YEe0=
+	t=1743256479; cv=none; b=rO4ZrT25W03+yc/m4zgOckLmgaJVLNsXftztMWDkstB4jKp6sQp2sxyo6ZXrZJzRcGAAXD0tbmaxdkBaBWMWZI4T01OlA+0n1AZLJTPcENG2U7mqAWDGhH8+q6fU5W242yGNPexVKC7/xBR8b8GHBSuiQuULiwPcOcJjxHkaAWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743254187; c=relaxed/simple;
-	bh=KuHBuA8N+iaj2AuGnbHx4GIQehKT2sBQF/s4+KKtdTo=;
+	s=arc-20240116; t=1743256479; c=relaxed/simple;
+	bh=4n6gakwcu0PhUp9+6uuyFcPnhmioTI0TXWmXpfOEzJA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JKor+cQ6BPEeplHe6Vbpo3eg7k2XsJkqienf97Axg8bEkiMbVuYppby5hX29tAkPlcEpkqJCeVJWbAqC8a7XxZiQkYRzMFGUOHnaM3zPJ0Be02r46jc/EYtw7CKhMDTh8wjFqdwqOW9Emf7fdUwzzzg8UIFKgJ26thA7cIaMKgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=r5NlGNOS; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1743254175; x=1743858975; i=markus.elfring@web.de;
-	bh=KuHBuA8N+iaj2AuGnbHx4GIQehKT2sBQF/s4+KKtdTo=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=r5NlGNOSS4ou4h6aHuVMk1ORDtvYYw+y+d+CFmAe8lnVyNYMULA6tKjQAZEe5Ccj
-	 Bk9Mm3J/tg9El2T7lKO7fnYZdudAY74qAlY6Q8toUU6pUrc/deuDccQElVAJyHX7n
-	 LEzbSXdLlEN22rHWBWS567r+XUvlJUF/dhXxtNZm1kb+buyxH0o0ZouzAJormLo2K
-	 bb3apjV1BXOafbydoEWuvJU3gFPJiSekzatC49tJM5XBRGWL2LkrEv0kxtOwrrv+J
-	 P+UAlz0X2FjcJJmezR+5klPe1ZaNFcEEMQ5+gypd3dB2dchZZOS21RxV/Ws1Vpyu7
-	 INEvi8jmfPNhYwKVCQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([94.31.93.33]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N8Vsx-1t2mtT3ORV-00t4Bp; Sat, 29
- Mar 2025 14:16:14 +0100
-Message-ID: <8a69d4c0-bd4e-4957-8b04-4a6130c82166@web.de>
-Date: Sat, 29 Mar 2025 14:16:12 +0100
+	 In-Reply-To:Content-Type; b=SaSZYJ3e6IU+H3GZ4taAI/+cCSfLSrT9YDrL8ElvkUKN+HnWD/kdVxrM3D8RGefC4etfyPjk0Yw/70PUFEgkhGLzPPr5r1Ydekp+mQupjZmk32/pmx9e7gWsigloci9yPA2ssQJ47Ygj33VIlUr8/49MwDWWR6PBTjDJQBluNyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=ON2HE2nC; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1743256469; bh=4n6gakwcu0PhUp9+6uuyFcPnhmioTI0TXWmXpfOEzJA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=ON2HE2nCYM+IiKTjO32HjB4U+sgj1thCQr1MdtjDPy6MbDMUpCnfnWTCCi7UkvywA
+	 pI+l6G+IGyzhGRGlEU8wc1In+MB9l7Qxx8xg2SbS68xoCOijadwCH/a3qq/61FLFcC
+	 pLuXhAQgFOq+xsevEhkhovsBry3oRd6Idow5rqQk=
+Message-ID: <ad132ebd-92f2-428c-95c2-d1986b5d060f@lucaweiss.eu>
+Date: Sat, 29 Mar 2025 14:54:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [v2 2/3] i3c: master: Add Qualcomm I3C controller driver
-To: Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
- linux-i3c@lists.infradead.org, devicetree@vger.kernel.org,
+Subject: Re: [PATCH 2/4] dt-bindings: display: panel: Add Himax HX83112B
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org
-Cc: LKML <linux-kernel@vger.kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Jarkko Nikula <jarkko.nikula@linux.intel.com>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>
-References: <20250326141641.3471906-3-quic_msavaliy@quicinc.com>
- <66d344b9-5cc6-4060-86ff-8100a00de477@web.de>
- <4161e6de-b16f-4371-be41-cc12adb3e9b8@quicinc.com>
- <e32324c8-1888-451b-8621-0e468ca61fd9@web.de>
- <a96511dc-5ba1-4302-acb0-f3b49bf8990c@quicinc.com>
- <20250329104812225f9ee5@mail.local>
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20250329104812225f9ee5@mail.local>
-Content-Type: text/plain; charset=UTF-8
+References: <20250222-fp3-display-v1-0-ccd812e16952@lucaweiss.eu>
+ <20250222-fp3-display-v1-2-ccd812e16952@lucaweiss.eu>
+ <20250223-tricky-saffron-rattlesnake-aaad63@krzk-bin>
+ <89cbb27e-414a-472f-8664-db5b4d37ddc1@lucaweiss.eu>
+ <cf3a0429-0c36-426f-b9b0-ae7749877bf3@kernel.org>
+Content-Language: en-US
+From: Luca Weiss <luca@lucaweiss.eu>
+In-Reply-To: <cf3a0429-0c36-426f-b9b0-ae7749877bf3@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:0vCbp2qS7xGeC+SBFAnjb28Q/RO9znj5JgQZ49qVjGESI0ovFj4
- CmeUw8DbMvMDh4XyhBlWAqp/H8Zu8dJBFJRIaT00l4xeFWeNfExL6K37PES2c47PvEcKpPL
- Ni2aJJ0jG452VVaaeW4jUO32/kfr9/dEe+1b7ca2dJPvbyz9+b19SdXDgM5BlQ9uAdg86CZ
- 3UkSmGZ6PDF0wn6pG3YEQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:sVtO3BxdzGo=;aKaK8yoHWCzvD1O+ArEVPeUptBs
- a00HnonhgX5CoMAU2m03+3N/8X9X0VY09kFnhzXuKwwBPrAapMxg2IJ4Tt9cGzSnoSKmK8S0c
- ut9tcup+qX+Rqe4KNhfLCqbQnnwp0ZLZBzRIYW3ooakmVDQ5sn1DHf+Dcq8BTbjKiLNIwgSg3
- fDdXKw/3cxRsShYT8FWNJQ2ETGHv0Ij16YkVs414m0fOykdcRgq731rnITGG+u9DT18lFzG0Y
- uMIlTG3BJ6loWXZGnr5nHdGAR81k4eKOXmj7R0msjYN0Hav+PU/IgJWveYS2rBp/6BHrzuqzp
- /5ZWOU1yII8C/6GsYtloiDUH+nsMVeDMWrtJ90NQdEq21KejnhBEQZAam6x+wm9cK7GuLebqs
- 1XZhN0b9vl+7yFVi/A+xD9uZllvAjkRm4OLsemy9gGUwRlmLe14X1GxLNhLYwWERrJ9xkO+2K
- 8G5XVLh1YJpzThGao6zRf5+aAEefVbLVIVPKhJtE50ngYK0V5frVNqDWhC1lFmYWOnEDaz/oO
- bYeFfhOcloM8y4GkhkrPYGNHcwkKDUoOyRCmLhMLHW7bkSBgbZCZDTU5flKmNEE/erP7mzZLp
- OuGEUtwRdKB7pZujiy6KxdO89QG3jZ9arRjYqOCO/wA73M1YrpHcJAY6BzNZXoVvYAS2Hpwy8
- v6h/i7ESa0jSlmwQDXIDpYw8S9C1D53UUOHMVZghKH611NBxtao2EoEH2czJJOnqXWadw+4eS
- mIkbkG/tBulN1W38zNLcQk3ydMeGP06WKFaORRG9a1fVaLWoWMBCyD7k8XOdVToOsKmivYN8P
- mIkxc+tkuG925NzrS1Xdgi8pnTFlYydFCSaT5H9AyzxQbewakixnemIvARrK+h+j0bmUofjG0
- u6heCL+du8vmgoy/IFqLg/nHUpWdw2e6ZhpcBvxSyfnK/4i+ZtunXpWnX4kHDzI/V5H6Un2dJ
- p2FGSvZN8ROGj3kswHc5wqXsc9+hsn9UKjiPRHKkut/OaN2I2FsNJzKMzYoK26+FxteR9yIIG
- VAOdZhYbSBY8HosfiN7/rhijKZ5npFU5PHqGTT2fkx3IoggjOxYH+VlvlH6EtC/Q3Nv/4w4ul
- bvOJMkLbwVe23im4yTr97pdviMLGUBHcLcQykZ730VmVDxTbDu5RL3hwPQ60ZgXhftC8dzpAj
- XeqOy/EFAfJlYEeaZR0q9dW/mAfu9/nKr1qe9MIbCb/uG5NnPtgEFK6QDQCGguYsqKFedb6Ho
- mL9QrZVlSwbma4CjrShPV5n0YGdqVZRWlx4z5E292hX67dO532gyHMmStbyBWeuRbbp4c1KM5
- nXuUIcZJ2rnXfThqO2Me5z8ZlRSKlUqju8orr4lb41FtKHtsMRPmW2qtbVAR8wDz3ILcP5tcW
- phbVMsMMH9KJLgd5z+cYppJF5I25LJFZbiI+hHm1cJK3h2hPraIJYwXlDskKBYlU2xO0mR8nt
- 5/B3VTvhoQbCrVQjX9m3ZHrrol1TIrXljnWFg2QlRf5wogRiVBADSBOLf56k8+CP5YvlGtA==
 
-> Don't change anything, Markus is wasting your time.
-Can clarifications become more constructive also for the usage of scope-based resource management?
+Hi all,
 
-Regards,
-Markus
+On 2/24/25 9:16 AM, Krzysztof Kozlowski wrote:
+> On 23/02/2025 16:29, Luca Weiss wrote:
+>> Hi Krzysztof,
+>>
+>> On 23-02-2025 12:54 p.m., Krzysztof Kozlowski wrote:
+>>> On Sat, Feb 22, 2025 at 06:58:05PM +0100, Luca Weiss wrote:
+>>>> Himax HX83112B is a display driver IC used to drive LCD DSI panels.
+>>>> Describe it and the Fairphone 3 panel from DJN using it.
+>>>>
+>>>> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+>>>> ---
+>>>>    .../bindings/display/panel/himax,hx83112b.yaml     | 75 ++++++++++++++++++++++
+>>>>    1 file changed, 75 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/display/panel/himax,hx83112b.yaml b/Documentation/devicetree/bindings/display/panel/himax,hx83112b.yaml
+>>>> new file mode 100644
+>>>> index 0000000000000000000000000000000000000000..e6bd4b33d40be98e479d84617aea6d2af0df70e4
+>>>> --- /dev/null
+>>>> +++ b/Documentation/devicetree/bindings/display/panel/himax,hx83112b.yaml
+>>>> @@ -0,0 +1,75 @@
+>>>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+>>>> +%YAML 1.2
+>>>> +---
+>>>> +$id: http://devicetree.org/schemas/display/panel/himax,hx83112b.yaml#
+>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>>> +
+>>>> +title: Himax HX83112B-based DSI display panels
+>>>> +
+>>>> +maintainers:
+>>>> +  - Luca Weiss <luca@lucaweiss.eu>
+>>>> +
+>>>> +description:
+>>>> +  The Himax HX83112B is a generic DSI Panel IC used to control
+>>>> +  LCD panels.
+>>>> +
+>>>> +allOf:
+>>>> +  - $ref: panel-common.yaml#
+>>>> +
+>>>> +properties:
+>>>> +  compatible:
+>>>> +    contains:
+>>>> +      const: djn,fairphone-fp3-panel
+>>>
+>>> Why no himax,hx83112b fallback?
+>>
+>> While this is the driver IC for this panel, I don't think there's any
+>> "generic" init sequence that can successfully configure this panel, so
+>> generic hx83112b driver could work I'd say.
+> 
+> 
+> Hm, indeed usually this would mean no need for unusable fallback alone,
+> but still drivers could use it for some common pieces of code. I imagine
+> there could be a piece of init sequence which is generic. Or some piece
+> of attributes.
+> We already have examples of both approaches for panels - with generic
+> fallback (himax,hx83102) and without (himax,hx83112a).
+> 
+> @Rob
+> what is your generic advice? Which of above (himax,hx83102 vs
+> himax,hx83112a) should be used, if the fallback compatible cannot be
+> used alone?
+
+I believe this thread is still pending of a resolution, based on the 
+model number I've found, I made the compatible "djn,98-03057-6598b-i" 
+for v2, but it's still a question whether himax,hx83112b should be part 
+of the compatible.
+
+Regards
+Luca
+
+> 
+> Best regards,
+> Krzysztof
+
 
