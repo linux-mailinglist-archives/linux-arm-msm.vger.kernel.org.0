@@ -1,164 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-52801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0EA1A75270
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 23:22:15 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1771BA753DA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Mar 2025 02:27:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 434E53B1132
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Mar 2025 22:22:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B64621756B7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Mar 2025 01:27:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BB361EF36D;
-	Fri, 28 Mar 2025 22:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D1A61DFFC;
+	Sat, 29 Mar 2025 01:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AbaRMvsh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ekTOO4iG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6891922D4;
-	Fri, 28 Mar 2025 22:22:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCA5524F
+	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Mar 2025 01:26:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743200530; cv=none; b=LFHVwWKfLQhoVWPetYdAXnTcwCJPZXUySbpac/WsPftzYvgbBPfjqMJp3mIB6FlzIsprBm5h6XPDgYyiW4OuzhLKbddd0zcrrqSIls22F+APl2SMCuL4X2OlyBrhKf4syi7EBdMlcWvq1OMJu2NAvSXeY3EXviy/goIfzU4WAac=
+	t=1743211616; cv=none; b=pdUorZY3heC0UuKuiRl79aKu61w6DOnD6o2n7Yfh+c54Hm6YUtPQqoIpnEGZVRctbzXZEIBmt+Bs1GPLspQUj0Dzzgsd5ON5jl4+fL8nX372lHcGMGyWGsWpin+JsoXqisUTMuNsaQ1wQq5hwegfWtJ4d1x7NscnAS/ZLfwpLCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743200530; c=relaxed/simple;
-	bh=G98Z3WGYvhW2A7hi2E5Ks/YG6A7og48XM823kzIjspc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=guZ0JwXMT1fWLnIDKb4Mm0bBTJScmVA0t0XwRRjSBakrEkHX7PWYFRY2UTWcRi7yEHwXaXc+PiejU/HUh25H3QSIUcTJg85eNXNy14pbW8mxNShU98Xlx4bB1UzjS8Va4oJQt73pKsGvFAU3wOuNdMilUquzqiYSZIEz96p9zJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AbaRMvsh; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1743200529; x=1774736529;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=G98Z3WGYvhW2A7hi2E5Ks/YG6A7og48XM823kzIjspc=;
-  b=AbaRMvshAIw3RLT6aUctkyKTdI8Hd8VjtbAa0GjRG0dPvFV8nmTuqMGW
-   UVkUakuQB+cpQAiYxAB79pdCYvJ5TWdC8X/NfCkCJLFAXM6wsQfs08VBc
-   9gLeNfA6gpPGGj4aIkUJjD0PYmF106HY19dXjZLLv8YtbKETTlY1yiIQ+
-   W9/BUEM02oBCmQ8EwVziJgM1riMDa/+Qpcid+Qwo0Q56d9MebuaVlHLyT
-   UtK0lg4WT/9UBFdwVQSazq8r7w9EEVed/oi4lkqXT4qGpwNSCeEf0DkDl
-   IM/YQCLuMu2WpE0Sb5P4SoZYsz5faCyeG+luAeENim0CJOH7JYteGUwXT
-   Q==;
-X-CSE-ConnectionGUID: /SbMZ5nrRWSMqeHDfor1+Q==
-X-CSE-MsgGUID: Pl5+x5pDRD6rZCn2kOxuRA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11387"; a="54771485"
-X-IronPort-AV: E=Sophos;i="6.14,284,1736841600"; 
-   d="scan'208";a="54771485"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Mar 2025 15:22:09 -0700
-X-CSE-ConnectionGUID: KYawj+qMRMyHBjjedYu1Iw==
-X-CSE-MsgGUID: ZOy7Bdi5RhSgFN2XMyjDdA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,284,1736841600"; 
-   d="scan'208";a="156553352"
-Received: from lkp-server02.sh.intel.com (HELO e98e3655d6d2) ([10.239.97.151])
-  by fmviesa001.fm.intel.com with ESMTP; 28 Mar 2025 15:22:04 -0700
-Received: from kbuild by e98e3655d6d2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tyI5R-0007ju-2g;
-	Fri, 28 Mar 2025 22:22:01 +0000
-Date: Sat, 29 Mar 2025 06:21:16 +0800
-From: kernel test robot <lkp@intel.com>
-To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Sumit Garg <sumit.garg@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Apurupa Pattapu <quic_apurupa@quicinc.com>,
-	Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org,
-	linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linaro-mm-sig@lists.linaro.org, linux-doc@vger.kernel.org,
-	Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-Subject: Re: [PATCH v3 08/11] tee: add Qualcomm TEE driver
-Message-ID: <202503290620.2KJEcZM6-lkp@intel.com>
-References: <20250327-qcom-tee-using-tee-ss-without-mem-obj-v3-8-7f457073282d@oss.qualcomm.com>
+	s=arc-20240116; t=1743211616; c=relaxed/simple;
+	bh=ieo3v3eB0Q3Vd8qHSezVD4mOnD8BGH4gMrjlTPEOOWA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To; b=NLDD1CS+TNX5o12xjxmB75Yorh8XevWwRI7J6VxfM6I5cdA30VE2YJs+V1LbI9zGb7eA3WcthvFsH+NQS21T5/s6WQKZj6DcJv6XeTSykcQoXb1/C2PdyR6AQzml4toO9L2LZBonB22+C1goxu/Xc2YC+fHRE7+kGTq2qdrZTFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ekTOO4iG; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-399744f74e9so1872294f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Mar 2025 18:26:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1743211612; x=1743816412; darn=vger.kernel.org;
+        h=to:content-transfer-encoding:mime-version:message-id:date:subject
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z3qGhnuDainIiSGsnAJ33rQSgGHUL64MysGlQKWygUU=;
+        b=ekTOO4iGHIY9n6RbogazejacyBhs3WT8xEMUSvxTKow1CbTN/aG0eMi/ccNE1mi1kQ
+         OkwP/q+N4Wzdv0gObmIgoGW/RwQlZZH8tSpqG9pQltEyDdIzgVZUZGA/gCEiuXOMhNFm
+         U0zfT72QPqd2saBKAKpoealSQEu4nZg9EYL6db+JbGwibxzuYETVwCPf2vtxLtXKhAC/
+         CgeN5elnspGQkPJFKZs46A5Tdq9CYT7zcrFbRbCH8zEkNTijcy6fBiK+X8iR+j0wA7/S
+         x9vIiT7P7FUu6vBp5Dy/GyTXi0W8eYeCZ16wptxQ1wQpy8GzyTKOJhqSr6IO7BjCMWhi
+         ffNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743211612; x=1743816412;
+        h=to:content-transfer-encoding:mime-version:message-id:date:subject
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z3qGhnuDainIiSGsnAJ33rQSgGHUL64MysGlQKWygUU=;
+        b=JKCgLbB6fKoBV7YO9Q150MZTJINwHbV/14oHIy3Ucfmer88slj2eiSyxLTs6P+COL7
+         eHtuCA03nmEKk9sn1V/9kIEG5Hx2mlmd5agsJunSwbuGTrKJI/du9L0SkdfbT+t1eY0o
+         Dc2pdqA9RGWosZXBMhXl2cHDhtfJlLrYmNV6iLa3WCIC34hQPx0gkpHHDCdycNUHn0w7
+         bnV8xwnSknqY4I8XyQI8VBmDVafTA8ScxmTGO6ufY7pIBeu/t5dkX5EucPUcLsUSnaNV
+         a0poTuKsUQqLjDIQX3QoTNOEzclLp7c3oCmk41MNpjVLe9jdWfhUPuuyay/2F9d73eVJ
+         yi+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCX9pGHPF6gNbScvTXcxf2MSL+btDPju3Q9LTy4Z2K1qH/kO+41hHvLTb44L1sqePAnUvdm1ChT+d1siD7H4@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy640Zo6q4hax5TUeEWu3UCNLwKDFtn8yw2I2DxJ6vctN8gS0Zf
+	84K0P1FBoxQjflPXDHcpNUOfihpWcU/7cUtoLHPgNCV25YOJ3r7/paPGYMp37OI=
+X-Gm-Gg: ASbGncsy5LDB5+teP24Ih51/0KPQNhyHnnQ10F6IE965POHw35doZFQuO1RqpgwYNUw
+	oMK9/YaKRvo/elgUaLWBFNuvWHfA0UfvdG+bn0o24MEVeCWtKt5zgfKMGW/vRt6/RacyjMDgoL+
+	B8068DocWxIvB9u7AGtHsUElVVfS3YWkzaLBk3TN7wfk7rt5Pe2cg7iALpHYDG3Sd0xNAi9q4Wj
+	CUdtMs87UKhMLca4a2DhC5BuJUagUH0vWI+7xa8CDarbwNuwIMG08ry+DLY5MXSQrfX1LeHTI5T
+	0tIkbJjXpy/aeOPEl4C6UPxvyAQzS0Ji7SUOShESeWhYLH+BCDIUyswMxGHoL80txX7dJE2Aplx
+	mW5tlvVmVt/Aw5BV0+eu3
+X-Google-Smtp-Source: AGHT+IGTHkSX5Lsugh5eM7Cu6CGWHlhiuVXW/CQFpV4/rGcYQLEZya9631aVHT9jxzBaZCaGHcBp/w==
+X-Received: by 2002:a05:6000:400b:b0:39c:dfb:9e8e with SMTP id ffacd0b85a97d-39c120c7cc3mr845271f8f.8.1743211611742;
+        Fri, 28 Mar 2025 18:26:51 -0700 (PDT)
+Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b7a4239sm4264655f8f.94.2025.03.28.18.26.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Mar 2025 18:26:51 -0700 (PDT)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 0/2] media: MAINTAINERS: Add myself into venus/iris to
+ maintain/review
+Date: Sat, 29 Mar 2025 01:26:49 +0000
+Message-Id: <20250329-b4-25-03-29-media-committers-venus-iris-maintainers-v1-0-0ec1007fde3c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250327-qcom-tee-using-tee-ss-without-mem-obj-v3-8-7f457073282d@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFlM52cC/x2NSw7CMAxEr1J5jaWQtEC5SsUiHwNeJEV2qCpVv
+ XsDi5HmvcXMBkrCpHDvNhBaWHkuDc6nDuLblxchp8ZgjR2MsyOGHu2AxmHrmRJ7jHPOXCuJ4kL
+ lq8jCitlzqS0/TcHdqB9TvFwDtOWP0JPX/+v02PcDoz51poUAAAA=
+X-Change-ID: 20250329-b4-25-03-29-media-committers-venus-iris-maintainers-eb38e49dc67b
+To: stanimir.k.varbanov@gmail.com, hverkuil@xs4all.nl, 
+ quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com, mchehab@kernel.org, 
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.14.2
 
-Hi Amirreza,
+I'd like to help out getting patches reviewed and merged for both of these
+drivers.
 
-kernel test robot noticed the following build warnings:
++M for venus
++R for iris
 
-[auto build test WARNING on db8da9da41bced445077925f8a886c776a47440c]
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (2):
+      media: MAINTAINERS: Switch from venus Reviewer to Maintainer
+      media: MAINTAINERS: Add myself to iris Reviewers
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Amirreza-Zarrabi/tee-allow-a-driver-to-allocate-a-tee_device-without-a-pool/20250328-104950
-base:   db8da9da41bced445077925f8a886c776a47440c
-patch link:    https://lore.kernel.org/r/20250327-qcom-tee-using-tee-ss-without-mem-obj-v3-8-7f457073282d%40oss.qualcomm.com
-patch subject: [PATCH v3 08/11] tee: add Qualcomm TEE driver
-config: s390-allyesconfig (https://download.01.org/0day-ci/archive/20250329/202503290620.2KJEcZM6-lkp@intel.com/config)
-compiler: s390-linux-gcc (GCC) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250329/202503290620.2KJEcZM6-lkp@intel.com/reproduce)
+ MAINTAINERS | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+---
+base-commit: f2151613e040973c868d28c8b00885dfab69eb75
+change-id: 20250329-b4-25-03-29-media-committers-venus-iris-maintainers-eb38e49dc67b
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202503290620.2KJEcZM6-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/tee/qcomtee/core.c:310: warning: Function parameter or struct member 'oic' not described in 'qcomtee_object_qtee_init'
-
-
-vim +310 drivers/tee/qcomtee/core.c
-
-   298	
-   299	/**
-   300	 * qcomtee_object_qtee_init() - Initialize an object for QTEE.
-   301	 * @object: object returned.
-   302	 * @object_id: object ID received from QTEE.
-   303	 *
-   304	 * Return: On failure, returns < 0 and sets @object to %NULL_QCOMTEE_OBJECT.
-   305	 *         On success, returns 0
-   306	 */
-   307	static int qcomtee_object_qtee_init(struct qcomtee_object_invoke_ctx *oic,
-   308					    struct qcomtee_object **object,
-   309					    unsigned int object_id)
- > 310	{
-   311		int ret = 0;
-   312	
-   313		switch (qcomtee_object_type(object_id)) {
-   314		case QCOMTEE_OBJECT_TYPE_NULL:
-   315			*object = NULL_QCOMTEE_OBJECT;
-   316	
-   317			break;
-   318		case QCOMTEE_OBJECT_TYPE_CB:
-   319			*object = qcomtee_local_object_get(object_id);
-   320			if (*object == NULL_QCOMTEE_OBJECT)
-   321				ret = -EINVAL;
-   322	
-   323			break;
-   324	
-   325		default: /* QCOMTEE_OBJECT_TYPE_TEE */
-   326			*object = qcomtee_qtee_object_alloc(oic, object_id);
-   327			if (*object == NULL_QCOMTEE_OBJECT)
-   328				ret = -ENOMEM;
-   329	
-   330			break;
-   331		}
-   332	
-   333		return ret;
-   334	}
-   335	
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
