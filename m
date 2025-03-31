@@ -1,122 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-52885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 219A4A76C2C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 18:48:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E7ABA76C42
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 18:51:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 63127188DDDA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 16:48:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 467F816B2CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 16:51:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49DCE1E47C9;
-	Mon, 31 Mar 2025 16:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E88582147FE;
+	Mon, 31 Mar 2025 16:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="O9NZqgw5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lv8KYt7Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E083234;
-	Mon, 31 Mar 2025 16:48:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FC62147FC;
+	Mon, 31 Mar 2025 16:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743439720; cv=none; b=lJXJSr3iFT/6JGUVOzoy/L3y61ILgEDnZA+9ink77JRTsrcoIL4ToZSsE8run8iTdarBKClefa8HEQJowURMhZb1KlQin6bFqnEH3cVTZHi+hFuA/NnieqeNV/ExZ5OHGR0w3wRxQzf3loGl8QbcJBE12sIhTCZKpev76zIEgI4=
+	t=1743439881; cv=none; b=fEugFb/Zj0qglEfSSyP9JxqOkq/yxKAVEq7b5YC291OekqIr50hzy3lAifX1riMJ2cnWzhvxAXX+ve2RBHxogWqCcf8z6TGKSz2mrXg5cnsIr6KB9XF+XsRuQzmyzlpp1oQhanr3Zf75+5t7Xg5E0T1iUi0k9JTPU84v3lX83NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743439720; c=relaxed/simple;
-	bh=BEoJklBXV1vZM5bd1fsHmqld4olk3qTu+UwIVHhloYg=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=AgoJ3yLsgFvro6CA18PUzxUM54QpcwxZNDCnbhfQ649nMN7VBnTemSfu07xZD2UyUy9MHXHgO8nrGluRwrBuZT59kk2UQtFylaHjyBF7GtZKdZMV455p5hScXnBnlCnlL+uXOFLFUth7kKP76LLYWm+Ke47H2eiNYv/wS7eiuIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=O9NZqgw5; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1743439715; x=1744044515; i=markus.elfring@web.de;
-	bh=l3A6fQIul5oJ7bHGs/rref7U3MM7aEcG6y1nK2fWykA=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=O9NZqgw5yW9GeUqgjwQlMS9oxelL12j90TxTCo5mnaoYIjBMJeMuDgHQ0sfWd0u0
-	 Y+97FrOdVeupna5JIfhAZERtZPrWcoKWbtcjGPq6EZ8Grp65ZXiSnn1FkvP2V6BjL
-	 aoBr3pOfNRzdnWqAl784BKScmEvecRWk+tEkeRtaUSmtxiMMPW2Ap0Qo1qsqMPSGq
-	 D1Fg6d8A26b/4xHFp6ZEmERy1j5NGb6CxI/kkYM3Y+rL9p+qo1Wt9UwxWp6NU1xrg
-	 0kHs6ChcsBeQ8zSRFeSnApFiujwEMyjNiEO01NNRC7YLd7aJ4RkJfi4GObXckJu1p
-	 EWLg19OotDCInxLf6Q==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([94.31.70.37]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MMpCg-1tiipj1JnY-00J5yj; Mon, 31
- Mar 2025 18:48:35 +0200
-Message-ID: <17c07117-36a6-4fab-aca8-a4cd3a67f2b0@web.de>
-Date: Mon, 31 Mar 2025 18:48:34 +0200
+	s=arc-20240116; t=1743439881; c=relaxed/simple;
+	bh=Maq2pGNPcQTL9i4L2U60OMwgOEC1wzel9CslYZpKRBE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hUIizU23kOKuPrVo5PL5ccj1Lmns2EPZdj2HI8F/JEXsRwMo8CxPrLEOSBHtopeZpPvaxnFhvs4vqnekheMEkJ8Rxq2Z1VocDOGiqH+jGfbCsoig7WCAPB4tn1/CwS8MfgQyyPYTe5UKs6Xek1HUUUBE5+LzapFQjgS0Qtq4kYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lv8KYt7Q; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so32739035e9.1;
+        Mon, 31 Mar 2025 09:51:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743439876; x=1744044676; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=MunBujQnIRxhYaTX5/fqcElXhgmT8GPSyJRl5CxG2CI=;
+        b=lv8KYt7QT7NceqwP0xGK1Z/DfKVPx38+S9aVAzv0U2IxDI25qgf4FYZE0N150iQGhX
+         DLsnJpzON8/Lstry+q+fRXdCBRR3WhFn86uBNCMuN14DGMQakiyVyvky4aS2SInOy7Po
+         Sp3c8gIVqYkbhWKFENBXji6XKFenQEgViQnZLubjJkh8nR4wm5f8nPHnKg01IkluL8M4
+         XwoEfGFHyTvpCZGenQX03VRTjtmihuBnS3GYmn6PzxW94EpM38ZwszOvtHbZGOjEW4Mp
+         4S9NrUEEJT4of3VnWsdLW7O7I5o/DbchRLifqVeJl25B0MuraqcA46oS/TSTwrHn/1bQ
+         vjrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743439876; x=1744044676;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MunBujQnIRxhYaTX5/fqcElXhgmT8GPSyJRl5CxG2CI=;
+        b=QwcFGJeRnd3q7JhTpLFq0o/ED0Cz5I4WsRIUFGCMwhGrxhrpqyxSZL4A6+0RyXOL6X
+         Fsrdkd6ugX033l4XyjFu0cPdaE4aslhMLqaJ7LL6hbOOpmRYG9V/tbDePec4qdhszkRo
+         LuacrAQulIP2blRXbXTJ1GZ3iGeKDUiiRe1sQCqprXvw/DfpnMvors5kcZ6ESzdLevMY
+         JZ39tjtaYnj2B8I/x5S9fVbReviTlMqh1d9T9dI9xg3veQM6vVZ4KJfNAIl9TmeC5EvV
+         sDnmaImdydKKCTfVmusQjnlwyUZYWBNM+S8Hdj8j24dD9HkgtyH4JW0nyoTv51mi0wHg
+         Y5Lg==
+X-Forwarded-Encrypted: i=1; AJvYcCVWV38O7+NUTT5x2Rs8FFMeX+EI8cQfrQl2cDBC5Aa08bmIVKTXu3l26SdLgVqEBQKOwY14E5U/VavYlOmj@vger.kernel.org, AJvYcCWlPBkjLYFoiBgpjBnfGFVq9DtXXKNOw/eU7si6gQJtuXXdCwytbIIDN1noNfJhPl6zIQnZXzKLnCTR6Hr5uA==@vger.kernel.org, AJvYcCXpQjBQ0lPwIAufbtagHuRlBwUVbQVrJfGwA8A2tZjOiYXs5sToJmgfM4eRdRriLmTo5ibktbzgobu/@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIpKNM+FAZfVHUukm4qKUsyD3ibyqrwVhG3Haw0ZD7k2eyUKjD
+	5ZhQzMX9rAKeAqAiFfQiT/38sDPw1Ly8AO+wiJ6a7EjeJHEbGijARGiFqiLYHn6aEY4jCzpBf5O
+	DgiOXmkyhpAoVoHxsNnszbOXY7A==
+X-Gm-Gg: ASbGncv0XMJOt0xpasc/SwdpoLhM7qrECN8sSRZnVsY/H596HgY+4zYNXYnoL1jy/S0
+	Ksr6wWQvKcBPTNJUL/DNa/d6jPnscAiUelnzpLntZzCffNKwQrxvkJl4izSh5GtHr6VPGK5AxZU
+	QvyJGFBiyBwdBa4JJ8UBgQN0aJF3M=
+X-Google-Smtp-Source: AGHT+IFcrnYpK2ItJPg2dckClf5edSa4GwLBqr08Q7cH7QCgI51gAHqY61tiKSt8aZJ55Gx4hHXlA4MeoNKjd9b3YUo=
+X-Received: by 2002:a05:600c:c8d:b0:43d:ed:acd5 with SMTP id
+ 5b1f17b1804b1-43db61d0e8amr138014625e9.10.1743439875876; Mon, 31 Mar 2025
+ 09:51:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Henry Martin <bsdhenrymartin@gmail.com>, linux-fbdev@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
-Cc: LKML <linux-kernel@vger.kernel.org>, Daniel Thompson
- <danielt@kernel.org>, Helge Deller <deller@gmx.de>,
- Jingoo Han <jingoohan1@gmail.com>, Lee Jones <lee@kernel.org>
-References: <20250331141654.12624-1-bsdhenrymartin@gmail.com>
-Subject: Re: [PATCH v2] backlight: pm8941: Add NULL check in wled_configure()
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20250331141654.12624-1-bsdhenrymartin@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:AUWM+maq9tcBe/mWR8Zs3MqF4GCROi9IeCzUazeKrnvu7/KZwiS
- B7w/0xy7fGgnHZeTmSR0izEvnTM87cKipZJH1hDCYYlETKm0L4XWgBc/6qvJVUULDd8Xevj
- jJNnE3mywQWpSHiB9dpdbKf+qjZPsdiAWri59QhikoWKKB8jDdwBunLWS8Z/c7jqFzjVFyP
- UGAkHZbALjniQ97VQk3+A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:SRCcPfgiUNY=;B3BVqxG5bQIJ3u5mi+9dPYWODkM
- 442p39lLFzdEzjToNBAEbeoEOWnAbebT2S3tFK1QOSu5NHIEbBVqPPvFdJhdcmSzUo88rpMge
- Yg0nW4D1PeupO2BLVI9RJ6KL9eBpd4HvAKA7L9x4hWnChyxkWVNDh49VUm4TTVcv4ueeqXWdb
- mMWFsEt8YM5VXDY+PF+A+O9oD0E5GJv6T5/iNcP0iPr3cnq984uZzeP44SMlgtk1ArMMmI2ts
- vyCRAGPidFpsemML6+y0M+PUpL/lM4YaIZxJ4EiIkaF9B2KCCm55k2aUP5XHPsRX/NmlcMqZ0
- dXgJ9NOvLklTQQW3LdHinnQYYrSZu0nB7HIqvjDE4XtGSKJJo4x7/qsAp4NoL0hEExPqDcIhS
- wZFgh4yZ26lDl48FJ6kIV8olc/tVCcerkiIP/KrPfW+vIScTgcVxGlyFgRhSIooHfOn3f8eFJ
- QFQwFZXf/o17L8cNoePthvOE2+rPOLR0dOeO9VGpZE1fQUn8Q13TDd0ofPphYSXppI5wu/UuU
- m+3Dc/wOKwo8/qY6LQnqfHaFdqg6nmnLfoBGAcGY64QC/qfwCeusZM9VTDUwqryYgUyTW9sO8
- U5ElzEROkAW5H2syZYg2jbHlMeH0jmEGZNCh7MNmwnqLNdmAADgzjXdoh4Zw/GU6S0C1bCzOy
- 0PBmU1/Of2cMm8pSM2JamnWRi+nKJh1oowmSmpzEmM71lKuBXxRbqoJ+O8Wf2Plq65TIVS4sW
- ioKIAc4tJ4dEK2IiO//QIMkQiYj78e1sTF9p9/54MnMaQVZwGcukt2/rvbnb00ypPuP74wR1C
- 8md3fBM2w1Xv9XrFIIaR3pR5Ci9EZ7xymJAYUO9VFZXnXtpJT5BJikLlKas1pSHRELS5e9+d9
- mN8BB1+T244GT0jt2VfcM+vrc6nLGgnhq/I+e2zm3SW52jf5m/Cm0XuVwxqi3l0TX2H8Karj/
- pE6iTtOC607bjcRMgktoSW4YVWacHT3sKG1ylRWPSMIDIwVRviBdRmvIIp9tSVJIE95tYO7vd
- WZGFA2wATnIb9FZ4NwpxQoJc4NKta1hZcXfSywm2psBEAXXMzHHwCpAzzsaTsQ0CEkmCd6cTp
- JA32EdpeGR4MqtNIzr8LmgUjQj0adW0978zf8H7DC2io5zvPXIZkNOcMxuJq0M3LFbGF6jPlZ
- EF0H4z0YjA15hfM+V5JdBs/HjceUaJ3q70IRgohYYo8ip9uXwRkhm2FDA4kiPJtoP+RVY4K9p
- XbND0ATjLLzNH/T3rZengQyIXGVe+lfXpv1YJplXwo9uO5O4x2zRPE8AwPGD6XaUBhceeR6YG
- dmOghn6ZqQXjmSckDFdoRxVJN0TQCi/YPUxXi7XgZb1dZlKhdCTpn/DXT0PG/kbII+t33mIrJ
- cGllZ2Mi2bv7Y8seAHnOOTSam5+bQeV2oZ16QVfFUu/9rqqHcvOwoLeDwR6wyH1bXkg5sjJ9u
- YbarsZly/fYC9XWexUJu06i0yzPWjRfit0h2Pqvd/Sv2nPLY6
+References: <20250331073423.3184322-1-alex.vinarskis@gmail.com>
+ <20250331073423.3184322-2-alex.vinarskis@gmail.com> <Z-pN1qloL2m4BWaq@hovoldconsulting.com>
+ <CAMcHhXq9W64MHhOV5i3U4t+ZfKNC_GaBq5X3ZN7VOLt0cjPQPg@mail.gmail.com> <Z-p1uADNVAM9NcAW@hovoldconsulting.com>
+In-Reply-To: <Z-p1uADNVAM9NcAW@hovoldconsulting.com>
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Date: Mon, 31 Mar 2025 18:51:03 +0200
+X-Gm-Features: AQ5f1JpJ5Mo4mJo4anfnZhdRws7WGyHmZLFHxcDsiHdzr1srWLr67ol82WD7zFg
+Message-ID: <CAMcHhXqO2Ej3UAej9QodX1NNCHAk956++=oakPxx-MkpOucJ2Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: x1e80100-dell-xps-9345: Add
+ WiFi/BT pwrseq
+To: Johan Hovold <johan@kernel.org>
+Cc: "Tudor, Laurentiu" <Laurentiu.Tudor1@dell.com>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	dmitry.baryshkov@oss.qualcomm.com, 
+	Stephan Gerhold <stephan.gerhold@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-> devm_kasprintf() return NULL if memory allocation fails. Currently,
+On Mon, 31 Mar 2025 at 13:00, Johan Hovold <johan@kernel.org> wrote:
+>
+> On Mon, Mar 31, 2025 at 11:38:25AM +0200, Aleksandrs Vinarskis wrote:
+> > On Mon, 31 Mar 2025 at 10:09, Johan Hovold <johan@kernel.org> wrote:
+> > >
+> > > [ +CC: Stephan ]
+> > >
+> > > On Mon, Mar 31, 2025 at 08:33:47AM +0100, Aleksandrs Vinarskis wrote:
+> > > > Add the WiFi/BT nodes for XPS and describe the regulators for the WCN7850
+> > > > combo chip using the new power sequencing bindings. All voltages are
+> > > > derived from chained fixed regulators controlled using a single GPIO.
+> > > >
+> > > > Based on the commit d09ab685a8f5 ("arm64: dts: qcom: x1e80100-qcp: Add
+> > > > WiFi/BT pwrseq").
+> > >
+> > > Are you sure this is correct and that you don't need to worry about the
+> > > "how do we model the supplies to an M.2 card" issue?
+> > >
+> > > See
+> > >
+> > >         https://lore.kernel.org/lkml/Z-KuG0aOwEnxuhp9@linaro.org/
+> >
+> > Dell XPS 9345 does not have an M.2 card, WLAN package is soldered
+> > directly onboard, hence I am quite sure this is similar to QCP.
+> > To be certain, perhaps @Tudor, Laurentiu or @Bryan O'Donoghue (if  you
+> > have it?) could confirm from schematics?
+>
+> I checked now, it seems you are correct.\
 
-                 call?                               failed?
+Ah perfect, thanks.
 
+>
+> Highly annoying that we need all this guess-work boiler plate (about
+> chip internal details) for what is effectively just two supplies.
+>
+> Hopefully we can drop that again going forward, but that's a separate
+> discussion.
+>
+> > > > With that fixed commit f5b788d0e8cd ("arm64: dts: qcom: Add support for
+> > > > X1-based Dell XPS 13 9345")
+> > >
+> > > Not sure what happened here.
+> >
+> > Bluetooth and WLAN definitions were missing, as at the time I only
+> > knew the UART port being used for bluetooth, and was missing
+> > everything else to describe it.
+>
+> Ah, ok. The above sentence looked like some left-over copy paste. I
+> guess you don't need to mention it at all since this does not seem to
+> warrant a proper Fixes tag.
 
-> wled_configure() does not check for this case, leading to a possible NUL=
-L
-> pointer dereference.
-
-You may omit the word =E2=80=9Cpossible=E2=80=9D in such a change descript=
-ion.
-(Would questionable data processing happen in other function implementatio=
-ns?)
-
-
-> Add NULL check after devm_kasprintf() to prevent this issue.
-
-Do you complete the error/exception handling also with the statement =E2=
-=80=9Creturn -ENOMEM;=E2=80=9D?
+It was a suggestion from Dmitry in v1. Though indeed it does not
+warrant a proper Fixed tag, as it is something  that was left out from
+the initial series, I think it's fine to keep it like this, if it's
+okay with you?
 
 Regards,
-Markus
+Alex
+
+>
+> Johan
 
