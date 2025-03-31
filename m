@@ -1,253 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-52851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9234FA75EF4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 08:43:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 198BDA75EF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 08:46:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EEA5A3A38FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 06:43:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 709EB3A47A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 06:46:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 456DC18E02A;
-	Mon, 31 Mar 2025 06:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B21AD14A4CC;
+	Mon, 31 Mar 2025 06:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="VeIV64QP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c4njhH0I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F1215B0EF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 06:43:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0231876
+	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 06:46:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743403407; cv=none; b=FTqc+RcFAHgQ6Fwg5BeIlbnlD4oE/tym6efFCk2Hr9nSnxQoHK2aQHDtaIIAQYjp9fLz7jF43YGnm/Lv/dnfNgjI8t7Zi3kP92jMowxQAMMcOQ6N4mSbHqWlll4b+3w/IWZWujExnO7dYr3k6QSBdeYd1OPGVK9/+zhokMYOEW0=
+	t=1743403582; cv=none; b=K9hVszOvFAKcp1T4eQvAWcUSXW7XZdA6Kpfgf7zzLJup1p/o/YH4IsbF7iGeeUhl0iEVxmw6IH0wTl0rnmT9JenkFRq8/rJbFVZpBUPdpQ74clAmI6dgg2Ajjx/Nb07fAJ3kcjQKtNCznYVYXUqbFafN55G0cD+Dg8y0I2scD9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743403407; c=relaxed/simple;
-	bh=hky7REQw5DX0JCWwyGQHJ7RHNbyG0IJonc9kHJfpjdE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Subject:
-	 References:In-Reply-To; b=aQ4Q/jX9mghQk7k/tW6zkSm0c3ci86iYce5+hTJvlDm0+Jpnghllef98D808XZnMjDRx7zRK/0UfbmltFPvqxX0A4jMbDJ5yzhTzaqSYnend4ahpWn1GishieDp0OIqwtnQ4hAkfog1lmOHE/JsZEMG6/29zGmrd8w/ij5xMigw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=VeIV64QP; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5e5e0caa151so7804933a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Mar 2025 23:43:24 -0700 (PDT)
+	s=arc-20240116; t=1743403582; c=relaxed/simple;
+	bh=jlSvjAFn3alQ4Yt+kDwAuBIfr3O8/1uPwl29MTTzlVA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
+	 In-Reply-To:Content-Type; b=Dbs/NSjsib0g3LYZhm1xCWyvXUCjIJypxPUAjFmZIh/HeXgaKmctRI1ToDIjPP29EXBdpIRfLfgwLy6IZ2edHT8GvSs2QQdqdBln4BQIzcNJv4V+Z7+gHjn3MvxQOOczMYpQdNwhoQM+wwFWq0u2s8VwHyWCgcnhaa4i9qBRgXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c4njhH0I; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43ce70f9afbso42600815e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Mar 2025 23:46:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1743403403; x=1744008203; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NCNuLXgHWyfCcy2WkSO6owH9cNPmm5zWBSR/V5DDmNY=;
-        b=VeIV64QPwki5UPQHTzF/xytV4M/zUbxSuS2lYaYSL2ti/q6kGvZ4zEHMo5h+qC0smV
-         8ieIj1JPN6yabMivrDDNYRb195GteuZM+xFwI4oGrzAgn3WMVYQXETIaeYN2uRizkY6f
-         4yZEGqb4Zk5XMmMbpPiZTB7r0hzmu0aKNF2ZCiKAwG0mgmsV1xZKNhC+gDUjdEPRlbnQ
-         W1Wxid9Z2mUdK1WNLvZ9c34+hOQmZIWGIDWeBd90uo1+vDTAbgig6AeqGcoq8817Twup
-         VeC+s7cTl0rY5ijOl1Ydih3T7auqbBKRU5SKuS4vW0rNryjNnUM0GkKWIgR0XBEc2pxO
-         zc/g==
+        d=linaro.org; s=google; t=1743403579; x=1744008379; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AA4sDqP4J8juhu+e1eHgJ4HsEPfRns6pCAnRWR1sqHg=;
+        b=c4njhH0IefARTcXjurUd2qOH2+9usm5m+9t4MJq7+BnHv0326GpENb0jN7/BvKmmOh
+         sFrp7slesm5vPOdsjxnfDzykXTom1jPET4hSpr8MVAdjROWwEN29FMkxByEWbWoNa9MX
+         wtHkGXBDP80sJqmwvJiEeiiqzcrl7DUCSd3FR7RJ+bJZJcyp1wudHulxpQr12xpgKuHN
+         D5borkN+abmfMm+rxC9s4Rl2Jft9YCrwHBGYWp869MgEnsA9wf2kosHcBOX2iXYmqwaz
+         c5Kv9N3ZA58MiWrwF1oLtHwI/BZi0r5UADwQyJkMnxWO5JNHsoKjAi9r1yJzGLdBlGau
+         nLKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743403403; x=1744008203;
-        h=in-reply-to:references:subject:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=NCNuLXgHWyfCcy2WkSO6owH9cNPmm5zWBSR/V5DDmNY=;
-        b=JTP4DWQhEXnjsx8rDF6jl0at/u1dCUrhnzrYwqSyS9usBzB+pKDrK9t9gi9ZPCr4jZ
-         qQaG/j68X2u/lYkUpSRCcSeQBunuEWUpphw1SDeS0W01V2PFUfdRFhEh4Y/UyYYILGA/
-         d7Bc6Yy6hkvpLX7JsA2DwdqVMpFkEq5e5lK1tUNb/kUWIXMf3xzRzNGOK7rEcwctL0CX
-         hw4DQJpcfk80McaF/4kB2Tba4xxGm4c7PLoq92q3UIvbeUnlmY2dzOtYL1fTF7GPdUHW
-         rxplPIhG0gJyy8m8iWThP7oAmZTdzH+5DXUA+HFb/OZ1OIEj73DPwrXJIoWBu57k6Wo4
-         25cw==
-X-Forwarded-Encrypted: i=1; AJvYcCU6I99fnC6/88LpeeMdgQ3Gh0LIQNN5twQOoiMXEz8hafWPbBL3p6e/HLH/X2FFGmRzow8sigs2/b/w/mPi@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3UEF1LUxfJYRgMq7rrFPsKZz2jD0pnS3UBYsnkKrIn3go3kaB
-	xjxUW/tQaI+3MPqbLVlMixeFQ+EVDjP5/tc693c6gdP6H18QVf5AUDlOz9eLEho=
-X-Gm-Gg: ASbGncs6sSdLu0egu9rEP/YpIfTilKxwEyDg2IIwXBwdh3YAvDemgdcF4eLffx3VNZr
-	PKnNjkiZ3sN3h3XgZZrNeQbZc/XLV9XRIQavGGyogLzZ27GfCgMaDypJdlDCvGVKFhZ1/6xFQ9i
-	ohQCJVd8c8GeAkey8sENsVSsdkxNBsmNsKuyzvdYleb18ejRc+33hSKAIFDz3Fnr+KYbvLKIgql
-	cMrHPYJrzr/DxHUzAierkQKy6TbK7tVXnD+UrsLGmMUnvTrxG4FFIRNqUnRdoF4Ppqdcj67V2Iw
-	nF7v8iE89yfh9W2X3kwn0Cr/M7ms1+1gRYhuAoa6kEYjHu9ALk/2YzfPx2irI0PvdDbOZLNcWpF
-	8KIIxUZygpko2VL3k43u1uWPHu+6AGf9Y6QiPDShZA4gUvhfxf4XuNgpG
-X-Google-Smtp-Source: AGHT+IH3W9/kBETcWbE+a0ro2HSH4RvxJ0Y46/aHF/mxst2xxYqXac9McK2Ar02Y4dw3ogqzjcL33A==
-X-Received: by 2002:a17:907:2cc6:b0:ac2:6910:a12f with SMTP id a640c23a62f3a-ac738bac9a6mr568245066b.46.1743403403069;
-        Sun, 30 Mar 2025 23:43:23 -0700 (PDT)
-Received: from localhost (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac71922ba33sm577513666b.23.2025.03.30.23.43.22
+        d=1e100.net; s=20230601; t=1743403579; x=1744008379;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=AA4sDqP4J8juhu+e1eHgJ4HsEPfRns6pCAnRWR1sqHg=;
+        b=uO/IQPKv2uoXl9c3J2DLT5PkB1PWkUKP7thffkDxoT76BGdyDpzv7QxlC80YsXxwS9
+         MteY37LYMYtCsE3QWqirjP+TnsE7jbnGZzqA/Cmo8KP7V0Nip06eWhD97EX9GK4CRFKD
+         j6rHhzQMpMCPmr9cnYcJjPR3GnBg+8SXCSoJ1amK5m7bfLf7JairlxYdR9WzEdBr5mLp
+         d8moLT9RKFhuD+GRBKtXGeAOKr53EE21tJQimdsX6W2dGvZ/V8D1PeG5R2cmRocLkRAr
+         CrLeb0FCW+UAFwaCKpIKYSKXa+6uOP/OkwC2pRvrZ6nhOMRoBnLtAtPviX3mNaGvTbOH
+         CktA==
+X-Forwarded-Encrypted: i=1; AJvYcCXmOkBC7OvgczKqt61kZwis0+OSVvOViIQ9B0s19mhvJ2qUYX2pMoFBgQ6BQRIiLh8FQhXVqGn3QK/i33r3@vger.kernel.org
+X-Gm-Message-State: AOJu0YzGyJON5C5ouCtZTfabL2rOrcBgZCZJymu0tz5S68Dn6K86FmXc
+	MVvr+RcvJZFWj2ubAZfVA4Wdmj0J2NvB1flbZkc8EYLWfIo5dTPbFZNVx4CaV2U=
+X-Gm-Gg: ASbGncuaYcCtrtqS99sXI27TGUscqHmBJ9LAC8lgcOc8dR/AtF/dFVfS3OOiQH99la/
+	7UqPpjo8lB/Y7Ko2Idl6DBnWtXAchyiFydq8cT33OzbKX2AQ5LQxdpyHDx/O5BK6inpUBd2vc4r
+	sasmagF67KPiXTf509MsYsD6pn2leXXwzJBASNgOe6zw5/VHOt7J3eygtm5uWl3OCJ/l8UsxdH8
+	NVE3sUENcLXnkrw63kVuE4x63u7Gp++2H6yRAOQ/+rHAQnB7C/pTetKQsDfFSxwUuyfpte0BPsW
+	DJJIUFbIefY1W7B9dzuyG0EFG2bm+Q/jIIRRcWTVErHUGIxRQO5lVzRpIvXOPkowD3430dSIa6h
+	/VmeNzEl5rwoJg4l/
+X-Google-Smtp-Source: AGHT+IGx1f4vC8GTeK58NiotvPS6asWIcIisQro1qkimwNxZktvh2jq9DwcElB67LzcJE4nqjvtuyg==
+X-Received: by 2002:a05:600c:5108:b0:43c:f629:66f3 with SMTP id 5b1f17b1804b1-43db624be12mr58276565e9.18.1743403579170;
+        Sun, 30 Mar 2025 23:46:19 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:143:2e3d:45f1:fd2? ([2a01:e0a:3d9:2080:143:2e3d:45f1:fd2])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d8314b6dbsm157837065e9.36.2025.03.30.23.46.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 30 Mar 2025 23:43:22 -0700 (PDT)
+        Sun, 30 Mar 2025 23:46:18 -0700 (PDT)
+Message-ID: <82674b8f-4fc3-4fd2-bc7d-f573d2d11b58@linaro.org>
+Date: Mon, 31 Mar 2025 08:46:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 31 Mar 2025 08:43:21 +0200
-Message-Id: <D8U8XDW1QRAY.35U7ER6E74G55@fairphone.com>
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, "Vikash Garodia"
- <quic_vgarodia@quicinc.com>, "Dikshita Agarwal"
- <quic_dikshita@quicinc.com>, "Konrad Dybcio" <konradybcio@kernel.org>,
- <linux-arm-msm@vger.kernel.org>
-Subject: Re: Venus probe issues on SM6350 SoC
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a
-References: <6P5iXJOUxv3jsPGI11XbeZOagg2ht2Ws-WbN2HjXSFC_xeFgWyGM3a9T6y30gmys3KSxJF9Tv3f7jAehZ6AlOQ==@protonmail.internalid> <D8S03CCD8LGW.TA2FRY4CKEGT@fairphone.com> <6ae076fc-e30a-431e-b75e-7f9b9d7bff08@linaro.org>
-In-Reply-To: <6ae076fc-e30a-431e-b75e-7f9b9d7bff08@linaro.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 0/2] media: MAINTAINERS: Add myself into venus/iris to
+ maintain/review
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ stanimir.k.varbanov@gmail.com, hverkuil@xs4all.nl,
+ quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com, mchehab@kernel.org,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250329-b4-25-03-29-media-committers-venus-iris-maintainers-v1-0-0ec1007fde3c@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250329-b4-25-03-29-media-committers-venus-iris-maintainers-v1-0-0ec1007fde3c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Bryan,
-
-On Fri Mar 28, 2025 at 5:39 PM CET, Bryan O'Donoghue wrote:
-> On 28/03/2025 15:22, Luca Weiss wrote:
->> Hi all, and Vikash and Dikshita,
->>=20
->> Konrad Dybcio was suggesting I write an email here, maybe someone has a
->> good idea what I can try.
->>=20
->> I've been working on bringup for SM6350/SM7225 ("lagoon") for the
->> Fairphone 4 smartphone but have been stuck on getting Venus working for
->> a long time (~January 2022). Essentially, whatever I try probe fails
->> with the following error:
->>=20
->> [   41.939451] qcom-venus aa00000.video-codec: non legacy binding
->> [   42.162105] qcom-venus aa00000.video-codec: wait for cpu and video co=
-re idle fail (-110)
->> [   42.167037] qcom-venus aa00000.video-codec: probe with driver qcom-ve=
-nus failed with error -110
->>=20
->> I've double checked the videocc driver against downstream, the videocc
->> GDSCs and their flags, compared dts bits, checked basic driver bits but
->> I couldn't find anything to get further than this.
->>=20
->> For driver / compatible, it doesn't seem to matter if I use sm8250 or
->> sc7280 compatible or actually the struct I created for sm6350.
->>=20
->> I'll attach the log with some extra debug prints below.
->>=20
->> My git branch for reference: https://github.com/z3ntu/linux/commits/sm63=
-50-6.14.y-wip-venus/
->>=20
->> I didn't try the new Iris driver yet, mostly because as far as I can
->> tell, VPU_VERSION_IRIS2_1 is not yet supported there, just IRIS2
->> (sm8250) and IRIS3 (sm8550). But I'm also happy to try something there.
->>=20
->> Regards
->> Luca
->>=20
->>=20
-
-<snip>
-
->> [   57.868683] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_=
-idle:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
->> [   57.868690] qcom-venus aa00000.video-codec: wait for cpu and video co=
-re idle fail (-110)
->> [   57.868699] venus_probe:505 ret=3D-110
->> [   57.873495] venus_hfi_destroy:1690
->> [   57.873519] qcom-venus aa00000.video-codec: probe with driver qcom-ve=
-nus failed with error -110
->>=20
->>=20
->
-> Have you matched the GDSC flags ?
->
-> sm6350:
->
-> static struct gdsc mvsc_gdsc =3D {
->          .gdscr =3D 0x2004,
->          .en_rest_wait_val =3D 0x2,
->          .en_few_wait_val =3D 0x2,
->          .clk_dis_wait_val =3D 0x6,
->          .pd =3D {
->                  .name =3D "mvsc_gdsc",
->          },
->          .pwrsts =3D PWRSTS_OFF_ON,
-> };
->
-> static struct gdsc mvs0_gdsc =3D {
->          .gdscr =3D 0x3004,
->          .en_rest_wait_val =3D 0x2,
->          .en_few_wait_val =3D 0x2,
->          .clk_dis_wait_val =3D 0x6,
->          .pd =3D {
->                  .name =3D "mvs0_gdsc",
->          },
->          .pwrsts =3D PWRSTS_OFF_ON,
->          .flags =3D HW_CTRL_TRIGGER,
-> };
->
-> sc7280:
-> static struct gdsc mvsc_gdsc =3D {
->          .gdscr =3D 0x2004,
->          .en_rest_wait_val =3D 0x2,
->          .en_few_wait_val =3D 0x2,
->          .clk_dis_wait_val =3D 0x6,
->          .pd =3D {
->                  .name =3D "mvsc_gdsc",
->          },
->          .flags =3D RETAIN_FF_ENABLE,
->          .pwrsts =3D PWRSTS_OFF_ON,
-> };
->
-> static struct gdsc mvs0_gdsc =3D {
->          .gdscr =3D 0x3004,
->          .en_rest_wait_val =3D 0x2,
->          .en_few_wait_val =3D 0x2,
->          .clk_dis_wait_val =3D 0x6,
->          .pd =3D {
->                  .name =3D "mvs0_gdsc",
->          },
->          .pwrsts =3D PWRSTS_OFF_ON,
->          .flags =3D HW_CTRL_TRIGGER | RETAIN_FF_ENABLE,
-> };
-
-I didn't add RETAIN_FF_ENABLE on SM6350 (lagoon) because the GDSCs don't
-have the property 'qcom,retain-regs' in the downstream dts, compared to
-SC7280 (yupik).
-
->
-> Also why not turn those apss_smmu entires you have commented out back on =
-?
->
-> https://github.com/z3ntu/linux/commit/281d07ae965ce0101bdb528e98bf8c00c94=
-f86ec#diff-ea117dfbd122406c02e5b143ee0969a3de21416b6c192e3b5ad024571f6e4bff=
-R2016
-
-As far as I can see, other SoCs only have the IOMMU that is downstream
-non_secure_cb.
-
-But unfortunately applying both changes (RETAIN_FF_ENABLE + iommus)
-doesn't change anything, it's still the same error:
-
-[   82.603202] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
-e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
-[   82.604738] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
-e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
-[   82.606263] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
-e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
-[   82.606273] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_idl=
-e:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
-[   82.606280] qcom-venus aa00000.video-codec: wait for cpu and video core =
-idle fail (-110)
-[   82.606287] venus_probe:505 ret=3D-110
-[   82.610767] venus_hfi_destroy:1690
-[   82.610783] qcom-venus aa00000.video-codec: probe with driver qcom-venus=
- failed with error -110
-
-Also one thing I can add from my notes, what I didn't write yet. This is
-how the register looks with msm-4.19 downstream. IIRC the values here
-are not directly comparable because of bitmasks and stuff.
-
-[   48.936285] __prepare_pc_iris2:267 DBG
-[   48.940352] __prepare_pc_iris2:299 DBG wfi_status=3D0 ctrl_status=3D4000=
-0001
-[   48.947624] __prepare_pc_iris2:299 DBG wfi_status=3D1 ctrl_status=3D101
-[   48.954212] __prepare_pc_iris2:301 DBG
-[   48.958178] __prepare_pc_iris2:314 DBG
-
-Regards
-Luca
-
->
+On 29/03/2025 02:26, Bryan O'Donoghue wrote:
+> I'd like to help out getting patches reviewed and merged for both of these
+> drivers.
+> 
+> +M for venus
+> +R for iris
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
-> bod
+> Bryan O'Donoghue (2):
+>        media: MAINTAINERS: Switch from venus Reviewer to Maintainer
+>        media: MAINTAINERS: Add myself to iris Reviewers
+> 
+>   MAINTAINERS | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> ---
+> base-commit: f2151613e040973c868d28c8b00885dfab69eb75
+> change-id: 20250329-b4-25-03-29-media-committers-venus-iris-maintainers-eb38e49dc67b
+> 
+> Best regards,
 
+I have no power here, but get my:
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
 
