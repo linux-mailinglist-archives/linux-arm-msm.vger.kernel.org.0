@@ -1,197 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-52882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81FF5A76B00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 17:45:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14893A76B29
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 17:49:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1BAE43B623A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 15:39:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D34DB188CFB5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 15:43:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99CFB21ADC5;
-	Mon, 31 Mar 2025 15:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A106202978;
+	Mon, 31 Mar 2025 15:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PX1oQUDP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QVGvXaB2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8D721ABDC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 15:36:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8D821A43C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 15:39:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743435373; cv=none; b=hA4ffCQ3yRzYgTBJRAQK/aFh09BawK02BFEN7KrcJh7Km0SnaVxfi5uRAfq9KzpKes1QkiGXYyy1MuXNNzwFbqxrjYuipZcdVIVelTTOy9fRryNz1ICKGjBhRBuETLp7ljKzCl31HRpD03lld2ChG4QH/A/CgFjJks7ohuGNZr4=
+	t=1743435590; cv=none; b=A4jCgPnL6YKlSQcl2tebxTQHyVeUEiMTNTJS1YU2RZqRWtlTH1YwnzKLM050B3DfyfEueL/sy2eeNW1wbduSiS9hrwri9mDNQ56+4fB+FRxTNiCiwMkKWDBMyycoufvFZDPsR8LjKSvGQ9eYxIyOoxP8XACEdPwODS4zMJY78OU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743435373; c=relaxed/simple;
-	bh=gr2i7ElkViQia/0pNOSKmak0K4CKCzxZlnH5gwwO/GU=;
+	s=arc-20240116; t=1743435590; c=relaxed/simple;
+	bh=BZHR9fwBUr9R6ixWKgn1n8QQcRUqJhgpg4Wrsfh3w2M=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kpu1NebiXmGNW6RI7F0cmAChmuFz6TdXT7nGhXvkVu9jK3KTSx3hvRvNFbOjtGScNRN1KbPCZ+QpDr78M/o4Nmyp7HL42qHivrOocB17ibOzQbAiBk2tFhyikfsF+8f1wXa+4v6TvzfZaC+mHUKNT/c/AC1nhnWR34BL+txbn+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PX1oQUDP; arc=none smtp.client-ip=209.85.128.41
+	 To:Cc:Content-Type; b=RgHnj2p92tfIUiweGt4emQlxUQXXRpvloUSld9piNsCEnctEX9yCWmsMO056oTM1PiPiHpTVLKSNJUJxiJRS1Ncu4nZkV9bTcmtI+kuAh3fCNmqsYMxfte1Enldv4Dl4PZO2X/1LVHeD8cM/+HDP2W/XTmWeN0KhiLpKPlJqyd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QVGvXaB2; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43cfecdd8b2so36665885e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 08:36:10 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43948021a45so46829645e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 08:39:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743435369; x=1744040169; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1743435587; x=1744040387; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=5ywrICBipCo3D98Pb8idqM4gJmh0ImUQe88U+5Mvgaw=;
-        b=PX1oQUDPjYNPIx1lUJRY5RR3HGQDlhE/6x/X3g/V4uRSkwkKlzFmB+fk/g/cvXGH/O
-         UqUKDVawcc6BDJD5AP0Ns6MCsHo+qs49ds7VgIXEPJfmtPVAhnND1iEf38xmI5CvIgE2
-         YbzHkif3PkRXVLkSXma4slVPqRzthAj/A2mY0kb/NevHDXuS7CszJkGGiAFl4gP41Ehs
-         He7dAYnUT6HUiG/w5D0CvyLj1r0nCCuu6KTShJm/cXI8/sOHR9+JqBYkfobaIwn0HTv0
-         DmSM8p6pF4Tjs5oL4DS+Lhn/E9DxkGwD2FEhkuvBGxR8UPS5C554UctqyEN8qSugjJxQ
-         cfaw==
+        bh=1sNg10NoCtirreV3RmWGt7kQXy82wXq+5oOziEES3k4=;
+        b=QVGvXaB2G1y5CaHnn7Dl2zyOb6yE+UjC8mrDOZlFvNUVKruWOVaTtviKbgUJOrl+wh
+         5aurhcNWSJmyyyQgFypeqejY2adtQx/woN7IyQX1geniONmy2LlCm/Yk63CWCMPm5fRN
+         PQTPKnNMFAhVBey/mqrbpAxBojG9la1Btxyk602P7sQ5FGqp5/0UbnqyFT/sXAI+/d4I
+         e19HiHeO2uRtUQwc75goVyV6X8jL/Mi2zOuiibm8/7RRl1LfmoQqcM1M3yzE3zM+w441
+         KGzod9RAJKnH1IgVo6BIQQ9oeeQeIuM21zzL+Pq5j6abOuS9xunUMo+UAhnrv9bRHFDj
+         mfvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743435369; x=1744040169;
+        d=1e100.net; s=20230601; t=1743435587; x=1744040387;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5ywrICBipCo3D98Pb8idqM4gJmh0ImUQe88U+5Mvgaw=;
-        b=CjKU9DIIDh9reeY7oSkbSa1TTjmp2w2ERRufItJkOt1D/oMylkuxRnnMDI7Tq/G9jr
-         hion2m1/9yVFZ95XxgA/SRfwdodlXqKEuDwnfPtZwov719AtOl0EZ52oY+8QZirWzldc
-         8oXVuiLyGgjN/ZL5IUNWonrmoL6zpiDE6QYvZBH6ZKXH6ra0rPNyPh/sad7Fio43ARs+
-         3dLRjfh7rRJQGowrADf15M9KTG+zmJGaF6LEVmV16gh5ebvXl/b1inEaynNOTXCSWhZK
-         gLrYhnNDQuPGLwSoB9BoRAmnEfR2+WYKJDNIhTzf0CkiMXw/QOeWyh5qyzYiD6R04BOq
-         5Gaw==
-X-Forwarded-Encrypted: i=1; AJvYcCUIUkk5FNLFwl9VlX78M5a6YpvjZPOXngSxHmGVAi6P8rGcDpTC9AVjv3ApLNQzmQAP14v5Im/TnNV2x1UL@vger.kernel.org
-X-Gm-Message-State: AOJu0YzY+u1QwYcQ+JWzA9NwDFIBlIghMEfOGZhCNThxpiLEtZ2CG0pI
-	P2zauSOpYKKNIGUEPRMaCais7KpVfKtSBvvD/UEn9Fvi2C8PIJoSTBKmeNCWbBLyYL4sJzLljJl
-	Nth6Xsk/JqfxrdFKGh/Zjce9mesMFhY2pTh4AZg==
-X-Gm-Gg: ASbGncsb/uQ+Tcyv4ap2I1iDcrLnLFdj8lWTIHJUwCJMGKT5ZyT9Lt+3KzcWpqA/YmX
-	OkanYly/pRKlyUsWEKmEXNUW1AaBoZFvRdlvMuaa1TL0CgAp9mB238AqKua+NRn3BRhwuM2Oi7R
-	U/9gjsym5r+aN+u/32MpLNpoxXUa9M
-X-Google-Smtp-Source: AGHT+IFh6+GM0IlcpIWBwIQonGGQpesbhVlKLCa6o8H68xAK6yvnnZx2ARkalCWY/48oTB3ma91dmfr1kqQk/SHjFFE=
-X-Received: by 2002:a05:600c:4fc8:b0:43d:9f2:6274 with SMTP id
- 5b1f17b1804b1-43db6248ff6mr92802865e9.14.1743435368685; Mon, 31 Mar 2025
- 08:36:08 -0700 (PDT)
+        bh=1sNg10NoCtirreV3RmWGt7kQXy82wXq+5oOziEES3k4=;
+        b=mYPYWiq6YRRtT5jWqf2h6l2+w5JeiZ1VKdoeM+igBt5sW7f/0b6i7eZuhr8ZtNdrT8
+         hId3ytB+paueYaM8CaMhMJxK16cm+9y/jwsO+7nvXwl17VLBpKlKFcZtcipppB3dj2r/
+         teu7WfCI2DiXoP/Latb5mQogSOjsDVpEIEKkXzkZiz5ZZ5DEYRxJV0O7ftMpbpjyxc2u
+         rwEw7tkY/rCJt0M8BGRmYmaf25vpMMZ0xQjMi3t4AH+MT9slL3DjT2qAShaCniC8PclK
+         dqeIQCoYnc/Hy9kx85BoYLlQuk3SsrYClf2TfOyLrJZYbZGhNKyGBsyl83qPYjMETQ6g
+         Mgwg==
+X-Forwarded-Encrypted: i=1; AJvYcCU3GFJ0EvUJaJu4tNvWuSQOtu6ToF3cvaTLQsfUw9wdq5ezJQhrYG6IKdRW0DUcpsFM9JL4FTZvfpqjRziL@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy6FpQUGFxZv0L+Fx8KGYJiHkU1d1u8wIbMQ/YZ22l0eOyds1uJ
+	pwPKgPp3vW/RgRmXUnlwVMGx8jFxEas6+lcX9HZixBhNi7680tEoFG8r6Jz/8NaOoGzPRzAdlqc
+	eENUVR00KqWGTe0Kmc0jfK4oC8kjS+2m5jC1Qpg==
+X-Gm-Gg: ASbGncsvzdzJCWxhUCMuHte47VECAGQNk17PzLE0b0JG+4NIaNJiAZBmRCsBxDXkcPo
+	g9U9eYNrT9LzScATAoHUkUu7S3MM7rtTqrvjl4kMiFMbtNC6Z/24BlWhurjs1qWwoiDe+7m4y8/
+	6QyDxbGTIYN3m61nlv5VCevyHspCcR
+X-Google-Smtp-Source: AGHT+IFq8kefn/iwjp3s9ms0HQTK+BhHSf0ZsbQcmKw5Vm41+dOdUlPBBEt/0fVmInccDrEv7cwRoXPu9DZcYcXNgvM=
+X-Received: by 2002:a05:600c:3485:b0:43d:2230:300f with SMTP id
+ 5b1f17b1804b1-43dabe237f8mr100927755e9.0.1743435586577; Mon, 31 Mar 2025
+ 08:39:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250314174800.10142-1-srinivas.kandagatla@linaro.org> <20250314174800.10142-4-srinivas.kandagatla@linaro.org>
-In-Reply-To: <20250314174800.10142-4-srinivas.kandagatla@linaro.org>
+References: <20250327-wip-obbardc-qcom-t14s-oled-panel-v3-0-45d5f2747398@linaro.org>
+ <20250327-wip-obbardc-qcom-t14s-oled-panel-v3-1-45d5f2747398@linaro.org> <Z-pJP4PMwPo3L3Og@hovoldconsulting.com>
+In-Reply-To: <Z-pJP4PMwPo3L3Og@hovoldconsulting.com>
 From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Mon, 31 Mar 2025 17:35:57 +0200
-X-Gm-Features: AQ5f1Jr5r8kzu92uTPWXhQdvRpNmkEoxDzeY_UvzmL6qGDeAb3ny2uTxjO8tcRE
-Message-ID: <CACr-zFBgQsiO=EVD-sCyvQHonbRLS+7J=q+Y8WNbwSPkF_5kug@mail.gmail.com>
-Subject: Re: [PATCH v5 3/5] ASoC: q6apm-dai: make use of q6apm_get_hw_pointer
-To: srinivas.kandagatla@linaro.org
-Cc: broonie@kernel.org, perex@perex.cz, tiwai@suse.com, 
-	krzysztof.kozlowski@linaro.org, linux-sound@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	dmitry.baryshkov@linaro.org, johan+linaro@kernel.org, stable@vger.kernel.org
+Date: Mon, 31 Mar 2025 17:39:35 +0200
+X-Gm-Features: AQ5f1JoEit7j_TzMlyZa7QbfN6E0NDm9GuAOKbUqEfVJoM1pbPZfw3UrD5vfGmY
+Message-ID: <CACr-zFA_oSySRnA2VaSQk2ND_AHeyt3v=RuPTbABPM7SYown6g@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: x1e78100-t14s: add hpd gpio to
+ eDP panel
+To: Johan Hovold <johan@kernel.org>
+Cc: Douglas Anderson <dianders@chromium.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, dri-devel@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Rui Miguel Silva <rui.silva@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 
-Hi Srini,
+Hi Johan,
 
-On Fri, 14 Mar 2025 at 18:49, <srinivas.kandagatla@linaro.org> wrote:
+On Mon, 31 Mar 2025 at 09:50, Johan Hovold <johan@kernel.org> wrote:
 >
-> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> On Thu, Mar 27, 2025 at 04:56:53PM +0000, Christopher Obbard wrote:
+> > The eDP panel has an HPD GPIO. Describe it in the device tree
+> > for the generic T14s model, as the HPD GPIO property is used in
+> > both the OLED and LCD models which inherit this device tree.
 >
-> With the existing code, the buffer position is only reset in pointer
-> callback, which leaves the possiblity of it going over the size of
-> buffer size and reporting incorrect position to userspace.
+> AFAICT, this patch is not correct as the hotplug detect signal is
+> connected directly to the display controller on (these) Qualcomm SoCs
+> and is already handled by its driver.
 >
-> Without this patch, its possible to see errors like:
-> snd-x1e80100 sound: invalid position: pcmC0D0p:0, pos = 12288, buffer size = 12288, period size = 1536
-> snd-x1e80100 sound: invalid position: pcmC0D0p:0, pos = 12288, buffer size = 12288, period size = 1536
+> Describing it as you do here leads to less accurate delays, see commits:
 >
-> Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Tested-by: Johan Hovold <johan+linaro@kernel.org>
+>         2327b13d6c47 ("drm/panel-edp: Take advantage of wait_hpd_asserted() in struct drm_dp_aux").
+>         3b5765df375c ("drm/panel: atna33xc20: Take advantage of wait_hpd_asserted() in struct drm_dp_aux")
+>
+> Perhaps you lose some other functionality too.
+>
+> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi | 11 +++++++++++
+> >  1 file changed, 11 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+> > index 962fb050c55c4fd33f480a21a8c47a484d0c82b8..46c73f5c039ed982b553636cf8c4237a20ba7687 100644
+> > --- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+> > @@ -980,8 +980,12 @@ &mdss_dp3 {
+> >       aux-bus {
+> >               panel: panel {
+> >                       compatible = "edp-panel";
+> > +                     hpd-gpios = <&tlmm 119 GPIO_ACTIVE_HIGH>;
+> >                       power-supply = <&vreg_edp_3p3>;
+> >
+> > +                     pinctrl-0 = <&edp_hpd_n_default>;
+> > +                     pinctrl-names = "default";
+> > +
+> >                       port {
+> >                               edp_panel_in: endpoint {
+> >                                       remote-endpoint = <&mdss_dp3_out>;
+> > @@ -1286,6 +1290,13 @@ hall_int_n_default: hall-int-n-state {
+> >               bias-disable;
+> >       };
+> >
+> > +     edp_hpd_n_default: edp-hpd-n-state {
+> > +             pins = "gpio119";
+> > +             function = "gpio";
+> > +             drive-strength = <2>;
+> > +             bias-pull-up;
+> > +     };
+>
+> I checked the firmware configuration for this pin on my T14s, which
+> does not match what you have here. Instead the function is set to
+> "edp0_hot" which forwards the signal to the display controller which
+> already handles the signal on panel power on. (And there is also no
+> internal pull up enabled).
+>
+> We may want to describe this pin configuration somewhere, but that's a
+> separate issue.
 
-Seems like I missed adding my T-b to this patch. If it's not too late,
-please add:
+Thanks for your review, I will send another version in coming days and
+drop this first patch (adding hpd to the T14s DTSI).
 
-Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
+As a consequence I will need to add no-hpd property to the panel node.
+I will add a short comment about how the hpd signal is handled by the
+driver already.
 
-> ---
->  sound/soc/qcom/qdsp6/q6apm-dai.c | 23 ++++-------------------
->  1 file changed, 4 insertions(+), 19 deletions(-)
->
-> diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
-> index 9d8e8e37c6de..90cb24947f31 100644
-> --- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-> +++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-> @@ -64,7 +64,6 @@ struct q6apm_dai_rtd {
->         phys_addr_t phys;
->         unsigned int pcm_size;
->         unsigned int pcm_count;
-> -       unsigned int pos;       /* Buffer position */
->         unsigned int periods;
->         unsigned int bytes_sent;
->         unsigned int bytes_received;
-> @@ -124,23 +123,16 @@ static void event_handler(uint32_t opcode, uint32_t token, void *payload, void *
->  {
->         struct q6apm_dai_rtd *prtd = priv;
->         struct snd_pcm_substream *substream = prtd->substream;
-> -       unsigned long flags;
->
->         switch (opcode) {
->         case APM_CLIENT_EVENT_CMD_EOS_DONE:
->                 prtd->state = Q6APM_STREAM_STOPPED;
->                 break;
->         case APM_CLIENT_EVENT_DATA_WRITE_DONE:
-> -               spin_lock_irqsave(&prtd->lock, flags);
-> -               prtd->pos += prtd->pcm_count;
-> -               spin_unlock_irqrestore(&prtd->lock, flags);
->                 snd_pcm_period_elapsed(substream);
->
->                 break;
->         case APM_CLIENT_EVENT_DATA_READ_DONE:
-> -               spin_lock_irqsave(&prtd->lock, flags);
-> -               prtd->pos += prtd->pcm_count;
-> -               spin_unlock_irqrestore(&prtd->lock, flags);
->                 snd_pcm_period_elapsed(substream);
->                 if (prtd->state == Q6APM_STREAM_RUNNING)
->                         q6apm_read(prtd->graph);
-> @@ -247,7 +239,6 @@ static int q6apm_dai_prepare(struct snd_soc_component *component,
->         }
->
->         prtd->pcm_count = snd_pcm_lib_period_bytes(substream);
-> -       prtd->pos = 0;
->         /* rate and channels are sent to audio driver */
->         ret = q6apm_graph_media_format_shmem(prtd->graph, &cfg);
->         if (ret < 0) {
-> @@ -445,16 +436,12 @@ static snd_pcm_uframes_t q6apm_dai_pointer(struct snd_soc_component *component,
->         struct snd_pcm_runtime *runtime = substream->runtime;
->         struct q6apm_dai_rtd *prtd = runtime->private_data;
->         snd_pcm_uframes_t ptr;
-> -       unsigned long flags;
->
-> -       spin_lock_irqsave(&prtd->lock, flags);
-> -       if (prtd->pos == prtd->pcm_size)
-> -               prtd->pos = 0;
-> -
-> -       ptr =  bytes_to_frames(runtime, prtd->pos);
-> -       spin_unlock_irqrestore(&prtd->lock, flags);
-> +       ptr = q6apm_get_hw_pointer(prtd->graph, substream->stream) * runtime->period_size;
-> +       if (ptr)
-> +               return ptr - 1;
->
-> -       return ptr;
-> +       return 0;
->  }
->
->  static int q6apm_dai_hw_params(struct snd_soc_component *component,
-> @@ -669,8 +656,6 @@ static int q6apm_dai_compr_set_params(struct snd_soc_component *component,
->         prtd->pcm_size = runtime->fragments * runtime->fragment_size;
->         prtd->bits_per_sample = 16;
->
-> -       prtd->pos = 0;
-> -
->         if (prtd->next_track != true) {
->                 memcpy(&prtd->codec, codec, sizeof(*codec));
->
-> --
-> 2.39.5
->
->
+Thanks!
+
+Chris
 
