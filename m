@@ -1,271 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-52874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2457A7656F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 14:10:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21F08A765B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 14:20:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9D2BB164AA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 12:10:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 763D83A9C1D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 12:19:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A18471BC073;
-	Mon, 31 Mar 2025 12:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB92D1E3769;
+	Mon, 31 Mar 2025 12:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kHsdGu7m"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="wpi7o1UZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0CF1D89FD
-	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 12:10:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0E71E5207
+	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 12:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743423050; cv=none; b=hkJAy21YegqqrZ+EznGzJb0MTliGrt51xyBLz2xG6UaCJJrt8zroafhFPzpLF/AdHaC4kLciPpA066Ys9NWUHPZiZ5Oyoe59AGbfhV+h+AidPIxdWOY4v1A1i3KAtwHwLbB7sfXdfhKqZLWw4osxMBa2pNJMp1pv7M/DzlNDjuc=
+	t=1743423611; cv=none; b=k+EvyhsAbwgS5IyHVItt/IW3KwVpY03WMttVb/WJwQy+CIUpi84CK32SH9xWuF8yhUHj7PAfS3IoQ9SflNjTyxMQHrvclZj/UWR3YJyOq4jlsvrF/GheXgc8TGFHtB6H5fkoUz8Ucun3U902EqCxHps5q9F3crqtQUEFoKDjsg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743423050; c=relaxed/simple;
-	bh=5FQq6G6CcDVX/WJRqrI0CJelfhamUp2ah6wu3/cOoYQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bqAMD+/EElHSqlv8BE9iNtSrlFy0lL3hQTQiEOpABVCuHg94n+JjHexz0FE4sbf2tIyvuTAjoglKN+ItW1JIUBZ6giiH9e+0Etm7Ny+mYCNKgKSX7si5I8I1q3KaPkrMSpo2LzhULm/6rfrO6EHTJ9UYyWuBLxync6T1uVvlLb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kHsdGu7m; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43cf034d4abso49264485e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 05:10:47 -0700 (PDT)
+	s=arc-20240116; t=1743423611; c=relaxed/simple;
+	bh=V+HIpf0XYtcXMdWG8h49zKmgGkavahAxXenAd7JQ9oo=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=sR33syoaRQ5uuTyoPb/n1uXcEBTiHvgl45yEDHuUV1DPCczOlq3nwcgad4acRqXyiYCJ2krMDTuHMCWoIV7q/7aeGb/wBxSKOAYZ5YAlI0zWxwBYOgpYl1V0uh9kPo9nOq4wPZWsKMwRdyrCtm1JJiPtX97eE1pkgRLYN01e+vQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=wpi7o1UZ; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-ac298c8fa50so740958566b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 05:20:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743423046; x=1744027846; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=okpqta+/WuV57s9p5DTEKrgVp2I+VFSDY0MRg0XoSnw=;
-        b=kHsdGu7mW5rF1LggZgXF+ue/tM5+Zj60JKkP7iQJCphZbIT4exo5MZHuRExOuOnjz9
-         zK/uN9E04CmloSW9YPr+q501Hz2WtU5Bcy2eem5uR5Yb98qB1HEgnGRQs5phG2dklGKK
-         R1Y8CY7ara0EX7m0lrN+iZ378HREqJE2oMHPZcoVEQEdIW9BjAQwQArWZrXONNOmbfDi
-         H5Xv8Z5FA2Edcsu+ytOoA81RxLFSTU/OygDxqjk87IiIrkNNYlz4Jpgcqvum/yfceaq+
-         kGe2sQM3tfv6PL4u+jyHOTPZdA29f5NnmdSV18VFu63g31nOObiq2XqCYfR9wcoIcLze
-         QH6g==
+        d=fairphone.com; s=fair; t=1743423608; x=1744028408; darn=vger.kernel.org;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/6UhGoeHcC4SZvbq63mZ678Tm+9OYBR5DKjiDwyXcqg=;
+        b=wpi7o1UZcdhdWgMCCybT15uAxIqlic0xih88C4WGx7ZkKBwBnsRi+FNJlDJi8lcT8U
+         k4wzdJJ1HvFBurnjCffwrmi16U4kaJgsggdQ7m/o4AjpskWLMKTlGerW57oQyo/TSPFp
+         KTWNFwAH8FO2cLXmdyZa511Bjg/dV9LR3hbUR6TDuodXpD+0hbcJ9hIuI6T/+0rsvV84
+         rGvjvzgVf2+Dx9ZFTAdqQrcU6QPe4INPEqP4aPUWJ3GOeU5hLL7+4sK55L44YtVEbd23
+         LOAdTfSGBWGQwDsHHo1LUp0vGMwUZRiBmZ7bujwVzZvBShiGtjz+bW4SRckStfD6I0Vt
+         fiKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743423046; x=1744027846;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=okpqta+/WuV57s9p5DTEKrgVp2I+VFSDY0MRg0XoSnw=;
-        b=To+QF1hffC+sz0ZBE/UXKCQvaNOCw+wpYiwHNY6e0njM1Bk2yRvLtGPobvXaEGAuKC
-         nisF4AglRG9VjeynbqDnfJkvUCQlOygK8IdE+iXyYmHBOmzFDYSDJvlUzUcaa6XtN748
-         ZKfp5kTTF7OysEGIHYmNj4v4LKwRldoND6aW4L5QA4VuicoAfKc7gSiMmEL98EFX5iT8
-         MxWqInULL7Dim0ypvBPvTHwTHdHXjajKaXigUfcEysCWJ5uvFUQbCPgV9up1Y25rWfGl
-         hEpxraAunaiPUf1hNgtKPnb6Vx6o7sV1+HhEPSygnMP435pz682Mxso6iw3RFEPb2Pd5
-         B8tg==
-X-Forwarded-Encrypted: i=1; AJvYcCWMq+by/WQZWQftXvHPSe+G4TMVk8P4Z0Wz30mbEgt9YT90hMYg42oRSPD/M77ODI+VM4FSg/ZSt4613zdK@vger.kernel.org
-X-Gm-Message-State: AOJu0YywGcUA8gLbLC7m1Aen6PQj4Zif3/Yhyb83OCgZEPYBOpiwIH8M
-	QlKQCV+A9qainWt9Y9/hQso7D5r6AXkOQ8PtReg0vzQ2usBsuEE7vzKun7VMaTw=
-X-Gm-Gg: ASbGncvqco39N0p9notKgyfq7GIP7sof1p59ha1T0yb0ZyWF0hOWE2mYr6qvZB7aCpR
-	VkDSVlaRhuaXtKUc4odwMKpek2mgoHNvthQxMCRNlApJxlLaWt40eJ5R0y4zZUQ34mOBtB1wxcL
-	9MjkIRUG4elNVhpiGNieNGJUvzBI5bZpkh0+KngZ1zb4h8CyN2rjqYQDNZS8PCMiKsHP/QmobQ3
-	SpzwWnLFb139FhoJOIh6c2Rjtkjw1zz0jrPbZqnc4BdYEIUNUfyvxcT9T14SksHwo9+yVEhgcZc
-	Ww76+4rWcwmxSho8xGXyv+A2lWb+T0EnaHS/LXNJK+WKOCH51Mklc1gBSlewWKB8TveJ58C5xeu
-	tAEYXNZGVOFgA9LMIUiWBBwI=
-X-Google-Smtp-Source: AGHT+IEzz4CgTrtL2IjSDR8RRNEQ/kYEnvAi0vIwUY4iCQ9PQ0DHcXncAtiFti+dDMrorBgDi5Zm0g==
-X-Received: by 2002:a05:600c:5494:b0:43d:7a:471f with SMTP id 5b1f17b1804b1-43db6252fa8mr87142055e9.18.1743423045681;
-        Mon, 31 Mar 2025 05:10:45 -0700 (PDT)
-Received: from toyger.tail248178.ts.net (i5E863BED.versanet.de. [94.134.59.237])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d8fba3b13sm124137345e9.3.2025.03.31.05.10.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Mar 2025 05:10:44 -0700 (PDT)
-From: Caleb Connolly <caleb.connolly@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>
-Cc: Caleb Connolly <caleb.connolly@linaro.org>,
-	devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: align gpio-keys label format
-Date: Mon, 31 Mar 2025 14:10:05 +0200
-Message-ID: <20250331121011.385250-1-caleb.connolly@linaro.org>
-X-Mailer: git-send-email 2.49.0
+        d=1e100.net; s=20230601; t=1743423608; x=1744028408;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=/6UhGoeHcC4SZvbq63mZ678Tm+9OYBR5DKjiDwyXcqg=;
+        b=Z8mBQ2Huj6bRDn/uTfRN9C4c9hqV3Cp7uOomiLt/F9kL1JkunY70ildCONtZ+4CsSk
+         NA/juUnSpGyMP9s0nRpur00wk3sXV5umDsvlXGJYCTpi6Xwiyrm9Kh+fNEvupjdPzFZx
+         J9LDfp7rluhVDAu+OUIF1mXEwVZ/M3Ip1wY1NaIDPM6ZNo/6+m9r451EaZsedrBcGk2Y
+         ThUvvKAdK4qkEsNtEcQVws0sHRR6UVmESznNOdIuZp7yyxkrDw57YX4ZqQeyVxQ8UymI
+         5g27Zbj73nvzO9WcMPRq9gUjuGz2PnrgRWyOBYiYbxx9lGGyKftfWHVQ+0JHuA11u8P0
+         1LHA==
+X-Forwarded-Encrypted: i=1; AJvYcCVW1Lo9GPMp3Mre41kCOr1CCDNMSGrlGRfUTIHCZE98f7mHhQ0mdtNwCJr3NLAR3wEhTGCCtE4QE5xoWTPC@vger.kernel.org
+X-Gm-Message-State: AOJu0YwhXeIIGgfqDoiL+P3Vxg+LAwVxMz5fcqILNi+31P3Df8ykNH7J
+	yFYVEWSZy9J3zFkgPa2/Wz+JgzO3Z6thZdLEdHD857oTK4dCxa9IAlWKbsCrrgk=
+X-Gm-Gg: ASbGncs9wIcIBllQ2gqFX1SoNQFLcW6bZPtH9TrC8FS0b7xQ+PeTQ7lbGLklWs/gpBa
+	njvZdAq1L+kluypVyaFShU7aBY2tth2rkam80chL4fkpmuboP7guNwAjOj81t/dKbpZgWwMe5wQ
+	L3O5C070OJvdin+rzH3j8PeSB/l6S5le2yR/pJhV+Zi04PcgwG9QjP5vz7r7fmJMyoPZTfx5Dt4
+	izCLI6aT/quSn+aouWA1n7wecACM4jzhrUAYQJhKcjdvd+94b5mc8eSHopnqbPeVU0rrypfnM0b
+	+l4kV/aB+37i1qPopeuy/sC7vZBilQ+QWrM8qVaZjZfQff/NMHjLyc9TG2C11qHeYMPGydxxEn8
+	t+LnEGV+zBUKir8WDAccNFMEvWBoFwg/fluno8JNP58fmzuvU1WuTxsKV
+X-Google-Smtp-Source: AGHT+IHTeHXgzQx9nBe7ZuxYvDPZW6eexOSde6sU5uGzolFYjQErhchMnqWKKOUDN7l4/orwes2PJg==
+X-Received: by 2002:a17:907:3d89:b0:ac3:4373:e8bf with SMTP id a640c23a62f3a-ac738932d65mr708179066b.10.1743423607866;
+        Mon, 31 Mar 2025 05:20:07 -0700 (PDT)
+Received: from localhost (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac71967fdc6sm609704066b.127.2025.03.31.05.20.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 31 Mar 2025 05:20:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 31 Mar 2025 14:20:06 +0200
+Message-Id: <D8UG37Z20WLF.1EH3L1KZTJKO8@fairphone.com>
+To: "Caleb Connolly" <caleb.connolly@linaro.org>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Konrad
+ Dybcio" <konradybcio@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Rob Herring" <robh@kernel.org>
+Cc: <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: align gpio-keys label format
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <20250331121011.385250-1-caleb.connolly@linaro.org>
+In-Reply-To: <20250331121011.385250-1-caleb.connolly@linaro.org>
 
-Most devices follow the practise of capitilising all words in a label,
-this seems to be the standard elsewhere too (e.g. run "evtest" on an x86
-ThinkPad).
+On Mon Mar 31, 2025 at 2:10 PM CEST, Caleb Connolly wrote:
+> Most devices follow the practise of capitilising all words in a label,
+> this seems to be the standard elsewhere too (e.g. run "evtest" on an x86
+> ThinkPad).
+>
+> Adjust the stragglers to follow suite, and standardise on "Volume
+> Buttons" over "Volume keys" as the label for the entire device where
+> applicable.
 
-Adjust the stragglers to follow suite, and standardise on "Volume
-Buttons" over "Volume keys" as the label for the entire device where
-applicable.
+In theory some weird user space could find the correct input node based
+on that label, which would 'break' if we change that label?
 
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
----
+Not that anyone should really do this I believe, checking the supported
+keys on a device is a much better solution.
 
-This is really a drop in the ocean, a good next step would be to fix the
-pm8941-pwrkey driver so your power button doesn't show up as
-"pm8941_pwrkey".
----
- arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi | 4 ++--
- arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts    | 6 +++---
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts   | 2 +-
- arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts     | 2 +-
- arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi       | 2 +-
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi  | 6 +++---
- arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts | 2 +-
- 7 files changed, 12 insertions(+), 12 deletions(-)
+But good to keep in mind.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
-index e6a69d942a4a..452c455294d0 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
-@@ -90,17 +90,17 @@ gpio-keys {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&vol_keys_default>;
- 
- 		button-vol-down {
--			label = "Volume down";
-+			label = "Volume Down";
- 			gpios = <&pm8998_gpios 5 GPIO_ACTIVE_LOW>;
- 			linux,code = <KEY_VOLUMEDOWN>;
- 			debounce-interval = <15>;
- 			wakeup-source;
- 		};
- 
- 		button-vol-up {
--			label = "Volume up";
-+			label = "Volume Up";
- 			gpios = <&pm8998_gpios 6 GPIO_ACTIVE_LOW>;
- 			linux,code = <KEY_VOLUMEUP>;
- 			debounce-interval = <15>;
- 			wakeup-source;
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts b/arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
-index 0cac06f25a77..2a62d58195fd 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
-@@ -124,16 +124,16 @@ zap_shader_region: memory@f7900000 {
- 	};
- 
- 	gpio-keys {
- 		compatible = "gpio-keys";
--		label = "Volume buttons";
-+		label = "Volume Up";
- 		autorepeat;
- 
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&vol_up_key_default>;
- 
- 		key-vol-up {
--			label = "Volume up";
-+			label = "Volume Up";
- 			gpios = <&pm8998_gpios 6 GPIO_ACTIVE_LOW>;
- 			linux,code = <KEY_VOLUMEUP>;
- 			debounce-interval = <15>;
- 			wakeup-source;
-@@ -141,9 +141,9 @@ key-vol-up {
- 	};
- 
- 	gpio-hall-sensor {
- 		compatible = "gpio-keys";
--		label = "Hall effect sensor";
-+		label = "Hall Effect Sensor";
- 
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&hall_sensor_default_state>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-index 0f1c83822f66..0333e06227eb 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-@@ -54,9 +54,9 @@ gpio-keys {
- 		pinctrl-0 = <&volume_down_default>, <&hall_sensor_default>;
- 		pinctrl-names = "default";
- 
- 		key-volume-up {
--			label = "Volume up";
-+			label = "Volume Up";
- 			gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
- 			linux,code = <KEY_VOLUMEUP>;
- 		};
- 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-index 712f29fbe85e..1b00fd5b2c89 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-@@ -56,9 +56,9 @@ gpio-keys {
- 		pinctrl-0 = <&volume_down_default>;
- 		pinctrl-names = "default";
- 
- 		key-volume-up {
--			label = "Volume up";
-+			label = "Volume Up";
- 			gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
- 			linux,code = <KEY_VOLUMEUP>;
- 			debounce-interval = <15>;
- 		};
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-index 99dafc6716e7..b60a41f71e29 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-@@ -129,9 +129,9 @@ gpio-keys {
- 
- 		label = "GPIO Buttons";
- 
- 		key-vol-up {
--			label = "Volume up";
-+			label = "Volume Up";
- 			linux,code = <KEY_VOLUMEUP>;
- 			gpios = <&pm8998_gpios 6 GPIO_ACTIVE_LOW>;
- 		};
- 	};
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 8a0f154bffc3..535b02d1b12c 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -48,23 +48,23 @@ event-hall-sensor {
- 	};
- 
- 	gpio-keys {
- 		compatible = "gpio-keys";
--		label = "Volume keys";
-+		label = "Volume Buttons";
- 		autorepeat;
- 
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&volume_down_gpio &volume_up_gpio>;
- 
- 		key-vol-down {
--			label = "Volume down";
-+			label = "Volume Down";
- 			linux,code = <KEY_VOLUMEDOWN>;
- 			gpios = <&pm8998_gpios 5 GPIO_ACTIVE_LOW>;
- 			debounce-interval = <15>;
- 		};
- 
- 		key-vol-up {
--			label = "Volume up";
-+			label = "Volume Up";
- 			linux,code = <KEY_VOLUMEUP>;
- 			gpios = <&pm8998_gpios 6 GPIO_ACTIVE_LOW>;
- 			debounce-interval = <15>;
- 		};
-diff --git a/arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts b/arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts
-index 85a928f98077..a7544d8b4fac 100644
---- a/arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts
-@@ -68,9 +68,9 @@ gpio-keys {
- 		pinctrl-0 = <&kypd_volp_n>;
- 		pinctrl-names = "default";
- 
- 		key-volume-up {
--			label = "Volume up";
-+			label = "Volume Up";
- 			gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
- 			linux,code = <KEY_VOLUMEUP>;
- 		};
- 	};
--- 
-2.49.0
+>
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> ---
+>
+> This is really a drop in the ocean, a good next step would be to fix the
+> pm8941-pwrkey driver so your power button doesn't show up as
+> "pm8941_pwrkey".
 
+"Power Button" would be good there, that's what my Intel Dell XPS 15 report=
+s.
+
+> ---
+>  arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi | 4 ++--
+>  arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts    | 6 +++---
+>  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts   | 2 +-
+>  arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts     | 2 +-
+>  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi       | 2 +-
+>  arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi  | 6 +++---
+>  arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts | 2 +-
+>  7 files changed, 12 insertions(+), 12 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi b/arch/=
+arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
+> index e6a69d942a4a..452c455294d0 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
+> @@ -90,17 +90,17 @@ gpio-keys {
+>  		pinctrl-names =3D "default";
+>  		pinctrl-0 =3D <&vol_keys_default>;
+> =20
+>  		button-vol-down {
+> -			label =3D "Volume down";
+> +			label =3D "Volume Down";
+>  			gpios =3D <&pm8998_gpios 5 GPIO_ACTIVE_LOW>;
+>  			linux,code =3D <KEY_VOLUMEDOWN>;
+>  			debounce-interval =3D <15>;
+>  			wakeup-source;
+>  		};
+> =20
+>  		button-vol-up {
+> -			label =3D "Volume up";
+> +			label =3D "Volume Up";
+>  			gpios =3D <&pm8998_gpios 6 GPIO_ACTIVE_LOW>;
+>  			linux,code =3D <KEY_VOLUMEUP>;
+>  			debounce-interval =3D <15>;
+>  			wakeup-source;
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts b/arch/arm=
+64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
+> index 0cac06f25a77..2a62d58195fd 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
+> @@ -124,16 +124,16 @@ zap_shader_region: memory@f7900000 {
+>  	};
+> =20
+>  	gpio-keys {
+>  		compatible =3D "gpio-keys";
+> -		label =3D "Volume buttons";
+> +		label =3D "Volume Up";
+
+Not sure where the label from this wrapping node would show up, but you
+maybe want to keep this one as "Volume Buttons", like in some of the
+other files?
+
+Regards
+Luca
 
