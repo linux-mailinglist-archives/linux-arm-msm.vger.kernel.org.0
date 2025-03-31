@@ -1,131 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-52881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 028ADA76790
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 16:17:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81FF5A76B00
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 17:45:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 420F21887D1E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 14:17:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1BAE43B623A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 15:39:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98947210F53;
-	Mon, 31 Mar 2025 14:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99CFB21ADC5;
+	Mon, 31 Mar 2025 15:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eYTAX+BL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PX1oQUDP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f194.google.com (mail-pl1-f194.google.com [209.85.214.194])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E81C17A2E2;
-	Mon, 31 Mar 2025 14:17:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8D721ABDC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 15:36:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743430625; cv=none; b=D50jM5BvdQ4secVFLjhtV8wuq7h44N7iT0/3xiwsowGVs/fqKUsBOnazVZyMAUcKsn5YgILljmA0lSPVep7BrftuiK6sXTudS8I9byz70EDOeLLlM7Fo7x/uc+XplxYaE0+UeVLznYQ0DTqj5hxCFMXxflwM6q0ocEYNT3gu6jo=
+	t=1743435373; cv=none; b=hA4ffCQ3yRzYgTBJRAQK/aFh09BawK02BFEN7KrcJh7Km0SnaVxfi5uRAfq9KzpKes1QkiGXYyy1MuXNNzwFbqxrjYuipZcdVIVelTTOy9fRryNz1ICKGjBhRBuETLp7ljKzCl31HRpD03lld2ChG4QH/A/CgFjJks7ohuGNZr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743430625; c=relaxed/simple;
-	bh=yw4rSSLAQJvHq9WL54GSuYubWtedDjVEaeHmxZ4RiUA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=e3vXRoD2v6DfhM7dqAcXNjb8hc9OUAl+AlhDaFxQSKUh1Xkr+a7NEOAmbDmnZH3f3mQDs4p/cdFOoITf12cUvzt1+DYZHJCPduLv0RJKa8QgkFw08OD4n8wH8vm5Rttw1z2EQykbv6euZGr7Z5e44vYhGZ77TXPm0GrpKNTAyaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eYTAX+BL; arc=none smtp.client-ip=209.85.214.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f194.google.com with SMTP id d9443c01a7336-227cf12df27so63768205ad.0;
-        Mon, 31 Mar 2025 07:17:03 -0700 (PDT)
+	s=arc-20240116; t=1743435373; c=relaxed/simple;
+	bh=gr2i7ElkViQia/0pNOSKmak0K4CKCzxZlnH5gwwO/GU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kpu1NebiXmGNW6RI7F0cmAChmuFz6TdXT7nGhXvkVu9jK3KTSx3hvRvNFbOjtGScNRN1KbPCZ+QpDr78M/o4Nmyp7HL42qHivrOocB17ibOzQbAiBk2tFhyikfsF+8f1wXa+4v6TvzfZaC+mHUKNT/c/AC1nhnWR34BL+txbn+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PX1oQUDP; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43cfecdd8b2so36665885e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 08:36:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743430623; x=1744035423; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pO1QeCUyXKGemqh/0PucODb/KuSbMsL5qkNhu7BZk4k=;
-        b=eYTAX+BLdjCRq+brFTCz6i5qpAvOUffM4ilYZcZM6+jSm0odjIuOOG3T3QpC2ty+kw
-         40yse6mlcLDWExMOSCz+xsGePaMeNBnbfPqe8M3RmamCh3ayKk96kkmlfcSY1BWLnsns
-         g8HdP/TRZf5S+wycA1cZLW97FVyEfBhjLJz3GyQGLapYWbQMuAaisMllBJ3OnoRLCa/3
-         KjzjTRLl/fef7Eh4inUK2F7Mvb3fKllkAkAFX8bdq0XYeFPVJWcYKB4CMSrbSYd8qnYL
-         KqOvxuJhB1TjLl0czf3rcXPHmHdlDMxpBFfFj8/BMAGeaayJO3qHBNIUseN1pcLs9qY1
-         KUlQ==
+        d=linaro.org; s=google; t=1743435369; x=1744040169; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5ywrICBipCo3D98Pb8idqM4gJmh0ImUQe88U+5Mvgaw=;
+        b=PX1oQUDPjYNPIx1lUJRY5RR3HGQDlhE/6x/X3g/V4uRSkwkKlzFmB+fk/g/cvXGH/O
+         UqUKDVawcc6BDJD5AP0Ns6MCsHo+qs49ds7VgIXEPJfmtPVAhnND1iEf38xmI5CvIgE2
+         YbzHkif3PkRXVLkSXma4slVPqRzthAj/A2mY0kb/NevHDXuS7CszJkGGiAFl4gP41Ehs
+         He7dAYnUT6HUiG/w5D0CvyLj1r0nCCuu6KTShJm/cXI8/sOHR9+JqBYkfobaIwn0HTv0
+         DmSM8p6pF4Tjs5oL4DS+Lhn/E9DxkGwD2FEhkuvBGxR8UPS5C554UctqyEN8qSugjJxQ
+         cfaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743430623; x=1744035423;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1743435369; x=1744040169;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pO1QeCUyXKGemqh/0PucODb/KuSbMsL5qkNhu7BZk4k=;
-        b=u9bT9o2+cO6MNKCzvd3DrIPfryzXKuSHsESAEBr/lV/I9hQ2HJqC0DPn7cDlgOkRsv
-         uOIQcOTTH1ye2PSmDOjyblO3RtYH+Q9loEkroE3fjMzoZyI/ksLaL88/IYwqdLq5bfzS
-         ddgRV5hfXmLhCzIy7hkAa3FwWPCSZyIv5xvNZmosPPPJ8+79G2uCjOA3juArSLpXF/Ql
-         pPmlOWj9dw8RuNoama4lOYmWLIMhefxXYw4BeE8ou7nO+BokaTtEQktN5JJ2mOz48m27
-         Dffo+xCIuZCVAdiGGoHhGbEQddhEtevBFiP73MYpGUsGq1RYhcQ+duz9aYXyQ9X493ml
-         5pCA==
-X-Forwarded-Encrypted: i=1; AJvYcCVKjA0TJbbvimhir/HISEqm8dgeBoIO1B1gQ3moUj3ETQSfzw+4ygTsbDRJf1gH8RAJSJUM+zI0qWDdXA==@vger.kernel.org, AJvYcCWHpN0AxnFx/hWv3jr345BsscDP4oYp0G77KLs24Hu70Qkj80gbGCzsDMgZnliaNlw+XxpmIh2+a+a+zsdz@vger.kernel.org
-X-Gm-Message-State: AOJu0YzsVZoUm5XFVZabd7WQ87CmqYcrTA4MAOG5/XNRl6Y0r5CdmP6R
-	j5bOpzYdM8PdVmkkYl/oLmS5WsVp/TIiAu88bze54uJ+z87+0ZDq
-X-Gm-Gg: ASbGncsVl6Cq8Y8J+mB9sJBSnd8SG4XNxeTVLIxscBAJGTJE0hdYZ3rsZ4IUdwwO+lj
-	E4+vq4JS5B5uuXOI73aM4emrQ90eyznkOEb1cCbfWWttL+x+MzBcCxsh0xsfjOifb7hJxZaYdAd
-	iEN4u56+U9avjI5tRPAYljJGnAfvzifu0lZSK6ep9n3sJCectmYtm7KUb8k3HnaSCPvlt5SeDIP
-	bAzrXnIZtGVHnylzNWhZ5uuQooUMtSWix2HXITFdbGu7Lg4Mk8qMy/KgFwPFv0zg4sE6ImxSQ/J
-	isBF4Gz9xc+JsUWaSwUFR8WLOhjiDbokirtmEXKyZzU0G+B/44rdWkXvbXZN2v0wejGjolE=
-X-Google-Smtp-Source: AGHT+IHiS3NQ9inGx04Z/RImRKqM2ZGoOKLOipMryfa1UnPAFRetOHxg2LrRkj+KBOMUbzqf7YBA6g==
-X-Received: by 2002:a17:902:ef07:b0:215:44fe:163d with SMTP id d9443c01a7336-2292eefd198mr163250605ad.17.1743430623282;
-        Mon, 31 Mar 2025 07:17:03 -0700 (PDT)
-Received: from henry.localdomain ([111.202.148.167])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2291eee5011sm69916735ad.103.2025.03.31.07.16.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Mar 2025 07:17:02 -0700 (PDT)
-From: Henry Martin <bsdhenrymartin@gmail.com>
-To: lee@kernel.org,
-	danielt@kernel.org,
-	jingoohan1@gmail.com,
-	deller@gmx.de
-Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-fbdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Henry Martin <bsdhenrymartin@gmail.com>
-Subject: [PATCH v2] backlight: pm8941: Add NULL check in wled_configure()
-Date: Mon, 31 Mar 2025 22:16:54 +0800
-Message-Id: <20250331141654.12624-1-bsdhenrymartin@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        bh=5ywrICBipCo3D98Pb8idqM4gJmh0ImUQe88U+5Mvgaw=;
+        b=CjKU9DIIDh9reeY7oSkbSa1TTjmp2w2ERRufItJkOt1D/oMylkuxRnnMDI7Tq/G9jr
+         hion2m1/9yVFZ95XxgA/SRfwdodlXqKEuDwnfPtZwov719AtOl0EZ52oY+8QZirWzldc
+         8oXVuiLyGgjN/ZL5IUNWonrmoL6zpiDE6QYvZBH6ZKXH6ra0rPNyPh/sad7Fio43ARs+
+         3dLRjfh7rRJQGowrADf15M9KTG+zmJGaF6LEVmV16gh5ebvXl/b1inEaynNOTXCSWhZK
+         gLrYhnNDQuPGLwSoB9BoRAmnEfR2+WYKJDNIhTzf0CkiMXw/QOeWyh5qyzYiD6R04BOq
+         5Gaw==
+X-Forwarded-Encrypted: i=1; AJvYcCUIUkk5FNLFwl9VlX78M5a6YpvjZPOXngSxHmGVAi6P8rGcDpTC9AVjv3ApLNQzmQAP14v5Im/TnNV2x1UL@vger.kernel.org
+X-Gm-Message-State: AOJu0YzY+u1QwYcQ+JWzA9NwDFIBlIghMEfOGZhCNThxpiLEtZ2CG0pI
+	P2zauSOpYKKNIGUEPRMaCais7KpVfKtSBvvD/UEn9Fvi2C8PIJoSTBKmeNCWbBLyYL4sJzLljJl
+	Nth6Xsk/JqfxrdFKGh/Zjce9mesMFhY2pTh4AZg==
+X-Gm-Gg: ASbGncsb/uQ+Tcyv4ap2I1iDcrLnLFdj8lWTIHJUwCJMGKT5ZyT9Lt+3KzcWpqA/YmX
+	OkanYly/pRKlyUsWEKmEXNUW1AaBoZFvRdlvMuaa1TL0CgAp9mB238AqKua+NRn3BRhwuM2Oi7R
+	U/9gjsym5r+aN+u/32MpLNpoxXUa9M
+X-Google-Smtp-Source: AGHT+IFh6+GM0IlcpIWBwIQonGGQpesbhVlKLCa6o8H68xAK6yvnnZx2ARkalCWY/48oTB3ma91dmfr1kqQk/SHjFFE=
+X-Received: by 2002:a05:600c:4fc8:b0:43d:9f2:6274 with SMTP id
+ 5b1f17b1804b1-43db6248ff6mr92802865e9.14.1743435368685; Mon, 31 Mar 2025
+ 08:36:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250314174800.10142-1-srinivas.kandagatla@linaro.org> <20250314174800.10142-4-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20250314174800.10142-4-srinivas.kandagatla@linaro.org>
+From: Christopher Obbard <christopher.obbard@linaro.org>
+Date: Mon, 31 Mar 2025 17:35:57 +0200
+X-Gm-Features: AQ5f1Jr5r8kzu92uTPWXhQdvRpNmkEoxDzeY_UvzmL6qGDeAb3ny2uTxjO8tcRE
+Message-ID: <CACr-zFBgQsiO=EVD-sCyvQHonbRLS+7J=q+Y8WNbwSPkF_5kug@mail.gmail.com>
+Subject: Re: [PATCH v5 3/5] ASoC: q6apm-dai: make use of q6apm_get_hw_pointer
+To: srinivas.kandagatla@linaro.org
+Cc: broonie@kernel.org, perex@perex.cz, tiwai@suse.com, 
+	krzysztof.kozlowski@linaro.org, linux-sound@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	dmitry.baryshkov@linaro.org, johan+linaro@kernel.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-devm_kasprintf() return NULL if memory allocation fails. Currently,
-wled_configure() does not check for this case, leading to a possible NULL
-pointer dereference.
+Hi Srini,
 
-Add NULL check after devm_kasprintf() to prevent this issue.
+On Fri, 14 Mar 2025 at 18:49, <srinivas.kandagatla@linaro.org> wrote:
+>
+> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>
+> With the existing code, the buffer position is only reset in pointer
+> callback, which leaves the possiblity of it going over the size of
+> buffer size and reporting incorrect position to userspace.
+>
+> Without this patch, its possible to see errors like:
+> snd-x1e80100 sound: invalid position: pcmC0D0p:0, pos = 12288, buffer size = 12288, period size = 1536
+> snd-x1e80100 sound: invalid position: pcmC0D0p:0, pos = 12288, buffer size = 12288, period size = 1536
+>
+> Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Tested-by: Johan Hovold <johan+linaro@kernel.org>
 
-Fixes: f86b77583d88 ("backlight: pm8941: Convert to using %pOFn instead of device_node.name")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
----
-V1 -> V2: Fix commit message to use imperative mood and wrap lines to 75
-characters.
+Seems like I missed adding my T-b to this patch. If it's not too late,
+please add:
 
- drivers/video/backlight/qcom-wled.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
 
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index 9afe701b2a1b..a63bb42c8f8b 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -1406,9 +1406,11 @@ static int wled_configure(struct wled *wled)
- 	wled->ctrl_addr = be32_to_cpu(*prop_addr);
- 
- 	rc = of_property_read_string(dev->of_node, "label", &wled->name);
--	if (rc)
-+	if (rc) {
- 		wled->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFn", dev->of_node);
--
-+		if (!wled->name)
-+			return -ENOMEM;
-+	}
- 	switch (wled->version) {
- 	case 3:
- 		u32_opts = wled3_opts;
--- 
-2.34.1
-
+> ---
+>  sound/soc/qcom/qdsp6/q6apm-dai.c | 23 ++++-------------------
+>  1 file changed, 4 insertions(+), 19 deletions(-)
+>
+> diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
+> index 9d8e8e37c6de..90cb24947f31 100644
+> --- a/sound/soc/qcom/qdsp6/q6apm-dai.c
+> +++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
+> @@ -64,7 +64,6 @@ struct q6apm_dai_rtd {
+>         phys_addr_t phys;
+>         unsigned int pcm_size;
+>         unsigned int pcm_count;
+> -       unsigned int pos;       /* Buffer position */
+>         unsigned int periods;
+>         unsigned int bytes_sent;
+>         unsigned int bytes_received;
+> @@ -124,23 +123,16 @@ static void event_handler(uint32_t opcode, uint32_t token, void *payload, void *
+>  {
+>         struct q6apm_dai_rtd *prtd = priv;
+>         struct snd_pcm_substream *substream = prtd->substream;
+> -       unsigned long flags;
+>
+>         switch (opcode) {
+>         case APM_CLIENT_EVENT_CMD_EOS_DONE:
+>                 prtd->state = Q6APM_STREAM_STOPPED;
+>                 break;
+>         case APM_CLIENT_EVENT_DATA_WRITE_DONE:
+> -               spin_lock_irqsave(&prtd->lock, flags);
+> -               prtd->pos += prtd->pcm_count;
+> -               spin_unlock_irqrestore(&prtd->lock, flags);
+>                 snd_pcm_period_elapsed(substream);
+>
+>                 break;
+>         case APM_CLIENT_EVENT_DATA_READ_DONE:
+> -               spin_lock_irqsave(&prtd->lock, flags);
+> -               prtd->pos += prtd->pcm_count;
+> -               spin_unlock_irqrestore(&prtd->lock, flags);
+>                 snd_pcm_period_elapsed(substream);
+>                 if (prtd->state == Q6APM_STREAM_RUNNING)
+>                         q6apm_read(prtd->graph);
+> @@ -247,7 +239,6 @@ static int q6apm_dai_prepare(struct snd_soc_component *component,
+>         }
+>
+>         prtd->pcm_count = snd_pcm_lib_period_bytes(substream);
+> -       prtd->pos = 0;
+>         /* rate and channels are sent to audio driver */
+>         ret = q6apm_graph_media_format_shmem(prtd->graph, &cfg);
+>         if (ret < 0) {
+> @@ -445,16 +436,12 @@ static snd_pcm_uframes_t q6apm_dai_pointer(struct snd_soc_component *component,
+>         struct snd_pcm_runtime *runtime = substream->runtime;
+>         struct q6apm_dai_rtd *prtd = runtime->private_data;
+>         snd_pcm_uframes_t ptr;
+> -       unsigned long flags;
+>
+> -       spin_lock_irqsave(&prtd->lock, flags);
+> -       if (prtd->pos == prtd->pcm_size)
+> -               prtd->pos = 0;
+> -
+> -       ptr =  bytes_to_frames(runtime, prtd->pos);
+> -       spin_unlock_irqrestore(&prtd->lock, flags);
+> +       ptr = q6apm_get_hw_pointer(prtd->graph, substream->stream) * runtime->period_size;
+> +       if (ptr)
+> +               return ptr - 1;
+>
+> -       return ptr;
+> +       return 0;
+>  }
+>
+>  static int q6apm_dai_hw_params(struct snd_soc_component *component,
+> @@ -669,8 +656,6 @@ static int q6apm_dai_compr_set_params(struct snd_soc_component *component,
+>         prtd->pcm_size = runtime->fragments * runtime->fragment_size;
+>         prtd->bits_per_sample = 16;
+>
+> -       prtd->pos = 0;
+> -
+>         if (prtd->next_track != true) {
+>                 memcpy(&prtd->codec, codec, sizeof(*codec));
+>
+> --
+> 2.39.5
+>
+>
 
