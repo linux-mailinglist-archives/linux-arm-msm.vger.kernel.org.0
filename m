@@ -1,139 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-52856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34C4AA76005
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 09:26:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A7A3A7601C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 09:34:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28C03168323
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 07:26:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CDF61168347
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 07:34:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BF221B0F1E;
-	Mon, 31 Mar 2025 07:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BA831ADC7E;
+	Mon, 31 Mar 2025 07:34:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nGOHlNuP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AAF19CC20;
-	Mon, 31 Mar 2025 07:26:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C814A35;
+	Mon, 31 Mar 2025 07:34:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743405998; cv=none; b=aky14UY1A/u7Y+AD5HZg/TYRZ6D4FQ+fFn6ILNLgT43avKfv8HrkHCV1GVA0ujvWp3BP87kFQVA/1T6Bk58bZTxAmxDAWD8xXiS02jBCxH2Fq6ID1mQNMDdNlnPKV9MQZbr8IRKr9z7mBrIcdzED/hKqSLk6j5d1er2enxdwItY=
+	t=1743406472; cv=none; b=pDESc1KdUPxhIveY7Y++4gWFjW9b9lqGEsETEoUjzyiOM/5DPXstRTZ3YENPSB0hlZDHETuAv3j55dReygkZ51o3GVJY8orJn/e9l1X94cYqPf3uxPR9VTxeQP7od/WQ4h2FOc2ZsNGV0xoPKaJHE3Ohs9/y+bkN85t5uh0Kelg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743405998; c=relaxed/simple;
-	bh=CxW7x+INpZV3W3lDl8PzSZ5Dw2S4l00pksh94iYdH0Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=u0PmOkJ5wq4TXOpjf1ft1vVIfFF+40wXckRSXKSUBxOMxqSlKN1oJ/kRHE7rw2btPcGeHqBXln6E0J2A0bwCHEnIabtPoP9FrokaygFOZb0J5CYmNyYczfZUsblRgkOGdqq2Err8vap8B8UKoWqkr640H0XfMnHFqV4tTh06RGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C8AC4CEE3;
-	Mon, 31 Mar 2025 07:26:35 +0000 (UTC)
-Message-ID: <f1d4d88f-1ca0-4be8-84cd-3ef0d224feb4@xs4all.nl>
-Date: Mon, 31 Mar 2025 09:26:34 +0200
+	s=arc-20240116; t=1743406472; c=relaxed/simple;
+	bh=Xp6rgIULGMK6ODHcRCYxrh/7fOLdQFf6tsWDjILa068=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qS9c+RTBnLouViwRdVNZJOP0v0BGokiG8v2wO8p3jBRnLwos+as4hJCDHCwIdf4Gu5Oy+SKCrVfwcJ/KPJCAXId0YmMzpmXn7T3Q1sF3nXSy8gDio4gM/8DeIiXZ4SNEpUg5bsY0A2gYYwoUVeO8MnzIxC3TkzmpoDgTxkLgxOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nGOHlNuP; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4394345e4d5so25472285e9.0;
+        Mon, 31 Mar 2025 00:34:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743406470; x=1744011270; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZUxp3S2dqfaEV5aPQPhb7Pjd2GvGLFIPTzA3dPHuiWE=;
+        b=nGOHlNuP9MrGJf58i/a86VztAIHEZNiXqemaK5oycySLNdM2oq7e1zNLsB4QA+VV2W
+         tO1zMoygE2LNsD/FKTeDxV9aEsuM34QJT2Ko38KpS43YgakvlAAiTzehwMWgt7Negmmf
+         yJ814dgwqw1b1/WeYALtaVisprhu5LxS0crcKwb+8DYoulY+/nRSeWoDsdmMhz8H8U1i
+         9p6h99Ck5T/JTJ7qvD40mkfGxHXS0olt5X1HDEP8OTs6614tjqGOd/JCcaHEw78UGthH
+         zCB/+LG0+UJH45S5a00wfAwdrDd13cDhdU9Jx/6RN3ySieVVZYTw581ALETfb6EXfUWk
+         BSFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743406470; x=1744011270;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZUxp3S2dqfaEV5aPQPhb7Pjd2GvGLFIPTzA3dPHuiWE=;
+        b=QMIXwfJ1HakvAqHhPIG53sjLan022L15s+D258Yu7o65pcVNaF+X2Uo9nSDz2S2C5W
+         r3kdFPa8HayGMsG3bswsCU7HM6YsV9XvnDE5UNvam0yeK0oZS+dgbUg4vxLTrFV1qeUl
+         Y1sfiCl+sVzoEecgE6yWs3zs0ty5jxXmQxrY1hoUNozWX0mtZctg4JPuL2EnBvLOirUy
+         vtpFXxUt7HDopnORUHooVnqGy8bBylPc6cPJNv43X+vBBUbyS4tflvKY5JNcXLyWXc/E
+         DXjo9ka8o4ZDksFSJwA/+PmxuwL9jej8oe35qlCKH1TrVuCSlKEtfZdaT2J++RW16xkm
+         gU3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUxlbYl0zCiNCWxZVKb2NdnNvlp7OzD9Ssw9aqTdAvLQuA0VaprW8AdgX3KjsBJKBc0y4CdGBj58ne/@vger.kernel.org, AJvYcCVf2L6GGHkNb159mspe6Ih+K1VfO2xxacerTeHqFqvI1D6rsXo4QwZaIjIZ5+iKADskyiSaDKHEhTg36R7T5w==@vger.kernel.org, AJvYcCVfLVijSLAEp+iG1flhHunu9VMXCDX6JLx+knyMD4JetN3G/vR2ETrtx+VMzVQHnQIciTsy8zDzLFq6LVuE@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyvj/tLhipagc5OUc9lcQjfTRL0hYfv7j8kxckWkgh5je9/dP7G
+	8PRrBntAxtjOQ8oiZkZnB5vsFN1j2AmHw2siShU1zF5btY9v1V4=
+X-Gm-Gg: ASbGncs33Ywt/OI5fQtbQyGzrxWNYo++O7GFGOMVX0t3Kn9Xn4L8ERNzci75hDHctgf
+	nXXKRo08eq2X8SRa98xVX2xBPNtNZMIbhFwozW1995CY6Ktu3AgR4auMd5XKwDrh4whT7TDXDM/
+	vMqsc586gGi5gQy5whwEftrmMYfptu9ahv8fsnhFqltvDt2G0dYcA8TcIne3ZZRniqi2R2dBd1N
+	Y1eDEN7bpf7/xyMFBfCU+7lexB3wDyvMKsyJfrDIs+qewby+mfHUOo/Tp0rdt7ODeG4sFQq72kT
+	nCjCGQWcvw6GmNOESabiEyoj+VIRhkKJ7qVkYBGrkHn30gTUZ8cIuFTs9F4fA21hbf+jG4FPaYh
+	gH2KtxBtKFQJm
+X-Google-Smtp-Source: AGHT+IE2fbHYxPjaH6uwrsY8Z0TXyjZuqPt9P3oR1B6GfKL25s/cfOBFZpUhBtQu27JOhS+7h/7qUg==
+X-Received: by 2002:a05:600c:3d8e:b0:43d:5ec:b2f4 with SMTP id 5b1f17b1804b1-43db6228293mr76135775e9.10.1743406469160;
+        Mon, 31 Mar 2025 00:34:29 -0700 (PDT)
+Received: from alex-x1e.. (mob-194-230-148-227.cgn.sunrise.net. [194.230.148.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d8fba4b4fsm115704195e9.1.2025.03.31.00.34.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Mar 2025 00:34:28 -0700 (PDT)
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	laurentiu.tudor1@dell.com,
+	dmitry.baryshkov@oss.qualcomm.com,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Subject: [PATCH v2 0/1] arm64: dts: qcom: x1e80100-dell-xps-9345: Add WiFi/BT pwrseq
+Date: Mon, 31 Mar 2025 08:33:46 +0100
+Message-ID: <20250331073423.3184322-1-alex.vinarskis@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] media: MAINTAINERS: Switch from venus Reviewer to
- Maintainer
-To: Trilok Soni <quic_tsoni@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
- quic_dikshita@quicinc.com, mchehab@kernel.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250329-b4-25-03-29-media-committers-venus-iris-maintainers-v1-0-0ec1007fde3c@linaro.org>
- <20250329-b4-25-03-29-media-committers-venus-iris-maintainers-v1-1-0ec1007fde3c@linaro.org>
- <93ca218a-71a2-4751-860c-025ec29b9180@quicinc.com>
-Content-Language: en-US, nl
-From: Hans Verkuil <hverkuil@xs4all.nl>
-Autocrypt: addr=hverkuil@xs4all.nl; keydata=
- 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
-In-Reply-To: <93ca218a-71a2-4751-860c-025ec29b9180@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 29/03/2025 02:38, Trilok Soni wrote:
-> On 3/28/2025 6:26 PM, Bryan O'Donoghue wrote:
->> I'd like to volunteer my help in keeping venus maintained upstream.
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>  MAINTAINERS | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 29b4471574982bf3f8d03158cd5edcb94bc9fab9..5ccddd2030efd96324e53fcee8048120990a85d5 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -19592,7 +19592,7 @@ F:	drivers/usb/typec/tcpm/qcom/
->>  QUALCOMM VENUS VIDEO ACCELERATOR DRIVER
->>  M:	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-> 
-> Is Stanimir still an active maintainer here? 
+Add bluetooth to mentioned device.
 
-He's no longer maintaining venus.
+Changes to V1:
+* Fixed commit message
+* Picked Dmitry's R-by
+* Link to v1: https://lore.kernel.org/all/20250330212729.3062485-1-alex.vinarskis@gmail.com/
 
-Bryan, can you post a v2 removing Stan as maintainer? Stan, can you Ack
-that v2?
+Aleksandrs Vinarskis (1):
+  arm64: dts: qcom: x1e80100-dell-xps-9345: Add WiFi/BT pwrseq
 
-Regards,
+ .../dts/qcom/x1e80100-dell-xps13-9345.dts     | 144 ++++++++++++++++++
+ 1 file changed, 144 insertions(+)
 
-	Hans
-
-> 
->>  M:	Vikash Garodia <quic_vgarodia@quicinc.com>
->> -R:	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> +M:	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>  L:	linux-media@vger.kernel.org
->>  L:	linux-arm-msm@vger.kernel.org
->>  S:	Maintained
->>
-> 
-> 
+-- 
+2.45.2
 
 
