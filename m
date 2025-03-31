@@ -1,212 +1,426 @@
-Return-Path: <linux-arm-msm+bounces-52884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5746A76B43
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 17:53:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84A82A76C35
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 18:49:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1DF2C18847E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 15:49:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F3933A9E87
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 16:49:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FEAD21422E;
-	Mon, 31 Mar 2025 15:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCB02215040;
+	Mon, 31 Mar 2025 16:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="E9nl8+23"
+	dkim=pass (2048-bit key) header.d=dell.com header.i=@dell.com header.b="iYhEEnMD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-00154904.pphosted.com (mx0b-00154904.pphosted.com [148.163.137.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADDD1E3DFC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 15:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743436173; cv=none; b=Rol8lmB/sCKpx/IeTeMJXHdT9KEtDkV2jvAxGzFooySBZQp5f/XhkIbLp1UHBAkYq28gJ9JHwdqAyiWV8vEqakqnZ1XYcfnBV7zdTO8pddNMusQbkx0z7Q7QSYq6/RbYG5vJKZ0PX6gbZ3vcCm9sAf8ME48dbrx8WgdocqFjK5c=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743436173; c=relaxed/simple;
-	bh=IGBH4wxVg1pNnD/eSgoSpRXhf9gdVCfg02O/OGATn1w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ekiafpaEdYondd3TvS3ZvtvZloeFzlZh+QrqtRcZKW9AbNWknGv97DFrRwGxnSxkGf53qozrwym66g+RjJp69zPqFanCHijo+cPgPsCWvE207hW1aajdDNdhoJNwYCAxuqYNViN/Lh3S4j6LCjSxzhhTDCjVWwRQhmMI5Ot7Vrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=E9nl8+23; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52VFCqgC002444
-	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 15:49:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JQfeCNQU3Vgxd6VbOxmW+SSNqYouK+Dr05GCEQnKu5Y=; b=E9nl8+23kNEbGNMH
-	1LVghavU+TRhoX0mpA+RfdCuC5MrTua0XbHbzC69cSGa3I0z0LofjbZk3VSORqwl
-	WB+Qve+DXY9RcSd62IeYtNYwweVWQ9scupKcgMBu5FvBBdqzxtCRxdnwcGOXpVmx
-	rLMqbdEAPA/k88cQZl/FADk5gQ1/TeKSEfNGSv6HCJJRw8b4XRN5V0XWLClXXcFq
-	Zu7ZUKryh5L7Ttz8DbZF86Hq2OzxUQmfi+0xhLIRDav+Rxp5JYPU6qji+fu2TP/6
-	lj43xV4oQisj5aGdJ8Yt2Z7cgTxv1a5WDJXpnvWx9/vbJ+RHDcAoWKB81dXhbpt+
-	eEio0g==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45pa5bmuud-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 15:49:30 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6e91d8a7183so87177226d6.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 08:49:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743436169; x=1744040969;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JQfeCNQU3Vgxd6VbOxmW+SSNqYouK+Dr05GCEQnKu5Y=;
-        b=S18pomuSreR7cTAPDINLts2zipiOzYULQvkqxURXYgLEbvRU5hapkRL5H7o/RPNmEa
-         zUc/UaDw66Ac8sGre8jevTKxAUvLb55g7EKwHLgMeiGmgYr0yO+vNumhZ2rl134E7YBp
-         XHdFf/l3KS37JxAa4qvZ1aazX7l+mBNMVY2q111guzhPqZg8O86b7cY7Rv2SbflqmWqh
-         oLiV4tfHO6plg4X+6ysXpAKdtvlSNxuWymdK99moL6Z2wgh2EMNXeAasAZBm37CLZyNj
-         jLUi/4HITYf9kQeFGMG3x1fMUDIanI36dn8DKQ5u5RXo+wAHpsK+VLMgtIIUULUnEY3J
-         qsNA==
-X-Forwarded-Encrypted: i=1; AJvYcCVdDqsCsE043XGJy1AYTKKU0HFeZdV8/Osl3Y9Hbvnvmu5zTxa2Gb+65d0KeCRdfILOEF0ntNZU1vb6h3wp@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxrz6AjxMAbW5U1aJ7TU+jxBLF9exjFilZJiAgyE0y4C9KQx5xw
-	wrC9llEld4hukD/TG4jJbE2OMkTNNKET/ENXeoWqDGg6/BVNkARbXqY1qFEXPv/t7jp8fwTfD+S
-	weNxW0Cu4cZinXPUESCIBN0Qr4mmTi40ujSmx5RQkaujTHwApXnRjsAXxVL7n+UD7
-X-Gm-Gg: ASbGncu8KFFYA/EbjwCepul2Ai/ePdny/c9Dco/nUG0MZ5MsS9huKXjIB4CruOOyyZe
-	eiez2oYmuqXO+5gxt+2IeEbCcjmKh9sesq1ApUMxC1I0Sa4zmZpfvzHYJrwADkRlGSP44tReA5I
-	Fg9qBg1Zxpk0MDfI9v4bEA7SPKDztuyf7ERtKq7sCJvequpsvhBMotfLDWjPdqgECTuy7So4lDR
-	c14mkSnQOJ1XSYAfZhlmuWR9TY1gmuV5HU5IpDaXmxb0Innr9KEiwl0oZiBwZlvwAXJALQcH9tS
-	Yo8vNd1R4608vgK+8/1nWDi2Vtf8QhL59R/zLQ/ERo2P+Wqt4+IwbxvBJ6cW6sZ9nrI=
-X-Received: by 2002:a05:620a:4105:b0:7c5:562d:cd02 with SMTP id af79cd13be357-7c690875665mr1327158885a.41.1743436169082;
-        Mon, 31 Mar 2025 08:49:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAFI3UMTVKl1f4Q8Z9ayeXB3UNVJ+jJ+IjQs7TXV+ypHv91zaFO4bVygk5ud+r/cnISXI9Fg==
-X-Received: by 2002:a05:620a:4105:b0:7c5:562d:cd02 with SMTP id af79cd13be357-7c690875665mr1327153585a.41.1743436168664;
-        Mon, 31 Mar 2025 08:49:28 -0700 (PDT)
-Received: from [127.0.0.1] (87-92-196-151.rev.dnainternet.fi. [87.92.196.151])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5edc16aae56sm5773557a12.14.2025.03.31.08.49.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Mar 2025 08:49:26 -0700 (PDT)
-Message-ID: <b4983b93-97fc-43ed-a41c-a44f90773062@oss.qualcomm.com>
-Date: Mon, 31 Mar 2025 18:49:18 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D7A78F4F;
+	Mon, 31 Mar 2025 16:49:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.137.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1743439745; cv=fail; b=rZQGltjb+BJQHh351uqNpI9xk0WxT+mMNTlHsMGHOhyVVZvtaaCqid4b/+8tPy+sX9GJY3rB3KxFO0q4sxc6JRFrabq/K6PiW2lycstS1Q7r39XWVkTaxQzb4vLOThE5f7wIOZBQX8cepMnOeRtg+Ia8CXAz67Qy1kYgoQ66aeA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1743439745; c=relaxed/simple;
+	bh=HR3V9A5d7Tp4kpX/bq14iXvHgYAehKxrOjeZiIJsvgU=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=WkrrrRgGfJdRZK2PgxcIOKo8tAL18dghSFuaD/BW79mVFbTZoh3mkpWJFa/yYfn/D6KxUQrKJlR43xWUyQWrxdhfUMFtaKCz1a2AXvfnbxmMcHghuZtBs+d2yacouwyASeyGQ26G9b0xROjRw/MRS1F1yBUs3cPQ34VG26Pwg8c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dell.com; spf=pass smtp.mailfrom=dell.com; dkim=pass (2048-bit key) header.d=dell.com header.i=@dell.com header.b=iYhEEnMD; arc=fail smtp.client-ip=148.163.137.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dell.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dell.com
+Received: from pps.filterd (m0170396.ppops.net [127.0.0.1])
+	by mx0b-00154904.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52V6CYw5019147;
+	Mon, 31 Mar 2025 09:22:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=smtpout1; bh=m
+	QOj348p2Ar/vQEcRrDwUfZagV04Vu98Wjbeai9n5sg=; b=iYhEEnMDGKqVQ+kk5
+	dOMaEANWj34Q94J9At8nftmJqVQlPE4INWzfBUOzAIoOzApT7cF4lZZO7/4QgKFW
+	Os1h2dQKmz63HRNTd1foVU6E3xJO0mUxURU7WSHKfYkFe5oH/8VtFKtQUbTWtc4k
+	3/RrTnx1xS26U0rSokYpFMWdEZDH/gbMjOcvmtZhA3mffYTc4BzFVHSiN7RjZfvB
+	3+OG0r1fn++JQw5TZsYIh2PbOCeg2X5lgSA1afYQGIV7V3oJyNHtKSpGqJNHwcZf
+	C/yn4RB0yYOMu+KTwfIpr5HaFjB2K/lTJjvfAFZ7KrXU3XT+BJCHAzevscN/eeWG
+	R040g==
+Received: from mx0a-00154901.pphosted.com (mx0a-00154901.pphosted.com [67.231.149.39])
+	by mx0b-00154904.pphosted.com (PPS) with ESMTPS id 45pcpxxews-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 31 Mar 2025 09:22:38 -0400 (EDT)
+Received: from pps.filterd (m0134746.ppops.net [127.0.0.1])
+	by mx0a-00154901.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52VCbxrc008254;
+	Mon, 31 Mar 2025 09:22:37 -0400
+Received: from nam12-bn8-obe.outbound.protection.outlook.com (mail-bn8nam12lp2173.outbound.protection.outlook.com [104.47.55.173])
+	by mx0a-00154901.pphosted.com (PPS) with ESMTPS id 45pngmr103-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 31 Mar 2025 09:22:37 -0400 (EDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=x28v415FLAyziKSyTSjCMSQADI4H0fQPjuqEgptIM1R21hJgREPWvtrtyDTQYHVntKqAqKBsQWsauWASfX+j084/qcweGQ6hshCSeO/WVB6THTBZW6AFCylaRUqF8UyWgDS4qTYydq8+UUd7FUeDiSVcZa+1IVuMUbx0yqgNq8t0HSiIqpVwABb+1PfliPA0RzlbVtYlqs/JipigSalYoFDaaoso25saGUoOwS8Y5ByZJ1IPCv1ObXyKa82oikdcdglBiqW1TmkYGMzKpGoTIoun6Z3UnYOjMmv+xqLwL31YzweLdhBfMIRM5S+1W/zPHw/XdL8YxrxlIP4Iha3qRg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mQOj348p2Ar/vQEcRrDwUfZagV04Vu98Wjbeai9n5sg=;
+ b=kIowWqOXSYMgwIM3GgDf0Uo1VkHYJJgDEymyRC0+e4JyNfqqT/a1LI40exa/ZRYDvJCMxwdts7E0VyA4+K9+yJi8iMphZxdOJFxjY1gfa5jv/uA/P+AaY9ty8ew0BRYWXASL4YGIaw3JzXBDzDQhJ94rxl1pdUF33VXNJAg9eDePn/gGcxQJANU0PznhbSFUPOEZNHyJ/9DMfIza2J8CRpXWyGM7VWLmn7w2nrLtxcapF2K0MSPD6GJ0M2pIgyjRKY/h9moqya0Uv7l23sppAU5iZy8ASdEG0GzlsHNbo7y/cQEOCvTGXNUsE2DZKgDZkca7QkkO9J6Oa0PLquFhoQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=dell.com; dmarc=pass action=none header.from=dell.com;
+ dkim=pass header.d=dell.com; arc=none
+Received: from CY5PR19MB6147.namprd19.prod.outlook.com (2603:10b6:930:c::14)
+ by MN0PR19MB6336.namprd19.prod.outlook.com (2603:10b6:208:3c0::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.47; Mon, 31 Mar
+ 2025 13:22:32 +0000
+Received: from CY5PR19MB6147.namprd19.prod.outlook.com
+ ([fe80::d390:13bd:b078:f743]) by CY5PR19MB6147.namprd19.prod.outlook.com
+ ([fe80::d390:13bd:b078:f743%5]) with mapi id 15.20.8534.043; Mon, 31 Mar 2025
+ 13:22:32 +0000
+From: "Tudor, Laurentiu" <Laurentiu.Tudor1@dell.com>
+To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+        Bjorn Andersson
+	<bjorn.andersson@oss.qualcomm.com>,
+        "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "dmitry.baryshkov@oss.qualcomm.com" <dmitry.baryshkov@oss.qualcomm.com>
+Subject: RE: [PATCH v2 1/1] arm64: dts: qcom: x1e80100-dell-xps-9345: Add
+ WiFi/BT pwrseq
+Thread-Topic: [PATCH v2 1/1] arm64: dts: qcom: x1e80100-dell-xps-9345: Add
+ WiFi/BT pwrseq
+Thread-Index: AQHbog9cm8heXXI6S06rByyf1K+eFrONOl+A
+Date: Mon, 31 Mar 2025 13:22:32 +0000
+Message-ID:
+ <CY5PR19MB6147747DD6A8183253EFA751BAAD2@CY5PR19MB6147.namprd19.prod.outlook.com>
+References: <20250331073423.3184322-1-alex.vinarskis@gmail.com>
+ <20250331073423.3184322-2-alex.vinarskis@gmail.com>
+In-Reply-To: <20250331073423.3184322-2-alex.vinarskis@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_ActionId=8a0c526d-da8b-4ba8-992a-a4611f82b04a;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_ContentBits=0;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_Enabled=true;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_Method=Privileged;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_Name=Public
+ No Visual
+ Label;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_SetDate=2025-03-31T13:19:28Z;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_SiteId=945c199a-83a2-4e80-9f8c-5a91be5752dd;MSIP_Label_dad3be33-4108-4738-9e07-d8656a181486_Tag=10,
+ 0, 1, 1;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CY5PR19MB6147:EE_|MN0PR19MB6336:EE_
+x-ms-office365-filtering-correlation-id: df6e6e08-9f71-4d96-9ca9-08dd705717f3
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|366016|10070799003|376014|7416014|38070700018;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?hpPGcUMj5vpI1VHS4EbLQWqQrk3aws2HXKO6NLG58VZwYbenAby8fZY0rqOh?=
+ =?us-ascii?Q?YWOrIs75XAJLz+FcoToGpVtpdzgnxysYyLTwnuVUEy/aQoOC4l26eTblhS9+?=
+ =?us-ascii?Q?TbUNJA27mGOTGKWn4MDkeGOJEdDfzTt9ixqOzn4Gt2sPCRuOfEk587w2sadb?=
+ =?us-ascii?Q?cJnyorsjpzgV4ePzuyBNFNloYwYNzxR2/FFNIk5bNv+kGThnKHlU9L19hYrE?=
+ =?us-ascii?Q?FZZWOvkvBDjfH7kAEozkBl6J4+MkpFTGU8XB+ppwr0fldrkyV3Xo6AijYQrI?=
+ =?us-ascii?Q?NrudjOtR8wgRNPuMo9Zxjn2bXBSzC52rBjUfQvc9FvJ9lSGN3dmrXI0Dwyc6?=
+ =?us-ascii?Q?Hagn4glOflQqteE2DgHXUdVahDfTMBeMl+6UIj7Q0Uawb3nHQYe7Qxr6Jwr4?=
+ =?us-ascii?Q?oKvD+9LzSY3X+c+ZlegCYpLmUAMVdr8GyuAdvpbSFEOOpQD7DXdRDB76+2zX?=
+ =?us-ascii?Q?qokHxKDTJhZRQLkBP+1UdXU3hRJVrTuv98ikruf1k0VWS80u7MHzL7yKar0W?=
+ =?us-ascii?Q?F8B/uzCyvl3PiakEMNJO9A88sf8El+aoXZHublhecKsunvzxj0oi9nU1YPd5?=
+ =?us-ascii?Q?ZmlNtasDodtr3RB9J8bvwwp2F8gyZNB6+AkWlMUBN77fJ2Vyx65YIbSzWAKG?=
+ =?us-ascii?Q?xCGb4fx+JtPxcfxQq9nvNp74yZ2leAaXqHyxeu4d7J+wWXPti9kv2N5IWI7J?=
+ =?us-ascii?Q?7LCSBWAriNPQf7KOdwjmKr7Fz6cf91tsNV56/RKBtdxubLmP5O33nAVTbwIP?=
+ =?us-ascii?Q?4u4MhmrcMRlQU40cy1yOLABsZYwN/NS8NFzXXBPEMWZ4W+eDBfZrRCibbdWP?=
+ =?us-ascii?Q?O5cYS9Lxwmve1pa0ue/UuU7+o5cDmPgYyOsD+kL/1YhqeMCvGs0VuFyaMAQX?=
+ =?us-ascii?Q?E7jUju/T6mvrp7HaYebZNP9gOQmSgVOy5Q/3flrWy+4eLVrdFBAaqi+IjuXR?=
+ =?us-ascii?Q?wM7LgpOtnE5GTgO8UPkaj1lVdFu7syEYr5TPcx7OxAYXBM0Vekz0RrQ1EESG?=
+ =?us-ascii?Q?XSWrTlGAytdaf5T992D4y7wrcqHJYkesyz05SL0zNreJ++O7/vYrF4Prvpe2?=
+ =?us-ascii?Q?yBMTZRVY+Y3FgGxETgEZmVxCKeeUYvEA50A4rQUavdvDQj/zhiI6Ek5751CH?=
+ =?us-ascii?Q?0eF354O/W8D715mWkCWaNMlLL7qG/pJc277bDF/+sRUpTR4QUI98VeSXP4+z?=
+ =?us-ascii?Q?bUQoKIIg9kPMxFkIkXm3DXzIN8RrnI0Nl552OYE65RO70/L00gMrNECjQ4aa?=
+ =?us-ascii?Q?4lvSyppKe9L2wqXStQAlRE8Lkx5F7m0tPKEt2JJPFx2qD+toXn09y5JuMYKz?=
+ =?us-ascii?Q?Td/gK1zHqrmJtjtmsPxuX+3C3ql7N5Uk0Trs6GVeYAW6erIspAk7q1OJuLy+?=
+ =?us-ascii?Q?GbWk+qnlmm8WDeYMfxUSgnWkTyocrcvgXOm2N+LiZpMIyEYZ4PdWXlPP1APU?=
+ =?us-ascii?Q?GyN4xqvwGn2Tf/qPrDaUTi8kdwJxUd0L?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR19MB6147.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(10070799003)(376014)(7416014)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?qf230lL6u3JLgUjCiytYHYGmw0IeqrB+iAFfce1LfQpAaBLSyHlleosPVqKd?=
+ =?us-ascii?Q?UAdOQBqekB7XmCz8WnstWK708wCGYZ7rtVZDXjL1g0M0hHNDHjl3Wa28y8k0?=
+ =?us-ascii?Q?QeNOIs7iFfO17eygAHAvIAOQSoZ+M5JAKGjFs1frxwypT3xk3+X+UXdwUrhK?=
+ =?us-ascii?Q?JxDrr9Tcgc1RHX9lfwdZyBLGW8i2WE2JTjMdj2lgcRP9mvYDwHKzI7ZwU2s4?=
+ =?us-ascii?Q?VgjOP1OTZPnn8STXkjKHmFNkpr3RiMmdiDJyc2Byi96etWX+eIK0eDgEpMPT?=
+ =?us-ascii?Q?p7ZabXB0XpOG74jptAPwzmTQWVwxpPngTTAHAasGByzp1EGiSq/IUVUEbugW?=
+ =?us-ascii?Q?jlKfcRaLEoedcYE9G/MC7y2AkfoIYwVBOD4tWFG7fZWPRO9c7gtesY1SqPib?=
+ =?us-ascii?Q?Y61wG3lqJ+URaL2FWo9bh+HIqEFofi5XwEKs2ZULEaZrdTG5i5vpxUPRrC2v?=
+ =?us-ascii?Q?BIUN2T22iyN6TrrQWJz3hzUJyu618fcYWe/8UvIrCY68M7c5g7yJvnyU2zxB?=
+ =?us-ascii?Q?n33sqLpjIaul7zIE+L2g+CGkx+/frAjHVd6ZfeXEwbBolq2M9kEeS/bZh13J?=
+ =?us-ascii?Q?F+141uQJS1dwEtlmeIwvwQzwkatlam0G97yaQMlF/xB2StUIKiBKtbPMWnnu?=
+ =?us-ascii?Q?a10UZ+0tEsqUVum66ondpUDjM2CuhevCJZH9ZoM5M0KB7WaF0FIBzYGv403U?=
+ =?us-ascii?Q?2cbrbJ3pDJuSlOsCQ7svkuato3+OjlxnPKC0i0UiTh/wx5uTwfqNrxUganAI?=
+ =?us-ascii?Q?VOff0J7SxI8E4UPc2kbne+/eF6egurFGad/gqsxoDbvCE2EG5Y/8bt4yMQjD?=
+ =?us-ascii?Q?tm8zGKTG6YVUEdlyikG8BjaPOvCeTyG+BvzAGeDTEobGXnngNCtt2cIh2u0x?=
+ =?us-ascii?Q?YkaLgS7/6twpdLjzzz6Tln5HtyyhrleOA5NFcG8jha/eongaxRZJ94KRmIGd?=
+ =?us-ascii?Q?KtPcrQ6ccMHiMb7s39azsM/Pk2fOlc2INKuIyWzwacUTAtZKuqY52kknFCcf?=
+ =?us-ascii?Q?8+NrhARz1EKABXgtXZh5A8vfPJr5BaqTgqENPWel+mCdy7Pb1XO2tWDcXGFZ?=
+ =?us-ascii?Q?dYmhIwqSYKxALK2ECBoFgAqvgTdIvISXlNlFKZQnldS0Dza5Qem43LY+R4Ap?=
+ =?us-ascii?Q?JRYt+TVTyp4T2VzRSHL4wAR/A9Zt+/BmUuYyU2kilos4wDjBqNZn9uN6Kb0Q?=
+ =?us-ascii?Q?NuBS3IhTo/GgYHkNYz7sR/cxud9sttjbhvku/gKxuwnJmfwQWTSePnwIld8g?=
+ =?us-ascii?Q?2heSWTh1+g16nBGcC15WSphVWmAr8pDrTdG3sRkn+Nhc1bdmBILbiAoACLjZ?=
+ =?us-ascii?Q?wbdl8LRttsXHBFvXwUMn1zKi4cEmr26H2OpotdY++sKRER0aOIJilXrO9sMM?=
+ =?us-ascii?Q?XnmaeU/6I/GoWL4+2jLq3+wH5dly70wk2XRLmbyuzQQJH4i1kU7EmZgVKy9n?=
+ =?us-ascii?Q?K1jIgVnA0MZdELoz8KVU37cqqWBA68NRyGT59fMPoQ3GqtQI4Xat6VQICfMp?=
+ =?us-ascii?Q?WQq5hXX7TZmXMh3PXow8VfxHYyvzg+Ki8mwFv36Q6Hu8pNPTybREcYmeaG4m?=
+ =?us-ascii?Q?dHDUjKEXSTZFZ9lUJc9uyW1FSiTvYqYUevplmTG7cxwq/6cS7b+GAg+p1j9+?=
+ =?us-ascii?Q?dVAdVUOMb/yXiWcxQ0vLqw98vftAw7R3sFahXbSzlTg8ahDuc58mY0rWWb5R?=
+ =?us-ascii?Q?HLwvgw=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: x1e78100-t14s: add hpd gpio to
- eDP panel
-To: Christopher Obbard <christopher.obbard@linaro.org>,
-        Johan Hovold <johan@kernel.org>
-Cc: Douglas Anderson <dianders@chromium.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Rui Miguel Silva <rui.silva@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20250327-wip-obbardc-qcom-t14s-oled-panel-v3-0-45d5f2747398@linaro.org>
- <20250327-wip-obbardc-qcom-t14s-oled-panel-v3-1-45d5f2747398@linaro.org>
- <Z-pJP4PMwPo3L3Og@hovoldconsulting.com>
- <CACr-zFA_oSySRnA2VaSQk2ND_AHeyt3v=RuPTbABPM7SYown6g@mail.gmail.com>
-Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <CACr-zFA_oSySRnA2VaSQk2ND_AHeyt3v=RuPTbABPM7SYown6g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: URVygcXYMbW1m-qtCdUyGSZQGT7OYM11
-X-Authority-Analysis: v=2.4 cv=YqcPR5YX c=1 sm=1 tr=0 ts=67eab98a cx=c_pps a=UgVkIMxJMSkC9lv97toC5g==:117 a=OTAToBYhIyEwkxHp7GKTIQ==:17 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=3C20PiN8XUAt7dgb-g4A:9 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: URVygcXYMbW1m-qtCdUyGSZQGT7OYM11
+X-OriginatorOrg: Dell.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CY5PR19MB6147.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: df6e6e08-9f71-4d96-9ca9-08dd705717f3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Mar 2025 13:22:32.2417
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 945c199a-83a2-4e80-9f8c-5a91be5752dd
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 14uVH2+g8pe1eOficpH91bwP8vFu7Xxs0x88hxMcRVQWmkDomUJ8rL6FMgx+l11MzMTBRKeJ3GqVbBdTzz3IxxyZphH1n5DuYCMuxWRUFDk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR19MB6336
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-31_07,2025-03-27_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- priorityscore=1501 malwarescore=0 spamscore=0 phishscore=0 impostorscore=0
- suspectscore=0 mlxlogscore=999 bulkscore=0 adultscore=0 lowpriorityscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503310112
+ definitions=2025-03-31_05,2025-03-27_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
+ phishscore=0 bulkscore=0 malwarescore=0 suspectscore=0 lowpriorityscore=0
+ spamscore=0 priorityscore=1501 mlxscore=0 impostorscore=0 clxscore=1011
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503310095
+X-Proofpoint-ORIG-GUID: Tl55ocgB7oZaaPjl5fi5Ys10x0Fe70uK
+X-Proofpoint-GUID: Tl55ocgB7oZaaPjl5fi5Ys10x0Fe70uK
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ mlxscore=0 malwarescore=0 mlxlogscore=999 phishscore=0 clxscore=1015
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503310095
 
-On 31/03/2025 18:39, Christopher Obbard wrote:
-> Hi Johan,
-> 
-> On Mon, 31 Mar 2025 at 09:50, Johan Hovold <johan@kernel.org> wrote:
->>
->> On Thu, Mar 27, 2025 at 04:56:53PM +0000, Christopher Obbard wrote:
->>> The eDP panel has an HPD GPIO. Describe it in the device tree
->>> for the generic T14s model, as the HPD GPIO property is used in
->>> both the OLED and LCD models which inherit this device tree.
->>
->> AFAICT, this patch is not correct as the hotplug detect signal is
->> connected directly to the display controller on (these) Qualcomm SoCs
->> and is already handled by its driver.
->>
->> Describing it as you do here leads to less accurate delays, see commits:
->>
->>          2327b13d6c47 ("drm/panel-edp: Take advantage of wait_hpd_asserted() in struct drm_dp_aux").
->>          3b5765df375c ("drm/panel: atna33xc20: Take advantage of wait_hpd_asserted() in struct drm_dp_aux")
->>
->> Perhaps you lose some other functionality too.
->>
->>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
->>> ---
->>>   arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi | 11 +++++++++++
->>>   1 file changed, 11 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
->>> index 962fb050c55c4fd33f480a21a8c47a484d0c82b8..46c73f5c039ed982b553636cf8c4237a20ba7687 100644
->>> --- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
->>> @@ -980,8 +980,12 @@ &mdss_dp3 {
->>>        aux-bus {
->>>                panel: panel {
->>>                        compatible = "edp-panel";
->>> +                     hpd-gpios = <&tlmm 119 GPIO_ACTIVE_HIGH>;
->>>                        power-supply = <&vreg_edp_3p3>;
->>>
->>> +                     pinctrl-0 = <&edp_hpd_n_default>;
->>> +                     pinctrl-names = "default";
->>> +
->>>                        port {
->>>                                edp_panel_in: endpoint {
->>>                                        remote-endpoint = <&mdss_dp3_out>;
->>> @@ -1286,6 +1290,13 @@ hall_int_n_default: hall-int-n-state {
->>>                bias-disable;
->>>        };
->>>
->>> +     edp_hpd_n_default: edp-hpd-n-state {
->>> +             pins = "gpio119";
->>> +             function = "gpio";
->>> +             drive-strength = <2>;
->>> +             bias-pull-up;
->>> +     };
->>
->> I checked the firmware configuration for this pin on my T14s, which
->> does not match what you have here. Instead the function is set to
->> "edp0_hot" which forwards the signal to the display controller which
->> already handles the signal on panel power on. (And there is also no
->> internal pull up enabled).
->>
->> We may want to describe this pin configuration somewhere, but that's a
->> separate issue.
-> 
-> Thanks for your review, I will send another version in coming days and
-> drop this first patch (adding hpd to the T14s DTSI).
-> 
-> As a consequence I will need to add no-hpd property to the panel node.
 
-No, you won't. There is a HPD line and it is routed to the DP controller.
+> -----Original Message-----
+> From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+> Sent: Monday, March 31, 2025 10:34 AM
+>=20
+> Add the WiFi/BT nodes for XPS and describe the regulators for the WCN7850
+> combo chip using the new power sequencing bindings. All voltages are deri=
+ved
+> from chained fixed regulators controlled using a single GPIO.
+>=20
+> Based on the commit d09ab685a8f5 ("arm64: dts: qcom: x1e80100-qcp: Add
+> WiFi/BT pwrseq").
+>=20
+> With that fixed commit f5b788d0e8cd ("arm64: dts: qcom: Add support for X=
+1-
+> based Dell XPS 13 9345")
+>=20
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 
-> I will add a short comment about how the hpd signal is handled by the
-> driver already.
+Tested-by: Laurentiu Tudor <laurentiu.tudor1@dell.com>
 
--- 
-With best wishes
-Dmitry
+Thanks for taking care of this, Alex!
+
+---
+Best Regards, Laurentiu
+
+> ---
+>  .../dts/qcom/x1e80100-dell-xps13-9345.dts     | 144 ++++++++++++++++++
+>  1 file changed, 144 insertions(+)
+>=20
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
+> b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
+> index d259a0d12d7b..c924f2a67939 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
+> @@ -22,6 +22,7 @@ / {
+>=20
+>  	aliases {
+>  		serial0 =3D &uart21;
+> +		serial1 =3D &uart14;
+>  	};
+>=20
+>  	gpio-keys {
+> @@ -288,6 +289,101 @@ vreg_vph_pwr: regulator-vph-pwr {
+>  		regulator-always-on;
+>  		regulator-boot-on;
+>  	};
+> +
+> +	vreg_wcn_0p95: regulator-wcn-0p95 {
+> +		compatible =3D "regulator-fixed";
+> +
+> +		regulator-name =3D "VREG_WCN_0P95";
+> +		regulator-min-microvolt =3D <950000>;
+> +		regulator-max-microvolt =3D <950000>;
+> +
+> +		vin-supply =3D <&vreg_wcn_3p3>;
+> +	};
+> +
+> +	vreg_wcn_1p9: regulator-wcn-1p9 {
+> +		compatible =3D "regulator-fixed";
+> +
+> +		regulator-name =3D "VREG_WCN_1P9";
+> +		regulator-min-microvolt =3D <1900000>;
+> +		regulator-max-microvolt =3D <1900000>;
+> +
+> +		vin-supply =3D <&vreg_wcn_3p3>;
+> +	};
+> +
+> +	vreg_wcn_3p3: regulator-wcn-3p3 {
+> +		compatible =3D "regulator-fixed";
+> +
+> +		regulator-name =3D "VREG_WCN_3P3";
+> +		regulator-min-microvolt =3D <3300000>;
+> +		regulator-max-microvolt =3D <3300000>;
+> +
+> +		gpio =3D <&tlmm 214 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 =3D <&wcn_sw_en>;
+> +		pinctrl-names =3D "default";
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+> +	wcn7850-pmu {
+> +		compatible =3D "qcom,wcn7850-pmu";
+> +
+> +		vdd-supply =3D <&vreg_wcn_0p95>;
+> +		vddio-supply =3D <&vreg_l15b_1p8>;
+> +		vddaon-supply =3D <&vreg_wcn_0p95>;
+> +		vdddig-supply =3D <&vreg_wcn_0p95>;
+> +		vddrfa1p2-supply =3D <&vreg_wcn_1p9>;
+> +		vddrfa1p8-supply =3D <&vreg_wcn_1p9>;
+> +
+> +		wlan-enable-gpios =3D <&tlmm 117 GPIO_ACTIVE_HIGH>;
+> +		bt-enable-gpios =3D <&tlmm 116 GPIO_ACTIVE_HIGH>;
+> +
+> +		pinctrl-0 =3D <&wcn_wlan_bt_en>;
+> +		pinctrl-names =3D "default";
+> +
+> +		regulators {
+> +			vreg_pmu_rfa_cmn: ldo0 {
+> +				regulator-name =3D "vreg_pmu_rfa_cmn";
+> +			};
+> +
+> +			vreg_pmu_aon_0p59: ldo1 {
+> +				regulator-name =3D "vreg_pmu_aon_0p59";
+> +			};
+> +
+> +			vreg_pmu_wlcx_0p8: ldo2 {
+> +				regulator-name =3D "vreg_pmu_wlcx_0p8";
+> +			};
+> +
+> +			vreg_pmu_wlmx_0p85: ldo3 {
+> +				regulator-name =3D "vreg_pmu_wlmx_0p85";
+> +			};
+> +
+> +			vreg_pmu_btcmx_0p85: ldo4 {
+> +				regulator-name =3D "vreg_pmu_btcmx_0p85";
+> +			};
+> +
+> +			vreg_pmu_rfa_0p8: ldo5 {
+> +				regulator-name =3D "vreg_pmu_rfa_0p8";
+> +			};
+> +
+> +			vreg_pmu_rfa_1p2: ldo6 {
+> +				regulator-name =3D "vreg_pmu_rfa_1p2";
+> +			};
+> +
+> +			vreg_pmu_rfa_1p8: ldo7 {
+> +				regulator-name =3D "vreg_pmu_rfa_1p8";
+> +			};
+> +
+> +			vreg_pmu_pcie_0p9: ldo8 {
+> +				regulator-name =3D "vreg_pmu_pcie_0p9";
+> +			};
+> +
+> +			vreg_pmu_pcie_1p8: ldo9 {
+> +				regulator-name =3D "vreg_pmu_pcie_1p8";
+> +			};
+> +		};
+> +	};
+>  };
+>=20
+>  &apps_rsc {
+> @@ -861,6 +957,23 @@ &pcie4_phy {
+>  	status =3D "okay";
+>  };
+>=20
+> +&pcie4_port0 {
+> +	wifi@0 {
+> +		compatible =3D "pci17cb,1107";
+> +		reg =3D <0x10000 0x0 0x0 0x0 0x0>;
+> +
+> +		vddaon-supply =3D <&vreg_pmu_aon_0p59>;
+> +		vddwlcx-supply =3D <&vreg_pmu_wlcx_0p8>;
+> +		vddwlmx-supply =3D <&vreg_pmu_wlmx_0p85>;
+> +		vddrfacmn-supply =3D <&vreg_pmu_rfa_cmn>;
+> +		vddrfa0p8-supply =3D <&vreg_pmu_rfa_0p8>;
+> +		vddrfa1p2-supply =3D <&vreg_pmu_rfa_1p2>;
+> +		vddrfa1p8-supply =3D <&vreg_pmu_rfa_1p8>;
+> +		vddpcie0p9-supply =3D <&vreg_pmu_pcie_0p9>;
+> +		vddpcie1p8-supply =3D <&vreg_pmu_pcie_1p8>;
+> +	};
+> +};
+> +
+>  &pcie6a {
+>  	perst-gpios =3D <&tlmm 152 GPIO_ACTIVE_LOW>;
+>  	wake-gpios =3D <&tlmm 154 GPIO_ACTIVE_LOW>; @@ -1127,6
+> +1240,37 @@ reset-n-pins {
+>  			drive-strength =3D <2>;
+>  		};
+>  	};
+> +
+> +	wcn_wlan_bt_en: wcn-wlan-bt-en-state {
+> +		pins =3D "gpio116", "gpio117";
+> +		function =3D "gpio";
+> +		drive-strength =3D <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	wcn_sw_en: wcn-sw-en-state {
+> +		pins =3D "gpio214";
+> +		function =3D "gpio";
+> +		drive-strength =3D <2>;
+> +		bias-disable;
+> +	};
+> +};
+> +
+> +&uart14 {
+> +	status =3D "okay";
+> +
+> +	bluetooth {
+> +		compatible =3D "qcom,wcn7850-bt";
+> +		max-speed =3D <3200000>;
+> +
+> +		vddaon-supply =3D <&vreg_pmu_aon_0p59>;
+> +		vddwlcx-supply =3D <&vreg_pmu_wlcx_0p8>;
+> +		vddwlmx-supply =3D <&vreg_pmu_wlmx_0p85>;
+> +		vddrfacmn-supply =3D <&vreg_pmu_rfa_cmn>;
+> +		vddrfa0p8-supply =3D <&vreg_pmu_rfa_0p8>;
+> +		vddrfa1p2-supply =3D <&vreg_pmu_rfa_1p2>;
+> +		vddrfa1p8-supply =3D <&vreg_pmu_rfa_1p8>;
+> +	};
+>  };
+>=20
+>  &uart21 {
+> --
+> 2.45.2
+
 
