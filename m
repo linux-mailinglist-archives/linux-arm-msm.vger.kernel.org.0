@@ -1,130 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-52985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA5CAA78200
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 20:19:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E13FA7836B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 22:43:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 91944188F795
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 18:19:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A78DA16A613
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 20:43:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0902A1DE2B4;
-	Tue,  1 Apr 2025 18:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E44B213E8E;
+	Tue,  1 Apr 2025 20:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=craftyguy.net header.i=@craftyguy.net header.b="GZg9ADIz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EtIJ4ee8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-174.mta0.migadu.com (out-174.mta0.migadu.com [91.218.175.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0618A20AF67;
-	Tue,  1 Apr 2025 18:19:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC9220E32B;
+	Tue,  1 Apr 2025 20:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743531549; cv=none; b=B/udIckmkmlZqt1Ue9/j538i4vskJoLai4acsCV1/okjEKq5iTQElegs2UeeAAPB0Iam3j6K//rlFKPxzWSeZu9kzKgpWZk0fsjezfBJfpycF++klDWBapOAVrqEvuHCJTyEcWoW98XFwcWd11qvGwguVcuL6mSeC3uSxNTcpWY=
+	t=1743540208; cv=none; b=YIIyrUED0iIL1tbvA05BNKV8eD3ByuIU9rgR20eedpgORRdf9XQWH7aJarBNCKpkD0Um5U7pyYkdTM0dGKAfESldHd4rDoSRiKs8VWoXoovyTmZAnEY8H4cUbHwVtJTn8vRz3EQP/5QfygINikYqdlHOdE6Aeu9VZr5gLNI7p6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743531549; c=relaxed/simple;
-	bh=k4nbEj2HOrkVKd3meibvEKz8GTVSNgISM5g0cAlbbB0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=P+3OOZC94QFlRpvWeyWzY5CicCOZIQvqvJRZ6t/B3JDikvirOBS25Nr1L01rTlpElcgmoJI3USFP73xExKYRxQTFXLkFDctnE7L51N04yaRTIIWl7yl9Qqt1aeM5piecssceLtYLsud78Hz8Lk1C6VzWClQwgc8UyWnkXtfcry8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=craftyguy.net; spf=pass smtp.mailfrom=craftyguy.net; dkim=pass (2048-bit key) header.d=craftyguy.net header.i=@craftyguy.net header.b=GZg9ADIz; arc=none smtp.client-ip=91.218.175.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=craftyguy.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=craftyguy.net
-Message-ID: <7e287401-98c4-413f-8108-134d5e43d279@craftyguy.net>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=craftyguy.net;
-	s=key1; t=1743531535;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=mPDdthZvOKQegQtqGLkhrEwgHRPScxP/qocRmzW8nbA=;
-	b=GZg9ADIzt1neDQckUX7aNRGvlukEVYj56hWCAdR/hMVBomhLpwnaXTdbC2h1PND/4irDiT
-	HjDw76E7lycsAF1KvO15jn3uO8RxYSOvmudpU1CJ76omexpvW87QzIEZKZtGegljFnNoks
-	KbBogy6tvjI2T236d/wQb/SpZM1atC+rwW3D6F5ZkQQ9YGvplzC9uYSVWV48Gt5kb7cu9r
-	/pzOcRrTRi63W0VdsEuzQqIRFu9F2n/YTJGZS/3SjRwDN8/4RTKyUL/neRC1NYGNz3ddb3
-	LzeDonS9LtBQ9zGLG0rY6CCOLIjH23PG2tugNLWr4HsxPfagfBsi4KBqf6UgbQ==
-Date: Tue, 1 Apr 2025 11:18:49 -0700
+	s=arc-20240116; t=1743540208; c=relaxed/simple;
+	bh=zQhKR8kVOAEtr8R3vm7SqBVF3sJt9l6H/kz5zrldLtk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=DO96ICoYCqIZ/y+Bpbd2GlBAS8FQw7LjKI1FPt69T33i9PmHJ3ILRvNaM+yrm8SLQhhDQsdFH5N9dSuxIsXfQzgXM4EUM1y0u/Lc/+SaAD7EmBrelQFNj6rww1v+gMieHS46BR+0373OBefvo8BWYs2IQVHFnA0Boi2x5toMFMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EtIJ4ee8; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-30dd5a93b49so40446891fa.0;
+        Tue, 01 Apr 2025 13:43:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743540204; x=1744145004; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ncjIuT5qgvMbEBzrNid23ot35c1++uRBRoVD3rabhTU=;
+        b=EtIJ4ee8pUdS5iu5UvRHsMuLig308qB3C9KbcsQLS8MSP8t9nwIx00+t67F62KEEBO
+         cWM0PrJXffgonT8C26Yma1py09wL3M45IOc3P5sCFkp1i78IFBCuGynzzPCbv/ndfc57
+         msrZTSYCVWgahRVXs5tKJcTljiiUsshP6BF6EfFNxka2X6RFylsBkPpqrIiwkwER7k8U
+         mTOkba/j1G3+LlRmxjtmLWC+z7l8kSb/WrvfvNLd3OcPtnQh8y6ydqdQwHFh3rOOQpEO
+         oHH6oioD0geCseQ3rUxLrwLamxE4/KwZA6x0dRmgf/r1hdiYSNPROfi4/G6UOWncaRHd
+         kPlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743540204; x=1744145004;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ncjIuT5qgvMbEBzrNid23ot35c1++uRBRoVD3rabhTU=;
+        b=nkIFohfO8zOeO5KxsiphauVcHRMRUAIbBhVxHZigKHSjKqQgi5dzJCmE0SFVHca5rz
+         3FQ72fhe1UgKvadtePzaVztaNZCBXmgffdlJBeWKt2AhWVBTBfZmmajZODJWOZ18sT6c
+         5BmHnFtK0BAV0vF8e5OYHinALPd7h0+QSAJVzoWSYE6JXSwCd56xT7hBd61byWrwwoe3
+         uAkkoJmfBmxYh9wuYzmOAIwLi6U1edRh2HHVGZNuOkX8PJ9G5Xyt7uVXczJZwP3ifJzc
+         aOe2nVhoY0PzGLAUQE/OHxl18m3/qzPOP007C+nwb28pSfA6l7fayD/H/2wuaCwqKdrt
+         VGNA==
+X-Forwarded-Encrypted: i=1; AJvYcCV1s4sdO5uNd/xm41H3+b052sfitkYkXK80sQmUrmlwQvYAkWdAGY6gz4N1kMNoWPkPvLZpWNQDgKqS7edL@vger.kernel.org, AJvYcCVEfKxjSTAp6klBX9+d/SVZt6vZkkGZZjMXuMgR8k4HjhnnOsCyPLYEd8W2zsCrLXjB6VG7ehDLPsp6zLg=@vger.kernel.org, AJvYcCVPzJGFJI0Add/pvuvF5w7vzJsMIMvTGOHBcRTVrll2zMq0bWcTbNTlGqrZmjLEIF6pFb4BUEHxgVyhTshq@vger.kernel.org, AJvYcCWlw+nAgPMeUOxFgMwvO1C/ZzoengDq3STafb+0D/CDWcfnsFJ52hSuYybSEY6BMlo3ni29yAAt@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJ5MmyjkI6NdhP8u1Jo4aC/2bzuk33fDtQrHGDnpBRoejO7Ozk
+	pFzUIde4aXUprYC7sYsNeanY5b1H7OyYxEMV2t6y0lE0FKk19nUz
+X-Gm-Gg: ASbGncuulTOyEU4bwklovXrVn+5RUqiRoE81LhAjD9aUkrqEw021ejy8IRWaBHOOK4L
+	U98I3vfNsBD9wh5qjJmpJrBYDFHBgINJt52WnZAWRw7QrmrHsH6f/A0bDsD2eEwx9aTosyAm0oP
+	USKI9nSUpg/Cmy0598VtnT4dVo3MEnL54cp90syiIMO3yCyHmiAzvHD2cuLUbFypsv+Xrooloh/
+	m4sojEWno1uaNjSUdmjEC1BhoL4hm/b0+Qwxx3YOk+p2jgAHIjylQnc1pQQw0jw7jy7Dbk2+PoB
+	Q64gDz/oA9gCh0LD3OP5x+Rhfnk4hxak1ZXWlpqPrPgkd3uH9zvrIdbeO/LFTDMxi6jjnw==
+X-Google-Smtp-Source: AGHT+IELNpGF2l/VAeH0aVpMUHnDd9JFi7xa5NDaI1mW4wUTHj9x8t8WdiqPNbT5mJBgMSpH5VHtxQ==
+X-Received: by 2002:a05:651c:1602:b0:30b:b184:a8ef with SMTP id 38308e7fff4ca-30de024b43cmr43726451fa.14.1743540203883;
+        Tue, 01 Apr 2025 13:43:23 -0700 (PDT)
+Received: from localhost.localdomain ([87.249.25.136])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30dd2ab8581sm18308161fa.25.2025.04.01.13.43.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Apr 2025 13:43:22 -0700 (PDT)
+From: Evgeny Pimenov <pimenoveu12@gmail.com>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Evgeny Pimenov <pimenoveu12@gmail.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Venkata Prasad Potturu <quic_potturu@quicinc.com>,
+	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	lvc-patches@linuxtesting.org,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Mikhail Kobuk <m.kobuk@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	stable@vger.kernel.org
+Subject: [PATCH] ASoC: qcom: Fix sc7280 lpass potential buffer overflow
+Date: Tue,  1 Apr 2025 23:40:58 +0300
+Message-Id: <20250401204058.32261-1-pimenoveu12@gmail.com>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH] soc: qcom: pmic_glink_altmode: fix spurious DP hotplug
- events
-To: Johan Hovold <johan@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20250324132448.6134-1-johan+linaro@kernel.org>
- <dd1bc01c-75f4-4071-a2ac-534a12dd3029@craftyguy.net>
- <Z-JqCUu13US1E5wY@hovoldconsulting.com>
- <Z-QSg7LH8u7uAfLg@hovoldconsulting.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Clayton Craft <clayton@craftyguy.net>
-In-Reply-To: <Z-QSg7LH8u7uAfLg@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
-On 3/26/25 07:43, Johan Hovold wrote:
-> On Tue, Mar 25, 2025 at 09:32:10AM +0100, Johan Hovold wrote:
->> On Mon, Mar 24, 2025 at 10:05:44AM -0700, Clayton Craft wrote:
->>> On 3/24/25 06:24, Johan Hovold wrote:
->>>> The PMIC GLINK driver is currently generating DisplayPort hotplug
->>>> notifications whenever something is connected to (or disconnected from)
->>>> a port regardless of the type of notification sent by the firmware.
->>>>
->>>> These notifications are forwarded to user space by the DRM subsystem as
->>>> connector "change" uevents:
->>
->>>> ---
->>>>
->>>> Clayton reported seeing display flickering with recent RC kernels, which
->>>> may possibly be related to these spurious events being generated with
->>>> even greater frequency.
->>>>
->>>> That still remains to be fully understood, but the spurious events, that
->>>> on the X13s are generated every 90 seconds, should be fixed either way.
->>>
->>> When a display/dock (which has ethernet) is connected, I see this
->>> hotplug change event 2 times (every 30 seconds) which I think you said
->>> this is expected now?
->>
->> I didn't realise you were also using a display/dock. Bjorn mentioned
->> that he has noticed issues with one of his monitors (e.g. built-in hub
->> reenumerating repeatedly iirc) which may be related.
+Case values introduced in commit
+5f78e1fb7a3e ("ASoC: qcom: Add driver support for audioreach solution")
+cause out of bounds access in arrays of sc7280 driver data (e.g. in case
+of RX_CODEC_DMA_RX_0 in sc7280_snd_hw_params()).
 
-Sorry for the confusion, let me clarify:
+Redefine LPASS_MAX_PORTS to consider the maximum possible port id for
+q6dsp as sc7280 driver utilizes some of those values.
 
-The original issue I reported to you on IRC was *without* a 
-dock/external display attached, only a PD adapter was attached. With 
-your patch, I no longer see these drm hotplug events in this scenario.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-After confirming that your patch resolved the spurious hotplug events 
-when using a PD charger, I connected a dock+external display to see if 
-the patch caused any regressions there for me. It was here that I 
-noticed a periodic hotplug event firing 2 times every 30 seconds was 
-still showing up. I don't know if this is expected or not, I've never 
-noticed it before because I wasn't monitoring udev events.
+Fixes: 77d0ffef793d ("ASoC: qcom: Add macro for lpass DAI id's max limit")
+Cc: stable@vger.kernel.org # v6.0+
+Suggested-by: Mikhail Kobuk <m.kobuk@ispras.ru>
+Suggested-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Signed-off-by: Evgeny Pimenov <pimenoveu12@gmail.com>
+---
+ sound/soc/qcom/lpass.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
->> Just so I understand you correctly here, you're no longer seeing the
->> repeated uevents with this patch? Both when using a dock and when using
->> a charger directly?
-
-With PD charger only: no more spurious hotplug events firing
-
-With dock+external displauy: 2x hotplug events every 30s.
-
->>
->> Did it help with the display flickering too? Was that only on the
->> external display?
-
-The flickering was only on the internal display, and your patch here 
-seems to have resolved that.
-
--Clayton
+diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
+index 27a2bf9a6613..de3ec6f594c1 100644
+--- a/sound/soc/qcom/lpass.h
++++ b/sound/soc/qcom/lpass.h
+@@ -13,10 +13,11 @@
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+ #include <dt-bindings/sound/qcom,lpass.h>
++#include <dt-bindings/sound/qcom,q6afe.h>
+ #include "lpass-hdmi.h"
+ 
+ #define LPASS_AHBIX_CLOCK_FREQUENCY		131072000
+-#define LPASS_MAX_PORTS			(LPASS_CDC_DMA_VA_TX8 + 1)
++#define LPASS_MAX_PORTS			(DISPLAY_PORT_RX_7 + 1)
+ #define LPASS_MAX_MI2S_PORTS			(8)
+ #define LPASS_MAX_DMA_CHANNELS			(8)
+ #define LPASS_MAX_HDMI_DMA_CHANNELS		(4)
+-- 
+2.39.5
 
