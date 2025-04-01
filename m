@@ -1,81 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-52917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26B87A773FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 07:37:37 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FCACA773FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 07:38:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B31347A4765
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 05:36:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 060F07A3BC9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 05:37:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A9211DD0D4;
-	Tue,  1 Apr 2025 05:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD4631DB55C;
+	Tue,  1 Apr 2025 05:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PFkXiwP6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eSSDghq6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE6EC2C6
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 05:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092901553AB
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 05:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743485847; cv=none; b=JKcZCqdMg3lz07/Y5uKPKuv4kGPMUBS5XlgSzCnqe7LaDF2KWIjyn1tiVxmhpf2BxeZMeAQ82TsKdQ2IdF21C8mbKt/1JCmG3a5x1ocTtMKiuWJsWnYIveo5z8kfQyRhUsBU3g4DUwlcN+ZNy/fy6H4qvqxTmQh8577M62Jmpt8=
+	t=1743485916; cv=none; b=tF/grj8HuCmZ9ywZEhqlAbDhHxEo10LDtL0gRsq0pgJajI1PjHo4F6dj7A8kproZQTAbLzgyQdk+gZWp12lGC1mK5oh2sNeTa8T/7T1qh92kdkOenzy7NrwVoX1k6R2VKnd+MM8+Dcm2Tkgh5tLwytgZxFeKHx60pOA6g1ySKSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743485847; c=relaxed/simple;
-	bh=s0VbEY+y+zt4UWZGVhiFYKXCJFm5wzoLHCoJFYBIOjQ=;
+	s=arc-20240116; t=1743485916; c=relaxed/simple;
+	bh=CErkKDEjU9Ktzy6kTr9k/XT5kFEz9hg4L3vyVBes7gU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CUpSZHLsIqKW9qSnQaI4b32sjS6CX/zjoL0oyfJrHGbVwYOVks/kNWDS61sdUlxy5aAuTiw+glQuMDaCmzANV5WKeAb+Q9GtE9tsJNjx/UOvxqyNBxDK3RSa2vWhxCc+YpMLdC3//4LYr60338+ffrBALfDKRX+E6xNySZhabls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PFkXiwP6; arc=none smtp.client-ip=209.85.128.44
+	 In-Reply-To:Content-Type; b=Jd09cHAZFmbq/2KEzMhs0fedZte3mpSPARfhToMim9ZQMFomlGBG3sgnnINodKJoyQTe7wriz1jIcc7XZKkBTyht0cNd2y4+Wc5Uj/9pKfmRRRI7rmk4xzjA88TuzdyNbt5OTPtaxDFBKckkpsFIwdzRILGatA5f6AtiN9UzuXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eSSDghq6; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43e9ccaa1ebso1623975e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 22:37:24 -0700 (PDT)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43cf825f46bso2745715e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 22:38:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743485843; x=1744090643; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1743485913; x=1744090713; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=7sGlS2iL/z9B2onN9uyeopwDJJ8I8KTQrZr2eIiejDY=;
-        b=PFkXiwP6yukpkZN4wO1vxEMLABJhjfG2anYAeBCMbNbIccwhd8E8cVDxNNDkxYirbt
-         JqQz8wp4hTxsr27qjt9+Nq8PCgaOzD51Ne9tJ9BzLHuBqjx1BcIQaeGXpwR0R1f3zpH3
-         CJG2Ysa+znaO0CLCVik3N3mj3G/g8j3HWBhOaKMA1KuFx0/nnMzm8+kudgjCuOmbEY4S
-         2bipBPv6+nHnUbiJjJLPguAzhRtOmfBnE7+XdddFidA4ZMuk/ZzlFT8HKLrVJegsZrZ+
-         E5Mmw9sapmSE5Et53h7XY8/kb/zWQfqmJwnrgptnQP4TwQ7BqGhweHTiYUi42eIXYnU1
-         FddA==
+        bh=bOpoP6PSaztLl4THg2Btve5EdP4mRwwEJFJZnZpMdgM=;
+        b=eSSDghq6WjlPvmAYJcJ96cByFZhgzFSngECRPwqrqRuoskN0tD0oGL/NuOZL/oG2rs
+         moc20F2JfZ0B12TCx8RYvBDepAgAfiXYCw6uBkU/HInLrUNT7jIJmHNd9laTOThFpaie
+         RmzKNesQxnLWIvogolRSS7N92xlnWq6bhbRTcqyfaU+XuGgHWZJX3QDML+v94D2F7+tz
+         5jcGuve1+f4FEfpPQ+5HLvo90rv63xWycnMfnQMXz+rNt74MCBa+NUGaXDYy0cQoWPL5
+         lTFH5nWsTfbHaVqo7tjtWLg8CP4aKzqztGBt6ykARXOTELHSmM26OW6UE893eTEW/wmA
+         3glg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743485843; x=1744090643;
+        d=1e100.net; s=20230601; t=1743485913; x=1744090713;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7sGlS2iL/z9B2onN9uyeopwDJJ8I8KTQrZr2eIiejDY=;
-        b=elHOHur0zF/fofe3KDicpaDoqTpFG8gOVm6WBb97gP24JZiXQK1HlSfFPCNj4Nyv/h
-         ykwGF2JIGh6XuXDRAp2PvPuvHMNY31floi+gMua/yxHFu1v0S6Y/VMAiaZY7CaV4Gntp
-         7gjbs5v2tl95NRwUlaHAxVPNT29iKQnoQDbNJ+/NsHqIMbDK1TE8sHMfpSGYtehMjTP+
-         hm2O4NB31HYdKBSH+xBbQYqjRSAy8hhlWK8SNO54ZRLJMbmGO+RV9lhrwYcQ6HJUiZes
-         sx4PSDv1muPyicdLOCL6/0aRWAnGsRzIJVB98FyZmeZtB6vuvwVlbwHVAj9lWcjW0ldv
-         XjKA==
-X-Forwarded-Encrypted: i=1; AJvYcCUrm1/EMb1c6W1xwUMO+7kPKMmkbSxx0v92K0o4wwmDyjvBqxzsrg0i6VyDAPKspaFDQJA1llhN/cJ4TcXl@vger.kernel.org
-X-Gm-Message-State: AOJu0YytBNhUT5Ov/G4xDJc3/5TUst7rMBgPHg10oQZDK0irvHNnmSvo
-	/XOr4na9UyRKRIWC5bCj/+cCw2zdRw38urkGvTcZa3bkaiYX3K1Cty4uJ6FEZos=
-X-Gm-Gg: ASbGncvo3zWMr/kIDfheAIdu8sTVfQA3ykXmXQQGoAKRIppLXB7wGsip7FGQLQi8eOO
-	wSStpBlZfEyGnJbdPC23Q3NeQkLjlQlJyHEcGU4fGnhI/s9jbcR2Osb/oTKqn3R0qURHjaEQo+w
-	PnKS1ipugCWBBHCSGprqs6RWrU5UbB8gu1bHaDK34ywzwdHb8dhrMhf7otZKkGGskA92H3txkpP
-	+IRjpHaqOxWhns321LFhSgwadjMbTNpcHJrVtKexIx0of3Cg0Uo4bk6Ji47ER22KeszTLVhATGM
-	+WS1BL+oyd7M+usjmSewIisjPbGaN3hHws5AtMzBPt8wrStlzvGPBHbtnyUv3c9BLB8hIERuvw=
-	=
-X-Google-Smtp-Source: AGHT+IE9VVlqaElKSlTlRNsLp5lNckamDxE50wxkxfz1YXgMaph2I/ABZPwdbX4HuFlBp2KCO3RzyA==
-X-Received: by 2002:a05:600c:5488:b0:43b:c228:1ee0 with SMTP id 5b1f17b1804b1-43ea93dc66emr3022695e9.7.1743485843423;
-        Mon, 31 Mar 2025 22:37:23 -0700 (PDT)
+        bh=bOpoP6PSaztLl4THg2Btve5EdP4mRwwEJFJZnZpMdgM=;
+        b=jYZh3lPWHoJEKFYDt+FfM2Mxo8KZ7gRmMhdyjG1UOCCPXz5s5uI7ebHvm1BEzng+UO
+         BB310R1r3Ufv/jkxnU3Ge2lcL6tGJkSWr7i7b9zhGGJjSO7xo6qPU55bRq2Yl51Fx9KJ
+         FSA8MUZh+9P/oRF++nQS+fMU/YpCWi8QWdZxACZ9h3jg+gXdMCcLo1nlwhEWHnfiPQI+
+         crwYeaIsl1v8WDUFIByCiUAhGXwAETunNXnOoVWIGzv6nC89Bar8LOdJMMJDh0QCN613
+         SLIqxVvnMj1DzbdAVRQ9za0mACDqBOauvnwpIp4hZiBFce91Bo63+RIxsfcsbwwf/8/t
+         7W9g==
+X-Forwarded-Encrypted: i=1; AJvYcCWDolSMaewhSd15lj6tOSNTcEoHfYxkSSp3pqo+RcPEh6NYIg357me47l+w+sfDiX3qAmgOtuW5Hx2LEi5K@vger.kernel.org
+X-Gm-Message-State: AOJu0YxpCFawSFmPjANU74QV45/78FuJ+g4RjbIsR4VWz7Im9Ve+duqX
+	tYbz+4Z37BlCUxIHh0Cbtg/Np9BrGBZUNvivyFXm9cAMZacUj5iWXAZZHpC3mvI=
+X-Gm-Gg: ASbGncuHl6ttVgP4H8KYCly4ueAUWignIcNni7v5CbFynzZH0409XNM3hmSOwHh0hUz
+	Vzaq59tbtf+85kpg63Hd2gX9YNBgod4p4iEMTqzXFR9GN5vl2b8poaTOFDP0n6vHHFn7cO8gWx/
+	wANNIs79cUkcMzTazxqyETm/FzFnHhUP91upZKzMTwQfDwWGmXR9CDW7H5YdovCecM5WA2G28Et
+	KhmjTk4janAD7HUbjF25H99iBncC1D0keozohXLLxo6yD3Tcx9lFTeKWq+g1pz9S1VQyN3sZtqU
+	Goo6fJtLLRY1ix2ymr+AvDPkYo8OrxmynKLyc6FqiOSXlBQrctXi9KXjM5Mf+Ik=
+X-Google-Smtp-Source: AGHT+IHolxMjUnLGFkfC2w74/f/AQfcpTxmuYQXIpvrtRTrSCdapL3ByrIc22eis1XEbS7cr+DyvLw==
+X-Received: by 2002:a5d:47a8:0:b0:39c:1ef2:fe3e with SMTP id ffacd0b85a97d-39c24707735mr242318f8f.6.1743485913265;
+        Mon, 31 Mar 2025 22:38:33 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.198.86])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d900008d8sm142376205e9.33.2025.03.31.22.37.21
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b658838sm12938694f8f.5.2025.03.31.22.38.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Mar 2025 22:37:22 -0700 (PDT)
-Message-ID: <0f590400-d50b-4b1f-afb4-6d3ac112d426@linaro.org>
-Date: Tue, 1 Apr 2025 07:37:20 +0200
+        Mon, 31 Mar 2025 22:38:32 -0700 (PDT)
+Message-ID: <fb1fc0aa-4921-4ee3-9b8a-6167ef6558eb@linaro.org>
+Date: Tue, 1 Apr 2025 07:38:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,8 +82,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/6] usb: typec: Add Parade PS8833 Type-C Retimer
- variant
+Subject: Re: [PATCH v1 4/6] dt-bindings: arm: qcom: Add Asus Zenbook A14
 To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
  Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
@@ -96,7 +94,7 @@ Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>
 References: <20250331215720.19692-1-alex.vinarskis@gmail.com>
- <20250331215720.19692-3-alex.vinarskis@gmail.com>
+ <20250331215720.19692-5-alex.vinarskis@gmail.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -143,32 +141,43 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20250331215720.19692-3-alex.vinarskis@gmail.com>
+In-Reply-To: <20250331215720.19692-5-alex.vinarskis@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 31/03/2025 23:53, Aleksandrs Vinarskis wrote:
-> Appears to behave similarly to Parade PS8830. Found on some Qualcomm
-> Snapdragon X1 devices, such as Asus Zenbook A14.
+> Document the X1E-78-100 and X1P-42-100/X1-26-100 variants.
 > 
 > Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 > ---
->  drivers/usb/typec/mux/ps883x.c | 1 +
->  1 file changed, 1 insertion(+)
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> diff --git a/drivers/usb/typec/mux/ps883x.c b/drivers/usb/typec/mux/ps883x.c
-> index ad59babf7cce..095c36530904 100644
-> --- a/drivers/usb/typec/mux/ps883x.c
-> +++ b/drivers/usb/typec/mux/ps883x.c
-> @@ -447,6 +447,7 @@ static void ps883x_retimer_remove(struct i2c_client *client)
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 08c329b1e919..1b7e2ed56baa 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -1133,6 +1133,7 @@ properties:
+>        - items:
+>            - enum:
+>                - asus,vivobook-s15
+> +              - asus,x1e80100-zenbook-a14
+
+asus,zenbook-a14-x1e80100
+
+asus did not make a component of x1e80100 soc.
+
+>                - dell,xps13-9345
+>                - hp,omnibook-x14
+>                - lenovo,yoga-slim7x
+> @@ -1144,6 +1145,7 @@ properties:
 >  
->  static const struct of_device_id ps883x_retimer_of_table[] = {
->  	{ .compatible = "parade,ps8830" },
-> +	{ .compatible = "parade,ps8833" },
+>        - items:
+>            - enum:
+> +              - asus,x1p42100-zenbook-a14
 
+Same here.
 
-Don't create unnecessary entries for compatible devices. Patch should be
-dropped.
 
 Best regards,
 Krzysztof
