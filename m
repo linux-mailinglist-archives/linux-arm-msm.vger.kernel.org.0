@@ -1,145 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-52956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D3F0A778A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 12:17:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07EAFA778B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 12:19:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C56A3AB2A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 10:17:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 427683A624B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 10:19:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DE401F03DE;
-	Tue,  1 Apr 2025 10:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88A981F09A1;
+	Tue,  1 Apr 2025 10:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wu+O/zuL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kezNLTyo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28C3131E2D;
-	Tue,  1 Apr 2025 10:17:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E621F03C8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 10:19:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743502630; cv=none; b=GQXkz2nwgxjTrUSTGzKESv9/3/hTIG5WRog+Acri8T+NcbM8Jo8Lh+WsZo/vBBzA1+q5WeBPOImZ+h4SXGcT9UgU/qKf3W3FM2HMV4396rZkEKyO1NdoJ/irq82yz19rpx3MB8aGyN4Chd5QEIVszy5thQkzW7sBt6ydZJ04/LE=
+	t=1743502770; cv=none; b=Y2+2IpIDAO0Y1hy5X3b+JRa9nONssg6kgpkTSh77cUVBfslfUZy30bW5ZcgCGfwRpu9YCaEkAneuuMUY4TsfFXO/ib4+p/rtkhvSRg24L6jFZ/NJPsCyxRtIeRMUVpzoAaKFOymZbsEstBG0FgFQa89B2Kp5WiMT36pFhMbLS48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743502630; c=relaxed/simple;
-	bh=Peb1o//GSWEmIuVpBNVjaGkIQrweoDtyw/f2xdyE+W0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=W4D7+b1YuV+9WMJtDNk+TvIByIZIFHAX1CEH/3cW5C7norQoosqBss9UsMrqZgmCX2n7EWB6JonJTkBKnXLSKKttHjwXRRZhl216DefuoeWrk38k6Yl1OURq6V/c+lNYoFXd2akXnyRLxVT2pSJuCYcIKTaAjaLvnYN85gSQl44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wu+O/zuL; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3965c995151so2923960f8f.1;
-        Tue, 01 Apr 2025 03:17:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743502627; x=1744107427; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=64rAQ2VCJf7txTVICWUW0ghWJrbf/f0/mZiOG+wN05g=;
-        b=Wu+O/zuL7byXNfDV/P/fCGbL2aa/8Y8tJ63TmI0Dsb2AdpoQBIoHrwBE85ERxOi6Jc
-         UiF6h9xZdZODGZ6Zj6ym7qnGCRD9iqoLkY35j9hnsgrM8G/WZmC0eBfFS6Xl8okgiFEe
-         puyHlrOYMC/fcbZEoClDnfTw/podaUQzlHXHWZmMyPCnfZEKIde+0CL2sOAum6RSi7Q0
-         AvgKu1fQLTTTQr4/0KYpw8fjVeXwBLo/lb/ZJv9tuwDbYtJiWccwwlir+ZjHImBPE7kR
-         YHGRZKkCXIYRfEYrgzWV0rEQZJNhCPnsHVwiNJOlrGrcTXPsnUoQ9SH0NHw4w6ZODnCu
-         2J1w==
+	s=arc-20240116; t=1743502770; c=relaxed/simple;
+	bh=VLndyfSBwsI92OgxkgucYvEjqkkt/ZCVDRe+KPbDQio=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ay2YkvOynFy6hBWgTzZdGIjvgZD8uIv0I1ksp8dvGjVmRgZb+Ey4GOBX3XQRjHB0rg8tQLCbfC6n0sCyArBnYrdr5trZ9WtOQO9C182NQJHD63yZR7vR9nbIdsn8QZ5kAHtzMGjhVwbq82yEJxdmoD5jMWexTkOEy2DA0ZaNaFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kezNLTyo; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5317pe8e019810
+	for <linux-arm-msm@vger.kernel.org>; Tue, 1 Apr 2025 10:19:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2DOPs8qVr8I70ztM6rWE5VLdIGBtlthQzmw040FJiSQ=; b=kezNLTyod0Rfl4kQ
+	eCeOAyLIBXdZAYqjmEWxfbPtTouMkt1hAjJSWdaeQTVAKA5CONG2aTyu4wgOucpU
+	VLgo/wx5qlvOuKO3eQs+1Jgsd0wwC4t7QiS6FEOGYL27+GG3zPUKu5mSCycPlWW3
+	AX/2ZXHAcfxsFNaE8OAQb9FNJqKPOcuLwOI/4oMWj4nEQOCNN5oD6+2C1SKIAB7J
+	hlXV3EcuwT7pF5Gxg3jolRNS62V2+pmZfIyfGZlLs9XWW68wnEiqyvBrmkVoeFlP
+	MlI8Cj7tYuXCNaHoMd0B8GVbxtqDGAXFuRy3j+0leZb4QL+KxN/W6y/ZfX12oeBZ
+	MsH2cg==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45r1vna4cd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 01 Apr 2025 10:19:27 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-475127bacd0so10928481cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Apr 2025 03:19:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743502627; x=1744107427;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=64rAQ2VCJf7txTVICWUW0ghWJrbf/f0/mZiOG+wN05g=;
-        b=DTbuGZFH4eZH0jkOy3oywL6kh1IK/NSQ7BlEnrZRaRTqGnmQVxS3CT3B+uIQmR0PRh
-         tNbgOUl4feyua+UUIhplycPD0h6nJ6hCNvP9ABVm/Ih73QkR78JtPjkrD/pKWBIcJYFF
-         Hz3iBQ7MH9IkYxOy3lHRLvvjGBa1HV8ZXQhTGc/bUAnP3nVXscmi19aE7cBYAQFsu3RR
-         5ds5/eJDif/mWuXyZg5kEwrs6nUuKSFAHi+bS5jtuCZpbyh0HpKHjIgOUCzp0mu/JV6E
-         SRxh/dkp3FmH9gTxJz3h3DAzEi97SEYAgp7H/MzCZQCHPIPbPquqIuRUqibZUFrLDn/i
-         6RNw==
-X-Forwarded-Encrypted: i=1; AJvYcCU334xoZEGbscJYqrCEcXrlInA4EGGZPw5imSloTJ0m9WNijqwRJU8O7nK1gSiKB4qmov2dLw9IHmMLyBTv@vger.kernel.org, AJvYcCUgzAAC6UgcQ3HHzBReHxJuVd/KVps8Qa9orMvx1+vx9vLIpC7wDZ5hUrYtBFrkc+txc6VyIevdVVQ8@vger.kernel.org, AJvYcCWDboRW6S5uqo36HTN+tY3/lD0oy/VWx2YTqLd6Aba2nilosbthf7KRdiBTLwAggB5/UBUx04VrI2iz@vger.kernel.org, AJvYcCWpqpBAJdaO2g7jlocZ6HJddCXKTVZbz+eI6Ntcozfb9vEI5IeXkyKmzQWftYEA24u94DmMAsyWCPJo1KiHKw==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2VtlwIFI0V8fW/jAL1CQ9dEGy7zxu60F0YHuV3trPfDTxopOq
-	s/SEaKecqTl46agJGQvyXHmbSpg6moji6DmOUh8vSApQH4S3fecI+BBtzxWefekh67+F/SX7T9l
-	v94wRNDkX7sDmoALPPAC3E2ErlQ==
-X-Gm-Gg: ASbGncupmc9XVXNw6u69w0PBklc38c4zbVDPM1yLLxiRSXcQy9U+1NngNA0tj5lZeL2
-	4Za8Z+uszgTOh+z7h72QA34Dq+FVeb5QyBIjby1Io0aHLq5ZJthrT27sgfcLo3T72GvmuJ/oVQ+
-	PeZp8nGKJZEYiYOADhmial9eD0YQ==
-X-Google-Smtp-Source: AGHT+IHFY3NKdTJ9L3ZcnHHkf8BNknq+DA4HNmpIkvt/+N60rm+ITtpzpjaK7YuegUYY84tr1PeBYtChhoZ/dQrZWeI=
-X-Received: by 2002:a05:6000:2701:b0:39c:1258:7e1a with SMTP id
- ffacd0b85a97d-39c12587e45mr5888229f8f.59.1743502626613; Tue, 01 Apr 2025
- 03:17:06 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743502767; x=1744107567;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2DOPs8qVr8I70ztM6rWE5VLdIGBtlthQzmw040FJiSQ=;
+        b=AeqWdAO17yWkvq2aanuZ4QH3H3vd2oHNerm8NZSUSoxdWkISXQN+FDIJWjQRZPAURx
+         eBOtBvnhQbGzyEY2yqCVpRdQ12GZNBMyWUhKfQQMPrYaL3ZC+uFSMEkmj8y1epVq1r2O
+         Bg7pq5p5bztz03p3wNprctfOZc9YSP5O4N+PZXq+OdMmQmWV/0BU2WZ9+tAgoZJ1VY/v
+         i8nsK7pwGzu/yMdauUFGZ0+YH9AmIdX37qKj2j8qm8RE+EuWPOrKhPzLTeb8miCyr7xY
+         Y80x5mb7FZ8aqHNpMGx02JEE/5DGg5NIt3x9h7NsRENt9YZory3aLd3j3zNpDtgLQZHQ
+         aYLA==
+X-Forwarded-Encrypted: i=1; AJvYcCW1vAcGIIIN2tJe+3s3mHToiWbk1lSN45YKXZusU/rXsFLA+ycGCNjry7w93TUm95B1D0kzNwKzPe8Xyqj6@vger.kernel.org
+X-Gm-Message-State: AOJu0YwntXi9hEF8OTHkrg4jLn+oWDZLdV/XqFoFrd8RhCwsmfXDM6G2
+	XXg7Blqka8Og3AXhP7Wjyqhs5bBnO/a5bLia1SSZp+QzyD7Axz7m7ij2mYoKqimBUzHnrAMZYcc
+	5ul4yiixCaqNdFsGhMgHoLTpdib3g3xCW1J4/mDqG6mLTG8i8TK3O6M5oLGkbntOo
+X-Gm-Gg: ASbGncsiar14FaLGXpBpX7M4iInI8enVkS90/a2ccZ8DMWG0ynhj/GijG+eUUADObfD
+	y+MLYV5RAZqsiJFxFQJrWjbtvRU8+qVUSpZN8pUOEcdQOWPp01ACTVMwUIhb2xsPjaTBOFLOYIX
+	TrIa2TEMcBgpppzxzyHLFE89+bh4lNCTdGqgZ3PKgfn4OrrvkzffuxoVkX4Lms2xYJVAVqmlCgj
+	+3STo+olXYoyuN/uex04zUAHHAPzbJW8V3UVZr6OO+I85j5ZlgCm5+EPSzrSXMSgbhvpwQqklAd
+	QSBY0NYvW7emayWPGPfB6Ea/BsuxksprWzemJIpcvFrEImslRWaHI8SzcinNQLJ2VUB+Bw==
+X-Received: by 2002:ac8:5743:0:b0:472:15be:54ad with SMTP id d75a77b69052e-478f8caaa3emr8015321cf.14.1743502766794;
+        Tue, 01 Apr 2025 03:19:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHVCXq1wEZzeuviNZFWjwRTsD/J2nl2Zsg5QfwBRNLIyCOjFWs9y0I9oOKP+u8l03W7oJ4KfA==
+X-Received: by 2002:ac8:5743:0:b0:472:15be:54ad with SMTP id d75a77b69052e-478f8caaa3emr8015221cf.14.1743502766458;
+        Tue, 01 Apr 2025 03:19:26 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5edc16aae6fsm6857889a12.16.2025.04.01.03.19.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Apr 2025 03:19:25 -0700 (PDT)
+Message-ID: <219c03ee-4440-4452-94c8-f8b32c147db5@oss.qualcomm.com>
+Date: Tue, 1 Apr 2025 12:19:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/6] arm64: dts: qcom: move pcie6a type change from
+ X1P42100 to X1P42100-crd
+To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>
 References: <20250331215720.19692-1-alex.vinarskis@gmail.com>
- <20250331215720.19692-5-alex.vinarskis@gmail.com> <fb1fc0aa-4921-4ee3-9b8a-6167ef6558eb@linaro.org>
-In-Reply-To: <fb1fc0aa-4921-4ee3-9b8a-6167ef6558eb@linaro.org>
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Date: Tue, 1 Apr 2025 12:16:55 +0200
-X-Gm-Features: AQ5f1JpMVjeGXlb_NjTeg0k-K6EplgmtwfAq6ppihs2rHcJBRu-dh162qJB6gNQ
-Message-ID: <CAMcHhXoxLx9SiUcntp1vmmK7BF0SO_uo3DCBx_3Ldd3tx+rBXg@mail.gmail.com>
-Subject: Re: [PATCH v1 4/6] dt-bindings: arm: qcom: Add Asus Zenbook A14
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Abel Vesa <abel.vesa@linaro.org>, 
-	Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-usb@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+ <20250331215720.19692-2-alex.vinarskis@gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250331215720.19692-2-alex.vinarskis@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=UL3dHDfy c=1 sm=1 tr=0 ts=67ebbdaf cx=c_pps a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=umw4QfNw0YT-tJYoN0AA:9
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: ItQH7L8uBQO76N6LIK-0g8K9VGazVGKk
+X-Proofpoint-GUID: ItQH7L8uBQO76N6LIK-0g8K9VGazVGKk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-01_04,2025-03-27_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ malwarescore=0 mlxlogscore=929 phishscore=0 impostorscore=0
+ lowpriorityscore=0 priorityscore=1501 spamscore=0 bulkscore=0
+ clxscore=1015 suspectscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504010066
 
-On Tue, 1 Apr 2025 at 07:38, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 31/03/2025 23:53, Aleksandrs Vinarskis wrote:
-> > Document the X1E-78-100 and X1P-42-100/X1-26-100 variants.
-> >
-> > Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-> > ---
-> >  Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> > index 08c329b1e919..1b7e2ed56baa 100644
-> > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> > @@ -1133,6 +1133,7 @@ properties:
-> >        - items:
-> >            - enum:
-> >                - asus,vivobook-s15
-> > +              - asus,x1e80100-zenbook-a14
->
-> asus,zenbook-a14-x1e80100
->
-> asus did not make a component of x1e80100 soc.
+On 3/31/25 11:53 PM, Aleksandrs Vinarskis wrote:
+> It appears at least on some devices (Asus Zenbook A14, x1-26-100) change
+> of pcie6a_phy's compatible breaks the controller. Move compatible change
+> from generic x1p42100.dtsi to CRD's specific x1p42100-crd.dts instead.
+> 
+> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+> ---
+>  arch/arm64/boot/dts/qcom/x1p42100-crd.dts | 4 ++++
+>  arch/arm64/boot/dts/qcom/x1p42100.dtsi    | 4 ----
+>  2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1p42100-crd.dts b/arch/arm64/boot/dts/qcom/x1p42100-crd.dts
+> index cf07860a63e9..a2a212b31556 100644
+> --- a/arch/arm64/boot/dts/qcom/x1p42100-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1p42100-crd.dts
+> @@ -15,3 +15,7 @@ / {
+>  	model = "Qualcomm Technologies, Inc. X1P42100 CRD";
+>  	compatible = "qcom,x1p42100-crd", "qcom,x1p42100";
+>  };
+> +
+> +&pcie6a_phy {
+> +	compatible = "qcom,x1p42100-qmp-gen4x4-pcie-phy";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/x1p42100.dtsi b/arch/arm64/boot/dts/qcom/x1p42100.dtsi
+> index 27f479010bc3..4424a8708d39 100644
+> --- a/arch/arm64/boot/dts/qcom/x1p42100.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1p42100.dtsi
+> @@ -37,10 +37,6 @@ &pcie3 {
+>  	num-lanes = <4>;
+>  };
+>  
+> -&pcie6a_phy {
+> -	compatible = "qcom,x1p42100-qmp-gen4x4-pcie-phy";
+> -};
 
-I see, I misunderstood the meaning of qcom,x1e80100-crd, clear now.
-In that case, perhaps follow pattern of other devices, describe by
-model differences (eg. -oled) instead of soc? eg:
 
-`asus,zenbook-a14-ux3407ra` (for x1e variant)
-`asus,zenbook-a14-ux3407qa` (for x1/x1p variants)
+This is not correct. The hardware is different in all SoCs, not just the
+ones put in the CRD.
 
-Thanks for the review,
-Alex
+You're probably missing this change [1], please test it out and leave a t-b
+if it's confirmed working for you.
 
->
-> >                - dell,xps13-9345
-> >                - hp,omnibook-x14
-> >                - lenovo,yoga-slim7x
-> > @@ -1144,6 +1145,7 @@ properties:
-> >
-> >        - items:
-> >            - enum:
-> > +              - asus,x1p42100-zenbook-a14
->
-> Same here.
->
->
-> Best regards,
-> Krzysztof
+Konrad
+
+[1] https://lore.kernel.org/linux-arm-msm/4c7059a0-46a0-424d-9068-60894c6cec1c@quicinc.com/T/#m9675593a62b2334ab2afd4269da6938464a03fa6
 
