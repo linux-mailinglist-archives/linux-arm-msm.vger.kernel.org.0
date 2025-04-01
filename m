@@ -1,246 +1,226 @@
-Return-Path: <linux-arm-msm+bounces-52939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7222FA7761E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 10:16:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E0FDA77653
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 10:25:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 31349169390
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 08:16:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A0E93A1389
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 08:23:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9828F1E9B09;
-	Tue,  1 Apr 2025 08:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FFA01E98FE;
+	Tue,  1 Apr 2025 08:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RhP/zcmu"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EVSKbaz6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7F51E8855
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 08:16:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30581E7C2F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 08:23:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743495399; cv=none; b=VUrpHbDziSZP9vcnPuV1iRbAyBAYgf7ijPDT56C++u35kOi6FjelNplzAEthefA/MAiVwYjxI1ujMU63R7SaKOaFzXvgVHgV92dzIxdqLjRYFNRCeM39bJ4kJjfkykGZBflJOAYDjv973JfinfB9KfK5e+nKHTCHnQnert10CSA=
+	t=1743495839; cv=none; b=GLGNwFgemtjAcGJcSo/+0p0Fm0bzi9P9y4vzQZbtg3TOo1xqvrFj7JoxAbeETVWNLpDsGfFs+zG6uVDyLj+v+PHLrBRq0DSaiOTIuSuYPd2PZTm/C+pg6UEE+JM9EXI1MR+3K/PBMqj5d2BDo4T75bIPuk6xpkfEmw9gemu/Y3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743495399; c=relaxed/simple;
-	bh=eofPP7zphowVZVkOlN5trgp55mfN8GY1zjDnh4fRLYw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=evUCKY9BS90ZzGpnwnbsO12FVO1T8XmWKblXen+C2MSqPIKmwfzx8fZxNrHesDg6KY19NAkCGeFHsOqREp7seJKX6/OXiPvkwvaX/IPKfzRCedi5MQBNQ2FuXLcYAZvo2gZSTkXHqlxh7Krqnk52nXd9fgsJ49VQ/QaamQGz770=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RhP/zcmu; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ac25d2b2354so848871666b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Apr 2025 01:16:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743495395; x=1744100195; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PrVIKvgnOU4qD+Zbvm9Ig4ON8IklOf3INDhWzvDe65U=;
-        b=RhP/zcmuF2oktGZ9djneLZZIv8DrdOmYMf3/9v/fTfCH7S+uZWj9EnvhdKBsULP/Qm
-         nUILXTDPXbMbzevmseryy7BN24KkpEI/fRqoJTmd52+43QC3E9Q8aP70xcC+xnCt+OJA
-         FzRImPdI7RSFfhrz0i1ugscsLgMtOl/7zZWCCaK+ZAgEOUEvbvUZERnrqc34RuP0sZeG
-         cJ2dP1O4+a2xVv7tG0UIdZyPJRKuDJHXNr72Oelmf+x9quujf4dOLk9ZcudasdNmE6mn
-         M52YIkQFosR+6ZiaA5KYqpeJ+c63U9/EsXcdSRKRj5+8XZpsUsZZnB1EjYXDaI6exbna
-         Aj8w==
+	s=arc-20240116; t=1743495839; c=relaxed/simple;
+	bh=f3kgk/b6eG9b6/UMe5RX/Dz8Wo1pLFNHHLoDdQK9Dcs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hcw8vaXmL7wSuxSWq07eOyHXah8fQV9L97Tm+aawYI35VTCzQKpzR7Jaan3RGNaRjk/Fjd8hleU9Qf39hlMp2zhC6u7eRSna03wDaI/xViwvfjp/EFavlmGpgo+eis6GZMwzXXee5VkpcVjoma5JnayKle7guorDVzh5FaX+JWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EVSKbaz6; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5317MfhG024528
+	for <linux-arm-msm@vger.kernel.org>; Tue, 1 Apr 2025 08:23:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	AF8PK+R11x7P7bxRV/GWmVss1mgR4hU/cnGOj0vziUE=; b=EVSKbaz6inQfzbR/
+	/aHviDvciuift882nW5g/+iRFqdsADaL6+H4ocYZmqOtWURd5HYkBu8qQfFnX0SU
+	1Hhk98dywdNyywn3u7otUisqOmKyt9Kii3P4yJJ8XrdqJfKSPPq7MtfPmvWRpbCG
+	IYdzIG0n6YtuyAASQ2djvuAhiYLzdOXD1J8505sDIPzUqz/h612rBKXYvIWlQcEj
+	AEoHvpK0eKmq24/B6Tf8xvgzNYxznVF2tkJawLVkMwGyz/PF/cyziwkT1ERb59o/
+	wqe17wEMez04xGjFrX2R1ImpndMpVr/LmGLKS6gCJHVDPJMZ4nhbIodibQ4BruBg
+	fl+vtQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45rbpyr7gg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 01 Apr 2025 08:23:56 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-227ed471999so85948605ad.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Apr 2025 01:23:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743495395; x=1744100195;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PrVIKvgnOU4qD+Zbvm9Ig4ON8IklOf3INDhWzvDe65U=;
-        b=k/Wsi4+8Ey11lNOe62NHg5HoGTjrP6AsmD+yWfdc104phLvUWo9S91whn772yu4lv2
-         E9XaB96VjU4H5tkET/ywRSvytLRK+Zsiqwt9ED0OZzZHVm+U93nwV3qkDPcrG/uJrDXn
-         YrJLe8cGT7StXDUmw+I5yJFkK0c5lZLCVUJqekvvuJjmdlIY2m26QKQHJ0/IeVfXy/A3
-         G2LTkrwP/9RVWyznjO1aSqAjiSU5W/VSnLH6tBmHG73268a71LjNII9dwNuaJ9977NT0
-         uYIMBpFfj72vElAw8zme0Ag/XkK7gBY1pTMfCd9/yFg030oQxDZPNZbE8IkiySJ1dm8a
-         4tNQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWgcgChMI7wTP823CC+CmEpP/DhQoXaGlNw271nnOAGu2aHiaqM1HEXGTDTlFUREZHHaNIuta3srPnG9hen@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWp1nO32Ljx+n0Of9ZF1Jmdz8fSZ+yZmjKHB5n7qdProKBwUao
-	YZ1U1rrH3QA3HhlMnSlcNrk+5ywyxb2lCID3xfoQAnp6N+lxlvlYj4eLum3YiT4=
-X-Gm-Gg: ASbGncsc7AqHdonbXColGmTMWVCrHcrgLIZFaE+r/BF5hjigZEYuxjy0cLcvqg2Dtp0
-	/N7xY9iTr3dQkYYEV2/IdxZyFsfFkYj83ywVsJGDkN8pS5Kpq9JF6aO/rNwke9hIJUWe8y2g+C4
-	crzBM4xN6kFp++hjCT8N/mYhlBK6bAl9KaZHwvxtPLsM6nqDXlS1Cy0HQHfUnZR37YC7Hfg0v7d
-	dAwwdJotHxVWID+EwHHrEyLHmvLmcKzp5y10hAyd6J5ISd8HUx7ULjcajvFTMXmOtBj/NoAe4IB
-	c0QzI9qYtoqSp8gc5FROvf8GxvqFwAn5GIRVpUL4Kujnn86Lv2abrCs=
-X-Google-Smtp-Source: AGHT+IH1NMpRelTCtWxZmplIIh8jUgx3dBuQ+5KnEzikK+mjlKQVyUDxOdR2qGWxJmqwwa8QNnWrYA==
-X-Received: by 2002:a17:907:868e:b0:ac3:5d68:c519 with SMTP id a640c23a62f3a-ac738c13dcbmr1172846266b.53.1743495395257;
-        Tue, 01 Apr 2025 01:16:35 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef30:ce6:8cc5:6e98:d576])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7196f55f9sm738659266b.177.2025.04.01.01.16.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Apr 2025 01:16:34 -0700 (PDT)
-Date: Tue, 1 Apr 2025 10:16:29 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Wesley Cheng <quic_wcheng@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, mathias.nyman@intel.com, perex@perex.cz,
-	conor+dt@kernel.org, dmitry.torokhov@gmail.com, corbet@lwn.net,
-	broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
-	pierre-louis.bossart@linux.intel.com, Thinh.Nguyen@synopsys.com,
-	tiwai@suse.com, robh@kernel.org, gregkh@linuxfoundation.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-sound@vger.kernel.org, linux-input@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-doc@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-Subject: Re: [PATCH v36 22/31] ASoC: qcom: qdsp6: Introduce USB AFE port to
- q6dsp
-Message-ID: <Z-ug3YFwff8hWIRl@linaro.org>
-References: <20250319005141.312805-1-quic_wcheng@quicinc.com>
- <20250319005141.312805-23-quic_wcheng@quicinc.com>
- <Z-J2WnrZHP6iMIhT@linaro.org>
- <871827f0-94ba-4565-865f-775cab9501eb@quicinc.com>
- <Z-PPlRD7gcUcNvNv@linaro.org>
- <200c08f7-3637-c2fb-2caa-002604b957ed@quicinc.com>
+        d=1e100.net; s=20230601; t=1743495836; x=1744100636;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AF8PK+R11x7P7bxRV/GWmVss1mgR4hU/cnGOj0vziUE=;
+        b=WvqAjbQ+uUTfq1Lrg998Bs1s1nAPKBch3epwRgaOxcaXtux+Ng5TOIuuOsFJ6j2kkM
+         m8F0GApc7mjxu4MvQq6ZkvK4ZXkHh2ZGNtkwfRGaOoWdGhxj5c65SgfJUdISgruHlVmJ
+         pSfYSdZ52ZsFpzH4jKJkA31wRgPHewDA+SFctqv5+XeNc0GB1q9uzNPhSlL0SvYslppW
+         oKGME7mXWBI9uADDR615O74KAbVfRjLmnvFcclcXjIIXGhSpXpy/oufhgtd4vxirLaP1
+         2nQXHLqN1Wx7IiB58wu6tpECdtatN/bumFsI8JYh4XnC8a00EB5b/T9AY/m3SOsx6yek
+         hvfA==
+X-Gm-Message-State: AOJu0YzJkpwBBLsHhrCCHm5PbWeQ48iky/WXvqTM9PISQgdO94m3iDaf
+	1a4jb3CjBo61MbmQrHDnsAOLq1xDLvWXYWGG0LjFcRfV4rWvuYWCHyM8d7XqrS6wWZme63GoqGM
+	b+upasaSo/uLhUfoWDP9ID1JzW3/oJF5riMuk+4l8x54KQdv9XGFrZ9gUhDZfJT6s
+X-Gm-Gg: ASbGncs/i8nHgmW4gvB4tidkwBM285pr4JoDAi7Qhf5+3a/QrT4Rtorf2k8X/+xP/jK
+	ajJkhaCMoq/CPpekQ99VXaEurWUfWk//uiM+gpsS8h6114Mu8MTdiPEg6jHbJPAatQrOZ5zaT91
+	+tTQEBiY7OCF6mGIq3v+ovXpTjWMGHW93VhJl9nH3Ent4rItvbtLkaDlvRfciN5gcswvnrs+hQb
+	hEwoO2dFAFMgQtawcZpCzZ/0V2Rx8o5DoShee7G7qtPRRRXve1sPTrlBVkViUqOwA0slygUyltU
+	zL5pcDVAUUsK8nmKgHh8q4CZ/VqkHD8C3GQKimGMC8G80Q==
+X-Received: by 2002:a17:903:22c7:b0:224:1c41:a4c0 with SMTP id d9443c01a7336-2295be31750mr31475475ad.9.1743495835889;
+        Tue, 01 Apr 2025 01:23:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHbC2PJQIUY9S4LAcfx1+uG9TqoXL9W61G9Ed1Gf/0mVoliZzpalR73CNKM2DVVkU3vpNzJZQ==
+X-Received: by 2002:a17:903:22c7:b0:224:1c41:a4c0 with SMTP id d9443c01a7336-2295be31750mr31475225ad.9.1743495835533;
+        Tue, 01 Apr 2025 01:23:55 -0700 (PDT)
+Received: from [10.92.192.202] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2293648e525sm56689605ad.32.2025.04.01.01.23.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Apr 2025 01:23:55 -0700 (PDT)
+Message-ID: <2be4472e-2931-fc62-fea9-02f3454ab61e@oss.qualcomm.com>
+Date: Tue, 1 Apr 2025 13:53:49 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <200c08f7-3637-c2fb-2caa-002604b957ed@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 1/3] dt-bindings: PCI: qcom: Move phy, wake & reset gpio's
+ to root port
+Content-Language: en-US
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com
+References: <20250322-perst-v1-0-e5e4da74a204@oss.qualcomm.com>
+ <20250322-perst-v1-1-e5e4da74a204@oss.qualcomm.com>
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+In-Reply-To: <20250322-perst-v1-1-e5e4da74a204@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: UuukD6HWZFn1hublARs_8GKmUxiykgyB
+X-Proofpoint-ORIG-GUID: UuukD6HWZFn1hublARs_8GKmUxiykgyB
+X-Authority-Analysis: v=2.4 cv=ZNLXmW7b c=1 sm=1 tr=0 ts=67eba29c cx=c_pps a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=xMVSDGMRPTrRGbC6XWUA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-01_03,2025-03-27_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 clxscore=1015 mlxscore=0 adultscore=0 mlxlogscore=999
+ priorityscore=1501 bulkscore=0 suspectscore=0 malwarescore=0 phishscore=0
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504010053
 
-Hi Wesley,
 
-On Mon, Mar 31, 2025 at 12:52:19PM -0700, Wesley Cheng wrote:
-> On 3/26/2025 2:57 AM, Stephan Gerhold wrote:
-> > On Tue, Mar 25, 2025 at 04:18:03PM -0700, Wesley Cheng wrote:
-> > > On 3/25/2025 2:24 AM, Stephan Gerhold wrote:
-> > > > On Tue, Mar 18, 2025 at 05:51:32PM -0700, Wesley Cheng wrote:
-> > > > > The QC ADSP is able to support USB playback endpoints, so that the main
-> > > > > application processor can be placed into lower CPU power modes.  This adds
-> > > > > the required AFE port configurations and port start command to start an
-> > > > > audio session.
-> > > > > 
-> > > > > Specifically, the QC ADSP can support all potential endpoints that are
-> > > > > exposed by the audio data interface.  This includes isochronous data
-> > > > > endpoints, in either synchronous mode or asynchronous mode. In the latter
-> > > > > case both implicit or explicit feedback endpoints are supported.  The size
-> > > > > of audio samples sent per USB frame (microframe) will be adjusted based on
-> > > > > information received on the feedback endpoint.
-> > > > > 
-> > > > > Some pre-requisites are needed before issuing the AFE port start command,
-> > > > > such as setting the USB AFE dev_token.  This carries information about the
-> > > > > available USB SND cards and PCM devices that have been discovered on the
-> > > > > USB bus.  The dev_token field is used by the audio DSP to notify the USB
-> > > > > offload driver of which card and PCM index to enable playback on.
-> > > > > 
-> > > > > Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> > > > > ---
-> > > > >  sound/soc/qcom/qdsp6/q6afe-dai.c         |  60 +++++++
-> > > > >  sound/soc/qcom/qdsp6/q6afe.c             | 192 ++++++++++++++++++++++-
-> > > > >  sound/soc/qcom/qdsp6/q6afe.h             |  36 ++++-
-> > > > >  sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c |  23 +++
-> > > > >  sound/soc/qcom/qdsp6/q6dsp-lpass-ports.h |   1 +
-> > > > >  sound/soc/qcom/qdsp6/q6routing.c         |  32 +++-
-> > > > >  6 files changed, 341 insertions(+), 3 deletions(-)
-> > > > > 
-> > > [...]
-> > > > > diff --git a/sound/soc/qcom/qdsp6/q6routing.c b/sound/soc/qcom/qdsp6/q6routing.c
-> > > > > index 90228699ba7d..b7439420b425 100644
-> > > > > --- a/sound/soc/qcom/qdsp6/q6routing.c
-> > > > > +++ b/sound/soc/qcom/qdsp6/q6routing.c
-> > > > > @@ -435,6 +435,26 @@ static struct session_data *get_session_from_id(struct msm_routing_data *data,
-> > > > >  	return NULL;
-> > > > >  }
-> > > > > +
-> > > > > +static bool is_usb_routing_enabled(struct msm_routing_data *data)
-> > > > > +{
-> > > > > +	int i;
-> > > > > +
-> > > > > +	/*
-> > > > > +	 * Loop through current sessions to see if there are active routes
-> > > > > +	 * to the USB_RX backend DAI.  The USB offload routing is designed
-> > > > > +	 * similarly to the non offload path.  If there are multiple PCM
-> > > > > +	 * devices associated with the ASoC platform card, only one active
-> > > > > +	 * path can be routed to the USB offloaded endpoint.
-> > > > > +	 */
-> > > > > +	for (i = 0; i < MAX_SESSIONS; i++) {
-> > > > > +		if (data->sessions[i].port_id == USB_RX)
-> > > > > +			return true;
-> > > > > +	}
-> > > > > +
-> > > > > +	return false;
-> > > > > +}
-> > > > 
-> > > > What is different about USB_RX compared to other output ports we have in
-> > > > Q6AFE? Obviously, we can only play one stream on an output port. But
-> > > > doesn't the ADSP mix streams together when you have multiple routes?
-> > > > 
-> > > 
-> > > This patch will limit the USB_RX from being able to be mixed to multiple
-> > > q6adm paths.
-> > > 
-> > > > Also, this doesn't actually check for *active* routes only. It just
-> > > > looks if any other MultiMedia DAI is configured to output to USB_RX.
-> > > > That doesn't mean they will ever be active at the same time.
-> > > > 
-> > > 
-> > > Yes, the main reason being that that is the mechanism we use to populate
-> > > the active offload path within the USB SND card mixer.
-> > > 
-> > > > I might for example want to have MultiMedia1 and MultiMedia2 both
-> > > > configured to output to USB_RX. Let's assume MultiMedia1 is a normal PCM
-> > > > DAI, MultiMedia2 is a compress offload DAI. When I want to playback
-> > > > normal audio, I go through MultiMedia1, when I want to play compressed
-> > > > audio, I go through MultiMedia2. Only one of them active at a time.
-> > > > Why can't I set this up statically in the mixers?
-> > > > 
-> > > > If you confirm that it is really impossible to have multiple streams
-> > > > mixed together to the USB_RX output in the ADSP, then this should be a
-> > > > runtime check instead when starting the stream IMO.
-> > > > 
-> > > 
-> > > We can have multiple streams being mixed together, but it will get
-> > > confusing because it changes the definition that we had discussed about in
-> > > the past about the overall design for the interaction w/ userspace.
-> > > Although we (QC) only support a single USB audio device for offloading,
-> > > there could be other situations where the audio DSP can support multiple
-> > > devices.  The assumption is that each MM path is assigned to a USB device.
-> > > 
-> > 
-> > Are you referring to the "USB Offload Playback Route PCM#*" mixers here?
-> > They could just refer to first of the configured MM paths, if someone
-> > decides to route multiple paths to the USB backend. Looking at
-> > q6usb_update_offload_route(), I think the implementation does that
-> > already.
-> > 
-> > I think it's fine that the userspace API for automatically "probing" the
-> > PCM device supports only a single path to the USB backend. But if
-> > someone wants to bypass the automatic probing and configure a more
-> > advanced setup, do we need to forbid that?
-> > 
-> > Asked differently: what would happen if we remove this check here and
-> > handle USB_RX like any other Q6AFE output port? Would anything break for
-> > the userspace interface?
-> > 
+
+On 3/22/2025 8:30 AM, Krishna Chaitanya Chundru wrote:
+> Move the phy, phy-names, wake-gpio's to the pcie root port node instead of
+> the bridge node, as agreed upon in multiple places one instance is[1].
 > 
-> So I took a look at seeing how the Q6ADM/ASM interactions would work for
-> the situation where if user tried to start both MM1/2 streams at the same
-> time over the USB offload path.  In this scenario, we see that the Q6USB BE
-> DAI operations, ie startup, hw_params, etc... gets called one time for the
-> initial stream.  For example, if I start playback on MM1, then that
-> triggers the USB BE DAI to be brought up.
+> Update the qcom,pcie-common.yaml to include the phy, phy-names, and
+> wake-gpios properties in the root port node. There is already reset-gpio
+> defined for PERST# in pci-bus-common.yaml, start using that property
+> instead of perst-gpio.
 > 
-> When I start playback on MM2, since MM1 already called
-> dpcm_be_dai_startup(), then be->dpcm[stream].users will be greater than
-> zero.  This would cause the __soc_pcm_open() to be skipped for the USB BE
-> DAI, so I wouldn't be able to check the runtime status at the Q6USB backend
-> DAI.  However, we do track current streaming sessions done over Q6 ADM and
-> it does save the AFE port associated to each COPP allocation, so I think its
-> reasonable to see if there is already a COPP entry for the USB AFE port, to
-> fail the open() call associated to the FE DAI.
+> For backward compatibility, do not remove any existing properties in the
+> bridge node.
 > 
+> [1] https://lore.kernel.org/linux-pci/20241211192014.GA3302752@bhelgaas/
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>   .../devicetree/bindings/pci/qcom,pcie-common.yaml  | 22 ++++++++++++++++++++++
+>   .../devicetree/bindings/pci/qcom,pcie-sc7280.yaml  | 18 ++++++++++++++----
+>   2 files changed, 36 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
+> index 0480c58f7d99..258c21c01c72 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
+> @@ -85,6 +85,28 @@ properties:
+>     opp-table:
+>       type: object
+>   
+> +patternProperties:
+> +  "^pcie@":
+> +    type: object
+> +    $ref: /schemas/pci/pci-pci-bridge.yaml#
+> +
+> +    properties:
+> +      reg:
+> +        maxItems: 1
+> +
+> +      phys:
+> +        maxItems: 1
+> +
+> +      phy-names:
+> +        items:
+> +          - const: pciephy
+> +
+> +      wake-gpios:
+> +        description: GPIO controlled connection to WAKE# signal
+> +        maxItems: 1
+> +
+Hi Rob,
 
-This sounds like a reasonable approach *if* we have to prevent multiple
-MM DAIs from streaming to the USB AFE port at the same time.
+As wake-gpios is a generic PCIe property like reset-gpio for PERST
+can we move this property to the pci-bus-common.yaml
 
-It's still unclear to me why we have to introduce this limitation in the
-first place. I think the questions from my previous email are still
-open. Can you check them again?
-
-Thanks,
-Stephan
+- Krishna Chaitanya.
+> +    unevaluatedProperties: false
+> +
+>   required:
+>     - reg
+>     - reg-names
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
+> index 76cb9fbfd476..c0a7cfdbfd2a 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
+> @@ -162,9 +162,6 @@ examples:
+>               iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
+>                           <0x100 &apps_smmu 0x1c81 0x1>;
+>   
+> -            phys = <&pcie1_phy>;
+> -            phy-names = "pciephy";
+> -
+>               pinctrl-names = "default";
+>               pinctrl-0 = <&pcie1_clkreq_n>;
+>   
+> @@ -173,7 +170,20 @@ examples:
+>               resets = <&gcc GCC_PCIE_1_BCR>;
+>               reset-names = "pci";
+>   
+> -            perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
+>               vddpe-3v3-supply = <&pp3300_ssd>;
+> +            pcieport1: pcie@0 {
+> +              device_type = "pci";
+> +              reg = <0x0 0x0 0x0 0x0 0x0>;
+> +              bus-range = <0x01 0xff>;
+> +
+> +              #address-cells = <3>;
+> +              #size-cells = <2>;
+> +              ranges;
+> +              phys = <&pcie1_phy>;
+> +              phy-names = "pciephy";
+> +
+> +              reset-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
+> +            };
+> +
+>           };
+>       };
+> 
 
