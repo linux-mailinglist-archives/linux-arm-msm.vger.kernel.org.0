@@ -1,223 +1,226 @@
-Return-Path: <linux-arm-msm+bounces-52932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D45C1A7755D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 09:42:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F163FA77552
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 09:41:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 99ACC188B61D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 07:42:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 330523A7B78
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 07:41:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F39E41A23A4;
-	Tue,  1 Apr 2025 07:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C79941E8847;
+	Tue,  1 Apr 2025 07:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="CjlaqXER"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="dhIiMmOg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026171E8354
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 07:42:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988B71A23A4
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 07:41:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743493344; cv=none; b=dc5yhnCneCdQTe2hZhe/vXUICIXGlSLvn8BbQ71WFbiaUBw6UwelPvTsrtpJxHPpoll5GKaCzF5YZ2CCNIZTfMwXAnNx2r0PyguT9byelfwerMWnyL57spd+oF5spJ1X3piWazi27U99P6sUv0b+EXGFhDLGWIsDMgkCYtt7Cb4=
+	t=1743493276; cv=none; b=hbYEtRhJ8xkQNFyvLmzptQkmHxGHHgOEE5XQiJAOQfC3dZmvbpJ7SkvkeHzkDJjxHDiwSHefRD4fVabwd2+Xx+m8Z5Ouw0nux2VnWnjyERAWIE15/emo6N3aMguwnY6d72tnuEm6dlTuhCWqaG+2tKGu+ywKuiaXr4MUkh3vGt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743493344; c=relaxed/simple;
-	bh=GXDDnqGcqQxffAYS7mwQQIF3EkxYxJEVlHATEWKBZ1A=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=VVGb6M4F3J2MHu7/LMVxe3JZNLRziy+Rl66n2Do+QlOwkxi5i7jtR3RAegM3o4/gMB+7KDQRGCvwPVp8NsWlK09wy5J2+AcH66Jxwh0pRKTT3fcYwzNVMDtEY75UW2Ya5qOzVQMVwG5ChbfebkReAhZXJuk2il31p0t49Zf3ajc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=CjlaqXER; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ac3fcf5ab0dso840428566b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Apr 2025 00:42:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1743493341; x=1744098141; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mPJ2TXsQDmL+ygOLSu1iN7U4xXMymlhiV19R/MTt4SE=;
-        b=CjlaqXEReGTCKVbGTcfhjt/xlLQ8fkCL3KIatW6K3w1b16GsJEqOKcZZh8y+upHDWp
-         qU86nlDj/tJOd6t/HWxH8EFQyDuWrMF+bxS4bYpHouDJuLSjA6C2CRgbzcvrvoR2Eb0h
-         ymUouiYWm+sUImvGJaKafRMvSm4be1yhjNUK5xNc5rncbZXq8dbmObkWFT7bd1vbvwGc
-         uxefowWWtChEgdp1+D1DLr10XZDYRfCQoshC5i8w9cF7lFF5EFKycqImnpNlpIOv6zZ6
-         yn3W5JayrVpkaB5rKjYPwNm+N5VD5tE/06EYgzSY0hV8klJLMkwdZJYFAY/1WwsloYYp
-         o6xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743493341; x=1744098141;
-        h=in-reply-to:references:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=mPJ2TXsQDmL+ygOLSu1iN7U4xXMymlhiV19R/MTt4SE=;
-        b=ACGiabNgaZADneiw3vVu77hCynPwolYzuUqAVczyv2gYumhvt3kZgKnp96n09GUf2c
-         DCui9kBtGU7ohpUkRpKDIhaDhFJ5k4g+YMuyiq/D7lE6vj2C1MLIn0EXirTv/AHCnfbx
-         pnPoqdUpYzZyjMmgO4po20gFc+pLwnLEEn+AT+wVzjUw4ONqMZdJXDDCk4l5MCEd0Oee
-         6HExdtToJsP9556ZpNiX9XNrVVeJD9w0AddTDk+FiOgdjK4mLVqJwHglvQYyUbgN7Gju
-         lISDnrq2u60IOB2i7WWfdbgHl/IMEMQAODGII+isuTc1p72SLaIRPtDnwqSBFeI/0yCA
-         bSDA==
-X-Forwarded-Encrypted: i=1; AJvYcCUw6OfVJ5pGv01VGfOYkIPi+kQ+ZkM3EMHjSxZJAkhS8srogsCjJhUY8b3Qx6FdHioOrlRIpn2bEqFdhHiE@vger.kernel.org
-X-Gm-Message-State: AOJu0YwB9b0czrxD7RjmYd2I8JFJAh+uRDgW0cZBZXguhIBRnQmt4lWy
-	HIweRt/r1ZlgzuLOanUaTc2825zM6ykT7rqMAFFC3G7iqLRxCopCTqBWlTy7kII=
-X-Gm-Gg: ASbGnctjFOQkxz5ZvbVIhWNiw5vav4+fnWK1q6/bRYeUX9KKFcd2EdsU92/XlLsejkc
-	yZRaj3R9+tnjotAq2RmK9nP8ECR5z3Z2IsjRW/w2y5LTtgKm9Jvc2zGO3AirzjPHqHYcHp/CL6r
-	QotXHgTyxSb1xyTYYD0/uUf9uzUw4bCVoYaZ5BWqCeRTyjon/r2bxPS/f7JptdkVWnIIcp7gTVG
-	PraLCmDR/Lxe9Zmb2LZ37oR3eqrJuVP3XUexCn2pV9y/rCirWzMIPzbgUzZ0geNYPIosn3u6SHq
-	50i+F3op+Hmo+47yiImnNDnyTeImsOAxDi3NkCGAk7gt
-X-Google-Smtp-Source: AGHT+IH5SFNThbqWZhSx5G09ClUQO77eHc7ObuTSpcHJ9u1Pk7Y9mnu3n7BjajKWcXm5I6bRsMYpbA==
-X-Received: by 2002:a17:907:2d22:b0:ac6:b80f:b48a with SMTP id a640c23a62f3a-ac7389e67cbmr1075900166b.17.1743493341118;
-        Tue, 01 Apr 2025 00:42:21 -0700 (PDT)
-Received: from localhost ([41.66.98.72])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac71969aae9sm737432866b.147.2025.04.01.00.42.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Apr 2025 00:42:20 -0700 (PDT)
+	s=arc-20240116; t=1743493276; c=relaxed/simple;
+	bh=8lDb+tj9G9W3H50O090Rj6Werfk/2LTDDSLhunA071w=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:In-Reply-To:
+	 Content-Type:References; b=XLWq0b5G7NGaNI+mXFbHXGBh18l1akPHiGgvrz3HMrU//yZP+e5YzCrD9tdIqkBH4pNFAVQ5pwKthTshNb0Ah711J1ER5SA2Y2BqsvK2EQUuSuXqU7zdUiKQTFySl3W2FXMnqsi6XbJFM69mA7DdQcNlT7LlvKWsOVppG2zgpX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=dhIiMmOg; arc=none smtp.client-ip=203.254.224.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas2p2.samsung.com (unknown [182.195.41.54])
+	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250401074111epoutp033ff07ec9f99c8701a8fbb330935300e2~yIeSgHY4D1341313413epoutp03E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 07:41:11 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250401074111epoutp033ff07ec9f99c8701a8fbb330935300e2~yIeSgHY4D1341313413epoutp03E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1743493271;
+	bh=oBb0BNuAwn97pBFWWNNhY+k0ByaCS6BtqFypjpWj3LI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=dhIiMmOgpIimDhFQjIeaXfKI4XnXCGeH5asBRjjeL+kaH6xWieb2yrtONElo9fn7L
+	 WYhuduJxkBak7xdAPtw4s2UGnmXjiX6lozL7RhRtW3MR331KBPJKTEWilssSP+pSYp
+	 TW3P23y3rH3WYHIVTGmlMKSmD+QjC0xMpQFgGS9M=
+Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
+	epcas2p4.samsung.com (KnoxPortal) with ESMTPS id
+	20250401074110epcas2p42906b946a2f87cf851b94e972247d74d~yIeRviT5m0310803108epcas2p4_;
+	Tue,  1 Apr 2025 07:41:10 +0000 (GMT)
+Received: from epsmges2p2.samsung.com (unknown [182.195.36.97]) by
+	epsnrtp04.localdomain (Postfix) with ESMTP id 4ZRg0j6yPfz6B9mH; Tue,  1 Apr
+	2025 07:41:09 +0000 (GMT)
+Received: from epcas2p4.samsung.com ( [182.195.41.56]) by
+	epsmges2p2.samsung.com (Symantec Messaging Gateway) with SMTP id
+	40.B6.10159.5989BE76; Tue,  1 Apr 2025 16:41:09 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+	epcas2p2.samsung.com (KnoxPortal) with ESMTPA id
+	20250401074109epcas2p213c1e698e333e78e0f89a5f6380e0453~yIeQaWFJ21964319643epcas2p2m;
+	Tue,  1 Apr 2025 07:41:09 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+	20250401074109epsmtrp244d82242992aaca5f40aaa0affd2524e~yIeQYvBma1489914899epsmtrp2C;
+	Tue,  1 Apr 2025 07:41:09 +0000 (GMT)
+X-AuditID: b6c32a46-9fefd700000027af-e4-67eb9895f11c
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+	epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	7B.C2.08805.5989BE76; Tue,  1 Apr 2025 16:41:09 +0900 (KST)
+Received: from ubuntu (unknown [10.229.95.128]) by epsmtip2.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20250401074109epsmtip2a820e9c556cf528e6cb2713bb3dff038~yIeQJ7yIZ0868108681epsmtip25;
+	Tue,  1 Apr 2025 07:41:09 +0000 (GMT)
+Date: Tue, 1 Apr 2025 16:50:21 +0900
+From: Jung Daehwan <dh10.jung@samsung.com>
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: Wesley Cheng <quic_wcheng@quicinc.com>, Puma Hsu <pumahsu@google.com>,
+	srinivas.kandagatla@linaro.org, mathias.nyman@intel.com, perex@perex.cz,
+	conor+dt@kernel.org, dmitry.torokhov@gmail.com, corbet@lwn.net,
+	broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
+	pierre-louis.bossart@linux.intel.com, Thinh.Nguyen@synopsys.com,
+	tiwai@suse.com, robh@kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
+	linux-input@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org, Mathias Nyman
+	<mathias.nyman@linux.intel.com>
+Subject: Re: [PATCH v36 01/31] xhci: sideband: add initial api to register a
+ secondary interrupter entity
+Message-ID: <20250401075021.GB98772@ubuntu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 01 Apr 2025 09:42:12 +0200
-Message-Id: <D8V4SZVFFHGD.17Y9J8WFKNHYY@fairphone.com>
-Subject: Re: Venus probe issues on SM6350 SoC
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Vikash Garodia" <quic_vgarodia@quicinc.com>, "Dikshita Agarwal"
- <quic_dikshita@quicinc.com>, "Konrad Dybcio" <konradybcio@kernel.org>,
- <linux-arm-msm@vger.kernel.org>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a
-References: <D8S03CCD8LGW.TA2FRY4CKEGT@fairphone.com>
- <bb733204-ad6d-8487-ba17-b38cd9ea1ac0@quicinc.com>
- <49f8a822-4df4-0a61-b342-bd6c418314c9@quicinc.com>
-In-Reply-To: <49f8a822-4df4-0a61-b342-bd6c418314c9@quicinc.com>
+MIME-Version: 1.0
+In-Reply-To: <2025040109-dove-declared-9466@gregkh>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Ta1BTRxTH3dy8QONcg8CWOsKEfhBoYsIjWVqgOljnjm0RhbbWL/QCl5CB
+	PCaPCrZDEQQBW4ER2hKVIg9xGC1MBiMiDwkvUYSCggqFKSMNBqQoFKR1gCZcbP3223PO//zP
+	2Z3lYnwjx4OrUOkprYpMFrCdmeZ2HyQs/mlGLl7ME6PiiUk2utLcx0CTt04B9HNHHwu1lz8F
+	KLOilo1sxnE2WnqQw0CFrfc46GJ2JRM9nl9iofuN59nogrUIQ+WXsjCUaSpioZnnGUyU25jP
+	Qv+sWRmo5Ko3Mt08w0JrTQ0clN3VxUI1Zbc4qO7lVbAHEjeMYxyizGQgKppsDMJUk8smfhtu
+	YhOlPYeI1gtXOETFmbMsomX2EpsobEojauuHmER96wIgFkw7I3lHk0ISKTKe0npRqjh1vEIl
+	DxV8FBUTHhMkFUuEkmAkE3ipSCUVKtj3caRwvyLZvr/A6ysy2WAPRZI6nWB3WIhWbdBTXolq
+	nT5UQGnikzUyjUhHKnUGlVykovTvScRi/yB74ZdJiQMzq0Bz1y3FbCkA6aBqWx5w4kI8EOYX
+	53DygDOXjzcA+P1lK3Ak+Pg8gNbaCDqxBGDfxCr7tSLrr8oNRTOA5+uWAH2YBNC8UIU5qpj4
+	O7DE0sVyMBv3hePLt9fj2/Fd0NY5wnQIMPwVEz5oNq/7ueBJsLPcyHAwD/eDnaUvmDRvgz0l
+	k+vshAfA7rw1+xhcrqvdYLrtW0cfiF93goO2hwx6vH3w9/onTJpd4HR3PYdmD7jwZ/PGCjo4
+	MmXFaPFJAC9Pn8ToRAA0Wk8BhwGGJ8Kn58IcCHFv2DGy3hLDt8Kc9hUOHebBnGw+LfSGP94v
+	YNH8Fmyb6dtoSMAf8oc37mcFg+Vlo4wC4Gl8YzPj/2Y0+sDaxt3GdTNPmHntHEaH34bVq9w3
+	KsoAuwa4URqdUk7p/DX+/z17nFppAuufxHd/AyiafS6yAAYXWADkYoLtvCOLNjmfF0+mHqe0
+	6hitIZnSWUCQ/cUKMQ/XOLX9l6n0MZLAYHGgVCqR+QeJZQJ3nuXFH3I+Lif1VBJFaSjtax2D
+	6+SRzvAxCIc2n846SqXIy1WiwccxadEHhREnXtna3PR1izsnjkWRsQOifpjpXnZkTPnh4WvV
+	ylHFvdnMyWVx5Cb/7KATF3P656rNfn8PUc79ae8/fGncOzbfn7Hljufo3mP+SHrodnDi58ti
+	2FIz3ZnxzNzToXh37uawivfr6SfUJ+6u/BCOT+9BoXQhVR75zQ7fM89+udGV4FGrjMCddyTE
+	5gbMkmNbojsivRYzBuXxzvxd03s+S80+G5jwhbnlOvbpI5c7sWHh2kdfW2wH/A4fj64sWYtX
+	+Mo23RUVDQBheJE1aUrRm2rcXFXQPVUgLV2RTDRyUuZ6P0DpsvGtKd+lzcAoAVOXSEp8Ma2O
+	/Be0FYU5rQQAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SfUzMcRzHfX9P9+vs+LmSb4U4z9ecQ7t9jYwxfmuzsf7QsqVTv056kLsi
+	DHG5uClMSZdOT57OWe1WSo7T9UCNlvKUOMqtSWo9SR5yuo7pv9c+7/f39fn88aVxYS/hTUfF
+	JXDKOHmMiOITd6pFvkszL3UrpOlpU1Bmu51CxvuNGLI/TAXoSk0jiaoLPgGkLiymUJfORqHh
+	56cwdN7ylIfyNUUEah0YJlFL5WUK5XZm4Kjg2kkcqU0ZJOruO0Gg05VnSfTD0Ymh7NvzkOle
+	Ookc5goe0tTVkciQ95CHSr7dBusge1f3jsfmmRLZQnMXxpoMpyn27Uszxerrt7GWXCOPLUy/
+	QLIPeq5R7HnzUba49AXBlloGATtomr1VEMJfE8HFRO3nlMvWhvF3/xxpx+N73JPO3uqhksHH
+	KVrgRkPGH54cKuJpAZ8WMvcArO19QboCL3g19zXPxe7wfUoN6Sp1AJjSlDxeIpj5MNtaN84U
+	I4a2kce4kz2YxbCr9g3hZJwZJaCmys3J7kw0rC3QYU4WMH6wVt9PuKQOHOYXPeW5gmmwPtv+
+	9/Ei+EvfPCalx9gHXv9Nu8a+UF2WM77LjVkJH2kdlLMyfeyez1XHzgGhboJIN0Gk+y/STRDl
+	AcIAvLh4VawiVrU8fkUcd0CikseqEuMUkvC9sSYw/iXE4gpgNvRJrACjgRVAGhd5CIK/dimE
+	ggj5wUOccu9OZWIMp7ICH5oQzRAMd6dFCBmFPIGL5rh4TvkvxWg372Qs17gwaEkqFbplmVaL
+	H5YhWVlZkvfml5X9e46nGYe8gv0DjyGfhvJVlhDiptAaOStw/0Zb6S+/AJnMPmoL1bQ8EvA9
+	yRt9iTlZc1sGspNSjcItWy3mt9PDeq1XOjo2tnpZrG1adUlOgm9mzbsFUzlZaNQufVjAxYah
+	Zxk1i6UepHdbtAh/s0TUvWGHcs7qUwe+l3fewiL3LbiTMtBs57eyMwNfHXnSLhh0HCR0M1fb
+	cvCgM88+TtYQHxRSfcingK9ZCgsJP0ubR4vzPH8YPpSLtSkjUknQJJ/w7Y2qtpiK8H5108h7
+	//xzXyyDa34SfsHrvzXMrpDUp01+FbkJLxERqt3y5WJcqZL/ATRBC4aBAwAA
+X-CMS-MailID: 20250401074109epcas2p213c1e698e333e78e0f89a5f6380e0453
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+	boundary="----BWvmtLGreXPtZv31XE49129YoyRr4_KGUd.k-ILdCyGA2LCZ=_6a8e4_"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250327161254epcas2p35ea7c80bdcefaefc645c061531dd6833
+References: <20250319005141.312805-1-quic_wcheng@quicinc.com>
+	<20250319005141.312805-2-quic_wcheng@quicinc.com>
+	<CAGCq0LZoi0MOJLJYUeQJW6EfOU_Ch=v1Sg8L4_B-KhdDCx1fCw@mail.gmail.com>
+	<2025032734-reward-fantasize-dc16@gregkh>
+	<CAGCq0LamxvvE8b45VAshw9aWJNC2so_vK9t+pzXd3C7Y7tfYAg@mail.gmail.com>
+	<CGME20250327161254epcas2p35ea7c80bdcefaefc645c061531dd6833@epcas2p3.samsung.com>
+	<87746e66-84c1-4ff3-8b69-fbee1664eff6@quicinc.com>
+	<20250401022336.GA98772@ubuntu> <2025040109-dove-declared-9466@gregkh>
 
-On Tue Apr 1, 2025 at 8:55 AM CEST, Vikash Garodia wrote:
+------BWvmtLGreXPtZv31XE49129YoyRr4_KGUd.k-ILdCyGA2LCZ=_6a8e4_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+
+On Tue, Apr 01, 2025 at 07:55:13AM +0100, Greg KH wrote:
+> On Tue, Apr 01, 2025 at 11:23:36AM +0900, Jung Daehwan wrote:
+> > On Thu, Mar 27, 2025 at 09:12:12AM -0700, Wesley Cheng wrote:
+> > > 
+> > > 
+> > > On 3/27/2025 3:14 AM, Puma Hsu wrote:
+> > > > On Thu, Mar 27, 2025 at 3:02 PM Greg KH <gregkh@linuxfoundation.org> wrote:
+> > > >>
+> > > >> On Thu, Mar 27, 2025 at 02:27:00PM +0800, Puma Hsu wrote:
+> > > >>> Hi,
+> > > >>>
+> > > >>> We have implemented and verified the USB audio offloading feature with
+> > > >>> the xhci sideband driver on our Google Pixel products. We would
+> > > >>> appreciate it if this solution can be accepted. Thank you all for the
+> > > >>> work!
+> > > >>>
+> > > >>
+> > > >> Great, can you properly send a "Tested-by:" line for this against the
+> > > >> 00/XX email so that it will be properly saved?
+> > > >>
+> > > > 
+> > > > We(Google Pixel) only use the xhci sideband related changes and two
+> > > > changes in the sound card driver. For the details, what we actually
+> > > > tested are patch [01], [02], [03], [04], [05], [06], [08], and [12].
+> > > > Do I still send the "Tested-by:" line to 00/31 email? Or should I just
+> > > > send the "Tested-by:" line to the 8 changes above? (I added
+> > > > "Tested-by" line for this [01/31] first.)
+> > > > 
+> > > >> Also, I think a new version of the series is coming, can you test that
+> > > >> to verify it works properly?  We have to wait until after -rc1 is out
+> > > >> anyway.
+> > > >>
+> > > > 
+> > > > I think this v36 is the last version of the series as I discussed with
+> > > > QCOM Wesley. And for sure I will test it if they do have a new
+> > > > version.
+> > > > 
+> > > 
+> > > Hi Puma,
+> > > 
+> > > I'm discussing with Stephan on the QC specific stuff, so the common changes
+> > > won't change on v37.  Please provide your tested-by tags for each commit,
+> > > so I can carry them accordingly on the next submission.  If I do end up
+> > > making changes to any of the common patches, I will remove your tested by
+> > > tag, which means you might have to test it again.
+> > > 
+> > > Thanks
+> > > Wesley Cheng
+> > > 
+> > > 
+> > > 
+> > 
+> > Hi Wesley,
+> > 
+> > Thanks for your effort to upstream usb audio offload.
+> > I've also used your patchset like Puma.
+> > ([01], [02], [03], [04], [05], [06], [08], and [12])
+> > 
+> > It works well on Exynos. Please let me know if you need also
+> > "Tested-by:" on our side.
+> 
+> Yes please.
 >
->
-> On 4/1/2025 11:47 AM, Vikash Garodia wrote:
->> Hi Luca,
->>=20
->> On 3/28/2025 8:52 PM, Luca Weiss wrote:
->>> Hi all, and Vikash and Dikshita,
->>>
->>> Konrad Dybcio was suggesting I write an email here, maybe someone has a
->>> good idea what I can try.
->>>
->>> I've been working on bringup for SM6350/SM7225 ("lagoon") for the
->>> Fairphone 4 smartphone but have been stuck on getting Venus working for
->>> a long time (~January 2022). Essentially, whatever I try probe fails
->>> with the following error:
->>>
->>> [   41.939451] qcom-venus aa00000.video-codec: non legacy binding
->>> [   42.162105] qcom-venus aa00000.video-codec: wait for cpu and video c=
-ore idle fail (-110)
->>> [   42.167037] qcom-venus aa00000.video-codec: probe with driver qcom-v=
-enus failed with error -110
->>>
->>> I've double checked the videocc driver against downstream, the videocc
->>> GDSCs and their flags, compared dts bits, checked basic driver bits but
->>> I couldn't find anything to get further than this.
->>>
->>> For driver / compatible, it doesn't seem to matter if I use sm8250 or
->>> sc7280 compatible or actually the struct I created for sm6350.
->>>
->>> I'll attach the log with some extra debug prints below.
->>>
->>> My git branch for reference: https://github.com/z3ntu/linux/commits/sm6=
-350-6.14.y-wip-venus/
->>>
->>> I didn't try the new Iris driver yet, mostly because as far as I can
->>> tell, VPU_VERSION_IRIS2_1 is not yet supported there, just IRIS2
->>> (sm8250) and IRIS3 (sm8550). But I'm also happy to try something there.
->> The good part if IRIS2_1 configuration have firmware support with gen2 H=
-FIs.
->> Since you are wiling to give a try, let me or Dikshita share the firmwar=
-e with
->> you in a short while, and with that, you can directly try SM6350 with IR=
-IS
->> driver. Given that we have already validated SC7280 with gen2 (downstrea=
-m
->> version of IRIS though), i am quite hopeful that SM6350 can be up with i=
-ris.
->> FYI, iris is having just the h264 decoder at this point with RFC patches=
- posted
->> for VP9 and H265 decoder.
-> Pls try with below firmware bins on IRIS driver. We can debug from there.=
- Hope
-> you have the access to download the binary.
->
-> https://git.codelinaro.org/clo/linux-kernel/linux-firmware/-/commit/56035=
-bf6edac7eb4d2867528c598eb646ee68651
 
-Hi Vikash,
+Tested-by: Daehwan Jung <dh10.jung@samsung.com>
 
-Thanks for sharing these binaries!
+------BWvmtLGreXPtZv31XE49129YoyRr4_KGUd.k-ILdCyGA2LCZ=_6a8e4_
+Content-Type: text/plain; charset="utf-8"
 
-I've signed them with sectools for my device and tried them first with
-the venus driver.
 
-There it looks like the firmware doesn't load at all:
-[   44.798028] qcom-venus aa00000.video-codec: fail to load video firmware
-[   44.800367] qcom-venus aa00000.video-codec: probe with driver qcom-venus=
- failed with error -22
-
-Then with iris driver and qcom,sm8250-venus compatible while it does
-seem to complete the probe function (I see a print I've added in
-iris_probe before the last "return 0;"), the phone crashes.
-
-I have the following diff on top of iris:
-
-diff --git a/drivers/clk/qcom/videocc-sm6350.c b/drivers/clk/qcom/videocc-s=
-m6350.c
-index 84c6a1fcb395..504dcaad897b 100644
---- a/drivers/clk/qcom/videocc-sm6350.c
-+++ b/drivers/clk/qcom/videocc-sm6350.c
-@@ -111,7 +111,7 @@ static const struct freq_tbl ftbl_video_cc_iris_clk_src=
-[] =3D {
- 	F(240000000, P_VIDEO_PLL0_OUT_EVEN, 1.5, 0, 0),
- 	F(300000000, P_VIDEO_PLL0_OUT_EVEN, 1, 0, 0),
- 	F(380000000, P_VIDEO_PLL0_OUT_EVEN, 1, 0, 0),
--	F(460000000, P_VIDEO_PLL0_OUT_EVEN, 1, 0, 0),
-+	//F(460000000, P_VIDEO_PLL0_OUT_EVEN, 1, 0, 0),
-
-    ^ this is because my sm6350 opp-table only goes up to 380 MHz, SKU 0
-    can go to 460 MHz but not SKU 1. I didn't check which SKU my SM7225
-    is.
-
- 	{ }
- };
-=20
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c b/driv=
-ers/media/platform/qcom/iris/iris_platform_sm8250.c
-index 5c86fd7b7b6f..d958a6540949 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-+++ b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-@@ -61,7 +61,7 @@ static const struct icc_info sm8250_icc_table[] =3D {
- 	{ "video-mem",  1000, 15000000 },
- };
-=20
--static const char * const sm8250_clk_reset_table[] =3D { "bus", "core" };
-+static const char * const sm8250_clk_reset_table[] =3D { };
-=20
- static const struct bw_info sm8250_bw_table_dec[] =3D {
- 	{ ((4096 * 2160) / 256) * 60, 2403000 },
-@@ -72,12 +72,12 @@ static const struct bw_info sm8250_bw_table_dec[] =3D {
-=20
- static const char * const sm8250_pmdomain_table[] =3D { "venus", "vcodec0"=
- };
-=20
--static const char * const sm8250_opp_pd_table[] =3D { "mx" };
-+static const char * const sm8250_opp_pd_table[] =3D { "cx" };
-=20
- static const struct platform_clk_data sm8250_clk_table[] =3D {
- 	{IRIS_AXI_CLK,  "iface"        },
- 	{IRIS_CTRL_CLK, "core"         },
--	{IRIS_HW_CLK,   "vcodec0_core" },
-+	{IRIS_HW_CLK,   "vcodec_core" },
- };
-=20
- static struct tz_cp_config tz_cp_config_sm8250 =3D {
-
+------BWvmtLGreXPtZv31XE49129YoyRr4_KGUd.k-ILdCyGA2LCZ=_6a8e4_--
 
