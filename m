@@ -1,186 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-52927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A5FDA77519
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 09:19:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E51CAA77533
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 09:28:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1BA2F3A54C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 07:17:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C9D7F7A3332
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 07:27:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE9831E8837;
-	Tue,  1 Apr 2025 07:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE28C1E7C2F;
+	Tue,  1 Apr 2025 07:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="S6zsxb8a"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="kcG2opWV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC9A1E990A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 07:17:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13341E2606
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 07:28:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743491844; cv=none; b=f51cfm5r0x3h3sXLkuXudP8PjfqIsRyw6qXhTvAmKaxTyKLVW4HDbtyRNHtJ2z6ZYiL1KTt9hScbJKD6ubK5XXSZpBgCCter6srUBOgHl+v2OMhJr4/mMGHqb6Efv1C09d8PE9Zn7OnYeCgFw8Fn8pUgGATnECDqD4OkLQbPBSA=
+	t=1743492520; cv=none; b=KvDJrcCsPeNkIckvN/RXEphnjReu9yfzImoIrzwbA++LJYc2j0uhmx2u/grjOvSA5shwetv2sL0I3DxGcNy/goYO49bVO4viXIZ2VOnX9z1Yg/QW8uhj008bFY+zNrv6BbLQclVvCJ52k3xm8pA1qI5gIgxsxgWN3wFkx2JKs+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743491844; c=relaxed/simple;
-	bh=K94tqSCdI38kDfHqpKSLdrbnPJqSiDjqX6KGxtHaBus=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MbIf+swHpMWsoR+C+WrLDV3IpxWXurHSOCFLNrb94pjCo7ZtiOJt4Y9LMn0dzk5c+mIL79Fd1kQWtYkVjLCFKiOcdffiivJQj1RnSvY7ZLYMm70x51xyJfWvnAbnC7Vx+EZNuZctFN54iAtvBdnfNlcEy1pp6XgG4X5M0bPrLfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=S6zsxb8a; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5315c95P014503
-	for <linux-arm-msm@vger.kernel.org>; Tue, 1 Apr 2025 07:17:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FtMGRVk1ZbNEw+POJb8t9Wm2iW3twKtu3+p8pqREbTY=; b=S6zsxb8ac9snJQ4a
-	pTSJ9wyVBp8SZhPsTxzorNsUhzlFYMn469v5G22Mk820Coizt/sgGtlsRE90TJPA
-	TiKcJldUyDfAqZ65mWrqsRetWJ0ndGKR9F5RHz9RxP2M3GeuqaDKGOVvau+xjydb
-	81Vuv1k9Le+O3hWNx4OaeEN/gb6aAX6TAP/2vMKxb8W24KWlfteo+vj/JIprg4lk
-	gtXGX9fZTwdu9K0OUHOrYdK8zDqBw5S98yioEQ9Khz9fUMFDG+wnm/BrhNRgvG9V
-	aPt/kQq1xw960uFCenOVOfxafW+c8CdTKRiSRm5Ic9fYa3sdOuGnVcPcySUiQlky
-	ycSSxw==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45p7tvex2r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 01 Apr 2025 07:17:22 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-2ff798e8c90so8573583a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Apr 2025 00:17:22 -0700 (PDT)
+	s=arc-20240116; t=1743492520; c=relaxed/simple;
+	bh=GMnVik6qR/DphHQzN117FOVrrZnJtfT0FulI+aQTyIs=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=QLi22hFmkwIkFzlZGTcItxk/H6L6q7Rr4r9g0UDlNH+aDoo4vq30rMICjbzUHNgpR9uhFSlVauoNVJ7HSvIGdPL0Ya7PniTFrBnHDf/TAIEtXPS51eXjLF2+2IGfOgme5XGuv3OyuHvsQ926fHCtVNYL38uhrpX10RBMSpgkvpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=kcG2opWV; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5e66407963fso9960524a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Apr 2025 00:28:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1743492517; x=1744097317; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AvyKOJV2j861DKzg7ZpKwJkwgo6rqIhbah6vR40nKrs=;
+        b=kcG2opWVcXZJ68DxcdUB/vulc0pOMJIitWQxSsChQZbY3aaND2gSws48jd8EsiUL3O
+         b+QeOLqnrzzolKBq4RlDof4XZw6OyLs3O6BnP8HGpyiDuMLTH5fouaeb5K2my2PBQAqa
+         qFUIvmsbohsTKr42bCNAbBgDvDguQuIdbxw0QFU5otiL4AWIlTxx9Vsb6XdUQDLfEI0q
+         HrCJe+wRTDMN5qDF72btN57XNf6/SefYJSh0BrG2DqcK+PWVIXvNXE7kMdVT/F40/zCy
+         caYfd/6o08+jnHYKvQN3xll3JQ4etLJk68hS0ZElkggWA5fDmm5zcNUjiXKmmXgtkMus
+         ldVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743491841; x=1744096641;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FtMGRVk1ZbNEw+POJb8t9Wm2iW3twKtu3+p8pqREbTY=;
-        b=DWLDAH5fcj6+8SsTYS/wvUNQfsZFf0DfcUODjOcbdEZGoF1hsi7LQ1TRnHwPkC6DB8
-         AgLHksgaveESc81YzmJNUvGliYBTRbKmviLZhMcLeyLCs/QgJgOGYXc6hMi4+/tsvBzX
-         n5EUa8HrtdyauG+JjN5SfHcc3MxblFOwPOEf9A0QJ77C1NacQyi3+DTMU3YxXGqmpVmR
-         UfEtD1zB+PMOxXEWmwR0jsV8BKbdh+Z2WWMl18vG/YgZ4QYaB7FkwlsMiZ5ACt3KLX2P
-         cxSwLBSQb3FDvrNXgulOBUQJiTFZuFDppMCEhmh6039lYhLN9VUovYter6rZHzFqzkxV
-         o0hw==
-X-Forwarded-Encrypted: i=1; AJvYcCXhMoIMIU8sPUTr4vRL6o409Wk3xcmoDM7deOYURWyyGOTorCPm8EqdNhd3WS0Aohi4WDSZCVsTTQlV4LbO@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNA2ZoIKqhYWfI+8PxrMCG+O2FefNs2Z/OVTSIIsXrq2pSwXCH
-	a+HL26eJrw0m9k5QmiGy+UMjVhrJ/yKwbLJsTik+aLV4Kq+2U50GHDpqnauqhsykdAzGUKkGPjh
-	bIlUI76Afh8zYm98h6PYF2tdr93NYPj7/xKQpeZ750uIGlXKEqSugppHkxizzA64f
-X-Gm-Gg: ASbGncu0DPJVsFhnHK4gZ3m8b4Gz1dxM3kHBGpzimOZKJW1erKcVRbFWRU6wNOuiqm0
-	ImxJkaHY1t/WPfEatDR9/32dFejqyvwYi9PROGJvEBC6iKyNAOlCds7C9bhJ0i/yKM/8c2igslw
-	KhZ4n+p87yT3jAC4oyg8z4ncuZNVwGlhsAj3R7UPF7b/MzHvLEembGAooqx7Lq/Sp9RwuLj5fAo
-	r3XCG6JK3ingSm+APb2XmTn323wl9pVRx9JNUzI41JmnvEc6g6jeAWV16h/r5Vek/R0V9zDgxDO
-	v55pHLxBQBB6pn6fJC+Mc6TOVTRu77PwK2sk4+eI/K0kJg==
-X-Received: by 2002:a17:90b:134d:b0:2f8:4a3f:dd2d with SMTP id 98e67ed59e1d1-305320ae2eamr18234697a91.15.1743491841320;
-        Tue, 01 Apr 2025 00:17:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFr4gOlMNdHJzyZphobs28BNbuI4vi69zmTSjUxMF19Ghg9xXQwTQ1pg7rC685uTI4i0vHJiA==
-X-Received: by 2002:a17:90b:134d:b0:2f8:4a3f:dd2d with SMTP id 98e67ed59e1d1-305320ae2eamr18234674a91.15.1743491840854;
-        Tue, 01 Apr 2025 00:17:20 -0700 (PDT)
-Received: from [10.92.192.202] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2291f1ecb62sm81122505ad.230.2025.04.01.00.17.16
+        d=1e100.net; s=20230601; t=1743492517; x=1744097317;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=AvyKOJV2j861DKzg7ZpKwJkwgo6rqIhbah6vR40nKrs=;
+        b=wjeoTwbHJJKAE+lXWR4LOFiNM6Y4U7XwLUGZeJxZdO53ltRzDKobYIO5ahF8Ii6zYk
+         66yfHnKHPPlVL8mtY2T63hU8+JJJ9jG0MwZuIlOKuHUl98mOIspTYzGN8qzDrgl0fqGb
+         /0IDzUQmzm1L6PeI9rRU6W4OZLF2dNPrC6HVuvSpdGe8WsI62huzcSgi1svNuiAIwoXf
+         gUjvoMh3wES1458n9EdFq7XDfVb/sHjsPYG3VjdNn4VGjmEVLrYJM3mGMnRiDHxEzRXV
+         Ps+Nw5dDx6HT0d91Qkce4TLMRr9wtYe4vU5yGivZqXdBb2Kmbe/er/XBbl9VMyeCI/rF
+         j5Ng==
+X-Forwarded-Encrypted: i=1; AJvYcCWtRz/n2T3Djqm1GQuaqyrP4/e7vFmBKb1VnCU9VVCba2esXI8orCyDizXkBUNYDLbRBAEQb9Bw6pQr9q/E@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrqkYaDumdAAAEMW+JzbY0jTG6OD3YEScq+GQNevAwxCmNsnYk
+	Iq8unWCktFPXx60njy+OGPUmchDHN2N4S/657jADMCRXuNmZXxXs252hd0NM1K8=
+X-Gm-Gg: ASbGncszt736nXOqTbHdkl8271q3/UHcy/h16Vl/swMmLjd/DOzTKD6VRhuD5V9ddPf
+	9y3vAdNSNcGhEbsvwSqpLFPg/Y4+axhVNXX11XK0pfrRrA/5UUvrL3mHL8YH0x/bFThbRAUdLaA
+	eO9HJ8fqyDm5HvTnsQh6redOs3vVDnE92kz1enBO2bs55lgmpqMdN+m1yqtGP2NpA9gwhl6VakY
+	MhdqGn6w+QKTBInKClA9vi/aCaSclLesR5OD8SD1AU0H0OlVH9Uqstmh+8+oS0RPhWiugHfrgme
+	Lq38LUbJdm078sZ+0+obXCXIb3TPD2Up52u4Zgoc4eC0opDD8SeCvhs=
+X-Google-Smtp-Source: AGHT+IGreNP1xS+TpYq117PonYwsZsrWIWZe7aQWxPT2KWDAiHRqRQFW+FwoSeQz9TNgmJoNUVepdw==
+X-Received: by 2002:a05:6402:26cb:b0:5e6:e68c:9d66 with SMTP id 4fb4d7f45d1cf-5edfce76c4emr8587117a12.8.1743492516958;
+        Tue, 01 Apr 2025 00:28:36 -0700 (PDT)
+Received: from localhost ([41.66.98.72])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5edc17b1ffcsm6713611a12.50.2025.04.01.00.28.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Apr 2025 00:17:20 -0700 (PDT)
-Message-ID: <95db82e9-8527-0520-07db-672e64b6e25b@oss.qualcomm.com>
-Date: Tue, 1 Apr 2025 12:47:15 +0530
+        Tue, 01 Apr 2025 00:28:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 2/2] PCI: Add support for PCIe wake interrupt
-Content-Language: en-US
-To: Lukas Wunner <lukas@wunner.de>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pci@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_mrana@quicinc.com
-References: <20250401-wake_irq_support-v1-0-d2e22f4a0efd@oss.qualcomm.com>
- <20250401-wake_irq_support-v1-2-d2e22f4a0efd@oss.qualcomm.com>
- <Z-uPOLNPIgm63PWY@wunner.de>
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <Z-uPOLNPIgm63PWY@wunner.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=OIon3TaB c=1 sm=1 tr=0 ts=67eb9302 cx=c_pps a=RP+M6JBNLl+fLTcSJhASfg==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=i3ooZJLN8YTFS9vXi5sA:9 a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-ORIG-GUID: 9V-YUBCRhiHn3fbs9SgXVl3ya8yVW-dR
-X-Proofpoint-GUID: 9V-YUBCRhiHn3fbs9SgXVl3ya8yVW-dR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-01_02,2025-03-27_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=740 lowpriorityscore=0 malwarescore=0 mlxscore=0 clxscore=1015
- adultscore=0 bulkscore=0 phishscore=0 suspectscore=0 impostorscore=0
- spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504010048
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 01 Apr 2025 09:28:28 +0200
+Message-Id: <D8V4IHD5INWE.3FK3SCTG05R97@fairphone.com>
+Subject: Re: Venus probe issues on SM6350 SoC
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, "Vikash Garodia"
+ <quic_vgarodia@quicinc.com>, "Dikshita Agarwal"
+ <quic_dikshita@quicinc.com>, "Konrad Dybcio" <konradybcio@kernel.org>,
+ <linux-arm-msm@vger.kernel.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <6P5iXJOUxv3jsPGI11XbeZOagg2ht2Ws-WbN2HjXSFC_xeFgWyGM3a9T6y30gmys3KSxJF9Tv3f7jAehZ6AlOQ==@protonmail.internalid> <D8S03CCD8LGW.TA2FRY4CKEGT@fairphone.com> <6ae076fc-e30a-431e-b75e-7f9b9d7bff08@linaro.org> <ak18vN44u4bjszfN2KsbOPxAzArT4ISzMKI7eapjrU-rK6O85oI-fqAIHPLYeQVIzUS32Huvpql2Vcg6_UHaAA==@protonmail.internalid> <D8U8XDW1QRAY.35U7ER6E74G55@fairphone.com> <5c1d5dfc-b189-4948-8739-1fd90ebd033b@linaro.org>
+In-Reply-To: <5c1d5dfc-b189-4948-8739-1fd90ebd033b@linaro.org>
+
+Hi Bryan,
+
+On Mon Mar 31, 2025 at 11:47 AM CEST, Bryan O'Donoghue wrote:
+> On 31/03/2025 07:43, Luca Weiss wrote:
+>>> Also why not turn those apss_smmu entires you have commented out back o=
+n ?
+>>>
+>>> https://github.com/z3ntu/linux/=20
+>>> commit/281d07ae965ce0101bdb528e98bf8c00c94f86ec#diff-=20
+>>> ea117dfbd122406c02e5b143ee0969a3de21416b6c192e3b5ad024571f6e4bffR2016
+>> As far as I can see, other SoCs only have the IOMMU that is downstream
+>> non_secure_cb.
+>>=20
+>> But unfortunately applying both changes (RETAIN_FF_ENABLE + iommus)
+>> doesn't change anything, it's still the same error:
+>>=20
+>> [   82.603202] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_=
+idle:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+>> [   82.604738] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_=
+idle:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+>> [   82.606263] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_=
+idle:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+>> [   82.606273] qcom-venus aa00000.video-codec: venus_cpu_and_video_core_=
+idle:1535 cpu_status=3D0 (OK 0) ctrl_status=3D1 (OK 0)
+>> [   82.606280] qcom-venus aa00000.video-codec: wait for cpu and video co=
+re idle fail (-110)
+>> [   82.606287] venus_probe:505 ret=3D-110
+>> [   82.610767] venus_hfi_destroy:1690
+>> [   82.610783] qcom-venus aa00000.video-codec: probe with driver qcom-ve=
+nus failed with error -110
+>>=20
+>> Also one thing I can add from my notes, what I didn't write yet. This is
+>> how the register looks with msm-4.19 downstream. IIRC the values here
+>> are not directly comparable because of bitmasks and stuff.
+>>=20
+>> [   48.936285] __prepare_pc_iris2:267 DBG
+>> [   48.940352] __prepare_pc_iris2:299 DBG wfi_status=3D0 ctrl_status=3D4=
+0000001
+>> [   48.947624] __prepare_pc_iris2:299 DBG wfi_status=3D1 ctrl_status=3D1=
+01
+>> [   48.954212] __prepare_pc_iris2:301 DBG
+>> [   48.958178] __prepare_pc_iris2:314 DBG
+>>=20
+>> Regards
+>
+> I wonder are all of the clocks going that are required to get the core=20
+> booting ?
+>
+> Taking a quick look I'd recommend keeping
+>
+> SLEEP_CLK and AHB_CLK always-on
+>
+> https://github.com/z3ntu/linux/blob/04f855c2b70302c9ddcd47b1fee4a2dc84fb5=
+ba6/drivers/clk/qcom/videocc-sm6350.c#L301C1-L302C58
+>
+> It might be an idea to set all of the interface clocks always-on and see=
+=20
+> if that makes a difference, rolling back individually if it works.
+>
+> - VIDEO_CC_IRIS_AHB_CLK
+> - VIDEO_CC_MVS0_AXI_CLK
+> - VIDEO_CC_SLEEP_CLK
+> - VIDEO_CC_VENUS_AHB_CLK
+
+How do I best do this? Adding ".flags =3D CLK_IS_CRITICAL," to these four
+clocks make them be stuck at probe time.
+
+[    0.459004] ------------[ cut here ]------------
+[    0.459069] video_cc_mvs0_axi_clk status stuck at 'off'
+[    0.459093] WARNING: CPU: 2 PID: 74 at drivers/clk/qcom/clk-branch.c:87 =
+clk_branch_toggle+0x194/0x1ac
+
+I guess some other clock or power domain that's required for this clock
+si not on yet?
+
+Same with
+[    0.466604] video_cc_venus_ahb_clk status stuck at 'off'
+
+But it looks like VIDEO_CC_IRIS_AHB_CLK and VIDEO_CC_SLEEP_CLK can turn
+on correctly with the CRITICAL flag.
+
+Regards
+Luca
 
 
+> ... and if we are going that far might as well do the whole array which=
+=20
+> is small enough
+>
+> https://github.com/z3ntu/linux/blob/04f855c2b70302c9ddcd47b1fee4a2dc84fb5=
+ba6/drivers/clk/qcom/videocc-sm6350.c#L293
+>
+> Is it possible the AHB and AXI clocks are on =3D> read/write transactions=
+=20
+> would work but one of the core-clocks is off =3D> no boot on the remote e=
+nd ?
+>
+> ---
+> bod
 
-On 4/1/2025 12:31 PM, Lukas Wunner wrote:
-> On Tue, Apr 01, 2025 at 10:12:44AM +0530, Krishna Chaitanya Chundru wrote:
->> PCIe wake interrupt is needed for bringing back PCIe device state
->> from D3cold to D0.
->>
->> Implement new functions, of_pci_setup_wake_irq() and
->> of_pci_teardown_wake_irq(), to manage wake interrupts for PCI devices
->> using the Device Tree.
->>
->>  From the port bus driver call these functions to enable wake support
->> for bridges.
-> [...]
->> --- a/drivers/pci/pcie/portdrv.c
->> +++ b/drivers/pci/pcie/portdrv.c
->> @@ -695,6 +695,10 @@ static int pcie_portdrv_probe(struct pci_dev *dev,
->>   	if (type == PCI_EXP_TYPE_RC_EC)
->>   		pcie_link_rcec(dev);
->>   
->> +	status = of_pci_setup_wake_irq(dev);
->> +	if (status)
->> +		return status;
->> +
->>   	status = pcie_port_device_register(dev);
->>   	if (status)
->>   		return status;
->> @@ -728,6 +732,8 @@ static void pcie_portdrv_remove(struct pci_dev *dev)
->>   		pm_runtime_dont_use_autosuspend(&dev->dev);
->>   	}
->>   
->> +	of_pci_teardown_wake_irq(dev);
->> +
->>   	pcie_port_device_remove(dev);
->>   
->>   	pci_disable_device(dev);
-> 
-> Why doesn't the teardown order mirror the probe order, i.e. why is
-> of_pci_teardown_wake_irq() called *before* pcie_port_device_remove()
-> instead of after?
-> 
-ack, in the next patch I will move teardown after
-pcie_port_device_remove()
-> (pcie_port_device_remove() is the opposite of pcie_port_device_register().)
-> 
-> Also, why is it safe to bail out of probe on failure of
-> of_pci_setup_wake_irq() without unwinding whatever pcie_link_rcec()
-> has done?  I think this needs either an explanation or reordering.
-> 
-if there is a failure in port_device_register also we are not unwinding
-so I taught it is already taken care. Looks like it is not.
-
-In the next patch I will move of_pci_setup_wake_irq() above 
-pcie_link_rcec() to avoid all this.
-
-- Krishna Chaitanya.
-
-> Thanks,
-> 
-> Lukas
 
