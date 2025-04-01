@@ -1,144 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-52908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1688AA77262
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 03:42:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13E47A7729F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 04:14:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B85B416AA62
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 01:42:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B113E16A3C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 02:14:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84BE370830;
-	Tue,  1 Apr 2025 01:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2D3D18C936;
+	Tue,  1 Apr 2025 02:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YX4Cet3J"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="TOuFEw4o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2CB2AF04
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 01:42:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A8314658C
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 02:14:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743471741; cv=none; b=fhUany42P4tsEKQro9MYUT+ZWqrYp2iz1+/1l3dJEcP6NBtkAxcBVJvEI0gj+2QOB8PoP0z+oTTwPPAU+GRFuWLxE/uD923P2SL1lIhxx6PV/4v9gk8vwHPH9ijECbZ43WSxiGrfDoVgfs//2+aeL4U7bsBIIGdYFPj3FlkIC60=
+	t=1743473673; cv=none; b=gwOHlx7f3HTh7QMtJWXEFgTXGQ9nwjtN9wALryizUhauzjkR8iH3H2qvTRDU0ZXT5Q9Q7esKRj0nxFE4hTwUvPjOoKpUKvXf7MRwx8Az9GjanGAOtR89CyGs398DX5Et0oAYbWiYr3l3ah7MDl0cuXXil5pZwgaodMyN3Uv3fD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743471741; c=relaxed/simple;
-	bh=LgAgkR9JX+LzMJK56/SfcYwiPWFfGWJah1IzcNJ7x4c=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=U+H1dinRHhq+8qrC/WDZJwnmF7EgEyrWNL79xk2hzFhd/aid+rO0pSRenPEj0CA32xnXk45w9BSzMxs+GRch9C398XKV5intDPazzmSFs6d5vzvmq89s6FyobtKBL3zZl/x71Pyj7Mu4h8ytFoHSbQNJoL6h10gxlv869yAERoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YX4Cet3J; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52VFCqss025623
-	for <linux-arm-msm@vger.kernel.org>; Tue, 1 Apr 2025 01:42:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=tQNRCYHU/5P2PfWYw9DTAN2O1KOVrz4anhz
-	8ncma5w0=; b=YX4Cet3JYUf2Ih40V3PneXIZvWvQlf6S7Bc7u2hJHvH0GWzp7xV
-	u+qwDYCphHhDa++A+YDuzntCM8hIVncD0Lq9At3XrYcaKVKgiq1T0CuT8pmy8SES
-	e/54+r8KQiXqLH+itC44KnS/kCtUwrh/ZKOwrx4dVtb3AZJVYu6XAANvfmXiDklU
-	nnwuVRUlj04LgX1cV6Soa6IrJByJ//atKvpTdxouUe3nQd7HuYiaiBYiYSeU/9IO
-	S1xZoKFoeYPpW2+GKrCq86e2E0+02fPHHDbbb5cvHqYOiLJk3svdBBwZr1JHp6D0
-	1ZoyprqR1omSE0TdK8lVtvnezVb6vo1TZTA==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45p6jhpagy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 01 Apr 2025 01:42:19 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2265a09dbfcso145281435ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 18:42:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743471738; x=1744076538;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tQNRCYHU/5P2PfWYw9DTAN2O1KOVrz4anhz8ncma5w0=;
-        b=ovLyUqVkzdt7h46bZaP0vMtyNeIZxrPNGLWVkKnnZbJI5euIDvyHVlq8+p3WWkpGc0
-         5nrJdEN/WlpN2JxGPehXGCiVR5poizG7AwIkbwBXiZHzrnvKk/Ita/5NLwy/gtUQ6ULf
-         eeJ1Ljt+Ht2lkmccs6TioOa5lP53qI0+QmB0M94tH3Ek5f4KmrnMy2/MPS99VahZs91H
-         fe2DUvmm4GiOvu05JsTztDC5MCGWqYCRX/OikUjQzSy3Nh7lsi583YysJX/NHcUBOgip
-         WRPlrYG4TzTczyFPi84UEZBmZhIE04vVS4MuUt/VNU8NwpsIz9JlufBqplGdCGsc5r0P
-         wSwA==
-X-Forwarded-Encrypted: i=1; AJvYcCWCwFXNvV5RnLHVvlp5if2zpbK4B6MpyS8eGBvyJmMSvCRifud+XsIIJH3c0Xa4vX68zt93YA57eq/kxWRY@vger.kernel.org
-X-Gm-Message-State: AOJu0YzLhW0eAnlfoM4Umb582hjkEp4E5qwlO8oItodsyBKGVsO+8VYT
-	CG/zwJuuHnOShnqrf3CyUHaq4lQjQyvNBIMZKhu13SqzYKk7dzoR2vJOP3oPJwTR0AdWEo4wSvv
-	m2qJOrnK/IeTDgJ1fruOFy7sSJkfW9KKEXPztnPv+uNRkpnZTCg3jGAaO8EUQZxKj
-X-Gm-Gg: ASbGncsN3bkfdJAg20oLUol3SHx83lT0Tk7VnvgwGC+DpZu+8oOuRGcfJ6XLJaBVvNc
-	a3BRR85IZmiQKekK6K/hXdPNKNmrtHBPI+KuCD0Ka+GWrtBcP67tvcRI1RiD+AnJ7b7fdXwyJu2
-	jMHu3wmqLe9RXOOb24AclttOS2IVQhTIAV8S8pCKR4fnN1XO1JSb6YXjsWhq2oePQzKQ7ulefII
-	bppypkd6nNHf9NvEy8vYtyR/PA6388i9A0buwb/cPsCCnC+hV3pwrYGo0SkbDU+6iD53Byl4sbX
-	IqKP3qaqTTF93LnJwtq59gX56w2GYWZuOQF5cF6XRwUPBVzYIgctSCtKJFg8wwkmCGYMixcYpqw
-	=
-X-Received: by 2002:a17:902:e74e:b0:224:376:7a21 with SMTP id d9443c01a7336-2292f9fa2d8mr186446245ad.42.1743471738158;
-        Mon, 31 Mar 2025 18:42:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdZ08l4j9k8M+jkJjNmYyxstuXHNySWWgvJXMz8WalhCiWroBe3xTuvINkOu/d9tKSD1zceg==
-X-Received: by 2002:a17:902:e74e:b0:224:376:7a21 with SMTP id d9443c01a7336-2292f9fa2d8mr186446005ad.42.1743471737836;
-        Mon, 31 Mar 2025 18:42:17 -0700 (PDT)
-Received: from jiegan-gv.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2291eee03f5sm76911435ad.99.2025.03.31.18.42.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Mar 2025 18:42:17 -0700 (PDT)
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        Jie Gan <quic_jiegan@quicinc.com>
-Cc: Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH] coresight: fix the wrong type of the trace_id in coresight_path
-Date: Tue,  1 Apr 2025 09:42:10 +0800
-Message-Id: <20250401014210.2576993-1-jie.gan@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1743473673; c=relaxed/simple;
+	bh=btsx7G9oLe745AyCwE8EiMzW96Mm8fFPN0r5Nj09QU8=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:In-Reply-To:
+	 Content-Type:References; b=M1LacD3iRF1XL9ZebOA8pONhT/gclf97nqhW36HxgBgQfZc9hfFNG4tJLwc0gWpkzPfcP1F6+AOr8f7q9+2FWQB/PrExhm7qiyIj7Zexz7jpkUiMV6fftj7WwlvDp/X2c7j2fnY67ZHhhTG8ynPeJmYd+9YxcS3aPgQ+XrZ0+vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=TOuFEw4o; arc=none smtp.client-ip=203.254.224.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
+	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250401021429epoutp04fd31d6feb267aefc5a08424d03d5674a~yEBCwNI_R1717217172epoutp04f
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 02:14:29 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250401021429epoutp04fd31d6feb267aefc5a08424d03d5674a~yEBCwNI_R1717217172epoutp04f
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1743473669;
+	bh=7bcFPViTtsO+p+t1ZImtFXAyntpk+EDHZqlNKA6Gh6M=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=TOuFEw4olTPDU1ScHlbbM0LQWlYP2ZauWyXqgYfusBsztcO4uwO6Dbd94KZiUG3lY
+	 BoPzCCmNDuoJDw9+6ahHmScTn9JUDw+HByHeJq+GSysEe8cPpBHKo9M5PjRJQqVpO7
+	 YhRWUUXEvDlNBsPt8cb6Bzlijvi0kzAAxLmqJgj0=
+Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
+	epcas2p2.samsung.com (KnoxPortal) with ESMTPS id
+	20250401021429epcas2p2402906ff9dabc07ca417a98c05fd3182~yEBCN5tQm1409014090epcas2p2Y;
+	Tue,  1 Apr 2025 02:14:29 +0000 (GMT)
+Received: from epsmgec2p1-new.samsung.com (unknown [182.195.36.89]) by
+	epsnrtp02.localdomain (Postfix) with ESMTP id 4ZRWlm2pMzz2SSL3; Tue,  1 Apr
+	2025 02:14:28 +0000 (GMT)
+Received: from epcas2p1.samsung.com ( [182.195.41.53]) by
+	epsmgec2p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	CE.27.37303.40C4BE76; Tue,  1 Apr 2025 11:14:28 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+	epcas2p4.samsung.com (KnoxPortal) with ESMTPA id
+	20250401021427epcas2p40616133da2f95585af5f83e355e0cab8~yEBBErT0m0916509165epcas2p4d;
+	Tue,  1 Apr 2025 02:14:27 +0000 (GMT)
+Received: from epsmgmcp1.samsung.com (unknown [182.195.42.82]) by
+	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+	20250401021427epsmtrp28c03f61d7cb3ee24287566a1dd591f6b~yEBBDlwmU1626516265epsmtrp2C;
+	Tue,  1 Apr 2025 02:14:27 +0000 (GMT)
+X-AuditID: b6c32a4d-541ff700000091b7-49-67eb4c041e75
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+	epsmgmcp1.samsung.com (Symantec Messaging Gateway) with SMTP id
+	B1.C6.19478.30C4BE76; Tue,  1 Apr 2025 11:14:27 +0900 (KST)
+Received: from ubuntu (unknown [10.229.95.128]) by epsmtip1.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20250401021427epsmtip160f3d75d1ab0c4c53dd0924e5eafe711~yEBAxHCur0673006730epsmtip1q;
+	Tue,  1 Apr 2025 02:14:27 +0000 (GMT)
+Date: Tue, 1 Apr 2025 11:23:36 +0900
+From: Jung Daehwan <dh10.jung@samsung.com>
+To: Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: Puma Hsu <pumahsu@google.com>, Greg KH <gregkh@linuxfoundation.org>,
+	srinivas.kandagatla@linaro.org, mathias.nyman@intel.com, perex@perex.cz,
+	conor+dt@kernel.org, dmitry.torokhov@gmail.com, corbet@lwn.net,
+	broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
+	pierre-louis.bossart@linux.intel.com, Thinh.Nguyen@synopsys.com,
+	tiwai@suse.com, robh@kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
+	linux-input@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org, Mathias Nyman
+	<mathias.nyman@linux.intel.com>
+Subject: Re: [PATCH v36 01/31] xhci: sideband: add initial api to register a
+ secondary interrupter entity
+Message-ID: <20250401022336.GA98772@ubuntu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+In-Reply-To: <87746e66-84c1-4ff3-8b69-fbee1664eff6@quicinc.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Brightmail-Tracker: H4sIAAAAAAAAA02TfUxTVxjGPb29t+Wjeim6HXGZTZnZYANa5OOwiS7RuEuGCWNLmPtj2MCl
+	MEpb2jKQkcGgfAZRBHHUMhg4QCZ28iGCRb4cDLaRZYqMDzFsUKWdToEVJgJruWr473ee932e
+	c95zcrgYv5Ljxo2Ta2iVXCITEo7sK30e/l7sUItUNJrtis5MzxDoYucwC8105wJUeWMYR33V
+	9wHKqjEQaE43RSDrrTwWKu76lYO+zTnPRmPzVhzd7NATqMJUiqHq2mwMZTWV4sjyKJON8jtO
+	4ujJuomFyhvdUdO1IhytG69yUE5/P44aqro56IelRvAupNp1dzhUVVMSVWOcY1FNDfkENXnb
+	SFDfDH5AdVVc5FA1RSU4df1BLUEVG7+kDC0jbKqlawFQC02vhvE+id8XS0uiaZWAlkcpouPk
+	0mDh+x9GHoz0DxCJvcRBKFAokEsS6GDhodAwr8NxMtv8QsHnElmSTQqTqNVCn/37VIokDS2I
+	Vag1wUJaGS1TBiq91ZIEdZJc6i2nNW+LRSJff1vjsfjYR+tWoLzumjKWmQcyQOO2AuDAhaQf
+	HGmYwO3MJ40Ariy5FABHG88D+Fh7nnixKKkoAc8d/ywvsZhCO4BT2macWcwAWDiazbZ3scnX
+	4N8npjeYID3h1PJPmJ2323hSfxfYDRj5HxtaTT0ce8GVjIc/VutYduaRb8KnX7dxGHaBg+Uz
+	G0EO5AF4qbLZ1sPl7rBtYO5Jt+dAss0BXiitwe06JA/B/Aw2c1JXaB5o4TDsBhcedhIMq+H4
+	PRPGeLUA1pu1GFPYC3Wm3I0xMTIWTq79jjGZ7vDGOJuRt8K8vlUOI/NgXg6fcbrDszdP4Qzv
+	hD2W4WeJFCw7eRsw99OCwQHTCfwU2K3bNJlu0246WyxGekBDhw8j74ZZreeeybtg3Rp3U0cV
+	IBqAG61UJ0jpKF+l2EtOJ794+yhFQhPY+CmeR64Ci2HVuxewuKAXQC4m3M77+N85KZ8XLTme
+	SqsUkaokGa3uBf62ZyvG3HZEKWxfTa6JFPsFifwCAsSBvv6iQOHLvN7Hs1I+KZVo6HiaVtKq
+	5z4W18Etg7U3fCVl3OKZdjlt8cFXT6e35sYM/VEWMRq362C4gZf1urN1LCER29p2obLklRjV
+	e7Mdvn7Oi/FbZO4Tp2vqe1dDvPsy/qrMuLKtfa7d5KTsc9Sp2W3JdUebs985nBmy80mbvmg0
+	2xLTHyW4I0inP9InDk2cqfs06OhsRNB36cWFVZedQ/lcY/6tcKehPa1arf6h44FUklw5VrYH
+	obP9RsfUxft/RnW+9LM5aEt9npewI9n6Fj+nOM3iPuUjMITXR1ocrzmL5fPEQEF6ueDeYq3R
+	xWO/Uyge8sXx3yRry0cSIwYv6TPNdz9L7U6pPbeWseyWNaLQFUabW3+RvfF9GTYiDxey1bES
+	sSemUkv+B4ufmJ6yBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNIsWRmVeSWpSXmKPExsWy7bCSnC6zz+t0g22N6hZTHz5hs1iz9xyT
+	xZMD7YwW84+cY7U4vOgFo0Xz4vVsFi9n3WOz+Halg8li4v6z7BYL25awWNz89I3V4vKuOWwW
+	c59NYbZYtKyV2aJ50xRWi9cfmlgsOnf1s1r8+v+MyWLmWmWLTbv7WC3+79nBbtF27BirxaoF
+	B9gtNnxfy+gg4bFz1l12jwWbSj0W73nJ5LFpVSebx51re9g85p0M9Ng/dw27x+K+yawe+94u
+	Y/OYuKfOY/2WqyweW/Z/ZvT4vEkugDeKyyYlNSezLLVI3y6BK+Pe8qOMBQ8EKqYeeMDWwPia
+	p4uRk0NCwETi/Y/vTF2MXBxCAtsZJRoutbJCJCQlls69wQ5hC0vcbznCClH0iFFiz6lPzCAJ
+	FgEViTe9D1lAbDYBLYl7P06AxUWA7Dtz7jOCNDAL/GaRuL38DliRsEC2xNFFs5hAbF4BbYk/
+	M7azQ0zdwiyxb813VoiEoMTJmU/AGpgF1CX+zLsENJUDyJaWWP6PAyIsL9G8dTbYMk4Be4l1
+	8zczgZSIAh306mD9BEahWUgGzUIyaBbCoFlIBi1gZFnFKJpaUJybnptcYKhXnJhbXJqXrpec
+	n7uJEZwetIJ2MC5b/1fvECMTB+MhRgkOZiUR3oivL9OFeFMSK6tSi/Lji0pzUosPMUpzsCiJ
+	8yrndKYICaQnlqRmp6YWpBbBZJk4OKUamNx5nF6ozFZ4Gmqs7/737UExTW+Gs+6rr3/Sv/TT
+	4f30oOPsV+f4HVmbyfpoMZup1r2FT36dctf4qjvhepfNx+zpvxlmusU/2Fbeyqeb8tS8us1f
+	Z/K5qO6+iqeVZVtL4kproyYKvT8bnLcyXyRiVuX+H8IpWvrslfkshQ/eK35IC8ycbvL3Sdee
+	lIVr9NScNRSvvmldL7V7+nJbMWbWWXur9jl7ymty/f9aKFpUeuF9y6HOI4Ida6OiOwsagqqz
+	GYv5FT6J68lIdWXVWV8vUlXYlTB1Tnt7/u++fecqTyfkHGmdJNVxIvvXj8usL/lPvOl/8L3Y
+	hGu/1nHugFsmmUauT8TKT7PWxvz/L/lSiaU4I9FQi7moOBEADSCNCn4DAAA=
+X-CMS-MailID: 20250401021427epcas2p40616133da2f95585af5f83e355e0cab8
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+	boundary="----caUwc_dC5aEw_I.xGS0GMYyTEPKysFRHRKa1IoFNAgiy-i3F=_66d1f_"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250327161254epcas2p35ea7c80bdcefaefc645c061531dd6833
+References: <20250319005141.312805-1-quic_wcheng@quicinc.com>
+	<20250319005141.312805-2-quic_wcheng@quicinc.com>
+	<CAGCq0LZoi0MOJLJYUeQJW6EfOU_Ch=v1Sg8L4_B-KhdDCx1fCw@mail.gmail.com>
+	<2025032734-reward-fantasize-dc16@gregkh>
+	<CAGCq0LamxvvE8b45VAshw9aWJNC2so_vK9t+pzXd3C7Y7tfYAg@mail.gmail.com>
+	<CGME20250327161254epcas2p35ea7c80bdcefaefc645c061531dd6833@epcas2p3.samsung.com>
+	<87746e66-84c1-4ff3-8b69-fbee1664eff6@quicinc.com>
+
+------caUwc_dC5aEw_I.xGS0GMYyTEPKysFRHRKa1IoFNAgiy-i3F=_66d1f_
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: gSBWeob4liA2co6Z3NTzwL6xxLUUYbnL
-X-Proofpoint-ORIG-GUID: gSBWeob4liA2co6Z3NTzwL6xxLUUYbnL
-X-Authority-Analysis: v=2.4 cv=bZZrUPPB c=1 sm=1 tr=0 ts=67eb447b cx=c_pps a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=h-QhH5eI3XViKx3wfOsA:9 a=1OuFwYUASf3TG4hYMiVC:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-01_01,2025-03-27_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 clxscore=1015 phishscore=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 spamscore=0 malwarescore=0 mlxscore=0
- impostorscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504010010
+Content-Disposition: inline
 
-The trace_id in coresight_path may contain an error number which means a
-negative integer, but the current type of the trace_id is u8. Change the
-type to int to fix it.
+On Thu, Mar 27, 2025 at 09:12:12AM -0700, Wesley Cheng wrote:
+> 
+> 
+> On 3/27/2025 3:14 AM, Puma Hsu wrote:
+> > On Thu, Mar 27, 2025 at 3:02 PM Greg KH <gregkh@linuxfoundation.org> wrote:
+> >>
+> >> On Thu, Mar 27, 2025 at 02:27:00PM +0800, Puma Hsu wrote:
+> >>> Hi,
+> >>>
+> >>> We have implemented and verified the USB audio offloading feature with
+> >>> the xhci sideband driver on our Google Pixel products. We would
+> >>> appreciate it if this solution can be accepted. Thank you all for the
+> >>> work!
+> >>>
+> >>
+> >> Great, can you properly send a "Tested-by:" line for this against the
+> >> 00/XX email so that it will be properly saved?
+> >>
+> > 
+> > We(Google Pixel) only use the xhci sideband related changes and two
+> > changes in the sound card driver. For the details, what we actually
+> > tested are patch [01], [02], [03], [04], [05], [06], [08], and [12].
+> > Do I still send the "Tested-by:" line to 00/31 email? Or should I just
+> > send the "Tested-by:" line to the 8 changes above? (I added
+> > "Tested-by" line for this [01/31] first.)
+> > 
+> >> Also, I think a new version of the series is coming, can you test that
+> >> to verify it works properly?  We have to wait until after -rc1 is out
+> >> anyway.
+> >>
+> > 
+> > I think this v36 is the last version of the series as I discussed with
+> > QCOM Wesley. And for sure I will test it if they do have a new
+> > version.
+> > 
+> 
+> Hi Puma,
+> 
+> I'm discussing with Stephan on the QC specific stuff, so the common changes
+> won't change on v37.  Please provide your tested-by tags for each commit,
+> so I can carry them accordingly on the next submission.  If I do end up
+> making changes to any of the common patches, I will remove your tested by
+> tag, which means you might have to test it again.
+> 
+> Thanks
+> Wesley Cheng
+> 
+> 
+> 
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: 3c03c49b2fa5 ("Coresight: Introduce a new struct coresight_path")
-Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
----
- include/linux/coresight.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi Wesley,
 
-diff --git a/include/linux/coresight.h b/include/linux/coresight.h
-index d79a242b271d..c2bf10c43e7c 100644
---- a/include/linux/coresight.h
-+++ b/include/linux/coresight.h
-@@ -337,7 +337,7 @@ static struct coresight_dev_list (var) = {				\
-  */
- struct coresight_path {
- 	struct list_head	path_list;
--	u8			trace_id;
-+	int			trace_id;
- };
- 
- enum cs_mode {
--- 
-2.34.1
+Thanks for your effort to upstream usb audio offload.
+I've also used your patchset like Puma.
+([01], [02], [03], [04], [05], [06], [08], and [12])
 
+It works well on Exynos. Please let me know if you need also
+"Tested-by:" on our side.
+
+Best Regards,
+Jung Daehwan
+
+------caUwc_dC5aEw_I.xGS0GMYyTEPKysFRHRKa1IoFNAgiy-i3F=_66d1f_
+Content-Type: text/plain; charset="utf-8"
+
+
+------caUwc_dC5aEw_I.xGS0GMYyTEPKysFRHRKa1IoFNAgiy-i3F=_66d1f_--
 
