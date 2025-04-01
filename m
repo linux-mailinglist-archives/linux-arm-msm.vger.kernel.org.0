@@ -1,221 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-52909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13E47A7729F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 04:14:39 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48F5CA772DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 04:57:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B113E16A3C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 02:14:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 834397A22B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 02:56:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2D3D18C936;
-	Tue,  1 Apr 2025 02:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0C1D1552FA;
+	Tue,  1 Apr 2025 02:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="TOuFEw4o"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IpWpoBBk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f193.google.com (mail-pl1-f193.google.com [209.85.214.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A8314658C
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 02:14:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4928135966;
+	Tue,  1 Apr 2025 02:57:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743473673; cv=none; b=gwOHlx7f3HTh7QMtJWXEFgTXGQ9nwjtN9wALryizUhauzjkR8iH3H2qvTRDU0ZXT5Q9Q7esKRj0nxFE4hTwUvPjOoKpUKvXf7MRwx8Az9GjanGAOtR89CyGs398DX5Et0oAYbWiYr3l3ah7MDl0cuXXil5pZwgaodMyN3Uv3fD8=
+	t=1743476270; cv=none; b=dn8uc7hBwCEjbiM3P+Qc1IxRWxARHo8dGQn1p1OVMY0vw+T0SPBVAkYHTRqIMpik3lUg0hbeitkey40ewCEGrGukNWXYqfi8Uk5HTeccxPOCaNOLENKw4lLn7ZvxpkiQAMpt2AzlZxGTUjSU/kcFKXGDo6WTly9MtXiEV6T0/Pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743473673; c=relaxed/simple;
-	bh=btsx7G9oLe745AyCwE8EiMzW96Mm8fFPN0r5Nj09QU8=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:In-Reply-To:
-	 Content-Type:References; b=M1LacD3iRF1XL9ZebOA8pONhT/gclf97nqhW36HxgBgQfZc9hfFNG4tJLwc0gWpkzPfcP1F6+AOr8f7q9+2FWQB/PrExhm7qiyIj7Zexz7jpkUiMV6fftj7WwlvDp/X2c7j2fnY67ZHhhTG8ynPeJmYd+9YxcS3aPgQ+XrZ0+vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=TOuFEw4o; arc=none smtp.client-ip=203.254.224.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250401021429epoutp04fd31d6feb267aefc5a08424d03d5674a~yEBCwNI_R1717217172epoutp04f
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 02:14:29 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250401021429epoutp04fd31d6feb267aefc5a08424d03d5674a~yEBCwNI_R1717217172epoutp04f
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1743473669;
-	bh=7bcFPViTtsO+p+t1ZImtFXAyntpk+EDHZqlNKA6Gh6M=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=TOuFEw4olTPDU1ScHlbbM0LQWlYP2ZauWyXqgYfusBsztcO4uwO6Dbd94KZiUG3lY
-	 BoPzCCmNDuoJDw9+6ahHmScTn9JUDw+HByHeJq+GSysEe8cPpBHKo9M5PjRJQqVpO7
-	 YhRWUUXEvDlNBsPt8cb6Bzlijvi0kzAAxLmqJgj0=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
-	epcas2p2.samsung.com (KnoxPortal) with ESMTPS id
-	20250401021429epcas2p2402906ff9dabc07ca417a98c05fd3182~yEBCN5tQm1409014090epcas2p2Y;
-	Tue,  1 Apr 2025 02:14:29 +0000 (GMT)
-Received: from epsmgec2p1-new.samsung.com (unknown [182.195.36.89]) by
-	epsnrtp02.localdomain (Postfix) with ESMTP id 4ZRWlm2pMzz2SSL3; Tue,  1 Apr
-	2025 02:14:28 +0000 (GMT)
-Received: from epcas2p1.samsung.com ( [182.195.41.53]) by
-	epsmgec2p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	CE.27.37303.40C4BE76; Tue,  1 Apr 2025 11:14:28 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-	epcas2p4.samsung.com (KnoxPortal) with ESMTPA id
-	20250401021427epcas2p40616133da2f95585af5f83e355e0cab8~yEBBErT0m0916509165epcas2p4d;
-	Tue,  1 Apr 2025 02:14:27 +0000 (GMT)
-Received: from epsmgmcp1.samsung.com (unknown [182.195.42.82]) by
-	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20250401021427epsmtrp28c03f61d7cb3ee24287566a1dd591f6b~yEBBDlwmU1626516265epsmtrp2C;
-	Tue,  1 Apr 2025 02:14:27 +0000 (GMT)
-X-AuditID: b6c32a4d-541ff700000091b7-49-67eb4c041e75
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-	epsmgmcp1.samsung.com (Symantec Messaging Gateway) with SMTP id
-	B1.C6.19478.30C4BE76; Tue,  1 Apr 2025 11:14:27 +0900 (KST)
-Received: from ubuntu (unknown [10.229.95.128]) by epsmtip1.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20250401021427epsmtip160f3d75d1ab0c4c53dd0924e5eafe711~yEBAxHCur0673006730epsmtip1q;
-	Tue,  1 Apr 2025 02:14:27 +0000 (GMT)
-Date: Tue, 1 Apr 2025 11:23:36 +0900
-From: Jung Daehwan <dh10.jung@samsung.com>
-To: Wesley Cheng <quic_wcheng@quicinc.com>
-Cc: Puma Hsu <pumahsu@google.com>, Greg KH <gregkh@linuxfoundation.org>,
-	srinivas.kandagatla@linaro.org, mathias.nyman@intel.com, perex@perex.cz,
-	conor+dt@kernel.org, dmitry.torokhov@gmail.com, corbet@lwn.net,
-	broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
-	pierre-louis.bossart@linux.intel.com, Thinh.Nguyen@synopsys.com,
-	tiwai@suse.com, robh@kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
-	linux-input@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org, Mathias Nyman
-	<mathias.nyman@linux.intel.com>
-Subject: Re: [PATCH v36 01/31] xhci: sideband: add initial api to register a
- secondary interrupter entity
-Message-ID: <20250401022336.GA98772@ubuntu>
+	s=arc-20240116; t=1743476270; c=relaxed/simple;
+	bh=CHUCvgrP+9ogl9HURA2isHsZTeEqq4WiC8nrNZ8lhVs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Is5jRk70101QtJjJO6wHkPPMYBewhhEHX0XtpbyTnZks9WPJ6QE2LZAV+0a/TpkOZn5hwn7jSHx5HGI020rP488Tm4vFdb8pgHhAsU7NUdYfCwgHcP2SZdvbhCRhZr4mgKxhJ2G6CMrdJrDxu/p8aedQSfJZ0/wXF1UHXauZyLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IpWpoBBk; arc=none smtp.client-ip=209.85.214.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f193.google.com with SMTP id d9443c01a7336-2254e0b4b79so130699095ad.2;
+        Mon, 31 Mar 2025 19:57:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743476268; x=1744081068; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7K/MRcRKPLOmFhBSAVzlJRL1mdc1WpbjpwfueJr4+Qk=;
+        b=IpWpoBBkj3gJLuxAsJs2RxZ7cFDb1vD/viCVtbtdCgjy5xDD30RasR1l4NGIXk3sbA
+         1DeOP987EaijpncXkbox4O3LibVODK0knMBtrOQcNkwY17W7UIL3FQ0kKioI+AhrAhFV
+         SDxJaE1cMMhUurHnN4dLd2ERAfr+ODgnbA90objxeaxi4JlS8GZ2lba8I2DUCp58BAmd
+         A5bzy2sRj0p6E10R03PYeXcjfsoRb1Dnoc99XJ8b6tJRaZle7fZpyRcsYB9PbuhzZWuz
+         aEg3qJxXQQMeEhukb6Cc2Sn6kh32hcXdir4Og4SZZOUhGEz4zif4IGyf5BgBrn61qmls
+         +Aaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743476268; x=1744081068;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7K/MRcRKPLOmFhBSAVzlJRL1mdc1WpbjpwfueJr4+Qk=;
+        b=LlrHLEXFS/h+x5vU5AyQQDwNQnu6bz8+e/jzCDQxqtZVZe/maLmKdhwydGO+gnQvQ1
+         0Cw54OwQUVON0H/MMEFAv15IcrdFwpds8ZWcueKXkAEdRYzZ/6av2yknIAEfV96lmeAr
+         Dkq3+WOCesTTSKW7wE/ORLmdNEGd0NQDz5FqKmd3aIRksNZDMHTjaAZ7Xdgq+KcA+gro
+         6y2H/Gnwil2LTr+l+j5j84Ob+NJ3A1dOp75CWmWepNejqAx7TOXwDNCACRpc3BsVPfRW
+         xz7/y+cdzD2Rp5f+3GN5vVoY5FR0wWUgeELcSBz4kytyToZcKfmDl/HtQpxe+qW+lIu1
+         tO5g==
+X-Forwarded-Encrypted: i=1; AJvYcCUih0oSGAtQpSTvtnTIn7yflHjWqZ2cuAy932fUycdiV8svaJQ/JUZqEUVgW9clWVvh72oHkE3rV1PYhw==@vger.kernel.org, AJvYcCWTeoNSSv/FCHsKoenSFs+tAXzRWBwyoFKT1BAa0T1iXoeGTUpFc4FUfG64NoATH0Vzcm5GxjKByDDMd42m@vger.kernel.org
+X-Gm-Message-State: AOJu0Yweh0UCRrjYzdhMnLGFy7r0GJWgqbVxJ87TRG9JswDxsqy5P8SR
+	1bLeZNUV3z6bEbBhJoDK93CL7YSSJEmwuvdBLp1WNcq8nJCudrFY
+X-Gm-Gg: ASbGnctIG8WJp2TTNpiwGRMF3pTd0XefNacA6I+cP+ul1TW7Bnk9EEzJ0wVpYjKNw9D
+	OJ1AhirugFKqPLRg8DEXWOTQJxUrSr956AmWg+lhrpaTs2vb5qn9R8/Zv0HdUCe75YllltL/AgV
+	DZxH7Xyy5YMVQRs3u4/8rjuM9NRedgDvHLfWeAPKdIHNtORol6KN39QZtrTjqv2ENjNtQqm4jol
+	XnW6lSwVTqeCR4mUlD6QaGTdBbXc0XmohxAALXNzlmNURI3Uw1Buq5BHby/AFMj/W5ofms1UG1a
+	puuhqEqa4KYhfovTjxHxO1vhNPh4vYzjERDXkKk9VFcGcs5g6uTlYopqtn85blWPqRBeSkk=
+X-Google-Smtp-Source: AGHT+IEjjmQRwbIrRjd0tFrbPz03cyNs3GgrsNuPX67Kbs2Wc+zU6hosOUnYOnmchj6ngZc6iNNlCw==
+X-Received: by 2002:a05:6a21:920d:b0:1f5:84c8:5d03 with SMTP id adf61e73a8af0-2009f5ba5c5mr20479746637.3.1743476268430;
+        Mon, 31 Mar 2025 19:57:48 -0700 (PDT)
+Received: from henry.localdomain ([111.202.148.167])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73970deefa8sm7804425b3a.31.2025.03.31.19.57.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Mar 2025 19:57:47 -0700 (PDT)
+From: Henry Martin <bsdhenrymartin@gmail.com>
+To: lee@kernel.org,
+	danielt@kernel.org,
+	jingoohan1@gmail.com,
+	deller@gmx.de
+Cc: linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linux-fbdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH v3] backlight: pm8941: Add NULL check in wled_configure()
+Date: Tue,  1 Apr 2025 10:57:37 +0800
+Message-Id: <20250401025737.16753-1-bsdhenrymartin@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <87746e66-84c1-4ff3-8b69-fbee1664eff6@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Brightmail-Tracker: H4sIAAAAAAAAA02TfUxTVxjGPb29t+Wjeim6HXGZTZnZYANa5OOwiS7RuEuGCWNLmPtj2MCl
-	MEpb2jKQkcGgfAZRBHHUMhg4QCZ28iGCRb4cDLaRZYqMDzFsUKWdToEVJgJruWr473ee932e
-	c95zcrgYv5Ljxo2Ta2iVXCITEo7sK30e/l7sUItUNJrtis5MzxDoYucwC8105wJUeWMYR33V
-	9wHKqjEQaE43RSDrrTwWKu76lYO+zTnPRmPzVhzd7NATqMJUiqHq2mwMZTWV4sjyKJON8jtO
-	4ujJuomFyhvdUdO1IhytG69yUE5/P44aqro56IelRvAupNp1dzhUVVMSVWOcY1FNDfkENXnb
-	SFDfDH5AdVVc5FA1RSU4df1BLUEVG7+kDC0jbKqlawFQC02vhvE+id8XS0uiaZWAlkcpouPk
-	0mDh+x9GHoz0DxCJvcRBKFAokEsS6GDhodAwr8NxMtv8QsHnElmSTQqTqNVCn/37VIokDS2I
-	Vag1wUJaGS1TBiq91ZIEdZJc6i2nNW+LRSJff1vjsfjYR+tWoLzumjKWmQcyQOO2AuDAhaQf
-	HGmYwO3MJ40Ariy5FABHG88D+Fh7nnixKKkoAc8d/ywvsZhCO4BT2macWcwAWDiazbZ3scnX
-	4N8npjeYID3h1PJPmJ2323hSfxfYDRj5HxtaTT0ce8GVjIc/VutYduaRb8KnX7dxGHaBg+Uz
-	G0EO5AF4qbLZ1sPl7rBtYO5Jt+dAss0BXiitwe06JA/B/Aw2c1JXaB5o4TDsBhcedhIMq+H4
-	PRPGeLUA1pu1GFPYC3Wm3I0xMTIWTq79jjGZ7vDGOJuRt8K8vlUOI/NgXg6fcbrDszdP4Qzv
-	hD2W4WeJFCw7eRsw99OCwQHTCfwU2K3bNJlu0246WyxGekBDhw8j74ZZreeeybtg3Rp3U0cV
-	IBqAG61UJ0jpKF+l2EtOJ794+yhFQhPY+CmeR64Ci2HVuxewuKAXQC4m3M77+N85KZ8XLTme
-	SqsUkaokGa3uBf62ZyvG3HZEKWxfTa6JFPsFifwCAsSBvv6iQOHLvN7Hs1I+KZVo6HiaVtKq
-	5z4W18Etg7U3fCVl3OKZdjlt8cFXT6e35sYM/VEWMRq362C4gZf1urN1LCER29p2obLklRjV
-	e7Mdvn7Oi/FbZO4Tp2vqe1dDvPsy/qrMuLKtfa7d5KTsc9Sp2W3JdUebs985nBmy80mbvmg0
-	2xLTHyW4I0inP9InDk2cqfs06OhsRNB36cWFVZedQ/lcY/6tcKehPa1arf6h44FUklw5VrYH
-	obP9RsfUxft/RnW+9LM5aEt9npewI9n6Fj+nOM3iPuUjMITXR1ocrzmL5fPEQEF6ueDeYq3R
-	xWO/Uyge8sXx3yRry0cSIwYv6TPNdz9L7U6pPbeWseyWNaLQFUabW3+RvfF9GTYiDxey1bES
-	sSemUkv+B4ufmJ6yBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNIsWRmVeSWpSXmKPExsWy7bCSnC6zz+t0g22N6hZTHz5hs1iz9xyT
-	xZMD7YwW84+cY7U4vOgFo0Xz4vVsFi9n3WOz+Halg8li4v6z7BYL25awWNz89I3V4vKuOWwW
-	c59NYbZYtKyV2aJ50xRWi9cfmlgsOnf1s1r8+v+MyWLmWmWLTbv7WC3+79nBbtF27BirxaoF
-	B9gtNnxfy+gg4bFz1l12jwWbSj0W73nJ5LFpVSebx51re9g85p0M9Ng/dw27x+K+yawe+94u
-	Y/OYuKfOY/2WqyweW/Z/ZvT4vEkugDeKyyYlNSezLLVI3y6BK+Pe8qOMBQ8EKqYeeMDWwPia
-	p4uRk0NCwETi/Y/vTF2MXBxCAtsZJRoutbJCJCQlls69wQ5hC0vcbznCClH0iFFiz6lPzCAJ
-	FgEViTe9D1lAbDYBLYl7P06AxUWA7Dtz7jOCNDAL/GaRuL38DliRsEC2xNFFs5hAbF4BbYk/
-	M7azQ0zdwiyxb813VoiEoMTJmU/AGpgF1CX+zLsENJUDyJaWWP6PAyIsL9G8dTbYMk4Be4l1
-	8zczgZSIAh306mD9BEahWUgGzUIyaBbCoFlIBi1gZFnFKJpaUJybnptcYKhXnJhbXJqXrpec
-	n7uJEZwetIJ2MC5b/1fvECMTB+MhRgkOZiUR3oivL9OFeFMSK6tSi/Lji0pzUosPMUpzsCiJ
-	8yrndKYICaQnlqRmp6YWpBbBZJk4OKUamNx5nF6ozFZ4Gmqs7/737UExTW+Gs+6rr3/Sv/TT
-	4f30oOPsV+f4HVmbyfpoMZup1r2FT36dctf4qjvhepfNx+zpvxlmusU/2Fbeyqeb8tS8us1f
-	Z/K5qO6+iqeVZVtL4kproyYKvT8bnLcyXyRiVuX+H8IpWvrslfkshQ/eK35IC8ycbvL3Sdee
-	lIVr9NScNRSvvmldL7V7+nJbMWbWWXur9jl7ymty/f9aKFpUeuF9y6HOI4Ida6OiOwsagqqz
-	GYv5FT6J68lIdWXVWV8vUlXYlTB1Tnt7/u++fecqTyfkHGmdJNVxIvvXj8usL/lPvOl/8L3Y
-	hGu/1nHugFsmmUauT8TKT7PWxvz/L/lSiaU4I9FQi7moOBEADSCNCn4DAAA=
-X-CMS-MailID: 20250401021427epcas2p40616133da2f95585af5f83e355e0cab8
-X-Msg-Generator: CA
-Content-Type: multipart/mixed;
-	boundary="----caUwc_dC5aEw_I.xGS0GMYyTEPKysFRHRKa1IoFNAgiy-i3F=_66d1f_"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250327161254epcas2p35ea7c80bdcefaefc645c061531dd6833
-References: <20250319005141.312805-1-quic_wcheng@quicinc.com>
-	<20250319005141.312805-2-quic_wcheng@quicinc.com>
-	<CAGCq0LZoi0MOJLJYUeQJW6EfOU_Ch=v1Sg8L4_B-KhdDCx1fCw@mail.gmail.com>
-	<2025032734-reward-fantasize-dc16@gregkh>
-	<CAGCq0LamxvvE8b45VAshw9aWJNC2so_vK9t+pzXd3C7Y7tfYAg@mail.gmail.com>
-	<CGME20250327161254epcas2p35ea7c80bdcefaefc645c061531dd6833@epcas2p3.samsung.com>
-	<87746e66-84c1-4ff3-8b69-fbee1664eff6@quicinc.com>
-
-------caUwc_dC5aEw_I.xGS0GMYyTEPKysFRHRKa1IoFNAgiy-i3F=_66d1f_
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Disposition: inline
 
-On Thu, Mar 27, 2025 at 09:12:12AM -0700, Wesley Cheng wrote:
-> 
-> 
-> On 3/27/2025 3:14 AM, Puma Hsu wrote:
-> > On Thu, Mar 27, 2025 at 3:02 PM Greg KH <gregkh@linuxfoundation.org> wrote:
-> >>
-> >> On Thu, Mar 27, 2025 at 02:27:00PM +0800, Puma Hsu wrote:
-> >>> Hi,
-> >>>
-> >>> We have implemented and verified the USB audio offloading feature with
-> >>> the xhci sideband driver on our Google Pixel products. We would
-> >>> appreciate it if this solution can be accepted. Thank you all for the
-> >>> work!
-> >>>
-> >>
-> >> Great, can you properly send a "Tested-by:" line for this against the
-> >> 00/XX email so that it will be properly saved?
-> >>
-> > 
-> > We(Google Pixel) only use the xhci sideband related changes and two
-> > changes in the sound card driver. For the details, what we actually
-> > tested are patch [01], [02], [03], [04], [05], [06], [08], and [12].
-> > Do I still send the "Tested-by:" line to 00/31 email? Or should I just
-> > send the "Tested-by:" line to the 8 changes above? (I added
-> > "Tested-by" line for this [01/31] first.)
-> > 
-> >> Also, I think a new version of the series is coming, can you test that
-> >> to verify it works properly?  We have to wait until after -rc1 is out
-> >> anyway.
-> >>
-> > 
-> > I think this v36 is the last version of the series as I discussed with
-> > QCOM Wesley. And for sure I will test it if they do have a new
-> > version.
-> > 
-> 
-> Hi Puma,
-> 
-> I'm discussing with Stephan on the QC specific stuff, so the common changes
-> won't change on v37.  Please provide your tested-by tags for each commit,
-> so I can carry them accordingly on the next submission.  If I do end up
-> making changes to any of the common patches, I will remove your tested by
-> tag, which means you might have to test it again.
-> 
-> Thanks
-> Wesley Cheng
-> 
-> 
-> 
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+wled_configure() does not check for this case, which results in a NULL
+pointer dereference.
 
-Hi Wesley,
+Add NULL check after devm_kasprintf() to prevent this issue.
 
-Thanks for your effort to upstream usb audio offload.
-I've also used your patchset like Puma.
-([01], [02], [03], [04], [05], [06], [08], and [12])
+Fixes: f86b77583d88 ("backlight: pm8941: Convert to using %pOFn instead of device_node.name")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+---
+V2 -> V3: Correct commit meessage and confirm this patch has considered
+resource cleanup to avoid any subsequent issues, ensuring that errors
+are handled properly and no resources are left in an inconsistent
+state.
+V1 -> V2: Fix commit message to use imperative mood and wrap lines to 75
+characters.
 
-It works well on Exynos. Please let me know if you need also
-"Tested-by:" on our side.
+ drivers/video/backlight/qcom-wled.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Best Regards,
-Jung Daehwan
+diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+index 9afe701b2a1b..a63bb42c8f8b 100644
+--- a/drivers/video/backlight/qcom-wled.c
++++ b/drivers/video/backlight/qcom-wled.c
+@@ -1406,9 +1406,11 @@ static int wled_configure(struct wled *wled)
+ 	wled->ctrl_addr = be32_to_cpu(*prop_addr);
+ 
+ 	rc = of_property_read_string(dev->of_node, "label", &wled->name);
+-	if (rc)
++	if (rc) {
+ 		wled->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFn", dev->of_node);
+-
++		if (!wled->name)
++			return -ENOMEM;
++	}
+ 	switch (wled->version) {
+ 	case 3:
+ 		u32_opts = wled3_opts;
+-- 
+2.34.1
 
-------caUwc_dC5aEw_I.xGS0GMYyTEPKysFRHRKa1IoFNAgiy-i3F=_66d1f_
-Content-Type: text/plain; charset="utf-8"
-
-
-------caUwc_dC5aEw_I.xGS0GMYyTEPKysFRHRKa1IoFNAgiy-i3F=_66d1f_--
 
