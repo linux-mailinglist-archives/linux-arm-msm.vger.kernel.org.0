@@ -1,223 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-52904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-52905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D46BA77097
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 00:00:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B3E6A77201
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 02:36:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3ACB7162391
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Mar 2025 22:00:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9E9EC188D7B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Apr 2025 00:36:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A45AB1D516F;
-	Mon, 31 Mar 2025 22:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF71F5103F;
+	Tue,  1 Apr 2025 00:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YOBKivb/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="a+J93/0q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E106B214A8F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 22:00:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB34576C61
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Apr 2025 00:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743458446; cv=none; b=BsDNzlriRUOEY9SQag13tLUSJKUaZVJzV2KBXLrzBpJUUeBfEzATiA7mY7+eHEzV3U1DaaWZF35FPL7QBpsodobftEsze3gAPvIKzr5mDNdWc1lvkzyvvpaCIOQMXffsKWGITNfN7QQe8UGMG0xCDQJP6luo2FSga00OZzpe4ZQ=
+	t=1743467751; cv=none; b=BDA2T6liRL4497k+jnUlPLHNwRCkJJVoHq/qQiaXHha6Z2hDwCH27WKkXvHKv4RZeiwLK07g4UX7rJZBm7CmIpC9sNzgmjSFSlNeMMxOxbh929a6xZFbW/KupKj8RkxZtOgZVQ5jFfv2sT0S6BMK9v9jwl0ZS2JF1qeyxOMBOBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743458446; c=relaxed/simple;
-	bh=WUWj1AX+EZYIzoBqPQx0J5vNkFJB9J2I0NYo8SVFXaQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Xn11PZiQkdi+opfA7cxfUgV//C6TrYWPq7QySNKIj6/yP9Fs7KrwG5qZSrmaKz4w9owys9HMtxsj6Ri0pGhk9YL2N+6svCg7entJkp4b2fls05Rxw5USwtksQw9t4CdqMaDtbUlLcWwlCfeISSckOu2TL8coO7+Ujad2d2rmfeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YOBKivb/; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1743467751; c=relaxed/simple;
+	bh=MIGf7slnAi1v2hx6yi5VUnYND5E+xotDpCXkjmisr0Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f0ortGJLY9Vp30GzOZtAL0G/XgleHGqRk1+6wXYMo5H483e7DI8VULTkdDEXLmAk2REMaqCtflDAo5qbqIn5ELYGCDpKtDsmvZkOd81SssEfPZrAUS+8PNwTiDlkZwa2pSgLCyHP/KjcYOhCzDTcxECMwZAUY76QojErSSVt4+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=a+J93/0q; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52VFD8iN003381
-	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 22:00:44 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52VKCAH4019398
+	for <linux-arm-msm@vger.kernel.org>; Tue, 1 Apr 2025 00:35:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=mkFZoZXQJzJt0Cg5UOTM27a1
-	fl/MrtPgUNj+Jrp+bYg=; b=YOBKivb/vSQMJi59VIMk0WZG2rYeBMWW5n0rV8qc
-	OqREB8zPgGOOHTSM4GZGpkBWovRFRnzo8twAgi2oZIGgKN5Gvsd0H/zxgsAvZKBW
-	GWFJJJ2z7FChxQJSFSH37TZDgceiKYvRwgNJKinDY2XdW5uYYDPOXkYGdic3NzcD
-	54RW8chblSN1CVZMmWo2qratP3c78XePJQRokqSutLepMnkN3DeqxFZuiyuwM8yB
-	qOKSo3CYgP/lxSnOU0sUOO85JW3YoXMdvuWcvKtPws3u/qxdRAAuatOYhMn0+jhn
-	Ie380S+2Ln9of7KWmBC2wmQ4Oz8+99VnSHwsttQT+5NUqg==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45pa5bnm5q-1
+	:references:subject:to; s=qcppdkim1; bh=xVZG5XFmHuEOv/oou7fYzA05
+	cG9iGzRAigpfxBHQiuA=; b=a+J93/0qSoeRKO+yA9bJBTkfRclycEtd2Lx3NAQ/
+	jPSjh+io7iw5THr0ul2LU3ISPF/kcRNaD3XsqXA3oV2/P43GbqpiR4objUqWtdVA
+	9/e2jD4AoWssBvLZEL4p60q8I0Y0pBpW1ib3enau8RpIz/IhcK1Bv6zvEfvLKnMk
+	kCfF44xwpB14rgJDPNfVphkmUcwMb2MFimMqKObvS/VHGt6quBKGQeVWy1IJIlXs
+	evXTLuSOhLrRRf6VRzKXhjkThMn6t6EjLRZ52j/6RDiHHqQ/mgxsd4jeXZ8SIjlJ
+	fAJa0h6R9lxYAIs490VFTK/GTb44zxPT3+wvQQbNQstt8w==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45r1vn8en3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 22:00:43 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-2ff605a7a43so13723459a91.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 15:00:43 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 01 Apr 2025 00:35:48 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c5d608e703so915451185a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Mar 2025 17:35:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743458443; x=1744063243;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mkFZoZXQJzJt0Cg5UOTM27a1fl/MrtPgUNj+Jrp+bYg=;
-        b=ijFhHY8zsf1VhgJXY0gyX+85AsBr04PySb98KUqaOZ7Cozvhk/929mGEQN3H4JC/zy
-         0D0BOei0+87NB4VPkRi0NNZYp/c+5W5q6kQDvQ61H3fSouY/fydBWi/bVhf7k9u0bCcU
-         RSU3rJD7nakEP2SC8H0W2ZMDtf1G2qJiMPj3C1DcnesmdQSHQh5lX1JnZXGLdaC+NtYp
-         PAc0xB1s/4O2EETaGNwebhvwd4RpUvVI/KGZOwQq7JdujHbifcUoKNIhph9uVQTM0PRu
-         0+4mrfdT7fQH4SMFHof0fK8Rs/LL6QwjM0rKoow+uAbPWh4Lf2QhumLBpwirJ7WFBpwm
-         y0Lg==
-X-Forwarded-Encrypted: i=1; AJvYcCUzfRwnihF7n9dxYGKnq3AXEW/pENpKYk8jwFUhK6LHjgfRSZkJ1Zxzt5/bjUvN9o50c6iaMAzfYrMcLM4Z@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyq5kxfhlzw0JK+tksZpAljCMMxzxPCaxRvHCTsQdL3jozLRG+B
-	zbxK+WrnTPwdF2TgsKCLJiVW5CXKEXkLXVpwFO9ska+LugCuWOc+jjkvLEkGHsHBnRb6Y+vLvqh
-	87rHqfS9C/3FgDpsnbbBAwmmqphGKmiV2GfdleKj8HIsbU+R458MXRFAdIEo8POie2AuwMgZt9x
-	Pt90zcAYjPS97C5m3Svvf3LTLB0JUT2/Ae4GlKvgo=
-X-Gm-Gg: ASbGnct4wZruJHXOPUbiZ7f5i3WMT0sgT4NxxQQ9egnhA9O7T8m3MRIOPXTJTM1btH5
-	QS8yeMNNO5zy345Zbe7QygrIS5LI1LBlFPkcp2pHK9oRJCt9o2L4IcwSmC8442Gg/rzDvcBfl
-X-Received: by 2002:a17:90b:4ed0:b0:2fe:a79e:f56f with SMTP id 98e67ed59e1d1-30531fa2e07mr17238361a91.13.1743458442818;
-        Mon, 31 Mar 2025 15:00:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGRjxY76/5/UsuzMPvfK4iO1euUPzgYJFxPuu7zecfhm4WiN69/SwrKxiGXZio8ZH7TREkRUUaI7irNgCBpWcU=
-X-Received: by 2002:a17:90b:4ed0:b0:2fe:a79e:f56f with SMTP id
- 98e67ed59e1d1-30531fa2e07mr17238311a91.13.1743458442457; Mon, 31 Mar 2025
- 15:00:42 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743467748; x=1744072548;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xVZG5XFmHuEOv/oou7fYzA05cG9iGzRAigpfxBHQiuA=;
+        b=XznXLOp9BYFhG0uWET8Y+I+f2IXjmzEqUVoVv5pFB8XZ1Wtx5PW5aD6Ckb8KN8HEho
+         u+Tw3JkU0v1gJ/G51Q9iyqvibXtM3nABhjWMrau2CGWm/YvotvK9SR1SSRioLIdYuPks
+         3oEWlAH5OKRkh3YNd9PSvgVIGr5B/V8qNRu430znLcUZGEZfKwHp6CaybhY71npDazHM
+         G6zebpPCzGKleB0oSt7pDGVSgfwuZXH3owFXhSCyOgRlWByCspq6kq7Z8kFB6dLKjmlU
+         2CWiTC8i9SznGwHQNQJE7/1vASTjdnfP404GsO1rMKQPsoUblxMSxrd9pUhQLxSFhv2+
+         xkKw==
+X-Forwarded-Encrypted: i=1; AJvYcCVJGQzas/sV0go5xRHx0ZyLAPnn/FdSHT9B8bjcaSl6cpS6C+kOzfE92/IW8N1h7eMGD9A6YhYHKVcZGlur@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5Jp1Q1MezCEL6QKksb9IGzKB3YIGw0E2/XCrFfPZhykaXC9qw
+	bvcNZUtj0wc5KrdVAvQK+ykk/4I8WmaFsBok3hm8U/sjM6Sr9ZKE5IGr1C++voNF36qnoaEkg/s
+	MmUdjv4Zjd2ImkK1lS8nu/CTR6JrwtJW+vbVwNtxHeyd4WcjteToCRqGCnlcMti8z
+X-Gm-Gg: ASbGncvwHMu0xhbG9TrIlotiHWAYM4PsgjhB5hFSwz01Lfj/dQbYM9NmaEgyEfl8u1U
+	xdI3OgXJaeB5iLCN7KXc7ya9Q3BHfl0hgXopZC5uVHHDMoObEK33oz+qyN9bh2vCv/DbAvAbv2e
+	oibZar/haLosCvhHjnh8GlzfU/JNfXgQoIaTICxAR4Xiq8zopyLlgsiPrO4yVu0fWCE1QJegO8F
+	m2vTkvKQXN53Xjf16GmbVsbopa7XafGRAiaOLJbC5sYO2iOoLClZBNcY/BRuSbwCRJwson/NwjO
+	HhFweIpcWZhO3PNmXZMaY171J6biExvuPcEUh7MTzNi1FHnX+7dwA1237K4f+udjcHdm02w0j1X
+	sQ68=
+X-Received: by 2002:a05:620a:199c:b0:7c5:e38a:66c2 with SMTP id af79cd13be357-7c690894ff8mr1717399785a.58.1743467747823;
+        Mon, 31 Mar 2025 17:35:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEA1opS2Ob3NuZOH0FyIY6wfqVH21/dPNFhnu8zvlNMPksgVPFTQVVPl0FPx1SOzRn48BMMjg==
+X-Received: by 2002:a05:620a:199c:b0:7c5:e38a:66c2 with SMTP id af79cd13be357-7c690894ff8mr1717396385a.58.1743467747473;
+        Mon, 31 Mar 2025 17:35:47 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54b0959f429sm1232125e87.212.2025.03.31.17.35.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Mar 2025 17:35:45 -0700 (PDT)
+Date: Tue, 1 Apr 2025 03:35:42 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        laurentiu.tudor1@dell.com, abel.vesa@linaro.org, johan@kernel.org
+Subject: Re: [PATCH v2 1/2] drm/msm/dp: Fix support of LTTPR handling
+Message-ID: <qcmyxcfhtecyddx42aaw6or436qj3ghsq6uckyoux4wulcn7oq@hwyg3dddbpb3>
+References: <20250311234109.136510-1-alex.vinarskis@gmail.com>
+ <20250311234109.136510-2-alex.vinarskis@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250327-wip-obbardc-qcom-t14s-oled-panel-v3-0-45d5f2747398@linaro.org>
- <20250327-wip-obbardc-qcom-t14s-oled-panel-v3-1-45d5f2747398@linaro.org>
- <Z-pJP4PMwPo3L3Og@hovoldconsulting.com> <CACr-zFA_oSySRnA2VaSQk2ND_AHeyt3v=RuPTbABPM7SYown6g@mail.gmail.com>
- <b4983b93-97fc-43ed-a41c-a44f90773062@oss.qualcomm.com> <CACr-zFDDPfRXZYUsbMoBASU6O5mBmqiFNFBtZTL9_vbo_7uANg@mail.gmail.com>
-In-Reply-To: <CACr-zFDDPfRXZYUsbMoBASU6O5mBmqiFNFBtZTL9_vbo_7uANg@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Tue, 1 Apr 2025 01:00:31 +0300
-X-Gm-Features: AQ5f1JpqhHc7KEz0u200xVRtc-LLhmuNIHxpZh6lPavUuGu8Ac7aioAB8xnQ09Y
-Message-ID: <CAO9ioeV9JoED9pvdwJneB1+-=uWW_XZ3Dm0ckQbiv7kfA7usoA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: x1e78100-t14s: add hpd gpio to
- eDP panel
-To: Christopher Obbard <christopher.obbard@linaro.org>
-Cc: Johan Hovold <johan@kernel.org>, Douglas Anderson <dianders@chromium.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Rui Miguel Silva <rui.silva@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Proofpoint-GUID: CHMgIuiFuUevNGYr_KL3t7jRWDR6t8NL
-X-Authority-Analysis: v=2.4 cv=YqcPR5YX c=1 sm=1 tr=0 ts=67eb108b cx=c_pps a=RP+M6JBNLl+fLTcSJhASfg==:117 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=rRiRvEloSRtx8nxw5TkA:9 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: CHMgIuiFuUevNGYr_KL3t7jRWDR6t8NL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250311234109.136510-2-alex.vinarskis@gmail.com>
+X-Authority-Analysis: v=2.4 cv=UL3dHDfy c=1 sm=1 tr=0 ts=67eb34e4 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=eggZMxrzFqzPhGHCAmkA:9 a=CjuIK1q_8ugA:10
+ a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: E-ZXXpgiXnVOM_q6jxn-BSQP2fac0KVJ
+X-Proofpoint-GUID: E-ZXXpgiXnVOM_q6jxn-BSQP2fac0KVJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-31_10,2025-03-27_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- priorityscore=1501 malwarescore=0 spamscore=0 phishscore=0 impostorscore=0
- suspectscore=0 mlxlogscore=999 bulkscore=0 adultscore=0 lowpriorityscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503310151
+ definitions=2025-03-31_11,2025-03-27_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ malwarescore=0 mlxlogscore=999 phishscore=0 impostorscore=0
+ lowpriorityscore=0 priorityscore=1501 spamscore=0 bulkscore=0
+ clxscore=1015 suspectscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504010002
 
-On Tue, 1 Apr 2025 at 00:38, Christopher Obbard
-<christopher.obbard@linaro.org> wrote:
->
-> Hi Dmitry,
->
-> On Mon, 31 Mar 2025 at 17:49, Dmitry Baryshkov
-> <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> >
-> > On 31/03/2025 18:39, Christopher Obbard wrote:
-> > > Hi Johan,
-> > >
-> > > On Mon, 31 Mar 2025 at 09:50, Johan Hovold <johan@kernel.org> wrote:
-> > >>
-> > >> On Thu, Mar 27, 2025 at 04:56:53PM +0000, Christopher Obbard wrote:
-> > >>> The eDP panel has an HPD GPIO. Describe it in the device tree
-> > >>> for the generic T14s model, as the HPD GPIO property is used in
-> > >>> both the OLED and LCD models which inherit this device tree.
-> > >>
-> > >> AFAICT, this patch is not correct as the hotplug detect signal is
-> > >> connected directly to the display controller on (these) Qualcomm SoCs
-> > >> and is already handled by its driver.
-> > >>
-> > >> Describing it as you do here leads to less accurate delays, see commits:
-> > >>
-> > >>          2327b13d6c47 ("drm/panel-edp: Take advantage of wait_hpd_asserted() in struct drm_dp_aux").
-> > >>          3b5765df375c ("drm/panel: atna33xc20: Take advantage of wait_hpd_asserted() in struct drm_dp_aux")
-> > >>
-> > >> Perhaps you lose some other functionality too.
-> > >>
-> > >>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > >>> Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
-> > >>> ---
-> > >>>   arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi | 11 +++++++++++
-> > >>>   1 file changed, 11 insertions(+)
-> > >>>
-> > >>> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-> > >>> index 962fb050c55c4fd33f480a21a8c47a484d0c82b8..46c73f5c039ed982b553636cf8c4237a20ba7687 100644
-> > >>> --- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-> > >>> +++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-> > >>> @@ -980,8 +980,12 @@ &mdss_dp3 {
-> > >>>        aux-bus {
-> > >>>                panel: panel {
-> > >>>                        compatible = "edp-panel";
-> > >>> +                     hpd-gpios = <&tlmm 119 GPIO_ACTIVE_HIGH>;
-> > >>>                        power-supply = <&vreg_edp_3p3>;
-> > >>>
-> > >>> +                     pinctrl-0 = <&edp_hpd_n_default>;
-> > >>> +                     pinctrl-names = "default";
-> > >>> +
-> > >>>                        port {
-> > >>>                                edp_panel_in: endpoint {
-> > >>>                                        remote-endpoint = <&mdss_dp3_out>;
-> > >>> @@ -1286,6 +1290,13 @@ hall_int_n_default: hall-int-n-state {
-> > >>>                bias-disable;
-> > >>>        };
-> > >>>
-> > >>> +     edp_hpd_n_default: edp-hpd-n-state {
-> > >>> +             pins = "gpio119";
-> > >>> +             function = "gpio";
-> > >>> +             drive-strength = <2>;
-> > >>> +             bias-pull-up;
-> > >>> +     };
-> > >>
-> > >> I checked the firmware configuration for this pin on my T14s, which
-> > >> does not match what you have here. Instead the function is set to
-> > >> "edp0_hot" which forwards the signal to the display controller which
-> > >> already handles the signal on panel power on. (And there is also no
-> > >> internal pull up enabled).
-> > >>
-> > >> We may want to describe this pin configuration somewhere, but that's a
-> > >> separate issue.
-> > >
-> > > Thanks for your review, I will send another version in coming days and
-> > > drop this first patch (adding hpd to the T14s DTSI).
-> > >
-> > > As a consequence I will need to add no-hpd property to the panel node.
-> > No, you won't. There is a HPD line and it is routed to the DP controller.
->
-> OK, I think I misunderstand what Johan said. After taking some time to
-> think about it in more detail:
-> - The first commit will be changed so that the hpd GPIO will be added
-> to the X1E DP controller instead of the panel. grepping the source for
-> dp_hot_plug_det shows me how to do that. This part is clear.
->
-> - The panel node in the generic T14s DTSI should not have the
-> hpd-gpios property / pinctrl set.
->
-> - The panel node should not have the hpd-gpios property / pinctrl set.
+On Wed, Mar 12, 2025 at 12:38:03AM +0100, Aleksandrs Vinarskis wrote:
+> Take into account LTTPR capabilities when selecting maximum allowed
+> link rate, number of data lines. Initialize LTTPR before
+> msm_dp_panel_read_sink_caps, as
+> a) Link params computation need to take into account LTTPR's caps
+> b) It appears DPTX shall (re)read DPRX caps after LTTPR detection
 
-LGTM. Use sc8180x-primus as an example
+... as required by DP 2.1, Section 3.6.7.6.1
 
->
-> I hope I understand that correctly. I will send a new series in the
-> morning unless there is any objection.
+Split this into two patches.
 
+> 
+> Return lttpr_count to prepare for per-segment link training.
+
+And this one is the third one.
+
+> 
+> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 29 +++++++++++++++++++---------
+>  drivers/gpu/drm/msm/dp/dp_panel.c   | 30 ++++++++++++++++++++---------
+>  drivers/gpu/drm/msm/dp/dp_panel.h   |  2 ++
+>  3 files changed, 43 insertions(+), 18 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index bbc47d86ae9e..d0c2dc7e6648 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -108,6 +108,8 @@ struct msm_dp_display_private {
+>  	struct msm_dp_event event_list[DP_EVENT_Q_MAX];
+>  	spinlock_t event_lock;
+>  
+> +	u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE];
+
+It would feel more natural to have lttpr_common_caps inside msm_dp_panel
+rather than here.
+
+> +
+>  	bool wide_bus_supported;
+>  
+>  	struct msm_dp_audio *audio;
+> @@ -367,17 +369,21 @@ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *d
+>  	return 0;
+>  }
+>  
+> -static void msm_dp_display_lttpr_init(struct msm_dp_display_private *dp)
+> +static int msm_dp_display_lttpr_init(struct msm_dp_display_private *dp, u8 *dpcd)
+
+Hmm, why? Return code is still unused in this patch. If it is a
+preparation for the next one, it should be split into a separate patch.
+
+>  {
+> -	u8 lttpr_caps[DP_LTTPR_COMMON_CAP_SIZE];
+> -	int rc;
+> +	int rc, lttpr_count;
+>  
+> -	if (drm_dp_read_lttpr_common_caps(dp->aux, dp->panel->dpcd, lttpr_caps))
+> -		return;
+> +	if (drm_dp_read_lttpr_common_caps(dp->aux, dpcd, dp->lttpr_common_caps))
+> +		return 0;
+>  
+> -	rc = drm_dp_lttpr_init(dp->aux, drm_dp_lttpr_count(lttpr_caps));
+> -	if (rc)
+> +	lttpr_count = drm_dp_lttpr_count(dp->lttpr_common_caps);
+> +	rc = drm_dp_lttpr_init(dp->aux, lttpr_count);
+> +	if (rc) {
+>  		DRM_ERROR("failed to set LTTPRs transparency mode, rc=%d\n", rc);
+> +		return 0;
+> +	}
+> +
+> +	return lttpr_count;
+>  }
+>  
+>  static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
+
+[...]
+
+> @@ -64,16 +67,24 @@ static int msm_dp_panel_read_dpcd(struct msm_dp_panel *msm_dp_panel)
+>  	major = (link_info->revision >> 4) & 0x0f;
+>  	minor = link_info->revision & 0x0f;
+>  
+> -	link_info->rate = drm_dp_max_link_rate(dpcd);
+> -	link_info->num_lanes = drm_dp_max_lane_count(dpcd);
+> +	max_source_lanes = msm_dp_panel->max_dp_lanes;
+> +	max_source_rate = msm_dp_panel->max_dp_link_rate;
+>  
+> -	/* Limit data lanes from data-lanes of endpoint property of dtsi */
+> -	if (link_info->num_lanes > msm_dp_panel->max_dp_lanes)
+> -		link_info->num_lanes = msm_dp_panel->max_dp_lanes;
+> +	max_sink_lanes = drm_dp_max_lane_count(dpcd);
+> +	max_sink_rate = drm_dp_max_link_rate(dpcd);
+> +
+> +	max_lttpr_lanes = drm_dp_lttpr_max_lane_count(lttpr_common_caps);
+> +	max_lttpr_rate = drm_dp_lttpr_max_link_rate(lttpr_common_caps);
+>  
+> +	if (max_lttpr_lanes)
+> +		max_sink_lanes = min(max_sink_lanes, max_lttpr_lanes);
+> +	if (max_lttpr_rate)
+> +		max_sink_rate = min(max_sink_rate, max_lttpr_rate);
+> +
+> +	/* Limit data lanes from data-lanes of endpoint property of dtsi */
+> +	link_info->num_lanes = min(max_sink_lanes, max_source_lanes);
+>  	/* Limit link rate from link-frequencies of endpoint property of dtsi */
+> -	if (link_info->rate > msm_dp_panel->max_dp_link_rate)
+> -		link_info->rate = msm_dp_panel->max_dp_link_rate;
+> +	link_info->rate = min(max_sink_rate, max_source_rate);
+
+
+Please keep existing code and extend it to handle max_lttpr_lanes /
+max_lttpr_rate instead of rewriting it unnecessarily.
+
+>  
+>  	drm_dbg_dp(panel->drm_dev, "version: %d.%d\n", major, minor);
+>  	drm_dbg_dp(panel->drm_dev, "link_rate=%d\n", link_info->rate);
 
 -- 
 With best wishes
