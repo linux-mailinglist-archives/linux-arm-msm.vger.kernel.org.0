@@ -1,274 +1,292 @@
-Return-Path: <linux-arm-msm+bounces-53061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3ACAA79817
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 00:18:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BDFAA79832
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 00:25:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B710171F4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 22:18:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B7C03B287C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 22:25:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 361B91F1909;
-	Wed,  2 Apr 2025 22:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA0E51F4168;
+	Wed,  2 Apr 2025 22:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="PeWXXXEJ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="J2H73Lmw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2044.outbound.protection.outlook.com [40.107.236.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D631DFF0;
-	Wed,  2 Apr 2025 22:17:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743632280; cv=fail; b=Yul6jQ45azYs88RUXEz2+myAjVMG9VzO1HRTOeRdCBliXGKor2yVQ8IfO737Gzq/Z81HRGQeBagWf/vWmspLy+P7SzcEXsnXlwi2kSbXylL2tN2B38S+vcRGqv3u+5FzllnZbvLR+ki1Yw3513sXOdSACzXh/5+6+gObYYmpj1w=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743632280; c=relaxed/simple;
-	bh=6RV3H4gpTt6+EiVLZuEPuInSr94WJoAkBD2gU3LCD0Q=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rESmwdQrwWBfufNe/S8hBMoNSLGoCnY83AAVxIAsL9ItjVh/RUsq3UQcGRIpdiKnJuhgYWUeU1+TPGBUEsYFdfcjJ5b35EMoBe3cs/fV+NU9vhkq1dOcTSHi5RCRjD4MAZx969BmFcw06TFTKpUmcQwCOKCdzSfF6Vm33g1mICk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=PeWXXXEJ; arc=fail smtp.client-ip=40.107.236.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=u1kvf/jHFRZzcgQuS6RiqCb2xCEHXlqYIGBU5zG42P3vkPGGAbebxuOOYmg4iN609AnAdFsh0r/amBf+grsR7TZ14H07fgpzHQNAEn1h+/SygDuFJsxVi1uChP4/9QjoBgUa313IX/uDKyAlv7+LXVCB8P3MB6A/1UB9G1jmP8DesDaHyjsZijz8DEh+XQU3iaoEbfT4e3b6PrIJJbp2rUX9UdzMoB4PzsztxB0Xm36fquBKRR0o0fBliXFgWgTYNCRjKqM6B1Wq+bk7qXZp3MAtpiPNTKzs0HKH63SOfoYRq+iUY9n02Ypp3TDwX4+HUgpq/EfmOHriAiPY86dHbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hBN1GNCKPC8jWPPRSxQeM7OeaQvUytNA+k2sj4hhY6g=;
- b=FsJUyspO15tU+dZFq2i6oTgn1MM9A7IgSMv8Ouqq54K0JSySaYtuU275+fAslTauWTrcPQe4nQt++BllwV+KvqBY0It4RW+KQuqnlocEmhe45uvgDmuYdT9Ae/ViHSV1AxjpDL7AIAR6Eq4UxP5QE41C0RPKCTbVUxR6nPGOxcOC9tJk/+TamylCvXcKg7aq4Y5r7fQyR7jfOkkmlTTp15zIjxkwWvU9FQNS3DQ2Yb/E3E8bNWOTOQztkFBKABfpmGvBXGdcaiAqWZ5mwBMwvE3aTg1AmrG/VZx09EfZ82NhYnPSzNJsNLpBjXlkBimJF7dgJsD8AaeffVFnPrXLrA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=google.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hBN1GNCKPC8jWPPRSxQeM7OeaQvUytNA+k2sj4hhY6g=;
- b=PeWXXXEJLoQfYHv5m+kOfmdrfSVB1s1j/wikbvmPLfj7eId9Sgv3UTIpmAnqfEM+dUF+shw3AKfUwdZTnE36P0J29tde1GFGQwnu1CFKdGQ/Fgdqi0OOpQ9FCmLGFu2x/vfNGokDjI8SzFXg9ZIqVBSIl9nxCLNDToDZWrukeRI=
-Received: from BL1PR13CA0377.namprd13.prod.outlook.com (2603:10b6:208:2c0::22)
- by PH8PR12MB6867.namprd12.prod.outlook.com (2603:10b6:510:1ca::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.50; Wed, 2 Apr
- 2025 22:17:54 +0000
-Received: from MN1PEPF0000F0E2.namprd04.prod.outlook.com
- (2603:10b6:208:2c0:cafe::b1) by BL1PR13CA0377.outlook.office365.com
- (2603:10b6:208:2c0::22) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8632.9 via Frontend Transport; Wed, 2
- Apr 2025 22:17:53 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- MN1PEPF0000F0E2.mail.protection.outlook.com (10.167.242.40) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8606.22 via Frontend Transport; Wed, 2 Apr 2025 22:17:53 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 2 Apr
- 2025 17:17:53 -0500
-Date: Wed, 2 Apr 2025 17:17:39 -0500
-From: Michael Roth <michael.roth@amd.com>
-To: Fuad Tabba <tabba@google.com>
-CC: Vishal Annapurve <vannapurve@google.com>, <kvm@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-mm@kvack.org>, <pbonzini@redhat.com>,
-	<chenhuacai@kernel.org>, <mpe@ellerman.id.au>, <anup@brainfault.org>,
-	<paul.walmsley@sifive.com>, <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>,
-	<seanjc@google.com>, <viro@zeniv.linux.org.uk>, <brauner@kernel.org>,
-	<willy@infradead.org>, <akpm@linux-foundation.org>, <xiaoyao.li@intel.com>,
-	<yilun.xu@intel.com>, <chao.p.peng@linux.intel.com>, <jarkko@kernel.org>,
-	<amoorthy@google.com>, <dmatlack@google.com>, <isaku.yamahata@intel.com>,
-	<mic@digikod.net>, <vbabka@suse.cz>, <ackerleytng@google.com>,
-	<mail@maciej.szmigiero.name>, <david@redhat.com>, <wei.w.wang@intel.com>,
-	<liam.merwick@oracle.com>, <isaku.yamahata@gmail.com>,
-	<kirill.shutemov@linux.intel.com>, <suzuki.poulose@arm.com>,
-	<steven.price@arm.com>, <quic_eberman@quicinc.com>,
-	<quic_mnalajal@quicinc.com>, <quic_tsoni@quicinc.com>,
-	<quic_svaddagi@quicinc.com>, <quic_cvanscha@quicinc.com>,
-	<quic_pderrin@quicinc.com>, <quic_pheragu@quicinc.com>,
-	<catalin.marinas@arm.com>, <james.morse@arm.com>, <yuzenghui@huawei.com>,
-	<oliver.upton@linux.dev>, <maz@kernel.org>, <will@kernel.org>,
-	<qperret@google.com>, <keirf@google.com>, <roypat@amazon.co.uk>,
-	<shuah@kernel.org>, <hch@infradead.org>, <jgg@nvidia.com>,
-	<rientjes@google.com>, <jhubbard@nvidia.com>, <fvdl@google.com>,
-	<hughd@google.com>, <jthoughton@google.com>, <peterx@redhat.com>
-Subject: Re: [PATCH v6 5/7] KVM: guest_memfd: Restore folio state after final
- folio_put()
-Message-ID: <20250402221739.yqvuuiuxvvphgijd@amd.com>
-References: <20250318162046.4016367-1-tabba@google.com>
- <20250318162046.4016367-6-tabba@google.com>
- <CAGtprH-aoUrAPAdTho7yeZL1dqz0yqvr0-v_-U1R9f+dTxOkMA@mail.gmail.com>
- <CA+EHjTwZaqX9Ab-XhFURn+Kn6OstN3PHNqUi_DxbHrQYBTa2KA@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422D71F4295
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 22:25:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1743632730; cv=none; b=aH2q5Rlz8nKp7pKIg7o+sBVQenTNgRZH4X2CGBiUm6rJVZRIaDhe3ZLH6BKmFAqhCTVHNdI+bFa+UcR/iQjPcOVCjCeZKMU588U+4n2j3NhDWjG1B8WD00rE5OlvEu2fOXno8aGu7uVm9tzB7FV77FL7v0DYAFDBCTs0i9Ntdgg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1743632730; c=relaxed/simple;
+	bh=HQPFBCaJ5Qm9FY7mTC8LOnkYNfXTCoz5Iw7Mb6idx6g=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=ZqSFPbh7tAoPwfZu2VrlznLADqgD+RemhEX5E7Je5YlAbtSc2a/7ldCpvsgN2ChShl+DWOB/EWLGwdo3+b6eioKAwszTmPDrqZdL57KUNM8sKFWOcmEUxCxx7XCKAgcoGunHZ7qLSRdRPol8fvONHip6aKbOuy6Fcjc5G6edoqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=J2H73Lmw; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-7394792f83cso170433b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 15:25:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1743632728; x=1744237528; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=A6WcvdR6WqAMHzvGxAbwSacD4Wb/rLMAXYVnrZz6qbg=;
+        b=J2H73LmwW4Z4PvkUTqjry7rUQn3y/bmK3VDCDsvTWdONnDBJcmrCyCLUThRjTdisWX
+         2BVZ4hQKs6Nx5Znp//QizKi1pZJdO57HrKVqAnJJjuqw8owBlX5mAaXiYCod4LHxt81Z
+         fii6i/HzvQnBa73d3Cui9usJ5B/gGF69W0/RugxdpGQVCOf5KN2BlvBzSJEcxBvXE2ot
+         DpPJGdV1tIaGhpZcp5O9f4Sso3GU/obzuF55TgX2NI61EgyC2sy6DCSdBLZ+6dG8QZlM
+         y/QgUOs8g7Uch+U6MZt9cFre2jdcADs31oDIPC0QuO0xvzqbAD95bBzKECBLIUzLs5t9
+         UKJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743632728; x=1744237528;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=A6WcvdR6WqAMHzvGxAbwSacD4Wb/rLMAXYVnrZz6qbg=;
+        b=j7mUn4bG6DGOeRhYDUldgF+gDaAMhe34B7JIt1OPWC17HTe66ZRqcnupfAX4EUpQa/
+         wWz2mMMvYAzN9cfTNBJtxfOLQrIFVfeuc+kW2sEN1eBK3Gme49yUnnoZuJOWx68NZEjz
+         0KSLLJLcY+X9G0XDhsPuayOVB8DOJGV1F+Ntk5mC08+PHo0xDm/FUY7NGl+kmmfGJTvQ
+         PquEhUAknCR1N6oY9iA6TfOTVVNvVCdcta/bL2luLPO73DRV5ifGUaYDOTfb5WEPlQGR
+         J5zpreZIPgQPw3BQut3/wHEioXH3JPLWvKAM6sn8dtR4We91Z4xjtOcSYHTA4lOyRL7o
+         ZJxw==
+X-Forwarded-Encrypted: i=1; AJvYcCWwNei5rOw6CmpNQOf+K64Tm+k/NvuKq4b+8w0yh35B7G1DNMGVnewgIBG12qpAo85ARuN1TpC5Zml//uuw@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTpOnyosOTfLttnvFeKlh4DfucN1P0esnhBpRDLun7JcepcGPC
+	zOY4ht59ZPCIVbvCt3idU5yA2WuwzrFIH/bUyO9Tgpnrho1htsuMQrG73P8pFMOm7S/7u7IcaxY
+	N2RuKGQaa7R8kS04kmHbNFA==
+X-Google-Smtp-Source: AGHT+IGMP1M5dr+i5RR5wshPuL6my2/PghcE1DIyVKMYQME2SB4PdP1R+1Hd6RdA1YQ7XI2HJR0mJC1nwnB0LvRPjA==
+X-Received: from pfbci14.prod.google.com ([2002:a05:6a00:28ce:b0:736:a055:1ce3])
+ (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a00:80d:b0:736:d6da:8f9e with SMTP id d2e1a72fcca58-739c7511323mr5458330b3a.0.1743632728406;
+ Wed, 02 Apr 2025 15:25:28 -0700 (PDT)
+Date: Wed, 02 Apr 2025 15:25:26 -0700
+In-Reply-To: <20250328153133.3504118-4-tabba@google.com> (message from Fuad
+ Tabba on Fri, 28 Mar 2025 15:31:29 +0000)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+EHjTwZaqX9Ab-XhFURn+Kn6OstN3PHNqUi_DxbHrQYBTa2KA@mail.gmail.com>
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000F0E2:EE_|PH8PR12MB6867:EE_
-X-MS-Office365-Filtering-Correlation-Id: 89233117-8d5f-4792-be8b-08dd723436c9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|7416014|82310400026|36860700013|1800799024|13003099007|7053199007;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?aWkvekQxcDk0NXA5akx4NEhZY1dIN0NjQytFUUtLUlFqL3NCdXlnMit6bHJJ?=
- =?utf-8?B?MWs0Tytwd3NVanJDSUtneWsrZTg3OC91UHJJSFJndVhVQmxveFRPaUNDY1U2?=
- =?utf-8?B?YjZ4Y3ZCVlIxTmFFdHJVNnN5Q3QzdkROV3pyR3ZYbS9aV0ZWTnNhNDBlZU85?=
- =?utf-8?B?UXFOUFZmNWpqUWUwN2E3dlVkRmUrdjRXR3JROWNkeDF1Z0tzRUtGZXh2VEJi?=
- =?utf-8?B?TW1qbEZFVXVCeTI0R3NSVzhGTGtxVlFTR0w0VkVDVTg1N2JzMDJVOVY2eUZX?=
- =?utf-8?B?Y3YxSTZLdzVOUEloS3NsK0NhSkhDOGFTdmVoRlpUa0NRZHplNXN6VlQ3cFJI?=
- =?utf-8?B?M1VCK2t0VWQ3Z1JnNHdKYWwxeDFvc3p5d3JOdWo1VTQrVXNRTjArVWhta1Er?=
- =?utf-8?B?VWZEeHVxemhjTmsxaTBYNDJUQ2RFSUdkN20vK3pvTG5QNmsxRS8zZlZhdnIy?=
- =?utf-8?B?UE5FZEEvV2JxcnpaYnBRb2pRUGp1MnRoUWhIQ3lYTDZwR1NKblp5OHVvaGFz?=
- =?utf-8?B?R1psNmIxd3FybXkxMThSeGw2L2VxNUJHU1BFRHZBeXF2SmkzZFNHOVFFUGFl?=
- =?utf-8?B?YnkzNUwrZG11ZGkvZmJBWGNjUXpjTXYvM2JGSXZHSUd2cjErbkNmaVlBS3Jr?=
- =?utf-8?B?elBDQVJDQmR4OVUySllJcDZqdHp2L2VFWFlFQzdBd0hxVXZ6eGdvMFFaRzRY?=
- =?utf-8?B?bFgvU2t0bWZQWDBUNEJrMWpnbGV4WDZmOXlobFFIT3cyYWZDSDNuSDhwQ1R0?=
- =?utf-8?B?dTlzaXJENllUTGVCeVEzbXMwaFJ4Y1p5Y2drMFdQcXR6eExuT2hPTlBzWVRj?=
- =?utf-8?B?YmViY3ZaQXZQemRxRFUwcU13MzVBTmhocTJydWVPSE1McWlOQlRCTDg4VFRN?=
- =?utf-8?B?VjBYbTluNDk5emNYOENRQmZCRFBERGhDbjVZTmNGR2N6Y0F4czE3QUFuTjg0?=
- =?utf-8?B?a2R4blkxS1VJMTFVVmVlNEVncTFNK0N1Zk16ZDIxMklnYTY1dDNiMFNFWml5?=
- =?utf-8?B?NVZlbmx5VzE3eHJSbk8wOVN4MCtUZ1ZjNTdLSnpNam9ydiswUHFMVHpRd2R5?=
- =?utf-8?B?andXc0FmM3JSVTFXck50VXdJdEwrSldzc2dQOWJ1bkZwRWRCYklTT0NhYTl1?=
- =?utf-8?B?TjFxK2dGZy94aWRpVnIxSk5zU0tEeWNRdHpPSGxQdTZXQWFLVHlydHVwcXpt?=
- =?utf-8?B?Mit2ci81SVNxMjNqWnJLYjlhOTFBeDQ1SnRWdUpoSjdSVTFNYXFVWE5vN1E1?=
- =?utf-8?B?T1IxYnBlR2FzMk42TW1ad0o3aUpHNFc1YXF2TVIrL2lKYkl3S29DejBUYm5G?=
- =?utf-8?B?WHFBMkRSMzV4bG43Z1hRZVpmUHpCM1VSa2cxU2NTdHBnL3BFSmRWcjFGMFly?=
- =?utf-8?B?U1NaM0owaHBZNm5mZzhPNzN2Z3E2ZVB2SWpnWGVsQkJEejRMeUtGWXFiRkRu?=
- =?utf-8?B?VER0SU00Z2MxSjVZTXZwZUJsV2U4aHhIM3pZQVgzUlkxbW1FcHRJY01wK2h4?=
- =?utf-8?B?UnZQeG5RU2x2YVRITmpBNU9xSUk2TkkrTjlnZ0pZVVdCY2tPZ2NSYU1UR1lS?=
- =?utf-8?B?dVlkZFE2NkhCVk9nQ1BtZWJNN3hCVFJaU2swNiszUFhQT1d4bTgvYWluRlNX?=
- =?utf-8?B?T1ZXNHIwU0NuNXNLOUpRbm5MeENneHJHWUxJeDN5bmxJa2REK3VaSVJuVU0r?=
- =?utf-8?B?QUJWbFEwbG1Xek15YXJBTzRRc2dtUUJIV2lBZzNSYzRabWFiQVNRcENmK05E?=
- =?utf-8?B?SEw3L3I3Y000NkljbC8vR3pGZGN3TW4zSDVncXRtTTErMUVJc2paMW1xTUVE?=
- =?utf-8?B?cnVFUHFPR1lLVnZSdHNGUlNBNm00a3pueXRDaTlXaFZTekQwWVVXcFBkT0lj?=
- =?utf-8?B?T1JCTkVhaC9Bb3RCWmJwWTNGemVRWHBYVFJ3c0xvVXJDbHkzZ3drNjFwWUM3?=
- =?utf-8?Q?27ZrAHCrYo0=3D?=
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(7416014)(82310400026)(36860700013)(1800799024)(13003099007)(7053199007);DIR:OUT;SFP:1101;
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Apr 2025 22:17:53.8910
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 89233117-8d5f-4792-be8b-08dd723436c9
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	MN1PEPF0000F0E2.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6867
+Mime-Version: 1.0
+Message-ID: <diqz1puanquh.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [PATCH v7 3/7] KVM: guest_memfd: Track folio sharing within a
+ struct kvm_gmem_private
+From: Ackerley Tng <ackerleytng@google.com>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
+	pankaj.gupta@amd.com, tabba@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Mar 25, 2025 at 03:57:00PM +0000, Fuad Tabba wrote:
-> Hi Vishal,
-> 
-> 
-> On Fri, 21 Mar 2025 at 20:09, Vishal Annapurve <vannapurve@google.com> wrote:
-> >
-> > On Tue, Mar 18, 2025 at 9:20 AM Fuad Tabba <tabba@google.com> wrote:
-> > > ...
-> > > +/*
-> > > + * Callback function for __folio_put(), i.e., called once all references by the
-> > > + * host to the folio have been dropped. This allows gmem to transition the state
-> > > + * of the folio to shared with the guest, and allows the hypervisor to continue
-> > > + * transitioning its state to private, since the host cannot attempt to access
-> > > + * it anymore.
-> > > + */
-> > >  void kvm_gmem_handle_folio_put(struct folio *folio)
-> > >  {
-> > > -       WARN_ONCE(1, "A placeholder that shouldn't trigger. Work in progress.");
-> > > +       struct address_space *mapping;
-> > > +       struct xarray *shared_offsets;
-> > > +       struct inode *inode;
-> > > +       pgoff_t index;
-> > > +       void *xval;
-> > > +
-> > > +       mapping = folio->mapping;
-> > > +       if (WARN_ON_ONCE(!mapping))
-> > > +               return;
-> > > +
-> > > +       inode = mapping->host;
-> > > +       index = folio->index;
-> > > +       shared_offsets = &kvm_gmem_private(inode)->shared_offsets;
-> > > +       xval = xa_mk_value(KVM_GMEM_GUEST_SHARED);
-> > > +
-> > > +       filemap_invalidate_lock(inode->i_mapping);
-> >
-> > As discussed in the guest_memfd upstream, folio_put can happen from
-> > atomic context [1], so we need a way to either defer the work outside
-> > kvm_gmem_handle_folio_put() (which is very likely needed to handle
-> > hugepages and merge operation) or ensure to execute the logic using
-> > synchronization primitives that will not sleep.
-> 
-> Thanks for pointing this out. For now, rather than deferring (which
-> we'll come to when hugepages come into play), I think this would be
+Fuad Tabba <tabba@google.com> writes:
 
-FWIW, with SNP, it's only possible to unsplit an RMP entry if the guest
-cooperates with re-validating/re-accepting the memory at a higher order.
-Currently, this guest support is not implemented in linux.
+> From: Ackerley Tng <ackerleytng@google.com>
+>
+> Track guest_memfd folio sharing state within the inode, since it is a
+> property of the guest_memfd's memory contents.
+>
+> The guest_memfd PRIVATE memory attribute is not used for two reasons. It
+> reflects the userspace expectation for the memory state, and therefore
+> can be toggled by userspace. Also, although each guest_memfd file has a
+> 1:1 binding with a KVM instance, the plan is to allow multiple files per
+> inode, e.g. to allow intra-host migration to a new KVM instance, without
+> destroying guest_memfd.
+>
+> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> Co-developed-by: Vishal Annapurve <vannapurve@google.com>
+> Signed-off-by: Vishal Annapurve <vannapurve@google.com>
+> Co-developed-by: Fuad Tabba <tabba@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>  virt/kvm/guest_memfd.c | 58 ++++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 53 insertions(+), 5 deletions(-)
+>
+> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> index ac6b8853699d..cde16ed3b230 100644
+> --- a/virt/kvm/guest_memfd.c
+> +++ b/virt/kvm/guest_memfd.c
+> @@ -17,6 +17,18 @@ struct kvm_gmem {
+>  	struct list_head entry;
+>  };
+>  
+> +struct kvm_gmem_inode_private {
+> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> +	struct xarray shared_offsets;
+> +	rwlock_t offsets_lock;
 
-So, if we were to opportunistically unsplit hugepages, we'd zap the
-mappings in KVM, let it fault in at a higher order so we could reduce
-TLB misses, and then KVM would (via
-kvm_x86_call(private_max_mapping_level)(kvm, pfn) find that the RMP
-entry is still split to 4K, and remap everything right back to the 4K
-granularity it was already at to begin with.
+This lock doesn't work, either that or this lock can't be held while
+faulting, because holding this lock means we can't sleep, and we need to
+sleep to allocate.
 
-TDX seems to have a bit more flexibility in being able to
-'unsplit'/promote private ranges back up to higher orders, so it could
-potentially benefit from doing things opportunistically...
+One of these config options must have helped throw a BUG
 
-However, ideally...the guest would just avoid unecessarily carving up
-ranges to begin with and pack all it's shared mappings into smaller GPA
-ranges. Then, all this unsplitting of huge pages could be completely
-avoided until cleanup/truncate time. So maybe even for hugepages we
-should just plan to do things this way, at least as a start?
+CONFIG_DEBUG_ATOMIC_SLEEP=y
+CONFIG_DEBUG_IRQFLAGS=y
+CONFIG_DEBUG_LOCK_ALLOC=y
+CONFIG_DEBUG_LOCKDEP=y
+CONFIG_DEBUG_MUTEXES=y
+CONFIG_DEBUG_RT_MUTEXES=y
+CONFIG_DEBUG_RWSEMS=y
+CONFIG_DEBUG_SPINLOCK=y
+CONFIG_DEBUG_WW_MUTEX_SLOWPATH=y
+CONFIG_LOCKDEP=y
+CONFIG_LOCK_STAT=y
+CONFIG_PREEMPT_COUNT=y
+CONFIG_PREEMPTIRQ_TRACEPOINTS=y
+CONFIG_PROVE_LOCKING=y
+CONFIG_PROVE_RAW_LOCK_NESTING=y
+CONFIG_PROVE_RCU=y
+CONFIG_RCU_CPU_STALL_CPUTIME=y
+CONFIG_TRACE_IRQFLAGS_NMI=y
+CONFIG_TRACE_IRQFLAGS=y
+CONFIG_UNINLINE_SPIN_UNLOCK=y
 
-> possible to resolve by ensuring we have exclusive access* to the folio
-> instead, and using that to ensure that we can access the
-> shared_offsets maps.
-> 
-> * By exclusive access I mean either holding the folio lock, or knowing
-> that no one else has references to the folio (which is the case when
-> kvm_gmem_handle_folio_put() is called).
-> 
-> I'll try to respin something in time for folks to look at it before
-> the next sync.
+with ./guest_memfd_test
 
-Thanks for posting. I was looking at how to get rid of
-filemap_invalidate_lock() from conversion path, and having that separate
-rwlock seems to resolve a lot of the potential races I was looking at.
-I'm working on rebasing SNP 2MB support on top of your v7 series now.
+[  161.255012] BUG: sleeping function called from invalid context at ./include/linux/sched/mm.h:321
+[  161.257350] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 254, name: guest_memfd_tes
+[  161.259662] preempt_count: 1, expected: 0
+[  161.260884] RCU nest depth: 0, expected: 0
+[  161.262119] 3 locks held by guest_memfd_tes/254:
+[  161.263470]  #0: ffff8883064c3c80 (&mm->mmap_lock){++++}-{4:4}, at: lock_mm_and_find_vma+0x29/0x140
+[  161.265932]  #1: ffff88830dedbc10 (mapping.invalidate_lock#4){++++}-{4:4}, at: kvm_gmem_fault+0x3d/0x1f0
+[  161.268507]  #2: ffff88830d510d30 (&private->offsets_lock){.+.+}-{3:3}, at: kvm_gmem_fault+0x45/0x1f0
+[  161.270992] CPU: 2 UID: 0 PID: 254 Comm: guest_memfd_tes Tainted: G        W          6.14.0-rc7-00016-g174a15c15f96 #1
+[  161.270995] Tainted: [W]=WARN
+[  161.270996] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[  161.270997] Call Trace:
+[  161.270998]  <TASK>
+[  161.271000]  dump_stack_lvl+0xa7/0x100
+[  161.271005]  __might_resched+0x261/0x280
+[  161.271009]  prepare_alloc_pages+0xe5/0x1e0
+[  161.271013]  __alloc_frozen_pages_noprof+0xbc/0x2a0
+[  161.271019]  alloc_pages_mpol+0x111/0x1d0
+[  161.271025]  alloc_pages_noprof+0x7e/0x120
+[  161.271028]  folio_alloc_noprof+0x14/0x30
+[  161.271030]  __filemap_get_folio+0x189/0x380
+[  161.271036]  kvm_gmem_fault+0x5e/0x1f0
+[  161.271041]  __do_fault+0x42/0xc0
+[  161.271045]  handle_mm_fault+0xf37/0x1c90
+[  161.271047]  ? handle_mm_fault+0x3c/0x1c90
+[  161.271053]  ? mt_find+0x208/0x2a0
+[  161.271088]  do_user_addr_fault+0x3c0/0x740
+[  161.271095]  exc_page_fault+0x69/0x110
+[  161.271099]  asm_exc_page_fault+0x26/0x30
+[  161.271102] RIP: 0033:0x419fb0
+[  161.271104] Code: 48 8d 3c 17 48 89 c1 48 85 d2 74 2e 48 89 fa 48 29 c2 83 e2 01 74 13 48 8d 48 01 40 88 71 ff 48 39 cf 74 17 66 0f 1f 44 00 00 <44> 88 01 48 83 c1 02 44 88 41 ff 48 39 cf[  161.271105] RSP: 002b:00007fffd695b568 EFLAGS: 00010246
+[  161.271107] RAX: 00007f4f395a0000 RBX: 00007fffd695b590 RCX: 00007f4f395a0000
+[  161.271108] RDX: 0000000000000000 RSI: 00000000ffffffaa RDI: 00007f4f395a4000
+[  161.271109] RBP: 0000000000000005 R08: 00000000ffffffaa R09: 0000000000000000
+[  161.271109] R10: 0000000000000001 R11: 0000000000000246 R12: 0000000000001000
+[  161.271110] R13: 000000002e03ab40 R14: 00007f4f395a0000 R15: 0000000000004000
+[  161.271119]  </TASK>
 
--Mike
-
-> 
-> Cheers,
-> /fuad
-> 
-> > [1] https://elixir.bootlin.com/linux/v6.14-rc6/source/include/linux/mm.h#L1483
-> >
-> > > +       folio_lock(folio);
-> > > +       kvm_gmem_restore_pending_folio(folio, inode);
-> > > +       folio_unlock(folio);
-> > > +       WARN_ON_ONCE(xa_err(xa_store(shared_offsets, index, xval, GFP_KERNEL)));
-> > > +       filemap_invalidate_unlock(inode->i_mapping);
-> > >  }
-> > >  EXPORT_SYMBOL_GPL(kvm_gmem_handle_folio_put);
-> > >
-> > > --
-> > > 2.49.0.rc1.451.g8f38331e32-goog
-> > >
-> 
+> +#endif
+> +};
+> +
+> +static struct kvm_gmem_inode_private *kvm_gmem_private(struct inode *inode)
+> +{
+> +	return inode->i_mapping->i_private_data;
+> +}
+> +
+>  #ifdef CONFIG_KVM_GMEM_SHARED_MEM
+>  void kvm_gmem_handle_folio_put(struct folio *folio)
+>  {
+> @@ -324,8 +336,28 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
+>  	return gfn - slot->base_gfn + slot->gmem.pgoff;
+>  }
+>  
+> +static void kvm_gmem_evict_inode(struct inode *inode)
+> +{
+> +	struct kvm_gmem_inode_private *private = kvm_gmem_private(inode);
+> +
+> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> +	/*
+> +	 * .evict_inode can be called before private data is set up if there are
+> +	 * issues during inode creation.
+> +	 */
+> +	if (private)
+> +		xa_destroy(&private->shared_offsets);
+> +#endif
+> +
+> +	truncate_inode_pages_final(inode->i_mapping);
+> +
+> +	kfree(private);
+> +	clear_inode(inode);
+> +}
+> +
+>  static const struct super_operations kvm_gmem_super_operations = {
+> -	.statfs		= simple_statfs,
+> +	.statfs         = simple_statfs,
+> +	.evict_inode	= kvm_gmem_evict_inode,
+>  };
+>  
+>  static int kvm_gmem_init_fs_context(struct fs_context *fc)
+> @@ -553,6 +585,7 @@ static struct inode *kvm_gmem_inode_make_secure_inode(const char *name,
+>  						      loff_t size, u64 flags)
+>  {
+>  	const struct qstr qname = QSTR_INIT(name, strlen(name));
+> +	struct kvm_gmem_inode_private *private;
+>  	struct inode *inode;
+>  	int err;
+>  
+> @@ -561,10 +594,20 @@ static struct inode *kvm_gmem_inode_make_secure_inode(const char *name,
+>  		return inode;
+>  
+>  	err = security_inode_init_security_anon(inode, &qname, NULL);
+> -	if (err) {
+> -		iput(inode);
+> -		return ERR_PTR(err);
+> -	}
+> +	if (err)
+> +		goto out;
+> +
+> +	err = -ENOMEM;
+> +	private = kzalloc(sizeof(*private), GFP_KERNEL);
+> +	if (!private)
+> +		goto out;
+> +
+> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> +	xa_init(&private->shared_offsets);
+> +	rwlock_init(&private->offsets_lock);
+> +#endif
+> +
+> +	inode->i_mapping->i_private_data = private;
+>  
+>  	inode->i_private = (void *)(unsigned long)flags;
+>  	inode->i_op = &kvm_gmem_iops;
+> @@ -577,6 +620,11 @@ static struct inode *kvm_gmem_inode_make_secure_inode(const char *name,
+>  	WARN_ON_ONCE(!mapping_unevictable(inode->i_mapping));
+>  
+>  	return inode;
+> +
+> +out:
+> +	iput(inode);
+> +
+> +	return ERR_PTR(err);
+>  }
+>  
+>  static struct file *kvm_gmem_inode_create_getfile(void *priv, loff_t size,
 
