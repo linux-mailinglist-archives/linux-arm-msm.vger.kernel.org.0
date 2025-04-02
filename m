@@ -1,104 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-53031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0201EA78D69
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 13:45:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58775A78DA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 13:59:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A47BF168495
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 11:45:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B62AB1886163
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 12:00:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D752D1F03C8;
-	Wed,  2 Apr 2025 11:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DE01238143;
+	Wed,  2 Apr 2025 11:59:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n8H+C9zY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mxhk.zte.com.cn (mxhk.zte.com.cn [63.216.63.40])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32334233153;
-	Wed,  2 Apr 2025 11:45:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.216.63.40
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58418235BFB;
+	Wed,  2 Apr 2025 11:59:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743594349; cv=none; b=P/RLzwjF1rvT93eLJa0GfUxfolA8UmQnj8GpgzzWYruMwAzzO91l8kXhg6oPdq0ULGbCQanR1Mw2IYW5ZcbaAXxWPYC5Q+RU/S3a9RHjM2mefaYSZG/GhK8TwOPCaZtFBS4yTitme2dffs3EIqqzt/ITm02XPmfOEcl9uCbcNu4=
+	t=1743595189; cv=none; b=KeGQ8iXRDRPGlGLTpsNWzbvutZ1eE36BRDPMNptAyJWnFRpZJQDxKtlq3XuFvcczOb4ePIRvKhPw4JpvtzPibitkvfnuLfpa1M6uuD9baf8KXCMW3wPIPe0/HG7ZrbBIW5DALYBuIuDN8pw7FFyXXXjE6strz8uyrpTU2p51p6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743594349; c=relaxed/simple;
-	bh=1FEXNb+3sgwnhrzy3P2QhZYbooTBMvl6WNcpdOtLPqc=;
-	h=Date:Message-ID:In-Reply-To:References:Mime-Version:From:To:Cc:
-	 Subject:Content-Type; b=QsLc6x1Zxw9FmyUVRjyCLAQipLmh9EqOUpuB3K49i+fPNBJOtD+GvwFs77sIuJTzb7C4WFyh84pXrmPVKV/gkT+HtHyvyKjkH+lHXiHbgltC5K8IPLA1HuRFqtbgwM0ltuR6ZRzYWWxVMBtWu6DU/4kYUqMwiizF+TQrPybpq3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zte.com.cn; spf=pass smtp.mailfrom=zte.com.cn; arc=none smtp.client-ip=63.216.63.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zte.com.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zte.com.cn
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mxhk.zte.com.cn (FangMail) with ESMTPS id 4ZSNNR0FSrz8QrkZ;
-	Wed,  2 Apr 2025 19:45:43 +0800 (CST)
-Received: from xaxapp02.zte.com.cn ([10.88.97.241])
-	by mse-fl1.zte.com.cn with SMTP id 532Bjd3j070014;
-	Wed, 2 Apr 2025 19:45:39 +0800 (+08)
-	(envelope-from shao.mingyin@zte.com.cn)
-Received: from mapi (xaxapp04[null])
-	by mapi (Zmail) with MAPI id mid32;
-	Wed, 2 Apr 2025 19:45:42 +0800 (CST)
-Date: Wed, 2 Apr 2025 19:45:42 +0800 (CST)
-X-Zmail-TransId: 2afb67ed2366ffffffffef7-237ea
-X-Mailer: Zmail v1.0
-Message-ID: <20250402194542026OH8jAzuv0uq-J-D9AVPqJ@zte.com.cn>
-In-Reply-To: <20250402194100610qY6KQ4JPISk-4v214Qs36@zte.com.cn>
-References: 20250402194100610qY6KQ4JPISk-4v214Qs36@zte.com.cn
+	s=arc-20240116; t=1743595189; c=relaxed/simple;
+	bh=8dl7ISQ+eM000+lZIQEPv+hiZRsdlSbP98vxWvDTalc=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=JZZNdmrm+3nSK/sA6aLhYE9uYK61WyTnejvq6KbRAuAUysEuCj49rJdhHw2wqDRdLA47l6fkfs31YKelkMh8OTePP7Gd2r5BcUDda8TMWi9ZypbA9UhsrYtRnZkLwH4lZdwiyIZUAfSt0RFdjAGzhzK7481//g+G7XVzFVKBxNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n8H+C9zY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 532AtCja032650;
+	Wed, 2 Apr 2025 11:59:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=n+iodew5GmsQ4lOHSz2keCNpjNVT3ejieh7tZZjFLp0=; b=n8
+	H+C9zY9aRX0pxmQs5UXKwjxo6U0zedV/Zh6ZotzySXJZ64PXFHoWvEOUqdYfjmNw
+	jmEr1EtVHtyYV85RZ0QgKv1RdlzbLX6WNrjJ+fIXFe7GBY59rwTijepKdFFqssz+
+	wI7o9Xn1rh1MPMPt0tRZErgH09FE5k2p/qRa1njnVAZfIiNXc8EupkAjJ0CtPv2S
+	fog9aYA/qNu48zAjs/jX28MZVrzO0msOHvboHLB9eDomosciG4tt22uxYEob72fe
+	Kz94bbyZBQm77/4zg9XJh3j0UZ3qPEiMqr0j4I9DugHNIPW313z4jYXiY28XdoTW
+	6V04TF3rDl+yR+jxYEgw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45p67qkm2n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 02 Apr 2025 11:59:43 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 532Bxg5b012802
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 2 Apr 2025 11:59:42 GMT
+Received: from hu-mapa-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 2 Apr 2025 04:59:39 -0700
+From: Manish Pandey <quic_mapa@quicinc.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "James E.J.
+ Bottomley" <James.Bottomley@HansenPartnership.com>,
+        "Martin K. Petersen"
+	<martin.petersen@oracle.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_nitirawa@quicinc.com>,
+        <quic_bhaskarv@quicinc.com>, <quic_rampraka@quicinc.com>,
+        <quic_cang@quicinc.com>, <quic_nguyenb@quicinc.com>
+Subject: [PATCH V5 0/3] scsi: ufs-qcom: Enable Hibern8, MCQ, and Testbus registers Dump
+Date: Wed, 2 Apr 2025 17:29:19 +0530
+Message-ID: <20250402115922.27874-1-quic_mapa@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-From: <shao.mingyin@zte.com.cn>
-To: <vkoul@kernel.org>, <robert.marko@sartura.hr>
-Cc: <kishon@kernel.org>, <wens@csie.org>, <jernej.skrabec@gmail.com>,
-        <samuel@sholland.org>, <zhang.enpei@zte.com.cn>,
-        <linux-phy@lists.infradead.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-sunxi@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>, <luka.perkov@sartura.hr>,
-        <linux-arm-msm@vger.kernel.org>, <heiko@sntech.de>,
-        <linux-rockchip@lists.infradead.org>, <yang.yang29@zte.com.cn>,
-        <xu.xin16@zte.com.cn>, <ye.xingchen@zte.com.cn>
-Subject: =?UTF-8?B?W1BBVENIIGxpbnV4LW5leHQgNS81XSBwaHk6IHJvY2tjaGlwOiBwaHktcm9ja2NoaXAtdHlwZWM6IFVzZcKgZGV2X2Vycl9wcm9iZSgp?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL:mse-fl1.zte.com.cn 532Bjd3j070014
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 67ED2367.000/4ZSNNR0FSrz8QrkZ
+MIME-Version: 1.0
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=fMI53Yae c=1 sm=1 tr=0 ts=67ed26af cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=pyQEGUW01KN_hzJh80EA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 8yRP_j5TW9CB5zVMQSrRaegCucJ6i0sz
+X-Proofpoint-GUID: 8yRP_j5TW9CB5zVMQSrRaegCucJ6i0sz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-02_04,2025-04-01_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 impostorscore=0 clxscore=1015
+ mlxlogscore=335 bulkscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504020075
 
-From: Zhang Enpei <zhang.enpei@zte.com.cn>
-
-Replace the open-code with dev_err_probe() to simplify the code.
-
-Signed-off-by: Zhang Enpei <zhang.enpei@zte.com.cn>
-Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
+Adding support to enhance the debugging capabilities of the Qualcomm UFS
+Host Controller, including HW and SW Hibern8 counts, MCQ registers, and
+testbus registers dump.
 ---
- drivers/phy/rockchip/phy-rockchip-typec.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+Changes in v5:
+- Addressed Mani's comment and used cond_resched() instead of usleep().
+Changes in v4:
+- Addressed Mani's comment and used kmalloc_array() for testbus mem allocation.
+- Removed usleep_range from ufs_qcom_dump_testbus.
+- Updated commit text.
+Changes in v3:
+- Addressed Bart's comment and Annotated the 'testbus' declaration with __free.
+- Converted the switch-statements into an array lookup.
+- Introduced struct testbus_info{} for handling testbus switch-statements to an array lookup.
+Changes in v2:
+- Rebased patchsets.
+- Link to v1: https://lore.kernel.org/linux-arm-msm/20241025055054.23170-1-quic_mapa@quicinc.com/
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-typec.c b/drivers/phy/rockchip/phy-rockchip-typec.c
-index d9701b6106d5..94d1e6ead1a7 100644
---- a/drivers/phy/rockchip/phy-rockchip-typec.c
-+++ b/drivers/phy/rockchip/phy-rockchip-typec.c
-@@ -1151,11 +1151,9 @@ static int rockchip_typec_phy_probe(struct platform_device *pdev)
- 	if (IS_ERR(tcphy->extcon)) {
- 		if (PTR_ERR(tcphy->extcon) == -ENODEV) {
- 			tcphy->extcon = NULL;
--		} else {
--			if (PTR_ERR(tcphy->extcon) != -EPROBE_DEFER)
--				dev_err(dev, "Invalid or missing extcon\n");
--			return PTR_ERR(tcphy->extcon);
--		}
-+		} else
-+			return dev_err_probe(dev, PTR_ERR(tcphy->extcon),
-+					     "Invalid or missing extcon\n");
- 	}
+---
+Manish Pandey (3):
+  scsi: ufs-qcom: Add support for dumping HW and SW hibern8 count
+  scsi: ufs-qcom: Add support to dump MCQ registers
+  scsi: ufs-qcom: Add support to dump testbus registers
 
- 	pm_runtime_enable(dev);
+ drivers/ufs/host/ufs-qcom.c | 119 ++++++++++++++++++++++++++++++++++++
+ drivers/ufs/host/ufs-qcom.h |  11 ++++
+ 2 files changed, 130 insertions(+)
+
 -- 
-2.25.1
+2.17.1
+
 
