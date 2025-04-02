@@ -1,152 +1,297 @@
-Return-Path: <linux-arm-msm+bounces-53052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22F99A79151
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 16:37:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05558A79165
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 16:42:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 432873AC30E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 14:36:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AB1E116EEB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 14:42:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86CBB23C8C1;
-	Wed,  2 Apr 2025 14:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4C7223BD1C;
+	Wed,  2 Apr 2025 14:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EihaTqL4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ufBo/4uV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F97D23BF88
-	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 14:36:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E33723BD01
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 14:42:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743604603; cv=none; b=OZTnnwLhPmXj89a2F4QB+bQ+R8tkn7YATtepfN1wIqUMQN3JSaS7tCSX4A5ToSX7blXlUZx+iJPcyszB0c4Gp7SE0Edvx/RpH5ea7Xz7uu5SQwbIBdlGBdVCdbezzxPxqcANYz0uFnWorTa2q1FM152nCXFxqXKEjwvZ/BZN3a8=
+	t=1743604924; cv=none; b=Uo6f41pOgzMTZytao+GFYUACfxZ4acRSDjsJw6KltPYrZ10ik9kAN5fwfp8mzNyEUu57M/6bdDXn8GnSi6rjLo16cmpbabxiL/aTHk4xXWGjXuXTleDSa7+q+pnbQZgQ1uuA31BqTVCbJSLVVpSPS1LXL/IYGVMz/6MyBdSLYlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743604603; c=relaxed/simple;
-	bh=NM+r1eddNSJ+PhsAt5mpIMaaO5aqtw1lqIQpoUzxeuo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mO6XhcMUyJx2Q+Yj8ehkeMkbptgQmqxalfSdtoRptU+QExQONxXQOauXBWPZ9UwI2J9d/+v+EMTgXr40I3vvN/ZPMbfaxTTv4dYEaF7tib5GYEyABDJHYtTXRuAEpiTJJVJ0zPFifZviwDhyIhGfUrMwtOy0OxtI9hEIptTAXdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EihaTqL4; arc=none smtp.client-ip=209.85.221.46
+	s=arc-20240116; t=1743604924; c=relaxed/simple;
+	bh=YfTErYDprd9k5yrR2bfdtIfn9GRAYyphYzrQZPF9ZnU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pBps5bzwP/OeSUG2hMkt4LY+9wpRIa+Sc6/G2fujzzpMBkPEf3SQCLnQm47WyLYetDpHwRbPQO6cTZ3/CBzrvha4+E/zNcNVD///6aQmTR1NiYROgudPdpsvPcRZ1nB1yBkKDrHdJAnV2nd1ettifbWs6dxUmGhhMRLT5f+O5WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ufBo/4uV; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-39c1efbefc6so1767493f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 07:36:41 -0700 (PDT)
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ac2c663a3daso1298469266b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 07:42:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743604600; x=1744209400; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WlNr7s9//ER/SikIA2XjkSmK+up9sy8cyHVWwjM89l8=;
-        b=EihaTqL4a6U473j/OG+Dr4vfcb3duGGsQ3R+pZ8968I0BXBBV+dxuE5iYpHVgLzUEf
-         8kzsNTh6JmZeFaVQGbEHikK0wzYL/KHXNTY1jx+ZqfKhWNM13n2UeLf/4Y/kHD8ZzyKt
-         BjEd78lo+vDVilZyi/xC1EnEFofRHvW+f7gi4foDDk/NvjEUBR+BfKeDToJg7uaOjlCx
-         K4XH4ObbTlbKw/57M4PkNo9K2jUC1CUmW4RseEgNHXrERfHwAy3UBhBIUDn9QFogbV1b
-         FnmkTnahLbtkQySgifBau66tEZOM3XzivavSOD2n2AeM1JLCqFCLtPonpOES9THsuw5D
-         MU/A==
+        d=linaro.org; s=google; t=1743604921; x=1744209721; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1irzcTAJtKkY/ckGSlesX7FKrq9TEsW4UyohrmzP07o=;
+        b=ufBo/4uV6r64QSQlq8RJr7d0DHEW/eZ0oo6VObTR+nZYm+fdwfjwEJq+i/jmtdiyUj
+         SRxrHmSIvmYNW1hTeplNRwyu5WUdqbn5iRPhUDtHT0jauI9epZDjtc6IRYFEiL93Cj4J
+         8FbS1rgC9TsIDuchd1oS05/jZvh++pv6zQxF1KCRMcS2D5mbtfSh93ccnUJpmhg+JiGn
+         8kVNmeVdigYSEcydXc7+GMpewmn0wVpaVpvAZRz4cQGUHXWR5xiDdastMMVQ8ZvUZ3G1
+         SqfK2uGdCI9ILE52jH3rcmuQD+eyR5BfeP9AhVVV+D259jLEZpGlngJwwe/2yomb+anT
+         SDYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743604600; x=1744209400;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WlNr7s9//ER/SikIA2XjkSmK+up9sy8cyHVWwjM89l8=;
-        b=XFDdk0Vj+JsYsu3AMAK3cXbcJxjh+IbYfcB4YciAHZ0tpp5CWIE6SmiHZzK6rAS27p
-         8OGxW/LLaI3YDXbZis5RHfk5Wc0Vqo5DulygS2uTi/ycQNSG892lKHFmtHfl8wV1gEun
-         NmNnKavDTtnsjtZh4y+9nXDhmENtRDeRKPCRyn87pNJ+MCtvNDMZGtWX75I7LeLfE6pq
-         2ylH6v26l0ai5KAeLmEKKgKnBGTg/02a2eLVJV0+mkLUqxnokLv1VgU487WqFQp+mi7m
-         +OeO1Sh7wPNgwRhW0mw3VfffsMjoKH4Qv7GreQaZEIeyER2kha6k9UQRhYMcmXhJX2Lr
-         eBwA==
-X-Forwarded-Encrypted: i=1; AJvYcCV61Zp/Gko2NU0xP1i/5+fU12+QyLmdohFz70TGF1tpLxOSHWtmOqZGX2Xlyq3iV1yYfkra4qFPJ8LNap4G@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw089rDWk9SZE6j9rg8ibNh8xASxtk0VqRo5IVx1p1OhP0Hb65k
-	DkpxuQAzUBVhwZPoxIdcpdBFoRDbu9nI0YhN2zFXcKW6T1IBbR5RqvLQqCCpG7A=
-X-Gm-Gg: ASbGncuSPDgo3AgJF+yulhvpDIRFgKMPz5ziUafJtCWLqD6IBn/edNkPSpo3O0lCHrc
-	ygcYdaaVhxZoWZbLZ1PWXNwF79emkTAxWcSgrb7UHNUM6T95Vbu+Mu7+Qj0ml/M58MPmkNW09Dp
-	uO14+WaN/jwvIcMFCnmxsSXmXQEM2zuhE8WxTfSmLQ2dvUTrxjE7GRTDvwupirgxkwTCDTOs3yv
-	MVR00Ep3T8JmbD06nxLOFlsclXTGTO0JvG1xsRysD1ZRX8QCXKlyvMInwsOS0U55CT6L3a+yOO1
-	AIUxzg3NeloYfrkSnRdcnv5bJmt7D3czelUHmAB9QQMv+f1Ljjkji5M7
-X-Google-Smtp-Source: AGHT+IFcoBoCC9BmmEOzMP3U/FDnU+7IhugBotKCAX7qSMOx6S3uyBr/tGFAZRODEe1ztN7QMsfesw==
-X-Received: by 2002:a5d:5f55:0:b0:391:22e2:cd21 with SMTP id ffacd0b85a97d-39c297e41bamr2609766f8f.36.1743604599866;
-        Wed, 02 Apr 2025 07:36:39 -0700 (PDT)
-Received: from localhost ([213.215.212.194])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-39c0b66d29csm17396769f8f.60.2025.04.02.07.36.39
+        d=1e100.net; s=20230601; t=1743604921; x=1744209721;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1irzcTAJtKkY/ckGSlesX7FKrq9TEsW4UyohrmzP07o=;
+        b=HY0dRLjj8Xs8pau4dLYbjjkh5VRgn4Pv7cG1j7kO9kUN3IKk1Ti30FZuhByZuq+p7c
+         H+XZSGm2u9c4h9KbKuKJbj1uMMdNldKn13l+gV64fHGOlj0F6Gl35f6zigiXUBBW86AN
+         nU9FcXCpsfO+T7Hcdn3qFgeMcp2tVVGXoLgqR7XQvDviI5gnFFDLUHJoDdLRVjA66oUW
+         pre6H965D/BDPYifdz0tGGLrOmT36OcaW6+6pRKUrN5gbfg9iemKG0lKTi/BgAvIlseT
+         KSRqF/Klt9S6Hx88iBn8LRt6/CYL0m6au4qIgh+dBGc4oRUGp9KufqojVCRB0Tgzuo4j
+         W1RQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUTisHVR4IfumByIbWm0MhiecCuXAdWbNLc0/q6xG1wHDVgG6u0bsOuqhEstrnWt5F0PcbJEKdiJlkWQvS2@vger.kernel.org
+X-Gm-Message-State: AOJu0YwEvAJmOYz3EhIaMz0rbAxxDleiPY1s5w46cFtE1ETaqF3ADVls
+	erkQ6/ccCAercFbURt3AgGzDyI72UhirEQzzbOZoNShYW4n/uVWex2lA54u3q/c=
+X-Gm-Gg: ASbGncuXQgmgAksDimBCOLB49qIRILARzcmVgR0S3eseZ5tF6abxFLFUd/POQaRtqPX
+	9TRV5IKq9r672QVhiEvdgVitOxum2L5U7DrIwRN19PZDR84+R6ubrnu3YnZUacxme4+bRIiQV2B
+	lbURdmt+C2K/2UPlbGcfnqNka6bgCtr+IAw9hrl0BNJheKj0eh0BJowTrXF2ljuHM7LuD9Qssk+
+	nvmGTX1oS/hdSwrBY+OP5NCWTM6WlIkVtDa9jsNy+MNysMx6AYopMXFJhwbEITa1PlbIcLsbxEh
+	twQ7n7lCeoLJ2gU6mMOUkTkfKkFsSLcDSyYlOB11tD2D6/D3nSiymnvCBTh1VhcA7Z4=
+X-Google-Smtp-Source: AGHT+IGs44NxfYzkGtUfvO1KjAinAkx8Og9ZN/rN70didEAjB40voDsDjUAm81DRGb0TvbRPJJKAyA==
+X-Received: by 2002:a17:907:86a2:b0:ac2:8428:c5c2 with SMTP id a640c23a62f3a-ac738a25221mr1679737966b.20.1743604920504;
+        Wed, 02 Apr 2025 07:42:00 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:ef30:8ef9:ff05:1c19:8d78])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac71961f9absm939265766b.103.2025.04.02.07.41.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Apr 2025 07:36:39 -0700 (PDT)
-From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Wed, 02 Apr 2025 15:36:34 +0100
-Subject: [PATCH v5 3/3] arm64: dts: qcom: x1e78100-t14s-oled: add edp panel
+        Wed, 02 Apr 2025 07:42:00 -0700 (PDT)
+Date: Wed, 2 Apr 2025 16:41:56 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, mathias.nyman@intel.com, perex@perex.cz,
+	conor+dt@kernel.org, dmitry.torokhov@gmail.com, corbet@lwn.net,
+	broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
+	pierre-louis.bossart@linux.intel.com, Thinh.Nguyen@synopsys.com,
+	tiwai@suse.com, robh@kernel.org, gregkh@linuxfoundation.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-sound@vger.kernel.org, linux-input@vger.kernel.org,
+	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-doc@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+Subject: Re: [PATCH v36 22/31] ASoC: qcom: qdsp6: Introduce USB AFE port to
+ q6dsp
+Message-ID: <Z-1MtJjfVbUQFron@linaro.org>
+References: <20250319005141.312805-1-quic_wcheng@quicinc.com>
+ <20250319005141.312805-23-quic_wcheng@quicinc.com>
+ <Z-J2WnrZHP6iMIhT@linaro.org>
+ <871827f0-94ba-4565-865f-775cab9501eb@quicinc.com>
+ <Z-PPlRD7gcUcNvNv@linaro.org>
+ <200c08f7-3637-c2fb-2caa-002604b957ed@quicinc.com>
+ <Z-ug3YFwff8hWIRl@linaro.org>
+ <378af3f1-b5b0-4f7a-ab62-f5c891feb7b5@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-3-ff33f4d0020f@linaro.org>
-References: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org>
-In-Reply-To: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org>
-To: Douglas Anderson <dianders@chromium.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Jessica Zhang <quic_jesszhan@quicinc.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
- Rui Miguel Silva <rui.silva@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, 
- devicetree@vger.kernel.org, 
- Christopher Obbard <christopher.obbard@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1087;
- i=christopher.obbard@linaro.org; h=from:subject:message-id;
- bh=NM+r1eddNSJ+PhsAt5mpIMaaO5aqtw1lqIQpoUzxeuo=;
- b=owEBbQKS/ZANAwAKAWNNxPBocEb4AcsmYgBn7Ut0ZIzB+XdAppA9QOZwn9n08ERbMN6V7fJpA
- 8Wz4niUuIOJAjMEAAEKAB0WIQTxi9yLbCX5CqI9UXRjTcTwaHBG+AUCZ+1LdAAKCRBjTcTwaHBG
- +J6YEACTC2p9NkWyqoxpsfbz8IAmvp9I25A0PJ8pwu+woG61rttN5y0Dbq5kye4TA+O64PyRgMm
- 4Jb7rcXJxkvK8q/+/ZEH2ZgUER8H2sOXLYvmmqKbqNzHnURqGHahQ7okHtiavXEs0HVIB9KTQHx
- beTZ7pS001+OWS0Dtd+1TtLWnQbqK0wr0DID1wKN0Sw6kIIXGTwzEA7TGw5wzOfqxiy6EuimjSc
- enu/AZ7oRhc+0ksmUjEvlnwo+DehQ5r1QIA0d0ZF2x0CK60zx6YH7OrFU+y0u65xpGckL72ljCZ
- GtmMPsdIyKoJWw1B9vnFZm371LQN8SKeAPQr2+DKLyY3eRN++a338cgsvakO3YqOEKxI7PGjv4Z
- EjSW5iDSQ6TiCD+Ljwhl223FUrZ7rGtd0ChlctmkW3GjuEw8cBcv8r012oM9kp5BlzV0X91g+SB
- 2JVtduFeu6MOhK7liW2i0m2l188EkvEju8T9gfTLmfy3ux03W2FnmIF8QkMnXnsJrtkfpnRldAe
- zaZM+YCPV8pRcjuq4uWTExmbFKHQkYeuYiL0hxsUI2EWbSd4dG2tum7RSaqIWo7G3f9HFcIVUIw
- nO4nJlY82B8fJhUImzNkkULIrXBI70WtYrzOC41CYzgt/LQCg5LVdp+rM50Ngc3WpOpj8YiGPkP
- nk9FjQewWQBW4rQ==
-X-Developer-Key: i=christopher.obbard@linaro.org; a=openpgp;
- fpr=F18BDC8B6C25F90AA23D5174634DC4F0687046F8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <378af3f1-b5b0-4f7a-ab62-f5c891feb7b5@quicinc.com>
 
-Add the Samsung ATNA40YK20 eDP panel to the device tree for the
-Snapdragon T14s OLED model.
+On Tue, Apr 01, 2025 at 04:47:41PM -0700, Wesley Cheng wrote:
+> On 4/1/2025 1:16 AM, Stephan Gerhold wrote:
+> > On Mon, Mar 31, 2025 at 12:52:19PM -0700, Wesley Cheng wrote:
+> >> On 3/26/2025 2:57 AM, Stephan Gerhold wrote:
+> >>> On Tue, Mar 25, 2025 at 04:18:03PM -0700, Wesley Cheng wrote:
+> >>>> On 3/25/2025 2:24 AM, Stephan Gerhold wrote:
+> >>>>> On Tue, Mar 18, 2025 at 05:51:32PM -0700, Wesley Cheng wrote:
+> >>>>>> The QC ADSP is able to support USB playback endpoints, so that the main
+> >>>>>> application processor can be placed into lower CPU power modes.  This adds
+> >>>>>> the required AFE port configurations and port start command to start an
+> >>>>>> audio session.
+> >>>>>>
+> >>>>>> Specifically, the QC ADSP can support all potential endpoints that are
+> >>>>>> exposed by the audio data interface.  This includes isochronous data
+> >>>>>> endpoints, in either synchronous mode or asynchronous mode. In the latter
+> >>>>>> case both implicit or explicit feedback endpoints are supported.  The size
+> >>>>>> of audio samples sent per USB frame (microframe) will be adjusted based on
+> >>>>>> information received on the feedback endpoint.
+> >>>>>>
+> >>>>>> Some pre-requisites are needed before issuing the AFE port start command,
+> >>>>>> such as setting the USB AFE dev_token.  This carries information about the
+> >>>>>> available USB SND cards and PCM devices that have been discovered on the
+> >>>>>> USB bus.  The dev_token field is used by the audio DSP to notify the USB
+> >>>>>> offload driver of which card and PCM index to enable playback on.
+> >>>>>>
+> >>>>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> >>>>>> ---
+> >>>>>>  sound/soc/qcom/qdsp6/q6afe-dai.c         |  60 +++++++
+> >>>>>>  sound/soc/qcom/qdsp6/q6afe.c             | 192 ++++++++++++++++++++++-
+> >>>>>>  sound/soc/qcom/qdsp6/q6afe.h             |  36 ++++-
+> >>>>>>  sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c |  23 +++
+> >>>>>>  sound/soc/qcom/qdsp6/q6dsp-lpass-ports.h |   1 +
+> >>>>>>  sound/soc/qcom/qdsp6/q6routing.c         |  32 +++-
+> >>>>>>  6 files changed, 341 insertions(+), 3 deletions(-)
+> >>>>>>
+> >>>> [...]
+> >>>>>> diff --git a/sound/soc/qcom/qdsp6/q6routing.c b/sound/soc/qcom/qdsp6/q6routing.c
+> >>>>>> index 90228699ba7d..b7439420b425 100644
+> >>>>>> --- a/sound/soc/qcom/qdsp6/q6routing.c
+> >>>>>> +++ b/sound/soc/qcom/qdsp6/q6routing.c
+> >>>>>> @@ -435,6 +435,26 @@ static struct session_data *get_session_from_id(struct msm_routing_data *data,
+> >>>>>>  	return NULL;
+> >>>>>>  }
+> >>>>>> +
+> >>>>>> +static bool is_usb_routing_enabled(struct msm_routing_data *data)
+> >>>>>> +{
+> >>>>>> +	int i;
+> >>>>>> +
+> >>>>>> +	/*
+> >>>>>> +	 * Loop through current sessions to see if there are active routes
+> >>>>>> +	 * to the USB_RX backend DAI.  The USB offload routing is designed
+> >>>>>> +	 * similarly to the non offload path.  If there are multiple PCM
+> >>>>>> +	 * devices associated with the ASoC platform card, only one active
+> >>>>>> +	 * path can be routed to the USB offloaded endpoint.
+> >>>>>> +	 */
+> >>>>>> +	for (i = 0; i < MAX_SESSIONS; i++) {
+> >>>>>> +		if (data->sessions[i].port_id == USB_RX)
+> >>>>>> +			return true;
+> >>>>>> +	}
+> >>>>>> +
+> >>>>>> +	return false;
+> >>>>>> +}
+> >>>>>
+> >>>>> What is different about USB_RX compared to other output ports we have in
+> >>>>> Q6AFE? Obviously, we can only play one stream on an output port. But
+> >>>>> doesn't the ADSP mix streams together when you have multiple routes?
+> >>>>>
+> >>>>
+> >>>> This patch will limit the USB_RX from being able to be mixed to multiple
+> >>>> q6adm paths.
+> >>>>
+> >>>>> Also, this doesn't actually check for *active* routes only. It just
+> >>>>> looks if any other MultiMedia DAI is configured to output to USB_RX.
+> >>>>> That doesn't mean they will ever be active at the same time.
+> >>>>>
+> >>>>
+> >>>> Yes, the main reason being that that is the mechanism we use to populate
+> >>>> the active offload path within the USB SND card mixer.
+> >>>>
+> >>>>> I might for example want to have MultiMedia1 and MultiMedia2 both
+> >>>>> configured to output to USB_RX. Let's assume MultiMedia1 is a normal PCM
+> >>>>> DAI, MultiMedia2 is a compress offload DAI. When I want to playback
+> >>>>> normal audio, I go through MultiMedia1, when I want to play compressed
+> >>>>> audio, I go through MultiMedia2. Only one of them active at a time.
+> >>>>> Why can't I set this up statically in the mixers?
+> >>>>>
+> >>>>> If you confirm that it is really impossible to have multiple streams
+> >>>>> mixed together to the USB_RX output in the ADSP, then this should be a
+> >>>>> runtime check instead when starting the stream IMO.
+> >>>>>
+> >>>>
+> >>>> We can have multiple streams being mixed together, but it will get
+> >>>> confusing because it changes the definition that we had discussed about in
+> >>>> the past about the overall design for the interaction w/ userspace.
+> >>>> Although we (QC) only support a single USB audio device for offloading,
+> >>>> there could be other situations where the audio DSP can support multiple
+> >>>> devices.  The assumption is that each MM path is assigned to a USB device.
+> >>>>
+> >>>
+> >>> Are you referring to the "USB Offload Playback Route PCM#*" mixers here?
+> >>> They could just refer to first of the configured MM paths, if someone
+> >>> decides to route multiple paths to the USB backend. Looking at
+> >>> q6usb_update_offload_route(), I think the implementation does that
+> >>> already.
+> >>>
+> >>> I think it's fine that the userspace API for automatically "probing" the
+> >>> PCM device supports only a single path to the USB backend. But if
+> >>> someone wants to bypass the automatic probing and configure a more
+> >>> advanced setup, do we need to forbid that?
+> >>>
+> >>> Asked differently: what would happen if we remove this check here and
+> >>> handle USB_RX like any other Q6AFE output port? Would anything break for
+> >>> the userspace interface?
+> >>>
+> >>
+> >> So I took a look at seeing how the Q6ADM/ASM interactions would work for
+> >> the situation where if user tried to start both MM1/2 streams at the same
+> >> time over the USB offload path.  In this scenario, we see that the Q6USB BE
+> >> DAI operations, ie startup, hw_params, etc... gets called one time for the
+> >> initial stream.  For example, if I start playback on MM1, then that
+> >> triggers the USB BE DAI to be brought up.
+> >>
+> >> When I start playback on MM2, since MM1 already called
+> >> dpcm_be_dai_startup(), then be->dpcm[stream].users will be greater than
+> >> zero.  This would cause the __soc_pcm_open() to be skipped for the USB BE
+> >> DAI, so I wouldn't be able to check the runtime status at the Q6USB backend
+> >> DAI.  However, we do track current streaming sessions done over Q6 ADM and
+> >> it does save the AFE port associated to each COPP allocation, so I think its
+> >> reasonable to see if there is already a COPP entry for the USB AFE port, to
+> >> fail the open() call associated to the FE DAI.
+> >>
+> > 
+> > This sounds like a reasonable approach *if* we have to prevent multiple
+> > MM DAIs from streaming to the USB AFE port at the same time.
+> > 
+> > It's still unclear to me why we have to introduce this limitation in the
+> > first place. I think the questions from my previous email are still
+> > open. Can you check them again?
+> > 
+> 
+> So I checked with our audio DSP folks, and they mentioned there isn't
+> technically a limitation from mixing multiple ADM streams from their end.
+> My observations are as follows:
+> - Using tinyplay to open and play on different FE PCM devices (ie MM1 and
+> MM2), both streams are audible on the USB headset (intermixed).
+> - If starting playback on MM1 first, before MM2, then once playback is
+> complete on MM1, the ADM close is also affecting the MM2 stream.
+> Basically, MM2 stops when the MM1 audio file is completed.
+> - Due to the abrupt/incomplete closing of the MM2 ADM stream, looks like
+> the audio DSP is not handling that case well, so subsequent playbacks fail.
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
----
- arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Thanks a lot for testing this!
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts
-index be65fafafa736a0401a5872c40f69cb20cfbbd90..d524afa12d19b2a6f22a24b9bed6b6b40248375f 100644
---- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts
-@@ -10,3 +10,11 @@ / {
- 	compatible = "lenovo,thinkpad-t14s-oled", "lenovo,thinkpad-t14s",
- 		     "qcom,x1e78100", "qcom,x1e80100";
- };
-+
-+&panel {
-+	compatible = "samsung,atna40yk20", "samsung,atna33xc20";
-+	enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
-+
-+	pinctrl-0 = <&edp_bl_en>;
-+	pinctrl-names = "default";
-+};
+> I did find a possible reason for this, and it seems to be due to some code
+> unrelated to the USB offload path directly.  It looks like the Q6ADM is
+> currently built in a way that you can only route streams to a single
+> endpoint, even though we do have reference counting for each COPP profile.
+> So even after the first MM1 ADM stream completes and the PCM device is
+> closed, the MM1 ADM close callback will issue a q6adm_device_close() for
+> the USB AFE port.
 
--- 
-2.49.0
+Yeah, this sounds like a bug to me...
 
+> 
+> I made some test changes to account for the refcount before issuing the
+> q6adm_device_close(), and that seemed to work.  Once the MM1 stream closes,
+> it allows for the MM2 stream to close/finish before issuing the command,
+> and that allows for proper cleanup of the audio data.
+> 
+> IMO, I would like to keep the initial behavior (ie, blocking the additional
+> stream open from the kernel) until I can get some more testing done, and
+> figure out if this is the correct approach.  If it is, I can submit a
+> follow up series to address it.
+> 
+
+I'm fine with this approach. My only two concerns/comments are:
+
+ 1. Let's make sure we don't waste too much time finding the ideal
+    approach to implement the additional blocking, if this will likely
+    end up getting removed again anyway.
+
+ 2. How can we justify making this change only for USB? Your analysis
+    sounds like the issue applies to all types of output ports. This was
+    exactly my main concern with the check you added in this patch:
+    I would expect QDSP6 treats all ports exactly the same. This means
+    we should add this additional check for all the output ports...
+
+Thanks,
+Stephan
 
