@@ -1,159 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-53044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40E6CA79088
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 16:00:04 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1A50A790F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 16:19:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BEBAD1897818
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 13:55:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 41D8D7A5144
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 14:18:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2CD921B905;
-	Wed,  2 Apr 2025 13:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1998823AE6D;
+	Wed,  2 Apr 2025 14:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="v4fmPaLc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XzKwPnSk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478EB157493
-	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 13:54:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E51223875A
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 14:19:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743602095; cv=none; b=Kwxbd+/g44xYJXxeEINW2Qr+M2YqQA4Cz7HacLTn83gRzM5SsVJIPzRlM6ORjB+wlPXV65666t+rGNbnUKG6QvsJaNn9CKiV0VAfoVl+sgL6XfWcAa528+yYKGCSjk11zjiTBukn60DJzv/ELfmy1YM8w6G7V1L7MIIgmdxK7wY=
+	t=1743603552; cv=none; b=cI6io/O8z80Twb3Bb5Nivw0PkhLulCTrhZ6+8xHM2ormICNBN45v/hPhYPVfPNEi86UF6SfbYTQ0AfGdXTYOFeiW4Tdci+4JrhIXltSIeZ/c6G95tDaD4+CQ7QqIs6JSSjUM7es2TKFFvCe7WLkh40y4P/14YomsCk+OiyCsfok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743602095; c=relaxed/simple;
-	bh=CG5eB3tDd5xsJ/jOYBTYA69qP6uMiQTIFvTatjTPiDY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZKrgZG8TLHJd1Krb3O/TaRy5QQb6tXtiXjp8DFeVzps8z9pNlX2JQFQAGy4WAYWlgwrwv8mNDub1z/qkepg5fGb+/vJHv3fRSwIEFBwBjqGo23cwp6TGeMVqI0o+i4xRrr3KD7hBZNoiIZKaekqpIpL9dqH7AlBaNiVpYb4sSDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=v4fmPaLc; arc=none smtp.client-ip=185.125.188.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com [209.85.128.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 37ECA3F698
-	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 13:54:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1743602091;
-	bh=CG5eB3tDd5xsJ/jOYBTYA69qP6uMiQTIFvTatjTPiDY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type;
-	b=v4fmPaLcR0sJ+sXagfSfr1shQYZMFKRxAPQXWQTVMAF0Fg1piZu9Q5onZ+Agcto32
-	 vnFsC4oaszc0IAprhoBep965tPQmydS6ghZM8ulhpTUGAbY+CHr5coRcvyVQ0KBuNp
-	 lPqFoBB/E9nie2n61qnhAUzsqmjkFG72VQ3/ZFBG68TGbbvzCs1LUhlLQM3KKGpKTi
-	 EaDCHIMyN5ZQnH6inu3vagVCBd2JwEK0QeCjY/e8yjyRKbQ2sZfBGQ4iyt8bggoRFb
-	 lMcA6hzdJzzkzT0NBH/fCooDqjalvMOdoM3tzWJAece81rpxRJU9pznyf/f8dAFtcf
-	 mcXHilHOlf+Yg==
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-43d007b2c79so55239715e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 06:54:51 -0700 (PDT)
+	s=arc-20240116; t=1743603552; c=relaxed/simple;
+	bh=Iv9KIspycsPpFIrjdjpQH7rMBYKoABLZDBLXX8Pi1m8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IEsD3NuAjqzN1rXWjdGFpWyWf7FYXSlffe3TfZhPRrZuQjF/fvRB52jWcYKeqZcA8v09wPtFIs4RSIMVTzGb6Ui2vBIVkHgeBpq1XE/tRPj9WTYi+dP3N78c7v21jzV0yBgAO8O+HuALI2P0TMjp9zpEoRISHY155eC2Sf86CqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XzKwPnSk; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 532C1hBs024534
+	for <linux-arm-msm@vger.kernel.org>; Wed, 2 Apr 2025 14:19:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=5lg2SSIflWKzsNjHH0yMEoyV
+	MVATrSnMyc3UcY37Ync=; b=XzKwPnSkuXaN5BjDpe29/7huBfGAIzL5jrqN9ObG
+	JcWeZk9TIDjV292XawvH0RYQ4w1vIxpg0YWqOem2bdtQdwFpvxeZiU3fgvMU061I
+	p3zlMFVgwVhhMnluu2Yq4UgcFHqYBWWp10mZcJtAf27niaS1RpV9wvCfwsK6szVH
+	K9HIst9aDXcJGWPo76GkLtcN1G9nEes6HWGlEs1zjEpa4U2gR3F+fWr7BhKqpW33
+	PP0EQBvdUQs5MnUREI12S78fodeBZZaQeZnE4Nd+dZsr8BZNPicIAYbXjSJdiTgL
+	7FI3uJZNLI6xRzn03bExIrFF4c9EUA+rz7PhwNa0DNsYwQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45rbpyvqda-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 14:19:08 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c54a6b0c70so638660585a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 07:19:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743602091; x=1744206891;
-        h=mime-version:organization:references:in-reply-to:message-id:subject
-         :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1743603547; x=1744208347;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CG5eB3tDd5xsJ/jOYBTYA69qP6uMiQTIFvTatjTPiDY=;
-        b=jlPfVXi+b2TVFPQcKV7DIgYWpba39gD6DXX18mp88QbHsSLRpfg1y6SW37nl8LcmTv
-         tHdbld6/UliJ9Zv/zSZCa75ZGCXPelHFrSTqxadHyKZ/l4nsw1uNix1CzltulS6TrmaP
-         KBty6xc+jYCOQnjjFM8Xs423ZxmYRnCtiFkvOx/+M69mrL+gZ0HkVJR3TZuQVhZLiM3X
-         lIhsBDIJbyYxoPS0cVcpnPVkG9G1dH8MNEkIYEOfq7uLcLA6pIx0gO1Bio17E3U++Jhd
-         4mItFjeffRNUHu0S64KWCIM9Nklf0rwGF+LDG1EIJ2yHN3KosrAyji7L0C/2QRi92Ea1
-         NI8g==
-X-Forwarded-Encrypted: i=1; AJvYcCWSEoz3YJkMnNhyIF+BVQd/C+Z29qROXKiRGEwoK/wUgLuXu76waRa9gh+W5DMNQ7OJdnC8lAxZMh7gpf1O@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6L3UqN9WzR1eCPRnWbUcVzg2GVlrD+WZyvkf9ylEbLeLCHpVU
-	YVbMDH7XERyODxEFhFeSxLGOXvd31ocEkIfIr8uSW/Ih4fkWqjLl68V4++PYZPKGAmiR9bzj6R8
-	k4+vfbtvXwLRbDH/Xw1M3+WN83adBp0IE3ESA2kFJ9NYlkQVk1DVDPSIdREeagJy7V7sAekSeGC
-	Jz6TI=
-X-Gm-Gg: ASbGncti5jZrc0TEN+w1jTCnt9eYRKnf3trh9K6pLIHxfF4s1WtA/WTBfb7SaEnocR5
-	wm8vPMyHvFFe3tUJLcCRxbmLnnVPUd3gl2zSMBYNreZ5esoQcwehbviHNlQcxGUyCkKoKomOxqA
-	p0XZQgio3je8QoRiwj0jimqTsm3V0PE/EI5/jKy+E1wfL0cUXtTkceEOHwuiDUnehkBOIDQf4yZ
-	55ax8w98/8igrQUrzf6tkVM2rJ5Bwt5VXtWEAyEa9bYvmoQe95WtkW5ln9v+e27i28ZWcqwHyzj
-	uuex9Gh5GTLo2V4oUOClKIW2ZXNi2r7I+btcrN/XoIldgQcOuvUXKYPe
-X-Received: by 2002:a05:600c:3b9c:b0:43c:f8fc:f6a6 with SMTP id 5b1f17b1804b1-43eb5c2072emr21841325e9.9.1743602090796;
-        Wed, 02 Apr 2025 06:54:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqAoRMw1orcBT36O/KAk/YHF2nnwZ4/dFtqfWdwVBT7tQpYvTXtM2QoP91qXVtO9TcFxzZmQ==
-X-Received: by 2002:a05:600c:3b9c:b0:43c:f8fc:f6a6 with SMTP id 5b1f17b1804b1-43eb5c2072emr21841005e9.9.1743602090222;
-        Wed, 02 Apr 2025 06:54:50 -0700 (PDT)
-Received: from gollum (151-243-191-194.pool.dsl-net.ch. [194.191.243.151])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43eb6190bc4sm22399685e9.31.2025.04.02.06.54.49
+        bh=5lg2SSIflWKzsNjHH0yMEoyVMVATrSnMyc3UcY37Ync=;
+        b=YWFc/AnNKY9BNbbBO5nD9x+KoWN3yKIiVpB487uJVT1NJisaEm3XP6zjNxbxzzyfs0
+         yB6aj6DVcgGoWIMSx2eLl5wJdWXPJSkmnpOyBQkFNTB83OWpuXAg0/hYAX8FHgkzcoGD
+         a82ewG1jY1B4bFakXywqdOTme/bdV6KRmYuez06MvGffygHXVy6RtwxSpRYKAlNqrUTa
+         4o42fs32DAHct0gEhSDoiDXJZXG9oRxML2MTSLjSyYxgJfaECNy3tyH7Y6MD2fQo2/ZB
+         aK43yUuFXl5FQrjVfN7fZMGkr3adcNXzFMey2N7havhx1kehYePoINt05syOooAsa+iJ
+         JDaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUEGtHx8u4NxXaqK0t6btaUqEm0v8uJlUUpnANAu8lJxXJhGFmZgxcMiJwHC6Pmh6DR69IFLzgUFzm4hd3H@vger.kernel.org
+X-Gm-Message-State: AOJu0YzGmOQzc4ZhM9C1oBR+bm1bUuJSh/hcU5ZAn1UUefG75aQ4aUxl
+	+W0em0JxRZu0k4E4Ybx0nDMwDdNpAQHzpHK9hkQbgsRdbDl9hiw3CWbpQ+MIQtE9ASTwTXAdbpM
+	P/nAe+3NMeWeeshl79sNkCKnB0fQEuau/gd/kYDaOR2wGj1qyEGF3NJvK8JMhEaT9
+X-Gm-Gg: ASbGncvf7b0UpkpwDZXgJCNWO43NhrzxexoMiT/WmUHLikM7NPDdojpYJr7dDSgXrSg
+	Fg/y0FL8JXaXlaksi84HxFlt28wjhfr6BPMjmor/C6uD95/K2tGWUFeF++/UcmNfnuDrLYdUkpj
+	hx/92XD6Q+vlvQ0OZvHoBVZJqserpz/UAFuSoH2o7p63dsJIndgToE5tJ4kXLaLqrpdhLIBvoEl
+	czRjieKgKte9OOio3M+0+VWn9InMMciAw0zIVe1HESivxc+wTefcje2j5YvaoaaGzRJKPmlcXnC
+	9alb0A/+9nGPKzhqF7shWtZvkaXdabAFmsfMTVJSj8uVHmvOEV4S8LR7dbAxvdRfn+tIvXI0jbG
+	g0cI=
+X-Received: by 2002:a05:620a:2494:b0:7c5:a435:8c98 with SMTP id af79cd13be357-7c67d22bee3mr2076317885a.0.1743603546808;
+        Wed, 02 Apr 2025 07:19:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHGf8XoxRo6CiED/IRIBY/zHf/t+XSXGEYpSCXW0hOzZD/FhK/1SyGdm2DXSeef2sMqiG/5kQ==
+X-Received: by 2002:a05:620a:2494:b0:7c5:a435:8c98 with SMTP id af79cd13be357-7c67d22bee3mr2076314785a.0.1743603546418;
+        Wed, 02 Apr 2025 07:19:06 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54b0e951a1fsm1428704e87.245.2025.04.02.07.19.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Apr 2025 06:54:49 -0700 (PDT)
-Date: Wed, 2 Apr 2025 15:54:47 +0200
-From: Juerg Haefliger <juerg.haefliger@canonical.com>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
- <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Jens
- Glathe <jens.glathe@oldschoolsolutions.biz>, Abel Vesa
- <abel.vesa@linaro.org>, Stephan Gerhold <stephan.gerhold@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-hp-x14: drop bogus USB
- retimer
-Message-ID: <20250402155447.0f41fed3@gollum>
-In-Reply-To: <20250328084154.16759-1-johan+linaro@kernel.org>
-References: <20250328084154.16759-1-johan+linaro@kernel.org>
-Organization: Canonical Ltd
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
+        Wed, 02 Apr 2025 07:19:05 -0700 (PDT)
+Date: Wed, 2 Apr 2025 17:19:02 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: shao.mingyin@zte.com.cn
+Cc: vkoul@kernel.org, robert.marko@sartura.hr, kishon@kernel.org,
+        wens@csie.org, jernej.skrabec@gmail.com, samuel@sholland.org,
+        zhang.enpei@zte.com.cn, linux-phy@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-kernel@vger.kernel.org, luka.perkov@sartura.hr,
+        linux-arm-msm@vger.kernel.org, heiko@sntech.de,
+        linux-rockchip@lists.infradead.org, yang.yang29@zte.com.cn,
+        xu.xin16@zte.com.cn, ye.xingchen@zte.com.cn
+Subject: Re: [PATCH linux-next 3/5] phy: qualcomm: =?utf-8?Q?phy-qcom-ipq4?=
+ =?utf-8?B?MDE5LXVzYjogVXNlwqBkZXZfZXJyX3Byb2JlKCk=?=
+Message-ID: <2s6gmwdlv5i6uqqrkxve6wiug7g3u54aqpycjftwbpars5poz4@nkb62c4yc522>
+References: <20250402194100610qY6KQ4JPISk-4v214Qs36@zte.com.cn>
+ <20250402194357404aoSxd3G74tojxA7uCZXiy@zte.com.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/lRao/ETFr.OIayZzb_CvQcq";
- protocol="application/pgp-signature"; micalg=pgp-sha512
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250402194357404aoSxd3G74tojxA7uCZXiy@zte.com.cn>
+X-Proofpoint-GUID: zJgFgL-iodIjE_VVBYOOc3uNelTUILO2
+X-Proofpoint-ORIG-GUID: zJgFgL-iodIjE_VVBYOOc3uNelTUILO2
+X-Authority-Analysis: v=2.4 cv=ZNLXmW7b c=1 sm=1 tr=0 ts=67ed475c cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=5KLPUuaC_9wA:10 a=1RTuLK3dAAAA:8 a=EUspDBNiAAAA:8 a=qROKWDKVmaoWvDy_uEsA:9 a=CjuIK1q_8ugA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=kRpfLKi8w9umh8uBmg1i:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-02_06,2025-04-02_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 clxscore=1015 mlxscore=0 adultscore=0 mlxlogscore=741
+ priorityscore=1501 bulkscore=0 suspectscore=0 malwarescore=0 phishscore=0
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504020090
 
---Sig_/lRao/ETFr.OIayZzb_CvQcq
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On Wed, Apr 02, 2025 at 07:43:57PM +0800, shao.mingyin@zte.com.cn wrote:
+> From: Zhang Enpei <zhang.enpei@zte.com.cn>
+> 
+> Replace the open-code with dev_err_probe() to simplify the code.
+> 
+> Signed-off-by: Zhang Enpei <zhang.enpei@zte.com.cn>
+> Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
+> 
 
-On Fri, 28 Mar 2025 09:41:54 +0100
-Johan Hovold <johan+linaro@kernel.org> wrote:
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-> Jens reported that the sanity checks added to the new ps883x USB retimer
-> driver breaks USB and display on the HP X14. Turns out the X14 only has
-> a retimer on one of the ports, but this initially went unnoticed due to
-> the missing sanity check (and error handling) in the retimer driver.
->=20
-> Drop the non-existing retimer from the devicetree to enable the second
-> USB port and the display subsystem.
->=20
-> Note that this also matches the ACPI tables.
->=20
-> Fixes: 6f18b8d4142c ("arm64: dts: qcom: x1e80100-hp-x14: dt for HP Omnibo=
-ok X Laptop 14")
-> Cc: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-
-Tested on an HP EliteBook Ultra which is the same HW but in a more
-expensive (?) packaging.
-
-Tested-by: Juerg Haefliger <juerg.haefliger@canonical.com>
-
---Sig_/lRao/ETFr.OIayZzb_CvQcq
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEhZfU96IuprviLdeLD9OLCQumQrcFAmftQacACgkQD9OLCQum
-QrfzvhAAgHLjVHvyXXP5zJfOLJqHphrQda58zyyZ6tler4eI3cjjOZAQDOTFjTbK
-L/+R5z1UZLHyeXNNv3q+6RoLJcJvlLdF5F+ms4GNoA1qCyMXvPExJ9ZyaXRpAQoU
-sT5krGTsA8UcRk/6IMifywtILNGO9AatALRxL7eAKbDIVJNho/BirNHmWIWvJS8f
-sHcC1M9qD1c54+kTZ4omcTPRSJrOCofp2r/kcblWkVSWkh7sUhp7fDbRKk8tB/qm
-MkDXIesdoSv9aVRBe0bN29sEbE+em1lYO6824NwLYgVpyQBlD3Q65m/agysV/Vb6
-hmR4dI9PkGLnGQMjbKNsIzqa/05oEx+HvByCtsvjfLp3zo3K2sk3LL3guQCSpMaR
-pRKr8ayNRjxSSL5PVn1aHqzQfuNtxQPCWcDceXMby9s+VA2KsnhxYWDr3LebUgEk
-7eHvZrzHGIxdFzT8DS7G082nR0d1Q7qMVNf1OJBDoEgEgvJHQacUf3OmAo/U0Dzh
-xpPDf0GEzSWXjr5pda1CWZvtaWbOVHEpe2ChnauZgOpPums2uAy2kt7xXskYVr1+
-ce0s8JdRO3QoGlSdfzVXeM+7o7vqxQDDp54/HEs2NtVPTDatdmthq3UwRjAbYVzQ
-HhNzNkVpgeT1piWvDfQTDXGjz/WJqDdN0tihh2yotm9jmaSBPNg=
-=qK4+
------END PGP SIGNATURE-----
-
---Sig_/lRao/ETFr.OIayZzb_CvQcq--
+-- 
+With best wishes
+Dmitry
 
