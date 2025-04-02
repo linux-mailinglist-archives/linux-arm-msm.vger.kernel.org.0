@@ -1,63 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-53006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13C0AA78A1E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 10:38:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19C97A78A23
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 10:39:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 74ABA7A287E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 08:36:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 574131892981
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 08:39:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 431E123535C;
-	Wed,  2 Apr 2025 08:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C325323536E;
+	Wed,  2 Apr 2025 08:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hIUC9uBY"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IXlwdO1m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AC0234973;
-	Wed,  2 Apr 2025 08:36:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F4D234989
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 08:38:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743583010; cv=none; b=fS99ewqn9sepqLYdbD46QThBcJZJP+YHaHVe7PuX5b+ofo8sCOwZWAoUSkngfi9m1ucahVYszvOKHCDUpzGVrZ1JAOdtHsltg5+QiEyQkITw5k781bmQcgl1BGQKFN/w93W66OJ3fxazCYExKswOyZOoM7aluXUmJBVqpgksJbo=
+	t=1743583140; cv=none; b=fS5vIVSHoa1cRogAjaSVU8gLZbJAFMZhubnwqQ6WG5KAuCS3wkvzene0wK8spaUXmGiD9pJDEVIKsQgHJNEeeGVXb3d3H1xU2ApmYjX/kD6TSE+PEngeA5ok0urMZl/7dMd/jLRxvZgIwh1HSGcf/h9n/t5CXqSyf9lc9feEJWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743583010; c=relaxed/simple;
-	bh=xMDFVO13IET0puhB2hPIb7ZAxgTcZW/65nx8wRbcD1U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=J8nLqJnxZRnFW3kG9NZI+Zv4eNhb/i5PNFRdJHj50xe6NEUQPccmtuIt3XBm0yhq6caJAtzpuc47VyCNXRpyYqmBagW0cjbfl8A+fuyW3sMeX3bdefk6c7LBYxKoIIvO6d9aMY3MuMPL7T1jfTu/m3piIZiY2UG4i954w1/2PgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hIUC9uBY; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5324ZaRC012757;
-	Wed, 2 Apr 2025 08:36:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1743583140; c=relaxed/simple;
+	bh=GXqn91oM87dfs6ORjh1DbmH5yqUbfVcBo3QmJoJCJ5E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=R1YUHct1XQ1TeL5TX9y6vkum6zdPXH3cU4htRTHb7NU0O5jp2tH/b0Sr/HVPK7e5DFsQMuO2pv4kDO9niJ3BvMjC5q5kBZ490czk2OYgVxznDZrn44e3/xSzHJvvY51zaSUui0VKoDwbNixDVfIhEmVrPzT2sdbGeIuSQ8EQQbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IXlwdO1m; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5324XZ4p023742
+	for <linux-arm-msm@vger.kernel.org>; Wed, 2 Apr 2025 08:38:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cV/25+M3mVCF1xGJGR6r9EgMoCqdCNdpGsojXDr1yEU=; b=hIUC9uBYbE+K/2hx
-	EiCV5R48bOepeVoediCtYby0kgElzgVOYY9ALXhlK7GmuMyxwjvCr9yF1ZayiuEO
-	uHyG9vtkqcZ+OIv9GEGj/VLpo46olBgMFZd15V8BOatQN1DBU7UQkGpxD4iNpc0D
-	lKvwNrUDi3l20xp/G7+OXD2LaRIg4Hz3LoJjdGU15zzB4PNIww2oXUBScD6mGd9M
-	l5t0b4Y/r1PfdHnJn2ofl0RRyrEkkFLsOqKyHTvI63IloYBGbrnhGSMMW+J5wFZ8
-	49uOPz2M7zNrlL7fLrQTrsktqEkK6uwraaTLTNG0CVWH3E/cX343l9hl8ZSwbEls
-	eJezSg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45rxbf0ma9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 02 Apr 2025 08:36:39 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5328acRO028342
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 2 Apr 2025 08:36:38 GMT
-Received: from [10.133.33.107] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 2 Apr 2025
- 01:36:33 -0700
-Message-ID: <731bacf0-a0b6-4dfd-aff0-01723a879a7c@quicinc.com>
-Date: Wed, 2 Apr 2025 16:36:31 +0800
+	GXqn91oM87dfs6ORjh1DbmH5yqUbfVcBo3QmJoJCJ5E=; b=IXlwdO1mKEyHcZRa
+	8XSR1STQl06bFOaPLdH9iaSGLzlA9YfEP6OuEh+Z2fr0jaVqR7WlSSsYxnxDuW/l
+	lKp8Il1cNNRE8ogH3Op9dQpHjk/cEWzrlRgH4tpW/ICDPoy8OwKxgjMmmUlZq+m6
+	qKtTB6gtGPcEx10ZwJDThTxQUC60vmOLe2OwcVMqhywt+bx5MjeQfDmRqQV1lFEw
+	pwUp1s1HvcI4RdmCX6mw6T9wQh4rntseYmAdYeuCPf8fUv8tZ1QOVarBldiebvEi
+	Sej2G+1ZFD9lrDE7kAoWY5Tz/0+TNsbytrhyjUv7OUhEuJpSGVNLmGqLYiPPkRUa
+	iqqXng==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45rxaprmmu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 08:38:57 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-2ff82dd6de0so9246864a91.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 01:38:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743583136; x=1744187936;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GXqn91oM87dfs6ORjh1DbmH5yqUbfVcBo3QmJoJCJ5E=;
+        b=dFz8g7KD/95+GrBOYl6Ksc3T51ZTGa0ra30p5Zxp70Q6GW8AW908R5RWAEon9xgBD9
+         RtdtI4OyIxMRRuXVRmQ7tdQXAdmX4tmg/K8jBl4P3jFqwowZNcnZ74T/0Xk+yVDM3AED
+         RTYnrbAI7rBfVJyPEMhnE6j6cNP0PL9gMDyIU0vqqcN7a2EPu55ynSM/1t6o1Dra+1Nc
+         Q9+t1Ovk7dfMps9IPxLrcb4M3ZBYY0L2U+cygwRzzb1xOYwPTDi9jzaEXr1L/vpDX79e
+         vbgqSYLvOB803STy+TVbEunZLoUjQnNv1iseBp8Owyif73erhGOO+P7uQBoJ53A9D4PG
+         MLTg==
+X-Forwarded-Encrypted: i=1; AJvYcCUA5RZsDA09VFWoBbpwD8cAJqYZU4q9A7Ipl2nCmpYG0UdebTkvT3RNl3SWdTwiesCJoSfBSFc9VmcIEmfe@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhSuC1GJkQkvYfpmlbPbvOo92QEY3wZXLbW5yvr8ovpZPJNGIN
+	hKhskYtmiJ+oATXDpqc9xXcFqC8KLCEZrBi0fqdrFZuj03yF/G8HJONGmG+6Jf9PGXz8nmS3Zbb
+	bXPDAfPSiOpSiH2TyZuTK1TKzmkuRbS3GjGotEe/M0Wb5vRmvet/g9m6OnDT/w498
+X-Gm-Gg: ASbGnctqsf7+2rvOSMnn5DVXRIXPM7SnZQoRyNplVKbPto7GFOoF5BDuQmr5uzwhtam
+	dJgczrzlrwriP3/61W2eRPxHszRdNyzqs5ZO2ULarNhQM86wbwiaO9zU8Wqm0cV74fDINQmICQj
+	9T+kQ0xVkHBnMWqm9wZ+ZLcZSsVQYwpe2BA/Ih77wW/C535gQXFuRrz0nQ06J/9ctyXhOL90Zg9
+	KeTswC9bhw5iihKHUKaatqx/U/iMu5nwB+6lq3M1UtiC0j+DfAzA9i8yyEqq1pjIRWlGkcSMMUt
+	aqK6v32OHywdW10AS1f3DG4rjuQmMHjj4QDu4OMZ
+X-Received: by 2002:a17:90b:4c12:b0:305:2d27:7cb0 with SMTP id 98e67ed59e1d1-305320b95e3mr21253093a91.21.1743583136521;
+        Wed, 02 Apr 2025 01:38:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGxpsxlI6jN778d4IK6ZYalPCibRjZVRcQJLRGaiqCKzoGfBMcE5UhmULWg6FxU234tpItMNQ==
+X-Received: by 2002:a17:90b:4c12:b0:305:2d27:7cb0 with SMTP id 98e67ed59e1d1-305320b95e3mr21253061a91.21.1743583136052;
+        Wed, 02 Apr 2025 01:38:56 -0700 (PDT)
+Received: from [10.204.65.49] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2291eec52cbsm103025065ad.37.2025.04.02.01.38.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Apr 2025 01:38:55 -0700 (PDT)
+Message-ID: <412fe24e-ce70-4733-ace5-d3fbe43476c4@oss.qualcomm.com>
+Date: Wed, 2 Apr 2025 14:08:49 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,163 +89,128 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] coresight: fix the wrong type of the trace_id in
- coresight_path
-To: Mike Leach <mike.leach@linaro.org>
-CC: Anshuman Khandual <anshuman.khandual@arm.com>,
-        Jie Gan
-	<jie.gan@oss.qualcomm.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        "James
- Clark" <james.clark@linaro.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Dan Carpenter <dan.carpenter@linaro.org>
-References: <20250401014210.2576993-1-jie.gan@oss.qualcomm.com>
- <470e4a90-41c3-4974-a4d7-3073a7fcc737@arm.com>
- <CAJ9a7VinQSx9FYvw4ww0KQgMqapLhWTaU9D2qcc-120YywUu2Q@mail.gmail.com>
- <92dc9b50-5e58-4cfd-a78c-e32a4bec8e26@quicinc.com>
- <CAJ9a7Vjhm5B=3mDHQpuRj2JSE1hfYzOx5wq-yQcC3k+QqEcvAQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] misc: fastrpc: add support for gpdsp remoteproc
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Ling Xu <quic_lxu5@quicinc.com>, andersson@kernel.org,
+        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, amahesh@qti.qualcomm.com, arnd@arndb.de,
+        gregkh@linuxfoundation.org, quic_kuiw@quicinc.com,
+        quic_ekangupt@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org
+References: <20250320091446.3647918-1-quic_lxu5@quicinc.com>
+ <20250320091446.3647918-3-quic_lxu5@quicinc.com>
+ <30bba296-8e6f-41ee-880e-2d5ecc8fe5a4@linaro.org>
+ <qhriqbm6fcy5vcclfounaaepxcvnck2lb7k2gcpbtrojqzehua@khv5lwdgbysc>
+ <9962c517-5c0e-4d46-ac0c-2a7bab550156@linaro.org>
 Content-Language: en-US
-From: Jie Gan <quic_jiegan@quicinc.com>
-In-Reply-To: <CAJ9a7Vjhm5B=3mDHQpuRj2JSE1hfYzOx5wq-yQcC3k+QqEcvAQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: h9cPj4DcIr7JbeRIHrqO8skenXZKCKkZ
-X-Proofpoint-ORIG-GUID: h9cPj4DcIr7JbeRIHrqO8skenXZKCKkZ
-X-Authority-Analysis: v=2.4 cv=F/5XdrhN c=1 sm=1 tr=0 ts=67ecf717 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=7CQSdrXTAAAA:8 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=rk3Ip3wbNkCNmIt9PQkA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=a-qgeE7W1pNrGK8U0ZQC:22 a=cvBusfyB2V15izCimMoJ:22
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+In-Reply-To: <9962c517-5c0e-4d46-ac0c-2a7bab550156@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Vbj3PEp9 c=1 sm=1 tr=0 ts=67ecf7a1 cx=c_pps a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=EjjHKn1hvHTiu-shZIMA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: yNvgOAW4nyj9H783jrcYTZOGuiBRkom9
+X-Proofpoint-GUID: yNvgOAW4nyj9H783jrcYTZOGuiBRkom9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-02_03,2025-04-01_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- lowpriorityscore=0 mlxlogscore=999 phishscore=0 priorityscore=1501
- mlxscore=0 spamscore=0 bulkscore=0 clxscore=1015 adultscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ suspectscore=0 clxscore=1015 mlxscore=0 phishscore=0 bulkscore=0
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 mlxlogscore=999
  impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2504020054
 
 
 
-On 4/2/2025 4:17 PM, Mike Leach wrote:
-> Hi,
-> 
-> On Wed, 2 Apr 2025 at 01:50, Jie Gan <quic_jiegan@quicinc.com> wrote:
->>
->>
->>
->> On 4/1/2025 5:56 PM, Mike Leach wrote:
->>> Hi,
+On 3/21/2025 5:53 PM, Srinivas Kandagatla wrote:
+>
+>
+> On 20/03/2025 18:43, Dmitry Baryshkov wrote:
+>> On Thu, Mar 20, 2025 at 05:11:20PM +0000, Srinivas Kandagatla wrote:
 >>>
->>> On Tue, 1 Apr 2025 at 07:11, Anshuman Khandual
->>> <anshuman.khandual@arm.com> wrote:
+>>>
+>>> On 20/03/2025 09:14, Ling Xu wrote:
+>>>> The fastrpc driver has support for 5 types of remoteprocs. There are
+>>>> some products which support GPDSP remoteprocs. Add changes to support
+>>>> GPDSP remoteprocs.
 >>>>
->>>> On 4/1/25 07:12, Jie Gan wrote:
->>>>> The trace_id in coresight_path may contain an error number which means a
->>>>> negative integer, but the current type of the trace_id is u8. Change the
->>>>> type to int to fix it.
->>>>>
->>>>> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
->>>>> Fixes: 3c03c49b2fa5 ("Coresight: Introduce a new struct coresight_path")
->>>>> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>>> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
+>>>> ---
+>>>>    drivers/misc/fastrpc.c | 10 ++++++++--
+>>>>    1 file changed, 8 insertions(+), 2 deletions(-)
 >>>>
->>>> LGTM
->>>>
->>>> Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
->>>>
->>>>> ---
->>>>>    include/linux/coresight.h | 2 +-
->>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
->>>>> index d79a242b271d..c2bf10c43e7c 100644
->>>>> --- a/include/linux/coresight.h
->>>>> +++ b/include/linux/coresight.h
->>>>> @@ -337,7 +337,7 @@ static struct coresight_dev_list (var) = {                                \
->>>>>     */
->>>>>    struct coresight_path {
->>>>>         struct list_head        path_list;
->>>>> -     u8                      trace_id;
->>>>> +     int                     trace_id;
->>>>>    };
->>>>>
->>>>>    enum cs_mode {
+>>>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>>>> index 7b7a22c91fe4..80aa554b3042 100644
+>>>> --- a/drivers/misc/fastrpc.c
+>>>> +++ b/drivers/misc/fastrpc.c
+>>>> @@ -28,7 +28,9 @@
+>>>>    #define SDSP_DOMAIN_ID (2)
+>>>>    #define CDSP_DOMAIN_ID (3)
+>>>>    #define CDSP1_DOMAIN_ID (4)
+>>>> -#define FASTRPC_DEV_MAX        5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
+>>>> +#define GDSP0_DOMAIN_ID (5)
+>>>> +#define GDSP1_DOMAIN_ID (6)
 >>>
->>> There are many places in the Coresight drivers that assign a u8
->>> traceid from the path trace ID.
+>>> We have already made the driver look silly here, Lets not add domain ids for
+>>> each instance, which is not a scalable.
 >>>
->>> e.g.
->>> In coresight-etm4x-core.c : etm4_enable_perf()
->>>
->>> drvdata->trcid = path->trace_id;
->>>
->>> drvdata->trcid is defined as a u8  - the reason being trace IDs are
->>> 128 bits wide with some reserved values.
->>>
->>> Will this not just trigger the same issue if path->trace_id is changed
->>> to an int? Even if not it is inconsistent handling of the trace ID
->>> values.
->>>
->>> Trace ID errors should be handled by returning an invalid trace ID
->>> value - were the trace ID value will fail the macro
->>> IS_VALID_CS_TRACE_ID(), or separate the return of a trace ID from an
->>> error return in a function.
->>>
+>>> Domain ids are strictly for a domain not each instance.
 >>
->> Hi Mike,
->>
->> The path->trace_id is verified after it has been assigned with the logic
->> you mentioned:
->>
->> if (!IS_VALID_CS_TRACE_ID(path->trace_id))
->>          goto err_path;
->>
->> So it should be safe to assign to another u8 parameter, like you mentioned:
->>
->> In coresight-etm4x-core.c : etm4_enable_perf()
->>
->> drvdata->trcid = path->trace_id;
->>
-> 
-> It is safe but will it not trigger a warning just like the one you are
-> trying to fix as the types are mismatched?
+>> Then CDSP1 should also be gone, correct?
+> Its already gone as part of the patch that I shared in this discussion.
+>
+> I will send a proper patch to list once Ling/Ekansh has agree with it.
+>
+Thanks, Srini, for sharing this clean-up patch. It looks proper to
+me, but I was thinking if we could remove the domain_id dependency
+from the fastrpc driver. The addition of any new DSP will frequently
+require changes in the driver. Currently, its usage is for creating
+different types of device nodes and transferring memory ownership to
+SLPI when a memory region is added.
 
-Hi Mike,
+The actual intention behind different types of device nodes can be
+defined as follows:
 
-It should trigger another type mismatch warning.
+fastrpc-xdsp-secure: Used for signed (privileged) PD offload and for daemons.
+fastrpc-xdsp: Should be used only for unsigned (less privileged) PD offload.
 
-This patch aims to fix the situation like assign a negative value to u8 
-will cause a integer toggle(it may happen and I think I should fix it), 
-e.g. -22 for 234.
+The reason for this constraint is to prevent any untrusted process
+from communicating with any privileged PD on DSP, which poses a security risk.
+The access to different device nodes can be provided/restricted based on UID/GID
+(still need to check more on this; on Android-like systems, this is controlled by
+SELinux).
 
-Thanks,
-Jie
+There is already a qcom,non-secure-domain device tree property[1] which doesn't
+have a proper definition as of today. The actual way to differentiate between
+secure and non-secure DSP should be based on its ability to support unsigned PD.
 
-> 
-> Mike
-> 
->> Thanks,
->> Jie
+One way to remove the domain_id dependency that I can think of is to use this
+property to create different types of device nodes. Essentially, if unsigned PD
+is supported (e.g., CDSP, GPDSP), we add this property to the DT node and create
+both types of device nodes based on this. Otherwise, only the secure device node
+is created.
+
+This raises the question of backward compatibility, but I see that on most older
+platform DTs, this property is already added, so both device nodes will be created
+there, and applications will work as expected. If any old DT DSP node lacks this
+property, we can add it there as well.
+
+Going forward, the qcom-non-secure-property should be added only if unsigned PD
+is supported. This way, we can clean up the driver completely to remove the
+domain_id dependency.
+
+If this sounds good, I can work on this design and send out a patch.
+
+[1] https://web.git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml#n44
+
+--Ekansh
+
+> --srini
 >>
->>
->>> Regards
->>>
->>> Mike
->>>
->>>
->>>
->>> --
->>> Mike Leach
->>> Principal Engineer, ARM Ltd.
->>> Manchester Design Centre. UK
->>
-> 
-> 
+>
 
 
