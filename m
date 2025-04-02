@@ -1,192 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-53040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 091FDA78EAB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 14:38:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8805A78ED8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 14:46:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A77221886944
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 12:36:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C25D33A20EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 12:44:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEC592376E1;
-	Wed,  2 Apr 2025 12:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55623237703;
+	Wed,  2 Apr 2025 12:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ABITKrGv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ghR5dZqt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349341E50B
-	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 12:36:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2493620D4E4;
+	Wed,  2 Apr 2025 12:44:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743597400; cv=none; b=FGKL9k6Fjqu3KV+iUvlxKkdpnaeMrTyszY1v/vHg77Ujl2xbtop309Dqg86/+QF0tadaKQGluo+AHYXuNX7HCjKMFAz6+yZu1nXWR+wcfGvzSKfFzWhUsAp3oD69sBn12AvA/QPTQoDcbl6BgD/WvAucm5HgB0V1X3gwEGW690I=
+	t=1743597868; cv=none; b=pSHUgp6115QKghYQmEA12L5hpT6UfTYGUbB3fqdMt/YUEHKonlMAisG8eVxpSagLUsuvHtkLWEuR8k+/dXHIggPJWJOm/+BqpKRFvJrOhJz98/s611R1H5/wbwbQ4MqSRWuin4hRatrl/+ZVB9HGaG/YRZpEP7MxolbHh18M440=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743597400; c=relaxed/simple;
-	bh=NmjqACQfrJ37s3N6AuU/MT+sQoPHZ/C361eXGCGz4RM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=PnSyXjDKiJv7A7Ss++jxdEdjN80vYt6CaiG4cF//KH1hqekqs96bE3XOrqie5Z+YTgGKgcurUHtTl0PRwIHgMsyCBb5obmSfNGUoASukHxpmMiPMiQjh/uYSlXOs/K4ddmoBAgyQDcGbOs1A1GJAGW1Gg5dGsyb2uesCOdww0r0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ABITKrGv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 532Atvkj022784
-	for <linux-arm-msm@vger.kernel.org>; Wed, 2 Apr 2025 12:36:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=0bPtfuVNMDp
-	Mwtr99Ca6KpjNhFdUmZN/eMQmpw+ZHAA=; b=ABITKrGv/uJeGzhT9bRGWfmEh4E
-	wLmkUDX3TEs7bZymIE15YW43xuGD4jrAdn+H4PdtgWzipCIhbm+z5H+OLxDSdBnj
-	u12rzVJpvZVNFclb6dR0xZEBs4zMI3yIhrI4Y5NZTKUYlfxtmy+hrGCj+p7tvrWi
-	DzXzvIjv0KXJZJEdoSdYEn2Zkaxu8psp9jgXX3K+slNPlB/ZCfp6YHJAmDdO14AU
-	O4PN04DAluSZsQMPJ9TTUrmH71Vnch3VB9NbAam5eNsVWGbWHoC7PB5gelPak6nj
-	98TvsyXM6EGS9Ak39gSfch7+BPiYhqv8vNY+UFxi07oM5Qwzk3KePCEsnKw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ruadsq9y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 12:36:38 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c0b0cf53f3so1008765185a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 05:36:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743597387; x=1744202187;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0bPtfuVNMDpMwtr99Ca6KpjNhFdUmZN/eMQmpw+ZHAA=;
-        b=QQ2RlZsHvBcjxDPYH980HhudDcGzEz862DrVRX3oGy6l0EP1TFdvG534msB9hfAef1
-         hVMod4tpT6sE0jwj7pTUxbrzw6Lo2kljLIhPjrEKk0ZXjemy3ixagJKmSFcfhJHKNNE3
-         9Bbwrmfvt1ZyAPFqU07ZpamWhAuVt4akKnwx5pyKj0ciPlj3XosM9Vkig1L6Pv9ZELrc
-         DUOZjC30MO/b4Si9tB/exuTFJjwACVPKwhFaA01UQ8YXFAG+zJwpW8g4RAX3LTXFrsYM
-         N1IJcdiUrg/u1jnF0lC/fSZRFu8XYn9pH/Q0Qp5ep3cPw86WMgczf3fHMPQicBTxJ2Pc
-         0QCw==
-X-Gm-Message-State: AOJu0Yw2NnTXyuMkgEh+6B0H7NR9HFww4lAPiqjrOK6n59/DOwSlcFzp
-	c4YEYORaj7pEjChB+Nhavqt+0ATF5iBgoGXdGlHdqjScuDB5Xxj/hHQrXDrRAwFQfXcFZlXwdWy
-	UsHc2TJApACLxeCtRtia4E6xoPQGy5bM+iWSvo3/KPaD/3UxqblXHEIIefkPt7kbL
-X-Gm-Gg: ASbGnct5DZhFg3DvHuLVsOkCSl8WP4oeYCqyuaj3oerj/y4bgxV/1M0hasnenwmER/X
-	yr0rj0CXDt6ycHvZikm46ykf6obcJ69No53IkeCg39MzjOcnP5aHjlU5ho726kBn9BFfIX4L1Kc
-	XgafjoSgGsbpGLJb2Uh6NAV2Zfj+ogtWJPZQ8aHoAmKclnWFSG5WYWCtVEHIUIl2NEatagxdYhc
-	8DJpvsutoDB8XO5q41/fdiAvxiakl4ZiJq161Cbt/4ts4H0/vK6puEOOKh0oiFuOvKal4qSMrO2
-	9TLdhpZ5VfESigQ3uu42J2fpU56dAVqjbQGCxT+V5IGIqAMLrw==
-X-Received: by 2002:a05:620a:4041:b0:7c5:49c9:e4ae with SMTP id af79cd13be357-7c69072f131mr2448520085a.32.1743597387618;
-        Wed, 02 Apr 2025 05:36:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEtXQXBQ11b54A1rMlOiGsFCvVN/Cb23GD5YAaRljh7pVcZH/wsAgAlR1FthR3T+tKOcPc8Xw==
-X-Received: by 2002:a05:620a:4041:b0:7c5:49c9:e4ae with SMTP id af79cd13be357-7c69072f131mr2448517185a.32.1743597387292;
-        Wed, 02 Apr 2025 05:36:27 -0700 (PDT)
-Received: from QCOM-eG0v1AUPpu.qualcomm.com ([2a01:e0a:82c:5f0:3450:ba3:21fc:7d2b])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac719221034sm916438266b.32.2025.04.02.05.36.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Apr 2025 05:36:26 -0700 (PDT)
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: qcm2290: Add CCI node
-Date: Wed,  2 Apr 2025 14:36:22 +0200
-Message-Id: <20250402123622.11984-2-loic.poulain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250402123622.11984-1-loic.poulain@oss.qualcomm.com>
-References: <20250402123622.11984-1-loic.poulain@oss.qualcomm.com>
+	s=arc-20240116; t=1743597868; c=relaxed/simple;
+	bh=CZ+IdWIe9VKZfl+JdSpgyh5N8UOVUcPaKhTvtmJANPw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LYsI12ti7buCaHk4dhqG8kYm+YFdF/BVu9/v3Bs6JcpoLNoXlCSVUZkZSMRU1Kr+js63uHC0wUGhGqvujPxVMENLIt3mKJFWJSMi6iQxauiwYT03OYgNZz2XbAZQor8O8sK0ryj8gxlubnVIc6PwMB8Hp81z9P/RqDpWtDWTCp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ghR5dZqt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075FBC4CEDD;
+	Wed,  2 Apr 2025 12:44:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743597867;
+	bh=CZ+IdWIe9VKZfl+JdSpgyh5N8UOVUcPaKhTvtmJANPw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ghR5dZqte8DoVxcKor9OxMW6eynY1N5TVGuH6qnKBThZdSE9bv35jED1E876MkiNu
+	 Ie2CnnZuZRWwaMdqkAoJ+klBZQCuP3KAUjZ27QMH3e5TPh3FxpgLrRuIUZ/XKVPK4c
+	 nSQl0FAfkVMQENyz67adeSUcXbFvGZH8SPQBewDwmyIqOvEtaOb86WPv8JEbXhOCox
+	 aEc+MCbE9xK+iBw/NfOdt00Oy2MFqZ/EqCVC7OOhBlLBDythQtAcYgZ24mOi3zZxuV
+	 63cVjY6nURGlS8jLcfZj4jSx+ZqPp1wWQl6mib0pXlCJhYz7hc+DZZy+LtU+Y+QzK+
+	 RpscC1Alu3Itg==
+Date: Wed, 2 Apr 2025 14:44:22 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_mrana@quicinc.com,
+	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+	quic_vpernami@quicinc.com
+Subject: Re: [PATCH] PCI: qcom: Implement shutdown() callback
+Message-ID: <Z-0xJpBrO4wN9UzN@ryzen>
+References: <20250401-shutdown-v1-1-f699859403ae@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=VI/dn8PX c=1 sm=1 tr=0 ts=67ed2f56 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=XR8D0OoHHMoA:10 a=QcRrIoSkKhIA:10 a=EUspDBNiAAAA:8 a=6k4BM0uUCjRUaVwtoScA:9 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-ORIG-GUID: 2lfXb2Z-xh7teOiw4mipaS5BZ0INLztf
-X-Proofpoint-GUID: 2lfXb2Z-xh7teOiw4mipaS5BZ0INLztf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-02_05,2025-04-01_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 adultscore=0 suspectscore=0 impostorscore=0
- phishscore=0 lowpriorityscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504020080
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250401-shutdown-v1-1-f699859403ae@oss.qualcomm.com>
 
-Add Camera Control Interface (CCI), supporting two I2C masters.
+Hello Krishna,
 
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
----
- v2: Reorder commits; Update dts properties order and style
+On Tue, Apr 01, 2025 at 04:51:37PM +0530, Krishna Chaitanya Chundru wrote:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>
+> PCIe host controller drivers are supposed to properly remove the
+> endpoint drivers and release the resources during host shutdown/reboot
+> to avoid issues like smmu errors, NOC errors, etc.
+>
+> So, stop and remove the root bus and its associated devices and release
+> its resources during system shutdown to ensure a clean shutdown/reboot.
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+>
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index e4d3366ead1f9198693e6f9da4ae1dc40a3a0519..926811a0e63eb3663c1f41dc598659993546d832 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1754,6 +1754,16 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>	return ret;
+>  }
+>
+> +static void qcom_pcie_shutdown(struct platform_device *pdev)
+> +{
+> +	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
+> +
+> +	dw_pcie_host_deinit(&pcie->pci->pp);
+> +	phy_exit(pcie->phy);
+> +	pm_runtime_put(&pdev->dev);
+> +	pm_runtime_disable(&pdev->dev);
+> +}
+> +
+>  static int qcom_pcie_suspend_noirq(struct device *dev)
+>  {
+>	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> @@ -1890,5 +1900,6 @@ static struct platform_driver qcom_pcie_driver = {
+>		.pm = &qcom_pcie_pm_ops,
+>		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
+>	},
+> +	.shutdown = qcom_pcie_shutdown,
+>  };
+>  builtin_platform_driver(qcom_pcie_driver);
+>
+> ---
 
- arch/arm64/boot/dts/qcom/qcm2290.dtsi | 50 +++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+Out of curiosity, I tried something similar to on pcie-dw-rockchip.c
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-index 7fb5de92bc4c..43fcb4f40a8c 100644
---- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-@@ -557,6 +557,20 @@ qup_uart4_default: qup-uart4-default-state {
- 				bias-disable;
- 			};
- 
-+			cci0_default: cci0-default-state {
-+				pins = "gpio22", "gpio23";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
-+			cci1_default: cci1-default-state {
-+				pins = "gpio29", "gpio30";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
- 			sdc1_state_on: sdc1-on-state {
- 				clk-pins {
- 					pins = "sdc1_clk";
-@@ -1603,6 +1617,42 @@ adreno_smmu: iommu@59a0000 {
- 			#iommu-cells = <2>;
- 		};
- 
-+		cci: cci@5c1b000 {
-+			compatible = "qcom,qcm2290-cci", "qcom,msm8996-cci";
-+			reg = <0x0 0x5c1b000 0x0 0x1000>;
-+
-+			interrupts = <GIC_SPI 206 IRQ_TYPE_EDGE_RISING>;
-+
-+			clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>, <&gcc GCC_CAMSS_CCI_0_CLK>;
-+			clock-names = "camss_top_ahb", "cci";
-+			assigned-clocks = <&gcc GCC_CAMSS_CCI_0_CLK>;
-+			assigned-clock-rates = <37500000>;
-+
-+			power-domains = <&gcc GCC_CAMSS_TOP_GDSC>;
-+
-+			pinctrl-0 = <&cci0_default &cci1_default>;
-+			pinctrl-names = "default";
-+
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			status = "disabled";
-+
-+			cci_i2c0: i2c-bus@0 {
-+				reg = <0>;
-+				clock-frequency = <400000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+
-+			cci_i2c1: i2c-bus@1 {
-+				reg = <1>;
-+				clock-frequency = <400000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
- 		mdss: display-subsystem@5e00000 {
- 			compatible = "qcom,qcm2290-mdss";
- 			reg = <0x0 0x05e00000 0x0 0x1000>;
--- 
-2.34.1
+Simply having a ->shutdown() callback that only calls dw_pcie_host_deinit()
+was enough for me to produce:
 
+[   40.209887] r8169 0004:41:00.0 eth0: Link is Down
+[   40.216572] ------------[ cut here ]------------
+[   40.216986] called from state HALTED
+[   40.217317] WARNING: CPU: 7 PID: 265 at drivers/net/phy/phy.c:1630 phy_stop+0x134/0x1a0
+[   40.218024] Modules linked in: rk805_pwrkey hantro_vpu v4l2_jpeg v4l2_vp9 v4l2_h264 v4l2_mem2mem videobuf2_v4l2 videobuf2_dma_contig videobuf2_memops videobuf2_common vidf
+[   40.220267] CPU: 7 UID: 0 PID: 265 Comm: init Not tainted 6.14.0+ #134 PREEMPT
+[   40.220908] Hardware name: Radxa ROCK 5B (DT)
+[   40.221289] pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   40.221899] pc : phy_stop+0x134/0x1a0
+[   40.222222] lr : phy_stop+0x134/0x1a0
+[   40.222546] sp : ffff800082213820
+[   40.222836] x29: ffff800082213820 x28: ffff45ec84b30000 x27: 0000000000000000
+[   40.223463] x26: 0000000000000000 x25: 0000000000000000 x24: ffffbe8df7fde030
+[   40.224088] x23: ffff800082213990 x22: 0000000000000001 x21: ffff45ec80e10000
+[   40.224714] x20: ffff45ec82cb40c8 x19: ffff45ec82ccc000 x18: 0000000000000006
+[   40.225340] x17: 000000040044ffff x16: 005000f2b5503510 x15: 0720072007200720
+[   40.225966] x14: 0720072007200720 x13: 0720072007200720 x12: 0720072007200720
+[   40.226592] x11: 0000000000000058 x10: 0000000000000018 x9 : ffffbe8df556469c
+[   40.227217] x8 : 0000000000000268 x7 : ffffbe8df7a48648 x6 : ffffbe8df7a48648
+[   40.227842] x5 : 0000000000017fe8 x4 : 0000000000000000 x3 : 0000000000000000
+[   40.228468] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff45ec84b30000
+[   40.229093] Call trace:
+[   40.229308]  phy_stop+0x134/0x1a0 (P)
+[   40.229634]  rtl8169_down+0x34/0x280
+[   40.229952]  rtl8169_close+0x64/0x100
+[   40.230275]  __dev_close_many+0xbc/0x1f0
+[   40.230621]  dev_close_many+0x94/0x160
+[   40.230951]  unregister_netdevice_many_notify+0x14c/0x9c0
+[   40.231426]  unregister_netdevice_queue+0xe4/0x100
+[   40.231848]  unregister_netdev+0x2c/0x60
+[   40.232193]  rtl_remove_one+0xa0/0xe0
+[   40.232517]  pci_device_remove+0x4c/0xf8
+[   40.232864]  device_remove+0x54/0x90
+[   40.233182]  device_release_driver_internal+0x1d4/0x238
+[   40.233643]  device_release_driver+0x20/0x38
+[   40.234019]  pci_stop_bus_device+0x84/0xe0
+[   40.234381]  pci_stop_bus_device+0x40/0xe0
+[   40.234741]  pci_stop_root_bus+0x48/0x80
+[   40.235087]  dw_pcie_host_deinit+0x34/0xe0
+[   40.235452]  rockchip_pcie_shutdown+0x24/0x48
+[   40.235839]  platform_shutdown+0x2c/0x48
+[   40.236187]  device_shutdown+0x150/0x278
+[   40.236533]  kernel_restart+0x4c/0xb8
+[   40.236859]  __do_sys_reboot+0x178/0x280
+[   40.237206]  __arm64_sys_reboot+0x2c/0x40
+[   40.237561]  invoke_syscall+0x50/0x120
+[   40.237891]  el0_svc_common.constprop.0+0x48/0xf0
+[   40.238305]  do_el0_svc+0x24/0x38
+[   40.238597]  el0_svc+0x30/0xd0
+[   40.238868]  el0t_64_sync_handler+0x10c/0x138
+[   40.239251]  el0t_64_sync+0x198/0x1a0
+[   40.239575] ---[ end trace 0000000000000000 ]---
+
+Did you try your change with a simple network card connected to the PCI slot?
+(And not just another qcom board running in EP mode.)
+
+I don't see why you wouldn't see the same thing as me.
+
+
+Kind regards,
+Niklas
 
