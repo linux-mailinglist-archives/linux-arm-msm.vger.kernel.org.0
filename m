@@ -1,228 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-53008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61C2BA78A33
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 10:42:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76752A78A4F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 10:46:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D4293A3B5B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 08:42:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 272DE163067
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 08:46:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E268C23535F;
-	Wed,  2 Apr 2025 08:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2E6623535D;
+	Wed,  2 Apr 2025 08:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hTvHY+K7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="heOj9+zP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C28E234973
-	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 08:42:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F039DA92E;
+	Wed,  2 Apr 2025 08:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743583344; cv=none; b=osiLPUfWrJRXLDvKF8kJzTkU4ssz2SoZa7A0UH5+5+9WfyfNXP/hOu75ZgME7ECCI91YSR7TNprpt9rw2zjQ0rIA06WVAeDOsSlfspD43myu83lGoqeAaF33Sos/b7UZiS3I3MAtpOuIAUUiT8C9Z41vMpItAn89c42plBgP4Mg=
+	t=1743583612; cv=none; b=B673SARHgAfb6SiN4izqv8aXdLXx5pOOgdJlmfhQflYYxT/YN2fj7MOXqbtZxs5MAsTfvRhpOXAXVFtRpnygO8oGztsNwovNFjySFKM0vyGIltURcX5OevYi7vjj2MNv8xg1RLjUyQkwKIg/FNePlEVsDKQ32/4e6KlwKH6c958=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743583344; c=relaxed/simple;
-	bh=K2bw+1KeHp81EuZFnQjbluDFd1uJMgLd3nwq4NNYKUo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sCzRe4m44Dthob7OcM+P5NKzdCrqB1fR7yotdwqIaVVCjSJT03yTmR4oo7peIPgdDTcT5nOuwCyndtDrnd2nmb+sgq3VnjTX3+C0Dg57PbHHIf425gMWBxp8ZPq5yC3TQiM+pC+7pqqi/Au0b/vLONNE8mWktmTLdIQwevV761c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hTvHY+K7; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5324KKu3024541
-	for <linux-arm-msm@vger.kernel.org>; Wed, 2 Apr 2025 08:42:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jfO7/bGre+6kk4wzIfdSX7eLLfl7DhFr+sFCeDK2cj8=; b=hTvHY+K7d6pykXFm
-	1mPPA03izIeGRhE7Ryb0ZFt0gnO6DLnQT0p5YmbX40/G8+wK+sCeMt/cfCBi3uxR
-	RKqYqL1wSQr+EJTja4/1dtxXfFGZhIPlDYrV3dT24GCdZLLI8wn1vjQ/417/4+Ry
-	iyAQHDlDf/mQ5xYTKC/cO4S3UBmsuOaT1/kKWkX/kgUPgkPmJZFMG/z6e5Y9zoaF
-	579hrjSys7eA0cxZj1pnu0SwB0Jqwi//Ary0rP/FhG3FFQ3fgRpH3pNZAPGTgdjD
-	2++GsvN/xY5+jDJvKVua7oP4SCWYBYyLUevp/YRCghI88+lUWdv3fKpkFBYZ44Pa
-	7aDCGg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45rbpyusx3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 08:42:22 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c54a6b0c70so607807885a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 01:42:22 -0700 (PDT)
+	s=arc-20240116; t=1743583612; c=relaxed/simple;
+	bh=/+vBNaDSH5QTXi0/YsM1pDRIhvd7YRy6SEJTLAcU+QU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eNUDc0CX1oJCqSDUuiYLzKVjqR0Ui6tHgyaxo2AzviEXK3o69a1u3++HQFOzCLPfIc2eHcgm63EEVfrcXaunzu6L1pUtNlRnRoW3cFlGbIuShmVH/MSyEl70duN1Hfky3sFn6sa0UIxK21uW9ytYfSOKu8XK7SBrBsZjNDC2flI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=heOj9+zP; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-ac41514a734so1080357966b.2;
+        Wed, 02 Apr 2025 01:46:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743583609; x=1744188409; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9ejPc7vz1NzfqJTdEL/ppgbTd/32+OfWNGIwtSm2VDk=;
+        b=heOj9+zP5eJ21foYaTrCDa2bEMJpY1gLGQXLfyVjOdU6jBVYNJ6+JxVSIckqqIX2Jc
+         9S+lFsD1iBYzWmBZmHlGXgZAn0dvVIxPU3CCAgoQsN7+uNRo4QHW9xA7iBEx0jNSXTM4
+         VnLwAz3p+zRkGz1lAuXiWZFjsOdFxs2Jwh8/+ynYfonP4zcICFgh8WvDM8B9TNHzhlia
+         9Uy1vsY+9myRxMrcHDwnQrphtgWrqMI5OvJtSWX6x2NjzHAuZPKU7kRqHMKfZXRUFYt7
+         Ic4AvaVJyjSJ+H0ojnux+U7qMoVJ7eRt+FXls+OJkSEma7TEh0QiWPM2jh3Eq3bIEWRP
+         nlrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743583341; x=1744188141;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jfO7/bGre+6kk4wzIfdSX7eLLfl7DhFr+sFCeDK2cj8=;
-        b=I5P494nKZmgiN7NhObS5iY4qkknS7pgJZiubnoew/w/2DmXLs9woUt2Np8Z5TTsELO
-         amnMXnhhMZe0d+T2CUPfnAAxmx24g48Y8HKT9CKbCbECFLhtTqaNUMPwIcIshVvn7ZVg
-         CF41WIlrlCoFJK2s99g4wZwcUGd8w1kYf4CQtNazEsQbjb9VjA5Npg+XEROQDcU1PpGi
-         9J+zwe48VlltbY/3ypHIcNatOLt72r9arUXgt3cGf/Rb2PJqLfkmYxWqdNt+UGKBJR3O
-         4iUT06uPI9pNMY2GU/JsQzPv3Nawo6C2myLc5P97D49vuFoE8Au9pO5HPc2U2lHPzkkl
-         88NQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWG2vDYr7pogvuhlL8RaSAD/Yb7dJmy0jXSSwFc07HNSgGpLr7Lq6Z+jFMIUuXatnv4BvA0d/BC8Ru4ffQS@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz6kf4fTDIB1bBr1HjDHEe6bkEe+YuhSm2W7UA1VpjHm1eT0zNi
-	2+UTOuGh1oxJ0SL0GXJ6Irk8AgFeDeCXHMGiDMDg50Fqy4vy9QVaPqE1bWjtefmoUaFW69zhdD/
-	1/jjHRmb6Crc2cJ9X3Zrw2lTwAIZxV4KQJfTtGAkp14BGWpoA7hVFKnrCgzz7jQMO
-X-Gm-Gg: ASbGncsgVKj8w1PV752QDrkp/uMAtHXan36nEn85dmIqE9TukDPKBO9vdcXii/vtYUZ
-	QGEJrjCneAK/wSSBTNFgadf9oEz5GHHZyPqKlC3OpslB0a56iapdfk1QRiexm0dHObCLPc9NTbv
-	7SKoQUPBYbNo6izM7hGkFEoJRj8FFE1G4kR3kmsu+lyhDiyCNEPWAIds3GPLaa85fk5VCZxkbuv
-	fsCYPYDbYNDauxKJbZd5Rshd1p1iByyzI17NYoJqXc79wdQzEeGOtTVNzf1XdSGVzGLGwryvr37
-	elEb1OOnwKNdBli6farTnpygznc39YqBnEp99gRQaLE17ljwp3rF+K2MmMftuumuV8EC8P36wBp
-	er0U+qoJAnNRSlYm7NcKaoeud6UMPRALAQvptKg9Krd7jIgtNMD/Iqm8Q8RaZldiVcEeiY18u
-X-Received: by 2002:a05:620a:4484:b0:7c5:5fa0:45f8 with SMTP id af79cd13be357-7c69071d9camr2031704285a.17.1743583340906;
-        Wed, 02 Apr 2025 01:42:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2MsXpi9YoQbrkM+I2ZTcI04QtJYTcA45hj7d6mFakfAdQJGJ6n7LSqt3GRBFrZGPDPSf6Vw==
-X-Received: by 2002:a05:620a:4484:b0:7c5:5fa0:45f8 with SMTP id af79cd13be357-7c69071d9camr2031700585a.17.1743583340459;
-        Wed, 02 Apr 2025 01:42:20 -0700 (PDT)
-Received: from ?IPV6:2001:14bb:673:ef86:ad54:6866:66aa:2ae6? (2001-14bb-673-ef86-ad54-6866-66aa-2ae6.rev.dnainternet.fi. [2001:14bb:673:ef86:ad54:6866:66aa:2ae6])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54b095a034esm1574317e87.216.2025.04.02.01.42.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Apr 2025 01:42:19 -0700 (PDT)
-Message-ID: <c27a97ed-c765-421a-a48c-3abbae3bac93@oss.qualcomm.com>
-Date: Wed, 2 Apr 2025 11:42:22 +0300
+        d=1e100.net; s=20230601; t=1743583609; x=1744188409;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9ejPc7vz1NzfqJTdEL/ppgbTd/32+OfWNGIwtSm2VDk=;
+        b=eWpALEEjcTVUwLt+0VpXE7wOhkwPorSDncnf++S8BzKkfeMAaKylOL4TbDLC9OjDpU
+         qZp02mWjNf0IFnZLGGVbtgtj5QIO4fodeLyDPrWpnPrKy/ZEya6uvDWty1+35XDAmNut
+         K4E/JwAVA9EujHDgs3UGGeTAoe7vOX/td7PvauMuFv2Id9UNvaLiufBaWjTYI2bCKSfc
+         Ps8TZtgZ9MZJeRVDUN7ukx/e4loED+tJTLMSXRBlvF7spPKHcO1jkUPaE/ZdFSnlj2ml
+         nz8FZGNfrNAjl4I0nAHZAWaKPtiBmnqDbjjxhYrVXuxMNYKuv1x8MDhrfvszwMsIXX+e
+         vu7g==
+X-Forwarded-Encrypted: i=1; AJvYcCVYvzqN4RfzZElhJszvunpyPT4MU6RykeuZzCbTXMyW9zxuNnk032C9Ea/3psbH+ysTYPhn6SpJkucp@vger.kernel.org, AJvYcCWMPOQmC1dCNifu1f6oainQvv7OQtsUfcgLWj5xW8qSsWr0OwLSCS0sPmb4mpEN8DXcE9pJdLYxyVdYGy4N@vger.kernel.org, AJvYcCXhdonnxsQzKZBpb47tlmCQGIc/er+/cf8H3OpelemLsdNVII+unriPYkdFO+mSDqVb/V95Ho4wJXJ5jGYuCQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwdVThoMIRtp+HdhcAU7S4Yz02VfWp/8Fmtv3cy6fRn75W4hcbN
+	9Z1Fz16YDZPrPf5dkJp3mhbfo2vvNuSIFrTsj2Q4+3GmzK9R0KatmY0WZHw=
+X-Gm-Gg: ASbGncuMENLOwJeq2tZLvaGoWP/f4mpVbxCxD4tOS3RVONzOl2ZKRPdYq8M8m42kRbg
+	f4Xw6iSOQ8RvMiBBaLO8E+Qegk9qZY4uOTaCAdl5Cxeji3OsRFp4wuIbBXQCM8+IOrbmAFtM3ux
+	IsKujCmoURWc2ezF7BYKHNaAbsiusmRpqcQhNwWUZo9X+aCUusHxQdnGSsiUqDQRWYqwFbhzSnS
+	kmflTvJx0WEciPhwNfXzEe6B6nScpBmOIib0FkRA9eTppGn0Pvs6a8Ya2M9+HeHlRP1/Lvf+7DO
+	CAjG3egpoyX0tNodYYFFzFm59nV2u6BU48IUa1t3BphXgKxGU3vaoYr73uTA
+X-Google-Smtp-Source: AGHT+IHNzSuTERE8ExbuGAfV3s0sg1/oLsjMnzYXwkmJD4dnlgvcmsIDdRwLbR8GdbUyMXT/NUU6zw==
+X-Received: by 2002:a17:907:d90:b0:ac2:49de:3969 with SMTP id a640c23a62f3a-ac7a197287cmr102633666b.47.1743583608653;
+        Wed, 02 Apr 2025 01:46:48 -0700 (PDT)
+Received: from alex-x1.lan ([84.226.118.249])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5edc16aae40sm8162760a12.7.2025.04.02.01.46.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Apr 2025 01:46:48 -0700 (PDT)
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	maud_spierings@hotmail.com,
+	dmitry.baryshkov@oss.qualcomm.com
+Subject: [PATCH v2 0/3] X1E Asus Zenbook A14 support
+Date: Wed,  2 Apr 2025 10:44:01 +0200
+Message-ID: <20250402084646.10098-1-alex.vinarskis@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] misc: fastrpc: add support for gpdsp remoteproc
-To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Ling Xu <quic_lxu5@quicinc.com>, andersson@kernel.org,
-        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, amahesh@qti.qualcomm.com, arnd@arndb.de,
-        gregkh@linuxfoundation.org, quic_kuiw@quicinc.com,
-        quic_ekangupt@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org
-References: <20250320091446.3647918-1-quic_lxu5@quicinc.com>
- <20250320091446.3647918-3-quic_lxu5@quicinc.com>
- <30bba296-8e6f-41ee-880e-2d5ecc8fe5a4@linaro.org>
- <qhriqbm6fcy5vcclfounaaepxcvnck2lb7k2gcpbtrojqzehua@khv5lwdgbysc>
- <9962c517-5c0e-4d46-ac0c-2a7bab550156@linaro.org>
- <412fe24e-ce70-4733-ace5-d3fbe43476c4@oss.qualcomm.com>
-Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <412fe24e-ce70-4733-ace5-d3fbe43476c4@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: djBQ-q5PDSic0GLnVeCEQaHxv5i-t_9Q
-X-Proofpoint-ORIG-GUID: djBQ-q5PDSic0GLnVeCEQaHxv5i-t_9Q
-X-Authority-Analysis: v=2.4 cv=ZNLXmW7b c=1 sm=1 tr=0 ts=67ecf86e cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=kzd5r9BBUjDB0T0qikoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-02_03,2025-04-01_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 clxscore=1015 mlxscore=0 adultscore=0 mlxlogscore=999
- priorityscore=1501 bulkscore=0 suspectscore=0 malwarescore=0 phishscore=0
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504020054
 
-On 02/04/2025 11:38, Ekansh Gupta wrote:
-> 
-> 
-> On 3/21/2025 5:53 PM, Srinivas Kandagatla wrote:
->>
->>
->> On 20/03/2025 18:43, Dmitry Baryshkov wrote:
->>> On Thu, Mar 20, 2025 at 05:11:20PM +0000, Srinivas Kandagatla wrote:
->>>>
->>>>
->>>> On 20/03/2025 09:14, Ling Xu wrote:
->>>>> The fastrpc driver has support for 5 types of remoteprocs. There are
->>>>> some products which support GPDSP remoteprocs. Add changes to support
->>>>> GPDSP remoteprocs.
->>>>>
->>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>>>> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
->>>>> ---
->>>>>     drivers/misc/fastrpc.c | 10 ++++++++--
->>>>>     1 file changed, 8 insertions(+), 2 deletions(-)
->>>>>
->>>>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->>>>> index 7b7a22c91fe4..80aa554b3042 100644
->>>>> --- a/drivers/misc/fastrpc.c
->>>>> +++ b/drivers/misc/fastrpc.c
->>>>> @@ -28,7 +28,9 @@
->>>>>     #define SDSP_DOMAIN_ID (2)
->>>>>     #define CDSP_DOMAIN_ID (3)
->>>>>     #define CDSP1_DOMAIN_ID (4)
->>>>> -#define FASTRPC_DEV_MAX        5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
->>>>> +#define GDSP0_DOMAIN_ID (5)
->>>>> +#define GDSP1_DOMAIN_ID (6)
->>>>
->>>> We have already made the driver look silly here, Lets not add domain ids for
->>>> each instance, which is not a scalable.
->>>>
->>>> Domain ids are strictly for a domain not each instance.
->>>
->>> Then CDSP1 should also be gone, correct?
->> Its already gone as part of the patch that I shared in this discussion.
->>
->> I will send a proper patch to list once Ling/Ekansh has agree with it.
->>
-> Thanks, Srini, for sharing this clean-up patch. It looks proper to
-> me, but I was thinking if we could remove the domain_id dependency
-> from the fastrpc driver. The addition of any new DSP will frequently
-> require changes in the driver. Currently, its usage is for creating
-> different types of device nodes and transferring memory ownership to
-> SLPI when a memory region is added.
-> 
-> The actual intention behind different types of device nodes can be
-> defined as follows:
-> 
-> fastrpc-xdsp-secure: Used for signed (privileged) PD offload and for daemons.
-> fastrpc-xdsp: Should be used only for unsigned (less privileged) PD offload.
-> 
-> The reason for this constraint is to prevent any untrusted process
-> from communicating with any privileged PD on DSP, which poses a security risk.
-> The access to different device nodes can be provided/restricted based on UID/GID
-> (still need to check more on this; on Android-like systems, this is controlled by
-> SELinux).
-> 
-> There is already a qcom,non-secure-domain device tree property[1] which doesn't
-> have a proper definition as of today. The actual way to differentiate between
-> secure and non-secure DSP should be based on its ability to support unsigned PD.
-> 
-> One way to remove the domain_id dependency that I can think of is to use this
-> property to create different types of device nodes. Essentially, if unsigned PD
-> is supported (e.g., CDSP, GPDSP), we add this property to the DT node and create
-> both types of device nodes based on this. Otherwise, only the secure device node
-> is created.
+Introduce support for the mentioned laptop.
 
-This sounds like breaking backwards compatibility on the userspace side. 
-You can not do that.
+Particular device exists in two model numbers:
+* UX3407QA: X1P-42-100 or X1-26-100 (as tested)
+* UX3407RA: X1E-78-100
 
-> 
-> This raises the question of backward compatibility, but I see that on most older
-> platform DTs, this property is already added, so both device nodes will be created
-> there, and applications will work as expected. If any old DT DSP node lacks this
-> property, we can add it there as well.
-> 
-> Going forward, the qcom-non-secure-property should be added only if unsigned PD
-> is supported. This way, we can clean up the driver completely to remove the
-> domain_id dependency.
-> 
-> If this sounds good, I can work on this design and send out a patch.
-> 
-> [1] https://web.git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml#n44
-> 
-> --Ekansh
-> 
->> --srini
->>>
->>
-> 
+Mostly similar to other X1-based laptops. Notable differences are:
+* Wifi/Bluetooth combo being Qualcomm FastConnect 6900 on UX3407QA
+  and Qualcomm FastConnect 7800 on UX3407RA
+* USB Type-C retimers are Parade PS8833, appear to behave identical
+  to Parade PS8830
+* gpio90 is TZ protected
 
+When comparing device firmware between UX3407QA, UX3407RA, it seems
+that only ADSP firmware is different, CDSP and GPU firmware appears to
+be the same. (At least assuming the GPU firmware name in both cases is
+`qcdxkmsuc8380.mbn`). Since at least some blobs are different betweeen
+X1E and X1/X1P, define new firmware directory for `qcom/x1p42100`. This
+also makes it easier for distros to automatically extract firmware from
+Windows and place all blobs for the model under the same path. If/When
+firmware blobs make it to linux-firmware, same blobs can be easily
+symlinked between `qcom/x1e80100` and `qcom/x1p42100`.
+
+NVMe SSD depends on [1]. USB Type-A over USB MP controller  depends on
+[2], or equivalent proposed solution.
+
+Qualcomm FastConnect 6900 on UX3407QA did not work out of the box, and
+additionally required both newer firmware and patches to `board-2.bin`.
+I added a short how-to [3], as it is not exactly trivial.
+
+ACPI dumps can be found on aarch64-laptops' github [4]. HWids on
+dtbloader's github [5].
+
+[1] https://lore.kernel.org/linux-arm-msm/20250319094544.3980357-1-quic_wenbyao@quicinc.com/
+[2] https://lore.kernel.org/all/20250318-xps13-fingerprint-v1-1-fbb02d5a34a7@oss.qualcomm.com/
+[3] https://github.com/alexVinarskis/linux-x1e80100-zenbook-a14?tab=readme-ov-file#wcn688x-wifi
+[4] https://github.com/aarch64-laptops/build/pull/134/files
+[5] https://github.com/TravMurav/dtbloader/pull/4/files
+
+Changes to v1:
+* Drop PS8833 variant, fallback to PS8830 as they behave the same
+* Drop wrong pcie6a_phy compatible revert
+* Drop redundant comments, fix order of properties in the device-tree
+* Fix device name bindings, express in model names instead of the soc
+* Fix GPU firmware name for UX3407QA
+* Fix model string, enclose variant in parenthesis
+* Added missing new lines before 'status = "okay";'
+* Updated cover letter to reflect some of the above changes
+* Left SPI10 disabled as it is unknown how/what for to use it as of now
+Link to v1: https://lore.kernel.org/all/20250331215720.19692-1-alex.vinarskis@gmail.com/
+
+Aleksandrs Vinarskis (3):
+  dt-bindings: arm: qcom: Add Asus Zenbook A14
+  firmware: qcom: scm: Allow QSEECOM on Asus Zenbook A14
+  arm64: dts: qcom: Add support for X1-based Asus Zenbook A14
+
+ .../devicetree/bindings/arm/qcom.yaml         |    2 +
+ arch/arm64/boot/dts/qcom/Makefile             |    2 +
+ arch/arm64/boot/dts/qcom/x1-zenbook-a14.dtsi  | 1258 +++++++++++++++++
+ .../dts/qcom/x1e80100-asus-zenbook-a14.dts    |   45 +
+ .../dts/qcom/x1p42100-asus-zenbook-a14.dts    |   48 +
+ drivers/firmware/qcom/qcom_scm.c              |    2 +
+ 6 files changed, 1357 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/x1-zenbook-a14.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dts
 
 -- 
-With best wishes
-Dmitry
+2.45.2
+
 
