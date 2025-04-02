@@ -1,191 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-53035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BB3AA78DAB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 14:00:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9837FA78E58
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 14:29:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3E9D6171027
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 12:00:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3FFB63B6652
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 12:24:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 215CE23959A;
-	Wed,  2 Apr 2025 11:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C50223A57F;
+	Wed,  2 Apr 2025 12:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PQcJGqfC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sGYF0GSe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6707C23958C;
-	Wed,  2 Apr 2025 11:59:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71630238D33
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 12:24:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743595199; cv=none; b=eDMK1mkGAUs3c20ECGQBLLKepRuxoz2q0yWObyO7mwpaqiy7hL8i5gdVx/e/QEa4a3aC8GMdGgc8EWKa1ZHv4zSeTwALngGRGLD9olIcpF8LC8y0T76sK8ganULCk5JRFPQXCfSvcrumDCuekPEafmg//AJfc2zB0WeGwtAXCkM=
+	t=1743596660; cv=none; b=EONjIZBYXiT9yeuV9EyRiVfLglLiuGQHIA0dwLK+q1D+8dqeLRsrw2LD16sNwIOt8xJFdyWLSBCItCdPvJ5+HwVgBcgF1YWb0TISsbYdJl6lSeWYL+jZA12xR15dZ8KZyAfii5V4q9e2iin6EbjuvAveISD8dP82Zt281qBz/hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743595199; c=relaxed/simple;
-	bh=4JiVsbykmZPlGme2dQA+hsM0yItlxp9C9iBD8FGv4+s=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QnR6NMDEzsmy86JyF+bmdhkoQcMV/DZ0IdownrOeZWQ59cjc9YUfBdmzyu6sfoEB8Hb+Ow8/0IzDe+7LurB3xjX7/NrJHbvrvgFSRIse9WEjOndr+ZlRRS25sgzJ+k0a6cVm1xq3cnyULKmbrTHT/xjNWG49OtyehQxBial7crg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PQcJGqfC; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 532Bpskc007206;
-	Wed, 2 Apr 2025 11:59:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=vn5JtBe5I0QtdmY4FOx/K+4l
-	LPY7E+fWNpdJ1ZtHUdc=; b=PQcJGqfCbJ8ytXEsq/ZcHhw67GdTvGjIQObh7WT4
-	mS0xvCByIJq9c8+OtNynUU80hsvmAc5r908bfhGMrSmay0cd/acZZsY0C+ZxCEwC
-	SWqky3sH0+7ZXAGvyhNYwYIxMbAVzcIH0fmNTYWcS4sL80/vzaag5v+orUziatzu
-	csSSfQuoAeM96ZKVWWIJO+eXzQIXcq0ouFbt8+d07+uEQXRsPJBQwoEqmjq+EAAo
-	wUoaT/zKMKXYGQ4vkGGAEjpbSGYGa9VGR2UJV7unM13BWz5qrZdGnSfj2whh5GNs
-	PiVwPvlByzhDdDyK1yVHXJFB36Y5hbZ8HjtOnBGTZxoOqw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45rh7yk6kx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 02 Apr 2025 11:59:54 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 532Bxqkl020104
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 2 Apr 2025 11:59:52 GMT
-Received: from hu-mapa-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 2 Apr 2025 04:59:49 -0700
-From: Manish Pandey <quic_mapa@quicinc.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "James E.J.
- Bottomley" <James.Bottomley@HansenPartnership.com>,
-        "Martin K. Petersen"
-	<martin.petersen@oracle.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_nitirawa@quicinc.com>,
-        <quic_bhaskarv@quicinc.com>, <quic_rampraka@quicinc.com>,
-        <quic_cang@quicinc.com>, <quic_nguyenb@quicinc.com>
-Subject: [PATCH V5 3/3] scsi: ufs-qcom: Add support to dump testbus registers
-Date: Wed, 2 Apr 2025 17:29:22 +0530
-Message-ID: <20250402115922.27874-4-quic_mapa@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20250402115922.27874-1-quic_mapa@quicinc.com>
-References: <20250402115922.27874-1-quic_mapa@quicinc.com>
+	s=arc-20240116; t=1743596660; c=relaxed/simple;
+	bh=0v2URiG8esdkRgUTyd3SngcEHuSOj0Zafp4N84xHkg4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hOG1TXg2a++OkFnk/5qKZ28EReqAHQ47Zs1ndAwZz6/iHo5umK8Hd6FcRxLhtvQqmOkmq5ITZqAfGEvaPLYb4WdF5Hsabq2d0uud2cicOqHao/0+oKLrYoMQu3s3xofPGT1kPyRTN/btSgxdxKPy9DFxQ9NuGVbBUebEw3pfV/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sGYF0GSe; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43cfe574976so46236635e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 05:24:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1743596657; x=1744201457; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ztK8X1ZBqwTpCQZgzQx75WiIn9I1zX9gTe47p5OjGL8=;
+        b=sGYF0GSeNVXXFwNIelq2JcE7p2k9EUARs3S/FzjucEFbRNJDZO+iNusSH6DpNHfUYh
+         7Oci/JxglJ/EjAVKagJ1msMF51SxzoM93l9mXOMhlnUDiFOdCVzy2DLbj4tE/zcbe2HU
+         5ucqlbzBTmsjUxxIe2eFF6r8A7xIExAr4unP03Uy1Ja9pETHp5Scl4MQaXAFMDz8ww7Z
+         pUd1SHOL1rRIB4B1IJK5Jw1DlPP7Qz0DbVEnfrf0bwPixpLK/8Q0RTWyDYTvkrJKHTCW
+         SFgHqqiphChv/gBlnTfueNWEB6F4AGrp3qDH6ElaLsaaNyyrqdpLoU4zt2vRgQ3ylyrD
+         JuLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743596657; x=1744201457;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ztK8X1ZBqwTpCQZgzQx75WiIn9I1zX9gTe47p5OjGL8=;
+        b=kf4UPfTAAMudUFkyKcKPWsUD6Pt9y/ZCForkhFnyNIsI0JDzANv9sqNJS5zNbfR3rf
+         YF4nWbN4cE/MMeAjs/e/oWdYkbPcHRMLlNpxX1uqj7SZ8PxkTxTYvfg7/DSZZEEGZRpu
+         7+cCgOcyrJnJUu+AFAnLo/sZcRXR+UkMRu4OJK4+IKA8M5iF4O9sve02G2uzY/YCgcFM
+         mGZddzEz75pq5EFv64BuUkqYvS4gQqKob+Hy4vLv7/c38XP2D2yvWdFG7MEXjfGjT8Ev
+         84FBczbBkcrB2ef0M9TdLonhGPhmRTBfzum92BTyvV9XLneX2fiYVNO4lMrhdKqeLPUW
+         iW1w==
+X-Forwarded-Encrypted: i=1; AJvYcCW43yX+SnGZUXtPOhjMMi76j2kH3uBYz3x25R9RX1BMHeOuC9Lwj5UB2f9kdykqYJD9aYhFuLiMfaMwcjqd@vger.kernel.org
+X-Gm-Message-State: AOJu0YwehB+r25etJXuyGWZBKv8H0K4WPp1hYlUJT5LTSPD8z1w+hTWx
+	jcYeKs4Y6TY+0veQE+jbidiAa7KMx0/wgB0mbeo4edF5PHQvm0ZrMnhqnF8pRJU=
+X-Gm-Gg: ASbGnctzY9kr5HqSbmiO2U+eGho8dA/O7g6GJrO8yoVvLHkraxKlVcVM9wNX5arAxEF
+	ICA6+EIx08CGYo3Hk2RhwkUj9qPvQ1nOne4lo49CTTz/DtT79Z0+2yBYdsNGJzCNftOwBmXNIU8
+	7OL/Cabg4uZa6FFNZfQVTHwqPvP7riVvLLCecQYWtMpJ1sDzV3RCzmh5LMLx5ylfJTiVXAQx6Kp
+	12J3eDdbX8WQA2ulLSWAFBh6jqUtZAwTUW3MTxgKBQY3Wz9wCzg3hcXQdj2bopmPu3zt7Tib6aH
+	yocsJbgZ6tBFvPaxSW17TeWZngb2KYKemv162Ef5iTpVqv4i9zF3ehn3JO2tOGtDnZui1OAwuQx
+	Fp1s1MDvxhrlHwzByqBmL
+X-Google-Smtp-Source: AGHT+IF40EzUUmGVd0zd7rqUsdkDiAiIczPUOCxpw6qKHK2XBj0/TDqOPqbFk3OkguXZaFpVMQXW9A==
+X-Received: by 2002:a05:600c:450a:b0:43d:ed:ad07 with SMTP id 5b1f17b1804b1-43ea7cdfdf8mr50511585e9.29.1743596656675;
+        Wed, 02 Apr 2025 05:24:16 -0700 (PDT)
+Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43eb60ccc66sm19418675e9.24.2025.04.02.05.24.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Apr 2025 05:24:16 -0700 (PDT)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v3 0/2] media: MAINTAINERS: Update venus/iris reviewers and
+ maintainers list
+Date: Wed, 02 Apr 2025 13:24:13 +0100
+Message-Id: <20250402-b4-25-03-29-media-committers-venus-iris-maintainers-v3-0-2b2434807ece@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=IYWHWXqa c=1 sm=1 tr=0 ts=67ed26ba cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=oU32yFmJg_HV1qE5Ry8A:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: s4IC_8jZsZWjPK7sPAN8rAi_iU7-_d7M
-X-Proofpoint-ORIG-GUID: s4IC_8jZsZWjPK7sPAN8rAi_iU7-_d7M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-02_04,2025-04-01_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=736
- priorityscore=1501 mlxscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- lowpriorityscore=0 adultscore=0 impostorscore=0 clxscore=1015 spamscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504020075
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAG0s7WcC/6XOPQ7CMAwF4KugzBilNv8T90AMaeq2lmiCkhKBq
+ t6dhAlWGCz5vcGfJxU5CEd1XEwqcJIo3uVAy4WyvXEdgzQ5K9S40YQHqNeAG9AEeR+4EQPWD4O
+ MI4cIid09ggSJMBhxY55Sc017Xh8au93VKl++BW7l8VbPl5x7iaMPz/cTqSrtf16qQINmW2m9a
+ xsme7qKM8GvfOhUARN+IFT9hmBBaIuIraE9mS9knucX4+8NGlwBAAA=
+X-Change-ID: 20250329-b4-25-03-29-media-committers-venus-iris-maintainers-eb38e49dc67b
+To: stanimir.k.varbanov@gmail.com, hverkuil@xs4all.nl, 
+ quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com, mchehab@kernel.org, 
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.2
 
-Add support to dump testbus registers to enhance debugging capabilities
-for the Qualcomm UFS Host Controller.
+V3:
+- Was: Add myself into venus/iris to maintain/review
+- I'll be helping to pickup patches for camss, venus and iris so
+  +R to make sure checkpatch.pl includes me.
+- +M Dikshita as she is an expert in this area.
+- Link to v2: https://lore.kernel.org/r/20250331-b4-25-03-29-media-committers-venus-iris-maintainers-v2-0-036222fa383a@linaro.org
 
-Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+V2:
+- Remove Stan from venus +M per his indication he can't continue
+  due to lack of appropriate test hardware.
+- Apply trailers from Neil on patch #2
+- Link to v1: https://lore.kernel.org/r/20250329-b4-25-03-29-media-committers-venus-iris-maintainers-v1-0-0ec1007fde3c@linaro.org
+
+V1:
+I'd like to help out getting patches reviewed and merged for both of these
+drivers.
+
++M for venus
++R for iris
+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 50 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+Bryan O'Donoghue (2):
+      media: MAINTAINERS: Amend venus Maintainers and Reviewers
+      media: MAINTAINERS: Add myself to iris Reviewers
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 22720ea761d9..d8606776c95f 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -5,6 +5,7 @@
- 
- #include <linux/acpi.h>
- #include <linux/clk.h>
-+#include <linux/cleanup.h>
- #include <linux/delay.h>
- #include <linux/devfreq.h>
- #include <linux/gpio/consumer.h>
-@@ -96,6 +97,24 @@ static const struct __ufs_qcom_bw_table {
- 	[MODE_MAX][0][0]		    = { 7643136,	819200 },
- };
- 
-+static const struct {
-+	int nminor;
-+	char *prefix;
-+} testbus_info[TSTBUS_MAX] = {
-+	[TSTBUS_UAWM]     = {32, "TSTBUS_UAWM"},
-+	[TSTBUS_UARM]     = {32, "TSTBUS_UARM"},
-+	[TSTBUS_TXUC]     = {32, "TSTBUS_TXUC"},
-+	[TSTBUS_RXUC]     = {32, "TSTBUS_RXUC"},
-+	[TSTBUS_DFC]      = {32, "TSTBUS_DFC"},
-+	[TSTBUS_TRLUT]    = {32, "TSTBUS_TRLUT"},
-+	[TSTBUS_TMRLUT]   = {32, "TSTBUS_TMRLUT"},
-+	[TSTBUS_OCSC]     = {32, "TSTBUS_OCSC"},
-+	[TSTBUS_UTP_HCI]  = {32, "TSTBUS_UTP_HCI"},
-+	[TSTBUS_COMBINED] = {32, "TSTBUS_COMBINED"},
-+	[TSTBUS_WRAPPER]  = {32, "TSTBUS_WRAPPER"},
-+	[TSTBUS_UNIPRO]   = {256, "TSTBUS_UNIPRO"},
-+};
-+
- static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
- static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba, bool is_scale_up);
- 
-@@ -1542,6 +1561,32 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
- 	return 0;
- }
- 
-+static void ufs_qcom_dump_testbus(struct ufs_hba *hba)
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	int i, j, nminor = 0, testbus_len = 0;
-+	u32 *testbus __free(kfree) = NULL;
-+	char *prefix;
-+
-+	testbus = kmalloc_array(256, sizeof(u32), GFP_KERNEL);
-+	if (!testbus)
-+		return;
-+
-+	for (j = 0; j < TSTBUS_MAX; j++) {
-+		nminor = testbus_info[j].nminor;
-+		prefix = testbus_info[j].prefix;
-+		host->testbus.select_major = j;
-+		testbus_len = nminor * sizeof(u32);
-+		for (i = 0; i < nminor; i++) {
-+			host->testbus.select_minor = i;
-+			ufs_qcom_testbus_config(host);
-+			testbus[i] = ufshcd_readl(hba, UFS_TEST_BUS);
-+		}
-+		print_hex_dump(KERN_ERR, prefix, DUMP_PREFIX_OFFSET,
-+				16, 4, testbus, testbus_len, false);
-+	}
-+}
-+
- static void ufs_qcom_dump_mcq_hci_regs(struct ufs_hba *hba)
- {
- 	/* voluntarily yield the CPU to prevent CPU hog during data dumps */
-@@ -1659,6 +1704,11 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
- 		/* Dump MCQ Host Vendor Specific Registers */
- 		if (hba->mcq_enabled)
- 			ufs_qcom_dump_mcq_hci_regs(hba);
-+
-+		/* voluntarily yield the CPU as we are dumping too much data */
-+		ufshcd_dump_regs(hba, UFS_TEST_BUS, 4, "UFS_TEST_BUS ");
-+		cond_resched();
-+		ufs_qcom_dump_testbus(hba);
- 	}
- }
- 
+ MAINTAINERS | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+---
+base-commit: f2151613e040973c868d28c8b00885dfab69eb75
+change-id: 20250329-b4-25-03-29-media-committers-venus-iris-maintainers-eb38e49dc67b
+
+Best regards,
 -- 
-2.17.1
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
