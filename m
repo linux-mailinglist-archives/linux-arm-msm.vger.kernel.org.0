@@ -1,125 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-53024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69DC9A78CBF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 13:00:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB255A78D33
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 13:36:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 370BF16E582
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 11:00:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 224C11895A5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 11:36:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EACBA237180;
-	Wed,  2 Apr 2025 10:59:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Iizv5asM"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C0C0238173;
+	Wed,  2 Apr 2025 11:35:39 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mxhk.zte.com.cn (mxhk.zte.com.cn [63.216.63.40])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FC6236A6D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 10:59:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32553238159;
+	Wed,  2 Apr 2025 11:35:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.216.63.40
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743591597; cv=none; b=WNGWTrD/vTthE/39qBNXFCP7eKTxMxwNiUbcJjZTke+6Kac0USV+TmQVT0xGoCrzLIKk6Jq0qH38vfnNHjwRTI0tNAvxUBO1rvMVKKZXDs1w81mQ5SagLSxTtpEq4UZ4sqREyqbhn5pm2mknDddthGd2FG2bJEyDQE24isGC5hU=
+	t=1743593739; cv=none; b=fpjWJ08ZYPZ8JuUMmtiTS2fnyuYGlmgr5AWi1ZNExsmK9HUvfWGiVk9VECS2/121yhQqVoxf7RIJHrRjigoXiU6RNCyaL2XGZN/qS3ucIyH2C7OxAVpYXvdDQEXDy1XzMgd61T+swI/UqOLQTW61WQmf6hS2rHrKfVHwPMzPl3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743591597; c=relaxed/simple;
-	bh=9yLicTejlhArWUH0AESaCnDBxMtBvX2kpvdlV6B/8A8=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=XqVwYcOMRezCQGd7DQV+zeFS93ivEh6EKrJ8EBzfdI6K4EQ2ciQsKxVkCpE5GbmlvkMxI5BnZXOvmLU/gZwhPr18uwzAH/06V9a54htQ3Qzxmc3pXXHZzHqnzN7uf35AQozCE4nnoFcHQCpLLcPsTkWHClx5ZSYBAhKr5bTEW5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Iizv5asM; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4394a0c65fcso62783665e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 03:59:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743591594; x=1744196394; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GTwEOtU7c1REAcQAM15r5ogMxhu3BYdLhsrAnf1aryQ=;
-        b=Iizv5asMiua2B/rjAMbI9R+nt0nkTUhtyFlelshY2Wc1P0HyQqOnqQzk+Mv/hyzObm
-         Dc8jqEE89lm1+yJAAh1rfPd7s7zUhHqbMbljqbfqwxWmpIBhMszoHJ8BBd96HqE9aA0u
-         Ai94zMpUf4M9K3Do1o1hM6ps3SX/sz9b4h2Gu+2X+SBVPTzyiYD38cd87+mCKp/LQpi/
-         yuNqP+1DdQjILH0I3BOArl/Bsnu2OrWbBC0pMBejLPbb88zMn+j8dX+on6K4RgwJ41HT
-         W92fHWDaTUae5NCiXX2h/wlVrYFSX05BU7GZaJpUxX+eBZWhW8gWZW5N1S0mHfRXbaqE
-         7psw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743591594; x=1744196394;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GTwEOtU7c1REAcQAM15r5ogMxhu3BYdLhsrAnf1aryQ=;
-        b=GLpkUvYD2TbAkKEjXX3cTnmPv1ePDcRgJvHm2fMIcBUyoRzat4iR0vMmrKmgrUlwOl
-         H0vmK/1cXNhO7YmIe6pgIctl34yRairU65k4g3iWSyMjSBHC2iv9xqRTNjmwPYh0Z8wg
-         5w3cHkfTCmHZ0arC1ZxHjQu1xLulWIqoRDYrQJD7C/MZ22vuyra1p4evDAG9JYfIKdLK
-         Ka0HwCVGnlHJfqFoyueOH9M/RckhKtz0oSaUarYo57iGAlgIsag2+36rXHnHpaZ8UktB
-         g0V7WQSuwnCKhF2kGK2jXSZtNmbKtsa68RKBTpR3zGBuYFyVEWp9RxFb/r0F5Ld1w9vv
-         okLw==
-X-Forwarded-Encrypted: i=1; AJvYcCXhDwBNaZHhC8i9zNQDnYSo2OaHWZkmMILMiKFxidz3DGbkeLUv4nHNdTvJuL+PA+gmHYtx/daIOkvWNjmi@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+Bz9BYXjujCC/vFotFIf0YQQD9D46djAdJ04ZP+GAekLg/Dbh
-	ozUqe2PoGuV/jwoiGBlK8Lp3+Jkdw3fJ4Mexwi8vQ8VLNX3c+ykWqAi6KPIZG+4=
-X-Gm-Gg: ASbGncv5PtIFzpRHpbnCpdctb/Ah/D094vQN1EvEFz3drzlhBXk2cq+wz4WY8maoVGG
-	mVeY020PN9CdIvNsai/oWK0+Xi7MPuXpZPQB9MQ33eNb9bjLkG/xhvxcSIXamFSnc+H7f90BvoO
-	5HeKwsDKvq/qtV/OfLActaz0QxCz5HIyd4JoaIFWYJqDziMXA9cSOY+aDoqB8qMLopnmSdst9VZ
-	c8ubu9D+5DSfSMoSKMCbYPXvOgH2Con+jeuaM62nz3GHqJrVRrAJ+adQgk6iES0E7/CIVvuCr1H
-	7QIZsnB4fGsvS3QrEMZfrOIzGmVrdrEtrBGI0hlXKepRdmwjyA==
-X-Google-Smtp-Source: AGHT+IGo7cTRo8kiQ/h++DgBA8RW5r2euHnxHw/uTOTKv4yUHsRawjSowGFkmPkzcA245vQdY6nlTQ==
-X-Received: by 2002:a05:600c:46d1:b0:43c:f8fe:dd82 with SMTP id 5b1f17b1804b1-43db624aed9mr150397785e9.18.1743591594310;
-        Wed, 02 Apr 2025 03:59:54 -0700 (PDT)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-43eb60d3627sm16842805e9.24.2025.04.02.03.59.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Apr 2025 03:59:53 -0700 (PDT)
-Date: Wed, 2 Apr 2025 13:59:51 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
-Subject: [PATCH] remoteproc: qcom_wcnss_iris: Add missing put_device() on
- error in probe
-Message-ID: <4604f7e0-3217-4095-b28a-3ff8b5afad3a@stanley.mountain>
+	s=arc-20240116; t=1743593739; c=relaxed/simple;
+	bh=TbdnfG8wkwkQNcCDVtClAVzFHhMRXauh/c7m5Sv6VTg=;
+	h=Date:Message-ID:Mime-Version:From:To:Cc:Subject:Content-Type; b=OJM/mqH+qQe+IbM/XLDbuZwDTBLtFYv4d36KU2AYNrherD4AZmuZ1vYTf/e021m/4ihRO5YUbFEG1cIsMKMZIi3y9Y6ZuaD7Hnml2zFvtZgYk5Dmf8kKOmfzXSE2ZnoTdgqAsK+q3o/atffkaTEbPUxO1t8wIgmPsD8quyseJrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zte.com.cn; spf=pass smtp.mailfrom=zte.com.cn; arc=none smtp.client-ip=63.216.63.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zte.com.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zte.com.cn
+Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mxhk.zte.com.cn (FangMail) with ESMTPS id 4ZSN8X20fdz8R049;
+	Wed,  2 Apr 2025 19:35:24 +0800 (CST)
+Received: from xaxapp05.zte.com.cn ([10.99.98.109])
+	by mse-fl1.zte.com.cn with SMTP id 532BZKTK064113;
+	Wed, 2 Apr 2025 19:35:20 +0800 (+08)
+	(envelope-from shao.mingyin@zte.com.cn)
+Received: from mapi (xaxapp05[null])
+	by mapi (Zmail) with MAPI id mid32;
+	Wed, 2 Apr 2025 19:35:22 +0800 (CST)
+Date: Wed, 2 Apr 2025 19:35:22 +0800 (CST)
+X-Zmail-TransId: 2afc67ed20fa174-1da6c
+X-Mailer: Zmail v1.0
+Message-ID: <20250402193522517tlQ-zKtbUFsLKAMwRTF6-@zte.com.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email haha only kidding
+Mime-Version: 1.0
+From: <shao.mingyin@zte.com.cn>
+To: <andersson@kernel.org>
+Cc: <yang.yang29@zte.com.cn>, <xu.xin16@zte.com.cn>, <ye.xingchen@zte.com.cn>,
+        <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <xie.ludan@zte.com.cn>
+Subject: =?UTF-8?B?W1BBVENIXSBidXM6IHFjb20tc3NjLWJsb2NrLWJ1czogVXNlwqBkZXZtX3BsYXRmb3JtX2lvcmVtYXBfcmVzb3VyY2VfYnluYW1l?=
+Content-Type: text/plain;
+	charset="UTF-8"
+X-MAIL:mse-fl1.zte.com.cn 532BZKTK064113
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 67ED20FC.001/4ZSN8X20fdz8R049
 
-The device_del() call matches with the device_add() but we also need
-to call put_device() to trigger the qcom_iris_release().
+From: Xie Ludan <xie.ludan@zte.com.cn>
 
-Fixes: 1fcef985c8bd ("remoteproc: qcom: wcnss: Fix race with iris probe")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Introduce devm_platform_ioremap_resource_byname() to simplify resource
+retrieval and mapping.This new function consolidates
+platform_get_resource_byname() and devm_ioremap_resource() into a single
+call, improving code readability and reducing API call overhead.
+
+Signed-off-by: Xie Ludan <xie.ludan@zte.com.cn>
+Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
 ---
-This patch is based on static analysis and has not been tested.  Please
-review carefully, etc.  Another option would be to call device_unregister()
+ drivers/bus/qcom-ssc-block-bus.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
- drivers/remoteproc/qcom_wcnss_iris.c | 2 ++
- 1 file changed, 2 insertions(+)
+diff --git a/drivers/bus/qcom-ssc-block-bus.c b/drivers/bus/qcom-ssc-block-bus.c
+index 7f5fd4e0940d..c542ef8ae4a6 100644
+--- a/drivers/bus/qcom-ssc-block-bus.c
++++ b/drivers/bus/qcom-ssc-block-bus.c
+@@ -255,7 +255,6 @@ static int qcom_ssc_block_bus_probe(struct platform_device *pdev)
+ 	struct qcom_ssc_block_bus_data *data;
+ 	struct device_node *np = pdev->dev.of_node;
+ 	struct of_phandle_args halt_args;
+-	struct resource *res;
+ 	int ret;
 
-diff --git a/drivers/remoteproc/qcom_wcnss_iris.c b/drivers/remoteproc/qcom_wcnss_iris.c
-index b989718776bd..2b52b403eb3f 100644
---- a/drivers/remoteproc/qcom_wcnss_iris.c
-+++ b/drivers/remoteproc/qcom_wcnss_iris.c
-@@ -196,6 +196,7 @@ struct qcom_iris *qcom_iris_probe(struct device *parent, bool *use_48mhz_xo)
- 
- err_device_del:
- 	device_del(&iris->dev);
-+	put_device(&iris->dev);
- 
- 	return ERR_PTR(ret);
- }
-@@ -203,4 +204,5 @@ struct qcom_iris *qcom_iris_probe(struct device *parent, bool *use_48mhz_xo)
- void qcom_iris_remove(struct qcom_iris *iris)
- {
- 	device_del(&iris->dev);
-+	put_device(&iris->dev);
- }
+ 	data = devm_kzalloc(&pdev->dev, sizeof(*data), GFP_KERNEL);
+@@ -265,14 +264,14 @@ static int qcom_ssc_block_bus_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, data);
+
+ 	/* low level overrides for when the HW logic doesn't "just work" */
+-	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mpm_sscaon_config0");
+-	data->reg_mpm_sscaon_config0 = devm_ioremap_resource(&pdev->dev, res);
++	data->reg_mpm_sscaon_config0 = devm_platform_ioremap_resource_byname(pdev,
++																		 "mpm_sscaon_config0");
+ 	if (IS_ERR(data->reg_mpm_sscaon_config0))
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(data->reg_mpm_sscaon_config0),
+ 				     "Failed to ioremap mpm_sscaon_config0\n");
+
+-	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mpm_sscaon_config1");
+-	data->reg_mpm_sscaon_config1 = devm_ioremap_resource(&pdev->dev, res);
++	data->reg_mpm_sscaon_config1 = devm_platform_ioremap_resource_byname(pdev,
++																		 "mpm_sscaon_config1");
+ 	if (IS_ERR(data->reg_mpm_sscaon_config1))
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(data->reg_mpm_sscaon_config1),
+ 				     "Failed to ioremap mpm_sscaon_config1\n");
 -- 
-2.47.2
-
+2.25.1
 
