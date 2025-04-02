@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-53018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BECB7A78BA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 11:58:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C71FA78BA9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 11:59:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 07CB61893A30
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 09:59:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 426441675A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Apr 2025 09:58:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1971D7081C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D48ED23644F;
 	Wed,  2 Apr 2025 09:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lwYUsLMI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HkbYJSrI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F042356CB
-	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 09:58:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E71235BFB
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Apr 2025 09:58:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743587928; cv=none; b=XSosQGbgC9KxsQsT8wOqsRbYsppbBnZuQheFiEvcpmShVHSwXNbPIJ/rzacRHVH21Pa8Zvs2GI6P1HhHbEPmqC4ViZjCFHwGHOd36At6kCPjQzt/ofUZGA9s6bOWgSMZeBfi9R/+LP5F4tHEvaARf2Wpk6HRdNJlHKmwxknoR1o=
+	t=1743587928; cv=none; b=EJij916J1z6l9IBLUMXI6K6VtoTyGC/6lKF49nI8SIwmbXtP06OgmcwlqCu/gJKQT6rdhPqvaD5XZEJNrAQncvkhgCHNnggLfU90c4BzHCUIp0BtAVJEHYpxkawe3GWEYUm0/4f6wsu8dqETX8pe9fqKvsCYNRBCkUV7FWw+2HY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1743587928; c=relaxed/simple;
-	bh=IlA4UvDfErox3kVQzczkwY1GjiDHyTr52IErFszm38M=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=gOnVAKqj3fvzBSSe1LW8S5PBe2CmF+trhMGtDgY4OPu+cxLAIh0EUEYmhRgneSxoobHA32GfhIUB9qojUMDYovqW32ZTLlszt+lyn8FnVizSYS+tLagvo8PsDD+BV3O14tKTHSf3ulSOTdwYiP3M7pa0CDVUn2fjki888ofLihk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lwYUsLMI; arc=none smtp.client-ip=209.85.128.47
+	bh=hotZmPorZb9jdirRsPwukgzloHcJkty6Am+HrOSlUd4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=duyQPGdEugnYsgcdM/lLEyO4abg1QtgFOJ0b3D7FqPIJuyiwEQO+0PlbwDUGv+d9sZhMpuhY903z37gQ7iGYIsi27Uy7EX3xXJ8N7WrZXyFdb05ycMTZPr88hFNH6alCBnyFFNNp9tOa9qhZ/LORcqp7P9H15LO0nyc5b8woobo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HkbYJSrI; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so23581405e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 02:58:45 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3995ff6b066so3740425f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 02:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743587924; x=1744192724; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=F64Bhf8JcqE2NyBcccVmI5z7F2vvtYs8PqVACVDcoJ4=;
-        b=lwYUsLMIWeeYICUE4CRsTsMPqjGKHdQ3X8h8NXsnStwvJp7xr4XH2ruYrVwM+l8kQK
-         I/wZ4emHf1Vep1Je/5TfNKMd6ShrbtHk+MFOshJJ+FKOWdMos99Zx7q28BJq2icSDUv3
-         gjNGqUn00DS05J3dS8x7bVMXqivFLAPK8WJ44d09fwFDuPmHMXAo9vHym2OSQZq49PLL
-         cLaHBygv5YVCITz7XUTbZv3uNUvhg4/TMTgCyj+aygmjbTniraoGwFqMiMds/DbTDjai
-         82dKh9xzCNby/M7gNRyGabp2tdQSWCIYEh9nZQqAf16yqclpuxjua+lx5afHNPiBO1oX
-         n5Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743587924; x=1744192724;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1743587925; x=1744192725; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=F64Bhf8JcqE2NyBcccVmI5z7F2vvtYs8PqVACVDcoJ4=;
-        b=iPFEQdmsfrjeogUmiQTRUxrD/RLRFNkk7hEUINqBiOU3MbXrc3ES5NWYo1Q2S4Ev4V
-         H9YAjv8s+3NcWMHWKcSGArFvaLbEf8Z3yfCDeUqchKdMk0JlWpeir53SeGmf2uhH8nUB
-         Yh36/QI4Z0jMKOYAYEgu/HdTVlCZpllvAOMpW6k3wZW+fhMfXJ6sW8dbFi/30w1b8/mz
-         sTBC7jIOuROLmdJ3V0Io/NusLJC6OqCW9WcdWCSgTv99i8zx3sCjpc1CpAURfhcV+Cl8
-         Ix3u8QhT6lU9eqyYzvs0tKCVVLDgo2sl9GUaYG7jYojGe3zhUtlXo1kIjgelsjhlrcBk
-         MJ5w==
-X-Forwarded-Encrypted: i=1; AJvYcCVlzylSVjwMq+yal3XhOeCOQL4GZ1coxE6YJbI/TRXR+ooPA4ozRAjxxbES26xempTvd18zf7Y412LJzrJb@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXiuAO2Yv5aqKr4pZglJbvOmgFORWJQF3GdwZKwObLtTjX4oL2
-	SUOCm1x++qRIB/ZcEQFQbqLkZ2qm9tJyZBk9832WxFXlN5TiLzO0oRSiTsGRY1Q=
-X-Gm-Gg: ASbGncuatRWTEQQrDL5iQPbPIMxqPfAg3Jwp9vQtjeONV+88kX7IDPDrg33gY4vUxRf
-	+kFEZobx1cv5qAenV520jxpdaT9zjn8vMaVUaeVQwhfFr1ZGNsVPLRZz+bJHRrXBsjpyzys1BVI
-	dsXaBKtHJRoMUnMzytsolBMPPQJVn03e1cvu3QuEMbX1QPaSx4ruFRU7jL/8qkMwLLq+RhFikDL
-	9FB/TeKBr60IavrJku7hHL5EfriKKG1sm5bVky2jMGEdx+tj/ByIuMgOT39sRrHcGcRzLvspxVU
-	olgta857jFMntpeVz/SkPVr4pE6wm0tBUgylpksooyb54xuBHw331/tc/x2wpbRbyxM=
-X-Google-Smtp-Source: AGHT+IFF+LY0kUxsYN1yucCu27iDkU8fohgx1eaXgcBCwuhTj6Le9wBHGbHQPhPbt6iIdhv/R5hh1w==
-X-Received: by 2002:a05:6000:4014:b0:391:2a9a:478c with SMTP id ffacd0b85a97d-39c297543b5mr1431926f8f.23.1743587924276;
-        Wed, 02 Apr 2025 02:58:44 -0700 (PDT)
+        bh=utN0oqIDcrT2zxK1IDRytgewtc+C2bsT6oGkn2JxGrw=;
+        b=HkbYJSrI1hpgC8f8uG8QS6Vvt2lLuYMlykoLecNnNpycMO7I9lIorqoRCczjP/PWMw
+         nR7TPOuh7A0D48BnyQmqNG5ldG+6TxM9C5MbRIhHukKW7k82cGS9tV5Jhkpj8rtDsCSH
+         QlJbW8YlvRqf9Vgk3SQR7a9FZEtT+83CYu/snu34cBklc9uHEwJpczjr342EevBmFetP
+         5RSwoRgP2UqtNzBCtjdy/RdvdPeHv5g7qITcdYACJ+Q9PYnQ7Air0HnS1B+tTUZUQJW7
+         dW1eDFbR7rnDapCDaJh+kjxRMcLah+nCD1G4EkuLuUPyfIQI5CzIp1zDdSK7zMCzh1ie
+         OW9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743587925; x=1744192725;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=utN0oqIDcrT2zxK1IDRytgewtc+C2bsT6oGkn2JxGrw=;
+        b=liP3kJZg6G1ScZVFuBOO9IA2btSgz6BTE9gQDbVZqpe5xxjZ2O6gj67o8cn0afEnRG
+         ZV/3o1mj7/xb2+hyA63dRe0Pfa8LaZgeLoYN2wWXnrDgSVTCcOR7WckhIML8oCUw/Jyy
+         entuhoXvcW8OjtHrmryZveyTfkyJ3WKebr6ASeqSn4G1I+Fmf3cf358+f8BXkSBW4dne
+         JXhU7lR2VE2rnk6h7JcrPAAgfMuFLZ7NrxL6tjjxlsVIdFT4XvkWeulcNXut5QmKakCa
+         jTxDw2bFtvzQM/FyFk4oDVCqjHYbTKmvR8LRSO1WWHPO/w43jCf1JOjWEtwYQPrJjBzh
+         YeHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUAz4atYKh1xTD9D+64p9BCUQAeZr9RDhVB6nSPgANvdoPXF/TWo5d8AejOzk8boukWX15m412IKZaRStjn@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrqE/pX04Su3pZMt8jlHpQQBVbRdzn6l43bc7HogZZp69oi+w+
+	GXfE9FvarlpBi7yXUVrXdUvH4OpvHUxs0XuB7dCMnAfHMVI/hY8QIjSeKk9Dfjs=
+X-Gm-Gg: ASbGnctNZ2WZ6pAhJW3KuuQfshKgBmE9f2/X+Y1uEqU160L2rp3AjfayiGFOTXkelON
+	828qavEd1ZR5jsSUHRi8HtKQn4ZDXuw0Eo1h4sNQr682q+/s5cH+NyV2fi2LD4CT8aSgRZCbUGP
+	QJT2P6Fiftvwwcz5VTJmbqiDNvRM/6kTmuN0Dqw3M6eBRUZ3e8KAe6H/Tf2USdMuSrmd7li+TnH
+	4Vkig/7zGb6OTkqjUHTAh++a6DiHk4EP9L5ECe5Dh182nCt1zI6/70moCBfbgSulFpvC+D+P/JM
+	tEl2vgYsBJzdMshihIdoo/+/yAne/+TXIpgSU96RZXylC/KmVmtpFyVz
+X-Google-Smtp-Source: AGHT+IEOQi872DGX/BWG/7PZr47mmBBiyqaeCfOJjhbYXULx0/oJQFipZz6WgGJyguMaUHkybYGruQ==
+X-Received: by 2002:a05:6000:40ce:b0:39a:cd84:a77a with SMTP id ffacd0b85a97d-39c12113939mr12073691f8f.37.1743587925158;
+        Wed, 02 Apr 2025 02:58:45 -0700 (PDT)
 Received: from localhost ([213.215.212.194])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-39c0b65b985sm16581662f8f.12.2025.04.02.02.58.43
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-43eb6190bc4sm15563475e9.31.2025.04.02.02.58.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Apr 2025 02:58:43 -0700 (PDT)
+        Wed, 02 Apr 2025 02:58:44 -0700 (PDT)
 From: Christopher Obbard <christopher.obbard@linaro.org>
-Subject: [PATCH v4 0/2] Add support for OLED panel used on Snapdragon
- Lenovo T14s Gen6
-Date: Wed, 02 Apr 2025 10:58:31 +0100
-Message-Id: <20250402-wip-obbardc-qcom-t14s-oled-panel-v4-0-41ba3f3739d0@linaro.org>
+Date: Wed, 02 Apr 2025 10:58:32 +0100
+Subject: [PATCH v4 1/2] arm64: dts: qcom: x1e78100-t14s: add hpd gpio to dp
+ controller
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,11 +84,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEcK7WcC/5XNu24CMRCF4VdBrpnIV8xS5T0iCntmFiwt68VGS
- yK07x5DRZQGyv8U37mJyiVxFbvVTRSeU015bGHXK4HHMB4YErUWWmonjZZwTRPkGEMhhDPmE1y
- UrZAHJpjCyANEb3smrWgjpWjMVLhP34+Lr33rY6qXXH4ej7O6r2/gswIF0kW0kZC2OnwOaQwlf
- +RyEHd91s+ie0HUIIG7iB47MhLxn2ieRf+CaJpoHblee+tNt/0jLsvyCz7jerZ1AQAA
-X-Change-ID: 20250320-wip-obbardc-qcom-t14s-oled-panel-b74fed21d600
+Message-Id: <20250402-wip-obbardc-qcom-t14s-oled-panel-v4-1-41ba3f3739d0@linaro.org>
+References: <20250402-wip-obbardc-qcom-t14s-oled-panel-v4-0-41ba3f3739d0@linaro.org>
+In-Reply-To: <20250402-wip-obbardc-qcom-t14s-oled-panel-v4-0-41ba3f3739d0@linaro.org>
 To: Douglas Anderson <dianders@chromium.org>, 
  Neil Armstrong <neil.armstrong@linaro.org>, 
  Jessica Zhang <quic_jesszhan@quicinc.com>, 
@@ -104,71 +103,61 @@ Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org, 
  Christopher Obbard <christopher.obbard@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2101;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1276;
  i=christopher.obbard@linaro.org; h=from:subject:message-id;
- bh=IlA4UvDfErox3kVQzczkwY1GjiDHyTr52IErFszm38M=;
- b=owEBbQKS/ZANAwAKAWNNxPBocEb4AcsmYgBn7QpPRoqhp0uCFc1qfUTwfMlvTteUzDKNC76k/
- ZxU7VoUoRyJAjMEAAEKAB0WIQTxi9yLbCX5CqI9UXRjTcTwaHBG+AUCZ+0KTwAKCRBjTcTwaHBG
- +OuZD/4q4OrxLfM5IQZJdlfHMtgt6pBL2NUTwms3NT0YVSZguUAkuGXPQq9EaAlqyIed58qWrJ/
- 44+r7asNQ4rhp96wGMY3QuiMWVcDMkz3uIy1bkOYhxNY82kt1eDE6dtusJOuoM0BU/d16gV2qSt
- 9gs8CCH7cUeL0auRWoSJiZ1vNcP1QnwGXl01x9po7YUaEUe1BWAxpQPP7DWh2J+DWfjPm+ySBIS
- zibb2tgf3U6ffJst8RbEjypQZ3Bs9/mymnqUBHustX6D9vBMPn6/q5+IwfzQTngDZEnIDyZDTpQ
- D7IYQBx4OpSQfO7NZA2/z2361xC3zXZqH1+ZE2On3Yfkw4Cwa+s2voOEfPgtoswePcQ+9U7UoYi
- o1xTepR9clFspYYwzj8TH5y9YP4im+K5oBO2K3q5k88lyDDPq6v3t2QC58i/Id23zUBgxCtejxY
- Tl/ulhlDvjXe6wNSsFTLLq9wKS+s92QqjB5EeTobkVrQpKvtbbb89p7/tdUSskMz25M5NdojAxL
- SIZge2SXxTogRI3mQ1AG9IZ1q1HTL00pWMof4rfQizh3NoYInBFHvUoHz0GdrnSX1V3Hw3IVJRg
- inSMaDlt7fhnVLLTplZILt+F6pPGvEt0QTa8q88Q1jao0/iAXbDcJp1fm/qnOpYZg7F003wZqwc
- XXcCA+pNCd0oFDw==
+ bh=hotZmPorZb9jdirRsPwukgzloHcJkty6Am+HrOSlUd4=;
+ b=owEBbQKS/ZANAwAKAWNNxPBocEb4AcsmYgBn7QpT8Rj3nswbju+q78Oxs8w0VOLDQ283LKUHD
+ N8EVUpv5Z+JAjMEAAEKAB0WIQTxi9yLbCX5CqI9UXRjTcTwaHBG+AUCZ+0KUwAKCRBjTcTwaHBG
+ +D1EEACewDpImJIERkGTNf8Tnlx96rG5Pmvg98xt6EJOnyPnqlDKRa4HQyl3oFaMClcdGiaqX2t
+ m5r39NWjQf65zxUHfI6QRF7zQx0EfUQfcJ5ZQXexn/spNZoWHown39IqGkKUIjMb5rMuBx1nHF+
+ FknHSf9P0QcmzIkg1x08qwCgsYPbwOOyCkPcojYofZpCsvPExKsvMvY2QGnIsEP0xUg4PpY3wND
+ jZ1AuF9FEpZ1TeXFwjq5gQ2iWg+20JXaJXAYRNKZJTamRE1LgmfFfwIl/0KliRKxI7MgIqzSQVK
+ Qxxs4q0V8tMlkmqCBDl5A8PFtPsS1uKSSBS4yN56c7M8PaaZJjgJ5gfoCkjwWdAn5y9KVWx9rI/
+ RpeXHeTgNGQOaYZzG479n7xeXnMevLNqovQwPaqdTb4o8ybKkMv4pJt1o+MOJqXUEKLMETmlt5X
+ yJrFBkBdCRqnjCQ2GFwu/25fff5O0FaeBPKoW35Ps1HEXSEAIf9FCqxXI/+2GZ4E2miyr0qyuwI
+ 25oA9fCTOjSQ/9vHBd3AYryIi2VbKj454jGcg6PoOheT106Fje+HkI+PIl24fyy2I9vJ2FAmHqQ
+ pHi5CnWJcObu/sjaK10OyMimQ+br6QMZs5rdjuWdnlEJ/B11oj+D1oUSPa/eP/oKP1mCEb+I4fN
+ jD8kmL1/70sY8pA==
 X-Developer-Key: i=christopher.obbard@linaro.org; a=openpgp;
  fpr=F18BDC8B6C25F90AA23D5174634DC4F0687046F8
 
-The Snapdragon Lenovo T14s Gen6 can be bought with a number of different
-panels. This patch series adds support for the OLED model which has a
-Samsung ATNA40YK20 panel.
-
-With this patch series the backlight of the OLED eDP panel does not
-illuminate since the brightness is incorrectly read from the eDP panel
-as (to be clear this is not a regression). This is fixed in [0].
-
-[0]: https://lore.kernel.org/all/20250330-wip-obbardc-qcom-t14s-oled-panel-brightness-v6-1-84ad1cd1078a@linaro.org/
+The eDP controller has an HPD GPIO. Describe it in the device tree
+for the generic T14s model, as the HPD GPIO is used in both the
+OLED and LCD models which inherit this device tree.
 
 Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
 ---
-Changes in v4:
-- Rework HPD GPIO into eDP device rather than panel (Johan).
-- Drop review tags for HPD GPIO patch.
-- Link to v3: https://lore.kernel.org/r/20250327-wip-obbardc-qcom-t14s-oled-panel-v3-0-45d5f2747398@linaro.org
+ arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Changes in v3:
-- Added review trailers from v2.
-- Dropped dt-binding documentation patch (applied by Douglas Anderson into
-  drm-misc-next).
-- Dropped eDP maximum brightness patch (will be sent in separate
-  series).
-- Removed duplicate nodes in T14s OLED device tree.
-- Reworked WIP comments from commit messages.
-- Link to v2: https://lore.kernel.org/r/20250325-wip-obbardc-qcom-t14s-oled-panel-v2-0-e9bc7c9d30cc@linaro.org
+diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+index 962fb050c55c4fd33f480a21a8c47a484d0c82b8..b0dbe4eaa77e5a6f862fd0db2a3c91db2aab5030 100644
+--- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+@@ -975,6 +975,9 @@ &mdss_dp3 {
+ 	compatible = "qcom,x1e80100-dp";
+ 	/delete-property/ #sound-dai-cells;
+ 
++	pinctrl-names = "default";
++	pinctrl-0 = <&edp_hpd_active>;
++
+ 	status = "okay";
+ 
+ 	aux-bus {
+@@ -1215,6 +1218,11 @@ &tlmm {
+ 			       <72 2>, /* Secure EC I2C connection (?) */
+ 			       <238 1>; /* UFS Reset */
+ 
++	edp_hpd_active: edp-hpd-active-state {
++		pins = "gpio119";
++		function = "edp_hot";
++	};
++
+ 	eusb3_reset_n: eusb3-reset-n-state {
+ 		pins = "gpio6";
+ 		function = "gpio";
 
-Changes in v2:
-- Use the existing atna33xc20 driver rather than panel-edp.
-- Add eDP panel into OLED devicetree.
-- Add patch to read the correct maximum brightness from the eDP panel.
-- Link to v1: https://lore.kernel.org/r/20250320-wip-obbardc-qcom-t14s-oled-panel-v1-1-05bc4bdcd82a@linaro.org
-
----
-Christopher Obbard (2):
-      arm64: dts: qcom: x1e78100-t14s: add hpd gpio to dp controller
-      arm64: dts: qcom: x1e78100-t14s-oled: add edp panel
-
- arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts | 8 ++++++++
- arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi     | 8 ++++++++
- 2 files changed, 16 insertions(+)
----
-base-commit: b6ae34803e82511009e2b78dc4fd154330ecdc2d
-change-id: 20250320-wip-obbardc-qcom-t14s-oled-panel-b74fed21d600
-
-Best regards,
 -- 
-Christopher Obbard <christopher.obbard@linaro.org>
+2.49.0
 
 
