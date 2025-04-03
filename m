@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-53108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADD32A7A504
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 16:25:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F1B1A7A50D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 16:26:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B45E16D739
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 14:22:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D4EE5164374
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 14:23:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F1C324EA90;
-	Thu,  3 Apr 2025 14:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 837E324EA90;
+	Thu,  3 Apr 2025 14:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qmky6xB/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uWVr973U"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4851514E4;
-	Thu,  3 Apr 2025 14:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531F524DFE7;
+	Thu,  3 Apr 2025 14:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743690121; cv=none; b=Wmfybl2mXZDq1qAMwDAVElapMB53OqhBmSYTLs5/pkWjhpaK3RHUtCNuIpYm11IvUYY1JjkZnZThSmi4J5dY5uooigzBx8/OVX7m5pW5O0TeaQu8XIjdwTjpzmI/qC1LuvpN0MIekEPa9nfOnGk0ojrFVnItGSmyqqpk5s7ePN4=
+	t=1743690229; cv=none; b=s93UE81BI3kGouEeN+1wKAczpF6LbjQovoE/YQtctiVMcup7WHhY33ZnkFFNJ9kIgMRgkzWsXapGXiprXLdL1JkpVGjx/WMD2qZUIzc4yZIlgJWtPEA1A/kdJJWzZD7vzF9xiOPhPPNq/7I4e9nn+frrlCRk7pt1epORBmqh/vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743690121; c=relaxed/simple;
-	bh=7cytq67GGUL6+u44tuFkbevBHrtSrDerVOuh56Zknks=;
+	s=arc-20240116; t=1743690229; c=relaxed/simple;
+	bh=G/JTFca46osFVH7to0Y+jfqwPLYjhymnaSWrKSi5cbQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tee944JS2IKnivXfMTGPTTNEqNd3xp9BuSgK6/FvQi5fPlV+H5tmDEQm0oL47sfGEF7b875vdwpTWClapERL3bNh1VGpNKtWW2uA2tffK/bf/NPFka2LYBhuzvMfs/SJhX2OV1OpubxdR6mVBINWips1LlbQHccPcBMo1fmCLos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qmky6xB/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C997DC4CEE3;
-	Thu,  3 Apr 2025 14:21:54 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=GCRReccfJLeo9tBktVygD9SxGBBIXoT8ArNJpTMLi+8UKxd6VOJJ3+6ctYtE9nTuhdoyP8+XMzyZNKUtGD+5/+XMoiCbcnAVC8wRgPFCNvQKvjZFBBRYvtAp0b3AK6rkbE3wTeo7Djx2ozdq9aRbbcdHmg6ZnaBw5cVWLyB9wTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uWVr973U; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45941C4CEE3;
+	Thu,  3 Apr 2025 14:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743690119;
-	bh=7cytq67GGUL6+u44tuFkbevBHrtSrDerVOuh56Zknks=;
+	s=k20201202; t=1743690229;
+	bh=G/JTFca46osFVH7to0Y+jfqwPLYjhymnaSWrKSi5cbQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Qmky6xB/pAR+xOKqgu71njJKKw5g8kdVTY6ggZAwkd1eLP9oY0CPV/rBS8JK25ILk
-	 mJrXhz+4cozipqGKpnuX2+W+0iyHa79YcFkKjMf2kMDIMvQtxKunPZ23zxXfNafrX1
-	 +GG9up7V/dLTHdesrJriSJ73LFv++JOcNSliDWqPQnpZU93US7/qfla9iRCxbylZIv
-	 YUbQCLfzLxVNcTLQ7UWkgVqk2eJKqKo9+jur+tKMbOZdXhOlRIAbzy/7riPIZ2MM6x
-	 hRis/YqmymG5jQeSJbHhvqoTLsPgeO2fqgwuRydpchTEX4tASQm7W80dXF5Io3bcJk
-	 QvT6xHV/1yRnQ==
-Message-ID: <6b33d7ea-4ad5-454f-bd26-0ef961cf7ae3@kernel.org>
-Date: Thu, 3 Apr 2025 16:21:52 +0200
+	b=uWVr973U+DYVv2nDoYbQ0koKHCmjt/HHmFi0QB1hDMQ4iBY9ZKjorcP4Kzy2hHv8I
+	 veUTyrrtV/WddFqEmGy8TtAymWLQ8iDpQn3tkMWPNlhV1sqzA0ijtMmAPRJxpJmPMo
+	 PADj0uVRVs+XnBZVDKL5Tnzo93gxkTcO4/XfPaWGtUs/wLO8i/eV6hakWLE2ltlcUD
+	 S4qOdevi8p7Gds2AvetgdrJ8EdNIMO0PlUCVUwN0ScLiIPxl2o1NqhOQJG1BOPQnCb
+	 i2BdYDm77JR5iX4vzSpL3TUQbUgkDQre6MAh1aHYykRSNfHgWz2X1S+xAXU3NF1eTJ
+	 cBHNmGLO+FDDA==
+Message-ID: <328b7016-402b-4fc3-ad62-2f29af86f9f7@kernel.org>
+Date: Thu, 3 Apr 2025 16:23:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 2/8] dt-bindings: remoteproc: qcom: document hexagon
- based WCSS secure PIL
+Subject: Re: [PATCH V4 7/8] arm64: dts: qcom: ipq5424: add nodes to bring up
+ q6
 To: Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>,
  andersson@kernel.org, mathieu.poirier@linaro.org, robh@kernel.org,
  krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
@@ -59,7 +59,7 @@ To: Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>,
  linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
 Cc: quic_srichara@quicinc.com, vignesh.viswanathan@oss.qualcomm.com
 References: <20250403120304.2345677-1-gokul.sriram.p@oss.qualcomm.com>
- <20250403120304.2345677-3-gokul.sriram.p@oss.qualcomm.com>
+ <20250403120304.2345677-8-gokul.sriram.p@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,26 +105,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250403120304.2345677-3-gokul.sriram.p@oss.qualcomm.com>
+In-Reply-To: <20250403120304.2345677-8-gokul.sriram.p@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 03/04/2025 14:02, Gokul Sriram Palanisamy wrote:
-> +    minItems: 1
-> +    items:
-> +      - description: Q6 reserved region
-> +      - description: Q6 dtb reserved region
+On 03/04/2025 14:03, Gokul Sriram Palanisamy wrote:
+> +					  "stop-ack";
 > +
-> +  qcom,q6-dtb-info:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-
-NAK, you added new properties which invalidates review. You must drop
-review after making such significant changes (3 new properties? Several
-other changed).
-
-See submitting patches.
-
-Anyway, NAK for the property, you don't get DTB info from DTB.
+> +			mboxes = <&tmel_qmp 0>;
+> +			qcom,smem-states = <&smp2p_wcss_out 1>,
+> +					   <&smp2p_wcss_out 0>;
+> +			qcom,smem-state-names = "stop",
+> +						"shutdown";
+> +
+> +			memory-region = <&q6_region>, <&q6_dtb_region>;
+> +			qcom,q6-dtb-info = <&tcsr 0x1f004 0x1f008 0x1f00c>;
+> +
+> +			status = "okay";
+How this could appear here? What is happening with this patchset?
 
 Best regards,
 Krzysztof
