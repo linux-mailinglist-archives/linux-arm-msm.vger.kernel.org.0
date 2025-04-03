@@ -1,282 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-53067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85449A79935
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 02:07:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D060A79954
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 02:19:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7307B188D260
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 00:07:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 24FB33A8325
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 00:19:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22DDB2E337E;
-	Thu,  3 Apr 2025 00:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51EAF1FDD;
+	Thu,  3 Apr 2025 00:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eb05JHwT"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rHzLNgdn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13484D26D;
-	Thu,  3 Apr 2025 00:06:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FB4D53C
+	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Apr 2025 00:19:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743638806; cv=none; b=EktLb/2alElJ/ANDJ9yKUbZoXxi+lgL6M3B0P0DgHytdcSxbRslyKXW1LWkJ516xJRNoysCIO4cCwAGwL066IG/KxGf6BjNY8hG0u/5/UAi7Gj3+y0hXlUbWq6xjM6Bx2hWR6O9cEulPLRqYxGeBdRiAbNr08exvoZpJqhW+P0A=
+	t=1743639582; cv=none; b=rRYWQuxQHBBnmOSU6nQMc4o4KdfK2gY7d14pPk503BDpY0BEnp3Haf212SbgvUmT6j7waBGnGwEurEIWqOq8ak91KusPxR0SI2xTpE5/hc38ymDAYVyDo3zPc2Y6IALeqevPY6SllPqfH8xZ867OX2b/HHs+AJNiVtgvC5gNcQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743638806; c=relaxed/simple;
-	bh=q0oeBg4kkjHukNevSdAXAXG57vFGbGkVFCKLMccHnWs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IfPtc69T1DLraapCbKjLYvVmq5TSJib/bTbvl7MuQbe3r7NB6TobNKmynqxXlNJjYeEY91cMVvWId/y5ZVhCf7YmGL2rnqdhatlBKThpke3brsGuEmuGCsvd7Pmyr54wZfBfhY+Ya5oX/RZC05d8bvn0JKeo/u+yXX3x8QrqVmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eb05JHwT; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so2430755e9.1;
-        Wed, 02 Apr 2025 17:06:43 -0700 (PDT)
+	s=arc-20240116; t=1743639582; c=relaxed/simple;
+	bh=wRL+LhgFwhn1QQmACMn+zc2j51ZeoWRMx48GJXzzxpM=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=sVWH4KPalNNhjA4vvwzqNtRdYjPt+L9VXikerLq4vpGY368GjI5G5/oLKd471H8N5c5w6R3zEvgICQ0q7hCZ6zg3f0ZIK5sRbZWPQIoAENkpwTzuKcXXGxPHa6YVlZouN7uDQeCnCrgcyZCjbE4pP/5ZFyP8m8NB6kry9rJEDKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=rHzLNgdn; arc=none smtp.client-ip=209.85.216.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-30566e34290so297071a91.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Apr 2025 17:19:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743638802; x=1744243602; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=THqZB3gc9ZiqXUYns3lMT7gLqog0AJdSzQ22r6kIxIg=;
-        b=eb05JHwTcsOcMq5VFNt78u6jEbs/NAfwNmBxcLQvXJ3oO2yT3cwSTN9d0eoYqzR6Rg
-         70bLPYn9Iw+WLxNsEEP+/n07nA/sQfZS5lu47pZ5F2nOZWjrB+cLCMheKfGa2Tik1oxe
-         +C5NF54cWRbf3KySzXa+eUD7yI1nMOdBCK6FgPwbBQsDKMDbRL8MD400B6FkvjAfrTCC
-         8y+wgKmRB2EKgBi0RxtuOt+gTOQmub/Lg0SFpKHU+pFF8jlA99P+ILgE1aNZLXXHh7RP
-         72bSuEQ3sy/7xt2JY+Ls9PAksv180el2uoxg7mB6vh5zQS8j1kGaImNZ4ohFh3kIUAQ3
-         TVcg==
+        d=google.com; s=20230601; t=1743639580; x=1744244380; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=giq31tPMYQR9GJOjdMUA5ykRfg6GYvMlM/OohhUUb8g=;
+        b=rHzLNgdn18bTacFu1p2/9+I6wgz7FAkpJvuLmTROuruXPeUjcMJV7PMkXit6Vw+OgX
+         348A/Enh/PnieYWeF9vy91hw1aAkpuJgfU7HPLcBcxZ5mOcv1Bm6f/JMxsSmt0Jw/1d8
+         B8vbXq//GI5NTRCW+tfyq1eMRG/rjwREQMAXwdnb3hXl3LQqZwbu1RYxlBmD2R1mSMPY
+         6oQoWMs6IKC/ZA8So50cYhr0q9fadUM9XdZesad+n+MjNApBhlbyGoXi9n21v3HiHpY+
+         eHnsqIluCMHJhKNRyjicLMUTjjg3Qs0PgcpYgzaA28I3geTpXuFR0xAeI0fN1JnVFi5W
+         zmpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743638802; x=1744243602;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=THqZB3gc9ZiqXUYns3lMT7gLqog0AJdSzQ22r6kIxIg=;
-        b=bW1uJPzrFs4o0Xn1qkeli/E1xhXgr628qMMVPit+97N+DVmxdtgtTgQu317scTmYL/
-         2k/cGHJaEjKKqFt1cZPgs1QFo8LCDoY8q8U0x/udcuma3diIjFJqRD/DZMBxNA/C6dQb
-         92zffP+vgaIm31LXTDbs0U3RHDt6hsn6Jkhlf0GbsdgfW6ecIP3ZT8vmMZzC/Zbv6pOJ
-         yB57dkkgjCF+CgjIHb9cwn4DIrdIrnhd+uX2kBP4VAw+s3Ok8CYwJ5zG955Ss3HMAD5U
-         dkuoRsRUg1jLj1EN07ZhvooHtcZvIjFcTilj00Rl4oFRTgN5SoLwpMPnt2sxh1apPD88
-         OMDw==
-X-Forwarded-Encrypted: i=1; AJvYcCU1y1EksQvDo/EE+ffg/BGzMhzKGlU8AunP71EFoQafPAk5qKft3ET53yZucRAl2QTFXIK63nreKICg@vger.kernel.org, AJvYcCUkwC7fNmNlzKObuLAWSDsKcikRdqPk152Vj3PiCLFrKaizzTOBluTC9ArJ4EzI/KDrIRo8HtSNiJlQ@vger.kernel.org, AJvYcCW3ZuB6Awv4WK0wR8rW4HDu6XuOVvpGy9fsq22pmscaP0jVvl2B7aTVNzoGr4rSy1H4HsdXClHV12C0OHR5@vger.kernel.org, AJvYcCWhDvXy+LQ+J2FV6+1a6ufHcUY0AivBiutfcn8Uga8HQbUNqG7E+SYCh+iqX5qyy+NL9HYJftOTZAOJxdgGBA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwMADUh+DecK8DFwYOx0x632Qx89HW5EelcKigAcFdvOahoJTUk
-	FtY3eyTIxegvo75g9zu+Vzbhysz3+IC+dcicKw+3w4EBu0hGNHDJlxk3ye7UZlDw6Vk+DpzYRUb
-	PV9L85+J5zhef61uZ4YC0PbBBJA==
-X-Gm-Gg: ASbGncumnHWJBaFW4oe+JYbhC+amBaeGF/MTs9py+Dm3DlVJ+X6hH8Ypyf4KuCns5Bz
-	nNhdpoZDEivK+7TI3HKPq4NP5xHew9D4c4XIDGBaaZ5SnI4royxU22MQ55PpwFgMPT7igNwuoiz
-	O7dJ5mS4r6GXzKLzAhDDRjDgfoOg==
-X-Google-Smtp-Source: AGHT+IEvyEQkupDmAf3qVozR5BlueIdVIfTL0esTsJxUP8sWVaCCP1GT6K2TX6UE6Phhe+TxzenmCuBGyJp2uE4+9O0=
-X-Received: by 2002:a05:6000:2585:b0:39c:2688:4ebf with SMTP id
- ffacd0b85a97d-39c29737e0dmr3794378f8f.6.1743638801887; Wed, 02 Apr 2025
- 17:06:41 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743639580; x=1744244380;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=giq31tPMYQR9GJOjdMUA5ykRfg6GYvMlM/OohhUUb8g=;
+        b=fwh5SUwPi68CM5Thu6odlEvlDZ2VpivBVBBfyj2T0xhREMtVnMmQdqDG/mTvjdBDj6
+         Ll352n5oujQ4EJO3/0mFlOutBpH7TyEbGd8qmWOlBIzpN87C1WQm+h3wPxWD1FxANXG2
+         YvucbbXjbJAzum/XZTyVfCoNmpU/5mgudZjYbCqsGDeO69rsQbtwsLaIdGN6i2LaznNQ
+         y9e0AMYmRuYNetZtzpkPuwqGbXbiMVMZfGx5d6ZT2pap2PUPIGkDi+J7cle3+MputQNw
+         6Co1KEjkEA/Tzqj4tqTtnQVC1PF4vTsQJlvH1Tw4gMZnxscul5xpSx9pXMPGB5koAbvg
+         DS9g==
+X-Forwarded-Encrypted: i=1; AJvYcCVJuGqLd8Xegghsq4D2D8KMQ+lEmkhx55Ax90H4Ik6BEHtvzxok/bXSfjygyqRAiFLg6imeQQgQo3PnmBmS@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx07oNNuJP3U8rvp168ZCRtLNjmzJug6zjCehih++ntKgqyvnj8
+	DEbsCO94f4LvsWAY6KtKGJyC0oziAZjKbBe7duwxg6pyaKVp0pcDJI3n0AgnjNt8ZTECwBJ6dia
+	qmg==
+X-Google-Smtp-Source: AGHT+IEALDHXaWn7DLHhgLj4jdYjci9jQvHFqEsuIO7fXG0v8/sr5fTQJ+kpqo4OZSalhy2Upmggi3qyPYE=
+X-Received: from pjbli6.prod.google.com ([2002:a17:90b:48c6:b0:2fa:27e2:a64d])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:2648:b0:2ee:90a1:5d42
+ with SMTP id 98e67ed59e1d1-3056eca1a6bmr7764389a91.0.1743639579925; Wed, 02
+ Apr 2025 17:19:39 -0700 (PDT)
+Date: Wed, 2 Apr 2025 17:19:38 -0700
+In-Reply-To: <20250328153133.3504118-5-tabba@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <CAMcHhXqbQ-6SLotNfQDStr5B0KAMxFRuSiLnjdg+UrtqA1phXw@mail.gmail.com>
- <AM7P189MB100945E7C0850C7469739C81E3AF2@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM>
- <CAMcHhXrcvsKtZnHC5gKFh3nc_XKQKaLdBbnQA6J_rBdUxxP27w@mail.gmail.com>
-In-Reply-To: <CAMcHhXrcvsKtZnHC5gKFh3nc_XKQKaLdBbnQA6J_rBdUxxP27w@mail.gmail.com>
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Date: Thu, 3 Apr 2025 02:06:30 +0200
-X-Gm-Features: ATxdqUHEo8FZvVy5ygBezdSIUAGGICKKb_RWUaWMTv_G9s3WUL90wafr3AxtuqI
-Message-ID: <CAMcHhXpPpQ175jiX3KbEVY7ATLghEzGU9EeQjx+zHkMs8vovzA@mail.gmail.com>
-Subject: Re: [PATCH v1 6/6] arm64: dts: qcom: Add support for X1-based Asus
- Zenbook A14
-To: Maud Spierings <maud_spierings@hotmail.com>
-Cc: abel.vesa@linaro.org, andersson@kernel.org, conor+dt@kernel.org, 
-	devicetree@vger.kernel.org, gregkh@linuxfoundation.org, 
-	heikki.krogerus@linux.intel.com, johan+linaro@kernel.org, 
-	konrad.dybcio@oss.qualcomm.com, konradybcio@kernel.org, krzk+dt@kernel.org, 
-	krzysztof.kozlowski@linaro.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, lumag@kernel.org, 
-	robh@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <20250328153133.3504118-1-tabba@google.com> <20250328153133.3504118-5-tabba@google.com>
+Message-ID: <Z-3UGmcCwJtaP-yF@google.com>
+Subject: Re: [PATCH v7 4/7] KVM: guest_memfd: Folio sharing states and
+ functions that manage their transition
+From: Sean Christopherson <seanjc@google.com>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org, 
+	willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, 
+	yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, 
+	amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com, 
+	mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, 
+	ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
+	pankaj.gupta@amd.com
+Content-Type: text/plain; charset="us-ascii"
 
-On Wed, 2 Apr 2025 at 10:36, Aleksandrs Vinarskis
-<alex.vinarskis@gmail.com> wrote:
->
-> On Wed, 2 Apr 2025 at 08:30, Maud Spierings <maud_spierings@hotmail.com> =
-wrote:
-> >
-> > > On Tue, 1 Apr 2025 at 23:15, Konrad Dybcio
-> > > <konrad.dybcio@oss.qualcomm.com> wrote:
-> > >>
-> > >> On 4/1/25 8:05 PM, Aleksandrs Vinarskis wrote:
-> > >> > On Tue, 1 Apr 2025 at 17:59, Konrad Dybcio
-> > >> > <konrad.dybcio@oss.qualcomm.com> wrote:
-> > >> >>
-> > >> >> On 3/31/25 11:53 PM, Aleksandrs Vinarskis wrote:
-> > >> >>> Initial support for Asus Zenbook A14. Particular moddel exists
-> > >> >>> in X1-26-100, X1P-42-100 (UX3407QA) and X1E-78-100 (UX3407RA).
-> > >> >>>
-> > >> >>> Mostly similar to other X1-based laptops. Notable differences ar=
-e:
-> > >> >>> * Wifi/Bluetooth combo being Qualcomm FastConnect 6900 on UX3407=
-QA
-> > >> >>>   and Qualcomm FastConnect 7800 on UX3407RA
-> > >> >>> * USB Type-C retimers are Parade PS8833, appear to behave identi=
-cal
-> > >> >>>   to Parade PS8830
-> > >> >>> * gpio90 is TZ protected
-> > >> >>
-> > >>
-> > >> [...]
-> > >>
-> > >> >>
-> > >> >>> +&spi10 {
-> > >> >>> +     status =3D "disabled";
-> > >> >>> +
-> > >> >>> +     /* Unknown device */
-> > >> >>> +};
-> > >> >>
-> > >> >> Does the device crash if you enable this bus? Keeping it 'okay' w=
-ould
-> > >> >> make it easier for folks to poke at it
-> > >> >
-> > >> > It does boot just fine, but does not initialize:
-> > >> > ```
-> > >> > geni_spi a88000.spi: Invalid proto 9
-> > >> > ...
-> > >> > qnoc-x1e80100 interconnect-1: sync_state() pending due to a88000.s=
-pi
-> > >> > ...
-> > >> > ```
-> > >> >
-> > >> > I only quickly checked that 9 is indeed invalid state, iirc should=
-'ve
-> > >> > been 2. But haven't looked deeper into it, so left it disabled. So=
- I
-> > >> > thought best to leave it off for now. Unless you prefer to drop it
-> > >> > altogether?
-> > >>
-> > >> That means this QUP is configured to work as a QSPI host, which is n=
-ot yet
-> > >> supported upstream. I looked at the DSDT you submitted to aa64-lapto=
-ps, but
-> > >> there doesn't seem to be anything connected there, perhaps it's load=
-ed at
-> > >> runtime. Since your keyboard and touchpad work, maybe it's a touchsc=
-reen?
-> > >>
-> > >
-> > > Indeed it is just defined without anything attached. I am suspecting
-> > > it also may be just leftover, won't be the first one...
-> > > No, this particular laptop doesn't have a touchscreen in any of the
-> > > three screen configurations announced.
-> > >
-> > > It also does not have a fingerprint reader, nor hardware TPM2.0 (yet
-> > > SPI11 typically used for it is still TZ protected :). EC seems to be
-> > > over i2c5. Asus's touchpad supports some fancy gesture controls, but
-> > > there is in fact another 'extra' hidraw device 'hdtl', I assume that'=
-s
-> > > the one. No sdcard reader.
-> > > Only other still unsupported features are audio (i guess unlikely tha=
-t
-> > > they used different smart amp?), camera (ov02c01, pm8010, so also no)
-> > > and DP-HDMI bridge PS185HDM, which from what I can guesstimate is i2c=
-.
-> >
-> > I actually managed to contact someone about the ps185hdm as it is also
-> > used in my asus vivobook s15. But from what they told me it is a dumb
-> > bridge that does not require any further configuration. I have tried
-> > getting it to work but I've had no luck yet. I did find a hpd gpio at
-> > tlmm 126.
-> >
-> > I currently have just tried ignoring its existence and describing a non
-> > existent dp-connector with the hpd gpio hooked up to mdss_dp2_out but n=
-o
-> > luck. I get a timeout on the aux bus communication I think, so somethin=
-g
-> > is blocking that still.
->
-> I think it was your messages that I saw on IRC of aarch64-laptops
-> then. Can confirm both HPD on tlmm, and lack of any i2c devices on
-> newly created virtual bus.
->
-> >
-> > I think it may just be some regulator or something required to actually
-> > power up the ps185hdm
->
-> That was my conclusion as well. Would you mind following up with them,
-> if they could disclose the amount of voltage supplies the IC is
-> expecting? if it's 1 or 2, it's rather easy to bruteforce all unused
-> pin combinations. If it's more than that, it's only reasonable to
-> enable all unused GPIOs to high at once, which I wouldn't do tbh :)
->
-> The weird thing is that according to a rather simplified publically
-> available diagram, HPD is actually propagated through the PS185,
-> implying that bridge is on. It could be that IC requires multiple
-> supplies, hence Aux bus is not working, but in my experience these
-> devices typically don't start until all of the required supplies are
-> up.
->
-> >
-> > from my correspondence:
-> > `
-> > Hi Maud,
-> >
-> > There is no =E2=80=9Cenable pin=E2=80=9D on the PS185 but there are sev=
-eral GPIO=E2=80=99s. The
-> > FW associated with the device is programmable so the manufacturer of th=
-e
-> > motherboard you are using may have requested a special feature (such as
-> > an enable pin on one of the GPIO) to be added by Parade. If that=E2=80=
-=99s the
-> > case then you would need to contact the motherboard manufacturer to fin=
-d
-> > out more details.
-> >
-> > Hot plug events are normally routed through the DP_HPD pin but, as note=
-d
-> > above, it=E2=80=99s possible that the motherboard manufacturer asked fo=
-r this to
-> > be replicated on the GPIO pin.
-> > `
-> >
-> > some messing around of me in the dts can be found here: [1]
->
-> I think, you would also need to enable usb_1_ss2 combo phy, afaik only
-> mdss3 (for eDP) has a dedicated DP phy, for the rest it's a combo
-> qmpphy. Konrad could probably confirm?
-> Once i2c/aux works, maybe we would also need a small driver to set phy
-> to DP mode, as afaik pmic-glink handles these. Just hypothesis though.
-> I have tried adding a dummy "dp-connector" like you did, but as a
-> child node to pmic-glink, hoping that it would handle the alt mode,
-> but it is probably not that easy :)
->
-> Would be happy to cooperate on debugging this offline.
->
-> Alex
+On Fri, Mar 28, 2025, Fuad Tabba wrote:
+> @@ -389,22 +381,211 @@ static void kvm_gmem_init_mount(void)
+>  }
+>  
+>  #ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> -static bool kvm_gmem_offset_is_shared(struct file *file, pgoff_t index)
+> +/*
+> + * An enum of the valid folio sharing states:
+> + * Bit 0: set if not shared with the guest (guest cannot fault it in)
+> + * Bit 1: set if not shared with the host (host cannot fault it in)
+> + */
+> +enum folio_shareability {
+> +	KVM_GMEM_ALL_SHARED	= 0b00,	/* Shared with the host and the guest. */
+> +	KVM_GMEM_GUEST_SHARED	= 0b10, /* Shared only with the guest. */
+> +	KVM_GMEM_NONE_SHARED	= 0b11, /* Not shared, transient state. */
 
-Small update,
+Absolutely not.  The proper way to define bitmasks is to use BIT(xxx).  Based on
+past discussions, I suspect you went this route so that the most common value
+is '0' to avoid extra, but that should be an implementation detail buried deep
+in the low level xarray handling, not a
 
-Following initial work from Maud, I hacked around a bit and got HDMI
-working _most of the times_ on cold boot. Far from complete, but this
-proves the IC is indeed working as dumb bridge. At least non Zenbook
-DP routed to qmphy, like hinted by DSDT.
-I am guessing the HPD event comes too early, before AUX is ready for
-EDID readout to be the cause of the hotplug almost never working,
-since I can always readout EDID manually just fine. Will need to
-investigate it a bit more.
+The name is also bizarre and confusing.  To map memory into the guest as private,
+it needs to be in KVM_GMEM_GUEST_SHARED.  That's completely unworkable.
+Of course, it's not at all obvious that you're actually trying to create a bitmask.
+The above looks like an inverted bitmask, but then it's used as if the values don't
+matter.
 
-Initial (dirty) change for Asus Zenbook A14 [1].
+	return (r == KVM_GMEM_ALL_SHARED || r == KVM_GMEM_GUEST_SHARED);
 
-[1] https://github.com/alexVinarskis/linux-x1e80100-zenbook-a14/commit/9046=
-6cd004c3df5d717295ae7dcd5ed183701de0
+Given that I can't think of a sane use case for allowing guest_memfd to be mapped
+into the host but not the guest (modulo temporary demand paging scenarios), I
+think all we need is:
 
->
->
->
-> >
-> > [...]
-> >
-> > [1]:
-> > https://github.com/SpieringsAE/linux/blob/wip/x1e80100-6.14/arch/arm64/=
-boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-> >
-> > kind regards,
-> > Maud
+	KVM_GMEM_SHARED		  = BIT(0),
+	KVM_GMEM_INVALID	  = BIT(1),
+
+As for optimizing xarray storage, assuming it's actually a bitmask, simply let
+KVM specify which bits to invert when storing/loading to/from the xarray so that
+KVM can optimize storage for the most common value (which is presumably
+KVM_GEM_SHARED on arm64?).
+
+If KVM_GMEM_SHARED is the desired "default", invert bit 0, otherwise dont.  If
+for some reason we get to a state where the default value is multiple bits, the
+inversion trick still works.  E.g. if KVM_GMEM_SHARED where a composite value,
+then invert bits 0 and 1.  The polarity shenanigans should be easy to hide in two
+low level macros/helpers.
+
+> +/*
+> + * Returns true if the folio is shared with the host and the guest.
+
+This is a superfluous comment.  Simple predicates should be self-explanatory
+based on function name alone.
+
+> + *
+> + * Must be called with the offsets_lock lock held.
+
+Drop these types of comments and document through code, i.e. via lockdep
+assertions (which you already have).
+
+> + */
+> +static bool kvm_gmem_offset_is_shared(struct inode *inode, pgoff_t index)
+> +{
+> +	struct xarray *shared_offsets = &kvm_gmem_private(inode)->shared_offsets;
+> +	rwlock_t *offsets_lock = &kvm_gmem_private(inode)->offsets_lock;
+> +	unsigned long r;
+> +
+> +	lockdep_assert_held(offsets_lock);
+>  
+> -	/* For now, VMs that support shared memory share all their memory. */
+> -	return kvm_arch_gmem_supports_shared_mem(gmem->kvm);
+> +	r = xa_to_value(xa_load(shared_offsets, index));
+> +
+> +	return r == KVM_GMEM_ALL_SHARED;
+> +}
+> +
+> +/*
+> + * Returns true if the folio is shared with the guest (not transitioning).
+> + *
+> + * Must be called with the offsets_lock lock held.
+
+See above.
+
+>  static vm_fault_t kvm_gmem_fault(struct vm_fault *vmf)
+
+This should be something like kvm_gmem_fault_shared() make it abundantly clear
+what's being done.  Because it too me a few looks to realize this is faulting
+memory into host userspace, not into the guest.
 
