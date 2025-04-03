@@ -1,171 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-53084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D5E7A7A202
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 13:37:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1983A7A212
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 13:43:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 88DB5176982
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 11:34:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3256A3B2683
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 11:43:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4F2F24C689;
-	Thu,  3 Apr 2025 11:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E68124BD04;
+	Thu,  3 Apr 2025 11:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WLT9SW9A"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GmJYnbfr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC4B24C062
-	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Apr 2025 11:33:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A57BA95E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Apr 2025 11:43:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743680003; cv=none; b=ihMGjWgGsd6/0HBH/FqUIMZ4weXLl8qHWozRqX80TSva6Bp+AggcQJ8zz4kAHrx3KAJzsBCLFzVT0ZoeNVjnpm1/cENj95GibgY3T9DEN5flzoTuL3UfXJho3BKhYmfWYW8N/60faYiTv9hCoSobgAiF8A7s78qww1iAE6tBM0Y=
+	t=1743680594; cv=none; b=Hrk26KCr6r/feUYQDNE8qNpdiUxQ1Ur/emlRf/uNZk6ZwjgCiv2+STAG2b0MqxLtn/AXGwdwwFw8JHK3aBcVv89X0Il5Q5rG4B2L0ugh6rUe8lPOHNLFkeoAJMUe8raig+u2j368j5gDmmbWaGIKmMl6PB+dPMhIBLaaY+Zc0Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743680003; c=relaxed/simple;
-	bh=ENjCOqZlKPp/D7qWHLdDXx/2Hgf7yk6/ptGgwF9MJKM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HIcURlUYxBVFI2TMHR2PLYqxI+4JMbOjrW3A82zDrgO6+32ynjxlgBhximzmqbIuTAGMBIYOxyghCFAFMGwEruOyC6wQsysW0z5Tn+uxGm4/Zbuwo2wZFKCoLkQfYzckt6ISHRkt1vcV0Szq7onO5YEsc0+A0OrvHuLOvfqvv7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WLT9SW9A; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4769e30af66so834261cf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Apr 2025 04:33:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1743680000; x=1744284800; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gEMObUoyn3JUJ1C/U9ykdrbpQA2uh4Mz7RwOIB0uCd8=;
-        b=WLT9SW9AVwnfSziiWjGOmTezf8G0L1CVPVx9TXB7LE9BzL1Fr6Y29XpMNRgjc3DEbz
-         kJbcdRUdDi6hhfOOd3ax16T8whbd4RIRGzhT3Rd9Hi77XD2taDmVj7HIZ0KlMIWpcqR/
-         +KIfCpQDqFTjd7XnczxdEYBwC551hYTUO5M5dMMLrtqS++kaO2dIx3Uh0OnUP5SgIppj
-         SmB90lz/e9ZPhG3/MpHOp4+jvbGgUB8jdoXOSAJInxUwZvcdzGwlUsXfJh4XmoMpfGQI
-         MX37PUARDVBX73wVWPSokub98uB8/UAjfa9VolvHxOGzkA/yxl3x9I1KuDGiHXbqnOwJ
-         TUuA==
+	s=arc-20240116; t=1743680594; c=relaxed/simple;
+	bh=OaRYLoGbspc7WOjs3T9v8K61cby/l9jbHSqqS1sIo0w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eS0ShW/jqgosSAfiLjbUgEuYk9BaxFKi1fXZZ8iAGEsd34oyDlFTP3GEHp/mSZ1Tfc6lMEuFtO5mSOAoHxhw7p8ELH95qxATCfqm32f48GZFIPcBAS+DJIS35j+JIjSb5Lum9Dtsvp7EpvHwJ8IVYivxWQUcyMT5tOZjaLHxK58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GmJYnbfr; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5339sHvC010258
+	for <linux-arm-msm@vger.kernel.org>; Thu, 3 Apr 2025 11:43:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=7WGKj7Yoq31u55DWzIbKxu8Q
+	6fmP+pT+b4/6SXNmUWw=; b=GmJYnbfrXd3A6dEOZ/lbTVl+7iYv7OwCzF4ms7JJ
+	9+z0q10DFpx2k9BhyepKAFQUfAjUUYdt17q3vgPqbJk75qXXtX0fMQZjLn3uAO0s
+	3AvX+0dc/7IXMBGYTO3Vdr+3yZI7g6+RCCnLOEN2aoQDfdHcjkQlXetAiT778xv6
+	Hd+B4n5bm/1/wn/siJmemEN80QEAWPDxskHShBttpts6oCaZ+gD6J/pC0cLcwvB+
+	7NIo8zAT7b5G4ekLZuHsy/xKHGqR+D2tT5RzASWTtHEBebJhcsEs5NeUKm+uSNET
+	Yd6fbkEwqLvrHPDTkQZlTIVaT47IXvAY2+GlISI3zScgBQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45se4g1qgc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 03 Apr 2025 11:43:12 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c543ab40d3so115993085a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Apr 2025 04:43:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743680000; x=1744284800;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gEMObUoyn3JUJ1C/U9ykdrbpQA2uh4Mz7RwOIB0uCd8=;
-        b=FtHWX9aSbTMysTpLo2k+2CMo7tUvFLMC6KIzcQWP3dQ8Nn+/MCw8Xj6QCu1AWmc/Lt
-         WN5jnQYnE7speEn52xImJ84NBszMKriC7V1FflSYR9ss3q37iwjX7wWjarBNl0Uoos4g
-         gZD3Qp53Rh6H44qRy37cD+/OzdH/fG2K/BJgpShfv6t/2HZJ3n3PRHY0ZJl4jM8tE4ld
-         83Pgi+tu/wSiYm+lClj53GN+Nx8tz4S07piouhkpsEZBI9YS8Slw1JmCf+IyWvG8nUIc
-         PtlsViorQAulfogyi1gPJj7gGrIMm3rFfxbl6g6d6KPLlMe0u88bKLI2rcdPv4ETwTqB
-         IKcA==
-X-Forwarded-Encrypted: i=1; AJvYcCXWIHwXC8MhaKzUGmHe84m9/VeFL+mWJ7X3YtCCWuqXPzuxm4nFYPKaTc3uCDnLNmfYJ924gaE/UKi6t1a/@vger.kernel.org
-X-Gm-Message-State: AOJu0YwcQFacdV67mB+/F2EB4Z/dLrOCjlcTltuqjTKC979n3eej/lgf
-	zVxNP9zd2O8zq2KWPx6LjGZ2oiz8J7t7qvcDjNk7p9gvWJ0syzLDzO3jazxJ26mK9NHjuNgV8EF
-	wEFs0xFdfhD/OLtzE/WRQD57x8kUjyBSx24wR
-X-Gm-Gg: ASbGncvwARyMD87Fp4eWNUnfVOupRdtzSpNbWEby5aQEZLseZOBR5nDiFlHXcXIflhk
-	WkHXW007ZEicg1ZSbzaFWBBZYUdXbZBWljL7E2Or3bnkG1zki+f+RGZdhLdLansGvPiJoG83zJp
-	ETGrlm7Pxvozm8xY8AlQTGAvwJMQ==
-X-Google-Smtp-Source: AGHT+IFomZU1HMl8dHzvwzaPBWQoixQ5c08Z91Ow3ggUIuXK//3qzyPh36fz8VwRQ2X3bgMszlZm14KOtw6OkXzulBI=
-X-Received: by 2002:ac8:5809:0:b0:477:c4f:ee58 with SMTP id
- d75a77b69052e-4791752498fmr4216301cf.24.1743679999618; Thu, 03 Apr 2025
- 04:33:19 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743680591; x=1744285391;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7WGKj7Yoq31u55DWzIbKxu8Q6fmP+pT+b4/6SXNmUWw=;
+        b=nEUmnc8vUKShPlYGpwQYo+p+P9yDjZG1kC5/RXtWB/2cSwPvoTtilWUmmzEA00Ap6A
+         EirLHwiqj814OupPhAS0yKQxNjhrxCVpdYlWW6ujWvo06ejEcj8T1ZCxGUaBXB4xlACw
+         WRcRH0jWuHZyiERnVGO+vxLsMYaep9sKxKv6e39zrMAz2cd6bqBAqTtInnCS21YzXDU7
+         66oWQMbFq1WgLfV3neWJNU4YE8r5joFPRz1q69UV2pn9AwsA6zSGnkW3OvIBvy3KKJkt
+         WcbAHsjzUbtZv8ZNIq5DGWp23Xj6+0BUHFBF4CgQtmCNn/0K7U5UPHuIMp33kZMXVC/8
+         VBfw==
+X-Forwarded-Encrypted: i=1; AJvYcCU+9CpO9EAUE+FOo9WcjVh2YmS0/g5xoI3Zk34uaM231h0qjITqEb90svcIhJVGmwHsgK6mkD/5DnWuZ3Bn@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLGYJaVgeg4fHraPuWO+oHTQnX8qW3FJX3z7RMBf96kBuLaENd
+	24ME+mDShVr5wGqMlXQ9EIMdFxY3vS25kUy/kyZHitQFuN3cIuJrSlhvtfok55p/vMfXdZPmlmm
+	ugx7M+GAJOcBhA17t4IneJ1RhWwy+hwfs5boSNFBMkLwwNg3xOiDgk0fdjO3VWh6u
+X-Gm-Gg: ASbGncsoxm4ssdRd16FW/iSZZcb4yq+JLiDM9IVOjvJmE0FV5+K2UEX/Bj+BY9uyhf4
+	kEs3fjXrXJ7LOe2xlWNiTloUYGN0oWiLDJ5dnZJGzi88SlCYb/td7QI0H2+cdi/+58lckTncm6e
+	8Zgn5NYjL6/DtKVrIU6lXPx3gBPvJFfUw+Qk43RZIpaYmZaSI/zC3HRf+wBJuRvm0F0g2NGYAUT
+	C3DJkclNxp9dZ7lyFI6/gdoy5Uq1UNcpVFcEtC8+vANhtAAsynTjeS7sROJlm+VECesX8oHUoE/
+	0OVaNnvASlvJ0fTSnBKkmDzq7Zhcdeyn42zTo1ZFUOyORqtMG1EaMoGqhKu9YxxWjhRk9B75cZ2
+	Fs5g=
+X-Received: by 2002:a05:620a:4493:b0:7c5:4001:3e9f with SMTP id af79cd13be357-7c7664568ccmr793961085a.29.1743680590985;
+        Thu, 03 Apr 2025 04:43:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHnABgBLu5cIel/f+cDOkFKr4+tzdS0iNDcsblXJI3isL+5tNaEMK0TgffH7YsY/qcTFanSSg==
+X-Received: by 2002:a05:620a:4493:b0:7c5:4001:3e9f with SMTP id af79cd13be357-7c7664568ccmr793957385a.29.1743680590628;
+        Thu, 03 Apr 2025 04:43:10 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30f031ceebbsm1839481fa.95.2025.04.03.04.43.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Apr 2025 04:43:09 -0700 (PDT)
+Date: Thu, 3 Apr 2025 14:43:08 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: shao.mingyin@zte.com.cn
+Cc: andersson@kernel.org, linus.walleij@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, yang.yang29@zte.com.cn,
+        xu.xin16@zte.com.cn, ye.xingchen@zte.com.cn, xie.ludan@zte.com.cn
+Subject: Re: [PATCH] pinctrl: qcom: Use devm_platform_ioremap_resource_byname
+Message-ID: <ucxebkad5fov7vejtenikor4zfujuggqwbzzmnvm7yj6rw4hfn@ibpcbnf5oscj>
+References: <202504031550143925VMOuiV6Gs3QgxNjRIOyf@zte.com.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250328153133.3504118-8-tabba@google.com> <diqzv7rmmahy.fsf@ackerleytng-ctop.c.googlers.com>
-In-Reply-To: <diqzv7rmmahy.fsf@ackerleytng-ctop.c.googlers.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Thu, 3 Apr 2025 12:32:42 +0100
-X-Gm-Features: ATxdqUEPebUlHzj5-92DkCj0iX8Rt4t2SxCxCMdVt6zFFuAFssAocEZowoZO9AY
-Message-ID: <CA+EHjTwy7BqWvTLsWMJExrerx6+AMoYaNib61of45v2hAsR--A@mail.gmail.com>
-Subject: Re: [PATCH v7 7/7] KVM: guest_memfd: Add a guest_memfd() flag to
- initialize it as shared
-To: Ackerley Tng <ackerleytng@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
-	pankaj.gupta@amd.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <202504031550143925VMOuiV6Gs3QgxNjRIOyf@zte.com.cn>
+X-Proofpoint-GUID: 4aL1gvRPAIwzWMdxOlTALwtXxy5H5Jhm
+X-Authority-Analysis: v=2.4 cv=a8Iw9VSF c=1 sm=1 tr=0 ts=67ee7450 cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=1RTuLK3dAAAA:8 a=xdMfvF8H04qyE73r5JkA:9 a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=kRpfLKi8w9umh8uBmg1i:22
+X-Proofpoint-ORIG-GUID: 4aL1gvRPAIwzWMdxOlTALwtXxy5H5Jhm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-03_05,2025-04-02_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ adultscore=0 phishscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 bulkscore=0 mlxlogscore=973 malwarescore=0 spamscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504030047
 
-Hi Ackerley,
+On Thu, Apr 03, 2025 at 03:50:14PM +0800, shao.mingyin@zte.com.cn wrote:
+> From: Xie Ludan <xie.ludan@zte.com.cn>
+> 
+> Introduce devm_platform_ioremap_resource_byname() to simplify
+> resource retrieval and mapping.This new function consolidates
+> platform_get_resource_byname() and devm_ioremap_resource() into a single
+> call, improving code readability and reducing API call overhead.
 
-On Thu, 3 Apr 2025 at 00:03, Ackerley Tng <ackerleytng@google.com> wrote:
->
-> Fuad Tabba <tabba@google.com> writes:
->
-> > Not all use cases require guest_memfd() to be shared with the host when
-> > first created. Add a new flag, GUEST_MEMFD_FLAG_INIT_SHARED, which when
-> > set on KVM_CREATE_GUEST_MEMFD initializes the memory as shared with the
-> > host, and therefore mappable by it. Otherwise, memory is private until
-> > explicitly shared by the guest with the host.
-> >
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >  Documentation/virt/kvm/api.rst                 |  4 ++++
-> >  include/uapi/linux/kvm.h                       |  1 +
-> >  tools/testing/selftests/kvm/guest_memfd_test.c |  7 +++++--
-> >  virt/kvm/guest_memfd.c                         | 12 ++++++++++++
-> >  4 files changed, 22 insertions(+), 2 deletions(-)
-> >
-> > <snip>
-> >
-> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> > index eec9d5e09f09..32e149478b04 100644
-> > --- a/virt/kvm/guest_memfd.c
-> > +++ b/virt/kvm/guest_memfd.c
-> > @@ -1069,6 +1069,15 @@ static int __kvm_gmem_create(struct kvm *kvm, loff_t size, u64 flags)
-> >               goto err_gmem;
-> >       }
-> >
-> > +     if (IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM) &&
-> > +         (flags & GUEST_MEMFD_FLAG_INIT_SHARED)) {
-> > +             err = kvm_gmem_offset_range_set_shared(file_inode(file), 0, size >> PAGE_SHIFT);
->
-> I think if GUEST_MEMFD_FLAG_INIT_SHARED is not set, we should call
-> kvm_gmem_offset_range_clear_shared(); so that there is always some
-> shareability defined for all offsets in a file. Otherwise, when reading
-> shareability, we'd have to check against GUEST_MEMFD_FLAG_INIT_SHARED
-> to find out what to initialize it to.
+Commit message is incorrect. You are not introducing anything, you are
+removing a whitespace.
 
-Ack.
+> 
+> Signed-off-by: Xie Ludan <xie.ludan@zte.com.cn>
+> Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index 13cdd6c0fbd7..264ac0e7152d 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -1548,7 +1548,7 @@ int msm_pinctrl_probe(struct platform_device *pdev,
+> 
+>  	if (soc_data->tiles) {
+>  		for (i = 0; i < soc_data->ntiles; i++) {
+> -			pctrl->regs[i] = devm_platform_ioremap_resource_byname(pdev, 
+> +			pctrl->regs[i] = devm_platform_ioremap_resource_byname(pdev,
+>  																   soc_data->tiles[i]);
+>  			if (IS_ERR(pctrl->regs[i]))
+>  				return PTR_ERR(pctrl->regs[i]);
+> -- 
+> 2.25.1
 
-Thanks!
-
-/fuad
-
-> > +             if (err) {
-> > +                     fput(file);
-> > +                     goto err_gmem;
-> > +             }
-> > +     }
-> > +
-> >       kvm_get_kvm(kvm);
-> >       gmem->kvm = kvm;
-> >       xa_init(&gmem->bindings);
-> > @@ -1090,6 +1099,9 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
-> >       u64 flags = args->flags;
-> >       u64 valid_flags = 0;
-> >
-> > +     if (IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM))
-> > +             valid_flags |= GUEST_MEMFD_FLAG_INIT_SHARED;
-> > +
-> >       if (flags & ~valid_flags)
-> >               return -EINVAL;
+-- 
+With best wishes
+Dmitry
 
