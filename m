@@ -1,133 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-53110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B62CCA7A531
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 16:34:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12B3CA7A54E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 16:38:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C7BA188854D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 14:29:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BCBF0166C5D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 14:35:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41DCE24EA99;
-	Thu,  3 Apr 2025 14:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60AAC24EF70;
+	Thu,  3 Apr 2025 14:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kOQ1ccF6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F2bXWMuw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FFA24BCF9;
-	Thu,  3 Apr 2025 14:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB8C24EF65;
+	Thu,  3 Apr 2025 14:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743690570; cv=none; b=dfD+N/R0gkdgonD22FRK5t2L1x7KNAWckDxgE38axoD/jyLWonfDns+9gdT1hRParji9F5Z0LIaDH+rEfzzcoRmytt67XJii6AcnKiH6VQ52uqypkAHBtqB66ssN9y2d+u1dnpCyLPYf48pUMElDn4OAwj7mbE0I+huxFufL96M=
+	t=1743690932; cv=none; b=EoQ85kzDfSbyIx568dztf0LFDVIKmOlapkRfq2T1xTe/2kWzn9hEyAo7D2rgrchb8BnorUJcSjPl25DCRPnGvPBIY0ChFEFmJGikJjVAyVeoDVTpYYQMA2MK+PJnqW33u2uQEnDc4DpcKy/6jgM2Jx9kK4mWtfVTNkAiAKC0Nhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743690570; c=relaxed/simple;
-	bh=vTwMHvOovCZ//ixEtEQTfu+/vKY6ddXQrx23wvtkghE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LZPRl5dTu5LdiAfwsCOZEkhDoCo29KqveVLvrLbn8UYf1irN8M0qHq8ce9QJPRZBb0CwuEgqbznK+r+pVf2hmk81N3Zy0PlR6VeGySW/9aJNKksP5cBekbgKp2i1KC5DNmh3NWnReY+yusT5V2zc4e/DJA8KzqpdEuejTGbO8MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kOQ1ccF6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC00C4CEE3;
-	Thu,  3 Apr 2025 14:29:29 +0000 (UTC)
+	s=arc-20240116; t=1743690932; c=relaxed/simple;
+	bh=dMClsw2AJio5KjDc2EyqIP58v8ggQ7YAMbyOKgPWoUY=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=RNwiuRyKgPptEQbIp9ZWi8gCZ23rE9AIx27cmBi2zwUWywzEOYa+kd83uhntaXeixVUj/LuvMpe/JmINa9pcQks4Zy+h8gUrqSBXqE9y8OLiB21fWyQNv7Dg9DcB+r9Iv5WcrKkoC98qoTmkl2LnvON1iMuARFVAKzwLl8eOhDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F2bXWMuw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6247DC4CEE5;
+	Thu,  3 Apr 2025 14:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743690569;
-	bh=vTwMHvOovCZ//ixEtEQTfu+/vKY6ddXQrx23wvtkghE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kOQ1ccF6zAtk8+uAHm9om+QfLiOLo9bCr0YBI2sXEyUyIcyvqTmExgKoOqnQV/KUI
-	 eyreS9A/pfL9+mUwDDaiAZ4quM6uauMhkL7z4oaroHhj89n0SQXXVdYPGsoCzzCpq5
-	 ioLOYzq9gN1o2dk6t3C5jUoATUvgHDvoB5Hdd0F3I967pAa/xusNl81EyLMOQ+egIO
-	 tYJX8ti9MUocytEeYn4L9YN6x/+R5ci8eRphHI678wg+kGCNe+0pIzpKUoNxt9kA+G
-	 FAwMRDfZJp6q8LnTZlflN0rT6YJdUKbYTW9xFrga1gI6vipGNs1Ipf0SeNWFAl/BEl
-	 fFd1X+gf0J0ag==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1u0LZW-0000000069e-2E6c;
-	Thu, 03 Apr 2025 16:29:35 +0200
-Date: Thu, 3 Apr 2025 16:29:34 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: peda@axentia.se, broonie@kernel.org, andersson@kernel.org,
-	krzk+dt@kernel.org, ivprusov@salutedevices.com,
-	luca.ceresoli@bootlin.com, zhoubinbin@loongson.cn,
-	paulha@opensource.cirrus.com, lgirdwood@gmail.com, robh@kernel.org,
-	conor+dt@kernel.org, konradybcio@kernel.org, perex@perex.cz,
-	tiwai@suse.com, dmitry.baryshkov@oss.qualcomm.com,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	johan+linaro@kernel.org,
-	Christopher Obbard <christopher.obbard@linaro.org>
-Subject: Re: [PATCH v6 5/6] ASoC: codecs: wcd938x: add mux control support
- for hp audio mux
-Message-ID: <Z-6bTj097a1LVn3X@hovoldconsulting.com>
-References: <20250327100633.11530-1-srinivas.kandagatla@linaro.org>
- <20250327100633.11530-6-srinivas.kandagatla@linaro.org>
- <Z-z_ZAyVBK5ui50k@hovoldconsulting.com>
- <8613cf45-d202-4577-868c-8caf771c7bc4@linaro.org>
+	s=k20201202; t=1743690931;
+	bh=dMClsw2AJio5KjDc2EyqIP58v8ggQ7YAMbyOKgPWoUY=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=F2bXWMuwErTuxjye1QgtQz0W30U6wtezV5ZFdv2VC1h9sxI5Q8BB1bTBDAhRVGaer
+	 /mvsJzBL+Q/H4vyTYVpV1GIHAuBOqS8GyBkoUp5Q3UTgrX9KFqCJotP6ZBAvdCFYYy
+	 GTkim+V7wOIJJVOqRDde/g8O3UYEkUzadAbLrM6++ZrAyokJUJRdLJtGU5HR47IEbo
+	 2VeHOprQ0Siaws3FScLm60DkJ5OU3W0hSi0Se4NeyDR2EMG3GBF3TLjUsyGDdXC5VW
+	 kG4oCVOm/4lhcyIXOCua2wBld47I4s3VEqZ+rCWdi2oJFipV4iOM24JBlxurSg+Gkh
+	 JYI8leV42+d7A==
+Date: Thu, 03 Apr 2025 09:35:30 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8613cf45-d202-4577-868c-8caf771c7bc4@linaro.org>
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>, Maxime Ripard <mripard@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Simona Vetter <simona@ffwll.ch>, 
+ Thomas Zimmermann <tzimmermann@suse.de>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Douglas Anderson <dianders@chromium.org>, dri-devel@lists.freedesktop.org, 
+ linux-arm-msm@vger.kernel.org, Rui Miguel Silva <rui.silva@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+ Johan Hovold <johan@kernel.org>, devicetree@vger.kernel.org, 
+ Jessica Zhang <quic_jesszhan@quicinc.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ David Airlie <airlied@gmail.com>, linux-kernel@vger.kernel.org
+To: Christopher Obbard <christopher.obbard@linaro.org>
+In-Reply-To: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org>
+References: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org>
+Message-Id: <174369066305.2789458.14506142357884994907.robh@kernel.org>
+Subject: Re: [PATCH v5 0/3] Add support for OLED panel used on Snapdragon
+ Lenovo T14s Gen6
 
-On Thu, Apr 03, 2025 at 01:19:57PM +0100, Srinivas Kandagatla wrote:
-> On 02/04/2025 10:12, Johan Hovold wrote:
-> > On Thu, Mar 27, 2025 at 10:06:32AM +0000, Srinivas Kandagatla wrote:
-> >> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> >>
-> >> On some platforms to minimise pop and click during switching between
-> >> CTIA and OMTP headset an additional HiFi mux is used. Most common
-> >> case is that this switch is switched on by default, but on some
-> >> platforms this needs a regulator enable.
-> >>
-> >> move to using mux control to enable both regulator and handle gpios,
-> >> deprecate the usage of gpio.
-> >>
-> >> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> >> Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
-> > 
-> >> @@ -3261,11 +3276,26 @@ static int wcd938x_populate_dt_data(struct wcd938x_priv *wcd938x, struct device
-> >>   		return dev_err_probe(dev, wcd938x->reset_gpio,
-> >>   				     "Failed to get reset gpio\n");
-> >>   
-> >> -	wcd938x->us_euro_gpio = devm_gpiod_get_optional(dev, "us-euro",
-> >> -						GPIOD_OUT_LOW);
-> >> -	if (IS_ERR(wcd938x->us_euro_gpio))
-> >> -		return dev_err_probe(dev, PTR_ERR(wcd938x->us_euro_gpio),
-> >> -				     "us-euro swap Control GPIO not found\n");
-> >> +	wcd938x->us_euro_mux = devm_mux_control_get(dev, NULL);
 
-> > Running with this patch on the CRD I noticed that this now prints an
-> > error as there is no optional mux (or gpio) defined:
-> > 
-> > 	wcd938x_codec audio-codec: /audio-codec: failed to get mux-control (0)
+On Wed, 02 Apr 2025 15:36:31 +0100, Christopher Obbard wrote:
+> The Snapdragon Lenovo T14s Gen6 can be bought with a number of different
+> panels. This patch series adds support for the OLED model which has a
+> Samsung ATNA40YK20 panel.
 > 
-> This is not from codec driver, mux control is throwing up this.
-
-Yeah, the error is printed by the mux code, but it's this codec change
-that starts triggering it.
-
-> > You need to suppress that error in mux_get() to allow for optional muxes
-> > to be looked up like this.
-
-> I have a plan for this,
+> With this patch series the backlight of the OLED eDP panel does not
+> illuminate since the brightness is incorrectly read from the eDP panel
+> as (to be clear this is not a regression). This is fixed in [0].
 > 
-> I proposed some changes to mux api for exclusive apis at 
-> https://lkml.org/lkml/2025/3/26/955
+> [0]: https://lore.kernel.org/all/20250330-wip-obbardc-qcom-t14s-oled-panel-brightness-v6-1-84ad1cd1078a@linaro.org/
 > 
-> This should also allow us to easily add an optional api, which I plan to 
-> do once i get some feedback on this patch.
+> Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
+> ---
+> Changes in v5:
+> - Move edp_hpd_active from T14s DTS into SoC DTSI (Dmitry).
+> - Link to v4: https://lore.kernel.org/r/20250402-wip-obbardc-qcom-t14s-oled-panel-v4-0-41ba3f3739d0@linaro.org
+> 
+> Changes in v4:
+> - Rework HPD GPIO into eDP device rather than panel (Johan).
+> - Drop review tags for HPD GPIO patch.
+> - Link to v3: https://lore.kernel.org/r/20250327-wip-obbardc-qcom-t14s-oled-panel-v3-0-45d5f2747398@linaro.org
+> 
+> Changes in v3:
+> - Added review trailers from v2.
+> - Dropped dt-binding documentation patch (applied by Douglas Anderson into
+>   drm-misc-next).
+> - Dropped eDP maximum brightness patch (will be sent in separate
+>   series).
+> - Removed duplicate nodes in T14s OLED device tree.
+> - Reworked WIP comments from commit messages.
+> - Link to v2: https://lore.kernel.org/r/20250325-wip-obbardc-qcom-t14s-oled-panel-v2-0-e9bc7c9d30cc@linaro.org
+> 
+> Changes in v2:
+> - Use the existing atna33xc20 driver rather than panel-edp.
+> - Add eDP panel into OLED devicetree.
+> - Add patch to read the correct maximum brightness from the eDP panel.
+> - Link to v1: https://lore.kernel.org/r/20250320-wip-obbardc-qcom-t14s-oled-panel-v1-1-05bc4bdcd82a@linaro.org
+> 
+> ---
+> Christopher Obbard (3):
+>       arm64: dts: qcom: x1e80100: add epd hpd pinctrl
+>       arm64: dts: qcom: x1e78100-t14s: add hpd gpio to dp controller
+>       arm64: dts: qcom: x1e78100-t14s-oled: add edp panel
+> 
+>  arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts | 8 ++++++++
+>  arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi     | 3 +++
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi                          | 5 +++++
+>  3 files changed, 16 insertions(+)
+> ---
+> base-commit: b6ae34803e82511009e2b78dc4fd154330ecdc2d
+> change-id: 20250320-wip-obbardc-qcom-t14s-oled-panel-b74fed21d600
+> 
+> Best regards,
+> --
+> Christopher Obbard <christopher.obbard@linaro.org>
+> 
+> 
+> 
 
-It may just be as simple as demoting that dev_err() in mux_get() to
-dev_dbg() and possibly make sure any callers log errors themselves.
 
-A quick grep shows there are only 12 users or so and most of them
-already seem to be logging mux lookup errors.
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
-Johan
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+This patch series was applied (using b4) to base:
+ Base: using specified base-commit b6ae34803e82511009e2b78dc4fd154330ecdc2d
+
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org:
+
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dtb: panel: compatible: 'oneOf' conditional failed, one must be fixed:
+	['samsung,atna40yk20', 'samsung,atna33xc20'] is too long
+	'samsung,atna33xc20' was expected
+	'samsung,atna40yk20' is not one of ['samsung,atna45af01', 'samsung,atna45dc02', 'samsung,atna56ac03']
+	from schema $id: http://devicetree.org/schemas/display/panel/samsung,atna33xc20.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dtb: /soc@0/display-subsystem@ae00000/displayport-controller@aea0000/aux-bus/panel: failed to match any schema with compatible: ['samsung,atna40yk20', 'samsung,atna33xc20']
+arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: pinctrl@f100000: edp-hpd-active-state: 'oneOf' conditional failed, one must be fixed:
+	'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	'edp_hot' is not one of ['aon_cci', 'aoss_cti', 'atest_char', 'atest_char0', 'atest_char1', 'atest_char2', 'atest_char3', 'atest_usb', 'audio_ext', 'audio_ref', 'cam_aon', 'cam_mclk', 'cci_async', 'cci_i2c', 'cci_timer0', 'cci_timer1', 'cci_timer2', 'cci_timer3', 'cci_timer4', 'cmu_rng0', 'cmu_rng1', 'cmu_rng2', 'cmu_rng3', 'cri_trng', 'dbg_out', 'ddr_bist', 'ddr_pxi0', 'ddr_pxi1', 'ddr_pxi2', 'ddr_pxi3', 'ddr_pxi4', 'ddr_pxi5', 'ddr_pxi6', 'ddr_pxi7', 'edp0_hot', 'edp0_lcd', 'edp1_hot', 'edp1_lcd', 'eusb0_ac', 'eusb1_ac', 'eusb2_ac', 'eusb3_ac', 'eusb5_ac', 'eusb6_ac', 'gcc_gp1', 'gcc_gp2', 'gcc_gp3', 'gpio', 'i2s0_data0', 'i2s0_data1', 'i2s0_sck', 'i2s0_ws', 'i2s1_data0', 'i2s1_data1', 'i2s1_sck', 'i2s1_ws', 'ibi_i3c', 'jitter_bist', 'mdp_vsync0', 'mdp_vsync1', 'mdp_vsync2', 'mdp_vsync3', 'mdp_vsync4', 'mdp_vsync5', 'mdp_vsync6', 'mdp_vsync7', 'mdp_vsync8', 'pcie3_clk', 'pcie4_clk', 'pcie5_clk', 'pcie6a_clk', 'pcie6b_clk', 'phase_flag', 'pll_bist', 'pll_clk', 'prng_rosc0', 'prng_r
+ osc1', 'prng_rosc2', 'prng_rosc3', 'qdss_cti', 'qdss_gpio', 'qspi00', 'qspi01', 'qspi02', 'qspi03', 'qspi0_clk', 'qspi0_cs0', 'qspi0_cs1', 'qup0_se0', 'qup0_se1', 'qup0_se2', 'qup0_se3', 'qup0_se4', 'qup0_se5', 'qup0_se6', 'qup0_se7', 'qup1_se0', 'qup1_se1', 'qup1_se2', 'qup1_se3', 'qup1_se4', 'qup1_se5', 'qup1_se6', 'qup1_se7', 'qup2_se0', 'qup2_se1', 'qup2_se2', 'qup2_se3', 'qup2_se4', 'qup2_se5', 'qup2_se6', 'qup2_se7', 'sd_write', 'sdc4_clk', 'sdc4_cmd', 'sdc4_data0', 'sdc4_data1', 'sdc4_data2', 'sdc4_data3', 'sys_throttle', 'tb_trig', 'tgu_ch0', 'tgu_ch1', 'tgu_ch2', 'tgu_ch3', 'tgu_ch4', 'tgu_ch5', 'tgu_ch6', 'tgu_ch7', 'tmess_prng0', 'tmess_prng1', 'tmess_prng2', 'tmess_prng3', 'tsense_pwm1', 'tsense_pwm2', 'sense_pwm3', 'tsense_pwm4', 'usb0_dp', 'usb0_phy', 'usb0_sbrx', 'usb0_sbtx', 'usb1_dp', 'usb1_phy', 'usb1_sbrx', 'usb1_sbtx', 'usb2_dp', 'usb2_phy', 'usb2_sbrx', 'usb2_sbtx', 'vsense_trigger']
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,x1e80100-tlmm.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dtb: pinctrl@f100000: edp-hpd-active-state: 'oneOf' conditional failed, one must be fixed:
+	'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	'edp_hot' is not one of ['aon_cci', 'aoss_cti', 'atest_char', 'atest_char0', 'atest_char1', 'atest_char2', 'atest_char3', 'atest_usb', 'audio_ext', 'audio_ref', 'cam_aon', 'cam_mclk', 'cci_async', 'cci_i2c', 'cci_timer0', 'cci_timer1', 'cci_timer2', 'cci_timer3', 'cci_timer4', 'cmu_rng0', 'cmu_rng1', 'cmu_rng2', 'cmu_rng3', 'cri_trng', 'dbg_out', 'ddr_bist', 'ddr_pxi0', 'ddr_pxi1', 'ddr_pxi2', 'ddr_pxi3', 'ddr_pxi4', 'ddr_pxi5', 'ddr_pxi6', 'ddr_pxi7', 'edp0_hot', 'edp0_lcd', 'edp1_hot', 'edp1_lcd', 'eusb0_ac', 'eusb1_ac', 'eusb2_ac', 'eusb3_ac', 'eusb5_ac', 'eusb6_ac', 'gcc_gp1', 'gcc_gp2', 'gcc_gp3', 'gpio', 'i2s0_data0', 'i2s0_data1', 'i2s0_sck', 'i2s0_ws', 'i2s1_data0', 'i2s1_data1', 'i2s1_sck', 'i2s1_ws', 'ibi_i3c', 'jitter_bist', 'mdp_vsync0', 'mdp_vsync1', 'mdp_vsync2', 'mdp_vsync3', 'mdp_vsync4', 'mdp_vsync5', 'mdp_vsync6', 'mdp_vsync7', 'mdp_vsync8', 'pcie3_clk', 'pcie4_clk', 'pcie5_clk', 'pcie6a_clk', 'pcie6b_clk', 'phase_flag', 'pll_bist', 'pll_clk', 'prng_rosc0', 'prng_r
+ osc1', 'prng_rosc2', 'prng_rosc3', 'qdss_cti', 'qdss_gpio', 'qspi00', 'qspi01', 'qspi02', 'qspi03', 'qspi0_clk', 'qspi0_cs0', 'qspi0_cs1', 'qup0_se0', 'qup0_se1', 'qup0_se2', 'qup0_se3', 'qup0_se4', 'qup0_se5', 'qup0_se6', 'qup0_se7', 'qup1_se0', 'qup1_se1', 'qup1_se2', 'qup1_se3', 'qup1_se4', 'qup1_se5', 'qup1_se6', 'qup1_se7', 'qup2_se0', 'qup2_se1', 'qup2_se2', 'qup2_se3', 'qup2_se4', 'qup2_se5', 'qup2_se6', 'qup2_se7', 'sd_write', 'sdc4_clk', 'sdc4_cmd', 'sdc4_data0', 'sdc4_data1', 'sdc4_data2', 'sdc4_data3', 'sys_throttle', 'tb_trig', 'tgu_ch0', 'tgu_ch1', 'tgu_ch2', 'tgu_ch3', 'tgu_ch4', 'tgu_ch5', 'tgu_ch6', 'tgu_ch7', 'tmess_prng0', 'tmess_prng1', 'tmess_prng2', 'tmess_prng3', 'tsense_pwm1', 'tsense_pwm2', 'sense_pwm3', 'tsense_pwm4', 'usb0_dp', 'usb0_phy', 'usb0_sbrx', 'usb0_sbtx', 'usb1_dp', 'usb1_phy', 'usb1_sbrx', 'usb1_sbtx', 'usb2_dp', 'usb2_phy', 'usb2_sbrx', 'usb2_sbtx', 'vsense_trigger']
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,x1e80100-tlmm.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dtb: pinctrl@f100000: edp-hpd-active-state: 'oneOf' conditional failed, one must be fixed:
+	'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	'edp_hot' is not one of ['aon_cci', 'aoss_cti', 'atest_char', 'atest_char0', 'atest_char1', 'atest_char2', 'atest_char3', 'atest_usb', 'audio_ext', 'audio_ref', 'cam_aon', 'cam_mclk', 'cci_async', 'cci_i2c', 'cci_timer0', 'cci_timer1', 'cci_timer2', 'cci_timer3', 'cci_timer4', 'cmu_rng0', 'cmu_rng1', 'cmu_rng2', 'cmu_rng3', 'cri_trng', 'dbg_out', 'ddr_bist', 'ddr_pxi0', 'ddr_pxi1', 'ddr_pxi2', 'ddr_pxi3', 'ddr_pxi4', 'ddr_pxi5', 'ddr_pxi6', 'ddr_pxi7', 'edp0_hot', 'edp0_lcd', 'edp1_hot', 'edp1_lcd', 'eusb0_ac', 'eusb1_ac', 'eusb2_ac', 'eusb3_ac', 'eusb5_ac', 'eusb6_ac', 'gcc_gp1', 'gcc_gp2', 'gcc_gp3', 'gpio', 'i2s0_data0', 'i2s0_data1', 'i2s0_sck', 'i2s0_ws', 'i2s1_data0', 'i2s1_data1', 'i2s1_sck', 'i2s1_ws', 'ibi_i3c', 'jitter_bist', 'mdp_vsync0', 'mdp_vsync1', 'mdp_vsync2', 'mdp_vsync3', 'mdp_vsync4', 'mdp_vsync5', 'mdp_vsync6', 'mdp_vsync7', 'mdp_vsync8', 'pcie3_clk', 'pcie4_clk', 'pcie5_clk', 'pcie6a_clk', 'pcie6b_clk', 'phase_flag', 'pll_bist', 'pll_clk', 'prng_rosc0', 'prng_r
+ osc1', 'prng_rosc2', 'prng_rosc3', 'qdss_cti', 'qdss_gpio', 'qspi00', 'qspi01', 'qspi02', 'qspi03', 'qspi0_clk', 'qspi0_cs0', 'qspi0_cs1', 'qup0_se0', 'qup0_se1', 'qup0_se2', 'qup0_se3', 'qup0_se4', 'qup0_se5', 'qup0_se6', 'qup0_se7', 'qup1_se0', 'qup1_se1', 'qup1_se2', 'qup1_se3', 'qup1_se4', 'qup1_se5', 'qup1_se6', 'qup1_se7', 'qup2_se0', 'qup2_se1', 'qup2_se2', 'qup2_se3', 'qup2_se4', 'qup2_se5', 'qup2_se6', 'qup2_se7', 'sd_write', 'sdc4_clk', 'sdc4_cmd', 'sdc4_data0', 'sdc4_data1', 'sdc4_data2', 'sdc4_data3', 'sys_throttle', 'tb_trig', 'tgu_ch0', 'tgu_ch1', 'tgu_ch2', 'tgu_ch3', 'tgu_ch4', 'tgu_ch5', 'tgu_ch6', 'tgu_ch7', 'tmess_prng0', 'tmess_prng1', 'tmess_prng2', 'tmess_prng3', 'tsense_pwm1', 'tsense_pwm2', 'sense_pwm3', 'tsense_pwm4', 'usb0_dp', 'usb0_phy', 'usb0_sbrx', 'usb0_sbtx', 'usb1_dp', 'usb1_phy', 'usb1_sbrx', 'usb1_sbtx', 'usb2_dp', 'usb2_phy', 'usb2_sbrx', 'usb2_sbtx', 'vsense_trigger']
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,x1e80100-tlmm.yaml#
+arch/arm64/boot/dts/qcom/x1p42100-crd.dtb: pinctrl@f100000: edp-hpd-active-state: 'oneOf' conditional failed, one must be fixed:
+	'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	'edp_hot' is not one of ['aon_cci', 'aoss_cti', 'atest_char', 'atest_char0', 'atest_char1', 'atest_char2', 'atest_char3', 'atest_usb', 'audio_ext', 'audio_ref', 'cam_aon', 'cam_mclk', 'cci_async', 'cci_i2c', 'cci_timer0', 'cci_timer1', 'cci_timer2', 'cci_timer3', 'cci_timer4', 'cmu_rng0', 'cmu_rng1', 'cmu_rng2', 'cmu_rng3', 'cri_trng', 'dbg_out', 'ddr_bist', 'ddr_pxi0', 'ddr_pxi1', 'ddr_pxi2', 'ddr_pxi3', 'ddr_pxi4', 'ddr_pxi5', 'ddr_pxi6', 'ddr_pxi7', 'edp0_hot', 'edp0_lcd', 'edp1_hot', 'edp1_lcd', 'eusb0_ac', 'eusb1_ac', 'eusb2_ac', 'eusb3_ac', 'eusb5_ac', 'eusb6_ac', 'gcc_gp1', 'gcc_gp2', 'gcc_gp3', 'gpio', 'i2s0_data0', 'i2s0_data1', 'i2s0_sck', 'i2s0_ws', 'i2s1_data0', 'i2s1_data1', 'i2s1_sck', 'i2s1_ws', 'ibi_i3c', 'jitter_bist', 'mdp_vsync0', 'mdp_vsync1', 'mdp_vsync2', 'mdp_vsync3', 'mdp_vsync4', 'mdp_vsync5', 'mdp_vsync6', 'mdp_vsync7', 'mdp_vsync8', 'pcie3_clk', 'pcie4_clk', 'pcie5_clk', 'pcie6a_clk', 'pcie6b_clk', 'phase_flag', 'pll_bist', 'pll_clk', 'prng_rosc0', 'prng_r
+ osc1', 'prng_rosc2', 'prng_rosc3', 'qdss_cti', 'qdss_gpio', 'qspi00', 'qspi01', 'qspi02', 'qspi03', 'qspi0_clk', 'qspi0_cs0', 'qspi0_cs1', 'qup0_se0', 'qup0_se1', 'qup0_se2', 'qup0_se3', 'qup0_se4', 'qup0_se5', 'qup0_se6', 'qup0_se7', 'qup1_se0', 'qup1_se1', 'qup1_se2', 'qup1_se3', 'qup1_se4', 'qup1_se5', 'qup1_se6', 'qup1_se7', 'qup2_se0', 'qup2_se1', 'qup2_se2', 'qup2_se3', 'qup2_se4', 'qup2_se5', 'qup2_se6', 'qup2_se7', 'sd_write', 'sdc4_clk', 'sdc4_cmd', 'sdc4_data0', 'sdc4_data1', 'sdc4_data2', 'sdc4_data3', 'sys_throttle', 'tb_trig', 'tgu_ch0', 'tgu_ch1', 'tgu_ch2', 'tgu_ch3', 'tgu_ch4', 'tgu_ch5', 'tgu_ch6', 'tgu_ch7', 'tmess_prng0', 'tmess_prng1', 'tmess_prng2', 'tmess_prng3', 'tsense_pwm1', 'tsense_pwm2', 'sense_pwm3', 'tsense_pwm4', 'usb0_dp', 'usb0_phy', 'usb0_sbrx', 'usb0_sbtx', 'usb1_dp', 'usb1_phy', 'usb1_sbrx', 'usb1_sbtx', 'usb2_dp', 'usb2_phy', 'usb2_sbrx', 'usb2_sbtx', 'vsense_trigger']
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,x1e80100-tlmm.yaml#
+arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: pinctrl@f100000: edp-hpd-active-state: 'oneOf' conditional failed, one must be fixed:
+	'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	'edp_hot' is not one of ['aon_cci', 'aoss_cti', 'atest_char', 'atest_char0', 'atest_char1', 'atest_char2', 'atest_char3', 'atest_usb', 'audio_ext', 'audio_ref', 'cam_aon', 'cam_mclk', 'cci_async', 'cci_i2c', 'cci_timer0', 'cci_timer1', 'cci_timer2', 'cci_timer3', 'cci_timer4', 'cmu_rng0', 'cmu_rng1', 'cmu_rng2', 'cmu_rng3', 'cri_trng', 'dbg_out', 'ddr_bist', 'ddr_pxi0', 'ddr_pxi1', 'ddr_pxi2', 'ddr_pxi3', 'ddr_pxi4', 'ddr_pxi5', 'ddr_pxi6', 'ddr_pxi7', 'edp0_hot', 'edp0_lcd', 'edp1_hot', 'edp1_lcd', 'eusb0_ac', 'eusb1_ac', 'eusb2_ac', 'eusb3_ac', 'eusb5_ac', 'eusb6_ac', 'gcc_gp1', 'gcc_gp2', 'gcc_gp3', 'gpio', 'i2s0_data0', 'i2s0_data1', 'i2s0_sck', 'i2s0_ws', 'i2s1_data0', 'i2s1_data1', 'i2s1_sck', 'i2s1_ws', 'ibi_i3c', 'jitter_bist', 'mdp_vsync0', 'mdp_vsync1', 'mdp_vsync2', 'mdp_vsync3', 'mdp_vsync4', 'mdp_vsync5', 'mdp_vsync6', 'mdp_vsync7', 'mdp_vsync8', 'pcie3_clk', 'pcie4_clk', 'pcie5_clk', 'pcie6a_clk', 'pcie6b_clk', 'phase_flag', 'pll_bist', 'pll_clk', 'prng_rosc0', 'prng_r
+ osc1', 'prng_rosc2', 'prng_rosc3', 'qdss_cti', 'qdss_gpio', 'qspi00', 'qspi01', 'qspi02', 'qspi03', 'qspi0_clk', 'qspi0_cs0', 'qspi0_cs1', 'qup0_se0', 'qup0_se1', 'qup0_se2', 'qup0_se3', 'qup0_se4', 'qup0_se5', 'qup0_se6', 'qup0_se7', 'qup1_se0', 'qup1_se1', 'qup1_se2', 'qup1_se3', 'qup1_se4', 'qup1_se5', 'qup1_se6', 'qup1_se7', 'qup2_se0', 'qup2_se1', 'qup2_se2', 'qup2_se3', 'qup2_se4', 'qup2_se5', 'qup2_se6', 'qup2_se7', 'sd_write', 'sdc4_clk', 'sdc4_cmd', 'sdc4_data0', 'sdc4_data1', 'sdc4_data2', 'sdc4_data3', 'sys_throttle', 'tb_trig', 'tgu_ch0', 'tgu_ch1', 'tgu_ch2', 'tgu_ch3', 'tgu_ch4', 'tgu_ch5', 'tgu_ch6', 'tgu_ch7', 'tmess_prng0', 'tmess_prng1', 'tmess_prng2', 'tmess_prng3', 'tsense_pwm1', 'tsense_pwm2', 'sense_pwm3', 'tsense_pwm4', 'usb0_dp', 'usb0_phy', 'usb0_sbrx', 'usb0_sbtx', 'usb1_dp', 'usb1_phy', 'usb1_sbrx', 'usb1_sbtx', 'usb2_dp', 'usb2_phy', 'usb2_sbrx', 'usb2_sbtx', 'vsense_trigger']
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,x1e80100-tlmm.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dtb: pinctrl@f100000: edp-hpd-active-state: 'oneOf' conditional failed, one must be fixed:
+	'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	'edp_hot' is not one of ['aon_cci', 'aoss_cti', 'atest_char', 'atest_char0', 'atest_char1', 'atest_char2', 'atest_char3', 'atest_usb', 'audio_ext', 'audio_ref', 'cam_aon', 'cam_mclk', 'cci_async', 'cci_i2c', 'cci_timer0', 'cci_timer1', 'cci_timer2', 'cci_timer3', 'cci_timer4', 'cmu_rng0', 'cmu_rng1', 'cmu_rng2', 'cmu_rng3', 'cri_trng', 'dbg_out', 'ddr_bist', 'ddr_pxi0', 'ddr_pxi1', 'ddr_pxi2', 'ddr_pxi3', 'ddr_pxi4', 'ddr_pxi5', 'ddr_pxi6', 'ddr_pxi7', 'edp0_hot', 'edp0_lcd', 'edp1_hot', 'edp1_lcd', 'eusb0_ac', 'eusb1_ac', 'eusb2_ac', 'eusb3_ac', 'eusb5_ac', 'eusb6_ac', 'gcc_gp1', 'gcc_gp2', 'gcc_gp3', 'gpio', 'i2s0_data0', 'i2s0_data1', 'i2s0_sck', 'i2s0_ws', 'i2s1_data0', 'i2s1_data1', 'i2s1_sck', 'i2s1_ws', 'ibi_i3c', 'jitter_bist', 'mdp_vsync0', 'mdp_vsync1', 'mdp_vsync2', 'mdp_vsync3', 'mdp_vsync4', 'mdp_vsync5', 'mdp_vsync6', 'mdp_vsync7', 'mdp_vsync8', 'pcie3_clk', 'pcie4_clk', 'pcie5_clk', 'pcie6a_clk', 'pcie6b_clk', 'phase_flag', 'pll_bist', 'pll_clk', 'prng_rosc0', 'prng_r
+ osc1', 'prng_rosc2', 'prng_rosc3', 'qdss_cti', 'qdss_gpio', 'qspi00', 'qspi01', 'qspi02', 'qspi03', 'qspi0_clk', 'qspi0_cs0', 'qspi0_cs1', 'qup0_se0', 'qup0_se1', 'qup0_se2', 'qup0_se3', 'qup0_se4', 'qup0_se5', 'qup0_se6', 'qup0_se7', 'qup1_se0', 'qup1_se1', 'qup1_se2', 'qup1_se3', 'qup1_se4', 'qup1_se5', 'qup1_se6', 'qup1_se7', 'qup2_se0', 'qup2_se1', 'qup2_se2', 'qup2_se3', 'qup2_se4', 'qup2_se5', 'qup2_se6', 'qup2_se7', 'sd_write', 'sdc4_clk', 'sdc4_cmd', 'sdc4_data0', 'sdc4_data1', 'sdc4_data2', 'sdc4_data3', 'sys_throttle', 'tb_trig', 'tgu_ch0', 'tgu_ch1', 'tgu_ch2', 'tgu_ch3', 'tgu_ch4', 'tgu_ch5', 'tgu_ch6', 'tgu_ch7', 'tmess_prng0', 'tmess_prng1', 'tmess_prng2', 'tmess_prng3', 'tsense_pwm1', 'tsense_pwm2', 'sense_pwm3', 'tsense_pwm4', 'usb0_dp', 'usb0_phy', 'usb0_sbrx', 'usb0_sbtx', 'usb1_dp', 'usb1_phy', 'usb1_sbrx', 'usb1_sbtx', 'usb2_dp', 'usb2_phy', 'usb2_sbrx', 'usb2_sbtx', 'vsense_trigger']
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,x1e80100-tlmm.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: pinctrl@f100000: edp-hpd-active-state: 'oneOf' conditional failed, one must be fixed:
+	'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	'edp_hot' is not one of ['aon_cci', 'aoss_cti', 'atest_char', 'atest_char0', 'atest_char1', 'atest_char2', 'atest_char3', 'atest_usb', 'audio_ext', 'audio_ref', 'cam_aon', 'cam_mclk', 'cci_async', 'cci_i2c', 'cci_timer0', 'cci_timer1', 'cci_timer2', 'cci_timer3', 'cci_timer4', 'cmu_rng0', 'cmu_rng1', 'cmu_rng2', 'cmu_rng3', 'cri_trng', 'dbg_out', 'ddr_bist', 'ddr_pxi0', 'ddr_pxi1', 'ddr_pxi2', 'ddr_pxi3', 'ddr_pxi4', 'ddr_pxi5', 'ddr_pxi6', 'ddr_pxi7', 'edp0_hot', 'edp0_lcd', 'edp1_hot', 'edp1_lcd', 'eusb0_ac', 'eusb1_ac', 'eusb2_ac', 'eusb3_ac', 'eusb5_ac', 'eusb6_ac', 'gcc_gp1', 'gcc_gp2', 'gcc_gp3', 'gpio', 'i2s0_data0', 'i2s0_data1', 'i2s0_sck', 'i2s0_ws', 'i2s1_data0', 'i2s1_data1', 'i2s1_sck', 'i2s1_ws', 'ibi_i3c', 'jitter_bist', 'mdp_vsync0', 'mdp_vsync1', 'mdp_vsync2', 'mdp_vsync3', 'mdp_vsync4', 'mdp_vsync5', 'mdp_vsync6', 'mdp_vsync7', 'mdp_vsync8', 'pcie3_clk', 'pcie4_clk', 'pcie5_clk', 'pcie6a_clk', 'pcie6b_clk', 'phase_flag', 'pll_bist', 'pll_clk', 'prng_rosc0', 'prng_r
+ osc1', 'prng_rosc2', 'prng_rosc3', 'qdss_cti', 'qdss_gpio', 'qspi00', 'qspi01', 'qspi02', 'qspi03', 'qspi0_clk', 'qspi0_cs0', 'qspi0_cs1', 'qup0_se0', 'qup0_se1', 'qup0_se2', 'qup0_se3', 'qup0_se4', 'qup0_se5', 'qup0_se6', 'qup0_se7', 'qup1_se0', 'qup1_se1', 'qup1_se2', 'qup1_se3', 'qup1_se4', 'qup1_se5', 'qup1_se6', 'qup1_se7', 'qup2_se0', 'qup2_se1', 'qup2_se2', 'qup2_se3', 'qup2_se4', 'qup2_se5', 'qup2_se6', 'qup2_se7', 'sd_write', 'sdc4_clk', 'sdc4_cmd', 'sdc4_data0', 'sdc4_data1', 'sdc4_data2', 'sdc4_data3', 'sys_throttle', 'tb_trig', 'tgu_ch0', 'tgu_ch1', 'tgu_ch2', 'tgu_ch3', 'tgu_ch4', 'tgu_ch5', 'tgu_ch6', 'tgu_ch7', 'tmess_prng0', 'tmess_prng1', 'tmess_prng2', 'tmess_prng3', 'tsense_pwm1', 'tsense_pwm2', 'sense_pwm3', 'tsense_pwm4', 'usb0_dp', 'usb0_phy', 'usb0_sbrx', 'usb0_sbtx', 'usb1_dp', 'usb1_phy', 'usb1_sbrx', 'usb1_sbtx', 'usb2_dp', 'usb2_phy', 'usb2_sbrx', 'usb2_sbtx', 'vsense_trigger']
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,x1e80100-tlmm.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: pinctrl@f100000: edp-hpd-active-state: 'oneOf' conditional failed, one must be fixed:
+	'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	'edp_hot' is not one of ['aon_cci', 'aoss_cti', 'atest_char', 'atest_char0', 'atest_char1', 'atest_char2', 'atest_char3', 'atest_usb', 'audio_ext', 'audio_ref', 'cam_aon', 'cam_mclk', 'cci_async', 'cci_i2c', 'cci_timer0', 'cci_timer1', 'cci_timer2', 'cci_timer3', 'cci_timer4', 'cmu_rng0', 'cmu_rng1', 'cmu_rng2', 'cmu_rng3', 'cri_trng', 'dbg_out', 'ddr_bist', 'ddr_pxi0', 'ddr_pxi1', 'ddr_pxi2', 'ddr_pxi3', 'ddr_pxi4', 'ddr_pxi5', 'ddr_pxi6', 'ddr_pxi7', 'edp0_hot', 'edp0_lcd', 'edp1_hot', 'edp1_lcd', 'eusb0_ac', 'eusb1_ac', 'eusb2_ac', 'eusb3_ac', 'eusb5_ac', 'eusb6_ac', 'gcc_gp1', 'gcc_gp2', 'gcc_gp3', 'gpio', 'i2s0_data0', 'i2s0_data1', 'i2s0_sck', 'i2s0_ws', 'i2s1_data0', 'i2s1_data1', 'i2s1_sck', 'i2s1_ws', 'ibi_i3c', 'jitter_bist', 'mdp_vsync0', 'mdp_vsync1', 'mdp_vsync2', 'mdp_vsync3', 'mdp_vsync4', 'mdp_vsync5', 'mdp_vsync6', 'mdp_vsync7', 'mdp_vsync8', 'pcie3_clk', 'pcie4_clk', 'pcie5_clk', 'pcie6a_clk', 'pcie6b_clk', 'phase_flag', 'pll_bist', 'pll_clk', 'prng_rosc0', 'prng_r
+ osc1', 'prng_rosc2', 'prng_rosc3', 'qdss_cti', 'qdss_gpio', 'qspi00', 'qspi01', 'qspi02', 'qspi03', 'qspi0_clk', 'qspi0_cs0', 'qspi0_cs1', 'qup0_se0', 'qup0_se1', 'qup0_se2', 'qup0_se3', 'qup0_se4', 'qup0_se5', 'qup0_se6', 'qup0_se7', 'qup1_se0', 'qup1_se1', 'qup1_se2', 'qup1_se3', 'qup1_se4', 'qup1_se5', 'qup1_se6', 'qup1_se7', 'qup2_se0', 'qup2_se1', 'qup2_se2', 'qup2_se3', 'qup2_se4', 'qup2_se5', 'qup2_se6', 'qup2_se7', 'sd_write', 'sdc4_clk', 'sdc4_cmd', 'sdc4_data0', 'sdc4_data1', 'sdc4_data2', 'sdc4_data3', 'sys_throttle', 'tb_trig', 'tgu_ch0', 'tgu_ch1', 'tgu_ch2', 'tgu_ch3', 'tgu_ch4', 'tgu_ch5', 'tgu_ch6', 'tgu_ch7', 'tmess_prng0', 'tmess_prng1', 'tmess_prng2', 'tmess_prng3', 'tsense_pwm1', 'tsense_pwm2', 'sense_pwm3', 'tsense_pwm4', 'usb0_dp', 'usb0_phy', 'usb0_sbrx', 'usb0_sbtx', 'usb1_dp', 'usb1_phy', 'usb1_sbrx', 'usb1_sbtx', 'usb2_dp', 'usb2_phy', 'usb2_sbrx', 'usb2_sbtx', 'vsense_trigger']
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,x1e80100-tlmm.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pinctrl@f100000: edp-hpd-active-state: 'oneOf' conditional failed, one must be fixed:
+	'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	'edp_hot' is not one of ['aon_cci', 'aoss_cti', 'atest_char', 'atest_char0', 'atest_char1', 'atest_char2', 'atest_char3', 'atest_usb', 'audio_ext', 'audio_ref', 'cam_aon', 'cam_mclk', 'cci_async', 'cci_i2c', 'cci_timer0', 'cci_timer1', 'cci_timer2', 'cci_timer3', 'cci_timer4', 'cmu_rng0', 'cmu_rng1', 'cmu_rng2', 'cmu_rng3', 'cri_trng', 'dbg_out', 'ddr_bist', 'ddr_pxi0', 'ddr_pxi1', 'ddr_pxi2', 'ddr_pxi3', 'ddr_pxi4', 'ddr_pxi5', 'ddr_pxi6', 'ddr_pxi7', 'edp0_hot', 'edp0_lcd', 'edp1_hot', 'edp1_lcd', 'eusb0_ac', 'eusb1_ac', 'eusb2_ac', 'eusb3_ac', 'eusb5_ac', 'eusb6_ac', 'gcc_gp1', 'gcc_gp2', 'gcc_gp3', 'gpio', 'i2s0_data0', 'i2s0_data1', 'i2s0_sck', 'i2s0_ws', 'i2s1_data0', 'i2s1_data1', 'i2s1_sck', 'i2s1_ws', 'ibi_i3c', 'jitter_bist', 'mdp_vsync0', 'mdp_vsync1', 'mdp_vsync2', 'mdp_vsync3', 'mdp_vsync4', 'mdp_vsync5', 'mdp_vsync6', 'mdp_vsync7', 'mdp_vsync8', 'pcie3_clk', 'pcie4_clk', 'pcie5_clk', 'pcie6a_clk', 'pcie6b_clk', 'phase_flag', 'pll_bist', 'pll_clk', 'prng_rosc0', 'prng_r
+ osc1', 'prng_rosc2', 'prng_rosc3', 'qdss_cti', 'qdss_gpio', 'qspi00', 'qspi01', 'qspi02', 'qspi03', 'qspi0_clk', 'qspi0_cs0', 'qspi0_cs1', 'qup0_se0', 'qup0_se1', 'qup0_se2', 'qup0_se3', 'qup0_se4', 'qup0_se5', 'qup0_se6', 'qup0_se7', 'qup1_se0', 'qup1_se1', 'qup1_se2', 'qup1_se3', 'qup1_se4', 'qup1_se5', 'qup1_se6', 'qup1_se7', 'qup2_se0', 'qup2_se1', 'qup2_se2', 'qup2_se3', 'qup2_se4', 'qup2_se5', 'qup2_se6', 'qup2_se7', 'sd_write', 'sdc4_clk', 'sdc4_cmd', 'sdc4_data0', 'sdc4_data1', 'sdc4_data2', 'sdc4_data3', 'sys_throttle', 'tb_trig', 'tgu_ch0', 'tgu_ch1', 'tgu_ch2', 'tgu_ch3', 'tgu_ch4', 'tgu_ch5', 'tgu_ch6', 'tgu_ch7', 'tmess_prng0', 'tmess_prng1', 'tmess_prng2', 'tmess_prng3', 'tsense_pwm1', 'tsense_pwm2', 'sense_pwm3', 'tsense_pwm4', 'usb0_dp', 'usb0_phy', 'usb0_sbrx', 'usb0_sbtx', 'usb1_dp', 'usb1_phy', 'usb1_sbrx', 'usb1_sbtx', 'usb2_dp', 'usb2_phy', 'usb2_sbrx', 'usb2_sbtx', 'vsense_trigger']
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,x1e80100-tlmm.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtb: pinctrl@f100000: edp-hpd-active-state: 'oneOf' conditional failed, one must be fixed:
+	'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	'edp_hot' is not one of ['aon_cci', 'aoss_cti', 'atest_char', 'atest_char0', 'atest_char1', 'atest_char2', 'atest_char3', 'atest_usb', 'audio_ext', 'audio_ref', 'cam_aon', 'cam_mclk', 'cci_async', 'cci_i2c', 'cci_timer0', 'cci_timer1', 'cci_timer2', 'cci_timer3', 'cci_timer4', 'cmu_rng0', 'cmu_rng1', 'cmu_rng2', 'cmu_rng3', 'cri_trng', 'dbg_out', 'ddr_bist', 'ddr_pxi0', 'ddr_pxi1', 'ddr_pxi2', 'ddr_pxi3', 'ddr_pxi4', 'ddr_pxi5', 'ddr_pxi6', 'ddr_pxi7', 'edp0_hot', 'edp0_lcd', 'edp1_hot', 'edp1_lcd', 'eusb0_ac', 'eusb1_ac', 'eusb2_ac', 'eusb3_ac', 'eusb5_ac', 'eusb6_ac', 'gcc_gp1', 'gcc_gp2', 'gcc_gp3', 'gpio', 'i2s0_data0', 'i2s0_data1', 'i2s0_sck', 'i2s0_ws', 'i2s1_data0', 'i2s1_data1', 'i2s1_sck', 'i2s1_ws', 'ibi_i3c', 'jitter_bist', 'mdp_vsync0', 'mdp_vsync1', 'mdp_vsync2', 'mdp_vsync3', 'mdp_vsync4', 'mdp_vsync5', 'mdp_vsync6', 'mdp_vsync7', 'mdp_vsync8', 'pcie3_clk', 'pcie4_clk', 'pcie5_clk', 'pcie6a_clk', 'pcie6b_clk', 'phase_flag', 'pll_bist', 'pll_clk', 'prng_rosc0', 'prng_r
+ osc1', 'prng_rosc2', 'prng_rosc3', 'qdss_cti', 'qdss_gpio', 'qspi00', 'qspi01', 'qspi02', 'qspi03', 'qspi0_clk', 'qspi0_cs0', 'qspi0_cs1', 'qup0_se0', 'qup0_se1', 'qup0_se2', 'qup0_se3', 'qup0_se4', 'qup0_se5', 'qup0_se6', 'qup0_se7', 'qup1_se0', 'qup1_se1', 'qup1_se2', 'qup1_se3', 'qup1_se4', 'qup1_se5', 'qup1_se6', 'qup1_se7', 'qup2_se0', 'qup2_se1', 'qup2_se2', 'qup2_se3', 'qup2_se4', 'qup2_se5', 'qup2_se6', 'qup2_se7', 'sd_write', 'sdc4_clk', 'sdc4_cmd', 'sdc4_data0', 'sdc4_data1', 'sdc4_data2', 'sdc4_data3', 'sys_throttle', 'tb_trig', 'tgu_ch0', 'tgu_ch1', 'tgu_ch2', 'tgu_ch3', 'tgu_ch4', 'tgu_ch5', 'tgu_ch6', 'tgu_ch7', 'tmess_prng0', 'tmess_prng1', 'tmess_prng2', 'tmess_prng3', 'tsense_pwm1', 'tsense_pwm2', 'sense_pwm3', 'tsense_pwm4', 'usb0_dp', 'usb0_phy', 'usb0_sbrx', 'usb0_sbtx', 'usb1_dp', 'usb1_phy', 'usb1_sbrx', 'usb1_sbtx', 'usb2_dp', 'usb2_phy', 'usb2_sbrx', 'usb2_sbtx', 'vsense_trigger']
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,x1e80100-tlmm.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-crd.dtb: pinctrl@f100000: edp-hpd-active-state: 'oneOf' conditional failed, one must be fixed:
+	'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	'edp_hot' is not one of ['aon_cci', 'aoss_cti', 'atest_char', 'atest_char0', 'atest_char1', 'atest_char2', 'atest_char3', 'atest_usb', 'audio_ext', 'audio_ref', 'cam_aon', 'cam_mclk', 'cci_async', 'cci_i2c', 'cci_timer0', 'cci_timer1', 'cci_timer2', 'cci_timer3', 'cci_timer4', 'cmu_rng0', 'cmu_rng1', 'cmu_rng2', 'cmu_rng3', 'cri_trng', 'dbg_out', 'ddr_bist', 'ddr_pxi0', 'ddr_pxi1', 'ddr_pxi2', 'ddr_pxi3', 'ddr_pxi4', 'ddr_pxi5', 'ddr_pxi6', 'ddr_pxi7', 'edp0_hot', 'edp0_lcd', 'edp1_hot', 'edp1_lcd', 'eusb0_ac', 'eusb1_ac', 'eusb2_ac', 'eusb3_ac', 'eusb5_ac', 'eusb6_ac', 'gcc_gp1', 'gcc_gp2', 'gcc_gp3', 'gpio', 'i2s0_data0', 'i2s0_data1', 'i2s0_sck', 'i2s0_ws', 'i2s1_data0', 'i2s1_data1', 'i2s1_sck', 'i2s1_ws', 'ibi_i3c', 'jitter_bist', 'mdp_vsync0', 'mdp_vsync1', 'mdp_vsync2', 'mdp_vsync3', 'mdp_vsync4', 'mdp_vsync5', 'mdp_vsync6', 'mdp_vsync7', 'mdp_vsync8', 'pcie3_clk', 'pcie4_clk', 'pcie5_clk', 'pcie6a_clk', 'pcie6b_clk', 'phase_flag', 'pll_bist', 'pll_clk', 'prng_rosc0', 'prng_r
+ osc1', 'prng_rosc2', 'prng_rosc3', 'qdss_cti', 'qdss_gpio', 'qspi00', 'qspi01', 'qspi02', 'qspi03', 'qspi0_clk', 'qspi0_cs0', 'qspi0_cs1', 'qup0_se0', 'qup0_se1', 'qup0_se2', 'qup0_se3', 'qup0_se4', 'qup0_se5', 'qup0_se6', 'qup0_se7', 'qup1_se0', 'qup1_se1', 'qup1_se2', 'qup1_se3', 'qup1_se4', 'qup1_se5', 'qup1_se6', 'qup1_se7', 'qup2_se0', 'qup2_se1', 'qup2_se2', 'qup2_se3', 'qup2_se4', 'qup2_se5', 'qup2_se6', 'qup2_se7', 'sd_write', 'sdc4_clk', 'sdc4_cmd', 'sdc4_data0', 'sdc4_data1', 'sdc4_data2', 'sdc4_data3', 'sys_throttle', 'tb_trig', 'tgu_ch0', 'tgu_ch1', 'tgu_ch2', 'tgu_ch3', 'tgu_ch4', 'tgu_ch5', 'tgu_ch6', 'tgu_ch7', 'tmess_prng0', 'tmess_prng1', 'tmess_prng2', 'tmess_prng3', 'tsense_pwm1', 'tsense_pwm2', 'sense_pwm3', 'tsense_pwm4', 'usb0_dp', 'usb0_phy', 'usb0_sbrx', 'usb0_sbtx', 'usb1_dp', 'usb1_phy', 'usb1_sbrx', 'usb1_sbtx', 'usb2_dp', 'usb2_phy', 'usb2_sbrx', 'usb2_sbtx', 'vsense_trigger']
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,x1e80100-tlmm.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: pinctrl@f100000: edp-hpd-active-state: 'oneOf' conditional failed, one must be fixed:
+	'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	'edp_hot' is not one of ['aon_cci', 'aoss_cti', 'atest_char', 'atest_char0', 'atest_char1', 'atest_char2', 'atest_char3', 'atest_usb', 'audio_ext', 'audio_ref', 'cam_aon', 'cam_mclk', 'cci_async', 'cci_i2c', 'cci_timer0', 'cci_timer1', 'cci_timer2', 'cci_timer3', 'cci_timer4', 'cmu_rng0', 'cmu_rng1', 'cmu_rng2', 'cmu_rng3', 'cri_trng', 'dbg_out', 'ddr_bist', 'ddr_pxi0', 'ddr_pxi1', 'ddr_pxi2', 'ddr_pxi3', 'ddr_pxi4', 'ddr_pxi5', 'ddr_pxi6', 'ddr_pxi7', 'edp0_hot', 'edp0_lcd', 'edp1_hot', 'edp1_lcd', 'eusb0_ac', 'eusb1_ac', 'eusb2_ac', 'eusb3_ac', 'eusb5_ac', 'eusb6_ac', 'gcc_gp1', 'gcc_gp2', 'gcc_gp3', 'gpio', 'i2s0_data0', 'i2s0_data1', 'i2s0_sck', 'i2s0_ws', 'i2s1_data0', 'i2s1_data1', 'i2s1_sck', 'i2s1_ws', 'ibi_i3c', 'jitter_bist', 'mdp_vsync0', 'mdp_vsync1', 'mdp_vsync2', 'mdp_vsync3', 'mdp_vsync4', 'mdp_vsync5', 'mdp_vsync6', 'mdp_vsync7', 'mdp_vsync8', 'pcie3_clk', 'pcie4_clk', 'pcie5_clk', 'pcie6a_clk', 'pcie6b_clk', 'phase_flag', 'pll_bist', 'pll_clk', 'prng_rosc0', 'prng_r
+ osc1', 'prng_rosc2', 'prng_rosc3', 'qdss_cti', 'qdss_gpio', 'qspi00', 'qspi01', 'qspi02', 'qspi03', 'qspi0_clk', 'qspi0_cs0', 'qspi0_cs1', 'qup0_se0', 'qup0_se1', 'qup0_se2', 'qup0_se3', 'qup0_se4', 'qup0_se5', 'qup0_se6', 'qup0_se7', 'qup1_se0', 'qup1_se1', 'qup1_se2', 'qup1_se3', 'qup1_se4', 'qup1_se5', 'qup1_se6', 'qup1_se7', 'qup2_se0', 'qup2_se1', 'qup2_se2', 'qup2_se3', 'qup2_se4', 'qup2_se5', 'qup2_se6', 'qup2_se7', 'sd_write', 'sdc4_clk', 'sdc4_cmd', 'sdc4_data0', 'sdc4_data1', 'sdc4_data2', 'sdc4_data3', 'sys_throttle', 'tb_trig', 'tgu_ch0', 'tgu_ch1', 'tgu_ch2', 'tgu_ch3', 'tgu_ch4', 'tgu_ch5', 'tgu_ch6', 'tgu_ch7', 'tmess_prng0', 'tmess_prng1', 'tmess_prng2', 'tmess_prng3', 'tsense_pwm1', 'tsense_pwm2', 'sense_pwm3', 'tsense_pwm4', 'usb0_dp', 'usb0_phy', 'usb0_sbrx', 'usb0_sbtx', 'usb1_dp', 'usb1_phy', 'usb1_sbrx', 'usb1_sbtx', 'usb2_dp', 'usb2_phy', 'usb2_sbrx', 'usb2_sbtx', 'vsense_trigger']
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,x1e80100-tlmm.yaml#
+
+
+
+
+
 
