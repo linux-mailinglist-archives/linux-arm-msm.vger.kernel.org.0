@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-53107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86AB9A7A502
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 16:25:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ADD32A7A504
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 16:25:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B85B16D940
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 14:20:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B45E16D739
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 14:22:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA25624EA90;
-	Thu,  3 Apr 2025 14:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F1C324EA90;
+	Thu,  3 Apr 2025 14:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W8DaIK6M"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qmky6xB/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8E324DFF6;
-	Thu,  3 Apr 2025 14:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4851514E4;
+	Thu,  3 Apr 2025 14:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743690053; cv=none; b=Bj+7ItsQ2FKRPL9H3JkiWTvjgxavJnptspzxxjSkJpOfGE3mmabPVjr+DkcaNj5TEj2aDdt0sdV30iByC77J6CBEhoAl2FW3a5oFQ4dbueGn/3zRovyhkV/EdsXKtNqfD5xsPT3Y8IbwlsfU5CbijUQUYm9ApNp6bSb5t8fjWUU=
+	t=1743690121; cv=none; b=Wmfybl2mXZDq1qAMwDAVElapMB53OqhBmSYTLs5/pkWjhpaK3RHUtCNuIpYm11IvUYY1JjkZnZThSmi4J5dY5uooigzBx8/OVX7m5pW5O0TeaQu8XIjdwTjpzmI/qC1LuvpN0MIekEPa9nfOnGk0ojrFVnItGSmyqqpk5s7ePN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743690053; c=relaxed/simple;
-	bh=oVspQsOli10ojcQuWaGk/4OcF/v1mQdbvkzFN2c0/GQ=;
+	s=arc-20240116; t=1743690121; c=relaxed/simple;
+	bh=7cytq67GGUL6+u44tuFkbevBHrtSrDerVOuh56Zknks=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QM5gO1SMCMmDLG5G09b9Mq0NshgpA9vJdnsbRzTzCojR/6Gl0BxX30xbOilbqSo0HWYp/fC5q+or5CEaYRLkA3MGls6HRpqGizqg0fMpz8AWIXnwcvxtB+Znn/YAaZcCP66LmPU/fAP4z9anc8D7+QHWhNag/DXxSQx9TxmF820=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W8DaIK6M; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CD2C4CEE3;
-	Thu,  3 Apr 2025 14:20:48 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=tee944JS2IKnivXfMTGPTTNEqNd3xp9BuSgK6/FvQi5fPlV+H5tmDEQm0oL47sfGEF7b875vdwpTWClapERL3bNh1VGpNKtWW2uA2tffK/bf/NPFka2LYBhuzvMfs/SJhX2OV1OpubxdR6mVBINWips1LlbQHccPcBMo1fmCLos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qmky6xB/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C997DC4CEE3;
+	Thu,  3 Apr 2025 14:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743690053;
-	bh=oVspQsOli10ojcQuWaGk/4OcF/v1mQdbvkzFN2c0/GQ=;
+	s=k20201202; t=1743690119;
+	bh=7cytq67GGUL6+u44tuFkbevBHrtSrDerVOuh56Zknks=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=W8DaIK6MtKx5CfQXjk4+Ok8QWMjpWAx4EaFMbIpU2C/gIigiLGbA9SygmS5C9JCyn
-	 xpxr5qHfoEtL9NyUNnB3mjQrCghp6ILmdWZ7HaWoOzQBp0yJtYqcPZsWCCKJ0e4fFz
-	 fCOL8tSTU1zppUZrUR/GHtdqDkJ2nYUQFc6q2C3L9ggOMDOK8esHGj+ty1QdX0DZxS
-	 OxqWocbB4dbGM9D+cY5QxobsGj+pqbNfpVAUnfWhIUP/lZAsOoCGypCdm63QiqueNU
-	 QRubPE5bs+174JQXg9Pu0VMR+/6FKqYmrDTPT/kHN3DhDU38WGkYfe9QUx1udxSfB/
-	 Y5xDpfWgguYnw==
-Message-ID: <267a5216-4b4e-415d-8fd5-98fa430d4893@kernel.org>
-Date: Thu, 3 Apr 2025 16:20:45 +0200
+	b=Qmky6xB/pAR+xOKqgu71njJKKw5g8kdVTY6ggZAwkd1eLP9oY0CPV/rBS8JK25ILk
+	 mJrXhz+4cozipqGKpnuX2+W+0iyHa79YcFkKjMf2kMDIMvQtxKunPZ23zxXfNafrX1
+	 +GG9up7V/dLTHdesrJriSJ73LFv++JOcNSliDWqPQnpZU93US7/qfla9iRCxbylZIv
+	 YUbQCLfzLxVNcTLQ7UWkgVqk2eJKqKo9+jur+tKMbOZdXhOlRIAbzy/7riPIZ2MM6x
+	 hRis/YqmymG5jQeSJbHhvqoTLsPgeO2fqgwuRydpchTEX4tASQm7W80dXF5Io3bcJk
+	 QvT6xHV/1yRnQ==
+Message-ID: <6b33d7ea-4ad5-454f-bd26-0ef961cf7ae3@kernel.org>
+Date: Thu, 3 Apr 2025 16:21:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 0/8] Add new driver for WCSS secure PIL loading
+Subject: Re: [PATCH V4 2/8] dt-bindings: remoteproc: qcom: document hexagon
+ based WCSS secure PIL
 To: Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>,
  andersson@kernel.org, mathieu.poirier@linaro.org, robh@kernel.org,
  krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
@@ -58,6 +59,7 @@ To: Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>,
  linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
 Cc: quic_srichara@quicinc.com, vignesh.viswanathan@oss.qualcomm.com
 References: <20250403120304.2345677-1-gokul.sriram.p@oss.qualcomm.com>
+ <20250403120304.2345677-3-gokul.sriram.p@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,47 +105,26 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250403120304.2345677-1-gokul.sriram.p@oss.qualcomm.com>
+In-Reply-To: <20250403120304.2345677-3-gokul.sriram.p@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 03/04/2025 14:02, Gokul Sriram Palanisamy wrote:
-> This series depends on Sricharan's tmel-qmp mailbox driver series v4 [1].
-> 
-> - Secure PIL is signed, split firmware images which only TrustZone (TZ)
->   can authenticate and load. Linux kernel will send a request to TZ to
->   authenticate and load the PIL images.
-> 
-> - When secure PIL support was added to the existing wcss PIL driver
->   earlier in [2], Bjorn suggested not to overload the existing WCSS
->   rproc driver, instead post a new driver for PAS based IPQ WCSS driver.
->   This series adds a new secure PIL driver for the same.
-> 
-> - Also adds changes to scm to pass metadata size as required for IPQ5332,
->   reposted from [3].
-> 
-> [1]
-> https://patchwork.kernel.org/project/linux-arm-msm/cover/20250327181750.3733881-1-quic_srichara@quicinc.com/
-> 
-> [2]
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/1611984013-10201-3-git-send-email-gokulsri@codeaurora.org/
-> 
-> [3]
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/20240820055618.267554-6-quic_gokulsri@quicinc.com/
-> 
-> changes in v4:
->         - changed q6 firmware image format from .mdt to .mbn
->         - corrected arrangement of variable assignemnts as per comments
->           in qcom_scm.c
->         - added scm call to get board machid
->         - added support for q6 dtb loading with support for additional
->           reserved memory for q6 dtb in .mbn format
->         - updated dt-bindings to include new dts entry qcom,q6-dtb-info
->           and additional item in memory-region for q6 dtb region.
+> +    minItems: 1
+> +    items:
+> +      - description: Q6 reserved region
+> +      - description: Q6 dtb reserved region
+> +
+> +  qcom,q6-dtb-info:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
 
+NAK, you added new properties which invalidates review. You must drop
+review after making such significant changes (3 new properties? Several
+other changed).
 
-This invalidates review.
+See submitting patches.
 
+Anyway, NAK for the property, you don't get DTB info from DTB.
 
 Best regards,
 Krzysztof
