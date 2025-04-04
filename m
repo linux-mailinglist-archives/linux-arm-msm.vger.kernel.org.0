@@ -1,365 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-53186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEEF4A7B674
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 05:05:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1EEAA7B71D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 07:24:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9BECF3B942D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 03:04:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D145189CC78
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 05:24:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 578F31EA7E2;
-	Fri,  4 Apr 2025 03:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAF9414EC5B;
+	Fri,  4 Apr 2025 05:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZzYCy357"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YF2GtSIB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FFE1EA7D3;
-	Fri,  4 Apr 2025 03:00:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4318376;
+	Fri,  4 Apr 2025 05:24:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743735608; cv=none; b=frHoOBV7NCnisA2+wTi4HiKeuSxTYqH/revKdfIvqSAs8HZtgCXQ9vOJclGu1uo7YHKA0VwJSvdian7OwFzV7gXY0v75xWdTVJLZPBRkZEonaKlEr/zhwEMVms0aqPPQSQ8/0g9e2hJhromRgqgj6QWYIWEpXxt4vHF9EcHWP1g=
+	t=1743744283; cv=none; b=T74VkBtpodS3ITs+jn7DHxb6Ui6WqrKFEjID5dZ9lrwlwWHeM8U1aDl8XPc/hcav3YSPr1bgfdu5G+PUuR/YyeHQUpO1NU85b+Db83JicbI6fJSLio0rvg6guRscax63H3E3oGd4GcRXuMTJRupdWn7xjAI57400gaX8qITH83M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743735608; c=relaxed/simple;
-	bh=+bglFes+JWUyYqhoWvdBTyyAUTU6Hu68wW9iKCwLBnY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=T3vzCW2csWyQQwS3YUVXhlHwsgdSP1pP5zga5dn5g/rM8iZ/laffF1ocfXgt7Yqnosc6LquwTtSq+u/SITm2gSE65OujzqnB2tnaPh5Yo51D4YaF6BtntGkuc9DsCR4dHLV0vi74CJjENCGN17TKddxpUME/aaLQHGA3DTt8ak4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZzYCy357; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F80C4CEE3;
-	Fri,  4 Apr 2025 03:00:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743735606;
-	bh=+bglFes+JWUyYqhoWvdBTyyAUTU6Hu68wW9iKCwLBnY=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=ZzYCy3572wAcb8VXN5IFR/xxSAoz+Ll8686K4A7qg8wIFI38fvJ8QSFQwX/eI7L6g
-	 9GswgwONrsiJoNkwsyrplALvNfCFcd8MaJKyb2kpDe/SMbAsiOEjmnUMrHu/+qEU44
-	 fc6+c+FKbR7mO9dkD4/sTpNP2Yvqw5zu1a79e2a7C/Y3mq9VrjXacawISc3gE7kwgm
-	 R1rrrZ20y/p8is2HZkHzkIPf4pvhIgTK1ctQnusjL0OrXjK1ZXlPMNFNLcVp0TxB9Z
-	 E9pl1+SlJ/3xi8ckKlkbV5SPf06nhMkBkco7rmYFgKHjgOa8xRquq6E/AnK3C/a00M
-	 T7EX1lGR7l7NQ==
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Date: Thu, 03 Apr 2025 21:59:40 -0500
-Subject: [PATCH 19/19] dt-bindings: cpufreq: Drop redundant Mediatek
- binding
+	s=arc-20240116; t=1743744283; c=relaxed/simple;
+	bh=T6qWTHO6zn6yFeQRka369OQfKhxhMz8aa9AQl4IEI8g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=K1c0ZmMF/EqYU9dqd+MTKxxiuRMSwdUElWaJG1z559z5l7VGvVnk554e8L6TbcquRqzPqPAeLIpKrp/F3TWTitmdGDsmoDt4DEpJfZLkezCZcDBnxC93Z50Pio9UiOL2zpxwtkgtJAOh2IDvH0xSxeGqvI/6/54+7qzxw+gVrcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YF2GtSIB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53433pSj012468;
+	Fri, 4 Apr 2025 05:24:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	dgpEB7gfc/lE0wfxGM1FCSwDljOatKrsnpah3weKpoQ=; b=YF2GtSIBQ+W8JWVc
+	+dun3q2bQr0j3bamCyb03zqxFYYuU23VGRSiPObrm26+J3AC1L1LHUbZ3UB3Lm8z
+	dOH0d6E9+vvxZUy+VQGmh06GF2OGZ9TMB/N8jyPZ35M3P3UkBNC2cvJzMwitj9it
+	BwofFJUoR70ubYL+MnornSuSz0S5hMDlXvhrY+ByfIeqdVhnQ7GMIPpDjswUDLh4
+	jgD+YQU/anEn7tPb8pfCCdZT5R8WZhUrKVLPvZv3iTjs4W+Mz6KJ7xMeejH4/zrb
+	QMlZ4C5oBgAEhMOmJ6Coq0SBRYHfoykSxWz8Kon0n8TRhjST+f+F/6bmVqlY08lU
+	2SNWfg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45t2d50qw9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 04 Apr 2025 05:24:36 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5345OZTk028739
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 4 Apr 2025 05:24:35 GMT
+Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 3 Apr 2025
+ 22:24:31 -0700
+Message-ID: <1dd6e03d-09be-4853-741a-4fb47b7619a0@quicinc.com>
+Date: Fri, 4 Apr 2025 10:54:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 0/8] Reup: SM8350 and SC8280XP venus support
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Johan Hovold <johan+linaro@kernel.org>
+References: <20250304-b4-linux-media-comitters-sc8280xp-venus-v1-0-279c7ea55493@linaro.org>
+ <8cfaeb25-2657-9df4-5cea-018aad62f579@quicinc.com>
+ <it3njgklhnedjzojafuxpjy3o5zfulgdclweyobv7kjgtpjmzx@6opje7yms4yg>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <it3njgklhnedjzojafuxpjy3o5zfulgdclweyobv7kjgtpjmzx@6opje7yms4yg>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250403-dt-cpu-schema-v1-19-076be7171a85@kernel.org>
-References: <20250403-dt-cpu-schema-v1-0-076be7171a85@kernel.org>
-In-Reply-To: <20250403-dt-cpu-schema-v1-0-076be7171a85@kernel.org>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Chen-Yu Tsai <wens@csie.org>, 
- Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Samuel Holland <samuel@sholland.org>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Viresh Kumar <viresh.kumar@linaro.org>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Vincenzo Frascino <vincenzo.frascino@arm.com>, 
- Liviu Dudau <liviu.dudau@arm.com>, Sudeep Holla <sudeep.holla@arm.com>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>, 
- Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, 
- Stephen Boyd <sboyd@kernel.org>, zhouyanjie@wanyeetech.com, 
- Conor Dooley <conor@kernel.org>, 
- Nicolas Ferre <nicolas.ferre@microchip.com>, 
- Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
- Steen Hegelund <Steen.Hegelund@microchip.com>, 
- Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
- Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, Heiko Stuebner <heiko@sntech.de>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Magnus Damm <magnus.damm@gmail.com>
-Cc: devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
- linux-pm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-mips@vger.kernel.org, 
- imx@lists.linux.dev, linux-rockchip@lists.infradead.org, 
- linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org
-X-Mailer: b4 0.15-dev
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7gynyBXwz0lmTHT6-60hgv_GkTO1B2KS
+X-Proofpoint-GUID: 7gynyBXwz0lmTHT6-60hgv_GkTO1B2KS
+X-Authority-Analysis: v=2.4 cv=Cvu/cm4D c=1 sm=1 tr=0 ts=67ef6d14 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=ruycbLpa2_zXmOni_LEA:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-04_01,2025-04-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ bulkscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0 spamscore=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
+ clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504040035
 
-The Mediatek CPUFreq binding document just describes properties from
-the CPU node which the driver uses. This is redundant as all the
-properties are described in the arm/cpus.yaml schema.
+Hi Dmitry,
 
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
----
- .../bindings/cpufreq/cpufreq-mediatek.txt          | 250 ---------------------
- 1 file changed, 250 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-mediatek.txt b/Documentation/devicetree/bindings/cpufreq/cpufreq-mediatek.txt
-deleted file mode 100644
-index e0a4ba599abc..000000000000
---- a/Documentation/devicetree/bindings/cpufreq/cpufreq-mediatek.txt
-+++ /dev/null
-@@ -1,250 +0,0 @@
--Binding for MediaTek's CPUFreq driver
--=====================================
--
--Required properties:
--- clocks: A list of phandle + clock-specifier pairs for the clocks listed in clock names.
--- clock-names: Should contain the following:
--	"cpu"		- The multiplexer for clock input of CPU cluster.
--	"intermediate"	- A parent of "cpu" clock which is used as "intermediate" clock
--			  source (usually MAINPLL) when the original CPU PLL is under
--			  transition and not stable yet.
--	Please refer to Documentation/devicetree/bindings/clock/clock-bindings.txt for
--	generic clock consumer properties.
--- operating-points-v2: Please refer to Documentation/devicetree/bindings/opp/opp-v2.yaml
--	for detail.
--- proc-supply: Regulator for Vproc of CPU cluster.
--
--Optional properties:
--- sram-supply: Regulator for Vsram of CPU cluster. When present, the cpufreq driver
--	       needs to do "voltage tracking" to step by step scale up/down Vproc and
--	       Vsram to fit SoC specific needs. When absent, the voltage scaling
--	       flow is handled by hardware, hence no software "voltage tracking" is
--	       needed.
--- mediatek,cci:
--	Used to confirm the link status between cpufreq and mediatek cci. Because
--	cpufreq and mediatek cci could share the same regulator in some MediaTek SoCs.
--	To prevent the issue of high frequency and low voltage, we need to use this
--	property to make sure mediatek cci is ready.
--	For details of mediatek cci, please refer to
--	Documentation/devicetree/bindings/interconnect/mediatek,cci.yaml
--- #cooling-cells:
--	For details, please refer to
--	Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml
--
--Example 1 (MT7623 SoC):
--
--	cpu_opp_table: opp_table {
--		compatible = "operating-points-v2";
--		opp-shared;
--
--		opp-598000000 {
--			opp-hz = /bits/ 64 <598000000>;
--			opp-microvolt = <1050000>;
--		};
--
--		opp-747500000 {
--			opp-hz = /bits/ 64 <747500000>;
--			opp-microvolt = <1050000>;
--		};
--
--		opp-1040000000 {
--			opp-hz = /bits/ 64 <1040000000>;
--			opp-microvolt = <1150000>;
--		};
--
--		opp-1196000000 {
--			opp-hz = /bits/ 64 <1196000000>;
--			opp-microvolt = <1200000>;
--		};
--
--		opp-1300000000 {
--			opp-hz = /bits/ 64 <1300000000>;
--			opp-microvolt = <1300000>;
--		};
--	};
--
--	cpu0: cpu@0 {
--		device_type = "cpu";
--		compatible = "arm,cortex-a7";
--		reg = <0x0>;
--		clocks = <&infracfg CLK_INFRA_CPUSEL>,
--			 <&apmixedsys CLK_APMIXED_MAINPLL>;
--		clock-names = "cpu", "intermediate";
--		operating-points-v2 = <&cpu_opp_table>;
--		#cooling-cells = <2>;
--	};
--	cpu@1 {
--		device_type = "cpu";
--		compatible = "arm,cortex-a7";
--		reg = <0x1>;
--		operating-points-v2 = <&cpu_opp_table>;
--	};
--	cpu@2 {
--		device_type = "cpu";
--		compatible = "arm,cortex-a7";
--		reg = <0x2>;
--		operating-points-v2 = <&cpu_opp_table>;
--	};
--	cpu@3 {
--		device_type = "cpu";
--		compatible = "arm,cortex-a7";
--		reg = <0x3>;
--		operating-points-v2 = <&cpu_opp_table>;
--	};
--
--Example 2 (MT8173 SoC):
--	cpu_opp_table_a: opp_table_a {
--		compatible = "operating-points-v2";
--		opp-shared;
--
--		opp-507000000 {
--			opp-hz = /bits/ 64 <507000000>;
--			opp-microvolt = <859000>;
--		};
--
--		opp-702000000 {
--			opp-hz = /bits/ 64 <702000000>;
--			opp-microvolt = <908000>;
--		};
--
--		opp-1001000000 {
--			opp-hz = /bits/ 64 <1001000000>;
--			opp-microvolt = <983000>;
--		};
--
--		opp-1105000000 {
--			opp-hz = /bits/ 64 <1105000000>;
--			opp-microvolt = <1009000>;
--		};
--
--		opp-1183000000 {
--			opp-hz = /bits/ 64 <1183000000>;
--			opp-microvolt = <1028000>;
--		};
--
--		opp-1404000000 {
--			opp-hz = /bits/ 64 <1404000000>;
--			opp-microvolt = <1083000>;
--		};
--
--		opp-1508000000 {
--			opp-hz = /bits/ 64 <1508000000>;
--			opp-microvolt = <1109000>;
--		};
--
--		opp-1573000000 {
--			opp-hz = /bits/ 64 <1573000000>;
--			opp-microvolt = <1125000>;
--		};
--	};
--
--	cpu_opp_table_b: opp_table_b {
--		compatible = "operating-points-v2";
--		opp-shared;
--
--		opp-507000000 {
--			opp-hz = /bits/ 64 <507000000>;
--			opp-microvolt = <828000>;
--		};
--
--		opp-702000000 {
--			opp-hz = /bits/ 64 <702000000>;
--			opp-microvolt = <867000>;
--		};
--
--		opp-1001000000 {
--			opp-hz = /bits/ 64 <1001000000>;
--			opp-microvolt = <927000>;
--		};
--
--		opp-1209000000 {
--			opp-hz = /bits/ 64 <1209000000>;
--			opp-microvolt = <968000>;
--		};
--
--		opp-1404000000 {
--			opp-hz = /bits/ 64 <1007000000>;
--			opp-microvolt = <1028000>;
--		};
--
--		opp-1612000000 {
--			opp-hz = /bits/ 64 <1612000000>;
--			opp-microvolt = <1049000>;
--		};
--
--		opp-1807000000 {
--			opp-hz = /bits/ 64 <1807000000>;
--			opp-microvolt = <1089000>;
--		};
--
--		opp-1989000000 {
--			opp-hz = /bits/ 64 <1989000000>;
--			opp-microvolt = <1125000>;
--		};
--	};
--
--	cpu0: cpu@0 {
--		device_type = "cpu";
--		compatible = "arm,cortex-a53";
--		reg = <0x000>;
--		enable-method = "psci";
--		cpu-idle-states = <&CPU_SLEEP_0>;
--		clocks = <&infracfg CLK_INFRA_CA53SEL>,
--			 <&apmixedsys CLK_APMIXED_MAINPLL>;
--		clock-names = "cpu", "intermediate";
--		operating-points-v2 = <&cpu_opp_table_a>;
--	};
--
--	cpu1: cpu@1 {
--		device_type = "cpu";
--		compatible = "arm,cortex-a53";
--		reg = <0x001>;
--		enable-method = "psci";
--		cpu-idle-states = <&CPU_SLEEP_0>;
--		clocks = <&infracfg CLK_INFRA_CA53SEL>,
--			 <&apmixedsys CLK_APMIXED_MAINPLL>;
--		clock-names = "cpu", "intermediate";
--		operating-points-v2 = <&cpu_opp_table_a>;
--	};
--
--	cpu2: cpu@100 {
--		device_type = "cpu";
--		compatible = "arm,cortex-a72";
--		reg = <0x100>;
--		enable-method = "psci";
--		cpu-idle-states = <&CPU_SLEEP_0>;
--		clocks = <&infracfg CLK_INFRA_CA72SEL>,
--			 <&apmixedsys CLK_APMIXED_MAINPLL>;
--		clock-names = "cpu", "intermediate";
--		operating-points-v2 = <&cpu_opp_table_b>;
--	};
--
--	cpu3: cpu@101 {
--		device_type = "cpu";
--		compatible = "arm,cortex-a72";
--		reg = <0x101>;
--		enable-method = "psci";
--		cpu-idle-states = <&CPU_SLEEP_0>;
--		clocks = <&infracfg CLK_INFRA_CA72SEL>,
--			 <&apmixedsys CLK_APMIXED_MAINPLL>;
--		clock-names = "cpu", "intermediate";
--		operating-points-v2 = <&cpu_opp_table_b>;
--	};
--
--	&cpu0 {
--		proc-supply = <&mt6397_vpca15_reg>;
--	};
--
--	&cpu1 {
--		proc-supply = <&mt6397_vpca15_reg>;
--	};
--
--	&cpu2 {
--		proc-supply = <&da9211_vcpu_reg>;
--		sram-supply = <&mt6397_vsramca7_reg>;
--	};
--
--	&cpu3 {
--		proc-supply = <&da9211_vcpu_reg>;
--		sram-supply = <&mt6397_vsramca7_reg>;
--	};
-
--- 
-2.47.2
-
+On 4/3/2025 10:28 PM, Dmitry Baryshkov wrote:
+> On Wed, Mar 05, 2025 at 08:49:37AM +0530, Vikash Garodia wrote:
+>>
+>> On 3/4/2025 6:37 PM, Bryan O'Donoghue wrote:
+>>> This series is a re-up of Konrad's original venus series for sc8280xp and
+>>> sm8350.Why this is enabled on venus driver ? Why not iris driver ? This needs an
+>> explanation on was this even tried to bring up on iris driver.
+>>
+>> How different is this from sm8250 which is already enabled on iris driver ?
+> 
+> As far as I remember, SM8250 support in Iris did not reach
+> feature-parity yet. So in my opinion it is fine to add new platforms to
+> the Venus driver, that will later migrate to the Iris driver.
+I would say, from decoder side all codecs are there now on Iris. H264 merged,
+while h265 and VP9 dec are posted as RFC, there is one compliance failure which
+is under debug to post them as regular patches.
+If we are mainly looking for decode usecases, then we should be on Iris.
+Preference would be to stay on Iris, otherwise we would have that extra ask to
+port it later from venus to iris.
+> 
+> Otherwise users of SC8280XP either have to use external patchsets (like
+> this one) or a non-full-featured driver (and still possibly external
+> patchsets, I didn't check if these two platforms can use
+> qcom,sm8250-venus as a fallback compat string).
+It should, atleast from the hardware spec perspective, AFAIK.
+> 
+> Bryan, Konrad, in my opinion, let's get these patches merged :-)
+> 
+>>
+>>> Link: https://lore.kernel.org/all/20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org/
+>>>
+>>> The main obstacle to merging that series at the time was the longstanding
+>>> but invalid usage of "video-encoder" and "video-decoder" which is a
+>>> driver level configuration option not a description of hardware.
+>>>
+>>> Following on from that discussion a backwards compatible means of
+>>> statically selecting transcoder mode was upstreamed
+>>>
+>>> commit: 687bfbba5a1c ("media: venus: Add support for static video encoder/decoder declarations")
+>>>
+>>> Reworking this series from Konrad to incorporate this simple change
+>>>
+> 
+Regards,
+Vikash
 
