@@ -1,175 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-53241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A397A7BCFA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 14:53:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65022A7BD42
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 15:11:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 09CCE1785D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 12:53:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BDA1817B28C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 13:09:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 957D01E1DF7;
-	Fri,  4 Apr 2025 12:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77E891EEA34;
+	Fri,  4 Apr 2025 13:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CeTVngV/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GDd3H0n4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BD61DB363;
-	Fri,  4 Apr 2025 12:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0C81DA53;
+	Fri,  4 Apr 2025 13:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743771216; cv=none; b=KfU7ceDRhpig9OLCnZx73C+HeR4Pa/fw0crPGXjD7iSiHCypzbm2VqmrLr5kRUhInO2J2pl+mqLZnSps1aGDxDSUng/w+NpOg5wH6Qwzi4WUnDhPJXxOM3RZVL3+3LPtNxzw/2kOvb02x4s53ZfC/aNgpKwlSMrl2HbXtQZk7QE=
+	t=1743772169; cv=none; b=DOJiP3UWeAMufjg0uKO4aamRya32iuuLfZYrfLtCTvCpa81Zv+kzBTayLEphoEmY19NeJ0qhFw2rOEy1JKZGZf7/CcdB4wqlKYsyzoIYhjYLRFtdWGs9vqakaHjSzwprrZUUqplhFP0xIOaGLhIPMNOeIkMvmjT3TV2p+5cTOtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743771216; c=relaxed/simple;
-	bh=M9oy6Oig3DightrSfmwgC0+ra3J0DzzSqTPwazFkYH0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ygz2wfOyzHh189e4OQj360K8l6XKTZi9iOdGHYTAZTV8q0Pu0bWmjcLKxqQa4OmY4R/gqfDG4q0jQJAg9aEgp9OKmF+ywnXvm95i4ahf5mgPzBlPof+TA5IeTHwq5ldjeyitsr5hJgQmQoy1wshxJ0DAaGMhruBshbIq/eTog0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CeTVngV/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D96C4CEDD;
-	Fri,  4 Apr 2025 12:53:33 +0000 (UTC)
+	s=arc-20240116; t=1743772169; c=relaxed/simple;
+	bh=dXvLo65uum190+DYUNNlALy+j1eqU6jZE1YhXB2VRzw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=X0C38h8UEJzIXSS/9JOIPJiJ6AB+cj8YLrkPrMKqB7h4qfOqC8nPG7puMNDrd2W4Dq6dyluCNQTX/FuNno8sX+WZeBsbz8z0/1Yb/xNAqLTiWlozLxLJ2GzV3CsTfRshfpbnHI074deaV0xSgy+HJnhjtC48ZsCOM4wUevbLdzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GDd3H0n4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84B1C4CEF4;
+	Fri,  4 Apr 2025 13:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743771215;
-	bh=M9oy6Oig3DightrSfmwgC0+ra3J0DzzSqTPwazFkYH0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CeTVngV/8Lh529GnepMDyp/kMXEsU6L6Sy4DWhqUmNKlzhIS1AwcR5dQL1kfQl0Y/
-	 BszOZzMtlpHp9/H2yRZx3sssDZ+rP5IohuGyg0eP/MWbTrOru5JFYrUhYV4RkQfrRB
-	 0wMWCBFNhsVEhKa4EtuKItEZnwY1etdKSUyg8VPcTHEOJGvrQgOnvWiGgwIm6GK5dV
-	 Az3RHWGSjXkGsXWva6UyRSkNyfBSfKtWqRxsmAiwIlbL5sPbzDhVIQDksbdTp9Qf7p
-	 giMVseLS1BgQ0ia/SkcUPuH4sizh0XVcSDmpVh9H7c24qkcFC2ULpi8FwP1xGiCn/t
-	 wMOSG21TlKptw==
-Message-ID: <bb95af7c-5e88-4c6a-87db-2ddd1fe211a5@kernel.org>
-Date: Fri, 4 Apr 2025 14:53:31 +0200
+	s=k20201202; t=1743772168;
+	bh=dXvLo65uum190+DYUNNlALy+j1eqU6jZE1YhXB2VRzw=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=GDd3H0n4Z0vbzhOAKBtX4aBm2VvNF3+IHAlBZcY+prFuXi8cUpHIAmcgMJANZtdgc
+	 SadmKjqoeeP3emGC4LnYFxHT6I2Z5k4Qigi/ixTpN0IjDgoC2YwqzWaLtiFw6MVdWY
+	 R51uqx4Vo1nBKrHVzBG0y29dCta48Jc5BLa59kSTc1THSL1yXM0eoSE65ifw4Hc4m9
+	 SWymD+qBgYbMWGz01AIzxcp4EAbHrwklRmWGHBAZsGAPODfBKuc22jPpwnuD0PsKUb
+	 4WzCQ8fABsmztu+A1EYwZSW/Iy8dxRsSFMwWpTf8Ntbimo0rh1MzNq8RAHcck28ns7
+	 PlZqBwK10PG0Q==
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ac297cbe017so586263666b.0;
+        Fri, 04 Apr 2025 06:09:28 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCU1oqbiGOfR79B3pmInEqVgP4qtwzVaONtkQARqp+uC81Mft8Xu8Osog9axGNsecaFxr6b8tpQ5Du3RDg==@vger.kernel.org, AJvYcCUP71WUkuxcxwSxEihnpmmgyJ69Y9v00U8+PEYZlnocMAkXkyjJ9+U0edMJAuili0g8BJpBmNplAxs=@vger.kernel.org, AJvYcCUnoidDpJ/6539fzb9oaeM6wd+Tu1qirHEVErwfUIaBM8P9JHTK87n9jyIDc73qqRPPRKyIkkQ28dc++woP@vger.kernel.org, AJvYcCWG+VknflL4bK0dOwFOCrJKVwn6g10VFM08IqFozGz3+cAgJDDe7gZgSn+f3IryoFQ06o9NJgoHItTlIDR1eoIqPnY=@vger.kernel.org, AJvYcCWUdpY/s8HvtRX6B72Yfafu95gfhVjTex1OcG3J4VBCyOwXaB459pygIrF0HRaCMQqEjw5IIxpgdr7I@vger.kernel.org, AJvYcCXnxWf2Yx+EFpzGuWfPkKaX1RVOICB1aJVDmboz4giWOIjye1YB/IMW+tjq+5bYJFPim6WkoQHssf1ZCmvd/Q==@vger.kernel.org
+X-Gm-Message-State: AOJu0YxGCVZaL7XGX5y50cubVmjjZlDPhU8H2yc1ZKh9vKw2qFcyVvcj
+	pP0m5emXt5B1XtQ82KNkFITbdP/UsstiLqSDSqyUEtSgMj6EvOWaIO/a0hrPo5lF9SVWu3i8rxW
+	STXg2O5Ayg75vLd95FHcGr5uUHA==
+X-Google-Smtp-Source: AGHT+IFIyAD0iksJ2rEYwVDKxfXp9paMa26qoweWItquite8ZOPf4g5g6GK5SE+pbTwu/1QEMoBYtzOxpeaG2eY6PCU=
+X-Received: by 2002:a17:907:6e8e:b0:ac2:d5d3:2b77 with SMTP id
+ a640c23a62f3a-ac7d2e1b9c5mr344142866b.8.1743772167150; Fri, 04 Apr 2025
+ 06:09:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: x1e80100-hp-elitebook-ultra-g1q: DT
- for HP EliteBook Ultra G1q
-To: Juerg Haefliger <juerg.haefliger@canonical.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-References: <20250404090108.3333211-1-juerg.haefliger@canonical.com>
- <20250404090108.3333211-3-juerg.haefliger@canonical.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250404090108.3333211-3-juerg.haefliger@canonical.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250403-dt-cpu-schema-v1-0-076be7171a85@kernel.org>
+ <20250403-dt-cpu-schema-v1-18-076be7171a85@kernel.org> <CAPDyKFrFRrPVJ_t0JrAE1VTbS02hwr=L-EHtqb7CQiWzB1MnQg@mail.gmail.com>
+In-Reply-To: <CAPDyKFrFRrPVJ_t0JrAE1VTbS02hwr=L-EHtqb7CQiWzB1MnQg@mail.gmail.com>
+From: Rob Herring <robh@kernel.org>
+Date: Fri, 4 Apr 2025 08:09:15 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKygxhcQ=PZW84sfiW7BVXKF839vfNyxS9GwAXuqmN=8g@mail.gmail.com>
+X-Gm-Features: ATxdqUFqb3GyPW1xY4MYIKArvKkAjEGffj80G84cX0XvObx4_cAf9jnDsr6emp0
+Message-ID: <CAL_JsqKygxhcQ=PZW84sfiW7BVXKF839vfNyxS9GwAXuqmN=8g@mail.gmail.com>
+Subject: Re: [PATCH 18/19] dt-bindings: arm/cpus: Add power-domains constraints
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Samuel Holland <samuel@sholland.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Viresh Kumar <viresh.kumar@linaro.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Vincenzo Frascino <vincenzo.frascino@arm.com>, Liviu Dudau <liviu.dudau@arm.com>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>, Viresh Kumar <vireshk@kernel.org>, 
+	Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, zhouyanjie@wanyeetech.com, 
+	Conor Dooley <conor@kernel.org>, Nicolas Ferre <nicolas.ferre@microchip.com>, 
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>, Steen Hegelund <Steen.Hegelund@microchip.com>, 
+	Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Heiko Stuebner <heiko@sntech.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	linux-pm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-mips@vger.kernel.org, 
+	imx@lists.linux.dev, linux-rockchip@lists.infradead.org, 
+	linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 04/04/2025 11:01, Juerg Haefliger wrote:
-> Introduce a device tree for the HP EliteBook Ultra G1q 14" AI laptop. It
-> seems to be using the same baseboard as the HP OmniBook X 14 so just use
-> that for now.
-> 
-> Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |  1 +
->  .../qcom/x1e80100-hp-elitebook-ultra-g1q.dts  | 36 +++++++++++++++++++
->  drivers/firmware/qcom/qcom_scm.c              |  1 +
->  3 files changed, 38 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 710879d94c00..3d98bb95e8b1 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -294,6 +294,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= x1e78100-lenovo-thinkpad-t14s-oled.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-asus-vivobook-s15.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-crd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-dell-xps13-9345.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-hp-elitebook-ultra-g1q.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-hp-omnibook-x14.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-lenovo-yoga-slim7x.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-microsoft-romulus13.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dts b/arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dts
-> new file mode 100644
-> index 000000000000..7f069a2e9a46
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dts
-> @@ -0,0 +1,36 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +
-> +/dts-v1/;
-> +
-> +#include "x1e80100-hp-omnibook-x14.dtsi"
-> +
-> +/ {
-> +	model = "HP EliteBook Ultra G1q";
-> +	compatible = "hp,elitebook-ultra-g1q", "qcom,x1e80100";
-> +
-> +	sound {
+On Fri, Apr 4, 2025 at 5:37=E2=80=AFAM Ulf Hansson <ulf.hansson@linaro.org>=
+ wrote:
+>
+> On Fri, 4 Apr 2025 at 05:06, Rob Herring (Arm) <robh@kernel.org> wrote:
+> >
+> > The "power-domains" and "power-domains-names" properties are missing an=
+y
+> > constraints. Add the constraints and drop the generic descriptions.
+> >
+> > Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> > ---
+> >  Documentation/devicetree/bindings/arm/cpus.yaml | 8 ++------
+> >  1 file changed, 2 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Document=
+ation/devicetree/bindings/arm/cpus.yaml
+> > index 6f74ebfd38df..5bd5822db8af 100644
+> > --- a/Documentation/devicetree/bindings/arm/cpus.yaml
+> > +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
+> > @@ -313,19 +313,15 @@ properties:
+> >      maxItems: 1
+> >
+> >    power-domains:
+> > -    description:
+> > -      List of phandles and PM domain specifiers, as defined by binding=
+s of the
+> > -      PM domain provider (see also ../power_domain.txt).
+> > +    maxItems: 1
+>
+> There are more than one in some cases. The most is probably three, I thin=
+k.
 
-Please override by label/phandle.
+Unless I missed it, testing says otherwise. What would the names be if
+more than 1 entry?
 
-> +		model = "X1E80100-HP-ELITEBOOK-ULTRA-G1Q";
-> +	};
-> +};
-> +
-> +&gpu {
-> +	status = "okay";
-> +
-> +	zap-shader {
-> +		firmware-name = "qcom/x1e80100/hp/elitebook-ultra-g1q/qcdxkmsuc8380.mbn";
-> +	};
-> +};
-
-so here &sound {}
-
-The other DTS also should have it model overridden, because otherwise
-you claim that "X1E80100-HP-OMNIBOOK-X14" is the common card.
-
-Best regards,
-Krzysztof
+Rob
 
