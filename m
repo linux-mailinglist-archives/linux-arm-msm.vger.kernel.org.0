@@ -1,155 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-53187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1EEAA7B71D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 07:24:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40A74A7B791
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 08:06:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D145189CC78
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 05:24:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B7B51777C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 06:06:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAF9414EC5B;
-	Fri,  4 Apr 2025 05:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C6F0161321;
+	Fri,  4 Apr 2025 06:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YF2GtSIB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LVQ6Bis1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4318376;
-	Fri,  4 Apr 2025 05:24:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D091A101F2;
+	Fri,  4 Apr 2025 06:06:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743744283; cv=none; b=T74VkBtpodS3ITs+jn7DHxb6Ui6WqrKFEjID5dZ9lrwlwWHeM8U1aDl8XPc/hcav3YSPr1bgfdu5G+PUuR/YyeHQUpO1NU85b+Db83JicbI6fJSLio0rvg6guRscax63H3E3oGd4GcRXuMTJRupdWn7xjAI57400gaX8qITH83M=
+	t=1743746796; cv=none; b=e/j/75y3dmux6UGYhkSAkTbl4ZwLX0wCEhhVolcBRy82AjyPSGPMXF1+VkWKe1U1pYEMluNJxzsG+FRLiuSS35V+X1B7aP8bR3jCWumuKxw6HpV5TCKJ0Ggh1R0KoNrlfxtrSTKDtYR8LINPVN9wBLZ2xrF3p7LaSINO4hfQh44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743744283; c=relaxed/simple;
-	bh=T6qWTHO6zn6yFeQRka369OQfKhxhMz8aa9AQl4IEI8g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=K1c0ZmMF/EqYU9dqd+MTKxxiuRMSwdUElWaJG1z559z5l7VGvVnk554e8L6TbcquRqzPqPAeLIpKrp/F3TWTitmdGDsmoDt4DEpJfZLkezCZcDBnxC93Z50Pio9UiOL2zpxwtkgtJAOh2IDvH0xSxeGqvI/6/54+7qzxw+gVrcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YF2GtSIB; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53433pSj012468;
-	Fri, 4 Apr 2025 05:24:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dgpEB7gfc/lE0wfxGM1FCSwDljOatKrsnpah3weKpoQ=; b=YF2GtSIBQ+W8JWVc
-	+dun3q2bQr0j3bamCyb03zqxFYYuU23VGRSiPObrm26+J3AC1L1LHUbZ3UB3Lm8z
-	dOH0d6E9+vvxZUy+VQGmh06GF2OGZ9TMB/N8jyPZ35M3P3UkBNC2cvJzMwitj9it
-	BwofFJUoR70ubYL+MnornSuSz0S5hMDlXvhrY+ByfIeqdVhnQ7GMIPpDjswUDLh4
-	jgD+YQU/anEn7tPb8pfCCdZT5R8WZhUrKVLPvZv3iTjs4W+Mz6KJ7xMeejH4/zrb
-	QMlZ4C5oBgAEhMOmJ6Coq0SBRYHfoykSxWz8Kon0n8TRhjST+f+F/6bmVqlY08lU
-	2SNWfg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45t2d50qw9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Apr 2025 05:24:36 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5345OZTk028739
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 4 Apr 2025 05:24:35 GMT
-Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 3 Apr 2025
- 22:24:31 -0700
-Message-ID: <1dd6e03d-09be-4853-741a-4fb47b7619a0@quicinc.com>
-Date: Fri, 4 Apr 2025 10:54:22 +0530
+	s=arc-20240116; t=1743746796; c=relaxed/simple;
+	bh=kdxx/iQU9DUFPGrP2rmDEm0XgmJkKdKoe2C+cY+sVlc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qIdaU9QdZxrSZevuqnfNwR8E8KDrJLD/I4xpgJmiju1VXsEyEaD3HJeRXesf/YPz/6PLLZIplQhHR5lHQyjXSU6W1TOdX7n1jh3KSO/O2CTr6fTxnXHS39/auvVF7HPjssnUZIdXZECr9uzvkEAMnO9tBf2RaJkmvGfqoB98OO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LVQ6Bis1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A955C4CEDD;
+	Fri,  4 Apr 2025 06:06:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743746796;
+	bh=kdxx/iQU9DUFPGrP2rmDEm0XgmJkKdKoe2C+cY+sVlc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=LVQ6Bis1t+SBNuNAI1xDodWz1lsK9ELHxxwmCYsKUh8larPIY01s3m3yob/8w/iiK
+	 9cDBOlXu3gtpuieD49YZd5eFqAZN7DLxipiJ2hp3FiiMF36/JLLfdIwIxgbg3hN5WU
+	 0CAngUTq4GRlqt3LQK0TGcj0K6O7nT7jgk+rZwKuafrKXVmoEurdKjEZ21SgdbWNX1
+	 WF34tqYZ7J8Nb9z/fyzfqLC4V0F9QQ5aX2jCas8CM90n85FR8jhiQmflFJ5Tqwm3fn
+	 9i5x9l0zoYCVBtlj2P13/aoyoPHNE2NSdxnJ2K8k169PZXEcUawadGG5SnK5+ytXis
+	 1kWok7iziNcIg==
+Message-ID: <ed9206d7-31a5-4450-9d24-364d28ef5198@kernel.org>
+Date: Fri, 4 Apr 2025 08:06:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 0/8] Reup: SM8350 and SC8280XP venus support
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] pinctrl: qcom: Use devm_platform_ioremap_resource_byname
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ shao.mingyin@zte.com.cn
+Cc: andersson@kernel.org, linus.walleij@linaro.org,
+ linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, yang.yang29@zte.com.cn, xu.xin16@zte.com.cn,
+ ye.xingchen@zte.com.cn, xie.ludan@zte.com.cn
+References: <202504031550143925VMOuiV6Gs3QgxNjRIOyf@zte.com.cn>
+ <ucxebkad5fov7vejtenikor4zfujuggqwbzzmnvm7yj6rw4hfn@ibpcbnf5oscj>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Johan Hovold <johan+linaro@kernel.org>
-References: <20250304-b4-linux-media-comitters-sc8280xp-venus-v1-0-279c7ea55493@linaro.org>
- <8cfaeb25-2657-9df4-5cea-018aad62f579@quicinc.com>
- <it3njgklhnedjzojafuxpjy3o5zfulgdclweyobv7kjgtpjmzx@6opje7yms4yg>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <it3njgklhnedjzojafuxpjy3o5zfulgdclweyobv7kjgtpjmzx@6opje7yms4yg>
-Content-Type: text/plain; charset="UTF-8"
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <ucxebkad5fov7vejtenikor4zfujuggqwbzzmnvm7yj6rw4hfn@ibpcbnf5oscj>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 7gynyBXwz0lmTHT6-60hgv_GkTO1B2KS
-X-Proofpoint-GUID: 7gynyBXwz0lmTHT6-60hgv_GkTO1B2KS
-X-Authority-Analysis: v=2.4 cv=Cvu/cm4D c=1 sm=1 tr=0 ts=67ef6d14 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=ruycbLpa2_zXmOni_LEA:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-04_01,2025-04-03_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- bulkscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0 spamscore=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
- clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504040035
 
-Hi Dmitry,
+On 03/04/2025 13:43, Dmitry Baryshkov wrote:
+> On Thu, Apr 03, 2025 at 03:50:14PM +0800, shao.mingyin@zte.com.cn wrote:
+>> From: Xie Ludan <xie.ludan@zte.com.cn>
+>>
+>> Introduce devm_platform_ioremap_resource_byname() to simplify
+>> resource retrieval and mapping.This new function consolidates
+>> platform_get_resource_byname() and devm_ioremap_resource() into a single
+>> call, improving code readability and reducing API call overhead.
+> 
+> Commit message is incorrect. You are not introducing anything, you are
+> removing a whitespace.
+> 
 
-On 4/3/2025 10:28 PM, Dmitry Baryshkov wrote:
-> On Wed, Mar 05, 2025 at 08:49:37AM +0530, Vikash Garodia wrote:
->>
->> On 3/4/2025 6:37 PM, Bryan O'Donoghue wrote:
->>> This series is a re-up of Konrad's original venus series for sc8280xp and
->>> sm8350.Why this is enabled on venus driver ? Why not iris driver ? This needs an
->> explanation on was this even tried to bring up on iris driver.
->>
->> How different is this from sm8250 which is already enabled on iris driver ?
-> 
-> As far as I remember, SM8250 support in Iris did not reach
-> feature-parity yet. So in my opinion it is fine to add new platforms to
-> the Venus driver, that will later migrate to the Iris driver.
-I would say, from decoder side all codecs are there now on Iris. H264 merged,
-while h265 and VP9 dec are posted as RFC, there is one compliance failure which
-is under debug to post them as regular patches.
-If we are mainly looking for decode usecases, then we should be on Iris.
-Preference would be to stay on Iris, otherwise we would have that extra ask to
-port it later from venus to iris.
-> 
-> Otherwise users of SC8280XP either have to use external patchsets (like
-> this one) or a non-full-featured driver (and still possibly external
-> patchsets, I didn't check if these two platforms can use
-> qcom,sm8250-venus as a fallback compat string).
-It should, atleast from the hardware spec perspective, AFAIK.
-> 
-> Bryan, Konrad, in my opinion, let's get these patches merged :-)
-> 
->>
->>> Link: https://lore.kernel.org/all/20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org/
->>>
->>> The main obstacle to merging that series at the time was the longstanding
->>> but invalid usage of "video-encoder" and "video-decoder" which is a
->>> driver level configuration option not a description of hardware.
->>>
->>> Following on from that discussion a backwards compatible means of
->>> statically selecting transcoder mode was upstreamed
->>>
->>> commit: 687bfbba5a1c ("media: venus: Add support for static video encoder/decoder declarations")
->>>
->>> Reworking this series from Konrad to incorporate this simple change
->>>
-> 
-Regards,
-Vikash
+This is another example of automated zte patches which sometimes are
+note tested or make no sense. They still keep generating them via
+automation and sending without actual review.
+
+Best regards,
+Krzysztof
 
