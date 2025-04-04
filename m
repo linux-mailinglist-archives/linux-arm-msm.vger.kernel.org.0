@@ -1,59 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-53253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A56C8A7C2C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 19:47:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E58F0A7C2C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 19:48:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 97A887A5714
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 17:46:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 514BF7A5F36
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 17:46:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE4BE21E0BB;
-	Fri,  4 Apr 2025 17:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 478942206B5;
+	Fri,  4 Apr 2025 17:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pWIoFmBF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XLTeXJ2c"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A9F1494A6;
-	Fri,  4 Apr 2025 17:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBEA22068D;
+	Fri,  4 Apr 2025 17:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743788803; cv=none; b=IeViGuWTMcDLi9M2v2qVXVl3q6BZ31UcP7CiVU0+LowyWyIyUC4hQNodNN2am0fwfKE6dKXWvSj8cgIUXdvZyfpyk9sBr1bzOjhmhqFt7jj7UeZvowxCjffEoAbvDvbFViVX2uxpKYytL+0faxsQq0nYjHALK2zqu1iEGB0SHqk=
+	t=1743788806; cv=none; b=dX9jJ1M0HdRXVZ1bV8G79rDM0c8T6u5CAh5EN4r0K7fJO05J00Qj6LhiBquqsABp65PABmhX+5MJAPuTV5XojEibe/BkssaUVytZAmvqL+5EjNXjIbMrf2BFheqeHFmiIp1W4CilsAmKjwMuLqlVspc6nPNxG1+PckfHPP0xZ0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743788803; c=relaxed/simple;
-	bh=A1RS/ZLQvyWYXSBeXfOQWDFm91fESjPToqYZ6ozV5wQ=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=oWvrSDhcrd/u5JnXRXSj4LKTI/wyIPzL0jCA7/+XSOCGzFoXn/NFYbnA0hjekZLdit55au96bK/okcqY5Ua/HsV+78jbhvihoc/lnaEKeecjWWkbQPVWDnbFvoF202LRL5BkfcrvOYr8sFTieEMQBYUrSn3tKJE90qkf+1A4kRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pWIoFmBF; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1743788806; c=relaxed/simple;
+	bh=pfPnLmSwODKL92NRUNMJppqCeMKNoThN5vCrqbv9H+I=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Oy89XIo4nBchpK1YkUvvbe2KUt8uA8fC9/EvgV7AkDSkK3vqkRwehvdbeIwps6zNJ4o46gGbLPzDkNiIto6DM9Ce/2IeaQDgRL2ts24MaWMyG7Ec5xP7Gs3uo5He5EOAYZiZp4HAFv40xYdmR8HbK9xSe93MdEAzwk907fJhzow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XLTeXJ2c; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 534ErsvH000647;
-	Fri, 4 Apr 2025 17:46:20 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 534EribA000430;
+	Fri, 4 Apr 2025 17:46:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=vUrzjeI0IFDrH2kZ9T0JJU
-	uyHYMtEg/fuvNTDAM4uOw=; b=pWIoFmBFQtapqtmt179owvNe0/uS2sva1RotBS
-	oGUM8T+g9hr9WOZ3mH42yDgaEw4/hO6SqWYF3Q4m3sgf2GE69mfmIPTbghUdW8Jw
-	Qt4c+d5V22ovuJw3qKdLLcXKyoURWSpcheDNtM6hCuJZvYxMzAzaAcdueujjoGqL
-	MR7hMda9YQT/c0itc9nttBpbNRnbps1ws0Unz77xz08lAgF5AfuMKBKx3tYk3Elv
-	zddtolCPt8Nxv44rby0FKajsIlk5ox1KY1pjwVTZlLHzGPH12XMRut+yFjj9a5qL
-	7yiRoRU7RvWx4WVg9KD81Eq0Jrrrw3Q9/4+zntdr5mRxTElA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45t2d8thjv-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=6dTfZHi0pxfT4xpbHh9Uegid
+	5/8EbFisfOn9Qtdtb5w=; b=XLTeXJ2c6InW2p74Bvz5eJimwOci6RCPDzItWfid
+	5SdquUiT0eVCPUofbEwSAPQwJ2xMQmW3ZFN+glCuy3dUsu77NeTmpGH9lbFtGdIn
+	BuE09wj1xJUCsv7RqEn77sKC2QGS5f1BMGRrcUEXUI3uYOHn+Ho/a8AJKu0ENHDb
+	gA/60/CAiKgb+MISjL8dczDMWkY9E/UGkhK5TysAh/cBUo+DQ0LMioVi4ILrOsMG
+	JzXsABuOlJ9pJvYioCpBDMSXtRtZbF1yXe0KWXYDRI9GmEODjLlnQTfdM62eVMRN
+	Y7KFTepE/AiK8ZgT7m7oUHCzxQA6j0ezYvzkP1QUO3MTXQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45t2d8thjy-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Apr 2025 17:46:20 +0000 (GMT)
+	Fri, 04 Apr 2025 17:46:25 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 534HkJeu029913
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 534HkOWa029048
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 4 Apr 2025 17:46:19 GMT
+	Fri, 4 Apr 2025 17:46:24 GMT
 Received: from hu-mapa-hyd.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 4 Apr 2025 10:46:15 -0700
+ 15.2.1544.9; Fri, 4 Apr 2025 10:46:19 -0700
 From: Manish Pandey <quic_mapa@quicinc.com>
 To: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
         "Martin K.
@@ -66,57 +67,174 @@ CC: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
         <quic_nitirawa@quicinc.com>, <quic_bhaskarv@quicinc.com>,
         <quic_rampraka@quicinc.com>, <quic_mapa@quicinc.com>,
         <quic_cang@quicinc.com>, <quic_nguyenb@quicinc.com>
-Subject: [PATCH V2 0/2] scsi: ufs: Implement Quirks for Samsung UFS Devices
-Date: Fri, 4 Apr 2025 23:15:37 +0530
-Message-ID: <20250404174539.28707-1-quic_mapa@quicinc.com>
+Subject: [PATCH V2 1/2] ufs: qcom: Add quirks for Samsung UFS devices
+Date: Fri, 4 Apr 2025 23:15:38 +0530
+Message-ID: <20250404174539.28707-2-quic_mapa@quicinc.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20250404174539.28707-1-quic_mapa@quicinc.com>
+References: <20250404174539.28707-1-quic_mapa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=KcPSsRYD c=1 sm=1 tr=0 ts=67f01aec cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=zgQ-T9pl9kVSWeUe3YwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: VZlWfoZ4QDkyoVvMaupEz9TIjuobClmF
-X-Proofpoint-ORIG-GUID: VZlWfoZ4QDkyoVvMaupEz9TIjuobClmF
+X-Authority-Analysis: v=2.4 cv=KcPSsRYD c=1 sm=1 tr=0 ts=67f01af1 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=bBPHcGj29vumQh2tsuEA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: HBhTbS10B2d1exkCj5ac0SSg-PGgxLJA
+X-Proofpoint-ORIG-GUID: HBhTbS10B2d1exkCj5ac0SSg-PGgxLJA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-04_07,2025-04-03_03,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- malwarescore=0 priorityscore=1501 mlxlogscore=826 mlxscore=0
- suspectscore=0 clxscore=1011 impostorscore=0 adultscore=0
+ malwarescore=0 priorityscore=1501 mlxlogscore=999 mlxscore=0
+ suspectscore=0 clxscore=1015 impostorscore=0 adultscore=0
  lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2502280000 definitions=main-2504040122
 
-Introduce quirks for Samsung UFS devices to modify the PA TX HSG1 sync
-length and TX_HS_EQUALIZER settings on the Qualcomm UFS Host controller.
+Introduce quirks for Samsung UFS devices to adjust PA TX HSG1 sync length
+and TX_HS_EQUALIZER settings on the Qualcomm UFS Host controller. These
+adjustments are necessary to ensure proper functionality of Samsung UFS
+devices with the Qualcomm UFS Host controller.
 
-Additionally, Samsung UFS devices require extra time in hibern8 mode
-before exiting, beyond the standard handshaking phase between the host
-and device. Introduce a quirk to increase the PA_HIBERN8TIME parameter
-by 100 µs to ensure a proper hibernation process.
+Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
 ---
-Changes in V2
-- Split patches to add PA_HIBERN8TIME quirk in ufshcd.c
-
----
-Manish Pandey (2):
-  ufs: qcom: Add quirks for Samsung UFS devices
-  scsi: ufs: introduce quirk to extend PA_HIBERN8TIME for UFS devices
-
- drivers/ufs/core/ufshcd.c   | 31 ++++++++++++++++++++++++++
  drivers/ufs/host/ufs-qcom.c | 43 +++++++++++++++++++++++++++++++++++++
  drivers/ufs/host/ufs-qcom.h | 18 ++++++++++++++++
- include/ufs/ufs_quirks.h    |  6 ++++++
- 4 files changed, 98 insertions(+)
+ 2 files changed, 61 insertions(+)
 
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 23b9f6efa047..cb2f55c75449 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -31,6 +31,10 @@
+ 	((((c) >> 16) & MCQ_QCFGPTR_MASK) * MCQ_QCFGPTR_UNIT)
+ #define MCQ_QCFG_SIZE	0x40
+ 
++/* De-emphasis for gear-5 */
++#define DEEMPHASIS_3_5_dB	0x04
++#define NO_DEEMPHASIS		0x0
++
+ enum {
+ 	TSTBUS_UAWM,
+ 	TSTBUS_UARM,
+@@ -778,6 +782,24 @@ static int ufs_qcom_icc_update_bw(struct ufs_qcom_host *host)
+ 	return ufs_qcom_icc_set_bw(host, bw_table.mem_bw, bw_table.cfg_bw);
+ }
+ 
++static void ufs_qcom_set_tx_hs_equalizer(struct ufs_hba *hba,
++				u32 gear, u32 tx_lanes)
++{
++	u32 equalizer_val;
++	int ret, i;
++
++	/* Determine the equalizer value based on the gear */
++	equalizer_val = (gear == 5) ? DEEMPHASIS_3_5_dB : NO_DEEMPHASIS;
++
++	for (i = 0; i < tx_lanes; i++) {
++		ret = ufshcd_dme_set(hba, UIC_ARG_MIB_SEL(TX_HS_EQUALIZER, i),
++					equalizer_val);
++		if (ret)
++			dev_err(hba->dev, "%s: failed equalizer lane %d\n",
++					__func__, i);
++	}
++}
++
+ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+ 				enum ufs_notify_change_status status,
+ 				struct ufs_pa_layer_attr *dev_max_params,
+@@ -829,6 +851,10 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+ 						dev_req_params->gear_tx,
+ 						PA_INITIAL_ADAPT);
+ 		}
++
++		if (hba->dev_quirks & UFS_DEVICE_QUIRK_PA_TX_DEEMPHASIS_TUNING)
++			ufs_qcom_set_tx_hs_equalizer(hba,
++				dev_req_params->gear_tx, dev_req_params->lane_tx);
+ 		break;
+ 	case POST_CHANGE:
+ 		if (ufs_qcom_cfg_timers(hba, dev_req_params->gear_rx,
+@@ -878,6 +904,16 @@ static int ufs_qcom_quirk_host_pa_saveconfigtime(struct ufs_hba *hba)
+ 			    (pa_vs_config_reg1 | (1 << 12)));
+ }
+ 
++static void ufs_qcom_override_pa_tx_hsg1_sync_len(struct ufs_hba *hba)
++{
++	int err;
++
++	err = ufshcd_dme_peer_set(hba, UIC_ARG_MIB(PA_TX_HSG1_SYNC_LENGTH),
++					PA_TX_HSG1_SYNC_LENGTH_VAL);
++	if (err)
++		dev_err(hba->dev, "Failed (%d) set PA_TX_HSG1_SYNC_LENGTH\n", err);
++}
++
+ static int ufs_qcom_apply_dev_quirks(struct ufs_hba *hba)
+ {
+ 	int err = 0;
+@@ -885,6 +921,9 @@ static int ufs_qcom_apply_dev_quirks(struct ufs_hba *hba)
+ 	if (hba->dev_quirks & UFS_DEVICE_QUIRK_HOST_PA_SAVECONFIGTIME)
+ 		err = ufs_qcom_quirk_host_pa_saveconfigtime(hba);
+ 
++	if (hba->dev_quirks & UFS_DEVICE_QUIRK_PA_TX_HSG1_SYNC_LENGTH)
++		ufs_qcom_override_pa_tx_hsg1_sync_len(hba);
++
+ 	return err;
+ }
+ 
+@@ -899,6 +938,10 @@ static struct ufs_dev_quirk ufs_qcom_dev_fixups[] = {
+ 	{ .wmanufacturerid = UFS_VENDOR_WDC,
+ 	  .model = UFS_ANY_MODEL,
+ 	  .quirk = UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE },
++	{ .wmanufacturerid = UFS_VENDOR_SAMSUNG,
++	  .model = UFS_ANY_MODEL,
++	  .quirk = UFS_DEVICE_QUIRK_PA_TX_HSG1_SYNC_LENGTH |
++		   UFS_DEVICE_QUIRK_PA_TX_DEEMPHASIS_TUNING },
+ 	{}
+ };
+ 
+diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+index 919f53682beb..95d02df48784 100644
+--- a/drivers/ufs/host/ufs-qcom.h
++++ b/drivers/ufs/host/ufs-qcom.h
+@@ -116,8 +116,11 @@ enum {
+ 				 TMRLUT_HW_CGC_EN | OCSC_HW_CGC_EN)
+ 
+ /* QUniPro Vendor specific attributes */
++#define PA_TX_HSG1_SYNC_LENGTH	0x1552
+ #define PA_VS_CONFIG_REG1	0x9000
+ #define DME_VS_CORE_CLK_CTRL	0xD002
++#define TX_HS_EQUALIZER		0x0037
++
+ /* bit and mask definitions for DME_VS_CORE_CLK_CTRL attribute */
+ #define CLK_1US_CYCLES_MASK_V4				GENMASK(27, 16)
+ #define CLK_1US_CYCLES_MASK				GENMASK(7, 0)
+@@ -135,6 +138,21 @@ enum {
+ #define UNIPRO_CORE_CLK_FREQ_201_5_MHZ         202
+ #define UNIPRO_CORE_CLK_FREQ_403_MHZ           403
+ 
++/* TX_HSG1_SYNC_LENGTH attr value */
++#define PA_TX_HSG1_SYNC_LENGTH_VAL	0x4A
++
++/*
++ * Some ufs device vendors need a different TSync length.
++ * Enable this quirk to give an additional TX_HS_SYNC_LENGTH.
++ */
++#define UFS_DEVICE_QUIRK_PA_TX_HSG1_SYNC_LENGTH (1 << 16)
++
++/*
++ * Some ufs device vendors need a different Deemphasis setting.
++ * Enable this quirk to tune TX Deemphasis parameters.
++ */
++#define UFS_DEVICE_QUIRK_PA_TX_DEEMPHASIS_TUNING (1 << 17)
++
+ static inline void
+ ufs_qcom_get_controller_revision(struct ufs_hba *hba,
+ 				 u8 *major, u16 *minor, u16 *step)
 -- 
 2.17.1
 
