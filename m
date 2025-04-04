@@ -1,125 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-53244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CB48A7BD9D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 15:20:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 863FFA7BDAD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 15:24:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C2D391B61964
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 13:19:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E79C21898AEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 13:24:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 498581EDA26;
-	Fri,  4 Apr 2025 13:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 053231DF97C;
+	Fri,  4 Apr 2025 13:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eKW8BkEP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kiR8xCYz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3EB82D98;
-	Fri,  4 Apr 2025 13:18:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA7F8635C
+	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Apr 2025 13:24:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743772724; cv=none; b=ldpW0QR9ASWFCyZCaY+k+g+cSEDGJmTg/WMqVVmB7oQvrJpxoQe+CleuUO3p2GLd+L55hotAVA/sLYAwhMb15XdK5EPZAbpkYUx6DbL4TbqJ3yztA7sPiph67zK+93edPx96EilX3CAcVDXS4s3L8UVNnRLS7jSqOjCyVJF+l5k=
+	t=1743773086; cv=none; b=Fz9k/YJligZn3jaXMnwzfIy99tZr0iiM3t95Vb+q8JqHFWCfXVFeHGiTAYN5NDx+d1lf4eQIAUF0HB+YDr29ZrU7NQqG0CuED2YF63cpdLOsBTjJfXPlWzFSJ+vEqAm+QCMbPIxzyz9+w+JFDXySivKyOBWKow8pUNCnIFycksA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743772724; c=relaxed/simple;
-	bh=8p+c4MB2Vz2NLD+RiN8PNGA7Pc+YAFAuwCP+/mMX5Bs=;
+	s=arc-20240116; t=1743773086; c=relaxed/simple;
+	bh=GyarVBp62jqrSOtWoIxdE0AcKQ1SkgUJIsWxfsIjo2k=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=syr+2X+tTBERF6utb9ugcFi2InI1tPTBhVhyRyP4oQBMDOHpBR0zxWXH9Esj7PNjLpc/ckdJQ1iPBO9zMOhfON9tqZV6YOc4yyCAeitZRQ/YrRW5AQt1cJSXgNuLm0UV4P4D4F31NcZP6af1YqMgzW/MHdvEy1Yi+yfZAS2tTS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eKW8BkEP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DBDCC4CEDD;
-	Fri,  4 Apr 2025 13:18:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743772723;
-	bh=8p+c4MB2Vz2NLD+RiN8PNGA7Pc+YAFAuwCP+/mMX5Bs=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=eKW8BkEPXJzBEfA6eyTODP0H96m9hqR98uXmWJ+NQbzBwEXHrdYrjtSd1C8RWZmfz
-	 2rcbpHdZXLJRVcFaE9n5Kp4yS8ugzHBQqGEDWJS2qXvoobc+wP2LpgFooZ3AZGa3xa
-	 6bKGGVFi85i5+b/AfCt8XkZRJhnqVnGqQ0ftCT5vqRVzGTuQFelxLx7V8tqxC1gZv7
-	 u1xcnhxGxabJM0V87wUWYVqmKLm/TNRviJGpd0rTUcnJlFhcHwhwwXhdKoE4G2UVgz
-	 pjRM+2K+IxITVbj+DgcmSYFJK28J91/7Ppto2N1C+xXzQUFvu+zdmpvR8Gf7606QS7
-	 J6mnKZPky2aVw==
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ac28e66c0e1so311005966b.0;
-        Fri, 04 Apr 2025 06:18:43 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCU74/AFkwfml4gbLJgq9B9nT7NigzWroHm/O7v4+JSE0HLq4cZFyhHESaVr+F/jFy+qajPMTwncmn3v@vger.kernel.org, AJvYcCVca6V00CRoBKtmUtOIWtOWE5bY3mOa0M3AJPEMAT/M4vh5VjsFQPQ45bzqYVVQj1v7jl0dK/wssQnFMWW1hw==@vger.kernel.org, AJvYcCVt6RIcvH0oORKvmL8WVdavu8J9SIIBSl6so57Ms21AUG21xMzChc5O1PjM/fy6+n2yMjWJ+zWNRmg=@vger.kernel.org, AJvYcCWElHLSNXK4GYCk3a16tcR6mVf0iXDTjD+tQu8rLGZk1JoGx7Eh4+5gpu5FcfCTBzXW/mL8+/iG8bTY4xPW@vger.kernel.org, AJvYcCWTtfUlgX6ca+PColQA4KXdHY/u7g/lLUiAbFptm2aFsFc/00VHmr5O94tToY1z2tK9KyL0ld/Nhi8BFyN6s/E2Cag=@vger.kernel.org, AJvYcCWfxWgSkvrs/iJ68oR2IeT8oaObM1OA9mAL2rutoTP5TKuARVZyrJvsl7CBRfJCbJGKvh3QvOQ76MujuQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8YR5iHRp2Qh7Z2jWkc5AaOgn5a34dBGvx+jVMh3ExHPtM5C+8
-	1pBb3M464xHdP+wExqQ0UhfhXaJiaMywYle0yjI90bJfXs6BIaLsHy2yExCeS/8YZYyTAI8fTnJ
-	rvAVb4Zmpo/AYxO4iWIW6k+XLhw==
-X-Google-Smtp-Source: AGHT+IGeMGvCEeK8AclL93nVBIzL9ZaOIe89VJXnsQlCY86LywWmTQFiXrpurfnLdBj4EjlXLbq/bSkPsN9UQIZ0bQ0=
-X-Received: by 2002:a17:907:7209:b0:ac3:45c6:a1ec with SMTP id
- a640c23a62f3a-ac7d6d5dff4mr229454566b.25.1743772721929; Fri, 04 Apr 2025
- 06:18:41 -0700 (PDT)
+	 To:Cc:Content-Type; b=kArhj5ZN40jToXxOCC9RDaZNe7yGFSgXqSX52POq8oqbExhu1LgGqJtkF24PVe8xJfnUaKIrRPaS8flFrOtUZCTHsS2jOYdCbVcsTQKeZDi98O/nJMp0muP1x4qlwqpSNno5NguuDaB+M+M9G8baQjD3q7b0Jf0nBJZHEuIUnFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kiR8xCYz; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-39141ffa9fcso2463512f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Apr 2025 06:24:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1743773083; x=1744377883; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=oj+YIAdxkk89Hzg4P+YYq0UStPxTqNlDd7I9k5sEoSI=;
+        b=kiR8xCYzb//NXFCEdI8kL4JzPnIqDO8RJ2TBETTaMPT7Kb7tqPj196So2C1Ir/1ooH
+         tXJnj8kHT/PehECevXH2hwuksUBk+O2BMGKrGbdjYqfjsFNFm9BRD7r5zcLVglP0/MAU
+         V6gbCB3BxalDubSsD4CQOmPuDr2QaEseF+7+ASWg4zdlKBKUMazhOKtpjXhxGWEMR3G5
+         QWoU8026RcZM4LQjSdtiyftwPWYTJ5xbSaIoLpbIC1YIiVRxQjtqv8mic2TR/f52S9T1
+         lmPRVJ5EZrVxr+AlefYO5fLtAl/kHqZL6fQQluSG7dZRmMzcFi3Oew7LrlBuJYhRJ62r
+         eZCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743773083; x=1744377883;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oj+YIAdxkk89Hzg4P+YYq0UStPxTqNlDd7I9k5sEoSI=;
+        b=T3sk0wbe4LKvy9iLfvrfAhkyGVJPZyzK7mhdmfKNxv00rx3lwEGNqKh9GAl8720cy2
+         NOsiP5up08h2k9viNHBwA3/fBCaUodOenJ3uP4ebH0hgAYeK3ffefccaOB1BSg0zDSLF
+         3zTjaVAy0kZ+Wlay56Q4Z+x7kpwyRbFfoAQZoOwksyyLooskFjiv+X2JyUwRpUDr1x3g
+         hzpuXDSC1UdnoalN/fONnrimvE+7vtvJGkGAIS2WRAvl0km43/HJlreoD1wTLvhsG18R
+         4z4lIBY5gTqJCAmO5SiyDx7niBLBd6VknnjTlDgxGobZUQOJ/Sxpq4buWHpkbHi1VZUB
+         aczg==
+X-Forwarded-Encrypted: i=1; AJvYcCUAAz72lnYupQHozMOMytfq+aRDhAAv2i2RqRhkIdqkOc3mw44bfrp1wvzIxU130cbh1EQ/993ezD0ubkfd@vger.kernel.org
+X-Gm-Message-State: AOJu0YzwjQdrcXNfBvS5yXoIukTSCAnT/IlRKiA8pGEV/hGrIMZzmisZ
+	XynkjooR4SJFb41kCDfy06w3Zi1Pejga/1rJjYudquNSDuGkTOd4rmB/NX1l4dUxUDKzjeCIVi0
+	zh+fOXXwgj9/+EpYRBPgxvi4oGOLMo/e6YtQlaw==
+X-Gm-Gg: ASbGncv6nlDbmRt9jxZ+jPs6lCMD+UwChvTO03tPIisZEohK5P90lLl7FK+L6vJYnFx
+	3k4c/auctTiaSpzHzgC/OO5biLnw+7mDttYY+2nEgzlUGKaJ2fYYtteMNK95dREV27m1VHBmDsO
+	ec8oz2BDZ45W13eGjGfU2P9N6BDoqg0in/CfQasd3F+SBvSqhh3sTSo+dMssE=
+X-Google-Smtp-Source: AGHT+IH+MryZk670LI+vb8g6AGQzjTKgC/A+Ysy8cvkGHq9W3yQmNkcMxSeio1SQx6Re2aTqU+InOAD5FiP0RNumBkQ=
+X-Received: by 2002:a5d:584c:0:b0:39a:ca59:a61d with SMTP id
+ ffacd0b85a97d-39cba93712amr2831530f8f.47.1743773083319; Fri, 04 Apr 2025
+ 06:24:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250403-dt-cpu-schema-v1-0-076be7171a85@kernel.org>
- <20250403-dt-cpu-schema-v1-6-076be7171a85@kernel.org> <Z-_K2XDEcbtcCMVM@linaro.org>
-In-Reply-To: <Z-_K2XDEcbtcCMVM@linaro.org>
-From: Rob Herring <robh@kernel.org>
-Date: Fri, 4 Apr 2025 08:18:30 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJT-0gwvJnMb63izy6WwJpBVsswkauL8OMLCrF08q9HYQ@mail.gmail.com>
-X-Gm-Features: ATxdqUHOgMca65CFxOkpc1GwFhcina94zKtpSzj7uSzh0WZ2vI4WGj4U0KjYQTw
-Message-ID: <CAL_JsqJT-0gwvJnMb63izy6WwJpBVsswkauL8OMLCrF08q9HYQ@mail.gmail.com>
-Subject: Re: [PATCH 06/19] arm64: dts: qcom: msm8939: Fix CPU node
- "enable-method" property dependencies
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Samuel Holland <samuel@sholland.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Viresh Kumar <viresh.kumar@linaro.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Vincenzo Frascino <vincenzo.frascino@arm.com>, Liviu Dudau <liviu.dudau@arm.com>, 
-	Sudeep Holla <sudeep.holla@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>, Viresh Kumar <vireshk@kernel.org>, 
-	Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, zhouyanjie@wanyeetech.com, 
-	Conor Dooley <conor@kernel.org>, Nicolas Ferre <nicolas.ferre@microchip.com>, 
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>, Steen Hegelund <Steen.Hegelund@microchip.com>, 
-	Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
-	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Heiko Stuebner <heiko@sntech.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-mips@vger.kernel.org, 
-	imx@lists.linux.dev, linux-rockchip@lists.infradead.org, 
-	linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org
+References: <20250330-wip-obbardc-qcom-t14s-oled-panel-brightness-v6-1-84ad1cd1078a@linaro.org>
+ <Z-pTcB0L33bozxjl@hovoldconsulting.com> <CACr-zFAiKRTHyRAF5HkM2drCMD7Q_Z3ZUFAsSnevy38yD8XMwg@mail.gmail.com>
+ <Z--eRHaYw_vbgK2f@hovoldconsulting.com>
+In-Reply-To: <Z--eRHaYw_vbgK2f@hovoldconsulting.com>
+From: Christopher Obbard <christopher.obbard@linaro.org>
+Date: Fri, 4 Apr 2025 14:24:32 +0100
+X-Gm-Features: ATxdqUGnTvLH_MOTicwPOTsv0Kyq_s2vv3HxYqY2Tmgfq0NrzRxurscl_9sCHeU
+Message-ID: <CACr-zFA77ogDSNEOGd32Rdh3geqkL25T0BKtNdKzUdjrL0+9RA@mail.gmail.com>
+Subject: Re: [PATCH v6] drm/dp: clamp PWM bit count to advertised MIN and MAX capabilities
+To: Johan Hovold <johan@kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, dri-devel@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Rui Miguel Silva <rui.silva@linaro.org>, Abel Vesa <abel.vesa@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 4, 2025 at 7:04=E2=80=AFAM Stephan Gerhold
-<stephan.gerhold@linaro.org> wrote:
+Johan,
+
+On Fri, 4 Apr 2025 at 09:54, Johan Hovold <johan@kernel.org> wrote:
 >
-> On Thu, Apr 03, 2025 at 09:59:27PM -0500, Rob Herring (Arm) wrote:
-> > The "qcom,acc" and "qcom,saw" properties aren't valid with "spin-table"
-> > enable-method nor are they used on 64-bit kernels, so they can be
-> > dropped.
+> On Fri, Apr 04, 2025 at 08:54:29AM +0100, Christopher Obbard wrote:
+> > On Mon, 31 Mar 2025 at 09:33, Johan Hovold <johan@kernel.org> wrote:
+>
+> > > > @@ -4035,6 +4036,32 @@ drm_edp_backlight_probe_max(struct drm_dp_aux *aux, struct drm_edp_backlight_inf
+> > > >       }
+> > > >
+> > > >       pn &= DP_EDP_PWMGEN_BIT_COUNT_MASK;
+> > > > +
+> > > > +     ret = drm_dp_dpcd_read_byte(aux, DP_EDP_PWMGEN_BIT_COUNT_CAP_MIN, &pn_min);
+> > > > +     if (ret < 0) {
+> > > > +             drm_dbg_kms(aux->drm_dev, "%s: Failed to read pwmgen bit count cap min: %d\n",
+> > > > +                         aux->name, ret);
+> > > > +             return -ENODEV;
+> > > > +     }
+> > > > +     pn_min &= DP_EDP_PWMGEN_BIT_COUNT_MASK;
+> > > > +
+> > > > +     ret = drm_dp_dpcd_read_byte(aux, DP_EDP_PWMGEN_BIT_COUNT_CAP_MAX, &pn_max);
+> > > > +     if (ret < 0) {
+> > > > +             drm_dbg_kms(aux->drm_dev, "%s: Failed to read pwmgen bit count cap max: %d\n",
+> > > > +                         aux->name, ret);
+> > > > +             return -ENODEV;
+> > > > +     }
+> > > > +     pn_max &= DP_EDP_PWMGEN_BIT_COUNT_MASK;
+> > > > +
+> > > > +     /*
+> > > > +      * Per VESA eDP Spec v1.4b, section 3.3.10.2:
+> > > > +      * If DP_EDP_PWMGEN_BIT_COUNT is less than DP_EDP_PWMGEN_BIT_COUNT_CAP_MIN,
+> > > > +      * the sink must use the MIN value as the effective PWM bit count.
+> > > > +      * Clamp the reported value to the [MIN, MAX] capability range to ensure
+> > > > +      * correct brightness scaling on compliant eDP panels.
+> > > > +      */
+> > > > +     pn = clamp(pn, pn_min, pn_max);
+> > >
+> > > You never make sure that pn_min <= pn_max so you could end up with
+> > > pn < pn_min on broken hardware here. Not sure if it's something you need
+> > > to worry about at this point.
 > >
+> > I am honestly not sure. I would hope that devices follow the spec and
+> > there is no need to be too paranoid, but then again we do live in the
+> > real world where things are... not so simple ;-).
+> > I will wait for further feedback from someone who has more experience
+> > with eDP panels than I have.
 >
-> The bootloader we currently use on these devices reads these properties
-> to set up the spin-table, so removing these will break booting secondary
-> CPU cores.
->
-> The motivation for implementing it that way was that 32-bit vs 64-bit
-> kernel shouldn't be relevant for the describing the hardware blocks in
-> the device tree. The code in the bootloader is generic and handles
-> different SoCs (e.g. msm8916 with 4 cores and msm8939 with 8 cores, the
-> enable sequences are identical).
->
-> Can we keep this in somehow? To be fair, I'm not sure what property we
-> could match on to check if these properties are allowed ...
+> There's always going to be buggy devices and input should always be
+> sanitised so I suggest adding that check before calling clamp() (which
+> expects min <= max) so that the result here is well-defined.
 
-Yes, we can keep them. We'll have to allow them with "spin-table" and
-"psci" I guess.
+Makes sense, I will do so in the next revision.
 
-Rob
+
+Thanks.
+
+Chris
 
