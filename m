@@ -1,187 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-53194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53195-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7D7CA7B82F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 09:18:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9147A7B836
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 09:22:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 38115189CFE8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 07:18:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 46CFA1894FC2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 07:22:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2A6618B47C;
-	Fri,  4 Apr 2025 07:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA84C18CC10;
+	Fri,  4 Apr 2025 07:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HPCC5zAQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RaXzu39b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2C4A95E
-	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Apr 2025 07:18:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4222E62B6;
+	Fri,  4 Apr 2025 07:22:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743751115; cv=none; b=Gg35nzqrEkmWZ8nldIJqg14qEJNNJvtlYhFvo04dvOK6mNMVc7FjWx0oYknxxKk4htpWNRumX3SK0Wf9mxX6LltZwUVyrgt3pzSCgj8CPh7xXSHw9k+Z+zeH78yGcoV0/yQj/mv/jDi1+XSpzgen1mbbTsPKp2AHVVAagCK+pbM=
+	t=1743751324; cv=none; b=suDmX9eVIY9SThkYYnyusYNXGQvlIvJU/DkrrrBTdhWIoe2s9ZcuzFyFEJA73xeg6VmxflFlMbPUt5Umn55X6dTzxYLKsaOXtjcnaU7ZrS1lfCMWDxczUX+qYVBpUcrkrbuv4DWhQWEEr5Q1bl92rbDqPwASIZfTLgL35j7BdjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743751115; c=relaxed/simple;
-	bh=ILNynjnmbXQ57V0L7E3GXdTBguloNIvSaFZmp//BXJo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Fu0DcxcG7z9T82PGqRckDE2IPnYPtMeEGb5WqXe+0FtdlSEEvftK+qW96AefnkVhqAEH4YsZu9k4Kuku0xgMPLj34UeTM5wNkKAeJoggoadm0uC4OtgyZCCUHf5i+LNUmYRqIw/Ggq4PjKQoc/y28IgHGKt6GpLuR2B4Vvbyoik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HPCC5zAQ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 534346Aa024373
-	for <linux-arm-msm@vger.kernel.org>; Fri, 4 Apr 2025 07:18:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UK7jfYZ/W+0+Ux5kZY3m5d5fiL859ZG5h1OBPReTA0w=; b=HPCC5zAQIICBh9lQ
-	wJoFgA64hFEjFK/zQTsK4JyYud6DbDAxikBoshqc6uC1aYtUxeqbCmduX1onBMbq
-	Q0B4AeIqG9aqzru0BhG7P6sK3E05//xf/g80p7/3wPpHCr38qQoFiruJOHCI4x5q
-	rpNNpdZ2dcghlI7GRZxt06t7KBzpq2ndL0VjYxXzu9eZ2/ku6XdS9fm3hpck8o54
-	5J/P8NKzNctsNTCkFFSbNpK1q6eckYjx0ODzUpLukMU/b2X87hcdcSpsUO0eg2sR
-	SfrCSr6UWHyX6ZNz0iUOuvK2q+mGghDAYSgObrc+Obr+QsIz10Gv9oe3ZCXcQqrr
-	OLrFUA==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45t2d510a7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 04 Apr 2025 07:18:33 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2242ce15cc3so17042895ad.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Apr 2025 00:18:33 -0700 (PDT)
+	s=arc-20240116; t=1743751324; c=relaxed/simple;
+	bh=wyyCNEg2XaAgHt+MpKO9cro/bi3gmE6YO23StBPm5yI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nnSR+spO3mbqseaQ6HTc7RU2KwrQTu5P6/C4MW99RklhTpZeELSBPQJLVyRlyDeycHHDhC9FHDxYChOw16qOymfzJsIT27rgK2d0XW0L/DESymyvjv2wrejihuwjNT7gTLA6AO31z8O7k6gYuROXl6W3pM4ranXAQV9J6vVrG9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RaXzu39b; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-736c062b1f5so1448106b3a.0;
+        Fri, 04 Apr 2025 00:22:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743751322; x=1744356122; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hjbjq84OY+V2VTQE3ONIBsyDtOPoNqTXO3fKwxhNopY=;
+        b=RaXzu39bjYAmakLJbuVp1rw33EDKSNVE3Cc9n2TfspWge8UI0leGGf6PfVSdbkPUFT
+         MRAh6HJTC2pFHhdflrHsXco5aPp/id0ye3KhCLgIl9PMUfZHh8Xzs3MvRqX/djXMcJnE
+         GVb8hnNfFR44QTlOeCCArghNQrYJldLFMpnGKy5+C2iFa5Fx0n72X5eBuoUD61nmIU4x
+         F6UJRCKq3qgNBhNy61AM/FBAfjuCkZSBYMBERVxc8B4wQ/cc3ZIk6e0oRtri85BR4z7q
+         7+c6aNqebmrZeAShk53/GHYBW5HpHcleomRAVw4RXmdaw8dAR2Y+tcz0PB2WgEk4ARgV
+         9lww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743751112; x=1744355912;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UK7jfYZ/W+0+Ux5kZY3m5d5fiL859ZG5h1OBPReTA0w=;
-        b=pLEPogZCLgRkVKEQv0vFZtoGMN/Gpv0c5Llt6ScetRvnGWWOc3fyxJQexvSYEvIFqD
-         8oCFGwV8p4cRWME6R1Xb8rNb8blN1m8N/fdxiLR6oCNFDJ0+wGOR1Bll6aJajrVw0t6E
-         ToaO3WRG02/1p6XVXpOSuIK2EoYPyOYc+ITXCB8EkJEgAPyMPVYOwD5LQ0bolRPhqs1J
-         8lbzTx7dMyR80fTeXPfNRKjcCGSKxsHvhtBJAfdaujpu8StM2nPahOTlEP1ZRzSQQ1S2
-         BPrgwlrM0T41Lpy6s+wJY635XFRYoL7cOrA79TomZttDPVEMSApw1SlTyBsRxoPdrp7x
-         udmA==
-X-Forwarded-Encrypted: i=1; AJvYcCWBYxwI0Jk2JZ2IMQ/s06JBOzf/wrpTBJLq4FuCHWhfDBJYXE6NxN1s6VTv+lNlf6xcxkCcGK+8PLjeQ+9C@vger.kernel.org
-X-Gm-Message-State: AOJu0YxtIz4JzixSaWq1RgQsQcFuRg3ywIXfx19d+hS479jx3fuz6UhJ
-	jvi1tBdN0ayNjBSeORbISXKtLspMFBgOJBah7sRs4oYEUugc/eAdJy4y9W5UC+ihBkzAYKc4EhE
-	7fslPc9CpxQyqi8++bLtw9U0prTDfv4bE/1rTODj2SgsHTnuePcmfwQVY2ohlCJFw
-X-Gm-Gg: ASbGncvLf/Tgc2MxslhpDUBSkepDMcV8cruAgO23cWDzEzkoTwblZeL7NcSI0G12F+i
-	ODunBGFWMim9Xak5oei/fk/ddWa6t/Z3KpT0oX8Jy4PU/QhUg+ycyPP/JsqRxhR/tgVBinMhbyJ
-	xpSnQyiOSS8Q3187mAavObFBzftcX+qihdV9uNDF9ecwBp8gYz7qJO8xmEnol0k2CgejhOpUK59
-	nanLNZyhxoaMM1OjzeYJDpwrZ9Qy4k+95E1CjWi8B+bes1evVe12dekKlSjjZp9ArdoyCM0pzVM
-	P/gYFYL4qtrJEUuGW4LarNxS+6XdhjmhYp7K0yT75vg=
-X-Received: by 2002:a17:903:3bc6:b0:223:5525:6239 with SMTP id d9443c01a7336-22a8a8cef53mr28679315ad.38.1743751112398;
-        Fri, 04 Apr 2025 00:18:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEIFjM5Ex2s1BdaYiCxPhmNszCnHV2el4vd4BXNPkCGVPizFcidepi7kG/x3M3w2iKgK5ytFQ==
-X-Received: by 2002:a17:903:3bc6:b0:223:5525:6239 with SMTP id d9443c01a7336-22a8a8cef53mr28679025ad.38.1743751112024;
-        Fri, 04 Apr 2025 00:18:32 -0700 (PDT)
-Received: from [10.152.201.37] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-229785c3819sm25820125ad.87.2025.04.04.00.18.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Apr 2025 00:18:31 -0700 (PDT)
-Message-ID: <4ee19c72-eb09-4d1f-ad45-7212c77131ac@oss.qualcomm.com>
-Date: Fri, 4 Apr 2025 12:48:26 +0530
+        d=1e100.net; s=20230601; t=1743751322; x=1744356122;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hjbjq84OY+V2VTQE3ONIBsyDtOPoNqTXO3fKwxhNopY=;
+        b=liMexDps1jkfhUVG9CgeuV5bBjoaeJWF+HH3B6aPa9atCFmejM6gWAprj2E0KkvqRJ
+         +sobFpLYQJuhXzgsC4UgN5dU8qh9PFtEFjKipZ7G0O0yCaiiu79bbKLRmnoGNiP8B4Lf
+         S70nuMAGZCEsAakljaoNGdVkrvjHMPq4IqSxcT4OU/HnE63+7tEUCMQoRtggzpBKvEHn
+         JoezEgbNoUgBeRV7iK+kEGSByk5sGTeF9mqUxlb6G3eQRvGYnu+0SKcoyVsX96mSSLAe
+         GTUMWCN6g0QGdKL+L2+f8blrWcGsn8STQRigae0GviTvGE5Z9HAJbXz69whRL52wzBaZ
+         8KFA==
+X-Forwarded-Encrypted: i=1; AJvYcCUKA9ww438SRu++xSeO80vEVGB2EzdDg0Q4Cw3xp3RrhFudYf2lCNn4DmPv4QI7SIClKQGa1KqvwxWM@vger.kernel.org, AJvYcCUzxvp38ycbsO3CNC1tTILssiHdZyoezyULAYdCLNTKKWjRDTUMKZbk1JzVMtLdBpCdDrSEVSz7f4JdpVu3@vger.kernel.org, AJvYcCWD9mbM5oJY/0YeY21tlnA+vmTosYDqihHRU6kh52L7OCpqZARcMpY6nk3YlBFspDvZJhvGvv+QULNCUUJ3@vger.kernel.org
+X-Gm-Message-State: AOJu0YyH0ZCoLqFP/jV/y1r+EoUxd2T37kcJdNYmmITD+Lgo3CsSAakU
+	pyCO+QZKe3cDmVeKpwg4o04YPi/nDN2/CxKNSx8JMnx3d3UU2ViQWo0UTxgA1oE=
+X-Gm-Gg: ASbGncsVafu2IFa1ixQlHD2m8+O9EEQcrwoD9tEcBh625K0f10eei2O891E8tHi2NzR
+	b8ISg+1P2JUwuDMN3/tlgGoQUjxXhm4gZp0MbMdSHp+Nb9dfqGJAyAGA/UqgPKjcTErSRqvrLFY
+	pg21kB2mAsBnlNNzfoWJGNBHd+gbOMOvkNfTn24Ib8ptU5TMdKwds++Ywd/kWEqkRmqLSYJzYFW
+	Y1v3NgDS9PjeFVWfo+QuEpt8rVlvYWv8xnGA8S5/BB42IXCm5Bp20TZ8jB02rffUyQicjSKQkmX
+	8Ontl5PQMBZnCMEaFaB5e0luU6caBgsJq6Etkx0wm3l19/WKkDN9xQ==
+X-Google-Smtp-Source: AGHT+IHz52iM0Ut+nIzEPwr7kHc6kYrM80hwVYpXhsX4Ng9bdBpZGSHbEcuYewXJUL8+qRD62QptZA==
+X-Received: by 2002:a05:6a20:3953:b0:1f5:7f45:7f95 with SMTP id adf61e73a8af0-201081897bbmr2516743637.27.1743751322434;
+        Fri, 04 Apr 2025 00:22:02 -0700 (PDT)
+Received: from nuvole.. ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-739da0e3184sm2674547b3a.160.2025.04.04.00.21.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Apr 2025 00:22:01 -0700 (PDT)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: Pengyu Luo <mitltlatltl@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: rpmh: make clkaN optional
+Date: Fri,  4 Apr 2025 15:20:02 +0800
+Message-ID: <20250404072003.515796-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 8/8] arm64: dts: qcom: ipq9574: add nodes to bring up
- q6
-To: Krzysztof Kozlowski <krzk@kernel.org>, andersson@kernel.org,
-        mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, konradybcio@kernel.org, quic_mmanikan@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc: quic_srichara@quicinc.com, vignesh.viswanathan@oss.qualcomm.com
-References: <20250403120304.2345677-1-gokul.sriram.p@oss.qualcomm.com>
- <20250403120304.2345677-9-gokul.sriram.p@oss.qualcomm.com>
- <69986326-acec-4032-b110-2f93362b3941@kernel.org>
-Content-Language: en-US
-From: Gokul Sriram P <gokul.sriram.p@oss.qualcomm.com>
-In-Reply-To: <69986326-acec-4032-b110-2f93362b3941@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: sM1wujp45S0OAqefURPDPxgQQEu_aBY1
-X-Proofpoint-ORIG-GUID: sM1wujp45S0OAqefURPDPxgQQEu_aBY1
-X-Authority-Analysis: v=2.4 cv=bZtrUPPB c=1 sm=1 tr=0 ts=67ef87c9 cx=c_pps a=IZJwPbhc+fLeJZngyXXI0A==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=YIqmbIv1MT4caBoUU0QA:9 a=QEXdDO2ut3YA:10
- a=RVmHIydaz68A:10 a=uG9DUKGECoFWVXl0Dc02:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-04_02,2025-04-03_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- lowpriorityscore=0 impostorscore=0 suspectscore=0 mlxlogscore=999
- mlxscore=0 bulkscore=0 priorityscore=1501 spamscore=0 adultscore=0
- clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504040048
+Content-Transfer-Encoding: 8bit
 
+On sm8650, clkaN are missing in cmd-db for some specific devices. This
+caused a boot failure. Printing log during initramfs phase, I found
 
-On 4/3/2025 8:21 PM, Krzysztof Kozlowski wrote:
-> On 03/04/2025 14:03, Gokul Sriram Palanisamy wrote:
->> From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->>
->> Enable nodes required for q6 remoteproc bring up.
->>
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> Signed-off-by: Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>
->> ---
->>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 61 ++++++++++++++++++++++++++-
->>  1 file changed, 60 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> index db69bff41afa..11a1849ec50f 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> @@ -3,7 +3,7 @@
->>   * IPQ9574 SoC device tree source
->>   *
->>   * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
->> - * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
->> + * Copyright (c) 2023-2025, Qualcomm Innovation Center, Inc. All rights reserved.
->>   */
->>  
->>  #include <dt-bindings/clock/qcom,apss-ipq.h>
->> @@ -226,6 +226,11 @@ smem@4aa00000 {
->>  			hwlocks = <&tcsr_mutex 3>;
->>  			no-map;
->>  		};
->> +
->> +		q6_region: wcss@4ab00000 {
->> +			reg = <0x0 0x4ab00000 0x0 0x2b00000>;
->> +			no-map;
->> +		};
->>  	};
->>  
->>  	soc: soc@0 {
->> @@ -1473,6 +1478,36 @@ top_glue-critical {
->>  				};
->>  			};
->>  		};
->> +
->> +		q6v5_wcss: remoteproc@cd00000 {
->> +			compatible = "qcom,ipq9574-wcss-sec-pil";
->> +			reg = <0x0cd00000 0x4040>;
-> So this obviously was never built tested :/
->
-> I don't understand why bindings and DTS is being changed after half a
-> year. You got already review and what you sent supposed to be complete.
-> Now, half a year later, you change both bindings and DTS thus:
-> 1. What was the point of reviewing it that time? I will skip reviewing
-> next time and wait till your patchsets reach v4 or v8 and review only
-> then. This is not the first time for IPQ patches. It is actually pattern.
->
-> 2. How released hardware can change within this timeframe?
+[    0.053281] clk-rpmh 17a00000.rsc:clock-controller: missing RPMh resource address for clka1
 
-The hardware/firmware hasn't changed. Will keep the Q6 DTB changes
-separately outside
-this series to make it clear and repost V5.
+Adding the optional property to avoid probing failure which causes
+countless deferred probe. In the downstream tree,similar workarounds
+are introduced for sm7635, sm8550, sm8635, sm8650, sm8750.
 
-Regards,
+Tested-by: Pengyu Luo <mitltlatltl@gmail.com> # Oneplus Pad Pro / Oneplus Pad 2
+Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+---
+ drivers/clk/qcom/clk-rpmh.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Gokul
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index c7675930f..68704c4f0 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -66,6 +66,8 @@ struct clk_rpmh {
+ struct clk_rpmh_desc {
+ 	struct clk_hw **clks;
+ 	size_t num_clks;
++	/* rpmh clock clkaN are optional for this latform */
++	bool clka_optional;
+ };
+ 
+ static DEFINE_MUTEX(rpmh_clk_lock);
+@@ -648,6 +650,7 @@ static struct clk_hw *sm8550_rpmh_clocks[] = {
+ static const struct clk_rpmh_desc clk_rpmh_sm8550 = {
+ 	.clks = sm8550_rpmh_clocks,
+ 	.num_clks = ARRAY_SIZE(sm8550_rpmh_clocks),
++	.clka_optional = true,
+ };
+ 
+ static struct clk_hw *sm8650_rpmh_clocks[] = {
+@@ -679,6 +682,7 @@ static struct clk_hw *sm8650_rpmh_clocks[] = {
+ static const struct clk_rpmh_desc clk_rpmh_sm8650 = {
+ 	.clks = sm8650_rpmh_clocks,
+ 	.num_clks = ARRAY_SIZE(sm8650_rpmh_clocks),
++	.clka_optional = true,
+ };
+ 
+ static struct clk_hw *sc7280_rpmh_clocks[] = {
+@@ -847,6 +851,7 @@ static struct clk_hw *sm8750_rpmh_clocks[] = {
+ static const struct clk_rpmh_desc clk_rpmh_sm8750 = {
+ 	.clks = sm8750_rpmh_clocks,
+ 	.num_clks = ARRAY_SIZE(sm8750_rpmh_clocks),
++	.clka_optional = true,
+ };
+ 
+ static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
+@@ -890,6 +895,11 @@ static int clk_rpmh_probe(struct platform_device *pdev)
+ 		rpmh_clk = to_clk_rpmh(hw_clks[i]);
+ 		res_addr = cmd_db_read_addr(rpmh_clk->res_name);
+ 		if (!res_addr) {
++			hw_clks[i] = NULL;
++
++			if (desc->clka_optional && !strncmp(rpmh_clk->res_name, "clka", sizeof("clka") - 1))
++				continue;
++
+ 			dev_err(&pdev->dev, "missing RPMh resource address for %s\n",
+ 				rpmh_clk->res_name);
+ 			return -ENODEV;
+-- 
+2.48.1
 
 
