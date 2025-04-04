@@ -1,132 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-53207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1210A7B97A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 11:01:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CC9A1A7B988
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 11:03:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 398F2188A3AF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 09:01:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6E7D81899B53
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 09:03:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70DCB1A5B87;
-	Fri,  4 Apr 2025 09:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1C981A5BB6;
+	Fri,  4 Apr 2025 09:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="PMRy9ABx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RqqiIGmV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F4D19F133
-	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Apr 2025 09:01:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18B81A265E;
+	Fri,  4 Apr 2025 09:02:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743757286; cv=none; b=flq05XLFpkQI6Sc27TxPEAZDnb8qC4OKGs6QrhfgQaK9Bjhy8xH4lukTPp7/nIywJPK11p9NqLXK6WfcKgk5pXD3PnbAXaq+oQSHq2/YeZbVs3UgR7nXt7ed6mduh2BfjKTzb21TDh+QQhbqf7KUkyaJkW/x78BElm9nBZ/E4/Q=
+	t=1743757372; cv=none; b=HpOoV40v0BCY7vcPuuJTaaVP5YzxNzehw1vlzPvOZ2ck4FebGFOrxAZF/170M/L1S+KxKEwvUj2yPjcyrCXn6K/NN4pXr4ONu1gypy+KGSt1NA0JxdeJ3mlCqnzGmzEElh2dy9epV3Kwp3NPW0xbDmautkNIRqFi0SyCXqxPNZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743757286; c=relaxed/simple;
-	bh=YzcC/8IF6WlBpTBBJmagM6VLu/QII2dkapejxYRXF+E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ODudT2DpVSCeXRY0rSxOik3vvE0kRot5q0MEk7/K6ADKIuSCRSHEQHZmDyk49HPkUSH1fhcRedeEcb8aiiOR1g86pQEb8DOqhc2v+7yiChcyp9aS3CcmpOY/W1aga1ME2gU/+3odpWdZ6ONgG7s+MB2Stw8lpeFUSJXPfOBMgT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=PMRy9ABx; arc=none smtp.client-ip=185.125.188.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com [209.85.128.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id C6A7F403F0
-	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Apr 2025 09:01:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1743757276;
-	bh=xut80Yyq76Rm1brNcTNysemzqDnut4empLNRrM1YUC8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version;
-	b=PMRy9ABxH276AB/M3YmThknrnAF/dM8LHrH4US4GdoO4K6nE9CF8MAA8LFBlva0YH
-	 56aO/KcmKJapwCwy/isvVkTyCZb8WxnXCJJVoWs+N8yxM2hK/KfqzyBpkmKj7AcnUI
-	 N3Q4zekU4k0viRZhryzHkTkvAsxG22+8N/Qr6sXOZ1uP1NDPUmC1vJjpZtk5i9gZeZ
-	 bJ0/ZzjOfSyjMmhd/VktYw1F6FWrzV0r/8NWxs0nY40gxRxKRUILzzkvV6ltXgG93l
-	 qKOdyMpT9TIYY4jqn3mc3Kr2k2z0+gbkT2UT5sHVBZD2hUU2ijx8JkDS47LjiaC9Sd
-	 Jzef4sMTtBqfQ==
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-43ced8c2eb7so14009145e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Apr 2025 02:01:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743757274; x=1744362074;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xut80Yyq76Rm1brNcTNysemzqDnut4empLNRrM1YUC8=;
-        b=YmyWGhjp71RGbIZW2xnwRpfvv4iM7HE6RSHopAp3w4MGb3SRPPv72sHiRxzJcwExEt
-         9iV7V/OYPaodfWz6w9ycitSOjIpHCt5TYamVQ8c0AyaH9XDj933vsmu/mlbyL5f8Kn+g
-         X/DDORdvMX2/Wq+eozTnzeg+gdcX2i4yvMw29+wR5OZbfXHVMXTPWVi6GdBpO6a8orev
-         b/aA2lye+WhS9jnEQQGzoS7UOkaH2Ffpcj49em2SA0jO+7CbH75yc5H/05aDeIkBCw33
-         bnNSEcdZM6vNHJhcobpdU5C2c2nAJkcaBRdTM3/VfuuhfIAbvuA4dxY0VMxmYAn6lVLy
-         Rnvg==
-X-Forwarded-Encrypted: i=1; AJvYcCUMnRMtVtTO7XguGdPo/kbTw0IqIo63DKMiBztLjASp5pImF38a6d4xtYkfLAvl79hxwD5TtH0/LoKTI6/u@vger.kernel.org
-X-Gm-Message-State: AOJu0YzaxGrrwArjk6eUXaivxTy0bSAU3JzYouIcEaG+3AhSkMrZx/W2
-	ZHMRJkZrxPM4x1/ClA0LzbS8XPBEtNab8gbHmLaFaVKLHNg9xKzxZNRkWATAdY8o5bV6CKxBR9T
-	botUQ+s8T3W+QxMP9DZhOAP0NVzUA3+XU9AP+rnztniMt1KLsew4hQ2vlFlI252egkA2xEaHTbN
-	pONzx3+cPmEzk=
-X-Gm-Gg: ASbGncsTE0ZLeN7xc+WGSF4SxStxYltFFKwtig9xm6lE1sunsWuFMtMroLPpfcBKgeM
-	4LoTS8ZKMnoNDVvopOvCq0rCEUl5VzNPY9bpETVGQ0Wbhgb44puIup2UW9ZTUBF+KUia6bcnUuw
-	iY3ODnk7JY8XMi2MA3X5IGv6ZBn3p8q+QG7Ql01y6SkUmOEO6YQ4aRiryTbPmA63uzxrpl1/cb3
-	Id9xxstZg9KXgVpaTploIg3awg4V1OFRDSS257v0Cjj6PF3UV614bNXi2cmyBYoRFU4TXEDklsx
-	5yEGVqb+E07CcMPjLlXSBjMLPlqg8aDPjV+Rp3QVtO3rxC8d8ejETgaXvgyv
-X-Received: by 2002:a05:600c:3b13:b0:43c:f5fe:5c26 with SMTP id 5b1f17b1804b1-43ed0b481aemr19668105e9.4.1743757274438;
-        Fri, 04 Apr 2025 02:01:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdpABidDuATXZ706ls87vLzgKf56I7dN2yooTu5/p7/hh9qVoP7Z4UPtu+CCEZh9am2E7ZrA==
-X-Received: by 2002:a05:600c:3b13:b0:43c:f5fe:5c26 with SMTP id 5b1f17b1804b1-43ed0b481aemr19667775e9.4.1743757274077;
-        Fri, 04 Apr 2025 02:01:14 -0700 (PDT)
-Received: from localhost (151-243-191-194.pool.dsl-net.ch. [194.191.243.151])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c300968a1sm3895816f8f.11.2025.04.04.02.01.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Apr 2025 02:01:13 -0700 (PDT)
-From: Juerg Haefliger <juerg.haefliger@canonical.com>
-To: andersson@kernel.org,
-	konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] dt-bindings: arm: qcom: Document HP EliteBook Ultra G1q
-Date: Fri,  4 Apr 2025 11:01:08 +0200
-Message-ID: <20250404090108.3333211-4-juerg.haefliger@canonical.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250404090108.3333211-1-juerg.haefliger@canonical.com>
-References: <20250404090108.3333211-1-juerg.haefliger@canonical.com>
+	s=arc-20240116; t=1743757372; c=relaxed/simple;
+	bh=wm44pMRxSMtVrJZ9//WbNLyZvf+/VMaxa9Bl2u1h3DU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gETNNL1zuDMHRkrgn8hWucuQRql3bUsQMPpqZYJZOy8PduWZfvpaML0vyfKxwl/kR+NUIMhgV0UsucSuGeu44vDJFq66isX3PT7USG4wVuLm/fe7EcSozuHldSZtAgDEJORNt/vfIpc3R2Z22dbgZz5nKMJ5L5t3h3eWK8Y6EB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RqqiIGmV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C705C4CEDD;
+	Fri,  4 Apr 2025 09:02:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743757372;
+	bh=wm44pMRxSMtVrJZ9//WbNLyZvf+/VMaxa9Bl2u1h3DU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=RqqiIGmVdSKS3ZhKoSM/x0QlgQ23XAWfSOYUsnl1O0R+0B8JuyU2o4hdmFBG+mxUK
+	 /QZmusJroU1fGCg6PjHm6r3xE/Xsl7b4IWFHWrz6AOSisgMB7DuPITh/7g5En3TSw6
+	 yXObcPqrcDXbZ43RKEcSUOWkPIfns6PuMUkYuExLz8kJIwNUQF2Cv4cZW4sW5Oqpm2
+	 b8XgdgJQDgkWuW/IjQGAaXjMgDts9OrxnQhONT99hlIiaU7cvEKchOJ7wRKOJ/aAFf
+	 mqU4ea+FIXpaeG3kQe0OBq/Dj4N7hn7mOn8/FO5FpoveryTtk4OU1ziaE8RULWhZcw
+	 l0/oESDsSHIxg==
+Message-ID: <70891a99-d2ca-4fd3-a88d-2f66a9a78f66@kernel.org>
+Date: Fri, 4 Apr 2025 10:02:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/8] Reup: SM8350 and SC8280XP venus support
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
+References: <20250304-b4-linux-media-comitters-sc8280xp-venus-v1-0-279c7ea55493@linaro.org>
+ <8cfaeb25-2657-9df4-5cea-018aad62f579@quicinc.com>
+ <it3njgklhnedjzojafuxpjy3o5zfulgdclweyobv7kjgtpjmzx@6opje7yms4yg>
+ <1dd6e03d-09be-4853-741a-4fb47b7619a0@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bod@kernel.org>
+In-Reply-To: <1dd6e03d-09be-4853-741a-4fb47b7619a0@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Add a compatible for the HP EliteBook Ultra G1q 14 inch Notebook AI PC.
-The laptop is based on the Snapdragon X Elite (x1e80100) SoC.
+On 04/04/2025 06:24, Vikash Garodia wrote:
+>>> How different is this from sm8250 which is already enabled on iris driver ?
+>> As far as I remember, SM8250 support in Iris did not reach
+>> feature-parity yet. So in my opinion it is fine to add new platforms to
+>> the Venus driver, that will later migrate to the Iris driver.
+> I would say, from decoder side all codecs are there now on Iris. H264 merged,
+> while h265 and VP9 dec are posted as RFC, there is one compliance failure which
+> is under debug to post them as regular patches.
+> If we are mainly looking for decode usecases, then we should be on Iris.
+> Preference would be to stay on Iris, otherwise we would have that extra ask to
+> port it later from venus to iris.
 
-PDF link: http://www8.hp.com/h20195/v2/GetDocument.aspx?docname=c08996392
+Right now venus represents 9/20 - 45% of the patches being churned for 
+sc8280xp.
 
-Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+https://github.com/jhovold/linux/tree/wip/sc8280xp-6.14-rc7
+
+This is a good debate to have, however my memory of what we collectively 
+agreed both in public and private was to continue to merge new silicon 
+<= HFI6XX into venus unless and until iris hit feature parity for HFI6XX 
+and to continue with venus at that point for < HFI6XX.
+
+So merging sc8280xp - HFI6XX is consistent with our agreement, the right 
+thing to do for our users and a big win in terms of technical debt 
+reduction.
+
+I will post an update to this series ASAP.
+
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 6260839fe972..1f2a26ac33b9 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -1133,6 +1133,7 @@ properties:
-           - enum:
-               - asus,vivobook-s15
-               - dell,xps13-9345
-+              - hp,elitebook-ultra-g1q
-               - hp,omnibook-x14
-               - lenovo,yoga-slim7x
-               - microsoft,romulus13
--- 
-2.43.0
-
+bod
 
