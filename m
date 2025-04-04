@@ -1,179 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-53203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E81DA7B918
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 10:42:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 221F8A7B950
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 10:52:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04E6F3B64DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 08:42:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E25351798C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 08:52:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B049819D07B;
-	Fri,  4 Apr 2025 08:42:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="RZz9MmEM"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E7121A0B0E;
+	Fri,  4 Apr 2025 08:52:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bmailout2.hostsharing.net (bmailout2.hostsharing.net [83.223.78.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A5819CCF5
-	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Apr 2025 08:42:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1851953AD;
+	Fri,  4 Apr 2025 08:52:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.78.240
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743756149; cv=none; b=MvviMZZ30JSMDaWUhRWx+tp84nn3mxAs4zZV1/W6NHngHBi8IN6yjPrkZI9iVH/ABblsxGG8WHpwl0TwjVgwrGBGrg3ov37SGZNr8bp7xrJRDW3pxXuL0xV8dEq947GX4VGvxjs1ucPZn7t5KKko8TwFzPBw/1UPDUPb4KBgO54=
+	t=1743756724; cv=none; b=sBkB33p9O6qr116T1mt68fkAeVhOvhbKMPUk448VL7YcW9phNDYCatykhzS+QSraiD9Cirll9mQ1/tOu7H/7gstjl4vlrTM8htNusasq5g7CtiLjqiWVeYld/WhFt7IEX4PWFx2Xl02wkAorWGBHwx8I8lJpY9Iy5qJ+J8b16FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743756149; c=relaxed/simple;
-	bh=MS7WaIMkq20DORNXyXmGMCpiPauFYp4ukxiNJ1OFdIk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Pei4+AarmbNVUkxHYrYqvAvNgJ/fWPTXbXQFRWtYYZxJHNoDOWO1oiwRlWdRRkSXPrQW2FQosaxlkKj9kX2vBehUTco3MSB6ygG0NIj2IBZ9rJ2mbVAtAXuQbv4ZehFTKTBfr/MczQXahc2TaY9+4AzdQbaVkKz1dkEznQFAyWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=RZz9MmEM; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5e5dce099f4so2382534a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Apr 2025 01:42:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1743756146; x=1744360946; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EvpxFOAMjGbDEHBzr8d3BstbBwgEQIKMSe6Zjgd2RsE=;
-        b=RZz9MmEMnTgfc4/W7G43u7gvKWnEbMjqTmmHJJxQOj//rWl/peRlGenjLYOwZP8fjb
-         090TUTc3c0Hgr9k+jINC6jPeNgYJTfwVTkpw3HmJ9EvnjtGPpU0NHHkMJElch1QrMBEU
-         HmXIx2r2Sh+yeMmm5dgfGDZujDmCeM4BPZ3bQz0YOPPl4MStkoTaixub/0dXLVz8Srq2
-         qk3YoBI3wCaD2zau50uc6G65wLG9pvLZaIA55TLGfv9gOOimz9M5ikcA+47t0mI04ppb
-         /igZ8hBxIKdjOHsRNYU9LropLM4HUO+gcVteXMeGVea/BKTbuOtU9xSwiDraPKzyu0Y8
-         bwmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743756146; x=1744360946;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EvpxFOAMjGbDEHBzr8d3BstbBwgEQIKMSe6Zjgd2RsE=;
-        b=rizlZyCuxqGyD0Kv/OTkXYvkwuR7A4VYpcoG2lusmwD6XAar19IlDhPe59e02vUBBp
-         UWBla8iAP9XzkyZ0qyC0bKtViVSrdePP5JqN+TUPwvAZn3/YOmzN9D60GEBPHqEvUdGR
-         R1HRxE9guhCCv0A3wRl7S+hkA9peluibZiXzN2WqhRApzgmaxfLjC5k2thTHABEwP2cM
-         QAofN+cUugP01lgKikbZzDkF44AKtEtuNIgqap3DhkyZloTpD0qcgRINLBvw6SK9tAV2
-         luIyTgCbuAnE0V9xM4Dt1pWNWDELZ8KaY8rwe1WeiI5WaPhtFuVsaOBxlTu0TdmkVU2v
-         HaVg==
-X-Forwarded-Encrypted: i=1; AJvYcCWHOwoLMt/lm3C/mRUYf3jYLvlpPSKWHdQlZ8dCTut0YD90T8ZRiteUYJHhy5Pd5nXQSQHMW8C3UEvl3G0s@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzvc6mDOn72SCSEJZl581n8bOF/LWtFJzJ7PjOzu4tuamHiWEtZ
-	WnYXqmNjc6a/tuX9WMTlBS52jo0emsXE0eUGCbCIPvwwNfinf65oRDUCDe2P04A=
-X-Gm-Gg: ASbGncstQrQ/7q5wVy+a+40tnXmhV2emhVD8zoyLtYYnxfmTUuBZ1nE0pj050OGz0Jb
-	h0mvSd+QFcJH1sSZE6NOzVspJDLPcZhZ3YW6o2KWOxMRPD3rQ/GYwlWAhrIlhAAQL10sLsKEVl+
-	1H/LdJ68Ii/Mja6qeMrc4e50eBJBOq77ThGRw6xJSTheAGY+wXBqanfaDNwrT1e6ZqqANnqxIhG
-	LN3E7RQPrjQvLNhCmAqnT0KPP6NB5TGDBAArVM5vkiGXZHE13MKBH4Gouk0wU0gAyWsQVuDoarJ
-	2SIqRVqP+DmYNeBI45JanbGAu4gz91pUkAWnR9DyUF6cahmQY9rnR3081t1dggjVQxFXY32kuMM
-	Z8IF2ZtRdmQhg6Eo7sB90nw==
-X-Google-Smtp-Source: AGHT+IHEpr1vauJBb+ztZ4BIYo4Rg69oVqKkkjWVKPc8XrGwoUcb7kFowBPp4QCiSvew91CEsHvqag==
-X-Received: by 2002:a17:907:3d9f:b0:ac2:cae8:e153 with SMTP id a640c23a62f3a-ac7d6c9fa0emr181343366b.4.1743756145955;
-        Fri, 04 Apr 2025 01:42:25 -0700 (PDT)
-Received: from [172.16.240.58] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7c0185e15sm217465566b.132.2025.04.04.01.42.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Apr 2025 01:42:25 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 04 Apr 2025 10:42:22 +0200
-Subject: [PATCH] arm64: dts: qcom: sc7280: Stop setting dmic01 pinctrl for
- va-macro
+	s=arc-20240116; t=1743756724; c=relaxed/simple;
+	bh=ytfvydb71SW4qnHu5ZeuDqr6g+dawnF2MysvyNp8mD4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KJCClfcO1sXX9dGpXND8CTJQsd56pq+CudY3tpqw1in4hq9KKW62OGrbua4ARQLpfv2joLop0h6S6o5ykhn8qTH/tDwbrrK6qrgfyA0GBZl+PW5BUXwWKgMs27q4CvJYe06aK8vKgS7mnTvbJHFluTLwk1lwstd3p7KHhdS5lpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=83.223.78.240
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
+Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
+	by bmailout2.hostsharing.net (Postfix) with ESMTPS id E74F3200A2A0;
+	Fri,  4 Apr 2025 10:46:15 +0200 (CEST)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id 282651212B; Fri,  4 Apr 2025 10:46:27 +0200 (CEST)
+Date: Fri, 4 Apr 2025 10:46:27 +0200
+From: Lukas Wunner <lukas@wunner.de>
+To: manivannan.sadhasivam@linaro.org
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+	Oliver O'Halloran <oohall@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof Wilczy??ski <kw@linux.com>, Rob Herring <robh@kernel.org>,
+	dingwei@marvell.com, cassel@kernel.org,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/4] PCI/ERR: Add support for resetting the slot in a
+ platforms specific way
+Message-ID: <Z--cY5Uf6JyTYL9y@wunner.de>
+References: <20250404-pcie-reset-slot-v1-0-98952918bf90@linaro.org>
+ <20250404-pcie-reset-slot-v1-2-98952918bf90@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250404-sc7280-va-dmic01-v1-1-2862ddd20c48@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIAG2b72cC/x3MQQ5AMBBA0as0szbJtIpyFbGgBrNQ0iYiEXfXW
- L7F/w8kjsIJOvVA5EuSHCFDFwr8NoaVUeZsMGQqsmQx+cY4wmvEeRdPGuuprdlpcqX1kLMz8iL
- 3v+yH9/0AtWv9t2IAAAA=
-X-Change-ID: 20250404-sc7280-va-dmic01-6b96e810834c
-To: cros-qcom-dts-watchers@chromium.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250404-pcie-reset-slot-v1-2-98952918bf90@linaro.org>
 
-There's devices that don't have a DMIC connected to va-macro, so stop
-setting the pinctrl in sc7280.dtsi, but move it to the devices that
-actually are using it.
+On Fri, Apr 04, 2025 at 01:52:22PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> When the PCI error handling requires resetting the slot, reset it using the
+> host bridge specific 'reset_slot' callback if available before calling the
+> 'slot_reset' callback of the PCI drivers.
+> 
+> The 'reset_slot' callback is responsible for resetting the given slot
+> referenced by the 'pci_dev' pointer in a platform specific way and bring it
+> back to the working state if possible. If any error occurs during the slot
+> reset operation, relevant errno should be returned.
+[...]
+> --- a/drivers/pci/pcie/err.c
+> +++ b/drivers/pci/pcie/err.c
+> @@ -234,11 +234,16 @@ pci_ers_result_t pcie_do_recovery(struct pci_dev *dev,
+>  	}
+>  
+>  	if (status == PCI_ERS_RESULT_NEED_RESET) {
+> -		/*
+> -		 * TODO: Should call platform-specific
+> -		 * functions to reset slot before calling
+> -		 * drivers' slot_reset callbacks?
+> -		 */
+> +		if (host->reset_slot) {
+> +			ret = host->reset_slot(host, bridge);
+> +			if (ret) {
+> +				pci_err(bridge, "failed to reset slot: %d\n",
+> +					ret);
+> +				status = PCI_ERS_RESULT_DISCONNECT;
+> +				goto failed;
+> +			}
+> +		}
+> +
 
-No change in functionality is expected, just some boards with disabled
-va-macro are losing the pinctrl (herobrine-r1, villager-r0, zombie*).
+This feels like something that should be plumbed into
+pcibios_reset_secondary_bus(), rather than pcie_do_recovery().
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi     | 3 +++
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi                         | 2 ++
- arch/arm64/boot/dts/qcom/sc7280.dtsi                             | 3 ---
- 4 files changed, 6 insertions(+), 3 deletions(-)
+Note that in the DPC case, pcie_do_recovery() doesn't issue a reset
+itself.  The reset has already happened, it was automatically done
+by the hardware and all the kernel needs to do is bring up the link
+again.  Do you really need any special handling for that in the
+host controller driver?
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi
-index a90c70b1b73ea042af3c5509dccc60844f599acc..0e07429982bd69a5f2455d5fcb7bb03bdeb32fab 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi
-@@ -139,6 +139,7 @@ &lpass_va_macro {
- 	vdd-micb-supply = <&pp1800_l2c>;
- 	pinctrl-0 = <&lpass_dmic01_clk>, <&lpass_dmic01_data>, <&lpass_dmic23_clk>,
- 			<&lpass_dmic23_data>;
-+	pinctrl-names = "default";
- 
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi
-index 020ef666e35fc676fcc4e4ae8aa65e5ba4f42d98..ce48e4cda1708798f40e792620de96034f093472 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-wcd9385.dtsi
-@@ -141,6 +141,9 @@ &lpass_tx_macro {
- };
- 
- &lpass_va_macro {
-+	pinctrl-0 = <&lpass_dmic01_clk>, <&lpass_dmic01_data>;
-+	pinctrl-names = "default";
-+
- 	status = "okay";
- };
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 7370aa0dbf0e3f9e7a3e38c3f00686e1d3dcbc9f..90e5b9ab5b847edc447111825999f73f6453b33a 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -412,6 +412,8 @@ &lpass_tx_macro {
- &lpass_va_macro {
- 	status = "okay";
- 	vdd-micb-supply = <&vreg_bob>;
-+	pinctrl-0 = <&lpass_dmic01_clk>, <&lpass_dmic01_data>;
-+	pinctrl-names = "default";
- };
- 
- &pcie1 {
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index ec96c917b56b4a077b45ac0186da6aaedb899dbe..7fba3c6e2b04f18295b7c63dcb83978b2c6049ca 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2617,9 +2617,6 @@ lpass_va_macro: codec@3370000 {
- 			compatible = "qcom,sc7280-lpass-va-macro";
- 			reg = <0 0x03370000 0 0x1000>;
- 
--			pinctrl-names = "default";
--			pinctrl-0 = <&lpass_dmic01_clk>, <&lpass_dmic01_data>;
--
- 			clocks = <&lpass_aon LPASS_AON_CC_TX_MCLK_CLK>;
- 			clock-names = "mclk";
- 
+Only in the AER case do you want to issue a reset on the secondary bus
+and if there's any platform-specific support needed for that, it needs
+to go into pcibios_reset_secondary_bus().
 
----
-base-commit: a4cda136f021ad44b8b52286aafd613030a6db5f
-change-id: 20250404-sc7280-va-dmic01-6b96e810834c
+Thanks,
 
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
-
+Lukas
 
