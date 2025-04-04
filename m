@@ -1,149 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-53217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29389A7BAE5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 12:33:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AB56A7BB0B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 12:38:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F42F172BA7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 10:33:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A39173AE981
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 10:37:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABA881AAA1A;
-	Fri,  4 Apr 2025 10:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75D461D7E26;
+	Fri,  4 Apr 2025 10:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JYqK8ygK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iwXkQ3H7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C767D10E9;
-	Fri,  4 Apr 2025 10:33:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC421D63E4
+	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Apr 2025 10:37:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743762828; cv=none; b=dsvx38CfVF0gEFBtYKEAehSdCDnkSh85CtZQUg9Nu0vWfagqEgYAmINVvDn447wDQVY8bQ9OX2Az44ja1xXQpDSL5Uxa3kt22N8qO36LroNefCEjBDCrlBwRyI90YNcKo8vUwyqvuXnvmyzZkvkZhtWVWkkkWL/F+3G2W+ViuZE=
+	t=1743763034; cv=none; b=Jag5x8jKiHSHzH7eRthmtCMmcxvUlmbIpMNAn2ViP+qHegzFzeB6tGBcVrFtPyCvroXaN+rcWYmh9aJlZDEHsHTS+nUG2utuJdbIezUJhcjCJ5foExTO2SnBJ3vy17skzUJomXX9SZrZgZfEVBIfytUJKlbfKfPvGMY1ivrVsNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743762828; c=relaxed/simple;
-	bh=38upGB0DbOTlqZuiMJDcmdUwubOS+Q8tO4NLEP+t3aM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NRjbCDCYWzvybcUYXs1s4oqM83Ae81aIp3KdxN5Zjy8QEuVZQ3dwsQzAlv7cwXxslS70ieref0GujNe0VYHFQ/7w8BjoVkx4J6CCzS8Ih7VKoTrEubNzxGVC3Oj/bz7VOOVBfhInpkgSXLUfuIqe07tvvgrPJ/PV0TjQ6YaAoXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JYqK8ygK; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53433oJC012456;
-	Fri, 4 Apr 2025 10:33:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lIOnZULnFX+QVwFsNZ/W3Tbhwbo208fPQklkCX8gMyg=; b=JYqK8ygKltlOLYBI
-	yCvOT5vifwig97kV6O9W5NFtHepjaLaQaXU2F2WnEXVHnlwsYd+8KDcy0N0nvwA3
-	6fQfNi+0u+eeqK91cQJcJ+nUrowcrayNHiGFdFOJtTTcatHlQZYQQ9EhPefHCroc
-	XP3I1Q+qdMvLFM17Lyr1MqbjClBUvb/NksvUlFcbgmpmwXIHFNOT5PhgM9hV9EPL
-	5pul9MFE+WDMLKpCqng49oLIiXW7bjbNenM0hijcyrauVffzMVCkJnhiMJr8H3zV
-	CWewySg/XrFD0WjKzGIY/I/SgMesUZQa8EWy3cCNxya0VUt6gJvjlzdAjyGkOSTV
-	hdWoOA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45t2d51fqb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Apr 2025 10:33:40 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 534AXdCQ015295
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 4 Apr 2025 10:33:39 GMT
-Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 4 Apr 2025
- 03:33:35 -0700
-Message-ID: <b73f8aa4-ccb9-d8fe-90c2-4430520d2255@quicinc.com>
-Date: Fri, 4 Apr 2025 16:03:32 +0530
+	s=arc-20240116; t=1743763034; c=relaxed/simple;
+	bh=XpFbSVqvEDgZgwyFUE/9ri5Zlpd76Q27/crMcE9fE2c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Otv2rXLR2Pfy6TEAiIQ6BT1j+02GisHFXGcr/2Hl9farWnCKCUWV5/Y83bvEE3gZeAyYNdaOHX+ARuZlfZefxuNgunah6VkuZ5fR2XJw0w6krt5Gw82WhSTJNJQDerBZ6A5HIrva+2ROb2VCr9okOydYB5X3BHqF7XChxfVDXbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iwXkQ3H7; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6feab7c5f96so18625707b3.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Apr 2025 03:37:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1743763030; x=1744367830; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=s85N6LbGyDvlbfm+7fjpbjUdhdaXcYheIAW+0EJPQoQ=;
+        b=iwXkQ3H7cVoSJCZqlnhIONUL/03XXTbrr+Z50cvIfpa5goqD+dL19peRpLIJhs89fc
+         iBAlQAnKWJ0DJQFs60qUVYIwQmrNtSIxPyyjmA+46KbXa3kmI28eROkylKIEnkLxkLtw
+         vx3Cw3g89qivoeNk+fzbZkUdwPv+Ocqh3iKp6Poyt3WvNjCgrKju9TXz92a3249xoArE
+         itzj8T6ReL7mzZdvsKeAw9iwD6nO3RfzLO1ysd4Taz3l+i0828EIc8S8JU14nejzPlV5
+         vvw3xiwdWhXb/GNHawsTO03PEN2bN3bM76OaYLj9DU26BC8RuJ6gXycZ7lNO3ibIvPm1
+         75FA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743763030; x=1744367830;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=s85N6LbGyDvlbfm+7fjpbjUdhdaXcYheIAW+0EJPQoQ=;
+        b=qSDPFNQxaTxF7NyQYwMCGq6TD2+DrPB4p03RnAXTXLxPSlw48WGctEknftBCPGT9fT
+         1UFMXFozqHTk9oBmt6zVQ1MsYHEFyPx29/XZYmoQVf4GkeKYI4KgyfdfAiEWAB5EGkyV
+         /QVlq+Ny/EYNQzCgvq+Z+iTLqFUB+F4HuKGmKDuPM/+00TS92oFY6z7BeWAJHBX8IH9p
+         Kk4IQeQm2e13+89QxRaZ47ZRQOwCvbelmwZHi5MrjWdqsYtFRuHfZYm/xIufgdYPTn30
+         OOczluPPCpfzUZ630QZyLV1ENtlaP0Xph4Iaw+OOyv+x39lO4IGUhHvnxWiX5OlDzrYY
+         4B7A==
+X-Forwarded-Encrypted: i=1; AJvYcCVMqHTFVUtmuRyaIoh4WMuOFx93wofpIKYD+V04383EVH0VQlNwO6GbK33CgOBvBPStFQqF+7F3mwt6E5HN@vger.kernel.org
+X-Gm-Message-State: AOJu0YwW7KWTxf762gXjyYIgv0OnEC4Bhq0PqpuV/sYuzncdGVVbqqbX
+	5lDy4qvQq/Vyj66mF+V6Be4i+kMDcM5m0oEsTUCoDuCse8av3SQ/mGh93wmwu6bR2PJ6nmBEyoS
+	Bf6b80XQV3xTHjaYKfzvnAnoHiTwJ8RnLwsczaQ==
+X-Gm-Gg: ASbGncv1jI+Ab7Le1syH7FR5B1/dFjg2XjPglxbpeN/sRA4XtFgQHPv3In8BZxx1YVH
+	VXwXrKwQFYncLGSLywnuH0ypN9OYBf/ipJrCGQgzBiWg917yWn8Wf1PK3q/t1EOq8AbjkRFF1UC
+	oRuT/YsRIBPUFODQxm3uzhQY4gdmE=
+X-Google-Smtp-Source: AGHT+IGuuSb2kyra+w2zQGcM5KZ+95CLnIjAJJ+ZAGPbM9ApbFO7sbm4a8zwJjSrMRu7/2gU0ViAtYbSOKTRdRXJ4YY=
+X-Received: by 2002:a05:690c:4c11:b0:702:5689:356e with SMTP id
+ 00721157ae682-703e1546003mr46207307b3.12.1743763029893; Fri, 04 Apr 2025
+ 03:37:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 0/8] Reup: SM8350 and SC8280XP venus support
-Content-Language: en-US
-To: Bryan O'Donoghue <bod@kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@oss.qualcomm.com>
-CC: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Johan Hovold
-	<johan+linaro@kernel.org>
-References: <20250304-b4-linux-media-comitters-sc8280xp-venus-v1-0-279c7ea55493@linaro.org>
- <8cfaeb25-2657-9df4-5cea-018aad62f579@quicinc.com>
- <it3njgklhnedjzojafuxpjy3o5zfulgdclweyobv7kjgtpjmzx@6opje7yms4yg>
- <1dd6e03d-09be-4853-741a-4fb47b7619a0@quicinc.com>
- <70891a99-d2ca-4fd3-a88d-2f66a9a78f66@kernel.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <70891a99-d2ca-4fd3-a88d-2f66a9a78f66@kernel.org>
+References: <20250403-dt-cpu-schema-v1-0-076be7171a85@kernel.org> <20250403-dt-cpu-schema-v1-18-076be7171a85@kernel.org>
+In-Reply-To: <20250403-dt-cpu-schema-v1-18-076be7171a85@kernel.org>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Fri, 4 Apr 2025 12:36:33 +0200
+X-Gm-Features: AQ5f1JqCiMQtdQdQn1tCIXwltI0szojsJGdKxwputYjFQK19pJwwJrC7p_ihypo
+Message-ID: <CAPDyKFrFRrPVJ_t0JrAE1VTbS02hwr=L-EHtqb7CQiWzB1MnQg@mail.gmail.com>
+Subject: Re: [PATCH 18/19] dt-bindings: arm/cpus: Add power-domains constraints
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Samuel Holland <samuel@sholland.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Viresh Kumar <viresh.kumar@linaro.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Vincenzo Frascino <vincenzo.frascino@arm.com>, Liviu Dudau <liviu.dudau@arm.com>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>, Viresh Kumar <vireshk@kernel.org>, 
+	Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, zhouyanjie@wanyeetech.com, 
+	Conor Dooley <conor@kernel.org>, Nicolas Ferre <nicolas.ferre@microchip.com>, 
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>, Steen Hegelund <Steen.Hegelund@microchip.com>, 
+	Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Heiko Stuebner <heiko@sntech.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	linux-pm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-mips@vger.kernel.org, 
+	imx@lists.linux.dev, linux-rockchip@lists.infradead.org, 
+	linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JFJ9DZSbqRMiS4GbkjyNFynO1TviuMIx
-X-Proofpoint-GUID: JFJ9DZSbqRMiS4GbkjyNFynO1TviuMIx
-X-Authority-Analysis: v=2.4 cv=Cvu/cm4D c=1 sm=1 tr=0 ts=67efb584 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=NEAV23lmAAAA:8 a=atOABbsASZFoYH5kmBwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-04_04,2025-04-03_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- bulkscore=0 suspectscore=0 mlxlogscore=911 malwarescore=0 spamscore=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
- clxscore=1011 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504040072
 
-
-
-On 4/4/2025 2:32 PM, Bryan O'Donoghue wrote:
-> On 04/04/2025 06:24, Vikash Garodia wrote:
->>>> How different is this from sm8250 which is already enabled on iris driver ?
->>> As far as I remember, SM8250 support in Iris did not reach
->>> feature-parity yet. So in my opinion it is fine to add new platforms to
->>> the Venus driver, that will later migrate to the Iris driver.
->> I would say, from decoder side all codecs are there now on Iris. H264 merged,
->> while h265 and VP9 dec are posted as RFC, there is one compliance failure which
->> is under debug to post them as regular patches.
->> If we are mainly looking for decode usecases, then we should be on Iris.
->> Preference would be to stay on Iris, otherwise we would have that extra ask to
->> port it later from venus to iris.
-> 
-> Right now venus represents 9/20 - 45% of the patches being churned for sc8280xp.
-> 
-> https://github.com/jhovold/linux/tree/wip/sc8280xp-6.14-rc7
-> 
-> This is a good debate to have, however my memory of what we collectively agreed
-> both in public and private was to continue to merge new silicon <= HFI6XX into
-> venus unless and until iris hit feature parity for HFI6XX and to continue with
-> venus at that point for < HFI6XX.
-Agree. Would appreciate your help later as well when we migrate these SOCs to iris.
-
-Regards,
-Vikash
-> 
-> So merging sc8280xp - HFI6XX is consistent with our agreement, the right thing
-> to do for our users and a big win in terms of technical debt reduction.
-> 
-> I will post an update to this series ASAP.
-> 
+On Fri, 4 Apr 2025 at 05:06, Rob Herring (Arm) <robh@kernel.org> wrote:
+>
+> The "power-domains" and "power-domains-names" properties are missing any
+> constraints. Add the constraints and drop the generic descriptions.
+>
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 > ---
-> bod
+>  Documentation/devicetree/bindings/arm/cpus.yaml | 8 ++------
+>  1 file changed, 2 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
+> index 6f74ebfd38df..5bd5822db8af 100644
+> --- a/Documentation/devicetree/bindings/arm/cpus.yaml
+> +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
+> @@ -313,19 +313,15 @@ properties:
+>      maxItems: 1
+>
+>    power-domains:
+> -    description:
+> -      List of phandles and PM domain specifiers, as defined by bindings of the
+> -      PM domain provider (see also ../power_domain.txt).
+> +    maxItems: 1
+
+There are more than one in some cases. The most is probably three, I think.
+
+>
+>    power-domain-names:
+>      description:
+> -      A list of power domain name strings sorted in the same order as the
+> -      power-domains property.
+> -
+>        For PSCI based platforms, the name corresponding to the index of the PSCI
+>        PM domain provider, must be "psci". For SCMI based platforms, the name
+>        corresponding to the index of an SCMI performance domain provider, must be
+>        "perf".
+> +    enum: [ psci, perf, cpr ]
+>
+>    resets:
+>      maxItems: 1
+>
+> --
+> 2.47.2
+>
+>
+
+Other than above, feel free to add:
+
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+
+Kind regards
+Uffe
 
