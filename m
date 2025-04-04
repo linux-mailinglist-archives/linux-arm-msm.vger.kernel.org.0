@@ -1,471 +1,787 @@
-Return-Path: <linux-arm-msm+bounces-53134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D46A5A7B08F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 23:20:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55171A7B4D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 02:43:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B84C18904D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Apr 2025 21:16:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DDAE6176753
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 00:41:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5925A1DF994;
-	Thu,  3 Apr 2025 21:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DA9D1FDA76;
+	Fri,  4 Apr 2025 00:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WhAqgcoq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="K72Ub4K9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EC019EED2;
-	Thu,  3 Apr 2025 21:00:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B821F3D5D;
+	Fri,  4 Apr 2025 00:28:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743714061; cv=none; b=XsoFbn5tNAxkUYVS1HlniDvpcICajDQzjf7OLKY6pFYbL20PFdDTd9uAeuQh5+tTXlQwXkMXlqDhOwDFR/lpwuGRB6skGypFgqe2pOKqb1bWM4ZSgoTSKZov8ZFxmlZK4U0wFlKYgc4QtrM/e6kBhQzsKL6CP+XfVejXJfv2ujk=
+	t=1743726491; cv=none; b=X0Ll+1ZqjiCtCMoCpIcrFiL2CYcL/kGwRkl5hMGQ6vrn3RX1l3OU3JUq9QxUde2zIJd02Xx8jZZso5ubXYiUQ2tRl2ecYps8q7MdMOf7xFnwji6aLvxWOAT5nuekDmu/XQsR7O+/FUxFls88gNTSKqAHqEbsC8SEz5TbxuHaYwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743714061; c=relaxed/simple;
-	bh=B085EWWX5gFYWgynI0EZlqmMdz5HDcR3MAu4aMcHvSc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LkTWtagv2YO71VojtLvizseVoowK5El6c2iHLswQOWf5+H83qkV/bYV5Y83T5xxzRV/R++HB5zvyLsqTiIg/G9NvrslGeUJfOngfUTJWe2xy2BHsAmQ16W0qKiY3jXB4JnUlWvzP7DMK1jEP8Emm8eJ8VD6eHYsIC/y/J3BnSZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WhAqgcoq; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1743726491; c=relaxed/simple;
+	bh=9T0ur/GYnepprIIpIRAXPTAYfPTjyJP/Qu+x5FNftVk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=MZGYtaVNTgdu91MmBEKtc3jvo9VYusg3pB2ZvfE67sOALiZgTjq7F/zKPg0eYc/L52RjkJjjCb6jwupyZ0atOrunhDYbXCQv7TFtvVzxsquOFIMVUjZ+Ex0k0u7Th3jB4xBT9q4NVUY4Sl4xaJJsNzckcy6RM0D9g2/ZhA/HIWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=K72Ub4K9; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 533Jhcwi013182;
-	Thu, 3 Apr 2025 21:00:36 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 533NX9t6027079;
+	Fri, 4 Apr 2025 00:27:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	c3lw9JY2tZNb0wqxI4HGqbaQXkvStcLSoePS2IwZaGo=; b=WhAqgcoqaB2dTh9E
-	kiy99wuEsiHjvrV1p+0ooC1WB8WY83T9K+8HUv6RLo5q6FzyArAso4pVUSG/4Czy
-	KLbPQjy0maT+B2glqj8BEyMxJoYE952IyYRYoUfsmUkfmdEvk7GKRWGTsrbvKkYj
-	9+W/k2oqRDnHNCFNpkmBfwM9F7ftHhYJB/vPMcSYj0WlrXYkZOh+7dLZUBLFl0I3
-	h+wCVzxGByJHLBWN54mc1vMjjJ8lBYqC5RirqGf6l9EQDEypzlFr0dx+PAP/udVl
-	nd9ORlWoKJ4aLChI6l1YOa3j7YrujgbCI2o56y05X7AuJTzxEVgKHV/iohaXXvLu
-	+fGQKA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45sc7x38wr-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=upaEFKtGCPeFKKtrzRFIST
+	j/xJ88OEO5+UDyURKknJ4=; b=K72Ub4K9S98/D49p2SXbhe3tXp+2iLbb1iPX8N
+	U+VAWcPPlX48CtQEf9FuPYZmBzTD4R2gCZL5hHEaQy4rWbPj3ShvlfGC7W4SoITY
+	9/oaWWClzcokzdse4+YG+9Nph+Z5Q/qJBSKv9BW7CARCHAv91aPtnEQKGUZ425a5
+	D2j8uMnwFSCuIawUnrpRWoIbqP5fP5n3VKucR3tojxaGtdWu/KNLG7Xq1oRiSAuo
+	cWMvf9cCx0kwHq5Hd6tf0MVdaU/cT/yY6VEnyrgad8x8LZszWY9p89An99oK226g
+	C0SVcomm8Fc4PGZ8nu5AK+26arh4uCti6TqG50SwH+LTLLPg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45t2deg8qv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 03 Apr 2025 21:00:35 +0000 (GMT)
+	Fri, 04 Apr 2025 00:27:40 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 533L0ZRD032394
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5340RdH8020283
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 3 Apr 2025 21:00:35 GMT
-Received: from [10.110.110.182] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 3 Apr 2025
- 14:00:34 -0700
-Message-ID: <e5b95522-baa1-414b-b16a-fe82e887a5de@quicinc.com>
-Date: Thu, 3 Apr 2025 14:00:33 -0700
+	Fri, 4 Apr 2025 00:27:39 GMT
+Received: from hu-wcheng-lv.qualcomm.com (10.49.16.6) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 3 Apr 2025 17:27:38 -0700
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+To: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
+        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
+        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
+        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
+        <gregkh@linuxfoundation.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>
+Subject: [PATCH v37 00/31] Introduce QC USB SND audio offloading support
+Date: Thu, 3 Apr 2025 17:26:57 -0700
+Message-ID: <20250404002728.3590501-1-quic_wcheng@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v36 22/31] ASoC: qcom: qdsp6: Introduce USB AFE port to
- q6dsp
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
-        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <linux-input@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        Luca Weiss
-	<luca.weiss@fairphone.com>
-References: <871827f0-94ba-4565-865f-775cab9501eb@quicinc.com>
- <Z-PPlRD7gcUcNvNv@linaro.org>
- <200c08f7-3637-c2fb-2caa-002604b957ed@quicinc.com>
- <Z-ug3YFwff8hWIRl@linaro.org>
- <378af3f1-b5b0-4f7a-ab62-f5c891feb7b5@quicinc.com>
- <Z-1MtJjfVbUQFron@linaro.org>
- <7d5fd3bf-c33e-4274-938b-2fb93c4b39d8@quicinc.com>
- <a9e281d6-59c0-3615-9851-c33752b0620f@quicinc.com>
- <Z-6Q_gaWsWyZcpLz@linaro.org>
- <e1eac325-233e-43eb-9ca0-9746893462d7@quicinc.com>
- <Z-7M1IeKNk6ZBayS@linaro.org>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <Z-7M1IeKNk6ZBayS@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: npZwLy4X00mIJ7RH5NbZ7QPK_DAas2YR
-X-Authority-Analysis: v=2.4 cv=XamJzJ55 c=1 sm=1 tr=0 ts=67eef6f3 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=5dSfeLAkA3Y8wAJoHGcA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: npZwLy4X00mIJ7RH5NbZ7QPK_DAas2YR
+X-Proofpoint-GUID: aLqhy46hHp-T1q4yu7H7tRKr85CR93JD
+X-Proofpoint-ORIG-GUID: aLqhy46hHp-T1q4yu7H7tRKr85CR93JD
+X-Authority-Analysis: v=2.4 cv=boxMBFai c=1 sm=1 tr=0 ts=67ef277c cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=3H110R4YSZwA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=YIDz7LGgFl_oPKHAzCgA:9 a=kJ6eQMnjrFa5BCT-:21
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-03_09,2025-04-03_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
- suspectscore=0 impostorscore=0 mlxscore=0 bulkscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504030111
+ definitions=2025-04-03_11,2025-04-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 malwarescore=0 mlxlogscore=999 spamscore=0 phishscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 suspectscore=0 adultscore=0
+ mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504040001
+
+Requesting to see if we can get some Acked-By tags, and merge on usb-next.
+
+Several Qualcomm based chipsets can support USB audio offloading to a
+dedicated audio DSP, which can take over issuing transfers to the USB
+host controller.  The intention is to reduce the load on the main
+processors in the SoC, and allow them to be placed into lower power modes.
+There are several parts to this design:
+  1. Adding ASoC binding layer
+  2. Create a USB backend for Q6DSP
+  3. Introduce XHCI interrupter support
+  4. Create vendor ops for the USB SND driver
+
+      USB                          |            ASoC
+--------------------------------------------------------------------
+                                   |  _________________________
+                                   | |sm8250 platform card     |
+                                   | |_________________________|
+                                   |         |           |
+                                   |      ___V____   ____V____
+                                   |     |Q6USB   | |Q6AFE    |  
+                                   |     |"codec" | |"cpu"    |
+                                   |     |________| |_________|
+                                   |         ^  ^        ^
+                                   |         |  |________|
+                                   |      ___V____    |
+                                   |     |SOC-USB |   |
+   ________       ________               |        |   |
+  |USB SND |<--->|QC offld|<------------>|________|   |
+  |(card.c)|     |        |<----------                |
+  |________|     |________|___     | |                |
+      ^               ^       |    | |    ____________V_________
+      |               |       |    | |   |APR/GLINK             |
+   __ V_______________V_____  |    | |   |______________________|
+  |USB SND (endpoint.c)     | |    | |              ^
+  |_________________________| |    | |              |
+              ^               |    | |   ___________V___________
+              |               |    | |->|audio DSP              |
+   ___________V_____________  |    |    |_______________________|
+  |XHCI HCD                 |<-    |
+  |_________________________|      |
 
 
+Adding ASoC binding layer
+=========================
+soc-usb: Intention is to treat a USB port similar to a headphone jack.
+The port is always present on the device, but cable/pin status can be
+enabled/disabled.  Expose mechanisms for USB backend ASoC drivers to
+communicate with USB SND.
 
-On 4/3/2025 11:00 AM, Stephan Gerhold wrote:
-> On Thu, Apr 03, 2025 at 08:58:11AM -0700, Wesley Cheng wrote:
->> On 4/3/2025 6:45 AM, Stephan Gerhold wrote:
->>> On Wed, Apr 02, 2025 at 05:54:45PM -0700, Wesley Cheng wrote:
->>>> On 4/2/2025 5:23 PM, Wesley Cheng wrote:
->>>>> On 4/2/2025 7:41 AM, Stephan Gerhold wrote:
->>>>>> On Tue, Apr 01, 2025 at 04:47:41PM -0700, Wesley Cheng wrote:
->>>>>>> On 4/1/2025 1:16 AM, Stephan Gerhold wrote:
->>>>>>>> On Mon, Mar 31, 2025 at 12:52:19PM -0700, Wesley Cheng wrote:
->>>>>>>>> On 3/26/2025 2:57 AM, Stephan Gerhold wrote:
->>>>>>>>>> On Tue, Mar 25, 2025 at 04:18:03PM -0700, Wesley Cheng wrote:
->>>>>>>>>>> On 3/25/2025 2:24 AM, Stephan Gerhold wrote:
->>>>>>>>>>>> On Tue, Mar 18, 2025 at 05:51:32PM -0700, Wesley Cheng wrote:
->>>>>>>>>>>>> The QC ADSP is able to support USB
->>>>>>>>>>>>> playback endpoints, so that the main
->>>>>>>>>>>>> application processor can be placed into
->>>>>>>>>>>>> lower CPU power modes.  This adds
->>>>>>>>>>>>> the required AFE port configurations and
->>>>>>>>>>>>> port start command to start an
->>>>>>>>>>>>> audio session.
->>>>>>>>>>>>>
->>>>>>>>>>>>> Specifically, the QC ADSP can support
->>>>>>>>>>>>> all potential endpoints that are
->>>>>>>>>>>>> exposed by the audio data interface. 
->>>>>>>>>>>>> This includes isochronous data
->>>>>>>>>>>>> endpoints, in either synchronous mode or
->>>>>>>>>>>>> asynchronous mode. In the latter
->>>>>>>>>>>>> case both implicit or explicit feedback
->>>>>>>>>>>>> endpoints are supported.  The size
->>>>>>>>>>>>> of audio samples sent per USB frame
->>>>>>>>>>>>> (microframe) will be adjusted based on
->>>>>>>>>>>>> information received on the feedback endpoint.
->>>>>>>>>>>>>
->>>>>>>>>>>>> Some pre-requisites are needed before
->>>>>>>>>>>>> issuing the AFE port start command,
->>>>>>>>>>>>> such as setting the USB AFE dev_token. 
->>>>>>>>>>>>> This carries information about the
->>>>>>>>>>>>> available USB SND cards and PCM devices
->>>>>>>>>>>>> that have been discovered on the
->>>>>>>>>>>>> USB bus.  The dev_token field is used by
->>>>>>>>>>>>> the audio DSP to notify the USB
->>>>>>>>>>>>> offload driver of which card and PCM index to enable playback on.
->>>>>>>>>>>>>
->>>>>>>>>>>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>>>>>>>>>>>> ---
->>>>>>>>>>>>>   sound/soc/qcom/qdsp6/q6afe-dai.c         |  60 +++++++
->>>>>>>>>>>>>  
->>>>>>>>>>>>> sound/soc/qcom/qdsp6/q6afe.c            
->>>>>>>>>>>>> | 192 ++++++++++++++++++++++-
->>>>>>>>>>>>>   sound/soc/qcom/qdsp6/q6afe.h             |  36 ++++-
->>>>>>>>>>>>>   sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c |  23 +++
->>>>>>>>>>>>>   sound/soc/qcom/qdsp6/q6dsp-lpass-ports.h |   1 +
->>>>>>>>>>>>>   sound/soc/qcom/qdsp6/q6routing.c         |  32 +++-
->>>>>>>>>>>>>   6 files changed, 341 insertions(+), 3 deletions(-)
->>>>>>>>>>>>>
->>>>>>>>>>> [...]
->>>>>>>>>>>>> diff --git
->>>>>>>>>>>>> a/sound/soc/qcom/qdsp6/q6routing.c
->>>>>>>>>>>>> b/sound/soc/qcom/qdsp6/q6routing.c
->>>>>>>>>>>>> index 90228699ba7d..b7439420b425 100644
->>>>>>>>>>>>> --- a/sound/soc/qcom/qdsp6/q6routing.c
->>>>>>>>>>>>> +++ b/sound/soc/qcom/qdsp6/q6routing.c
->>>>>>>>>>>>> @@ -435,6 +435,26 @@ static struct
->>>>>>>>>>>>> session_data *get_session_from_id(struct
->>>>>>>>>>>>> msm_routing_data *data,
->>>>>>>>>>>>>       return NULL;
->>>>>>>>>>>>>   }
->>>>>>>>>>>>> +
->>>>>>>>>>>>> +static bool is_usb_routing_enabled(struct msm_routing_data *data)
->>>>>>>>>>>>> +{
->>>>>>>>>>>>> +    int i;
->>>>>>>>>>>>> +
->>>>>>>>>>>>> +    /*
->>>>>>>>>>>>> +     * Loop through current sessions to
->>>>>>>>>>>>> see if there are active routes
->>>>>>>>>>>>> +     * to the USB_RX backend DAI.  The
->>>>>>>>>>>>> USB offload routing is designed
->>>>>>>>>>>>> +     * similarly to the non offload
->>>>>>>>>>>>> path.  If there are multiple PCM
->>>>>>>>>>>>> +     * devices associated with the ASoC
->>>>>>>>>>>>> platform card, only one active
->>>>>>>>>>>>> +     * path can be routed to the USB offloaded endpoint.
->>>>>>>>>>>>> +     */
->>>>>>>>>>>>> +    for (i = 0; i < MAX_SESSIONS; i++) {
->>>>>>>>>>>>> +        if (data->sessions[i].port_id == USB_RX)
->>>>>>>>>>>>> +            return true;
->>>>>>>>>>>>> +    }
->>>>>>>>>>>>> +
->>>>>>>>>>>>> +    return false;
->>>>>>>>>>>>> +}
->>>>>>>>>>>>
->>>>>>>>>>>> What is different about USB_RX compared to
->>>>>>>>>>>> other output ports we have in
->>>>>>>>>>>> Q6AFE? Obviously, we can only play one
->>>>>>>>>>>> stream on an output port. But
->>>>>>>>>>>> doesn't the ADSP mix streams together when
->>>>>>>>>>>> you have multiple routes?
->>>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> This patch will limit the USB_RX from being able
->>>>>>>>>>> to be mixed to multiple
->>>>>>>>>>> q6adm paths.
->>>>>>>>>>>
->>>>>>>>>>>> Also, this doesn't actually check for *active* routes only. It just
->>>>>>>>>>>> looks if any other MultiMedia DAI is
->>>>>>>>>>>> configured to output to USB_RX.
->>>>>>>>>>>> That doesn't mean they will ever be active at the same time.
->>>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> Yes, the main reason being that that is the
->>>>>>>>>>> mechanism we use to populate
->>>>>>>>>>> the active offload path within the USB SND card mixer.
->>>>>>>>>>>
->>>>>>>>>>>> I might for example want to have MultiMedia1 and MultiMedia2 both
->>>>>>>>>>>> configured to output to USB_RX. Let's assume
->>>>>>>>>>>> MultiMedia1 is a normal PCM
->>>>>>>>>>>> DAI, MultiMedia2 is a compress offload DAI. When I want to playback
->>>>>>>>>>>> normal audio, I go through MultiMedia1, when
->>>>>>>>>>>> I want to play compressed
->>>>>>>>>>>> audio, I go through MultiMedia2. Only one of them active at a time.
->>>>>>>>>>>> Why can't I set this up statically in the mixers?
->>>>>>>>>>>>
->>>>>>>>>>>> If you confirm that it is really impossible
->>>>>>>>>>>> to have multiple streams
->>>>>>>>>>>> mixed together to the USB_RX output in the
->>>>>>>>>>>> ADSP, then this should be a
->>>>>>>>>>>> runtime check instead when starting the stream IMO.
->>>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> We can have multiple streams being mixed together, but it will get
->>>>>>>>>>> confusing because it changes the definition that
->>>>>>>>>>> we had discussed about in
->>>>>>>>>>> the past about the overall design for the interaction w/ userspace.
->>>>>>>>>>> Although we (QC) only support a single USB audio
->>>>>>>>>>> device for offloading,
->>>>>>>>>>> there could be other situations where the audio
->>>>>>>>>>> DSP can support multiple
->>>>>>>>>>> devices.  The assumption is that each MM path is
->>>>>>>>>>> assigned to a USB device.
->>>>>>>>>>>
->>>>>>>>>>
->>>>>>>>>> Are you referring to the "USB Offload Playback Route
->>>>>>>>>> PCM#*" mixers here?
->>>>>>>>>> They could just refer to first of the configured MM paths, if someone
->>>>>>>>>> decides to route multiple paths to the USB backend. Looking at
->>>>>>>>>> q6usb_update_offload_route(), I think the implementation does that
->>>>>>>>>> already.
->>>>>>>>>>
->>>>>>>>>> I think it's fine that the userspace API for
->>>>>>>>>> automatically "probing" the
->>>>>>>>>> PCM device supports only a single path to the USB backend. But if
->>>>>>>>>> someone wants to bypass the automatic probing and configure a more
->>>>>>>>>> advanced setup, do we need to forbid that?
->>>>>>>>>>
->>>>>>>>>> Asked differently: what would happen if we remove this check here and
->>>>>>>>>> handle USB_RX like any other Q6AFE output port?
->>>>>>>>>> Would anything break for
->>>>>>>>>> the userspace interface?
->>>>>>>>>>
->>>>>>>>>
->>>>>>>>> So I took a look at seeing how the Q6ADM/ASM
->>>>>>>>> interactions would work for
->>>>>>>>> the situation where if user tried to start both MM1/2
->>>>>>>>> streams at the same
->>>>>>>>> time over the USB offload path.  In this scenario, we
->>>>>>>>> see that the Q6USB BE
->>>>>>>>> DAI operations, ie startup, hw_params, etc... gets
->>>>>>>>> called one time for the
->>>>>>>>> initial stream.  For example, if I start playback on MM1, then that
->>>>>>>>> triggers the USB BE DAI to be brought up.
->>>>>>>>>
->>>>>>>>> When I start playback on MM2, since MM1 already called
->>>>>>>>> dpcm_be_dai_startup(), then be->dpcm[stream].users will
->>>>>>>>> be greater than
->>>>>>>>> zero.  This would cause the __soc_pcm_open() to be
->>>>>>>>> skipped for the USB BE
->>>>>>>>> DAI, so I wouldn't be able to check the runtime status
->>>>>>>>> at the Q6USB backend
->>>>>>>>> DAI.  However, we do track current streaming sessions
->>>>>>>>> done over Q6 ADM and
->>>>>>>>> it does save the AFE port associated to each COPP
->>>>>>>>> allocation, so I think its
->>>>>>>>> reasonable to see if there is already a COPP entry for
->>>>>>>>> the USB AFE port, to
->>>>>>>>> fail the open() call associated to the FE DAI.
->>>>>>>>>
->>>>>>>>
->>>>>>>> This sounds like a reasonable approach *if* we have to prevent multiple
->>>>>>>> MM DAIs from streaming to the USB AFE port at the same time.
->>>>>>>>
->>>>>>>> It's still unclear to me why we have to introduce this
->>>>>>>> limitation in the
->>>>>>>> first place. I think the questions from my previous email are still
->>>>>>>> open. Can you check them again?
->>>>>>>>
->>>>>>>
->>>>>>> So I checked with our audio DSP folks, and they mentioned there isn't
->>>>>>> technically a limitation from mixing multiple ADM streams from
->>>>>>> their end.
->>>>>>> My observations are as follows:
->>>>>>> - Using tinyplay to open and play on different FE PCM devices
->>>>>>> (ie MM1 and
->>>>>>> MM2), both streams are audible on the USB headset (intermixed).
->>>>>>> - If starting playback on MM1 first, before MM2, then once playback is
->>>>>>> complete on MM1, the ADM close is also affecting the MM2 stream.
->>>>>>> Basically, MM2 stops when the MM1 audio file is completed.
->>>>>>> - Due to the abrupt/incomplete closing of the MM2 ADM stream, looks like
->>>>>>> the audio DSP is not handling that case well, so subsequent
->>>>>>> playbacks fail.
->>>>>>>
->>>>>>
->>>>>> Thanks a lot for testing this!
->>>>>>
->>>>>>> I did find a possible reason for this, and it seems to be due to
->>>>>>> some code
->>>>>>> unrelated to the USB offload path directly.  It looks like the Q6ADM is
->>>>>>> currently built in a way that you can only route streams to a single
->>>>>>> endpoint, even though we do have reference counting for each
->>>>>>> COPP profile.
->>>>>>> So even after the first MM1 ADM stream completes and the PCM device is
->>>>>>> closed, the MM1 ADM close callback will issue a q6adm_device_close() for
->>>>>>> the USB AFE port.
->>>>>>
->>>>>> Yeah, this sounds like a bug to me...
->>>>>>
->>>>>>>
->>>>>>> I made some test changes to account for the refcount before issuing the
->>>>>>> q6adm_device_close(), and that seemed to work.  Once the MM1
->>>>>>> stream closes,
->>>>>>> it allows for the MM2 stream to close/finish before issuing the command,
->>>>>>> and that allows for proper cleanup of the audio data.
->>>>>>>
->>>>>>> IMO, I would like to keep the initial behavior (ie, blocking the
->>>>>>> additional
->>>>>>> stream open from the kernel) until I can get some more testing done, and
->>>>>>> figure out if this is the correct approach.  If it is, I can submit a
->>>>>>> follow up series to address it.
->>>>>>>
->>>>>>
->>>>>> I'm fine with this approach. My only two concerns/comments are:
->>>>>>
->>>>>>   1. Let's make sure we don't waste too much time finding the ideal
->>>>>>      approach to implement the additional blocking, if this will likely
->>>>>>      end up getting removed again anyway.
->>>>>>
->>>>>>   2. How can we justify making this change only for USB? Your analysis
->>>>>>      sounds like the issue applies to all types of output ports. This was
->>>>>>      exactly my main concern with the check you added in this patch:
->>>>>>      I would expect QDSP6 treats all ports exactly the same. This means
->>>>>>      we should add this additional check for all the output ports...
->>>>>>
->>>>>
->>>>> Fair points...I will extend this check across all ports until I get back
->>>>> with seeing how we can address the mixing situation.
->>>>>
->>>>
->>>> Sorry for replying again.  I think I'll at least limit this to the playback
->>>> path only for now.  I'm not sure how the behavior yet is for the record
->>>> path, since I don't really have that use case to test with yet :).  I will
->>>> see how it looks like when the record USB offload is done.
->>>>
->>>
->>> FWIW, I tested this on MSM8916:
->>>
->>>  - MultiMedia1 -> PRI_MI2S_RX
->>>  - MultiMedia3 -> PRI_MI2S_RX
->>>  - TERT_MI2S_TX -> MultiMedia2
->>>  - TERT_MI2S_TX -> MultiMedia5
->>>
->>> 2x speaker-test to MultiMedia1 and MultiMedia3 (pink noise + sine wave):
->>>  -> Audio playback correctly mixed together
->>>  -> Playback aborts for both when stopping one of the processes
->>>       Write error: -5,I/O error
->>>       xrun_recovery failed: -5,I/O error
->>>       Transfer failed: I/O error
->>>  -> Kernel log:
->>>     [  585.679421] q6routing 4080000.remoteproc:smd-edge:apr:service@8:routing: Found Matching Copp 0x0
->>>     [  587.917135] qcom-q6adm aprsvc:service:4:8: cmd = 0x10327 return error = 0x2
->>>     [  587.917378] qcom-q6adm aprsvc:service:4:8: DSP returned error[2]
->>>     [  587.917409] qcom-q6adm aprsvc:service:4:8: Failed to close copp -22
->>>
->>> 2x arecord from MultiMedia2 and MultiMedia5:
->>>  -> Both processes record audio as expected
->>>  -> Recording aborts for both when stopping one of the processes
->>>       arecord: pcm_read:2272: read error: I/O error
->>>  -> Kernel log:
->>>     [  646.125612] q6routing 4080000.remoteproc:smd-edge:apr:service@8:routing: Found Matching Copp 0x0
->>>     [  654.247867] q6asm-dai 4080000.remoteproc:smd-edge:apr:service@7:dais: command[0x10bdb] not expecting rsp
->>>     [  654.815474] q6asm-dai 4080000.remoteproc:smd-edge:apr:service@7:dais: command[0x10bdb] not expecting rsp
->>>     [  654.825568] qcom-q6adm aprsvc:service:4:8: cmd = 0x10327 return error = 0x2
->>>     [  654.825955] qcom-q6adm aprsvc:service:4:8: DSP returned error[2]
->>>     [  654.826013] qcom-q6adm aprsvc:service:4:8: Failed to close copp -22
->>>
->>> => Both playback and recording are affected. As you suspected it's
->>>    unrelated to USB.
->>>
->>
->> Great, thanks for confirming both paths show the same issue :).
->>
->>> This feels like a bug to me rather than an intentional limitation. If
->>> you can share the fix you made I can test it here.
->>>
->>
->> Change I tried was fairly straightforward.  Sharing it below:
->>
->> diff --git a/sound/soc/qcom/qdsp6/q6adm.c b/sound/soc/qcom/qdsp6/q6adm.c
->> index fe719c4c32b3..7880fbbe815f 100644
->> --- a/sound/soc/qcom/qdsp6/q6adm.c
->> +++ b/sound/soc/qcom/qdsp6/q6adm.c
->> @@ -578,12 +579,13 @@ int q6adm_close(struct device *dev, struct q6copp *copp)
->>      struct q6adm *adm = dev_get_drvdata(dev->parent);
->>      int ret = 0;
->>
->> -    ret = q6adm_device_close(adm, copp, copp->afe_port, copp->copp_idx);
->> -    if (ret < 0) {
->> -        dev_err(adm->dev, "Failed to close copp %d\n", ret);
->> -        return ret;
->> +    if (kref_read(&copp->refcount) == 1) {
->> +        ret = q6adm_device_close(adm, copp, copp->afe_port, copp->copp_idx);
->> +        if (ret < 0) {
->> +            dev_err(adm->dev, "Failed to close copp %d\n", ret);
->> +            return ret;
->> +        }
->>      }
->> -
->>      kref_put(&copp->refcount, q6adm_free_copp);
->>
->>      return 0;
->>
-> 
-> Hmm, yeah it looks like we need some reference counting for the
-> open/close operation. I think checking the refcount like that is going
-> to be prone to potential race conditions though. I'm not sure if we can
-> guarantee that q6adm_close() isn't called concurrently.
-> 
+Create a USB backend for Q6DSP
+==============================
+q6usb: Basic backend driver that will be responsible for maintaining the
+resources needed to initiate a playback stream using the Q6DSP.  Will
+be the entity that checks to make sure the connected USB audio device
+supports the requested PCM format.  If it does not, the PCM open call will
+fail, and userspace ALSA can take action accordingly.
 
-Yeah, I was hoping there was some locking in the ASoC levels, but its going
-to be locking based on the runtime PCM stream, so that wouldn't prevent
-q6adm_close() running concurrently. (as MM1/2 are different RTDs)
+Introduce XHCI interrupter support
+==================================
+XHCI HCD supports multiple interrupters, which allows for events to be routed
+to different event rings.  This is determined by "Interrupter Target" field
+specified in Section "6.4.1.1 Normal TRB" of the XHCI specification.
 
-> I played around a bit and came up with the two patches below. I think
-> those should be good. Given the "Found Matching Copp" code path, it
-> feels like this was the intended behavior all along. I can post these if
-> you have no objections. You could then just go ahead with your series by
-> removing the check I originally commented on in this patch.
-> 
+Events in the offloading case will be routed to an event ring that is assigned
+to the audio DSP.
 
-OK, that sounds good to me.  Thanks for helping out with this part of my
-series.  Definitely think its a good idea to have an explicit mutex that is
-managing the Q6ADM open/close ops.
+Create vendor ops for the USB SND driver
+========================================
+qc_audio_offload: This particular driver has several components associated
+with it:
+- QMI stream request handler
+- XHCI interrupter and resource management
+- audio DSP memory management
 
-Thanks
-Wesley Cheng
+When the audio DSP wants to enable a playback stream, the request is first
+received by the ASoC platform sound card.  Depending on the selected route,
+ASoC will bring up the individual DAIs in the path.  The Q6USB backend DAI
+will send an AFE port start command (with enabling the USB playback path), and
+the audio DSP will handle the request accordingly.
+
+Part of the AFE USB port start handling will have an exchange of control
+messages using the QMI protocol.  The qc_audio_offload driver will populate the
+buffer information:
+- Event ring base address
+- EP transfer ring base address
+
+and pass it along to the audio DSP.  All endpoint management will now be handed
+over to the DSP, and the main processor is not involved in transfers.
+
+Overall, implementing this feature will still expose separate sound card and PCM
+devices for both the platform card and USB audio device:
+ 0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
+                      SM8250-MTP-WCD9380-WSA8810-VA-DMIC
+ 1 [Audio          ]: USB-Audio - USB Audio
+                      Generic USB Audio at usb-xhci-hcd.1.auto-1.4, high speed
+
+This is to ensure that userspace ALSA entities can decide which route to take
+when executing the audio playback.  In the above, if card#1 is selected, then
+USB audio data will take the legacy path over the USB PCM drivers, etc...
+
+The current limitation is that the latest USB audio device that is identified
+will be automatically selected by the Q6USB BE DAI for offloading.  Future
+patches can be added to possibly add for more flexibility, but until the userpace
+applications can be better defined, having these mechanisms will complicate the
+overall implementation.
+
+USB offload Kcontrols
+=====================
+Part of the vendor offload package will have a mixer driver associated with it
+(mixer_usb_offload.c).  This entity will be responsible for coordinating with
+SOC USB and the Q6USB backend DAI to fetch information about the sound card
+and PCM device indices associated with the offload path.  The logic is done
+based on the current implementation of how paths are controlled within the QC
+ASoC implementation.
+
+QC ASoC Q6Routing
+-----------------
+Within the Q6 ASOC design, the registered ASoC platform card will expose a set
+of kcontrols for enabling the BE DAI links to the FE DAI link.  For example:
+
+tinymix -D 0 contents
+Number of controls: 1033
+ctl     type    num     name                                    value
+...
+1025    BOOL    1       USB Mixer MultiMedia1                   Off
+1026    BOOL    1       USB Mixer MultiMedia2                   Off
+1027    BOOL    1       USB Mixer MultiMedia3                   Off
+1028    BOOL    1       USB Mixer MultiMedia4                   Off
+1029    BOOL    1       USB Mixer MultiMedia5                   Off
+1030    BOOL    1       USB Mixer MultiMedia6                   Off
+1031    BOOL    1       USB Mixer MultiMedia7                   Off
+1032    BOOL    1       USB Mixer MultiMedia8                   Off
+
+Each of these kcontrols will enable the USB BE DAI link (q6usb) to be connected
+to a FE DAI link (q6asm).  Since each of these controls are DAPM widgets, when
+it is enabled, the DAPM widget's "connect" flag is updated accordingly.
+
+USB Offload Mapping
+-------------------
+Based on the Q6routing, the USB BE DAI link can determine which sound card and
+PCM device is enabled for offloading.  Fetching the ASoC platform sound card's
+information is fairly straightforward, and the bulk of the work goes to finding
+the corresponding PCM device index.  As mentioned above, the USB BE DAI can
+traverse the DAPM widgets to find the DAPM path that is related to the control
+for the "USB Mixer."  Based on which "USB Mixer" is enabled, it can find the
+corresponding DAPM widget associated w/ the FE DAI link (Multimedia*).  From there
+it can find the PCM device created for the Multimedia* stream.
+
+Only one BE DAI link can be enabled per FE DAI.  For example, if the HDMI path is
+enabled for Multimedia1, the USB Mixer will be disabled and switched over.
+
+Examples of kcontrol
+--------------------
+tinymix -D 0 contents
+Number of controls: 1033
+ctl     type    num     name 
+...
+1025    BOOL    1       USB Mixer MultiMedia1                   Off
+1026    BOOL    1       USB Mixer MultiMedia2                   On
+1027    BOOL    1       USB Mixer MultiMedia3                   Off
+1028    BOOL    1       USB Mixer MultiMedia4                   Off
+1029    BOOL    1       USB Mixer MultiMedia5                   Off
+1030    BOOL    1       USB Mixer MultiMedia6                   Off
+1031    BOOL    1       USB Mixer MultiMedia7                   Off
+1032    BOOL    1       USB Mixer MultiMedia8                   Off
+
+tinymix -D 2 contents
+Number of controls: 10
+ctl     type    num     name                                    value
+0       INT     2       Capture Channel Map                     0, 0 (range 0->36)
+1       INT     2       Playback Channel Map                    0, 0 (range 0->36)
+2       BOOL    1       Headset Capture Switch                  On
+3       INT     1       Headset Capture Volume                  10 (range 0->13)
+4       BOOL    1       Sidetone Playback Switch                On
+5       INT     1       Sidetone Playback Volume                4096 (range 0->8192)
+6       BOOL    1       Headset Playback Switch                 On
+7       INT     2       Headset Playback Volume                 20, 20 (range 0->24)
+8       INT     1       USB Offload Playback Card Route PCM#0   0 (range -1->32)
+9       INT     1       USB Offload Playback PCM Route PCM#0    1 (range -1->255)
+
+The example highlights that the userspace/application can utilize the offload path
+for the USB device on card#0 PCM device#1.
+
+When dealing with multiple USB audio devices, only the latest USB device identified
+is going to be selected for offload capable.
+
+tinymix -D 1 contents
+Number of controls: 9
+ctl     type    num     name                                    value
+0       INT     2       Capture Channel Map                     0, 0 (range 0->36)
+1       INT     2       Playback Channel Map                    0, 0 (range 0->36)
+2       BOOL    1       Headset Capture Switch                  On
+3       INT     1       Headset Capture Volume                  1 (range 0->4)
+4       BOOL    1       Sidetone Playback Switch                On
+5       INT     1       Sidetone Playback Volume                4096 (range 0->8192)
+6       BOOL    1       Headset Playback Switch                 On
+7       INT     2       Headset Playback Volume                 20, 20 (range 0->24)
+8       INT     1       USB Offload Playback Card Route PCM#0   -1 (range -1->32)
+9       INT     1       USB Offload Playback PCM Route PCM#0    -1 (range -1->255)
+
+"-1, -1" shows that this device has no route to the offload path.
+
+This feature was validated using:
+- tinymix: set/enable the multimedia path to route to USB backend
+- tinyplay: issue playback on platform card
+
+Changelog
+--------------------------------------------
+Changes in v37:
+- Added auxiliary device management between QC USB SND offload and the Q6 USB
+backend DAI.
+  - Allowed for simplier device references between the two drivers.  Removed the
+  need for usb_get_usb_backend() and the usb-soc-be property.
+- Removed limitation for the Q6 routing to only allow one FE path to USB offload.
+  - Fix for properly maintaining multiple Q6ADM streams will be followed up by
+  Stephan.
+- Compiling the QC USB offload mixer as part of the overall QC offload SW package.
+Removes the need for a separate kconfig.
+
+Changes in v36:
+- Removed the tristate definition for xHCI sideband, as the introduction of hooks
+to the xHCI sideband driver from xHCI HCD will have some depmod issues.  This is
+required so that xHCI is able to notify offloaded clients on specific sequences,
+such as EP ring free.  This is how Mathias initially defined the xHCI sideband
+module, so we are just reverting back to that submission.
+- Rebased on usb-next.
+
+Changes in v35:
+- Fixed kernel bot and sparse errors.
+
+Changes in v34:
+- Fixed comments to align to kernel doc format.
+- Rebased to usb-next
+
+Changes in v33:
+- Removed patch#1, which introduced the xhci skip_events flag.  Refactored this as
+  an argument to the xhci_handle_events() API.  Events will be skipped accordingly.
+- Updated patch#2 and patch#3 to accommodate for the patch#1 removal.
+- Replaced sec intr term from xHCI sideband commit message.
+
+Changes in v32:
+- Updated license year.  Happy new years, 2025!
+
+Changes in v31:
+- Rebased to usb-next, which required some minor updates to APIs and structures
+  changed upstream.
+- Moved USB SND offload mixer as part of the QCOM vendor USB offload package.
+- Have separate kcontrols for PCM and sound card offload mapping versus one kcontrol
+  returning a pair.
+- Added a xHCI sideband notifier into sideband client drivers, so that clients can
+  handle certain xHCI sequences properly.  Currently, track the xfer ring free, so
+  the client can ensure transfers are fully stopped by the DSP.
+- Updated documentation for #3
+- Removed SoC USB enable/disable sound jack calls, and replaced with direct calls to
+  SoC jack.
+
+Changes in v30:
+- Rebased to usb-next tip
+- Renamed the xhci-sideband driver to xhci-sec-intr to avoid confusion with the xHCI
+audio sideband feature mentioned within the spec.
+- Squashed the xhci-sec-intr change to set IMOD for secondary interrupters into the main
+patch that introduces the overall driver.
+
+Changes in v29:
+- Fixed some phrases/wording within the SOC USB documentation, and also added an output
+with aplay -l for the example output.
+- Fixed allocated string buffer for creating the USB SND offload mixer, and added
+a PCM index check to ensure that the pcm index is less than the expected number.
+- Added a complement enable jack call if USB backend DAI link drivers need access
+to it.
+
+Changes in v28:
+- Updated comments and commit log in the stop endpoint sync patch.  Clarified that
+the default stop endpoint completion routine won't fully run as expected since it
+has a completion associated w/ the command.
+- Added a null check for sb->xhci within xhci_sideband_create_interrupter().  This
+is to just ensure that caller has registered sideband before calling create
+interrupter.
+
+Changes in v27:
+- Added some comments and notes about the offload design.  Enforcing the q6routing
+to only allow one USB mixer (PCM device) to be enabled at a time.
+- Modified SND_JACK_USB notifications for all USB audio offloadable devices plugged
+in
+- Rebased on latest XHCI secondary interrupter IMOD changes upstream.  Modified the
+change in this series to allow for XHCI sideband to set the IMOD for sideband
+clients.
+- Updated documentation on how USB SND kcontrols are involved in the overall design.
+- Remove mutex locking from suspend/resume platform ops, as USB core ensures that the
+interface and device are in the RPM_ACTIVE state while disconnect is handled.
+
+Changes in v26:
+- Cleaned up drivers based on errors from checkpatch
+- Fixed several typos using codespell
+- Removed any vendor specific notation from USB SND offload mixer patch
+
+Changes in v25:
+- Cleanups on typos mentioned within the xHCI layers
+- Modified the xHCI interrupter search if clients specify interrupter index
+- Moved mixer_usb_offload into its own module, so that other vendor offload USB
+modules can utilize it also.
+- Added support for USB audio devices that may have multiple PCM streams, as
+previous implementation only assumed a single PCM device.  SOC USB will be
+able to handle an array of PCM indexes supported by the USB audio device.
+- Added some additional checks in the QC USB offload driver to check that device
+has at least one playback stream before allowing to bind
+- Reordered DT bindings to fix the error found by Rob's bot.  The patch that
+added USB_RX was after the example was updated.
+- Updated comments within SOC USB to clarify terminology and to keep it consistent
+- Added SND_USB_JACK type for notifying of USB device audio connections
+
+Changes in v24:
+- Simplified the kcontrols involved in determining how to utilize the offload
+path.
+    - There is one kcontrol registered to each USB audio device that will
+      output which card/pcm device it is mapped to for the offload route.
+    - Removed kcontrols to track offload status and device selection.
+    - Default to last USB audio device plugged in as offload capable.
+    - kcontrol will reside on USB SND device.
+- Reworked the tracking of connected USB devices from the Q6USB BE DAI link.
+Previously, it was convoluted by doing it over an array, but moved to using
+a list made it much simpler.  Logic is still unchanged in that the last USB
+headset plugged in will be selected for offloading.
+- Updated the USB SOC RST documentation accordingly with new kcontrol updates.
+- Added logic to fetch mapped ASoC card and pcm device index that the offload
+path is mapped to for the USB SND kcontrol (for offload route).
+- Re-ordered series to hopefully make reviews more readable by combining
+patches based on the layer modified (ie QC ASoC, ASoC, USB sound, and USB XHCI).
+
+Changes in v23:
+- Added MODULE_DESCRIPTION() fields to drivers that needed it.
+
+Changes in v22:
+- Removed components tag for the ASoC platform card, as the USB SND kcontrol for
+notifying userspace of offload capable card achieves similar results.
+- Due to the above, had to remove the review-by tag for the RST documentation,
+as changes were made to remove the components tag section.
+- Took in feedback to make the SOC USB add/remove ports void.
+- Fixed an issue w/ the USB SND kcontrol management for devices that have multi
+UAC interfaces. (would attempt to create the kcontrol more than once)
+- Modified SOC USB card and PCM index select to be based off the num_supported
+streams that is specified by the USB BE DAI.
+- Modified comments on selecting the latest USB headset for offloading.
+
+Changes in v21:
+- Added an offload jack disable path from the ASoC platform driver and SOC USB.
+- Refactored some of the existing SOC USB context look up APIs and created some
+new helpers to search for the USB context.
+- Renamed snd_soc_usb_find_format to snd_soc_usb_find_supported_format
+- Removed some XHCI sideband calls that would allow clients to actually enable
+the IRQ line associated w/ the secondary interrupter.  This is removed because
+there are other dependencies that are required for that to happen, which are not
+covered as part of this series, and to avoid confusion.
+- Due to the above, removed the need to export IMOD setting, and enable/disable
+interrupter APIs.
+
+Changes in v20:
+- Fixed up some formatting changes pointed out in the usb.rst
+- Added SB null check during XHCI sideband unregister in case caller passes
+improper argument (xhci_sideband_unregister())
+
+Changes in v19:
+- Rebased to usb-next to account for some new changes in dependent drivers.
+
+Changes in v18:
+- Rebased to usb-next, which merged in part of the series.  Removed these patches.
+- Reworked Kconfigs for the ASoC USB related components from QCOM Q6DSP drivers
+  to keep dependencies in place for SoC USB and USB SND.
+- Removed the repurposing of the stop ep sync API into existing XHCI operations.
+  This will be solely used by the XHCI sideband for now.
+
+Changes in v17:
+- Fixed an issue where one patch was squashed into another.
+- Re-added some kconfig checks for helpers exposed in USB SND for the soc usb
+  driver, after running different kconfigs.
+
+Changes in v16:
+- Modified some code layer dependencies so that soc usb can be split as a separate
+  module.
+  - Split the kcontrols from ASoC QCOM common layer into a separate driver
+- Reworked SOC USB kcontrols for controlling card + pcm offload routing and status
+  so that there are individual controls for card and pcm devices.
+- Added a kcontrol remove API in SOC USB to remove the controls on the fly.  This
+  required to add some kcontrol management to SOC USB.
+- Removed the disconnect work and workqueue for the QC USB offload as it is not
+  required, since QMI interface driver ensures events are handled in its own WQ.
+
+Changes in v15:
+- Removed some already merged XHCI changes
+- Separated SOC USB driver from being always compiled into SOC core.  Now
+  configurable from kconfig.
+- Fixed up ASoC kcontrol naming to fit guidelines.
+- Removed some unnecessary dummy ifdefs.
+- Moved usb snd offload capable kcontrol to be initialized by the platform offloading
+  driver.
+
+Changes in v14:
+- Cleaned up some USB SND related feedback:
+  - Renamed SNDUSB OFFLD playback available --> USB offload capable card
+  - Fixed locking while checking if stream is in use
+  - Replaced some mutex pairs with guard(mutex)
+
+Changes in v13:
+- Pulled in secondary/primary interrupter rework from Mathias from:
+  https://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git/log/drivers/usb/host?h=fix_eventhandling
+  - Did some cleanup and commit message updates, and tested on current code base.
+- Added mutex locking to xhci sideband to help prevent any race conditions, esp. for when accessing shared
+  references.
+- Addressed concerns from Hillf about gfp_flags and locking used in qc_usb_audio_offload.
+- Rebased onto usb-next
+
+Changes in v12:
+- Updated copyright year to 2024.  Happy new years!
+- Fixed newline format on mixer offload driver.
+
+Changes in v11:
+- Modified QMI format structures to be const
+
+Changes in v10:
+- Added new mixer for exposing kcontrol for sound card created by USB SND.  This
+allows for applications to know which platform sound card has offload support.
+Will return the card number.
+- Broke down and cleaned up some functions/APIs within qc_audio_offload driver.
+- Exported xhci_initialize_ring_info(), and modified XHCI makefile to allow for
+the XHCI sideband to exist as a module.
+- Reworked the jack registration and moved it to the QCOM platform card driver,
+ie sm8250.
+- Added an SOC USB API to fetch a standard component tag that can be appended to
+the platform sound card.  Added this tag to sm8250 if any USB path exists within
+the DT node.
+- Moved kcontrols that existed in the Q6USB driver, and made it a bit more generic,
+so that naming can be standardized across solutions.  SOC USB is now responsible
+for creation of these kcontrols.
+- Added a SOC USB RST document explaining some code flows and implementation details
+so that other vendors can utilize the framework.
+- Addressed a case where USB device connection events are lost if usb offload driver
+(qc_audio_offload) is not probed when everything else has been initialized, ie 
+USB SND, SOC USB and ASoC sound card.  Add a rediscover device call during module
+init, to ensure that connection events will be propagated.
+- Rebased to usb-next.
+
+Changes in v9:
+- Fixed the dt binding check issue with regards to num-hc-interrupters.
+
+Changes in v8:
+- Cleaned up snd_soc_usb_find_priv_data() based on Mark's feedback.  Removed some of
+the duplicate looping code that was present on previous patches.  Also renamed the API.
+- Integrated Mathias' suggestions on his new sideband changes:
+https://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git/log/?h=feature_interrupters
+- Addressed some of Mathias' fixme tags, such as:
+ - Resetting transfer ring dequeue/enqueue pointers
+ - Issuing stop endpoint command during ep removal
+ - Reset ERDP properly to first segment ring during interrupter removal. (this is currently
+   just being cleared to 0, but should be pointing to a valid segment if controller is still
+   running.
+
+Changes in v7:
+- Fixed dt check error for q6usb bindings
+- Updated q6usb property from qcom,usb-audio-intr-num --> qcom,usb-audio-intr-idx
+- Removed separate DWC3 HC interrupters num property, and place limits to XHCI one.
+- Modified xhci_ring_to_sgtable() to use assigned IOVA/DMA address to fetch pages, as
+it is not ensured event ring allocated is always done in the vmalloc range.
+
+Changes in v6:
+- Fixed limits and description on several DT bindings (XHCI and Q6USB)
+- Fixed patch subjects to follow other ALSA/ASoC notations.
+
+USB SND
+- Addressed devices which expose multiple audio (UAC) interfaces.  These devices will
+create a single USB sound card with multiple audio streams, and receive multiple
+interface probe routines.  QC offload was not properly considering cases with multiple
+probe calls.
+- Renamed offload module name and kconfig to fit within the SND domain.
+- Renamed attach/detach endpoint API to keep the hw_params notation.
+
+Changes in v5:
+- Removed some unnecessary files that were included
+- Fixed some typos mentioned
+- Addressed dt-binding issues and added hc-interrupters definition to usb-xhci.yaml
+
+XHCI:
+- Moved secondary skip events API to xhci-ring and updated implementation
+   - Utilized existing XHCI APIs, such as inc_deq and xhci_update_erst_dequeue()
+
+USB SND
+- Renamed and reworked the APIs in "sound: usb: Export USB SND APIs for modules" patch to
+include suggestions to utilize snd_usb_hw_params/free and to avoid generic naming.
+- Added a resume_cb() op for completion sake.
+- Addressed some locking concerns with regards to when registering for platform hooks.
+- Added routine to disconnect all offloaded devices during module unbind.
+
+ASoC
+- Replaced individual PCM parameter arguments in snd_soc_usb_connect() with new
+snd_soc_usb_device structure to pass along PCM info.
+- Modified snd_jack set report to notify HEADPHONE event, as we do not support record path.
+
+Changes in v4:
+- Rebased to xhci/for-usb-next
+- Addressed some dt-bindings comments
+
+XHCI:
+- Pulled in latest changes from Mathias' feature_interrupters branch:
+https://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git/log/?h=feature_interrupters
+
+- Fixed commit text and signage for the XHCI sideband/interrupter related changes
+- Added some logic to address the FIXME tags mentioned throughout the commits, such
+as handling multi segment rings and building the SGT, locking concerns, and ep
+cleanup operations.
+- Removed some fixme tags for conditions that may not be needed/addressed.
+- Repurposed the new endpoint stop sync API to be utilized in other places.
+- Fixed potential compile issue if XHCI sideband config is not defined.
+
+ASoC:
+- Added sound jack control into the Q6USB driver.  Allows for userspsace to know when
+an offload capable device is connected.
+
+USB SND:
+- Avoided exporting _snd_pcm_hw_param_set based on Takashi's recommendation.
+- Split USB QMI packet header definitions into a separate commit.  This is used to
+properly allow the QMI interface driver to parse and route QMI packets accordingly
+- Added a "depends on" entry when enabling QC audio offload to avoid compile time
+issues.
+
+Changes in v3:
+- Changed prefix from RFC to PATCH
+- Rebased entire series to usb-next
+- Updated copyright years
+
+XHCI:
+- Rebased changes on top of XHCI changes merged into usb-next, and only added
+changes that were still under discussion.
+- Added change to read in the "num-hc-interrupters" device property.
+
+ASoC:
+- qusb6 USB backend
+  - Incorporated suggestions to fetch iommu information with existing APIs
+  - Added two new sound kcontrols to fetch offload status and offload device
+    selection.
+    - offload status - will return the card and pcm device in use
+        tinymix -D 0 get 1 --> 1, 0 (offload in progress on card#1 pcm#0)
+
+    - device selection - set the card and pcm device to enable offload on. Ex.:
+        tinymix -D 0 set 1 2 0  --> sets offload on card#2 pcm#0
+                                    (this should be the USB card)
+
+USB SND:
+- Fixed up some locking related concerns for registering platform ops.
+   - Moved callbacks under the register_mutex, so that 
+- Modified APIs to properly pass more information about the USB SND device, so
+that the Q6USB backend can build a device list/map, in order to monitor offload
+status and device selection.
+
+Changes in v2:
+
+XHCI:
+- Replaced XHCI and HCD changes with Mathias' XHCI interrupter changes
+in his tree:
+https://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git/log/?h=feature_interrupters
+
+Adjustments made to Mathias' changes:
+  - Created xhci-intr.h to export/expose interrupter APIs versus exposing xhci.h.
+    Moved dependent structures to this file as well. (so clients can parse out
+    information from "struct xhci_interrupter")
+  - Added some basic locking when requesting interrupters.
+  - Fixed up some sanity checks.
+  - Removed clearing of the ERSTBA during freeing of the interrupter. (pending
+    issue where SMMU fault occurs if DMA addr returned is 64b - TODO)
+
+- Clean up pending events in the XHCI secondary interrupter.  While testing USB
+bus suspend, it was seen that on bus resume, the xHCI HC would run into a command
+timeout.
+- Added offloading APIs to xHCI to fetch transfer and event ring information.
+
+ASoC:
+- Modified soc-usb to allow for multiple USB port additions.  For this to work,
+the USB offload driver has to have a reference to the USB backend by adding
+a "usb-soc-be" DT entry to the device saved into XHCI sysdev.
+- Created separate dt-bindings for defining USB_RX port.
+- Increased APR timeout to accommodate the situation where the AFE port start
+command could be delayed due to having to issue a USB bus resume while
+handling the QMI stream start command.
+
+Mathias Nyman (1):
+  xhci: sideband: add initial api to register a secondary interrupter
+    entity
+
+Wesley Cheng (30):
+  usb: host: xhci-mem: Cleanup pending secondary event ring events
+  usb: host: xhci-mem: Allow for interrupter clients to choose specific
+    index
+  usb: host: xhci-plat: Set XHCI max interrupters if property is present
+  usb: host: xhci: Notify xHCI sideband on transfer ring free
+  usb: dwc3: Specify maximum number of XHCI interrupters
+  ALSA: Add USB audio device jack type
+  ALSA: usb-audio: Export USB SND APIs for modules
+  ALSA: usb-audio: Check for support for requested audio format
+  ALSA: usb-audio: Save UAC sample size information
+  ALSA: usb-audio: Prevent starting of audio stream if in use
+  ALSA: usb-audio: Introduce USB SND platform op callbacks
+  ALSA: usb-audio: Allow for rediscovery of connected USB SND devices
+  ASoC: Add SoC USB APIs for adding an USB backend
+  ASoC: usb: Add PCM format check API for USB backend
+  ASoC: usb: Create SOC USB SND jack kcontrol
+  ASoC: usb: Fetch ASoC card and pcm device information
+  ASoC: usb: Rediscover USB SND devices on USB port add
+  ASoC: doc: Add documentation for SOC USB
+  ASoC: dt-bindings: qcom,q6dsp-lpass-ports: Add USB_RX port
+  ASoC: dt-bindings: Update example for enabling USB offload on SM8250
+  ASoC: qcom: qdsp6: Introduce USB AFE port to q6dsp
+  ASoC: qcom: qdsp6: q6afe: Increase APR timeout
+  ASoC: qcom: qdsp6: Add USB backend ASoC driver for Q6
+  ASoC: qcom: qdsp6: Add headphone jack for offload connection status
+  ASoC: qcom: qdsp6: Fetch USB offload mapped card and PCM device
+  ALSA: usb-audio: qcom: Add USB QMI definitions
+  ALSA: usb-audio: qcom: Introduce QC USB SND offloading support
+  ALSA: usb-audio: qcom: Don't allow USB offload path if PCM device is
+    in use
+  ALSA: usb-audio: qcom: Add USB offload route kcontrol
+  ALSA: usb-audio: qcom: Notify USB audio devices on USB offload probing
+
+ .../bindings/sound/qcom,sm8250.yaml           |   15 +
+ Documentation/sound/soc/index.rst             |    1 +
+ Documentation/sound/soc/usb.rst               |  482 ++++
+ drivers/usb/dwc3/core.c                       |   12 +
+ drivers/usb/dwc3/core.h                       |    2 +
+ drivers/usb/dwc3/host.c                       |    3 +
+ drivers/usb/host/Kconfig                      |    9 +
+ drivers/usb/host/Makefile                     |    4 +
+ drivers/usb/host/xhci-mem.c                   |   31 +-
+ drivers/usb/host/xhci-plat.c                  |    2 +
+ drivers/usb/host/xhci-ring.c                  |   47 +-
+ drivers/usb/host/xhci-sideband.c              |  457 ++++
+ drivers/usb/host/xhci.c                       |    5 +-
+ drivers/usb/host/xhci.h                       |   13 +-
+ .../sound/qcom,q6dsp-lpass-ports.h            |    1 +
+ include/linux/mod_devicetable.h               |    2 +-
+ include/linux/usb/xhci-sideband.h             |  102 +
+ include/sound/jack.h                          |    4 +-
+ include/sound/q6usboffload.h                  |   20 +
+ include/sound/soc-usb.h                       |  138 ++
+ include/uapi/linux/input-event-codes.h        |    3 +-
+ sound/core/jack.c                             |    6 +-
+ sound/soc/Kconfig                             |   10 +
+ sound/soc/Makefile                            |    2 +
+ sound/soc/qcom/Kconfig                        |   16 +
+ sound/soc/qcom/Makefile                       |    2 +
+ sound/soc/qcom/qdsp6/Makefile                 |    1 +
+ sound/soc/qcom/qdsp6/q6afe-dai.c              |   60 +
+ sound/soc/qcom/qdsp6/q6afe.c                  |  194 +-
+ sound/soc/qcom/qdsp6/q6afe.h                  |   36 +-
+ sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c      |   23 +
+ sound/soc/qcom/qdsp6/q6dsp-lpass-ports.h      |    1 +
+ sound/soc/qcom/qdsp6/q6routing.c              |   10 +-
+ sound/soc/qcom/qdsp6/q6usb.c                  |  417 ++++
+ sound/soc/qcom/sm8250.c                       |   24 +-
+ sound/soc/qcom/usb_offload_utils.c            |   56 +
+ sound/soc/qcom/usb_offload_utils.h            |   30 +
+ sound/soc/soc-usb.c                           |  322 +++
+ sound/usb/Kconfig                             |   14 +
+ sound/usb/Makefile                            |    2 +-
+ sound/usb/card.c                              |  106 +
+ sound/usb/card.h                              |   17 +
+ sound/usb/endpoint.c                          |    1 +
+ sound/usb/format.c                            |    1 +
+ sound/usb/helper.c                            |    1 +
+ sound/usb/pcm.c                               |  104 +-
+ sound/usb/pcm.h                               |   11 +
+ sound/usb/qcom/Makefile                       |    4 +
+ sound/usb/qcom/mixer_usb_offload.c            |  156 ++
+ sound/usb/qcom/mixer_usb_offload.h            |   11 +
+ sound/usb/qcom/qc_audio_offload.c             | 2004 +++++++++++++++++
+ sound/usb/qcom/usb_audio_qmi_v01.c            |  863 +++++++
+ sound/usb/qcom/usb_audio_qmi_v01.h            |  164 ++
+ 53 files changed, 5967 insertions(+), 55 deletions(-)
+ create mode 100644 Documentation/sound/soc/usb.rst
+ create mode 100644 drivers/usb/host/xhci-sideband.c
+ create mode 100644 include/linux/usb/xhci-sideband.h
+ create mode 100644 include/sound/q6usboffload.h
+ create mode 100644 include/sound/soc-usb.h
+ create mode 100644 sound/soc/qcom/qdsp6/q6usb.c
+ create mode 100644 sound/soc/qcom/usb_offload_utils.c
+ create mode 100644 sound/soc/qcom/usb_offload_utils.h
+ create mode 100644 sound/soc/soc-usb.c
+ create mode 100644 sound/usb/qcom/Makefile
+ create mode 100644 sound/usb/qcom/mixer_usb_offload.c
+ create mode 100644 sound/usb/qcom/mixer_usb_offload.h
+ create mode 100644 sound/usb/qcom/qc_audio_offload.c
+ create mode 100644 sound/usb/qcom/usb_audio_qmi_v01.c
+ create mode 100644 sound/usb/qcom/usb_audio_qmi_v01.h
+
 
