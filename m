@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-53240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9B29A7BCF5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 14:52:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A397A7BCFA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 14:53:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D81617838F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 12:52:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 09CCE1785D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 12:53:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA7431DF993;
-	Fri,  4 Apr 2025 12:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 957D01E1DF7;
+	Fri,  4 Apr 2025 12:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XQLkuWq0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CeTVngV/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FB92E62B6;
-	Fri,  4 Apr 2025 12:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BD61DB363;
+	Fri,  4 Apr 2025 12:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743771118; cv=none; b=Ih0vWo6anGZNEiSrxESFrmzNSSMS1epsdXcHSPn/hgZcsPlncLeMrO6lu0Alt2u62lCR9rV4QfmQqiUZbKZl59i7R3zduukoJVy3DWYK7ww7izGcTdJ93UDuBNHOO1ttL4Qd/8og9raOl9XTXve0hdc9FmtmxanaVSQlBCS9b9A=
+	t=1743771216; cv=none; b=KfU7ceDRhpig9OLCnZx73C+HeR4Pa/fw0crPGXjD7iSiHCypzbm2VqmrLr5kRUhInO2J2pl+mqLZnSps1aGDxDSUng/w+NpOg5wH6Qwzi4WUnDhPJXxOM3RZVL3+3LPtNxzw/2kOvb02x4s53ZfC/aNgpKwlSMrl2HbXtQZk7QE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743771118; c=relaxed/simple;
-	bh=maRc4IID3+uygGLhOMETqQP8enFjsMh2QFO+llK2Pc0=;
+	s=arc-20240116; t=1743771216; c=relaxed/simple;
+	bh=M9oy6Oig3DightrSfmwgC0+ra3J0DzzSqTPwazFkYH0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O00A+VwXnowfqvjtdjQ89WK08xZ7QhxagAxxoKwDPLNvfk9kTnHz0qIDe0PzZXMgNtp88Gz5xEZeHMXqrBWXFRbFK100icNUnGreEDxp7IirU7QjN3R5ZD31gc0xqoKT0e4m18ucqYSOaTDmT3MxoZjKv0y6TNb88+aDCTqNlJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XQLkuWq0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6136C4CEDD;
-	Fri,  4 Apr 2025 12:51:55 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Ygz2wfOyzHh189e4OQj360K8l6XKTZi9iOdGHYTAZTV8q0Pu0bWmjcLKxqQa4OmY4R/gqfDG4q0jQJAg9aEgp9OKmF+ywnXvm95i4ahf5mgPzBlPof+TA5IeTHwq5ldjeyitsr5hJgQmQoy1wshxJ0DAaGMhruBshbIq/eTog0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CeTVngV/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D96C4CEDD;
+	Fri,  4 Apr 2025 12:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743771118;
-	bh=maRc4IID3+uygGLhOMETqQP8enFjsMh2QFO+llK2Pc0=;
+	s=k20201202; t=1743771215;
+	bh=M9oy6Oig3DightrSfmwgC0+ra3J0DzzSqTPwazFkYH0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XQLkuWq0R0gyrxqSTFsCXlVAu4Nx7vJ1v1Jes//7Eup60cBK4idCRrm3HtJR7qEdO
-	 izyog7tEhzX7Sp3Ak743WirldIzzfffPTRzA1YVsEinkSim49Ct89K7rXT8S0y/fHE
-	 qlZWq6RNT1lkQKoZGUE/oNWIqcyevbf0yLbIo87fqsrA/3f4P9VY5UknV+h7A13Y9B
-	 UnjiQDkwGCZHHV9URI648YjeK/Jems/0/PuHDHRPhCmQvg0ghij60XGQu0Cx9CBrUN
-	 gOyumUJZLAXakMLgjgVc/bYaD8ljPJIeE0HDu2eH43k/WXmYrsR/XWUMgW+4bW+B0v
-	 K8Fm3Rokf52FQ==
-Message-ID: <e326a1e8-5f2e-4b1d-bb72-64f1e32038fa@kernel.org>
-Date: Fri, 4 Apr 2025 14:51:54 +0200
+	b=CeTVngV/8Lh529GnepMDyp/kMXEsU6L6Sy4DWhqUmNKlzhIS1AwcR5dQL1kfQl0Y/
+	 BszOZzMtlpHp9/H2yRZx3sssDZ+rP5IohuGyg0eP/MWbTrOru5JFYrUhYV4RkQfrRB
+	 0wMWCBFNhsVEhKa4EtuKItEZnwY1etdKSUyg8VPcTHEOJGvrQgOnvWiGgwIm6GK5dV
+	 Az3RHWGSjXkGsXWva6UyRSkNyfBSfKtWqRxsmAiwIlbL5sPbzDhVIQDksbdTp9Qf7p
+	 giMVseLS1BgQ0ia/SkcUPuH4sizh0XVcSDmpVh9H7c24qkcFC2ULpi8FwP1xGiCn/t
+	 wMOSG21TlKptw==
+Message-ID: <bb95af7c-5e88-4c6a-87db-2ddd1fe211a5@kernel.org>
+Date: Fri, 4 Apr 2025 14:53:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: x1e80100-hp-omnibook-x14: Create
- and include a dtsi
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: x1e80100-hp-elitebook-ultra-g1q: DT
+ for HP EliteBook Ultra G1q
 To: Juerg Haefliger <juerg.haefliger@canonical.com>, andersson@kernel.org,
  konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org
 Cc: linux-kernel@vger.kernel.org
 References: <20250404090108.3333211-1-juerg.haefliger@canonical.com>
- <20250404090108.3333211-2-juerg.haefliger@canonical.com>
+ <20250404090108.3333211-3-juerg.haefliger@canonical.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,28 +104,71 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250404090108.3333211-2-juerg.haefliger@canonical.com>
+In-Reply-To: <20250404090108.3333211-3-juerg.haefliger@canonical.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 04/04/2025 11:01, Juerg Haefliger wrote:
-> Create a dtsi for the HP OmniBook so it can be reused for the HP EliteBook
-> which seems to be the same HW.
+> Introduce a device tree for the HP EliteBook Ultra G1q 14" AI laptop. It
+> seems to be using the same baseboard as the HP OmniBook X 14 so just use
+> that for now.
 > 
 > Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
 > ---
->  .../dts/qcom/x1e80100-hp-omnibook-x14.dts     | 1554 +---------------
->  .../dts/qcom/x1e80100-hp-omnibook-x14.dtsi    | 1557 +++++++++++++++++
->  2 files changed, 1558 insertions(+), 1553 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dtsi
+>  arch/arm64/boot/dts/qcom/Makefile             |  1 +
+>  .../qcom/x1e80100-hp-elitebook-ultra-g1q.dts  | 36 +++++++++++++++++++
+>  drivers/firmware/qcom/qcom_scm.c              |  1 +
+>  3 files changed, 38 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 710879d94c00..3d98bb95e8b1 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -294,6 +294,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= x1e78100-lenovo-thinkpad-t14s-oled.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-asus-vivobook-s15.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-crd.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-dell-xps13-9345.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-hp-elitebook-ultra-g1q.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-hp-omnibook-x14.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-lenovo-yoga-slim7x.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-microsoft-romulus13.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dts b/arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dts
+> new file mode 100644
+> index 000000000000..7f069a2e9a46
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dts
+> @@ -0,0 +1,36 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +
+> +/dts-v1/;
+> +
+> +#include "x1e80100-hp-omnibook-x14.dtsi"
+> +
+> +/ {
+> +	model = "HP EliteBook Ultra G1q";
+> +	compatible = "hp,elitebook-ultra-g1q", "qcom,x1e80100";
+> +
+> +	sound {
 
-Very difficult to review. This should have been rename. You are not
-using b4, so you can tweak -M/-B/-C parameters.
+Please override by label/phandle.
 
+> +		model = "X1E80100-HP-ELITEBOOK-ULTRA-G1Q";
+> +	};
+> +};
+> +
+> +&gpu {
+> +	status = "okay";
+> +
+> +	zap-shader {
+> +		firmware-name = "qcom/x1e80100/hp/elitebook-ultra-g1q/qcdxkmsuc8380.mbn";
+> +	};
+> +};
 
-I also do not understand what the DTSI represents. The DTSI files should
-be some sort of common hardware, design, product. Are you sure these
-devices share the design?
+so here &sound {}
+
+The other DTS also should have it model overridden, because otherwise
+you claim that "X1E80100-HP-OMNIBOOK-X14" is the common card.
 
 Best regards,
 Krzysztof
