@@ -1,188 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-53235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 400DDA7BC62
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 14:10:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03025A7BCBC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 14:37:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 460761749A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 12:10:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DEE793B45E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 12:37:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5DE41DE8A3;
-	Fri,  4 Apr 2025 12:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3C0F1DE4E1;
+	Fri,  4 Apr 2025 12:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tuRaU1gz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t1NwqwB2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C951DDA2D
-	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Apr 2025 12:10:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3C11C84DC;
+	Fri,  4 Apr 2025 12:37:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743768610; cv=none; b=KvzjYqrDP9t85/e1Ow6t4jOwWsshNT5whUBQPJMeV3WniQqgMPmJpqi3L80/OVeoIHVMQQFt1p+cK6qzezxuFGVhjNxOgKHbBZl2rOF/rloanPexdzRF4K3in/Tm8HaEaS2KjmZ2ufDMmX1wkjYxoQpnNaPTxb2NfZfuGH1r61w=
+	t=1743770274; cv=none; b=sym0Tpxojcm6Rs0m/q4/Nte+S3fJ7cYOOXizxCJtbQvt6PgF5cJ3CgWshTXJdMeHTrlwDX4J+5u5p08+cfF78UX1UtZskSzPJic7z5LrPl7+/TyvCdxe2uhX9WFp+WYAAXF4jzvoR9uN9XhhEvbTnXccqxgUm/0lVIApidyyiG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743768610; c=relaxed/simple;
-	bh=MgHuAR2KaGlMfN8tReCPFlabjidLcFBKbOmQATKd/sc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eG/ig4QVpRhrZX8lEcJazl9jIEDQLur1m7XSPySYsHbzy1ZeJ7p+xOD+Mv3i5GCpuDw6j1fqfX/6uGKplfA6slD2tNXPXf7BXJd6ORePcOYOZF9Gw4Q9GcUpKaw1PhyaPXqQ9tqo+hI4mGHkuGOaQqe5dGTWuZT+xbTx/+M6Ixw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tuRaU1gz; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43cfba466b2so19745785e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Apr 2025 05:10:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743768607; x=1744373407; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Uw21iOfeEdk3463J9ORbvRKcjzeh75OKbdf6KpxN7ys=;
-        b=tuRaU1gz7yY/UPylGPtFCbmv1QtUpGR/239TkdiecfVRIUMMoZPaYXDPUWI0KoApnC
-         C7GP0GVkM4hPJUTgcmNzuzSdf9aI0gahvBckksILQORuPzoo+Yjlv91VOHX63YAL7k4o
-         cCSVvRmmlFy87drUwPiLW5qIgVDh+j/eGouXi5tT2Wnyjm51fpZOPmNkvzlfIND7fuNU
-         5HXlu+pgwPra/zrP6Pu1fnyo0YUKhnnofQzqMO23/7NvZlfJCen1Lzd6+33LuS4bDJxO
-         umgfGGDjBmb7KT6bwlfODoR9X89WbpJCXZ9gJylNLer9UC2UjrkqgCT3FJ7qyIwei1NT
-         +PKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743768607; x=1744373407;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Uw21iOfeEdk3463J9ORbvRKcjzeh75OKbdf6KpxN7ys=;
-        b=sAyoRGdlxz35CxOidMxhJvu54dfGVqX+L2jjvhhwy5cImkffMitmoi/aJaXajqASmH
-         G3LSqU+qmWTgMEQDdg1KgXulQOsw4V4bqwb4ZtaeASNOIN6g5/TXecDYu9bblHnHpDtb
-         cLx4oo8afa5fd3TVzrO2aV8Lk9Sx267d+4cwNl29IhVxf2D+QCfHEzO1MUoo5A6679Qi
-         kESxBA9NQFiJ5rNhRydOFEy6ze3lkEvhpbL33P+fjGYgWta+XdiLEw21JLfF9N1Y+t6O
-         1gpb2eTUlODWOjtxWvFEDg/PwYy8Siq8ArE00JsD/vM5f8Ak+kOz8/IK6bOgm95r1ycy
-         dWMQ==
-X-Gm-Message-State: AOJu0YzJgSpawV6hr7yO9FdCAWQ5aSpSnTPAPGsiejYOHSvwvWOjEJVg
-	0WZbJ15U2dVHgF0flhjMZJrj5thGCfaozYyDAF2KePYpyzWeEvz7ZxcfAQiFos4=
-X-Gm-Gg: ASbGncvBf0u+wLUQq3ct2j67Z3+BremMxyEHCapkyV1on3Nz8joV5PT49uU3+g9G0fY
-	dM0oeRYHQ1zMPT7AxIWSSt3ScSHSH54I7+MqbG8vLbzbuBplW4x2YYT+Jmj8a0VplJtDoJPGf58
-	VFxnEdBZ5SQxseyQTMzF7AIhuqjRJXO9RmytCAtQ+lacV4M1+/zxbdsrZvNib+dCpO70iAEK0Ji
-	aUpStKGSeRIImTGP3O7T7iSiMUyE6wup0bvKypsUE+xMb3d3u9PpxTktHQvioCz3f2WxUOWyiTf
-	ZBQwFH7mFglzeZNbZSbbA5pHOQlNnj2b2Wwx4zJALazl8dsZzatOy8WfM+NmVdRvFIfMPctcELS
-	WZiL/PU07lQ==
-X-Google-Smtp-Source: AGHT+IGmy1dhSXCxdlE9WpZ8lmIMDAlaM4Cd7sK9OrwG+JdRJ0Iokwp3vZ4pNShGrMEF3QlAaP/nig==
-X-Received: by 2002:a05:600c:3103:b0:43d:300f:fa4a with SMTP id 5b1f17b1804b1-43ecf89dd3emr27944265e9.12.1743768607082;
-        Fri, 04 Apr 2025 05:10:07 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ec3669002sm44795565e9.33.2025.04.04.05.10.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Apr 2025 05:10:06 -0700 (PDT)
-Message-ID: <1b649ead-f6d6-4fb0-b5ac-02cf2dba92ca@linaro.org>
-Date: Fri, 4 Apr 2025 13:10:04 +0100
+	s=arc-20240116; t=1743770274; c=relaxed/simple;
+	bh=VvmsBy/mapPiKfdXXiu1j2lKuHaHgjbFqLZsrREc/14=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T/yiZrvCOfMjZWw8yYxwPckSerx0z//aKjV9LhfQU6Ggfai7zw8PqJ0BXL0UHElAnc1Cx9m1qWtBqlDXD98zvgR5IlFA2UL0Wl+HroNThUeu/0+fOYLGJssMBFXotJK4aYS2AhrZfObEHD71838+lvC5bvlwn6/XDeJ4TbbAVBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t1NwqwB2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923F1C4CEDD;
+	Fri,  4 Apr 2025 12:37:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743770274;
+	bh=VvmsBy/mapPiKfdXXiu1j2lKuHaHgjbFqLZsrREc/14=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=t1NwqwB24nos3tDQ7j5m3JifuV9ILytu8D46XEYOG4J/KP/L+RAFCTSQm1KXrifu4
+	 4LI68DGxAZM5poiLYqZ4XI4D+N02CFHr5Invx5bcubxogk0wyHIE1zzCBS6x0CrAoB
+	 IOTz+7LUNZIwfw72m1nhuhPP1UQG3wwDGs8TFceph+mz6/z+gdXH2PGNQRxQVw36ar
+	 ScmsFUrhWkoso/zeBROuS18/0UFOzR2WBQvdyYObdon3XukPf/BiZWotYRevkAuph7
+	 A8Kz7F/4axvslbMjfBm9ZNOj4XQjFx7C5qLihsd/EQ3/qUpfKnL4B4oWRGtYKGq3VR
+	 K04VMlZhpxbZg==
+Date: Fri, 4 Apr 2025 14:37:48 +0200
+From: Joel Granados <joel.granados@kernel.org>
+To: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Cc: iommu@lists.linux.dev, David Woodhouse <dwmw2@infradead.org>, 
+	Jason Gunthorpe <jgg@nvidia.com>, Joerg Roedel <joro@8bytes.org>, 
+	Kevin Tian <kevin.tian@intel.com>, Lu Baolu <baolu.lu@linux.intel.com>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
+	Niklas Schnelle <schnelle@linux.ibm.com>, Rob Clark <robdclark@gmail.com>, 
+	Robin Murphy <robin.murphy@arm.com>, Thierry Reding <thierry.reding@gmail.com>, 
+	Tomasz Jeznach <tjeznach@rivosinc.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
+	Will Deacon <will@kernel.org>, Yong Wu <yong.wu@mediatek.com>, virtualization@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org, 
+	linux-tegra@vger.kernel.org, pierrick.bouvier@linaro.org, Klaus Jensen <k.jensen@samsung.com>
+Subject: Re: RFC iommutests_: Testing software for everything IOMMU
+Message-ID: <qk32ie2b663it7tjpdqfjecgrlamtuycyxulb5m2elblymzyqy@jcvjiqwgsmww>
+References: <5zoh5r6eovbpijic22htkqik6mvyfbma5w7kjzcpz7kgbjufd2@yw6ymwy2a54s>
+ <20250401103519.GC2424925@myrica>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcm2290: Add CCI node
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>, andersson@kernel.org,
- konradybcio@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- krzk+dt@kernel.org, robh@kernel.org
-References: <20250403102256.101217-1-loic.poulain@oss.qualcomm.com>
- <0YH8BNtmMcywwRXI3xHiLyB_zFED-XbjzCyyI1Vc4184BPadVJ-GWj23lpEwaXEHqDPiMiraMsWlOd1qA_hiog==@protonmail.internalid>
- <20250403102256.101217-2-loic.poulain@oss.qualcomm.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250403102256.101217-2-loic.poulain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250401103519.GC2424925@myrica>
 
-On 03/04/2025 11:22, Loic Poulain wrote:
-> Add Camera Control Interface (CCI), supporting two I2C masters.
+On Tue, Apr 01, 2025 at 11:35:19AM +0100, Jean-Philippe Brucker wrote:
+> On Fri, Mar 28, 2025 at 10:11:13AM +0100, Joel Granados wrote:
+> > Custom qemu device: pci-ats-testdev
+> > -------------------------------------
+> > To support IOMMU testing under qemu, the pci-ats-testdev [10]
+> > (different from pci-testdev [11]) was used to emulate DMA transactions.
+> > It is a full fledged pci device capable of executing emulated DMA
+> > accesses. It was originally intended to test Linux kernel interactions
+> > with devices that had a working Address Translation Cache (ATC) but can
+> > become a platform capable of testing anything PCI/IOMMU related if
+> > needed.
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> ---
->   v2: Reorder commits; Update dts properties order and style
->   v3: No change for this patch
-> 
->   arch/arm64/boot/dts/qcom/qcm2290.dtsi | 50 +++++++++++++++++++++++++++
->   1 file changed, 50 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-> index 7fb5de92bc4c..43fcb4f40a8c 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-> @@ -557,6 +557,20 @@ qup_uart4_default: qup-uart4-default-state {
->   				bias-disable;
->   			};
-> 
-> +			cci0_default: cci0-default-state {
-> +				pins = "gpio22", "gpio23";
-> +				function = "cci_i2c";
-> +				drive-strength = <2>;
-> +				bias-disable;
-> +			};
-> +
-> +			cci1_default: cci1-default-state {
-> +				pins = "gpio29", "gpio30";
-> +				function = "cci_i2c";
-> +				drive-strength = <2>;
-> +				bias-disable;
-> +			};
-> +
->   			sdc1_state_on: sdc1-on-state {
->   				clk-pins {
->   					pins = "sdc1_clk";
-> @@ -1603,6 +1617,42 @@ adreno_smmu: iommu@59a0000 {
->   			#iommu-cells = <2>;
->   		};
-> 
-> +		cci: cci@5c1b000 {
-> +			compatible = "qcom,qcm2290-cci", "qcom,msm8996-cci";
-> +			reg = <0x0 0x5c1b000 0x0 0x1000>;
-> +
-> +			interrupts = <GIC_SPI 206 IRQ_TYPE_EDGE_RISING>;
-> +
-> +			clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>, <&gcc GCC_CAMSS_CCI_0_CLK>;
-> +			clock-names = "camss_top_ahb", "cci";
+> Yes please!  Maybe "pcie-testdev" rather than "pci-ats-testdev"?  There
+Definitely. If it is a more general pcie test framework, we need to
+change the name to something like that; agreed.
 
-do you not need an axi clock GCC_CAMSS_AXI_CLK ?
+> are other PCIe features that are poorly tested at the moment, for example
+> PASID and PRI. The programming model of devices that actually implement
+Actually, PRI was what we used it for. I have this as one of the
+potential next steps for iommutests.
 
-> +			assigned-clocks = <&gcc GCC_CAMSS_CCI_0_CLK>;
-> +			assigned-clock-rates = <37500000>;
-> +
-> +			power-domains = <&gcc GCC_CAMSS_TOP_GDSC>;
-> +
-> +			pinctrl-0 = <&cci0_default &cci1_default>;
-> +			pinctrl-names = "default";
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			status = "disabled";
-> +
-> +			cci_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <400000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			cci_i2c1: i2c-bus@1 {
-> +				reg = <1>;
-> +				clock-frequency = <400000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +		};
-> +
->   		mdss: display-subsystem@5e00000 {
->   			compatible = "qcom,qcm2290-mdss";
->   			reg = <0x0 0x05e00000 0x0 0x1000>;
-> --
-> 2.34.1
+> those can get too complex so we need something simpler to precisely stress
+> the IOMMU driver infrastructure. Driver unit-tests alone aren't good
+> enough for exercising TLB invalidation (DMA after removing a mapping must
+> crash), tricky cleanup paths (eg. killing a process bound to a device
+> that's issuing page requests), runtime PM, MSIs etc. I'm guessing testing
+Totally agree. PRI is tricky to test indeed.
+
+> newer/future features like TDISP would also benefit from a simple device.
 > 
-> 
+> Some time back I needed a device like that to reproduce some tricky races
+> but never got round to implementing extra PCIe features. Although this one
+> [1] is based on virtio any programming interface should work as long as it
+> can instruct the device to send precise DMA transactions, ideally many in
+> parallel.
+And it can be up-streamed to QEMU if it ends up being used for linux
+kernel testing.
 
-other than that
+Best
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+-- 
+
+Joel Granados
 
