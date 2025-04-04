@@ -1,126 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-53251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6EB2A7C070
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 17:19:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40613A7C09A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 17:34:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7CAB9189BD3B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 15:19:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0D7E616BD68
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 15:34:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB4EC1F4E21;
-	Fri,  4 Apr 2025 15:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92BF41E5B6C;
+	Fri,  4 Apr 2025 15:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XbeRVOpb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b5jJbzkY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f196.google.com (mail-lj1-f196.google.com [209.85.208.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D521F3BA8;
-	Fri,  4 Apr 2025 15:19:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6240A145B0B;
+	Fri,  4 Apr 2025 15:34:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743779964; cv=none; b=SjbzD1OWFViHDd39YXCaOJkdSkfc25DPbZiydxoq3ZcTYTlhtwHDwp3rdX0IjGOZP8b8xYcRX8MAn3chPW3CMqn9dWaIAv2KrtbN0OJpTM0kzVdiHXraEviBKEmcXBWkiO23FAhopojIIqXaFQZY5pdV+UvHQ+8Ypqv60tPrRuE=
+	t=1743780864; cv=none; b=kxctd6GBvvuRJuoQeC0bNK9FlvGrNFc8ZnUmbjczzC8gRZHng+416JEmlnz+vGL/cAyLrS0lLe/KfZGrtNie71Dnz8CxOFsJI8EEGeE99LHLIDD2I6ul0ojSV1O0tgXJNxgJxvpFJ6pcMlRkhhqSNtXYIiowk2p57vWaRluB5bU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743779964; c=relaxed/simple;
-	bh=Xr9jXvezucw+9GAAJLda5NvJK+z/kHdD7h+oYo5bzG4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=taE+n3VUkAvilnvjPBwLCVQrPrFZES6V2J7SQ0KDy19nKQitte++JLi+aYJmrJA8IoiP/THVfXGMvUwY4phPjRygC6xGT65g3dDfk0J6jwD1JZ6LksGEGRgFgqIAn8RGjA7PHLk7QrVnnzrv0XX02Km8fDT9Uww0SxEou2lcbm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XbeRVOpb; arc=none smtp.client-ip=209.85.208.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f196.google.com with SMTP id 38308e7fff4ca-30bee278c2aso33997651fa.0;
-        Fri, 04 Apr 2025 08:19:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743779961; x=1744384761; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=b7iWccUiw/ID8NYLVkhb9PSyPwcEt5/Y/IQ2ZtQH16c=;
-        b=XbeRVOpb/c+ffdckV6hAMPjVDMLrXHU5kmTm6m5Us1FZJQ26rUFD5bMr0o/h2uDRuV
-         9JjhyiUagIR+2qGMmCzFGD5sdDdvwjqcfBUTHQm9fDJthqoHbOrqpUotoqofSPnJMlfz
-         NewegDjOHY4tppPcHDjDpm/EUZFo13W2fY8DerDqsrqIW54DCbt9Yvu2MQ80+dAUVb7l
-         0b3lnZwJGR1wk/lisRbMrhMB+pUMdDiLeSbmQsITxffAZGUGFmW/XEj6LsU+qNLy20Yi
-         kCp8BvpOkON78qBhzR7NCeOan7cPwJCVhGc7CNpartuWHXbU4Ly360JkZCORIPl/6jNi
-         a/qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743779961; x=1744384761;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=b7iWccUiw/ID8NYLVkhb9PSyPwcEt5/Y/IQ2ZtQH16c=;
-        b=bT/l72uyAIym4vEFB0S7qXMIUD/fypqxb1R6khppSMFdTtaJMXG+kZ5kdzHQ4Imbs8
-         VH8/vQywwbkN0HYnc3CsWxP1CBJ144J4jNx1pNTS2rtA/tQkvG/uFtqNhngpumJiRv/m
-         2j72gxpMLr2CwSgOUNZAuJFEqMgckJTcvEHEIZTDsjRKrkerQzqL8PAB9BaotLdsZVo2
-         Fng6lB6Dw9y4As3e5OA0gFhKZkpBdacarps6MccGSgN4ImbfuuinS6Wd10K8s8pjk2M5
-         7f73242J6109Vt+ePSOHyiVvygrG2vSLj9tPXuuWCQGXsjKr2fOTTzq0W90t3kLiHZMs
-         VHLw==
-X-Forwarded-Encrypted: i=1; AJvYcCVadcIfH69Yc39Lmseq/oF1NJqK+7IMYmbSIO4acZ/7ihrji9Q7Es1yEh/xPqHzwNT+XSrF3LMwb2uL3fOp@vger.kernel.org, AJvYcCWbd3+qPD7GOf8M+QYXqjQk0yf8Kd4BhELySI53e+itGXra586A8L/vTf1KYXJ2T2g6toMtiVMZMgkYvu4=@vger.kernel.org, AJvYcCXmGmkOIy927aBoiD2ANi/jNqweRizYykbKgqCrc6gKaFqlhD79izuzbhLHBQiUVN1zSEfUo7/ABP+4BzGX@vger.kernel.org
-X-Gm-Message-State: AOJu0YyPevizb3BofelzxNCF7dG8LfQyWoYPusnduz+Nm2Q+6C6mekuG
-	23KdmoRu+I5il8Yh+fOV5qeKI59hm+zUvyuJBHp4nDidgILiMILi78+MCIewKTMdGMKBrxmFfmm
-	q+2kwkoE8weopLRgYSbciEQOzbx8=
-X-Gm-Gg: ASbGncuPwk5MlXwV1+P9yhIsYSOx5tHkIcGBNkPqe3BQoXfAa+ZOHvvsHzYNneFiXOA
-	bmlkrzi6ExZzYkamRJUn9p3enr3zMBUPKtZ20BdcUUSZFVrP52hHzc6JEeciO+ItawrCLvCiSAu
-	lmmpbOrAnLWoA/dDujR9rbi3kbyuU=
-X-Google-Smtp-Source: AGHT+IEXx6acthjgAn6//pGGjgLYBD1HWjhVlOep3HaA55zS/PUR37+AJSk2OPFw/dPZLEdIcG0O31KhRGxGnR7OnQE=
-X-Received: by 2002:a05:651c:1449:b0:30d:c4c3:eafa with SMTP id
- 38308e7fff4ca-30f0a6672c6mr13405141fa.7.1743779960600; Fri, 04 Apr 2025
- 08:19:20 -0700 (PDT)
+	s=arc-20240116; t=1743780864; c=relaxed/simple;
+	bh=/4dirTW7v+Oh+pNv2aY5PDHiZhYmC1dQjpxEX1joon0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q9/TWXbtVIKvt3Uqh5rKOqHm0EvWJQn456uoav02VlyEpqYKzwfjh1toqF1oR6znj9wB2ZEbaYJ1ML5OsmyvSFfQU//eAmf2aI0OsT2WNwJzIS7lhunHoFHLZQMXKZGYVWxyg9zM3ykdonOq4Lg6Q+WttlI9W7lbFhVy3lfdlX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b5jJbzkY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D02C4CEDD;
+	Fri,  4 Apr 2025 15:34:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743780863;
+	bh=/4dirTW7v+Oh+pNv2aY5PDHiZhYmC1dQjpxEX1joon0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=b5jJbzkYJf8tHvmcTa4QGDPrr1S2tKH+01UTwhjiSXCjFs6Qq5QTG8743lkWdxRHD
+	 XfGorU6sq/hnpWmBRKt/VQtIIj+LUNqHIskLA2Gvnj30nFSQ0xhCPdqHgM0o+xt/pe
+	 02Yx2gM5VJsyDJfV674x46KHky82IHSOno+J/w/TtYqMO65FF6CgtwNi6Jy698n7a3
+	 lVFnPgfaeCYrvLI9VPBsqjk27W7zFjV5H8gPVn1PrvJ6ZcF/O6tEPUVTeOTY9xtbxt
+	 ypG58ohpvkxId0r3qvgLBRVhVbUv2wl5TaADCyW/lnJKM22AbnYK/Q+0GruA2Dnm6W
+	 Xt4ZgFEaVW3tQ==
+Date: Fri, 4 Apr 2025 10:33:39 -0500
+From: Rob Herring <robh@kernel.org>
+To: Juerg Haefliger <juerg.haefliger@canonical.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: x1e80100-hp-omnibook-x14: Create
+ and include a dtsi
+Message-ID: <20250404153339.GA1463808-robh@kernel.org>
+References: <20250404090108.3333211-1-juerg.haefliger@canonical.com>
+ <20250404090108.3333211-2-juerg.haefliger@canonical.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <Z-uqpxcge0J99IPI@aspen.lan> <20250401091647.22784-1-bsdhenrymartin@gmail.com>
- <174377951404.402191.3996310155954584937.b4-ty@kernel.org> <20250404151300.GD372032@google.com>
-In-Reply-To: <20250404151300.GD372032@google.com>
-From: henry martin <bsdhenrymartin@gmail.com>
-Date: Fri, 4 Apr 2025 23:19:09 +0800
-X-Gm-Features: ATxdqUEtLv1VLfi6vRSrJH5UTl_kVLlPCY8-xy9xcLIwMYM5iu9pWJ5-wcimQ4I
-Message-ID: <CAEnQdOpWrZPor9WMtEfub5qJFT98rrsN_A6jb_a-JqSjd9tihw@mail.gmail.com>
-Subject: Re: (subset) [PATCH v4] backlight: pm8941: Add NULL check in wled_configure()
-To: Lee Jones <lee@kernel.org>
-Cc: danielt@kernel.org, jingoohan1@gmail.com, deller@gmx.de, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250404090108.3333211-2-juerg.haefliger@canonical.com>
 
-Noted, thanks for the feedback! I=E2=80=99ll send subsequent versions as
-independent patches in the future.
+On Fri, Apr 04, 2025 at 11:01:06AM +0200, Juerg Haefliger wrote:
+> Create a dtsi for the HP OmniBook so it can be reused for the HP EliteBook
+> which seems to be the same HW.
+> 
+> Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+> ---
+>  .../dts/qcom/x1e80100-hp-omnibook-x14.dts     | 1554 +---------------
+>  .../dts/qcom/x1e80100-hp-omnibook-x14.dtsi    | 1557 +++++++++++++++++
 
-Best regards,
-Henry
+Just include x1e80100-hp-omnibook-x14.dts where you need it. There is no 
+rule against including .dts files.
 
-
-Lee Jones <lee@kernel.org> =E4=BA=8E2025=E5=B9=B44=E6=9C=884=E6=97=A5=E5=91=
-=A8=E4=BA=94 23:13=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Fri, 04 Apr 2025, Lee Jones wrote:
->
-> > On Tue, 01 Apr 2025 17:16:47 +0800, Henry Martin wrote:
-> > > devm_kasprintf() returns NULL when memory allocation fails. Currently=
-,
-> > > wled_configure() does not check for this case, which results in a NUL=
-L
-> > > pointer dereference.
-> > >
-> > > Add NULL check after devm_kasprintf() to prevent this issue.
-> > >
-> > >
-> > > [...]
-> >
-> > Applied, thanks!
-> >
-> > [1/1] backlight: pm8941: Add NULL check in wled_configure()
-> >       commit: b0fdeb96ead46de57a6226bc3a3ac7f9b50c0ace
->
-> Next time, please send subsequent patch versions independently.
->
-> --
-> Lee Jones [=E6=9D=8E=E7=90=BC=E6=96=AF]
+Rob
 
