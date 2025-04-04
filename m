@@ -1,68 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-53231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D730FA7BBED
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 13:56:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DC20A7BBEA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 13:56:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B8BF17AD55
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 11:56:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 328D03AB761
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Apr 2025 11:56:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04CF31EE7AA;
-	Fri,  4 Apr 2025 11:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C46E51EB5F1;
+	Fri,  4 Apr 2025 11:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q2W0gomY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CLW6ErKW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3419B1DE2BB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3423E1E1E04;
 	Fri,  4 Apr 2025 11:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743767775; cv=none; b=VYdej/lTSJh3W/CvmgIKAo3NvhUPEt0RW3lb5yFoX9oEN52NghcOWMw6sHY+v0geugWpxlE17gR+JKneDO+DBxb/8vLarPirZXT+u/CSAZ0iW6m7tMKO/OzLzndZvnbycOFJWz9/VbJ6I6I8cXh3IWNFO3TcxCR4XLOaylceJgE=
+	t=1743767775; cv=none; b=U/w79xlVE9APCmnEiAwqrPpWivSzwo3aBQNuK+dBsvQy3diNr2KMMIWIGyDwN2+GTrOtwHr67mpcJjQm1MX0XH74eXdKnPfWX1VBuxi7tzm77ORDoZm+MGoayLi+hjYhMqNrVHk6VvfI5UdikS1Scwtq8Dnak37xH3mlkHMM4Lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1743767775; c=relaxed/simple;
-	bh=521hByyU3xCjBrqg+Vdrxo0m1i/+0sLUGFQ9jpUfbco=;
+	bh=SdKoJ+wrgbmbqtCuuf5Qj63KLZ54K3vcbb8D6elfkjs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=LZbJaE5BMth8dio6LVPeoMjzRbZeXirpiuWq7xVKWfNnVpMgrelH0uoiemGZ2c+2DnbvR7T6Ad8A7/iicMskmMmVfT8ggxkt71oi7KVIuR4cSdjsHBqqpaERhNI9j1/2BUdpBFqXT++68e0ixOhOKGQF3JsfAj1xmFjx5aa+crA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q2W0gomY; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version; b=P6Jg6vWT8q9T1y1KGPx5cA3FquR8UqWTfZZQwr+B2oGnNdOREU1TIJFu15WnsgXovFQTqF98zebL6gqw5pO3fo6S0anetejaVWglf/eygreB2t8xHFv+NTAWOMIqR1rW4YjdYVX5nlVv2LXKRY7zlNaS9GBtBbXJx9A7AmIdVmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CLW6ErKW; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53433pQC016632;
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53489EmM006604;
 	Fri, 4 Apr 2025 11:55:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=stoQeFnCRJJ
-	P+5hN4xdHhEe5hTFaoED8fOY39ugX+To=; b=Q2W0gomYd+Um9fcycCKgn8TO+Uq
-	1eW7RQlkdDR/1+urhJV3VLRL866LC0idjcpU6/gdtzuP+oWnceNGAwunrbxSuelv
-	VTYQOmCfRLkt13rCIrxkrAB51fgsl/t5sLppegdYY1u0pWCS7qUMLQhzMZe8zpx4
-	AUJ4Ny9zKkJz3KP7nbIGsvwFGbMjtQLj1AAHkk4PbbVhicFPJzLzZ1EQr0k5ci25
-	AiURx94ze26tojLdv2S2Y3WqXMmfMPvtHca8WnmOM81UVhrheooYGlUWaZRkm0Rb
-	V3CVbq/aLpZYztQHVh85sngApssCdBe83ezZb12ohLDMf6Yzpos9jv8V/KQ==
+	:mime-version:references:subject:to; s=qcppdkim1; bh=hVCi7gtLhpA
+	XdSAk9dtD/5Maw7VEwUB2kEsjxp7ZhWY=; b=CLW6ErKW9hcuHwyeXE32gOaqf/h
+	k2wsvJU4j/fd+2ujaG/uQIbMDK1Jg2QZIa+2uDT87ZLnCX3mu2Vq69952+D17lLS
+	jJtFZ6WGRub9ph0/mAZuPw/+xxdd/ipz2OuHJyNezzP5KfIDwxaTB02i5II/yxYB
+	hMOw48s1Fkp1/KG7/RZn6OnOGuQ7LW+FQFFqBCxzdXjM/fwWM00t6bslUd7Hs6BL
+	Y16FJjs8j1Dxjw5xoGW54CMIslgjfMKzx5FPKaRm8waaXj1ihho583g+feY0ShA7
+	DWeJFCe7ki2IvoAc87z0LBQNq8E+7lK7Kc2kxgSjwQ65d37lYWdGKcP/62Q==
 Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45t2d99nuc-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45tbnkrh04-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Fri, 04 Apr 2025 11:55:49 +0000 (GMT)
 Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 534BtkC2016588;
+	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 534Btju9016523;
 	Fri, 4 Apr 2025 11:55:46 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 45p9xmaeju-1
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 45p9xmaejp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Fri, 04 Apr 2025 11:55:46 +0000
 Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 534BtjHM016496;
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 534Btkmv016546;
 	Fri, 4 Apr 2025 11:55:46 GMT
 Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-amakhija-hyd.qualcomm.com [10.213.99.91])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 534BtkZ2016542
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 534BtkFp016541
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Fri, 04 Apr 2025 11:55:46 +0000
 Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4090850)
-	id 5364B59E; Fri,  4 Apr 2025 17:25:44 +0530 (+0530)
+	id 586BD59F; Fri,  4 Apr 2025 17:25:44 +0530 (+0530)
 From: Ayushi Makhija <quic_amakhija@quicinc.com>
 To: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
@@ -76,11 +76,10 @@ Cc: Ayushi Makhija <quic_amakhija@quicinc.com>, robdclark@gmail.com,
         Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
         jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com,
         quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
-        quic_jesszhan@quicinc.com,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH v3 09/10] drm/bridge: anx7625: update bridge_ops and sink detect logic
-Date: Fri,  4 Apr 2025 17:25:38 +0530
-Message-Id: <20250404115539.1151201-10-quic_amakhija@quicinc.com>
+        quic_jesszhan@quicinc.com
+Subject: [PATCH v3 10/10] drm/bridge: anx7625: change the gpiod_set_value API
+Date: Fri,  4 Apr 2025 17:25:39 +0530
+Message-Id: <20250404115539.1151201-11-quic_amakhija@quicinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250404115539.1151201-1-quic_amakhija@quicinc.com>
 References: <20250404115539.1151201-1-quic_amakhija@quicinc.com>
@@ -95,71 +94,68 @@ X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: xzIhmoNqT1dCw95Ns85gF-jek0uv-XJi
-X-Authority-Analysis: v=2.4 cv=cpybk04i c=1 sm=1 tr=0 ts=67efc8c6 cx=c_pps a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=KzNNLWg-im-pYHkXERoA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: xzIhmoNqT1dCw95Ns85gF-jek0uv-XJi
+X-Proofpoint-ORIG-GUID: q8O9dFXJH86HnqBNqL7WQT_r_FhBN4h3
+X-Proofpoint-GUID: q8O9dFXJH86HnqBNqL7WQT_r_FhBN4h3
+X-Authority-Analysis: v=2.4 cv=X9xSKHTe c=1 sm=1 tr=0 ts=67efc8c6 cx=c_pps a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=qu7jSu7UeuI-ykz2460A:9 a=TjNXssC_j7lpFel5tvFf:22
+ a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-04_05,2025-04-03_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 mlxscore=0 impostorscore=0 malwarescore=0 clxscore=1015
- phishscore=0 suspectscore=0 mlxlogscore=999 bulkscore=0 adultscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 mlxlogscore=999 impostorscore=0 malwarescore=0 suspectscore=0
+ spamscore=0 adultscore=0 bulkscore=0 mlxscore=0 clxscore=1015
  priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2504040082
 
-The anx7625_link_bridge() checks if a device is not a panel
-bridge and add DRM_BRIDGE_OP_HPD and DRM_BRIDGE_OP_DETECT to
-the bridge operations. However, on port 1 of the anx7625
-bridge, any device added is always treated as a panel
-bridge, preventing connector_detect function from being
-called. To resolve this, instead of just checking if it is a
-panel bridge, verify the type of panel bridge
-whether it is a DisplayPort or eDP panel. If the panel
-bridge is not of the eDP type, add DRM_BRIDGE_OP_HPD and
-DRM_BRIDGE_OP_DETECT to the bridge operations.
+Use gpiod_set_value_cansleep() instead of gpiod_set_value()
+to fix the below call trace in the boot log:
 
-In the anx7625_sink_detect(), the device is checked to see
-if it is a panel bridge, and it always sends a "connected"
-status to the connector. When adding the DP port on port 1 of the
-anx7625, it incorrectly treats it as a panel bridge and sends an
-always "connected" status. Instead of checking the status on the
-panel bridge, it's better to check the hpd_status for connectors
-like DisplayPort. This way, it verifies the hpd_status variable
-before sending the status to the connector.
+[    5.690534] Call trace:
+[    5.690536]  gpiod_set_value+0x40/0xa4
+[    5.690540]  anx7625_runtime_pm_resume+0xa0/0x324 [anx7625]
+[    5.690545]  __rpm_callback+0x48/0x1d8
+[    5.690549]  rpm_callback+0x6c/0x78
+
+Certain GPIO controllers require access via message-based buses
+such as I2C or SPI, which may cause the GPIOs to enter a sleep
+state. Therefore, use the gpiod_set_value_cansleep().
 
 Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/bridge/analogix/anx7625.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/bridge/analogix/anx7625.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-index 99ef3f27ae42..365d1c871028 100644
+index 365d1c871028..f6f730262511 100644
 --- a/drivers/gpu/drm/bridge/analogix/anx7625.c
 +++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-@@ -1814,9 +1814,6 @@ static enum drm_connector_status anx7625_sink_detect(struct anx7625_data *ctx)
+@@ -1257,10 +1257,10 @@ static void anx7625_power_on(struct anx7625_data *ctx)
+ 	usleep_range(11000, 12000);
  
- 	DRM_DEV_DEBUG_DRIVER(dev, "sink detect\n");
+ 	/* Power on pin enable */
+-	gpiod_set_value(ctx->pdata.gpio_p_on, 1);
++	gpiod_set_value_cansleep(ctx->pdata.gpio_p_on, 1);
+ 	usleep_range(10000, 11000);
+ 	/* Power reset pin enable */
+-	gpiod_set_value(ctx->pdata.gpio_reset, 1);
++	gpiod_set_value_cansleep(ctx->pdata.gpio_reset, 1);
+ 	usleep_range(10000, 11000);
  
--	if (ctx->pdata.panel_bridge)
--		return connector_status_connected;
--
- 	return ctx->hpd_status ? connector_status_connected :
- 				     connector_status_disconnected;
- }
-@@ -2608,9 +2605,8 @@ static int anx7625_link_bridge(struct drm_dp_aux *aux)
- 	platform->bridge.of_node = dev->of_node;
- 	if (!anx7625_of_panel_on_aux_bus(dev))
- 		platform->bridge.ops |= DRM_BRIDGE_OP_EDID;
--	if (!platform->pdata.panel_bridge)
--		platform->bridge.ops |= DRM_BRIDGE_OP_HPD |
--					DRM_BRIDGE_OP_DETECT;
-+	if (!platform->pdata.panel_bridge || !anx7625_of_panel_on_aux_bus(dev))
-+		platform->bridge.ops |= DRM_BRIDGE_OP_HPD | DRM_BRIDGE_OP_DETECT;
- 	platform->bridge.type = platform->pdata.panel_bridge ?
- 				    DRM_MODE_CONNECTOR_eDP :
- 				    DRM_MODE_CONNECTOR_DisplayPort;
+ 	DRM_DEV_DEBUG_DRIVER(dev, "power on !\n");
+@@ -1280,9 +1280,9 @@ static void anx7625_power_standby(struct anx7625_data *ctx)
+ 		return;
+ 	}
+ 
+-	gpiod_set_value(ctx->pdata.gpio_reset, 0);
++	gpiod_set_value_cansleep(ctx->pdata.gpio_reset, 0);
+ 	usleep_range(1000, 1100);
+-	gpiod_set_value(ctx->pdata.gpio_p_on, 0);
++	gpiod_set_value_cansleep(ctx->pdata.gpio_p_on, 0);
+ 	usleep_range(1000, 1100);
+ 
+ 	ret = regulator_bulk_disable(ARRAY_SIZE(ctx->pdata.supplies),
 -- 
 2.34.1
 
