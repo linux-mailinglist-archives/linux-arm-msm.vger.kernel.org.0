@@ -1,188 +1,289 @@
-Return-Path: <linux-arm-msm+bounces-53284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 819FEA7CAEE
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Apr 2025 19:27:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C89BA7CB19
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Apr 2025 19:45:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 93BD47A1807
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Apr 2025 17:26:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D1FD83B960F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Apr 2025 17:45:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7821D176242;
-	Sat,  5 Apr 2025 17:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B89C7144304;
+	Sat,  5 Apr 2025 17:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="X1QBDPTC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TmRji+Lq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8C422EE5
-	for <linux-arm-msm@vger.kernel.org>; Sat,  5 Apr 2025 17:27:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1054F70838;
+	Sat,  5 Apr 2025 17:45:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743874074; cv=none; b=D3cdpb5fLyUquEZp8FNFkLXKqvie4nYvx2tP7sJYAjb02bTuWtQDLtCDSF29wAW2FIveiEaR57ZhgJDd/hBubuAr6JygofVQL6CtcGD10vowjWCFlnn245bmYIV4ynehPIg8BZmv9rDMVoIAYd+5FbAFsPOZAZWmA6/AolWigm8=
+	t=1743875130; cv=none; b=YALZjCh4w1vERhvtbGaeZoheNPTE59EJYPDMEvooIgjOCDCpfa2lV0CDhzNhvjUcIO9TCfipiqW8SRISVYB2DvHnhsEHY8Lp42vL1QP+KGl9wUMzDyYz1zZQ3iksiSy0ChxTrCKBnJaaO57EvpCVT2ebpOA6Hdpy5yilW/QPnq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743874074; c=relaxed/simple;
-	bh=WzPNIG8S7EkLyB4wTk65d9ihG81GOrOkBB58wKZnCyo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qxIE1KhV/FatSnxniTF3tIcUCChYNFcdOXunNH61GPB46lLJ3imwz2KsaEnBqUdjJEtRWjYF2w3kb+MBl1gtfE6kKkXtNOEz1tZEdmRv+VJao8smHr5lIqVzLBzlnnYUj5fIygX3e8KdIVuMEN8sQIG891E/z0hy0cbO37DnOgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=X1QBDPTC; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 535EHq2F010920
-	for <linux-arm-msm@vger.kernel.org>; Sat, 5 Apr 2025 17:27:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	C5UrBqYYL10LEBTum6m4Xhl+Wzvt7NLtyyRegDCKdfw=; b=X1QBDPTCvrcB4Uzf
-	nvoFTh9+7tiHbmPvw0HjUvUEMEljd+Oz/kM4lfoP2eJZe4IhLEBU872mub6V7AHK
-	/Ewp64+Mx4MjcB1eUYnq4K3L9D/Aj+i6QKFek5jcTjmSns09bQ90uzE2Ue0Vy5f1
-	I+JPnjomlG+V6ZdphbPjNnVPMegL+QFVMszxT64z+MsYMz3VE//rrfHM2hfguR9v
-	WJjRwGkyBGi71VMTt2LwL3mEG11nSiMjjgCDZR3sbOhA+BZqx+kxXZSZfSaVXLVo
-	CpeTojgQRMJWNpyuXMlUP7E4jyghOVen222GQrqXnaxBs24//c/I7HEQmqQilCYc
-	8mrl/g==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twbu8tcx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 05 Apr 2025 17:27:51 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c5ac559cbaso588661085a.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Apr 2025 10:27:51 -0700 (PDT)
+	s=arc-20240116; t=1743875130; c=relaxed/simple;
+	bh=Ml9G9ULATq3giFLsg/UVYtT11OMEdGKcJeqrvzQu3eI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Xr9f2TQe8xNUvPXTZsioQYtMAWmKISUBLB0zfDvpovA21o6KmhoNOwCjpXqWbCI16brJdFfx/ZW5Y7Z4hDDZRd34810x9Bp1QDo9rjkprZSVbXO40QZGfd842lThCW+3UMmb/gSFngsmTcmkdxPfa/JR/z6KxSsLG4JyQVghwXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TmRji+Lq; arc=none smtp.client-ip=209.85.210.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-736c1138ae5so2981998b3a.3;
+        Sat, 05 Apr 2025 10:45:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743875128; x=1744479928; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=k8JylLaT6hrTHNf9AdJnwsccmzcqkaZsXAyvhlHxaK0=;
+        b=TmRji+LqVua4MGN+HtNuzWADrYAWcDQJZCx4pT5t3fZlt6b0rcytRmgJoM91blIHEO
+         z09NENUdWDFlOB+ay1hKSLsEUx005dhIhRPfJ5aum+C+AcvDBVChr5Ybq2jLrD7Tkcca
+         aZdLH1P2aLNKaCMeZ8iaQJ3T/71j6Q+SFVKovd5Q9CUhBGXmqTDVjZq3+WHwm41Lcria
+         eSz/qAfKEW8NJVcBNxJ7asQGUfuvjYn31T2I0C+54aLzWxvOoe+IZuzjJji5mVuaQuba
+         zsIBM478wQST4HdRt8oXqO9ZlxqVWIwA+5adnm7Qod4sUAnc0BnY4C/kLyPkcnp/mMpg
+         ARgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743874070; x=1744478870;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=C5UrBqYYL10LEBTum6m4Xhl+Wzvt7NLtyyRegDCKdfw=;
-        b=JS6d8iCGigRvuSFRE5ouoriY9r2A1ODpLegUzrNBhT0uw2ubULDIYH/bfdLQvRDAv4
-         0AMlLapVYzkC1uPW50e2kInEn5xoTKqwxNyl73yLyQRVQ2WEUdEGy1Gd5NpuXlLdvgzG
-         MDZdHF2SFWBBHkqbyzpjG5B2hfXgvYG7oU4CBRnbhLiFDC4noIkUVVU0JLU2YeNpsR73
-         cb+QR3ufb0dVk9BDkYVFmwDEhUp2jZ51U9c5+/ooudC2dWSeil2E+zXYoxnVicMWe5uu
-         Ip8zwBtghmsNXz9ThKdM2QNvVxgu7ks4ST/q1r7318Rw7vLh6DN6VUvCh78Vn6IU6yeD
-         rMFA==
-X-Forwarded-Encrypted: i=1; AJvYcCUDUP4yrZmC3ZDjJoyynxrNCMqhYT97acYXfm0Z2OC04jTJxGdILJZtBK8TByIiXBkfbSgwirfA4R0R/e3i@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzz8UDmDV1/sH7bpu2AjWiqh0YF/PdaFByZOTf5N15gfAlXhk9u
-	+eZrwHOQk3699fH6ide0UvsXWOqmAFp4QaT8R2KjcOz6I5pyvztgVY0/xpMqTIgYKIjCnjJJghr
-	ZBidufdZh94LeR21sJBxent3mK2Df1U4kYmlnTqerrU4vHJee1luCXbccpPLCJaVe
-X-Gm-Gg: ASbGncu3QJrGEuCqxp8h2Z+CtQaxInOhFYsYOTwBcLEGX56+b/9N8uGOUvL49JjJ0AJ
-	z6jPeJZ4m0gvfjUb8/6z08VilVxWwl1LhlydYuD5aH20itbWJqIqWfo1HN6Y1cfuFiMi0n9v/+D
-	yDXVEQ3aIC0xkKkUflkAO/oMNeiZabEXLwrFtPkKcpfqayDJjTao0aRvkXDLO3mxTfFnxLY7730
-	N2G1xPQgYxyWXkB35OtCzDMVrwmU+Lshl0CL8Oyy1+uMAmari0Tsye/d1ubNLnA0y1Assj9D2l7
-	P0nJyCgujmsPmAUJzavUn42Uo8QuU/JNZkDOhF14h6MMjN1fj9V55gOC8oEL758HuiFQ
-X-Received: by 2002:a05:620a:440f:b0:7c5:4711:dc56 with SMTP id af79cd13be357-7c77de01d44mr567518785a.48.1743874070506;
-        Sat, 05 Apr 2025 10:27:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHafMbZ8BW3LW+4OJQutAKH0ZMvi8+bi8/F+SD5nICOagJ0fwxXZbQOXQE2zRrHoVp4J93XJA==
-X-Received: by 2002:a05:620a:440f:b0:7c5:4711:dc56 with SMTP id af79cd13be357-7c77de01d44mr567515885a.48.1743874070163;
-        Sat, 05 Apr 2025 10:27:50 -0700 (PDT)
-Received: from [10.160.109.143] (87-95-81-170.bb.dnainternet.fi. [87.95.81.170])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30f0313f2desm9387941fa.28.2025.04.05.10.27.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 05 Apr 2025 10:27:49 -0700 (PDT)
-Message-ID: <6e135e55-b5e4-4ead-85ba-29c2cd6aa7a2@oss.qualcomm.com>
-Date: Sat, 5 Apr 2025 20:27:47 +0300
+        d=1e100.net; s=20230601; t=1743875128; x=1744479928;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k8JylLaT6hrTHNf9AdJnwsccmzcqkaZsXAyvhlHxaK0=;
+        b=PYTaDgj6wddYNzAIhI/W/pYawrXeNot7Nug35j2GDzRCdZqKFxWBt+JscIHBW9RsBO
+         auHuCm/T8vMnwPR0yz1qWvQmeAAoMGabCAUHGTGhl/zjIlto0AjpH1kYvtAd3xcSr1dK
+         yauSFqPtavTihEoIQXE9KkdehiXAmSzJqEcyBhGt8boXZUgJwNELcUpvftlN2JfOzafT
+         MXjaHKWmTNrazWi/NGxGk0frWKBOVmqIl0A+eLKaM55x5SRmWRjPmXNLrCTxPR5yJgn/
+         cJCz2fd/5jt0p+AnU8Xeil8FBRqmL7t6xuswSj69ZKy/8B3YybUShfQi2w8WuwkvYRPl
+         LChg==
+X-Forwarded-Encrypted: i=1; AJvYcCVhk2+YeHgEHgV5O3BTHf1zcD8ZvkjVXXf78qWmKRsaMGqGb+2hDVvtjsk16lc6MqTAn7TFhQF7FZtEBWid6w==@vger.kernel.org, AJvYcCVwmmy71D9heCfUGxidyDEYj+p3dE6l9E/quhVu5IPn1qNLb8aL+2OboFtO1p9ree/E4835b9GSe5RK92BZ@vger.kernel.org, AJvYcCWoB1CwdhhxHuYccgRxrT2HCHruWug46BFjzpHeBP7LQ6fkWgdvjhHfKvT5j8iyzGy7t5gaE40sICrL@vger.kernel.org
+X-Gm-Message-State: AOJu0Yytv2z+/Rev7tITlTFMxoKUpGmNgwCVwI4tTcNfqjdcneel1PO0
+	LgREgpfJgtiWo3uVr/emP1R+Dw8cpU5qCDaaT8XxQwAssNCbRqUm
+X-Gm-Gg: ASbGncvLdZghbK5evjYcuHY/1R8cwmSSG8GNtC1O0xsEB0N9RRdCeYuQmFrCpNeAhUn
+	RTJobzV73MT/k1sx9MgmrJ+Bdm5gheErKib8oAym3Kp3/BE9Ive0qIrmEw/6M8yzrOAr43vkzNG
+	qtP6xY9/+qzhsAUyukOEYaH/FdHI31yFtees4A7h+6CQjRuuLTX3Tnn/E7LpSsFrOvxK58s3B1o
+	eDkssy896eDRwt71Uh3ZjG0AQ1XEZlNfw7oaQ3kWLX4AbymaGAfX6ZoN6SyJWs51kQAZPBB53F7
+	Tge/8QZlYhz1fGC2BxiMkYqfKqDOFpvWkZJHPx5Y/Hs=
+X-Google-Smtp-Source: AGHT+IE8/SKNOkh3OWD691lYQAnb2nSVSyMVuxAUKB46j38xJ+sPYkhr14o+4KJZ0ykyZ+9mo6MOwg==
+X-Received: by 2002:a05:6a00:a89:b0:737:e73:f64b with SMTP id d2e1a72fcca58-739e48c6f91mr9436320b3a.1.1743875128199;
+        Sat, 05 Apr 2025 10:45:28 -0700 (PDT)
+Received: from nuvole.. ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-739d97f2fd3sm5680631b3a.69.2025.04.05.10.45.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 05 Apr 2025 10:45:27 -0700 (PDT)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: Pengyu Luo <mitltlatltl@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org
+Subject: [PATCH] phy: qualcomm: phy-qcom-eusb2-repeater: rework reg override handler
+Date: Sun,  6 Apr 2025 01:43:18 +0800
+Message-ID: <20250405174319.405975-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 5/6] ASoC: codecs: wcd938x: add mux control support for
- hp audio mux
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Johan Hovold <johan@kernel.org>
-Cc: peda@axentia.se, broonie@kernel.org, andersson@kernel.org,
-        krzk+dt@kernel.org, ivprusov@salutedevices.com,
-        luca.ceresoli@bootlin.com, zhoubinbin@loongson.cn,
-        paulha@opensource.cirrus.com, lgirdwood@gmail.com, robh@kernel.org,
-        conor+dt@kernel.org, konradybcio@kernel.org, perex@perex.cz,
-        tiwai@suse.com, linux-sound@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, johan+linaro@kernel.org,
-        Christopher Obbard <christopher.obbard@linaro.org>
-References: <20250327100633.11530-1-srinivas.kandagatla@linaro.org>
- <20250327100633.11530-6-srinivas.kandagatla@linaro.org>
- <Z-z_ZAyVBK5ui50k@hovoldconsulting.com>
- <8613cf45-d202-4577-868c-8caf771c7bc4@linaro.org>
-Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <8613cf45-d202-4577-868c-8caf771c7bc4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: wsd-zTRDcJfNKV0RVmklfDYWZ2mL7kM7
-X-Proofpoint-ORIG-GUID: wsd-zTRDcJfNKV0RVmklfDYWZ2mL7kM7
-X-Authority-Analysis: v=2.4 cv=dbeA3WXe c=1 sm=1 tr=0 ts=67f16817 cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=YfwyiRVFF7VR29Me/gQaHA==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=D19gQVrFAAAA:8 a=gjPlNVnwJrpBRyZBAVEA:9 a=lqcHg5cX4UMA:10
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=ImwWUX5h3JJ3gRE9moBe:22 a=z2U-W3hJrleVIN9YIjzO:22 a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22 a=W4TVW4IDbPiebHqcZpNg:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-05_07,2025-04-03_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 mlxlogscore=916 phishscore=0 mlxscore=0 spamscore=0
- malwarescore=0 clxscore=1015 adultscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504050113
 
-On 03/04/2025 15:19, Srinivas Kandagatla wrote:
-> 
-> 
-> On 02/04/2025 10:12, Johan Hovold wrote:
->> On Thu, Mar 27, 2025 at 10:06:32AM +0000, Srinivas Kandagatla wrote:
->>> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>>
->>> On some platforms to minimise pop and click during switching between
->>> CTIA and OMTP headset an additional HiFi mux is used. Most common
->>> case is that this switch is switched on by default, but on some
->>> platforms this needs a regulator enable.
->>>
->>> move to using mux control to enable both regulator and handle gpios,
->>> deprecate the usage of gpio.
->>>
->>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>> Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
->>
->>> @@ -3261,11 +3276,26 @@ static int wcd938x_populate_dt_data(struct 
->>> wcd938x_priv *wcd938x, struct device
->>>           return dev_err_probe(dev, wcd938x->reset_gpio,
->>>                        "Failed to get reset gpio\n");
->>> -    wcd938x->us_euro_gpio = devm_gpiod_get_optional(dev, "us-euro",
->>> -                        GPIOD_OUT_LOW);
->>> -    if (IS_ERR(wcd938x->us_euro_gpio))
->>> -        return dev_err_probe(dev, PTR_ERR(wcd938x->us_euro_gpio),
->>> -                     "us-euro swap Control GPIO not found\n");
->>> +    wcd938x->us_euro_mux = devm_mux_control_get(dev, NULL);
->>
-> Thanks Johan,
->> Running with this patch on the CRD I noticed that this now prints an
->> error as there is no optional mux (or gpio) defined:
->>
->>     wcd938x_codec audio-codec: /audio-codec: failed to get mux-control 
->> (0)
-> 
-> This is not from codec driver, mux control is throwing up this.
-> 
->>
->> You need to suppress that error in mux_get() to allow for optional muxes
->> to be looked up like this.
-> I have a plan for this,
-> 
-> I proposed some changes to mux api for exclusive apis at https:// 
-> lkml.org/lkml/2025/3/26/955
-> 
-> This should also allow us to easily add an optional api, which I plan to 
-> do once i get some feedback on this patch.
+In downstream tree, many registers need to be overrided, it varies
+from devices and platforms, not only HS trasmit amplitude(0x51),
+HS disconnect threshold(0x53), Tx pre-emphasis tuning(0x57).
 
-I'd rather suggest an API to switch the state without deselecting the 
-the mux.
+The device I plan to upstream also uses it, so I write the patch for
+it (Oneplus Pad Pro / Oneplus Pad 2, sm8650-mtp based).
 
-> 
-> --srini
-> 
->>
+In upstream, only Sony Xperia 1 V is using this, so fixing it for sony,
+in downstream, some crd, mtp, htk devices also use it, I have no
+such device, don't set it for them.
 
+Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+---
+ .../qcom/sm8550-sony-xperia-yodo-pdx234.dts   |  5 +-
+ .../phy/qualcomm/phy-qcom-eusb2-repeater.c    | 86 +++++++++++++++----
+ 2 files changed, 72 insertions(+), 19 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts b/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
+index d90dc7b37..99f5fd32c 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
+@@ -673,9 +673,8 @@ cam_pwr_a_cs: cam-pwr-a-cs-state {
+ };
+ 
+ &pm8550b_eusb2_repeater {
+-	qcom,tune-usb2-disc-thres = /bits/ 8 <0x6>;
+-	qcom,tune-usb2-amplitude = /bits/ 8 <0xf>;
+-	qcom,tune-usb2-preem = /bits/ 8 <0x7>;
++	qcom,param-override-seq = <0x51 0x08 0x53 0x06 0x57 0x07>;
++	qcom,host-param-override-seq = <0x51 0x08 0x53 0x06 0x57 0x07>;
+ 	vdd18-supply = <&pm8550_l15>;
+ 	vdd3-supply = <&pm8550_l5>;
+ };
+diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
+index 6bd1b3c75..151e93cd0 100644
+--- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
++++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
+@@ -76,6 +76,11 @@ struct eusb2_repeater {
+ 	const struct eusb2_repeater_cfg *cfg;
+ 	u32 base;
+ 	enum phy_mode mode;
++
++	u32 *param_override_seq;
++	u32 *host_param_override_seq;
++	u8 param_override_seq_cnt;
++	u8 host_param_override_seq_cnt;
+ };
+ 
+ static const char * const pm8550b_vreg_l[] = {
+@@ -108,6 +113,63 @@ static const struct eusb2_repeater_cfg smb2360_eusb2_cfg = {
+ 	.num_vregs	= ARRAY_SIZE(pm8550b_vreg_l),
+ };
+ 
++static void eusb2_repeater_write_overrides(struct eusb2_repeater *rptr,
++					   u32 *seq, u8 cnt)
++{
++	int i;
++
++	for (i = 0; i < cnt; i += 2)
++		regmap_write(rptr->regmap, rptr->base + seq[i], seq[i + 1]);
++}
++
++static int eusb2_repeater_read_overrides(struct device *dev, const char *prop,
++					 u32 **seq, u8 *seq_cnt)
++{
++	int num_elem, ret;
++
++	num_elem = of_property_count_elems_of_size(dev->of_node, prop, sizeof(**seq));
++	if (num_elem > 0) {
++		if (num_elem % 2) {
++			dev_err(dev, "invalid len for %s\n", prop);
++			return -EINVAL;
++		}
++
++		*seq_cnt = num_elem;
++		*seq = devm_kcalloc(dev, num_elem, sizeof(**seq), GFP_KERNEL);
++		if (!*seq)
++			return -ENOMEM;
++
++		ret = of_property_read_u32_array(dev->of_node, prop, *seq, num_elem);
++		if (ret) {
++			dev_err(dev, "%s read failed %d\n", prop, ret);
++			return ret;
++		}
++	}
++
++	return 0;
++}
++
++static int eusb2_repeater_parse_dt(struct eusb2_repeater *rptr)
++{
++	int ret;
++
++	ret = of_property_read_u32(rptr->dev->of_node, "reg", &rptr->base);
++	if (ret < 0)
++		return ret;
++
++	ret = eusb2_repeater_read_overrides(rptr->dev, "qcom,param-override-seq",
++					    &rptr->param_override_seq,
++					    &rptr->param_override_seq_cnt);
++	if (ret < 0)
++		return ret;
++
++	ret = eusb2_repeater_read_overrides(rptr->dev, "qcom,host-param-override-seq",
++					    &rptr->host_param_override_seq,
++					    &rptr->host_param_override_seq_cnt);
++
++	return ret;
++}
++
+ static int eusb2_repeater_init_vregs(struct eusb2_repeater *rptr)
+ {
+ 	int num = rptr->cfg->num_vregs;
+@@ -127,20 +189,12 @@ static int eusb2_repeater_init_vregs(struct eusb2_repeater *rptr)
+ static int eusb2_repeater_init(struct phy *phy)
+ {
+ 	struct eusb2_repeater *rptr = phy_get_drvdata(phy);
+-	struct device_node *np = rptr->dev->of_node;
+ 	struct regmap *regmap = rptr->regmap;
+ 	const u32 *init_tbl = rptr->cfg->init_tbl;
+-	u8 tune_usb2_preem = init_tbl[TUNE_USB2_PREEM];
+-	u8 tune_hsdisc = init_tbl[TUNE_HSDISC];
+-	u8 tune_iusb2 = init_tbl[TUNE_IUSB2];
+ 	u32 base = rptr->base;
+ 	u32 val;
+ 	int ret;
+ 
+-	of_property_read_u8(np, "qcom,tune-usb2-amplitude", &tune_iusb2);
+-	of_property_read_u8(np, "qcom,tune-usb2-disc-thres", &tune_hsdisc);
+-	of_property_read_u8(np, "qcom,tune-usb2-preem", &tune_usb2_preem);
+-
+ 	ret = regulator_bulk_enable(rptr->cfg->num_vregs, rptr->vregs);
+ 	if (ret)
+ 		return ret;
+@@ -156,10 +210,9 @@ static int eusb2_repeater_init(struct phy *phy)
+ 	regmap_write(regmap, base + EUSB2_TUNE_SQUELCH_U, init_tbl[TUNE_SQUELCH_U]);
+ 	regmap_write(regmap, base + EUSB2_TUNE_RES_FSDIF, init_tbl[TUNE_RES_FSDIF]);
+ 	regmap_write(regmap, base + EUSB2_TUNE_USB2_CROSSOVER, init_tbl[TUNE_USB2_CROSSOVER]);
+-
+-	regmap_write(regmap, base + EUSB2_TUNE_USB2_PREEM, tune_usb2_preem);
+-	regmap_write(regmap, base + EUSB2_TUNE_HSDISC, tune_hsdisc);
+-	regmap_write(regmap, base + EUSB2_TUNE_IUSB2, tune_iusb2);
++	regmap_write(regmap, base + EUSB2_TUNE_USB2_PREEM, init_tbl[TUNE_USB2_PREEM]);
++	regmap_write(regmap, base + EUSB2_TUNE_HSDISC, init_tbl[TUNE_HSDISC]);
++	regmap_write(regmap, base + EUSB2_TUNE_IUSB2, init_tbl[TUNE_IUSB2]);
+ 
+ 	ret = regmap_read_poll_timeout(regmap, base + EUSB2_RPTR_STATUS, val, val & RPTR_OK, 10, 5);
+ 	if (ret)
+@@ -177,6 +230,8 @@ static int eusb2_repeater_set_mode(struct phy *phy,
+ 
+ 	switch (mode) {
+ 	case PHY_MODE_USB_HOST:
++		eusb2_repeater_write_overrides(rptr, rptr->host_param_override_seq,
++					       rptr->host_param_override_seq_cnt);
+ 		/*
+ 		 * CM.Lx is prohibited when repeater is already into Lx state as
+ 		 * per eUSB 1.2 Spec. Below implement software workaround until
+@@ -186,6 +241,8 @@ static int eusb2_repeater_set_mode(struct phy *phy,
+ 		regmap_write(regmap, base + EUSB2_FORCE_VAL_5, V_CLK_19P2M_EN);
+ 		break;
+ 	case PHY_MODE_USB_DEVICE:
++		eusb2_repeater_write_overrides(rptr, rptr->param_override_seq,
++					       rptr->param_override_seq_cnt);
+ 		/*
+ 		 * In device mode clear host mode related workaround as there
+ 		 * is no repeater reset available, and enable/disable of
+@@ -222,7 +279,6 @@ static int eusb2_repeater_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct phy_provider *phy_provider;
+ 	struct device_node *np = dev->of_node;
+-	u32 res;
+ 	int ret;
+ 
+ 	rptr = devm_kzalloc(dev, sizeof(*rptr), GFP_KERNEL);
+@@ -240,12 +296,10 @@ static int eusb2_repeater_probe(struct platform_device *pdev)
+ 	if (!rptr->regmap)
+ 		return -ENODEV;
+ 
+-	ret = of_property_read_u32(np, "reg", &res);
++	ret = eusb2_repeater_parse_dt(rptr);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	rptr->base = res;
+-
+ 	ret = eusb2_repeater_init_vregs(rptr);
+ 	if (ret < 0) {
+ 		dev_err(dev, "unable to get supplies\n");
 -- 
-With best wishes
-Dmitry
+2.49.0
+
 
