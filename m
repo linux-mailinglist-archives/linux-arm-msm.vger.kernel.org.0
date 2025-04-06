@@ -1,279 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-53305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6749A7CF86
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 20:28:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BE5ABA7CFBA
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 20:36:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8396B16E6CA
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 18:28:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 41501168FA0
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 18:35:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A702E1A08B1;
-	Sun,  6 Apr 2025 18:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65690188006;
+	Sun,  6 Apr 2025 18:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d5js8ceX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TOu04ogp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6F119F11E;
-	Sun,  6 Apr 2025 18:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52C842AA5
+	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Apr 2025 18:35:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743964100; cv=none; b=V4KfyMFX9fSSwGdg9s7D4u4AzlT+fynAHwE4UMcGg58BmHFr9CdLJTtNRm3mnfY5e7h+3gplpYIkDQz7w9HdEYNHdLxww5Hz+OaTORIkEJjfo9LZUHVVnpdoNumQRsYfCihknq0x3fA9gu+yuiQbZw8PmOSR8qDqQ+GruNRlH4o=
+	t=1743964527; cv=none; b=m6QQXNDRy1twerOalskG2j74nQaXye3s3w8WIStINrQxVE5EZhqC421vADgF+ZvgdMCL4VjDEUZ0qQee3LNRROts35iJWHtGXpAgLCeKKU50J1z2aqOsTIJfBqWi73wrn0fy6Cx6s5y8G+EhL9cG2FOGHkPH47HPBP8GyWpsJdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743964100; c=relaxed/simple;
-	bh=6O+OtUY8I4gIiPTqNSHbMX3HSUJdq2fniANGw6IDTag=;
+	s=arc-20240116; t=1743964527; c=relaxed/simple;
+	bh=xVF3x3UkSJDIxlowMV/5yJWg5CVdZ5Rp/WZSsw2+4XY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=feIiXAmizE/3Tl0Bn/8fL3mrFglhy+LHFCYZNVCo6xlLvMI/JsY8D/rq9lrP/UMsu5+H7N3TELKktnxZ9ObGMGL6M3RwgxwK/gVvizBKVcf754ywm1aStNCTFLRZGY6g8pJN7ii4kwqsgPfEPoWnmCgTtJ+vlFO6IlhRbfsTSf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d5js8ceX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9AFC4CEE7;
-	Sun,  6 Apr 2025 18:28:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743964098;
-	bh=6O+OtUY8I4gIiPTqNSHbMX3HSUJdq2fniANGw6IDTag=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=d5js8ceX+DABBohgMHLKQYssyUgg19/uFwKP+oKYuo9iHVYTKMsm/EvpPCOoWkSJK
-	 fs1SSMaXf4XEKq9AvSM94CybVLtgQB+jbmdy+BT5nsoNOqozO1vOJfqgqA94RvvJjm
-	 wmMgQCpfpjGBHDMiyhEb4/GVtKNSoBo0+xHLjaBLgSWP5KXo5pbJjICUiW0q8qTHYG
-	 vVKEWC0pCK+bSolLKsklx275qVQgfyvJKfKf5v8mytoc52miwiH6QZmZWodCszHYJg
-	 ML2pcjgZLZQFfoUUf8nC+v1sF0oKep8TZ79hbnGgsDWoHmD0K8W3UZuWel3BBsxs6w
-	 X1TY6UCZmApcg==
-Date: Sun, 6 Apr 2025 19:28:15 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Weidong Wang <wangweidong.a@awinic.com>,
-	linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/3] ASoC: codecs: Add aw8898 amplifier driver
-Message-ID: <Z_LHv4S-FcgvGldA@finisterre.sirena.org.uk>
-References: <20250406-aw8898-v1-0-58a2d554693f@lucaweiss.eu>
- <20250406-aw8898-v1-2-58a2d554693f@lucaweiss.eu>
+	 Content-Type:Content-Disposition:In-Reply-To; b=i3gytJJPYO9J+wx4C0NdrN/FD5jZx/JolBZ/WvobTn7xmx0OiBbz4SCXWiiQYv/cemem0s+3XMib47JNISbf8PMD2z8g9DjNA1mqNaYQ4fTYD9aalow7H9NqNnaoFQTwxpvDQaGJueykQgySTBxAa+BJSg+RdTRybMAKhZ/iINY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TOu04ogp; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-227cf12df27so26587185ad.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Apr 2025 11:35:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1743964525; x=1744569325; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=JG00idBbiuZzkIUnOfUDwBMjIfIGhLtfrBRZuXQ2YbM=;
+        b=TOu04ogpGZucH3zRsGvcLUQQKn4G3sZlm3cBv1EG4svsZ6PY0UvU0LO5MXWC86erHM
+         FqU/3lurbBpSPOtzSGUw/2duANc2J+UCVh+gIcYqcjNFqTy1K8Uk1kHVNYmstVfGic/P
+         OoFCM+s3vPXSKbtyH8yBb+Osw1ylR/iFzA8OaxceQTNnNTg5hftYQnHymuxcFRkuohrN
+         C4n5lbTrMjcbu1/R71Pk5GSdexzfLT7VzZz0QvsXEoFFz+Dv6v7NGsuCoNwvNIy3lKPf
+         XoTdK4BhOAZ6u83mjFCVD05fuemh5jrNHgX15cwvRzLA+W1KvXa/3xQATdGyf3ng5p4V
+         MwkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743964525; x=1744569325;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JG00idBbiuZzkIUnOfUDwBMjIfIGhLtfrBRZuXQ2YbM=;
+        b=wjgjPCZqkSa4/rU9Kop6QMoUuQhsbZL8PVlQppj3o6qNV0kGpBOgVVCZNqY9ZXEn8y
+         AZ08F48shfledQ5j/1txYe6wM4ZnQJqWcfT5dz1WW9oU5Y9hiNb2eJCf6F6oVOZmYyTN
+         vo4V6spYxhANhcml+SfLnXh64XxqPUNs25iRJZEiDU02+nxOKCToy3Ajpt9BWyzofKlM
+         AvFnbz+y+GABHt4Uz9iJXZsVK2HAXpwR6aFS3B0b8fshuVuyfmWOOISPQvtLwc06avwR
+         FoE+Xu6G/iPAOWw6sOu2fd4nHBZCyn5Zub/jDcxWKMQD7P9o/RshjX5LUh9I7jgIbzQL
+         b/Dg==
+X-Forwarded-Encrypted: i=1; AJvYcCVgQ71L8YgaRAYeU8zlCfHLEMsAPlUYp5u9esXCdQd7PzPozWoPQXQsUeZfPttjR22Xo3o/3XXOCTpIuPAm@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7LTuOgIfu/QPsDxyn3fAWKBJThdHChXRSjc7X+z3GoBMLhJN0
+	NF9DUsOUpSqYsfVE+z3Vf5HzaOpAUheoz7jkYK+GF/ZXao9nDNAFz0fYG7rkqw==
+X-Gm-Gg: ASbGncsKwL4MLArJ1q2nByIrQXeX+Ev0PSKhD3PiZKrxVieqyEwRR3kzPC6OCsK5F0w
+	mWHvgosk03+vEzUF+Y9HPy/85K1TcJ5lS26j26c5m2DyKIP2aw0hhHDM3izDVtv/JaDXiHad/do
+	PlP2rQ+1jPjd3C1o/OV/GOtPrsQ0T2dL+Kkk1QGvLVRMr85+1636xEJGSAw8robHzOWykWgKsqv
+	1mjJ9h23uddjdammbeFRWTw6HIQhzUOmimR2wBj1xFnOXi17tDPA2JLxAsUmzqV+PUFAXLodOSw
+	3y1wlPsdnor+2SErMoTlXxBV/eUZBFqVH6YRjfuxsIA/f5Us7puWrBM=
+X-Google-Smtp-Source: AGHT+IGOGFfSBcmfodUPLiDGYIY4DGC8r1k7PhYjbfzDdhTnlzgvWrXr4fTTmrOrq1dg8IG68Osutg==
+X-Received: by 2002:a17:902:d482:b0:223:4d5e:76a6 with SMTP id d9443c01a7336-22a89a241d6mr131992235ad.1.1743964524915;
+        Sun, 06 Apr 2025 11:35:24 -0700 (PDT)
+Received: from thinkpad ([120.60.71.192])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2297866080csm66260455ad.125.2025.04.06.11.35.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Apr 2025 11:35:24 -0700 (PDT)
+Date: Mon, 7 Apr 2025 00:05:19 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Manish Pandey <quic_mapa@quicinc.com>
+Cc: "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
+	"Martin K. Petersen" <martin.petersen@oracle.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, linux-scsi@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, quic_nitirawa@quicinc.com, 
+	quic_bhaskarv@quicinc.com, quic_rampraka@quicinc.com, quic_cang@quicinc.com, 
+	quic_nguyenb@quicinc.com
+Subject: Re: [PATCH V2 2/2] scsi: ufs: introduce quirk to extend
+ PA_HIBERN8TIME for UFS devices
+Message-ID: <hcguawgzuqgi2cyw3nf7uiilahjsvrm37f6zgfqlnfkck3jatv@xgaca3zgts2u>
+References: <20250404174539.28707-1-quic_mapa@quicinc.com>
+ <20250404174539.28707-3-quic_mapa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2La7XcN7yH/by3lQ"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250406-aw8898-v1-2-58a2d554693f@lucaweiss.eu>
-X-Cookie: Well begun is half done.
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250404174539.28707-3-quic_mapa@quicinc.com>
 
+On Fri, Apr 04, 2025 at 11:15:39PM +0530, Manish Pandey wrote:
+> Some UFS devices need additional time in hibern8 mode before exiting,
+> beyond the negotiated handshaking phase between the host and device.
+> Introduce a quirk to increase the PA_HIBERN8TIME parameter by 100 µs
+> to ensure proper hibernation process.
+> 
 
---2La7XcN7yH/by3lQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This commit message didn't mention the UFS device for which this quirk is being
+applied.
 
-On Sun, Apr 06, 2025 at 03:03:16PM +0200, Luca Weiss wrote:
-
-Overall this driver feels like it's not terribly well integrated into
-the subsystem - it's not using the standard framework features for
-things.  The code itself looks broadly fine but things need moving about
-a bit to feel more like a standard driver.
-
-> @@ -0,0 +1,583 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +/*
-> + * Copyright (c) 2018 AWINIC Technology CO., LTD
-> + * Author: Nick Li <liweilei@awinic.com.cn>
+> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+> ---
+>  drivers/ufs/core/ufshcd.c | 31 +++++++++++++++++++++++++++++++
+>  include/ufs/ufs_quirks.h  |  6 ++++++
+>  2 files changed, 37 insertions(+)
+> 
+> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+> index 464f13da259a..2b8203fe7b8c 100644
+> --- a/drivers/ufs/core/ufshcd.c
+> +++ b/drivers/ufs/core/ufshcd.c
+> @@ -278,6 +278,7 @@ static const struct ufs_dev_quirk ufs_fixups[] = {
+>  	  .model = UFS_ANY_MODEL,
+>  	  .quirk = UFS_DEVICE_QUIRK_DELAY_BEFORE_LPM |
+>  		   UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE |
+> +		   UFS_DEVICE_QUIRK_PA_HIBER8TIME |
+>  		   UFS_DEVICE_QUIRK_RECOVERY_FROM_DL_NAC_ERRORS },
+>  	{ .wmanufacturerid = UFS_VENDOR_SKHYNIX,
+>  	  .model = UFS_ANY_MODEL,
+> @@ -8384,6 +8385,33 @@ static int ufshcd_quirk_tune_host_pa_tactivate(struct ufs_hba *hba)
+>  	return ret;
+>  }
+>  
+> +/**
+> + * ufshcd_quirk_override_pa_h8time - Ensures proper adjustment of PA_HIBERN8TIME.
+> + * @hba: per-adapter instance
 > + *
-> + * Copyright (c) 2025 Luca Weiss <luca@lucaweiss.eu>
+> + * Some UFS devices require specific adjustments to the PA_HIBERN8TIME parameter
+> + * to ensure proper hibernation timing. This function retrieves the current
+> + * PA_HIBERN8TIME value and increments it by 100us.
 > + */
-
-Please make the entire comment a C++ one so things look more
-intentional.
-
-> +static void aw8898_set_mute(struct aw8898 *aw8898, bool mute)
+> +static void ufshcd_quirk_override_pa_h8time(struct ufs_hba *hba)
 > +{
-> +	unsigned int val =3D AW8898_PWMCTRL_HMUTE_DISABLE;
-> +
-> +	if (mute)
-> +		val =3D AW8898_PWMCTRL_HMUTE_ENABLE;
-> +
-> +	regmap_update_bits(aw8898->regmap, AW8898_PWMCTRL,
-> +			   AW8898_PWMCTRL_HMUTE_MASK,
-> +			   FIELD_PREP(AW8898_PWMCTRL_HMUTE_MASK, val));
-> +}
+> +	u32 pa_h8time = 0;
 
-This should either be the standard DAI mute operation, user controlled
-or there should be a clear explanation of what's going on.  Or just
-inlined into callers given how trivial it is.
+Why do you need to initialize it?
 
-> +static void aw8898_set_power(struct aw8898 *aw8898, bool on)
-> +{
-> +	unsigned int val =3D AW8898_SYSCTRL_PW_PDN;
-> +
-> +	if (on)
-> +		val =3D AW8898_SYSCTRL_PW_ACTIVE;
-> +
-> +	regmap_update_bits(aw8898->regmap, AW8898_SYSCTRL,
-> +			   AW8898_SYSCTRL_PW_MASK,
-> +			   FIELD_PREP(AW8898_SYSCTRL_PW_MASK, val));
-> +}
-
-This should be in the standard framework power management flows
-(probably either a DAPM widget or set_bias_level(), it looks closer to
-the latter).
-
-> +static int aw8898_dev_mode_put(struct snd_kcontrol *kcontrol,
-> +			       struct snd_ctl_elem_value *ucontrol)
-> +{
-> +	struct snd_soc_component *component =3D snd_soc_kcontrol_component(kcon=
-trol);
-> +	struct aw8898 *aw8898 =3D snd_soc_component_get_drvdata(component);
-> +
-> +	if (aw8898->dev_mode =3D=3D ucontrol->value.enumerated.item[0])
-> +		return 0;
-> +
-> +	aw8898->dev_mode =3D ucontrol->value.enumerated.item[0];
-> +
-> +	aw8898_update_dev_mode(aw8898);
-> +
-> +	return 1;
-> +}
-
-There is no validation of the written value here.  Please use the
-mixer-test selftest to vaidate things.
-
-> +/*
-> + * -127.5 dB min, 0.5 dB steps, no mute
-> + * Note: The official datasheet claims to be able to attenuate between 0=
- dB and
-> + * -96 dB with 0.5 dB/step, but the register values are 0-255 so this do=
-esn't
-> + * really line up. It's a best guess.
-> + */
-
-It is common for registers to have out of spec values which should never
-be written, they might behave in undesirable ways.  The controls should
-only expose whatever the documented values are.
-
-> +static int aw8898_startup(struct snd_pcm_substream *substream,
-> +			  struct snd_soc_dai *dai)
-> +{
-> +	struct aw8898 *aw8898 =3D snd_soc_component_get_drvdata(dai->component);
-> +
-> +	aw8898_set_power(aw8898, true);
-> +
-> +	return 0;
-> +}
-
-As noted above the power should be managed from power management
-operations, either set_bias_level() or DAPM.
-
-> +static int aw8898_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
-> +{
-> +	struct snd_soc_component *component =3D dai->component;
-> +
-> +	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
-> +	case SND_SOC_DAIFMT_I2S:
-> +		if ((fmt & SND_SOC_DAIFMT_MASTER_MASK)
-
-_CLOCK_PROVIDER_MASK.
-
-> +static int aw8898_mute(struct snd_soc_dai *dai, int mute, int stream)
-> +{
-> +	struct aw8898 *aw8898 =3D snd_soc_component_get_drvdata(dai->component);
-> +
-> +	mutex_lock(&aw8898->cfg_lock);
-> +
-> +	if (mute) {
-> +		aw8898_stop(aw8898);
-> +	} else {
-> +		if (!aw8898->cfg_loaded) {
-> +			aw8898_cold_start(aw8898);
-> +		} else {
-> +			aw8898_update_dev_mode(aw8898);
-> +			aw8898_start(aw8898);
-> +		}
-> +	}
-> +
-> +	mutex_unlock(&aw8898->cfg_lock);
-
-A mute operation should not be doing anything as expensive as this, it
-should just be something more like a single register write (eg, just the
-mute).  This looks more like power management operations. =20
-
-> +static int aw8898_component_probe(struct snd_soc_component *component)
-> +{
-> +	struct aw8898 *aw8898 =3D snd_soc_component_get_drvdata(component);
 > +	int ret;
 > +
-> +	aw8898->component =3D component;
-> +
-> +	ret =3D regulator_bulk_enable(ARRAY_SIZE(aw8898->supplies),
-> +				    aw8898->supplies);
+> +	ret = ufshcd_dme_get(hba, UIC_ARG_MIB(PA_HIBERN8TIME),
+> +			&pa_h8time);
 > +	if (ret) {
-> +		dev_err(component->dev, "Failed to enable supplies: %d\n",
-> +			ret);
-> +		return ret;
+> +		dev_err(hba->dev, "Failed to get PA_HIBERN8TIME: %d\n", ret);
+> +		return;
 > +	}
-
-It seems random to do this separately to the rest of the power
-management for the device?
-
-> +	snd_soc_add_component_controls(component, aw8898_controls,
-> +				       ARRAY_SIZE(aw8898_controls));
-
-Just specify the controls in the driver struct when registering.
-
-> +static const struct regmap_config aw8898_regmap =3D {
-> +	.reg_bits =3D 8,
-> +	.val_bits =3D 16,
 > +
-> +	.max_register =3D AW8898_MAX_REGISTER,
-> +	.cache_type =3D REGCACHE_RBTREE,
-> +};
+> +	/* Increment by 1 to increase hibernation time by 100 µs */
 
-Use _MAPLE unless you have a particular reason not to, it's a more
-modern data structure.
+From where the value of 100us adjustment is coming from?
 
-> +static int aw8898_probe(struct i2c_client *client)
-> +{
-> +	struct aw8898 *aw8898;
-> +	int ret;
+- Mani
 
-> +	aw8898->reset =3D devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_HIGH);
-> +	if (IS_ERR(aw8898->reset))
-> +		return dev_err_probe(&client->dev, PTR_ERR(aw8898->reset),
-> +				     "Failed to get reset GPIO\n");
-> +
-> +	aw8898_reset(aw8898);
-> +
-> +	ret =3D aw8898_check_chipid(aw8898);
-> +	if (ret)
-> +		return dev_err_probe(&client->dev, ret, "Chip ID check failed\n");
-
-We didn't power on the regulators before trying to validate the chip ID
-which probably isn't going to go terribly well if the regulators are
-controllable...
-
---2La7XcN7yH/by3lQ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmfyx74ACgkQJNaLcl1U
-h9BbOwgAht5c+dFrCWIsoSgKWjmZtr17i6+lOi1GHTsCotsaVhEaYhUq3p1Vb6iW
-7/LLKNMi9BwIHNeYAqYK/tKrj8DDagb2nkYFqqiE4M5TZ/8RTLj9ZoFz1S8ZK2TJ
-7hAtF/jE5R6W9O614MRkleHf88JgyYdyBdJAmmq9YaoZh6byB6RQgtgbtiOVX0+z
-yrs+pPkkp+jeZaLsBbHkDhP2uUJuOX+ogg1ICcE8nN0WZiMWiWH0mq9w4Qfy73+7
-vCmJi7FDOIFrZScB/C+iiywpSikpi0/ohvDX0p0D79Rr7JrFVgdT5ijqfwGvyzkj
-431b2bAvGcBBN6Xod+yKWquOBiKOgA==
-=fuBE
------END PGP SIGNATURE-----
-
---2La7XcN7yH/by3lQ--
+-- 
+மணிவண்ணன் சதாசிவம்
 
