@@ -1,163 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-53306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE5ABA7CFBA
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 20:36:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 752A0A7D00C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 22:02:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 41501168FA0
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 18:35:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16FE53AF8B9
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 20:01:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65690188006;
-	Sun,  6 Apr 2025 18:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAAF21AAE13;
+	Sun,  6 Apr 2025 20:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TOu04ogp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xJrvTcqn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52C842AA5
-	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Apr 2025 18:35:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F54154C00
+	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Apr 2025 20:01:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743964527; cv=none; b=m6QQXNDRy1twerOalskG2j74nQaXye3s3w8WIStINrQxVE5EZhqC421vADgF+ZvgdMCL4VjDEUZ0qQee3LNRROts35iJWHtGXpAgLCeKKU50J1z2aqOsTIJfBqWi73wrn0fy6Cx6s5y8G+EhL9cG2FOGHkPH47HPBP8GyWpsJdY=
+	t=1743969713; cv=none; b=UphKu8wElrv7ohhoTVcnIkmCCd8eojeKVVbRxKyPFyiyJ2jXrz20x684g7FbRC1muWi5n73s5TJoj8WtxCvn0ti1Lo2PJTDAzspOz0xESFF8cXQOQ5AluueXIpCE/7B948S33JDE4Q6/rjXx3Ffj6N1Oppo0rjf67MGQn91xvgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743964527; c=relaxed/simple;
-	bh=xVF3x3UkSJDIxlowMV/5yJWg5CVdZ5Rp/WZSsw2+4XY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i3gytJJPYO9J+wx4C0NdrN/FD5jZx/JolBZ/WvobTn7xmx0OiBbz4SCXWiiQYv/cemem0s+3XMib47JNISbf8PMD2z8g9DjNA1mqNaYQ4fTYD9aalow7H9NqNnaoFQTwxpvDQaGJueykQgySTBxAa+BJSg+RdTRybMAKhZ/iINY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TOu04ogp; arc=none smtp.client-ip=209.85.214.174
+	s=arc-20240116; t=1743969713; c=relaxed/simple;
+	bh=iSXkcUbsxY3DxZJb4frxFs5pjfXPxSfYSUua8756xYQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=l2I4UuZ+V8pUfO91t5Yw5c9ipAeWIo9QrXxw+a4KgdqrrJoQh/iXBU04s9PlB0+gW3NBWFu89ygRSmkDj9/E60qJfd+EQkpVzp/vmg6hu19FnaQxmyJJcqFm+5JfLM6EaeMRYLwuPhEJ3bfOj8Y5xLmHBXbvRCQUxLljZ9E0CgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xJrvTcqn; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-227cf12df27so26587185ad.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Apr 2025 11:35:25 -0700 (PDT)
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-39973c72e8cso400855f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Apr 2025 13:01:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743964525; x=1744569325; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=JG00idBbiuZzkIUnOfUDwBMjIfIGhLtfrBRZuXQ2YbM=;
-        b=TOu04ogpGZucH3zRsGvcLUQQKn4G3sZlm3cBv1EG4svsZ6PY0UvU0LO5MXWC86erHM
-         FqU/3lurbBpSPOtzSGUw/2duANc2J+UCVh+gIcYqcjNFqTy1K8Uk1kHVNYmstVfGic/P
-         OoFCM+s3vPXSKbtyH8yBb+Osw1ylR/iFzA8OaxceQTNnNTg5hftYQnHymuxcFRkuohrN
-         C4n5lbTrMjcbu1/R71Pk5GSdexzfLT7VzZz0QvsXEoFFz+Dv6v7NGsuCoNwvNIy3lKPf
-         XoTdK4BhOAZ6u83mjFCVD05fuemh5jrNHgX15cwvRzLA+W1KvXa/3xQATdGyf3ng5p4V
-         MwkA==
+        d=linaro.org; s=google; t=1743969709; x=1744574509; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1B7AZw7nds/G/Q7UFyxo55SXsrJvSu3ziPQ8Q+kdE2g=;
+        b=xJrvTcqn1tLdwURDE2qcbL0jwaUazlJJRo2y5ecjFlJ8irt2Zgvzn1YkyCb4i89rjm
+         jF7+9SPQHohZJNRNgC6jphc43ow3Q1tTiB63gK/bkgMfhGvsRBMhlekfkagmAP6skTXT
+         H7ao6nNjRKHbRwYmSc2OFvUovXzccSZmTcOaNiruj/VRURJ6BLWkWdvkwk0hFLnbJmDH
+         4nUghQDaqf+lTwSvr9KsreQLeJEHG9YzykjlwHZD7YkiPug9kyO5SKcektAA8Q3V3XEX
+         HMxDRHynlSjWkqf9atzbBQWBAeK+iAT76TBEyOOby5wqxB6+DXTExYphe4bK/nrnCX4/
+         4Hhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743964525; x=1744569325;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JG00idBbiuZzkIUnOfUDwBMjIfIGhLtfrBRZuXQ2YbM=;
-        b=wjgjPCZqkSa4/rU9Kop6QMoUuQhsbZL8PVlQppj3o6qNV0kGpBOgVVCZNqY9ZXEn8y
-         AZ08F48shfledQ5j/1txYe6wM4ZnQJqWcfT5dz1WW9oU5Y9hiNb2eJCf6F6oVOZmYyTN
-         vo4V6spYxhANhcml+SfLnXh64XxqPUNs25iRJZEiDU02+nxOKCToy3Ajpt9BWyzofKlM
-         AvFnbz+y+GABHt4Uz9iJXZsVK2HAXpwR6aFS3B0b8fshuVuyfmWOOISPQvtLwc06avwR
-         FoE+Xu6G/iPAOWw6sOu2fd4nHBZCyn5Zub/jDcxWKMQD7P9o/RshjX5LUh9I7jgIbzQL
-         b/Dg==
-X-Forwarded-Encrypted: i=1; AJvYcCVgQ71L8YgaRAYeU8zlCfHLEMsAPlUYp5u9esXCdQd7PzPozWoPQXQsUeZfPttjR22Xo3o/3XXOCTpIuPAm@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7LTuOgIfu/QPsDxyn3fAWKBJThdHChXRSjc7X+z3GoBMLhJN0
-	NF9DUsOUpSqYsfVE+z3Vf5HzaOpAUheoz7jkYK+GF/ZXao9nDNAFz0fYG7rkqw==
-X-Gm-Gg: ASbGncsKwL4MLArJ1q2nByIrQXeX+Ev0PSKhD3PiZKrxVieqyEwRR3kzPC6OCsK5F0w
-	mWHvgosk03+vEzUF+Y9HPy/85K1TcJ5lS26j26c5m2DyKIP2aw0hhHDM3izDVtv/JaDXiHad/do
-	PlP2rQ+1jPjd3C1o/OV/GOtPrsQ0T2dL+Kkk1QGvLVRMr85+1636xEJGSAw8robHzOWykWgKsqv
-	1mjJ9h23uddjdammbeFRWTw6HIQhzUOmimR2wBj1xFnOXi17tDPA2JLxAsUmzqV+PUFAXLodOSw
-	3y1wlPsdnor+2SErMoTlXxBV/eUZBFqVH6YRjfuxsIA/f5Us7puWrBM=
-X-Google-Smtp-Source: AGHT+IGOGFfSBcmfodUPLiDGYIY4DGC8r1k7PhYjbfzDdhTnlzgvWrXr4fTTmrOrq1dg8IG68Osutg==
-X-Received: by 2002:a17:902:d482:b0:223:4d5e:76a6 with SMTP id d9443c01a7336-22a89a241d6mr131992235ad.1.1743964524915;
-        Sun, 06 Apr 2025 11:35:24 -0700 (PDT)
-Received: from thinkpad ([120.60.71.192])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2297866080csm66260455ad.125.2025.04.06.11.35.21
+        d=1e100.net; s=20230601; t=1743969709; x=1744574509;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1B7AZw7nds/G/Q7UFyxo55SXsrJvSu3ziPQ8Q+kdE2g=;
+        b=GC6b0mEYel1X4uItvF2IbEI9AeQ/aIXs25zV6x606izS4wPnbYbVJotiMX/P5316kC
+         nmGxrFVReIYiwWj2RMxMH6NuehdYTAG+2qqJe8t951k7OFhzioeytjlKD5B9GlDkI+0Y
+         UJdSdsNzoWXZY2AvOIHQ1iQiwqcrN/txphko6m6By/QV272dMMm+6FdLUFp7PL73D0dL
+         oCa+1mVhquqo4h501LjfzZ3dfnydfuMssF3ZKGciYfwza/fbneHtQTiNNVG24/BGcOJH
+         Ib7pI+4QMOCVFVaPCKTJrOon46Fe35HBm3GQji0wSt3AO5tRWvmGGjqT7qU9BFFMa0ql
+         E5FQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVMzhNw+5VYIwOwF6ds2uZLDbTQVg2j5TWrHw271loc0J52EzJ06+ZYgyiF3I2bWWHi0n9FQkPMoqyVuimE@vger.kernel.org
+X-Gm-Message-State: AOJu0YxX8qvLWBQ0T7ZHBIzvwOFuvuDC6SnmP8wtNgXHubDSnVhE0Kzv
+	esqb3Mwq6qwg4sxOYxSgUff7OJRCFUheD4b7lqr9oKb0kjYRKjIg7xaXvcPlPB4=
+X-Gm-Gg: ASbGncv/+ZROSmNRgZNFiiOEji6VQ5BqSAmP+tfQbLV86cJnUSb5L3Wdp2FaAI3ldRq
+	6T9d+q9JmL5Pe+t9f6mRsuNSP0IPOMcd1H3G9HkyiijjL/J181Ey5ufHYWAUBitOuc3xtRPEJlf
+	fof6FUFVDyXx2xf9ixzcSMHcKGc6GRQVk3SSY5SzYzOQYLFawrM6HQjFrq0j2ClarUwXWsToOcL
+	VgoeGamrx3nyaSEQ5jdh8XETpvBW/ix5Ccex3n48k6vy1m62Zj/4IczJMm1wPdjGPLFiMHM3iZG
+	rIzPzCgkAcwOg//GsWleXm6nUWpk4vEcpSueVvUSrS6C1remLshVAROT2u1pRlGdQlzyYJ4tLg=
+	=
+X-Google-Smtp-Source: AGHT+IEjlfGioqQrUO4vvsISl/rkiK08Y6eqp4VaGk5U/oVlTDftQ1aVG8HuZicBmI8IgcAr6Zc32Q==
+X-Received: by 2002:a05:6000:2481:b0:39a:be16:9f1e with SMTP id ffacd0b85a97d-39cba936295mr3359285f8f.12.1743969708899;
+        Sun, 06 Apr 2025 13:01:48 -0700 (PDT)
+Received: from [192.168.1.26] ([178.197.198.86])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c3020d98bsm10199924f8f.76.2025.04.06.13.01.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Apr 2025 11:35:24 -0700 (PDT)
-Date: Mon, 7 Apr 2025 00:05:19 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Manish Pandey <quic_mapa@quicinc.com>
-Cc: "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
-	"Martin K. Petersen" <martin.petersen@oracle.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, linux-scsi@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, quic_nitirawa@quicinc.com, 
-	quic_bhaskarv@quicinc.com, quic_rampraka@quicinc.com, quic_cang@quicinc.com, 
-	quic_nguyenb@quicinc.com
-Subject: Re: [PATCH V2 2/2] scsi: ufs: introduce quirk to extend
- PA_HIBERN8TIME for UFS devices
-Message-ID: <hcguawgzuqgi2cyw3nf7uiilahjsvrm37f6zgfqlnfkck3jatv@xgaca3zgts2u>
-References: <20250404174539.28707-1-quic_mapa@quicinc.com>
- <20250404174539.28707-3-quic_mapa@quicinc.com>
+        Sun, 06 Apr 2025 13:01:48 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 0/3] iio: Fix wakeup source leaks on device unbind
+Date: Sun, 06 Apr 2025 22:01:41 +0200
+Message-Id: <20250406-b4-device-wakeup-leak-iio-v1-0-2d7d322a4a93@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250404174539.28707-3-quic_mapa@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKXd8mcC/x2MWwqAIBAAryL73YKGFXaV6ENrq8UoUXpAdPekz
+ 4GZeSBRZErQigcinZx43zKoQsCw2G0m5DEzlLKspJY1Oo1j9gbCy3o6Aq5kPTLvqHXVOGNcbY2
+ C3IdIE9//u+vf9wMUrxNNawAAAA==
+X-Change-ID: 20250406-b4-device-wakeup-leak-iio-4457b99b6a91
+To: Jonathan Cameron <jic23@kernel.org>, 
+ Lars-Peter Clausen <lars@metafoo.de>, Lorenzo Bianconi <lorenzo@kernel.org>
+Cc: linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=784;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=iSXkcUbsxY3DxZJb4frxFs5pjfXPxSfYSUua8756xYQ=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBn8t2oyiYKFqMFuIEI+qrJOdqyPUI7XxIjAn1Y0
+ XuFYA2+qVmJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ/LdqAAKCRDBN2bmhouD
+ 14vhD/0UdVj5FON7GeEue18yn0kAF4sr1rbTdzOxvjDnh19v7r5l5KOaDq1/jlotutWE3p24gzP
+ 1/DgIRCP0ZCFWAFTyCYmP7nykaeuqW80Pu6MAEE5oTFfhQ7NnYztRpYyMROOpTauE5aNDfh67xu
+ WAGlYk2LahSx6lv8cYYw0IrmIpMoeiRa8HDA+dJ79h38F8U66kAVXcuRDM+X3LmBoBuY1b+mc27
+ yecbQYStW1+Ur/sQWjOEbuK+ue0Y4SSTf7CbY7mkeFIAc+zUtFzIwOu0r4ms5JJnudd5QzQBW9Z
+ spZblATUlfk64uN8HfYOyrK1JLDbofZ5ug/nQejIxBp4knzpCkdoSW0/tU+wLr66X9pRtWPtrEI
+ 4WQLrZqARWQyl+L/wsaWyRQm0IKDx1dJF7Me5vOVM+h7o/eDtBdC59OQhDP6hQ7XaRP2fD7urQq
+ bozViLpZlg0Ac6Y8E9w8qLFpcDDr6G8u46iIQ7FmdknURcviy/zVHPIAszrAAFDvnSnW+jXkMCl
+ jbN84GvH/MlnJotIEQZgTIxWByFE8O4o6om4/0wTCJzTzuaxiHcfMJwGy+UR47vUdXB+qmaMXIv
+ CkkcCBseaLhNkk9YmALwULIk6g+vQRcYnDp/SrqfH7fg5NG3s14znkSg3ar8BzOHOXWZde2cWLI
+ KQBr4eQU0Fa36EQ==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-On Fri, Apr 04, 2025 at 11:15:39PM +0530, Manish Pandey wrote:
-> Some UFS devices need additional time in hibern8 mode before exiting,
-> beyond the negotiated handshaking phase between the host and device.
-> Introduce a quirk to increase the PA_HIBERN8TIME parameter by 100 µs
-> to ensure proper hibernation process.
-> 
+Device can be unbound, so driver must also release memory for the wakeup
+source.
 
-This commit message didn't mention the UFS device for which this quirk is being
-applied.
+Best regards,
+Krzysztof
 
-> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
-> ---
->  drivers/ufs/core/ufshcd.c | 31 +++++++++++++++++++++++++++++++
->  include/ufs/ufs_quirks.h  |  6 ++++++
->  2 files changed, 37 insertions(+)
-> 
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index 464f13da259a..2b8203fe7b8c 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -278,6 +278,7 @@ static const struct ufs_dev_quirk ufs_fixups[] = {
->  	  .model = UFS_ANY_MODEL,
->  	  .quirk = UFS_DEVICE_QUIRK_DELAY_BEFORE_LPM |
->  		   UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE |
-> +		   UFS_DEVICE_QUIRK_PA_HIBER8TIME |
->  		   UFS_DEVICE_QUIRK_RECOVERY_FROM_DL_NAC_ERRORS },
->  	{ .wmanufacturerid = UFS_VENDOR_SKHYNIX,
->  	  .model = UFS_ANY_MODEL,
-> @@ -8384,6 +8385,33 @@ static int ufshcd_quirk_tune_host_pa_tactivate(struct ufs_hba *hba)
->  	return ret;
->  }
->  
-> +/**
-> + * ufshcd_quirk_override_pa_h8time - Ensures proper adjustment of PA_HIBERN8TIME.
-> + * @hba: per-adapter instance
-> + *
-> + * Some UFS devices require specific adjustments to the PA_HIBERN8TIME parameter
-> + * to ensure proper hibernation timing. This function retrieves the current
-> + * PA_HIBERN8TIME value and increments it by 100us.
-> + */
-> +static void ufshcd_quirk_override_pa_h8time(struct ufs_hba *hba)
-> +{
-> +	u32 pa_h8time = 0;
+---
+Krzysztof Kozlowski (3):
+      iio: accel: fxls8962af: Fix wakeup source leaks on device unbind
+      iio: adc: qcom-spmi-iadc: Fix wakeup source leaks on device unbind
+      iio: imu: st_lsm6dsx: Fix wakeup source leaks on device unbind
 
-Why do you need to initialize it?
+ drivers/iio/accel/fxls8962af-core.c          | 7 +++++--
+ drivers/iio/adc/qcom-spmi-iadc.c             | 4 +++-
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c | 7 +++++--
+ 3 files changed, 13 insertions(+), 5 deletions(-)
+---
+base-commit: a4cda136f021ad44b8b52286aafd613030a6db5f
+change-id: 20250406-b4-device-wakeup-leak-iio-4457b99b6a91
 
-> +	int ret;
-> +
-> +	ret = ufshcd_dme_get(hba, UIC_ARG_MIB(PA_HIBERN8TIME),
-> +			&pa_h8time);
-> +	if (ret) {
-> +		dev_err(hba->dev, "Failed to get PA_HIBERN8TIME: %d\n", ret);
-> +		return;
-> +	}
-> +
-> +	/* Increment by 1 to increase hibernation time by 100 µs */
-
-From where the value of 100us adjustment is coming from?
-
-- Mani
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
