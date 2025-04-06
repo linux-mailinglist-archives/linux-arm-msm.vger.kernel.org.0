@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-53302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08961A7CED9
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 18:01:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62CDEA7CEF3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 18:29:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A3DA43AFB35
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 16:01:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D9C20188DB59
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 16:29:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9484522154D;
-	Sun,  6 Apr 2025 16:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 550D3155312;
+	Sun,  6 Apr 2025 16:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nu0S56rn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GV+8GDZE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED1C14A82;
-	Sun,  6 Apr 2025 16:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1F028373;
+	Sun,  6 Apr 2025 16:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743955284; cv=none; b=N8zW9IkzSBO5DlBpaiKTuWAvnzhS3rEF3dIrHn0f2uY+wvx5/bBlNMB53pZ10schVzEFP+UAL10wiu0XVwsA8Bd/OiUHYtqMPoVnDdh2w7wISdUik7txlQIwad7DoBG+kb0z+d/X+3icXLtUiwGTGtZQ3ZTFDJhEFuaGy4ZDoQo=
+	t=1743956959; cv=none; b=ithBN1RQ0z2ALeJTjohdrq9um5a38erehdbxw7zgFiub7H/ckl8PhhW2bhrAxBGnng2aUsisaLujOUkKbLCM9dJyJQHyXnjpi1zGh3Zt2SSfgVv4REWpKDFG+ctCQVuurD0OWcfzLt9J5CKZ4d7GhkjwT2OVRm/O77mhyy5JbRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743955284; c=relaxed/simple;
-	bh=xiYT3OXSwrXnf48Kqo+AeUKLe4LHpkaxA4SGgwPbfk4=;
+	s=arc-20240116; t=1743956959; c=relaxed/simple;
+	bh=b/xAVnixHXUXt03p0bDzhsloPHIQmMn6KiJbzG70nj4=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=penBVpV9AmIOq3Q2UE/JTSyla2J9jrzS6Q/zpR/7x69CsiILryKfGNe4OxlyhpctSExEl4Me738ep9gT0YRliV7E3KYXBtnrlJoOaZ3nkMtI+86ovtZNbnKUyGpOgwyPqmCrOkDbROfEIKhV+4qIvweM3pCbm0F1QUq7RDHYPlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nu0S56rn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32215C4CEE3;
-	Sun,  6 Apr 2025 16:01:14 +0000 (UTC)
+	 MIME-Version:Content-Type; b=nE3ZGNrJeuJ8Gk74Uqg/VXZTqo+r2UO2tKs472QSL+6ndRUJ+xsfNs9jJ0GuFmmkZ5hqpvlggmFhA0gofNDli9k35ZjUHNcYLk9Xm/gHgAjrTnb/ft98IU/jXHeI2ZwW1kEPs2ACh2oQiRMTX3uC4nme/pNms55BZrpaoSvWjOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GV+8GDZE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA68C4CEE3;
+	Sun,  6 Apr 2025 16:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743955283;
-	bh=xiYT3OXSwrXnf48Kqo+AeUKLe4LHpkaxA4SGgwPbfk4=;
+	s=k20201202; t=1743956958;
+	bh=b/xAVnixHXUXt03p0bDzhsloPHIQmMn6KiJbzG70nj4=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=nu0S56rnZGLVOf5sZzzAgHErmGBZT2nk1Mm6ebz9+qcFK9VLpELK9y799JB9UvAES
-	 Y46/AcM32/K48BBaEPK/htz4p4rCoX8tvuGt48J+DVSxdzU+yfh9HPT9xCpBEdh4ES
-	 M9mN8uDJ6i16NTFmA5Htwd1EYhJk0wbOHAWHpL4r19clnsyiRDlGnFMEr988ldQolG
-	 y+EQNvgn9sXsY1F3VaU3rX/chASZ9ay9vIe2wIqK+W/ESxDrv6LV4J6J89DhD8AAFU
-	 kYGCMQdDPNMAZ8kyzVd0uCCLtPyTh2OI4wkHGazx8iykI/76pP6K7Ex9cC31AuM7N/
-	 fD7hkehpT/MSg==
-Date: Sun, 6 Apr 2025 17:01:11 +0100
+	b=GV+8GDZEdgt6dp9EKFLEoj6rSx/zxTeLVMdkfCgaMD/s+xpIA6WLEydx+RDrjk6h1
+	 8p0ez0B/tOKfETRJqEZxTopc2cEh3FCdGC7ftlfewItNeNc95tJVIR0y9EeDFpLpbB
+	 Qy3joaBOIlidLbhOlttrwCpim1lHOTsyXPo1r0G/lSqz8opKSFgavCnfJ3LDSDDvtF
+	 0tUVgJ6BA5gO2YKeudNIbPKzQ9XhAU9aXtSgECp3UEdjaNPJcjvDKr0g+qb3JGG/g7
+	 ptt6H3I0gBFlQOE9QA7ho1Xrl5l1MOtKTPxdF0DirtMUsVo/4QEsCIMOdP71FL7eZb
+	 mC/h/8QznOskQ==
+Date: Sun, 6 Apr 2025 17:29:04 +0100
 From: Jonathan Cameron <jic23@kernel.org>
 To: Yassine Oudjana <y.oudjana@protonmail.com>
 Cc: Lars-Peter Clausen <lars@metafoo.de>, Bjorn Andersson
@@ -68,11 +68,11 @@ Cc: Lars-Peter Clausen <lars@metafoo.de>, Bjorn Andersson
  Yassine Oudjana <yassine.oudjana@gmail.com>, linux-kernel@vger.kernel.org,
  linux-iio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  netdev@vger.kernel.org, linux-kbuild@vger.kernel.org
-Subject: Re: [PATCH 1/3] net: qrtr: Turn QRTR into a bus
-Message-ID: <20250406170111.7a11437a@jic23-huawei>
-In-Reply-To: <20250406140706.812425-2-y.oudjana@protonmail.com>
+Subject: Re: [PATCH 3/3] iio: Add Qualcomm Sensor Manager drivers
+Message-ID: <20250406172904.1521881e@jic23-huawei>
+In-Reply-To: <20250406140706.812425-4-y.oudjana@protonmail.com>
 References: <20250406140706.812425-1-y.oudjana@protonmail.com>
-	<20250406140706.812425-2-y.oudjana@protonmail.com>
+	<20250406140706.812425-4-y.oudjana@protonmail.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.48; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -83,328 +83,496 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On Sun, 06 Apr 2025 14:07:43 +0000
+On Sun, 06 Apr 2025 14:08:03 +0000
 Yassine Oudjana <y.oudjana@protonmail.com> wrote:
 
-> Implement a QRTR bus to allow for creating drivers for individual QRTR
-> services. With this in place, devices are dynamically registered for QRTR
-> services as they become available, and drivers for these devices are
-> matched using service and instance IDs.
-> 
-> In smd.c, replace all current occurences of qdev with qsdev in order to
-> distinguish between the newly added QRTR device which represents a QRTR
-> service with the existing QRTR SMD device which represents the endpoint
-> through which services are provided.
+> Add drivers for sensors exposed by the Qualcomm Sensor Manager service,
+> which is provided by SLPI or ADSP on Qualcomm SoCs. Supported sensors
+> include accelerometers, gyroscopes, pressure sensors, proximity sensors
+> and magnetometers.
 > 
 > Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-Hi Yassine
+> ---
+>  MAINTAINERS                                 |  18 +
+>  drivers/iio/accel/Kconfig                   |  10 +
+>  drivers/iio/accel/Makefile                  |   2 +
+>  drivers/iio/accel/qcom_smgr_accel.c         | 138 ++++
+>  drivers/iio/common/Kconfig                  |   1 +
+>  drivers/iio/common/Makefile                 |   1 +
+>  drivers/iio/common/qcom_smgr/Kconfig        |  16 +
+>  drivers/iio/common/qcom_smgr/Makefile       |   8 +
+>  drivers/iio/common/qcom_smgr/qcom_smgr.c    | 589 ++++++++++++++++
+>  drivers/iio/common/qcom_smgr/qmi/Makefile   |   3 +
+>  drivers/iio/common/qcom_smgr/qmi/sns_smgr.c | 711 ++++++++++++++++++++
+>  drivers/iio/common/qcom_smgr/qmi/sns_smgr.h | 163 +++++
+>  drivers/iio/gyro/Kconfig                    |  10 +
+>  drivers/iio/gyro/Makefile                   |   2 +
+>  drivers/iio/gyro/qcom_smgr_gyro.c           | 138 ++++
+>  drivers/iio/magnetometer/Kconfig            |   9 +
+>  drivers/iio/magnetometer/Makefile           |   2 +
+>  drivers/iio/magnetometer/qcom_smgr_mag.c    | 138 ++++
+>  drivers/iio/pressure/Kconfig                |  10 +
+>  drivers/iio/pressure/Makefile               |   1 +
+>  drivers/iio/pressure/qcom_smgr_pressure.c   | 106 +++
+>  drivers/iio/proximity/Kconfig               |  10 +
+>  drivers/iio/proximity/Makefile              |   1 +
+>  drivers/iio/proximity/qcom_smgr_prox.c      | 106 +++
+>  include/linux/iio/common/qcom_smgr.h        |  64 ++
+>  25 files changed, 2257 insertions(+)
+Split this up.  Common library code first, then
+individual drivers making use of it.
 
-Just took a quick look through.
 
-It might make more sense to do this with an auxiliary_bus rather
-than defining a new bus.
+>  create mode 100644 drivers/iio/accel/qcom_smgr_accel.c
+>  create mode 100644 drivers/iio/common/qcom_smgr/Kconfig
+>  create mode 100644 drivers/iio/common/qcom_smgr/Makefile
+>  create mode 100644 drivers/iio/common/qcom_smgr/qcom_smgr.c
+>  create mode 100644 drivers/iio/common/qcom_smgr/qmi/Makefile
+>  create mode 100644 drivers/iio/common/qcom_smgr/qmi/sns_smgr.c
+>  create mode 100644 drivers/iio/common/qcom_smgr/qmi/sns_smgr.h
+>  create mode 100644 drivers/iio/gyro/qcom_smgr_gyro.c
+>  create mode 100644 drivers/iio/magnetometer/qcom_smgr_mag.c
+>  create mode 100644 drivers/iio/pressure/qcom_smgr_pressure.c
+>  create mode 100644 drivers/iio/proximity/qcom_smgr_prox.c
+>  create mode 100644 include/linux/iio/common/qcom_smgr.h
 
-I'd also split out the renames as a precursor patch.
 
-Various other comments inline.
+> diff --git a/drivers/iio/accel/qcom_smgr_accel.c b/drivers/iio/accel/qcom_smgr_accel.c
+> new file mode 100644
+> index 000000000000..ce854312d1d9
+> --- /dev/null
+> +++ b/drivers/iio/accel/qcom_smgr_accel.c
+> @@ -0,0 +1,138 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Qualcomm Sensor Manager accelerometer driver
+> + *
+> + * Copyright (c) 2022, Yassine Oudjana <y.oudjana@protonmail.com>
+Given ongoing work, a range on that date to go up to this year
+probably makes sense!
 
-Jonathan
-
-> diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-> index 00c51cf693f3..e11682fd7960 100644
-> --- a/net/qrtr/af_qrtr.c
-> +++ b/net/qrtr/af_qrtr.c
-> @@ -435,6 +435,7 @@ static void qrtr_node_assign(struct qrtr_node *node, unsigned int nid)
->  int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
->  {
->  	struct qrtr_node *node = ep->node;
-> +	const struct qrtr_ctrl_pkt *pkt;
->  	const struct qrtr_hdr_v1 *v1;
->  	const struct qrtr_hdr_v2 *v2;
->  	struct qrtr_sock *ipc;
-> @@ -443,6 +444,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
->  	size_t size;
->  	unsigned int ver;
->  	size_t hdrlen;
-> +	int ret = 0;
->  
->  	if (len == 0 || len & 3)
->  		return -EINVAL;
-> @@ -516,12 +518,24 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
->  
->  	qrtr_node_assign(node, cb->src_node);
->  
-> +	pkt = data + hdrlen;
+> + */
 > +
->  	if (cb->type == QRTR_TYPE_NEW_SERVER) {
->  		/* Remote node endpoint can bridge other distant nodes */
-> -		const struct qrtr_ctrl_pkt *pkt;
-> -
-> -		pkt = data + hdrlen;
->  		qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/iio/buffer.h>
+> +#include <linux/iio/common/qcom_smgr.h>
+> +#include <linux/iio/iio.h>
+> +#include <linux/iio/kfifo_buf.h>
 > +
-> +		/* Create a QRTR device */
-> +		ret = ep->add_device(ep, le32_to_cpu(pkt->server.node),
-> +					       le32_to_cpu(pkt->server.port),
-> +					       le32_to_cpu(pkt->server.service),
-> +					       le32_to_cpu(pkt->server.instance));
-> +		if (ret)
-> +			goto err;
-> +	} else if (cb->type == QRTR_TYPE_DEL_SERVER) {
-> +		/* Remove QRTR device corresponding to service */
-> +		ret = ep->del_device(ep, le32_to_cpu(pkt->server.port));
-> +		if (ret)
-> +			goto err;
->  	}
->  
->  	if (cb->type == QRTR_TYPE_RESUME_TX) {
-> @@ -543,8 +557,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
->  
->  err:
->  	kfree_skb(skb);
-> -	return -EINVAL;
-> -
-> +	return ret ? ret : -EINVAL;
-How do we get here with non error value given we couldn't before?
-
-
->  }
->  EXPORT_SYMBOL_GPL(qrtr_endpoint_post);
->  
-
-> diff --git a/net/qrtr/smd.c b/net/qrtr/smd.c
-> index c91bf030fbc7..fd5ad6a8d1c3 100644
-> --- a/net/qrtr/smd.c
-> +++ b/net/qrtr/smd.c
-> @@ -7,6 +7,7 @@
-
+> +static const struct iio_chan_spec qcom_smgr_accel_iio_channels[] = {
+> +	{
+> +		.type = IIO_ACCEL,
+> +		.modified = true,
+> +		.channel2 = IIO_MOD_X,
+> +		.scan_index = 0,
+> +		.scan_type = {
+> +			.sign = 's',
+> +			.realbits = 32,
+> +			.storagebits = 32,
+> +			.endianness = IIO_LE,
+> +		},
+> +		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE) |
+> +					    BIT(IIO_CHAN_INFO_SAMP_FREQ),
+> +		.ext_info = qcom_smgr_iio_ext_info
+> +	},
+> +	{
+> +		.type = IIO_ACCEL,
+> +		.modified = true,
+> +		.channel2 = IIO_MOD_Y,
+> +		.scan_index = 1,
+> +		.scan_type = {
+> +			.sign = 's',
+> +			.realbits = 32,
+> +			.storagebits = 32,
+> +			.endianness = IIO_LE,
+> +		},
+> +		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE) |
+> +					    BIT(IIO_CHAN_INFO_SAMP_FREQ),
+> +		.ext_info = qcom_smgr_iio_ext_info
+> +	},
+> +	{
+> +		.type = IIO_ACCEL,
+> +		.modified = true,
+> +		.channel2 = IIO_MOD_Z,
+> +		.scan_index = 2,
+> +		.scan_type = {
+> +			.sign = 's',
+> +			.realbits = 32,
+> +			.storagebits = 32,
+> +			.endianness = IIO_LE,
+> +		},
+> +		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE) |
+> +					    BIT(IIO_CHAN_INFO_SAMP_FREQ),
+> +		.ext_info = qcom_smgr_iio_ext_info
+> +	},
+> +	{
+> +		.type = IIO_TIMESTAMP,
+> +		.channel = -1,
+> +		.scan_index = 3,
+> +		.scan_type = {
+> +			.sign = 'u',
+> +			.realbits = 32,
+> +			.storagebits = 64,
+> +			.endianness = IIO_LE,
+> +		},
+> +	},
+> +};
 > +
-> +static int qcom_smd_qrtr_uevent(const struct device *dev, struct kobj_uevent_env *env)
+> +static int qcom_smgr_accel_probe(struct platform_device *pdev)
 > +{
-> +	const struct qrtr_device *qdev = to_qrtr_device(dev);
-> +
-> +	return add_uevent_var(env, "MODALIAS=%s%x:%x", QRTR_MODULE_PREFIX, qdev->service,
-> +			      qdev->instance);
-> +}
-
-
-> +void qrtr_driver_unregister(struct qrtr_driver *drv)
-> +{
-> +	driver_unregister(&drv->driver);
-> +}
-> +EXPORT_SYMBOL_GPL(qrtr_driver_unregister);
-
-Given this is a 'new thing' maybe namespace it from the start?
-EXPORT_SYMBOL_NS_GPL();
-
-
-> +
-> +static int qcom_smd_qrtr_match_device_by_port(struct device *dev, const void *data)
-> +{
-> +	struct qrtr_device *qdev = to_qrtr_device(dev);
-> +	unsigned int port = *(unsigned int *)data;
-	unsinged int *port = data;
-	
-	return qdev->port == *port;
-
-> +
-> +	return qdev->port == port;
-> +}
-> +
-> +static void qcom_smd_qrtr_add_device_worker(struct work_struct *work)
-> +{
-> +	struct qrtr_new_server *new_server = container_of(work, struct qrtr_new_server, work);
-> +	struct qrtr_smd_dev *qsdev = new_server->parent;
-> +	struct qrtr_device *qdev;
+> +	struct iio_dev *iio_dev;
+> +	struct qcom_smgr_iio_priv *priv;
 > +	int ret;
 > +
-> +	qdev = kzalloc(sizeof(*qdev), GFP_KERNEL);
-> +	if (!qdev)
-> +		return;
+> +	iio_dev = devm_iio_device_alloc(&pdev->dev, sizeof(*priv));
+> +	if (!iio_dev)
+> +		return -ENOMEM;
 > +
-Maybe 
-	*qdev = (struct qrtr_device *) {
-	};
-and free new_server after all of these are filled in.
-	
-> +	qdev->node = new_server->node;
-> +	qdev->port = new_server->port;
-> +	qdev->service = new_server->service;
-> +	qdev->instance = new_server->instance;
+> +	priv = iio_priv(iio_dev);
+> +	priv->sensor = *(struct qcom_smgr_sensor **)pdev->dev.platform_data;
+> +	priv->sensor->iio_dev = iio_dev;
 > +
-> +	devm_kfree(qsdev->dev, new_server);
-
-As below.
-
+> +	iio_dev->name = "qcom-smgr-accel";
+> +	iio_dev->info = &qcom_smgr_iio_info;
+> +	iio_dev->channels = qcom_smgr_accel_iio_channels;
+> +	iio_dev->num_channels = ARRAY_SIZE(qcom_smgr_accel_iio_channels);
 > +
-> +	dev_set_name(&qdev->dev, "%d-%d", qdev->node, qdev->port);
-> +
-> +	qdev->dev.bus = &qrtr_bus;
-> +	qdev->dev.parent = qsdev->dev;
-> +	qdev->dev.release = qcom_smd_qrtr_dev_release;
-> +	qdev->dev.driver = NULL;
-
-it's kzalloc'd so no need to set this.
-
-> +
-> +	ret = device_register(&qdev->dev);
+> +	ret = devm_iio_kfifo_buffer_setup(&pdev->dev, iio_dev,
+> +					  &qcom_smgr_buffer_ops);
 > +	if (ret) {
-> +		dev_err(qsdev->dev, "Failed to register QRTR device: %pe\n", ERR_PTR(ret));
-> +		put_device(&qdev->dev);
+> +		dev_err(&pdev->dev, "Failed to setup buffer: %pe\n",
+> +			ERR_PTR(ret));
+For all error message in probe() use
+		return dev_err_probe(&pdev->dev, ERR_PTR(ret), "Failed to setup buffer\n")
+etc.
+
+> +		return ret;
+> +	}
+> +
+> +	ret = devm_iio_device_register(&pdev->dev, iio_dev);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "Failed to register IIO device: %pe\n",
+> +			ERR_PTR(ret));
+> +		return ret;
+> +	}
+> +
+> +	platform_set_drvdata(pdev, priv->sensor);
+> +
+> +	return 0;
+> +}
+> +
+> +static void qcom_smgr_accel_remove(struct platform_device *pdev)
+
+I'm surprised to see a platform device here - will read on but I
+doubt that is the way to go.  Maybe an auxbus or similar or
+just squashing this all down to be registered directly by
+the parent driver.
+
+
+> +{
+> +	struct qcom_smgr_sensor *sensor = platform_get_drvdata(pdev);
+> +
+> +	sensor->iio_dev = NULL;
+> +}
+> +
+> +static const struct platform_device_id qcom_smgr_accel_ids[] = {
+> +	{ .name = "qcom-smgr-accel" },
+> +	{ /* sentinel */ }
+> +};
+> +MODULE_DEVICE_TABLE(platform, qcom_smgr_accel_ids);
+> +
+> +static struct platform_driver qcom_smgr_accel_driver = {
+> +	.probe = qcom_smgr_accel_probe,
+> +	.remove = qcom_smgr_accel_remove,
+> +	.driver	= {
+> +		.name = "qcom_smgr_accel",
+> +	},
+> +	.id_table = qcom_smgr_accel_ids,
+> +};
+> +module_platform_driver(qcom_smgr_accel_driver);
+> +
+> +MODULE_AUTHOR("Yassine Oudjana <y.oudjana@protonmail.com>");
+> +MODULE_DESCRIPTION("Qualcomm Sensor Manager accelerometer driver");
+> +MODULE_LICENSE("GPL");
+
+> diff --git a/drivers/iio/common/qcom_smgr/qcom_smgr.c b/drivers/iio/common/qcom_smgr/qcom_smgr.c
+> new file mode 100644
+> index 000000000000..8d46be11d5b6
+> --- /dev/null
+> +++ b/drivers/iio/common/qcom_smgr/qcom_smgr.c
+> @@ -0,0 +1,589 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Qualcomm Sensor Manager core driver
+> + *
+> + * Copyright (c) 2021, Yassine Oudjana <y.oudjana@protonmail.com>
+
+As above, I'd add a date range to reflect that this is ongoing.
+
+> + */
+> +
+> +#include <linux/iio/buffer.h>
+> +#include <linux/iio/common/qcom_smgr.h>
+> +#include <linux/iio/iio.h>
+
+Be consistent with ordering. Above you have iio as a separate block.
+Either option is fine, but not a mixture.
+
+> +#include <linux/math64.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+Unless there are very strong reasons for of specific code please
+use property.h and the generic firmware accessors.
+
+> +#include <linux/platform_device.h>
+> +#include <linux/remoteproc/qcom_rproc.h>
+> +#include <linux/soc/qcom/qmi.h>
+> +#include <linux/soc/qcom/qrtr.h>
+> +#include <linux/types.h>
+> +#include <net/sock.h>
+
+
+> +static void qcom_smgr_buffering_report_handler(struct qmi_handle *hdl,
+> +					       struct sockaddr_qrtr *sq,
+> +					       struct qmi_txn *txn,
+> +					       const void *data)
+> +{
+> +	struct qcom_smgr *smgr =
+> +		container_of(hdl, struct qcom_smgr, sns_smgr_hdl);
+> +	struct sns_smgr_buffering_report_ind *ind =
+> +		(struct sns_smgr_buffering_report_ind *)data;
+
+Casting away a const isn't a good sign. Why do you need to do that?
+	const struct sns_smg_buffer_repor_ind *ind = data;
+should be fine I think.
+
+
+> +	struct qcom_smgr_sensor *sensor;
+> +	u8 i;
+> +
+> +	for (i = 0; i < smgr->sensor_count; ++i) {
+> +		sensor = &smgr->sensors[i];
+> +
+> +		/* Find sensor matching report */
+> +		if (sensor->id != ind->report_id)
+> +			continue;
+> +
+> +		if (!sensor->iio_dev)
+> +			/* Corresponding driver was unloaded. Ignore remaining reports. */
+> +			return;
+> +
+> +		/*
+> +		 * Since we are matching report rate with sample rate, we only
+> +		 * get a single sample in every report.
+> +		 */
+> +		iio_push_to_buffers_with_timestamp(sensor->iio_dev,
+> +						   ind->samples[0].values,
+> +						   ind->metadata.timestamp);
+You are using a 64 bit timestamp writer that doesn't know about the endianness of
+that timestamp. I'd not do this.  Just write the timestamp in like any normal
+channel and call iio_push_to_buffers().
+
+> +
+> +		break;
+
+return;
+
 > +	}
 > +}
 > +
-> +static void qcom_smd_qrtr_del_device_worker(struct work_struct *work)
+> +static const struct qmi_msg_handler qcom_smgr_msg_handlers[] = {
+> +	{
+> +		.type = QMI_INDICATION,
+> +		.msg_id = SNS_SMGR_BUFFERING_REPORT_MSG_ID,
+> +		.ei = sns_smgr_buffering_report_ind_ei,
+> +		.decoded_size = sizeof(struct sns_smgr_buffering_report_ind),
+> +		.fn = qcom_smgr_buffering_report_handler,
+> +	},
+> +	{}
+	{ }
+
+given it's in IIO and I get to pick silly formatting rules.
+More seriously I wanted this consistent so picked a choice mostly at random.
+
+> +};
+
+> +
+> +static int qcom_smgr_iio_write_raw(struct iio_dev *iio_dev,
+> +				   struct iio_chan_spec const *chan, int val,
+> +				   int val2, long mask)
 > +{
-> +	struct qrtr_del_server *del_server = container_of(work, struct qrtr_del_server, work);
-> +	struct qrtr_smd_dev *qsdev = del_server->parent;
-> +	struct device *dev = device_find_child(qsdev->dev, &del_server->port,
-> +					       qcom_smd_qrtr_match_device_by_port);
+> +	struct qcom_smgr_iio_priv *priv = iio_priv(iio_dev);
 > +
-> +	devm_kfree(qsdev->dev, del_server);
-If we are always going to free what was alocated in qcom_smd_qrtr_del_device()
-why use devm at all?  
+> +	switch (mask) {
+> +	case IIO_CHAN_INFO_SAMP_FREQ:
+> +		priv->sensor->data_types[0].cur_sample_rate = val;
 > +
-> +	if (dev)
-> +		device_unregister(dev);
-If this doesn't match anything I'm guessing it's a bug?   So maybe an error message?
+> +		/*
+> +		 * Send new SMGR buffering request with updated rates
+> +		 * if buffer is enabled
+> +		 */
+> +		if (iio_buffer_enabled(iio_dev))
+> +			return iio_dev->setup_ops->postenable(iio_dev);
+
+Generally we'd just refuse to set the sampling frequency.
+This is racy as nothing holds the buffer enabled.
+So I'd do
+		if (!iio_device_claim_direct(iio_dev);
+			return -EBUSY;
+
+		priv->sensor->data_types[0].cur_sample_rate = val;
+		iio_device_release_diect(iio_dev);
+		
+Change sampling frequency when doing buffered capture is really confusing
+anyway for userspace software as it has no way to know when the
+change occurred so just don't bother supporting that.
+
+> +
+> +		return 0;
+> +	}
+> +
+> +	return -EINVAL;
+Put this in a default in the switch.  That makes it clear we don't
+expect to see anything else.
+Same for other similar cases above.
 
 > +}
 > +
-> +static int qcom_smd_qrtr_add_device(struct qrtr_endpoint *parent, unsigned int node,
-> +				    unsigned int port, u16 service, u16 instance)
+> +static int qcom_smgr_iio_read_avail(struct iio_dev *iio_dev,
+> +				    struct iio_chan_spec const *chan,
+> +				    const int **vals, int *type, int *length,
+> +				    long mask)
 > +{
-> +	struct qrtr_smd_dev *qsdev = container_of(parent, struct qrtr_smd_dev, ep);
-> +	struct qrtr_new_server *new_server;
-> +
-> +	new_server = devm_kzalloc(qsdev->dev, sizeof(struct qrtr_new_server), GFP_KERNEL);
+> +	struct qcom_smgr_iio_priv *priv = iio_priv(iio_dev);
+> +	const int samp_freq_vals[3] = {
+> +		1, 1, priv->sensor->data_types[0].cur_sample_rate
+> +	};
 
-As below. sizeof(*new_server)
+Lifetime of this needs to last beyond the end of this call as some users
+or read_avail hang on to it.  Embed the storage in your priv
+structure rather than local in this function. I'm also a little confused
+how the maximum comes from something called cur_sample_rate.
 
-> +	if (!new_server)
-> +		return -ENOMEM;
 > +
-	*new_server = (struct qtr_new_server) {
-		.parent = qsdev,
-		.ndoe = node,
+> +	switch (mask) {
+> +	case IIO_CHAN_INFO_SAMP_FREQ:
+> +		*type = IIO_VAL_INT;
+> +		*vals = samp_freq_vals;
+> +		*length = ARRAY_SIZE(samp_freq_vals);
+> +		return IIO_AVAIL_RANGE;
+> +	}
+> +
+> +	return -EINVAL;
+> +}
+
 ...
-	};
 
-perhaps a tiny bit easier to read?
+> +const struct iio_chan_spec_ext_info qcom_smgr_iio_ext_info[] = {
+> +	IIO_MOUNT_MATRIX(IIO_SHARED_BY_DIR, qcom_smgr_iio_get_mount_matrix),
+> +	{}
+trivial but I'm trying to standardize on
+	{ }
+for this in IIO.
 
-> +	new_server->parent = qsdev;
-> +	new_server->node = node;
-> +	new_server->port = port;
-> +	new_server->service = service;
-> +	new_server->instance = instance;
+> +};
+> +EXPORT_SYMBOL_GPL(qcom_smgr_iio_ext_info);
 > +
-> +	INIT_WORK(&new_server->work, qcom_smd_qrtr_add_device_worker);
-> +	schedule_work(&new_server->work);
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_smd_qrtr_del_device(struct qrtr_endpoint *parent, unsigned int port)
+> +static int qcom_smgr_probe(struct qrtr_device *qdev)
 > +{
-> +	struct qrtr_smd_dev *qsdev = container_of(parent, struct qrtr_smd_dev, ep);
-> +	struct qrtr_del_server *del_server;
-> +
-> +	del_server = devm_kzalloc(qsdev->dev, sizeof(struct qrtr_del_server), GFP_KERNEL);
-
-sizeof(*del_server)
-preferred as then no one has to check types match.
-
-> +	if (!del_server)
-> +		return -ENOMEM;
-> +
-> +	del_server->parent = qsdev;
-> +	del_server->port = port;
-> +
-> +	INIT_WORK(&del_server->work, qcom_smd_qrtr_del_device_worker);
-> +	schedule_work(&del_server->work);
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_smd_qrtr_device_unregister(struct device *dev, void *data)
-> +{
-> +	device_unregister(dev);
-
-One option that may simplify this is to do the device_unregister() handling
-a devm_action_or_reset() handler that is using the parent device as it's dev
-but unregistering the children.  That way the unregister is called in the
-reverse order of setup and you only register a handler for those devices
-registered (rather walking children).  I did this in the CXL pmu driver
-for instance.
-
-> +
-> +	return 0;
-> +}
-> +
-
-> @@ -82,9 +276,11 @@ static int qcom_smd_qrtr_probe(struct rpmsg_device *rpdev)
->  
->  static void qcom_smd_qrtr_remove(struct rpmsg_device *rpdev)
->  {
-> -	struct qrtr_smd_dev *qdev = dev_get_drvdata(&rpdev->dev);
-> +	struct qrtr_smd_dev *qsdev = dev_get_drvdata(&rpdev->dev);
-
-May be worth doing the rename in a precursor patch to simplify a little what is
-in this one.
-
-> +
-> +	device_for_each_child(qsdev->dev, NULL, qcom_smd_qrtr_device_unregister);
->  
-> -	qrtr_endpoint_unregister(&qdev->ep);
-> +	qrtr_endpoint_unregister(&qsdev->ep);
->  
->  	dev_set_drvdata(&rpdev->dev, NULL);
->  }
-> @@ -104,7 +300,27 @@ static struct rpmsg_driver qcom_smd_qrtr_driver = {
->  	},
->  };
->  
-> -module_rpmsg_driver(qcom_smd_qrtr_driver);
-> +static int __init qcom_smd_qrtr_init(void)
-> +{
+> +	struct qcom_smgr *smgr;
+> +	int i, j;
 > +	int ret;
 > +
-> +	ret = bus_register(&qrtr_bus);
-> +	if (!ret)
-> +		ret = register_rpmsg_driver(&qcom_smd_qrtr_driver);
-This style tends to extend badly. Go with more conventional errors
-out of line style.
-
-	if (ret)
-		return ret;
-
-	ret = register_rpmsg_driver(&qcom_smd_qrtr_driver);
-	if (ret) {
-		bus_unregister(&qtr_bus);
-		return ret;		
-	}
-
-	return 0;
-
-> +	else
-> +		bus_unregister(&qrtr_bus);
+> +	smgr = devm_kzalloc(&qdev->dev, sizeof(*smgr), GFP_KERNEL);
+> +	if (!smgr)
+> +		return -ENOMEM;
 > +
-> +	return ret;
+> +	smgr->dev = &qdev->dev;
+> +
+> +	smgr->sns_smgr_info.sq_family = AF_QIPCRTR;
+> +	smgr->sns_smgr_info.sq_node = qdev->node;
+> +	smgr->sns_smgr_info.sq_port = qdev->port;
+> +
+> +	dev_set_drvdata(&qdev->dev, smgr);
+> +
+> +	ret = qmi_handle_init(&smgr->sns_smgr_hdl,
+> +			      SNS_SMGR_SINGLE_SENSOR_INFO_RESP_MAX_LEN, NULL,
+> +			      qcom_smgr_msg_handlers);
+On error this handle doesn't seem to be released.
+
+> +	if (ret < 0) {
+> +		dev_err(smgr->dev,
+> +			"Failed to initialize sensor manager handle: %d\n",
+> +			ret);
+> +		return ret;
+
+return dev_err_probe()
+Same in all other similar cases that are only called from probe.
+
+> +	}
+> +
+> +	ret = qcom_smgr_request_all_sensor_info(smgr, &smgr->sensors);
+> +	if (ret < 0) {
+> +		dev_err(smgr->dev, "Failed to get available sensors: %pe\n",
+> +			ERR_PTR(ret));
+> +		return ret;
+> +	}
+> +	smgr->sensor_count = ret;
+> +
+> +	/* Get primary and secondary sensors from each sensor ID */
+> +	for (i = 0; i < smgr->sensor_count; i++) {
+> +		ret = qcom_smgr_request_single_sensor_info(smgr,
+> +							   &smgr->sensors[i]);
+> +		if (ret < 0) {
+> +			dev_err(smgr->dev,
+> +				"Failed to get sensors from ID 0x%02x: %pe\n",
+> +				smgr->sensors[i].id, ERR_PTR(ret));
+> +			return ret;
+> +		}
+> +
+> +		for (j = 0; j < smgr->sensors[i].data_type_count; j++) {
+> +			/* Default to maximum sample rate */
+> +			smgr->sensors[i].data_types->cur_sample_rate =
+> +				smgr->sensors[i].data_types->max_sample_rate;
+> +
+> +			dev_dbg(smgr->dev, "0x%02x,%d: %s %s\n",
+> +				smgr->sensors[i].id, j,
+> +				smgr->sensors[i].data_types[j].vendor,
+> +				smgr->sensors[i].data_types[j].name);
+> +		}
+> +
+> +		qcom_smgr_register_sensor(smgr, &smgr->sensors[i]);
+Above I suggest that maybe you should just skip the platform devices and register
+directly with IIO as you find the sensors. So have the struct iio_dev->device
+parent directly off this one.
+
+> +	}
+> +
+> +	return 0;
 > +}
 > +
-> +static void __exit qcom_smd_qrtr_exit(void)
+> +static void qcom_smgr_remove(struct qrtr_device *qdev)
 > +{
-> +	bus_unregister(&qrtr_bus);
+> +	struct qcom_smgr *smgr = dev_get_drvdata(&qdev->dev);
+> +
+> +	qmi_handle_release(&smgr->sns_smgr_hdl);
+If that is all you have, use a devm_add_action_or_reset() to
+register a handler and drop this remove entirely.
 
-Order should be the reverse of what happened in probe so swap these round.
-
-> +	unregister_rpmsg_driver(&qcom_smd_qrtr_driver);
 > +}
 > +
-> +subsys_initcall(qcom_smd_qrtr_init);
-> +module_exit(qcom_smd_qrtr_exit);
->  
->  MODULE_ALIAS("rpmsg:IPCRTR");
->  MODULE_DESCRIPTION("Qualcomm IPC-Router SMD interface driver");
->
+> +static const struct qrtr_device_id qcom_smgr_qrtr_match[] = {
+> +	{
+> +		.service = SNS_SMGR_QMI_SVC_ID,
+> +		.instance = QRTR_INSTANCE(SNS_SMGR_QMI_SVC_V1,
+> +					  SNS_SMGR_QMI_INS_ID)
+> +	},
+> +	{},
+	{ }
+
+for IIO terminating entries like this.
+
+> +};
+> +MODULE_DEVICE_TABLE(qrtr, qcom_smgr_qrtr_match);
 
