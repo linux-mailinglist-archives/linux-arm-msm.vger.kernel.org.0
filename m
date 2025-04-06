@@ -1,189 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-53312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5875AA7D027
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 22:14:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1B8BA7D028
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 22:16:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E37F7188B65E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 20:14:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A7AD816E5D4
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 20:16:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 487C31A5BAA;
-	Sun,  6 Apr 2025 20:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC4AE1991C9;
+	Sun,  6 Apr 2025 20:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bLixNEpu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RRuDVsMv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C59418DB03
-	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Apr 2025 20:14:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06DE3597A
+	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Apr 2025 20:16:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743970458; cv=none; b=E/Co5kfmftT20FuTXOX8/a6HPZ4REqq5VSzvQJtae8vMVywxvYWkOr39phDkgrjFKE+V99INLM7/tmzR/2F9CSMWAeTN4Bx6BN+7MCiKtv2pQ9kRsPgozylV3XATr3exPQgLhG6XX1DkmeydhFJRHdDhCqG76DI5o0NFAGLNDE4=
+	t=1743970613; cv=none; b=kQ4aRDowxZh+Q2IkoOavzvGKpzYMe/AXVYGmDLWjRAa6b3FVIvsO0VgoumXTgZHK/mOnf2wyFIxs5UWqESuTFBkdNn1c50Gn0nWMME2G2d13ALasEGlsui3qUNXlrQrcfmoLYbEIaLC3uUrt7dRN4PNId9XmVnLhD5VXM3SKxJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743970458; c=relaxed/simple;
-	bh=Uam0zLMq7HpVozbh5ufJC2Ny3ITek901NdcSMUYoIig=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MhHK24F0MxeHE67AaB2MG1B3ICUS4XPahFCjErvFKjZM4/kGyijafB4LhMMDzqvNkLmZ16tnF2sB6WqO/wSTBx1mnh7Ki34YklRH1r5omjUZ+qE9Kms6jZQSMDyhB1q86Ov6nKm3z/daZPHjYrIfoHDs+5JDzGxpD45+eTN+tdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bLixNEpu; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 536FlljV026352
-	for <linux-arm-msm@vger.kernel.org>; Sun, 6 Apr 2025 20:14:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=O8hv9mePop8METDLs+nG1ezB
-	BYJSkLemzhlRHzLHAPA=; b=bLixNEpu1IvONcIqZK/kVrOKgRLen8p3lTBq2jhI
-	dUFySD44d0WTWUIZVnTdOJN8dp+W0Cv9Jk85np/wefr1OsSAEv4/5SKOBA2SXxdW
-	h8G0o5cPbYiOCL3UXR8BttI5vUcETfyheZDt2+kn4YWuWRhp0+evPOLYsDHFWzYy
-	cq9piUHaQ0TsGaI0F3XlbNq/q6lXq95KGHCYU08rKtZ6azNPyp3m8rqkGdJaHDT2
-	ulEoJwz+RPwEn+W8I7WEsYx/kaCOLQe9eSkkOJBNTaofVUVNpLsF91y0a/SsMlhw
-	cmFvjblyRJnwGvn7bhCnXQVOQwNO3OG+AqnvucNtWPQT3g==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twcra9cf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sun, 06 Apr 2025 20:14:14 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c5f7210995so664750985a.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Apr 2025 13:14:14 -0700 (PDT)
+	s=arc-20240116; t=1743970613; c=relaxed/simple;
+	bh=IynFeTWu2RIJzXLhbEL7Bz8oQAxmTkOW8hpdmpazhoQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=s8rzAT5nSIEvFuhcXmH3rhldEaBM2GFknWsqxCQB0anwDd6oDncDCpcmzC8yF5Att7UcOA90cQ92xYwu/6trohSjNDrOK0m/VlHe3UYUXYFBSM9r1HjkbzYyuzH2D4GYaxewinPCt8M7gwxm+fdJc52jl9rL/nltbJp45HS2Q0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RRuDVsMv; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3913290f754so447244f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Apr 2025 13:16:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1743970610; x=1744575410; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/dVyzSn8fSeihotin2QKk8FRBWW/ENbboLn0/pECTQU=;
+        b=RRuDVsMvrZi1kojq4+yaJST+usXcde29sGmJi67LgMHvQR+MZsdLLjTewfvxddtS1v
+         ryusXwuqto5W1NSfhV692LDk5qMjC2T+MsswbW/923/gCCiQFdNMQ24L5JzUdGMyIJP8
+         YHxZi3g7H7rG12Gr8MlefjbLl9owvnpHeElLmm3z3HLfCwsR16cDLWDflME/zr4aQtTR
+         g9cdg4MnypzuVCLa4314aZ8v2xuzUlIrVr7hdCOvZYrHUWRJxaipa1zEQCZvBPXqKH+w
+         mapG23oNCxEM33ZQhlK7T0/1DcAptJOJMwyntK0SxprHhgIZ8WrpwLghPDyGp8ae/OGD
+         UjRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743970453; x=1744575253;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=O8hv9mePop8METDLs+nG1ezBBYJSkLemzhlRHzLHAPA=;
-        b=eqS9tF2eC7IEuJj+TUxse2zymSczx8bGMnYwiorrwf/r7r/c2fFZZOoGT/q1Jf68nJ
-         EsGYKQLtYNagYNRDkBKRjJ7gU6AZkyynI9TgnFVgzPFMrpX8riibP2Zu2qdYFYrl61oj
-         hrM485negZMlkiYcN0cCvQTPMfyeBL4nVAbu8rlS0/B2fzx8pG2PxhYR7TWT8pUK7BX4
-         sR8b2wUkuPnBHzEuNZRh81r0A3E3TaMx6lSbpfGG5q2636ipTZjn7HBlFMi2KpC0Pmm0
-         dCr4E/e2aID4+OoxfEINEt3EoDlr7EienuNR+YxNCbtkN48qr+sEFnrqtRwTR6peD/Rs
-         bUNA==
-X-Gm-Message-State: AOJu0Yx6zVksH64ltpX3ntL722B9JT4p0UsDxIv5XzkbX1JHrWWLO1S1
-	RohMB1hbPeQT3ZUeuOakM0V2u/G29pU3skeJc6rXUz8xG7LKgJ3BL5hhbVGYG6ebZneMKVNylrz
-	EVUk0Cb2hqFJAwCWSwXxWgiRq/ka1G4/LfhIcOnF02t0NZo0p1dNGXW0Lwjt9uQ6bbZxkl0cN
-X-Gm-Gg: ASbGncsclO86QFN8Lpx3eTabtm2UxvU5wOWd5mp8I2zVNgV3FhA6+biPUfk8MJ7KD4E
-	bd00tqkJa26vHb8hD4BVuCwtI5h1xZRY9AYCE+3+Bj7jqg/ulj/u3ZuvmN5kO+TWf1fL2HR9gdu
-	6b8ahZINqFp9hEqOf9rvlTFBfu7GPHlDXxETbuwb7uNakoiqOpCPq7JrqABUB9C/EvB552YMJsR
-	QzXb9zZ/GdnnKAN0SY8chGgY6Pw869DABs7agZcHv3Sudome44lFDiX7i56/8igcf/VV65FA1Tx
-	43W0lPdrJG0o/5zyi0+bcdhszeMujr+0GE3GpQuNLkcxQJKTh4/FO2mW7DDWVsIYfMXIVfJQRMK
-	ekNI=
-X-Received: by 2002:a05:620a:f14:b0:7b6:cb3c:cb81 with SMTP id af79cd13be357-7c76c9c0c8bmr2276342285a.18.1743970452755;
-        Sun, 06 Apr 2025 13:14:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG6bE+uyjd5ifLK1IJUj1GerX4vOxW/2WADmTBo303FxgyqDrXW1FVehmfIGpQRQAfnLqr7vQ==
-X-Received: by 2002:a05:620a:f14:b0:7b6:cb3c:cb81 with SMTP id af79cd13be357-7c76c9c0c8bmr2276340185a.18.1743970452444;
-        Sun, 06 Apr 2025 13:14:12 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54c1e5c1f95sm1043850e87.83.2025.04.06.13.14.09
+        d=1e100.net; s=20230601; t=1743970610; x=1744575410;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/dVyzSn8fSeihotin2QKk8FRBWW/ENbboLn0/pECTQU=;
+        b=SMz1/mcr9hrRCAZXoaPWgd7cyGrVSkMlTBH4W2mHAbEFHOC5nWqgUSrGIa7i4/w9fZ
+         0Hhv3gR9D5CNWlKY0tsMe4Kid2H5mPT7RbJV1wgI/UAG6fE4x0SDjt8yoLeqOopvpMGP
+         9vB6/c/ktwgP9HwtgqXRHvaktxGBPf67RHaILEudVmV4DpYWwrHE1mtvmq9pwWj34PNA
+         H+zakq8sntgBg46Rp5ixMrTQ/9QVhEJ/NyXJz6pfHRuTSXwuzgl2GX7YZ2F8UVGX17+4
+         QpO4xjJarsjIwwFnWao0zjZMuBMFJ2GufeDTmk5P5X9qb6IwMaV+XzyYx8GrrGym/eTk
+         6I0w==
+X-Forwarded-Encrypted: i=1; AJvYcCWI8g0fZIeK31HbH5zs8uoRzqxrGk41UOUIrK9fsD8Heb0jbf1GWbLpNpiEAubusuutrlD6q4Z3fOwXd//h@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5JeP45o00TvwHb0gkx9dgibeWcQbxviYqWLBKkaN0SoZM6FyG
+	K1WyZ6saZPUnyPcoBz1G3Nru2dBUkVWhnYWDSlsVBwv8tiMmUOFfIfQGIF8SMWk=
+X-Gm-Gg: ASbGncsSZBMpcBpLqKwy6yLhqbf39kcqqMOT+jk0c9pbABm73cyz8/qf4fEMW1W9xMR
+	wGYsSNSWE3gwL5yDFBTQCGQVJ/0Hsu+JcyXsb8wM0GGVi9SZ2p/vtrMaMha4Fn54dARGwIe6HD2
+	D19e6h2Wj9EMSkpIRcImw3yaiEuVKVLzKrARgomX1W4iKmDfMZ9m8yD/oa37FarpVZsJBjZc2KM
+	g/DFzBdKsUl2M2vOwPDC68OiBHhVdOZrUDBl2Nb76GRvqUPkr7u1vj7quaWpOHcl6GyJ8X8WDTY
+	ScGwr0rUKmZfST1MyPnosCq7mhW1YqCHn14vD2BqbJiKNmlrLnCOv71PhC/zUKU=
+X-Google-Smtp-Source: AGHT+IFiIpvcOwBmgVnnknF4d+Z9EAYOHluJwv1KXZPNLWgwlIX3qotFRPLaaIcIsJj96kA9woECbA==
+X-Received: by 2002:a05:6000:1ac8:b0:38d:d743:7d36 with SMTP id ffacd0b85a97d-39cba936342mr2974149f8f.10.1743970610172;
+        Sun, 06 Apr 2025 13:16:50 -0700 (PDT)
+Received: from [192.168.1.26] ([178.197.198.86])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c3020d68esm10295521f8f.67.2025.04.06.13.16.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Apr 2025 13:14:11 -0700 (PDT)
-Date: Sun, 6 Apr 2025 23:14:08 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Ayushi Makhija <quic_amakhija@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
-        conor+dt@kernel.org, andrzej.hajda@intel.com,
-        neil.armstrong@linaro.org, rfoss@kernel.org,
-        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
-        jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com,
-        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
-        quic_jesszhan@quicinc.com
-Subject: Re: [PATCH v3 09/10] drm/bridge: anx7625: update bridge_ops and sink
- detect logic
-Message-ID: <ctwzoes6or6nmezz24t5tekb5ovxoh3bylqtiwjjvkcrz37xeh@hclirezl6o5t>
-References: <20250404115539.1151201-1-quic_amakhija@quicinc.com>
- <20250404115539.1151201-10-quic_amakhija@quicinc.com>
+        Sun, 06 Apr 2025 13:16:49 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 0/4] extcon: Fix wakeup source leaks on device unbind
+Date: Sun, 06 Apr 2025 22:16:38 +0200
+Message-Id: <20250406-device-wakeup-leak-extcon-v1-0-8873eca57465@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250404115539.1151201-10-quic_amakhija@quicinc.com>
-X-Proofpoint-ORIG-GUID: I1rjWIQlvgikHtygx02Bf_5vsnIl88Fo
-X-Authority-Analysis: v=2.4 cv=QuVe3Uyd c=1 sm=1 tr=0 ts=67f2e096 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=Qhp2PSjbNHdjP6JHm_UA:9 a=CjuIK1q_8ugA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: I1rjWIQlvgikHtygx02Bf_5vsnIl88Fo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-06_06,2025-04-03_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- spamscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501
- clxscore=1015 phishscore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504060147
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACbh8mcC/x2MQQqEMBAEvyJzdiCGKLhfWTzEpNVBiZK4qyD+3
+ eCxoKouSoiCRJ/iooi/JFlDhqosyE02jGDxmUkrXSujGvZZcuDDzvhtvMDOjHN3a2DvKm+Mbq3
+ uDeV+ixjkfN/f7r4fZ3n6qWsAAAA=
+X-Change-ID: 20250406-device-wakeup-leak-extcon-dc1d4429a2b4
+To: MyungJoo Ham <myungjoo.ham@samsung.com>, 
+ Chanwoo Choi <cw00.choi@samsung.com>, Hans de Goede <hdegoede@redhat.com>, 
+ Chen-Yu Tsai <wens@csie.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1016;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=IynFeTWu2RIJzXLhbEL7Bz8oQAxmTkOW8hpdmpazhoQ=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBn8uEr9D66aedCyUONRuEkOeAuxZZK90QD9AfiM
+ Si+GkPkgZqJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ/LhKwAKCRDBN2bmhouD
+ 15wGD/oCr01DUByCd9GYdB92Iq8CCUYdDMU+GQBupswesIlUU8J/2WxoPkr6Ka2bIFMzYCXTJH9
+ yNfJShPuVZmnFh0njAuNjaZhZ3s9Wo/FIIgFEZXqiAVxeZasx0E1MIcX3vN8C5DKwJ7bdld2cF9
+ zJc+e/URXfrL37O+nxq2J1jKH2bTz3tBfGFLr2CxzjXvBqQZFN4IM7vkLR1rN16uqU5wX8d2Yje
+ 5k6s+P3XClnFZQPAstYNa6jeIOTvHcZP+jJrNUGngNZDeS8uqdZQDttqRDAkIDdQp5HhsoTD84C
+ SAlM32ipHYy5ZOz4D/PEFgQRotQA+6W0IDmflN1n/4HSctjbhKtR5rWBsKeTch+r3YTaDShwiG7
+ NZEtLN9mWBA8hfKc7XJOzA0ibe1pvJSLhi5TqS8/GqiMnvwpINushLp3yR8mvEoB7vYA6u7PA2d
+ F3IosXTD1o4q4r8vzuy83isq2YNYBQN6QhVdX4s+YlkEb5JK9VFuHCBg0oQ7a0T/FJAGXUz0oY3
+ gbjgpZoCHWEGFinaYG1yUbZ/XR43auMmRVUns7WfeD62z+x4hIhPFVYXsqr6HbZRKTfvFZg4b4S
+ Zis9yUOKHTDBWAWf8SUrdSjUatQ7hXRSwRm3FjgaDxrCf2xdCAKh9SjUi7QamQWhNmnK8Ju8R5+
+ N9npqiP7DAELkbA==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-On Fri, Apr 04, 2025 at 05:25:38PM +0530, Ayushi Makhija wrote:
-> The anx7625_link_bridge() checks if a device is not a panel
-> bridge and add DRM_BRIDGE_OP_HPD and DRM_BRIDGE_OP_DETECT to
-> the bridge operations. However, on port 1 of the anx7625
-> bridge, any device added is always treated as a panel
-> bridge, preventing connector_detect function from being
-> called. To resolve this, instead of just checking if it is a
-> panel bridge, verify the type of panel bridge
-> whether it is a DisplayPort or eDP panel. If the panel
-> bridge is not of the eDP type, add DRM_BRIDGE_OP_HPD and
-> DRM_BRIDGE_OP_DETECT to the bridge operations.
-> 
-> In the anx7625_sink_detect(), the device is checked to see
-> if it is a panel bridge, and it always sends a "connected"
-> status to the connector. When adding the DP port on port 1 of the
-> anx7625, it incorrectly treats it as a panel bridge and sends an
-> always "connected" status. Instead of checking the status on the
-> panel bridge, it's better to check the hpd_status for connectors
-> like DisplayPort. This way, it verifies the hpd_status variable
-> before sending the status to the connector.
+Device can be unbound, so driver must also release memory for the wakeup
+source.  Use devm for driver already having devm interface and manually
+disable wakeup for drivers still having remove() callback to keep
+consistent ordering of cleanups.
 
-This commit message describes two separte changes. Please split it
-accordingly.
+Best regards,
+Krzysztof
 
-> 
-> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/bridge/analogix/anx7625.c | 8 ++------
->  1 file changed, 2 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-> index 99ef3f27ae42..365d1c871028 100644
-> --- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-> +++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-> @@ -1814,9 +1814,6 @@ static enum drm_connector_status anx7625_sink_detect(struct anx7625_data *ctx)
->  
->  	DRM_DEV_DEBUG_DRIVER(dev, "sink detect\n");
->  
-> -	if (ctx->pdata.panel_bridge)
-> -		return connector_status_connected;
-> -
->  	return ctx->hpd_status ? connector_status_connected :
->  				     connector_status_disconnected;
->  }
-> @@ -2608,9 +2605,8 @@ static int anx7625_link_bridge(struct drm_dp_aux *aux)
->  	platform->bridge.of_node = dev->of_node;
->  	if (!anx7625_of_panel_on_aux_bus(dev))
->  		platform->bridge.ops |= DRM_BRIDGE_OP_EDID;
-> -	if (!platform->pdata.panel_bridge)
-> -		platform->bridge.ops |= DRM_BRIDGE_OP_HPD |
-> -					DRM_BRIDGE_OP_DETECT;
-> +	if (!platform->pdata.panel_bridge || !anx7625_of_panel_on_aux_bus(dev))
-> +		platform->bridge.ops |= DRM_BRIDGE_OP_HPD | DRM_BRIDGE_OP_DETECT;
->  	platform->bridge.type = platform->pdata.panel_bridge ?
->  				    DRM_MODE_CONNECTOR_eDP :
->  				    DRM_MODE_CONNECTOR_DisplayPort;
-> -- 
-> 2.34.1
-> 
+---
+Krzysztof Kozlowski (4):
+      extcon: adc-jack: Fix wakeup source leaks on device unbind
+      extcon: axp288: Fix wakeup source leaks on device unbind
+      extcon: fsa9480: Fix wakeup source leaks on device unbind
+      extcon: qcom-spmi-misc: Fix wakeup source leaks on device unbind
 
+ drivers/extcon/extcon-adc-jack.c       | 1 +
+ drivers/extcon/extcon-axp288.c         | 2 +-
+ drivers/extcon/extcon-fsa9480.c        | 2 +-
+ drivers/extcon/extcon-qcom-spmi-misc.c | 2 +-
+ 4 files changed, 4 insertions(+), 3 deletions(-)
+---
+base-commit: a4cda136f021ad44b8b52286aafd613030a6db5f
+change-id: 20250406-device-wakeup-leak-extcon-dc1d4429a2b4
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
