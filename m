@@ -1,145 +1,396 @@
-Return-Path: <linux-arm-msm+bounces-53310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D1A5A7D011
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 22:02:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A510EA7D01D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 22:13:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0767B170584
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 20:02:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 47AC73ACAA2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 20:12:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17EE821858D;
-	Sun,  6 Apr 2025 20:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F085215B0EC;
+	Sun,  6 Apr 2025 20:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BiKIhLGy"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="e2c5c0C+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483D11B5EA4
-	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Apr 2025 20:01:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE3317BB21
+	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Apr 2025 20:12:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743969717; cv=none; b=jeDC6F0SW8MWlqEnYF/dGmjF8ztjFxkgNtV8LymTL4/As0nAaKCJqctTXaJGFyDLtUeIAgZ+jwWo7WI2PMZH8ps6Gpq9UeUNGmk1aDqdSvaENAe8+XA+dJPl/rtXXwC88R+n4kn91ElFptMSK3OZ/wRGwJXr+lj3cZwLReX7uZg=
+	t=1743970379; cv=none; b=VZlAF7mR457ioiTTkPuPBid1hgcl4eUDlwGmhKHuNZ+Mxise5JxBW4ArZhcw6Bod9nyECVPfdJVF2UGGmolrzGFG5N0Y6jMjGWPmMXlW6gZJV3iBlyK3EJlHmm16XhOCG/N4qEIYksW0nFU1mqn7EVOlJcLjjWkDSpsvzQo7lDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743969717; c=relaxed/simple;
-	bh=l7CRhFlZ6pn6hdkl7kstlhIYoNXxtom6dCRCabxrvMU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fbJAvjAe2FLa+Lm5hIx56WfSdW+zWdcjqgskBfvKnmPMSOClUSsSPtwoZpv7Ht8l4kC2TB+KbRQDwdF60fbQXX/7u250zSyIqMywZX5nKP1Hd5P20tlNRYRFXUecQiUY0rkJkiFWBM+0Xw06uU1lI7ZO49g93y6gh5KD2o861js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BiKIhLGy; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3913290f754so445970f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Apr 2025 13:01:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743969713; x=1744574513; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ux2yY1RchxKGuIqfE/2wQobUJuq5g/5pfkTf4qTXwDE=;
-        b=BiKIhLGy9tI1I+L510O0dm/UGF5E5mhM3xxrtL/nZrqQbmuvckexqPbeJDZ0rnChbl
-         aJsWipiuHgznhVX0+lr8BEp9XvDbSxFIybuDzkFzv0Krf/kMilZCJGgqmM6XiSXxF+GT
-         E63zBNmtfmvmmgPHCgIcERL/Sl/acryadiyyEQFheia393X5GaqsSOpCO3NEaciir7/f
-         +jl6P81cVR+i5+wwFneHkU6E43JXmfGdpUzVfgN9nFoWqtaJmYHTRTJEJNuyCzuV74Zh
-         ozxjsPvDI5/wp9d/Gl/x8QF/ot6VUkvGNfPoXkTYAm8we2SJ+HK35GJt1CMXPep2Jl0f
-         +0LQ==
+	s=arc-20240116; t=1743970379; c=relaxed/simple;
+	bh=fn3XIv374GafpmFsN99R+3aPdYkl1Tqj8epH+8kLyrw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CSW636oZ1EO80ANYc0glgOz0Q56JtU27+NMUiiTN93oTMQ3+KULSpcV9XHMyL3pKHVBYQ5ji6ptYmtqljJGXv8PM/MsvWdBVRHxlieiDRXJOu5B7668hY6a6ArleoU+xU71RN+1Zw2NwV0AJEl+Aj+S2G5YYDHfjdecMsscpCa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=e2c5c0C+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 536IuBxk002074
+	for <linux-arm-msm@vger.kernel.org>; Sun, 6 Apr 2025 20:12:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=CF/FhaEsCR/+W8yHZpCK1Z4y
+	/u8MKd7X9wwGafUA/ZE=; b=e2c5c0C+A1QJkl1S8mBqKwwsXeYpNYXuiqKDhhRp
+	YucyENyy7sfSIHbVDqqSSOqMQ3NOs2VZ2QKzrLQchP6LSuSd2aHFSSZqMBaF2wpH
+	Ugk3adWn+40XqIoQ5nRb9MDAyk2z/r5T8dOOdGlELdZpJftxVqyj0Dr1+t7YlvTh
+	xnM0n25HBfHsxElkhYaDHqcPv1vMupQtsiT47m2pnSuAHdIJ0C06lqrlr1zKzyrn
+	3IeIi7ZwkY3mdMZSFgP1x4YPfOn6pHX5bdOQk1+PpLrRQ+JgFuRhA+hYwnCTSyWF
+	hyfeJbKFS6KOZ3I0PubyMy/nTqcKq7q8pWDTBKynleZOvA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twpm28hw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 06 Apr 2025 20:12:57 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c3c5e92d41so616573785a.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Apr 2025 13:12:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743969713; x=1744574513;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ux2yY1RchxKGuIqfE/2wQobUJuq5g/5pfkTf4qTXwDE=;
-        b=ZwySqfqv2/O8WxW6KqDf91S7djR7CcLV0QRp8FfC/OT2B7Q6hv1s7jZZPsW2CDNH6e
-         WyuGvRNAfIpurGtBtN1nYdmdI1d3aN4jIlJFyPjKH3L/FBd07yQWdAzocQzM4WitvtGQ
-         PqczK+7oU5lYRbNQk2npt99TNFrHtlDCiXhecaTk76aD6Z4XI2vp85z3D2nRc3TnODO8
-         +aHNT6Zr/LphS705umR0zd0Wo9qMxZ6Xua5C+5bZgROEzTRtjzohc4MhqInuWteRYdEi
-         zftmt2Wg2M1DPKK8kE2uEYoLr15BWx9Up7IDSJzk5bqsW14Sm7wsj0Li3sYG+0qWsC8K
-         Wy4w==
-X-Forwarded-Encrypted: i=1; AJvYcCV+51bCdtvZMu28IQvJoRzsqArTgYiL/MD7+dK3fP8sFBmcdaaRVW7AlyUBzkMlQXH6NasaCIfJwMo1bCUa@vger.kernel.org
-X-Gm-Message-State: AOJu0YxI/ns9PJJMjN8qBN/Oh0gTpyz/8pRI0RcSF58meqE10m9e2FYv
-	HBlziKIP7jmA1foKCcTZyubBOdR/nzi2NPeO8JDJdvt51p9MsGvNDjjK5KJpLAo=
-X-Gm-Gg: ASbGncuDTOpX3B5MmiIwFrgI6Oq8DWZnZUFrIf6bNtYHL9e+yQNTUxWSixJLCHqrOjy
-	HyggysJk0BQiSif5hc5vOmL90FolJ5wB5xK7GpS6HmyQzVZ8GEguNH+ziAbV5bwxPgdKXcXSblC
-	r/T7kZQkn8a8wUQ9kpfOreveC/NmwHqHtL1mE/aGYwx0aS2g6txuj2/5Nt5JB05Sw2TT7X5HIXB
-	xP8VLKGDxoutFQqjEwgZNh+mbXKboogmOKBk/bH2wRWe7R2kH9Kji/y8tc65TRjNY/wMIcEUsox
-	DqTZRpDwGviFBnsvtSucdQY7VsJAELLwxuXYsMlDYhYytFn0CsqsKQ50CepaT72lvyG+rY+LNw=
-	=
-X-Google-Smtp-Source: AGHT+IEJ+Ef3Oex5pdoKvNGE2jNPnyAvjiCvNX7k53N0P6w5OL4ACrTa/WVrbC1VAnfl97pDetAO6A==
-X-Received: by 2002:a5d:6d81:0:b0:38f:27d3:1b44 with SMTP id ffacd0b85a97d-39cb357b616mr2957681f8f.2.1743969713594;
-        Sun, 06 Apr 2025 13:01:53 -0700 (PDT)
-Received: from [192.168.1.26] ([178.197.198.86])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c3020d98bsm10199924f8f.76.2025.04.06.13.01.52
+        d=1e100.net; s=20230601; t=1743970376; x=1744575176;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CF/FhaEsCR/+W8yHZpCK1Z4y/u8MKd7X9wwGafUA/ZE=;
+        b=u4IhZZ0SLg6Jbt/aFeqchovgY7fvuzal8+a7gnEbWpbmp3yxrqyGxcmBe6eLygC2zz
+         nhrsGbivwzO6KB0zfBZCUUHO/ONYIJxQvamLoPrrE2RuIpPqW6rw+4wkUdAbg3Wk1bOd
+         K82yASgOUeXnc6tTTcHwqSZnj74OGbHEr/hl0smAEP+4b0NVIx9zRrZZNH8n28fyIIvb
+         XEFQdZ9AkqD0yL0Ybn6ui8ZkFisY65m8xQq4JCiDuBfvpNJawxddajA9VkC9ZJ3sj6Rr
+         6GUkv3t4ObccfWsSx+UCNYdiGk7T3XHCiaczEGnCFKTZ8JFrbH2xUP6mAoQ/2Pim1UsZ
+         idQw==
+X-Gm-Message-State: AOJu0Yz8ih/Qhhi+b9VZhdUSvdpji0TOjUHHRyeHwVwp1DUNogbvHC7j
+	1d5xjZIB++OELrz4hxd0prplLFRqXwbWY/s75sm+3eC+543el31nrZVVLUm5b21S1QLlptKqtiA
+	4ijSFpaiJYJxqQ6LvdZAnQteETEwYWsuCHDrjxWlU8FSmD79uLZC/rUdqAHzS+B1H
+X-Gm-Gg: ASbGncvtFjucobzZAwqgYOS2ox4ppfWHjKDxAe1g/vFg8+K7V26HcV60TWwF5WSL1bM
+	jTD/X/x0zq2wdG6FKYbUX4ehF4WN6k4jqljCL2MyePfZjVK1QilUA/K3bFF0ZB6/EtKVJbez/a4
+	4XujKyWLO+fk3fI4kGzR+boNn8xAtgaUiWWQ30gHn5EopvvhDb8g7a3GMoPNXHopnzmvXi9uGUq
+	1BolW/9HpTveUIVSZRBbEB0f9hkD6S10bgaJBFqDTKl43xX6+d4uGhTGsrNU6MCz+IMwbN0zGOz
+	0MHbyERndNwwuAtveJw7V3KatMAWt4GQLupkM9Tn9Fdr9PSajzxBGBLPovgkSjqfdeIiVhgwSFa
+	ekFw=
+X-Received: by 2002:a05:620a:c4d:b0:7c5:4c6d:7f95 with SMTP id af79cd13be357-7c77dddd504mr1034346085a.48.1743970375714;
+        Sun, 06 Apr 2025 13:12:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE8HcuVy420ofuMxKjaap5079mCf5g49f9eFhqlYXviEaGsK9bqA0z16b86EzmKh4ysjdA81w==
+X-Received: by 2002:a05:620a:c4d:b0:7c5:4c6d:7f95 with SMTP id af79cd13be357-7c77dddd504mr1034343085a.48.1743970375372;
+        Sun, 06 Apr 2025 13:12:55 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30f03124530sm13925971fa.9.2025.04.06.13.12.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Apr 2025 13:01:53 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Sun, 06 Apr 2025 22:01:44 +0200
-Subject: [PATCH 3/3] iio: imu: st_lsm6dsx: Fix wakeup source leaks on
- device unbind
+        Sun, 06 Apr 2025 13:12:54 -0700 (PDT)
+Date: Sun, 6 Apr 2025 23:12:52 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Ayushi Makhija <quic_amakhija@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
+        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
+        conor+dt@kernel.org, andrzej.hajda@intel.com,
+        neil.armstrong@linaro.org, rfoss@kernel.org,
+        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+        jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com,
+        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
+        quic_jesszhan@quicinc.com
+Subject: Re: [PATCH v3 07/10] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
+ to DP bridge nodes
+Message-ID: <nxnqwh2mzvnxv5ytwjsyulxr6ct6mhv3z3v6q4ojrjhhclwv2i@55nb56hnwi3y>
+References: <20250404115539.1151201-1-quic_amakhija@quicinc.com>
+ <20250404115539.1151201-8-quic_amakhija@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250406-b4-device-wakeup-leak-iio-v1-3-2d7d322a4a93@linaro.org>
-References: <20250406-b4-device-wakeup-leak-iio-v1-0-2d7d322a4a93@linaro.org>
-In-Reply-To: <20250406-b4-device-wakeup-leak-iio-v1-0-2d7d322a4a93@linaro.org>
-To: Jonathan Cameron <jic23@kernel.org>, 
- Lars-Peter Clausen <lars@metafoo.de>, Lorenzo Bianconi <lorenzo@kernel.org>
-Cc: linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1002;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=l7CRhFlZ6pn6hdkl7kstlhIYoNXxtom6dCRCabxrvMU=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBn8t2qifPOWPOc85NGw1m7yDEGSug8i9ONXMKX5
- 5gP53XtWDiJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ/LdqgAKCRDBN2bmhouD
- 1+B4D/0eXUZVxZoiPcZjMLxa3FH+U7uhxJSCqoHJdSpdEtOM4g0uDEfsauINOXiir8KF2EspHqx
- nkVH6hoL3EaHuDsWeD8bjY+PNKS3sThCakly4LNMYHyPCd9Hw6ikDYNkk3IIAMigdi0g9VUvBh8
- A1NZIeM2OwUbGz01zpelL3sXyRjgDxQY6d0BlX4iTPnAiqmdIq5pTVDmp+v7qZd5owzwKwYqvN2
- OCom9ADN+y/ham4MXhB7UFJoUKyrQcH7EKiqUCZHEGKCC7z25oZl26FaJCieR09OMf384mizQ7n
- zGGGFJ5Ik4Y9vMcQ6qMmM0GglVdV2VgYrHKob4im82KXGwWNcVIKS2a6KA+MGiv1riFAUOPDHzj
- h93xmc6Zfx594JWNbGfOHU7+n+zgbzGDO3KFe25OQLRHsWKNpUGOSgfTV1EVzL10JB8v1iWMvAR
- 5E/NTLjRjTwTqfqb/2M5DMEsJ4EAZi7EugacBRC8h0CFI1dJYLPtVg6Lk1R/98F/DFqe1VZhj5p
- Lg/dHImuAp5oCNfiLULw8w7XbBvIHYPeLFABam1fdzfllND6QIUUN1VX6wrr40uhxvJANSrJfL3
- 2Pc4yd55QRMjpKsKeX69vo2wtceyXiLQ5TzD53RWM1brIXiYa1zb191VmBV6xp2Glo0pnt68BgT
- ThIX3TfHGrgd1Tg==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250404115539.1151201-8-quic_amakhija@quicinc.com>
+X-Proofpoint-GUID: mq0AYde9vjF3NN3IcFadoLBMZDS-aC7V
+X-Proofpoint-ORIG-GUID: mq0AYde9vjF3NN3IcFadoLBMZDS-aC7V
+X-Authority-Analysis: v=2.4 cv=MpRS63ae c=1 sm=1 tr=0 ts=67f2e049 cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=DHtXK5enkGFnJ6Jc3mUA:9 a=CjuIK1q_8ugA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-06_06,2025-04-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=911 clxscore=1015 priorityscore=1501 impostorscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0
+ phishscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504060147
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.
+On Fri, Apr 04, 2025 at 05:25:36PM +0530, Ayushi Makhija wrote:
+> Add anx7625 DSI to DP bridge device nodes.
+> 
+> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 208 ++++++++++++++++++++-
+>  1 file changed, 207 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> index 175f8b1e3b2d..8e784ccf4138 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> @@ -28,6 +28,13 @@ chosen {
+>  		stdout-path = "serial0:115200n8";
+>  	};
+>  
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +	};
+> +
+>  	vreg_conn_1p8: vreg_conn_1p8 {
+>  		compatible = "regulator-fixed";
+>  		regulator-name = "vreg_conn_1p8";
+> @@ -128,6 +135,30 @@ dp1_connector_in: endpoint {
+>  			};
+>  		};
+>  	};
+> +
+> +	dp-dsi0-connector {
+> +		compatible = "dp-connector";
+> +		label = "DSI0";
+> +		type = "full-size";
+> +
+> +		port {
+> +			dp_dsi0_connector_in: endpoint {
+> +				remote-endpoint = <&dsi2dp_bridge0_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	dp-dsi1-connector {
+> +		compatible = "dp-connector";
+> +		label = "DSI1";
+> +		type = "full-size";
+> +
+> +		port {
+> +			dp_dsi1_connector_in: endpoint {
+> +				remote-endpoint = <&dsi2dp_bridge1_out>;
+> +			};
+> +		};
+> +	};
+>  };
+>  
+>  &apps_rsc {
+> @@ -517,9 +548,135 @@ &i2c11 {
+>  
+>  &i2c18 {
+>  	clock-frequency = <400000>;
+> -	pinctrl-0 = <&qup_i2c18_default>;
+> +	pinctrl-0 = <&qup_i2c18_default>,
+> +		    <&io_expander_intr_active>,
+> +		    <&io_expander_reset_active>;
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+These pinctrl entries should go to the IO expander itself.
 
-diff --git a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-index 4fdcc2acc94ed0f594116b9141ce85f7c4449a58..96c6106b95eef60b43eb41fef67889d44d5836db 100644
---- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-+++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-@@ -2719,8 +2719,11 @@ int st_lsm6dsx_probe(struct device *dev, int irq, int hw_id,
- 	}
- 
- 	if (device_property_read_bool(dev, "wakeup-source") ||
--	    (pdata && pdata->wakeup_source))
--		device_init_wakeup(dev, true);
-+	    (pdata && pdata->wakeup_source)) {
-+		err = devm_device_init_wakeup(dev);
-+		if (err)
-+			return dev_err_probe(dev, err, "Failed to init wakeup\n");
-+	}
- 
- 	return 0;
- }
+>  	pinctrl-names = "default";
+> +
+>  	status = "okay";
+> +
+> +	io_expander: gpio@74 {
+> +		compatible = "ti,tca9539";
+> +		reg = <0x74>;
+> +		interrupts-extended = <&tlmm 98 IRQ_TYPE_EDGE_BOTH>;
+> +		gpio-controller;
+> +		#gpio-cells = <2>;
+> +		interrupt-controller;
+> +		#interrupt-cells = <2>;
+> +
+> +		gpio2-hog {
+
+This needs a huuge explanation in the commit message. Otherwise I'd say
+these pins should likely be used by the corresponding anx bridges.
+
+> +			gpio-hog;
+> +			gpios = <2 GPIO_ACTIVE_HIGH>;
+> +			input;
+> +			line-name = "dsi0_int_pin";
+> +		};
+> +
+> +		gpio3-hog {
+> +			gpio-hog;
+> +			gpios = <3 GPIO_ACTIVE_LOW>;
+> +			output-high;
+> +			line-name = "dsi0_cbl_det_pin";
+> +		};
+> +
+> +		gpio10-hog {
+> +			gpio-hog;
+> +			gpios = <10 GPIO_ACTIVE_HIGH>;
+> +			input;
+> +			line-name = "dsi1_int_pin";
+> +		};
+> +
+> +		gpio11-hog {
+> +			gpio-hog;
+> +			gpios = <11 GPIO_ACTIVE_LOW>;
+> +			output-high;
+> +			line-name = "dsi1_cbl_det_pin";
+> +		};
+> +	};
+> +
+> +	i2c-mux@70 {
+> +		compatible = "nxp,pca9543";
+> +		#address-cells = <1>;
+> +
+> +		#size-cells = <0>;
+> +		reg = <0x70>;
+> +
+> +		i2c@0 {
+> +			reg = <0>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			bridge@58 {
+> +				compatible = "analogix,anx7625";
+> +				reg = <0x58>;
+> +				interrupts-extended = <&io_expander 2 IRQ_TYPE_EDGE_FALLING>;
+> +				enable-gpios = <&io_expander 1 GPIO_ACTIVE_HIGH>;
+> +				reset-gpios = <&io_expander 0 GPIO_ACTIVE_HIGH>;
+> +				vdd10-supply = <&vph_pwr>;
+> +				vdd18-supply = <&vph_pwr>;
+> +				vdd33-supply = <&vph_pwr>;
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +
+> +						dsi2dp_bridge0_in: endpoint {
+> +							remote-endpoint = <&mdss0_dsi0_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +
+> +						dsi2dp_bridge0_out: endpoint {
+> +							remote-endpoint = <&dp_dsi0_connector_in>;
+> +						};
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		i2c@1 {
+> +			reg = <1>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			bridge@58 {
+> +				compatible = "analogix,anx7625";
+> +				reg = <0x58>;
+> +				interrupts-extended = <&io_expander 10 IRQ_TYPE_EDGE_FALLING>;
+> +				enable-gpios = <&io_expander 9 GPIO_ACTIVE_HIGH>;
+> +				reset-gpios = <&io_expander 8 GPIO_ACTIVE_HIGH>;
+> +				vdd10-supply = <&vph_pwr>;
+> +				vdd18-supply = <&vph_pwr>;
+> +				vdd33-supply = <&vph_pwr>;
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +
+> +						dsi2dp_bridge1_in: endpoint {
+> +							remote-endpoint = <&mdss0_dsi1_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +
+> +						dsi2dp_bridge1_out: endpoint {
+> +							remote-endpoint = <&dp_dsi1_connector_in>;
+> +						};
+> +					};
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+>  };
+>  
+>  &mdss0 {
+> @@ -566,6 +723,40 @@ &mdss0_dp1_phy {
+>  	status = "okay";
+>  };
+>  
+> +&mdss0_dsi0 {
+> +	vdda-supply = <&vreg_l1c>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&mdss0_dsi0_out {
+> +	data-lanes = <0 1 2 3>;
+> +	remote-endpoint = <&dsi2dp_bridge0_in>;
+> +};
+> +
+> +&mdss0_dsi0_phy {
+> +	vdds-supply = <&vreg_l4a>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&mdss0_dsi1 {
+> +	vdda-supply = <&vreg_l1c>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&mdss0_dsi1_out {
+> +	data-lanes = <0 1 2 3>;
+> +	remote-endpoint = <&dsi2dp_bridge1_in>;
+> +};
+> +
+> +&mdss0_dsi1_phy {
+> +	vdds-supply = <&vreg_l4a>;
+> +
+> +	status = "okay";
+> +};
+> +
+>  &pmm8654au_0_gpios {
+>  	gpio-line-names = "DS_EN",
+>  			  "POFF_COMPLETE",
+> @@ -714,6 +905,21 @@ ethernet0_mdio: ethernet0-mdio-pins {
+>  		};
+>  	};
+>  
+> +	io_expander_intr_active: io-expander-intr-active-state {
+> +		pins = "gpio98";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	io_expander_reset_active: io-expander-reset-active-state {
+> +		pins = "gpio97";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +		output-high;
+> +	};
+> +
+>  	qup_uart10_default: qup-uart10-state {
+>  		pins = "gpio46", "gpio47";
+>  		function = "qup1_se3";
+> -- 
+> 2.34.1
+> 
 
 -- 
-2.45.2
-
+With best wishes
+Dmitry
 
