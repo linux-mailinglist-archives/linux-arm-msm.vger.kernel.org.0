@@ -1,368 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-53327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F943A7D08E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 22:55:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E77EA7D0B2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 23:32:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EC49A188C18F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 20:55:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6261116FF92
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 21:32:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7FEC1B85CC;
-	Sun,  6 Apr 2025 20:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87C9B218AC4;
+	Sun,  6 Apr 2025 21:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="7w4oGq+H"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SRXyOuRF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE51189BAC;
-	Sun,  6 Apr 2025 20:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE1E1B0402
+	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Apr 2025 21:32:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743972930; cv=none; b=I0+KC+xNpNafGRVxML+eTF6zM3pSJvoKfIj17EWMPjEm7mL68tqyNOJrTXttc/kZZnSfgV2U09Uzxx8J/towXI66YOXbf67GDW9zkGxx2Ar62WNovOTUKt3aRXmlyAOU9+xMXJCMpsnG9zxerozGxV9y4leVjpS2liqTnfbfFaw=
+	t=1743975155; cv=none; b=kfrZmIOIH/7J6XSFWmWUKSIq6RZyjW4PVOuJR8wEZY54hY0qztz6jzW0vSbFiNDvxG8r6Uh2X3wnA9hGBAfCwfMxAa+UZNtUmeT4AeOaan4NwKf1rfGYHJNuTUGN3e98hnJu/lruj88wEetBNHR3YzXy/pYG4/JmupVOfdi+r6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743972930; c=relaxed/simple;
-	bh=GYQDKxQYPeumdjpCWFzmT/BFYkqlpiumCHjzhGY3a/I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iikk1VsVP0rauxNWKG50W7BIuH7ZuXvnXQFnnB2U5jMeOmcHrQWgwDYFP5GVgpQCwEd7CDWM7sFxYQYCFKOPAw0nExL6D5MmySmi9YHdsVFPogRvidgahFp5fD5QIvuCidEWcdG8PUDR2cXLui92ceC/NDZtyRhLcHKUKPvI8VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=7w4oGq+H; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1743972926; bh=GYQDKxQYPeumdjpCWFzmT/BFYkqlpiumCHjzhGY3a/I=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=7w4oGq+H+b6MbgG4oSCp8yrzLQHtRTTLN8U2pbRKfqcb3Jc1ynW4HfhfBc492CW6q
-	 E7G8QLuq9qvchlYL188PiKSmm6KQONBYb5Nz8yxd2RBhiUaPBGr0Bdb+i55hh4rW9z
-	 zhqWgHp3J/I9NG6NeE5yzabU6WdYQU6cINs9Qpik=
-From: Luca Weiss <luca@lucaweiss.eu>
-Date: Sun, 06 Apr 2025 22:55:04 +0200
-Subject: [PATCH 2/2] arm64: dts: qcom: msm8953: Add interconnects
+	s=arc-20240116; t=1743975155; c=relaxed/simple;
+	bh=S7UwqcJJoO5b9nBl8qVyAYQ7e87sp4oTdoEjMGzFTV0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kB7vHC5gdsTADbspgcP6PbS11NApnr8dlg1mxUml0OeKnNIDQ0CpNoN3JH1Auwe44T3vRJAgtAoLvE5nS0IMQQLIxCnANPyGMJ+L6gEYFzkVXh87xkyijbtdUof0ICOLeFY5Ff/Dlquf/qtQyQnJl+uNC0Jyo6tN86SdNwlsLYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SRXyOuRF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 536KfANs010653
+	for <linux-arm-msm@vger.kernel.org>; Sun, 6 Apr 2025 21:32:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=0tjh5MMU03iFzSO9fdJiKaZd
+	Vjsqa8YnKVuGo7pzdWg=; b=SRXyOuRFW06+fUjDKuBWELpdmCLnwtTHKnvLay/3
+	SMy40zPH0ElyOgjyGKFWAJx9X0SP4Ggw+naoC5aWIAwhHooAEhzZfJMq3NNaMxJC
+	t1JcpH0DnlkqO8lol+GnekAXsWJt7oCE9fyTF9ZnoYHH7r6aDzKWos0r77gFCTUK
+	DgNlp3+EvS5eWafLR+rgzP7HEfWP98AByJB0gQIbBBQT/18ipYEVeP0HG3vKL0zG
+	+hdqVSkpkCd2oKSKn8OShkzTDyGX9WHtTHJ6nrwmwO41hTK/LdoQVK0qG4wf6Ma7
+	CXfIKQVr3ehdmedDamOfN6+peC56lsv1brz4fuAzO/yHqw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twpm2atc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 06 Apr 2025 21:32:32 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c3c5e92d41so622557585a.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Apr 2025 14:32:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743975150; x=1744579950;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0tjh5MMU03iFzSO9fdJiKaZdVjsqa8YnKVuGo7pzdWg=;
+        b=FYqrgYZFyZ5GD5JmSMi6M/XFwy3/VJFMsV1BunY1uVTnffFbIZvWzTF+cFkKFePexe
+         ZZ2Y3jfaGaFKko2HwS7CJ8uAXBDXrytCWvb57CYXZfdLgFidCMqbBcMwegbk0L+t4nT0
+         T2kyNtzteqpjvNQpnzYkqtxT5IWqpmvl/1aza3x9Fpr4tXCL3SAbTbp3735rQx0km1l7
+         sGZaSwdCOWY/HXaOMT23Wh2RCaWznWbj2H8QnLbjS4yusB2z6XwoIGHpDHgRokbnLrLI
+         ROEvMVuOtAXs/I4vupTK3dYFrfsFto1qkbttSG0+HLnDqQiU/dJ05bqYIjHxcfKFZAKj
+         imkg==
+X-Forwarded-Encrypted: i=1; AJvYcCWlhlErQWqEbHAn4FzZGcqtUzV/JryHMRGBN6E4kMdE/qSv24O/aRarKvfKqx5pWb03rFK8Z3nTpqz72ykB@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQv2VceExsWRAXa/Hkrefj72N1M7iRnyjWT3apGqREk0cWkEiR
+	PD+u3XNkLRWt37RL77DtQ/psQMCveWW1OlBFtvguwg7ziquUBmNQmPNX7pDHvDvu/oJmCXXLJlK
+	pAyA7X6n0DB/+HUA8Bl84b7yVIbVDdYpONIohhSKu2WZpH5b28TnfpdlERufzIknSwWtRv1hm
+X-Gm-Gg: ASbGncsi3S5+tm2Fm6hbjDOHKUkpG33jAb/Tb3dWz9+YLhvSUDtmhetpr5vDqmYTAK8
+	uMIjHxZTixx1kw2QdYhvXiNmYTj/c+e06L4m71yWJWKEDLgHs/32Arn2yZapsr0iTrRMKePl2Wb
+	p3Adtso3cW1t+oZRn8k5lApKczkQtSb4+YRBASuhg7ET3M4gVYr6BdxgExQ09VPsMzaIZCj1/Sh
+	PdKAreBRZfk0T5POEBw8i4H5e3x33nVcBip5gYxCRIxhHOl4R0PSalDfVSRN3mEO+Vefqq9qWB1
+	dNhdjR5HI2G/9dsgppwftibLRhAPTS5W5y9g9dcxF+5RaJlp8gaVkzF5BRPXyVKW7X9mXzBr5WX
+	UsPg=
+X-Received: by 2002:a05:620a:4154:b0:7c5:49d6:733a with SMTP id af79cd13be357-7c77dd61f77mr1098207985a.21.1743975150505;
+        Sun, 06 Apr 2025 14:32:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGPxi/Cy4ZI0jgCL/m186L4t9f/4IWHa+q0KVz28z2I5NuRx0R5Dr+tUUUDfiYp2TRM9UhMHA==
+X-Received: by 2002:a05:620a:4154:b0:7c5:49d6:733a with SMTP id af79cd13be357-7c77dd61f77mr1098205685a.21.1743975150149;
+        Sun, 06 Apr 2025 14:32:30 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30f031bcfcasm14148611fa.79.2025.04.06.14.32.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Apr 2025 14:32:29 -0700 (PDT)
+Date: Mon, 7 Apr 2025 00:32:27 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Pengyu Luo <mitltlatltl@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: rpmh: make clkaN optional
+Message-ID: <lt2v3pw4byfdmmgwo35sppmempnyeeu4hsl6eoula5o4h7q22j@z7dmakunwnuk>
+References: <20250404072003.515796-1-mitltlatltl@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250406-msm8953-interconnect-v1-2-a23e22e236e0@lucaweiss.eu>
-References: <20250406-msm8953-interconnect-v1-0-a23e22e236e0@lucaweiss.eu>
-In-Reply-To: <20250406-msm8953-interconnect-v1-0-a23e22e236e0@lucaweiss.eu>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Vladimir Lypak <vladimir.lypak@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca@lucaweiss.eu>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8564; i=luca@lucaweiss.eu;
- h=from:subject:message-id; bh=9ktMphiDY7XwX/inEIMXs+LhqzzNNoazAkIIZJrkXKg=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBn8uo8VRx5k5lFLWc/sZAtRJHoRQ9Ivwq0PlI3i
- 2BLqzjQBG+JAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ/LqPAAKCRBy2EO4nU3X
- Vs62D/46FF04VEtCjUPVZ3L0DJ4AyXJI5QNJ3kkzSpYn8YY3R6xzkOkgeVisINfxJFq7eBoEtTO
- 2/CwEMAA1bKK0Sq/yBKgm+JWGFAeyfXN0Wm2ZqPm1N0XP4hpDe1ec9FmjBzBrJms7xfHzrk/LxF
- X5+wkLzMOzG94ZXnlhHhnlSzqz73sUa3FCmoSGRSICHjTf/9sdlHZv5n4P8phrlKIoO63q0k+kQ
- VxUqD3S4cf3m7dIGNUSYIUBooJW9XXpMVCwKnm5EvutFf/x8pwKcoqsEaXbXiTODkpuBTAfFt/w
- yeuvKs2LKp3rna2jUtVOYBl7E2uv7UEabEeA9NgTWd0m1vRsZnf9qoJdgi9sqaA6GitewAFpNEY
- d/j8XG1IjI+dMLaG5XfpJ84S/Wgsqiu0oTkBBZhgQSe0P1Hn8LNanPRp17IfUiQuolAwsZ2dWQ7
- LSWpNkrlNugt5N/YQ2sYJBQI2dnvc9eCToEYMVTDOjRPMipQ8+ma7ZVb3R47QLtzWR3HSUAXJIK
- JnQkSIfWYi1SZHbTgt8y7g3zDUwff+gHDo7i8Weba0hQjtY3J6KXDm9VU/3x9HI988U6hJMMsnz
- A66tF/5YC3w4uVz1hLjJyjgmEYQutc54CuimuZ3NA1k/QjM/Q8kx/CsTd+OSbs1G0CthOlAOsje
- vtJZb8E3/2HHB0g==
-X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250404072003.515796-1-mitltlatltl@gmail.com>
+X-Proofpoint-GUID: nwWCVZ9EyfCAFU5yejj1ZiiDK_yJMFwA
+X-Proofpoint-ORIG-GUID: nwWCVZ9EyfCAFU5yejj1ZiiDK_yJMFwA
+X-Authority-Analysis: v=2.4 cv=MpRS63ae c=1 sm=1 tr=0 ts=67f2f2f0 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=pGLkceISAAAA:8 a=AZcm_5yHBFW_TKN9jTcA:9 a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-06_06,2025-04-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=815 clxscore=1015 priorityscore=1501 impostorscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0
+ phishscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504060157
 
-From: Vladimir Lypak <vladimir.lypak@gmail.com>
+On Fri, Apr 04, 2025 at 03:20:02PM +0800, Pengyu Luo wrote:
+> On sm8650, clkaN are missing in cmd-db for some specific devices. This
+> caused a boot failure. Printing log during initramfs phase, I found
+> 
+> [    0.053281] clk-rpmh 17a00000.rsc:clock-controller: missing RPMh resource address for clka1
+> 
+> Adding the optional property to avoid probing failure which causes
+> countless deferred probe. In the downstream tree,similar workarounds
+> are introduced for sm7635, sm8550, sm8635, sm8650, sm8750.
 
-Add the nodes for the bimc, pcnoc, snoc and snoc_mm. And wire up the
-interconnects where applicable.
+Nit: SM7635, SM8550, etc.
 
-Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-[luca: Prepare patch for upstream submission]
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
----
- arch/arm64/boot/dts/qcom/msm8953.dtsi | 96 +++++++++++++++++++++++++++++++++++
- 1 file changed, 96 insertions(+)
+> 
+> Tested-by: Pengyu Luo <mitltlatltl@gmail.com> # Oneplus Pad Pro / Oneplus Pad 2
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-index af4c341e2533ef2cca593e0dc97003334d3fd6b7..bc75c0bd67a27d0b2437e1bd29498f45a4822c08 100644
---- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-@@ -4,6 +4,8 @@
- #include <dt-bindings/clock/qcom,gcc-msm8953.h>
- #include <dt-bindings/clock/qcom,rpmcc.h>
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/interconnect/qcom,msm8953.h>
-+#include <dt-bindings/interconnect/qcom,rpm-icc.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,apr.h>
-@@ -44,6 +46,8 @@ cpu0: cpu@0 {
- 			reg = <0x0>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
-+			interconnects = <&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &bimc SLV_EBI RPM_ACTIVE_TAG>;
- 			next-level-cache = <&l2_0>;
- 			#cooling-cells = <2>;
- 		};
-@@ -54,6 +58,8 @@ cpu1: cpu@1 {
- 			reg = <0x1>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
-+			interconnects = <&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &bimc SLV_EBI RPM_ACTIVE_TAG>;
- 			next-level-cache = <&l2_0>;
- 			#cooling-cells = <2>;
- 		};
-@@ -64,6 +70,8 @@ cpu2: cpu@2 {
- 			reg = <0x2>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
-+			interconnects = <&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &bimc SLV_EBI RPM_ACTIVE_TAG>;
- 			next-level-cache = <&l2_0>;
- 			#cooling-cells = <2>;
- 		};
-@@ -74,6 +82,8 @@ cpu3: cpu@3 {
- 			reg = <0x3>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
-+			interconnects = <&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &bimc SLV_EBI RPM_ACTIVE_TAG>;
- 			next-level-cache = <&l2_0>;
- 			#cooling-cells = <2>;
- 		};
-@@ -84,6 +94,8 @@ cpu4: cpu@100 {
- 			reg = <0x100>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
-+			interconnects = <&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &bimc SLV_EBI RPM_ACTIVE_TAG>;
- 			next-level-cache = <&l2_1>;
- 			#cooling-cells = <2>;
- 		};
-@@ -94,6 +106,8 @@ cpu5: cpu@101 {
- 			reg = <0x101>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
-+			interconnects = <&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &bimc SLV_EBI RPM_ACTIVE_TAG>;
- 			next-level-cache = <&l2_1>;
- 			#cooling-cells = <2>;
- 		};
-@@ -104,6 +118,8 @@ cpu6: cpu@102 {
- 			reg = <0x102>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
-+			interconnects = <&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &bimc SLV_EBI RPM_ACTIVE_TAG>;
- 			next-level-cache = <&l2_1>;
- 			#cooling-cells = <2>;
- 		};
-@@ -114,6 +130,8 @@ cpu7: cpu@103 {
- 			reg = <0x103>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
-+			interconnects = <&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &bimc SLV_EBI RPM_ACTIVE_TAG>;
- 			next-level-cache = <&l2_1>;
- 			#cooling-cells = <2>;
- 		};
-@@ -470,6 +488,13 @@ rng@e3000 {
- 			clock-names = "core";
- 		};
- 
-+		bimc: interconnect@400000 {
-+			compatible = "qcom,msm8953-bimc";
-+			reg = <0x00400000 0x5a000>;
-+
-+			#interconnect-cells = <2>;
-+		};
-+
- 		tsens0: thermal-sensor@4a9000 {
- 			compatible = "qcom,msm8953-tsens", "qcom,tsens-v2";
- 			reg = <0x004a9000 0x1000>, /* TM */
-@@ -486,6 +511,29 @@ restart@4ab000 {
- 			reg = <0x004ab000 0x4>;
- 		};
- 
-+		pcnoc: interconnect@500000 {
-+			compatible = "qcom,msm8953-pcnoc";
-+			reg = <0x00500000 0x12080>;
-+
-+			clocks = <&gcc GCC_PCNOC_USB3_AXI_CLK>;
-+			clock-names = "pcnoc_usb3_axi";
-+
-+			#interconnect-cells = <2>;
-+		};
-+
-+		snoc: interconnect@580000 {
-+			compatible = "qcom,msm8953-snoc";
-+			reg = <0x00580000 0x16080>;
-+
-+			#interconnect-cells = <2>;
-+
-+			snoc_mm: interconnect-snoc {
-+				compatible = "qcom,msm8953-snoc-mm";
-+
-+				#interconnect-cells = <2>;
-+			};
-+		};
-+
- 		tlmm: pinctrl@1000000 {
- 			compatible = "qcom,msm8953-pinctrl";
- 			reg = <0x01000000 0x300000>;
-@@ -849,6 +897,13 @@ mdss: display-subsystem@1a00000 {
- 			interrupt-controller;
- 			#interrupt-cells = <1>;
- 
-+			interconnects = <&snoc_mm MAS_MDP RPM_ACTIVE_TAG
-+					 &bimc SLV_EBI RPM_ACTIVE_TAG>,
-+					<&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &pcnoc SLV_DISP_SS_CFG RPM_ACTIVE_TAG>;
-+			interconnect-names = "mdp0-mem",
-+					     "cpu-cfg";
-+
- 			clocks = <&gcc GCC_MDSS_AHB_CLK>,
- 				 <&gcc GCC_MDSS_AXI_CLK>,
- 				 <&gcc GCC_MDSS_VSYNC_CLK>,
-@@ -1065,6 +1120,11 @@ gpu: gpu@1c00000 {
- 				      "alwayson";
- 			power-domains = <&gcc OXILI_GX_GDSC>;
- 
-+			interconnects = <&bimc MAS_OXILI RPM_ACTIVE_TAG
-+					 &bimc SLV_EBI RPM_ACTIVE_TAG>,
-+					<&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &pcnoc SLV_GPU_CFG RPM_ACTIVE_TAG>;
-+
- 			iommus = <&gpu_iommu 0>;
- 			operating-points-v2 = <&gpu_opp_table>;
- 
-@@ -1302,6 +1362,12 @@ usb3: usb@70f8800 {
- 					  <&gcc GCC_USB30_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <133330000>;
- 
-+			interconnects = <&pcnoc MAS_USB3 RPM_ALWAYS_TAG
-+					 &bimc SLV_EBI RPM_ALWAYS_TAG>,
-+					<&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &pcnoc SLV_USB3 RPM_ACTIVE_TAG>;
-+			interconnect-names = "usb-ddr", "apps-usb";
-+
- 			power-domains = <&gcc USB30_GDSC>;
- 
- 			qcom,select-utmi-as-pipe-clk;
-@@ -1354,6 +1420,11 @@ sdhc_1: mmc@7824900 {
- 				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
- 			clock-names = "iface", "core", "xo";
- 
-+			interconnects = <&pcnoc MAS_SDCC_1 RPM_ACTIVE_TAG
-+					 &bimc SLV_EBI RPM_ACTIVE_TAG>,
-+					<&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &pcnoc SLV_SDCC_1 RPM_ACTIVE_TAG>;
-+
- 			power-domains = <&rpmpd MSM8953_VDDCX>;
- 			operating-points-v2 = <&sdhc1_opp_table>;
- 
-@@ -1374,26 +1445,36 @@ sdhc1_opp_table: opp-table-sdhc1 {
- 
- 				opp-25000000 {
- 					opp-hz = /bits/ 64 <25000000>;
-+					opp-peak-kBps = <200000>, <100000>;
-+					opp-avg-kBps = <65360>, <32768>;
- 					required-opps = <&rpmpd_opp_low_svs>;
- 				};
- 
- 				opp-50000000 {
- 					opp-hz = /bits/ 64 <50000000>;
-+					opp-peak-kBps = <400000>, <200000>;
-+					opp-avg-kBps = <130718>, <65360>;
- 					required-opps = <&rpmpd_opp_svs>;
- 				};
- 
- 				opp-100000000 {
- 					opp-hz = /bits/ 64 <100000000>;
-+					opp-peak-kBps = <400000>, <400000>;
-+					opp-avg-kBps = <130718>, <65360>;
- 					required-opps = <&rpmpd_opp_svs>;
- 				};
- 
- 				opp-192000000 {
- 					opp-hz = /bits/ 64 <192000000>;
-+					opp-peak-kBps = <800000>, <600000>;
-+					opp-avg-kBps = <261438>, <130718>;
- 					required-opps = <&rpmpd_opp_nom>;
- 				};
- 
- 				opp-384000000 {
- 					opp-hz = /bits/ 64 <384000000>;
-+					opp-peak-kBps = <800000>, <800000>;
-+					opp-avg-kBps = <261438>, <300000>;
- 					required-opps = <&rpmpd_opp_nom>;
- 				};
- 			};
-@@ -1414,6 +1495,11 @@ sdhc_2: mmc@7864900 {
- 				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
- 			clock-names = "iface", "core", "xo";
- 
-+			interconnects = <&pcnoc MAS_SDCC_2 RPM_ACTIVE_TAG
-+					 &bimc SLV_EBI RPM_ACTIVE_TAG>,
-+					<&bimc MAS_APPS_PROC RPM_ACTIVE_TAG
-+					 &pcnoc SLV_SDCC_2 RPM_ACTIVE_TAG>;
-+
- 			power-domains = <&rpmpd MSM8953_VDDCX>;
- 			operating-points-v2 = <&sdhc2_opp_table>;
- 
-@@ -1430,26 +1516,36 @@ sdhc2_opp_table: opp-table-sdhc2 {
- 
- 				opp-25000000 {
- 					opp-hz = /bits/ 64 <25000000>;
-+					opp-peak-kBps = <200000>, <100000>;
-+					opp-avg-kBps = <65360>, <32768>;
- 					required-opps = <&rpmpd_opp_low_svs>;
- 				};
- 
- 				opp-50000000 {
- 					opp-hz = /bits/ 64 <50000000>;
-+					opp-peak-kBps = <400000>, <400000>;
-+					opp-avg-kBps = <130718>, <65360>;
- 					required-opps = <&rpmpd_opp_svs>;
- 				};
- 
- 				opp-100000000 {
- 					opp-hz = /bits/ 64 <100000000>;
-+					opp-peak-kBps = <800000>, <400000>;
-+					opp-avg-kBps = <130718>, <130718>;
- 					required-opps = <&rpmpd_opp_svs>;
- 				};
- 
- 				opp-177770000 {
- 					opp-hz = /bits/ 64 <177770000>;
-+					opp-peak-kBps = <600000>, <600000>;
-+					opp-avg-kBps = <261438>, <130718>;
- 					required-opps = <&rpmpd_opp_nom>;
- 				};
- 
- 				opp-200000000 {
- 					opp-hz = /bits/ 64 <200000000>;
-+					opp-peak-kBps = <800000>, <800000>;
-+					opp-avg-kBps = <261438>, <130718>;
- 					required-opps = <&rpmpd_opp_nom>;
- 				};
- 			};
+I'm not so sure about this tag. You are expected to test the patch that
+you are submitting.
+
+> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+> ---
+>  drivers/clk/qcom/clk-rpmh.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+> index c7675930f..68704c4f0 100644
+> --- a/drivers/clk/qcom/clk-rpmh.c
+> +++ b/drivers/clk/qcom/clk-rpmh.c
+> @@ -66,6 +66,8 @@ struct clk_rpmh {
+>  struct clk_rpmh_desc {
+>  	struct clk_hw **clks;
+>  	size_t num_clks;
+> +	/* rpmh clock clkaN are optional for this latform */
+
+RPMh, platform
+
+> +	bool clka_optional;
+>  };
+>  
+>  static DEFINE_MUTEX(rpmh_clk_lock);
+> @@ -648,6 +650,7 @@ static struct clk_hw *sm8550_rpmh_clocks[] = {
+>  static const struct clk_rpmh_desc clk_rpmh_sm8550 = {
+>  	.clks = sm8550_rpmh_clocks,
+>  	.num_clks = ARRAY_SIZE(sm8550_rpmh_clocks),
+> +	.clka_optional = true,
+>  };
+>  
+>  static struct clk_hw *sm8650_rpmh_clocks[] = {
+> @@ -679,6 +682,7 @@ static struct clk_hw *sm8650_rpmh_clocks[] = {
+>  static const struct clk_rpmh_desc clk_rpmh_sm8650 = {
+>  	.clks = sm8650_rpmh_clocks,
+>  	.num_clks = ARRAY_SIZE(sm8650_rpmh_clocks),
+> +	.clka_optional = true,
+>  };
+>  
+>  static struct clk_hw *sc7280_rpmh_clocks[] = {
+> @@ -847,6 +851,7 @@ static struct clk_hw *sm8750_rpmh_clocks[] = {
+>  static const struct clk_rpmh_desc clk_rpmh_sm8750 = {
+>  	.clks = sm8750_rpmh_clocks,
+>  	.num_clks = ARRAY_SIZE(sm8750_rpmh_clocks),
+> +	.clka_optional = true,
+>  };
+>  
+>  static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
+> @@ -890,6 +895,11 @@ static int clk_rpmh_probe(struct platform_device *pdev)
+>  		rpmh_clk = to_clk_rpmh(hw_clks[i]);
+>  		res_addr = cmd_db_read_addr(rpmh_clk->res_name);
+>  		if (!res_addr) {
+> +			hw_clks[i] = NULL;
+> +
+> +			if (desc->clka_optional && !strncmp(rpmh_clk->res_name, "clka", sizeof("clka") - 1))
+
+Carriage return after &&
+
+> +				continue;
+> +
+>  			dev_err(&pdev->dev, "missing RPMh resource address for %s\n",
+>  				rpmh_clk->res_name);
+>  			return -ENODEV;
+> -- 
+> 2.48.1
+> 
 
 -- 
-2.49.0
-
+With best wishes
+Dmitry
 
