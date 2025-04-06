@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-53296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A204A7CE3A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 15:53:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DC3CA7CE41
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 15:54:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 209FC16A6A3
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 13:53:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6AA71188E6F2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Apr 2025 13:54:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F5812185BC;
-	Sun,  6 Apr 2025 13:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 388CF2185BC;
+	Sun,  6 Apr 2025 13:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RNRKqjfX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u/O92oZG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF26128819;
-	Sun,  6 Apr 2025 13:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D2217C220;
+	Sun,  6 Apr 2025 13:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743947630; cv=none; b=FiGmF6cR6pPWFbvzEy6PNHIJot1iqJdcBcPChcrg+D11iXKl6vFUaKGnuTHOoL9px7AXnx0meIVL0x4gnJR7hfpNbahfVlwJH4muCJEHJtJlWFEC7x6SJFUax+xlc48MqR7dNywmA5kVNWkh+BnRJxSVyCLL5cQPai9b4pSr8ww=
+	t=1743947682; cv=none; b=SBCpDo7QJCzlO8NzJ1PFIPknL/XU2IZ+utpbjZFXBuqmze1HMfxb6DkG+cCs+nRslVe6Ns+c49OujVCNFvqOyvCin4y3Fwx4xgjFLt1jXXVfVddCM324dUKKsbEDJED8DoLe4VlkiaTMK/E8S7TLRvHgvsXMvddJE2rPbK5a7Z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743947630; c=relaxed/simple;
-	bh=aU5m++M1HhWT6yP7jA1QIy8LqTSXqwb1xgM+NT4RZEM=;
+	s=arc-20240116; t=1743947682; c=relaxed/simple;
+	bh=9skXj/Ea5NQxFShtPwK//mmHvrgmhq2AlIHi2HeIhWM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Zc8U/QOeYk22wcdRxYISnV3jCXxcW626jjVmPFplRidQlujtBVp48IWm5yHKrMPcZAcdk/yu07yc/kNrDpFmvphB2F+lKB4qEcM8fTcM0z93VARgjjfwH+ZOGPncZ3/GqVmNaGHIFJ5DHf7rnrQcBke3ujANlUGJMBySX2lU41Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RNRKqjfX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C71C4CEE3;
-	Sun,  6 Apr 2025 13:53:45 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=agVIJ3dKl6SVKlKePxRZdacZvxeUFIyfOFAgWiGGltfRiYME2ugE+Caj87oS6xSOzQGttjvQ2l8f1s7EG25V39GHxGZRfqikp7R0bF8f+SrsccB5RzK/h6wULPpGZGfvP7aO/zxmToESmN3MMAurnMOekl0XLhO2qDERTWSX+3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u/O92oZG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8924C4CEE9;
+	Sun,  6 Apr 2025 13:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743947629;
-	bh=aU5m++M1HhWT6yP7jA1QIy8LqTSXqwb1xgM+NT4RZEM=;
+	s=k20201202; t=1743947680;
+	bh=9skXj/Ea5NQxFShtPwK//mmHvrgmhq2AlIHi2HeIhWM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RNRKqjfX/EQi7g93uoR2qm+OORLjx+7Eu5FEXnSVF+2tTasRWmy2RF1bhCa3ynZ02
-	 YMoDqBV1XvVcKU8OFiBLhsMP8zoFSsDGPflVcwF7a9DF/KWbSA2FfSJcFk7ApyQQof
-	 9uKtgvgaDTPgEmnYH9IutHFFvjes2hSI/7DBgipKvNtUqrkgFCghiICnCu93kgQBaO
-	 WU/Lywu6BlpPNFFvWD89YSzn4qxX6zRiF3rAe9M2J5WTYxVenlKukbIXxjbijlLD1b
-	 tkNpNI0QDLG/kMlNa67QI3/nJJO7Lx6Mvz/912G50nD9xDrhcv5aYS0Jspcz42b6a0
-	 1hSHKA5MCajKw==
-Message-ID: <99d75428-2882-47f4-a276-fbe753520dfb@kernel.org>
-Date: Sun, 6 Apr 2025 15:53:43 +0200
+	b=u/O92oZGFOvmQnRZSwYi8OFBj/1193yyYgXFPgPAKkHnpbDJ3AwUjCUZdVhkUtAYI
+	 UDdyMZB44uA+G2arBmuMYXo8L/mBERymK08hAHY3AqkGi4iXLCSV8SnfXZNlKcchDB
+	 KVuCCs3xO0NCIrAOKvg0bUqdsbVGxbF9PuQLSYYCvXdmnoM9D0YrM/64aKfK+6UiN0
+	 minCnPANjZ+CdQP+BBOEVmHI4PbqcMI+ce/bUnU0wSlcUc8hJAf3y/YwYP2vCSZu8q
+	 ofbCNff4PnyBsLu82LIDmoZ+XtuDpCzBoSVRO90H5sDoZy6BU5ArLoRfrMbmx5HTHq
+	 J0kWyUYtLkCwQ==
+Message-ID: <0dc9dd32-8522-4d08-8278-8cd1a7f37ee7@kernel.org>
+Date: Sun, 6 Apr 2025 15:54:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] ASoC: codecs: Add aw8898 amplifier driver
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm632-fairphone-fp3: Add AW8898
+ amplifier
 To: Luca Weiss <luca@lucaweiss.eu>, ~postmarketos/upstreaming@lists.sr.ht,
  phone-devel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
  Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -62,7 +63,7 @@ To: Luca Weiss <luca@lucaweiss.eu>, ~postmarketos/upstreaming@lists.sr.ht,
 Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 References: <20250406-aw8898-v1-0-58a2d554693f@lucaweiss.eu>
- <20250406-aw8898-v1-2-58a2d554693f@lucaweiss.eu>
+ <20250406-aw8898-v1-3-58a2d554693f@lucaweiss.eu>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,30 +109,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250406-aw8898-v1-2-58a2d554693f@lucaweiss.eu>
+In-Reply-To: <20250406-aw8898-v1-3-58a2d554693f@lucaweiss.eu>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 06/04/2025 15:03, Luca Weiss wrote:
-> +static const struct i2c_device_id aw8898_id[] = {
-> +	{ "aw8898" },
-> +	{ /* sentinel */ }
-> +};
-> +MODULE_DEVICE_TABLE(i2c, aw8898_id);
-> +
-> +static const struct of_device_id aw8898_of_match[] = {
-> +	{ .compatible = "awinic,aw8898" },
-> +	{ /* sentinel */ }
-> +};
-> +MODULE_DEVICE_TABLE(of, aw8898_of_match);
-> +
-> +static struct i2c_driver aw8898_driver = {
-> +	.driver = {
-> +		.name = "aw8898",
-> +		.of_match_table = of_match_ptr(aw8898_of_match),
+> Add a node for the amplifier found on Fairphone 3, receiving sound via
+> I2S from the SoC and being connected to the speaker.
+> 
+> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+> ---
 
 
-Drop of_match_ptr.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
