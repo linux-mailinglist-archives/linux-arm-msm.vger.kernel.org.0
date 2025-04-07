@@ -1,208 +1,315 @@
-Return-Path: <linux-arm-msm+bounces-53347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52D88A7D91B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 11:12:48 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C3A9A7D943
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 11:16:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 22B3116C903
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 09:12:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B3836177CC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 09:14:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DEC322F154;
-	Mon,  7 Apr 2025 09:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B56E622FDF2;
+	Mon,  7 Apr 2025 09:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aLm1UH3g"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YpgPdZV6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFEC22A7EC;
-	Mon,  7 Apr 2025 09:12:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98269232377;
+	Mon,  7 Apr 2025 09:13:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744017164; cv=none; b=ffMQYx9mr+hZH32pRATvlGuScCDAqXKrIpt7wslflBt8O38LPn9onoS+dyuPb3n9syrraHlM6+jMR3zCAXXQDp4D7Izfs4MCJRZ9WmOTS7XvfyNVieKpH67Hp5Gd7F7mUdCFBxy4WdFHwvdVNx9Efmp/E/OAtTzrxIlsjEZC6gE=
+	t=1744017238; cv=none; b=JNx4EVE7xGHkQYxFFwKyd5dP2+UVR/lH7uuykvRdyx0SaR/t0NtBI45RLaDu/ofoCFHULFM+dGw597rwGVFNcl48spCmho0RwfCgJaRMkSxPDZ03t6BB/hXqfMrzso9izexskX2fBqtugaUun29gRJ8R5gogmhnX0IHDQGArt08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744017164; c=relaxed/simple;
-	bh=vqpVaxHXc7PLd5O0C9EcLS336Tg/Cor6GujYWsntLqQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rAA8QH40Z0J+BrKuJtMQS73userAUw5aWl0/Os7G3inZi1f1Sum3Z6JmveNaMCx07dO2iuksnn+gxNXWcu/wXy6BoNfremx7zZD8OZXXOHpOpsuYhX3vsm4kvhBGh266rTlgSLRzpcr8S2MOpewO6SmxxEP6X2D8ynwW4l+v/kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aLm1UH3g; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B84C4CEDD;
-	Mon,  7 Apr 2025 09:12:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744017163;
-	bh=vqpVaxHXc7PLd5O0C9EcLS336Tg/Cor6GujYWsntLqQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aLm1UH3gQlo5+sE76VMhgUbvEtQzNiO5R4nD2VKuYSKdv8XLOqPip8+bDGJ42s2b/
-	 5ktxospmg9fuV5LyR8XWc3AJooQqQsYivPdKyocnclkht64YCEVATbv1oW2E4Fhldx
-	 r+IQXm513rp4cFQHLlXVhLuTwQAHhYgFzxevivP0bo4W95dpB+FSGk+wyIZLJ/jeTR
-	 JZ4W4XlG+4EshZn3xs/BPELuQZYyRd6/kr+Pkl7fd22+TIId0C1Z4WIovd0iq40TRy
-	 B2G6gkN5p+Ee1U1kQ6H5N9g5eMDKRiLlOQoofTtCgaojiGCCEwXTdTjuc0TmdiNoaX
-	 8M/3wg3+dwxBw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1u1iXA-000000006Q3-3NIW;
-	Mon, 07 Apr 2025 11:12:49 +0200
-Date: Mon, 7 Apr 2025 11:12:48 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: camss NULL-deref on power on with 6.12-rc2
-Message-ID: <Z_OXELLDIfQII6wV@hovoldconsulting.com>
-References: <Zwjw6XfVWcufMlqM@hovoldconsulting.com>
+	s=arc-20240116; t=1744017238; c=relaxed/simple;
+	bh=bIzLlpXo9+yFCb4WbrnFzSqHJlINIW8DBUDl/cXxSAc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ugZdinSbfjIfsJBR2AliWr/ITzOw4nAnMCM6yHNGB1JhV0kqDIVpfeWJHibmV7Um5+hKFuJe5XUcgu/MijueF9N4m5if5dTUtjKBNVZcgT14a3KTS5DzBA5cIyTjH5nLwSO9IKT+aBdWuzxdgxLflbg5tcErZL1ep59/3V/jrRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YpgPdZV6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5378dkqW028065;
+	Mon, 7 Apr 2025 09:13:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	o7FHe/LJ2C/KiKmQAPCfGVQfsjGl6fDGbrok6uaCMcw=; b=YpgPdZV6ESIkFrdu
+	Rsa1OIuE7UyrGsr0NfjvJKaUPKLDtKUYfLNqL2+yrY7QmICaMQ3BppgtIGcwYhyC
+	SbqUEMyVzT/Lt/omQnP8cThS3hQ0Bx4KCiWSL8i1tOiT6NtREJoN8TcZsDGjKBzg
+	8mw70KdcgOH2NuLsomnGBuglVhUKKdFMxf4RVHlFZRl5QEfSbolFkHk8uF9EQlAN
+	vwTou061LFrDODCS3OPi5AP4gncvE6EN+bwjDcWoxDt6EjYGRxfVQ8QHYSoqRM0S
+	z6NdQoYM6vRKTE6ggIJYzikHyPZSOF4CFliW0S0JYUzIOBzR5LI+LfRMnww0Xp7G
+	xzZ2Rg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twcyuq25-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 07 Apr 2025 09:13:48 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5379Dlrx032120
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 7 Apr 2025 09:13:47 GMT
+Received: from [10.239.29.49] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 7 Apr 2025
+ 02:13:43 -0700
+Message-ID: <e2a8528b-fa18-471f-9cb8-da64bb488f2a@quicinc.com>
+Date: Mon, 7 Apr 2025 17:13:25 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zwjw6XfVWcufMlqM@hovoldconsulting.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] misc: fastrpc: add support for gpdsp remoteproc
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <amahesh@qti.qualcomm.com>, <arnd@arndb.de>,
+        <gregkh@linuxfoundation.org>
+CC: <quic_kuiw@quicinc.com>, <quic_ekangupt@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
+References: <20250320091446.3647918-1-quic_lxu5@quicinc.com>
+ <20250320091446.3647918-3-quic_lxu5@quicinc.com>
+ <30bba296-8e6f-41ee-880e-2d5ecc8fe5a4@linaro.org>
+Content-Language: en-US
+From: Ling Xu <quic_lxu5@quicinc.com>
+In-Reply-To: <30bba296-8e6f-41ee-880e-2d5ecc8fe5a4@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: FXmnH42qQWgTbJpshc5ToQ6Iaj3PcOGE
+X-Authority-Analysis: v=2.4 cv=Q4vS452a c=1 sm=1 tr=0 ts=67f3974c cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8
+ a=_yrR5X8AjwJofxW06v8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: FXmnH42qQWgTbJpshc5ToQ6Iaj3PcOGE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-07_02,2025-04-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 spamscore=0 clxscore=1011 phishscore=0
+ bulkscore=0 adultscore=0 malwarescore=0 mlxscore=0 suspectscore=0
+ mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504070065
 
-On Fri, Oct 11, 2024 at 11:33:30AM +0200, Johan Hovold wrote:
-
-> This morning I hit the below NULL-deref in camss when booting a 6.12-rc2
-> kernel on the Lenovo ThinkPad X13s.
+在 3/21/2025 1:11 AM, Srinivas Kandagatla 写道:
 > 
-> I booted the same kernel another 50 times without hitting it again it so
-> it may not be a regression, but simply an older, hard to hit bug.
 > 
-> Hopefully you can figure out what went wrong from just staring at the
-> oops and code.
-
-Hit the NULL-pointer dereference during boot that I reported back in
-October again today with 6.15-rc1.
-
-The camss_find_sensor_pad() function was renamed in 6.15-rc1, but
-otherwise it looks identical.
-
-Johan
-
-
-[    5.740833] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000030
-[    5.741162] Mem abort info:
-[    5.741435]   ESR = 0x0000000096000004
-[    5.741707]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    5.741980]   SET = 0, FnV = 0
-[    5.742249]   EA = 0, S1PTW = 0
-[    5.742253]   FSC = 0x04: level 0 translation fault
-[    5.742255] Data abort info:
-[    5.742257]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-[    5.743264]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[    5.743267]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[    5.743269] user pgtable: 4k pages, 48-bit VAs, pgdp=000000010fb98000
-[    5.743272] [0000000000000030] pgd=0000000000000000, p4d=0000000000000000
-[    5.744064] Internal error: Oops: 0000000096000004 [#1]  SMP
-
-[    5.744645] CPU: 3 UID: 0 PID: 442 Comm: v4l_id Not tainted 6.15.0-rc1 #106 PREEMPT
-[    5.744647] Hardware name: LENOVO 21BYZ9SRUS/21BYZ9SRUS, BIOS N3HET87W (1.59 ) 12/05/2023
-[    5.744649] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    5.744651] pc : camss_find_sensor_pad+0x20/0x74 [qcom_camss]
-[    5.744661] lr : camss_get_pixel_clock+0x18/0x64 [qcom_camss]
-[    5.744666] sp : ffff800082dfb8e0
-[    5.744667] x29: ffff800082dfb8e0 x28: ffff800082dfbc68 x27: ffff143e80404618
-[    5.744671] x26: 0000000000000000 x25: 0000000000000000 x24: ffff143e9398baa8
-[    5.744675] x23: ffff800082dfb998 x22: ffff143e9398d9a0 x21: ffff800082dfb9a8
-[    5.744678] x20: 0000000000000002 x19: 0000000000020001 x18: 0000000000000020
-[    5.744682] x17: 3030613563613a33 x16: ffffac4db3ccf814 x15: 706e65672f6b6e69
-[    5.744686] x14: 0000000000000000 x13: ffff143e80b39180 x12: 30613563613a333a
-[    5.744690] x11: ffffac4db50a8920 x10: 0000000000000000 x9 : 0000000000000000
-[    5.744693] x8 : ffffac4db4992000 x7 : ffff800082dfb8e0 x6 : ffff800082dfb870
-[    5.744697] x5 : ffff800082dfc000 x4 : ffff143e9398cc70 x3 : ffff143e9398cb40
-[    5.744701] x2 : ffff143e9398be00 x1 : ffff143e9398d9a0 x0 : 0000000000000000
-[    5.744704] Call trace:
-[    5.744706]  camss_find_sensor_pad+0x20/0x74 [qcom_camss] (P)
-[    5.744711]  camss_get_pixel_clock+0x18/0x64 [qcom_camss]
-[    5.744716]  vfe_get+0xb8/0x504 [qcom_camss]
-[    5.744724]  vfe_set_power+0x30/0x58 [qcom_camss]
-[    5.744731]  pipeline_pm_power_one+0x13c/0x150 [videodev]
-[    5.744745]  pipeline_pm_power.part.0+0x58/0xf4 [videodev]
-[    5.744754]  v4l2_pipeline_pm_use+0x58/0x94 [videodev]
-[    5.744762]  v4l2_pipeline_pm_get+0x14/0x20 [videodev]
-[    5.744771]  video_open+0x78/0xf4 [qcom_camss]
-[    5.744776]  v4l2_open+0x80/0x120 [videodev]
-[    5.755711]  chrdev_open+0xb4/0x204
-[    5.755716]  do_dentry_open+0x138/0x4d0
-[    5.756271]  vfs_open+0x2c/0xe8
-[    5.756274]  path_openat+0x2b8/0x9fc
-[    5.756276]  do_filp_open+0x8c/0x144
-[    5.756277]  do_sys_openat2+0x80/0xdc
-[    5.756279]  __arm64_sys_openat+0x60/0xb0
-[    5.757830]  invoke_syscall+0x48/0x110
-[    5.757834]  el0_svc_common.constprop.0+0xc0/0xe0
-[    5.758369]  do_el0_svc+0x1c/0x28
-[    5.758372]  el0_svc+0x48/0x114
-[    5.758889]  el0t_64_sync_handler+0xc8/0xcc
-[    5.759184]  el0t_64_sync+0x198/0x19c
-[    5.759475] Code: f9000bf3 52800033 72a00053 f9402420 (f9401801)
- 
- 
-> [    5.657860] ov5675 24-0010: failed to get HW configuration: -517
-> [    5.676183] vreg_l6q: Bringing 2800000uV into 1800000-1800000uV
+> On 20/03/2025 09:14, Ling Xu wrote:
+>> The fastrpc driver has support for 5 types of remoteprocs. There are
+>> some products which support GPDSP remoteprocs. Add changes to support
+>> GPDSP remoteprocs.
+>>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
+>> ---
+>>   drivers/misc/fastrpc.c | 10 ++++++++--
+>>   1 file changed, 8 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index 7b7a22c91fe4..80aa554b3042 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -28,7 +28,9 @@
+>>   #define SDSP_DOMAIN_ID (2)
+>>   #define CDSP_DOMAIN_ID (3)
+>>   #define CDSP1_DOMAIN_ID (4)
+>> -#define FASTRPC_DEV_MAX        5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
+>> +#define GDSP0_DOMAIN_ID (5)
+>> +#define GDSP1_DOMAIN_ID (6)
 > 
-> [    6.517689] qcom-camss ac5a000.camss: Adding to iommu group 22
+> We have already made the driver look silly here, Lets not add domain ids for each instance, which is not a scalable.
 > 
-> [    6.589201] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000030
-> [    6.589625] Mem abort info:
-> [    6.589960]   ESR = 0x0000000096000004
-> [    6.590293]   EC = 0x25: DABT (current EL), IL = 32 bits
-> [    6.590630]   SET = 0, FnV = 0
-> [    6.591619]   EA = 0, S1PTW = 0
-> [    6.591968]   FSC = 0x04: level 0 translation fault
-> [    6.592298] Data abort info:
-> [    6.592621]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-> [    6.593112]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-> [    6.593450]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-> [    6.593783] user pgtable: 4k pages, 48-bit VAs, pgdp=000000010daef000
-> [    6.594139] [0000000000000030] pgd=0000000000000000, p4d=0000000000000000
-> [    6.594214] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+> Domain ids are strictly for a domain not each instance.
+> 
+> 
+>> +#define FASTRPC_DEV_MAX        7 /* adsp, mdsp, slpi, cdsp, cdsp1, gdsp0, gdsp1 */
+>>   #define FASTRPC_MAX_SESSIONS    14
+>>   #define FASTRPC_MAX_VMIDS    16
+>>   #define FASTRPC_ALIGN        128
+>> @@ -107,7 +109,9 @@
+>>   #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
+>>     static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
+>> -                        "sdsp", "cdsp", "cdsp1" };
+>> +                        "sdsp", "cdsp",
+>> +                        "cdsp1", "gdsp0",
+>> +                        "gdsp1" };
+>>   struct fastrpc_phy_page {
+>>       u64 addr;        /* physical address */
+>>       u64 size;        /* size of contiguous region */
+>> @@ -2338,6 +2342,8 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>           break;
+>>       case CDSP_DOMAIN_ID:
+>>       case CDSP1_DOMAIN_ID:
+>> +    case GDSP0_DOMAIN_ID:
+>> +    case GDSP1_DOMAIN_ID:
+>>           data->unsigned_support = true;
+>>           /* Create both device nodes so that we can allow both Signed and Unsigned PD */
+>>           err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
+> 
+> 
+> Can you try this patch: only compile tested.
+> 
+> ---------------------------------->cut<---------------------------------------
+> From 3f8607557162e16673b26fa253d11cafdc4444cf Mon Sep 17 00:00:00 2001
+> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Date: Thu, 20 Mar 2025 17:07:05 +0000
+> Subject: [PATCH] misc: fastrpc: cleanup the domain names
+> 
+> Currently the domain ids are added for each instance of domain, this is
+> totally not scalable approch.
+> 
+> Clean this mess and create domain ids for only domains not its
+> instances.
+> This patch also moves the domain ids to uapi header as this is required
+> for FASTRPC_IOCTL_GET_DSP_INFO ioctl.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  drivers/misc/fastrpc.c      | 45 ++++++++++++++++++++-----------------
+>  include/uapi/misc/fastrpc.h |  7 ++++++
+>  2 files changed, 32 insertions(+), 20 deletions(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 7b7a22c91fe4..b3932897a437 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -23,12 +23,6 @@
+>  #include <uapi/misc/fastrpc.h>
+>  #include <linux/of_reserved_mem.h>
+> 
+> -#define ADSP_DOMAIN_ID (0)
+> -#define MDSP_DOMAIN_ID (1)
+> -#define SDSP_DOMAIN_ID (2)
+> -#define CDSP_DOMAIN_ID (3)
+> -#define CDSP1_DOMAIN_ID (4)
+> -#define FASTRPC_DEV_MAX        5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
+>  #define FASTRPC_MAX_SESSIONS    14
+>  #define FASTRPC_MAX_VMIDS    16
+>  #define FASTRPC_ALIGN        128
+> @@ -106,8 +100,6 @@
+> 
+>  #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
+> 
+> -static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
+> -                        "sdsp", "cdsp", "cdsp1" };
+>  struct fastrpc_phy_page {
+>      u64 addr;        /* physical address */
+>      u64 size;        /* size of contiguous region */
+> @@ -1769,7 +1761,7 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
+>          return  -EFAULT;
+> 
+>      cap.capability = 0;
+> -    if (cap.domain >= FASTRPC_DEV_MAX) {
+> +    if (cap.domain >= FASTRPC_DOMAIN_MAX) {
+>          dev_err(&fl->cctx->rpdev->dev, "Error: Invalid domain id:%d, err:%d\n",
+>              cap.domain, err);
+>          return -ECHRNG;
 
-> [    6.594868] CPU: 0 UID: 0 PID: 557 Comm: v4l_id Not tainted 6.12.0-rc2 #165
-> [    6.594871] Hardware name: LENOVO 21BYZ9SRUS/21BYZ9SRUS, BIOS N3HET87W (1.59 ) 12/05/2023
-> [    6.594872] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [    6.594874] pc : camss_find_sensor+0x20/0x74 [qcom_camss]
-> [    6.594885] lr : camss_get_pixel_clock+0x18/0x60 [qcom_camss]
-> [    6.594889] sp : ffff800082d538f0
-> [    6.594890] x29: ffff800082d538f0 x28: ffff800082d53c70 x27: ffff670cc0404618
-> [    6.594893] x26: 0000000000000000 x25: 0000000000000000 x24: ffff670cd33173d0
-> [    6.594895] x23: ffff800082d539a8 x22: ffff670cd33192c8 x21: ffff800082d539b8
-> [    6.594898] x20: 0000000000000002 x19: 0000000000020001 x18: 0000000000000000
-> [    6.594900] x17: 0000000000000000 x16: ffffbf0bffbecdd0 x15: 0000000000000001
-> [    6.594902] x14: ffff670cc5c95300 x13: ffff670cc0b38980 x12: ffff670cc5c95ba8
-> [    6.594905] x11: ffffbf0c00f73000 x10: 0000000000000000 x9 : 0000000000000000
-> [    6.594907] x8 : ffffbf0c0085d000 x7 : 0000000000000000 x6 : 0000000000000078
-> [    6.594910] x5 : 0000000000000000 x4 : ffff670cd3318598 x3 : ffff670cd3318468
-> [    6.594912] x2 : ffff670cd3317728 x1 : ffff800082d539b8 x0 : 0000000000000000
-> [    6.594915] Call trace:
-> [    6.594915]  camss_find_sensor+0x20/0x74 [qcom_camss]
-> [    6.594920]  camss_get_pixel_clock+0x18/0x60 [qcom_camss]
-> [    6.594924]  vfe_get+0xb8/0x504 [qcom_camss]
-> [    6.594931]  vfe_set_power+0x30/0x58 [qcom_camss]
-> [    6.594936]  pipeline_pm_power_one+0x13c/0x150 [videodev]
-> [    6.594951]  pipeline_pm_power.part.0+0x58/0xf4 [videodev]
-> [    6.594960]  v4l2_pipeline_pm_use+0x58/0x94 [videodev]
-> [    6.594969]  v4l2_pipeline_pm_get+0x14/0x20 [videodev]
-> [    6.594978]  video_open+0x78/0xf4 [qcom_camss]
-> [    6.594982]  v4l2_open+0x80/0x120 [videodev]
-> [    6.594991]  chrdev_open+0xb4/0x204
-> [    6.594996]  do_dentry_open+0x138/0x4d0
-> [    6.595000]  vfs_open+0x2c/0xe4
-> [    6.595003]  path_openat+0x2b4/0x9fc
-> [    6.595005]  do_filp_open+0x80/0x130
-> [    6.595007]  do_sys_openat2+0xb4/0xe8
-> [    6.595010]  __arm64_sys_openat+0x64/0xac
-> [    6.595012]  invoke_syscall+0x48/0x110
-> [    6.595016]  el0_svc_common.constprop.0+0xc0/0xe0
-> [    6.595018]  do_el0_svc+0x1c/0x28
-> [    6.595021]  el0_svc+0x48/0x114
-> [    6.595023]  el0t_64_sync_handler+0xc0/0xc4
-> [    6.595025]  el0t_64_sync+0x190/0x194
-> [    6.595028] Code: 52800033 72a00053 d503201f f9402400 (f9401801)
-> [    6.595029] ---[ end trace 0000000000000000 ]---
+I tested this patch and saw one issue.
+Here FASTRPC_DOMAIN_MAX is set to 4, but in userspace, cdsp1 is 4, gdsp0 is 5 and gdsp1 is 6.
+For example, if we run a demo on gdsp0, cap.domain copied from userspace will be 5 which could lead to wrong message.
+
+--Ling Xu
+
+> @@ -2255,6 +2247,24 @@ static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ct
+>      return err;
+>  }
+> 
+> +static int fastrpc_get_domain_id(const char *domain)
+> +{
+> +    if (strncmp(domain, "adsp", 4) == 0) {
+> +        return ADSP_DOMAIN_ID;
+> +    } else    if (strncmp(domain, "cdsp", 4) == 0) {
+> +        return CDSP_DOMAIN_ID;
+> +    } else if (strncmp(domain, "mdsp", 4) ==0) {
+> +        return MDSP_DOMAIN_ID;
+> +    } else if (strncmp(domain, "sdsp", 4) ==0) {
+> +        return SDSP_DOMAIN_ID;
+> +    } else if (strncmp(domain, "gdsp", 4) ==0) {
+> +        return GDSP_DOMAIN_ID;
+> +    }
+> +
+> +    return -EINVAL;
+> +
+> +}
+> +
+>  static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>  {
+>      struct device *rdev = &rpdev->dev;
+> @@ -2272,15 +2282,10 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>          return err;
+>      }
+> 
+> -    for (i = 0; i < FASTRPC_DEV_MAX; i++) {
+> -        if (!strcmp(domains[i], domain)) {
+> -            domain_id = i;
+> -            break;
+> -        }
+> -    }
+> +    domain_id = fastrpc_get_domain_id(domain);
+> 
+>      if (domain_id < 0) {
+> -        dev_info(rdev, "FastRPC Invalid Domain ID %d\n", domain_id);
+> +        dev_info(rdev, "FastRPC Domain %s not supported\n", domain);
+>          return -EINVAL;
+>      }
+> 
+> @@ -2332,19 +2337,19 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>      case SDSP_DOMAIN_ID:
+>          /* Unsigned PD offloading is only supported on CDSP and CDSP1 */
+>          data->unsigned_support = false;
+> -        err = fastrpc_device_register(rdev, data, secure_dsp, domains[domain_id]);
+> +        err = fastrpc_device_register(rdev, data, secure_dsp, domain);
+>          if (err)
+>              goto fdev_error;
+>          break;
+>      case CDSP_DOMAIN_ID:
+> -    case CDSP1_DOMAIN_ID:
+> +    case GDSP_DOMAIN_ID:
+>          data->unsigned_support = true;
+>          /* Create both device nodes so that we can allow both Signed and Unsigned PD */
+> -        err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
+> +        err = fastrpc_device_register(rdev, data, true, domain);
+>          if (err)
+>              goto fdev_error;
+> 
+> -        err = fastrpc_device_register(rdev, data, false, domains[domain_id]);
+> +        err = fastrpc_device_register(rdev, data, false, domain);
+>          if (err)
+>              goto populate_error;
+>          break;
+> diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
+> index f33d914d8f46..89516abd258f 100644
+> --- a/include/uapi/misc/fastrpc.h
+> +++ b/include/uapi/misc/fastrpc.h
+> @@ -133,6 +133,13 @@ struct fastrpc_mem_unmap {
+>      __s32 reserved[5];
+>  };
+> 
+> +#define ADSP_DOMAIN_ID (0)
+> +#define MDSP_DOMAIN_ID (1)
+> +#define SDSP_DOMAIN_ID (2)
+> +#define CDSP_DOMAIN_ID (3)
+> +#define GDSP_DOMAIN_ID (4)
+> +
+> +#define FASTRPC_DOMAIN_MAX    4
+>  struct fastrpc_ioctl_capability {
+>      __u32 domain;
+>      __u32 attribute_id;
+
+-- 
+Thx and BRs,
+Ling Xu
+
 
