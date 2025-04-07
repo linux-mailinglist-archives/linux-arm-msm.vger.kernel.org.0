@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-53357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DEF6A7DAE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 12:18:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BCF7A7DAE8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 12:18:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B8F31891613
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 10:17:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1EEDC1891977
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 10:17:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DBF3231C9F;
-	Mon,  7 Apr 2025 10:17:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4416323312D;
+	Mon,  7 Apr 2025 10:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dUKgnJ0c"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JexIb2gj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F95A2309B0
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 10:17:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C13230BCE
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 10:17:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744021031; cv=none; b=ifKs4RQQSeSKiCqZR1FT7cyMNuv42sDJI8VnsWn3oZpkXKMP1VGF5dehf8H0bB57bM0nHf4FzqAAM6xBRekV4vm9gps0dhV84ovQCWDdDki5m6ysPIC6u8xdyM7khHznwqBbRT2eGaoaosX6pm417dQGbpwcW8y5KzswDXWlyPs=
+	t=1744021032; cv=none; b=qcejrzr1b4OgpOQMJHTPsC3rrmvCwUmhVEKkAbHsR32kbQ9pBnXhI/1u3oAk/NXC4ErG5De1uCdgLxXNTmUbtZhMm4AigvObh96QVeqqZsBcbmMahAWllu+wBUwAymAcApCRaNIKfDN+XEhlQZ+QlpvHqB9vE9DHj/p/rJKezfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744021031; c=relaxed/simple;
-	bh=YWJ34j7xCQDhTiMNfYYLeseOAG7KJPfmn+Y8UFFCVW0=;
+	s=arc-20240116; t=1744021032; c=relaxed/simple;
+	bh=GJ/3LoYhjreXCmlje4HGApIZSD0dopghOnCCoRTD310=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=agMYBBua8kTkTHphBK5Yz2l+wLdj6rKhUg674Ndmg14sfZiv4yv+T51BG1CI+m9sy3z/xCtNoWrI0LYCMkqMPznVxOgIYq/25HifKAQIGsj8TjiHYxQo59GB4CpP8hAyr60Lt2eiIjZkKhAQcpFk2JG+yZJBdMcdI48XSGC55Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dUKgnJ0c; arc=none smtp.client-ip=209.85.128.44
+	 In-Reply-To:To:Cc; b=VFe2sS64u4I9+trj3WD+yT8uByuZ78zrvQhAOjME9I+CJ0LbJB1tXDpbb2GmsYA9Ky0SwPiOlgV+2OF5ycQ4KVxDv9r2DWOb/2l2pbpKdOCOCKlMJF8fbox2HX9tdBg5RqFHuCbHpebfQ49PgX2D109W2FKj6P6EKfViV+rh4Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JexIb2gj; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43d0c18e84eso21032735e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Apr 2025 03:17:09 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3913b539aabso2358419f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Apr 2025 03:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1744021028; x=1744625828; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pDP1Z0ZMTTNt0kswy5xA7deGiP0r00iI32AWjJvJBV4=;
-        b=dUKgnJ0cIkp2+BoEB/wTT46zAeqPwb4IP5UwqyAyGqGOPKMrhIqc84QcvxvszhGUQs
-         2BL89JrWxnWA26GjVD4B9EDafN3EpLWzrdmudB6E6FCG0mQRJjRJpGu0EAeeo3Pq8c7G
-         WV9erYw90pBvQJ34MshemUwwevJJuhTQBJLhDv7UErR8BSJLsSXjTaJ4N+0BWIZUfzV3
-         vSnBLxlFg8abrbR1wfpz9MhACD1Lmgm9GXekjISnFBJ0libzQ7SI5bkLVbp4h5vq3VjD
-         p5EWe0CD8Y4zUlcX/TWZP1Edw0EXkDJI7MEzt7lhJjZa5h5qNPAs4z3+Ze1D3l5AUE5r
-         /wKw==
+        bh=PxuAzzqTN8Esy+3wBd10qAHGJHFzExg1oERBNtTrUmM=;
+        b=JexIb2gjNt3Gy/0s2IiYAJmZpxFMHlk8DtcWbR7rtyvXNqYfH8Hl+Byo5o47fypklG
+         tQnm8mHpZ/MSG/9yObjvvSjQmv9tFsh+Y7VzULy7ZpOkc+w5PQzZFxkcSb7LUXDX2Git
+         5ca/Sz0R4mmXboyU3kA+/PK0rCyH6nJs/5Kt4c90/gE/tOCaP7KZ+7aL0RMLt1QJdkpi
+         3FW/qt0sJx2Sv41pXbYN49/eloQoDgA7j0EhAYixmItwtUKd/R61WLx8tEW61VoB5rZT
+         70+RXV4cNuB/TimQGcMdu+7Eai4Amo7f2tqL1XAyXHO8uUfZ9eZ8ZjCU5VtXtgf++2fI
+         ZXsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1744021028; x=1744625828;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=pDP1Z0ZMTTNt0kswy5xA7deGiP0r00iI32AWjJvJBV4=;
-        b=GPxUZSV7bO7vIDALfL26DgRjdYMRcJ7aBhDpDmdbA0D/4MJ1U9Pm/w0G9cQ6NZ+XUr
-         Q77ZvL02da747oBqGGaJvLc5vu0FsPtkohEWNqjIpekNvrlp5xHV3iCltAfuRkC2zDZY
-         Duid9jcR+qJSyUbtHyXGhygvI7Bzkm04/tjclvklGFiBSIROg/TYNWgFYx8ZqTfIVloJ
-         0EzG5ooRBg0Shhn5oIcihALyMXiqhjUds5q//tHi977rUrHchk390nTuWmFg/olngCoa
-         bXH65MLlPECaPYl4BKPOZDpK2E4u/oROaYxJ6C0RoViLDFMAn6WTT0jTvAa5lu3O3dXL
-         F59Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWHxX6UPK3H0KWsA44Nf738CFsdMEtq6GNpqmpq+/MjCuhy0Y+unU5y2JRaVMloFmAke53N85MJDXiAZQNb@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDWSiKazqXrTt4QFO3lcJPHD9UqWWTrSORQs9VFZnEeuIWDbJ0
-	Z+HHsD7jhlEvpYm56r++KkbZFw1Xoe3RNI3ts4chWqH8/DzI4uo7XJt36yEzB1o=
-X-Gm-Gg: ASbGnctXmuX8aMEmPsqJImNUKH1F2LAgUv+zRkJFOYHH5GUIf1gCMVVmtuEkI1GQnYZ
-	5mGRhdSpN1dkrkhGCmhwmZXbJKJlGFE62Gxdkt56CrK2/DDpPkksQrG1Lg4QdGiz+xWq1Q5imJ/
-	SANuSYcjaD39Zyf97IQy8tn7AbQoJn6UCCLuZ8fBj0P478+eGJ2je0B8kNHu8Ezpjc+83ktUwvp
-	4P/SBU4iFEfZBMDRnexmKN2DfMsC74Bv0bOs7GNIrIQFZkWH+PLQIyL/ki8BGbNzF79LZs8Vx6D
-	ojmjx7CMYf1EOKHe30zsSRldHMjINDJ9RZoRLG4uASsYRYfitVlHSjAwIC1dpnsxsw==
-X-Google-Smtp-Source: AGHT+IH1bA7eG2g6ZFY5ccY48q/cn1qwbgDKTUQtjdE6PNCKBBqrdLrjGJIHYoe4Np4eEJQF1+LN9g==
-X-Received: by 2002:a05:6000:4304:b0:39c:12ce:1052 with SMTP id ffacd0b85a97d-39d07bcd00dmr9383723f8f.7.1744021027786;
-        Mon, 07 Apr 2025 03:17:07 -0700 (PDT)
+        bh=PxuAzzqTN8Esy+3wBd10qAHGJHFzExg1oERBNtTrUmM=;
+        b=P/HJJYgfMBTLi7sfuFlOfimEM7kUl3lcBCePRCwMkQb49U6CUV4+dminrLNG/YmWh9
+         Ssf7IIPXbJb29OHkQKtoa7fhSZAEfGNh7Tj8g2UO6MwmtjX2WuJaX2N/rFsDmMgt9pAm
+         JY+VjW1o3P6u/d41bWaaZ+7Bi0v2yarvFYV9JbLN+gJrtkcKn8DZ+jcI6U06DanocmGc
+         nZhBffBPv7D0AGdM39W5m7gs1eWIlW9B80CTYFTnLeJu6YO3/l9nhqHHqGyJrUaUXO1Y
+         OtW7kAKfS780kYTQvULlgZJbjeMhhHwv2W9IneCRscv5tLdqIcS4v7MckT/qQSa2ZcQ3
+         gRbA==
+X-Forwarded-Encrypted: i=1; AJvYcCVywYca9Y7NZL7NgN6tfdbExwfDLLYYx1qqCdrb5HxR2wu9uz3UVbMo1BdptkB7etmLERRe9lqSLPF9U+gG@vger.kernel.org
+X-Gm-Message-State: AOJu0YyFx9e1+d5aA5wUPbRD8dOKOwlpmwQ7nmDXzSxJsgLxLoAaQVEe
+	yiTZaRfQXxhjwPIvqe9YqopJm4LyRFYo7HJBZcIek1cDCe4cBB6IsFiUeLsh4pE=
+X-Gm-Gg: ASbGncvBuzqNnP90keEv9ILPjNCw2bkxOwFOnlt5gh+Z1O0FeYe9OH5UEdEUH89r3Jw
+	BrZmJks3hBl6HeuhlcqSKvQpkLkx5PCdAmr6M9kpbK/xttz28nx064Dop+l9MdO0omh+QYEfP5w
+	XhRxBz1cIh1/Y43pvfWpVnRD668NeaOj8J4zpufuxoTT4+JtMwfC4Avq46tR+ed1kw/2QbhL3Qi
+	mWdiWOqx/1tl9BX9vJESgdwL+FZ9cGC6XOWkSD1Z/TSaQ0WaSb6XTuXLlhRlmCxXZXUHI/65vog
+	SapsC5G1BCI+Qa2O58uDnwPGMVAdrLsXSLcfY6GseloWm9jXS4pmFTgfR7E8Ssx0yQ==
+X-Google-Smtp-Source: AGHT+IHh+6UGrJ/XHf2b1137nkPVPeuW5PoXq2uwhIcmz71829sHC5RKQ4MEcbte47SAnkiXo4gpRg==
+X-Received: by 2002:a05:6000:188f:b0:391:3915:cfea with SMTP id ffacd0b85a97d-39cba93329amr9862933f8f.38.1744021028483;
+        Mon, 07 Apr 2025 03:17:08 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
         by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c301a67a1sm11476831f8f.24.2025.04.07.03.17.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Apr 2025 03:17:07 -0700 (PDT)
+        Mon, 07 Apr 2025 03:17:08 -0700 (PDT)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Mon, 07 Apr 2025 12:17:04 +0200
-Subject: [PATCH RFT v3 2/3] ufs: core: track when MCQ ESI is enabled
+Date: Mon, 07 Apr 2025 12:17:05 +0200
+Subject: [PATCH RFT v3 3/3] ufs: core: delegate the interrupt service
+ routine to a threaded irq handler
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250407-topic-ufs-use-threaded-irq-v3-2-08bee980f71e@linaro.org>
+Message-Id: <20250407-topic-ufs-use-threaded-irq-v3-3-08bee980f71e@linaro.org>
 References: <20250407-topic-ufs-use-threaded-irq-v3-0-08bee980f71e@linaro.org>
 In-Reply-To: <20250407-topic-ufs-use-threaded-irq-v3-0-08bee980f71e@linaro.org>
 To: Alim Akhtar <alim.akhtar@samsung.com>, 
@@ -94,66 +95,115 @@ Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
  linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1722;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3901;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=YWJ34j7xCQDhTiMNfYYLeseOAG7KJPfmn+Y8UFFCVW0=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBn86YhSTaWBCZtRUbhDHyJiFKzongiGQ0xTg4YuL1O
- an7H57uJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ/OmIQAKCRB33NvayMhJ0YvJD/
- wJohh7fChJ0XzWfnyC+njGmkEzzkUh0SDs+P4U82VzN/EQxwt6KlVpAlMPKqbsSkHnrOTLKFarmnMF
- q1mhKXpRXRqH2Kt4WK6O502B+vzqEE29+pwbBh4fbS8scAzE3GJnb5S6cCzYa0NHW7ugOFjDCV7Z2L
- mIH7AIRa+NmxQJcCD1ZxKAPgRYTSvh8Bm2qm1MEn8gpwd6ynB4iNcqJpzHAA3p/okBRD9cFevyp0Xp
- 4mWQxyeqV2WyVCKfES+rGrnf301W56PGoclpr9QPppDJ9aDW6TgRnWHTfFF0//GFihEm+Oypp21Ysm
- X5VYQ2KLuG3UxIbTAykngEnx+Mgr2N/qX47KU1IVJRkEX/Y+OIxY6hSRZ6NrcmzDwJC5i+QLiO/eWE
- XQF1vISdKXPm8PkOUolcu0+srQq1O7b+Mx/FV8gSMS2vuiTHDCPLMixY+vZsE6E4UlM3s7gr4ewIAF
- TLRUjmuXT+c5ZOP1sYeazBzUfCvIN2tWM11gyAzZJEVpdqCuFiaXjJoKABUcnoTfHt3I4e9Mfnlrnp
- M+1aOjedD7B+MynnyCLOvY6aq0Q1Gc1pxRsj3Ygfk9MPlk/AAEXb6uZwSJfVEPez82HV2MTFuzMSsZ
- YQOlz9HWKgasKsVvf3xYWr8FDjfg+H61eZg4NHMza7UdF3E6OsGdpZPUxFJA==
+ bh=GJ/3LoYhjreXCmlje4HGApIZSD0dopghOnCCoRTD310=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBn86Yh9gJ5axoT/EQbGWoqm1NFW5vkB2viScmVj9lv
+ 3zyu8NeJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ/OmIQAKCRB33NvayMhJ0faSEA
+ Cda9fOHkeTmvfwyg0O+9OkwVmMxfblxX9lpBagC/2+wG542TmQ/IznGMbYXZn/h3UmpJQgAcpKt1Dk
+ DXIzZRFBxs17dffzTsGbFmp+EKhVmBoQPCDqH0YPHBcMM8R8I/yQT33v3ygS6PkvQQO9/nFyXmnokE
+ Llrr+gCJW6jG5FXPjEVLJ6aKTcOtOj3mMp5p1FsxbOTI+TtOhM5pOomdZrVuUzyHLqrQ+R8xMr6BGo
+ 3+6zc5klY7QEsJv4LIFzklaGh1pDbEqeYgT2WS+rJtJkGkxXEqD8At5DrbjU2fDLrJgJWxc2ZvN74I
+ 2rz2//vS7H6zmXsbo73NOPVuMvL1Zu+eWseoUs1qkGaLI1BSyLeGjUSNGF7PUPV011hAC0KHAPTQ7v
+ cJJLItL/eDavPoRw1Hpf9C5ORd4EuY48CibS9VveKTMd4HLDqhwDszEPCz/2L07pfVgrM/nmHAGxGv
+ qSWiw2NzS1HE2kKuH3chhPNgiQDCsxZM1LGI7W9hniNBXFuV8/67myXyc1osPrwsuNgMEVcxFn1hxh
+ GmdKebccIDYdWwiJGM72YAhh1UXfwcKtAepsOFO4yoAS7gVPKlzeOzvQm/qTN9OYPJAlK2Koj25Ug1
+ fPqAWLx6u4daaV/0A3bWBo1es/VvlfKMopdmwBilSYgBRA56C4eqYGkpl9FA==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-In preparation of adding a threaded interrupt handler, track when
-the MCQ ESI interrupt handlers were installed so we can optimize the
-MCQ interrupt handling to avoid walking the threaded handler in the case
-ESI handlers are enabled.
+On systems with a large number request slots and unavailable MCQ ESI,
+the current design of the interrupt handler can delay handling of
+other subsystems interrupts causing display artifacts, GPU stalls
+or system firmware requests timeouts.
+
+Since the interrupt routine can take quite some time, it's
+preferable to move it to a threaded handler and leave the
+hard interrupt handler wake up the threaded interrupt routine,
+the interrupt line would be masked until the processing is
+finished in the thread thanks to the IRQS_ONESHOT flag.
+
+When MCQ & ESI interrupts are enabled the I/O completions are now
+directly handled in the "hard" interrupt routine to keep IOPs high
+since queues handling is done in separate per-queue interrupt routines.
+
+This fixes all encountered issued when running FIO tests
+on the Qualcomm SM8650 platform.
+
+Example of errors reported on a loaded system:
+ [drm:dpu_encoder_frame_done_timeout:2706] [dpu error]enc32 frame done timeout
+ msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.20.1: hangcheck detected gpu lockup rb 2!
+ msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.20.1:     completed fence: 74285
+ msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.20.1:     submitted fence: 74286
+ Error sending AMC RPMH requests (-110)
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/ufs/core/ufshcd.c | 1 +
- include/ufs/ufshcd.h      | 2 ++
- 2 files changed, 3 insertions(+)
+ drivers/ufs/core/ufshcd.c | 30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 5e73ac1e00788f3d599f0b3eb6e2806df9b6f6c3..7f256f77b8ba9853569157db7785d177b6cd6dee 100644
+index 7f256f77b8ba9853569157db7785d177b6cd6dee..b40660ca2fa6b3488645bd26121752554a8d6a08 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -8717,6 +8717,7 @@ static void ufshcd_config_mcq(struct ufs_hba *hba)
- 	u32 intrs;
+@@ -6971,7 +6971,7 @@ static irqreturn_t ufshcd_sl_intr(struct ufs_hba *hba, u32 intr_status)
+ }
  
- 	ret = ufshcd_mcq_vops_config_esi(hba);
-+	hba->mcq_esi_enabled = !ret;
- 	dev_info(hba->dev, "ESI %sconfigured\n", ret ? "is not " : "");
+ /**
+- * ufshcd_intr - Main interrupt service routine
++ * ufshcd_threaded_intr - Threaded interrupt service routine
+  * @irq: irq number
+  * @__hba: pointer to adapter instance
+  *
+@@ -6979,7 +6979,7 @@ static irqreturn_t ufshcd_sl_intr(struct ufs_hba *hba, u32 intr_status)
+  *  IRQ_HANDLED - If interrupt is valid
+  *  IRQ_NONE    - If invalid interrupt
+  */
+-static irqreturn_t ufshcd_intr(int irq, void *__hba)
++static irqreturn_t ufshcd_threaded_intr(int irq, void *__hba)
+ {
+ 	u32 last_intr_status, intr_status, enabled_intr_status = 0;
+ 	irqreturn_t retval = IRQ_NONE;
+@@ -7018,6 +7018,29 @@ static irqreturn_t ufshcd_intr(int irq, void *__hba)
+ 	return retval;
+ }
  
- 	intrs = UFSHCD_ENABLE_MCQ_INTRS;
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index fffa9cc465433604570f91b8e882b58cd985f35b..ec999fa671240cb87bf540d339aa830b6847eb71 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -954,6 +954,7 @@ enum ufshcd_mcq_opr {
-  *	ufshcd_resume_complete()
-  * @mcq_sup: is mcq supported by UFSHC
-  * @mcq_enabled: is mcq ready to accept requests
-+ * @mcq_esi_enabled: is mcq ESI configured
-  * @res: array of resource info of MCQ registers
-  * @mcq_base: Multi circular queue registers base address
-  * @uhq: array of supported hardware queues
-@@ -1122,6 +1123,7 @@ struct ufs_hba {
- 	bool mcq_sup;
- 	bool lsdb_sup;
- 	bool mcq_enabled;
-+	bool mcq_esi_enabled;
- 	struct ufshcd_res_info res[RES_MAX];
- 	void __iomem *mcq_base;
- 	struct ufs_hw_queue *uhq;
++/**
++ * ufshcd_intr - Main interrupt service routine
++ * @irq: irq number
++ * @__hba: pointer to adapter instance
++ *
++ * Return:
++ *  IRQ_HANDLED     - If interrupt is valid
++ *  IRQ_WAKE_THREAD - If handling is moved to threaded handled
++ *  IRQ_NONE        - If invalid interrupt
++ */
++static irqreturn_t ufshcd_intr(int irq, void *__hba)
++{
++	struct ufs_hba *hba = __hba;
++
++	/* Move interrupt handling to thread when MCQ & ESI are not enabled */
++	if (!hba->mcq_enabled || !hba->mcq_esi_enabled)
++		return IRQ_WAKE_THREAD;
++
++	/* Directly handle interrupts since MCQ ESI handlers does the hard job */
++	return ufshcd_sl_intr(hba, ufshcd_readl(hba, REG_INTERRUPT_STATUS) &
++				   ufshcd_readl(hba, REG_INTERRUPT_ENABLE));
++}
++
+ static int ufshcd_clear_tm_cmd(struct ufs_hba *hba, int tag)
+ {
+ 	int err = 0;
+@@ -10577,7 +10600,8 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
+ 	ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
+ 
+ 	/* IRQ registration */
+-	err = devm_request_irq(dev, irq, ufshcd_intr, IRQF_SHARED, UFSHCD, hba);
++	err = devm_request_threaded_irq(dev, irq, ufshcd_intr, ufshcd_threaded_intr,
++					IRQF_ONESHOT | IRQF_SHARED, UFSHCD, hba);
+ 	if (err) {
+ 		dev_err(hba->dev, "request irq failed\n");
+ 		goto out_disable;
 
 -- 
 2.34.1
