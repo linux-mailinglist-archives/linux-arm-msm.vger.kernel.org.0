@@ -1,161 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-53351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81CBBA7D993
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 11:25:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5C48A7DA81
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 11:59:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 94F6C17966B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 09:22:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6B0C37A2B20
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 09:57:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A5AF233149;
-	Mon,  7 Apr 2025 09:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D0E0230269;
+	Mon,  7 Apr 2025 09:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="WIuUMTLG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="edUxBtwS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC1B22FF2E
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 09:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46CD22FF4C
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 09:58:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744017692; cv=none; b=hI/ObTx4FWppok59BcNFPeQLXO7nDLSHhjs1H9UzW61AdCJsrUZ0Onymh3EGP3W0AQDM/1X7/Ppa+5y3dGOFN+z8JQ+4axbo3ELy51HHU7yPSBLfL/yp0ZmlcACsZEhxMzyVE9zgfkhpw/MyIjXO7Mgyk6vDUyDcPIPdMTNeag4=
+	t=1744019937; cv=none; b=DWYl3vaKtPNXcD40LhoTjem3sE7knt9t3B8W5vdH0ar+bHGUbRc5a5sjx3oQJekKMoQAdnlwIp2KC9Qvaby/pV1N91yIycmeFPgBkPWAlOiFxorQQxh4Taa8frJYk+kwX39ir429bTKMV3QQKRoSW5clEPHzIjl+43qoN1ja8uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744017692; c=relaxed/simple;
-	bh=iSlSsIy8a8fjMFvyVm2tJ7hdd5DE5BK0cDXC7vabG8I=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kDBZIwXOSLpQTtN1fkhTT0uUjKED3F3TOPf3pAvQx0uCpxcTgPPp3xMyHYUsj9jwDIQoeEo+H/vXVvvPFzkRtryv/jP0+Grb/eYgWgNdFmKZkTRJyCUaAyNZq5Hi5V6x07wGhIGGJkqiKU4dlPMtbwrXm76YGoeV2MM0U0QLM+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=WIuUMTLG; arc=none smtp.client-ip=185.125.188.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 869493F472
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 09:21:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1744017688;
-	bh=HEaLDYOXOEmeBww1pBLiPCAb16rSoW8x0h/ino16yYg=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type;
-	b=WIuUMTLGpRNmBVTi2DEEHlyZ8A2QvCOQWbbsGFmuLYqIBZh2e9FRYRaJrRBLTKfw6
-	 UE2fSkSBJWt0nnRwQl24YzMG5uwCIH48j9zADGa4HM2c7SNjXm1QC/jrLkH7qe3T5v
-	 VMNF/rFebHSa0twMcFJ8sTEeoxV9lLcFn61kQGqFlinW9S3yjG4bWAEzaXEoGXpTSM
-	 YEy5oVfmFLJgvaJw62i2UT4rQDhT9EpDBKWcJEUjbA84Q1+VNBAWf6cQdiB8WWLNYS
-	 zt1qlJ/L73RLKmTjFvwPwi22Qw/8K0+WPmMMDX2ZQvJwbKaGQLHer//ifwi+j6/oMT
-	 W6pZV1aalPnMA==
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-ac2aa3513ccso352175366b.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Apr 2025 02:21:28 -0700 (PDT)
+	s=arc-20240116; t=1744019937; c=relaxed/simple;
+	bh=v29T1FbGbcKeRMuW0VbePwisgAp9BsYkH9UNPlwsybg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=u1qQUh2x4xn+iuQ9042JZ+k/nwQaDxIEgMnlmsDJc8MLi/GJ7HjyBCtqmXPDx4MngjqAsj6Q+pWsbGOmYprCi0g8iHN1GDvlDtkE/2+2oTytpyenONjXc+r7tDyJxwjqiUXnXkN/Q7yy3EhJWE6Fjqr2LLcfCMOwx+fYCU6AGv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=edUxBtwS; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4394a823036so37766065e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Apr 2025 02:58:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744019934; x=1744624734; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vrZNuJsrn23JwdNkrVTHfCKc6rDwAMWYvk+A+tg7J78=;
+        b=edUxBtwSu7i/SE+y974xBKU7Qag3//f751DnkXuDgDX+m1K0oqJVGORzJp93HQLVSd
+         IkQAx24itg9gtodyNqslx3hs0cSoqnkYtLCXxMV5ve6KqQ2ox094C+LJetqVrSh8vaLz
+         n/7f/jeRAhulHHiCgZ+OE1n9lwWA5DDWZqzUJ8Q6il1y0HRXd0PTPisacW1CqwWt5JLy
+         0swNsLTyvDLxt3eIai/SDpSCxCVIb4cx47lmycvhC+1sxi8QcDzML7rA6+OmD4sdIfaa
+         xptKySFE6NhwX8TgbJvR2GLxbm1+TP9B1huK/uSqNsgQBWoEF6rqthIOFzHfeaovFWUg
+         c9vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744017688; x=1744622488;
-        h=mime-version:organization:references:in-reply-to:message-id:subject
-         :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HEaLDYOXOEmeBww1pBLiPCAb16rSoW8x0h/ino16yYg=;
-        b=aG7bmgx9yA9gKt9flVFMN7N33+S4j/sqPsKS12FuyYJm0/eNW7tHASVQv3vATBnaGp
-         m3xLDniYhXv3HYwQVYVsN4Kgr6te9CHSsnU0m6idCgsKuWlZCCqi2HREhhA6zptp9HX0
-         uALMCkBJ/nb588/mvJXw+zPgcux0YecFNoS/uIidi/BGed+x0bpn+C5x/UX3NjRrqz8Z
-         BJ5qlIbQGv5Qqh82393IGHyQfhURw+LfVkRhpTUJkNuepg4GwY0n26W1vy7y5qKeKRzP
-         i96EFLuCs62rYgtOxFpKb7uhGy7OqHwY/9FZUB31fgExcVFhBeX5/jlALcdJlVqR9DSM
-         SDCA==
-X-Forwarded-Encrypted: i=1; AJvYcCV2jlmlJRIN+10QaXf8gSaLkNkou2/e5x1hv9W/EI7t1qIOW+6Co05COUftUJ6MhCuKhDC37D/XGWfx1MTw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz01EzjX5qGfnkp9xQWI0rjEzldWan+s+OcdDgXZ+1KPIKrG7sH
-	m/Zj2+YEif6wTuIeCgSswk2Xsw+0VDK5dU5sX3zL7D6s47sbLn1OdnFnznQ1yDdToD55Bgj5WCk
-	pgPSD4Am0JdRqYppDWpMC8CFmrQHgsJ//Y+2mOV7CriBQjvl2nAgMUEgkuThL7GTrC2E127bEyX
-	dxehxdZHA9LJM=
-X-Gm-Gg: ASbGncul9w0RrGrm+O+h1LsWw3MLGL4OKCQVkWg4HlWvn3p6ieUVDvAUoC9GEXg4RTc
-	/vl9j3CnZJmxobrNBSg9V89d1VC81hSGZM1SY6qJgiNpfxAVA5yo4ANP2nouURIcKLYsxWAi//6
-	eU3G83+AF8iBNE56BdCHIdkBZ0aiHvnlvxvHO/sxDhzcW0HWwJgRPn8UucvlY4UZPIQvRz0Iygz
-	7D6XD6norHmxsg1sANWqihH7EhbdRifM7pnnYagZpOrxanqZOhQ8ZIZF0s9F5R/cGnh8h6u24z6
-	tVEwJbyEFPXdj+Zaj9w/8VYTIvnlOkH02yFaZOSxJ9PrhXczfZ/EkcN+
-X-Received: by 2002:a17:907:da6:b0:ac3:24bb:f1ca with SMTP id a640c23a62f3a-ac7e71704b1mr706494966b.7.1744017687894;
-        Mon, 07 Apr 2025 02:21:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFyEZWiuDaF2JJ5GJs6D6+FEn383IkKkAsNepFXIH0X3u6o9dK8jmGaIJRw6XAhqqRc3z+sng==
-X-Received: by 2002:a17:907:da6:b0:ac3:24bb:f1ca with SMTP id a640c23a62f3a-ac7e71704b1mr706493566b.7.1744017687557;
-        Mon, 07 Apr 2025 02:21:27 -0700 (PDT)
-Received: from gollum (151-243-191-194.pool.dsl-net.ch. [194.191.243.151])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7bfe986a4sm714636166b.39.2025.04.07.02.21.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Apr 2025 02:21:26 -0700 (PDT)
-Date: Mon, 7 Apr 2025 11:21:25 +0200
-From: Juerg Haefliger <juerg.haefliger@canonical.com>
-To: Rob Herring <robh@kernel.org>
-Cc: andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: x1e80100-hp-omnibook-x14: Create
- and include a dtsi
-Message-ID: <20250407112125.65f22dd8@gollum>
-In-Reply-To: <20250404153339.GA1463808-robh@kernel.org>
-References: <20250404090108.3333211-1-juerg.haefliger@canonical.com>
-	<20250404090108.3333211-2-juerg.haefliger@canonical.com>
-	<20250404153339.GA1463808-robh@kernel.org>
-Organization: Canonical Ltd
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
+        d=1e100.net; s=20230601; t=1744019934; x=1744624734;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vrZNuJsrn23JwdNkrVTHfCKc6rDwAMWYvk+A+tg7J78=;
+        b=EDvYNuelCtlHSHiWTm8RUaLVA96oB1QNJfd0Gw0SjyZwlHGPMIvXiS4arZc+oUNWKf
+         2eZYmGIZe15349CgbE+yBAtvXbjpYH2RsM2evWZB8HYENY9RGYdbxlVTuC1GvHTRNnnF
+         vxvL8peXRtOc2ayGekkLC+ocknw5RDj6VADNelIbAptaMGuQLZL07XpShU/NIhZyuhiv
+         tTx8O4bDub7ADZB3alP5KYW+uJTR+HdZ8UoPHgQvIku6K38DVkSTLMDF5EWt673a08LS
+         GkvF/Oa6qzMxJ5YcY7BSOt+FmyXdfWwEnZkgwxJ4R49kd0JDCa9uB93jBD1W2PZ0q0eh
+         j4Rw==
+X-Forwarded-Encrypted: i=1; AJvYcCUGuc/E5TGGgsrdBsVLNYiVj+mKZTX14ny3tOIjLNBaKpo2Ptf2RH4/wofhR8zYe+XCMLCtq2s58AdGuXef@vger.kernel.org
+X-Gm-Message-State: AOJu0YyMU/2uyCARniB9ZJZpj+85HbM4v2SgWWqc6vgjoQkYLEKZpDNR
+	FX3h0nejB3pB5r8oiJapWzm/OgkbpiAXnkUJBNmPPjM/Xsm3IDJSfBeMCGDGyCA=
+X-Gm-Gg: ASbGncvlJ7svgBp+H23T/NFyhdpa9pCrekC/SUMWkIFIcRqm0b1vavF9jRSpVseXY3U
+	j2l9TgjljooGm6kNqvgS8tbZHOzDxEBvo3VyOIuCWzg0/ckgp2uTT6/6INOfTMn8KODk1lyP3lc
+	L5TJeKO7VCkcIObpCUVIWP+7geD6AOqYwKcfC9kpI140HnTvHrbKu3getFeUoebNTvP5jqp1Vim
+	Ohc3q1slyzMZ5rZzJapRGkJSP+enLw+qKQDXaFK8LhDvpTjjSH1JNuDEF1jYCt2V4On9mz/1+GG
+	ZGb1lo+PXgjUua4U2M52dY5G3LGyvAiAk/tdX0r6HC6Kqex9GXmw/DPRt/6WdOjttxUD+oi+uY1
+	aYBf/P5diDw==
+X-Google-Smtp-Source: AGHT+IFa6RmlxDVU+Z/fAcwEEKxjPn906JwxGNMAIQ21GqtzU5bzQldRFT4YWzFFJnbZpVCs+q7ukw==
+X-Received: by 2002:a05:600c:4754:b0:43c:eec7:eab7 with SMTP id 5b1f17b1804b1-43ee0640054mr78338955e9.11.1744019934216;
+        Mon, 07 Apr 2025 02:58:54 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c3020d938sm11679731f8f.65.2025.04.07.02.58.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Apr 2025 02:58:53 -0700 (PDT)
+Message-ID: <778e2cd0-5371-424f-809d-20f7c3ae5343@linaro.org>
+Date: Mon, 7 Apr 2025 10:58:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/axXhoG65m197/2vTrG.U=7j";
- protocol="application/pgp-signature"; micalg=pgp-sha512
+User-Agent: Mozilla Thunderbird
+Subject: Re: camss NULL-deref on power on with 6.12-rc2
+To: Johan Hovold <johan@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <Zwjw6XfVWcufMlqM@hovoldconsulting.com>
+ <Z_OXELLDIfQII6wV@hovoldconsulting.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <Z_OXELLDIfQII6wV@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---Sig_/axXhoG65m197/2vTrG.U=7j
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On 07/04/2025 10:12, Johan Hovold wrote:
+> On Fri, Oct 11, 2024 at 11:33:30AM +0200, Johan Hovold wrote:
+> 
+>> This morning I hit the below NULL-deref in camss when booting a 6.12-rc2
+>> kernel on the Lenovo ThinkPad X13s.
+>>
+>> I booted the same kernel another 50 times without hitting it again it so
+>> it may not be a regression, but simply an older, hard to hit bug.
+>>
+>> Hopefully you can figure out what went wrong from just staring at the
+>> oops and code.
+> 
+> Hit the NULL-pointer dereference during boot that I reported back in
+> October again today with 6.15-rc1.
+> 
+> The camss_find_sensor_pad() function was renamed in 6.15-rc1, but
+> otherwise it looks identical.
+> 
+> Johan
+> 
+> 
+> [    5.740833] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000030
+> [    5.741162] Mem abort info:
+> [    5.741435]   ESR = 0x0000000096000004
+> [    5.741707]   EC = 0x25: DABT (current EL), IL = 32 bits
+> [    5.741980]   SET = 0, FnV = 0
+> [    5.742249]   EA = 0, S1PTW = 0
+> [    5.742253]   FSC = 0x04: level 0 translation fault
+> [    5.742255] Data abort info:
+> [    5.742257]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+> [    5.743264]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+> [    5.743267]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+> [    5.743269] user pgtable: 4k pages, 48-bit VAs, pgdp=000000010fb98000
+> [    5.743272] [0000000000000030] pgd=0000000000000000, p4d=0000000000000000
+> [    5.744064] Internal error: Oops: 0000000096000004 [#1]  SMP
+> 
+> [    5.744645] CPU: 3 UID: 0 PID: 442 Comm: v4l_id Not tainted 6.15.0-rc1 #106 PREEMPT
+> [    5.744647] Hardware name: LENOVO 21BYZ9SRUS/21BYZ9SRUS, BIOS N3HET87W (1.59 ) 12/05/2023
+> [    5.744649] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> [    5.744651] pc : camss_find_sensor_pad+0x20/0x74 [qcom_camss]
+> [    5.744661] lr : camss_get_pixel_clock+0x18/0x64 [qcom_camss]
+> [    5.744666] sp : ffff800082dfb8e0
+> [    5.744667] x29: ffff800082dfb8e0 x28: ffff800082dfbc68 x27: ffff143e80404618
+> [    5.744671] x26: 0000000000000000 x25: 0000000000000000 x24: ffff143e9398baa8
+> [    5.744675] x23: ffff800082dfb998 x22: ffff143e9398d9a0 x21: ffff800082dfb9a8
+> [    5.744678] x20: 0000000000000002 x19: 0000000000020001 x18: 0000000000000020
+> [    5.744682] x17: 3030613563613a33 x16: ffffac4db3ccf814 x15: 706e65672f6b6e69
+> [    5.744686] x14: 0000000000000000 x13: ffff143e80b39180 x12: 30613563613a333a
+> [    5.744690] x11: ffffac4db50a8920 x10: 0000000000000000 x9 : 0000000000000000
+> [    5.744693] x8 : ffffac4db4992000 x7 : ffff800082dfb8e0 x6 : ffff800082dfb870
+> [    5.744697] x5 : ffff800082dfc000 x4 : ffff143e9398cc70 x3 : ffff143e9398cb40
+> [    5.744701] x2 : ffff143e9398be00 x1 : ffff143e9398d9a0 x0 : 0000000000000000
+> [    5.744704] Call trace:
+> [    5.744706]  camss_find_sensor_pad+0x20/0x74 [qcom_camss] (P)
+> [    5.744711]  camss_get_pixel_clock+0x18/0x64 [qcom_camss]
+> [    5.744716]  vfe_get+0xb8/0x504 [qcom_camss]
+> [    5.744724]  vfe_set_power+0x30/0x58 [qcom_camss]
+> [    5.744731]  pipeline_pm_power_one+0x13c/0x150 [videodev]
+> [    5.744745]  pipeline_pm_power.part.0+0x58/0xf4 [videodev]
+> [    5.744754]  v4l2_pipeline_pm_use+0x58/0x94 [videodev]
+> [    5.744762]  v4l2_pipeline_pm_get+0x14/0x20 [videodev]
+> [    5.744771]  video_open+0x78/0xf4 [qcom_camss]
+> [    5.744776]  v4l2_open+0x80/0x120 [videodev]
+> [    5.755711]  chrdev_open+0xb4/0x204
+> [    5.755716]  do_dentry_open+0x138/0x4d0
+> [    5.756271]  vfs_open+0x2c/0xe8
+> [    5.756274]  path_openat+0x2b8/0x9fc
+> [    5.756276]  do_filp_open+0x8c/0x144
+> [    5.756277]  do_sys_openat2+0x80/0xdc
+> [    5.756279]  __arm64_sys_openat+0x60/0xb0
+> [    5.757830]  invoke_syscall+0x48/0x110
+> [    5.757834]  el0_svc_common.constprop.0+0xc0/0xe0
+> [    5.758369]  do_el0_svc+0x1c/0x28
+> [    5.758372]  el0_svc+0x48/0x114
+> [    5.758889]  el0t_64_sync_handler+0xc8/0xcc
+> [    5.759184]  el0t_64_sync+0x198/0x19c
+> [    5.759475] Code: f9000bf3 52800033 72a00053 f9402420 (f9401801)
+>   
+>   
+>> [    5.657860] ov5675 24-0010: failed to get HW configuration: -517
+>> [    5.676183] vreg_l6q: Bringing 2800000uV into 1800000-1800000uV
+>>
+>> [    6.517689] qcom-camss ac5a000.camss: Adding to iommu group 22
+>>
+>> [    6.589201] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000030
+>> [    6.589625] Mem abort info:
+>> [    6.589960]   ESR = 0x0000000096000004
+>> [    6.590293]   EC = 0x25: DABT (current EL), IL = 32 bits
+>> [    6.590630]   SET = 0, FnV = 0
+>> [    6.591619]   EA = 0, S1PTW = 0
+>> [    6.591968]   FSC = 0x04: level 0 translation fault
+>> [    6.592298] Data abort info:
+>> [    6.592621]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+>> [    6.593112]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+>> [    6.593450]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+>> [    6.593783] user pgtable: 4k pages, 48-bit VAs, pgdp=000000010daef000
+>> [    6.594139] [0000000000000030] pgd=0000000000000000, p4d=0000000000000000
+>> [    6.594214] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+> 
+>> [    6.594868] CPU: 0 UID: 0 PID: 557 Comm: v4l_id Not tainted 6.12.0-rc2 #165
+>> [    6.594871] Hardware name: LENOVO 21BYZ9SRUS/21BYZ9SRUS, BIOS N3HET87W (1.59 ) 12/05/2023
+>> [    6.594872] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+>> [    6.594874] pc : camss_find_sensor+0x20/0x74 [qcom_camss]
+>> [    6.594885] lr : camss_get_pixel_clock+0x18/0x60 [qcom_camss]
+>> [    6.594889] sp : ffff800082d538f0
+>> [    6.594890] x29: ffff800082d538f0 x28: ffff800082d53c70 x27: ffff670cc0404618
+>> [    6.594893] x26: 0000000000000000 x25: 0000000000000000 x24: ffff670cd33173d0
+>> [    6.594895] x23: ffff800082d539a8 x22: ffff670cd33192c8 x21: ffff800082d539b8
+>> [    6.594898] x20: 0000000000000002 x19: 0000000000020001 x18: 0000000000000000
+>> [    6.594900] x17: 0000000000000000 x16: ffffbf0bffbecdd0 x15: 0000000000000001
+>> [    6.594902] x14: ffff670cc5c95300 x13: ffff670cc0b38980 x12: ffff670cc5c95ba8
+>> [    6.594905] x11: ffffbf0c00f73000 x10: 0000000000000000 x9 : 0000000000000000
+>> [    6.594907] x8 : ffffbf0c0085d000 x7 : 0000000000000000 x6 : 0000000000000078
+>> [    6.594910] x5 : 0000000000000000 x4 : ffff670cd3318598 x3 : ffff670cd3318468
+>> [    6.594912] x2 : ffff670cd3317728 x1 : ffff800082d539b8 x0 : 0000000000000000
+>> [    6.594915] Call trace:
+>> [    6.594915]  camss_find_sensor+0x20/0x74 [qcom_camss]
+>> [    6.594920]  camss_get_pixel_clock+0x18/0x60 [qcom_camss]
+>> [    6.594924]  vfe_get+0xb8/0x504 [qcom_camss]
+>> [    6.594931]  vfe_set_power+0x30/0x58 [qcom_camss]
+>> [    6.594936]  pipeline_pm_power_one+0x13c/0x150 [videodev]
+>> [    6.594951]  pipeline_pm_power.part.0+0x58/0xf4 [videodev]
+>> [    6.594960]  v4l2_pipeline_pm_use+0x58/0x94 [videodev]
+>> [    6.594969]  v4l2_pipeline_pm_get+0x14/0x20 [videodev]
+>> [    6.594978]  video_open+0x78/0xf4 [qcom_camss]
+>> [    6.594982]  v4l2_open+0x80/0x120 [videodev]
+>> [    6.594991]  chrdev_open+0xb4/0x204
+>> [    6.594996]  do_dentry_open+0x138/0x4d0
+>> [    6.595000]  vfs_open+0x2c/0xe4
+>> [    6.595003]  path_openat+0x2b4/0x9fc
+>> [    6.595005]  do_filp_open+0x80/0x130
+>> [    6.595007]  do_sys_openat2+0xb4/0xe8
+>> [    6.595010]  __arm64_sys_openat+0x64/0xac
+>> [    6.595012]  invoke_syscall+0x48/0x110
+>> [    6.595016]  el0_svc_common.constprop.0+0xc0/0xe0
+>> [    6.595018]  do_el0_svc+0x1c/0x28
+>> [    6.595021]  el0_svc+0x48/0x114
+>> [    6.595023]  el0t_64_sync_handler+0xc0/0xc4
+>> [    6.595025]  el0t_64_sync+0x190/0x194
+>> [    6.595028] Code: 52800033 72a00053 d503201f f9402400 (f9401801)
+>> [    6.595029] ---[ end trace 0000000000000000 ]---
 
-On Fri, 4 Apr 2025 10:33:39 -0500
-Rob Herring <robh@kernel.org> wrote:
+I've never seen this myself.
 
-> On Fri, Apr 04, 2025 at 11:01:06AM +0200, Juerg Haefliger wrote:
-> > Create a dtsi for the HP OmniBook so it can be reused for the HP EliteB=
-ook
-> > which seems to be the same HW.
-> >=20
-> > Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
-> > ---
-> >  .../dts/qcom/x1e80100-hp-omnibook-x14.dts     | 1554 +---------------
-> >  .../dts/qcom/x1e80100-hp-omnibook-x14.dtsi    | 1557 +++++++++++++++++=
- =20
->=20
-> Just include x1e80100-hp-omnibook-x14.dts where you need it. There is no=
-=20
-> rule against including .dts files.
+I wonder, are you building camcc, camss and the sensor driver into your 
+initrd ?
 
-Ah that makes it easier. Thanks.
+---
+bod
 
-...Juerg
-
-
->=20
-> Rob
-
-
---Sig_/axXhoG65m197/2vTrG.U=7j
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEhZfU96IuprviLdeLD9OLCQumQrcFAmfzmRUACgkQD9OLCQum
-QrcITA//YRlVT5IeMhh8Va/712MvwiTgJtdw+bN4W88wwrIt/RuZ/q+KWNx6kN7U
-JvFeBZ5lOY3A9ncxWmoGO9b7vX3lqdqVbvDzsSyEUQi6feuMRgIY7SAaY2uSH6lB
-C6HdmuhczWpYyWfkzSHV3A+LBXXnY2joO17fEWsHnEDa3zQOgmpUJ9to7ZF8jjSH
-zVXDkpPw+GJSPDaiEHKicnzzf87i4hETEa0KB5kbGxNfzhCpmjpdFv2anvt9Hj2J
-iYzK0guG7yZTpQWrilOdkVuhbyG2ZLRu2xn2VF7QtvJ3kpRkKQFmUUEovnWSyEdk
-OLAzOG69frF/FN42VpSJb9pYvniWEPi5EvrluBZRK3L8G5S2F6kDucnWTnjBWw3/
-P+1sUu7bTYsE3f2dF0dNluKy75a4d5f5GKlMO5luFCJ+hfunyESdfG35j6EcbgJ3
-xnNecFC3c9CDIZi7UcdO+voQjaZGRd0e4riyq2b0VzVyOyFmgapkmim82e/C+5Np
-CdrOjF5rlPN1xqdd7lRPKNIJfQ+zjRUngP5nYy85aDDdJF/YVxjMNuTAPeWKC2W7
-o4B/6MWWsCxDkbee0QovnKRt0pT0raj75OinNE19hj+10PriZRVOTAvgSqGuowUr
-HtChUgr5t2NMaE0xToNIl5IgShS981+YEZpvbjRa4/Kjr2q3eTA=
-=rZfb
------END PGP SIGNATURE-----
-
---Sig_/axXhoG65m197/2vTrG.U=7j--
 
