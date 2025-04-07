@@ -1,209 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-53426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9161EA7E4E0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 17:41:27 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51CA1A7E4D0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 17:40:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7E58F4242D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 15:29:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 031F07A3238
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 15:38:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6F2E1FE45F;
-	Mon,  7 Apr 2025 15:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31566201259;
+	Mon,  7 Apr 2025 15:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="LBZvLE2G"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aBxrsI2W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BC31FCFD3;
-	Mon,  7 Apr 2025 15:27:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0117F200BB3;
+	Mon,  7 Apr 2025 15:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744039672; cv=none; b=bswnRZuVtOQXcPrTThzmYfJgeGEJm8evqH4RarMheH+22nWSuFYqclAXHUGMc3kBiVGediePhtAVt8OSFfqy08Wf7AtBEM0z80cA4XNtJTZvyTm25kzGYGhbQYUWFnb9UP/YXsW0zkj//RYTTjEJ2vakCyDvBRkiojzwjkXSUmA=
+	t=1744040372; cv=none; b=ruFPVXY2idlpM8ZSu6GWuaAjA5OLBqYhOncQHGzkNbjrB0ID7DWhYlKQeiB8mLiX5Cs084p8NNOqc3xxPqBHUjNzemPfvXAXo+MdNNlQs2ZnD10cctD3a7FCDCWIaEz2xuY0qACeAhWx1WiFFCtE1ydzVSuXpmrq4y3xzto2Q0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744039672; c=relaxed/simple;
-	bh=ft5fAVeWE1b1HKhaLeGcIb2VFYMlP13maxhipyRumJQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZY2Xu1OM3QMHWceYmnS7TTCp5/YBiXwM1XWu86slA+7PA7qxkW4nGhj0c1fHD4YOkWfaQgr7A5pWQAfBbcoX6hC/V5WepP4bcnb0iYzRBkju6U7KBtt8v+RKSHMjgVscSQIn1xci7wdCMFH0jF7JB6NkuhwM+w6idGENVpzJQQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=LBZvLE2G; arc=none smtp.client-ip=217.70.183.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 72646431EA;
-	Mon,  7 Apr 2025 15:27:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1744039667;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=WgX6S64ngnXsjU0lQPqeLHBfnA+UnbXv6BjQk1oGXZU=;
-	b=LBZvLE2G+afaVJ2bwhuBl1x1YRR/aqaZ2Xm5yU+xaLjjIqM+WbNAKPx85Swnqti9EdXmCR
-	jxm3gIWcOaG1co2jTwQSHLMwRfa/o37ZW3TL5sERhaicxQw3i4iyp8UcVcTXkH1w4KSGdk
-	Y19KevZYjLYHr3HXXP8AducFPd1YdMFTPsJeGctmaMWsKIGeEO+n7SDKrX8kxYN5Z1gWgI
-	+UT+rfLgfI9oZV+al0AMr7X1Hj0w9CZsV0S3DJwxwGrF5CvYlrRAnPH725fFHTQ9VF1+RR
-	KAa03YipbyuRmYOv8qQstJ9OZTNaCvUkN6DRY2d/JonMQilxNjXgv50w/l7c9A==
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jagan Teki <jagan@amarulasolutions.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Anusha Srivatsa <asrivats@redhat.com>,
-	Paul Kocialkowski <paulk@sys-base.io>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	=?utf-8?q?Herv=C3=A9_Codina?= <herve.codina@bootlin.com>,
-	Hui Pu <Hui.Pu@gehealthcare.com>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	dri-devel@lists.freedesktop.org,
-	asahi@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	chrome-platform@lists.linux.dev,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	linux-amlogic@lists.infradead.org,
-	linux-renesas-soc@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	linux-stm32@st-md-mailman.stormreply.com
-Subject: [PATCH 34/34] drm/bridge: panel: convert to devm_drm_bridge_alloc() API
-Date: Mon,  7 Apr 2025 17:27:39 +0200
-Message-ID: <20250407-drm-bridge-convert-to-alloc-api-v1-34-42113ff8d9c0@bootlin.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250407-drm-bridge-convert-to-alloc-api-v1-0-42113ff8d9c0@bootlin.com>
-References: <20250407-drm-bridge-convert-to-alloc-api-v1-0-42113ff8d9c0@bootlin.com>
+	s=arc-20240116; t=1744040372; c=relaxed/simple;
+	bh=M3y8hJh48p4El0IfUM4vjOfPCS0bV3egS3RqF+kA6FE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g1ZxwabH3npwJKr/2nzN0lJQWmbB4qSNTmXLSy07+MQXRCvmrBfQePnwoADO2xXNSfHh9mNQ7N86ibHP28xn/nE17zAII0KojcaV5JFroirjEIYyqldo3knBYY8WM/oAB76OZCo1dpCFM4PQEbrK79rxVeZKFxv+YRN/X/3ZmgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aBxrsI2W; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A8FC4CEDD;
+	Mon,  7 Apr 2025 15:39:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744040371;
+	bh=M3y8hJh48p4El0IfUM4vjOfPCS0bV3egS3RqF+kA6FE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=aBxrsI2W50l74Pn58A5m09CxNRjYDxThYlA4abxzg1FuCkQLDYCef4ag7qNVKeB2q
+	 n+/KNjBJIssz7yA7e0Ieog2KN+tRSmsFZIfWa8Mj2c8yuTgw7E6hz75Nw/R+4tAOZi
+	 W435MIUXI+JJrfusrjiVxUvWoSCFUzlrNKpA1yEarvidLHwyPmuclXz/kc75tYBkFi
+	 jgxMLeI7Zj7fNBoDSdJGiskOBrYUwFV7Ccv7lJ6I2Nz0OmXsq34Gdoacw668icvxy4
+	 3H5sAdM69wef4rmbPYWGJFWf9aCf9Yf1qory0BOxvQmA96BnHPwZ+iTTfkd2xqoiha
+	 UL9F3Sg0MeyWA==
+Message-ID: <6f11921a-4ee8-4f40-9131-529f548f681a@kernel.org>
+Date: Mon, 7 Apr 2025 16:39:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: b4 0.14.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/4] media: venus: pm_helpers: use opp-table for the
+ frequency
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Renjiang Han <quic_renjiang@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241219-add-venus-for-qcs615-v6-0-e9a74d3b003d@quicinc.com>
+ <20241219-add-venus-for-qcs615-v6-2-e9a74d3b003d@quicinc.com>
+ <fde279ad-27ed-4947-a408-23139bcd270a@oss.qualcomm.com>
+ <351a9654-ffa1-4727-b772-95d4ed113c81@quicinc.com>
+ <ac145c57-1db3-4747-88e2-02825f958d5a@oss.qualcomm.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bod@kernel.org>
+In-Reply-To: <ac145c57-1db3-4747-88e2-02825f958d5a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddtheegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfgggtoffgsehtkeertdertdejnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepudffiefgvdfftdffkeejjefhffduleejleeuieetieetgeehtefhjedtgeegieegnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihrdhfrhhithiirdgsohigpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepgedupdhrtghpthhtohepmhgrrghrthgvnhdrlhgrnhhkhhhorhhstheslhhinhhugidrihhnthgvlhdrtghomhdprhgtphhtthhopehmrhhiphgrrhgusehkvghrnhgvlhdrohhrghdprhgtphhtthhopehtiihimhhmvghrmhgrnhhnsehsuhhsvgdruggvp
- dhrtghpthhtoheprghirhhlihgvugesghhmrghilhdrtghomhdprhgtphhtthhopehsihhmohhnrgesfhhffihllhdrtghhpdhrtghpthhtoheprghnughriigvjhdrhhgrjhgurgesihhnthgvlhdrtghomhdprhgtphhtthhopehnvghilhdrrghrmhhsthhrohhngheslhhinhgrrhhordhorhhgpdhrtghpthhtoheprhhfohhssheskhgvrhhnvghlrdhorhhg
-X-GND-Sasl: luca.ceresoli@bootlin.com
 
-This is the new API for allocating DRM bridges.
+On 09/01/2025 13:05, Konrad Dybcio wrote:
+> On 2.01.2025 6:38 AM, Renjiang Han wrote:
+>>
+>> On 12/23/2024 10:17 PM, Konrad Dybcio wrote:
+>>> On 19.12.2024 6:41 AM, Renjiang Han wrote:
+>>>> The frequency value in the opp-table in the device tree and the freq_tbl
+>>>> in the driver are the same.
+>>>>
+>>>> Therefore, update pm_helpers.c to use the opp-table for frequency values
+>>>> for the v4 core.
+>>>> If getting data from the opp table fails, fall back to using the frequency
+>>>> table.
+>>>>
+>>>> Signed-off-by: Renjiang Han<quic_renjiang@quicinc.com>
+>>>> ---
+>>>>    drivers/media/platform/qcom/venus/pm_helpers.c | 53 +++++++++++++++++++-------
+>>>>    1 file changed, 39 insertions(+), 14 deletions(-)
+>>>>
+>>>> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+>>>> index 33a5a659c0ada0ca97eebb5522c5f349f95c49c7..b61c0ad152878870b7223efa274e137d3636433b 100644
+>>>> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+>>>> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+>>>> @@ -43,14 +43,20 @@ static int core_clks_enable(struct venus_core *core)
+>>>>        const struct venus_resources *res = core->res;
+>>>>        const struct freq_tbl *freq_tbl = core->res->freq_tbl;
+>>>>        unsigned int freq_tbl_size = core->res->freq_tbl_size;
+>>>> +    struct device *dev = core->dev;
+>>>> +    struct dev_pm_opp *opp;
+>>>>        unsigned long freq;
+>>>>        unsigned int i;
+>>>>        int ret;
+>>>>    -    if (!freq_tbl)
+>>>> -        return -EINVAL;
+>>>> -
+>>>> -    freq = freq_tbl[freq_tbl_size - 1].freq;
+>>>> +    opp = dev_pm_opp_find_freq_ceil(dev, &freq);
+>>>> +    if (IS_ERR(opp)) {
+>>>> +        if (!freq_tbl)
+>>>> +            return -EINVAL;
+>>>> +        freq = freq_tbl[freq_tbl_size - 1].freq;
+>>>> +    } else {
+>>>> +        dev_pm_opp_put(opp);
+>>>> +    }
+>>> I'm not super convinced how this could have ever worked without
+>>> scaling voltage levels, by the way. Perhaps this will squash some
+>>> random bugs :|
+>>>
+>>> Konrad
+>>   Thanks for your comment.
+>>   The default value of freq is 0, and then dev_pm_opp_find_freq_ceil is
+>>   used to match freq to the maximum value in opp-table that is close to
+>>   0. The frequency values ​​in opp-table and freq_tbl are the same, and
+>>   dev_pm_opp_find_freq_ceil is used to assign the minimum value in
+>>   opp-table to freq. So the logic is the same as before. I'm not sure if
+>>   I've answered your concern.
+> 
+> We talked offline, but for the record: my concern here was about
+> clk_set_rate() not scaling RPM/h voltage corners, which this patch
+> fixes
+> 
+> Konrad
 
-The devm lifetime management of this driver is peculiar. The underlying
-device for the panel_bridge is the panel, and the devm lifetime is tied the
-panel device (panel->dev). However the panel_bridge allocation is not
-performed by the panel driver, but rather by a separate entity (typically
-the previous bridge in the encoder chain).
+Konrad is this an RB from you, do you have any other concerns with this 
+code ?
 
-Thus when that separate entoty is destroyed, the panel_bridge is not
-removed automatically by devm, so it is rather done explicitly by calling
-drm_panel_bridge_remove(). This is the function that does devm_kfree() the
-panel_bridge in current code, so update it as well to put the bridge
-reference instead.
+Dikshita, Vikash ?
 
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+I'll give it a test myself ASAP but any other comments or R/B would be 
+helpful.
+
 ---
-
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-To: Maxime Ripard <mripard@kernel.org>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-To: David Airlie <airlied@gmail.com>
-To: Simona Vetter <simona@ffwll.ch>
-To: Andrzej Hajda <andrzej.hajda@intel.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-To: Robert Foss <rfoss@kernel.org>
-To: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-To: Jonas Karlman <jonas@kwiboo.se>
-To: Jernej Skrabec <jernej.skrabec@gmail.com>
-To: Jagan Teki <jagan@amarulasolutions.com>
-To: Shawn Guo <shawnguo@kernel.org>
-To: Sascha Hauer <s.hauer@pengutronix.de>
-To: Pengutronix Kernel Team <kernel@pengutronix.de>
-To: Fabio Estevam <festevam@gmail.com>
-To: Douglas Anderson <dianders@chromium.org>
-To: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Anusha Srivatsa <asrivats@redhat.com>
-Cc: Paul Kocialkowski <paulk@sys-base.io>
-Cc: Dmitry Baryshkov <lumag@kernel.org>
-Cc: Hervé Codina <herve.codina@bootlin.com>
-Cc: Hui Pu <Hui.Pu@gehealthcare.com>
-Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: asahi@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org
-Cc: chrome-platform@lists.linux.dev
-Cc: imx@lists.linux.dev
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-mediatek@lists.infradead.org
-Cc: linux-amlogic@lists.infradead.org
-Cc: linux-renesas-soc@vger.kernel.org
-Cc: platform-driver-x86@vger.kernel.org
-Cc: linux-samsung-soc@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Cc: linux-stm32@st-md-mailman.stormreply.com
----
- drivers/gpu/drm/bridge/panel.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/gpu/drm/bridge/panel.c b/drivers/gpu/drm/bridge/panel.c
-index 79b009ab9396048eac57ad47631a902e949d77c6..ddd1e91970d09b93aa64f50cd9155939a12a2c6f 100644
---- a/drivers/gpu/drm/bridge/panel.c
-+++ b/drivers/gpu/drm/bridge/panel.c
-@@ -287,15 +287,14 @@ struct drm_bridge *drm_panel_bridge_add_typed(struct drm_panel *panel,
- 	if (!panel)
- 		return ERR_PTR(-EINVAL);
- 
--	panel_bridge = devm_kzalloc(panel->dev, sizeof(*panel_bridge),
--				    GFP_KERNEL);
--	if (!panel_bridge)
--		return ERR_PTR(-ENOMEM);
-+	panel_bridge = devm_drm_bridge_alloc(panel->dev, struct panel_bridge, bridge,
-+					     &panel_bridge_bridge_funcs);
-+	if (IS_ERR(panel_bridge))
-+		return (void *)panel_bridge;
- 
- 	panel_bridge->connector_type = connector_type;
- 	panel_bridge->panel = panel;
- 
--	panel_bridge->bridge.funcs = &panel_bridge_bridge_funcs;
- 	panel_bridge->bridge.of_node = panel->dev->of_node;
- 	panel_bridge->bridge.ops = DRM_BRIDGE_OP_MODES;
- 	panel_bridge->bridge.type = connector_type;
-@@ -327,7 +326,7 @@ void drm_panel_bridge_remove(struct drm_bridge *bridge)
- 	panel_bridge = drm_bridge_to_panel_bridge(bridge);
- 
- 	drm_bridge_remove(bridge);
--	devm_kfree(panel_bridge->panel->dev, bridge);
-+	devm_drm_put_bridge(panel_bridge->panel->dev, bridge);
- }
- EXPORT_SYMBOL(drm_panel_bridge_remove);
- 
-
--- 
-2.49.0
-
+bod
 
