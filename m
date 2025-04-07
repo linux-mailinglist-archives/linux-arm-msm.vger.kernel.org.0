@@ -1,108 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-53349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C955A7D976
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 11:22:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD1A2A7D98B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 11:24:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A6A717A2C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 09:20:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B01A9188A673
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 09:22:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B63222FF2B;
-	Mon,  7 Apr 2025 09:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 689F822A808;
+	Mon,  7 Apr 2025 09:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="gp/rUJDl"
+	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="sjuRosIT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53859224B0E
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 09:17:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D0042A97
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 09:20:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.123
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744017448; cv=none; b=J0NXkDd0YOL8KuuJZl3lHM/yGwNTJYn4sNz9RKsXsAw9GOFIqancK58eJw3Vc8rcyW6AvCsr0n/MPreqJNYYCH/T+7y0aXFT3B2lIZ7f+yaHwfrERF7hxFZru/CW9OSIqWNHNZiZyGNlzzMw0T2D5B6tESL/wkAIk9rpOHvo/Qk=
+	t=1744017652; cv=none; b=QJzQIFepFBk3ydBDxuDT5GMrNsIfMLh1JGj5pFYpjMfKxVSDe07tl7yBTHh3XCYxm92meyBRP+buYwUEQR4iE4vhd/O6N5Y+XjC06iTzFf4qyOE6UzdK0Cqq1BF4Gf/vXsCmseC9p9eJpB+SuThuPqnSlYwSgFPJtujEq5qG4Z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744017448; c=relaxed/simple;
-	bh=QU9XKmlg3Q63oHMPSj27z50Nm0jwwOnBo8VBeuxoiy8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kY0MByn4QX1OURUwMU7gind1KaZ8Zkk9HQX/w1ERuuOuQdxKEvA0n5RmZ/DuswwQFVfRDOl7R/dkYkvpsDcW5nSBBc+v0M0tJpISjqYQIoDIW3KE1BJORJpRciSyMw16zznZq2Eppa3+H4dDPskRBkgYfMmFwJ46mSUmEmkqRuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=gp/rUJDl; arc=none smtp.client-ip=95.215.58.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1744017444;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=/S879XubW4aeIBAXUFWkv+U4RmQfwb/eak1SUwWdbBY=;
-	b=gp/rUJDliYigIAelHGM9/eZO4JmnohS8kGLqyorLndikcO7JK9Km4S/4qfTn0YBqp/V0a0
-	hmTC9TWM0O1kYObQpB/XOiaLB8tp96kHPSj8sEUesTr9G9Kl5CSaOqJUCXSzeuI1RfcS9s
-	MSEYYbOGdZMJPnuUroy1Y1IJhjNcHis=
-From: Thorsten Blum <thorsten.blum@linux.dev>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: Thorsten Blum <thorsten.blum@linux.dev>,
-	linux-arm-msm@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] rpmsg: Use strscpy() instead of strscpy_pad()
-Date: Mon,  7 Apr 2025 11:17:14 +0200
-Message-ID: <20250407091714.743681-1-thorsten.blum@linux.dev>
+	s=arc-20240116; t=1744017652; c=relaxed/simple;
+	bh=ScdXEXK3bUhFt+Yi2JcouhlEsXjMdlf4d3ndS+JkYLo=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UAQ9vjATZM1wstlDRm5Pd5O3avLgT8aAwgHVhIG87SuJO+SYYwQCE2sJeRe5/OJY1Up7aAkTPd9ePEzNVXvbKZUhzFhQIEXEvu0cRjORP+F+2FOllqxn1lTijm4cDnlGuqwlLgbogqpukDBjkUyD+bSSz+4AtAA6MAZeKQybbnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=sjuRosIT; arc=none smtp.client-ip=185.125.188.123
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com [209.85.218.70])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id AA7D33F13F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 09:20:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1744017647;
+	bh=7GZS6uPYj8uHFMPZTZNVxCqyKS9pg06/fJF5SvkoEvI=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type;
+	b=sjuRosITQU1Q5wYPeFd2Yfi0XwcnBAQAOjdT/2JJ6iuOYAQU39g8Ky2qWQyEKozXO
+	 s4HsN30HCEMdEJ+GRkyvSXpx9tGZclgJsBHhf6qiLI+INq8S0riAzlHA/6dhngjjja
+	 pGurOOC4UqyrySrfwa+sPiTO09g5ORbv8+gfOShlgUkzx2QR3VeuG6NGAmSyVv3vkQ
+	 q+lR/mTFPc4771JHVOcQtYqkna/0x0wPvL3CnFjoaeH1hFek+p/PAlsqpFUhKvYZiI
+	 +f3hJY7ovnvzHTBOJ2apz3NdiYlMH2YMCr3W13KO46ikv4nILA+cy/thRIQszM8I97
+	 hqkXOZkLWBVvQ==
+Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-ac737973c9bso317041766b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Apr 2025 02:20:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744017647; x=1744622447;
+        h=mime-version:organization:references:in-reply-to:message-id:subject
+         :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7GZS6uPYj8uHFMPZTZNVxCqyKS9pg06/fJF5SvkoEvI=;
+        b=gZ5TT+QX5Nv/5pwpkKrlMZhMh9LfXYLKxImC+QQBiCHelfxZh6Oay5XZKXyA4rhT5z
+         MHrPL/L8pmJcKjiYBzBPkIghk/IlTgG34MTYh4IA62wME+OgV4K+hYjMh0ClZ9IRMk5c
+         s3VTYQ6ACmbdGlZO/V4o7rNX7tj0rCG70JiD20uRV+Q6GuKIluGWQE6oF77wuL2Tb/g/
+         3Q+zZHPmDnL5YC/z0CuK8y3DqjxWV/CpvvCOb+DD37VaUZ5rtqj5r5PbZPJMWlEu7IJq
+         u5GuBlxYnJHZRISwIjvWe/PaSI1bnZAvMWBxfH3d37q1Zpb4HqmzpoHOF5pGC8Ewyq6/
+         jHIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVG6eqVWQfpUAA6Soey6rE6tG/EMKu5vOL5XjFlsC0qGSAvb00MdiSbQaTzzRSuq+fzotMo5gySsaA3kONI@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy9UCFL6/OCpKA+W5PsVYoWdR5juCNegTmD8VTfFWfTCHiINMNh
+	yT8Go3iTW3S9l+ql17vESwmTBrwkUe1eWQ1vqO9Ca4n4jrfA1lklrKVt48SUANB/jTkLkZsqwwY
+	V6kp8Xe1fUm/YDhYadP+e1t7v5o4rw0xjZXdlS02T3eOZtC4A9oss0+qiyCF8tQDCCpJpvlTNi/
+	S0fLQ=
+X-Gm-Gg: ASbGncssAyxCafi2kDvxxSRDXXX5IWUkd/vyLGHL3PFpOdlrzf365vpTPJEyAsbZXAq
+	nmSUOmnWhkGzoOmY2uvZEJpYwpCplXvJkFI2Ha5a9KDjxHPZ+bjmvxm5ATPHKp78NhfS4XywWIy
+	sOhCvGBHuMhF8TxyLaSW2O0hU0g+WEMW9A+hLZu/SWOTSVZ2LEtiVqBdZYDDgdYjn3DVsfFdij/
+	OWb7yYTauouhkrJwFUoHxkoEm03ANOn5neBIGfk7er6mn7s/LtgkCAuDIPomGpDOeUM2jEZRouc
+	+V86AJNAutK9XSKyTRKBmLrhdPiVr/bEtCAlt0KUjigWnqhLjI7HkDeQ
+X-Received: by 2002:a17:907:7214:b0:ac6:b811:e65b with SMTP id a640c23a62f3a-ac7d1821920mr1055181666b.36.1744017647224;
+        Mon, 07 Apr 2025 02:20:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5RKNwcDAkF0pEvh7xm6VWRcXnybWvXazgwz0pvnQ6TMVJtV3bBp4BF0HHU1KK4D5FiFb2pw==
+X-Received: by 2002:a17:907:7214:b0:ac6:b811:e65b with SMTP id a640c23a62f3a-ac7d1821920mr1055178966b.36.1744017646855;
+        Mon, 07 Apr 2025 02:20:46 -0700 (PDT)
+Received: from gollum (151-243-191-194.pool.dsl-net.ch. [194.191.243.151])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7bfe5c5c5sm709420866b.29.2025.04.07.02.20.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Apr 2025 02:20:46 -0700 (PDT)
+Date: Mon, 7 Apr 2025 11:20:43 +0200
+From: Juerg Haefliger <juerg.haefliger@canonical.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: x1e80100-hp-omnibook-x14: Create
+ and include a dtsi
+Message-ID: <20250407112044.35fe4d8a@gollum>
+In-Reply-To: <e326a1e8-5f2e-4b1d-bb72-64f1e32038fa@kernel.org>
+References: <20250404090108.3333211-1-juerg.haefliger@canonical.com>
+	<20250404090108.3333211-2-juerg.haefliger@canonical.com>
+	<e326a1e8-5f2e-4b1d-bb72-64f1e32038fa@kernel.org>
+Organization: Canonical Ltd
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: multipart/signed; boundary="Sig_/2GAB8FRdlhzjw/4_=O1iMN1";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
 
-kzalloc() already zero-initializes the destination buffer, making
-strscpy() sufficient for safely copying the name. The additional NUL-
-padding performed by strscpy_pad() is unnecessary.
+--Sig_/2GAB8FRdlhzjw/4_=O1iMN1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-The size parameter is optional, and strscpy() automatically determines
-the size of the destination buffer using sizeof() when the argument is
-omitted. RPMSG_NAME_SIZE is equal to sizeof(rpdev->id.name) and can be
-removed - remove it.
+On Fri, 4 Apr 2025 14:51:54 +0200
+Krzysztof Kozlowski <krzk@kernel.org> wrote:
 
-No functional changes intended.
+> On 04/04/2025 11:01, Juerg Haefliger wrote:
+> > Create a dtsi for the HP OmniBook so it can be reused for the HP EliteB=
+ook
+> > which seems to be the same HW.
+> >=20
+> > Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+> > ---
+> >  .../dts/qcom/x1e80100-hp-omnibook-x14.dts     | 1554 +---------------
+> >  .../dts/qcom/x1e80100-hp-omnibook-x14.dtsi    | 1557 +++++++++++++++++
+> >  2 files changed, 1558 insertions(+), 1553 deletions(-)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.d=
+tsi =20
+>=20
+> Very difficult to review. This should have been rename. You are not
+> using b4, so you can tweak -M/-B/-C parameters.
 
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
----
- drivers/rpmsg/qcom_glink_native.c | 2 +-
- drivers/rpmsg/qcom_smd.c          | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Not sure what that means, but OK :-)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index a2f9d85c7156..820a6ca5b1d7 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1663,7 +1663,7 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
- 		}
- 
- 		rpdev->ept = &channel->ept;
--		strscpy_pad(rpdev->id.name, name, RPMSG_NAME_SIZE);
-+		strscpy(rpdev->id.name, name);
- 		rpdev->src = RPMSG_ADDR_ANY;
- 		rpdev->dst = RPMSG_ADDR_ANY;
- 		rpdev->ops = &glink_device_ops;
-diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-index 40d386809d6b..3c86c5553de6 100644
---- a/drivers/rpmsg/qcom_smd.c
-+++ b/drivers/rpmsg/qcom_smd.c
-@@ -1089,7 +1089,7 @@ static int qcom_smd_create_device(struct qcom_smd_channel *channel)
- 
- 	/* Assign public information to the rpmsg_device */
- 	rpdev = &qsdev->rpdev;
--	strscpy_pad(rpdev->id.name, channel->name, RPMSG_NAME_SIZE);
-+	strscpy(rpdev->id.name, channel->name);
- 	rpdev->src = RPMSG_ADDR_ANY;
- 	rpdev->dst = RPMSG_ADDR_ANY;
- 
--- 
-2.49.0
 
+>=20
+>=20
+> I also do not understand what the DTSI represents. The DTSI files should
+> be some sort of common hardware, design, product. Are you sure these
+> devices share the design?
+
+Yes, pretty much.
+
+OmniBook:  mainboard 8CBE, version 17.39
+EliteBook: mainboard 8CBE, version 17.40
+
+HWinfo from Windows looks identical. DSDT are identical except that the
+EliteBook has two additional nodes \_SB_.GPU0.PBRT.RBF5 and
+\_SB_.GPU0.PBRT.RBF6. Not sure what those are, maybe due to different BIOS
+versions?
+
+Using the current OmniBook dtb works with my EliteBook.
+
+...Juerg
+
+
+>=20
+> Best regards,
+> Krzysztof
+
+
+--Sig_/2GAB8FRdlhzjw/4_=O1iMN1
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEhZfU96IuprviLdeLD9OLCQumQrcFAmfzmOwACgkQD9OLCQum
+QreiCxAAmjf9riTwqTB0eq0J5fIEHqYnd6ITtyuOHiWmS57uWKOl/R7354LDEcmm
+aYUVLLoOxrPUUBBPsxQg65EF3PumDBGwNEt9m3MH3yAnRZAg8IG0XddBNx+5+Y4F
+Uoz8K6kAkE7BV1jxUPlZPg9wopC0Gmk/OPVm2OnXYxyIyfdv9lrVhR9mfkQhIKho
+eqgIxqAnjPXvYPpZQ0fhdw/smHpsYXnWhuCvVi9befgEIHqCQPzZXwhkCFojzEes
+1dhqZY2zFL2hyL+dio4GzY+tASuik1gY/liOM081MqPfxkq5wDQWfwJEc6Kfrhm8
+IXcM0KWNkWtqiRw5QNSxxLnJgsXem72BdE3mld7gzgM0F8fsZ8I0MeDGxWOV6Gr8
+FMDDORlla4+/SrDLkyYxvuW7eHY1+UMGIRM1smhdjd9Oj74su8MV3kpp1hHJqLrE
+Adjrb/5P/+PWvncwqLabYt1P04BawL4WE586i78HJPCnb+6PpBffqLsGGem5tuzF
+/K5EuvwPTN/1tKHYjTVArG39N3RDkQ0Toik/i9M6ODwKK8+GCT0COYH7kc5bS9Mt
+/22XuVH7u15Et2VuWysC9Z/ee/0xKotz0SA3WFbpH6igdRLdDwyX7fL2yiU802Oj
+cNOXgCJwETZxlQSSVwDjs728jfyMJii4K+o9EcbtxDKRMMgtD5M=
+=nyGV
+-----END PGP SIGNATURE-----
+
+--Sig_/2GAB8FRdlhzjw/4_=O1iMN1--
 
