@@ -1,117 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-53376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8A42A7E01B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 15:56:44 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8145A7E0FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 16:21:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 27BC91895D3D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 13:49:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CA6AE7A14BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 14:20:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E6111A3152;
-	Mon,  7 Apr 2025 13:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A1831DB37B;
+	Mon,  7 Apr 2025 14:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZX9MsYUv"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="byaxT9wZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4043119D08F;
-	Mon,  7 Apr 2025 13:48:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4025200B0;
+	Mon,  7 Apr 2025 14:21:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744033737; cv=none; b=intF++s9amdQgiZZ7Mr+q51Lla8+CKmXlYMvj8CPJza0SMH8UFlFGMbb16XkbbcJgNFR5ePpb0fAWGec0pTw/O092I18tMIO9vChh61rCZ9gg1S/H3jgKoTvT+ECSwk9MqG7qiGfUuOFH3AZsMNEViVdHAcypV7Fa5kSrEDwr00=
+	t=1744035691; cv=none; b=C9rxTbukEneLJGrakyjX0chzviOcmRGCFkqB01pTXUtrs4GftjE8s10ATEXdTDU0NAQl2L3v9DrHJ4GDOhJqrODMuUk8LVOocXYsZ40ZUtF6Z0lJxUvQBDpocMF0+M5s1WLMZODHfVt6yHvN1zM5tGNNWy1Yv+aAJFyMvutZZkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744033737; c=relaxed/simple;
-	bh=Ox7tiIkaCRawomU325EiXwPmeeSjZyj78ZsMxwmOulA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C8UFmKuDzVjMXOaRQJ+zjRcGvT3WX+DZfuR5gwOg96USjQErNf9Rk07KDTC2AaEtVYEwDrXP9PyEoSADUIbZvj0k/zyPLvphcoVJgYMA570NxM0Hw19aKI++ZJ+vps7h6gG9+8G+R+r69kzYsvJGXNGBIjismZ3sT5iucpBSh54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZX9MsYUv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992B7C4CEE7;
-	Mon,  7 Apr 2025 13:48:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744033736;
-	bh=Ox7tiIkaCRawomU325EiXwPmeeSjZyj78ZsMxwmOulA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZX9MsYUvCLd0WfNshTif2wMQJPsVnZ8FFIG7X87LnvtPDtFZ6cMZD67sMAoo+S0yB
-	 9p6BRSStrmqAd8xaXL5uGgmhk/HBMBYInq+zQrp2u+k3xaZYuu3XY1btqIWTyEhl34
-	 YpPDHlxvv21niX7Zgl2zXptLXx5LTJA7h3PhihzIf3bQzQcguuZUSKE0Hr7Yf10p6X
-	 4yDZZQC1KFRjHxIlWN1xNRudlUazsw0aZteJXsMt9niLrLrRlBCYbQi90gYWobwOQa
-	 pGdF329qlwvyTLWkt/pyDe8FycqpBCM2X9pTVj24OnizoeKVsK7/gUVFWxKSIT3GT6
-	 IIiKuuY+xTlAA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1u1mqU-000000005bW-2a1S;
-	Mon, 07 Apr 2025 15:49:03 +0200
-Date: Mon, 7 Apr 2025 15:49:02 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: camss NULL-deref on power on with 6.12-rc2
-Message-ID: <Z_PXzvL5Zt9QkivE@hovoldconsulting.com>
-References: <Zwjw6XfVWcufMlqM@hovoldconsulting.com>
- <Z_OXELLDIfQII6wV@hovoldconsulting.com>
- <778e2cd0-5371-424f-809d-20f7c3ae5343@linaro.org>
- <Z_OrQGspD79k1Mg4@hovoldconsulting.com>
- <Z_OwdYtSyFDhkYMa@hovoldconsulting.com>
+	s=arc-20240116; t=1744035691; c=relaxed/simple;
+	bh=J3Ouex5t/BJuRLsIVAdTtEOT1UXLXYJ0kbwTkxBPXuY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hzG103rL4yQNN6QBGcKHYvpj7lQkG23zqomfvLFPJW2uqqjbrjijNKxpOgcozZybjy1ONepss9/KtMhs3kdPQwXdZaWeHZn7ZxSuqtf8EgrNoRyqvHKHTs1y+iH0GN/9YjyTnzPRNoQsIsQ8flcSkKDG+2t4RAnl/yWJ7yYZR6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=byaxT9wZ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5378doGJ009987;
+	Mon, 7 Apr 2025 14:21:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=wQ1d5nGMf8Kmroqoy9X4+2r9PBxPFkf0SoFNOYlqaQo=; b=by
+	axT9wZfcNsqiCAOYLoLFMD3P7h5UjCGKKfx/olD/hutEq3++dQ3uL0m2nxenoZ6s
+	clz8GOnxIDUQyV4K2lA965Y1JbUjYJfLH9uR2Utjut1z/figqlGqQ++Lvz3fMWHw
+	4+HFytBbBPR+R+nYzkCYyPqbovrzZQYNgaQs+aSiglPigGxlOJFQvUrp336zbFqk
+	w7vskK/mhSpS2qGDHHrlCNL+OqRFqPRNac4wk2aSOfPJ235GDeIO1mO7VlyTb3+X
+	NOnSOu4GfSrTGVBpFZC/TFvxhdi7zAgvNjmmNw7Ou/R6S0JyZ1+QUFzzv2GtKGP+
+	wIRWXuYurhsJ4VeC3Dyg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twpm4dy2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 07 Apr 2025 14:21:24 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 537ELOX6009006
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 7 Apr 2025 14:21:24 GMT
+Received: from hu-mapa-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 7 Apr 2025 07:21:20 -0700
+From: Manish Pandey <quic_mapa@quicinc.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "James E.J.
+ Bottomley" <James.Bottomley@HansenPartnership.com>,
+        "Martin K. Petersen"
+	<martin.petersen@oracle.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_nitirawa@quicinc.com>,
+        <quic_bhaskarv@quicinc.com>, <quic_rampraka@quicinc.com>,
+        <quic_cang@quicinc.com>, <quic_nguyenb@quicinc.com>
+Subject: [PATCH V6 0/3] scsi: ufs-qcom: Enable Hibern8, MCQ, and Testbus registers Dump
+Date: Mon, 7 Apr 2025 19:51:07 +0530
+Message-ID: <20250407142110.16925-1-quic_mapa@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z_OwdYtSyFDhkYMa@hovoldconsulting.com>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: PkFux5rJi8qye3-mRhqAHa5n9zwXHz1V
+X-Proofpoint-ORIG-GUID: PkFux5rJi8qye3-mRhqAHa5n9zwXHz1V
+X-Authority-Analysis: v=2.4 cv=MpRS63ae c=1 sm=1 tr=0 ts=67f3df64 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=pyQEGUW01KN_hzJh80EA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-07_04,2025-04-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=292 clxscore=1015 priorityscore=1501 impostorscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0
+ phishscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504070101
 
-On Mon, Apr 07, 2025 at 01:01:09PM +0200, Johan Hovold wrote:
-> On Mon, Apr 07, 2025 at 12:38:56PM +0200, Johan Hovold wrote:
-> > On Mon, Apr 07, 2025 at 10:58:52AM +0100, Bryan O'Donoghue wrote:
-> > > On 07/04/2025 10:12, Johan Hovold wrote:
-> 
-> > > > [    5.740833] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000030
-> > 
-> > > > [    5.744704] Call trace:
-> > > > [    5.744706]  camss_find_sensor_pad+0x20/0x74 [qcom_camss] (P)
-> > > > [    5.744711]  camss_get_pixel_clock+0x18/0x64 [qcom_camss]
-> > > > [    5.744716]  vfe_get+0xb8/0x504 [qcom_camss]
-> > > > [    5.744724]  vfe_set_power+0x30/0x58 [qcom_camss]
-> > > > [    5.744731]  pipeline_pm_power_one+0x13c/0x150 [videodev]
-> > > > [    5.744745]  pipeline_pm_power.part.0+0x58/0xf4 [videodev]
-> > > > [    5.744754]  v4l2_pipeline_pm_use+0x58/0x94 [videodev]
-> > > > [    5.744762]  v4l2_pipeline_pm_get+0x14/0x20 [videodev]
-> > > > [    5.744771]  video_open+0x78/0xf4 [qcom_camss]
-> > > > [    5.744776]  v4l2_open+0x80/0x120 [videodev]
-> 
-> > I've only seen it twice myself (that I've noticed, at least this time it
-> > prevented the display from probing so I knew something was wrong).
-> 
-> Just hit this again with 6.15-rc1 after the third reboot so timing has
-> likely changed slightly which now makes it easier to hit this.
-> 
-> > Since it's obviously a race condition I think you'll need to analyse the
-> > code to try to figure out where the bug is. With an hypothesis you may
-> > be able to instrument a reliable reproducer (e.g. by adding appropriate
-> > delays to extend the race window).
-> 
-> It's apparently udev which powers up the camera when running v4l_id:
-> 
-> [    5.859741] CPU: 4 UID: 0 PID: 420 Comm: v4l_id Not tainted 6.15.0-rc1 #106 PREEMPT
-> 
-> So this looks like the classic bug of drivers registering their devices
-> before they have been fully set up.
+Adding support to enhance the debugging capabilities of the Qualcomm UFS
+Host Controller, including HW and SW Hibern8 counts, MCQ registers, and
+testbus registers dump.
+---
+Changes in v6:
+- Added ufs_qcom_dump_regs() API for MCQ dump due, as SoC vendors explicitly
+  allocate MCQ resource.
+Changes in v5:
+- Addressed Mani's comment and used cond_resched() instead of usleep().
+Changes in v4:
+- Addressed Mani's comment and used kmalloc_array() for testbus mem allocation.
+- Removed usleep_range from ufs_qcom_dump_testbus.
+- Updated commit text.
+Changes in v3:
+- Addressed Bart's comment and Annotated the 'testbus' declaration with __free.
+- Converted the switch-statements into an array lookup.
+- Introduced struct testbus_info{} for handling testbus switch-statements to an array lookup.
+Changes in v2:
+- Rebased patchsets.
+- Link to v1: https://lore.kernel.org/linux-arm-msm/20241025055054.23170-1-quic_mapa@quicinc.com/
 
-It's entity->pad which is being dereferenced while NULL in
-camss_find_sensor_pad() and when this happens entity->name is also NULL.
+---
+Manish Pandey (3):
+  scsi: ufs-qcom: Add support for dumping HW and SW hibern8 count
+  scsi: ufs-qcom: Add support to dump MCQ registers
+  scsi: ufs-qcom: Add support to dump testbus registers
 
-Bailing out when entity->pad is NULL allows the machine to boot, but we
-should figure out why this function is called before things have been
-properly initialised.
- 
-Johan
+ drivers/ufs/host/ufs-qcom.c | 142 ++++++++++++++++++++++++++++++++++++
+ drivers/ufs/host/ufs-qcom.h |  11 +++
+ 2 files changed, 153 insertions(+)
+
+-- 
+2.17.1
+
 
