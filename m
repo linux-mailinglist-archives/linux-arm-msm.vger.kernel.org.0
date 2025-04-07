@@ -1,80 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-53429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A08B5A7E597
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 18:05:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 74568A7E5BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 18:11:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D51571678E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 15:55:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C0409445A04
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 16:03:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD1EB2066E8;
-	Mon,  7 Apr 2025 15:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3D6D2063F1;
+	Mon,  7 Apr 2025 15:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IzM0GHCg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U87Tcvkn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89FF2066CB
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 15:52:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95F21ADC86;
+	Mon,  7 Apr 2025 15:59:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744041142; cv=none; b=Ad0axEiDgOjc/cs5sAPaVd/+VC92GCvkf0rnoaacnoV+mSXFqXnNsmYLU701GoidHR1ZUuoh6xX+4EwQ2Ztk0vaX1qga84zs6a0g+qp3tCM/gPIM6YWzWSHU116UEp8thLEdRK7ZryMB0OPM4I/izfbpPZhdPFhVZnbrN5ebsic=
+	t=1744041558; cv=none; b=D3mn5Ch0oKV+0yCFB6udtgMKwbLR7rcS3Pq6pv9MtmaWllRSVKE+SX50MlKCuHo+E3Su2UoXi8ntuXqt/3vWNiIBrA4T+NMtF0rqiViEi9hC1n0jL6XSE0BtOM7FwGKtCjEQKWoNxDvfa/rOjhO+u25FGSHRx+GbXEuj0egRWv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744041142; c=relaxed/simple;
-	bh=5Y1kkD63GffpokSvoVSgAXKIhsTTpE6ldnuA2Z/5/+4=;
+	s=arc-20240116; t=1744041558; c=relaxed/simple;
+	bh=1GyAjSDlG1wgBYRaQ8zf6o0fLwSnmGQPgHb92Y351kE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qs/W/oJYNpooDkTiNapPKeO/lht/z3Ft+xDHzGf1eh9KLnqAp9fotUHdmJ1WJOixuWcX2hzkIdxsVPxAtVpzLujObxYGyemS0Yp7D3WqMJ0fRPc7Vh+5VeAWOVk1jqTc+1FlxdRAnksteyBLkj+TzotxgdtHSMafWAQ6EmF+bYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IzM0GHCg; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43edb40f357so21710615e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Apr 2025 08:52:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744041136; x=1744645936; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JKXVpHnQ9UfB3mcq/Ytnee0VY/Oh+/K5y49jt5/yJQg=;
-        b=IzM0GHCgX+u095Jd6i7+yevvOfA93QfXrYiF2RWJIuW7ZHX6t3HTYZx/WxYLHbOJgg
-         +P1g+QRWkD5CGvuT04VaK5ZjwjUj0FwicAuKcqz9XfN80dzhSGnSGzwNpaSZHQuaDzau
-         6tXbD0KibM4XmL9WTM3NbJtWhJe0hE0S0KC5NLZOrQDUqY25s/sye61ZsMmO/TlJ/KmJ
-         V1oGkwpyOu2bc94hPAi1zziHTap/bR+MLgQpHT1ubMczNDnkEen271jf2p6OStz9rgHA
-         GN7ZyWFgUCLdNoOfvt1P86IMeT2x7RpgkZmAhOvP2wd2Sk23D0/A7IWlGU48o0flETcA
-         RtSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744041136; x=1744645936;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JKXVpHnQ9UfB3mcq/Ytnee0VY/Oh+/K5y49jt5/yJQg=;
-        b=nAqlj586Du4t3+YVcAj60K+03ba6h0uS4uVDmxKHdkYstxSBtD77iufY8tSGLJ/sbo
-         LbDb+gT75g/+xvQk7c7sLpaHbud2631aT2qe8Wdkn/uBLOqA5WUyYjWnUr0F7+BI8Qal
-         SX1MQj7L0089jNpFPqEfVdIoVAClcMYcGKWrXgXJIUA78mIcKCCoLSthNdkqIXr7SykU
-         vk3qMzXcagm5ywg9SnolP+yqwKCYEsFIttLDOBrOZhyZtqLMwxQx5m8DZMLSd1iJMbym
-         XvkqoQv3uGpxUQ0Msqt47NuIWOLQVzceHJMifocb+zE0KROWxnsaiq7CqJInkgdJOm4e
-         0gLA==
-X-Forwarded-Encrypted: i=1; AJvYcCVuJnPD/QNzOBGf8Pew8HM2Z0NLprp/tWi4j0hL7qWSI0RuEtCN3O6Ko5patidp9ME7NHvM+A2Gbg5KEDXm@vger.kernel.org
-X-Gm-Message-State: AOJu0YwsvSKje6EMWqOg2BNq/yQ8CZMSIsQLPPenmk19tXvA1YW7tWCW
-	rHd/4iNS3Bb1VhHC9CKBa2oEgPkBIbQUbCaZ/pDTAmGXcGou2ic5+Ct94y9HLEk=
-X-Gm-Gg: ASbGncvyyd3XvB9keiIBG2NIKb/Ia2PjvKtn4SqWG13IV5KGu+oyAVmkkFK/k4LxZ2Q
-	rk5uLUMC9XLsJ92hr/uxcrOcOs7diSltLm3y4ihgOO/opLWNRSrl5FF+f6vrfgD0zBi2od3cCZN
-	8auftDFjh4Sm1H/C0oYAeBFyMeBXQpacmxDU5VJlJcCUMzLw9xeAMBAgu+1fh+EY9xdWS0Xqb23
-	rBi2a/W9AJ/NTTlCv1O0o9N1P1FKTyhIaYJ/kZDlAqWU3oCEiL7l5zvnVRZT9Y5Ih0D5/z3K2cY
-	0Nc+87iya9N425G8mhT9BoBbjskes8TKFRzppS4FF4iWszy/L0bxuSb1PmUezCcWEA+JUJdXaaf
-	5c9EiS8CCTg==
-X-Google-Smtp-Source: AGHT+IFbrdnI0bm3X3wXVKLHpcb20gRsAzFE7lNyp40eyc5wEc6nf7w8wnTgwtpWKtCfdc480jt9mA==
-X-Received: by 2002:a05:600c:4fd6:b0:43b:c5a3:2e1a with SMTP id 5b1f17b1804b1-43ee0616f6fmr94548555e9.2.1744041136210;
-        Mon, 07 Apr 2025 08:52:16 -0700 (PDT)
-Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ec34be2e6sm133750525e9.18.2025.04.07.08.52.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Apr 2025 08:52:15 -0700 (PDT)
-Message-ID: <ecb193d1-2bf1-4d99-b9c6-9b5cde1e936e@linaro.org>
-Date: Mon, 7 Apr 2025 16:52:14 +0100
+	 In-Reply-To:Content-Type; b=AdOHh8PjRD6c2YefU2p7I8Bwu+1eEjFKHoKaU6U9IsSq1TLWUN5V33BfjmhPmE0/8R0PkCVCQ2Lnxp5mxxHHIFbrDCQuuaTvhgL7s+DsHhmkQna+xg4LkEPrfbLCkT919rIQym0Xw35bv3/4PHQFgT+RBmu66RojFSuxKCHLe5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U87Tcvkn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1337C4CEE7;
+	Mon,  7 Apr 2025 15:59:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744041558;
+	bh=1GyAjSDlG1wgBYRaQ8zf6o0fLwSnmGQPgHb92Y351kE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=U87TcvknweLw8WVHBDI8tFeDHzDGjFfL/7YNpQa4B0ILtFjdBE6LbOff6Qw8up2KU
+	 Tv5W+RAl6B7U87U1zp4eUA+ubLjgQ3cN7kxBfCpAwaj3BztjSDw3UYswmoz+yOHZ68
+	 uNF6E1JAVZus23iUGq47KGXJil5OYH4qC0iR74ErWqPlxwfpPiTaM/6J1T78thq5oZ
+	 IXqcKRivw5nEvxZfxdogQUUeF9Ej0X4Wh9zNkhFXpFMTzOkim2DFLTWixI1+n51n60
+	 TJaZHG/PMGgTxOnIyDvGt5r/b01cgh2Tp+IUG9gwlWm4RKGzYqkDneZnLGOE3Dwu/e
+	 bEaafTh9m3jpQ==
+Message-ID: <c3284c33-4a8e-4150-b40a-05cd3af39def@kernel.org>
+Date: Mon, 7 Apr 2025 16:59:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,73 +50,148 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] media: platform: qcom/iris: add sm8650 support
-To: Neil Armstrong <neil.armstrong@linaro.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250407-topic-sm8x50-iris-v10-v3-0-63569f6d04aa@linaro.org>
- <6zCwYEsWlyaz8z8Elw573sfjWDZBB46nc0IA4Eu_-pKdy3O1WzYh2sr0jdSPRr0uBHqfgMaK3WC5d9sN6-O6cA==@protonmail.internalid>
- <20250407-topic-sm8x50-iris-v10-v3-5-63569f6d04aa@linaro.org>
+Subject: Re: [PATCH v1 1/2] media: camss: Increase the maximum frame size
+To: Luca Weiss <luca.weiss@fairphone.com>, Jordan Crouse
+ <jorcrous@amazon.com>, linux-media@vger.kernel.org
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Robert Foss
+ <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240802152435.35796-1-jorcrous@amazon.com>
+ <20240802152435.35796-2-jorcrous@amazon.com>
+ <D64PAIXELZ6A.37ZSFBIRPE6MT@fairphone.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250407-topic-sm8x50-iris-v10-v3-5-63569f6d04aa@linaro.org>
+From: Bryan O'Donoghue <bod@kernel.org>
+In-Reply-To: <D64PAIXELZ6A.37ZSFBIRPE6MT@fairphone.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 07/04/2025 16:24, Neil Armstrong wrote:
-> Add support for the SM8650 platform by re-using the SM8550
-> definitions and using the vpu33 ops.
+On 06/12/2024 14:51, Luca Weiss wrote:
+> On Fri Aug 2, 2024 at 5:24 PM CEST, Jordan Crouse wrote:
+>> Commit 35493d653a2d
+>> ("media: camss: add support for vidioc_enum_framesizes ioctl") added a
+>> maximum frame width and height but the values selected seemed to have
+>> been arbitrary. In reality the cam hardware doesn't seem to have a maximum
+>> size restriction so double up the maximum reported width and height to
+>> allow for larger frames.
+>>
+>> Also increase the maximum size checks at each point in the pipeline so
+>> the increased sizes are allowed all the way down to the sensor.
 > 
-> The SM8650/vpu33 requires more reset lines, but the H.284
+> Hi Jordan,
+> 
+> Looks like this hasn't landed yet, do you plan on resending this?
+> 
+> Just wanted to try a 8192x6144 format but csid limiting the size to 8191
+> is a bit in the way.
+> 
+> Regards
+> Luca
+> 
+>>
+>> Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
+>> ---
+>>
+>>   drivers/media/platform/qcom/camss/camss-csid.c   | 8 ++++----
+>>   drivers/media/platform/qcom/camss/camss-csiphy.c | 4 ++--
+>>   drivers/media/platform/qcom/camss/camss-ispif.c  | 4 ++--
+>>   drivers/media/platform/qcom/camss/camss-vfe.c    | 4 ++--
+>>   drivers/media/platform/qcom/camss/camss-video.c  | 6 +++---
+>>   5 files changed, 13 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+>> index 858db5d4ca75..886c42c82612 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csid.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
+>> @@ -752,8 +752,8 @@ static void csid_try_format(struct csid_device *csid,
+>>   		if (i >= csid->res->formats->nformats)
+>>   			fmt->code = MEDIA_BUS_FMT_UYVY8_1X16;
+>>   
+>> -		fmt->width = clamp_t(u32, fmt->width, 1, 8191);
+>> -		fmt->height = clamp_t(u32, fmt->height, 1, 8191);
+>> +		fmt->width = clamp_t(u32, fmt->width, 1, 16383);
+>> +		fmt->height = clamp_t(u32, fmt->height, 1, 16383);
+>>   
+>>   		fmt->field = V4L2_FIELD_NONE;
+>>   		fmt->colorspace = V4L2_COLORSPACE_SRGB;
+>> @@ -781,8 +781,8 @@ static void csid_try_format(struct csid_device *csid,
+>>   			if (i >= csid->res->formats->nformats)
+>>   				fmt->code = MEDIA_BUS_FMT_UYVY8_1X16;
+>>   
+>> -			fmt->width = clamp_t(u32, fmt->width, 1, 8191);
+>> -			fmt->height = clamp_t(u32, fmt->height, 1, 8191);
+>> +			fmt->width = clamp_t(u32, fmt->width, 1, 16383);
+>> +			fmt->height = clamp_t(u32, fmt->height, 1, 16383);
+>>   
+>>   			fmt->field = V4L2_FIELD_NONE;
+>>   		}
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+>> index 2f7361dfd461..43c35ad6ac84 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+>> @@ -368,8 +368,8 @@ static void csiphy_try_format(struct csiphy_device *csiphy,
+>>   		if (i >= csiphy->res->formats->nformats)
+>>   			fmt->code = MEDIA_BUS_FMT_UYVY8_1X16;
+>>   
+>> -		fmt->width = clamp_t(u32, fmt->width, 1, 8191);
+>> -		fmt->height = clamp_t(u32, fmt->height, 1, 8191);
+>> +		fmt->width = clamp_t(u32, fmt->width, 1, 16383);
+>> +		fmt->height = clamp_t(u32, fmt->height, 1, 16383);
+>>   
+>>   		fmt->field = V4L2_FIELD_NONE;
+>>   		fmt->colorspace = V4L2_COLORSPACE_SRGB;
+>> diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
+>> index a12dcc7ff438..01e2ded8da0b 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-ispif.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-ispif.c
+>> @@ -912,8 +912,8 @@ static void ispif_try_format(struct ispif_line *line,
+>>   		if (i >= line->nformats)
+>>   			fmt->code = MEDIA_BUS_FMT_UYVY8_1X16;
+>>   
+>> -		fmt->width = clamp_t(u32, fmt->width, 1, 8191);
+>> -		fmt->height = clamp_t(u32, fmt->height, 1, 8191);
+>> +		fmt->width = clamp_t(u32, fmt->width, 1, 16383);
+>> +		fmt->height = clamp_t(u32, fmt->height, 1, 16383);
+>>   
+>>   		fmt->field = V4L2_FIELD_NONE;
+>>   		fmt->colorspace = V4L2_COLORSPACE_SRGB;
+>> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+>> index 83c5a36d071f..826c0fb31785 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+>> @@ -1049,8 +1049,8 @@ static void vfe_try_format(struct vfe_line *line,
+>>   		if (i >= line->nformats)
+>>   			fmt->code = MEDIA_BUS_FMT_UYVY8_1X16;
+>>   
+>> -		fmt->width = clamp_t(u32, fmt->width, 1, 8191);
+>> -		fmt->height = clamp_t(u32, fmt->height, 1, 8191);
+>> +		fmt->width = clamp_t(u32, fmt->width, 1, 16383);
+>> +		fmt->height = clamp_t(u32, fmt->height, 1, 16383);
+>>   
+>>   		fmt->field = V4L2_FIELD_NONE;
+>>   		fmt->colorspace = V4L2_COLORSPACE_SRGB;
+>> diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+>> index cd72feca618c..5fee3733da8e 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-video.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-video.c
+>> @@ -19,10 +19,10 @@
+>>   #include "camss.h"
+>>   
+>>   #define CAMSS_FRAME_MIN_WIDTH		1
+>> -#define CAMSS_FRAME_MAX_WIDTH		8191
+>> +#define CAMSS_FRAME_MAX_WIDTH		16833
+>>   #define CAMSS_FRAME_MIN_HEIGHT		1
+>> -#define CAMSS_FRAME_MAX_HEIGHT_RDI	8191
+>> -#define CAMSS_FRAME_MAX_HEIGHT_PIX	4096
+>> +#define CAMSS_FRAME_MAX_HEIGHT_RDI	16833
+>> +#define CAMSS_FRAME_MAX_HEIGHT_PIX	8192
+>>   
+>>   /* -----------------------------------------------------------------------------
+>>    * Helper functions
+> 
 
-h264.
+Ping Jordan !
 
-> decoder capabilities are identical.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   .../platform/qcom/iris/iris_platform_common.h      |  1 +
->   .../platform/qcom/iris/iris_platform_sm8550.c      | 64 ++++++++++++++++++++++
->   drivers/media/platform/qcom/iris/iris_probe.c      |  4 ++
->   3 files changed, 69 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> index fdd40fd80178c4c66b37e392d07a0a62f492f108..6bc3a7975b04d612f6c89206eae95dac678695fc 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> @@ -35,6 +35,7 @@ enum pipe_type {
-> 
->   extern struct iris_platform_data sm8250_data;
->   extern struct iris_platform_data sm8550_data;
-> +extern struct iris_platform_data sm8650_data;
-> 
->   enum platform_clk_type {
->   	IRIS_AXI_CLK,
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8550.c b/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
-> index 35d278996c430f2856d0fe59586930061a271c3e..d0f8fa960d53367023e41bc5807ba3f8beae2efc 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
-> @@ -144,6 +144,10 @@ static const struct icc_info sm8550_icc_table[] = {
-> 
->   static const char * const sm8550_clk_reset_table[] = { "bus" };
-> 
-> +static const char * const sm8650_clk_reset_table[] = { "bus", "core" };
-> +
-> +static const char * const sm8650_controller_reset_table[] = { "xo" };
-
-
-At the risk of asking a stupid question, where are these resets in your 
-dts ?
-
-You're missing core here ?
-
-20250407-topic-sm8x50-upstream-iris-8550-dt-v1-1-1f7ab3083f49@linaro.org
+Will buy you beer for a v2 of this series.
 
 ---
 bod
