@@ -1,71 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-53375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0351A7DFA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 15:41:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8A42A7E01B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 15:56:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF21418916AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 13:38:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 27BC91895D3D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 13:49:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C36613A86C;
-	Mon,  7 Apr 2025 13:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E6111A3152;
+	Mon,  7 Apr 2025 13:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CAOTyETx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZX9MsYUv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2F0537F8;
-	Mon,  7 Apr 2025 13:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4043119D08F;
+	Mon,  7 Apr 2025 13:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744033023; cv=none; b=Kke0rnokAob/L6npINWrNZwPpWv2XXOXW5VlkdZhHLwLxlXAMJ6h5CrhJOs8xvjfEUtdbiTS2pwQWnh4Kk1+0QUj3TZ9B1JxVJ7h8DO6MgkenOYFx3TYpmMNms93rybrO2YxQmx3CCFrmMaTgwcDfuelhrUxAci0mBk0hzCYMSQ=
+	t=1744033737; cv=none; b=intF++s9amdQgiZZ7Mr+q51Lla8+CKmXlYMvj8CPJza0SMH8UFlFGMbb16XkbbcJgNFR5ePpb0fAWGec0pTw/O092I18tMIO9vChh61rCZ9gg1S/H3jgKoTvT+ECSwk9MqG7qiGfUuOFH3AZsMNEViVdHAcypV7Fa5kSrEDwr00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744033023; c=relaxed/simple;
-	bh=z2YPPx/huYycm4RmyXI94B1UPAuAdtuMmpycOF2eNfE=;
+	s=arc-20240116; t=1744033737; c=relaxed/simple;
+	bh=Ox7tiIkaCRawomU325EiXwPmeeSjZyj78ZsMxwmOulA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OuJNYXiwHkto7j2hKFF7HiElkTi67DFqHDsxImQ3R1rux7cTXR/lwwYPyOnlUItH+itVwe9lbTDiZRWHehxxjBbvg+Vj4QcsO2QCshVPG1RbyrgGnWglek5ED5t5h44KT1p5IfXb5fkXM25cheQo6lxd1k83ls8sG6508ZpUx70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CAOTyETx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103DEC4CEDD;
-	Mon,  7 Apr 2025 13:37:01 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=C8UFmKuDzVjMXOaRQJ+zjRcGvT3WX+DZfuR5gwOg96USjQErNf9Rk07KDTC2AaEtVYEwDrXP9PyEoSADUIbZvj0k/zyPLvphcoVJgYMA570NxM0Hw19aKI++ZJ+vps7h6gG9+8G+R+r69kzYsvJGXNGBIjismZ3sT5iucpBSh54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZX9MsYUv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992B7C4CEE7;
+	Mon,  7 Apr 2025 13:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744033022;
-	bh=z2YPPx/huYycm4RmyXI94B1UPAuAdtuMmpycOF2eNfE=;
+	s=k20201202; t=1744033736;
+	bh=Ox7tiIkaCRawomU325EiXwPmeeSjZyj78ZsMxwmOulA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CAOTyETxd6/g/MkX2N0+SDWbWzuP8ChrEt+8pQsd8Z1UN96yLAPX3mrm6rJKWgLc/
-	 GP3x7AwaHvtA0Jtsx74qQL2k+hZvMWDteDH/YB3GoICpZh4luvFSChhFJHTH/lrV20
-	 b+hXqyVtsiPwIggNMD8GmUD89BGniYLY3gCSsYq2n5lrrqmhhmW7ymG9qjFjP9yL3G
-	 /21cC3rQ6NjDx16wg2OaOfTpM7WbaY3YLdy1K6ptgw2JG8eYkTxWxNzd7W8wntLB0W
-	 4Tfy8s1qXT8M64MxdC+TayfHbH8QdysTiNhdTtVqqRFlGfQW4YpwRQqzBksqUAloUU
-	 COfTxc/kQ16Aw==
-Date: Mon, 7 Apr 2025 08:37:01 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	David Airlie <airlied@gmail.com>,
-	Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Vladimir Lypak <vladimir.lypak@gmail.com>,
-	dri-devel@lists.freedesktop.org, Simona Vetter <simona@ffwll.ch>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>, Sean Paul <sean@poorly.run>,
-	Rob Clark <robdclark@gmail.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	freedreno@lists.freedesktop.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	Thomas Zimmermann <tzimmermann@suse.de>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: msm: qcom,mdss: Document interconnect
- paths
-Message-ID: <174403302028.2068916.9679649068590207721.robh@kernel.org>
-References: <20250406-msm8953-interconnect-v1-0-a23e22e236e0@lucaweiss.eu>
- <20250406-msm8953-interconnect-v1-1-a23e22e236e0@lucaweiss.eu>
+	b=ZX9MsYUvCLd0WfNshTif2wMQJPsVnZ8FFIG7X87LnvtPDtFZ6cMZD67sMAoo+S0yB
+	 9p6BRSStrmqAd8xaXL5uGgmhk/HBMBYInq+zQrp2u+k3xaZYuu3XY1btqIWTyEhl34
+	 YpPDHlxvv21niX7Zgl2zXptLXx5LTJA7h3PhihzIf3bQzQcguuZUSKE0Hr7Yf10p6X
+	 4yDZZQC1KFRjHxIlWN1xNRudlUazsw0aZteJXsMt9niLrLrRlBCYbQi90gYWobwOQa
+	 pGdF329qlwvyTLWkt/pyDe8FycqpBCM2X9pTVj24OnizoeKVsK7/gUVFWxKSIT3GT6
+	 IIiKuuY+xTlAA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1u1mqU-000000005bW-2a1S;
+	Mon, 07 Apr 2025 15:49:03 +0200
+Date: Mon, 7 Apr 2025 15:49:02 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: camss NULL-deref on power on with 6.12-rc2
+Message-ID: <Z_PXzvL5Zt9QkivE@hovoldconsulting.com>
+References: <Zwjw6XfVWcufMlqM@hovoldconsulting.com>
+ <Z_OXELLDIfQII6wV@hovoldconsulting.com>
+ <778e2cd0-5371-424f-809d-20f7c3ae5343@linaro.org>
+ <Z_OrQGspD79k1Mg4@hovoldconsulting.com>
+ <Z_OwdYtSyFDhkYMa@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,23 +67,51 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250406-msm8953-interconnect-v1-1-a23e22e236e0@lucaweiss.eu>
+In-Reply-To: <Z_OwdYtSyFDhkYMa@hovoldconsulting.com>
 
-
-On Sun, 06 Apr 2025 22:55:03 +0200, Luca Weiss wrote:
-> Document two interconnect paths found on the MDSS on MSM8953.
+On Mon, Apr 07, 2025 at 01:01:09PM +0200, Johan Hovold wrote:
+> On Mon, Apr 07, 2025 at 12:38:56PM +0200, Johan Hovold wrote:
+> > On Mon, Apr 07, 2025 at 10:58:52AM +0100, Bryan O'Donoghue wrote:
+> > > On 07/04/2025 10:12, Johan Hovold wrote:
 > 
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-> ---
-> There's also some interconnect paths defined in the mdp5 schema, both
-> drivers accept it. Newer mdss schemas seem to prefer mdp0-mem + cpu-cfg
-> in the mdss schema instead of in the dpu subnode. Since there's no
-> cpu-cfg defined with mdp5, I've added these paths here.
-> ---
->  Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+> > > > [    5.740833] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000030
+> > 
+> > > > [    5.744704] Call trace:
+> > > > [    5.744706]  camss_find_sensor_pad+0x20/0x74 [qcom_camss] (P)
+> > > > [    5.744711]  camss_get_pixel_clock+0x18/0x64 [qcom_camss]
+> > > > [    5.744716]  vfe_get+0xb8/0x504 [qcom_camss]
+> > > > [    5.744724]  vfe_set_power+0x30/0x58 [qcom_camss]
+> > > > [    5.744731]  pipeline_pm_power_one+0x13c/0x150 [videodev]
+> > > > [    5.744745]  pipeline_pm_power.part.0+0x58/0xf4 [videodev]
+> > > > [    5.744754]  v4l2_pipeline_pm_use+0x58/0x94 [videodev]
+> > > > [    5.744762]  v4l2_pipeline_pm_get+0x14/0x20 [videodev]
+> > > > [    5.744771]  video_open+0x78/0xf4 [qcom_camss]
+> > > > [    5.744776]  v4l2_open+0x80/0x120 [videodev]
 > 
+> > I've only seen it twice myself (that I've noticed, at least this time it
+> > prevented the display from probing so I knew something was wrong).
+> 
+> Just hit this again with 6.15-rc1 after the third reboot so timing has
+> likely changed slightly which now makes it easier to hit this.
+> 
+> > Since it's obviously a race condition I think you'll need to analyse the
+> > code to try to figure out where the bug is. With an hypothesis you may
+> > be able to instrument a reliable reproducer (e.g. by adding appropriate
+> > delays to extend the race window).
+> 
+> It's apparently udev which powers up the camera when running v4l_id:
+> 
+> [    5.859741] CPU: 4 UID: 0 PID: 420 Comm: v4l_id Not tainted 6.15.0-rc1 #106 PREEMPT
+> 
+> So this looks like the classic bug of drivers registering their devices
+> before they have been fully set up.
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+It's entity->pad which is being dereferenced while NULL in
+camss_find_sensor_pad() and when this happens entity->name is also NULL.
 
+Bailing out when entity->pad is NULL allows the machine to boot, but we
+should figure out why this function is called before things have been
+properly initialised.
+ 
+Johan
 
