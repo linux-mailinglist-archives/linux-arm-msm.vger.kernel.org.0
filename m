@@ -1,127 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-53368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53369-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B61CA7DDAA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 14:30:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C0B7A7DE13
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 14:48:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AFA03189052A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 12:30:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6EAFC177731
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 12:47:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E92E4244EAB;
-	Mon,  7 Apr 2025 12:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C19062505A6;
+	Mon,  7 Apr 2025 12:47:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aSciZyyD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 780F615382E;
-	Mon,  7 Apr 2025 12:30:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41C122DFB6
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 12:47:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744029016; cv=none; b=bwgO097SaigNZQgq6q1nldw1IPapNs1p8h3BVBMbQrrme5yrERnajZ/VDQfiqF9z50yVXKFcCBBHr1hyG77rzCz6NL0fHlz0QpaL+MwC2TOhezWe/iFZ8Y/EXLlBKlLLuS7MC6aUrdxzQJZ4MCHSt7tlWSqwSxWFDJj3o1rSl4M=
+	t=1744030052; cv=none; b=eCC6WgJR7UEPM33+aqBeKmEgCsc62ag17KxaYUrWag07/RK6tNgZ/SZfo3wss3jYbAtTDj/axMrjE9R3NNX+cAC6qHyG61FHqBF7kvChIjRU7S3Yh3XWAsNEFkiUBuMW7kJphCsS0bXC/bchLBspckt2L2gHlDfTnnUwopCwxvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744029016; c=relaxed/simple;
-	bh=LCZhVuuf9dPJmAeyfXfPhtBN3F11jxmZsGmjqMucLSQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=miJLnXymFVh/yKO/R6S4jAMAuogvbzoHCBdOC77iTU8p4FrbMmUkNo3mXZJ/rY1i9l+rNfsgymj1fk4KMs6/uqmdpZXRNdi+SI4Wp3Kt6HxqOx72xp5E9OzS2Z3Q184OUEjfkHmLTFuk696ETWXrYwiCriHg85Ww/5x4c1q8M58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=arm.com; spf=none smtp.mailfrom=foss.arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=foss.arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1516F106F;
-	Mon,  7 Apr 2025 05:30:16 -0700 (PDT)
-Received: from bogus (unknown [10.57.41.33])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 100F53F694;
-	Mon,  7 Apr 2025 05:30:05 -0700 (PDT)
-Date: Mon, 7 Apr 2025 13:30:03 +0100
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: "Rob Herring (Arm)" <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-	Stephen Boyd <sboyd@kernel.org>, zhouyanjie@wanyeetech.com,
-	Conor Dooley <conor@kernel.org>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Steen Hegelund <Steen.Hegelund@microchip.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	UNGLinuxDriver@microchip.com, Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>, devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-mips@vger.kernel.org, imx@lists.linux.dev,
-	linux-rockchip@lists.infradead.org,
-	linux-amlogic@lists.infradead.org,
-	linux-renesas-soc@vger.kernel.org
-Subject: Re: [PATCH 18/19] dt-bindings: arm/cpus: Add power-domains
- constraints
-Message-ID: <20250407-aloof-fox-of-relaxation-62963a@sudeepholla>
-References: <20250403-dt-cpu-schema-v1-0-076be7171a85@kernel.org>
- <20250403-dt-cpu-schema-v1-18-076be7171a85@kernel.org>
- <CAPDyKFrFRrPVJ_t0JrAE1VTbS02hwr=L-EHtqb7CQiWzB1MnQg@mail.gmail.com>
+	s=arc-20240116; t=1744030052; c=relaxed/simple;
+	bh=CKpCxFXfa7qApafzzxoR6KgBjbUrX2COqwSWDtyCHVE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cC1LRlVYGoP7JXi7fJknRZJlzZchYq93F59Dv313z8obeBpc0AZKaN7JWwiJmWT+OlPwwzu/xu18iQBGK2ssvybuVKicmQiju4thOGa785DBYSRxcsBTj4TSeEM3hnD/Ck04+5H6V1kCqboXk3pw7sPVYpP6bnszz4yv6L5xxeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aSciZyyD; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-39c0dfad22aso2568742f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Apr 2025 05:47:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744030048; x=1744634848; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ejwa9QkM9z1qj04KEhziISr+vDareUo67q+OL7JdUHk=;
+        b=aSciZyyDPoozNKTnw1fpbN+aHBeUogyvAIGZ5J2YJ1oMbVy3555eI+CUde6s2WlRNS
+         a08L0ivVw/3oPevOpeAL7xCL2BU+bbM98rAQ/GEZGs3y6W0oom6Cr6WvhJAjdy830i6E
+         vFNaBrihZ6BJQ01wJaRlkxvvNXSXX6Oqyg9R3LbqEEuUNIb9mjaClewLLwhAnAlgLyKl
+         N4cqUMIYk0jxSAOcpRcKPlOBL32L2VGQAUVFNNIxfsNG3wfZGRpIrGJa414qzNjqObsa
+         L0LL6+sJfuRyDiES+FjbuEDPj2Iqsit8ZrE76oj5TlcYw6A/As24t8rC4IYl4M+BBN+b
+         l3Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744030048; x=1744634848;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ejwa9QkM9z1qj04KEhziISr+vDareUo67q+OL7JdUHk=;
+        b=kL8i8XbNQLeXGx7fSh+SJVVqvUHt9lzI7ZwF88gBX7r9HlRq3SPd2wcN6ecltZfmUa
+         e3HvTXTRSyBZBxQ/s8rh0PherdE+Ioihtu5qI5w3H1Oe7fz4qPGQBndYtghWA1RB/S/D
+         6DPRO7/IBYpavJEkvZFfKp7BZHLJzy0kB9eUL+WIacb5QwM5l9/oNgp3wghDJo1w9A/W
+         IR3hOBNOQVxMOKvW1H0VDkFxmoHZ45uQqoVHysOECgviNxRI8zy6jtaiy/Nygh6cdKzp
+         CG4w4sI3qjr0sebe2aypmXgRviuOmll/3BboXRYJozDQfhrZaOqjImvyh0lBQXBwqwpi
+         kISA==
+X-Forwarded-Encrypted: i=1; AJvYcCVfz6AdSqZXFytT6DUINL30pNevoZpMhrrV3FVIkPWdnmT7qL3LqaOYHrVZRMc6cpMNwrWnbwsqu4N+z5Jb@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxsu+UlB6bh7MYMaSr6GUyoT628ekDkJ627KSlARLqKqdNY36zX
+	M6TiPwqN7kGzNztRmUVQuUy/RTrcXscoqzPDhXgM6LEfVrrO7w5mekTzDOHhUq4cY2rwSL7uj6n
+	mjrbLoX16+695FFCE2jcIaDdgPjJZH/64pqtHxw==
+X-Gm-Gg: ASbGncsudEHHHZrRKDfLRJli9Kboqi5zzfR2YXjNfxJOHchBS43NqGjf5kT8rgXf+Nh
+	KARbG2z2JDctfdZjNPMrdaDBVFow781at2nX+MvkaISYgcwcvGX4C1PEbA36B6slMkKdzhVH+My
+	Im6hcaLFtMPO84uqwVYYQQL0xwx83PRAIA9MVeTEwnidro2TVgqhln6C5Wa74=
+X-Google-Smtp-Source: AGHT+IFtCtwBF1MQCSDv8kWR7+AawPBQWSSLTfZPWX6BoSv/E8BAZBB3w0TBcGKEjHI82f9K8I8unuvtiL9GOlAqfvI=
+X-Received: by 2002:a05:6000:18a9:b0:39c:1401:679c with SMTP id
+ ffacd0b85a97d-39cb35bda0dmr9467438f8f.21.1744030048103; Mon, 07 Apr 2025
+ 05:47:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFrFRrPVJ_t0JrAE1VTbS02hwr=L-EHtqb7CQiWzB1MnQg@mail.gmail.com>
+References: <20250407104828.3833-1-johan+linaro@kernel.org>
+In-Reply-To: <20250407104828.3833-1-johan+linaro@kernel.org>
+From: Christopher Obbard <christopher.obbard@linaro.org>
+Date: Mon, 7 Apr 2025 13:47:17 +0100
+X-Gm-Features: ATxdqUHIKA4eGZ6sfftXvlzn5wf-8Cqh7uYF6-LkB4PNWkNHORpRrjxLgKXBxFo
+Message-ID: <CACr-zFBAUrjRZ2s7oMO+7Qjk5X4zvdNb-9zYapTsuSqikm73zA@mail.gmail.com>
+Subject: Re: [PATCH v2] media: qcom: camss: vfe: suppress VFE version log spam
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Hans Verkuil <hverkuil@xs4all.nl>, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Depeng Shao <quic_depengs@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Apr 04, 2025 at 12:36:33PM +0200, Ulf Hansson wrote:
-> On Fri, 4 Apr 2025 at 05:06, Rob Herring (Arm) <robh@kernel.org> wrote:
-> >
-> > The "power-domains" and "power-domains-names" properties are missing any
-> > constraints. Add the constraints and drop the generic descriptions.
-> >
-> > Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> > ---
-> >  Documentation/devicetree/bindings/arm/cpus.yaml | 8 ++------
-> >  1 file changed, 2 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > index 6f74ebfd38df..5bd5822db8af 100644
-> > --- a/Documentation/devicetree/bindings/arm/cpus.yaml
-> > +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > @@ -313,19 +313,15 @@ properties:
-> >      maxItems: 1
-> >
-> >    power-domains:
-> > -    description:
-> > -      List of phandles and PM domain specifiers, as defined by bindings of the
-> > -      PM domain provider (see also ../power_domain.txt).
-> > +    maxItems: 1
-> 
-> There are more than one in some cases. The most is probably three, I think.
+Hi Johan,
+
+On Mon, 7 Apr 2025 at 11:49, Johan Hovold <johan+linaro@kernel.org> wrote:
 >
+> A recent commit refactored the printing of the VFE hardware version, but
+> (without it being mentioned) also changed the log level from debug to
+> info.
+>
+> This results in several hundred lines of repeated log spam during boot
+> and use, for example, on the Lenovo ThinkPad X13s:
+>
+>         qcom-camss ac5a000.camss: VFE:1 HW Version = 1.2.2
+>         qcom-camss ac5a000.camss: VFE:0 HW Version = 1.2.2
+>         qcom-camss ac5a000.camss: VFE:2 HW Version = 1.2.2
+>         qcom-camss ac5a000.camss: VFE:2 HW Version = 1.2.2
+>         qcom-camss ac5a000.camss: VFE:3 HW Version = 1.2.2
+>         qcom-camss ac5a000.camss: VFE:5 HW Version = 1.3.0
+>         qcom-camss ac5a000.camss: VFE:6 HW Version = 1.3.0
+>         qcom-camss ac5a000.camss: VFE:4 HW Version = 1.3.0
+>         qcom-camss ac5a000.camss: VFE:5 HW Version = 1.3.0
+>         qcom-camss ac5a000.camss: VFE:6 HW Version = 1.3.0
+>         qcom-camss ac5a000.camss: VFE:7 HW Version = 1.3.0
+>         qcom-camss ac5a000.camss: VFE:7 HW Version = 1.3.0
+>         qcom-camss ac5a000.camss: VFE:7 HW Version = 1.3.0
+>         ...
+>
+> Suppress the version logging by demoting to debug level again.
+>
+> Fixes: 10693fed125d ("media: qcom: camss: vfe: Move common code into vfe core")
+> Cc: Depeng Shao <quic_depengs@quicinc.com>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-+1, there are users using "perf" and "psci" together now.
+This makes my T14s a bit more peaceful during boot. Very welcome change:
 
--- 
-Regards,
-Sudeep
+Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
+Reviewed-by: Christopher Obbard <christopher.obbard@linaro.org>
+
+> ---
+>
+> Changes in v2:
+>  - align continuation line to open parenthesis as instructed by the
+>    media patchwork hooks
+>
+>
+>  drivers/media/platform/qcom/camss/camss-vfe.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index cf0e8f5c004a..91bc0cb7781e 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -428,8 +428,8 @@ u32 vfe_hw_version(struct vfe_device *vfe)
+>         u32 rev = (hw_version >> HW_VERSION_REVISION) & 0xFFF;
+>         u32 step = (hw_version >> HW_VERSION_STEPPING) & 0xFFFF;
+>
+> -       dev_info(vfe->camss->dev, "VFE:%d HW Version = %u.%u.%u\n",
+> -                vfe->id, gen, rev, step);
+> +       dev_dbg(vfe->camss->dev, "VFE:%d HW Version = %u.%u.%u\n",
+> +               vfe->id, gen, rev, step);
+>
+>         return hw_version;
+>  }
+> --
+> 2.49.0
+>
+>
 
