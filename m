@@ -1,139 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-53371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D870A7DE28
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 14:50:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B0FFA7DE72
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 15:04:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6DBDF1893B5D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 12:49:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1846E188B050
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 13:03:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC1E724EA9B;
-	Mon,  7 Apr 2025 12:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A28B92512C6;
+	Mon,  7 Apr 2025 13:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qK15qn+4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s9Qg/bNE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CA224888D;
-	Mon,  7 Apr 2025 12:49:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6450722DF8D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 13:03:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744030162; cv=none; b=rBIcdq3FZyRiY2cntIolExl5MmQjiEczOu9aOhwMcFBv43jLl6hR0TP9hdBRzLyPS6UKnODueLeCmJ5VxQaE5Tc5mHEyWgu05rHWuFrUg+9NB5L7Tyl2XauPATAIo3GyJPT5/79dYzeUN7Sh9qNYOrjniSc8ooYeCz54VVz0GzM=
+	t=1744031019; cv=none; b=QhsaFPcxQ2wlJLu2u8K1JO7BEDhHbn0TgfaFOP+j8soFYYXCuM/qKSuYY8h5A2qiBZ1vLdyWa9bCxpcSfFJ8NxTDdYHjiEB+NUaIEVjvF4RemZTlDvm+XyHWpERhqhH2BNu8clnuRTM4lxj2ecHXcHXhGy9/sS9Cp4XtW6Qme7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744030162; c=relaxed/simple;
-	bh=+B7zKeUdb4vhO3I+2ufYAN6NeJofvMlAuG64Ted7aW4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=baNs5PO/pZgXFLU8VFb1Ef4qPRX47S2VwwzpKCKncyuPKHZKLaSpbGvfzfvuUifz72ox0/WrNK9ZFJ8w5Di7BKiPSYFqZ0dSNa1sK9Yn7GkxXDfMXRl58H0UapMki+hAjJ0AjbkjcGYiaDAut1/bhs0UFtTCT2S6TYjhnbKiYPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qK15qn+4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915FBC4CEF3;
-	Mon,  7 Apr 2025 12:49:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744030162;
-	bh=+B7zKeUdb4vhO3I+2ufYAN6NeJofvMlAuG64Ted7aW4=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=qK15qn+4XDBux6uFbNeNhwEi2hTl9qrQlhxa+iPQu3pfCNYk0TGSpt6kV7em1bTJM
-	 vUljZeXsRzR7Jj8NuzkMZTYi/9u3Yh2lORMvrA2WvRMeyyoBzIohPTgjigRudqmNPN
-	 WCmBlDx+nk5sKJyfK9ktF0xU8btt+NV60wmriw/nmO6i89bCszDcDKQbX7pX1j6TC0
-	 Xd/3FGyHAth4HgZCQUn37Zqh6wg+Ro8M103g9aum/kNYd1KAOExeFkxcGRv+EeHVZ3
-	 0RBql7KPbo+Oc3mCIikCkfjSG2W2lDAgrpUCmM33RaND4LwR3y6IonYd3dKod/jNWr
-	 FKe526FHkDDIA==
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-aaecf50578eso694862266b.2;
-        Mon, 07 Apr 2025 05:49:22 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCU/qKQw6RNCFaZk9vtB6ZqHQx72sFrPat3RMBElSgAdR3sAaXHajezRSTOm5C+HdCxzff7Oj50cSstlf6KgN85LB5M=@vger.kernel.org, AJvYcCUbGZGLeVhhuYQayEE+YYxV+/A6T93w+BFmVwJzKKDEKJgJTVlG3ThwMuXiMHrw4ILltyl1PLj9plwxw09V8w==@vger.kernel.org, AJvYcCVZlj3c41QNNOPXQGcbSTHDjcISgpBK1ad9JASV1e8kLshMv2G4f14ZeXzTO2PSBY0KTQ+jZr/Bnig=@vger.kernel.org, AJvYcCVkoXNZI4C9Nu1HRKFmI3VSSDgjOXHznQuysWuSneY4Fo/pUIuzJQMsPcLHIawW3k1N7qsBTq2T/gCoSw==@vger.kernel.org, AJvYcCX1oML6q5iGI8a88sRAP+7kSx3UftJHpou6Qio9Dga6KXkBto9ETjRPuIIAhviOMgp6bqn/fp9ZRRFUdaHW@vger.kernel.org, AJvYcCXBu35nCMFofo17fU+eE9IiDFldYrnFPEcvlpxgfrZ77QtBb2byHawe6C1S+NeNCqT2KFgUE+8AvlHJ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+0ZCi7Su+ce0Yz1INh3SW9BV3pFz5Eru4yFvJG7jYAg3EhnDy
-	0JqxEEbD+UzXPyOyuJ2YLo+FehX/duJM/BbyVOok2YEotxWvlBHLcM/ecEbpiznSnVPlWD13IZp
-	6d+kpKccae6bsnhhr1Dn4MX8JIw==
-X-Google-Smtp-Source: AGHT+IHDXKnPQLm3ONu11Ll77borMYreC4A7vgRQSv5YVZin37244aX9wUO7LUzP2WcSyOBSKvvGgd7SCFS9hjbiqWA=
-X-Received: by 2002:a17:907:7f0f:b0:ac7:3323:cfdc with SMTP id
- a640c23a62f3a-ac7e7120321mr823783266b.10.1744030161025; Mon, 07 Apr 2025
- 05:49:21 -0700 (PDT)
+	s=arc-20240116; t=1744031019; c=relaxed/simple;
+	bh=wpl/vPTJcLkrNzhp1xfRr6rd+jBzkVczwVjNbI+aCoA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ZuFzwZkq4bMKm2umfCUVFCb0QogSGsAM9HLFR+lt1rSCJrsTFpkePdUyJQayPVkOZ9Oak0vrKuHfcDlTK8N4AnjIQy3KAtq4JYy501CG0rspniK/TYOVOkMC0Aph/dzk+CkwSYzH7nQS792eBRQqavXqcRxddiuVfL+CojhrvpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s9Qg/bNE; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43cfe574976so29426865e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Apr 2025 06:03:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744031015; x=1744635815; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nSsCIjvR/DpqlZr0dy0a5YzR+QYHTqH+auQ/wAPHhtA=;
+        b=s9Qg/bNEC1zsYHUP7WTkNbEyjWTFjmO3PhdNFGkrF6aWyg86zC1VmP82bRN4P6p8+0
+         141XYcjeOjSI+h/6i2B1mHiq6ckV4s3d6W5xPMjCLe4T96kZcfVk40BzhtbcvWVei7Mb
+         rakpH85gSfmNNQwHTSq9BCBlhQulGFBKfDxO9ZfxHTHsx597xKu0cR+UNRskcvDFP4+p
+         HR1Pdf10eG4mPFGd0dVtXUTaw6RSfGjKDDJXAHVyYl0LcG7u56J/Kwd1BwaNYUMOZyzT
+         a8UHNJDlknqtWOD0xz3iH9EdnlBAR9/oiRo7KWgm4ErUCPjbaQn4U+l0yRoC0fWXmmCX
+         SmXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744031015; x=1744635815;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nSsCIjvR/DpqlZr0dy0a5YzR+QYHTqH+auQ/wAPHhtA=;
+        b=IXuT0chDDsDQPfUjuu49yu2PbyEkSnauwvYHVO5lt5RAC85a8Etqa5a4Dq/cex1jgW
+         x/F3leDe59yHnhP60BjdLkSfSCDfYFf4Hej90lp4yhmsyonPGq1jYzWCmJzdgPXuEZ13
+         47IbkalO9kt8x7akY6cndt54IzMBDKche0NyFo7lz+Tws1fnwmPLIe9WPxtCMemU+/Wo
+         fQDD6UssnF0PxoGNacr5/qcbdU+i4GuGQ7c6/v41t3g+jaGDV0fYB8yTigwY4LY+w+rV
+         4QY5mwzRYhaJ2Pu0sWkM6UyCNVB4ttEGhxqQAFEcI2TveM3ebPu9tcz2IkUNXMIh5Mgr
+         YN5w==
+X-Gm-Message-State: AOJu0YyFuYa17oO/NoRFXSv/IB0lAMHSZzMMFG/5I80Q/vEoBWRPgg7N
+	jK3BhTy6LaWgQdXaYK1pgPpGDr+9lXpxp9boiIxtPICVBknFQ2PiqZRglmY20yM=
+X-Gm-Gg: ASbGncuvJ3DSzT+2NoMJJnBRr7KO1i7pNd7Dqz19PUB/kPn8q9OApU7xvmL1YEysmol
+	9ZrdELC6nFQU81briyiRE6ASFinTDkbZN8mv9VfRQpS+ROnAEx6e8JpFD6quFLHim6nEQwLGSG6
+	foiGI+QdOxiFrMzUxi3aC+nSdLzKwfKaPpDz/1PcxqyolNtabFEL5VwGZxsXUzAdkiUmOQ1mfMm
+	bYZWt0NQN9YJWBQfn0VERqulcGC32VKiqfFKlJZM2pVu+9hazqdbkR7HM1bnuyJiwSdUT3HvuR0
+	uFhNjfbNYaxJr26HgmLeAYnybRxEbxbCBCCBrqWM11HuOr1XEJOv7A/lQvJRpwNEd+FcrFEUpYp
+	p
+X-Google-Smtp-Source: AGHT+IFZFK3wlUpqJmXsUYZAFYQdGzjNd2OpaoMVWxUm3lsHacq8ir6Y2bAW4zwcoS+f8h+LqzPWpg==
+X-Received: by 2002:a05:600c:4f0e:b0:43b:c0fa:f9dd with SMTP id 5b1f17b1804b1-43ecf9c3224mr92276095e9.25.1744031014549;
+        Mon, 07 Apr 2025 06:03:34 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ec36691b3sm131378805e9.34.2025.04.07.06.03.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Apr 2025 06:03:33 -0700 (PDT)
+From: neil.armstrong@linaro.org
+Date: Mon, 07 Apr 2025 15:03:33 +0200
+Subject: [PATCH] arm64: dts: qcom: sm8550: add iris DT node
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250403-dt-cpu-schema-v1-0-076be7171a85@kernel.org>
- <20250403-dt-cpu-schema-v1-18-076be7171a85@kernel.org> <CAPDyKFrFRrPVJ_t0JrAE1VTbS02hwr=L-EHtqb7CQiWzB1MnQg@mail.gmail.com>
- <20250407-aloof-fox-of-relaxation-62963a@sudeepholla>
-In-Reply-To: <20250407-aloof-fox-of-relaxation-62963a@sudeepholla>
-From: Rob Herring <robh@kernel.org>
-Date: Mon, 7 Apr 2025 07:49:09 -0500
-X-Gmail-Original-Message-ID: <CAL_Jsq+6GG3j3_S94SYLwdGN7x8fjf5WuGL4uHfmgW-fFb=dKQ@mail.gmail.com>
-X-Gm-Features: ATxdqUG97FKlHBXmze0JeAjms2C3uLqc9HHI86LZOz8ldRdp0AMtBpiWM_qROsw
-Message-ID: <CAL_Jsq+6GG3j3_S94SYLwdGN7x8fjf5WuGL4uHfmgW-fFb=dKQ@mail.gmail.com>
-Subject: Re: [PATCH 18/19] dt-bindings: arm/cpus: Add power-domains constraints
-To: Sudeep Holla <sudeep.holla@arm.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Chen-Yu Tsai <wens@csie.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Vincenzo Frascino <vincenzo.frascino@arm.com>, Liviu Dudau <liviu.dudau@arm.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Thomas Bogendoerfer <tsbogend@alpha.franken.de>, 
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, 
-	zhouyanjie@wanyeetech.com, Conor Dooley <conor@kernel.org>, 
-	Nicolas Ferre <nicolas.ferre@microchip.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
-	Steen Hegelund <Steen.Hegelund@microchip.com>, Daniel Machon <daniel.machon@microchip.com>, 
-	UNGLinuxDriver@microchip.com, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
-	Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-mips@vger.kernel.org, 
-	imx@lists.linux.dev, linux-rockchip@lists.infradead.org, 
-	linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250407-topic-sm8x50-upstream-iris-8550-dt-v1-1-1f7ab3083f49@linaro.org>
+X-B4-Tracking: v=1; b=H4sIACTN82cC/x2Nuw6DMAwAfwV5xlIaEpryKxUDD0M9AJGdIiTEv
+ xMx3g13JygJk0JTnCC0s/K2ZniVBQy/bp0JecwM1lhvnHlj2iIPqEs4vMF/1CTULcjCisFnNSa
+ 0wdW9+1RUews5FIUmPp7Jt72uGxxmO3l0AAAA
+X-Change-ID: 20250407-topic-sm8x50-upstream-iris-8550-dt-2846b493e652
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Dikshita Agarwal <quic_dikshita@quicinc.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2896;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=l3nK4t1N1vFrdEqqSpqgF3jrixKbP18uRVCFWMPfPcM=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBn880lawvXbf94lmICeZiwP1vz1AnoHVwVXBSiW5KJ
+ pejden2JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ/PNJQAKCRB33NvayMhJ0RwDD/
+ 9FsCB7SMM2Gf2eXR6KHOzE6Cw8f7vmaM2JSjzmPcXiw/KIJNhQszWBmjC9JvhI33+FUOLPG21Oj0eU
+ 0+wpslo+x8AchcY+onkXEXsp5hQCxpab49dPF3MYtjmgTcqejcYSj3XjQ593jmCYxoVs4chyJsZN1N
+ MtddWUTq5/lX281sjKwpnX/t/j4jlTKY3aCNxN9OScc1K0Um0xxEWG4O7L8r/Aqd9bEg6fniYsnOis
+ qHqVlNz5l2XzT5+b2ZrToIR71AWWmuQrKKLcs75EwWr+UrZjhMeH0TqrrbI9RG9QkM4SoBgvrM6vIS
+ aB0k0mdYZfkVWrYfwFzM9J95k9TfMn//wYVNwPxe+O98xHiT3O3QHy5ydS9lLXrOGUVwFSwa74zXyE
+ ic0PrXrsEDcbwZPkFMEckP5KWBXGf5b3TNF0EYY6RJ39ZUn3J/cTx8ep7CyJrIu0xkS17RyexgCQH/
+ 2HtMU88UM0i7tzZbM+KaRTXDPslk7z9Qz+6GHdLuAXlIs3qh0W8w3mipmtJt29Q1WcdBKmSpSoaNUe
+ V/cLUch7CiCNmOcgI2QPQaeclrukQ/AG18EqJz7IDqnur9m7q61AjNYoi6U+QCbDwBtskMr5wsbeLn
+ XAaRUqLhPTGTFOEdz5XRS3DA8gj4yQfWJbwQtXZyLtg5UEW9MuJq3Odtj+8Q==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On Mon, Apr 7, 2025 at 7:30=E2=80=AFAM Sudeep Holla <sudeep.holla@arm.com> =
-wrote:
->
-> On Fri, Apr 04, 2025 at 12:36:33PM +0200, Ulf Hansson wrote:
-> > On Fri, 4 Apr 2025 at 05:06, Rob Herring (Arm) <robh@kernel.org> wrote:
-> > >
-> > > The "power-domains" and "power-domains-names" properties are missing =
-any
-> > > constraints. Add the constraints and drop the generic descriptions.
-> > >
-> > > Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> > > ---
-> > >  Documentation/devicetree/bindings/arm/cpus.yaml | 8 ++------
-> > >  1 file changed, 2 insertions(+), 6 deletions(-)
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Docume=
-ntation/devicetree/bindings/arm/cpus.yaml
-> > > index 6f74ebfd38df..5bd5822db8af 100644
-> > > --- a/Documentation/devicetree/bindings/arm/cpus.yaml
-> > > +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > > @@ -313,19 +313,15 @@ properties:
-> > >      maxItems: 1
-> > >
-> > >    power-domains:
-> > > -    description:
-> > > -      List of phandles and PM domain specifiers, as defined by bindi=
-ngs of the
-> > > -      PM domain provider (see also ../power_domain.txt).
-> > > +    maxItems: 1
-> >
-> > There are more than one in some cases. The most is probably three, I th=
-ink.
-> >
->
-> +1, there are users using "perf" and "psci" together now.
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-Where? That's just wrong.
+Add DT entries for the sm8550 iris decoder.
 
-Rob
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 69 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 69 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index f78d5292c5dd5ec88c8deb0ca6e5078511ac52b7..ab49329a435d87107a4ff20cb7b9eeacbaf63247 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -3220,6 +3220,75 @@ opp-202000000 {
+ 			};
+ 		};
+ 
++		iris: video-codec@aa00000 {
++			compatible = "qcom,sm8550-iris";
++
++			reg = <0 0x0aa00000 0 0xf0000>;
++			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
++
++			power-domains = <&videocc VIDEO_CC_MVS0C_GDSC>,
++					<&videocc VIDEO_CC_MVS0_GDSC>,
++					<&rpmhpd RPMHPD_MXC>,
++					<&rpmhpd RPMHPD_MMCX>;
++			power-domain-names = "venus", "vcodec0", "mxc", "mmcx";
++			operating-points-v2 = <&iris_opp_table>;
++
++			clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
++				 <&videocc VIDEO_CC_MVS0C_CLK>,
++				 <&videocc VIDEO_CC_MVS0_CLK>;
++			clock-names = "iface", "core", "vcodec0_core";
++
++			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
++					 &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
++					<&mmss_noc MASTER_VIDEO QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
++			interconnect-names = "cpu-cfg", "video-mem";
++
++			/* FW load region */
++			memory-region = <&video_mem>;
++
++			resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>;
++			reset-names = "bus";
++
++			iommus = <&apps_smmu 0x1940 0x0000>,
++				 <&apps_smmu 0x1947 0x0000>;
++			dma-coherent;
++
++			iris_opp_table: opp-table {
++				compatible = "operating-points-v2";
++
++				opp-240000000 {
++					opp-hz = /bits/ 64 <240000000>;
++					required-opps = <&rpmhpd_opp_svs>,
++							<&rpmhpd_opp_low_svs>;
++				};
++
++				opp-338000000 {
++					opp-hz = /bits/ 64 <338000000>;
++					required-opps = <&rpmhpd_opp_svs>,
++							<&rpmhpd_opp_svs>;
++				};
++
++				opp-366000000 {
++					opp-hz = /bits/ 64 <366000000>;
++					required-opps = <&rpmhpd_opp_svs_l1>,
++							<&rpmhpd_opp_svs_l1>;
++				};
++
++				opp-444000000 {
++					opp-hz = /bits/ 64 <444000000>;
++					required-opps = <&rpmhpd_opp_turbo>,
++							<&rpmhpd_opp_turbo>;
++				};
++
++				opp-533333334 {
++					opp-hz = /bits/ 64 <533333334>;
++					required-opps = <&rpmhpd_opp_turbo_l1>,
++							<&rpmhpd_opp_turbo_l1>;
++				};
++			};
++		};
++
+ 		videocc: clock-controller@aaf0000 {
+ 			compatible = "qcom,sm8550-videocc";
+ 			reg = <0 0x0aaf0000 0 0x10000>;
+
+---
+base-commit: 2bdde620f7f2bff2ff1cb7dc166859eaa0c78a7c
+change-id: 20250407-topic-sm8x50-upstream-iris-8550-dt-2846b493e652
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
