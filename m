@@ -1,82 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-53334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9577AA7D5ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 09:31:50 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C032A7D5C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 09:29:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CC4673BB2F5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 07:25:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A2D567A788C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 07:28:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4248222B8A2;
-	Mon,  7 Apr 2025 07:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F03222F147;
+	Mon,  7 Apr 2025 07:22:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vSENOmfC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R58rYfQ1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6182822A4E4
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 07:21:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A676D22F388
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 07:22:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744010484; cv=none; b=JSHtUFz8UXVQBfuTWLwBKUPl1enzd08aHjaWGztrXPHBJHLDy/cNN+Coh39ONEJH6m94ht3NsomFje6M71KKVmjSQvkuuz2t9WMaI7FV8rR9VDBVM/huYxB5A7F/rrCzssOueX8d2RvAsHqLzkri7KsiPwd3/jn4Y8Tnf2eXpEI=
+	t=1744010565; cv=none; b=RrLbV66Ct8NcQVgZUXlzGXtgxCJffgi+oEhtCyRPrH7b4hmhzwlLrslAsre0bngeTQHVhsKyIiOpmNoTfpkZxf8mCrF7N3Pwy9Z2opvVwVhh0wpqjYzZrnYFBGyphMjcR+sNKrM2dOmsAlTlR2dK6i71cjDxYRsmJ7IL29a5xOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744010484; c=relaxed/simple;
-	bh=/F/iBzjj16HR5A1tU/0Iqh0+C6+AwZaA15eTTFZRf+Q=;
+	s=arc-20240116; t=1744010565; c=relaxed/simple;
+	bh=73YjE4Mhwi0WBQCbMudtvvzxBf2NPJrusHjOYzLngE4=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=PK8SN+re+SbnrFmHtRwhohKdM1jl11N78ioIqNuVqIAL12vYrH32nRL+u1HfFRuaY8nscGyS6jJZJjXzHm96+Y4o40fut5XRJ3V0JXsfbHDl4lRf/xyaV11hhI6wVY2dib0fZrpdhh9UMISqvRL146D+CcvxbQWZDWce5K7Dr3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vSENOmfC; arc=none smtp.client-ip=209.85.128.47
+	 In-Reply-To:Content-Type; b=S/aHGEVa3lRdDIbCNUIC4kkb3z1JbAM7NX4BF/9vKERK7ux3ay2GwDLor3nJK6HktEYAgNVA2LsFHYZIgnxNknGA9dO5CH0hm3/t4fnb6uL/htQHosidNYJVbYJFl9V24tK905uQ35WrMXn8kdpTyvJ6/QYOrXOHGGr+h6w4/RY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=R58rYfQ1; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43d04dc73b7so44932055e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Apr 2025 00:21:22 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43cf257158fso26855605e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Apr 2025 00:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744010481; x=1744615281; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1744010562; x=1744615362; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=MPzcXHfwhTdJf1G6SrL4mmAYOzD/PgqXyH9Vw5LY4tI=;
-        b=vSENOmfCIvh+7wAIvBberLDCOLdppjpMMnI53wSCNAXAym6V6wGWOm3zVLadGBvfnt
-         vg5TVxaZvgmSkm+wRqtP0wHaskqoCgflLeMR3IaYtuYfAPhmCAMuUXWEYanqe2eFbTY0
-         CfHiroY2uvrdvONpwxEQDlmjqfV5WQKh97v0IK/hWjkd8aD1E0/ZZsSlIIDiK+sJcvEE
-         nu2QP7xMYa0C5LPy0Dz0yP/OiwG0UeRNnQcUfXh7NI/YfRVdaXmpDBAp2hbQGKyAuNBE
-         /AG5WyPqBr5dQnhIhkD1ALZ6h3wmViA9b5pmXv2U9HvGuuURoxwMnVE8bpA2d4iXO1DY
-         ckAA==
+        bh=JuGZUnSASk10lNE/9ifp4v0eahsXlHOvwT8MRApN0Og=;
+        b=R58rYfQ1+hkDL455DkI7Y3U66jSD4z4UcLpJ930NuCaHkUlfKLTrBH3EtUmHBei4C0
+         /05xSRBUnDHqi2yNse/b3P8ztq3IKU9Y+8GYYZf5UsQP5xJuAGiH66ZRtDzzN/TocHmX
+         v3b5oJCEMCt2Y+McMQV3oT0vE9U7ADqiP76oiGVRtKCtwUBSUqCYkh/XOHwjjJikfNLc
+         EqvUrCzQA53YkSAaTfQLgLBhmoo6/VF6XN+Yizp6L81KUkLqRYsVpKBqoUbDP95JTQu0
+         RD0cGC9ZcxQ9jnNmcryVWHO8j0cBGKqhejLvODu0O037Jd9g2nhD3J8y7ECZ8oxoL+RV
+         TOqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744010481; x=1744615281;
+        d=1e100.net; s=20230601; t=1744010562; x=1744615362;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=MPzcXHfwhTdJf1G6SrL4mmAYOzD/PgqXyH9Vw5LY4tI=;
-        b=qH+qrOTyI6EVzBXd/X6XMs+62MPYbE7K6VyvblF+sM2p9EiquHrUqnXV5swBHGLBpk
-         mdAVLnTCD5ZVpra8E0BehQpTwB1OX2iSXAk5jb05S2e9JdJXYfdKUqusEb9KCIH5Lg8q
-         Ar7deYIE9Br+zG8Uqa7m17R80EEAkwraJdLP1PRCtv7ooL1CsY9FmqTPjSPb7HIUCrX+
-         xQ8XkkKK/EKCTV+kD9xYDQs46w5Oyh5bwo4qLGbkh5I+CHbqTiPgT+yew592NzZ4c/UL
-         ZuugeuIESt3HNhMx5cFSEFSHlLN0KVMuv/iR0WKC4VLTGsCDA6tYWkOWnba21DePe6b3
-         p44A==
-X-Gm-Message-State: AOJu0YxNEllD6AxL8ip7f5lbtyQXYuHw1nhpXOsgNjg74ZyOhUw/Nrxa
-	VvGUpuEQZWK6ZouxRWavj9GwvQ+KV5VQCcT5zvcR4LMHTcv8r78XSVsT4mdsRvhyCr4aeajq04j
-	Y
-X-Gm-Gg: ASbGnctI+Wg/1PbHMHtysME0+6UHuNi6PbYTl5VTPkCLDnL1CIIvq6D/HAw9iXP1BXY
-	wnJC1scEkk7viL6z5CXQaAACequVoWoQlEwQH7Z2XwB0yayZd91Tx8C87W64J7pTIl0pMK3Uqij
-	8DY1hF4HUtKCjwGh0w4l0tMbwgkue+WIVB4UkIIe0eSVVrgu7BgbAcxpD19tN+olFgSFJDVxr0X
-	krDkRbXGV0zhxndf1voyodyk21m+9s88ZQ/5hj6AVYJAof/dh3jniodb8JCiklNAgAo8RD28C6t
-	ji9W1SfKH+GuXhUBQH/Jipr+RsOI63sKXid40wN2eljDLYsDwBllfa1WFWfiH2JIBrPEAA1rlSL
-	poblPjv1VwoExNAgakUdaEQ==
-X-Google-Smtp-Source: AGHT+IFJ3CMu84fXDTqeLnCZf0ZAv7p6xftmF7goGvJ/KQTlLSUGGhXyq2rtRBXb/kV7Ak897AXDFg==
-X-Received: by 2002:a05:600c:3b08:b0:43c:fb5b:84d8 with SMTP id 5b1f17b1804b1-43ed0c50883mr87435595e9.16.1744010480636;
-        Mon, 07 Apr 2025 00:21:20 -0700 (PDT)
+        bh=JuGZUnSASk10lNE/9ifp4v0eahsXlHOvwT8MRApN0Og=;
+        b=niFCJ8QDKLvkiVbjboSxg1YeRUzrAKjv7vWEY/Kusc/P0Y4w9BqmwzYoJh2KIKOMNY
+         3ojstdYmRvqaJ1C3poD1y//rYwfNAMtOeLgiN3MkFDpNmCGpzSsdiwfFq205dX4+CwVG
+         nrF149Co0NSknczBOmcpsaXxN5mWZW1goFwboVY9Z0OFwQk2doDZM+Lp3yFxaQ9eY2/x
+         X/ugUE34iTX8P1wt7ewYTU5bvb3XhCs1/Ov9OJvGqAiUpsuVtuMleLGzEuBeuBBIuwwX
+         QN3ww+x3q4CvSVjv69oIqQhqayOva2Ajkt9U75ahvpMxrKM2jzEARoF4ztOrguRAo/D5
+         dEvg==
+X-Gm-Message-State: AOJu0YyLcqngfjOSzzk4SO5xKDXYPNFIilNkZZ0yx+s/oTmpXQPzI6q+
+	kYZCIxI8Me1iOjtBwFFM0TGl/jceJ4G9xp147pb32QkYzMaJvFCQWa6VW4Y7E4E=
+X-Gm-Gg: ASbGncsOJRqheQBBh7l2dJCLqO46RZ06BWODUfsrkfb88A707k8pchDQA+A4WxxJDzE
+	GR67gx1p2VH5CvGOZCeCdDsv8cBHucio3Pn04SToZYirlTOP+ly1qkULl4DRhxnWh8em2fIjHFW
+	hnhRUcz7l9Oa+6tQsbPOHYmHwfPDLxnYGL1TMEeffr5SM6yV+CWdSi7oPVwJbCvDO63crz5wqHA
+	nMAwvmAiB1OWxRoiKfEnGJMHMvfOnXtCVsKwhP3FCAQsX0lNVqWnwv4qBP4/EFJZtfkn0KK5hdA
+	VNY+kIpAfELbhVZkmzA7kTOrM74g48I2tWgGVtdDr9RX/7IXgPm3fXc6XvmyN/p0w3KvjiMGlOj
+	oirJpr7dHFYq5iKWbAyikaQ==
+X-Google-Smtp-Source: AGHT+IGpA9PaiK6p4H62d6eljIWg3SGWCwAKEJi8YPHrwmXIK87FySy7IShnB6R6GLTtXuuKMtPpxA==
+X-Received: by 2002:a05:600c:35c8:b0:43c:f513:9591 with SMTP id 5b1f17b1804b1-43ecf86b406mr99142655e9.14.1744010561890;
+        Mon, 07 Apr 2025 00:22:41 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:3d9:2080:f2a4:b974:cba3:a605? ([2a01:e0a:3d9:2080:f2a4:b974:cba3:a605])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ec36699e0sm120966035e9.35.2025.04.07.00.21.20
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ea9a346e3sm109314875e9.1.2025.04.07.00.22.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Apr 2025 00:21:20 -0700 (PDT)
-Message-ID: <3ab630f4-8b1e-46ea-a8c6-a2878cfff78b@linaro.org>
-Date: Mon, 7 Apr 2025 09:21:19 +0200
+        Mon, 07 Apr 2025 00:22:41 -0700 (PDT)
+Message-ID: <58471b67-98ab-4452-8508-d6276d47695e@linaro.org>
+Date: Mon, 7 Apr 2025 09:22:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,14 +85,30 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: add the missing l2 cache node
-To: Pengyu Luo <mitltlatltl@gmail.com>, Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250405105529.309711-1-mitltlatltl@gmail.com>
+Subject: Re: [PATCH v2 2/6] phy: qcom-qmp-ufs: Add PHY Configuration support
+ for sm8750
+To: Nitin Rawat <quic_nitirawa@quicinc.com>,
+ Melody Olvera <quic_molvera@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+ Bart Van Assche <bvanassche@acm.org>, Bjorn Andersson
+ <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-scsi@vger.kernel.org, Manish Pandey <quic_mapa@quicinc.com>,
+ Linux regressions mailing list <regressions@lists.linux.dev>
+References: <20250310-sm8750_ufs_master-v2-0-0dfdd6823161@quicinc.com>
+ <20250310-sm8750_ufs_master-v2-2-0dfdd6823161@quicinc.com>
+ <1526d8a4-9606-4fb3-bb86-79bd8eb8a789@linaro.org>
+ <430ed11c-0490-45be-897b-27cad9682371@quicinc.com>
+ <731f1ad1-8979-49a1-b168-56e24b94f4fb@linaro.org>
+ <7b08c860-e5f1-4665-8e5e-2a6a3e26a2fa@quicinc.com>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -120,47 +135,134 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20250405105529.309711-1-mitltlatltl@gmail.com>
+In-Reply-To: <7b08c860-e5f1-4665-8e5e-2a6a3e26a2fa@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 05/04/2025 12:55, Pengyu Luo wrote:
-> Only two little a520s share the same L2, every a720 has their own L2
-> cache.
-> 
-> Fixes: d2350377997f ("arm64: dts: qcom: add initial SM8650 dtsi")
-> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-> ---
->   arch/arm64/boot/dts/qcom/sm8650.dtsi | 9 ++++++++-
->   1 file changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index a2b3d97ab..f47f29ec8 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -187,7 +187,7 @@ cpu3: cpu@300 {
->   			power-domain-names = "psci";
->   
->   			enable-method = "psci";
-> -			next-level-cache = <&l2_200>;
-> +			next-level-cache = <&l2_300>;
->   			capacity-dmips-mhz = <1792>;
->   			dynamic-power-coefficient = <238>;
->   
-> @@ -203,6 +203,13 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
->   					 &epss_l3 SLAVE_EPSS_L3_SHARED>;
->   
->   			#cooling-cells = <2>;
-> +
-> +			l2_300: l2-cache {
-> +				compatible = "cache";
-> +				cache-level = <2>;
-> +				cache-unified;
-> +				next-level-cache = <&l3_0>;
-> +			};
->   		};
->   
->   		cpu4: cpu@400 {
+Hi,
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+On 25/03/2025 08:37, Nitin Rawat wrote:
+> 
+> 
+> On 3/25/2025 1:04 PM, neil.armstrong@linaro.org wrote:
+>> Hi,
+>>
+>> On 25/03/2025 04:12, Nitin Rawat wrote:
+>>>
+>>>
+>>> On 3/24/2025 11:40 PM, Neil Armstrong wrote:
+>>>> Hi,
+>>>>
+>>>> On 10/03/2025 22:12, Melody Olvera wrote:
+>>>>> From: Nitin Rawat <quic_nitirawa@quicinc.com>
+>>>>>
+>>>>> Add SM8750 specific register layout and table configs. The serdes
+>>>>> TX RX register offset has changed for SM8750 and hence keep UFS
+>>>>> specific serdes offsets in a dedicated header file.
+>>>>>
+>>>>> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>>> Co-developed-by: Manish Pandey <quic_mapa@quicinc.com>
+>>>>> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+>>>>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+>>>>> ---
+>>>>>   drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h |   7 +
+>>>>>   .../qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v7.h    |  67 ++++++++
+>>>>>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            | 180 +++++++++ ++ +++++++++-
+>>>>>   3 files changed, 246 insertions(+), 8 deletions(-)
+>>>>>
+>>>>
+>>>> <snip>
+>>>>
+>>>> This change breaks UFS on the SM8550-HDK:
+>>>>
+>>>> [    7.418161] qcom-qmp-ufs-phy 1d80000.phy: phy initialization timed-out
+>>>> [    7.427021] phy phy-1d80000.phy.0: phy poweron failed --> -110
+>>>> [    7.493514] ufshcd-qcom 1d84000.ufshc: Enabling the controller failed
+>>>> ...
+>>>
+>>> Hi Neil,
+>>>
+>>> Thanks for testing and reporting.
+>>> I did tested this patch on SM8750 MTP, SM8750 QRD, SM8650 MTP, SM8550 MTP and SM8850 QRD all of these have rate B and hence no issue.
+>>>
+>>> Unfortunately only SM8550 HDK platform which UFS4.0 and RateA couldn't get tested. As we know SM8550 with gear 5 only support rate A.
+>>>
+>>> I was applying rate B setting without checking for mode type. Since
+>>> SM8550 is only platform which support only rate A with UFS4.0 . Hence
+>>> this could be the issue.
+>>>
+>>> Meanwhile can you help test at your end with below change and let me if it resolves for you. I will also try at my end to test as well.
+>>>
+>>> =============================================================================
+>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/ qualcomm/phy-qcom-qmp-ufs.c
+>>> index 45b3b792696e..b33e2e2b5014 100644
+>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>>> @@ -1754,7 +1754,8 @@ static void qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg
+>>>                  qmp_ufs_init_all(qmp, &cfg->tbls_hs_overlay[i]);
+>>>          }
+>>>
+>>> -       qmp_ufs_init_all(qmp, &cfg->tbls_hs_b);
+>>> +       if (qmp->mode == PHY_MODE_UFS_HS_B)
+>>> +               qmp_ufs_init_all(qmp, &cfg->tbls_hs_b);
+>>>   }
+>>>
+>>> =================================================================================
+>>
+>> With this change the UFS works again.
+> 
+> Thanks Neil for quick revert. I'll raise the official change.
+
+Any news of a fix here ?
+
+Thanks,
+Neil
+
+> 
+> Regards,
+> nitin
+> 
+>>
+>> Thanks,
+>> Neil
+>>
+>>>
+>>>
+>>> Thanks,
+>>> Nitin
+>>>
+>>>>
+>>>> GIT bisect points to:
+>>>> b02cc9a176793b207e959701af1ec26222093b05 is the first bad commit
+>>>> Author: Nitin Rawat <quic_nitirawa@quicinc.com>
+>>>> Date:   Mon Mar 10 14:12:30 2025 -0700
+>>>>
+>>>>      phy: qcom-qmp-ufs: Add PHY Configuration support for sm8750
+>>>>
+>>>> bisect log:
+>>>> git bisect start 'ff7f9b199e3f' 'v6.14-rc1'
+>>>> git bisect good 36c18c562846300d4e59f1a65008800b787f4fe4
+>>>> git bisect good 85cf0293c3a75726e7bc54d3efdc5dc783debc07
+>>>> git bisect good b2cd73e18cec75f917d14b9188f82a2fdef64ebe
+>>>> git bisect bad b247639d33ad16ea76797268fd0eef08d8027dfd
+>>>> git bisect good 9b3f2dfdad1cc0ab90a0fa371c8cbee08b2446e3
+>>>> git bisect bad 8dc30c3e4cf8c4e370cf08bd09eb87b0deccd3de
+>>>> git bisect bad 100aeb03a437f30300894091627e4406605ee3cb
+>>>> git bisect bad b2a1a2ae7818c9d8da12bf7b1983c8b9f5fb712b
+>>>> git bisect good 8f831f272b4c89aa13b45bd010c2c18ad97a3f1b
+>>>> git bisect good e45cc62c23428eefbae18a9b4d88d10749741bdd
+>>>> git bisect bad ebf198f17b5ac967db6256f4083bbcbdcc2a3100
+>>>> git bisect good 12185bc38f7667b1d895b2165a8a47335a4cf31b
+>>>> git bisect bad e46e59b77a9e6f322ef1ad08a8874211f389cf47
+>>>> git bisect bad b02cc9a176793b207e959701af1ec26222093b05
+>>>>
+>>>> CI run: https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba- tester/-/jobs/229880#L1281
+>>>>
+>>>> #regzbot introduced: b02cc9a17679
+>>>>
+>>>> Neil
+>>>
+>>
+> 
+
 
