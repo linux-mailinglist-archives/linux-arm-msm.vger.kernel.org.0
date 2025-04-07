@@ -1,167 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-53354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A99CA7DAD9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 12:15:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AC21A7DAE1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 12:17:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DDEA3189131B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 10:16:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B75A174AF1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 10:17:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEAB4227E82;
-	Mon,  7 Apr 2025 10:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58C3B231A36;
+	Mon,  7 Apr 2025 10:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="drjT/U5b"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TLzVVEaJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA3D2E628;
-	Mon,  7 Apr 2025 10:15:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB10227B95
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 10:17:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744020946; cv=none; b=JnPWYkJVS4mVBZ93H61A92N+PLr9J/Pabh08yuUKsbPSUR3Bf6BrfngDCGXXolcO2ooPC4g4s+bp2PcX/Mbw1oKgshXp8AJw50ow9TpxsxIPE9b64d603uz8E62zujJ0ssg6SrlgGP6g49S2zWX1EO3R+uFalQ64rtUuSqmCux8=
+	t=1744021031; cv=none; b=c1wXrzMEqaWj9EFKNtfI7/VejOp8WFQfgStt/UCJ3rtaWoG/yVuIrlgNNs9BGYzfvvoizyTRbHu/iMCsLgpurZ6ebUClWTuRH4GLEyuemJ8jFnvo8O8A3rOXhNQwWAOmddh3lmB5m204suRRwjgyCRUIuGozR+sGWFWIVCemJ0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744020946; c=relaxed/simple;
-	bh=9eS9ezE6nh3MaPNTOipDBVMFwr7xraog6zifkWPaG7Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=oQgMjEVSvh2CnNVftkGqdm+Jaz3bRPrjsTjaFvjkFVyDSWhh9FmRY5/O3S8o5Bn04kLXocliNDmK23dviI194GOhwCW7bREFsn//P64nCtjZUKp3LuR8Pe8ojxIpmu+p+HQq1Je3VECtSnuxiYTACYLGrv1HvfhxQ+ojTEZ67ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=drjT/U5b; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5378dkMn022387;
-	Mon, 7 Apr 2025 10:15:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cC7dQ/4Rpl+FzxIxIIoDZjdcvC0HIZnYG6XWQRhxNQM=; b=drjT/U5bgEZiythJ
-	T6Zea4PTqEsPwW4sCnbXGTiwAaJI6hGY+BeN6ggqyh/yEu8w2/OPe91S3Ra3Kx8Q
-	QKFdoDl3+XDhOE0XWDEkEySzl+K+pSuUUK6WSLEbFNFsoxFPHr7JpTx/pHd28LGb
-	MzFbU7L+p3MQpmK/9v6tXVBPl1yllhbha+2tVxKT4zbwIENVOE2lnCng7wjACRKs
-	BfIiVxLYrJOz9qVSMKcMEnYVXgWp6pu7JWWsQ3kG3wggW94NhEFr9CW+5eI6jXJo
-	K0tSxKMZ25/O0LOAzwbqc5t3PxV05rQje0vRVnNTg38KsTrThAnRrdI5GYx+JGYC
-	jrj7yg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twcrbvug-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 07 Apr 2025 10:15:39 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 537AFcU2019519
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 7 Apr 2025 10:15:38 GMT
-Received: from [10.64.69.186] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 7 Apr 2025
- 03:15:36 -0700
-Message-ID: <84fd283a-ca87-4689-8955-855f7275d6d1@quicinc.com>
-Date: Mon, 7 Apr 2025 18:15:18 +0800
+	s=arc-20240116; t=1744021031; c=relaxed/simple;
+	bh=7LcrE9PwjMxM+D3p0ZWZWb1pO8745bswAP5vgVdnDak=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=iuZ/u7y7CHXk+fCMz9jQPHgtMl/Er0th0RXZ3vM3pRl7Kf4S4QbmNW+hLZ0RIkSFaAJ6ZFpAnMBwTCwH02VHWkxwyCo2JQEp6fkkaF1Mti4a0iOhcTm8rEQp9hFnRCKAUluBqOGM9Ih4DWvhy8kf1fS48/a7olCFOTUWoZLe2hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TLzVVEaJ; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3995ff6b066so2181876f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Apr 2025 03:17:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744021026; x=1744625826; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jOALBW8cVNbdK6yJWB3znuwD8zL8Vv3OQVACGyCjItQ=;
+        b=TLzVVEaJ9dx5xyfEreiAUyEfli4lzO8J5ljn+/mLEhJu6JMMO6IZ2biqKgnx6B6cf/
+         FLnMRH7rPuSORg0RroX4tOhDInf4xXRhbFp+ON5NDYZwEgjAg3zttXPpDydlPBscAmDr
+         ybKSg0igoXR5e3zyLDc7NLAMEYJKh+EKqkG5Gp/P51tHYaiQ3L/luuv6AIsLmw39As1y
+         Fazy3gdzbIK4UdKUf8jsOA1t+2WkVd1tWcV/mQoRx1hvsWKapDabXUrvGoWmPLXGOHHy
+         DlfnHnOMLrXm9DdTp7IOg1x5hy8fOtD1r3vctonyDW3m0wkMgTD8FTCnLvR5f/v16dak
+         Itxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744021026; x=1744625826;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jOALBW8cVNbdK6yJWB3znuwD8zL8Vv3OQVACGyCjItQ=;
+        b=OstYq6QQRpCLY3rqzj8RFIF5gwvcEuu2ggbamHZpB5hLmzPTznljeo/GU+l0TZ9+qz
+         y+K+RblyP9iqFJdR1iXRuMau24UMAUVOu9At2x3LIEN1svV8MMknE815gpxMEenyFC4N
+         1xMQcFV4CZgqIxZ/8ZfaqPSysBoa37p5EnpocwkFZ3yHIUr3fkxRrIiIvw6HChq3TiaQ
+         Nfjj5qk6UBmYjI1P7yP9wXTIy5U4neAt39Tdc3C/eJVZN1KSBKJ6CqUDeFh5pYR0ymKB
+         JOKHIIsIy8AwphvYjfhTFV8NhdtPfigTOOFyhjtU6tUIbB6z9i+ERGkJbqPbSRH3PU6q
+         ND0g==
+X-Forwarded-Encrypted: i=1; AJvYcCUcNe8dMI2dOCJ8HVMvx7rO2QO9JUEeRxkMtpHENSR9WWkV/nWzSad0dPtkCOCf+Vkbds46d+uSYDSWkABb@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywx/z39dflYeIhc9yimh3/AEiTx9RUV/S5AheXFyw/65qzRmRA9
+	pfNYCcHqapLt1b1LG6dU50NL1mgm0eF+Pw+0+20xRFgEm1VCp0lmKIgMRB/bU7s=
+X-Gm-Gg: ASbGncsK7+3nGnORdM3hn9jChXBvZbYQzgyiekZTtjyhcMMICz2DkdEpCRn65U3HNjx
+	No5jWASmImakSno3oCv5KgeHQSzKCCIjXQMASaU6NwQTjewre2xjpraSXt15KxKLgCE4tFxfeoC
+	ucdjRoixwROT8JeBNDi3xz2m1OzGF7jo6/2GRsxzzXnz6+kNQnGRnvwOPgWM/rd641W5XQMlb9K
+	spya4NCZzpB9oZOZ3zoWSpV+8cAqBAVdJQkyZUUAPoMox3aXlau99d9dJv71lBHoT37ixyhDpgL
+	kT9J9e0bbZL3wvGQ0d/ZqY/bqqVhh1uZPjRohFQFGx6cqOqTI5PE6Y9LdTGegn8OvQ==
+X-Google-Smtp-Source: AGHT+IEOTdDrswC+bFQxvJR3r92l4tdMlGA69d9j7tDpjaVWhpTf9J82Z0r72AKsbAAQfXkVTzAl0w==
+X-Received: by 2002:a5d:64ce:0:b0:39c:1257:c7a2 with SMTP id ffacd0b85a97d-39cba93d0aemr9456431f8f.58.1744021026472;
+        Mon, 07 Apr 2025 03:17:06 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c301a67a1sm11476831f8f.24.2025.04.07.03.17.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Apr 2025 03:17:06 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH RFT v3 0/3] ufs: core: cleanup and threaded irq handler
+Date: Mon, 07 Apr 2025 12:17:02 +0200
+Message-Id: <20250407-topic-ufs-use-threaded-irq-v3-0-08bee980f71e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] media: qcom: camss: Add sa8775p camss TPG support
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Robert Foss
-	<rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20250211-sa8775p_tpg-v1-0-3f76c5f8431f@quicinc.com>
- <012b0381-a5d1-49bc-aa59-aae0d35aa034@linaro.org>
-Content-Language: en-US
-From: Wenmeng Liu <quic_wenmliu@quicinc.com>
-In-Reply-To: <012b0381-a5d1-49bc-aa59-aae0d35aa034@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: oHsdj4GrodkDQnrDNYRqnzt2c2VBHhz8
-X-Authority-Analysis: v=2.4 cv=QuVe3Uyd c=1 sm=1 tr=0 ts=67f3a5cc cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=yDHa7VgQrPWfl1kdwn4A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: oHsdj4GrodkDQnrDNYRqnzt2c2VBHhz8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-07_03,2025-04-03_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- spamscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501
- clxscore=1011 phishscore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504070073
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAB6m82cC/43NTQ6CMBAF4KuQrh3THwvoypUHMO6MiwJTmMRQb
+ KHREO5uw0o3xuWbN/nezAJ6wsAO2cw8Rgrk+hTUJmN1Z/oWgZqUmeRScyUFjG6gGiYbYAoIY+f
+ RNNgA+QdoZaziVmq5tywBg0dLzxW/svPpwm7p2FEYnX+tg1Gs1T92FCCgMFqXIje7SjTHO/XGu
+ 63z7epG+WnlPy0JHIpKYWnSb4H5l7Usyxtkx+U1FgEAAA==
+X-Change-ID: 20250321-topic-ufs-use-threaded-irq-53af30f2529f
+To: Alim Akhtar <alim.akhtar@samsung.com>, 
+ Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2023;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=7LcrE9PwjMxM+D3p0ZWZWb1pO8745bswAP5vgVdnDak=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBn86YgoDLSti2lmmUtACENDXd6NyTizG7mG9a0B2Mf
+ Z74YodqJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ/OmIAAKCRB33NvayMhJ0YGnEA
+ CrNUiuXHhHUDtvqQlIMfsIZiHsCjOIeQh9iv43GFFtv0aHYfAVEIn91buuRhQDPdg1MegIa/SI74wg
+ 4SfNcenuMRFex8vt6T8qRqdis8WgwJkTCcm8Gb8/txeec7uTe53lMx7+yQn5BbuOfthDX9pMUeF4go
+ M11QCtlXflTSO7EtdCGU8fzcdMtuyl7aev5MhnZNlk3YxujS4FA8V3JnqQn2IshdsX4HY1gfXzbJGA
+ YBUsGvWBaEc7c+40FUAcdq5IcbB6i6GyAQnFTjTlhAjWm3PSJyIh91wh8xWa4FXgW1qLJkOsdNGdL3
+ H42SzVlVocCg94nQHklY3iOgRtNAO9kCrB3aBzfRSBoeieNXAdF048+tPstIM8vROF1aax3zNLfR6Y
+ hRzRWMYr9ICmdFUHRXOfUyo5O0JV2T+qa83ZTfSvDFPt0PfptUYdE9FNxnH3MxrZARve01HJcwGQk9
+ XcIroSnKLtYLXeI//x3rYbW1XfuwbMMSLfoy/FjvBU30gqGBC6cvvzeu/6b7Skw/3DCoQNp0+qYEKw
+ qV8RyK3+DvUQReM4JOFHhz7hJN1LDOehPFbVkOzNuF7gGh1yKlYbhUbLmKirEa57/RSV6H1dYJUN3o
+ jgppfYpkgiLQVEdg26OeHjeOgxXhlOqIMgksVaXXrBbrMhouNTIQESPsRs1Q==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On 2025/2/11 18:19, Bryan O'Donoghue wrote:
-> On 11/02/2025 10:07, Wenmeng Liu wrote:
->> SA8775P is a Qualcomm SoC. This series adds driver changes to
->> bring up the TPG interfaces in SA8775P.
->>
->> We have tested this on qcs9100-ride board with 'Test Pattern Generator'.
->> Unlike CSID TPG, this TPG can be seen as a combination of CSIPHY and 
->> sensor.
->>
->> Tested with following commands:
->> - media-ctl --reset
->> - v4l2-ctl -d /dev/v4l-subdev0 -c test_pattern=0
->> - media-ctl -V '"msm_tpg0":0[fmt:SRGGB10/4608x2592 field:none]'
->> - media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4608x2592 field:none]'
->> - media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4608x2592 field:none]'
->> - media-ctl -l '"msm_tpg0":1->"msm_csid0":0[1]'
->> - media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
->> - v4l2-ctl -d /dev/v4l-subdev0 -c test_pattern=9
->> - yavta -B capture-mplane -n 5 -f SRGGB10P -s 4608x2592 /dev/video0
->>    --capture=7
->>
->> Used following tools for the sanity check of these changes.
->>
->> - make -j32 W=1
->> - ./scripts/checkpatch.pl
->>
->> ---
->> This patch series depends on patch series:
->> https://lore.kernel.org/linux-media/20250210162843.609337-1-quic_vikramsa@quicinc.com/
->> ---
->>
->> ---
->> Wenmeng Liu (3):
->>        media: qcom: camss: Add support for TPG common
->>        media: qcom: camss: Add link support for TPG common
->>        media: qcom: camss: tpg: Add TPG support for SA8775P
->>
->>   drivers/media/platform/qcom/camss/Makefile         |   2 +
->>   drivers/media/platform/qcom/camss/camss-csid-690.c |  15 +
->>   drivers/media/platform/qcom/camss/camss-csid.c     |  44 +-
->>   drivers/media/platform/qcom/camss/camss-tpg-gen1.c | 245 +++++++
->>   drivers/media/platform/qcom/camss/camss-tpg.c      | 737 
->> +++++++++++++++++++++
->>   drivers/media/platform/qcom/camss/camss-tpg.h      | 130 ++++
->>   drivers/media/platform/qcom/camss/camss.c          | 113 ++++
->>   drivers/media/platform/qcom/camss/camss.h          |   5 +
->>   8 files changed, 1282 insertions(+), 9 deletions(-)
->> ---
->> base-commit: c1696380f08cf7cc68560a11f2e8c51cb24aa7ba
->> change-id: 20250211-sa8775p_tpg-7de227a82eb4
->>
->> Best regards,
-> 
-> Great to see this work.
-> 
-> I think the TPG should be another type of PHY.
-> 
-> ---
-> bod
+On systems with a large number request slots and unavailable MCQ,
+the current design of the interrupt handler can delay handling of
+other subsystems interrupts causing display artifacts, GPU stalls
+or system firmware requests timeouts.
 
-Hi bryan,
+Example of errors reported on a loaded system:
+ [drm:dpu_encoder_frame_done_timeout:2706] [dpu error]enc32 frame done timeout
+ msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.20.1: hangcheck detected gpu lockup rb 2!
+ msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.20.1:     completed fence: 74285
+ msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.20.1:     submitted fence: 74286
+ Error sending AMC RPMH requests (-110)
 
-Do you mean to handle TPG like CSIPHY and embed it into the CSIPHY driver?
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v3:
+- reword patch 1 commit message, add review tag
+- add intermediate patch to track the ESI state
+- use the ESI state instead of ufshcd_is_intr_aggr_allowed()
+- reword commit message to explain why in mcq + esi mode we bypass threaded irq
+- Link to v2: https://lore.kernel.org/r/20250326-topic-ufs-use-threaded-irq-v2-0-7b3e8a5037e6@linaro.org
 
-thanks
-Wenmeng
+Changes in v2:
+- Removed last_intr_status/last_intr_ts stats
+- Handle irq in prinmary handler for MCQ case
+- Stop touching REG_INTERRUPT_ENABLE register
+- Link to v1: https://lore.kernel.org/r/20250321-topic-ufs-use-threaded-irq-v1-1-7a55816a4b1d@linaro.org
+
+---
+Neil Armstrong (3):
+      ufs: core: drop last_intr_status/ts stats
+      ufs: core: track when MCQ ESI is enabled
+      ufs: core: delegate the interrupt service routine to a threaded irq handler
+
+ drivers/ufs/core/ufshcd.c | 42 +++++++++++++++++++++++++++++++-----------
+ include/ufs/ufshcd.h      |  7 ++-----
+ 2 files changed, 33 insertions(+), 16 deletions(-)
+---
+base-commit: ff7f9b199e3f4cc7d61df5a9a26a7cbb5c1492e6
+change-id: 20250321-topic-ufs-use-threaded-irq-53af30f2529f
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
