@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-53448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B811A7EACA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 20:40:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17AD4A7EB36
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 20:48:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F2FF189001E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 18:39:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B225A42041E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 18:41:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AA1B269820;
-	Mon,  7 Apr 2025 18:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 772B826A0F9;
+	Mon,  7 Apr 2025 18:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xe7fLD4t"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i7CGsB8A"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C5C269817;
-	Mon,  7 Apr 2025 18:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C3426A0F3;
+	Mon,  7 Apr 2025 18:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744049713; cv=none; b=kH+yymOjw07T9feFVskUZs1oVvQS5MDsvgU39YRiwjIBv815PTDP1qJBK2x2tSa4B94nMIAgeWko/M2XsU0X2nP3piG2zk/FZOcYrLH2O17+kDrbaezXOi9Lq2XrmOuRRapzumRfCFDDTPbCg7piwqQ6x5erczfzClqDYlZJYhY=
+	t=1744049734; cv=none; b=LP3/ctETp0m+eNqUYQN15Szc5c1zNJGblNvvvMwYWDyHBJmuuKq4WhNYUBCE4XZ+c3IvnNUrhfjlix1BUw1iT61BvOLQgF9uWFIAuwD2gSF3F61C3XDP8Oj2n0m2QRA5qVkVcKw3KXhU14x14cqiNJ1Elh/dn/1oLv2zFuD8gY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744049713; c=relaxed/simple;
-	bh=QNsoeK8DnciAtuDtVld6p1u5T3ejqruwhCx/D5HmAkc=;
+	s=arc-20240116; t=1744049734; c=relaxed/simple;
+	bh=sqc5/LjtNOxZgdBk9s26ZhlVm1GA5zz7VLoJBbNOe+o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Uttr/r1SO0Rg5cXRK1HbrK/j1mvKJXflx6T+r8wCUF/3b0V1OZXe7swUbAEPaFf8DtxJ8rsZGs3ralKJM81t0cibmXTOSAk7uD4stRPH2rlNPxGuafwZBx6yDhds72I0EXlFLHxOBgNrcmcQKZ0xcf1R88GSOgPgGbyI06FucGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xe7fLD4t; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBD4C4CEE9;
-	Mon,  7 Apr 2025 18:15:11 +0000 (UTC)
+	 MIME-Version; b=lhYPdjXgv91mRxqB0t/dOUULocRRro+vRFnJFiyfY++aS+68fBicz2S/rbLGsDEVk88ge9sFqWxl8wbMAi3R3cUPRIYnoaYticAmkjO+N/FSBodDGHacA5Qx2DolfgHQK6Iphc8glRAXVGqApoDGZoLjEfFye5KUbqBhgRZ88n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i7CGsB8A; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76231C4CEE7;
+	Mon,  7 Apr 2025 18:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744049712;
-	bh=QNsoeK8DnciAtuDtVld6p1u5T3ejqruwhCx/D5HmAkc=;
+	s=k20201202; t=1744049734;
+	bh=sqc5/LjtNOxZgdBk9s26ZhlVm1GA5zz7VLoJBbNOe+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xe7fLD4tBC+5nVLwmmW7ue+gQjhfsHHtwWIUwHEUM9OI7pKA5ul2dD2hmKcItIfOF
-	 W34XMPEFScjzCwfs+pYkLx3pTx++1opfR1P+Pqkc1xEGN4rlFaZI5SMwu1bRu6gGh1
-	 EzQtxBGweAHQAU70/XQwMLYH6J654qf33GvXLBkeZfpsCUZQyabKxMe2JTv/q+pu9Z
-	 5tmRL7ph3rtj4uOseC0uVcJ8pa+FrfmHRM8Q5mBeRGv5ThB5VVD8qcK7Fj68rD1hxo
-	 4/eJmbs1NE6YhFyJf4ziqAbo5KXxoJy8ofVFAIuxvSwsP8igey9IjLLxLxacGGqLM+
-	 xbftN+mrSa4Ng==
+	b=i7CGsB8A4KB68k2Y1DbyFXkYenDTncdoVwDmGHWKBkDs89PLQz7OqsAo5iWi1RQHI
+	 SZMuGBmqOqM9idsVfIc8yCrilrLPTa3V74JChgz7YdmVIITLATCCeWmcom7hkdqYDa
+	 JU541W1b/g9JZYdl9SFZUOpG47b8IqczmFiBF2/hl4P1z/P0xxjDHXcWaQhFCIB6ZL
+	 ttFwrDNINMDS+QMA+YM2ZtSw7xKDOF/VmXiDosQdWD6Iu6xUNfYoHwrU2d6fNNNgWc
+	 xr7UF9e/VYzKraRaHIkmSW5sNxf9KEim+/mCzgbEhr/S+vNVo8Fg2HwOwpx4Vi2WoJ
+	 DIRWfZ/cY9nwg==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -58,12 +58,12 @@ Cc: Josh Poimboeuf <jpoimboe@kernel.org>,
 	linux-sound@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.1 12/13] objtool, ASoC: codecs: wcd934x: Remove potential undefined behavior in wcd934x_slim_irq_handler()
-Date: Mon,  7 Apr 2025 14:14:46 -0400
-Message-Id: <20250407181449.3183687-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 8/8] objtool, ASoC: codecs: wcd934x: Remove potential undefined behavior in wcd934x_slim_irq_handler()
+Date: Mon,  7 Apr 2025 14:15:14 -0400
+Message-Id: <20250407181516.3183864-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250407181449.3183687-1-sashal@kernel.org>
-References: <20250407181449.3183687-1-sashal@kernel.org>
+In-Reply-To: <20250407181516.3183864-1-sashal@kernel.org>
+References: <20250407181516.3183864-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,7 +72,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.1.133
+X-stable-base: Linux 5.15.179
 Content-Transfer-Encoding: 8bit
 
 From: Josh Poimboeuf <jpoimboe@kernel.org>
@@ -112,7 +112,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/sound/soc/codecs/wcd934x.c b/sound/soc/codecs/wcd934x.c
-index 0b5999c819db9..04c50f9acda18 100644
+index 94ffd2ba29aef..765ac2a3e9638 100644
 --- a/sound/soc/codecs/wcd934x.c
 +++ b/sound/soc/codecs/wcd934x.c
 @@ -2281,7 +2281,7 @@ static irqreturn_t wcd934x_slim_irq_handler(int irq, void *data)
