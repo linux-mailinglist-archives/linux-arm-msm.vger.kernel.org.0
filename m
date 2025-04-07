@@ -1,359 +1,358 @@
-Return-Path: <linux-arm-msm+bounces-53413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E36B7A7E29D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 16:52:01 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4590A7E2CD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 16:57:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 976D442352F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 14:34:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 54F7F7A5275
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Apr 2025 14:56:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81C51205AB1;
-	Mon,  7 Apr 2025 14:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E0111F873D;
+	Mon,  7 Apr 2025 14:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="lM7vJvKv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J7i/Y59h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69AF204F7C;
-	Mon,  7 Apr 2025 14:25:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83841F8676
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Apr 2025 14:55:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744035944; cv=none; b=k7TdAVhocH8m/lVj/EfKTviPNiaSJc6O4+pj3F8dpXd8pCriQ8FEZI6sNVnIPLVl+Ge7oqc0Y6uGe9+Hv9etVhFYbaLJqjpDk/VCT9CR+dcFADJ+AajzrYEOCvReFWzwMtOgf62PeDN6jytDp+NinYJihe7Pb4sVb51YW5CD+gg=
+	t=1744037729; cv=none; b=OauQ/y3lOgPUZF8kq+ZF+iuGuek98rX9jJHLW8qOfYQsH8vNMeF6wzie6ZWB9SqiHpW14nB0CnSRSn+NLQoEcW7m19lVFfPnT+34RK2hSD9Y/q+IRkhYjVklO8vaoY78lDzHJa2nsw+Yf2yb4Fd58hm/7Y3QrfyQgZYPiDpk290=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744035944; c=relaxed/simple;
-	bh=rbzilaqVuyHoMPv7ZhAr8kUXXPHqxFNlXlBe7MkiJCw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mbjvx5RzPAuR0FAw0GieZUaKkDXSBQs2D1COxQOaPwyYHDArLgoFMLIhWXxT75i73yX+yxgjjbuusMw3hApO2Pz3NiPDLKprMgYgTWGbfaiV220LVyMh0bO25SP1RV7Oxtsl85jYAdVS3ddDnJjyk2Sxi6/WTzp4/knvdWCv1VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=lM7vJvKv; arc=none smtp.client-ip=217.70.183.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 1AB77442B9;
-	Mon,  7 Apr 2025 14:25:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1744035940;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ebgCpKb0JBnNyBzMJIKOLuwJd1meFjjT61fyzD63fBQ=;
-	b=lM7vJvKvBKYwHDIqNg9m3hu0vb4jPOkECMiAsXsESARSvZnpOjIAjGzvaM/5i+nq9n2SBO
-	YtBRrm574LAiOzMnAO9HrNMZCkEiSROPGlWsfHDWPfz7V3XlGeVEkBKILnpY1GccdFEMi8
-	sRYEC1xRJvmvyR14c6t/p5Qf/OjP2RRZLItT+jnl8JtWHtkU+g+ofusmSAsKDsQwH4/BCi
-	a7nm6y0DFtMvOvar/IHOpkQaeTruncyAbMr4BIib0lywGqvCIiy+subPgADw/GmsCc1woM
-	oXvYIgNRYfImNH0cyIFRsSap2efDKkLC44W4+1kLi78zA+IKX+2yFUMWLh2W3g==
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Date: Mon, 07 Apr 2025 16:23:46 +0200
-Subject: [PATCH 31/34] drm/bridge: imx8*-ldb: convert to
- devm_drm_bridge_alloc() API
+	s=arc-20240116; t=1744037729; c=relaxed/simple;
+	bh=E9qbrxGdm0fqahKIKbgt5AwMhqrhHXdpe/uu8rggp0c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=g20JyjKoceO7w233w1J0EBPc/v9SSZBDsTqkojsJzyawXQWO20ntSflrUQmhD7KlCoQVCP8/9MkMuFOp4z5lhxvxV+JHik2UATwRfX7CU7aezapL36yJMKm08mVIFSnD+0EfBJm22oVRie6SeZQizQGwkqsxWmw+efCbKaGq1i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J7i/Y59h; arc=none smtp.client-ip=209.85.160.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-2b8e26063e4so2362739fac.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Apr 2025 07:55:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744037726; x=1744642526; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o4xn9cimfDHTXs5TpUGv6N7Mowttz4ZTLbCFX2kVKqw=;
+        b=J7i/Y59hjvNr4avwPD5Q8kF9RMsSvs30K5bkvTmuLguLYObIHDRS7DiAfDDsjdGKXQ
+         wF2XYQN/464zI4EO/+gICsH9f+iu+PREB+9AjTJ4x8b/P+nkqQ3o8yS+DS1eDD0IpfZa
+         OcvFBFhW88f8kgNn7YaX/aS0oFQFKth6fBTs/R6wbOAJfXIEEUiR4gWmoT3oTa0yzPRq
+         mgaPtDqlzHYJgpIqVUSdOh+AiHny9wJVJZAx8gVXzT9oK0acG5tTojH5W0rpIcMU71v0
+         qdp1hjcaWO5oqNGkQ/1nanc+1n/qvZEJtFgO2g0pkIVe3KV1HZ3T5fLJ97AEAefFUWLl
+         O15w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744037726; x=1744642526;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o4xn9cimfDHTXs5TpUGv6N7Mowttz4ZTLbCFX2kVKqw=;
+        b=KRXX7ASkjsME/YMyrG2PNmLbT77afdKhBGqp4U7dZffJDxXnV+E5KdlCZ5NTcr6JZt
+         nYSw1LS/sClUW2gzKtwVff1Z9/N2LerQo80xRtgzIKr2ZT/GDLgVe+2wv7iWr83R2mOJ
+         bVUm7NvEWGHOJ0Fs82/6E5c4btHu1EF8a4E1Eqmt93YlYXWFyBsaN6jyU9aqLhjA2R+G
+         8NxZDyfWrZujrMKzT3vn2+H0rvm4BMZdmrjpFYQpddq/HCWHlv1QculPaAYtAeSeQ3B6
+         DiSxA5zFLQXjwMbm01S7Mbg0C5o4+DnPnEAsK46V9Zokph1AwGhTXPLCQDlWtWNrrf4D
+         jlsw==
+X-Forwarded-Encrypted: i=1; AJvYcCUzeVzSDYGjgmp+sCcHmMFyr8D/IwJoKviredLyBHE/2N+znySTSwl3m8n2otcwDmYU64uxTgUOZ2kTGGnB@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDKWpGXtb3w6g99T4lgYhy3d++x+jHc/45HNC/ZQVZaes5INWx
+	VDFf8qGqv9c6mqNB4PIuRydgbU1I1FWrdagBlqOCgR5pUvUkJSxB/1Cnl/nwXMQWNkoHGx7Qc06
+	U07b17NiSwXgM/AxJwJYy/rLMHri0weJh+bVAZQ==
+X-Gm-Gg: ASbGncvZXjkPDZ4ObRoJkCHL0pNyG8gcQvWRr0WA/5s/qlgUkYpFDq+f8CxaDEfkFy5
+	dHLQrp5uI7zEBOikGOQxZJ6E/Ij8gThrCJVjtNaq1JibnLg72lLOKr50MvYj+r0BoB2Pjvfqv8l
+	+qOcN+F9KFg3jOLdGYJRYXScMD4j0=
+X-Google-Smtp-Source: AGHT+IE6txomzGGAbwFADFCUywgbtkEgGT6GCg3c/ibtTiN62bLYpeINpXvDIoclViQ8oopGWCfxq+knFtQaTlHdqqI=
+X-Received: by 2002:a05:6870:de17:b0:2c2:5b08:8e42 with SMTP id
+ 586e51a60fabf-2cd3311870dmr5281511fac.27.1744037725617; Mon, 07 Apr 2025
+ 07:55:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250407-drm-bridge-convert-to-alloc-api-v1-31-42113ff8d9c0@bootlin.com>
-References: <20250407-drm-bridge-convert-to-alloc-api-v1-0-42113ff8d9c0@bootlin.com>
-In-Reply-To: <20250407-drm-bridge-convert-to-alloc-api-v1-0-42113ff8d9c0@bootlin.com>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Andrzej Hajda <andrzej.hajda@intel.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Jagan Teki <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, 
- Douglas Anderson <dianders@chromium.org>, 
- Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
- Krzysztof Kozlowski <krzk@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Anusha Srivatsa <asrivats@redhat.com>, 
- Paul Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, 
- =?utf-8?q?Herv=C3=A9_Codina?= <herve.codina@bootlin.com>, 
- Hui Pu <Hui.Pu@gehealthcare.com>, 
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
- dri-devel@lists.freedesktop.org, asahi@lists.linux.dev, 
- linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev, 
- imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
- linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org, 
- linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
- linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com, 
- Luca Ceresoli <luca.ceresoli@bootlin.com>, Liu Ying <victor.liu@nxp.com>
-X-Mailer: b4 0.14.2
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddtgedvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomhepnfhutggrucevvghrvghsohhlihcuoehluhgtrgdrtggvrhgvshholhhisegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeeiieeuvdfftefgueduleehueetgffgjeeitedtteetkeeuueeuueekveevvdeuveenucfkphepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgenucevlhhushhtvghrufhiiigvpedvieenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegludelvddrudeikedrudejkedrjeehngdpmhgrihhlfhhrohhmpehluhgtrgdrtggvrhgvshholhhisegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeegvddprhgtphhtthhopehhvghrvhgvrdgtohguihhnrgessghoohhtlhhinhdrtghomhdprhgtphhtthhopehlihhnuhigqdhmvgguihgrthgvkheslhhishhtshdrihhnfhhrrgguvggrugdrohhrghdprhgtphhtthhopehshhgrfihnghhuoheskhgvr
- hhnvghlrdhorhhgpdhrtghpthhtohepjfhuihdrrfhusehgvghhvggrlhhthhgtrghrvgdrtghomhdprhgtphhtthhopehkvghrnhgvlhesphgvnhhguhhtrhhonhhigidruggvpdhrtghpthhtohepshhimhhonhgrsehffhiflhhlrdgthhdprhgtphhtthhopehrfhhoshhssehkvghrnhgvlhdrohhrghdprhgtphhtthhopegrnhgurhiivghjrdhhrghjuggrsehinhhtvghlrdgtohhm
-X-GND-Sasl: luca.ceresoli@bootlin.com
+References: <20250327-qcom-tee-using-tee-ss-without-mem-obj-v3-0-7f457073282d@oss.qualcomm.com>
+ <20250327-qcom-tee-using-tee-ss-without-mem-obj-v3-2-7f457073282d@oss.qualcomm.com>
+In-Reply-To: <20250327-qcom-tee-using-tee-ss-without-mem-obj-v3-2-7f457073282d@oss.qualcomm.com>
+From: Jens Wiklander <jens.wiklander@linaro.org>
+Date: Mon, 7 Apr 2025 16:55:13 +0200
+X-Gm-Features: ATxdqUFUAjG5BhSKb_2PfAi1V3_18wUctOFmQdGMnywulnQl545FYuZXFXM_jpk
+Message-ID: <CAHUa44G+Z9LjxqqqvKRRHrfN_6QPweF_5df2uOqtRuBfa5j3pw@mail.gmail.com>
+Subject: Re: [PATCH v3 02/11] tee: add close_context to TEE driver operation
+To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Cc: Sumit Garg <sumit.garg@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Apurupa Pattapu <quic_apurupa@quicinc.com>, 
+	Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+	Sumit Semwal <sumit.semwal@linaro.org>, =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+	linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org, 
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org, 
+	linux-doc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This is the new API for allocating DRM bridges.
+Hi Amir,
 
-These two drivers are tangled together by the ldb_add_bridge_helper(), so
-they are converted at once.
+On Fri, Mar 28, 2025 at 3:48=E2=80=AFAM Amirreza Zarrabi
+<amirreza.zarrabi@oss.qualcomm.com> wrote:
+>
+> The tee_context can be used to manage TEE user resources, including
+> those allocated by the driver for the TEE on behalf of the user.
+> The release() callback is invoked only when all resources, such as
+> tee_shm, are released and there are no references to the tee_context.
+>
+> When a user closes the device file, the driver should notify the
+> TEE to release any resources it may hold and drop the context
+> references. To achieve this, a close_context() callback is
+> introduced to initiate resource release in the TEE driver when
+> the device file is closed.
+>
+> Relocate teedev_ctx_get, teedev_ctx_put, tee_device_get, and
+> tee_device_get functions to tee_drv.h to make them accessible
+> outside the TEE subsystem.
+>
+> Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+> ---
+>  drivers/tee/tee_core.c    | 39 +++++++++++++++++++++++++++++++++++++++
+>  drivers/tee/tee_private.h |  6 ------
+>  include/linux/tee_core.h  | 11 +++++++++--
+>  include/linux/tee_drv.h   | 40 ++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 88 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
+> index 24edce4cdbaa..22cc7d624b0c 100644
+> --- a/drivers/tee/tee_core.c
+> +++ b/drivers/tee/tee_core.c
+> @@ -72,6 +72,20 @@ struct tee_context *teedev_open(struct tee_device *tee=
+dev)
+>  }
+>  EXPORT_SYMBOL_GPL(teedev_open);
+>
+> +/**
+> + * teedev_ctx_get() - Increment the reference count of a context
+> + *
+> + * This function increases the refcount of the context, which is tied to
+> + * resources shared by the same tee_device. During the unregistration pr=
+ocess,
+> + * the context may remain valid even after tee_device_unregister() has r=
+eturned.
+> + *
+> + * Users should ensure that the context's refcount is properly decreased=
+ before
+> + * calling tee_device_put(), typically within the context's release() fu=
+nction.
+> + * Alternatively, users can call tee_device_get() and teedev_ctx_get() t=
+ogether
+> + * and release them simultaneously (see shm_alloc_helper()).
+> + *
+> + * @ctx: Pointer to the context
 
-They also have a similar design, each embedding an array of channels in
-their main struct, and each channel embeds a drm_bridge. This prevents
-dynamic, refcount-based deallocation of the bridges.
+Please move this @ctx line to before the verbose description of the functio=
+n.
 
-To make the new, dynamic bridge allocation possible:
+Cheers,
+Jens
 
- * change the array of channels into an array of channel pointers
- * allocate each channel using devm_drm_bridge_alloc()
- * adapt ldb_add_bridge_helper() to not set the funcs pointer
-   (now done by devm_drm_bridge_alloc())
- * adapt the code wherever using the channels
-
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-
----
-
-Cc: Liu Ying <victor.liu@nxp.com>
----
- drivers/gpu/drm/bridge/imx/imx-ldb-helper.c |  4 +---
- drivers/gpu/drm/bridge/imx/imx-ldb-helper.h |  3 +--
- drivers/gpu/drm/bridge/imx/imx8qm-ldb.c     | 32 ++++++++++++++++++-----------
- drivers/gpu/drm/bridge/imx/imx8qxp-ldb.c    | 20 ++++++++++++------
- 4 files changed, 36 insertions(+), 23 deletions(-)
-
-diff --git a/drivers/gpu/drm/bridge/imx/imx-ldb-helper.c b/drivers/gpu/drm/bridge/imx/imx-ldb-helper.c
-index 61347f6ec33d906264f7e06902b0d915d263f3f8..6149ba141a389a04b3c347a67f13e049328c07ff 100644
---- a/drivers/gpu/drm/bridge/imx/imx-ldb-helper.c
-+++ b/drivers/gpu/drm/bridge/imx/imx-ldb-helper.c
-@@ -190,8 +190,7 @@ int ldb_find_next_bridge_helper(struct ldb *ldb)
- }
- EXPORT_SYMBOL_GPL(ldb_find_next_bridge_helper);
- 
--void ldb_add_bridge_helper(struct ldb *ldb,
--			   const struct drm_bridge_funcs *bridge_funcs)
-+void ldb_add_bridge_helper(struct ldb *ldb)
- {
- 	struct ldb_channel *ldb_ch;
- 	int i;
-@@ -203,7 +202,6 @@ void ldb_add_bridge_helper(struct ldb *ldb,
- 			continue;
- 
- 		ldb_ch->bridge.driver_private = ldb_ch;
--		ldb_ch->bridge.funcs = bridge_funcs;
- 		ldb_ch->bridge.of_node = ldb_ch->np;
- 
- 		drm_bridge_add(&ldb_ch->bridge);
-diff --git a/drivers/gpu/drm/bridge/imx/imx-ldb-helper.h b/drivers/gpu/drm/bridge/imx/imx-ldb-helper.h
-index 38a8a54b37a60e1be942aaa60b1d1bc375a7a131..de187e3269996d284ecad451dd857271056812e1 100644
---- a/drivers/gpu/drm/bridge/imx/imx-ldb-helper.h
-+++ b/drivers/gpu/drm/bridge/imx/imx-ldb-helper.h
-@@ -88,8 +88,7 @@ int ldb_init_helper(struct ldb *ldb);
- 
- int ldb_find_next_bridge_helper(struct ldb *ldb);
- 
--void ldb_add_bridge_helper(struct ldb *ldb,
--			   const struct drm_bridge_funcs *bridge_funcs);
-+void ldb_add_bridge_helper(struct ldb *ldb);
- 
- void ldb_remove_bridge_helper(struct ldb *ldb);
- 
-diff --git a/drivers/gpu/drm/bridge/imx/imx8qm-ldb.c b/drivers/gpu/drm/bridge/imx/imx8qm-ldb.c
-index 524aac751359f5cd377807508cbeeb6a597529e1..47aa65938e6a521cd6f111535f6feb3920a0dfb7 100644
---- a/drivers/gpu/drm/bridge/imx/imx8qm-ldb.c
-+++ b/drivers/gpu/drm/bridge/imx/imx8qm-ldb.c
-@@ -47,7 +47,7 @@ struct imx8qm_ldb_channel {
- struct imx8qm_ldb {
- 	struct ldb base;
- 	struct device *dev;
--	struct imx8qm_ldb_channel channel[MAX_LDB_CHAN_NUM];
-+	struct imx8qm_ldb_channel *channel[MAX_LDB_CHAN_NUM];
- 	struct clk *clk_pixel;
- 	struct clk *clk_bypass;
- 	int active_chno;
-@@ -107,7 +107,7 @@ static int imx8qm_ldb_bridge_atomic_check(struct drm_bridge *bridge,
- 
- 	if (is_split) {
- 		imx8qm_ldb_ch =
--			&imx8qm_ldb->channel[imx8qm_ldb->active_chno ^ 1];
-+			imx8qm_ldb->channel[imx8qm_ldb->active_chno ^ 1];
- 		imx8qm_ldb_set_phy_cfg(imx8qm_ldb, di_clk, is_split, true,
- 				       phy_cfg);
- 		ret = phy_validate(imx8qm_ldb_ch->phy, PHY_MODE_LVDS, 0, &opts);
-@@ -158,7 +158,7 @@ imx8qm_ldb_bridge_mode_set(struct drm_bridge *bridge,
- 
- 	if (is_split) {
- 		imx8qm_ldb_ch =
--			&imx8qm_ldb->channel[imx8qm_ldb->active_chno ^ 1];
-+			imx8qm_ldb->channel[imx8qm_ldb->active_chno ^ 1];
- 		imx8qm_ldb_set_phy_cfg(imx8qm_ldb, di_clk, is_split, true,
- 				       phy_cfg);
- 		ret = phy_configure(imx8qm_ldb_ch->phy, &opts);
-@@ -226,13 +226,13 @@ static void imx8qm_ldb_bridge_atomic_enable(struct drm_bridge *bridge,
- 	}
- 
- 	if (is_split) {
--		ret = phy_power_on(imx8qm_ldb->channel[0].phy);
-+		ret = phy_power_on(imx8qm_ldb->channel[0]->phy);
- 		if (ret)
- 			DRM_DEV_ERROR(dev,
- 				      "failed to power on channel0 PHY: %d\n",
- 				      ret);
- 
--		ret = phy_power_on(imx8qm_ldb->channel[1].phy);
-+		ret = phy_power_on(imx8qm_ldb->channel[1]->phy);
- 		if (ret)
- 			DRM_DEV_ERROR(dev,
- 				      "failed to power on channel1 PHY: %d\n",
-@@ -261,12 +261,12 @@ static void imx8qm_ldb_bridge_atomic_disable(struct drm_bridge *bridge,
- 	ldb_bridge_disable_helper(bridge);
- 
- 	if (is_split) {
--		ret = phy_power_off(imx8qm_ldb->channel[0].phy);
-+		ret = phy_power_off(imx8qm_ldb->channel[0]->phy);
- 		if (ret)
- 			DRM_DEV_ERROR(dev,
- 				      "failed to power off channel0 PHY: %d\n",
- 				      ret);
--		ret = phy_power_off(imx8qm_ldb->channel[1].phy);
-+		ret = phy_power_off(imx8qm_ldb->channel[1]->phy);
- 		if (ret)
- 			DRM_DEV_ERROR(dev,
- 				      "failed to power off channel1 PHY: %d\n",
-@@ -412,7 +412,7 @@ static int imx8qm_ldb_get_phy(struct imx8qm_ldb *imx8qm_ldb)
- 	int i, ret;
- 
- 	for (i = 0; i < MAX_LDB_CHAN_NUM; i++) {
--		imx8qm_ldb_ch = &imx8qm_ldb->channel[i];
-+		imx8qm_ldb_ch = imx8qm_ldb->channel[i];
- 		ldb_ch = &imx8qm_ldb_ch->base;
- 
- 		if (!ldb_ch->is_available)
-@@ -448,6 +448,14 @@ static int imx8qm_ldb_probe(struct platform_device *pdev)
- 	if (!imx8qm_ldb)
- 		return -ENOMEM;
- 
-+	for (i = 0; i < MAX_LDB_CHAN_NUM; i++) {
-+		imx8qm_ldb->channel[i] =
-+			devm_drm_bridge_alloc(dev, struct imx8qm_ldb_channel, base.bridge,
-+					      &imx8qm_ldb_bridge_funcs);
-+		if (IS_ERR(imx8qm_ldb->channel[i]))
-+			return PTR_ERR(imx8qm_ldb->channel[i]);
-+	}
-+
- 	imx8qm_ldb->clk_pixel = devm_clk_get(dev, "pixel");
- 	if (IS_ERR(imx8qm_ldb->clk_pixel)) {
- 		ret = PTR_ERR(imx8qm_ldb->clk_pixel);
-@@ -473,7 +481,7 @@ static int imx8qm_ldb_probe(struct platform_device *pdev)
- 	ldb->ctrl_reg = 0xe0;
- 
- 	for (i = 0; i < MAX_LDB_CHAN_NUM; i++)
--		ldb->channel[i] = &imx8qm_ldb->channel[i].base;
-+		ldb->channel[i] = &imx8qm_ldb->channel[i]->base;
- 
- 	ret = ldb_init_helper(ldb);
- 	if (ret)
-@@ -499,12 +507,12 @@ static int imx8qm_ldb_probe(struct platform_device *pdev)
- 		}
- 
- 		imx8qm_ldb->active_chno = 0;
--		imx8qm_ldb_ch = &imx8qm_ldb->channel[0];
-+		imx8qm_ldb_ch = imx8qm_ldb->channel[0];
- 		ldb_ch = &imx8qm_ldb_ch->base;
- 		ldb_ch->link_type = pixel_order;
- 	} else {
- 		for (i = 0; i < MAX_LDB_CHAN_NUM; i++) {
--			imx8qm_ldb_ch = &imx8qm_ldb->channel[i];
-+			imx8qm_ldb_ch = imx8qm_ldb->channel[i];
- 			ldb_ch = &imx8qm_ldb_ch->base;
- 
- 			if (ldb_ch->is_available) {
-@@ -525,7 +533,7 @@ static int imx8qm_ldb_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, imx8qm_ldb);
- 	pm_runtime_enable(dev);
- 
--	ldb_add_bridge_helper(ldb, &imx8qm_ldb_bridge_funcs);
-+	ldb_add_bridge_helper(ldb);
- 
- 	return ret;
- }
-diff --git a/drivers/gpu/drm/bridge/imx/imx8qxp-ldb.c b/drivers/gpu/drm/bridge/imx/imx8qxp-ldb.c
-index d4f3492ca5abf65a3327d7fa62214832946eb218..5d272916e200980f7253a032701dcd990e0e34f2 100644
---- a/drivers/gpu/drm/bridge/imx/imx8qxp-ldb.c
-+++ b/drivers/gpu/drm/bridge/imx/imx8qxp-ldb.c
-@@ -44,7 +44,7 @@ struct imx8qxp_ldb_channel {
- struct imx8qxp_ldb {
- 	struct ldb base;
- 	struct device *dev;
--	struct imx8qxp_ldb_channel channel[MAX_LDB_CHAN_NUM];
-+	struct imx8qxp_ldb_channel *channel[MAX_LDB_CHAN_NUM];
- 	struct clk *clk_pixel;
- 	struct clk *clk_bypass;
- 	struct drm_bridge *companion;
-@@ -410,7 +410,7 @@ static const struct drm_bridge_funcs imx8qxp_ldb_bridge_funcs = {
- static int imx8qxp_ldb_set_di_id(struct imx8qxp_ldb *imx8qxp_ldb)
- {
- 	struct imx8qxp_ldb_channel *imx8qxp_ldb_ch =
--			 &imx8qxp_ldb->channel[imx8qxp_ldb->active_chno];
-+			 imx8qxp_ldb->channel[imx8qxp_ldb->active_chno];
- 	struct ldb_channel *ldb_ch = &imx8qxp_ldb_ch->base;
- 	struct device_node *ep, *remote;
- 	struct device *dev = imx8qxp_ldb->dev;
-@@ -456,7 +456,7 @@ imx8qxp_ldb_check_chno_and_dual_link(struct ldb_channel *ldb_ch, int link)
- static int imx8qxp_ldb_parse_dt_companion(struct imx8qxp_ldb *imx8qxp_ldb)
- {
- 	struct imx8qxp_ldb_channel *imx8qxp_ldb_ch =
--			 &imx8qxp_ldb->channel[imx8qxp_ldb->active_chno];
-+			 imx8qxp_ldb->channel[imx8qxp_ldb->active_chno];
- 	struct ldb_channel *ldb_ch = &imx8qxp_ldb_ch->base;
- 	struct ldb_channel *companion_ldb_ch;
- 	struct device_node *companion;
-@@ -586,6 +586,14 @@ static int imx8qxp_ldb_probe(struct platform_device *pdev)
- 	if (!imx8qxp_ldb)
- 		return -ENOMEM;
- 
-+	for (i = 0; i < MAX_LDB_CHAN_NUM; i++) {
-+		imx8qxp_ldb->channel[i] =
-+			devm_drm_bridge_alloc(dev, struct imx8qxp_ldb_channel, base.bridge,
-+					      &imx8qxp_ldb_bridge_funcs);
-+		if (IS_ERR(imx8qxp_ldb->channel[i]))
-+			return PTR_ERR(imx8qxp_ldb->channel[i]);
-+	}
-+
- 	imx8qxp_ldb->clk_pixel = devm_clk_get(dev, "pixel");
- 	if (IS_ERR(imx8qxp_ldb->clk_pixel)) {
- 		ret = PTR_ERR(imx8qxp_ldb->clk_pixel);
-@@ -611,7 +619,7 @@ static int imx8qxp_ldb_probe(struct platform_device *pdev)
- 	ldb->ctrl_reg = 0xe0;
- 
- 	for (i = 0; i < MAX_LDB_CHAN_NUM; i++)
--		ldb->channel[i] = &imx8qxp_ldb->channel[i].base;
-+		ldb->channel[i] = &imx8qxp_ldb->channel[i]->base;
- 
- 	ret = ldb_init_helper(ldb);
- 	if (ret)
-@@ -627,7 +635,7 @@ static int imx8qxp_ldb_probe(struct platform_device *pdev)
- 	}
- 
- 	for (i = 0; i < MAX_LDB_CHAN_NUM; i++) {
--		imx8qxp_ldb_ch = &imx8qxp_ldb->channel[i];
-+		imx8qxp_ldb_ch = imx8qxp_ldb->channel[i];
- 		ldb_ch = &imx8qxp_ldb_ch->base;
- 
- 		if (ldb_ch->is_available) {
-@@ -660,7 +668,7 @@ static int imx8qxp_ldb_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, imx8qxp_ldb);
- 	pm_runtime_enable(dev);
- 
--	ldb_add_bridge_helper(ldb, &imx8qxp_ldb_bridge_funcs);
-+	ldb_add_bridge_helper(ldb);
- 
- 	return 0;
- }
-
--- 
-2.49.0
-
+> + */
+>  void teedev_ctx_get(struct tee_context *ctx)
+>  {
+>         if (ctx->releasing)
+> @@ -79,6 +93,7 @@ void teedev_ctx_get(struct tee_context *ctx)
+>
+>         kref_get(&ctx->refcount);
+>  }
+> +EXPORT_SYMBOL_GPL(teedev_ctx_get);
+>
+>  static void teedev_ctx_release(struct kref *ref)
+>  {
+> @@ -89,6 +104,10 @@ static void teedev_ctx_release(struct kref *ref)
+>         kfree(ctx);
+>  }
+>
+> +/**
+> + * teedev_ctx_put() - Decrease reference count on a context
+> + * @ctx: pointer to the context
+> + */
+>  void teedev_ctx_put(struct tee_context *ctx)
+>  {
+>         if (ctx->releasing)
+> @@ -96,11 +115,15 @@ void teedev_ctx_put(struct tee_context *ctx)
+>
+>         kref_put(&ctx->refcount, teedev_ctx_release);
+>  }
+> +EXPORT_SYMBOL_GPL(teedev_ctx_put);
+>
+>  void teedev_close_context(struct tee_context *ctx)
+>  {
+>         struct tee_device *teedev =3D ctx->teedev;
+>
+> +       if (teedev->desc->ops->close_context)
+> +               teedev->desc->ops->close_context(ctx);
+> +
+>         teedev_ctx_put(ctx);
+>         tee_device_put(teedev);
+>  }
+> @@ -1024,6 +1047,10 @@ int tee_device_register(struct tee_device *teedev)
+>  }
+>  EXPORT_SYMBOL_GPL(tee_device_register);
+>
+> +/**
+> + * tee_device_put() - Decrease the user count for a tee_device
+> + * @teedev: pointer to the tee_device
+> + */
+>  void tee_device_put(struct tee_device *teedev)
+>  {
+>         mutex_lock(&teedev->mutex);
+> @@ -1037,7 +1064,18 @@ void tee_device_put(struct tee_device *teedev)
+>         }
+>         mutex_unlock(&teedev->mutex);
+>  }
+> +EXPORT_SYMBOL_GPL(tee_device_put);
+>
+> +/**
+> + * tee_device_get() - Increment the user count for a tee_device
+> + * @teedev: Pointer to the tee_device
+> + *
+> + * If tee_device_unregister() has been called and the final user of @tee=
+dev
+> + * has already released the device, this function will fail to prevent n=
+ew users
+> + * from accessing the device during the unregistration process.
+> + *
+> + * Returns: true if @teedev remains valid, otherwise false
+> + */
+>  bool tee_device_get(struct tee_device *teedev)
+>  {
+>         mutex_lock(&teedev->mutex);
+> @@ -1049,6 +1087,7 @@ bool tee_device_get(struct tee_device *teedev)
+>         mutex_unlock(&teedev->mutex);
+>         return true;
+>  }
+> +EXPORT_SYMBOL_GPL(tee_device_get);
+>
+>  /**
+>   * tee_device_unregister() - Removes a TEE device
+> diff --git a/drivers/tee/tee_private.h b/drivers/tee/tee_private.h
+> index 9bc50605227c..d3f40a03de36 100644
+> --- a/drivers/tee/tee_private.h
+> +++ b/drivers/tee/tee_private.h
+> @@ -14,12 +14,6 @@
+>
+>  int tee_shm_get_fd(struct tee_shm *shm);
+>
+> -bool tee_device_get(struct tee_device *teedev);
+> -void tee_device_put(struct tee_device *teedev);
+> -
+> -void teedev_ctx_get(struct tee_context *ctx);
+> -void teedev_ctx_put(struct tee_context *ctx);
+> -
+>  struct tee_shm *tee_shm_alloc_user_buf(struct tee_context *ctx, size_t s=
+ize);
+>  struct tee_shm *tee_shm_register_user_buf(struct tee_context *ctx,
+>                                           unsigned long addr, size_t leng=
+th);
+> diff --git a/include/linux/tee_core.h b/include/linux/tee_core.h
+> index a38494d6b5f4..8a4c9e30b652 100644
+> --- a/include/linux/tee_core.h
+> +++ b/include/linux/tee_core.h
+> @@ -65,8 +65,9 @@ struct tee_device {
+>  /**
+>   * struct tee_driver_ops - driver operations vtable
+>   * @get_version:       returns version of driver
+> - * @open:              called when the device file is opened
+> - * @release:           release this open file
+> + * @open:              called for a context when the device file is open=
+ed
+> + * @close_context:     called when the device file is closed
+> + * @release:           called to release the context
+>   * @open_session:      open a new session
+>   * @close_session:     close a session
+>   * @system_session:    declare session as a system session
+> @@ -76,11 +77,17 @@ struct tee_device {
+>   * @supp_send:         called for supplicant to send a response
+>   * @shm_register:      register shared memory buffer in TEE
+>   * @shm_unregister:    unregister shared memory buffer in TEE
+> + *
+> + * The context given to @open might last longer than the device file if =
+it is
+> + * tied to other resources in the TEE driver. @close_context is called w=
+hen the
+> + * client closes the device file, even if there are existing references =
+to the
+> + * context. The TEE driver can use @close_context to start cleaning up.
+>   */
+>  struct tee_driver_ops {
+>         void (*get_version)(struct tee_device *teedev,
+>                             struct tee_ioctl_version_data *vers);
+>         int (*open)(struct tee_context *ctx);
+> +       void (*close_context)(struct tee_context *ctx);
+>         void (*release)(struct tee_context *ctx);
+>         int (*open_session)(struct tee_context *ctx,
+>                             struct tee_ioctl_open_session_arg *arg,
+> diff --git a/include/linux/tee_drv.h b/include/linux/tee_drv.h
+> index a54c203000ed..ce23fd42c5d4 100644
+> --- a/include/linux/tee_drv.h
+> +++ b/include/linux/tee_drv.h
+> @@ -96,6 +96,46 @@ struct tee_param {
+>         } u;
+>  };
+>
+> +/**
+> + * tee_device_get() - Increment the user count for a tee_device
+> + * @teedev: Pointer to the tee_device
+> + *
+> + * If tee_device_unregister() has been called and the final user of @tee=
+dev
+> + * has already released the device, this function will fail to prevent n=
+ew users
+> + * from accessing the device during the unregistration process.
+> + *
+> + * Returns: true if @teedev remains valid, otherwise false
+> + */
+> +bool tee_device_get(struct tee_device *teedev);
+> +
+> +/**
+> + * tee_device_put() - Decrease the user count for a tee_device
+> + * @teedev: pointer to the tee_device
+> + */
+> +void tee_device_put(struct tee_device *teedev);
+> +
+> +/**
+> + * teedev_ctx_get() - Increment the reference count of a context
+> + *
+> + * This function increases the refcount of the context, which is tied to
+> + * resources shared by the same tee_device. During the unregistration pr=
+ocess,
+> + * the context may remain valid even after tee_device_unregister() has r=
+eturned.
+> + *
+> + * Users should ensure that the context's refcount is properly decreased=
+ before
+> + * calling tee_device_put(), typically within the context's release() fu=
+nction.
+> + * Alternatively, users can call tee_device_get() and teedev_ctx_get() t=
+ogether
+> + * and release them simultaneously (see shm_alloc_helper()).
+> + *
+> + * @ctx: Pointer to the context
+> + */
+> +void teedev_ctx_get(struct tee_context *ctx);
+> +
+> +/**
+> + * teedev_ctx_put() - Decrease reference count on a context
+> + * @ctx: pointer to the context
+> + */
+> +void teedev_ctx_put(struct tee_context *ctx);
+> +
+>  /**
+>   * tee_shm_alloc_kernel_buf() - Allocate kernel shared memory for a
+>   *                              particular TEE client driver
+>
+> --
+> 2.34.1
+>
 
