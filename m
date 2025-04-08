@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-53566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E338AA8113B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 18:04:30 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 561E9A810FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 17:59:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5FF45188869F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 15:58:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B67177B1F22
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 15:58:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF26E23E359;
-	Tue,  8 Apr 2025 15:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9408422E3E3;
+	Tue,  8 Apr 2025 15:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PauRh3f4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ExL9+RRm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1332E23E34F;
-	Tue,  8 Apr 2025 15:55:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091EE241105;
+	Tue,  8 Apr 2025 15:55:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744127738; cv=none; b=VYzKrWVj/i+Fx3y0HCXU7KfCEFkzH8cGeODsc3Y0rzmbd5oKTXvtAVeMo9tRxqg0SKzzQ/HKf1QZaly+zuIAWZk9i9yG2Wr0HNvEWvd3WoAvtTclkb2a4zWybxW1jA4dA2U/FvE8FzKmcw4swNnOK1KDQ3vlfpZzM7QqMukhQZs=
+	t=1744127753; cv=none; b=S2/h+L3GeW6XNeL82U7ghanmyi2kZ9kGjWCy8bD1V0cbDfq1XrET+171Tgo2cwtqziF44VnQN84HKyrTXMlTIhkS725Jw5g/WF3yS8mjWJLnK0yrXF4lmZTJ4/81gmCcXQ0xIWrVIxSYr/d5zC1Kx4R4qU3Ae/kVyaSkJQNxPdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744127738; c=relaxed/simple;
-	bh=KVuvYX62+cimMpA+aoGXMHXJeDk8Hsx9c5dnJrYxg4Y=;
+	s=arc-20240116; t=1744127753; c=relaxed/simple;
+	bh=Yb+jgs1jio5NCWfZjj5+oGet/NEiSGyU8hb0SS66iNk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=eoJnNKxTm39OITPXBSTxRuMu9Zt8ffKKQuUZKnoUAuHSkx1+Qr6KK7sd356yqKh+qPpI3o+s3PvIarvkslUNXgyIBtDK6KG46k8n9ALXWkCWYo3QGc8tvYlKz/2q6BlePTOYJDTmikyqKkgeQ99kk4QcwfNwJtP4/tu6VvfEfnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PauRh3f4; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:CC; b=LDEiamlUoC+2lo5afhWwaeUUa7ABnvGjQftzJr66J2SpakO+KeD4xtJ6pfXrij1WrehHsdkdiK8sgfPs9KOAbZxQ2qzIwg7w77ATDV7ySX5l7Gs9dFP29/9VAxRQspm0+ielGY0hup1Q6sHVES0uok09k5B09n338oa+bZ7U+j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ExL9+RRm; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538AsvSv019579;
-	Tue, 8 Apr 2025 15:55:33 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538AiiwZ014980;
+	Tue, 8 Apr 2025 15:55:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9AjMBkValIeT1MIElgyZHTzsj4P6mNuX5gbBpaNqBkM=; b=PauRh3f4ngy5pkCu
-	DrfLy7AX3D8sdkwpnCTXnbAaprjCEp3N2eeIUB3+xMDqQKoS1p7CrEWfHIYEDrKJ
-	tZt0WCKXpeaHJijck3v4lCAWdeHzHmy1kjDW4I0BREEODuJ3sbR86wFQStWADvsI
-	H1crPtzfWkZFYrNJ4cclo5DcUrvwDKBORqxrsz87RFO+Zol2+xT6+N9TaIwgUEpS
-	VjPvCqPR46M2BYNhTb8rXYBUUZXkGEDTkSHVrN48Z+W3CEs1PE9JNQ5ta6Rw1acM
-	4pTADS3CyDNwqC+F/A59/zg0fi+C2GYhc0SrBEbGRWmalRYooZXsYKBQi/vOdu/E
-	v2qlBw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twg3g9gc-1
+	JpZeI+SLkFopvq4PI7fcbfL5xzSpfjovS/n6AhptvDg=; b=ExL9+RRmMOAZydu+
+	MzNRMEio93ecCalpL/m1LbnILsdhHE1ynSvPIhffMxDG4MGKxl8PmMgIc9UrCaCC
+	AzPP3agqJBe4bah01iBjAUEhiVXTkXRaC8dyimfdyS/GLVQGIussVky38a7ok0aX
+	m2CUScWbGedysOHMYMPSqWH17/i2gFGLuXj+RQtkXWSIyOG2FPAoNVHsAedSOe+c
+	g01UJnzMaQY3tlk2KU146oP9Dk1lm5Xzg/pW7tD6dKNpOTyzucUTmZXmsELz65tP
+	9SKNb1NQn8qL7BoFhRogPhGou7gTKtdQ9FI06jHxZ2LGV02RL+enm3zsXrYc549B
+	v0gE6A==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twbugbr5-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Apr 2025 15:55:33 +0000 (GMT)
+	Tue, 08 Apr 2025 15:55:49 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 538FtWDK017777
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 538FtmmO009751
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 8 Apr 2025 15:55:32 GMT
+	Tue, 8 Apr 2025 15:55:48 GMT
 Received: from hu-dikshita-hyd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 8 Apr 2025 08:55:27 -0700
+ 15.2.1544.9; Tue, 8 Apr 2025 08:55:42 -0700
 From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Date: Tue, 8 Apr 2025 21:24:24 +0530
-Subject: [PATCH 10/20] media: iris: Remove redundant buffer count check in
- stream off
+Date: Tue, 8 Apr 2025 21:24:27 +0530
+Subject: [PATCH 13/20] media: iris: Fix NULL pointer dereference
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +67,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250408-iris-dec-hevc-vp9-v1-10-acd258778bd6@quicinc.com>
+Message-ID: <20250408-iris-dec-hevc-vp9-v1-13-acd258778bd6@quicinc.com>
 References: <20250408-iris-dec-hevc-vp9-v1-0-acd258778bd6@quicinc.com>
 In-Reply-To: <20250408-iris-dec-hevc-vp9-v1-0-acd258778bd6@quicinc.com>
 To: Vikash Garodia <quic_vgarodia@quicinc.com>,
@@ -91,108 +90,65 @@ CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
         "Dikshita
- Agarwal" <quic_dikshita@quicinc.com>
+ Agarwal" <quic_dikshita@quicinc.com>,
+        <stable@vger.kernel.org>, Dan Carpenter
+	<dan.carpenter@linaro.org>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1744127674; l=2446;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1744127674; l=1389;
  i=quic_dikshita@quicinc.com; s=20240917; h=from:subject:message-id;
- bh=KVuvYX62+cimMpA+aoGXMHXJeDk8Hsx9c5dnJrYxg4Y=;
- b=Xk9wsEkLxrm/UvB8cQituGL1FmrL3q5/TPYm0yUD8wqDsDL61NTXa8vNIwRnr0rZAO7QbN/9o
- Uu9WCL7Dy8OCR0fnxF6izmAi7WKWgwlPag8vDLeLjCbB/zSlGGg/5Cw
+ bh=Yb+jgs1jio5NCWfZjj5+oGet/NEiSGyU8hb0SS66iNk=;
+ b=j7cHzPFq/VDRXWYDH196WfoJE4lYydhNMNmWmAb8akOLfw1kTwX0sZJ+6JF2qGpUcQsHz4Fdu
+ 9bRQNrA0odQDWRKIefETIL/pwTivbA45tKhb57mxSycqQTN2xn5xPmd
 X-Developer-Key: i=quic_dikshita@quicinc.com; a=ed25519;
  pk=EEvKY6Ar1OI5SWf44FJ1Ebo1KuQEVbbf5UNPO+UHVhM=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: FJd1JH1vdRFCvh60L-Ti6VCjI7nuUpYm
-X-Proofpoint-ORIG-GUID: FJd1JH1vdRFCvh60L-Ti6VCjI7nuUpYm
-X-Authority-Analysis: v=2.4 cv=I/9lRMgg c=1 sm=1 tr=0 ts=67f546f5 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=-qshO7OKkG8J2I8e95wA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: GaUgkHJ9iL-BOHt7Z6pfshGlEaR6RoSG
+X-Proofpoint-ORIG-GUID: GaUgkHJ9iL-BOHt7Z6pfshGlEaR6RoSG
+X-Authority-Analysis: v=2.4 cv=dbeA3WXe c=1 sm=1 tr=0 ts=67f54705 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8
+ a=_9w-BpbxiFVjEEnp1AAA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-08_06,2025-04-08_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- phishscore=0 suspectscore=0 mlxlogscore=999 lowpriorityscore=0 spamscore=0
- clxscore=1015 malwarescore=0 adultscore=0 priorityscore=1501
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504080110
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 mlxlogscore=999 phishscore=0 mlxscore=0 spamscore=0
+ malwarescore=0 clxscore=1015 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504080110
 
-Currently, the stream off process checks the count of buffers in
-v4l2_m2m_queues using v4l2_m2m_for_each_src_buf_safe and
-v4l2_m2m_for_each_dst_buf_safe APIs. If the count is non-zero, it
-returns an error. This check is redundant as the V4L2 framework already
-handles buffer management internally.
+A warning reported by smatch indicated a possible null pointer
+dereference where one of the arguments to API
+"iris_hfi_gen2_handle_system_error" could sometimes be null.
 
-Remove the unnecessary buffer count check in stream off, simplifying the
-process and relying on V4L2's internal mechanisms for buffer management.
+To fix this, add a check to validate that the argument passed is not
+null before accessing its members.
 
+Cc: stable@vger.kernel.org
+Fixes: fb583a214337 ("media: iris: introduce host firmware interface with necessary hooks")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-media/634cc9b8-f099-4b54-8556-d879fb2b5169@stanley.mountain/
 Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 ---
- drivers/media/platform/qcom/iris/iris_vdec.c | 36 ----------------------------
- 1 file changed, 36 deletions(-)
+ drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
-index 7058f2d789bd..1305b981a72d 100644
---- a/drivers/media/platform/qcom/iris/iris_vdec.c
-+++ b/drivers/media/platform/qcom/iris/iris_vdec.c
-@@ -244,35 +244,6 @@ void iris_vdec_src_change(struct iris_inst *inst)
- 	v4l2_event_queue_fh(&inst->fh, &event);
- }
- 
--static int iris_vdec_get_num_queued_buffers(struct iris_inst *inst,
--					    enum iris_buffer_type type)
--{
--	struct v4l2_m2m_ctx *m2m_ctx = inst->m2m_ctx;
--	struct v4l2_m2m_buffer *buffer, *n;
--	struct iris_buffer *buf;
--	u32 count = 0;
--
--	switch (type) {
--	case BUF_INPUT:
--		v4l2_m2m_for_each_src_buf_safe(m2m_ctx, buffer, n) {
--			buf = to_iris_buffer(&buffer->vb);
--			if (!(buf->attr & BUF_ATTR_QUEUED))
--				continue;
--			count++;
--		}
--		return count;
--	case BUF_OUTPUT:
--		v4l2_m2m_for_each_dst_buf_safe(m2m_ctx, buffer, n) {
--			buf = to_iris_buffer(&buffer->vb);
--			if (!(buf->attr & BUF_ATTR_QUEUED))
--				continue;
--			count++;
--		}
--		return count;
--	default:
--		return count;
--	}
--}
- 
- static void iris_vdec_flush_deferred_buffers(struct iris_inst *inst,
- 					     enum iris_buffer_type type)
-@@ -321,7 +292,6 @@ int iris_vdec_session_streamoff(struct iris_inst *inst, u32 plane)
+diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
+index de823a314efd..2267e220c9ea 100644
+--- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
++++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
+@@ -267,7 +267,8 @@ static int iris_hfi_gen2_handle_system_error(struct iris_core *core,
  {
- 	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
- 	enum iris_buffer_type buffer_type;
--	u32 count;
- 	int ret;
+ 	struct iris_inst *instance;
  
- 	switch (plane) {
-@@ -339,12 +309,6 @@ int iris_vdec_session_streamoff(struct iris_inst *inst, u32 plane)
- 	if (ret)
- 		goto error;
+-	dev_err(core->dev, "received system error of type %#x\n", pkt->type);
++	if (pkt)
++		dev_err(core->dev, "received system error of type %#x\n", pkt->type);
  
--	count = iris_vdec_get_num_queued_buffers(inst, buffer_type);
--	if (count) {
--		ret = -EINVAL;
--		goto error;
--	}
--
- 	ret = iris_inst_state_change_streamoff(inst, plane);
- 	if (ret)
- 		goto error;
+ 	core->state = IRIS_CORE_ERROR;
+ 
 
 -- 
 2.34.1
