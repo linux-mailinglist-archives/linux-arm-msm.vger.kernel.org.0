@@ -1,163 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-53593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7DC0A816CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 22:27:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 492E8A8178F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 23:26:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 41DC03B0BD5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 20:26:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2550E4C38B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 21:26:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C927D250BF1;
-	Tue,  8 Apr 2025 20:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1996C2550A8;
+	Tue,  8 Apr 2025 21:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aGQZHq6/"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Dbh1Oa5q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD7823F41D
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 20:27:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B54E254867
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 21:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744144026; cv=none; b=UoCZYXNGHtV5yyOV1/fb1N9HgTuMhkbtPw2OufKEfdXKMtWSIlQ4iNyXQ43bzoSN8emw9hYVDahYkHUROKnp/3yNCz5j4MrmJHpw+J0024edxugB1LglTosohfftn//jpY/9un24gjSIFlPjekCDwM48RJkcxPJoPlzkplskQ6g=
+	t=1744147590; cv=none; b=o8SsqHHoJVU+TkrgUfNgl15++MP2pUlccycwqSIQVMUMVimGf+LzRFHkGAIBZ4HNcktt3pS0NkZbsN70n1BbwSvcQQUPFi+YDhBodEKd1oRcKdKZ6pU0ZzukhXMCLSReVNlyFKU8IDPfxbTxolVE0LMR7eiM7wVfUj06srbxoO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744144026; c=relaxed/simple;
-	bh=lmxJkzFzN55CvpHITqysrbpyojnZyXakGvg4sdUShRQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XlzkJSY4UaJua3L8lsn8F+zpz190wqWY7vfN2EadEqM0pDQFhAIqYrx00z/9uRxlnq7837RlnW5ypjUwXAvmsdFCvjO+zjGLFjTBecW5fGVBNt/Bo4ixnuftDNxwVQiw4UzVKfRmNYCrNNeZgTB4U/9zsxoC4pA3M8Y2YCE1EPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aGQZHq6/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538JYtji002263
-	for <linux-arm-msm@vger.kernel.org>; Tue, 8 Apr 2025 20:27:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cqXN69eJjj53VercbPPDUqUwXi+7djq/bqmM04r34T4=; b=aGQZHq6/nEayjBSQ
-	x17b6vBaVffK69+9jySaswTU4QZWqd8ZQrUvDNbMHcTmNAJYKuR8aoXnVCMHLbAr
-	A7SvqTj6dV9eitGJBU3zY1VVO6N9P460NjnTifSBAc57hM/OABHO94pWKvmcIklB
-	SKer5dCA3KW6/KpcbVwrZ+UJh9hfhWr578Bn1W9PmhP7Ag0GdSyv7RhJgIsHJ7j8
-	60dKkVgPxeyDoBLzdWO3L4RDYAKxJBJxsJILtCbzdBuHLpGfuOKsrRINjzwk2W4x
-	xzYNsl6rKwWh8qLSks3ZUmVsAQXlTehBEw+NwKwzC2HiXRBSUKRTC1oMgZFxleGK
-	TeuFjw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twc1h04e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 20:27:03 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c5e2a31f75so1875363685a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 13:27:03 -0700 (PDT)
+	s=arc-20240116; t=1744147590; c=relaxed/simple;
+	bh=bOYcVCH7jUtLC+s56g/zmnXTCYBbHKKlwNxQVfwM7CI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J/ZZpn6xwNmT8z8E3/vY5WXJrSuHGneeFzFr1hYHRD6ljtChza/78O4CDGV3m/R8jOEj9jTN65myuICUyXr2r+x4mzzgw2aZ3dEkOPB/opgVY5sAoACXlIdymHiPgRIpBca0stTlV5Qe2dBJaIVlR8l6DF7CLwMAzAErHaK4fYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Dbh1Oa5q; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-af523f4511fso4799374a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 14:26:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1744147587; x=1744752387; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3ZXenv5NdRxAPmtDIgNSh4oCYjmXRf9QV8n2/7t4A18=;
+        b=Dbh1Oa5qfoim0aPo+7t+97RidFLLZx5YuGgcec7OjWmrmhOUoyTcdsaSqjo2dLaY4u
+         08WzspXIUiRbe/eEXfIomy1nR3Y2GDvSg+4wbpuWI+EDtFEJzufrcm8VIJVHzV0RZ8yI
+         V4WQZsypqGTa2UeETTW5HBVPvlyFnod1Nvb3Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744144023; x=1744748823;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cqXN69eJjj53VercbPPDUqUwXi+7djq/bqmM04r34T4=;
-        b=EMOGdtQmp3gO/3wyZCgvlasSnb5kEb26lQoapZUWYS59Yt7N1VidHn77l0n2KiVXQH
-         KWYAixP+0P+Lako9SLX4ugUj0HGqmbbnDbqER78vOtcFyA1U31KRblJgSpJAJOsJadIB
-         Tt49hp2E5P8CXhw2E7K7UjqwYwSv7fRD6a5CJv9Lyx3oKVUHISTUUXfuSelH8Aw1qm/b
-         ndMnIMzUlql8MNyINvmlwarNnmUx/yY4Nybos3vDpD5hDJ4/umCYWj9TFx4tYiT2e3t3
-         FRa0JZh74zjZ4axZPGN4EQDG+4QCiMvBRz+mOrm5oOLWkHdQXrUw7JbRI5OTm7RE42nc
-         EjMw==
-X-Forwarded-Encrypted: i=1; AJvYcCX9otQDO4YuE0BLGKGh8BtPKWcJpfpbNKY1gT5e50vd9wTqwMtTM05K/Qm2kRloSrZHVHoGskT6S3jB8fKt@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywf5CUcodeK4N0+b6PIv5oIwYEJ7Xe9nvLO4Y5ClDP95yRkwcSM
-	SKjzEzUb01SxjkrD/FZiQLiIQOW3h8qmCfP80vo4S4stcU1q13E6F7IH8zZ2ARswG0HxqRGDHyk
-	PHoQm5LCTCJ++ntZ/8JsNZWGiBkYlBt6BpdHwC+6L/Gc9a+sdRxhtHtToVJMBLCKafBWFPYbr
-X-Gm-Gg: ASbGncsCJXAx339MP7QLyJgx1bKS5wTpjxgj4Q/CjGL1hut2NkKpNfEAX9kSc9Lhidg
-	Q1nzlLzbcOo/pwqhjnjWPmm8iP4vOiOxzzjanZ/5f1D6meMDuqS5JwmMiu41S2Si2kZARu2w1HK
-	SjWXJsv7JCjFujG6maX8QUp6UdEI6+OlL+yLwUQkoaK02MjuR/lE+tzK+NAwjiJtKFvNrTY4li6
-	P4JS8tTAPaFXZx5QcOSgp5hOoDtLqZlnA8ek+3I1+sOphFmt4EmEP29WJ/cSSaq2lf3auzMH2uW
-	YWUffq8i6LG1mBWHz10/rS9Ga/+rBqPgeAjADsucp3E+ZQimEqn97SmUyWe2pvq4AxpObzE=
-X-Received: by 2002:a05:620a:408c:b0:7c5:6c02:4c25 with SMTP id af79cd13be357-7c79cbeb80emr99552985a.25.1744144023071;
-        Tue, 08 Apr 2025 13:27:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFa91aTShNdMl7VmKxRQdJAndH07tT2U427MXJh74EQlfRPx/O/pMOjC+hvL+QXxIcw4lHwVA==
-X-Received: by 2002:a05:620a:408c:b0:7c5:6c02:4c25 with SMTP id af79cd13be357-7c79cbeb80emr99549385a.25.1744144022716;
-        Tue, 08 Apr 2025 13:27:02 -0700 (PDT)
-Received: from [10.187.209.180] (37-33-188-210.bb.dnainternet.fi. [37.33.188.210])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30f0314b908sm20034721fa.55.2025.04.08.13.27.00
+        d=1e100.net; s=20230601; t=1744147587; x=1744752387;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3ZXenv5NdRxAPmtDIgNSh4oCYjmXRf9QV8n2/7t4A18=;
+        b=KqSfBtT+nzwHbsEHEZ0JTqk1cSxxf4p+YvSosYKh/cXJy9ZhkXmcNE+QuMo83P9lPw
+         j8ajryw+3Q2g13QIPkAFgnkk/AlYnmK+5RUYRKQ6Z9G+tHFGNCoJTszZ1FwusOfrvqOv
+         gCMgZcf9WV/fYS4hDL5FSzDEbwL97tB3l/pX1Dc2oHfuwa7vipYU8vL41AsEbWbA21DB
+         IZ5pmiOwBWFLtl5PrGpHL6a8S4unlt1tk5e3a9NZ4RNtNncWAmUoHB062tX1VnDJ17Ue
+         EE9Ps97tNNk2NSUI3EA7wMyr21SVG43kRHxpnhcu46iGAGTQlzGXGdT5I7/Eq7Is5f6s
+         /a4A==
+X-Forwarded-Encrypted: i=1; AJvYcCWIWvPeZyh9gMsX+hSke1JRcLLQVE+7nqR5b/8vwape6e/5WXrR/4tnj4hCdA5m2p06jx6/tUOM9lxt5VWi@vger.kernel.org
+X-Gm-Message-State: AOJu0YySxc6Mj6yQZy2tGPOXW5lKEYT4fSnm7jv9X+722b7BrW9JO4q7
+	Yq0lyCec6uErI9ID3aG0b3m3XPgakQ2+WCxWn0/n+rqB4iQ7rd3ICKNcOQib+Q==
+X-Gm-Gg: ASbGncsCgimSE/JCjHIf4UxtE3UYW0LfTMmVkKWJkzBKylWjpeGtw3wXn1UsxH/SYE5
+	RHmS20gWkAEqv+4EUHmkBu8idGKiZDRihSs/H0AwH92VllDAI/jkcI0eIWZznAig2AUMAWeOijs
+	wPZ+kelT3jcHWZ9hhrb//ogxH+6iFMTO28Z8AHKEf6GeAB9pFih2NAO7HgIgX1nB24NGsLJjSn6
+	fIWvs6FTjhwmZIvsa8qMDB6NFRebToZLsjmv5e5ZG8W58NL4Vuti9k4UP+86DiStIYtOmAW/IhX
+	jnEGrLymbBu7ztUPOB/bAJPMrB/5Jjo4tccFkvps3US6n8s1XAZhXmTjrq2acUBCrCMYXDcv0AG
+	G0dNqQaU=
+X-Google-Smtp-Source: AGHT+IGWBL43POLyTKIVtvqCNnHwPO80WghJhRq8bDGo1CpD365Z+Gt9wZXz61k815bEhQ2ufO5cSg==
+X-Received: by 2002:a17:90b:2f46:b0:2ff:592d:23bc with SMTP id 98e67ed59e1d1-306dbb66ae3mr1063923a91.4.1744147587486;
+        Tue, 08 Apr 2025 14:26:27 -0700 (PDT)
+Received: from localhost ([2a00:79e0:2e14:7:f6a0:ca46:b8a5:169e])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-305983b9954sm11484930a91.32.2025.04.08.14.26.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Apr 2025 13:27:01 -0700 (PDT)
-Message-ID: <767e11cd-e338-4e00-a8e7-2e15f3da84b4@oss.qualcomm.com>
-Date: Tue, 8 Apr 2025 23:26:59 +0300
+        Tue, 08 Apr 2025 14:26:26 -0700 (PDT)
+Date: Tue, 8 Apr 2025 14:26:24 -0700
+From: Brian Norris <briannorris@chromium.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	dmitry.baryshkov@linaro.org, Tsai Sung-Fu <danielsftsai@google.com>,
+	Jim Quinlan <jim2101024@gmail.com>,
+	Nicolas Saenz Julienne <nsaenz@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Subject: Re: [RFC] PCI: pwrctrl and link-up dependencies
+Message-ID: <Z_WUgPMNzFAftLeE@google.com>
+References: <Z_WAKDjIeOjlghVs@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/10] dt-bindings: display: msm: document DSI
- controller and phy on SA8775P
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Ayushi Makhija <quic_amakhija@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robdclark@gmail.com, dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
-        conor+dt@kernel.org, andrzej.hajda@intel.com,
-        neil.armstrong@linaro.org, rfoss@kernel.org,
-        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
-        jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com,
-        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
-        quic_jesszhan@quicinc.com
-References: <20250311122445.3597100-1-quic_amakhija@quicinc.com>
- <20250311122445.3597100-4-quic_amakhija@quicinc.com>
- <20250312-calm-steadfast-cricket-fe9dd8@krzk-bin>
- <654d409e-2325-46e7-a064-ed9e64277e69@quicinc.com>
- <a168a473-c363-4041-8e3e-84fa44e92b10@kernel.org>
- <zpmr6cpiixyu2sj7r7oqpqsge6dcqw6xszldf7ugznmcrxqsme@efiwnggcn5qx>
- <a654d62e-502a-4a47-96c4-a44c14860e54@kernel.org>
-Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <a654d62e-502a-4a47-96c4-a44c14860e54@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: G9C7KHpR4uqtgwidvPSzMa9V0nLugM4i
-X-Authority-Analysis: v=2.4 cv=KtdN2XWN c=1 sm=1 tr=0 ts=67f58698 cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=gh1egkeLKbPt9jDVRuYeUQ==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=0U3iGMtbaPiC_UXuCSIA:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: G9C7KHpR4uqtgwidvPSzMa9V0nLugM4i
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-08_08,2025-04-08_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0 spamscore=0
- malwarescore=0 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=800 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504080142
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z_WAKDjIeOjlghVs@google.com>
 
-On 08/04/2025 21:42, Krzysztof Kozlowski wrote:
-> On 08/04/2025 13:44, Dmitry Baryshkov wrote:
->> On Tue, Apr 08, 2025 at 01:03:53PM +0200, Krzysztof Kozlowski wrote:
->>> On 08/04/2025 12:38, Ayushi Makhija wrote:
->>>>>> +    properties:
->>>>>> +      compatible:
->>>>>> +        items:
->>>>>
->>>>> contains
->>>>>
->>>>>> +          - const: qcom,sa8775p-dsi-ctrl
->>>>>> +          - const: qcom,mdss-dsi-ctrl
->>>>>
->>>>> Drop fallback
->>>>>
->>>>   
->>>> Hi Krzysztof,
->>>>
->>>> I couldn't understand the meaning of "Drop fallback", could please elaborate it ?
->>> Look at SM8750 example on the lists. Keep only front compatible.
->>
->> Why?
++ adding pcie-brcmstb.c folks
+
+On Tue, Apr 08, 2025 at 12:59:39PM -0700, Brian Norris wrote:
+> TL;DR: PCIe link-up may depend on pwrctrl; however, link-startup is
+> often run before pwrctrl gets involved. I'm exploring options to resolve
+> this.
+
+Apologies if a quick self-reply is considered nosiy or rude, but I
+nearly forgot that I previously was looking at "pwrctrl"-like
+functionality and noticed that drivers/pci/controller/pcie-brcmstb.c has
+had a portion of the same "pwrctrl" functionality for some time (commit
+93e41f3fca3d ("PCI: brcmstb: Add control of subdevice voltage
+regulators")).
+
+Notably, it performs its power sequencing before starting its link, for
+(I believe) exactly the same reasons as I mention below. While I'm sure
+it could theoretically be nice for them to be able to use
+drivers/pci/pwrctrl/, I expect they cannot today, for the same reasons.
+
+Brian
+
+P.S. My original post is here, in case you're interested:
+https://lore.kernel.org/linux-pci/Z_WAKDjIeOjlghVs@google.com/
+I also leave the rest of the message intact below.
+
+> Hi all,
 > 
-> To make things simpler and shorter.
-
-I'd prefer consistency. Previous platforms use qcom,mdss-dsi-ctrl.
-
-
--- 
-With best wishes
-Dmitry
+> I'm currently looking at reworking how some (currently out-of-tree, but I'm
+> hoping to change that) pcie-designware based drivers integrate power sequencing
+> for their endpoint devices, as well as the corresponding start_link()
+> functionality.
+> 
+> For power sequencing, drivers/pci/pwrctrl/ looks like a very good start at what
+> we need, since we have various device-specific regulators, GPIOs, and
+> sequencing requirements, which we'd prefer not to encode directly in the
+> controller driver.
+> 
+> For link startup, pcie-designware-host.c currently
+> (a) starts the link via platform-specific means (dw_pcie::ops::start_link()) and
+> (b) waits for the link training to complete.
+> 
+> However, (b) will fail if the other end of the link is not powered up --
+> e.g., if the appropriate pwrctrl driver has not yet loaded, or its
+> device hasn't finished probing. Today, this can mean the designware
+> driver will either fail to probe, or at least waste time for a condition
+> that we can't achieve (link up), depending on the HW/driver
+> implementation.
+> 
+> I'm wondering how any designware-based platforms (on which I believe pwrctrl
+> was developed) actually support this, and how I should look to integrate
+> additional platforms/drivers. From what I can tell, the only way things would
+> work today would either be if:
+> (1) a given platform uses the dw_pcie_rp::use_linkup_irq==true functionality,
+>     which means pcie-designware-host will only start the link, but not wait for
+>     training to succeed. (And presumably the controller will receive its
+>     link-up IRQ after power sequencing is done, at which point both pwrctrl and
+>     the IRQ may rescan the PCI bus.) Or:
+> (2) pci/pwrctrl sequencing only brings up some non-critical power rails for the
+>     device in question, so link-up can actually succeed even without
+>     pwrctrl.
+> 
+> My guess is that (1) is the case, and specifically that the relevant folks are
+> using the pcie-qcom.c, with its "global" IRQ used for link-up events.
+> 
+> So how should I replicate this on other designware-based platforms? I suppose
+> if the platform in question has a link-up IRQ, I can imitate (1). But what if
+> it doesn't? (Today, we don't validate and utilize a link-up IRQ, although it's
+> possible there is one available. Additionally, we use various retry mechanisms
+> today, which don't trivially fit into this framework, as we won't know when
+> precisely to retry, if power sequencing is controlled entirely by some other
+> entity.)
+> 
+> Would it make sense to introduce some sort of pwrctrl -> start_link()
+> dependency? For example, I see similar work done in this series [1], for
+> slightly different reasons. In short, that series adds new
+> pci_ops::{start,stop}_link() callbacks, and teaches a single pwrctrl driver to
+> stop and restart the bridge link before/after powering things up.
+> 
+> I also see that Manivannan has a proposal out [2] to add semi-generic
+> link-down + retraining support to core code. It treads somewhat similar
+> ground, and I could even imagine that its pci_ops::retrain_link()
+> callback could even be reimplemented in terms of the aforementioned
+> pci_ops::{start,stop}_link(), or possibly vice versa.
+> 
+> Any thoughts here? Sorry for a lot of text and no patch, but I didn't just want
+> to start off by throwing a 3rd set of patches on top of the existing ones that
+> tread similar ground[1][2].
+> 
+> Regards,
+> Brian
+> 
+> [1] [PATCH v4 00/10] PCI: Enable Power and configure the TC956x PCIe switch
+> https://lore.kernel.org/linux-pci/20250225-qps615_v4_1-v4-0-e08633a7bdf8@oss.qualcomm.com/
+> 
+> [PATCH v4 03/10] PCI: Add new start_link() & stop_link function ops
+> https://lore.kernel.org/linux-pci/20250225-qps615_v4_1-v4-3-e08633a7bdf8@oss.qualcomm.com/
+> 
+> [...]
+> [
+> [PATCH v4 08/10] PCI: pwrctrl: Add power control driver for tc956x
+> https://lore.kernel.org/linux-pci/20250225-qps615_v4_1-v4-8-e08633a7bdf8@oss.qualcomm.com/
+> 
+> [2] [PATCH 0/2] PCI: Add support for handling link down event from host bridge drivers
+> https://lore.kernel.org/linux-pci/20250221172309.120009-1-manivannan.sadhasivam@linaro.org/
 
