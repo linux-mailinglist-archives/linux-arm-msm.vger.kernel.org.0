@@ -1,77 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-53507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FA1AA7FC21
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 12:34:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D062DA7FC49
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 12:38:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF134189B389
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 10:29:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C7644423F72
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 10:31:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A18D268C41;
-	Tue,  8 Apr 2025 10:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E4B026A0BA;
+	Tue,  8 Apr 2025 10:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="l0iUWLzS"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="C1BR6YR+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE10E2686A9
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 10:23:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC9A2206A2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 10:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744107803; cv=none; b=ikPymjGZOoOhM3xX9fSGkKLd4MEe6x7obsu6sji+8DZlh6bmV3pg+HoT/obGTYp1yOkp0yBgqPrJCmSEMTAWgFbvN/Dvk4yYnd2Ck+rLU/dSdF0iQ89fJ137mdDZ5bhWpvwakoCVfwdHJgAcYu/AqUwY/q5fddf7+/4Dp6rNV20=
+	t=1744108084; cv=none; b=tGxcwfJRIH0oGjuPE6bz1g5zuBZZlZ4iW4b5pFgCYNXTi3KFdtzGB6YAXJPrtkW80dr8O7UX4qG0f+P1nGKvzVOL5D6Zz4BuiUlGt7pxUiB2HbskuRL5xAUZ3IXF3rq4AJKBx5MR0dAeJeT14znThPWSbDe9vEqpWoowtB1VuyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744107803; c=relaxed/simple;
-	bh=OGNuM13Jn2n20UyvzyKj9h90vOLjQ7TUEPBE+s/TVZc=;
+	s=arc-20240116; t=1744108084; c=relaxed/simple;
+	bh=WrI0lX7+J5s+4CwxTeHTL2V9dJJ7Iqdsj3G+bwSv8Qg=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=ce15g16jnKAk19qm1COkLSQTL6RWIqHSb/OW8vJiBGXGm9VkP66c5BzOeY92g8OkXOP7jJgwpEs54SgG0FCra55kSWwrB88F/5l57g9T7hJ2xzLU/F0P8uGDRv45V9dgmFKzo5ugQGs89FhJxqX2OMcLq7m6nbm3yrwsTQFcyo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=l0iUWLzS; arc=none smtp.client-ip=209.85.208.51
+	 References:In-Reply-To; b=C4YqBUTz56OYyW+i2iJyzq8aRBoqgsHKaFg837kkqLBq0TZ5jMekNRLlrrcgDF8zzv64YMkLKnKAWFuHhaHOGtHoF3lPFWOIrXItexCfci5bSnNxVdTJbvx385bTXjPE087or/1/QTupmjvMoEZd4DEkvXkIG+PtOhlG44aIk4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=C1BR6YR+; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5ec9d24acfbso11829639a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 03:23:20 -0700 (PDT)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ac6ed4ab410so866965366b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 03:28:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1744107799; x=1744712599; darn=vger.kernel.org;
+        d=fairphone.com; s=fair; t=1744108080; x=1744712880; darn=vger.kernel.org;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ATjvu1YuAWOqdIdSFjKRxn6bFisEx6/wr2o3X2NPy/4=;
-        b=l0iUWLzS8/ij7Kcua7IjG/NLTV8wM07QYHdjzRlm+LQstzU20PXVR6VeaDklllgMCg
-         ti8XxNoNSijrxDJROigMDzYdNKJ+FuRrlhqe9k+PBZ1/hBIhVr9Y9y9PStjhY5uoGUEP
-         G1m8z0xjvCk5eXeEF9nwf/sX1F28hEJyJpcyL1K5HaCwD2PR5aNfj3+CyyjslpwNaxFU
-         lX5S6ej9HcxpFZFbL+PCu230b+xVzdA93UsTi3F6u+eoxrFo3gl0to6BGTfdcvI4LFvn
-         v5E0llgxCYQZrVJpERiHPzF+jARDJRX2vqlkuzZxMnW178euJ2yo2kA757PXG0FTpr4A
-         7AqA==
+        bh=Pv5rrjrhBcfKnYh0Q7OEJ/yH0eQFOKYhTNlnDBdY1gs=;
+        b=C1BR6YR+nGpAodc2Emag1kg/19o1IQUzGynXJh+FLgOOva8XwJVMOwSaI6FqEvr9gW
+         rfigQNGiU73BOQFNwdI8Z75ud0A2FSqcDi9x+S8hgwrgEJyiagxXgpRz05KyJHBeyXYE
+         LAQ+WDoZBJa052TPGot/7bruib3RqLQMMecrYBCeJCLTdAigo3ab15y0XlR3VimY6kyT
+         6crfKu/MLqFeFaCMRKU/9GUml5olMXEemHGnCYexkvZhC4dAIfAHdRKo8oXX0vmdsYzs
+         xY5kp8bkF4TaTShQHazuuAzHW5ARM59OAlwG7R4wrpi0acSUeq5e++43DEO8evY2+Sbf
+         pM9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744107799; x=1744712599;
+        d=1e100.net; s=20230601; t=1744108080; x=1744712880;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=ATjvu1YuAWOqdIdSFjKRxn6bFisEx6/wr2o3X2NPy/4=;
-        b=Z+bipUg2lnE+RLvZBivr/95PqsXySkaCitsRGUf2VYdISZkRwAOO/tStIj5fxVqUgG
-         TPdJgbyFhey0eaZnMnTNp0hN2CuBil6QMu1IIoEZAmhFhZvJBRFZAFsBJTSTLmi4OfCM
-         C9dLZKtWNokGcDsM2PGP0M9DWqhd/l7se2gqayaSgVsq6vGGWccN7iDLnmLNJ5Sdu1pG
-         4Q8drE6Y98v1ZSn7EYiaV3oOk3Hxu94ObSnRdF7aB0ysgHyaDXJnzOPtYEBDT+JmccWs
-         DYLiM59xY3SjeOxiOc9Un2oPPwBwFGb+CV7a45+KZDrjCDxssdG7YOnK54a7mYiJLhct
-         d3Dw==
-X-Gm-Message-State: AOJu0YxI9XK3fbmpKxOQyCKNMlRdb6IHKgHXHGO03mrBNpIBISowrlnq
-	VTfSMnLywJSZ5dBkFDaLdVXMr2sub3iPTDn+dhBStfgr0EgsNlKB6ihIdUKGLEY=
-X-Gm-Gg: ASbGncsXFYmTm0S1XEzSU4vWovlmyES4LXW/b6qef8iE1+o13LFkyafoEGOxzcFBDZv
-	Ac/Oum5bJDuFaCE3jCXOgMgFXmVZbCj7IMkeOsB+MyFRT+2FpoeFhzFXQ60/nn/UFack/L6FQYo
-	KaiiroOF+AiHUxY0DHoKNp7K3dvImfjWFn1dIvaYcne3OjiZgTLbuVqtd7IZamWXufKe0xMfjsI
-	jPu6bZb1pWpvBdWZDEpJ4txnYvW78Su3E36cD6qXNbwkzTGe6S4zq0jK6nNmRJpYCj9sJNzd7d8
-	Hhrroe3YZ33s2yNVog0LBCTIIGrnmPOhjNHim57YNFkZ4SNpMjV8wQKuIs0/m1keqk7CehNlFhJ
-	GcAUOfauWKZUDVg==
-X-Google-Smtp-Source: AGHT+IESezrO0NwdMHDG4u4oSclKwyxgWMeMzsPuPPHtz4vm8/nQJIpzM61Y73uij3wfyLK4ntLQ6g==
-X-Received: by 2002:a17:907:9495:b0:ac8:1ea0:650d with SMTP id a640c23a62f3a-ac81ea06691mr191813166b.0.1744107798996;
-        Tue, 08 Apr 2025 03:23:18 -0700 (PDT)
+        bh=Pv5rrjrhBcfKnYh0Q7OEJ/yH0eQFOKYhTNlnDBdY1gs=;
+        b=Dqp+iSVxOogmDoGK8b+DrclJGIXnBsyUOkS1W9TcdwCA+6E3c1gbiBD73hroDkIDiF
+         RrBvlBCwWIw6AyqVxccEPu5nF2nV6Lq/0UnrK6kmIy5xyrAJIvtwsHMPIHPgEbmMHsu7
+         N3W9656oTfnjyxaQLGxhNLBJ0RGhDwiM6rdjqoK9uwhuGSffE5jKRSg5TyKaAP6jRfVu
+         rACs3PHOpUsN8jneKEsOOdjgxujCV0It38PCPY2XuoNnowPS6Ji+e09Ql6j2k6BwriBX
+         yxbrJ2QOyKjpLssfJyXAymTLqoRZFre8l5gPmx/xZsHC7h956yi2LSymjT4OutURXMnm
+         n6wQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVtAbUGLLOKE9Jv7hXHLmZWeGforWPDSVe+2AectTfqxXY7KALlqeY8np1snXoP/uUK0ZTP9D5tkNxrKJSR@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkS+Zy6zJcPpiA1ohOEMTIuVDa3VUmU70x8hwKtSyVMcVmyPtX
+	3zKx0iwsZgsdrvzuDGa3Zc6ZjLTS32mKEGdNyuml3kv6jY+OwPFaO+wo1Ye+slo=
+X-Gm-Gg: ASbGncuLKD50vuDetEiFBvGGBO5wmTNaX3Mr1v6xJlzvEKbjcuicJr2MwRTs95g5HDb
+	yZafpIckoiamOrXek38AG3mj4SrO8rN2EhrnF/oYN6Vvenag3q9d1i375eNtU0dgsLuwTvCeL/6
+	5WnIQq9AVE9J1JbBrLBSpJ3wmSqcKoCO2zOWuCMd23pgtGIAAQRzQzHYfTTu857dRBrw4Y1DVBb
+	o9Q1Pbk99n8atHKpY8mRql13AZQw5m42EQea4zaQsL2BuWkeMc5ggQdOKDFtgLzmAp938oZMuvI
+	1l0F/6WUkAXdKEv5vJpDdm3znqB7/PBFfoa0csFRW5E+x1COBfgyb/vUpcUi/3/drCLXQpSldUH
+	qBsbjhDholV2ZBg==
+X-Google-Smtp-Source: AGHT+IESBdUuaEBUx9lGQ+c+tpA4+Swqaw0w+9TY0oUjOWcmr9SgDm/idOrRiIt3O3EZmRZOQ/hskA==
+X-Received: by 2002:a17:906:2b05:b0:ac8:1798:a796 with SMTP id a640c23a62f3a-ac81798a8fdmr245365866b.54.1744108080129;
+        Tue, 08 Apr 2025 03:28:00 -0700 (PDT)
 Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f0880a55aasm8049772a12.78.2025.04.08.03.23.18
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7bfe67e17sm896532566b.34.2025.04.08.03.27.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Apr 2025 03:23:18 -0700 (PDT)
+        Tue, 08 Apr 2025 03:27:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,80 +81,193 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 08 Apr 2025 12:23:18 +0200
-Message-Id: <D916M5DUK1YC.282XEZ0TMSNEC@fairphone.com>
-Cc: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, "Neil Armstrong"
- <neil.armstrong@linaro.org>, "Dmitry Baryshkov" <lumag@kernel.org>
-Subject: Re: [PATCH v2 03/24] ARM: dts: qcom: msm8916: Use the header with
- DSI phy clock IDs
+Date: Tue, 08 Apr 2025 12:27:58 +0200
+Message-Id: <D916PQ9VLGEB.Q61B70OVQ9JZ@fairphone.com>
+Cc: "Yassine Oudjana" <yassine.oudjana@gmail.com>,
+ <linux-kernel@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+ <linux-kbuild@vger.kernel.org>
+Subject: Re: [PATCH 0/3] QRTR bus and Qualcomm Sensor Manager IIO drivers
 From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>, "Bjorn
+To: "Yassine Oudjana" <y.oudjana@protonmail.com>, "Jonathan Cameron"
+ <jic23@kernel.org>, "Lars-Peter Clausen" <lars@metafoo.de>, "Bjorn
  Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- <cros-qcom-dts-watchers@chromium.org>
+ <konradybcio@kernel.org>, "Manivannan Sadhasivam"
+ <manivannan.sadhasivam@linaro.org>, "David S. Miller"
+ <davem@davemloft.net>, "Eric Dumazet" <edumazet@google.com>, "Jakub
+ Kicinski" <kuba@kernel.org>, "Paolo Abeni" <pabeni@redhat.com>, "Simon
+ Horman" <horms@kernel.org>, "Masahiro Yamada" <masahiroy@kernel.org>,
+ "Nathan Chancellor" <nathan@kernel.org>, "Nicolas Schier"
+ <nicolas.schier@linux.dev>, "Alexander Sverdlin"
+ <alexander.sverdlin@gmail.com>, "Sean Nyekjaer" <sean@geanix.com>, "Javier
+ Carrasco" <javier.carrasco.cruz@gmail.com>, "Matti Vaittinen"
+ <mazziesaccount@gmail.com>, "Antoniu Miclaus" <antoniu.miclaus@analog.com>,
+ "Ramona Gradinariu" <ramona.gradinariu@analog.com>, "Yo-Jung (Leo) Lin"
+ <0xff07@gmail.com>, "Andy Shevchenko" <andriy.shevchenko@linux.intel.com>,
+ "Neil Armstrong" <neil.armstrong@linaro.org>,
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?=
+ <barnabas.czeman@mainlining.org>, "Danila Tikhonov" <danila@jiaxyga.com>,
+ "Antoni Pokusinski" <apokusinski01@gmail.com>, "Vasileios Amoiridis"
+ <vassilisamir@gmail.com>, "Petar Stoykov" <pd.pstoykov@gmail.com>,
+ "shuaijie wang" <wangshuaijie@awinic.com>, "Yasin Lee"
+ <yasin.lee.x@gmail.com>, "Borislav Petkov (AMD)" <bp@alien8.de>, "Dave
+ Hansen" <dave.hansen@linux.intel.com>, "Tony Luck" <tony.luck@intel.com>,
+ "Pawan Gupta" <pawan.kumar.gupta@linux.intel.com>, "Ingo Molnar"
+ <mingo@kernel.org>
 X-Mailer: aerc 0.20.1-0-g2ecb8770224a
-References: <20250408-dts-qcom-dsi-phy-clocks-v2-0-73b482a6dd02@linaro.org>
- <20250408-dts-qcom-dsi-phy-clocks-v2-3-73b482a6dd02@linaro.org>
-In-Reply-To: <20250408-dts-qcom-dsi-phy-clocks-v2-3-73b482a6dd02@linaro.org>
+References: <20250406140706.812425-1-y.oudjana@protonmail.com>
+In-Reply-To: <20250406140706.812425-1-y.oudjana@protonmail.com>
 
-On Tue Apr 8, 2025 at 11:32 AM CEST, Krzysztof Kozlowski wrote:
-> Use the header with DSI phy clock IDs to make code more readable.
+Hi Yassine,
 
-Hi Krzysztof,
+On Sun Apr 6, 2025 at 4:07 PM CEST, Yassine Oudjana wrote:
+> Sensor Manager is a QMI service available on several Qualcomm SoCs which
+> exposes available sensors and allows for getting data from them. This
+> service is provided by either:
+>
+> - SSC (Snapdragon Sensor Core): Also known as SLPI (Sensor Low Power
+>   Island). Has its own set of pins and peripherals to which sensors are
+>   connected. These peripherals are generally inaccessible from the AP,
+>   meaning sensors need to be operated exclusively through SSC. The only
+>   known SoCs in this category are MSM8996 and MSM8998 (and their
+>   derivatives).
+> - ADSP (Audio DSP): Shares pins and peripherals with the AP. At least on
+>   some devices, these pins could be configured as GPIOs which allows the =
+AP
+>   to access sensors by bit-banging their interfaces. Some SoCs in this
+>   category are SDM630/660, MSM8953, MSM8974 and MSM8226.
+>
+> Before Sensor Manager becomes accessible, another service known as Sensor
+> Registry needs to be provided by the AP. The remote processor that provid=
+es
+> Sensor Manager will then request data from it, and once that process is
+> done, will expose several services including Sensor Manager.
+>
+> This series adds kernel drivers for the Sensor Manager service, exposing
+> sensors accessible through it as IIO devices. To facilitate probing of th=
+e
+> Sensor Manager core driver, QRTR is turned into a bus, with services bein=
+g
+> exposed as devices. Once the Sensor Manager service becomes available, th=
+e
+> kernel attaches its device to the driver added in this series. This allow=
+s
+> for dynamic probing of Sensor Manager without the need for static DT
+> bindings, which would also not be ideal because they would be describing
+> software rather than hardware. Sensor Manager is given as a working examp=
+le
+> of the QRTR bus. Kernel drivers for other services may also be able
+> to benefit from this change.
+>
+> As previously mentioned, a Sensor Registry server must run on the AP to
+> provide the remote processor (either SLPI or ADSP) with necessary data.
+> A userspace implementation of this server is made[1]. The server can be
+> supplied with the necessary data in the form of a plain-text configuratio=
+n
+> file that can be pulled from the Android vendor partition (sample[2]), or
+> generated from a binary file that can be pulled from the persist partitio=
+n.
+> A more recently developed kernel implementation of the Sensor Registry
+> server[3] can also be used. This last implementation only supports readin=
+g
+> data from the binary file pulled from persist. Sensor Registry remains ou=
+t
+> of the scope of this patch series, as the Sensor Registry server and Sens=
+or
+> Manager client (this series) are fully independent components.
+>
+> Due to the total lack of documentation on Sensor Manager, this driver was
+> almost entirely the result of a process of capturing transactions between
+> SSC and the proprietary Android daemons with several methods and manually
+> decoding and interpreting them, sometimes by comparing with values acquir=
+ed
+> from Android APIs. A blog post[4] describes part of this process more
+> detail. A little piece of downstream Android open-source code[5] was also
+> used as reference during later stages of development. All of this, as wel=
+l
+> as a lack of time on my side for the last couple of years, meant that thi=
+s
+> driver had to go through a slow and intermittent development process for
+> more than 3 years before reaching its current state.
+>
+> Currently supported sensor types include accelerometers, gyroscopes,
+> magentometers, proximity and pressure sensors. Other types (namely
+> light and temperature sensors) are close to being implemented.
+>
+> Some testing instructions may also be found here[6].
 
-This patch was the wrong subject, it's touching arm64, not arm32.
+It's awesome to see this work being sent! I remember trying this quite a
+while ago, so I definitely need to pick this up again and try it out!
 
-And thanks for sending this series, it's nice to see some magic numbers
-disappear that make little sense if you don't know what it's about :)
+I can try on msm8226, msm8974 and msm8953 so lots of platforms which
+will gain sensor support thanks to you!
 
 Regards
 Luca
 
 >
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/msm8916.dtsi | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+> [1] https://gitlab.com/msm8996-mainline/sns-reg
+> [2] https://github.com/nian0114/android_vendor_xiaomi_scorpio/blob/mkn-mr=
+1/proprietary/etc/sensors/sensor_def_qcomdev.conf
+> [3] https://github.com/sdm660-mainline/linux/pull/57
+> [4] https://emainline.gitlab.io/2022/04/08/Unlocking_SSC_P2.html
+> [5] https://android.googlesource.com/platform/system/chre/+/android-8.0.0=
+_r2/platform/slpi
+> [6] https://gitlab.postmarketos.org/postmarketOS/pmaports/-/merge_request=
+s/4118
 >
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/=
-qcom/msm8916.dtsi
-> index 8f35c9af18782aa1da7089988692e6588c4b7c5d..c89f9e92e832eae8f630555e9=
-e7f5817d6731d4d 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> @@ -4,6 +4,7 @@
->   */
-> =20
->  #include <dt-bindings/arm/coresight-cti-dt.h>
-> +#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
->  #include <dt-bindings/clock/qcom,gcc-msm8916.h>
->  #include <dt-bindings/clock/qcom,rpmcc.h>
->  #include <dt-bindings/interconnect/qcom,msm8916.h>
-> @@ -1497,8 +1498,8 @@ gcc: clock-controller@1800000 {
->  			reg =3D <0x01800000 0x80000>;
->  			clocks =3D <&xo_board>,
->  				 <&sleep_clk>,
-> -				 <&mdss_dsi0_phy 1>,
-> -				 <&mdss_dsi0_phy 0>,
-> +				 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>,
-> +				 <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
->  				 <0>,
->  				 <0>,
->  				 <0>;
-> @@ -1590,8 +1591,8 @@ mdss_dsi0: dsi@1a98000 {
-> =20
->  				assigned-clocks =3D <&gcc BYTE0_CLK_SRC>,
->  						  <&gcc PCLK0_CLK_SRC>;
-> -				assigned-clock-parents =3D <&mdss_dsi0_phy 0>,
-> -							 <&mdss_dsi0_phy 1>;
-> +				assigned-clock-parents =3D <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
-> +							 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>;
-> =20
->  				clocks =3D <&gcc GCC_MDSS_MDP_CLK>,
->  					 <&gcc GCC_MDSS_AHB_CLK>,
+> Yassine Oudjana (3):
+>   net: qrtr: Turn QRTR into a bus
+>   net: qrtr: Define macro to convert QMI version and instance to QRTR
+>     instance
+>   iio: Add Qualcomm Sensor Manager drivers
+>
+>  MAINTAINERS                                 |  18 +
+>  drivers/iio/accel/Kconfig                   |  10 +
+>  drivers/iio/accel/Makefile                  |   2 +
+>  drivers/iio/accel/qcom_smgr_accel.c         | 138 ++++
+>  drivers/iio/common/Kconfig                  |   1 +
+>  drivers/iio/common/Makefile                 |   1 +
+>  drivers/iio/common/qcom_smgr/Kconfig        |  16 +
+>  drivers/iio/common/qcom_smgr/Makefile       |   8 +
+>  drivers/iio/common/qcom_smgr/qcom_smgr.c    | 589 ++++++++++++++++
+>  drivers/iio/common/qcom_smgr/qmi/Makefile   |   3 +
+>  drivers/iio/common/qcom_smgr/qmi/sns_smgr.c | 711 ++++++++++++++++++++
+>  drivers/iio/common/qcom_smgr/qmi/sns_smgr.h | 163 +++++
+>  drivers/iio/gyro/Kconfig                    |  10 +
+>  drivers/iio/gyro/Makefile                   |   2 +
+>  drivers/iio/gyro/qcom_smgr_gyro.c           | 138 ++++
+>  drivers/iio/magnetometer/Kconfig            |   9 +
+>  drivers/iio/magnetometer/Makefile           |   2 +
+>  drivers/iio/magnetometer/qcom_smgr_mag.c    | 138 ++++
+>  drivers/iio/pressure/Kconfig                |  10 +
+>  drivers/iio/pressure/Makefile               |   1 +
+>  drivers/iio/pressure/qcom_smgr_pressure.c   | 106 +++
+>  drivers/iio/proximity/Kconfig               |  10 +
+>  drivers/iio/proximity/Makefile              |   1 +
+>  drivers/iio/proximity/qcom_smgr_prox.c      | 106 +++
+>  drivers/soc/qcom/qmi_interface.c            |   5 +-
+>  include/linux/iio/common/qcom_smgr.h        |  64 ++
+>  include/linux/mod_devicetable.h             |   9 +
+>  include/linux/soc/qcom/qrtr.h               |  36 +
+>  net/qrtr/af_qrtr.c                          |  23 +-
+>  net/qrtr/qrtr.h                             |   3 +
+>  net/qrtr/smd.c                              | 250 ++++++-
+>  scripts/mod/devicetable-offsets.c           |   4 +
+>  scripts/mod/file2alias.c                    |  10 +
+>  33 files changed, 2573 insertions(+), 24 deletions(-)
+>  create mode 100644 drivers/iio/accel/qcom_smgr_accel.c
+>  create mode 100644 drivers/iio/common/qcom_smgr/Kconfig
+>  create mode 100644 drivers/iio/common/qcom_smgr/Makefile
+>  create mode 100644 drivers/iio/common/qcom_smgr/qcom_smgr.c
+>  create mode 100644 drivers/iio/common/qcom_smgr/qmi/Makefile
+>  create mode 100644 drivers/iio/common/qcom_smgr/qmi/sns_smgr.c
+>  create mode 100644 drivers/iio/common/qcom_smgr/qmi/sns_smgr.h
+>  create mode 100644 drivers/iio/gyro/qcom_smgr_gyro.c
+>  create mode 100644 drivers/iio/magnetometer/qcom_smgr_mag.c
+>  create mode 100644 drivers/iio/pressure/qcom_smgr_pressure.c
+>  create mode 100644 drivers/iio/proximity/qcom_smgr_prox.c
+>  create mode 100644 include/linux/iio/common/qcom_smgr.h
+>  create mode 100644 include/linux/soc/qcom/qrtr.h
 
 
