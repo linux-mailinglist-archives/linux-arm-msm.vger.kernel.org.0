@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-53532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0658EA80A4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 15:03:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6597A80A6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 15:05:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8E3311B8604F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 12:57:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CFD8B189FF97
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 12:59:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACF6E27D760;
-	Tue,  8 Apr 2025 12:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 842BD27EC99;
+	Tue,  8 Apr 2025 12:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SSYr/wrJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kHWt6b4o"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7866327CCF4;
-	Tue,  8 Apr 2025 12:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525E527EC93;
+	Tue,  8 Apr 2025 12:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116540; cv=none; b=AMWjlUrATpa46sgMwvposUImrsUsnWw/TlPL8gXMaEglQ4AqoaAvpnYzlS3kg7eg8Aq5Dgg1Jbxv52UKVlGw3KyScsD4pI2Ac1PkjSiFPX1SC/O6K0HZktPU0EHg/vPhca34mrepOscrRXdP5zgN9q8yCNZGtOKVx1X+BSa62Vo=
+	t=1744116547; cv=none; b=nIH9CSRlANWcXIFRKw2bFeT1UUJYKv9sXmdBHEu+h6Db0rVXjpLXubw5w+yNyP4HKtFX3AsQhn+e1C9GZmghTLcuqjzJZKPhKUQDUVLmTSvrIMrnWiiOsJN9mshdEk86ACom628UtCCuGJCiHo8Q75ITnGRtCmOPwHQbNVplAYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116540; c=relaxed/simple;
-	bh=XM+AsilHgrZC+uXc6rG5q/tsLJlK4RumDEB5BXZsV+E=;
+	s=arc-20240116; t=1744116547; c=relaxed/simple;
+	bh=vKT4C/GTC6IQ9JYbZes2rZEbu8WnSSrIU6DtAnt8Gv4=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Y84ZdlV7YhVvLfnHkCaAmvMv5sedY/O+x4mFt8H5WJlmZJCX/nZ35w65QGu0lzTP9tQe3j+lt2MeLQF3p3E/NSRf3g4OJ3KysY/YHzOt5LeOXtHkwW0lI1aT+xPPrkVxpmiNXDimwpS/LROMD+McOVqztRQne582yU8gXGXdWP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SSYr/wrJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E56C4CEEB;
-	Tue,  8 Apr 2025 12:48:57 +0000 (UTC)
+	 MIME-Version:Content-Type; b=mwmtxYSbqP/DB0q7FwqvikhvYpr1xx8YWZK6+WZjJnPnzjQIbwDm5L7HKG16jX0OsaacocVbxml5QIT6wdSYxgV8u5HQFvXIR+0/exnS6/fFfRPUVXKJJo48KLvEyQcrEItN6DtS5sgHMTty1gZonmqvg2h0wI07AmGim9AVjpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kHWt6b4o; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC80C4CEEC;
+	Tue,  8 Apr 2025 12:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744116540;
-	bh=XM+AsilHgrZC+uXc6rG5q/tsLJlK4RumDEB5BXZsV+E=;
+	s=k20201202; t=1744116546;
+	bh=vKT4C/GTC6IQ9JYbZes2rZEbu8WnSSrIU6DtAnt8Gv4=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=SSYr/wrJ/Jt1PaZpmQELcaYxVQrlDy3wmtK2YtQGIVu8qL5WzzU9gn6hLK8SqhDkN
-	 Ep8ZuRCsTA2SgwaUT6698NoIELrOMdq8S7HVktYV2ORGXPzADWXaQA0w9anaOTQgB4
-	 rJF2mpoP/gKkuJRSsu/xsAV8AoYv9H2KqrGFROLN54IhHOc5uKwN0FLAB04BtJYf53
-	 Pfed0H6OpHjRLGBVfAny09Xxw0OzKj5u01shPllH1EBnXKsKcQ61U+yhIO9QJ4Pf8o
-	 crZhbRxdLNH5ocHFm+SX39TPINLbfrFccJm1bsL4J0xryb8yaQC1RGjaisRYPB/rhr
-	 y6+lGIbPH/mmg==
+	b=kHWt6b4oMvIthJlMku0Z8R2pq9+6O0s1tZ/V33yDLuw1jVvTlSKngzjmPYbrSxPeW
+	 upbiPdKqb1y62Q/xY7wU3BczXQqTmhtDmyAUoHawFemVmWCONGNCvPgO/DiPu3N4Lw
+	 HY+L3g9gw+gMs0yQSNQtfEiA8vNI4QV4bttPvN2/r3b0bAVbiHNzs51/fmur5sHuDq
+	 xQva2DC4Zy+vRRyr48b908Cn9Uhq1j6qwXsYAJf0ymM+CdHSnGEnKgvGZHXAWo2iF9
+	 4pBQ1Z5KlkHcBmqvidCQ5SU5zvmx3NXD6ov8jql5kLHOL3b+8/Mr3RvEhoUAb+2a2O
+	 y+wl7irHtKAtA==
 From: Mark Brown <broonie@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Linus Walleij <linus.walleij@linaro.org>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Steev Klimaszewski <steev@kali.org>, Johan Hovold <johan@kernel.org>, 
- "Peng Fan (OSS)" <peng.fan@oss.nxp.com>
-Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Peng Fan <peng.fan@nxp.com>
-In-Reply-To: <20250324-wcd-gpiod-v2-0-773f67ce3b56@nxp.com>
-References: <20250324-wcd-gpiod-v2-0-773f67ce3b56@nxp.com>
-Subject: Re: [PATCH v2 0/3] ASoC: codec: wcd93xx: Convert to GPIO
- descriptors
-Message-Id: <174411653740.2091760.14768802253567122095.b4-ty@kernel.org>
-Date: Tue, 08 Apr 2025 13:48:57 +0100
+To: peda@axentia.se, andersson@kernel.org, krzk+dt@kernel.org, 
+ srinivas.kandagatla@linaro.org
+Cc: ivprusov@salutedevices.com, luca.ceresoli@bootlin.com, 
+ zhoubinbin@loongson.cn, paulha@opensource.cirrus.com, lgirdwood@gmail.com, 
+ robh@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org, 
+ perex@perex.cz, tiwai@suse.com, dmitry.baryshkov@oss.qualcomm.com, 
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ johan+linaro@kernel.org
+In-Reply-To: <20250327100633.11530-1-srinivas.kandagatla@linaro.org>
+References: <20250327100633.11530-1-srinivas.kandagatla@linaro.org>
+Subject: Re: (subset) [PATCH v6 0/6] ASoC: wcd938x: enable t14s audio
+ headset
+Message-Id: <174411654299.2091760.16115765833106462248.b4-ty@kernel.org>
+Date: Tue, 08 Apr 2025 13:49:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,15 +67,14 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.15-dev-c25d1
 
-On Mon, 24 Mar 2025 19:51:26 +0800, Peng Fan (OSS) wrote:
-> Steev,
->  I would appreciate if you have time to help test again.
->  Hope V2 could work on your platform.
+On Thu, 27 Mar 2025 10:06:27 +0000, srinivas.kandagatla@linaro.org wrote:
+> On Lenovo ThinkPad T14s, the headset is connected via a HiFi Switch to
+> support CTIA and OMTP headsets. This switch is used to minimise pop and
+> click during headset type switching.
 > 
-> Linus,
->  Since v2 is only a minor change to use GPIOD_OUT_LOW to replace
->  GPIOD_ASIS when devm_gpio_get, so I still keep you R-b. Appreciate
->  for your quick action.
+> This patchset adds required bindings and changes to codec and dts to
+> tnable the regulator required to power this switch along with wiring up
+> gpio that control the headset switching.
 > 
 > [...]
 
@@ -85,12 +84,12 @@ Applied to
 
 Thanks!
 
-[1/3] ASoC: codec: wcd939x: Convert to GPIO descriptors
-      commit: 4bba5d0e51647e06c83036b6c3f0ec65465adc68
-[2/3] ASoC: codec: wcd938x: Convert to GPIO descriptors
-      commit: c2d359b4acfbe847d3edcc25d3dc4e594daf9010
-[3/3] ASoC: codec: wcd9335: Convert to GPIO descriptors
-      commit: d5099bc1b56417733f4cccf10c61ee74dadd5562
+[3/6] ASoC: codecs: wcd-mbhc: cleanup swap_gnd_mic api
+      commit: 6417066fb41f70c5aec242a36cbb6def8c99303f
+[4/6] ASoC: dt-bindings: wcd93xx: add bindings for audio mux controlling hp
+      commit: fe19245d3efd5bf714623e83f2056bc46d9339b1
+[5/6] ASoC: codecs: wcd938x: add mux control support for hp audio mux
+      commit: eec611d26f84800852a9badbeafa76db3cdc9118
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
