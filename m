@@ -1,174 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-53540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EEBDA80C0B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 15:24:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E5674A80C49
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 15:31:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A96D89073CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 13:18:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E45678C77AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 13:22:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50F8D139CE3;
-	Tue,  8 Apr 2025 13:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EBA2282F1;
+	Tue,  8 Apr 2025 13:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Vu7oLHHK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KLArECh4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81F486358
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 13:18:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78021E4A9;
+	Tue,  8 Apr 2025 13:22:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744118287; cv=none; b=aUMC4I4/W7qC+mxrJvFAWWfnTmTTWR8YWJJ53VDqBLalh9ykuFsm1vIJcQO9KpkQzqehkosEEA2E7VEYW6hcaALsr/aDXMre6qBqB7UpgqklGJ6Pml9f24WMgvyUYT2/u+Yk56nTc4vOtPKAlQ9BulpGYvZXJPC4FB7i7WYaljA=
+	t=1744118564; cv=none; b=Mrxw7ic+t9c1JqlZSXCZISJIMJCYmiazeFcaQ7LQactRdGQT9hK0Odp6k0AngJ8fxIKVChAVup1NlBKIEVJz66dW3in6NHp07wg0FOiT0zTM/l+1A7eKj62x7UpuOw1/k6mcnCoPknoq8IyckrCAkBJTeQy068fPHg0/ZBbudU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744118287; c=relaxed/simple;
-	bh=k7NlXqsYUX8pjXrcoPJ1o3a0IqbR/uG74F9gP89IH/0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P1/J53+fCjsHYX/ZuJ5WXeK5HaCGf5DSYqIXFpC5p2uqY4DDuDjSa+tmucoQ2Z0hu/l4Cv32FlAfh7ORmArs+jeD1mMu3+e5upetyBR5xxjsGNn1+M2yBklrFTrvORT7leyU6ZwFzZ1UX2pFpx5LLvYODsw/v0qvsTuqgtpSA5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Vu7oLHHK; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-47666573242so430871cf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 06:18:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1744118284; x=1744723084; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DLkZ8H10u754bzDEYxG0pGG1Vym3BSRsC007lFUVMA0=;
-        b=Vu7oLHHKYkipZ45DEkKT5ZOLz1c60VJkQEoEC/K9LhTMh/hbedx5IXt57cAhmoXbrv
-         WjpLlo6DRuCz7uzhChRoMQnVfshVjT6rnGsgsOodXusaJ2xv0Qnynyca3zZNdWCytmSC
-         V2WGMWwwavTG6ZGL4h9bHURiLEeSzmuyr9UfbQZBlbo4g4erKqP127dSTbUEsMJxvy04
-         l2XAKisHPi1jvF3JcIWa2U/+PbuKw8RUTReIGw1RiTz7lJgT1s1tM0N0pS2RBQkOXeUA
-         hS1kd72jK/6n/uX3rYKWwtIHBKZfO4WQCAtJxVGxx4L7HiTsogfn+YdF7BHLuXaWHrBF
-         vohg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744118284; x=1744723084;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DLkZ8H10u754bzDEYxG0pGG1Vym3BSRsC007lFUVMA0=;
-        b=p2eCUzjgE4ngKYQxVR1cHHXN1uEQrLWjfYTvc5ivn51S8kGq1tRALkZ2+wBNh1Ggby
-         xouqQtWwV2Ukrw5LKnNtjaUq48aGsA+4BPJLqudY6VSG7RXxeoa40oTZGG014Eskbwt0
-         irGaZCYMxrmpeyY2xXyNPH1Rwb5Dq7Mbk+nll2eWio6/Wh6hCWdTXaVQHzYFFZBIMlyl
-         rVXkMGsZgFJyCaByurR4yDEIykby7WEHnHQoJyb85m70pjmkzc45YP87a+pz+WC4u+Rn
-         muS4OPFZwYRKkbIYV8+6NwdTvEswv5kxDvVsqO0JvamE7MZpza7oPXvNwHamUyIgmvCD
-         u6zg==
-X-Forwarded-Encrypted: i=1; AJvYcCWKxZh1xVugx3UIjqQbCHo0Rnjx5RbWzfQUDJBmq8V+0i6HND/qt7T5NzuKB+VehMDBdhxvUGOeQO7moMDf@vger.kernel.org
-X-Gm-Message-State: AOJu0YzFFNBkebiqMSODhE+xDWNLRykrKTJTk9wOlgauwRSuqEFrLezg
-	fEwW8rY+03RzsrMwxxF6lJGGMFm9Kfwp7DrP3uvfm8+NU/zRfCGj5Kr2qUXuhpmjSroik+4ooOR
-	P2fikcQMZF7CV0NDD8cnFiK4tSVIbJ18wj+4N
-X-Gm-Gg: ASbGncuJd5Hdh7cul5VaP+TP5Dk0Pth0IT7esT1y7EEsd1tZb0bk7u6vPEEgOhTUe2K
-	4OFGyaFJWS5a9uryZAl3bAj7dxH3Vy7P/CIKNHoeBjI+ZVs0k+H2n8NkO60C7fTxJf+7dW7Bts0
-	AgeTfzudCI11DQOAfAu8Sum547yShMLzecaGSkmrLRV9UIY6kTL0JJI5s=
-X-Google-Smtp-Source: AGHT+IEDCj75uLOr9P2Vigx7J1ItMHWGrGRbxd2MN7PC6r4Wx5Y0g7b6KNz8RZ4KgdK933NpM5luHDRK5PVCe5NSW9Y=
-X-Received: by 2002:ac8:5a8f:0:b0:477:8577:1532 with SMTP id
- d75a77b69052e-47954f896a1mr4329511cf.28.1744118284214; Tue, 08 Apr 2025
- 06:18:04 -0700 (PDT)
+	s=arc-20240116; t=1744118564; c=relaxed/simple;
+	bh=vcqpD0DZQXuUtLCwTzDAFDZYSF2LBX98kts7jb3UtuY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=mB8E0I5vzvyjK5B7rj9lp5YvPxkrjE4W2bFgML0vt4jTuH0Kiy5SoYYDhAvwMUQ5cwWTlfZuVSvK8oj63ByqQ2SiJr+MgT2WV93AoMmsJUjgFthKjcc56/x4wOZeGHdBBPalHTHaln9YYYzTIRqVG4VxRsb5D1IpJFjs1a2nHoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KLArECh4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538BFt0F010566;
+	Tue, 8 Apr 2025 13:22:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	NsuarZDN3Gs2nwMb5Xe3ixGpirzkURNjbyVrY3XQMtQ=; b=KLArECh4Qp7U8Xha
+	Hopr8rQy/9IbnRe/lNaTsKANER1Dzjqw/qFdHECL5Fi0AsIvXYtYFz7yth50BdLX
+	4x3pk1T0U0GFYaK6fY4kU4eLyS5sKtswOmKva7CAyuIpJKPQQbiH4/LWO4SxA3FC
+	zfKGVBHODAgxsytZRKJlcADziP6Hn5zrXE77VRGyGCoJS8sC1B2egbDfrl46muyE
+	Rx4LbOh2so/biy+KKygoBU5P6poIyDR0Pr1MmXBh4jVI5otU55jqhE8wK5uvFROb
+	a3JyAarOdFZbnJdDcfRKe4hgxQsIdBIE2EHtMWJPxj6M3JxQJavMMTc6tR2wpBgL
+	T/IisQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twc1frtx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 08 Apr 2025 13:22:31 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 538DMTkn012507
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 8 Apr 2025 13:22:29 GMT
+Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 8 Apr 2025
+ 06:22:26 -0700
+Message-ID: <8a2c74f4-fd5b-4714-859e-3138e6b01a6e@quicinc.com>
+Date: Tue, 8 Apr 2025 18:52:23 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250318161823.4005529-1-tabba@google.com> <20250318161823.4005529-4-tabba@google.com>
- <aeed695d-043d-45f6-99f3-e41f4a698963@amd.com>
-In-Reply-To: <aeed695d-043d-45f6-99f3-e41f4a698963@amd.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Tue, 8 Apr 2025 14:17:27 +0100
-X-Gm-Features: ATxdqUFr2igflPFe3Ha6eBMgg_-Ahvty9YC0a3MzdgeJzRB0x5YKJNf2b56gIOM
-Message-ID: <CA+EHjTzmxuGK2i1C5bgFeNMOxdupnMcR09ELZzZttvuvHtS7og@mail.gmail.com>
-Subject: Re: [PATCH v7 3/9] KVM: guest_memfd: Allow host to map guest_memfd() pages
-To: Shivank Garg <shivankg@amd.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] dt-bindings: i3c: Add support for Qualcomm I3C
+ controller
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <alexandre.belloni@bootlin.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <jarkko.nikula@linux.intel.com>,
+        <linux-i3c@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>
+References: <20250403134644.3935983-1-quic_msavaliy@quicinc.com>
+ <20250403134644.3935983-2-quic_msavaliy@quicinc.com>
+ <20250404-rugged-terrestrial-foxhound-fcf36b@shite>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <20250404-rugged-terrestrial-foxhound-fcf36b@shite>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: LPv9I2rrKRsgG0Q468Gqdainn9YIoOUE
+X-Authority-Analysis: v=2.4 cv=KtdN2XWN c=1 sm=1 tr=0 ts=67f52317 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VQQZ3mPWug7dUSpnJMIA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
+X-Proofpoint-GUID: LPv9I2rrKRsgG0Q468Gqdainn9YIoOUE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-08_05,2025-04-08_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0 spamscore=0
+ malwarescore=0 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504080094
 
-Hi Shivank,
+Thanks Krzysztof  !
 
-On Tue, 8 Apr 2025 at 13:04, Shivank Garg <shivankg@amd.com> wrote:
->
-> Hi Fuad,
->
-> On 3/18/2025 9:48 PM, Fuad Tabba wrote:
-> > Add support for mmap() and fault() for guest_memfd backed memory
-> > in the host for VMs that support in-place conversion between
-> > shared and private. To that end, this patch adds the ability to
-> > check whether the VM type supports in-place conversion, and only
-> > allows mapping its memory if that's the case.
-> >
-> > Also add the KVM capability KVM_CAP_GMEM_SHARED_MEM, which
-> > indicates that the VM supports shared memory in guest_memfd, or
-> > that the host can create VMs that support shared memory.
-> > Supporting shared memory implies that memory can be mapped when
-> > shared with the host.
-> >
-> > This is controlled by the KVM_GMEM_SHARED_MEM configuration
-> > option.
-> >
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
->
-> ...
-> ...
-> > +
-> > +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
-> > +{
-> > +     struct kvm_gmem *gmem = file->private_data;
-> > +
-> > +     if (!kvm_arch_gmem_supports_shared_mem(gmem->kvm))
-> > +             return -ENODEV;
-> > +
-> > +     if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
-> > +         (VM_SHARED | VM_MAYSHARE)) {
-> > +             return -EINVAL;
-> > +     }
-> > +
-> > +     file_accessed(file);
->
-> As it is not directly visible to userspace, do we need to update the
-> file's access time via file_accessed()?
+On 4/4/2025 3:56 PM, Krzysztof Kozlowski wrote:
+> On Thu, Apr 03, 2025 at 07:16:42PM GMT, Mukesh Kumar Savaliya wrote:
+>> +allOf:
+>> +  - $ref: i3c.yaml#
+>> +
+>> +properties:
+>> +  compatible:
+>> +    - qcom,geni-i3c
+const: qcom,geni-i3c
+is this fine to change ? Sorry but to avoid iteration asking here.
+In future if we add anything new (*in case*)we can concert to enum.
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  clocks:
+>> +    maxItems: 1
+>> +
+>> +  clock-names:
+>> +    const: se
+> 
+> Drop, not that useful.
+Done
+> 
+> Best regards,
+> Krzysztof
+> 
 
-Makes sense.
-
-Thanks!
-
-/fuad
-
-> > +     vm_flags_set(vma, VM_DONTDUMP);
-> > +     vma->vm_ops = &kvm_gmem_vm_ops;
-> > +
-> > +     return 0;
-> > +}
-> > +#else
-> > +#define kvm_gmem_mmap NULL
-> > +#endif /* CONFIG_KVM_GMEM_SHARED_MEM */
-> > +
-> >  static struct file_operations kvm_gmem_fops = {
-> > +     .mmap           = kvm_gmem_mmap,
-> >       .open           = generic_file_open,
-> >       .release        = kvm_gmem_release,
-> >       .fallocate      = kvm_gmem_fallocate,
->
-> Thanks,
-> Shivank
 
