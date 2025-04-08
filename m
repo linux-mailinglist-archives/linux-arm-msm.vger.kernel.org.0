@@ -1,63 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-53468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7482A7F70B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 09:50:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE72FA7F747
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 10:07:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 600E742363E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 07:45:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C33E188A642
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 08:07:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F4A523F262;
-	Tue,  8 Apr 2025 07:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC3B4261584;
+	Tue,  8 Apr 2025 08:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ECEgXtqe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EBPT1YTL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41B41FF5F7;
-	Tue,  8 Apr 2025 07:45:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D9625F78A
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 08:07:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744098319; cv=none; b=HOZ7Potn1kM12STDtWqf5T09wu3YesdPIZbX0h2VRND0qg39AZziDj7RJOFPc9Z2xR/fmkqxy7/tXH3FdscOGH0g95TqarUOZDr9kl+HxK+dNkl9Zp07Ka+jTsTbgQ9+EpgRDkXWiWieXcfY6ZO0lUvTTWdxJa8F4iVsI63VLEA=
+	t=1744099651; cv=none; b=RHFIdEWJDfU3OdOD4MO+yFxG6pYPYOG3m10Cy2LUQ7D+X1Pxy0SBwdfqXHMlTXscoY03fIH766c52bOnpuND4xg8c4ArNqu6d2KN3VapPPM1EpFFktYY1U/3Bj1znoRDurJ36Yc3uUAUg5Fan4/Vo8yicx8FYWtesTWwk8pWlPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744098319; c=relaxed/simple;
-	bh=Mizm5uEJO5H1qNNgLNdW5F3xHw77CVaEhFDifRlvlgA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=umRg9zg43gIGsI7cH2z65QVrIZ5vkQ7O56WsDDutlhejvMhQYnwZIDlM/2pQBhymHKGPhcnqrt8rT7hUkjsqYdCku97PbY3pwUxXPcp4Rndfgz4FXQ0rUo+8o+PqvvGc7wMr8m8NPe3qhsEP4o4x02Zco8vRRQvoJr3RhZkt9pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ECEgXtqe; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5382GN4N032610;
-	Tue, 8 Apr 2025 07:44:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FoXvxYlgeT51Ldmi420joSo5f8c07apE7nK99oXSsQU=; b=ECEgXtqeh8uhhY5e
-	E+1uESUPlp4Jsj+Xvfg/fnT+GPLrAfUv1AkO7F5QVqkJeIFSl0qlNpcPEBB54wBN
-	9KFhweGxagHG095/7e3vcLoPqnjDIoxJsNZhZutnlIVcT7tQZq9FaudheraJmTzB
-	0nk8pcibF/5ly7aJzlIp135SU6FU+w7WCAKMw4LhnXtZ6j8CJVF9VLqfMfA5Zrg6
-	ip10Zg6k5QhEV3BXMhax+n2p2Q7L5hkYUvkP6JKukHLGyiP6Ztq+yuDY0ORQ5cLh
-	CeN/f7ORMyIAg77ILfQIjUYTF85PYTVNLyeVU/sBWCoulJltU31yxbASh7djfL4M
-	6oCTtA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twfketp8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Apr 2025 07:44:57 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5387iu31001417
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 8 Apr 2025 07:44:56 GMT
-Received: from [10.217.217.240] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 8 Apr 2025
- 00:44:52 -0700
-Message-ID: <25d8a781-14ea-4b97-b6b4-f9d472c1b692@quicinc.com>
-Date: Tue, 8 Apr 2025 13:14:50 +0530
+	s=arc-20240116; t=1744099651; c=relaxed/simple;
+	bh=k9CSGfDZYhat9A7hNdYkbf5OXkvSJrxO9ZA3cNbzaCo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DU8nQoUD3eJxTJX0xagINARgjvQbJcLupR6xVkMvCOKACtZMyVmfwamtg9ooWyb5dZBV2ue1dPqTi6eARBm4+ldq3iTfKYuXwTAYHUa1jZ82qFYn4OI47P11kh+krmrmPZFWdhIYquujRAOLAdOqMXDn3MB5Zp2SJdCpFUzCrx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EBPT1YTL; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43cf034d4abso56403045e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 01:07:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744099648; x=1744704448; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WSDEwc7QWvNnjNYSgC4m4TCyiYUs1psSSUJ0e9qdFNY=;
+        b=EBPT1YTLzyh+CU+bPbQyUw6ybXSipZWvoqLNVEp9WhoDErABX4womSpXpQkSjMBSDC
+         KJkYPRyYCnyEguKQfDV6MFjcjYPv8/LSiC8uhf2oI7Fss7IG6/j12MKg4iyvcNrSst01
+         C4PEc6pL3eVb0YAGosqyRFNsDq9uHcWmrWkuC0JSdlES7yqtok/4N38qPp3oGf/hEtFi
+         aMDVvNYDmiMdII/Wz7mEwTeHuFu25p3xl063Ojlf6HRmu/d3LrRd2gbgl9BDGgVgZ3tH
+         EP88bG15UpPiFLI3xAnVStSN3XEuEITkUBrKWyQIM/hf9m/nTH/HA8lDlRj4Eda6EHB1
+         trXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744099648; x=1744704448;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WSDEwc7QWvNnjNYSgC4m4TCyiYUs1psSSUJ0e9qdFNY=;
+        b=U24eMCXRh1LrPdo3MbNzVx/AQZibd2adLRtGdLEJXTnU9ySyY7N/5343bvZXg6At16
+         yWaAEUkeapnJSldWow5SIgXzZBJ44a7dIJJ3CZIrp9IiLwmx7ZNHWe7/E4SwTaxna340
+         yELzPFQ7PI79MyehGAZzRTkrzDE8VAbO6OrhLzbECI11HAYz1uwU2xhazU/PzpuY0xLv
+         q65Ia7Vml4YmqfaF2CtFlYB5YepKJztXAN8rC1iQRI3LKNKK+1w+7NBXJrVqikJVJDm2
+         kSyVs2lVHd9BdQ9xzKfMQWcQv7I8PiMuEeOwOc0hiG+IkJ4aqIHD40TeglIb/x6pr+p3
+         Bszw==
+X-Forwarded-Encrypted: i=1; AJvYcCUdXzWYIMQuh1ViUYjEmOPYqABVyIacOSpLEo9GXiy0JSJZaveuFoidNSywZPDBUt8F12+qD0hRYR23t+ys@vger.kernel.org
+X-Gm-Message-State: AOJu0YwsOsPjuzwv3oSFQyQ8xOEkdjTRkoVqQAtHTvtbby2Dw/9x1q/q
+	rMMG/5N4n0qQ+BZcvyd0A69GVhufkIj1i99D+yfiVnG9tRAyVDjNlCH1wBg3x9E/E9orarQe/rG
+	GCbU=
+X-Gm-Gg: ASbGncuLDz/Bs60A8n6wQPCcE/3VpSBCX6nJ52C3z/Y/lnXNYyIGiIqDzoetelzjy0H
+	ikRC1iip3+biTOe/+21MxCIXwPC9+5EF8pRhdg9vaWuuww5zyzZQVLOizpvOSt8gjXBv6mjgQ/Z
+	PS80HfGZ9NfXlEWsv7zOKYRTrXwJ3fd+q5A7o9Owz7DBVQESWrK/4poykCZQHBLYOfIerTKjMXV
+	RYZWfQpZk56Bw922gbLFEmFEb/GsvHu2qks5hixqQwg9R+M6/j60w6CpVLMPmM+gsETVHkGP5dw
+	jSrDKmCJEd4Vtvek2CgSoMcyw6ieu6fwwiex0xdQBBc/X/IDIRpeIunTPZCLoJUYaUrdkGviDQ=
+	=
+X-Google-Smtp-Source: AGHT+IFDiZ0cnV2ayvj8DA4Rl4xGe57ExDt/t21NR6kpjVQ87p06SQ/qaCpf+bTExejAD5z/3aBKUw==
+X-Received: by 2002:a05:600c:9a5:b0:43c:f78d:82eb with SMTP id 5b1f17b1804b1-43f115eb698mr9593075e9.15.1744099648109;
+        Tue, 08 Apr 2025 01:07:28 -0700 (PDT)
+Received: from [192.168.68.117] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-43ec17b0dbesm156568955e9.33.2025.04.08.01.07.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Apr 2025 01:07:27 -0700 (PDT)
+Message-ID: <7222bbbd-51f7-43b6-9755-29808833cf5f@linaro.org>
+Date: Tue, 8 Apr 2025 09:07:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,138 +83,79 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 2/2] scsi: ufs: introduce quirk to extend
- PA_HIBERN8TIME for UFS devices
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-        "Martin K.
- Petersen" <martin.petersen@oracle.com>,
-        Alim Akhtar
-	<alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche
-	<bvanassche@acm.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_nitirawa@quicinc.com>, <quic_bhaskarv@quicinc.com>,
-        <quic_rampraka@quicinc.com>, <quic_cang@quicinc.com>,
-        <quic_nguyenb@quicinc.com>
-References: <20250404174539.28707-1-quic_mapa@quicinc.com>
- <20250404174539.28707-3-quic_mapa@quicinc.com>
- <hcguawgzuqgi2cyw3nf7uiilahjsvrm37f6zgfqlnfkck3jatv@xgaca3zgts2u>
- <d09641c7-c266-4f0a-a0e3-56f63d8c9ce3@quicinc.com>
- <l6xao2ubcvv3ho56dv6qfr3b62ve3olfbhvywg2is2xdhod27r@2nyjfwinrxzm>
+Subject: Re: [PATCH v5 2/5] ASoC: q6apm: add q6apm_get_hw_pointer helper
+To: Johan Hovold <johan@kernel.org>
+Cc: broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
+ krzysztof.kozlowski@linaro.org, linux-sound@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ dmitry.baryshkov@linaro.org, johan+linaro@kernel.org, stable@vger.kernel.org
+References: <20250314174800.10142-1-srinivas.kandagatla@linaro.org>
+ <20250314174800.10142-3-srinivas.kandagatla@linaro.org>
+ <Z_O2RhwYp6iy02cM@hovoldconsulting.com>
 Content-Language: en-US
-From: MANISH PANDEY <quic_mapa@quicinc.com>
-In-Reply-To: <l6xao2ubcvv3ho56dv6qfr3b62ve3olfbhvywg2is2xdhod27r@2nyjfwinrxzm>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rY7H1816cawbAfHLhS5hb4L8SE4s1iw9
-X-Proofpoint-ORIG-GUID: rY7H1816cawbAfHLhS5hb4L8SE4s1iw9
-X-Authority-Analysis: v=2.4 cv=b7Oy4sGx c=1 sm=1 tr=0 ts=67f4d3f9 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=PcgxfyDzYYffGdZ7QdYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-08_02,2025-04-07_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- priorityscore=1501 suspectscore=0 mlxscore=0 impostorscore=0 phishscore=0
- clxscore=1015 spamscore=0 mlxlogscore=999 bulkscore=0 lowpriorityscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504080054
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <Z_O2RhwYp6iy02cM@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Thanks Johan,
 
-
-On 4/8/2025 12:53 PM, Manivannan Sadhasivam wrote:
-> On Tue, Apr 08, 2025 at 11:07:58AM +0530, MANISH PANDEY wrote:
+On 07/04/2025 12:25, Johan Hovold wrote:
+> Hi Srini,
+> 
+> On Fri, Mar 14, 2025 at 05:47:57PM +0000, Srinivas Kandagatla wrote:
+>> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 >>
+>> Implement an helper function in q6apm to be able to read the current
+>> hardware pointer for both read and write buffers.
 >>
->> On 4/7/2025 12:05 AM, Manivannan Sadhasivam wrote:
->>> On Fri, Apr 04, 2025 at 11:15:39PM +0530, Manish Pandey wrote:
->>>> Some UFS devices need additional time in hibern8 mode before exiting,
->>>> beyond the negotiated handshaking phase between the host and device.
->>>> Introduce a quirk to increase the PA_HIBERN8TIME parameter by 100 µs
->>>> to ensure proper hibernation process.
->>>>
->>>
->>> This commit message didn't mention the UFS device for which this quirk is being
->>> applied.
->>>
->> Since it's a quirk and may be applicable to other vendors also in future, so
->> i thought to keep it general.
->>
+>> This should help q6apm-dai to get the hardware pointer consistently
+>> without it doing manual calculation, which could go wrong in some race
+>> conditions.
+>   
+>> +int q6apm_get_hw_pointer(struct q6apm_graph *graph, int dir)
+>> +{
+>> +	struct audioreach_graph_data *data;
+>> +
+>> +	if (dir == SNDRV_PCM_STREAM_PLAYBACK)
+>> +		data = &graph->rx_data;
+>> +	else
+>> +		data = &graph->tx_data;
+>> +
+>> +	return (int)atomic_read(&data->hw_ptr);
+>> +}
+>> +EXPORT_SYMBOL_GPL(q6apm_get_hw_pointer);
 > 
-> You cannot make commit message generic. It should precisely describe the change.
+>> @@ -553,6 +567,8 @@ static int graph_callback(struct gpr_resp_pkt *data, void *priv, int op)
+>>   		rd_done = data->payload;
+>>   		phys = graph->tx_data.buf[hdr->token].phys;
+>>   		mutex_unlock(&graph->lock);
+>> +		/* token numbering starts at 0 */
+>> +		atomic_set(&graph->tx_data.hw_ptr, hdr->token + 1);
+>>   
+>>   		if (upper_32_bits(phys) == rd_done->buf_addr_msw &&
+>>   		    lower_32_bits(phys) == rd_done->buf_addr_lsw) {
 > 
->> Will update in next patch set if required.
->>   >> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
->>>> ---
->>>>    drivers/ufs/core/ufshcd.c | 31 +++++++++++++++++++++++++++++++
->>>>    include/ufs/ufs_quirks.h  |  6 ++++++
->>>>    2 files changed, 37 insertions(+)
->>>>
->>>> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
->>>> index 464f13da259a..2b8203fe7b8c 100644
->>>> --- a/drivers/ufs/core/ufshcd.c
->>>> +++ b/drivers/ufs/core/ufshcd.c
->>>> @@ -278,6 +278,7 @@ static const struct ufs_dev_quirk ufs_fixups[] = {
->>>>    	  .model = UFS_ANY_MODEL,
->>>>    	  .quirk = UFS_DEVICE_QUIRK_DELAY_BEFORE_LPM |
->>>>    		   UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE |
->>>> +		   UFS_DEVICE_QUIRK_PA_HIBER8TIME |
->>>>    		   UFS_DEVICE_QUIRK_RECOVERY_FROM_DL_NAC_ERRORS },
->>>>    	{ .wmanufacturerid = UFS_VENDOR_SKHYNIX,
->>>>    	  .model = UFS_ANY_MODEL,
->>>> @@ -8384,6 +8385,33 @@ static int ufshcd_quirk_tune_host_pa_tactivate(struct ufs_hba *hba)
->>>>    	return ret;
->>>>    }
->>>> +/**
->>>> + * ufshcd_quirk_override_pa_h8time - Ensures proper adjustment of PA_HIBERN8TIME.
->>>> + * @hba: per-adapter instance
->>>> + *
->>>> + * Some UFS devices require specific adjustments to the PA_HIBERN8TIME parameter
->>>> + * to ensure proper hibernation timing. This function retrieves the current
->>>> + * PA_HIBERN8TIME value and increments it by 100us.
->>>> + */
->>>> +static void ufshcd_quirk_override_pa_h8time(struct ufs_hba *hba)
->>>> +{
->>>> +	u32 pa_h8time = 0;
->>>
->>> Why do you need to initialize it?
->>>
->> Agree.. Not needed, will update.>> +	int ret;
->>>> +
->>>> +	ret = ufshcd_dme_get(hba, UIC_ARG_MIB(PA_HIBERN8TIME),
->>>> +			&pa_h8time);
->>>> +	if (ret) {
->>>> +		dev_err(hba->dev, "Failed to get PA_HIBERN8TIME: %d\n", ret);
->>>> +		return;
->>>> +	}
->>>> +
->>>> +	/* Increment by 1 to increase hibernation time by 100 µs */
->>>
->>>   From where the value of 100us adjustment is coming from?
->>>
->>> - Mani
->>>
->> These values are derived from experiments on Qualcomm SoCs.
->> However this is also matching with ufs-exynos.c
->>
+> 			graph->result.opcode = hdr->opcode;
+>                          graph->result.status = rd_done->status;
+>                          if (graph->cb)
+>                                  graph->cb(client_event, hdr->token, data->payload, graph->priv);
+>                  } else {
+>                          dev_err(dev, "RD BUFF Unexpected addr %08x-%08x\n", rd_done->buf_addr_lsw,
+>                                  rd_done->buf_addr_msw);
+>                  }
 > 
-> Okay. In that case, you should mention that the 100us value is derived from
-> experiments on Qcom and Samsung SoCs. Otherwise, it gives an assumption that
-> this value is universal.
+> I just hit the following error on the T14s with 6.15-rc1 that I've never
+> seen before and which looks like it could be related to this series:
+Its unlikely, but the timings have changed here.
+I have not seen it either, but I will try to reproduce this with 6.15-rc1.
 > 
-> - Mani
+> 	q6apm-dai 6800000.remoteproc:glink-edge:gpr:service@1:dais: RD BUFF Unexpected addr ffe0d200-00000001
 > 
-  << Otherwise, it gives an assumption that this value is universal. >>
-So with this, should i add this quirk for Qcom only, or should add in 
-ufshcd.c and make it common for all SoC vendors?
+> Any ideas about what may be causing this?
+How easy is this to reproduce?
 
-Regards
-Manish
-
+--srini
+> 
+> Johan
 
