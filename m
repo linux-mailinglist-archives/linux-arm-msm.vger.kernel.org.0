@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-53538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED567A80C1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 15:25:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CEF47A80BF7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 15:23:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BDC6B505DBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 13:13:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E4248C840D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 13:15:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D54B4C148;
-	Tue,  8 Apr 2025 13:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 718411E4B2;
+	Tue,  8 Apr 2025 13:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MU3QPD55"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NI4ClvuO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1413282899
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 13:02:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C0E27713
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 13:10:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117371; cv=none; b=F2gOrWFIMcHvtiK/WQzRaNQSvZr6ottQsWxK47NxTr39VgARPoV40cw+PbcMvaAmrhGJ1lC4MceLicz1eGwCkMh5kDKVli0xuR/SusBc/01G6xx2dJ6AqzH3qtQoYka7YSuKYTuf0noz7xgx2P71lQmCYoAvBY9INqdmE0DoVFM=
+	t=1744117826; cv=none; b=nEDItJN6Er1KiCwox+WKUoIvjn0sVm9VWguG00IyTn9OH5tqgSjAaUQer27dX6DalwC/yFrtGHCQjTBNcAmAFBwkqzclDCTVQXIKZCky1hSskJa0Zes0JQQWXPb6Mrb+Iqqqp0lTLUCoywXGLrfFikp7pZ711Gd1LFdTrkVOZrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117371; c=relaxed/simple;
-	bh=JdlMXxUwizN2ti92XXyxVJFjwtOn6Nq4gI0Xlewt8tI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=QvSC6a87XOsqNwQOA86e29RXHc8iN2yQYAk3cHk7E4DoXjmsHPQqhrsUXZBsq1VFE/hTCG/qOc0gMqnkwTeHsHUJKsIJFYyt89Vv10fpTEv/X5lkP/bkEIdqSXmHJAv2XVEMplJvUpMkRzQ9GOPYHUiyPzRfxciRPoSt0a+EkyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MU3QPD55; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1744117826; c=relaxed/simple;
+	bh=wmcbvuwfcexkF/IZq5AXxakmuiHkGVEOuFwNiJ9zpng=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=a10w/FZIRju8L9zhBlZIeZnVBOKV1tCm01iS5aA+ImbI5DwmqDyebuMHjNR85+LsfR5eAbKF+eDd3/RmPTNULqn7bjJw6O4oSeWcJoDH4eNRgA6Xb7gH8GQrH0QZnYA9Mh937hk+lOVI0z8P3KpROviJO3PO2qMtLTB96tcF/VM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NI4ClvuO; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538B8c63001919
-	for <linux-arm-msm@vger.kernel.org>; Tue, 8 Apr 2025 13:02:49 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538AxorK027735
+	for <linux-arm-msm@vger.kernel.org>; Tue, 8 Apr 2025 13:10:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=C99IbYsybOI0qp7XxA4lc+
-	KIHKOFmr7JRjwEaTrZLy8=; b=MU3QPD55N9DA2pJuMf56VhN6m09g5P9xHnGDw0
-	2GCTx8MvJlWt3jtXA9MH8Gn0Z5bS7LMNbHbfvkx5DvjZ+Dln/8+LGpfgNaVbHb5O
-	bOuOW6k1nBuaKWCStWmwGorfPayYPSgwL1uiOFgLk+PoK7UHJ4qXxVnSv0aGwCr5
-	RtzN+GItoymdF0pIv3jAMzn05AwNi17bdQqXswPi2ZlKfL9+hLdCIHrcCNWU76/h
-	W4gzNKLGScWRQpdCtWu+2pC3mSzr+uDaYJaZpxgXihSyvKR7WsmvohT3Chaeo+YK
-	RHTHD2W41mvVCoxZqtz1HnPn4fNsAEtiHgF02nt6g2lnjssw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twbe7uqb-1
+	:mime-version:subject:to; s=qcppdkim1; bh=5UBWW4MRrgta4eIXJ9yYXc
+	6dcVrwrrFfqWYMy2Uu/k0=; b=NI4ClvuO39OUzvCXEef7OTJniPpNB7FhjGWtjF
+	TZgqnc4tIxDl/cFF2AvYmAazLljGuT9/JFxYMC7+TUUyo9As95bPsLfzafbfPH4M
+	vfkL4WY6ruPAzXCJbeWjkFezTN5bZxpiNlORu/XhB6qxBxwzO1suqr5wdummxbfN
+	y37Vs3kBADMNxJHDlG+l2LGQa6RyPvZvpiXCdb3/eLuJ121+Om0qRfZQTNyIxnZT
+	WRJqxgWcB6tl1A8HhznjJMf0N3gvZFZBflbVk44ppM8G7CSTHBFY0tsgfREvQe/0
+	NV8tuXHb9x2CI9xzcxPvrrumKWLDhUhHEEh4gF74dlCzk3Eg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twcyyv2k-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 13:02:48 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c5c9abdbd3so541201585a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 06:02:48 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 13:10:23 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c5e28d0cc0so994135885a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 06:10:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744117367; x=1744722167;
+        d=1e100.net; s=20230601; t=1744117822; x=1744722622;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=C99IbYsybOI0qp7XxA4lc+KIHKOFmr7JRjwEaTrZLy8=;
-        b=qStrfFvigJf49Ty2CqOF9LnMSOoLQKAh0RcsvtPCRDb5K15ZyDPRde+YSaTWA/TI10
-         o95WJOsjhChBoqCkmPquE/9JPUtlpNfEkcAF9xKSbbZ1jCDyvj9D7sbMOV/MsRT3gzpm
-         GF7bWJ1CgBv0pcCptmJdPgqbZYAUzacbuDyHmYR8Gm7WDQvYaKS6Qems0iSUFQaENfMI
-         LIxKwEs2ATHtMoS08dOuM69Ozf+jXkLn0tVaTZHfvLVFhPH/+EyJf1MGQn7vKpgQs5UF
-         dwiqa6DGsuPp/g0HlX5XdLSwUNvR5hEa7YaiPznPBpr/+3mPbAojnTPvafpQ5oy2nwlD
-         zYQg==
-X-Gm-Message-State: AOJu0YzHvTM+wnGSYIZEH+ig2MSTpoDr8hoUaW05n7lLaBZSwZnvNNmK
-	40ZmoioK9dyPlrF5EJbMBx/h3HZX+1HGL1UbhkCEv4Gvadtp2cDB009gBZO2WdUHJ+CGjEPYTiJ
-	aDTUeiPJvILYKH7LW0tKaTNgHt2vqLdoPfMdDkreIDlZpnAPsxYdL1fpl6EzlX+kG
-X-Gm-Gg: ASbGncuQRXS7gpMmORB9ePJZy66bs71D4NRQJc+28ayVcBfhZOKxoBrX4wTCGjBNIrC
-	HCMW9/teB4cetKnyOjLrlUgkoAuk+Gv8JqfgeD8KK5dA4g3Pu9L9LrjftDB5yoZUU/cZF7UJZmf
-	Xop5LUxVYg6AWdpPqQmqyMMnY97uOsy9/kaij+3vq41O1lDp5njcEExPvyRXpxyuNXuZo3IdH1d
-	Y2YxF5qiW4tajw3NcmAxEcUFr+LbSOHU//1x9glaZyHxlgLFmM746G1pi9A97yl5Id2UzueKJw0
-	VM2UYs1F8h+b+34ihuZWHgZSgJ/QXfa1TmeAb8mtzRv/WEqdJkkW0T0Dk7WCziYednwXfcVmIWL
-	lAZifGQs1fX54UKb9488QO3O3vReU
-X-Received: by 2002:a05:620a:404d:b0:7c5:4be5:b0b1 with SMTP id af79cd13be357-7c775abf4demr2156429685a.35.1744117367507;
-        Tue, 08 Apr 2025 06:02:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGaECUNZdRzJhLeXw75QE0R57Qpn6GFw1WDUnaDhh01xqCeMB3cxE/BN2Oc2HzYpAvyKc0/7w==
-X-Received: by 2002:a05:620a:404d:b0:7c5:4be5:b0b1 with SMTP id af79cd13be357-7c775abf4demr2156423685a.35.1744117366999;
-        Tue, 08 Apr 2025 06:02:46 -0700 (PDT)
+        bh=5UBWW4MRrgta4eIXJ9yYXc6dcVrwrrFfqWYMy2Uu/k0=;
+        b=dtWXvaJ3bN2iGlUefspkW19Wd1Ovzmw4oBjdHtDypwZnOHRY2si2x3fqd94uMZLIDx
+         ihPK7X7365Ca1MNZCvo+zEBsNtNebH+1WONSXNfg9AiICt4GH9dNWnABNpTYx89j0mj3
+         eRmAE7A4l/GLd2aJ7CY82TWg/vApuM/GVSkiJdh/tgDZqyuMV5MeCkdywKdC6lV7P3nM
+         o1fZerUa67Nomdjrgn6xdhhSeqFrj7MK4Nb12YIkWnkob31wltKRVRwtRy//Z4MhqsiO
+         dpyvwRcgn07MpR1NlAx2lcVxWvwi0p+fnupYqgX2j0u5D8cBNhyp6Z7ZmbA1XkJg9MLN
+         VUXA==
+X-Gm-Message-State: AOJu0Yyg1DY2lUPVF2VUoNDWsmEgSFPsTapuOP2LeQHKR+fzYEMKIZuW
+	AwMACM2dvwEZS86xTZTAbWoINCT7iZhBfo/9dOkbDKMR1y2SWWqHCx5EUS1FnMQZp7mfWGkgPgH
+	QUJT4nXp0DqGc7Rv44qItOAgu1HOvkBL27adLdwUtIgOXQbdRibHpU7n75q2dL0sr
+X-Gm-Gg: ASbGncsKc7eae3y62iU+i4nkb0FWYwGXgdqYchxCwVLwoMkpitOd7Sfr5MPgLC/M+I9
+	Z7JStHbEdIM2pxMCFFBTsjTQN+dHIbR4Ja0qfggIenIGzbCrv5uiCK8bTfycE95rTv5p5siAe8k
+	Kd5VrufweTaoMg5O0DdgEy5VKR0w/yxeEdSHX4vAKA5Al6ByIa0/HD9Iu+18/e95gH5EgSRF0m2
+	VGrvV/2QKr6BTI+42z/3fj3+JmIyrKdvZvYen0t/S/UQA/IVAdDlRaKJp5Gw5kntTfwillJcYK/
+	03fWJ4sD7aDGJQFtNQb66FU3ZMjf20+qJbRmBSOdzeWByi1KvKaC8w0+Mno14LyGRfQhO/WdBd9
+	g0+hwQVvGMFxFyYdl4RNnhJL686/j
+X-Received: by 2002:a05:620a:40ca:b0:7c3:97a8:901c with SMTP id af79cd13be357-7c774e4ba4amr2246817885a.53.1744117822650;
+        Tue, 08 Apr 2025 06:10:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKoJuWHnW0lE7wkJ2sSIhMNy1Bxs/JmW2vMjs80QwWr8TuvnplUD0b17fUpjDotwXYWysf0A==
+X-Received: by 2002:a05:620a:40ca:b0:7c3:97a8:901c with SMTP id af79cd13be357-7c774e4ba4amr2246814285a.53.1744117822206;
+        Tue, 08 Apr 2025 06:10:22 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54c1e670d1bsm1560613e87.214.2025.04.08.06.02.44
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54c1e5ab889sm1514837e87.11.2025.04.08.06.10.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Apr 2025 06:02:46 -0700 (PDT)
+        Tue, 08 Apr 2025 06:10:20 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Tue, 08 Apr 2025 16:02:44 +0300
-Subject: [PATCH] drm/msm/dpu: drop rogue intr_tear_rd_ptr values
+Date: Tue, 08 Apr 2025 16:10:19 +0300
+Subject: [PATCH] arm64: dts: qcom: msm8998-lenovo-miix-630: add Venus node
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,217 +89,71 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250408-dpu-drop-intr-rd-ptr-v1-1-eeac337d88f8@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAHMe9WcC/x2MQQqAIBAAvxJ7bkElK/pKdKjcai8qa0Ug/T3pN
- MxhJkMiYUowVBmEbk4cfBFdV7Aes98J2RUHo4xVjerRxQudhIjsT0FxGAu6drGm0e2qjYWSRqG
- Nn387Tu/7Ae5Oh7tmAAAA
-X-Change-ID: 20250408-dpu-drop-intr-rd-ptr-76b52416c125
-To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Message-Id: <20250408-miix-630-venus-v1-1-771c330ee279@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIADog9WcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDEwML3dzMzApdM2MD3bLUvNJiXfNEgySTNMM0Y3MLCyWgpoKi1LTMCrC
+ B0bG1tQCETl/FYAAAAA==
+X-Change-ID: 20250408-miix-630-venus-7a0b4f1f3788
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8183;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1021;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=JdlMXxUwizN2ti92XXyxVJFjwtOn6Nq4gI0Xlewt8tI=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBn9R50D8d8SZ21NDKudMR43W7rVbh+XQ/JeL46E
- rTpKwT/QwOJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ/UedAAKCRCLPIo+Aiko
- 1TBAB/9CG/SR1t4i7Zbc+3thhGxKeEe1SkmXyismu5gPfIWoRcjUOkzRJRDqJHynfQRE5ujp9Tb
- rsKr28RJPLvgHJjHVU2fy2eHDVBL/0Ef6+nfwQhd+FnXvr6fx8Ccdha2/1t6rR61NLn0+K0l12O
- g0FUDyCblRJeM90M6KFVcDZreLRx1ym+I1g693JRWhpLwEvwdA3E888oa1KU6WCCIMP2/F6rHvf
- P5xWunufE4HbFzgCEfQK5n+3hpokY906G9NsZeFm50qsFO5sQIZ+vDQI+r0ao0h1MDKfVq6+csS
- sa9VQffKBsgBuoMt/4AtYS8HNL6Py0dhfujMIifTyPhLdVSh
+ bh=wmcbvuwfcexkF/IZq5AXxakmuiHkGVEOuFwNiJ9zpng=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBn9SA7VNUl98nBv3ZNkD88KYglSCweZUYPxLyTL
+ mCsUeWPNIiJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ/UgOwAKCRCLPIo+Aiko
+ 1aktB/9/USl+Q+vHI3iIzz4QXK+WZdXBO18AsdRDQ0iQrwGu48tunrs5c076iK0LMbleV42Cqcd
+ e+RxWus5cZSE4w/uRoDGryj/IhAGAkQfvubEOeK8MsaukPzSpGm+TYDLiJMwUzIne3EgjDhELwg
+ BUJYTx2HmX+oH7SsnHXyNnMB3XhqUGhsi0UjAP/To4mWSpER6gBNq/2UT2wFrwrCCC22Cc1o9rm
+ fsab6zH2PnrXJWl6UKkrqgQeLuv66mgRs0jbY9OXKSv8SjXPmCyyWNYzuno0dWdlGe0fO7XedoU
+ 5sx7X9JwUJdvYfQequyzuKn42R2mdzXBvPK66ctodBb8CE94
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-GUID: -AU0rX5wLCMYkpJeM1t4eWnrcSKcSBdb
-X-Authority-Analysis: v=2.4 cv=T7OMT+KQ c=1 sm=1 tr=0 ts=67f51e79 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=ZZee45BDSTTCXVxweLkA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-ORIG-GUID: -AU0rX5wLCMYkpJeM1t4eWnrcSKcSBdb
+X-Proofpoint-ORIG-GUID: CXoivn28dsDBnYwMn8RS6kXpZdvmYnhd
+X-Authority-Analysis: v=2.4 cv=Q4vS452a c=1 sm=1 tr=0 ts=67f5203f cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=TDdjnMeiFjqKsEOA0EcA:9 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-GUID: CXoivn28dsDBnYwMn8RS6kXpZdvmYnhd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-08_05,2025-04-08_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 lowpriorityscore=0 adultscore=0 phishscore=0 bulkscore=0
- mlxscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 spamscore=0
- clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 adultscore=0 malwarescore=0 mlxscore=0 suspectscore=0
+ mlxlogscore=925 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2504080092
 
-The commit 5a9d50150c2c ("drm/msm/dpu: shift IRQ indices by 1") shifted
-IRQ indices by 1, making 'NO_IRQ' to be 0 rather than -1 (and allowing
-to skip the definition if the IRQ is not present).
-Several platform files were sketched before that commit, but got applied
-afterwards. As such, they inherited historical (and currently incorrect)
-setting of .intr_tear_rd_ptr = -1 for 'NO_IRQ' value.
+Enable Venus on Lenovo Miix 630 and specify corresponding firmware file.
 
-Drop that setting for all the affected platforms.
-
-Fixes: 62af6e1cb596 ("drm/msm/dpu: Add support for MSM8917")
-Fixes: c079680bb0fa ("drm/msm/dpu: Add support for MSM8937")
-Fixes: 7a6109ce1c2c ("drm/msm/dpu: Add support for MSM8953")
-Fixes: daf9a92daeb8 ("drm/msm/dpu: Add support for MSM8996")
-Fixes: 7204df5e7e68 ("drm/msm/dpu: add support for SDM660 and SDM630 platforms")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h | 2 --
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h | 3 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h  | 4 ----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h   | 3 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h   | 2 --
- 6 files changed, 15 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
-index 1f32807bb5e5d49b696832c4eab54c05106bfd4b..ad60089f18ea6c22160533874ea0cc54c352e064 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
-@@ -132,7 +132,6 @@ static const struct dpu_intf_cfg msm8937_intf[] = {
- 		.prog_fetch_lines_worst_case = 14,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--		.intr_tear_rd_ptr = -1,
- 	}, {
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x6b000, .len = 0x268,
-@@ -141,7 +140,6 @@ static const struct dpu_intf_cfg msm8937_intf[] = {
- 		.prog_fetch_lines_worst_case = 14,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
--		.intr_tear_rd_ptr = -1,
- 	},
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts b/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
+index f160ba562b0af505bdc1357731f75a394b5eeeeb..c11b972771c3881a57ba5a4dfbdcea487da7c6f1 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
++++ b/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
+@@ -100,6 +100,12 @@ i2c5_hid_active: i2c5-hid-active-state {
+ 	};
  };
  
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h
-index 42131959ff22020a83c0ea65d79a56fd57c800f9..a1cf89a0a42d5f3c909798c30901fe8796b15075 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h
-@@ -118,7 +118,6 @@ static const struct dpu_intf_cfg msm8917_intf[] = {
- 		.prog_fetch_lines_worst_case = 14,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--		.intr_tear_rd_ptr = -1,
- 	},
++&venus {
++	firmware-name = "qcom/msm8998/LENOVO/81F1/qcvss8998.mbn";
++
++	status = "okay";
++};
++
+ &wifi {
+ 	qcom,calibration-variant = "Lenovo_Miix630";
  };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h
-index 2b4723a5c67606d68dea905d947cd691bb28eda0..eea9b80e2287a86448ab4e1a5914c1914d5a2090 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h
-@@ -131,7 +131,6 @@ static const struct dpu_intf_cfg msm8953_intf[] = {
- 		.prog_fetch_lines_worst_case = 14,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
--		.intr_tear_rd_ptr = -1,
- 	}, {
- 		.name = "intf_1", .id = INTF_1,
- 		.base = 0x6a800, .len = 0x268,
-@@ -140,7 +139,6 @@ static const struct dpu_intf_cfg msm8953_intf[] = {
- 		.prog_fetch_lines_worst_case = 14,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--		.intr_tear_rd_ptr = -1,
- 	}, {
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x6b000, .len = 0x268,
-@@ -149,7 +147,6 @@ static const struct dpu_intf_cfg msm8953_intf[] = {
- 		.prog_fetch_lines_worst_case = 14,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
--		.intr_tear_rd_ptr = -1,
- 	},
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h
-index 5cf19de71f060818d257f95aa781b91ec201d4e4..ae18a354e5d2a3d2e073f2099e4d970bff5ed085 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h
-@@ -241,7 +241,6 @@ static const struct dpu_intf_cfg msm8996_intf[] = {
- 		.prog_fetch_lines_worst_case = 25,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
--		.intr_tear_rd_ptr = -1,
- 	}, {
- 		.name = "intf_1", .id = INTF_1,
- 		.base = 0x6a800, .len = 0x268,
-@@ -250,7 +249,6 @@ static const struct dpu_intf_cfg msm8996_intf[] = {
- 		.prog_fetch_lines_worst_case = 25,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--		.intr_tear_rd_ptr = -1,
- 	}, {
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x6b000, .len = 0x268,
-@@ -259,7 +257,6 @@ static const struct dpu_intf_cfg msm8996_intf[] = {
- 		.prog_fetch_lines_worst_case = 25,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
--		.intr_tear_rd_ptr = -1,
- 	}, {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x6b800, .len = 0x268,
-@@ -267,7 +264,6 @@ static const struct dpu_intf_cfg msm8996_intf[] = {
- 		.prog_fetch_lines_worst_case = 25,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
--		.intr_tear_rd_ptr = -1,
- 	},
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h
-index 4f2f68b07f203a11529f7a680fb87b448305d80a..bb89da0a481dec053e06369dee8b0854a3427aaf 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h
-@@ -202,7 +202,6 @@ static const struct dpu_intf_cfg sdm660_intf[] = {
- 		.prog_fetch_lines_worst_case = 21,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
--		.intr_tear_rd_ptr = -1,
- 	}, {
- 		.name = "intf_1", .id = INTF_1,
- 		.base = 0x6a800, .len = 0x280,
-@@ -211,7 +210,6 @@ static const struct dpu_intf_cfg sdm660_intf[] = {
- 		.prog_fetch_lines_worst_case = 21,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--		.intr_tear_rd_ptr = -1,
- 	}, {
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x6b000, .len = 0x280,
-@@ -220,7 +218,6 @@ static const struct dpu_intf_cfg sdm660_intf[] = {
- 		.prog_fetch_lines_worst_case = 21,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
--		.intr_tear_rd_ptr = -1,
- 	},
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h
-index c70bef025ac4190347f81d75caf4777786fbeaf7..7caf876ca3e30cc9230cbc6f19b9d3d1b954e2e0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h
-@@ -147,7 +147,6 @@ static const struct dpu_intf_cfg sdm630_intf[] = {
- 		.prog_fetch_lines_worst_case = 21,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
--		.intr_tear_rd_ptr = -1,
- 	}, {
- 		.name = "intf_1", .id = INTF_1,
- 		.base = 0x6a800, .len = 0x280,
-@@ -156,7 +155,6 @@ static const struct dpu_intf_cfg sdm630_intf[] = {
- 		.prog_fetch_lines_worst_case = 21,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--		.intr_tear_rd_ptr = -1,
- 	},
- };
- 
 
 ---
 base-commit: 2bdde620f7f2bff2ff1cb7dc166859eaa0c78a7c
-change-id: 20250408-dpu-drop-intr-rd-ptr-76b52416c125
+change-id: 20250408-miix-630-venus-7a0b4f1f3788
 
 Best regards,
 -- 
