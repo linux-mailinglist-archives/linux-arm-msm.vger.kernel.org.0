@@ -1,233 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-53479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91CA8A7F917
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 11:14:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC114A7F9AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 11:35:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 443981892207
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 09:14:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0BD2117D398
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 09:33:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25735264628;
-	Tue,  8 Apr 2025 09:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CCFD264A85;
+	Tue,  8 Apr 2025 09:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aYjTcb/N"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NdSqZPdR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6820317F4EC;
-	Tue,  8 Apr 2025 09:14:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F753264A7D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 09:32:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744103672; cv=none; b=U/0s5BY/bViZ1UfL3bZT+bEl5fNuYVR+JtROBrOeURTzG+DmwKb0Gk9h4aUhyT8c4q6SutoihMB+pj8cGGR+eW+yr2Ky6UHcrvUPrKsQ02QRq5fZ5zWsBrMA/VENbGwOToLigBADyBJvQnewr0FrI08CoYTqrtrxLi2TkNnvzD0=
+	t=1744104753; cv=none; b=rH9TrAzMYocqLzbFDj6YdNTSSpvr+nJCXQKtgWn/s0Rzao963GHbecPD+cBVBTVzxpqVIA7Gui2VJsQy7VxpiEHGMyHC7EBDj0RnmX4XVr6Z3PQ9R7jE4nmemRVTN/u2JiXLoXfvfl+NbL1kDx9nqV2nb6+k3Npnf9hjkpPH5pQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744103672; c=relaxed/simple;
-	bh=N3EB8yCpOI6dMKXG63mX649MC38GMowkxWYMreqGhqI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DCS2aRtKrO0py2m/D3FgmXsdJsDhTIWGyke4DY5sbqXLLQ2QFPGw60b/Q4ujll2tR8+ekSC7BSgJqKwJjvzdS/ek8855PmAJ6bLZzkTJccIDAG2bIDcbmSymh88uJ/JvA9FKXI0wYCKh7B0LVlRU4iLtvo4rRLQbNAjkJeRS0gY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aYjTcb/N; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5382GMhO014971;
-	Tue, 8 Apr 2025 09:14:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0xgvjp3pvARCPIysxnA4YWBopvRxtiZ3sI9z0/ibT2A=; b=aYjTcb/NB6CfUx9i
-	ovpJ7TrE7xPaYhDIlHTKgvTR9T66DkssIYRabMNNLxDpq+afDsgVSnJO0ZwqfbDY
-	MsFDkmb949HHS/Q0W7DZQjs5Gr16NJystD1FTKXQl5r3DHCskZywOk8u98nFv7+O
-	Tu5lgsjo3FuwbyJD9ctSUALzLdxVU//b5pEycUggj7Ya6sidxKSbDF3vzccNk6wd
-	hmcDd4T152Ohu13IWAJ8iuk/aJ3YG6Ihz6i2VGd+2rvF4FCIKAnLE6Up39WrHJ+w
-	nigEYRHL9ODnWOO27Mot8vIGJ2enxbusgZheLf8UtP5X6Lj7kle82/YTmwQeSs0T
-	VdYUwg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twbuf7bg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Apr 2025 09:14:25 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5389EOXg017990
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 8 Apr 2025 09:14:24 GMT
-Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 8 Apr 2025
- 02:14:20 -0700
-Message-ID: <a153ba0f-5f73-db6a-b821-5145e3ffc33a@quicinc.com>
-Date: Tue, 8 Apr 2025 14:44:17 +0530
+	s=arc-20240116; t=1744104753; c=relaxed/simple;
+	bh=nJhtU/p+2ibFPm6eaeU2RXeqcRvO83wil1AuYBv0Kj0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Ih4bVlo2r7pCl8UNg8LbgAmhdvj6z+F4Uz0dXWWkGxrW9hqrJVDt4xlwlmI45w6QhXekG7jJ49mXQINh98SjTQiycW3ChTs/tyhxaTEcyQis7ZWK3U/s4RLW0xiJenmC5IBvQsygaY40LHeR/LSydbSwhHgZNJTYu+6zpcEEGkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NdSqZPdR; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43e9ccaa1ebso4113225e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 02:32:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744104749; x=1744709549; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=geg1UNNsJZdELs71YAT3icaSzTrvBq+oyumhCKCeUhI=;
+        b=NdSqZPdRn2rsaQzSIdJIWDXqhUCR3HV8H5aDFygc9c/MiP6KLvIMr1b925rDPHTvUp
+         joC3L77dIxb1q82I84iHM6dhkHZ4L47KDPZRPjfmWowDrV3Wb7pevn6wIzgbcj17eI8e
+         KMS8/m0bxjhC0rH62ktd4Mp2+s330su6jcwnoEGOGB89///5brcc5cqWfAjkJPHOOKtg
+         BOMDmtQBPInNvYUBCxrys3c4uVhiNTSpAU3Xbw6cDbYQvmlwW5fuXyG9fvb1sgV9H3If
+         2bqXBLWLAI4snGuC+szOCSqMZwuZwrgGPmAf3T2e0nSa/PJ29dQ87e7VmPn5qCuualp5
+         gR8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744104749; x=1744709549;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=geg1UNNsJZdELs71YAT3icaSzTrvBq+oyumhCKCeUhI=;
+        b=i7b4uZiOwS6UetS5XzhrPH/3NCHfVYX5i4EYbKu+Y5P02rnEC6BIL+o7XhPYHHpU5m
+         Kb0L97wW9VBznB6r02n3yVNDeAV4dnbplNG7LrYy6KsCp8JJqTZIL3/Jt5ryO1BjZoTQ
+         Afh1je6sL0cylmCsDhkqKu0mdunEWL6gf93sGdaD/PTkHSthO4Q68m1ME3Js6AcUt3JY
+         BclZnDpJHQPCnJXChvABUCIVZ1GnbX82IkQ2pyQJcsftHVg3yl4sOq9TwOIAR1P9bT+X
+         mV4sNkGYnAVLzPlt2gk7YU5psQs3OTnzNJ2EjR1Ekyi1Cjy+0JeBu5qqNy5pirDMVRaY
+         8KGg==
+X-Gm-Message-State: AOJu0Yzq2Rg3SQsmNavDOIACoo2K7drZWbfYMg0eqZit5Zfs62z4kmUE
+	0v5taaMOU4yN0QLyJtvhDu24NqBiQXGyx3WPBt1ZlUmNgSZcf3D11w2Ib3VEwVg=
+X-Gm-Gg: ASbGncvU1e20G/xMX6MNaB3SgEmNgOPIi8UkTzAgaBNIoMkJ9Mj1MuELjBQF0pvmcgQ
+	AT2zkLmMCuZ6Z+t53mc0t0FTst8UWzbpoVgc48+LkNv33F9Hl+Xc03/YHt+edhfegIsgzohUl9a
+	4cx+lpH6SIMM5YcxUOA9odU4WIQwGH0hysAopW3DFCiQbcqKqe5WvPq4OBFALVpZ5nyt/w/x/Vx
+	B5C/SWdDAMHjxwgxFr8mCLdcTP1oUqz7yecGwohBtUvQgDkjn8Bade7fGa60mXB4tCrftUmihmp
+	gQYcucp66xsdwW2OjRafv/6uBSuGL8MUdI2NQ56KxfBYSDfVeMVSGVMnjkKLJNg=
+X-Google-Smtp-Source: AGHT+IGTYGmUMNbxn+aRLmSjuIMeJmi+FJspkI6rVYXBi9pbLL/Nl48clIeCAgsdElyn6Gj68h7MvQ==
+X-Received: by 2002:a05:600c:3d12:b0:439:8294:2115 with SMTP id 5b1f17b1804b1-43ecfa56d10mr57083635e9.8.1744104749509;
+        Tue, 08 Apr 2025 02:32:29 -0700 (PDT)
+Received: from [192.168.1.26] ([178.197.198.86])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ec34be2f4sm153680085e9.19.2025.04.08.02.32.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Apr 2025 02:32:29 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 00/24] ARM / arm64: dts: qcom: Use the header with DSI
+ phy clock IDs
+Date: Tue, 08 Apr 2025 11:31:57 +0200
+Message-Id: <20250408-dts-qcom-dsi-phy-clocks-v2-0-73b482a6dd02@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v6 2/4] media: venus: pm_helpers: use opp-table for the
- frequency
-Content-Language: en-US
-To: Renjiang Han <quic_renjiang@quicinc.com>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "Rob Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konradybcio@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241219-add-venus-for-qcs615-v6-0-e9a74d3b003d@quicinc.com>
- <20241219-add-venus-for-qcs615-v6-2-e9a74d3b003d@quicinc.com>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20241219-add-venus-for-qcs615-v6-2-e9a74d3b003d@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NA6wuO_OFUH5gZ3_vc3nxHuzZHrMqXtq
-X-Proofpoint-ORIG-GUID: NA6wuO_OFUH5gZ3_vc3nxHuzZHrMqXtq
-X-Authority-Analysis: v=2.4 cv=dbeA3WXe c=1 sm=1 tr=0 ts=67f4e8f1 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=L8KPSNNy_WAkgOVfbNQA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-08_03,2025-04-07_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 mlxlogscore=999 phishscore=0 mlxscore=0 spamscore=0
- malwarescore=0 clxscore=1015 adultscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504080065
+X-B4-Tracking: v=1; b=H4sIAA7t9GcC/4WNSw6CQBAFr0J6bRtmDD9X3sOwgO4BOiKD04RIC
+ Hd39AIuq5JXbwd1QZzCNdkhuFVU/BTBnhKgoZl6h8KRwaY2S40tkBfFF/knsgrOw4Y0enooFhX
+ lVV5yZy8ZxPUcXCfvX/leRx5EFx+239FqvvZ/czWYYsUlc0utoaK7jTI1wZ996KE+juMDQiZcq
+ 78AAAA=
+X-Change-ID: 20250127-dts-qcom-dsi-phy-clocks-79c6968df235
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Dmitry Baryshkov <lumag@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4498;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=nJhtU/p+2ibFPm6eaeU2RXeqcRvO83wil1AuYBv0Kj0=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBn9O0T9WCfm7gcLgeK675xTMsx9nuR+SYdE1ltE
+ ea1H0zzXYaJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ/TtEwAKCRDBN2bmhouD
+ 1wfkD/44er75tkxY/bbq5Umyh+3XtV8uIAqETZvYpA+vo6Utozu7qC8gxNMjEUk8MLnNPcTQGvH
+ fz4GcWXldLTuuAMs2mu4cT66mkdxbl0VelrSM0VjZrZFNbgwaFNi9hCg15DOYndr7pHPu2//hAG
+ 8IFSnyQY5oiA7KOi6BNOF23mmjaEg2Kbjoml4P9OSSnDxbdSdcg+9u3Hpep09Ig4RtLr46keRhw
+ kD+cJslgwy9F6IFT0Ir2GyqX/qP/q6n4K9lX1fGDqK4uAp7G9ouJDHTnv3ws7xxaMB4k/6hk8vC
+ 7lAtrTDKiDoZv1r4ZgL9xscuw8HaKKb4wfarIbsFtya6/+vL/L76Nck+e7HlcpsLxcCDNHhca5b
+ SecLFcDdepTSX/zqtObNJdiC61XmloM9CnEPKc8V0yXJXqy+yrILliIIumgLMuXulhPICP+9Py4
+ 8VtNPyO9j14QojQukIoAjBEyRk7DahYeEmYxpE2q6xAhuCPVhzAVv6YkKMJ4aZRRxIAEQOHMT+N
+ jyiTdINi+q13pbHHIS+r86BYDr/FIEUA1QRT6VsyFpycBjzfRyThTkTh5re2N13YMGMveM1+9fE
+ kqEiMXngZ6eN7M5pCH9FZAAwXbqDcHw201JLiTEsO3O8bCPyCpRm2gjy9R2B+YDWcZ7yfX+1ki6
+ rZoNoOMbLV8/7EQ==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
+Changes in v2:
+- Collect tags and rebase (no changes).
+- Dependency was merged, so this can send be applied freely.
+- Link to v1: https://lore.kernel.org/r/20250127-dts-qcom-dsi-phy-clocks-v1-0-9d8ddbcb1c7f@linaro.org
 
-On 12/19/2024 11:11 AM, Renjiang Han wrote:
-> The frequency value in the opp-table in the device tree and the freq_tbl
-> in the driver are the same.
-> 
-> Therefore, update pm_helpers.c to use the opp-table for frequency values
-> for the v4 core.
-> If getting data from the opp table fails, fall back to using the frequency
-> table.
-> 
-> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
-> ---
->  drivers/media/platform/qcom/venus/pm_helpers.c | 53 +++++++++++++++++++-------
->  1 file changed, 39 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-> index 33a5a659c0ada0ca97eebb5522c5f349f95c49c7..b61c0ad152878870b7223efa274e137d3636433b 100644
-> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
-> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-> @@ -43,14 +43,20 @@ static int core_clks_enable(struct venus_core *core)
->  	const struct venus_resources *res = core->res;
->  	const struct freq_tbl *freq_tbl = core->res->freq_tbl;
->  	unsigned int freq_tbl_size = core->res->freq_tbl_size;
-> +	struct device *dev = core->dev;
-> +	struct dev_pm_opp *opp;
->  	unsigned long freq;
->  	unsigned int i;
->  	int ret;
->  
-> -	if (!freq_tbl)
-> -		return -EINVAL;
-> -
-> -	freq = freq_tbl[freq_tbl_size - 1].freq;
-> +	opp = dev_pm_opp_find_freq_ceil(dev, &freq);
-> +	if (IS_ERR(opp)) {
-> +		if (!freq_tbl)
-> +			return -EINVAL;
-> +		freq = freq_tbl[freq_tbl_size - 1].freq;
-> +	} else {
-> +		dev_pm_opp_put(opp);
-> +	}
->  
->  	for (i = 0; i < res->clks_num; i++) {
->  		if (IS_V6(core)) {
-> @@ -627,12 +633,15 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load, bool lo
->  
->  static int decide_core(struct venus_inst *inst)
->  {
-> +	const struct freq_tbl *freq_tbl = inst->core->res->freq_tbl;
->  	const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
->  	struct venus_core *core = inst->core;
->  	u32 min_coreid, min_load, cur_inst_load;
->  	u32 min_lp_coreid, min_lp_load, cur_inst_lp_load;
->  	struct hfi_videocores_usage_type cu;
-> -	unsigned long max_freq;
-> +	unsigned long max_freq = ULONG_MAX;
-> +	struct device *dev = core->dev;
-> +	struct dev_pm_opp *opp;
->  	int ret = 0;
->  
->  	if (legacy_binding) {
-> @@ -655,7 +664,11 @@ static int decide_core(struct venus_inst *inst)
->  	cur_inst_lp_load *= inst->clk_data.low_power_freq;
->  	/*TODO : divide this inst->load by work_route */
->  
-> -	max_freq = core->res->freq_tbl[0].freq;
-> +	opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
-> +	if (IS_ERR(opp))
-> +		max_freq = freq_tbl[0].freq;
-> +	else
-> +		dev_pm_opp_put(opp);
->  
->  	min_loaded_core(inst, &min_coreid, &min_load, false);
->  	min_loaded_core(inst, &min_lp_coreid, &min_lp_load, true);
-> @@ -1078,7 +1091,9 @@ static int load_scale_v4(struct venus_inst *inst)
->  	unsigned int num_rows = core->res->freq_tbl_size;
->  	struct device *dev = core->dev;
->  	unsigned long freq = 0, freq_core1 = 0, freq_core2 = 0;
-> +	unsigned long max_freq = ULONG_MAX;
->  	unsigned long filled_len = 0;
-> +	struct dev_pm_opp *opp;
->  	int i, ret = 0;
->  
->  	for (i = 0; i < inst->num_input_bufs; i++)
-> @@ -1104,19 +1119,29 @@ static int load_scale_v4(struct venus_inst *inst)
->  
->  	freq = max(freq_core1, freq_core2);
->  
-> -	if (freq > table[0].freq) {
-> -		dev_dbg(dev, VDBGL "requested clock rate: %lu scaling clock rate : %lu\n",
-> -			freq, table[0].freq);
-> +	opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
-> +	if (IS_ERR(opp))
-> +		max_freq = table[0].freq;
-> +	else
-> +		dev_pm_opp_put(opp);
->  
-> -		freq = table[0].freq;
-> +	if (freq > max_freq) {
-> +		dev_dbg(dev, VDBGL "requested clock rate: %lu scaling clock rate : %lu\n",
-> +			freq, max_freq);
-> +		freq = max_freq;
->  		goto set_freq;
->  	}
->  
-> -	for (i = num_rows - 1 ; i >= 0; i--) {
-> -		if (freq <= table[i].freq) {
-> -			freq = table[i].freq;
-> -			break;
-> +	opp = dev_pm_opp_find_freq_ceil(dev, &freq);
-> +	if (IS_ERR(opp)) {
-> +		for (i = num_rows - 1 ; i >= 0; i--) {
-> +			if (freq <= table[i].freq) {
-> +				freq = table[i].freq;
-> +				break;
-> +			}
->  		}
-> +	} else {
-> +		dev_pm_opp_put(opp);
->  	}
->  
->  set_freq:
-> 
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Use the header with DSI phy clock IDs to make code more readable.
+Changes done with sed with alignment/wrapping fixups. Verified with
+dtx_diff.
+
+Best regards,
+Krzysztof
+
+---
+Krzysztof Kozlowski (24):
+      ARM: dts: qcom: msm8226: Use the header with DSI phy clock IDs
+      ARM: dts: qcom: msm8974: Use the header with DSI phy clock IDs
+      ARM: dts: qcom: msm8916: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: msm8917: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: msm8939: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: msm8953: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: msm8976: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: msm8996: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: msm8998: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: qcm2290: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sc7180: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sc8180x: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sdm630: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sdm670: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sdm845: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sm6115: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sm6125: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sm6350: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sm8150: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sm8250: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sm8350: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sm8450: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sm8550: Use the header with DSI phy clock IDs
+      arm64: dts: qcom: sm8650: Use the header with DSI phy clock IDs
+
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi            |  9 +++++----
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi            | 21 +++++++++++++--------
+ arch/arm64/boot/dts/qcom/msm8916.dtsi               |  9 +++++----
+ arch/arm64/boot/dts/qcom/msm8917.dtsi               |  9 +++++----
+ arch/arm64/boot/dts/qcom/msm8939.dtsi               | 13 +++++++------
+ arch/arm64/boot/dts/qcom/msm8953.dtsi               | 17 +++++++++--------
+ arch/arm64/boot/dts/qcom/msm8976.dtsi               | 17 +++++++++--------
+ arch/arm64/boot/dts/qcom/msm8996.dtsi               | 21 +++++++++++++--------
+ arch/arm64/boot/dts/qcom/msm8998.dtsi               | 17 +++++++++--------
+ arch/arm64/boot/dts/qcom/qcm2290.dtsi               |  9 +++++----
+ arch/arm64/boot/dts/qcom/sc7180.dtsi                | 11 +++++++----
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi               |  9 +++++----
+ arch/arm64/boot/dts/qcom/sdm630.dtsi                |  9 +++++----
+ arch/arm64/boot/dts/qcom/sdm660.dtsi                | 12 ++++++------
+ arch/arm64/boot/dts/qcom/sdm670.dtsi                | 16 +++++++++-------
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts          |  3 ++-
+ arch/arm64/boot/dts/qcom/sdm845-mtp.dts             |  3 ++-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi                | 21 +++++++++++++--------
+ arch/arm64/boot/dts/qcom/sm6115.dtsi                |  8 +++++---
+ arch/arm64/boot/dts/qcom/sm6125.dtsi                |  8 +++++---
+ arch/arm64/boot/dts/qcom/sm6350.dtsi                |  8 +++++---
+ arch/arm64/boot/dts/qcom/sm8150-hdk.dts             |  3 ++-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi                | 17 +++++++++--------
+ .../boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi   |  3 ++-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi                | 21 +++++++++++++--------
+ arch/arm64/boot/dts/qcom/sm8350.dtsi                | 15 +++++++++------
+ arch/arm64/boot/dts/qcom/sm8450.dtsi                | 21 +++++++++++++--------
+ arch/arm64/boot/dts/qcom/sm8550.dtsi                | 17 +++++++++--------
+ arch/arm64/boot/dts/qcom/sm8650.dtsi                | 17 +++++++++--------
+ 29 files changed, 210 insertions(+), 154 deletions(-)
+---
+base-commit: 7702d0130dc002bab2c3571ddb6ff68f82d99aea
+change-id: 20250127-dts-qcom-dsi-phy-clocks-79c6968df235
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
