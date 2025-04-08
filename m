@@ -1,170 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-53578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63E62A8131C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 18:58:53 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C86BA8136F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 19:22:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C778D1BA0F1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 16:58:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 73A217AEC35
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 17:21:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E40C4230BFE;
-	Tue,  8 Apr 2025 16:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEB70235BF8;
+	Tue,  8 Apr 2025 17:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cSIZjP3M"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fOUJVUwK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4438622E400
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 16:58:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F01A14AD2D;
+	Tue,  8 Apr 2025 17:22:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744131507; cv=none; b=iVL2N7OfJFBuOCLbWEeNRHUpWtkqmw9pV1YZ3xaPQo7uhnJdZdaqnOdtsS39bK3gZV1Jfm6uzQBPn2UBGoJWfGxYldQAkvqul4YjkzfHZ6XUc9CT89ZRI3hfMj0gHnW+Ow8Xt8/GosEdQvajSmWLb2vnHScVUSs9iwsSNNCDu9I=
+	t=1744132958; cv=none; b=Ok6BOJb+f9aeDZOXfsqa4+NjUoqeu2jjl4dnAF9NicOv69OqKy047+BJqIfesVoz1kupCUd4h7R4em7ZvNEFhpBctbzBTARB5uoqYybY4TOyS4yujF2GCLi0wTapacJ2TK0X6I2N/nTraJB/hdoLALQnvm4kxbH3ER3AOoWTdow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744131507; c=relaxed/simple;
-	bh=1yHW+WngQPDcxfP4JH1rGuORo3S8ePfGj/4p30/ZjG4=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=F0uOOfyjzKbuutZHzTgVJWUwd6A9o++cTTyK//08QqIk09p/U+qadMi9CkOl1mABoeQU80Z0cLHKrOK2LXeWUQD0PhAUqo//53aB1UHhrKOF6E9+I9sMEUCOhoAY3T01/uD9wjTtNAzfBHLeQPOzFlym7Gz99Yny/25LQW3oUEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cSIZjP3M; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-30566e34290so6109647a91.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 09:58:26 -0700 (PDT)
+	s=arc-20240116; t=1744132958; c=relaxed/simple;
+	bh=fo4bucBnXY/q0oK6G7meZ4oUY3TMcCAnjpICzIo+a5A=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=BpNhSU30BsZWE1vCrg3KJiRiot1tvdl/4j2KMf+kKhuEwUVOEsi1VKxLMXqtwGjgIw43CjfIFANWZLNU2mMg4vtfTy8z/0pK1Yoa3sDzM4dW45lp/VpK8V/GZQQe2EqE1/qdpJjoEuoeJCzKcIfGMJ2gOj223v9ikgqA43mQoq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fOUJVUwK; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3913b539aabso3493885f8f.2;
+        Tue, 08 Apr 2025 10:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1744131505; x=1744736305; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4/cspsRoH7mgvJKsLmS0oN+FfcvZOZE3BpLLUKAvOl4=;
-        b=cSIZjP3MUj4KMRKAjqY8bK7uPsYJjmCWLFKRW/eL+E7CAWrMR1ZKFk6lN8t0C/U+me
-         Bxt1hgpMSuhkUagbBUboxx1uZhBpIcUPohct1hoLr/WwTBB6cyppIjJuSuDn9SrXFcku
-         a7Zo4+6RdebbLVhNdCBQFNMYoSu7tHuOpe/ZOfSoCisg6bkuqvqE7rD0AUhmqtDGSHRZ
-         6FEugAZM45JSH+XC5ji92fcUeKqtdinSNnxfUNixUQ+ObhP8jyDol2Zg1rYjranjhB5z
-         a2KAPxPxzO/+CKAm+NTFVUvgeh9kusjOIYhz/qMxxK5vFnPT5+7rT2RpA/eTkGBXnGBv
-         Q24A==
+        d=gmail.com; s=20230601; t=1744132955; x=1744737755; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=k4URTuU4OqPDMxhBgu52MpzTH+LX835ANJbVjlWk8JY=;
+        b=fOUJVUwK/7BigCFP/cO6ij+v3OIJ/XZAibupTL+cObPZJZi7cNJKnXqBrf4P7pw90+
+         EwYB+Vr5StOvgm1rPvsnAM55EWDs+ZKogCSKWRnuuTeDOw42pqcd10TPKoC/CbfqxOB6
+         XAPTcrbIJ92k3RT2Xtdb1FdFDT5n2TAW4P6cEORLlbxu/UaFjK0Kc8e9k+xGbMfdAKRD
+         SmkU+XP0J3FkbYLBxiys7xLc0SDRWgszJDVm3MLf7nTHehGa4qQ/gyD/wWHp/I0dUZr7
+         lwihvQ78KqTSr47XBwcjZuYkpx10VrV+kzj/h5uyUjkGSTVBrOsrboEs3dgmvIM5UAfh
+         I3RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744131505; x=1744736305;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4/cspsRoH7mgvJKsLmS0oN+FfcvZOZE3BpLLUKAvOl4=;
-        b=oEfHGf9hDjwBd8xRDaEYVSpGyfqwwHvVddNuUom8r4bLcxsJkF3N5QTKP4yW22NJLs
-         R1RUz1aJ+grCTqSDdFWoapNAlHAjLmRkeyI6Bqh5HHIZOZHy420jcqeqYRFqp38YeRH3
-         G8iYH1z/sGkGM1I3BaTPkM08wtFnH62pz4Y9E/mMohBGTuYnTr6dLnrIAYDYC5eOnezJ
-         vIGuI4qiYai89BGh7sc6a4K2YeqHzujYxCUKZ/XDkxui/T4h5AyY3W6cfGTaGNfAvfyL
-         Fwe7S9t9nrJ6HjryXT97FU7PVJz1ZQQYYL1xlSCYCqm+/PDOiBlFs5+4aqVT+HbjsIlH
-         qrMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUB5tTz4sle0oabbRtojzu9Vf9SoprC8wvz62nC5M2R259Ui/wExmuvldaU3f2bLEKnTFyCLOhZTkIV2Tn4@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFbD1siIIY7IeZwCR4pfJRt0u406RmICbqmo+OnKru60TQbeMa
-	oIx9jqo6Q5pRD23bfnX54EvC/3uaMOifolgj4ibMco+cWdINJhtQQB6JZtsY+cCuqeCDb5HxXq8
-	YambbB0Dz6arrma78EL5tLA==
-X-Google-Smtp-Source: AGHT+IHhG5hSB3aOnKu/HHrAmMFRLsHAG6Yf/NLT6GaoqAr+8hqPxs0sYHiqY17BjjeR0rXHNDk0o7C4Y+BsIOeodw==
-X-Received: from pjbse3.prod.google.com ([2002:a17:90b:5183:b0:2ee:3128:390f])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:51cb:b0:2fe:861b:1ae3 with SMTP id 98e67ed59e1d1-306af7178cemr18710322a91.8.1744131505344;
- Tue, 08 Apr 2025 09:58:25 -0700 (PDT)
-Date: Tue, 08 Apr 2025 09:58:23 -0700
-In-Reply-To: <aeed695d-043d-45f6-99f3-e41f4a698963@amd.com>
+        d=1e100.net; s=20230601; t=1744132955; x=1744737755;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k4URTuU4OqPDMxhBgu52MpzTH+LX835ANJbVjlWk8JY=;
+        b=Lpvp2VTvql+rIUc83RIpOOul1H9BjotkkQDZQcgAEV4MPfEldP02BLstoJBgE99+JV
+         QXibqcLpSqlzht4wNxJIm+xvALH080lGRJOAlkuqo3m+PEarzkdNQhyMas5W51j2jeeX
+         SZnOu8xkPCLrbbSGxIUF6dgqZKv2sRuDKFoWRlLwBzflZYnPpmdwrsfvb4RolmdIBC4C
+         zimne1kOHB6XOnphYfry+HyMFHoGdYT5FAeUOGix656Jv69GPAw7SRfOHo7x80VK0vuI
+         /AdCP7ySCxjgRs9ka11zSYX4qhEXnHsI/KBzRZfOrU6yUZrV6fgv5rS6+xcZ1BFIjGQP
+         veJg==
+X-Forwarded-Encrypted: i=1; AJvYcCUlHXD9TlXRRfm0R/2tgCPcuLlOso3T8Z+8i3zUmEiFBqCXuYjO/zUFHb4Zk07hx7+9mOl7L6xqdZTbLgw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YytY18ib+C05YlIWHST5wPtVShhBBgwSc/1/77ZEa/5gYVA/Ubf
+	+hhCzABjq6PbyBgVfxnoObH5VCJeQCASPknuNQz6zU3UrwTbezha
+X-Gm-Gg: ASbGncuaqFSOLTk/a0h2LaaweBTlFscn/WFjLS03M2kyjNv2ifBCS3MRAdUpM3d00HL
+	FHFOw0m/lBOkSaY4DKxli+/E/KzVhBa/2Hd8XyaK5YZR4WL1HdD5Lx1C++z2MDaBddrgbSNB8cO
+	G0XEfUtJVllM5CtMnJlkyZS7J17W6OCNuqX6tllgDVmlUkyjxJEXHA1ByD4EFi/YYj5UsUOKMk3
+	1bZm9XN6m5Sz6n68pmwGraWR0+j9nyKLMAtPW9My0KAowsS5ZNIXpXnTyTeFlKN7OSjxbaDwpLv
+	J4+X1/qJCWbqiFl8H8K/alm+jNtIwgQ+FtSkAXbm6xg9L1z33FJ43h8g
+X-Google-Smtp-Source: AGHT+IGF2ELWn/bt4SThTAhIsS85ycBVt4QmEGy6AROd0iJukYlBEQMvgJpx007p2eIQD1aBh/DVGw==
+X-Received: by 2002:a5d:64c4:0:b0:39c:1257:c7a3 with SMTP id ffacd0b85a97d-39d87ce3284mr16492f8f.59.1744132955207;
+        Tue, 08 Apr 2025 10:22:35 -0700 (PDT)
+Received: from qasdev.Home ([2a02:c7c:6696:8300:5b45:5642:beb0:688f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c30096896sm15729953f8f.19.2025.04.08.10.22.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Apr 2025 10:22:34 -0700 (PDT)
+From: Qasim Ijaz <qasdev00@gmail.com>
+To: robdclark@gmail.com,
+	quic_abhinavk@quicinc.com,
+	lumag@kernel.org,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	quic_jesszhan@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 RESEND] drm/msm/dpu: reorder pointer operations after sanity checks to avoid NULL deref
+Date: Tue,  8 Apr 2025 18:22:23 +0100
+Message-Id: <20250408172223.10827-1-qasdev00@gmail.com>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250318161823.4005529-1-tabba@google.com> <20250318161823.4005529-4-tabba@google.com>
- <aeed695d-043d-45f6-99f3-e41f4a698963@amd.com>
-Message-ID: <diqzr022twsw.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [PATCH v7 3/9] KVM: guest_memfd: Allow host to map guest_memfd() pages
-From: Ackerley Tng <ackerleytng@google.com>
-To: Shivank Garg <shivankg@amd.com>, Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Shivank Garg <shivankg@amd.com> writes:
+_dpu_encoder_trigger_start dereferences "struct dpu_encoder_phys *phys"
+before the sanity checks which can lead to a NULL pointer dereference if
+phys is NULL.
+ 
+Fix this by reordering the dereference after the sanity checks.
+ 
+Fixes: 8144d17a81d9 ("drm/msm/dpu: Skip trigger flush and start for CWB")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+---
+v2:
+- Moved Signed-off tag below Fixes tag
+- Moved dpu_enc declaration to the top and initialisation below sanity checks
 
-> Hi Fuad,
->
-> On 3/18/2025 9:48 PM, Fuad Tabba wrote:
->> Add support for mmap() and fault() for guest_memfd backed memory
->> in the host for VMs that support in-place conversion between
->> shared and private. To that end, this patch adds the ability to
->> check whether the VM type supports in-place conversion, and only
->> allows mapping its memory if that's the case.
->> 
->> Also add the KVM capability KVM_CAP_GMEM_SHARED_MEM, which
->> indicates that the VM supports shared memory in guest_memfd, or
->> that the host can create VMs that support shared memory.
->> Supporting shared memory implies that memory can be mapped when
->> shared with the host.
->> 
->> This is controlled by the KVM_GMEM_SHARED_MEM configuration
->> option.
->> 
->> Signed-off-by: Fuad Tabba <tabba@google.com>
->
-> ...
-> ...
->> +
->> +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
->> +{
->> +	struct kvm_gmem *gmem = file->private_data;
->> +
->> +	if (!kvm_arch_gmem_supports_shared_mem(gmem->kvm))
->> +		return -ENODEV;
->> +
->> +	if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
->> +	    (VM_SHARED | VM_MAYSHARE)) {
->> +		return -EINVAL;
->> +	}
->> +
->> +	file_accessed(file);
->
-> As it is not directly visible to userspace, do we need to update the
-> file's access time via file_accessed()?
->
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Could you explain a little more about this being directly visible to
-userspace?
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 0eed93a4d056..0bd1f2bfaaff 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1667,7 +1667,7 @@ static void _dpu_encoder_trigger_flush(struct drm_encoder *drm_enc,
+  */
+ static void _dpu_encoder_trigger_start(struct dpu_encoder_phys *phys)
+ {
+-	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(phys->parent);
++	struct dpu_encoder_virt *dpu_enc;
+ 
+ 	if (!phys) {
+ 		DPU_ERROR("invalid argument(s)\n");
+@@ -1678,6 +1678,8 @@ static void _dpu_encoder_trigger_start(struct dpu_encoder_phys *phys)
+ 		DPU_ERROR("invalid pingpong hw\n");
+ 		return;
+ 	}
++
++	dpu_enc = to_dpu_encoder_virt(phys->parent);
+ 
+ 	if (phys->parent->encoder_type == DRM_MODE_ENCODER_VIRTUAL &&
+ 	    dpu_enc->cwb_mask) {
+-- 
+2.39.5
 
-IIUC generic_fillattr(), which guest_memfd uses, will fill stat->atime
-from the inode's atime. file_accessed() will update atime and so this
-should be userspace accessible. (Unless I missed something along the way
-that blocks the update)
-
->> +	vm_flags_set(vma, VM_DONTDUMP);
->> +	vma->vm_ops = &kvm_gmem_vm_ops;
->> +
->> +	return 0;
->> +}
->> +#else
->> +#define kvm_gmem_mmap NULL
->> +#endif /* CONFIG_KVM_GMEM_SHARED_MEM */
->> +
->>  static struct file_operations kvm_gmem_fops = {
->> +	.mmap		= kvm_gmem_mmap,
->>  	.open		= generic_file_open,
->>  	.release	= kvm_gmem_release,
->>  	.fallocate	= kvm_gmem_fallocate,
->
-> Thanks,
-> Shivank
 
