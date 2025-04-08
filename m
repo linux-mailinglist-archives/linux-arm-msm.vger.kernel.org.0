@@ -1,258 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-53459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81A90A7F2AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 04:33:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7241A7F439
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 07:39:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F220E7A4AC6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 02:32:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DEB043B32DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 05:38:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B194F1A7045;
-	Tue,  8 Apr 2025 02:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD7CE216396;
+	Tue,  8 Apr 2025 05:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SIAaWqhZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LdZSueD3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87008F77;
-	Tue,  8 Apr 2025 02:33:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCD9215782;
+	Tue,  8 Apr 2025 05:39:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744079618; cv=none; b=qsrJpP7VXJEckAlfkn8egG5InM8td/7W/rvU/BAlJ2i2bb8kzHXpAnIg72o9YMbn58kcEMPGF4dvYjckzSBzzwyxK3CzPCpZ6i273ic5gGCnDpGamOyLlvLj/RUgvjRM16a/4aOCrqehyaUTSAkNxZEoiAE2l4WRDscP8dQ+dfg=
+	t=1744090744; cv=none; b=r7KT7eHaOkGgyOdlMnBLaB8E2DAxylWV7GOFw2PLRP7nw2plLKkK6/k9zOsaoLmfkdy5l7JjDv2OBUx8uHvM9skbob+bpcvcMHfFoP2OtbPbe9jhkb0CAALROu/hX3HiweQni51Lkzf1vwaiYy6ds5xt84w/ejrEmOw68BZ7LxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744079618; c=relaxed/simple;
-	bh=vSBnwvoM1GwONMhi4Pk2sXk0SrZulUpa7dTpzQ9opg0=;
+	s=arc-20240116; t=1744090744; c=relaxed/simple;
+	bh=oWaA2H6BcrLZcleZ8oSxypJ20x+11KKhnPxk9s+HpCw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=n3pzZjdtp3xtk10AVNHoXTgWueP/6eKV4dgA5VTG4/j8/K98r5JBX6pJWJBE6EH8MnocolGir2R40MEq68OOwFo3aO3JuEfDUR2E5G3DA6Vu3HyP8jgP+6lxrL+eeCHXqf5rmZAYatfTzN41H6dKLfzvEVRM/r/830VIZRHXvmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SIAaWqhZ; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=d5ZqZSYJni3LL5tyoR3vVcFqGAP6ae507Mo5P2HwoCxX/hLqr0y+tyeMTJe5nKKNUfnrpFnf209OphwyoM2YoqTc+Ja4UdWnDrZHcKopbGydVJ/qoKOjJtB+4wUD+ZRhvaegqhQ63pSfxy8vzFnS7mPGQ51lQs2QMuAjWKZ+ip4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LdZSueD3; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5382GPej019664;
-	Tue, 8 Apr 2025 02:32:56 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5382HcwS023850;
+	Tue, 8 Apr 2025 05:38:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	8tkLU/q9k4bzXOFaIPnKaXKZ9vxRAORbRLbV0GT2sj4=; b=SIAaWqhZKCRyXT5b
-	LPOPvCKqjpkCu4mwv6zyomN6MHZkgmlw0so8HPOIgFTvYq9Cf0A5r6JjZrxaZXeX
-	OvSmKVyc0wqaJiV6Ici0LY8qoLGCe9CFuvsFTbncuBBYcapvFSp6QRA+NlhNZBMA
-	YZracMLeBdI3rOiAtyyfMvzSSgrV9iS26Q/4pRmCEW59Rb+JkDisEovKEPAZMAHx
-	8G92RknUmauD2coG9zoNEIUFGGyckGXdiK/JEne37Ai79LhaYsRwU7OyUnl9SneG
-	MYCt2UZ2tEpMAw3SRTBU9KAAYZ8jF8DTs4J/VIldsAvFodejUY9NvJbK+gTiWQSq
-	pD0VDg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twg3e566-1
+	W04bo2gjFy9d2YdweaHf66J+BDIRb38cQgx3cFMMsn4=; b=LdZSueD3a6EOUCka
+	sX8FyBl9GQUv3KffWK2C5MC3m0pxh0ht4xgOQCNV+M5E4gASodlvwZmhROwmPXoJ
+	v4NqzrXTi0kLZ+Q97d69RYLxmIBsjCMPNybDhszBBlzIQPcdk/R3lVHLaXGYPFss
+	T/a0JCm+D1NZFemx/KGxC8csylD5oQdIU9dzMOYa7rrfZ1PtlS0Pls6fGQND92kn
+	l12/fphn5vHLMOCGZ797jwUotArSVQC8wX1FC6mob0AZ2pkK1Ef8mcyQyXLNRMoZ
+	PTpFA6w1aJevpJkfbzYj9QGt05jbXdNf+1WbSxOQKjFeWLmpiPC1Jc6v/qLZBbFD
+	57I48A==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twftehmp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Apr 2025 02:32:56 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5382WtF9000584
+	Tue, 08 Apr 2025 05:38:09 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5385c9cY030548
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 8 Apr 2025 02:32:55 GMT
-Received: from [10.110.75.38] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 8 Apr 2025 05:38:09 GMT
+Received: from [10.217.217.240] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 7 Apr 2025
- 19:32:54 -0700
-Message-ID: <73499d82-e7e5-b88a-41a4-160529efc988@quicinc.com>
-Date: Mon, 7 Apr 2025 19:32:53 -0700
+ 22:38:05 -0700
+Message-ID: <d09641c7-c266-4f0a-a0e3-56f63d8c9ce3@quicinc.com>
+Date: Tue, 8 Apr 2025 11:07:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v3 06/10] phy: qcom: Add M31 based eUSB2 PHY driver
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 2/2] scsi: ufs: introduce quirk to extend
+ PA_HIBERN8TIME for UFS devices
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+        "Martin K.
+ Petersen" <martin.petersen@oracle.com>,
+        Alim Akhtar
+	<alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche
+	<bvanassche@acm.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_nitirawa@quicinc.com>, <quic_bhaskarv@quicinc.com>,
+        <quic_rampraka@quicinc.com>, <quic_cang@quicinc.com>,
+        <quic_nguyenb@quicinc.com>
+References: <20250404174539.28707-1-quic_mapa@quicinc.com>
+ <20250404174539.28707-3-quic_mapa@quicinc.com>
+ <hcguawgzuqgi2cyw3nf7uiilahjsvrm37f6zgfqlnfkck3jatv@xgaca3zgts2u>
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Melody Olvera
-	<quic_molvera@quicinc.com>
-CC: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20250324-sm8750_usb_master-v3-0-13e096dc88fd@quicinc.com>
- <20250324-sm8750_usb_master-v3-6-13e096dc88fd@quicinc.com>
- <kj5dyy7bclmkft7x4hdpzpo7n35cu5nkpksj47phb7jt5lceab@7fb5i6gluqwz>
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <kj5dyy7bclmkft7x4hdpzpo7n35cu5nkpksj47phb7jt5lceab@7fb5i6gluqwz>
+From: MANISH PANDEY <quic_mapa@quicinc.com>
+In-Reply-To: <hcguawgzuqgi2cyw3nf7uiilahjsvrm37f6zgfqlnfkck3jatv@xgaca3zgts2u>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 21XJomGnkL8m6ur2pvtTBprBrwIZ3tQc
-X-Proofpoint-ORIG-GUID: 21XJomGnkL8m6ur2pvtTBprBrwIZ3tQc
-X-Authority-Analysis: v=2.4 cv=I/9lRMgg c=1 sm=1 tr=0 ts=67f48ad8 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=IJHOkPr1J-CqusO2T_sA:9 a=QEXdDO2ut3YA:10
- a=RVmHIydaz68A:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Authority-Analysis: v=2.4 cv=B5+50PtM c=1 sm=1 tr=0 ts=67f4b641 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=C3wUGYcifkSLtJB_Z24A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: eoztKyiyFp5nqaVSt1ZwT0ZLfSVVnkpU
+X-Proofpoint-ORIG-GUID: eoztKyiyFp5nqaVSt1ZwT0ZLfSVVnkpU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-07_07,2025-04-07_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- phishscore=0 suspectscore=0 mlxlogscore=999 lowpriorityscore=0 spamscore=0
- clxscore=1015 malwarescore=0 adultscore=0 priorityscore=1501
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ definitions=2025-04-08_01,2025-04-07_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ suspectscore=0 malwarescore=0 bulkscore=0 phishscore=0 spamscore=0
+ priorityscore=1501 adultscore=0 impostorscore=0 lowpriorityscore=0
+ mlxscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504080016
+ definitions=main-2504080039
 
-Hi Dmitry,
 
-On 3/26/2025 7:33 AM, Dmitry Baryshkov wrote:
-> On Mon, Mar 24, 2025 at 01:18:34PM -0700, Melody Olvera wrote:
->> From: Wesley Cheng <quic_wcheng@quicinc.com>
+
+On 4/7/2025 12:05 AM, Manivannan Sadhasivam wrote:
+> On Fri, Apr 04, 2025 at 11:15:39PM +0530, Manish Pandey wrote:
+>> Some UFS devices need additional time in hibern8 mode before exiting,
+>> beyond the negotiated handshaking phase between the host and device.
+>> Introduce a quirk to increase the PA_HIBERN8TIME parameter by 100 µs
+>> to ensure proper hibernation process.
 >>
->> SM8750 utilizes an eUSB2 PHY from M31.  Add the initialization
->> sequences to bring it out of reset and into an operational state.  This
->> differs to the M31 USB driver, in that the M31 eUSB2 driver will
->> require a connection to an eUSB2 repeater.  This PHY driver will handle
->> the initialization of the associated eUSB2 repeater when required.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> 
+> This commit message didn't mention the UFS device for which this quirk is being
+> applied.
+> 
+Since it's a quirk and may be applicable to other vendors also in 
+future, so i thought to keep it general.
+
+Will update in next patch set if required.
+  >> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
 >> ---
->>   drivers/phy/qualcomm/Kconfig              |  10 +
->>   drivers/phy/qualcomm/Makefile             |   1 +
->>   drivers/phy/qualcomm/phy-qcom-m31-eusb2.c | 297 ++++++++++++++++++++++++++++++
->>   3 files changed, 308 insertions(+)
+>>   drivers/ufs/core/ufshcd.c | 31 +++++++++++++++++++++++++++++++
+>>   include/ufs/ufs_quirks.h  |  6 ++++++
+>>   2 files changed, 37 insertions(+)
 >>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..b18aab968122683e2e87287a4b570321d376870a
->> --- /dev/null
->> +++ b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
->> @@ -0,0 +1,297 @@
->> +// SPDX-License-Identifier: GPL-2.0+
-> 
-> GPL-2.0-only
-> 
-
-Will fix.
-
->> +/*
->> + * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+>> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+>> index 464f13da259a..2b8203fe7b8c 100644
+>> --- a/drivers/ufs/core/ufshcd.c
+>> +++ b/drivers/ufs/core/ufshcd.c
+>> @@ -278,6 +278,7 @@ static const struct ufs_dev_quirk ufs_fixups[] = {
+>>   	  .model = UFS_ANY_MODEL,
+>>   	  .quirk = UFS_DEVICE_QUIRK_DELAY_BEFORE_LPM |
+>>   		   UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE |
+>> +		   UFS_DEVICE_QUIRK_PA_HIBER8TIME |
+>>   		   UFS_DEVICE_QUIRK_RECOVERY_FROM_DL_NAC_ERRORS },
+>>   	{ .wmanufacturerid = UFS_VENDOR_SKHYNIX,
+>>   	  .model = UFS_ANY_MODEL,
+>> @@ -8384,6 +8385,33 @@ static int ufshcd_quirk_tune_host_pa_tactivate(struct ufs_hba *hba)
+>>   	return ret;
+>>   }
+>>   
+>> +/**
+>> + * ufshcd_quirk_override_pa_h8time - Ensures proper adjustment of PA_HIBERN8TIME.
+>> + * @hba: per-adapter instance
+>> + *
+>> + * Some UFS devices require specific adjustments to the PA_HIBERN8TIME parameter
+>> + * to ensure proper hibernation timing. This function retrieves the current
+>> + * PA_HIBERN8TIME value and increments it by 100us.
 >> + */
->> +
->> +#include <linux/clk.h>
->> +#include <linux/delay.h>
->> +#include <linux/err.h>
->> +#include <linux/io.h>
->> +#include <linux/kernel.h>
->> +#include <linux/module.h>
->> +#include <linux/of.h>
->> +#include <linux/phy/phy.h>
->> +#include <linux/platform_device.h>
->> +#include <linux/reset.h>
->> +#include <linux/slab.h>
->> +
->> +#include <linux/regulator/consumer.h>
->> +
->> +#define USB_PHY_UTMI_CTRL0		(0x3c)
->> +
->> +#define USB_PHY_UTMI_CTRL5		(0x50)
->> +
->> +#define USB_PHY_HS_PHY_CTRL_COMMON0	(0x54)
->> +#define FSEL				GENMASK(6, 4)
->> +#define FSEL_38_4_MHZ_VAL		(0x6)
->> +
->> +#define USB_PHY_HS_PHY_CTRL2		(0x64)
->> +
->> +#define USB_PHY_CFG0			(0x94)
->> +#define USB_PHY_CFG1			(0x154)
->> +
->> +#define USB_PHY_FSEL_SEL		(0xb8)
->> +
->> +#define USB_PHY_XCFGI_39_32		(0x16c)
->> +#define USB_PHY_XCFGI_71_64		(0x17c)
->> +#define USB_PHY_XCFGI_31_24		(0x168)
->> +#define USB_PHY_XCFGI_7_0		(0x15c)
->> +
->> +#define M31_EUSB_PHY_INIT_CFG(o, b, v)	\
->> +{				\
->> +	.off = o,		\
->> +	.mask = b,		\
->> +	.val = v,		\
->> +}
->> +
->> +struct m31_phy_tbl_entry {
->> +	u32 off;
->> +	u32 mask;
->> +	u32 val;
->> +};
->> +
->> +struct m31_eusb2_priv_data {
->> +	const struct m31_phy_tbl_entry	*setup_seq;
->> +	unsigned int			setup_seq_nregs;
->> +	const struct m31_phy_tbl_entry	*override_seq;
->> +	unsigned int			override_seq_nregs;
->> +	const struct m31_phy_tbl_entry	*reset_seq;
->> +	unsigned int			reset_seq_nregs;
->> +	unsigned int			fsel;
->> +};
->> +
->> +static const struct m31_phy_tbl_entry m31_eusb2_setup_tbl[] = {
->> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG0, BIT(1), 1),
->> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_UTMI_CTRL5, BIT(1), 1),
->> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG1, BIT(0), 1),
->> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_FSEL_SEL, BIT(0), 1),
-> 
-> I suppose, we can not expect to have #defines for all used bitfields?
-> 
-
-Added the bitfields as requested.
-
->> +};
->> +
-> 
-> [...]
-> 
->> +
->> +static const struct phy_ops m31eusb2_phy_gen_ops = {
->> +	.init	= m31eusb2_phy_init,
->> +	.exit	= m31eusb2_phy_exit,
-> 
-> I think, you have a missing .set_mode callback here.
-> 
-
-Added this to properly set the mode on the repeater as well.
-
->> +	.owner	= THIS_MODULE,
->> +};
->> +
->> +static int m31eusb2_phy_probe(struct platform_device *pdev)
+>> +static void ufshcd_quirk_override_pa_h8time(struct ufs_hba *hba)
 >> +{
->> +	struct phy_provider *phy_provider;
->> +	const struct m31_eusb2_priv_data *data;
->> +	struct device *dev = &pdev->dev;
->> +	struct m31eusb2_phy *phy;
->> +	int ret;
->> +
->> +	phy = devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
->> +	if (!phy)
->> +		return -ENOMEM;
->> +
->> +	data = of_device_get_match_data(dev);
+>> +	u32 pa_h8time = 0;
 > 
-> device_get_match_data()
+> Why do you need to initialize it?
 > 
+Agree.. Not needed, will update.>> +	int ret;
+>> +
+>> +	ret = ufshcd_dme_get(hba, UIC_ARG_MIB(PA_HIBERN8TIME),
+>> +			&pa_h8time);
+>> +	if (ret) {
+>> +		dev_err(hba->dev, "Failed to get PA_HIBERN8TIME: %d\n", ret);
+>> +		return;
+>> +	}
+>> +
+>> +	/* Increment by 1 to increase hibernation time by 100 µs */
+> 
+>  From where the value of 100us adjustment is coming from?
+> 
+> - Mani
+> 
+These values are derived from experiments on Qualcomm SoCs.
+However this is also matching with ufs-exynos.c
 
-Done.
+fsd_ufs_post_link() {
+     ufshcd_dme_get(hba,UIC_ARG_MIB(PA_HIBERN8TIME),  		 
+&max_rx_hibern8_time_cap);
+     .......
+     ufshcd_dme_set(hba, UIC_ARG_MIB(PA_HIBERN8TIME), 	 
+max_rx_hibern8_time_cap + 1);
+     ...
+}
 
 Thanks
-Wesley Cheng
+Manish
 
