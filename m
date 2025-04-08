@@ -1,212 +1,346 @@
-Return-Path: <linux-arm-msm+bounces-53553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDBF1A80F15
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 16:59:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5802A80FC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 17:22:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 663B44E738F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 14:56:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E43397BC765
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 15:16:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 008D71BEF8A;
-	Tue,  8 Apr 2025 14:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2622922A7F0;
+	Tue,  8 Apr 2025 15:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HexKUwP3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X92gh4Mb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD991553AA
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 14:56:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D61228375;
+	Tue,  8 Apr 2025 15:17:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744124209; cv=none; b=GFnedbEvdIL/WAhHkOXyxPtsufeI8w2jK5VfBNMUYzizHwr1CUFZ7+dWjw9Wmn0Mmo2qIPKBaTr/cBXOQHExGok20HeMA11CxKIXtxiTTZ3ljE8V5js18Kxu8JQIgNrvRoLgNRP0PRb4qoBr+u9MKF1c2SU6/PrxdaKg8+7C4DY=
+	t=1744125423; cv=none; b=vGJOOnuOvZgdHamOX1Q3PSIubGfGQ6zh9j3uf/7oN7ZWWXzzztnwOnSoPCWqLqwV9g/ar4+Plemp07lLp0nQfkPreKcWrjhtwDoYvlYnUbgOJONza8auh5Yap90XV/rcfQTJ/gFXM+oVsqIkoRCcix7tCRZb4C2A19PG/JyC85I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744124209; c=relaxed/simple;
-	bh=8KR39FZSTUXoLdQpSJJx1Rg5AaamtIERM+a8BOs1a9Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dN7eL0JD5cAp6cqHET8LhN/kb18Tln8Dcins8KGf5opWF8sWbewEzm8qKTLmvUIEqJl97Hec/hAiUQjjxDYvOUEteqhrIQ+Ogzxmf9howmgzpNTkx6gdUEMvETBCDUNUJOphEq6UCJid5dfoTH2UYOFNdkxxjtamEc/O3fvRST0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HexKUwP3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538B01WF008082
-	for <linux-arm-msm@vger.kernel.org>; Tue, 8 Apr 2025 14:56:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OnLhGRbnotHUC+BJAk6Gvios3/jKclEvVKBs/uKOxuo=; b=HexKUwP3wCqx+4yt
-	ZkDJQZl33qdAl2J5O5rC6NsDXEVa4yPM8ZApaBW9NYrBtLYJAmSvE7aNjC0mrtlg
-	r42wcW+4I81lSMLL4r7OgbH6ZakYVexCETZ4mueazovOoJyFeOGXG1HUdmkMi9xA
-	YeFa2yI1wuWN++1Zn29ym+Hrn0ToMXvQOocI1HOHRwBkPdkI8WSKQK3QQqQ5937o
-	3MHrpjNW3pd/2yf2h2uwQjBEZ2y0DY3l+a3Tet6TKA+4xJ9lh/RTAAOge8/SHDin
-	Aw1j1EP1HlXn/e+EPWNS6talF40LrCsRh86pOJOewa7w4wemyzCLlAu0HTMpdvIA
-	2//N2Q==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twtb06xk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 14:56:47 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-af9070a5311so3381173a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 07:56:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744124206; x=1744729006;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OnLhGRbnotHUC+BJAk6Gvios3/jKclEvVKBs/uKOxuo=;
-        b=LcdKbloOQtiZiaeagx68DpawgDtvCxBS4c3fvs5p0EMjD4lbCp438Nw8QfOLqrSL86
-         scGb0yV+JIw9rLfyETWSxKT/2koehHN6E/gJhSlw/mYKw0L0XBFWKKCNQyvxTJWvwTjY
-         uJkxw7NXI9B5vq6R6NdszT4BoVVUWrAFL0ava/6ZXHIHFQ8sGJc3NP9wc2BF4/43ptqv
-         qZshPg49bVgaP2Gz3qWFYuMeGvI7n/Shw1Pv2JpYt7moMz7MvGzMFu3OJ+eSCiW8KzpJ
-         fMGtpfkh5Ps1GGKRavLpH2jz2YJFrB6lu/1mLtLBjYnNKoKs7/S0qBtDBJqrczCZKjp3
-         ImRg==
-X-Forwarded-Encrypted: i=1; AJvYcCWP4lPueIAY37Alt6Uk957wvbawHPXe2ktpH84wk2rFfY2u1/VSZu2JsLWD7HD8LHBa/u0nfMWb9UNmBk18@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRwxYGSIMTANPohK4bABRHhLHiD4QiYhcalL1zA5EM1NwIPfgj
-	00VRRNpfcj0xaB34+DMwFXgfyJ8Ch8A0Xaxz5d3PWApD4pdYs0LyIBDnZfNB41tojvEoVOen80n
-	RoEiIYsOieQjt122RISttzbHPonfXVpdUHIxHRHB2cLfMTERZlwP8uPwWu4GnkQdp
-X-Gm-Gg: ASbGncv3Vwp/bf1n34GpfIZu4nZgyws2zzUf6jhrlX4zEUbR0WSfNSPkGcom5Td78xQ
-	lmXhus5GdYDe3cNJ8cvGHYhL3lzB97/mH1SAn47n5QyJDw6Reqbv6W7ENah4XZ2BvFvhX6+1VZf
-	sveSSVQY6ofmAaFhSMibQ2/93PKglXHc/KGWu2gWPZ5tYh7a3msKXekHlqiMYJkRf9QemIU9Jll
-	yTfBPVCMgAcqg5buAY+C3LK5byZi0AeQVZdDSFkaCCuAg/8cSVfVK5EFTGK0knyOhvsMQ9tTfN2
-	XlB5NNr0EkrQv2gkSre5Zfa8ulC+24KnkUOcG93HXxNymiTm6W9ZDlzQ4eC0ujNyhg==
-X-Received: by 2002:a05:6a21:118a:b0:1f5:93b1:6a56 with SMTP id adf61e73a8af0-20104736aa3mr22801999637.33.1744124206313;
-        Tue, 08 Apr 2025 07:56:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEZbrtBGbreOoRxCYCm3eRyTvBvIuVSmC/EM3vW1ZUoT19SPFn7c1fZ057K1+nQeDdYRsw2xQ==
-X-Received: by 2002:a05:6a21:118a:b0:1f5:93b1:6a56 with SMTP id adf61e73a8af0-20104736aa3mr22801970637.33.1744124205926;
-        Tue, 08 Apr 2025 07:56:45 -0700 (PDT)
-Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af9bc41aba7sm9229213a12.71.2025.04.08.07.56.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Apr 2025 07:56:45 -0700 (PDT)
-Message-ID: <07cc4ee2-4a13-495c-bc4d-8837d6b54414@oss.qualcomm.com>
-Date: Tue, 8 Apr 2025 08:56:43 -0600
+	s=arc-20240116; t=1744125423; c=relaxed/simple;
+	bh=YBHV1R1LANqwOlZ3bpGukqGWjvNFHr67D3rL1PJ5cBc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u70KtKiep2jDdsk14fRKAcBW8xd9Hz933VtHeehWBTV30ryMrXUSemq/06B6M1qJJdjfKSRQ92pNMPigPpmSTvwvsqdkoFm0dspQYpmExe4BXh3/+Swl+0Tv9BdzFR/PvqNyeuTU24XW+QZ78XVmLx3XCdoAn3KoZW6RSS9HqlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X92gh4Mb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D62C4CEE5;
+	Tue,  8 Apr 2025 15:16:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744125422;
+	bh=YBHV1R1LANqwOlZ3bpGukqGWjvNFHr67D3rL1PJ5cBc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=X92gh4MbpheXmMlisobrsJH9pTK+vbMHIiGSscsBOd56YoWUZGvQ9GHj7I9cJe6h+
+	 5dRHXUfyB/dxqlFo5efWZ5yeva/1Aye54sPNLiKAx3IKWSUHvzQvwQK9j124PuMPO1
+	 Y35Yap4gT60rXG6sxYh1je5jWv5XHC2V0k8g9rvvbg5T87FCunh5tk/suoXaa7r8gb
+	 pMwBuEX3Lo7OopzWgRIar0Stmwj/J1rMPvIyQ5cKlGybubscMOgKlJHBDaRyeD8mCW
+	 7ZjoCSUkXBiR50nZuTt8sUNYrBzIKvTY4X1U61ituZEnCC5LTi3UZCuapNVgKZV5pc
+	 cvcAxj3fXp2Ng==
+Date: Tue, 8 Apr 2025 17:16:52 +0200
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Elliot Berman <quic_eberman@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Melody Olvera <quic_molvera@quicinc.com>,
+	Shivendra Pratap <quic_spratap@quicinc.com>,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Stephen Boyd <swboyd@chromium.org>, linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, Elliot Berman <elliotb317@gmail.com>,
+	Elliot Berman <elliot.berman@oss.qualcomm.com>
+Subject: Re: [PATCH v9 2/5] firmware: psci: Read and use vendor reset types
+Message-ID: <Z/U95G+2GsoLD6Mi@lpieralisi>
+References: <20250303-arm-psci-system_reset2-vendor-reboots-v9-0-b2cf4a20feda@oss.qualcomm.com>
+ <20250303-arm-psci-system_reset2-vendor-reboots-v9-2-b2cf4a20feda@oss.qualcomm.com>
+ <Z9QQw6BcE7IXzu+r@lpieralisi>
+ <Z+K3uNjTNbq3pUis@hu-mojha-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bus: mhi: host: Allocate entire MHI control config once
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: quic_carlv@quicinc.com, quic_thanson@quicinc.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org,
-        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-References: <20250328165913.3380933-1-jeff.hugo@oss.qualcomm.com>
- <pgr6u3onrlf4mvldqn7cxlqkh3krduv542jqgjcy5c535ys6hm@dujbvax4b56s>
-Content-Language: en-US
-From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-In-Reply-To: <pgr6u3onrlf4mvldqn7cxlqkh3krduv542jqgjcy5c535ys6hm@dujbvax4b56s>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: MZObXCdVq_7wuvPRMztXM6TrqMGaGSHg
-X-Authority-Analysis: v=2.4 cv=LLlmQIW9 c=1 sm=1 tr=0 ts=67f5392f cx=c_pps a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=EqrZPqEe0gY6MFZa27UA:9 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: MZObXCdVq_7wuvPRMztXM6TrqMGaGSHg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-08_06,2025-04-08_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- clxscore=1015 mlxlogscore=999 malwarescore=0 phishscore=0
- lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0 adultscore=0
- suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504080105
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z+K3uNjTNbq3pUis@hu-mojha-hyd.qualcomm.com>
 
-On 4/8/2025 1:01 AM, Manivannan Sadhasivam wrote:
-> On Fri, Mar 28, 2025 at 10:59:13AM -0600, Jeff Hugo wrote:
->> From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
->>
->> MHI control configurations such as channel context, event context, command
->> context and rings, are currently allocated individually. During MHI
->> initialization MHI bus driver needs to configure the address space in
->> which this control configuration resides. Since different component of the
->> config is being allocated separately, only logical solution is to give the
->> entire RAM address space, as they could be anywhere.
->>
+On Tue, Mar 25, 2025 at 07:33:36PM +0530, Mukesh Ojha wrote:
+> On Fri, Mar 14, 2025 at 12:19:31PM +0100, Lorenzo Pieralisi wrote:
+> > On Mon, Mar 03, 2025 at 01:08:31PM -0800, Elliot Berman wrote:
+> > > From: Elliot Berman <elliot.berman@oss.qualcomm.com>
+> > > 
+> > > SoC vendors have different types of resets and are controlled through
+> > > various registers. For instance, Qualcomm chipsets can reboot to a
+> > > "download mode" that allows a RAM dump to be collected. Another example
+> > > is they also support writing a cookie that can be read by bootloader
+> > > during next boot. PSCI offers a mechanism, SYSTEM_RESET2, for these
+> > > vendor reset types to be implemented without requiring drivers for every
+> > > register/cookie.
+> > > 
+> > > Add support in PSCI to statically map reboot mode commands from
+> > > userspace to a vendor reset and cookie value using the device tree.
+> > 
+> > I have managed to discuss a little bit this patchset over the last
+> > few days and I think we have defined a plan going forward.
+> > 
+> > A point that was raised is:
+> > 
+> > https://man7.org/linux/man-pages/man2/reboot.2.html
+> > 
+> > LINUX_REBOOT_CMD_RESTART2 *arg command, what is it supposed to
+> > represent ?
+> > 
+> > Is it the mode the system should reboot into OR it is the
+> > actual command to be issued (which is what this patchset
+> > implements) ?
+> > 
+> > LINUX_REBOOT_CMD_RESTART "..a default restart..."
+> > 
+> > It is unclear what "default" means. We wonder whether the
+> > reboot_mode variable was introduced to _define_ that "default".
+> > 
+> > So, in short, my aim is trying to decouple reboot_mode from the
+> > LINUX_REBOOT_CMD_RESTART2 *arg command.
+> > 
+> > I believe that adding a sysfs interface to reboot-mode driver
+> > infrastructure would be useful, so that the commands would
+> > be exposed to userspace and userspace can set the *arg command
+> > specifically to issue a given reset/mode.
+> > 
+> > I wonder why this is not already in place for eg syscon-reboot-mode
+> > resets, how does user space issue a command in those systems if the
+> > available commands aren't exposed to userspace ?
+> > 
+> > Is there a kernel entity exposing those "modes" to userspace, somehow ?
+> > 
+> > > A separate initcall is needed to parse the devicetree, instead of using
+> > > psci_dt_init because mm isn't sufficiently set up to allocate memory.
+> > > 
+> > > Reboot mode framework is close but doesn't quite fit with the
+> > > design and requirements for PSCI SYSTEM_RESET2. Some of these issues can
+> > > be solved but doesn't seem reasonable in sum:
+> > >  1. reboot mode registers against the reboot_notifier_list, which is too
+> > >     early to call SYSTEM_RESET2. PSCI would need to remember the reset
+> > >     type from the reboot-mode framework callback and use it
+> > >     psci_sys_reset.
+> > >  2. reboot mode assumes only one cookie/parameter is described in the
+> > >     device tree. SYSTEM_RESET2 uses 2: one for the type and one for
+> > >     cookie.
+> > 
+> > This can be changed and I think it should, so that the reboot modes
+> > are exposed to user space and PSCI can use that.
+> > 
+> In the case of a regular reboot or panic, the reboot/panic notifiers run
+> first, followed by the restart notifiers. The PSCI reset/reset2 should
+> be the last call from Linux, and ideally, this call should not fail.
 > 
-> This is fine...
-
-We tripped over this when experimenting with an automotive market 
-product. The FW for that product had a rather strict interpretation of 
-the spec, which we confirmed with the spec owner.
-
-In the specific FW implementation, the device maps the entire MHI space 
-of shared structures in a single ATU entry. The device cannot map an 
-entire 64-bit address space, and it expects all of the shared structures 
-in a single compact range.
-
-This applies to the control structures, not the data buffers per the 
-device implementation.
-
-This restriction seems backed by the spec.  I can't find a reason why 
-the device is invalid, if limited.  I don't think this should break 
-anything, but more on that below.
-
+> Reboot mode notifiers => restart notifiers or Panic notifiers => restart
+> notifiers
 > 
->> As per MHI specification the MHI control configuration address space should
->> not be more them 4GB.
->>
+> So, if I understand correctly, you mean that we can change the reboot
+> mode framework to expose the arguments available to user space. We can
+> extend it to accept magic and cookies, save them in the reboot
+> framework, and retrieve them via a call from PSCI during a regular
+> reboot or panic based on the current arguments. Is this leading towards
+> writing an ARM-specific PSCI-reboot-mode driver, which in its reboot
+> notifier callback saves the magic and cookies, and these magic and
+> cookies will be used during psci_sys_reset2()? Or is there something
+> wrong with my understanding?
+
+No, you got it right (apologies for the delay in replying) - if the
+case for making reboot mode available to user space is accepted.
+
+> P.S. We appreciate Elliot for his work and follow-up on this while being
+> employed at Qualcomm.
+
+Yes I sincerely do for his patience, thank you.
+
+Lorenzo
+
+> > >  3. psci cpuidle driver already registers a driver against the
+> > >     arm,psci-1.0 compatible. Refactoring would be needed to have both a
+> > >     cpuidle and reboot-mode driver.
+> > > 
+> > > Signed-off-by: Elliot Berman <elliot.berman@oss.qualcomm.com>
+> > > ---
+> > >  drivers/firmware/psci/psci.c | 105 +++++++++++++++++++++++++++++++++++++++++++
+> > >  1 file changed, 105 insertions(+)
+> > > 
+> > > diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+> > > index a1ebbe9b73b136218e9d9f9b8daa7756b3ab2fbe..6f8c47deaec0225f26704e1f3bcad52603127a85 100644
+> > > --- a/drivers/firmware/psci/psci.c
+> > > +++ b/drivers/firmware/psci/psci.c
+> > > @@ -80,6 +80,14 @@ static u32 psci_cpu_suspend_feature;
+> > >  static bool psci_system_reset2_supported;
+> > >  static bool psci_system_off2_hibernate_supported;
+> > >  
+> > > +struct psci_reset_param {
+> > > +	const char *mode;
+> > > +	u32 reset_type;
+> > > +	u32 cookie;
+> > > +};
+> > > +static struct psci_reset_param *psci_reset_params __ro_after_init;
+> > > +static size_t num_psci_reset_params __ro_after_init;
+> > > +
+> > >  static inline bool psci_has_ext_power_state(void)
+> > >  {
+> > >  	return psci_cpu_suspend_feature &
+> > > @@ -306,9 +314,39 @@ static int get_set_conduit_method(const struct device_node *np)
+> > >  	return 0;
+> > >  }
+> > >  
+> > > +static int psci_vendor_system_reset2(const char *cmd)
+> > > +{
+> > > +	unsigned long ret;
+> > > +	size_t i;
+> > > +
+> > > +	for (i = 0; i < num_psci_reset_params; i++) {
+> > > +		if (!strcmp(psci_reset_params[i].mode, cmd)) {
+> > > +			ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
+> > > +					     psci_reset_params[i].reset_type,
+> > > +					     psci_reset_params[i].cookie, 0);
+> > > +			/*
+> > > +			 * if vendor reset fails, log it and fall back to
+> > > +			 * architecture reset types
+> > 
+> > That's not what the code does.
+> > 
+> Ack.
 > 
-> Where exactly this limitation is specified in the spec? The spec supports full
-> 64 bit address space for the MHI control/data structures. But due to the device
-> DMA limitations, MHI controller drivers often use 32 bit address space. But
-> that's not a spec limitation.
-
-Its not the clearest thing, sadly.
-
-Document 80-NF223-11 Rev AB "MHI spec v1.2" Section 6.2 "MHI Registers" 
-table 6-19 (page 106) -
-
-Describing MHICTRLLIMIT: "The most significant 32 bits of MHICTRLBASE 
-and MHICTRLLIMIT registers must be equal."
-
-This means we have a 4GB range (32-bit) to play with in a 64-bit address 
-space.  If the upper 32-bits of the 64-bit address for both the base and 
-the limit must be the same, then the range of addresses from the base to 
-the limit can only vary the lower 32-bits.
-
-Invalid:
-BASE: 0x0
-LIMIT: 0xffffffff_ffffffff
-
-Valid:
-BASE: 0x0f_00000000
-LIMIT: 0x0f_ffffffff
-
->> Since the current implementation is in violation of MHI specification.
-
-For example mhi_init_dev_ctxt()
-
-We allocate the chan_ctxt with dma_alloc_coherent() as an individual 
-allocation.  In the case of AIC100, the device can access the full 
-64-bit address space, but the DMA engine is limited to a 32-bit transfer 
-size.  The chan_ctxt probably won't be larger than 4GB, so the size is 
-rather irrelevant.  Can be allocated anywhere.  Lets say that it gets 
-put in the lower 32-bit address space - 0x0_XXXXXXXX
-
-Then a little bit later we allocate er_ctxt with a different 
-dma_alloc_coherent() instance.  Being a unique allocation, it is not 
-tied to the chan_ctxt and can exist anywhere.  Lets assume that it gets 
-put somewhere in the non-lower 32-bits - 0x1000_XXXXXXXX
-
-Now we have a problem because we cannot describe a single range covering 
-both of these allocations via MHICTRLBASE/MHICTRLLIMIT where the upper 
-32-bits of both registers is the same.
-
->> Allocate a single giant DMA buffer for MHI control configurations and
->> limit the configuration address space to that buffer.
->>
+> -Mukesh
 > 
-> I don't think this could work for all devices. For instance, some ath11k devices
-> use a fixed reserved region in host address space for MHICTRL/BASE.
-
-Why would we be unable to allocate all of the control structures in a 
-single allocation out of that reserved region?  Is it larger than 4GB in 
-size?
-
--Jeff
-
+> > > +			 */
+> > > +			pr_err("failed to perform reset \"%s\": %ld\n", cmd,
+> > > +			       (long)ret);
+> > > +			return 0;
+> > > +		}
+> > > +	}
+> > > +
+> > > +	return -ENOENT;
+> > > +}
+> > > +
+> > >  static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
+> > >  			  void *data)
+> > >  {
+> > > +	/*
+> > > +	 * try to do the vendor system_reset2
+> > > +	 * If there wasn't a matching command, fall back to architectural resets
+> > > +	 */
+> > > +	if (data && !psci_vendor_system_reset2(data))
+> > > +		return NOTIFY_DONE;
+> > > +
+> > >  	if ((reboot_mode == REBOOT_WARM || reboot_mode == REBOOT_SOFT) &&
+> > >  	    psci_system_reset2_supported) {
+> > >  		/*
+> > > @@ -795,6 +833,73 @@ static const struct of_device_id psci_of_match[] __initconst = {
+> > >  	{},
+> > >  };
+> > >  
+> > > +#define REBOOT_PREFIX "mode-"
+> > > +
+> > > +static int __init psci_init_system_reset2_modes(void)
+> > > +{
+> > > +	const size_t len = strlen(REBOOT_PREFIX);
+> > > +	struct psci_reset_param *param;
+> > > +	struct device_node *psci_np __free(device_node) = NULL;
+> > > +	struct device_node *np __free(device_node) = NULL;
+> > > +	struct property *prop;
+> > > +	size_t count = 0;
+> > > +	u32 magic[2];
+> > > +	int num;
+> > > +
+> > > +	if (!psci_system_reset2_supported)
+> > > +		return 0;
+> > > +
+> > > +	psci_np = of_find_matching_node(NULL, psci_of_match);
+> > > +	if (!psci_np)
+> > > +		return 0;
+> > > +
+> > > +	np = of_find_node_by_name(psci_np, "reset-types");
+> > > +	if (!np)
+> > > +		return 0;
+> > 
+> > Related to my initial question above. If LINUX_REBOOT_CMD_RESTART2 *arg command,
+> > is the actual reset to be issued, should we add a default mode "cold"
+> > and, if SYSTEM_RESET2 is supported, a "warm" reset mode too ?
+> > 
+> > It all boils down to what *arg represents - adding "cold" and "warm"
+> > modes would remove the dependency on reboot_mode for resets issued
+> > through LINUX_REBOOT_CMD_RESTART2, the question is whether this
+> > is the correct thing to do.
+> > 
+> > Comments very welcome.
+> > 
+> > Thanks,
+> > Lorenzo
+> > 
+> > > +
+> > > +	for_each_property_of_node(np, prop) {
+> > > +		if (strncmp(prop->name, REBOOT_PREFIX, len))
+> > > +			continue;
+> > > +		num = of_property_count_u32_elems(np, prop->name);
+> > > +		if (num != 1 && num != 2)
+> > > +			continue;
+> > > +
+> > > +		count++;
+> > > +	}
+> > > +
+> > > +	param = psci_reset_params =
+> > > +		kcalloc(count, sizeof(*psci_reset_params), GFP_KERNEL);
+> > > +	if (!psci_reset_params)
+> > > +		return -ENOMEM;
+> > > +
+> > > +	for_each_property_of_node(np, prop) {
+> > > +		if (strncmp(prop->name, REBOOT_PREFIX, len))
+> > > +			continue;
+> > > +
+> > > +		num = of_property_read_variable_u32_array(np, prop->name, magic,
+> > > +							  1, ARRAY_SIZE(magic));
+> > > +		if (num < 0) {
+> > > +			pr_warn("Failed to parse vendor reboot mode %s\n",
+> > > +				param->mode);
+> > > +			kfree_const(param->mode);
+> > > +			continue;
+> > > +		}
+> > > +
+> > > +		param->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
+> > > +		if (!param->mode)
+> > > +			continue;
+> > > +
+> > > +		/* Force reset type to be in vendor space */
+> > > +		param->reset_type = PSCI_1_1_RESET_TYPE_VENDOR_START | magic[0];
+> > > +		param->cookie = num > 1 ? magic[1] : 0;
+> > > +		param++;
+> > > +		num_psci_reset_params++;
+> > > +	}
+> > > +
+> > > +	return 0;
+> > > +}
+> > > +arch_initcall(psci_init_system_reset2_modes);
+> > > +
+> > >  int __init psci_dt_init(void)
+> > >  {
+> > >  	struct device_node *np;
+> > > 
+> > > -- 
+> > > 2.34.1
+> > > 
 
