@@ -1,81 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-53492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EF3BA7F9CA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 11:37:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10090A7F9EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 11:41:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C66317470F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 09:36:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9FFC21894DC8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 09:37:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1925A267F79;
-	Tue,  8 Apr 2025 09:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D3692686AC;
+	Tue,  8 Apr 2025 09:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NkuSyAWA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R4pqz/UG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A61B267F58
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 09:32:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760D8268685
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 09:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744104773; cv=none; b=EBokraAp687/rlVEUZ2KHYT91qCTvsrF4Op5vGuUgtU6tsIaqWBZPjCDPDSHPAHkYVvpnBMYVjSQoyGe03nD/vOomiu/KrGqa5lGuiFuJLOtgScSLnZCqujlC7Xkhm1s+DxYb9FT2HGH2LesaZCGkRSJgISKSzolgJEoud1CiX4=
+	t=1744104775; cv=none; b=tQ6jFkWTah4AVY28L+mOqRoqwoSssi7krd/ku8sJ8/fdDtXejcUeSX3zT8/9R8BWATZ8jx1bg1p4Ta06Q04rF4kJmpJ1fQ8uirjkrKGgIjSi3ten3d9BIBZTcsjGiXRt/tNfl5BoKLpH6YWH+JYMQeD96hjeveaTy7/eTiSnJzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744104773; c=relaxed/simple;
-	bh=wrALnxrPHUXPgAdAIi61FIS6cjVsAHrdY0OAJGvKs+M=;
+	s=arc-20240116; t=1744104775; c=relaxed/simple;
+	bh=noKAuGYc/FuXpXpzswCrqXeAdlgNvT9WSYSV3NjT4xg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PoeTCEYjXmrLqrUa+J8oXiS1+zZLf3BslmXTDkUaiZJxtnoOR1q3f0CEvxwgkAO25IyZdjLDuVtJvd8PeaAx3RxEbkKme7HQRlWsIzDUlMoD3cMvqFnitp5hjrepIXBHzVp5nVgry0TjlQZiF5OrKowkZYog/C0bo//LQW8TQl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NkuSyAWA; arc=none smtp.client-ip=209.85.128.41
+	 In-Reply-To:To:Cc; b=Qe9OJvKDSYL7df9Ny1NOP+mPih7+zUWGgJqiDv2j0ZkJta0R3EACvUqBpmgkZSD1Nj/KF1vbrTzzZ2duN2TK3JnWmCnH4/F4SXB7GULgcsoWKkRSUKs/Spz4T6G8gA2pOyPcs0qZHTXketmxWby8a1In+6NCkz1f0/rI0qHSqrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=R4pqz/UG; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43f106a3591so838695e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 02:32:50 -0700 (PDT)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43d64e6c83eso3469155e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 02:32:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744104769; x=1744709569; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1744104772; x=1744709572; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NxO5+JoEiCzlmQhedz8IDum/Hr0w5nRBROvtuW53UYU=;
-        b=NkuSyAWAE6nSagkDHFe9zvRzaLKawRqKlC/GqulydQgP/wz2y0C/zWrmGGE+slcvdB
-         Laf5U89U8zPc867ketdjoDZwcL6TdL2IiNCHst3IZcfpsDRtRGcXDdTrvoJbK/J4c27E
-         9jzR9LjOjkVFQoDF56hbo7/QmNd0GdqnBwWiWiqrz5C89fPVS+fDF1mwDlT3YKzrnrCw
-         ZcCOvNfFjvtgyP6qX0NYrUeAJKgz7Dc5ZyizV8m5iuRDRxkTCqv5sPVMv1f1xh7x3k1z
-         e2b70tOEOFhu2MRUsP0ZWdhxMQPzr4o+xLOsudPtCnQuY7/C8HcS+rU8GiTTmwiZdkap
-         1wTA==
+        bh=MJrhV1L8g5th97zdjtHrEGnjKRK3uNf+lknaQaxDFg4=;
+        b=R4pqz/UG5bXK/KKjYUkqByrxEiclyEHxe0MIlwZ2pt3r555SpL8Q6dJqrJliw5h2aL
+         LLDB9++IAL4v3O2rYEMX9x61f7gYn9NHuQh1l7FSZXKRVRtQPguuPw4MQRmvU4PimFCQ
+         APbDOU6Q6L7afiby45uHRc99w5jTMeBYzxpwoOiLEIRWRM3r/k2GlIc6WU1vF+5pZ0DL
+         ubpQzkzpBj8PFuwL7tcV9k0PgmFYCWEmAbw3bVhVNoRLoHZrRoDUyCo5uq6oRiPPMSBg
+         lmpoIBM9jkHfcWHFvs7VNK43TSn/Ys21smfekOC6ZtvT9RMHKIJX+9BaeRRfBmniAVNc
+         NZ+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744104769; x=1744709569;
+        d=1e100.net; s=20230601; t=1744104772; x=1744709572;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NxO5+JoEiCzlmQhedz8IDum/Hr0w5nRBROvtuW53UYU=;
-        b=X60XSWjqGrMj+dI6lmAZT8IFt0nG5+a1wubvXd8Ael0PlcqxcfMWMPihz52sVOJiMo
-         QTjFfGIJsdmc0j6vylcl/akn+HJ8+Ct0VE6UkiX0C1nP5IBLvSnzfcNebk4C+EwPozP5
-         GPpnL9wGyrnEuAhlIgJjRVf/zWKjOauPfmltz5DfQiqngvD3tkIGTdzndosGtzryQ3jU
-         pb0CXVa+PS6+EGw3UxK5BGQiqml9gCm2JQ35IIaIgJAkOMYmUxGQJ0WOd46UiE+rTR3N
-         5wyrw6T3h9RU6YUAHigpK4cPfXgBGLThuklUX4yEVtWnypX5+8fSNntHx3SADFL9yWe9
-         vxfw==
-X-Gm-Message-State: AOJu0YwJrUKPJnfCoV0jTtO+Fra8hpVccEAcUqMd6J7vDSnmx5XHvSxr
-	wTDyRcJP2Rd4ePrZz7anS4RGTnta9QL6ktFmcaLBw5kOvz/xpDmKTx0FWSNc6xo=
-X-Gm-Gg: ASbGncuykP1pWMb1Zq9p8/hi8J37ROkHSAlY7B4lv2cX+lnc+UVn4vG0taWrazh1nEq
-	vs6X3q4aN8WuKhxE5SnuXKyXIuMRZt2drtNklZV+mEGke6+cDawB0psxESGqgFPkiruIKxQ6ONV
-	b6Z+bzA2FYVikS5JqJyEp1K6DUk0XPl0O//ki/EQwS3rj06mll6qWVHLzQ4mB1sRxJ7nY8Sah6t
-	JMFDekh7iarJmFlHkObqbNq7f80Ji0M0rvbao/dgRxsCTJo33ItxEXVdTEE7kdWwCrMdp/QKG1x
-	DWlIWkZwGgyPXSsoZf6uqFgaubohlRUQdYvytrP9Th2HUUh188JOb42d2U1ZDG7ls9cEZ7kXCQ=
-	=
-X-Google-Smtp-Source: AGHT+IEhqJRPG6jiXOM4M7EtymJybaJJaVAr0n8j1sg1vCzP02cienEQR993Mp8jqHgEpk251RiiMw==
-X-Received: by 2002:a05:600c:8488:b0:439:9b3f:2dd9 with SMTP id 5b1f17b1804b1-43ecfa05efcmr52827275e9.7.1744104769614;
-        Tue, 08 Apr 2025 02:32:49 -0700 (PDT)
+        bh=MJrhV1L8g5th97zdjtHrEGnjKRK3uNf+lknaQaxDFg4=;
+        b=TNBaCkeAhJ5c2xmphdT5WTpbKQYMOKFaYvGHCOEdf68t7arpsuUClrr+IYKB0V6xSP
+         rlSORYQPwAFN4MmD1lhcmOqUCenP01ur1R4ZsoGtXQmyhXoSZYxezWeZLVsjo/GY+0c3
+         EeY8BsKdsA+2B4ynFUwuS/d0Y9oW++sc84SKIR5PFVRN+xnF6PUx4AY6fg3EyncVmIRV
+         vR2l3qNOkqvDHQmbhhcaaiwjxD9fenEeRZLPoPiM1iYhqrGJtDcqvVJGjxXPmthaEw/K
+         T6ZzTUdDqYAAuac7gwa4sT+Fby7KDl/mfiuQnyLX3VTMhKTzyD6Ifk4INM3m/S4P6w2M
+         Y8hQ==
+X-Gm-Message-State: AOJu0Yxm3Yx23M9Y3U3WtVe1p/mTo0XVw89Do5wCe7fCHaL8UQYH1BOO
+	2+XpHAZdDmODbi0i5a4lwMDiXIHNdn6EHvn5SU7fOffZnaCI35UX+oTG+FIZMsM=
+X-Gm-Gg: ASbGnctAQdVZkSvGKHv4pSelLuRrlf8sSlnkZCRq4U6siy2nM8Yhf9g6xCb4v9ZUsxO
+	EfdCwedpnu/uin3SPCtR/CwxCK7hnn4e/Ibu50B4lCNDW+WnzFa6o2lu4m1gn9E3mL86fVPLxDQ
+	2ZqMRhUJX9aHT+gDyS9TgchxxAVZon1+wictM93iunTfBYMLhp6OQtqMF60Z+8XUjX97IAmr54p
+	EgIopPjKDTwgaVIxodjqwYCbxE4vS5jZpMwrPgVDrHM1tjk2oEJPOiUEtUagsM0D5pKvGxlYx/Z
+	YAXcw+oaclE6RYJQBPbVs+LKuY7bNN7CfuHhA+IohFyS7I+65mGZ83qI61jTb/g=
+X-Google-Smtp-Source: AGHT+IHMqikLDAtX/GOxngxzLAcI3sXh7/4Yj7BQAqmgomd9bUJ7fXJ2LUMoTpdnPDnO8H6rRoZnHg==
+X-Received: by 2002:a05:600c:5107:b0:43b:c844:a4ba with SMTP id 5b1f17b1804b1-43ecf85f893mr45735195e9.3.1744104771911;
+        Tue, 08 Apr 2025 02:32:51 -0700 (PDT)
 Received: from [192.168.1.26] ([178.197.198.86])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ec34be2f4sm153680085e9.19.2025.04.08.02.32.47
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ec34be2f4sm153680085e9.19.2025.04.08.02.32.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Apr 2025 02:32:49 -0700 (PDT)
+        Tue, 08 Apr 2025 02:32:51 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Tue, 08 Apr 2025 11:32:09 +0200
-Subject: [PATCH v2 12/24] arm64: dts: qcom: sc8180x: Use the header with
- DSI phy clock IDs
+Date: Tue, 08 Apr 2025 11:32:10 +0200
+Subject: [PATCH v2 13/24] arm64: dts: qcom: sdm630: Use the header with DSI
+ phy clock IDs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250408-dts-qcom-dsi-phy-clocks-v2-12-73b482a6dd02@linaro.org>
+Message-Id: <20250408-dts-qcom-dsi-phy-clocks-v2-13-73b482a6dd02@linaro.org>
 References: <20250408-dts-qcom-dsi-phy-clocks-v2-0-73b482a6dd02@linaro.org>
 In-Reply-To: <20250408-dts-qcom-dsi-phy-clocks-v2-0-73b482a6dd02@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -96,21 +95,21 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
  Dmitry Baryshkov <lumag@kernel.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1514;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2793;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=wrALnxrPHUXPgAdAIi61FIS6cjVsAHrdY0OAJGvKs+M=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBn9O0gCno9j3rBs6lVgvbMvXZl47cJ3JVVya8fm
- N+o1EoSU82JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ/TtIAAKCRDBN2bmhouD
- 17O4EACYJ6gNVD+8NUzbFnv+DaCuI3AxBbsSAaFusRUDf1sgrf+vZ6XV/7Ai/XMf7h6+y+0ax1m
- EaNuN7ijLoeQVPkWietQeBLL45UQKwZnjcd7qH5Gha3IjaDrTXuui/mkMWSUisKz9eqQDhwsKiT
- eAopAH18+Z9O3FKlIbN5zhgt/+zl4I8yLKontztD5QYhzPmROvsimJdkQSgdnKEi7r5gDuVA3Y0
- P8KifghGDBNNeOjIuW3SM+k2Qe9/ZhylcBILt56otfZMrY5TBgRh6OeaO988k7tqs6vO/Db+z2s
- J7KKPRbFB8hIbuE0R4j9AfDzCJWoEBnzrlp/WDzpwGnnTnl0F6IDWZloR1WbC4DzooFvr6QHnrV
- cbQaLtkuDI6AcvQuCPLOgJMd6mbWMWDAYRC+SlE3I2XD1OHYMLC3Kk9hmN/f2W1w4x2PsMRXjBF
- Zm43Oi4vGImC+fHhZqNJFQuNjP0AUteDatirsBGpMTBWMOZJVXKaiQam1Z46I+/uKdwmyKy4S24
- L62e9ZvaOCKsO+6bY7ZNw5lZsIjdqECuPNXS3fnP1Ce7b4P5GgA/dXroTxm542Zm2/HE222pa24
- VrtbRfqDh6HRyDQ3GZT+9y10aYO1swiISvy8cEMl/JiqmKlBPgF2TbDsPPtMj3p2vF5tKh4+Dup
- wgIiGe2WIPKN0mw==
+ bh=noKAuGYc/FuXpXpzswCrqXeAdlgNvT9WSYSV3NjT4xg=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBn9O0hTLrK8BoShomUd0Sj9HR0OypaOvoVHiSqg
+ 8m+GhFhoS2JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ/TtIQAKCRDBN2bmhouD
+ 13IdD/4pQby+GnX5PgpVQ3zC/znG8P9FUPnANUG/hXOB2KaUxnbTXWxdNGQQjfS/WNRH14Yk1Pt
+ Qp3OtS7hb6lJK8lEUhkrNYFbxBuQ0K5VSeeD3iq7h06T1t6ApFkR2wYnLQ26lrQ+wgCVkFLZvzq
+ Z4iLsLu7bPqAIylBLr4CuHxrx4XhEtFBkSpoi6EnMom4hseMK4VtjIox6tj1NygRMMWwLhsRu1C
+ G6vS7ojI+ibDIr49HV/q9wgukZvGI+zRhVe9sMoBXyV3mFe/UIiYph4Ws3QEM2v4s6tEa3EjylQ
+ ht5rxQzplv1GeZwfPljH9noHhRr2OufICpMS+hjVRhCFgiXVXUbGjbk/nywztiw1JLpCPyNRId2
+ 61u3l3tiweRNvkKwXfJrDhc/Yy9qPn9Xwxm1pdCA8sDKD9/Q6PCmjC8BjKMAV1895zKobGtDL0b
+ pXooBJiDwyQXZS80w/FSxQZg3JxvUWw4HUMkmLR9/ULeNovwZQA3P9CEScn48t6SHeVbfMaOkHU
+ LfLN2GhfPuFljrPejaAl9PF628+VP9wOOrIBY921G/FsslF2WlFazg+sTWFE/cosA7gnPpW0IWZ
+ pVxbgPeIy8IIEBlU0We4tT1XsE3uweSgYYnXiJFb0MNJJICY5uUCOUwWxrvRJhzOaz/Pgy5yRFh
+ K/LZgBB0iDWeTLQ==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
@@ -120,36 +119,74 @@ Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi |  9 +++++----
+ arch/arm64/boot/dts/qcom/sdm660.dtsi | 12 ++++++------
+ 2 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index f142eb63b8d7f443a8df2334cf3c205353762893..30b8a666561d7b56009db988fb70bbac402a934f 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -5,6 +5,7 @@
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index 3722e405a97cb096b2085a4a21b3e15f06849271..2d3820536ddf45fc9cd96ffda3e9cc64b1e6ddff 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -4,6 +4,7 @@
+  * Copyright (c) 2020, AngeloGioacchino Del Regno <kholk11@gmail.com>
   */
  
- #include <dt-bindings/clock/qcom,dispcc-sm8250.h>
 +#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
- #include <dt-bindings/clock/qcom,gcc-sc8180x.h>
- #include <dt-bindings/clock/qcom,gpucc-sm8150.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-@@ -3465,10 +3466,10 @@ dispcc: clock-controller@af00000 {
- 			compatible = "qcom,sc8180x-dispcc";
- 			reg = <0 0x0af00000 0 0x20000>;
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
--				 <&mdss_dsi0_phy 0>,
--				 <&mdss_dsi0_phy 1>,
--				 <&mdss_dsi1_phy 0>,
--				 <&mdss_dsi1_phy 1>,
-+				 <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
-+				 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>,
-+				 <&mdss_dsi1_phy DSI_BYTE_PLL_CLK>,
-+				 <&mdss_dsi1_phy DSI_PIXEL_PLL_CLK>,
- 				 <&usb_prim_qmpphy QMP_USB43DP_DP_LINK_CLK>,
- 				 <&usb_prim_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
- 				 <&edp_phy 0>,
+ #include <dt-bindings/clock/qcom,gcc-sdm660.h>
+ #include <dt-bindings/clock/qcom,gpucc-sdm660.h>
+ #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
+@@ -1541,8 +1542,8 @@ mmcc: clock-controller@c8c0000 {
+ 					<&sleep_clk>,
+ 					<&gcc GCC_MMSS_GPLL0_CLK>,
+ 					<&gcc GCC_MMSS_GPLL0_DIV_CLK>,
+-					<&mdss_dsi0_phy 1>,
+-					<&mdss_dsi0_phy 0>,
++					<&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>,
++					<&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
+ 					<0>,
+ 					<0>,
+ 					<0>,
+@@ -1664,8 +1665,8 @@ mdss_dsi0: dsi@c994000 {
+ 
+ 				assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
+ 						  <&mmcc PCLK0_CLK_SRC>;
+-				assigned-clock-parents = <&mdss_dsi0_phy 0>,
+-							 <&mdss_dsi0_phy 1>;
++				assigned-clock-parents = <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
++							 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>;
+ 
+ 				clocks = <&mmcc MDSS_MDP_CLK>,
+ 					 <&mmcc MDSS_BYTE0_CLK>,
+diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+index 3164a4817e3267d458d81cabf2ae4223a7a94963..ef4a563c0feba7cd651158cdfa1b4d3cb7503c7c 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+@@ -170,8 +170,8 @@ mdss_dsi1: dsi@c996000 {
+ 
+ 		assigned-clocks = <&mmcc BYTE1_CLK_SRC>,
+ 					<&mmcc PCLK1_CLK_SRC>;
+-		assigned-clock-parents = <&mdss_dsi1_phy 0>,
+-						<&mdss_dsi1_phy 1>;
++		assigned-clock-parents = <&mdss_dsi1_phy DSI_BYTE_PLL_CLK>,
++					 <&mdss_dsi1_phy DSI_PIXEL_PLL_CLK>;
+ 
+ 		clocks = <&mmcc MDSS_MDP_CLK>,
+ 				<&mmcc MDSS_BYTE1_CLK>,
+@@ -239,10 +239,10 @@ &mmcc {
+ 			<&sleep_clk>,
+ 			<&gcc GCC_MMSS_GPLL0_CLK>,
+ 			<&gcc GCC_MMSS_GPLL0_DIV_CLK>,
+-			<&mdss_dsi0_phy 1>,
+-			<&mdss_dsi0_phy 0>,
+-			<&mdss_dsi1_phy 1>,
+-			<&mdss_dsi1_phy 0>,
++			<&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>,
++			<&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
++			<&mdss_dsi1_phy DSI_PIXEL_PLL_CLK>,
++			<&mdss_dsi1_phy DSI_BYTE_PLL_CLK>,
+ 			<0>,
+ 			<0>;
+ };
 
 -- 
 2.45.2
