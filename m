@@ -1,205 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-53594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 492E8A8178F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 23:26:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EDAAA817E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 23:51:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2550E4C38B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 21:26:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BA7C23BF791
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Apr 2025 21:51:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1996C2550A8;
-	Tue,  8 Apr 2025 21:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 405A11E2843;
+	Tue,  8 Apr 2025 21:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Dbh1Oa5q"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fHN20sUj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B54E254867
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 21:26:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B0321ADC3
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Apr 2025 21:51:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744147590; cv=none; b=o8SsqHHoJVU+TkrgUfNgl15++MP2pUlccycwqSIQVMUMVimGf+LzRFHkGAIBZ4HNcktt3pS0NkZbsN70n1BbwSvcQQUPFi+YDhBodEKd1oRcKdKZ6pU0ZzukhXMCLSReVNlyFKU8IDPfxbTxolVE0LMR7eiM7wVfUj06srbxoO4=
+	t=1744149104; cv=none; b=m0xQnR1KmRyRchQ16gm8kFPlQw/eA9bBzGq0MFt7XP5bDHzIZDGuDyVTyzXI373DXzvkzJAEnhf4xXoi7sir3uD+zbWhIIjYyrigbsR2fnvoQ6oP6lRBlP78LPBVkZbPRgRjVODtQrG/e9/G9Zc8icmnkVLFKSlT72aV+iuEKN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744147590; c=relaxed/simple;
-	bh=bOYcVCH7jUtLC+s56g/zmnXTCYBbHKKlwNxQVfwM7CI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J/ZZpn6xwNmT8z8E3/vY5WXJrSuHGneeFzFr1hYHRD6ljtChza/78O4CDGV3m/R8jOEj9jTN65myuICUyXr2r+x4mzzgw2aZ3dEkOPB/opgVY5sAoACXlIdymHiPgRIpBca0stTlV5Qe2dBJaIVlR8l6DF7CLwMAzAErHaK4fYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Dbh1Oa5q; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-af523f4511fso4799374a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 14:26:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1744147587; x=1744752387; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3ZXenv5NdRxAPmtDIgNSh4oCYjmXRf9QV8n2/7t4A18=;
-        b=Dbh1Oa5qfoim0aPo+7t+97RidFLLZx5YuGgcec7OjWmrmhOUoyTcdsaSqjo2dLaY4u
-         08WzspXIUiRbe/eEXfIomy1nR3Y2GDvSg+4wbpuWI+EDtFEJzufrcm8VIJVHzV0RZ8yI
-         V4WQZsypqGTa2UeETTW5HBVPvlyFnod1Nvb3Q=
+	s=arc-20240116; t=1744149104; c=relaxed/simple;
+	bh=SO5j5WgpKL3BcXKO5kOdxByCJcvTLcn9ijCoQY04dpQ=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=qMg4JhaqBlHARh9vOIgjkqZs5/zf1MnGGZ6p/grd+IWL3gIj3IsVA+b5rx2R1vUsfFzVuWR/NZduMxCSf9vo19wLHZqPrz/YmtXZ+0DAuZWYgsICeH7oe6czfCdVAxOV3bVSXmB+J5Wrmqge1m+ZfwgI7RMIL8y6Y1kh2vinaP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fHN20sUj; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538JYq3s027508
+	for <linux-arm-msm@vger.kernel.org>; Tue, 8 Apr 2025 21:51:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4qYMmx1cwwXQQRUe4B443jnoYMCJS9Y4BrBHvddUYs0=; b=fHN20sUjyr6/tJLY
+	VFhatTXDYbz76Q0DK5zR2QYW9X9Y/auQ1nlJ7HFpRTshffjRlcLSirXqIxTLYqXN
+	w9ZEOnVuhOGlCcoyLHhIlt8tdrbPluKXVrQurRD6TS6/lva/R+tq9uDsvFZ0xQ+Z
+	a8oBH20Ljg9CewBtye8yMMArv4aaBjMQDRJ5jO0eqoUpthRtmP68Ac4hWhMDDm5g
+	y/cf6cS5DuNI8wypYHE7MXHll3Esx3tiBVKMMI9PAOg77sogXsoWndhNgaO91H7w
+	ttTbf4MUUpKSARWg9BevWtu+FFt5XOHTPhBZob3Dbve218YHPWsWynBBu7NIsiLf
+	LJtPTQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twcrha7b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 21:51:41 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2241e7e3addso50011895ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Apr 2025 14:51:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744147587; x=1744752387;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3ZXenv5NdRxAPmtDIgNSh4oCYjmXRf9QV8n2/7t4A18=;
-        b=KqSfBtT+nzwHbsEHEZ0JTqk1cSxxf4p+YvSosYKh/cXJy9ZhkXmcNE+QuMo83P9lPw
-         j8ajryw+3Q2g13QIPkAFgnkk/AlYnmK+5RUYRKQ6Z9G+tHFGNCoJTszZ1FwusOfrvqOv
-         gCMgZcf9WV/fYS4hDL5FSzDEbwL97tB3l/pX1Dc2oHfuwa7vipYU8vL41AsEbWbA21DB
-         IZ5pmiOwBWFLtl5PrGpHL6a8S4unlt1tk5e3a9NZ4RNtNncWAmUoHB062tX1VnDJ17Ue
-         EE9Ps97tNNk2NSUI3EA7wMyr21SVG43kRHxpnhcu46iGAGTQlzGXGdT5I7/Eq7Is5f6s
-         /a4A==
-X-Forwarded-Encrypted: i=1; AJvYcCWIWvPeZyh9gMsX+hSke1JRcLLQVE+7nqR5b/8vwape6e/5WXrR/4tnj4hCdA5m2p06jx6/tUOM9lxt5VWi@vger.kernel.org
-X-Gm-Message-State: AOJu0YySxc6Mj6yQZy2tGPOXW5lKEYT4fSnm7jv9X+722b7BrW9JO4q7
-	Yq0lyCec6uErI9ID3aG0b3m3XPgakQ2+WCxWn0/n+rqB4iQ7rd3ICKNcOQib+Q==
-X-Gm-Gg: ASbGncsCgimSE/JCjHIf4UxtE3UYW0LfTMmVkKWJkzBKylWjpeGtw3wXn1UsxH/SYE5
-	RHmS20gWkAEqv+4EUHmkBu8idGKiZDRihSs/H0AwH92VllDAI/jkcI0eIWZznAig2AUMAWeOijs
-	wPZ+kelT3jcHWZ9hhrb//ogxH+6iFMTO28Z8AHKEf6GeAB9pFih2NAO7HgIgX1nB24NGsLJjSn6
-	fIWvs6FTjhwmZIvsa8qMDB6NFRebToZLsjmv5e5ZG8W58NL4Vuti9k4UP+86DiStIYtOmAW/IhX
-	jnEGrLymbBu7ztUPOB/bAJPMrB/5Jjo4tccFkvps3US6n8s1XAZhXmTjrq2acUBCrCMYXDcv0AG
-	G0dNqQaU=
-X-Google-Smtp-Source: AGHT+IGWBL43POLyTKIVtvqCNnHwPO80WghJhRq8bDGo1CpD365Z+Gt9wZXz61k815bEhQ2ufO5cSg==
-X-Received: by 2002:a17:90b:2f46:b0:2ff:592d:23bc with SMTP id 98e67ed59e1d1-306dbb66ae3mr1063923a91.4.1744147587486;
-        Tue, 08 Apr 2025 14:26:27 -0700 (PDT)
-Received: from localhost ([2a00:79e0:2e14:7:f6a0:ca46:b8a5:169e])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-305983b9954sm11484930a91.32.2025.04.08.14.26.25
+        d=1e100.net; s=20230601; t=1744149100; x=1744753900;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4qYMmx1cwwXQQRUe4B443jnoYMCJS9Y4BrBHvddUYs0=;
+        b=TLw2NkV3LIuixJ1DiuqyxFkjDuFWX58LPKvRAwCGaPqQBECTaqbvVDImbrUlBHMPqI
+         ldZR8qUvJz4l+5QXDgoqOGvtR9vQR2ynKkRUlw8hWSmzsV1Wi7ciX9lH0iIaNEmByBt8
+         Lf3A5D8KG9VzvuVm8MHd5higbIM3kCZn5661iqjBJAnAB3PNQemAXiUWQhdPJDcfD9DX
+         I+cy+czmIP4reFGRFv+kma5fhcI7S3aBcYWtcmJ2VdvTybB1F+yGetxYFUXIHbHG6syV
+         l2Vuey4UbNDCVygqt1oVOqaPWmfuKCt1eVIASxvAowZ9r9hsQj0aw9/DSZwQ7f/sXrSW
+         uNFA==
+X-Forwarded-Encrypted: i=1; AJvYcCUL7JsluYdzV5yznB+aUWGEAnhtrqVczuLgOa3C+Vhwn2s+3Iug8S8H/F7tj5WvAaxMb5Flq8+iRUAEXneA@vger.kernel.org
+X-Gm-Message-State: AOJu0Yygby9IBd9hptTWKb+3QsncAXxW3xFiAECOnXQdWqQUGF8cwqTa
+	aBT1HbTkU+KBH3HlhbpmFXWLH9A38DdZwpjMbUeJsQTRswmHoS3tscAB8zHKBmGgPYLqSBQSzQR
+	Qh8Pmijnf+0mpl8E4MvL+jH1Xmc4a0BkgwXpUwe2XfezsAIpEN9vdGPQlQdO4W3Fy
+X-Gm-Gg: ASbGncslyqIqa+egsX6FWm0//0IU6vbBrb4NTgtxOW7GvjXcRDS8jHIfFslwIsv3sOf
+	bgosJGrU17MvvCYIRP1WZpSCep//OfTUv0DcpTIN+P2FGSs5Z6Z/0FEPXJwqUTFCxOO2vFcXC8V
+	w7dIlTbLVqYJTZE78vvHPlS3otGqxRhiSHY1LCiVqTn9PqYapZKsYktB9iiHyjlNzUnwVj6toFn
+	c29kc5XHK6q5b6nuSRqxviyizgyhZtNtwJzNxfOqNp0gei7sO8UM7t8iK7twq8hcpjcke/lQleu
+	P2f+WqdjAzlTzceUobg8ty02helT60Z38Yp7HZr/Tuq01tsMu7uPlLdJhnkgpqlRSOCpKV5Cw/V
+	4Gkl9KA==
+X-Received: by 2002:a17:903:1245:b0:221:7b4a:476c with SMTP id d9443c01a7336-22ac2992a09mr8608925ad.18.1744149099655;
+        Tue, 08 Apr 2025 14:51:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFCNranT1CO/GEUVT0ohp6e+mD5pBJVFGlgN+QUZlRKj2YbWbEFTNk7ni641yJ3KvIeudhivw==
+X-Received: by 2002:a17:903:1245:b0:221:7b4a:476c with SMTP id d9443c01a7336-22ac2992a09mr8608705ad.18.1744149099281;
+        Tue, 08 Apr 2025 14:51:39 -0700 (PDT)
+Received: from [10.71.114.173] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-229785ada60sm106004875ad.3.2025.04.08.14.51.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Apr 2025 14:26:26 -0700 (PDT)
-Date: Tue, 8 Apr 2025 14:26:24 -0700
-From: Brian Norris <briannorris@chromium.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	dmitry.baryshkov@linaro.org, Tsai Sung-Fu <danielsftsai@google.com>,
-	Jim Quinlan <jim2101024@gmail.com>,
-	Nicolas Saenz Julienne <nsaenz@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Subject: Re: [RFC] PCI: pwrctrl and link-up dependencies
-Message-ID: <Z_WUgPMNzFAftLeE@google.com>
-References: <Z_WAKDjIeOjlghVs@google.com>
+        Tue, 08 Apr 2025 14:51:38 -0700 (PDT)
+Message-ID: <de34c654-5b9c-4c21-aee3-e732f6ed374f@oss.qualcomm.com>
+Date: Tue, 8 Apr 2025 14:51:37 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z_WAKDjIeOjlghVs@google.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/5 RESEND] thermal: qcom-spmi-temp-alarm: Add support
+ for new TEMP_ALARM subtypes
+From: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+To: amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org
+Cc: rui.zhang@intel.com, lukasz.luba@arm.com, david.collins@oss.qualcomm.com,
+        srinivas.kandagatla@linaro.org, stefan.schmidt@linaro.org,
+        quic_tsoni@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmitry.baryshkov@linaro.org
+References: <20250320202408.3940777-1-anjelique.melendez@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20250320202408.3940777-1-anjelique.melendez@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: F3M7gcfch7YvpIs50fMhI7JBHZkUal7g
+X-Authority-Analysis: v=2.4 cv=QuVe3Uyd c=1 sm=1 tr=0 ts=67f59a6d cx=c_pps a=IZJwPbhc+fLeJZngyXXI0A==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=p-nOP-kxAAAA:8 a=EUspDBNiAAAA:8
+ a=P6RHbN-0fNZ3JhbA0IsA:9 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22 a=TjNXssC_j7lpFel5tvFf:22 a=XN2wCei03jY4uMu7D0Wg:22
+X-Proofpoint-GUID: F3M7gcfch7YvpIs50fMhI7JBHZkUal7g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-08_09,2025-04-08_04,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ spamscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501
+ clxscore=1015 phishscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504080151
 
-+ adding pcie-brcmstb.c folks
 
-On Tue, Apr 08, 2025 at 12:59:39PM -0700, Brian Norris wrote:
-> TL;DR: PCIe link-up may depend on pwrctrl; however, link-startup is
-> often run before pwrctrl gets involved. I'm exploring options to resolve
-> this.
 
-Apologies if a quick self-reply is considered nosiy or rude, but I
-nearly forgot that I previously was looking at "pwrctrl"-like
-functionality and noticed that drivers/pci/controller/pcie-brcmstb.c has
-had a portion of the same "pwrctrl" functionality for some time (commit
-93e41f3fca3d ("PCI: brcmstb: Add control of subdevice voltage
-regulators")).
+On 3/20/2025 1:24 PM, Anjelique Melendez wrote:
+> Add support in the qcom-spmi-temp-alarm driver for the new PMIC
+> TEMP_ALARM peripheral subtypes: GEN2 rev 2 and LITE. The GEN2 rev 2
+> subtype provides greater flexibility in temperature threshold
+> specification by using an independent register value to configure
+> each of the three thresholds. The LITE subtype utilizes a simplified
+> set of control registers to configure two thresholds: warning and
+> shutdown. While at it refactor the qcom-spmi-temp-alarm driver to limit
+> code reuse and if/else statements when deciphering between TEMP_ALARM
+> peripheral subtypes.
+> 
+> Also add support to avoid a potential issue on certain versions of
+> the TEMP_ALARM GEN2 subtype when automatic stage 2 partial shutdown
+> is disabled.
+> 
+> This patch series is a continuation of older series from 7/2024
+> (https://lore.kernel.org/all/20240729231259.2122976-1-quic_amelende@quicinc.com/)
+> but current series has been reworked to address the change in thermal framework to
+> update .set_trip_temp() callback function variables
+> (https://lore.kernel.org/all/8392906.T7Z3S40VBb@rjwysocki.net/)
+> 
+> Changes since v2:
+>    - Updated function name to include "gen1" in patch 2/5
+>    - Added Dmitry's reviewed-by tag in patch 2/5
+>    - link: https://lore.kernel.org/all/20250225192429.2328092-1-anjelique.melendez@oss.qualcomm.com/
+> Changes since v1:
+>    - Remove unnecessary moving of code
+>    - Added new v2 patch 3/5 add a preparation patch to v1 patch 2/5
+>    - Updated temp alarm data function names to be consistently named
+>    - link: https://lore.kernel.org/all/20250213210403.3396392-1-anjelique.melendez@oss.qualcomm.com/
+> 
+> Anjelique Melendez (4):
+>    thermal: qcom-spmi-temp-alarm: Add temp alarm data struct based on HW
+>      subtype
+>    thermal: qcom-spmi-temp-alarm: Prepare to support additional Temp
+>      Alarm subtypes
+>    thermal: qcom-spmi-temp-alarm: add support for GEN2 rev 2 PMIC
+>      peripherals
+>    thermal: qcom-spmi-temp-alarm: add support for LITE PMIC peripherals
+> 
+> David Collins (1):
+>    thermal: qcom-spmi-temp-alarm: enable stage 2 shutdown when required
+> 
+>   drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 515 ++++++++++++++++++--
+>   1 file changed, 464 insertions(+), 51 deletions(-)
+> 
+Hi Amit and Thara,
+Can you take a look at changes when you have a chance.
 
-Notably, it performs its power sequencing before starting its link, for
-(I believe) exactly the same reasons as I mention below. While I'm sure
-it could theoretically be nice for them to be able to use
-drivers/pci/pwrctrl/, I expect they cannot today, for the same reasons.
-
-Brian
-
-P.S. My original post is here, in case you're interested:
-https://lore.kernel.org/linux-pci/Z_WAKDjIeOjlghVs@google.com/
-I also leave the rest of the message intact below.
-
-> Hi all,
-> 
-> I'm currently looking at reworking how some (currently out-of-tree, but I'm
-> hoping to change that) pcie-designware based drivers integrate power sequencing
-> for their endpoint devices, as well as the corresponding start_link()
-> functionality.
-> 
-> For power sequencing, drivers/pci/pwrctrl/ looks like a very good start at what
-> we need, since we have various device-specific regulators, GPIOs, and
-> sequencing requirements, which we'd prefer not to encode directly in the
-> controller driver.
-> 
-> For link startup, pcie-designware-host.c currently
-> (a) starts the link via platform-specific means (dw_pcie::ops::start_link()) and
-> (b) waits for the link training to complete.
-> 
-> However, (b) will fail if the other end of the link is not powered up --
-> e.g., if the appropriate pwrctrl driver has not yet loaded, or its
-> device hasn't finished probing. Today, this can mean the designware
-> driver will either fail to probe, or at least waste time for a condition
-> that we can't achieve (link up), depending on the HW/driver
-> implementation.
-> 
-> I'm wondering how any designware-based platforms (on which I believe pwrctrl
-> was developed) actually support this, and how I should look to integrate
-> additional platforms/drivers. From what I can tell, the only way things would
-> work today would either be if:
-> (1) a given platform uses the dw_pcie_rp::use_linkup_irq==true functionality,
->     which means pcie-designware-host will only start the link, but not wait for
->     training to succeed. (And presumably the controller will receive its
->     link-up IRQ after power sequencing is done, at which point both pwrctrl and
->     the IRQ may rescan the PCI bus.) Or:
-> (2) pci/pwrctrl sequencing only brings up some non-critical power rails for the
->     device in question, so link-up can actually succeed even without
->     pwrctrl.
-> 
-> My guess is that (1) is the case, and specifically that the relevant folks are
-> using the pcie-qcom.c, with its "global" IRQ used for link-up events.
-> 
-> So how should I replicate this on other designware-based platforms? I suppose
-> if the platform in question has a link-up IRQ, I can imitate (1). But what if
-> it doesn't? (Today, we don't validate and utilize a link-up IRQ, although it's
-> possible there is one available. Additionally, we use various retry mechanisms
-> today, which don't trivially fit into this framework, as we won't know when
-> precisely to retry, if power sequencing is controlled entirely by some other
-> entity.)
-> 
-> Would it make sense to introduce some sort of pwrctrl -> start_link()
-> dependency? For example, I see similar work done in this series [1], for
-> slightly different reasons. In short, that series adds new
-> pci_ops::{start,stop}_link() callbacks, and teaches a single pwrctrl driver to
-> stop and restart the bridge link before/after powering things up.
-> 
-> I also see that Manivannan has a proposal out [2] to add semi-generic
-> link-down + retraining support to core code. It treads somewhat similar
-> ground, and I could even imagine that its pci_ops::retrain_link()
-> callback could even be reimplemented in terms of the aforementioned
-> pci_ops::{start,stop}_link(), or possibly vice versa.
-> 
-> Any thoughts here? Sorry for a lot of text and no patch, but I didn't just want
-> to start off by throwing a 3rd set of patches on top of the existing ones that
-> tread similar ground[1][2].
-> 
-> Regards,
-> Brian
-> 
-> [1] [PATCH v4 00/10] PCI: Enable Power and configure the TC956x PCIe switch
-> https://lore.kernel.org/linux-pci/20250225-qps615_v4_1-v4-0-e08633a7bdf8@oss.qualcomm.com/
-> 
-> [PATCH v4 03/10] PCI: Add new start_link() & stop_link function ops
-> https://lore.kernel.org/linux-pci/20250225-qps615_v4_1-v4-3-e08633a7bdf8@oss.qualcomm.com/
-> 
-> [...]
-> [
-> [PATCH v4 08/10] PCI: pwrctrl: Add power control driver for tc956x
-> https://lore.kernel.org/linux-pci/20250225-qps615_v4_1-v4-8-e08633a7bdf8@oss.qualcomm.com/
-> 
-> [2] [PATCH 0/2] PCI: Add support for handling link down event from host bridge drivers
-> https://lore.kernel.org/linux-pci/20250221172309.120009-1-manivannan.sadhasivam@linaro.org/
+Thanks,
+Anjelique
 
