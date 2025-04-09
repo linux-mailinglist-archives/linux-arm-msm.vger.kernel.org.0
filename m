@@ -1,166 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-53616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08B78A81F02
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2263A81F03
 	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 10:01:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE8338A17EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 07:58:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 480887B33AD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 07:59:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C29C425C716;
-	Wed,  9 Apr 2025 07:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7964925A634;
+	Wed,  9 Apr 2025 08:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=damsy.net header.i=@damsy.net header.b="slk6VF1v";
-	dkim=permerror (0-bit key) header.d=damsy.net header.i=@damsy.net header.b="09y8o62Y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PoN8zveM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from jeth.damsy.net (jeth.damsy.net [51.159.152.102])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD3825B686;
-	Wed,  9 Apr 2025 07:58:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.159.152.102
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716DB25A35E;
+	Wed,  9 Apr 2025 08:00:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744185500; cv=none; b=AGxBkN+dKRsFG2eV9mVx/t6z26DdoMjsqyuaEI6jfiSrGJZbadFywehOw8GBy4and9L2JjucmQ3Vt3/1Oo/FFFRIgKGyJEf0jNQZr8QdB2+sN0uEj43cyqvgGIpuf31NocOMG8U6DN4ZtIH0nDdYlpc6f75PBiuSxe0Y34twICI=
+	t=1744185649; cv=none; b=pEgi7zU6JAVamlPc5BupVfotcOy9XxjzYeOXRL8n50yYBDelUyhgGS4tDdg7jT0D8srq6UXYw83OE498ydl8PK7B059AEwaLuWG6y5IJ+VFychlSkMkI/78xVZ18jSrc7qyNjjYjpGXWxH0dZ1F3a9uLI/PngnMtrfDq5WGZNkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744185500; c=relaxed/simple;
-	bh=fg3tvVR/uXNXSDvxZ4l+Z3LudKE1cRCcApc0gwkbxMY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kDrWcxTDvD8mvnhHdOG44Mi0jJlahxjloAr2gaXmwchWHbC9NylIVzn0GHbsvJHGk3uEpoo5CiAPz2OmTUj624kjF6oG8KELR2GuwYjbjCFx4N/qaDgpjLljvzEmEIlSzZwnxefvXelB/Z7nA+/X4IkUCAHD/WT+1YCJKC5nN5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=damsy.net; spf=pass smtp.mailfrom=damsy.net; dkim=pass (2048-bit key) header.d=damsy.net header.i=@damsy.net header.b=slk6VF1v; dkim=permerror (0-bit key) header.d=damsy.net header.i=@damsy.net header.b=09y8o62Y; arc=none smtp.client-ip=51.159.152.102
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=damsy.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=damsy.net
-DKIM-Signature: v=1; a=rsa-sha256; s=202408r; d=damsy.net; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1744185144; bh=m0UnMasJN//idMnYkH7ZVnj
-	GqZ6c589EeVyBi7IEG6E=; b=slk6VF1v2JektGaPflcGO2CTCGnjVtConEYnMwNQuHIKv5GnZN
-	iKySxNzKqaqmMSGTHV2sD7e6p9JMM/bWwVV60dKGgbydrphz39R0nULHz7MEORNs5C/68+fh8hE
-	mlZ9b5Z88OSQ8xg9+VjAXpw/HRZzgwVLlWHsB8EiA5jMt5rjUUhF+Q/YRDNDgE1oqjF2JbvgPva
-	cS89tlOy4Apc6IPe8ZmM/vtazs3BSCEAEgUDzLIxcvGjev4kX2xaLfNCszaUERyyBxHykYumB+1
-	dBO7Dwa0yztI3rfuRieQ6sKhWOyoHaC9sv/tmFXCcrxeOxKvOvdgQCq577mnEJ+VpWw==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202408e; d=damsy.net; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1744185144; bh=m0UnMasJN//idMnYkH7ZVnj
-	GqZ6c589EeVyBi7IEG6E=; b=09y8o62Y7U+ZSS7gXzumhfKXC15qDUDbHWKwRc+54MEVLT3ms7
-	XJzrgBE+FB+rwkzQeINVbFqIXq5dQESfANCg==;
-Message-ID: <f3416edf-46f8-4296-86bd-600ab629fe60@damsy.net>
-Date: Wed, 9 Apr 2025 09:52:23 +0200
+	s=arc-20240116; t=1744185649; c=relaxed/simple;
+	bh=lai/0uIpGhoob1j7YYLfN9RhgTWvu4LC5LrNo8HVgmE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ctCbIlmSQhBC4oLQ63WDa1PeRCmbP22R7wWHlbSB/bvZot4zsuvM9MeZxmZkHkQaBmHTVjp+fSbAw40g4nWKhMIEL4UJm+gJaJafGfnNMhkkwUTsgvJzN+j2uUE6d2o7TwXoh4zFQspSFO3ryJuGGfyYcrFkQNL6tSzO07wG2nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PoN8zveM; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5499e3ec54dso7718010e87.0;
+        Wed, 09 Apr 2025 01:00:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744185645; x=1744790445; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GBbnnLl0KVKjf6mjo45SSeu87gd4uemqTNQJ2BYDFwU=;
+        b=PoN8zveM+TNWMum/dfCVwNZidd5tgzG6UEIhoFRMY0IPARVllInpxLXT6+RJrKG3o7
+         A4qtnePtIWzmCgoxcusrWFEbeO9Nc0cRvfX/8xrR47ygm0NreS+4FiR6vYGlc7bxXeK1
+         Pn7Rd/uGQ/PA5g1WgJs9COyFOpZQSXIcJgnXbL1OOUwHsIu4yqwGQdah8Jxh0D/2eLRs
+         E1IZFrkaagxtanSNhDgLm4EVFGdl1eXrG9b3FMsHhA5xmQ337jzi79Mmh1DpOT96wj1J
+         936EOf5I7wHv1ouVaR/SeI3kJEkX6JyI0uENvkx/Pb7tLdW4w5QagPZet35IwodtQTRX
+         t31g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744185645; x=1744790445;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GBbnnLl0KVKjf6mjo45SSeu87gd4uemqTNQJ2BYDFwU=;
+        b=kFxb72n2NIbL2kYAqYIo921bvWyndZYnjYDlU+LGBnhK3Mb0mO+DQQGnuiGkpwzBJC
+         CxK963QSMRez7QGSsJtOyum133joJmucUWkXvoompo9e4/SdNLuqLsCuairArhS8punE
+         Qi5W6qYN9DdL7MgxCF7283jbuTwc2mo4cJRHhbER3Zaa7Rkr+V+RvGKFSzMk1/20u8Ww
+         bOih7NZvYGZxKstW6FNQb/IYN/BVgUFXNzMKfrf8dRaugfHcoJy9gahWn66ANvk/1zF3
+         +MD+RKDYrFTBjF5vRrLIAe6ke/USNGsO5iqWCJ0d1JfYImkVk27Su25WQsQTtFRUuu9Y
+         j96Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVjj7qEcm3MISq1fZlPb675vbxXTpV/OMqIrq/+elXpiYs/9QKwYTn9OJKZSfn3Id/KqhH/XjTmLTTYGNsz@vger.kernel.org, AJvYcCX5lWvuVTrBNl2ZjtfYkxLiUgkb1Pi80oSy1Q6+tR0ICTE/2jqud6jrUTU0ca53MWxkUTnP+pv6UkX5Z+VH@vger.kernel.org, AJvYcCXn2vzEute7o35dKmXLaNmu1ancA7ANM17Js0q32GRslqBx2SjndrtE1ODHh7Ava0bojlij1ZOFJKy6Ew==@vger.kernel.org
+X-Gm-Message-State: AOJu0YzN4ZJkCVkjegBUudxYdmA6551OIOkXtti3JW4o9skfhNuwys39
+	hjG9QZfjOz17K4JJR4C4vsfjgHiI4iZWLds8OwWEAdn0QIiuS8QU
+X-Gm-Gg: ASbGncu88Wq4EmLqUXeZvqa6b6+RBCCyQr95vyMRzecxvw3bp71lnecCSCXwtC/XkDS
+	saq/uzq3ngGYmTzgB6n0KiuxSJC5gVzNRn//2oaQ3g6hj1RueBJYuKvcSm5U+Z80hxlGzObvqzN
+	BjvECWiPcmcAoEN5crdQCqbr5TSQMc8/d1csd8VCAH82oUTCfBZZg1zQmO8ddAUnVtMb5HkwCbA
+	vyf402yOp6PcVMg4+2p6RLoGdZIyfSV4KSlJpjn2lH4KYEZZGxPeSbRfvnx6fSeDZByFhGDrCf/
+	10Q0aF94aqlxgFUvVk1HM3uzYYCXAwdXi7Pdf6rC
+X-Google-Smtp-Source: AGHT+IHmm3xwFUNBjJf7Z0s3XKqvoj33/yIUNMY6ovsT12BpAUgSNVPHON4VBQkOdsDaLeakrQ9q6w==
+X-Received: by 2002:a05:6512:32c1:b0:545:3031:40aa with SMTP id 2adb3069b0e04-54c436f0cbcmr452590e87.9.1744185645324;
+        Wed, 09 Apr 2025 01:00:45 -0700 (PDT)
+Received: from T15.. ([46.175.113.10])
+        by smtp.googlemail.com with ESMTPSA id 2adb3069b0e04-54c4565f79csm70790e87.114.2025.04.09.01.00.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Apr 2025 01:00:44 -0700 (PDT)
+From: Wojciech Slenska <wojciech.slenska@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Cc: Wojciech Slenska <wojciech.slenska@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] pinctrl: qcom: pinctrl-qcm2290: Add egpio support
+Date: Wed,  9 Apr 2025 10:00:29 +0200
+Message-Id: <20250409080030.62254-1-wojciech.slenska@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 00/10] Improve gpu_scheduler trace events + UAPI
-To: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
- Philipp Stanner <phasta@kernel.org>, Danilo Krummrich <dakr@kernel.org>,
- Matthew Brost <matthew.brost@intel.com>
-Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- etnaviv@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, lima@lists.freedesktop.org,
- linaro-mm-sig@lists.linaro.org, linux-arm-msm@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, nouveau@lists.freedesktop.org
-References: <20250320095818.40622-1-pierre-eric.pelloux-prayer@amd.com>
-Content-Language: en-US
-From: Pierre-Eric Pelloux-Prayer <pierre-eric@damsy.net>
-In-Reply-To: <20250320095818.40622-1-pierre-eric.pelloux-prayer@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi,
+qcm2290 supports the egpio feature on GPIOs ranging from 98 to 126.
+This change is necessary to allow these GPIOs to be driven by TLMM.
 
-I've rebased the series on top of drm-next, applied the minor tweaks suggested by Tvrtko on v8 and 
-the R-b tags. The result can be found on gitlab.fdo:
+Signed-off-by: Wojciech Slenska <wojciech.slenska@gmail.com>
+---
+ drivers/pinctrl/qcom/pinctrl-qcm2290.c | 70 +++++++++++++++-----------
+ 1 file changed, 41 insertions(+), 29 deletions(-)
 
-https://gitlab.freedesktop.org/pepp/linux/-/commits/improve_gpu_scheduler_trace_v9
-
-I believe it's ready to be merged, unless I've missed something?
-
-Thanks,
-Pierre-Eric
-
-Le 20/03/2025 à 10:57, Pierre-Eric Pelloux-Prayer a écrit :
-> Hi,
-> 
-> The initial goal of this series was to improve the drm and amdgpu
-> trace events to be able to expose more of the inner workings of
-> the scheduler and drivers to developers via tools.
-> 
-> Then, the series evolved to become focused only on gpu_scheduler.
-> The changes around vblank events will be part of a different
-> series, as well as the amdgpu ones.
-> 
-> Moreover Sima suggested to make some trace events stable uAPI,
-> so tools can rely on them long term.
-> 
-> The first patches extend and cleanup the gpu scheduler events,
-> then add a documentation entry in drm-uapi.rst.
-> 
-> The last 2 patches are new in v8. One is based on a suggestion
-> from Tvrtko and gets rid of drm_sched_job::id. The other is a
-> cleanup of amdgpu trace events to use the fence=%llu:%llu format.
-> 
-> The drm_sched_job patches don't affect gpuvis which has code to parse
-> the gpu_scheduler events but these events are not enabled.
-> 
-> Changes since v7:
-> * uint64_t -> u64
-> * reworked dependencies tracing (Tvrtko)
-> * use common name prefix for all events (Tvrtko)
-> * dropped drm_sched_job::id (Tvrtko)
-> 
-> Useful links:
-> - userspace tool using the updated events:
-> https://gitlab.freedesktop.org/tomstdenis/umr/-/merge_requests/37
-> - v7:
-> https://lists.freedesktop.org/archives/dri-devel/2025-January/488117.html
-> 
-> Pierre-Eric Pelloux-Prayer (10):
->    drm/debugfs: output client_id in in drm_clients_info
->    drm/sched: store the drm client_id in drm_sched_fence
->    drm/sched: add device name to the drm_sched_process_job event
->    drm/sched: cleanup gpu_scheduler trace events
->    drm/sched: trace dependencies for gpu jobs
->    drm/sched: add the drm_client_id to the drm_sched_run/exec_job events
->    drm/sched: cleanup event names
->    drm/doc: document some tracepoints as uAPI
->    drm: get rid of drm_sched_job::id
->    drm/amdgpu: update trace format to match gpu_scheduler_trace
-> 
->   Documentation/gpu/drm-uapi.rst                |  19 ++++
->   drivers/accel/amdxdna/aie2_ctx.c              |   3 +-
->   drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c    |   2 +-
->   drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c        |   3 +-
->   drivers/gpu/drm/amd/amdgpu/amdgpu_job.c       |   8 +-
->   drivers/gpu/drm/amd/amdgpu/amdgpu_job.h       |   3 +-
->   drivers/gpu/drm/amd/amdgpu/amdgpu_trace.h     |  32 ++----
->   drivers/gpu/drm/drm_debugfs.c                 |  10 +-
->   drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c  |   2 +-
->   drivers/gpu/drm/imagination/pvr_job.c         |   2 +-
->   drivers/gpu/drm/imagination/pvr_queue.c       |   5 +-
->   drivers/gpu/drm/imagination/pvr_queue.h       |   2 +-
->   drivers/gpu/drm/lima/lima_gem.c               |   2 +-
->   drivers/gpu/drm/lima/lima_sched.c             |   6 +-
->   drivers/gpu/drm/lima/lima_sched.h             |   3 +-
->   drivers/gpu/drm/msm/msm_gem_submit.c          |   8 +-
->   drivers/gpu/drm/nouveau/nouveau_sched.c       |   3 +-
->   drivers/gpu/drm/panfrost/panfrost_drv.c       |   2 +-
->   drivers/gpu/drm/panthor/panthor_drv.c         |   3 +-
->   drivers/gpu/drm/panthor/panthor_mmu.c         |   2 +-
->   drivers/gpu/drm/panthor/panthor_sched.c       |   5 +-
->   drivers/gpu/drm/panthor/panthor_sched.h       |   3 +-
->   .../gpu/drm/scheduler/gpu_scheduler_trace.h   | 103 +++++++++++++-----
->   drivers/gpu/drm/scheduler/sched_entity.c      |  16 ++-
->   drivers/gpu/drm/scheduler/sched_fence.c       |   4 +-
->   drivers/gpu/drm/scheduler/sched_internal.h    |   2 +-
->   drivers/gpu/drm/scheduler/sched_main.c        |  11 +-
->   drivers/gpu/drm/v3d/v3d_submit.c              |   2 +-
->   drivers/gpu/drm/xe/xe_sched_job.c             |   3 +-
->   include/drm/gpu_scheduler.h                   |  13 ++-
->   30 files changed, 186 insertions(+), 96 deletions(-)
-> 
+diff --git a/drivers/pinctrl/qcom/pinctrl-qcm2290.c b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
+index ba699eac9ee8..f885af571ec9 100644
+--- a/drivers/pinctrl/qcom/pinctrl-qcm2290.c
++++ b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
+@@ -37,6 +37,8 @@
+ 		.mux_bit = 2,			\
+ 		.pull_bit = 0,			\
+ 		.drv_bit = 6,			\
++		.egpio_enable = 12,		\
++		.egpio_present = 11,		\
+ 		.oe_bit = 9,			\
+ 		.in_bit = 0,			\
+ 		.out_bit = 1,			\
+@@ -387,6 +389,7 @@ enum qcm2290_functions {
+ 	msm_mux_ddr_pxi1,
+ 	msm_mux_ddr_pxi2,
+ 	msm_mux_ddr_pxi3,
++	msm_mux_egpio,
+ 	msm_mux_gcc_gp1,
+ 	msm_mux_gcc_gp2,
+ 	msm_mux_gcc_gp3,
+@@ -816,6 +819,13 @@ static const char * const sd_write_groups[] = {
+ static const char * const jitter_bist_groups[] = {
+ 	"gpio96", "gpio97",
+ };
++static const char * const egpio_groups[] = {
++	"gpio98", "gpio99", "gpio100", "gpio101", "gpio102", "gpio103",
++	"gpio104", "gpio105", "gpio106", "gpio107", "gpio108", "gpio109",
++	"gpio110", "gpio111", "gpio112", "gpio113", "gpio114", "gpio115",
++	"gpio116", "gpio117", "gpio118", "gpio119", "gpio120", "gpio121",
++	"gpio122", "gpio123", "gpio124", "gpio125", "gpio126",
++};
+ static const char * const ddr_pxi2_groups[] = {
+ 	"gpio102", "gpio103",
+ };
+@@ -851,6 +861,7 @@ static const struct pinfunction qcm2290_functions[] = {
+ 	MSM_PIN_FUNCTION(ddr_pxi1),
+ 	MSM_PIN_FUNCTION(ddr_pxi2),
+ 	MSM_PIN_FUNCTION(ddr_pxi3),
++	MSM_PIN_FUNCTION(egpio),
+ 	MSM_PIN_FUNCTION(gcc_gp1),
+ 	MSM_PIN_FUNCTION(gcc_gp2),
+ 	MSM_PIN_FUNCTION(gcc_gp3),
+@@ -1037,35 +1048,35 @@ static const struct msm_pingroup qcm2290_groups[] = {
+ 	[95] = PINGROUP(95, nav_gpio, gp_pdm0, qdss_gpio, wlan1_adc1, _, _, _, _, _),
+ 	[96] = PINGROUP(96, qup4, nav_gpio, mdp_vsync, gp_pdm1, sd_write, jitter_bist, qdss_cti, qdss_cti, _),
+ 	[97] = PINGROUP(97, qup4, nav_gpio, mdp_vsync, gp_pdm2, jitter_bist, qdss_cti, qdss_cti, _, _),
+-	[98] = PINGROUP(98, _, _, _, _, _, _, _, _, _),
+-	[99] = PINGROUP(99, _, _, _, _, _, _, _, _, _),
+-	[100] = PINGROUP(100, atest, _, _, _, _, _, _, _, _),
+-	[101] = PINGROUP(101, atest, _, _, _, _, _, _, _, _),
+-	[102] = PINGROUP(102, _, phase_flag, dac_calib, ddr_pxi2, _, _, _, _, _),
+-	[103] = PINGROUP(103, _, phase_flag, dac_calib, ddr_pxi2, _, _, _, _, _),
+-	[104] = PINGROUP(104, _, phase_flag, qdss_gpio, dac_calib, ddr_pxi3, _, pwm_8, _, _),
+-	[105] = PINGROUP(105, _, phase_flag, qdss_gpio, dac_calib, ddr_pxi3, _, _, _, _),
+-	[106] = PINGROUP(106, nav_gpio, gcc_gp3, qdss_gpio, _, _, _, _, _, _),
+-	[107] = PINGROUP(107, nav_gpio, gcc_gp2, qdss_gpio, _, _, _, _, _, _),
+-	[108] = PINGROUP(108, nav_gpio, _, _, _, _, _, _, _, _),
+-	[109] = PINGROUP(109, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[110] = PINGROUP(110, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[111] = PINGROUP(111, _, _, _, _, _, _, _, _, _),
+-	[112] = PINGROUP(112, _, _, _, _, _, _, _, _, _),
+-	[113] = PINGROUP(113, _, _, _, _, _, _, _, _, _),
+-	[114] = PINGROUP(114, _, _, _, _, _, _, _, _, _),
+-	[115] = PINGROUP(115, _, pwm_9, _, _, _, _, _, _, _),
+-	[116] = PINGROUP(116, _, _, _, _, _, _, _, _, _),
+-	[117] = PINGROUP(117, _, _, _, _, _, _, _, _, _),
+-	[118] = PINGROUP(118, _, _, _, _, _, _, _, _, _),
+-	[119] = PINGROUP(119, _, _, _, _, _, _, _, _, _),
+-	[120] = PINGROUP(120, _, _, _, _, _, _, _, _, _),
+-	[121] = PINGROUP(121, _, _, _, _, _, _, _, _, _),
+-	[122] = PINGROUP(122, _, _, _, _, _, _, _, _, _),
+-	[123] = PINGROUP(123, _, _, _, _, _, _, _, _, _),
+-	[124] = PINGROUP(124, _, _, _, _, _, _, _, _, _),
+-	[125] = PINGROUP(125, _, _, _, _, _, _, _, _, _),
+-	[126] = PINGROUP(126, _, _, _, _, _, _, _, _, _),
++	[98] = PINGROUP(98, _, _, _, _, _, _, _, _, egpio),
++	[99] = PINGROUP(99, _, _, _, _, _, _, _, _, egpio),
++	[100] = PINGROUP(100, atest, _, _, _, _, _, _, _, egpio),
++	[101] = PINGROUP(101, atest, _, _, _, _, _, _, _, egpio),
++	[102] = PINGROUP(102, _, phase_flag, dac_calib, ddr_pxi2, _, _, _, _, egpio),
++	[103] = PINGROUP(103, _, phase_flag, dac_calib, ddr_pxi2, _, _, _, _, egpio),
++	[104] = PINGROUP(104, _, phase_flag, qdss_gpio, dac_calib, ddr_pxi3, _, pwm_8, _, egpio),
++	[105] = PINGROUP(105, _, phase_flag, qdss_gpio, dac_calib, ddr_pxi3, _, _, _, egpio),
++	[106] = PINGROUP(106, nav_gpio, gcc_gp3, qdss_gpio, _, _, _, _, _, egpio),
++	[107] = PINGROUP(107, nav_gpio, gcc_gp2, qdss_gpio, _, _, _, _, _, egpio),
++	[108] = PINGROUP(108, nav_gpio, _, _, _, _, _, _, _, egpio),
++	[109] = PINGROUP(109, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[110] = PINGROUP(110, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[111] = PINGROUP(111, _, _, _, _, _, _, _, _, egpio),
++	[112] = PINGROUP(112, _, _, _, _, _, _, _, _, egpio),
++	[113] = PINGROUP(113, _, _, _, _, _, _, _, _, egpio),
++	[114] = PINGROUP(114, _, _, _, _, _, _, _, _, egpio),
++	[115] = PINGROUP(115, _, pwm_9, _, _, _, _, _, _, egpio),
++	[116] = PINGROUP(116, _, _, _, _, _, _, _, _, egpio),
++	[117] = PINGROUP(117, _, _, _, _, _, _, _, _, egpio),
++	[118] = PINGROUP(118, _, _, _, _, _, _, _, _, egpio),
++	[119] = PINGROUP(119, _, _, _, _, _, _, _, _, egpio),
++	[120] = PINGROUP(120, _, _, _, _, _, _, _, _, egpio),
++	[121] = PINGROUP(121, _, _, _, _, _, _, _, _, egpio),
++	[122] = PINGROUP(122, _, _, _, _, _, _, _, _, egpio),
++	[123] = PINGROUP(123, _, _, _, _, _, _, _, _, egpio),
++	[124] = PINGROUP(124, _, _, _, _, _, _, _, _, egpio),
++	[125] = PINGROUP(125, _, _, _, _, _, _, _, _, egpio),
++	[126] = PINGROUP(126, _, _, _, _, _, _, _, _, egpio),
+ 	[127] = SDC_QDSD_PINGROUP(sdc1_rclk, 0x84004, 0, 0),
+ 	[128] = SDC_QDSD_PINGROUP(sdc1_clk, 0x84000, 13, 6),
+ 	[129] = SDC_QDSD_PINGROUP(sdc1_cmd, 0x84000, 11, 3),
+@@ -1095,6 +1106,7 @@ static const struct msm_pinctrl_soc_data qcm2290_pinctrl = {
+ 	.ngpios = 127,
+ 	.wakeirq_map = qcm2290_mpm_map,
+ 	.nwakeirq_map = ARRAY_SIZE(qcm2290_mpm_map),
++	.egpio_func = 9,
+ };
+ 
+ static int qcm2290_pinctrl_probe(struct platform_device *pdev)
+-- 
+2.34.1
 
 
