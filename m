@@ -1,216 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-53632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 629E1A8245B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 14:08:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F735A8248E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 14:23:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E84644C365C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 12:08:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F6C11BC0988
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 12:22:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17AEC25F7B4;
-	Wed,  9 Apr 2025 12:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7BC625E835;
+	Wed,  9 Apr 2025 12:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GhqxgiUk"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="MF6636WL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDBB25E471;
-	Wed,  9 Apr 2025 12:07:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744200465; cv=none; b=ELYNddHyzRrDJc+2PYwSMbv5v++z/wWRbGOt4pwRcpuYebJP6HCSdNxk+A8OwWQdBs3bC26sg6EuJGYwrfMsp0/QNF5LfgvuIMe5jaRjOgLDrLI26AsikaF6hFSBYPkcxUgmh3Lo3KDkvRRSty32lB4/YVyOs8pr8ZeQkpMNyMU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744200465; c=relaxed/simple;
-	bh=FdUb0DPDYi+ttgoinI37K88fuRyaVge7JDVXiVilF7E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XcNksFkot4tsp9YKxl1KmiF7mC7B3atWiA9KGb0S7PdoJKUDFpEDg/Pom0cbkJ57O+41zt72UWS7oA/KncJf74Ds4nyUV4AbUaMLsQuMbk5uCwng0v4UnES5Tevjc/UV5nJb7de1MBPWarHCDpbNDXynRtV1SO0HMc/Ik+pvuNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GhqxgiUk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DACC4CEE7;
-	Wed,  9 Apr 2025 12:07:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744200464;
-	bh=FdUb0DPDYi+ttgoinI37K88fuRyaVge7JDVXiVilF7E=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GhqxgiUktLqE62NnlGbCozLGAOy1ebYKCfRTbO1C2V8isrEUvyivtHWOlIWWY3iNe
-	 lT7qBhQi0YUXEHd/a3nybBs+okp72WCBqbBHa/gUT5qc5stTjpZBUhmQIEvTFikt5z
-	 3QEX/nurLaDWBdA3+xqEX+t36u0MD+4s/DDnE947U63BOSLACxJE4ATzBnB7162kEM
-	 uJVlOhBR6ng/gxrCkIJmx2DVTmwcGtpsyRWe122qGV/9UBAusoKc1mqJjzRiizRz4e
-	 qqynMSOHuqVH/gL+pm4QM8yBcDL9Jr5dx5FDs1H6jkyRMDbX2Cuq8465NG5c4c31Ao
-	 m0BWGZ8ZfmD1w==
-From: Philipp Stanner <phasta@kernel.org>
-To: Sumit Semwal <sumit.semwal@linaro.org>,
-	Gustavo Padovan <gustavo@padovan.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Xinhui Pan <Xinhui.Pan@amd.com>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Russell King <linux+etnaviv@armlinux.org.uk>,
-	Christian Gmeiner <christian.gmeiner@gmail.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Frank Binns <frank.binns@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>,
-	Qiang Yu <yuq825@gmail.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Rob Herring <robh@kernel.org>,
-	Steven Price <steven.price@arm.com>,
-	Dave Airlie <airlied@redhat.com>,
-	Gerd Hoffmann <kraxel@redhat.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Philipp Stanner <phasta@kernel.org>,
-	Huang Rui <ray.huang@amd.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Melissa Wen <mwen@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Jesse Zhang <jesse.zhang@amd.com>,
-	Tim Huang <tim.huang@amd.com>,
-	Sathishkumar S <sathishkumar.sundararaju@amd.com>,
-	Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>,
-	Sunil Khatri <sunil.khatri@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Ma Jun <Jun.Ma2@amd.com>,
-	Yunxiang Li <Yunxiang.Li@amd.com>,
-	Eric Huang <jinhuieric.huang@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Jack Xiao <Jack.Xiao@amd.com>,
-	Friedrich Vock <friedrich.vock@gmx.de>,
-	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Anna-Maria Behnsen <anna-maria@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Cc: linux-media@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linaro-mm-sig@lists.linaro.org,
-	linux-kernel@vger.kernel.org,
-	amd-gfx@lists.freedesktop.org,
-	etnaviv@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org,
-	lima@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	nouveau@lists.freedesktop.org,
-	virtualization@lists.linux.dev,
-	spice-devel@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org
-Subject: [PATCH 2/2] dma-fence: Improve docu for dma_fence_check_and_signal()
-Date: Wed,  9 Apr 2025 14:06:38 +0200
-Message-ID: <20250409120640.106408-4-phasta@kernel.org>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250409120640.106408-2-phasta@kernel.org>
-References: <20250409120640.106408-2-phasta@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD2D253B47;
+	Wed,  9 Apr 2025 12:22:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744201344; cv=pass; b=OviZH8GePRoNQtxu4KJ7gFmaVR0f93LbUDE8Qe0ojOPSZvTasjDSgSc1XHkeSWzXkgV8SFDcx3s7Ds+rGjnqs7qfxddNb5/ReTS2Ame6ZRCQuBv2nrA/ZGtYCe0ZqfGiBKNEP1UGgrX/Zsc6TIk/acM3Snj/HkhvVWyW3bYvD/I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744201344; c=relaxed/simple;
+	bh=6yBf8W8vO2hACh1SC+eLkO+C14WaO1cr6vh8aqgfWO0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YiwGwR7oS17769p+4iefU3tRhkNIatqpdVVQpoz+DQGtgWni6GEcbE9LJWaJNPfbHCsNKJNwsxMq2xxoE/wM+ZT1jCnGGkGqlTaRjXeLR1D13BSy17zqoAiUN8VV9r1uMy205lnFvKv9zxerks9h029VyeTvGlK8EOOjXBNebXI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=MF6636WL; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1744201319; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=kpWWeEwnHlweCrW89qn+jAQTjQVGZhvmP8/cFimLLascz97YoI3FxPQVZXG6LBoIfPHmGosGzXluJgXr2HrvBosTm1z5/LENKx6Pj1bmgC+kEO+ACF+uDjFhP5b9eBvLgo3FhIvHbP50EgmKOeTHe78KJOxBMpXRLScC9tCl238=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1744201319; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=0sj+DuIzdkG+cv5QyQfQu6z2szFxnb+cJQRXL5LW4yI=; 
+	b=mk9LFpWj6grcuOh2VEn/wiC0tp18XA+XwOahS+fleFd5AeqKOvxRb2IiJQwztBj9uiQ8nh/3D+Jdo/U0D6gfUw0iFvnnqxE9g6MoIoB2ubJFnCEtoPHxfWdfaujVVc0YYzKi97Mng0u2WBRLQRnDzUfwRcJV2mgO1pdwqjy9Z8g=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
+	dmarc=pass header.from=<usama.anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1744201318;
+	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=0sj+DuIzdkG+cv5QyQfQu6z2szFxnb+cJQRXL5LW4yI=;
+	b=MF6636WLv1EvVDc9ZrjCcq7EnD1Nmm0Kuc3uZwnwuDv/CkRPgDTS6aonR5rMX5/r
+	QXmPRg2O7+FqF9UrvCl9WUThMPW4jZrxtbTTghezOuC8lP0IHGSlUcMkMkR2E71d73P
+	FR1E3ZwQhRGi5owN/AYfHmTd4rfsmwKifs3rOqJ8=
+Received: by mx.zohomail.com with SMTPS id 1744201317620751.9922453113006;
+	Wed, 9 Apr 2025 05:21:57 -0700 (PDT)
+Message-ID: <08e71d7d-5da6-4dfe-a504-190e7633df12@collabora.com>
+Date: Wed, 9 Apr 2025 17:21:49 +0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] bus: mhi: host: don't free bhie tables during power
+ off
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+ Youssef Samir <quic_yabdulra@quicinc.com>,
+ Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
+ Qiang Yu <quic_qianyu@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Kunwu Chan <chentao@kylinos.cn>
+Cc: Carl Vanderlip <quic_carlv@quicinc.com>,
+ Sumit Garg <sumit.garg@kernel.org>, mhi@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250409082444.582295-1-usama.anjum@collabora.com>
+ <56f4b9fc-69ba-c867-653b-7ea28ad8ab0b@quicinc.com>
+Content-Language: en-US
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+In-Reply-To: <56f4b9fc-69ba-c867-653b-7ea28ad8ab0b@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-The documentation of the return value of dma_fence_check_and_signal()
-and dma_fence_check_and_signal_locked() reads as if the returned boolean
-only describes whether dma_fence_signal() (or similar) has been called
-before this function call already. That's not the case, since
-dma_fence_ops.signaled() usually just checks through the sequence number
-whether the hardware is finished with a fence. That doesn't mean a
-signaling function has been called already.
+Hi Krishna,
 
-Make the documentation clearer.
+Thank you for reviewing.
 
-Move the Return: documentation to the end, since that's the officially
-recommended docu style.
+On 4/9/25 4:25 PM, Krishna Chaitanya Chundru wrote:
+> 
+> 
+> On 4/9/2025 1:54 PM, Muhammad Usama Anjum wrote:
+>> Fix dma_direct_alloc() failure at resume time during bhie_table
+>> allocation. There is a crash report where at resume time, the memory
+>> from the dma doesn't get allocated and MHI fails to re-initialize.
+>> There may be fragmentation of some kind which fails the allocation
+>> call.
+>>
+>> To fix it, don't free the memory at power down. Use the same allocated
+>> memory again and again after every resume/hibernation. This patch has
+>> been tested with resume and hibernation both.
+> How do you handle the mhi un-register case, in that case all the MHI
+> memory needs to be freed.
+I'm working on fixing it. I'll post a v2.
 
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
----
- include/linux/dma-fence.h | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+>>
+>> Here are the crash logs:
+>>
+>> [ 3029.338587] mhi mhi0: Requested to power ON
+>> [ 3029.338621] mhi mhi0: Power on setup success
+>> [ 3029.668654] kworker/u33:8: page allocation failure: order:7,
+>> mode:0xc04(GFP_NOIO|GFP_DMA32), nodemask=(null),cpuset=/,mems_allowed=0
+>> [ 3029.668682] CPU: 4 UID: 0 PID: 2744 Comm: kworker/u33:8 Not tainted
+>> 6.11.11-valve10-1-neptune-611-gb69e902b4338
+>> #1ed779c892334112fb968aaa3facf9686b5ff0bd7
+>> [ 3029.668690] Hardware name: Valve Galileo/Galileo, BIOS F7G0112
+>> 08/01/2024
+>> [ 3029.668694] Workqueue: mhi_hiprio_wq mhi_pm_st_worker [mhi]
+>> [ 3029.668717] Call Trace:
+>> [ 3029.668722]  <TASK>
+>> [ 3029.668728]  dump_stack_lvl+0x4e/0x70
+>> [ 3029.668738]  warn_alloc+0x164/0x190
+>> [ 3029.668747]  ? srso_return_thunk+0x5/0x5f
+>> [ 3029.668754]  ? __alloc_pages_direct_compact+0xaf/0x360
+>> [ 3029.668761]  __alloc_pages_slowpath.constprop.0+0xc75/0xd70
+>> [ 3029.668774]  __alloc_pages_noprof+0x321/0x350
+>> [ 3029.668782]  __dma_direct_alloc_pages.isra.0+0x14a/0x290
+>> [ 3029.668790]  dma_direct_alloc+0x70/0x270
+>> [ 3029.668796]  mhi_alloc_bhie_table+0xe8/0x190 [mhi
+>> faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
+>> [ 3029.668814]  mhi_fw_load_handler+0x1bc/0x310 [mhi
+>> faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
+>> [ 3029.668830]  mhi_pm_st_worker+0x5c8/0xaa0 [mhi
+>> faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
+>> [ 3029.668844]  ? srso_return_thunk+0x5/0x5f
+>> [ 3029.668853]  process_one_work+0x17e/0x330
+>> [ 3029.668861]  worker_thread+0x2ce/0x3f0
+>> [ 3029.668868]  ? __pfx_worker_thread+0x10/0x10
+>> [ 3029.668873]  kthread+0xd2/0x100
+>> [ 3029.668879]  ? __pfx_kthread+0x10/0x10
+>> [ 3029.668885]  ret_from_fork+0x34/0x50
+>> [ 3029.668892]  ? __pfx_kthread+0x10/0x10
+>> [ 3029.668898]  ret_from_fork_asm+0x1a/0x30
+>> [ 3029.668910]  </TASK>
+>>
+>> Tested-on: QCNFA765 WLAN.HSP.1.1-03926.13-
+>> QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+>> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+>> ---
+>>   drivers/bus/mhi/host/boot.c | 11 +++++++----
+>>   drivers/bus/mhi/host/init.c | 15 +++------------
+>>   2 files changed, 10 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+>> index efa3b6dddf4d2..8b3d2b9d239c3 100644
+>> --- a/drivers/bus/mhi/host/boot.c
+>> +++ b/drivers/bus/mhi/host/boot.c
+>> @@ -323,6 +323,7 @@ void mhi_free_bhie_table(struct mhi_controller
+>> *mhi_cntrl,
+>>                     mhi_buf->buf, mhi_buf->dma_addr);
+>>         kfree(image_info->mhi_buf);
+>> +    image_info->mhi_buf = NULL;
+> image_info is getting freed in the next line. why do we need this?
+I'll remove this line.
 
-diff --git a/include/linux/dma-fence.h b/include/linux/dma-fence.h
-index dc2ad171458b..3df370b2cc7c 100644
---- a/include/linux/dma-fence.h
-+++ b/include/linux/dma-fence.h
-@@ -385,14 +385,21 @@ void dma_fence_enable_sw_signaling(struct dma_fence *fence);
-  * dma_fence_check_and_signal_locked - Checks a fence and signals it if necessary
-  * @fence: the fence to check
-  *
-- * Returns true if the fence was already signaled, false if not. Since this
-- * function doesn't enable signaling, it is not guaranteed to ever return
-- * true if dma_fence_add_callback(), dma_fence_wait() or
-+ * Checks whether the fence was already signaled, and, if not, whether
-+ * &struct dma_fence_ops.signaled indicates that it should be signaled. If so,
-+ * the fence gets signaled here.
-+ *
-+ * Since this function doesn't enable signaling, it is not guaranteed to ever
-+ * return true if dma_fence_add_callback(), dma_fence_wait() or
-  * dma_fence_enable_sw_signaling() haven't been called before.
-  *
-  * This function requires &dma_fence.lock to be held.
-  *
-  * See also dma_fence_check_and_signal().
-+ *
-+ * Return: true if the fence was already signaled, or if
-+ * &struct dma_fence_ops.signaled is implemented and indicates that this fence
-+ * can be treated as signaled; false otherwise.
-  */
- static inline bool
- dma_fence_check_and_signal_locked(struct dma_fence *fence)
-@@ -412,9 +419,12 @@ dma_fence_check_and_signal_locked(struct dma_fence *fence)
-  * dma_fence_check_and_signal - Checks a fence and signals it if necessary
-  * @fence: the fence to check
-  *
-- * Returns true if the fence was already signaled, false if not. Since this
-- * function doesn't enable signaling, it is not guaranteed to ever return
-- * true if dma_fence_add_callback(), dma_fence_wait() or
-+ * Checks whether the fence was already signaled, and, if not, whether
-+ * &struct dma_fence_ops.signaled indicates that it should be signaled. If so,
-+ * the fence gets signaled here.
-+ *
-+ * Since this function doesn't enable signaling, it is not guaranteed to ever
-+ * return true if dma_fence_add_callback(), dma_fence_wait() or
-  * dma_fence_enable_sw_signaling() haven't been called before.
-  *
-  * It's recommended for seqno fences to call dma_fence_signal when the
-@@ -423,6 +433,10 @@ dma_fence_check_and_signal_locked(struct dma_fence *fence)
-  * value of this function before calling hardware-specific wait instructions.
-  *
-  * See also dma_fence_check_and_signal_locked().
-+ *
-+ * Return: true if the fence was already signaled, or if
-+ * &struct dma_fence_ops.signaled is implemented and indicates that this fence
-+ * can be treated as signaled; false otherwise.
-  */
- static inline bool
- dma_fence_check_and_signal(struct dma_fence *fence)
+> 
+> - Krishna Chaitanya.
+>>       kfree(image_info);
+>>   }
+>>   @@ -584,10 +585,12 @@ void mhi_fw_load_handler(struct mhi_controller
+>> *mhi_cntrl)
+>>        * device transitioning into MHI READY state
+>>        */
+>>       if (fw_load_type == MHI_FW_LOAD_FBC) {
+>> -        ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image,
+>> fw_sz);
+>> -        if (ret) {
+>> -            release_firmware(firmware);
+>> -            goto error_fw_load;
+>> +        if (!mhi_cntrl->fbc_image) {
+>> +            ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl-
+>> >fbc_image, fw_sz);
+>> +            if (ret) {
+>> +                release_firmware(firmware);
+>> +                goto error_fw_load;
+>> +            }
+>>           }
+>>             /* Load the firmware into BHIE vec table */
+>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+>> index 13e7a55f54ff4..3c20e4541357e 100644
+>> --- a/drivers/bus/mhi/host/init.c
+>> +++ b/drivers/bus/mhi/host/init.c
+>> @@ -1173,8 +1173,9 @@ int mhi_prepare_for_power_up(struct
+>> mhi_controller *mhi_cntrl)
+>>           /*
+>>            * Allocate RDDM table for debugging purpose if specified
+>>            */
+>> -        mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
+>> -                     mhi_cntrl->rddm_size);
+>> +        if (!mhi_cntrl->rddm_image)
+>> +            mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
+>> +                         mhi_cntrl->rddm_size);
+>>           if (mhi_cntrl->rddm_image) {
+>>               ret = mhi_rddm_prepare(mhi_cntrl,
+>>                              mhi_cntrl->rddm_image);
+>> @@ -1202,16 +1203,6 @@ EXPORT_SYMBOL_GPL(mhi_prepare_for_power_up);
+>>     void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
+>>   {
+>> -    if (mhi_cntrl->fbc_image) {
+>> -        mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
+>> -        mhi_cntrl->fbc_image = NULL;
+>> -    }
+>> -
+>> -    if (mhi_cntrl->rddm_image) {
+>> -        mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->rddm_image);
+>> -        mhi_cntrl->rddm_image = NULL;
+>> -    }
+>> -
+>>       mhi_cntrl->bhi = NULL;
+>>       mhi_cntrl->bhie = NULL;
+>>   
+
+
 -- 
-2.48.1
-
+Regards,
+Usama
 
