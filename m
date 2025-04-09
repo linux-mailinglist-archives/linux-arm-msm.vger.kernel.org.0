@@ -1,140 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-53655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53656-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EBB4A82868
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 16:46:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B38FA82929
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 17:02:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E725518907AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 14:41:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20D939A17CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 14:52:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E01133EA;
-	Wed,  9 Apr 2025 14:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 872B126B2D6;
+	Wed,  9 Apr 2025 14:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jT78wl4X"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GvQkpW4P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3710266590
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Apr 2025 14:41:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580A026AAAA;
+	Wed,  9 Apr 2025 14:47:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744209669; cv=none; b=HVSbIMI7grzJNj9dTlCMUc6ue5aAID86YwZXBwJ2wGMcnOsQnQnM+7LXwe36I1eSM+gntIwbU4v2nxj1oqNt2D1VElpsTcm/7abq5Yc9oaPoHF5fZsO7lSk60bUJeIXmN4maO2K358xrDUKlxH8zBSNmjjOs8aecWhtau/TKxio=
+	t=1744210068; cv=none; b=FCzeMpL7fubrBbm3aB8qsNKu18XKsLEjqEehaArahZvPNPdiw8pmYozwKlBMGsodjGgUo/jMl9Toec80ck8zmh1x8cDj0AJEpW6Pm3JWWLgRPpKMQs+hHR98e8NMqca3Tsr+GkUzttjI1HzpihMOoqnK1k7bsRQRUf2FqleweJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744209669; c=relaxed/simple;
-	bh=+jAaxo1TCO741+kpdjVMq0f8msIm1aVBprj7vRnZB9M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C4TDyp1Cvm2iDg6vxxa99UYMtu8nfYLMjTmQ62DY4VhscboTEfYYLcFi1wTbOQlBMlgyhd3tzbSxI+6+fBvsCZTfiwcBbjEu0GmEk8SRXyvDpBTuNeb01VtVuJbxJskJYcraJZO0qKoiuRhvaW561+oBO75fUq40093/NhHAF9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jT78wl4X; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5397n3q3032578
-	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Apr 2025 14:41:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	LG0gqeloi7FE5d7p16XRDqhtX9K2zsgebX8qfY7Te+M=; b=jT78wl4XukyH/die
-	0Bj8lEldfMDGVTa0F15PvGw+qHq7UM1o5hBL7fEkTv11aZsQQ2DLxkbUe6+/lYJF
-	yA8MnajdBub8F/6K2aBBkwAiQIyHxcdxbPVyjZ0sDnWcD19cboQV+htqOy+LkniG
-	fv0y5RjvxHdjot7WZtMdAjqIdy0oosrn+QrYeCwNWIDHjM7TlAUOmYt/x+gnhr+E
-	HQu+GdrZu/vK0T5qZNSV39+VBK3IVqdUwONzswXj4k1o7Fn2tNlLsWe8A6Dqqazc
-	fpITKQ9NJeufUQT5+dO5jTIW6GW9pYuXsAfiG+28+mhLK1MwQwem0i6YCxAO2u1t
-	xyn/Dw==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twbebrfu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Apr 2025 14:41:06 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-225ab228a37so61662665ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Apr 2025 07:41:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744209666; x=1744814466;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LG0gqeloi7FE5d7p16XRDqhtX9K2zsgebX8qfY7Te+M=;
-        b=brmFGLhsAWpKNalPK97qrs/oMDB9+3KAPSHpShomG6qgVjRD2FL4IhoBHPrxYdb+iJ
-         9IHaA5II7SIXNrW13pdwShBG0eQM12ITJI5oymuaaM47EIdnE3O03VUOAmEp/hCx2WZg
-         QeNLqX1Dv8W7j3g3miUqheHZARfv5AJr9c8Kw+H++KclaZNeSLl0Ml1CwXHHHY1fy3t3
-         o7p/Y0pYvpB3OurkPyQudipJ7OxlXs49VYA3B4OxcoPNEjGyDgl6gbUI8tQ8XfLUE0z8
-         wUG4M3Z/RRmSdP88F/vcQKLlhWysCCaWg2l67zfQurVE2QRyH28UymqeAk0sjpHe/Aqg
-         Bkmw==
-X-Forwarded-Encrypted: i=1; AJvYcCVRwut4yped5iEfLpbopzYt2Gz0AZXz18q4DMwuyNxLNT9q0FcBZBWvwiPzCaTyRFMvZZ0094BdlDK3PqEc@vger.kernel.org
-X-Gm-Message-State: AOJu0YzddyE8uYWvW2zRDuaYdaFdxW41Wao8rDFE+8ax7DdomEaXTbXB
-	yEv/UIKUcigLVyiynCW46HWm5ClHqmybaGX7q0wIkXUak5m31DAtsUbUouikKDrA9fgMS1BJKXe
-	k+Bw26d63P42osLFrAX3IpF8sYe/vt+tyL+l+wWpywuQPQFrJOplVcPBBBaso4jJh
-X-Gm-Gg: ASbGnct/axIypx3BT1fIpo2lamVHo/keqmQngXw6rKJLM3vLeX98BuPznrj+orrwQFt
-	YNBkXg4Ofj5EHcIM7GlzFSO569TUa+sfwL0WiTqctmuiIX4PAXVa8Nx65ibOroLE7SS74q7zbtV
-	kBY6VD0PdvLvDDS5s7SzeuPyPdOPHwOD/upsNRead7EzfV9mPCNUDh3Zw/bQ0YhdSZO/2LEce4Z
-	TKW+Cv89r3ywECh/b6U4gxpsV3exklnfa1VH1Enm1vIW8kVqT0amJEd5IOywqSoA6BW9jt8BywS
-	fv4t/+OZngejXzQSDvHykFUZHewkCC01lnNOm4b024sRuW4P7Iytu0zm/5DitA==
-X-Received: by 2002:a17:902:e94c:b0:223:f408:c3cf with SMTP id d9443c01a7336-22ac29a7d9bmr55332325ad.21.1744209665717;
-        Wed, 09 Apr 2025 07:41:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEPfuY6hqgOg5etkGo/HTOxudMRDkIQgYiO8YJN+34a0GSOQamTjc5qFyXZO44KKkIKLc2Acg==
-X-Received: by 2002:a17:902:e94c:b0:223:f408:c3cf with SMTP id d9443c01a7336-22ac29a7d9bmr55331925ad.21.1744209665320;
-        Wed, 09 Apr 2025 07:41:05 -0700 (PDT)
-Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22ac7b6511dsm12744275ad.7.2025.04.09.07.41.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Apr 2025 07:41:04 -0700 (PDT)
-Message-ID: <27642cab-9d0a-4989-9f3d-68f329676674@oss.qualcomm.com>
-Date: Wed, 9 Apr 2025 08:41:03 -0600
+	s=arc-20240116; t=1744210068; c=relaxed/simple;
+	bh=ji/0WKfDuZz1CAwKz/ZybtrsgX+mKgql4YfuRrLSe7Y=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=VaXC2KK8zuhyeGlXUZvwZWcADMM+hA0Ca0AsJjlyrAeBSjQko7rmxbNVTMef18hzsKkYDOj/yLpqnsyCIiaBweMjm5iFWwEm2FIZk6Vkz/tV9rbdOGAKuMIl9v3kKE5sJYHCf29poeWR2Eeta32LIXu+x5WFVoz9d9fD6zScF1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GvQkpW4P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FFDC4CEEE;
+	Wed,  9 Apr 2025 14:47:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744210067;
+	bh=ji/0WKfDuZz1CAwKz/ZybtrsgX+mKgql4YfuRrLSe7Y=;
+	h=From:Subject:Date:To:Cc:From;
+	b=GvQkpW4PiR9zdWlVmXMb8UJq/yUM2yfBHZt8BZPf+RUR7dZsKEpl3GYehJDgky3+J
+	 xb8H12Sva8VoEITNYWFXcC0yGKfzvqElvqGjTSirNF+2wYjo6BkiZ3ZI+ffnRC+3ZC
+	 ZA1wQ8pP3f6kf06AnYv+GtzM6enrIpLk4Cncv4XiLy8iQkD9oNfMKPfTzYUU8HmCkQ
+	 JM1eFsZDZe50iF/yg+3II6wtYqumMelSWi2a7n4eQELLlS/cnWY11yhMpe4QSBi17s
+	 D5OpgmQ3dpFuxllD+JyRuBfJQXmD7p41AXzPqKsVmQIvaNoNs9c0sYKLWkIOQzlZl2
+	 j7kq4XWjz5Z/w==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Subject: [PATCH 0/4] Retrieve information about DDR from SMEM
+Date: Wed, 09 Apr 2025 16:47:28 +0200
+Message-Id: <20250409-topic-smem_dramc-v1-0-94d505cd5593@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bus: mhi: ep: Update read pointer only after buffer is
- written
-To: Sumit Kumar <quic_sumk@quicinc.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Alex Elder <elder@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_krichai@quicinc.com,
-        quic_akhvin@quicinc.com, quic_skananth@quicinc.com,
-        quic_vbadigan@quicinc.com, stable@vger.kernel.org,
-        Youssef Samir <quic_yabdulra@quicinc.com>
-References: <20250409-rp_fix-v1-1-8cf1fa22ed28@quicinc.com>
-Content-Language: en-US
-From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-In-Reply-To: <20250409-rp_fix-v1-1-8cf1fa22ed28@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: prUsRC_ZUfW0kCRF3gVRc3pWK4o7qu3V
-X-Authority-Analysis: v=2.4 cv=T7OMT+KQ c=1 sm=1 tr=0 ts=67f68702 cx=c_pps a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=Mw1Om9em43-oCLZg1R0A:9
- a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: prUsRC_ZUfW0kCRF3gVRc3pWK4o7qu3V
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-09_05,2025-04-08_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 lowpriorityscore=0 adultscore=0 phishscore=0 bulkscore=0
- mlxscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 spamscore=0
- clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504090092
+X-B4-Tracking: v=1; b=H4sIAICI9mcC/x3MTQqAIBBA4avErBM08qeuEhGiU81CC40IpLsnL
+ b/FewUyJsIMY1Mg4U2Zjlgh2gbcbuOGjHw1dLyTvOcDu46THMsBw+KTDY6pXmlhtHVGSajZmXC
+ l519O8/t+whgWzGIAAAA=
+X-Change-ID: 20250409-topic-smem_dramc-6467187ac865
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Kees Cook <kees@kernel.org>, 
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Dmitry Baryshkov <lumag@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1744210063; l=1496;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=ji/0WKfDuZz1CAwKz/ZybtrsgX+mKgql4YfuRrLSe7Y=;
+ b=c7R7yPcUkBHQOwE2hoz8t4W9GhNYc/PRxrBiB9Sed6VzU1zJIsUk4Bac4G98pCP0PWDrOwngA
+ Jk8deOjsENpB6u0YyU9/D/sMvd0Z4mEGOB42gNYtc5hN+u4/wJyoz61
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On 4/9/2025 4:47 AM, Sumit Kumar wrote:
-> Inside mhi_ep_ring_add_element, the read pointer (rd_offset) is updated
-> before the buffer is written, potentially causing race conditions where
-> the host sees an updated read pointer before the buffer is actually
-> written. Updating rd_offset prematurely can lead to the host accessing
-> an uninitialized or incomplete element, resulting in data corruption.
-> 
-> Invoke the buffer write before updating rd_offset to ensure the element
-> is fully written before signaling its availability.
-> 
-> Fixes: bbdcba57a1a2 ("bus: mhi: ep: Add support for ring management")
-> cc: stable@vger.kernel.org
-> Co-developed-by: Youssef Samir <quic_yabdulra@quicinc.com>
-> Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
-> Signed-off-by: Sumit Kumar <quic_sumk@quicinc.com>
+SMEM allows the OS to retrieve information about the DDR memory.
+Among that information, is a semi-magic value called 'HBB', or Highest
+Bank address Bit, which multimedia drivers (for hardware like Adreno
+and MDSS) must retrieve in order to program the IP blocks correctly.
 
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+This series introduces an API to retrieve that value, uses it in the
+aforementioned programming sequences and exposes available DDR
+frequencies in debugfs (to e.g. pass to aoss_qmp debugfs). More
+information can be exposed in the future, as needed.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+Konrad Dybcio (4):
+      soc: qcom: Expose DDR data from SMEM
+      drm/msm/a5xx: Get HBB dynamically, if available
+      drm/msm/a6xx: Get HBB dynamically, if available
+      drm/msm/mdss: Get HBB dynamically, if available
+
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c |  13 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c |  22 ++-
+ drivers/gpu/drm/msm/msm_mdss.c        |  35 ++++-
+ drivers/soc/qcom/Makefile             |   3 +-
+ drivers/soc/qcom/smem.c               |  14 +-
+ drivers/soc/qcom/smem.h               |   9 ++
+ drivers/soc/qcom/smem_dramc.c         | 287 ++++++++++++++++++++++++++++++++++
+ include/linux/soc/qcom/smem.h         |   4 +
+ 8 files changed, 371 insertions(+), 16 deletions(-)
+---
+base-commit: 46086739de22d72319e37c37a134d32db52e1c5c
+change-id: 20250409-topic-smem_dramc-6467187ac865
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
 
