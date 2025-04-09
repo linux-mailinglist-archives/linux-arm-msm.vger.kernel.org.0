@@ -1,190 +1,306 @@
-Return-Path: <linux-arm-msm+bounces-53612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D56DA81DD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 09:04:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A87FA81E17
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 09:18:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 21B771BA5B1B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 07:04:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 681FC4A4733
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 07:18:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5965D231A24;
-	Wed,  9 Apr 2025 07:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DF17255243;
+	Wed,  9 Apr 2025 07:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ley9sddd"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="rNP9VZWU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2078.outbound.protection.outlook.com [40.107.244.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2798822D4F2;
-	Wed,  9 Apr 2025 07:03:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744182226; cv=none; b=qS8ikDp9tPd+rGOf1O5yGeIhbhChuE1P6aYwdxYZwqQr55QpK09cBjgGj3XznIsyGgcL3Y8nRE9/Vlv+baryE84rm/KDSQc2u6X10R2Eo/AIZWUPtk7LIq7JpK7V8bkbCcrU+5/nQrsbakGX5wXBu9XAhhnUdGShr/rlHuuPg14=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744182226; c=relaxed/simple;
-	bh=H9OzLV//uUbwQZ3s+mZv5Am9nBll8C7v7aDLd7+2hfo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f+Fv5WbCnK1K2Rm5TTguyXOg/E4lCmfX1yTRFGmp+GpTU3WjISEMQXoXZUI/ptQnLMq/kmB87hlpJP8pYajx/KgmktNk06xNuv0JL/kmmvdRK2ZpO7hxWHiY0dj1POflA0KUo1S2bECwBQMSleAWk1vIBYKU2ZNiC+hXhIkeBN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ley9sddd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47C9C4CEE3;
-	Wed,  9 Apr 2025 07:03:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744182225;
-	bh=H9OzLV//uUbwQZ3s+mZv5Am9nBll8C7v7aDLd7+2hfo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ley9sdddm50yavrGv+Cb6uR5na7pXIEY+CLY7V6uzZSaP7Qi4zo5j3AmM68TyQpaP
-	 pQcqDNOQctO7j87wC4QDX1x4tY/MR6U5LmBmOfKFozOSALs/rOfCxhxFBB4pc9LWT8
-	 oPMPyt3W1sENqzaD4Ti/KDuNDky6E434naAw/imOm/BsuAWt+leu9g1dXMDCv30i/V
-	 PrOmNDH/tJZEm2seyNO+vH+OwM11bZN+gsbW3IHmLHyyyC0kbJl0HhiO8BeYetsgAx
-	 Olz258nShfC3nVbGIxYlTcyfhyI0TMmIRxS9ILfT6hiXJ4bup9TrZPLUgd9yRRcuI4
-	 XnYqMsLQlkkzQ==
-Message-ID: <d075946b-44f4-42a4-a0b2-90ddeeb15960@kernel.org>
-Date: Wed, 9 Apr 2025 09:03:41 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6FD82899;
+	Wed,  9 Apr 2025 07:17:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.78
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744183080; cv=fail; b=lk5HIfD/lVuyjglaBXV4rzcXdafXxzKkzhUHBj6rVb9m5MClPwk1acOyiNi/rOgxHwARedJGw1/H8MY1rRa/S4cAeXXbxCJCEUwPUg+Dbn6Dpxk3WxV9shud7vIXCBSD45ELRkw1ZQ9yX605PHNeCR5TlPeq/cAcmOsEEc6nZNw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744183080; c=relaxed/simple;
+	bh=QCRKSmUXxotVcoJ0hGP4V0iCy1EJQ2K7tGDHmSEi6d4=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=X2bnm+MvqE/uKiICMwl2gaNSQtuABSZpySyTh7gPvl0uVB0rqwE9gaaqZTBnVZDdcZp3iEDA8zp0Ob6OzwNx+cCOmrHGOd1Ri7Z8xTDURP6j1gge2Wma8PXlDPnKdolS2mRH3R1ApAsjWtSBMNQAkHkNT5GkK/VflFpA0/v8wFQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=rNP9VZWU; arc=fail smtp.client-ip=40.107.244.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SyhsZOPnu1W/qaViQrH0TRYRiMCiNdnlu7kJ+b0FPFr5lr3pn7j1BLhZVEUJNjXi4TcHPGSmEk5CehXq6gGkvYn40TWxJU9vsVoxEHeaFgWEUo26UgrwpN3C+dLvFkRX5XqkGzI1LGfPamWn2R6besKtr+d2PPH6K3QZL1FGvet8tgMt8vpq2JeQ6ft7HJKkMS+BlIglucv3KlNB6vJLkCTxQVya0T9ewlipkTlyST7ue9I3emURMyZI12yKywZFHsdIjHKxQWOT/eWG6wtBoibM20Eh3VRVw9VdDM5l3svPS3LPY7y0QjG56ChHucDRnosk1Gk8PRZHbvxizb4qSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aIlzQGZNldBft4p1/u5+F4oyg0WFRB9s40rsqOzVsDM=;
+ b=f6kuDOhwmDEo/fTQmh42+33H3SMvSUXOx/i3A/XfOcEdlBcPhQMfLMJadOSMKngSeZRCEudpsxNQ6s+EW7W+bQCCPiWohuFRZsAYdYnXviLE4aR03hk27wrmVP4NMvI22sXRwoKV8h0HFXql7ev4hxDidJyH/8mL+TeiyxxxRv/SBLzZFxcqlkkQ16e2O9JWyM3F/XUvQ0OypbGUnWuikFAY/SuXNsfAa0W1DmgztvNsUeRWiM+D182JaP6VazMItQOIzqRzRxxNKtpWbfRsOzhwFc9WQ4DidKhlu/H3o36VD7D5MjxVqtf+IXCJnBF4rvvlH03WeOvOU2Kz6mSHjA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aIlzQGZNldBft4p1/u5+F4oyg0WFRB9s40rsqOzVsDM=;
+ b=rNP9VZWUvjTuB4xMkIQr1VyKpWH6EzxeVtd0jTp2RXCLj21tcRdGxbDKhbcxlOLM4dc2pu461w3dtluruGTMmA3lYF64MjcCGc2tZOnzdZnipnKG1F0cRywVwLL8kSu2cNhpV9pvLmMUSJb5pycogT3OmSe0mCklzf60oJH/3OU=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CH2PR12MB4262.namprd12.prod.outlook.com (2603:10b6:610:af::8)
+ by DS7PR12MB6215.namprd12.prod.outlook.com (2603:10b6:8:95::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8632.21; Wed, 9 Apr 2025 07:17:54 +0000
+Received: from CH2PR12MB4262.namprd12.prod.outlook.com
+ ([fe80::3bdb:bf3d:8bde:7870]) by CH2PR12MB4262.namprd12.prod.outlook.com
+ ([fe80::3bdb:bf3d:8bde:7870%4]) with mapi id 15.20.8606.033; Wed, 9 Apr 2025
+ 07:17:53 +0000
+Message-ID: <d5942725-2789-4626-bee1-81d69ed794f8@amd.com>
+Date: Wed, 9 Apr 2025 12:47:33 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 3/9] KVM: guest_memfd: Allow host to map guest_memfd()
+ pages
+To: Ackerley Tng <ackerleytng@google.com>, Fuad Tabba <tabba@google.com>,
+ kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com
+References: <20250318161823.4005529-1-tabba@google.com>
+ <20250318161823.4005529-4-tabba@google.com>
+ <aeed695d-043d-45f6-99f3-e41f4a698963@amd.com>
+ <diqzr022twsw.fsf@ackerleytng-ctop.c.googlers.com>
+Content-Language: en-US
+From: Shivank Garg <shivankg@amd.com>
+In-Reply-To: <diqzr022twsw.fsf@ackerleytng-ctop.c.googlers.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN2PR01CA0220.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:ea::18) To CH2PR12MB4262.namprd12.prod.outlook.com
+ (2603:10b6:610:af::8)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 5/6] watchdog: qcom-wdt: add support to read the
- restart reason from IMEM
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck <linux@roeck-us.net>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
-References: <20250408-wdt_reset_reason-v1-0-e6ec30c2c926@oss.qualcomm.com>
- <20250408-wdt_reset_reason-v1-5-e6ec30c2c926@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250408-wdt_reset_reason-v1-5-e6ec30c2c926@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR12MB4262:EE_|DS7PR12MB6215:EE_
+X-MS-Office365-Filtering-Correlation-Id: e71f49ec-ed13-46dc-efc5-08dd7736a4c1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?azVMKy96ZVRiNVpLS3BYTWxocTMrQlA0TkR3YjBlUGRKT0tJeXB1M1VyMkN2?=
+ =?utf-8?B?VjVYdFpKZ3ZJclAvdzFCNEpKRHNEa2dCUzduTE1NckpFZitLZ0NYMGEzRVhC?=
+ =?utf-8?B?RDdtN0VxWmZpcEIwTDl3TlpidjRrWld2RTRuSmFBQWQzWmo1UkZ4L2NRamdu?=
+ =?utf-8?B?Znl4eDl4QkZpaGEwK3VTcFlqQm1HWVNRczg3Q1o2aFhMRytjOW04MzFxWUtt?=
+ =?utf-8?B?UEFPT1JHV3BkU2twemF3ZTV4Q1FLRC9udnZPOHVoaGlUdm9YdXFncG9ZMDVD?=
+ =?utf-8?B?MCsrc3Exbkk0UXZhdlhub2piQ05LQ1FhV2h3WjZKVkZpSEFUbFhQZjEwZXBk?=
+ =?utf-8?B?K3V0NGJtNUFzL1dGUVFFK2dHQnlqa1U1aWlLZ2lQQnBVSGI3clRST09XN2du?=
+ =?utf-8?B?Qmp0V1o3Smp6UVkrYnA2eU5zeEtSVGpMdVl0UUhoQTNiU1hXZk43eS8vdmlT?=
+ =?utf-8?B?MnprTHJEeVVyYjBVM2gxQzZQYTlONzNUekhubmVmVllzQ3pxbDRweHU0WVRN?=
+ =?utf-8?B?VFB4RVJDQ3ZFc3N0SFM4VzdSRlZaUEN5MXlteTYwQjZCTjRKa3BXWVNDTXZ0?=
+ =?utf-8?B?NmdjV015UmdNelFCa0lsdFYvMnFyR2pCTStkK2RSRDNoTGVyWkFOZVZwK1BC?=
+ =?utf-8?B?bDh5S1dueHRQT3FqYllVU1EvYm10d01paGtrNklFZmcrSSt1Wi9QSUZ6UTla?=
+ =?utf-8?B?SXB3TVBjVVRNTS8vYjRCU1UvMVgxdmZlOFpWWkJNdUVtZVBLKzE5VXhvdTNp?=
+ =?utf-8?B?RXBsa1R5Z3AySTdzdUZIU1RrbTBjcHBUSEtiMDN4VzdjeFZkVHZiTDF3aUpF?=
+ =?utf-8?B?RlBjeEc2amE3STJEYmowMEZkWnl3UDBONHp2aUhjS0dHTUt2Z1NURWNub0R0?=
+ =?utf-8?B?ZWpGVHpqQWRyVWRrNUZ1K0VsRk1vaCtEdTdxYWNpdXcrWDhoRmdPa0NEZmZL?=
+ =?utf-8?B?V09hOUVHTkNVazN0RkRpd1A2K0Yxb1J4T0FtMXFUMnZPQlREaXJ3d2VWc2R6?=
+ =?utf-8?B?WENvWVVpYnhSRTlSZG1HVWtNaGNIMFVHWWdjVFhBR2hLVFZVekxFaHhjb1lr?=
+ =?utf-8?B?Y0pqMkNVVDFLRjJoTHI0dmpDM0dycGl0dkVvWk1GZHk3VlVTUjM5WHpKcUhI?=
+ =?utf-8?B?TmNQSkNGNkRSUm9xSTFvc2xSSi9DcnQ4M0hmbFMrU284K0p2YmNlNkZ1ak8w?=
+ =?utf-8?B?RjdwZnNoV0lrN2tKVVYyYyttUlFBUXJJZ3RNYktvRHp5QlpzTVVuYURyTUd2?=
+ =?utf-8?B?WHI5ZFcxZnk3OStFcTFHN1JuZlZYbWlCb0hxQ3lTT2U1TFVjMVZqVzlkeWZn?=
+ =?utf-8?B?UGJnbDFVZzQ2MnlCSDhZV1ZzeHNUQ3FFT1NmMG5jZEJsL0g1cEhaNFJ2cFlO?=
+ =?utf-8?B?dzArUkNtRmUxaXU5ZkJSMVlrUUhGSHFPS2tQY0tVaHUzdnlHMHBPTTFhVEQy?=
+ =?utf-8?B?U2I3aHh2cktWYzZFTXZybUxUWmlnRlA2SkFFR2lSVTh5NGMwemtvNG16eHFH?=
+ =?utf-8?B?Z0dZNktKQ2RKZnMyTXQ0OUJnY0xBekxZd0F1NlpxcGliWFRRK0NrM1pibUNE?=
+ =?utf-8?B?ZjRMVFB0V1NwTGpKbkxNR2cybE5mcjFrM2pCRDJleUJ5TWxFUE1mZTYzTFRY?=
+ =?utf-8?B?cEpjNnJSR0NFK2NyZ3NaUFFLVzZsUy9henBXTkEwRjdGb05maGdST1dtdTlH?=
+ =?utf-8?B?SVc5ZWlGeEt4b0FxZ1pGNEluOEVGc1IvWmp5VmZ5a09ydXlLVnNHaUxmREpa?=
+ =?utf-8?B?cDM3dENVWXNoTTN4NzZXNXVhYkNRVVljY1Y1Y3J1d0FES3dZaDZ5R3FrRXlq?=
+ =?utf-8?B?WHFqZXMvdDBwTmNPREhhelZUSlVVZ05QWmw1NnUwdmtVdmJFNGdiZ2VnUmNI?=
+ =?utf-8?B?ZHl1YWMxTDlVdE9zYk9HdDhxTjhmYkYrMVNzcmZlZy94QWtUMFlHa1pEMXll?=
+ =?utf-8?Q?Sip22OwBeO4=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH2PR12MB4262.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?cjdtemJuTWo0Mms2UWJPd0hZeDB4cFAxU2kwbHhSY1dva2M5aW5kazdlWlU2?=
+ =?utf-8?B?dEdOVEo0YmNTV2o4ZDZxdVMrYkRnaTVVbVJYczRFaCtEU2dlTWtadk1ZQk56?=
+ =?utf-8?B?VXhmczJ1WUNqYXM5alppd09MZHZhMytlcEc5WHNQMG1MdEVwNlQ0TGpMQUxo?=
+ =?utf-8?B?Ukh6SmJxWUdIN3dmUmFCSEovZzREM1VxNHRxS29EVnFTTTVNNzJaa3pFaVE3?=
+ =?utf-8?B?NHQ0MldYMGJHbGpmcXAyOTRoUWd4T0gvYnEyR2VQbkJmSFc1TG5NOW1Cb0FO?=
+ =?utf-8?B?eWhSallZd0NYVWF2bzJoaEVlY3RHTkFCaEFVejBGdXJCZktIMnVyT1ljTzIv?=
+ =?utf-8?B?bGM1aTRvNHorQzBaVy8yTDVDMmJNR0thVStlZGVQRVZYYllGRWhkdFhxOG95?=
+ =?utf-8?B?ZGozYXk1ZUMyTitKNVRoSEQyUlpkSU02aTVTWE5DUTBZSzVQdEdqWnM4ODZo?=
+ =?utf-8?B?WWhMUDNrdVVXVUlYaUhaNnZ6Z1YwZFp1OEpqc0YvRHBiUU1qU0VvQUVPeEcw?=
+ =?utf-8?B?ekdEVjFKaEJMamdiOEsySXNKZmNIUjdPM2NuUmk4TVAyS1hEdUgzOGhYOFp6?=
+ =?utf-8?B?dVhzZjhrMzk4M3lHZXZNdWpIbHdVcVhyeCt2UFBpaS9CSGx1MkNjWGdjWmRI?=
+ =?utf-8?B?ZG5HWi8rRS9mKzZvYTRjQS9NMUo3eWNncGxmbFUwOXRLTjhPcHF6M1dzVml4?=
+ =?utf-8?B?K0RJU2JUOGprVDRwalU3WUNhR2c3YkFsK0RpNXpRait0ay9PUC9WNkVISUpl?=
+ =?utf-8?B?SngxeHlEcGZPVVFlM0l3UmRXazJENGNLSjV5N1BaaS9NMHl2UFNHSUFDZGIz?=
+ =?utf-8?B?QlY0WldsT25RTTZqSXY5TGNuTS8xaS8wM3A1d1lmU2RndUdQeUE4M3VEMSt6?=
+ =?utf-8?B?QzJKZytlVk9TWW1LV0pMbmtQNkUrd3E2SkpmNHhhWHZYUWJhK01HRHkzUVB0?=
+ =?utf-8?B?UkpJWk5mRXVXeXFkUVBLYXIvUHJ3b2MwSUZqTTcwQWU3ZXBQS0lwSjhJQnlG?=
+ =?utf-8?B?SGVEQTkrWTE4VngrZU1BNEg2Tk9EWTltNSsyNWVabmc5aUt3Y1A1anpNdTJ2?=
+ =?utf-8?B?aG1CNytPemdGWFFrSVVpTXF6S2FvUlRBVlkvYzFSVDVlaExRN1NVZG5zV2FZ?=
+ =?utf-8?B?TmwrNVdJS3c1VzZycVVuczdGZWRvSVFKNXBNQ2RwSVVEN2NoQ1h4V2JQVDEv?=
+ =?utf-8?B?TDdqZHRBUVRKb292TWdmakUzWVp2bmlWdlI1bk5SVmRqbG9SVWdCQURMeHNk?=
+ =?utf-8?B?NHN2L3c1L2QrUWQ4SkljbTJEMGpkZExpUVE1Sk90QlVVYzBvVDJrNWx0bzJ2?=
+ =?utf-8?B?OVdzTDhweWFJM3UxWThpd2VWemN4RHdoY2I3MDdpUmU3S1VSOTZ3SXY1Q0lo?=
+ =?utf-8?B?WWUyeUNlZGdYY3g3enNMWlhYVy8xdUNFLzVkM3VrTTZjajdpRHpwNXFJNDMv?=
+ =?utf-8?B?Y1N4cGlRUzlFUmlZRU1Fa2EvamNoSVpIRS9ROTA5T1ArYkpKYm9mMHlFeXlr?=
+ =?utf-8?B?WElOeUU4dVVSSmx2R1o2R0d5cFU2bmVSY0lUSlJjNmRhSDF3WFVERFpOU3hR?=
+ =?utf-8?B?cWpVbDN0cGRlNytJMVk5VHVnZ0txT3d0Zy9GeHpJaVhBeVQzbHRHYXlVSU44?=
+ =?utf-8?B?RklONnNOeTUwZjc5b3FPbXdJNzdaeU9CSnNkRDV1RW9ZTm5YNEZKRm81ek0x?=
+ =?utf-8?B?WU1NalV2WTJnUTdRbTFYSFhYcWZmeEFldnhJdVlEcGlqTWJRalNJenB6bEg5?=
+ =?utf-8?B?d3hVZWt4UFZvU1FGemdPdmZURnpnRWRDWTJad3U0cTE5SFI2OVdabklzK2h0?=
+ =?utf-8?B?WVBlL1VrRnl1cVV5WGJhb3lXTEFOU08vdlJPUUxpNTFGMXFKdU96bEhPZDVS?=
+ =?utf-8?B?OFNxckI2MytScXJzSVIrZXVmWmJOd0Jmc1hNWjBGbWdxdC9sc1poUXNack03?=
+ =?utf-8?B?UkFWdmRYWkwyMEpJOVdCUURmMTA5UzhRRjluL3plVVVQclVLNGh4TUNoam5l?=
+ =?utf-8?B?OGVWMjJYMUdMelYzNmVtYkVDVTc4NzJMSjRQdzNjRzJzVzAvL2JIY2hoN2px?=
+ =?utf-8?B?TXZXdTR2WEN4UnJqaHo4RHFrVmNBT0E2eFNiUnJab08rUVo2VWNPM0VxM3dz?=
+ =?utf-8?Q?YJiEMW73JtOrJTnDJ6jzJdFLH?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e71f49ec-ed13-46dc-efc5-08dd7736a4c1
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4262.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2025 07:17:53.7538
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hZmYa5P21MnWrofRuTdbAvZI9rgbD20z0MGwgsy3EzPm1kFjXtuQR1LknbQADoT98qmq4sdI6GITvxb6PnkVIw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6215
 
-On 08/04/2025 10:49, Kathiravan Thirumoorthy wrote:
-> When the system boots up after a watchdog reset, the EXPIRED_STATUS bit
-> in the WDT_STS register is cleared. To identify if the system was restarted
-> due to WDT expiry, bootloaders update the information in the IMEM region.
-> Update the driver to read the restart reason from IMEM and populate the
-> bootstatus accordingly.
+
+
+On 4/8/2025 10:28 PM, Ackerley Tng wrote:
+> Shivank Garg <shivankg@amd.com> writes:
 > 
-> For backward compatibility, keep the EXPIRED_STATUS bit check. Add a new
-> function qcom_wdt_get_restart_reason() to read the restart reason from
-> IMEM.
+>> Hi Fuad,
+>>
+>> On 3/18/2025 9:48 PM, Fuad Tabba wrote:
+>>> Add support for mmap() and fault() for guest_memfd backed memory
+>>> in the host for VMs that support in-place conversion between
+>>> shared and private. To that end, this patch adds the ability to
+>>> check whether the VM type supports in-place conversion, and only
+>>> allows mapping its memory if that's the case.
+>>>
+>>> Also add the KVM capability KVM_CAP_GMEM_SHARED_MEM, which
+>>> indicates that the VM supports shared memory in guest_memfd, or
+>>> that the host can create VMs that support shared memory.
+>>> Supporting shared memory implies that memory can be mapped when
+>>> shared with the host.
+>>>
+>>> This is controlled by the KVM_GMEM_SHARED_MEM configuration
+>>> option.
+>>>
+>>> Signed-off-by: Fuad Tabba <tabba@google.com>
+>>
+>> ...
+>> ...
+>>> +
+>>> +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
+>>> +{
+>>> +	struct kvm_gmem *gmem = file->private_data;
+>>> +
+>>> +	if (!kvm_arch_gmem_supports_shared_mem(gmem->kvm))
+>>> +		return -ENODEV;
+>>> +
+>>> +	if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
+>>> +	    (VM_SHARED | VM_MAYSHARE)) {
+>>> +		return -EINVAL;
+>>> +	}
+>>> +
+>>> +	file_accessed(file);
+>>
+>> As it is not directly visible to userspace, do we need to update the
+>> file's access time via file_accessed()?
+>>
 > 
-> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-> ---
->  drivers/watchdog/qcom-wdt.c | 40 +++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 39 insertions(+), 1 deletion(-)
+> Could you explain a little more about this being directly visible to
+> userspace?
 > 
-> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-> index 006f9c61aa64fd2b4ee9db493aeb54c8fafac818..54d6eaa132ab9f63e1312a69ad51b7a14f78fe2d 100644
-> --- a/drivers/watchdog/qcom-wdt.c
-> +++ b/drivers/watchdog/qcom-wdt.c
-> @@ -9,6 +9,7 @@
->  #include <linux/kernel.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> +#include <linux/of_address.h>
->  #include <linux/platform_device.h>
->  #include <linux/watchdog.h>
->  
-> @@ -22,6 +23,8 @@ enum wdt_reg {
->  
->  #define QCOM_WDT_ENABLE		BIT(0)
->  
-> +#define NON_SECURE_WDT_RESET	0x5
-> +
->  static const u32 reg_offset_data_apcs_tmr[] = {
->  	[WDT_RST] = 0x38,
->  	[WDT_EN] = 0x40,
-> @@ -187,6 +190,39 @@ static const struct qcom_wdt_match_data match_data_kpss = {
->  	.max_tick_count = 0xFFFFFU,
->  };
->  
-> +static int  qcom_wdt_get_restart_reason(struct qcom_wdt *wdt)
-> +{
-> +	struct device_node *np;
-> +	struct resource imem;
-> +	void __iomem *base;
-> +	int ret;
-> +
-> +	np = of_find_compatible_node(NULL, NULL, "qcom,restart-reason-info");
-> +	if (!np)
+> IIUC generic_fillattr(), which guest_memfd uses, will fill stat->atime
+> from the inode's atime. file_accessed() will update atime and so this
+> should be userspace accessible. (Unless I missed something along the way
+> that blocks the update)
+> 
 
-That's not how you express dependencies between devices.
+By visibility to userspace, I meant that guest_memfd is in-memory and not
+directly exposed to users as a traditional file would be.
 
-> +		return -ENOENT;
-> +
-> +	ret = of_address_to_resource(np, 0, &imem);
-> +	of_node_put(np);
-> +	if (ret < 0) {
-> +		dev_err(wdt->wdd.parent, "can't translate OF node address\n");
-> +		return ret;
-> +	}
-> +
-> +	base = ioremap(imem.start, resource_size(&imem));
-> +	if (!base) {
-> +		dev_err(wdt->wdd.parent, "failed to map restart reason info region\n");
-> +		return -ENOMEM;
-> +	}
-> +
-> +	memcpy_fromio(&ret, base, sizeof(ret));
-> +	iounmap(base);
+Yes, theoretically atime is accessible to user, but is it actually useful for
+guest_memfd, and do users track atime in this context? In my understanding,
+this might be an unnecessary unless we want to maintain it for VFS consistency.
 
-All this is wrong usage of syscon API, missing devlinks, messing up with
-other device's address space.
+My analysis of the call flow:
+fstat() -> vfs_fstat() -> vfs_getattr() -> vfs_getattr_nosec() -> kvm_gmem_getattr()
+I couldn't find any kernel-side consumers of inode's atime or instances where
+it's being used for any internal purposes.
+
+Searching for examples, I found secretmem_mmap() skips file_accessed().
 
 
-Best regards,
-Krzysztof
+Also as side note, I believe the kvm_gmem_getattr() ops implementation
+might be unnecessary here.
+Since kvm_gmem_getattr() is simply calling generic_fillattr() without
+any special handling, couldn't we just use the default implementation?
+
+int vfs_getattr_nosec(const struct path *path, struct kstat *stat,
+                      u32 request_mask, unsigned int query_flags)
+{
+...
+        if (inode->i_op->getattr)
+                return inode->i_op->getattr(idmap, path, stat,
+                                            request_mask,
+                                            query_flags);
+
+        generic_fillattr(idmap, request_mask, inode, stat);
+        return 0;
+}
+
+I might be missing some context. Please feel free to correct me
+if I've misunderstood anything.
+
+Thanks,
+Shivank
+
+>>> +	vm_flags_set(vma, VM_DONTDUMP);
+>>> +	vma->vm_ops = &kvm_gmem_vm_ops;
+>>> +
+>>> +	return 0;
+>>> +}
+>>> +#else
+>>> +#define kvm_gmem_mmap NULL
+>>> +#endif /* CONFIG_KVM_GMEM_SHARED_MEM */
+>>> +
+>>>  static struct file_operations kvm_gmem_fops = {
+>>> +	.mmap		= kvm_gmem_mmap,
+>>>  	.open		= generic_file_open,
+>>>  	.release	= kvm_gmem_release,
+>>>  	.fallocate	= kvm_gmem_fallocate,
+>>
+>> Thanks,
+>> Shivank
+
 
