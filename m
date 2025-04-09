@@ -1,147 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-53698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6906A82F42
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 20:50:48 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21B5AA82FE6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 21:02:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5B4C6881F8D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 18:49:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4352F174830
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 19:02:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 969252777EF;
-	Wed,  9 Apr 2025 18:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8A8D267B00;
+	Wed,  9 Apr 2025 19:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Tg+0WnMF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FlgFutvz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0392676D6
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Apr 2025 18:49:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3AD519882B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Apr 2025 19:02:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744224582; cv=none; b=pvg4IUt93WT0STUUGl97Afkxdd7Rn3KCkHjSUXvbiOAKHCqYKgU1+la4QkugwJ5SBoHGG6D8jL+HkDTHm4T79OLFTPo+wgIrm6KZTI//GbPI9aoZBVyNRpXAwXE7KnsWr6YaykYOLfSt5mivdGGjtsYXYZ8wx3LrjHJLcyuh61M=
+	t=1744225324; cv=none; b=Gi0OwtPUmbAOeqCB3Rn1uiB52/bwu4PJdtIzTspK7O9SuWaq34rWlfWbzy2m5EqZ0dYboDaKrVVr1cl5SChFKfcXHkw+4W9s8OafdejmVY3tSAgUeT4vGa1iEiQ2x1KNdwmieX0dBDvbmo57diybRPeva/0ztMxWSFr8yTStifg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744224582; c=relaxed/simple;
-	bh=d1HN9Tr6UusnWUDY09EuhHWuXvJFMZU/PC1RTqx388Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RGhcakwGfCib+Tp83ehmuGwWEeewxKT3ltctoeRTClW9nbAp0qbNFHSoeZrGpqVyxTBsBghuNQvnMXlZ1EYMGFUdPqKyQVcI+ZJiHhzQUpVWnefLomt2AdySfC1DFAZCW9et/EWjIt7RpKYIwLa6G+sb3aSdXFMN8j1NSXHxa58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Tg+0WnMF; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 539H7BGU014998
-	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Apr 2025 18:49:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9G1H4peKA3lpmZuEmoeg3zh5n+oBKM3YHIRLcwt6Bh4=; b=Tg+0WnMFbMdwmdAe
-	jGAgLCxebue2pQoTHclz7XGlGQ2+BfZjw6B2C6PYKO6E75IOcmHWvybq1HGmJZz/
-	8/WKj/sCbOT32dP+eiLNs16mUaE7A85D3H/wH3o5wtr/a2kXlAYAlKWqmSbEJ/j5
-	k/i1DOM9PBnkotkmb9LYrtBhtjYx+YoZBepNGFQcGXfCxKIkMddC1O9unS8u/MW4
-	xtNZnyV0Wx1yuoclavN6npAop8c5H07iRhdh6CBcqLmO1P0TAidcHuFTF1UrVJXt
-	8pY9UnDzK1S1qzUo5dMMlOHqK+KrqirG6aawVI0P56DXG1/V8mWeMoQAdJ+FC8EG
-	Obp2Vw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twbumg39-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Apr 2025 18:49:40 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4775bdbcdc3so12489471cf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Apr 2025 11:49:39 -0700 (PDT)
+	s=arc-20240116; t=1744225324; c=relaxed/simple;
+	bh=8fiUgzEDAb/CPt2ThFku6rRgGJ1bHR98JE7uXO5Swkk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FLUxZiGrphrE0WCw2AgiH5ZsODzwg4GN/2hwd5d5zh21L2r8YHEClNSXhex/5pDxwsQTdGnrJdRNKPuUILxmAlPy1LHk0NUtfKAf1oTGgLrQ5vXRJ7txCaaxxwxzew0TRHJ3Gqf4s7cJ92/iN5IQSegn9wDkA/ir1ASMIumQlOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FlgFutvz; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so536595e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Apr 2025 12:02:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744225321; x=1744830121; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ROf/FyXlvK5lJYdCngxjxqdwGQ6incPFtb/OHbqnriY=;
+        b=FlgFutvzgQss5o8R3pM4FGbLJbUZpuFbDFDCIgyfCR3MjN14g4P3jr1ZUXNJBw00zq
+         pwB6vP7Qd8ivFe+kHFOKphDBt9tx08AXpBdlll/9Lj2OO/wSTNVlJakQrZpFq/as3vWe
+         ZFdN4rboYHoG1UVnbphw+L1mEh+qr4Dh3ze0GynXjtg3v+hxXpuR26QwUSYanfdta4Fo
+         UgZu8CN5WVXKAkG89cysLyob5D9SUPzQl0A3tZ+GneXd8pnpwIgTlUdFuQlBo/b+YH2U
+         fd2C104Cf+MBI9h9gxNWQA8f2HOR94zHUaXZPE9mp+d3YEuWNS9RB5jZIvLT5IOGGGdN
+         Mz5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744224578; x=1744829378;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9G1H4peKA3lpmZuEmoeg3zh5n+oBKM3YHIRLcwt6Bh4=;
-        b=Q6UdPgxL7FVQDgjSruDXR8ybx+cQOHOtn/ipWaGX/Z/NkneyOuxFGdC92qPXceF+XV
-         UEfOmSbfBRWvD/LyzxvXipiEHYzmF1fJOhSdPdbo3fTUFlzjsqedsvLc1ktPJKYiJHvw
-         ZgG69ER1vsJvjgBe58FzGUCTCzCInOvtPEkdhuy7eioCUMLgfZN+AxyODa9DUCUbb5Ai
-         WVgr714Q0ixVviWeWINmlSQ5GjFX4reoJ9sgrZxX8DmB6aJ8YU81lcH7CNk002LUT9/m
-         1Kuu+1LeFGeTKNCFSPJUvdxizc09PLxUpc7CAj++BOHctOx4uGOd/NKGijxWp57g+8/d
-         uFXA==
-X-Gm-Message-State: AOJu0Yxu/jZ35J2xJfplM18xEPesBEUGcRssUMHwUbGob1211R6XgC8J
-	yvA86Y49f2zPz+UF8AWjSwHQfu0QwCHd8J9pB7EP7xqggbiNjSNJbmD3jIO39/AzegQPC8aBh65
-	p/FAtcTTfJOQehbtT1KSofvUUdEL2OllqgOM3We97Sl3/mmnjPaUgwvpcTEV5jyhi
-X-Gm-Gg: ASbGnctUXGN85ZA8hVlYtk+WEyhPAYYoBzfqepN8tFjuBIou56LW/krLDNYfmFquMtI
-	pyxrN5I35gMb/i5GZhDVNeCfUojyUEbQRh8nHjfnWoVg+vSG6pZWRBH/uxiSwUU/7SQPc0JGHgJ
-	hYMMpHmaCSU7GNftry8MRTGdep/+5V1LeleZaUSE0i3wg2rHOD3nSNuK+dQ6CWQe8h3NqrEpdan
-	MhKvL015i6IO4KrFXlVQ/Z2wlACkQUsx6EQspPiaKBNNvOQprUvNLnS8kfHeyhH5A8JhgkXrWxk
-	Nx5daZk1lDSLs2SoiNXQh2EiEV+WTTb9ybZxSnnA/ccSgeGktxQ0AJM2GohanWyyLA==
-X-Received: by 2002:ac8:5a85:0:b0:472:1812:23da with SMTP id d75a77b69052e-4795f37eb0fmr18667041cf.11.1744224578468;
-        Wed, 09 Apr 2025 11:49:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH4IsBpqmt+cYnKoIaMat7rtolFSfys581Xta6Gs0Qhv7H57/HFppjF3Hi21BAzmpJ//NIfkQ==
-X-Received: by 2002:ac8:5a85:0:b0:472:1812:23da with SMTP id d75a77b69052e-4795f37eb0fmr18666801cf.11.1744224578139;
-        Wed, 09 Apr 2025 11:49:38 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f2fbc0d2d9sm1138649a12.29.2025.04.09.11.49.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Apr 2025 11:49:37 -0700 (PDT)
-Message-ID: <07426a13-7897-4fe8-bfc4-549730717e85@oss.qualcomm.com>
-Date: Wed, 9 Apr 2025 20:49:36 +0200
+        d=1e100.net; s=20230601; t=1744225321; x=1744830121;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ROf/FyXlvK5lJYdCngxjxqdwGQ6incPFtb/OHbqnriY=;
+        b=bBiHEDqJLxoeO3LlRpXcXjn7uk9yNCM/0vqaBhOnsuTc9jeuv1qWg4lyZeOEddQbJL
+         JRAYvqFQUMJBiydZ9VPi3WjXMEun2g+880izJwD8RZYoeV/GL8niWf3Z7X8ZcRRAVDCK
+         4nOM3OcclBhUktXTFKN/lXYv/wRSDv5IuP+FfUcRXPS5/zyhKmE/Ewn18Yt4+nt0PqEE
+         Af+cpMlJBWzbsYodm8gANjSayLcQ+voMgkMc/fDoJd90nDs4LxyKzKXwMxuwJSshIyoU
+         Wtc1hnOJk7dtJQajpBUVczy01tA7uUlR+fgVv3Lf8BRPYj4wBLpZs3wyG0V+QZAziXYV
+         vjxw==
+X-Forwarded-Encrypted: i=1; AJvYcCWD1AdqUEm4LKZr2UNTZy/skgLoaNw6McSsLzohJUU+YaffV83EW6JbtcePuC4YjVHxNUgdTQUniQBE0S8E@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNT0y/KtVvmRCvE7wDWgL3s393ItfuBILu5XJO0XzKclP+0teD
+	aNYtLnoN9ZKJ2ffl+aWzgJcW/iwHczxB9bm2M8RCkSQ5XsNzQHNO5SBXOZVjtqk=
+X-Gm-Gg: ASbGncvVTM7NK9CH0+sCxEKNTWJgDFbPssorO+B6otV74fyMirIeC0/7AgKxdqXGaD1
+	HWtQeWDi6oDTIAotpGA6fTwKZWY+kzbmCJbEn9M21KnXrhTBsFo4NBHMQLRcVWHw/tzDMgkSAws
+	dQGAS9+8Ir0/QYI+WZpgQgwTGIod6FR6ozuhWjYPVn7INF6o+pokjwsnW7LMFlvqQEgUz8pJ0d+
+	4/dtrBFtYlU/QNuLvmIUjnoz48OvxZs8lfalAN2VWG1oxfl6+cO52X10P5DlpneefKkmMxrfnOf
+	jEkFt8AdBdtjK3xHYVpjhw7cdnJOPhIAhgXBJ+OP2nMCPPNt9ZlS
+X-Google-Smtp-Source: AGHT+IEyIRkiTwSNNIAg2oHYPBzs0rkTcPyCv7biIBEY7Pp3zAUiU75B5HFIdfXkzJnkiyq2+BVokg==
+X-Received: by 2002:a05:600c:3b16:b0:43c:f8fc:f6a6 with SMTP id 5b1f17b1804b1-43f2d7b4f1cmr1323835e9.9.1744225321022;
+        Wed, 09 Apr 2025 12:02:01 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:ef30:d36f:db1a:e26c:8aa7])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39d89361165sm2471277f8f.19.2025.04.09.12.02.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Apr 2025 12:02:00 -0700 (PDT)
+Date: Wed, 9 Apr 2025 21:01:56 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+	Sam Day <me@samcday.com>
+Subject: Re: [PATCH] serial: msm: Configure correct working mode before
+ starting earlycon
+Message-ID: <Z_bEJGwFIlPdBtAy@linaro.org>
+References: <20250408-msm-serial-earlycon-v1-1-429080127530@linaro.org>
+ <ac130f09d89b8efea8e0d24f1465c42f@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 0/6] Add support to read the restart reason from IMEM
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
-References: <20250408-wdt_reset_reason-v1-0-e6ec30c2c926@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250408-wdt_reset_reason-v1-0-e6ec30c2c926@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: ofG3ZFi4lxtiOwSTw3HiDn9ADtEYrLGF
-X-Proofpoint-ORIG-GUID: ofG3ZFi4lxtiOwSTw3HiDn9ADtEYrLGF
-X-Authority-Analysis: v=2.4 cv=dbeA3WXe c=1 sm=1 tr=0 ts=67f6c144 cx=c_pps a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=5K-QkYO3ZFZSxnrS5XMA:9 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-09_06,2025-04-08_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 mlxlogscore=804 phishscore=0 mlxscore=0 spamscore=0
- malwarescore=0 clxscore=1015 adultscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504090124
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ac130f09d89b8efea8e0d24f1465c42f@kernel.org>
 
-On 4/8/25 10:49 AM, Kathiravan Thirumoorthy wrote:
-> In Qualcomm IPQ SoC, if the system is rebooted due to the watchdog
-> timeout, there is no way to identify it. Current approach of checking
-> the EXPIRED_STATUS in WDT_STS is not working.
+On Wed, Apr 09, 2025 at 11:11:00AM -0700, Stephen Boyd wrote:
+> Quoting Stephan Gerhold (2025-04-08 10:22:47)
+> > diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
+> > index 1b137e06844425584afe5d3f647e9537c6e2d658..3449945493ceb42369d2acafca925350fccc4f82 100644
+> > --- a/drivers/tty/serial/msm_serial.c
+> > +++ b/drivers/tty/serial/msm_serial.c
+> > @@ -1746,6 +1746,12 @@ msm_serial_early_console_setup_dm(struct earlycon_device *device,
+> >         if (!device->port.membase)
+> >                 return -ENODEV;
+> >  
+> > +       /* Disable DM / single-character modes */
+> > +       msm_write(&device->port, 0, UARTDM_DMEN);
+> > +       msm_write(&device->port, MSM_UART_CR_CMD_RESET_RX, MSM_UART_CR);
+> > +       msm_write(&device->port, MSM_UART_CR_CMD_RESET_TX, MSM_UART_CR);
+> > +       msm_write(&device->port, MSM_UART_CR_TX_ENABLE, MSM_UART_CR);
 > 
-> To achieve this, if the system is rebooted due to watchdog timeout, the
-> information is captured in the IMEM by the bootloader (along with other
-> reason codes as well).
-> 
-> This series attempts to address this by adding the support to read the
-> IMEM and populate the information via bootstatus sysfs file. As of now,
-> we are handling only the non secure watchdog timeout reason.
-> 
-> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-> ---
+> In msm_complete_tx_dma() these are under an if condition checking the
+> version of uartdm. Do we need that here? Although I also see that
+> MSM_UART_CR_CMD_RESET_TX is unconditionally written in msm_reset() but
+> not MSM_UART_CR_TX_ENABLE so maybe the condition check is wrong or the
+> bit doesn't exist in earlier versions of the hardware so it doesn't
+> really matter.
 
-So I think it would be easier to model this as nvram (something like
-"nvmem-rmem" with imem perhaps modeled as "mmio-sram") and then consume
-that value through in-kernel APIs (or write to it, as necessary)
+msm_reset() is called from msm_set_baud_rate(), and that one does
 
-Taking a quick look at mobile, it seems like "reboot bootloader" and
-friends use a similar mechanism
+  msm_write(port, MSM_UART_CR_TX_ENABLE | MSM_UART_CR_RX_ENABLE, MSM_UART_CR);
 
-Konrad
+unconditionally immediately after, so what I'm doing here matches what
+the driver anyway does for all the IP versions.
 
+I'm not sure why we have version checks to perform the reset/enable in
+*some* code paths only for *some* IP versions. All of this feels
+obsolete at this point, since "msm_port->is_uartdm > UARTDM_1P3" covers
+all SoCs we still support upstream. There are no users of the v1.1 and
+v1.2 compatibles upstream, even MSM8660 has v1.3 already. We might as
+well drop those conditions at some point.
+
+Even better, we still have code for some super old controller before all
+the DM variants (qcom,msm-uart instead of qcom,msm-uart*dm*). No users
+of that upstream either. :-)
+
+Thanks,
+Stephan
 
