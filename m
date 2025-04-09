@@ -1,229 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-53629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC6F5A8237E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 13:26:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CE1CA82442
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 14:07:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 79A4F188823A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 11:26:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C64858A5A4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 12:07:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBBB925D556;
-	Wed,  9 Apr 2025 11:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECD9D25EF97;
+	Wed,  9 Apr 2025 12:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q0oVOZol"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y8MpBv/V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3846725C6FB;
-	Wed,  9 Apr 2025 11:25:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99D425DAF1;
+	Wed,  9 Apr 2025 12:07:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744197958; cv=none; b=Pc/5aA93Rdu3gjvfjFmfKik/3VouUsR3BCfE1e0g7YSFUJqqONOuOLdgGMnpKIMz0v3ZSCM+7xfzwP7msftGonmTIzBsIg4HlUC0Q+aJGXUbYzGJj2WWcBdGz6PKXtPizoWQfHrQermpCEFYiH7V2Bg+BxDSn0E7pG2cA9OoKr8=
+	t=1744200430; cv=none; b=JGrdBhBN4NPZeV92SdfeJnrHwQ3uCqUHzwtlAl7nAzQm2fFUUf/HSytigxcjlOKATBa8GQgn3V3sxgyL0pqDAxNVQEnTOLMV9UcZZcY3YVjNNLZxDKwa7nwuKHAcC7Fzqid7/bEwo/fSzAOmjEL5DUnLF1DrCrRH1TxIA8EgaYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744197958; c=relaxed/simple;
-	bh=w6c6I7F4/kq2lo1XICyiL03Xhslm9Ta8M6qRWacDPt0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Lklghn3t4QRo0Xe7Iuao1C25DUFA0jj/eWJGJGuG/AOtV/yNSANsvpcivEI8C62Hzl9MDT+88tkNkXyRcjGRUMCvH6eqmmrwe+Axlh06eaSuiea1/+nXZV83mjPWs6/VUmqm4pa/e4ftKasRVf3w+OsNOCKICBhxz6zYJ/ESlMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q0oVOZol; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5398kWmj028991;
-	Wed, 9 Apr 2025 11:25:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	DKNuZYUgqfSY2QPjFRQxGDipKqsuAa5YHnQ0M50S7To=; b=Q0oVOZol3drRdodi
-	gQJvbyVyF7jQ6lOS5HnkW61hU7HExfC95rsGtwBjLnXlHvUbd9GHViMEFrT3m3Ye
-	mtuV1Civ4FfQmDFBWZdLHX/te4cYDUPsJFBq+LgY2fgE6uS58AEBMeQTijlfzg/f
-	puSgALW/R8IVTtUshxglJKiPcaKTNunN0seYFlT7euz+84ywS/zuuwozkS6biUEX
-	vbrQUlGbbc8arBzNIN2qgoqOCsCsA3WBy/IgcO9HiSF7U1NgJqUVR6M7I909s/p6
-	hmNfBg8jg2ODdo6SZAyus0VZN8JtcVKvGPt7+bQdH2ujEgKAqF49ITquRhT+/fwF
-	AALKvA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twpmb2b1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 09 Apr 2025 11:25:47 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 539BPksH006621
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 9 Apr 2025 11:25:46 GMT
-Received: from [10.216.8.212] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 9 Apr 2025
- 04:25:41 -0700
-Message-ID: <56f4b9fc-69ba-c867-653b-7ea28ad8ab0b@quicinc.com>
-Date: Wed, 9 Apr 2025 16:55:39 +0530
+	s=arc-20240116; t=1744200430; c=relaxed/simple;
+	bh=CP4IzQPsQFU05CPteWgLrKp8oO61tr2PBS7gZ6n8ASw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ckeJNVYkPsQP2HOXXtUDnYQ6nFA6OBQTCDLxw6zcOULUeyS8msNvrjzRD0sXNzcvPGE2xR7JPbhmNOXDqYf+SYKzLXODXUVXfCt5FqYtNIVZ8mou+KVdNvD2lDeFJoXFN4eX8rHJqLSlgUnqhdONEOWP4ZaW4sNVphq/Xokdj1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y8MpBv/V; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46BE8C4CEE3;
+	Wed,  9 Apr 2025 12:06:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744200430;
+	bh=CP4IzQPsQFU05CPteWgLrKp8oO61tr2PBS7gZ6n8ASw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Y8MpBv/VoYICVgx24E4PbAEeT/t+3drrYqVPXQj/UWOU981wSUC2trY0ul0RXZ4wd
+	 MkAx9PgO5Yw+VwWeCS5mVNPUtido63L93DX1SivyY+13YYrMjDXVJojlKe034sCsIf
+	 IXbbSMY6B2lgZvsRRqBcXLbdfgJpCLE9Ocio59lw0qcNczRocWkmdW6u0pMl+PVPSL
+	 zLFWnsi95dTx+O1APKbqG17wJqqgfNLu7i1hb4srMezFEWlY/HbWRTVaaEuGyAUa8W
+	 dfb1CSfha9y4tiKqGvgilBAPkbv3kopHt/rZkV63FdmiU8P3G8udQT6soJgCn3moIx
+	 f0ru9tf/8eXIg==
+From: Philipp Stanner <phasta@kernel.org>
+To: Sumit Semwal <sumit.semwal@linaro.org>,
+	Gustavo Padovan <gustavo@padovan.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Xinhui Pan <Xinhui.Pan@amd.com>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Russell King <linux+etnaviv@armlinux.org.uk>,
+	Christian Gmeiner <christian.gmeiner@gmail.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Frank Binns <frank.binns@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>,
+	Qiang Yu <yuq825@gmail.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Lyude Paul <lyude@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Rob Herring <robh@kernel.org>,
+	Steven Price <steven.price@arm.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Philipp Stanner <phasta@kernel.org>,
+	Huang Rui <ray.huang@amd.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Melissa Wen <mwen@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Jesse Zhang <jesse.zhang@amd.com>,
+	Tim Huang <tim.huang@amd.com>,
+	Sathishkumar S <sathishkumar.sundararaju@amd.com>,
+	Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>,
+	Sunil Khatri <sunil.khatri@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Ma Jun <Jun.Ma2@amd.com>,
+	Yunxiang Li <Yunxiang.Li@amd.com>,
+	Eric Huang <jinhuieric.huang@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Jack Xiao <Jack.Xiao@amd.com>,
+	Friedrich Vock <friedrich.vock@gmx.de>,
+	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Cc: linux-media@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org,
+	linux-kernel@vger.kernel.org,
+	amd-gfx@lists.freedesktop.org,
+	etnaviv@lists.freedesktop.org,
+	intel-gfx@lists.freedesktop.org,
+	lima@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	nouveau@lists.freedesktop.org,
+	virtualization@lists.linux.dev,
+	spice-devel@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org
+Subject: [PATCH 0/2] dma-fence: Rename dma_fence_is_signaled()
+Date: Wed,  9 Apr 2025 14:06:36 +0200
+Message-ID: <20250409120640.106408-2-phasta@kernel.org>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 1/1] bus: mhi: host: don't free bhie tables during power
- off
-Content-Language: en-US
-To: Muhammad Usama Anjum <usama.anjum@collabora.com>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-        Youssef Samir <quic_yabdulra@quicinc.com>,
-        Matthew Leung
-	<quic_mattleun@quicinc.com>,
-        Yan Zhen <yanzhen@vivo.com>, Qiang Yu
-	<quic_qianyu@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Kunwu Chan <chentao@kylinos.cn>
-CC: Carl Vanderlip <quic_carlv@quicinc.com>,
-        Sumit Garg
-	<sumit.garg@kernel.org>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250409082444.582295-1-usama.anjum@collabora.com>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20250409082444.582295-1-usama.anjum@collabora.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: knL68Z-Nnzc8sK_UkEfcgiCTyPwikSZn
-X-Proofpoint-ORIG-GUID: knL68Z-Nnzc8sK_UkEfcgiCTyPwikSZn
-X-Authority-Analysis: v=2.4 cv=MpRS63ae c=1 sm=1 tr=0 ts=67f6593b cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=QX4gbG5DAAAA:8 a=NlJ2bC5Jul0cl-557kgA:9 a=QEXdDO2ut3YA:10
- a=AbAUZ8qAyYyZVLSsDulk:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-09_04,2025-04-08_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 clxscore=1011 priorityscore=1501 impostorscore=0
- spamscore=0 bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0
- phishscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504090067
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Hi all,
+
+I'm currently debugging a Nouveau issue [1] and potentially might want to
+add a function that just checks whether a fence is signaled already –
+which then would obviously be called dma_fence_is_signaled().
+
+In any case, I think it is reasonable to rename dma_fence_is_signaled()
+so that it becomes very, very explicit when reading code that this is a
+place where fences can get signaled.
+
+This series obsoletes this patch: [2]
+
+P.
+
+[1] https://lore.kernel.org/all/20250403101353.42880-2-phasta@kernel.org/
+[2] https://lore.kernel.org/all/20250408122217.61530-2-phasta@kernel.org/
 
 
+Philipp Stanner (2):
+  dma-fence: Rename dma_fence_is_signaled()
+  dma-fence: Improve docu for dma_fence_check_and_signal()
 
-On 4/9/2025 1:54 PM, Muhammad Usama Anjum wrote:
-> Fix dma_direct_alloc() failure at resume time during bhie_table
-> allocation. There is a crash report where at resume time, the memory
-> from the dma doesn't get allocated and MHI fails to re-initialize.
-> There may be fragmentation of some kind which fails the allocation
-> call.
-> 
-> To fix it, don't free the memory at power down. Use the same allocated
-> memory again and again after every resume/hibernation. This patch has
-> been tested with resume and hibernation both.
-How do you handle the mhi un-register case, in that case all the MHI
-memory needs to be freed.
-> 
-> Here are the crash logs:
-> 
-> [ 3029.338587] mhi mhi0: Requested to power ON
-> [ 3029.338621] mhi mhi0: Power on setup success
-> [ 3029.668654] kworker/u33:8: page allocation failure: order:7, mode:0xc04(GFP_NOIO|GFP_DMA32), nodemask=(null),cpuset=/,mems_allowed=0
-> [ 3029.668682] CPU: 4 UID: 0 PID: 2744 Comm: kworker/u33:8 Not tainted 6.11.11-valve10-1-neptune-611-gb69e902b4338 #1ed779c892334112fb968aaa3facf9686b5ff0bd7
-> [ 3029.668690] Hardware name: Valve Galileo/Galileo, BIOS F7G0112 08/01/2024
-> [ 3029.668694] Workqueue: mhi_hiprio_wq mhi_pm_st_worker [mhi]
-> [ 3029.668717] Call Trace:
-> [ 3029.668722]  <TASK>
-> [ 3029.668728]  dump_stack_lvl+0x4e/0x70
-> [ 3029.668738]  warn_alloc+0x164/0x190
-> [ 3029.668747]  ? srso_return_thunk+0x5/0x5f
-> [ 3029.668754]  ? __alloc_pages_direct_compact+0xaf/0x360
-> [ 3029.668761]  __alloc_pages_slowpath.constprop.0+0xc75/0xd70
-> [ 3029.668774]  __alloc_pages_noprof+0x321/0x350
-> [ 3029.668782]  __dma_direct_alloc_pages.isra.0+0x14a/0x290
-> [ 3029.668790]  dma_direct_alloc+0x70/0x270
-> [ 3029.668796]  mhi_alloc_bhie_table+0xe8/0x190 [mhi faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
-> [ 3029.668814]  mhi_fw_load_handler+0x1bc/0x310 [mhi faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
-> [ 3029.668830]  mhi_pm_st_worker+0x5c8/0xaa0 [mhi faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
-> [ 3029.668844]  ? srso_return_thunk+0x5/0x5f
-> [ 3029.668853]  process_one_work+0x17e/0x330
-> [ 3029.668861]  worker_thread+0x2ce/0x3f0
-> [ 3029.668868]  ? __pfx_worker_thread+0x10/0x10
-> [ 3029.668873]  kthread+0xd2/0x100
-> [ 3029.668879]  ? __pfx_kthread+0x10/0x10
-> [ 3029.668885]  ret_from_fork+0x34/0x50
-> [ 3029.668892]  ? __pfx_kthread+0x10/0x10
-> [ 3029.668898]  ret_from_fork_asm+0x1a/0x30
-> [ 3029.668910]  </TASK>
-> 
-> Tested-on: QCNFA765 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
-> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-> ---
->   drivers/bus/mhi/host/boot.c | 11 +++++++----
->   drivers/bus/mhi/host/init.c | 15 +++------------
->   2 files changed, 10 insertions(+), 16 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-> index efa3b6dddf4d2..8b3d2b9d239c3 100644
-> --- a/drivers/bus/mhi/host/boot.c
-> +++ b/drivers/bus/mhi/host/boot.c
-> @@ -323,6 +323,7 @@ void mhi_free_bhie_table(struct mhi_controller *mhi_cntrl,
->   				  mhi_buf->buf, mhi_buf->dma_addr);
->   
->   	kfree(image_info->mhi_buf);
-> +	image_info->mhi_buf = NULL;
-image_info is getting freed in the next line. why do we need this?
+ drivers/dma-buf/dma-fence-array.c             |  2 +-
+ drivers/dma-buf/dma-fence-chain.c             |  6 +--
+ drivers/dma-buf/dma-fence-unwrap.c            |  4 +-
+ drivers/dma-buf/dma-fence.c                   |  6 +--
+ drivers/dma-buf/dma-resv.c                    |  6 +--
+ drivers/dma-buf/st-dma-fence-chain.c          | 10 ++--
+ drivers/dma-buf/st-dma-fence.c                |  8 ++--
+ drivers/dma-buf/sw_sync.c                     |  2 +-
+ drivers/dma-buf/sync_file.c                   |  4 +-
+ .../gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c  |  2 +-
+ .../gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c  |  8 ++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c       |  2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c   |  2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c    |  4 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c     |  4 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c       |  8 ++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c      |  6 +--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c      | 10 ++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c        |  6 +--
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c       |  2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c          |  2 +-
+ drivers/gpu/drm/drm_suballoc.c                |  6 +--
+ drivers/gpu/drm/drm_syncobj.c                 |  6 +--
+ drivers/gpu/drm/etnaviv/etnaviv_gpu.c         |  2 +-
+ drivers/gpu/drm/etnaviv/etnaviv_sched.c       |  2 +-
+ drivers/gpu/drm/i915/gem/i915_gem_wait.c      |  4 +-
+ .../drm/i915/gem/selftests/i915_gem_migrate.c |  2 +-
+ drivers/gpu/drm/i915/i915_deps.c              |  6 +--
+ drivers/gpu/drm/i915/i915_request.c           |  6 +--
+ drivers/gpu/drm/i915/i915_sw_fence.c          |  4 +-
+ drivers/gpu/drm/i915/i915_vma.c               |  2 +-
+ drivers/gpu/drm/i915/selftests/i915_request.c |  4 +-
+ drivers/gpu/drm/imagination/pvr_queue.c       | 10 ++--
+ drivers/gpu/drm/lima/lima_sched.c             |  4 +-
+ drivers/gpu/drm/msm/msm_gpu.c                 |  2 +-
+ drivers/gpu/drm/nouveau/nouveau_drm.c         |  2 +-
+ drivers/gpu/drm/nouveau/nouveau_fence.c       |  2 +-
+ drivers/gpu/drm/panfrost/panfrost_job.c       |  4 +-
+ drivers/gpu/drm/qxl/qxl_release.c             |  2 +-
+ drivers/gpu/drm/scheduler/sched_entity.c      |  2 +-
+ drivers/gpu/drm/scheduler/sched_main.c        |  4 +-
+ drivers/gpu/drm/ttm/ttm_bo.c                  |  2 +-
+ drivers/gpu/drm/v3d/v3d_sched.c               |  4 +-
+ drivers/gpu/drm/vgem/vgem_fence.c             |  2 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_fence.c         |  6 +--
+ drivers/gpu/drm/xe/xe_bo.c                    |  2 +-
+ drivers/gpu/drm/xe/xe_guc_submit.c            |  4 +-
+ drivers/gpu/drm/xe/xe_hw_fence.c              |  2 +-
+ drivers/gpu/drm/xe/xe_pt.c                    |  2 +-
+ drivers/gpu/drm/xe/xe_range_fence.c           |  2 +-
+ include/linux/dma-fence.h                     | 47 ++++++++++++-------
+ 51 files changed, 133 insertions(+), 120 deletions(-)
 
-- Krishna Chaitanya.
->   	kfree(image_info);
->   }
->   
-> @@ -584,10 +585,12 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->   	 * device transitioning into MHI READY state
->   	 */
->   	if (fw_load_type == MHI_FW_LOAD_FBC) {
-> -		ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
-> -		if (ret) {
-> -			release_firmware(firmware);
-> -			goto error_fw_load;
-> +		if (!mhi_cntrl->fbc_image) {
-> +			ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
-> +			if (ret) {
-> +				release_firmware(firmware);
-> +				goto error_fw_load;
-> +			}
->   		}
->   
->   		/* Load the firmware into BHIE vec table */
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index 13e7a55f54ff4..3c20e4541357e 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -1173,8 +1173,9 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
->   		/*
->   		 * Allocate RDDM table for debugging purpose if specified
->   		 */
-> -		mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
-> -				     mhi_cntrl->rddm_size);
-> +		if (!mhi_cntrl->rddm_image)
-> +			mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
-> +					     mhi_cntrl->rddm_size);
->   		if (mhi_cntrl->rddm_image) {
->   			ret = mhi_rddm_prepare(mhi_cntrl,
->   					       mhi_cntrl->rddm_image);
-> @@ -1202,16 +1203,6 @@ EXPORT_SYMBOL_GPL(mhi_prepare_for_power_up);
->   
->   void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
->   {
-> -	if (mhi_cntrl->fbc_image) {
-> -		mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
-> -		mhi_cntrl->fbc_image = NULL;
-> -	}
-> -
-> -	if (mhi_cntrl->rddm_image) {
-> -		mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->rddm_image);
-> -		mhi_cntrl->rddm_image = NULL;
-> -	}
-> -
->   	mhi_cntrl->bhi = NULL;
->   	mhi_cntrl->bhie = NULL;
->   
+-- 
+2.48.1
+
 
