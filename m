@@ -1,326 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-53664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA9E3A829C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 17:16:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99F1BA829D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 17:17:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B75174A6B3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 15:09:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BA29C1BC6977
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Apr 2025 15:10:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45FAF26FDA6;
-	Wed,  9 Apr 2025 15:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7534C25EF89;
+	Wed,  9 Apr 2025 15:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="LS9up8sz"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EfpnjdFK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3406626FD82;
-	Wed,  9 Apr 2025 15:04:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC2719D092
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Apr 2025 15:09:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744211069; cv=none; b=c6NMv5vIqyJOXwcKuehS5LVxoQGjmCLdwCVB/tDb3nGEdUp8pW8g1cyBUofuR8hRB9JAJAahLGWt5Z9ixFVQN57k8HWpuLAqjTfuJoom5pHcHH8L5fZul67iHF3vFdi8uwOqsVZHlG8VgnHm77EiwZfn2VoZT0zA6xUB4Xry21U=
+	t=1744211344; cv=none; b=ZQ2Y3ve3P12kCipIO1K6LYwKMKDATyIzxIC0zYTXwx6MMpc/ZT9j7CY7DcR0PssCVpfOci5u1+BL7DbSXx2Xie1GE97RQIH1tRAfraosYmS/E+0wf0+VZi9v6fF7DHqoSM5e8NXj7S3gyfSDvjymMQ/UDoI6NzaqRDzHQWHyFJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744211069; c=relaxed/simple;
-	bh=vXNbrTLUQrlYNydORT5K+rP57dVB2oADM2jV2AgBth4=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=hANqiunfNiLMiZ5Roz7J4XNLzWR1U5UKXcZjlvxHGPyXmNxadVdNaUVenVq5cYKm6l3wX18rn5Qz0KzBlEZLdtuW/hbEAAQcV4jGh+1zBtiPNo+GwRc9zWfRjM4KVPDiY5mnh9kj5ordAMb80kbQpX0/mVo3drKho2rtmEyEinM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=LS9up8sz; arc=none smtp.client-ip=80.241.56.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4ZXmSR19b9z9t7P;
-	Wed,  9 Apr 2025 17:04:23 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1744211063; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vXNbrTLUQrlYNydORT5K+rP57dVB2oADM2jV2AgBth4=;
-	b=LS9up8szfCpBJACvt4gXa2EtpB97sVavX67wzRPpNDGRm6AHGs0RWhd+AXtPqRnp9op8zM
-	yE04pWSHbv+2bVCH/VYb7yTY+oy+qVUAZ4WW9/6lnP3PpHLGzc4tcRtTF4O7CQkK3tXhvX
-	cCiMrZuEgIld1a2KfjtHsIUu/oAQCKCx7fGs11u4gWzMoATXWnWjLCYPUuT99rUvw0HFVE
-	FckYqYRVDbBSXy1btg0Kjd2aoH0hjFAIPruG1nC4IsLJddiCYtoMfHQpDpP9RKPQBOiAnR
-	HJHimkXP9tmHGGqthFRauJolLOimIaLd2csSieO9zeWinLAUXQxNFxqKta20mA==
-Message-ID: <0b2fc70d8fae566c8ca43bafc929e2bd19725924.camel@mailbox.org>
-Subject: Re: [PATCH 1/2] dma-fence: Rename dma_fence_is_signaled()
-From: Philipp Stanner <phasta@mailbox.org>
-Reply-To: phasta@kernel.org
-To: Christian =?ISO-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>, 
-	phasta@kernel.org, Boris Brezillon <boris.brezillon@collabora.com>
-Cc: Sumit Semwal <sumit.semwal@linaro.org>, Gustavo Padovan
- <gustavo@padovan.org>, Felix Kuehling <Felix.Kuehling@amd.com>, Alex
- Deucher <alexander.deucher@amd.com>, Xinhui Pan <Xinhui.Pan@amd.com>, David
- Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten
- Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
- <mripard@kernel.org>,  Thomas Zimmermann <tzimmermann@suse.de>, Lucas Stach
- <l.stach@pengutronix.de>, Russell King <linux+etnaviv@armlinux.org.uk>,
- Christian Gmeiner <christian.gmeiner@gmail.com>,  Jani Nikula
- <jani.nikula@linux.intel.com>, Joonas Lahtinen
- <joonas.lahtinen@linux.intel.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>, Frank Binns
- <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>, Qiang Yu
- <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>, Sean Paul
- <sean@poorly.run>,  Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Dmitry Baryshkov
- <dmitry.baryshkov@linaro.org>, Marijn Suijten
- <marijn.suijten@somainline.org>,  Lyude Paul <lyude@redhat.com>, Danilo
- Krummrich <dakr@kernel.org>, Rob Herring <robh@kernel.org>,  Steven Price
- <steven.price@arm.com>, Dave Airlie <airlied@redhat.com>, Gerd Hoffmann
- <kraxel@redhat.com>,  Matthew Brost <matthew.brost@intel.com>, Huang Rui
- <ray.huang@amd.com>, Matthew Auld <matthew.auld@intel.com>,  Melissa Wen
- <mwen@igalia.com>, =?ISO-8859-1?Q?Ma=EDra?= Canal <mcanal@igalia.com>, Zack
- Rusin <zack.rusin@broadcom.com>, Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>, Lucas De Marchi
- <lucas.demarchi@intel.com>, Thomas =?ISO-8859-1?Q?Hellstr=F6m?=
- <thomas.hellstrom@linux.intel.com>, Bas Nieuwenhuizen
- <bas@basnieuwenhuizen.nl>,  Yang Wang <kevinyang.wang@amd.com>, Jesse Zhang
- <jesse.zhang@amd.com>, Tim Huang <tim.huang@amd.com>,  Sathishkumar S
- <sathishkumar.sundararaju@amd.com>, Saleemkhan Jamadar
- <saleemkhan.jamadar@amd.com>, Sunil Khatri <sunil.khatri@amd.com>, Lijo
- Lazar <lijo.lazar@amd.com>, Hawking Zhang <Hawking.Zhang@amd.com>, Ma Jun
- <Jun.Ma2@amd.com>, Yunxiang Li <Yunxiang.Li@amd.com>, Eric Huang
- <jinhuieric.huang@amd.com>, Asad Kamal <asad.kamal@amd.com>, Srinivasan
- Shanmugam <srinivasan.shanmugam@amd.com>,  Jack Xiao <Jack.Xiao@amd.com>,
- Friedrich Vock <friedrich.vock@gmx.de>, Michel =?ISO-8859-1?Q?D=E4nzer?=
- <mdaenzer@redhat.com>, Geert Uytterhoeven <geert@linux-m68k.org>,
- Anna-Maria Behnsen <anna-maria@linutronix.de>, Thomas Gleixner
- <tglx@linutronix.de>, Frederic Weisbecker <frederic@kernel.org>, Dan
- Carpenter <dan.carpenter@linaro.org>,  linux-media@vger.kernel.org,
- dri-devel@lists.freedesktop.org,  linaro-mm-sig@lists.linaro.org,
- linux-kernel@vger.kernel.org,  amd-gfx@lists.freedesktop.org,
- etnaviv@lists.freedesktop.org,  intel-gfx@lists.freedesktop.org,
- lima@lists.freedesktop.org,  linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org,  nouveau@lists.freedesktop.org,
- virtualization@lists.linux.dev,  spice-devel@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org
-Date: Wed, 09 Apr 2025 17:04:00 +0200
-In-Reply-To: <334e843c-d7fe-4e33-b4fc-f3d18226465a@amd.com>
-References: <20250409120640.106408-2-phasta@kernel.org>
-	 <20250409120640.106408-3-phasta@kernel.org>
-	 <20250409143917.31303d22@collabora.com>
-	 <73d41cd84c73b296789b654e45125bfce88e0dbf.camel@mailbox.org>
-	 <72eb974dfea8fa1167cf97e29848672223f6fc5b.camel@mailbox.org>
-	 <ab7d1937-d0e9-45f8-8f7d-ddd7a1a9d3d5@amd.com>
-	 <9a90f7f14c22c01aa28d89aa91bf4dfa4049c062.camel@mailbox.org>
-	 <334e843c-d7fe-4e33-b4fc-f3d18226465a@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1744211344; c=relaxed/simple;
+	bh=zcGWZwy+nuORNV+F/ThZjfFW0lE2rDvhpV1x9HexZ5w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pzh6nci6wS0i/SIIJxBxQMzQOV4kfs05K2XirOqOdYwitkCNZvvWZcCGx1yjnB2oYiAXljdHfPi6A90zXswKiolHRro71YQQPM443bAFhFsn6gX7mVxYc8z9/Y0eHc9/7S3IY0mbJsuRbwh0RSX+RvkKsqOp6vfzEM4pxVBWzMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EfpnjdFK; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5398ZsnK002292
+	for <linux-arm-msm@vger.kernel.org>; Wed, 9 Apr 2025 15:09:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZM49O2ioHcxPJFgz0BW7OWFv9D0F8HSwleBnH7gV14s=; b=EfpnjdFKzGCqHJEN
+	Ma/mOBmSYSbE/oWDxhUGfjgKLsaLrT7haeMHc6DuaLFAaUTf1Rgmfr4kGnwJMNZp
+	iIQxKlLT0tzeg8Qton673zuoj8X8AsnHcbwsDyXDdQG68/zAkephLqY/V1Yur2g+
+	y1TBsGfnEznmvp/YydzaD0uxRqkpIiG7OG+qX/SPY3rXuoWCFbzky0bfRQBW8pfJ
+	AJH327Xmon8PrmBGBoK0rLCOKaa9NDumDOv2TLVL8ipaiJQsWiWfx34CwiAvAgE2
+	BPCcRA2Cbq9Bc/G7a4L00twnwaVQ93L2sLu4SQ2I0XSxMO67tiUMtBMC6PyuSJET
+	0MTMeg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twc1knw0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 09 Apr 2025 15:09:01 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c552802e9fso167536185a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Apr 2025 08:09:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744211340; x=1744816140;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZM49O2ioHcxPJFgz0BW7OWFv9D0F8HSwleBnH7gV14s=;
+        b=XGb3vWe1DThoYnfe6pWph/r3R6PjwjxX5l+uLIY6Y2WVnMk2QHAnsqmIytWNeN3uAJ
+         49+VlT65TA21ElbNbnsghS6bmr3QfR+gHiiuPmkTXVbcW4wHpwLkwx8KeEgYTjJdDk25
+         /0Rsbw3IyttwPNx2AVLyZlLwfMjXdswNkW94plVyy61yhVTI+quRoNrragUDWVxdqszB
+         0vnS5Vy88OTVxfWqChk86+yC8RimEUD/zkxqWAozbjEpp4xH0BJ85WEhsyL4VyXVfrIx
+         svg87sAIMp48byvVoq8QUlh/K73zmp2W2saLLA4d2puVfhl7cxHQ1IHYY3An6Gkjppu+
+         5f2A==
+X-Forwarded-Encrypted: i=1; AJvYcCUkxehM1UsIuNqCV0KtpIS7IMmbvgVMyeySsx8qhVLlbe2nZBMSsWwwAaZZ9CmU+LUsa7Y0mLI6VvDlbFFZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxTFG5+QdmptZt7K/pWjN/tIYawlhYKapX88sPlU4w4+Faiw0Z
+	pTPeW4UgJR/woOdpucx6t0Mh1dqVqqC7AOnx8smrJ+62+eEf83IJHmccg0Gi58NqUF1ldOGTKWT
+	kVJ9vQuQRMJvYMCjw+8sdDALU809xg9mS5CF3dMVqj6e9evANxre4aP1MDXPJwBZ+
+X-Gm-Gg: ASbGncsu728ILwFWZWSJ2YqCIMB+oFbnuFxJQFJlhkTXC2vnFY0dMh7qB8+WBY4d9ym
+	P5ABIg9ZlShEknEJehlnQ7uzTtAmBJmRN/slz7+g6gqxdU4uWV2gwc1jigzE1dP5CPnBVm4Jwsl
+	Bsqj77pP2idRn6oTDI5d80jhKjhH7wyIdn1l8EE+GDdEHjtlIaXhp6ac+ucvykhTpUTm9kr/G1b
+	RNkXJNRKK8L/e5CcKQbQ05LEToPz46ZnGITFZgRDiI/K8/AG9Uf/zHRugMYsNipH36AieFvKLtz
+	mbolfDh2jZMCgDIyG/28Y+B3n/YxrYiqCTZ3da8SAAkcBkXUDrE8x6sSzpCXd4r6Cw==
+X-Received: by 2002:a05:620a:2805:b0:7c0:bb63:536c with SMTP id af79cd13be357-7c79cbd8ad2mr156917885a.4.1744211340648;
+        Wed, 09 Apr 2025 08:09:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKqxp7rcrINyn8M6wMLr3P4dzZIUo2PduztsqFYTGLMrH5xZk1qXZ1BhuOXgUr9MLv4mhnXA==
+X-Received: by 2002:a05:620a:2805:b0:7c0:bb63:536c with SMTP id af79cd13be357-7c79cbd8ad2mr156916885a.4.1744211340304;
+        Wed, 09 Apr 2025 08:09:00 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acaa1cb425csm110988066b.104.2025.04.09.08.08.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Apr 2025 08:08:59 -0700 (PDT)
+Message-ID: <0d1aaba8-7736-497e-8424-84489c637914@oss.qualcomm.com>
+Date: Wed, 9 Apr 2025 17:08:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MBO-RS-META: 9wh48drngnos9i43y9zpcu5f5mrpihgx
-X-MBO-RS-ID: f0082fb0ff96fc9be99
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/7] Support for GPU ACD feature on Adreno X1-85
+To: Anthony Ruhier <aruhier@mailbox.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Maya Matuszczyk <maccraft123mc@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20250109-gpu-acd-v4-0-08a5efaf4a23@quicinc.com>
+ <dj256lrkc4s5ylqkqdrak6a6p3v62ckkd3orsg7ykz2w6ugllg@rbfkojacklvx>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <dj256lrkc4s5ylqkqdrak6a6p3v62ckkd3orsg7ykz2w6ugllg@rbfkojacklvx>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: cNkei6AAF40agOpmlaJ_jKlWRu88kGpt
+X-Authority-Analysis: v=2.4 cv=KtdN2XWN c=1 sm=1 tr=0 ts=67f68d8d cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=vjlbkFh1sCUApBijkyAA:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-GUID: cNkei6AAF40agOpmlaJ_jKlWRu88kGpt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-09_05,2025-04-08_04,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0 spamscore=0
+ malwarescore=0 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=885 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504090095
 
-On Wed, 2025-04-09 at 16:10 +0200, Christian K=C3=B6nig wrote:
-> Am 09.04.25 um 16:01 schrieb Philipp Stanner:
-> > On Wed, 2025-04-09 at 15:14 +0200, Christian K=C3=B6nig wrote:
-> > > Am 09.04.25 um 14:56 schrieb Philipp Stanner:
-> > > > On Wed, 2025-04-09 at 14:51 +0200, Philipp Stanner wrote:
-> > > > > On Wed, 2025-04-09 at 14:39 +0200, Boris Brezillon wrote:
-> > > > > > Hi Philipp,
-> > > > > >=20
-> > > > > > On Wed,=C2=A0 9 Apr 2025 14:06:37 +0200
-> > > > > > Philipp Stanner <phasta@kernel.org> wrote:
-> > > > > >=20
-> > > > > > > dma_fence_is_signaled()'s name strongly reads as if this
-> > > > > > > function
-> > > > > > > were
-> > > > > > > intended for checking whether a fence is already
-> > > > > > > signaled.
-> > > > > > > Also
-> > > > > > > the
-> > > > > > > boolean it returns hints at that.
-> > > > > > >=20
-> > > > > > > The function's behavior, however, is more complex: it can
-> > > > > > > check
-> > > > > > > with a
-> > > > > > > driver callback whether the hardware's sequence number
-> > > > > > > indicates
-> > > > > > > that
-> > > > > > > the fence can already be treated as signaled, although
-> > > > > > > the
-> > > > > > > hardware's /
-> > > > > > > driver's interrupt handler has not signaled it yet. If
-> > > > > > > that's
-> > > > > > > the
-> > > > > > > case,
-> > > > > > > the function also signals the fence.
-> > > > > > >=20
-> > > > > > > (Presumably) this has caused a bug in Nouveau (unknown
-> > > > > > > commit),
-> > > > > > > where
-> > > > > > > nouveau_fence_done() uses the function to check a fence,
-> > > > > > > which
-> > > > > > > causes a
-> > > > > > > race.
-> > > > > > >=20
-> > > > > > > Give the function a more obvious name.
-> > > > > > This is just my personal view on this, but I find the new
-> > > > > > name
-> > > > > > just
-> > > > > > as
-> > > > > > confusing as the old one. It sounds like something is
-> > > > > > checked,
-> > > > > > but
-> > > > > > it's
-> > > > > > clear what, and then the fence is forcibly signaled like it
-> > > > > > would
-> > > > > > be
-> > > > > > if
-> > > > > > you call drm_fence_signal(). Of course, this clarified by
-> > > > > > the
-> > > > > > doc,
-> > > > > > but
-> > > > > > given the goal was to make the function name clearly
-> > > > > > reflect
-> > > > > > what
-> > > > > > it
-> > > > > > does, I'm not convinced it's significantly better.
-> > > > > >=20
-> > > > > > Maybe dma_fence_check_hw_state_and_propagate(), though it
-> > > > > > might
-> > > > > > be
-> > > > > > too long of name. Oh well, feel free to ignore this
-> > > > > > comments if
-> > > > > > a
-> > > > > > majority is fine with the new name.
-> > > > > Yoa, the name isn't perfect (the perfect name describing the
-> > > > > whole
-> > > > > behavior would be
-> > > > > dma_fence_check_if_already_signaled_then_check_hardware_state
-> > > > > _and
-> > > > > _pro
-> > > > > pa
-> > > > > gate() ^^'
-> > > > >=20
-> > > > > My intention here is to have the reader realize "watch out,
-> > > > > the
-> > > > > fence
-> > > > > might get signaled here!", which is probably the most
-> > > > > important
-> > > > > event
-> > > > > regarding fences, which can race, invoke the callbacks and so
-> > > > > on.
-> > > > >=20
-> > > > > For details readers will then check the documentation.
-> > > > >=20
-> > > > > But I'm of course open to see if there's a majority for this
-> > > > > or
-> > > > > that
-> > > > > name.
-> > > > how about:
-> > > >=20
-> > > > dma_fence_check_hw_and_signal() ?
-> > > I don't think that renaming the function is a good idea in the
-> > > first
-> > > place.
-> > >=20
-> > > What the function does internally is an implementation detail of
-> > > the
-> > > framework.
-> > >=20
-> > > For the code using this function it's completely irrelevant if
-> > > the
-> > > function might also signal the fence, what matters for the caller
-> > > is
-> > > the returned status of the fence. I think this also counts for
-> > > the
-> > > dma_fence_is_signaled() documentation.
-> > It does obviously matter. As it's currently implemented, a lot of
-> > important things happen implicitly.
->=20
-> Yeah, but that's ok.
->=20
-> The code who calls this is the consumer of the interface and so
-> shouldn't need to know this. That's why we have created the DMA fence
-> framework in the first place.
->=20
-> For the provider side when a driver or similar implements the
-> interface the relevant documentation is the dma_fence_ops structure.
->=20
-> > I only see improvement by making things more obvious.
-> >=20
-> > In any case, how would you call a wrapper that just does
-> > test_bit(IS_SIGNALED, =E2=80=A6) ?
->=20
-> Broken, that was very intentionally removed quite shortly after we
-> created the framework.
->=20
-> We have a few cases were implementations do check that for their
-> fences, but consumers should never be allowed to touch such
-> internals.
+On 3/18/25 2:12 PM, Anthony Ruhier wrote:
+> Using this patch serie on 6.14-rc (tested over multiple RCs, up to rc7) on a
+> Yoga Slim 7x (x1e80100), I often get a video output freeze a few seconds after
+> my wayland compositor loads. I can still ssh into the laptop. I get these
+> kernel errors in loop:
+> 
+> 	msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.12.1: hangcheck detected gpu lockup rb 0!
+> 	msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.12.1:     completed fence: 777
+> 	msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 67.5.12.1:     submitted fence: 778
+> 
+> Rob Clark recommended to me to remove the higher GPU frequencies added by this
+> patch (1.25Ghz and 1.175 Ghz). The lockups happen then less often, but are
+> still present. It is easily reproducible.
+> 
+> A way to mitigate the problem is by constantly moving my cursor during a few
+> seconds after my wayland session starts, then no freeze happens. Reverting this
+> patch serie fixes the problem.
 
-There is theory and there is practice. In practice, those internals are
-being used by Nouveau, i915, Xe, vmgfx and radeon.
+What firmware files are you using? ZAP surely comes from the Windows
+package, but what about GMU and SQE? Linux-firmware?
 
-So it seems that we failed quite a bit at communicating clearly how the
-interface should be used.
+Specifically, please provide the GMU version which is printed to dmesg
+on first GPU open
 
-And, to repeat myself, with both name and docu of that function, I
-think it is very easy to misunderstand what it's doing. You say that it
-shouldn't matter =E2=80=93 and maybe that's true, in theory. In practice, i=
-t
-does matter. In practice, APIs get misused and have side-effects. And
-making that harder is desirable.
-
-In any case, I might have to add another such call to Nouveau, because
-the solution preferred by you over the callback causes another race.
-Certainly one could solve this in a clean way, but someone has to do
-the work, and we're talking about more than a few hours here.
-
-In any case, be so kind and look at patch 2 and tell me there if you're
-at least OK with making the documentation more detailed.
-
-P.
-
->=20
-> Regards,
-> Christian.
->=20
-> >=20
-> > P.
-> >=20
-> > > What we should improve is the documentation of the dma_fence_ops-
-> > > > enable_signaling and dma_fence_ops->signaled callbacks.
-> > > Especially see the comment about reference counts on
-> > > enable_signaling
-> > > which is missing on the signaled callback. That is most likely
-> > > the
-> > > root cause why nouveau implemented enable_signaling correctly but
-> > > not
-> > > the other one.
-> > >=20
-> > > But putting that aside I think we should make nails with heads
-> > > and
-> > > let the framework guarantee that the fences stay alive until they
-> > > are
-> > > signaled (one way or another). This completely removes the burden
-> > > to
-> > > keep a reference on unsignaled fences from the drivers /
-> > > implementations and make things more over all more defensive.
-> > >=20
-> > > Regards,
-> > > Christian.
-> > >=20
-> > > > P.
-> > > >=20
-> > > > > P.
-> > > > >=20
-> > > > >=20
-> > > > > > Regards,
-> > > > > >=20
-> > > > > > Boris
->=20
-
+Konrad
 
