@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-53898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32F48A84B92
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 19:48:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 026B0A84B8A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 19:47:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 65AC19C3DF2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 17:45:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5B4747B7D88
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 17:45:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6903628FFC5;
-	Thu, 10 Apr 2025 17:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5167828EA63;
+	Thu, 10 Apr 2025 17:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s7aPuTLk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qmRzQV63"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBB428EA5D;
-	Thu, 10 Apr 2025 17:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2467C28EA61;
+	Thu, 10 Apr 2025 17:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744307054; cv=none; b=ebQmDU2b+vnOmwEn3+kueIgYW/s/lbg8ei8D66VdAzPmJRrdQL7GT+kDxKRrfY1IAvwTMan0X1djqxwECIiQITHQABrXWoKyzwdNTSnM3yVKybZe5zI8NMe19MGrK2MKvdkMmzR49ye7zlG0R/P4knxmX7SxBO3MjO35hBTQvJk=
+	t=1744307059; cv=none; b=HzCeFsML3p0Ght8E/NgtZJ8EPTrwuaUmculYJAc+CWlRNoZOV7TRRBgmVsdmdHTdxZnuERZiPlGd+yFbsCUEZpU7iejZL5E8cpYKwvCukrsi00HvicHq+T07PW2BgwILrRhdBsrJTNbP+eXcGil4MVU4Ja4WzuFZVuLogdPqo8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744307054; c=relaxed/simple;
-	bh=TzU0yNDNxTV7Xy8TTEpD94TaKa3KYI72neWKtr0Ki74=;
+	s=arc-20240116; t=1744307059; c=relaxed/simple;
+	bh=+TXOFnKqLNVBQVmqkqgvY5ByLqr5f+PoTrMrJaHt+f0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=H9HSvuxw8toWMCf5OqjxgMfu4E3LzY9aB0Id/udigG2ATqw/pKA+KoaPUW0qXemXPZc/J0DNyx3aJm637O/5fVapo7ATHUAgesQ6CtF0oEFN7Q3SpEy506pav+9speb9gJcRZNktV/iGesLMkdGXIFeG8rOkI/D+MMXb9KL5oAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s7aPuTLk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A971DC4CEEA;
-	Thu, 10 Apr 2025 17:44:09 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=mUagLiGFyfkf1GM4CnbCq2p7nV3mL0ai5N6RE1HX8jXmjb6d89yz7O4XCUWmH3kN6/OyAVMjBvtkl56foS1zaJXdx+nOf51NLuNVJ8HO4Lmk9hiFEmblaVmbJH0qMMX6IaomhMwAnvLIpNGEkkqKfbMeLJG4iFPyHKl+IB+npsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qmRzQV63; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D5AC4CEDD;
+	Thu, 10 Apr 2025 17:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744307054;
-	bh=TzU0yNDNxTV7Xy8TTEpD94TaKa3KYI72neWKtr0Ki74=;
+	s=k20201202; t=1744307059;
+	bh=+TXOFnKqLNVBQVmqkqgvY5ByLqr5f+PoTrMrJaHt+f0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=s7aPuTLktguo7zatUgpFlNaGDRjdkRhZXJUsfyYYXVaaumXDZApdXsGyeRVFy7bUK
-	 s26mQu0W2GflNjs9QNcLEiD34XIbYZYyK6zl0QpGIFgd95k0PEM9l9NFELpqpNBlU7
-	 CZgyE9py3NHHAcybiOL9ne89Myg66ugBoLm2qa+Uk5bzvMf5yUjK24r5hH3vYDlr5P
-	 LF9UZYUGBmcXt4Lce+MgJGQVGX5X5KuW9WR5NSwJ/3scVg/0MZKljqNy3SWazK1Oqz
-	 ZyXnK6KWd5A/Yimm/1ZEb8bJioI1CY0lNceI0jyuN8ecoKZcmbjXv0+RAMKkf9XxHz
-	 gRW4y48pLPafQ==
+	b=qmRzQV63x24BdHYuCbf0feqPnRhvkGp7ijara0BP5bRFYo4YOPkyAna0d/zTm62u8
+	 QARlOg16vIeTi0OKaw7csqVnky4zmAw49LQlhaT7QNANIV17AsxA77lS2lbrzrI75P
+	 mUgea4RNJcqDyJTsDvmpyY1njeUrSb9mNAgNiCd6m8Uv5jAeOd7iYYbXm/lIYFQYhD
+	 CIDW+qJO07KessQEbatwVKncMIRzl13EjPoOvD3mtgk4W1z4nZYIaNR1sqS+EHRYfQ
+	 RBnbhgK0m3swrdUkOzd7rR05XoBaIZc8yRvkWmmKWie/zdIqD25U889Q9doLy0SjaJ
+	 L7LI1Df7sZNdA==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Thu, 10 Apr 2025 19:43:46 +0200
-Subject: [PATCH v2 3/4] drm/msm/a6xx: Get HBB dynamically, if available
+Date: Thu, 10 Apr 2025 19:43:47 +0200
+Subject: [PATCH v2 4/4] drm/msm/mdss: Get HBB dynamically, if available
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,7 +52,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250410-topic-smem_dramc-v2-3-dead15264714@oss.qualcomm.com>
+Message-Id: <20250410-topic-smem_dramc-v2-4-dead15264714@oss.qualcomm.com>
 References: <20250410-topic-smem_dramc-v2-0-dead15264714@oss.qualcomm.com>
 In-Reply-To: <20250410-topic-smem_dramc-v2-0-dead15264714@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -69,11 +69,11 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  freedreno@lists.freedesktop.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1744307035; l=2298;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1744307035; l=4364;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=m07m8qQDOOWd2fvMDrOD8Tzt78kulsuGTKp47oc3+WQ=;
- b=mSuoD139bK0ZvIJah6ExMqatBNKiV9yZSPo2PFoW+BCtduyL7mi4+1xx9wxfMJXSCjph4mH/M
- TgUE6n9kvwIBINJ5AXx6N4iYizF/rrtPr0lVEuRbytd7Qmgr6voaezc
+ bh=u4DLQLo3tH5nr+Zi9TgIpdAPYpDHteGYc0a2ROXvGKs=;
+ b=qS0K/ADcOWTRbVEPdzhzxqnyG+jDeryAle3FlGQNCiV5CAPeE2m8FrGGKr+AWeGLhnIyH8jGK
+ 5UVo9E9N7HTB9iTPKVj7QOtQbnYkwxXHHLkyAVIt5JPF+B3MWCki/YP
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
@@ -86,63 +86,113 @@ default (the one used prior to this change) on error.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_mdss.c | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 06465bc2d0b4b128cddfcfcaf1fe4252632b6777..a6232b382bd16319f20ae5f8f5e57f38ecc62d9f 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -13,6 +13,7 @@
- #include <linux/firmware/qcom/qcom_scm.h>
- #include <linux/pm_domain.h>
- #include <linux/soc/qcom/llcc-qcom.h>
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index dcb49fd30402b80edd2cb5971f95a78eaad6081f..3f5c60ce20c0b66160bcc9bf74bf8f86ab57e9a4 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -15,6 +15,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/reset.h>
 +#include <linux/soc/qcom/smem.h>
  
- #define GPU_PAS_ID 13
- 
-@@ -587,6 +588,8 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
- 
- static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
- {
-+	int hbb;
-+
- 	gpu->ubwc_config.rgb565_predicator = 0;
- 	gpu->ubwc_config.uavflagprd_inv = 0;
- 	gpu->ubwc_config.min_acc_len = 0;
-@@ -635,7 +638,6 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
- 	    adreno_is_a690(gpu) ||
- 	    adreno_is_a730(gpu) ||
- 	    adreno_is_a740_family(gpu)) {
--		/* TODO: get ddr type from bootloader and use 2 for LPDDR4 */
- 		gpu->ubwc_config.highest_bank_bit = 16;
- 		gpu->ubwc_config.amsbc = 1;
- 		gpu->ubwc_config.rgb565_predicator = 1;
-@@ -664,6 +666,13 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
- 		gpu->ubwc_config.highest_bank_bit = 14;
- 		gpu->ubwc_config.min_acc_len = 1;
- 	}
-+
-+	/* Attempt to retrieve the data from SMEM, keep the above defaults in case of error */
-+	hbb = qcom_smem_dram_get_hbb();
-+	if (hbb < 0)
-+		return;
-+
-+	gpu->ubwc_config.highest_bank_bit = hbb;
+ #include "msm_mdss.h"
+ #include "msm_kms.h"
+@@ -163,11 +164,11 @@ static int _msm_mdss_irq_domain_add(struct msm_mdss *msm_mdss)
+ 	return 0;
  }
  
- static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
-@@ -2467,6 +2476,10 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 	bool is_a7xx;
+-static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss)
++static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss, int hbb)
+ {
+ 	const struct msm_mdss_data *data = msm_mdss->mdss_data;
+ 	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
+-		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit);
++		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(hbb);
+ 
+ 	if (data->ubwc_bank_spread)
+ 		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
+@@ -178,11 +179,11 @@ static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss)
+ 	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
+ }
+ 
+-static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss)
++static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss, int hbb)
+ {
+ 	const struct msm_mdss_data *data = msm_mdss->mdss_data;
+ 	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle & 0x1) |
+-		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit);
++		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(hbb);
+ 
+ 	if (data->macrotile_mode)
+ 		value |= MDSS_UBWC_STATIC_MACROTILE_MODE;
+@@ -196,11 +197,11 @@ static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss)
+ 	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
+ }
+ 
+-static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss)
++static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss, int hbb)
+ {
+ 	const struct msm_mdss_data *data = msm_mdss->mdss_data;
+ 	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
+-		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit);
++		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(hbb);
+ 
+ 	if (data->ubwc_bank_spread)
+ 		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
+@@ -287,7 +288,7 @@ const struct msm_mdss_data *msm_mdss_get_mdss_data(struct device *dev)
+ 
+ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+ {
+-	int ret, i;
++	int hbb, ret, i;
+ 
+ 	/*
+ 	 * Several components have AXI clocks that can only be turned on if
+@@ -317,6 +318,11 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+ 	if (msm_mdss->is_mdp5 || !msm_mdss->mdss_data)
+ 		return 0;
+ 
++	/* Attempt to retrieve HBB data from SMEM, keep reasonable defaults in case of error */
++	hbb = qcom_smem_dram_get_hbb() - 13;
++	if (hbb < 0)
++		hbb = msm_mdss->mdss_data->highest_bank_bit;
++
+ 	/*
+ 	 * ubwc config is part of the "mdss" region which is not accessible
+ 	 * from the rest of the driver. hardcode known configurations here
+@@ -330,14 +336,14 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+ 		/* do nothing */
+ 		break;
+ 	case UBWC_2_0:
+-		msm_mdss_setup_ubwc_dec_20(msm_mdss);
++		msm_mdss_setup_ubwc_dec_20(msm_mdss, hbb);
+ 		break;
+ 	case UBWC_3_0:
+-		msm_mdss_setup_ubwc_dec_30(msm_mdss);
++		msm_mdss_setup_ubwc_dec_30(msm_mdss, hbb);
+ 		break;
+ 	case UBWC_4_0:
+ 	case UBWC_4_3:
+-		msm_mdss_setup_ubwc_dec_40(msm_mdss);
++		msm_mdss_setup_ubwc_dec_40(msm_mdss, hbb);
+ 		break;
+ 	default:
+ 		dev_err(msm_mdss->dev, "Unsupported UBWC decoder version %x\n",
+@@ -538,6 +544,10 @@ static int mdss_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
  	int ret;
  
-+	/* We need data from SMEM to retrieve HBB in calc_ubwc_config() */
++	/* We need data from SMEM to retrieve HBB msm_mdss_enable() */
 +	if (!qcom_smem_is_available())
-+		return ERR_PTR(-EPROBE_DEFER);
++		return -EPROBE_DEFER;
 +
- 	a6xx_gpu = kzalloc(sizeof(*a6xx_gpu), GFP_KERNEL);
- 	if (!a6xx_gpu)
- 		return ERR_PTR(-ENOMEM);
+ 	mdss = msm_mdss_init(pdev, is_mdp5);
+ 	if (IS_ERR(mdss))
+ 		return PTR_ERR(mdss);
 
 -- 
 2.49.0
