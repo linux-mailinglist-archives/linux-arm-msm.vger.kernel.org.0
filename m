@@ -1,258 +1,332 @@
-Return-Path: <linux-arm-msm+bounces-53839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0341A8472A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 17:00:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27845A84825
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 17:39:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49CD37A41AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 14:57:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 76E701B8876F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 15:38:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B631B2857E5;
-	Thu, 10 Apr 2025 14:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EFCE1E9B38;
+	Thu, 10 Apr 2025 15:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="JC/nCX8H"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jVlypefq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB4F1E22E9;
-	Thu, 10 Apr 2025 14:58:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744297131; cv=pass; b=GGz9weLqA71ZTzJdxoIaYAfoAIBm0SXU2GFxV8uH4bSIxAuCCs77ii5YQcsKcS2g66r5pDi/16PaPQvFejA5VSpHO6ioG8K3Uz8cpdvTVwocBXPp16t580jjBlLY12GgxCfTjHmKG/pRrGa7yo91d3T5I+YTOTAellqBl3tOHq8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744297131; c=relaxed/simple;
-	bh=sQdKcyOJjyFXyb7DMKGnoZRedKZ89xXboX5hfzQUXL4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NQiADn4xezjj/djsF87A2kZdfWpURg9vYlZ17pUVLZcbGIjoikAp+dWBC163ly3okyV+AYdjqjS+4lfD0Slb6mSV+gOJX4kNr8BG84wpf2+YjGdEBzeEqifUkaL3J0j0cXZSH3v55zq6k/p5Pupc1Jiegfjt6tDEnjaOOcrSKWw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=JC/nCX8H; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1744297097; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=iOCahUm7PU80m8l7K8or5tfmRg47wqQ2hU7AlGOQ8GCiM0NNiPZaJCz9YYAlV2ntkCFXObAs0i7/9NhJVrz23pFRJYiCq+g/GV6AnqrDUcCj7MDTdeLUuir7ZbWrZD0NFpIfznEwRhGS6Bzf+A2tEEY5shmiukuTEusG2XNrIvE=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1744297097; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=j6KUxqpvhXLce/PJDd2pNOS0Y+D23pvQbY/jB6EG2Pg=; 
-	b=GbeJIWlbmo9QK5pe3QMweg6xd+PxcAwiQ6Cfe6MJdH+j1Tb6F6vPQcUcp/ZZ0Q9c8xpNdDyHArOepDHCOvxYJP9vPJItVJTij4HK7utRHpfgHHwP8iWzO6SSGckEeG0+QZI4WJBAYGPaGplKcMuvs32Ulgr4bApiavoY3eMA/Ss=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
-	dmarc=pass header.from=<usama.anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1744297097;
-	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=j6KUxqpvhXLce/PJDd2pNOS0Y+D23pvQbY/jB6EG2Pg=;
-	b=JC/nCX8H1RxMZU+s68CVcHaKYh85XcvGjibq0WwguVW2RutQRDwCPXLmPQ9lXNdb
-	bnA9tGkYBeu/+ynGhkPBk0W4ThqL2bFTfhnikD9ZVIBOaoEMSqVisDw6gSGuxHeWTEc
-	lH35rnIKB5Yad/MR2IC4alQv2jbb7K/uK74MhoaY=
-Received: by mx.zohomail.com with SMTPS id 1744297096527931.6945802394524;
-	Thu, 10 Apr 2025 07:58:16 -0700 (PDT)
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Jeff Johnson <jjohnson@kernel.org>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Yan Zhen <yanzhen@vivo.com>,
-	Youssef Samir <quic_yabdulra@quicinc.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Qiang Yu <quic_qianyu@quicinc.com>,
-	Alex Elder <elder@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Kunwu Chan <chentao@kylinos.cn>
-Cc: kernel@collabora.com,
-	mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org,
-	ath11k@lists.infradead.org
-Subject: [PATCH v2] bus: mhi: host: don't free bhie tables during suspend/hibernation
-Date: Thu, 10 Apr 2025 19:56:54 +0500
-Message-ID: <20250410145704.207969-1-usama.anjum@collabora.com>
-X-Mailer: git-send-email 2.43.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860501E990B;
+	Thu, 10 Apr 2025 15:37:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744299477; cv=none; b=ugMuYpO6v/ZOiBKF3SGWu0t4zfZCGMR+uErBeGgs6re7EF22wpLE4HJ//gCWrmDg8t4WrYvuHK8qyagY5YNvgcY1hoUZmB/M5Lauc0C0lcUB5+QWuKa4mkfrLK3osItTSewwEoB/lanL+X1XyMAp7ILZ4ICccHHLbKAADxpjiMk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744299477; c=relaxed/simple;
+	bh=EMYuLPJWM6t/QbvZf7ywpIWpg26tA/P0uWIEh8ao1Cg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=mje5N2Z/eLhG3P/3dESZ8KuBLpirHEHMtd9QBG6GY821OKIQljNHF1DLo3fGlPM3u+EkHadHO5NkJ9ZGno6U189sSCW+cSnp79x7hU6eLoiWIFYakTJoVReaFvZF5huZ4ST6vMjmL/x34W11DzZvw3Y4oEOTHd0379z92waR5Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jVlypefq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53A75cjs018370;
+	Thu, 10 Apr 2025 15:37:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	F1tK8A5KiVjnbhi2rhR7y0Y7Tn8k6euzMRCiQt761SM=; b=jVlypefqgYPtx6II
+	034IxYHAeRxNa0PI0ZzPGVkY+Z5GMBC6uX9dCSp9+JUjNLXyMkwsyVXJatAhdL4H
+	6Ul5vy+esWyw58+pjsSppb8h+YcGuV6jj3ZekjC9KB69gr/1LM/h/VhORECqf9/9
+	tIWVeUMP3eDmYSSUfTK0MYhF/DjLUqZlrv9JBvVZzIx1kqCuFebSGkp64+5+QCWU
+	XuWsW4DRUkUeIonJUFyQ/PbTqL8F1747UtiTx2rGu4jywxCCERAmRXBI/epzlT4O
+	xW+a7Oj1K5bSADR835Al1Sc3puogwhwvqAId8AOe+hJabY25SYMTxzStX/dtspW+
+	9wLWug==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twtb7h4b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 10 Apr 2025 15:37:44 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53AFbh3q017023
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 10 Apr 2025 15:37:43 GMT
+Received: from [10.218.7.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 10 Apr
+ 2025 08:37:40 -0700
+Message-ID: <124fb13c-c41a-42b0-a521-158876b1b00c@quicinc.com>
+Date: Thu, 10 Apr 2025 21:07:37 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 3/6] phy: qcom-qmp-ufs: Refactor UFS PHY reset
+To: Bjorn Andersson <andersson@kernel.org>
+CC: <vkoul@kernel.org>, <kishon@kernel.org>,
+        <manivannan.sadhasivam@linaro.org>,
+        <James.Bottomley@hansenpartnership.com>, <martin.petersen@oracle.com>,
+        <konrad.dybcio@oss.qualcomm.com>, <quic_rdwivedi@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-scsi@vger.kernel.org>
+References: <20250318144944.19749-1-quic_nitirawa@quicinc.com>
+ <20250318144944.19749-4-quic_nitirawa@quicinc.com>
+ <w3si5lpps5nzpyxjulxynl3fxwobtbnfsqwau6et5s2pkgehub@vcmkdaevbf5w>
+Content-Language: en-US
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <w3si5lpps5nzpyxjulxynl3fxwobtbnfsqwau6et5s2pkgehub@vcmkdaevbf5w>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: cwJEHaUvcl9U1x2AlFUUBburphREsOXj
+X-Authority-Analysis: v=2.4 cv=LLlmQIW9 c=1 sm=1 tr=0 ts=67f7e5c8 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=WIYHiBWYbOpNOST8Gw0A:9
+ a=QEXdDO2ut3YA:10 a=-_B0kFfA75AA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: cwJEHaUvcl9U1x2AlFUUBburphREsOXj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-10_04,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ clxscore=1015 mlxlogscore=999 malwarescore=0 phishscore=0
+ lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0 adultscore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504100113
 
-Fix dma_direct_alloc() failure at resume time during bhie_table
-allocation. There is a crash report where at resume time, the memory
-from the dma doesn't get allocated and MHI fails to re-initialize.
-There may be fragmentation of some kind which fails the allocation
-call.
 
-To fix it, don't free the memory at power down during suspend /
-hibernation. Instead, use the same allocated memory again after every
-resume / hibernation. This patch has been tested with resume and
-hibernation both.
 
-The rddm is of constant size for a given hardware. While the fbc_image
-size depends on the firmware. If the firmware changes, we'll free and
-allocate new memory for it.
+On 3/19/2025 1:16 AM, Bjorn Andersson wrote:
+> On Tue, Mar 18, 2025 at 08:19:41PM +0530, Nitin Rawat wrote:
+>> Refactor the UFS PHY reset handling to parse the reset logic only once
+>> during probe, instead of every resume.
+>>
+> 
+> This looks very reasonable! But it would be preferred to see the commit
+> messages following the what format outlines in
+> https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+> with a clear problem description followed by a description of the
+> technical solution.
+> 
+>> Move the UFS PHY reset parsing logic from qmp_phy_power_on to
+>> qmp_ufs_probe to avoid unnecessary parsing during resume.
+> 
+> Please add ()-suffix to function names in your commit messages.
+> 
+> Also, this series moves things around a lot, can you confirm that UFS is
+> working inbetween each one of this patches, so that the branch is
+> bisectable when this is being picked up?
 
-Here are the crash logs:
+Hi Bjorn,
 
-[ 3029.338587] mhi mhi0: Requested to power ON
-[ 3029.338621] mhi mhi0: Power on setup success
-[ 3029.668654] kworker/u33:8: page allocation failure: order:7, mode:0xc04(GFP_NOIO|GFP_DMA32), nodemask=(null),cpuset=/,mems_allowed=0
-[ 3029.668682] CPU: 4 UID: 0 PID: 2744 Comm: kworker/u33:8 Not tainted 6.11.11-valve10-1-neptune-611-gb69e902b4338 #1ed779c892334112fb968aaa3facf9686b5ff0bd7
-[ 3029.668690] Hardware name: Valve Galileo/Galileo, BIOS F7G0112 08/01/2024
-[ 3029.668694] Workqueue: mhi_hiprio_wq mhi_pm_st_worker [mhi]
-[ 3029.668717] Call Trace:
-[ 3029.668722]  <TASK>
-[ 3029.668728]  dump_stack_lvl+0x4e/0x70
-[ 3029.668738]  warn_alloc+0x164/0x190
-[ 3029.668747]  ? srso_return_thunk+0x5/0x5f
-[ 3029.668754]  ? __alloc_pages_direct_compact+0xaf/0x360
-[ 3029.668761]  __alloc_pages_slowpath.constprop.0+0xc75/0xd70
-[ 3029.668774]  __alloc_pages_noprof+0x321/0x350
-[ 3029.668782]  __dma_direct_alloc_pages.isra.0+0x14a/0x290
-[ 3029.668790]  dma_direct_alloc+0x70/0x270
-[ 3029.668796]  mhi_alloc_bhie_table+0xe8/0x190 [mhi faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
-[ 3029.668814]  mhi_fw_load_handler+0x1bc/0x310 [mhi faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
-[ 3029.668830]  mhi_pm_st_worker+0x5c8/0xaa0 [mhi faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
-[ 3029.668844]  ? srso_return_thunk+0x5/0x5f
-[ 3029.668853]  process_one_work+0x17e/0x330
-[ 3029.668861]  worker_thread+0x2ce/0x3f0
-[ 3029.668868]  ? __pfx_worker_thread+0x10/0x10
-[ 3029.668873]  kthread+0xd2/0x100
-[ 3029.668879]  ? __pfx_kthread+0x10/0x10
-[ 3029.668885]  ret_from_fork+0x34/0x50
-[ 3029.668892]  ? __pfx_kthread+0x10/0x10
-[ 3029.668898]  ret_from_fork_asm+0x1a/0x30
-[ 3029.668910]  </TASK>
+Thanks for the review. I've addressed the bisectability compliance in my 
+latest patch set (patchset #3) that I posted today. I just realized I 
+missed your other comments about adding the ()-suffix to function names 
+in commit messages. Sorry about that. I'll make sure to include this in 
+my next patch set.
 
-Tested-on: QCNFA765 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+Thanks,
+Nitin
 
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
----
-Changes sice v1:
-- Don't free bhie tables during suspend/hibernation only
-- Handle fbc_image changed size correctly
-- Remove fbc_image getting set to NULL in *free_bhie_table()
----
- drivers/bus/mhi/host/boot.c           | 15 +++++++++++----
- drivers/bus/mhi/host/init.c           | 13 ++++++++++---
- drivers/net/wireless/ath/ath11k/mhi.c |  9 +++++----
- include/linux/mhi.h                   |  7 +++++++
- 4 files changed, 33 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-index 9dcc7184817d5..0df26100c8f9c 100644
---- a/drivers/bus/mhi/host/boot.c
-+++ b/drivers/bus/mhi/host/boot.c
-@@ -487,10 +487,17 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
- 	 * device transitioning into MHI READY state
- 	 */
- 	if (mhi_cntrl->fbc_download) {
--		ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
--		if (ret) {
--			release_firmware(firmware);
--			goto error_fw_load;
-+		if (mhi_cntrl->fbc_image && fw_sz != mhi_cntrl->prev_fw_sz) {
-+			mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
-+			mhi_cntrl->fbc_image = NULL;
-+		}
-+		if (!mhi_cntrl->fbc_image) {
-+			ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
-+			if (ret) {
-+				release_firmware(firmware);
-+				goto error_fw_load;
-+			}
-+			mhi_cntrl->prev_fw_sz = fw_sz;
- 		}
- 
- 		/* Load the firmware into BHIE vec table */
-diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-index a9b1f8beee7bc..09b946b86ac46 100644
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -1173,8 +1173,9 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
- 		/*
- 		 * Allocate RDDM table for debugging purpose if specified
- 		 */
--		mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
--				     mhi_cntrl->rddm_size);
-+		if (!mhi_cntrl->rddm_image)
-+			mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
-+					     mhi_cntrl->rddm_size);
- 		if (mhi_cntrl->rddm_image) {
- 			ret = mhi_rddm_prepare(mhi_cntrl,
- 					       mhi_cntrl->rddm_image);
-@@ -1212,12 +1213,18 @@ void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
- 		mhi_cntrl->rddm_image = NULL;
- 	}
- 
-+	mhi_partial_unprepare_after_power_down(mhi_cntrl);
-+}
-+EXPORT_SYMBOL_GPL(mhi_unprepare_after_power_down);
-+
-+void mhi_partial_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
-+{
- 	mhi_cntrl->bhi = NULL;
- 	mhi_cntrl->bhie = NULL;
- 
- 	mhi_deinit_dev_ctxt(mhi_cntrl);
- }
--EXPORT_SYMBOL_GPL(mhi_unprepare_after_power_down);
-+EXPORT_SYMBOL_GPL(mhi_partial_unprepare_after_power_down);
- 
- static void mhi_release_device(struct device *dev)
- {
-diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
-index acd76e9392d31..f77cec79b5b80 100644
---- a/drivers/net/wireless/ath/ath11k/mhi.c
-+++ b/drivers/net/wireless/ath/ath11k/mhi.c
-@@ -460,12 +460,13 @@ void ath11k_mhi_stop(struct ath11k_pci *ab_pci, bool is_suspend)
- 	 * workaround, otherwise ath11k_core_resume() will timeout
- 	 * during resume.
- 	 */
--	if (is_suspend)
-+	if (is_suspend) {
- 		mhi_power_down_keep_dev(ab_pci->mhi_ctrl, true);
--	else
-+		mhi_partial_unprepare_after_power_down(ab_pci->mhi_ctrl);
-+	} else {
- 		mhi_power_down(ab_pci->mhi_ctrl, true);
--
--	mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
-+		mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
-+	}
- }
- 
- int ath11k_mhi_suspend(struct ath11k_pci *ab_pci)
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index 059dc94d20bb6..65a47c712b3a0 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -382,6 +382,7 @@ struct mhi_controller {
- 	const char *fw_image;
- 	const u8 *fw_data;
- 	size_t fw_sz;
-+	size_t prev_fw_sz;
- 	const char *edl_image;
- 	size_t rddm_size;
- 	size_t sbl_size;
-@@ -662,6 +663,12 @@ void mhi_power_down_keep_dev(struct mhi_controller *mhi_cntrl, bool graceful);
-  */
- void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl);
- 
-+/**
-+ * mhi_partial_unprepare_after_power_down - Free any allocated memory after power down partially
-+ * @mhi_cntrl: MHI controller
-+ */
-+void mhi_partial_unprepare_after_power_down(struct mhi_controller *mhi_cntrl);
-+
- /**
-  * mhi_pm_suspend - Move MHI into a suspended state
-  * @mhi_cntrl: MHI controller
--- 
-2.43.0
+> 
+>>
+>> Co-developed-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+>> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+>> ---
+>>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 104 ++++++++++++------------
+>>   1 file changed, 50 insertions(+), 54 deletions(-)
+>>
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>> index 0089ee80f852..3a80c2c110d2 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>> @@ -1757,32 +1757,6 @@ static void qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg
+>>   	qmp_ufs_init_all(qmp, &cfg->tbls_hs_b);
+>>   }
+>>
+>> -static int qmp_ufs_com_init(struct qmp_ufs *qmp)
+>> -{
+>> -	const struct qmp_phy_cfg *cfg = qmp->cfg;
+>> -	void __iomem *pcs = qmp->pcs;
+>> -	int ret;
+>> -
+>> -	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
+>> -	if (ret) {
+>> -		dev_err(qmp->dev, "failed to enable regulators, err=%d\n", ret);
+>> -		return ret;
+>> -	}
+>> -
+>> -	ret = clk_bulk_prepare_enable(qmp->num_clks, qmp->clks);
+>> -	if (ret)
+>> -		goto err_disable_regulators;
+>> -
+>> -	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], SW_PWRDN);
+>> -
+>> -	return 0;
+>> -
+>> -err_disable_regulators:
+>> -	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
+>> -
+>> -	return ret;
+>> -}
+>> -
+>>   static int qmp_ufs_com_exit(struct qmp_ufs *qmp)
+>>   {
+>>   	const struct qmp_phy_cfg *cfg = qmp->cfg;
+>> @@ -1800,41 +1774,27 @@ static int qmp_ufs_power_on(struct phy *phy)
+>>   {
+>>   	struct qmp_ufs *qmp = phy_get_drvdata(phy);
+>>   	const struct qmp_phy_cfg *cfg = qmp->cfg;
+>> +	void __iomem *pcs = qmp->pcs;
+> 
+> This is only used once, perhaps not worth a local variable to save 5
+> characters on that line?
+> 
+>>   	int ret;
+>> -	dev_vdbg(qmp->dev, "Initializing QMP phy\n");
+>> -
+>> -	if (cfg->no_pcs_sw_reset) {
+>> -		/*
+>> -		 * Get UFS reset, which is delayed until now to avoid a
+>> -		 * circular dependency where UFS needs its PHY, but the PHY
+>> -		 * needs this UFS reset.
+>> -		 */
+>> -		if (!qmp->ufs_reset) {
+>> -			qmp->ufs_reset =
+>> -				devm_reset_control_get_exclusive(qmp->dev,
+>> -								 "ufsphy");
+>> -
+>> -			if (IS_ERR(qmp->ufs_reset)) {
+>> -				ret = PTR_ERR(qmp->ufs_reset);
+>> -				dev_err(qmp->dev,
+>> -					"failed to get UFS reset: %d\n",
+>> -					ret);
+>> -
+>> -				qmp->ufs_reset = NULL;
+>> -				return ret;
+>> -			}
+>> -		}
+>>
+>> -		ret = reset_control_assert(qmp->ufs_reset);
+>> -		if (ret)
+>> -			return ret;
+>> +	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
+>> +	if (ret) {
+>> +		dev_err(qmp->dev, "failed to enable regulators, err=%d\n", ret);
+> 
+> regulator_bulk_enable() will already have printed a more useful error
+> message, letting you know which of the vregs[] it was that failed to
+> enable.
+> 
+>> +		return ret;
+>>   	}
+>>
+>> -	ret = qmp_ufs_com_init(qmp);
+>> +	ret = clk_bulk_prepare_enable(qmp->num_clks, qmp->clks);
+>>   	if (ret)
+>> -		return ret;
+>> +		goto err_disable_regulators;
+>> +
+>> +	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], SW_PWRDN);
+>>
+>>   	return 0;
+>> +
+>> +err_disable_regulators:
+>> +	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
+>> +
+>> +	return ret;
+>>   }
+>>
+>>   static int qmp_ufs_phy_calibrate(struct phy *phy)
+>> @@ -1846,6 +1806,10 @@ static int qmp_ufs_phy_calibrate(struct phy *phy)
+>>   	unsigned int val;
+>>   	int ret;
+>>
+>> +	ret = reset_control_assert(qmp->ufs_reset);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>>   	qmp_ufs_init_registers(qmp, cfg);
+>>
+>>   	ret = reset_control_deassert(qmp->ufs_reset);
+>> @@ -2088,6 +2052,34 @@ static int qmp_ufs_parse_dt(struct qmp_ufs *qmp)
+>>   	return 0;
+>>   }
+>>
+>> +static int qmp_ufs_get_phy_reset(struct qmp_ufs *qmp)
+>> +{
+>> +	const struct qmp_phy_cfg *cfg = qmp->cfg;
+>> +	int ret;
+>> +
+>> +	if (!cfg->no_pcs_sw_reset)
+>> +		return 0;
+>> +
+>> +	/*
+>> +	 * Get UFS reset, which is delayed until now to avoid a
+>> +	 * circular dependency where UFS needs its PHY, but the PHY
+>> +	 * needs this UFS reset.
+> 
+> This is invoked only once, from qcom_ufs_probe(), so it doesn't seem
+> accurate anymore. How come this is no longer needed? Please describe
+> what changed int he commit message.
+> 
+>> +	 */
+>> +	if (!qmp->ufs_reset) {
+>> +		qmp->ufs_reset =
+>> +		devm_reset_control_get_exclusive(qmp->dev, "ufsphy");
+> 
+> The line break here is really weird, are you sure checkpatch --strict
+> didn't complain about this one?
+> 
+>> +
+>> +		if (IS_ERR(qmp->ufs_reset)) {
+>> +			ret = PTR_ERR(qmp->ufs_reset);
+>> +			dev_err(qmp->dev, "failed to get PHY reset: %d\n", ret);
+> 
+> return dev_err_probe(qmp->dev, PTR_ERR(qmp->ufs_reset), "failed to...: %pe\n", qmp->ufs_reset);
+> 
+> While being more succinct, it also stores the reason for failing the
+> probe so that you can find it in /sys/kernel/debug/devices_deferred
+> 
+>> +			qmp->ufs_reset = NULL;
+> 
+> Use a local variable if you're worried about someone accessing the stale
+> error code after returning here.
+> 
+> Regards,
+> Bjorn
+> 
+>> +			return ret;
+>> +		}
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>>   static int qmp_ufs_probe(struct platform_device *pdev)
+>>   {
+>>   	struct device *dev = &pdev->dev;
+>> @@ -2114,6 +2106,10 @@ static int qmp_ufs_probe(struct platform_device *pdev)
+>>   	if (ret)
+>>   		return ret;
+>>
+>> +	ret = qmp_ufs_get_phy_reset(qmp);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>>   	/* Check for legacy binding with child node. */
+>>   	np = of_get_next_available_child(dev->of_node, NULL);
+>>   	if (np) {
+>> --
+>> 2.48.1
+>>
+>>
 
 
