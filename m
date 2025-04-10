@@ -1,211 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-53764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCB09A839A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 08:44:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBC74A839A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 08:44:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1BB053A1DB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 06:41:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A88061B61E6C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 06:44:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F4AE20458B;
-	Thu, 10 Apr 2025 06:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E95682040B3;
+	Thu, 10 Apr 2025 06:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dKOfMOT3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mzw1lRdP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBD42040B3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 06:41:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418DF1DFE8;
+	Thu, 10 Apr 2025 06:43:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744267309; cv=none; b=IhBJaBX+0h291q1tjIY7WdMnvSCwwlOUvd1+JGXloY+VHW8sAxiwVdOk+9b9QmI2nuGaolPws8w/xyD8EOEW64QkyKi+qMtKK5SWt5xbBdohdGpXpbdZgKS+lfcYaZWWF0KrqeWWyIQxJxxm4y1lvnTBjbTwGzwU14V0NfT3SWg=
+	t=1744267439; cv=none; b=mZpw3G932DjevNMKKrLy6rGBLyFQfDXuLwMAaA6D9epAoMPEt07NMojVAgsZGkhPcbXzx/Cbw8zD5130Gm09jE4XUSY0oWZqNhHWm652Komkw+K4WFsjey9KQ1PUHUUTcsDJtNYjgSoeblAdlzUfCmkju5fS82d/5A7dZNJnAFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744267309; c=relaxed/simple;
-	bh=eKWdlsR+gZq/WMnwiDfDDPjy/aOdQaKP5Tog0oX8hXI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R2Cb88mXuKumBx64nBTjBGptMjj2spt5QLUkDqsU4Xi3hX0DFfsgp0bFPelMh4tf1n+e+8aJjszq+4UWtKVDSR/SSCvkkQjFSBYe+U79DIv4QaxsqE8iK8XG8XBiLbwR5nB6WNw0e/Juhoj64dRP/DoLndKfAoC5A2SJoY6lYQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dKOfMOT3; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ac6e8cf9132so89839966b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Apr 2025 23:41:47 -0700 (PDT)
+	s=arc-20240116; t=1744267439; c=relaxed/simple;
+	bh=YV128qhGuAyvX2XLDTOXX2NTQVmvho5pgSBUUl0uM3I=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ah04Gh5axr6Uwg8BAuppn8MUMB+iTKqIA8S8P4M+ZVIEw8YTFsXsdscG8Q5Mpe3/y0LIYaraLc5VVDhdB5tLJYS5blLwfYrUIqH8kM+CDrLNAfZXCTulhGp54TJmt+NXzMORtykOpywDMxvvCoch/Qf0eNN8YzoS+l1BXBw+x0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mzw1lRdP; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43d0618746bso3004395e9.2;
+        Wed, 09 Apr 2025 23:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744267306; x=1744872106; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sbl05XNjXwXIwA7PmbRBkyTSHc10MQi0pg5RfqUxRjQ=;
-        b=dKOfMOT3zf19q3/SaMp71AMOwSWNO+Nymp479U1orkzGBNoTOt6WawgFtJ6autr5QO
-         EESJW7gb6g59d1iRQ2+BPF2n63YmmYpo9hJfAH9Hvc/9n3uoZoeb/AwD32pmzxpBsHws
-         eV2yZM6VnR78EFytfqT/yyBBms9rJ0p7Blo0ZJ0eiODVswhjE3reinDNrEiNIVZVwWF7
-         zMNAk9xdevU4bRWduYuOu5Gv2Kx0DVOvYWSdMJY8oznb8N4ELKGxFEpts/SwsLaa/Xhu
-         u9fxOhvRYoO8OHI7O6U/6HDCqVsdLgLsfg9Xfs/due7Vbt5NgDBp8AHTr5SHKQd0EbZt
-         9vgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744267306; x=1744872106;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1744267437; x=1744872237; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Sbl05XNjXwXIwA7PmbRBkyTSHc10MQi0pg5RfqUxRjQ=;
-        b=pIMGW2G6HTTk+DyU/b1j0t9BhHgkSnd+ZhOHUrdaWXTcdXebVmgMviMA7wI/GpbiPM
-         /1ujvbwvTSrcH1kOOZwh0v9gcXnhy3zv0rzQMRDNr6+VCJI2KVEo4ME5zTFgxrKkYb8A
-         EHqBbF1uHl1wn3oa/rpZ9M3ufo55fHl4QymTpUnmXZUFu4C11pazrvqmEc5oCgcluj0B
-         OZTlqbkkUzM5cpbFZqn7bOcIBxVwJknqk3nnXzcHav9NigWebr/ES5CbhyLLTNHJ0lJV
-         b7ss4Yt06IM5ZfFrhNVDRhczIp/QTv3TP2GT2cd21DzimJYON0ahv/qsV0cf8vIhaamf
-         f2cA==
-X-Forwarded-Encrypted: i=1; AJvYcCWBc+x9gOyNjySbzkWZYJFOd+EU8q98+fMDqnxdGL0F9pfiBBqr7pVHesE6fAKhWq5AL9DcBGOzqcwErRtF@vger.kernel.org
-X-Gm-Message-State: AOJu0YypMFMjZr9tsjCjXcNWe8BXcf5W90j9+2yAFggOjRqlVCZyv2Xk
-	ctt49+VGuLsQjgLypWuSveBzpRRF9rkufS/q/GH3GWSXuIs+P34Bz7vWa+pmgTQ=
-X-Gm-Gg: ASbGncuOnT64FH0qoW4gnOomYRPJZ79S/dnEweTyvNe5zbp7UwugqM8jbicjd49nOEk
-	uBSbp2adlAFM0o0AQQV+8d+GU34VNxTRb2/WREzcVF3MPgFCRGrwdqcUYaX9a6jOMyB3c0kbDOx
-	zHNiVpuLMpBV0Wd9Qa+3KR2MaiLgMhpit7T4Y+n1u4eB79vdZ8yBZ7w0mIi1aNh/PUpSC1KlwVc
-	sD4AwMdcUF8pJbAExAmRR0mm66a7jgPv5fN2OQLBAR3xJgGkDXxrGQn6QiVBXlsh76LrGT4lRcP
-	nc8umwv9v96xs0x4FYb2QNuWXhKaFia8Cv6J1wueQ+gPxogElSSd0g439l020w==
-X-Google-Smtp-Source: AGHT+IGIijzSQTIvNZFHk1vd6j481tQc4BPdHGyE68UEhUubBExhKjE2Tspefm3pBMUpCnsjgm2sQw==
-X-Received: by 2002:a17:907:3cc3:b0:ac3:afb1:dee7 with SMTP id a640c23a62f3a-acabd20d17dmr128884466b.28.1744267305615;
-        Wed, 09 Apr 2025 23:41:45 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef30:ae8a:4fb8:9c71:6be])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acaa1be9632sm221324866b.66.2025.04.09.23.41.44
+        bh=YV128qhGuAyvX2XLDTOXX2NTQVmvho5pgSBUUl0uM3I=;
+        b=Mzw1lRdPo02QVuh9s+UZh5mH9ugApObNp6FmDb9HaL2JEjYeCFo66Yr8OX4+lhXoNd
+         k0UO0ajbnvt1fpiS+YCzfw/U5YVZmImdNfzv+5LkLMQ6JAkFWllw3iGVMsRpwqOBgjs4
+         EGJSttMp2nbIhyrfQtCm9u7lFRMasSF0y8d1zBUD3U1PJImgeZQ9YgqKm8ySec8a1l0h
+         9Ggy6X5S1SlkodS0cntTiutBVT3tzA6UPXXSeRR5sHuKfwOS3LVOELfLN7eFjjblXYK9
+         SMfp8+V6OUES6T0R8SBOLwKmY05iMzv3jW8jaY75uPh9GLPs893BBsjlkHeEiddlzz90
+         Vdog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744267437; x=1744872237;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YV128qhGuAyvX2XLDTOXX2NTQVmvho5pgSBUUl0uM3I=;
+        b=YfJTBGTGEy7Q7v8tc4GnHGRigZ5Nj9PR8cwD0ezpl1PQPNr8TjNBrhf1Lpoq7Y1IyG
+         l7gMnhfTDPKJx1SzdysKcmsmL1zqBl1Qkmehrc57WExJ1540w8Y3QPQcnG6YN0Gy3/I7
+         yOgLxdscsAZYmpWIlr9C2N4EzbwOvmO9O0jKSJr7U+nf9HoGgARzXu9UUtmkB8GAQxkG
+         7KNl7PEkLqAEz4BuEjIn9DkduKm0FqR2kOmLyANEC4Nbufmqh1StDPeaxt98HatimpDt
+         bZyfKC5iyefuP8/+JxCybPr1nRHqmD0rJcZ960fs2zcBtIQjnpkZchIXLz+x2SynyUkk
+         DZkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUgp8WkJTzE3nSLB7T6f7atAZ4Wbzco962VGypLUqQfE4oepLhe0PHOogUorncZRbtwKE8fDovkbuQb29B80UGHpAU=@vger.kernel.org, AJvYcCUoVbMYjuLYCP6ocZ3Xw99kgZ0ib4HcscbWAPp883SZlBIS6165vV7i8OtSXVVF4lHySJB8rZKme9N88NMo@vger.kernel.org, AJvYcCV1IwHCAx60aqa32kXYNxIcJsVHZU8LuGbuWLRa0zUeOORxSdUqC/Rib9Rc0/y3VDAb0idY29QTk8c7CC1m@vger.kernel.org, AJvYcCW8D9vJNrD0JHqk73lhxiGG9WIvj7h/akezFPbDcPmA6iWOkgqQgxJwLX+LVSx4GR4zJftAPBU9G4c=@vger.kernel.org, AJvYcCWDZuKnzwYV4cKXQJGtgECIJpQxmTK8zGZ5eRceKQh2JSKnA6NiIB3xlY2h6iDEsI32Y+11REjRnr5Dqg==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMgZlRw3i5Kl6Jg1lFiEKISzRhrAeZmIl8MclK7da2q1RHIG0i
+	nsAaew9FpQoEzzM/D+vt5NVamvL3eJQDZqgxLxwXPyxMh6IQyTLY
+X-Gm-Gg: ASbGnctjZtwyMlrII+VGRNGcQjICGgm+HknT40zVYsbeBYSunMpjWWWIyo/kC+uCvVj
+	MgBjeB70k+kNM/V3vXqTU8DJ0IZrcNtjn4pNIXa3OXkOLnz7TVj34hwxq6xPifP+rQFtkRrP5EC
+	YpBjZMwwHuyP6wkIqPhpXF9I2sB6JlKNKS0w2bgqZIOTBHipxUOplAnTKDVTVw2E7as4EQTuHDP
+	Qd/JfL9qY6/4RDyUWLeYCsucKTlMw0PjdafoJ3x9J9D7ysqUUHEtcxxs8SpMBhIZVV2CGu4DmPo
+	xdaQz8h6o2vXjgxMRoGYw2Am3a5pgNjY4+KcDcNmNGAczwSnojstgO9e6BsnGwX9gg44qu5i7A4
+	d602CB6ox9LGu4pqL
+X-Google-Smtp-Source: AGHT+IEL1gPJzOAzRp7flPkyN4Ef+Ndtjxrjlvobznu4GMFiYPht20jH1k+dVvg8c3EBb+I0DiJViw==
+X-Received: by 2002:a05:600c:3512:b0:43c:f689:dd with SMTP id 5b1f17b1804b1-43f2d7e9229mr11997625e9.19.1744267436516;
+        Wed, 09 Apr 2025 23:43:56 -0700 (PDT)
+Received: from jernej-laptop.localnet (86-58-6-171.dynamic.telemach.net. [86.58.6.171])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43f207cb692sm46662105e9.40.2025.04.09.23.43.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Apr 2025 23:41:45 -0700 (PDT)
-Date: Thu, 10 Apr 2025 08:41:40 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Wesley Cheng <quic_wcheng@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, mathias.nyman@intel.com, perex@perex.cz,
-	conor+dt@kernel.org, dmitry.torokhov@gmail.com, corbet@lwn.net,
-	broonie@kernel.org, lgirdwood@gmail.com, robh@kernel.org,
-	krzk+dt@kernel.org, pierre-louis.bossart@linux.intel.com,
-	Thinh.Nguyen@synopsys.com, tiwai@suse.com,
-	gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
-	linux-input@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org
-Subject: Re: [PATCH v38 26/31] ASoC: qcom: qdsp6: Fetch USB offload mapped
- card and PCM device
-Message-ID: <Z_doJMXjSFHt6eAp@linaro.org>
-References: <20250409194804.3773260-1-quic_wcheng@quicinc.com>
- <20250409194804.3773260-27-quic_wcheng@quicinc.com>
+        Wed, 09 Apr 2025 23:43:56 -0700 (PDT)
+From: Jernej =?UTF-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+ Samuel Holland <samuel@sholland.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Vincenzo Frascino <vincenzo.frascino@arm.com>,
+ Liviu Dudau <liviu.dudau@arm.com>, Sudeep Holla <sudeep.holla@arm.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+ Stephen Boyd <sboyd@kernel.org>, zhouyanjie@wanyeetech.com,
+ Conor Dooley <conor@kernel.org>, Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+ Steen Hegelund <Steen.Hegelund@microchip.com>,
+ Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com,
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Heiko Stuebner <heiko@sntech.de>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>, "Rob Herring (Arm)" <robh@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-mips@vger.kernel.org,
+ imx@lists.linux.dev, linux-rockchip@lists.infradead.org,
+ linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org
+Subject:
+ Re: [PATCH 01/19] arm64: dts: allwinner: h5/h6: Drop spurious
+ 'clock-latency-ns' properties
+Date: Thu, 10 Apr 2025 08:43:52 +0200
+Message-ID: <4999502.31r3eYUQgx@jernej-laptop>
+In-Reply-To: <20250403-dt-cpu-schema-v1-1-076be7171a85@kernel.org>
+References:
+ <20250403-dt-cpu-schema-v1-0-076be7171a85@kernel.org>
+ <20250403-dt-cpu-schema-v1-1-076be7171a85@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250409194804.3773260-27-quic_wcheng@quicinc.com>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-On Wed, Apr 09, 2025 at 12:47:59PM -0700, Wesley Cheng wrote:
-> The USB SND path may need to know how the USB offload path is routed, so
-> that applications can open the proper sound card and PCM device.  The
-> implementation for the QC ASoC design has a "USB Mixer" kcontrol for each
+Dne petek, 4. april 2025 ob 04:59:22 Srednjeevropski poletni =C4=8Das je Ro=
+b Herring (Arm) napisal(a):
+> 'clock-latency-ns' is not a valid property for CPU nodes. It belongs in
+> OPP table (which has it). Drop them from the CPU nodes.
+>=20
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 
-Is this "USB_RX Audio Mixer" now?
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-> possible FE (Q6ASM) DAI, which can be utilized to know which front end link
-> is enabled.
-> 
-> When an application/userspace queries for the mapped offload devices, the
-> logic will lookup the USB mixer status though the following path:
-> 
-> MultiMedia* <-> MM_DL* <-> USB Mixer*
+Best regards,
+Jernej
 
-^
 
-> 
-> The "USB Mixer" is a DAPM widget, and the q6routing entity will set the
 
-^
-
-> DAPM connect status accordingly if the USB mixer is enabled.  If enabled,
-> the Q6USB backend link can fetch the PCM device number from the FE DAI
-> link (Multimedia*).  With respects to the card number, that is
-> straightforward, as the ASoC components have direct references to the ASoC
-> platform sound card.
-> 
-> An example output can be shown below:
-> 
-> Number of controls: 9
-> name                                    value
-> Capture Channel Map                     0, 0 (range 0->36)
-> Playback Channel Map                    0, 0 (range 0->36)
-> Headset Capture Switch                  On
-> Headset Capture Volume                  1 (range 0->4)
-> Sidetone Playback Switch                On
-> Sidetone Playback Volume                4096 (range 0->8192)
-> Headset Playback Switch                 On
-> Headset Playback Volume                 20, 20 (range 0->24)
-> USB Offload Playback Route PCM#0        0, 1 (range -1->255)
-> 
-> The "USB Offload Playback Route PCM#*" kcontrol will signify the
-> corresponding card and pcm device it is offload to. (card#0 pcm - device#1)
-> If the USB SND device supports multiple audio interfaces, then it will
-> contain several PCM streams, hence in those situations, it is expected
-> that there will be multiple playback route kcontrols created.
-> 
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> ---
->  sound/soc/qcom/qdsp6/q6usb.c | 98 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 98 insertions(+)
-> 
-> diff --git a/sound/soc/qcom/qdsp6/q6usb.c b/sound/soc/qcom/qdsp6/q6usb.c
-> index 6634e132787e..274c251e84dd 100644
-> --- a/sound/soc/qcom/qdsp6/q6usb.c
-> +++ b/sound/soc/qcom/qdsp6/q6usb.c
-> @@ -134,6 +134,103 @@ static int q6usb_audio_ports_of_xlate_dai_name(struct snd_soc_component *compone
->  	return ret;
->  }
->  
-> +static int q6usb_get_pcm_id_from_widget(struct snd_soc_dapm_widget *w)
-> +{
-> +	struct snd_soc_pcm_runtime *rtd;
-> +	struct snd_soc_dai *dai;
-> +
-> +	for_each_card_rtds(w->dapm->card, rtd) {
-> +		dai = snd_soc_rtd_to_cpu(rtd, 0);
-> +		/*
-> +		 * Only look for playback widget. RTD number carries the assigned
-> +		 * PCM index.
-> +		 */
-> +		if (dai->stream[0].widget == w)
-> +			return rtd->id;
-> +	}
-> +
-> +	return -1;
-> +}
-> +
-> +static int q6usb_usb_mixer_enabled(struct snd_soc_dapm_widget *w)
-> +{
-> +	struct snd_soc_dapm_path *p;
-> +
-> +	/* Checks to ensure USB path is enabled/connected */
-> +	snd_soc_dapm_widget_for_each_sink_path(w, p)
-> +		if (!strcmp(p->sink->name, "USB Mixer") && p->connect)
-> +			return 1;
-
-I assume this also needs to be changed. Please make sure you test the
-series again. :)
-
-> +
-> +	return 0;
-> +}
-> +
-> +static int q6usb_get_pcm_id(struct snd_soc_component *component)
-> +{
-> +	struct snd_soc_dapm_widget *w;
-> +	struct snd_soc_dapm_path *p;
-> +	int pidx;
-> +
-> +	/*
-> +	 * Traverse widgets to find corresponding FE widget.  The DAI links are
-> +	 * built like the following:
-> +	 *    MultiMedia* <-> MM_DL* <-> USB Mixer*
-
-^
-
-Thanks,
-Stephan
 
