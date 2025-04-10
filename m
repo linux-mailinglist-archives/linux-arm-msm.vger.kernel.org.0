@@ -1,306 +1,505 @@
-Return-Path: <linux-arm-msm+bounces-53745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C91AA835F4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 03:49:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59891A8366E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 04:24:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E3F76171514
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 01:48:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 079AF4A2DD6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 02:22:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A90278F34;
-	Thu, 10 Apr 2025 01:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D154A1D2F53;
+	Thu, 10 Apr 2025 02:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TO9NKiTx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GB6AY4dQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E94BA38
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 01:48:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17AC18C004;
+	Thu, 10 Apr 2025 02:21:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744249727; cv=none; b=e4y4PTsoluKBHVaYLVlhM2vpAXnBvDv+DDE5bfORHNSnP+2rzQyrZIuh+Pa3cEsCfzEX0eMxjFoKmr28Ae6cQ3tIBGGS4PBNnTc3Z345EwFBXKvZv7t6mAngf33pDL97fxjlFcQkKhVH1uM+CL3oVzdmue5ertxu/sMmTPyu+so=
+	t=1744251696; cv=none; b=RAJ1OCK9G3UPSnxTJ4Z+0hdQbVGN3HQNWG/AZC3biKcNk6FEOeMFPgvCnVeEgf1SGnu4f5fHegxPdU6eFk1M92NJpQuSk+hgXuSDRN5ev/ouM9RvPze50C72wchpwwHG6BAM6w4EBR4ZPQ1/oT5RhQtz6uIeojFbF63/74lsbmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744249727; c=relaxed/simple;
-	bh=ztyuZYD2QiwTeaHwR3oqEp34vmJD2uUrPKv6pNLOgBg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b02TFVRwRtJpCnkpX0VRhqwtY8jJflvs4Hs2TQO51CHA6hRPZVY+Fo7gG+fwI3r+7zKdwVzaz0aN+EHH1neUzV4akqXpL0uGx3g/+nAb/rSXP/vd3rqU/qVAFJqtv5GwI1U8VLDwe1PJj53knzVruLJt0MLF/+kQjYmXjs6a3Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TO9NKiTx; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 539HDpi2030960
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 01:48:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zKhnfdV3GEFVHaKgfNhvY0tGFR+eogY4Uoy9iYfC7pU=; b=TO9NKiTxT+KRwnz2
-	QigVSd7ytIopiNDdF/jXyAAt61dTRhKBdXqf2i8D0k5p1Noj4zdAZWQNfg2gjGgX
-	j2ZFtkBYj0NAnek1nDr+gXRu31N40VEo1ZneLLOeNMvgmmfM53oF81b0naXZjbUS
-	Mv7cEVuF+q4jYwKUA65F3kxcFuks2tHXYGYe6o64q+XgWPYsvgZIOX+vBSXQhP9v
-	g1TGIM7Udw+d7XC42pXfxzXLRjJKJyJMluaU9US9ZgWRJaBgoNiO0vPqAd0CoqIQ
-	vw/lT4MbPwrVIqCmVfW1nBO2S8fFrnOp5GGk595YXfmxBjx/sbPKaa0AJXPS0sRc
-	LguVhg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twbun9e3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 01:48:44 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c5f7210995so63804585a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Apr 2025 18:48:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744249723; x=1744854523;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zKhnfdV3GEFVHaKgfNhvY0tGFR+eogY4Uoy9iYfC7pU=;
-        b=BcMHyBNquj/Vod2woYC+KVtvoXRbthhuZREAfZiGkqZbOJhK5X2QMayEcxwNPt0mIL
-         OF+2F/yzISqvvKe962J9e0YCrAAZuSH+VEqtJ7WBwtw1eRFvVU+4/UlPxwIk5Ze+XgYa
-         JEHC47ZtmKvlxPT+T6UNS++Zf6DdsUd4I9oZnuvdNxDU+DTz/zuanSrZNvtLmamxZD9r
-         E8clKvWiyXKzBAcUvIv4RrEot77bbM4knlTtl+Fxhhz4YN9OP3Cy22Ed6Oux8WtdFf94
-         AZZT7w8rWYmg08fmi8h9IupNp9yooEBHRFELIUnxeD02aaEvu7hc0sEVsIzlFOaUE5pT
-         IQTA==
-X-Forwarded-Encrypted: i=1; AJvYcCXSYlkASHlZw7frv+9A5bHN/A/2WIchhQjF8HcnY3JTU0DfKzf1KfCNULXmw17Wc+KCsJ6tYY/7Tg/ZQdeo@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywh/YJcY59TXmR++d+/oTadUfAz8OJypOGxLrwvD0PoD5qmuQrx
-	sg3Vvs52AWSjhPLHq0RWZ+5vC9HPx5PstxTQPwnEIGnkKNA3EuLGQL93hV8x1CWL1nSLsoqh3EJ
-	azHGGD6QBl52HoXI9s2gMf42hJDrfAh6fpyZgx8gs0kJprI4C4zLNMjZ/pawFWfAw
-X-Gm-Gg: ASbGncvu3oG7+t77WtC+toFHJAYkVtUwBoW5k+qMW0rpP2FDUrlNw4Z5Tewoe3o9tiA
-	QclxbPwmv+l2Oj2Jx2mVr0FMG3/5lR8sTu2QPDPo3GlosHeIoi2+A+2KZR+wgsyNm4KN5dF81VZ
-	VFIuHXx4l2lPQAgM5g6fdAhX2qk0u1j7g+MIRLsB5fh++TJeN28YoPLfpwOymOCoxHX/eflBWc9
-	VQO9cZYBdAXHefROQIYbK655ApRxjQMjL6chzyoeoTH9PZVg4UB6v4KT0rxqK9BjYoCn4ZhsNJ3
-	3zZqw3d3vUPGG+Rg3yNHgwWvUM2zcf5X+QXmV0Ezl4MBdArtUnzEktmnsqPfmrRtPmI=
-X-Received: by 2002:a05:620a:d87:b0:7c3:b7c2:acf6 with SMTP id af79cd13be357-7c7a7675c27mr147094485a.15.1744249723357;
-        Wed, 09 Apr 2025 18:48:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGVpTVwea76PwuaFk+JPjY47A66yas3RifEpD1NxW5A88uPSJBzRF7DiQ+Tyo4KIZTq6M1MLg==
-X-Received: by 2002:a05:620a:d87:b0:7c3:b7c2:acf6 with SMTP id af79cd13be357-7c7a7675c27mr147091885a.15.1744249722981;
-        Wed, 09 Apr 2025 18:48:42 -0700 (PDT)
-Received: from [10.187.209.180] (37-33-188-210.bb.dnainternet.fi. [37.33.188.210])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54d3ce4da20sm18066e87.0.2025.04.09.18.48.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Apr 2025 18:48:40 -0700 (PDT)
-Message-ID: <c87c88be-211b-424e-b033-496e1e877d10@oss.qualcomm.com>
-Date: Thu, 10 Apr 2025 04:48:39 +0300
+	s=arc-20240116; t=1744251696; c=relaxed/simple;
+	bh=wrJ3YJUyBIK8cOHIhf2vdxkAWOY+2F6yP5BowSrkZRM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=helbPDPLDQPbjitKVIk950etFu6C2sO+kaWf5xqgNCLoJJwkJ0/aRzeIxCKOLQdXmpSVPjZKiSuJDsIcmpgEuUrdeCNaIdr85yDfmm6cYpQ6rcjpQCdEp9zEeyND9AtTCa9rYqM4B0uplbsreXP25u0Plq94yjWYHrWsD07V+OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GB6AY4dQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1102C4CEE2;
+	Thu, 10 Apr 2025 02:21:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744251696;
+	bh=wrJ3YJUyBIK8cOHIhf2vdxkAWOY+2F6yP5BowSrkZRM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GB6AY4dQdlaK4h8PSq+U1CcrrimnlReKEA/kc6R6up48CyXv2NnZsCilNaJxP/9S3
+	 VLjwZ1Do01zkIAFEVWmRmRjkH/R4uFhcEI2B7uLxi40bqt9QSsN2DZzFrZJ6gN/tVx
+	 tvfRSVbGJkwcLbmk8G+Ypap44NtIHR1mdfGl7hBy3Y1MtNteIFm89W8rZoqgcTURfa
+	 ehASmFI5Co5Har2yM0dfdoU+srDeX50ajCTS4WLgZAHXAewV2vjKwaozf9/wBTviWi
+	 CJiVwO9qkk0e+7iQq8CtJfZhHG1HQsP14oWBMgpKBDST1yY0evFawyZaCiqltlcbKA
+	 GIePBtoESZF1A==
+Date: Wed, 9 Apr 2025 21:21:33 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Kees Cook <kees@kernel.org>, 
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>, Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH 1/4] soc: qcom: Expose DDR data from SMEM
+Message-ID: <opohwkaqgircxxmnizlxfec6dgba65a6uvdue6dgbhwvkmmyyc@5ia2michtnns>
+References: <20250409-topic-smem_dramc-v1-0-94d505cd5593@oss.qualcomm.com>
+ <20250409-topic-smem_dramc-v1-1-94d505cd5593@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] drm/msm/dp: Introduce link training per-segment
- for LTTPRs
-To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        laurentiu.tudor1@dell.com, abel.vesa@linaro.org, johan@kernel.org
-References: <20250311234109.136510-1-alex.vinarskis@gmail.com>
- <20250311234109.136510-3-alex.vinarskis@gmail.com>
- <ytqnodci5xhkd4eqs3homrdwbv4zkaiewalfsbuclvkkaw754t@wpt3noqxlcvu>
- <CAMcHhXrZiO7PxyGsZY3upPzk=GeM4GVSmwUUWy2J+DYEe6ggVg@mail.gmail.com>
-Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <CAMcHhXrZiO7PxyGsZY3upPzk=GeM4GVSmwUUWy2J+DYEe6ggVg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: NiT_fWmWt1wWgaSld0JFSvOPHMAptTGx
-X-Proofpoint-ORIG-GUID: NiT_fWmWt1wWgaSld0JFSvOPHMAptTGx
-X-Authority-Analysis: v=2.4 cv=dbeA3WXe c=1 sm=1 tr=0 ts=67f7237c cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=gh1egkeLKbPt9jDVRuYeUQ==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8
- a=Hp4AkEBV2qiAwbuNyjgA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-09_06,2025-04-08_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 mlxlogscore=999 phishscore=0 mlxscore=0 spamscore=0
- malwarescore=0 clxscore=1015 adultscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504100012
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250409-topic-smem_dramc-v1-1-94d505cd5593@oss.qualcomm.com>
 
-On 09/04/2025 01:29, Aleksandrs Vinarskis wrote:
-> On Tue, 1 Apr 2025 at 02:55, Dmitry Baryshkov
-> <dmitry.baryshkov@oss.qualcomm.com> wrote:
->>
->> On Wed, Mar 12, 2025 at 12:38:04AM +0100, Aleksandrs Vinarskis wrote:
->>> DisplayPort requires per-segment link training when LTTPR are switched
->>> to non-transparent mode, starting with LTTPR closest to the source.
->>> Only when each segment is trained individually, source can link train
->>> to sink.
->>>
->>> Implement per-segment link traning when LTTPR(s) are detected, to
->>> support external docking stations. On higher level, changes are:
->>>
->>> * Pass phy being trained down to all required helpers
->>> * Run CR, EQ link training per phy
->>> * Set voltage swing, pre-emphasis levels per phy
->>>
->>> This ensures successful link training both when connected directly to
->>> the monitor (single LTTPR onboard most X1E laptops) and via the docking
->>> station (at least two LTTPRs).
->>>
->>> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
->>> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
->>> ---
->>>   drivers/gpu/drm/msm/dp/dp_ctrl.c    | 137 +++++++++++++++++++---------
->>>   drivers/gpu/drm/msm/dp/dp_ctrl.h    |   2 +-
->>>   drivers/gpu/drm/msm/dp/dp_display.c |   4 +-
->>>   3 files changed, 99 insertions(+), 44 deletions(-)
->>>
+On Wed, Apr 09, 2025 at 04:47:29PM +0200, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> Most modern Qualcomm platforms (>= SM8150) expose information about the
+> DDR memory present on the system via SMEM.
+> 
+> Details from this information is used in various scenarios, such as
+> multimedia drivers configuring the hardware based on the "Highest Bank
+> address Bit" (hbb), or the list of valid frequencies in validation
+> scenarios...
+> 
+> Add support for parsing v3-v5 version of the structs. Unforunately,
+> they are not versioned, so some elbow grease is necessary to determine
+> which one is present. See for reference:
+> 
+> v3: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/commit/1d11897d2cfcc7b85f28ff74c445018dbbecac7a
+> v4: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/commit/f6e9aa549260bbc0bdcb156c2b05f48dc5963203
+> v5: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/blob/uefi.lnx.4.0.r31-rel/QcomModulePkg/Include/Protocol/DDRDetails.h?ref_type=heads
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[...]
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
->>> @@ -1129,18 +1144,19 @@ static int msm_dp_ctrl_link_train_1(struct msm_dp_ctrl_private *ctrl,
->>>        if (ret)
->>>                return ret;
->>>        msm_dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_1 |
->>> -             DP_LINK_SCRAMBLING_DISABLE);
->>> +             DP_LINK_SCRAMBLING_DISABLE, dp_phy);
->>>
->>> -     ret = msm_dp_ctrl_update_vx_px(ctrl);
->>> +     msm_dp_link_reset_phy_params_vx_px(ctrl->link);
->>> +     ret = msm_dp_ctrl_update_phy_vx_px(ctrl, dp_phy);
->>>        if (ret)
->>>                return ret;
->>>
->>>        tries = 0;
->>>        old_v_level = ctrl->link->phy_params.v_level;
->>>        for (tries = 0; tries < maximum_retries; tries++) {
->>> -             drm_dp_link_train_clock_recovery_delay(ctrl->aux, ctrl->panel->dpcd);
->>> +             fsleep(delay_us);
->>>
->>> -             ret = msm_dp_ctrl_read_link_status(ctrl, link_status);
->>> +             ret = drm_dp_dpcd_read_phy_link_status(ctrl->aux, dp_phy, link_status);
->>
->> Please rebase this code on top of drm-misc-next.
-> 
-> What is the relation of drm-misc-next to linux-next? When rebasing on
-> top of drm-misc-next, I lose all displays including internal one. Same
-> if just build drm-misc-next without this series with config imported
-> from linux-next. I could of course address comments, test on
-> linux-next and then rebase before submitting, but that sounds wrong.
+Regards,
+Bjorn
 
-Usually drm-misc-next is a part of the linux-next. Except the time 
-between -rc6 (or -rc7) and -rc1, when the drm-misc-next gets new 
-patches, but they are not propagated to the linux-next.
-
-As we are past -rc1, linux-next should be getting drm-misc-next as 
-usual. So, please just rebase onto the linux-next. Be sure to account 
-for linux-next
-
+> ---
+>  drivers/soc/qcom/Makefile     |   3 +-
+>  drivers/soc/qcom/smem.c       |  14 ++-
+>  drivers/soc/qcom/smem.h       |   9 ++
+>  drivers/soc/qcom/smem_dramc.c | 287 ++++++++++++++++++++++++++++++++++++++++++
+>  include/linux/soc/qcom/smem.h |   4 +
+>  5 files changed, 315 insertions(+), 2 deletions(-)
 > 
-> ```
-> auxiliary aux_bridge.aux_bridge.0: deferred probe pending:
-> aux_bridge.aux_bridge: failed to acquire drm_bridge
-> auxiliary aux_bridge.aux_bridge.1: deferred probe pending:
-> aux_bridge.aux_bridge: failed to acquire drm_bridge
-> ```
+> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+> index acbca2ab5cc2a9ab3dce1ff38efd048ba2fab31e..7227f648893d047d7de8819dc159554af6a7b817 100644
+> --- a/drivers/soc/qcom/Makefile
+> +++ b/drivers/soc/qcom/Makefile
+> @@ -23,7 +23,8 @@ obj-$(CONFIG_QCOM_RPMH)		+= qcom_rpmh.o
+>  qcom_rpmh-y			+= rpmh-rsc.o
+>  qcom_rpmh-y			+= rpmh.o
+>  obj-$(CONFIG_QCOM_SMD_RPM)	+= rpm-proc.o smd-rpm.o
+> -obj-$(CONFIG_QCOM_SMEM) +=	smem.o
+> +qcom_smem-y			+= smem.o smem_dramc.o
+> +obj-$(CONFIG_QCOM_SMEM) +=	qcom_smem.o
+>  obj-$(CONFIG_QCOM_SMEM_STATE) += smem_state.o
+>  CFLAGS_smp2p.o := -I$(src)
+>  obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
+> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+> index 59281970180921b76312fd5020828edced739344..cfd6a9d531d3d2438d7577be0c594d3b960bd003 100644
+> --- a/drivers/soc/qcom/smem.c
+> +++ b/drivers/soc/qcom/smem.c
+> @@ -4,6 +4,7 @@
+>   * Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
+>   */
+>  
+> +#include <linux/debugfs.h>
+>  #include <linux/hwspinlock.h>
+>  #include <linux/io.h>
+>  #include <linux/module.h>
+> @@ -16,6 +17,8 @@
+>  #include <linux/soc/qcom/smem.h>
+>  #include <linux/soc/qcom/socinfo.h>
+>  
+> +#include "smem.h"
+> +
+>  /*
+>   * The Qualcomm shared memory system is a allocate only heap structure that
+>   * consists of one of more memory areas that can be accessed by the processors
+> @@ -284,6 +287,8 @@ struct qcom_smem {
+>  	struct smem_partition global_partition;
+>  	struct smem_partition partitions[SMEM_HOST_COUNT];
+>  
+> +	struct dentry *debugfs_dir;
+> +
+>  	unsigned num_regions;
+>  	struct smem_region regions[] __counted_by(num_regions);
+>  };
+> @@ -1230,17 +1235,24 @@ static int qcom_smem_probe(struct platform_device *pdev)
+>  
+>  	__smem = smem;
+>  
+> +	smem->debugfs_dir = smem_dram_parse(smem->dev);
+> +
+>  	smem->socinfo = platform_device_register_data(&pdev->dev, "qcom-socinfo",
+>  						      PLATFORM_DEVID_NONE, NULL,
+>  						      0);
+> -	if (IS_ERR(smem->socinfo))
+> +	if (IS_ERR(smem->socinfo)) {
+> +		debugfs_remove_recursive(smem->debugfs_dir);
+> +
+>  		dev_dbg(&pdev->dev, "failed to register socinfo device\n");
+> +	}
+>  
+>  	return 0;
+>  }
+>  
+>  static void qcom_smem_remove(struct platform_device *pdev)
+>  {
+> +	debugfs_remove_recursive(__smem->debugfs_dir);
+> +
+>  	platform_device_unregister(__smem->socinfo);
+>  
+>  	hwspin_lock_free(__smem->hwlock);
+> diff --git a/drivers/soc/qcom/smem.h b/drivers/soc/qcom/smem.h
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..8bf3f606e1ae80b7aa02b9567870f6a2681f8e5a
+> --- /dev/null
+> +++ b/drivers/soc/qcom/smem.h
+> @@ -0,0 +1,9 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +#ifndef __QCOM_SMEM_INTERNAL__
+> +#define __QCOM_SMEM_INTERNAL__
+> +
+> +#include <linux/device.h>
+> +
+> +struct dentry *smem_dram_parse(struct device *dev);
+> +
+> +#endif
+> diff --git a/drivers/soc/qcom/smem_dramc.c b/drivers/soc/qcom/smem_dramc.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..6ded45fd55c2ffa0924492f8042b753ec6c925cf
+> --- /dev/null
+> +++ b/drivers/soc/qcom/smem_dramc.c
+> @@ -0,0 +1,287 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/debugfs.h>
+> +#include <linux/io.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/soc/qcom/smem.h>
+> +#include <linux/units.h>
+> +#include <linux/soc/qcom/smem.h>
+> +
+> +#include "smem.h"
+> +
+> +#define SMEM_DDR_INFO_ID		603
+> +
+> +#define MAX_DDR_FREQ_NUM_V3		13
+> +#define MAX_DDR_FREQ_NUM_V5		14
+> +
+> +#define MAX_DDR_REGION_NUM		6
+> +#define MAX_CHAN_NUM			8
+> +#define MAX_RANK_NUM			2
+> +
+> +static struct smem_dram *__dram;
+> +
+> +enum ddr_info_version {
+> +	INFO_UNKNOWN,
+> +	INFO_V3,
+> +	INFO_V3_WITH_14_FREQS,
+> +	INFO_V4,
+> +	INFO_V5,
+> +	INFO_V5_WITH_6_REGIONS,
+> +};
+> +
+> +struct smem_dram {
+> +	unsigned long frequencies[MAX_DDR_FREQ_NUM_V5];
+> +	u32 num_frequencies;
+> +	u8 hbb;
+> +};
+> +
+> +enum ddr_type {
+> +	DDR_TYPE_NODDR = 0,
+> +	DDR_TYPE_LPDDR1 = 1,
+> +	DDR_TYPE_LPDDR2 = 2,
+> +	DDR_TYPE_PCDDR2 = 3,
+> +	DDR_TYPE_PCDDR3 = 4,
+> +	DDR_TYPE_LPDDR3 = 5,
+> +	DDR_TYPE_LPDDR4 = 6,
+> +	DDR_TYPE_LPDDR4X = 7,
+> +	DDR_TYPE_LPDDR5 = 8,
+> +	DDR_TYPE_LPDDR5X = 9,
+> +};
+> +
+> +/* The data structures below are NOT __packed on purpose! */
+> +
+> +/* Structs used across multiple versions */
+> +struct ddr_part_details {
+> +	__le16 revision_id1;
+> +	__le16 revision_id2;
+> +	__le16 width;
+> +	__le16 density;
+> +};
+> +
+> +struct ddr_freq_table {
+> +	u32 freq_khz;
+> +	u8 enabled;
+> +};
+> +
+> +/* V3 */
+> +struct ddr_freq_plan_v3 {
+> +	struct ddr_freq_table ddr_freq[MAX_DDR_FREQ_NUM_V3]; /* NOTE: some have 14 like v5 */
+> +	u8 num_ddr_freqs;
+> +	phys_addr_t clk_period_address;
+> +};
+> +
+> +struct ddr_details_v3 {
+> +	u8 manufacturer_id;
+> +	u8 device_type;
+> +	struct ddr_part_details ddr_params[MAX_CHAN_NUM];
+> +	struct ddr_freq_plan_v3 ddr_freq_tbl;
+> +	u8 num_channels;
+> +};
+> +
+> +/* V4 */
+> +struct ddr_details_v4 {
+> +	u8 manufacturer_id;
+> +	u8 device_type;
+> +	struct ddr_part_details ddr_params[MAX_CHAN_NUM];
+> +	struct ddr_freq_plan_v3 ddr_freq_tbl;
+> +	u8 num_channels;
+> +	u8 num_ranks[MAX_CHAN_NUM];
+> +	u8 highest_bank_addr_bit[MAX_CHAN_NUM][MAX_RANK_NUM];
+> +};
+> +
+> +/* V5 */
+> +struct ddr_freq_plan_v5 {
+> +	struct ddr_freq_table ddr_freq[MAX_DDR_FREQ_NUM_V5];
+> +	u8 num_ddr_freqs;
+> +	phys_addr_t clk_period_address;
+> +	u32 max_nom_ddr_freq;
+> +};
+> +
+> +struct ddr_region_v5 {
+> +	u64 start_address;
+> +	u64 size;
+> +	u64 mem_controller_address;
+> +	u32 granule_size; /* MiB */
+> +	u8  ddr_rank;
+> +#define DDR_RANK_0	BIT(0)
+> +#define DDR_RANK_1	BIT(1)
+> +	u8  segments_start_index;
+> +	u64 segments_start_offset;
+> +};
+> +
+> +struct ddr_regions_v5 {
+> +	u32 ddr_region_num; /* We expect this to always be 4 or 6 */
+> +	u64 ddr_rank0_size;
+> +	u64 ddr_rank1_size;
+> +	u64 ddr_cs0_start_addr;
+> +	u64 ddr_cs1_start_addr;
+> +	u32 highest_bank_addr_bit;
+> +	struct ddr_region_v5 ddr_region[] __counted_by(ddr_region_num);
+> +};
+> +
+> +struct ddr_details_v5 {
+> +	u8 manufacturer_id;
+> +	u8 device_type;
+> +	struct ddr_part_details ddr_params[MAX_CHAN_NUM];
+> +	struct ddr_freq_plan_v5 ddr_freq_tbl;
+> +	u8 num_channels;
+> +	struct ddr_regions_v5 ddr_regions;
+> +};
+> +
+> +/**
+> + * qcom_smem_dram_get_hbb(): Get the Highest bank address bit
+> + *
+> + * Context: Check qcom_smem_is_available() before calling this function.
+> + * Because __dram * is initialized by smem_dram_parse(), which is in turn
+> + * called from * qcom_smem_probe(), __dram will only be NULL if the data
+> + * couldn't have been found/interpreted correctly.
+> + *
+> + * If the function fails, the argument is left unmodified.
+> + *
+> + * Return: 0 on success, -ENODATA on failure.
+> + */
+> +int qcom_smem_dram_get_hbb(void)
+> +{
+> +	return __dram ? __dram->hbb : -ENODATA;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_smem_dram_get_hbb);
+> +
+> +static void smem_dram_parse_v3_data(struct smem_dram *dram, void *data, bool additional_freq_entry)
+> +{
+> +	/* This may be 13 or 14 */
+> +	int num_freq_entries = MAX_DDR_FREQ_NUM_V3;
+> +	struct ddr_details_v3 *details = data;
+> +
+> +	if (additional_freq_entry)
+> +		num_freq_entries++;
+> +
+> +	for (int i = 0; i < num_freq_entries; i++) {
+> +		struct ddr_freq_table *freq_entry = &details->ddr_freq_tbl.ddr_freq[i];
+> +
+> +		if (freq_entry->freq_khz && freq_entry->enabled)
+> +			dram->frequencies[dram->num_frequencies++] = 1000 * freq_entry->freq_khz;
+> +	}
+> +}
+> +
+> +static void smem_dram_parse_v4_data(struct smem_dram *dram, void *data)
+> +{
+> +	struct ddr_details_v4 *details = data;
+> +
+> +	/* Rank 0 channel 0 entry holds the correct value */
+> +	dram->hbb = details->highest_bank_addr_bit[0][0];
+> +
+> +	for (int i = 0; i < MAX_DDR_FREQ_NUM_V3; i++) {
+> +		struct ddr_freq_table *freq_entry = &details->ddr_freq_tbl.ddr_freq[i];
+> +
+> +		if (freq_entry->freq_khz && freq_entry->enabled)
+> +			dram->frequencies[dram->num_frequencies++] = 1000 * freq_entry->freq_khz;
+> +	}
+> +}
+> +
+> +static void smem_dram_parse_v5_data(struct smem_dram *dram, void *data)
+> +{
+> +	struct ddr_details_v5 *details = data;
+> +	struct ddr_regions_v5 *region = &details->ddr_regions;
+> +
+> +	dram->hbb = region[0].highest_bank_addr_bit;
+> +
+> +	for (int i = 0; i < MAX_DDR_FREQ_NUM_V5; i++) {
+> +		struct ddr_freq_table *freq_entry = &details->ddr_freq_tbl.ddr_freq[i];
+> +
+> +		if (freq_entry->freq_khz && freq_entry->enabled)
+> +			dram->frequencies[dram->num_frequencies++] = 1000 * freq_entry->freq_khz;
+> +	}
+> +}
+> +
+> +/* The structure contains no version field, so we have to perform some guesswork.. */
+> +static int smem_dram_infer_struct_version(size_t size)
+> +{
+> +	/* Some early versions provided less bytes of less useful data */
+> +	if (size < sizeof(struct ddr_details_v3))
+> +		return -EINVAL;
+> +	if (size == sizeof(struct ddr_details_v3))
+> +		return INFO_V3;
+> +	else if (size == sizeof(struct ddr_details_v3) + sizeof(struct ddr_freq_table))
+> +		return INFO_V3_WITH_14_FREQS;
+> +	else if (size == sizeof(struct ddr_details_v4))
+> +		return INFO_V4;
+> +	else if (size == sizeof(struct ddr_details_v5) + 4 * sizeof(struct ddr_region_v5))
+> +		return INFO_V5;
+> +	else if (size == sizeof(struct ddr_details_v5) + 6 * sizeof(struct ddr_region_v5))
+> +		return INFO_V5_WITH_6_REGIONS;
+> +
+> +	return INFO_UNKNOWN;
+> +}
+> +
+> +static int smem_dram_frequencies_show(struct seq_file *s, void *unused)
+> +{
+> +	struct smem_dram *dram = s->private;
+> +
+> +	for (int i = 0; i < dram->num_frequencies; i++)
+> +		seq_printf(s, "%lu\n", dram->frequencies[i]);
+> +
+> +	return 0;
+> +}
+> +DEFINE_SHOW_ATTRIBUTE(smem_dram_frequencies);
+> +
+> +struct dentry *smem_dram_parse(struct device *dev)
+> +{
+> +	struct dentry *debugfs_dir;
+> +	enum ddr_info_version ver;
+> +	struct smem_dram *dram;
+> +	size_t actual_size;
+> +	void *data = NULL;
+> +
+> +	/* No need to check qcom_smem_is_available(), this func is called by the SMEM driver */
+> +	data = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_DDR_INFO_ID, &actual_size);
+> +	if (IS_ERR_OR_NULL(data))
+> +		return ERR_PTR(-ENODATA);
+> +
+> +	ver = smem_dram_infer_struct_version(actual_size);
+> +	if (ver < 0) {
+> +		/* Some SoCs don't provide data that's useful for us */
+> +		return ERR_PTR(-ENODATA);
+> +	} else if (ver == INFO_UNKNOWN) {
+> +		/* In other cases, we may not have added support for a newer struct revision */
+> +		pr_err("Found an unknown type of DRAM info struct (size = %zu)\n", actual_size);
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
+> +	dram = devm_kzalloc(dev, sizeof(*dram), GFP_KERNEL);
+> +	if (!dram)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	switch (ver) {
+> +	case INFO_V3:
+> +		smem_dram_parse_v3_data(dram, data, false);
+> +		break;
+> +	case INFO_V3_WITH_14_FREQS:
+> +		smem_dram_parse_v3_data(dram, data, true);
+> +		break;
+> +	case INFO_V4:
+> +		smem_dram_parse_v4_data(dram, data);
+> +		break;
+> +	case INFO_V5:
+> +	case INFO_V5_WITH_6_REGIONS:
+> +		smem_dram_parse_v5_data(dram, data);
+> +		break;
+> +	default:
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
+> +	/* Both the entry and its parent dir will be cleaned up by debugfs_remove_recursive */
+> +	debugfs_dir = debugfs_create_dir("qcom_smem", NULL);
+> +	debugfs_create_file("dram_frequencies", 0444, debugfs_dir,
+> +			    dram, &smem_dram_frequencies_fops);
+> +
+> +	/* If there was no failure so far, assign the global variable */
+> +	__dram = dram;
+> +
+> +	return debugfs_dir;
+> +}
+> diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
+> index f946e3beca215548ac56dbf779138d05479712f5..223cd5090a2a8d0b29be768c6a9cc76c2997bbce 100644
+> --- a/include/linux/soc/qcom/smem.h
+> +++ b/include/linux/soc/qcom/smem.h
+> @@ -2,6 +2,8 @@
+>  #ifndef __QCOM_SMEM_H__
+>  #define __QCOM_SMEM_H__
+>  
+> +#include <linux/platform_device.h>
+> +
+>  #define QCOM_SMEM_HOST_ANY -1
+>  
+>  bool qcom_smem_is_available(void);
+> @@ -17,4 +19,6 @@ int qcom_smem_get_feature_code(u32 *code);
+>  
+>  int qcom_smem_bust_hwspin_lock_by_host(unsigned int host);
+>  
+> +int qcom_smem_dram_get_hbb(void);
+> +
+>  #endif
 > 
->>
->>>                if (ret)
->>>                        return ret;
->>>
-
-[...]
-
->>> @@ -1902,7 +1954,7 @@ int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl)
->>>                        }
->>>
->>>                        /* stop link training before start re training  */
->>> -                     msm_dp_ctrl_clear_training_pattern(ctrl);
->>> +                     msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
->>
->> Just DPRX or should this include all LTTPRs? Could you point out how
->> this is handled inside Intel or AMD drivers?
+> -- 
+> 2.49.0
 > 
-> Just DPRX since this call follows `rc =
-> msm_dp_ctrl_setup_main_link(ctrl, &training_step);` [1], which in turn
-> calls `msm_dp_ctrl_link_train` [2].
-> The latter one with the proposed changes will attempt to Train
-> LTTPRx->Clear training pattern on LTTPRx->Proceed. Finally, it will
-> attempt to Train DPRX, without cleaning the training pattern:
-> 
-> ```
->      for (i = *ctrl->lttpr_count - 1; i >= 0; i--) {
->          enum drm_dp_phy dp_phy = DP_PHY_LTTPR(i);
-> 
->          ret = msm_dp_ctrl_link_train_1_2(ctrl, training_step, dp_phy);
->          msm_dp_ctrl_clear_training_pattern(ctrl, dp_phy);
-> 
->          if (ret)
->              break;
->      }
-> 
->      if (ret) {
->          DRM_ERROR("link training of LTTPR(s) failed. ret=%d\n", ret);
->          goto end;
->      }
-> 
->      ret = msm_dp_ctrl_link_train_1_2(ctrl, training_step, DP_PHY_DPRX);
->      if (ret) {
->          DRM_ERROR("link training on sink failed. ret=%d\n", ret);
->          goto end;
->      }
-> ```
-> 
-> The reason for not clearing training pattern on DPRX right after
-> training like with LTTPRs appears to be needed for compliance, as it
-> should only be cleared right before stream starts [3]:
-> ```
->      if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
->          return rc;
-> 
->      if (rc == 0) {  /* link train successfully */
->          /*
->           * do not stop train pattern here
->           * stop link training at on_stream
->           * to pass compliance test
->           */
->      } else  {
->          /*
->           * link training failed
->           * end txing train pattern here
->           */
->          msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
-> 
->          msm_dp_ctrl_deinitialize_mainlink(ctrl);
->          rc = -ECONNRESET;
->      }
-> ```
-> 
-> Intel does a somewhat similar approach - they have
-> `intel_dp_link_train_all_phys` function [4] which would Train
-> LTTPRx->Clear dpcd training pattern on LTTPRx->Proceed, and finally
-> train DPRX but not disable training pattern. DPRX's training is
-> disabled separately in the `intel_dp_stop_link_train` [5] at a much
-> later stage.
-
-Ack, thanks.
-
-> 
-> The difference to msm's drm driver is that in case of link training
-> failure, Intel schedules software hpd event [6] and exists, while msm
-> stops and restarts training with reduced parameters internally (this
-> very function), hence it appears more than once.
-> 
-> [1] https://github.com/torvalds/linux/blob/v6.14/drivers/gpu/drm/msm/dp/dp_ctrl.c#L1856
-> [2] https://github.com/torvalds/linux/blob/v6.14/drivers/gpu/drm/msm/dp/dp_ctrl.c#L1273
-> [3] https://github.com/torvalds/linux/blob/v6.14/drivers/gpu/drm/msm/dp/dp_ctrl.c#L1917-L1932
-> [4] https://github.com/torvalds/linux/blob/v6.14/drivers/gpu/drm/i915/display/intel_dp_link_training.c#L1338-L1364
-> [5] https://github.com/torvalds/linux/blob/v6.14/drivers/gpu/drm/i915/display/intel_dp_link_training.c#L1107-L1136
-> [6] https://github.com/torvalds/linux/blob/v6.14/drivers/gpu/drm/i915/display/intel_dp_link_training.c#L1313-L1336
-> 
->>
->>>                }
->>>
->>>                rc = msm_dp_ctrl_reinitialize_mainlink(ctrl);
-
--- 
-With best wishes
-Dmitry
 
