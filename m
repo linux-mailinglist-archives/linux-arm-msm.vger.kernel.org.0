@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-53866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56F0CA849D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 18:33:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE220A849DF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 18:33:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5CF229C5176
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 16:29:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63F379C5379
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 16:30:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EED1C1EF391;
-	Thu, 10 Apr 2025 16:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67F381EFF92;
+	Thu, 10 Apr 2025 16:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZgRYCZLy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KOenOsFU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1A61EE7DA
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 16:30:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE92F1EF0BE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 16:30:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744302612; cv=none; b=PWsPsUsyEMfppT5UcNkPNt3ZsWs9jubIilGmZyhC7DfH3X+To644GxILTmejYGVpjtAKVJrKwBQJm9m2kX3Jjf9u0NK4fHUcYuWulGgnifMr9vUpnRzN5EujZVO1Jb6CAs1SdG/50llIWTMYsAgV0HGCPThLQuWJittZG7ZdksY=
+	t=1744302614; cv=none; b=Iy7UugZmcX1ty+RtKr499AuK1aL0YROPiWL7+AR7VVkKaLEmDQXO2sg2gxrci2RLTvxlCwaOZXLkVgyP5pL2usCdwUm+pqHIgIEhFwNG+IjRmCta/SrMYWyT+QfkZemNKZKi69EhI+UUDyICrOw36OTXSOe/gKaOCNeO8DvyBwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744302612; c=relaxed/simple;
-	bh=ZT1naHPMwcnziJgo4UbQxNWT1qHNuQGDv9YaGQAevXU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CEu6s1q05rBnlpXhAraJ9JIvLWavRx6NWWoPPdeGRIh02VE1EcKMrIAV67GenhosIqERrIAk2KiQJbGBUUTC74FKwzPQhVt31FvDzOq/dfqdNCwIf3LRddWBCg/YYJhKeIPeq3AGt/iNY1z78/77HTboFV+/laayiDf0jq0QQTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZgRYCZLy; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1744302614; c=relaxed/simple;
+	bh=tCEOYGPmIc1SPAM1HF+UO1/NYRAAsIsKLUXJIESOnu8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=QsdTSE/for8W6QAg9ypEx6gpZwtVm6HubL2t8z7yIyArT7nS+vXonVXZEgYGuXrUZzLTWRndetwUAyzN39vK2rSHty4k2sBq1PeCveaUl0mevQQ2rw81zkPw/ORNK+9jPdNNldkq7fZQoM0yIBQI8nB+v//DvJTGgzItQBNPjx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KOenOsFU; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43d0359b1fcso7416585e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 09:30:10 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-39c1ef4acf2so627855f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 09:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744302609; x=1744907409; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CmSQhXqEv16lMgPQ+xzd2jwzH2nXMAOrej8vrFccN5A=;
-        b=ZgRYCZLyU6SBQ3VpdQaIX9fnBjgzBmfVAHOsenSoDQQuvEejuBAclgaL2VWE9I5xpi
-         HZ9yaj8hjTzPJNDT23RpPWG9jH0TDDrr1e9vE0SLLiCuEX0EhJlFdkn5SyTl3YamAPh0
-         2JOibgGdZ8XEXo7zT2vjbH+9woF9cUz01Mf0XZiTTMn6JGA8u2rYbSKW17aghsdzbAXP
-         RhZE14xDt67nVOHdaCcVHWwuoZGcBDsE5FG3P4XiD11RNV29aZBtbOnJt3uRJDPwGdeR
-         zD4hXAwVwnB7NBNh3Xw1IgtukSp9PrjYnzqzQ6YvVvbJZCkusCRkS5CGmM9MYI7DrWhT
-         Hehw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744302609; x=1744907409;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1744302610; x=1744907410; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CmSQhXqEv16lMgPQ+xzd2jwzH2nXMAOrej8vrFccN5A=;
-        b=NKYWNB/h3XNmO8w4XKi+3C4sReUKnAvVlAvbpD7NDwj+Uw0GVOW7KPAG2n2NjKENdY
-         YoXZ2peRrFIIAxJJoYuXja3wP3FArg5SuNuAkDVxZrSGcx9a3jHaTdfrHiRtNDj0t9zf
-         HYaJ2/Up4sT5Dv8qGWN3why75i0b5Rr1NkfR7ECMAHd3hQTpiYOpZotpUQHiblrnNh0l
-         hxJk2APToCmuNdyMsRG9DHRJHbOrYhiu2s0sD2XORFIP+5qK1odrbpaXbRfUqU1/IoQa
-         BL3urykspyEkXnOnnPNSde11hVfAWQd0MO3RQoPiHzuD5/C0JalyjkFkMtvazXD6KSJr
-         +f2A==
-X-Forwarded-Encrypted: i=1; AJvYcCVxYSmRz5m9LlNYHxPcZsm1ZFPMe9DQvZpKBpe3O1xRKaibvLrZC9/3WQGgHjc/dIcMPUsLEtEr4GG1B6Pp@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFaySSKCfwUCCm+E4fNALBm0Bv8P+9S5JxRiJmgJGgml+HJVx8
-	teiRl88q1+JLmIG2hNSC8yEF8hV72Ga1xmpVx9Ah1MBSvykNBiq3ZxE8xmlQadU=
-X-Gm-Gg: ASbGncvz827ruIO3NGC3+rPJR3eUzFvHWCNvslIS2QxI5DA/zmxzLTNzLj33pDIdmzn
-	u636uqQnaIjjagpYL55b/LfG21H6pWbS32Ax1igArnm3aMY/iEGtcr7UMxglchsUtXSAMwfRMgc
-	2UO1HBzDLkNOyIhPSYURf+EzNM8T+2/H3TfIbqDdXMSwYf8G2kX3UXzldYb1tHue8rmQzLa4XN2
-	OcZl26lGLpaLSq57MmHtfbeeRaMbhLu1erlKXObi0gQCnilMFXVij0kqn8ISZfBERpMeuI2ArWi
-	8Ki8zZqQ9WG2eV9vYRlH/RkwRqbAd/KNn4/pGP0jmdxS7x2NBGJe8zLkovxWAXNxuJlZqnk2
-X-Google-Smtp-Source: AGHT+IFqSeHKIM9S2EJiC4vMqu0IORLlomRAI/05NMUp22VoBDjNuDgsC0XQJSAWXvOHZULfmc7Gbg==
-X-Received: by 2002:a05:600c:154a:b0:43c:f509:2bbf with SMTP id 5b1f17b1804b1-43f2eb98fddmr31789625e9.15.1744302609092;
+        bh=EfgoiISEI6CCBXz+KLnorq2mkzdptbjBXDbJbv0ENcI=;
+        b=KOenOsFUYl1MszShGxzm6w4IkmvEmCf15tkHW6HQ94NGCjzhXE/D+c/guxGlsMXC+8
+         5YAmZvhxSQYv7j/fQUwVVHCCm6IxfllWb5NZ5Wv1rLSBFugLS46xkdLfKO0MiwPQWytH
+         bNB91sWbKbJCVrjz3/D/D2YmNAiynxhEC42f51vMxe6Gh26KwHnhDAHLluoajQ2jFYwB
+         kAYQfq1HhN+RLEKa5URPU2ytFAKjgP1iGG1UQKbpgnNsGDQ++amA33l6KqVRHIhIXk+6
+         Pyv9hVtWulP0f/jc1RKxLnQYHV4ZW/JSq6zB2jj8Hdm3kpmB2Myg6ASsISxzlqR2PUvN
+         MFaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744302610; x=1744907410;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EfgoiISEI6CCBXz+KLnorq2mkzdptbjBXDbJbv0ENcI=;
+        b=Ix8nN7aY2mQZ/dFN0UW4V93JfVdrrabFpkaJYaqJCN/6zgyoCUFGSYMfuFyJJYm88/
+         iKl2GitDs1YwTW8GK6mx8UJ1qvyTxOMZ1E3Et+eI1GWw+e781CcT6VXi96tFMY35mdfY
+         ifAHfW1ZuJv1dtqeLlpRHH/iDLK7fJ4DWXdni+8H/2/yLPUP3xsCBsxtO64yA/AYgAJZ
+         jHJD4Wm2suYB0ehFM0+sK7TJnZhE11H1vGNBeQPu3XE9wH5JW851OkcFyEKq2CLmYaDL
+         0PavDbObHVuMTH8gvMHxideoaolTeIckwJyJKtYEpSjH7ztTQVKOYNGhAvDfhLXUCkl8
+         lgSA==
+X-Forwarded-Encrypted: i=1; AJvYcCX0MqQgxlZ+CRu+WKSkRY5PW+yIR4uLmx2JuYXceJP2eovMiVZuKp8ULXs4qKLC7rCze+y7gFT56qEABH2h@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz1ov2OatYyy6823AwsOgoLPetV1LErFclYVmAikky35KdqmHxi
+	MwsFkOitUws7QecZprvTTpeGDuCvBy9Fx1FIMw74XCQxl/Ee7JNM4FpLH00Tyfr58OJ/jkl83Pq
+	k
+X-Gm-Gg: ASbGnctg9yviRu2LY+EfbC0IC067pdsXHE3npaXDDbVObRtuTftZmLUZxSNm7cio6qn
+	9+Z7B73YZ7vdf5s3MMT9e5FpSiPo5Ersikadsh+CVsvoV5tDlHz0SkiAmuEoCmEK8wbUF4Fkwlh
+	lAFpVyFVe44mwZQzfVEdqiCRPunZV09hn++GgPrVcyremBhQ1BOE1EWrZ9xR6hJF4aMXB/eY8/x
+	AzTmDW5WwJ1M6M33MQGoDko/hTlxjCj9OcPuVn306xKtEsO3BsEnsjiVefUAlX26lxE33uPkn4M
+	8Yi6j9zkF6B2QnCT0bkeltC2j1h1K4qi+MhWBCI3+oTdYneg4cALsG9svuINNA==
+X-Google-Smtp-Source: AGHT+IF7YxresxxIUSbFvKOXhrMSn92TtBy4rTG0L/x99604fWMt5TARqsw/+/xZMRt9jngqCpO+LA==
+X-Received: by 2002:a05:6000:240b:b0:391:ba6:c066 with SMTP id ffacd0b85a97d-39d8fd526f8mr3324426f8f.35.1744302609788;
         Thu, 10 Apr 2025 09:30:09 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39d8936129dsm5350663f8f.18.2025.04.10.09.30.08
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39d8936129dsm5350663f8f.18.2025.04.10.09.30.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Apr 2025 09:30:08 -0700 (PDT)
+        Thu, 10 Apr 2025 09:30:09 -0700 (PDT)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH RFC v5 0/8] media: qcom: iris: re-organize catalog & add
- support for SM8650
-Date: Thu, 10 Apr 2025 18:29:59 +0200
-Message-Id: <20250410-topic-sm8x50-upstream-iris-catalog-v5-0-44a431574c25@linaro.org>
+Date: Thu, 10 Apr 2025 18:30:00 +0200
+Subject: [PATCH RFC v5 1/8] media: qcom: iris: move sm8250 to gen1 catalog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,10 +84,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAfy92cC/x3NwQrCMAyA4VcZORuI7SriVfABvIqH0mUz4NaSV
- BmMvbvF43f5/w2MVdjg0m2g/BWTvDSEQwfpFZeJUYZmcOQC9UfCmosktPm8BsJPsaocZxQVwxR
- rfOcJPTvuI3k/nEZooaI8yvqfPOB+u8Jz33/Isr1weQAAAA==
-X-Change-ID: 20250410-topic-sm8x50-upstream-iris-catalog-3e2e4a033d6f
+Message-Id: <20250410-topic-sm8x50-upstream-iris-catalog-v5-1-44a431574c25@linaro.org>
+References: <20250410-topic-sm8x50-upstream-iris-catalog-v5-0-44a431574c25@linaro.org>
+In-Reply-To: <20250410-topic-sm8x50-upstream-iris-catalog-v5-0-44a431574c25@linaro.org>
 To: Vikash Garodia <quic_vgarodia@quicinc.com>, 
  Dikshita Agarwal <quic_dikshita@quicinc.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
@@ -95,23 +95,22 @@ To: Vikash Garodia <quic_vgarodia@quicinc.com>,
  Conor Dooley <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
 Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+ Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3647;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6915;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=ZT1naHPMwcnziJgo4UbQxNWT1qHNuQGDv9YaGQAevXU=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBn9/IMKbkRSxg7StrAd02cJPMA5J+jM4ZSZAfisRV9
- i2FhFe2JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ/fyDAAKCRB33NvayMhJ0TgcD/
- 9pwraSP+JBy6WoWCY+0F00mRHfwFZ3P+WoThPNFseD+Ks++o74jrfaSvTJr8iAq07v0kb2mGCAmGIq
- 6wcwwXVprWgRDHDCNB31V2KLy//iA4q3I6pKIlX32BsJOiqGTFvEt1GHdT4Iou6l0dGeSUmssGa09o
- 13/upBc+AfiFIQyahpAXtFExRWcE0ZgtqUfmFMwZ1VVDF4Eh+R1llplpOq6h3WoaYwQmwhu55ee+8Q
- qUebfpr1dLiEFiDPBGFlcngfCsuBszfpf01BZIngux9auHoe57duo/tMrnQx8rhsgRvQWtYN2cmjLr
- sSqR7H9ZvC1cNqyXw9WHTLYXNfp7yUYtc8rVZAogJHwcxkQtm5wu5TcYPQ3KOqrKj6jNvNrXL1OmTC
- 87T3SHF1x5es1B7yIC12y7JNNhxDbzlVzWTchZzggMqDkNipObtnYcjJBOVxio9xowk31ljoFilLCY
- dpu0gc/d3VEIHE3avAzDktqrkrmQdTJcRxJEJx2bwDpb1KjVD1U3rdPWLSlBjqr0lk7Hds5Jr4IZyh
- kyjlN2MxViMYS8hCVfzPf35RWP9YqonpDfpJiB+Vi0VK1t/WjVBhnfT+ZlUm+HZixifil6GKTDzuvH
- STuw1quJjJQeOBf2Yw7RYIVCfxhwwURWoJDR6XHuYkfvC2GqyvJL+Kiiq/xg==
+ bh=tCEOYGPmIc1SPAM1HF+UO1/NYRAAsIsKLUXJIESOnu8=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBn9/IMfeilWuF7TCcmZY4Vf7hudfDLAqCN0DgvzgK+
+ br44w/SJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ/fyDAAKCRB33NvayMhJ0U6SD/
+ 9eu8VP5fZKJUmWqiNhVFsP9SryZn/Pch5CB3w0UsohBaxx5ZsdmQ/hOV2noeGbQVAA3Y+ZuPPHEUFq
+ XG5qS3iWPxny7ZWiv84OANxwLyeVo92A4cf/yFN/UD0xpRRh+OY1gs0gj4hmu2WaJ8AMuvwIx6Y7YI
+ Wa1PRKGm6IFlwUAQLPbn0w1hjDu5Qq49NTvgSP+ZRuob350ZBM/F8KmeRQGypHOShJD4YZIAGrO0m1
+ peYZvwEDaD/q4I8QXH3XrRYM229nEbp2rOUhGR1eyxdxiLmDNwW5LjX/Tit2Hy548v/Ekbfyc0Adtb
+ vLRISSZLyGHx4NtWa1/oTXLn5GRFHwjZw/IESaujA2+NrIKHncSUk5z1XQdQuyNt6Wv3dUJGz0RpyJ
+ RPO8ijfo960Popy9dvNzz9FIamuyo+P8Jt7xOPhmYDl9SPPrHfE7kyebOkx9VPuejQMyvX9dVQ8CFT
+ dUXQrcRu9MY4tRsWkKVc41XhqKV9x8SzXznOuTNCY8QPhXH48jpwfrHVqNyf9yjkTlqBw3P25tcp98
+ qZck9hdzUfJcTO0aFLvnG4plAQyNpeOnAFXT0JAhYMvo4YgjZ7DQJMyJDFU+DHIB0el3soh1FPLN+D
+ WATjkT2LrgGa7QXhQ/x9z4yghkEeR0MKNAH3RAR/R4dfGUxFw1yMzQVTE7dQ==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
@@ -123,79 +122,226 @@ structure.
 The goal is to share most of the structure while having
 clear and separate per-SoC catalog files.
 
-The organization is based on the curent drm/msm dpu1 catalog
+The organization is based on the current drm/msm dpu1 catalog
 entries.
-
-Add support for the IRIS accelerator for the SM8650
-platform, which uses the iris33 hardware.
-
-The vpu33 requires a different reset & poweroff sequence
-in order to properly get out of runtime suspend.
-
-Follow-up of [1]:
-https://lore.kernel.org/all/20250409-topic-sm8x50-iris-v10-v4-0-40e411594285@linaro.org/
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-Changes in v4:
-- Reorganized into catalog, rebased sm8650 support on top
-- Link to v4: https://lore.kernel.org/all/20250409-topic-sm8x50-iris-v10-v4-0-40e411594285@linaro.org
+ drivers/media/platform/qcom/iris/Makefile          |  2 +-
+ .../media/platform/qcom/iris/iris_catalog_gen1.c   | 83 ++++++++++++++++++++++
+ ...ris_platform_sm8250.c => iris_catalog_sm8250.h} | 80 ++-------------------
+ 3 files changed, 89 insertions(+), 76 deletions(-)
 
-Changes in v4:
-- collected tags
-- un-split power_off in vpu3x
-- removed useless function defines
-- added back vpu3x disappeared rename commit
-- Link to v3: https://lore.kernel.org/r/20250407-topic-sm8x50-iris-v10-v3-0-63569f6d04aa@linaro.org
+diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
+index 35390534534e93f4617c1036a05ca0921567ba1d..7e7bc5ca81e0f0119846ccaff7f79fd17b8298ca 100644
+--- a/drivers/media/platform/qcom/iris/Makefile
++++ b/drivers/media/platform/qcom/iris/Makefile
+@@ -25,7 +25,7 @@ qcom-iris-objs += \
+              iris_vpu_common.o \
+ 
+ ifeq ($(CONFIG_VIDEO_QCOM_VENUS),)
+-qcom-iris-objs += iris_platform_sm8250.o
++qcom-iris-objs += iris_catalog_gen1.o
+ endif
+ 
+ obj-$(CONFIG_VIDEO_QCOM_IRIS) += qcom-iris.o
+diff --git a/drivers/media/platform/qcom/iris/iris_catalog_gen1.c b/drivers/media/platform/qcom/iris/iris_catalog_gen1.c
+new file mode 100644
+index 0000000000000000000000000000000000000000..c4590f8996431eb5103d45f01c6bee2b38b848c2
+--- /dev/null
++++ b/drivers/media/platform/qcom/iris/iris_catalog_gen1.c
+@@ -0,0 +1,83 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#include "iris_core.h"
++#include "iris_ctrls.h"
++#include "iris_platform_common.h"
++#include "iris_resources.h"
++#include "iris_hfi_gen1.h"
++#include "iris_hfi_gen1_defines.h"
++#include "iris_vpu_common.h"
++
++/* Common SM8250 & variants */
++static struct platform_inst_fw_cap inst_fw_cap_sm8250[] = {
++	{
++		.cap_id = PIPE,
++		.min = PIPE_1,
++		.max = PIPE_4,
++		.step_or_mask = 1,
++		.value = PIPE_4,
++		.hfi_id = HFI_PROPERTY_PARAM_WORK_ROUTE,
++		.set = iris_set_pipe,
++	},
++	{
++		.cap_id = STAGE,
++		.min = STAGE_1,
++		.max = STAGE_2,
++		.step_or_mask = 1,
++		.value = STAGE_2,
++		.hfi_id = HFI_PROPERTY_PARAM_WORK_MODE,
++		.set = iris_set_stage,
++	},
++	{
++		.cap_id = DEBLOCK,
++		.min = 0,
++		.max = 1,
++		.step_or_mask = 1,
++		.value = 0,
++		.hfi_id = HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER,
++		.set = iris_set_u32,
++	},
++};
++
++static struct platform_inst_caps platform_inst_cap_sm8250 = {
++	.min_frame_width = 128,
++	.max_frame_width = 8192,
++	.min_frame_height = 128,
++	.max_frame_height = 8192,
++	.max_mbpf = 138240,
++	.mb_cycles_vsp = 25,
++	.mb_cycles_vpp = 200,
++};
++
++static struct tz_cp_config tz_cp_config_sm8250 = {
++	.cp_start = 0,
++	.cp_size = 0x25800000,
++	.cp_nonpixel_start = 0x01000000,
++	.cp_nonpixel_size = 0x24800000,
++};
++
++static const u32 sm8250_vdec_input_config_param_default[] = {
++	HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE,
++	HFI_PROPERTY_PARAM_UNCOMPRESSED_FORMAT_SELECT,
++	HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_CONSTRAINTS_INFO,
++	HFI_PROPERTY_PARAM_BUFFER_COUNT_ACTUAL,
++	HFI_PROPERTY_PARAM_VDEC_MULTI_STREAM,
++	HFI_PROPERTY_PARAM_FRAME_SIZE,
++	HFI_PROPERTY_PARAM_BUFFER_SIZE_ACTUAL,
++	HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE,
++};
++
++static const u32 sm8250_dec_ip_int_buf_tbl[] = {
++	BUF_BIN,
++	BUF_SCRATCH_1,
++};
++
++static const u32 sm8250_dec_op_int_buf_tbl[] = {
++	BUF_DPB,
++};
++
++/* platforms catalogs */
++#include "iris_catalog_sm8250.h"
+diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c b/drivers/media/platform/qcom/iris/iris_catalog_sm8250.h
+similarity index 59%
+rename from drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+rename to drivers/media/platform/qcom/iris/iris_catalog_sm8250.h
+index 5c86fd7b7b6fd36dc2d57a1705d915308b4c0f92..4d2df669b3e1df2ef2b0d2f88fc5f309b27546db 100644
+--- a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
++++ b/drivers/media/platform/qcom/iris/iris_catalog_sm8250.h
+@@ -1,55 +1,10 @@
+-// SPDX-License-Identifier: GPL-2.0-only
++/* SPDX-License-Identifier: GPL-2.0-only */
+ /*
+  * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+-#include "iris_core.h"
+-#include "iris_ctrls.h"
+-#include "iris_platform_common.h"
+-#include "iris_resources.h"
+-#include "iris_hfi_gen1.h"
+-#include "iris_hfi_gen1_defines.h"
+-#include "iris_vpu_common.h"
+-
+-static struct platform_inst_fw_cap inst_fw_cap_sm8250[] = {
+-	{
+-		.cap_id = PIPE,
+-		.min = PIPE_1,
+-		.max = PIPE_4,
+-		.step_or_mask = 1,
+-		.value = PIPE_4,
+-		.hfi_id = HFI_PROPERTY_PARAM_WORK_ROUTE,
+-		.set = iris_set_pipe,
+-	},
+-	{
+-		.cap_id = STAGE,
+-		.min = STAGE_1,
+-		.max = STAGE_2,
+-		.step_or_mask = 1,
+-		.value = STAGE_2,
+-		.hfi_id = HFI_PROPERTY_PARAM_WORK_MODE,
+-		.set = iris_set_stage,
+-	},
+-	{
+-		.cap_id = DEBLOCK,
+-		.min = 0,
+-		.max = 1,
+-		.step_or_mask = 1,
+-		.value = 0,
+-		.hfi_id = HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER,
+-		.set = iris_set_u32,
+-	},
+-};
+-
+-static struct platform_inst_caps platform_inst_cap_sm8250 = {
+-	.min_frame_width = 128,
+-	.max_frame_width = 8192,
+-	.min_frame_height = 128,
+-	.max_frame_height = 8192,
+-	.max_mbpf = 138240,
+-	.mb_cycles_vsp = 25,
+-	.mb_cycles_vpp = 200,
+-};
++#ifndef _IRIS_CATALOG_SM8250_H
++#define _IRIS_CATALOG_SM8250_H
+ 
+ static void iris_set_sm8250_preset_registers(struct iris_core *core)
+ {
+@@ -80,33 +35,6 @@ static const struct platform_clk_data sm8250_clk_table[] = {
+ 	{IRIS_HW_CLK,   "vcodec0_core" },
+ };
+ 
+-static struct tz_cp_config tz_cp_config_sm8250 = {
+-	.cp_start = 0,
+-	.cp_size = 0x25800000,
+-	.cp_nonpixel_start = 0x01000000,
+-	.cp_nonpixel_size = 0x24800000,
+-};
+-
+-static const u32 sm8250_vdec_input_config_param_default[] = {
+-	HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE,
+-	HFI_PROPERTY_PARAM_UNCOMPRESSED_FORMAT_SELECT,
+-	HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_CONSTRAINTS_INFO,
+-	HFI_PROPERTY_PARAM_BUFFER_COUNT_ACTUAL,
+-	HFI_PROPERTY_PARAM_VDEC_MULTI_STREAM,
+-	HFI_PROPERTY_PARAM_FRAME_SIZE,
+-	HFI_PROPERTY_PARAM_BUFFER_SIZE_ACTUAL,
+-	HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE,
+-};
+-
+-static const u32 sm8250_dec_ip_int_buf_tbl[] = {
+-	BUF_BIN,
+-	BUF_SCRATCH_1,
+-};
+-
+-static const u32 sm8250_dec_op_int_buf_tbl[] = {
+-	BUF_DPB,
+-};
+-
+ struct iris_platform_data sm8250_data = {
+ 	.get_instance = iris_hfi_gen1_get_instance,
+ 	.init_hfi_command_ops = &iris_hfi_gen1_command_ops_init,
+@@ -147,3 +75,5 @@ struct iris_platform_data sm8250_data = {
+ 	.dec_op_int_buf_tbl = sm8250_dec_op_int_buf_tbl,
+ 	.dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8250_dec_op_int_buf_tbl),
+ };
++
++#endif
 
-Changes in v3:
-- Collected review tags
-- Removed bulky reset_controller ops
-- Removed iris_vpu_power_off_controller split
-- Link to v2: https://lore.kernel.org/r/20250305-topic-sm8x50-iris-v10-v2-0-bd65a3fc099e@linaro.org
-
-Changes in v2:
-- Collected bindings review
-- Reworked rest handling by adding a secondary optional table to be used by controller poweroff
-- Reworked power_off_controller to be reused and extended by vpu33 support
-- Removed useless and unneeded vpu33 init
-- Moved vpu33 into vpu3x files to reuse code from vpu3
-- Moved sm8650 data table into sm8550
-- Link to v1: https://lore.kernel.org/r/20250225-topic-sm8x50-iris-v10-v1-0-128ef05d9665@linaro.org
-
----
-Neil Armstrong (8):
-      media: qcom: iris: move sm8250 to gen1 catalog
-      media: qcom: iris: move sm8550 to gen2 catalog
-      dt-bindings: media: qcom,sm8550-iris: document SM8650 IRIS accelerator
-      media: platform: qcom/iris: add power_off_controller to vpu_ops
-      media: platform: qcom/iris: introduce optional controller_rst_tbl
-      media: platform: qcom/iris: rename iris_vpu3 to iris_vpu3x
-      media: platform: qcom/iris: add support for vpu33
-      media: platform: qcom/iris: add sm8650 support
-
- .../bindings/media/qcom,sm8550-iris.yaml           |  33 ++-
- drivers/media/platform/qcom/iris/Makefile          |   6 +-
- .../media/platform/qcom/iris/iris_catalog_gen1.c   |  83 +++++++
- ...{iris_platform_sm8550.c => iris_catalog_gen2.c} |  85 +------
- ...ris_platform_sm8250.c => iris_catalog_sm8250.h} |  80 +-----
- .../media/platform/qcom/iris/iris_catalog_sm8550.h |  91 +++++++
- .../media/platform/qcom/iris/iris_catalog_sm8650.h |  68 +++++
- drivers/media/platform/qcom/iris/iris_core.h       |   1 +
- .../platform/qcom/iris/iris_platform_common.h      |   3 +
- drivers/media/platform/qcom/iris/iris_probe.c      |  43 +++-
- drivers/media/platform/qcom/iris/iris_vpu2.c       |   1 +
- drivers/media/platform/qcom/iris/iris_vpu3.c       | 122 ---------
- drivers/media/platform/qcom/iris/iris_vpu3x.c      | 275 +++++++++++++++++++++
- drivers/media/platform/qcom/iris/iris_vpu_common.c |   4 +-
- drivers/media/platform/qcom/iris/iris_vpu_common.h |   3 +
- 15 files changed, 598 insertions(+), 300 deletions(-)
----
-base-commit: 2bdde620f7f2bff2ff1cb7dc166859eaa0c78a7c
-change-id: 20250410-topic-sm8x50-upstream-iris-catalog-3e2e4a033d6f
-
-Best regards,
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.34.1
 
 
