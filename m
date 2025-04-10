@@ -1,209 +1,296 @@
-Return-Path: <linux-arm-msm+bounces-53830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC7A1A84465
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 15:16:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 497F2A8445E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 15:15:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 02BBE4C4FA4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 13:11:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F0A934C632C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 13:10:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E49528F953;
-	Thu, 10 Apr 2025 13:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E20DD28D820;
+	Thu, 10 Apr 2025 13:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bqnsJ6s2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pqvIv80b"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7075A28C5D3;
-	Thu, 10 Apr 2025 13:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC07A28CF74;
+	Thu, 10 Apr 2025 13:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744290522; cv=none; b=eJ/aOuJLJ52ySnYpudFwFIooQpQR7TH6L8CZ3ii4JZVbts6zOPZbH7H8/UHbS2Bu1EGsan9U/9/H1WM9CjJqzXrqsHF3rWrKO0CuB+GkSXK7sM7z8AR3g7mQAaJlR4uNQBjVGKn90Ysf5ZalwXfhZxVvt+jnDu0uJpJ+oOkwCt0=
+	t=1744290493; cv=none; b=Hjz0Rlyc88QEnMyIOpgQwg4j92yBmtz4IvYPgZI8w8q1ztj9ve2293EUIAa/rhY8pC31SPQ+3xr/tjQH3FVMl36/TGn56Sv9YMS0BaTmH3D9QAqE2UwdptY78Y9tVieeVZvx4UEo5a/6Z/sxztGQwhVtNCkYLrK08oQkz2yYwy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744290522; c=relaxed/simple;
-	bh=IRpptOiKFrmHAhXBkMvL+moUnHRIzNyCQ9OIUGR3TUo=;
+	s=arc-20240116; t=1744290493; c=relaxed/simple;
+	bh=G+dZq27aiwwtdcreuJNiIHBLgho5C8OBmZQW2SvK1Tw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=I3huoja+89t2tYLW3vKWzhHgZx55EJFBPXGvMSIBQR20G1Z0x/kzC9tjPSsZzyfc1txraWg9qEIuIZW3a3z8B/SCFzk3jVXWv9m5x6NmroJKnnTEFFUsLSjvY1xiifKl8h0HCYaqILvJooVGkGNhQ5ax6oo+z4/Rf7VJ5BBAjb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bqnsJ6s2; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=GtPS9zLewrIizG6GcD4SyQ24AB/NhKAaaOVMNXIvI8uUyFlp5LMZdK2Ei2HASEAJTeTZmlYZjhm0JH9oKqy9OsKte6Bi4saxAZCZqI3HP339qqJB8+7anptUajxdV26cxT4itFCjJU4m3wGKb0xTrDhilQAgZ3D+s2YoyHVs6Sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pqvIv80b; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53A75aKN018319;
-	Thu, 10 Apr 2025 13:08:07 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53A75hRB030632;
+	Thu, 10 Apr 2025 13:08:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	C0lS2+7VSOL0SIGZcpKjdnDb9d67WgyN16/wLnthOpw=; b=bqnsJ6s2atv0917k
-	jG+3SXVTxD6aJUTJpgtQhtlzpZYEK+LRGffmOYi9FrTonuPnDjJHyqd9+pIIxWN4
-	PzBQ3CZoJJ5VX/DPd48umgdupTyQPfQHTLQgJl4BmGsLsKC3O1c4Di8dIOfSpnAr
-	PqYdxS4uSpPuBK3HZo3lF3BruLBkf2/M75Z1YCzU/UYXp2gVuPX43sVa1DyERJKd
-	hoGoCCWpCnBrxF6Uv/YC03N/Li9zqrONLyzRO+f9pe/amtEmeVgTrXDADrdqtrYn
-	ufAg0tWRy+hrjnX1TcDr2DMNTC94xJv+lixiDi+hB3VcEAK6vSq3e9nT/KDm1wDP
-	URzTQg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twtb73ty-1
+	0LfaLwsnXXBhp2mj6HthXnYG8KjS0ZIDIXcIX52wzm4=; b=pqvIv80bkarjFHnd
+	eq0nbNSTYdZip8H2GTyhKDS1FkrfWegZai5SUJTnFfaaiQaqgohhN3JCTGNqHRrm
+	3GhuPK9s/Jpil4ZeJadoel6dbwLjJrrcrYC/pCbEftMLVqElwqGs/pjAg1lSgLZz
+	uC4B5aM2O8jHeMxPhzz4063S+msyA3qdP7xL3sPkNWq5iUKxVVV5OULAPYu0DdFz
+	rKb28BuVfJ5RtRe/cY0xpdimpSvyZtpkFl1VOUM3wmOTz9fTcdHOFZHDNdp1AL0W
+	VU3Qs0F6CFtrdZbvzqn0x1p946slLPXvJGOaWHtZXeded2ZuRtvYO7nd2wyNtVFT
+	aJy81w==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twftpt4u-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Apr 2025 13:08:07 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53AD86rA014610
+	Thu, 10 Apr 2025 13:08:03 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53AD82sZ000458
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Apr 2025 13:08:06 GMT
-Received: from [10.216.14.182] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 10 Apr 2025 13:08:02 GMT
+Received: from [10.50.31.123] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 10 Apr
- 2025 06:07:57 -0700
-Message-ID: <0f4eca6c-67df-4730-88b3-a277903deabc@quicinc.com>
-Date: Thu, 10 Apr 2025 18:37:54 +0530
+ 2025 06:07:58 -0700
+Message-ID: <a51e2e8a-bd7b-7d30-8cd6-9438b053ea2c@quicinc.com>
+Date: Thu, 10 Apr 2025 18:37:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/10] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
- to DP bridge nodes
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        <konradybcio@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
-        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
-        <marijn.suijten@somainline.org>, <andersson@kernel.org>,
-        <robh@kernel.org>, <robh+dt@kernel.org>, <krzk+dt@kernel.org>,
-        <konradybcio@kernel.org>, <conor+dt@kernel.org>,
-        <andrzej.hajda@intel.com>, <neil.armstrong@linaro.org>,
-        <rfoss@kernel.org>, <Laurent.pinchart@ideasonboard.com>,
-        <jonas@kwiboo.se>, <jernej.skrabec@gmail.com>,
-        <quic_abhinavk@quicinc.com>, <quic_rajeevny@quicinc.com>,
-        <quic_vproddut@quicinc.com>, <quic_jesszhan@quicinc.com>
-References: <20250404115539.1151201-1-quic_amakhija@quicinc.com>
- <20250404115539.1151201-8-quic_amakhija@quicinc.com>
- <nxnqwh2mzvnxv5ytwjsyulxr6ct6mhv3z3v6q4ojrjhhclwv2i@55nb56hnwi3y>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 6/6] media: platform: qcom/iris: add sm8650 support
 Content-Language: en-US
-From: Ayushi Makhija <quic_amakhija@quicinc.com>
-In-Reply-To: <nxnqwh2mzvnxv5ytwjsyulxr6ct6mhv3z3v6q4ojrjhhclwv2i@55nb56hnwi3y>
+To: Vikash Garodia <quic_vgarodia@quicinc.com>, <neil.armstrong@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel
+	<p.zabel@pengutronix.de>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Bryan
+ O'Donoghue" <bryan.odonoghue@linaro.org>
+References: <20250409-topic-sm8x50-iris-v10-v4-0-40e411594285@linaro.org>
+ <20250409-topic-sm8x50-iris-v10-v4-6-40e411594285@linaro.org>
+ <36e25d6e-36de-fec6-e54d-0683503c7a09@quicinc.com>
+ <1550c870-188e-4b41-b17c-2009cda41ffc@linaro.org>
+ <8cade183-72ac-eac1-1a57-a9db37657fca@quicinc.com>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <8cade183-72ac-eac1-1a57-a9db37657fca@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: u6cLcpuCQZXqIApBuHPMYAggNJBvecAZ
-X-Authority-Analysis: v=2.4 cv=LLlmQIW9 c=1 sm=1 tr=0 ts=67f7c2b7 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=zjBtcsmdu44VOzoy24MA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: u6cLcpuCQZXqIApBuHPMYAggNJBvecAZ
+X-Authority-Analysis: v=2.4 cv=B5+50PtM c=1 sm=1 tr=0 ts=67f7c2b3 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=lJxrbFA30pwzKi-l1BMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: GnbwpN4eOcrEtBsttOEFznZx1SQuGQPH
+X-Proofpoint-ORIG-GUID: GnbwpN4eOcrEtBsttOEFznZx1SQuGQPH
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-10_03,2025-04-08_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- clxscore=1015 mlxlogscore=999 malwarescore=0 phishscore=0
- lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0 adultscore=0
- suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ suspectscore=0 malwarescore=0 bulkscore=0 phishscore=0 spamscore=0
+ priorityscore=1501 adultscore=0 impostorscore=0 lowpriorityscore=0
+ mlxscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2504100095
 
-Hi Dmirity/Konard
 
-On 4/7/2025 1:42 AM, Dmitry Baryshkov wrote:
-> On Fri, Apr 04, 2025 at 05:25:36PM +0530, Ayushi Makhija wrote:
->> Add anx7625 DSI to DP bridge device nodes.
+
+On 4/10/2025 2:43 PM, Vikash Garodia wrote:
+> 
+> On 4/10/2025 2:31 PM, Neil Armstrong wrote:
+>> On 09/04/2025 18:57, Vikash Garodia wrote:
+>>> Hi Neil,
+>>>
+>>> On 4/9/2025 8:08 PM, Neil Armstrong wrote:
+>>>> Add support for the SM8650 platform by re-using the SM8550
+>>>> definitions and using the vpu33 ops.
+>>>>
+>>>> The SM8650/vpu33 requires more reset lines, but the H.264
+>>>> decoder capabilities are identical.
+>>>>
+>>>> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # x1e Dell
+>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>> ---
+>>>>   .../platform/qcom/iris/iris_platform_common.h      |  1 +
+>>>>   .../platform/qcom/iris/iris_platform_sm8550.c      | 64 ++++++++++++++++++++++
+>>>>   drivers/media/platform/qcom/iris/iris_probe.c      |  4 ++
+>>>>   3 files changed, 69 insertions(+)
+>>>>
+>>>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h
+>>>> b/drivers/media/platform/qcom/iris/iris_platform_common.h
+>>>> index
+>>>> fdd40fd80178c4c66b37e392d07a0a62f492f108..6bc3a7975b04d612f6c89206eae95dac678695fc 100644
+>>>> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
+>>>> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+>>>> @@ -35,6 +35,7 @@ enum pipe_type {
+>>>>     extern struct iris_platform_data sm8250_data;
+>>>>   extern struct iris_platform_data sm8550_data;
+>>>> +extern struct iris_platform_data sm8650_data;
+>>>>     enum platform_clk_type {
+>>>>       IRIS_AXI_CLK,
+>>>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+>>>> b/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+>>>> index
+>>>> 35d278996c430f2856d0fe59586930061a271c3e..d0f8fa960d53367023e41bc5807ba3f8beae2efc 100644
+>>>> --- a/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+>>>> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
+>>>> @@ -144,6 +144,10 @@ static const struct icc_info sm8550_icc_table[] = {
+>>>>     static const char * const sm8550_clk_reset_table[] = { "bus" };
+>>>>   +static const char * const sm8650_clk_reset_table[] = { "bus", "core" };
+>>>> +
+>>>> +static const char * const sm8650_controller_reset_table[] = { "xo" };
+>>>> +
+>>>>   static const struct bw_info sm8550_bw_table_dec[] = {
+>>>>       { ((4096 * 2160) / 256) * 60, 1608000 },
+>>>>       { ((4096 * 2160) / 256) * 30,  826000 },
+>>>> @@ -264,3 +268,63 @@ struct iris_platform_data sm8550_data = {
+>>>>       .dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
+>>>>       .dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
+>>>>   };
+>>>> +
+>>>> +/*
+>>>> + * Shares most of SM8550 data except:
+>>>> + * - vpu_ops to iris_vpu33_ops
+>>>> + * - clk_rst_tbl to sm8650_clk_reset_table
+>>>> + * - controller_rst_tbl to sm8650_controller_reset_table
+>>>> + * - fwname to "qcom/vpu/vpu33_p4.mbn"
+>>>> + */
+>>>> +struct iris_platform_data sm8650_data = {
+>>>> +    .get_instance = iris_hfi_gen2_get_instance,
+>>>> +    .init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
+>>>> +    .init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
+>>>> +    .vpu_ops = &iris_vpu33_ops,
+>>>> +    .set_preset_registers = iris_set_sm8550_preset_registers,
+>>>> +    .icc_tbl = sm8550_icc_table,
+>>>> +    .icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
+>>>> +    .clk_rst_tbl = sm8650_clk_reset_table,
+>>>> +    .clk_rst_tbl_size = ARRAY_SIZE(sm8650_clk_reset_table),
+>>>> +    .controller_rst_tbl = sm8650_controller_reset_table,
+>>>> +    .controller_rst_tbl_size = ARRAY_SIZE(sm8650_controller_reset_table),
+>>>> +    .bw_tbl_dec = sm8550_bw_table_dec,
+>>>> +    .bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
+>>>> +    .pmdomain_tbl = sm8550_pmdomain_table,
+>>>> +    .pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
+>>>> +    .opp_pd_tbl = sm8550_opp_pd_table,
+>>>> +    .opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
+>>>> +    .clk_tbl = sm8550_clk_table,
+>>>> +    .clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
+>>>> +    /* Upper bound of DMA address range */
+>>>> +    .dma_mask = 0xe0000000 - 1,
+>>>> +    .fwname = "qcom/vpu/vpu33_p4.mbn",
+>>>> +    .pas_id = IRIS_PAS_ID,
+>>>> +    .inst_caps = &platform_inst_cap_sm8550,
+>>>> +    .inst_fw_caps = inst_fw_cap_sm8550,
+>>>> +    .inst_fw_caps_size = ARRAY_SIZE(inst_fw_cap_sm8550),
+>>>> +    .tz_cp_config_data = &tz_cp_config_sm8550,
+>>>> +    .core_arch = VIDEO_ARCH_LX,
+>>>> +    .hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
+>>>> +    .ubwc_config = &ubwc_config_sm8550,
+>>>> +    .num_vpp_pipe = 4,
+>>>> +    .max_session_count = 16,
+>>>> +    .max_core_mbpf = ((8192 * 4352) / 256) * 2,
+>>>> +    .input_config_params =
+>>>> +        sm8550_vdec_input_config_params,
+>>>> +    .input_config_params_size =
+>>>> +        ARRAY_SIZE(sm8550_vdec_input_config_params),
+>>>> +    .output_config_params =
+>>>> +        sm8550_vdec_output_config_params,
+>>>> +    .output_config_params_size =
+>>>> +        ARRAY_SIZE(sm8550_vdec_output_config_params),
+>>>> +    .dec_input_prop = sm8550_vdec_subscribe_input_properties,
+>>>> +    .dec_input_prop_size = ARRAY_SIZE(sm8550_vdec_subscribe_input_properties),
+>>>> +    .dec_output_prop = sm8550_vdec_subscribe_output_properties,
+>>>> +    .dec_output_prop_size =
+>>>> ARRAY_SIZE(sm8550_vdec_subscribe_output_properties),
+>>>> +
+>>>> +    .dec_ip_int_buf_tbl = sm8550_dec_ip_int_buf_tbl,
+>>>> +    .dec_ip_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_ip_int_buf_tbl),
+>>>> +    .dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
+>>>> +    .dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
+>>>> +};
+>>> While i was extending the data for QCS8300 (one another iris-v3 variant), i
+>>> realize that this file iris_platform_sm8550.c is getting dumped with all SOC
+>>> platform data. It would be a good idea at this point to split it into something
+>>> like this
+>>> 1. Introduce SOC specific c file and move the respective SOC platform data to
+>>> it, for ex, in this case sm8650_data
+>>> 2. Move the common structs from iris_platform_sm8550.c to
+>>> iris_platform_common.h. This way more SOCs getting added in future, can include
+>>> the common header to reuse them, otherwise it would end up using 8550.c for all
+>>> future SOC.
+>>>
+>>> Share your comments if you have any better approach to manage/re-use these
+>>> platform data considering more SOCs getting added.
 >>
->> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 208 ++++++++++++++++++++-
->>  1 file changed, 207 insertions(+), 1 deletion(-)
+>> Right, yes the architecture is fine, but I don't feel iris_platform_common is
+>> the right
+>> place, perhaps we could introduce a platform_catalog.c where we could place all
+>> the common
+>> platform data and reuse them from the platform_<soc>.c files ?
+> Common structs would certainly need to be part of a header which can be
+> included. Where do you plan to keep common struct to be used across SOC specific
+> file in your approach ?
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
->> index 175f8b1e3b2d..8e784ccf4138 100644
->> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
->> @@ -28,6 +28,13 @@ chosen {
->>  		stdout-path = "serial0:115200n8";
->>  	};
->>  
->> +	vph_pwr: vph-pwr-regulator {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "vph_pwr";
->> +		regulator-always-on;
->> +		regulator-boot-on;
->> +	};
->> +
->>  	vreg_conn_1p8: vreg_conn_1p8 {
->>  		compatible = "regulator-fixed";
->>  		regulator-name = "vreg_conn_1p8";
->> @@ -128,6 +135,30 @@ dp1_connector_in: endpoint {
->>  			};
->>  		};
->>  	};
->> +
->> +	dp-dsi0-connector {
->> +		compatible = "dp-connector";
->> +		label = "DSI0";
->> +		type = "full-size";
->> +
->> +		port {
->> +			dp_dsi0_connector_in: endpoint {
->> +				remote-endpoint = <&dsi2dp_bridge0_out>;
->> +			};
->> +		};
->> +	};
->> +
->> +	dp-dsi1-connector {
->> +		compatible = "dp-connector";
->> +		label = "DSI1";
->> +		type = "full-size";
->> +
->> +		port {
->> +			dp_dsi1_connector_in: endpoint {
->> +				remote-endpoint = <&dsi2dp_bridge1_out>;
->> +			};
->> +		};
->> +	};
->>  };
->>  
->>  &apps_rsc {
->> @@ -517,9 +548,135 @@ &i2c11 {
->>  
->>  &i2c18 {
->>  	clock-frequency = <400000>;
->> -	pinctrl-0 = <&qup_i2c18_default>;
->> +	pinctrl-0 = <&qup_i2c18_default>,
->> +		    <&io_expander_intr_active>,
->> +		    <&io_expander_reset_active>;
+>> I can design prototype on top of this patchset as an RFC.
+> I was thinking that the changes are not that big, and can be done in existing
+> series though.
 > 
-> These pinctrl entries should go to the IO expander itself.
-> 
->>  	pinctrl-names = "default";
->> +
->>  	status = "okay";
->> +
->> +	io_expander: gpio@74 {
->> +		compatible = "ti,tca9539";
->> +		reg = <0x74>;
->> +		interrupts-extended = <&tlmm 98 IRQ_TYPE_EDGE_BOTH>;
->> +		gpio-controller;
->> +		#gpio-cells = <2>;
->> +		interrupt-controller;
->> +		#interrupt-cells = <2>;
->> +
->> +		gpio2-hog {
-> 
-> This needs a huuge explanation in the commit message. Otherwise I'd say
-> these pins should likely be used by the corresponding anx bridges.
+For now, I think you can introduce a platform_sm8650.c as part of this
+series and use the common structure from platform_sm8550.c.
+Shouldn't be a big change.
 
-Thanks, for the review.
+Later you can post a separate patch series to add platform_catalog.c and
+have common struct placed there which can be used across different SOC
+platform files.
 
-Previously, I was referring to the downstream DT and misunderstood the use of gpio-hog.
-After reading the schematic, I realized that gpio2, gpio3, gpio10, and gpio11 are all input pins
-to the IO expander TC9539. We have already configured gpio2 and gpio10 as interrupts in the
-ANX7625 bridges, so the gpio-hog is not required. It is working without the gpio-hog configuration.
+or other way is,
+Post a patch series to introduce platform_catalog.c with common struct and
+then rebase your 8650 series on top of it.
 
 Thanks,
-Ayushi
-
+Dikshita
+> Thanks,
+> Vikash
+>>
+>> Neil
+>>
+>>>
+>>> Regards,
+>>> Vikash
+>>>
+>>>> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c
+>>>> b/drivers/media/platform/qcom/iris/iris_probe.c
+>>>> index
+>>>> 4f8bce6e2002bffee4c93dcaaf6e52bf4e40992e..7cd8650fbe9c09598670530103e3d5edf32953e7 100644
+>>>> --- a/drivers/media/platform/qcom/iris/iris_probe.c
+>>>> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
+>>>> @@ -345,6 +345,10 @@ static const struct of_device_id iris_dt_match[] = {
+>>>>               .data = &sm8250_data,
+>>>>           },
+>>>>   #endif
+>>>> +    {
+>>>> +        .compatible = "qcom,sm8650-iris",
+>>>> +        .data = &sm8650_data,
+>>>> +    },
+>>>>       { },
+>>>>   };
+>>>>   MODULE_DEVICE_TABLE(of, iris_dt_match);
+>>>>
+>>
 
