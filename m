@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-53818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD8B3A840DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 12:37:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3ED58A840DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 12:37:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4EB7B7AEC4F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 10:36:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0838D1B85881
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 10:38:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EE78281376;
-	Thu, 10 Apr 2025 10:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9DDE281516;
+	Thu, 10 Apr 2025 10:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gnqMRPJZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FNs/SU7b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C56B26B948
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 10:37:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C14281364
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 10:37:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744281447; cv=none; b=cDpfhIGs3dNZg+iUSQ4NflRDZ61V5U+42p54SZXfrn+PV9RgXosO+PTfJlTGVYys00O1YiBl4WKYFiHFLu/cqlGH6kUUyvp61Ailyju7vksXSgwofcBuHMyu9rAPlSIN4/LB6Pnxjunb5Mp6eNX8klscOx2iJT4kybZxEVeGHxw=
+	t=1744281448; cv=none; b=OepNctH0Z7RF+ig58MD9XKzWF8JxoRwPt6u/bZKcpGrp8c9pq2M+Uwiooz2YhrAL98NFKQNGD60LVtaCzwaB+lKUiId/dd4N1yBn6d7kC8LtnnV3dp0KhVvBL80KIG5oquUN9Fxd8iT3HhW3lTWpUAKWrDMhdLIoYrZdcX0UfOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744281447; c=relaxed/simple;
-	bh=g82gY1xhxcNU1gWfdeY5y//QX6zBB8SepcGIdHSH0QM=;
+	s=arc-20240116; t=1744281448; c=relaxed/simple;
+	bh=L1x+MEpRCSfrf2Z5t+ZWnBQnsCOKl8zGDEi/DBrESfI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=WBkuCGU2DZUABz50Dyj/dp9SJ4P9l695uPSaEKiF7S8SQjmC9KrnhirJ6m9kUDnmuOJD5OIluPye5i1VVd2O3SzjawTlmByxCqUzmBFaFse/B10CU3epk/nSlw5XWIZd6HiD6egJzzTC/V6EuFPvjX/1dB0shr2Yqm5S/dwLVBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gnqMRPJZ; arc=none smtp.client-ip=209.85.221.46
+	 MIME-Version; b=moxVf3GCPAxAnqQnebQPvTaYoXmj5XLL4YLXZin04M7IfnrKxklygI7CM6+k0ado0xe2FSRjZiOKHMRa+BLUwPzFBSp2+RhnC3oxJThIb1IEOM72yLR4xv5xemIaoh4dunA5EF5/6hvXV8t/M5XwY/2LwdBTRuJyDr11PQ67afg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FNs/SU7b; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-39c2688619bso330602f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 03:37:25 -0700 (PDT)
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-39c266c2dd5so478746f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 03:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744281444; x=1744886244; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1744281445; x=1744886245; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4Nnbd5v6TVKVB045KCik5mojpozdPs3L2r4qsLSnC+U=;
-        b=gnqMRPJZo5aP7o1vHEGfuK3h1pKekorBctl3L/20jw5ufFR2kDHg9CL77aSlk8btZw
-         b1LLvj2qG+E6z6UCKjvhxuosRqEWrU/Da/S5l9uNaG/YDMCxAS5KeBx9np1OacMzN0/z
-         ohYwwktv2wLlUT1/glp3j9pQTNlXqBXlpOnNwsbtzMk+veCXv+IxHoJb+CNP7FBu3f6/
-         +9qpsYJMVDJgAhtjlO7VgPPCqZ6tYZbFksLZQrhXuDorsctfwaQ/suycI5+MZKtPVsKS
-         vWL0UIC4Em54EyL+Sk6rA5388WFyNuPSu6p3CqtvrzoqRDICwRMdTE4dcTimLLgKrsLe
-         8pmQ==
+        bh=2aYtjGBXatHaseT3Phi2jIW+StTZyswtuqFhYnfH/gE=;
+        b=FNs/SU7b9esSeNgXWoWBwd5rCQX3MZWOFhAf4z6GcdGulWqyVSGQakO48T6QYaJQ0D
+         bZ6t4M7kUnapr8RB27eOQ7r6TP/38pVZoweJ4rqr9SyOUUWN03epYBQSOV2Hy8ZrL57c
+         4Icb1CPI4fST7TAekEoL8camthBXymMTG7zoidS2PxQ2YdKKNNiMamc+j41Zc8hhDYlq
+         1jG4S/A/sXakbKTgM5nmlqpdC0t0zcU4sbhi6T79t4oYEjTgo7/ZtRgxu2C48MzVWkeB
+         jjzTBEAbgTcfVIaBsX8K82GRSXEqQr+/f5b6L4axWHsZvJLYbycrOzvqZZab19NVhgR+
+         dJRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744281444; x=1744886244;
+        d=1e100.net; s=20230601; t=1744281445; x=1744886245;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4Nnbd5v6TVKVB045KCik5mojpozdPs3L2r4qsLSnC+U=;
-        b=QYNcKcH6qjgqM8h5QhXRhBBnyzGL7SNCbkxRLHSriWEhHW6TKhWMLPnuchB75p4Lgz
-         YawNygN8i0k/AqdJg0LM1WMnaj/d5K5EsOLvUm7D8AGWF9ApT5x3ntrcKysZv8vu3wb+
-         ac6O+L5EbYGr/XjVNlVSq1on8A1m3jc3pRXBX1Hm8UB0kfI2DLaHYPbPOBAIArpEocBM
-         xMM5XGurbVclWqtd2J7IJUo9pIcuFJ77lRVho87FaSdCWrPb6XOCR1+LdTzG02xkH0q7
-         h7JGx/4HqhBHhQTs5PS6Yy33Qb1pSM9Yw5kSnzo/VyvcW6tCs7IRKRmQndkq9qXGPX5b
-         s7BA==
-X-Gm-Message-State: AOJu0YzMXhmn9wSWaHif4I5f7lhIgeHW4J3NEUo2EBgyo2b5OpzQAD4J
-	L8zVJ5wI9cj/WfGmgB8YHio5pIO3sRq6S9Er2HMA99QLZKBfk+nVN1R4XqG2Kww=
-X-Gm-Gg: ASbGncvKx4leuhPlI4AtV0Rb0Kv6EFpfIkeyrTjiX5WI6yc9fWFpQ6RrqEhYVY6VSrb
-	ZkKISU3EYQG95ukBfDvf/zJ05ev654keuRTzGMBh9joRzdgvmQ8PF5+P9ZVEX5D4teGVgSIvLaq
-	a1z0SyxMbs53lF9XQcDB3N7r8rGToetsr8JisYJBn1O5aOkuIeOHynajgSHsghcGeR7iT6Mvim7
-	kbrxX3OZCshy5iSCsM8QMJB8sdosL2QUDdU7jtxULg0meH9jC7KtQJQv36R0WrK3Mogo5dkxbXO
-	uDfu9+WpyRdvrUL29Y1JRZc9pItaBFxHQeVwEOoNwc+O/ietNdk8w2AcMYlUgGTrvA==
-X-Google-Smtp-Source: AGHT+IEHtath/9fjeA3GlI+26reTGsqkfkI9JQfy2xnJmqeyhEm1jWIGOX2/OQqJlhE3Dk/VrZDbzw==
-X-Received: by 2002:a05:6000:4383:b0:391:3157:7717 with SMTP id ffacd0b85a97d-39d8f491bcfmr1794974f8f.34.1744281443890;
-        Thu, 10 Apr 2025 03:37:23 -0700 (PDT)
+        bh=2aYtjGBXatHaseT3Phi2jIW+StTZyswtuqFhYnfH/gE=;
+        b=iBH15wWDl2vurfU5pDxavkX9tQYrMuv+FdCDP8Rxu0qUv5RXvplpUoYA0gykzU+4Tu
+         QVVkAZOrt0bSjfHbMfq5G9Y1/gbF2o/7q79B3TWLn7YRDKbr/ogf0jtckKngJpJbwDLy
+         GDIktJiEPtFgw3ZyEzrlX7wNiyiZkr7Bs7Skc79SN7wTzTAS10dV/CrvXmpaFeSg58EV
+         8i7Egi37I/7/K6AIhnwDqIsQcpVIoPjNb3RHL8AwkDRU4LdKGhyhwxefIXNdEjEMv2DQ
+         6OVIFyylrHP31Xd7Y6RBsR1QNJTp3bPAfOeMVqkT7bEFMoJ3krkzRCx/135ydrwQRwc+
+         IbEA==
+X-Gm-Message-State: AOJu0YzALJZycDYuMKMylvuNiwGt0HXuUnToYHzqNhlTi/aXDcBpA4zK
+	GJpgmBtZv9hZkI9+0oFWeXkUOIGKrqfJjEu2npR5HwmkNyNcpn2TPv2l6TEsc0s=
+X-Gm-Gg: ASbGncvyDznUEQwslujjxU+gEcKXYESMHBi48lRt4ormLJRNmoh5UepAaJXx7MRgRTh
+	YlNUwDDkMyG50+jGmbvBjoHHGkK5SnBmfRb+N3kses69TPAzUnAki1kbZ12jzDIe6DQZ6XlksUT
+	kd84wSttTo4qHgr8qwDcuJ5+4psro0iUJV70pXWuEWpsiLspIev2phDjQzNKjldjYfCB3SKh6XH
+	Z/Fq95V2D0y+aOnYXS/1OZfKwUwfLoXJkd2UfrqWaETom5lyZ6+Fmtc3ty1EaIMrSHg38YwvMyp
+	pq10c4kHnGfvdnBmWiN9ByzKDQFBwN2J4xKrt4+8dpG799jj9LF0nXpmjDuziPzLMw==
+X-Google-Smtp-Source: AGHT+IGGCF1uYN0vSOy+9N6MTk1Sll7akKwdvJm3f6V81SnCFhS1Hq04fztkt0wX1t2RP9Kn4lRv9Q==
+X-Received: by 2002:a05:6000:2210:b0:38f:2413:2622 with SMTP id ffacd0b85a97d-39d8fddf94emr1702026f8f.47.1744281445152;
+        Thu, 10 Apr 2025 03:37:25 -0700 (PDT)
 Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39d893612dbsm4309388f8f.1.2025.04.10.03.37.22
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39d893612dbsm4309388f8f.1.2025.04.10.03.37.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Apr 2025 03:37:22 -0700 (PDT)
+        Thu, 10 Apr 2025 03:37:24 -0700 (PDT)
 From: srinivas.kandagatla@linaro.org
 To: broonie@kernel.org,
 	gregkh@linuxfoundation.org
@@ -79,9 +79,9 @@ Cc: linux-arm-msm@vger.kernel.org,
 	alsa-devel@alsa-project.org,
 	srini@kernel.org,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 1/2] MAINTAINERS: use kernel.org alias
-Date: Thu, 10 Apr 2025 11:37:12 +0100
-Message-Id: <20250410103713.24875-2-srinivas.kandagatla@linaro.org>
+Subject: [PATCH 2/2] mailmap: Add entry for Srinivas Kandagatla
+Date: Thu, 10 Apr 2025 11:37:13 +0100
+Message-Id: <20250410103713.24875-3-srinivas.kandagatla@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20250410103713.24875-1-srinivas.kandagatla@linaro.org>
 References: <20250410103713.24875-1-srinivas.kandagatla@linaro.org>
@@ -91,59 +91,33 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1711; i=srinivas.kandagatla@linaro.org; h=from:subject; bh=X081G5b8ZJlECnTTMUpLb1rMWL1BAhU9ovFKI7eRRN4=; b=owEBbQGS/pANAwAKAXqh/VnHNFU3AcsmYgBn959YJ14iAJU7//C7aknncCha6Mtq08dvOrWyn /HNnuNGqKqJATMEAAEKAB0WIQQi509axvzi9vce3Y16of1ZxzRVNwUCZ/efWAAKCRB6of1ZxzRV N3txB/9AnD2EaTyqWg9hTGWre3HhXjm+e4ArOy4+kihuI5qZt/0DIFRwwhMl5TagJHghVSfRqDI fgFMaFEx/F3yTAb+6B7jGn9MWe0GMteRQL/MysODm5+PBjeuYckxpEUsO9hcaI60xzkXcVzUGye a4vxJ0ozhUaROwiAPId3n2aPFUfHG/ko8X5KCSLrFCF5QRBOy3A1apUomNvdN4MhMoNTY2QRpWO hUih2OClr3o2uTC2eYmSNAw/FhE3tk2WpA3g53iMViuSRvQrVgTrm6ubCUZL7g3CHEF3mk6fuAl 2zu6QU2DVNut+mt8rwLSWlEwmydhaJP2VaekFFSSeVeuuyse
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1036; i=srinivas.kandagatla@linaro.org; h=from:subject; bh=ZhYHEoqrUkGkRgz46TiGnWcPMiKR/N1g2slVddB+DV0=; b=owEBbQGS/pANAwAKAXqh/VnHNFU3AcsmYgBn959Zm3y7kLG6HvBFTp7/7z9RyQCDI8Z0cZJte YmqqO7XWtWJATMEAAEKAB0WIQQi509axvzi9vce3Y16of1ZxzRVNwUCZ/efWQAKCRB6of1ZxzRV N8i4CAC1e4sdQHEe9sOx1teSQqtqYSkc9V8pStNn0lGq2HBACEukAa59Qb7+IxwFcdI/fvNVwoj IZ8PFTqOl2N+eMpABQqYZn11RiZECUCl+LNEF70jhrN8ZolLoeYLYuC+sp7lrPdRRvjTzXlu+Bk QAOcD5+btV+okFLbjsM3CVCFyxYGCSQVlI+hGTDY8A1+VxsUZABV13u8JuXFsPsmCSqTwHeFMCC 9/XJQjg6/D67SzfntnoC/FCsVMA/Z3HQbQJUsVLaVN2RVmdwcLCxDzEnNU5R7QD8dp+7NCAT2fa bG5/S05epDUFKboyGZpLCzqbQLUUVBJNFKO4xdKxG+KlGqpB
 X-Developer-Key: i=srinivas.kandagatla@linaro.org; a=openpgp; fpr=ED6472765AB36EC43B3EF97AD77E3FC0562560D6
 Content-Transfer-Encoding: 8bit
 
 From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-My Linaro email will stop working soon. Use @kernel.org email instead.
+Add entries for the various addresses that I have been using over
+the years and remap all of them to kernel.org alias.
 
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- MAINTAINERS | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .mailmap | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 96b827049501..f9a9d3dced67 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -17368,7 +17368,7 @@ T:	git git://git.infradead.org/nvme.git
- F:	drivers/nvme/target/
- 
- NVMEM FRAMEWORK
--M:	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+M:	Srinivas Kandagatla <srini@kernel.org>
- S:	Maintained
- T:	git git://git.kernel.org/pub/scm/linux/kernel/git/srini/nvmem.git
- F:	Documentation/ABI/stable/sysfs-bus-nvmem
-@@ -19573,7 +19573,7 @@ S:	Supported
- F:	drivers/crypto/intel/qat/
- 
- QCOM AUDIO (ASoC) DRIVERS
--M:	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+M:	Srinivas Kandagatla <srini@kernel.org>
- L:	linux-sound@vger.kernel.org
- L:	linux-arm-msm@vger.kernel.org
- S:	Supported
-@@ -19873,7 +19873,7 @@ F:	Documentation/devicetree/bindings/net/qcom,ethqos.yaml
- F:	drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
- 
- QUALCOMM FASTRPC DRIVER
--M:	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+M:	Srinivas Kandagatla <srini@kernel.org>
- M:	Amol Maheshwari <amahesh@qti.qualcomm.com>
- L:	linux-arm-msm@vger.kernel.org
- L:	dri-devel@lists.freedesktop.org
-@@ -21921,7 +21921,7 @@ S:	Maintained
- F:	drivers/media/rc/serial_ir.c
- 
- SERIAL LOW-POWER INTER-CHIP MEDIA BUS (SLIMbus)
--M:	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+M:	Srinivas Kandagatla <srini@kernel.org>
- L:	linux-sound@vger.kernel.org
- S:	Maintained
- F:	Documentation/devicetree/bindings/slimbus/
+diff --git a/.mailmap b/.mailmap
+index 4f7cd8e23177..0326d5e75012 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -685,6 +685,8 @@ Simon Wunderlich <sw@simonwunderlich.de> <simon.wunderlich@saxnet.de>
+ Simon Wunderlich <sw@simonwunderlich.de> <simon@open-mesh.com>
+ Simon Wunderlich <sw@simonwunderlich.de> <siwu@hrz.tu-chemnitz.de>
+ Sricharan Ramabadhran <quic_srichara@quicinc.com> <sricharan@codeaurora.org>
++Srinivas Kandagatla <srini@kernel.org> <srinivas.kandagatla@st.com>
++Srinivas Kandagatla <srini@kernel.org> <srinivas.kandagatla@linaro.org>
+ Srinivas Ramana <quic_sramana@quicinc.com> <sramana@codeaurora.org>
+ Sriram R <quic_srirrama@quicinc.com> <srirrama@codeaurora.org>
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com> <sriram.yagnaraman@est.tech>
 -- 
 2.25.1
 
