@@ -1,165 +1,918 @@
-Return-Path: <linux-arm-msm+bounces-53904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A064A84D11
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 21:31:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90248A84D25
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 21:37:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA18D8A79C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 19:31:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3CE7B1B64FA4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 19:37:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0833028F945;
-	Thu, 10 Apr 2025 19:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F4E828135E;
+	Thu, 10 Apr 2025 19:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gJPX7vmi"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="tscE99rb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FC028EA7F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 19:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0910828D841
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 19:37:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744313499; cv=none; b=gmQ7piEX/RjGNw/zx3kPmtozxXL0Oq8Bu7pQEYJnYQYLpVGwBIw5xmNssVYWy6Js3RKh71opovBoaADFkDnIE/9wFDzWbOwkhYdnWNsFqmHv1FI+peqgCc+MoJ5rqX+j66bSVj+1G72MKtNJ5lzZQDA9vMa/djlrN1aySgi86DM=
+	t=1744313863; cv=none; b=ZKMB9YZIrF2vMSMWaga6Dqq9z612Qefs1I2eHARCLZHcvJvSqv8ohXYFwHLFWk4yXAt13rXnBZERjPXagrRFqxREB7NwoW3PzQXTChqhV9gC7EPwuBsFpAaRmLqrttZ8854JngDFVGq3sxL/DCXTQc/JhqQ51YK+/F5ub4HAMKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744313499; c=relaxed/simple;
-	bh=nvk3AfBlAGN872ZRTShvqoou5aanO8EBPXmNKMB9Veo=;
+	s=arc-20240116; t=1744313863; c=relaxed/simple;
+	bh=PEeJ0Hu5l9d33I/HaVMgalHLpaaMIxIm8ZAbX7BGvFw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=igyVAlOtguvEZ2fc0q5QTiZekQ/BkY9Jnvihff9PEvHKom5e+kEfgRQ6JdV5wddCR2RxJZwIBdLEIUw8HwEgMAwpT0+ol8STzuwjqj7o4tP6W/Lt6afrG41Su7KvtlUdGDNAql6kjIqq4LQG2LtAuX4Rs3HO/+25eyUGM1a+ObM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gJPX7vmi; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53AFojEG018349
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 19:31:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=ds9TtaCY5KQ6iV/Yaj6mG8zs
-	RfUBvQFElU18gYT4+UY=; b=gJPX7vmiC/oS5ak4DBfWZE9ixd9+ysY8osoaEgj7
-	61edvL7XVE34WQiPGOVw+HlwLzPZqN6Ovu/+GgcvyuIN5Fou8pCocDn5TO2+FidD
-	Wz7LXd8COtugpdgTP6aan5mqKNwcaw6Eaf0GjmzDVgUxfoe+yUUEubsrKbMfhYqk
-	clzFgiIVJUr3IQAmlTsx1vUQb+nmnE3+Z1hwaqRorXlUl16NxUFATWerVOK25eip
-	ptaCjZPDZISJHQ3BhWQxySQSOkRyV0ikTUYkHsCESJy+dyEnlfFiSozQDZaSREcy
-	dRWjFRFSY60uxcOGQ30oHZ8nfQ0U31bSL2qbKsBirUC5Dg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twtb8889-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 19:31:37 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c5bb68b386so341880485a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 12:31:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744313496; x=1744918296;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ds9TtaCY5KQ6iV/Yaj6mG8zsRfUBvQFElU18gYT4+UY=;
-        b=aELcbWU+9Py+/Adefa/mnMN9fg+vKAF/BWVCd8e7AEAenhjen0IuNpbQmHgAZ5v7pd
-         dFWvUHdPm8QmGHfeoH+7SamBKWY3iXvWLOl+GldgKq9V9DT38F6tpn4wGNj7WmedU6/1
-         FUf52RfA4zk14P5zVq0ZonXUOiEXky1Lrh+T+gaYNI6Hrm33hf2lY5UTVhgvnYNcz8Hn
-         k3GP95TvtSyXjhyNt5tNfWsH/A2pu1l1b6IBv07b4KkaKwKgTxxZJYgWPGVkeKF7Bgqq
-         JMsQNIh+PGD3pjoNRBc31JlCluCQjuU1hmGLLasyDtTohVd+qeY+ytDi832jz+CTxMDv
-         +Xtg==
-X-Forwarded-Encrypted: i=1; AJvYcCU6JH8OG3ZzbDzujdOxUgJgn3OUmAAsLDW4KO+uQSgVkeHRSrokt5U/GgFkjIQkgNL5IGflWqFIw2IsRnDa@vger.kernel.org
-X-Gm-Message-State: AOJu0YwW85h4TyAjI8f+n96J/VLWKHwVBLSPC51E8yXscgDLKbGtg0Mh
-	28+fwLSaPf2f3m5Z4K1wKs4kutdY8UaYPD80UuWBjEdCfN3O9997RIMzBs7hYrFt7B9nMkyodYb
-	6CwlsWCmhpaHkbENiu87zQt/F6Olwtc0l/gMr05D3PDtKe0nv+BdM6Y5gfgrVxfgR
-X-Gm-Gg: ASbGncvZrKzf8vnubxHsoz1ZwfvRjclx8PqyWHq/mkPjf20mhu/CMXhJa/VGT6ZSHO8
-	mT1Kv0JvvuXMApMm/rEZ6oovfVmkXdwvrVeHXW2h+AU2AmJ81Uy6aARIpduw/t4aqPkZ85RjXfl
-	D3SA9LelJWrapNHX9PTG27odyqMKPWKsOntFCNLyiVLwTUa8lSDj00tG+Mf3KDfA0E+sKw2h+uA
-	lZHpZRuPdufNAXPiG3bFFPOZrfrkCz0jX9rVMb/7H3iabPp3nXqDSYw7bav703jobjDGFazn195
-	nr+73pGbxRPQ+ZqoXWCkFlRbVIebklMmn4EMwcaP6Qhkvpr7j2TzOI06fAGgC/+g7ee62VztNeg
-	=
-X-Received: by 2002:a05:620a:439c:b0:7c5:5e69:4450 with SMTP id af79cd13be357-7c7af0d6384mr32377885a.17.1744313496255;
-        Thu, 10 Apr 2025 12:31:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqctDDvkKrw5rP7GZctwMAOW52noXSrb/QQM/7LagYwEhTOr3WvKjQ5q57zE/X4Pbf9fAxcQ==
-X-Received: by 2002:a05:620a:439c:b0:7c5:5e69:4450 with SMTP id af79cd13be357-7c7af0d6384mr32373885a.17.1744313495965;
-        Thu, 10 Apr 2025 12:31:35 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54d3d123d84sm228105e87.23.2025.04.10.12.31.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Apr 2025 12:31:35 -0700 (PDT)
-Date: Thu, 10 Apr 2025 22:31:32 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Anthony Ruhier <aruhier@mailbox.org>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Maya Matuszczyk <maccraft123mc@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 0/7] Support for GPU ACD feature on Adreno X1-85
-Message-ID: <zns3xlyeajvxxpubzzsls5tnr7tnp4ws2dwfx4s7klzn4nslte@gpgdfjzm2s7p>
-References: <20250109-gpu-acd-v4-0-08a5efaf4a23@quicinc.com>
- <dj256lrkc4s5ylqkqdrak6a6p3v62ckkd3orsg7ykz2w6ugllg@rbfkojacklvx>
- <0d1aaba8-7736-497e-8424-84489c637914@oss.qualcomm.com>
- <dmzoooujjb4zojjlgovjt6lccxilnnc3yr4j24vj4hwpzf5ouf@e6qkdlekcsnm>
+	 Content-Type:Content-Disposition:In-Reply-To; b=sBR+7tQli5pO4VWbXpAlLSDuRfTM2gKa9lKXjmqQ4mEbNRP35KaSJLFdBwfgE9wB2502TQ+K/IoG+EjNLNsE6aE8LogZCfRBCkH2sJbdXDl1ePhi9Gd5txG1W+Vabj7OoGQflhO7mudtvjjRCxhvDyQ7nNcNfp62ReaKcfcxrmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=tscE99rb; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 8CCD5352;
+	Thu, 10 Apr 2025 21:35:37 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1744313737;
+	bh=PEeJ0Hu5l9d33I/HaVMgalHLpaaMIxIm8ZAbX7BGvFw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tscE99rbYHrvzs8AAZtvdUF0ANGYqhE+howT+Mfmf2ho6Q+AyxDKoA0OvRfPWIU7e
+	 /eE4LBDqmLys0+kuBy4nSk3idy3NrjOGHaLB+URsnv/zpuWuy31D5URJpUDYAeWeQC
+	 r9KVOSsIy9lpHnkTuC8sKqsNL+D7zsn38YkDzZZY=
+Date: Thu, 10 Apr 2025 22:37:10 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Ville Syrjala <ville.syrjala@linux.intel.com>
+Cc: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Inki Dae <inki.dae@samsung.com>,
+	Seung-Woo Kim <sw0312.kim@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Marek Vasut <marex@denx.de>, Stefan Agner <stefan@agner.ch>,
+	Lyude Paul <lyude@redhat.com>, Danilo Krummrich <dakr@kernel.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Dave Airlie <airlied@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sandy Huang <hjc@rock-chips.com>,
+	Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Gurchetan Singh <gurchetansingh@chromium.org>,
+	Chia-I Wu <olvaffe@gmail.com>, Zack Rusin <zack.rusin@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>,
+	amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+	virtualization@lists.linux.dev
+Subject: Re: [PATCH 04/19] drm: Pass the format info to .fb_create()
+Message-ID: <20250410193649.GD27834@pendragon.ideasonboard.com>
+References: <20250410163218.15130-1-ville.syrjala@linux.intel.com>
+ <20250410163218.15130-5-ville.syrjala@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <dmzoooujjb4zojjlgovjt6lccxilnnc3yr4j24vj4hwpzf5ouf@e6qkdlekcsnm>
-X-Proofpoint-GUID: eHmVCnDJtOho9aQPVyQBpJqfYP2DoESu
-X-Authority-Analysis: v=2.4 cv=LLlmQIW9 c=1 sm=1 tr=0 ts=67f81c99 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=ZR51km1V383oZAxlFiMA:9 a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-ORIG-GUID: eHmVCnDJtOho9aQPVyQBpJqfYP2DoESu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-10_06,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- clxscore=1015 mlxlogscore=999 malwarescore=0 phishscore=0
- lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0 adultscore=0
- suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504100141
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250410163218.15130-5-ville.syrjala@linux.intel.com>
 
-On Thu, Apr 10, 2025 at 05:51:38PM +0200, Anthony Ruhier wrote:
-> Hi,
-> 
-> Sorry I should have gave an update on this: I don't think the lockups are
-> related to this patch series, the same problem happens without applying these
-> patches. It seems to increase by a lot the chances that a GPU lockup happens at
-> start, however, so I could use that to debug the real problem.
-> 
-> > What firmware files are you using? ZAP surely comes from the Windows
-> > package, but what about GMU and SQE? Linux-firmware?
-> >
-> > Specifically, please provide the GMU version which is printed to dmesg
-> > on first GPU open
-> 
-> I'm using the firmwares imported from Windows, the Yoga Slim 7x is not in
-> linux-firmware. I understood that the firmware files used by the Slim 7x are
-> quite old, maybe it could be the problem.
+Hi Ville,
 
-Recently firmware for Yoga Slim 7x was merged to linux-firmware. Could
-you please check if this helps or not?
+Thank you for the patch.
 
+On Thu, Apr 10, 2025 at 07:32:03PM +0300, Ville Syrjala wrote:
+> From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 > 
-> The GMU version:
+> Pass long the format information from the top to .fb_create()
+> so that we can avoid redundant (and somewhat expensive) lookups
+> in the drivers.
 > 
-> > [drm] Loaded GMU firmware v4.3.17
+> Done with cocci (with some manual fixups):
+> @@
+> identifier func =~ ".*create.*";
+> identifier dev, file, mode_cmd;
+> @@
+> struct drm_framebuffer *func(
+>        struct drm_device *dev,
+>        struct drm_file *file,
+> +      const struct drm_format_info *info,
+>        const struct drm_mode_fb_cmd2 *mode_cmd)
+> {
+> ...
+> (
+> - const struct drm_format_info *info = drm_get_format_info(...);
+> |
+> - const struct drm_format_info *info;
+> ...
+> - info = drm_get_format_info(...);
+> )
+> <...
+> - if (!info)
+> -    return ...;
+> ...>
+> }
 > 
-> Thanks
+> @@
+> identifier func =~ ".*create.*";
+> identifier dev, file, mode_cmd;
+> @@
+> struct drm_framebuffer *func(
+>        struct drm_device *dev,
+>        struct drm_file *file,
+> +      const struct drm_format_info *info,
+>        const struct drm_mode_fb_cmd2 *mode_cmd)
+> {
+> ...
+> }
 > 
-> --
-> Anthony Ruhier
+> @find@
+> identifier fb_create_func =~ ".*create.*";
+> identifier dev, file, mode_cmd;
+> @@
+> struct drm_framebuffer *fb_create_func(
+>        struct drm_device *dev,
+>        struct drm_file *file,
+> +      const struct drm_format_info *info,
+>        const struct drm_mode_fb_cmd2 *mode_cmd);
+> 
+> @@
+> identifier find.fb_create_func;
+> expression dev, file, mode_cmd;
+> @@
+> fb_create_func(dev, file
+> +	       ,info
+> 	       ,mode_cmd)
+> 
+> @@
+> expression dev, file, mode_cmd;
+> @@
+> drm_gem_fb_create(dev, file
+> +	       ,info
+> 	       ,mode_cmd)
+> 
+> @@
+> expression dev, file, mode_cmd;
+> @@
+> drm_gem_fb_create_with_dirty(dev, file
+> +	       ,info
+> 	       ,mode_cmd)
+> 
+> @@
+> expression dev, file_priv, mode_cmd;
+> identifier info, fb;
+> @@
+> info = drm_get_format_info(...);
+> ...
+> fb = dev->mode_config.funcs->fb_create(dev, file_priv
+> +                                      ,info
+>                                        ,mode_cmd);
+> 
+> @@
+> identifier dev, file_priv, mode_cmd;
+> @@
+> struct drm_mode_config_funcs {
+> ...
+> struct drm_framebuffer *(*fb_create)(struct drm_device *dev,
+>                                      struct drm_file *file_priv,
+> +                                     const struct drm_format_info *info,
+>                                      const struct drm_mode_fb_cmd2 *mode_cmd);
+> ...
+> };
+> 
+> Cc: Alex Deucher <alexander.deucher@amd.com>
+> Cc: Liviu Dudau <liviu.dudau@arm.com>
+> Cc: Maxime Ripard <mripard@kernel.org>
+> Cc: Russell King <linux@armlinux.org.uk>
+> Cc: Inki Dae <inki.dae@samsung.com>
+> Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+> Cc: Kyungmin Park <kyungmin.park@samsung.com>
+> Cc: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+> Cc: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+> Cc: Philipp Zabel <p.zabel@pengutronix.de>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Cc: Dmitry Baryshkov <lumag@kernel.org>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: Marijn Suijten <marijn.suijten@somainline.org>
+> Cc: Marek Vasut <marex@denx.de>
+> Cc: Stefan Agner <stefan@agner.ch>
+> Cc: Lyude Paul <lyude@redhat.com>
+> Cc: Danilo Krummrich <dakr@kernel.org>
+> Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+> Cc: Dave Airlie <airlied@redhat.com>
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+> Cc: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+> Cc: Biju Das <biju.das.jz@bp.renesas.com>
+> Cc: Geert Uytterhoeven <geert+renesas@glider.be>
+> Cc: Sandy Huang <hjc@rock-chips.com>
+> Cc: "Heiko Stübner" <heiko@sntech.de>
+> Cc: Andy Yan <andy.yan@rock-chips.com>
+> Cc: Thierry Reding <thierry.reding@gmail.com>
+> Cc: Mikko Perttunen <mperttunen@nvidia.com>
+> Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>
+> Cc: "Maíra Canal" <mcanal@igalia.com>
+> Cc: Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: Gurchetan Singh <gurchetansingh@chromium.org>
+> Cc: Chia-I Wu <olvaffe@gmail.com>
+> Cc: Zack Rusin <zack.rusin@broadcom.com>
+> Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+> Cc: Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>
+> Cc: amd-gfx@lists.freedesktop.org
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: freedreno@lists.freedesktop.org
+> Cc: nouveau@lists.freedesktop.org
+> Cc: virtualization@lists.linux.dev
+> Cc: spice-devel@lists.freedesktop.org
+> Cc: linux-renesas-soc@vger.kernel.org
+> Cc: linux-tegra@vger.kernel.org
+> Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+> ---
+>  drivers/gpu/drm/amd/amdgpu/amdgpu_display.c            |  1 +
+>  drivers/gpu/drm/amd/amdgpu/amdgpu_display.h            |  1 +
+>  .../gpu/drm/arm/display/komeda/komeda_framebuffer.c    |  1 +
+>  .../gpu/drm/arm/display/komeda/komeda_framebuffer.h    |  1 +
+>  drivers/gpu/drm/arm/malidp_drv.c                       |  3 ++-
+>  drivers/gpu/drm/armada/armada_fb.c                     |  6 ++----
+>  drivers/gpu/drm/armada/armada_fb.h                     |  3 ++-
+>  drivers/gpu/drm/drm_framebuffer.c                      |  2 +-
+>  drivers/gpu/drm/drm_gem_framebuffer_helper.c           |  2 ++
+>  drivers/gpu/drm/exynos/exynos_drm_fb.c                 |  4 +---
+>  drivers/gpu/drm/gma500/framebuffer.c                   |  1 +
+>  drivers/gpu/drm/i915/display/intel_fb.c                |  1 +
+>  drivers/gpu/drm/i915/display/intel_fb.h                |  1 +
+>  drivers/gpu/drm/ingenic/ingenic-drm-drv.c              |  5 +++--
+>  drivers/gpu/drm/mediatek/mtk_drm_drv.c                 |  7 ++-----
+>  drivers/gpu/drm/msm/msm_drv.h                          |  3 ++-
+>  drivers/gpu/drm/msm/msm_fb.c                           |  6 ++----
+>  drivers/gpu/drm/mxsfb/mxsfb_drv.c                      | 10 ++--------
+>  drivers/gpu/drm/nouveau/nouveau_display.c              |  1 +
+>  drivers/gpu/drm/nouveau/nouveau_display.h              |  1 +
+>  drivers/gpu/drm/omapdrm/omap_fb.c                      |  6 ++----
+>  drivers/gpu/drm/omapdrm/omap_fb.h                      |  3 ++-
+>  drivers/gpu/drm/qxl/qxl_display.c                      |  1 +
+>  drivers/gpu/drm/radeon/radeon_display.c                |  1 +
+>  drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c          |  3 ++-
+>  drivers/gpu/drm/renesas/rz-du/rzg2l_du_kms.c           |  3 ++-
+>  drivers/gpu/drm/renesas/shmobile/shmob_drm_kms.c       |  3 ++-
+>  drivers/gpu/drm/rockchip/rockchip_drm_fb.c             |  7 +------
+>  drivers/gpu/drm/tegra/drm.h                            |  1 +
+>  drivers/gpu/drm/tegra/fb.c                             |  4 +---
+>  drivers/gpu/drm/tests/drm_framebuffer_test.c           |  1 +
+>  drivers/gpu/drm/vc4/vc4_kms.c                          |  3 ++-
+>  drivers/gpu/drm/virtio/virtgpu_display.c               |  1 +
+>  drivers/gpu/drm/vmwgfx/vmwgfx_kms.c                    |  1 +
+>  drivers/gpu/drm/xen/xen_drm_front_kms.c                |  1 +
+>  drivers/gpu/drm/xlnx/zynqmp_kms.c                      |  3 ++-
+>  include/drm/drm_gem_framebuffer_helper.h               |  3 +++
+>  include/drm/drm_mode_config.h                          |  1 +
+>  38 files changed, 57 insertions(+), 49 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+> index 35c778426a7c..10c57ded0e3e 100644
+> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+> @@ -1297,6 +1297,7 @@ static int amdgpu_display_framebuffer_init(struct drm_device *dev,
+>  struct drm_framebuffer *
+>  amdgpu_display_user_framebuffer_create(struct drm_device *dev,
+>  				       struct drm_file *file_priv,
+> +				       const struct drm_format_info *info,
+>  				       const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct amdgpu_framebuffer *amdgpu_fb;
+> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.h
+> index dfa0d642ac16..930c171473b4 100644
+> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.h
+> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.h
+> @@ -44,6 +44,7 @@ uint32_t amdgpu_display_supported_domains(struct amdgpu_device *adev,
+>  struct drm_framebuffer *
+>  amdgpu_display_user_framebuffer_create(struct drm_device *dev,
+>  				       struct drm_file *file_priv,
+> +				       const struct drm_format_info *info,
+>  				       const struct drm_mode_fb_cmd2 *mode_cmd);
+>  const struct drm_format_info *
+>  amdgpu_lookup_format_info(u32 format, uint64_t modifier);
+> diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.c b/drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.c
+> index df5da5a44755..29b05482f713 100644
+> --- a/drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.c
+> +++ b/drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.c
+> @@ -157,6 +157,7 @@ komeda_fb_none_afbc_size_check(struct komeda_dev *mdev, struct komeda_fb *kfb,
+>  
+>  struct drm_framebuffer *
+>  komeda_fb_create(struct drm_device *dev, struct drm_file *file,
+> +		 const struct drm_format_info *info,
+>  		 const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct komeda_dev *mdev = dev->dev_private;
+> diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.h b/drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.h
+> index c61ca98a3a63..02b2b8ae482a 100644
+> --- a/drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.h
+> +++ b/drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.h
+> @@ -37,6 +37,7 @@ struct komeda_fb {
+>  
+>  struct drm_framebuffer *
+>  komeda_fb_create(struct drm_device *dev, struct drm_file *file,
+> +		const struct drm_format_info *info,
+>  		const struct drm_mode_fb_cmd2 *mode_cmd);
+>  int komeda_fb_check_src_coords(const struct komeda_fb *kfb,
+>  			       u32 src_x, u32 src_y, u32 src_w, u32 src_h);
+> diff --git a/drivers/gpu/drm/arm/malidp_drv.c b/drivers/gpu/drm/arm/malidp_drv.c
+> index 558e44a7e627..8b920566f2e8 100644
+> --- a/drivers/gpu/drm/arm/malidp_drv.c
+> +++ b/drivers/gpu/drm/arm/malidp_drv.c
+> @@ -377,6 +377,7 @@ malidp_verify_afbc_framebuffer(struct drm_device *dev, struct drm_file *file,
+>  
+>  static struct drm_framebuffer *
+>  malidp_fb_create(struct drm_device *dev, struct drm_file *file,
+> +		 const struct drm_format_info *info,
+>  		 const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	if (mode_cmd->modifier[0]) {
+> @@ -384,7 +385,7 @@ malidp_fb_create(struct drm_device *dev, struct drm_file *file,
+>  			return ERR_PTR(-EINVAL);
+>  	}
+>  
+> -	return drm_gem_fb_create(dev, file, mode_cmd);
+> +	return drm_gem_fb_create(dev, file, info, mode_cmd);
+>  }
+>  
+>  static const struct drm_mode_config_funcs malidp_mode_config_funcs = {
+> diff --git a/drivers/gpu/drm/armada/armada_fb.c b/drivers/gpu/drm/armada/armada_fb.c
+> index 85fc2cb50544..597720e229c2 100644
+> --- a/drivers/gpu/drm/armada/armada_fb.c
+> +++ b/drivers/gpu/drm/armada/armada_fb.c
+> @@ -84,11 +84,9 @@ struct armada_framebuffer *armada_framebuffer_create(struct drm_device *dev,
+>  }
+>  
+>  struct drm_framebuffer *armada_fb_create(struct drm_device *dev,
+> -	struct drm_file *dfile, const struct drm_mode_fb_cmd2 *mode)
+> +	struct drm_file *dfile, const struct drm_format_info *info,
+> +	const struct drm_mode_fb_cmd2 *mode)
+>  {
+> -	const struct drm_format_info *info = drm_get_format_info(dev,
+> -								 mode->pixel_format,
+> -								 mode->modifier[0]);
+>  	struct armada_gem_object *obj;
+>  	struct armada_framebuffer *dfb;
+>  	int ret;
+> diff --git a/drivers/gpu/drm/armada/armada_fb.h b/drivers/gpu/drm/armada/armada_fb.h
+> index c5bc53d7e0c4..41ba76dd80d6 100644
+> --- a/drivers/gpu/drm/armada/armada_fb.h
+> +++ b/drivers/gpu/drm/armada/armada_fb.h
+> @@ -19,5 +19,6 @@ struct armada_framebuffer {
+>  struct armada_framebuffer *armada_framebuffer_create(struct drm_device *,
+>  	const struct drm_mode_fb_cmd2 *, struct armada_gem_object *);
+>  struct drm_framebuffer *armada_fb_create(struct drm_device *dev,
+> -	struct drm_file *dfile, const struct drm_mode_fb_cmd2 *mode);
+> +	struct drm_file *dfile, const struct drm_format_info *info,
+> +	const struct drm_mode_fb_cmd2 *mode);
+>  #endif
+> diff --git a/drivers/gpu/drm/drm_framebuffer.c b/drivers/gpu/drm/drm_framebuffer.c
+> index ae09ef6977b2..61a7213f2389 100644
+> --- a/drivers/gpu/drm/drm_framebuffer.c
+> +++ b/drivers/gpu/drm/drm_framebuffer.c
+> @@ -302,7 +302,7 @@ drm_internal_framebuffer_create(struct drm_device *dev,
+>  	if (ret)
+>  		return ERR_PTR(ret);
+>  
+> -	fb = dev->mode_config.funcs->fb_create(dev, file_priv, r);
+> +	fb = dev->mode_config.funcs->fb_create(dev, file_priv, info, r);
+>  	if (IS_ERR(fb)) {
+>  		drm_dbg_kms(dev, "could not create framebuffer\n");
+>  		return fb;
+> diff --git a/drivers/gpu/drm/drm_gem_framebuffer_helper.c b/drivers/gpu/drm/drm_gem_framebuffer_helper.c
+> index 8f1213ea0e16..1b58823e14b1 100644
+> --- a/drivers/gpu/drm/drm_gem_framebuffer_helper.c
+> +++ b/drivers/gpu/drm/drm_gem_framebuffer_helper.c
+> @@ -282,6 +282,7 @@ static const struct drm_framebuffer_funcs drm_gem_fb_funcs = {
+>   */
+
+Missing documentation update.
+
+>  struct drm_framebuffer *
+>  drm_gem_fb_create(struct drm_device *dev, struct drm_file *file,
+> +		  const struct drm_format_info *info,
+>  		  const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	return drm_gem_fb_create_with_funcs(dev, file, mode_cmd,
+> @@ -320,6 +321,7 @@ static const struct drm_framebuffer_funcs drm_gem_fb_funcs_dirtyfb = {
+>   */
+
+Here too.
+
+>  struct drm_framebuffer *
+>  drm_gem_fb_create_with_dirty(struct drm_device *dev, struct drm_file *file,
+> +			     const struct drm_format_info *info,
+>  			     const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	return drm_gem_fb_create_with_funcs(dev, file, mode_cmd,
+> diff --git a/drivers/gpu/drm/exynos/exynos_drm_fb.c b/drivers/gpu/drm/exynos/exynos_drm_fb.c
+> index bcf7b534d1f7..9ae526825726 100644
+> --- a/drivers/gpu/drm/exynos/exynos_drm_fb.c
+> +++ b/drivers/gpu/drm/exynos/exynos_drm_fb.c
+> @@ -94,11 +94,9 @@ exynos_drm_framebuffer_init(struct drm_device *dev,
+>  
+>  static struct drm_framebuffer *
+>  exynos_user_fb_create(struct drm_device *dev, struct drm_file *file_priv,
+> +		      const struct drm_format_info *info,
+>  		      const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+> -	const struct drm_format_info *info = drm_get_format_info(dev,
+> -								 mode_cmd->pixel_format,
+> -								 mode_cmd->modifier[0]);
+>  	struct exynos_drm_gem *exynos_gem[MAX_FB_BUFFER];
+>  	struct drm_framebuffer *fb;
+>  	int i;
+> diff --git a/drivers/gpu/drm/gma500/framebuffer.c b/drivers/gpu/drm/gma500/framebuffer.c
+> index c82e623a2071..a4a18ec2dd56 100644
+> --- a/drivers/gpu/drm/gma500/framebuffer.c
+> +++ b/drivers/gpu/drm/gma500/framebuffer.c
+> @@ -97,6 +97,7 @@ struct drm_framebuffer *psb_framebuffer_create(struct drm_device *dev,
+>   */
+>  static struct drm_framebuffer *psb_user_framebuffer_create
+>  			(struct drm_device *dev, struct drm_file *filp,
+> +			 const struct drm_format_info *info,
+>  			 const struct drm_mode_fb_cmd2 *cmd)
+>  {
+>  	struct drm_gem_object *obj;
+> diff --git a/drivers/gpu/drm/i915/display/intel_fb.c b/drivers/gpu/drm/i915/display/intel_fb.c
+> index b83c42fe3233..dd1d5c00395e 100644
+> --- a/drivers/gpu/drm/i915/display/intel_fb.c
+> +++ b/drivers/gpu/drm/i915/display/intel_fb.c
+> @@ -2323,6 +2323,7 @@ int intel_framebuffer_init(struct intel_framebuffer *intel_fb,
+>  struct drm_framebuffer *
+>  intel_user_framebuffer_create(struct drm_device *dev,
+>  			      struct drm_file *filp,
+> +			      const struct drm_format_info *info,
+>  			      const struct drm_mode_fb_cmd2 *user_mode_cmd)
+>  {
+>  	struct drm_framebuffer *fb;
+> diff --git a/drivers/gpu/drm/i915/display/intel_fb.h b/drivers/gpu/drm/i915/display/intel_fb.h
+> index 7d1267fbeee2..00181c4a67dc 100644
+> --- a/drivers/gpu/drm/i915/display/intel_fb.h
+> +++ b/drivers/gpu/drm/i915/display/intel_fb.h
+> @@ -109,6 +109,7 @@ intel_framebuffer_create(struct drm_gem_object *obj,
+>  struct drm_framebuffer *
+>  intel_user_framebuffer_create(struct drm_device *dev,
+>  			      struct drm_file *filp,
+> +			      const struct drm_format_info *info,
+>  			      const struct drm_mode_fb_cmd2 *user_mode_cmd);
+>  
+>  bool intel_fb_modifier_uses_dpt(struct intel_display *display, u64 modifier);
+> diff --git a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
+> index f851e9ffdb28..9db1ceaed518 100644
+> --- a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
+> +++ b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
+> @@ -901,14 +901,15 @@ static void ingenic_drm_disable_vblank(struct drm_crtc *crtc)
+>  
+>  static struct drm_framebuffer *
+>  ingenic_drm_gem_fb_create(struct drm_device *drm, struct drm_file *file,
+> +			  const struct drm_format_info *info,
+>  			  const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct ingenic_drm *priv = drm_device_get_priv(drm);
+>  
+>  	if (priv->soc_info->map_noncoherent)
+> -		return drm_gem_fb_create_with_dirty(drm, file, mode_cmd);
+> +		return drm_gem_fb_create_with_dirty(drm, file, info, mode_cmd);
+>  
+> -	return drm_gem_fb_create(drm, file, mode_cmd);
+> +	return drm_gem_fb_create(drm, file, info, mode_cmd);
+>  }
+>  
+>  static struct drm_gem_object *
+> diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+> index 64521577b05f..76fd10afe467 100644
+> --- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+> +++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+> @@ -43,16 +43,13 @@ static const struct drm_mode_config_helper_funcs mtk_drm_mode_config_helpers = {
+>  static struct drm_framebuffer *
+>  mtk_drm_mode_fb_create(struct drm_device *dev,
+>  		       struct drm_file *file,
+> +		       const struct drm_format_info *info,
+>  		       const struct drm_mode_fb_cmd2 *cmd)
+>  {
+> -	const struct drm_format_info *info = drm_get_format_info(dev,
+> -								 cmd->pixel_format,
+> -								 cmd->modifier[0]);
+> -
+>  	if (info->num_planes != 1)
+>  		return ERR_PTR(-EINVAL);
+>  
+> -	return drm_gem_fb_create(dev, file, cmd);
+> +	return drm_gem_fb_create(dev, file, info, cmd);
+>  }
+>  
+>  static const struct drm_mode_config_funcs mtk_drm_mode_config_funcs = {
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index a65077855201..ba82fa756e57 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -271,7 +271,8 @@ uint32_t msm_framebuffer_iova(struct drm_framebuffer *fb,
+>  struct drm_gem_object *msm_framebuffer_bo(struct drm_framebuffer *fb, int plane);
+>  const struct msm_format *msm_framebuffer_format(struct drm_framebuffer *fb);
+>  struct drm_framebuffer *msm_framebuffer_create(struct drm_device *dev,
+> -		struct drm_file *file, const struct drm_mode_fb_cmd2 *mode_cmd);
+> +		struct drm_file *file, const struct drm_format_info *info,
+> +		const struct drm_mode_fb_cmd2 *mode_cmd);
+>  struct drm_framebuffer * msm_alloc_stolen_fb(struct drm_device *dev,
+>  		int w, int h, int p, uint32_t format);
+>  
+> diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
+> index df2f85c44d55..4aef51cef3d5 100644
+> --- a/drivers/gpu/drm/msm/msm_fb.c
+> +++ b/drivers/gpu/drm/msm/msm_fb.c
+> @@ -134,11 +134,9 @@ const struct msm_format *msm_framebuffer_format(struct drm_framebuffer *fb)
+>  }
+>  
+>  struct drm_framebuffer *msm_framebuffer_create(struct drm_device *dev,
+> -		struct drm_file *file, const struct drm_mode_fb_cmd2 *mode_cmd)
+> +		struct drm_file *file, const struct drm_format_info *info,
+> +		const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+> -	const struct drm_format_info *info = drm_get_format_info(dev,
+> -								 mode_cmd->pixel_format,
+> -								 mode_cmd->modifier[0]);
+>  	struct drm_gem_object *bos[4] = {0};
+>  	struct drm_framebuffer *fb;
+>  	int ret, i, n = info->num_planes;
+> diff --git a/drivers/gpu/drm/mxsfb/mxsfb_drv.c b/drivers/gpu/drm/mxsfb/mxsfb_drv.c
+> index 09329af9b01e..0b756da2fec2 100644
+> --- a/drivers/gpu/drm/mxsfb/mxsfb_drv.c
+> +++ b/drivers/gpu/drm/mxsfb/mxsfb_drv.c
+> @@ -91,21 +91,15 @@ void mxsfb_disable_axi_clk(struct mxsfb_drm_private *mxsfb)
+>  
+>  static struct drm_framebuffer *
+>  mxsfb_fb_create(struct drm_device *dev, struct drm_file *file_priv,
+> +		const struct drm_format_info *info,
+>  		const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+> -	const struct drm_format_info *info;
+> -
+> -	info = drm_get_format_info(dev, mode_cmd->pixel_format,
+> -				   mode_cmd->modifier[0]);
+> -	if (!info)
+> -		return ERR_PTR(-EINVAL);
+> -
+>  	if (mode_cmd->width * info->cpp[0] != mode_cmd->pitches[0]) {
+>  		dev_dbg(dev->dev, "Invalid pitch: fb width must match pitch\n");
+>  		return ERR_PTR(-EINVAL);
+>  	}
+>  
+> -	return drm_gem_fb_create(dev, file_priv, mode_cmd);
+> +	return drm_gem_fb_create(dev, file_priv, info, mode_cmd);
+>  }
+>  
+>  static const struct drm_mode_config_funcs mxsfb_mode_config_funcs = {
+> diff --git a/drivers/gpu/drm/nouveau/nouveau_display.c b/drivers/gpu/drm/nouveau/nouveau_display.c
+> index a54c3f132c5c..3df388784bd3 100644
+> --- a/drivers/gpu/drm/nouveau/nouveau_display.c
+> +++ b/drivers/gpu/drm/nouveau/nouveau_display.c
+> @@ -333,6 +333,7 @@ nouveau_framebuffer_new(struct drm_device *dev,
+>  struct drm_framebuffer *
+>  nouveau_user_framebuffer_create(struct drm_device *dev,
+>  				struct drm_file *file_priv,
+> +				const struct drm_format_info *info,
+>  				const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct drm_framebuffer *fb;
+> diff --git a/drivers/gpu/drm/nouveau/nouveau_display.h b/drivers/gpu/drm/nouveau/nouveau_display.h
+> index 1f506f8b289c..e45f211501f6 100644
+> --- a/drivers/gpu/drm/nouveau/nouveau_display.h
+> +++ b/drivers/gpu/drm/nouveau/nouveau_display.h
+> @@ -67,5 +67,6 @@ nouveau_framebuffer_get_layout(struct drm_framebuffer *fb, uint32_t *tile_mode,
+>  
+>  struct drm_framebuffer *
+>  nouveau_user_framebuffer_create(struct drm_device *, struct drm_file *,
+> +				const struct drm_format_info *,
+>  				const struct drm_mode_fb_cmd2 *);
+>  #endif
+> diff --git a/drivers/gpu/drm/omapdrm/omap_fb.c b/drivers/gpu/drm/omapdrm/omap_fb.c
+> index e18878068c57..36afcd1c1fd7 100644
+> --- a/drivers/gpu/drm/omapdrm/omap_fb.c
+> +++ b/drivers/gpu/drm/omapdrm/omap_fb.c
+> @@ -335,11 +335,9 @@ void omap_framebuffer_describe(struct drm_framebuffer *fb, struct seq_file *m)
+>  #endif
+>  
+>  struct drm_framebuffer *omap_framebuffer_create(struct drm_device *dev,
+> -		struct drm_file *file, const struct drm_mode_fb_cmd2 *mode_cmd)
+> +		struct drm_file *file, const struct drm_format_info *info,
+> +		const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+> -	const struct drm_format_info *info = drm_get_format_info(dev,
+> -								 mode_cmd->pixel_format,
+> -								 mode_cmd->modifier[0]);
+>  	unsigned int num_planes = info->num_planes;
+>  	struct drm_gem_object *bos[4];
+>  	struct drm_framebuffer *fb;
+> diff --git a/drivers/gpu/drm/omapdrm/omap_fb.h b/drivers/gpu/drm/omapdrm/omap_fb.h
+> index b75f0b5ef1d8..0873f953cf1d 100644
+> --- a/drivers/gpu/drm/omapdrm/omap_fb.h
+> +++ b/drivers/gpu/drm/omapdrm/omap_fb.h
+> @@ -20,7 +20,8 @@ struct omap_overlay_info;
+>  struct seq_file;
+>  
+>  struct drm_framebuffer *omap_framebuffer_create(struct drm_device *dev,
+> -		struct drm_file *file, const struct drm_mode_fb_cmd2 *mode_cmd);
+> +		struct drm_file *file, const struct drm_format_info *info,
+> +		const struct drm_mode_fb_cmd2 *mode_cmd);
+>  struct drm_framebuffer *omap_framebuffer_init(struct drm_device *dev,
+>  		const struct drm_mode_fb_cmd2 *mode_cmd, struct drm_gem_object **bos);
+>  int omap_framebuffer_pin(struct drm_framebuffer *fb);
+> diff --git a/drivers/gpu/drm/qxl/qxl_display.c b/drivers/gpu/drm/qxl/qxl_display.c
+> index 70aff64ced87..f7bc83f2d489 100644
+> --- a/drivers/gpu/drm/qxl/qxl_display.c
+> +++ b/drivers/gpu/drm/qxl/qxl_display.c
+> @@ -1176,6 +1176,7 @@ static int qdev_output_init(struct drm_device *dev, int num_output)
+>  static struct drm_framebuffer *
+>  qxl_user_framebuffer_create(struct drm_device *dev,
+>  			    struct drm_file *file_priv,
+> +			    const struct drm_format_info *info,
+>  			    const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	return drm_gem_fb_create_with_funcs(dev, file_priv, mode_cmd,
+> diff --git a/drivers/gpu/drm/radeon/radeon_display.c b/drivers/gpu/drm/radeon/radeon_display.c
+> index 8f5f8abcb1b4..85b714ac9882 100644
+> --- a/drivers/gpu/drm/radeon/radeon_display.c
+> +++ b/drivers/gpu/drm/radeon/radeon_display.c
+> @@ -1314,6 +1314,7 @@ radeon_framebuffer_init(struct drm_device *dev,
+>  static struct drm_framebuffer *
+>  radeon_user_framebuffer_create(struct drm_device *dev,
+>  			       struct drm_file *file_priv,
+> +			       const struct drm_format_info *info,
+>  			       const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct drm_gem_object *obj;
+> diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c b/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
+> index 70d8ad065bfa..af22a5d23637 100644
+> --- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
+> +++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
+> @@ -426,6 +426,7 @@ int rcar_du_dumb_create(struct drm_file *file, struct drm_device *dev,
+>  
+>  static struct drm_framebuffer *
+>  rcar_du_fb_create(struct drm_device *dev, struct drm_file *file_priv,
+> +		  const struct drm_format_info *info,
+>  		  const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct rcar_du_device *rcdu = to_rcar_du_device(dev);
+> @@ -490,7 +491,7 @@ rcar_du_fb_create(struct drm_device *dev, struct drm_file *file_priv,
+>  		}
+>  	}
+>  
+> -	return drm_gem_fb_create(dev, file_priv, mode_cmd);
+> +	return drm_gem_fb_create(dev, file_priv, info, mode_cmd);
+>  }
+>  
+>  /* -----------------------------------------------------------------------------
+> diff --git a/drivers/gpu/drm/renesas/rz-du/rzg2l_du_kms.c b/drivers/gpu/drm/renesas/rz-du/rzg2l_du_kms.c
+> index 55a97691e9b2..87f171145a23 100644
+> --- a/drivers/gpu/drm/renesas/rz-du/rzg2l_du_kms.c
+> +++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_du_kms.c
+> @@ -191,6 +191,7 @@ int rzg2l_du_dumb_create(struct drm_file *file, struct drm_device *dev,
+>  
+>  static struct drm_framebuffer *
+>  rzg2l_du_fb_create(struct drm_device *dev, struct drm_file *file_priv,
+> +		   const struct drm_format_info *info,
+>  		   const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	const struct rzg2l_du_format_info *format;
+> @@ -214,7 +215,7 @@ rzg2l_du_fb_create(struct drm_device *dev, struct drm_file *file_priv,
+>  		return ERR_PTR(-EINVAL);
+>  	}
+>  
+> -	return drm_gem_fb_create(dev, file_priv, mode_cmd);
+> +	return drm_gem_fb_create(dev, file_priv, info, mode_cmd);
+>  }
+>  
+>  /* -----------------------------------------------------------------------------
+> diff --git a/drivers/gpu/drm/renesas/shmobile/shmob_drm_kms.c b/drivers/gpu/drm/renesas/shmobile/shmob_drm_kms.c
+> index 4202ab00fb0c..fd9460da1789 100644
+> --- a/drivers/gpu/drm/renesas/shmobile/shmob_drm_kms.c
+> +++ b/drivers/gpu/drm/renesas/shmobile/shmob_drm_kms.c
+> @@ -117,6 +117,7 @@ const struct shmob_drm_format_info *shmob_drm_format_info(u32 fourcc)
+>  
+>  static struct drm_framebuffer *
+>  shmob_drm_fb_create(struct drm_device *dev, struct drm_file *file_priv,
+> +		    const struct drm_format_info *info,
+>  		    const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	const struct shmob_drm_format_info *format;
+> @@ -144,7 +145,7 @@ shmob_drm_fb_create(struct drm_device *dev, struct drm_file *file_priv,
+>  		}
+>  	}
+>  
+> -	return drm_gem_fb_create(dev, file_priv, mode_cmd);
+> +	return drm_gem_fb_create(dev, file_priv, info, mode_cmd);
+>  }
+>  
+>  static const struct drm_mode_config_funcs shmob_drm_mode_config_funcs = {
+> diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_fb.c b/drivers/gpu/drm/rockchip/rockchip_drm_fb.c
+> index bf25286c7665..d46297bec5f8 100644
+> --- a/drivers/gpu/drm/rockchip/rockchip_drm_fb.c
+> +++ b/drivers/gpu/drm/rockchip/rockchip_drm_fb.c
+> @@ -30,17 +30,12 @@ static const struct drm_mode_config_helper_funcs rockchip_mode_config_helpers =
+>  
+>  static struct drm_framebuffer *
+>  rockchip_fb_create(struct drm_device *dev, struct drm_file *file,
+> +		   const struct drm_format_info *info,
+>  		   const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct drm_afbc_framebuffer *afbc_fb;
+> -	const struct drm_format_info *info;
+>  	int ret;
+>  
+> -	info = drm_get_format_info(dev, mode_cmd->pixel_format,
+> -				   mode_cmd->modifier[0]);
+> -	if (!info)
+> -		return ERR_PTR(-ENOMEM);
+> -
+>  	afbc_fb = kzalloc(sizeof(*afbc_fb), GFP_KERNEL);
+>  	if (!afbc_fb)
+>  		return ERR_PTR(-ENOMEM);
+> diff --git a/drivers/gpu/drm/tegra/drm.h b/drivers/gpu/drm/tegra/drm.h
+> index 0b65e69f3a8a..77e520c43f72 100644
+> --- a/drivers/gpu/drm/tegra/drm.h
+> +++ b/drivers/gpu/drm/tegra/drm.h
+> @@ -190,6 +190,7 @@ struct drm_framebuffer *tegra_fb_alloc(struct drm_device *drm,
+>  				       unsigned int num_planes);
+>  struct drm_framebuffer *tegra_fb_create(struct drm_device *drm,
+>  					struct drm_file *file,
+> +					const struct drm_format_info *info,
+>  					const struct drm_mode_fb_cmd2 *cmd);
+>  
+>  #ifdef CONFIG_DRM_FBDEV_EMULATION
+> diff --git a/drivers/gpu/drm/tegra/fb.c b/drivers/gpu/drm/tegra/fb.c
+> index 634c6346d947..24907573e758 100644
+> --- a/drivers/gpu/drm/tegra/fb.c
+> +++ b/drivers/gpu/drm/tegra/fb.c
+> @@ -132,11 +132,9 @@ struct drm_framebuffer *tegra_fb_alloc(struct drm_device *drm,
+>  
+>  struct drm_framebuffer *tegra_fb_create(struct drm_device *drm,
+>  					struct drm_file *file,
+> +					const struct drm_format_info *info,
+>  					const struct drm_mode_fb_cmd2 *cmd)
+>  {
+> -	const struct drm_format_info *info = drm_get_format_info(drm,
+> -								 cmd->pixel_format,
+> -								 cmd->modifier[0]);
+>  	struct tegra_bo *planes[4];
+>  	struct drm_gem_object *gem;
+>  	struct drm_framebuffer *fb;
+> diff --git a/drivers/gpu/drm/tests/drm_framebuffer_test.c b/drivers/gpu/drm/tests/drm_framebuffer_test.c
+> index 6ea04cc8f324..9b8e01e8cd91 100644
+> --- a/drivers/gpu/drm/tests/drm_framebuffer_test.c
+> +++ b/drivers/gpu/drm/tests/drm_framebuffer_test.c
+> @@ -363,6 +363,7 @@ struct drm_framebuffer_test_priv {
+>  
+>  static struct drm_framebuffer *fb_create_mock(struct drm_device *dev,
+>  					      struct drm_file *file_priv,
+> +					      const struct drm_format_info *info,
+>  					      const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct drm_framebuffer_test_priv *priv = container_of(dev, typeof(*priv), dev);
+> diff --git a/drivers/gpu/drm/vc4/vc4_kms.c b/drivers/gpu/drm/vc4/vc4_kms.c
+> index f5b167417428..8f983edb81ff 100644
+> --- a/drivers/gpu/drm/vc4/vc4_kms.c
+> +++ b/drivers/gpu/drm/vc4/vc4_kms.c
+> @@ -530,6 +530,7 @@ static int vc4_atomic_commit_setup(struct drm_atomic_state *state)
+>  
+>  static struct drm_framebuffer *vc4_fb_create(struct drm_device *dev,
+>  					     struct drm_file *file_priv,
+> +					     const struct drm_format_info *info,
+>  					     const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct vc4_dev *vc4 = to_vc4_dev(dev);
+> @@ -568,7 +569,7 @@ static struct drm_framebuffer *vc4_fb_create(struct drm_device *dev,
+>  		mode_cmd = &mode_cmd_local;
+>  	}
+>  
+> -	return drm_gem_fb_create(dev, file_priv, mode_cmd);
+> +	return drm_gem_fb_create(dev, file_priv, info, mode_cmd);
+>  }
+>  
+>  /* Our CTM has some peculiar limitations: we can only enable it for one CRTC
+> diff --git a/drivers/gpu/drm/virtio/virtgpu_display.c b/drivers/gpu/drm/virtio/virtgpu_display.c
+> index 59a45e74a641..f9a98fbbabd1 100644
+> --- a/drivers/gpu/drm/virtio/virtgpu_display.c
+> +++ b/drivers/gpu/drm/virtio/virtgpu_display.c
+> @@ -293,6 +293,7 @@ static int vgdev_output_init(struct virtio_gpu_device *vgdev, int index)
+>  static struct drm_framebuffer *
+>  virtio_gpu_user_framebuffer_create(struct drm_device *dev,
+>  				   struct drm_file *file_priv,
+> +				   const struct drm_format_info *info,
+>  				   const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct drm_gem_object *obj = NULL;
+> diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+> index 05b1c54a070c..2d48a28cda9c 100644
+> --- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+> +++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+> @@ -712,6 +712,7 @@ vmw_kms_new_framebuffer(struct vmw_private *dev_priv,
+>  
+>  static struct drm_framebuffer *vmw_kms_fb_create(struct drm_device *dev,
+>  						 struct drm_file *file_priv,
+> +						 const struct drm_format_info *info,
+>  						 const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct vmw_private *dev_priv = vmw_priv(dev);
+> diff --git a/drivers/gpu/drm/xen/xen_drm_front_kms.c b/drivers/gpu/drm/xen/xen_drm_front_kms.c
+> index dfa78a49a6d9..a360003bee47 100644
+> --- a/drivers/gpu/drm/xen/xen_drm_front_kms.c
+> +++ b/drivers/gpu/drm/xen/xen_drm_front_kms.c
+> @@ -54,6 +54,7 @@ static const struct drm_framebuffer_funcs fb_funcs = {
+>  
+>  static struct drm_framebuffer *
+>  fb_create(struct drm_device *dev, struct drm_file *filp,
+> +	  const struct drm_format_info *info,
+>  	  const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct xen_drm_front_drm_info *drm_info = dev->dev_private;
+> diff --git a/drivers/gpu/drm/xlnx/zynqmp_kms.c b/drivers/gpu/drm/xlnx/zynqmp_kms.c
+> index b47463473472..2bee0a2275ed 100644
+> --- a/drivers/gpu/drm/xlnx/zynqmp_kms.c
+> +++ b/drivers/gpu/drm/xlnx/zynqmp_kms.c
+> @@ -373,6 +373,7 @@ static int zynqmp_dpsub_dumb_create(struct drm_file *file_priv,
+>  
+>  static struct drm_framebuffer *
+>  zynqmp_dpsub_fb_create(struct drm_device *drm, struct drm_file *file_priv,
+> +		       const struct drm_format_info *info,
+>  		       const struct drm_mode_fb_cmd2 *mode_cmd)
+>  {
+>  	struct zynqmp_dpsub *dpsub = to_zynqmp_dpsub(drm);
+> @@ -383,7 +384,7 @@ zynqmp_dpsub_fb_create(struct drm_device *drm, struct drm_file *file_priv,
+>  	for (i = 0; i < ARRAY_SIZE(cmd.pitches); ++i)
+>  		cmd.pitches[i] = ALIGN(cmd.pitches[i], dpsub->dma_align);
+>  
+> -	return drm_gem_fb_create(drm, file_priv, &cmd);
+> +	return drm_gem_fb_create(drm, file_priv, info, &cmd);
+>  }
+>  
+>  static const struct drm_mode_config_funcs zynqmp_dpsub_mode_config_funcs = {
+> diff --git a/include/drm/drm_gem_framebuffer_helper.h b/include/drm/drm_gem_framebuffer_helper.h
+> index d302521f3dd4..4fdf9d3d1863 100644
+> --- a/include/drm/drm_gem_framebuffer_helper.h
+> +++ b/include/drm/drm_gem_framebuffer_helper.h
+> @@ -8,6 +8,7 @@ struct drm_afbc_framebuffer;
+>  struct drm_device;
+>  struct drm_fb_helper_surface_size;
+>  struct drm_file;
+> +struct drm_format_info;
+>  struct drm_framebuffer;
+>  struct drm_framebuffer_funcs;
+>  struct drm_gem_object;
+> @@ -32,9 +33,11 @@ drm_gem_fb_create_with_funcs(struct drm_device *dev, struct drm_file *file,
+>  			     const struct drm_framebuffer_funcs *funcs);
+>  struct drm_framebuffer *
+>  drm_gem_fb_create(struct drm_device *dev, struct drm_file *file,
+> +		  const struct drm_format_info *info,
+>  		  const struct drm_mode_fb_cmd2 *mode_cmd);
+>  struct drm_framebuffer *
+>  drm_gem_fb_create_with_dirty(struct drm_device *dev, struct drm_file *file,
+> +			     const struct drm_format_info *info,
+>  			     const struct drm_mode_fb_cmd2 *mode_cmd);
+>  
+>  int drm_gem_fb_vmap(struct drm_framebuffer *fb, struct iosys_map *map,
+> diff --git a/include/drm/drm_mode_config.h b/include/drm/drm_mode_config.h
+> index 6fca0362bc31..bea88446fcdc 100644
+> --- a/include/drm/drm_mode_config.h
+> +++ b/include/drm/drm_mode_config.h
+> @@ -82,6 +82,7 @@ struct drm_mode_config_funcs {
+>  	 */
+
+No need to document the new parameter ?
+
+>  	struct drm_framebuffer *(*fb_create)(struct drm_device *dev,
+>  					     struct drm_file *file_priv,
+> +					     const struct drm_format_info *info,
+>  					     const struct drm_mode_fb_cmd2 *mode_cmd);
+>  
+>  	/**
 
 -- 
-With best wishes
-Dmitry
+Regards,
+
+Laurent Pinchart
 
