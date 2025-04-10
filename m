@@ -1,360 +1,456 @@
-Return-Path: <linux-arm-msm+bounces-53775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C086DA83B36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 09:32:16 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E0A6A83D30
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 10:37:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D80669E087C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 07:26:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93A6D19E7BB9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 08:38:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2822C20D4FD;
-	Thu, 10 Apr 2025 07:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84C9520AF9A;
+	Thu, 10 Apr 2025 08:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aTe27cm5"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="1ad/pI1r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2043.outbound.protection.outlook.com [40.107.223.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E50F20ADF9;
-	Thu, 10 Apr 2025 07:24:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744269854; cv=none; b=de3i+05A78LmDoYfWo0DtQDbvs8m3pIxOo2kiqxEfvieshvEuy3liRKD23/IRGeKck/lMfSxrEN8nyksEstOMVfxXEP7IPLG2L50pCtw7TW35B9FhGlcpWCPJF816BsgH6x724iSk57Hl+9e1GkSADV0YyrvO9VqtBFAszhoKiA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744269854; c=relaxed/simple;
-	bh=+wJGrK6NXdSk81uWZS20SyBE9yN56hTNRcUj/7WArkc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Mb/lEx9EkwWbEOpWCU1Br3JwmUhM/Op1jaAlrj3+A3PG3kng5eqxryihSySp09NFzqmKV8w64GfU1TI/wiWM7/3VzYlC/OCEDwaLfC+BmczghO+kibX044hnOtJbWv/fppXlqA0b1V8Ba0YeoWioBUTcIJssej1eit+mtljcObk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aTe27cm5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53A75dc0000661;
-	Thu, 10 Apr 2025 07:24:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kDfq3qDRcS+Eo9w8R8o23lc6Bwi0JEgHsmKUT1oZAFI=; b=aTe27cm5n6Od1hly
-	59X/Rwv9t402uY60UUhJ1iVtA0+r46975VcjiWaaxPDMPyrpwtSgc5/cRT7xlfS0
-	gyu//mMNdUR3pW3jkZ5JdeCKAvBiyRXeECqIHB+X1zh8xk/TpBqJ8u+laonD5Ic6
-	ban1tIY57whg7YMzfEYwzyNFd4uUt4YHxoyxkbVpnYcXLtv1horL/8Qcx8aelpmd
-	L5464HkvI4yQdYJO8GUlMJFPLPt2lTKNLd3GHCAZdw3NbYyVLbGuuT3q46yA/+9v
-	5zXw1dbcRrQIT53UWmZi0fRjDWZKhj+MI8MMU3vibyFKYTRAh579igMhnpk1q8l6
-	zEd2mg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twd2wy04-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Apr 2025 07:24:06 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53A7O5P5023823
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Apr 2025 07:24:05 GMT
-Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 10 Apr
- 2025 00:24:00 -0700
-Message-ID: <144f5707-9b17-9a62-3ede-9c79f9625a08@quicinc.com>
-Date: Thu, 10 Apr 2025 12:53:57 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7385643AB7;
+	Thu, 10 Apr 2025 08:37:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744274261; cv=fail; b=pOJMz6a8+iQiThrLwOjuAUICBEyuRiaRJmY/fzR1hq5K0NhwJf6kmGvettcmQUY5XRQZgkH2tvRnLi+dTr3rnurHWwuXq5a6/xT+yo72Cm/md1/Dy+MAiDT8r/FTEmrEt4lKFbmnSQbpQ91fnrSkl2K+RvZZ9nhO7pTfLXaIzME=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744274261; c=relaxed/simple;
+	bh=g9cTmtShP58iSGWSAY9Ffo14jXr2cvkyRN1SPgTCLas=;
+	h=Content-Type:Message-ID:Date:Subject:To:Cc:References:From:
+	 In-Reply-To:MIME-Version; b=XDYb+c9T3acpDvL7WnPvne9uid5gkn4/xmtvovAuWiqiboy3Jp/jhpzeuQvsTNNl/lWUAJrogU6A2toI2prxXWgVyUp0T/emsiB1YF6Bh+LiouPeoq6QOLmRTY5L9JAbrc0Q6DqOazAcC20AVMPyADP3GLsKc2OvLqveuJe8gy8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=1ad/pI1r; arc=fail smtp.client-ip=40.107.223.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jevnqumo1U63abvv57l7niqR+35GyXqxqyYZCm3m32N6NXeR94ICjABsjbmjtLYo0Sp3K6KhajqQwoH5m46cReIA9yqoXjo7y6MgMyTTeHAwWdHliKUG0wuP3CTcNUX1k/jGId5wpIVogM6SlQX5ChpG9SMOJKz4S9uE0QxX6UHGPjUy8BSK7cconxww20HbSCj2qMtjWvNIwUKp2ygXY1FH6G8LtUREpEKlphP5PlzU1etuZdiRu/bN4ATPGJegVHeiRCC9/7uhG9j3NIkCzsAgP/NIGovBwfR5HJpgwVzXIZP7ucA3q/rM99yVa/3Io+hxi7yHgux21NE1pDfCgQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dYzyVUBgBsbL7grtewF+buEH6tgGGnbb47odBhqBFz8=;
+ b=SOUs2IO8nREh3/k2BkOCZkFRA9NcOks9vDdylB7z2HjLOUAk7oYU5dLSUOFe1j041ebzzducRvl3Acs/4le9pzrzPy/GGhCq9/MOHM6hFoKWnPKVxru5ZYB3CX9rRbn91VFkHzCnaBTxJb1aLpPmUR3Kv6EYfciVcpkPYcTJAGAS4XfYOuP74i07kv4CyRXpI8FCkymrN5XRzh888aSX6ieCmAy5GTyA5D/9gjpUTInhKpeYWM+iPVuVsHED0Xb6JjVMXBNAZ7Zpy09NqGYZjW/qPMaczw/snuhCZGZmb9VFO8a40JR0un2erA66QBmNsI+VJSRliuig3gbfH7GnBQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dYzyVUBgBsbL7grtewF+buEH6tgGGnbb47odBhqBFz8=;
+ b=1ad/pI1r+ile+W+04Gp6yLIc1WmUZQA+zeGRAqjCJ24SBtTLLv9GDKR2ulMFN+KgwDk3whOSkl6G7bRKQ8to+F+bHbvV8J6yhSZCXFKyL20O+m1OgMqJyAYZhiYud691BKZ/7MeWFusIr7SqUNxpO25471sNVjsuk6bkn9WgAbI=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH7PR12MB5685.namprd12.prod.outlook.com (2603:10b6:510:13c::22)
+ by MW3PR12MB4426.namprd12.prod.outlook.com (2603:10b6:303:58::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.22; Thu, 10 Apr
+ 2025 08:37:36 +0000
+Received: from PH7PR12MB5685.namprd12.prod.outlook.com
+ ([fe80::46fb:96f2:7667:7ca5]) by PH7PR12MB5685.namprd12.prod.outlook.com
+ ([fe80::46fb:96f2:7667:7ca5%5]) with mapi id 15.20.8632.021; Thu, 10 Apr 2025
+ 08:37:36 +0000
+Content-Type: multipart/mixed; boundary="------------RitEXH8ONBTGBTbpKtqnx0LV"
+Message-ID: <4283351a-5650-4b48-8958-e76a54118045@amd.com>
+Date: Thu, 10 Apr 2025 10:37:18 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dma-fence: Rename dma_fence_is_signaled()
+To: phasta@kernel.org, Boris Brezillon <boris.brezillon@collabora.com>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>,
+ Gustavo Padovan <gustavo@padovan.org>,
+ Felix Kuehling <Felix.Kuehling@amd.com>,
+ Alex Deucher <alexander.deucher@amd.com>, Xinhui Pan <Xinhui.Pan@amd.com>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Lucas Stach <l.stach@pengutronix.de>,
+ Russell King <linux+etnaviv@armlinux.org.uk>,
+ Christian Gmeiner <christian.gmeiner@gmail.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, Tvrtko Ursulin
+ <tursulin@ursulin.net>, Frank Binns <frank.binns@imgtec.com>,
+ Matt Coster <matt.coster@imgtec.com>, Qiang Yu <yuq825@gmail.com>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>, Lyude Paul
+ <lyude@redhat.com>, Danilo Krummrich <dakr@kernel.org>,
+ Rob Herring <robh@kernel.org>, Steven Price <steven.price@arm.com>,
+ Dave Airlie <airlied@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Matthew Brost <matthew.brost@intel.com>, Huang Rui <ray.huang@amd.com>,
+ Matthew Auld <matthew.auld@intel.com>, Melissa Wen <mwen@igalia.com>,
+ =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
+ Zack Rusin <zack.rusin@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>,
+ Lucas De Marchi <lucas.demarchi@intel.com>,
+ =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+ Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
+ Yang Wang <kevinyang.wang@amd.com>, Jesse Zhang <jesse.zhang@amd.com>,
+ Tim Huang <tim.huang@amd.com>,
+ Sathishkumar S <sathishkumar.sundararaju@amd.com>,
+ Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>,
+ Sunil Khatri <sunil.khatri@amd.com>, Lijo Lazar <lijo.lazar@amd.com>,
+ Hawking Zhang <Hawking.Zhang@amd.com>, Ma Jun <Jun.Ma2@amd.com>,
+ Yunxiang Li <Yunxiang.Li@amd.com>, Eric Huang <jinhuieric.huang@amd.com>,
+ Asad Kamal <asad.kamal@amd.com>,
+ Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+ Jack Xiao <Jack.Xiao@amd.com>, Friedrich Vock <friedrich.vock@gmx.de>,
+ =?UTF-8?Q?Michel_D=C3=A4nzer?= <mdaenzer@redhat.com>,
+ Geert Uytterhoeven <geert@linux-m68k.org>,
+ Anna-Maria Behnsen <anna-maria@linutronix.de>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Frederic Weisbecker <frederic@kernel.org>,
+ Dan Carpenter <dan.carpenter@linaro.org>, linux-media@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org,
+ linux-kernel@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+ etnaviv@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+ virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org
+References: <20250409120640.106408-2-phasta@kernel.org>
+ <20250409120640.106408-3-phasta@kernel.org>
+ <20250409143917.31303d22@collabora.com>
+ <73d41cd84c73b296789b654e45125bfce88e0dbf.camel@mailbox.org>
+ <72eb974dfea8fa1167cf97e29848672223f6fc5b.camel@mailbox.org>
+ <ab7d1937-d0e9-45f8-8f7d-ddd7a1a9d3d5@amd.com>
+ <9a90f7f14c22c01aa28d89aa91bf4dfa4049c062.camel@mailbox.org>
+ <334e843c-d7fe-4e33-b4fc-f3d18226465a@amd.com>
+ <0b2fc70d8fae566c8ca43bafc929e2bd19725924.camel@mailbox.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+In-Reply-To: <0b2fc70d8fae566c8ca43bafc929e2bd19725924.camel@mailbox.org>
+X-ClientProxiedBy: FR4P281CA0131.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:b9::9) To PH7PR12MB5685.namprd12.prod.outlook.com
+ (2603:10b6:510:13c::22)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 00/20] Add support for HEVC and VP9 codecs in decoder
-Content-Language: en-US
-To: <neil.armstrong@linaro.org>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        "Hans
- Verkuil" <hverkuil@xs4all.nl>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konradybcio@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <stable@vger.kernel.org>, Dan Carpenter <dan.carpenter@linaro.org>
-References: <20250408-iris-dec-hevc-vp9-v1-0-acd258778bd6@quicinc.com>
- <801511ac-78db-476b-8f1d-a478b0b64bcb@linaro.org>
- <72a5b302-5c99-4457-86c8-5fa994c93c4a@linaro.org>
- <054c3ee4-78d3-68b2-0dca-8fc339cbea80@quicinc.com>
- <d43d0b56-83e0-4567-a99a-6611a146954e@linaro.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <d43d0b56-83e0-4567-a99a-6611a146954e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5685:EE_|MW3PR12MB4426:EE_
+X-MS-Office365-Filtering-Correlation-Id: ac36526f-8010-49fe-866d-08dd780af1c9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|1800799024|366016|4053099003|8096899003;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?b3JWZ2kvamkvTytSaHlGODhQcEhHaDlHS3J0cmxTdmJYNEV5bVZ4Z2cySE0x?=
+ =?utf-8?B?aHRsRWNoY3haRUZhd2dQdDZOMzR2Y29Cbi9OV01hZis5cTdwbWFzbjkzbEt3?=
+ =?utf-8?B?bUR4R3RsNmlKTkducnM3S3lUK205UHdPdEcwcEM1L2ZhRmRxbTZaNkM1MFFl?=
+ =?utf-8?B?cTY0a3pEeEgwQmlreDVPc2p5Q05oVG4xS3JvSk4raDI4NkFXYVBuaGtPcElR?=
+ =?utf-8?B?bnU2ZjQ0NkJPcXRiTkorTC9BelRyRjBFQkZXVitFVFM4ZVR4TVhvbHRLYVZx?=
+ =?utf-8?B?M0VlMUdkcTlqN2ZmcjZ3ZnRxNDdMUG9nWEtrQlQxK1NBQldFZHB2dThZSG54?=
+ =?utf-8?B?czAwS0NQbTVacm02VXNXOGlFU3E5Q2RabUduYnpKWCtpcG1sT0ZXVGZ6dHBB?=
+ =?utf-8?B?WFVrSW1XZW10VEd5ZnVidjBzNnJWRjI1dm9XTURmVEE4NXBTVGNzZm1YN05S?=
+ =?utf-8?B?SXRQRTlKMU41cmREbHZBL0VYL1FubmpvZDdMYVRyQklDWGI3dk4yNmpNTGNp?=
+ =?utf-8?B?UFNHVTVyZkd5dUkxYjBOUXVXd1VQbkNaaFp3VUpKOGFXcEFleXpDRkFLY2pX?=
+ =?utf-8?B?Y2cvUnVpbHE1TzhFeDV5dTdEbDhIMFpHaVhqdXRrSmQ0a0p2TEdobFBlQ0dG?=
+ =?utf-8?B?OUV6ZDdLNjEyY0w2QkRROU5WT3JHNGw1T1pURW92K0FCUGJhdmljYlVIUXli?=
+ =?utf-8?B?bGNHcXoxZmYyRTJJRENQSUtEbGtjc3lYUzNkQkRuZGh0cFZOUCswYkNtQzhh?=
+ =?utf-8?B?OHhYZzEyUXBYT2NvckN3NGpzM3lFWEtVZ1ZrSFlhVGpic0NDcmdLM3pBS3d0?=
+ =?utf-8?B?WmYrdkVjRDFxWjViYTI0N2d5OWgzTytnWWNSWGkyTmVDUDFGN0NtelkrUVpQ?=
+ =?utf-8?B?QVV3c3FRd0lMZWdtZlY1eHhERzhteDIzcXFQa2Z5MjVMcWlRTng2b3FGUHV5?=
+ =?utf-8?B?M0xZRldGYlNMVC9rU0hBUzVCRGRXQUhJSnd0UUZDeHprZzN5czRFK1doV0lk?=
+ =?utf-8?B?ZnJWMjdmZmYyT1FHMHZRUjY4bDhJUGdpZmxFYjZtbk5JMmNnMy9qM3hKUU43?=
+ =?utf-8?B?L0RaZUdyRjdQd3Y2Qm1PYnRMVGpqcHh0M0wzMXk1Wml0dkpiUVRaeHBISDkz?=
+ =?utf-8?B?RHErbzJHUmE3bVdhb3dMV2JGR3QwejBXQXJnaDFJalZZd0d0ajdjS0YzY1Bz?=
+ =?utf-8?B?T0xkV1VTWVZURkNQamZTeUtWL1JmRUZLdXMzSG40dzVkamlxK0lTQ3pmd2JX?=
+ =?utf-8?B?eVNVTW1QSmp1aFJZMlk4bUhQUmMwTWMwVmdpMEJvVnd2T2FGc25qWHdqMnN0?=
+ =?utf-8?B?My9sKzRUOFNWeEJmTVkySFRtQ3ZOK3dSQ1lPcHlXeXYwSDNjdmw1WXdZc01H?=
+ =?utf-8?B?QWxTaGRkek82ZlFtS0VSTE5tOWkzMlp3c3NjcDVWRVBDeDBteEx2SGtkZURC?=
+ =?utf-8?B?bFFXOHlIQ1p1SXA5Q1ExNDFYa3RJOTdveTFFejBFMmE0SGxRNTIvREx6TDBT?=
+ =?utf-8?B?VGhhSkpTYzhReVpHZ3lzejFYTjlxdlJPVFpTK3pnVWQ3bjdQV2RpdCtyaUtL?=
+ =?utf-8?B?T0s1ZnJWNmVPNWpxajVWcXpkRlVMdE96ZTE3RFVkQndoNGk2OWhvaWd5T1NJ?=
+ =?utf-8?B?bExXbVNSMkdmT3RCS2FNVE1YYXI1ME9yK2ZkTFJZRkJsY1c2UmVCY1ZoK2lI?=
+ =?utf-8?B?V0VZVEYxSU5EbktCRXRGSVFnd210emFWZWhreWJaK0Z6ZWhmRTNWa0tBSm9O?=
+ =?utf-8?B?bVI1SWRsOG91dWV5QWxOVzA5RDFuQVJ0MlpCZkI1SzVoS0h0OHVLTHlCeDd6?=
+ =?utf-8?B?NnFNMU1iZStyUWk2QW4rSFI5RHNNYjFWZ2l1dUJNaVZSZFJ4MVc1RjRQb0hF?=
+ =?utf-8?Q?SpJi82IAoRRen?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5685.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016)(4053099003)(8096899003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?OEJOVVRGZkZjN2lVVjl1VUVxcWxMMndWaExDRFdodmZXcVQ2VnNTNUxCTHY4?=
+ =?utf-8?B?TjR5NkFTKzEwYm4wYWlqVHZ1RU1RdDVSWml3a0JRTE9RcllRMUxndDNpRUUr?=
+ =?utf-8?B?OVNRMU5NQXFEdUZPVkxGNTdBdmJtVi95V1UveEdKWklpSkQyODBOLzVUY0xK?=
+ =?utf-8?B?TWFpclpoN1JoRFN0TGR3ZVNheXIxR1ljMTdvZEJIZ2RoVFFsei9COVZQK0R6?=
+ =?utf-8?B?ZG03SUtoRUVpb0dvS3RkZ2RKNDVTMWIzUU9LM3ZmZGo4L2J0TDV3YTI2cFZr?=
+ =?utf-8?B?MHhsNFJ2YVZjaWg4eHQ1UWhPVGlyblo3SnAvRUlWNnR2MXdtaGtZcHc4Y2w2?=
+ =?utf-8?B?S2hVUTF0ckR3cDY1VWx4RTlabHVaQ1RWSy8wUUlkSGhhOWh1cnkybW9ralpi?=
+ =?utf-8?B?SnZRUHlLZVh6dXFZcUxlTUNSV0xLbUlQYVRySHJzNDl3VnBUdWNtQ1RFbSt6?=
+ =?utf-8?B?dEZBWTJoYWt3bDlqbDNiUGY4Vk9Zbkg5bkpvMmZiRWd6TVNrOGpGVVBzWE9z?=
+ =?utf-8?B?MHpRRUFFbkd1cHdJbjkxMFkvellmSk4zMWl1Syt3bEJhbXg5OWtvZXU2QlYv?=
+ =?utf-8?B?d2tncE4wOW9aMjVwYk1BdWEyMGlrbU1USnJwTUxFZ2FrZkQweUFNMDAwMjhi?=
+ =?utf-8?B?N2hmVmgvSUxmOTBtNEprWnJzYlM5eHg3aEM1SjcyZElWa3Ewa1ZoNWJGMnpa?=
+ =?utf-8?B?SytoNmNNSkdscEFwMHpnZjFlRWc4V2VwUWlFck1od1IwVE1HSzZJa1ZOTmZN?=
+ =?utf-8?B?RHlURFE1V3hGTmJ3RmV3clpQL1p3enhSeStmV3dvUE9wVUs0bUdjbzB3ZmpR?=
+ =?utf-8?B?TUJkczI1eFAvK3ZXc0x0UFlpMm1kejk5NEM2d1dYZTMzb2ZCSGZxSHFQWnN4?=
+ =?utf-8?B?Q29VVjgvUUd5WnNTUXk5Y0pjUk0rQWVpL2RVOVB1RVBaNmcyTnp3R01ycEx3?=
+ =?utf-8?B?RDhLU0ZrbjUxVUp6eEZUUW1sZEVRUE9lREw0M25Ca05HclJmUklua09FYTNw?=
+ =?utf-8?B?T0N5ZVFDWVBtSkJyL1ZURWtGcWk2U3NZVW9HYWNxTGRlOVc1TDJiVC81bGhy?=
+ =?utf-8?B?Y0ljM3NTaVJRUVROVjU5RE1DWWdZWjd0cG5mdXdOYk1mMFZ1VTVwMnQxTUpv?=
+ =?utf-8?B?YkNSUGVueXZ4OWFGeVZDSnFkdEhJTzdsTTNGK0dVUmZpamVXSjc5UU8rOFJC?=
+ =?utf-8?B?TlBnM2JmcFlwa3RnUnkveXJ1OGFXSGZmalFrVklDS1ZkUVR2YXFvcDQwc1Zz?=
+ =?utf-8?B?cGxYWU9JcG40VDFLczhwelcxQWpQRGwxV2ZpSmlyWmY5QTdidDExZTRsYjVU?=
+ =?utf-8?B?NHpJa3RJWUIvNlE5cWswNjBQd05YK3RTTFFIMTNzNU1RL1JXNE9Sbjl1Mm5o?=
+ =?utf-8?B?azNZdUU2dVIyaldEYS9ka3NxZFhDNkRwcWpibGZSSjNNazZMaG9IMmpMSktX?=
+ =?utf-8?B?WEhaaXYvWUdrR01MLzhtSkh5WSt2bzIwd0xEaDg5L0gwT3NtYzg1WnBnMGk5?=
+ =?utf-8?B?cjl3QUh2a2hIRFMvdTAxYzRCbkU1OE9Ka2RYSE1xNnBySHVBdXd6ZVFEc2xx?=
+ =?utf-8?B?QzE1MEY1S0ZaZVN1Z2lGOUZGMmtKSVlkcXdsblNPTzBPNzkySE1NOVRPU3BJ?=
+ =?utf-8?B?RDhlc25qYlpGWkVjcVZqdFZxNXFXYlM0Vm1YM2NHRE9QeFpSKzRheXJzMktW?=
+ =?utf-8?B?KzhDRXI3b2lVaHA5RytRVHJsZ0VSeUxWWGVVSDQ1bkREUFg3c3E4UXg5dzJx?=
+ =?utf-8?B?SVNyVXl1TmxrWnFtS0Z6eHkyV1pnWGJ6RjRoMXBwZ1RTTk5pd04vNm5INDBy?=
+ =?utf-8?B?ajdoQzYxYlhCbzVWOGd6Q0U3MlhVVVNBZU1CR0dMejdsTVhyUG5jeFRPVURT?=
+ =?utf-8?B?Mmdoak4vVHhqUCtFT29XY3lsVm5qclV2RWtEeVVOQmRFY3AzZkJCTXJYS2ls?=
+ =?utf-8?B?S1U1WGZOdmxFZlR5dXc3VDVSek4wSENOc0t0QUdxOWI0ekRCVG1SQTgxRVpR?=
+ =?utf-8?B?SHNqa3BKUmxDaTJGSkNIVXVKQUJ3cFRvYkEweFVoYWdJUW9LQlJBdEp1VERt?=
+ =?utf-8?B?N2ZWQ1F6bjV5NEFuWXZHckRWdlErYXlqWnVCM2NqMXVpNXM0ZU1FaDdLNnQr?=
+ =?utf-8?Q?mJKs=3D?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ac36526f-8010-49fe-866d-08dd780af1c9
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5685.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Apr 2025 08:37:35.9724
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: geU0JqPTkFQad5oiNqNKoYle62eAG7hLQ2sXBBOR5Yn8L7KwdSjdzoSH5gKa6dcs
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4426
+
+--------------RitEXH8ONBTGBTbpKtqnx0LV
+Content-Type: multipart/alternative;
+ boundary="------------SqV01NuVquRMkgoJu407omKu"
+
+--------------SqV01NuVquRMkgoJu407omKu
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BDDpdu7oqvvSBUQBZ91BFPl5xbGI0UeZ
-X-Proofpoint-GUID: BDDpdu7oqvvSBUQBZ91BFPl5xbGI0UeZ
-X-Authority-Analysis: v=2.4 cv=NaLm13D4 c=1 sm=1 tr=0 ts=67f77216 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=qC_FGOx9AAAA:8
- a=KKAkSRfTAAAA:8 a=EGgesTezXlpRaHjclHMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=fsdK_YakeE02zTmptMdW:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-09_06,2025-04-08_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 suspectscore=0
- lowpriorityscore=0 bulkscore=0 mlxlogscore=999 clxscore=1015 phishscore=0
- spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504100053
+
+Am 09.04.25 um 17:04 schrieb Philipp Stanner:
+> On Wed, 2025-04-09 at 16:10 +0200, Christian König wrote:
+>>> I only see improvement by making things more obvious.
+>>>
+>>> In any case, how would you call a wrapper that just does
+>>> test_bit(IS_SIGNALED, …) ?
+>> Broken, that was very intentionally removed quite shortly after we
+>> created the framework.
+>>
+>> We have a few cases were implementations do check that for their
+>> fences, but consumers should never be allowed to touch such
+>> internals.
+> There is theory and there is practice. In practice, those internals are
+> being used by Nouveau, i915, Xe, vmgfx and radeon.
+
+What do you mean? I only skimmed over the use cases, but as far as I can see those are all valid.
+
+You can test the flag if you know what the fence means to you, that is not a problem at all.
+
+> So it seems that we failed quite a bit at communicating clearly how the
+> interface should be used.
+>
+> And, to repeat myself, with both name and docu of that function, I
+> think it is very easy to misunderstand what it's doing. You say that it
+> shouldn't matter – and maybe that's true, in theory. In practice, it
+> does matter. In practice, APIs get misused and have side-effects. And
+> making that harder is desirable.
+
+That sounds like I didn't used the right wording.
+
+It *must* not matter to the consumer. See the purpose of the DMA-fence framework is to make it irrelevant for the consumer how the provider has implemented it's fences.
+
+This means that things like if polling or interrupt driven signaling is used, 32bit vs 64bit seq numbers, etc... should all be hidden by the framework from the consumer of the fences.
 
 
-On 4/10/2025 12:50 PM, neil.armstrong@linaro.org wrote:
-> On 09/04/2025 19:59, Vikash Garodia wrote:
->>
->>
->> On 4/9/2025 9:56 PM, Neil Armstrong wrote:
->>> On 09/04/2025 16:29, Bryan O'Donoghue wrote:
->>>> On 08/04/2025 16:54, Dikshita Agarwal wrote:
->>>>> Hi All,
->>>>>
->>>>> This patch series adds initial support for the HEVC(H.265) and VP9
->>>>> codecs in iris decoder. The objective of this work is to extend the
->>>>> decoder's capabilities to handle HEVC and VP9 codec streams,
->>>>> including necessary format handling and buffer management.
->>>>> In addition, the series also includes a set of fixes to address issues
->>>>> identified during testing of these additional codecs.
->>>>>
->>>>> These patches also address the comments and feedback received from the
->>>>> RFC patches previously sent. I have made the necessary improvements
->>>>> based on the community's suggestions.
->>>>>
->>>>> Changes sinces RFC:
->>>>> - Added additional fixes to address issues identified during further
->>>>> testing.
->>>>> - Moved typo fix to a seperate patch [Neil]
->>>>> - Reordered the patches for better logical flow and clarity [Neil,
->>>>> Dmitry]
->>>>> - Added fixes tag wherever applicable [Neil, Dmitry]
->>>>> - Removed the default case in the switch statement for codecs [Bryan]
->>>>> - Replaced if-else statements with switch-case [Bryan]
->>>>> - Added comments for mbpf [Bryan]
->>>>> - RFC:
->>>>> https://lore.kernel.org/linux-media/20250305104335.3629945-1-quic_dikshita@quicinc.com/
->>>>>
->>>>> These patches are tested on SM8250 and SM8550 with v4l2-ctl and
->>>>> Gstreamer for HEVC and VP9 decoders, at the same time ensured that
->>>>> the existing H264 decoder functionality remains uneffected.
->>>>>
->>>>> Note: 1 of the fluster compliance test is fixed with firmware [1]
->>>>> [1]:
->>>>> https://lore.kernel.org/linux-firmware/1a511921-446d-cdc4-0203-084c88a5dc1e@quicinc.com/T/#u
->>>>>
->>>
->>> <snip>
->>>
->>>>> ---
->>>>> Dikshita Agarwal (20):
->>>>>         media: iris: Skip destroying internal buffer if not dequeued
->>>>>         media: iris: Update CAPTURE format info based on OUTPUT format
->>>>>         media: iris: Add handling for corrupt and drop frames
->>>>>         media: iris: Avoid updating frame size to firmware during reconfig
->>>>>         media: iris: Send V4L2_BUF_FLAG_ERROR for buffers with 0 filled length
->>>>>         media: iris: Add handling for no show frames
->>>>>         media: iris: Improve last flag handling
->>>>>         media: iris: Skip flush on first sequence change
->>>>>         media: iris: Prevent HFI queue writes when core is in deinit state
->>>>>         media: iris: Remove redundant buffer count check in stream off
->>>>>         media: iris: Remove deprecated property setting to firmware
->>>>>         media: iris: Fix missing function pointer initialization
->>>>>         media: iris: Fix NULL pointer dereference
->>>>>         media: iris: Fix typo in depth variable
->>>>>         media: iris: Add a comment to explain usage of MBPS
->>>>>         media: iris: Add HEVC and VP9 formats for decoder
->>>>>         media: iris: Add platform capabilities for HEVC and VP9 decoders
->>>>>         media: iris: Set mandatory properties for HEVC and VP9 decoders.
->>>>>         media: iris: Add internal buffer calculation for HEVC and VP9 decoders
->>>>>         media: iris: Add codec specific check for VP9 decoder drain handling
->>>>>
->>>>>    drivers/media/platform/qcom/iris/iris_buffer.c     |  22 +-
->>>>>    drivers/media/platform/qcom/iris/iris_ctrls.c      |  35 +-
->>>>>    drivers/media/platform/qcom/iris/iris_hfi_common.h |   1 +
->>>>>    .../platform/qcom/iris/iris_hfi_gen1_command.c     |  44 ++-
->>>>>    .../platform/qcom/iris/iris_hfi_gen1_defines.h     |   5 +-
->>>>>    .../platform/qcom/iris/iris_hfi_gen1_response.c    |  22 +-
->>>>>    .../platform/qcom/iris/iris_hfi_gen2_command.c     | 143 +++++++-
->>>>>    .../platform/qcom/iris/iris_hfi_gen2_defines.h     |   5 +
->>>>>    .../platform/qcom/iris/iris_hfi_gen2_response.c    |  57 ++-
->>>>>    drivers/media/platform/qcom/iris/iris_hfi_queue.c  |   2 +-
->>>>>    drivers/media/platform/qcom/iris/iris_instance.h   |   6 +
->>>>>    .../platform/qcom/iris/iris_platform_common.h      |  28 +-
->>>>>    .../platform/qcom/iris/iris_platform_sm8250.c      |  15 +-
->>>>>    .../platform/qcom/iris/iris_platform_sm8550.c      | 143 +++++++-
->>>>>    drivers/media/platform/qcom/iris/iris_vb2.c        |   3 +-
->>>>>    drivers/media/platform/qcom/iris/iris_vdec.c       | 113 +++---
->>>>>    drivers/media/platform/qcom/iris/iris_vdec.h       |  11 +
->>>>>    drivers/media/platform/qcom/iris/iris_vidc.c       |   3 -
->>>>>    drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 397
->>>>> ++++++++++++++++++++-
->>>>>    drivers/media/platform/qcom/iris/iris_vpu_buffer.h |  46 ++-
->>>>>    20 files changed, 948 insertions(+), 153 deletions(-)
->>>>> ---
->>>>> base-commit: 7824b91d23e9f255f0e9d2acaa74265c9cac2e9c
->>>>> change-id: 20250402-iris-dec-hevc-vp9-2654a1fc4d0d
->>>>>
->>>>> Best regards,
->>>>
->>>> Assuming we merge Neils sm8650 stuff first, which I think we should merge
->>>> first, you'll have a subsequent build error to fix [1]
->>>
->>> I agree, it would be simpler, I prepared a fix to apply on top of this patchset.
->> Lets sort out the platform data handling. More so, when i see that the patch you
->> are adding more of 8650 specific data into 8550 file.
-> 
-> Not really, I only add iris_set_sm8650_preset_registers()
-You might have added iris_set_sm8650_preset_registers in this patch, but the
-list have already grown enough which demand for separate SOC specific platform
-data file. Better done now than keeping it for later.
+BTW I'm actually not sure if nouveau has a bug here. As far as I can see nouveau_fence_signal() will be called later eventually and do the necessary cleanup.
 
-Thanks,
-Vikash
-> 
->>>
->>>>
->>>> https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linaro/arm-laptop/wip/x1e80100-6.15-rc1-dell-inspiron14-camss-ov02c10-ov02e10-audio-iris?ref_type=heads
->>>>
->>>> Testing your series in isolation. I can confirm vp9 decodes also getting some
->>>> strange prinouts which we need to follow up to see if they exist with the
->>>> baseline driver [2].
->>>>
->>>> https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linaro/arm-laptop/wip/x1e80100-6.15-rc1-dell-inspiron14-camss-ov02c10-ov02e10-audio-iris-20250408-iris-dec-hevc-vp9-v1-0-acd258778bd6@quicinc.com?ref_type=heads
->>>>
->>>
->>> <snip>
->>>
->>>> [  126.582170] qcom-iris aa00000.video-codec: session error received
->>>> 0x1000006: unknown
->>>> [  126.582177] qcom-iris aa00000.video-codec: session error received
->>>> 0x4000004: invalid operation for current state
->>>
->>> With the following on top of the last SM8650 patchet + this patchset, I have the
->>> same HEVC errors on SM8650, but VP9 works fine:
->>> [  115.185745] qcom-iris aa00000.video-codec: session error received 0x4000004:
->>> invalid operation for current state
->>> [  115.221058] qcom-iris aa00000.video-codec: session error received 0x1000006:
->>> unknown
->>>
->>> ==========================================><==============================================
->>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
->>> b/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
->>> index 65f3accc2fb2..7d5116528fca 100644
->>> --- a/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
->>> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8550.c
->>> @@ -213,6 +213,22 @@ static void iris_set_sm8550_preset_registers(struct
->>> iris_core *core)
->>>       writel(0x0, core->reg_base + 0xB0088);
->>>   }
->>>
->>> +static void iris_set_sm8650_preset_registers(struct iris_core *core)
->>> +{
->>> +    writel(0x0, core->reg_base + 0xB0088);
->>> +    writel(0x33332222, core->reg_base + 0x13030);
->>> +    writel(0x44444444, core->reg_base + 0x13034);
->>> +    writel(0x1022, core->reg_base + 0x13038);
->>> +    writel(0x0, core->reg_base + 0x13040);
->>> +    writel(0xFFFF, core->reg_base + 0x13048);
->>> +    writel(0x33332222, core->reg_base + 0x13430);
->>> +    writel(0x44444444, core->reg_base + 0x13434);
->>> +    writel(0x1022, core->reg_base + 0x13438);
->>> +    writel(0x0, core->reg_base + 0x13440);
->>> +    writel(0xFFFF, core->reg_base + 0x13448);
->>> +    writel(0x99, core->reg_base + 0xA013C);
->>> +}
->> This is strange, h264 decoder does not need any of those while VP9 needed it to
->> work. I could see the same set of registers in downstream code, but cannot
->> recollect now on the need to add those.
-> 
-> Yes this is why I added it only to enable support for HEVC and VP9, before we were
-> using the iris_set_sm8550_preset_registers().
-> 
->>
->> Regards,
->> Vikash
->>> +
->>>   static const struct icc_info sm8550_icc_table[] = {
->>>       { "cpu-cfg",    1000, 1000     },
->>>       { "video-mem",  1000, 15000000 },
->>> @@ -390,6 +406,7 @@ struct iris_platform_data sm8550_data = {
->>>
->>>   /*
->>>    * Shares most of SM8550 data except:
->>> + * - set_preset_registers to iris_set_sm8650_preset_registers
->>>    * - vpu_ops to iris_vpu33_ops
->>>    * - clk_rst_tbl to sm8650_clk_reset_table
->>>    * - controller_rst_tbl to sm8650_controller_reset_table
->>> @@ -400,7 +417,7 @@ struct iris_platform_data sm8650_data = {
->>>       .init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
->>>       .init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
->>>       .vpu_ops = &iris_vpu33_ops,
->>> -    .set_preset_registers = iris_set_sm8550_preset_registers,
->>> +    .set_preset_registers = iris_set_sm8650_preset_registers,
->>>       .icc_tbl = sm8550_icc_table,
->>>       .icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
->>>       .clk_rst_tbl = sm8650_clk_reset_table,
->>> @@ -428,20 +445,34 @@ struct iris_platform_data sm8650_data = {
->>>       .ubwc_config = &ubwc_config_sm8550,
->>>       .num_vpp_pipe = 4,
->>>       .max_session_count = 16,
->>> -    .max_core_mbpf = ((8192 * 4352) / 256) * 2,
->>> -    .input_config_params =
->>> -        sm8550_vdec_input_config_params,
->>> -    .input_config_params_size =
->>> -        ARRAY_SIZE(sm8550_vdec_input_config_params),
->>> +    .max_core_mbpf = NUM_MBS_8K * 2,
->>> +    .input_config_params_default =
->>> +        sm8550_vdec_input_config_params_default,
->>> +    .input_config_params_default_size =
->>> +        ARRAY_SIZE(sm8550_vdec_input_config_params_default),
->>> +    .input_config_params_hevc =
->>> +        sm8550_vdec_input_config_param_hevc,
->>> +    .input_config_params_hevc_size =
->>> +        ARRAY_SIZE(sm8550_vdec_input_config_param_hevc),
->>> +    .input_config_params_vp9 =
->>> +        sm8550_vdec_input_config_param_vp9,
->>> +    .input_config_params_vp9_size =
->>> +        ARRAY_SIZE(sm8550_vdec_input_config_param_vp9),
->>>       .output_config_params =
->>>           sm8550_vdec_output_config_params,
->>>       .output_config_params_size =
->>>           ARRAY_SIZE(sm8550_vdec_output_config_params),
->>>       .dec_input_prop = sm8550_vdec_subscribe_input_properties,
->>>       .dec_input_prop_size = ARRAY_SIZE(sm8550_vdec_subscribe_input_properties),
->>> -    .dec_output_prop = sm8550_vdec_subscribe_output_properties,
->>> -    .dec_output_prop_size =
->>> ARRAY_SIZE(sm8550_vdec_subscribe_output_properties),
->>> -
->>> +    .dec_output_prop_avc = sm8550_vdec_subscribe_output_properties_avc,
->>> +    .dec_output_prop_avc_size =
->>> +        ARRAY_SIZE(sm8550_vdec_subscribe_output_properties_avc),
->>> +    .dec_output_prop_hevc = sm8550_vdec_subscribe_output_properties_hevc,
->>> +    .dec_output_prop_hevc_size =
->>> +        ARRAY_SIZE(sm8550_vdec_subscribe_output_properties_hevc),
->>> +    .dec_output_prop_vp9 = sm8550_vdec_subscribe_output_properties_vp9,
->>> +    .dec_output_prop_vp9_size =
->>> +        ARRAY_SIZE(sm8550_vdec_subscribe_output_properties_vp9),
->>>       .dec_ip_int_buf_tbl = sm8550_dec_ip_int_buf_tbl,
->>>       .dec_ip_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_ip_int_buf_tbl),
->>>       .dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
->>> ==========================================><==============================================
->>>
->>> Thanks,
->>> Neil
-> 
+But on the other hand it wouldn't surprise me if nouveau has a bug with that. The driver has been basically only barely maintained for quite a while.
+
+> In any case, I might have to add another such call to Nouveau, because
+> the solution preferred by you over the callback causes another race.
+> Certainly one could solve this in a clean way, but someone has to do
+> the work, and we're talking about more than a few hours here.
+
+Well this is not my preferred solution, it's just the technical correct solution as far as I can see.
+
+> In any case, be so kind and look at patch 2 and tell me there if you're
+> at least OK with making the documentation more detailed.
+
+As far as I can see that is clearly the wrong place to document that stuff.
+
+Regards,
+Christian.
+
+>
+> P.
+--------------SqV01NuVquRMkgoJu407omKu
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    Am 09.04.25 um 17:04 schrieb Philipp Stanner:<br>
+    <blockquote type="cite" cite="mid:0b2fc70d8fae566c8ca43bafc929e2bd19725924.camel@mailbox.org">
+      <pre class="moz-quote-pre" wrap="">On Wed, 2025-04-09 at 16:10 +0200, Christian König wrote:
+</pre>
+      <blockquote type="cite"><span style="white-space: pre-wrap">
+</span>
+        <blockquote type="cite">
+          <pre class="moz-quote-pre" wrap="">I only see improvement by making things more obvious.
+
+In any case, how would you call a wrapper that just does
+test_bit(IS_SIGNALED, …) ?
+</pre>
+        </blockquote>
+        <pre class="moz-quote-pre" wrap="">
+Broken, that was very intentionally removed quite shortly after we
+created the framework.
+
+We have a few cases were implementations do check that for their
+fences, but consumers should never be allowed to touch such
+internals.
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+There is theory and there is practice. In practice, those internals are
+being used by Nouveau, i915, Xe, vmgfx and radeon.</pre>
+    </blockquote>
+    <br>
+    What do you mean? I only skimmed over the use cases, but as far as I
+    can see those are all valid.<br>
+    <br>
+    You can test the flag if you know what the fence means to you, that
+    is not a problem at all.<br>
+    <br>
+    <blockquote type="cite" cite="mid:0b2fc70d8fae566c8ca43bafc929e2bd19725924.camel@mailbox.org">
+      <pre class="moz-quote-pre" wrap="">So it seems that we failed quite a bit at communicating clearly how the
+interface should be used.
+
+And, to repeat myself, with both name and docu of that function, I
+think it is very easy to misunderstand what it's doing. You say that it
+shouldn't matter – and maybe that's true, in theory. In practice, it
+does matter. In practice, APIs get misused and have side-effects. And
+making that harder is desirable.</pre>
+    </blockquote>
+    <br>
+    That sounds like I didn't used the right wording.<br>
+    <br>
+    It *must* not matter to the consumer. See the purpose of the
+    DMA-fence framework is to make it irrelevant for the consumer how
+    the provider has implemented it's fences.<br>
+    <br>
+    This means that things like if polling or interrupt driven signaling
+    is used, 32bit vs 64bit seq numbers, etc... should all be hidden by
+    the framework from the consumer of the fences.<br>
+    <br>
+    <br>
+    BTW I'm actually not sure if nouveau has a bug here. As far as I can
+    see nouveau_fence_signal() will be called later eventually and do
+    the necessary cleanup.<br>
+    <br>
+    But on the other hand it wouldn't surprise me if nouveau has a bug
+    with that. The driver has been basically only barely maintained for
+    quite a while.<br>
+    <br>
+    <blockquote type="cite" cite="mid:0b2fc70d8fae566c8ca43bafc929e2bd19725924.camel@mailbox.org">
+      <pre class="moz-quote-pre" wrap="">In any case, I might have to add another such call to Nouveau, because
+the solution preferred by you over the callback causes another race.
+Certainly one could solve this in a clean way, but someone has to do
+the work, and we're talking about more than a few hours here.</pre>
+    </blockquote>
+    <br>
+    Well this is not my preferred solution, it's just the technical
+    correct solution as far as I can see.<br>
+    <br>
+    <blockquote type="cite" cite="mid:0b2fc70d8fae566c8ca43bafc929e2bd19725924.camel@mailbox.org">
+      <pre class="moz-quote-pre" wrap="">In any case, be so kind and look at patch 2 and tell me there if you're
+at least OK with making the documentation more detailed.</pre>
+    </blockquote>
+    <br>
+    As far as I can see that is clearly the wrong place to document that
+    stuff.<br>
+    <br>
+    Regards,<br>
+    Christian.<br>
+    <br>
+    <blockquote type="cite" cite="mid:0b2fc70d8fae566c8ca43bafc929e2bd19725924.camel@mailbox.org">
+      <pre class="moz-quote-pre" wrap="">
+
+P.
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------SqV01NuVquRMkgoJu407omKu--
+
+--------------RitEXH8ONBTGBTbpKtqnx0LV
+Content-Type: text/x-patch; charset=UTF-8;
+ name="0001-drm-nouveau-fix-and-cleanup-fence-handling.patch"
+Content-Disposition: attachment;
+ filename="0001-drm-nouveau-fix-and-cleanup-fence-handling.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSAzMGI5NTc0YmFhZGNmODYwMTA0ZTYxY2UyNzY3Zjk5OTliYmRkNzdkIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiA9P1VURi04P3E/Q2hyaXN0aWFuPTIwSz1DMz1CNm5pZz89IDxj
+aHJpc3RpYW4ua29lbmlnQGFtZC5jb20+CkRhdGU6IFRodSwgMTAgQXByIDIwMjUgMTA6MTg6Mjkg
+KzAyMDAKU3ViamVjdDogW1BBVENIXSBkcm0vbm91dmVhdTogZml4IGFuZCBjbGVhbnVwIGZlbmNl
+IGhhbmRsaW5nCk1JTUUtVmVyc2lvbjogMS4wCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgY2hh
+cnNldD1VVEYtOApDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiA4Yml0CgpUaGUgZmVuY2Ugd2Fz
+IG5vdCByZW1vdmVkIGZyb20gdGhlIHBlbmRpbmcgbGlzdCB3aGVuIHNpZ25hbGVkIGZyb20gdGhl
+Ci5zaWduYWxlZCBjYWxsYmFjay4gRml4IHRoYXQgYW5kIGFsc28gcmVtb3ZlIHRoZSBzdXBlcmZs
+b3VzCi5lbmFibGVfc2lnbmFsaW5nIGNhbGxiYWNrLgoKU2lnbmVkLW9mZi1ieTogQ2hyaXN0aWFu
+IEvDtm5pZyA8Y2hyaXN0aWFuLmtvZW5pZ0BhbWQuY29tPgotLS0KIGRyaXZlcnMvZ3B1L2RybS9u
+b3V2ZWF1L25vdXZlYXVfZmVuY2UuYyB8IDMxICsrKysrKystLS0tLS0tLS0tLS0tLS0tLS0KIDEg
+ZmlsZSBjaGFuZ2VkLCA4IGluc2VydGlvbnMoKyksIDIzIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdp
+dCBhL2RyaXZlcnMvZ3B1L2RybS9ub3V2ZWF1L25vdXZlYXVfZmVuY2UuYyBiL2RyaXZlcnMvZ3B1
+L2RybS9ub3V2ZWF1L25vdXZlYXVfZmVuY2UuYwppbmRleCA3Y2M4NDQ3MmNlY2UuLjUzYzcwZGRl
+Zjk2NCAxMDA2NDQKLS0tIGEvZHJpdmVycy9ncHUvZHJtL25vdXZlYXUvbm91dmVhdV9mZW5jZS5j
+CisrKyBiL2RyaXZlcnMvZ3B1L2RybS9ub3V2ZWF1L25vdXZlYXVfZmVuY2UuYwpAQCAtNDg1LDMy
+ICs0ODUsMTggQEAgc3RhdGljIGJvb2wgbm91dmVhdV9mZW5jZV9pc19zaWduYWxlZChzdHJ1Y3Qg
+ZG1hX2ZlbmNlICpmKQogCQlyZXQgPSAoaW50KShmY3R4LT5yZWFkKGNoYW4pIC0gZmVuY2UtPmJh
+c2Uuc2Vxbm8pID49IDA7CiAJcmN1X3JlYWRfdW5sb2NrKCk7CiAKLQlyZXR1cm4gcmV0OwotfQot
+Ci1zdGF0aWMgYm9vbCBub3V2ZWF1X2ZlbmNlX25vX3NpZ25hbGluZyhzdHJ1Y3QgZG1hX2ZlbmNl
+ICpmKQotewotCXN0cnVjdCBub3V2ZWF1X2ZlbmNlICpmZW5jZSA9IGZyb21fZmVuY2UoZik7Ci0K
+LQkvKgotCSAqIGNhbGxlciBzaG91bGQgaGF2ZSBhIHJlZmVyZW5jZSBvbiB0aGUgZmVuY2UsCi0J
+ICogZWxzZSBmZW5jZSBjb3VsZCBnZXQgZnJlZWQgaGVyZQotCSAqLwotCVdBUk5fT04oa3JlZl9y
+ZWFkKCZmZW5jZS0+YmFzZS5yZWZjb3VudCkgPD0gMSk7CisJaWYgKHJldCkgeworCQkvKgorCQkg
+KiBjYWxsZXIgc2hvdWxkIGhhdmUgYSByZWZlcmVuY2Ugb24gdGhlIGZlbmNlLAorCQkgKiBlbHNl
+IGZlbmNlIGNvdWxkIGdldCBmcmVlZCBoZXJlCisJCSAqLworCQlXQVJOX09OKGtyZWZfcmVhZCgm
+ZmVuY2UtPmJhc2UucmVmY291bnQpIDw9IDEpOwogCi0JLyoKLQkgKiBUaGlzIG5lZWRzIHVldmVu
+dHMgdG8gd29yayBjb3JyZWN0bHksIGJ1dCBkbWFfZmVuY2VfYWRkX2NhbGxiYWNrIHJlbGllcyBv
+bgotCSAqIGJlaW5nIGFibGUgdG8gZW5hYmxlIHNpZ25hbGluZy4gSXQgd2lsbCBzdGlsbCBnZXQg
+c2lnbmFsZWQgZXZlbnR1YWxseSwKLQkgKiBqdXN0IG5vdCByaWdodCBhd2F5LgotCSAqLwotCWlm
+IChub3V2ZWF1X2ZlbmNlX2lzX3NpZ25hbGVkKGYpKSB7CiAJCWxpc3RfZGVsKCZmZW5jZS0+aGVh
+ZCk7Ci0KIAkJZG1hX2ZlbmNlX3B1dCgmZmVuY2UtPmJhc2UpOwotCQlyZXR1cm4gZmFsc2U7CiAJ
+fQogCi0JcmV0dXJuIHRydWU7CisJcmV0dXJuIHJldDsKIH0KIAogc3RhdGljIHZvaWQgbm91dmVh
+dV9mZW5jZV9yZWxlYXNlKHN0cnVjdCBkbWFfZmVuY2UgKmYpCkBAIC01MjUsNyArNTExLDYgQEAg
+c3RhdGljIHZvaWQgbm91dmVhdV9mZW5jZV9yZWxlYXNlKHN0cnVjdCBkbWFfZmVuY2UgKmYpCiBz
+dGF0aWMgY29uc3Qgc3RydWN0IGRtYV9mZW5jZV9vcHMgbm91dmVhdV9mZW5jZV9vcHNfbGVnYWN5
+ID0gewogCS5nZXRfZHJpdmVyX25hbWUgPSBub3V2ZWF1X2ZlbmNlX2dldF9nZXRfZHJpdmVyX25h
+bWUsCiAJLmdldF90aW1lbGluZV9uYW1lID0gbm91dmVhdV9mZW5jZV9nZXRfdGltZWxpbmVfbmFt
+ZSwKLQkuZW5hYmxlX3NpZ25hbGluZyA9IG5vdXZlYXVfZmVuY2Vfbm9fc2lnbmFsaW5nLAogCS5z
+aWduYWxlZCA9IG5vdXZlYXVfZmVuY2VfaXNfc2lnbmFsZWQsCiAJLndhaXQgPSBub3V2ZWF1X2Zl
+bmNlX3dhaXRfbGVnYWN5LAogCS5yZWxlYXNlID0gbm91dmVhdV9mZW5jZV9yZWxlYXNlCkBAIC01
+NDAsNyArNTI1LDcgQEAgc3RhdGljIGJvb2wgbm91dmVhdV9mZW5jZV9lbmFibGVfc2lnbmFsaW5n
+KHN0cnVjdCBkbWFfZmVuY2UgKmYpCiAJaWYgKCFmY3R4LT5ub3RpZnlfcmVmKyspCiAJCW52aWZf
+ZXZlbnRfYWxsb3coJmZjdHgtPmV2ZW50KTsKIAotCXJldCA9IG5vdXZlYXVfZmVuY2Vfbm9fc2ln
+bmFsaW5nKGYpOworCXJldCA9IG5vdXZlYXVfZmVuY2VfaXNfc2lnbmFsZWQoZik7CiAJaWYgKHJl
+dCkKIAkJc2V0X2JpdChETUFfRkVOQ0VfRkxBR19VU0VSX0JJVFMsICZmZW5jZS0+YmFzZS5mbGFn
+cyk7CiAJZWxzZSBpZiAoIS0tZmN0eC0+bm90aWZ5X3JlZikKLS0gCjIuMzQuMQoK
+
+--------------RitEXH8ONBTGBTbpKtqnx0LV--
 
