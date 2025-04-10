@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-53913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F321A84DD2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 22:06:09 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7465A84DD6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 22:06:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 863B97B6696
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 20:04:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BFA727B68B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Apr 2025 20:04:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6643F28FFE1;
-	Thu, 10 Apr 2025 20:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 412401F1510;
+	Thu, 10 Apr 2025 20:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PJCxT2AG"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IAvcKzSW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41232900B8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 20:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B850219DF99
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 20:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744315512; cv=none; b=O1KsVfGJYIYWkNZEBSJXJ/P2txZRDkvH2NgjRj9lx9QrqNG4d1OCw8j2ONbNMOO+V9KE7xWDGKQG/xi+NuDUXsrP8ZOryoNdaRp75GXTGbdPTToGio8R8RE1zJIpQe9S1GSwQaqMDoKl2s8PtZQ05ZGIlEHmf9Rw3Z7ratg9yFg=
+	t=1744315535; cv=none; b=W0kZP+7tdNtNx2RkfWQeDn5XWpgtiNiHcTcJxqCZNdAk9D10DAudpFkvhZrr2nMwbkxKaU9jCrdqF4VqdkhkqUDvPKsJV4dMSZ+auKHkwWEnQFlImDybtVi7bsd0FOU0fsPrcUKdjx4mgn5gsluquYZasE5GKaIgLhNwGBZ6cAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744315512; c=relaxed/simple;
-	bh=UF6uFxhhpLDKtUrY3ht+7nQtiQu0sMUFMtx5ki3iz44=;
+	s=arc-20240116; t=1744315535; c=relaxed/simple;
+	bh=kE0juyTpiJRFvY3bhCkubK6oqwgvbhtJEpj29J8UYsk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NANabzEFHvcD+TA/WLzhYBOB5nDr3ilLyg1JaIPbMmlReRrimLeNLrTblBCmdC8UXdXnVJYhKV88c4bzZn0wuLfRzRESHaZ/HaSuy4A0QfG+dO3aVr7kotu7x6r2DsT7XLkC/ALTCym7LBRI1fa+XAJmyXR0ZV6ecmGYiCKnQBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PJCxT2AG; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=uARMph6iSJxOPLi147f3oseW3CJrkcpSONCY2DuCDl5Al/EYI4rcVFBKg7Gf+lhK73jjiu9WCU1Y/ZPb9h8B6LXry/ByD5DudQ5sZpvMB0/exxi9nsIh7F201zGKfpiRU/U13anEYAiUFvCc3HyCrKx1LRE0hF9AsSpyczbqvVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IAvcKzSW; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53AG4j8I000699
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 20:05:10 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53AGA7Hq000635
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 20:05:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=NDLAEun4AR3emOcXFOyfcWJY
-	bo2wswXjIw76iL0ScI0=; b=PJCxT2AGW/leA1rf3fgN95tuljrzlv2PD/2LAeZ3
-	4lcRsVwWwVQgkGLNC8UqAkaq95QQWzXmdbdkwxpYrD+28gVEzKRy7kJwc2PgcV5R
-	ymss5be5CJAWt3rstQo5SyLz1B49HUn+suXw3jcGAZJA9AMXttMEVrGVGG6f3EFx
-	hjg+SjdSvX+0+cgFFbCZxvo6aUBUxQ9MujAbvxjLwV3E1C9BNhnYSt+XWc4bO7v2
-	GXwcVmaW6gW896+h5zJPupIyiCoNK0TDkfBMTA1RhOVRyBxJLW7hPoq3hRRU0dyz
-	7yUXlEVRLOImJuBuN7N1RmE4BBgzehzi1wgk8RQiBha2lw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twd305y3-1
+	:references:subject:to; s=qcppdkim1; bh=TXfF9vM+BoIBd/qesq5gNZSO
+	9HgKKIqscZ8pGO8kuqM=; b=IAvcKzSWfZBOeARWfvOqiUotdPXWOaEavfq48bcu
+	swGb2WHJy0XVTswakGO7TB8Y5YurgV5MqfYNZWaKeO2bHSXB61bGxbZAWFJwKSni
+	12xSCl9zI8WAs6X3dfXoB2LTJyRQAECKchgOtghHzMu6a3sd2pfbIh4jkoRrwaRO
+	mI2yFmw1TUikbGaNo+8SDHD1CisIXAy3RA5hs3rXL0XFHrV/kTDcwOZ2V0PglAFh
+	nM1MH3X8TChqnMWmCne+6B/JUYWeGqiiIyhIiYMaYnQ//9Mzlkt9tOcwBJWoCbq9
+	dHCgm8fGQxgZev94yn45I0mTzHSCKmMftZyp2fhKY+3dTA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twd3060f-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 20:05:10 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c5c77aff55so297828485a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 13:05:09 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 20:05:32 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c5f876bfe0so231791085a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 13:05:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744315509; x=1744920309;
+        d=1e100.net; s=20230601; t=1744315531; x=1744920331;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NDLAEun4AR3emOcXFOyfcWJYbo2wswXjIw76iL0ScI0=;
-        b=IAmzhysez+BucXst/tAisD3skeZ0BOdHWHe3vxaZijBR8Dmr2s3xxPbR5EafEF08qW
-         ZsIwJ7D/q3IR1gXXvfFglkgSD27RtvwZsyMJxRjNfkraGK7vZPKZTqrmHCGMmX7Fph3O
-         MAdV19wdBDObPZJHX2pOidNsVcLB68g56morP1kCDydU4t6H6+KfrQeHPGJrowkmqsil
-         rKtkhI9zwPNWgVHAWJ+y3eRC1Vw03oqX9TVDzHaYqwnKHaYYVkSQ70CDnBlKKK3sw/jp
-         u7fufQa+d6+xWVrd3t364H/WrtrtRFqWsHKpClej/eKHoJIC1H2Ti3dZDraIIaNZUsbk
-         a7ww==
-X-Forwarded-Encrypted: i=1; AJvYcCV4in66ZgRDmHeTytseWsbRsoPN37bDp5lbUFCH0lHCaC16SX8N+H6xwNqdbNriYJNcIRPYY4TlQdI+bSoc@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyq6jH6hmjlM2Qp3Muf8J9ThXgm3iQbD6WNtwhZQ+8DBV7pR49P
-	2Gljto44G4Ui5dY010Fpp+yefanJMYLO9VgAs0zlDPqeJs62pIGCgaQ4Uvisl4qi+S+58RHoAo8
-	XaWkf5Bt52AFMyU3LMEuE4UpuKmcnTpOjmanXl25MvmycTaijGZed74ZSDoYWZKHd
-X-Gm-Gg: ASbGncuippd44XPvfT/xY4auJBJ3f1ffIvAdj3bEnAr2dwPU9lgWY4BXIG58jbOyASb
-	y7FbtiWuurHf4Hqo3oZhOICZvdwDC9IpzI5TdzhAheUpEWC1xJa7lmod+Kq3YBI3Yo2+0gyk2nM
-	Sqj2Y0qN1iHyup1WvmBkh1fAkphJ321wZX5iVIcMWxZs2uHRVjJmsfye5brMkMpayfGQAvrKoVt
-	N9hxiS5F96eVmjfBvbNHm7SuxBP1hmt48GVMvyfNXTb1EDBmAtg1u2rX6BoqRZpbJuHi4+Hrv0V
-	MaRQ/acVXFMq9ZtZHURaz0dveoTYRQ3EYosVxzgLTZyDPw3HprcXMLCiBFSDGGtWxDf7IyWfXuE
+        bh=TXfF9vM+BoIBd/qesq5gNZSO9HgKKIqscZ8pGO8kuqM=;
+        b=fvlCxdTyUORYdbwf78N26GtXi3qRfREuIyVzdTVWgwPTrepPX4RUAd1loye7/UKJLb
+         wfwdnWxXGzf92CGEjBAelaeGzVOCystqXZ9tc0oPLpqGhs5GkrBLoTn8EK6mVnaa6Ntl
+         4R9MkR0RYPalMr6yRNig2EaxbTBihQKvTkpO8sbEGCa/VwUqyGWpjmtVqQq8e9JC1TpF
+         HR3xCQa2QTEXha0B1yrX/c14lpSgB2LHSnhnP6/QGQG2UyCYl2W3m3yk+EKpmQlKq7YQ
+         5X0augMjaBMTQR9iwCb++6avu996ibZsipvAQgIcRhr0AJcNy9834KyfHORmJR+Vhs6u
+         AH9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWaLnSpYamJL0RR8Ca2XZQ9NEzhghcWX7aZ/7qpUgvy7KEmuUc9J7dUY/5rCU1MR7+WEZmfUy7fXcxZIcdS@vger.kernel.org
+X-Gm-Message-State: AOJu0YzjxcM946OJlrxD2U5+4DI2/dBv2phtsF1IrIWeh3RhrssuE0u0
+	xvKBQPSWDYgNwXtrbvheJUU3KxcZhesDuQLua2Yl+tHVUo5JU6k1+ghv0mha8Cb0cQN42vDWsJh
+	EtnnyVMIe7h1x/0wHHT7BTKZxs6TqRUEOxjpAKZjicjssIP54DChsnCJS2U3qrqhF
+X-Gm-Gg: ASbGnctQte0JU+maPtfEXR3awdwNK4JLRWdfwQY4DaNVPe6uhO1wwgdCqZH+GnFYKkq
+	AcnJXzoHlCVBWDcKL7E95zNye13q2T6MIILLBicBcm0PiTZphXXSE5ASLEMk0LxbykEVKlsHzrI
+	R0W/UNktaSgKISxxC2D0e1wcrPui5tVHxYVDrK0JLHy337VO4FRPeC3H3my5g2cf/i9DH4Oe3Ni
+	DwWWqOcr0BkOV3yC4xaZH11WmKdAL7rxk/IhyidDk0wGtd7xcYEeRb3OuyNP4Zvn9bPHPakBeWw
+	PNuaS0Pz452XAYMdC6oQjVXuzp5m1I7KFibUjapLebp2XvKHagtrw9zenqph7mvQeaJg9eN8OSY
 	=
-X-Received: by 2002:a05:620a:4001:b0:7c7:a5f5:5616 with SMTP id af79cd13be357-7c7af1d8653mr37248285a.42.1744315508742;
-        Thu, 10 Apr 2025 13:05:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGf+JpGVMSFzujCZW07L8EOj0/xyefs1ZkEaUKfid0MPMMwiHP/7FdGXBKdlU2vY59OqEnIcg==
-X-Received: by 2002:a05:620a:4001:b0:7c7:a5f5:5616 with SMTP id af79cd13be357-7c7af1d8653mr37244685a.42.1744315508317;
-        Thu, 10 Apr 2025 13:05:08 -0700 (PDT)
+X-Received: by 2002:a05:620a:19a9:b0:7c5:53ab:a74f with SMTP id af79cd13be357-7c7af1f32famr39461785a.39.1744315531609;
+        Thu, 10 Apr 2025 13:05:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNwwRD5+XOsvvXwA7FK0l1NN+2EkzlXU5C/nqu3FRHnxldNXsWpsj4tAqkeWZh4iuNHA2zcg==
+X-Received: by 2002:a05:620a:19a9:b0:7c5:53ab:a74f with SMTP id af79cd13be357-7c7af1f32famr39457385a.39.1744315531220;
+        Thu, 10 Apr 2025 13:05:31 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54d3d12311asm239157e87.2.2025.04.10.13.05.07
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54d3d52084fsm232846e87.255.2025.04.10.13.05.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Apr 2025 13:05:07 -0700 (PDT)
-Date: Thu, 10 Apr 2025 23:05:05 +0300
+        Thu, 10 Apr 2025 13:05:30 -0700 (PDT)
+Date: Thu, 10 Apr 2025 23:05:28 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 To: Nitin Rawat <quic_nitirawa@quicinc.com>
 Cc: vkoul@kernel.org, kishon@kernel.org, manivannan.sadhasivam@linaro.org,
@@ -89,9 +89,11 @@ Cc: vkoul@kernel.org, kishon@kernel.org, manivannan.sadhasivam@linaro.org,
         konrad.dybcio@oss.qualcomm.com, quic_rdwivedi@quicinc.com,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org
-Subject: Re: [PATCH V3 0/9] Refactor phy powerup sequence
-Message-ID: <zzfffzclcftivaaffri6ucupyh3u5dfy7uctgw6xgid2vucusx@x542fel3qkeg>
+Subject: Re: [PATCH V3 2/9] phy: qcom-qmp-ufs: Rename qmp_ufs_enable and
+ qmp_ufs_power_on
+Message-ID: <2hysso6n4f5tnyknmgne2r4wpy72j2taqwuncqdcwqqztr4g7y@a3scnple4tew>
 References: <20250410090102.20781-1-quic_nitirawa@quicinc.com>
+ <20250410090102.20781-3-quic_nitirawa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,44 +102,35 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250410090102.20781-1-quic_nitirawa@quicinc.com>
-X-Proofpoint-ORIG-GUID: gDhT_ep6hiGnAzPteQKsGUFw7CyWv5iX
-X-Proofpoint-GUID: gDhT_ep6hiGnAzPteQKsGUFw7CyWv5iX
-X-Authority-Analysis: v=2.4 cv=NaLm13D4 c=1 sm=1 tr=0 ts=67f82476 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=BPZSipMUsAf8-dKi_Y8A:9 a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
+In-Reply-To: <20250410090102.20781-3-quic_nitirawa@quicinc.com>
+X-Proofpoint-ORIG-GUID: EoE7w0Sw2NziDpsHSgkaCA-COSgYiCpR
+X-Proofpoint-GUID: EoE7w0Sw2NziDpsHSgkaCA-COSgYiCpR
+X-Authority-Analysis: v=2.4 cv=NaLm13D4 c=1 sm=1 tr=0 ts=67f8248c cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=hpSo_X1Mu2B5NIsQaEEA:9 a=CjuIK1q_8ugA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-10_06,2025-04-10_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
  priorityscore=1501 adultscore=0 malwarescore=0 suspectscore=0
- lowpriorityscore=0 bulkscore=0 mlxlogscore=431 clxscore=1015 phishscore=0
+ lowpriorityscore=0 bulkscore=0 mlxlogscore=736 clxscore=1015 phishscore=0
  spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
  adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2504100145
 
-On Thu, Apr 10, 2025 at 02:30:53PM +0530, Nitin Rawat wrote:
-> In Current code regulators enable, clks enable, calibrating UFS PHY,
-> start_serdes and polling PCS_ready_status are part of phy_power_on.
+On Thu, Apr 10, 2025 at 02:30:55PM +0530, Nitin Rawat wrote:
+> Rename qmp_ufs_enable to qmp_ufs_power_on and qmp_ufs_power_on to
+> qmp_ufs_phy_calibrate to better reflect their functionality. Also
+> update function calls and structure assignments accordingly.
 > 
-> UFS PHY registers are retained after power collapse, meaning calibrating
-> UFS PHY, start_serdes and polling PCS_ready_status can be done only when
-> hba is powered_on, and not needed every time when phy_power_on is called
-> during resume. Hence keep the code which enables PHY's regulators & clks
-> in phy_power_on and move the rest steps into phy_calibrate function.
+> Co-developed-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 > 
-> Since phy_power_on is separated out from phy calibrate, make separate calls
-> to phy_power_on and phy_calibrate calls from ufs qcom driver.
-> 
-> Also for better power saving, remove the phy_power_on/off calls from
-> resume/suspend path and put them to ufs_qcom_setup_clocks, so that
-> PHY's regulators & clks can be turned on/off along with UFS's clocks.
 
-Please add an explicit note that patch1 is a requirement for the rest of
-the PHY patches. It might make sense to merge it through the PHY tree
-too (or to use an immutable branch).
-
-> 
-> This patch series is tested on SM8550 QRD, SM8650 MTP , SM8750 MTP.
-> 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
 -- 
 With best wishes
