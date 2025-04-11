@@ -1,87 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-54057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDAA7A865DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 21:03:06 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD06AA865EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 21:11:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D5C6A175289
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 19:03:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 88FE27B7A43
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 19:09:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBE7E2594B9;
-	Fri, 11 Apr 2025 19:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0097C26988E;
+	Fri, 11 Apr 2025 19:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GfWF6Bqk"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="QONFRYzx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959D3221FDA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 19:03:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744398184; cv=none; b=WMUlNQPkEtCrhDMjh2yUrYv1x1zqh10JGd2G7CymTWm/iWY75vEqi99B7J5nqSfGjteNZRShn9I/WWXloB7wlJsiYawOODCyPovMaJgWGzm6Eow5hBBIXwNdU74O0i8c6KA8RzNmr7LNJXVymHU3zkvdC7pz6NSoHpK6ulCUvJo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744398184; c=relaxed/simple;
-	bh=UQQ6vcoB3VC6bc7iYzqFYWKGCwZsMEpWBdA9VyKUiSU=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF673268C7A;
+	Fri, 11 Apr 2025 19:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744398659; cv=pass; b=GmPcs50CNedAof/Ne2YvZ0p0tiOPZyjn13gW453JNwkbQ1Bft7uIrHJp7nYIwtZV/ezEiVyXbdiUcne6KHq8p/FzW7ypM5XxtbOt6yMxOD0raRzidYdf98mlX3r+YMTk1BroguKWaezSriR6CEXeVNZ3z9FqFq0oktY2YRnMWGk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744398659; c=relaxed/simple;
+	bh=FTnNjGqOv7a4F357heGbZqsWZEXNWybRZaKMJ28M1vQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mtEjBNemwF3B0MPgvQbaiN834lHd9ERoSl+qdzc9NUxjaBMekRp+VC9cot2u7PSF4GGfMxrGw0mJ3k2R9EOulf12fay6k1T3xhj2ckpDdLlwBvUug4ITmuE/OJW2QN18UM+tkdpeLOmr9dauRQ434DLqK1JCbcJsg2UoLo4hkCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GfWF6Bqk; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BFbs8h030658
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 19:02:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1vaF2aDcuvUPgXupZj1sVSgz/YB0ZGf0jSIIiOXLx5w=; b=GfWF6BqkdJKMNOU7
-	ciBjWgxx4T3PldJrt9Va+elrIY1nOz3yefv2U6MYeUy80liCMngrW8AfWg8JaBvP
-	q8WIRIKWWhggJ0QzyvUnMuKCnnQMA5X6c66XsUdFiHiQQQiWv6eoJ2ATXvo9ocfn
-	Xpc5Ge6dSaOcQcjw0szgF4/9hZDNkJma4GR1eaaIEuK8lqzpXW6inbZl632b13/3
-	sIkHTN9k3COw2YcsdlAIZ8E5whIcAJ/GDmnAB8TwMmcYLw8nfBQDAaBRRoHAzewv
-	C4mF2aRse1qPJL8gSBVKMZYHqoqJ/JyLXvQd8JUxJ3RfZdTzZbB6j8+QqMpVJKd4
-	zKIptQ==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twftu6yn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 19:02:55 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c547ab8273so35846285a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 12:02:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744398174; x=1745002974;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1vaF2aDcuvUPgXupZj1sVSgz/YB0ZGf0jSIIiOXLx5w=;
-        b=BJ5bRm/WtegdXCW/M1ATFcy56tOQOHMk3mMBu1Kp9AcLc/Fut8cIy2KwRPCnFs3ZOa
-         whfXLa7rA2swPiosr+P7nFsolisK1VtVMGIpn2aRBTEZ2xOd+HXU7TKqbHhNenI+uOCC
-         gpTgcvioM5UrYBH7nfwNvb9VYG3UjM9hxDZsdDai//uIGkN9rBollf7wRNLwPDljcWSR
-         VNtW9rOITYGmYk5HEn9qR1nEFo10Kzgr5nWpvWk5B7qrkJl4lGYdkVFqOHp0COjmfXc9
-         +Wb9bDadb+N9tyLLZKmKAQ6E5GaLQ6qotPQOkkUr2K/3W/nX2L6Zh5k6N3EN33nkB0qh
-         BjZA==
-X-Forwarded-Encrypted: i=1; AJvYcCWCyLv9tQtN76FxE8PfQrSSqcMLiVDghanJDF6LZA3ocFzueMXm8WxHNbXBQP356Qm1ldmhhclgz2v6jmJ7@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy1bpdWPBu7vlV2mpYt2qnjeFI03qHKeUTJ6u+A+w84bnCXesd1
-	hNlABV5h5KrODdgF/KeM0MKhQfz2jJ1wODivm8ObbG/ZSLddpqcmnI95XLzmPd9vBL5HKpBuMMI
-	1IoAcOpfImwOmrBo+nIakhZMK7RGUzpEXD3IX6yvLJ/8qci6kSTARbmN7vw10f7c5uybBz3pm
-X-Gm-Gg: ASbGncsK475l9r/DbNF26iU1uEAUj+VROJPFZ1mqWB67/JFN/A6H5B4CNlGSaosOJe2
-	OfqJddOV9mzD3rFk/P6XudVatXJ3hO7awOLLptTMUnQuX2LDT+8/4o4/zcj1WB31MINWSBWvxW2
-	OxCq7npFQT3iZwxIPcIOBJjn4GFIsf4JbjXGV3ncelC/+PtRHelvmijBvlDfYjzLAWSwjg/r0H0
-	xWMuip2y/STm8ZCKUFKjxg+fqDmqWW6xXh0/t266pSYSD6id+sCeDG1AkWOejQwap8Xd6mjSyIl
-	Jzcv3nZY1FJNt2obR3Fn/ef8C3n9NGHh08wN0/QkfBJxCpIuuGHeu17qY4/+qdPcGA==
-X-Received: by 2002:a05:620a:2805:b0:7c3:d266:3342 with SMTP id af79cd13be357-7c7af0d6f78mr233681485a.5.1744398174179;
-        Fri, 11 Apr 2025 12:02:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHUNrZb30hikn84frYT3M8TQ5a40xIqc08XkhLasXRgrcJZ3bIfcGeUhPq/L8esoHi8gTSMDQ==
-X-Received: by 2002:a05:620a:2805:b0:7c3:d266:3342 with SMTP id af79cd13be357-7c7af0d6f78mr233680085a.5.1744398173807;
-        Fri, 11 Apr 2025 12:02:53 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acaa1cb424fsm477367166b.120.2025.04.11.12.02.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Apr 2025 12:02:52 -0700 (PDT)
-Message-ID: <9295b681-fcd1-4e8a-bfa9-5e7ee80c8fa1@oss.qualcomm.com>
-Date: Fri, 11 Apr 2025 21:02:50 +0200
+	 In-Reply-To:Content-Type; b=GhVUwNFnFQ6BwjoGidhM4QtNP0pj1qagIz1bQ+bC5i9AaBxpXh1Gh5fKaFgqb8zVpSoMQDHeYoW2AwVR0/M7s2gyR7MCoEcaQV6LEDoTvHnk9op9ZcyALomT32q7go/L0OOZgPR9GkMAEufK8YekoZ5R/beSNphohUGvby5PcEs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=QONFRYzx; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1744398617; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=LagLz1ji2d+DnEKve4azrMvZmlXBIo4NrshvcOZdargy7OWmrCVvft/Rm1he0ETz76+SopBJFXNG3jtb/4VB3XzymM52MlUdtNAPuF3Rbd9cQ8it5ea49+EEPX/QWkJkZdw7E0klgr9tGpIjkEJeFtjcW7mwxXqo+EqiYzhz76w=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1744398617; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=PYLTZ5CkQVuq21T5qkOtaeudKbBcekBWkmXQi3p1ZZ4=; 
+	b=UioHXixN9lK66lVbd9bfa/pnre5hr5zkIHgxrU20aYlS7eFiYbpCmcZ9zQCx54s4alrWQyhlt66VL4gDTne6TS1TUrmmkqttNOuoz32lifcXLJ6gfwgEe4EVDU6rbZzRvP7TkxFy8YRhBYM3q8QHpOXL8bT0GbS44wHNtTp566M=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
+	dmarc=pass header.from=<usama.anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1744398617;
+	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=PYLTZ5CkQVuq21T5qkOtaeudKbBcekBWkmXQi3p1ZZ4=;
+	b=QONFRYzxehMOqIFIanmhHOwk9RhOCetDN5s+tYC+ChTYjgQ+twqT1/1z9FX1pmgV
+	SdU9HmOooRv4o4qKRB+XsU4U+ydO9X+/Zo7lRIasTsRJZ5N8/JG4k5I28u2O1FyjNA/
+	DuM3x+1fRvKOWUkCpojljdKc7UsvlM7thdVTTcpo=
+Received: by mx.zohomail.com with SMTPS id 1744398616272298.2588265790662;
+	Fri, 11 Apr 2025 12:10:16 -0700 (PDT)
+Message-ID: <1443e736-5e83-4125-b754-7a2972d48e24@collabora.com>
+Date: Sat, 12 Apr 2025 00:10:06 +0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,82 +60,187 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] soc: qcom: socinfo: Add support for new fields in
- revision 22
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250411095025.4067964-1-mukesh.ojha@oss.qualcomm.com>
- <20250411095025.4067964-3-mukesh.ojha@oss.qualcomm.com>
- <a730e112-b3c8-46a1-a9d7-186d22a2479f@oss.qualcomm.com>
- <Z/lKDZFtJEQEYbWd@hu-mojha-hyd.qualcomm.com>
+Subject: Re: [PATCH v2] bus: mhi: host: don't free bhie tables during
+ suspend/hibernation
+To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Johannes Berg <johannes@sipsolutions.net>, Jeff Johnson
+ <jjohnson@kernel.org>, Yan Zhen <yanzhen@vivo.com>,
+ Youssef Samir <quic_yabdulra@quicinc.com>, Qiang Yu
+ <quic_qianyu@quicinc.com>, Alex Elder <elder@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Kunwu Chan <chentao@kylinos.cn>
+Cc: kernel@collabora.com, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
+ ath11k@lists.infradead.org
+References: <20250410145704.207969-1-usama.anjum@collabora.com>
+ <37ea52d5-11de-49c7-a676-ec47cca7f91b@oss.qualcomm.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <Z/lKDZFtJEQEYbWd@hu-mojha-hyd.qualcomm.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+In-Reply-To: <37ea52d5-11de-49c7-a676-ec47cca7f91b@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=B5+50PtM c=1 sm=1 tr=0 ts=67f9675f cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=8k34yVbjjd5OpHI9aoMA:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: J_Ww5TvHqNERAMwY1q1u1ZVCGKL7jDRG
-X-Proofpoint-ORIG-GUID: J_Ww5TvHqNERAMwY1q1u1ZVCGKL7jDRG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-11_07,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- suspectscore=0 malwarescore=0 bulkscore=0 phishscore=0 spamscore=0
- priorityscore=1501 adultscore=0 impostorscore=0 lowpriorityscore=0
- mlxscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504110121
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On 4/11/25 6:57 PM, Mukesh Ojha wrote:
-> On Fri, Apr 11, 2025 at 12:01:48PM +0200, Konrad Dybcio wrote:
->> On 4/11/25 11:50 AM, Mukesh Ojha wrote:
->>> Add the ncluster_cores_array_offset field with socinfo structure
->>> revision 22 which specifies no of cores present in each cluster.
->>>
->>> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
->>> ---
+Hi Jeff,
+
+Thank you for reviewing.
+
+On 4/11/25 9:10 PM, Jeff Hugo wrote:
+> On 4/10/2025 8:56 AM, Muhammad Usama Anjum wrote:
+>> Fix dma_direct_alloc() failure at resume time during bhie_table
+>> allocation. There is a crash report where at resume time, the memory
+>> from the dma doesn't get allocated and MHI fails to re-initialize.
+>> There may be fragmentation of some kind which fails the allocation
+>> call.
 >>
->> So with all three of your patches, you neither introduce a user for them,
->> nor even expose them in debugfs.
+>> To fix it, don't free the memory at power down during suspend /
+>> hibernation. Instead, use the same allocated memory again after every
+>> resume / hibernation. This patch has been tested with resume and
+>> hibernation both.
 >>
->> Please definitely add the latter, and let's talk about the former.
+>> The rddm is of constant size for a given hardware. While the fbc_image
+>> size depends on the firmware. If the firmware changes, we'll free and
+>> allocate new memory for it.
+>>
+>> Here are the crash logs:
+>>
+>> [ 3029.338587] mhi mhi0: Requested to power ON
+>> [ 3029.338621] mhi mhi0: Power on setup success
+>> [ 3029.668654] kworker/u33:8: page allocation failure: order:7,
+>> mode:0xc04(GFP_NOIO|GFP_DMA32), nodemask=(null),cpuset=/,mems_allowed=0
+>> [ 3029.668682] CPU: 4 UID: 0 PID: 2744 Comm: kworker/u33:8 Not tainted
+>> 6.11.11-valve10-1-neptune-611-gb69e902b4338
+>> #1ed779c892334112fb968aaa3facf9686b5ff0bd7
+>> [ 3029.668690] Hardware name: Valve Galileo/Galileo, BIOS F7G0112
+>> 08/01/2024
+>> [ 3029.668694] Workqueue: mhi_hiprio_wq mhi_pm_st_worker [mhi]
+>> [ 3029.668717] Call Trace:
+>> [ 3029.668722]  <TASK>
+>> [ 3029.668728]  dump_stack_lvl+0x4e/0x70
+>> [ 3029.668738]  warn_alloc+0x164/0x190
+>> [ 3029.668747]  ? srso_return_thunk+0x5/0x5f
+>> [ 3029.668754]  ? __alloc_pages_direct_compact+0xaf/0x360
+>> [ 3029.668761]  __alloc_pages_slowpath.constprop.0+0xc75/0xd70
+>> [ 3029.668774]  __alloc_pages_noprof+0x321/0x350
+>> [ 3029.668782]  __dma_direct_alloc_pages.isra.0+0x14a/0x290
+>> [ 3029.668790]  dma_direct_alloc+0x70/0x270
+>> [ 3029.668796]  mhi_alloc_bhie_table+0xe8/0x190 [mhi
+>> faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
+>> [ 3029.668814]  mhi_fw_load_handler+0x1bc/0x310 [mhi
+>> faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
+>> [ 3029.668830]  mhi_pm_st_worker+0x5c8/0xaa0 [mhi
+>> faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
+>> [ 3029.668844]  ? srso_return_thunk+0x5/0x5f
+>> [ 3029.668853]  process_one_work+0x17e/0x330
+>> [ 3029.668861]  worker_thread+0x2ce/0x3f0
+>> [ 3029.668868]  ? __pfx_worker_thread+0x10/0x10
+>> [ 3029.668873]  kthread+0xd2/0x100
+>> [ 3029.668879]  ? __pfx_kthread+0x10/0x10
+>> [ 3029.668885]  ret_from_fork+0x34/0x50
+>> [ 3029.668892]  ? __pfx_kthread+0x10/0x10
+>> [ 3029.668898]  ret_from_fork_asm+0x1a/0x30
+>> [ 3029.668910]  </TASK>
+>>
+>> Tested-on: QCNFA765 WLAN.HSP.1.1-03926.13-
+>> QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+>>
+>> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+>> ---
+>> Changes sice v1:
+>> - Don't free bhie tables during suspend/hibernation only
+>> - Handle fbc_image changed size correctly
+>> - Remove fbc_image getting set to NULL in *free_bhie_table()
+>> ---
+>>   drivers/bus/mhi/host/boot.c           | 15 +++++++++++----
+>>   drivers/bus/mhi/host/init.c           | 13 ++++++++++---
+>>   drivers/net/wireless/ath/ath11k/mhi.c |  9 +++++----
+>>   include/linux/mhi.h                   |  7 +++++++
+>>   4 files changed, 33 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+>> index 9dcc7184817d5..0df26100c8f9c 100644
+>> --- a/drivers/bus/mhi/host/boot.c
+>> +++ b/drivers/bus/mhi/host/boot.c
+>> @@ -487,10 +487,17 @@ void mhi_fw_load_handler(struct mhi_controller
+>> *mhi_cntrl)
+>>        * device transitioning into MHI READY state
+>>        */
+>>       if (mhi_cntrl->fbc_download) {
+>> -        ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image,
+>> fw_sz);
+>> -        if (ret) {
+>> -            release_firmware(firmware);
+>> -            goto error_fw_load;
+>> +        if (mhi_cntrl->fbc_image && fw_sz != mhi_cntrl->prev_fw_sz) {
+>> +            mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
+>> +            mhi_cntrl->fbc_image = NULL;
+>> +        }
+>> +        if (!mhi_cntrl->fbc_image) {
+>> +            ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl-
+>> >fbc_image, fw_sz);
+>> +            if (ret) {
+>> +                release_firmware(firmware);
+>> +                goto error_fw_load;
+>> +            }
+>> +            mhi_cntrl->prev_fw_sz = fw_sz;
 > 
-> These all revision is added as part of latest boot firmware's socinfo
-> struct version and that also necessitates updating Linux socinfo struct
-> version.
-> 
-> I don't have a problem in adding debugfs entry for all of them however, I
-> don't feel the need unless there is already some user or kernel space code
-> using it.
-> 
-> If you still feel like we should add it, let me know, will do it.
+> This seems confusing.  Why do we care about the previous fw size when we
+> care about the allocated bhie table size?
+The table size depends on seg_size and alloc_size. The seg_size remains
+same. While alloc_size would change if firmware size changes. So I'm
+checking just firmware size here.
 
-Yeah please do, debugfs is precisely for the cases where *someone* may want
-to get a read out, but it's not especially useful in general, plus most (all?)
-other values that this driver retrieves are already exposed there.
+> Also, if the fw size is
+> smaller than the allocated table size it looks like we'll do a free/
+> alloc, when it seems like we could jsut use the memory we already have.
+This can be done. I'll do it if we can find out if the firmware can
+change at resume time or not.
 
->> What's 'subpart feture'?
 > 
-> Ah, my bad I did not explain that field in the patch.
+>>           }
+>>             /* Load the firmware into BHIE vec table */
+>> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+>> index 059dc94d20bb6..65a47c712b3a0 100644
+>> --- a/include/linux/mhi.h
+>> +++ b/include/linux/mhi.h
+>> @@ -382,6 +382,7 @@ struct mhi_controller {
+>>       const char *fw_image;
+>>       const u8 *fw_data;
+>>       size_t fw_sz;
+>> +    size_t prev_fw_sz;
 > 
-> Subpart_feat_offset, it is subpart like camera, display, etc., internal
-> feature available on a bin. 
-> 
-> 
->> How should we interpret the value added in patch 1? Does it expose the
->> higher temperature threshold in degrees, or do we need to add some hardcoded
->> variants for each platform separately?
-> 
-> As the name feature suggest some of thermal policy could change based on
-> this value and currently, this will contain only 0 or 1 and 1 means
-> its heat dissipation is better and more relaxed thermal scheme can be
-> put in place.
+> No documentation?
+Sorry, I'll add:
+ * @prev_fw_sz: Previous firmware image data size, used when
+fbc_download is true
 
-Please add some comments in both cases
 
-Konrad
+> 
+>>       const char *edl_image;
+>>       size_t rddm_size;
+>>       size_t sbl_size;
+>> @@ -662,6 +663,12 @@ void mhi_power_down_keep_dev(struct
+>> mhi_controller *mhi_cntrl, bool graceful);
+>>    */
+>>   void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl);
+>>   +/**
+>> + * mhi_partial_unprepare_after_power_down - Free any allocated memory
+>> after power down partially
+> 
+> This looks like it exceeds 80 char.
+> Also what is a "power down partially"?
+Fixing it:
+ * mhi_partial_unprepare_after_power_down - Free any allocated memory after
+ * 					    power down other than fbc_image
+ * 					    and rddm_image
+
+
+> 
+> 
+
+
+-- 
+Regards,
+Usama
 
