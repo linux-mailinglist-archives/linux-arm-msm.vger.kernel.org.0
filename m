@@ -1,110 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-54043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D92BEA86240
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 17:47:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A349DA86297
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 18:00:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6BE5A9A348E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 15:45:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A0984E080B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 16:00:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5864121B9D3;
-	Fri, 11 Apr 2025 15:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E3F7221548;
+	Fri, 11 Apr 2025 15:59:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aPJL0UiE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249FB20DD6B;
-	Fri, 11 Apr 2025 15:44:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0BE21CC44;
+	Fri, 11 Apr 2025 15:59:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744386279; cv=none; b=c4pNGGTwHXcvQ68BGXek6t2AwW9LgFnbOdR2lSyGrmL8jrqYjEBF/IMHunDwACz7fuEx9surOF86xwHPIF09qG9rFkhKn0Gxz+u9Ghi8WjaliCVTNiLdvRIcjqZDDjNAR4nGMoTaljyAPyY/5cwv735bYsdD4z6rbCF+1lqqglo=
+	t=1744387142; cv=none; b=XyMzucdFXyveYyHB/lkO2FtR4FrH/j21oRZP33icksOSBy2Qf/jyQA2lBt4eOHLZ4bdtOh4gz0VgFCS3TDWSD0SZpPB9O7tkO2+X4WuuA/T1UvKpiPmyk/KKEpJMUeapM2n3jIUAaKWLT05M6r1QIjRL11fJC2k0IWIHRHAwnsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744386279; c=relaxed/simple;
-	bh=rhk63kE+eFhK1H4ZWcBbfIoHVGFGzCPZDckKZnOUHQk=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=et/FOIqPqqqStsIfyuo5mTi9MxCejeiEmE/gZZk3i0c5lMl9Mvo4kCdYVrQ/gXMJLr3XeuRY3xeXBELYpF23RWdUnchlw/BTgntZx9rmZNeIxj2spDJZVyYSSADpDfR6Ui2H5DqfgCSTRiHbmjLff0Eq2/1dgEiAhH1BALdMV3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A794C4CEE9;
-	Fri, 11 Apr 2025 15:44:38 +0000 (UTC)
-Received: from wens.tw (localhost [127.0.0.1])
-	by wens.tw (Postfix) with ESMTP id F10975FCDB;
-	Fri, 11 Apr 2025 23:44:35 +0800 (CST)
-From: Chen-Yu Tsai <wens@csie.org>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Samuel Holland <samuel@sholland.org>, Conor Dooley <conor@kernel.org>, 
- Nicolas Ferre <nicolas.ferre@microchip.com>, 
- Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
- Steen Hegelund <Steen.Hegelund@microchip.com>, 
- Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Shawn Guo <shawnguo@kernel.org>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, Heiko Stuebner <heiko@sntech.de>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Magnus Damm <magnus.damm@gmail.com>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, Andy Gross <agross@kernel.org>, 
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>, 
- Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, 
- Stephen Boyd <sboyd@kernel.org>, zhouyanjie@wanyeetech.com, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Stephan Gerhold <stephan.gerhold@linaro.org>, 
- "Rob Herring (Arm)" <robh@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, imx@lists.linux.dev, 
- linux-rockchip@lists.infradead.org, linux-amlogic@lists.infradead.org, 
- linux-renesas-soc@vger.kernel.org, linux-mips@vger.kernel.org, 
- linux-pm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
- Andre Przywara <andre.przywara@arm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Sudeep Holla <sudeep.holla@arm.com>, Viresh Kumar <viresh.kumar@linaro.org>, 
- Ulf Hansson <ulf.hansson@linaro.org>
-In-Reply-To: <20250410-dt-cpu-schema-v2-0-63d7dc9ddd0a@kernel.org>
-References: <20250410-dt-cpu-schema-v2-0-63d7dc9ddd0a@kernel.org>
-Subject: Re: (subset) [PATCH v2 00/17] Arm cpu schema clean-ups
-Message-Id: <174438627597.2569515.3740142615905391643.b4-ty@csie.org>
-Date: Fri, 11 Apr 2025 23:44:35 +0800
+	s=arc-20240116; t=1744387142; c=relaxed/simple;
+	bh=qsXtBiQfzv3ppOjk33t0VTHVUMSlolrvFHO5Ppcv2V0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AGOuF/fE0L0I5BajbnvHDev749EKVJRE2tzzFkdYWiT7LoLqDUmSuJjXfMHbNWYocVeVIEOhiX+imwdiXfogjiQvXcr/K17e1SYD4p5jzd+9sjAHqv4KbGLJPGQnGl+9E72lLomJvb7AaIF/ylMe5qnL1aPCda7mhlu6goIYArQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aPJL0UiE; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43cec5cd73bso16049035e9.3;
+        Fri, 11 Apr 2025 08:59:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744387139; x=1744991939; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tZr9fTRuG4cPDOtYV40TbKpOUf8PGvyr3lp6HShP6Mc=;
+        b=aPJL0UiEsm9GaMFbdc7vtXJIsSkieGg2IpoA8SExrjovu2h0Lg5a2Cj7No98ZJnW9s
+         xAt1fXhDY6TxoJECCo7Q2xg7601gYXRC8wfCNwHzLDFwkevSmTG9LzMyPrpdhqXMi2dG
+         JBWtE9cBzcCtrRtH+mFkWIbJM3NsfMdFlrne/l5Jxmwv4AS8zKhpoUPrSK2tPxd4Gfni
+         MZLI5JPHYqYJWif+sUKRweDWRchewxpbYmUABRcf2AOJYHvle1DYOAy+f5VOEP8S9bat
+         gGWoR06GFEL8U89fH3YHNnoMUZNCUihjh4T2Xb0FFZZ+mLDHNQ9p32/01YQbsR2tH//S
+         MBvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744387139; x=1744991939;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tZr9fTRuG4cPDOtYV40TbKpOUf8PGvyr3lp6HShP6Mc=;
+        b=LlYqUTZsBuwFED9UUAQdM4B79F9dDHlnXMs1pxJ9ETVclCh6uMaBuyAnJ9AWvhOCPk
+         m21gzA2vwPgV17CNVG/4XXyndxZFBsKlPpAyB9NvrWKpPCsNENCe+B+A2Ro/3iSfDHoQ
+         +ZkJDb+Y/VlQXF1cjWQ1a6hegqSfj1mDKfEiKHBxrPBhd6BeLoyvVNqYUaaoFheSjLXW
+         zRXFhla6n6Lt5WVUw7YZuUvy0lETnJNdNRgEVwmnpB68WIYN21Af0umrCjyZtQ9PFwlW
+         JIAsddZ/wjTy11R13CDdi6GIlGe1Hw3lqjoZUWQi8Gs+AMpEtLmlE2RvswjYrTwyDCEI
+         tFgw==
+X-Forwarded-Encrypted: i=1; AJvYcCUqHgmSsUWVYQ7AqgQbCpdTqHIG5mOyBbX+7B9oBmwXYO4igHBVGjWO1IuWPo5P4yhRyHiu1NUaLSfqZyd5@vger.kernel.org, AJvYcCVmuW4Z9Tc+N1YXuwjxeZPIzZZacjW8ull0DAsxlH5XpxOkzCay3llh0D2Jk86Gh0JBP7P8BWfJ41nlXgJoTA==@vger.kernel.org, AJvYcCXFnPopx/acy3fDhyKEecC2gPzA1bBa4J7aPHd39Qk6IAASol6day1k2tVsKDPpaqfhyfmKmCGimSjX@vger.kernel.org
+X-Gm-Message-State: AOJu0YzdE8TJlTTaw0WxzpILwe6T6COcVT95zXhJMXAs+bjKZ9XYTjxc
+	EYCf07LfmMRjV6G1q8HOtYCiCJ6FqE3uwzfmnb5dpzlXX6yr5zkRNZR8qlU=
+X-Gm-Gg: ASbGncsowa5b15nwbwyrosjR2Vg/PfYlD+VuJSC8SKYltkeQqIpvgovrzPhAt+f6q9c
+	bMhZgv8cWB1SRC9RspeIKYzUFW71EEtjZOgnjyUN4/27zv8RRAOXl61ZZXOHWBKc+lV3/ao3tNq
+	AnWEAke6l2a30QODPNct1EqyG0q9onNveLQQgXC46U5CA/7BSDov+MTUuncHO/EbdXJ8inASRy5
+	OlXRlgmCb/G632PYLTMn5Gi1EPVPyUdmaGIhFCOXVAUfYylP0/JF71RLs4L0f76pAIgKExQ5HtK
+	Ke13eeOTct8T7enD1XkVjYJUJauv20orv32yz+hOqKwXKvS/9dcDHsEQC0nGbKj41Ye6QjgbPS/
+	nP98jIDk=
+X-Google-Smtp-Source: AGHT+IGhrpb/YrnbELAph4aGtCS9VLS+UBEaIkjtSM/5yDy4tQaDR3ujgdcNMtWfN1WWrmsl1UJ1Vw==
+X-Received: by 2002:a05:600c:5008:b0:43c:ec28:d301 with SMTP id 5b1f17b1804b1-43f3a9aaf7fmr27769825e9.26.1744387138260;
+        Fri, 11 Apr 2025 08:58:58 -0700 (PDT)
+Received: from alex-x1.. (mob-194-230-148-227.cgn.sunrise.net. [194.230.148.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43f23572d43sm86028075e9.31.2025.04.11.08.58.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Apr 2025 08:58:57 -0700 (PDT)
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Subject: [PATCH v1 1/1] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: enable MICs LDO
+Date: Fri, 11 Apr 2025 17:54:21 +0200
+Message-ID: <20250411155852.4238-1-alex.vinarskis@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.2
+Content-Transfer-Encoding: 8bit
 
-On Thu, 10 Apr 2025 10:47:21 -0500, Rob Herring (Arm) wrote:
-> The Arm cpu.yaml schema fails to restrict allowed properties in 'cpu'
-> nodes. The result, not surprisely, is a number of additional properties
-> and errors in .dts files. This series resolves those issues.
-> 
-> There's still more properties in arm32 DTS files which I have not
-> documented. Mostly yet more supply names and "fsl,soc-operating-points".
-> What's a few more warnings on the 10000s of warnings...
-> 
-> [...]
+Particular device comes without headset combo jack, hence does not
+feature wcd codec IC. In such cases, DMICs are powered from vreg_l1b.
+Set regulator as always-on to enable microphones.
 
-Applied to dt-for-6.16 in git@github.com:linux-sunxi/linux-sunxi.git, thanks!
+Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-[01/17] arm64: dts: allwinner: h5/h6: Drop spurious 'clock-latency-ns' properties
-        commit: 4df05f4a5fead4e5fc7e3c39cae74e5c0dc5282a
-
-Best regards,
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+index 35d97db9e1f6..4a35846b5947 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+@@ -269,6 +269,7 @@ vreg_l1b_1p8: ldo1 {
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
+ 		};
+ 
+ 		vreg_l2b_3p0: ldo2 {
 -- 
-Chen-Yu Tsai <wens@csie.org>
+2.45.2
 
 
