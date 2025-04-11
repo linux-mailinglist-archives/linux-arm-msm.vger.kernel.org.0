@@ -1,58 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-54050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCE51A864BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 19:29:18 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51C5CA86524
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 19:57:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BD1329A372B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 17:23:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BECA37AB296
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 17:56:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E42C9230BEC;
-	Fri, 11 Apr 2025 17:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBA4C258CC3;
+	Fri, 11 Apr 2025 17:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gPZzGZiS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vQL8jzqT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A20221FCC;
-	Fri, 11 Apr 2025 17:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FC52586EA;
+	Fri, 11 Apr 2025 17:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744392230; cv=none; b=kXD0LvGne98XNzBwkBSbVNuuxLkQhnBUNcb/Vf7/M1/9G3h4FMH7wt3meV/rDEMY4EuQaHJkPpFIvz32eg/sXNFzPw/NxB1BpuMff3ykRIm4QKLiTcTpL5RWtgjbFvKw1pEUWm5+Rs6g0hrhX4j9edHwEJmTqnD64pdYs0EmCd8=
+	t=1744394252; cv=none; b=bWP8Ho90u1xiy3U7X8Mnj3KuRyZ2NQJKHsSnpgSr4yKCaOIhXj82qw5ahysfaRjmWzSzFBh1aG1wXH1rwuE2oC48g5QMoRq1DjxklGm2IW6HgEuplTBX6BnSh6Ho6h028RP45po/xFoD3RjtZBilKjNgv3E4abLQ1pBsNVEfqgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744392230; c=relaxed/simple;
-	bh=A5RyENpGOJJhLN9yt6MaEzGOno0p/FsbaK6AG5b413c=;
+	s=arc-20240116; t=1744394252; c=relaxed/simple;
+	bh=1/CULNrp6gAuXONzF0vqUued6nOAitWEc5QO9k0BcfM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M+OYZjSwF0GCh/DulnzIl7OG7OcEAI3DEY3xmJSoVU9atX4BoaRHp7C3HHIKslrfI8venBBO7ykI+GK6JSZ2t32U/n+BhULMuKZZ9E4X8M306DiPbcqCDo599aWWfy3qoVrJDAEh+eH4HjGnzp684j/wRgfbH+HMuSTMhlQqtEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gPZzGZiS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE63FC4CEE2;
-	Fri, 11 Apr 2025 17:23:49 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=njuFd64YES7ExutJKF7BzzS90a7tRth+Ub9lSXzjkdwvv53PZmV5dUslPynaJ6fuejwYBL9nfmdc6eF+8dUl+Xdg8QqLknYFROhEfE+EsyVIYXPTy2lxAMRM49wmZc+QYzxQlvTw6NDwezOVPm2/ggffwqt5m7aHIzShs7IyktI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vQL8jzqT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAA8C4CEE2;
+	Fri, 11 Apr 2025 17:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744392230;
-	bh=A5RyENpGOJJhLN9yt6MaEzGOno0p/FsbaK6AG5b413c=;
+	s=k20201202; t=1744394251;
+	bh=1/CULNrp6gAuXONzF0vqUued6nOAitWEc5QO9k0BcfM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gPZzGZiSv8o4+dGZufvdny/b7NXQM30wE4PyTpmESiBZ8+89/axRN6ugXo5skuPzI
-	 cGy4wYmzcKefEY2kgaHNk9hmSdERXPZOKbCOQer6IAfHgwabtguEy5BPe4oajVk90j
-	 fTDA6jqNVMBDYJJRDQGaDN2nb1AoTUTDreFLNkle7QqscpD9y6qUdVxsqj+ypaJqik
-	 wkpyPiTOHo6w2iU+/RledY51YgIMCYv6Y9c6OnW6K+P7Z8kS0Dr33Ys13CJgZbrwmC
-	 HjDGKThmOBjjG1WioMH/6Htyw/dYnAkTn53MElgDb3nOrQTVa9H4M38QpUJTeYKND0
-	 9+dJFNlS5ne0A==
-Date: Fri, 11 Apr 2025 12:23:48 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Gaurav Kohli <quic_gkohli@quicinc.com>
-Cc: konradybcio@kernel.org, devicetree@vger.kernel.org,
-	andersson@kernel.org, rafael@kernel.org, rui.zhang@intel.com,
-	amitk@kernel.org, lukasz.luba@arm.com, krzk+dt@kernel.org,
-	linux-kernel@vger.kernel.org, daniel.lezcano@linaro.org,
-	linux-arm-msm@vger.kernel.org, quic_manafm@quicinc.com
-Subject: Re: [PATCH v1 1/2] dt-bindings: thermal: tsens: Add QCS615 compatible
-Message-ID: <174439222845.3551396.4839377552706414911.robh@kernel.org>
-References: <cover.1744292503.git.quic_gkohli@quicinc.com>
- <c8339b6ccf5ee19fefed762874560d6d8408ebba.1744292503.git.quic_gkohli@quicinc.com>
+	b=vQL8jzqTq0Mt9e5/JneJadi8HlMfBW1lUfP29jeKA7AXF17GrRL7EGjSF+OcxDTT+
+	 Q50Le5Uho9FyrtY+DS4gnwRNTMhp/OUFgUvRVrNTKuE3RBQ/08g1tBRNipNXvacs4I
+	 ftH0qnbINyOjg7oXIJ/ksRpF0whK+c8FL3a01Hjcl5BJrCbccsmdBbUemLNby+jJeM
+	 mf2OPQgQV7mxABw09VRCzxGJhc+rCD5IUckA9shSmPoerGfaMXVpjTtVhGXwnVRj8X
+	 xoKkQgPqQ3GtFcbeilxBgRG+WI2yZ4YZvo8719+bMdMHD8AqcjXj1QkjBycLBEidbx
+	 49MTgDL6i9Qfw==
+Date: Fri, 11 Apr 2025 12:57:30 -0500
+From: Rob Herring <robh@kernel.org>
+To: Praveen Talari <quic_ptalari@quicinc.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-pm@vger.kernel.org, psodagud@quicinc.com, djaggi@quicinc.com,
+	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+	quic_arandive@quicinc.com, quic_mnaresh@quicinc.com,
+	quic_shazhuss@quicinc.com, Nikunj Kela <quic_nkela@quicinc.com>
+Subject: Re: [PATCH v1 2/9] dt-bindings: serial: describe SA8255p
+Message-ID: <20250411175730.GA3642862-robh@kernel.org>
+References: <20250410174010.31588-1-quic_ptalari@quicinc.com>
+ <20250410174010.31588-3-quic_ptalari@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,18 +71,105 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c8339b6ccf5ee19fefed762874560d6d8408ebba.1744292503.git.quic_gkohli@quicinc.com>
+In-Reply-To: <20250410174010.31588-3-quic_ptalari@quicinc.com>
 
-
-On Thu, 10 Apr 2025 19:30:18 +0530, Gaurav Kohli wrote:
-> Add compatibility string for the thermal sensors on QCS615 platform.
+On Thu, Apr 10, 2025 at 11:10:03PM +0530, Praveen Talari wrote:
+> From: Nikunj Kela <quic_nkela@quicinc.com>
 > 
-> Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
+> SA8255p platform abstracts resources such as clocks, interconnect and
+> GPIO pins configuration in Firmware. SCMI power and perf protocols are
+> used to send request for resource configurations.
+> 
+> Add DT bindings for the QUP GENI UART controller on sa8255p platform.
+> 
+> Co-developed-by: Praveen Talari <quic_ptalari@quicinc.com>
+> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+
+Your tags go last because you touched this last (I assume). The order 
+here would be correct if you were the original author, but Nikunj made 
+significant enough changes to change the author and also sent the 
+patches. The sender always has the last S-o-b (until the maintainer 
+adds their's when applying).
+
+> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  .../serial/qcom,sa8255p-geni-uart.yaml        | 59 +++++++++++++++++++
+>  1 file changed, 59 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/serial/qcom,sa8255p-geni-uart.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/serial/qcom,sa8255p-geni-uart.yaml b/Documentation/devicetree/bindings/serial/qcom,sa8255p-geni-uart.yaml
+> new file mode 100644
+> index 000000000000..0dbfbfa1d504
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/serial/qcom,sa8255p-geni-uart.yaml
+> @@ -0,0 +1,59 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/serial/qcom,sa8255p-geni-uart.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Geni based QUP UART interface
+> +
+> +maintainers:
+> +  - Praveen Talari <quic_ptalari@quicinc.com>
+> +
+> +allOf:
+> +  - $ref: /schemas/serial/serial.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sa8255p-geni-uart
+> +      - qcom,sa8255p-geni-debug-uart
+> +
+> +  interrupts:
+> +    minItems: 1
+> +    items:
+> +      - description: UART core irq
+> +      - description: Wakeup irq (RX GPIO)
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+If this is a wakeup source, then you should have interrupt-names with 
+'wakeup' for the 2nd irq.
 
+> +
+> +  power-domains:
+> +    minItems: 2
+> +    maxItems: 2
+> +
+> +  power-domain-names:
+> +    items:
+> +      - const: power
+> +      - const: perf
+> +
+> +  reg:
+> +    maxItems: 1
+
+'reg' goes after compatible.
+
+> +
+> +required:
+> +  - compatible
+> +  - interrupts
+> +  - reg
+> +  - power-domains
+> +  - power-domain-names
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    serial@990000 {
+> +        compatible = "qcom,sa8255p-geni-uart";
+> +        reg = <0x990000 0x4000>;
+> +        interrupts = <GIC_SPI 531 IRQ_TYPE_LEVEL_HIGH>;
+> +        power-domains = <&scmi0_pd 0>, <&scmi0_dvfs 0>;
+> +        power-domain-names = "power", "perf";
+> +    };
+> +...
+> -- 
+> 2.17.1
+> 
 
