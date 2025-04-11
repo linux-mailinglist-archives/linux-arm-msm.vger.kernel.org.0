@@ -1,142 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-54047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA0DEA863BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 18:54:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 50235A863DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 19:01:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 08F2D3BAA68
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 16:48:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0EEF93A7E66
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 16:57:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A112521D58F;
-	Fri, 11 Apr 2025 16:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26C4D221264;
+	Fri, 11 Apr 2025 16:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jzvR40yO"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GJUUjNvP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD72719CC36;
-	Fri, 11 Apr 2025 16:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846DE21D5A7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 16:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744390095; cv=none; b=Ako4ptKoMjV84kNq2ddpnuOnyT0foArWVFnfxvHojC034I1iiOqG4ueFntKOF5r65BcFqgtRzbMJ0g6LrKT/mYCQbnwOdZVQhqH0AsHHv6vM1W+PF4QXfKn2VTn+9uugfrjhx+sJOHhcLHNlonK4UfWzq0kehuQhY+NYH+No0fQ=
+	t=1744390678; cv=none; b=CNe4S/tc7jLNoRlen4tasUIbjyIh9kOA02GLr4cT8VTVYHk+eLNvonWFxPWSltKSb6eFKZZXhAbJnEyxpJNyQfaQ3rt9ZS4M0i2J9q9LvN1qxDcA1GnEZHgQYNpOStCu8A6J5VKweGazDOTW/NInoYB8bfCqQSgCmnFb12toD5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744390095; c=relaxed/simple;
-	bh=wa+AVNQk+IQmGfijqRyLsj77653kD6hhJ1b2CemESKw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=uKeLR8VzpEDBlvpsxVarVqWfpkEzJ87yPX3M0TqjHxyXuHU5GPFm6b05BZyA65qN3IQWLtbP9gQ3aYn2R8tq70qnOZ+aq/Gcg0qdHmHb/qlUqbm0bn+bXCAjwtuqjYv2cxkoRVrEoj/Syw4cPqb8r4fbdgiRqNvJalEvCtX+ZqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jzvR40yO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BFaraB032525;
-	Fri, 11 Apr 2025 16:47:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mxSIL024YDdH3noxg9Rt5OG8c1CjMIkSVCfzMQ9iUAo=; b=jzvR40yOJgbc1vTZ
-	T40ditOiQkBc5zCStqPVrNyTCEcd1lFiqbYYU0KHUu6n1IMm/q1vztooHJqhQ4Sw
-	dys5WnAJ9UI4RKuD1DUaCeZnQXGLJqNYxFadHtaMYbFmngeOOKkN9abBDsg21eQ/
-	p2dq6NZ5025Dua/XroA/8ZtChOw9AeEbCIo1Vkn7gslRIOUjv1h1ed5DfEaS7oQH
-	wd1yfrCWyh4bu9Tfp1hg+TZzHQCpze8dV+aq4wUQYz6lW4km+GlPpjf8WA7Th7+j
-	ChkD/9+aAiDZZPKNQXKftZbZd41ToyYEGuVZL5TP+A8mLLT3yu766aBn+YyyCPfZ
-	d88eJA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twfktusf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Apr 2025 16:47:55 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53BGlsqu029526
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Apr 2025 16:47:54 GMT
-Received: from [10.71.112.82] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 11 Apr
- 2025 09:47:53 -0700
-Message-ID: <2efdc7ef-adc1-4316-adbc-ef25db7c7612@quicinc.com>
-Date: Fri, 11 Apr 2025 09:47:50 -0700
+	s=arc-20240116; t=1744390678; c=relaxed/simple;
+	bh=g1FN5PT3e+DmJD0YyLOI2xihs5Hpfcx6Ef4TFtLLHO4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pt6GOmZfa+g6frnhjenOPVOHWyqRgudFVB0nTPOW/EPujYn/tWDsuT2NOG8+9pwJ3eP6rS5+psewqgkBvSCCfclerX3N2Z2OAFe+ONTS2Bew/uFQlFZuwXiz2jCT5gPq82ax362BU36dX1T2CDSePZHpHCQOUsUHxMLgn7XBeIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GJUUjNvP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BFUj61018639
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 16:57:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=VKImoR0KichjLHhvcg5Snjqf
+	fOPNM4U3wHwTAAjNnW4=; b=GJUUjNvP/hHF34eVZKR4sQ7plSnvlEqvQoctOHgG
+	06hgN/Rn0wUkt4m37gC7xM2pcAgtjqxsrUsP5V1xxkdwaoWbn13lNNaCTF6cBIgL
+	1hbqS01cBrACvy9/BZyCxS4+otiEy2b51QkU+7Atp+0+oKO96e4X4euBCflto1Fb
+	FjQbFSROgqMhDd+P+aorWQHoDDo2WN1zgTxUu9FvyYVu8Wjx8fE9OHNGrKgrHcyj
+	fvXrPITy20GpUsBbVxxbylRl6jp0qplP7uzEBSERSmmN032BFjfgPV/4jdfQOZHp
+	kUJ6iiS0s9FfH8zZAa5Bispzr3a1QQkRsBReJqF5vQvZig==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twdgu8aj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 16:57:55 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2240a96112fso30958335ad.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 09:57:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744390674; x=1744995474;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VKImoR0KichjLHhvcg5SnjqffOPNM4U3wHwTAAjNnW4=;
+        b=RX1gACAmQXB7/spG1wJR63meg2FlfoBRmZBQQF/PLw9rxD5DfkudADDAcdp/+R2jfo
+         HISWZ8xZmqIp8WKKO9WCYZb2qUGY3+DifxdDdwHMy8BRPoxAS6gTVnjse6im5xTCix1K
+         KWyll7kQ1y9EoEfxS8S9quw/8DbZbW2xTzl6tWmlKosnDgFf1aEVODltv8HlbULi+ao9
+         MSowsgJLI+Bs/tLjoykJ/BU8Ue9ZGWz0tu68vS4nhLfeu9ZcGro8v0CVOOqD1ta2H455
+         bZJJwZZpKJF8hZKs9ruQj4LX/PvE9qIA9OWUqzcoOxCI5EnCuxi0bZEqgUUU879yIu7I
+         62Vw==
+X-Forwarded-Encrypted: i=1; AJvYcCVqtiS7NRIIFP+eEmJ8AxlsQVFEcYGBFqawX8J8rYyNbDoQ8BJS2mXNSAJdR8lgBZzVGSp8BeO03GFTe/8Q@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzaCWjKeM0y3ZOt0vzCcYYxhV7yV0oM30t2viCKmC/dn38g6Yr
+	iXMeG8bCKAQh2v6+TTomJCdNYzLBt86I170yxBQdo4RQuOF7HNt5YiXf6bmoDDrIZCDj4x7EzmB
+	kBHhLKyqefh0jOl7An9/dbDM47dNlcMnVuWixir58jBFGEd2+Xu8t2WtesseqAB45
+X-Gm-Gg: ASbGncsJol8MEz/LusSdkYgAGkkRZncsF5XAqmkobFiJiyS+eCjqnFMqVFxZlbHD+3T
+	YVPVLqDv5nKOZwRf7uztO3aqdCmOM2gt2dKh5tmBBcLV+fUrwaH+G8bmdbaWSsqGHTKqgY/zql+
+	u7NUh1DligXJuM6micmgRkDWUx+2vNkymnoGsyIygnLhMSDVnhNW4bWW5/04BkWXfMrshiHJJK/
+	l7gVSjCKtIw0gGlPe4T87mqLH7zJD9UY2Ivzdwn0VG/GjjJpBxBKR9NNrmPyV3m2HQmRB8eXdNR
+	RMwx7hBItr/S3CtWSJJoSxLJyyNClnZPT/9jmQY=
+X-Received: by 2002:a17:903:189:b0:223:f9a4:3fb6 with SMTP id d9443c01a7336-22bea4a183bmr44301085ad.11.1744390673861;
+        Fri, 11 Apr 2025 09:57:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHUVDTk+yzucEuAE4WKGO88quhWCVXvQVwZn02WXJ9p0EoVjVInbjnjnp7hGMhEFd7TQFVmsg==
+X-Received: by 2002:a17:903:189:b0:223:f9a4:3fb6 with SMTP id d9443c01a7336-22bea4a183bmr44300835ad.11.1744390673449;
+        Fri, 11 Apr 2025 09:57:53 -0700 (PDT)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22ac7cc8daasm51998795ad.210.2025.04.11.09.57.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Apr 2025 09:57:53 -0700 (PDT)
+Date: Fri, 11 Apr 2025 22:27:49 +0530
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/3] soc: qcom: socinfo: Add support for new fields in
+ revision 22
+Message-ID: <Z/lKDZFtJEQEYbWd@hu-mojha-hyd.qualcomm.com>
+References: <20250411095025.4067964-1-mukesh.ojha@oss.qualcomm.com>
+ <20250411095025.4067964-3-mukesh.ojha@oss.qualcomm.com>
+ <a730e112-b3c8-46a1-a9d7-186d22a2479f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v38 00/31] Introduce QC USB SND audio offloading support
-To: Greg KH <gregkh@linuxfoundation.org>,
-        Stephan Gerhold
-	<stephan.gerhold@linaro.org>
-CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <pierre-louis.bossart@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
-        <tiwai@suse.com>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <linux-input@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>
-References: <20250409194804.3773260-1-quic_wcheng@quicinc.com>
- <2025041029-oval-cavity-7896@gregkh>
- <2025041144-imitation-reappear-a0d9@gregkh> <Z_kNr52hM-iWUgyZ@linaro.org>
- <2025041152-eternal-harmonize-d608@gregkh>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <2025041152-eternal-harmonize-d608@gregkh>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1a38mqELc9Yx_-XevlOZ1O78PQHDv81z
-X-Proofpoint-ORIG-GUID: 1a38mqELc9Yx_-XevlOZ1O78PQHDv81z
-X-Authority-Analysis: v=2.4 cv=b7Oy4sGx c=1 sm=1 tr=0 ts=67f947bb cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=5j0JM0_CJDOIDA5IkhwA:9 a=QEXdDO2ut3YA:10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a730e112-b3c8-46a1-a9d7-186d22a2479f@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=PJgP+eqC c=1 sm=1 tr=0 ts=67f94a13 cx=c_pps a=IZJwPbhc+fLeJZngyXXI0A==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=CieDfDEW6uGNFcNvMxgA:9 a=CjuIK1q_8ugA:10
+ a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-ORIG-GUID: B8MPcKhqacMAgzG26vAUYrjP4uJxfeVM
+X-Proofpoint-GUID: B8MPcKhqacMAgzG26vAUYrjP4uJxfeVM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-11_06,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- priorityscore=1501 suspectscore=0 mlxscore=0 impostorscore=0 phishscore=0
- clxscore=1015 spamscore=0 mlxlogscore=711 bulkscore=0 lowpriorityscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 malwarescore=0 spamscore=0
+ impostorscore=0 suspectscore=0 mlxlogscore=999 bulkscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2504110106
 
-Hi Greg,
-
-On 4/11/2025 5:54 AM, Greg KH wrote:
-> On Fri, Apr 11, 2025 at 02:40:15PM +0200, Stephan Gerhold wrote:
->> Hi Greg,
->>
->> On Fri, Apr 11, 2025 at 01:04:37PM +0200, Greg KH wrote:
->>> On Thu, Apr 10, 2025 at 09:11:42AM +0200, Greg KH wrote:
->>>> On Wed, Apr 09, 2025 at 12:47:33PM -0700, Wesley Cheng wrote:
->>>>> Requesting to see if we can get some Acked-By tags, and merge on usb-next.
->>>>
->>>> let me give it some 0-day bot testing to see how that goes...
->>>
->>> All looks good, so let me go apply this to my usb-next branch now.
->>>
->>> Thanks for sticking with this, I think it deserves the "most versions ever"
->>> of a patch series award.
->>>
->>
->> I have honestly no intention of blocking this series any longer, but the
->> comments I raised on PATCH 26/31 are likely valid and suggest the series
->> wasn't fully tested on v38. So I would personally prefer to get fixes
->> and confirmation on that from Wesley and then merge v39. It doesn't feel
->> like the kind of thing to fix incrementally on top, since the commit
->> message is also misleading now.
+On Fri, Apr 11, 2025 at 12:01:48PM +0200, Konrad Dybcio wrote:
+> On 4/11/25 11:50 AM, Mukesh Ojha wrote:
+> > Add the ncluster_cores_array_offset field with socinfo structure
+> > revision 22 which specifies no of cores present in each cluster.
+> > 
+> > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> > ---
 > 
-> I think a fixup is probably sufficient, especially as I can't rebase my
-> tree, and reverting all of these is just a mess.
+> So with all three of your patches, you neither introduce a user for them,
+> nor even expose them in debugfs.
 > 
+> Please definitely add the latter, and let's talk about the former.
 
-Sure I will submit a fix up today.  Thanks Greg, Stephan for the feedback
-and help with the overall progress of the series.
+These all revision is added as part of latest boot firmware's socinfo
+struct version and that also necessitates updating Linux socinfo struct
+version.
 
-Thanks
-Wesley Cheng
+I don't have a problem in adding debugfs entry for all of them however, I
+don't feel the need unless there is already some user or kernel space code
+using it.
+
+If you still feel like we should add it, let me know, will do it.
+
+> 
+> What's 'subpart feture'?
+
+Ah, my bad I did not explain that field in the patch.
+
+Subpart_feat_offset, it is subpart like camera, display, etc., internal
+feature available on a bin. 
+
+
+> How should we interpret the value added in patch 1? Does it expose the
+> higher temperature threshold in degrees, or do we need to add some hardcoded
+> variants for each platform separately?
+
+As the name feature suggest some of thermal policy could change based on
+this value and currently, this will contain only 0 or 1 and 1 means
+its heat dissipation is better and more relaxed thermal scheme can be
+put in place.
+
+-Mukesh
 
