@@ -1,105 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-53939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FFCCA8540D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 08:21:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52853A8548B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 08:44:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C12259A06FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 06:21:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0EF077B1028
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 06:43:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19E9027D76A;
-	Fri, 11 Apr 2025 06:21:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rKsMFCn2"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7232927D76F;
+	Fri, 11 Apr 2025 06:44:34 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4374367;
-	Fri, 11 Apr 2025 06:21:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FF327CB2E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 06:44:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744352502; cv=none; b=MKgy148NSA92I/OYynSQoe9Pvaa3vB0D7bjzAz6jklmqIBR0yAOBOmXg4ALiVnCCDPqul2bx4Puq8YpxbLAwA0QLP8zoqT6KKSQOveXOcyicPkxp3jsmo5yCxVFa9iD64dsZSVWBk0aoi+XozSEKGpWbowH8w0AWoF/6cB7VpkA=
+	t=1744353874; cv=none; b=B4wx9nAgYnyI6Qag/KMKQIfLaZFqHyLQMxjVzOD0lDPaj0HpIYVo65eZBJ5R6ZFrWa66nSkKAoaQZYculNNGiEqOUs6E4yNGyLV1qZEDxLhw4bSrKNJWQc1MKr8A6V2KYe+mosbVvLICLHQGpkTkedVoU8VWwcgvqhG9oIszhDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744352502; c=relaxed/simple;
-	bh=uwwzJRyfNXL+Pb3Ntu55xpbTfqnsLWcsMS2/4C8sR9A=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=apr0rPXHWjrtklFO9rIkzNaFoq/2l7cMrjY2BxN36PmB546G0o6QBEQspMcbdWUaGGvjH8c9HG+lYkD7n82XBOPyVyvv2IbbnmkmuUhi1izRYo9PyGFDiDuUSol6ZUts9lddQt5dFcUN7Yz+ToJQRR0akBds/uv4kxlU63GRLyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rKsMFCn2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18731C4CEE5;
-	Fri, 11 Apr 2025 06:21:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744352501;
-	bh=uwwzJRyfNXL+Pb3Ntu55xpbTfqnsLWcsMS2/4C8sR9A=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=rKsMFCn2k5vXBWmjWgqIe7kPyUtQb8IywjE2Ac9CTEnF9C55TJ+sPU8XRJon6hLG3
-	 9/nAVaOkfLqn+1MResUe3oxi+rGAlnIsgMNCVLbcOFqa/KDvLwdFKsRGe4JKEGMJQn
-	 uHS2n9pVMPy2mtFS74ASGiEUZz2I6W+sxOwx3ja/RAscwlN/1i4Pd4Cg7xn7+2+pPE
-	 IPYbbvHRNlrgmMy9X8HMdyrRAnHIOYdCra/4VAAJk+B8gkvNsGTDoFsjtgIy948qxw
-	 QjmolFIm2yd1DwY0kFvu81U99Ss8VhmgwASVorhr8TXTyysPoEHvWkiVxhCBMdLo2b
-	 XlZkw1rdBff1w==
-From: Mark Brown <broonie@kernel.org>
-To: gregkh@linuxfoundation.org, srinivas.kandagatla@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- alsa-devel@alsa-project.org, srini@kernel.org
-In-Reply-To: <20250410103713.24875-1-srinivas.kandagatla@linaro.org>
-References: <20250410103713.24875-1-srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH 0/2] MAINTAINERS: update my email address
-Message-Id: <174435249981.1315708.17163326951823552256.b4-ty@kernel.org>
-Date: Fri, 11 Apr 2025 07:21:39 +0100
+	s=arc-20240116; t=1744353874; c=relaxed/simple;
+	bh=TmRsfdrl+SkxHKqFCnuLtJKoWjb6p8iTBz1i+VJGK5k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=U9C2VXgZ75GxURkFyg5kbGfKS1Lm+op3JFwXVctb9lpSlEUwDvpk0hfu5gP8CAN8uzbBQYpNhF/Y5FhtI2rcFens3YpscPxT0w311qq5cCoD2SADgoQQ3XNC5FP/sDa99+29sDo+cYoN5r8SrcH7lAuvixBNzKO+cdxvSKa4dXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.166.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3d46ef71b6cso14283735ab.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 23:44:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744353871; x=1744958671;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6YaWTI7DWsK4VeI0QvD2ZFS0NMVC1Fl7xtwp7U/95NA=;
+        b=RInrIeSAY0BjETMSbZ5UZ6oKaK4RTbqtldT5cH7Q9vssBZElNAvfUY9B14R/8zaqxU
+         6rWNsrLfdCAtMpn/dxZOlw3gW9mhqrCHmtgGOzSTZqnNcNFMM9Ja3hf0ZOhyMmWG6h39
+         EewHTMAhDmEu8QgijyxcUvxqlu245bWRmrkbkS8Gzf7G1JcZKo6w24RyJTgCcxvabun4
+         5AiWhOTiBzK0/R6O7NjJvVUt/arqzdK3uIu31moM7YAplGFATLeFxCCLF1cjASoEPeBM
+         C4Glz+aaAlhBMF72+A4Dw8RmT2BPSqboBoJJ6hhiDCnT6ARe2Fvi1+sVmD2EeesOzKLn
+         SesQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVCIJ3MMrGXGx+rKmdRELEr/wt9BHlJ7p6HvoGCtvcFWBnLotWvmtN0Hb96ygf/vKsbz8sLqdNblTrDOUdt@vger.kernel.org
+X-Gm-Message-State: AOJu0YxiBuWuoQFeldyRclMvgWW48WeGjKFELl37IscHvqYDTpeRKkyu
+	drJ3NCt1lQFWm5YPR63eN2kLfmfQ3IWkpJhO47dMaT1sde63MpPNXT3A99/+hNE=
+X-Gm-Gg: ASbGncvuHQ8tayrqys4UvaBrJfylDTCAcT7Y3MHop/lpI9mXgZC3+oT1TjfCNZ6GerO
+	i3hQ/Ti2s8hodM0C3lBcZ6i86cHwaMSVb5+21zasxXBrwdZmVT2NjcdrZSGdEV6MKjgMcmGbENF
+	dH2NFCkjSnFASuRBxL6LoqPt9FjShfO7k+OuyLuoc6sUQzzVWwf0YfRrOnJCef1aB3GnGKc9P94
+	XKzFNh2lbhfbW262AIadsi+ydoRFFFrxXLKKWJz2+X5P1cNXBSdVYVDSyLax4rZFIBdEvXMJ4H+
+	SttZAKvk4hileiCfRKL66JSj5s6DTnPz7TmREw1dhs0rbCEbza50VaJxJODcvlfoZhRsbW0Js8r
+	tIsE=
+X-Google-Smtp-Source: AGHT+IHS7LI1sCEZ3TAdrINlm/HTv+/FuoT+YUY8PdSAwHHlzPc6+0urEBx+M2JXfqUCGj4fEanlWg==
+X-Received: by 2002:a05:6e02:349c:b0:3d4:3db1:77ae with SMTP id e9e14a558f8ab-3d7ec26b69fmr21971955ab.18.1744353871269;
+        Thu, 10 Apr 2025 23:44:31 -0700 (PDT)
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com. [209.85.166.49])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4f505e2f3b3sm1120806173.117.2025.04.10.23.44.31
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Apr 2025 23:44:31 -0700 (PDT)
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-861525e9b0aso131473239f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Apr 2025 23:44:31 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCV4IhxZ7yULFPgBFMaFwm/0KEjxM3O6BcFQp1Xh3LTqMy3R2chBvkSMIc19uGeqL74ubClUFWjJWZQG5B81@vger.kernel.org
+X-Received: by 2002:a05:6102:5489:b0:4c1:924e:1a2a with SMTP id
+ ada2fe7eead31-4c9e504c3aemr736947137.25.1744353386128; Thu, 10 Apr 2025
+ 23:36:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-c25d1
+References: <20250410163218.15130-1-ville.syrjala@linux.intel.com> <20250410163218.15130-5-ville.syrjala@linux.intel.com>
+In-Reply-To: <20250410163218.15130-5-ville.syrjala@linux.intel.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Fri, 11 Apr 2025 08:36:13 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdUt4UkiTqe6T1QPxAwJdLnQfaDjw7_cKYtTx9WVed9Z0w@mail.gmail.com>
+X-Gm-Features: ATxdqUGG68dHUm49IQV8G2NJ_HEDfXWabJxNBHJkOpQT2upH4xlbmyKOguLtNHo
+Message-ID: <CAMuHMdUt4UkiTqe6T1QPxAwJdLnQfaDjw7_cKYtTx9WVed9Z0w@mail.gmail.com>
+Subject: Re: [PATCH 04/19] drm: Pass the format info to .fb_create()
+To: Ville Syrjala <ville.syrjala@linux.intel.com>
+Cc: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
+	intel-xe@lists.freedesktop.org, Alex Deucher <alexander.deucher@amd.com>, 
+	Liviu Dudau <liviu.dudau@arm.com>, Maxime Ripard <mripard@kernel.org>, 
+	Russell King <linux@armlinux.org.uk>, Inki Dae <inki.dae@samsung.com>, 
+	Seung-Woo Kim <sw0312.kim@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Marek Vasut <marex@denx.de>, Stefan Agner <stefan@agner.ch>, Lyude Paul <lyude@redhat.com>, 
+	Danilo Krummrich <dakr@kernel.org>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+	Dave Airlie <airlied@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, 
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, 
+	Biju Das <biju.das.jz@bp.renesas.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Sandy Huang <hjc@rock-chips.com>, =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
+	Andy Yan <andy.yan@rock-chips.com>, Thierry Reding <thierry.reding@gmail.com>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+	=?UTF-8?B?TWHDrXJhIENhbmFs?= <mcanal@igalia.com>, 
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+	Gurchetan Singh <gurchetansingh@chromium.org>, Chia-I Wu <olvaffe@gmail.com>, 
+	Zack Rusin <zack.rusin@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+	Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>, amd-gfx@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	nouveau@lists.freedesktop.org, virtualization@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 10 Apr 2025 11:37:11 +0100, srinivas.kandagatla@linaro.org wrote:
-> Update .mailmap and MAINTAINERS to point to the @kernel.org instead of
-> the @linaro.org. Linaro address will stop working in few days.
-> 
-> Mark or Greg, could you please pick these two patches?
-> 
-> Srinivas Kandagatla (2):
->   MAINTAINERS: use kernel.org alias
->   mailmap: Add entry for Srinivas Kandagatla
-> 
-> [...]
+On Thu, 10 Apr 2025 at 18:33, Ville Syrjala
+<ville.syrjala@linux.intel.com> wrote:
+> From: Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com>
+>
+> Pass long the format information from the top to .fb_create()
 
-Applied to
+s/long/along/
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+> so that we can avoid redundant (and somewhat expensive) lookups
+> in the drivers.
 
-Thanks!
+[...]
 
-[1/2] MAINTAINERS: use kernel.org alias
-      commit: 7f33f247138554b84729688169dfbe87724b70ef
-[2/2] mailmap: Add entry for Srinivas Kandagatla
-      commit: 807c1c83152138e2fc22101a57b9346159ad4f4c
+> Signed-off-by: Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com>
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+>  drivers/gpu/drm/renesas/shmobile/shmob_drm_kms.c       |  3 ++-
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+Gr{oetje,eeting}s,
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+                        Geert
 
-Thanks,
-Mark
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
 
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
 
