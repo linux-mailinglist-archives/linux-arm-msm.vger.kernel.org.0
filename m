@@ -1,125 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-54040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5BFCA861FD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 17:37:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C4F8A8621F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 17:42:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F3C041B60067
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 15:36:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 15F384A0214
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 15:42:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 238F11DFE8;
-	Fri, 11 Apr 2025 15:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C259120E33F;
+	Fri, 11 Apr 2025 15:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dw2jU6Iw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MxId31xc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A462367B3
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 15:36:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BD12AD14;
+	Fri, 11 Apr 2025 15:42:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744385774; cv=none; b=scjQmPjRZTsFjebKLENQKtW3YlVdTAhh4GhhJpfUFgK9uh6RsaDf4FRtZavQzyHAVTe8YUf5CxccCX3pNPhtzQU8X515Qb4tAcmh6DJBHfBAhQoJ/pKc+j+SbI+ju/BMq+c6byl8YE5H4AG/oG97V/aKQsYTIHv6bi5sDDxOCas=
+	t=1744386143; cv=none; b=ighlB7Ri/kTHIF0QO2cbVcJuvbimMNt+uzZ0YjXSoOO/ha4K0fHrcOUZC3QqMmzeJgznRpIeu0eGb2wK4xc6EdqfVlXsNOe+zp6seHxVBrwJyDvywcSRxr7Cj75dRg0JB+8OEc6Q65/zvLF8xGN+V3Pa6afN5rLY/ziez3zJzdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744385774; c=relaxed/simple;
-	bh=/WEE5ScEJq0P/LsDQLPxL0pEQuguX7tuGeEQLsCV8/0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Qnh6SY+BhFlabvjddVAvYpCJJ7OLM0pwtdoFdQFkPZ9qdSMsAjdcz/NFM2w4mnI/QTOiJBzXwrXXXA2BEkrcmqqYfz1U0jj99njWI2SvpMyfUgvMo1lTs4rhfl27QGJDt8ZgYCd+vv+9legeqF3SBYbN5djt4Ze+jRo8KN0pXkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dw2jU6Iw; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BC8FMM006966
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 15:36:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	I/f0AoIahJfkhGbYsJHUxeRCAL+AbEIMXiMqEigSljY=; b=dw2jU6IwBw8HcsWv
-	V6X+RuHQho7kEjqtB9U/r2IyX0wyBhfGTQIcM1ncALCQT1bgGqfhxssnFFUe5qkz
-	+A3YxWeX5CZ3lg++aZ/2PtiLD24yg/13X6AFFgseDfXIfLJWN1ccbO0VsTYyy3hu
-	MRNqBhO1xT3PHWads/ezeOFE7Hcc/zIHZI3D1sNKZhcF0zWw9/drsjDKFGicrkMB
-	Mw03lj5S3rH5aQqebQWSHpIYOTFfZbB+p2FUcimPjruHt8G/Oo4bH9iWO7qmfg6P
-	fn9P4mVhUA0Cb3X6zRb/JLJAxWFFrzmOmG951o05WQoKGNJQBBlw805qt1eA5IUI
-	6ucU2w==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45xeh3kuh0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 15:36:11 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-2ff78dd28ecso2484272a91.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 08:36:11 -0700 (PDT)
+	s=arc-20240116; t=1744386143; c=relaxed/simple;
+	bh=It2VnWFeoAs2/AO81MkBMka6daEY9+eiPuA3+Nx/GX0=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=WXCQUY/4Pb+fUjNW0hsU1bDoMsizkJK05l0ZCEGjFAv1lLt+5o7337AoXH4r2wR9j16f4/aqSoot3Aajis2YoggCss7p7xNxifaBMe09gVC/pnBSVRqgX/bbz70g79NZ8dNN8l3R+GAzxgfapLQkbM++GeVxJjwtIlgxTlE4998=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MxId31xc; arc=none smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5e5e34f4e89so4348651a12.1;
+        Fri, 11 Apr 2025 08:42:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744386140; x=1744990940; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=It2VnWFeoAs2/AO81MkBMka6daEY9+eiPuA3+Nx/GX0=;
+        b=MxId31xcG0nNt8Oys25Ykt0MDpra0f1aO9oT1Uz1oKyfrU5xDroiKxkqP4eAS+ncWO
+         KV28v08+R/PHe+Be+qWFn9wg9byjtaO72z5fTXs87acZvHm0NRl5sVomM+c6k70i2kp/
+         woyNsDDTOA5AEvg7c7vLVsbi30TWJhPtfTC/EziYR0vj7GIExbuofcByAXvmAEk751x9
+         T3RH+YgimOpsxWtyZsZ3cPVMyCsRZbCB1sfcKPY8Y2QPTaqxoRnfIJyTPzMcAlksjPr7
+         6dnpO8lUPC8r6LuRV9eRrkNFYOPYyGeBJ6OZxG4jTn+mLVgviIxSRUbzpCA32TTYd+/I
+         W8Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744385770; x=1744990570;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I/f0AoIahJfkhGbYsJHUxeRCAL+AbEIMXiMqEigSljY=;
-        b=VZskcYqPNrzyWE0aa1G31/nJbsPnOQKYYR2LCcElG4ctUObdsYWSaLHJaAqV5Tg3RO
-         tjQ2S6HVmOG84xZNmp3AxLcK0rUr3TYjeDsJ40YAY8qDgDHCvYqXqA4ROSMShB5cli/s
-         O+BDK6Rnnz7+0FPJHCKEdXhQmzILUBZEK8lk17Xiq65up2j55rQxyUyiB6exywcJITm+
-         amk2XBH/YV1cWk5oB9NyCWYYoAlUA1vylLbwVt5Uy3O0+s2iknVbEfJnlypuacB6EjpX
-         VmEMzBED8Q4Aae+yDSxqVCkdv2wloDWLOLIC4cdzkG4fTxGUChjDb2ECC/XpVoca+1GB
-         I47A==
-X-Gm-Message-State: AOJu0YzAQyEiInHPJ76sbx5LZELvRKSiLcgGa3YGQUivUa7eYdaXIKvY
-	QELP/+j7JHOftCAi/YELgV79SpNOQnM9rWBhrGzI4JsrFCG7DvJ3ks443LrGdB8uePRxlim0DS4
-	7gmIRNR+epHSIePO1HSvcNw7k4iudNOokFHOSwZmvsB9XlTfJ4geLRle3IiOy7oUq
-X-Gm-Gg: ASbGnctPjcBTX2U68tgVuXBg5lQZdcsVzZfa36FWehWF6RGkPXGnz35B34DZeqXcmQN
-	CVGl3ObUm9ARfUi1IZAKOJyq1q4uBWFYLF+jnWJyVcpjgPQ5p0IIEtC2/RAFG+BCXp5G/btnrdX
-	G7DZWizi+xpyCawSLp8S0IQrwxZcmrSnrzh0TaQG4HbDaVXiAEr3fZYeqs8cT4ZSaM0LIqJNvLV
-	OkuCHlambRv7gvGrPL4AfpY5sizL9Krzkll6Y0KiKtux7bB/UBHUPy8ghsbn857mtkRl9u9u6Li
-	roX6tv3Giql4dk+Fy0OrTsyL6/cOOfLvPBXljwUHbCmazpeGkUjrJZWR8S3GrQ==
-X-Received: by 2002:a17:90b:1f8c:b0:2ee:df70:1ff3 with SMTP id 98e67ed59e1d1-308235930d1mr6367269a91.0.1744385769796;
-        Fri, 11 Apr 2025 08:36:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH7jVoTk0bgA2blmCpqsRfRAq5Raa4igq+CHmM0l5hT9aUMWE7n0pyovhqVx2qrtaLDVK0K4w==
-X-Received: by 2002:a17:90b:1f8c:b0:2ee:df70:1ff3 with SMTP id 98e67ed59e1d1-308235930d1mr6367230a91.0.1744385769368;
-        Fri, 11 Apr 2025 08:36:09 -0700 (PDT)
-Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-306df07fd69sm5745231a91.17.2025.04.11.08.36.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Apr 2025 08:36:09 -0700 (PDT)
-Message-ID: <16a967fd-a787-40a5-a680-da6cf2c2def4@oss.qualcomm.com>
-Date: Fri, 11 Apr 2025 09:36:07 -0600
+        d=1e100.net; s=20230601; t=1744386140; x=1744990940;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=It2VnWFeoAs2/AO81MkBMka6daEY9+eiPuA3+Nx/GX0=;
+        b=WP+QZe5V+uj3KUAvBnJMB+7cZmJFGMZ+63WENbD6V6toF5gGxZdhWTnQljOb2y3FYe
+         +lHZv7qeYr+rMa4pJdSDMigI5mmbjC8qA8G3vozwreLqOyrwMK+gQWh0LnWs63+arlu5
+         XRsfIrje1BLlPBS6QOGgXLD3LRPct22t3F4kYaEjx/9xX8frNLSAfS53vdLiYr4QdFGv
+         E6190ZTLUImNWij3lfasmK3yCXguIWTsP/vakTL5IB8ikIVsGxDrUSLO8Iqt/b6+QXEt
+         gJeV3voG4eEW1IZsQkGm9Al2AAu+V0EmD0EZ2pvw5yM8VvaNTW2JsIWr3NQpwP+XiLX+
+         VG8w==
+X-Forwarded-Encrypted: i=1; AJvYcCUemsTugXoJ58B3zrq1dhk50VdJk1zc8lLlD5MFdjP4Geat5OcBkAUvRLnUwec48mGJhMBSwF3ChATAsOuk@vger.kernel.org, AJvYcCWOy4RgrwdVaybF/kZcnnkGPA596+o23cohMthl4ThEit7doIvvbDiTe2NxZepEP+3jJ0L9GILp6HGMANUX@vger.kernel.org, AJvYcCXTgjbO06ie7MYC6SltNZZeSdow/5xHHu7PnvXo5dJ2hnFIDvSJgwMUrtHQtfclUxiPucZASeU9+burNg==@vger.kernel.org
+X-Gm-Message-State: AOJu0YxiCCIMaPC74yEMR4UinVT3Gj+YMb8tds47qS2EJ88h42nIbfyA
+	HwvcXTx/BC/4Pz6IWCe6Tquu/d84CTdMIxNx8B3SdW29PeaJJUej
+X-Gm-Gg: ASbGncvbPd1DL7sS4ZXzCwFMfEPS9xDzLuPjEXwsmlFf9Pn9BwaGKjT0TtOGQYjf4qa
+	ci3u366eX2dum772XOW/fInFdRAzCkgGP9f8/VAqNaoUWJmnGGlAEwp+OONtOdSDeJfViwzI3D+
+	3pOwS/oj+elOWgA+7M1ysciddfDOSA9z50UsjufJbOjoGvARJcZM+ZIHX6WgDXjpjKL/+FINwIx
+	V/0VPK9r0Fh2d5eSC/CpUST0NVrUuge0uiBg3nnppBZFWogkOwr90XeYqMtnUdQCsCoOOJiwvqt
+	6CM8RAasZVFaF2x+V7wfMgyHF2L3Z78PJPuk6vrkWLY=
+X-Google-Smtp-Source: AGHT+IEtSIaJ3H+ZraLLFCodD6/LDQvZtvBke+gPK1x5t3vsMCHDWRB4OCz2umhxenATOBcALBtRxA==
+X-Received: by 2002:a17:907:1b03:b0:ac4:493:403 with SMTP id a640c23a62f3a-acad36a5b29mr264461366b.37.1744386140056;
+        Fri, 11 Apr 2025 08:42:20 -0700 (PDT)
+Received: from [10.176.234.34] ([137.201.254.41])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acaa1cb3d8fsm464863166b.106.2025.04.11.08.42.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Apr 2025 08:42:19 -0700 (PDT)
+Message-ID: <995f5cd137d0b0b82a1d253cc081fe9e145738c5.camel@gmail.com>
+Subject: Re: [PATCH V3 2/2] scsi: ufs: introduce quirk to extend
+ PA_HIBERN8TIME for UFS devices
+From: Bean Huo <huobean@gmail.com>
+To: Manish Pandey <quic_mapa@quicinc.com>, "James E.J. Bottomley"
+	 <James.Bottomley@HansenPartnership.com>, "Martin K. Petersen"
+	 <martin.petersen@oracle.com>, Manivannan Sadhasivam
+	 <manivannan.sadhasivam@linaro.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman
+ <avri.altman@wdc.com>,  Bart Van Assche <bvanassche@acm.org>,
+ linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, quic_nitirawa@quicinc.com, 
+ quic_bhaskarv@quicinc.com, quic_rampraka@quicinc.com,
+ quic_cang@quicinc.com,  quic_nguyenb@quicinc.com
+Date: Fri, 11 Apr 2025 17:42:17 +0200
+In-Reply-To: <20250411121630.21330-3-quic_mapa@quicinc.com>
+References: <20250411121630.21330-1-quic_mapa@quicinc.com>
+	 <20250411121630.21330-3-quic_mapa@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.4-0ubuntu2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/qaic: Test for imported buffers with
- drm_gem_is_imported()
-To: Thomas Zimmermann <tzimmermann@suse.de>, quic_carlv@quicinc.com,
-        ogabbay@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
-References: <20250408115237.428985-1-tzimmermann@suse.de>
-Content-Language: en-US
-From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-In-Reply-To: <20250408115237.428985-1-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=VbH3PEp9 c=1 sm=1 tr=0 ts=67f936eb cx=c_pps a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=HMLxokm-dE5sQ3OGyH8A:9 a=QEXdDO2ut3YA:10
- a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-GUID: 1W1nAxHwcl978qUXKES_PdACjUBMy5hT
-X-Proofpoint-ORIG-GUID: 1W1nAxHwcl978qUXKES_PdACjUBMy5hT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-11_05,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 impostorscore=0 suspectscore=0 adultscore=0 spamscore=0
- clxscore=1015 malwarescore=0 priorityscore=1501 bulkscore=0 mlxscore=0
- mlxlogscore=748 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504110099
 
-On 4/8/2025 5:52 AM, Thomas Zimmermann wrote:
-> Instead of testing import_attach for imported GEM buffers, invoke
-> drm_gem_is_imported() to do the test. The helper tests the dma_buf
-> itself while import_attach is just an artifact of the import. Prepares
-> to make import_attach optional.
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+On Fri, 2025-04-11 at 17:46 +0530, Manish Pandey wrote:
+> Samsung UFS devices require additional time in hibern8 mode before
+> exiting,
+> beyond the negotiated handshaking phase between the host and device.
+> Introduce a quirk to increase the PA_HIBERN8TIME parameter by 100 =C2=B5s=
+,
+> a value derived from experiments, to ensure a properhibernation
+> process.
+>=20
+> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
 
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+
+Reviewed-by: Bean Huo <beanhuo@micron.com>
 
