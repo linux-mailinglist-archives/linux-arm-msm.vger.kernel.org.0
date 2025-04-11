@@ -1,174 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-53948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C889A8556F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 09:28:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04564A8557A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 09:30:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 27162445562
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 07:28:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 702D1189C98F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 07:30:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E6C82857D1;
-	Fri, 11 Apr 2025 07:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E48752857D8;
+	Fri, 11 Apr 2025 07:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JhYRYeQp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X7KDETyq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBB72036FD;
-	Fri, 11 Apr 2025 07:28:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE8B27E1BA;
+	Fri, 11 Apr 2025 07:29:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744356494; cv=none; b=fLmVSADPd54XSsV/3BqDXJbozLq7/w+wFIRt3sWE0hPVaThDsk6Hy48zp0kTezQFzDbc5NHK/SlhjLgzAHySBMGJP4x4/HiUsmsqq7auQAZH4ypuLhX73/2D43rrCMgEtI2hn71vEudPAsKTBVuC+oFa1oJWkZ2UKoFEeF0zPno=
+	t=1744356588; cv=none; b=uGEe6hip9Kd+3P9zbI5nHhfdqgNOc1RrIqpiws66wKc2nIYg3UVKRF37K71QBF01w4jOiNMQ6JRYE9fb6xF+xhnC5ehJwfXfWRvxqUsF0UPKUukZC0UEDWWBOFGwlRQ/GZRPEujV8nqEz+xEUk0Wbaigss69bcGkCkVljCACP08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744356494; c=relaxed/simple;
-	bh=ZXw7IdSYGbwpYBIfDEuJeabL5UpH+BofGjlFBgSV8gM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=iWQtefmuE9xEdkkv1FTrd1tdgiOQmgl3lNiMb/8e8erACt1czPBXkZYMAQuXXaUf36r8Lcs80/mkCaKPDl2ScoqtsMnJz0K2T8JQJanP/dnTGvGtFCqoQwrD8C8Ub+T7h9PH0jyX/kQH3IJBsnFvV4j1SHlgTdX5AUTubHgunTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JhYRYeQp; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53B4ubJD019687;
-	Fri, 11 Apr 2025 07:28:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	q0U0ycz0cCg1vV/Qts+Pr8Y1j1A9cbNKFfAJRKW2kBQ=; b=JhYRYeQpsVZ8enrx
-	zFGAJo+O6CWnHPF+9smpDkRJo/Q7bQchHt0cUjK2rIbYQnjW6FWkCNGZoCxhPykF
-	Sm/imqKkH/vQjBSx4ZPXJJ5rbCtfLBQIp1YnkwbsYUWE0y3cA2fjJc/VK8wic6wf
-	opfv6+8QGBmsUjo5T0RJ4yVerUx0hX/I0swhpJaZfB7/NFtBWN1xtgzWv1aL/W5t
-	H8jlZLqI4Q0LmZomhpl+6pgm/MRyL9JWMj7rl7W0UcJ+vPDVmHzRWUNMdmXrT/qn
-	rLociptGcFqcYO4eIZFyflgkCS2Zdn+Y/Wnt2Xv4A+sZRnePC+6Ze/wecHtPaxAX
-	RsXQJw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twcrsqyk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Apr 2025 07:28:07 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53B7S6Ph013950
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Apr 2025 07:28:06 GMT
-Received: from [10.218.22.7] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 11 Apr
- 2025 00:27:59 -0700
-Message-ID: <7af5a2a5-6eac-4734-aa20-3e0f2141afef@quicinc.com>
-Date: Fri, 11 Apr 2025 12:57:55 +0530
+	s=arc-20240116; t=1744356588; c=relaxed/simple;
+	bh=FpvFJBCNZeQwsrZwlHDgycSPFQVP2F3VGtux5Rvt/7g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U8e/8Bm0ggE/3q0E42qDtgNtFZmNJyvdjPuVvMQSo+OXXyYdHiTnBkMgWtz5cGd3CbDVeQfV+3o9mGiFtr95V7ywu8iPd2xgzmNW1egXRryC0f4zVh0BR3+qxJnAQ8gLHFOLv3HWfh+nm7gQWjozT2iZPdwxy2q9HtlHkR2LRuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X7KDETyq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DDCC4CEE2;
+	Fri, 11 Apr 2025 07:29:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744356588;
+	bh=FpvFJBCNZeQwsrZwlHDgycSPFQVP2F3VGtux5Rvt/7g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=X7KDETyqBKkomQxqCqCT5fjZcfO0jb23vcPrDVG2sfYqceJ+FujzpC3NdTw+6+eH8
+	 ymkaW9HwrpugRm1tkoiu4yyUCbdE6FFc9uyLC0Ghx+MzXCJ+yIldW9qrRB5ZQGc6cg
+	 dTrVb61IvUc7ne+xSt6VbTT+bKA4Q6v6m1795KE38u8ULO4YsP9VGBOAFtcximuSaZ
+	 ds4phx3rmrS8DodJf1vyl/Q4qBfPbu2EnvZX2GWhDM7BPZ37w3ljtnP/Grsp9trsg+
+	 xCYkh7D5KkMbLl+Ao0NYtw6nK6MpFesNfCjGTR8zzzdJ/vbQnezh9J8wofR6ynMDVQ
+	 ebSTpatkqc3IQ==
+Date: Fri, 11 Apr 2025 12:59:44 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Wenbin Yao <quic_wenbyao@quicinc.com>
+Cc: kishon@kernel.org, p.zabel@pengutronix.de, dmitry.baryshkov@linaro.org,
+	abel.vesa@linaro.org, quic_qianyu@quicinc.com,
+	neil.armstrong@linaro.org, manivannan.sadhasivam@linaro.org,
+	quic_devipriy@quicinc.com, konrad.dybcio@oss.qualcomm.com,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 0/2] phy: qcom: qmp-pcie: Add PCIe PHY no_csr reset
+ support
+Message-ID: <Z/jE6FzW4MM98hgv@vaman>
+References: <20250319094544.3980357-1-quic_wenbyao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/18] arm64: dts: qcom: Add MXC power domain to
- videocc node on SM8650
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Dmitry Baryshkov <lumag@kernel.org>
-CC: Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Satya Priya
- Kakitapalli" <quic_skakitap@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>
-References: <20250327-videocc-pll-multi-pd-voting-v3-0-895fafd62627@quicinc.com>
- <20250327-videocc-pll-multi-pd-voting-v3-15-895fafd62627@quicinc.com>
- <12986cda-99eb-4a1b-a97b-544ea01e2dbb@oss.qualcomm.com>
- <4d23b54e-93eb-4c1c-86d9-a70f29c23ec4@oss.qualcomm.com>
-Content-Language: en-US
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <4d23b54e-93eb-4c1c-86d9-a70f29c23ec4@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YHJJPxVZWcWl_l59HymslCK1ge66uv_U
-X-Authority-Analysis: v=2.4 cv=QuVe3Uyd c=1 sm=1 tr=0 ts=67f8c487 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8
- a=nKsp9sJ0S5QfW6cRe6gA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: YHJJPxVZWcWl_l59HymslCK1ge66uv_U
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-11_02,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- spamscore=0 malwarescore=0 mlxlogscore=728 bulkscore=0 priorityscore=1501
- clxscore=1015 phishscore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504110049
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250319094544.3980357-1-quic_wenbyao@quicinc.com>
 
-
-
-On 4/1/2025 9:30 PM, Konrad Dybcio wrote:
-> On 4/1/25 5:27 PM, Konrad Dybcio wrote:
->> On 3/27/25 10:52 AM, Jagadeesh Kona wrote:
->>> Videocc requires both MMCX and MXC rails to be powered ON to configure
->>> the video PLLs on SM8650 platform. Hence add MXC power domain to videocc
->>> node on SM8650.
->>>
->>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 3 ++-
->>>  1 file changed, 2 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>> index 818db6ba3b3be99c187512ea4acf2004422f6a18..ad60596b71d25bb0198b26660dc41195a1210a23 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>> @@ -4959,7 +4959,8 @@ videocc: clock-controller@aaf0000 {
->>>  			reg = <0 0x0aaf0000 0 0x10000>;
->>>  			clocks = <&bi_tcxo_div2>,
->>>  				 <&gcc GCC_VIDEO_AHB_CLK>;
->>> -			power-domains = <&rpmhpd RPMHPD_MMCX>;
->>> +			power-domains = <&rpmhpd RPMHPD_MMCX>,
->>> +					<&rpmhpd RPMHPD_MXC>;
->>
->> So all other DTs touched in this series reference low_svs in required-opps
+On 19-03-25, 17:45, Wenbin Yao wrote:
+> The series aims to skip phy register programming and drive PCIe PHY with
+> register setting programmed in bootloader by simply toggling no_csr reset,
+> which once togglled, PHY hardware will be reset while PHY registers are
+> retained.
 > 
-> actually "all" is wrong on my side, please also consider and if necessary apply
-> the same change to patch 18
+> First, determine whether PHY setting can be skipped by checking
+> QPHY_START_CTRL register and the existence of nocsr reset. If it is
+> programmed and no_csr reset is supported, do no_csr reset and skip BCR
+> reset which will reset entire PHY.
 > 
-> Konrad
->
-It is not needed for SM8650. In the initial SM8650 videocc and camcc series,
-required-opps was added for MMCX. But it was dropped based on the review comments
-in that series, after confirming that minimum non-zero level from cmd-db on MMCX
-is > retention on SM8650. And as mentioned here[1], required-opps is not mandatory
-for MXC as well.
+> This series also remove has_nocsr_reset flag in qmp_phy_cfg structure and
+> decide whether the PHY supports nocsr reset by checking the existence of
+> nocsr reset in device tree.
+> 
+> The series are tested on X1E80100-QCP and HDK8550.
+> 
+> The commit messages of this patchset have been modified based on comments
+> and suggestions.
 
-[1]: https://lore.kernel.org/all/44dad3b5-ea3d-47db-8aca-8f67294fced9@quicinc.com/
+This does not apply for me on phy/next, pls rebase and resend
 
-Thanks,
-Jagadeesh
-
->>
->> Is that an actual requirement? Otherwise since Commit e3e56c050ab6
->> ("soc: qcom: rpmhpd: Make power_on actually enable the domain") we get the
->> first nonzero state, which can be something like low_svs_d2
->>
->> Konrad
+-- 
+~Vinod
 
