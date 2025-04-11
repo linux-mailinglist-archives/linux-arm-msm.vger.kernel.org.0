@@ -1,132 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-54046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5CA4A86319
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 18:22:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA0DEA863BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 18:54:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BA23B3B7DA0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 16:21:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 08F2D3BAA68
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 16:48:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE524219EA5;
-	Fri, 11 Apr 2025 16:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A112521D58F;
+	Fri, 11 Apr 2025 16:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fUDwvmlm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jzvR40yO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799CE1DE2DB;
-	Fri, 11 Apr 2025 16:22:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD72719CC36;
+	Fri, 11 Apr 2025 16:48:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744388529; cv=none; b=KW6T93NL9QEO1TNHU/FEn/jBXF1j8PgaaVyzXLVCSnDAIwvRc0mvkPvbxd4We68pZq24ig4gjhDyd5laZT0RlFga7W0bXrFYUCEpzD//Y3WKuH8Pm7178xkxv56eBD+kSF/GwwVhO4Ajoopxi9GQhOsGSyIerVdu2240uS3oQ2w=
+	t=1744390095; cv=none; b=Ako4ptKoMjV84kNq2ddpnuOnyT0foArWVFnfxvHojC034I1iiOqG4ueFntKOF5r65BcFqgtRzbMJ0g6LrKT/mYCQbnwOdZVQhqH0AsHHv6vM1W+PF4QXfKn2VTn+9uugfrjhx+sJOHhcLHNlonK4UfWzq0kehuQhY+NYH+No0fQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744388529; c=relaxed/simple;
-	bh=wzAQATy54vCpkwt37K9i8fVvLuJ9F3HtOZNJF5NfmuI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KHKEb5SXA+J8bcWDhGZhDLdzdr2JfB8X8wzNkp4go7CQelGiyx6i1+743QCUuS61VECelSF+8qlo45JYgLzOAuwC8XdPkYSKsRg2rhyP2srBIJkfPMdY0iiJ36DDNUDBxEwH3Gagn+sOfu096j+p42/EPYBwnFIQdi5gIOxKerk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fUDwvmlm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B53EC4CEE2;
-	Fri, 11 Apr 2025 16:22:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744388528;
-	bh=wzAQATy54vCpkwt37K9i8fVvLuJ9F3HtOZNJF5NfmuI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fUDwvmlmGNEOE6UiCuFajisN/+N0W4PsppgK3YKQxxblTRgJXcyGl2fDX3uKbdkJr
-	 2+V+sMZvOsWOB80R99rxGcKZe/jhqzm0hntMRCAIy4yRtUp3Z4QdbvxGA5YqfA03A3
-	 rYUgo1Y+GdFxYB1N83XbBdrM4GXSFVjUhy41gNQt4vi776Nz1z2pujd5vBTWwcchh0
-	 LwBeY4i9+9HM515v7PIK0hiLxAtE6fjRjKg39JQ2sB/mENgOkt6gYw9FHfBK8gy26+
-	 5tArMU4Hk5fUZbPjg7m9cwn4VJ8htSVvHAG7uy6YUzsnNBC5x0t8iefCYpo59D3X6t
-	 SfC0haIi7PSxQ==
-Date: Fri, 11 Apr 2025 17:21:58 +0100
-From: Conor Dooley <conor@kernel.org>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Steen Hegelund <Steen.Hegelund@microchip.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	UNGLinuxDriver@microchip.com,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-	Stephen Boyd <sboyd@kernel.org>, zhouyanjie@wanyeetech.com,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
-	linux-rockchip@lists.infradead.org,
-	linux-amlogic@lists.infradead.org,
-	linux-renesas-soc@vger.kernel.org, linux-mips@vger.kernel.org,
-	linux-pm@vger.kernel.org, linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH v2 03/17] arm64: dts: microchip: sparx5: Fix CPU node
- "enable-method" property dependencies
-Message-ID: <20250411-ebay-exerciser-392c42daf5ba@spud>
-References: <20250410-dt-cpu-schema-v2-0-63d7dc9ddd0a@kernel.org>
- <20250410-dt-cpu-schema-v2-3-63d7dc9ddd0a@kernel.org>
+	s=arc-20240116; t=1744390095; c=relaxed/simple;
+	bh=wa+AVNQk+IQmGfijqRyLsj77653kD6hhJ1b2CemESKw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=uKeLR8VzpEDBlvpsxVarVqWfpkEzJ87yPX3M0TqjHxyXuHU5GPFm6b05BZyA65qN3IQWLtbP9gQ3aYn2R8tq70qnOZ+aq/Gcg0qdHmHb/qlUqbm0bn+bXCAjwtuqjYv2cxkoRVrEoj/Syw4cPqb8r4fbdgiRqNvJalEvCtX+ZqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jzvR40yO; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BFaraB032525;
+	Fri, 11 Apr 2025 16:47:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	mxSIL024YDdH3noxg9Rt5OG8c1CjMIkSVCfzMQ9iUAo=; b=jzvR40yOJgbc1vTZ
+	T40ditOiQkBc5zCStqPVrNyTCEcd1lFiqbYYU0KHUu6n1IMm/q1vztooHJqhQ4Sw
+	dys5WnAJ9UI4RKuD1DUaCeZnQXGLJqNYxFadHtaMYbFmngeOOKkN9abBDsg21eQ/
+	p2dq6NZ5025Dua/XroA/8ZtChOw9AeEbCIo1Vkn7gslRIOUjv1h1ed5DfEaS7oQH
+	wd1yfrCWyh4bu9Tfp1hg+TZzHQCpze8dV+aq4wUQYz6lW4km+GlPpjf8WA7Th7+j
+	ChkD/9+aAiDZZPKNQXKftZbZd41ToyYEGuVZL5TP+A8mLLT3yu766aBn+YyyCPfZ
+	d88eJA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twfktusf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 11 Apr 2025 16:47:55 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53BGlsqu029526
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 11 Apr 2025 16:47:54 GMT
+Received: from [10.71.112.82] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 11 Apr
+ 2025 09:47:53 -0700
+Message-ID: <2efdc7ef-adc1-4316-adbc-ef25db7c7612@quicinc.com>
+Date: Fri, 11 Apr 2025 09:47:50 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="gXwATB6SbIWbLkFw"
-Content-Disposition: inline
-In-Reply-To: <20250410-dt-cpu-schema-v2-3-63d7dc9ddd0a@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v38 00/31] Introduce QC USB SND audio offloading support
+To: Greg KH <gregkh@linuxfoundation.org>,
+        Stephan Gerhold
+	<stephan.gerhold@linaro.org>
+CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
+        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <pierre-louis.bossart@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
+        <tiwai@suse.com>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
+        <linux-input@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>
+References: <20250409194804.3773260-1-quic_wcheng@quicinc.com>
+ <2025041029-oval-cavity-7896@gregkh>
+ <2025041144-imitation-reappear-a0d9@gregkh> <Z_kNr52hM-iWUgyZ@linaro.org>
+ <2025041152-eternal-harmonize-d608@gregkh>
+Content-Language: en-US
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <2025041152-eternal-harmonize-d608@gregkh>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1a38mqELc9Yx_-XevlOZ1O78PQHDv81z
+X-Proofpoint-ORIG-GUID: 1a38mqELc9Yx_-XevlOZ1O78PQHDv81z
+X-Authority-Analysis: v=2.4 cv=b7Oy4sGx c=1 sm=1 tr=0 ts=67f947bb cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=5j0JM0_CJDOIDA5IkhwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-11_06,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 mlxscore=0 impostorscore=0 phishscore=0
+ clxscore=1015 spamscore=0 mlxlogscore=711 bulkscore=0 lowpriorityscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504110106
 
+Hi Greg,
 
---gXwATB6SbIWbLkFw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 4/11/2025 5:54 AM, Greg KH wrote:
+> On Fri, Apr 11, 2025 at 02:40:15PM +0200, Stephan Gerhold wrote:
+>> Hi Greg,
+>>
+>> On Fri, Apr 11, 2025 at 01:04:37PM +0200, Greg KH wrote:
+>>> On Thu, Apr 10, 2025 at 09:11:42AM +0200, Greg KH wrote:
+>>>> On Wed, Apr 09, 2025 at 12:47:33PM -0700, Wesley Cheng wrote:
+>>>>> Requesting to see if we can get some Acked-By tags, and merge on usb-next.
+>>>>
+>>>> let me give it some 0-day bot testing to see how that goes...
+>>>
+>>> All looks good, so let me go apply this to my usb-next branch now.
+>>>
+>>> Thanks for sticking with this, I think it deserves the "most versions ever"
+>>> of a patch series award.
+>>>
+>>
+>> I have honestly no intention of blocking this series any longer, but the
+>> comments I raised on PATCH 26/31 are likely valid and suggest the series
+>> wasn't fully tested on v38. So I would personally prefer to get fixes
+>> and confirmation on that from Wesley and then merge v39. It doesn't feel
+>> like the kind of thing to fix incrementally on top, since the commit
+>> message is also misleading now.
+> 
+> I think a fixup is probably sufficient, especially as I can't rebase my
+> tree, and reverting all of these is just a mess.
+> 
 
-On Thu, Apr 10, 2025 at 10:47:24AM -0500, Rob Herring (Arm) wrote:
-> The "spin-table" enable-method requires "cpu-release-addr" property,
-> so add a dummy entry. It is assumed the bootloader will fill in the
-> correct values.
->=20
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-> Tested-by: Daniel Machon <daniel.machon@microchip.com>
+Sure I will submit a fix up today.  Thanks Greg, Stephan for the feedback
+and help with the overall progress of the series.
 
-This is already applied, guess I forgot to merge it into the branch that
-appears in linux next. I'll do that now..
-
---gXwATB6SbIWbLkFw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZ/lBpgAKCRB4tDGHoIJi
-0h05APsEcaA5n4MeMUDF1Ullyde98iLkYYAFaHTFR+km537NdgEAxwuhCZvt2UZz
-n9hkciE6jwyE29jkNaUkkhNiH534NAA=
-=8lEZ
------END PGP SIGNATURE-----
-
---gXwATB6SbIWbLkFw--
+Thanks
+Wesley Cheng
 
