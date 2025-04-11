@@ -1,218 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-54059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A8EBA865F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 21:12:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BC69A86606
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 21:16:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 77BA24408CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 19:12:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 970C83AC017
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 19:15:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C7002777FF;
-	Fri, 11 Apr 2025 19:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C515258CF0;
+	Fri, 11 Apr 2025 19:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cHwZFwGI"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="h6Cfx20h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372DC27703C;
-	Fri, 11 Apr 2025 19:12:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFFE800
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 19:16:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744398775; cv=none; b=W3/K/TmvEHzpvNqgQSkU1P1r7YTb4m506RuFL+GK8WA3gQqFV7+/dHuu4oRVh7blX/OK6eammj3gqW4ufwLJp6I/uqdKvzSZ2yS0zyOe0jcNavJWVwozXNfsNUro0yvFreVNHKmzea5UBokHiK535JWyz4ASKzC4LGJe/EqOeL8=
+	t=1744398963; cv=none; b=EU1Eh11BXItDoqJ9y9bl5lWu/w0JoE+gh+wYwkEGbrSh+xpCspghGMEWLVKzTGKt9AdKa6vJQyb5z8xClujIbQoEuEt4vIFKCt1tJokU68Z13l7or7X8fkTqoeY0kPWQXH1KGJx8R+p1M1EstzN2kZA8g58T0pcaYi/X5LyKKck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744398775; c=relaxed/simple;
-	bh=x5lzlhqUWayiREF1DTdz0Deyy9l2UALfFeK3fvta88s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IappZ+BYL1suPkTb12N4Jsg3uAfuSJ6fx/YGfYT8D4LYrQXVwx4dlYBj5/TLToEEH84235CoPFy9BuNvUExrmmvJmm/MisHEPXIHNNwul9nwtZkz2hHAaWsZLUjoK8jtbMewVHgC3LxWX79G2lw1nGJ5FoJdF/yzQG+A2jMXqp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cHwZFwGI; arc=none smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1744398773; x=1775934773;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=x5lzlhqUWayiREF1DTdz0Deyy9l2UALfFeK3fvta88s=;
-  b=cHwZFwGIdLH0mvwDcOfxKtCl6ry/m0Z1Up7dbR+7+go9Co9IIoVvO4yM
-   Fst41BGaYaRLSsD+roUK6Lu/06UXv3nLQdpHH9p1q4g9umKmkNsygZ8ee
-   3rhcdnxpRPXfEPkb8kMgZJzLh7SGfyfevhcOJOJxsWbr5W2Iq2UDArRFY
-   /8aHEXNkc/aPBL61y+U40ajfrpdjTnETfYybeuwQ1J/zHhUBYyR8PpZgX
-   45rBYfBRYrywpNhkOn+FOoWthAOGzk9AgKQsjLKjNUcHZMAINUH1ipZM/
-   dsukBHFuTxUnFCSP9FUrf41xOy2RAXxZZMel4RZ7+j8CECQI9cFPx0U3V
-   Q==;
-X-CSE-ConnectionGUID: jyCcv2ySRZuRy9b95XUjyw==
-X-CSE-MsgGUID: N1Il5Rt7TBiA9/rSoZkkpg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11401"; a="63503479"
-X-IronPort-AV: E=Sophos;i="6.15,205,1739865600"; 
-   d="scan'208";a="63503479"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Apr 2025 12:12:52 -0700
-X-CSE-ConnectionGUID: xDwBl6seQs627YDvRm9z8g==
-X-CSE-MsgGUID: 5YBIxDutQSuWAHUYbvDAiQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,205,1739865600"; 
-   d="scan'208";a="129833114"
-Received: from lkp-server01.sh.intel.com (HELO b207828170a5) ([10.239.97.150])
-  by orviesa007.jf.intel.com with ESMTP; 11 Apr 2025 12:12:45 -0700
-Received: from kbuild by b207828170a5 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1u3Jnv-000BKY-1t;
-	Fri, 11 Apr 2025 19:12:43 +0000
-Date: Sat, 12 Apr 2025 03:12:24 +0800
-From: kernel test robot <lkp@intel.com>
-To: Praveen Talari <quic_ptalari@quicinc.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-pm@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, psodagud@quicinc.com, djaggi@quicinc.com,
-	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
-	quic_arandive@quicinc.com, quic_mnaresh@quicinc.com,
-	quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v1 7/9] serial: qcom-geni: move clock-rate logic to
- separate function
-Message-ID: <202504120237.YIWM0gvQ-lkp@intel.com>
-References: <20250410174010.31588-8-quic_ptalari@quicinc.com>
+	s=arc-20240116; t=1744398963; c=relaxed/simple;
+	bh=pvUKWv+x28Ff+V4b7yI4dgwPdyvafW1Qmhe4vPUo9zc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IkWhnxxd65sfutMki5UKALp0UnHhDiIfvPTAzSh45d1I/dFL/vamGTp8ZRUUmHRJvuEVVXPGDM7pey27/ERO0TgZ+fj9d/D195MvJtXZnxXKWNlRnC8igcpuWOM7Pp6Oce8QJ10LNyFIupdokpZRWmbXk931CCLZWZ83CaFnGq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=h6Cfx20h; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BFGZmb031978
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 19:16:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3a305TDUC/FN1EUQW2b5Zguf/XdkfZu8nixf0K6aank=; b=h6Cfx20hyBOhK+gB
+	iCRnoB6/z7j3fNuY0QhN7iKGYzR8PM3nPXYTQosOW7uTrfx6BB/7NYqvo/pLpZZW
+	Ro34Q/wmSXadk3oCZMQYTqRaI/i28gnE9xk85gmmOJ+Y9PNTFzcuorbkXiZqSFJ4
+	tIdYJZC9QY1GahVk36sIZ8SLkE2w5x0NQGYXM8UCD4vi19lBJhI/6NcpVVvUFUVC
+	IEoVOgyFYaynisGBTtQ5+Pio2I3tnv8aLui7gv7GsKGCL8CbqS2v6QYNvxejkMN2
+	ntNJgIMuM1aTpt6ZCBjfwlukDpLjspjprUkWmioR2AzVDe+2lF0gkEiF52tA8Kvp
+	7luw/Q==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twpmkcj2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 19:16:00 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c5841ae28eso59588085a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 12:16:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744398959; x=1745003759;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3a305TDUC/FN1EUQW2b5Zguf/XdkfZu8nixf0K6aank=;
+        b=H7MYwg1d94NyRzq/DMaMkZqyMpB3Nn2NfLxJ1WZqQhuxGXiWjMiAK6I/Uew5TgshJ8
+         UyG28W3PSpBLAKdkHaGlh8DbPdWSMkCGeK1fGqHSsc+MPSVB/+VxHBVtjBbWAf1Ov52L
+         8MH7wE8mOUKCR683UaSj3B8tqHHu9O45Vm+GHY5L1V8WnE1uHBRdiCrMiesCbl5uJ6tY
+         49CrXbomD9lEJiYCYKu2ZVgo6RUMexGkbtmMUTGsxIBxQUMa9uW9GR72n+DnOvu6nblv
+         CAzxWsu4+kaSel7j0171tAeVlV5k1FNCeDefatWWzi27qTAIDy+V8DRIaY5qaNCT40Pb
+         wkeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/bC1N9X+H3SOVBPYw7t67/dL4+aZl1wXZo7bR85gqxDgzBstQTCRrhfv1PD2Q38mIykn0XN5J5MpnDFOt@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy7AkoE/E54Ry+Dcz15knv4Qnr621kY8XzYlMheiYBRgwmGBFRm
+	op7J0SMLzZMaW/iw0BdFzDKq1yh841xAmwDc78tp0wAZTpA15++tsYGebVkpru7Q+sF/xY2h5w6
+	YMigzuR0eZVUnyC52HH5lAosEP1iz61RlBrq0tgRTa8bZIVY1ytSoh9GVTu6GrjkB
+X-Gm-Gg: ASbGncvIMjGEyjkHVdzGSO7XRXVVfjonnVmn95pLHas6NJZpgrBHO3CfFSCJK8BW1uF
+	MAOFgsIlAOJqms3/RkdDao2VMrdCuPKCPaYxjfkQ42rzCwItPMgsQCRnxkYlW6AezrIYylL6lRc
+	vMwcw2omRrpzVujCK+4tPkhsW9PMZ876+7Q0UytbuSZlzk1DeetyoFyyzOq+GyvZQV57JCskASm
+	C6t1DMFfMWGFhF5YvpAE7Mg77jPmHlBLxhmTEKDpPXLukUmUQ6ss8cNgf4H/nLSjUV62zchBuO3
+	FeVdaANECd+B+WLnDQJutY94i1tHPpPq3ZI7OP2wnd64spUFf0ITBASEEUQTmJXdBg==
+X-Received: by 2002:a05:620a:40cc:b0:7c5:75ad:5c3a with SMTP id af79cd13be357-7c7b19ae38emr138061785a.8.1744398959049;
+        Fri, 11 Apr 2025 12:15:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEax4zulHWu8nGk5eGUvhc8qZMubEvXymplyY3nW8Si1Yu0Dda62QCU09XbrOJfA5N20R8UAg==
+X-Received: by 2002:a05:620a:40cc:b0:7c5:75ad:5c3a with SMTP id af79cd13be357-7c7b19ae38emr138059585a.8.1744398958487;
+        Fri, 11 Apr 2025 12:15:58 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acaa1bea593sm493975866b.62.2025.04.11.12.15.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Apr 2025 12:15:57 -0700 (PDT)
+Message-ID: <47787c11-bd21-4a58-bfb4-fd2ac75e77d9@oss.qualcomm.com>
+Date: Fri, 11 Apr 2025 21:15:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250410174010.31588-8-quic_ptalari@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcm2290: Add CCI node
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, andersson@kernel.org,
+        konradybcio@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, krzk+dt@kernel.org, robh@kernel.org
+References: <20250403102256.101217-1-loic.poulain@oss.qualcomm.com>
+ <0YH8BNtmMcywwRXI3xHiLyB_zFED-XbjzCyyI1Vc4184BPadVJ-GWj23lpEwaXEHqDPiMiraMsWlOd1qA_hiog==@protonmail.internalid>
+ <20250403102256.101217-2-loic.poulain@oss.qualcomm.com>
+ <1b649ead-f6d6-4fb0-b5ac-02cf2dba92ca@linaro.org>
+ <CAFEp6-2kamY6m_vzE0gMi-QKCRYf42RjMd7f2ud6bte=aL9mRA@mail.gmail.com>
+ <170e4c9a-bdf4-44f7-9dd1-9eed31fa27db@oss.qualcomm.com>
+ <CAFEp6-2jiq+8wOz1WzWR_8R3t4GoVR7COv3iVV-mJkhZxcRYAg@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <CAFEp6-2jiq+8wOz1WzWR_8R3t4GoVR7COv3iVV-mJkhZxcRYAg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: EJsOIObW1kaN5P4FAPGOFJLFDLQn0eDJ
+X-Proofpoint-ORIG-GUID: EJsOIObW1kaN5P4FAPGOFJLFDLQn0eDJ
+X-Authority-Analysis: v=2.4 cv=MpRS63ae c=1 sm=1 tr=0 ts=67f96a70 cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=C2MwvOwe_SAwF-TQrWUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-11_07,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 clxscore=1015 priorityscore=1501 impostorscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0
+ phishscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504110122
 
-Hi Praveen,
+On 4/11/25 10:02 AM, Loic Poulain wrote:
+> Hi Konrad, Bryan,
+> 
+> On Wed, Apr 9, 2025 at 8:39 PM Konrad Dybcio
+> <konrad.dybcio@oss.qualcomm.com> wrote:
+>>
+>> On 4/7/25 4:56 PM, Loic Poulain wrote:
+>>> Hi Bryan,
+>>>
+>>>
+>>> On Fri, Apr 4, 2025 at 2:10 PM Bryan O'Donoghue
+>>> <bryan.odonoghue@linaro.org> wrote:
+>>>>
+>>>> On 03/04/2025 11:22, Loic Poulain wrote:
+>>>>> Add Camera Control Interface (CCI), supporting two I2C masters.
+>>>>>
+>>>>> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+>>>>> ---
+>>>>>   v2: Reorder commits; Update dts properties order and style
+>>>>>   v3: No change for this patch
+>>>>>
+>>>>>   arch/arm64/boot/dts/qcom/qcm2290.dtsi | 50 +++++++++++++++++++++++++++
+>>>>>   1 file changed, 50 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+>>>>> index 7fb5de92bc4c..43fcb4f40a8c 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+>>>>> @@ -557,6 +557,20 @@ qup_uart4_default: qup-uart4-default-state {
+>>>>>                               bias-disable;
+>>>>>                       };
+>>>>>
+>>>>> +                     cci0_default: cci0-default-state {
+>>>>> +                             pins = "gpio22", "gpio23";
+>>>>> +                             function = "cci_i2c";
+>>>>> +                             drive-strength = <2>;
+>>>>> +                             bias-disable;
+>>>>> +                     };
+>>>>> +
+>>>>> +                     cci1_default: cci1-default-state {
+>>>>> +                             pins = "gpio29", "gpio30";
+>>>>> +                             function = "cci_i2c";
+>>>>> +                             drive-strength = <2>;
+>>>>> +                             bias-disable;
+>>>>> +                     };
+>>>>> +
+>>>>>                       sdc1_state_on: sdc1-on-state {
+>>>>>                               clk-pins {
+>>>>>                                       pins = "sdc1_clk";
+>>>>> @@ -1603,6 +1617,42 @@ adreno_smmu: iommu@59a0000 {
+>>>>>                       #iommu-cells = <2>;
+>>>>>               };
+>>>>>
+>>>>> +             cci: cci@5c1b000 {
+>>>>> +                     compatible = "qcom,qcm2290-cci", "qcom,msm8996-cci";
+>>>>> +                     reg = <0x0 0x5c1b000 0x0 0x1000>;
+>>>>> +
+>>>>> +                     interrupts = <GIC_SPI 206 IRQ_TYPE_EDGE_RISING>;
+>>>>> +
+>>>>> +                     clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>, <&gcc GCC_CAMSS_CCI_0_CLK>;
+>>>>> +                     clock-names = "camss_top_ahb", "cci";
+>>>>
+>>>> do you not need an axi clock GCC_CAMSS_AXI_CLK ?
+>>>
+>>> AFAIU AXI is not involved for CCI.
+>>
+>> I'm not able to infer that from statically provided infromation, try
+>> forcefully shutting the clock down (both the branch and _SRC) and
+>> poking at the CCI
+> 
+> CCI is a 'slow' device, both control and data flow go through register
+> R/W (ahb/cnoc).
 
-kernel test robot noticed the following build warnings:
+This is not always a given ;)
 
-[auto build test WARNING on tty/tty-testing]
-[also build test WARNING on tty/tty-next tty/tty-linus robh/for-next driver-core/driver-core-testing driver-core/driver-core-next driver-core/driver-core-linus usb/usb-testing usb/usb-next usb/usb-linus linus/master v6.15-rc1 next-20250411]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> Below is an experiment showing CAMSS AXI can be off during CCI operation.
+> 
+> ```
+> $ cat /sys/kernel/debug/clk/clk_summary | grep -e camss_axi -e camss_cci
+>        gcc_camss_axi_clk_src         0       0        0
+> 19200000    0          0     50000      ?         deviceless
+>           gcc_camss_axi_clk          0       0        0
+> 19200000    0          0     50000      N            5c52000.camss
+>               bus
+>              gcc_camss_cci_clk_src   0       0        0
+> 37500000    0          0     50000      ?               deviceless
+>                 gcc_camss_cci_0_clk  0       0        0
+> 37500000    0          0     50000      N                  cci@5c1b000
+> 
+> $ echo on > /sys/bus/platform/drivers/i2c-qcom-cci/5c1b000.cci/power/control
+> 
+> $ cat /sys/kernel/debug/clk/clk_summary | grep -e camss_axi -e camss_cci
+>        gcc_camss_axi_clk_src         0       0        0
+> 19200000    0          0     50000      ?         deviceless
+>           gcc_camss_axi_clk          0       0        0
+> 19200000    0          0     50000      N            5c52000.camss
+>               bus
+>              gcc_camss_cci_clk_src   1       1        0
+> 37500000    0          0     50000      ?               deviceless
+>                 gcc_camss_cci_0_clk  1       1        0
+> 37500000    0          0     50000      Y                  cci@5c1b000
+> 
+> $ cat /sys/class/i2c-dev/i2c-2/name
+> Qualcomm-CCI
+> 
+> $ i2cdetect -y -r -a 2
+>      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+> 00: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> 10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> 20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> 30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> 40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> 60: UU -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> 70: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> 
+> # Dump GCC CAMSS AXI clock registers
+> $ dd if=/sys/kernel/debug/regmap/1400000.clock-controller/registers
+> count=8 bs=16 skip=90123
+> 5802c: 80000000 # CAMSS_AXI_CMD_RCGR => ROOT_EN_DISABLE | ROOT_OFF
+> 58030: 00000000 # CAMSS_AXI_CFG_RCGR => SRC_0 | BYPASS | HW_CLK_DISABLE
+> [...]
+> 58044: 80000220 # CAMSS_AXI_CBCR => CLK_DISABLE | SLEEP_CLOCK2 |
+> WAKEUP_CLK2 | CLK_OFF
+> 58048: 00010c00 # GCC_CAMSS_AXI_SREGR => MEM_CORE_ON_ACK |
+> MEM_PERIPH_ON_ACK | PSCBC_SPARE_CTRL_IN
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Praveen-Talari/opp-add-new-helper-API-dev_pm_opp_set_level/20250411-015310
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git tty-testing
-patch link:    https://lore.kernel.org/r/20250410174010.31588-8-quic_ptalari%40quicinc.com
-patch subject: [PATCH v1 7/9] serial: qcom-geni: move clock-rate logic to separate function
-config: arm-randconfig-002-20250412 (https://download.01.org/0day-ci/archive/20250412/202504120237.YIWM0gvQ-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 7.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250412/202504120237.YIWM0gvQ-lkp@intel.com/reproduce)
+Amazing, thank you
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202504120237.YIWM0gvQ-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   In file included from include/linux/device.h:15:0,
-                    from include/linux/node.h:18,
-                    from include/linux/cpu.h:17,
-                    from arch/arm/include/asm/cpu.h:11,
-                    from arch/arm/include/asm/smp_plat.h:12,
-                    from arch/arm/include/asm/irq_work.h:5,
-                    from include/linux/irq_work.h:64,
-                    from include/linux/console.h:19,
-                    from drivers/tty/serial/qcom_geni_serial.c:8:
-   drivers/tty/serial/qcom_geni_serial.c: In function 'geni_serial_set_rate':
->> drivers/tty/serial/qcom_geni_serial.c:1289:4: warning: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'long unsigned int' [-Wformat=]
-       "Couldn't find suitable clock rate for %u\n",
-       ^
-   include/linux/dev_printk.h:110:16: note: in definition of macro 'dev_printk_index_wrap'
-      _p_func(dev, fmt, ##__VA_ARGS__);   \
-                   ^~~
-   include/linux/dev_printk.h:154:49: note: in expansion of macro 'dev_fmt'
-     dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-                                                    ^~~~~~~
-   drivers/tty/serial/qcom_geni_serial.c:1288:3: note: in expansion of macro 'dev_err'
-      dev_err(port->se.dev,
-      ^~~~~~~
-   drivers/tty/serial/qcom_geni_serial.c:1294:24: warning: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'long unsigned int' [-Wformat=]
-     dev_dbg(port->se.dev, "desired_rate = %u, clk_rate = %lu, clk_div = %u\n",
-                           ^
-   include/linux/dev_printk.h:139:28: note: in definition of macro 'dev_no_printk'
-       _dev_printk(level, dev, fmt, ##__VA_ARGS__); \
-                               ^~~
-   include/linux/dev_printk.h:171:33: note: in expansion of macro 'dev_fmt'
-     dev_no_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__)
-                                    ^~~~~~~
-   drivers/tty/serial/qcom_geni_serial.c:1294:2: note: in expansion of macro 'dev_dbg'
-     dev_dbg(port->se.dev, "desired_rate = %u, clk_rate = %lu, clk_div = %u\n",
-     ^~~~~~~
-   drivers/tty/serial/qcom_geni_serial.c: In function 'qcom_geni_serial_pm':
-   drivers/tty/serial/qcom_geni_serial.c:1666:32: warning: unused variable 'port' [-Wunused-variable]
-     struct qcom_geni_serial_port *port = to_dev_port(uport);
-                                   ^~~~
-
-
-vim +1289 drivers/tty/serial/qcom_geni_serial.c
-
-c4f528795d1add Karthikeyan Ramasubramanian 2018-03-14  1269  
-68765ed6fdd109 Praveen Talari              2025-04-10  1270  static int geni_serial_set_rate(struct uart_port *uport, unsigned long baud)
-c4f528795d1add Karthikeyan Ramasubramanian 2018-03-14  1271  {
-00ce7c6e86b5d1 Bartosz Golaszewski         2022-12-29  1272  	struct qcom_geni_serial_port *port = to_dev_port(uport);
-c4f528795d1add Karthikeyan Ramasubramanian 2018-03-14  1273  	unsigned long clk_rate;
-7cf563b2c84624 Akash Asthana               2020-06-23  1274  	unsigned int avg_bw_core;
-68765ed6fdd109 Praveen Talari              2025-04-10  1275  	unsigned int clk_div;
-68765ed6fdd109 Praveen Talari              2025-04-10  1276  	u32 ver, sampling_rate;
-68765ed6fdd109 Praveen Talari              2025-04-10  1277  	u32 ser_clk_cfg;
-ce734600545fc7 Vivek Gautam                2019-08-01  1278  
-ce734600545fc7 Vivek Gautam                2019-08-01  1279  	sampling_rate = UART_OVERSAMPLING;
-ce734600545fc7 Vivek Gautam                2019-08-01  1280  	/* Sampling rate is halved for IP versions >= 2.5 */
-ce734600545fc7 Vivek Gautam                2019-08-01  1281  	ver = geni_se_get_qup_hw_version(&port->se);
-c9ca43d42ed8d5 Paras Sharma                2020-09-30  1282  	if (ver >= QUP_SE_VERSION_2_5)
-ce734600545fc7 Vivek Gautam                2019-08-01  1283  		sampling_rate /= 2;
-ce734600545fc7 Vivek Gautam                2019-08-01  1284  
-c2194bc999d41e Vijaya Krishna Nivarthi     2022-05-16  1285  	clk_rate = get_clk_div_rate(port->se.clk, baud,
-c2194bc999d41e Vijaya Krishna Nivarthi     2022-05-16  1286  		sampling_rate, &clk_div);
-c474c775716edd Vijaya Krishna Nivarthi     2022-07-16  1287  	if (!clk_rate) {
-c474c775716edd Vijaya Krishna Nivarthi     2022-07-16  1288  		dev_err(port->se.dev,
-0fec518018cc5c Douglas Anderson            2022-08-02 @1289  			"Couldn't find suitable clock rate for %u\n",
-c474c775716edd Vijaya Krishna Nivarthi     2022-07-16  1290  			baud * sampling_rate);
-68765ed6fdd109 Praveen Talari              2025-04-10  1291  		return -EINVAL;
-c474c775716edd Vijaya Krishna Nivarthi     2022-07-16  1292  	}
-c474c775716edd Vijaya Krishna Nivarthi     2022-07-16  1293  
-18536cc8fab81f Johan Hovold                2023-07-14  1294  	dev_dbg(port->se.dev, "desired_rate = %u, clk_rate = %lu, clk_div = %u\n",
-c474c775716edd Vijaya Krishna Nivarthi     2022-07-16  1295  			baud * sampling_rate, clk_rate, clk_div);
-c4f528795d1add Karthikeyan Ramasubramanian 2018-03-14  1296  
-c4f528795d1add Karthikeyan Ramasubramanian 2018-03-14  1297  	uport->uartclk = clk_rate;
-8ece7b754bc34f Johan Hovold                2023-07-14  1298  	port->clk_rate = clk_rate;
-a5819b548af0cc Rajendra Nayak              2020-06-15  1299  	dev_pm_opp_set_rate(uport->dev, clk_rate);
-c4f528795d1add Karthikeyan Ramasubramanian 2018-03-14  1300  	ser_clk_cfg = SER_CLK_EN;
-c4f528795d1add Karthikeyan Ramasubramanian 2018-03-14  1301  	ser_clk_cfg |= clk_div << CLK_DIV_SHFT;
-c4f528795d1add Karthikeyan Ramasubramanian 2018-03-14  1302  
-7cf563b2c84624 Akash Asthana               2020-06-23  1303  	/*
-7cf563b2c84624 Akash Asthana               2020-06-23  1304  	 * Bump up BW vote on CPU and CORE path as driver supports FIFO mode
-7cf563b2c84624 Akash Asthana               2020-06-23  1305  	 * only.
-7cf563b2c84624 Akash Asthana               2020-06-23  1306  	 */
-7cf563b2c84624 Akash Asthana               2020-06-23  1307  	avg_bw_core = (baud > 115200) ? Bps_to_icc(CORE_2X_50_MHZ)
-7cf563b2c84624 Akash Asthana               2020-06-23  1308  						: GENI_DEFAULT_BW;
-7cf563b2c84624 Akash Asthana               2020-06-23  1309  	port->se.icc_paths[GENI_TO_CORE].avg_bw = avg_bw_core;
-7cf563b2c84624 Akash Asthana               2020-06-23  1310  	port->se.icc_paths[CPU_TO_GENI].avg_bw = Bps_to_icc(baud);
-7cf563b2c84624 Akash Asthana               2020-06-23  1311  	geni_icc_set_bw(&port->se);
-7cf563b2c84624 Akash Asthana               2020-06-23  1312  
-68765ed6fdd109 Praveen Talari              2025-04-10  1313  	writel(ser_clk_cfg, uport->membase + GENI_SER_M_CLK_CFG);
-68765ed6fdd109 Praveen Talari              2025-04-10  1314  	writel(ser_clk_cfg, uport->membase + GENI_SER_S_CLK_CFG);
-68765ed6fdd109 Praveen Talari              2025-04-10  1315  	return 0;
-68765ed6fdd109 Praveen Talari              2025-04-10  1316  }
-68765ed6fdd109 Praveen Talari              2025-04-10  1317  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Konrad
 
