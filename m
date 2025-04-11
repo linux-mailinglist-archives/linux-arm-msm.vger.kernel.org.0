@@ -1,61 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-54013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01856A85CA8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 14:14:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6A47A85CB3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 14:15:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 056C44A689A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 12:13:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 90DAA8C56D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 12:13:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2C1629DB6E;
-	Fri, 11 Apr 2025 12:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9D5229B233;
+	Fri, 11 Apr 2025 12:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gx+YEbdM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oXfReTdO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FAB29344B;
-	Fri, 11 Apr 2025 12:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B12629B231;
+	Fri, 11 Apr 2025 12:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744373468; cv=none; b=Luhkg54AKeEE6p44UunREU1RQnJLHEWacoF7MpbXi/AvcKe9XUIZe410TWcxNAnS2Bvns45l+t9bctTIxqjGqrl/FoyMwTSy6sSdpdRxvOS7LtDtTbE0+4el1wFR6kDKcIJceuDKDy+xYbL0hw56McYbmOitu+QCmpeGHpetpf0=
+	t=1744373475; cv=none; b=YODbD90u8rzHqG5/+ELgF0qxShph1NPOafTv1J/ux75yZRnAqmWXB6OX6YF7Pjssjg03YTEAvVi56py2DFyKLeekwotIJiqqlVCXdayye/2pwLrK0WprW1SLUdWNzfg4v/KwuDz98TnxadmE0VFvk5GkcZ26wMTjN3xsgXJoWwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744373468; c=relaxed/simple;
-	bh=d+FLiWuinx/mnrMg1djQFjn220kbb6rhpINiatKBBLA=;
+	s=arc-20240116; t=1744373475; c=relaxed/simple;
+	bh=kbUcZPoXi79WtS45+fL3/oWI2wWgCZEwrEDv3Xo/gxY=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=qPtTZXtvNb1OYfOL0tdysg+Pi4rHvuYa4ZWVD29DXlpke8z9AxYI7sPKytbmbrgzQ8ZEHYDPOSWdCSQMIQxNBK4SYfRMBBctcRYCYcaqpg3yDZ0x17+6CHtHkVtD6/MoLahipbhXKFShvgIBcu+pInRBR2ImA4eMtyRa7rg6Vc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gx+YEbdM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDF1C4CEE2;
-	Fri, 11 Apr 2025 12:11:04 +0000 (UTC)
+	 MIME-Version:Content-Type; b=lmUneF1z3pZTDzLJHtakSDE2IGrE/1rTIvs/Z8wF6ThOARxLlTWrPJmoUheC6axdvlXnShK/tZ2knJ8DnBgQ1n2WBhR6MYyYtJ94v/cfxn3rf17nDWj9BjtqLWgGsV6Dafp1ekz5FaTQONdf/55CU0XRLlYZcLrYPIpllthuLYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oXfReTdO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E48BC4CEE2;
+	Fri, 11 Apr 2025 12:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744373468;
-	bh=d+FLiWuinx/mnrMg1djQFjn220kbb6rhpINiatKBBLA=;
+	s=k20201202; t=1744373475;
+	bh=kbUcZPoXi79WtS45+fL3/oWI2wWgCZEwrEDv3Xo/gxY=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=gx+YEbdMFS3jQ3nJQJAkyi7Q6MKRLcUIyVT96m3Tpp6fTNCHVQsqKRdTyJIbF3JW5
-	 W/K8IstBhsDJPWKFat640JKteq+vINh8/ee/PvKVr29MOxDAwneKsfF6PvZJTw744p
-	 gJshN5dI7YngxelyDks/Wvx4Jn3IFswA067NQweRE658r9WJeYCa252GwO1fz5Zc0q
-	 wCWoGJTxe/b2uVTCM7YRZwSO7+KyfnFIB7rAL6ngTwmINeLIPXFZQK/8JLv833Hk3p
-	 llPLLOcCrgmX456j8uz0T7Lg9X3c6K4NV9yR/coVss3tDoqdcpXyLvdpQvazFA7vg6
-	 yEss+5665JJ+w==
+	b=oXfReTdO98Js7+lVoMrKowkY/dHKuDTcIXRPKrWKJk5X7+RY5+egJLrKqFXdsYjEC
+	 5wLKayQ1r3Tgymu3bg2fgBKj+3MbAanhYpUzqS3NE+uAs8XITlEqaTdh6svcJc68Mn
+	 c3M/HAtl2EbjFc7+khBRMqryHMHJzNv5s4oAJdwvpSglnEjlQtOhUIRv6Tj8AXLoC1
+	 IQV+9SQstnRyR+LX+GVypm2DDXIkhOeefXaTRdElniPQFX1u9NzQvR9F+7++Tes60S
+	 vme+tAt7hKQiBD13P/PmV5PFVVCSgX487Ob9P2+rH02DvZS8hRw4kzKCRsZjC5cSlE
+	 sLUxz2hT515OA==
 From: Vinod Koul <vkoul@kernel.org>
-To: kishon@kernel.org, p.zabel@pengutronix.de, abel.vesa@linaro.org, 
- quic_qianyu@quicinc.com, neil.armstrong@linaro.org, 
- manivannan.sadhasivam@linaro.org, quic_devipriy@quicinc.com, 
- konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, 
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <lumag@kernel.org>, Wenbin Yao <quic_wenbyao@quicinc.com>
-Cc: krishna.chundru@oss.qualcomm.com, quic_vbadigan@quicinc.com, 
- quic_mrana@quicinc.com, quic_cang@quicinc.com
-In-Reply-To: <20250411113120.651363-1-quic_wenbyao@quicinc.com>
-References: <20250411113120.651363-1-quic_wenbyao@quicinc.com>
-Subject: Re: [PATCH v7 0/2] phy: qcom: qmp-pcie: Add PCIe PHY no_csr reset
- support
-Message-Id: <174437346409.673939.2537740696548096560.b4-ty@kernel.org>
-Date: Fri, 11 Apr 2025 17:41:04 +0530
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Nitheesh Sekar <quic_nsekar@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Bjorn Helgaas <bhelgaas@google.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Praveenkumar I <quic_ipkumar@quicinc.com>, 
+ George Moussalem <george.moussalem@outlook.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-pci@vger.kernel.org, 20250317100029.881286-1-quic_varada@quicinc.com, 
+ 20250317100029.881286-2-quic_varada@quicinc.com, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250326-ipq5018-pcie-v7-0-e1828fef06c9@outlook.com>
+References: <20250326-ipq5018-pcie-v7-0-e1828fef06c9@outlook.com>
+Subject: Re: (subset) [PATCH v7 0/6] Enable IPQ5018 PCI support
+Message-Id: <174437346895.673939.17282327012259130391.b4-ty@kernel.org>
+Date: Fri, 11 Apr 2025 17:41:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,25 +79,24 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.2
 
 
-On Fri, 11 Apr 2025 19:31:18 +0800, Wenbin Yao wrote:
-> The series aims to skip phy register programming and drive PCIe PHY with
-> register setting programmed in bootloader by simply toggling no_csr reset,
-> which once togglled, PHY hardware will be reset while PHY registers are
-> retained.
+On Wed, 26 Mar 2025 12:10:54 +0400, George Moussalem wrote:
+> This patch series adds the relevant phy and controller
+> DT configurations for enabling PCI gen2 support
+> on IPQ5018. IPQ5018 has two phys and two controllers,
+> one dual-lane and one single-lane.
 > 
-> First, determine whether PHY setting can be skipped by checking
-> QPHY_START_CTRL register and the existence of nocsr reset. If it is
-> programmed and no_csr reset is supported, do no_csr reset and skip BCR
-> reset which will reset entire PHY.
+> Last patch series (v3) submitted dates back to August 30, 2024.
+> As I've worked to add IPQ5018 platform support in OpenWrt, I'm
+> continuing the efforts to add Linux kernel support.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] phy: qcom: pcie: Determine has_nocsr_reset dynamically
-      commit: ea57d7fe4f5af517b5ce91fdff96cc33be932690
-[2/2] phy: qcom: qmp-pcie: Add PHY register retention support
-      commit: 0cc22f5a861c3149171485349dafac3047212a5d
+[1/6] dt-bindings: phy: qcom: uniphy-pcie: Add ipq5018 compatible
+      commit: aae29082b6620c664e97a1e2f2062abc6a58659d
+[2/6] phy: qualcomm: qcom-uniphy-pcie 28LP add support for IPQ5018
+      commit: dfc820d2f8a8ea90bbc02269b5362e3678e58cac
 
 Best regards,
 -- 
