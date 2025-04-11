@@ -1,251 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-53953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F1F9A85675
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 10:25:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C84FA8569E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 10:34:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A8A1178C5F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 08:25:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 65A961B84F56
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 08:34:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94852293450;
-	Fri, 11 Apr 2025 08:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DE90293B56;
+	Fri, 11 Apr 2025 08:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NvsYUHOH"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="S7o0qsbP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73F6290BBB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 08:25:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7A128F936
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 08:33:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744359921; cv=none; b=EgnHeTxTsLB5XzEThOkb1Kkzh81F2SE79M6ASTTf+iCsVpoYQ693TPvVNhQ4jBX5CVl1vECk5WHfh1gBgtmjulXj+GLeVPj4QQkNjVbhpmaCCeA7EAl3R6VWzxb/nSGN4xe5XGM9l5cL7ztqXPx0JbQcx4KWOq3yBSCPiHeVc10=
+	t=1744360423; cv=none; b=PTXUYu4JHQuGEMWlOL8Iiixy05WzI0APPtswXpeYr3B0xJ8UgNlI4eHkVEeuFxuuVe8Ndq9/EVwx7qh8pVP4HM+L7GcOTdMEfZ3mIPK1DL92ecQLEeEEKy5wM9T+ma2P3bFdo7XpCdjbvKpsm6/iHNQtBxPE4Lw0ZW6pkvG/las=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744359921; c=relaxed/simple;
-	bh=DFEHwYI9rVelR3BcP/YQU9uSGyGHb49B/GJRonMMFkU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kAwoRZ0UHf5hwB7/ukyR2UMqW+99c/d/MmUzGjeIY33rqscXYzeEZgIe6Sd3Zs9zRQUHzs8Oal6/FNN8IRjn80A7No1dlHQMXBt9Eyhg459vhC57zFCVWCKSR2s3IDm49n1Gy1ci9X6yB1yczOXAISVykffJ9nS8GT19f1XJL74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NvsYUHOH; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53B5ckt2018394
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 08:25:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	acPZ4ugkuuEf4hjqppVya/+B+qvZwDLed16PbNGyT6k=; b=NvsYUHOHXQ5T8sge
-	7nmI+PeV1opufCy/tq/PHL65ZWSwAwNxUXJZ6WjxHWgwfhXxfXbgEuobsS98uQw2
-	lmaCwlKKGjUYrfaHCcIVOlgxII/JQ0aDXLQvLNHQLix2aqnjyOKF0IqO+/mWtvIp
-	zs4ysgQpJDQDNlB9ElwgR38kUWDwMws+sBwRazXUiDKcu1NRlBXqKHIW3liga4Wx
-	LzPVexN2aJilb0Hy0BfnG3cq3koZBPaE0RuiJ+sPmNblNPl9bHmnat+F3ryjC7ZC
-	2cTeQEfAfVdLmPkK6yk+zZNqr//Aww9n/KCBNrBkXsX5qeqn4ZnhcqanIxbSntCY
-	Xu/iSg==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twtb9uww-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 08:25:18 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-7377139d8b1so1331647b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 01:25:18 -0700 (PDT)
+	s=arc-20240116; t=1744360423; c=relaxed/simple;
+	bh=YtyEfPCLhxuh+HxbSQ37x4q0L+ygNb73OUpvm28vAvM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=a/PBdV/UUPcZjHuuxbSTp6eF4+SnWowTIGyHvtAz3Mz/Uz0gYpTr1COqJQ5yVB2IsUOO70Nc+dDFXnDkuLa4HUSYxzV2SDnZOBJ7oLSSQ0BlHHLh4s5xad5lS0QxPU1vTrmXMgtr5+v6JEVijl4M9fGO9uIOH7hT1HaUeOwoOrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=S7o0qsbP; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ab78e6edb99so248907266b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Apr 2025 01:33:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1744360419; x=1744965219; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5/OEIkhs5i/56iKsf6Ln6xmh08Ek/lCXrCNvVIOB0uw=;
+        b=S7o0qsbPxtvT0a7pl9GDP7ZK/zfsxgYD4IkQSDdnp+eIYceMiZTuhQdlL/auXdc09e
+         Pwe9SYFobseAe2ucfW2vTgWbmPQH+UjZ7uAGeVWU6/7BJ8GLwu0WouyEfvOAUlQcaLcM
+         BizmjRLBzKQ697xhkajEKnkggAhhEYNHhnhQ/D/FOXvsE7mdUk/6hpezL+KbEjSbZxUg
+         KmBYEoyDHfO04K5n2yEUTW4j97awngz+MgqGS+UnFkEavwIUSRjHyusdZTbsL+wNclp9
+         fZcgIsCUxeRE2goKvkqTD7EaKAOtyRRwG7cXNiV7/HqIlPlVCKiqKKh4iRVrAS+5+HvJ
+         9r8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744359917; x=1744964717;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=acPZ4ugkuuEf4hjqppVya/+B+qvZwDLed16PbNGyT6k=;
-        b=PuCEyVah2XzWSEnZM9opMziA6P8wyRmL0quvkHES94Im+X4uLaV2kacR2UWmlcpKDZ
-         b6GHX6Vo0YV5tEjYLFaD5yu4EuPDCRt1Wuqp852cj7MpuKjzmabxIRd3Cx8hxqI8Tq1g
-         WYAVGJa3dKWrtsrmN7EcRKJhYVh8KQC5LS2mc7Gu32ptbW1HH2EUHzoXCKYfjEMnargE
-         2Lx6tucuyNRkt7/lMgx4zLouYvitUYeJL+uFuEcoUFw7R9WAGVeBYn8M+dXAE1lTrncL
-         vIrUckK5z6UAqU0cQUHGuL6GhPvVPiZB/sKQgDa49EVBgLTHNyc1oba2BvUcj30Afwh4
-         mPOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVRTY7dJliiq+ioOEZuJ70a9GCqlP4Hy7RXtDH0PxgQJpKwcLpE2oInNNzQVdoaOS1n+IlgnJw4fIIK9PyE@vger.kernel.org
-X-Gm-Message-State: AOJu0YwbyQqOmgDF/gg+bnlXvysUKfOqaRO+0euYPr1/Odd1aYvkuoKF
-	jFz+4eDeePl0+UhwSBRwYhq1JkgKcr1BeKfHqSj4mObIFxSkMW4ngs0k6nGFAgsj7yjFCkDjEYu
-	izprpSHsK0WiDVxZiTAkhr/n+YB5NWmIPx+cBwg6hXnS5w3PXccqNbgm9Z01pT31c
-X-Gm-Gg: ASbGncv3Vkz41lQ01NG/dC6t2fH+zXgSNM45rFBlxXl0mqCL9LEsvKCza8i99QT5JoT
-	1lH6mFgw/WiLV2jAsg8cDYVVcvqePwFBU3v5yTFLJv8XC2BYOsPUyV0OFc5GhDlZkl4FIMKl8Rt
-	Eh8r7tSn4weDNhJFb2EAOdoSTnyvw7BZTxuo4jnulR/RXftm3YqNTiFw1zvUWciLM+z/9hd2ssS
-	SoH/s6gg5cbuSavukUyLrysWZeU4wRspI1kYNPGufVGv8wh5k1zCLN9xhTtiNcNlSP1ZNg6FrsW
-	aYkREw54Af69vr4FcomeyFjUF0f1f/Sgfztk
-X-Received: by 2002:a05:6a21:32a2:b0:1f5:7007:9eb7 with SMTP id adf61e73a8af0-20179983274mr3130877637.37.1744359917522;
-        Fri, 11 Apr 2025 01:25:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEGf/yDIti3vULh6ct7+T4yDuSTfe9j7Wfzot0G78yH4iaP8e0+/c/Dj17WpHRm7uU+QR65Zw==
-X-Received: by 2002:a05:6a21:32a2:b0:1f5:7007:9eb7 with SMTP id adf61e73a8af0-20179983274mr3130850637.37.1744359917112;
-        Fri, 11 Apr 2025 01:25:17 -0700 (PDT)
-Received: from [10.204.65.49] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73bd21c62c3sm937039b3a.52.2025.04.11.01.25.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Apr 2025 01:25:16 -0700 (PDT)
-Message-ID: <e1c23027-94c3-4fdf-b842-b154179aa2b8@oss.qualcomm.com>
-Date: Fri, 11 Apr 2025 13:55:12 +0530
+        d=1e100.net; s=20230601; t=1744360419; x=1744965219;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5/OEIkhs5i/56iKsf6Ln6xmh08Ek/lCXrCNvVIOB0uw=;
+        b=j5k9wwdM+pB73FK0c6LCl5mGVillusSRbFvL3IhuRa+C+cxX2YT7MbqdOIvGrZ1YHf
+         R/XgMrNf1NQ1Km0u2ZPp0a+iPJzWc6SHd819XC4sT8rDUoz5Pv24NpCmY+W/qa8rxTvc
+         fsyEHzGyAIFXigbWd1Bg+4Fl/3eI4Wy4jTikzRuOJVM0H5MiMU3OjtHUGDj8NxMS5PM6
+         7fhBRlEFi5iZU5R8u5MpA/CffNWpNA6NyaAZ4myTQgluWjXue9VuSHeQMhr37t+Sb/ee
+         nF0CNkfcjM1VbnbwWTK9CmcDGwMXCSiiObtrGZslbuF7BvdqqnsDxMnjamCL4441SwKE
+         Dn5w==
+X-Forwarded-Encrypted: i=1; AJvYcCXCSfJj4wyql7Ro1k07x4phJAd1gPGRie1E85KNG3AgxA9Lv/S+7t2RKz4DzkVddMg/94uiQZG6rDnwx3Ig@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5uVr2QRpHzDvqQpTHDlWg9TpfOm7A3TvCG1AYOi3XMiqxJpYW
+	vGdRr/icye3Ea9XjGLPIvQB3vvj3E/nqK1wHX9NdB4F6M2iiXsLizCn0G6ioTFg=
+X-Gm-Gg: ASbGncuIjQkdH/+Ux+EFokYQL3eVpj0jD9XadHNF/Lj01x37ZSPbc+SnmgpMlQ01dgW
+	Z2MqhrWyCB4tBzV0SxetbLeSVmFTXF8wkvNWcER3qPcxM/SfgTcom+vtsqr1pkrXd6MV3XK8HwG
+	k1gjAb9mP4Jz1r8ZWAM900oeZVbPkzZCLPWqcKxHrL7cEs7vVIWBDg4tpRuDVhbqzzXALdgwsFF
+	q4fg83iJMVFDECZOM7YcNsmK7g+49VkGb9u+WCs6Qf60yZEeYr51pvhAmbdrWWX2imnZhwsEzxE
+	VN2oC78LOs2vjFPdpn/asxuVHk67+kI63CHZL9JBHPrO9C/xkQ6Znw0vxX/59aMmpYPiRTQ9j36
+	YOIkOQXuGTqXucg==
+X-Google-Smtp-Source: AGHT+IGoM4A7Qtqtt1Dy9i6pdPwoGCXRAZYCNHk6wtIo7PyTKrh0k7tkODDWcluBWIFiL+qyGGp5HQ==
+X-Received: by 2002:a17:907:6e87:b0:aca:96a7:d373 with SMTP id a640c23a62f3a-acad36c4587mr149028766b.57.1744360419442;
+        Fri, 11 Apr 2025 01:33:39 -0700 (PDT)
+Received: from [100.64.0.4] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acaa1bb2ee1sm417729266b.12.2025.04.11.01.33.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Apr 2025 01:33:39 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Date: Fri, 11 Apr 2025 10:33:29 +0200
+Subject: [PATCH] arm64: dts: qcom: Remove unnecessary MM_[UD]L audio routes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 4/4] misc: fastrpc: Add debugfs support for fastrpc
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, quic_dsi@quicinc.com
-Cc: Greg KH <gregkh@linuxfoundation.org>, srinivas.kandagatla@linaro.org,
-        linux-arm-msm@vger.kernel.org, quic_bkumar@quicinc.com,
-        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-        dri-devel@lists.freedesktop.org, arnd@arndb.de
-References: <20241118084046.3201290-1-quic_ekangupt@quicinc.com>
- <20241118084046.3201290-5-quic_ekangupt@quicinc.com>
- <2024111804-doze-reflected-0feb@gregkh>
- <c3b285b0-33d1-4bfa-b8ab-6783ff5ed78d@quicinc.com>
- <cn7pqvhw4x4y7s5hbgzjpvyjnw4g6hoyepic4jai7x2fjdenxr@ikr4hkorbuwb>
- <365c4709-b421-4af8-b521-a195630242de@quicinc.com>
- <nsaq3zungvyhuikz35arvxmle2fovxh422jpyqxuleh57ufqnk@bekeh7qr7y76>
- <697e90db-6ecc-44ac-af86-6c7f910fc902@quicinc.com>
- <CAA8EJppbptPryu_O3G3YAapHT=Ai+MAdA38FtSU=YvWb+mqa1g@mail.gmail.com>
-Content-Language: en-US
-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-In-Reply-To: <CAA8EJppbptPryu_O3G3YAapHT=Ai+MAdA38FtSU=YvWb+mqa1g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: VbDCTFABvfvZqW7x2niRzIakbEO8suzy
-X-Authority-Analysis: v=2.4 cv=LLlmQIW9 c=1 sm=1 tr=0 ts=67f8d1ee cx=c_pps a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=bRUorU-10DnGX_eTzEgA:9 a=QEXdDO2ut3YA:10
- a=IoOABgeZipijB_acs4fv:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: VbDCTFABvfvZqW7x2niRzIakbEO8suzy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-11_03,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- clxscore=1015 mlxlogscore=999 malwarescore=0 phishscore=0
- lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0 adultscore=0
- suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504110049
+Message-Id: <20250411-cleanup-mm-routes-v1-1-ba98f653aa69@fairphone.com>
+X-B4-Tracking: v=1; b=H4sIANjT+GcC/x3MTQqAIBBA4avErBtQy8KuEi36mWqgLDQjCO+et
+ PwW773gyTF5aLIXHN3s+bAJMs9gXHu7EPKUDEooLUopcdyot+HEfUd3hIs81oMho0yltC4gdae
+ jmZ//2XYxfnOj4vJjAAAA
+X-Change-ID: 20250411-cleanup-mm-routes-7b9e92962553
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.2
 
+Since commit 6fd8d2d275f7 ("ASoC: qcom: qdsp6: Move frontend AIFs to
+q6asm-dai") from over 4 years ago the audio routes beween MM_DL* +
+MultiMedia* Playback and MultiMedia* Capture + MM_UL* are not necessary
+anymore and can be removed from the dts files. It also helps to stop
+anyone copying these into new dts files.
 
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dts          | 5 +----
+ arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts   | 5 +----
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts             | 2 --
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts             | 6 +-----
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts           | 6 +-----
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 5 +----
+ arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts     | 5 +----
+ 7 files changed, 6 insertions(+), 28 deletions(-)
 
-On 12/3/2024 5:27 PM, Dmitry Baryshkov wrote:
-> On Tue, 3 Dec 2024 at 07:22, Ekansh Gupta <quic_ekangupt@quicinc.com> wrote:
->>
->>
->> On 12/2/2024 6:18 PM, Dmitry Baryshkov wrote:
->>> On Mon, Dec 02, 2024 at 03:27:43PM +0530, Ekansh Gupta wrote:
->>>> On 11/22/2024 12:23 AM, Dmitry Baryshkov wrote:
->>>>> On Thu, Nov 21, 2024 at 12:12:17PM +0530, Ekansh Gupta wrote:
->>>>>> On 11/18/2024 7:32 PM, Greg KH wrote:
->>>>>>> On Mon, Nov 18, 2024 at 02:10:46PM +0530, Ekansh Gupta wrote:
->>>>>>>> Add changes to support debugfs. The fastrpc directory will be
->>>>>>>> created which will carry debugfs files for all fastrpc processes.
->>>>>>>> The information of fastrpc user and channel contexts are getting
->>>>>>>> captured as part of this change.
->>>>>>>>
->>>>>>>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->>>>>>>> ---
->>>>>>>>  drivers/misc/fastrpc/Makefile        |   3 +-
->>>>>>>>  drivers/misc/fastrpc/fastrpc_debug.c | 156 +++++++++++++++++++++++++++
->>>>>>>>  drivers/misc/fastrpc/fastrpc_debug.h |  31 ++++++
->>>>>>>>  drivers/misc/fastrpc/fastrpc_main.c  |  18 +++-
->>>>>>>>  4 files changed, 205 insertions(+), 3 deletions(-)
->>>>>>>>  create mode 100644 drivers/misc/fastrpc/fastrpc_debug.c
->>>>>>>>  create mode 100644 drivers/misc/fastrpc/fastrpc_debug.h
->>>>>>>>
->>>>>>>> diff --git a/drivers/misc/fastrpc/Makefile b/drivers/misc/fastrpc/Makefile
->>>>>>>> index 020d30789a80..4ff6b64166ae 100644
->>>>>>>> --- a/drivers/misc/fastrpc/Makefile
->>>>>>>> +++ b/drivers/misc/fastrpc/Makefile
->>>>>>>> @@ -1,3 +1,4 @@
->>>>>>>>  # SPDX-License-Identifier: GPL-2.0
->>>>>>>>  obj-$(CONFIG_QCOM_FASTRPC)      += fastrpc.o
->>>>>>>> -fastrpc-objs    := fastrpc_main.o
->>>>>>>> \ No newline at end of file
->>>>>>>> +fastrpc-objs    := fastrpc_main.o \
->>>>>>>> +                fastrpc_debug.o
->>>>>>> Only build this file if debugfs is enabled.
->>>>>>>
->>>>>>> And again, "debug.c"?
->>>>>> I'll add change to build this only if debugfs is enabled. Going forward I have plans to add
->>>>>> few more debug specific changes, maybe then I'll need to change the build rules again.
->>>>>>>> diff --git a/drivers/misc/fastrpc/fastrpc_debug.c b/drivers/misc/fastrpc/fastrpc_debug.c
->>>>>>>> new file mode 100644
->>>>>>>> index 000000000000..cdb4fc6845a8
->>>>>>>> --- /dev/null
->>>>>>>> +++ b/drivers/misc/fastrpc/fastrpc_debug.c
->>>>>>>> @@ -0,0 +1,156 @@
->>>>>>>> +// SPDX-License-Identifier: GPL-2.0
->>>>>>>> +// Copyright (c) 2024 Qualcomm Innovation Center.
->>>>>>>> +
->>>>>>>> +#include <linux/debugfs.h>
->>>>>>>> +#include <linux/seq_file.h>
->>>>>>>> +#include "fastrpc_shared.h"
->>>>>>>> +#include "fastrpc_debug.h"
->>>>>>>> +
->>>>>>>> +#ifdef CONFIG_DEBUG_FS
->>>>>>> Please put the #ifdef in the .h file, not in the .c file.
->>>>>> Ack
->>>>>>>> +void fastrpc_create_user_debugfs(struct fastrpc_user *fl)
->>>>>>>> +{
->>>>>>>> +        char cur_comm[TASK_COMM_LEN];
->>>>>>>> +        int domain_id, size;
->>>>>>>> +        char *debugfs_buf;
->>>>>>>> +        struct dentry *debugfs_dir = fl->cctx->debugfs_dir;
->>>>>>>> +
->>>>>>>> +        memcpy(cur_comm, current->comm, TASK_COMM_LEN);
->>>>>>>> +        cur_comm[TASK_COMM_LEN-1] = '\0';
->>>>>>>> +        if (debugfs_dir != NULL) {
->>>>>>>> +                domain_id = fl->cctx->domain_id;
->>>>>>>> +                size = snprintf(NULL, 0, "%.10s_%d_%d_%d", cur_comm,
->>>>>>>> +                                current->pid, fl->tgid, domain_id) + 1;
->>>>>>>> +                debugfs_buf = kzalloc(size, GFP_KERNEL);
->>>>>>>> +                if (debugfs_buf == NULL)
->>>>>>>> +                        return;
->>>>>>>> +                /*
->>>>>>>> +                 * Use HLOS process name, HLOS PID, fastrpc user TGID,
->>>>>>>> +                 * domain_id in debugfs filename to create unique file name
->>>>>>>> +                 */
->>>>>>>> +                snprintf(debugfs_buf, size, "%.10s_%d_%d_%d",
->>>>>>>> +                        cur_comm, current->pid, fl->tgid, domain_id);
->>>>>>>> +                fl->debugfs_file = debugfs_create_file(debugfs_buf, 0644,
->>>>>>>> +                                debugfs_dir, fl, &fastrpc_debugfs_fops);
->>>>>>> Why are you saving the debugfs file?  What do you need to do with it
->>>>>>> that you can't just delete the whole directory, or look up the name
->>>>>>> again in the future when removing it?
->>>>>> fl structure is specific to a process using fastrpc driver. The reason to save
->>>>>> this debugfs file is to delete is when the process releases fastrpc device.
->>>>>> If the file is not deleted, it might flood multiple files in debugfs directory.
->>>>>>
->>>>>> As part of this change, only the file that is getting created by a process is
->>>>>> getting removed when process is releasing device and I don't think we
->>>>>> can clean up the whole directory at this point.
->>>>> My 2c: it might be better to create a single file that conains
->>>>> information for all the processes instead of that. Or use fdinfo data to
->>>>> export process / FD information to userspace.
->>>> Thanks for your review. The reason of not having single file for all processes is that
->>>> I can run 100s of iteration for any process(say calculator) and every time the properties
->>>> of the process can differ(like buffer, session etc.). For this reason, I'm creating and
->>>> deleting the debugfs files for every process run.
->>>>
->>>> Do you see any advantage of using fdinfo over debugfs? I'm not sure if we can add all
->>>> the information(like in debugfs) here.
->>> Which information is actually useful / interesting for application
->>> developers? If not for the fdinfo, I might still vote for a single file
->>> rather than a pile of per-process data.
->> I have tried to capture all the information that could be useful.
->>
->> I can try changes to maintain single file for all active processes. Having this file specific
->> to a channel should be fine, right? like fastrpc_adsp, fastrpc_cdsp, etc.? Each file will
->> carry information of all processes using that remoteproc.
-> I think it's a better idea, yes.
+diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+index e8148b3d6c50c670d6bc8045e42074162dc1c6d9..1089964e6c0d819e166fd5a959f7f1e6fe688d65 100644
+--- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
++++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+@@ -1012,10 +1012,7 @@ wcd9335: codec@1,0 {
+ &sound {
+ 	compatible = "qcom,apq8096-sndcard";
+ 	model = "DB820c";
+-	audio-routing = "RX_BIAS", "MCLK",
+-		"MM_DL1",  "MultiMedia1 Playback",
+-		"MM_DL2",  "MultiMedia2 Playback",
+-		"MultiMedia3 Capture", "MM_UL3";
++	audio-routing = "RX_BIAS", "MCLK";
+ 
+ 	mm1-dai-link {
+ 		link-name = "MultiMedia1";
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
+index dbad8f57f2fa34575440caa7f0a19d5893efcfbb..d7fa56808747ae1290b884430d5fa5443bdd9be1 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
++++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
+@@ -156,10 +156,7 @@ &slpi_pil {
+ &sound {
+ 	compatible = "qcom,apq8096-sndcard";
+ 	model = "gemini";
+-	audio-routing = "RX_BIAS", "MCLK",
+-		"MM_DL1",  "MultiMedia1 Playback",
+-		"MM_DL2",  "MultiMedia2 Playback",
+-		"MultiMedia3 Capture", "MM_UL3";
++	audio-routing = "RX_BIAS", "MCLK";
+ 
+ 	mm1-dai-link {
+ 		link-name = "MultiMedia1";
+diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+index d485249bcda44055689b5556eec9dd057b92d0ae..a37860175d2733214f1b257e84d5cb4821033242 100644
+--- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
++++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+@@ -110,8 +110,6 @@ sound {
+ 		pinctrl-0 = <&lpi_i2s2_active>;
+ 		pinctrl-names = "default";
+ 		model = "Qualcomm-RB2-WSA8815-Speakers-DMIC0";
+-		audio-routing = "MM_DL1", "MultiMedia1 Playback",
+-				"MM_DL2", "MultiMedia2 Playback";
+ 
+ 		mm1-dai-link {
+ 			link-name = "MultiMedia1";
+diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+index 4cc14ab1b9ea0f92a12a12ef4df1cdc37bf5591c..dcb998b8b05498d8f9a82ff9a984c1e237a61308 100644
+--- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
++++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+@@ -1053,11 +1053,7 @@ &sound {
+ 		"SpkrLeft IN", "WSA_SPK1 OUT",
+ 		"SpkrRight IN", "WSA_SPK2 OUT",
+ 		"VA DMIC0", "vdd-micb",
+-		"VA DMIC1", "vdd-micb",
+-		"MM_DL1",  "MultiMedia1 Playback",
+-		"MM_DL2",  "MultiMedia2 Playback",
+-		"MultiMedia3 Capture", "MM_UL3",
+-		"MM_DL4", "MultiMedia4 Playback";
++		"VA DMIC1", "vdd-micb";
+ 
+ 	mm1-dai-link {
+ 		link-name = "MultiMedia1";
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index 2b2ef4dbad2fc55b27fd176baf1b4205802e1c42..adfd916270055df0a957c573868302e0d77c614d 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -777,11 +777,7 @@ &quat_mi2s_sd2_active
+ 		"DMIC2", "MIC BIAS3",
+ 		"DMIC3", "MIC BIAS3",
+ 		"SpkrLeft IN", "SPK1 OUT",
+-		"SpkrRight IN", "SPK2 OUT",
+-		"MM_DL1",  "MultiMedia1 Playback",
+-		"MM_DL2",  "MultiMedia2 Playback",
+-		"MM_DL4",  "MultiMedia4 Playback",
+-		"MultiMedia3 Capture", "MM_UL3";
++		"SpkrRight IN", "SPK2 OUT";
+ 
+ 	mm1-dai-link {
+ 		link-name = "MultiMedia1";
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index e8012205954e76627febda14ee51ecff9d29e4fb..7677acd08e2d176be932d3f726fe5602cf8d50d1 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -632,10 +632,7 @@ &sound {
+ 		"RX_BIAS", "MCLK",
+ 		"AMIC2", "MIC BIAS2",
+ 		"SpkrLeft IN", "SPK1 OUT",
+-		"SpkrRight IN", "SPK2 OUT",
+-		"MM_DL1",  "MultiMedia1 Playback",
+-		"MM_DL3",  "MultiMedia3 Playback",
+-		"MultiMedia2 Capture", "MM_UL2";
++		"SpkrRight IN", "SPK2 OUT";
+ 
+ 	mm1-dai-link {
+ 		link-name = "MultiMedia1";
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+index 26217836c2707ba2f7b0030c9801d7de3a797315..d6d4e7184c5603864668057de79c7497ad361ab3 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+@@ -445,10 +445,7 @@ &sound {
+ 		"RX_BIAS", "MCLK",
+ 		"AMIC2", "MIC BIAS2",
+ 		"SpkrLeft IN", "SPK1 OUT",
+-		"SpkrRight IN", "SPK2 OUT",
+-		"MM_DL1",  "MultiMedia1 Playback",
+-		"MM_DL3",  "MultiMedia3 Playback",
+-		"MultiMedia2 Capture", "MM_UL2";
++		"SpkrRight IN", "SPK2 OUT";
+ 
+ 	mm1-dai-link {
+ 		link-name = "MultiMedia1";
 
-Hi all,
+---
+base-commit: 01c6df60d5d4ae00cd5c1648818744838bba7763
+change-id: 20250411-cleanup-mm-routes-7b9e92962553
 
-I'm adding Deepika <quic_dsi@quicinc.com> to this thread who is reworking
-on this patch series.
-
-//Ekansh
-
->> --ekansh
->>>> --ekansh
->
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
 
