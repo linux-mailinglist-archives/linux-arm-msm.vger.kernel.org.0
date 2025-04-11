@@ -1,309 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-54053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51771A8658A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 20:33:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27710A865AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 20:42:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D5AA87B0DCB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 18:31:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A5C469A80F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 18:41:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED521259C85;
-	Fri, 11 Apr 2025 18:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38FB9269CF7;
+	Fri, 11 Apr 2025 18:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="cSehihAj"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="d9Lq+nM/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A191B182BC;
-	Fri, 11 Apr 2025 18:32:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744396377; cv=pass; b=piq5nJi/jk3ysTMCQqO+v/h0hLuyijpja9Wp2Cfj6Rqlw4VryQ7IbbtnE4728gHTh4Q+jewL8OI3Dt4o2eAwy2UM+kfbNIFJuRMgHt9LdcrPoNY3ChJVi7/3LW/gCLzvPagyd5XjZ09mUmAgbr0NaPVaExjPqM3zt1zMgKxoD6A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744396377; c=relaxed/simple;
-	bh=xpKDWgFnRLVb+6HJb/HqkpDdRpr3Vd47VV2587j9wsE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qTzTSR1pQKe20MuY3UDsSspc7cnaaA7ZVe/G2eYJfIanlWGU1eembJXsMwHJwAMQbNt0twIVAUOu8mdR3XDLKWbD9JP5YjEtTJWxgVyz8Sko8NVfI0eqitmqSUPiqbWJ6nZnUBWrqVfSWOch590dCQl7IiBEQjEoIl5/4mfmHyU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=cSehihAj; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1744396338; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=LF3z+M9df7Z6RtCJI+4YgnBTJBTc0xg2ybvq5vCjRURviMzHNZNM/PtEfo+0nW814mVg4JmWQMKZ8XPrwvNP8tDXcqnBL59/JF4VVk/vElPjWMinKeUz7IkJI1fMikxinDfIpwlmZkHrGYq/0mvMfVqaum/jSkrsSM7qPxdn2MU=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1744396338; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=VPAMF9z9f1QJ3kCrAeK00zP1q6fUscWKTEHxjGJt2/g=; 
-	b=HWmjTCmSYtF3uhI/ys7uBErzC2LuS7gbrguldW3drZRFAgaItF0YMWZCembQkF7J9F6U4kZquaPQuUMEiIeQ40bcwhFvVqx6AXYDt4qLsjXgmvBxJnFQGjOhVZ8dh89ApDDx63D8xc7yiIAxCrV3GUwav0NNYFbPRr99ertzz/E=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
-	dmarc=pass header.from=<usama.anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1744396338;
-	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=VPAMF9z9f1QJ3kCrAeK00zP1q6fUscWKTEHxjGJt2/g=;
-	b=cSehihAjT33+lHlj45zxqcsIKF0TdqmLcI+vKhWkkqhlIAsZ4VQnvt8F3k2HVNh1
-	RM92sUUFu9jyhtcTxXwyp5mn9ngCO917kPAQyrGnJQ7VFobz6dgTPxlphxvb/ktPft4
-	v6fSoCNUzRDAe45JF3uvCpQsU5C1QaijYTbKmjxk=
-Received: by mx.zohomail.com with SMTPS id 1744396336029349.890803975474;
-	Fri, 11 Apr 2025 11:32:16 -0700 (PDT)
-Message-ID: <85580a01-289a-461b-b0f1-38fa1b96717c@collabora.com>
-Date: Fri, 11 Apr 2025 23:32:04 +0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C85269892;
+	Fri, 11 Apr 2025 18:41:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744396913; cv=none; b=l5pZ3RNN8cQQDDl9dXqu/i8g40ECWq7tcioHORhB5HnusllLtODBW6KShmrp3j1rfE4HXnxqysVXblmRzyQEltAZVmTF52qMS8Hm8M7SOY1PMXQdBls9qXHrTXmoLnZE0Hfl8avyH6B59ItUEFDH1iw6fMzMwafZ5wmCyu9QmO8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744396913; c=relaxed/simple;
+	bh=NY8+7+ZEmdWqqx0zQOF9aAujJPW4CRyp6FmkPwIcd+w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y6pCbFvNiXcmQ1fxo1MNa+q0oQGFulYTYgdFrQMY7cKBaqaBufzSURQmpU69BA5NNU++N/Nyd5tm6CSxLOAh0jWnKaFudOwk8JR6+61D4S19A8UHsfHENJXBZ8h/7PmbaJgOSBL3jNPn1sWG1gtrVjPtyiNsTbe/Hf5dE+2l940=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=d9Lq+nM/; arc=none smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1744396911; x=1775932911;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=NY8+7+ZEmdWqqx0zQOF9aAujJPW4CRyp6FmkPwIcd+w=;
+  b=d9Lq+nM/2lV5ChjjnQ/zGREVg7pP3vjW11ZIFfd4SEd6pb5Os7uEyySQ
+   Kb0V/rnnpuaEomBjr2ZjfvuWI0Ya2NkEKYgnpZSKvcI0S7NL0RUrRGqUL
+   G5puANSFUtBwqgQ5g/HgOl1YbdqAfBLnmnBAfXX7k/6NFcecqLSJPIbeF
+   cfysNlryKFaoPJ3lCZH2umQQ4X62Ybn/OeaOisEORL3A7F3vdLegaWo7/
+   mMIRTEHIJootX7LO2jQAOjJ6hr9KRoxTfa08gdjCyicZobvcq5ndSBIdN
+   xISSme44mctcWE8vPAWKhraV0it29da9AFwvgxteVwE/2/pXKQ0EbfNBT
+   g==;
+X-CSE-ConnectionGUID: RlttfFGIS3mXtNGLCkFurA==
+X-CSE-MsgGUID: WARzn40OR9Cm0hDklpGVWw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11401"; a="63500552"
+X-IronPort-AV: E=Sophos;i="6.15,205,1739865600"; 
+   d="scan'208";a="63500552"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Apr 2025 11:41:48 -0700
+X-CSE-ConnectionGUID: e3q01x+CRf6UfIA1beGItA==
+X-CSE-MsgGUID: 8a1ba08VQkKVcgN2zvTF2A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,205,1739865600"; 
+   d="scan'208";a="129124558"
+Received: from lkp-server01.sh.intel.com (HELO b207828170a5) ([10.239.97.150])
+  by fmviesa006.fm.intel.com with ESMTP; 11 Apr 2025 11:41:43 -0700
+Received: from kbuild by b207828170a5 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1u3JJt-000BJa-0o;
+	Fri, 11 Apr 2025 18:41:41 +0000
+Date: Sat, 12 Apr 2025 02:40:51 +0800
+From: kernel test robot <lkp@intel.com>
+To: Praveen Talari <quic_ptalari@quicinc.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-pm@vger.kernel.org
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
+	quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
+	quic_mnaresh@quicinc.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v1 4/9] soc: qcom: geni-se: Enable QUPs on SA8255p
+ Qualcomm platforms
+Message-ID: <202504120226.2XbpK0yU-lkp@intel.com>
+References: <20250410174010.31588-5-quic_ptalari@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] bus: mhi: host: don't free bhie tables during
- suspend/hibernation
-To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Johannes Berg <johannes@sipsolutions.net>, Jeff Johnson
- <jjohnson@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Yan Zhen <yanzhen@vivo.com>, Youssef Samir <quic_yabdulra@quicinc.com>,
- Qiang Yu <quic_qianyu@quicinc.com>, Alex Elder <elder@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Kunwu Chan <chentao@kylinos.cn>, Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Cc: kernel@collabora.com, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
- ath11k@lists.infradead.org
-References: <20250410145704.207969-1-usama.anjum@collabora.com>
- <ba09ae0c-fe8d-8f4e-a1b8-9c7e5913c84e@quicinc.com>
- <fc9ca0da-9f6a-42b5-aa79-abcd43c97043@collabora.com>
- <e0159cb8-fe21-7f71-1ebe-744ed26bd698@quicinc.com>
-Content-Language: en-US
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-In-Reply-To: <e0159cb8-fe21-7f71-1ebe-744ed26bd698@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250410174010.31588-5-quic_ptalari@quicinc.com>
 
-On 4/11/25 1:39 PM, Krishna Chaitanya Chundru wrote:
-> 
-> 
-> On 4/11/2025 12:32 PM, Muhammad Usama Anjum wrote:
->> On 4/11/25 8:37 AM, Krishna Chaitanya Chundru wrote:
->>>
->>>
->>> On 4/10/2025 8:26 PM, Muhammad Usama Anjum wrote:
->>>> Fix dma_direct_alloc() failure at resume time during bhie_table
->>>> allocation. There is a crash report where at resume time, the memory
->>>> from the dma doesn't get allocated and MHI fails to re-initialize.
->>>> There may be fragmentation of some kind which fails the allocation
->>>> call.
->>>>
->>>> To fix it, don't free the memory at power down during suspend /
->>>> hibernation. Instead, use the same allocated memory again after every
->>>> resume / hibernation. This patch has been tested with resume and
->>>> hibernation both.
->>>>
->>>> The rddm is of constant size for a given hardware. While the fbc_image
->>>> size depends on the firmware. If the firmware changes, we'll free and
->>> If firmware image will change between suspend and resume ?
->> Yes, correct.
->>
-> why the firmware image size will change between suspend & resume?
-> who will update the firmware image after bootup?
-> It is not expected behaviour.
-I was trying to research if the firmware can change or not. I've not
-found any documentation on it.
+Hi Praveen,
 
-If the firmare is updated in filesystem before suspend/hibernate, would
-the new firwmare be loaded the next time kernel resumes as the older
-firmware is no where to be found?
+kernel test robot noticed the following build warnings:
 
-What do you think about this?
+[auto build test WARNING on tty/tty-testing]
+[also build test WARNING on tty/tty-next tty/tty-linus robh/for-next driver-core/driver-core-testing driver-core/driver-core-next driver-core/driver-core-linus usb/usb-testing usb/usb-next usb/usb-linus linus/master v6.15-rc1 next-20250411]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> 
-> - Krishna chaitanya.
->>>> allocate new memory for it.
->>>>
->>>> Here are the crash logs:
->>>>
->>>> [ 3029.338587] mhi mhi0: Requested to power ON
->>>> [ 3029.338621] mhi mhi0: Power on setup success
->>>> [ 3029.668654] kworker/u33:8: page allocation failure: order:7,
->>>> mode:0xc04(GFP_NOIO|GFP_DMA32), nodemask=(null),cpuset=/,mems_allowed=0
->>>> [ 3029.668682] CPU: 4 UID: 0 PID: 2744 Comm: kworker/u33:8 Not tainted
->>>> 6.11.11-valve10-1-neptune-611-gb69e902b4338
->>>> #1ed779c892334112fb968aaa3facf9686b5ff0bd7
->>>> [ 3029.668690] Hardware name: Valve Galileo/Galileo, BIOS F7G0112
->>>> 08/01/2024
->>>> [ 3029.668694] Workqueue: mhi_hiprio_wq mhi_pm_st_worker [mhi]
->>>> [ 3029.668717] Call Trace:
->>>> [ 3029.668722]  <TASK>
->>>> [ 3029.668728]  dump_stack_lvl+0x4e/0x70
->>>> [ 3029.668738]  warn_alloc+0x164/0x190
->>>> [ 3029.668747]  ? srso_return_thunk+0x5/0x5f
->>>> [ 3029.668754]  ? __alloc_pages_direct_compact+0xaf/0x360
->>>> [ 3029.668761]  __alloc_pages_slowpath.constprop.0+0xc75/0xd70
->>>> [ 3029.668774]  __alloc_pages_noprof+0x321/0x350
->>>> [ 3029.668782]  __dma_direct_alloc_pages.isra.0+0x14a/0x290
->>>> [ 3029.668790]  dma_direct_alloc+0x70/0x270
->>>> [ 3029.668796]  mhi_alloc_bhie_table+0xe8/0x190 [mhi
->>>> faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
->>>> [ 3029.668814]  mhi_fw_load_handler+0x1bc/0x310 [mhi
->>>> faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
->>>> [ 3029.668830]  mhi_pm_st_worker+0x5c8/0xaa0 [mhi
->>>> faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
->>>> [ 3029.668844]  ? srso_return_thunk+0x5/0x5f
->>>> [ 3029.668853]  process_one_work+0x17e/0x330
->>>> [ 3029.668861]  worker_thread+0x2ce/0x3f0
->>>> [ 3029.668868]  ? __pfx_worker_thread+0x10/0x10
->>>> [ 3029.668873]  kthread+0xd2/0x100
->>>> [ 3029.668879]  ? __pfx_kthread+0x10/0x10
->>>> [ 3029.668885]  ret_from_fork+0x34/0x50
->>>> [ 3029.668892]  ? __pfx_kthread+0x10/0x10
->>>> [ 3029.668898]  ret_from_fork_asm+0x1a/0x30
->>>> [ 3029.668910]  </TASK>
->>>>
->>>> Tested-on: QCNFA765 WLAN.HSP.1.1-03926.13-
->>>> QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
->>>>
->>>> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
->>>> ---
->>>> Changes sice v1:
->>>> - Don't free bhie tables during suspend/hibernation only
->>>> - Handle fbc_image changed size correctly
->>>> - Remove fbc_image getting set to NULL in *free_bhie_table()
->>>> ---
->>>>    drivers/bus/mhi/host/boot.c           | 15 +++++++++++----
->>>>    drivers/bus/mhi/host/init.c           | 13 ++++++++++---
->>>>    drivers/net/wireless/ath/ath11k/mhi.c |  9 +++++----
->>>>    include/linux/mhi.h                   |  7 +++++++
->>>>    4 files changed, 33 insertions(+), 11 deletions(-)
->>>>
->>>> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
->>>> index 9dcc7184817d5..0df26100c8f9c 100644
->>>> --- a/drivers/bus/mhi/host/boot.c
->>>> +++ b/drivers/bus/mhi/host/boot.c
->>>> @@ -487,10 +487,17 @@ void mhi_fw_load_handler(struct mhi_controller
->>>> *mhi_cntrl)
->>>>         * device transitioning into MHI READY state
->>>>         */
->>>>        if (mhi_cntrl->fbc_download) {
->>>> -        ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image,
->>>> fw_sz);
->>>> -        if (ret) {
->>>> -            release_firmware(firmware);
->>>> -            goto error_fw_load;
->>>> +        if (mhi_cntrl->fbc_image && fw_sz != mhi_cntrl->prev_fw_sz) {
->>>> +            mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
->>>> +            mhi_cntrl->fbc_image = NULL;
->>>> +        }
->>>> +        if (!mhi_cntrl->fbc_image) {
->>>> +            ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl-
->>>>> fbc_image, fw_sz);
->>>> +            if (ret) {
->>>> +                release_firmware(firmware);
->>>> +                goto error_fw_load;
->>>> +            }
->>>> +            mhi_cntrl->prev_fw_sz = fw_sz;
->>>>            }
->>>>              /* Load the firmware into BHIE vec table */
->>>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
->>>> index a9b1f8beee7bc..09b946b86ac46 100644
->>>> --- a/drivers/bus/mhi/host/init.c
->>>> +++ b/drivers/bus/mhi/host/init.c
->>>> @@ -1173,8 +1173,9 @@ int mhi_prepare_for_power_up(struct
->>>> mhi_controller *mhi_cntrl)
->>>>            /*
->>>>             * Allocate RDDM table for debugging purpose if specified
->>>>             */
->>>> -        mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
->>>> -                     mhi_cntrl->rddm_size);
->>>> +        if (!mhi_cntrl->rddm_image)
->>>> +            mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
->>>> +                         mhi_cntrl->rddm_size);
->>>>            if (mhi_cntrl->rddm_image) {
->>>>                ret = mhi_rddm_prepare(mhi_cntrl,
->>>>                               mhi_cntrl->rddm_image);
->>>> @@ -1212,12 +1213,18 @@ void mhi_unprepare_after_power_down(struct
->>>> mhi_controller *mhi_cntrl)
->>>>            mhi_cntrl->rddm_image = NULL;
->>>>        }
->>>>    +    mhi_partial_unprepare_after_power_down(mhi_cntrl);
->>>> +}
->>>> +EXPORT_SYMBOL_GPL(mhi_unprepare_after_power_down);
->>>> +
->>>> +void mhi_partial_unprepare_after_power_down(struct mhi_controller
->>>> *mhi_cntrl)
->>>> +{
->>>>        mhi_cntrl->bhi = NULL;
->>>>        mhi_cntrl->bhie = NULL;
->>>>          mhi_deinit_dev_ctxt(mhi_cntrl);
->>>>    }
->>>> -EXPORT_SYMBOL_GPL(mhi_unprepare_after_power_down);
->>>> +EXPORT_SYMBOL_GPL(mhi_partial_unprepare_after_power_down);
->>>>    
->>> Instead of adding new API you can free memory from the unregister
->>> controller also.
->>>
->>> - Krishna Chaitanya.
->>>>    static void mhi_release_device(struct device *dev)
->>>>    {
->>>> diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/
->>>> wireless/ath/ath11k/mhi.c
->>>> index acd76e9392d31..f77cec79b5b80 100644
->>>> --- a/drivers/net/wireless/ath/ath11k/mhi.c
->>>> +++ b/drivers/net/wireless/ath/ath11k/mhi.c
->>>> @@ -460,12 +460,13 @@ void ath11k_mhi_stop(struct ath11k_pci *ab_pci,
->>>> bool is_suspend)
->>>>         * workaround, otherwise ath11k_core_resume() will timeout
->>>>         * during resume.
->>>>         */
->>>> -    if (is_suspend)
->>>> +    if (is_suspend) {
->>>>            mhi_power_down_keep_dev(ab_pci->mhi_ctrl, true);
->>>> -    else
->>>> +        mhi_partial_unprepare_after_power_down(ab_pci->mhi_ctrl);
->>>> +    } else {
->>>>            mhi_power_down(ab_pci->mhi_ctrl, true);
->>>> -
->>>> -    mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
->>>> +        mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
->>>> +    }
->>>>    }
->>>>      int ath11k_mhi_suspend(struct ath11k_pci *ab_pci)
->>>> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
->>>> index 059dc94d20bb6..65a47c712b3a0 100644
->>>> --- a/include/linux/mhi.h
->>>> +++ b/include/linux/mhi.h
->>>> @@ -382,6 +382,7 @@ struct mhi_controller {
->>>>        const char *fw_image;
->>>>        const u8 *fw_data;
->>>>        size_t fw_sz;
->>>> +    size_t prev_fw_sz;
->>>>        const char *edl_image;
->>>>        size_t rddm_size;
->>>>        size_t sbl_size;
->>>> @@ -662,6 +663,12 @@ void mhi_power_down_keep_dev(struct
->>>> mhi_controller *mhi_cntrl, bool graceful);
->>>>     */
->>>>    void mhi_unprepare_after_power_down(struct mhi_controller
->>>> *mhi_cntrl);
->>>>    +/**
->>>> + * mhi_partial_unprepare_after_power_down - Free any allocated memory
->>>> after power down partially
->>>> + * @mhi_cntrl: MHI controller
->>>> + */
->>>> +void mhi_partial_unprepare_after_power_down(struct mhi_controller
->>>> *mhi_cntrl);
->>>> +
->>>>    /**
->>>>     * mhi_pm_suspend - Move MHI into a suspended state
->>>>     * @mhi_cntrl: MHI controller
->>
->>
+url:    https://github.com/intel-lab-lkp/linux/commits/Praveen-Talari/opp-add-new-helper-API-dev_pm_opp_set_level/20250411-015310
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git tty-testing
+patch link:    https://lore.kernel.org/r/20250410174010.31588-5-quic_ptalari%40quicinc.com
+patch subject: [PATCH v1 4/9] soc: qcom: geni-se: Enable QUPs on SA8255p Qualcomm platforms
+config: arm-randconfig-001-20250412 (https://download.01.org/0day-ci/archive/20250412/202504120226.2XbpK0yU-lkp@intel.com/config)
+compiler: clang version 21.0.0git (https://github.com/llvm/llvm-project f819f46284f2a79790038e1f6649172789734ae8)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250412/202504120226.2XbpK0yU-lkp@intel.com/reproduce)
 
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202504120226.2XbpK0yU-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/soc/qcom/qcom-geni-se.c:953:1: warning: unused label 'out' [-Wunused-label]
+     953 | out:
+         | ^~~~
+   1 warning generated.
+
+
+vim +/out +953 drivers/soc/qcom/qcom-geni-se.c
+
+   928	
+   929	static int geni_se_probe(struct platform_device *pdev)
+   930	{
+   931		struct device *dev = &pdev->dev;
+   932		struct geni_wrapper *wrapper;
+   933		const struct geni_se_desc *desc;
+   934		int ret;
+   935	
+   936		wrapper = devm_kzalloc(dev, sizeof(*wrapper), GFP_KERNEL);
+   937		if (!wrapper)
+   938			return -ENOMEM;
+   939	
+   940		wrapper->dev = dev;
+   941		wrapper->base = devm_platform_ioremap_resource(pdev, 0);
+   942		if (IS_ERR(wrapper->base))
+   943			return PTR_ERR(wrapper->base);
+   944	
+   945		desc = device_get_match_data(&pdev->dev);
+   946	
+   947		if (!has_acpi_companion(&pdev->dev) && desc->geni_se_rsc_init) {
+   948			ret = desc->geni_se_rsc_init(wrapper, desc);
+   949			if (ret)
+   950				return -EINVAL;
+   951		}
+   952	
+ > 953	out:
+   954		dev_set_drvdata(dev, wrapper);
+   955		dev_dbg(dev, "GENI SE Driver probed\n");
+   956		return devm_of_platform_populate(dev);
+   957	}
+   958	
 
 -- 
-Regards,
-Usama
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
