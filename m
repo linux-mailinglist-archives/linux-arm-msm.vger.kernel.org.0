@@ -1,85 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-53997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-53999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A56DA85BB0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 13:32:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65206A85BF8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 13:39:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A11C17AA47B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 11:30:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F9E219E5DE6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Apr 2025 11:37:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 267902980AC;
-	Fri, 11 Apr 2025 11:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B28CB238C34;
+	Fri, 11 Apr 2025 11:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bw61iPAn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IH72q+77"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66016290BA9;
-	Fri, 11 Apr 2025 11:31:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88CA202C43;
+	Fri, 11 Apr 2025 11:36:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744371104; cv=none; b=VXa8M9/kmVmE6ZeoUhazN7BymI8nNyWwQoBDL4pcenzsHmmDLU9Lorgefs2Spxz3Xyfhf3uvK6oM49sgvT16QO9oinUZbyf8mY6lUk1GXnnjlYhoJwpq8SQ1z6eKFo6xKwr+gP+/Evpk9xA3cQGLosCxe03PWKUqTGxGw15buUA=
+	t=1744371365; cv=none; b=Shfj0rhG8lGUSMTrbVwsCTlEWnRpK2ipxHRf12+Uy3KtcWMyMcRN9kElCknVnjV+cvlvOF8T/DVzpy3qkQ37wNCA+au09z47UzS2+9K2KZI8Hz5GlEGJsgslpH4uEvh8g/lvHHAp09rRafFoJrOQlLkPxE5+8PDTOe/FN55p4FM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744371104; c=relaxed/simple;
-	bh=I9bdVut+x/yEMXxBOhRJPIftktCoLAOugUOEuYVv3RI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=WOUJLkQx3BTPFWCpME88kYbqmfzgKSdVTg0jAXVMNMPJgUPx/5mbJ1PFlN2zkTkraCp56wakNDeikck9hL3rGbI0ko9Vq5FznMTYOhpaE/z+OXN6htEjyr174TmvQ/og55GTgq13E1tZ6Q1KD3Iv7ZkbgF3pIRGBPUnq1+m95jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bw61iPAn; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1744371365; c=relaxed/simple;
+	bh=VuQng9vpSjWlsjvJ1Zv4WeXWJwr6IyT0SKxjpQRCm8A=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=YWsOD6fXBR+n03hHXBXOBJTa140A1ZWUcAemT1gt+iz+T6bxgolgIEEcL7SlEzq/11vRzLHi619dOQuzg6iIWHwnnnrNYkK321/MlUN30DH9ec2QNRj6xvix+oF9wkfh4cc/h1iBd7zq9IACpRKawiyvFSO8ZAnVtlHNPd5x1pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IH72q+77; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53B5Up68029741;
-	Fri, 11 Apr 2025 11:31:34 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53B4llt9019725;
+	Fri, 11 Apr 2025 11:35:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=a0vR0H25dtT
-	gLOCQK545t8HEsrRLOWngd5EPzANU09Q=; b=bw61iPAn7rX8Pwhebh0+Kb4KqJf
-	bXeNTK5s6XDUSC4v70guEBdyUCkvXud5lAcu5OoPLUpq4/RGPSd9yHcD6OsaFZix
-	P5sOaHuC9kfcyDgFt6EINIHY8ahHrZtGMtNLlfJ3tI6hzoSiMLgSfvNRGnfAeyNE
-	5PHLmpVdi/qY3rGsYu4OUPT6z3l/vylSj7E5SnlV4jo7FRDbFdteQlq+tgN/8W5Q
-	gwZ8OImzIPJZRMmcWNPZ1uKpNfwmOHiCub35M5UiCK8bBVsm/jTysvlTCM8dI/ir
-	d9LmASIfUs3AHs/tTrtPSf4+9TwzoBwcOSuwz55DWJQzXGgosJ6ZECEfCtg==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twbut8m8-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=1DHUaP74AMQppECn/ZrerIIPW7z101gPGPe
+	GO6ArAbQ=; b=IH72q+776nyU1rU010tfB7QqBFYaFEhA3BlhvR1PZY44fKa1gky
+	LLtltt/jZK4DrutcASNs5CU+AEuktPzq/vcKfVK22JDnmcOKT8zAGwXzAeXZ1k6U
+	FNEqEWT8JfEY9XQyhiOZdesE4Wp20mm6JdE0FuWm6nFxRt2l3SduQWZBAUczwUAV
+	ix67gy7rXqyOuKpy0P4O0uK6hgXjQAt/BV/Y33EFDl6V+EK4wyanxZPcKCoLUWDV
+	xWvYS7wx6wB+3ttrX7J4/WTyWydaygoGCgk9+tMQ8q3pOD9bxHelNGK+J7umHNNA
+	Q7GScUVmh0soJ3RzhkX1fsTEcM80EA8sIkw==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twcrtcm4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Apr 2025 11:31:33 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 53BBVVoA021659;
-	Fri, 11 Apr 2025 11:31:31 GMT
+	Fri, 11 Apr 2025 11:35:51 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 53BBZlOP031877;
+	Fri, 11 Apr 2025 11:35:47 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 45uek59m35-1
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 45ue7gawya-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Apr 2025 11:31:31 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53BBVU11021648;
-	Fri, 11 Apr 2025 11:31:30 GMT
-Received: from cbsp-sh-gv.ap.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 53BBVUIX021646
+	Fri, 11 Apr 2025 11:35:47 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53BBZlhm031872;
+	Fri, 11 Apr 2025 11:35:47 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.213.110.207])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 53BBZlAs031871
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Apr 2025 11:31:30 +0000
-Received: by cbsp-sh-gv.ap.qualcomm.com (Postfix, from userid 4635958)
-	id 7D9D640C49; Fri, 11 Apr 2025 19:31:29 +0800 (CST)
-From: Wenbin Yao <quic_wenbyao@quicinc.com>
-To: vkoul@kernel.org, kishon@kernel.org, p.zabel@pengutronix.de,
-        dmitry.baryshkov@linaro.org, abel.vesa@linaro.org,
-        quic_qianyu@quicinc.com, neil.armstrong@linaro.org,
-        manivannan.sadhasivam@linaro.org, quic_devipriy@quicinc.com,
-        konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-Cc: krishna.chundru@oss.qualcomm.com, quic_vbadigan@quicinc.com,
-        quic_mrana@quicinc.com, quic_cang@quicinc.com,
-        quic_wenbyao@quicinc.com,
-        Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Subject: [PATCH v7 2/2] phy: qcom: qmp-pcie: Add PHY register retention support
-Date: Fri, 11 Apr 2025 19:31:20 +0800
-Message-Id: <20250411113120.651363-3-quic_wenbyao@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250411113120.651363-1-quic_wenbyao@quicinc.com>
-References: <20250411113120.651363-1-quic_wenbyao@quicinc.com>
+	Fri, 11 Apr 2025 11:35:47 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 429934)
+	id 4C9DB24077; Fri, 11 Apr 2025 17:05:46 +0530 (+0530)
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+To: alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, jarkko.nikula@linux.intel.com,
+        linux-i3c@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: andersson@kernel.org, konradybcio@kernel.org,
+        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Subject: [PATCH v4 0/3] Add Qualcomm i3c controller driver support
+Date: Fri, 11 Apr 2025 17:05:13 +0530
+Message-Id: <20250411113516.87958-1-quic_msavaliy@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,200 +84,128 @@ X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: B5svodJovmLB9IxMt33_4H8hHGtfERUv
-X-Proofpoint-ORIG-GUID: B5svodJovmLB9IxMt33_4H8hHGtfERUv
-X-Authority-Analysis: v=2.4 cv=dbeA3WXe c=1 sm=1 tr=0 ts=67f8fd95 cx=c_pps a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=pGLkceISAAAA:8 a=tqIfmRrofTIwFCb1_2sA:9 a=TjNXssC_j7lpFel5tvFf:22
- a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: h0MxjwWz2nbjaw6zGpp4RnYX1Saz_DKa
+X-Authority-Analysis: v=2.4 cv=QuVe3Uyd c=1 sm=1 tr=0 ts=67f8fe98 cx=c_pps a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=DtHcpr2ulf37o_V7ZmQA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: h0MxjwWz2nbjaw6zGpp4RnYX1Saz_DKa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-11_04,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 mlxlogscore=999 phishscore=0 mlxscore=0 spamscore=0
- malwarescore=0 clxscore=1011 adultscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504110073
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ spamscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501
+ clxscore=1015 phishscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504110074
 
-From: Qiang Yu <quic_qianyu@quicinc.com>
+This patchset adds i3c controller support for the qualcomm's QUPV3 based 
+Serial engine (SE) hardware controller. 
 
-Some QCOM PCIe PHYs support no_csr reset. Unlike BCR reset which resets the
-whole PHY (hardware and register), no_csr reset only resets PHY hardware
-but retains register values, which means PHY setting can be skipped during
-PHY init if PCIe link is enabled in bootloader and only no_csr is toggled
-after that.
+The I3C SE(Serial Engine) controller implements I3C master functionality
+as defined in the MIPI Specifications for I3C, Version 1.0. 
 
-Hence, determine whether the PHY has been enabled in bootloader by
-verifying QPHY_START_CTRL register. If it's programmed and no_csr reset is
-available, skip BCR reset and PHY register setting to establish the PCIe
-link with bootloader - programmed PHY settings.
+This patchset was tested on Kailua SM8550 MTP device and data transfer
+has been tested in I3C SDR mode.
 
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 69 ++++++++++++++++++++----
- 1 file changed, 59 insertions(+), 10 deletions(-)
+Features tested and supported :
+  Standard CCC commands.
+  I3C SDR mode private transfers in PIO mode.
+  I2C transfers in PIO mode.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 3fd911506f08..ab90aafb313e 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -3033,6 +3033,7 @@ struct qmp_pcie {
- 
- 	const struct qmp_phy_cfg *cfg;
- 	bool tcsr_4ln_config;
-+	bool skip_init;
- 
- 	void __iomem *serdes;
- 	void __iomem *pcs;
-@@ -4330,18 +4331,38 @@ static int qmp_pcie_init(struct phy *phy)
- {
- 	struct qmp_pcie *qmp = phy_get_drvdata(phy);
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
-+	void __iomem *pcs = qmp->pcs;
-+	bool phy_initialized = !!(readl(pcs + cfg->regs[QPHY_START_CTRL]));
- 	int ret;
- 
-+	qmp->skip_init = qmp->nocsr_reset && phy_initialized;
-+	/*
-+	 * We need to check the existence of init sequences in two cases:
-+	 * 1. The PHY doesn't support no_csr reset.
-+	 * 2. The PHY supports no_csr reset but isn't initialized by bootloader.
-+	 * As we can't skip init in these two cases.
-+	 */
-+	if (!qmp->skip_init && !cfg->tbls.serdes_num) {
-+		dev_err(qmp->dev, "Init sequence not available\n");
-+		return -ENODATA;
-+	}
-+
- 	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
- 	if (ret) {
- 		dev_err(qmp->dev, "failed to enable regulators, err=%d\n", ret);
- 		return ret;
- 	}
- 
--	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
--	if (ret) {
--		dev_err(qmp->dev, "reset assert failed\n");
--		goto err_disable_regulators;
-+	/*
-+	 * Toggle BCR reset for PHY that doesn't support no_csr reset or has not
-+	 * been initialized.
-+	 */
-+	if (!qmp->skip_init) {
-+		ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-+		if (ret) {
-+			dev_err(qmp->dev, "reset assert failed\n");
-+			goto err_disable_regulators;
-+		}
- 	}
- 
- 	ret = reset_control_assert(qmp->nocsr_reset);
-@@ -4352,10 +4373,12 @@ static int qmp_pcie_init(struct phy *phy)
- 
- 	usleep_range(200, 300);
- 
--	ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
--	if (ret) {
--		dev_err(qmp->dev, "reset deassert failed\n");
--		goto err_assert_reset;
-+	if (!qmp->skip_init) {
-+		ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
-+		if (ret) {
-+			dev_err(qmp->dev, "reset deassert failed\n");
-+			goto err_assert_reset;
-+		}
- 	}
- 
- 	ret = clk_bulk_prepare_enable(ARRAY_SIZE(qmp_pciephy_clk_l), qmp->clks);
-@@ -4365,7 +4388,8 @@ static int qmp_pcie_init(struct phy *phy)
- 	return 0;
- 
- err_assert_reset:
--	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-+	if (!qmp->skip_init)
-+		reset_control_bulk_assert(cfg->num_resets, qmp->resets);
- err_disable_regulators:
- 	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
- 
-@@ -4377,7 +4401,10 @@ static int qmp_pcie_exit(struct phy *phy)
- 	struct qmp_pcie *qmp = phy_get_drvdata(phy);
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
- 
--	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-+	if (qmp->nocsr_reset)
-+		reset_control_assert(qmp->nocsr_reset);
-+	else
-+		reset_control_bulk_assert(cfg->num_resets, qmp->resets);
- 
- 	clk_bulk_disable_unprepare(ARRAY_SIZE(qmp_pciephy_clk_l), qmp->clks);
- 
-@@ -4396,6 +4423,13 @@ static int qmp_pcie_power_on(struct phy *phy)
- 	unsigned int mask, val;
- 	int ret;
- 
-+	/*
-+	 * Write CSR register for PHY that doesn't support no_csr reset or has not
-+	 * been initialized.
-+	 */
-+	if (qmp->skip_init)
-+		goto skip_tbls_init;
-+
- 	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
- 			cfg->pwrdn_ctrl);
- 
-@@ -4407,6 +4441,7 @@ static int qmp_pcie_power_on(struct phy *phy)
- 	qmp_pcie_init_registers(qmp, &cfg->tbls);
- 	qmp_pcie_init_registers(qmp, mode_tbls);
- 
-+skip_tbls_init:
- 	ret = clk_bulk_prepare_enable(qmp->num_pipe_clks, qmp->pipe_clks);
- 	if (ret)
- 		return ret;
-@@ -4417,6 +4452,9 @@ static int qmp_pcie_power_on(struct phy *phy)
- 		goto err_disable_pipe_clk;
- 	}
- 
-+	if (qmp->skip_init)
-+		goto skip_serdes_start;
-+
- 	/* Pull PHY out of reset state */
- 	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
- 
-@@ -4426,6 +4464,7 @@ static int qmp_pcie_power_on(struct phy *phy)
- 	if (!cfg->skip_start_delay)
- 		usleep_range(1000, 1200);
- 
-+skip_serdes_start:
- 	status = pcs + cfg->regs[QPHY_PCS_STATUS];
- 	mask = cfg->phy_status;
- 	ret = readl_poll_timeout(status, val, !(val & mask), 200,
-@@ -4450,6 +4489,15 @@ static int qmp_pcie_power_off(struct phy *phy)
- 
- 	clk_bulk_disable_unprepare(qmp->num_pipe_clks, qmp->pipe_clks);
- 
-+	/*
-+	 * While powering off the PHY, only qmp->nocsr_reset needs to be checked. In
-+	 * this way, no matter whether the PHY settings were initially programmed by
-+	 * bootloader or PHY driver itself, we can reuse them when PHY is powered on
-+	 * next time.
-+	 */
-+	if (qmp->nocsr_reset)
-+		goto skip_phy_deinit;
-+
- 	/* PHY reset */
- 	qphy_setbits(qmp->pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
- 
-@@ -4461,6 +4509,7 @@ static int qmp_pcie_power_off(struct phy *phy)
- 	qphy_clrbits(qmp->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
- 			cfg->pwrdn_ctrl);
- 
-+skip_phy_deinit:
- 	return 0;
- }
- 
+Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+----
+Link to V3: https://lore.kernel.org/lkml/20250403134644.3935983-1-quic_msavaliy@quicinc.com/T/
+v3->v4:
+ - Dropped "clock-names" property from dt-bindings as suggested by krzysztof.
+ - Makefile: Correct order sequence for i3c-qcom-geni.c.
+ - Indentation corrected around print statement.
+ - geni_i3c_probe() : Exit with return 0 instead of ret for success.
+ - Added sparse annotations around i3c_geni_runtime_get_mutex_lock()/_unlock().
+
+Link to V2: https://patchwork.kernel.org/project/linux-arm-msm/cover/20250326141641.3471906-1-quic_msavaliy@quicinc.com/
+v2 -> v3:
+ - Removed "master" word from compatible and dt-bindings filename.
+ - Changed compatible qcom,i3c-master to qcom,geni-i3c.
+ - Renamed qcom,i3c-master.yaml to qcom,geni-i3c.yaml matchin to compatible name.
+ - Removed const from compatible property from yaml.
+ - Changed driver file name from qcom-i3c-master.c to i3c-qcom-geni.c.
+ - Changed Kconfig and Makefile accordingly as per driver filename changes.
+ - Changed se-clk to se inside devm_clk_get(&pdev->dev, "se-clk").
+ - Removed "se-clock-frequency" read from DTSI and fixed frequency within driver.
+
+Link to V1: https://lore.kernel.org/lkml/20250205143109.2955321-1-quic_msavaliy@quicinc.com/
+v1-> v2 :
+ - Removed bindings word from subject title of dt-bindings patch.
+ - Use Controller name instead of Master as per MIPI alliance guidance and updated title.
+ - Added description field for the i3c master into dt-bindings.
+ - Changed title to "Qualcomm Geni based QUP I3C Controller".
+ - Changed compatible to "qcom,i3c-master" matching dt-binding file and driver.
+ - Changed "interrupts-extended" property to "interrupts" as suggested by krzysztof.
+ - Dropped reg, clock minItems and added maxItems similar to other dt-bindings.
+ - Removed clock-names property from dt-bindings suggested by Krzysztof, Bjorn.
+ - Set "se-clock-frequency"  set it within drivers as suggested by Rob.
+ - Removed "dfs-index" property and manage it within driver as suggested by Rob.
+ - Removed "interrupts" maxItems as we need only 1 interrupt in this change.
+ - Added comment for mutex lock mentioning purpose in sruct geni_i3c_dev .
+ - Return with dev_err_probe() instead of error log and then return -ENXIO from probe().
+ - Removed dev_dbg(&pdev->dev, "Geni I3C probed\n") print log as suggested by krzysztof.
+ - Removed CONFIG_PM and else part around runtime PM operations following other drivers.
+ - Removed Module alias MODULE_ALIAS("platform:geni_i3c_master").
+ - Replaced MASTER with GENI in the Title of MAINTAINER file.
+ - Removed duplications from the commit log and removed unwanted statement.
+ - Formatted license and copyright similar to other files.
+ - Removed SLV_ADDR_MSK and used FIELD_PREP/FIELD_GET instead of local bit shifting operations.
+ - Used direct bit positions for each internal Error bit of DM_I3C_CB_ERR.
+ - Removed Unused SLV_ADDR_MSK and added SLAVE_ADDR_MASK as GENMASK(15,9).
+ - Renamed spinlock as irq_lock.
+ - Removed dfs_idx from geni_i3c_dev and made it local inside qcom_geni_i3c_conf().
+ - Use boolean cur_is_write instead of enum i3c_trans_dir/gi3c->cur_rnw.
+ - Used DECLARE_BITMAP and related set/clear_bit APIs instead of manual operation.
+ - Inline the error messages from geni_i3c_err_log directly to improve readability
+   and avoid unnecessary jumps caused by the geni_i3c_err_code enum.
+ - Converted clk_src_freq of struct geni_i3c_clk_settings to HZ.
+ - Removed unwanted debug logs from geni_i3c_clk_map_idx().
+ - clk_od_fld and itr renamed to clk_od_idx and clk_idx respectively to map actual usage.
+ - Added se-clock-frequency to be read from DTSI, if none, then default to 100MHz source.
+ - Changed Error log during bus_init() if OD and PP mode frequencies avaiable or not.
+ - Used FIELD_PREP and standard BIT operations inside qcom_geni_i3c_conf() instead manual shifting.
+ - Removed unnecessary parentheses from geni_i3c_irq().
+ - Moved geni_se_abort_m_cmd() implementation to a new helper function geni_i3c_abort_xfer().
+ - Removed unwanted reinitialization of cur_len, cur_idx, cur_rnw from _i3c_geni_execute_command().
+ - Removed dev_dbg logs which were meant for developmental debug purpose.
+ - Removed unnecessary check nxfers <= 0 from geni_i3c_master_priv_xfers().
+ - Replaced devm_kzalloc() by kzalloc() inside geni_i3c_master_attach_i2c_dev() to use
+   kfree() from counter function geni_i3c_master_detach_i2c_dev().
+ - Replaced devm_kzalloc() by kzalloc() inside geni_i3c_master_attach_i3c_dev() to use
+   kfree() from counter function geni_i3c_master_detach_i3c_dev().   
+ - Removed geni_i3c_master_reattach_i3c_dev() function as default returns 0.
+ - Removed goto label from geni_i3c_master_bus_init() by reorganizing internal code.
+   Also used i3c_geni_runtime_get_mutex_lock()/unlock() instead of get_sync() similar to other places.
+ - Added indent to fallthrough for switch cases inside geni_i3c_master_supports_ccc_cmd().
+ - Renamed i3c_geni_rsrcs_init() to i3c_geni_resources_init().
+ - Changed devm_ioremap_resource() to devm_platform_ioremap_resource(), removed platform_get_resource().
+ - Replaced dev_err() with dev_err_probe() for core clock named se-clk.
+ - Removed development debug prints for votings from gi3c->se.icc_paths.
+ - Probe(): Changed all dev_err() to dev_error_probe() with proper log messages.
+ - Probe(): Moved static resource allocation immediately after gi3c object allocation.
+ - Probe(): Disabled PM if i3c master registration fails during probe().
+ - Remove(): Unregister master first and then added Disable of PM as opposite to probe().
+ - Removed I3C_CCC_ENTHDR support as it's not supported.
+----
+Mukesh Kumar Savaliya (3):
+  dt-bindings: i3c: Add support for Qualcomm I3C controller
+  i3c: master: Add Qualcomm I3C controller driver
+  MAINTAINERS: Add maintainer for Qualcomm's I3C controller driver
+
+ .../bindings/i3c/qcom,geni-i3c.yaml           |   59 +
+ MAINTAINERS                                   |    8 +
+ drivers/i3c/master/Kconfig                    |   13 +
+ drivers/i3c/master/Makefile                   |    1 +
+ drivers/i3c/master/i3c-qcom-geni.c            | 1101 +++++++++++++++++
+ 5 files changed, 1182 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/i3c/qcom,geni-i3c.yaml
+ create mode 100644 drivers/i3c/master/i3c-qcom-geni.c
+
 -- 
-2.34.1
+2.25.1
 
 
