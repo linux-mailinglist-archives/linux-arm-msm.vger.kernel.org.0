@@ -1,215 +1,345 @@
-Return-Path: <linux-arm-msm+bounces-54079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A99D0A869F8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Apr 2025 03:18:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80076A86A02
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Apr 2025 03:23:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9B89B902485
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Apr 2025 01:18:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7DA811BA3E10
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Apr 2025 01:23:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFE6218B03;
-	Sat, 12 Apr 2025 01:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F15C95BAF0;
+	Sat, 12 Apr 2025 01:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="n62rH6Db";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="FKSCNkFC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l24Gzsz7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6352A846F;
-	Sat, 12 Apr 2025 01:18:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744420697; cv=fail; b=pjvdLhe4bj4VaTioVNLa4WpkYu3gXsUwfnL5uhDNKArtmznwjVw1/XonuH7Pw4zHqfFlTUXoHcg532KOdhT0r7T9BWpALx2IqinqibHguIKnZmBb/FlWPeyQOkdfiIJutB0MO+mJJxyiHdxTKFb7gPs0K/lB4xk//7G0QuQ2bU0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744420697; c=relaxed/simple;
-	bh=0HSA/Wqo0IE5s9RJQSOXNw5qv+3WVUPr/2LGrbgNl44=;
-	h=To:Cc:Subject:From:In-Reply-To:Message-ID:References:Date:
-	 Content-Type:MIME-Version; b=TFKX5WQljZ97g9tvE1aTSaaU7ji4o5GlCDwvZkJ+Eqvl40XHv1ebZRvltgnMr5DwnYSURdB9fiBra/BnNLre0GryhwPL45Wd/YPkUHpovnQUFQBFQ2CxOm8ihMS1tDbD5RnP1DUnS9UxbZNLvV+qZMkrpwjiZcoOBXJRXydrZQg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=n62rH6Db; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=FKSCNkFC; arc=fail smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BLHhhO030641;
-	Sat, 12 Apr 2025 01:18:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=corp-2023-11-20; bh=7ypKL8MWJJg1c1u2sx
-	JtTKmCRgyYCaXesG6R7+drnqk=; b=n62rH6DbMbn5Rs9Db3efgfKwMTVgnDY4Ds
-	wp2jDd0l+SSfS9fbrqbJ5+VKfIG4tAJIBuVMv4g0M2AhqZhDICzIIHhC8qLz9Q5u
-	jsiUmbAC09EtkgyMB/u/XGTu/JZK/rcdxoH9DQ8U9jjtINOIxKEjRZ07IjUxUa6q
-	qcJjr/rzH0L1B6tUG3QYBpLITi4t+fEDAz0P0j/uZfuTd9Roy0zbjgbMwgA5roJP
-	DgC+nlRz77Ke2Hq867jiHq2BCI9kx+62njH2cYPWl0qGStKyhg2vJqPfTXhoVhDZ
-	DyaISn6QbW+6Lq2yt7kA9emw07TWIIWDdQPzFg7bAjVwgSEnamIg==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45y9fe0k0s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sat, 12 Apr 2025 01:18:07 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 53C0O2RS016340;
-	Sat, 12 Apr 2025 01:18:06 GMT
-Received: from nam10-bn7-obe.outbound.protection.outlook.com (mail-bn7nam10lp2040.outbound.protection.outlook.com [104.47.70.40])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 45ttyebj3f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sat, 12 Apr 2025 01:18:06 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WRd9M2aYwNCBmWd32xc25ILGr5/oZ1X4Ip9cXgvq+xwnwUaxlRxDaNygu4xrZKMvNwp00eL9XvdcOdQ3L7yrN2yYrJtafb/uiO7NBovgmRL6RViT1mPwCZzz7BFOLFAg0tMcr3J93E2gGL3laL9i/aqtV72q2jWGxAO3Np1x8US9VSSLpVB44u3C/N9UqquZPQNqUt+PBKej+WvP80zR1eQlzIpkFbj5L0g7fwMFvcjEtDlIB2+LEzHqLQxpHYPlFuNW6srVqNR1+Cu3dfA0+MR0z0c0FQgfi09mkhvPQyqStucEysCD0ZYTkxEyH6eTmxmbrRn2njQxXHH7b9fD5A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7ypKL8MWJJg1c1u2sxJtTKmCRgyYCaXesG6R7+drnqk=;
- b=KSDFmCUuDdltbHT9PDrpnMJ9ySe202P0FCC+Ora8RKDNVADau0bltsjIjsS5JNcdXNOdHukvnmqw6KJcMC8n0o/4aUN9/3IfBw65vhgDT3kpyRxrt3qNGhw4UNh4/Mz1rGE96XGQDkepgLoTafkIg74+TtBMkMod26gyf1AVsilvM2RgGamfoQM1VB3/NrtjcdVZusw7RW1KZdCcqvl4w3kP14e57ZCiDMLOPBRf742daBdCoxt9EypFLDMcEGFKKm/eAQygxFudZm2ziC+OSUde9fPOG02Ts3tnvI8sL1y/bMZ74MFM7aaVtSD8ywsGQoVz9ghYSrnLSfwGQbryrw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7ypKL8MWJJg1c1u2sxJtTKmCRgyYCaXesG6R7+drnqk=;
- b=FKSCNkFCR/JwCG0BD0ffct1X9V5o80QrIWCU3sN0DR2hFcJy0TzMVvNFnWx5Pq+5NowEu0DLOXZ47WXeBibWZXVXiu5s//Sdfz/EChMYp2Vz8LejOkl0m/Wa320UDgermrwKBaeS/u8UkHMz5IPD0y+uZfeDG6JwySZd3OrGzcY=
-Received: from CH0PR10MB5338.namprd10.prod.outlook.com (2603:10b6:610:cb::8)
- by LV3PR10MB8129.namprd10.prod.outlook.com (2603:10b6:408:285::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8606.33; Sat, 12 Apr
- 2025 01:17:59 +0000
-Received: from CH0PR10MB5338.namprd10.prod.outlook.com
- ([fe80::5cca:2bcc:cedb:d9bf]) by CH0PR10MB5338.namprd10.prod.outlook.com
- ([fe80::5cca:2bcc:cedb:d9bf%3]) with mapi id 15.20.8632.025; Sat, 12 Apr 2025
- 01:17:59 +0000
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: linux-scsi@vger.kernel.org, linux-block@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        Bartosz
- Golaszewski <brgl@bgdev.pl>,
-        Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov
- <dmitry.baryshkov@oss.qualcomm.com>,
-        Jens Axboe <axboe@kernel.dk>, Konrad Dybcio <konradybcio@kernel.org>,
-        Manivannan Sadhasivam
- <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v13 0/3] Support for wrapped inline encryption keys on
- Qualcomm SoCs
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-In-Reply-To: <20250404231533.174419-1-ebiggers@kernel.org> (Eric Biggers's
-	message of "Fri, 4 Apr 2025 16:15:29 -0700")
-Organization: Oracle Corporation
-Message-ID: <yq1ecxyjhzd.fsf@ca-mkp.ca.oracle.com>
-References: <20250404231533.174419-1-ebiggers@kernel.org>
-Date: Fri, 11 Apr 2025 21:17:57 -0400
-Content-Type: text/plain
-X-ClientProxiedBy: BN9PR03CA0405.namprd03.prod.outlook.com
- (2603:10b6:408:111::20) To CH0PR10MB5338.namprd10.prod.outlook.com
- (2603:10b6:610:cb::8)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E265C11187;
+	Sat, 12 Apr 2025 01:23:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744420999; cv=none; b=qKkZCrZhB6Im0EKUr11F6dvLkDXuHykSqyRQn6HbydwUwGcNFkp5s+K2bOsAy+FRTpNHE9rV4p86tFJ9GBK5U063Ex7SFbWk8HmLEiGQwCTvnqvdtHO7vJ0w7kkKdwGcsQsRwfS8ep1+9a4eoHy/JUtJ8H2xEllGXnQKlQ19zyw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744420999; c=relaxed/simple;
+	bh=0mCJVe8TTb2UIxIF/UGKrmXjaUlh66LkTiTtAUDB5II=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=koD5l2mdZZTGr2MW8lznlTLktYJlg5ssPT7vQ9/YsCEdgX+Kww2AgFASFtXLo6mXsPM2DJmuUojKGpeEKlk6F3+YB/muOZiDCD7T+JaJ7gyqkGf/PoyZuBjROR+tBuxm7EjYFGNKMioS8e3VRA1f+yKCXb/ksg0XFPEC0crCn2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l24Gzsz7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BKciZb006137;
+	Sat, 12 Apr 2025 01:22:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	G+SGYWnsxqV23r5rh4Lb1DM3+LYlYqfoEe9WSuOpclE=; b=l24Gzsz7wFiN4TrN
+	83io4tZdEBd4l4ayxuz4XZ17moKFwp8iActqhJ2WU7FBcjqzhU20Mfw7xoq1YZ2Y
+	WBpfUeGCOUsIeP0bA6Jp4bBLLGOcMNhT1mINkCBATmZAF0uM1cU9DiB2dKgqD3yq
+	67UHw3FU7agr0PTaOXpMWym7VNHqsLRqs3jODaKtnTwveRiFxA+4nL600zc7LUxV
+	amGHj/vxyXoPBWkfM7Jt0/AK6hT+Yzk9hFxqy2DBvGsDD8FogSEiHpgcbP8PIFgc
+	8f7yItI5OE9d1R8gDCtMw+gZagdC6KHBEFPuyOq2MGQInoVeH0rlY1ICfdAkVynN
+	CFL72w==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twpmkyf3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 12 Apr 2025 01:22:54 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53C1MrSY011849
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 12 Apr 2025 01:22:53 GMT
+Received: from [10.216.45.179] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 11 Apr
+ 2025 18:22:47 -0700
+Message-ID: <1c0b2217-49d9-360c-ed60-db517eaf2ccc@quicinc.com>
+Date: Sat, 12 Apr 2025 06:52:43 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH0PR10MB5338:EE_|LV3PR10MB8129:EE_
-X-MS-Office365-Filtering-Correlation-Id: 15fb5815-3bf3-437e-af9d-08dd795fdcc4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?qARDgTBEDD93aQNViyOg2eeuccsvDVxlqOF8Z0LC22RvyiE+iE8WGZnmfnAZ?=
- =?us-ascii?Q?KdPNb4bREItCUekh85uXTW3BR1BCrUMyGrjDjEqqR/xD/218iRPWagoa09j0?=
- =?us-ascii?Q?VyhOJRy19O10kBAaLbpVAH+TI18O9ALP3Zjaau5a5EA865EChUOqJgy+qIKj?=
- =?us-ascii?Q?W+tINLcVLKBopi8iuMCr2ZlCObj+WfSp0YBrK4/hEnWzd4+XEs2+RqaC+2q+?=
- =?us-ascii?Q?Xx/4ojh8WDJohI4/IYhHTefxy3QvY+qoy8Owvz3RhI1RhkQ7khIVueEeAjwV?=
- =?us-ascii?Q?mceujqI6s/YkekQ9Ik8nzNdn2gZU2NkfIB+n1Q1R9tNGElarFRfSmHnltlSs?=
- =?us-ascii?Q?/VKDzJiW7CgKtWnffCpIumzku4977Q6jRCzHxzVmPosn4LBsmIraDglBZW5t?=
- =?us-ascii?Q?ZQZ1oPZL0I3IBMamnRZX9Eb0LKsRNMtOI5NMw8KsvNWsylz/ESX7Z9HSarpi?=
- =?us-ascii?Q?CCmwEL9ukZEaFl2Ul1YAGcMECzWe42K2ywWHyIGiTI1p2wWoZEXj2n0Itn8a?=
- =?us-ascii?Q?TJSWBR1+GVEDDwIp7Oo4mF/Dlu5pEFCdNSghJQunB/vpHC2lUF5EXRtCA+cY?=
- =?us-ascii?Q?EDqRGbp+4hbu+Q9kEivuYfZ0IBflWlEbsG2jI8xEHHvGNEIpiXTHlq7yVvKz?=
- =?us-ascii?Q?oIVA9SpyatbjqKEtXByZtk/Q4kQTMqyHyVAZgwMCfoK8Y4nDfiizPOSj2k+A?=
- =?us-ascii?Q?hIQbjTEn1T9aCJdpoRFI1/4OdpxSjTzqu4gtuhkrY8NMATinEUK+aT/YpaLc?=
- =?us-ascii?Q?wMc4PZOqZp9qTgFjhKHZFPvyD0eVjOUZv5vodXFaWScGXF6nBCv+HaoJ1NhI?=
- =?us-ascii?Q?KCjLkgByiUKHfe48qxszH8fhR0lhwl+twcr+I+91/JQcyCqqCENiNxYyIYic?=
- =?us-ascii?Q?FGTV6zT9Cip17bDxQfE1aVHc/lcRivE4gGnlPv5HxMXyNuH5xYtcNp0cshzk?=
- =?us-ascii?Q?iN4zsG7L99mQ1ENVbiIM4LRiG2zxL5na6oxzekwbucaiaFMgJojvzbWvWuxh?=
- =?us-ascii?Q?PaxoVNjfS6Xf0bw+XM+BQ/NVl78Rv036XZNTutFRd/Z1SnOtOMT88z3x+Dmv?=
- =?us-ascii?Q?7LdIN/sflH3uCgFD27+U9yalQFAWXzVHHOf/60oNs+TGVoXMxxGFt60mxQvA?=
- =?us-ascii?Q?WWdt44HA3vPMOXrFAwhYxpTaK7nUP5TPS1dFD/X3kZXhNjiNt0tjdRZvbeWv?=
- =?us-ascii?Q?gvSHlTIeKRfM+9lwbz9AN9VCfIJYnExDRviom8/uy+3W8s9+PmcNmzU38mjm?=
- =?us-ascii?Q?kXO8qyRaT8tTiOSVpn9NWLWueK8eps2dXnLNddRWs+/vi8iYPzbrC1wftio5?=
- =?us-ascii?Q?cSsbL2wZUQrMeK/lvp9yM0TLtxzq17YIB9VTtBIgwprloQXRc3mMFY8uxEi2?=
- =?us-ascii?Q?OhTAS4ZgUDU85LXnyijq6Se4bP9WRhr+AN5khbX9w6Slr2GuetwFRPOerA81?=
- =?us-ascii?Q?RHz8O1W/1a8=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR10MB5338.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?us5+Heh6YArXO/X9t2Pb5d3sd64wVWh0qYQVmNDy6t56HnrOu46xTlNue6fc?=
- =?us-ascii?Q?fsSoAQKva6U4w5FNWnoElUT7Znp2s3cXzkqWq0dVCXCocY3obLZvS0/HIRlO?=
- =?us-ascii?Q?QxN+BG1XbUUumSijryHGG5le1eAWCHHv62PjPKdCU5Ln7XMD7B0bEPkAulAW?=
- =?us-ascii?Q?YeSZrW2MbIcl0yKKeLUDUJ0ZGoZ4VORff1RM9p+EgRp09LdW/NXtaaqNkYVW?=
- =?us-ascii?Q?iOZtFdC/BAMm1bSyooyxMQ7STiOolhQTPEeSxprAX3qIUyvH40dyqygEGrTU?=
- =?us-ascii?Q?3ekZJZufGY3HCnnvqFGwbK5N7CMRjyuufEv+uiwRavAWzYvHavrGCPjVhg/o?=
- =?us-ascii?Q?Bu1uy3oplJdVekHiuO9RWMQZvcDBJsCN4yjMaUzGxwyxCr7ILCJo7Bp2Dx+f?=
- =?us-ascii?Q?aWIMToqrDYy3sbJAccveasXoyq13RTr0zeLS1xe7uyCOlif+00z+OEVvArRk?=
- =?us-ascii?Q?vFYCNt9KwZwjnTH3lkwNfdYtrslDt0jgIMwbcXffZcWVePs3ih/TtNxDnP2h?=
- =?us-ascii?Q?Q2NpodH6IGApYdGOZTUwaFAUZJkeOd9mzgDI7Guz/e+YPNPFSSTAVhOzh+5m?=
- =?us-ascii?Q?e2bLc0/kE5kTQxo6scdO8iYcNymCIK8u8qMmkxYEoI8aYnD6axSlOmyUZl0B?=
- =?us-ascii?Q?eJhtmyO0+zv4TAsFNnnEn02KNTbuOpo9rtMpEJMyflRKV9NBV/xFIbGBjUfM?=
- =?us-ascii?Q?N7BMKENsIyUbqLkUTc1WWOxNO6L0NH9ER4sldZ4cc3N4s/83gHOanBUl0ad0?=
- =?us-ascii?Q?ajO5awUoHjNQee8Ft5SiMQLJKRbVlSu/PyNiOiO3j1JGNyiD4WQCPIbbDtBX?=
- =?us-ascii?Q?KfWMfPu+PWqjQvm4oj3uLRtO9yQeIWYKGGZpGQ1+krOnWSFRVtitwjtBD9Fz?=
- =?us-ascii?Q?dAvbJNOqJpFnp/CSX6YXpsuGGojSK3u1+4+TJafdIpOqTEYczotZ8JSUDrbg?=
- =?us-ascii?Q?Z+iyR6UhublZvqkrdWS7JSQ6j/iVxgIJm3qFkQCop3hY+rWQFoOfm3luw9DI?=
- =?us-ascii?Q?dGPmbHhKnblCpNgVH2JM4KBvUJrZDIAaoiOYjrk/k7yY1wVGGYGjx6rV/6iN?=
- =?us-ascii?Q?qRF76/Yunn7WqNIR5lZt84CAUz1tGkPLbwbXEJNDCDBxhCKRO6ZKqanGMw0C?=
- =?us-ascii?Q?hRU4vzWgetyk8mx7SwoxUNoieaZo9Yh3fxR4iRdgE7Rs0PSk8jNCsIbUhE/B?=
- =?us-ascii?Q?k6kZ0hPzGntprsQBFulGewpd/refkidzc+DtGYMRkjFTMTowPyzQ7YZ/2F4S?=
- =?us-ascii?Q?ickUHrrPbfSkq8E3cPEnX1vVKC2ac6w4WZEh1LXpf+zvFOOAEpJWhz6a0KoQ?=
- =?us-ascii?Q?LDpuGO1JV3Id/Gyleg+PlWyGZ2gmuWX7CLt3LO9Zg4BskCdGBrdzDCWIC9g1?=
- =?us-ascii?Q?UGbt93ihCQu35olllRznBOvsnlY2ILWB7gpoavn57ZVH6tzZuW73W1FZd1XE?=
- =?us-ascii?Q?tQRswVGICw4zXuNU7Sk1lmUqXtU1MCWEW7tIkpS2FRrN0Iw3jSIOzXOguC8v?=
- =?us-ascii?Q?9nEO5/1BTa/lzl0kFkQJZSWq8fq7g/LIS1aFtpZvZS1KGWx14TNVh2IjP4p/?=
- =?us-ascii?Q?+dFJVcykYFqPyjtkQwMd0PXUayEGke/q19AFIRdrDcNvjeOpqcRQP9aUSQ6X?=
- =?us-ascii?Q?Qg=3D=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	fbE2otAt3z888MsfL/GO0Xlq4Vne1+2nXJLxHL6rOJ3ddv/jct1RSNmsC8i/ja1ouRz/+L/bqpJMbzrGyDwEizmOfRFviwlIYRfbxHtD4LwZHMzw8Q7W5JoNflbcODPdw6dPTPyWMJWRvRnfwmfvjp8LzsklQ8U6qpDKhIHlY/m3gzLnpHyy7igXQ8r6NLQvvAUwREtMZRW6XEP87kRywBHyGbt0cFuASfGj8Bc85uolfmdKi3NsrnhUcKKP4v6GVcebuDLxl5SaD9qgCn0DXcFfi992oxFak66Al7SuESzFmsNWyDF9bFc9stQKspiKwlaNzqPT5NJa5PpLXum1ddiD0uqTX+tngVVFJA5Rn+7XPrfQde3/U0BIIP5dyQK6aLpbVAAcDymeqMtNl0MyVrohFgxr/2WxQSz6zcuUwwR33NsPSAdMWu4bJX3UApIn+sXoGRUA3VODKVhohq377Y08iqbGBJPrc+lQtzyrTyAgCc0q0V5e7qR35rgq5Z1U6ozUNMB4cgAobzLfw0pcSKqWoWdVfv/LJ6A98lsJx02wu+6uuH65cDv5QxREMDDGR8UKBYq2VpXLgwOdWvGbHQsV2GDy0HX8AeGpjMy8lbY=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 15fb5815-3bf3-437e-af9d-08dd795fdcc4
-X-MS-Exchange-CrossTenant-AuthSource: CH0PR10MB5338.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Apr 2025 01:17:59.1030
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Aen7IaHEi38MRNShKiDilsfi6/7L41oZQnIcXO44qoLD3fyC2GA8cyyyruq1SEIxo+QDCIdKk24QSYaDzovoUncsZVDR1ixrrXrG7gXCj2U=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR10MB8129
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v2] bus: mhi: host: don't free bhie tables during
+ suspend/hibernation
+Content-Language: en-US
+To: Muhammad Usama Anjum <usama.anjum@collabora.com>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Johannes Berg
+	<johannes@sipsolutions.net>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        Jeffrey Hugo
+	<quic_jhugo@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
+        Youssef Samir
+	<quic_yabdulra@quicinc.com>,
+        Qiang Yu <quic_qianyu@quicinc.com>, Alex Elder
+	<elder@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Kunwu
+ Chan" <chentao@kylinos.cn>,
+        Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+CC: <kernel@collabora.com>, <mhi@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-wireless@vger.kernel.org>, <ath11k@lists.infradead.org>
+References: <20250410145704.207969-1-usama.anjum@collabora.com>
+ <ba09ae0c-fe8d-8f4e-a1b8-9c7e5913c84e@quicinc.com>
+ <fc9ca0da-9f6a-42b5-aa79-abcd43c97043@collabora.com>
+ <e0159cb8-fe21-7f71-1ebe-744ed26bd698@quicinc.com>
+ <85580a01-289a-461b-b0f1-38fa1b96717c@collabora.com>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <85580a01-289a-461b-b0f1-38fa1b96717c@collabora.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 3amS2hKWae_YLfovvT1MB8uYvVGfolsG
+X-Proofpoint-ORIG-GUID: 3amS2hKWae_YLfovvT1MB8uYvVGfolsG
+X-Authority-Analysis: v=2.4 cv=MpRS63ae c=1 sm=1 tr=0 ts=67f9c06e cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=QX4gbG5DAAAA:8 a=UtuEnEn5-OjW6Kurj4UA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=AbAUZ8qAyYyZVLSsDulk:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-12_01,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 spamscore=0 suspectscore=0
- bulkscore=0 adultscore=0 malwarescore=0 phishscore=0 mlxlogscore=938
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502280000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 clxscore=1015 priorityscore=1501 impostorscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0
+ phishscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2504120007
-X-Proofpoint-GUID: zXu-sQSIpSjEsMWhkUharuunhWPlTYt-
-X-Proofpoint-ORIG-GUID: zXu-sQSIpSjEsMWhkUharuunhWPlTYt-
 
 
-Eric,
 
-> Add support for hardware-wrapped inline encryption keys to the
-> Qualcomm ICE (Inline Crypto Engine) and UFS (Universal Flash Storage)
-> drivers.
->
-> I'd like these patches to be taken through the scsi tree for 6.16.
+On 4/12/2025 12:02 AM, Muhammad Usama Anjum wrote:
+> On 4/11/25 1:39 PM, Krishna Chaitanya Chundru wrote:
+>>
+>>
+>> On 4/11/2025 12:32 PM, Muhammad Usama Anjum wrote:
+>>> On 4/11/25 8:37 AM, Krishna Chaitanya Chundru wrote:
+>>>>
+>>>>
+>>>> On 4/10/2025 8:26 PM, Muhammad Usama Anjum wrote:
+>>>>> Fix dma_direct_alloc() failure at resume time during bhie_table
+>>>>> allocation. There is a crash report where at resume time, the memory
+>>>>> from the dma doesn't get allocated and MHI fails to re-initialize.
+>>>>> There may be fragmentation of some kind which fails the allocation
+>>>>> call.
+>>>>>
+>>>>> To fix it, don't free the memory at power down during suspend /
+>>>>> hibernation. Instead, use the same allocated memory again after every
+>>>>> resume / hibernation. This patch has been tested with resume and
+>>>>> hibernation both.
+>>>>>
+>>>>> The rddm is of constant size for a given hardware. While the fbc_image
+>>>>> size depends on the firmware. If the firmware changes, we'll free and
+>>>> If firmware image will change between suspend and resume ?
+>>> Yes, correct.
+>>>
+>> why the firmware image size will change between suspend & resume?
+>> who will update the firmware image after bootup?
+>> It is not expected behaviour.
+> I was trying to research if the firmware can change or not. I've not
+> found any documentation on it.
+> 
+> If the firmare is updated in filesystem before suspend/hibernate, would
+> the new firwmare be loaded the next time kernel resumes as the older
+> firmware is no where to be found?
+> 
+> What do you think about this?
+> 
+I don't think firmware can be updated before suspend/hibernate. I don't
+see any reason why it can be updated. If you think it can be updated
+please quote relevant doc.
 
-Applied to 6.16/scsi-staging, thanks!
-
--- 
-Martin K. Petersen
+- Krishna Chaitanya.
+>>
+>> - Krishna chaitanya.
+>>>>> allocate new memory for it.
+>>>>>
+>>>>> Here are the crash logs:
+>>>>>
+>>>>> [ 3029.338587] mhi mhi0: Requested to power ON
+>>>>> [ 3029.338621] mhi mhi0: Power on setup success
+>>>>> [ 3029.668654] kworker/u33:8: page allocation failure: order:7,
+>>>>> mode:0xc04(GFP_NOIO|GFP_DMA32), nodemask=(null),cpuset=/,mems_allowed=0
+>>>>> [ 3029.668682] CPU: 4 UID: 0 PID: 2744 Comm: kworker/u33:8 Not tainted
+>>>>> 6.11.11-valve10-1-neptune-611-gb69e902b4338
+>>>>> #1ed779c892334112fb968aaa3facf9686b5ff0bd7
+>>>>> [ 3029.668690] Hardware name: Valve Galileo/Galileo, BIOS F7G0112
+>>>>> 08/01/2024
+>>>>> [ 3029.668694] Workqueue: mhi_hiprio_wq mhi_pm_st_worker [mhi]
+>>>>> [ 3029.668717] Call Trace:
+>>>>> [ 3029.668722]  <TASK>
+>>>>> [ 3029.668728]  dump_stack_lvl+0x4e/0x70
+>>>>> [ 3029.668738]  warn_alloc+0x164/0x190
+>>>>> [ 3029.668747]  ? srso_return_thunk+0x5/0x5f
+>>>>> [ 3029.668754]  ? __alloc_pages_direct_compact+0xaf/0x360
+>>>>> [ 3029.668761]  __alloc_pages_slowpath.constprop.0+0xc75/0xd70
+>>>>> [ 3029.668774]  __alloc_pages_noprof+0x321/0x350
+>>>>> [ 3029.668782]  __dma_direct_alloc_pages.isra.0+0x14a/0x290
+>>>>> [ 3029.668790]  dma_direct_alloc+0x70/0x270
+>>>>> [ 3029.668796]  mhi_alloc_bhie_table+0xe8/0x190 [mhi
+>>>>> faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
+>>>>> [ 3029.668814]  mhi_fw_load_handler+0x1bc/0x310 [mhi
+>>>>> faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
+>>>>> [ 3029.668830]  mhi_pm_st_worker+0x5c8/0xaa0 [mhi
+>>>>> faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
+>>>>> [ 3029.668844]  ? srso_return_thunk+0x5/0x5f
+>>>>> [ 3029.668853]  process_one_work+0x17e/0x330
+>>>>> [ 3029.668861]  worker_thread+0x2ce/0x3f0
+>>>>> [ 3029.668868]  ? __pfx_worker_thread+0x10/0x10
+>>>>> [ 3029.668873]  kthread+0xd2/0x100
+>>>>> [ 3029.668879]  ? __pfx_kthread+0x10/0x10
+>>>>> [ 3029.668885]  ret_from_fork+0x34/0x50
+>>>>> [ 3029.668892]  ? __pfx_kthread+0x10/0x10
+>>>>> [ 3029.668898]  ret_from_fork_asm+0x1a/0x30
+>>>>> [ 3029.668910]  </TASK>
+>>>>>
+>>>>> Tested-on: QCNFA765 WLAN.HSP.1.1-03926.13-
+>>>>> QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+>>>>>
+>>>>> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+>>>>> ---
+>>>>> Changes sice v1:
+>>>>> - Don't free bhie tables during suspend/hibernation only
+>>>>> - Handle fbc_image changed size correctly
+>>>>> - Remove fbc_image getting set to NULL in *free_bhie_table()
+>>>>> ---
+>>>>>     drivers/bus/mhi/host/boot.c           | 15 +++++++++++----
+>>>>>     drivers/bus/mhi/host/init.c           | 13 ++++++++++---
+>>>>>     drivers/net/wireless/ath/ath11k/mhi.c |  9 +++++----
+>>>>>     include/linux/mhi.h                   |  7 +++++++
+>>>>>     4 files changed, 33 insertions(+), 11 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+>>>>> index 9dcc7184817d5..0df26100c8f9c 100644
+>>>>> --- a/drivers/bus/mhi/host/boot.c
+>>>>> +++ b/drivers/bus/mhi/host/boot.c
+>>>>> @@ -487,10 +487,17 @@ void mhi_fw_load_handler(struct mhi_controller
+>>>>> *mhi_cntrl)
+>>>>>          * device transitioning into MHI READY state
+>>>>>          */
+>>>>>         if (mhi_cntrl->fbc_download) {
+>>>>> -        ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image,
+>>>>> fw_sz);
+>>>>> -        if (ret) {
+>>>>> -            release_firmware(firmware);
+>>>>> -            goto error_fw_load;
+>>>>> +        if (mhi_cntrl->fbc_image && fw_sz != mhi_cntrl->prev_fw_sz) {
+>>>>> +            mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
+>>>>> +            mhi_cntrl->fbc_image = NULL;
+>>>>> +        }
+>>>>> +        if (!mhi_cntrl->fbc_image) {
+>>>>> +            ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl-
+>>>>>> fbc_image, fw_sz);
+>>>>> +            if (ret) {
+>>>>> +                release_firmware(firmware);
+>>>>> +                goto error_fw_load;
+>>>>> +            }
+>>>>> +            mhi_cntrl->prev_fw_sz = fw_sz;
+>>>>>             }
+>>>>>               /* Load the firmware into BHIE vec table */
+>>>>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+>>>>> index a9b1f8beee7bc..09b946b86ac46 100644
+>>>>> --- a/drivers/bus/mhi/host/init.c
+>>>>> +++ b/drivers/bus/mhi/host/init.c
+>>>>> @@ -1173,8 +1173,9 @@ int mhi_prepare_for_power_up(struct
+>>>>> mhi_controller *mhi_cntrl)
+>>>>>             /*
+>>>>>              * Allocate RDDM table for debugging purpose if specified
+>>>>>              */
+>>>>> -        mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
+>>>>> -                     mhi_cntrl->rddm_size);
+>>>>> +        if (!mhi_cntrl->rddm_image)
+>>>>> +            mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
+>>>>> +                         mhi_cntrl->rddm_size);
+>>>>>             if (mhi_cntrl->rddm_image) {
+>>>>>                 ret = mhi_rddm_prepare(mhi_cntrl,
+>>>>>                                mhi_cntrl->rddm_image);
+>>>>> @@ -1212,12 +1213,18 @@ void mhi_unprepare_after_power_down(struct
+>>>>> mhi_controller *mhi_cntrl)
+>>>>>             mhi_cntrl->rddm_image = NULL;
+>>>>>         }
+>>>>>     +    mhi_partial_unprepare_after_power_down(mhi_cntrl);
+>>>>> +}
+>>>>> +EXPORT_SYMBOL_GPL(mhi_unprepare_after_power_down);
+>>>>> +
+>>>>> +void mhi_partial_unprepare_after_power_down(struct mhi_controller
+>>>>> *mhi_cntrl)
+>>>>> +{
+>>>>>         mhi_cntrl->bhi = NULL;
+>>>>>         mhi_cntrl->bhie = NULL;
+>>>>>           mhi_deinit_dev_ctxt(mhi_cntrl);
+>>>>>     }
+>>>>> -EXPORT_SYMBOL_GPL(mhi_unprepare_after_power_down);
+>>>>> +EXPORT_SYMBOL_GPL(mhi_partial_unprepare_after_power_down);
+>>>>>     
+>>>> Instead of adding new API you can free memory from the unregister
+>>>> controller also.
+>>>>
+>>>> - Krishna Chaitanya.
+>>>>>     static void mhi_release_device(struct device *dev)
+>>>>>     {
+>>>>> diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/
+>>>>> wireless/ath/ath11k/mhi.c
+>>>>> index acd76e9392d31..f77cec79b5b80 100644
+>>>>> --- a/drivers/net/wireless/ath/ath11k/mhi.c
+>>>>> +++ b/drivers/net/wireless/ath/ath11k/mhi.c
+>>>>> @@ -460,12 +460,13 @@ void ath11k_mhi_stop(struct ath11k_pci *ab_pci,
+>>>>> bool is_suspend)
+>>>>>          * workaround, otherwise ath11k_core_resume() will timeout
+>>>>>          * during resume.
+>>>>>          */
+>>>>> -    if (is_suspend)
+>>>>> +    if (is_suspend) {
+>>>>>             mhi_power_down_keep_dev(ab_pci->mhi_ctrl, true);
+>>>>> -    else
+>>>>> +        mhi_partial_unprepare_after_power_down(ab_pci->mhi_ctrl);
+>>>>> +    } else {
+>>>>>             mhi_power_down(ab_pci->mhi_ctrl, true);
+>>>>> -
+>>>>> -    mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
+>>>>> +        mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
+>>>>> +    }
+>>>>>     }
+>>>>>       int ath11k_mhi_suspend(struct ath11k_pci *ab_pci)
+>>>>> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+>>>>> index 059dc94d20bb6..65a47c712b3a0 100644
+>>>>> --- a/include/linux/mhi.h
+>>>>> +++ b/include/linux/mhi.h
+>>>>> @@ -382,6 +382,7 @@ struct mhi_controller {
+>>>>>         const char *fw_image;
+>>>>>         const u8 *fw_data;
+>>>>>         size_t fw_sz;
+>>>>> +    size_t prev_fw_sz;
+>>>>>         const char *edl_image;
+>>>>>         size_t rddm_size;
+>>>>>         size_t sbl_size;
+>>>>> @@ -662,6 +663,12 @@ void mhi_power_down_keep_dev(struct
+>>>>> mhi_controller *mhi_cntrl, bool graceful);
+>>>>>      */
+>>>>>     void mhi_unprepare_after_power_down(struct mhi_controller
+>>>>> *mhi_cntrl);
+>>>>>     +/**
+>>>>> + * mhi_partial_unprepare_after_power_down - Free any allocated memory
+>>>>> after power down partially
+>>>>> + * @mhi_cntrl: MHI controller
+>>>>> + */
+>>>>> +void mhi_partial_unprepare_after_power_down(struct mhi_controller
+>>>>> *mhi_cntrl);
+>>>>> +
+>>>>>     /**
+>>>>>      * mhi_pm_suspend - Move MHI into a suspended state
+>>>>>      * @mhi_cntrl: MHI controller
+>>>
+>>>
+> 
+> 
 
