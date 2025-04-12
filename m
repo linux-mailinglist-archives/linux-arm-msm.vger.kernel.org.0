@@ -1,113 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-54103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C01F3A86D7F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Apr 2025 16:10:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7136A86D74
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Apr 2025 16:10:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1633E8C7444
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 03B9344661F
 	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Apr 2025 14:10:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B37141C84A4;
-	Sat, 12 Apr 2025 14:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE2041EB1B0;
+	Sat, 12 Apr 2025 14:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="xIvfwDSM"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="1y1+5saT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809921D619F;
-	Sat, 12 Apr 2025 14:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700591DFED;
+	Sat, 12 Apr 2025 14:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744467034; cv=none; b=nE4lZQOOI5mRqs68CkB03fE1nYLXukIEb54DobsJc75+bQvy9tCdyLxUpbM4C8hJwLuEHaC/hXfv2IANGR8SfaNGW/tpMqfK4bx/sOdITxus9Hy9ehebn8ijYDzfpgEhM3/WGzgHBZYmKOKjWyCCiKwciIxaszFLkkd3N1CEkMc=
+	t=1744467009; cv=none; b=u9R6iiO54hAs52469vCbEMxHO6eZnz7jiSxxfhJpCQowBlvjr5wwBWSd9rimGrIVhNFTfsXvaXWJPMl3ZZeyRpQCRB/Audx42HI36DSN074PJeDfiqjinKLpII/SjAROq/QhSImUxN6fdzO5oWh6S3H3V+42Vm2cG41ZoFLzVlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744467034; c=relaxed/simple;
-	bh=pq2z80aWp0mSx9yb/+9glQ747wr8KKL1a4yFmy93Njs=;
-	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=QMx4258WuAW4t34fD9aofpt5Q/lnNggi2fqVsezMk1SdB2A8VDZ25DtGLho5Ze08Kw6LVF+kbV4to2ZHLQMAr5/SWq58+yjJopiiuwYuVqefBYjE/tcQpUbLECo7FklT6EPgMDvtyBRj8vJqgVcqOrE7AstGOYAAhgpPB98BVX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=xIvfwDSM; arc=none smtp.client-ip=78.32.30.218
+	s=arc-20240116; t=1744467009; c=relaxed/simple;
+	bh=gvyML1ETjGpPwCUzkIgmnZ/o/Gq9x/Gq1b2eLhXeIVw=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=UODoKE3geY2+Iol3U3wHFzdsNeV7VhK77HaF6phOaQSPRh+MNMQjFfNtN7WpD9xKNZ0vPvNPKrKqmVk+/5rwn3jni4kS26B+MviMjQOsCIPiMZqkooEKENzEf6AtILBA1I3HCAJcZz1TpEAL/+ZTljpEob2TywYji/ZMUmqvuZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=1y1+5saT; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
-	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:References:
-	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=VR3FFlMBN8HRj0XAqVkThi23aRwTjX+yZE7rM3zkE2E=; b=xIvfwDSML00COazWAJNDsih+Sy
-	TSYIUiY7mYICIfNCV6U2Ug/N9e29FzdVQC3qyT/2qo1ojvF3wBUIJmo8pmpUsCrHCXxSIEGFfEkVO
-	jQgjMJpIqNjMut1LogXWaPyNauYILtqAbDGm1jNI0h04iK2jFLyAyrTMIoD7CoySJUeOhdkkNG6Pz
-	9p2SNsXHbGxCS/3MWxy1Smnr0bIUDsfJPwrqCbx8YGnKhybH6GnlcnhUhbZtWCTTLRBNfubQshzrX
-	r1YtWZSZCmYZ7xPj16Bz6ozA8wo755B7NuzeZ32p+ColEZeS88wYMg/l/0VOyLWcAZ/if16F+Do3h
-	7KPeIovw==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:38022 helo=rmk-PC.armlinux.org.uk)
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=CYbTQ2OjNT5HQZlq54gRg5Ekmk2v67BRStp4jn6gpZU=; b=1y1+5saT66vFlxhIPYmjDaHQuZ
+	dI5B8IDr5xlLlM/VX7I9KL5h+x3Qnk85E6Bne6SRKCSDFbLg6wXr/qAXMdgUsail8kqEmwukZY0Lb
+	zao3rtGUJOkMPhfe3o0DfuGcb9jRbO5dD1onIZkzrtuKiPzlCfjD6yeeLjah/eWCcQjrnJ3GbcbTQ
+	Zq5keSSLE1cHrJqsEBfhI6SgUUTuQSmBWfrmDJvCOd58lY2+0bxoDseUPH12JotQleYghX246k2dz
+	Z0vyoKPem3QPsSsiaYlxP88NEyjfOuwgk0hCs9g0EAr+Xl05dKvUyi4mbJo3R0/GGrnFbcArST+Mx
+	9tAmNiQA==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:46152)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.96)
-	(envelope-from <rmk@armlinux.org.uk>)
-	id 1u3bYw-0004aF-1F;
-	Sat, 12 Apr 2025 15:10:26 +0100
-Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1u3bYL-000EcE-5c; Sat, 12 Apr 2025 15:09:49 +0100
-In-Reply-To: <Z_p0LzY2_HFupWK0@shell.armlinux.org.uk>
-References: <Z_p0LzY2_HFupWK0@shell.armlinux.org.uk>
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1u3bYT-0004Zy-13;
+	Sat, 12 Apr 2025 15:09:57 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1u3bYN-0005iw-23;
+	Sat, 12 Apr 2025 15:09:51 +0100
+Date: Sat, 12 Apr 2025 15:09:51 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
 Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
 	linux-stm32@st-md-mailman.stormreply.com,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH net-next 1/4] net: stmmac: qcom-ethqos: set serdes speed using
- serdes_speed
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH net-next 0/4] net: stmmac: qcom-ethqos: simplifications
+Message-ID: <Z_p0LzY2_HFupWK0@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1u3bYL-000EcE-5c@rmk-PC.armlinux.org.uk>
-Sender: Russell King <rmk@armlinux.org.uk>
-Date: Sat, 12 Apr 2025 15:09:49 +0100
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-ethqos->serdes_speed represents the current speed the serdes was
-configured for, which should be the same as ethqos->speed. Since we
-wish to remove ethqos->speed to simplify the code, switch to using the
-serdes_speed instead.
+Remove unnecessary code from the qcom-ethqos glue driver.
 
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
----
- drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Start by consistently using -> serdes_speed to set the speed of the
+serdes PHY rather than sometimes using ->serdes_speed and sometimes
+using ->speed.
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 0e4da216f942..5d8cd4336a8c 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -709,7 +709,7 @@ static int qcom_ethqos_serdes_powerup(struct net_device *ndev, void *priv)
- 	if (ret)
- 		return ret;
- 
--	return phy_set_speed(ethqos->serdes_phy, ethqos->speed);
-+	return phy_set_speed(ethqos->serdes_phy, ethqos->serdes_speed);
- }
- 
- static void qcom_ethqos_serdes_powerdown(struct net_device *ndev, void *priv)
+This then allows the removal of ->speed in the second patch.
+
+There is no need to set the maximum speed just because we're using
+2500BASE-X - phylink already knows that 2500BASE-X can't support
+faster speeds.
+
+This then makes qcom_ethqos_speed_mode_2500() redundant as it's
+setting the interface mode to the value that was determined in the
+switch statement that already determined that the interface mode
+had this value.
+
+Not tested on hardware.
+
+ .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 43 ++++++++--------------
+ 1 file changed, 15 insertions(+), 28 deletions(-)
+
 -- 
-2.30.2
-
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
