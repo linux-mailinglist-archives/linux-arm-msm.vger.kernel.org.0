@@ -1,134 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-54092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCE05A86AA2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Apr 2025 05:53:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 287F5A86BD6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Apr 2025 10:34:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DC2667B4AF8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Apr 2025 03:52:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 14F688A0C34
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Apr 2025 08:34:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1097156C72;
-	Sat, 12 Apr 2025 03:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A237019259A;
+	Sat, 12 Apr 2025 08:34:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="N6kCjtyW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bmailout1.hostsharing.net (bmailout1.hostsharing.net [83.223.95.100])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1EA15CD78;
-	Sat, 12 Apr 2025 03:52:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.95.100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4731AAC9;
+	Sat, 12 Apr 2025 08:34:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744429982; cv=none; b=a8AlXMQKYFFtRAiBIfkgun/pr0SZGCqHOj+45mHRMa4yBgHmFB6pMpFiTG58mBA+1IQFIIe0O6ej64/9A/QH1ajh/YiqjtXua0SsyS69rekrwIx/01fgTLH2PcwOLjx8aojoAmktrnFYr9WvoDv2eMHj8tHlWZcIQ30j1LQIvmQ=
+	t=1744446883; cv=none; b=rIE5/CpYSCxdYVY6gcIFRn2FjZeuhkDhjR+lAjvsx4rqpfNGzcnY9zMEOD6bM+cYPiToVGHrA7jBFbw2+qmN+uPW4BWeFPLlyzS+9f2DAl32aUGsxw6tRKTxL5PoSArPmPkTF5s30C5/eRd+gzxApFakTF/9UNSZUbFgPwH75d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744429982; c=relaxed/simple;
-	bh=r4/JMs6C2Dvw1bW8VHdZlPi+YkDCZTs1eOaXxjGw/oM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g2vDr3xPSBuO2kFHgZWy06EAOlxUngqcQJxQRfPw4T0x/ZxNW9yzPC55MtAr5U4VOZqEg8Y+jR/R+PgTP2FrS5lpY5uyb9QVso899Latx9/CG4hDLOYjQv2qaiDVvxLkxV/7nBoufzu5tYPWb/C+f2Gu+SQVGlPLBIzADZaSDBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=83.223.95.100
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
-Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
-	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
-	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
-	by bmailout1.hostsharing.net (Postfix) with ESMTPS id 35C8D2C4C0D2;
-	Sat, 12 Apr 2025 05:52:25 +0200 (CEST)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id 031171E092; Sat, 12 Apr 2025 05:52:56 +0200 (CEST)
-Date: Sat, 12 Apr 2025 05:52:56 +0200
-From: Lukas Wunner <lukas@wunner.de>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof Wilczy??ski <kw@linux.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	chaitanya chundru <quic_krichai@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicnic.com,
-	amitk@kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, jorge.ramirez@oss.qualcomm.com,
-	Dmitry Baryshkov <lumag@kernel.org>
-Subject: Re: [PATCH v5 7/9] PCI: PCI: Add pcie_link_is_active() to determine
- if the PCIe link is active
-Message-ID: <Z_njmA49Gda-m0aH@wunner.de>
-References: <20250412-qps615_v4_1-v5-0-5b6a06132fec@oss.qualcomm.com>
- <20250412-qps615_v4_1-v5-7-5b6a06132fec@oss.qualcomm.com>
+	s=arc-20240116; t=1744446883; c=relaxed/simple;
+	bh=uY1OzpWq1YuTlBMN+P0DZuRjCGRt3R3FZeEoAtM9qDo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uNq6izgA5E+gN8vWcrK8/S7j7AzTkqhfssvteiLRIwq8T7KWGLU6xXNgPBwSCcqdaxIy5hOPBtgStnHamEmBwonhKY1BjXlOvID04nT/NgIQBy6sr89wReHxUoTNKH24bdQwy9Gnj6HKCZ2UVHuhPoTZ+rWfT9C26JQmfLgZCkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=N6kCjtyW; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1744446873; bh=uY1OzpWq1YuTlBMN+P0DZuRjCGRt3R3FZeEoAtM9qDo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=N6kCjtyW+zT3K6fq+BuZYYFMZXt6w1xHyupWm5kjViEZK+ojhu4Q5QRGZjjU8mo2Y
+	 1cjsfC9ARNpXFpbdzP57sDq+V42GI5q1AV+ksHAEf648LqleWKBUwl/ysm5VLP1DuC
+	 gQ2RrnLIUJ+LvY4lEkkTYAHUad8XdXa2iejhOFMs=
+Message-ID: <cc84ef26-6c33-42d0-a11f-4d6b31d8beee@lucaweiss.eu>
+Date: Sat, 12 Apr 2025 10:34:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250412-qps615_v4_1-v5-7-5b6a06132fec@oss.qualcomm.com>
+Subject: Re: [PATCH] arm64: dts: qcom: msm8953: Add uart_5
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Felix Kaechele <felix@kaechele.ca>
+References: <20250406-msm8953-uart_5-v1-1-7e4841674137@lucaweiss.eu>
+ <e87220f1-bf8e-4014-834f-ae99c0b032ca@oss.qualcomm.com>
+Content-Language: en-US
+From: Luca Weiss <luca@lucaweiss.eu>
+In-Reply-To: <e87220f1-bf8e-4014-834f-ae99c0b032ca@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Apr 12, 2025 at 07:19:56AM +0530, Krishna Chaitanya Chundru wrote:
-> Introduce a common API to check if the PCIe link is active, replacing
-> duplicate code in multiple locations.
+On 4/10/25 6:45 PM, Konrad Dybcio wrote:
+> On 4/6/25 3:52 PM, Luca Weiss wrote:
+>> From: Felix Kaechele <felix@kaechele.ca>
+>>
+>> Add the node and pinctrl for uart_5 found on the MSM8953 SoC.
+>>
+>> Signed-off-by: Felix Kaechele <felix@kaechele.ca>
+>> [luca: Prepare patch for upstream submission]
+>> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+>> ---
+>>   arch/arm64/boot/dts/qcom/msm8953.dtsi | 32 ++++++++++++++++++++++++++++++++
+>>   1 file changed, 32 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+>> index af4c341e2533ef2cca593e0dc97003334d3fd6b7..3d6ab83cbce4696a8eb54b16fdb429e191f44637 100644
+>> --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+>> @@ -767,6 +767,20 @@ spi_6_sleep: spi-6-sleep-state {
+>>   				bias-disable;
+>>   			};
+>>   
+>> +			uart_5_default: uart-5-default-state {
+>> +				pins = "gpio16", "gpio17", "gpio18", "gpio19";
+>> +				function = "blsp_uart5";
+>> +				drive-strength = <16>;
 > 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> This guy's strongly biased! But it looks like that's on purpose for
+> these older SoCs..
+> 
+>> +				bias-disable;
+>> +			};
+>> +
+>> +			uart_5_sleep: uart-5-sleep-state {
+>> +				pins = "gpio16", "gpio17", "gpio18", "gpio19";
+>> +				function = "gpio";
+>> +				drive-strength = <2>;
+>> +				bias-disable;
+>> +			};
+>> +
+>>   			wcnss_pin_a: wcnss-active-state {
+>>   
+>>   				wcss-wlan2-pins {
+>> @@ -1592,6 +1606,24 @@ blsp2_dma: dma-controller@7ac4000 {
+>>   			qcom,controlled-remotely;
+>>   		};
+>>   
+>> +		uart_5: serial@7aef000 {
+>> +			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+>> +			reg = <0x07aef000 0x200>;
+>> +			interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>;
+>> +			clocks = <&gcc GCC_BLSP2_UART1_APPS_CLK>,
+>> +				 <&gcc GCC_BLSP2_AHB_CLK>;
+>> +			clock-names = "core",
+>> +				      "iface";
+>> +			dmas = <&blsp2_dma 0>, <&blsp2_dma 1>;
+>> +			dma-names = "tx", "rx";
+> 
+> Matches what the computer says
+> 
+> It's more usual to send these together with a user, but I don't mind
 
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
+This seems to be used with the out-of-tree dts
+apq8053-lenovo-cd-18781y.dts
 
-One heads-up and one nit:
+I'm just sometimes trying to reduce the out-of-tree diff of the
+msm8953-mailine tree on GitHub
 
-> --- a/drivers/pci/hotplug/pciehp_hpc.c
-> +++ b/drivers/pci/hotplug/pciehp_hpc.c
-> @@ -584,7 +557,7 @@ static void pciehp_ignore_dpc_link_change(struct controller *ctrl,
->  	 * Synthesize it to ensure that it is acted on.
->  	 */
->  	down_read_nested(&ctrl->reset_lock, ctrl->depth);
-> -	if (!pciehp_check_link_active(ctrl))
-> +	if (!pcie_link_is_active(ctrl_dev(ctrl)))
->  		pciehp_request(ctrl, PCI_EXP_SLTSTA_DLLSC);
->  	up_read(&ctrl->reset_lock);
->  }
+Regards
+Luca
 
-Heads-up:  There's a trivial merge conflict here with what's queued on
-pci.git/hotplug.  No need for you to respin because I expect this will be
-merged through a different topic branch anyway, but Bjorn and the other
-maintainers will see the merge conflict when generating the next branch.
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> Konrad
 
-
-> --- a/include/linux/pci.h
-> +++ b/include/linux/pci.h
-> @@ -1945,6 +1945,7 @@ pci_release_mem_regions(struct pci_dev *pdev)
->  			    pci_select_bars(pdev, IORESOURCE_MEM));
->  }
->  
-> +bool pcie_link_is_active(struct pci_dev *dev);
->  #else /* CONFIG_PCI is not enabled */
->  
->  static inline void pci_set_flags(int flags) { }
-> @@ -2093,6 +2094,9 @@ pci_alloc_irq_vectors(struct pci_dev *dev, unsigned int min_vecs,
->  {
->  	return -ENOSPC;
->  }
-> +
-> +static inline bool pcie_link_is_active(struct pci_dev *dev)
-> +{ return false; }
->  #endif /* CONFIG_PCI */
-
-Nit:  Seems like this would still fit within 80 chars:
-
-static inline bool pcie_link_is_active(struct pci_dev *dev) { return false; }
-
-That said, all existing callers of this function as well as the new one
-introduced by this series are only compiled in the CONFIG_PCI=y case,
-so I'm not sure the inline stub is necessary at all?
-
-Thanks,
-
-Lukas
 
