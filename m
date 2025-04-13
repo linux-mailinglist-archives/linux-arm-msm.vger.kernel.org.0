@@ -1,109 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-54133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED5EBA87299
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Apr 2025 18:35:32 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5357FA872E0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Apr 2025 19:14:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C86DD3A3339
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Apr 2025 16:35:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B52DA7A3FE8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Apr 2025 17:13:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E40971A9B3D;
-	Sun, 13 Apr 2025 16:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MikeDy2o"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81C941EBFED;
+	Sun, 13 Apr 2025 17:14:51 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from bmailout3.hostsharing.net (bmailout3.hostsharing.net [176.9.242.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6431DF721
-	for <linux-arm-msm@vger.kernel.org>; Sun, 13 Apr 2025 16:35:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F6C1EB1B5;
+	Sun, 13 Apr 2025 17:14:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=176.9.242.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744562128; cv=none; b=YkzWcLuhitWAmRRqRHvtpGYVjNpMtfb/X2cRkvhS6fg9ZkkNPiVdk4eSC3rM/0f1LG6Kj/RBsAEvrWYGq/i3Q0OEKdVzEQ9NSSabKsTgZ+U6ZJ6Txbh67q8Xf68LL2u5jYuF47bqZziVzMcRdDw5TdjmFwKpE9lQ1/zlXFtjg4I=
+	t=1744564491; cv=none; b=iQs59jey7zzj9xdDY5PoAHxcpO7b0Zkxr4Hv83pjLVBhQlGjXp29TBDGyINxww1kF3XmRKK5+VvPTW0jDIsoSLUBn/eW4IpLy/5DrogkzWosFVm1vT+MAz4KqNKTCjW1JZ3V2RZOwDa/H4XKM5SDnu+ec7N8ki8kZGhbdS9AsBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744562128; c=relaxed/simple;
-	bh=RB0Is3RsXE4ayIze9bhVA06wlRHIFRumqGpp63ItTVA=;
+	s=arc-20240116; t=1744564491; c=relaxed/simple;
+	bh=/9QIEj3PSUi5gKC7fRNdPDpM6GW5b6WkHu9fzuhe19A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YFZ9HbQwJB7GOCQy6sSbIDvzfHk4yWkVvm6JN7/5PP0p0nyvprJUuOher5mk72uetekOGUV4PveQrv4amPWReX7pf/gM8smH74rqvcMRyFVZtEJbSvuRIZsxmy6UydJNdGfpV5Dfx8DbS0u0Ef0YU0LlZQ+8rKfxMxyCizY5Szo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MikeDy2o; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53DFpJUV021271
-	for <linux-arm-msm@vger.kernel.org>; Sun, 13 Apr 2025 16:35:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=HHDGRlqVtQyxh83zlwnFTMpQ
-	Jn3llTrejkQ0QtY9TUg=; b=MikeDy2oM6IDwZvBeICfrVy6g2JuSn1wycCTDOJy
-	ewpYcbNKm1lkqdvXr3OCB4shtXjbWN+TBdYtBVgcPSAIi6/zQM4I56WAMY5FjJ4h
-	dn7FDu0fQaDrk9cbqdTUNneHMfwnhGAHMRgtP9+qGg0YI2MiVtKSWjj7orm7QRUX
-	ZGYJvM8W3c972lOf/HW79X8durgIMCEro9e2RyIRBJM4dT+kPhHllv31StHI1gpl
-	YVcdKhNbB2lQZ4txeZXjvuvtLb2NNGTae32ixYaZr6rsvoaJahePKgP/MXwS8FxG
-	TttBkWSNZP1X/DghyQqyFoUQgRtCXFdMHmN7mxebRRJ+EQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygj92byh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sun, 13 Apr 2025 16:35:25 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c5d608e703so634791885a.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Apr 2025 09:35:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744562125; x=1745166925;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HHDGRlqVtQyxh83zlwnFTMpQJn3llTrejkQ0QtY9TUg=;
-        b=kLrqvfZX2eIsButGB4qscLSSC2g/d6xn35TQ/RqESU7FIzduPW1i7LCzje9sYNbhGN
-         MJD9T3vU2FVtPgYiCNi3s9inR9ZMU7y8vPQ1f9w1FL73XmwbhbMf85iDeLisp8t84UGz
-         iP+qiq75Kg50qkOaNZrAz76h9IgipmWDs+VyzEmti4/aaH9xbUkMV8bb09HHMxSKBXWA
-         16QfIOxnH4K4Oo9csTYTd+lHs4zlt9mAK/W4fC9ru5Pyvwy6JWOk2ApgJ2KkP8xStMBD
-         kAbIjtGJ83vWeep/GxNNfqWUdcwQ5F0apW+tViHbL/TQLrzDAFeQ3X3PqT4r4eJi6ol0
-         fKrg==
-X-Forwarded-Encrypted: i=1; AJvYcCVL1//yjYgrVvShtTuJt/X8mEjVgwyuJ+EL4CeEhNSIpr7bAdpl8NPioLDHamayrlRtrX+bfmguG9ei6ML4@vger.kernel.org
-X-Gm-Message-State: AOJu0YxKt9bmTROrYCXoM1KAytO2HL4fjT5vnlAb3+Qc1w8hRfLwAHgK
-	UQ/J49I5VLNPWkV/r5W71UYjTfS4IySFw/Ki0W3+Jcij0zgfA768Dq50XSDAS18H6VxpE5DHgwh
-	rzDHCPXmjChRgaKMdFNqsm56c/sQC9H+79kJKvukgoGVAeIB8YacwCXz65S5luNVI
-X-Gm-Gg: ASbGncuzmMqmjDa7oeV8GHOVoau5JzP5TgkK38++SXT/1r3pJGgN1xRUm41M9cBMu6L
-	RCp1jZo2KqobpsQh7oAXbBEGid0xLpCfpr4gFTeCuoGPUzl0WoQ6w8BxoKwn2u6vbK+heVYXt4J
-	c5ZZRX9nZ2HngUQkY5kAD12CVNE5Pr2Z8fiVQ5MYlFHRP+1og6ntET43mrgJUYAgjpLWZDh04E0
-	TmMhxUkAxs0t74l/2nEzr4duM+c40YNIbPEFHYOI6o/nLIVLfUgJRAbRRSJMCPX4E9Utasb2tqq
-	kK4SlNJFTIyv1fj9obogutP/2eS9kfBcxP4ZsKZ42SVQKIOIZWIS7jblCmz4K+B3y6xJQJWp004
-	=
-X-Received: by 2002:a05:620a:2684:b0:7c5:50ab:ddf7 with SMTP id af79cd13be357-7c7af20babcmr1365619785a.52.1744562125102;
-        Sun, 13 Apr 2025 09:35:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZ2SmFOwzSyR099QmLh/foSM29GY2hyA1aduFy1joD+oyH331vhHReKlrLXjjTN89o+aPFZg==
-X-Received: by 2002:a05:620a:2684:b0:7c5:50ab:ddf7 with SMTP id af79cd13be357-7c7af20babcmr1365615385a.52.1744562124627;
-        Sun, 13 Apr 2025 09:35:24 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54d3d23c8afsm888868e87.101.2025.04.13.09.35.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Apr 2025 09:35:22 -0700 (PDT)
-Date: Sun, 13 Apr 2025 19:35:19 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=iml4a0vfKBc2FNOPWB8FBEEszLMkwpzU1bl/CxQP68nZC0jrT+/KQPGlGZtE/QBBfX7srPRR4rXpm8cEFfwmsooSuu90XPkHWG9JhYhJA3CChfCsGPW81LSwPKYJmpeHCTyv59X3tvHV2MK8TxkAOk2yaKgca0h3ZWqM/8RHSyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=176.9.242.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
+Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
+	by bmailout3.hostsharing.net (Postfix) with ESMTPS id 7E71E2C0600F;
+	Sun, 13 Apr 2025 19:14:29 +0200 (CEST)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id A0E6B4914D; Sun, 13 Apr 2025 19:14:38 +0200 (CEST)
+Date: Sun, 13 Apr 2025 19:14:38 +0200
+From: Lukas Wunner <lukas@wunner.de>
 To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 Cc: Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        chaitanya chundru <quic_krichai@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, Jingoo Han <jingoohan1@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicnic.com,
-        amitk@kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, jorge.ramirez@oss.qualcomm.com,
-        Dmitry Baryshkov <lumag@kernel.org>
-Subject: Re: [PATCH v5 2/9] arm64: dts: qcom: qcs6490-rb3gen2: Add TC9563
- PCIe switch node
-Message-ID: <ethalrlraf4lnaefcmks4buffqfsuxasmfjmajhlz66zoqtzvi@37hh57nbfrmd>
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof Wilczy??ski <kw@linux.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	chaitanya chundru <quic_krichai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicnic.com,
+	amitk@kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, jorge.ramirez@oss.qualcomm.com,
+	Dmitry Baryshkov <lumag@kernel.org>
+Subject: Re: [PATCH v5 7/9] PCI: PCI: Add pcie_link_is_active() to determine
+ if the PCIe link is active
+Message-ID: <Z_vw_i1P_Y2gCYrR@wunner.de>
 References: <20250412-qps615_v4_1-v5-0-5b6a06132fec@oss.qualcomm.com>
- <20250412-qps615_v4_1-v5-2-5b6a06132fec@oss.qualcomm.com>
+ <20250412-qps615_v4_1-v5-7-5b6a06132fec@oss.qualcomm.com>
+ <Z_njmA49Gda-m0aH@wunner.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -112,43 +72,60 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250412-qps615_v4_1-v5-2-5b6a06132fec@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: d5vKu58rK8YDcGye8CiLMlL58Z9NXyYv
-X-Authority-Analysis: v=2.4 cv=PruTbxM3 c=1 sm=1 tr=0 ts=67fbe7cd cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=2cuD_6P_uzM7HzBj738A:9 a=CjuIK1q_8ugA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: d5vKu58rK8YDcGye8CiLMlL58Z9NXyYv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-13_08,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 lowpriorityscore=0
- impostorscore=0 clxscore=1015 spamscore=0 mlxscore=0 mlxlogscore=999
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504130127
+In-Reply-To: <Z_njmA49Gda-m0aH@wunner.de>
 
-On Sat, Apr 12, 2025 at 07:19:51AM +0530, Krishna Chaitanya Chundru wrote:
-> Add a node for the TC9563 PCIe switch, which has three downstream ports.
-> Two embedded Ethernet devices are present on one of the downstream ports.
-> As all these ports are present in the node represent the downstream
-> ports and embedded endpoints.
+On Sat, Apr 12, 2025 at 05:52:56AM +0200, Lukas Wunner wrote:
+> On Sat, Apr 12, 2025 at 07:19:56AM +0530, Krishna Chaitanya Chundru wrote:
+> > Introduce a common API to check if the PCIe link is active, replacing
+> > duplicate code in multiple locations.
+> > 
+> > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 > 
-> Power to the TC9563 is supplied through two LDO regulators, controlled by
-> two GPIOs, which are added as fixed regulators. Configure the TC9563
-> through I2C.
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 129 +++++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi         |   2 +-
->  2 files changed, 130 insertions(+), 1 deletion(-)
-> 
+> Reviewed-by: Lukas Wunner <lukas@wunner.de>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Looking at this with a fresh pair of eyeballs, I realize there's an issue
+here, so unfortunately I have to retract the Reviewed-by:
 
--- 
-With best wishes
-Dmitry
+pcie_link_is_active() differs from the existing pciehp_check_link_active()
+in that it returns 0 not only if the link is down, but also if the
+Config Space read returns with an error.
+
+In particular, if Config Space of a hotplug bridge is inaccessible,
+0 is returned instead of -ENODEV with this patch.  That can happen if
+the hotplug bridge itself has been hot-removed, which is common with
+Thunderbolt, but also on servers with nested PCIe switches.
+
+The existing invocations of pciehp_check_link_active() do the right
+thing if the hotplug bridge has been hot-removed, but after this patch
+they no longer do.  For example in this hunk ...
+
+> > --- a/drivers/pci/hotplug/pciehp_hpc.c
+> > +++ b/drivers/pci/hotplug/pciehp_hpc.c
+> > @@ -584,7 +557,7 @@ static void pciehp_ignore_dpc_link_change(struct controller *ctrl,
+> >  	 * Synthesize it to ensure that it is acted on.
+> >  	 */
+> >  	down_read_nested(&ctrl->reset_lock, ctrl->depth);
+> > -	if (!pciehp_check_link_active(ctrl))
+> > +	if (!pcie_link_is_active(ctrl_dev(ctrl)))
+> >  		pciehp_request(ctrl, PCI_EXP_SLTSTA_DLLSC);
+> >  	up_read(&ctrl->reset_lock);
+> >  }
+
+... pciehp_request() will be called if the hotplug bridge was
+hot-removed, which isn't the right thing to do.  The current
+behavior is to do nothing.
+
+I realize I steered you in the wrong direction because in my
+review of your v4 I asked why pcie_link_is_active() doesn't
+return a bool:
+
+https://lore.kernel.org/all/Z72TRBvpzizcgm9S@wunner.de/
+
+So I sincerely apologize for that!  You actually did the right
+thing in v4 by returning a negative int if the Config Space read
+returned an error.
+
+Thanks,
+
+Lukas
 
