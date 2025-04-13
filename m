@@ -1,60 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-54136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CED81A873C6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Apr 2025 22:09:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01E3AA873D8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Apr 2025 22:41:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92E8318936C1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Apr 2025 20:09:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A0AB16EE00
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Apr 2025 20:41:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CAE11F30BB;
-	Sun, 13 Apr 2025 20:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E35F1E5711;
+	Sun, 13 Apr 2025 20:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="ZcGKUAeh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mdyW5OQx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A92C78F4C;
-	Sun, 13 Apr 2025 20:09:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3066131E49;
+	Sun, 13 Apr 2025 20:41:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744574963; cv=none; b=AjTRXL/orHFXYqAVoH4voQN1Mc/Sq5KwJv9Yy+XoI8C2y7q6Cfm7w3eYG3au7s0wG+n47Rr56Oa1axr/3o6dw8gAu1Fi9Ce/5JSGt1bTYKxqNP5YQOu1L6epHJiS6/xhkDGE33Q+zMFV9SxAoqNatbRNSMS/2KUiX4Rn83NqSuU=
+	t=1744576912; cv=none; b=XZXBdnDPruXDn3dGecp7oF1GXpyDH48exeuGYbwKhJertN5HId5Mp4wcYQphzaHu3NVyx/6C/UhNl7BLN5nTYb6XQ7xY4f8PIilVANvs8uVwLpsO9YJTkX+I1qbuRyJKB3I+F1kudxvPri+bjTRQ9sTE7X42/mD//+qeFqpFsj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744574963; c=relaxed/simple;
-	bh=g5Kl44xfliZtc3F8mEZvzsmuva57Nej/HbnbF9B9CTc=;
+	s=arc-20240116; t=1744576912; c=relaxed/simple;
+	bh=8BblCTdCvwkOkbtJ9xAbALEBDKyCEwg3Ua9/9+xfMq0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eXooqcVi3So/EP2TZdp22ymz3Jx5VVsweyE4eCMwmAOxuXQI96O8bKxIYQ9gcduNLX6kRTDDENmx1LcXCUSLoK10YZ7ReDwrrGhc31d8V2Cy1EEoZ1C3PIVOpIpjCm4QEAB6oplUixqcFpz4f98tsh+SkUxSG12aS1laF1JOE4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=ZcGKUAeh; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=4+bWvLNfqVXKoM92yRwQ99BQCTFezGqLq0CQ17PjyRk=; b=ZcGKUAeh7QEUUa1hdlTLhnNbV/
-	iwc2eD/oDOI5JIH62/PG9XxJIzQV3QExdX6K+g5ZBNZrdW8JqakiMP/tZ3fWTI8ZRp5gSii7IKKIq
-	gglFdW0PxMfuww6tSpdbHmNFgmoYdq6CJGpkQROcxxo7bOSd0T+BYj47VyfysMOPmh/s=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1u43dh-0095hS-QW; Sun, 13 Apr 2025 22:09:13 +0200
-Date: Sun, 13 Apr 2025 22:09:13 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	netdev@vger.kernel.org, Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: remove max-speed = 1G for RGMII for
- ethernet
-Message-ID: <a21ccb50-1f32-47b4-b37d-d8250a505afb@lunn.ch>
-References: <E1u3bkm-000Epw-QU@rmk-PC.armlinux.org.uk>
+	 Content-Type:Content-Disposition:In-Reply-To; b=b6FnZtVIGfP87iKyQ8U2qZnsRv/NnqVyt950wGWgXxNoFN/ML2uCdE1JMyfxkt/Tgcie5RXVLDwXV5soG/G4vWDgdlLgBHUfCgBMBv5wFdNLU2i7VxiaUJF2bGzsdbwMQx04e8cggGaOJ6+5CQDLOSd5EamcSxe+Pnf4xlZBEMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mdyW5OQx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4BDC4CEDD;
+	Sun, 13 Apr 2025 20:41:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744576911;
+	bh=8BblCTdCvwkOkbtJ9xAbALEBDKyCEwg3Ua9/9+xfMq0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mdyW5OQxZ6en/4OBLFNVCk92zJvCNmiAi7HcR1ou+cMzwZKJiIFDt4QwX/UMctbwI
+	 hoOZ/FFuJRmHJsTxHIbxkTkDZdyOKggDlDIUiN5Gxi401DM2zTIQQV7UWDAUSY1fF9
+	 Jcqbf0oJzk1Uo6YzgB0T/1wjsBh6tE7nWZBjE5MZLl5o7QfdZnLgoO8FlT/f0OIAdr
+	 wdAkA9OZv99Zk2KRZGF9xniFRJ/0aQytze0Pk9sRQlJIvc6MdRiTgFEfpqCx27Rmgz
+	 8rf1ccog654bY3O8YCSZ3wOg63kuUSD4fxEDjCiZSDOl2tPnj1FUpV3hebfS3Fpqai
+	 DyvdjG2XegyyQ==
+Date: Sun, 13 Apr 2025 22:41:46 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, 
+	Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Subject: Re: [PATCH v1 1/1] i2c: qcom-geni: Use generic definitions for bus
+ frequencies
+Message-ID: <7jhgwtwhgmxooofln2zjpjp4kdqjuc5dd5bnrht54ts63s626u@ixaa53eptlkr>
+References: <20250322144736.472777-1-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,17 +59,17 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <E1u3bkm-000Epw-QU@rmk-PC.armlinux.org.uk>
+In-Reply-To: <20250322144736.472777-1-andriy.shevchenko@linux.intel.com>
 
-On Sat, Apr 12, 2025 at 03:22:40PM +0100, Russell King (Oracle) wrote:
-> The RGMII interface is designed for speeds up to 1G. Phylink already
-> imposes the design limits for MII interfaces, and additional
-> specification is unnecessary. Therefore, we can remove this property
-> without any effect.
+Hi Andy,
+
+On Sat, Mar 22, 2025 at 04:47:36PM +0200, Andy Shevchenko wrote:
+> Since we have generic definitions for bus frequencies, let's use them.
 > 
-> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+merged to i2c/i2c-host.
 
-    Andrew
+Thanks,
+Andi
 
