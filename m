@@ -1,104 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-54159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F569A87936
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 09:43:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AAFAA87942
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 09:44:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF37C3B346D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 07:42:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 34F2D188D45D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 07:43:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68BA925FA04;
-	Mon, 14 Apr 2025 07:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94C6525A623;
+	Mon, 14 Apr 2025 07:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="W4ZbHdgl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FX7WHlli"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B0025F7BB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 07:39:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAC2259CAA;
+	Mon, 14 Apr 2025 07:40:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744616398; cv=none; b=nToU/2vr+TwxzdInLUauMZ9fBwqAKq3knVh7OfD8+wT+bccvR5YByL6XU2JQ1DqwDjDmEuDGh+tN0kfEFNS2O9FlVnKeJlAhkoYruoocFXUZLfvWZrhPrxVgd3Kt1vHYec2BO3Mo39smQfS60U3SyWVT/8GeoelaxmABbzN6MYI=
+	t=1744616420; cv=none; b=Bch/EB8ISv9jB9PhP46aS0p7bf4Di4CcD2uiqg1jSCazAihvDLIFYPxOlzMaHJhZ2t1buxmeZzt4i5me7b9DRelFxufRdy2ywXx9+PqXr6DqEYwfXdWqDO6esgV587qej+oT8veMhGsX9rk47q4flUpfRM1cRoPSWw1EIgC3jY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744616398; c=relaxed/simple;
-	bh=qF5ht6cdPU1r0V+kQK5l0Co8aSKuRHlVK07MOUtDLZU=;
+	s=arc-20240116; t=1744616420; c=relaxed/simple;
+	bh=t2r22kypL7dkgR5icGf+FItZxkqG4+5fcqunKc1xsiY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XjQ6ILxLDuto7OWtWSVUxY9V0dqNUlpNMRl6Uw3cuu9MrVOaAArzEaI1LDpdX1o1hx4gPA3GWJJS6GxBK4s9J2jN3DwIwFuENRBRXe0X4hgkbNnDwIO1TmW/r8682YgLAiHi0PUG+f1OoPbsYSM0QNLVuN4xVpJ63suqwLuHZ3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=W4ZbHdgl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53DNLX17025010
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 07:39:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=MmJ+Fq4K5UDpd363d47aRJm/
-	X4ZqL75ahdqCEORaDrU=; b=W4ZbHdgl8auni3N8HY/TTNAmdqBWtinh2beNY+na
-	ypPePIHizYMpmkfW7P4Vr5/k5fMIpeW9kDjwPBMSgX4ngDGNYazo/oWB/AlVOpkP
-	v9K2u+zlTXb0JgLm/6Zl80VhvPa4jBAJscuxr4Htr/7XoYaWBMcIlrVF3ZWasxaT
-	E/DUqyvPwCDke4pD7hmgYGvgTYNQwF7MfFhX1IzaNOBs9L+VJfzLj3v/07GZ9KWO
-	QdNNXJQlxckrRe/+5WQnX27iRiyAOooDvyXKSIjLDdGennuPsQlK99LNUNR5FUhF
-	5uX3KRlmVkctFVpg+Zx8WfgxPdMRXqJXtW5oM8qf90876A==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygj93p3k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 07:39:54 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c543ab40d3so617546685a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 00:39:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744616393; x=1745221193;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MmJ+Fq4K5UDpd363d47aRJm/X4ZqL75ahdqCEORaDrU=;
-        b=uJkMwYS/fF2R2Sk6h83aTePPQ3lu4XPTcm+Gz88juGeWhvwJxtRlgF1K5X2e3xc+g+
-         +xISYRCspevQ8sGh4HT/HNDMjv2w1r3NZcpSCcEwT+G20mEf1L6jbxlV5bo4WwXEC0GE
-         Ab/2A/Yz2wxgneKHF8OdASkhoNfWN6H73Ayy70x9kgYAPBQreiPDlNLAYkLWa8X/Iebs
-         IK59RBp79MNYSVU4dO0gnX4gxyMXyBSKtCTqMn3g7QbXqjCpnlTVRx7acCZm5fwop9WN
-         oS80jExaLrrTnbIVN0E2ZZX4h5evW7c2ZdEInOLIEMFsWm5O6YO+pNrB3u3w9Na/m97F
-         XvnA==
-X-Forwarded-Encrypted: i=1; AJvYcCU1xgQAw6XrRhFt9qu05r6ktUebLce7Yjv68JUIcFfgk8bh/BeXHsqb1Ee8X7kVaaPz5/U8VW3d6udwyUE6@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywpv2SwvQ/J8vc8Tzhaar2BgHt/+j1kJxr5bb7RA9uw9uy74Kwl
-	15xIjHYSGWV59O4rjAGQpWFQT+QF2qJgnHmXxrqHTNvWtxx2hdOqEFb7/n4Jn66noZsoYTgCH9V
-	KfaFNncqIEqyTmY2NtONK5yJKoJj1AkeTU61WKEZGDqX8DTDOpb/7GHdEoHAAU34Dc393xk6C
-X-Gm-Gg: ASbGncs1ke1aekaQec+6AQ5HlqfHA7LobP+nk877cX2Sm8Pac1T/WjiJK/RQ1Q605Qe
-	OvL0dBJFLd3tKjm7tLG+LH8iqTB5Vyv8mvq/06tsugZBWUahhPQFO4ApYGxSEQUGplfBhMJjkn9
-	uYmGaAl8NVYAbHgkFSAMYtP8218xakpjVSW7gOeYUJTVbNXi89Cl2JsHbkukIIWjcwqsTMB+kV/
-	T7lMffwfhhZz32O+Nm/3TVzOl5QJaCdJRpjUUZtVVPs7nIRz7RHr+kZY3hEz+tcXl1uhtBQBh2W
-	riNiXYe4575KoTBPzcX/3I78Bs56F/oUdRqOSDi9Cbu3+AVcoUhv+eBqnmTX8lxJfH9C1FCEcgM
-	=
-X-Received: by 2002:a05:620a:2a0f:b0:7c7:6667:ade5 with SMTP id af79cd13be357-7c7af0e0de5mr1678091185a.27.1744616393066;
-        Mon, 14 Apr 2025 00:39:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWB8yJJCQ+1aExZQAKcvLDgxwXWq3sPKi6sM39R0/E6aSC84IG/VhxIYGxrQIc/6fwCKflGg==
-X-Received: by 2002:a05:620a:2a0f:b0:7c7:6667:ade5 with SMTP id af79cd13be357-7c7af0e0de5mr1678088085a.27.1744616392568;
-        Mon, 14 Apr 2025 00:39:52 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30f465f7affsm15992091fa.92.2025.04.14.00.39.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Apr 2025 00:39:51 -0700 (PDT)
-Date: Mon, 14 Apr 2025 10:39:50 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH RFC v5 1/8] media: qcom: iris: move sm8250 to gen1 catalog
-Message-ID: <gkgd7gelin2hbkm2ltsifibxs6laluc66yx5k5uupfa2p4sswc@ypkyrj25njew>
-References: <20250410-topic-sm8x50-upstream-iris-catalog-v5-0-44a431574c25@linaro.org>
- <20250410-topic-sm8x50-upstream-iris-catalog-v5-1-44a431574c25@linaro.org>
- <vhfuhjruok7gupoeo2uloe525k7oycd5gkh67zzz4wbiwrczpt@i3qknymfu4px>
- <f637965b-dff5-45d4-b6be-de8c68c6c397@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=X4v5+mSJvZaWLgjbP8mhRpVpewAJZmA21Ynx9S4ue5McYv9bBhqvJevh44Vrglpm6L8RzVTdPoziscRIer8a7rZspfqNGbbZfgvnYcVYOp5qxWSSO93hByyIcxaRuWg8UXQ7qfMDkd6omZEmA2bo+EJx+4quC0emtgwZxobEkDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FX7WHlli; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DD2C4CEE2;
+	Mon, 14 Apr 2025 07:40:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744616417;
+	bh=t2r22kypL7dkgR5icGf+FItZxkqG4+5fcqunKc1xsiY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FX7WHlli6ntZdKYS5xf1F3wb3fLcfj/ewa5Pb4N8s+GkRSbkZsgn6fB3R+oL7V8hO
+	 L1OTVYTlRsfuRJqWEcFMqymXAqw03e9DAgaOPrfh+xziTPDwVjUtvm1hASLNkoMGML
+	 r+3iKHcBc3VIjAw4ekjZlTw36IfQMAFeeRtjT7xkgBRNNSu0BoDBGGkhXx3K0Xky/p
+	 IPBcP2lJg3Fv2uSHcx5JQ4MPfxoGxmYrWTj1LkItKbNDkP09NrKzeE8H6oYbF11Yv/
+	 +KjqCMX/puR7+DXXvvRxwb+VckQyqE6JmMPLraf06CQb5Kn4LrHb7+Ico6K376sNCc
+	 e6RPJiqAoTF4Q==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1u4EQP-000000001tW-2uQ5;
+	Mon, 14 Apr 2025 09:40:13 +0200
+Date: Mon, 14 Apr 2025 09:40:13 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Chenyuan Yang <chenyuan0y@gmail.com>, vkoul@kernel.org,
+	kishon@kernel.org, lumag@kernel.org, quic_kriskura@quicinc.com,
+	manivannan.sadhasivam@linaro.org, konrad.dybcio@oss.qualcomm.com,
+	quic_varada@quicinc.com, quic_kbajaj@quicinc.com,
+	johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] phy: qcom-qmp-usb: Fix an NULL vs IS_ERR() bug
+Message-ID: <Z_y73a5IDO66AzY1@hovoldconsulting.com>
+References: <20250413212518.2625540-1-chenyuan0y@gmail.com>
+ <22ec4fc8-9368-4955-ac97-c49b3317d3b3@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,63 +66,17 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f637965b-dff5-45d4-b6be-de8c68c6c397@linaro.org>
-X-Proofpoint-ORIG-GUID: U5blHSvq0btKQEvtB1lFQlTYhHMKVdT1
-X-Authority-Analysis: v=2.4 cv=PruTbxM3 c=1 sm=1 tr=0 ts=67fcbbca cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=Eqk6DaCM9aLN9NpnsfwA:9 a=CjuIK1q_8ugA:10 a=NFOGd7dJGGMPyQGDc5-O:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: U5blHSvq0btKQEvtB1lFQlTYhHMKVdT1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-14_01,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 lowpriorityscore=0
- impostorscore=0 clxscore=1015 spamscore=0 mlxscore=0 mlxlogscore=999
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504140053
+In-Reply-To: <22ec4fc8-9368-4955-ac97-c49b3317d3b3@kernel.org>
 
-On Fri, Apr 11, 2025 at 10:14:02AM +0200, Neil Armstrong wrote:
-> On 10/04/2025 21:44, Dmitry Baryshkov wrote:
-> > On Thu, Apr 10, 2025 at 06:30:00PM +0200, Neil Armstrong wrote:
-> > > Re-organize the platform support core into a gen1 catalog C file
-> > > declaring common platform structure and include platform headers
-> > > containing platform specific entries and iris_platform_data
-> > > structure.
-> > > 
-> > > The goal is to share most of the structure while having
-> > > clear and separate per-SoC catalog files.
-> > > 
-> > > The organization is based on the current drm/msm dpu1 catalog
-> > > entries.
-> > > 
-> > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > > ---
-> > >   drivers/media/platform/qcom/iris/Makefile          |  2 +-
-> > >   .../media/platform/qcom/iris/iris_catalog_gen1.c   | 83 ++++++++++++++++++++++
-> > >   ...ris_platform_sm8250.c => iris_catalog_sm8250.h} | 80 ++-------------------
-> > 
-> > I'd suggest _not_ to follow DPU here. I like the per-generation files,
-> > but please consider keeping platform files as separate C files too.
+On Mon, Apr 14, 2025 at 09:30:19AM +0200, Krzysztof Kozlowski wrote:
+> On 13/04/2025 23:25, Chenyuan Yang wrote:
+> > In qmp_usb_iomap(), one branch returns the result of devm_ioremap(), which
+> > can be NULL. Since IS_ERR() does not catch a NULL pointer,
 > 
-> This would duplicate all tables, do we really want this ?
+> No, that's not true. NAK.
 
-No. Keep the tables that are shared in iris_catalog_gen1.c, keep
-platform data in iris_catalog_sm8250.c and iris_catalog_sm8550.c (and
-later iris_catalog_sm8650.c)
+I'm afraid you're mistaken here. See __devm_ioremap() which can return
+NULL.
 
-> 
-> I want just to add SM8650 support, not to entirely rework the
-> whole iris driver.
-> 
-> Neil
-> 
-> > 
-> > >   3 files changed, 89 insertions(+), 76 deletions(-)
-> > > 
-> > 
-> 
-
--- 
-With best wishes
-Dmitry
+Johan
 
