@@ -1,230 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-54220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A01C0A87E22
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 12:55:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C6239A87E42
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 12:58:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6175A3A8BBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 10:54:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 34A473A341D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 10:57:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BBAB27CB27;
-	Mon, 14 Apr 2025 10:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DE59267AE5;
+	Mon, 14 Apr 2025 10:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OVcLs8kp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FQijKSKs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F26627CB2E;
-	Mon, 14 Apr 2025 10:54:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3234327E1DB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 10:57:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744628099; cv=none; b=OJu7hLFOuUqHarmjY2KFGZKoEHMIaXsHpe9otCWSpwjK7ZrSeWOBw43mOC3xpmJncQmrVuiMqgM3720c4VN0mxFkTxHF7W5z3BN1qNz6SxHQqNOOLDfd1L4st3WWH1v35GKlYm3xZr9ItEhH8kCCar+/Onlkr+GSotSZHvbJUMY=
+	t=1744628264; cv=none; b=D/MzSB3UCleZ4zFxd3dtOUAj+7+ptdDxjqUG/eSuya6eKh3gYusOONWP5Kf2kcRUQVLOJ2cEy/CBhmtjHoBTLxVCgMe8pOAisAALQZtDCCy87Y2qQtqTBzcMD2nthXywoxXNhobV3xH2J8CTW23t447NKHK5GNaTy9Rne19uUWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744628099; c=relaxed/simple;
-	bh=PogYEh6yK0izoEyQMmmryQwDMp4cJbN4Ay3InPJFHhs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=IpOKKuQcVOd+13+++1cSiVthwvoPZjMhrVzBukB5SIrKkEXuQvKN8CS73JpARcOgMsiTfb7lqNG10fPqiFaesuMLzbZyU0i2q3egbDZRNifREJd+QmeImb8eY1oW8L2a2TgX26TSLQJINoyFAcuD1ZaaUUS6R3H57cJiwWZNytA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OVcLs8kp; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53E99qg6001766;
-	Mon, 14 Apr 2025 10:54:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cZ/lDXu7qiesb1vmPom54xx1ZrNlSDlA7rR1BqQX3cM=; b=OVcLs8kp1ECQRJwH
-	CwDxzAbRYuo6WHIdRt9BJueRXv3GtmMFCTylFw784LSalnRtDDB06An8ZvJMAW+a
-	zx9gsv4K/NqBmCxj64UtelO5z2q2rQ/S6b8+CO06Ovgby+p+Qow3Cv1qSW+/m4BY
-	MTtsY2Tt2a/On8f93u/+A8ULdPz+mmRA5YZLiFWLz/ZdTHcb50IqfXzrs23PpqXA
-	qqX8NhmebhQMAE8lQfZeSmVFVCKkKuel6dBvlNaBM6k2Fr8bAkIcMFqExtL9OjZd
-	g1+ZJvfTdW/Hy4X6Wl+05jfcj1NBDacbJ418ITfY/QsioK5a0gvIKcewoUSpAopo
-	AGSIDQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ydhq4g91-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 14 Apr 2025 10:54:48 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53EAslwJ005866
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 14 Apr 2025 10:54:47 GMT
-Received: from [10.206.101.41] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 14 Apr
- 2025 03:54:43 -0700
-Message-ID: <96953447-cff5-98d4-053e-8cc31778849c@quicinc.com>
-Date: Mon, 14 Apr 2025 16:24:40 +0530
+	s=arc-20240116; t=1744628264; c=relaxed/simple;
+	bh=BoqcpGLsoABX4vg4/Ivt2I+MXhyCCQay6STb45Ufw+w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fvTEE9jIEX9oj+qk1cRo0yFgA+c+spZZbHiTIP5cplSPEvyEVzxTewgOX6T3uE81BekKyXm2j0YOVfqYOkrGUvHEictPEXzsGcIP4b4KghI7LCVLbb5GJJbAoA4zwfohlHFvqs5rsIk/nXW3DHuME4QrU2WlITWZmg2koGTlvNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FQijKSKs; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-301d6cbbd5bso4257335a91.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 03:57:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744628261; x=1745233061; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3gYGD0102TT7Kuba2ulJFmxLeAypj29hAhExmb/Q6KY=;
+        b=FQijKSKsdiXb/vmlvTQZ8leJiD3YZzoyTm7oxONr1ArZcTbmsSvTt8J3M/PlmRumVO
+         8oLjfGDVzTZA7RYgAQz27NGJrCHFrvLOGq078pFhXIqDhHoLKQm0t7taU5+HS0Pz8L65
+         Ht4pNWLlhThSQNflvXuJKqzUMtTg6YanuUboJVGVJhD4bRC0/9+mliSBjBjuMZFtXNFc
+         /qUWT28oq/NPxNML1/zMvqdzwuJVDxgYxyF3HGcWEzlCfd0flkFOlSN+u30pBowtrfm+
+         BSA0pma4kwCpMrdMIyAIIBjcnKBNcKTP4FojazO5f3z+/LoSusM70Nk/xCEQOhVjjZeo
+         i6Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744628261; x=1745233061;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3gYGD0102TT7Kuba2ulJFmxLeAypj29hAhExmb/Q6KY=;
+        b=ZYGjf3jZzbVfHMJVs4LuRA/H6whfYu9slqD+Tzb84DK2aoQcnjs+Mn9B2IoSR746IT
+         ozK9t69XU3A8cqWa3tLrWRI6uoVP08dhd7B4Y2jV/Z7IjavBOr43gC3ZeA+w77QVBFnR
+         Vu5RjpIJHpDQiBuZcW/CZUWjTIg63nUaTvYFLQQBiabFYemkhUUsUUT6rYU99HxPcD7F
+         oemO25hla1ETfeR6JRR/rN0c9xNTwFf3dsa2oFbFqRyfirxRZa5oYsJJZCLd3lIhosrX
+         4NCDs8EAuo86vSOEEpYoBdlFqo/4CbFZqcxII8HcUt6ANCAHQ6Gi3b6tUJ5rBSMXAuf0
+         lYag==
+X-Forwarded-Encrypted: i=1; AJvYcCUiUuej6k4y97E47mnFdxy4ZpOVYFlM7iUggLk/9IvdB7DUXU96Zb+/mFq7+CDNBFzmOvXcrn5/y0RyUdd7@vger.kernel.org
+X-Gm-Message-State: AOJu0YwwMbwiLPYe8Ocs0pVGaoA7QO3u77co6Xgwaqn+dBVZCna3B+T0
+	bOlV/E1Y6nUpNhae/GcLWjxsWez6f+wefEUuv7CC8K3OEEKdQVZ8BiPm+Sq76ZM7X8safm1oAoU
+	=
+X-Gm-Gg: ASbGncuDcoIkGpR33Iww6hIrRpjie451lTQZjEJ2cGNzd2e3JGpieltv/IrMPWCXErF
+	Z4WulaLyfvzpddUyfbD7wxDI7ylFtiq/7sSKPP3mNmPHu01XME7ZmsZjsDTwQxMqQJYBqONKypv
+	OSHWq3VZN70AvWgxZJ4NS04WQAA8pKYv9hWQruCKuo93NmoUhF7paacFpQ6ufMKXKy1CoShGHGe
+	3vkyV5Yh61dfvUQprB057OFbTTgMydI1ialicl9JR7P6bqnX5X5nPw4jYGMUtVFknJ2hHFdYhld
+	7ZCQ7oZgj/iP7PCv44g6k5BzkgBeLIRet9y74fgWpcxW3FWSPUdK
+X-Google-Smtp-Source: AGHT+IFrTaFVyOPiYJivy5MghxyEC8vM+3s641uXVU9gQnpG1AwmzV3RmWIzhztYD7luXmb/H7jf+w==
+X-Received: by 2002:a17:90b:5206:b0:305:2d27:7ca7 with SMTP id 98e67ed59e1d1-308236523femr20387289a91.16.1744628261382;
+        Mon, 14 Apr 2025 03:57:41 -0700 (PDT)
+Received: from thinkpad ([120.56.202.123])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-306dd10c3cdsm10893869a91.2.2025.04.14.03.57.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Apr 2025 03:57:41 -0700 (PDT)
+Date: Mon, 14 Apr 2025 16:27:35 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Brian Norris <briannorris@chromium.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org, 
+	Tsai Sung-Fu <danielsftsai@google.com>
+Subject: Re: [RFC] PCI: pwrctrl and link-up dependencies
+Message-ID: <vfjh3xzfhwoppcaxlov5bcmkfngyf6no4zyrgexlcxpfajsw2t@o5nbfcep3auz>
+References: <Z_WAKDjIeOjlghVs@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH RFC v5 0/8] media: qcom: iris: re-organize catalog & add
- support for SM8650
-Content-Language: en-US
-To: <neil.armstrong@linaro.org>, Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel
-	<p.zabel@pengutronix.de>
-CC: <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        "Bryan
- O'Donoghue" <bryan.odonoghue@linaro.org>
-References: <20250410-topic-sm8x50-upstream-iris-catalog-v5-0-44a431574c25@linaro.org>
- <2740b178-34cc-4b95-a8da-7e6862cabc92@linaro.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <2740b178-34cc-4b95-a8da-7e6862cabc92@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: XCRZg9Rz-JzV0yEaT2iAi7iIkQ61qA8X
-X-Authority-Analysis: v=2.4 cv=C7DpyRP+ c=1 sm=1 tr=0 ts=67fce978 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=fPU9YJLUV81MxjcyFtsA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: XCRZg9Rz-JzV0yEaT2iAi7iIkQ61qA8X
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-14_03,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0 bulkscore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 mlxscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504140079
+In-Reply-To: <Z_WAKDjIeOjlghVs@google.com>
 
-Hi Neil,
+On Tue, Apr 08, 2025 at 12:59:36PM -0700, Brian Norris wrote:
+> TL;DR: PCIe link-up may depend on pwrctrl; however, link-startup is
+> often run before pwrctrl gets involved. I'm exploring options to resolve
+> this.
+> 
+> Hi all,
+> 
+> I'm currently looking at reworking how some (currently out-of-tree, but I'm
+> hoping to change that) pcie-designware based drivers integrate power sequencing
+> for their endpoint devices, as well as the corresponding start_link()
+> functionality.
+> 
+> For power sequencing, drivers/pci/pwrctrl/ looks like a very good start at what
+> we need, since we have various device-specific regulators, GPIOs, and
+> sequencing requirements, which we'd prefer not to encode directly in the
+> controller driver.
+> 
 
-On 4/14/2025 1:05 PM, Neil Armstrong wrote:
-> Hi Vikash, Dikshita,
-> 
-> On 10/04/2025 18:29, Neil Armstrong wrote:
->> Re-organize the platform support core into a gen1 catalog C file
->> declaring common platform structure and include platform headers
->> containing platform specific entries and iris_platform_data
->> structure.
->>
->> The goal is to share most of the structure while having
->> clear and separate per-SoC catalog files.
->>
->> The organization is based on the curent drm/msm dpu1 catalog
->> entries.
-> 
-> Any feedback on this patchset ?
-Myself and Dikshita went through the approach you are bringing here, let me
-update some context here:
-- sm8550, sm8650, sm8775p, qcs8300 are all irisv3, while qcs8300 is the scaled
-down variant i.e have 2 PIPE vs others having 4. Similarly there are other
-irisv3 having 1 pipe as well.
-- With above variations, firmware and instance caps would change for the variant
-SOCs.
-- Above these, few(less) bindings/connections specific delta would be there,
-like there is reset delta in sm8550 and sm8650.
+The naming is a bit confusing, but power sequencing and power control are two
+different yet related drivers. Power sequencing drivers
+(drivers/power/sequencing) are targeted towards devices having complex resource
+topology and often accessed by more than one drivers. Like the WiFI + BT combo
+PCIe cards. On the other hand, power control (drivers/pci/pwrctrl) drivers are
+used to control power to the PCIe slots/cards having simple resource topology.
 
-Given above, xxx_gen1.c and xxx_gen2.c can have all binding specific tables and
-SOC platform data, i.e sm8650_data (for sm8650). On top of this, individual SOC
-specific .c file can have any delta, from xxx_gen1/2.c) like reset table or
-preset register table, etc and export these delta structs in xxx_gen1.c or
-xxx_gen2.c.
+> For link startup, pcie-designware-host.c currently
+> (a) starts the link via platform-specific means (dw_pcie::ops::start_link()) and
+> (b) waits for the link training to complete.
+> 
+> However, (b) will fail if the other end of the link is not powered up --
+> e.g., if the appropriate pwrctrl driver has not yet loaded, or its
+> device hasn't finished probing. Today, this can mean the designware
+> driver will either fail to probe,
 
-Going with above approach, sm8650.c would have only one reset table for now.
-Later if any delta is identified, the same can be added in it. All other common
-structs, can reside in xxx_gen2.c for now.
+This is not correct. DWC driver will start LTSSM and wait for the link to be up
+if the platform has no way of detecting link up. But it will not fail if the
+link doesn't come up. It will just continue hoping for the link to come up
+later. LTSSM would be in Detect.Quiet/Active state till a link partner is found:
 
-Regards,
-Vikash
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/controller/dwc/pcie-designware-host.c#n558
+
+> or at least waste time for a condition
+> that we can't achieve (link up), depending on the HW/driver
+> implementation.
 > 
-> Thanks,
-> Neil
+
+Unfortunately we cannot avoid this waiting time as we don't know if a device is
+attached to the bus or not. The 1s wait time predates my involvement with DWC
+drivers.
+
+> I'm wondering how any designware-based platforms (on which I believe pwrctrl
+> was developed) actually support this, and how I should look to integrate
+> additional platforms/drivers. From what I can tell, the only way things would
+> work today would either be if:
+> (1) a given platform uses the dw_pcie_rp::use_linkup_irq==true functionality,
+>     which means pcie-designware-host will only start the link, but not wait for
+>     training to succeed. (And presumably the controller will receive its
+>     link-up IRQ after power sequencing is done, at which point both pwrctrl and
+>     the IRQ may rescan the PCI bus.) Or:
+> (2) pci/pwrctrl sequencing only brings up some non-critical power rails for the
+>     device in question, so link-up can actually succeed even without
+>     pwrctrl.
 > 
->>
->> Add support for the IRIS accelerator for the SM8650
->> platform, which uses the iris33 hardware.
->>
->> The vpu33 requires a different reset & poweroff sequence
->> in order to properly get out of runtime suspend.
->>
->> Follow-up of [1]:
->> https://lore.kernel.org/all/20250409-topic-sm8x50-iris-v10-v4-0-40e411594285@linaro.org/
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->> Changes in v4:
->> - Reorganized into catalog, rebased sm8650 support on top
->> - Link to v4:
->> https://lore.kernel.org/all/20250409-topic-sm8x50-iris-v10-v4-0-40e411594285@linaro.org
->>
->> Changes in v4:
->> - collected tags
->> - un-split power_off in vpu3x
->> - removed useless function defines
->> - added back vpu3x disappeared rename commit
->> - Link to v3:
->> https://lore.kernel.org/r/20250407-topic-sm8x50-iris-v10-v3-0-63569f6d04aa@linaro.org
->>
->> Changes in v3:
->> - Collected review tags
->> - Removed bulky reset_controller ops
->> - Removed iris_vpu_power_off_controller split
->> - Link to v2:
->> https://lore.kernel.org/r/20250305-topic-sm8x50-iris-v10-v2-0-bd65a3fc099e@linaro.org
->>
->> Changes in v2:
->> - Collected bindings review
->> - Reworked rest handling by adding a secondary optional table to be used by
->> controller poweroff
->> - Reworked power_off_controller to be reused and extended by vpu33 support
->> - Removed useless and unneeded vpu33 init
->> - Moved vpu33 into vpu3x files to reuse code from vpu3
->> - Moved sm8650 data table into sm8550
->> - Link to v1:
->> https://lore.kernel.org/r/20250225-topic-sm8x50-iris-v10-v1-0-128ef05d9665@linaro.org
->>
->> ---
->> Neil Armstrong (8):
->>        media: qcom: iris: move sm8250 to gen1 catalog
->>        media: qcom: iris: move sm8550 to gen2 catalog
->>        dt-bindings: media: qcom,sm8550-iris: document SM8650 IRIS accelerator
->>        media: platform: qcom/iris: add power_off_controller to vpu_ops
->>        media: platform: qcom/iris: introduce optional controller_rst_tbl
->>        media: platform: qcom/iris: rename iris_vpu3 to iris_vpu3x
->>        media: platform: qcom/iris: add support for vpu33
->>        media: platform: qcom/iris: add sm8650 support
->>
->>   .../bindings/media/qcom,sm8550-iris.yaml           |  33 ++-
->>   drivers/media/platform/qcom/iris/Makefile          |   6 +-
->>   .../media/platform/qcom/iris/iris_catalog_gen1.c   |  83 +++++++
->>   ...{iris_platform_sm8550.c => iris_catalog_gen2.c} |  85 +------
->>   ...ris_platform_sm8250.c => iris_catalog_sm8250.h} |  80 +-----
->>   .../media/platform/qcom/iris/iris_catalog_sm8550.h |  91 +++++++
->>   .../media/platform/qcom/iris/iris_catalog_sm8650.h |  68 +++++
->>   drivers/media/platform/qcom/iris/iris_core.h       |   1 +
->>   .../platform/qcom/iris/iris_platform_common.h      |   3 +
->>   drivers/media/platform/qcom/iris/iris_probe.c      |  43 +++-
->>   drivers/media/platform/qcom/iris/iris_vpu2.c       |   1 +
->>   drivers/media/platform/qcom/iris/iris_vpu3.c       | 122 ---------
->>   drivers/media/platform/qcom/iris/iris_vpu3x.c      | 275 +++++++++++++++++++++
->>   drivers/media/platform/qcom/iris/iris_vpu_common.c |   4 +-
->>   drivers/media/platform/qcom/iris/iris_vpu_common.h |   3 +
->>   15 files changed, 598 insertions(+), 300 deletions(-)
->> ---
->> base-commit: 2bdde620f7f2bff2ff1cb7dc166859eaa0c78a7c
->> change-id: 20250410-topic-sm8x50-upstream-iris-catalog-3e2e4a033d6f
->>
->> Best regards,
+
+Again, failing to detect link up will not fail the probe. I don't know how you
+derived this conclusion. Even the PCIe spec itself is clear that the link should
+stay in Detect.Quiet until it has found the link partner. So failing the probe
+means we are introducing a dependency on the devices which would be bizarre.
+Imagine how a controller will end up supporting hotplug.
+
+> My guess is that (1) is the case, and specifically that the relevant folks are
+> using the pcie-qcom.c, with its "global" IRQ used for link-up events.
 > 
+
+We only recently added support for 'Link Up' event through 'global_irq' in the
+controller driver. And this was done to avoid waiting for link up during probe
+(which is what you/your colleagues also want to avoid I believe). But the
+problem in your case is that you are completely skipping the LTSSM and relying
+on custom userspace tooling to bring up the device and start LTSSM once done.
+
+> So how should I replicate this on other designware-based platforms? I suppose
+> if the platform in question has a link-up IRQ, I can imitate (1). But what if
+> it doesn't? (Today, we don't validate and utilize a link-up IRQ, although it's
+> possible there is one available. Additionally, we use various retry mechanisms
+> today, which don't trivially fit into this framework, as we won't know when
+> precisely to retry, if power sequencing is controlled entirely by some other
+> entity.)
+> 
+> Would it make sense to introduce some sort of pwrctrl -> start_link()
+> dependency? For example, I see similar work done in this series [1], for
+> slightly different reasons. In short, that series adds new
+> pci_ops::{start,stop}_link() callbacks, and teaches a single pwrctrl driver to
+> stop and restart the bridge link before/after powering things up.
+> 
+
+This switch has a crazy requirement for configuring it through I2C. The I2C
+configuration has to be done before starting LTSSM. So we disable LTSSM first
+since it was enabled way before, then do I2C config and then start LTSSM again.
+
+> I also see that Manivannan has a proposal out [2] to add semi-generic
+> link-down + retraining support to core code. It treads somewhat similar
+> ground, and I could even imagine that its pci_ops::retrain_link()
+> callback could even be reimplemented in terms of the aforementioned
+> pci_ops::{start,stop}_link(), or possibly vice versa.
+> 
+
+Retrain work is mostly to bring up a broken link, which is completely different
+from what you are trying to achieve.
+
+> Any thoughts here? Sorry for a lot of text and no patch, but I didn't just want
+> to start off by throwing a 3rd set of patches on top of the existing ones that
+> tread similar ground[1][2].
+> 
+
+No problem. If you want to use pwrctrl in your platform and get rid of the
+custom userspace tooling, I'm all in for it. But for that, I need to understand
+your controller design first. All I heard so far is, "we want to skip LTSSM and
+let our tool take care of it".
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
