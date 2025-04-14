@@ -1,344 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-54280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2788EA89020
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 01:24:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9228BA89023
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 01:25:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2732E1681FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 23:24:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F04E7189BBBA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 23:25:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB3371FDA6A;
-	Mon, 14 Apr 2025 23:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1883020125F;
+	Mon, 14 Apr 2025 23:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="iJ5U/Ach"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CH/Jp3Zl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB401FC7D9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 23:24:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE675201017
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 23:24:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744673083; cv=none; b=GUhNin3B4VeHbM4pn0vBGaQ9bJq3UlxtWoaq8490lWJBYXkoEKDFeExghsHIXau1c+ykRhBK5AHDH08Fx7zkASKKbZwJLZoaG3a6C1U8Ox5gFBWdjAM3fIuv8Yig1EKHRA1BS0F8SvOiKeJBwTZLucGZf5WdQccL+IevBLB4Nas=
+	t=1744673090; cv=none; b=F/K0FL+8/39c1a2DOTfGfvhbb1wZPZjNtYkEkahSKaoQ/36rHx7k9TXc4ujyePmT9BFszSOx5UwbAmJgsO+nJcXtQWVD8gMYFN1nOkJmYD0OefcxQW4CTFRnp+yK5ZiuAPcEp2bI1ZtDey47ZHnPJuXsvKAzU9Wr6zyj+G5vho8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744673083; c=relaxed/simple;
-	bh=DrK5sCN0Djm7yYzGeu8GBMoAVw0bKeH9pnhbd8Jhi+0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k+bddlM25ZrqD+YKV9+ozNwoYT7qp1NPuNYjhGNuhiz6Cq+M74b9ltV882kY4x2frcwxZhXmtBdeB4mK71IKyn9h20a4gAwORq2JvHnJcvCVy3BGsAZcB81XrOH5hu4UzmNGmtUo3UQN2K4YuMpGiM2o0uefxRLcI0GGp+NaagI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=iJ5U/Ach; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-73bf5aa95e7so1499645b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 16:24:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1744673081; x=1745277881; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CnRjpXKt5up+IzlTcWQL0PBVW3Sar0P9RT7q5iNBMeE=;
-        b=iJ5U/AchbBYKr6PIJpWdw72smQGOmLtNiz6pMxHJyKiyLJdjGa1P7HcN1Urupj1nRO
-         3yMiDtKLVOfelv1/qTRfEAxyqQSvXDXLkr4wG5wPO9tk/v4JLDWJv0iqCXnCGDoDiFu8
-         Rvexa+nySvFxsAHLV1lskJ+76eCQRL1gzuDrI=
+	s=arc-20240116; t=1744673090; c=relaxed/simple;
+	bh=h2pvihb+r7IyXNDpZp7U3oD4Rj//hdL1D90IbYTHZEE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YE4TQXuMzu8zXvqBmWVcD2kiKPufQGnuTzDPUVcg1j9UT4FHFFqjy2meh3TIIMxZoFnMkPw+03Xzu6I0N199ojB/wm3OOTbjw2Iga3oO7udW7uwPh7K4028LOsKZt5j4UukJFFXH4oI43anR9o7cMNod/lmZyAehvgiF8fOcPQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CH/Jp3Zl; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53EKdjc7011111
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 23:24:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	syhqoSLgiLKWoYixmoWsnuqaN8xZFF6IGsZlfy3D5A0=; b=CH/Jp3ZlxAsXNIyd
+	OaYFKyz7rkikQgyuxvJJNnDkc5RUxsvlOXIXSrZeZdpjZuR5EX9O22TRIdaWix2t
+	28bxFz2f9ExCKEpH8Yd7R2bUwF7gxgGHCpet+GfiJFZAsr9Vyox2lG84p1NMjAG1
+	+kdp4O3KKsY7j5TJA5+ONm63RUxkiDFelubHeCueny1l6pV27G8RrsYa2kFgBaHo
+	MGoVdsxv1zU0gw52qPCJfqlJZM3SSDav0fsE9lps60qXgMNQ+aHtAgfqjF36vEY5
+	o7r/C8SQZ7LB3QzzksSiyM6gf+jhs5QQSf8ftnAbmxAg0gv96tfHgBZ16fFo+zj3
+	FeqlbA==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yhfcwxgg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 23:24:47 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-476718f9369so11120561cf.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 16:24:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744673081; x=1745277881;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CnRjpXKt5up+IzlTcWQL0PBVW3Sar0P9RT7q5iNBMeE=;
-        b=LfYg6DASkHueZJzyUg90k1E3bh0oLUaIr4PT+eHakBzpNaQ6cWcM577pWbrEcip7dW
-         odiAluFvtTViFo53v1GPiMb5Fk5UOilZcMLRk/iBk/+drwmJggKNv0BsOLwIx3zrHmjE
-         sOKjM7hYYUBdYEnK6Hhr95J+Z0aHt8c2ArRqSu61ZRx/Fn+jur3HIoU6M2OPQtpD8Eac
-         qIJBgQzzKHpN/VoEzRECns7X1Mqv243spxDvIPRhCUUjPHDMlH4F2YQvdWh+mYJDUuzy
-         eSyq1j/OMF/ss8Ga1p+lZfwNua4NICZGYJarJ0sK3+cP8JseSUv4tIfQHFxb6O5VPuIR
-         +mzw==
-X-Forwarded-Encrypted: i=1; AJvYcCVX+0meHVaW17kfAhbwGlRY9XLILE3hb7flx1WYgvNREez1Tf/20khpHXz3dxcCgXOCG1I8SUaFSKbJiZ0K@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYAXlMqQCJwJ9sDw69pFidl8PpDXqtnlBUjGnxxSsw21C1OiQj
-	0uNg6xZTEgsHmKLjQl3kx31rj9xVkE7r2QX8jCjU6In9FPHiOeXA55zXN3CaKw==
-X-Gm-Gg: ASbGncvlxQAGigXWQBbENpFEnUPBwhI8vUQZ5zze9FJC9v4S2x/ptxH5sQSfeqlegE0
-	hKlPNShHkf0XYES1A/CV+EtfGAUfgpGEJh/pmhSXkqYs97zxdtDKmZMMQCHxY9h6ch1Kg/GSwKy
-	W1Ti5m0Es6IdMI3mqiOrU5l7C7BlHk+DOf/tRLL0Njs+zP5BAGSLnj4YMK24zMRuV1zSfdT9yxm
-	fpjGY6wBsUabrJopZVITPXhfpSthMfX0kIZlxpY+UrkrVrDK7FHWmB3RvgghEQl1fV16QNo+Gpn
-	WrsAxh19x6TdeFZmxAP/5ZnCiT8tL5kILA19uLwDcnmGTyYyJShMk4XLh2+AcaDfbWmjfZQUsHR
-	hjA==
-X-Google-Smtp-Source: AGHT+IEvnVP59BXuKQI6FEom+2qVwz80oGIq0KRPOTQ1u7+ypWxWVkcsX7qw8fSjcwcyyGre4bIIiA==
-X-Received: by 2002:a05:6a00:3901:b0:736:4d44:8b77 with SMTP id d2e1a72fcca58-73bd11e210emr22785720b3a.8.1744673080820;
-        Mon, 14 Apr 2025 16:24:40 -0700 (PDT)
-Received: from localhost ([2a00:79e0:2e14:7:cfd0:cb73:1c0:728a])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-73bd230ddaasm7404870b3a.138.2025.04.14.16.24.39
+        d=1e100.net; s=20230601; t=1744673086; x=1745277886;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=syhqoSLgiLKWoYixmoWsnuqaN8xZFF6IGsZlfy3D5A0=;
+        b=OL6VrVWkFngqau+T0JkWWYnVP6caTWsC3iQHpWZfbkS6a57+dT7IoQXwLejmUPhuIq
+         sG5HI9m3PzYFEETDnsvCHPBlRZ26DMcwGr8CQpKPV7AyEdNDSiOjg1hAAjjQNeu+5JJQ
+         meGZuodZ7xPGNcmz8Y4uz8U1JO1zR5LXzmEvfszQ7U3fohjnrN3ztpzaaNbjPVQQAB9N
+         6w1z0hcNdF3ptyagEtrQk5XuoAa1C4KX8ySKpKHAcvHfUaZ9nnXOKMaWt4MHqXAbt265
+         X5pWY1wnadTVuoModXoMUHVOXq2AWBTlQ5nKpMzuLRDnEvjsm3GA7OLfWSXsC25L9eov
+         Uj7w==
+X-Gm-Message-State: AOJu0YwJU8Ju6hCpKnnVLkwWK0pd/SsJhgqoeP3sUjGxXvwXcd7SNtML
+	7H3vs3/uKpR98XhyDbD4LKE5byOHEkKeRZSNZlERmPv899lf+tl8Bx38XOwDgMd1vetdoPFVCu3
+	0uhvjLPaFkEmKkz/31T0WYsW7P2eQVhnXOjJwrAiGy+cX0WdXzM+juqLgVKV0rsYE
+X-Gm-Gg: ASbGncuKqnW+7Wo7dnqLEGOrkvNX7Kembsectsv+m/k3OFwBp4+N6LDmruKjdacqyKj
+	Xfh9SDhPnQraARIHb7QgFOLTYC3UvIjCS8e9FDFGKejzUu5W3tBMnURJZ0ly3oDSpZAKWCBfvom
+	i8/MxW+b5NraRt+PShTViDG6NVxQ9GBXa/QLSxvCZi3i064/fSD9YFsOobaGZmj4fqJQ39YaxPD
+	uD6SJJqS9+aZPPF0oKr4WOo8yczWp7hMVRoI2SfYgFhsieWRMFYDbUU0yMlo2t4WoZsmVRdekh/
+	cUz74iRo3mUjMSA3HVzPl1Vlx0c9jjGMsTdPKZI3ZNjEEV5YQIMK+07HJYuBAWMj+A==
+X-Received: by 2002:a05:620a:424f:b0:7c0:be0e:cb09 with SMTP id af79cd13be357-7c7af113653mr670670185a.7.1744673086245;
+        Mon, 14 Apr 2025 16:24:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8PTRomTehXQkpJAD665EuLX7SUm59eGe5gjBmCc2IHLMBCvASYa1s8Eb5SDTMHqQU4Sc4Hw==
+X-Received: by 2002:a05:620a:424f:b0:7c0:be0e:cb09 with SMTP id af79cd13be357-7c7af113653mr670669185a.7.1744673085863;
+        Mon, 14 Apr 2025 16:24:45 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acaa1bb2ed4sm994857166b.34.2025.04.14.16.24.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Apr 2025 16:24:40 -0700 (PDT)
-Date: Mon, 14 Apr 2025 16:24:38 -0700
-From: Brian Norris <briannorris@chromium.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	dmitry.baryshkov@linaro.org, Tsai Sung-Fu <danielsftsai@google.com>
-Subject: Re: [RFC] PCI: pwrctrl and link-up dependencies
-Message-ID: <Z_2ZNuJsDr0lDjbo@google.com>
-References: <Z_WAKDjIeOjlghVs@google.com>
- <vfjh3xzfhwoppcaxlov5bcmkfngyf6no4zyrgexlcxpfajsw2t@o5nbfcep3auz>
+        Mon, 14 Apr 2025 16:24:45 -0700 (PDT)
+Message-ID: <ac789ed9-da73-4a1b-8dd4-925441d62baa@oss.qualcomm.com>
+Date: Tue, 15 Apr 2025 01:24:43 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <vfjh3xzfhwoppcaxlov5bcmkfngyf6no4zyrgexlcxpfajsw2t@o5nbfcep3auz>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/4] soc: qcom: llcc-qcom: Add support for SM8750
+To: Melody Olvera <melody.olvera@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250414-sm8750_llcc_master-v4-0-e007f035380c@oss.qualcomm.com>
+ <20250414-sm8750_llcc_master-v4-3-e007f035380c@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250414-sm8750_llcc_master-v4-3-e007f035380c@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=CfUI5Krl c=1 sm=1 tr=0 ts=67fd993f cx=c_pps a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=DTz9NSAdtq1ik8-Tc7kA:9 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-GUID: 6ar6mxmjHD_yEBQJMjMxVnjjrpW4q0tQ
+X-Proofpoint-ORIG-GUID: 6ar6mxmjHD_yEBQJMjMxVnjjrpW4q0tQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-14_08,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ bulkscore=0 malwarescore=0 impostorscore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 suspectscore=0 mlxlogscore=582 mlxscore=0 clxscore=1015
+ adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504140168
 
-Hi Manivannan,
-
-On Mon, Apr 14, 2025 at 04:27:35PM +0530, Manivannan Sadhasivam wrote:
-> On Tue, Apr 08, 2025 at 12:59:36PM -0700, Brian Norris wrote:
-> > TL;DR: PCIe link-up may depend on pwrctrl; however, link-startup is
-> > often run before pwrctrl gets involved. I'm exploring options to resolve
-> > this.
-> > 
-> > Hi all,
-> > 
-> > I'm currently looking at reworking how some (currently out-of-tree, but I'm
-> > hoping to change that) pcie-designware based drivers integrate power sequencing
-> > for their endpoint devices, as well as the corresponding start_link()
-> > functionality.
-> > 
-> > For power sequencing, drivers/pci/pwrctrl/ looks like a very good start at what
-> > we need, since we have various device-specific regulators, GPIOs, and
-> > sequencing requirements, which we'd prefer not to encode directly in the
-> > controller driver.
-> > 
+On 4/15/25 1:21 AM, Melody Olvera wrote:
+> Add system cache table and configs for SM8750 SoCs.
 > 
-> The naming is a bit confusing,
+> Signed-off-by: Melody Olvera <melody.olvera@oss.qualcomm.com>
+> ---
 
-+1
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-> but power sequencing and power control are two
-> different yet related drivers. Power sequencing drivers
-> (drivers/power/sequencing) are targeted towards devices having complex resource
-> topology and often accessed by more than one drivers. Like the WiFI + BT combo
-> PCIe cards. On the other hand, power control (drivers/pci/pwrctrl) drivers are
-> used to control power to the PCIe slots/cards having simple resource topology.
-
-Sure, I get the difference. There can be "sequencing" in the pwrctrl
-area too though, because there can be PMICs involved even in a single
-PCIe device (i.e., non-shared, not needing "pwrseq" framework) which
-require multiple steps (e.g., 2 GPIOs) to power up. Apologies if my
-mention of "sequencing" is unclear, but I believe everything I'm
-concerned about is in pwrctrl not pwrseq.
-
-> > For link startup, pcie-designware-host.c currently
-> > (a) starts the link via platform-specific means (dw_pcie::ops::start_link()) and
-> > (b) waits for the link training to complete.
-> > 
-> > However, (b) will fail if the other end of the link is not powered up --
-> > e.g., if the appropriate pwrctrl driver has not yet loaded, or its
-> > device hasn't finished probing. Today, this can mean the designware
-> > driver will either fail to probe,
-> 
-> This is not correct.
-
-That depends on the implementation of start_link(). But I suppose the
-intention is that start_link() only "starts" and doesn't care where
-things go from there. (IOW, my local start_link() implementation is
-probably wrong at the moment, as it performs some poll/retry steps too.)
-
-> DWC driver will start LTSSM and wait for the link to be up
-> if the platform has no way of detecting link up. But it will not fail if the
-> link doesn't come up. It will just continue hoping for the link to come up
-> later. LTSSM would be in Detect.Quiet/Active state till a link partner is found:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/controller/dwc/pcie-designware-host.c#n558
-
-I'd still consider logging an error a failure of sorts though, even if
-we don't fail the probe().
-
-> > or at least waste time for a condition
-> > that we can't achieve (link up), depending on the HW/driver
-> > implementation.
-> > 
-> 
-> Unfortunately we cannot avoid this waiting time as we don't know if a device is
-> attached to the bus or not. The 1s wait time predates my involvement with DWC
-> drivers.
-
-I don't really love that answer. It means that any DWC-based platform
-that needs pwrctrl and doesn't set use_link_irq==true will waste 1
-second per PCIe controller. While it's hard to make guarantees about old
-and/or unloved drivers, I'd like to think I can do better on new ones.
-
-> > I'm wondering how any designware-based platforms (on which I believe pwrctrl
-> > was developed) actually support this, and how I should look to integrate
-> > additional platforms/drivers. From what I can tell, the only way things would
-> > work today would either be if:
-> > (1) a given platform uses the dw_pcie_rp::use_linkup_irq==true functionality,
-> >     which means pcie-designware-host will only start the link, but not wait for
-> >     training to succeed. (And presumably the controller will receive its
-> >     link-up IRQ after power sequencing is done, at which point both pwrctrl and
-> >     the IRQ may rescan the PCI bus.) Or:
-> > (2) pci/pwrctrl sequencing only brings up some non-critical power rails for the
-> >     device in question, so link-up can actually succeed even without
-> >     pwrctrl.
-> > 
-> 
-> Again, failing to detect link up will not fail the probe. I don't know how you
-> derived this conclusion. Even the PCIe spec itself is clear that the link should
-> stay in Detect.Quiet until it has found the link partner. So failing the probe
-> means we are introducing a dependency on the devices which would be bizarre.
-> Imagine how a controller will end up supporting hotplug.
-
-I think you're over-fixating on my mention of probe failure. Consider
-the lesser statement that was paired along with it: always wasting 1
-second per controller polling for something that will never happen. It
-feels backwards and wasteful.
-
-One of my key questions: if I don't have a link-up IRQ, how can I avoid
-this waste? pcie-brcmstb avoids that waste today (for the common case
-where there is, in fact, a device connected), and it would be a
-regression for it to start using pwrctrl tomorrow.
-
-(Side note: I also just noticed pcie-tegra194.c does the same.)
-
-> > My guess is that (1) is the case, and specifically that the relevant folks are
-> > using the pcie-qcom.c, with its "global" IRQ used for link-up events.
-> > 
-> 
-> We only recently added support for 'Link Up' event through 'global_irq' in the
-> controller driver. And this was done to avoid waiting for link up during probe
-
-You're kind of reinforcing my question: you don't like the waste, so
-you're adding link-up IRQ support -- is that really the only way?
-
-(My initial thought: no, it's not. We know when pwrctrl has done its
-thing -- why should we bother polling for link state before that? But
-that's easier said than done, when pwrctrl is optional and highly
-abstracted away from the DWC driver...)
-
-> (which is what you/your colleagues also want to avoid I believe). But the
-> problem in your case is that you are completely skipping the LTSSM and relying
-> on custom userspace tooling to bring up the device and start LTSSM once done.
-
-I assume you're talking about this thread:
-https://lore.kernel.org/linux-pci/20240112093006.2832105-1-ajayagarwal@google.com/
-[PATCH v5] PCI: dwc: Wait for link up only if link is started
-
-I'm very aware of that thread, and the userspace tooling that underlies
-it. I also am well aware that this is not how upstream should work, and
-that's really why I'm here at all -- I'm trying to rewrite how we do
-things, including our link-up and PMIC strategy.
-
-So yes, that thread does provide some historical context for where I am,
-but no, it doesn't really describe what I'm doing or asking about today.
-
-> > Would it make sense to introduce some sort of pwrctrl -> start_link()
-> > dependency? For example, I see similar work done in this series [1], for
-> > slightly different reasons. In short, that series adds new
-> > pci_ops::{start,stop}_link() callbacks, and teaches a single pwrctrl driver to
-> > stop and restart the bridge link before/after powering things up.
-> > 
-> 
-> This switch has a crazy requirement for configuring it through I2C. The I2C
-> configuration has to be done before starting LTSSM. So we disable LTSSM first
-> since it was enabled way before, then do I2C config and then start LTSSM again.
-
-OK, thanks for the notice.
-
-> > I also see that Manivannan has a proposal out [2] to add semi-generic
-> > link-down + retraining support to core code. It treads somewhat similar
-> > ground, and I could even imagine that its pci_ops::retrain_link()
-> > callback could even be reimplemented in terms of the aforementioned
-> > pci_ops::{start,stop}_link(), or possibly vice versa.
-> > 
-> 
-> Retrain work is mostly to bring up a broken link, which is completely different
-> from what you are trying to achieve.
-
-OK. Thanks for the clarification.
-
-One reason I highlight these patch sets is because they add more cases
-of "PCI core" to "host bridge/controller driver" dependencies
-specifically around link management, which otherwise has very little
-precedent. I wasn't sure if that was by requirement, or simply because
-people haven't tried to support these things.
-
-> > Any thoughts here? Sorry for a lot of text and no patch, but I didn't just want
-> > to start off by throwing a 3rd set of patches on top of the existing ones that
-> > tread similar ground[1][2].
-> > 
-> 
-> No problem. If you want to use pwrctrl in your platform and get rid of the
-> custom userspace tooling, I'm all in for it. But for that, I need to understand
-> your controller design first. All I heard so far is, "we want to skip LTSSM and
-> let our tool take care of it".
-
-Please consider that last sentence "dead" or "totally not any plan of
-record." It may be how we do things privately today, but it's not
-anything I expect the upstream community to even think about. (Feel free
-to CC me if it comes up again. It's hard for me to speak for everyone at
-my employer, but I can probably convince them it's a bad idea if
-needed.)
-
-Regarding the controller design: frankly, I don't think my controller
-does anything all that revolutionary in this space [0]. All of my
-questions today can be asked (from what I can tell) of existing upstream
-controller drivers. I'm mostly trying to understand the expected driver
-design here, and that includes teasing apart what is "stuff done in
-'old' drivers, but isn't recommended", and "what is currently
-unimplemented in new stuff" (like pwrctrl [1]), and where do my
-expectations fit in between that.
-
-For instance, poking around a bit I come up with this question: when
-using pci/pwrctrl, how does one ensure timing requirements around, e.g.,
-power stability vs PERST# deassertion are met? When looking at a pwrctrl
-driver like drivers/pci/pwrctrl/slot.c, the process looks too simple:
-
-(0) host bridge probably already started its LTSSM, deasserted PERST#
-(1) slot.c powers the slot
-(2) pci_pwrctrl_device_set_ready() -> rescan_work_func() rescans the bus
-
-Notably, there's no enforced delay between (1) and (2).
-
-Reading the PCIe CEM, it seems we're violating some specification bits,
-like:
-
-  2.2. PERST# Signal
-  [...] On power-up, the de-assertion of PERST# is delayed 100 ms
-  (TPVPERL) from the power rails achieving specified operating limits.
-  [...]
-
-There are references to this in various implementations (e.g.,
-tegra_pcie_enable_slot_regulators() and brcm_pcie_start_link() --
-although I suspect the latter is applying the wrong ordering).
-
-Additionaly, CEM also seems to suggest we have PERST# ordering wrong. It
-should also come between (1) and (2), not at (0).
-
-And finally (for now), I don't understand how we have any guarantee that
-step (2) is useful. Even if we've already started the LTSSM in (0), we
-have no idea if the link is actually Active by the time we hit (2), and
-so rescanning may not actually discover the device. And if that scan
-fails ... then when do we trigger another pci_rescan_bus()? Only if the
-implementation has a "link-up" IRQ?
-
-Unless I'm misunderstanding, these concerns all suggest we need some
-host-bridge hook in between (1) and (2), and existing pwrctrl users are
-operating somewhat outside the specification, or are relying on
-something more subtle that I'm missing.
-
-Regards,
-Brian
-
-[0] That's not to dodge your question. I can try to describe relevant
-    details if they would help. But I don't think they would right now.
-
-[1] And if I were to propose my driver upstream eventually, I bet you
-    wouldn't want me reimplementing pwrctrl in my driver, just because
-    pwrctrl is missing features AFAICT.
+Konrad
 
