@@ -1,83 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-54154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DE43A87894
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 09:19:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F855A878B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 09:29:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 805B716C5CB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 07:19:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C6FF93A53E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 07:29:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0333C257AED;
-	Mon, 14 Apr 2025 07:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D20111F236B;
+	Mon, 14 Apr 2025 07:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PCxRpoo5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MaP2Z4Vl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CBB158DA3;
-	Mon, 14 Apr 2025 07:19:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB33817E4;
+	Mon, 14 Apr 2025 07:29:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744615151; cv=none; b=NwUTInwW2zbFMakawh/uPwlchF1z1I2hszACcPhh1QtM4EMB5sGGZ+B6barLnATRb0/ENVXEbuYCVUuANpk/HrpcKIpp9tGgA7tpCCx2X1Rzmki7K7tnjMICORrlRqv/1cqTmtV7gb1SCDDVxxiM8FqJXArgRyvveX1G2iGnkrI=
+	t=1744615762; cv=none; b=rUugxOZD642V58Vy0SXCKpxOrQU618jujgSwaa6DJgIM+FNgqYIolB4y9OW5iipU7zmF/pRzad2V1/HMTLS8Xroo+PgDfClHE1qju6fj7SeEiSa4a6twlrA6LS6ONY9s9ychuDnXLZh/M4/hCTIh8f/I6/gPmcqLdO+CHjYzscM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744615151; c=relaxed/simple;
-	bh=5XAwYqPF/VcumK0eqoVgJ7WMHjerh75+AgOEX07/FYs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UIVHCsRS77suNPJBUf43PQIusvCjeHzqKkQCZU/Qj6nPif/glwmWAxDWXlGd3BB5dzVdQnO6+sAv50l23fUr/6MWWve5sOYxfqSTgs/gEohPLoSseEXWHPsWsKFIg0f9OH6ft74o7ckW343lzBePIwxUw1WQz4luV2FbUgDpbPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PCxRpoo5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC602C4CEE2;
-	Mon, 14 Apr 2025 07:19:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744615151;
-	bh=5XAwYqPF/VcumK0eqoVgJ7WMHjerh75+AgOEX07/FYs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PCxRpoo5tBeIdkv6YPps3K58/RgIF8jkAbi3crSrltPrby0+rAINAv/jYbrLiu4J9
-	 eKKnKRj8rVIytyAEtadMBcsYrNzBw93UPb01ZYTd/w6vcLGzaPw7szlvAL5glU+R81
-	 Xk2a/9+wdFcpMvqpGEjWKzrTsCqfETOsIRhfcWW2FughmX9XcbiBVpBLEsdpWyWTOe
-	 uEQbD9AL7AuDl8RQtgiDdxQuj9eUPyPpSSA2ien2vZYrBnscjcnIFLOMiMN8NrF9qv
-	 jpC6p7PwHpPp6Xqxef7L2dz3jP7IXfoV5+POEPEv0J1lxx9A5Jr8uQJXVkC9FUavHz
-	 wMuyZXe9FMeGw==
-Date: Mon, 14 Apr 2025 09:19:08 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Kishon Vijay Abraham I <kishon@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	linux-samsung-soc@vger.kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 02/10] dt-bindings: phy: samsung,usb3-drd-phy: add
- exynos2200 support
-Message-ID: <20250414-mottled-divergent-swift-666aaf@shite>
-References: <20250412202620.738150-1-ivo.ivanov.ivanov1@gmail.com>
- <20250412202620.738150-3-ivo.ivanov.ivanov1@gmail.com>
+	s=arc-20240116; t=1744615762; c=relaxed/simple;
+	bh=aHvNCoHK+bQPj9s8Zhsq5DocqZfznckwFA1hbIUygEY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=hCF3YtlrL6eexAvrgiJUA0kinUmLCmjF/ab0QVNCaEBVPOZaDlQkGhR6t3Z0eHRwd1be+098PbNioR4WSklAZj/AQP7JRudlNcTYBgpvoc2yQ3cbJjodY4VJ9bsDHi2HoqFhCn76AHs2IuxO+dO+XIv8ExQN+LkmnXQeOgWywjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MaP2Z4Vl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53DLh0xI023917;
+	Mon, 14 Apr 2025 07:28:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	OjiGZC52CHR41PNaeeAYyaoOKNBLCL9gKVDy+5mH/7Q=; b=MaP2Z4VlO/5pHNGr
+	xO6b1STe/LtNuIjTRkY746iBYIlXuw3IKIgRm3Gl1SjLG4NbOcE+xRiGy3auNCUA
+	CwN0mgDaOFOA0OH+s4Xw+vLYCh3T/Q0CDslUgceiXObCwRQyhVViSs3IXJs9Gp0f
+	nMtzSeEXf0J1YOKbWO2mAvyrJCnqF1/GM9t+A13ZKuHjMUeRkaUcSeAgrh/On7IO
+	Gl0WXgP7qtu6puS/20JL4IDrj+BenXaBbDiMTKfrakN4EmfGM2Xw/3qwKcgfsqEr
+	Jq9HVrVSFrMAMHy5iyO1GMHDfwMtkNRoPwkzPwXR1jLpgTzec4NG1d8lImPH2mg5
+	9CvByg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygj93n0x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Apr 2025 07:28:57 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53E7SuCw015963
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Apr 2025 07:28:56 GMT
+Received: from [10.218.7.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 14 Apr
+ 2025 00:28:51 -0700
+Message-ID: <64216a90-e2e0-435c-87bc-388c72a702c0@quicinc.com>
+Date: Mon, 14 Apr 2025 12:58:48 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250412202620.738150-3-ivo.ivanov.ivanov1@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 5/9] phy: qcom-qmp-ufs: Remove qmp_ufs_com_init()
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: <vkoul@kernel.org>, <kishon@kernel.org>,
+        <manivannan.sadhasivam@linaro.org>,
+        <James.Bottomley@hansenpartnership.com>, <martin.petersen@oracle.com>,
+        <bvanassche@acm.org>, <bjorande@quicinc.com>,
+        <neil.armstrong@linaro.org>, <konrad.dybcio@oss.qualcomm.com>,
+        <quic_rdwivedi@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <linux-scsi@vger.kernel.org>
+References: <20250410090102.20781-1-quic_nitirawa@quicinc.com>
+ <20250410090102.20781-6-quic_nitirawa@quicinc.com>
+ <zvc3gf7mek7u46wlcrjak3j2hihj4vfgdwpdzjhvnxxowuyvsr@hlra5bmz5ign>
+ <4557abf9-bcd2-4a06-8161-43ad5047b277@quicinc.com>
+ <CAO9ioeXyDWOhe1cbGO_tR=ppZd1aC0GSdeMzQjir4XmDRMQ3Jg@mail.gmail.com>
+Content-Language: en-US
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <CAO9ioeXyDWOhe1cbGO_tR=ppZd1aC0GSdeMzQjir4XmDRMQ3Jg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: FFeMv0htls74xxJvzSSTQWTcZ4qheAHz
+X-Authority-Analysis: v=2.4 cv=PruTbxM3 c=1 sm=1 tr=0 ts=67fcb939 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=i59cu7xprNbt8OyMWn4A:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: FFeMv0htls74xxJvzSSTQWTcZ4qheAHz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-14_01,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 lowpriorityscore=0
+ impostorscore=0 clxscore=1015 spamscore=0 mlxscore=0 mlxlogscore=999
+ phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504140052
 
-On Sat, Apr 12, 2025 at 11:26:12PM GMT, Ivaylo Ivanov wrote:
-> Document support for Exynos2200. As the USBDRD 3.2 4nm controller
-> consists of Synopsys eUSB2.0 phy and USBDP/SS combophy, which will
-> be handled by external drivers, define only the bus clocked used
-> by the link controller.
+
+
+On 4/11/2025 4:26 PM, Dmitry Baryshkov wrote:
+> On Fri, 11 Apr 2025 at 13:42, Nitin Rawat <quic_nitirawa@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 4/11/2025 1:39 AM, Dmitry Baryshkov wrote:
+>>> On Thu, Apr 10, 2025 at 02:30:58PM +0530, Nitin Rawat wrote:
+>>>> Simplify the qcom ufs phy driver by inlining qmp_ufs_com_init() into
+>>>> qmp_ufs_power_on(). This change removes unnecessary function calls and
+>>>> ensures that the initialization logic is directly within the power-on
+>>>> routine, maintaining the same functionality.
+>>>
+>>> Which problem is this patch trying to solve?
+>>
+>> Hi Dmitry,
+>>
+>> As part of the patch, I simplified the code by moving qmp_ufs_com_init
+>> inline to qmp_ufs_power_on, since qmp_ufs_power_on was merely calling
+>> qmp_ufs_com_init. This change eliminates unnecessary function call.
 > 
-> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-> ---
->  .../bindings/phy/samsung,usb3-drd-phy.yaml    | 38 +++++++++++++++++--
->  1 file changed, 34 insertions(+), 4 deletions(-)
+> You again are describing what you did. Please start by stating the
+> problem or the issue.
+> 
+>>
+Hi Dmitry,
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Sure, will update the commit with "problem" first in the next patchset 
+when I post.
 
-Best regards,
-Krzysztof
+Thanks,
+Nitin
+
+>> Regards,
+>> Nitin
+>>
+>>
+>>
+>>>
+>>>>
+>>>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+>>>> ---
+>>>>    drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 44 ++++++++++---------------
+>>>>    1 file changed, 18 insertions(+), 26 deletions(-)
+>>>>
+>>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>>>> index 12dad28cc1bd..2cc819089d71 100644
+>>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>>>> @@ -1757,31 +1757,6 @@ static void qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg
+>>>>       qmp_ufs_init_all(qmp, &cfg->tbls_hs_b);
+>>>>    }
+>>>>
+>>>> -static int qmp_ufs_com_init(struct qmp_ufs *qmp)
+>>>> -{
+>>>> -    const struct qmp_phy_cfg *cfg = qmp->cfg;
+>>>> -    void __iomem *pcs = qmp->pcs;
+>>>> -    int ret;
+>>>> -
+>>>> -    ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
+>>>> -    if (ret) {
+>>>> -            dev_err(qmp->dev, "failed to enable regulators, err=%d\n", ret);
+>>>> -            return ret;
+>>>> -    }
+>>>> -
+>>>> -    ret = clk_bulk_prepare_enable(qmp->num_clks, qmp->clks);
+>>>> -    if (ret)
+>>>> -            goto err_disable_regulators;
+>>>> -
+>>>> -    qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], SW_PWRDN);
+>>>> -
+>>>> -    return 0;
+>>>> -
+>>>> -err_disable_regulators:
+>>>> -    regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
+>>>> -
+>>>> -    return ret;
+>>>> -}
+>>>>
+>>>>    static int qmp_ufs_com_exit(struct qmp_ufs *qmp)
+>>>>    {
+>>>> @@ -1799,10 +1774,27 @@ static int qmp_ufs_com_exit(struct qmp_ufs *qmp)
+>>>>    static int qmp_ufs_power_on(struct phy *phy)
+>>>>    {
+>>>>       struct qmp_ufs *qmp = phy_get_drvdata(phy);
+>>>> +    const struct qmp_phy_cfg *cfg = qmp->cfg;
+>>>> +    void __iomem *pcs = qmp->pcs;
+>>>>       int ret;
+>>>> +
+>>>>       dev_vdbg(qmp->dev, "Initializing QMP phy\n");
+>>>>
+>>>> -    ret = qmp_ufs_com_init(qmp);
+>>>> +    ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
+>>>> +    if (ret) {
+>>>> +            dev_err(qmp->dev, "failed to enable regulators, err=%d\n", ret);
+>>>> +            return ret;
+>>>> +    }
+>>>> +
+>>>> +    ret = clk_bulk_prepare_enable(qmp->num_clks, qmp->clks);
+>>>> +    if (ret)
+>>>> +            goto err_disable_regulators;
+>>>> +
+>>>> +    qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], SW_PWRDN);
+>>>> +    return 0;
+>>>> +
+>>>> +err_disable_regulators:
+>>>> +    regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
+>>>>       return ret;
+>>>>    }
+>>>>
+>>>> --
+>>>> 2.48.1
+>>>>
+>>>
+>>
+> 
+> 
 
 
