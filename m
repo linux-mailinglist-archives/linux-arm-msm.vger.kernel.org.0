@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-54214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADBABA87D4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 12:16:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE7F7A87D4C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 12:16:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D0CB3B6187
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 10:15:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C90BB16207F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 10:16:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 934E82620FA;
-	Mon, 14 Apr 2025 10:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAE9E5D738;
+	Mon, 14 Apr 2025 10:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jeH2cPJ0"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OtevI2R7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9996258CCF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 10:16:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C92263C78
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 10:16:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744625762; cv=none; b=pIRoL/OPWmNvQzEeu3huumwUvQzCx2nFeydBkz5JWrfctkcWIn4r+NznGs7c/TVRXCACC7oRcVzdDDbPJcEYjCzb7AX0yEHLdhXmkAHVlNYC7Sre4BiELrrTPzTMVaxSFiqKf+dNi9lH6AehTcIC3BiHNsEEdu1hh1ijOzBcq2Y=
+	t=1744625779; cv=none; b=sjyO0TlWFyRAWMV+y7Krx9iwTUz8PpJfjwv1cpdYuYtGOpefD6Hh1pjVpM/lhO/a41DptrFuQO2wpabLxsm1mb6ki/+kndA5OtVY38TpBY5TYzqk783AfMsxZB/wE9hJqd6bQWPM3xY5qDluj517+qCY+wCTogxmT6vDK35su14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744625762; c=relaxed/simple;
-	bh=OcLJDnrFkO8e8oXnJcW6VAoR6xwGl1kDtwgUjWBGRiI=;
+	s=arc-20240116; t=1744625779; c=relaxed/simple;
+	bh=xSIJ0vFFb2+XHasdF5PAsBtux4dzXFv+jYFSL30pvgA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AQ5em5bOdHv4aR2vwRtpBqdnlRgTcMOCB7R4DvDLmh9PWidCVDgVvSjOgWzwRwO7pm6+df7K1t9KntNlmMnGGU6dy9fJ0NezsnlC73Wqlq4QhhW4wGbKwcX9Ixj659pIixbDQBho57/kwnk/tMT3Bw5XTSPUQ/yxCJynQ7vbO5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jeH2cPJ0; arc=none smtp.client-ip=209.85.160.175
+	 To:Cc:Content-Type; b=gCYrP3a1K+lHn5lEvXsbv8WnFrdAwTdE8vonSSoycsDhna0fa+mj5JlycCgjtkjCp8eA4G8r896j5Zxm9yZVdOSrzgKXRdZeIk4md2bq0yYlM0loeNix3/TiLvWXIpmWS7UStDsDAfmx/0+OKFyOgKETHBkmvQ+frnON3bAX/II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OtevI2R7; arc=none smtp.client-ip=209.85.160.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-4769e30af66so600241cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 03:16:00 -0700 (PDT)
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-4774611d40bso561411cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 03:16:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1744625760; x=1745230560; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1744625777; x=1745230577; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OcLJDnrFkO8e8oXnJcW6VAoR6xwGl1kDtwgUjWBGRiI=;
-        b=jeH2cPJ0KL+BeppKe8tyHYwdcAEVMAyve1JeeOdYlqEPTSre/KOYRNK01x+GMdnm05
-         S0BDAwqQsjx9DCaHgr6pN9Ga9O8Y4b/Ej0FayV4Ch8Yy7yWLzCRphw6nTvtEkXa+qvnY
-         GwgwEX6oYSUVmaNzUweY7DGJtZRKJo2cRdd3ZLPajO7k/sBrlzKW8W1iQ3miO8HtRgwC
-         tyjV0BsdJP2El6Q0b+lH87QoLmEDx4krp6anHwWs3eZREFmpgUjTnPB2DBL9Rn5/GhuZ
-         gZ6vNCWKtoG073AhwhUbxeAQ3wsPDJRMfUMwnl7gVdDV/rCNMxRrm6CiOuBUUYGLnHyK
-         u9yw==
+        bh=m1CFhU+Us34qKNcUetLtx8bVGJXglYvmORKZst7qknM=;
+        b=OtevI2R7itWmdlsrUxGnakazuHZw5UzMq+22CMPxh1eoI5dUrcx3gSZA4j34QGjRIe
+         IsNsg1LUcPHopKs96MfNqJ8EuLBDZijLjrmRNNibmsJ88XWkhN9USmRb1l9TBChlvxqp
+         35zQxh947RlNHJp/SS3b2KzWKYslpuD8kC2AW3AzeXF2bCseu0hU9zlho3pEMEnOuy17
+         xtZJxvSPCAzQV3wtjhaUlQjmyJm6bZXTprRyMzgUfGmw1b6jdKpAzXN3Vc2UgFF4XgcR
+         8Qfqtt6ZW362T/PAyBtKeQM81jqptwcrdZST/RRORess3bdGRsN0ANqnxj8VpjvYyFey
+         UzNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744625760; x=1745230560;
+        d=1e100.net; s=20230601; t=1744625777; x=1745230577;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OcLJDnrFkO8e8oXnJcW6VAoR6xwGl1kDtwgUjWBGRiI=;
-        b=N9cAdXcZd/vj1kMlQeR1fPG8mjSwbfcpQowLM3hzDVeFXsrYbhz5whH+zWU+pPYbPm
-         SBHI5U/KKAJI8bpIFxGCA8ENP6pc8bBAghRAIZKccy0rKOxZIAHqCJ10na+2xD44NtjX
-         Pi8HjTlOFimyR5uPQ5F5D/KAuAz9OHpi4qUs0SFg/vMez+Tmc+IN5B+by1rWj2bNpKxr
-         Of57rvfgx0Q0jKM84+tfxVZ205Onon8DbGfqXuERfJlOH1U93T/jN3GbThCAy7e3r1RV
-         QR/1rSgv+H2WBB1fCV3280wHWGNfCmlmSNpFJ1L/Yi/PJun7wkMKwFg66PLIpNZdB6B/
-         hpEg==
-X-Forwarded-Encrypted: i=1; AJvYcCWpXJDosNxwEmT3kxVmZ8vavON++2uTZO+JW033TVO9KevX1vdWMygcr77eB3XqIEXlpP1G6oBModNuMpHB@vger.kernel.org
-X-Gm-Message-State: AOJu0YzO5ggHeqfFmttGETarrdFWVun5p5zRqtboSgvHPWtqUzZ5o44J
-	Hmlw/WZsYMWDtqUsoCOIX0nBccLQuQhhCjxIjfT3P4m0quS7V6wUM39D+K95oACDZkODyKX/Vux
-	opb7474Q+rW7rl+P/EAXXybaCWmZ1Xs7052Ka
-X-Gm-Gg: ASbGncsG7hkXTH4gmj1ai+5t9Sob/Q3D3Y8bw99ehQhzP3MZiI7JTx64bB9DGCaBG4d
-	FNlQurFwNEigOUfJAVBZTWy9ikLGTawA3vdesqKSCVbhuZO56J09NlkN4McukcygCdOJ2pwz+sy
-	Nk/hzAEGKSqrUbCNjii3Rq7g==
-X-Google-Smtp-Source: AGHT+IGCz8tRzMWzZ7k1b4BNH1NUIjgUIZI2IRy23Z5IEMrMl0Yq7yQbo8Xe1bpouJ0DZWpGxsoWemisIh3ijjXh1mA=
-X-Received: by 2002:a05:622a:11:b0:479:973:46f1 with SMTP id
- d75a77b69052e-479815f5c0emr7965841cf.22.1744625759359; Mon, 14 Apr 2025
- 03:15:59 -0700 (PDT)
+        bh=m1CFhU+Us34qKNcUetLtx8bVGJXglYvmORKZst7qknM=;
+        b=Kw6C2yuKks2iMgprles0smWQEmTchqM96kN5GSERFv50yyZK3/g1/t2VcKyr7rkw3U
+         ezDyrqcXoZ084nZsGx8xjMofB2tHVpDVtIUO6oqSdlCGcXdA7d7LHdhVvI719d18eSn6
+         GnwQvPpTvYC3HmJIycnj/d8NBuMpMiYuWNopjTTdnPWWjU/cCjte19JDnIJ30/Lzkmjm
+         +kfs3WEGdr078o8eer4F96M/cTnj5d9okxtxveKyNJES5jRNCG6OK1LKQ40fGqv94cTx
+         ZuIde6fdRJgGvSihBU+6QVFeu1i02a9RzkNiPUckAmlVta2YHf4FP8zI+BIadXm5wmCn
+         LC4w==
+X-Forwarded-Encrypted: i=1; AJvYcCUsf6Agsl1aJjptZbDB1hqNS1jCvpzdCv9DcKvv+JG3wsz38hQX5slFGqOP0qzLDLjXqTMAxlDY/H/42wJU@vger.kernel.org
+X-Gm-Message-State: AOJu0YxEv98AAMP3Vp7/Yr5cPPghr5sB99Awt46j1W5CsKx+v6lhXlCH
+	2dCw1f+u+McfvlLpGGIkotx2tw33+21gbilRnro5y9Vtq2MJbeOoocWmRX1v/hRz7mgtwJ6QUr6
+	v6gWHBTZoShgZuVjwkXiM+9a3U9X8F3CjYhtW
+X-Gm-Gg: ASbGnctPQ1g9/Zy6qJ0FAflDP5ogXoX+C2H4+o9Vkg18umfxNBXalKoORGP1rTXCUj0
+	tQIUbyeeIonpCBTqgtT4AegtnAxLlGpzHLlYwPeY4dv27r1t6kVooTm/zmWTejaLdrLLmqgoaq/
+	3KE5JNqhq8W/1BEq/Jy8qtKQ==
+X-Google-Smtp-Source: AGHT+IE7N7CQyu6cJnoqxB5sCy6LSjPZ11zuPXGLhynUeIQf8hFCrB+6p/8yJNraIeugxZleuOsQPHl+eTNzV+QZxtk=
+X-Received: by 2002:a05:622a:181f:b0:477:871c:5e80 with SMTP id
+ d75a77b69052e-479824864a1mr6442931cf.5.1744625776707; Mon, 14 Apr 2025
+ 03:16:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250318161823.4005529-1-tabba@google.com> <20250318161823.4005529-2-tabba@google.com>
- <96ed1b7e-a4ec-417f-a766-237229231017@redhat.com>
-In-Reply-To: <96ed1b7e-a4ec-417f-a766-237229231017@redhat.com>
+References: <20250318161823.4005529-1-tabba@google.com> <20250318161823.4005529-4-tabba@google.com>
+ <e3c26b84-5388-43f8-87ed-bee034f327b8@redhat.com>
+In-Reply-To: <e3c26b84-5388-43f8-87ed-bee034f327b8@redhat.com>
 From: Fuad Tabba <tabba@google.com>
-Date: Mon, 14 Apr 2025 11:15:22 +0100
-X-Gm-Features: ATxdqUGYDtD0-17Blas24LtFzrv5L-nhb2QSHzRNpC2CiejHvLicJITFfxnMcJ0
-Message-ID: <CA+EHjTyky=2Jy=Ctvy3n81as+aq_-m_Rxwu2VRi_-0X=VFFe+w@mail.gmail.com>
-Subject: Re: [PATCH v7 1/9] mm: Consolidate freeing of typed folios on final folio_put()
+Date: Mon, 14 Apr 2025 11:15:40 +0100
+X-Gm-Features: ATxdqUFTBJlpnwSmrV77Tym0H8Hp9RCIeXMAAODOU2G7ZtkMx-Y5jKinNbiiJow
+Message-ID: <CA+EHjTzpboCX7xseY5R1r0GHnea=mkMPi7h=vQp6ZCs7aKaXWQ@mail.gmail.com>
+Subject: Re: [PATCH v7 3/9] KVM: guest_memfd: Allow host to map guest_memfd() pages
 To: David Hildenbrand <david@redhat.com>
 Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
 	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
@@ -103,41 +103,23 @@ Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
 	hughd@google.com, jthoughton@google.com, peterx@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 
-Hi David,
+On Mon, 14 Apr 2025 at 11:06, David Hildenbrand <david@redhat.com> wrote:
+>
+>
+> > +     /*
+> > +      * Shared folios would not be marked as "guestmem" so far, and we only
+> > +      * expect shared folios at this point.
+> > +      */
+> > +     if (WARN_ON_ONCE(folio_test_guestmem(folio)))  {
+> > +             ret = VM_FAULT_SIGBUS;
+> > +             goto out_folio;
+> > +     }
+>
+> With that dropped for now
+>
+> Acked-by: David Hildenbrand <david@redhat.com>
 
-On Mon, 14 Apr 2025 at 11:00, David Hildenbrand <david@redhat.com> wrote:
->
-> On 18.03.25 17:18, Fuad Tabba wrote:
-> > Some folio types, such as hugetlb, handle freeing their own
-> > folios. Moreover, guest_memfd will require being notified once a
-> > folio's reference count reaches 0 to facilitate shared to private
-> > folio conversion, without the folio actually being freed at that
-> > point.
-> >
-> > As a first step towards that, this patch consolidates freeing
-> > folios that have a type. The first user is hugetlb folios. Later
-> > in this patch series, guest_memfd will become the second user of
-> > this.
-> >
-> > Suggested-by: David Hildenbrand <david@redhat.com>
-> > Acked-by: Vlastimil Babka <vbabka@suse.cz>
-> > Acked-by: David Hildenbrand <david@redhat.com>
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
->
-> As discussed in the last upstream meeting, we should focus on using the
-> folio_put() hook only for the post-truncate case where required (e.g.,
-> re-assemble hugetlb).
->
-> For shared->private conversion doing it synchronously (unmap, try
-> freezing refcount) and failing if impossible to signal user space to
-> retry is a better first approach.
->
-> So this patch will be dropped from your series for now, correct?
-
-Yes it will.
-
-Thanks,
+Thanks!
 /fuad
 
 > --
