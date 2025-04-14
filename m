@@ -1,48 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-54156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60FBCA878BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 09:30:29 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 882F8A878CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 09:33:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0F8143A55B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 07:30:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DD9EB7A2AAE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 07:32:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1F2D1A9B49;
-	Mon, 14 Apr 2025 07:30:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4F531DC1A7;
+	Mon, 14 Apr 2025 07:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="odOEbNg8"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="dw158rFs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879D21A5B94;
-	Mon, 14 Apr 2025 07:30:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744615824; cv=none; b=D1b0ysmy3QirhmQmWIMzTqFLaH1QG1n8U3rkO3xEZTXwRnorhop1AZyBrdxkgamnc7L+izvuS/ipyFh/HLRq17EVmW2kffQ/4n6ZueptBOiN6cCADEguuiKj0iNJZ7A9wdr4XzOJTID3LEXQ+NxD/WFVSwDPPZdjMei+pHegVkM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744615824; c=relaxed/simple;
-	bh=hEsji1Z7oUC2YGDwgWedXB/uWGnCu+xnHNQu52nKQ9E=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A9F258CEE;
+	Mon, 14 Apr 2025 07:33:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744616005; cv=pass; b=sIKzPKGLy1h+oBaI+xuYKjxifI1NXFJXv9OQwhYfm/VTvHxjIuumM+HECTF+ie1IuSNO+PlsffmCKYc0V9/+36OIUmDBXJgv7hw1FLLBAl6gCOshfJRi/oSByhITpDXP1JNVdiy7+9MFRCpjvPHNDLzZY5nqhTkyiaxmgeOC3SI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744616005; c=relaxed/simple;
+	bh=0DM+yECyVKmMRm/otDrf4OIShCY4xBTSKZrpEXD0gBY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hHH4P6UHQ+ERG+HdkBFDiXHthKmaQUKgc5PtK+RpywJR8gzQ/5MAfSw8CasiZKS/lh+hcADtnZX9T592r1LTPFmb5UAc6hJBIsdejVH8fVi5SGHLaBfw120IdeSIPaff/d1PLw9ATDfvKxFHVKhlyCXcRDtsPdqEwhSwR4F6Rts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=odOEbNg8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD73C4CEE2;
-	Mon, 14 Apr 2025 07:30:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744615824;
-	bh=hEsji1Z7oUC2YGDwgWedXB/uWGnCu+xnHNQu52nKQ9E=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=odOEbNg8kaRDh3xASyhq58ytVp8RVSJ7tVJHNd7xzuVnBLppl2xMwqwULiTSNeuHk
-	 VTMexiwmCiI2Ouhx/0/hwnpfQB5HPJi86t1zQN/hXnQnZhZ6Y3ipF3WzUPDhOXYdxr
-	 4xlq9mZSj/kajFV5ry2pDiwF+48+nWoyUBkSaotiwIyUoUAkHzdCqIhCl+yw81g/Ha
-	 HmNNTHQgIVx4rMepy02nbGDMAj1jgku8CZ28PuX3dt1FQ4u5ODxwmJzrHLK9rrmGJB
-	 HZT2aN8T56MhRYjFWdbI3nX4lUh3oStyiQ2F3Lew1LElb2metAN8jqQ00YPmkezI24
-	 VYYSKRgwvVZfA==
-Message-ID: <22ec4fc8-9368-4955-ac97-c49b3317d3b3@kernel.org>
-Date: Mon, 14 Apr 2025 09:30:19 +0200
+	 In-Reply-To:Content-Type; b=p8K8rpyogwURuzCura6+3juKDZJzmE3Rm1bJp0YV8hClOKlC/k6vK3AAPi5rtd3wGYQeU3GzIFdVjGlt4e3DNeddcaw66DzpCPlQCUPxEM8xrBSJnS7w+fwdMzofESaL3MSPWFuJ8DS+TJdiPE5aY4UGAiAuAVuat25YUxKGtIw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=dw158rFs; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1744615967; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=S0354nrgj9hb6NeQadl1Jgb85f2XZ6MReFCZUBNsZDdDAzQrzRFwGnwr8EweP211SA50Xn4y+hioKW/Bz7wmSJyQzWGG86Adf+RIiSkVsJrAFwnk++2k92Nh+A0bocClaD6qEvMeHhwgCJW3OQZKy63j5AuNqVz9pD0HTHtwTRk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1744615967; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=r6Hcb7CoSvel25wAUR0OKJ4456sj4HsUlowzVIyObhI=; 
+	b=Qqza8kx+/OPX6Vbfz/xlS+1wWb4D/S0YtI/H9orFvcpgSpGFzTD7ZWXicQMorRRfkLY8zw0Zasu2X+LL5lPj0154UKv9ZEh+w1uw3aNmD0SyOa03w9DM4n1pwHykJNqkny8yw6F3vlYRtsis62vfJZSL6b8wVLirN7KXsEnTp8A=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
+	dmarc=pass header.from=<usama.anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1744615967;
+	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=r6Hcb7CoSvel25wAUR0OKJ4456sj4HsUlowzVIyObhI=;
+	b=dw158rFsigQq+3WvSfq3Kgi3Rvj53BgokKnVLW2u3VAHfgNngg/+0puXeBCjJE+y
+	/UGjtVvi3ANtObQaDu9BNvu0glsKVKO/GPUw9KS+PaIttwYgkUOw3xT4m8cT96ClSuA
+	71V/M5BsqaGYHQ1v/2k7u++MKga8gbd8jKW1CeHc=
+Received: by mx.zohomail.com with SMTPS id 1744615966149258.692739802746;
+	Mon, 14 Apr 2025 00:32:46 -0700 (PDT)
+Message-ID: <7d6b074c-8499-4984-b235-d1285b006ab3@collabora.com>
+Date: Mon, 14 Apr 2025 12:32:34 +0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,69 +60,79 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] phy: qcom-qmp-usb: Fix an NULL vs IS_ERR() bug
-To: Chenyuan Yang <chenyuan0y@gmail.com>, vkoul@kernel.org,
- kishon@kernel.org, lumag@kernel.org, quic_kriskura@quicinc.com,
- manivannan.sadhasivam@linaro.org, konrad.dybcio@oss.qualcomm.com,
- quic_varada@quicinc.com, quic_kbajaj@quicinc.com, johan+linaro@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20250413212518.2625540-1-chenyuan0y@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2] bus: mhi: host: don't free bhie tables during
+ suspend/hibernation
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Johannes Berg <johannes@sipsolutions.net>, Jeff Johnson
+ <jjohnson@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Yan Zhen <yanzhen@vivo.com>, Youssef Samir <quic_yabdulra@quicinc.com>,
+ Qiang Yu <quic_qianyu@quicinc.com>, Alex Elder <elder@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Kunwu Chan <chentao@kylinos.cn>, Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Cc: kernel@collabora.com, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
+ ath11k@lists.infradead.org
+References: <20250410145704.207969-1-usama.anjum@collabora.com>
+ <ba09ae0c-fe8d-8f4e-a1b8-9c7e5913c84e@quicinc.com>
+ <fc9ca0da-9f6a-42b5-aa79-abcd43c97043@collabora.com>
+ <e0159cb8-fe21-7f71-1ebe-744ed26bd698@quicinc.com>
+ <85580a01-289a-461b-b0f1-38fa1b96717c@collabora.com>
+ <1c0b2217-49d9-360c-ed60-db517eaf2ccc@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250413212518.2625540-1-chenyuan0y@gmail.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+In-Reply-To: <1c0b2217-49d9-360c-ed60-db517eaf2ccc@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-On 13/04/2025 23:25, Chenyuan Yang wrote:
-> In qmp_usb_iomap(), one branch returns the result of devm_ioremap(), which
-> can be NULL. Since IS_ERR() does not catch a NULL pointer,
+On 4/12/25 6:22 AM, Krishna Chaitanya Chundru wrote:
+> 
+> On 4/12/2025 12:02 AM, Muhammad Usama Anjum wrote:
+>> On 4/11/25 1:39 PM, Krishna Chaitanya Chundru wrote:
+>>>
+>>>
+>>> On 4/11/2025 12:32 PM, Muhammad Usama Anjum wrote:
+>>>> On 4/11/25 8:37 AM, Krishna Chaitanya Chundru wrote:
+>>>>>
+>>>>>
+>>>>> On 4/10/2025 8:26 PM, Muhammad Usama Anjum wrote:
+>>>>>> Fix dma_direct_alloc() failure at resume time during bhie_table
+>>>>>> allocation. There is a crash report where at resume time, the memory
+>>>>>> from the dma doesn't get allocated and MHI fails to re-initialize.
+>>>>>> There may be fragmentation of some kind which fails the allocation
+>>>>>> call.
+>>>>>>
+>>>>>> To fix it, don't free the memory at power down during suspend /
+>>>>>> hibernation. Instead, use the same allocated memory again after every
+>>>>>> resume / hibernation. This patch has been tested with resume and
+>>>>>> hibernation both.
+>>>>>>
+>>>>>> The rddm is of constant size for a given hardware. While the
+>>>>>> fbc_image
+>>>>>> size depends on the firmware. If the firmware changes, we'll free and
+>>>>> If firmware image will change between suspend and resume ?
+>>>> Yes, correct.
+>>>>
+>>> why the firmware image size will change between suspend & resume?
+>>> who will update the firmware image after bootup?
+>>> It is not expected behaviour.
+>> I was trying to research if the firmware can change or not. I've not
+>> found any documentation on it.
+>>
+>> If the firmare is updated in filesystem before suspend/hibernate, would
+>> the new firwmare be loaded the next time kernel resumes as the older
+>> firmware is no where to be found?
+>>
+>> What do you think about this?
+>>
+> I don't think firmware can be updated before suspend/hibernate. I don't
+> see any reason why it can be updated. If you think it can be updated
+> please quote relevant doc.
+I've not found any documentation on it. Let's wait for others to review
+and it it cannot be updated, I'll remove this part.
 
-No, that's not true. NAK.
-
-Best regards,
-Krzysztof
+-- 
+Regards,
+Usama
 
