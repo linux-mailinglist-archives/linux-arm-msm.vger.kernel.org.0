@@ -1,222 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-54221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6239A87E42
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 12:58:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCC4AA87E51
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 13:01:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 34A473A341D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 10:57:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D7F53A8BB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 11:01:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DE59267AE5;
-	Mon, 14 Apr 2025 10:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E860127F4E9;
+	Mon, 14 Apr 2025 11:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FQijKSKs"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IRH4OrXj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3234327E1DB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 10:57:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5108727F4E4
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 11:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744628264; cv=none; b=D/MzSB3UCleZ4zFxd3dtOUAj+7+ptdDxjqUG/eSuya6eKh3gYusOONWP5Kf2kcRUQVLOJ2cEy/CBhmtjHoBTLxVCgMe8pOAisAALQZtDCCy87Y2qQtqTBzcMD2nthXywoxXNhobV3xH2J8CTW23t447NKHK5GNaTy9Rne19uUWs=
+	t=1744628506; cv=none; b=an9Z0dlSVf02XTTJwGAlBGEaSxd/YX0w0BtBx82SEwamRIQKGZzLxUwAtls1ADhsJrpLHCs6GspgCTySzJNEyGqYQOzbyOy+Z0nsMKPLSPhQBa2E/fxZei7zVFOOpkx0DtreBk+mfA95FWRdL0Q1/J0VkGXYHhl4MAlnjxsK1fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744628264; c=relaxed/simple;
-	bh=BoqcpGLsoABX4vg4/Ivt2I+MXhyCCQay6STb45Ufw+w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fvTEE9jIEX9oj+qk1cRo0yFgA+c+spZZbHiTIP5cplSPEvyEVzxTewgOX6T3uE81BekKyXm2j0YOVfqYOkrGUvHEictPEXzsGcIP4b4KghI7LCVLbb5GJJbAoA4zwfohlHFvqs5rsIk/nXW3DHuME4QrU2WlITWZmg2koGTlvNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FQijKSKs; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-301d6cbbd5bso4257335a91.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 03:57:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744628261; x=1745233061; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3gYGD0102TT7Kuba2ulJFmxLeAypj29hAhExmb/Q6KY=;
-        b=FQijKSKsdiXb/vmlvTQZ8leJiD3YZzoyTm7oxONr1ArZcTbmsSvTt8J3M/PlmRumVO
-         8oLjfGDVzTZA7RYgAQz27NGJrCHFrvLOGq078pFhXIqDhHoLKQm0t7taU5+HS0Pz8L65
-         Ht4pNWLlhThSQNflvXuJKqzUMtTg6YanuUboJVGVJhD4bRC0/9+mliSBjBjuMZFtXNFc
-         /qUWT28oq/NPxNML1/zMvqdzwuJVDxgYxyF3HGcWEzlCfd0flkFOlSN+u30pBowtrfm+
-         BSA0pma4kwCpMrdMIyAIIBjcnKBNcKTP4FojazO5f3z+/LoSusM70Nk/xCEQOhVjjZeo
-         i6Kw==
+	s=arc-20240116; t=1744628506; c=relaxed/simple;
+	bh=9cvX1CJ3U5uc9zTD4idqlNc6XJkc/PTIQgCpgJhNuUg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kd5HleGfJ7LonLfrHFsqxQI5fkI9X6zg7EDsNujoUb0VSoJakbBPEoNBEmmL2a9SQESMUbDbZ6kefLtnKoTHV0yd5MBa4kl2z+U+Lx9/Xc14W2pWXR3kXE6e+md7otAa/eLXXSqZIG7d0k3s8PZcHyCWnDoM0gNp3c8wLi+LdXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IRH4OrXj; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53E99qV6016547
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 11:01:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	AwhFYLcRsvN/5O2x/zPOJHH24568TbvM4q5YBcWwvdQ=; b=IRH4OrXjrF8UutOY
+	GBf1PKgjFlk10wkDRsCWGHf9o6AaEXZhofCdVkovBaFdkTkf7yV8zu+ogEquGVb6
+	ST7VZXRKJ/IA4eES2q73rqAq3+i2gHGM4HpPNpSr2wwOgPUFgZFlTR8/AL9UqiR0
+	zsCWllHJyNULVJ5/Zby3sTqU1jvSX/r1Dgj16HI+b3iUr9zU48rZUitl2vWDJxOH
+	aEKoQisubDdRmMvlmN/Yz9ijgsHUG+hN/qg4g4imu4XQB2VXYFCFF3zDV+/xpaCz
+	3DpnO0zoJsnjLltC+ttKUCEd9BgAr1FoAluRpCJM++nTHGyE2RjGmjivlcW3RHtv
+	lv2txg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yf69mbkt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 11:01:43 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c54734292aso122066985a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 04:01:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744628261; x=1745233061;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1744628503; x=1745233303;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3gYGD0102TT7Kuba2ulJFmxLeAypj29hAhExmb/Q6KY=;
-        b=ZYGjf3jZzbVfHMJVs4LuRA/H6whfYu9slqD+Tzb84DK2aoQcnjs+Mn9B2IoSR746IT
-         ozK9t69XU3A8cqWa3tLrWRI6uoVP08dhd7B4Y2jV/Z7IjavBOr43gC3ZeA+w77QVBFnR
-         Vu5RjpIJHpDQiBuZcW/CZUWjTIg63nUaTvYFLQQBiabFYemkhUUsUUT6rYU99HxPcD7F
-         oemO25hla1ETfeR6JRR/rN0c9xNTwFf3dsa2oFbFqRyfirxRZa5oYsJJZCLd3lIhosrX
-         4NCDs8EAuo86vSOEEpYoBdlFqo/4CbFZqcxII8HcUt6ANCAHQ6Gi3b6tUJ5rBSMXAuf0
-         lYag==
-X-Forwarded-Encrypted: i=1; AJvYcCUiUuej6k4y97E47mnFdxy4ZpOVYFlM7iUggLk/9IvdB7DUXU96Zb+/mFq7+CDNBFzmOvXcrn5/y0RyUdd7@vger.kernel.org
-X-Gm-Message-State: AOJu0YwwMbwiLPYe8Ocs0pVGaoA7QO3u77co6Xgwaqn+dBVZCna3B+T0
-	bOlV/E1Y6nUpNhae/GcLWjxsWez6f+wefEUuv7CC8K3OEEKdQVZ8BiPm+Sq76ZM7X8safm1oAoU
-	=
-X-Gm-Gg: ASbGncuDcoIkGpR33Iww6hIrRpjie451lTQZjEJ2cGNzd2e3JGpieltv/IrMPWCXErF
-	Z4WulaLyfvzpddUyfbD7wxDI7ylFtiq/7sSKPP3mNmPHu01XME7ZmsZjsDTwQxMqQJYBqONKypv
-	OSHWq3VZN70AvWgxZJ4NS04WQAA8pKYv9hWQruCKuo93NmoUhF7paacFpQ6ufMKXKy1CoShGHGe
-	3vkyV5Yh61dfvUQprB057OFbTTgMydI1ialicl9JR7P6bqnX5X5nPw4jYGMUtVFknJ2hHFdYhld
-	7ZCQ7oZgj/iP7PCv44g6k5BzkgBeLIRet9y74fgWpcxW3FWSPUdK
-X-Google-Smtp-Source: AGHT+IFrTaFVyOPiYJivy5MghxyEC8vM+3s641uXVU9gQnpG1AwmzV3RmWIzhztYD7luXmb/H7jf+w==
-X-Received: by 2002:a17:90b:5206:b0:305:2d27:7ca7 with SMTP id 98e67ed59e1d1-308236523femr20387289a91.16.1744628261382;
-        Mon, 14 Apr 2025 03:57:41 -0700 (PDT)
-Received: from thinkpad ([120.56.202.123])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-306dd10c3cdsm10893869a91.2.2025.04.14.03.57.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Apr 2025 03:57:41 -0700 (PDT)
-Date: Mon, 14 Apr 2025 16:27:35 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Brian Norris <briannorris@chromium.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org, 
-	Tsai Sung-Fu <danielsftsai@google.com>
-Subject: Re: [RFC] PCI: pwrctrl and link-up dependencies
-Message-ID: <vfjh3xzfhwoppcaxlov5bcmkfngyf6no4zyrgexlcxpfajsw2t@o5nbfcep3auz>
-References: <Z_WAKDjIeOjlghVs@google.com>
+        bh=AwhFYLcRsvN/5O2x/zPOJHH24568TbvM4q5YBcWwvdQ=;
+        b=EKvyv+/3S1W1m7k1DyszT5KwTgalfm3pNEk1/R2YwP7r+VFaIWTBWfaFGlFavsGhXK
+         rP7Yq1L8F33qtn8kR7M5+1SHHjtpRDiJo8IqgMHWjvBH387KmaMOtX+PE8UGxZb7NDpB
+         Md33CPI4AzCMxUif3ScQ2XWl20zG4LLMb78FXD7TOrjaC7fiTAySBU/GPffnz88FU1dB
+         8bYhFDTZKqb1/q2b9UUyc9DbyXzDmv9a7XtzDPn9T8augz/1X/HblHGJonHx7kv8NmTN
+         m4PLP5EH0LrSo0e2SJlW2ytHdHzJOz6r3mJwgv+HTATHyVH1oR/qSoiBwH7SDfgodPY5
+         wggg==
+X-Gm-Message-State: AOJu0Yww2NyweOXA8KoR7fgqovE+kE3HCdCNjcPpayt2/MGFf0I5XWz9
+	AVS/KzSH8exNrwTIchm908mNFMuc1RuLjNhDZew6zy5fLYNWYahzrnP0GfTnMprdw7+V0VxVYoU
+	/Wr0kzs7DkHX++5TnzNABkcu3Kx/r3opR+zh6ym7wcogUsbBhwgezCSqhbgxxkbmM
+X-Gm-Gg: ASbGncvv3PxZMCFkwcN77YrEfbvWxSJQQuy004UXqsOGhmII3Nde0b6womddLr3Ds3H
+	VrweEWWNj1vJAjqKJ/+v3hcRfG/Gwc9ABl0ILV5ilgFShnGJbJHP5XxHq1IVBu8rdJnSkrrwD8f
+	fW7TgAEEd2JTKMyBWJqs5CZY4916u9Z6dgknmT6bhSd4PDwbbRcfAZbIPaWTOtD9LIiNc41dpHk
+	cfg3IyrOh/VCZPI2l88dN8GLNZnWZUoi/t6+XyOfAiMwClMyBay5xaDMLbzDkaNPLAOL/41G+Kb
+	+xiAvnM5kJg1A5fDxBcTsBtlk0jhALjJdBoZi5vjsVy4adiwrVYqhYLgC560NcxQug==
+X-Received: by 2002:a05:620a:254d:b0:7c3:e1ef:e44d with SMTP id af79cd13be357-7c7af04c112mr642841485a.0.1744628502714;
+        Mon, 14 Apr 2025 04:01:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEK97vOdYIq2mdoALIGz5F0Dh2fRVfBH0Km89YvV3CijLmngOzHMeK37HY+4moc2F10MzIcDw==
+X-Received: by 2002:a05:620a:254d:b0:7c3:e1ef:e44d with SMTP id af79cd13be357-7c7af04c112mr642838785a.0.1744628501979;
+        Mon, 14 Apr 2025 04:01:41 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acaa1cb42casm874884866b.88.2025.04.14.04.01.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Apr 2025 04:01:41 -0700 (PDT)
+Message-ID: <e22daaae-57fc-4523-b594-87d202d255f3@oss.qualcomm.com>
+Date: Mon, 14 Apr 2025 13:01:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z_WAKDjIeOjlghVs@google.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/6] arm64: dts: qcom: qcs8300: Add gpu and gmu nodes
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Rob Clark
+ <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Jie Zhang <quic_jiezh@quicinc.com>
+References: <20250228-a623-gpu-support-v2-0-aea654ecc1d3@quicinc.com>
+ <20250228-a623-gpu-support-v2-5-aea654ecc1d3@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250228-a623-gpu-support-v2-5-aea654ecc1d3@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: eGZq7SE0aOvQNPs_K75WW9riAAWu2QOA
+X-Authority-Analysis: v=2.4 cv=JNc7s9Kb c=1 sm=1 tr=0 ts=67fceb17 cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=515PL6qApFHJgk_UoXMA:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: eGZq7SE0aOvQNPs_K75WW9riAAWu2QOA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-14_03,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ suspectscore=0 mlxlogscore=631 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 clxscore=1015 phishscore=0 adultscore=0 priorityscore=1501
+ spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504140080
 
-On Tue, Apr 08, 2025 at 12:59:36PM -0700, Brian Norris wrote:
-> TL;DR: PCIe link-up may depend on pwrctrl; however, link-startup is
-> often run before pwrctrl gets involved. I'm exploring options to resolve
-> this.
+On 2/27/25 9:07 PM, Akhil P Oommen wrote:
+> From: Jie Zhang <quic_jiezh@quicinc.com>
 > 
-> Hi all,
+> Add gpu and gmu nodes for qcs8300 chipset.
 > 
-> I'm currently looking at reworking how some (currently out-of-tree, but I'm
-> hoping to change that) pcie-designware based drivers integrate power sequencing
-> for their endpoint devices, as well as the corresponding start_link()
-> functionality.
-> 
-> For power sequencing, drivers/pci/pwrctrl/ looks like a very good start at what
-> we need, since we have various device-specific regulators, GPIOs, and
-> sequencing requirements, which we'd prefer not to encode directly in the
-> controller driver.
-> 
+> Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> ---
 
-The naming is a bit confusing, but power sequencing and power control are two
-different yet related drivers. Power sequencing drivers
-(drivers/power/sequencing) are targeted towards devices having complex resource
-topology and often accessed by more than one drivers. Like the WiFI + BT combo
-PCIe cards. On the other hand, power control (drivers/pci/pwrctrl) drivers are
-used to control power to the PCIe slots/cards having simple resource topology.
+[...]
 
-> For link startup, pcie-designware-host.c currently
-> (a) starts the link via platform-specific means (dw_pcie::ops::start_link()) and
-> (b) waits for the link training to complete.
-> 
-> However, (b) will fail if the other end of the link is not powered up --
-> e.g., if the appropriate pwrctrl driver has not yet loaded, or its
-> device hasn't finished probing. Today, this can mean the designware
-> driver will either fail to probe,
+> +		gmu: gmu@3d6a000 {
+> +			compatible = "qcom,adreno-gmu-623.0", "qcom,adreno-gmu";
+> +			reg = <0x0 0x03d6a000 0x0 0x34000>,
 
-This is not correct. DWC driver will start LTSSM and wait for the link to be up
-if the platform has no way of detecting link up. But it will not fail if the
-link doesn't come up. It will just continue hoping for the link to come up
-later. LTSSM would be in Detect.Quiet/Active state till a link partner is found:
+size = 0x26000 so that it doesn't leak into GPU_CC
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/controller/dwc/pcie-designware-host.c#n558
+> +			      <0x0 0x03de0000 0x0 0x10000>,
+> +			      <0x0 0x0b290000 0x0 0x10000>;
+> +			reg-names = "gmu", "rscc", "gmu_pdc";
+> +			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hfi", "gmu";
+> +			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
+> +				 <&gpucc GPU_CC_CXO_CLK>,
+> +				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
+> +				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+> +				 <&gpucc GPU_CC_AHB_CLK>,
+> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
+> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
 
-> or at least waste time for a condition
-> that we can't achieve (link up), depending on the HW/driver
-> implementation.
-> 
+This should only be bound to the SMMU
 
-Unfortunately we cannot avoid this waiting time as we don't know if a device is
-attached to the bus or not. The 1s wait time predates my involvement with DWC
-drivers.
+> +			clock-names = "gmu",
+> +				      "cxo",
+> +				      "axi",
+> +				      "memnoc",
+> +				      "ahb",
+> +				      "hub",
+> +				      "smmu_vote";
+> +			power-domains = <&gpucc GPU_CC_CX_GDSC>,
+> +					<&gpucc GPU_CC_GX_GDSC>;
+> +			power-domain-names = "cx",
+> +					     "gx";
+> +			iommus = <&adreno_smmu 5 0xc00>;
+> +			operating-points-v2 = <&gmu_opp_table>;
+> +
+> +			gmu_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-200000000 {
+> +					opp-hz = /bits/ 64 <200000000>;
 
-> I'm wondering how any designware-based platforms (on which I believe pwrctrl
-> was developed) actually support this, and how I should look to integrate
-> additional platforms/drivers. From what I can tell, the only way things would
-> work today would either be if:
-> (1) a given platform uses the dw_pcie_rp::use_linkup_irq==true functionality,
->     which means pcie-designware-host will only start the link, but not wait for
->     training to succeed. (And presumably the controller will receive its
->     link-up IRQ after power sequencing is done, at which point both pwrctrl and
->     the IRQ may rescan the PCI bus.) Or:
-> (2) pci/pwrctrl sequencing only brings up some non-critical power rails for the
->     device in question, so link-up can actually succeed even without
->     pwrctrl.
-> 
+It looks like this clock only has a 500 Mhz rate 
 
-Again, failing to detect link up will not fail the probe. I don't know how you
-derived this conclusion. Even the PCIe spec itself is clear that the link should
-stay in Detect.Quiet until it has found the link partner. So failing the probe
-means we are introducing a dependency on the devices which would be bizarre.
-Imagine how a controller will end up supporting hotplug.
-
-> My guess is that (1) is the case, and specifically that the relevant folks are
-> using the pcie-qcom.c, with its "global" IRQ used for link-up events.
-> 
-
-We only recently added support for 'Link Up' event through 'global_irq' in the
-controller driver. And this was done to avoid waiting for link up during probe
-(which is what you/your colleagues also want to avoid I believe). But the
-problem in your case is that you are completely skipping the LTSSM and relying
-on custom userspace tooling to bring up the device and start LTSSM once done.
-
-> So how should I replicate this on other designware-based platforms? I suppose
-> if the platform in question has a link-up IRQ, I can imitate (1). But what if
-> it doesn't? (Today, we don't validate and utilize a link-up IRQ, although it's
-> possible there is one available. Additionally, we use various retry mechanisms
-> today, which don't trivially fit into this framework, as we won't know when
-> precisely to retry, if power sequencing is controlled entirely by some other
-> entity.)
-> 
-> Would it make sense to introduce some sort of pwrctrl -> start_link()
-> dependency? For example, I see similar work done in this series [1], for
-> slightly different reasons. In short, that series adds new
-> pci_ops::{start,stop}_link() callbacks, and teaches a single pwrctrl driver to
-> stop and restart the bridge link before/after powering things up.
-> 
-
-This switch has a crazy requirement for configuring it through I2C. The I2C
-configuration has to be done before starting LTSSM. So we disable LTSSM first
-since it was enabled way before, then do I2C config and then start LTSSM again.
-
-> I also see that Manivannan has a proposal out [2] to add semi-generic
-> link-down + retraining support to core code. It treads somewhat similar
-> ground, and I could even imagine that its pci_ops::retrain_link()
-> callback could even be reimplemented in terms of the aforementioned
-> pci_ops::{start,stop}_link(), or possibly vice versa.
-> 
-
-Retrain work is mostly to bring up a broken link, which is completely different
-from what you are trying to achieve.
-
-> Any thoughts here? Sorry for a lot of text and no patch, but I didn't just want
-> to start off by throwing a 3rd set of patches on top of the existing ones that
-> tread similar ground[1][2].
-> 
-
-No problem. If you want to use pwrctrl in your platform and get rid of the
-custom userspace tooling, I'm all in for it. But for that, I need to understand
-your controller design first. All I heard so far is, "we want to skip LTSSM and
-let our tool take care of it".
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Konrad
 
