@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-54204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EEA3A87CAA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 12:00:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CBD7A87CB4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 12:01:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 54D4C172BAB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 10:00:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9BFC03B3068
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 10:01:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95F5517A2EF;
-	Mon, 14 Apr 2025 10:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEA6526770C;
+	Mon, 14 Apr 2025 10:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="U+5TyIdX"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="P3UAQtyw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0AF18C32C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 10:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAD525DAE8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 10:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744624825; cv=none; b=AEmFcY96eEW1nYK43n8/7uSXZTGObRVnev3BEAByImfrMffkoyyqlpWn+2iVPGAJu9VZlnf9MX6fRhFdEqqiDlcP5tZstDxkqvWvbUkFO+W4n/LpyvvGTNwNJN7Q+xjdWjyNj0kDw9ZIAc7EnhHvhs9w5YUqJLAQuGcx9dWK1J4=
+	t=1744624893; cv=none; b=BLSTxaaUlHtdAenqGx1CMFpWEUXCqw/h7CjmumwFapKcplCOsRPkF1F96NDs4EpwE1nbhc6go9y3zXI7hdhOi2h4+8WwGFzmeH2g0pDabxkdgVhVY4C63VJETvptJ5d/CN2PApNSziQOg3P9xIXNo3ycedJtqd5fSj6u98qO/VM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744624825; c=relaxed/simple;
-	bh=E2ulgG8qf7wPn46Y2lAa5uVy4QqnKmHl6sR0Ix0GsYI=;
+	s=arc-20240116; t=1744624893; c=relaxed/simple;
+	bh=wRFao9Jxip8CWFWYPpBVYqFnQoxHYc6AjZdAz1qUM1Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uXDvnwDW2OlofyO1lskR5EUHYxBQYlNHvHWeALOKE0qB3dlWjx2oO06W+UL1n5muvDHt9jGFm0i3osuySDMMJtEWlAdh0OLsWFEF8EU8eEFi8oUyQprB7c5aDJ4pktI7KLd3qSbiu0AcO0U2ohGtPrnatll47V3MUPxRkVudmSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=U+5TyIdX; arc=none smtp.client-ip=170.10.129.124
+	 In-Reply-To:Content-Type; b=JDw4n1fDaVjBHn1yWu+vESEWWBJB5cAEQRbus7x3tKa0YtPOaXZMMREdcQy6LZVW1oH+MsAUgtuVU8agVfHWDGOXqRJhF+pfwHOX+9KCHsNdxHq3Siorca96yJ7vW8KGgpgpKwTsPbZ4XyqtburluaWVCgZR69JJSahgkpCS2Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=P3UAQtyw; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1744624822;
+	s=mimecast20190719; t=1744624891;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=L4Idrt5jhlWOKQwE/zTHaJzLfRmeFRmEybrkysjcruE=;
-	b=U+5TyIdXguZSZZfX0OEaZGOna/BQemmMIXgzVCycpM676IbQ6IL4v9oWKfRt3vI19OcuAK
-	K5KwQw4Ze55wVEhsKpwJUQ2ZoGTj4b2AB6sLBn3nwc6Hd85iMNoJqsCpWWjwwuulMIA0xk
-	kvJ5vv51TXCp0l7mR1rhs/Ds2SNSK34=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=CQpHZGD3dD9RZvh09AEsXjx+o20A24mVtSCXWwzsMuw=;
+	b=P3UAQtywk/9Y4PFEBA0Kjt9BppHJAApTkfJCX6dddNkNmP0l/P5lbHOFS3+X7Xpp24JZLg
+	k/rgEMFqWmWQNvPG0qbT6cFXwrEQxKU8qDFNavZKkRWzeF3XHebA+eNMcVnZtQVQmQjjTw
+	Va6OamB7ScyUlOP7yDNP9jSNrSYba2M=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-381-sJs7J9ceMLWSYu6w_BB-Iw-1; Mon, 14 Apr 2025 06:00:21 -0400
-X-MC-Unique: sJs7J9ceMLWSYu6w_BB-Iw-1
-X-Mimecast-MFC-AGG-ID: sJs7J9ceMLWSYu6w_BB-Iw_1744624820
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-43cf44b66f7so27923845e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 03:00:20 -0700 (PDT)
+ us-mta-609-mwAMQXZSMhm4XSxbs0wkew-1; Mon, 14 Apr 2025 06:01:30 -0400
+X-MC-Unique: mwAMQXZSMhm4XSxbs0wkew-1
+X-Mimecast-MFC-AGG-ID: mwAMQXZSMhm4XSxbs0wkew_1744624889
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-39d9243b1c2so1564139f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 03:01:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744624820; x=1745229620;
+        d=1e100.net; s=20230601; t=1744624889; x=1745229689;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=L4Idrt5jhlWOKQwE/zTHaJzLfRmeFRmEybrkysjcruE=;
-        b=YP2XawZV0Jmpa+hcI8PkL6mmkvhIWXjwClL4azm3d0vCnxa/BBEQrqyCJ6OGkG9LNY
-         ciP5pDAZFMicBlYnYFFjo9ComhiXI39UKy6vBG6rcERbw0N0iYG4mEV69G5ti+zPZ7bN
-         +LMNpInOA6nL9KSzM0aEXETCR04/azxSXTrtJTv/CwwU1YhQDu9GLZyFY8fNbbUJepJI
-         aj+SU/X15cWrWsNR0a2P6wSXx44qo0D5/mS8XOWjCCBt0HZH17vWxRL/On9FMKKmPU2V
-         Xo1n7ugiU67LIoDx2bDRdorcHMaGMQZ4DTlZEI0u2dE3HSjU+Zd2hIB6ldOrEOHSY/xZ
-         KLpw==
-X-Forwarded-Encrypted: i=1; AJvYcCXOgJbh9M+mtmhjWCzmUnqMKHMXI9On9z0GPAOqFs9YrNMAJFqG5N1DVc2viRmMv5vM3YYOEDsaL11X+U9K@vger.kernel.org
-X-Gm-Message-State: AOJu0YziY5Hr3CTHm9tadh5zAYH4xDsi38B6X64y//RdOH5u07QbNJKc
-	WPcehKaptemxaziOrdITNis0VfTJViF4wYowCExp3hXpAY0B/MqAo/arflLkIcMfYGQ85dOyoW7
-	Y5Zt4nieSo2VUbGb/p2YKg3NoyTeVbCiNUm8mMGD/aLpZmTV0/Jx8fivdpsc6T0A=
-X-Gm-Gg: ASbGncsd+7+NeaCS53LsLoweNpgGCE2GbdNdc8F1Gby3MjI2clX0VNMeW3nIKFhzp7o
-	HnFbuHGGXo6Rv/lZerzcZi07cPv9NQ1ZpEVc0J1vas+yB+deTAgzkBNif1oqEca0tVRMca0VAVq
-	LUOBuS/GTPMsG0fHDHpvFLsAB0m2oosWc9RJ+TCUAmh1XqBLQK+1IgqREB/yfrEXCq86r0XbiN4
-	ylVnDjXP0IyuGSi2ONWsTn/JDcmmsuV1IQXrW6Ff/sAEovKyFo+5AZ8MmR5jbYo5udRps7GKKql
-	6bjh6X+ub55gqphshI3HhOIWBFKkKn4qw0n/kGfVr0tTf75j5cGon//ERUjtT2m2Xl1ob48STie
-	dRClBpxPd7aUehYsKW7tdCOQltepLN8WJl12CLg==
-X-Received: by 2002:a05:600c:3b10:b0:43c:ec4c:25b1 with SMTP id 5b1f17b1804b1-43f3a9aafafmr81664035e9.23.1744624819878;
-        Mon, 14 Apr 2025 03:00:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGyhYzyPNehTd4v1p4+Sh2300WZZI+TtxBPATJRETBckgmoME/MwenniNO9Zxg98EcULt2d5A==
-X-Received: by 2002:a05:600c:3b10:b0:43c:ec4c:25b1 with SMTP id 5b1f17b1804b1-43f3a9aafafmr81663625e9.23.1744624819297;
-        Mon, 14 Apr 2025 03:00:19 -0700 (PDT)
+        bh=CQpHZGD3dD9RZvh09AEsXjx+o20A24mVtSCXWwzsMuw=;
+        b=eqzmoeHEbbZp1fPvLf7HkRTrKYRf2UbrD9igP1UeLH1H+iNjrzOKE5TIHsN7MtP1Ek
+         CU+8DksMIgldzaaIRTfHm8vhdIkFHHhM5FOzFcptFFNjYa2K98VriP0lQHgTinMCehfl
+         0wJaBNrmUK54UyjsCziY/R6+fZNET5Lux5OYqxqjOWwH8Rnj0ket0PRP9FErpbEPfHCI
+         aLUcQlwvEAF1FikM0mfx4AlTlwvpR95xqg5GjARmI1n8/f2Tu+SbvvfK8RXWlJz/T3bH
+         YwamJvyfEUuUBCOugOPdDsDIjZMQlVzEDZ0O/Jrl+QqhqxgSlPPRvD2agllD4Y+jGOkq
+         mf8A==
+X-Forwarded-Encrypted: i=1; AJvYcCV8d9g1w27Dqak70Ybm6/tbimpasN/WCM2/1Ka4xA43hE8kVVt86CcGY6VUPO83K+8cvubmB0c53Z0mxV5W@vger.kernel.org
+X-Gm-Message-State: AOJu0YwTeEEqysFSGvc7W6BJN2Z2xA5RusCoqvphP7jVHakPKESGOICK
+	lFl9QqICSXmN5tVGfbp4ocXJNPfNHiRSC3R+gXdpVCnfXXouLnPPehWlRWyS/R7+E241jWYg5mc
+	ALSHGF9WIg/e49HwzVkz7jfvC8+B20+FqX9abwKhwWzKsvcT9swRUCH0umpa4kxc=
+X-Gm-Gg: ASbGncvPsDV/ToneOsSaiPAdphNGz8c6+9ICvGZjRBlQp3MDzvulsW0Zh0AA9XuO8K7
+	cv2a4xjhlwV558lJ0+xvf38vdCiEjhWJUSJRSPNmjeWKj+/givj2U18+CUjEzo0X1tpwByJH15O
+	s0UPAzbQKSNgcFRuwojFTwfaI+Au3Si4C7XtYVMNbDuwJtgQECzLrhWeh7uQyvM6oZwEK7MelMT
+	ZXxoL9iVm98pvUXk0RAL9uy1Hfji3LfdF51PhkK9Wu0vHE9JL1FQzdUMnLK4dOlKoE/Sz/wopyc
+	PrSUhvIPSCH7blPSJV2ce26FcLhgv5Sn+WMJEfhnRfOYDVuqnTFGrbLYvbPq4132sctORmJLslK
+	TwYDruhgesOmStmmF10klJrkDbgoFT8y6Ch3X1g==
+X-Received: by 2002:a05:6000:381:b0:391:2f71:bbb3 with SMTP id ffacd0b85a97d-39eaaebe931mr8390553f8f.46.1744624888658;
+        Mon, 14 Apr 2025 03:01:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXXXn6nBgguub3tboPkqAn7gF9G5oTdwRCb77CcKCe43y6I7udhFTVKhqGZRDa1trcIe7nmA==
+X-Received: by 2002:a05:6000:381:b0:391:2f71:bbb3 with SMTP id ffacd0b85a97d-39eaaebe931mr8390518f8f.46.1744624888185;
+        Mon, 14 Apr 2025 03:01:28 -0700 (PDT)
 Received: from ?IPV6:2003:d8:2f02:2900:f54f:bad7:c5f4:9404? (p200300d82f022900f54fbad7c5f49404.dip0.t-ipconnect.de. [2003:d8:2f02:2900:f54f:bad7:c5f4:9404])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eaf43cc72sm10766875f8f.67.2025.04.14.03.00.16
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eae978023sm10531763f8f.47.2025.04.14.03.01.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Apr 2025 03:00:18 -0700 (PDT)
-Message-ID: <96ed1b7e-a4ec-417f-a766-237229231017@redhat.com>
-Date: Mon, 14 Apr 2025 12:00:15 +0200
+        Mon, 14 Apr 2025 03:01:27 -0700 (PDT)
+Message-ID: <dc681818-1a6a-4e19-bff4-af4e232d79a8@redhat.com>
+Date: Mon, 14 Apr 2025 12:01:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,8 +90,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/9] mm: Consolidate freeing of typed folios on final
- folio_put()
+Subject: Re: [PATCH v7 2/9] KVM: guest_memfd: Handle final folio_put() of
+ guest_memfd pages
 To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
 Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
@@ -114,7 +114,7 @@ Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
  rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
  jthoughton@google.com, peterx@redhat.com
 References: <20250318161823.4005529-1-tabba@google.com>
- <20250318161823.4005529-2-tabba@google.com>
+ <20250318161823.4005529-3-tabba@google.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -162,37 +162,34 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20250318161823.4005529-2-tabba@google.com>
+In-Reply-To: <20250318161823.4005529-3-tabba@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 18.03.25 17:18, Fuad Tabba wrote:
-> Some folio types, such as hugetlb, handle freeing their own
-> folios. Moreover, guest_memfd will require being notified once a
-> folio's reference count reaches 0 to facilitate shared to private
-> folio conversion, without the folio actually being freed at that
-> point.
+> Before transitioning a guest_memfd folio to unshared, thereby
+> disallowing access by the host and allowing the hypervisor to
+> transition its view of the guest page as private, we need to be
+> sure that the host doesn't have any references to the folio.
 > 
-> As a first step towards that, this patch consolidates freeing
-> folios that have a type. The first user is hugetlb folios. Later
-> in this patch series, guest_memfd will become the second user of
-> this.
+> This patch introduces a new type for guest_memfd folios, which
+> isn't activated in this series but is here as a placeholder and
+> to facilitate the code in the subsequent patch series. This will
+> be used in the future to register a callback that informs the
+> guest_memfd subsystem when the last reference is dropped,
+> therefore knowing that the host doesn't have any remaining
+> references.
 > 
-> Suggested-by: David Hildenbrand <david@redhat.com>
+> This patch also introduces the configuration option,
+> KVM_GMEM_SHARED_MEM, which toggles support for mapping
+> guest_memfd shared memory at the host.
+> 
+> Signed-off-by: Fuad Tabba <tabba@google.com>
 > Acked-by: Vlastimil Babka <vbabka@suse.cz>
 > Acked-by: David Hildenbrand <david@redhat.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
 > ---
 
-As discussed in the last upstream meeting, we should focus on using the 
-folio_put() hook only for the post-truncate case where required (e.g., 
-re-assemble hugetlb).
-
-For shared->private conversion doing it synchronously (unmap, try 
-freezing refcount) and failing if impossible to signal user space to 
-retry is a better first approach.
-
-So this patch will be dropped from your series for now, correct?
+Same with this patch for now.
 
 -- 
 Cheers,
