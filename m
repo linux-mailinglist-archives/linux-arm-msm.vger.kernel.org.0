@@ -1,184 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-54169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C23F6A879A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 10:01:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D875A879AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 10:03:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B5BC6165FFB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 08:01:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A7965188F71E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 08:03:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42E891B424A;
-	Mon, 14 Apr 2025 08:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 078B642077;
+	Mon, 14 Apr 2025 08:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RejD54Bj"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aBHAiRM7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5512F42;
-	Mon, 14 Apr 2025 08:01:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5891EB5C9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 08:03:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744617708; cv=none; b=Q9h1rG8a1lg7f1HXtV61p6OIPPMjzhlzMrty6gOGWP4IHKGUmK2eaQyuctht8bs3hrdr9OqszgzLgX/lQ8I8LwlZk2/5tLwp+A0DBHwqlac6n8cMlmV0Z+Rn3sAjJGZXRRz1ORu5tRRBDshgnw999DUxNWsl3zUStqEHeRYY7gM=
+	t=1744617795; cv=none; b=JYf//bBhBLK2E6YvIM2TgHnOwNsLExW1bRqfgnlIplOcPfYc4ohgxbIPCnnRk5/2a2lGaxd3eHJ1BoIMfgS/bDuCtQwjBp6kJHv1+rVL8beUvDWvexE21vVyeJsuNCXSGlQt2vQTR9F+BvzkKuLZFR1OnWAIxZeRCcJb1rC/jts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744617708; c=relaxed/simple;
-	bh=TjMXHWiQGYFhQQlesKoJ3UCFTUeDAYPGaObEjM5rE50=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jyuDmHPCKmcwT4tvoapNn45CKgFWlkY1NUuKI+wVwjCRIhmB9uCbzvB7caHwNxhi1dKkkuHaoGUv7DMW7JFWj4UCsqUEbia3DDhTD9HO9Ep4dev30f/sJvL9IQfRplCZlo5pYhpl3icTZxWacbeZHvIA4iLG8qBK8x1n6fVc94M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RejD54Bj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA95C4CEE2;
-	Mon, 14 Apr 2025 08:01:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744617707;
-	bh=TjMXHWiQGYFhQQlesKoJ3UCFTUeDAYPGaObEjM5rE50=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RejD54Bj7c3QEILZ45XVMVfY4jsiT6+1kO+U4hwQCTADHPVTGkEFZpmMfUkTN7noh
-	 XiLrPnINqEqJ8pQKeM8gvdgmkgzRYegYDbDr8zS1E/IazeF6bGqOeE4B+I9CQ6n9BZ
-	 HuH/eKLWScOV40TOSXVyRGxGAp16zH9BsY6BenX22ieAqN3BLgpS5+emRoGxXLEXIX
-	 Hr627CEc5md4pTatCOgEEno1lH6uEFVr5XoVzcLEgsMAQhSFlAXNODHhGJMzVIzwbu
-	 eGZI+TZXXwXz0UWRLxfFSaGWetx5MC8aYxY6Jhr/oKVFZERkqVNasVDH+za7TxKi87
-	 MGVWe8mfNL2Cw==
-Message-ID: <966960bf-0d5a-4e1f-af77-b573c3d1e1cb@kernel.org>
-Date: Mon, 14 Apr 2025 10:01:41 +0200
+	s=arc-20240116; t=1744617795; c=relaxed/simple;
+	bh=uph4zHoLG9oMayUKP51V7Ui3CVrfNf+hdd0i3wJU+DE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FZBSyO8bp8VOuarS6X/h4hIzzr1F9uE+8IPzepWYl8Bs/hGXsI9obGxRiWC5igcJO/b1XN4B2udQqIx7FAhaVh0xuoLPSmxFojOOyDN4fJptRZO5+ST3sIKOO5AYuBpgkRrrhFl4SgIsz74FRme78UMuetlOGPi6EDqPl9tgSn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aBHAiRM7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53DNwnIM019504
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 08:03:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=EiwHhk5vFVCbL/7IZb2Z7mJo
+	tSciivUHSnNHCf6n2sg=; b=aBHAiRM7Q1VfL1y0K6s3z+x/5ZKAsAY9QlbSd8aC
+	iSd30+jetXyNpi/691BqB/PwLpKDQN+bfF5wqA0zU3pLQpj1rmoS2IZXDFBxA/Bd
+	eauPqAO1Pe/YZDPATzcvLVY5Bl9SpJqgsN6YmNVhugyyJi/jFkZeVXZaPuSjW5sx
+	oHMMDsDWKytXXloFN2OALp80xj9Wj8NX06CYtrU9IV7IgT+oNmw7QJlqgFPwnPmB
+	BpvFDqpuEPRF5giNDnF1yrxE3+174py2MJfShAcEKKtvvzdXVa8fDvqVj3mBzheM
+	vhlOjbTq9n3qvzgP1t9jE/SXcd2hxZlJtLi/HIpN7SZveg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygd6bsje-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 08:03:13 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c790dc38b4so664096685a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 01:03:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744617792; x=1745222592;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EiwHhk5vFVCbL/7IZb2Z7mJotSciivUHSnNHCf6n2sg=;
+        b=Zyxddx1BiS1NpiFZoDhpvGx4hL2AozI6OeUajh+OcvSQ0ZuRt7laU1h+PQmfzkYTT5
+         4MFsJzgSnWLsLc8vTLpxwDHiwZvlwL0Q6Lp5SVqNmL/1Z0KZK3+g8TW3PC1XSOf/6/pq
+         TO2uLBFRA2YCRJzhgFi1H1lwNLpA+bKRujzJjaE07lpJR5AB/pGud1jgFLeYYhj1h0zq
+         s1X3oIp4WafxWlKUhvpLf+Rj5XuY5QVSk4XnC28//K88nxEe25GZ+a7Onrpft7sQmFVL
+         bMJGLsvhDJ9vGKJCumSDzKJmhx1RJlH4zxSUIv0UuRrF5BQ26POrPz0ZFXJ3i9nF73bH
+         gRzw==
+X-Forwarded-Encrypted: i=1; AJvYcCWy9JbA0cxdx47mNtR7D9c99SPlpuc2wyqCksVUxb5hd/VgOMIMxea/oQf0MjUyPOSQF7xJ+KwXvPqXMOAC@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/13rY6W4amPhhWZ3T2S5iZ4Mnm2Nas5187/oiFyPlJBN4c9oH
+	8Q1zwo+uof304OQkcV90vMKZqVvoxrTKLTm4d81H5pqE4DwoKRZHCJ3exOieR55lJzkhrpywyjn
+	otOWVXB/xPtyoXV1XzS3jFn5m4Bmd41xsjZLkHPBjGl5zVrQAAkFehIAxWbnHTFXZ
+X-Gm-Gg: ASbGncssAf7FDhKw2KD3ArHev+tdbMlGXL22l1y/L/ldybCuMJcRAFlv9+g3aCczFKc
+	JcRF3huiN7du6pbf1mlMzcu+Tah0mX7CG88tgo+ZgeS7AC0QIIb3DUMPf+F3Y8wvONyHkrNRgxc
+	x/9TDHRv0kE5+QpQ6YvBT2pqDvZ9zVmwvGhw+6YzT2l5VK/SWCxHnYdnljpQkMZK+0R6+kbm3BF
+	Gp8chazjKS0aVG0/CxRF5tx4nbhS2alZllRXbO3v4Qf0LFkuxkgFumZBCZ+AScxITuYfeGvmeO4
+	vuk6CzuAo/gGcWt4jZ5T2HS4xKFpeIEqp9+8UVq/MdcZeeVjpltq+IYi0Q7d6ZRa5RX9qla8KsE
+	=
+X-Received: by 2002:a05:620a:d87:b0:7c3:b7c2:acf6 with SMTP id af79cd13be357-7c7a7675c27mr2162278685a.15.1744617791950;
+        Mon, 14 Apr 2025 01:03:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESZN07wYmkacvSwp8lFk2vRdDEFr2/a3rzDrW2cfKAF3hpIHMbwXYQcEMnw4snP4Wfu7vADQ==
+X-Received: by 2002:a05:620a:d87:b0:7c3:b7c2:acf6 with SMTP id af79cd13be357-7c7a7675c27mr2162273685a.15.1744617791394;
+        Mon, 14 Apr 2025 01:03:11 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54d3d521931sm1022102e87.257.2025.04.14.01.03.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Apr 2025 01:03:10 -0700 (PDT)
+Date: Mon, 14 Apr 2025 11:03:08 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_mrana@quicinc.com
+Subject: Re: [PATCH v2 0/3] PCI: qcom: Move PERST# GPIO & phy retrieval from
+ controller to PCIe bridge node
+Message-ID: <b5ucd2ypwk3qv3pl7cij5geg6e2bt72xqb4hx3yvpei44wdc7c@ub5cujnfvz3d>
+References: <20250414-perst-v2-0-89247746d755@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 7/9] serial: qcom-geni: move clock-rate logic to
- separate function
-To: Praveen Talari <quic_ptalari@quicinc.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
- Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- devicetree@vger.kernel.org, linux-pm@vger.kernel.org
-Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
- quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
- quic_mnaresh@quicinc.com, quic_shazhuss@quicinc.com
-References: <20250410174010.31588-1-quic_ptalari@quicinc.com>
- <20250410174010.31588-8-quic_ptalari@quicinc.com>
-Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
-Autocrypt: addr=jirislaby@kernel.org; keydata=
- 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
-In-Reply-To: <20250410174010.31588-8-quic_ptalari@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250414-perst-v2-0-89247746d755@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: byxXf5OBxjSDymJxtgvShpjrcceokpkh
+X-Proofpoint-GUID: byxXf5OBxjSDymJxtgvShpjrcceokpkh
+X-Authority-Analysis: v=2.4 cv=ANaQCy7k c=1 sm=1 tr=0 ts=67fcc141 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=1xens5CjvSCak2KtytIA:9 a=CjuIK1q_8ugA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-14_02,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ mlxlogscore=999 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ phishscore=0 impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504140057
 
-On 10. 04. 25, 19:40, Praveen Talari wrote:
-> Facilitates future modifications within the new function,
-> leading to better readability and maintainability of the code.
+On Mon, Apr 14, 2025 at 11:09:11AM +0530, Krishna Chaitanya Chundru wrote:
+> There are many places we agreed to move the wake and perst gpio's
+> and phy etc to the pcie root port node instead of bridge node[1].
+
+Which problem are you trying to solve?
+
 > 
-> Move the code that handles the actual logic of clock-rate
-> calculations to a separate function geni_serial_set_rate()
-> which enhances code readability.
+> So move the phy, phy-names, wake-gpio's in the root port.
+
+Is there a reason why you've selected only these properties? Is there a
+plan to 
+
+> There is already reset-gpio defined for PERST# in pci-bus-common.yaml,
+> start using that property instead of perst-gpio.
 > 
-> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+> For backward compatibility, not removing any existing properties in the
+> bridge node.
+
+'don't remove', rather than 'not removing'.
+
+> There are some other properties like num-lanes, max-link-speed which
+> needs to be moved to the root port nodes, but in this series we are
+> excluding them for now as this requires more changes in dwc layer and
+> can complicate the things.
+> 
+> The main intention of this series is to move wake# to the root port node.
+> After this series we wil come up with a patch which regiters for wake IRQ
+> from the pcieport driver. The wake IRQ is needed for the endpoint to wakeup
+> the host from D3cold.
+
+This should have been in the beginning of the series. In the next run
+please include the functional change to prove that this is enough and
+that you won't have to restrucutre DT bindings again.
+
+Please include the note about merging order. You have to mention
+explicitly that DT bits must go after the driver changes. Ask
+maintainers to provide the immutable branch with the PCIe changes.
+
+> 
+> [1] https://lore.kernel.org/linux-pci/20241211192014.GA3302752@bhelgaas/
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 > ---
->   drivers/tty/serial/qcom_geni_serial.c | 56 +++++++++++++++++----------
->   1 file changed, 36 insertions(+), 20 deletions(-)
+> Changes in v2:
+> - Remove phy-names property and change the driver, dtsi accordingly (Rob)
+> - Link to v1: https://lore.kernel.org/r/20250322-perst-v1-0-e5e4da74a204@oss.qualcomm.com
 > 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index e341f5090ecc..25d16ac3f406 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-...
-> @@ -1323,6 +1310,37 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
->   	port->se.icc_paths[CPU_TO_GENI].avg_bw = Bps_to_icc(baud);
->   	geni_icc_set_bw(&port->se);
->   
-> +	writel(ser_clk_cfg, uport->membase + GENI_SER_M_CLK_CFG);
-> +	writel(ser_clk_cfg, uport->membase + GENI_SER_S_CLK_CFG);
-> +	return 0;
+> ---
+> Krishna Chaitanya Chundru (3):
+>       dt-bindings: PCI: qcom: Move phy, wake & reset gpio's to root port
+>       arm64: qcom: sc7280: Move phy, perst to root port node
+>       PCI: qcom: Add support for multi-root port
 
-Did this pass checkpatch?
+This order of patches suggests that one can merge DT bits before the
+driver changes and that it will still work. Is that the case?
 
-> +}
-> +
-> +static void qcom_geni_serial_set_termios(struct uart_port *uport,
-> +					 struct ktermios *termios,
-> +					 const struct ktermios *old)
-> +{
-> +	struct qcom_geni_serial_port *port = to_dev_port(uport);
-> +	unsigned int baud;
-> +	unsigned long timeout;
-> +	u32 bits_per_char;
-> +	u32 tx_trans_cfg;
-> +	u32 tx_parity_cfg;
-> +	u32 rx_trans_cfg;
-> +	u32 rx_parity_cfg;
-> +	u32 stop_bit_len;
-> +	int ret = 0;
-> +
-> +	/* baud rate */
-> +	baud = uart_get_baud_rate(uport, termios, old, 300, 4000000);
-> +
-> +	ret = geni_serial_set_rate(uport, baud);
-> +	if (ret) {
-> +		dev_err(port->se.dev,
-> +			"%s: Failed to set  baud: %u  ret: %d\n",
+> 
+>  .../devicetree/bindings/pci/qcom,pcie-common.yaml  |  18 +++
+>  .../devicetree/bindings/pci/qcom,pcie-sc7280.yaml  |  17 ++-
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts       |   5 +-
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi     |   5 +-
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           |   5 +-
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi               |   6 +-
+>  drivers/pci/controller/dwc/pcie-qcom.c             | 149 +++++++++++++++++----
+>  7 files changed, 168 insertions(+), 37 deletions(-)
+> ---
+> base-commit: 8ffd015db85fea3e15a77027fda6c02ced4d2444
+> change-id: 20250101-perst-cb885b5a6129
+> 
+> Best regards,
+> -- 
+> Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> 
 
-Why the doubled spaces?
-
-> +			__func__, baud, ret);
-> +		return;
-> +	}
-> +
->   	/* parity */
->   	tx_trans_cfg = readl(uport->membase + SE_UART_TX_TRANS_CFG);
->   	tx_parity_cfg = readl(uport->membase + SE_UART_TX_PARITY_CFG);
-
-thanks,
 -- 
-js
-suse labs
+With best wishes
+Dmitry
 
