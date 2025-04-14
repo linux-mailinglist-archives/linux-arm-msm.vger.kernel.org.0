@@ -1,175 +1,235 @@
-Return-Path: <linux-arm-msm+bounces-54263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18459A88A93
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 20:00:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6E55A88AB5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 20:07:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 345767AA993
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 17:59:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8E66C3AFC5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 18:07:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E86528A1FD;
-	Mon, 14 Apr 2025 18:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C601127C869;
+	Mon, 14 Apr 2025 18:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OZV6rAjo"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="I3clipVh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C6C288CB6;
-	Mon, 14 Apr 2025 18:00:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCA62749E2
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 18:07:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744653612; cv=none; b=RIX+11W6vn4FnNVc9HRXbIMfM/M+Vuz1HefaYRAXVyFi72FgGdEWFjIBftwRo1obL51gDgrzRrWXx0ITBOYXeaZeu8eH7vKuf9QGRQfPgtT/VgMwIoiiDp8wLHTdVwVhGqtigcOZddqqaWa7inK5rZaVmEC5cq7UXMOOxloRVYw=
+	t=1744654058; cv=none; b=FvTAMepNqrz+ZXpIUdRGlF+I8bJeKXkYupaj+P/nC3bFLZsjgjJzy9IEhySXJDkC4esd4eHvzZgoHXybmmn3DbkN8XkC6iLbxbZ4YkbQN7BTVCJuXTOA224vZrGp73Uwq5ygAVQqAKrX4coKIaK+m/PJ1lHuOHMKRWHk404NcAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744653612; c=relaxed/simple;
-	bh=+CoYcsP98tUeuncLLLFjvVY9A37RssOyoYXVp+8fEpo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nX0xRBvC19w9Y2dGRXnn/3hl5KNWoQbl1qXvMj+FpbGs0HbAEN0o7hzZej8wPiXSQhBMsiJp00uMLAnlT1+gAbs3ExKV1vwOqozN1jvTaCcnX3JP/7m4ZvNn2TcQc5esoKlLQGDCQ2a1DqgcplZ88ofOUUmEftknS5HV5c5A1yE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OZV6rAjo; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53E9AF9T017437;
-	Mon, 14 Apr 2025 18:00:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+m3M7q4RcMjSlbZqaN3PtP+0QBeAAlsXq7JC4+LsdA0=; b=OZV6rAjo/XCBN5sF
-	Uvc+kqFXH3xiJRyXKau+5wYOVdtNLTr88zklQZpJk1ZIRl5/zInqS5BTNa/y5wZ9
-	iqtybdYnW6oCCoB9fgHyYHQQTLNte8EF9DU5UgFHcpsDu3seqvih0z5SLl5HnD9N
-	K8yAa7RL0uIYDz1P5tlKucGVYarNxPtSxePmxrRAWvNb7DSs4xiPTLs5BeZfkWE/
-	tdqkeQ49YkFJ8aiN9Trh7u/B8c4iMxVFu/n8UzQAt5KuOuJOZ6LhX20F+Q+Q+8cz
-	XLstUJKHrukk/oN7ynn3KLCnGFe0SFFp3zzbFiLfWCGPscD771uF4kRRTz6hcrtn
-	KIcs3g==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygd6de10-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 14 Apr 2025 18:00:06 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53EI05Nb018506
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 14 Apr 2025 18:00:05 GMT
-Received: from [10.216.13.250] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 14 Apr
- 2025 10:59:57 -0700
-Message-ID: <1e69b6f5-efe7-4b81-8bea-b463b1eacfd4@quicinc.com>
-Date: Mon, 14 Apr 2025 23:29:53 +0530
+	s=arc-20240116; t=1744654058; c=relaxed/simple;
+	bh=AjkuyH+WYUVccrSUXLR+U/L+vq3jzNi72jov7x8RAn8=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=no/DBguQ89AoJ1ZuhMp72mnVnX1C2p3n8Y/zcUH9SdhmXzpBjBXxUbSrLsbFUuKNsnLG//6+0iORJa3cfW5J09wZ3t9Ww84bb9zlo8JnKPNai6G5OSwwL9Oc/urMT+wmCehWIUZaK2AFFAvsecVfbP/rtEWQF2rxlWdZ0LF7zZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=I3clipVh; arc=none smtp.client-ip=209.85.214.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-229170fbe74so38209855ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 11:07:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1744654056; x=1745258856; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=++SDvb35prT8wUX8KJx52I0lAjlJYxZ6ukgi+YkcMGk=;
+        b=I3clipVhvQ+DtCSInKEc/px3Bg3vHJFWCW+SVvTJR2kkvmG95hPE73w3AmFH1jXqSj
+         UaepBJmAlgmKOukGYHHZve9OkCT9p1/WPQrIFdp1azPPSkjgyPqxZI6RO7xWLaBjYPOD
+         1JFpNGMwppfam359vAbCDpeCfzeUcoYvmMO1PcU0ZGFpAq7gIWkUvEee4edoYWy8sZ+V
+         TNYOh06X63SAYkvN0G3Lxqo5F99swvUFPvWlK/MDXcs7cQFzmxCK9bi0sc2oBmv4B2Oi
+         /IxLWMBwPmkZvcqV7bLRVyHVAwJ1Q0d0Mr4iN3E+C41W2N4Zfve46VTIqaVcjv0y1Ilx
+         TYww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744654056; x=1745258856;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=++SDvb35prT8wUX8KJx52I0lAjlJYxZ6ukgi+YkcMGk=;
+        b=QTkWWsJnoxcZ3pw33mG/vYymnhtsrRqek6TnZMZukMyGp21IZrpDvHec7xR4jz9KyN
+         t2vocV4kKByUS3+lumbkHFVQuVsTOO1egqaPprHh2yUXmJVjIpMqkS4KbrvmmzXCULlP
+         taGrUGVMN7EEEMtYq/Z5jEgzjR3joVNGwXhVD6AFGn7ieoEYQAFfqbZzPywbheOsfTIr
+         63VdiKZZdAo+aFXcPv9ryF7SR5qvdfQmv+8qMpJmiZ+Kh24XEsgUUVHNItrIQUjPB4Zc
+         2VHguxyL+0t97bme+H1TpHZ5mC5zqmaiVVLz1CjQT6Yg9NWiRKppoWqu8fLC5tEE70zf
+         5akA==
+X-Forwarded-Encrypted: i=1; AJvYcCUfuBkI+sPtMi3q1G1GtU5jQYlQojJUCRyaoCPrgoPaZ57m8HdH3bUKO7xwlgl/yuN6kKzB7cjnafCFdwf0@vger.kernel.org
+X-Gm-Message-State: AOJu0YySKPD755YEhPKyh3r+uVXqNMSWtk1I5AbN10qiVuwr1KDPoyyq
+	mx3qcfJSefujvI/E1ryuch66Vvqrm7XjnqVi8NxvDbaErEYwUTPWxS+Bj7gTN4ZdUXXhClkZ9ja
+	IG319xXvLg2slgnCfr0PBZQ==
+X-Google-Smtp-Source: AGHT+IElXEZob++tmZ5mqeC0IBayeWoM91PrVBaN59KXtCAPwL4Hj1kJtUFwW0h4f+MctTFeOcTA04fqvlejztmSQg==
+X-Received: from plbkx4.prod.google.com ([2002:a17:902:f944:b0:223:69a1:46da])
+ (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:903:3c44:b0:224:162:a3e0 with SMTP id d9443c01a7336-22bea50dfb1mr185065455ad.49.1744654056309;
+ Mon, 14 Apr 2025 11:07:36 -0700 (PDT)
+Date: Mon, 14 Apr 2025 11:07:34 -0700
+In-Reply-To: <8ebc66ae-5f37-44c0-884b-564a65467fe4@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 4/9] soc: qcom: geni-se: Enable QUPs on SA8255p
- Qualcomm platforms
-To: Jiri Slaby <jirislaby@kernel.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd
-	<sboyd@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-CC: <psodagud@quicinc.com>, <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
-        <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
-        <quic_mnaresh@quicinc.com>, <quic_shazhuss@quicinc.com>
-References: <20250410174010.31588-1-quic_ptalari@quicinc.com>
- <20250410174010.31588-5-quic_ptalari@quicinc.com>
- <abbfc13d-d6f5-485f-a73d-6a89e15f0ff6@kernel.org>
-Content-Language: en-US
-From: Praveen Talari <quic_ptalari@quicinc.com>
-In-Reply-To: <abbfc13d-d6f5-485f-a73d-6a89e15f0ff6@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: mcRZeR5fc5ZqeuH0u5O6SW9r8zsyvGff
-X-Proofpoint-GUID: mcRZeR5fc5ZqeuH0u5O6SW9r8zsyvGff
-X-Authority-Analysis: v=2.4 cv=ANaQCy7k c=1 sm=1 tr=0 ts=67fd4d26 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=BTMtgF0SbkP0gLXr6YcA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-14_07,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- mlxlogscore=999 suspectscore=0 clxscore=1015 lowpriorityscore=0
- phishscore=0 impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0
- bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504140130
+Mime-Version: 1.0
+References: <20250318161823.4005529-1-tabba@google.com> <20250318161823.4005529-5-tabba@google.com>
+ <8ebc66ae-5f37-44c0-884b-564a65467fe4@redhat.com>
+Message-ID: <diqzplhe4nx5.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [PATCH v7 4/9] KVM: guest_memfd: Handle in-place shared memory as
+ guest_memfd backed memory
+From: Ackerley Tng <ackerleytng@google.com>
+To: David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com
+Content-Type: text/plain; charset="UTF-8"
 
+David Hildenbrand <david@redhat.com> writes:
 
-On 4/14/2025 1:26 PM, Jiri Slaby wrote:
-> On 10. 04. 25, 19:40, Praveen Talari wrote:
->> On the sa8255p platform, resources such as clocks,interconnects
->> and TLMM (GPIO) configurations are managed by firmware.
->>
->> Introduce a platform data function callback to distinguish whether
->> resource control is performed by firmware or directly by the driver
->> in linux.
->>
->> The refactor ensures clear differentiation of resource
->> management mechanisms, improving maintainability and flexibility
->> in handling platform-specific configurations.
->>
->> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+> On 18.03.25 17:18, Fuad Tabba wrote:
+>> For VMs that allow sharing guest_memfd backed memory in-place,
+>> handle that memory the same as "private" guest_memfd memory. This
+>> means that faulting that memory in the host or in the guest will
+>> go through the guest_memfd subsystem.
+>> 
+>> Note that the word "private" in the name of the function
+>> kvm_mem_is_private() doesn't necessarily indicate that the memory
+>> isn't shared, but is due to the history and evolution of
+>> guest_memfd and the various names it has received. In effect,
+>> this function is used to multiplex between the path of a normal
+>> page fault and the path of a guest_memfd backed page fault.
+>> 
+>> Signed-off-by: Fuad Tabba <tabba@google.com>
 >> ---
->>   drivers/soc/qcom/qcom-geni-se.c | 78 +++++++++++++++++++++------------
->>   1 file changed, 50 insertions(+), 28 deletions(-)
->>
->> diff --git a/drivers/soc/qcom/qcom-geni-se.c 
->> b/drivers/soc/qcom/qcom-geni-se.c
->> index 4cb959106efa..5e2add1e04d3 100644
->> --- a/drivers/soc/qcom/qcom-geni-se.c
->> +++ b/drivers/soc/qcom/qcom-geni-se.c
->> @@ -105,6 +105,8 @@ struct geni_wrapper {
->>   struct geni_se_desc {
->>       unsigned int num_clks;
->>       const char * const *clks;
->> +    int (*geni_se_rsc_init)(struct geni_wrapper *wrapper,
->> +                const struct geni_se_desc *desc);
->>   };
->>     static const char * const icc_path_names[] = {"qup-core", 
->> "qup-config",
->> @@ -891,10 +893,44 @@ int geni_icc_disable(struct geni_se *se)
->>   }
->>   EXPORT_SYMBOL_GPL(geni_icc_disable);
->>   +static int geni_se_resource_init(struct geni_wrapper *wrapper,
->> +                 const struct geni_se_desc *desc)
->> +{
->> +    struct device *dev = wrapper->dev;
->> +    int ret;
->> +    int i;
->> +
->> +    wrapper->num_clks = min_t(unsigned int, desc->num_clks, MAX_CLKS);
+>>   include/linux/kvm_host.h | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>> 
+>> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+>> index 601bbcaa5e41..3d5595a71a2a 100644
+>> --- a/include/linux/kvm_host.h
+>> +++ b/include/linux/kvm_host.h
+>> @@ -2521,7 +2521,8 @@ static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+>>   #else
+>>   static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+>>   {
+>> -	return false;
+>> +	return kvm_arch_gmem_supports_shared_mem(kvm) &&
+>> +	       kvm_slot_can_be_private(gfn_to_memslot(kvm, gfn));
+>>   }
+>>   #endif /* CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES */
+>>   
 >
-> I thought min_t is no longer needed in these cases?
+> I've been thinking long about this, and was wondering if we should instead
+> clean up the code to decouple the "private" from gmem handling first.
+>
 
-it is needed since there are two types of QUPs - the normal QUP which 
-uses 2 clocks,
+Thank you for making this suggestion more concrete, I like the renaming!
 
-and HUB QUP which uses only 1 clock.
+> I know, this was already discussed a couple of times, but faking that
+> shared memory is private looks odd.
+>
+> I played with the code to star cleaning this up. I ended up with the following
+> gmem-terminology  cleanup patches (not even compile tested)
+>
+> KVM: rename CONFIG_KVM_GENERIC_PRIVATE_MEM to CONFIG_KVM_GENERIC_GMEM_POPULATE
+> KVM: rename CONFIG_KVM_PRIVATE_MEM to CONFIG_KVM_GMEM
+> KVM: rename kvm_arch_has_private_mem() to kvm_arch_supports_gmem()
+> KVM: x86: rename kvm->arch.has_private_mem to kvm->arch.supports_gmem
+> KVM: rename kvm_slot_can_be_private() to kvm_slot_has_gmem()
 
+Perhaps zooming into this [1] can clarify a lot. In
+kvm_mmu_max_mapping_level(), it was
+
+  bool is_private = kvm_slot_has_gmem(slot) && kvm_mem_is_private(kvm, gfn);
+
+and now it is
+
+  bool is_gmem = kvm_slot_has_gmem(slot) && kvm_mem_from_gmem(kvm, gfn);
+
+Is this actually saying that the mapping level is to be fully determined
+from lpage_info as long as this memslot has gmem and
+
+A. this specific gfn is backed by gmem, or
+B. if the specific gfn is private?
+
+I noticed some other places where kvm_mem_is_private() is left as-is
+[2], is that intentional? Are you not just renaming but splitting out
+the case two cases A and B?
+
+[1] https://github.com/davidhildenbrand/linux/blob/ac8ae8eb494c3d5a943a4a44c0e9e34b4976895a/arch/x86/kvm/mmu/mmu.c#L3286
+[2] https://github.com/davidhildenbrand/linux/blob/ac8ae8eb494c3d5a943a4a44c0e9e34b4976895a/arch/x86/kvm/mmu/mmu.c#L4585
+
+> KVM: x86: generalize private fault lookups to "gmem" fault lookups
 >
->> +
->> +    for (i = 0; i < wrapper->num_clks; ++i)
+> https://github.com/davidhildenbrand/linux/tree/gmem_shared_prep
 >
-> FWIW i should be unsigned too.
+> On top of that, I was wondering if we could look into doing something like
+> the following. It would also allow for pulling pages out of gmem for
+> existing SW-protected VMs once they enable shared memory for GMEM IIUC.
 >
-> thanks,
+>
+> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+> index 08eebd24a0e18..6f878cab0f466 100644
+> --- a/arch/x86/kvm/mmu/mmu.c
+> +++ b/arch/x86/kvm/mmu/mmu.c
+> @@ -4495,11 +4495,6 @@ static int kvm_mmu_faultin_pfn_gmem(struct kvm_vcpu *vcpu,
+>   {
+>          int max_order, r;
+>   
+> -       if (!kvm_slot_has_gmem(fault->slot)) {
+> -               kvm_mmu_prepare_memory_fault_exit(vcpu, fault);
+> -               return -EFAULT;
+> -       }
+> -
+>          r = kvm_gmem_get_pfn(vcpu->kvm, fault->slot, fault->gfn, &fault->pfn,
+>                               &fault->refcounted_page, &max_order);
+>          if (r) {
+> @@ -4518,8 +4513,19 @@ static int __kvm_mmu_faultin_pfn(struct kvm_vcpu *vcpu,
+>                                   struct kvm_page_fault *fault)
+>   {
+>          unsigned int foll = fault->write ? FOLL_WRITE : 0;
+> +       bool use_gmem = false;
+> +
+> +       if (fault->is_private) {
+> +               if (!kvm_slot_has_gmem(fault->slot)) {
+> +                       kvm_mmu_prepare_memory_fault_exit(vcpu, fault);
+> +                       return -EFAULT;
+> +               }
+> +               use_gmem = true;
+> +       } else if (kvm_slot_has_gmem_with_shared(fault->slot)) {
+> +               use_gmem = true;
+> +       }
+>   
+> -       if (fault->is_private)
+> +       if (use_gmem)
+>                  return kvm_mmu_faultin_pfn_gmem(vcpu, fault);
+>   
+>          foll |= FOLL_NOWAIT;
+>
+>
+> That is, we'd not claim that things are private when they are not, but instead
+> teach the code about shared memory coming from gmem.
+>
+> There might be some more missing, just throwing it out there if I am completely off.
+>
+> -- 
+> Cheers,
+>
+> David / dhildenb
 
