@@ -1,124 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-54239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 865A4A880D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 14:52:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB3CBA880EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 14:58:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DCA461898B00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 12:52:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D2B71894A9F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 12:58:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15FCC29CB4B;
-	Mon, 14 Apr 2025 12:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F9B629AAF8;
+	Mon, 14 Apr 2025 12:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FYmA2Zd5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MsokLDbl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE131DFF8;
-	Mon, 14 Apr 2025 12:52:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4567C539A;
+	Mon, 14 Apr 2025 12:58:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744635145; cv=none; b=UkLQ0alzF5iidpMzm8ldYqIY5ZkzZ52+BJ8rjQxTpEJd5GTz6e7qHgoLSFEdEjwDE3qqYSYdqwDO/i9srU5gIb7iuV7HBclQ9XQLS+axbZKOLBQAC+qJfWmH32zCQ1Wf/JRDLJxdhIEFQohfqeIN59IlynB+ckZTZQcXQZFKRJY=
+	t=1744635521; cv=none; b=MOCHyveBJIOB0k8RznMrHLUUHyXUIfLOK+PvFMN5R0m0fMrE0d0wQOmuf1UL2yT7DkAwn2tw46xFBU606keKSEeBZFuVn2M+DClaqQ8Mhpge1DGs8QDd49QAfIubF0KyC6IV1/O8Sq/svBG4hevFljIqUtcFABWP3GZFXDnaRx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744635145; c=relaxed/simple;
-	bh=1ldnkfgixg9bs2RCXFkPmShEZrz8c7D9t/EpDMmr8QM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aGAnQOa4eG7H8fIkMre81Ltlo17rgWDtO3AVRg7cLNFKdBdhfYLEgmja8qGL2Ic1CYhZycBXLy8rlGoS78QWnFGY/ZmzIwtS0GLfQ4qrJDVRoi+GG+mhTbwmqhmjWkRfR5WWxClugw0wZbIfHbhXF8JDUQIfphfCmRrx5S6B8Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FYmA2Zd5; arc=none smtp.client-ip=209.85.221.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-523e895dd3dso147381e0c.2;
-        Mon, 14 Apr 2025 05:52:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744635142; x=1745239942; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Lxq0k8JECetlMezwpx18zh68KnoK9PWRqalahhyXsYc=;
-        b=FYmA2Zd57Hbgj+2fQw0YMypy7D9Ej4zUxA8TSf9b4pcNT10LOoZtuVsh5YbXFmYraZ
-         60+3y0WFeuQAab0Hfarafo4p3OQhI9BgS30U5oI9tOM8oYAtpXft98lj1ZakIImENztQ
-         wCvtW1GWr/AYW561brvDcIpD2qVobIIdNqIHPIPLSmTjIUGCgh2QhQvF1b2tOkNa8+kR
-         o+g66lw7kUBXZnBxhs2KtCFSaMqQymsdEbQKnsMgQS6IZotqJ4+r/vPr2qFcRL1jIe15
-         uyaCK/SPPMgA7w556mohzLhiIe2igLDPf3TpO9d/gVWso6Nk8eU7ONQLvEtzEGl18/PA
-         lpcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744635142; x=1745239942;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Lxq0k8JECetlMezwpx18zh68KnoK9PWRqalahhyXsYc=;
-        b=Ch83JAy+H3wxmS0bqdSkTdx9w0GbUMa5hF5IjzJ/vAmPR0EPGsnsGrvdrXbyk3gdnm
-         NU56NESedYmbxvIM2ZYIDi8n0+N1CU3sjvghl3D0R8roSQEyWJBEWAYWwzXp7YOJblDR
-         qOvvCaXxnQY4eUYQ9B8f21U/Cf9X9GMS59tw9gEIFHo1eyDt99httkI7zz+PXFy2etqU
-         o3Dj8CUmwp/l4u0HBz3Sqd8Ij+lOSeh0TmLX2a3RYW70DvvB3KnG4jZcoNn13R9OqO7s
-         IIc1V2kesvFJ6iO43oOwBZAvQvODu2F1Ci+JxyxTQ72zXBxotXoCJiwOVauU8+4GweZn
-         7slQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUBVs7KqwR+dvgivazSF4FLEe0Pv3ZIjVayT1cSR3zvB2f2A5Mqnnt8C/+CIGm4ncepAAa7/dOxTofSz0ut@vger.kernel.org, AJvYcCWsQ4C7TPsmiAuXdhegQIo7q9g+ByA3hZyDl/gNFT4Nn6D67Lh0vrVI7wHOmWmQQIfGKwOF32KH5W6AUIah@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCi0WRADZS3UmdZ0zIiEJsdTIswKSNXRSmtK6RlF5Odkash1EJ
-	DhXWi+odNfEgiDXmFEw9nqMgQHeV/8GBAdiqmr2AzRubvPuzF7cQZJ12pHKaKIrkLapGNnABejc
-	i0RYEEHdaL04QawWfbipqWHHxcg==
-X-Gm-Gg: ASbGncvnhDuPwx8WoScj4tlBZOZBY8W4HyzBJdR6reVqHWJ5N0ZUYUQ1I5+2egB2YNN
-	xdFv9pQBEEi71bZF11/Z5xSWdNhlLgfbSpcRX99+8CLWHvza0jFUUijGN3tJ63PrjRnvKBytKj5
-	6kISF0AsA7BStZJrC1eJwazSM=
-X-Google-Smtp-Source: AGHT+IF/v7mtNxmW/BA3M7zuPV30jB46+QuFqkvXXuoe9h6dKHwUIeEENVSAWHN3prhzK88qFeD9PyaKIbVWCr8a0Gk=
-X-Received: by 2002:a05:6122:d90:b0:527:67da:74eb with SMTP id
- 71dfb90a1353d-527f7218ae6mr2145470e0c.1.1744635142084; Mon, 14 Apr 2025
- 05:52:22 -0700 (PDT)
+	s=arc-20240116; t=1744635521; c=relaxed/simple;
+	bh=ZLod5GeDITCrF893kFp2KeEfQ+aSWVu96c4Qc/UeQZc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RL9CwAB7mhDMw49VZPFF6s3lnsvEui3s+dAQRPRJ+MkEFE7w1cdC15JmQrkD10o0ZNQ49fvyQPvphg2gqbaIcW96qVNfWu6sDkxG+WziLYn6N8/bgxsyvTL9IeAAxK88c0yiFro19hCSDMniRaYTheQ1RvXSCzR0JsAM92tIYwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MsokLDbl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2119C4CEE2;
+	Mon, 14 Apr 2025 12:58:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744635520;
+	bh=ZLod5GeDITCrF893kFp2KeEfQ+aSWVu96c4Qc/UeQZc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=MsokLDblm+WdMl14QgRVs1R5PBaQBE3jwmg6Hc2CCxHcsiauCK3emMZr5hk82yq1k
+	 4XexBZlVM4nuuF9HzLa8ErPvZqDuc7OF9sjO1BeNUeF/cSk2alseevgTIYuafDqNL2
+	 RSOFs0qZTMg1BSkgerauzXTSrgValXrKfvCDHh6/wjW+iW72i/RMqMgJ2vNEM2I+z4
+	 pylsamysF9amTav30VE0b4+b0yrBdGLt7MxC0ICR4inGDhZSYHaPFgp5k9NWJ0HJpV
+	 X8NbV2zCYvxrP3rXaxKPOQBF50CrY5KgQVnD+XXrZ2Xd5sQs90TjMMWobCTkw7JSim
+	 0lwB1PN3j5UzA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1u4JOW-000000008Pr-2SZ2;
+	Mon, 14 Apr 2025 14:58:37 +0200
+Date: Mon, 14 Apr 2025 14:58:36 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Chenyuan Yang <chenyuan0y@gmail.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, lumag@kernel.org,
+	quic_kriskura@quicinc.com, manivannan.sadhasivam@linaro.org,
+	konrad.dybcio@oss.qualcomm.com, quic_varada@quicinc.com,
+	quic_kbajaj@quicinc.com, johan+linaro@kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2] phy: qcom-qmp-usb: Fix an NULL vs IS_ERR() bug
+Message-ID: <Z_0GfAFufdAiYE_j@hovoldconsulting.com>
+References: <20250414125050.2118619-1-chenyuan0y@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250413212518.2625540-1-chenyuan0y@gmail.com>
- <22ec4fc8-9368-4955-ac97-c49b3317d3b3@kernel.org> <Z_y73a5IDO66AzY1@hovoldconsulting.com>
- <f3b77aa4-e7a4-475f-a633-48aab59fa9b1@kernel.org> <Z_zDtfEsgXsFodG9@hovoldconsulting.com>
-In-Reply-To: <Z_zDtfEsgXsFodG9@hovoldconsulting.com>
-From: Chenyuan Yang <chenyuan0y@gmail.com>
-Date: Mon, 14 Apr 2025 07:52:11 -0500
-X-Gm-Features: ATxdqUGA6rf8NvPr_QyC7nCQ3KhCb283Qi94-D8xvSbaWhdMjQ7j7Sb5pzG1syg
-Message-ID: <CALGdzuo2qn-Eq=UgsSpkEvR4ZZgGKb=ETepWBoeMCf_x0J5kQQ@mail.gmail.com>
-Subject: Re: [PATCH] phy: qcom-qmp-usb: Fix an NULL vs IS_ERR() bug
-To: Johan Hovold <johan@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, vkoul@kernel.org, kishon@kernel.org, lumag@kernel.org, 
-	quic_kriskura@quicinc.com, manivannan.sadhasivam@linaro.org, 
-	konrad.dybcio@oss.qualcomm.com, quic_varada@quicinc.com, 
-	quic_kbajaj@quicinc.com, johan+linaro@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250414125050.2118619-1-chenyuan0y@gmail.com>
 
-Hi Johan and Krzysztof,
+On Mon, Apr 14, 2025 at 07:50:50AM -0500, Chenyuan Yang wrote:
+> The qmp_usb_iomap() helper function currently returns the raw result of
+> devm_ioremap() for non-exclusive mappings. Since devm_ioremap() may return
+> a NULL pointer and the caller only checks error pointers with IS_ERR(),
+> NULL could bypass the check and lead to an invalid dereference.
+> 
+> Fix the issue by checking if devm_ioremap() returns NULL. When it does,
+> qmp_usb_iomap() now returns an error pointer via IOMEM_ERR_PTR(-ENOMEM),
+> ensuring safe and consistent error handling.
+> 
+> Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+> Fixes: a5d6b1ac56cb ("phy: qcom-qmp-usb: fix memleak on probe deferral")
+> CC: Johan Hovold <johan@kernel.org>
+> CC: Krzysztof Kozlowski <krzk@kernel.org>
+> ---
 
-On Mon, Apr 14, 2025 at 3:13=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
-te:
->
-> On Mon, Apr 14, 2025 at 10:08:18AM +0200, Krzysztof Kozlowski wrote:
-> > On 14/04/2025 09:40, Johan Hovold wrote:
->
-> > > I'm afraid you're mistaken here. See __devm_ioremap() which can retur=
-n
-> > > NULL.
-> > >
-> > Uh, you are right, I only checked devm_of_iomap in qmp_usb_iomap().
-> > Anyway, the fix should be different - given function should either
-> > return ERR or NULL, not both, so devm_ioremap return value needs to be
-> > wrapped in ERR_PTR.
->
-> Right, I already suggested that:
->
->         https://lore.kernel.org/lkml/Z_yxxoa12N9rNn2z@hovoldconsulting.co=
-m/
->
-> Johan
+Thanks for the update, looks good.
 
-I have submitted "[PATCH v2] phy: qcom-qmp-usb: Fix an NULL vs
-IS_ERR() bug", which fixes this issue based on your suggestions
+Next time, remember to include a short changelog here after the --- line
+(so that it does not get included in the commit message when the patch
+is applied).
 
--Chenyuan
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+
+Johan
 
