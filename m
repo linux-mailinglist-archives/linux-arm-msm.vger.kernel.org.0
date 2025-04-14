@@ -1,87 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-54200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B52CA87C76
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 11:54:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D349A87C8D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 11:57:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E49F8188E3CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 09:54:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5FBB23A61B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 09:57:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85E3A25D1EC;
-	Mon, 14 Apr 2025 09:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3289525F97A;
+	Mon, 14 Apr 2025 09:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UYG2sVfB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZHx+w8bl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D887261580
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 09:53:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6094E257AFA;
+	Mon, 14 Apr 2025 09:57:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744624431; cv=none; b=nHHm2HI4KpXtvpJGrhVq//wEzwUZTDNV/bXT/MsHnx61y2JnyMJ9DWZ8uuTzE3B0HZmGoAETw3A/OI5ZNL2NHh3M11vlruDc02eeMFlpRlT/lRPhr32AyRfZIAv/HtePZCMlRbqr+sl/54RYIe1j/4JfAT+tDk/4HlKweRNM5io=
+	t=1744624640; cv=none; b=uhjOM43zQ4oDFIkcUJwlnwuLuD2iN06AtwCS0x2fu6ZMKHeB0x6obdr6cqqfP6TdwijjB+RWkMe+BNLCmLMT8o4dgMg3gE++ngwrBB8RcKTkc8WZ0vIOY/a/xwj06nyvgLb/Awl6kbbHx9G8ZI51bc3CssOgKmwL5sUI6koIbh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744624431; c=relaxed/simple;
-	bh=fE+JE5cENnrFnAtimgq9nSWmgLL8B8MGJLAmn4zv+vg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CF9Tr0JaVyHRjvDRAswow9UNnX85ayJRimSdSCShqrp0HqQ7+1VVjFKCd8VFBMimLqg65p2cWP13l4TLbuWUrYePp0xBIqhqgW36W+DfuP0+uwUdnHxcny+zdMMPhtsUrSHPwzNafpMth64aW9cofPvMDQrQ58fPov3Oq1nyoXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UYG2sVfB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53E9AO85004925
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 09:53:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1744624640; c=relaxed/simple;
+	bh=7GgL3xtvI7pnGeuvq9RVd04janbGJVSlvm5BxXVmlgQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=TG6CkPW8aFgZyMD3JFNiLry3LAIKkiIHj+CnKE4VRqKlioBZZk3paXkLJv2X0qTCtoLBMbvTdIAwp5ZN/eHGdfURTg1KXF25p8rkbM2CG8GQKSrzmAj5TYA0bzzmsC8cpVo8EEaG30TEAS63kKOCVl1pQ4I/JasjJqWe7ONQRxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZHx+w8bl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53E99qRt011398;
+	Mon, 14 Apr 2025 09:56:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	EdclKkXxFTt0I2OWvs6ezf5xV8oX2spytT768VYcNQo=; b=UYG2sVfBCarTcUZ4
-	Eau8ZJPh1ckqR0jc8pUV/a17Pw4W/yl5434cRscP+fR8qBEYQ31C8hPMaenrWdqA
-	DCCex1srCikdUyb0+VT1Yymz8pAwWoQ9Hcrst+3EsjsdKwJqj92swyTFWd74xDox
-	5LubjTS27sBK1zuOJRQyK9mduRuJObMIEHU4Tho2DT3VBI/ACryRgUP136AZNzlP
-	UpJ/gVUGMD5Wz4v3GNDJQGQtH8K3ioxwkTfhJ1TQxDhonRnS4Q8b8bZQS2OayyH1
-	nHKntVEOgCfbldqpfcPGGAYlIBB+LobUB8Mgy517LUbFeGW5HZiv2q/Q7KQZtMiO
-	LCgg+Q==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yhbpky9p-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 09:53:47 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c545ac340aso32263785a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 02:53:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744624426; x=1745229226;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EdclKkXxFTt0I2OWvs6ezf5xV8oX2spytT768VYcNQo=;
-        b=P0bckVTMJBiz1a1M5GEwpeQ4E0jKyyrNbVcZ6otv2xvgSWrKJ65jZKjw93KKNt3es7
-         d5holIok/4stpF19plcp/1XeSeBgguJZCL1S2RL07HELGAKqfXmO7CrGmu99jZ0y/GDI
-         WTE5211wcQ0km+ofnG+XqpnusKRKbBuNa0ZstGCh+nmXnfA///hv6c//lnnEWRJaSG2/
-         cbo4i0LdIA7/FMorpzUHnFjDhRPnwtZan7yIkwZblx7Rka5iBJP8A1JVlc4Qzcy4y6W7
-         8UwJQelXBfLMCb7pTLBvXrzRruEpb6nRJlMGIoDDozXTfXrh/2wyOgXdYICdf3I4/Nmr
-         9Y2w==
-X-Forwarded-Encrypted: i=1; AJvYcCXvKEHt6C6snX6oDJHAjtZz/KsWhms05FekR1LCFXF3yxQwzaEu2P3dRqjjA6EYASU3SoormN9SjOe+rvbp@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/d5ODkXxeEfWmFF8B0sP3Iq83h+BK3RgHdKUDypqkmPN3iLZH
-	L1mv551WZIdjFhBOQF5Q1HLBF5DZbr4I9qprlRglwpWYBDxYX5B2SRtcw/WuRmKIJWokcMFeVjv
-	k7w+JjxZWZf15UXhzEtWsV11yut/nbKMANDKPdlKCZlPPFQpa3dIfTOV9nnwzR5Ty
-X-Gm-Gg: ASbGncs1aVOiw9czqcXnuRSJfbA7LDNpvoY8iTV0JsTdtHQgfSQqs5FuBoSjfYbY16B
-	weWZBReMSUcYrWD6fnRIL4r6ZOggWPqiNDSIeMkWGj58kScWTH0whVaJ9ZXnZX3t5z64q1yTdZn
-	kGNtItR6apl0YHh75OQ9NjDhae63CBD01fsmiqZWuB3N3A/UFv65/1RWC848Bt/Uo+MnqLRxxro
-	EjtPizNeOr8Wl6bncz6l5aWFV+WgvrLONckwDqdARCcEbpHqPsaXnRDRl89vdvi/e9wWNK/gEV3
-	JwpMdmu2j1S6m1HSR15suCT5ubM16LpDBSxNiCSCQI5vn7/ZiAJBUgV5Dtv4AxAM0A==
-X-Received: by 2002:a05:620a:424f:b0:7c0:be0e:cb09 with SMTP id af79cd13be357-7c7af113653mr552037085a.7.1744624426101;
-        Mon, 14 Apr 2025 02:53:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEoXdqkcpaAerObGEK8HRnwc8WmDaStUQwIiHR1xvbhIiHbRhcZx7+Jtthf6NJhgUhOWtDZ6w==
-X-Received: by 2002:a05:620a:424f:b0:7c0:be0e:cb09 with SMTP id af79cd13be357-7c7af113653mr552035685a.7.1744624425611;
-        Mon, 14 Apr 2025 02:53:45 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acaa1bb3513sm890098866b.11.2025.04.14.02.53.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Apr 2025 02:53:45 -0700 (PDT)
-Message-ID: <2b889254-2847-4c6b-a01d-3626332dcb0a@oss.qualcomm.com>
-Date: Mon, 14 Apr 2025 11:53:42 +0200
+	4VHC8WYpl+uLggBA75zLhVV+Fe7u1dbbrYvZ0DxrmwE=; b=ZHx+w8blJmgNpPdx
+	ZuI3JHLeJJ0EpXJT9Ql1p0pzljSctU6IqOmkcWjmvFvL0DaVexXTM/08XA6ySM5o
+	6HG3jxqUIinw+R9LFxJfIsiQrc6OmW+heO8sB77+Eromy1i4v2bJAxWJW4Cj3HcN
+	ckbQYSU2r7BMkKd1v9pl7YtuUXV+rZyJOQ+qUCczugtsY0L7a2Jyut58Rn9W1iak
+	YOvRUtKSc2/iq+enK+jjyQ2ovoYtw+BRn+CV2q3pHfbEXVRnMjPWtyLHX5uAjr1J
+	clJV25yfr36AJRivRDT+/vO9tbJnVIsqHzlZ3R7bvHJGzJYP++Ji7hubdSa4xfWk
+	b4V8Iw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yg8wc2u6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Apr 2025 09:56:54 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53E9ur1R006022
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Apr 2025 09:56:53 GMT
+Received: from [10.204.66.137] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 14 Apr
+ 2025 02:56:46 -0700
+Message-ID: <bb277124-a225-450b-acfe-0acd0f94b263@quicinc.com>
+Date: Mon, 14 Apr 2025 15:26:43 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,118 +65,188 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: Enable TSENS support for QCS615
- SoC
-To: Gaurav Kohli <quic_gkohli@quicinc.com>, amitk@kernel.org,
-        rafael@kernel.org, daniel.lezcano@linaro.org, rui.zhang@intel.com,
-        lukasz.luba@arm.com, robh@kernel.org, krzk+dt@kernel.org,
-        andersson@kernel.org, konradybcio@kernel.org
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_manafm@quicinc.com
-References: <cover.1744292503.git.quic_gkohli@quicinc.com>
- <76e0ce0e312f691abae7ce0fd422f73306166926.1744292503.git.quic_gkohli@quicinc.com>
- <7f893243-572b-4e23-8f2b-ae364d154107@oss.qualcomm.com>
- <46cd600e-b388-4225-a839-a6af76524efe@quicinc.com>
+Subject: Re: [PATCH v3 07/10] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
+ to DP bridge nodes
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <robdclark@gmail.com>, <dmitry.baryshkov@linaro.org>,
+        <sean@poorly.run>, <marijn.suijten@somainline.org>,
+        <andersson@kernel.org>, <robh@kernel.org>, <robh+dt@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andrzej.hajda@intel.com>,
+        <neil.armstrong@linaro.org>, <rfoss@kernel.org>,
+        <Laurent.pinchart@ideasonboard.com>, <jonas@kwiboo.se>,
+        <jernej.skrabec@gmail.com>, <quic_abhinavk@quicinc.com>,
+        <quic_rajeevny@quicinc.com>, <quic_vproddut@quicinc.com>,
+        <quic_jesszhan@quicinc.com>
+References: <20250404115539.1151201-1-quic_amakhija@quicinc.com>
+ <20250404115539.1151201-8-quic_amakhija@quicinc.com>
+ <nxnqwh2mzvnxv5ytwjsyulxr6ct6mhv3z3v6q4ojrjhhclwv2i@55nb56hnwi3y>
+ <0f4eca6c-67df-4730-88b3-a277903deabc@quicinc.com>
+ <wzqct2y67h6bkazxv3se77slsheaw5rspgcrcfjm7ngr5t4alw@nktpqrt5woky>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <46cd600e-b388-4225-a839-a6af76524efe@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 40gBPxsS9KJdqUgNG5ko899XoBi86qEY
-X-Proofpoint-GUID: 40gBPxsS9KJdqUgNG5ko899XoBi86qEY
-X-Authority-Analysis: v=2.4 cv=I+plRMgg c=1 sm=1 tr=0 ts=67fcdb2b cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=PLlEqiOu4NsstTQGM3oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=TjNXssC_j7lpFel5tvFf:22
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
+In-Reply-To: <wzqct2y67h6bkazxv3se77slsheaw5rspgcrcfjm7ngr5t4alw@nktpqrt5woky>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=E9TNpbdl c=1 sm=1 tr=0 ts=67fcdbe7 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=gEfo2CItAAAA:8 a=COk6AnOGAAAA:8 a=8v7svmj6aq3A3Q3kazgA:9
+ a=QEXdDO2ut3YA:10 a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 8Z-j7vyNj4iUSOfE710VIG7ZGQwXoleI
+X-Proofpoint-GUID: 8Z-j7vyNj4iUSOfE710VIG7ZGQwXoleI
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-14_03,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- phishscore=0 adultscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
- bulkscore=0 mlxlogscore=999 clxscore=1015 impostorscore=0 malwarescore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504140071
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ mlxscore=0 bulkscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
+ suspectscore=0 mlxlogscore=999 spamscore=0 priorityscore=1501
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504140072
 
-On 4/14/25 10:28 AM, Gaurav Kohli wrote:
-> thanks for review!
-> 
-> On 4/12/2025 5:13 AM, Konrad Dybcio wrote:
->> On 4/10/25 4:00 PM, Gaurav Kohli wrote:
->>> Add TSENS and thermal devicetree node for QCS615 SoC.
+Hi Dmitry,
+
+On 4/11/2025 1:31 AM, Dmitry Baryshkov wrote:
+> On Thu, Apr 10, 2025 at 06:37:54PM +0530, Ayushi Makhija wrote:
+>> Hi Dmirity/Konard
+>>
+>> On 4/7/2025 1:42 AM, Dmitry Baryshkov wrote:
+>>> On Fri, Apr 04, 2025 at 05:25:36PM +0530, Ayushi Makhija wrote:
+>>>> Add anx7625 DSI to DP bridge device nodes.
+>>>>
+>>>> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 208 ++++++++++++++++++++-
+>>>>  1 file changed, 207 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>>>> index 175f8b1e3b2d..8e784ccf4138 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>>>> @@ -28,6 +28,13 @@ chosen {
+>>>>  		stdout-path = "serial0:115200n8";
+>>>>  	};
+>>>>  
+>>>> +	vph_pwr: vph-pwr-regulator {
+>>>> +		compatible = "regulator-fixed";
+>>>> +		regulator-name = "vph_pwr";
+>>>> +		regulator-always-on;
+>>>> +		regulator-boot-on;
+>>>> +	};
+>>>> +
+>>>>  	vreg_conn_1p8: vreg_conn_1p8 {
+>>>>  		compatible = "regulator-fixed";
+>>>>  		regulator-name = "vreg_conn_1p8";
+>>>> @@ -128,6 +135,30 @@ dp1_connector_in: endpoint {
+>>>>  			};
+>>>>  		};
+>>>>  	};
+>>>> +
+>>>> +	dp-dsi0-connector {
+>>>> +		compatible = "dp-connector";
+>>>> +		label = "DSI0";
+>>>> +		type = "full-size";
+>>>> +
+>>>> +		port {
+>>>> +			dp_dsi0_connector_in: endpoint {
+>>>> +				remote-endpoint = <&dsi2dp_bridge0_out>;
+>>>> +			};
+>>>> +		};
+>>>> +	};
+>>>> +
+>>>> +	dp-dsi1-connector {
+>>>> +		compatible = "dp-connector";
+>>>> +		label = "DSI1";
+>>>> +		type = "full-size";
+>>>> +
+>>>> +		port {
+>>>> +			dp_dsi1_connector_in: endpoint {
+>>>> +				remote-endpoint = <&dsi2dp_bridge1_out>;
+>>>> +			};
+>>>> +		};
+>>>> +	};
+>>>>  };
+>>>>  
+>>>>  &apps_rsc {
+>>>> @@ -517,9 +548,135 @@ &i2c11 {
+>>>>  
+>>>>  &i2c18 {
+>>>>  	clock-frequency = <400000>;
+>>>> -	pinctrl-0 = <&qup_i2c18_default>;
+>>>> +	pinctrl-0 = <&qup_i2c18_default>,
+>>>> +		    <&io_expander_intr_active>,
+>>>> +		    <&io_expander_reset_active>;
 >>>
->>> Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
->>> ---
->>
->> subject: "arm64: dts: qcom: qcs615: ..">  arch/arm64/boot/dts/qcom/qcs615.dtsi | 281 +++++++++++++++++++++++++++
->>>   1 file changed, 281 insertions(+)
+>>> These pinctrl entries should go to the IO expander itself.
 >>>
-> will fix this.
->>> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
->>> index edfb796d8dd3..f0d8aed7da29 100644
->>> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
->>> @@ -3668,6 +3668,17 @@ usb_2_dwc3: usb@a800000 {
->>>                   maximum-speed = "high-speed";
->>>               };
->>>           };
->>> +
->>> +        tsens0: tsens@c222000 {
->>> +            compatible = "qcom,qcs615-tsens", "qcom,tsens-v2";
->>> +            reg = <0x0 0xc263000 0x0 0x1ff>,
->>> +                <0x0 0xc222000 0x0 0x8>;
->> Pad the address part to 8 hex digits with leading zeroes> +            interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
+>>>>  	pinctrl-names = "default";
+>>>> +
+>>>>  	status = "okay";
+>>>> +
+>>>> +	io_expander: gpio@74 {
+>>>> +		compatible = "ti,tca9539";
+>>>> +		reg = <0x74>;
+>>>> +		interrupts-extended = <&tlmm 98 IRQ_TYPE_EDGE_BOTH>;
+>>>> +		gpio-controller;
+>>>> +		#gpio-cells = <2>;
+>>>> +		interrupt-controller;
+>>>> +		#interrupt-cells = <2>;
+>>>> +
+>>>> +		gpio2-hog {
+>>>
+>>> This needs a huuge explanation in the commit message. Otherwise I'd say
+>>> these pins should likely be used by the corresponding anx bridges.
 >>
->> &pdc 26
+>> Thanks, for the review.
 >>
->>> +                    <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
->>
->> &pdc 28
-> we don't want to mark this as wake up capable, so using this approach.
-
-Why not?
-
->>> +
->>> +        cpuss-0-thermal {
->>> +            thermal-sensors = <&tsens0 1>;
->>> +
->>> +            trips {
->>> +
->>> +                trip-point0 {
->>> +                    temperature = <115000>;
->>> +                    hysteresis = <5000>;
->>> +                    type = "passive";
->>> +                };
->>> +
->>> +                trip-point1 {
->>> +                    temperature = <118000>;
->>> +                    hysteresis = <5000>;
->>> +                    type = "passive";
->>> +                };
->>
->> Please drop the passive trip point for the *CPU* tzones, see
->>
+>> Previously, I was referring to the downstream DT and misunderstood the use of gpio-hog.
+>> After reading the schematic, I realized that gpio2, gpio3, gpio10, and gpio11 are all input pins
+>> to the IO expander TC9539. We have already configured gpio2 and gpio10 as interrupts in the
+>> ANX7625 bridges, so the gpio-hog is not required. It is working without the gpio-hog configuration.
 > 
-> we are using trip-point 0 for cpu idle injection mitigation which i will add in subsequent patches, if you are fine i will add cpu idle injection cooling map in this series only ?
+> Please make sure that there are pinctrl entries for all pins.
+> 
 
-The folks working on qcs9xxx have made this point too, but I'm lukewarm
-on duplicating meaningless dt description everywhere. I've asked them to
-conduct some measurements on whether random default settings (that would
-be preset in the driver and require no additional dt fluff) show any
-significant difference - if not, we can save up on boilerplate.
+Thanks, for the review.
 
-So let's wait to hear back from them on this.
+While declaring the pinctrl entries inside the io_expander node, I am getting below error while checking the DTBS check against DT-binding.
 
->> commit 06eadce936971dd11279e53b6dfb151804137836
->> ("arm64: dts: qcom: x1e80100: Drop unused passive thermal trip points for CPU")
->>
->> and add a single critical point instead, see
->>
-> As critical shutdown is already supported by hardware, so we are not defining here.
+Error : /local/mnt/workspace/amakhija/linux_next_11042025/linux/arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: gpio@74: 'dsi0-int-pin-state', 'dsi1-int-pin-state' do not match any of the regexes:
+        '^(hog-[0-9]+|.+-hog(-[0-9]+)?)$', 'pinctrl-[0-9]+' from schema $id: http://devicetree.org/schemas/gpio/gpio-pca95xx.yaml#
 
-The hardware critical shutdown will literally pull the plug out with the OS
-having no chance to sync the filesystem etc.
+        io_expander: gpio@74 {
+                compatible = "ti,tca9539";
+                reg = <0x74>;
+                interrupts-extended = <&tlmm 98 IRQ_TYPE_EDGE_BOTH>;
+                gpio-controller;
+                #gpio-cells = <2>;
+                interrupt-controller;
+                #interrupt-cells = <2>;
 
-Please define one that's like 5 degC below the hardware limit, so that the
-operating system can try to take some steps to avoid data loss
+                pinctrl-0 = <&io_expander_intr_active>,
+                            <&io_expander_reset_active>;
+                pinctrl-names = "default";
 
-Konrad
+                dsi0_int_pin: dsi0-int-pin-state {
+                        pins = "gpio2";
+                        input-enable;
+                        bias-disable;
+                };
+
+                dsi1_int_pin: dsi1-int-pin-state {
+                        pins = "gpio10";
+                        input-enable;
+                        bias-disable;
+                };
+
+        };
+
+I couldn't find any devicetree example of tca9539 which is using pinctrl. The gpio-pca95xx.yaml DT binding does not match with any regex of the patterns properties.
+
+Thanks,
+Ayushi
 
