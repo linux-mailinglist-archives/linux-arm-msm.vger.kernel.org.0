@@ -1,318 +1,307 @@
-Return-Path: <linux-arm-msm+bounces-54265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D244A88C60
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 21:43:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FC95A88C6B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 21:48:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 31CC23B27EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 19:42:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AEC321898FDD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 19:48:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBAD04C74;
-	Mon, 14 Apr 2025 19:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 476511C5F35;
+	Mon, 14 Apr 2025 19:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ibxITOfz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bBLFGxvY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E771C1C5D50
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 19:42:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E201AAA1A;
+	Mon, 14 Apr 2025 19:48:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744659780; cv=none; b=tK98d9IDsqfuR/mlEmu5pZ2pDYCKs8b8aHfqdP2eZPtjbkTRrxPyUpmO5TNC9nTmNG4gtOQ7NzFIhPainCIsN0/PST8MI8h9iteTKcOWAn/Ur7P0rrfzhmI9LyXgIi7tV3nB/5u2qJAtT9W3A6KvzYpruCcf0jDG7PmOQCEXJ/4=
+	t=1744660107; cv=none; b=iWRQNM1hs1NeeDzGIJJWsqVb9j0O7ME5b0WfPN9zyIEVY/QXnMW7tNFAEemrEa6tkPnjfJTAdZ9RwKyPYB4Mhj1fHUSAMUaf9UV+G2pSK50iMFib1Z2EVUjW53zWxGrI3EksVA1wvTaFRAz6RfaDrv47Tcz/HTfEw34hK5vCkcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744659780; c=relaxed/simple;
-	bh=o4fgBswOSkBHLviYU+653N02TTLhxlY+0/hgjdYZiy0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EGGJ/d5DZn3+UChsy2pgEk5AMrqUnNRrPVRbhZb+RQ1QJrO3IcLYcWmaNOYUUOgXBJ2nPvmu282pxEYMfbK+N4Tt0x6vLWgRcDB3ikgTiszsvWl4Gwe0/TNvmt6+GiWVkOyKJyayjRcmz+ep1crYMwNKyFfB/+6YPKOOem0k9k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ibxITOfz; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1744659777;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=pT5r9iBLZj4GusFqEfMScidmqAeBKtc+LdH5uu6fGeA=;
-	b=ibxITOfzIp8oIntCR7HO48tPr0YyCyGxOIhWnY8kJDHKqO8/Z6qkMA/E0GWNPGM+gHTPMc
-	YSaqsZdYtzHo+qy496rcdoIpgVdPhGSMImx4KHUprMqmLDNU8zeL2r7f2jVmvc20S76Pxb
-	hHvmQH81XI4zM9c9cU5YCEtLFBcwWcQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-327-5LmGuCU1O3irhl_4NYuO0g-1; Mon, 14 Apr 2025 15:42:53 -0400
-X-MC-Unique: 5LmGuCU1O3irhl_4NYuO0g-1
-X-Mimecast-MFC-AGG-ID: 5LmGuCU1O3irhl_4NYuO0g_1744659772
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-43e9b0fd00cso23709965e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 12:42:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744659772; x=1745264572;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pT5r9iBLZj4GusFqEfMScidmqAeBKtc+LdH5uu6fGeA=;
-        b=pR8QATjVt0rq25m3Z27v7W14BPF5B26o/9mMTL4eq/VrYykiVYn+lLqfa9InIfzOzu
-         ZWGN48n/3Cp9OVCArYLoEPrF7CK0LYY9PkHazmZXXLXmS0AoyR+J32X+Ce39NPrMapPc
-         V4ww3UDh9xCCFkmW9idiTR9B7+OQ9mlqyYtIDz2vJGm/CmIl+x+UOGJaSeOp3CWF6+ct
-         5VGouaG3aPm5hh5DlKQ/Xp6x2bfXIDk+2YFB5Dd//uQVvK/xDq6fXpvaou9/asgS0c33
-         qPZzt6XoTxkhGXSQza5vdDCWrtHiTy063RecT6JUqO0CSpP23QYnf6WG1LFRC74vJG5j
-         nDVA==
-X-Forwarded-Encrypted: i=1; AJvYcCUjAeiJ1jJPUvGgople2LFGIAhB2I3rD2blYzSTFrM31X2jH5fbChPoO5aEDX9z6Z+CaEaQVVSMLEcKSghN@vger.kernel.org
-X-Gm-Message-State: AOJu0YwkiHDbS1XBiNUSYwl8wGexL8tTfD7Xd/WZ6zNbYkAW7nLC1Z/W
-	aSdCL1ZNuvQ8P96bteebpajxfCHVVBWjs6Nb7tGK65iBZnkEyGm1z7XVe/1hSJNFDfYY2bVhwug
-	yqhCSW+wLAXqhDT0JeikcCd06R3EOok5qQYt0V9+jDq2zEewU9VY6UI/goobJKSg=
-X-Gm-Gg: ASbGncsmrbBV3gG4OP+GBNa2E+d1dnmfB1fb8nt9oG/iZ0cc/Q19o7RbCkxpVmveS83
-	huOVbO/vTH2GZbDKkKUE2covDzTRbRBmS2UzLkcyRAFAix1ETVo+FQNmSEhK1KibbwsM6D15qbp
-	lHIgkWGevdKF3pyDZTfeDlXM3C6+jFXlL9if811FkO8If5+zeb1zHy9aWakqX/uZJ/vW87sC/x8
-	ygPSSWp8zNdwEyFGJ70dMd8uInf4N3WdnDCZu0QQUe3Rf+tk1NlfdqejUAVz4Y/YytDzh6RXwSq
-	+rph3BHEjNO/LMhIukfBT3TGMjQ4FTbf/BZMMscFpJTZ5xqrod0/8K8anYwCafNcUcKWN6GGt4d
-	dq4GpcaTKa+rBmYv16k7jR2mqtUmbw35OrZLpFw==
-X-Received: by 2002:a05:600c:35c5:b0:439:4b23:9e8e with SMTP id 5b1f17b1804b1-43f99889ad0mr5120765e9.3.1744659772213;
-        Mon, 14 Apr 2025 12:42:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLSLcGUzHCiCgpLJHBLnwWCeZhh7zTLZd+w+RUgzE+h97venDG0rJVKuVFsw3uE6fcozV9/A==
-X-Received: by 2002:a05:600c:35c5:b0:439:4b23:9e8e with SMTP id 5b1f17b1804b1-43f99889ad0mr5120255e9.3.1744659771679;
-        Mon, 14 Apr 2025 12:42:51 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f02:2900:f54f:bad7:c5f4:9404? (p200300d82f022900f54fbad7c5f49404.dip0.t-ipconnect.de. [2003:d8:2f02:2900:f54f:bad7:c5f4:9404])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43f20626c19sm192945175e9.15.2025.04.14.12.42.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Apr 2025 12:42:51 -0700 (PDT)
-Message-ID: <103b8afc-96e3-4a04-b36c-9a8154296426@redhat.com>
-Date: Mon, 14 Apr 2025 21:42:48 +0200
+	s=arc-20240116; t=1744660107; c=relaxed/simple;
+	bh=wCrJSz5d6zcJhiE7u2I6anLOnopV1Cz4WW9gUgUz2RI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=p5ezpwt9//D/K1Uwx9yXChYJ6YndsOUHSe5XuV4ObpUtMflJ54f+WjNfP5u6y5A6qw71Qi0QgPl3YfA1dZIqXNRkGgBEPRU/8N6suhpzwsEWf3/QpKH9hGtvxUKk0f9Y7W5enXfR6j34iPcMXNbr1hnVZQ65RBOsirooWkILRpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bBLFGxvY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53EGPjcQ018251;
+	Mon, 14 Apr 2025 19:48:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2JmiBkgI+S5m1pc4UJrqkB0SlSpYuXCuRIUIL9IhoQs=; b=bBLFGxvY0x8J/40F
+	hNc0oiwk6Qvzt0YOtvyOQfOnmA1D5JBksocXgtN12TEAQmkQQAHXdz8fiHiJYBW+
+	eiX5GWxTZLPNRwalVCYh5v/IULFrZPC/uvkdhq5iKzshk+ZaK43U9A3RdoXN6UHs
+	WjHRhd+mQ7WwmgixbuYoerFuOuH598naa0N6dHLcqoAO4HFhkybiEBTFQILxZYtj
+	K/nxSVNTCZpKpObtesQPOC+d6axdeLg2ttgztWR4YKXfnRabgZk5epqV/dM01ArD
+	9lM/6X5yumEF7SjKh1CbGsDnGkIE8PkiGtZSQJyvqfbDVeH0C1C7DdWKcz22oIMk
+	K/CCjQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yfgjdn77-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Apr 2025 19:48:17 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53EJmG5F004601
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Apr 2025 19:48:16 GMT
+Received: from [10.216.23.135] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 14 Apr
+ 2025 12:48:12 -0700
+Message-ID: <5b50ad93-0885-d908-fd13-3a597966115c@quicinc.com>
+Date: Tue, 15 Apr 2025 01:18:09 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/9] KVM: guest_memfd: Handle in-place shared memory as
- guest_memfd backed memory
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
- pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
- vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com
-References: <20250318161823.4005529-1-tabba@google.com>
- <20250318161823.4005529-5-tabba@google.com>
- <8ebc66ae-5f37-44c0-884b-564a65467fe4@redhat.com>
- <CA+EHjTwjShH8vw-YsSmPk0yNY3akLFT3R9COtWLVgLozT_G7nA@mail.gmail.com>
-From: David Hildenbrand <david@redhat.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH RFC v5 0/8] media: qcom: iris: re-organize catalog & add
+ support for SM8650
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <CA+EHjTwjShH8vw-YsSmPk0yNY3akLFT3R9COtWLVgLozT_G7nA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: <neil.armstrong@linaro.org>, Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel
+	<p.zabel@pengutronix.de>
+CC: <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        "Bryan
+ O'Donoghue" <bryan.odonoghue@linaro.org>
+References: <20250410-topic-sm8x50-upstream-iris-catalog-v5-0-44a431574c25@linaro.org>
+ <2740b178-34cc-4b95-a8da-7e6862cabc92@linaro.org>
+ <96953447-cff5-98d4-053e-8cc31778849c@quicinc.com>
+ <eb469388-d2f9-447a-aa80-41795991a4ad@linaro.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <eb469388-d2f9-447a-aa80-41795991a4ad@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: llrJcvs5PtxiHI_qY7o-9hH3G_UAwiEL
+X-Proofpoint-ORIG-GUID: llrJcvs5PtxiHI_qY7o-9hH3G_UAwiEL
+X-Authority-Analysis: v=2.4 cv=Cve/cm4D c=1 sm=1 tr=0 ts=67fd6681 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=Vq-1Ow0QjQc1Q7wVqY8A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-14_07,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0
+ suspectscore=0 impostorscore=0 mlxlogscore=999 mlxscore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504140144
 
-On 14.04.25 18:03, Fuad Tabba wrote:
-> Hi David,
+
+On 4/14/2025 5:39 PM, neil.armstrong@linaro.org wrote:
+> Hi,
 > 
-> On Mon, 14 Apr 2025 at 12:51, David Hildenbrand <david@redhat.com> wrote:
+> On 14/04/2025 12:54, Vikash Garodia wrote:
+>> Hi Neil,
 >>
->> On 18.03.25 17:18, Fuad Tabba wrote:
->>> For VMs that allow sharing guest_memfd backed memory in-place,
->>> handle that memory the same as "private" guest_memfd memory. This
->>> means that faulting that memory in the host or in the guest will
->>> go through the guest_memfd subsystem.
+>> On 4/14/2025 1:05 PM, Neil Armstrong wrote:
+>>> Hi Vikash, Dikshita,
 >>>
->>> Note that the word "private" in the name of the function
->>> kvm_mem_is_private() doesn't necessarily indicate that the memory
->>> isn't shared, but is due to the history and evolution of
->>> guest_memfd and the various names it has received. In effect,
->>> this function is used to multiplex between the path of a normal
->>> page fault and the path of a guest_memfd backed page fault.
+>>> On 10/04/2025 18:29, Neil Armstrong wrote:
+>>>> Re-organize the platform support core into a gen1 catalog C file
+>>>> declaring common platform structure and include platform headers
+>>>> containing platform specific entries and iris_platform_data
+>>>> structure.
+>>>>
+>>>> The goal is to share most of the structure while having
+>>>> clear and separate per-SoC catalog files.
+>>>>
+>>>> The organization is based on the curent drm/msm dpu1 catalog
+>>>> entries.
 >>>
->>> Signed-off-by: Fuad Tabba <tabba@google.com>
->>> ---
->>>    include/linux/kvm_host.h | 3 ++-
->>>    1 file changed, 2 insertions(+), 1 deletion(-)
+>>> Any feedback on this patchset ?
+>> Myself and Dikshita went through the approach you are bringing here, let me
+>> update some context here:
+>> - sm8550, sm8650, sm8775p, qcs8300 are all irisv3, while qcs8300 is the scaled
+>> down variant i.e have 2 PIPE vs others having 4. Similarly there are other
+>> irisv3 having 1 pipe as well.
+>> - With above variations, firmware and instance caps would change for the variant
+>> SOCs.
+>> - Above these, few(less) bindings/connections specific delta would be there,
+>> like there is reset delta in sm8550 and sm8650.
+>>
+>> Given above, xxx_gen1.c and xxx_gen2.c can have all binding specific tables and
+>> SOC platform data, i.e sm8650_data (for sm8650). On top of this, individual SOC
+>> specific .c file can have any delta, from xxx_gen1/2.c) like reset table or
+>> preset register table, etc and export these delta structs in xxx_gen1.c or
+>> xxx_gen2.c.
+>>
+>> Going with above approach, sm8650.c would have only one reset table for now.
+>> Later if any delta is identified, the same can be added in it. All other common
+>> structs, can reside in xxx_gen2.c for now.
+> 
+> Thanks for reviewing, but...
+> Sorry I don't understand what you and Dmitry are asking me...
+> 
+> If I try really hard, you would like to have:
+> 
+> iris_catalog_sm8550.c
+> - iris_set_sm8550_preset_registers
+> - sm8550_icc_table
+> - sm8550_clk_reset_table
+> - sm8550_bw_table_dec
+> - sm8550_pmdomain_table
+> - sm8550_opp_pd_table
+> - sm8550_clk_table
+Move or rename existing 8550.c as xxx_gen2.c. This is with the existing
+assumption that everything under 8550.c is common for all gen2 to come in future.
+> 
+> iris_catalog_sm8650.c
+> - sm8650_clk_reset_table
+> - sm8650_controller_reset_table
+yes, since reset is the only delta.
+> 
+> iris_catalog_gen2.c
+> - iris_hfi_gen2_command_ops_init
+> - iris_hfi_gen2_response_ops_init
+> ...
+> - sm8550_dec_op_int_buf_tbl
+> 
+> and:
+> - struct iris_platform_data sm8550_data
+> - struct iris_platform_data sm8650_data
+all this goes to xxx_gen2.c as well.
+
+> using data from iris_catalog_sm8550.c & iris_catalog_sm8550.c
+> 
+> So this is basically what I _already_ propose except
+> you move data in separate .c files for no reasons,
+> please explain why you absolutely want distinct .c
+> files per SoC. We are no more in the 1990's and we camn
+> defintely have big .c files.
+Its not about the size of file alone, it is easy to understand later what would
+be the delta in the SOCs and what would common. For ex, just navigating through
+sm8650.c, anyone can comment that reset is the delta.
+> 
+> And we still have a big issue, how to get the:
+> - ARRAY_SIZE(sm8550_clk_reset_table)
+> - ARRAY_SIZE(sm8550_bw_table_dec)
+> - ARRAY_SIZE(sm8550_pmdomain_table)
+> ...
+> 
+> since they are declared in a separate .c file and you
+> need a compile-time const value to fill all the _size
+> attribute in iris_platform_data.
+I have not tries this, but isn't extern-ing the soc structs (in your case reset
+tables) into xxx_gen2.c enough here ? Also i think the tables you are pointing
+here, lies in the xxx_gen2.c only, so i am sure above ones would not be an issue
+at all. The only delta struct is reset table, lets see if extern helps.
+
+Regards,
+Vikash
+> 
+> So I recall my goal, I just want to add sm8650 support,
+> and I'm not the owner of this driver, and I'm really happy
+> to help, but giving me random ideas to solve your problem
+> doesn't help us at all going forward.
+> 
+> Neil
+> 
+>>
+>> Regards,
+>> Vikash
 >>>
->>> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
->>> index 601bbcaa5e41..3d5595a71a2a 100644
->>> --- a/include/linux/kvm_host.h
->>> +++ b/include/linux/kvm_host.h
->>> @@ -2521,7 +2521,8 @@ static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
->>>    #else
->>>    static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
->>>    {
->>> -     return false;
->>> +     return kvm_arch_gmem_supports_shared_mem(kvm) &&
->>> +            kvm_slot_can_be_private(gfn_to_memslot(kvm, gfn));
->>>    }
->>>    #endif /* CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES */
+>>> Thanks,
+>>> Neil
 >>>
->>
->> I've been thinking long about this, and was wondering if we should instead
->> clean up the code to decouple the "private" from gmem handling first.
->>
->> I know, this was already discussed a couple of times, but faking that
->> shared memory is private looks odd.
+>>>>
+>>>> Add support for the IRIS accelerator for the SM8650
+>>>> platform, which uses the iris33 hardware.
+>>>>
+>>>> The vpu33 requires a different reset & poweroff sequence
+>>>> in order to properly get out of runtime suspend.
+>>>>
+>>>> Follow-up of [1]:
+>>>> https://lore.kernel.org/all/20250409-topic-sm8x50-iris-v10-v4-0-40e411594285@linaro.org/
+>>>>
+>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>> ---
+>>>> Changes in v4:
+>>>> - Reorganized into catalog, rebased sm8650 support on top
+>>>> - Link to v4:
+>>>> https://lore.kernel.org/all/20250409-topic-sm8x50-iris-v10-v4-0-40e411594285@linaro.org
+>>>>
+>>>> Changes in v4:
+>>>> - collected tags
+>>>> - un-split power_off in vpu3x
+>>>> - removed useless function defines
+>>>> - added back vpu3x disappeared rename commit
+>>>> - Link to v3:
+>>>> https://lore.kernel.org/r/20250407-topic-sm8x50-iris-v10-v3-0-63569f6d04aa@linaro.org
+>>>>
+>>>> Changes in v3:
+>>>> - Collected review tags
+>>>> - Removed bulky reset_controller ops
+>>>> - Removed iris_vpu_power_off_controller split
+>>>> - Link to v2:
+>>>> https://lore.kernel.org/r/20250305-topic-sm8x50-iris-v10-v2-0-bd65a3fc099e@linaro.org
+>>>>
+>>>> Changes in v2:
+>>>> - Collected bindings review
+>>>> - Reworked rest handling by adding a secondary optional table to be used by
+>>>> controller poweroff
+>>>> - Reworked power_off_controller to be reused and extended by vpu33 support
+>>>> - Removed useless and unneeded vpu33 init
+>>>> - Moved vpu33 into vpu3x files to reuse code from vpu3
+>>>> - Moved sm8650 data table into sm8550
+>>>> - Link to v1:
+>>>> https://lore.kernel.org/r/20250225-topic-sm8x50-iris-v10-v1-0-128ef05d9665@linaro.org
+>>>>
+>>>> ---
+>>>> Neil Armstrong (8):
+>>>>         media: qcom: iris: move sm8250 to gen1 catalog
+>>>>         media: qcom: iris: move sm8550 to gen2 catalog
+>>>>         dt-bindings: media: qcom,sm8550-iris: document SM8650 IRIS accelerator
+>>>>         media: platform: qcom/iris: add power_off_controller to vpu_ops
+>>>>         media: platform: qcom/iris: introduce optional controller_rst_tbl
+>>>>         media: platform: qcom/iris: rename iris_vpu3 to iris_vpu3x
+>>>>         media: platform: qcom/iris: add support for vpu33
+>>>>         media: platform: qcom/iris: add sm8650 support
+>>>>
+>>>>    .../bindings/media/qcom,sm8550-iris.yaml           |  33 ++-
+>>>>    drivers/media/platform/qcom/iris/Makefile          |   6 +-
+>>>>    .../media/platform/qcom/iris/iris_catalog_gen1.c   |  83 +++++++
+>>>>    ...{iris_platform_sm8550.c => iris_catalog_gen2.c} |  85 +------
+>>>>    ...ris_platform_sm8250.c => iris_catalog_sm8250.h} |  80 +-----
+>>>>    .../media/platform/qcom/iris/iris_catalog_sm8550.h |  91 +++++++
+>>>>    .../media/platform/qcom/iris/iris_catalog_sm8650.h |  68 +++++
+>>>>    drivers/media/platform/qcom/iris/iris_core.h       |   1 +
+>>>>    .../platform/qcom/iris/iris_platform_common.h      |   3 +
+>>>>    drivers/media/platform/qcom/iris/iris_probe.c      |  43 +++-
+>>>>    drivers/media/platform/qcom/iris/iris_vpu2.c       |   1 +
+>>>>    drivers/media/platform/qcom/iris/iris_vpu3.c       | 122 ---------
+>>>>    drivers/media/platform/qcom/iris/iris_vpu3x.c      | 275
+>>>> +++++++++++++++++++++
+>>>>    drivers/media/platform/qcom/iris/iris_vpu_common.c |   4 +-
+>>>>    drivers/media/platform/qcom/iris/iris_vpu_common.h |   3 +
+>>>>    15 files changed, 598 insertions(+), 300 deletions(-)
+>>>> ---
+>>>> base-commit: 2bdde620f7f2bff2ff1cb7dc166859eaa0c78a7c
+>>>> change-id: 20250410-topic-sm8x50-upstream-iris-catalog-3e2e4a033d6f
+>>>>
+>>>> Best regards,
+>>>
 > 
-> I agree. I've been wanting to do that as part of a separate series,
-> since renaming discussions sometimes tend to take a disproportionate
-> amount of time.But the confusion the current naming (and overloading
-> of terms) is causing is probably worse.
-
-Exactly my thoughts. The cleanup diff I was able to come up with is not 
-too crazy, so it feels feasible to just include the cleanups as a 
-preparation for mmap() where we introduce the concept of shared memory 
-in guest_memfd.
-
-> 
->>
->> I played with the code to star cleaning this up. I ended up with the following
->> gmem-terminology  cleanup patches (not even compile tested)
->>
->> KVM: rename CONFIG_KVM_GENERIC_PRIVATE_MEM to CONFIG_KVM_GENERIC_GMEM_POPULATE
->> KVM: rename CONFIG_KVM_PRIVATE_MEM to CONFIG_KVM_GMEM
->> KVM: rename kvm_arch_has_private_mem() to kvm_arch_supports_gmem()
->> KVM: x86: rename kvm->arch.has_private_mem to kvm->arch.supports_gmem
->> KVM: rename kvm_slot_can_be_private() to kvm_slot_has_gmem()
->> KVM: x86: generalize private fault lookups to "gmem" fault lookups
->>
->> https://github.com/davidhildenbrand/linux/tree/gmem_shared_prep
->>
->> On top of that, I was wondering if we could look into doing something like
->> the following. It would also allow for pulling pages out of gmem for
->> existing SW-protected VMs once they enable shared memory for GMEM IIUC.
->>
->>
->> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
->> index 08eebd24a0e18..6f878cab0f466 100644
->> --- a/arch/x86/kvm/mmu/mmu.c
->> +++ b/arch/x86/kvm/mmu/mmu.c
->> @@ -4495,11 +4495,6 @@ static int kvm_mmu_faultin_pfn_gmem(struct kvm_vcpu *vcpu,
->>    {
->>           int max_order, r;
->>
->> -       if (!kvm_slot_has_gmem(fault->slot)) {
->> -               kvm_mmu_prepare_memory_fault_exit(vcpu, fault);
->> -               return -EFAULT;
->> -       }
->> -
->>           r = kvm_gmem_get_pfn(vcpu->kvm, fault->slot, fault->gfn, &fault->pfn,
->>                                &fault->refcounted_page, &max_order);
->>           if (r) {
->> @@ -4518,8 +4513,19 @@ static int __kvm_mmu_faultin_pfn(struct kvm_vcpu *vcpu,
->>                                    struct kvm_page_fault *fault)
->>    {
->>           unsigned int foll = fault->write ? FOLL_WRITE : 0;
->> +       bool use_gmem = false;
->> +
->> +       if (fault->is_private) {
->> +               if (!kvm_slot_has_gmem(fault->slot)) {
->> +                       kvm_mmu_prepare_memory_fault_exit(vcpu, fault);
->> +                       return -EFAULT;
->> +               }
->> +               use_gmem = true;
->> +       } else if (kvm_slot_has_gmem_with_shared(fault->slot)) {
->> +               use_gmem = true;
->> +       }
->>
->> -       if (fault->is_private)
->> +       if (use_gmem)
->>                   return kvm_mmu_faultin_pfn_gmem(vcpu, fault);
->>
->>           foll |= FOLL_NOWAIT;
->>
->>
->> That is, we'd not claim that things are private when they are not, but instead
->> teach the code about shared memory coming from gmem.
->>
->> There might be some more missing, just throwing it out there if I am completely off.
-> 
-> For me these changes seem to be reasonable all in all. I might want to
-> suggest a couple of modifications, but I guess the bigger question is
-> what the KVM maintainers and guest_memfd's main contributors think.
-
-I'm afraid we won't get a reply before we officially send it ...
-
-> 
-> Also, how do you suggest we go about this? Send out a separate series
-> first, before continuing with the mapping series? Or have it all as
-> one big series? It could be something to add to the agenda for
-> Thursday.
-
-... and ideally it would be part of this series. After all, this series 
-shrunk a bit :)
-
-Feel free to use my commits when helpful: they are still missing 
-descriptions and probably have other issues. Feel free to turn my SOB 
-into a Co-developed-by+SOB and make yourself the author.
-
-Alternatively, let me know and I can polish them up and we can discuss 
-what you have in mind (either here or elsewhere).
-
-I'd suggest we go full-steam on this series to finally get it over the 
-finish line :)
-
--- 
-Cheers,
-
-David / dhildenb
-
 
