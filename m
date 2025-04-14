@@ -1,414 +1,711 @@
-Return-Path: <linux-arm-msm+bounces-54149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E561A8777D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 07:40:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 988A9A8778F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 07:52:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5ECDD16F37E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 05:40:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F0FE3ADCC2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 05:52:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB39E1A3161;
-	Mon, 14 Apr 2025 05:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAEC219DFA7;
+	Mon, 14 Apr 2025 05:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LvBqoxuv"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="U6Kudtpm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5321A9B4C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 05:39:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACC97E9;
+	Mon, 14 Apr 2025 05:52:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744609183; cv=none; b=pCfAfO/pLGmmhHrUnHt1RlgJRZUZUCVHuPZPqndaaju8Z4MRdkzUPOtsx/Hbc2D8GhEnJLgnck6J64kSlF6g26IadjxSygwFs412oDj/jbeEsOzrFR++g0T2+wGtdyIVJlmWcjfJKvyu3RzewA68dFjlnB+afNY6TFHKB6rDoZc=
+	t=1744609937; cv=none; b=rWnN/ItOyuP0L+HogQJ+nvHri/ac7Uk82I2KfIuBgGuNgRRhxtn+zRQW1C5wz2Gou+cEhq28R/Yiw1HbABKD+NidunnAGQ9JLnJvQVS8nVAIJbII99M2E15WaxXraTg6nxoVUg163jyzZrQb4swP7xc2tWC1yGwVHacAthq/aXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744609183; c=relaxed/simple;
-	bh=WC5wKRvcYuSwXR7Izdx25mVC4LSMyYyIUrLgoxUWBas=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XCMS8RSCapNbAH+U1yWTisaDUrpaXFe1ZiKUFWkSRRv7yzcdtpQaTpHg433PgSSO+3Rbg6VUYw6DMHvA9m+Iy0B1yvEX6PRo5AoHz0WRDnrdOYkLKpUM+VlYVKNYIhfylXxGvnZHH9gO8BN5BsYl2Fznxjert9r8SrhgCTU225Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LvBqoxuv; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53DMaaq7032718
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 05:39:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1744609937; c=relaxed/simple;
+	bh=0HLw5evvLLLL09+ljNjFdTaRV2ag17pxvhr7tKQ+QJE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=XhqE6BUw5YsU+uLc0p2UmbUZP2AGlr2mrBlB2XlzUFOa7P0mzfFuoxU4GnUmbKQHnZ1BulWIHmhqR3oCbCwyO8Y/1TPKMN0QUQZcNpVFBpsoY0QX5QwXgeDYHj6zeV0MP1u0xR79hmYQNe4SI9qzXdpBebiuNm37AKsFkfZ8X28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=U6Kudtpm; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53DLWZgx003451;
+	Mon, 14 Apr 2025 05:52:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qG2kUNarrqP9lMavMts7qNZl8UluSE4dZqY7JK6NYfE=; b=LvBqoxuvI8ERBn51
-	JxfazQMKKM16rrYj1km848N82F8uKd4XyvjKF+TZrNDFu1C4JUTHK8Q5FM4U9u0r
-	glZTk5yZu1e4sIJPS5kMkBhFsUlQgZHLCnEuOQcetGl+StgX/zaPuW7aS85N+MDP
-	TturSPY3D6PSUKnFWuqC+XGrlrTapeXgGZ746f9Sk3x+J0Yy+6W9T8pjFi0KRX3H
-	oXmNRhuO3+L5pCdLoZCCXNlHJ2/t+YGmF0PM+MhB2BTurdotL2ihvEMdmH4ZLi48
-	vZOJrB6Nb9sQA8AOpLDzbBSj9Iu4aEhQ4I0pP2LFwIB60BUHaifZSHmxX9aGquyu
-	hyF54Q==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ydhq3nax-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 05:39:40 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-6c8f99fef10so4065268a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Apr 2025 22:39:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744609179; x=1745213979;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qG2kUNarrqP9lMavMts7qNZl8UluSE4dZqY7JK6NYfE=;
-        b=OlTQveeMR/+f1QEc0rFd8rDs1yQyVk/4tLEOx8YiLn/BFEt6QygM7C6myfFklgk8TC
-         Yd81zwhinvYztTsR1X4x2fLzsA6SQHyqEtGcyYX1nlTEvwC/925xIIunfsNAd//ppaOt
-         +/aC2AMvzPCzblu7SYN7SYB9lFLdkqGZGivRsOqohslR+GpwRCGkWQD6t5wkkRkqyMMY
-         2ZuCN3fRwXDMdKKMZ2JyT1FDNG40V/La9WwGqAvxZmlPKG/8DTib9xdGwnHUOpRiOOF+
-         sF1tK2IMP57eO4kv3thfhI9/Uh4b/2AtkFRM4c8tVKVh960CEohwVlF9Nvr3YIF8PUHh
-         Zjtw==
-X-Gm-Message-State: AOJu0Yx3YwWpolFo+zjHpOF9SRo7bRHfACy3/WIkdFGpZov4WAiW3eq3
-	b6I0ZFJUKIn5wGZSaahwc8ZsCmtV87i60/6pgONZ7ydR9pQ2HBpQd5WorVvBzOm4R1QE3XpMyem
-	ldy5tuwiZPNRrDekNEa+OKM+XJwpe3dMNx+m09UJ8Ied8byp3fBCb95bEflQmETb4
-X-Gm-Gg: ASbGncuiWT19uQDhylj/TprqZ9FHQP1DOcl12eSXJg57ZFEfFdPaqqxfK5Nsq75BU17
-	+/O4VUIUyQNRyJdos0u8df2+L9LuzaSDipEAp2RGoks5OUO4MXCWHO865xfYa+ujMqo7wBB1hHf
-	Sl4cAyAt4dxmZUKqM1VdIjJvpRE0bqvzIitrQWBjQt7S1WEpDUyVdY/olmgm1rBNkk8A4hJTqGf
-	a6D2XGTZp2tHMPIOYFijveY0HixXCrpqN9qXMvo+FPm4FpSDQwOGFDEqli55VB1+ry8ozClkFIN
-	qFiQeKy0AWF9kTQsYMCoYYZ6SBcoRCrs34ShyUZ/DOpfSEA=
-X-Received: by 2002:a05:6a20:d525:b0:1f5:7873:304b with SMTP id adf61e73a8af0-2017996fbfdmr14224115637.26.1744609179268;
-        Sun, 13 Apr 2025 22:39:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF7i2E+yUtPthN8Zj0a3CulLjT99OAsG6h/Rr0m+qBzSGvFBz+WVcNzfzjKGoti/SP51/cpqw==
-X-Received: by 2002:a05:6a20:d525:b0:1f5:7873:304b with SMTP id adf61e73a8af0-2017996fbfdmr14224088637.26.1744609178723;
-        Sun, 13 Apr 2025 22:39:38 -0700 (PDT)
-Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73bd23332d2sm5824559b3a.159.2025.04.13.22.39.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Apr 2025 22:39:38 -0700 (PDT)
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Date: Mon, 14 Apr 2025 11:09:14 +0530
-Subject: [PATCH v2 3/3] PCI: qcom: Add support for multi-root port
+	AIK+KrGNsD7cR0tiZMxs+mjT9s4W1uDmtONyVvhCkZ0=; b=U6KudtpmoXG8DCCH
+	3EB8YR3/E1L4ML0/SOUy5qDRGcbjuK91DPowxFWvxPZiQGiQiFT/b2rAJ/Cd4VoG
+	RIwfVG9UTU338qQ95dy8ok/UpITlP07bw1QA9jFh9XkxpH0EVTG0zRjDjZDzVPDh
+	FpO60GQFCbDZoJIHgMmOD5FLYCGLnA0LsOXcS6SH6D8gnGz9+CwYcxGZE175O0Xi
+	ehBnGzrprMYDRtsvSOvy5r/1r3MVs/fkiOYH2o3VJdDEvxo2XUtnzLqKxUt+d1GF
+	eGRxzXtyHDF9NTIQTATDAcE28KBVfukflGZYVewao1CATCbPi+4vCQesGRscg3b5
+	YWR7PA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygd6bf9f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Apr 2025 05:52:06 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53E5q5mA008513
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Apr 2025 05:52:05 GMT
+Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 13 Apr
+ 2025 22:52:01 -0700
+Message-ID: <ceace8d0-d8ec-4010-a65f-bec36833c16f@quicinc.com>
+Date: Mon, 14 Apr 2025 11:21:59 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/3] i3c: master: Add Qualcomm I3C controller driver
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        <alexandre.belloni@bootlin.com>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <jarkko.nikula@linux.intel.com>, <linux-i3c@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: <andersson@kernel.org>, <konradybcio@kernel.org>
+References: <20250411113516.87958-1-quic_msavaliy@quicinc.com>
+ <20250411113516.87958-3-quic_msavaliy@quicinc.com>
+ <a1e85e39-4be6-4793-aee4-d990e1e46bdb@oss.qualcomm.com>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <a1e85e39-4be6-4793-aee4-d990e1e46bdb@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250414-perst-v2-3-89247746d755@oss.qualcomm.com>
-References: <20250414-perst-v2-0-89247746d755@oss.qualcomm.com>
-In-Reply-To: <20250414-perst-v2-0-89247746d755@oss.qualcomm.com>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com,
-        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1744609160; l=7942;
- i=krishna.chundru@oss.qualcomm.com; s=20230907; h=from:subject:message-id;
- bh=WC5wKRvcYuSwXR7Izdx25mVC4LSMyYyIUrLgoxUWBas=;
- b=Uh3eu8AQrCP/1w+anhue+7slJ8ehb8F7LfDcOmm4ZnKrm4cfNxd7BXpF8rpedC9vXnlU2iBn8
- eDeDzkMnvCCCcbuW3sUij6qLXOxPZWSa3XK/BriuEGupc9KF7d7aZ3y
-X-Developer-Key: i=krishna.chundru@oss.qualcomm.com; a=ed25519;
- pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-Proofpoint-ORIG-GUID: u2pvPAONCLS-HW4S_6sRCvaUhBeBtukR
-X-Authority-Analysis: v=2.4 cv=C7DpyRP+ c=1 sm=1 tr=0 ts=67fc9f9c cx=c_pps a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=KZ4ZsdeBRq2BojHjq4kA:9 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-GUID: u2pvPAONCLS-HW4S_6sRCvaUhBeBtukR
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9GocnMYW6rNp7pT5SVZvS5o63c07XWvL
+X-Proofpoint-GUID: 9GocnMYW6rNp7pT5SVZvS5o63c07XWvL
+X-Authority-Analysis: v=2.4 cv=ANaQCy7k c=1 sm=1 tr=0 ts=67fca286 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=WHrP3EDNxcdy5OAKBrkA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-14_01,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0 bulkscore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 mlxscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504140039
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ mlxlogscore=999 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ phishscore=0 impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504140040
 
-Move phy, perst handling to root port and provide a way to have multi-port
-logic.
+Thanks Konrad for detailed review.
 
-Currently, qcom controllers only support single port, and all properties
-are present in the controller node itself. This is incorrect, as
-properties like phy, perst, wake, etc. can vary per port and should be
-present in the root port node.
 
-pci-bus-common.yaml uses reset-gpios property for representing PERST, use
-same property instead of perst-gpios.
+On 4/12/2025 4:45 AM, Konrad Dybcio wrote:
+> On 4/11/25 1:35 PM, Mukesh Kumar Savaliya wrote:
+>> Add support for the Qualcomm I3C controller driver, which implements
+>> I3C master functionality as defined in the MIPI Alliance Specification
+>> for I3C, Version 1.0.
+>>
+>> This driver supports master role in SDR mode.
+>>
+>> Unlike some other I3C master controllers, this implementation
+>> does not support In-Band Interrupts (IBI) and Hot-join requests.
+>>
+>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>> ---
+> 
+> [...]
+> 
+>> +#define SE_I3C_SCL_HIGH                 0x268
+>> +#define SE_I3C_TX_TRANS_LEN             0x26C
+>> +#define SE_I3C_RX_TRANS_LEN             0x270
+>> +#define SE_I3C_DELAY_COUNTER            0x274
+>> +#define SE_I2C_SCL_COUNTERS             0x278
+>> +#define SE_I3C_SCL_CYCLE                0x27C
+> 
+> lowercase hex, please
+sure, done.
+> 
+>> +#define SE_GENI_HW_IRQ_EN               0x920
+>> +#define SE_GENI_HW_IRQ_IGNORE_ON_ACTIVE 0x924
+>> +#define SE_GENI_HW_IRQ_CMD_PARAM_0      0x930
+>> +
+>> +/* HW I3C IBI interrupt enable */
+>> +#define M_IBI_IRQ_EN BIT(0)
+>> +
+>> +/* M_IBI_IRQ_IGNORE */
+>> +#define M_IBI_IRQ_IGNORE BIT(0)
+>> +
+>> +/* SE_GENI_M_CLK_CFG field shifts */
+>> +#define	CLK_DIV_VALUE_MASK	GENMASK(23, 4)
+> 
+> ' ' after "define", '\t' after
+> 
+Done. Also added equal tabs for all other macros too.
+>> +#define SER_CLK_EN		BIT(0)
+>> +
+>> +/* SE_GENI_HW_IRQ_CMD_PARAM_0 field bits */
+>> +#define M_IBI_IRQ_PARAM_7E BIT(0)
+>> +#define M_IBI_IRQ_PARAM_STOP_STALL BIT(1)
+>> +/* SE_I2C_SCL_COUNTERS field shifts */
+>> +#define I2C_SCL_HIGH_COUNTER_MASK	GENMASK(29, 20)
+>> +#define I2C_SCL_LOW_COUNTER_MASK	GENMASK(19, 10)
+>> +#define I2C_SCL_CYCLE_COUNTER_MASK	GENMASK(9, 0)
+>> +
+>> +#define SE_I3C_ERR  (M_CMD_OVERRUN_EN | M_ILLEGAL_CMD_EN | M_CMD_FAILURE_EN |\
+>> +	M_CMD_ABORT_EN | M_GP_IRQ_0_EN | M_GP_IRQ_1_EN | M_GP_IRQ_2_EN | \
+>> +	M_GP_IRQ_3_EN | M_GP_IRQ_4_EN)
+>> +
+>> +/* M_CMD OP codes for I2C/I3C */
+>> +#define I3C_READ_IBI_HW          0
+>> +#define I2C_WRITE                1
+>> +#define I2C_READ                 2
+>> +#define I2C_WRITE_READ           3
+>> +#define I2C_ADDR_ONLY            4
+>> +#define I3C_INBAND_RESET         5
+>> +#define I2C_BUS_CLEAR            6
+>> +#define I2C_STOP_ON_BUS          7
+>> +#define I3C_HDR_DDR_EXIT         8
+>> +#define I3C_PRIVATE_WRITE        9
+>> +#define I3C_PRIVATE_READ         10
+>> +#define I3C_HDR_DDR_WRITE        11
+>> +#define I3C_HDR_DDR_READ         12
+>> +#define I3C_DIRECT_CCC_ADDR_ONLY 13
+>> +#define I3C_BCAST_CCC_ADDR_ONLY  14
+>> +#define I3C_READ_IBI             15
+>> +#define I3C_BCAST_CCC_WRITE      16
+>> +#define I3C_DIRECT_CCC_WRITE     17
+>> +#define I3C_DIRECT_CCC_READ      18
+>> +
+>> +/* M_CMD params for I3C */
+>> +#define PRE_CMD_DELAY          BIT(0)
+>> +#define TIMESTAMP_BEFORE       BIT(1)
+>> +#define STOP_STRETCH           BIT(2)
+>> +#define TIMESTAMP_AFTER        BIT(3)
+>> +#define POST_COMMAND_DELAY     BIT(4)
+>> +#define IGNORE_ADD_NACK        BIT(6)
+>> +#define READ_FINISHED_WITH_ACK BIT(7)
+>> +#define CONTINUOUS_MODE_DAA    BIT(8)
+>> +
+>> +#define SLAVE_ADDR_MASK           GENMASK(15, 9)
+>> +#define SLV_ADDR_SHFT          9
+> 
+> The shift is now unused
+> 
+Yes, Removed.
+>> +
+>> +#define CCC_HDR_CMD_MSK        GENMASK(23, 16)
+>> +#define CCC_HDR_CMD_SHFT       16
+> 
+> And this one *should* be unused, fill in the value with FIELD_PREP instead
+Yes, Done.
+> 
+>> +#define IBI_NACK_TBL_CTRL      BIT(24)
+>> +#define USE_7E                 BIT(25)
+>> +#define BYPASS_ADDR_PHASE      BIT(26)
+>> +
+>> +/* GSI callback error fields - DMA_TX_IRQ_STAT */
+>> +#define GP_IRQ0	BIT(5)
+>> +#define GP_IRQ1	BIT(6)
+>> +#define GP_IRQ2	BIT(7)
+>> +#define GP_IRQ3	BIT(8)
+>> +#define GP_IRQ4	BIT(9)
+>> +#define GP_IRQ5	BIT(10)
+>> +#define DM_I3C_CB_ERR   GENMASK(10, 5)
+>> +
+>> +#define I3C_AUTO_SUSPEND_DELAY  250
+>> +#define KHZ(freq)               (1000 * (freq))
+> 
+> You can store the values in kHz and do (x * HZ_PER_KHZ) where they're
+> used instead
+> 
+Sure, Done.
 
-Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 149 +++++++++++++++++++++++++++------
- 1 file changed, 123 insertions(+), 26 deletions(-)
+>> +#define PACKING_BYTES_PW        4
+> 
+> PW -> "PER_WORD", if that's what it means, please
+Yes, changed to PACKING_BYTES_PER_WORD.
+> 
+>> +#define XFER_TIMEOUT            250
+>> +#define DFS_INDEX_MAX           7
+>> +
+>> +#define I3C_ADDR_MASK 0x7f
+> 
+> This could go to some i3c common header, IIUC it's part of the spec
+> 
+Yes, let me use I2C_ADDR_MASK from i3c/master.h and Used same macro name 
+to maintain I3C context here.
+> [...]
+> 
+>> +static inline struct geni_i3c_dev *to_geni_i3c_master(struct i3c_master_controller
+>> +							*master)
+>> +{
+>> +	return container_of(master, struct geni_i3c_dev, ctrlr);
+>> +}
+> 
+> #define instead
+> 
+i see all i3c vendors are using same definitions, so for now can we keep 
+it similar way if it's minor ?
+>> +
+>> +struct geni_i3c_clk_settings {
+>> +	u32 clk_freq_out;
+>> +	u32 clk_src_freq;
+>> +	u8  clk_div;
+>> +	u8  i2c_t_high_cnt;
+>> +	u8  i2c_t_low_cnt;
+>> +	u8  i3c_t_high_cnt;
+>> +	u8  i3c_t_cycle_cnt;
+>> +	u8  i2c_t_cycle_cnt;
+>> +};
+>> +
+>> +/*
+>> + * Hardware uses the underlying formula to calculate time periods of
+>> + * SCL clock cycle. Firmware uses some additional cycles excluded from the
+>> + * below formula and it is confirmed that the time periods are within
+>> + * specification limits.
+>> + *
+>> + * time of high period of I2C SCL:
+>> + *         i2c_t_high = (i2c_t_high_cnt * clk_div) / source_clock
+>> + * time of low period of I2C SCL:
+>> + *         i2c_t_low = (i2c_t_low_cnt * clk_div) / source_clock
+>> + * time of full period of I2C SCL:
+>> + *         i2c_t_cycle = (i2c_t_cycle_cnt * clk_div) / source_clock
+>> + * time of high period of I3C SCL:
+>> + *         i3c_t_high = (i3c_t_high_cnt * clk_div) / source_clock
+>> + * time of full period of I3C SCL:
+>> + *         i3c_t_cycle = (i3c_t_cycle_cnt * clk_div) / source_clock
+>> + * clk_freq_out = t / t_cycle
+>> + */
+>> +static const struct geni_i3c_clk_settings geni_i3c_clk_map[] = {
+>> +/* op-freq,  src-freq,  div,  i2c_high,  i2c_low, i3c_high, i3c_cyc i2c_cyc */
+>> +	{ KHZ(100),    KHZ(19200), 1, 76, 90, 7, 8, 192},
+>> +	{ KHZ(400),    KHZ(19200), 1, 12, 24, 7, 8, 48},
+>> +	{ KHZ(1000),   KHZ(19200), 1,  4,  9, 7, 0, 19},
+>> +	{ KHZ(12500), KHZ(100000), 1, 45, 63, 6, 7, 110},
+> 
+> It's gonna take up considerably more space, but you may want to write
+> this using C99 designated initializers:
+> 
+> {
+> 	.op_freq = ...,
+> 	.src_freq = ...,
+> }, {
+> 	...
+> }
+> 
+> etc.
+Sure, changed accordingly.
+> 
+>> +};
+>> +
+>> +static int geni_i3c_clk_map_idx(struct geni_i3c_dev *gi3c)
+>> +{
+>> +	const struct geni_i3c_clk_settings *clk_idx = geni_i3c_clk_map;
+>> +	struct i3c_master_controller *m = &gi3c->ctrlr;
+>> +	struct i3c_bus *bus = i3c_master_get_bus(m);
+>> +	int i;
+>> +
+>> +	for (i = 0; i < ARRAY_SIZE(geni_i3c_clk_map); i++, clk_idx++) {
+>> +		if ((!bus || clk_idx->clk_freq_out == bus->scl_rate.i3c) &&
+> 
+> Move this nullcheck out of the loop, please.
+> Or get rid of it, the master registration ensures that there's a bus bound
+> to it, IIUC.
+> 
+Sure, makes sense! Removed it.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index dc98ae63362db0422384b1879a2b9a7dc564d091..5566c8aa7f9a9928c06aa6284ca4de21cc411874 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -262,6 +262,11 @@ struct qcom_pcie_cfg {
- 	bool no_l0s;
- };
- 
-+struct qcom_pcie_port {
-+	struct list_head list;
-+	struct gpio_desc *reset;
-+	struct phy *phy;
-+};
- struct qcom_pcie {
- 	struct dw_pcie *pci;
- 	void __iomem *parf;			/* DT parf */
-@@ -276,21 +281,36 @@ struct qcom_pcie {
- 	struct dentry *debugfs;
- 	bool suspended;
- 	bool use_pm_opp;
-+	struct list_head ports;
- };
- 
- #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
- 
- static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
- {
--	gpiod_set_value_cansleep(pcie->reset, 1);
-+	struct qcom_pcie_port *port, *tmp;
-+
-+	if (list_empty(&pcie->ports))
-+		gpiod_set_value_cansleep(pcie->reset, 1);
-+	else
-+		list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+			gpiod_set_value_cansleep(port->reset, 1);
-+
- 	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
- }
- 
- static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
- {
-+	struct qcom_pcie_port *port, *tmp;
-+
- 	/* Ensure that PERST has been asserted for at least 100 ms */
- 	msleep(100);
--	gpiod_set_value_cansleep(pcie->reset, 0);
-+	if (list_empty(&pcie->ports))
-+		gpiod_set_value_cansleep(pcie->reset, 0);
-+	else
-+		list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+			gpiod_set_value_cansleep(port->reset, 0);
-+
- 	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
- }
- 
-@@ -1229,10 +1249,19 @@ static int qcom_pcie_link_up(struct dw_pcie *pci)
- 	return !!(val & PCI_EXP_LNKSTA_DLLLA);
- }
- 
-+static void qcom_pcie_port_phy_off(struct qcom_pcie *pcie)
-+{
-+	struct qcom_pcie_port *port, *tmp;
-+
-+	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+		phy_power_off(port->phy);
-+}
-+
- static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- {
- 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
- 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-+	struct qcom_pcie_port *port, *tmp;
- 	int ret;
- 
- 	qcom_ep_reset_assert(pcie);
-@@ -1241,13 +1270,27 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 	if (ret)
- 		return ret;
- 
--	ret = phy_set_mode_ext(pcie->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
--	if (ret)
--		goto err_deinit;
-+	if (list_empty(&pcie->ports)) {
-+		ret = phy_set_mode_ext(pcie->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
-+		if (ret)
-+			goto err_deinit;
- 
--	ret = phy_power_on(pcie->phy);
--	if (ret)
--		goto err_deinit;
-+		ret = phy_power_on(pcie->phy);
-+		if (ret)
-+			goto err_deinit;
-+	} else {
-+		list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
-+			ret = phy_set_mode_ext(port->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
-+			if (ret)
-+				goto err_deinit;
-+
-+			ret = phy_power_on(port->phy);
-+			if (ret) {
-+				qcom_pcie_port_phy_off(pcie);
-+				goto err_deinit;
-+			}
-+		}
-+	}
- 
- 	if (pcie->cfg->ops->post_init) {
- 		ret = pcie->cfg->ops->post_init(pcie);
-@@ -1268,7 +1311,10 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- err_assert_reset:
- 	qcom_ep_reset_assert(pcie);
- err_disable_phy:
--	phy_power_off(pcie->phy);
-+	if (list_empty(&pcie->ports))
-+		phy_power_off(pcie->phy);
-+	else
-+		qcom_pcie_port_phy_off(pcie);
- err_deinit:
- 	pcie->cfg->ops->deinit(pcie);
- 
-@@ -1281,7 +1327,10 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
- 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
- 
- 	qcom_ep_reset_assert(pcie);
--	phy_power_off(pcie->phy);
-+	if (list_empty(&pcie->ports))
-+		phy_power_off(pcie->phy);
-+	else
-+		qcom_pcie_port_phy_off(pcie);
- 	pcie->cfg->ops->deinit(pcie);
- }
- 
-@@ -1579,11 +1628,41 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
- 	return IRQ_HANDLED;
- }
- 
-+static int qcom_pcie_parse_port(struct qcom_pcie *pcie, struct device_node *node)
-+{
-+	struct device *dev = pcie->pci->dev;
-+	struct qcom_pcie_port *port;
-+	struct gpio_desc *reset;
-+	struct phy *phy;
-+
-+	reset = devm_fwnode_gpiod_get(dev, of_fwnode_handle(node),
-+				      "reset", GPIOD_OUT_HIGH, "PERST#");
-+	if (IS_ERR(reset))
-+		return PTR_ERR(reset);
-+
-+	phy = devm_of_phy_get(dev, node, NULL);
-+	if (IS_ERR(phy))
-+		return PTR_ERR(phy);
-+
-+	port = devm_kzalloc(dev, sizeof(*port), GFP_KERNEL);
-+	if (!port)
-+		return -ENOMEM;
-+
-+	port->reset = reset;
-+	port->phy = phy;
-+	INIT_LIST_HEAD(&port->list);
-+	list_add_tail(&port->list, &pcie->ports);
-+
-+	return 0;
-+}
-+
- static int qcom_pcie_probe(struct platform_device *pdev)
- {
- 	const struct qcom_pcie_cfg *pcie_cfg;
- 	unsigned long max_freq = ULONG_MAX;
-+	struct qcom_pcie_port *port, *tmp;
- 	struct device *dev = &pdev->dev;
-+	struct device_node *of_port;
- 	struct dev_pm_opp *opp;
- 	struct qcom_pcie *pcie;
- 	struct dw_pcie_rp *pp;
-@@ -1611,6 +1690,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		goto err_pm_runtime_put;
- 
-+	INIT_LIST_HEAD(&pcie->ports);
-+
- 	pci->dev = dev;
- 	pci->ops = &dw_pcie_ops;
- 	pp = &pci->pp;
-@@ -1619,12 +1700,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 
- 	pcie->cfg = pcie_cfg;
- 
--	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
--	if (IS_ERR(pcie->reset)) {
--		ret = PTR_ERR(pcie->reset);
--		goto err_pm_runtime_put;
--	}
--
- 	pcie->parf = devm_platform_ioremap_resource_byname(pdev, "parf");
- 	if (IS_ERR(pcie->parf)) {
- 		ret = PTR_ERR(pcie->parf);
-@@ -1647,12 +1722,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 		}
- 	}
- 
--	pcie->phy = devm_phy_optional_get(dev, "pciephy");
--	if (IS_ERR(pcie->phy)) {
--		ret = PTR_ERR(pcie->phy);
--		goto err_pm_runtime_put;
--	}
--
- 	/* OPP table is optional */
- 	ret = devm_pm_opp_of_add_table(dev);
- 	if (ret && ret != -ENODEV) {
-@@ -1699,9 +1768,31 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 
- 	pp->ops = &qcom_pcie_dw_ops;
- 
--	ret = phy_init(pcie->phy);
--	if (ret)
--		goto err_pm_runtime_put;
-+	for_each_child_of_node(dev->of_node, of_port) {
-+		ret = qcom_pcie_parse_port(pcie, of_port);
-+		of_node_put(of_port);
-+		if (ret)
-+			break;
-+	}
-+
-+	/* Fallback to previous method */
-+	if (ret) {
-+		pcie->phy = devm_phy_optional_get(dev, "pciephy");
-+		if (IS_ERR(pcie->phy)) {
-+			ret = PTR_ERR(pcie->phy);
-+			goto err_pm_runtime_put;
-+		}
-+
-+		pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
-+		if (IS_ERR(pcie->reset)) {
-+			ret = PTR_ERR(pcie->reset);
-+			goto err_pm_runtime_put;
-+		}
-+
-+		ret = phy_init(pcie->phy);
-+		if (ret)
-+			goto err_pm_runtime_put;
-+	}
- 
- 	platform_set_drvdata(pdev, pcie);
- 
-@@ -1746,10 +1837,16 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- err_host_deinit:
- 	dw_pcie_host_deinit(pp);
- err_phy_exit:
--	phy_exit(pcie->phy);
-+	if (list_empty(&pcie->ports))
-+		phy_exit(pcie->phy);
-+	else
-+		list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+			phy_exit(port->phy);
- err_pm_runtime_put:
- 	pm_runtime_put(dev);
- 	pm_runtime_disable(dev);
-+	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+		list_del(&port->list);
- 
- 	return ret;
- }
+>> +		    clk_idx->clk_src_freq == gi3c->clk_src_freq) {
+>> +			gi3c->clk_cfg = clk_idx;
+>> +		}
+>> +
+>> +		if (clk_idx->clk_freq_out == bus->scl_rate.i2c)
+>> +			gi3c->clk_od_cfg = clk_idx;
+>> +	}
+>> +
+>> +	if (!gi3c->clk_cfg || !gi3c->clk_od_cfg)
+>> +		return -EINVAL;
+> 
+> IIUC this makes the 100 kHz configuration invalid (index 0)
+> 
+Yes, for i3c, 100KHz is not possible. i2c can work but i3c can't.
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static void set_new_addr_slot(unsigned long *addrslot, u8 addr)
+>> +{
+>> +	if (addr > I3C_ADDR_MASK)
+>> +		return;
+>> +
+>> +	set_bit(addr, addrslot);
+>> +}
+> 
+> Inline this single-use function, please
+> 
+Done
+>> +
+>> +static void clear_new_addr_slot(unsigned long *addrslot, u8 addr)
+>> +{
+>> +	if (addr > I3C_ADDR_MASK)
+>> +		return;
+>> +
+>> +	clear_bit(addr, addrslot);
+>> +}
+> 
+> And this one
+> 
+Done
+>> +
+>> +static bool is_new_addr_slot_set(unsigned long *addrslot, u8 addr)
+>> +{
+>> +	if (addr > I3C_ADDR_MASK)
+>> +		return false;
+> 
+> This condition is impossible given the user
+Removed it.
+> 
+>> +
+>> +	return test_bit(addr, addrslot);
+> 
+> Inline this check
+> 
+To have the function name meaning in the action by caller, i am keeping 
+it. But i have inlined this function also. Hope its fine.
+> [...]
+> 
+>> +static void qcom_geni_i3c_conf(struct geni_i3c_dev *gi3c, enum i3c_bus_phase bus_phase)
+>> +{
+>> +	const struct geni_i3c_clk_settings *clk_idx = gi3c->clk_cfg;
+>> +	unsigned long freq;
+>> +	u32 val, dfs_idx;
+>> +	int ret;
+>> +
+>> +	if (bus_phase == OPEN_DRAIN_MODE)
+>> +		clk_idx = gi3c->clk_od_cfg;
+>> +
+>> +	ret = geni_se_clk_freq_match(&gi3c->se, clk_idx->clk_src_freq,
+>> +				     &dfs_idx, &freq, false);
+>> +	if (ret)
+>> +		dfs_idx = 0;
+> 
+> Shouldn't we throw some sort of error here instead?
+> 
+No, dfs_idx = 0 should be fine too. As default source frequency 19.2MHz 
+can work at index 0.
+> [...]
+> 
+>> +static void geni_i3c_handle_err(struct geni_i3c_dev *gi3c, u32 status)
+>> +{
+>> +	dev_dbg(gi3c->se.dev, "len:%d, %s\n",
+>> +		gi3c->cur_len, gi3c->cur_is_write ? "write" : "read");
+>> +
+>> +	if (status & M_GP_IRQ_0_EN) {
+>> +		gi3c->err = -EINVAL;
+>> +		dev_dbg(gi3c->se.dev, "%s\n", "I3C slave early read termination");
+> 
+> Whenever there's just a string literal, please just print it directly.
+> 
+Sure, Done for all the places.
+>> +	}
+> 
+> Please separate these with a newline
+> 
+Sure, Done for all the conditions.
+>> +	if (status & M_GP_IRQ_1_EN) {
+>> +		gi3c->err = -ENOTCONN;
+>> +		dev_dbg(gi3c->se.dev, "%s\n", "NACK: slave unresponsive, check power/reset");
+>> +	}
+> 
+> [...]
+> 
+>> +static irqreturn_t geni_i3c_irq(int irq, void *dev)
+>> +{
+>> +	u32 m_stat_mask, dm_tx_st, dm_rx_st, m_stat, rx_st, dma;
+>> +	struct geni_i3c_dev *gi3c = dev;
+>> +	unsigned long flags;
+>> +	int j;
+>> +
+>> +	m_stat = readl_relaxed(gi3c->se.base + SE_GENI_M_IRQ_STATUS);
+>> +	m_stat_mask = readl_relaxed(gi3c->se.base + SE_GENI_M_IRQ_EN);
+>> +	rx_st = readl_relaxed(gi3c->se.base + SE_GENI_RX_FIFO_STATUS);
+>> +	dm_tx_st = readl_relaxed(gi3c->se.base + SE_DMA_TX_IRQ_STAT);
+>> +	dm_rx_st = readl_relaxed(gi3c->se.base + SE_DMA_RX_IRQ_STAT);
+>> +	dma = readl_relaxed(gi3c->se.base + SE_GENI_DMA_MODE_EN);
+>> +
+>> +	spin_lock_irqsave(&gi3c->irq_lock, flags);
+>> +
+>> +	if (m_stat & SE_I3C_ERR || dm_rx_st & DM_I3C_CB_ERR) {
+>> +		geni_i3c_handle_err(gi3c, m_stat);
+>> +		/* Disable the TX Watermark interrupt to stop TX */
+>> +		if (!dma)
+>> +			writel_relaxed(0, gi3c->se.base + SE_GENI_TX_WATERMARK_REG);
+>> +		goto irqret;
+>> +	}
+>> +
+>> +	if (dma) {
+>> +		dev_dbg(gi3c->se.dev, "i3c dma tx:0x%x, dma rx:0x%x\n", dm_tx_st, dm_rx_st);
+>> +		goto irqret;
+>> +	}
+>> +
+>> +	if ((m_stat &
+>> +		(M_RX_FIFO_WATERMARK_EN | M_RX_FIFO_LAST_EN)) &&
+>> +		!gi3c->cur_is_write && gi3c->cur_buf) {
+> 
+> The indentation here is confusing, please align the `(M_RX..` with `m_stat &`
+> 
+Sure, Done.
+>> +		u32 rxcnt = rx_st & RX_FIFO_WC_MSK;
+>> +
+>> +		for (j = 0; j < rxcnt; j++) {
+>> +			u32 val;
+>> +			int p = 0;
+>> +
+>> +			val = readl_relaxed(gi3c->se.base + SE_GENI_RX_FIFOn);
+>> +			while (gi3c->cur_idx < gi3c->cur_len && p < sizeof(val)) {
+> 
+> sizeof(val) is 4, please unroll this loop into something more readable
+> 
+Replaced directly with 4.
+>> +				gi3c->cur_buf[gi3c->cur_idx++] = val & 0xff;
+>> +				val >>= 8;
+>> +				p++;
+>> +			}
+>> +			if (gi3c->cur_idx == gi3c->cur_len)
+>> +				break;
+>> +		}
+>> +	} else if (m_stat & M_TX_FIFO_WATERMARK_EN &&
+>> +		gi3c->cur_is_write && gi3c->cur_buf) {
+>> +		for (j = 0; j < gi3c->tx_wm; j++) {
+>> +			u32 temp;
+>> +			u32 val = 0;
+>> +			int p = 0;
+>> +
+>> +			while (gi3c->cur_idx < gi3c->cur_len && p < sizeof(val)) {
+> 
+> ditto
+Done
+> 
+>> +				temp = gi3c->cur_buf[gi3c->cur_idx++];
+>> +				val |= temp << (p * 8);
+>> +				p++;
+>> +			}
+>> +
+>> +			writel_relaxed(val, gi3c->se.base + SE_GENI_TX_FIFOn);
+>> +			if (gi3c->cur_idx == gi3c->cur_len) {
+>> +				writel_relaxed(0, gi3c->se.base + SE_GENI_TX_WATERMARK_REG);
+>> +				break;
+>> +			}
+>> +		}
+>> +	}
+>> +
+>> +irqret:
+>> +	if (m_stat)
+>> +		writel_relaxed(m_stat, gi3c->se.base + SE_GENI_M_IRQ_CLEAR);
+>> +
+>> +	if (dma) {
+>> +		if (dm_tx_st)
+>> +			writel_relaxed(dm_tx_st, gi3c->se.base + SE_DMA_TX_IRQ_CLR);
+>> +		if (dm_rx_st)
+>> +			writel_relaxed(dm_rx_st, gi3c->se.base + SE_DMA_RX_IRQ_CLR);
+>> +	}
+>> +
+>> +	/* if this is err with done-bit not set, handle that through timeout. */
+>> +	if (m_stat & M_CMD_DONE_EN || m_stat & M_CMD_ABORT_EN) {
+>> +		writel_relaxed(0, gi3c->se.base + SE_GENI_TX_WATERMARK_REG);
+>> +		complete(&gi3c->done);
+>> +	} else if (dm_tx_st & TX_DMA_DONE || dm_rx_st & RX_DMA_DONE	||
+> 
+> odd '\t'
+> 
+yes, Aligned.
+>> +		dm_rx_st & RX_RESET_DONE) {
+>> +		complete(&gi3c->done);
+>> +	}
+>> +
+>> +	spin_unlock_irqrestore(&gi3c->irq_lock, flags);
+>> +	return IRQ_HANDLED;
+> 
+> a '\n' before return is customary
+> 
+Done
+> [...]
+> 
+>> +static int _i3c_geni_execute_command(struct geni_i3c_dev *gi3c, struct geni_i3c_xfer_params *xfer)
+>> +{
+>> +	bool is_write = gi3c->cur_is_write;
+>> +	dma_addr_t tx_dma = 0, rx_dma = 0;
+>> +	unsigned long time_remaining;
+>> +	u32 len = gi3c->cur_len;
+>> +	int ret;
+>> +
+>> +	geni_se_select_mode(&gi3c->se, xfer->mode);
+>> +
+>> +	gi3c->err = 0;
+>> +	gi3c->cur_idx = 0;
+>> +
+>> +	if (!is_write) {
+> 
+> Nit: if (is_write) {} .. else {} is more natural> +		dev_dbg(gi3c->se.dev, "I3C cmd:0x%x param:0x%x READ len:%d\n",
+Sure, Reversed with natural and positive check.
+I didn't get about debug log suggestion. Do you want to optimize it to 
+one for both if/else condition ?
+>> +			xfer->m_cmd, xfer->m_param, len);
+>> +		writel_relaxed(len, gi3c->se.base + SE_I3C_RX_TRANS_LEN);
+>> +		geni_se_setup_m_cmd(&gi3c->se, xfer->m_cmd, xfer->m_param);
+>> +		if (xfer->mode == GENI_SE_DMA) {
+>> +			ret = geni_se_rx_dma_prep(&gi3c->se, gi3c->cur_buf, len, &rx_dma);
+>> +			if (ret) {
+> Why would it fail? And why should we fall back silently to FIFO mode then?
+> 
+DMA mapping can fail OR input validation can also fail. So we want to 
+continue with FIFO mode.
+>> +				xfer->mode = GENI_SE_FIFO;
+>> +				geni_se_select_mode(&gi3c->se, xfer->mode);
+>> +			}
+>> +		}
+>> +	} else {
+>> +		dev_dbg(gi3c->se.dev, "I3C cmd:0x%x param:0x%x WRITE len:%d\n",
+>> +			xfer->m_cmd, xfer->m_param, len);
+>> +
+>> +		writel_relaxed(len, gi3c->se.base + SE_I3C_TX_TRANS_LEN);
+>> +		geni_se_setup_m_cmd(&gi3c->se, xfer->m_cmd, xfer->m_param);
+>> +
+>> +		if (xfer->mode == GENI_SE_DMA) {
+>> +			ret = geni_se_tx_dma_prep(&gi3c->se, gi3c->cur_buf, len, &tx_dma);
+>> +			if (ret) {
+>> +				xfer->mode = GENI_SE_FIFO;
+>> +				geni_se_select_mode(&gi3c->se, xfer->mode);
+>> +			}
+>> +		}
+>> +
+>> +		if (xfer->mode == GENI_SE_FIFO && len > 0) /* Get FIFO IRQ */
+>> +			writel_relaxed(1, gi3c->se.base + SE_GENI_TX_WATERMARK_REG);
+>> +	}
+>> +
+>> +	time_remaining = wait_for_completion_timeout(&gi3c->done, XFER_TIMEOUT);
+>> +	if (!time_remaining) {
+>> +		unsigned long flags;
+>> +
+>> +		dev_dbg(gi3c->se.dev, "Timeout completing FIFO transfer\n");
+> 
+> Can it not be DMA mode here too?
+> 
+Good find, it's common timeout error. Removed FIFO word.
+> [...]
+> 
+>> +static void geni_i3c_perform_daa(struct geni_i3c_dev *gi3c)
+>> +{
+>> +	u8 last_dyn_addr = 0;
+>> +	int ret;
+>> +
+>> +	while (1) {
+>> +		u8 rx_buf[8], tx_buf[8];
+>> +		struct geni_i3c_xfer_params xfer = { GENI_SE_FIFO };
+>> +		struct i3c_device_info info = { 0 };
+>> +		struct i3c_dev_desc *i3cdev;
+>> +		bool new_device = true;
+>> +		u64 pid;
+>> +		u8 bcr, dcr, addr;
+>> +
+>> +		xfer.m_cmd = I2C_READ;
+>> +		xfer.m_param = STOP_STRETCH | CONTINUOUS_MODE_DAA | USE_7E;
+>> +		ret = i3c_geni_execute_read_command(gi3c, &xfer, rx_buf, 8);
+>> +		if (ret)
+>> +			break;
+>> +
+>> +		dcr = rx_buf[7];
+>> +		bcr = rx_buf[6];
+>> +		pid = ((u64)rx_buf[0] << 40) |
+>> +			((u64)rx_buf[1] << 32) |
+>> +			((u64)rx_buf[2] << 24) |
+>> +			((u64)rx_buf[3] << 16) |
+>> +			((u64)rx_buf[4] <<  8) |
+>> +			((u64)rx_buf[5]);
+> 
+> FIELD_PREP + GENMASK, please
+> 
+Sure, Done.
+>> +
+>> +		i3c_bus_for_each_i3cdev(&gi3c->ctrlr.bus, i3cdev) {
+>> +			i3c_device_get_info(i3cdev->dev, &info);
+>> +			if (pid == info.pid && dcr == info.dcr && bcr == info.bcr) {
+>> +				new_device = false;
+>> +				addr = (info.dyn_addr) ? info.dyn_addr :
+> 
+> addr = info.dyn_addr ?: info.static_addr;
+> 
+Yes, Done.
+>> +					info.static_addr;
+>> +				break;
+>> +			}
+>> +		}
+>> +
+>> +		if (new_device) {
+>> +			ret = i3c_master_get_free_addr(&gi3c->ctrlr, last_dyn_addr + 1);
+>> +			if (ret < 0)
+>> +				break;
+>> +			addr = (u8)ret;
+>> +			last_dyn_addr = (u8)ret;
+> 
+> nit: while logically the same, last_dyn_addr = addr would make sense here
+> 
+Sure, Done.
+>> +			set_new_addr_slot(gi3c->newaddrslots, addr);
+>> +		}
+>> +
+> 
+> suppose addr=0x38
+> 
+>> +		tx_buf[0] = (addr & I3C_ADDR_MASK) << 1;
+> 
+> tx_buf[0] = (0x38 & 0x7f) << 1 = 0x38<<1 = 0x70 = 0b1110000
+> 
+>> +		tx_buf[0] |= ~(hweight8(addr & I3C_ADDR_MASK) & 1);
+> 
+> 0x70 | ~(hweight8(0x70 & 0x7f) & 1) = 0x70 | ~(3 & 1) = 0x70 | ~BIT(0) = 0xfe
+> 
+> is that the intended result?
+> 
+Yes, thats right.
+It can have either 0xfe OR 0xff.
 
--- 
-2.34.1
+Mainly for error detection purpose. This parity bit in tx_buf[0] is set 
+correctly based on nos set bits in the Masked addr is odd or even.
+I have simplified it using parity8().
+>> +
+>> +		xfer.m_cmd = I2C_WRITE;
+>> +		xfer.m_param = STOP_STRETCH | BYPASS_ADDR_PHASE | USE_7E;
+>> +
+>> +		ret = i3c_geni_execute_write_command(gi3c, &xfer, tx_buf, 1);
+>> +		if (ret)
+>> +			break;
+>> +	}
+>> +}
+>> +
+>> +static int geni_i3c_master_send_ccc_cmd(struct i3c_master_controller *m,
+>> +					struct i3c_ccc_cmd *cmd)
+>> +{
+>> +	struct geni_i3c_dev *gi3c = to_geni_i3c_master(m);
+>> +	int i, ret;
+>> +
+>> +	if (!(cmd->id & I3C_CCC_DIRECT) && cmd->ndests != 1)
+>> +		return -EINVAL;
+>> +
+>> +	ret = i3c_geni_runtime_get_mutex_lock(gi3c);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	qcom_geni_i3c_conf(gi3c, OPEN_DRAIN_MODE);
+>> +	for (i = 0; i < cmd->ndests; i++) {
+>> +		int stall = (i < (cmd->ndests - 1)) ||
+>> +			(cmd->id == I3C_CCC_ENTDAA);
+> 
+> bool
+> 
+Sorry, Didn't get it where to keep bool ?
+> Konrad
 
 
