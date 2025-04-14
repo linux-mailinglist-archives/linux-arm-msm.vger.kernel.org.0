@@ -1,134 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-54259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A3E2A888DE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 18:45:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E2DE2A88946
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 19:02:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 883551899B2F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 16:45:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4B1511893B18
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 17:03:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9B6227F758;
-	Mon, 14 Apr 2025 16:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F53827F757;
+	Mon, 14 Apr 2025 17:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oJby2Jg4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="haXXUUQ5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EED19A2A3;
-	Mon, 14 Apr 2025 16:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B04539A;
+	Mon, 14 Apr 2025 17:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744649141; cv=none; b=K0fuPaO5ppgiEA94xXUWN97kG3TdHZq6WDsPdAElDpfiLtCvX44/vGeXCWN5p3BfBJMsIcJic4Gc6B2w6Ndhk3flXT7oWFWCCQursxUtANiPbCqusmmm+54cWlC2nfmHEByFmAMpKyAtxg1i9aOBTV//iirTT25+t3gGenoYfwM=
+	t=1744650165; cv=none; b=FBRCHYgh8EJvnuLCAMHLhGvmV0pSj9ohVqoIz7zZWk9nSnx/wCcD49X2PsJUbM5KVN20v3c+zjp2eJjb8quDNExj4Qaq1i+ShD9FV8tW7apxge0ROVaGlHhtF3MS6MPz5Mrc9jKoL8i+tEfn4DSW3u0Lmn4e/Hd+R2poWqzfr0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744649141; c=relaxed/simple;
-	bh=UUtRWLWyJUerHzk/XbggQ5MuRdrgseJn9oVb0Fz0NLo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Go26YE27Mfbt0W080hdHNGjr8+cGpo88VjOfFPpg/YjFLK6lXxugAZ3PUetTOAKoh31HUYZAZFpbKbmystbCojemnmJJTcgd7W14rTqVMGPnafSYjHdme5JCeRLG/P2mldjdj4ZYSK81IxyjR5WP/nGbIp8lmK3UAGkAyTvEobw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oJby2Jg4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id DC00CC4CEEA;
-	Mon, 14 Apr 2025 16:45:40 +0000 (UTC)
+	s=arc-20240116; t=1744650165; c=relaxed/simple;
+	bh=KqFT3PKAxBM7aneYNA4QM0R7Gd1DemUhbyEfOOJZdwc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ghxVq4wfI9T/VpgrrQGHQ4EcZ6hXTesPpkVkT5G+1EJo1y6TDFT15KIhdF58v0UVv7YA+eKu6o4NP0UfDbl6TFM09v8etH55NAbK8lbB1PXKUZI7jkBzuKVVgJvnHNSk08DB0NyLncxbi4fcHgEQ3obX4jtDcEreSX6OjjxGcm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=haXXUUQ5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD4FC4CEEB;
+	Mon, 14 Apr 2025 17:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744649141;
-	bh=UUtRWLWyJUerHzk/XbggQ5MuRdrgseJn9oVb0Fz0NLo=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=oJby2Jg4zCbeInT1UkA6CKqzysJpj6EqB7nAfrLpXIHCxp4u/o8GrNqBMaG9Iww3c
-	 MAzgnURSebWYtp8/UKX6ODMxobpaK0iZm1k829eaiF4LP+s/mO717AJ9grUQQxEFgT
-	 QQL0Qmx/nk//klNYb4t3iRrG4K/w5yejlvRed4ApbgfN+xTxM4Zqvxxi5jYnmY6GcH
-	 AApoeKuF+Sxp0kFdTtuOBStcKND/vZYjeDuV+CUTlNxQ0ZqAObmlekeCPNX6dkW0xk
-	 Zzr8kX1AJuql8/7ZJiPiZYf6cepB8FXe64Zc7SI6D2+lAqvQUolwFrConIvQzlC2sm
-	 4tUL6J65x7UvA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9CD6C369A2;
-	Mon, 14 Apr 2025 16:45:40 +0000 (UTC)
-From: Vincent Knecht via B4 Relay <devnull+vincent.knecht.mailoo.org@kernel.org>
-Date: Mon, 14 Apr 2025 18:45:12 +0200
-Subject: [PATCH RESEND2 v2] clk: qcom: gcc-msm8939: Fix mclk0 & mclk1 for
- 24 MHz
+	s=k20201202; t=1744650164;
+	bh=KqFT3PKAxBM7aneYNA4QM0R7Gd1DemUhbyEfOOJZdwc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=haXXUUQ5j7/xdMK6YjwHt6lr9C50Nl/g7bFmEYMZvNiz+gF0wIYn0k0JlsN7AgIIr
+	 4iu+74zlC0pGVbnny4GpZcvFCtRv7UbXiLj/Jktoz55Xw4OI0gFEF9IMr5JRkbS89a
+	 FWUp+fMSf5UkmLfyLJ4Oh8mMhzRX4zRBtIyxizLmg1yK8LXnD6fzQ4a/5VdOID9XcX
+	 dE75rVIJSiBbQRqIjkmlXD+Sz1tODj0aRj329Hqs8wN3tRMUOekPmkiQJuBXhlIRBs
+	 zzEUQdKKdZxKbNiIRzd4lVHI7DTVE6ie+lpUtXY7UaT3cQKWd5+rfYxv5sIPEdod6N
+	 ZZHwk4psw8ppw==
+Date: Mon, 14 Apr 2025 18:02:33 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Steen Hegelund <Steen.Hegelund@microchip.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	UNGLinuxDriver@microchip.com,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Andy Gross <agross@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+	Stephen Boyd <sboyd@kernel.org>, zhouyanjie@wanyeetech.com,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
+	linux-rockchip@lists.infradead.org,
+	linux-amlogic@lists.infradead.org,
+	linux-renesas-soc@vger.kernel.org, linux-mips@vger.kernel.org,
+	linux-pm@vger.kernel.org, linux-mediatek@lists.infradead.org
+Subject: Re: [PATCH v2 03/17] arm64: dts: microchip: sparx5: Fix CPU node
+ "enable-method" property dependencies
+Message-ID: <20250414-fragile-same-9cd06114cd85@spud>
+References: <20250410-dt-cpu-schema-v2-0-63d7dc9ddd0a@kernel.org>
+ <20250410-dt-cpu-schema-v2-3-63d7dc9ddd0a@kernel.org>
+ <20250411-ebay-exerciser-392c42daf5ba@spud>
+ <CAL_JsqJza-bufzjZ415THyDDQaOfk8F+JRFvFxzNwObG=NKVJQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250414-gcc-msm8939-fixes-mclk-v2-resend2-v2-1-5ddcf572a6de@mailoo.org>
-X-B4-Tracking: v=1; b=H4sIAJc7/WcC/x3MsQqDMBCA4VeRm3ugZ1JM57o62LF0kHjao02UH
- IggvntDxw9+/gOUk7DCrTgg8SYqS8ygSwH+PcSZUcZsoJJsaSqDs/cYNDSudjjJzorBfz+4ESZ
- WjiOhM7YZjOX6Sg7yZ038D/PmCX37aLs7wes8f4bHAqF8AAAA
-X-Change-ID: 20250414-gcc-msm8939-fixes-mclk-v2-resend2-9458a45e3629
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Shawn Guo <shawn.guo@linaro.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Stephan Gerhold <stephan@gerhold.net>, 
- =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- ~postmarketos/upstreaming@lists.sr.ht, 
- Vincent Knecht <vincent.knecht@mailoo.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1744649140; l=1473;
- i=vincent.knecht@mailoo.org; s=20250414; h=from:subject:message-id;
- bh=rmTNV+QNatPi9Yx+q9e80eZX7u4a7NReIZUsYB1JC3A=;
- b=bL5pEw4ycYvfASyvE3TY6wTsYbglQYSn1nspsXLgmUqe+Ru3JenjqUx2i03WIVWSr2jBXJT+h
- +PCGG8dDluLCnrdBxuZQodXyYLh+YQwcLjxihpKehisRBxvd3wG5DEt
-X-Developer-Key: i=vincent.knecht@mailoo.org; a=ed25519;
- pk=MFCVQkhL3+d3NHDzNPWpyZ4isxJvT+QTqValj5gSkm4=
-X-Endpoint-Received: by B4 Relay for vincent.knecht@mailoo.org/20250414
- with auth_id=377
-X-Original-From: Vincent Knecht <vincent.knecht@mailoo.org>
-Reply-To: vincent.knecht@mailoo.org
-
-From: Vincent Knecht <vincent.knecht@mailoo.org>
-
-Fix mclk0 & mclk1 parent map to use correct GPLL6 configuration and
-freq_tbl to use GPLL6 instead of GPLL0 so that they tick at 24 MHz.
-
-Fixes: 1664014e4679 ("clk: qcom: gcc-msm8939: Add MSM8939 Generic Clock Controller")
-Suggested-by: Stephan Gerhold <stephan@gerhold.net>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
----
- drivers/clk/qcom/gcc-msm8939.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/clk/qcom/gcc-msm8939.c b/drivers/clk/qcom/gcc-msm8939.c
-index 7431c9a65044f841f711df6e84008f759e7ab026..45193b3d714babcf56fc0c6877a13a73f3e79104 100644
---- a/drivers/clk/qcom/gcc-msm8939.c
-+++ b/drivers/clk/qcom/gcc-msm8939.c
-@@ -432,7 +432,7 @@ static const struct parent_map gcc_xo_gpll0_gpll1a_gpll6_sleep_map[] = {
- 	{ P_XO, 0 },
- 	{ P_GPLL0, 1 },
- 	{ P_GPLL1_AUX, 2 },
--	{ P_GPLL6, 2 },
-+	{ P_GPLL6, 3 },
- 	{ P_SLEEP_CLK, 6 },
- };
- 
-@@ -1113,7 +1113,7 @@ static struct clk_rcg2 jpeg0_clk_src = {
- };
- 
- static const struct freq_tbl ftbl_gcc_camss_mclk0_1_clk[] = {
--	F(24000000, P_GPLL0, 1, 1, 45),
-+	F(24000000, P_GPLL6, 1, 1, 45),
- 	F(66670000, P_GPLL0, 12, 0, 0),
- 	{ }
- };
-
----
-base-commit: b425262c07a6a643ebeed91046e161e20b944164
-change-id: 20250414-gcc-msm8939-fixes-mclk-v2-resend2-9458a45e3629
-
-Best regards,
--- 
-Vincent Knecht <vincent.knecht@mailoo.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="pt+1yttKuNYLWgzQ"
+Content-Disposition: inline
+In-Reply-To: <CAL_JsqJza-bufzjZ415THyDDQaOfk8F+JRFvFxzNwObG=NKVJQ@mail.gmail.com>
 
 
+--pt+1yttKuNYLWgzQ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Apr 11, 2025 at 03:26:50PM -0500, Rob Herring wrote:
+> On Fri, Apr 11, 2025 at 11:22=E2=80=AFAM Conor Dooley <conor@kernel.org> =
+wrote:
+> >
+> > On Thu, Apr 10, 2025 at 10:47:24AM -0500, Rob Herring (Arm) wrote:
+> > > The "spin-table" enable-method requires "cpu-release-addr" property,
+> > > so add a dummy entry. It is assumed the bootloader will fill in the
+> > > correct values.
+> > >
+> > > Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> > > Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+> > > Tested-by: Daniel Machon <daniel.machon@microchip.com>
+> >
+> > This is already applied, guess I forgot to merge it into the branch that
+> > appears in linux next. I'll do that now..
+>=20
+> Sometimes I check next, but in this case I just looked at replies for
+> which there were none. I dislike submitting dts changes because it's a
+> range of AWOL maintainers, only applying around some rcN (so up to 2
+> months later), silently applying, and applied but never in linux-next
+> (until in soc tree).
+
+Let's add "send the b4 ty email" to the list of things that I did not
+do, but thought that I had done.
+
+--pt+1yttKuNYLWgzQ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZ/0/qQAKCRB4tDGHoIJi
+0llIAQCfeSIfGZefusGStXxy21uaJUGlki/H/XzQ1dq4t278oAD9GMv/CXNEj8CG
+oPoSllLdscFoA/5qVRjJh0erPiNF8gA=
+=q+yA
+-----END PGP SIGNATURE-----
+
+--pt+1yttKuNYLWgzQ--
 
