@@ -1,240 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-54257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25692A887E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 17:59:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2BCBA887EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 18:04:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 572B51893094
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 15:59:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 53B403AB7BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Apr 2025 16:03:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C8F827465F;
-	Mon, 14 Apr 2025 15:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B356199FB0;
+	Mon, 14 Apr 2025 16:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a+VsmH+U"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="O1jAWWta"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEA025229C;
-	Mon, 14 Apr 2025 15:58:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9383D193086
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 16:03:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744646339; cv=none; b=aiuBX3y/SyFWXJXV2BtG/V7YW+n0tk9Y1VmDbXsoTUFEfwzr53tRP/i8Xy41MJ4G94cbAr0p1Jzktkz8CfuegiKhbFxTCOgpL/DHz9NQWyYpf2JNc6LiQQJcwoK3suefaSQo/M19Wl2HurCOzUPEhLNgm9BPWysN9OMiF740+AA=
+	t=1744646636; cv=none; b=uSJL1hxy7UI2urWJgTA1Ato4E1raUXSUcLmhDeygopj0T8OvDxXMVFw9Oky9ozBB84y5lddstHeLUtMBIcwUq3qYnxNpIrLQ8t5oJinKtbv2Y1IFRSTCl0KFCYPtHLSWYAfm6yzapOcxgpHaAspivRkeJijmMnDmfYvbN24CDNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744646339; c=relaxed/simple;
-	bh=ivd0+p84N8NAANoYcIt4fG5+kUnvyy7w9SUAiMC8N0k=;
+	s=arc-20240116; t=1744646636; c=relaxed/simple;
+	bh=gaI2o+IcMMRpu9zga35PMrGvI2/8TmKmZh7u0FxdbQo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VgFgnxAw3CKsEa54V8B/a4CmWJTy7qVosIge/TXj8D3L508lGhLHXz+aocB36e0I1iK8N3RfwvtveDsHnWHT575Rd6GylWoSAShuMrSgDmI432XOiNJ6Q/Uh+4wK5v++RD/i4fJ6uzdIgIA/Z9TCLJafGNfqmLMU1sRx+0UsTrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a+VsmH+U; arc=none smtp.client-ip=209.85.166.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3d5e68418b5so35875105ab.2;
-        Mon, 14 Apr 2025 08:58:57 -0700 (PDT)
+	 To:Cc:Content-Type; b=AsqO+y/1/B2Wvp4HgMyy51QR/dTTg8QiV9+DdERLoAAjVt25ZIYHZFLlJa49RdboQJViXuT3zfeSL5hJ0fJ7LAivrlnKvxD1re+wXm3r+3ZjyEUqd0NffXuaMcwRoszotCDeNylz7UGEiInnxvO0VIaIjSTgsxoMuXoSIc8LsOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=O1jAWWta; arc=none smtp.client-ip=209.85.160.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-4769e30af66so730271cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 09:03:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744646336; x=1745251136; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h6P8ayfjreTaAdbrwfIK/U4coYDih17t3SKgQH6xJW0=;
-        b=a+VsmH+UdLMC4sT/W3rZbS8NQTRCmtmRj1+rvC2L4EG3XPbLO5QTB5cFB1meReh/6i
-         Ec0UI935AWmGr1GJX7zESqywRUCQUkmuxN5WTiCgnn5J7jAwrbG7V/QosmuaJfJAM+5T
-         KnXPYoLPEWCLisiWIYXID8LCakyyTbluBKPbGPQ/PUZWWTJs+bt+w/176VPkEjS04y3C
-         sLF7xR1+yF+2MOU1XUV/g7+aXxVVmtIR0pUaw0zCpLPZDeGPuj9Q0cd0T5d/H00/6Su4
-         KJ8OCG0V4Ru1FCwh0CEuu0TFE65iX77fzFboMp+Le0UPGOHPeysRRAcxB/abrYVOoAt9
-         tePQ==
+        d=google.com; s=20230601; t=1744646633; x=1745251433; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VzyFZIEP6M1ohDkNBbb+oGqFZk64nQZeVuUKR+ZBZTs=;
+        b=O1jAWWtaUdQ1+yEvvr+EIw78yiYTBRcEcv7E0jIuE1w5gLtVPIkCmbKMdTVi3Kvfcj
+         9odHQqWejBvXffjsYDMzsdi8LiEag3DwpJIJH6a8X+wLHUop+LHNxxmSI1m4uuMjvY9q
+         w79VsAzLYmug5Ht3rw/yOQXi1/7wrRp4oPJJnWEKOrHmackqZBThMd9Y7HEL9d3yPL5v
+         +rF/kSKcg36X/+HBphNfgl2rxkNFdt+XU0fMrfJSIvcCaUCP2UIzBLQqCcd1I/w1IN46
+         D21yJ8XD1hMjb5z5sBlPUIeBTcv2AXDGWuzn9hBgrwYj+TBW7PxDQ3in0gfdhONZqd7I
+         0vsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744646336; x=1745251136;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=h6P8ayfjreTaAdbrwfIK/U4coYDih17t3SKgQH6xJW0=;
-        b=Yn1zIF4ZgiOl4aqXjxDHGeVSBf/wOeq8cLeFxnAa63TZ1rzrMPe6dJeYaO3Dl62bo+
-         antTdvwNRZ1FiGZzkKc5LtDqkwXbeFk24n7c8fUqPM/otyzAeNgEJ9RquMgyCuhFX+9/
-         VZH81PdZvBzBzbSEaN/6HAF+41CHYh0SKHgHMCqGJJTyHlbK2bz3FIqtHql63EQBg1qb
-         v4YwFlU3awi/NkX9WLlXGYCTaMT7ZgzOplCzDfb17Zch1EysRTTNlZvmYPDvgIJ5v1mZ
-         2yIS787lTJzyAw7oayW02paYRwfzuEhzSZLLFtoTnWZXu/Vi+x0z4/h1Lt9aQN/WdLAM
-         2sNg==
-X-Forwarded-Encrypted: i=1; AJvYcCUqq8ENnt/vo0PhM1Jj781AKEUKUqd2TEhGNM1orRJ3jTTgk8ldIpib5AC6gedNzGgFL6EQTsaMimi81VC7@vger.kernel.org, AJvYcCXkdDaTFgdrGtaKALv2IiZL1bShpOuKLRPxDfVngPOxyBqFBPXK98dxu9hOQ5fp+EQFP+MOV2L6BNu8fWTo@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmAVDnu1buFhwdevyAmzNzyTU6chEbQrs102hfgX4mPjWfWAQ7
-	uqX8R527kM8m4MQ6oGxhHCItGdp2VhmMgd8iGaWG7kyJVIS1sgDYsouayxi66nQTQ6JrdE4dYrU
-	z4Mabohkcxl0Uk3u8dc+JamGAyy0=
-X-Gm-Gg: ASbGncsVOqtabBYAcYg7nZLyxTlbeBii79Dv/MdN8miBPA1GndADT9Nx9LLoBR+LwV2
-	fizsBgGRiUIklcYcrnAXzsjrVBQnDkLLJicj6HXIF8ZxWsOYhODdkkr8O7HpYXFiTmy78wM9WYY
-	CAQjA+z5C0FuWKI8QxQr/LtLPRhnOcN5a/pHu/TxagFx/4B8+t0BhF
-X-Google-Smtp-Source: AGHT+IGTJOrEPEiVQW2cxlaQzIiNbiSJmAaMsZZjfT3INWUuQzyEmCLMu7tBGSiCluIYiS0KpLJkhLx4jPL1HbwRKKM=
-X-Received: by 2002:a05:6e02:1f86:b0:3d3:f6ee:cc4c with SMTP id
- e9e14a558f8ab-3d7ec0e1287mr131512955ab.0.1744646336149; Mon, 14 Apr 2025
- 08:58:56 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744646633; x=1745251433;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VzyFZIEP6M1ohDkNBbb+oGqFZk64nQZeVuUKR+ZBZTs=;
+        b=Dd51Mnx5EtV65al5Y00oNzfezLCJsCwgIIZzPFe+kQw95yvzdw23kiIDJcYWddCpsc
+         nteybmb2UGrrYBHhiewd8SxV1gsZaNabiadqJxUAopEvKCpPTjCQROhlhy26p6CHECE/
+         kPFWLnW/sbD3JSxIngzDBVxt6sYDyguycqrteBS70zQs6b01AesN4Xyii8FW4Z6QkIpC
+         LhDpSrue7U+ngBZutzuFgw4qRi0FKPrGyt78v8+OWQBriGvErhSjCjIU9fPr9513zWWA
+         iSHPa6z5puhy0SwycSvBFoQjBA9ZtzPErDT2YQOj2tKGz3yDY/6LuOxjpqxRHG8DM9Pr
+         GPuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVLXrlC5NWsw6dEzziO/VaPFAWrOeoy0Ysp0+dkH90u0mrYOv+8XQpneFEXQvu3wqz/QiSx+W2AbxQz7btI@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVXZ8anBeSz/V9NAJOVL2lelV/kIplnfkpyoucUhIBdqVjB2Zo
+	/y02dRyihem/O2VCPMGK9D0gE2KmLujKF/9djTcZgLOw2DvxwuVwn+aI/W1ullDpRIpAXzIvBco
+	rIr1TsKha4DC5l4l1/2g/iu5nwiZQSpkBBV0A
+X-Gm-Gg: ASbGncuC+L/hyn5Px92TCF7p4CJ9HkkRh8zerng5iTNmDDJcSRg3UFIiGF9gBMTqk6W
+	ljnICES39SelYu0GBf7xmf8nVmxObS+7eG1V8iBz5rHKgFKqI19JFU0Ff0iWy7Gj/qbweu7T0sa
+	VCKLazE4qXzfaAI7ZWNygatA==
+X-Google-Smtp-Source: AGHT+IFJg8GPXWq1lSCl703rekQ9oedGzVrCfZbbes1E5yG1RkGoWHSg6Y0BmhLSzHoUCX0vCwJ/tUA/5BAi0+XC2Rk=
+X-Received: by 2002:a05:622a:1a22:b0:477:2c1e:d252 with SMTP id
+ d75a77b69052e-479815f5b60mr8970641cf.20.1744646632877; Mon, 14 Apr 2025
+ 09:03:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250413-msm-gpu-split-v1-0-1132f4b616c7@oss.qualcomm.com> <20250413-msm-gpu-split-v1-1-1132f4b616c7@oss.qualcomm.com>
-In-Reply-To: <20250413-msm-gpu-split-v1-1-1132f4b616c7@oss.qualcomm.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 14 Apr 2025 08:58:44 -0700
-X-Gm-Features: ATxdqUE_40sjegeHYa17G5HPUwszlpBReEliqxXQxbBNutISCiHgfrvT9EcVIts
-Message-ID: <CAF6AEGtG2K79zAd9tyNAG7JSVhS2sPdC-VjqubpmhD9AvoVoAA@mail.gmail.com>
-Subject: Re: [PATCH 1/7] drm/msm: move wq handling to KMS code
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
+References: <20250318161823.4005529-1-tabba@google.com> <20250318161823.4005529-5-tabba@google.com>
+ <8ebc66ae-5f37-44c0-884b-564a65467fe4@redhat.com>
+In-Reply-To: <8ebc66ae-5f37-44c0-884b-564a65467fe4@redhat.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Mon, 14 Apr 2025 17:03:15 +0100
+X-Gm-Features: ATxdqUGPHkmIlJ3xSXP2tJdh8AVRtpSMsm_dfz2QSKTlfggMkikmgGbgteWcNbQ
+Message-ID: <CA+EHjTwjShH8vw-YsSmPk0yNY3akLFT3R9COtWLVgLozT_G7nA@mail.gmail.com>
+Subject: Re: [PATCH v7 4/9] KVM: guest_memfd: Handle in-place shared memory as
+ guest_memfd backed memory
+To: David Hildenbrand <david@redhat.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, Apr 13, 2025 at 9:33=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> The global workqueue is only used for vblanks inside KMS code. Move
-> allocation / flushing / deallcation of it to msm_kms.c
+Hi David,
 
-Maybe we should also just move the wq into struct msm_kms?
+On Mon, 14 Apr 2025 at 12:51, David Hildenbrand <david@redhat.com> wrote:
+>
+> On 18.03.25 17:18, Fuad Tabba wrote:
+> > For VMs that allow sharing guest_memfd backed memory in-place,
+> > handle that memory the same as "private" guest_memfd memory. This
+> > means that faulting that memory in the host or in the guest will
+> > go through the guest_memfd subsystem.
+> >
+> > Note that the word "private" in the name of the function
+> > kvm_mem_is_private() doesn't necessarily indicate that the memory
+> > isn't shared, but is due to the history and evolution of
+> > guest_memfd and the various names it has received. In effect,
+> > this function is used to multiplex between the path of a normal
+> > page fault and the path of a guest_memfd backed page fault.
+> >
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > ---
+> >   include/linux/kvm_host.h | 3 ++-
+> >   1 file changed, 2 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> > index 601bbcaa5e41..3d5595a71a2a 100644
+> > --- a/include/linux/kvm_host.h
+> > +++ b/include/linux/kvm_host.h
+> > @@ -2521,7 +2521,8 @@ static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+> >   #else
+> >   static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+> >   {
+> > -     return false;
+> > +     return kvm_arch_gmem_supports_shared_mem(kvm) &&
+> > +            kvm_slot_can_be_private(gfn_to_memslot(kvm, gfn));
+> >   }
+> >   #endif /* CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES */
+> >
+>
+> I've been thinking long about this, and was wondering if we should instead
+> clean up the code to decouple the "private" from gmem handling first.
+>
+> I know, this was already discussed a couple of times, but faking that
+> shared memory is private looks odd.
 
-BR,
--R
+I agree. I've been wanting to do that as part of a separate series,
+since renaming discussions sometimes tend to take a disproportionate
+amount of time. But the confusion the current naming (and overloading
+of terms) is causing is probably worse.
 
 >
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/msm/msm_drv.c | 21 ++-------------------
->  drivers/gpu/drm/msm/msm_kms.c | 16 +++++++++++++++-
->  2 files changed, 17 insertions(+), 20 deletions(-)
+> I played with the code to star cleaning this up. I ended up with the following
+> gmem-terminology  cleanup patches (not even compile tested)
 >
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.=
-c
-> index c3588dc9e53764a27efda1901b094724cec8928a..02beb40eb9146941aa43862d0=
-7a6d82ae21c965e 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -82,13 +82,6 @@ static int msm_drm_uninit(struct device *dev)
->                         drm_atomic_helper_shutdown(ddev);
->         }
+> KVM: rename CONFIG_KVM_GENERIC_PRIVATE_MEM to CONFIG_KVM_GENERIC_GMEM_POPULATE
+> KVM: rename CONFIG_KVM_PRIVATE_MEM to CONFIG_KVM_GMEM
+> KVM: rename kvm_arch_has_private_mem() to kvm_arch_supports_gmem()
+> KVM: x86: rename kvm->arch.has_private_mem to kvm->arch.supports_gmem
+> KVM: rename kvm_slot_can_be_private() to kvm_slot_has_gmem()
+> KVM: x86: generalize private fault lookups to "gmem" fault lookups
 >
-> -       /* We must cancel and cleanup any pending vblank enable/disable
-> -        * work before msm_irq_uninstall() to avoid work re-enabling an
-> -        * irq after uninstall has disabled it.
-> -        */
-> -
-> -       flush_workqueue(priv->wq);
-> -
->         msm_gem_shrinker_cleanup(ddev);
+> https://github.com/davidhildenbrand/linux/tree/gmem_shared_prep
 >
->         msm_perf_debugfs_cleanup(priv);
-> @@ -104,8 +97,6 @@ static int msm_drm_uninit(struct device *dev)
->         ddev->dev_private =3D NULL;
->         drm_dev_put(ddev);
+> On top of that, I was wondering if we could look into doing something like
+> the following. It would also allow for pulling pages out of gmem for
+> existing SW-protected VMs once they enable shared memory for GMEM IIUC.
 >
-> -       destroy_workqueue(priv->wq);
-> -
->         return 0;
->  }
 >
-> @@ -227,12 +218,6 @@ static int msm_drm_init(struct device *dev, const st=
-ruct drm_driver *drv)
->         ddev->dev_private =3D priv;
->         priv->dev =3D ddev;
+> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+> index 08eebd24a0e18..6f878cab0f466 100644
+> --- a/arch/x86/kvm/mmu/mmu.c
+> +++ b/arch/x86/kvm/mmu/mmu.c
+> @@ -4495,11 +4495,6 @@ static int kvm_mmu_faultin_pfn_gmem(struct kvm_vcpu *vcpu,
+>   {
+>          int max_order, r;
 >
-> -       priv->wq =3D alloc_ordered_workqueue("msm", 0);
-> -       if (!priv->wq) {
-> -               ret =3D -ENOMEM;
-> -               goto err_put_dev;
+> -       if (!kvm_slot_has_gmem(fault->slot)) {
+> -               kvm_mmu_prepare_memory_fault_exit(vcpu, fault);
+> -               return -EFAULT;
 > -       }
 > -
->         INIT_LIST_HEAD(&priv->objects);
->         mutex_init(&priv->obj_lock);
->
-> @@ -253,12 +238,12 @@ static int msm_drm_init(struct device *dev, const s=
-truct drm_driver *drv)
->         if (priv->kms_init) {
->                 ret =3D drmm_mode_config_init(ddev);
->                 if (ret)
-> -                       goto err_destroy_wq;
-> +                       goto err_put_dev;
->         }
->
->         ret =3D msm_init_vram(ddev);
->         if (ret)
-> -               goto err_destroy_wq;
-> +               goto err_put_dev;
->
->         dma_set_max_seg_size(dev, UINT_MAX);
->
-> @@ -304,8 +289,6 @@ static int msm_drm_init(struct device *dev, const str=
-uct drm_driver *drv)
->
->  err_deinit_vram:
->         msm_deinit_vram(ddev);
-> -err_destroy_wq:
-> -       destroy_workqueue(priv->wq);
->  err_put_dev:
->         drm_dev_put(ddev);
->
-> diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.=
-c
-> index 35d5397e73b4c5cb90b1770e8570277e782be7ec..821f0b9f968fc3d448e612bfa=
-e04639ceb770353 100644
-> --- a/drivers/gpu/drm/msm/msm_kms.c
-> +++ b/drivers/gpu/drm/msm/msm_kms.c
-> @@ -227,6 +227,13 @@ void msm_drm_kms_uninit(struct device *dev)
->
->         BUG_ON(!kms);
->
-> +       /* We must cancel and cleanup any pending vblank enable/disable
-> +        * work before msm_irq_uninstall() to avoid work re-enabling an
-> +        * irq after uninstall has disabled it.
-> +        */
+>          r = kvm_gmem_get_pfn(vcpu->kvm, fault->slot, fault->gfn, &fault->pfn,
+>                               &fault->refcounted_page, &max_order);
+>          if (r) {
+> @@ -4518,8 +4513,19 @@ static int __kvm_mmu_faultin_pfn(struct kvm_vcpu *vcpu,
+>                                   struct kvm_page_fault *fault)
+>   {
+>          unsigned int foll = fault->write ? FOLL_WRITE : 0;
+> +       bool use_gmem = false;
 > +
-> +       flush_workqueue(priv->wq);
-> +
->         /* clean up event worker threads */
->         for (i =3D 0; i < priv->num_crtcs; i++) {
->                 if (priv->event_thread[i].worker)
-> @@ -243,6 +250,8 @@ void msm_drm_kms_uninit(struct device *dev)
+> +       if (fault->is_private) {
+> +               if (!kvm_slot_has_gmem(fault->slot)) {
+> +                       kvm_mmu_prepare_memory_fault_exit(vcpu, fault);
+> +                       return -EFAULT;
+> +               }
+> +               use_gmem = true;
+> +       } else if (kvm_slot_has_gmem_with_shared(fault->slot)) {
+> +               use_gmem = true;
+> +       }
 >
->         if (kms && kms->funcs)
->                 kms->funcs->destroy(kms);
-> +
-> +       destroy_workqueue(priv->wq);
->  }
+> -       if (fault->is_private)
+> +       if (use_gmem)
+>                  return kvm_mmu_faultin_pfn_gmem(vcpu, fault);
 >
->  int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
-> @@ -258,10 +267,14 @@ int msm_drm_kms_init(struct device *dev, const stru=
-ct drm_driver *drv)
->         if (ret)
->                 return ret;
->
-> +       priv->wq =3D alloc_ordered_workqueue("msm", 0);
-> +       if (!priv->wq)
-> +               return -ENOMEM;
-> +
->         ret =3D priv->kms_init(ddev);
->         if (ret) {
->                 DRM_DEV_ERROR(dev, "failed to load kms\n");
-> -               return ret;
-> +               goto err_msm_uninit;
->         }
->
->         /* Enable normalization of plane zpos */
-> @@ -319,6 +332,7 @@ int msm_drm_kms_init(struct device *dev, const struct=
- drm_driver *drv)
->         return 0;
->
->  err_msm_uninit:
-> +       destroy_workqueue(priv->wq);
->         return ret;
->  }
+>          foll |= FOLL_NOWAIT;
 >
 >
+> That is, we'd not claim that things are private when they are not, but instead
+> teach the code about shared memory coming from gmem.
+>
+> There might be some more missing, just throwing it out there if I am completely off.
+
+For me these changes seem to be reasonable all in all. I might want to
+suggest a couple of modifications, but I guess the bigger question is
+what the KVM maintainers and guest_memfd's main contributors think.
+
+Also, how do you suggest we go about this? Send out a separate series
+first, before continuing with the mapping series? Or have it all as
+one big series? It could be something to add to the agenda for
+Thursday.
+
+Thanks,
+/fuad
 > --
-> 2.39.5
+> Cheers,
+>
+> David / dhildenb
 >
 
