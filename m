@@ -1,64 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-54421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FEC8A89F33
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 15:17:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B274FA89F7F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 15:33:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB23418994C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 13:17:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B525F17DFCE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 13:33:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C10FA29114F;
-	Tue, 15 Apr 2025 13:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC6C933991;
+	Tue, 15 Apr 2025 13:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+68+SyR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rdVPHELa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9075C5336D;
-	Tue, 15 Apr 2025 13:17:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F161531D5
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 13:33:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744723045; cv=none; b=Qwg2DA0iS7swY7kh8AVvfJjOmXGPPlNXVn/x0qK4spVGnRgK8tCMP2XKvajAopAHJTQo5QFkUXXbOkqvTvJtpGxwntgZnaRKE0vyk1zAJGUhMoDcfEW0DRf7ySrbKdMdrDJbO/9R7V7YvNyX+LYcYeQDJdsfRvjb/AWRiE9r6Oc=
+	t=1744724006; cv=none; b=En0kf/uXr/ugWPLl2QqFyvGGkr2dPUr5Ba8EBdA6avdp2ew77YOsXrkLCyT+WYi4ZvwdDxwKNksOpzAucgA5V8UFr7kdpTHobNMN/RNGKAIfw80KPWXEnmw9nIxeZCry66kJecMU6NZdx7lSAQA6FM+ZzrSNfHDG8Pm0vHM3H2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744723045; c=relaxed/simple;
-	bh=Q6HYizLtnLR7O7W9vSuKB7yPKKEShXO4Yi6jA1hSxsA=;
+	s=arc-20240116; t=1744724006; c=relaxed/simple;
+	bh=ek3xtokJGLel1uaqoh04AFgye1w5Sn7lMzo5cXs8j9I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tnwGYo+Bnr9uCnyNJvEKHUNbfPob+XN6+Lqs5FRrWa0zsDA9EUNrSSErUOwL6TbPSdyswkYfiQ+ng0NV5rWKKWDZDpHdCVbrXZ5ixggV6u9ejmHcofkbVssGCa/QlKKLEI+sTBZWrKYFs8RIZzqAv9V5BLrz7xkIx/Pyl0WLrN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+68+SyR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864E8C4CEE5;
-	Tue, 15 Apr 2025 13:17:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744723045;
-	bh=Q6HYizLtnLR7O7W9vSuKB7yPKKEShXO4Yi6jA1hSxsA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=X+68+SyRW+F1Ytja6WiougmYlgU3Xzy340l6JMwl+gRxEaj66h0aZDBEP0WalkqWj
-	 uZ3ZWGp3vtbw6e/q76F3M/w+hHNoQYC0Vb1a0fXDHKB/JGTkeJ15WKlbtaaxIc09Ie
-	 8hp79bGMOhxT47lJ8WKUv+4TAPsPPjnD9c/WaAZA=
-Date: Tue, 15 Apr 2025 15:17:22 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Deepika Singh <quic_dsi@quicinc.com>
-Cc: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	dmitry.baryshkov@oss.qualcomm.com, srinivas.kandagatla@linaro.org,
-	linux-arm-msm@vger.kernel.org, quic_bkumar@quicinc.com,
-	linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-	dri-devel@lists.freedesktop.org, arnd@arndb.de
-Subject: Re: [PATCH v1 4/4] misc: fastrpc: Add debugfs support for fastrpc
-Message-ID: <2025041534-subdivide-upward-1eca@gregkh>
-References: <20241118084046.3201290-5-quic_ekangupt@quicinc.com>
- <2024111804-doze-reflected-0feb@gregkh>
- <c3b285b0-33d1-4bfa-b8ab-6783ff5ed78d@quicinc.com>
- <cn7pqvhw4x4y7s5hbgzjpvyjnw4g6hoyepic4jai7x2fjdenxr@ikr4hkorbuwb>
- <365c4709-b421-4af8-b521-a195630242de@quicinc.com>
- <nsaq3zungvyhuikz35arvxmle2fovxh422jpyqxuleh57ufqnk@bekeh7qr7y76>
- <697e90db-6ecc-44ac-af86-6c7f910fc902@quicinc.com>
- <CAA8EJppbptPryu_O3G3YAapHT=Ai+MAdA38FtSU=YvWb+mqa1g@mail.gmail.com>
- <e1c23027-94c3-4fdf-b842-b154179aa2b8@oss.qualcomm.com>
- <a3addff2-1ee6-45aa-ac2c-693ffe804948@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=nGhnosjd4FRcOvA/goAQGaNkav0OCmVWukkiN+ZXnMoFQCfDtAIqM77t8A12BP7koX6W5QlFOXgrRRsdU7NECGP2TYw5ZFnB2chwrOIgfC/GBVJrsHa+YEuZ89/IElGGx+lvSL4Kx0/3oTMRprZ/qKeym6PhI2QNNCgv0bP985k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rdVPHELa; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-227d6b530d8so53597955ad.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 06:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744724004; x=1745328804; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6kb+FJnw86VvRtE36N+d+X7ug1k6Yvpc1Ae1wFjKr7M=;
+        b=rdVPHELastes4u4eSCnFjKQw7B7P1s0RLzwNZABoObyN90lgUr5+TurKQ69r8n2uXn
+         MHfg47nAbXTfsR5LSyIwD1VE8xH+d3zDPpD2ftrh6x4rmzAt9GS5lYrfHTFI0GP+MSXs
+         iiz+QIzVLYV1dh3p7zlsUdG8PBly9+putZ3XLh5TuK+Hr4FwPcprVneTuvCB78am3MEU
+         14kclh2tkbfi05PNLtYeT9P8qihEI01jMm5iSyDogKOM6vjD3fv8PWcQcu6I2t3o4fPU
+         oPZ4CNqjtSUHj34t/d6mOxgOn6KLFXI5fgfno2DhBmqZ/wB2M2ykRhUB3oHaeJMZ09eY
+         GTPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744724004; x=1745328804;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6kb+FJnw86VvRtE36N+d+X7ug1k6Yvpc1Ae1wFjKr7M=;
+        b=VKcII7Lt6cMN6unUd1tkH21y9ivti3mH8DDXevZtIoJCmrop66meHFyjbJQaM8Oaap
+         g3SdsZog3Ps9nSikpnBwc7Q+sw0XuxbbvA2VtxU6E5/YVme63F3BP2nEsMMOfwolWv9W
+         q86Iy+2yoIDH89X5fkhg8HDvgJNotoO1WBh4I1fcGCcKSTL68yHNcAyXzk3be+OysAcb
+         yHNtvQdOgr2x33lczKPGQgsECJUABS4TsbULNhaR98pQGYqVDvNIs/KcgSkwMMb25kNw
+         i2o73Z4kZG/zcsupKzyFeLK6J70szK/0+Tzs+DV7GixBHoPd6KdtzGPoJ9e9nVqaVs1G
+         Vy+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUYKtnBWBR7bg5uo6vL1hT4hSXI8je0ST72NVd4Svpr+gHRr5VAjNJ9kpHUk2WiKewVdPTCAIJMfIdt/BQ8@vger.kernel.org
+X-Gm-Message-State: AOJu0YzdsssGU4bPpG6JdK/Mos6zDLqkS4+S5u+v5zW7wSnzopmH9pAr
+	c+aeTOI/obrZANERaQXgzZ37wCciaOi2sOSNY/sT6PNZMRC5RfjbGEBFayVrIiKF6Q3YWvPu9/b
+	13A==
+X-Gm-Gg: ASbGncvLlQk1OJC8l/tGnqLa9mGOQt71bc1YjcvCP4M103mkBGAem6ShatioIK97QhD
+	1rNmmunk1NE5Tl3Cfd+jhMoCHz095wAIeoBBBRlMe4AhafuQOKPIc4f6AWKAuIxuhDOXMw2gm2V
+	mW6nhsEpN+oOp3+G/JSqeAxdupSw9NOPtNDRCCeXJVKGjWE8O6jLQyc+XJ6NRIOqbmtPrewkrxu
+	xRrFluIA9pwqGDybmfJzF6RKANtfduCJAtGdNtHIk85tRCmucT2G7Mn1whwCY4XWfgt25LxQc/J
+	wtIUcudogmXiNfMvDpxO25ZFtnsvIxlWpB34l05XZ4+562lReg==
+X-Google-Smtp-Source: AGHT+IH6VniJgzO2ge6ikLonScHc+/MusL7v3em7u0V8pMku3ZWCkwH976lsW0jgobFIzeciiAD5CQ==
+X-Received: by 2002:a17:902:f705:b0:220:e9ac:e746 with SMTP id d9443c01a7336-22bea4fdc7amr267687405ad.53.1744724004231;
+        Tue, 15 Apr 2025 06:33:24 -0700 (PDT)
+Received: from thinkpad ([120.60.71.35])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22ac7cb6876sm117199985ad.181.2025.04.15.06.33.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Apr 2025 06:33:23 -0700 (PDT)
+Date: Tue, 15 Apr 2025 19:03:17 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Lukas Wunner <lukas@wunner.de>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
+	Oliver O'Halloran <oohall@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof Wilczy??ski <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, dingwei@marvell.com, cassel@kernel.org, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/4] PCI/ERR: Add support for resetting the slot in a
+ platforms specific way
+Message-ID: <3dokyirkf47lqxgx5k2ybij5b5an6qnceifsub3mcmjvzp3kdb@sm7f2jxxepdc>
+References: <20250404-pcie-reset-slot-v1-0-98952918bf90@linaro.org>
+ <20250404-pcie-reset-slot-v1-2-98952918bf90@linaro.org>
+ <Z--cY5Uf6JyTYL9y@wunner.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,137 +97,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a3addff2-1ee6-45aa-ac2c-693ffe804948@quicinc.com>
+In-Reply-To: <Z--cY5Uf6JyTYL9y@wunner.de>
 
-On Mon, Apr 14, 2025 at 12:41:47PM +0530, Deepika Singh wrote:
-> 
-> 
-> On 4/11/2025 1:55 PM, Ekansh Gupta wrote:
+On Fri, Apr 04, 2025 at 10:46:27AM +0200, Lukas Wunner wrote:
+> On Fri, Apr 04, 2025 at 01:52:22PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > When the PCI error handling requires resetting the slot, reset it using the
+> > host bridge specific 'reset_slot' callback if available before calling the
+> > 'slot_reset' callback of the PCI drivers.
 > > 
-> > 
-> > On 12/3/2024 5:27 PM, Dmitry Baryshkov wrote:
-> > > On Tue, 3 Dec 2024 at 07:22, Ekansh Gupta <quic_ekangupt@quicinc.com> wrote:
-> > > > 
-> > > > 
-> > > > On 12/2/2024 6:18 PM, Dmitry Baryshkov wrote:
-> > > > > On Mon, Dec 02, 2024 at 03:27:43PM +0530, Ekansh Gupta wrote:
-> > > > > > On 11/22/2024 12:23 AM, Dmitry Baryshkov wrote:
-> > > > > > > On Thu, Nov 21, 2024 at 12:12:17PM +0530, Ekansh Gupta wrote:
-> > > > > > > > On 11/18/2024 7:32 PM, Greg KH wrote:
-> > > > > > > > > On Mon, Nov 18, 2024 at 02:10:46PM +0530, Ekansh Gupta wrote:
-> > > > > > > > > > Add changes to support debugfs. The fastrpc directory will be
-> > > > > > > > > > created which will carry debugfs files for all fastrpc processes.
-> > > > > > > > > > The information of fastrpc user and channel contexts are getting
-> > > > > > > > > > captured as part of this change.
-> > > > > > > > > > 
-> > > > > > > > > > Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> > > > > > > > > > ---
-> > > > > > > > > >   drivers/misc/fastrpc/Makefile        |   3 +-
-> > > > > > > > > >   drivers/misc/fastrpc/fastrpc_debug.c | 156 +++++++++++++++++++++++++++
-> > > > > > > > > >   drivers/misc/fastrpc/fastrpc_debug.h |  31 ++++++
-> > > > > > > > > >   drivers/misc/fastrpc/fastrpc_main.c  |  18 +++-
-> > > > > > > > > >   4 files changed, 205 insertions(+), 3 deletions(-)
-> > > > > > > > > >   create mode 100644 drivers/misc/fastrpc/fastrpc_debug.c
-> > > > > > > > > >   create mode 100644 drivers/misc/fastrpc/fastrpc_debug.h
-> > > > > > > > > > 
-> > > > > > > > > > diff --git a/drivers/misc/fastrpc/Makefile b/drivers/misc/fastrpc/Makefile
-> > > > > > > > > > index 020d30789a80..4ff6b64166ae 100644
-> > > > > > > > > > --- a/drivers/misc/fastrpc/Makefile
-> > > > > > > > > > +++ b/drivers/misc/fastrpc/Makefile
-> > > > > > > > > > @@ -1,3 +1,4 @@
-> > > > > > > > > >   # SPDX-License-Identifier: GPL-2.0
-> > > > > > > > > >   obj-$(CONFIG_QCOM_FASTRPC)      += fastrpc.o
-> > > > > > > > > > -fastrpc-objs    := fastrpc_main.o
-> > > > > > > > > > \ No newline at end of file
-> > > > > > > > > > +fastrpc-objs    := fastrpc_main.o \
-> > > > > > > > > > +                fastrpc_debug.o
-> > > > > > > > > Only build this file if debugfs is enabled.
-> > > > > > > > > 
-> > > > > > > > > And again, "debug.c"?
-> > > > > > > > I'll add change to build this only if debugfs is enabled. Going forward I have plans to add
-> > > > > > > > few more debug specific changes, maybe then I'll need to change the build rules again.
-> > > > > > > > > > diff --git a/drivers/misc/fastrpc/fastrpc_debug.c b/drivers/misc/fastrpc/fastrpc_debug.c
-> > > > > > > > > > new file mode 100644
-> > > > > > > > > > index 000000000000..cdb4fc6845a8
-> > > > > > > > > > --- /dev/null
-> > > > > > > > > > +++ b/drivers/misc/fastrpc/fastrpc_debug.c
-> > > > > > > > > > @@ -0,0 +1,156 @@
-> > > > > > > > > > +// SPDX-License-Identifier: GPL-2.0
-> > > > > > > > > > +// Copyright (c) 2024 Qualcomm Innovation Center.
-> > > > > > > > > > +
-> > > > > > > > > > +#include <linux/debugfs.h>
-> > > > > > > > > > +#include <linux/seq_file.h>
-> > > > > > > > > > +#include "fastrpc_shared.h"
-> > > > > > > > > > +#include "fastrpc_debug.h"
-> > > > > > > > > > +
-> > > > > > > > > > +#ifdef CONFIG_DEBUG_FS
-> > > > > > > > > Please put the #ifdef in the .h file, not in the .c file.
-> > > > > > > > Ack
-> > > > > > > > > > +void fastrpc_create_user_debugfs(struct fastrpc_user *fl)
-> > > > > > > > > > +{
-> > > > > > > > > > +        char cur_comm[TASK_COMM_LEN];
-> > > > > > > > > > +        int domain_id, size;
-> > > > > > > > > > +        char *debugfs_buf;
-> > > > > > > > > > +        struct dentry *debugfs_dir = fl->cctx->debugfs_dir;
-> > > > > > > > > > +
-> > > > > > > > > > +        memcpy(cur_comm, current->comm, TASK_COMM_LEN);
-> > > > > > > > > > +        cur_comm[TASK_COMM_LEN-1] = '\0';
-> > > > > > > > > > +        if (debugfs_dir != NULL) {
-> > > > > > > > > > +                domain_id = fl->cctx->domain_id;
-> > > > > > > > > > +                size = snprintf(NULL, 0, "%.10s_%d_%d_%d", cur_comm,
-> > > > > > > > > > +                                current->pid, fl->tgid, domain_id) + 1;
-> > > > > > > > > > +                debugfs_buf = kzalloc(size, GFP_KERNEL);
-> > > > > > > > > > +                if (debugfs_buf == NULL)
-> > > > > > > > > > +                        return;
-> > > > > > > > > > +                /*
-> > > > > > > > > > +                 * Use HLOS process name, HLOS PID, fastrpc user TGID,
-> > > > > > > > > > +                 * domain_id in debugfs filename to create unique file name
-> > > > > > > > > > +                 */
-> > > > > > > > > > +                snprintf(debugfs_buf, size, "%.10s_%d_%d_%d",
-> > > > > > > > > > +                        cur_comm, current->pid, fl->tgid, domain_id);
-> > > > > > > > > > +                fl->debugfs_file = debugfs_create_file(debugfs_buf, 0644,
-> > > > > > > > > > +                                debugfs_dir, fl, &fastrpc_debugfs_fops);
-> > > > > > > > > Why are you saving the debugfs file?  What do you need to do with it
-> > > > > > > > > that you can't just delete the whole directory, or look up the name
-> > > > > > > > > again in the future when removing it?
-> > > > > > > > fl structure is specific to a process using fastrpc driver. The reason to save
-> > > > > > > > this debugfs file is to delete is when the process releases fastrpc device.
-> > > > > > > > If the file is not deleted, it might flood multiple files in debugfs directory.
-> > > > > > > > 
-> > > > > > > > As part of this change, only the file that is getting created by a process is
-> > > > > > > > getting removed when process is releasing device and I don't think we
-> > > > > > > > can clean up the whole directory at this point.
-> > > > > > > My 2c: it might be better to create a single file that conains
-> > > > > > > information for all the processes instead of that. Or use fdinfo data to
-> > > > > > > export process / FD information to userspace.
-> > > > > > Thanks for your review. The reason of not having single file for all processes is that
-> > > > > > I can run 100s of iteration for any process(say calculator) and every time the properties
-> > > > > > of the process can differ(like buffer, session etc.). For this reason, I'm creating and
-> > > > > > deleting the debugfs files for every process run.
-> > > > > > 
-> > > > > > Do you see any advantage of using fdinfo over debugfs? I'm not sure if we can add all
-> > > > > > the information(like in debugfs) here.
-> > > > > Which information is actually useful / interesting for application
-> > > > > developers? If not for the fdinfo, I might still vote for a single file
-> > > > > rather than a pile of per-process data.
-> Let’s say I am trying to do debugfs read when 10+ or more sessions are
-> active per channel, then for pushing data of nth process in a single file, I
-> would have to wait for n-1 processes, by that time process data might get
-> changed. How do you suggest handling this?
+> > The 'reset_slot' callback is responsible for resetting the given slot
+> > referenced by the 'pci_dev' pointer in a platform specific way and bring it
+> > back to the working state if possible. If any error occurs during the slot
+> > reset operation, relevant errno should be returned.
+> [...]
+> > --- a/drivers/pci/pcie/err.c
+> > +++ b/drivers/pci/pcie/err.c
+> > @@ -234,11 +234,16 @@ pci_ers_result_t pcie_do_recovery(struct pci_dev *dev,
+> >  	}
+> >  
+> >  	if (status == PCI_ERS_RESULT_NEED_RESET) {
+> > -		/*
+> > -		 * TODO: Should call platform-specific
+> > -		 * functions to reset slot before calling
+> > -		 * drivers' slot_reset callbacks?
+> > -		 */
+> > +		if (host->reset_slot) {
+> > +			ret = host->reset_slot(host, bridge);
+> > +			if (ret) {
+> > +				pci_err(bridge, "failed to reset slot: %d\n",
+> > +					ret);
+> > +				status = PCI_ERS_RESULT_DISCONNECT;
+> > +				goto failed;
+> > +			}
+> > +		}
+> > +
+> 
+> This feels like something that should be plumbed into
+> pcibios_reset_secondary_bus(), rather than pcie_do_recovery().
+> 
 
-I suggest you NEVER use debugfs for anything that you care about this
-type of thing for.
+I did consider that, but didn't go for it since there was no platform reset code
+present in that function. But I will try to use it as I don't have a strong
+preference to do reset slot in pcie_do_recovery().
 
-debugfs is for debugging.  Don't expect to rely on it for anything
-relating to performance, and many/most systems don't even have it
-enabled.  It also can NOT be used for anything that actually is a real
-functionality of the system, and MUST work properly if it is not enabled
-or a failure happens with the creation of a debugfs file.
+> Note that in the DPC case, pcie_do_recovery() doesn't issue a reset
+> itself.  The reset has already happened, it was automatically done
+> by the hardware and all the kernel needs to do is bring up the link
+> again.  Do you really need any special handling for that in the
+> host controller driver?
+> 
 
-So why would this even be an issue, as surely you aren't expecting that
-debugfs be the main api for your driver, right?  :)
+I haven't tested DPC, so I'm not sure if reset slot is needed or not.
 
-thanks,
+> Only in the AER case do you want to issue a reset on the secondary bus
+> and if there's any platform-specific support needed for that, it needs
+> to go into pcibios_reset_secondary_bus().
+> 
 
-greg k-h
+Ok. I'm trying out this right now and will see if it satisfies my requirement
+(for both AER fatal and Link Down recovery).
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
