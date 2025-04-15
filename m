@@ -1,61 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-54291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F76DA89240
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 04:53:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE76FA89243
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 04:54:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A8E77189C0AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 02:53:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11C0B3A4D6A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 02:53:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DC9046426;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AEB0157A48;
 	Tue, 15 Apr 2025 02:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ohCLHh1Y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="anizWvRZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FD02DFA26;
-	Tue, 15 Apr 2025 02:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D6C2DFA32;
+	Tue, 15 Apr 2025 02:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744685566; cv=none; b=UZmfVbYL7KO5r9gSvmyOage/N6dpqy7oDIadb2PdVfF48GtSEUQUP5dwMcQRhq6beqRiJlnZvQHs3Fh48wD0LxUC/SW2bhrCZJuD7YljsJahZrCOlMb1GfVZBj0NDQrw/cIsLUPSAdgW10BPqWDYpIhwUzLWcsxh1sKZLXjNYkE=
+	t=1744685566; cv=none; b=slxgV/GjqqtOnKNzk7SvdP+2ske4ml6xZNGIQcjFNlUJPaw5+QlntyeVrVsUZiBIhH5dBFLCjBPmz1aNpffY3/50qCFmEXhJiel6y6PJj5Kc7+KGEcMsjUwGYxpX3+1aNtsoYwQmQlDBheV9t9IcOVmJts/I8O4e4fcoWkbimUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1744685566; c=relaxed/simple;
-	bh=D3fHJzips5mW3Ekv3PXGxBas7u/4KPS9mKPQsZ87I3c=;
+	bh=IGxreNlwpqQm5syFJ8pj7BbF6kEXtKAd/PNKLjIuTvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hycwtjbOZircQpvft+nyi9SaIejsyzZX7KF8g7xES7aJopTLER3lmhFR33RV0HQhfakxoyyAzavOfv6uDS1wFBGAu9+//PGVbHPfLEAv7QV3KL423WvWqIX7TvijDpYoqnzoFLMXoxuubTXlCdK2/jVcDsA9rk5tJ/SRSsNtNQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ohCLHh1Y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA0FC4CEE2;
-	Tue, 15 Apr 2025 02:52:43 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Sl4rOw+mt2BxyAK5P5Sd6EEeh+/ht6K5aJtD3/GzaanGN303pU+cJ7ahbyExWoo+AdrasopvwsPkoaWF+dP915mIkyUjZNFGglEKScU83G86yGE8UuDrKXXjngE70nrmhQXk6kPIlvvrrNe0WRJXo0XZTWnbuLvGOfVXjG9DCDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=anizWvRZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCE0C4CEED;
+	Tue, 15 Apr 2025 02:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744685564;
-	bh=D3fHJzips5mW3Ekv3PXGxBas7u/4KPS9mKPQsZ87I3c=;
+	s=k20201202; t=1744685565;
+	bh=IGxreNlwpqQm5syFJ8pj7BbF6kEXtKAd/PNKLjIuTvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohCLHh1Yma0e41b/axzEao6RgMe6NgeCuBW/g3nAEAZbno22OjGlxldjikPK74MRs
-	 AK10ciWi3BodwOGiYmRx/KaxOGkjFX3Gcb5zvvxXrFE40fzNuz/gsnMy6w1U1RD2m5
-	 zIG0ES2Mfuryq6VikIKyHt2e0dMbSqiigNzOnbKfhz/I44Chmp9DAfxxD433gwfKLd
-	 0tbbpaFtIOtSNJ+IPITE4CBCqXzMRTsZa86/4j0GoXyb+vAwM8/4qnBXGQk7PlrpAA
-	 trqv3GEYkzjADGo2xoMsOKs9UPziWrZ5W7PkdmTEXvVcpJIml6rb8UYdy8YUt8iW5G
-	 af5EVzscgvccw==
+	b=anizWvRZYfmt1Bm+YMw3o69qlGNd7ikTjSrCPDfDDjXFX8r1Em34EaA2rWaIaUbba
+	 KP6m+GhaBtf1gQN18oXsVnhBlLNMNonJTNSA/PIZhCvCHG2DHLGnLgl44Vw7K7/iWk
+	 Lze/6VRbgJGRaY97jBLVo1+Sg03L0yP2s35dDczt76NRZV/zyw40tVoPDArGEoiJWb
+	 nguIIIfC3CucCHfZ2m5sEOVbo1ZOh4g1gL26Pg7FkU+c3V0xmKLCPwIOlXhHwRyToz
+	 MelztK/oN3r/r+u8/NuLL0VF5gElZI3XQdveWsSISbHnOb/zYMYgwkl2F1Pefn+QDs
+	 0gn54hV6vYuLg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Subject: Re: (subset) [PATCH v2 1/1] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: enable MICs LDO
-Date: Mon, 14 Apr 2025 21:52:37 -0500
-Message-ID: <174468553409.331095.207120209579526273.b4-ty@kernel.org>
+	Conor Dooley <conor+dt@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: Remove unnecessary MM_[UD]L audio routes
+Date: Mon, 14 Apr 2025 21:52:38 -0500
+Message-ID: <174468553410.331095.18181920532616083271.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250412124956.20562-1-alex.vinarskis@gmail.com>
-References: <20250412124956.20562-1-alex.vinarskis@gmail.com>
+In-Reply-To: <20250411-cleanup-mm-routes-v1-1-ba98f653aa69@fairphone.com>
+References: <20250411-cleanup-mm-routes-v1-1-ba98f653aa69@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,18 +69,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 12 Apr 2025 14:49:18 +0200, Aleksandrs Vinarskis wrote:
-> Particular device comes without headset combo jack, hence does not
-> feature wcd codec IC. In such cases, DMICs are powered from vreg_l1b.
-> Describe all 4 microphones in the audio routing. vdd-micb is defined
-> for lpass-macro already.
+On Fri, 11 Apr 2025 10:33:29 +0200, Luca Weiss wrote:
+> Since commit 6fd8d2d275f7 ("ASoC: qcom: qdsp6: Move frontend AIFs to
+> q6asm-dai") from over 4 years ago the audio routes beween MM_DL* +
+> MultiMedia* Playback and MultiMedia* Capture + MM_UL* are not necessary
+> anymore and can be removed from the dts files. It also helps to stop
+> anyone copying these into new dts files.
 > 
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: enable MICs LDO
-      commit: 337921764e31907ea46df02c1d8dd1ae8f2802f5
+[1/1] arm64: dts: qcom: Remove unnecessary MM_[UD]L audio routes
+      commit: e8acfc1bbcda6978d952d0c18b0b5cebd6dcc3cf
 
 Best regards,
 -- 
