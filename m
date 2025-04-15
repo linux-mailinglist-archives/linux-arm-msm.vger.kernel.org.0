@@ -1,239 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-54332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 417B2A897B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 11:15:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6401A897E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 11:26:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC8A33B80FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 09:15:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D906816DBE4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 09:26:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C87AC274644;
-	Tue, 15 Apr 2025 09:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF3EE2820B0;
+	Tue, 15 Apr 2025 09:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p4+61tZf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="k+dzLShd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08F31C701C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 09:15:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F332D27A932;
+	Tue, 15 Apr 2025 09:26:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744708541; cv=none; b=eUsGLozqm5l4Av9gS9q4es0OChm6u3Re1Z0TsVjRT61t7jfXWB5dWABtEPCVifAMhnF44NmPQpFpXUlZCKgGuSgl575B/0CrIiXzvV8ZUx59KmxSAJjwq9h3BDXk+oSCIuz5LKe/y535tIEWjTRsTsLycB+ta49c83J3BwfUdqU=
+	t=1744709196; cv=none; b=Q2dv+iklr7UFVH5S4XxfZjmoGIcO06y9qRnRpZ7sCrKBDF1Yyiign3yrYHR46R1Hr0XLuodFRQlgDxbHYFfEKxJmvNm+LpXSfrhjhfASyyfZfcISe8eAKWcUebrXObHiwwjWrNJxeDZF6nofO78eYTzTX7zUq84+4MU6NTB0tVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744708541; c=relaxed/simple;
-	bh=Xb56mDUhjw/Q1oLqLQeKgmtGUX5Xo/aS80fWKCCJGY4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lfauluCK2rhmxK2eCo4ZRn8rXJJ+LrLGKK3BeRVSPBIMpUml9EWWcRynyPgn723UOzJCHOqAZsOn2zky5de+ydIA7GVSgTGAREDr/mp5xBBHwovtQvJWm+VCCOdPZeCJlNLQmyEyIkTGP3qIsUVDOupOi/r+4ayjpk6fhFn0v4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p4+61tZf; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3912fdddf8fso4217627f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 02:15:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744708538; x=1745313338; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a5vJVCTJwtq6/DnoPIdPI95VzLb9KuC0ho+ih6r4jso=;
-        b=p4+61tZfZsRtLrQ5oB37BJMO/eOm3NYN/GGX0TK1gaFwTEzG4G5504m4qJcZRKljQw
-         3a35414jm03uVrhdE5YSOQmyd6J7PdHIjIb/qm31TRuULvZWYWVAxAatDKZets0dP1dR
-         h+vMrEEgq/qPRq5r/QPTQFWX0TIbJ4KwvVjDMq+mE77WPNuprKFQadF5re9zM3vmEbDC
-         gN+VJ7/EF8w9QwskePUs92+BzzQKhdR98W34Z6cXhGCn5HLsOu2yFGbX3V3q3TRDrlag
-         AsaXTepufABky3aHTLlUIEX4LCWO+N+HdK/1ouOvi6pqgbyeTOzNeN/6qYpKj/4rKzgz
-         r6rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744708538; x=1745313338;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a5vJVCTJwtq6/DnoPIdPI95VzLb9KuC0ho+ih6r4jso=;
-        b=SYMIivE5VRFbHV8i6KvKBjf/OHvY56C1ULhAUZf7F3ikUdrvzElUrsdJ7yuPFbBlSo
-         hncwcBrKZCFT+jj/kqAhQIKQi4pj3W16+VBjgFBowSZu1Jd4dfQ97ZLXptAQ91KSvcXn
-         tD3aVxGf7zrQarB2oZ3XPtQw4t4NJmP1pjf/jN6PkwE0rECtYOdhWhkvxBODwq/ZF2Zc
-         uxPuCeG+582QGN0/REDvAHcYMI2d4qxqLvXf2uZNhP35Tr3Ig1dbTxGUyWsPXRWF7DJJ
-         vZwzBTV/tcX7k6R3DHaTaYpMCZD90hrMSt7HVjkPiwgZSmLM42+mK4v3nn5lfr8mqg+1
-         C71g==
-X-Forwarded-Encrypted: i=1; AJvYcCVsjSjgwWlK83IQC875W9zbBiLAeJml9ivjOomvni6Aq0uf3QEOcpnMRBEExnMzBrMdaga2hn8hmSyNgvLQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4M0WXZlQs1RzmHEJCL+If8vU4V6UFz6sQLe6LQ3LjXAsoE//h
-	4uhf8bt1Db+AWhGv+7rmCX4Aks0mf8YD/yUjyWDS1wKKdZq523jOyXHwlJtvTXs=
-X-Gm-Gg: ASbGncuNkIwItmp1/BbjjlhpsOC1bwGHgwt/h7GnkVo87jYrF8KZ2voLQzSCwhfxwae
-	MEdTAiAqN7ancajoKkUcSn9O4TcnttfZSHP0F1aJpbn+/OhTXw0JAyfXTBMvZPHCfM7w9IzJzRL
-	aBiBpv+7GeD2p1b9Z6HvIqs8C3WxXxm8i+eBr2YbRj/B/+Nyqr0X0B+EOZYhuNte9yj3t3JiyFj
-	Y9zAHzqlMnH5swwOToytgUmEAzhiXT5sT5sv7YlesUHtS1gyzfiGW7e+ikk4o4dQikXlsuF1Cqs
-	rjHdgNKUARHsXLHrHKPCP9CJiJgKsNT4S9+V0lUt5lKj1QgSOAucQghLgk9xCHOrNvjt89Q=
-X-Google-Smtp-Source: AGHT+IEfr/Hk5p9L21/uIcg8UOwfZhTDJAOMWzS89QUdqyXz4YBi2QMOGRnZPOYkn8+5CJxQQ8lFQQ==
-X-Received: by 2002:a5d:5989:0:b0:39c:11a1:21d6 with SMTP id ffacd0b85a97d-39edc30b4fdmr1951577f8f.17.1744708538062;
-        Tue, 15 Apr 2025 02:15:38 -0700 (PDT)
-Received: from [192.168.1.47] (i5E863ACE.versanet.de. [94.134.58.206])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43f2338dc13sm209176705e9.3.2025.04.15.02.15.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Apr 2025 02:15:37 -0700 (PDT)
-Message-ID: <6275ada5-f7c4-42cd-8d47-f4cbf0a0d4cc@linaro.org>
-Date: Tue, 15 Apr 2025 11:15:35 +0200
+	s=arc-20240116; t=1744709196; c=relaxed/simple;
+	bh=UTwpbbngg84fuy2zUb2xDQozibZQbR5SveTQ8xVJlNU=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=p0RTV/b0j4zY1+r74PG8igEawFbw0MrqA9qRdpFM97z97jK2V3hx86S24dhpCnJyEcKJLRLiMbMreDj8srNCDuCC9PUlxLOOj3bPt2sIHXnqTeey1BzNNygqDaYP4bRVMzKPCI9gCvZr7++GnkdUE14ezRBW47kAyY+X85rbycw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=k+dzLShd; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53F8tH9t005263;
+	Tue, 15 Apr 2025 09:26:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=ZqwRMi8M1IUtIS6VXtjKJq
+	uub+so3nVVibWZGQx2TpA=; b=k+dzLShd7NITl7CfdS09rV8Qd+OuKmnnqtlXUM
+	ig8urptOfhFL9f5gl1J8f0ufyBEalWfzkEnSCCvflSnrOkF8qremtP1aZIIXSb/F
+	yZLlU+DmwZsoetKR0CThu4rVJ4mDNhL0/VfPc8E4KXU5poUojIdlts1bBxIx6AcO
+	fXqas7YvSmATER/iEiDEEQtGrsjW764yHgYt4sRzDhT5vXi6OhAKZ7cBsOuc1rxe
+	4Mh78uBZRSsrUDAruqKFjqtX1xiRtbPc+dpZUOU672BxSuN6UX3kY7djmgDJfm+L
+	tEOd0C5OdGTTlgXjDQ72gPNcz+5jOFHopEv6sEmLknTJ+xwQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yhbpqa06-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Apr 2025 09:26:22 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53F9QLrW006213
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Apr 2025 09:26:21 GMT
+Received: from yuanfang4-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 15 Apr 2025 02:26:18 -0700
+From: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+Subject: [PATCH v4 0/2] coresight: Add Coresight Trace Network On Chip
+ driver
+Date: Tue, 15 Apr 2025 17:25:38 +0800
+Message-ID: <20250415-trace-noc-v4-0-979938fedfd8@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] arm64: qcom: sc7280: Move phy, perst to root port
- node
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org,
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_vbadigan@quicinc.com, quic_mrana@quicinc.com
-References: <20250414-perst-v2-0-89247746d755@oss.qualcomm.com>
- <20250414-perst-v2-2-89247746d755@oss.qualcomm.com>
- <511f8414-bbb1-4069-a0a6-f7505190c1e0@linaro.org>
- <7atbwco3htsrfzfb5hd36t3tprqdgcxbtvggdww7pabibbs44i@zncb2tznzzvc>
-Content-Language: en-US
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <7atbwco3htsrfzfb5hd36t3tprqdgcxbtvggdww7pabibbs44i@zncb2tznzzvc>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABIm/mcC/3XPy07DMBAF0F+pvK6RHxM/WPEfqAs/ZqgXJOCUq
+ KjKv+NEIKVEXc7I5871jY1YC47s+XBjFacylqFvAxwPLJ1D/4a85DYzJVQnQGh+qSEh74fEySl
+ nom5bh6y9/6hI5bpmvZ7afC7jZajfa/Qkly0DY0AL53l0LnPwOfGIouM2kohRSXJgXz6/Sip9e
+ krDO1tyJr3a3wZ202DSXPAOoqesQg7k7+zxr7WU/40k6XMma7yP+3vw8B40652BQEmDjW5vu4e
+ 2a1ZbslomAoy4t2Zr3daa5Z/KJCODEpbMvZ3n+QeqJ7N5yAEAAA==
+X-Change-ID: 20250403-trace-noc-f8286b30408e
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>
+CC: <kernel@oss.qualcomm.com>, <linux-arm-msm@vger.kernel.org>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Yuanfang Zhang
+	<quic_yuanfang@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1744709177; l=1710;
+ i=quic_yuanfang@quicinc.com; s=20241209; h=from:subject:message-id;
+ bh=UTwpbbngg84fuy2zUb2xDQozibZQbR5SveTQ8xVJlNU=;
+ b=QqN88X/vzOI7YeLmoIHxWhivRSa/lrfSS2xycn/rGoayOrunSkrPf7d4pWqbKnYhUmjWsWKzO
+ 2ILEyqHPcSlBQ0w1PlO6P0lLFiIBDKiebD5isCi9/n4abiQJXZ4xwcS
+X-Developer-Key: i=quic_yuanfang@quicinc.com; a=ed25519;
+ pk=ZrIjRVq9LN8/zCQGbDEwrZK/sfnVjwQ2elyEZAOaV1Q=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XfsPSoorrSd5FiA-etJlvgXxWZ5k1sba
+X-Proofpoint-GUID: XfsPSoorrSd5FiA-etJlvgXxWZ5k1sba
+X-Authority-Analysis: v=2.4 cv=I+plRMgg c=1 sm=1 tr=0 ts=67fe263e cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=wQFbxXTkjMarF-hqfQ4A:9
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-15_04,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ phishscore=0 adultscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
+ bulkscore=0 mlxlogscore=999 clxscore=1015 impostorscore=0 malwarescore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504150065
 
+The Trace Network On Chip (TNOC) is an integration hierarchy which is a
+hardware component that integrates the functionalities of TPDA and
+funnels. It collects trace form subsystems and transfers to coresight
+sink.
 
+Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+---
+Changes in v4:
+- Fix dt_binding warning.
+- update mask of trace_noc amba_id.
+- Modify driver comments.
+- rename TRACE_NOC_SYN_VAL to TRACE_NOC_SYNC_INTERVAL.
+- Link to v3: https://lore.kernel.org/r/20250411-trace-noc-v3-0-1f19ddf7699b@quicinc.com
 
-On 4/15/25 09:59, Dmitry Baryshkov wrote:
-> On Mon, Apr 14, 2025 at 02:49:00PM +0200, Caleb Connolly wrote:
->>
->>
->> On 4/14/25 07:39, Krishna Chaitanya Chundru wrote:
->>> Move phy, perst, to root port from the controller node.
->>>
->>> Rename perst-gpios to reset-gpios to align with the expected naming
->>> convention of pci-bus-common.yaml.
->>>
->>> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
->>> ---
->>>    arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts   | 5 ++++-
->>>    arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 5 ++++-
->>>    arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 5 ++++-
->>>    arch/arm64/boot/dts/qcom/sc7280.dtsi           | 6 ++----
->>>    4 files changed, 14 insertions(+), 7 deletions(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->>> index 7a36c90ad4ec8b52f30b22b1621404857d6ef336..3dd58986ad5da0f898537a51715bb5d0fecbe100 100644
->>> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->>> @@ -709,8 +709,11 @@ &mdss_edp_phy {
->>>    	status = "okay";
->>>    };
->>> +&pcie1_port0 {
->>> +	reset-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
->>> +};
->>> +
->>>    &pcie1 {
->>> -	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
->>>    	pinctrl-0 = <&pcie1_reset_n>, <&pcie1_wake_n>;
->>>    	pinctrl-names = "default";
->>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
->>> index 2ba4ea60cb14736c9cfbf9f4a9048f20a4c921f2..ff11d85d015bdab6a90bd8a0eb9113a339866953 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
->>> @@ -472,10 +472,13 @@ &pcie1 {
->>>    	pinctrl-names = "default";
->>>    	pinctrl-0 = <&pcie1_clkreq_n>, <&ssd_rst_l>, <&pe_wake_odl>;
->>> -	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
->>>    	vddpe-3v3-supply = <&pp3300_ssd>;
->>>    };
->>> +&pcie1_port0 {
->>> +	reset-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
->>> +};
->>> +
->>>    &pm8350c_pwm {
->>>    	status = "okay";
->>>    };
->>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->>> index 7370aa0dbf0e3f9e7a3e38c3f00686e1d3dcbc9f..3209bb15dfec36299cabae07d34f3dc82db6de77 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->>> @@ -414,9 +414,12 @@ &lpass_va_macro {
->>>    	vdd-micb-supply = <&vreg_bob>;
->>>    };
->>> +&pcie1_port0 {
->>> +	reset-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
->>> +};
->>> +
->>>    &pcie1 {
->>>    	status = "okay";
->>> -	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
->>>    	vddpe-3v3-supply = <&nvme_3v3_regulator>;
->>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>> index 0f2caf36910b65c398c9e03800a8ce0a8a1f8fc7..376fabf3b4eac34d75bb79ef902c9d83490c45f7 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>> @@ -2271,9 +2271,6 @@ pcie1: pcie@1c08000 {
->>>    			power-domains = <&gcc GCC_PCIE_1_GDSC>;
->>> -			phys = <&pcie1_phy>;
->>> -			phy-names = "pciephy";
->>
->> Isn't this a huge API breakage that will break using new DT with old
->> kernels? It will also break U-boot which uses upstream DT.
->>
->> This is bad enough, but at least let's break it a clean break by changing
->> all platforms at once.
-> 
-> Up to now as the kernel was the only and the main user, we allowed
-> forward breakage (new DT breaks with the old kernel), only backwards
-> compatibility was required (new kernels work with old DT).
-> 
-> Maybe, as this breaks external projects, we should allow a grace period
-> and list _both_ properties, dropping them after the LTS?
+Changes in v3:
+- Remove unnecessary sysfs nodes.
+- update commit messages.
+- Use 'writel' instead of 'write_relaxed' when writing to the register for the last time.
+- Add trace_id ops.
+- Link to v2: https://lore.kernel.org/r/20250226-trace-noc-driver-v2-0-8afc6584afc5@quicinc.com
 
-This would be good, especially with some mechanism like below that would 
-allow us to collect and list all the ABI breakages in DT for a given 
-kernel release.
+Changes in v2:
+- Modified the format of DT binging file.
+- Fix compile warnings.
+- Link to v1: https://lore.kernel.org/r/46643089-b88d-49dc-be05-7bf0bb21f847@quicinc.com
 
-Thanks,>
->>
->> As I understand it, we seem to allow these breakages in DT for now (and this
->> patch landing will confirm that), but perhaps we could at least track them
->> somewhere or at acknowledge the breakage with a tag in the commit message
->> pointing to the relevant dt-bindings patch.
->>
->> Breaks-dt: https://lore.kernel.org/linux-arm-msm/20250414-perst-v2-1-89247746d755@oss.qualcomm.com
->>
->> Kind regards,
->>
->>> -
->>>    			pinctrl-names = "default";
->>>    			pinctrl-0 = <&pcie1_clkreq_n>;
->>> @@ -2284,7 +2281,7 @@ pcie1: pcie@1c08000 {
->>>    			status = "disabled";
->>> -			pcie@0 {
->>> +			pcie1_port0: pcie@0 {
->>>    				device_type = "pci";
->>>    				reg = <0x0 0x0 0x0 0x0 0x0>;
->>>    				bus-range = <0x01 0xff>;
->>> @@ -2292,6 +2289,7 @@ pcie@0 {
->>>    				#address-cells = <3>;
->>>    				#size-cells = <2>;
->>>    				ranges;
->>> +				phys = <&pcie1_phy>;
->>>    			};
->>>    		};
->>>
->>
->> -- 
->> Caleb (they/them)
->>
-> 
+---
+Yuanfang Zhang (2):
+      dt-bindings: arm: Add device Trace Network On Chip definition
+      coresight: add coresight Trace Network On Chip driver
 
+ .../bindings/arm/qcom,coresight-tnoc.yaml          | 111 ++++++++++++
+ drivers/hwtracing/coresight/Kconfig                |  13 ++
+ drivers/hwtracing/coresight/Makefile               |   1 +
+ drivers/hwtracing/coresight/coresight-tnoc.c       | 191 +++++++++++++++++++++
+ drivers/hwtracing/coresight/coresight-tnoc.h       |  34 ++++
+ 5 files changed, 350 insertions(+)
+---
+base-commit: a2cc6ff5ec8f91bc463fd3b0c26b61166a07eb11
+change-id: 20250403-trace-noc-f8286b30408e
+
+Best regards,
 -- 
-Caleb (they/them)
+Yuanfang Zhang <quic_yuanfang@quicinc.com>
 
 
