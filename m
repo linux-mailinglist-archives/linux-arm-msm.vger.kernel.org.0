@@ -1,88 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-54330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2896AA8974D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 11:00:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E1C7AA89799
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 11:13:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C04813A423A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 08:59:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 879753B1044
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 09:13:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1467A27A913;
-	Tue, 15 Apr 2025 09:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC12D27F724;
+	Tue, 15 Apr 2025 09:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VqOpzx74"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Get02uRv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABF327B4EE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 09:00:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF6A1DED5D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 09:13:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744707606; cv=none; b=K+OrXKO9PDMeLEcGP4dKJm9AV35SrnjgEEQ2mOjcECZiIpdY9sIPaHB/ZsJJ/E6SJ3rqBQo8oHWUlx+2Zjozm6pDSOBWNwvO8/bpOCsdyTbQv09+p0P8jRhG3IfFvmWUbh7SfIBXHzJnMB95IMyo4SyFGJ2i5CoO3hJhpzFp6es=
+	t=1744708402; cv=none; b=Go85EL/pXxULLaIquFUzQvcxtfbJ+nc46xRHf1wViugGBgcMO3m8+ylVUuV4azFHl5aXxnHBhiDHE31Q43cDEGYDiwwS+bOoDxWLRyfSia/rbmw9CnWzP+f3ZNaFlh3miVOPD3hzv5USPahVOkoRwYuNeHiqSV/14VEsCrKqcH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744707606; c=relaxed/simple;
-	bh=vYXk1ZvF0LPWGAJ8cYQlfFO7JgFdQ0uW7P9M4pmdSZo=;
+	s=arc-20240116; t=1744708402; c=relaxed/simple;
+	bh=Y3cF4eZoT0Tuq6lyHi7dJ/kFBdodGF0lWp44qmkdgv4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jvdbZZxCHrF7RjxaaP7SBPio3yG/YrkNlu3BrkfWCSMxdOZyxOMtDKplcNdtUDUXW0lZx57l99E+yiSyWrBWY984znQZoqfY7Kl0WGjluPYSFMcEqaEi467Snb+nMN46iZCTuLgM6NiCiRHQV/2ilrcnD6LwiRVFZEW4W7e5VZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VqOpzx74; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=AIZ2PzM/E1AMN5VBX6xNLs75AXD/ydwieg7ZFF+dATkJGFS7rJEm2sNCZ66mBUda0LCi3gZ58hVLhnBT0TLR0Byn6jp7mO0QJTQVya3YocP3h9x+XMGmkvUW1zgVwryxkziEY1b/kzQY2zFYo1GSSc1P/udQ2umymAk6kt5Xioo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Get02uRv; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53F8tMHD013244
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 09:00:03 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53F8tJaA025232
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 09:13:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AQfepw9ye4d/Sw6PIpGIUW7pKP12q7jW28+QB4VgaF8=; b=VqOpzx74DYeT39j4
-	IPfoYHGjfM8ZDyDmQKnuleirjPOxyXlgWQ6xpEd/P6QqBaXZqfnhudoB9gPvBIxW
-	1bX9/y2cbXRHL772rXQelfk+AwStp3BoD7NALIvNVLo5c2wsC4dr36IgyJBnPgh0
-	8QM4WvT4kIAJb9EJlQ5grJ32Kkc6dn+PLOvh3MkwIBZKcvOmEBT6PK+fB58mqAKd
-	x80lW0mfYPrg9FZwDReJ1fKr/8uyxiINA+zaLeXHEjyRj4c+VtYf/nVx8TpwcT6O
-	nSYNmbVQOW4DOII+F1FR4KI/vBptvY+EuWoEAaQIZx3oIGdrPXwzZsQtX7euEbK+
-	Htydbw==
+	+rR/+ftTAIsUkZ0fyx0/CUkeHOOpZznIIF7t4NeJeNc=; b=Get02uRvEClbLNVW
+	Za/NGMqD2SjwhAF1sQ+mUGp65SqHxDQ+/nEsap/p/jPrSq6ecxoLpky4Cz0LrCjh
+	F75iploxuFy3ymU2u2C22tdJwydEt80jEY880WksKEO04ZKgtBI8Ss+IZ84pErPi
+	bGu0ZcsDvYJbfUcEJZHWrE0+DgVc7xeL0Ri+7KHMuWRKTO6T+Ae3odONED1qhwh9
+	PbpckzaoYHB3rjVCjV74QlB66dqzewYhrXjLyy2I1WPoA2MO2yugxjk5FhYWgkQM
+	h3hUD81z06d3r+POH6pRKqxlu2Mov4PJUfeirxp/SipoaRXkjc8D+JyW66JaZv5W
+	0p9Ing==
 Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygd6fd28-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yg8wfej3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 09:00:03 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c54767e507so877342485a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 02:00:03 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 09:13:19 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c5841ae28eso122260985a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 02:13:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744707602; x=1745312402;
+        d=1e100.net; s=20230601; t=1744708399; x=1745313199;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AQfepw9ye4d/Sw6PIpGIUW7pKP12q7jW28+QB4VgaF8=;
-        b=gNpIP6m1G7NhHvnKWuypwhYzgwrDuGUPFP5rrU57+LWCtGOwyuTaATyrNyvmLu+WKP
-         Q7XeqD8AIYQbymo2ko2Gb1zI8lOqyL8UHAMc3gamLLIVWmmU7C1iWdA/IhyQZTi39zHe
-         oJ0p9bDAyM0Cjjbjhlopc8c1nIMK/rQlkVEVOaD+/7rVKvGSGhTWAwwEeXG7yI1fjaj7
-         1pK8rAi0zbezJMUjY8E3cVTQ1qssCzSdjYbumbOpM7T89MWNmb8Nvy9gUqxtCiy+9mc+
-         YRJZ78lLBdeEvZp80LmNLdFYvpC0VpHN9y3MTwTDoavvOqh7BE51r6BzPJhtT1uhorbI
-         rAeg==
-X-Forwarded-Encrypted: i=1; AJvYcCU2L6bBMtEePlURbI0P9CDCA/dxoi81QlpRbLjjMj+cG4b8QTAVcIQJ11EKBDPi5gNxuhiVqYoftN1p0DaR@vger.kernel.org
-X-Gm-Message-State: AOJu0YxzDit+zpffC6PGT6qy7binFxQSge3oC9J/04JtMlW8OdiB8eWZ
-	dHKuaKInq3RzoiJt9KUKR7GnxK7Mn9c61U4OXJmdE5WVSYcER+QfADDruNiYzsZGnYfPOuErNpi
-	AEtXYQx47vbv9MsoHM/bQaHy+ZJ4RH4FQSy050t6g/kBT2zTrpXqhXX7qf7ZHrIFQ
-X-Gm-Gg: ASbGncs6632Yff9losgHk/a5J+De9c928B6JAwBnPh60de35Lk3Nxrcr2rbuxNhjPWf
-	2TUhsdyNeKab5uMKLYAMTOuA/7v4uS+dR1fR3f2/MHkqxSK1EYsphmniWagp5Az3AQ35Md06uw2
-	PacTOHCvjK/fBmFmrFm+kQV34UWLc4Ulu8uEeAmU3qnVdAfGhBDgNmNY0hua5fZmiBxGGnsX3oc
-	l+aAZBZzUL2fckTU7vn8qKL7weNFiDhM8Ka/MmutLVfW8s0AVLVqcfJEpaZWfHHqKaHEelqmgQh
-	8AOABa856ZZ0FhBgTdJmIScPjpmY9dUT/ES/OffZEQMoxod9+vnqdXqyinUMb7PaucnJWsAJAVU
-	6LZ0NKzQBgW2a6satEoTgzMI7thBeHGl+9heT3P4pRYDSOtq1f0/6TGdHYaSh
-X-Received: by 2002:a05:620a:170b:b0:7c5:55f9:4bbf with SMTP id af79cd13be357-7c7af0c0e77mr2367827685a.7.1744707601954;
-        Tue, 15 Apr 2025 02:00:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IESAyXoVLPjZgJIbP3L2JUlerT+JWqD6z0UX/136WNz5T6IEY76btFrfuYKR0NSWX/Mfql5Zg==
-X-Received: by 2002:a05:620a:170b:b0:7c5:55f9:4bbf with SMTP id af79cd13be357-7c7af0c0e77mr2367822485a.7.1744707601439;
-        Tue, 15 Apr 2025 02:00:01 -0700 (PDT)
-Received: from ?IPV6:2001:14bb:aa:77bc:64e0:30e4:f6ff:5bd? (2001-14bb-aa-77bc-64e0-30e4-f6ff-5bd.rev.dnainternet.fi. [2001:14bb:aa:77bc:64e0:30e4:f6ff:5bd])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54d3d239708sm1356448e87.85.2025.04.15.01.59.59
+        bh=+rR/+ftTAIsUkZ0fyx0/CUkeHOOpZznIIF7t4NeJeNc=;
+        b=ZZRGB/lLrqJ3C8HVlqC7/dDIRDgDNHxRAcT/QryogrIl/mbVZTYlM2S6HUykSZvF+1
+         d7K5lAOY6+FsyY/3LkGVHTG2D8/jf4WO0PA5oIeJm6TM3JlLiZW6LESYSVSFlXhydSIK
+         Aoqf41mpgS1jLxUtBq063FD2vxNYhTQXyamM6zieKud8rQVT1s+aevlKLjYYyWtUYY12
+         DXGg5Nysjj95xe/rF0IaNwcK2FuRFILxa4aCA5L4V8OsEKk1LJ/iyczi6APk2+owj5UR
+         +tUhnYngf4tdRJrjob7NEmTWykX+edS3StwG2jGjUz/GyTX2LhqCD3EwKgjd4CTAVLxL
+         sAKA==
+X-Forwarded-Encrypted: i=1; AJvYcCVeK9HturcG8eHPczO/VfVUFrsZI9svszQek+AfVcVGkjIWlauBTtOjGSlkPjOUZSmU0twfkZ/EEvCbYMyC@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw7lRYc+4lDye2T3O5aeKTondlMNpLG5z3JVCz1qWhLss1jVdKH
+	T9yrkcOs0eFjpKflqWNtx8XTxW3xsaVo6GtZSPUAeRcBWh24chH9RLSsrESCcefPCwotpc7Q6tw
+	MZ1v4wseKLaRToXnaX5mvha1KmsLhdLKXy/ZSKl1PVc0yZAnFd0vGGKHlhPUtTJvy
+X-Gm-Gg: ASbGnct/keyf/y943whEE9z01nnZg7qNuGug08k3Uaa52R+g9O5XjrsoGUlHhqQ1FeV
+	gnhyVyyWlG0fke2O8A6VuGV9QP4yZ4YYeeCErcM18/W7X1LPigmljMAAhb4jUsbc9QyvqzJ24+Y
+	2dw2rQ3sDTu/fJ3QgWq/rOfU6Q3DrWSi+w72fUiXLRuabxvw/YfViImC2zFpGF6G0AbjFZAWTD4
+	X6Gf2Aq/8z/8ZngnvNc4jbbe3ZpGMuYRbdDtt32E0+Y3ed4TMDlZwDytZzEb19nWcR730DC+sYu
+	6kAzfHcoP8YzFRUFBlJHB7JQLC3MEFF4FXfeVPikInukI78vlVU+PizU3fHxSAcqThQ=
+X-Received: by 2002:a05:620a:450b:b0:7c0:a1ca:93cb with SMTP id af79cd13be357-7c7dd7355f2mr150177385a.1.1744708398827;
+        Tue, 15 Apr 2025 02:13:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE5b7ibStatFaNQd403wS1RPgFmV1TghCWOGZLKiMrn2UNIPOtfVqPrSYwuKnQ0CSbSEiFzWA==
+X-Received: by 2002:a05:620a:450b:b0:7c0:a1ca:93cb with SMTP id af79cd13be357-7c7dd7355f2mr150176085a.1.1744708398451;
+        Tue, 15 Apr 2025 02:13:18 -0700 (PDT)
+Received: from [192.168.65.246] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f36f6491c4sm6271585a12.81.2025.04.15.02.13.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Apr 2025 02:00:00 -0700 (PDT)
-Message-ID: <9f64ea5e-1b59-4522-b55a-d9b11e412ee5@oss.qualcomm.com>
-Date: Tue, 15 Apr 2025 11:59:59 +0300
+        Tue, 15 Apr 2025 02:13:17 -0700 (PDT)
+Message-ID: <702ba6b2-b84d-41e0-aedf-747535d6ab32@oss.qualcomm.com>
+Date: Tue, 15 Apr 2025 11:13:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,181 +89,121 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] drm/msm: move wq handling to KMS code
-To: Rob Clark <robdclark@gmail.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20250413-msm-gpu-split-v1-0-1132f4b616c7@oss.qualcomm.com>
- <20250413-msm-gpu-split-v1-1-1132f4b616c7@oss.qualcomm.com>
- <CAF6AEGtG2K79zAd9tyNAG7JSVhS2sPdC-VjqubpmhD9AvoVoAA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sm6350: Add video clock
+ controller
+To: Taniya Das <quic_tdas@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Bjorn Andersson
+ <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250324-sm6350-videocc-v2-0-cc22386433f4@fairphone.com>
+ <20250324-sm6350-videocc-v2-4-cc22386433f4@fairphone.com>
+ <1c09fee5-9626-4540-83fb-6d90db2ce595@oss.qualcomm.com>
+ <9eb6dfd7-2716-4150-9392-98e26892d82d@quicinc.com>
+ <e3dda8bf-e19e-4dde-83a4-7876ca81e5e6@oss.qualcomm.com>
+ <69fba227-ed47-4004-9451-777ca19b687f@quicinc.com>
+ <cfa4003c-e8b0-40f6-821d-07f8d44752af@oss.qualcomm.com>
+ <0db798bf-04b3-40b5-af90-7dda5b606727@quicinc.com>
 Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <CAF6AEGtG2K79zAd9tyNAG7JSVhS2sPdC-VjqubpmhD9AvoVoAA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: yqxtAXnea0Ms9aoqm9jGystEBiFZZHcf
-X-Proofpoint-GUID: yqxtAXnea0Ms9aoqm9jGystEBiFZZHcf
-X-Authority-Analysis: v=2.4 cv=ANaQCy7k c=1 sm=1 tr=0 ts=67fe2013 cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=vNUryEpXin0155aUV7MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <0db798bf-04b3-40b5-af90-7dda5b606727@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=E9TNpbdl c=1 sm=1 tr=0 ts=67fe232f cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=6H0WHjuAAAAA:8 a=KHwu0kPLBxgQqcPLut8A:9
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=TjNXssC_j7lpFel5tvFf:22 a=Soq9LBFxuPC4vsCAQt-j:22
+X-Proofpoint-ORIG-GUID: 7_Kuz46CZXTH4gt6LptvgkS_kJcWF9y3
+X-Proofpoint-GUID: 7_Kuz46CZXTH4gt6LptvgkS_kJcWF9y3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-15_04,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- mlxlogscore=999 suspectscore=0 clxscore=1015 lowpriorityscore=0
- phishscore=0 impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0
- bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504150061
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ mlxscore=0 bulkscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
+ suspectscore=0 mlxlogscore=999 spamscore=0 priorityscore=1501
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504150063
 
-On 14/04/2025 18:58, Rob Clark wrote:
-> On Sun, Apr 13, 2025 at 9:33 AM Dmitry Baryshkov
-> <dmitry.baryshkov@oss.qualcomm.com> wrote:
->>
->> The global workqueue is only used for vblanks inside KMS code. Move
->> allocation / flushing / deallcation of it to msm_kms.c
+On 4/15/25 6:05 AM, Taniya Das wrote:
 > 
-> Maybe we should also just move the wq into struct msm_kms?
-
-... together with several other KMS-only fields. I will take a look.
-
 > 
-> BR,
-> -R
+> On 4/12/2025 12:56 AM, Konrad Dybcio wrote:
+>> On 4/11/25 1:37 PM, Jagadeesh Kona wrote:
+>>>
+>>>
+>>> On 4/11/2025 2:42 PM, Konrad Dybcio wrote:
+>>>> On 4/11/25 9:15 AM, Jagadeesh Kona wrote:
+>>>>>
+>>>>>
+>>>>> On 4/1/2025 10:03 PM, Konrad Dybcio wrote:
+>>>>>> On 3/24/25 9:41 AM, Luca Weiss wrote:
+>>>>>>> Add a node for the videocc found on the SM6350 SoC.
+>>>>>>>
+>>>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>>>>>> ---
+>>>>>>>  arch/arm64/boot/dts/qcom/sm6350.dtsi | 14 ++++++++++++++
+>>>>>>>  1 file changed, 14 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+>>>>>>> index 42f9d16c2fa6da66a8bb524a33c2687a1e4b40e0..4498d6dfd61a7e30a050a8654d54dae2d06c220c 100644
+>>>>>>> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
+>>>>>>> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+>>>>>>> @@ -1952,6 +1952,20 @@ usb_1_dwc3_ss_out: endpoint {
+>>>>>>>  			};
+>>>>>>>  		};
+>>>>>>>  
+>>>>>>> +		videocc: clock-controller@aaf0000 {
+>>>>>>> +			compatible = "qcom,sm6350-videocc";
+>>>>>>> +			reg = <0x0 0x0aaf0000 0x0 0x10000>;
+>>>>>>> +			clocks = <&gcc GCC_VIDEO_AHB_CLK>,
+>>>>>>> +				 <&rpmhcc RPMH_CXO_CLK>,
+>>>>>>> +				 <&sleep_clk>;
+>>>>>>> +			clock-names = "iface",
+>>>>>>> +				      "bi_tcxo",
+>>>>>>> +				      "sleep_clk";
+>>>>>>> +			#clock-cells = <1>;
+>>>>>>> +			#reset-cells = <1>;
+>>>>>>> +			#power-domain-cells = <1>;
+>>>>>>> +		};
+>>>>>>
+>>>>>> You'll probably want to hook up some additional power domains here, see
+>>>>>>
+>>>>>> https://lore.kernel.org/linux-arm-msm/20250327-videocc-pll-multi-pd-voting-v3-0-895fafd62627@quicinc.com/
+>>>>>>
+>>>>>
+>>>>> On SM6350, videocc doesn't need multiple power domains at HW level, it is only on CX rail which would be ON
+>>>>> when system is active, hence power-domains are not mandatory here.
+>>>>
+>>>> 6350 doesn't have either MMCX nor a split MX - shouldn't both normal
+>>>> CX and MX be in there?
+>>>>
+>>>
+>>> All clocks & GDSC's of SM6350 videocc are only on CX rail, so it requires only CX power domain. But when HLOS
+>>> is active, CX rail will be ON and operate at a level above retention, which is sufficient for videocc to operate.
+>>> Hence clock driver don't need to explicitly vote on CX rail.
+>>>
+>>> The same is not true for other rails like MMCX and Split MX(MXC), hence clock drivers had to explicitly vote on
+>>> those rails.
+>>
+>> I'm worried about MX being undervolted for higher OPPs
+>>
 > 
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->> ---
->>   drivers/gpu/drm/msm/msm_drv.c | 21 ++-------------------
->>   drivers/gpu/drm/msm/msm_kms.c | 16 +++++++++++++++-
->>   2 files changed, 17 insertions(+), 20 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
->> index c3588dc9e53764a27efda1901b094724cec8928a..02beb40eb9146941aa43862d07a6d82ae21c965e 100644
->> --- a/drivers/gpu/drm/msm/msm_drv.c
->> +++ b/drivers/gpu/drm/msm/msm_drv.c
->> @@ -82,13 +82,6 @@ static int msm_drm_uninit(struct device *dev)
->>                          drm_atomic_helper_shutdown(ddev);
->>          }
->>
->> -       /* We must cancel and cleanup any pending vblank enable/disable
->> -        * work before msm_irq_uninstall() to avoid work re-enabling an
->> -        * irq after uninstall has disabled it.
->> -        */
->> -
->> -       flush_workqueue(priv->wq);
->> -
->>          msm_gem_shrinker_cleanup(ddev);
->>
->>          msm_perf_debugfs_cleanup(priv);
->> @@ -104,8 +97,6 @@ static int msm_drm_uninit(struct device *dev)
->>          ddev->dev_private = NULL;
->>          drm_dev_put(ddev);
->>
->> -       destroy_workqueue(priv->wq);
->> -
->>          return 0;
->>   }
->>
->> @@ -227,12 +218,6 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->>          ddev->dev_private = priv;
->>          priv->dev = ddev;
->>
->> -       priv->wq = alloc_ordered_workqueue("msm", 0);
->> -       if (!priv->wq) {
->> -               ret = -ENOMEM;
->> -               goto err_put_dev;
->> -       }
->> -
->>          INIT_LIST_HEAD(&priv->objects);
->>          mutex_init(&priv->obj_lock);
->>
->> @@ -253,12 +238,12 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->>          if (priv->kms_init) {
->>                  ret = drmm_mode_config_init(ddev);
->>                  if (ret)
->> -                       goto err_destroy_wq;
->> +                       goto err_put_dev;
->>          }
->>
->>          ret = msm_init_vram(ddev);
->>          if (ret)
->> -               goto err_destroy_wq;
->> +               goto err_put_dev;
->>
->>          dma_set_max_seg_size(dev, UINT_MAX);
->>
->> @@ -304,8 +289,6 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->>
->>   err_deinit_vram:
->>          msm_deinit_vram(ddev);
->> -err_destroy_wq:
->> -       destroy_workqueue(priv->wq);
->>   err_put_dev:
->>          drm_dev_put(ddev);
->>
->> diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
->> index 35d5397e73b4c5cb90b1770e8570277e782be7ec..821f0b9f968fc3d448e612bfae04639ceb770353 100644
->> --- a/drivers/gpu/drm/msm/msm_kms.c
->> +++ b/drivers/gpu/drm/msm/msm_kms.c
->> @@ -227,6 +227,13 @@ void msm_drm_kms_uninit(struct device *dev)
->>
->>          BUG_ON(!kms);
->>
->> +       /* We must cancel and cleanup any pending vblank enable/disable
->> +        * work before msm_irq_uninstall() to avoid work re-enabling an
->> +        * irq after uninstall has disabled it.
->> +        */
->> +
->> +       flush_workqueue(priv->wq);
->> +
->>          /* clean up event worker threads */
->>          for (i = 0; i < priv->num_crtcs; i++) {
->>                  if (priv->event_thread[i].worker)
->> @@ -243,6 +250,8 @@ void msm_drm_kms_uninit(struct device *dev)
->>
->>          if (kms && kms->funcs)
->>                  kms->funcs->destroy(kms);
->> +
->> +       destroy_workqueue(priv->wq);
->>   }
->>
->>   int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
->> @@ -258,10 +267,14 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
->>          if (ret)
->>                  return ret;
->>
->> +       priv->wq = alloc_ordered_workqueue("msm", 0);
->> +       if (!priv->wq)
->> +               return -ENOMEM;
->> +
->>          ret = priv->kms_init(ddev);
->>          if (ret) {
->>                  DRM_DEV_ERROR(dev, "failed to load kms\n");
->> -               return ret;
->> +               goto err_msm_uninit;
->>          }
->>
->>          /* Enable normalization of plane zpos */
->> @@ -319,6 +332,7 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
->>          return 0;
->>
->>   err_msm_uninit:
->> +       destroy_workqueue(priv->wq);
->>          return ret;
->>   }
->>
->>
->> --
->> 2.39.5
->>
+> From a videocc PoV there is no requirement of Mx on SM6350. The CX
+> levels would be taken care by Video SW driver from their defined OPP. Mx
+> at system level would be catered via the BW votes.
 
+So I'm specifically thinking about the videocc (and other) PLLs, which
+have defined vdd levels downstream - currently we're relying on random
+luck rather than ensuring each one of them has its requirements fulfilled
 
--- 
-With best wishes
-Dmitry
+Konrad
 
