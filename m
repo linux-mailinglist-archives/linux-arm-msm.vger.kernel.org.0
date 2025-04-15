@@ -1,211 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-54418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DD2FA89DCF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 14:22:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 465E1A89EE6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 15:02:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5857C3B8B0A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 12:21:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E0D8E3A268D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 13:02:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 274091F55ED;
-	Tue, 15 Apr 2025 12:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7390F28E5FF;
+	Tue, 15 Apr 2025 13:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J3nEr8/T"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="N/RvFUb7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B591FF1B0;
-	Tue, 15 Apr 2025 12:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1453332C8B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 13:02:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744719513; cv=none; b=Ujf5HFXpdIYb7HSeZTOPMc0IHonnv46XJrGunOCr11+FFPU7TAJyyik+4T9o484H5YqqHh/iW+tRbemlxoC7aprrDKO6v/Sf/dARmgf1qIvcCn2c85vyISqc+pU51f1gI/9z21P5PxdgJs3nC45rvIyqF1KI0CONCoirdJMnOvU=
+	t=1744722165; cv=none; b=FObHPeAEj/iNaOkZolaOh8qPUlU8RdJ7cae5el/8QNyfB94VwhKQemD//SVzH09P/cbNqf3B+OU1yIL+//quXVl8JtvKRDyu+LVOFFWV/H6nEM23HsbkHo7KB3SIy/lr+OeKu5xZhzlkRoJvYzUhr+YDj5fCW86G9l28y+NpbdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744719513; c=relaxed/simple;
-	bh=atFAuwFrqsVLkfoO7LubzvIfTLvQEcb6RWqoGJEiPss=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Yoki3k5jRMjY5sX58WpfOeRENg2O7a7JvV768gpdro4ojaxLC+k/wP6zxYhmmsFCoMTQ/CbmjTiuZI8cNPUwFIMPVpmWEx0GIF8tvkUirdEUwhsgTR6yTK6F3wtv7vQZnGbndu0USr74UUvj+xW3R8WpvzvKWaRgAo+XEXmN7OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=J3nEr8/T; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53F8tBRD022959;
-	Tue, 15 Apr 2025 12:18:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pH3u8oVUx94lPPJSWYtRRTsZwY4inY7vNjLnJSUYblc=; b=J3nEr8/THWLYg7Ad
-	vU/D64XNhXaq6TIYRT4MLrrXCHUrMUs3hOXcJ0nmqBjvtpLToK26VySUG3pHvyS1
-	WMY3oa25HjydIEBFSyoQM9rcyzHZAKxnpUnPFMW7VKrG7yCUYc/pAqeYi2AN76lF
-	bYJZOSH8AKIGQXypD1h1c/QNCt/kkAimEtvXuQX9u8+G8+k1f4LteUbfmvS4P7i6
-	jRADUzLXrZdpdxdfvJa4IipLPo0fKA/pPzrqISJ+YgZBxg46k27FcqgY/JnFGZe3
-	MOPfqJLNI0JwUHlkZx64KSTl1UG6t1CdU/5RDciJUl0VMr4h39xCRqGh7HPHjbzc
-	/wwNIQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygj980bq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Apr 2025 12:18:27 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53FCIQ38030904
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Apr 2025 12:18:26 GMT
-Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 15 Apr
- 2025 05:18:22 -0700
-Message-ID: <c14863c8-5930-4ab9-8448-947ff5a44dbc@quicinc.com>
-Date: Tue, 15 Apr 2025 17:48:19 +0530
+	s=arc-20240116; t=1744722165; c=relaxed/simple;
+	bh=dqSohRqnaX3T4biyEYTa91cwEJw2TNovypV/CEmubvQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cTWvqjIQG9yeE+IRua0ftPCubDwX0bNxiYXuBh7P52U+3ngB9Hg3MljddWJURgZaUoic8CGwDZJGQHp9JURF0Oq+TyHZv8VzrvHMWFvCpRN3yM/ghh8mbABQjh9KMV/MhfLFA8OcFqiP31yF2V6tZB+p4hI6jF6bp+K2T1UFBl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=N/RvFUb7; arc=none smtp.client-ip=95.215.58.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=postmarketos.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+	s=key1; t=1744722151;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=wNwI1U/mwji86+rRMoS5QnuPV7UL2iA5v/M6rqOfDNw=;
+	b=N/RvFUb7IyayfB4EWy4lnoG3LdalNJuwYoFSvx2lgGz1dvoqYlTKQyKDRmXjTTA7C6/AVr
+	JMJjpD1L5SH0Fz9eT8LqlZcGBfJ+FiNhM153kzNP4uJ2+Nbu33X9n1dAM90nYx2R3gegeM
+	czN+83wuFoAyxIjBT6MKzD6KODWLRMLDOvIoa69H0iqwlnj9QD3tL3+jnIpBnny847Jmk7
+	4LkeY/X3MQY9DHYSWylgzb+AO8e0t0e9dw+yM8QqPS878Bc0+KaFxPpDzWrrm9aNVw1ln5
+	10kH4e3hZoB85p9/nBIMfVSS9nO+w/J8HC9Ph6NKHg/N3GO20tVY1H8H5u+V0w==
+From: Alexey Minnekhanov <alexeymin@postmarketos.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: Caleb Connolly <caleb@connolly.tech>,
+	Dang Huynh <danct12@riseup.net>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>
+Subject: [PATCH] arm64: dts: qcom: sdm660-xiaomi-lavender: Add missing SD card detect GPIO
+Date: Tue, 15 Apr 2025 16:01:01 +0300
+Message-ID: <20250415130101.1429281-1-alexeymin@postmarketos.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/2] arm64: dts: qcom: ipq5424: Add PCIe PHYs and
- controller nodes
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC: <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>
-References: <20250402102723.219960-1-quic_mmanikan@quicinc.com>
- <20250402102723.219960-2-quic_mmanikan@quicinc.com>
- <218c9580-de47-41a6-a3ae-8b7477fafe30@oss.qualcomm.com>
-Content-Language: en-US
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <218c9580-de47-41a6-a3ae-8b7477fafe30@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ch2tyRC0yCFLeh-7zsS2Z5e-kZ5r-H8A
-X-Authority-Analysis: v=2.4 cv=PruTbxM3 c=1 sm=1 tr=0 ts=67fe4e93 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=Up9O-4L68c34P-V2CXsA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: ch2tyRC0yCFLeh-7zsS2Z5e-kZ5r-H8A
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-15_05,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 lowpriorityscore=0
- impostorscore=0 clxscore=1015 spamscore=0 mlxscore=0 mlxlogscore=999
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504150087
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
+During initial porting these cd-gpios were missed. Having card detect is
+beneficial because driver does not need to do polling every second and it
+can just use IRQ. SD card detection in U-Boot is also fixed by this.
 
+Fixes: cf85e9aee210 ("arm64: dts: qcom: sdm660-xiaomi-lavender: Add eMMC and SD")
 
-On 4/14/2025 4:17 PM, Konrad Dybcio wrote:
-> On 4/2/25 12:27 PM, Manikanta Mylavarapu wrote:
->> Add PCIe0, PCIe1, PCIe2, PCIe3 (and corresponding PHY) devices
->> found on IPQ5424 platform. The PCIe0 & PCIe1 are 1-lane Gen3
->> host whereas PCIe2 & PCIe3 are 2-lane Gen3 host.
->>
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> ---
-> 
-> [...]
-> 
->> +		pcie0_phy: phy@84000 {
->> +			compatible = "qcom,ipq5424-qmp-gen3x1-pcie-phy",
->> +				     "qcom,ipq9574-qmp-gen3x1-pcie-phy";
->> +			reg = <0x0 0x00084000 0x0 0x2000>;
-> 
-> This is 0x1000-wide
-> 
+Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+---
+ arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Okay, sure.
-
->> +			clocks = <&gcc GCC_PCIE0_AUX_CLK>,
->> +				 <&gcc GCC_PCIE0_AHB_CLK>,
->> +				 <&gcc GCC_PCIE0_PIPE_CLK>;
->> +			clock-names = "aux",
->> +				      "cfg_ahb",
->> +				      "pipe";
->> +
->> +			assigned-clocks = <&gcc GCC_PCIE0_AUX_CLK>;
->> +			assigned-clock-rates = <20000000>;
->> +
->> +			resets = <&gcc GCC_PCIE0_PHY_BCR>,
->> +				 <&gcc GCC_PCIE0PHY_PHY_BCR>;
->> +			reset-names = "phy",
->> +				      "common";
->> +
->> +			#clock-cells = <0>;
->> +			clock-output-names = "gcc_pcie0_pipe_clk_src";
->> +
->> +			#phy-cells = <0>;
->> +			status = "disabled";
->> +		};
->> +
->> +		pcie1_phy: phy@8c000 {
->> +			compatible = "qcom,ipq5424-qmp-gen3x1-pcie-phy",
->> +				     "qcom,ipq9574-qmp-gen3x1-pcie-phy";
->> +			reg = <0x0 0x0008c000 0x0 0x2000>;
-> 
-> So is this
-> 
-
-Okay, sure.
-
->> +			clocks = <&gcc GCC_PCIE1_AUX_CLK>,
->> +				 <&gcc GCC_PCIE1_AHB_CLK>,
->> +				 <&gcc GCC_PCIE1_PIPE_CLK>;
->> +			clock-names = "aux",
->> +				      "cfg_ahb",
->> +				      "pipe";
->> +
->> +			assigned-clocks = <&gcc GCC_PCIE1_AUX_CLK>;
->> +			assigned-clock-rates = <20000000>;
->> +
->> +			resets = <&gcc GCC_PCIE1_PHY_BCR>,
->> +				 <&gcc GCC_PCIE1PHY_PHY_BCR>;
->> +			reset-names = "phy",
->> +				      "common";
->> +
->> +			#clock-cells = <0>;
->> +			clock-output-names = "gcc_pcie1_pipe_clk_src";
->> +
->> +			#phy-cells = <0>;
->> +			status = "disabled";
->> +		};
-> 
-> 
->> +		pcie3: pcie@40000000 {
->> +			compatible = "qcom,pcie-ipq5424", "qcom,pcie-ipq9574";
->> +			reg = <0x0 0x40000000 0x0 0xf1c>,
->> +			      <0x0 0x40000f20 0x0 0xa8>,
->> +			      <0x0 0x40001000 0x0 0x1000>,
->> +			      <0x0 0x000f8000 0x0 0x3000>,
->> +			      <0x0 0x40100000 0x0 0x1000>,
->> +			      <0x0 0x000fe000 0x0 0x1000>;
->> +			reg-names = "dbi",
->> +				    "elbi",
->> +				    "atu",
->> +				    "parf",
->> +				    "config",
->> +				    "mhi";
->> +			device_type = "pci";
->> +			linux,pci-domain = <3>;
->> +			num-lanes = <2>;
->> +			#address-cells = <3>;
->> +			#size-cells = <2>;
->> +
->> +			ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x00100000>,
->> +				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x0fd00000>;
-> 
-> I think the BAR spaces on all these hosts are only 32 MiB long
-> 
-
-I have confirmed with the hardware team that the specified BAR register space is accurate.
-256MB for all PCIe controllers.
-
-Thanks & Regards,
-Manikanta.
+diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+index 7167f75bced3..0b4d71c14a77 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
++++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+@@ -404,6 +404,8 @@ &sdhc_1 {
+ &sdhc_2 {
+ 	status = "okay";
+ 
++	cd-gpios = <&tlmm 54 GPIO_ACTIVE_HIGH>;
++
+ 	vmmc-supply = <&vreg_l5b_2p95>;
+ 	vqmmc-supply = <&vreg_l2b_2p95>;
+ };
+-- 
+2.49.0
 
 
