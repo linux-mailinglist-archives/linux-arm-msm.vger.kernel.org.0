@@ -1,81 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-54439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50A29A8A032
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 15:54:43 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36F94A8A07E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 16:04:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42E4B1903D94
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 13:54:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C591C7A42BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 14:03:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73218296D06;
-	Tue, 15 Apr 2025 13:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53E1B1C5D57;
+	Tue, 15 Apr 2025 14:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LMZ3lR7U"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OsWxxCh9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85CC1F4629
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 13:53:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F91D1F30B3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 14:03:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744725209; cv=none; b=A2sP+DzSKulcQ510eRRy+j42AuWTw/Q7Fg3PbfdNAbJCD79e5mYePJtC/ovNtI9Am384Co4DMzHOm+BLaMWtMQIdOKhxTZ/vYb9jSKz/lfw+wdSjci8jno7EVcxjoeHOcz2eUsnxD/zTebKfujfa/2JJrhn2O6idjTJHC0BIqlg=
+	t=1744725834; cv=none; b=OQehK3zK45ZiKDOAbZDy4nJsUaYazWqKcC5Vzw45LE5sDAYNE7sV+jZ9xY3Ls1uvlhO0TkvHCeAAv+vyoMi+4dG03u/tn2v11LOX9UW5s3KKJxRpRBY3rVR/C5iDZIm1oyT3P2K05hFC4r5uYJ4DEZNe0hwQ4SRRUIIqKE6AVQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744725209; c=relaxed/simple;
-	bh=vHHaCmn/9aX14sPYqzMHTDqRNgtEpmUR2XVR9kxw4us=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=R0t/H4f7Fpg9P85b+IHY3D0p7hwn6iB6RCXp3ihqPDvwrMFEyA2zCOYoJdeXpWrNkoOjqM+eAGrb/TYYg7lGxYAe1ammi6Hk17TEKOPnwLvttpW86cplhC/Z0E+15wzPGMuzAkDoUe0FLh0uMF0+czzWqjI1O4211o3pDQIJRIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LMZ3lR7U; arc=none smtp.client-ip=209.85.218.49
+	s=arc-20240116; t=1744725834; c=relaxed/simple;
+	bh=5bfJsgR3m/o/t1OHYyV5icrvh0iH7ZHvs7Ywc6HuCLQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=HTDNx/pcu1iowLGD0byrPY2W6s10RGrksMw1LVXypNr3LTsEmNIzOW4p7hrNfdF+1yWxCNZLOFA9YqaHDHejeEYwSA2pHMkitocShDohw2Z/d/849BbEd19A6qCTYfdVf+VHPKFe30lCu5lg3+T1zYNAOWdpL4Na/e4wJowqgAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OsWxxCh9; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ac29af3382dso899150766b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 06:53:26 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43cec5cd73bso38729585e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 07:03:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744725205; x=1745330005; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Y4l6FA9ivn6gypUQ5rfKT4sB7wf6dagDvJ3RDh2XcgA=;
-        b=LMZ3lR7UIsJ9tfCDq+sA6fcKM2jFaPcqVG015fmPGAT5WMYmxD2nnLkHWN5wvnMLO7
-         p5tV7ZsTsgr8HT8/m+ENLr5zCrsQ8ULfFKj+zFRDm6ZF80B0ybYzDK7eIIKPhnBbe/cC
-         AlTl5xWFZ1KfKwHDPIRk84RiPzFGrWQE92G1uY0/GovRkbUaec0o0sV1cNNvJTNSMY1t
-         w6mSoU18P9o9RxbTaPB3muXBJDhFJh9Hu6LSDImktT9q2iibYw/AXbw2FcaQosp5EpGf
-         /0zw64yU6XXaxVXB/8Wg+oAvEGq4ikU8BELQUg5y3Q05p/xBmef2bG4Ji0WYfIikLDzE
-         a4rQ==
+        d=linaro.org; s=google; t=1744725830; x=1745330630; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iSMcwciXFDhUl1+08Fh5h1VKOSqvYJ+dyCoPGR8uh48=;
+        b=OsWxxCh9AqUGgGsVqTi1oF0oryuKwgJB33nNah2EGri4j8gQSGov4kJD5t9+JhPrAL
+         nUKMKtNLxoXq46H966wtgF/j1WDKlIdceaLUXi9nrjS9NoOBsqU84KTk/ORJZs965TeW
+         C9TtuJTedhqZys/PLfLGcFMUHSPeQUX2ZcaZ8mAtMWHifGlAUrRPQw6AwYno+NEPk/IR
+         moLqTjL0Vvsyh0haw2GEBOUU+Eb4vk0kVzUhLha5Dz3lAOIKoM4hT9mxC8vGtBQxHwIl
+         dzVdW4lLv4rClxk4R5zUN+Czlam8OzykP3JsiOK2n81YdMLiDYNWAxnc2SzIVsv1aYCZ
+         XI/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744725205; x=1745330005;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y4l6FA9ivn6gypUQ5rfKT4sB7wf6dagDvJ3RDh2XcgA=;
-        b=RYHmquTP90ORpG8ZAkCOTF1pCjsnIKmCi3ea3iN22/QPqNhTEklSgB1WOMZIulEbhJ
-         8Rmk4wHn4ysljVSMVifPQe6gb2YtA6IdgyehfJjay5X1czpu3mOK/lFkBetvQLRWdFL2
-         5IdPiUn/OEqmys6GSIlLRNsnY6XfpxwZGVa4TcZGQwA83zYQlrZuqfzr70yeBpBPYT3B
-         vjto4CQWw7UUJQ3FYOiBWzUEDMEpqzwoqilHgX/VL/8kMSjrBClkRHicAGvwDprLfR78
-         au84DFLxTeFJzlmHqXDO8T3l2FxHdSxhlBZiwkD6K727/8S4oIIxf7OKS0ubhF+l0uj/
-         TrsA==
-X-Forwarded-Encrypted: i=1; AJvYcCVi7czvGYBkgb02oZcOGbm1iyYk9KuaGtTAZS+yVyGEp8nHZYP6FAgRP38KJ/8nviJQQ9WAo52qWz1X6m+3@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQ//PA1NRGb4VzMki5GT7k0WICvvWJuKFpKqBW2bJBjuxUkHVt
-	wT4rh/o8kzq4/ta2rSShlEooZ9cZkpb8SZVFn0GKm6E4IBy6yldH6iSFDU8fDbE=
-X-Gm-Gg: ASbGncvNLeNd0Gc50tRvMqzULO930Lhd+Ps+TveddlV04mFHCpAjWBulJk9NfUmbmkB
-	KLsK6x4gf0c5IBoc2uOWiGJzxluwX8kb7rB94UtbNffpgbdarMkZ996FhQLr4l7kjlqGw0t2APj
-	eS4Bd3pBswCAbwdDA8Vu6+6fEFfvAsXrmJzW/FMsMaedW1EmMeShkta3IcJYgzaRPBvCOw5MzKt
-	CXxt6nchmI865/D16FrN7WdXtKkl8A8rZmvsZKxTanvyU7wpC3GZtiRdr3htcvaStazySFP0ihU
-	VcCBCaEoxPu961SxpHlyfyF+M5s7s3GhKimRXStb/CL8xc/ZfJ1Dyh8=
-X-Google-Smtp-Source: AGHT+IGLoagUswLH/ZZJxI5K2dTSGE3DxsOQWCM3VHaHo3ThpnYQbzNk4zQXdqBSRKUbftY/ghk2xw==
-X-Received: by 2002:a17:906:db06:b0:ac6:ecd8:a235 with SMTP id a640c23a62f3a-acad34c1a5bmr1656932066b.28.1744725205043;
-        Tue, 15 Apr 2025 06:53:25 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:7b18:2529:5ce1:343d])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acadcc21a44sm681379166b.177.2025.04.15.06.53.24
+        d=1e100.net; s=20230601; t=1744725830; x=1745330630;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iSMcwciXFDhUl1+08Fh5h1VKOSqvYJ+dyCoPGR8uh48=;
+        b=QUBqhRArGzra+YhjMyuvzNV6QafP5WD4CRnmGYvUcGhhYlDn/1j77iaaTlayhAWbyd
+         v5tVzWgqjCKaf5py/ljZWuwF7Rr/mEBbDFxKr7Afh07Q2/ayZVLKaK+GFDUQ24LG9c/Y
+         FNId9cj2oHr3VzIIVx5O6h8XfJ7xXO78Ur6OGB3NrXfEsur55sdN5hpm6pjG2MDKIFKU
+         g9Dzvzv9Oncw2zGQj4nLWUSZQeSJmQHDVN6rEZuTTkD9vwbRrmp57caFQDFWMmfCYZxI
+         ffVfT8Mp8wJPzmIedmRMGzYcQ96lCuaWjysWKHRRGwQwQPp6HhT3tDdndACbP4mF8X1w
+         521A==
+X-Gm-Message-State: AOJu0YxXqK561U8mahFEB8isgktwP+g/t71NvH1MW8Xwp/9fzzdMSQrd
+	qW7klT2xrFSGduwSci0RMvARR2+jQlDV6FZwNDTy3I2B1SOZIMf51wcAkMc7pKg=
+X-Gm-Gg: ASbGncszArgQFBAV8W3RBZ1jiYOmBHobVUklHPi/7YHRNZSCYUXVer6xNln6EX1tzLk
+	lqiy4zhOv2eno2KcDVMx4TSP1nnI9cdIZIfBR5hu9SoCOXm/NL0PA1h9eWmTFZ47Auhqunetejz
+	0+RKoRjBtYsgB3vlxz69jvQI58Ike9uKgEyryYmFD0GUPmU/4lR7UDLa34PzhUwAlhJNTwzp8ep
+	EmzY8TQJuR3rhPXw0Uj/m+w9q3VGCG3ZWmydXYBTK0wwHC8lOrSI4mpDoRhu4H9FpzwbZgfU4ot
+	hoBWxU65f9JAK4kKjbVrtjjc9U8D7IW8Ci+WxDaGKasWikmaU0dcA1+sT3J44PhUkf1m7uxq
+X-Google-Smtp-Source: AGHT+IFEA/aJ+3RMT11dq2pF/arT4Y9Og71cDqv5JQgKpe3srWBWNpFe/YkbdCDPZghLlxg4Cni8LA==
+X-Received: by 2002:a05:600c:46d0:b0:43d:209:21fd with SMTP id 5b1f17b1804b1-43f3a9b02b3mr165355905e9.30.1744725830091;
+        Tue, 15 Apr 2025 07:03:50 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43f206332d9sm210480765e9.13.2025.04.15.07.03.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Apr 2025 06:53:24 -0700 (PDT)
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Tue, 15 Apr 2025 15:52:51 +0200
-Subject: [PATCH 8/8] arm64: dts: qcom: msm8916/39: Drop generic UART
- pinctrl templates
+        Tue, 15 Apr 2025 07:03:49 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/2] interconnect: qcom: sm8650: add MASTER_APSS_NOC system
+ NoC node
+Date: Tue, 15 Apr 2025 16:03:46 +0200
+Message-Id: <20250415-topic-sm8650-upstream-icc-apss-noc-v1-0-9e6bea3943d8@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,129 +82,59 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250415-msm8916-console-pinctrl-v1-8-a1d33ea994b9@linaro.org>
-References: <20250415-msm8916-console-pinctrl-v1-0-a1d33ea994b9@linaro.org>
-In-Reply-To: <20250415-msm8916-console-pinctrl-v1-0-a1d33ea994b9@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+X-B4-Tracking: v=1; b=H4sIAEJn/mcC/32OMQ6DMBAEv2JdnYtsgsHxVyIKY47EBRh8gCIh/
+ h4rNKlSzhY7swNTCsRgxQ6JtsAhjhnURYB/ufFJGLrMUMhCy1JpXOIUPPJgKi1xnXhJ5AYM3qO
+ bmHGMHvXNSeN6p0xfQz6aEvXh/ZU8mpMTzWt2LecIrWNCH4chLFZs1TV7klfwG2HFmSDrPwlzZ
+ KTW65aoNPeqs5uC5jg+Gj90KuYAAAA=
+X-Change-ID: 20250415-topic-sm8650-upstream-icc-apss-noc-53a08afa18f7
+To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Sam Day <me@samcday.com>, Casey Connolly <caleb.connolly@linaro.org>
+ Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=993;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=5bfJsgR3m/o/t1OHYyV5icrvh0iH7ZHvs7Ywc6HuCLQ=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBn/mdDpn+xZ+RYrEX6/OBCAaF4nMt5i8FhE6bkIpjk
+ 1Q83B1KJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ/5nQwAKCRB33NvayMhJ0erpD/
+ 94TG9P4WKRl4RZy23i/74ssR70noio15L2KIquvl0ZxaFcSJBwRXUTNx0/nyIvhKzAAiqEBNalEFrg
+ 7ZxEEYi5aG9RggPiTNA4E9/Oui2VgpJXnBY9SSnyD6IDQo/vBiez+Xqj4a/hr2HJB9T5OgvqkcUaVp
+ Vw7zLgyjl4NOzoL5/1EzKMK0KqJB0C2IvA9umFd/z0+YFIiCHRH/tqa2g4JYUtabRdjPbZEo6W1eyS
+ Jc5V7BRg0NFIYchg7ZdmdsYXT+I3dwpi4FFlVrIr0RS9PwE27+A/9DxapFgu0bhZKW2i0I7WbKnjL9
+ x7fqtXwozUQ2glGspmwTdty11ewChIAOwKjo9kT/W1ah//ThZbBzOlCfFpM9TdY86kwDZHXVKf6Xks
+ nDS9UoYEOchdOwAeyvhmyeMdPj/TGyoscKh6igal60WvLEAlXgh3hXuWZWmBibU/vZhm59Efae76ye
+ dOvE25Kgfu+xLwxYoRNZpVRxev9C5rIlonD493WmUpWJ5C71TmbqvWix3N5urILnQABkqEXg9+Z0MN
+ T4P3qSSXcBAiSdz8TYv/nTv/iBARtYxOyFp96JQBmP1YLSHt6Hve34+r24iIzXHZQg9oCVET1j/dpA
+ F3mtzz0Jh81q0GejGaJLYrMDoKN8h8UiwLfkEW9rnQPZMLDGuMFiPZ6gU0SQ==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Now that all boards use either the customized console UART pinctrl
-templates or define the UART pinctrl directly in the board DT file,
-drop the old inconsistent generic pinctrl templates to reduce potential
-confusion.
+Add the missing MASTER_APSS_NOC system NoC node,
+synced from downstream driver.
 
-No functional change.
+Depends on:
+- https://lore.kernel.org/all/20250407-topic-sm8650-upstream-icc-qos-v1-1-93b33f99a455@linaro.org/
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 24 +-----------------------
- arch/arm64/boot/dts/qcom/msm8939.dtsi | 23 +----------------------
- 2 files changed, 2 insertions(+), 45 deletions(-)
+Neil Armstrong (2):
+      dt-bindings: interconnect: sm8650: document the MASTER_APSS_NOC
+      interconnect: qcom: sm8650: add the MASTER_APSS_NOC
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 9f1796222c597afd45dd31131b198f3574e97885..4175abc20fa7d26180ea4c69a0e1972222261354 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1232,21 +1232,6 @@ blsp_spi6_sleep: blsp-spi6-sleep-state {
- 				bias-pull-down;
- 			};
- 
--			blsp_uart1_default: blsp-uart1-default-state {
--				/* TX, RX, CTS_N, RTS_N */
--				pins = "gpio0", "gpio1", "gpio2", "gpio3";
--				function = "blsp_uart1";
--				drive-strength = <16>;
--				bias-disable;
--			};
--
--			blsp_uart1_sleep: blsp-uart1-sleep-state {
--				pins = "gpio0", "gpio1", "gpio2", "gpio3";
--				function = "gpio";
--				drive-strength = <2>;
--				bias-pull-down;
--			};
--
- 			blsp_uart1_console_default: blsp-uart1-console-default-state {
- 				tx-pins {
- 					pins = "gpio0";
-@@ -1271,13 +1256,6 @@ blsp_uart1_console_sleep: blsp-uart1-console-sleep-state {
- 				bias-pull-down;
- 			};
- 
--			blsp_uart2_default: blsp-uart2-default-state {
--				pins = "gpio4", "gpio5";
--				function = "blsp_uart2";
--				drive-strength = <16>;
--				bias-disable;
--			};
--
- 			blsp_uart2_console_default: blsp-uart2-console-default-state {
- 				tx-pins {
- 					pins = "gpio4";
-@@ -1295,7 +1273,7 @@ rx-pins {
- 				};
- 			};
- 
--			blsp_uart2_sleep: blsp_uart2_console_sleep: blsp-uart2-sleep-state {
-+			blsp_uart2_console_sleep: blsp-uart2-console-sleep-state {
- 				pins = "gpio4", "gpio5";
- 				function = "gpio";
- 				drive-strength = <2>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-index 16c16ec0f4560a7102f8ffef20c58fbec81dee38..3ee61acc0f96aaf79a182d21920b3664a0daa5fc 100644
---- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-@@ -905,20 +905,6 @@ blsp_spi6_sleep: blsp-spi6-sleep-state {
- 				bias-pull-down;
- 			};
- 
--			blsp_uart1_default: blsp-uart1-default-state {
--				pins = "gpio0", "gpio1", "gpio2", "gpio3";
--				function = "blsp_uart1";
--				drive-strength = <16>;
--				bias-disable;
--			};
--
--			blsp_uart1_sleep: blsp-uart1-sleep-state {
--				pins = "gpio0", "gpio1", "gpio2", "gpio3";
--				function = "gpio";
--				drive-strength = <2>;
--				bias-pull-down;
--			};
--
- 			blsp_uart1_console_default: blsp-uart1-console-default-state {
- 				tx-pins {
- 					pins = "gpio0";
-@@ -943,13 +929,6 @@ blsp_uart1_console_sleep: blsp-uart1-console-sleep-state {
- 				bias-pull-down;
- 			};
- 
--			blsp_uart2_default: blsp-uart2-default-state {
--				pins = "gpio4", "gpio5";
--				function = "blsp_uart2";
--				drive-strength = <16>;
--				bias-disable;
--			};
--
- 			blsp_uart2_console_default: blsp-uart2-console-default-state {
- 				tx-pins {
- 					pins = "gpio4";
-@@ -967,7 +946,7 @@ rx-pins {
- 				};
- 			};
- 
--			blsp_uart2_sleep: blsp_uart2_console_sleep: blsp-uart2-sleep-state {
-+			blsp_uart2_console_sleep: blsp-uart2-console-sleep-state {
- 				pins = "gpio4", "gpio5";
- 				function = "gpio";
- 				drive-strength = <2>;
+ drivers/interconnect/qcom/sm8650.c                  | 19 +++++++++++++++++++
+ drivers/interconnect/qcom/sm8650.h                  |  1 +
+ include/dt-bindings/interconnect/qcom,sm8650-rpmh.h |  1 +
+ 3 files changed, 21 insertions(+)
+---
+base-commit: 64e9fdfc89a76fed38d8ddeed72d42ec71957ed9
+change-id: 20250415-topic-sm8650-upstream-icc-apss-noc-53a08afa18f7
+prerequisite-change-id: 20250407-topic-sm8650-upstream-icc-qos-ebc5bee4896d:v1
+prerequisite-patch-id: 04fba63dd9b30c5ff407351a86ba445373c841b7
 
+Best regards,
 -- 
-2.47.2
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
