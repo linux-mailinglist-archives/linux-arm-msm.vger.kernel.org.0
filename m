@@ -1,425 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-54306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAF7EA89366
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 07:32:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F417AA894DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 09:23:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD35F166B94
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 05:32:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0FFBC16BBF3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 07:23:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C23F523AE84;
-	Tue, 15 Apr 2025 05:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 069DF27991D;
+	Tue, 15 Apr 2025 07:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MSHpMjwy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s0aWOljH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3740188A0C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 05:32:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1028727990F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 07:23:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744695145; cv=none; b=Gl1oLOGASq7bWi+DNP32LeVX+TgIJbIPGedJAsOL/TEEPv7c9YAO1j+bJVZd7DblpZfLb8hb28VKjstH3kyNPPscdOpwy4f9k5hOtr4bYqeHrOrFcRBqyDd5J3F3Hi7xtW5rkzLNoCZc9m+zPRnErdPpZ208TDY8Sadfcf+6VBA=
+	t=1744701827; cv=none; b=SVKDGPzOr6Y3R0DR8nsZp+1ASrFWpc/l4QAb7/Ip+CQ5VrGl9TYUgVV5bT+EPSNLZAolDaJKi4sDlcBk5RdXb0Re/j+4ZnVFB48ncsNat9SYHvZHNlt01Nk6YhfpSfCEf9ymHYrtV1C/ly2QX5v8wPxdcW0O4+G0qSbN9obTg/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744695145; c=relaxed/simple;
-	bh=kSOq37P8NXFIkk79o+1Iypi8cLk30+DmlNv7LdKq0QE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kqD38EFoBDd/ATRx64athWFBB5SDEqYZ1ghNCDxQHeXz0ahY3i/NLSnDlyItU7FVc3xAKLUO4FS5vxGYGo2fPmolr9dfzZ1A3/h2+onVq0bh8nCU0F2mrZDeiSJxETM5xml/uhP7U/+0d3s7G8zKKIz9MHQBobSC4QtXEf0r6NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MSHpMjwy; arc=none smtp.client-ip=209.85.210.180
+	s=arc-20240116; t=1744701827; c=relaxed/simple;
+	bh=UDj4eAeCiIPS1KrBXrK6pNmhKNCEyzIvzN6l8yfOIt8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TJsQ/69RlkUenc/EkibBWOvwoP+r8Iu1NiP4QOH18CjNmilFDkN7XgOJZYHhXB/syUlJFb5rEihKNGW2MT5mPAURyoQrYqppWHUxB+a4HLcjjbefSa/kGGRKz/1fmw8b1a41o39QFYjaNLAmpp/WiQPmcq1y881QOPOI+uEevUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s0aWOljH; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-736ad42dfd6so4183707b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Apr 2025 22:32:23 -0700 (PDT)
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30bee278c2aso64512091fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 00:23:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744695143; x=1745299943; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=eiCmHwvjD4j/IPAdFIy+Ayuaxo2551JBqloA2gvIcww=;
-        b=MSHpMjwy43Fditu34330lbMjOTjyAhzjVZ5gmXdhsTcfE5W5sAmIPU4dloxahiKftZ
-         JCecU3UGigmN4yDqQjyzd7sLjKKMqNkLRvdj0j2I6y32ofr7vFummd88IOudYaXR2Ied
-         fI4yzA0ccr+Qq+DAgwgZarQ+qDIkWdW5C/rM2Dnk/HagzgDYjKZBzIk5mjeHPrG9Urif
-         aXfG9CD4Q9K4LhxYtkmE9hQFrRAA3JjEN2TfS3XclINlm96e8+L23TBmMEmTyWpO9ewt
-         3Hvd7vHGFU/swgq+PofNTpdV7xdYTehfFTjHMIPmr2XvmXD8Plxn9rMXhaOZpvLsejJv
-         wJ8w==
+        d=linaro.org; s=google; t=1744701824; x=1745306624; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UDj4eAeCiIPS1KrBXrK6pNmhKNCEyzIvzN6l8yfOIt8=;
+        b=s0aWOljHtl3DYidT4aBuJ5RbOxGD9xuVQ7XbynkofVHRGqgSxThq2b/B0pWaoy4maz
+         auxxhCx/GtAGSO0VotQQynzt+4gcaYpVSeWmWWYD7mdXYfqz2GJC75tK+MJv5UluprA+
+         E6D4Bq1vpEYg92kphPPOahfOs06pLP/evDQK02BnCI6bvavUEMdPlAhpO5LHP6wDHOPF
+         ugVSHq4Nhx8ih2HHPLHAJKSN4nzEMWwcPg8u89zEwPFMLlKTlvG8PWaYt97TOsTz3era
+         h3BVoZKC3RaadKJ2aI4+Lk8YLjSF85BJTNcuSRg16dWdASx6XTYDusqGbdIYFjK3SBqk
+         gkGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744695143; x=1745299943;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eiCmHwvjD4j/IPAdFIy+Ayuaxo2551JBqloA2gvIcww=;
-        b=Xrvo8quuYFzdbtgoZ6HxRwNgJQC0+sovGm4LzZM5j9sdooJ/ZUilUqGRlDcgBMeKk1
-         dQvZmILjeb1z53qvltbMx0oXj+aDTN9jLOCEZyZH+XrEaXmXtivWISEn0TIPE2Di9wvV
-         4R7VQEiV1P7W9Z1jXhdxF6SB8BoHNSqluCkEkwxROi4yyq8/sjJ748EJ+igMc6TxGtsO
-         OFRKOQ1VWuld+JL+otb3klF3Uk8wxQNAUqP1lxDr/C0iruRpSjdqTRjre0XbuCpCV5Bt
-         8iqkU7xhxXdCnEU/CBuZ49ljx6jYCwLiD3WRkHNjFOWcd8dFBnpkf4Qf6piKzB1UE+Em
-         DAHw==
-X-Forwarded-Encrypted: i=1; AJvYcCXrGLqW0s1efssQ5EMclyR6FccS/2xYV3nYPB+oZ9m6LfqTkhnvS1tKE9f2L1IWbGSGSGqysoVYNYhuAxHi@vger.kernel.org
-X-Gm-Message-State: AOJu0YzuRFawY90d4zCqt980Rtftp+zam9oQ3Z5wFC4tkM6eGroSUO61
-	+1kDn3rjelxhpFMayZVAcwL72cf6z8rUwZ3MIwsOrKLwfOtDQvRwOqkMa6g4JA==
-X-Gm-Gg: ASbGncuD/UP6sKVmDiQ74Ua4Vh/CCvtjdsgoXuKKECHI7FK/kXNhuVBL20fBNqIxtbv
-	pfXii65BjKHW1vssqS4zvzCNldG+fs5FeKmi5d3cctnvG1w1rEOgQ3CzVZmXw/aPOUVEqTNV2oj
-	NJJ0xd9kubkrTr3vNNEJhNloOaqHH9fiWlCEi7RgUQnVbOrTKF+6rTSbpucnSzb2di8SwYmRlQN
-	q0xff43+Z/yHla4L27gHro/kmVM0MuGBSQtNclRCjDiV05O02ShTXQvQWU9uGi1guyBCgPA5E2K
-	MXV3nifP2CpTH7z437N4aXiwC6D3KxfakFnYx1t90glgjS0F5A==
-X-Google-Smtp-Source: AGHT+IFce4/cJdYToN86yQyneVgZwqH3FlljPaPzu537+JXKWid7iSANB7gzTxBBRjex4IDt8ACouw==
-X-Received: by 2002:a05:6a21:4006:b0:1f5:64a4:aeac with SMTP id adf61e73a8af0-20179972e9fmr21282269637.33.1744695142742;
-        Mon, 14 Apr 2025 22:32:22 -0700 (PDT)
-Received: from thinkpad ([120.60.71.35])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b02a08183e2sm10179676a12.5.2025.04.14.22.32.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Apr 2025 22:32:22 -0700 (PDT)
-Date: Tue, 15 Apr 2025 11:02:14 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Brian Norris <briannorris@chromium.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org, 
-	Tsai Sung-Fu <danielsftsai@google.com>
-Subject: Re: [RFC] PCI: pwrctrl and link-up dependencies
-Message-ID: <4pwigzf7q6abyntt4opjv6lnvkdulyejr73efnud2cvltskgt2@tjs2k5tiwyvc>
-References: <Z_WAKDjIeOjlghVs@google.com>
- <vfjh3xzfhwoppcaxlov5bcmkfngyf6no4zyrgexlcxpfajsw2t@o5nbfcep3auz>
- <Z_2ZNuJsDr0lDjbo@google.com>
+        d=1e100.net; s=20230601; t=1744701824; x=1745306624;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UDj4eAeCiIPS1KrBXrK6pNmhKNCEyzIvzN6l8yfOIt8=;
+        b=AGoWRfmAFzR9De+PNgQod/+xsFH55suFqUXDqehaDsPLLHzzzZ50Y99W3ylyoWh9gX
+         8IkIXfNHI6t5MXq2hMDll5/YC7ftS/amJPqSHml+bDIvFMdxByXT1gAxIzfaK3U8WQlH
+         pF4/Nrm9dpFjmTP6hLTXtRjlXECF4Ov89p3+5eNXxJ/jxuf5PY8lNkNKP0M3R/qCiUnK
+         bMKHiyBpa2RMLc2DDHaz/uWx2D9s8jxM0SlRwHGdMYcnlFVyZ/xSLNAMyZURGR8+dUJh
+         YjBTTYg+KMRrNtcvsvI4KndtTZ+ZQ10yVUgefl7PDIsq44jLsGVS+vc6kaLnTdWPI/70
+         33AQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVl0IK5JEqmBZWt19HfCBKFDL8+SZBaOyo/hZt9BfIp8qbRHubrglrgD5FoB00QBNnp6OSC+msspezsNFB/@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrIpK7QxBhMdcaKepL2ltU7wXKmFGHDj66If2IbNOd8234ZLkA
+	iSzDBiwFTgU/5MiFkoF8uUkfY58Xvlnz//aWWj966OvzKS7oSoZaoY6FAsIOewgBERlgpsRTBT9
+	p5GAuJce+7YpDGxxZV4p6jLUTwbNPmJp2VcTXtw==
+X-Gm-Gg: ASbGncuYLcWFE2JzSIUWJmhQLxDwU6fP9XygNmZNssuwXuDrojEsGSlQCbDsq393+tx
+	Ht3AaVM5v2pRrMUOIwntpziERdDjRrM9WuJFxtkcYi5cKMbtrDiQQDja1hMktnsW1WIsToCADqc
+	XMFb8+7Hp+R/PSEh9C48D9xA==
+X-Google-Smtp-Source: AGHT+IFglWsLuajUozFpVPnPlBh2TjItDXNHlDH6L4EnWFRw+AziSkdH6rFqHcXtAE7NLHbCAo69n7eu1N1+R9UHYqI=
+X-Received: by 2002:a05:651c:54c:b0:30b:c36c:ba96 with SMTP id
+ 38308e7fff4ca-31071c0b5bamr8409831fa.1.1744701824036; Tue, 15 Apr 2025
+ 00:23:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z_2ZNuJsDr0lDjbo@google.com>
+References: <20250325094932.4733-1-hanchunchao@inspur.com>
+In-Reply-To: <20250325094932.4733-1-hanchunchao@inspur.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Tue, 15 Apr 2025 09:23:32 +0200
+X-Gm-Features: ATxdqUE5jF908PdCkX3CIFaPCBX4_mmXl_uxNevSNqAZQBsFJDSR9NbcxEZF5qo
+Message-ID: <CACRpkdbWx5u2RBmZ8bjoV-85b3HmQyWHxxwQ12zx_6pAFPPMUQ@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: tlmm-test: Fix potential null dereference
+ in tlmm kunit test
+To: Charles Han <hanchunchao@inspur.com>
+Cc: andersson@kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 14, 2025 at 04:24:38PM -0700, Brian Norris wrote:
-> Hi Manivannan,
-> 
-> On Mon, Apr 14, 2025 at 04:27:35PM +0530, Manivannan Sadhasivam wrote:
-> > On Tue, Apr 08, 2025 at 12:59:36PM -0700, Brian Norris wrote:
-> > > TL;DR: PCIe link-up may depend on pwrctrl; however, link-startup is
-> > > often run before pwrctrl gets involved. I'm exploring options to resolve
-> > > this.
-> > > 
-> > > Hi all,
-> > > 
-> > > I'm currently looking at reworking how some (currently out-of-tree, but I'm
-> > > hoping to change that) pcie-designware based drivers integrate power sequencing
-> > > for their endpoint devices, as well as the corresponding start_link()
-> > > functionality.
-> > > 
-> > > For power sequencing, drivers/pci/pwrctrl/ looks like a very good start at what
-> > > we need, since we have various device-specific regulators, GPIOs, and
-> > > sequencing requirements, which we'd prefer not to encode directly in the
-> > > controller driver.
-> > > 
-> > 
-> > The naming is a bit confusing,
-> 
-> +1
-> 
-> > but power sequencing and power control are two
-> > different yet related drivers. Power sequencing drivers
-> > (drivers/power/sequencing) are targeted towards devices having complex resource
-> > topology and often accessed by more than one drivers. Like the WiFI + BT combo
-> > PCIe cards. On the other hand, power control (drivers/pci/pwrctrl) drivers are
-> > used to control power to the PCIe slots/cards having simple resource topology.
-> 
-> Sure, I get the difference. There can be "sequencing" in the pwrctrl
-> area too though, because there can be PMICs involved even in a single
-> PCIe device (i.e., non-shared, not needing "pwrseq" framework) which
-> require multiple steps (e.g., 2 GPIOs) to power up. Apologies if my
-> mention of "sequencing" is unclear, but I believe everything I'm
-> concerned about is in pwrctrl not pwrseq.
-> 
+On Tue, Mar 25, 2025 at 10:49=E2=80=AFAM Charles Han <hanchunchao@inspur.co=
+m> wrote:
 
-Right.
+> kunit_kzalloc() may return a NULL pointer, dereferencing it without
+> NULL check may lead to NULL dereference.
+> Add a NULL check for grp.
+>
+> Fixes: c7984dc0a2b9 ("pinctrl: qcom: Add test case for TLMM interrupt han=
+dling")
+> Signed-off-by: Charles Han <hanchunchao@inspur.com>
 
-> > > For link startup, pcie-designware-host.c currently
-> > > (a) starts the link via platform-specific means (dw_pcie::ops::start_link()) and
-> > > (b) waits for the link training to complete.
-> > > 
-> > > However, (b) will fail if the other end of the link is not powered up --
-> > > e.g., if the appropriate pwrctrl driver has not yet loaded, or its
-> > > device hasn't finished probing. Today, this can mean the designware
-> > > driver will either fail to probe,
-> > 
-> > This is not correct.
-> 
-> That depends on the implementation of start_link(). But I suppose the
-> intention is that start_link() only "starts" and doesn't care where
-> things go from there. (IOW, my local start_link() implementation is
-> probably wrong at the moment, as it performs some poll/retry steps too.)
-> 
+Patch applied.
 
-Yes, that's why I said it was incorrect. The callback is supposed to just start
-the link and not wait for anything else.
-
-> > DWC driver will start LTSSM and wait for the link to be up
-> > if the platform has no way of detecting link up. But it will not fail if the
-> > link doesn't come up. It will just continue hoping for the link to come up
-> > later. LTSSM would be in Detect.Quiet/Active state till a link partner is found:
-> > 
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/controller/dwc/pcie-designware-host.c#n558
-> 
-> I'd still consider logging an error a failure of sorts though, even if
-> we don't fail the probe().
-> 
-
-We do print the log now. Infact it is dev_info():
-
-"Phy link never came up"
-
-> > > or at least waste time for a condition
-> > > that we can't achieve (link up), depending on the HW/driver
-> > > implementation.
-> > > 
-> > 
-> > Unfortunately we cannot avoid this waiting time as we don't know if a device is
-> > attached to the bus or not. The 1s wait time predates my involvement with DWC
-> > drivers.
-> 
-> I don't really love that answer. It means that any DWC-based platform
-> that needs pwrctrl and doesn't set use_link_irq==true will waste 1
-> second per PCIe controller. While it's hard to make guarantees about old
-> and/or unloved drivers, I'd like to think I can do better on new ones.
-> 
-
-Even I'd like to avoid the 1s delay. But the problem is how would you know if
-the device is attached to the bus or not. The delay is to account for the fact
-that the link may take up to 1s to come up post starting LTSSM. So if we do not
-wait for that period, there is a chance that we would report the false negative
-status and also the enumeration would fail.
-
-> > > I'm wondering how any designware-based platforms (on which I believe pwrctrl
-> > > was developed) actually support this, and how I should look to integrate
-> > > additional platforms/drivers. From what I can tell, the only way things would
-> > > work today would either be if:
-> > > (1) a given platform uses the dw_pcie_rp::use_linkup_irq==true functionality,
-> > >     which means pcie-designware-host will only start the link, but not wait for
-> > >     training to succeed. (And presumably the controller will receive its
-> > >     link-up IRQ after power sequencing is done, at which point both pwrctrl and
-> > >     the IRQ may rescan the PCI bus.) Or:
-> > > (2) pci/pwrctrl sequencing only brings up some non-critical power rails for the
-> > >     device in question, so link-up can actually succeed even without
-> > >     pwrctrl.
-> > > 
-> > 
-> > Again, failing to detect link up will not fail the probe. I don't know how you
-> > derived this conclusion. Even the PCIe spec itself is clear that the link should
-> > stay in Detect.Quiet until it has found the link partner. So failing the probe
-> > means we are introducing a dependency on the devices which would be bizarre.
-> > Imagine how a controller will end up supporting hotplug.
-> 
-> I think you're over-fixating on my mention of probe failure. Consider
-> the lesser statement that was paired along with it: always wasting 1
-> second per controller polling for something that will never happen. It
-> feels backwards and wasteful.
-> 
-
-Again, I do get your point. But tell me how can a controller reliably detect
-that there is a device attached to the bus. Only on your android setup, you for
-sure know that the device won't be there during probe. So you are considering 1s
-wait as a wast of time and it is fair. But what if the same controller is used
-in another platform which is not android or the endpoint device is powered on
-during probe itself without replying on userspace?
-
-> One of my key questions: if I don't have a link-up IRQ, how can I avoid
-> this waste? pcie-brcmstb avoids that waste today (for the common case
-> where there is, in fact, a device connected), and it would be a
-> regression for it to start using pwrctrl tomorrow.
-> 
-
-Why are you tying pwrctrl with this designware driver behavior? Both are
-unrelated. Even if you don't use pwrctrl and use controller driver to bring up
-the device, the 1s delay would be applicable (if there is no device).
-
-pcie-brcmstb driver indeed wastes time. It is not 1s but just 100ms. But that
-driver is for only one vendor. In the case of DWC, the driver has to work with
-multiple vendors. But again, I do not know how this 1s delay came up. Maybe we
-could try to reduce it to 500ms or so, but for that I need confirmation from
-someone like Lorenzo who knows the history.
-
-> (Side note: I also just noticed pcie-tegra194.c does the same.)
-> 
-> > > My guess is that (1) is the case, and specifically that the relevant folks are
-> > > using the pcie-qcom.c, with its "global" IRQ used for link-up events.
-> > > 
-> > 
-> > We only recently added support for 'Link Up' event through 'global_irq' in the
-> > controller driver. And this was done to avoid waiting for link up during probe
-> 
-> You're kind of reinforcing my question: you don't like the waste, so
-> you're adding link-up IRQ support -- is that really the only way?
-> 
-
-I don't know. But so far I haven't seen any other sensible way which is generic.
-
-> (My initial thought: no, it's not. We know when pwrctrl has done its
-> thing -- why should we bother polling for link state before that? But
-> that's easier said than done, when pwrctrl is optional and highly
-> abstracted away from the DWC driver...)
-> 
-
-Oh well... this is where you got it wrong. pwrctrl drivers are only probed
-before enumeration because of the design (which is way after starting the link).
-As of v6.15-rc1, before we try to enumerate any device, we check if there is any
-device defined in DT which requires power supply. If so, we create a platform
-device (or pwrctrl device) and let the pwrctrl driver to bind to it and power up
-the device. In that case, we also do not proceed to scan the bus further and
-skip the hierarchy. Because, the pwrctrl driver will rescan the bus once it has
-finished powering up the device.
-
-> > (which is what you/your colleagues also want to avoid I believe). But the
-> > problem in your case is that you are completely skipping the LTSSM and relying
-> > on custom userspace tooling to bring up the device and start LTSSM once done.
-> 
-> I assume you're talking about this thread:
-> https://lore.kernel.org/linux-pci/20240112093006.2832105-1-ajayagarwal@google.com/
-> [PATCH v5] PCI: dwc: Wait for link up only if link is started
-> 
-
-Yes!
-
-> I'm very aware of that thread, and the userspace tooling that underlies
-> it. I also am well aware that this is not how upstream should work, and
-> that's really why I'm here at all -- I'm trying to rewrite how we do
-> things, including our link-up and PMIC strategy.
-> 
-
-I'm really happy to hear this :)
-
-> So yes, that thread does provide some historical context for where I am,
-> but no, it doesn't really describe what I'm doing or asking about today.
-> 
-> > > Would it make sense to introduce some sort of pwrctrl -> start_link()
-> > > dependency? For example, I see similar work done in this series [1], for
-> > > slightly different reasons. In short, that series adds new
-> > > pci_ops::{start,stop}_link() callbacks, and teaches a single pwrctrl driver to
-> > > stop and restart the bridge link before/after powering things up.
-> > > 
-> > 
-> > This switch has a crazy requirement for configuring it through I2C. The I2C
-> > configuration has to be done before starting LTSSM. So we disable LTSSM first
-> > since it was enabled way before, then do I2C config and then start LTSSM again.
-> 
-> OK, thanks for the notice.
-> 
-> > > I also see that Manivannan has a proposal out [2] to add semi-generic
-> > > link-down + retraining support to core code. It treads somewhat similar
-> > > ground, and I could even imagine that its pci_ops::retrain_link()
-> > > callback could even be reimplemented in terms of the aforementioned
-> > > pci_ops::{start,stop}_link(), or possibly vice versa.
-> > > 
-> > 
-> > Retrain work is mostly to bring up a broken link, which is completely different
-> > from what you are trying to achieve.
-> 
-> OK. Thanks for the clarification.
-> 
-> One reason I highlight these patch sets is because they add more cases
-> of "PCI core" to "host bridge/controller driver" dependencies
-> specifically around link management, which otherwise has very little
-> precedent. I wasn't sure if that was by requirement, or simply because
-> people haven't tried to support these things.
-> 
-
-The callbacks are introduced only because of the hardware requirements of the
-switch.
-
-> > > Any thoughts here? Sorry for a lot of text and no patch, but I didn't just want
-> > > to start off by throwing a 3rd set of patches on top of the existing ones that
-> > > tread similar ground[1][2].
-> > > 
-> > 
-> > No problem. If you want to use pwrctrl in your platform and get rid of the
-> > custom userspace tooling, I'm all in for it. But for that, I need to understand
-> > your controller design first. All I heard so far is, "we want to skip LTSSM and
-> > let our tool take care of it".
-> 
-> Please consider that last sentence "dead" or "totally not any plan of
-> record." It may be how we do things privately today, but it's not
-> anything I expect the upstream community to even think about. (Feel free
-> to CC me if it comes up again. It's hard for me to speak for everyone at
-> my employer, but I can probably convince them it's a bad idea if
-> needed.)
-> 
-
-Sure thing. Thanks for understanding. The thread kept coming once in a while and
-I had to repeat everytime why the idea is so bad and won't scale. Finally
-someone understood it.
-
-> Regarding the controller design: frankly, I don't think my controller
-> does anything all that revolutionary in this space [0]. All of my
-> questions today can be asked (from what I can tell) of existing upstream
-> controller drivers. I'm mostly trying to understand the expected driver
-> design here, and that includes teasing apart what is "stuff done in
-> 'old' drivers, but isn't recommended", and "what is currently
-> unimplemented in new stuff" (like pwrctrl [1]), and where do my
-> expectations fit in between that.
-> 
-> For instance, poking around a bit I come up with this question: when
-> using pci/pwrctrl, how does one ensure timing requirements around, e.g.,
-> power stability vs PERST# deassertion are met? When looking at a pwrctrl
-> driver like drivers/pci/pwrctrl/slot.c, the process looks too simple:
-> 
-> (0) host bridge probably already started its LTSSM, deasserted PERST#
-> (1) slot.c powers the slot
-> (2) pci_pwrctrl_device_set_ready() -> rescan_work_func() rescans the bus
-> 
-> Notably, there's no enforced delay between (1) and (2).
-> 
-> Reading the PCIe CEM, it seems we're violating some specification bits,
-> like:
-> 
->   2.2. PERST# Signal
->   [...] On power-up, the de-assertion of PERST# is delayed 100 ms
->   (TPVPERL) from the power rails achieving specified operating limits.
->   [...]
-> 
-> There are references to this in various implementations (e.g.,
-> tegra_pcie_enable_slot_regulators() and brcm_pcie_start_link() --
-> although I suspect the latter is applying the wrong ordering).
-> 
-> Additionaly, CEM also seems to suggest we have PERST# ordering wrong. It
-> should also come between (1) and (2), not at (0).
-> 
-
-You are absolutely right! Currently, we follow the timing requirement while
-deasserting the PERST# in the controller drivers. But once we power on the slot,
-we do not touch PERST# and it just happen to work.
-
-We may need to introduce another callback that toggles PERST# so that we can use
-it while powering up the device.
-
-> And finally (for now), I don't understand how we have any guarantee that
-> step (2) is useful. Even if we've already started the LTSSM in (0), we
-> have no idea if the link is actually Active by the time we hit (2), and
-> so rescanning may not actually discover the device. And if that scan
-> fails ... then when do we trigger another pci_rescan_bus()? Only if the
-> implementation has a "link-up" IRQ?
-> 
-
-As I said above, we do not enumerate the device if it has devicetree node with
-supplies. So that's why we need (2). Otherwise, the device won't be enumerated
-at all, unless userspace does the rescan (which defeats the purpose of pwrctrl).
-
-> Unless I'm misunderstanding, these concerns all suggest we need some
-> host-bridge hook in between (1) and (2), and existing pwrctrl users are
-> operating somewhat outside the specification, or are relying on
-> something more subtle that I'm missing.
-> 
-
-Yes, feel free to submit patches for toggling PERST#. Or let me know otherwise,
-I'll do it.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Yours,
+Linus Walleij
 
