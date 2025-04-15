@@ -1,269 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-54431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2949A8A010
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 15:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BF42DA8A01C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 15:53:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28BE4441FA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 13:51:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A337A444C9E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 13:53:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6151C1A4F2F;
-	Tue, 15 Apr 2025 13:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 189581ACEDE;
+	Tue, 15 Apr 2025 13:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DHACGsc6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E1RGe7Hl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EAF198E9B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 13:51:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7FF19D88B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 13:53:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744725106; cv=none; b=V/O76rimwlCi2LrNaQi6oxYyfpKHRV7u3ar7DispQdKz/5ympDKUJ8EKy87tFFg5iDySiK7iIlsGmTxf1kYyXTQ0IS1URVdRgKrtkXULkj76kBAl5yTr3mDujyLDpTAr0QkrdZ++QZJXPQc0JihQsxaUSDHQ9a+CGGpvL8RAmIQ=
+	t=1744725202; cv=none; b=nftdi6YE/5V3gfQa92CS9sl6UpfETQd35sMjew8pOjYhEWKkN6CC1zVMaD97oNSJsYFxDfNDQKY8FyZ6eINFL+j5xxHS5aK39Q1fM/gUfnIL7IFBJ5QUwkGJvHp7QJMBPRLB3LJCZbjWhzXMJWoz9HzIHgz/NZxfKHUoSG55YY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744725106; c=relaxed/simple;
-	bh=LP/9oRtpUe2h8OfLw7/nirLfuIAdCzLDkVKZQ/KtgIk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZHfCGq8JzewuIQffrurFmAthPVIOLTxgPD9QRVuNi+DU1t2S5hMqVP5Cn68HzYy0HUFL6135R6LipPDDfRDo6tBDgICBqXy43F1FjhLzFYuj2+fkw+oE8JbQEQq/njDFcf6OWVclq357Fo0KyoI+fUT/JpmjyrjJH7N47OT57hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DHACGsc6; arc=none smtp.client-ip=209.85.160.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-47681dba807so217971cf.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 06:51:44 -0700 (PDT)
+	s=arc-20240116; t=1744725202; c=relaxed/simple;
+	bh=bgzW8YxINyu6W61KznQTMmt2So/8oOuKzrFONOEyMzA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=KY5G+vgV9cSlYRrQSjX6RPhZaM5yIKuHteRLNjiJb4GYlZrhqwDdyphzL0ZT9a3H+rmp7N/Lj3UUf34ev6JC9Bk81zc/IpRncCynBdq36ogiuRIKzqE++BxLiSIowNIpTREKiUWQ5z17yoAwr7uBS12lZRMUX2Yo8/dt0tS3HMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E1RGe7Hl; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5efe8d9ebdfso10604654a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 06:53:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1744725103; x=1745329903; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2krD/FL4kAPkbUf20jwju49i4p5y6JZxMe+TikflV2I=;
-        b=DHACGsc6t7m0aU7Se/sC3ToDlQaaPJC+3X4j6TtzEBUngYfrdpAAWwGLdXkDZ3xuoy
-         TR3FRYe7XLgDAzBJmSLnf3TplMLbIKLKlmtDpOUv2z8Z1lg+d/uqRnOqxpgG8uW/Bkj4
-         EkVkc23bZN7HIDsvbt1p6Cc4KT1RCHdOzZDLQajGy+eQpKwiuapYPpEh86jOmxfvcrrh
-         7BD6bcNxcN7Z+pL0Lio1kKzjfYBtGZRLA8Oz/SC8Se9D6RM+Rz9KlfMGBblVNwZBPJlA
-         ZAzmorHybW/jtwyAF9oesIv4ICPOI+zSW+iP3ivpR8VGSubrMS8s4xlf7CLEXdg9u3CK
-         Mxug==
+        d=linaro.org; s=google; t=1744725198; x=1745329998; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AllNkRrbyjcjvSu2WZVuohdOWdJ1dJ6T/kkM49XqA4g=;
+        b=E1RGe7Hlz1mwl75Uj/uWezX1dfBasXulgXnJjWxPIfaV3sKkq/2zg2Nkq9k+RJoct+
+         8o+HJJw5B5PPMlwHf3o67Geo2NbrPbKdEpbnuxJLC9Ab9/IZ9YgMALAHX0jE/o8lctNF
+         g8X47zold4lP70zcE646lC9m8KFFrN8YHjrboXe68aNmNxcRi20GDZjamXoCsMLR1bV4
+         seP45/eQlhfblZnWRIsHNGzWVGfyuZPoXTLkCclO6p1aS4oIOxszGt11gcEciWLY8W0d
+         0eT85PYDz8Bv1yJhgdRrbgmFhDQvMGl7gyru3M5L5Fzhw3ErmQ8AcxLeldeGIGPpXqV7
+         ZtOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744725103; x=1745329903;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1744725198; x=1745329998;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2krD/FL4kAPkbUf20jwju49i4p5y6JZxMe+TikflV2I=;
-        b=wYoazbGO6CLN4r5MzEsmPZFU/V2+tPVQG+MzQdUWoEVU6f0h1wQ+ie30iJkGYU63Ed
-         dX19vC9IHeuQJaJwmZUMLjwXt04JLPgmyPgsHyAv1g25/TXipcFlawQ2Y3V1OGjNOqXg
-         I6GfemXfk5Na195tt2bx2ZKTnbYggQfcjUZRhPVV4AHeSbltvGYHuSoTZNiz87D/KMlW
-         s4RfNsl7okAlXfyF/2qkTApRYz5LyLkCOla6Yjfolr0QqgBnrm4DWEDaCacYM09GNGsN
-         xkcN8oxQGIQjE39EiSmVi8YF3YnY5q4MA7QqhkTqckGZGT8JaPQUWfEEzba1xTSI9I8G
-         AXSA==
-X-Forwarded-Encrypted: i=1; AJvYcCVPm57E+J2x7zetbyT5ku4WbzJJbo3HYVU4bL2lOsKa02O2XvL2qbACb/QFU1Bfo5tvY6OwA8fp3mW0Fmfi@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzsqsw16/to+dDx+uEf9CSmI6hs1wocPJ+pCp9M30W2Ns35sboM
-	DWeeE/RkIV/Gcx5DPQe1kDbhUjeZr/4edJTvXc24tGVmwEHLqfF6YwZlz9I3HndSJdqUzdf8+Ef
-	BK87AKaDhEJnCNX8ErFmmdPuKFFs9gx1cISFK
-X-Gm-Gg: ASbGncvtdRW56CTB9TzvgmKEPd9lt/zemfmn2D3kjOyy6dEJdxBsek1/hSYsyUfRe75
-	M+mnczLtnRJQarLg4Hhoarm0VDLkLhXZkKFJgDwjZZQstPi2IK7I7+M7TOtJXbMqv15yUI4ZNre
-	8Xdm19jEAIQ1d4SUJhJMn6o+hxSj/gR0s9Avfdac89OTJj9k4ivA==
-X-Google-Smtp-Source: AGHT+IFA6OpbrhGV/+VCYom9qh0Ea+gMHW+k17zS5n0TQe4PsHbTdR3GAfcG6mdLxCddo/t0QnDz7jhYKdq546yAJoo=
-X-Received: by 2002:ac8:7e91:0:b0:478:f8ac:8adf with SMTP id
- d75a77b69052e-47acac18fd5mr2766361cf.19.1744725102996; Tue, 15 Apr 2025
- 06:51:42 -0700 (PDT)
+        bh=AllNkRrbyjcjvSu2WZVuohdOWdJ1dJ6T/kkM49XqA4g=;
+        b=iz4aCW6hXPPwJGlRxFeKXxp/r4hlYql3ntMBocs7ddWIZqfOf+GQe7GOVH5/VdFbMH
+         9lHxVTxjJJSX4TBxhu6srTRYwHoHFY01sZ20ZsohWDW7b4XKCt4QDGLHt5x0ayxVrUqk
+         VDMoWr4opCrI1KW3DglBwUsvmI6D53cux8NAXYM9JYcx5Gw56eR0Lrn4+zd3DWQBuOHh
+         yhoIzru9UShJt3tHRf7q+lA8QXvD4HKP+ZKZPhMsa7Ao3QcDnt0YLOzi3RkNVMfsxf1J
+         D2LzpOxVieoI80ui0zNMXaeHhx0IuJ9t+D+EbhcORL+tVt1UUZ6erYQUy9iKRBGI9Rnv
+         g2vw==
+X-Forwarded-Encrypted: i=1; AJvYcCWzhegSAxwcE7ZdfQmIyXzWugbPVuhfmb3aiwCUnYAA+BWxLuZDQd3CD2yoLPsRafKQN4dBoilor6o82GBR@vger.kernel.org
+X-Gm-Message-State: AOJu0YyPFMlu2yyiZ8iwRs+ntKhQBtJyDIbO7lZHsQ0tniUkiXud3Me5
+	7Nv6wJVNdq3dkzHUx4dqnVvbxJenkUlX8M8EKc4NrU5gjiG1T9fBX3eA2Scj9J4=
+X-Gm-Gg: ASbGnctZYRx6xU5myqZyo9zDazZGl5m2eoXpNq39JUTs6rNWzSB1Qjv0PE1QOolGboo
+	50sOn6aT7XThZE9UCwdWsxDwVeaIiv0Ic2saFBWdAofpULmeL6iD7AhZWtArVRC52xxUWmDE8YO
+	9k/8l5LMoItPRTVdLDXM6ywlrhNrSgyc+A4LUtHYGoDqcsRa0ZJFhRUBFpn4TXRmqxmTt6sDWqz
+	xBzbXnb5i6xSB37kwsE0oxUcopv8WyYb18YBtlCFvmN4m6CC3MWRtUznOoE50N0EYEGSBTD09a8
+	o+hdulcQRkiNw5uWJO8jMZLtKGophUxIQZQY+2a3mhLdphwRzpiPMVg=
+X-Google-Smtp-Source: AGHT+IGRcEt9oK3lxyGiEnhvV+ZQfkcTyZLJgYiuW7WPrPlF2pqkkrZjNilPDswBvYfDwLxbNzmKXA==
+X-Received: by 2002:a17:907:a48:b0:ac7:1ec1:d8bd with SMTP id a640c23a62f3a-acad351bf05mr1481526966b.29.1744725197572;
+        Tue, 15 Apr 2025 06:53:17 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:7b18:2529:5ce1:343d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acadcc21a44sm681379166b.177.2025.04.15.06.53.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Apr 2025 06:53:17 -0700 (PDT)
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+Subject: [PATCH 0/8] arm64: dts: qcom: msm8916/39: Cleanup/fix UART console
+ pinctrl
+Date: Tue, 15 Apr 2025 15:52:43 +0200
+Message-Id: <20250415-msm8916-console-pinctrl-v1-0-a1d33ea994b9@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250318161823.4005529-1-tabba@google.com> <20250318161823.4005529-5-tabba@google.com>
- <8ebc66ae-5f37-44c0-884b-564a65467fe4@redhat.com> <CA+EHjTwjShH8vw-YsSmPk0yNY3akLFT3R9COtWLVgLozT_G7nA@mail.gmail.com>
- <103b8afc-96e3-4a04-b36c-9a8154296426@redhat.com>
-In-Reply-To: <103b8afc-96e3-4a04-b36c-9a8154296426@redhat.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Tue, 15 Apr 2025 14:51:06 +0100
-X-Gm-Features: ATxdqUF2fjyijejaIC1kw37vfGIKBpDqMF-_fucpkmSEaVbZaviAZd-hhsiO6bk
-Message-ID: <CA+EHjTxuAE1N3NOngNGfZYxPb1AJPmrUR5vhHpv353YUjEgfRg@mail.gmail.com>
-Subject: Re: [PATCH v7 4/9] KVM: guest_memfd: Handle in-place shared memory as
- guest_memfd backed memory
-To: David Hildenbrand <david@redhat.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKtk/mcC/x3MQQqAIBBA0avErBtQqaiuEi1MpxooDSciiO6et
+ HyL/x8QSkwCffFAoouFY8jQZQFutWEhZJ8NRplaVVrjLnvb6QZdDBI3woODO9OGqulmb4ydyHv
+ I9ZFo5vs/D+P7fqAypxVpAAAA
+X-Change-ID: 20250411-msm8916-console-pinctrl-069fd22abedd
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Sam Day <me@samcday.com>, Casey Connolly <caleb.connolly@linaro.org>
+X-Mailer: b4 0.14.2
 
-Hi David,
+At the moment, msm8916/39.dtsi have two inconsistent UART pinctrl templates
+that are used by all the boards:
 
-On Mon, 14 Apr 2025 at 20:42, David Hildenbrand <david@redhat.com> wrote:
->
-> On 14.04.25 18:03, Fuad Tabba wrote:
-> > Hi David,
-> >
-> > On Mon, 14 Apr 2025 at 12:51, David Hildenbrand <david@redhat.com> wrote:
-> >>
-> >> On 18.03.25 17:18, Fuad Tabba wrote:
-> >>> For VMs that allow sharing guest_memfd backed memory in-place,
-> >>> handle that memory the same as "private" guest_memfd memory. This
-> >>> means that faulting that memory in the host or in the guest will
-> >>> go through the guest_memfd subsystem.
-> >>>
-> >>> Note that the word "private" in the name of the function
-> >>> kvm_mem_is_private() doesn't necessarily indicate that the memory
-> >>> isn't shared, but is due to the history and evolution of
-> >>> guest_memfd and the various names it has received. In effect,
-> >>> this function is used to multiplex between the path of a normal
-> >>> page fault and the path of a guest_memfd backed page fault.
-> >>>
-> >>> Signed-off-by: Fuad Tabba <tabba@google.com>
-> >>> ---
-> >>>    include/linux/kvm_host.h | 3 ++-
-> >>>    1 file changed, 2 insertions(+), 1 deletion(-)
-> >>>
-> >>> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> >>> index 601bbcaa5e41..3d5595a71a2a 100644
-> >>> --- a/include/linux/kvm_host.h
-> >>> +++ b/include/linux/kvm_host.h
-> >>> @@ -2521,7 +2521,8 @@ static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
-> >>>    #else
-> >>>    static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
-> >>>    {
-> >>> -     return false;
-> >>> +     return kvm_arch_gmem_supports_shared_mem(kvm) &&
-> >>> +            kvm_slot_can_be_private(gfn_to_memslot(kvm, gfn));
-> >>>    }
-> >>>    #endif /* CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES */
-> >>>
-> >>
-> >> I've been thinking long about this, and was wondering if we should instead
-> >> clean up the code to decouple the "private" from gmem handling first.
-> >>
-> >> I know, this was already discussed a couple of times, but faking that
-> >> shared memory is private looks odd.
-> >
-> > I agree. I've been wanting to do that as part of a separate series,
-> > since renaming discussions sometimes tend to take a disproportionate
-> > amount of time.But the confusion the current naming (and overloading
-> > of terms) is causing is probably worse.
->
-> Exactly my thoughts. The cleanup diff I was able to come up with is not
-> too crazy, so it feels feasible to just include the cleanups as a
-> preparation for mmap() where we introduce the concept of shared memory
-> in guest_memfd.
->
-> >
-> >>
-> >> I played with the code to star cleaning this up. I ended up with the following
-> >> gmem-terminology  cleanup patches (not even compile tested)
-> >>
-> >> KVM: rename CONFIG_KVM_GENERIC_PRIVATE_MEM to CONFIG_KVM_GENERIC_GMEM_POPULATE
-> >> KVM: rename CONFIG_KVM_PRIVATE_MEM to CONFIG_KVM_GMEM
-> >> KVM: rename kvm_arch_has_private_mem() to kvm_arch_supports_gmem()
-> >> KVM: x86: rename kvm->arch.has_private_mem to kvm->arch.supports_gmem
-> >> KVM: rename kvm_slot_can_be_private() to kvm_slot_has_gmem()
-> >> KVM: x86: generalize private fault lookups to "gmem" fault lookups
-> >>
-> >> https://github.com/davidhildenbrand/linux/tree/gmem_shared_prep
-> >>
-> >> On top of that, I was wondering if we could look into doing something like
-> >> the following. It would also allow for pulling pages out of gmem for
-> >> existing SW-protected VMs once they enable shared memory for GMEM IIUC.
-> >>
-> >>
-> >> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-> >> index 08eebd24a0e18..6f878cab0f466 100644
-> >> --- a/arch/x86/kvm/mmu/mmu.c
-> >> +++ b/arch/x86/kvm/mmu/mmu.c
-> >> @@ -4495,11 +4495,6 @@ static int kvm_mmu_faultin_pfn_gmem(struct kvm_vcpu *vcpu,
-> >>    {
-> >>           int max_order, r;
-> >>
-> >> -       if (!kvm_slot_has_gmem(fault->slot)) {
-> >> -               kvm_mmu_prepare_memory_fault_exit(vcpu, fault);
-> >> -               return -EFAULT;
-> >> -       }
-> >> -
-> >>           r = kvm_gmem_get_pfn(vcpu->kvm, fault->slot, fault->gfn, &fault->pfn,
-> >>                                &fault->refcounted_page, &max_order);
-> >>           if (r) {
-> >> @@ -4518,8 +4513,19 @@ static int __kvm_mmu_faultin_pfn(struct kvm_vcpu *vcpu,
-> >>                                    struct kvm_page_fault *fault)
-> >>    {
-> >>           unsigned int foll = fault->write ? FOLL_WRITE : 0;
-> >> +       bool use_gmem = false;
-> >> +
-> >> +       if (fault->is_private) {
-> >> +               if (!kvm_slot_has_gmem(fault->slot)) {
-> >> +                       kvm_mmu_prepare_memory_fault_exit(vcpu, fault);
-> >> +                       return -EFAULT;
-> >> +               }
-> >> +               use_gmem = true;
-> >> +       } else if (kvm_slot_has_gmem_with_shared(fault->slot)) {
-> >> +               use_gmem = true;
-> >> +       }
-> >>
-> >> -       if (fault->is_private)
-> >> +       if (use_gmem)
-> >>                   return kvm_mmu_faultin_pfn_gmem(vcpu, fault);
-> >>
-> >>           foll |= FOLL_NOWAIT;
-> >>
-> >>
-> >> That is, we'd not claim that things are private when they are not, but instead
-> >> teach the code about shared memory coming from gmem.
-> >>
-> >> There might be some more missing, just throwing it out there if I am completely off.
-> >
-> > For me these changes seem to be reasonable all in all. I might want to
-> > suggest a couple of modifications, but I guess the bigger question is
-> > what the KVM maintainers and guest_memfd's main contributors think.
->
-> I'm afraid we won't get a reply before we officially send it ...
->
-> >
-> > Also, how do you suggest we go about this? Send out a separate series
-> > first, before continuing with the mapping series? Or have it all as
-> > one big series? It could be something to add to the agenda for
-> > Thursday.
->
-> ... and ideally it would be part of this series. After all, this series
-> shrunk a bit :)
+ - &blsp_uart1_default configures all 4 pins (TX, RX, CTS, RTS), some
+   boards then limit this to just TX and RX
+ - &blsp_uart2_default only configures 2 pins (TX, RX), even though UART2
+   also supports CTS/RTS
 
-True, although Ackerley is working hard on adding more things on top
-(mainly selftests though) :) That said, having multiple series
-floating around was clearly not the way to go. So yes, this will be
-part of this series.
+It's difficult to define a generic pinctrl template for all UART use cases,
+since they are quite different in practice. The main use case for most of
+the boards is the UART debug console. Unfortunately, the current generic
+pinctrl template doesn't work well for that either:
 
-> Feel free to use my commits when helpful: they are still missing
-> descriptions and probably have other issues. Feel free to turn my SOB
-> into a Co-developed-by+SOB and make yourself the author.
->
-> Alternatively, let me know and I can polish them up and we can discuss
-> what you have in mind (either here or elsewhere).
->
-> I'd suggest we go full-steam on this series to finally get it over the
-> finish line :)
+ - We need bias-pull-up for the RX pin to avoid potential garbage at
+   runtime when the console UART is not connected, but this may be
+   unneeded, unexpected or even unwanted for other UART use cases.
 
-Sure. I can take it over from here and bug you whenever I have any questions :)
+ - U-Boot needs to know which pinctrl to apply during early boot stages, so
+   we should specify "bootph-all" for the console UART pinctrl. It doesn't
+   make sense to apply this for other UART use cases.
 
-Cheers,
-/fuad
+The solution proposed in this series is to abandon the idea that one
+generic pinctrl template can fit for all the UART use cases. Instead, add a
+new pinctrl specific to the very common console use case, and move the few
+other UART use cases directly to the board-specific DT files. This ensures
+that people are forced to consider what exactly their UART use case needs
+when porting new boards.
 
-> --
-> Cheers,
->
-> David / dhildenb
->
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+---
+Stephan Gerhold (8):
+      arm64: dts: qcom: msm8916/39: Move UART pinctrl to board files
+      arm64: dts: qcom: msm8916/39: Introduce new UART console pinctrl
+      arm64: dts: qcom: msm8919/39: Use UART2 console pinctrl where appropriate
+      arm64: dts: qcom: msm8916-motorola: Use UART1 console pinctrl
+      arm64: dts: qcom: apq8016-sbc: Move non-console UART pinctrl to board
+      arm64: dts: qcom: apq8016-schneider-hmibsc: Move UART pinctrl to board
+      arm64: dts: qcom: apq8039-t2: Move customized pinctrl to board
+      arm64: dts: qcom: msm8916/39: Drop generic UART pinctrl templates
+
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts           | 21 +++++++++
+ .../boot/dts/qcom/apq8016-schneider-hmibsc.dts     | 41 +++++++++++++++--
+ arch/arm64/boot/dts/qcom/apq8039-t2.dts            | 28 ++++++++----
+ arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts   |  3 ++
+ .../boot/dts/qcom/msm8916-alcatel-idol347.dts      |  3 ++
+ arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts     |  3 ++
+ arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts |  3 ++
+ arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts     |  3 ++
+ arch/arm64/boot/dts/qcom/msm8916-lg-c50.dts        |  3 ++
+ arch/arm64/boot/dts/qcom/msm8916-lg-m216.dts       |  3 ++
+ .../boot/dts/qcom/msm8916-longcheer-l8150.dts      |  3 ++
+ .../boot/dts/qcom/msm8916-longcheer-l8910.dts      |  3 ++
+ .../boot/dts/qcom/msm8916-motorola-common.dtsi     | 11 ++---
+ arch/arm64/boot/dts/qcom/msm8916-mtp.dts           |  3 ++
+ .../dts/qcom/msm8916-samsung-a2015-common.dtsi     |  3 ++
+ .../dts/qcom/msm8916-samsung-fortuna-common.dtsi   |  3 ++
+ .../boot/dts/qcom/msm8916-samsung-gt5-common.dtsi  |  3 ++
+ .../boot/dts/qcom/msm8916-samsung-j5-common.dtsi   |  3 ++
+ .../boot/dts/qcom/msm8916-samsung-serranove.dts    |  3 ++
+ arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi          |  3 ++
+ .../boot/dts/qcom/msm8916-wingtech-wt865x8.dtsi    |  3 ++
+ .../boot/dts/qcom/msm8916-wingtech-wt88047.dts     |  3 ++
+ arch/arm64/boot/dts/qcom/msm8916.dtsi              | 53 ++++++++++++++--------
+ arch/arm64/boot/dts/qcom/msm8939-huawei-kiwi.dts   |  3 ++
+ .../boot/dts/qcom/msm8939-longcheer-l9100.dts      |  3 ++
+ arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts    |  3 ++
+ .../boot/dts/qcom/msm8939-wingtech-wt82918.dtsi    |  3 ++
+ arch/arm64/boot/dts/qcom/msm8939.dtsi              | 52 +++++++++++++--------
+ 28 files changed, 213 insertions(+), 59 deletions(-)
+---
+base-commit: 29f8b76c55e05821f41c3e975e6a48013d8a861f
+change-id: 20250411-msm8916-console-pinctrl-069fd22abedd
+
+Best regards,
+-- 
+Stephan Gerhold <stephan.gerhold@linaro.org>
+
 
