@@ -1,119 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-54529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADDF3A90747
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 17:04:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 754D1A9074B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 17:04:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2DD4F44307C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 15:04:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 134AA441C2D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 15:04:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 219DE1FDE12;
-	Wed, 16 Apr 2025 15:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56CEA1DC9A8;
+	Wed, 16 Apr 2025 15:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ifYBf12c"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k1lsu1tj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578D61FC114
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 15:04:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B161898FB
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 15:04:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744815863; cv=none; b=F5l3ymINoRxtx6tXnvhEnEDI0nWBhNQMASduVRtPpgY3/WFzURleABE/hfjYGyM1ZtFrfW4pb9CyphFeRm/316YB4uT/hdnvfJ9owEAZYJU71kDVApXXr3mh63htebq3CLdvgWnvxY87woPkRRRWe/0Q+s/xrblcGgCb32INU2U=
+	t=1744815870; cv=none; b=rKSEhn4J80X2kxSws1LcMIm91lIojALlmQfGsUGyiU+i+Mkk5QxLAHGp8cDZTfYak+naI1VPIGJCvS5xpdPFzYHiQ7sawAX7HTs36ZX2JYTi2bp46SlmSXSuHSpBDikln3BPR8FN5p6+OQwDoxAKG4MXUZnZ4NT2yajHr0Qoh9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744815863; c=relaxed/simple;
-	bh=wlov7nFR2p7UcnpULR/zq8qyspFKNmoNYk2OBZFYc68=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nFlazhNZVdhMxMnUnJq1hqs4+57t7SJyGKkNXF5NPfKcM9HLS3UlNa2mDexmpAaMUiZPS8YmEw6174ODOm5wgfnvWiZk2aXvd8bxHKvFM1HOdC4LpHivQLBYUZmO1BixAAdr8EnVflVc+FwiZTzTQLkfCR1RVkCDdPxAxyNIpSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ifYBf12c; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1744815870; c=relaxed/simple;
+	bh=EFuzooIfLCsjOofu0bOd+t/uEt0Xb2K3xAAPKZW9FK0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bJEuBIzwUSuCXILsEc20/75vpIRWdP54Md2DOcHcVxDFFM7F0BFBCiw5X9jksF++8wU5HlFzsBcO0Yh7NTOD9FpPTEqx//J/KH32fmxHKooNTaqAEQKHgllpUKYSc6SdolZf4YD8VA43ldEUpaEgwrfiPF72QaumYNoazQHl48E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=k1lsu1tj; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so57409725e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 08:04:21 -0700 (PDT)
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-736ab1c43c4so6501565b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 08:04:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744815859; x=1745420659; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dPcE+iBE/Pijal0cRxmb6/wFqB+XH5H8pnX226mgPTA=;
-        b=ifYBf12cvQ0y/etIky2Es+NC/j0b4nEbhsuaD8+WRA5DrPu/uu3hbau7n8j62dSlEo
-         i7hbUwiKI1YfKaxsQC8dNXG1TCRZIjaivXeXa/OmpiwmA/9BDpSmG4CpDqN6uP2pHmIB
-         NdzyF9QgiRi4/KsA0fF5LWGbHAzMKvj3kPsWsUNV6W1OwpPv3XhKuLM/3vUfnrL4Kjyq
-         jw37FLnvgmYRDaE/rLDsu8FeziESsBZbNuKwdTKUwu4ObPRobcpzomZY5DU55nuJQfdy
-         MWHAtOkldB4LpWKD1jxUUTtMHF53vbucp/eu+BuxNGku/tHWxeGPLiNa8ZHbfPgrWv6C
-         HTDg==
+        d=linaro.org; s=google; t=1744815868; x=1745420668; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=nfVG8rZrRwVZOKz6TlWppVwoQCGAxCeOOP1j7MIZGRw=;
+        b=k1lsu1tjnRrr6CJQ5miPePeaCRTHTwmtgDx8thwYYoZml2vf78q7fkmohu1cUhNRPo
+         ZuZ6N33mYpallPfps/SvUmc1hZwsDlxJs4DSt7ou3WpZ9cKr2qpzZU0myrZFmj9403cD
+         HtfnqZfCtJxOTbh7heLhMTtugw2P2hIOF5TOb2KZgBb0WQVq54bmCIKIYtmpLc/97Dvd
+         9v46Zoa0UjjnVHq6226NZnucyM5gMTmc9JEyIzNYJVGAj4P9D580NoMe6ET/PqAQdAjS
+         NjAlPa18DPRpoVPkM7olNDuRZ/LHpdDcm6uAawbVnEnT16fC82ASI95q77rnZB/XOJpH
+         YD6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744815859; x=1745420659;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1744815868; x=1745420668;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dPcE+iBE/Pijal0cRxmb6/wFqB+XH5H8pnX226mgPTA=;
-        b=kg69uI+KOJTfhbaAgd7d4YnmaTZn6kflm17uqcRSVjkS3pGR10Hech9HBvlIfQBdJM
-         f06FXteyBJFvF+B5kY/HdRLdjq4AiIHwGMiFDJejbh1XSYd4PP7nb3p4kFJlEv6l1XXx
-         vjsmRM735OOgmFE4oiYFuFOhcoBJLmSAErcyHIj2leP/l1X0DN5D2NR8oAuYKSQPBChz
-         9fqp99ok6cxKD4sRvptr8OcMC0Cut5yRtpkCsi3SIY7swiB2JLzAqz/i7WMJptsxGHUi
-         EJP1ac6VKTDkGT0KRFFj6645/wWYSIDha1n54szxf13y0/NNv97R5DQ5xeGspxCBoa4E
-         H7wA==
-X-Forwarded-Encrypted: i=1; AJvYcCWNymu6mnIRg3dl9m/+oIiIQYsudIbHMRP3GYkff6ToVW2fbL0kzFEWVGNpYqwK1LkBxM/TsOqWOpSczOFh@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMhCqjQx72UOL4pRfeAz/vPACQ9yEOYy/XmD4zv4nKQ6ecC9zH
-	EGDyg0PgcM/zmobWsmzyxJKZ9Ln+WedBPbRGXoWyx11ztXrCR1HIDfK8vVMyFPY=
-X-Gm-Gg: ASbGnct9zCsB6kBO6IzY+Sb2+8AW8NtMSUlDhu27hz1vnUEVjPNHtwBcOMySP6sz4l3
-	u2/b6IccHjwVds04dNjWHXBcY9XmDq5TWQLJ5Dvr5gxSDa5sV1zUacU/tb1AnUzTAtkeAzEII8N
-	N3boPN2/xUnP/IlBDy0Uh3/ko23766qlfy6kxP2wSybdYv4FLTPUeLECCJp0MuuumlNd9NrgrMd
-	riWOrICaUuNdLpC3YZl6ZEepmOAkuMA+gkL/sz38RJMNu7t6XJdUly0Nks+TecUh6FQUclwBrIi
-	AyiMNqZQMXVGwMz24782TsT8NoVOe2zdOwndwZ28KcCcmTHs9qeIwUBqa4VH7XvxDx3I78Iqtii
-	trO5GtF9Kv2+P4Ul7
-X-Google-Smtp-Source: AGHT+IGw+0z/rdG4QreP8lH8WBio2oP2tc9ggR2a5uQKSnw+ZcKCRs53G862H86hVcTyY0XyJXoY+g==
-X-Received: by 2002:a05:600c:3b87:b0:43c:fffc:786c with SMTP id 5b1f17b1804b1-4405d636761mr16958455e9.19.1744815859432;
-        Wed, 16 Apr 2025 08:04:19 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4405b4f3407sm23479845e9.21.2025.04.16.08.04.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Apr 2025 08:04:18 -0700 (PDT)
-Message-ID: <20b74cd7-127a-42ee-b2f8-a144b9ed9304@linaro.org>
-Date: Wed, 16 Apr 2025 16:04:18 +0100
+        bh=nfVG8rZrRwVZOKz6TlWppVwoQCGAxCeOOP1j7MIZGRw=;
+        b=cG5fxaeR4VzsrbpRTR9EGfNMHNUA2tK671HHy3jSgujzal0Ck0miGwHT6UD5YCb54T
+         twvUalLC9qheBVaMLeRx5fRO4jp7RNdzjqLcubiQh17f8Eqb+Sd6mTH5p0JEzEr7BWHF
+         PI01+UKpXIHp3G7CNMj1jS/G1lXTXGcpwE2Y6/p5BHr/9FovnY+9uZxR+sMeda7wtjC1
+         B+kQOnmWfmHs9h4rxrBZL17/Ein0FRBA16vfT4J18mM6aiixF6/R0XqZXI1j+j18SQMr
+         5mx0qnCNiXCzAuBlcW7pN5/BUk6q5xmbw6vx6BQM/kZKBK4ZPbSlxysYcB4UPkV6pQBb
+         8nsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXcOaFZchcU+ANmbnSS8S9Vt78o1CQPwbnyPcqceylIIlRv+E4PUBA5VqDM4DLpfT0xpwe0zFn6sE+gdFEj@vger.kernel.org
+X-Gm-Message-State: AOJu0YyRzv3diav9mlFF3P1GgMlj3mbRHVHsfOFpeqA2eqEKC/Yq1OUC
+	Nx0DyOphaty/KOEvAa/M4Qh0GioB6IksGUVZvkP14Jpz2VFUSJamAgtwfhr69w==
+X-Gm-Gg: ASbGncv1i0nvBY/TLkM5zkc0Zz1Kswhe84c+S23eotFHJ6vhq11vsSwCZUI7y2GRENa
+	6yrBFwIVZ1T77me4rFSleoqkcvfy0oBIooQ3939Kd44E9OdvZQz6xjQKZ7nG7uDAPIOmXfemC1g
+	3kdP1HO0nC3GnLWLXpOPJb0bb+1oZtlZIErmGBx0hQfkLta6eSoQAMX2QIjKj0LZZKgZAgMTA/k
+	S+HVE3YVNetaJRt7aIcjvW1wWlTwdvybMLkqX3HXlbqb+FyN19N2Jdc3ryw6ekv74TuajcK0AWa
+	UvqGB67E2a3rQxLwu7rSPBciXHQsPumkSwoGzq4cuSju440trvk=
+X-Google-Smtp-Source: AGHT+IGhtyNmiMmaDXqhLwWa1sShCSn/DUyQsAgpk7UXgCpMw78TMynnnA2HPDDqv4w0w9QstcvPGQ==
+X-Received: by 2002:a05:6a21:8cc1:b0:1f5:7df9:f13c with SMTP id adf61e73a8af0-203b400cfdfmr2815792637.41.1744815867897;
+        Wed, 16 Apr 2025 08:04:27 -0700 (PDT)
+Received: from thinkpad ([120.60.130.16])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b0b220a988bsm1391403a12.14.2025.04.16.08.04.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Apr 2025 08:04:27 -0700 (PDT)
+Date: Wed, 16 Apr 2025 20:34:21 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Lukas Wunner <lukas@wunner.de>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
+	Oliver O'Halloran <oohall@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof Wilczy??ski <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, dingwei@marvell.com, cassel@kernel.org, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/4] PCI/ERR: Add support for resetting the slot in a
+ platforms specific way
+Message-ID: <rrqn7hlefn7klaczi2jkfta72pwmtentj3zp37yvw3brwpnalk@3eapwfeo5y4d>
+References: <20250404-pcie-reset-slot-v1-0-98952918bf90@linaro.org>
+ <20250404-pcie-reset-slot-v1-2-98952918bf90@linaro.org>
+ <Z--cY5Uf6JyTYL9y@wunner.de>
+ <3dokyirkf47lqxgx5k2ybij5b5an6qnceifsub3mcmjvzp3kdb@sm7f2jxxepdc>
+ <Z__AyQeZmXiNwT7c@wunner.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: qcm2290: Add CAMSS node
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: rfoss@kernel.org, konradybcio@kernel.org, andersson@kernel.org,
- krzk+dt@kernel.org, robh@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org
-References: <20250416120908.206873-1-loic.poulain@oss.qualcomm.com>
- <20250416120908.206873-6-loic.poulain@oss.qualcomm.com>
- <c57084c4-189a-484f-af2f-8e4181f547fb@oss.qualcomm.com>
- <CAFEp6-0tZQowmDrEsHgU1Ncx6jR2f=Lp259vaj3mefc-9BfUbg@mail.gmail.com>
- <1bb2c12a-df9a-4ff8-bb76-0b5dec86ee3c@oss.qualcomm.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <1bb2c12a-df9a-4ff8-bb76-0b5dec86ee3c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z__AyQeZmXiNwT7c@wunner.de>
 
-On 16/04/2025 16:02, Konrad Dybcio wrote:
->>> @5c6e000
->>> (first reg entry)
->> Ah right, I reordered reg to be aligned with other camss drivers.
->> Should I keep that order (and update node name) or reorder with phy
->> lower addresses first (PHYs)?
-> That seems to be wildly different across a number of socs, so let's
-> just say this is okay as is, as we're not gonna find any reasonable
-> order in here
+On Wed, Apr 16, 2025 at 04:38:01PM +0200, Lukas Wunner wrote:
+> On Tue, Apr 15, 2025 at 07:03:17PM +0530, Manivannan Sadhasivam wrote:
+> > On Fri, Apr 04, 2025 at 10:46:27AM +0200, Lukas Wunner wrote:
+> > > On Fri, Apr 04, 2025 at 01:52:22PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > > > When the PCI error handling requires resetting the slot, reset it
+> > > > using the host bridge specific 'reset_slot' callback if available
+> > > > before calling the 'slot_reset' callback of the PCI drivers.
+> > > > 
+> > > > The 'reset_slot' callback is responsible for resetting the given slot
+> > > > referenced by the 'pci_dev' pointer in a platform specific way and
+> > > > bring it back to the working state if possible. If any error occurs
+> > > > during the slot reset operation, relevant errno should be returned.
+> > > 
+> > > This feels like something that should be plumbed into
+> > > pcibios_reset_secondary_bus(), rather than pcie_do_recovery().
+> > 
+> > I did consider that, but didn't go for it since there was no platform
+> > reset code present in that function. But I will try to use it as I
+> > don't have a strong preference to do reset slot in pcie_do_recovery().
+> 
+> The only platform overriding pcibios_reset_secondary_bus() is powerpc,
+> and it only does that on PowerNV.
+> 
+> I think you could continue to stick with the approach of adding a
+> ->reset_slot() callback to struct pci_host_bridge, but it would
+> be good if at the same time you could convert PowerNV to use the
+> newly introduced callback as well.  And then remove the way to
+> override the reset procedure via pcibios_reset_secondary_bus().
+> 
+> All pci_host_bridge's which do not define a ->reset_slot() could be
+> assigned a default callback which just calls pci_reset_secondary_bus().
+> 
+> Alternatively, pcibios_reset_secondary_bus() could be made to invoke the
+> pci_host_bridge's ->reset_slot() callback if it's not NULL, else
+> pci_reset_secondary_bus(). 
 
-eek no please - we've been trying to make this consistent.
+Yes. This is what I now tried locally as well.
 
-Please do as was done with sm8550. My stress levels can't take another 
-change.
+> And in that case, the __weak attribute
+> could be removed as well as the powerpc-specific version of
+> pcibios_reset_secondary_bus().
+> 
 
----
-bod
+I don't think it is possible to get rid of the powerpc version. It has its own
+pci_dev::sysdata pointing to 'struct pci_controller' pointer which is internal
+to powerpc arch code. And the generic code would need 'struct pci_host_bridge'
+to access the callback.
+
+> I guess what I'm trying to say is, you don't *have* to plumb this
+> into pcibios_reset_secondary_bus().  In fact, having a host bridge
+> specific callback could be useful if the SoC contains several
+> host bridges which require different callbacks to perform a reset.
+> 
+> I just want to make sure that the code remains maintainable,
+> i.e. we don't have two separate ways to override how a bus reset
+> is performed.
+> 
+
+I think we need to have the override in powerpc anyway. But I will move the
+'reset_slot' callback to it and get it called from pci_bus_error_reset() (for
+both AER and Link Down).
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
