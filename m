@@ -1,63 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-54509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEAD7A8B8FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:27:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA235A8B906
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:28:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E9C411897785
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 12:27:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52E173A6933
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 12:27:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AF5124889A;
-	Wed, 16 Apr 2025 12:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0873824A053;
+	Wed, 16 Apr 2025 12:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b9cfPWqj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FYSjEaBs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD472472B0;
-	Wed, 16 Apr 2025 12:27:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70C72327A1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 12:27:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744806435; cv=none; b=ErK6dpF7RfcRBxHHNt39yVSeg0yzZMz8DW7MvEsGfIZDOLcmqSNVqXMDBrcZ+zjvdccKwNYT/QGJLtERbIbiJNpKiQEOJUv8/LrecosHKu54a7ultaEd0eA8P31yWe0Pv5VXD8ZWmrn7YnilYz8+O+ZwcMKywHkU5LSY7+Mf4EI=
+	t=1744806471; cv=none; b=WZ9AYCXzp5osHfkMFvjZWis3+v1R4kCLVkLg8WDrN4zTT/hJBUHxHYJDlU0Wr2+H7U6v+ymPnLADwSgnXZOPwyy+BbbIRqoYC5KgM0e7fBPX4zxrOFecPeHS3ITGrUiSdJBKocuMTlbsDeMc2mnEbIg1ZJtf5bRuPZbUE9xYc0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744806435; c=relaxed/simple;
-	bh=Rx1zPJva/XQEFNW8ubo+VVgOpGBu8ywM7+A5vB0tNzw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=G/EqIxkyB9TVFRYDF02HoRImqIadmAus7u2PB285pluWkCCSumTp/RI8KtlvsxIU1KKOYaM2QkrBNN2YyqmXS3SAFC0NX5knc/SkwgGn0MtJQUnOLCpcbXFlAHsNXGLb5xlt67yHMeyB0uOHPgZDYXWV45aBGwTS+QdJoJJD6NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b9cfPWqj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53G9mDWb020542;
-	Wed, 16 Apr 2025 12:26:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IswbPGGAP13igDj4nUq3J/kuUfd/m5Ej3KjQNHq8od4=; b=b9cfPWqjX1XKpoPg
-	kPoUli2LAAhrjtwAo0V7+4+k9cd/ir+khsqSP4dTm6HK/iMDQv5hJsPjtpIa3fwy
-	vTcUEIU/oMF/uSP5vZR39NbYsZbD8OQPXIALW2bI4DVGC+nur8uzx9QFn4GYdPTI
-	Do25HCgfY/Io/mz9jslE7JDnLJ3gAFBqV+0TFE7Nn4lgCiQWHv4Zhm9wDJocK1ah
-	z8aO+7aQVQVWTkQpOA3Ppuf9tLJdvGRQgAWAlw2rYDTHDtk9JT0FPvPIPyCQ3H7/
-	7/r78H2wXMFDFa3MGQWvTvOUcuOxu5aGtxbltfFLH9dfaQlXowEPEpZukywexPjH
-	TRBxlg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yg8wkfue-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Apr 2025 12:26:52 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53GCQpdw000371
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Apr 2025 12:26:51 GMT
-Received: from [10.218.7.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 16 Apr
- 2025 05:26:47 -0700
-Message-ID: <1a623099-40bb-4884-8d93-132138a4150b@quicinc.com>
-Date: Wed, 16 Apr 2025 17:56:44 +0530
+	s=arc-20240116; t=1744806471; c=relaxed/simple;
+	bh=OZMx6bfd2ZDLBU6RVpR1Ti861dk7Yhg0G5ACQvJCnCM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bKHpaDldUUBufyk3kPfUdTF8HscqRXp6HA4Q69Zxi8SUy3SPwywM8xJGXA9+6OLQB91JdbxUA1hB0r26d0ktzYtc61nxYDe95n+xyS3pPMUVx0LxqfxUC9hkcRHPVV6JyrBMVRIrJd+8d1IpgkCJUB0U3JgIe3V4j+8llQR/VCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FYSjEaBs; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43cf257158fso47927405e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 05:27:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744806467; x=1745411267; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7olKqUShSn9q9KBt/t1ADqj4alCQc1+OYSK/0oU0WCg=;
+        b=FYSjEaBss8TP84Iq7b1vL/i5oBzaaz4HJfFL3JGLPpYZuVGay50V0ZYRXOb04gs5go
+         438kljdRpPItqqyRKAGRyT50a+yMa2fr6RElkW55Tjb8JqyV+mSTKWN8j4R7pT8+k/BS
+         ftnd8imYjGmtSWZheO8jMUJLd6v7hXxAmKI+o2vlSYxaXFACZmcFjdtRiloVPvfOzfaV
+         7Wd1EzRCUqXfGcqFmwFHTdIrTkvof8Qyb3DDRZqTFgNYWdQRpkFH6R0vE41tEWgKjYyt
+         CArtfeWX4q25VP5fYJ2C0+VOipkMYiv2DejG24h43NwY94y3lRhEcJF6CuX0tyPlc1tY
+         D2nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744806467; x=1745411267;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7olKqUShSn9q9KBt/t1ADqj4alCQc1+OYSK/0oU0WCg=;
+        b=o7z9y2d9ijfyQYjobU8W8BMvEDFbiQ2qCv9yCy8qsCz+mUG9u1UE64r6AXQdAj1+j9
+         oIjOtedB+ZHPGn32l37bBGLHq6Y5ZnbNYUdK2rOkiqaV9/m8RKyWN2A/gqsM4lmVukSR
+         hCMCbOi4c6YNfPDpE9Q2jLdqm37ouqSU+6FwXNFhVJnETDrFWMrdbRRb+8+NWiDkZTM/
+         XlGV6c7MLue+OABoMKsCnctOdiFmIU/n42d9MvGEeS4hv/2tQO9o+uN/gHBEDF3de/3G
+         yEc6qpT43EUjIjY7taCx0jm37E04xNNXJ23MLwUpDrRl+ld8M/GKudvPUELKPXK1oLeb
+         OczQ==
+X-Gm-Message-State: AOJu0YxHPwroG1imTwI4FKWcWgC/Zw3A0Ls7QxyZdjIoZIzwnU4kg7yc
+	Sei/m51hiVIl5cL+zutihkNOREo0Hzhh2OgDLrY9vS0BCCMqTw/SAwrjxkb0eoM=
+X-Gm-Gg: ASbGncsKd7sgTQMmr8Gds12LTbfZDAVQ8a2gIXAF2sLeL+m25bH4oThUZKEe1kshZ2l
+	XvnrUeVx/e9+rdkwIj5cEvWtUMNVGYUlEONBit8kXDQ1xsuoMbYaETpeaAHKB+R6dzcdXPtMw9h
+	KeyS5rrfgFIYi36Z9SfrXgYxofNIdicmMYHUKAbFOzC+UB4OVtSMF340QC+whuU30+homPPjEQP
+	lL1f0+PuSSjydNR9qlT2W3HKfnlyu9UK1tHlRaELGVZgKTvKjJIncxBEXWdj5cbTSprmrEBU5Yw
+	UdmxC2m6ZphU4racbnFlnkBzY6K3zJF3kR4XXcm63FpH0vkIs1tuFIR8LjAsvGa9X3FK+Uo4xx5
+	jKVKJvw==
+X-Google-Smtp-Source: AGHT+IE3xdu+nx4jiKKa3mpgLosX1tZj4e3Uadm6gVyLqzr5AROw2GFjRV4QVE6nUfoA+BchQkUC/g==
+X-Received: by 2002:a05:600c:a378:b0:43c:ea1a:720a with SMTP id 5b1f17b1804b1-4405d5fcd39mr17192585e9.1.1744806466791;
+        Wed, 16 Apr 2025 05:27:46 -0700 (PDT)
+Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4405b4f2444sm19844815e9.17.2025.04.16.05.27.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Apr 2025 05:27:46 -0700 (PDT)
+Message-ID: <08592c93-c866-4515-8ddf-5e1eeb75c9a2@linaro.org>
+Date: Wed, 16 Apr 2025 13:27:45 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,134 +81,356 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 4/9] phy: qcom-qmp-ufs: Refactor UFS PHY reset
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: <vkoul@kernel.org>, <kishon@kernel.org>,
-        <manivannan.sadhasivam@linaro.org>,
-        <James.Bottomley@hansenpartnership.com>, <martin.petersen@oracle.com>,
-        <bvanassche@acm.org>, <bjorande@quicinc.com>,
-        <neil.armstrong@linaro.org>, <konrad.dybcio@oss.qualcomm.com>,
-        <quic_rdwivedi@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <linux-scsi@vger.kernel.org>
-References: <20250410090102.20781-1-quic_nitirawa@quicinc.com>
- <20250410090102.20781-5-quic_nitirawa@quicinc.com>
- <pur4y63xhfmqlyymg4pehk37ry4gg22h24zceoqjbsxp3hj4yf@4kptase3c4qp>
- <317faeaa-3130-4e28-8c5d-441a76aa79b4@quicinc.com>
- <CAO9ioeXnnbNzriVOYPUeBiWdrPfYUcMk+pVWYv0vZpJbFeByoQ@mail.gmail.com>
- <2820908b-4548-4e0a-94b2-6065cb5ff1f3@quicinc.com>
- <c2ec6b7c-421d-43c3-8c0a-de4f7bdd867c@oss.qualcomm.com>
- <a24ff510-2afd-4aa7-a026-199fb6d87287@quicinc.com>
- <CAO9ioeUDzYLMvqmsOQ-VfgLQLavHqn=QVYxyHzetjSfmhjKFjw@mail.gmail.com>
+Subject: Re: [PATCH 1/6] media: qcom: camss: Add support for TFE (Spectra 340)
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>, rfoss@kernel.org,
+ konradybcio@kernel.org, andersson@kernel.org, krzk+dt@kernel.org,
+ robh@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250416120908.206873-1-loic.poulain@oss.qualcomm.com>
 Content-Language: en-US
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <CAO9ioeUDzYLMvqmsOQ-VfgLQLavHqn=QVYxyHzetjSfmhjKFjw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250416120908.206873-1-loic.poulain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=E9TNpbdl c=1 sm=1 tr=0 ts=67ffa20d cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=bthNQ_mdbZiY202X5xgA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: uf2_nzWwdmzDjmWmCrk70h3bkkY1PG-C
-X-Proofpoint-GUID: uf2_nzWwdmzDjmWmCrk70h3bkkY1PG-C
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-16_04,2025-04-15_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- mlxscore=0 bulkscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
- suspectscore=0 mlxlogscore=999 spamscore=0 priorityscore=1501
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504160102
 
+On 16/04/2025 13:09, Loic Poulain wrote:
+> Add support for TFE (Thin Front End) found in QCM2290.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> ---
+>   drivers/media/platform/qcom/camss/Makefile    |   1 +
+>   .../media/platform/qcom/camss/camss-vfe-340.c | 281 ++++++++++++++++++
+>   drivers/media/platform/qcom/camss/camss-vfe.h |   1 +
+>   3 files changed, 283 insertions(+)
+>   create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-340.c
+> 
+> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
+> index d26a9c24a430..719898f5d32b 100644
+> --- a/drivers/media/platform/qcom/camss/Makefile
+> +++ b/drivers/media/platform/qcom/camss/Makefile
+> @@ -17,6 +17,7 @@ qcom-camss-objs += \
+>   		camss-vfe-4-7.o \
+>   		camss-vfe-4-8.o \
+>   		camss-vfe-17x.o \
+> +		camss-vfe-340.o \
+>   		camss-vfe-480.o \
+>   		camss-vfe-680.o \
+>   		camss-vfe-780.o \
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-340.c b/drivers/media/platform/qcom/camss/camss-vfe-340.c
+> new file mode 100644
+> index 000000000000..fc454d66e1d2
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-340.c
+> @@ -0,0 +1,281 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Qualcomm MSM Camera Subsystem - VFE (Video Front End) Module 340 (TFE)
+> + *
+> + * Copyright (c) 2025 Qualcomm Technologies, Inc.
+> + */
+> +
+> +#include <linux/delay.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/io.h>
+> +#include <linux/iopoll.h>
+> +
+> +#include "camss.h"
+> +#include "camss-vfe.h"
+> +
+> +#define TFE_GLOBAL_RESET_CMD				(0x014)
+> +#define		TFE_GLOBAL_RESET_CMD_CORE	BIT(0)
+> +
+> +#define TFE_REG_UPDATE_CMD				(0x02C)
+> +
+> +#define TFE_IRQ_CMD					(0x030)
+> +#define		TFE_IRQ_CMD_CLEAR		BIT(0)
+> +#define TFE_IRQ_MASK_0					(0x034)
+> +#define		TFE_IRQ_MASK_0_RST_DONE		BIT(0)
+> +#define		TFE_IRQ_MASK_0_BUS_WR		BIT(1)
+> +#define TFE_IRQ_MASK_1					(0x038)
+> +#define TFE_IRQ_MASK_2					(0x03c)
+> +#define TFE_IRQ_CLEAR_0					(0x040)
+> +
+> +#define TFE_IRQ_STATUS_0				(0x04c)
+> +
+> +#define BUS_REG(a)	(0xa00 + (a))
+> +
+> +#define TFE_BUS_IRQ_MASK_0				BUS_REG(0x18)
+> +#define		TFE_BUS_IRQ_MASK_RUP_DONE_ALL	0x000f
+> +#define		TFE_BUS_IRQ_MASK_RUP_DONE(src)	BIT(src)
+> +#define		TFE_BUS_IRQ_MASK_BUF_DONE_ALL	0xff00
+> +#define		TFE_BUS_IRQ_MASK_BUF_DONE(sg)	BIT((sg) + 8)
+> +#define		TFE_BUS_IRQ_MASK_0_CONS_VIOL	BIT(28)
+> +#define		TFE_BUS_IRQ_MASK_0_VIOL		BIT(30)
+> +#define		TFE_BUS_IRQ_MASK_0_IMG_VIOL	BIT(31)
+> +
+> +#define TFE_BUS_IRQ_MASK_1				BUS_REG(0x1C)
+> +#define TFE_BUS_IRQ_CLEAR_0				BUS_REG(0x20)
+> +#define TFE_BUS_IRQ_STATUS_0				BUS_REG(0x28)
+> +#define TFE_BUS_IRQ_CMD					BUS_REG(0x30)
+> +#define		TFE_BUS_IRQ_CMD_CLEAR		BIT(0)
+> +
+> +#define TFE_BUS_STATUS_CLEAR				BUS_REG(0x60)
+> +#define TFE_BUS_VIOLATION_STATUS			BUS_REG(0x64)
+> +#define TFE_BUS_OVERFLOW_STATUS				BUS_REG(0x68)
+> +#define TFE_BUS_IMAGE_SZ_VIOLATION_STATUS		BUS_REG(0x70)
+> +
+> +#define TFE_BUS_CLIENT_CFG(c)				BUS_REG(0x200 + (c) * 0x100)
+> +#define		TFE_BUS_CLIENT_CFG_EN		BIT(0)
+> +#define		TFE_BUS_CLIENT_CFG_MODE_FRAME	BIT(16)
+> +#define TFE_BUS_IMAGE_ADDR(c)				BUS_REG(0x204 + (c) * 0x100)
+> +#define TFE_BUS_FRAME_INCR(c)				BUS_REG(0x208 + (c) * 0x100)
+> +#define TFE_BUS_IMAGE_CFG_0(c)				BUS_REG(0x20C + (c) * 0x100)
+> +#define		TFE_BUS_IMAGE_CFG_0_DEFAULT	0xffff
+> +#define TFE_BUS_IMAGE_CFG_1(c)				BUS_REG(0x210 + (c) * 0x100)
+> +#define TFE_BUS_IMAGE_CFG_2(c)				BUS_REG(0x214 + (c) * 0x100)
+> +#define		TFE_BUS_IMAGE_CFG_2_DEFAULT	0xffff
+> +#define TFE_BUS_PACKER_CFG(c)				BUS_REG(0x218 + (c) * 0x100)
+> +#define		TFE_BUS_PACKER_CFG_FMT_PLAIN64	0xa
+> +#define TFE_BUS_IRQ_SUBSAMPLE_CFG_0(c)			BUS_REG(0x230 + (c) * 0x100)
+> +#define TFE_BUS_IRQ_SUBSAMPLE_CFG_1(c)			BUS_REG(0x234 + (c) * 0x100)
+> +#define TFE_BUS_FRAMEDROP_CFG_0(c)			BUS_REG(0x238 + (c) * 0x100)
+> +#define TFE_BUS_FRAMEDROP_CFG_1(c)			BUS_REG(0x23c + (c) * 0x100)
+> +
+> +#define RDI_CLIENT(n)		(7 + (n))
 
+Should be RDI_WM for consistency.
 
-On 4/16/2025 5:43 PM, Dmitry Baryshkov wrote:
-> On Wed, 16 Apr 2025 at 12:08, Nitin Rawat <quic_nitirawa@quicinc.com> wrote:
->>
->>
->>
->> On 4/15/2025 2:59 PM, Dmitry Baryshkov wrote:
->>> On 14/04/2025 23:34, Nitin Rawat wrote:
->>>>
->>>>
->>>> On 4/11/2025 4:38 PM, Dmitry Baryshkov wrote:
->>>>> On Fri, 11 Apr 2025 at 13:50, Nitin Rawat <quic_nitirawa@quicinc.com>
->>>>> wrote:
->>>>>>
->>>>>>
->>>>>>
->>>>>> On 4/11/2025 1:38 AM, Dmitry Baryshkov wrote:
->>>>>>> On Thu, Apr 10, 2025 at 02:30:57PM +0530, Nitin Rawat wrote:
->>>>>>>> Refactor the UFS PHY reset handling to parse the reset logic only
->>>>>>>> once
->>>>>>>> during probe, instead of every resume.
->>>>>>>>
->>>>>>>> Move the UFS PHY reset parsing logic from qmp_phy_power_on to
->>>>>>>> qmp_ufs_probe to avoid unnecessary parsing during resume.
->>>>>>>
->>>>>>> How did you solve the circular dependency issue being noted below?
->>>>>>
->>>>>> Hi Dmitry,
->>>>>> As part of my patch, I moved the parsing logic from qmp_phy_power_on to
->>>>>> qmp_ufs_probe to avoid unnecessary parsing during resume. I'm uncertain
->>>>>> about the circular dependency issue and whether if it still exists.
->>>>>
->>>>> It surely does. The reset controller is registered in the beginning of
->>>>> ufs_qcom_init() and the PHY is acquired only a few lines below. It
->>>>> creates a very small window for PHY driver to probe.
->>>>> Which means, NAK, this patch doesn't look acceptable.
->>>>
->>>> Hi Dmitry,
->>>>
->>>> Thanks for pointing this out. I agree that it leaves very little time
->>>> for the PHY to probe, which may cause issues with targets where
->>>> no_pcs_sw_reset is set to true.
->>>>
->>>> As an experiment, I kept no_pcs_sw_reset set to true for the SM8750,
->>>> and it caused bootup probe issues in some of the iterations I ran.
->>>>
->>>> To address this, I propose updating the patch to move the
->>>> qmp_ufs_get_phy_reset call to phy_calibrate, just before the
->>>> reset_control_assert call.
->>>
->>> Will it cause an issue if we move it to phy_init() instead of
->>> phy_calibrate()?
->>
->> Hi Dmitry,
->>
->> Thanks for suggestion.
->> Phy_init is invoked before phy_set_mode_ext and ufs_qcom_phy_power_on,
->> whereas calibrate is called after ufs_qcom_phy_power_on. Keeping the UFS
->> PHY reset in phy_calibrate introduces relatively more delay, providing
->> more buffer time for the PHY driver probe, ensuring the UFS PHY reset is
->> handled correctly the first time.
-> 
-> We are requesting the PHY anyway, so the PHY driver should have probed
-> well before phy_init() call. I don't get this comment.
-> 
->>
->> Moving the calibration to phy_init shouldn't cause any issues. However,
->> since we currently don't have an initialization operations registered
->> for init, we would need to add a new PHY initialization ops if we decide
->> to move it to phy_init.
-> 
-> Yes. I don't see it as a problem. Is there any kind of an issue there?
+Please add a comment listing what those clients are
 
-No issues. In my next patchset, I would add a new init ops registered 
-for qcom phy and move get ufs phy reset handler to it.
+https://gitlab.freedesktop.org/linux-media/media-committers/-/commit/727970e9725c35366f501a890584e466ae34224a#c0063099c8260d8c4b3dc9ea650b6d0a4db47518_0_59
 
-Regards,
-Nitin
+> +#define TFE_SOURCES_NUM		4
+> +#define TFE_SUBGROUPS_NUM	8
+> +#define TFE_CLIENTS_NUM		10
+> +
+> +static inline unsigned int __regupdate_iface(enum vfe_line_id line_id)
+> +{
+> +	switch (line_id) {
+> +	case VFE_LINE_RDI0:
+> +		return 1;
+> +	case VFE_LINE_RDI1:
+> +		return 2;
+> +	case VFE_LINE_RDI2:
+> +		return 3;
+> +	case VFE_LINE_PIX:
+> +	default:
+> +		return 0;
+> +	}
 
-> 
->>
->> Please let me know if this looks fine to you, or if you have any
->> suggestions. I am open to your suggestions.
-> 
-> phy_init() callback
-> 
+An enum or a define instead of hard-coded values on the return please.
+
+> +}
+> +
+> +static inline unsigned int __regupdate_line(unsigned int iface)
+> +{
+> +	if (!iface)
+> +		return VFE_LINE_PIX;
+> +	if (iface < 4)
+> +		return VFE_LINE_RDI0 + (iface - 1);
+> +
+> +	return VFE_LINE_NONE;
+> +}
+> +
+> +static inline unsigned int __subgroup_line(unsigned int subgroup)
+> +{
+> +	switch (subgroup) {
+> +	case 5:
+> +		return VFE_LINE_RDI0;
+> +	case 6:
+> +		return VFE_LINE_RDI1;
+> +	case 7:
+> +		return VFE_LINE_RDI2;
+> +	default:
+> +		return VFE_LINE_PIX;
+> +	}
+> +
+> +	return VFE_LINE_NONE;
+> +}
+> +
+> +static void vfe_global_reset(struct vfe_device *vfe)
+> +{
+> +	writel_relaxed(TFE_IRQ_MASK_0_RST_DONE, vfe->base + TFE_IRQ_MASK_0);
+> +	writel(TFE_GLOBAL_RESET_CMD_CORE, vfe->base + TFE_GLOBAL_RESET_CMD);
+
+Why is one relaxed and one not ?
+
+> +}
+> +
+> +static irqreturn_t vfe_isr(int irq, void *dev)
+> +{
+> +	struct vfe_device *vfe = dev;
+> +	u32 status;
+> +	int i;
+> +
+> +	status = readl_relaxed(vfe->base + TFE_IRQ_STATUS_0);
+> +	writel_relaxed(status, vfe->base + TFE_IRQ_CLEAR_0);
+> +	writel_relaxed(TFE_IRQ_CMD_CLEAR, vfe->base + TFE_IRQ_CMD);
+> +
+> +
+> +	if (status & TFE_IRQ_MASK_0_RST_DONE) {
+> +		dev_dbg(vfe->camss->dev, "VFE%u: Reset done!", vfe->id);
+> +		vfe_isr_reset_ack(vfe);
+> +	}
+> +
+> +	if (status & TFE_IRQ_MASK_0_BUS_WR) {
+> +		u32 bus_status = readl_relaxed(vfe->base + TFE_BUS_IRQ_STATUS_0);
+> +
+> +		writel_relaxed(bus_status, vfe->base + TFE_BUS_IRQ_CLEAR_0);
+> +		writel_relaxed(TFE_BUS_IRQ_CMD_CLEAR, vfe->base + TFE_BUS_IRQ_CMD);
+> +
+> +		for (i = 0; i < TFE_SOURCES_NUM; i++) {
+> +			if (bus_status & TFE_BUS_IRQ_MASK_RUP_DONE(i))
+> +				vfe->res->hw_ops->reg_update_clear(vfe, __regupdate_line(i));
+> +		}
+> +
+> +		for (i = 0; i < TFE_SUBGROUPS_NUM; i++) {
+> +			if (bus_status & TFE_BUS_IRQ_MASK_BUF_DONE(i))
+> +				vfe_buf_done(vfe, __subgroup_line(i));
+> +		}
+> +
+> +		if (bus_status & TFE_BUS_IRQ_MASK_0_CONS_VIOL)
+> +			dev_err_ratelimited(vfe->camss->dev, "VFE%u: Bad config violation",
+> +					    vfe->id);
+> +
+> +		if (bus_status & TFE_BUS_IRQ_MASK_0_VIOL)
+> +			dev_err_ratelimited(vfe->camss->dev, "VFE%u: Input data violation",
+> +					    vfe->id);
+> +
+> +		if (bus_status & TFE_BUS_IRQ_MASK_0_IMG_VIOL)
+> +			dev_err_ratelimited(vfe->camss->dev, "VFE%u: Image size violation",
+> +					    vfe->id);
+> +	}
+> +
+> +	status = readl_relaxed(vfe->base + TFE_BUS_OVERFLOW_STATUS);
+> +	if (status) {
+> +		writel_relaxed(status, vfe->base + TFE_BUS_STATUS_CLEAR);
+> +		for (i = 0; i < TFE_CLIENTS_NUM; i++) {
+> +			if (status & BIT(i))
+> +				dev_err_ratelimited(vfe->camss->dev,
+> +						    "VFE%u: bus overflow for client %u\n",
+> +						    vfe->id, i);
+> +		}
+> +	}
+> +
+> +	return IRQ_HANDLED;
+> +}
+
+looks ok
+
+> +
+> +static int vfe_halt(struct vfe_device *vfe)
+> +{
+> +	/* rely on vfe_disable_output() to stop the VFE */
+> +	return 0;
+> +}
+> +
+> +static void vfe_enable_irq(struct vfe_device *vfe)
+> +{
+> +	writel_relaxed(TFE_IRQ_MASK_0_RST_DONE | TFE_IRQ_MASK_0_BUS_WR,
+> +		       vfe->base + TFE_IRQ_MASK_0);
+> +	writel_relaxed(TFE_BUS_IRQ_MASK_RUP_DONE_ALL | TFE_BUS_IRQ_MASK_BUF_DONE_ALL |
+> +		       TFE_BUS_IRQ_MASK_0_CONS_VIOL | TFE_BUS_IRQ_MASK_0_VIOL |
+> +		       TFE_BUS_IRQ_MASK_0_IMG_VIOL, vfe->base + TFE_BUS_IRQ_MASK_0);
+> +}
+> +
+> +static void vfe_wm_update(struct vfe_device *vfe, u8 rdi, u32 addr,
+> +			  struct vfe_line *line)
+> +{
+> +	u8 client = RDI_CLIENT(rdi);
+> +
+> +	writel_relaxed(addr, vfe->base + TFE_BUS_IMAGE_ADDR(client));
+> +}
+> +
+> +static void vfe_wm_start(struct vfe_device *vfe, u8 rdi, struct vfe_line *line)
+> +{
+> +	struct v4l2_pix_format_mplane *pix =
+> +		&line->video_out.active_fmt.fmt.pix_mp;
+> +	u32 stride = pix->plane_fmt[0].bytesperline;
+> +	u8 client = RDI_CLIENT(rdi);
+> +
+> +	/* Configuration for plain RDI frames */
+> +	writel_relaxed(TFE_BUS_IMAGE_CFG_0_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_0(client));
+> +	writel_relaxed(0u, vfe->base + TFE_BUS_IMAGE_CFG_1(client));
+> +	writel_relaxed(TFE_BUS_IMAGE_CFG_2_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_2(client));
+> +	writel_relaxed(stride * pix->height, vfe->base + TFE_BUS_FRAME_INCR(client));
+> +	writel_relaxed(TFE_BUS_PACKER_CFG_FMT_PLAIN64, vfe->base + TFE_BUS_PACKER_CFG(client));
+> +
+> +	/* No dropped frames, one irq per frame */
+> +	writel_relaxed(0, vfe->base + TFE_BUS_FRAMEDROP_CFG_0(client));
+> +	writel_relaxed(1, vfe->base + TFE_BUS_FRAMEDROP_CFG_1(client));
+> +	writel_relaxed(0, vfe->base + TFE_BUS_IRQ_SUBSAMPLE_CFG_0(client));
+> +	writel_relaxed(1, vfe->base + TFE_BUS_IRQ_SUBSAMPLE_CFG_1(client));
+> +
+> +	vfe_enable_irq(vfe);
+> +
+> +	writel(TFE_BUS_CLIENT_CFG_EN | TFE_BUS_CLIENT_CFG_MODE_FRAME,
+> +	       vfe->base + TFE_BUS_CLIENT_CFG(client));
+> +
+> +	dev_dbg(vfe->camss->dev, "VFE%u: Started RDI%u width %u height %u stride %u\n",
+> +		vfe->id, rdi, pix->width, pix->height, stride);
+> +}
+> +
+> +static void vfe_wm_stop(struct vfe_device *vfe, u8 rdi)
+> +{
+> +	u8 client = RDI_CLIENT(rdi);
+> +
+> +	writel(0, vfe->base + TFE_BUS_CLIENT_CFG(client));
+> +
+> +	dev_dbg(vfe->camss->dev, "VFE%u: Stopped RDI%u\n", vfe->id, rdi);
+> +}
+> +
+> +static const struct camss_video_ops vfe_video_ops_520 = {
+> +	.queue_buffer = vfe_queue_buffer_v2,
+> +	.flush_buffers = vfe_flush_buffers,
+> +};
+> +
+> +static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+> +{
+> +	vfe->video_ops = vfe_video_ops_520;
+> +}
+> +
+> +static void vfe_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
+> +{
+> +	vfe->reg_update |= BIT(__regupdate_iface(line_id));
+> +	writel_relaxed(vfe->reg_update, vfe->base + TFE_REG_UPDATE_CMD);
+> +}
+> +
+> +static inline void vfe_reg_update_clear(struct vfe_device *vfe,
+> +					enum vfe_line_id line_id)
+> +{
+> +	vfe->reg_update &= ~BIT(__regupdate_iface(line_id));
+> +}
+> +
+> +const struct vfe_hw_ops vfe_ops_340 = {
+> +	.global_reset = vfe_global_reset,
+> +	.hw_version = vfe_hw_version,
+> +	.isr = vfe_isr,
+> +	.pm_domain_off = vfe_pm_domain_off,
+> +	.pm_domain_on = vfe_pm_domain_on,
+> +	.subdev_init = vfe_subdev_init,
+> +	.vfe_disable = vfe_disable,
+> +	.vfe_enable = vfe_enable_v2,
+> +	.vfe_halt = vfe_halt,
+> +	.vfe_wm_start = vfe_wm_start,
+> +	.vfe_wm_stop = vfe_wm_stop,
+> +	.vfe_buf_done = vfe_buf_done,
+> +	.vfe_wm_update = vfe_wm_update,
+> +	.reg_update = vfe_reg_update,
+> +	.reg_update_clear = vfe_reg_update_clear,
+> +};
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
+> index a23f666be753..9b138849caca 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
+> @@ -242,6 +242,7 @@ extern const struct vfe_hw_ops vfe_ops_4_1;
+>   extern const struct vfe_hw_ops vfe_ops_4_7;
+>   extern const struct vfe_hw_ops vfe_ops_4_8;
+>   extern const struct vfe_hw_ops vfe_ops_170;
+> +extern const struct vfe_hw_ops vfe_ops_340;
+>   extern const struct vfe_hw_ops vfe_ops_480;
+>   extern const struct vfe_hw_ops vfe_ops_680;
+>   extern const struct vfe_hw_ops vfe_ops_780;
 
 
