@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-54523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 647F2A906FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 16:52:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6C1FA90703
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 16:52:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6E32F167545
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:52:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A45C3B0A41
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:52:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 996041F1526;
-	Wed, 16 Apr 2025 14:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 506D31F463D;
+	Wed, 16 Apr 2025 14:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Jh8PAI4w"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mF9LfbGD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C28315F41F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 14:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB281F1526
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 14:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744815115; cv=none; b=JePx0cmTtHqrFBIjsSpTfEZlQjnMwbSWpQVCoaKCVjnKwTens/1vfL54g1AnyMUJ2V0hpN9sktk1okJlFzhJnJ7zSoYjoSQXEL5G+4jgQjgQskqJhTZ2ynnya/ICZyqXJOVwsLa+j8XYsmsr9yg/rMYxAZDfuQsG22FZV3sk/Kk=
+	t=1744815142; cv=none; b=M79dQSx92wS4REbuGurghqgYLpX4TuotfrIzhoPynZoEg1kZhktGYaF1sSB9E+3McDOcMgLcr1eZ5VvzmEiWrdzMkrqffdMHfv9vW3ycjHZAYBxB/SnWaSyiipo49y4Agfu800WJf0qexZ28xaj5+zck7hqQl9MHHTcWvW8ErAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744815115; c=relaxed/simple;
-	bh=vwL1BbE9dim+EUQ5oei2dD+XaH7nnA7tsi2X4O+Jtts=;
+	s=arc-20240116; t=1744815142; c=relaxed/simple;
+	bh=KWLqCb9MMCaNjOfYMU+358ah6KhC4kqVvCHp2nDpQjM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QY+Nuuynfs74/ZB6ZtRgnXV/baJiODyVSPCB+OVe8dULer6ndUrWF5QhfUM1v46i7Wiu6X7HWyiEbzCtbEGYEBiHR0FdX+LELvcZescLI2ISuhR2yUJRCGYfZz6pvLva1GztgD4ff0ikL1dFC3k/Q1/zENUQeLWIwcllXN13EtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Jh8PAI4w; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=NBwTGaXS2FjB21cB2Xr8CO9S7DBq0EQdolxYJcmu04DqvdjELncKmO0wxza262LHGw1Lvnsa7zpzYDwVra7LW8Nzpgpv3uJzqpoF6vBOJFFv/lnWhPM2ZWKdT6X0KV17skCSCwcuf+ty0oJZbu6itHjVYwclEzw+mbt06VQHa38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mF9LfbGD; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53G9mEdZ007029
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 14:51:53 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53G9mIga007668
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 14:52:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	68ZrhJQovSEcR2kztjippS0ohW5/EM4NVarjyk+ti00=; b=Jh8PAI4wOElWmlPv
-	1QGJhjgN/Jp67AVwgq3d/dMdL5otjq5VvoRBN0m0Dmetmey0PuG3zuGTPRWKoKTW
-	Ai4p2CTx2L+35klVlCzvpEWSoY8emzYp9yjt92TXYph4eFOpe4xKE1C2gPxQ3eSM
-	rUx3ThcGdYrBZ2LUUbVIyh99R8vX6/wTxLAhzHStBIG39TljXfB5cdAtSExq9Fcd
-	9f2m106XuI8gd507IFN9y4PhzEmc3HtB/1Ile7RU3ddadVF80RhOlFXif8T7wV4R
-	/sa2/1FA3QjXftyYdSJ3wxSk2thyNWR6YPgg3RqBh9JGvNGiLlDxocVQz1AuJJwl
-	ttxYeA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygd6kx92-1
+	4eXLekD7nIt9cu4Q3k7mAjKbk2MkbDMCeLet6DrgZGA=; b=mF9LfbGDRAudEF4+
+	2etGITAkPk5cYASo9RoNiRFp+tF3IB44E6plOLZB8a+8hKDnQbSzJ8G8EjYgZ5ff
+	eXblU9sMShi6WkEE46Iyu+Z68VHn3cyL8QJ5lm7E4Z1kxgpjW0o0uy7jezs+Xk96
+	uWsLj6MaEdOxHnNukvZX4m2GVKqlTzCxqM5qXgLsdLaoV9kTzB54nVvYGr2Y+veo
+	FIVI3566yGQSMYyK0iZMxr29/DL9d9xcy1ToLqWdZOxbzzAaWvHlZ2F5YwXvsj0X
+	In5yQjec8ONXOM+NECNRe4ijY59HqLprCOH7rSRmle/EYoBVm3dayQjA5nxDMW8R
+	dA45zw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygd6kxav-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 14:51:53 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c5af539464so163217785a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 07:51:53 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 14:52:18 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c54be4b03aso129101485a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 07:52:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744815112; x=1745419912;
+        d=1e100.net; s=20230601; t=1744815136; x=1745419936;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=68ZrhJQovSEcR2kztjippS0ohW5/EM4NVarjyk+ti00=;
-        b=JZuMZCqTW65+bp6RTKPbftRs8DTaLTi7BOK+Ps+ZyeHz+ChY7M3ox/A1DCCCDjeB7u
-         uA1Qjp/kY9lc9tXLU/fxLawmSwxgpMx9wxqe4gwGAF9vTgMwpg5YhGN/bCL6U7wskgwM
-         +kQKGzGxz/vC8swixwmQPh63kRO6lKShC+6TE5uArtjJh9X7WhnjJC0DBw8FsHQDm68m
-         QgnVxsbrgnfaEkEh8tP8mU1X5wBqLWUQA6HJ8yYm+83HaoTTtS/xogRC5Oih3AwuBDNI
-         VA184YM5V5k61rTIxWDUIGMGI5i0gU7JQR9mk5Br8CCrOVcmeZsaiQ4BRKpg9baOScx/
-         //tA==
-X-Gm-Message-State: AOJu0YzhUzjWSRP0JCKEvMBSKXVdpQhwV5PDPM/hjVuqpOYeoCn/s30X
-	fNz1Xd2hhWdzy1SUz78jXfzkGuyk1w1So7+i00sJfyUzqPHTHYiNeVgvZNuGMnJBzPCjKA3LpP1
-	1cqsGPT8XIr/gmLF+6C4+qgHRI3hhB9VOdDEcVw4r5opwHoFIbwnAENVCXKI9H8R3
-X-Gm-Gg: ASbGncv/ZbCdLQGPkZbn4ISy3ZzHcWk7CstC0Y2Dlknivhs5wE2+gdkrRvwSphV7Wh8
-	UMvG3eZoWLC6E8oXqeAedTyXOCoeQf8hjcYLsFFgBFO3KHP5Zw7gDlte7n1cgZJU2A6h7SPjVAB
-	/2GhE9mjjnu73wUbz45Lt2VgdSghREfNlDwFjKLDDbNFybk70w24L8cAPXg7/lvI0g7YGnMwGFS
-	IXi2wf553GwvUw0ZRlV2SJs6htuiZZskGtasq/F0wU3ZRBMTqF888RrX0Gj8yIItJDg1m7WRhGq
-	Cox75tLSnb3I1c/z8gS42bTz5ygt/h+R4UroknxOZWFh2pvr6gVk3JlfIVNSnMjvWJo=
-X-Received: by 2002:a05:620a:3949:b0:7c3:c340:70bf with SMTP id af79cd13be357-7c91907f98bmr107038885a.14.1744815111892;
-        Wed, 16 Apr 2025 07:51:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEcOviPf73nDukXkJL7ld7hTvKQxe8wwMiCfiI19F135lGpiXQBbhZ3nTHbf1J+gRCPNMCQDg==
-X-Received: by 2002:a05:620a:3949:b0:7c3:c340:70bf with SMTP id af79cd13be357-7c91907f98bmr107036185a.14.1744815111395;
-        Wed, 16 Apr 2025 07:51:51 -0700 (PDT)
+        bh=4eXLekD7nIt9cu4Q3k7mAjKbk2MkbDMCeLet6DrgZGA=;
+        b=i2lWA4z1J6r9sFQ3MMXM3SkWxDXnHMjLdx3IZYrgzgga7mkpaR1lpKFf9RdOfkPBGH
+         FcSdBxlP07PaVLsA/2pA95nikbK7aWzkyzM+vSgCfJx3yoR/MvWd/lKmdtrtezzVxmT3
+         0MmsuP/xaWonaKRctNGwbiLMEEISl/rfGOZzh4n1YaAyBi2FLcGyIT0HhDLVJhwMV7Nm
+         D1dUs+Zu0rFAsKfn7ZmDj1ems2VI9TR+LtLgVM/KgDV2mBuT8+a/Ko8lieSu1in/xXwl
+         peZabGIHtJbp7gDovlbCYxd0g6RPNkJMSVPP8v+6uLJSzdeQZyU5Z/L750f5DsoHDbBA
+         /5IA==
+X-Gm-Message-State: AOJu0Yw30jPNLW73sgsOFstKiEEu/Rr87ODl6hn7fJiqMwxHlSLo5Uot
+	kqQJCtU4qWcyQott8fUPX42sxEEmn7DVeCHW9qC8n4psHn9K/WaX5705dYl7nYAIfYDpjImEwlv
+	vWhtMyBozIcrR6Ibe9OEBrbfRk0PqYLoiIkiCcx8DWjD0T+jH31zRL/xfe83iku7S
+X-Gm-Gg: ASbGncuxHs+DatWTCfYbJkmH3i8H7fdA9O3Q7VYM22Bn+OlCxeA6RqYcwqZsMRmSNLC
+	E7xug9n78frz/0qXy21YMrKozMv/GbtJNe4ezsrakFj3+qHkgB8jgXa7mAn17AnHwsnzqB0VZm/
+	DW2kpWLfmiukpo+N3LvgHXJV7BCItUcsVCYZXLhJV7S3vxaAGtjXOtwnILvNyFYp1z5vpEHzeC+
+	uFaNUddUwj+tZq3Kxrqa4ML1r/G6PwPAPGz1SEGyUehCd4736TvSi1BrWaaBosQHKLzAEEYGxgR
+	oAHhXIplSGxY6oBGOE1gJm0es2j9lo/LWiRuUjBo4KlFldpALofSyrHg+R4jFNtgDhM=
+X-Received: by 2002:a05:620a:2706:b0:7c7:9d87:9e2 with SMTP id af79cd13be357-7c919061cf6mr98641785a.12.1744815136554;
+        Wed, 16 Apr 2025 07:52:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQ6Qw/xZedYgX9uVB2FjDWt0hQK95/ZLeo+Xo+Gzu93v8ZobxUVcWEwyW9p71lE1sPHvlb8Q==
+X-Received: by 2002:a05:620a:2706:b0:7c7:9d87:9e2 with SMTP id af79cd13be357-7c919061cf6mr98639685a.12.1744815136153;
+        Wed, 16 Apr 2025 07:52:16 -0700 (PDT)
 Received: from [192.168.65.178] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acb3cdda64fsm140691166b.62.2025.04.16.07.51.49
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f45bc75b4fsm3875259a12.18.2025.04.16.07.52.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Apr 2025 07:51:50 -0700 (PDT)
-Message-ID: <4e9621c2-f347-4cba-9422-b14f96ee4c0b@oss.qualcomm.com>
-Date: Wed, 16 Apr 2025 16:51:48 +0200
+        Wed, 16 Apr 2025 07:52:15 -0700 (PDT)
+Message-ID: <4410c711-fa56-4cba-87b8-3a561a0fbab2@oss.qualcomm.com>
+Date: Wed, 16 Apr 2025 16:52:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,8 +88,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] watchdog: qcom: add support to read the restart
- reason from IMEM
+Subject: Re: [PATCH v2 2/5] arm64: dts: qcom: ipq5424: Add the IMEM node
 To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
         Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -103,110 +102,38 @@ To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
 References: <20250416-wdt_reset_reason-v2-0-c65bba312914@oss.qualcomm.com>
- <20250416-wdt_reset_reason-v2-5-c65bba312914@oss.qualcomm.com>
+ <20250416-wdt_reset_reason-v2-2-c65bba312914@oss.qualcomm.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250416-wdt_reset_reason-v2-5-c65bba312914@oss.qualcomm.com>
+In-Reply-To: <20250416-wdt_reset_reason-v2-2-c65bba312914@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 5txOdQOA9_0jCp8a2gI6NN07EVLFxeIT
-X-Proofpoint-GUID: 5txOdQOA9_0jCp8a2gI6NN07EVLFxeIT
-X-Authority-Analysis: v=2.4 cv=ANaQCy7k c=1 sm=1 tr=0 ts=67ffc409 cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=4JCwT51NPQo9-FzctWsA:9 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-ORIG-GUID: bK3VKkm2Mlzq7HbCJT4FVYhiu8hasNEy
+X-Proofpoint-GUID: bK3VKkm2Mlzq7HbCJT4FVYhiu8hasNEy
+X-Authority-Analysis: v=2.4 cv=ANaQCy7k c=1 sm=1 tr=0 ts=67ffc422 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=owAxAYLDMf__z6yt7SIA:9 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-16_04,2025-04-15_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- mlxlogscore=999 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ mlxlogscore=706 suspectscore=0 clxscore=1015 lowpriorityscore=0
  phishscore=0 impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0
  bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
  adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2504160122
 
 On 4/16/25 10:29 AM, Kathiravan Thirumoorthy wrote:
-> When the system boots up after a watchdog reset, the EXPIRED_STATUS bit
-> in the WDT_STS register is cleared. To identify if the system was restarted
-> due to WDT expiry, bootloaders update the information in the IMEM region.
-> Update the driver to read the restart reason from IMEM and populate the
-> bootstatus accordingly.
+> Add the IMEM node to the device tree to extract debugging information
+> like system restart reason, which is populated via IMEM. Define the
+> IMEM region to enable this functionality.
 > 
-> For backward compatibility, keep the EXPIRED_STATUS bit check. Add a new
-> function qcom_wdt_get_restart_reason() to read the restart reason from
-> IMEM.
+> As described, overall IMEM region is 112KB but only initial 4KB is
+> accessible by all masters in the SoC.
 > 
 > Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 > ---
-> Changes in v2:
-> 	- Use the syscon API to access the IMEM region
-> 	- Handle the error cases returned by qcom_wdt_get_restart_reason
-> 	- Define device specific data to retrieve the IMEM compatible,
-> 	  offset and the value for non secure WDT, which allows to
-> 	  extend the support for other SoCs
-> ---
->  drivers/watchdog/qcom-wdt.c | 47 +++++++++++++++++++++++++++++++++++++++++++--
->  1 file changed, 45 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-> index 006f9c61aa64fd2b4ee9db493aeb54c8fafac818..94ba9ec9907a19854cd45a94f8da17d6e6eb33bc 100644
-> --- a/drivers/watchdog/qcom-wdt.c
-> +++ b/drivers/watchdog/qcom-wdt.c
-> @@ -7,9 +7,11 @@
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/kernel.h>
-> +#include <linux/mfd/syscon.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
->  #include <linux/platform_device.h>
-> +#include <linux/regmap.h>
->  #include <linux/watchdog.h>
->  
->  enum wdt_reg {
-> @@ -39,6 +41,9 @@ static const u32 reg_offset_data_kpss[] = {
->  };
->  
->  struct qcom_wdt_match_data {
-> +	const char *compatible;
-> +	unsigned int restart_reason_offset;
-> +	unsigned int non_secure_wdt_val;
->  	const u32 *offset;
->  	bool pretimeout;
->  	u32 max_tick_count;
-> @@ -175,6 +180,15 @@ static const struct watchdog_info qcom_wdt_pt_info = {
->  	.identity	= KBUILD_MODNAME,
->  };
->  
-> +static const struct qcom_wdt_match_data match_data_ipq5424 = {
-> +	.compatible = "qcom,ipq5424-imem",
-> +	.restart_reason_offset = 0x7b0,
-> +	.non_secure_wdt_val = 0x5,
-> +	.offset = reg_offset_data_kpss,
-> +	.pretimeout = true,
-> +	.max_tick_count = 0xFFFFFU,
-> +};
-> +
->  static const struct qcom_wdt_match_data match_data_apcs_tmr = {
->  	.offset = reg_offset_data_apcs_tmr,
->  	.pretimeout = false,
-> @@ -187,6 +201,29 @@ static const struct qcom_wdt_match_data match_data_kpss = {
->  	.max_tick_count = 0xFFFFFU,
->  };
->  
-> +static int  qcom_wdt_get_restart_reason(struct qcom_wdt *wdt,
 
-double space> +					const struct qcom_wdt_match_data *data)
-
-Please align this
-
-> +{
-> +	struct regmap *imem;
-> +	unsigned int val;
-> +	int ret;
-> +
-> +	imem = syscon_regmap_lookup_by_compatible(data->compatible);
-
-I still think nvmem could be better here, as it allows to plug in
-more magic values
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
 Konrad
 
