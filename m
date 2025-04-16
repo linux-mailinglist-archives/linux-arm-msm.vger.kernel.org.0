@@ -1,145 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-54540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F171EA90921
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 18:40:31 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30A73A90973
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 18:57:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6EACB3BEC46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 16:40:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1DFA37A5AF9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 16:56:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13401211A20;
-	Wed, 16 Apr 2025 16:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="efsHX+Re"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A0682144C7;
+	Wed, 16 Apr 2025 16:57:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from bmailout2.hostsharing.net (bmailout2.hostsharing.net [83.223.78.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585A31552E3;
-	Wed, 16 Apr 2025 16:40:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBD32135B7;
+	Wed, 16 Apr 2025 16:57:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.78.240
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744821629; cv=none; b=N6JK3ASF3k4Xi1Tf28KEuMmSR5PqpC+jDgapsBlAGfAVjb1BNvQbXnJXTFKTEkJbBNspuzeXapVPvbo4glcILQLTRiz2nykOAXLlfz2Syos7QYsIo3GEpj3SACWPROlkP5rIn5eXKJ2zB/d1VbuLIwkrqsuQYjjd6Kzr3q2A+aA=
+	t=1744822642; cv=none; b=GNGo7LdR6u7dB9+GekoAY9CHZbZId2AfQJobkAtJazN+c87Irf1T47WdK4cic0pO9pefLPcRrvJlxxYVhFXsi98t52fLmjGKb29f4xuUR6OX7xWpRbGtGvm7CgzcNNFZbTr7WRVHLtM4MvBI9T+olwNFWv6Fd5IbyI9Gu393JYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744821629; c=relaxed/simple;
-	bh=kdWGzMC4e8Q/F55njWJtcJOc5uDVvyTSX+OFhhLoMs8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=kCY9WrfRx1c7rvnIHYbWJhK1+GR4pSo2ocnQWXIJ0CdLPiDT2XQnz0PviTeu+4UHCI7pQxwPclv5oBDBES08ufKfbbdECaHQbrdxdz29V76fJybObF8S5CCfXU8dg1ibRm3wsXkK92ma46YAtlOXfMXsIOEsfNPTG57oAZuRqLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=efsHX+Re; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53G9mFPI007029;
-	Wed, 16 Apr 2025 16:40:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YnCM84KjxzfyDSxb3gt85GemZL1H2aNhnuW7pS5CQkw=; b=efsHX+ReLvKFxozR
-	N4FGKnp3F0eeNoPpxrqt4fc9ZzpVozHxy8mAYMk45aOKaKp8bceBNsK3Ej81F36s
-	9ddC4lG3al5FsvWW19MyqSh1COcyzibaE1wLe1j1qi1pf3wzx48atJTG5IN75iTW
-	4HVh4OU/M++RNCbyXXOi82ru0deY34IRCB0nNsQ+o8IkbKT5hdgiJpMpaxaTXXDy
-	3JZHQddFUSht8hNvbn6UXZbsJ+2oF841hma5u+7v95nZgn6Pa5TcpnRfOl4MYHSK
-	DibFQq3Q8ighMArntczOJm+V1wBAW/VgOkRvnC4qln0o5OC1rLDdDlIbHU57F/tJ
-	u5Od1Q==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yfgjm46e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Apr 2025 16:40:22 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53GGeLh7023006
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Apr 2025 16:40:21 GMT
-Received: from [10.50.19.174] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 16 Apr
- 2025 09:40:15 -0700
-Message-ID: <30ebc1b7-5746-59a3-0155-7a7870544622@quicinc.com>
-Date: Wed, 16 Apr 2025 22:10:12 +0530
+	s=arc-20240116; t=1744822642; c=relaxed/simple;
+	bh=Zt/tQFUbpSmz7S4t/UplGM4xSmdA/oN6XTSYkpTWm80=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U8ODgZiL4gnsKgvh5PxtEtRHaIcEC+4h4EEZL1RHSE/pKhfl++osiIdd/2OQLR+vsnle3UyieMC/Wx3TcX1qKf+zFMwTBhU0l5+z1iYOZSAMnZGKzIsCPSZMdAkBMKuxa8GdLJRF7ZWJB7aZzSYwKTOJwdCua5z4HM9aCDhopY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=83.223.78.240
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
+Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
+	by bmailout2.hostsharing.net (Postfix) with ESMTPS id 2807E200A2AD;
+	Wed, 16 Apr 2025 18:57:05 +0200 (CEST)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id 674D217601D; Wed, 16 Apr 2025 18:57:11 +0200 (CEST)
+Date: Wed, 16 Apr 2025 18:57:11 +0200
+From: Lukas Wunner <lukas@wunner.de>
+To: manivannan.sadhasivam@linaro.org
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+	Oliver O'Halloran <oohall@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof Wilczy??ski <kw@linux.com>, Rob Herring <robh@kernel.org>,
+	dingwei@marvell.com, cassel@kernel.org,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 3/4] PCI: Add link down handling for host bridges
+Message-ID: <Z__hZ2M8wDHn2XSn@wunner.de>
+References: <20250416-pcie-reset-slot-v2-0-efe76b278c10@linaro.org>
+ <20250416-pcie-reset-slot-v2-3-efe76b278c10@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 01/20] media: iris: Skip destroying internal buffer if not
- dequeued
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Stefan Schmidt
-	<stefan.schmidt@linaro.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        "Rob Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor Dooley" <conor+dt@kernel.org>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <stable@vger.kernel.org>
-References: <20250408-iris-dec-hevc-vp9-v1-0-acd258778bd6@quicinc.com>
- <20250408-iris-dec-hevc-vp9-v1-1-acd258778bd6@quicinc.com>
- <811cd70e-dc27-4ce0-b7da-296fa5926f90@linaro.org>
- <137c68d5-36c5-4977-921b-e4b07b22113c@linaro.org>
- <96bd9ffa-94f6-0d1f-d050-5bec13b3328f@quicinc.com>
- <70a630cb-06ad-403c-b2e2-ae6d26e0877e@linaro.org>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <70a630cb-06ad-403c-b2e2-ae6d26e0877e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3hVtaosg3CGbQh3bTYuTewtgMNNFml9Z
-X-Proofpoint-ORIG-GUID: 3hVtaosg3CGbQh3bTYuTewtgMNNFml9Z
-X-Authority-Analysis: v=2.4 cv=Cve/cm4D c=1 sm=1 tr=0 ts=67ffdd76 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=UQm-4NqDxuu6OjQSYYYA:9 a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-16_06,2025-04-15_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- malwarescore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0
- suspectscore=0 impostorscore=0 mlxlogscore=917 mlxscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504160135
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250416-pcie-reset-slot-v2-3-efe76b278c10@linaro.org>
 
+On Wed, Apr 16, 2025 at 09:59:05PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> --- a/drivers/pci/pcie/err.c
+> +++ b/drivers/pci/pcie/err.c
+> @@ -270,3 +270,30 @@ pci_ers_result_t pcie_do_recovery(struct pci_dev *dev,
+>  
+>  	return status;
+>  }
+> +
+> +static pci_ers_result_t pcie_do_slot_reset(struct pci_dev *dev)
+> +{
+> +	int ret;
+> +
+> +	ret = pci_bus_error_reset(dev);
+> +	if (ret) {
+> +		pci_err(dev, "Failed to reset slot: %d\n", ret);
+> +		return PCI_ERS_RESULT_DISCONNECT;
+> +	}
+> +
+> +	pci_info(dev, "Slot has been reset\n");
+> +
+> +	return PCI_ERS_RESULT_RECOVERED;
+> +}
+> +
+> +void pcie_do_recover_slots(struct pci_host_bridge *host)
+> +{
+> +	struct pci_bus *bus = host->bus;
+> +	struct pci_dev *dev;
+> +
+> +	for_each_pci_bridge(dev, bus) {
+> +		if (pci_is_root_bus(bus))
+> +			pcie_do_recovery(dev, pci_channel_io_frozen,
+> +					 pcie_do_slot_reset);
+> +	}
+> +}
 
+Since pcie_do_slot_reset(), pcie_do_recover_slots() and
+pcie_do_recover_slots() are only needed on platforms with a
+specific host controller (and not, say, on x86), it would be good
+if they could be kept e.g. in a library in drivers/pci/controller/
+to avoid unnecessarily enlarging the .text section for everyone else.
 
-On 4/16/2025 5:40 PM, Bryan O'Donoghue wrote:
-> On 15/04/2025 05:58, Dikshita Agarwal wrote:
->> Although firmware makes sure that during session close, all buffers are
->> returned to driver and driver will release them but still we shouldn't rely
->> for this on firmware and should handle in driver.
->> Will fix this in next patch set.
-> 
-> Shouldn't we reset iris in this case ?
-> 
-Not required.
-> i.e. its a breaking of the software contract to have failed to have
-> returned a buffer by - close.
-> 
-> Its not enough to free the memory on the APSS side as the remote end could
-> still assume ownership of a buffer... right ?
-> 
-Before close, Stop will be called to firmware and firmware will return all
-the buffers to driver, which will transfer the ownership to driver, so no
-issue with freeing these buffers in close.
+One option would be the existing pci-host-common.c, another a
+completely new file.
+
+> --- a/drivers/pci/pci.h
+> +++ b/drivers/pci/pci.h
+> @@ -966,6 +966,7 @@ int pci_aer_clear_status(struct pci_dev *dev);
+>  int pci_aer_raw_clear_status(struct pci_dev *dev);
+>  void pci_save_aer_state(struct pci_dev *dev);
+>  void pci_restore_aer_state(struct pci_dev *dev);
+> +void pcie_do_recover_slots(struct pci_host_bridge *host);
+>  #else
+>  static inline void pci_no_aer(void) { }
+>  static inline void pci_aer_init(struct pci_dev *d) { }
+> @@ -975,6 +976,26 @@ static inline int pci_aer_clear_status(struct pci_dev *dev) { return -EINVAL; }
+>  static inline int pci_aer_raw_clear_status(struct pci_dev *dev) { return -EINVAL; }
+>  static inline void pci_save_aer_state(struct pci_dev *dev) { }
+>  static inline void pci_restore_aer_state(struct pci_dev *dev) { }
+> +static inline void pcie_do_recover_slots(struct pci_host_bridge *host)
+> +{
+> +	struct pci_bus *bus = host->bus;
+> +	struct pci_dev *dev;
+> +	int ret;
+> +
+> +	if (!host->reset_slot)
+> +		dev_warn(&host->dev, "Missing reset_slot() callback\n");
+> +
+> +	for_each_pci_bridge(dev, bus) {
+> +		if (!pci_is_root_bus(bus))
+> +			continue;
+> +
+> +		ret = pci_bus_error_reset(dev);
+> +		if (ret)
+> +			pci_err(dev, "Failed to reset slot: %d\n", ret);
+> +		else
+> +			pci_info(dev, "Slot has been reset\n");
+> +	}
+> +}
+>  #endif
+
+Unusual to have such a large inline function in a header.
+Can this likewise be moved to some library file and separated
+from the other version via #ifdef please?
 
 Thanks,
-Dikshita
-> ---
-> bod
+
+Lukas
 
