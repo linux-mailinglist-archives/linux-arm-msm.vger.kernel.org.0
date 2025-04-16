@@ -1,175 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-54507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71FF1A8B8F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:26:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E6B3CA8B8F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:27:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C7B96188A8BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 12:26:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 525741898073
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 12:27:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11FB124A055;
-	Wed, 16 Apr 2025 12:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2897224889F;
+	Wed, 16 Apr 2025 12:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R5ah9ueQ"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="JAF4hkeC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D0D22E3FF;
-	Wed, 16 Apr 2025 12:26:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05202472B3;
+	Wed, 16 Apr 2025 12:26:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744806372; cv=none; b=fccnsul8wAbmZUqxrSvd62mXf32Oi9/q+bRfVmqz66takH4xFLLeMNRVhk3J6ZpXfnDHeqFesoP4pE1mNRRTjNkRml5jGNr/KEM3BVBNIfEe+fX00Ko1R5hDL7mS/39b5tzX+Iqe22yjlP5n/nOripD4D+VT7cJphCKfJ44fZl4=
+	t=1744806387; cv=none; b=YryVqAhProQKbRxWJFbQfqShemy7b2MG1e2J69L1YeWiMlQq/EuRSlsjGkp+C8xr/EvtKiWxmpIrgBoqCyFlZ/qg3gKcFmc4HAUnye+o28szFx9ctQkezMnUdsuxnmUb68mVYUyq0gENvzpC2HnDvqjl9TSAGwXMGZW+SoKkHJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744806372; c=relaxed/simple;
-	bh=Aeg8kUOHJseMiIlqvC2SPKYTZHsN5Nn9IVE2UYlg/ec=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lEM0RPfneOkMzbEU5vUj/LOpSvtsQ3fWj/rn5oVU/yRp7kVj10OL9DRecjqcRopV8rVacFdz5TfIELzmBCwpdisABtyVVZM8C8gqQsPM2eI1oZngfh+IPcwqbSSNXdg0iJ0Yyn/12E2ciUpZha1gnsOwXVpKNL0q8L5Nxs2Eyys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=R5ah9ueQ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53G9mFA5007034;
-	Wed, 16 Apr 2025 12:26:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IxqARdOpyUj1ZO/NkgULldZw/EY/t2do1FHMFZ5hUjw=; b=R5ah9ueQCrqkyq7V
-	VwOZJDK7F8A/kl28YNAlTs7+wGXoU92PosgrNmuiz2VnCTySoSHDr334zR0ZFcRa
-	VLAjN/VRv1e1+Lomt9qtkNxZlMvZm6Vgpntr30a8f/lMy/cfCyiWgDuBbASgSCSR
-	FR4OSoSbRSYEcrV90lz+NVE3WqnoqpYhnUU5vpC+q18mXppv37f4Lf98B+aVxj4t
-	GJwlYA09jRAGfkGyUnqmKHP3boEnNPU4hbzDbV+xlLrJHpma1HbFJ76sItU21bxT
-	F4i9WcHe3ZpCM0Lbw/IHF3dUdyKCNtzK0Tsj85+S7nbgoM6x1W3tadsYcxB+RtvX
-	A19heg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yfgjkdst-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Apr 2025 12:26:07 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53GCQ699025119
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Apr 2025 12:26:06 GMT
-Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 16 Apr 2025 05:26:03 -0700
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-Subject: [PATCH v7 2/2] arm64: dts: qcom: ipq5424: Enable PCIe PHYs and controllers
-Date: Wed, 16 Apr 2025 17:55:38 +0530
-Message-ID: <20250416122538.2953658-3-quic_mmanikan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250416122538.2953658-1-quic_mmanikan@quicinc.com>
-References: <20250416122538.2953658-1-quic_mmanikan@quicinc.com>
+	s=arc-20240116; t=1744806387; c=relaxed/simple;
+	bh=zZyoUoQs57ugcr6pi7AFEtiMgwqRDtvhMHoc4UZWdWY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sBGdqlKhfP1S7eA1xKtoNkzwFQcZOKWBWp/tK5dK7W8R0LAuo3o2td+cIH8HnzZl0gxgUENU8bDB7b8AK83c7V7aHrvQhV3bzdF7q0FeyA2hrGNiTRH4uKb3ORFCVTfC7TrLMZpjJ3ZS6SNwOfja0KHYfFEX4Tm7GJa/mBYao7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=JAF4hkeC; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 18B80446;
+	Wed, 16 Apr 2025 14:24:17 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1744806259;
+	bh=zZyoUoQs57ugcr6pi7AFEtiMgwqRDtvhMHoc4UZWdWY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=JAF4hkeCioakqnxQz9bTUPttghD/RANLFweNIr16lzd8pBObABa768eAO0Ei9TL72
+	 7cO7bfN79c4QAdYcmgkJgHS8kooHXkT81GJvZaMYZgJWIFvPnZjQhsTBa/3cZFLcSN
+	 tTqDr7CfXSzOZtaSh9msG9GiqvphRDXZnigsfMjA=
+Message-ID: <f5880400-ab7b-4cae-81e4-893ce34a0460@ideasonboard.com>
+Date: Wed, 16 Apr 2025 15:26:17 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: dkHeZMOrFpu-8Y59rzR8y98mRoHl07pf
-X-Proofpoint-ORIG-GUID: dkHeZMOrFpu-8Y59rzR8y98mRoHl07pf
-X-Authority-Analysis: v=2.4 cv=Cve/cm4D c=1 sm=1 tr=0 ts=67ffa1df cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=vdRwA7TqO3sj12wk4UIA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-16_04,2025-04-15_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- malwarescore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0
- suspectscore=0 impostorscore=0 mlxlogscore=947 mlxscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504160102
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 29/34] drm: zynqmp_dp: convert to devm_drm_bridge_alloc()
+ API
+To: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Cc: Anusha Srivatsa <asrivats@redhat.com>,
+ Paul Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>,
+ =?UTF-8?Q?Herv=C3=A9_Codina?= <herve.codina@bootlin.com>,
+ Hui Pu <Hui.Pu@gehealthcare.com>,
+ Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+ dri-devel@lists.freedesktop.org, asahi@lists.linux.dev,
+ linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev,
+ imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com,
+ Michal Simek <michal.simek@amd.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Jagan Teki <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Douglas Anderson
+ <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ "Sagar, Vishal" <vishal.sagar@amd.com>
+References: <20250407-drm-bridge-convert-to-alloc-api-v1-0-42113ff8d9c0@bootlin.com>
+ <20250407-drm-bridge-convert-to-alloc-api-v1-29-42113ff8d9c0@bootlin.com>
+Content-Language: en-US
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Autocrypt: addr=tomi.valkeinen@ideasonboard.com; keydata=
+ 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
+In-Reply-To: <20250407-drm-bridge-convert-to-alloc-api-v1-29-42113ff8d9c0@bootlin.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Enable the PCIe controller and PHY nodes corresponding to RDP466.
-The IPQ5424 RDP466 does not have a wake gpio because it does not
-support low power mode. It only supports a perst gpio.
+Hi,
 
-Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
----
-Changes in V7:
-	- Incorporated the information about the absence of wake GPIO
-	  support into the commit message.
+On 07/04/2025 17:23, Luca Ceresoli wrote:
+> This is the new API for allocating DRM bridges.
+> 
+> This driver has a peculiar structure. zynqmp_dpsub.c is the actual driver,
+> which delegates to a submodule (zynqmp_dp.c) the allocation of a
+> sub-structure embedding the drm_bridge and its initialization, however it
+> does not delegate the drm_bridge_add(). Hence, following carefully the code
+> flow, it is correct to change the allocation function and .funcs assignment
+> in the submodule, while the drm_bridge_add() is not in that submodule.
+> 
+> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+> 
+> ---
+> 
+> Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Cc: Michal Simek <michal.simek@amd.com>
+> Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+> ---
+>   drivers/gpu/drm/xlnx/zynqmp_dp.c | 7 +++----
+>   1 file changed, 3 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/xlnx/zynqmp_dp.c b/drivers/gpu/drm/xlnx/zynqmp_dp.c
+> index 11d2415fb5a1f7fad03421898331289f2295d68b..de22b6457a78a7a2110f9f308d0b5a8700544010 100644
+> --- a/drivers/gpu/drm/xlnx/zynqmp_dp.c
+> +++ b/drivers/gpu/drm/xlnx/zynqmp_dp.c
+> @@ -2439,9 +2439,9 @@ int zynqmp_dp_probe(struct zynqmp_dpsub *dpsub)
+>   	struct zynqmp_dp *dp;
+>   	int ret;
+>   
+> -	dp = kzalloc(sizeof(*dp), GFP_KERNEL);
+> -	if (!dp)
+> -		return -ENOMEM;
+> +	dp = devm_drm_bridge_alloc(&pdev->dev, struct zynqmp_dp, bridge, &zynqmp_dp_bridge_funcs);
+> +	if (IS_ERR(dp))
+> +		return PTR_ERR(dp);
+>   
+>   	dp->dev = &pdev->dev;
+>   	dp->dpsub = dpsub;
+> @@ -2488,7 +2488,6 @@ int zynqmp_dp_probe(struct zynqmp_dpsub *dpsub)
+>   
+>   	/* Initialize the bridge. */
+>   	bridge = &dp->bridge;
+> -	bridge->funcs = &zynqmp_dp_bridge_funcs;
+>   	bridge->ops = DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP_EDID
+>   		    | DRM_BRIDGE_OP_HPD;
+>   	bridge->type = DRM_MODE_CONNECTOR_DisplayPort;
+> 
 
- arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts | 41 ++++++++++++++++++++-
- 1 file changed, 40 insertions(+), 1 deletion(-)
+I haven't had time to look at this more, but jfyi: I got this when 
+unloading modules, but it doesn't seem to happen every time:
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-index 0fd0ebe0251d..1f89530cb035 100644
---- a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-@@ -82,6 +82,32 @@ &dwc_1 {
- 	dr_mode = "host";
- };
- 
-+&pcie2 {
-+	pinctrl-0 = <&pcie2_default_state>;
-+	pinctrl-names = "default";
-+
-+	perst-gpios = <&tlmm 31 GPIO_ACTIVE_LOW>;
-+
-+	status = "okay";
-+};
-+
-+&pcie2_phy {
-+	status = "okay";
-+};
-+
-+&pcie3 {
-+	pinctrl-0 = <&pcie3_default_state>;
-+	pinctrl-names = "default";
-+
-+	perst-gpios = <&tlmm 34 GPIO_ACTIVE_LOW>;
-+
-+	status = "okay";
-+};
-+
-+&pcie3_phy {
-+	status = "okay";
-+};
-+
- &qusb_phy_0 {
- 	vdd-supply = <&vreg_misc_0p925>;
- 	vdda-pll-supply = <&vreg_misc_1p8>;
-@@ -197,6 +223,20 @@ data-pins {
- 			bias-pull-up;
- 		};
- 	};
-+
-+	pcie2_default_state: pcie2-default-state {
-+		pins = "gpio31";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+
-+	pcie3_default_state: pcie3-default-state {
-+		pins = "gpio34";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
- };
- 
- &uart1 {
-@@ -216,4 +256,3 @@ &usb3 {
- &xo_board {
- 	clock-frequency = <24000000>;
- };
--
--- 
-2.34.1
+[  103.010533] ------------[ cut here ]------------
+[  103.015415] refcount_t: underflow; use-after-free.
+[  103.020657] WARNING: CPU: 2 PID: 392 at lib/refcount.c:28 
+refcount_warn_saturate+0xf4/0x148
+[  103.029056] Modules linked in: zynqmp_dpsub(-) display_connector 
+drm_display_helper drm_dma_helper drm_kms_helper drm drm_p
+anel_orientation_quirks
+[  103.042437] CPU: 2 UID: 0 PID: 392 Comm: rmmod Not tainted 
+6.15.0-rc2+ #3 PREEMPT
+[  103.050035] Hardware name: ZynqMP ZCU106 RevA (DT)
+[  103.054836] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS 
+BTYPE=--)
+[  103.061814] pc : refcount_warn_saturate+0xf4/0x148
+[  103.066632] lr : refcount_warn_saturate+0xf4/0x148
+[  103.071441] sp : ffff800083b5bbb0
+[  103.074766] x29: ffff800083b5bbb0 x28: ffff000806b23780 x27: 
+0000000000000000
+[  103.081953] x26: 0000000000000000 x25: 0000000000000000 x24: 
+ffff000801a68400
+[  103.089141] x23: ffff800081311a20 x22: ffff800083b5bc38 x21: 
+ffff000801a68010
+[  103.096329] x20: ffff0008040676c0 x19: ffff000804067240 x18: 
+0000000000000006
+[  103.103517] x17: 2e30303030303464 x16: 662d7968703a7968 x15: 
+ffff800083b5b5a0
+[  103.110705] x14: 0000000000000000 x13: 00000000000c0000 x12: 
+0000000000000000
+[  103.117892] x11: ffff80008163d6bc x10: 0000000000000028 x9 : 
+ffff800080ead38c
+[  103.125080] x8 : ffff800083b5b908 x7 : 0000000000000000 x6 : 
+ffff800083b5b9c0
+[  103.132268] x5 : ffff800083b5b948 x4 : 0000000000000001 x3 : 
+00000000000000db
+[  103.139455] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 
+ffff000806b23780
+[  103.146644] Call trace:
+[  103.149102]  refcount_warn_saturate+0xf4/0x148 (P)
+[  103.153918]  drm_bridge_put.part.0+0x88/0xa0 [drm]
+[  103.159188]  drm_bridge_put_void+0x1c/0x38 [drm]
+[  103.164231]  devm_action_release+0x1c/0x30
+[  103.168354]  release_nodes+0x68/0xa8
+[  103.171957]  devres_release_all+0x98/0xf0
+[  103.175993]  device_unbind_cleanup+0x20/0x70
+[  103.180291]  device_release_driver_internal+0x208/0x250
+[  103.185542]  driver_detach+0x54/0xa8
+[  103.189145]  bus_remove_driver+0x78/0x108
+[  103.193181]  driver_unregister+0x38/0x70
+[  103.197131]  platform_driver_unregister+0x1c/0x30
+[  103.201862]  zynqmp_dpsub_driver_exit+0x18/0x1100 [zynqmp_dpsub]
+[  103.207931]  __arm64_sys_delete_module+0x1a8/0x2d0
+[  103.212748]  invoke_syscall+0x50/0x120
+[  103.216524]  el0_svc_common.constprop.0+0x48/0xf0
+[  103.221256]  do_el0_svc+0x24/0x38
+[  103.224598]  el0_svc+0x48/0x128
+[  103.227766]  el0t_64_sync_handler+0x10c/0x138
+[  103.232150]  el0t_64_sync+0x1a4/0x1a8
+[  103.235841] irq event stamp: 7936
+[  103.239173] hardirqs last  enabled at (7935): [<ffff8000800aaf78>] 
+finish_task_switch.isra.0+0xb0/0x2a0
+[  103.248600] hardirqs last disabled at (7936): [<ffff800080eaac74>] 
+el1_dbg+0x24/0x90
+[  103.256369] softirqs last  enabled at (7930): [<ffff800080066f98>] 
+handle_softirqs+0x4a0/0x4c0
+[  103.265007] softirqs last disabled at (7905): [<ffff800080010224>] 
+__do_softirq+0x1c/0x28
+[  103.273211] ---[ end trace 0000000000000000 ]---
+
+  Tomi
 
 
