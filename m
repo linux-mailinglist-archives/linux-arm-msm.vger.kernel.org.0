@@ -1,75 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-54552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62605A90B04
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 20:11:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA640A90B01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 20:11:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9ACEB5A2406
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 18:11:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A15385A2F1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 18:11:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EB25221715;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F96A221576;
 	Wed, 16 Apr 2025 18:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lzmYjCsN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fVH68p0V"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BD621CA0E;
-	Wed, 16 Apr 2025 18:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F33421ABB0;
+	Wed, 16 Apr 2025 18:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744827056; cv=none; b=d3sbp1VuHCK/6ZylY7QBLbXTHL7M0bPyOcy1jkNTDc/UARfbGFUfqKjBSfeNsT3Q9S4xORymSglKIG/1xXi4w8zwEsboY0sdti2slfbyCjT9mL2DpAkVbbafZJXdXSS/lNgQmKSTfqem3lqail+byG6ec8Ez+USEsTjHrO/m9ks=
+	t=1744827056; cv=none; b=h7Eh4hWaR1ZWstvK1igU05QkJzCT48sXwTRJ+l4ZjvuCTL8IOfgSThoNRJhrQjy7oaxW83L8dC/KnJ3EreYq9I1J+e/W4UmzHkzcCr5gjgRV2HDM79FZsPDycaYPmtL5Qep7j6qQK+/2DYzqm5gSQGAacMZvZ7ujnCr4lVy/s1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1744827056; c=relaxed/simple;
-	bh=BwHkWTpOhur440Z80ly8g3N+djQD6dBjxS1kT5nV74c=;
+	bh=vZh3g5tnBCLLM/Z0GHCroziA4tVUB6U+QZ2RQctdI3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SRR8im2l8Hay3dFcZRQ1ca60YOqVtdkD4V+Rj9ihKhLrfCQ0UOm6mfmARzu+dfA4scq3IL5AnE8Ejv3gzBM2+vsvuOEKwDPBLP7pzR6/GWbIJnTrkfOvKw0E2xL6xiRGxn+4HHgChz5os5ZrJKRzpZwxnUf4+lG5uBZKmCktf5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lzmYjCsN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28084C4CEE2;
-	Wed, 16 Apr 2025 18:10:53 +0000 (UTC)
+	 MIME-Version:Content-Type; b=mqN1P+5HISohp11x+CZ9dXQ6p4GfPU0MacBxbLpxbW2CFBJ7cqIwcol/C+l07tPBtPLKD3TJpAZEwFMc5bpMvn5xgoIs6LhTlqKFfySHMlyfWKDWerqRNEMqu2QKyT07wQtPF9Rp8PUmSfbVVqVSYqz8cOMpKUI6Rac8vKRNlEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fVH68p0V; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05405C4CEE9;
+	Wed, 16 Apr 2025 18:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744827054;
-	bh=BwHkWTpOhur440Z80ly8g3N+djQD6dBjxS1kT5nV74c=;
+	s=k20201202; t=1744827056;
+	bh=vZh3g5tnBCLLM/Z0GHCroziA4tVUB6U+QZ2RQctdI3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzmYjCsNepDSraryG5VzpwlDZMymqsbCUIVG1pE93F4nsvJ4sDUKkIFceIGn8SsqS
-	 zTTTblMvtpNo4tz5BuU38fRzxWuWXvj9KKn07rXgfg786pZE7moBJKDzN0cWo+pKba
-	 1WqTfdUgmXyJkofHy+pcBGnfJvqFg8ulA1BqG91BvG2a/vHN0gKGU9T5BiT2VjSAk1
-	 EQ1qH6zHSeXlNy7WWa1++M3lNS+qOj99aCAKZDSBaxoPvdDx5xjr9rKNS7EVlkpPEX
-	 8VzNpr0+ZnMqloSkevz2u734MLJELNtf1/Fc5fQNt/0SORCDqLTE8WFV4Am8FM524w
-	 VbZQCI0SUXE2w==
+	b=fVH68p0VtZpPOQqQ9ieT7DUabCPZaXg7OPqOjGnOSe9WAu/QEeYqSZwYsFKgl7dbn
+	 J4K6bU/9jnGU4782ukRT35ekvBXdY8D8KFPF1yX/fVuna2qZoOKKFHQ1XB0iUfer8V
+	 CnmVZ+kC8i69FVpAGcMg+D7rIeMkxlLbCHXE/t/mTCZz3lGOmIlLhDGC+UmowzXBIQ
+	 0IjLn8x4bMWts4BJDuvYm4UOtcyEDWOAbf7PbElA2b0NEDBmIiLNbusl46nrKiwB9u
+	 glpJcds0YrLLg5h254zCyVoR4Et1evTmyHDDLiIxTmdt0juvyj6dwggkHmiAuZH/ur
+	 vta4fjIW+fqEQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	ulf.hansson@linaro.org,
-	linus.walleij@linaro.org,
-	catalin.marinas@arm.com,
-	p.zabel@pengutronix.de,
-	geert+renesas@glider.be,
-	neil.armstrong@linaro.org,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
 	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-mmc@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Sricharan R <quic_srichara@quicinc.com>
-Cc: quic_varada@quicinc.com
-Subject: Re: (subset) [PATCH V5 0/6] Add minimal boot support for IPQ5424
-Date: Wed, 16 Apr 2025 13:10:44 -0500
-Message-ID: <174482704415.446874.4349704931217088020.b4-ty@kernel.org>
+	Dmitry Baryshkov <lumag@kernel.org>
+Subject: Re: (subset) [PATCH v5 0/4] Update LPASS Audio clock driver for QCM6490 board
+Date: Wed, 16 Apr 2025 13:10:45 -0500
+Message-ID: <174482704422.446874.852481372761594404.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20241028060506.246606-1-quic_srichara@quicinc.com>
-References: <20241028060506.246606-1-quic_srichara@quicinc.com>
+In-Reply-To: <20250221-lpass_qcm6490_resets-v5-0-6be0c0949a83@quicinc.com>
+References: <20250221-lpass_qcm6490_resets-v5-0-6be0c0949a83@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,20 +73,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 28 Oct 2024 11:35:00 +0530, Sricharan R wrote:
-> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+On Fri, 21 Feb 2025 15:04:53 +0530, Taniya Das wrote:
+> This series updates the low pass audio clock controller driver for reset
+> functionality. The patches are split from the below series.
+> https://lore.kernel.org/all/20240318053555.20405-1-quic_tdas@quicinc.com/
 > 
-> The IPQ5424 is Qualcomm's 802.11be SoC for Routers, Gateways and
-> Access Points.
-> 
-> This series adds minimal board boot support for ipq5424-rdp466 board.
+> The QCM6490 board requires only the reset functionality from the LPASS
+> subsystem. Thus separate out the driver probe to provide the same on the
+> QCM6490 boards.
 > 
 > [...]
 
 Applied, thanks!
 
-[6/6] arm64: defconfig: Enable IPQ5424 RDP466 base configs
-      commit: 4b77122818239bcc05995d0234491b91c8cd477f
+[3/4] arm64: dts: qcom: qcm6490-idp: Update the LPASS audio node
+      commit: 9361ee93ac9d1b6730a65fc690e64cffaa41335e
+[4/4] arm64: dts: qcom: qcs6490-rb3gen2: Update the LPASS audio node
+      commit: f716f5dcf5cc40a0e883513b93dfaf35c50e7ead
 
 Best regards,
 -- 
