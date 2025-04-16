@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-54575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88C61A90F86
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 01:24:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE8EEA90F8A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 01:24:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A31AA17FB74
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 23:24:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E29D3B8A36
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 23:24:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7730324BCE8;
-	Wed, 16 Apr 2025 23:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0372B24C078;
+	Wed, 16 Apr 2025 23:23:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k58AEY3T"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EFOS+x5U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FA8235345;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CBD24A06F;
 	Wed, 16 Apr 2025 23:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744845834; cv=none; b=YEypM27YwfOwMnGbgXukvWU62NMRZ1kr2e7cWgsQTqx1XRPAMWc5CDkgEI76g0JEcyk57e9AmidEamc93WouNQ2V4+ZamyeO77DTjWmYI3cjDHNhVhJcIamGI9EAEPWDb6R0YWi2UaMBxWlfDAKUCkNGY3jMjNRaHuK84oduL6g=
+	t=1744845834; cv=none; b=d4O4zmFl8gZSQgP3yxB5FX+avik9Gy35Jwb8DJv1kNzZG5oYX8TNfX+aykLAbQA53lQuuYQnOwrlT3BxXFnejp1FBLhisbDyPt7ov++veLPQDNcytjLN5Jv1W6Ye4SckyRutwJJF5Qv1AwPnm0pHjSZDuvc03Yw7j0juOrwLq18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1744845834; c=relaxed/simple;
-	bh=LKTrU+sgU2OIjybj0utaZFM0waoa3ItskjDGTcF6xOA=;
+	bh=r6iiGw0WPshoyykVfAw4KQSvu1jD7CE+zlVJnLOPPv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J4UNzr4qFLPdjkcPilA1dmzGrhWjPXV0DJxPkSEY3q/dSN9CHddvE8v2fzvvv+6+VRMc3jlcr6Xh56BoXgaCtqbrMWmXU6EL2dQpbNiA/IS+USedS1mUtmr12vYv0GEjtGKI32ysysRJCZFzMV3zTZ4MJ188tInaMe/KfBxSet8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k58AEY3T; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version; b=fLOHF9PaZZ4azCnL+/MhB4iToVBARy4HQh4eVmuuHOTO273YN/CHmJrKR1Qd6bQO/z6a3cwVxQQ4vXOyV6jlukYqKbW3+m+H2kUuCAIh4l1D9I0yM1qPrUJRXJDPJUEyR7HyEf1GFJipEJskJVYQ42Vhij7fvtjQS10sbGEhNvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EFOS+x5U; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43d0359b1fcso1347465e9.0;
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so1873725e9.1;
         Wed, 16 Apr 2025 16:23:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1744845831; x=1745450631; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qjHXYMC7zHygZVzVtYT+NoerxDkgqGuxQiQmQIb1pA4=;
-        b=k58AEY3TTP3sJHgs5W/4iVg72VsTxYbZRJCLOk8imxqLj/PM1PQxT/4nbm79zYiLCv
-         X6aN2ndEWO9Uv2XvKDvumsYNGm8PjAJWZW2mocU6rB4VPizAOJNImWDDKK3ugweyNEsw
-         oMwxhkG3obsHrKkV05elxC2Gi0SIgz4Ju98/4duO8RkChOGru1ANr0dJz0s5CmT9kTYu
-         u4gj81+M+v3HkcD2rBkITZp3Ldw/zLoWVC9uTgsffnah4bjw1+6opNVle6lgAeWmMG15
-         GDAfcH/OF861QyAxZIQGjAoY4Hhbk+R1o+kA+Pu3UBHOuvVxANELkIXNidTCBCSLGent
-         KaZA==
+        bh=a8SNfV9cq9fPWvvPmR3dGHfZnD5tEVE8UIBf0qCYzhM=;
+        b=EFOS+x5UDAboSQJ0023rRzIfqGs4pYCmZoqHIOaRSOs1azDjL4Z1DiDNRr48X8MmVb
+         tpUQsarxCV75EBn/G1q6M9YTMMHgi3NjZCob9d/BrJIbCsGtET8nDn9VMYzy1RRQQn11
+         xgiDAUVHHdxXumoNrcXQUXEbxg1qJUEArFXEMfFZy1tJLWl3ka9+3HUCrr8Oz/1ZXgRy
+         nce7/J7+AbPvC1Q5rU98E6DrdDOOvdXxZIHTcsgssh0FElOnOZyemKz+hbGG/Ha7d83u
+         WoOP6p7ern74ksubHmpzZ8Y30vA4bRrsJxRaTXPrtwZP/jc0ig+OlUAzMPWrFYzORlr6
+         JfAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1744845831; x=1745450631;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qjHXYMC7zHygZVzVtYT+NoerxDkgqGuxQiQmQIb1pA4=;
-        b=Hg3vMxPiN50FTqKOR0IdmUq+MLXFtXHEcuHrdMcXAaVCknyPus1iJmRvk0kEZQboeB
-         aFzA4zDA14yeWfhcArFzOiHA0D8oqYwhcF0K1H0zDCaueZsCloRa+Z25goWsDB6U88tD
-         Jz59N9gVjtajLTPdb3PbscgDLVYYsxmfN0xt9zRKGtbXbVB+GwTFiV1LoMqsStyW/ft7
-         RlFX9yxcjCukgDOvKb9tsZCQZEjmL/GP2ECEYp5jrMG9PHnFdmpqtO/KmOn1rB2CGzxG
-         yIT+hNBTy/GA86Qhnj7NcOTPOvQhAgmc5mMv9y4gvbv4Kyw6VUGzatnz9Wf/yq4YbA+i
-         ugPw==
-X-Forwarded-Encrypted: i=1; AJvYcCUEbelFsMfGY8aMD54LtlMb8xt/l+l9kA9PGc2XYKPyzfvGx22B8qM/ExiH83sxuju9i5VdGtPM34vxLKpHgQ==@vger.kernel.org, AJvYcCUHYJ5ef0QsqvYtUxDVTkGbErVkBuw1eExqxwH6UwYO7eibqvich/9STPL7GzFHZCs3wsv2sZlrRjvjzE42@vger.kernel.org, AJvYcCVhgxOgaPpNmnTwXEiDF5qrWIylCxqFPo91D5Xx/tFPniUuo127Sh2k5vWV5kPCBAkRDRGXnMH38ncq@vger.kernel.org, AJvYcCWn/0RM8hehKAzTpk50UZB+SHhZ0U67rOEEdcpPt5/SZSi860tB3IgArTp6OsU9eIxDogGtON46bIm6@vger.kernel.org
-X-Gm-Message-State: AOJu0YzW/ND6NDazrT1qRabdcwE0TPwL7nJgubL634NCJfKoCOqwGQem
-	p5ysGq5nkluFe2EdpQysrFjXBJa3zVKNVEj8ROa35VcU6SwKdks=
-X-Gm-Gg: ASbGncusXunLIWa9I+xZyxpZwieDm2aXiJvt/Ee4eP/8hvpU9FNDV2BHSTBPH00eujZ
-	RC7T85gN3LKzwfF67O7lZ414hSsHW0ZKyAV5wCyzwB8Rkqnfxyh94djL5DDIApqgOATwi0hOJQd
-	hA7K48kIItm20AA68Pzq+SOvYrrA4jWGXLrjqHKawzvDOfkv8f+j6aKbv5vcnt/lgKfhbRH05+2
-	1p0VYg/vG5tq+yPA/shNeVxeXa7Bsz3EmdVVRfSdf5no+au009ZpEIlcSry5+b+WRMjd+J8kXgX
-	bkZ4aPMWD1CT+flLB/K8+HGVV6f5sqDp043DcPJdt9ve2Q==
-X-Google-Smtp-Source: AGHT+IE5zbHou//dRNGvt+Vsme8KKZ8BhiJRDmyZVKFMRGE+OOd3vEs4H5fPDZbFtNhjriRHcXPv8A==
-X-Received: by 2002:a05:600c:3b88:b0:439:8e95:796a with SMTP id 5b1f17b1804b1-440636a4008mr3712315e9.13.1744845830281;
-        Wed, 16 Apr 2025 16:23:50 -0700 (PDT)
+        bh=a8SNfV9cq9fPWvvPmR3dGHfZnD5tEVE8UIBf0qCYzhM=;
+        b=ZpwvtmohePJzXxYpaGkwM4JRyjiUZ2/FR42PpiLgSkc3mFBAStCxsRuUx/JY8186k1
+         NFF3x04lD5RHfJEAT8xvjOjaZAd+7G99pSd7Oq/6lbpfn7ruJxHYVrBVkgNc8McyBmek
+         U2W8OdakkhTktlp+QM1p2EnVqtgbGFIjoJAccuFna1VCQ4MEfLJq7T3/jIUlvl3sTFDD
+         mmGd6MjDBA/s/4AgygCxso18fz/4dJwhCuZAixdnQKG0aIdyhhNlAGvm4UTCjVT7orkQ
+         DQuSqB4+cdv+0Zr6TN70lPfzOhWYM2DEd893u+kM+kPXS6WQTAOrWkhpW9Wbn/e3/Si+
+         eImQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUAlbgz68FGUaXFgWOH1HMVAS423/XcqOEsifnWG0+pW+ZRo4UaWr5LZvPKuvquA4Ss+9pWq2fHU4PG@vger.kernel.org, AJvYcCUKPeMupfvJOZwi/o0CN1Q8W4xZcNathtgzfaCjwwN+lTscCf7c3pzPTDOzbr2K/wNzTo03MsNBRcD+@vger.kernel.org, AJvYcCVecZSaoEDpTlHvMkH34A0MoISJGmtxKbncpoTthjuPNl7GrlYlnfw/9LL8TjNHMkIudEKL+0qDxKuAFycm6g==@vger.kernel.org, AJvYcCWFOH3J3bmx8WiOY1B30LhF89lbI/uky5T/BZrg4OwF69dBBiMIaL8bK+sVs8DYd4Ddt6FTpO10T8YgFUe/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+tZTY/o+e05YPQ4CXDe0+I/FvZTWw3CKwV7OOAP6dEuHC2ueu
+	CxC7PEONfkXCW6sYy84WzmAD1SYNwST55hFf88ZbVAEkbYlvTSk=
+X-Gm-Gg: ASbGncuC4ns1lHrswZ2QbtjBJ+ewbBKmkA44oCwZ4QhgyY4jyI23kbcyPGIljVsS50/
+	08yA9AN91kfytq9MPuj2eRYLrC17HDOZ6PLlSy6C4VKbGu6cau/naiKQaVfCHtfJVrZOopWC9sX
+	/EYF7ap2jfRohPwHduhi8MKLBm/BKZ4d6Nsisdp6v+LsZddxolf2fnXGwrVkNaBAhW4xvTY48NI
+	X1QGU073OHiE6grjQ7bFWs+MJWluHRjbhO8f4EmZpsC04fYTHmwmmUHEK3MYrumjVudkI/pHUKT
+	TKZQ9XfGT+jGw3U40dg0eyRhTWLhr/kJLL56N7pLlxZ3VMakL8U4VAEP
+X-Google-Smtp-Source: AGHT+IFQKmaEJJUpUWUAmkiE2XBULeCmTdOnJnh1u52S9T034pt9R4TM3ohVVZP8H5IfrgyFDVZFxw==
+X-Received: by 2002:a05:600c:190c:b0:43c:fdbe:43be with SMTP id 5b1f17b1804b1-4405d6cd44amr33919965e9.27.1744845831100;
+        Wed, 16 Apr 2025 16:23:51 -0700 (PDT)
 Received: from alex-x1.lan ([84.226.118.249])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4405b4f3ac4sm34026465e9.23.2025.04.16.16.23.49
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4405b4f3ac4sm34026465e9.23.2025.04.16.16.23.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 16 Apr 2025 16:23:50 -0700 (PDT)
 From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
@@ -88,9 +88,9 @@ Cc: Konrad Dybcio <konradybcio@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	maud_spierings@hotmail.com,
 	dmitry.baryshkov@oss.qualcomm.com
-Subject: [PATCH v3 2/4] dt-bindings: arm: qcom: Add Asus Zenbook A14
-Date: Thu, 17 Apr 2025 01:20:49 +0200
-Message-ID: <20250416232345.5240-3-alex.vinarskis@gmail.com>
+Subject: [PATCH v3 3/4] firmware: qcom: scm: Allow QSEECOM on Asus Zenbook A14
+Date: Thu, 17 Apr 2025 01:20:50 +0200
+Message-ID: <20250416232345.5240-4-alex.vinarskis@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20250416232345.5240-1-alex.vinarskis@gmail.com>
 References: <20250416232345.5240-1-alex.vinarskis@gmail.com>
@@ -102,33 +102,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Document the X1E-78-100 and X1P-42-100/X1-26-100 variants.
+Allow particular machine accessing eg. efivars.
 
 Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
+ drivers/firmware/qcom/qcom_scm.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 08c329b1e919..bb589021a97a 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -1133,6 +1133,7 @@ properties:
-       - items:
-           - enum:
-               - asus,vivobook-s15
-+              - asus,zenbook-a14-ux3407ra
-               - dell,xps13-9345
-               - hp,omnibook-x14
-               - lenovo,yoga-slim7x
-@@ -1144,6 +1145,7 @@ properties:
- 
-       - items:
-           - enum:
-+              - asus,zenbook-a14-ux3407qa
-               - qcom,x1p42100-crd
-           - const: qcom,x1p42100
- 
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index fc4d67e4c4a6..79128d11eb51 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -1986,6 +1986,8 @@ EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_send);
+  */
+ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
+ 	{ .compatible = "asus,vivobook-s15" },
++	{ .compatible = "asus,zenbook-a14-ux3407qa" },
++	{ .compatible = "asus,zenbook-a14-ux3407ra" },
+ 	{ .compatible = "dell,xps13-9345" },
+ 	{ .compatible = "hp,omnibook-x14" },
+ 	{ .compatible = "huawei,gaokun3" },
 -- 
 2.45.2
 
