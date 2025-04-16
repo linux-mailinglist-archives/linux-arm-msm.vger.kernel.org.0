@@ -1,79 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-54510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA235A8B906
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:28:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC559A8B910
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:30:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52E173A6933
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 12:27:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0CB3E188F967
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 12:30:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0873824A053;
-	Wed, 16 Apr 2025 12:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E49F0382;
+	Wed, 16 Apr 2025 12:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FYSjEaBs"
+	dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b="YCjA7j7W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-fw-80007.amazon.com (smtp-fw-80007.amazon.com [99.78.197.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70C72327A1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 12:27:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2278136B;
+	Wed, 16 Apr 2025 12:30:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=99.78.197.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744806471; cv=none; b=WZ9AYCXzp5osHfkMFvjZWis3+v1R4kCLVkLg8WDrN4zTT/hJBUHxHYJDlU0Wr2+H7U6v+ymPnLADwSgnXZOPwyy+BbbIRqoYC5KgM0e7fBPX4zxrOFecPeHS3ITGrUiSdJBKocuMTlbsDeMc2mnEbIg1ZJtf5bRuPZbUE9xYc0A=
+	t=1744806627; cv=none; b=Z07Drukxd8jy+nfFOOmRm64b8pcyagKDBUZJb8Dua5uGWku7yGwLrU7hS0zppdSF+JsT9xCEE63r8U2vWQCAc1NtRYaazwYF2nrzIGVn2aSQQIR1LO8i/ZZFivCWrOMuNyelNRAEO1ZU3AhVu1Wi2MyeYqrMIuFbCZCBvnR7dQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744806471; c=relaxed/simple;
-	bh=OZMx6bfd2ZDLBU6RVpR1Ti861dk7Yhg0G5ACQvJCnCM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bKHpaDldUUBufyk3kPfUdTF8HscqRXp6HA4Q69Zxi8SUy3SPwywM8xJGXA9+6OLQB91JdbxUA1hB0r26d0ktzYtc61nxYDe95n+xyS3pPMUVx0LxqfxUC9hkcRHPVV6JyrBMVRIrJd+8d1IpgkCJUB0U3JgIe3V4j+8llQR/VCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FYSjEaBs; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43cf257158fso47927405e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 05:27:48 -0700 (PDT)
+	s=arc-20240116; t=1744806627; c=relaxed/simple;
+	bh=w4TAR/yH3VcS9OoJH0esVNtvvSK6jM0c6R3XkuFx4Xo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=jd8cASZZndqIeQE8BUAIGl9g5O4Fca0/OntDd2xOAFoU0A/yFqKeXuOanHQK01rYYEFy/MjKpyOboWC0xTSfw8XToFaaBIMQIOgjIpOHxVFLYg0H3ze4U6lzdv6OY9POgF52vdbVrbTBtGCrz965rQ6Mg+MOaGn6bV4WwBmtHmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk; spf=pass smtp.mailfrom=amazon.co.uk; dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b=YCjA7j7W; arc=none smtp.client-ip=99.78.197.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.uk
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744806467; x=1745411267; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7olKqUShSn9q9KBt/t1ADqj4alCQc1+OYSK/0oU0WCg=;
-        b=FYSjEaBss8TP84Iq7b1vL/i5oBzaaz4HJfFL3JGLPpYZuVGay50V0ZYRXOb04gs5go
-         438kljdRpPItqqyRKAGRyT50a+yMa2fr6RElkW55Tjb8JqyV+mSTKWN8j4R7pT8+k/BS
-         ftnd8imYjGmtSWZheO8jMUJLd6v7hXxAmKI+o2vlSYxaXFACZmcFjdtRiloVPvfOzfaV
-         7Wd1EzRCUqXfGcqFmwFHTdIrTkvof8Qyb3DDRZqTFgNYWdQRpkFH6R0vE41tEWgKjYyt
-         CArtfeWX4q25VP5fYJ2C0+VOipkMYiv2DejG24h43NwY94y3lRhEcJF6CuX0tyPlc1tY
-         D2nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744806467; x=1745411267;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7olKqUShSn9q9KBt/t1ADqj4alCQc1+OYSK/0oU0WCg=;
-        b=o7z9y2d9ijfyQYjobU8W8BMvEDFbiQ2qCv9yCy8qsCz+mUG9u1UE64r6AXQdAj1+j9
-         oIjOtedB+ZHPGn32l37bBGLHq6Y5ZnbNYUdK2rOkiqaV9/m8RKyWN2A/gqsM4lmVukSR
-         hCMCbOi4c6YNfPDpE9Q2jLdqm37ouqSU+6FwXNFhVJnETDrFWMrdbRRb+8+NWiDkZTM/
-         XlGV6c7MLue+OABoMKsCnctOdiFmIU/n42d9MvGEeS4hv/2tQO9o+uN/gHBEDF3de/3G
-         yEc6qpT43EUjIjY7taCx0jm37E04xNNXJ23MLwUpDrRl+ld8M/GKudvPUELKPXK1oLeb
-         OczQ==
-X-Gm-Message-State: AOJu0YxHPwroG1imTwI4FKWcWgC/Zw3A0Ls7QxyZdjIoZIzwnU4kg7yc
-	Sei/m51hiVIl5cL+zutihkNOREo0Hzhh2OgDLrY9vS0BCCMqTw/SAwrjxkb0eoM=
-X-Gm-Gg: ASbGncsKd7sgTQMmr8Gds12LTbfZDAVQ8a2gIXAF2sLeL+m25bH4oThUZKEe1kshZ2l
-	XvnrUeVx/e9+rdkwIj5cEvWtUMNVGYUlEONBit8kXDQ1xsuoMbYaETpeaAHKB+R6dzcdXPtMw9h
-	KeyS5rrfgFIYi36Z9SfrXgYxofNIdicmMYHUKAbFOzC+UB4OVtSMF340QC+whuU30+homPPjEQP
-	lL1f0+PuSSjydNR9qlT2W3HKfnlyu9UK1tHlRaELGVZgKTvKjJIncxBEXWdj5cbTSprmrEBU5Yw
-	UdmxC2m6ZphU4racbnFlnkBzY6K3zJF3kR4XXcm63FpH0vkIs1tuFIR8LjAsvGa9X3FK+Uo4xx5
-	jKVKJvw==
-X-Google-Smtp-Source: AGHT+IE3xdu+nx4jiKKa3mpgLosX1tZj4e3Uadm6gVyLqzr5AROw2GFjRV4QVE6nUfoA+BchQkUC/g==
-X-Received: by 2002:a05:600c:a378:b0:43c:ea1a:720a with SMTP id 5b1f17b1804b1-4405d5fcd39mr17192585e9.1.1744806466791;
-        Wed, 16 Apr 2025 05:27:46 -0700 (PDT)
-Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4405b4f2444sm19844815e9.17.2025.04.16.05.27.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Apr 2025 05:27:46 -0700 (PDT)
-Message-ID: <08592c93-c866-4515-8ddf-5e1eeb75c9a2@linaro.org>
-Date: Wed, 16 Apr 2025 13:27:45 +0100
+  d=amazon.co.uk; i=@amazon.co.uk; q=dns/txt;
+  s=amazon201209; t=1744806626; x=1776342626;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=sFqE0U8biMo7h/rFvupA/Vgek3MDfQSR208Nzfq3VY8=;
+  b=YCjA7j7Wq8NXJLPYeNndv7vJtO0lp+Q+GXU74rlVzxmNgral1IEiQ/Xe
+   FKzCQWoGuttB6WJoBr5M0iTN6EUzJxnv+It4NsHybYUFSECFOpDNl7Y9M
+   OZCdmhvwPZCGLWpUOgERo5eVh3BcD6AOKRSoZrWmUxyld7dGoyxQfPEz9
+   4=;
+X-IronPort-AV: E=Sophos;i="6.15,216,1739836800"; 
+   d="scan'208";a="396347607"
+Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO smtpout.prod.us-east-1.prod.farcaster.email.amazon.dev) ([10.25.36.210])
+  by smtp-border-fw-80007.pdx80.corp.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Apr 2025 12:30:23 +0000
+Received: from EX19MTAUEA001.ant.amazon.com [10.0.44.209:64083]
+ by smtpin.naws.us-east-1.prod.farcaster.email.amazon.dev [10.0.62.158:2525] with esmtp (Farcaster)
+ id 5cd90893-39c7-408c-bd64-a8f3f4ff1016; Wed, 16 Apr 2025 12:30:23 +0000 (UTC)
+X-Farcaster-Flow-ID: 5cd90893-39c7-408c-bd64-a8f3f4ff1016
+Received: from EX19EXOUEB002.ant.amazon.com (10.252.135.74) by
+ EX19MTAUEA001.ant.amazon.com (10.252.134.203) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
+ Wed, 16 Apr 2025 12:30:17 +0000
+Received: from EX19MTAUEB001.ant.amazon.com (10.252.135.108) by
+ EX19EXOUEB002.ant.amazon.com (10.252.135.74) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
+ Wed, 16 Apr 2025 12:30:17 +0000
+Received: from email-imr-corp-prod-iad-all-1a-f1af3bd3.us-east-1.amazon.com
+ (10.43.8.2) by mail-relay.amazon.com (10.252.135.35) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id
+ 15.2.1544.14 via Frontend Transport; Wed, 16 Apr 2025 12:30:17 +0000
+Received: from [127.0.0.1] (dev-dsk-roypat-1c-dbe2a224.eu-west-1.amazon.com [172.19.88.180])
+	by email-imr-corp-prod-iad-all-1a-f1af3bd3.us-east-1.amazon.com (Postfix) with ESMTPS id E8E47413B0;
+	Wed, 16 Apr 2025 12:30:10 +0000 (UTC)
+Message-ID: <392fc76a-5d2a-441d-99c8-532c0bbb052b@amazon.co.uk>
+Date: Wed, 16 Apr 2025 13:30:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,356 +73,134 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] media: qcom: camss: Add support for TFE (Spectra 340)
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>, rfoss@kernel.org,
- konradybcio@kernel.org, andersson@kernel.org, krzk+dt@kernel.org,
- robh@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250416120908.206873-1-loic.poulain@oss.qualcomm.com>
+Subject: Re: [PATCH v7 4/9] KVM: guest_memfd: Handle in-place shared memory as
+ guest_memfd backed memory
+To: David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>,
+	<kvm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>, <linux-mm@kvack.org>
+CC: <pbonzini@redhat.com>, <chenhuacai@kernel.org>, <mpe@ellerman.id.au>,
+	<anup@brainfault.org>, <paul.walmsley@sifive.com>, <palmer@dabbelt.com>,
+	<aou@eecs.berkeley.edu>, <seanjc@google.com>, <viro@zeniv.linux.org.uk>,
+	<brauner@kernel.org>, <willy@infradead.org>, <akpm@linux-foundation.org>,
+	<xiaoyao.li@intel.com>, <yilun.xu@intel.com>, <chao.p.peng@linux.intel.com>,
+	<jarkko@kernel.org>, <amoorthy@google.com>, <dmatlack@google.com>,
+	<isaku.yamahata@intel.com>, <mic@digikod.net>, <vbabka@suse.cz>,
+	<vannapurve@google.com>, <ackerleytng@google.com>,
+	<mail@maciej.szmigiero.name>, <michael.roth@amd.com>, <wei.w.wang@intel.com>,
+	<liam.merwick@oracle.com>, <isaku.yamahata@gmail.com>,
+	<kirill.shutemov@linux.intel.com>, <suzuki.poulose@arm.com>,
+	<steven.price@arm.com>, <quic_eberman@quicinc.com>,
+	<quic_mnalajal@quicinc.com>, <quic_tsoni@quicinc.com>,
+	<quic_svaddagi@quicinc.com>, <quic_cvanscha@quicinc.com>,
+	<quic_pderrin@quicinc.com>, <quic_pheragu@quicinc.com>,
+	<catalin.marinas@arm.com>, <james.morse@arm.com>, <yuzenghui@huawei.com>,
+	<oliver.upton@linux.dev>, <maz@kernel.org>, <will@kernel.org>,
+	<qperret@google.com>, <keirf@google.com>, <shuah@kernel.org>,
+	<hch@infradead.org>, <jgg@nvidia.com>, <rientjes@google.com>,
+	<jhubbard@nvidia.com>, <fvdl@google.com>, <hughd@google.com>,
+	<jthoughton@google.com>, <peterx@redhat.com>
+References: <20250318161823.4005529-1-tabba@google.com>
+ <20250318161823.4005529-5-tabba@google.com>
+ <8ebc66ae-5f37-44c0-884b-564a65467fe4@redhat.com>
+From: Patrick Roy <roypat@amazon.co.uk>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250416120908.206873-1-loic.poulain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=roypat@amazon.co.uk; keydata=
+ xjMEY0UgYhYJKwYBBAHaRw8BAQdA7lj+ADr5b96qBcdINFVJSOg8RGtKthL5x77F2ABMh4PN
+ NVBhdHJpY2sgUm95IChHaXRodWIga2V5IGFtYXpvbikgPHJveXBhdEBhbWF6b24uY28udWs+
+ wpMEExYKADsWIQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbAwULCQgHAgIiAgYVCgkI
+ CwIEFgIDAQIeBwIXgAAKCRBVg4tqeAbEAmQKAQC1jMl/KT9pQHEdALF7SA1iJ9tpA5ppl1J9
+ AOIP7Nr9SwD/fvIWkq0QDnq69eK7HqW14CA7AToCF6NBqZ8r7ksi+QLOOARjRSBiEgorBgEE
+ AZdVAQUBAQdAqoMhGmiXJ3DMGeXrlaDA+v/aF/ah7ARbFV4ukHyz+CkDAQgHwngEGBYKACAW
+ IQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbDAAKCRBVg4tqeAbEAtjHAQDkh5jZRIsZ
+ 7JMNkPMSCd5PuSy0/Gdx8LGgsxxPMZwePgEAn5Tnh4fVbf00esnoK588bYQgJBioXtuXhtom
+ 8hlxFQM=
+In-Reply-To: <8ebc66ae-5f37-44c0-884b-564a65467fe4@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 
-On 16/04/2025 13:09, Loic Poulain wrote:
-> Add support for TFE (Thin Front End) found in QCM2290.
+Hi!
+
+On Mon, 2025-04-14 at 12:51 +0100, David Hildenbrand wrote:
+>
+
+[...]
+
+> On top of that, I was wondering if we could look into doing something like
+> the following. It would also allow for pulling pages out of gmem for
+> existing SW-protected VMs once they enable shared memory for GMEM IIUC.
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> ---
->   drivers/media/platform/qcom/camss/Makefile    |   1 +
->   .../media/platform/qcom/camss/camss-vfe-340.c | 281 ++++++++++++++++++
->   drivers/media/platform/qcom/camss/camss-vfe.h |   1 +
->   3 files changed, 283 insertions(+)
->   create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-340.c
 > 
-> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
-> index d26a9c24a430..719898f5d32b 100644
-> --- a/drivers/media/platform/qcom/camss/Makefile
-> +++ b/drivers/media/platform/qcom/camss/Makefile
-> @@ -17,6 +17,7 @@ qcom-camss-objs += \
->   		camss-vfe-4-7.o \
->   		camss-vfe-4-8.o \
->   		camss-vfe-17x.o \
-> +		camss-vfe-340.o \
->   		camss-vfe-480.o \
->   		camss-vfe-680.o \
->   		camss-vfe-780.o \
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-340.c b/drivers/media/platform/qcom/camss/camss-vfe-340.c
-> new file mode 100644
-> index 000000000000..fc454d66e1d2
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe-340.c
-> @@ -0,0 +1,281 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Qualcomm MSM Camera Subsystem - VFE (Video Front End) Module 340 (TFE)
-> + *
-> + * Copyright (c) 2025 Qualcomm Technologies, Inc.
-> + */
+> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+> index 08eebd24a0e18..6f878cab0f466 100644
+> --- a/arch/x86/kvm/mmu/mmu.c
+> +++ b/arch/x86/kvm/mmu/mmu.c
+> @@ -4495,11 +4495,6 @@ static int kvm_mmu_faultin_pfn_gmem(struct kvm_vcpu *vcpu,
+>  {
+>         int max_order, r;
+> 
+> -       if (!kvm_slot_has_gmem(fault->slot)) {
+> -               kvm_mmu_prepare_memory_fault_exit(vcpu, fault);
+> -               return -EFAULT;
+> -       }
+> -
+>         r = kvm_gmem_get_pfn(vcpu->kvm, fault->slot, fault->gfn, &fault->pfn,
+>                              &fault->refcounted_page, &max_order);
+>         if (r) {
+> @@ -4518,8 +4513,19 @@ static int __kvm_mmu_faultin_pfn(struct kvm_vcpu *vcpu,
+>                                  struct kvm_page_fault *fault)
+>  {
+>         unsigned int foll = fault->write ? FOLL_WRITE : 0;
+> +       bool use_gmem = false;
 > +
-> +#include <linux/delay.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/io.h>
-> +#include <linux/iopoll.h>
-> +
-> +#include "camss.h"
-> +#include "camss-vfe.h"
-> +
-> +#define TFE_GLOBAL_RESET_CMD				(0x014)
-> +#define		TFE_GLOBAL_RESET_CMD_CORE	BIT(0)
-> +
-> +#define TFE_REG_UPDATE_CMD				(0x02C)
-> +
-> +#define TFE_IRQ_CMD					(0x030)
-> +#define		TFE_IRQ_CMD_CLEAR		BIT(0)
-> +#define TFE_IRQ_MASK_0					(0x034)
-> +#define		TFE_IRQ_MASK_0_RST_DONE		BIT(0)
-> +#define		TFE_IRQ_MASK_0_BUS_WR		BIT(1)
-> +#define TFE_IRQ_MASK_1					(0x038)
-> +#define TFE_IRQ_MASK_2					(0x03c)
-> +#define TFE_IRQ_CLEAR_0					(0x040)
-> +
-> +#define TFE_IRQ_STATUS_0				(0x04c)
-> +
-> +#define BUS_REG(a)	(0xa00 + (a))
-> +
-> +#define TFE_BUS_IRQ_MASK_0				BUS_REG(0x18)
-> +#define		TFE_BUS_IRQ_MASK_RUP_DONE_ALL	0x000f
-> +#define		TFE_BUS_IRQ_MASK_RUP_DONE(src)	BIT(src)
-> +#define		TFE_BUS_IRQ_MASK_BUF_DONE_ALL	0xff00
-> +#define		TFE_BUS_IRQ_MASK_BUF_DONE(sg)	BIT((sg) + 8)
-> +#define		TFE_BUS_IRQ_MASK_0_CONS_VIOL	BIT(28)
-> +#define		TFE_BUS_IRQ_MASK_0_VIOL		BIT(30)
-> +#define		TFE_BUS_IRQ_MASK_0_IMG_VIOL	BIT(31)
-> +
-> +#define TFE_BUS_IRQ_MASK_1				BUS_REG(0x1C)
-> +#define TFE_BUS_IRQ_CLEAR_0				BUS_REG(0x20)
-> +#define TFE_BUS_IRQ_STATUS_0				BUS_REG(0x28)
-> +#define TFE_BUS_IRQ_CMD					BUS_REG(0x30)
-> +#define		TFE_BUS_IRQ_CMD_CLEAR		BIT(0)
-> +
-> +#define TFE_BUS_STATUS_CLEAR				BUS_REG(0x60)
-> +#define TFE_BUS_VIOLATION_STATUS			BUS_REG(0x64)
-> +#define TFE_BUS_OVERFLOW_STATUS				BUS_REG(0x68)
-> +#define TFE_BUS_IMAGE_SZ_VIOLATION_STATUS		BUS_REG(0x70)
-> +
-> +#define TFE_BUS_CLIENT_CFG(c)				BUS_REG(0x200 + (c) * 0x100)
-> +#define		TFE_BUS_CLIENT_CFG_EN		BIT(0)
-> +#define		TFE_BUS_CLIENT_CFG_MODE_FRAME	BIT(16)
-> +#define TFE_BUS_IMAGE_ADDR(c)				BUS_REG(0x204 + (c) * 0x100)
-> +#define TFE_BUS_FRAME_INCR(c)				BUS_REG(0x208 + (c) * 0x100)
-> +#define TFE_BUS_IMAGE_CFG_0(c)				BUS_REG(0x20C + (c) * 0x100)
-> +#define		TFE_BUS_IMAGE_CFG_0_DEFAULT	0xffff
-> +#define TFE_BUS_IMAGE_CFG_1(c)				BUS_REG(0x210 + (c) * 0x100)
-> +#define TFE_BUS_IMAGE_CFG_2(c)				BUS_REG(0x214 + (c) * 0x100)
-> +#define		TFE_BUS_IMAGE_CFG_2_DEFAULT	0xffff
-> +#define TFE_BUS_PACKER_CFG(c)				BUS_REG(0x218 + (c) * 0x100)
-> +#define		TFE_BUS_PACKER_CFG_FMT_PLAIN64	0xa
-> +#define TFE_BUS_IRQ_SUBSAMPLE_CFG_0(c)			BUS_REG(0x230 + (c) * 0x100)
-> +#define TFE_BUS_IRQ_SUBSAMPLE_CFG_1(c)			BUS_REG(0x234 + (c) * 0x100)
-> +#define TFE_BUS_FRAMEDROP_CFG_0(c)			BUS_REG(0x238 + (c) * 0x100)
-> +#define TFE_BUS_FRAMEDROP_CFG_1(c)			BUS_REG(0x23c + (c) * 0x100)
-> +
-> +#define RDI_CLIENT(n)		(7 + (n))
+> +       if (fault->is_private) {
+> +               if (!kvm_slot_has_gmem(fault->slot)) {
+> +                       kvm_mmu_prepare_memory_fault_exit(vcpu, fault);
+> +                       return -EFAULT;
+> +               }
+> +               use_gmem = true;
+> +       } else if (kvm_slot_has_gmem_with_shared(fault->slot)) {
+> +               use_gmem = true;
+> +       }
+> 
+> -       if (fault->is_private)
+> +       if (use_gmem)
+>                 return kvm_mmu_faultin_pfn_gmem(vcpu, fault);
+> 
+>         foll |= FOLL_NOWAIT;
+> 
+> 
+> That is, we'd not claim that things are private when they are not, but instead
+> teach the code about shared memory coming from gmem.
+> 
+> There might be some more missing, just throwing it out there if I am completely off.
 
-Should be RDI_WM for consistency.
+I think I arrived at the need for this as well while experimenting with
+building a Firecracker version that works with my direct map removal
+patches.
 
-Please add a comment listing what those clients are
+With this patch series, on ARM, as soon as a memslot has a guest_memfd
+associated with it, all guest faults go through kvm_gmem_get_pfn, but on
+x86, they go through slot->userspace_addr by default, as
+CONFIG_KVM_SW_PROTECTED_VM selects CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES.
+There's no real difference between these if slot->userspace_addr can be
+GUP'd, but if its a VMA of a guest_memfd without direct map entries,
+faulting through slot->userspace_addr wont work. So on x86 Firecracker
+has to formally set the memory attributes to private, while on ARM it
+doesn't [1], which is a bit awkward.
 
-https://gitlab.freedesktop.org/linux-media/media-committers/-/commit/727970e9725c35366f501a890584e466ae34224a#c0063099c8260d8c4b3dc9ea650b6d0a4db47518_0_59
+David, I couldn't find an implementation of
+kvm_slot_has_gmem_with_shared() in the branch you shared, but would it
+be something like "slot->userspace_addr points to a gmem VMA,
+particularly to a VMA of the gmem that's associated with this memslot,
+mapped at the same offset"?
 
-> +#define TFE_SOURCES_NUM		4
-> +#define TFE_SUBGROUPS_NUM	8
-> +#define TFE_CLIENTS_NUM		10
-> +
-> +static inline unsigned int __regupdate_iface(enum vfe_line_id line_id)
-> +{
-> +	switch (line_id) {
-> +	case VFE_LINE_RDI0:
-> +		return 1;
-> +	case VFE_LINE_RDI1:
-> +		return 2;
-> +	case VFE_LINE_RDI2:
-> +		return 3;
-> +	case VFE_LINE_PIX:
-> +	default:
-> +		return 0;
-> +	}
+Best, 
+Patrick
 
-An enum or a define instead of hard-coded values on the return please.
+[1]: https://github.com/firecracker-microvm/firecracker/blob/feature/secret-hiding/src/vmm/src/builder.rs#L268
 
-> +}
-> +
-> +static inline unsigned int __regupdate_line(unsigned int iface)
-> +{
-> +	if (!iface)
-> +		return VFE_LINE_PIX;
-> +	if (iface < 4)
-> +		return VFE_LINE_RDI0 + (iface - 1);
-> +
-> +	return VFE_LINE_NONE;
-> +}
-> +
-> +static inline unsigned int __subgroup_line(unsigned int subgroup)
-> +{
-> +	switch (subgroup) {
-> +	case 5:
-> +		return VFE_LINE_RDI0;
-> +	case 6:
-> +		return VFE_LINE_RDI1;
-> +	case 7:
-> +		return VFE_LINE_RDI2;
-> +	default:
-> +		return VFE_LINE_PIX;
-> +	}
-> +
-> +	return VFE_LINE_NONE;
-> +}
-> +
-> +static void vfe_global_reset(struct vfe_device *vfe)
-> +{
-> +	writel_relaxed(TFE_IRQ_MASK_0_RST_DONE, vfe->base + TFE_IRQ_MASK_0);
-> +	writel(TFE_GLOBAL_RESET_CMD_CORE, vfe->base + TFE_GLOBAL_RESET_CMD);
-
-Why is one relaxed and one not ?
-
-> +}
-> +
-> +static irqreturn_t vfe_isr(int irq, void *dev)
-> +{
-> +	struct vfe_device *vfe = dev;
-> +	u32 status;
-> +	int i;
-> +
-> +	status = readl_relaxed(vfe->base + TFE_IRQ_STATUS_0);
-> +	writel_relaxed(status, vfe->base + TFE_IRQ_CLEAR_0);
-> +	writel_relaxed(TFE_IRQ_CMD_CLEAR, vfe->base + TFE_IRQ_CMD);
-> +
-> +
-> +	if (status & TFE_IRQ_MASK_0_RST_DONE) {
-> +		dev_dbg(vfe->camss->dev, "VFE%u: Reset done!", vfe->id);
-> +		vfe_isr_reset_ack(vfe);
-> +	}
-> +
-> +	if (status & TFE_IRQ_MASK_0_BUS_WR) {
-> +		u32 bus_status = readl_relaxed(vfe->base + TFE_BUS_IRQ_STATUS_0);
-> +
-> +		writel_relaxed(bus_status, vfe->base + TFE_BUS_IRQ_CLEAR_0);
-> +		writel_relaxed(TFE_BUS_IRQ_CMD_CLEAR, vfe->base + TFE_BUS_IRQ_CMD);
-> +
-> +		for (i = 0; i < TFE_SOURCES_NUM; i++) {
-> +			if (bus_status & TFE_BUS_IRQ_MASK_RUP_DONE(i))
-> +				vfe->res->hw_ops->reg_update_clear(vfe, __regupdate_line(i));
-> +		}
-> +
-> +		for (i = 0; i < TFE_SUBGROUPS_NUM; i++) {
-> +			if (bus_status & TFE_BUS_IRQ_MASK_BUF_DONE(i))
-> +				vfe_buf_done(vfe, __subgroup_line(i));
-> +		}
-> +
-> +		if (bus_status & TFE_BUS_IRQ_MASK_0_CONS_VIOL)
-> +			dev_err_ratelimited(vfe->camss->dev, "VFE%u: Bad config violation",
-> +					    vfe->id);
-> +
-> +		if (bus_status & TFE_BUS_IRQ_MASK_0_VIOL)
-> +			dev_err_ratelimited(vfe->camss->dev, "VFE%u: Input data violation",
-> +					    vfe->id);
-> +
-> +		if (bus_status & TFE_BUS_IRQ_MASK_0_IMG_VIOL)
-> +			dev_err_ratelimited(vfe->camss->dev, "VFE%u: Image size violation",
-> +					    vfe->id);
-> +	}
-> +
-> +	status = readl_relaxed(vfe->base + TFE_BUS_OVERFLOW_STATUS);
-> +	if (status) {
-> +		writel_relaxed(status, vfe->base + TFE_BUS_STATUS_CLEAR);
-> +		for (i = 0; i < TFE_CLIENTS_NUM; i++) {
-> +			if (status & BIT(i))
-> +				dev_err_ratelimited(vfe->camss->dev,
-> +						    "VFE%u: bus overflow for client %u\n",
-> +						    vfe->id, i);
-> +		}
-> +	}
-> +
-> +	return IRQ_HANDLED;
-> +}
-
-looks ok
-
-> +
-> +static int vfe_halt(struct vfe_device *vfe)
-> +{
-> +	/* rely on vfe_disable_output() to stop the VFE */
-> +	return 0;
-> +}
-> +
-> +static void vfe_enable_irq(struct vfe_device *vfe)
-> +{
-> +	writel_relaxed(TFE_IRQ_MASK_0_RST_DONE | TFE_IRQ_MASK_0_BUS_WR,
-> +		       vfe->base + TFE_IRQ_MASK_0);
-> +	writel_relaxed(TFE_BUS_IRQ_MASK_RUP_DONE_ALL | TFE_BUS_IRQ_MASK_BUF_DONE_ALL |
-> +		       TFE_BUS_IRQ_MASK_0_CONS_VIOL | TFE_BUS_IRQ_MASK_0_VIOL |
-> +		       TFE_BUS_IRQ_MASK_0_IMG_VIOL, vfe->base + TFE_BUS_IRQ_MASK_0);
-> +}
-> +
-> +static void vfe_wm_update(struct vfe_device *vfe, u8 rdi, u32 addr,
-> +			  struct vfe_line *line)
-> +{
-> +	u8 client = RDI_CLIENT(rdi);
-> +
-> +	writel_relaxed(addr, vfe->base + TFE_BUS_IMAGE_ADDR(client));
-> +}
-> +
-> +static void vfe_wm_start(struct vfe_device *vfe, u8 rdi, struct vfe_line *line)
-> +{
-> +	struct v4l2_pix_format_mplane *pix =
-> +		&line->video_out.active_fmt.fmt.pix_mp;
-> +	u32 stride = pix->plane_fmt[0].bytesperline;
-> +	u8 client = RDI_CLIENT(rdi);
-> +
-> +	/* Configuration for plain RDI frames */
-> +	writel_relaxed(TFE_BUS_IMAGE_CFG_0_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_0(client));
-> +	writel_relaxed(0u, vfe->base + TFE_BUS_IMAGE_CFG_1(client));
-> +	writel_relaxed(TFE_BUS_IMAGE_CFG_2_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_2(client));
-> +	writel_relaxed(stride * pix->height, vfe->base + TFE_BUS_FRAME_INCR(client));
-> +	writel_relaxed(TFE_BUS_PACKER_CFG_FMT_PLAIN64, vfe->base + TFE_BUS_PACKER_CFG(client));
-> +
-> +	/* No dropped frames, one irq per frame */
-> +	writel_relaxed(0, vfe->base + TFE_BUS_FRAMEDROP_CFG_0(client));
-> +	writel_relaxed(1, vfe->base + TFE_BUS_FRAMEDROP_CFG_1(client));
-> +	writel_relaxed(0, vfe->base + TFE_BUS_IRQ_SUBSAMPLE_CFG_0(client));
-> +	writel_relaxed(1, vfe->base + TFE_BUS_IRQ_SUBSAMPLE_CFG_1(client));
-> +
-> +	vfe_enable_irq(vfe);
-> +
-> +	writel(TFE_BUS_CLIENT_CFG_EN | TFE_BUS_CLIENT_CFG_MODE_FRAME,
-> +	       vfe->base + TFE_BUS_CLIENT_CFG(client));
-> +
-> +	dev_dbg(vfe->camss->dev, "VFE%u: Started RDI%u width %u height %u stride %u\n",
-> +		vfe->id, rdi, pix->width, pix->height, stride);
-> +}
-> +
-> +static void vfe_wm_stop(struct vfe_device *vfe, u8 rdi)
-> +{
-> +	u8 client = RDI_CLIENT(rdi);
-> +
-> +	writel(0, vfe->base + TFE_BUS_CLIENT_CFG(client));
-> +
-> +	dev_dbg(vfe->camss->dev, "VFE%u: Stopped RDI%u\n", vfe->id, rdi);
-> +}
-> +
-> +static const struct camss_video_ops vfe_video_ops_520 = {
-> +	.queue_buffer = vfe_queue_buffer_v2,
-> +	.flush_buffers = vfe_flush_buffers,
-> +};
-> +
-> +static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
-> +{
-> +	vfe->video_ops = vfe_video_ops_520;
-> +}
-> +
-> +static void vfe_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
-> +{
-> +	vfe->reg_update |= BIT(__regupdate_iface(line_id));
-> +	writel_relaxed(vfe->reg_update, vfe->base + TFE_REG_UPDATE_CMD);
-> +}
-> +
-> +static inline void vfe_reg_update_clear(struct vfe_device *vfe,
-> +					enum vfe_line_id line_id)
-> +{
-> +	vfe->reg_update &= ~BIT(__regupdate_iface(line_id));
-> +}
-> +
-> +const struct vfe_hw_ops vfe_ops_340 = {
-> +	.global_reset = vfe_global_reset,
-> +	.hw_version = vfe_hw_version,
-> +	.isr = vfe_isr,
-> +	.pm_domain_off = vfe_pm_domain_off,
-> +	.pm_domain_on = vfe_pm_domain_on,
-> +	.subdev_init = vfe_subdev_init,
-> +	.vfe_disable = vfe_disable,
-> +	.vfe_enable = vfe_enable_v2,
-> +	.vfe_halt = vfe_halt,
-> +	.vfe_wm_start = vfe_wm_start,
-> +	.vfe_wm_stop = vfe_wm_stop,
-> +	.vfe_buf_done = vfe_buf_done,
-> +	.vfe_wm_update = vfe_wm_update,
-> +	.reg_update = vfe_reg_update,
-> +	.reg_update_clear = vfe_reg_update_clear,
-> +};
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
-> index a23f666be753..9b138849caca 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
-> @@ -242,6 +242,7 @@ extern const struct vfe_hw_ops vfe_ops_4_1;
->   extern const struct vfe_hw_ops vfe_ops_4_7;
->   extern const struct vfe_hw_ops vfe_ops_4_8;
->   extern const struct vfe_hw_ops vfe_ops_170;
-> +extern const struct vfe_hw_ops vfe_ops_340;
->   extern const struct vfe_hw_ops vfe_ops_480;
->   extern const struct vfe_hw_ops vfe_ops_680;
->   extern const struct vfe_hw_ops vfe_ops_780;
-
+> -- 
+> Cheers,
+> 
+> David / dhildenb
+> 
 
