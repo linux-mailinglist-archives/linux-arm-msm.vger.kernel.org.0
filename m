@@ -1,196 +1,309 @@
-Return-Path: <linux-arm-msm+bounces-54503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0250A8B8A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:14:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA131A8B8B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:19:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B81117DB00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 12:14:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0F1A83ACC19
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 12:18:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD8E623D296;
-	Wed, 16 Apr 2025 12:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C10024A060;
+	Wed, 16 Apr 2025 12:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XvuYr27O"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tZWJtg5I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEF82472BE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 12:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF1D24A056
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 12:17:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744805648; cv=none; b=Z/UQTjo2xV3ZuO5laJCGDnIMn8rlbaryTtX8bkEfQ5/QVOy1l944pq0NYRsfBaGJGjLfC/nICOYwspjAawBtNtYUFS7Z0Xo8euNcsoJscE2VT2iHb8PVf6TSq+cHrtqvamncHQBSbSquQhoefSrlYlD9NASmcKDc1WZB8435QBE=
+	t=1744805879; cv=none; b=TQjAlr8Ha2FO0LI+D/SCvFHVFctCNUWH27+oz1lUk2bT+Uz30eIAM8U+cjuRA3zIgDJScVpX4eVTleSDjleACSV+GvAUlF3NpDFleCbtYt9QSeKZHYf3llyovYCN5ieKryeP80FHtqxv4hbtdpS+pwnyg0g/eVpT8faWp+6df6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744805648; c=relaxed/simple;
-	bh=8ZR2LD+reQ/Dz1RzU5SYkbXhaZByyYvQbKVpzYuVc1M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JUgN34ihWqmTLHKMBj51/xzt4sH61pd/jaOrd6KlzV4TnSb3PaltMHM3eYwlbteV1mqGs3OSIKSc+D//Qr08cFP3qMweUr+8JBGKLrTY3oU2raMSClshTu5V7kLhpGn6WSB0qI06Zs4G3tLPmr8lVREVCzGzbbBoMWy9Gr0WHTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XvuYr27O; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53G9mHd5020815
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 12:14:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=hoicvJayGfRbnVNr+kDnUFXz
-	fuMtcH6jdsL2r7v/8DQ=; b=XvuYr27OqXZK4noaP6C9iJspNwv7GtnmKDByE1+k
-	lCem9xCUKbOJPxbBHJMGuQfqUEtCH7cuNUFlGk7PvXertbejzlTdW+cZKNMdZ2HD
-	z0PrUKrB2GFUOqF25conwqWsHMxQpQdLsJkzUBTtlRr0iZVV0V9eNWvOGfcNtcEa
-	EW9yDN+qLyawJjjQcgamwDXjqq28hzpJ6ivWHXk3NyNEkYqfh5EjotxZZ+xHeM0a
-	/LPYDjGRlu/wc6KCmpIC/WYhgnvxVUiyEyUuqxYhQvbgmbrgk5+7Q22Fpfq9Ao14
-	g9g8llaHSbon3/WiW5+L7xhsYDiifiq/Una4P8IuNtaj9Q==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yg8wkes8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 12:14:04 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-af8e645a1d1so4577675a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 05:14:04 -0700 (PDT)
+	s=arc-20240116; t=1744805879; c=relaxed/simple;
+	bh=blUM8MCr3uTpaKRPBWacJbXVRXgWGnt3OS/+m54imjw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EezHl61TThIrfVE395CrLTi8OuX+3qfRK5gyeL6AQwSLmi62zO5WQX8J6dJOVf2Gl5H7AGpXl/9Z72W4e0uWE721EJsu5ToiOyMvyZYzmzDFIhOJ69WS64xKRYork56BYdXkL6DEs+WwUqU9//ZRT3/llFzBqDNxPEIxlAyoo+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tZWJtg5I; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-39ee623fe64so308598f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 05:17:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744805876; x=1745410676; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7qzmPfGUQphjSn8JU9/K3urNRuVP8doXci+CHrxSN0c=;
+        b=tZWJtg5IVCkTYkvWNywL5w0fMeWZmAo63GAkdPaa6k86wyUkLVjP7tTm6v9PckFVlr
+         epXL1z7vXbB79v9uDkG0uie+BWTMKuGXgUDebUhQxnfFFIof81Tcsb35WZXXZGXKT15S
+         otLJ7HQcI8jKmFN/n48rLYFAflkSl20zF6wCJbOR+xv4Qh8nBYjbbmhMFnShTgNihPqN
+         rrxuuDj7a1racBuPHlMhJen1wtx8OmYzDR7tce2mJPHItL47No4yhbglec1oAD6A5Mo5
+         iYUZPAN1uRu6C0ESaCh4wrMMxFl/yOMucDt1NE3w5d0FKSutqWcbBTfxxYgVaDVhUhHW
+         kjVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744805643; x=1745410443;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hoicvJayGfRbnVNr+kDnUFXzfuMtcH6jdsL2r7v/8DQ=;
-        b=geaXk/uFTq/eQhC+UDTiebD9cQ9/tB3E2T3g6O6xdyYoEdS4wDJXAgImqwRrzn5a1J
-         u7KNJyPGaXJbx3zHG8l/ezvAcGjxGLui8zJNC/JdXrZ0el35uiAN/88o/CSZ5i7rJ59F
-         v3plSBZc5azXnXGjafyHCX7djgrRohY7sGU05R3aiox72+GKB3a48l6euo+g2ZwHNq0Q
-         LAfBu/hnCYdET+41s6P16/nGJWe9yEFpY48cFVcRzKYaUMzERWwsrFUpOBTFM0qnA+B9
-         EgEjwpPPG117fIrBPxT041CXS3S+DXP7RVw8/qIcKVRFeMrpAprJwol6v1wurKxEBoXl
-         0SvQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWCcH3jFtD3Gi5ABBZ4VJ/tLxZH9K7l8OMnfAb8cXXtam3iMZOR4ov+RnXuS41sCFidU5jiRMCaKrpxkYZ8@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyk5OrnmHmgw6KIo2JFHzo6VUFuj0d387jP9eilI3XqT3EW//Zm
-	9WG90X9ej/ljsxWdCY83cCwjRzfxwTB/rW5tpVjPFhYsXUgJSrEXHSLQX633vQYiyvjVl1WK8S4
-	Wzf7JVTI5CgLhVpxwcBKo5i9zbVkEaw5SL/9xIsvWf+Fw7TPL5m0TvHUCN004rp39WzYPy/HocU
-	ODgROrTurTtbqcX1iBXWsY3T8sjrdv9wb+xtHx+O8=
-X-Gm-Gg: ASbGncsxxYcX10dhJtZPuhO3WUARzU4xl6tZFKPBN1Fv7Ipeag1TNWpF1A2ceCJfgeM
-	9P0YXB+8WhKIhuFhI6vuSSWZuPrh9xe//U9senlBSbtFeOp5Ws3JdURDAAwUoH1YsZJMLxPuTBe
-	f0pP738gU57hlmXMHRyfu8J3tc
-X-Received: by 2002:a17:90b:498b:b0:2fe:a336:fe63 with SMTP id 98e67ed59e1d1-3086415ea28mr2431958a91.24.1744805643292;
-        Wed, 16 Apr 2025 05:14:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEBAO/IXJsIRD6bGBDFHb/vhg2Pt0r5xCrzct5z2vNsXzqxMqL9va5fjULmWQG3bJv/Ec3+IT1w+RLtSRXwQS4=
-X-Received: by 2002:a17:90b:498b:b0:2fe:a336:fe63 with SMTP id
- 98e67ed59e1d1-3086415ea28mr2431917a91.24.1744805642822; Wed, 16 Apr 2025
- 05:14:02 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744805876; x=1745410676;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7qzmPfGUQphjSn8JU9/K3urNRuVP8doXci+CHrxSN0c=;
+        b=a3S0AfjHeha9mqo9sgLwt0s/TeovAG3/YnfZDYNjBKYgr4/q4MeMIRTwqFkniD1m/x
+         3OzmXjvB3T9SqwxjL6IgpNZzJqkG1GAlPTXLiYuCwuWuaLyyqfDS56AA9vmjYBt0FYrn
+         pPxpoUCviqNz0B9/1ViCarO7I+3lIyMog0T+UMZDJXSv74Ioar75rUC3TtxBsPfDjR55
+         ufM1Pa0oBZk1i3djhc9izYQAhx0ubeB4wAa8J03gI7m061Lv9yiMfaMxQRl2dcVRKV0Y
+         M8h4N5wr7SwpFVVuauMmKQDpcUsfXaAVYfDy2YUYjenHnIinJ54dr46YTEQ+z06mixI5
+         aBIQ==
+X-Gm-Message-State: AOJu0Ywa3/65m/hAPA2uYDH3dVCETJJEm4zn9Vk/EdQJlwlljNBihbDQ
+	Iy/0CZ4GwQeGBHGOXH8DnzYrZUyzEE9Nnn0YyagrF3bCWAYXW/k+oIof+wMkqu0=
+X-Gm-Gg: ASbGnctLVtH7mdtIu1MuPGvwxBRASyS4sAhVOoI8K892fsLZNIk/7eNz+FBEv1M7vt2
+	f2epc9nVNEbpti1WyFrWjN9hRwoC2jmVIaL3AB12YpLg3+p1M5gkBlFVg47C/nEl/HWuYBMcBYd
+	kWUD/3y4EdeJMZ/NKhOvLNtgJSZMEo9puj5yQIu74BnAduB3OXwh1RzIQ+Fm8sv/CVC5XNcNCfh
+	J9sfpoS/M7gGuyoDcPPiznzEEEkMmijJNT1/z1hKCpqY0QSVtQA6tEllWp71TRyOH3N/jLRWJ43
+	ygskMMrEXZrVXksUFEUPL2ZljQkFuOJBE5kGmJ7LdrOiwdILGK4SQe9ez49+ld6X4E9Ed+EIojy
+	uqd5fZ19pvZ/hY4ic
+X-Google-Smtp-Source: AGHT+IFBKvD/CJgbhatKr7c1PxeSo6YlFCiQLOW9fGCuyRIsJKGMp9wtGO0z/i9mZ4FKq4/l22V4Ig==
+X-Received: by 2002:a05:6000:43c6:10b0:39c:1424:1cb3 with SMTP id ffacd0b85a97d-39ee5b0ff12mr1124465f8f.5.1744805875692;
+        Wed, 16 Apr 2025 05:17:55 -0700 (PDT)
+Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eae978018sm16754251f8f.49.2025.04.16.05.17.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Apr 2025 05:17:55 -0700 (PDT)
+Message-ID: <391e7a1a-ea7f-4299-86df-cb1600428d90@linaro.org>
+Date: Wed, 16 Apr 2025 13:17:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250410090102.20781-1-quic_nitirawa@quicinc.com>
- <20250410090102.20781-5-quic_nitirawa@quicinc.com> <pur4y63xhfmqlyymg4pehk37ry4gg22h24zceoqjbsxp3hj4yf@4kptase3c4qp>
- <317faeaa-3130-4e28-8c5d-441a76aa79b4@quicinc.com> <CAO9ioeXnnbNzriVOYPUeBiWdrPfYUcMk+pVWYv0vZpJbFeByoQ@mail.gmail.com>
- <2820908b-4548-4e0a-94b2-6065cb5ff1f3@quicinc.com> <c2ec6b7c-421d-43c3-8c0a-de4f7bdd867c@oss.qualcomm.com>
- <a24ff510-2afd-4aa7-a026-199fb6d87287@quicinc.com>
-In-Reply-To: <a24ff510-2afd-4aa7-a026-199fb6d87287@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Wed, 16 Apr 2025 15:13:51 +0300
-X-Gm-Features: ATxdqUGiC1BHfSn5Eklp7gKFpyWYSjnAPEw8Fg9jZzGqaxHriewAs1J3z4zxcto
-Message-ID: <CAO9ioeUDzYLMvqmsOQ-VfgLQLavHqn=QVYxyHzetjSfmhjKFjw@mail.gmail.com>
-Subject: Re: [PATCH V3 4/9] phy: qcom-qmp-ufs: Refactor UFS PHY reset
-To: Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, manivannan.sadhasivam@linaro.org,
-        James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com,
-        bvanassche@acm.org, bjorande@quicinc.com, neil.armstrong@linaro.org,
-        konrad.dybcio@oss.qualcomm.com, quic_rdwivedi@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Authority-Analysis: v=2.4 cv=E9TNpbdl c=1 sm=1 tr=0 ts=67ff9f0c cx=c_pps a=rz3CxIlbcmazkYymdCej/Q==:117 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=E4AxlzQU9QZxWW8QZIgA:9 a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: GthxfiPrSu94_DCDJfDsHPaMkCNc_DNI
-X-Proofpoint-GUID: GthxfiPrSu94_DCDJfDsHPaMkCNc_DNI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-16_04,2025-04-15_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- mlxscore=0 bulkscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
- suspectscore=0 mlxlogscore=999 spamscore=0 priorityscore=1501
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504160100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/6] media: qcom: camss: add support for QCM2290 camss
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>, rfoss@kernel.org,
+ konradybcio@kernel.org, andersson@kernel.org, krzk+dt@kernel.org,
+ robh@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250416120908.206873-1-loic.poulain@oss.qualcomm.com>
+ <20250416120908.206873-4-loic.poulain@oss.qualcomm.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250416120908.206873-4-loic.poulain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, 16 Apr 2025 at 12:08, Nitin Rawat <quic_nitirawa@quicinc.com> wrote:
->
->
->
-> On 4/15/2025 2:59 PM, Dmitry Baryshkov wrote:
-> > On 14/04/2025 23:34, Nitin Rawat wrote:
-> >>
-> >>
-> >> On 4/11/2025 4:38 PM, Dmitry Baryshkov wrote:
-> >>> On Fri, 11 Apr 2025 at 13:50, Nitin Rawat <quic_nitirawa@quicinc.com>
-> >>> wrote:
-> >>>>
-> >>>>
-> >>>>
-> >>>> On 4/11/2025 1:38 AM, Dmitry Baryshkov wrote:
-> >>>>> On Thu, Apr 10, 2025 at 02:30:57PM +0530, Nitin Rawat wrote:
-> >>>>>> Refactor the UFS PHY reset handling to parse the reset logic only
-> >>>>>> once
-> >>>>>> during probe, instead of every resume.
-> >>>>>>
-> >>>>>> Move the UFS PHY reset parsing logic from qmp_phy_power_on to
-> >>>>>> qmp_ufs_probe to avoid unnecessary parsing during resume.
-> >>>>>
-> >>>>> How did you solve the circular dependency issue being noted below?
-> >>>>
-> >>>> Hi Dmitry,
-> >>>> As part of my patch, I moved the parsing logic from qmp_phy_power_on to
-> >>>> qmp_ufs_probe to avoid unnecessary parsing during resume. I'm uncertain
-> >>>> about the circular dependency issue and whether if it still exists.
-> >>>
-> >>> It surely does. The reset controller is registered in the beginning of
-> >>> ufs_qcom_init() and the PHY is acquired only a few lines below. It
-> >>> creates a very small window for PHY driver to probe.
-> >>> Which means, NAK, this patch doesn't look acceptable.
-> >>
-> >> Hi Dmitry,
-> >>
-> >> Thanks for pointing this out. I agree that it leaves very little time
-> >> for the PHY to probe, which may cause issues with targets where
-> >> no_pcs_sw_reset is set to true.
-> >>
-> >> As an experiment, I kept no_pcs_sw_reset set to true for the SM8750,
-> >> and it caused bootup probe issues in some of the iterations I ran.
-> >>
-> >> To address this, I propose updating the patch to move the
-> >> qmp_ufs_get_phy_reset call to phy_calibrate, just before the
-> >> reset_control_assert call.
-> >
-> > Will it cause an issue if we move it to phy_init() instead of
-> > phy_calibrate()?
->
-> Hi Dmitry,
->
-> Thanks for suggestion.
-> Phy_init is invoked before phy_set_mode_ext and ufs_qcom_phy_power_on,
-> whereas calibrate is called after ufs_qcom_phy_power_on. Keeping the UFS
-> PHY reset in phy_calibrate introduces relatively more delay, providing
-> more buffer time for the PHY driver probe, ensuring the UFS PHY reset is
-> handled correctly the first time.
+On 16/04/2025 13:09, Loic Poulain wrote:
+> The camera subsystem for QCM2290 which is based on Spectra 340.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> ---
+>   drivers/media/platform/qcom/camss/camss-vfe.c |   2 +
+>   drivers/media/platform/qcom/camss/camss.c     | 146 ++++++++++++++++++
+>   2 files changed, 148 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index 4bca6c3abaff..c575c9767492 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -340,6 +340,7 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
+>   		}
+>   		break;
+>   	case CAMSS_660:
+> +	case CAMSS_2290:
+>   	case CAMSS_7280:
+>   	case CAMSS_8x96:
+>   	case CAMSS_8250:
+> @@ -1969,6 +1970,7 @@ static int vfe_bpl_align(struct vfe_device *vfe)
+>   	int ret = 8;
+>   
+>   	switch (vfe->camss->res->version) {
+> +	case CAMSS_2290:
+>   	case CAMSS_7280:
+>   	case CAMSS_8250:
+>   	case CAMSS_8280XP:
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 06f42875702f..1e0eb2a650a3 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -515,6 +515,138 @@ static const struct camss_subdev_resources vfe_res_8x96[] = {
+>   	}
+>   };
+>   
+> +static const struct camss_subdev_resources csiphy_res_2290[] = {
+> +	/* CSIPHY0 */
+> +	{
+> +		.regulators = { "vdda-phy", "vdda-pll" },
+> +		.clock = { "top_ahb", "ahb", "csiphy0", "csiphy0_timer" },
+> +		.clock_rate = { { 0 },
+> +				{ 0 },
+> +				{ 240000000, 341330000, 384000000 },
+> +				{ 100000000, 200000000, 268800000 }  },
+> +		.reg = { "csiphy0" },
+> +		.interrupt = { "csiphy0" },
+> +		.csiphy = {
+> +			.hw_ops = &csiphy_ops_3ph_1_0,
+> +			.formats = &csiphy_formats_sdm845
 
-We are requesting the PHY anyway, so the PHY driver should have probed
-well before phy_init() call. I don't get this comment.
+You'll need to specify and .id property
 
->
-> Moving the calibration to phy_init shouldn't cause any issues. However,
-> since we currently don't have an initialization operations registered
-> for init, we would need to add a new PHY initialization ops if we decide
-> to move it to phy_init.
+https://gitlab.freedesktop.org/linux-media/media-committers/-/commit/74cae7794341fa4f96fef0966f44471f7e2d322f
 
-Yes. I don't see it as a problem. Is there any kind of an issue there?
+> +		}
+> +	},
+> +
+> +	/* CSIPHY1 */
+> +	{
+> +		.regulators = { "vdda-phy", "vdda-pll" },
+> +		.clock = { "top_ahb", "ahb", "csiphy1", "csiphy1_timer" },
+> +		.clock_rate = { { 0 },
+> +				{ 0 },
+> +				{ 240000000, 341330000, 384000000 },
+> +				{ 100000000, 200000000, 268800000 }  },
+> +		.reg = { "csiphy1" },
+> +		.interrupt = { "csiphy1" },
+> +		.csiphy = {
+> +			.hw_ops = &csiphy_ops_3ph_1_0,
+> +			.formats = &csiphy_formats_sdm845
+> +		}
+> +	}
+> +};
+> +
+> +static const struct camss_subdev_resources csid_res_2290[] = {
+> +	/* CSID0 */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "top_ahb", "ahb", "csi0", "vfe0_cphy_rx", "vfe0" },
+> +		.clock_rate = { { 0 },
+> +				{ 0 },
+> +				{ 192000000, 240000000, 384000000, 426400000 },
+> +				{ 0 },
+> +				{ 0 } },
+> +		.reg = { "csid0" },
+> +		.interrupt = { "csid0" },
+> +		.csid = {
+> +			.hw_ops = &csid_ops_340,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+> +			.formats = &csid_formats_gen2
+> +		}
+> +	},
+> +
+> +	/* CSID1 */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "top_ahb", "ahb", "csi1", "vfe1_cphy_rx", "vfe1" },
+> +		.clock_rate = { { 0 },
+> +				{ 0 },
+> +				{ 192000000, 240000000, 384000000, 426400000 },
+> +				{ 0 },
+> +				{ 0 } },
+> +		.reg = { "csid1" },
+> +		.interrupt = { "csid1" },
+> +		.csid = {
+> +			.hw_ops = &csid_ops_340,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+> +			.formats = &csid_formats_gen2
+> +		}
+> +	}
+> +};
+> +
+> +static const struct camss_subdev_resources vfe_res_2290[] = {
+> +	/* VFE0 */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "top_ahb", "ahb", "axi", "vfe0", "camnoc_rt_axi", "camnoc_nrt_axi" },
+> +		.clock_rate = { { 0 },
+> +				{ 0 },
+> +				{ 0 },
+> +				{ 19200000, 153600000, 192000000, 256000000, 384000000, 460800000 },
+> +				{ 0 },
+> +				{ 0 }, },
+> +		.reg = { "vfe0" },
+> +		.interrupt = { "vfe0" },
+> +		.vfe = {
+> +			.line_num = 4,
+> +			.hw_ops = &vfe_ops_340,
+> +			.formats_rdi = &vfe_formats_rdi_845,
+> +			.formats_pix = &vfe_formats_pix_845
+> +		}
+> +	},
+> +
+> +	/* VFE1 */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "top_ahb", "ahb", "axi", "vfe1", "camnoc_rt_axi", "camnoc_nrt_axi" },
+> +		.clock_rate = { { 0 },
+> +				{ 0 },
+> +				{ 0 },
+> +				{ 19200000, 153600000, 192000000, 256000000, 384000000, 460800000 },
+> +				{ 0 },
+> +				{ 0 }, },
+> +		.reg = { "vfe1" },
+> +		.interrupt = { "vfe1" },
+> +		.vfe = {
+> +			.line_num = 4,
+> +			.hw_ops = &vfe_ops_340,
+> +			.formats_rdi = &vfe_formats_rdi_845,
+> +			.formats_pix = &vfe_formats_pix_845
+> +		}
+> +	},
+> +};
+> +
+> +static const struct resources_icc icc_res_2290[] = {
+> +	{
+> +		.name = "ahb",
+> +		.icc_bw_tbl.avg = 150000,
+> +		.icc_bw_tbl.peak = 300000,
+> +	},
+> +	{
+> +		.name = "hf_mnoc",
+> +		.icc_bw_tbl.avg = 2097152,
+> +		.icc_bw_tbl.peak = 2097152,
+> +	},
+> +	{
+> +		.name = "sf_mnoc",
+> +		.icc_bw_tbl.avg = 2097152,
+> +		.icc_bw_tbl.peak = 2097152,
+> +	},
+> +};
 
->
-> Please let me know if this looks fine to you, or if you have any
-> suggestions. I am open to your suggestions.
+I think you can get better numbers from downstream for the above.
 
-phy_init() callback
-
--- 
-With best wishes
-Dmitry
+> +
+>   static const struct camss_subdev_resources csiphy_res_660[] = {
+>   	/* CSIPHY0 */
+>   	{
+> @@ -3753,6 +3885,19 @@ static const struct camss_resources msm8996_resources = {
+>   	.link_entities = camss_link_entities
+>   };
+>   
+> +static const struct camss_resources qcm2290_resources = {
+> +	.version = CAMSS_2290,
+> +	.csiphy_res = csiphy_res_2290,
+> +	.csid_res = csid_res_2290,
+> +	.vfe_res = vfe_res_2290,
+> +	.icc_res = icc_res_2290,
+> +	.icc_path_num = ARRAY_SIZE(icc_res_2290),
+> +	.csiphy_num = ARRAY_SIZE(csiphy_res_2290),
+> +	.csid_num = ARRAY_SIZE(csid_res_2290),
+> +	.vfe_num = ARRAY_SIZE(vfe_res_2290),
+> +	.link_entities = camss_link_entities
+> +};
+> +
+>   static const struct camss_resources sdm660_resources = {
+>   	.version = CAMSS_660,
+>   	.csiphy_res = csiphy_res_660,
+> @@ -3865,6 +4010,7 @@ static const struct of_device_id camss_dt_match[] = {
+>   	{ .compatible = "qcom,msm8916-camss", .data = &msm8916_resources },
+>   	{ .compatible = "qcom,msm8953-camss", .data = &msm8953_resources },
+>   	{ .compatible = "qcom,msm8996-camss", .data = &msm8996_resources },
+> +	{ .compatible = "qcom,qcm2290-camss", .data = &qcm2290_resources },
+>   	{ .compatible = "qcom,sc7280-camss", .data = &sc7280_resources },
+>   	{ .compatible = "qcom,sc8280xp-camss", .data = &sc8280xp_resources },
+>   	{ .compatible = "qcom,sdm660-camss", .data = &sdm660_resources },
+Other than that LGTM.
+---
+bod
 
