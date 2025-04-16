@@ -1,158 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-54534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE820A90881
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 18:17:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F2F55A908F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 18:29:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1DAF45A1BB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 16:16:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D2DE3BF8A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 16:29:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB2B02080DC;
-	Wed, 16 Apr 2025 16:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F9DC212B22;
+	Wed, 16 Apr 2025 16:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jRxRxxv3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B1IUL+59"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51218FC0E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 16:16:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8754211A3D;
+	Wed, 16 Apr 2025 16:29:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744820203; cv=none; b=V/DLCs6UY6gbPLRllR9YAVe84CaSr9EAIZK/qjIK9ib+Ws7QwNn0Ig1y3CC1uZf4vkc2P/jjdSf/VoERInb6Q1Yu4FFc69Stq7scv8CsWweUELVpW0bqwLnp6mrmDDdjOEEjIPn6LPhx3Qh+Kvp2oHcfI41JWD6XmMEN+GmFX6g=
+	t=1744820955; cv=none; b=Nkfr7PzhZDyANkzEL2p9vbPxVpKMFsv11GAjiPe7liOc60t6JGx4jdSF+xXxWC8ix7eJMfJtDTEboi5/HwALjzNp0nPDuSzMYgtCc/pF4ZIG7ifcWHOz93BDZ/D1l6ybq0r1ueZcObbwgWMYN1T3Jhl0dbWoYZ9HuNtNlP7n96A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744820203; c=relaxed/simple;
-	bh=CnwNrCRLuflBZPFZFP4NWhNbXGVzpL+XeGZ9wSYRRoc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cd0Yv0CaGusH93KCFU+3tYhqjd3gVimZzVQzSaltpctTEdAgx+TkD53yRGp6o/9984MAZX4IP8a0sjaO+P/K0dM23e/u5hzveE3thmD1qUm/JNODweizOQ8N6rAuG5H5zjdXZIOcXWL1NExZEoGusCfEaLiDWWp0eaCvck3N3yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jRxRxxv3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53G9mExI024769
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 16:16:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IUwvyXYOCDlV6AdUm377Hu1dN5POoteGW8cjGXB2J7s=; b=jRxRxxv3DtAaGscp
-	ZoAKJKcsSHbJ9NOM8y0hSsCDur3nq5oxxR6i3eP+K6nNJNCLV6/kPKnkbTFIfBlG
-	YLOBqOJ4RKr73ONCALqbHKy90IUTgXk3wPtmjBr7HvoKZ255VHaqCi54udqMzY6z
-	TCoRupBYg0XYqVAYIpoUTrr6nzJZl1RdSERonPrw6JY/7sY2p2frTS57UE8w34LL
-	xeV5q3WagqElCjymS+DRLPj+S3KL1lsmbjFcEnoi+er7LLdxXqiRAncrL/FLVMeM
-	7CEYZWwft/cN74Z5oIF8lTrJvzs7EPx6oPRg8boCBG9pK3xyje5j/Hx4lnzgBlWu
-	wV05xg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ydvjca30-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 16:16:41 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6f2af3128b0so16445826d6.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 09:16:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744820200; x=1745425000;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IUwvyXYOCDlV6AdUm377Hu1dN5POoteGW8cjGXB2J7s=;
-        b=P89vZ1IBwHC5NMr+he5f1Mn6fFaROutL2lWrdpfUXxbrQbXmfVSWHZXgGO7YN/smWM
-         SVTD7NMBGAysCFhQi6g9ptx6HCMQI259E97S9n6MifIH+BYbHUuqnoEo4HqxS5oeXFIy
-         uFgQ1i/skqBbAkGQy3r8a9jglPsAxc3sWYUQRY+U09Qjunpe0x4JMIeXTDuwKQa6CeNU
-         /Dz9Ddk4QW2EQY++JXC52YHBiC9qNE7E0aSXZcnfUA+N2N5pG4fSl1HlsUB7Gx/7zoUp
-         zb/Vsoc9aTSlf/9Emp0bBgEqi8Ijczmd4FdpHL29ARoZ/D1I/311TGsyWzqEynkcSHds
-         VCJA==
-X-Forwarded-Encrypted: i=1; AJvYcCXAhvV7zsJOOFcmgev8WhB3RCEvSLM/spUanbPuIUhEJfRKcWYvr0vngyRJnzxR6kpZ067aCFPuTN9X+zZA@vger.kernel.org
-X-Gm-Message-State: AOJu0YzLwmzmfN9o4EkVHNMZalpvZOmYigQcTnzeXQNEGFd9/i6U/3rj
-	HUKGs6181xOUIph2s0tOuc5xipCMJHFSbZumhmFTLwLJ9/SQH1CF4qynbnw7XhI176T9XYuDxab
-	saSiXMvmIguyHoP1uYk8JJkFIIJJt3Qcs2El61sI57iDB7q+M1wMqj/ZONovWGVB6Hit8ivgqXS
-	n++7IgGeOJv6BgWBby7lgQEjLjBo7vvUaMl6MhRME=
-X-Gm-Gg: ASbGncufLZJIItxX6UApgdsOOaOUqGgfcmZ3s2ara+V143jWPYt7nvwxVOJZnXtTkyy
-	wDqJ6uBY734MJ3hdLSTdaGwqU22hLgfYwyIBzqZRy1qQ9Y76sBlhrV9wqaXZa/l8VvmjON5A=
-X-Received: by 2002:ad4:5965:0:b0:6e8:97f6:3229 with SMTP id 6a1803df08f44-6f2b2f4240amr38117426d6.16.1744820199991;
-        Wed, 16 Apr 2025 09:16:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGx21vZbnq0jtucTsIqzaBf3WtNCjD67d9WEjC1pVtPsaA9mLOnwj0r4CqLBJi/G73/FVZCLE6+697N5DBZyk0=
-X-Received: by 2002:ad4:5965:0:b0:6e8:97f6:3229 with SMTP id
- 6a1803df08f44-6f2b2f4240amr38117086d6.16.1744820199680; Wed, 16 Apr 2025
- 09:16:39 -0700 (PDT)
+	s=arc-20240116; t=1744820955; c=relaxed/simple;
+	bh=qkB19ebsdB7yF8JrqmDzhAIvjQoXMD7T3mmriNCrqxE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XCXxP0wPqibYjbzVi1m6RG51gF3DaDAnVse/sOK53jOqkNMFE5EedeMEMJKKDAEL8dGlKI5mrwspakovslpJzNvm03M3+fKki97ROjqM4VZYXrM0SkWJATm4H0YS0zOBKwyZb4pXCNBat8kbtMh9jhiiT/wNP5oFzCUCiKXWi4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B1IUL+59; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2650BC4CEE2;
+	Wed, 16 Apr 2025 16:29:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744820955;
+	bh=qkB19ebsdB7yF8JrqmDzhAIvjQoXMD7T3mmriNCrqxE=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=B1IUL+59kGeD7mqga7bCyxPIxG2tp3cXVrKCvl5dVtHYI0OhB5uCNAOGJiOc0bp+l
+	 HsYGTqjEsLaHjBoX4CofSq+N9qa3eKcmpemd67bkz6OaFrkFLEkyLMD+1OE8YbB0lG
+	 KLv12g/nY3FdONOL1EgWm3Xw4t8o0vKBbJuJSzLNnFufjeaKx3lfX1dZDk6RPSJOng
+	 oAQCbEQd1tTf6NwWRPx5fSaohAq4P5rcqnD3z+EgBYIuR7vOFa6VklFzFzPOJGwxpH
+	 zu86cEMnCqpkacuKS0dZhcYisejR0kc+z2kDbH66j8nILxYuGVpK2rSjNJJQn4MHUN
+	 5SfMBNL6P3Jfg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F1ECC369BA;
+	Wed, 16 Apr 2025 16:29:15 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
+Subject: [PATCH v2 0/4] PCI: Add support for resetting the slots in a
+ platform specific way
+Date: Wed, 16 Apr 2025 21:59:02 +0530
+Message-Id: <20250416-pcie-reset-slot-v2-0-efe76b278c10@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250416120908.206873-1-loic.poulain@oss.qualcomm.com>
- <20250416120908.206873-6-loic.poulain@oss.qualcomm.com> <c57084c4-189a-484f-af2f-8e4181f547fb@oss.qualcomm.com>
-In-Reply-To: <c57084c4-189a-484f-af2f-8e4181f547fb@oss.qualcomm.com>
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Date: Wed, 16 Apr 2025 18:16:27 +0200
-X-Gm-Features: ATxdqUFW77vP_4OlAAIRog3Se0kprB_UbJE19ejedwG6hLlqKFFJqi_BOdbcfu4
-Message-ID: <CAFEp6-1iUapOg3DU2+NG7q9E5EPgwBuNUvpgLJL2jWKT=0SOkw@mail.gmail.com>
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: qcm2290: Add CAMSS node
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: bryan.odonoghue@linaro.org, rfoss@kernel.org, konradybcio@kernel.org,
-        andersson@kernel.org, krzk+dt@kernel.org, robh@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=ZIrXmW7b c=1 sm=1 tr=0 ts=67ffd7e9 cx=c_pps a=oc9J++0uMp73DTRD5QyR2A==:117 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=Iht8ywTv3xx2x2p8IFcA:9 a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-GUID: -F_c_8wq4hKl3bdUV3Cz46tuRKSsAbNl
-X-Proofpoint-ORIG-GUID: -F_c_8wq4hKl3bdUV3Cz46tuRKSsAbNl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-16_06,2025-04-15_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
- clxscore=1015 priorityscore=1501 bulkscore=0 phishscore=0 mlxlogscore=999
- spamscore=0 impostorscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504160132
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAM/a/2cC/3WNwQqDMBBEf0X23C1Jqmh66n8UD9FudEES2UhoE
+ f+9qfce3zDzZodEwpTgXu0glDlxDAXMpYJxdmEi5FdhMMo0qlY1riMTCiXaMC1xw/amBu9a7Uo
+ DymoV8vw+jc++8Mxpi/I5D7L+pf9dWaNC29nGWN0N3qrHwsFJvEaZoD+O4wsJP+HXrwAAAA==
+X-Change-ID: 20250404-pcie-reset-slot-730bfa71a202
+To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
+ Oliver O'Halloran <oohall@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>
+Cc: dingwei@marvell.com, cassel@kernel.org, Lukas Wunner <lukas@wunner.de>, 
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+ linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3553;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=qkB19ebsdB7yF8JrqmDzhAIvjQoXMD7T3mmriNCrqxE=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBn/9rVLvxXFkai8cVNkg23+3JBYRdthOY/lxQwa
+ fbOegB4XfmJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZ//a1QAKCRBVnxHm/pHO
+ 9SGRB/40rRHb9fGiMK5kD1aBd/MewJxI5StivHVa5Erzx+HMuFj97jziyHXdpUsz4ffhJ4XQFoQ
+ EMKPxKj+ocduRoORbAYIa33SUHBLn9X5/XInHvLBEw/E47p6YBkQDFCSXZOAgZ+9FX0D0Te5tNb
+ 2CDt7KVi+T2IKCwkbBX+pLkKJfs0hbfGBijN3F6/qNXG/stthtJKfzrFg9VYRmfOjaLGXksNq1d
+ OiiXevAEEKFNC81mjU+Y6fQGpvjisAiglcBeql266ba4ZFT+yV17zxaxnd1oV7XdMRq/Nmthza6
+ b/hxtehyr4BdSL0Vhz0u0SENUH1/6Tv88cWuux5Xhjrb+IJ7
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@linaro.org/default with auth_id=185
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reply-To: manivannan.sadhasivam@linaro.org
 
-On Wed, Apr 16, 2025 at 4:46=E2=80=AFPM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 4/16/25 2:09 PM, Loic Poulain wrote:
-> > Add node for the QCM2290 camera subsystem.
-> >
-> > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/qcm2290.dtsi | 93 +++++++++++++++++++++++++++
-> >  1 file changed, 93 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dt=
-s/qcom/qcm2290.dtsi
-> > index f0746123e594..4b81e721e50c 100644
-> > --- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-> > @@ -1579,6 +1579,99 @@ adreno_smmu: iommu@59a0000 {
-> >                       #iommu-cells =3D <2>;
-> >               };
-> >
-> > +             camss: camss@5c52000 {
->
-> @5c6e000
-> (first reg entry)
->
-> > +                     compatible =3D "qcom,qcm2290-camss";
-> > +
-> > +                     reg =3D <0 0x5c6e000 0 0x1000>,
-> > +                           <0 0x5c75000 0 0x1000>,
-> > +                           <0 0x5c52000 0 0x1000>,
-> > +                           <0 0x5c53000 0 0x1000>,
-> > +                           <0 0x5c6f000 0 0x4000>,
-> > +                           <0 0x5c76000 0 0x4000>;
-> > +                     reg-names =3D "csid0",
-> > +                                 "csid1",
-> > +                                 "csiphy0",
-> > +                                 "csiphy1",
-> > +                                 "vfe0",
-> > +                                 "vfe1";
->
-> we also have a pair of TPGs at 0x5c6[68]000 - I think it would be good to
-> describe them from the get-go
+Hi,
 
-If we want to be ready for TPG, we may also want a camss 'top' reg
-(0x05C11000), since it seems to be required for configuring CSID input
-mux (TPG vs CSIPHY).
+Currently, in the event of AER/DPC, PCI core will try to reset the slot and its
+subordinate devices by invoking bridge control reset and FLR. But in some
+cases like AER Fatal error, it might be necessary to reset the slots using the
+PCI host bridge drivers in a platform specific way (as indicated by the TODO in
+the pcie_do_recovery() function in drivers/pci/pcie/err.c). Otherwise, the PCI
+link won't be recovered successfully.
+
+So this series adds a new callback 'pci_host_bridge::reset_slot' for the host
+bridge drivers to reset the slot when a fatal error happens.
+
+Also, this series allows the host bridge drivers to handle PCI link down event
+by resetting the slots and recovering the bus. This is accomplished by the
+help of a new API 'pci_host_handle_link_down()'. Host bridge drivers are
+expected to call this API (preferrably from a threaded IRQ handler) when a link
+down event is detected. The API will reuse the pcie_do_recovery() function to
+recover the link if AER support is enabled, otherwise it will directly call the
+reset_slot() callback of the host bridge driver (if exists).
+
+For reference, I've modified the pcie-qcom driver to call
+pci_host_handle_link_down() after receiving LINK_DOWN global_irq event and
+populated the 'pci_host_bridge::reset_slot()' callback to reset the controller
+(there by slots). Since the Qcom PCIe controllers support only a single root
+port (slot) per controller instance, reset_slot() callback is going to be
+invoked only once. For multi root port controllers, this callback is supposed to
+identify the slots using the supplied 'pci_dev' pointer and reset them.
+
+NOTE
+====
+
+This series is a reworked version of the earlier series [1] that I submitted for
+handling PCI link down event. In this series, I've made use of the AER helpers
+to recover the link as it allows notifying the device drivers and also
+allows saving/restoring the config space.
+
+Testing
+=======
+
+This series is tested on Qcom RB5 and SA8775p Ride boards by triggering the link
+down event manually by writing to LTSSM register. For the error recovery to
+succeed (if AER is enabled), all the drivers in the bridge hierarchy should have
+the 'err_handlers' populated. Otherwise, the link recovery will fail.
+
+[1] https://lore.kernel.org/linux-pci/20250221172309.120009-1-manivannan.sadhasivam@linaro.org
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Changes in v2:
+- Moved calling reset_slot() callback from pcie_do_recovery() to pcibios_reset_secondary_bus()
+- Link to v1: https://lore.kernel.org/r/20250404-pcie-reset-slot-v1-0-98952918bf90@linaro.org
+
+---
+Manivannan Sadhasivam (4):
+      PCI/ERR: Remove misleading TODO regarding kernel panic
+      PCI/ERR: Add support for resetting the slots in a platform specific way
+      PCI: Add link down handling for host bridges
+      PCI: qcom: Add support for resetting the slot due to link down event
+
+ drivers/pci/controller/dwc/pcie-qcom.c | 89 +++++++++++++++++++++++++++++++++-
+ drivers/pci/pci.c                      | 12 +++++
+ drivers/pci/pci.h                      | 21 ++++++++
+ drivers/pci/pcie/err.c                 | 33 ++++++++++---
+ drivers/pci/probe.c                    |  7 +++
+ include/linux/pci.h                    |  2 +
+ 6 files changed, 156 insertions(+), 8 deletions(-)
+---
+base-commit: 08733088b566b58283f0f12fb73f5db6a9a9de30
+change-id: 20250404-pcie-reset-slot-730bfa71a202
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+
 
