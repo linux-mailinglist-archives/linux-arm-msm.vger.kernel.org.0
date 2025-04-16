@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-54508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6B3CA8B8F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:27:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CEAD7A8B8FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:27:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 525741898073
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 12:27:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E9C411897785
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 12:27:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2897224889F;
-	Wed, 16 Apr 2025 12:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AF5124889A;
+	Wed, 16 Apr 2025 12:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="JAF4hkeC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b9cfPWqj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05202472B3;
-	Wed, 16 Apr 2025 12:26:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD472472B0;
+	Wed, 16 Apr 2025 12:27:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744806387; cv=none; b=YryVqAhProQKbRxWJFbQfqShemy7b2MG1e2J69L1YeWiMlQq/EuRSlsjGkp+C8xr/EvtKiWxmpIrgBoqCyFlZ/qg3gKcFmc4HAUnye+o28szFx9ctQkezMnUdsuxnmUb68mVYUyq0gENvzpC2HnDvqjl9TSAGwXMGZW+SoKkHJ0=
+	t=1744806435; cv=none; b=ErK6dpF7RfcRBxHHNt39yVSeg0yzZMz8DW7MvEsGfIZDOLcmqSNVqXMDBrcZ+zjvdccKwNYT/QGJLtERbIbiJNpKiQEOJUv8/LrecosHKu54a7ultaEd0eA8P31yWe0Pv5VXD8ZWmrn7YnilYz8+O+ZwcMKywHkU5LSY7+Mf4EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744806387; c=relaxed/simple;
-	bh=zZyoUoQs57ugcr6pi7AFEtiMgwqRDtvhMHoc4UZWdWY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sBGdqlKhfP1S7eA1xKtoNkzwFQcZOKWBWp/tK5dK7W8R0LAuo3o2td+cIH8HnzZl0gxgUENU8bDB7b8AK83c7V7aHrvQhV3bzdF7q0FeyA2hrGNiTRH4uKb3ORFCVTfC7TrLMZpjJ3ZS6SNwOfja0KHYfFEX4Tm7GJa/mBYao7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=JAF4hkeC; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 18B80446;
-	Wed, 16 Apr 2025 14:24:17 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1744806259;
-	bh=zZyoUoQs57ugcr6pi7AFEtiMgwqRDtvhMHoc4UZWdWY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JAF4hkeCioakqnxQz9bTUPttghD/RANLFweNIr16lzd8pBObABa768eAO0Ei9TL72
-	 7cO7bfN79c4QAdYcmgkJgHS8kooHXkT81GJvZaMYZgJWIFvPnZjQhsTBa/3cZFLcSN
-	 tTqDr7CfXSzOZtaSh9msG9GiqvphRDXZnigsfMjA=
-Message-ID: <f5880400-ab7b-4cae-81e4-893ce34a0460@ideasonboard.com>
-Date: Wed, 16 Apr 2025 15:26:17 +0300
+	s=arc-20240116; t=1744806435; c=relaxed/simple;
+	bh=Rx1zPJva/XQEFNW8ubo+VVgOpGBu8ywM7+A5vB0tNzw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=G/EqIxkyB9TVFRYDF02HoRImqIadmAus7u2PB285pluWkCCSumTp/RI8KtlvsxIU1KKOYaM2QkrBNN2YyqmXS3SAFC0NX5knc/SkwgGn0MtJQUnOLCpcbXFlAHsNXGLb5xlt67yHMeyB0uOHPgZDYXWV45aBGwTS+QdJoJJD6NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b9cfPWqj; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53G9mDWb020542;
+	Wed, 16 Apr 2025 12:26:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	IswbPGGAP13igDj4nUq3J/kuUfd/m5Ej3KjQNHq8od4=; b=b9cfPWqjX1XKpoPg
+	kPoUli2LAAhrjtwAo0V7+4+k9cd/ir+khsqSP4dTm6HK/iMDQv5hJsPjtpIa3fwy
+	vTcUEIU/oMF/uSP5vZR39NbYsZbD8OQPXIALW2bI4DVGC+nur8uzx9QFn4GYdPTI
+	Do25HCgfY/Io/mz9jslE7JDnLJ3gAFBqV+0TFE7Nn4lgCiQWHv4Zhm9wDJocK1ah
+	z8aO+7aQVQVWTkQpOA3Ppuf9tLJdvGRQgAWAlw2rYDTHDtk9JT0FPvPIPyCQ3H7/
+	7/r78H2wXMFDFa3MGQWvTvOUcuOxu5aGtxbltfFLH9dfaQlXowEPEpZukywexPjH
+	TRBxlg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yg8wkfue-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Apr 2025 12:26:52 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53GCQpdw000371
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Apr 2025 12:26:51 GMT
+Received: from [10.218.7.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 16 Apr
+ 2025 05:26:47 -0700
+Message-ID: <1a623099-40bb-4884-8d93-132138a4150b@quicinc.com>
+Date: Wed, 16 Apr 2025 17:56:44 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,208 +65,134 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 29/34] drm: zynqmp_dp: convert to devm_drm_bridge_alloc()
- API
-To: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Cc: Anusha Srivatsa <asrivats@redhat.com>,
- Paul Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>,
- =?UTF-8?Q?Herv=C3=A9_Codina?= <herve.codina@bootlin.com>,
- Hui Pu <Hui.Pu@gehealthcare.com>,
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
- dri-devel@lists.freedesktop.org, asahi@lists.linux.dev,
- linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev,
- imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
- linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com,
- Michal Simek <michal.simek@amd.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Jagan Teki <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Douglas Anderson
- <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>,
- Krzysztof Kozlowski <krzk@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- "Sagar, Vishal" <vishal.sagar@amd.com>
-References: <20250407-drm-bridge-convert-to-alloc-api-v1-0-42113ff8d9c0@bootlin.com>
- <20250407-drm-bridge-convert-to-alloc-api-v1-29-42113ff8d9c0@bootlin.com>
+Subject: Re: [PATCH V3 4/9] phy: qcom-qmp-ufs: Refactor UFS PHY reset
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: <vkoul@kernel.org>, <kishon@kernel.org>,
+        <manivannan.sadhasivam@linaro.org>,
+        <James.Bottomley@hansenpartnership.com>, <martin.petersen@oracle.com>,
+        <bvanassche@acm.org>, <bjorande@quicinc.com>,
+        <neil.armstrong@linaro.org>, <konrad.dybcio@oss.qualcomm.com>,
+        <quic_rdwivedi@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <linux-scsi@vger.kernel.org>
+References: <20250410090102.20781-1-quic_nitirawa@quicinc.com>
+ <20250410090102.20781-5-quic_nitirawa@quicinc.com>
+ <pur4y63xhfmqlyymg4pehk37ry4gg22h24zceoqjbsxp3hj4yf@4kptase3c4qp>
+ <317faeaa-3130-4e28-8c5d-441a76aa79b4@quicinc.com>
+ <CAO9ioeXnnbNzriVOYPUeBiWdrPfYUcMk+pVWYv0vZpJbFeByoQ@mail.gmail.com>
+ <2820908b-4548-4e0a-94b2-6065cb5ff1f3@quicinc.com>
+ <c2ec6b7c-421d-43c3-8c0a-de4f7bdd867c@oss.qualcomm.com>
+ <a24ff510-2afd-4aa7-a026-199fb6d87287@quicinc.com>
+ <CAO9ioeUDzYLMvqmsOQ-VfgLQLavHqn=QVYxyHzetjSfmhjKFjw@mail.gmail.com>
 Content-Language: en-US
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Autocrypt: addr=tomi.valkeinen@ideasonboard.com; keydata=
- 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
-In-Reply-To: <20250407-drm-bridge-convert-to-alloc-api-v1-29-42113ff8d9c0@bootlin.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <CAO9ioeUDzYLMvqmsOQ-VfgLQLavHqn=QVYxyHzetjSfmhjKFjw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=E9TNpbdl c=1 sm=1 tr=0 ts=67ffa20d cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=bthNQ_mdbZiY202X5xgA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: uf2_nzWwdmzDjmWmCrk70h3bkkY1PG-C
+X-Proofpoint-GUID: uf2_nzWwdmzDjmWmCrk70h3bkkY1PG-C
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-16_04,2025-04-15_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ mlxscore=0 bulkscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
+ suspectscore=0 mlxlogscore=999 spamscore=0 priorityscore=1501
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504160102
 
-Hi,
 
-On 07/04/2025 17:23, Luca Ceresoli wrote:
-> This is the new API for allocating DRM bridges.
-> 
-> This driver has a peculiar structure. zynqmp_dpsub.c is the actual driver,
-> which delegates to a submodule (zynqmp_dp.c) the allocation of a
-> sub-structure embedding the drm_bridge and its initialization, however it
-> does not delegate the drm_bridge_add(). Hence, following carefully the code
-> flow, it is correct to change the allocation function and .funcs assignment
-> in the submodule, while the drm_bridge_add() is not in that submodule.
-> 
-> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-> 
-> ---
-> 
-> Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Cc: Michal Simek <michal.simek@amd.com>
-> Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-> ---
->   drivers/gpu/drm/xlnx/zynqmp_dp.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/xlnx/zynqmp_dp.c b/drivers/gpu/drm/xlnx/zynqmp_dp.c
-> index 11d2415fb5a1f7fad03421898331289f2295d68b..de22b6457a78a7a2110f9f308d0b5a8700544010 100644
-> --- a/drivers/gpu/drm/xlnx/zynqmp_dp.c
-> +++ b/drivers/gpu/drm/xlnx/zynqmp_dp.c
-> @@ -2439,9 +2439,9 @@ int zynqmp_dp_probe(struct zynqmp_dpsub *dpsub)
->   	struct zynqmp_dp *dp;
->   	int ret;
->   
-> -	dp = kzalloc(sizeof(*dp), GFP_KERNEL);
-> -	if (!dp)
-> -		return -ENOMEM;
-> +	dp = devm_drm_bridge_alloc(&pdev->dev, struct zynqmp_dp, bridge, &zynqmp_dp_bridge_funcs);
-> +	if (IS_ERR(dp))
-> +		return PTR_ERR(dp);
->   
->   	dp->dev = &pdev->dev;
->   	dp->dpsub = dpsub;
-> @@ -2488,7 +2488,6 @@ int zynqmp_dp_probe(struct zynqmp_dpsub *dpsub)
->   
->   	/* Initialize the bridge. */
->   	bridge = &dp->bridge;
-> -	bridge->funcs = &zynqmp_dp_bridge_funcs;
->   	bridge->ops = DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP_EDID
->   		    | DRM_BRIDGE_OP_HPD;
->   	bridge->type = DRM_MODE_CONNECTOR_DisplayPort;
-> 
 
-I haven't had time to look at this more, but jfyi: I got this when 
-unloading modules, but it doesn't seem to happen every time:
+On 4/16/2025 5:43 PM, Dmitry Baryshkov wrote:
+> On Wed, 16 Apr 2025 at 12:08, Nitin Rawat <quic_nitirawa@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 4/15/2025 2:59 PM, Dmitry Baryshkov wrote:
+>>> On 14/04/2025 23:34, Nitin Rawat wrote:
+>>>>
+>>>>
+>>>> On 4/11/2025 4:38 PM, Dmitry Baryshkov wrote:
+>>>>> On Fri, 11 Apr 2025 at 13:50, Nitin Rawat <quic_nitirawa@quicinc.com>
+>>>>> wrote:
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>> On 4/11/2025 1:38 AM, Dmitry Baryshkov wrote:
+>>>>>>> On Thu, Apr 10, 2025 at 02:30:57PM +0530, Nitin Rawat wrote:
+>>>>>>>> Refactor the UFS PHY reset handling to parse the reset logic only
+>>>>>>>> once
+>>>>>>>> during probe, instead of every resume.
+>>>>>>>>
+>>>>>>>> Move the UFS PHY reset parsing logic from qmp_phy_power_on to
+>>>>>>>> qmp_ufs_probe to avoid unnecessary parsing during resume.
+>>>>>>>
+>>>>>>> How did you solve the circular dependency issue being noted below?
+>>>>>>
+>>>>>> Hi Dmitry,
+>>>>>> As part of my patch, I moved the parsing logic from qmp_phy_power_on to
+>>>>>> qmp_ufs_probe to avoid unnecessary parsing during resume. I'm uncertain
+>>>>>> about the circular dependency issue and whether if it still exists.
+>>>>>
+>>>>> It surely does. The reset controller is registered in the beginning of
+>>>>> ufs_qcom_init() and the PHY is acquired only a few lines below. It
+>>>>> creates a very small window for PHY driver to probe.
+>>>>> Which means, NAK, this patch doesn't look acceptable.
+>>>>
+>>>> Hi Dmitry,
+>>>>
+>>>> Thanks for pointing this out. I agree that it leaves very little time
+>>>> for the PHY to probe, which may cause issues with targets where
+>>>> no_pcs_sw_reset is set to true.
+>>>>
+>>>> As an experiment, I kept no_pcs_sw_reset set to true for the SM8750,
+>>>> and it caused bootup probe issues in some of the iterations I ran.
+>>>>
+>>>> To address this, I propose updating the patch to move the
+>>>> qmp_ufs_get_phy_reset call to phy_calibrate, just before the
+>>>> reset_control_assert call.
+>>>
+>>> Will it cause an issue if we move it to phy_init() instead of
+>>> phy_calibrate()?
+>>
+>> Hi Dmitry,
+>>
+>> Thanks for suggestion.
+>> Phy_init is invoked before phy_set_mode_ext and ufs_qcom_phy_power_on,
+>> whereas calibrate is called after ufs_qcom_phy_power_on. Keeping the UFS
+>> PHY reset in phy_calibrate introduces relatively more delay, providing
+>> more buffer time for the PHY driver probe, ensuring the UFS PHY reset is
+>> handled correctly the first time.
+> 
+> We are requesting the PHY anyway, so the PHY driver should have probed
+> well before phy_init() call. I don't get this comment.
+> 
+>>
+>> Moving the calibration to phy_init shouldn't cause any issues. However,
+>> since we currently don't have an initialization operations registered
+>> for init, we would need to add a new PHY initialization ops if we decide
+>> to move it to phy_init.
+> 
+> Yes. I don't see it as a problem. Is there any kind of an issue there?
 
-[  103.010533] ------------[ cut here ]------------
-[  103.015415] refcount_t: underflow; use-after-free.
-[  103.020657] WARNING: CPU: 2 PID: 392 at lib/refcount.c:28 
-refcount_warn_saturate+0xf4/0x148
-[  103.029056] Modules linked in: zynqmp_dpsub(-) display_connector 
-drm_display_helper drm_dma_helper drm_kms_helper drm drm_p
-anel_orientation_quirks
-[  103.042437] CPU: 2 UID: 0 PID: 392 Comm: rmmod Not tainted 
-6.15.0-rc2+ #3 PREEMPT
-[  103.050035] Hardware name: ZynqMP ZCU106 RevA (DT)
-[  103.054836] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS 
-BTYPE=--)
-[  103.061814] pc : refcount_warn_saturate+0xf4/0x148
-[  103.066632] lr : refcount_warn_saturate+0xf4/0x148
-[  103.071441] sp : ffff800083b5bbb0
-[  103.074766] x29: ffff800083b5bbb0 x28: ffff000806b23780 x27: 
-0000000000000000
-[  103.081953] x26: 0000000000000000 x25: 0000000000000000 x24: 
-ffff000801a68400
-[  103.089141] x23: ffff800081311a20 x22: ffff800083b5bc38 x21: 
-ffff000801a68010
-[  103.096329] x20: ffff0008040676c0 x19: ffff000804067240 x18: 
-0000000000000006
-[  103.103517] x17: 2e30303030303464 x16: 662d7968703a7968 x15: 
-ffff800083b5b5a0
-[  103.110705] x14: 0000000000000000 x13: 00000000000c0000 x12: 
-0000000000000000
-[  103.117892] x11: ffff80008163d6bc x10: 0000000000000028 x9 : 
-ffff800080ead38c
-[  103.125080] x8 : ffff800083b5b908 x7 : 0000000000000000 x6 : 
-ffff800083b5b9c0
-[  103.132268] x5 : ffff800083b5b948 x4 : 0000000000000001 x3 : 
-00000000000000db
-[  103.139455] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 
-ffff000806b23780
-[  103.146644] Call trace:
-[  103.149102]  refcount_warn_saturate+0xf4/0x148 (P)
-[  103.153918]  drm_bridge_put.part.0+0x88/0xa0 [drm]
-[  103.159188]  drm_bridge_put_void+0x1c/0x38 [drm]
-[  103.164231]  devm_action_release+0x1c/0x30
-[  103.168354]  release_nodes+0x68/0xa8
-[  103.171957]  devres_release_all+0x98/0xf0
-[  103.175993]  device_unbind_cleanup+0x20/0x70
-[  103.180291]  device_release_driver_internal+0x208/0x250
-[  103.185542]  driver_detach+0x54/0xa8
-[  103.189145]  bus_remove_driver+0x78/0x108
-[  103.193181]  driver_unregister+0x38/0x70
-[  103.197131]  platform_driver_unregister+0x1c/0x30
-[  103.201862]  zynqmp_dpsub_driver_exit+0x18/0x1100 [zynqmp_dpsub]
-[  103.207931]  __arm64_sys_delete_module+0x1a8/0x2d0
-[  103.212748]  invoke_syscall+0x50/0x120
-[  103.216524]  el0_svc_common.constprop.0+0x48/0xf0
-[  103.221256]  do_el0_svc+0x24/0x38
-[  103.224598]  el0_svc+0x48/0x128
-[  103.227766]  el0t_64_sync_handler+0x10c/0x138
-[  103.232150]  el0t_64_sync+0x1a4/0x1a8
-[  103.235841] irq event stamp: 7936
-[  103.239173] hardirqs last  enabled at (7935): [<ffff8000800aaf78>] 
-finish_task_switch.isra.0+0xb0/0x2a0
-[  103.248600] hardirqs last disabled at (7936): [<ffff800080eaac74>] 
-el1_dbg+0x24/0x90
-[  103.256369] softirqs last  enabled at (7930): [<ffff800080066f98>] 
-handle_softirqs+0x4a0/0x4c0
-[  103.265007] softirqs last disabled at (7905): [<ffff800080010224>] 
-__do_softirq+0x1c/0x28
-[  103.273211] ---[ end trace 0000000000000000 ]---
+No issues. In my next patchset, I would add a new init ops registered 
+for qcom phy and move get ufs phy reset handler to it.
 
-  Tomi
+Regards,
+Nitin
+
+> 
+>>
+>> Please let me know if this looks fine to you, or if you have any
+>> suggestions. I am open to your suggestions.
+> 
+> phy_init() callback
+> 
 
 
