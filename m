@@ -1,106 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-54458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24ACFA8AB29
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 00:16:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEA68A8AC5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 02:02:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE7B93BD6DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Apr 2025 22:15:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D01A9174901
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 00:02:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD7C72741D8;
-	Tue, 15 Apr 2025 22:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82149DDC5;
+	Wed, 16 Apr 2025 00:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CJ5SQiNz"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="b+IOVZmR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA3A274FD7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 22:14:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843AC2C9D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 00:02:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744755258; cv=none; b=HtJhkYQKpp9sP+7ubQJphXSzcZXb4efhwiuDM4AH8cOzL/teGENOSXiwlJWbkwfHaDGcdfrfIWV2A2H3Oz+6JoP8o6TgVbM1dBFTsHIIlI+vqpurdpYnYiL2Gd1wjYK2IwaF7umyQ9D2yCXWoiv0Rp0bWUOeoe0DxEQ/iUHHUvc=
+	t=1744761734; cv=none; b=suKXDfbWWsaxZhP1d3Ww6leXlA7tr/QSIcL1Wb2Ycf0YNUK5zGJcZdPWyNuJACr5B/aDxvm0QDSqok3aoW6tEiW3fttflx3A+kQDJfZfitLjcmUiXwEIvrkoon29bHtrfQVN4WLFZAaF/gHAyuX/KnypC8aVblbc9qHaRujUbPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744755258; c=relaxed/simple;
-	bh=+9CSOfy/OSDQDBo6m9PcMfybGueDvhyni88kHhj8bBk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iiRxbOjNph7d2I6SMFUiaLohNDoqdhvGmX9oBz3WjNz/k29w8HWO7/M9hKLxYle6f/tZjgiGE6rwZR9WoY05nP31TPc791907Y/in42AOcacMDgWKzGwKusNQLXCztr1b7K2mthKj/0CO1o3mT2SAAgBYnfymytec/kJzsof7VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CJ5SQiNz; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5493b5bc6e8so7116720e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 15:14:16 -0700 (PDT)
+	s=arc-20240116; t=1744761734; c=relaxed/simple;
+	bh=cRmda5bmrfCcBQPE77qN3/UFddHhyZ+FKubxHJT/wkw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jsXPDcbKy7LwtHgEqPk2Kj/X5O7R3UVlhpLhS3iBXz79IzQbjTu7mHw60pD510fZV+gGNpLOHhVS0Oj3vDQ6ikl6KvHVymjF8AyqY9aKTdPiov3P9cmQpan4xt8rC0bhx0OGhuxb+Ovfr3N3bZpluY1Z8l+qckZah/MTdUdcv3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=b+IOVZmR; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-30820167b47so184908a91.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Apr 2025 17:02:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744755255; x=1745360055; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+9CSOfy/OSDQDBo6m9PcMfybGueDvhyni88kHhj8bBk=;
-        b=CJ5SQiNzBkWr7VDwLF4XmMgwi9uA/nJkucF0dbjRoZMF4KOtqHsmlzB8VguusGNL1+
-         X26bp2oeqra77NcXY8c3QhJNXCkbRWNKpOedNTWTWd2SBmKNxw10NfN1Vzc3QBjuN7Np
-         5jGEK9y34WY4aPivStMFaZUMFBTdvjZ1DZZjPiKI00p3AWIN4J8VSL3uN2DEvLQ2px7K
-         X3R5YxCymYV01n0xQRtxL2noZ22C59n4By6MeJ/3FYmDDtJ8JtaW0sqSL0hQvUvAv00l
-         6KvJks6pKQ/LLTl46xfAt0c6Iz/xg8uarK5P95NJhBrvaSdGZKC+JoPoXbBesMf4a8f3
-         d90g==
+        d=chromium.org; s=google; t=1744761732; x=1745366532; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bgdhLXqZmm02+iuTYg8IYzdl8VvNi9VMKk7v6vfTzwQ=;
+        b=b+IOVZmRWvXP7dxekykI47UwBU4k+7TRxs43A1LpgzkzUgu0hOsPHKvLmuymkjfdcv
+         ULi4aEc+wIZO2orJE97BGh8QVRIFCtb1DJ5PTT1EnqEVYZAR8hxKDASF1dxYqfHAauZ5
+         cGPM/kcAoII60f0Et8CN+OFstOcHsX5uKQ1nM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744755255; x=1745360055;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+9CSOfy/OSDQDBo6m9PcMfybGueDvhyni88kHhj8bBk=;
-        b=d8FszRPv2d8LgmaVtGn/HKylmZuMVq8VP9L36Poxhw30LIxEZQdkpEVR+UWThvNXK7
-         iXwKAXzFhjx4CUvVIjC9Ml34bQ80f25wyVFk7Ua699r1a2hD4MkaBmpXCQRM8T67CIvE
-         NlSxJ2v75h1vdjAidSt957crZrNrb6d/B270MVqJn+DH8BRbTEDupP0CVto3+ts9chCt
-         2zDsKtZOPNPd1cPDt+mjMhAJng4Y/ZHKeC66iTflXyvXytqnZB8LzHQ9fcknBCYHQIU1
-         QewH2x1WFUOujEFwnC5Z6X3Mr7N1o95KCV2ZPRCewZnreJ4NWAa04mODoVYOjYKz3Lhk
-         /Hdw==
-X-Forwarded-Encrypted: i=1; AJvYcCVSamsKOdLCIQAPEjsI693EoVl+fK5J/lOGmFo+BSHkB/xUm5vnLKzly3eWpvA9Bl9pQwuD3J2HD/Dpk1Og@vger.kernel.org
-X-Gm-Message-State: AOJu0YyU8ueTVopTo58Sqvs9rbaaK63QVfS47Z/eN0+QvS8Ch0eRZV7j
-	+0BIsIJyu0b+Kpsj5DOj9t0opeqmlUpv0Ab1oBK8n/IcJ/kA5MmHjqyZtZJgrXX+3V4EO6sid6Q
-	uyhmZfjsPEgpD5Tz129EGEXaMjNxYdmgkadc6XA==
-X-Gm-Gg: ASbGnct8/khi3x3sqG6DaIQwEsy8AnHAuoiudId8d5VTqR5vgsuX98HyOQEjiYAK8x6
-	nJvQlscrvB7xJg1esGY97wrUVIS1k0i9fMqGM3rfa3WYdifNdbwf3RPqgwyepgOfwxPU1Zz8s/y
-	4GZwdwT2sEokxm7MRVLiVHNQ==
-X-Google-Smtp-Source: AGHT+IGBF5IrLeLXzWpPgufuoRl7LZtgwhRspRq/qCcnRj1V10eVXuTbFOcobeERvTB8phFE0DlLxPU9lGc7Ecpbux0=
-X-Received: by 2002:a05:651c:19aa:b0:309:20b4:b6d5 with SMTP id
- 38308e7fff4ca-3107c35b9e8mr2073651fa.28.1744755254887; Tue, 15 Apr 2025
- 15:14:14 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744761732; x=1745366532;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bgdhLXqZmm02+iuTYg8IYzdl8VvNi9VMKk7v6vfTzwQ=;
+        b=B7MJGjCbGvjSyayJ8KfesMxWNsyBUvgUDS44aQbKwF77g1wU4wNApa4PsPwMElSS8X
+         gQie04B1RRmb+ZAuERtVcbt45IWrXpwXJEyiJwnG7R2fdIFFnWhRQaD8l+7jauxxoF8z
+         FJjeUCjXMgMpd74P2rpGDVv8v05cvZV/q7CDSb4Rq2Ty6uJCyCFYVMJwnqx3nczuMJ5x
+         rOVgelwmzaiwxFfiW/gfMLETuT9WZvsxDPxDETz8yiCxEzrqdlTT3aID5+ZdRLLSOJak
+         SV08eJLWR/SzXRXlFzLjzM2SYbPNlJzIfpBiZ7ZC/ZjwSzFSIZbJKY+dvV1dCMDBoVRV
+         NhvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW7U/UUU/ffCI39bggWQelpByG74fe7bdb6BHx8ben3YqDcGrPJOiosc3rJCs2QMrdBGnCBJsjLrXffkvrU@vger.kernel.org
+X-Gm-Message-State: AOJu0YyX9W0rB++4uK7RNTbQ2akJf01SUFQ23uYuyYoQoTAPN7nidqgw
+	+47hotuvvAqInTk9NNPW/FTWd+MKPHnV3aL+ta/ORQ500/Si78oCWbT5fTIvZA==
+X-Gm-Gg: ASbGncvurSXtgqeIcY15G9178w/ShyGqYODMGnbQ8fwK1kOLl8PWtXpaJSddclP8pRC
+	QDX5r1gcMSpTUr9GvD1k2nH0nbBztxOolNZOKgVcBSsKosMgV7zoXoJZlDJAIF7Btl3F80nvKtc
+	8LL0V/C3VBDGUbnHvDOLL5FzQQ7Ql3O/BOH1eegvfOZKtvkPxeeua99e3JdlhvAu86sLhfAnc4e
+	2H67PlqpoIwpZl7fPa/4n+5fEnXvtOY8248+vVlYhjKpxlnNiBCRjKpSI63zAbdHdRRGu7sgQYK
+	LtAPJWL5Q6WXYlPDqDh9RGpTvHzk7TEfwol0EjWAGByiFZjQ58uGpX0GmwRjs9q02hn2fwZLVd8
+	XNg==
+X-Google-Smtp-Source: AGHT+IEW2BUyetqEJqp2Byr5gKAPoyPMy/3pBAQDFJR2uAF5E8DZzaAi+L5qSZqV09GCAbzUezOZCQ==
+X-Received: by 2002:a17:90b:5243:b0:2fa:2268:1af4 with SMTP id 98e67ed59e1d1-3084f3176d1mr7881903a91.7.1744761731705;
+        Tue, 15 Apr 2025 17:02:11 -0700 (PDT)
+Received: from localhost (199.24.125.34.bc.googleusercontent.com. [34.125.24.199])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-308613b3849sm196226a91.38.2025.04.15.17.02.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Apr 2025 17:02:11 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Tzung-Bi Shih <tzungbi@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	devicetree@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Benson Leung <bleung@chromium.org>,
+	chrome-platform@lists.linux.dev,
+	Pin-yen Lin <treapking@chromium.org>,
+	Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
+	Jameson Thies <jthies@google.com>,
+	Andrei Kuchynski <akuchynski@chromium.org>
+Subject: [PATCH 0/7] platform/chrome: Support for USB DP altmode muxing w/ DT
+Date: Tue, 15 Apr 2025 17:02:00 -0700
+Message-ID: <20250416000208.3568635-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.49.0.604.gff1f9ca942-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250410-gpiochip-set-rv-pinctrl-qcom-v1-0-6a6891338aae@linaro.org>
-In-Reply-To: <20250410-gpiochip-set-rv-pinctrl-qcom-v1-0-6a6891338aae@linaro.org>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 16 Apr 2025 00:14:03 +0200
-X-Gm-Features: ATxdqUFlFg0lGWI6NSoTSJm8tZcs-_N--2yxo9MXcXcFS8VRrICSZBjqn1olmIw
-Message-ID: <CACRpkdZyqvQi8NyUGOhrN97g=jOm5FySeTnL1aZ+TZtX88o+ug@mail.gmail.com>
-Subject: Re: [PATCH 0/6] pinctrl: qcom: use new GPIO line value setter callbacks
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Apr 10, 2025 at 11:35=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl=
-> wrote:
+This is a continuation of an earlier series[1] split out to become more
+manageable. After discussions at LPC2024 with Dmitry, I've settled on
+using the DisplayPort altmode driver to signal HPD to the DP controller
+through the out of band API. This series patches up the ChromeOS EC
+driver enough to the point that Chromebooks that use EC driven entry can
+bind the DP altmode driver (CONFIG_TYPEC_DP_ALTMODE) and signal the HPD
+state to the drm_connector.
 
-> Commit 98ce1eb1fd87e ("gpiolib: introduce gpio_chip setters that return
-> values") added new line setter callbacks to struct gpio_chip. They allow
-> to indicate failures to callers. We're in the process of converting all
-> GPIO controllers to using them before removing the old ones. Convert all
-> Qualcomm pinctrl drivers.
->
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+The first few patches make the DP altmode driver work on Trogdor and
+other EC mode entry based Chromebooks. The next couple patches add
+support to the cros-ec-typec binding to describe the DP graph
+connections between the DP controller and the DP altmode. I chose to put
+the graph into the altmode node, but I suspect it can just as easily be
+added to the usb-c-connector graph as another port or endpoint within
+the port@1 if we want to keep it close to the SuperSpeed endpoint. The
+final patches support creating a drm_bridge in the cros-ec-typec driver.
+They workaround a problem on Trogdor where HPD doesn't signal properly
+so we have to capture the HPD signal from the upstream drm_bridge and
+inject it into the USB type-c framework. We will pretty much only use
+this bridge on Trogdor where we're steering the DP lanes from the EC.
 
-Patches applied!
+With this series the USB type-c sysfs entries reflect the state of the
+port when the DP altmode driver binds. Trying to control the mode from
+the sysfs entries doesn't really work because the EC is in control and
+most writes are blocked if they try to exit DP altmode for example.
 
-Yours,
-Linus Walleij
+There's still one part left though; finding the drm_connector from the
+DP altmode driver. The way that the binding is written for the Corsola
+case where a four lane DP bridge is hard-wired to two USB-C connectors
+requires more work, but we're pretty much setup to tackle the problem
+even on Trogdor with this proposed binding. I'm imagining in the Corsola
+scenario the DP chip has a binding like this:
+
+  it6505 {
+    ports {
+      port@0 { }; // input port from MIPI DSI
+      port@1 {  // output port for DP
+        dp_ml0_1: endpoint@0 { // output port for DP lanes ML0/1
+          data-lanes = <0 1>;
+          remote-endpoint = <&usbc0_dp>;
+        };
+        dp_ml2_3: endpoint@1 { // output port for DP lanes ML2/3
+          data-lanes = <2 3>;
+          remote-endpoint = <&usbc1_dp>;
+        };
+    };
+  };
+
+  cros-ec {
+    typec {
+      connector@0 {
+        altmodes {
+          displayport {
+            port {
+              usbc0_dp: endpoint {
+                remote-endpoint = <&dp_ml0_1>;
+              };
+            };
+          };
+        };
+      };
+      connector@1 {
+        altmodes {
+          displayport {
+            port {
+              usbc1_dp: endpoint {
+                remote-endpoint = <&dp_ml2_3>;
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+
+We'll need to implement a drm_bridge in the connector's altmode node
+that can be connected to the dp_ml0_1 or dp_ml2_3 endpoint. That final
+drm_bridge that lives in the DP altmode driver needs to be implemented
+on top of this series[2] that supports hotpluggable DRM bridges. If we
+do that we can hotplug the it6505 bridge and the usb-c-connector bridge
+when DP altmode is entered on the port. We'll also be able to easily
+associate the drm_connector with the usb-c connector because the bridge
+will be implemented there. Once we do that it should be possible to get
+rid of the out of band HPD API and signal HPD state from the drm_bridge
+created in the DP altmode driver while hotplugging the bridge chain upon
+DP altmode entry.
+
+[1] https://lore.kernel.org/r/20240901040658.157425-1-swboyd@chromium.org
+[2] https://lore.kernel.org/r/20250206-hotplug-drm-bridge-v6-0-9d6f2c9c3058@bootlin.com
+
+Cc: Benson Leung <bleung@chromium.org>
+Cc: Tzung-Bi Shih <tzungbi@kernel.org>
+Cc: <chrome-platform@lists.linux.dev>
+Cc: Pin-yen Lin <treapking@chromium.org>
+Cc: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Cc: Łukasz Bartosik <ukaszb@chromium.org>
+Cc: Jameson Thies <jthies@google.com>
+Cc: Andrei Kuchynski <akuchynski@chromium.org>
+
+Stephen Boyd (7):
+  platform/chrome: cros_ec_typec: No pending status means attention
+  platform/chrome: cros_ec_typec: Allow DP configure to work
+  platform/chrome: cros_ec_typec: Support EC mode entry
+  dt-bindings: Move google,cros-ec-typec binding to usb
+  dt-bindings: usb: google,cros-ec-typec: Add ports for DP altmode
+  platform/chrome: cros_ec_typec: Add support for DP altmode via
+    drm_bridge
+  platform/chrome: cros_ec_typec: Support DP muxing
+
+ .../bindings/chrome/google,cros-ec-typec.yaml |  66 -----
+ .../bindings/connector/usb-connector.yaml     |   6 +
+ .../bindings/mfd/google,cros-ec.yaml          |   7 +-
+ .../bindings/usb/google,cros-ec-typec.yaml    | 231 ++++++++++++++++++
+ drivers/platform/chrome/Kconfig               |   1 +
+ drivers/platform/chrome/cros_ec_typec.c       | 167 ++++++++++++-
+ drivers/platform/chrome/cros_ec_typec.h       |  21 ++
+ drivers/platform/chrome/cros_typec_altmode.c  | 121 +++++----
+ 8 files changed, 508 insertions(+), 112 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml
+ create mode 100644 Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
+
+
+base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
+-- 
+https://chromeos.dev
+
 
