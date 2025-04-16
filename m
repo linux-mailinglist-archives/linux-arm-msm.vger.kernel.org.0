@@ -1,119 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-54520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CC3BA906A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 16:38:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B5F7A906DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 16:46:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2A42C173374
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:38:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8B90F1889436
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:46:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E19FA1B424E;
-	Wed, 16 Apr 2025 14:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E654D1CAA98;
+	Wed, 16 Apr 2025 14:46:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TsPIgFGz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bmailout3.hostsharing.net (bmailout3.hostsharing.net [176.9.242.62])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6913010C;
-	Wed, 16 Apr 2025 14:38:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=176.9.242.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BE41A5B9C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 14:46:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744814293; cv=none; b=oCknJtX1dPH5a/Tpg0/okE6gaY71g+FfN11eTwsInGVmqZ2onHDLgpjsODJOCwCoHGAN4yFX0TP9+TAlwLcpE53KjO0t9+w40B25WHTChj+QUEf/DprggD1gavXgiuN/cuQh69bWnhMP/vCfoT8w6iVAH73RYm8ryGWZx9GRXtU=
+	t=1744814795; cv=none; b=AjccA6Kq5knch54sXAvtS1HuxmvfWqN3m1wADzo0su8KBm+KaZcmee4iWoTJ3mOzZuwxZBFfR3P6TAJCYW4vPLXRH4ZkCV++YU1TkmGrrTbUxKPQEalRtinUDnx00xIJ8W5HciNWoe/cSQoYNBlW9WG9p+m2VAFo7JvvXtm86JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744814293; c=relaxed/simple;
-	bh=doVRRvVe6WEmfRp+vwpcnTHqA9pAD2XGe1+hyb7lzFU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uMCPXb/+sZjiIwq88AxVGG0wMzCpo+IMJQ/nerwrc7uIep2MUiH3OLnnZ0diGj7L5nH4trFF6GjuAoWbVE4TFfNjsgmdbQuYPQJksmHZXe6HZdcA0I+YH+OdJ0orlUQMJ+JOwdGT3I+unSEr1QUTkWnh+6Rt6w69MvkwLrZ/3+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=176.9.242.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
-Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
-	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
-	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
-	by bmailout3.hostsharing.net (Postfix) with ESMTPS id E372F2C06039;
-	Wed, 16 Apr 2025 16:38:00 +0200 (CEST)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id D4BF0173A2F; Wed, 16 Apr 2025 16:38:01 +0200 (CEST)
-Date: Wed, 16 Apr 2025 16:38:01 +0200
-From: Lukas Wunner <lukas@wunner.de>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
-	Oliver O'Halloran <oohall@gmail.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof Wilczy??ski <kw@linux.com>, Rob Herring <robh@kernel.org>,
-	dingwei@marvell.com, cassel@kernel.org,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/4] PCI/ERR: Add support for resetting the slot in a
- platforms specific way
-Message-ID: <Z__AyQeZmXiNwT7c@wunner.de>
-References: <20250404-pcie-reset-slot-v1-0-98952918bf90@linaro.org>
- <20250404-pcie-reset-slot-v1-2-98952918bf90@linaro.org>
- <Z--cY5Uf6JyTYL9y@wunner.de>
- <3dokyirkf47lqxgx5k2ybij5b5an6qnceifsub3mcmjvzp3kdb@sm7f2jxxepdc>
+	s=arc-20240116; t=1744814795; c=relaxed/simple;
+	bh=+SqyWiYgiFVRcrv3hFQViet85UCefWVjmCaHmgVV+Co=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AVqXE5PyTOd6itflCR5GIGXPlGAt1UtIV9o7XPHhwg5rSOsaKgTGFST+vvbz7tViAjjbSNQjUn6fZcH64ezx5jDwupyg1OpkemFJd7/3dgr+rS7r3wRrnvlBhM4rR34FOZoc/OEc81JYLOuLJau4rUz9GVT3jfjISVkva2BZYxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TsPIgFGz; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53G9mVHH030729
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 14:46:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	KA4TV5mKsL2y0RL5Gn3GhHH/7I7jDODOCh7jGAM9fWA=; b=TsPIgFGzCK2LdB+0
+	uNNoHOrxXr+Nq+R0Bq7kF0L9pVop/7JzZmSI94l/hhPsEOaskbVIGufxoW2zlMCA
+	E0k1KS/JlcuzkxVLn7PTuMrD5Omw6PR9y4MXgLkC5GyorrlZ3uVELgRjkZPO3NkA
+	GP7dUELIfCKm99lf12SrZB+/iBLi0rvBZBG8ucBwDXF/1QhRmagOpAVYiuwIaKx7
+	tU7aTkVdoWBoYI7rzjqDL4VvMeem0m0LHnF5B9MB4LSqh58noAktvm4XiI98RgSQ
+	nGGjgaZTIS7LXtUC44JTg2c368rKHY4+4IaZHZvrfkx+rOYyt+aSJj0AE29GdNQE
+	wV2/ww==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygxk3rsx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 14:46:33 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c53d5f85c9so156729685a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 07:46:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744814792; x=1745419592;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KA4TV5mKsL2y0RL5Gn3GhHH/7I7jDODOCh7jGAM9fWA=;
+        b=ptlGUuS6jwSIg8oUT/V7ogbUwj/18l/9So8IZdeD0SwjWCeQxdNSudSSsExjO74gL9
+         TgE+KpxynSoWel8Mjp3thXrKjZxIllmfEBKUyVDXNRC7y+IO05du72jG6Lea3Zf9QWYf
+         4fYD4DFxxSWrqnx3p7wLIIrph3glh88XjYrvzGdwnCMATaBhqdF2+JYVdN9j84qVAv8+
+         67Bo40F7HLuVkWgiPD8kKqCa+831FqF0B57KHzsZumeNHpQQRC6APV1FPU2AB1OLxpvl
+         hdEZ53DsHkVBRnTOYaSv2EzOWJaAEFgV5+FYS3Xl2mZdOAF9ePnxCPZVicCkHIxf0oo2
+         M7XQ==
+X-Gm-Message-State: AOJu0Yy41+npyVVH38hffbMOS9wCn89pD/cyKVIbsRcKkrt1cBkOb9Ns
+	QRmQbk70t9MKGKnN3v2O+t63oILjKyycV3hgc3HNS7JV63wziYBY8+Y/hFIFEaT/MtmvCo3qIU0
+	aE5crMOCLr+JpG3w8cGEGlRwf2osMimKqHuie2MhG0OZ9eH3/Xt8X7/qJxBLYs0wD
+X-Gm-Gg: ASbGncvxouFmYep/xjDQci6S1z4woQtUDWsBE77sYH8v/7bWDrS5H1VJeU9mAwAq5Ts
+	6WOnBEWYrHbc6iPamYTgZKyKwomO9e9tTPN8uNyOu+PTkeNA04qOiP0uuGpa30QIErwudnFaj+F
+	4d5b4BRKB3rF+/DzL5FZn/UbZEgVgOqhjmXdNSGBA1+h75n+g5yFUYwb1QXxYdHRSG1XXaTp8QL
+	AL9T1g6wSno2JOPd/JCWLzOyEuNzw011kWDd/5S3vfjoi5cV/QXHrQNA9PPb/spXhWrH7K2X+RS
+	B+bB56cBVjzONDstPFxjDFxkZzGRa8fABDLqvV9ltWxF+IViFpxVoF2VhW/htj//sFU=
+X-Received: by 2002:a05:620a:f11:b0:7c3:c9d4:95e3 with SMTP id af79cd13be357-7c91d0432c7mr3067485a.10.1744814792041;
+        Wed, 16 Apr 2025 07:46:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG59ukWC3MyfycyjIAvWr+JUl6W0NbfjImB2+ZjakY/8PQ2cNO/ibVV7aEWoEpjqX246S5jbw==
+X-Received: by 2002:a05:620a:f11:b0:7c3:c9d4:95e3 with SMTP id af79cd13be357-7c91d0432c7mr3064585a.10.1744814791519;
+        Wed, 16 Apr 2025 07:46:31 -0700 (PDT)
+Received: from [192.168.65.178] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acb3cdf4684sm141728366b.68.2025.04.16.07.46.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Apr 2025 07:46:30 -0700 (PDT)
+Message-ID: <c57084c4-189a-484f-af2f-8e4181f547fb@oss.qualcomm.com>
+Date: Wed, 16 Apr 2025 16:46:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3dokyirkf47lqxgx5k2ybij5b5an6qnceifsub3mcmjvzp3kdb@sm7f2jxxepdc>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: qcm2290: Add CAMSS node
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>, bryan.odonoghue@linaro.org,
+        rfoss@kernel.org, konradybcio@kernel.org, andersson@kernel.org,
+        krzk+dt@kernel.org, robh@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20250416120908.206873-1-loic.poulain@oss.qualcomm.com>
+ <20250416120908.206873-6-loic.poulain@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250416120908.206873-6-loic.poulain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=WecMa1hX c=1 sm=1 tr=0 ts=67ffc2c9 cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=STQ2a8oQ04ts6E9hehUA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-GUID: JjHb1dw_aZzhUrgWAtFtfWPc0uk6MnCL
+X-Proofpoint-ORIG-GUID: JjHb1dw_aZzhUrgWAtFtfWPc0uk6MnCL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-16_04,2025-04-15_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ adultscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0 mlxscore=0
+ impostorscore=0 mlxlogscore=999 spamscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504160121
 
-On Tue, Apr 15, 2025 at 07:03:17PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Apr 04, 2025 at 10:46:27AM +0200, Lukas Wunner wrote:
-> > On Fri, Apr 04, 2025 at 01:52:22PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > > When the PCI error handling requires resetting the slot, reset it
-> > > using the host bridge specific 'reset_slot' callback if available
-> > > before calling the 'slot_reset' callback of the PCI drivers.
-> > > 
-> > > The 'reset_slot' callback is responsible for resetting the given slot
-> > > referenced by the 'pci_dev' pointer in a platform specific way and
-> > > bring it back to the working state if possible. If any error occurs
-> > > during the slot reset operation, relevant errno should be returned.
-> > 
-> > This feels like something that should be plumbed into
-> > pcibios_reset_secondary_bus(), rather than pcie_do_recovery().
+On 4/16/25 2:09 PM, Loic Poulain wrote:
+> Add node for the QCM2290 camera subsystem.
 > 
-> I did consider that, but didn't go for it since there was no platform
-> reset code present in that function. But I will try to use it as I
-> don't have a strong preference to do reset slot in pcie_do_recovery().
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcm2290.dtsi | 93 +++++++++++++++++++++++++++
+>  1 file changed, 93 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> index f0746123e594..4b81e721e50c 100644
+> --- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> @@ -1579,6 +1579,99 @@ adreno_smmu: iommu@59a0000 {
+>  			#iommu-cells = <2>;
+>  		};
+>  
+> +		camss: camss@5c52000 {
 
-The only platform overriding pcibios_reset_secondary_bus() is powerpc,
-and it only does that on PowerNV.
+@5c6e000
+(first reg entry)
 
-I think you could continue to stick with the approach of adding a
-->reset_slot() callback to struct pci_host_bridge, but it would
-be good if at the same time you could convert PowerNV to use the
-newly introduced callback as well.  And then remove the way to
-override the reset procedure via pcibios_reset_secondary_bus().
+> +			compatible = "qcom,qcm2290-camss";
+> +
+> +			reg = <0 0x5c6e000 0 0x1000>,
+> +			      <0 0x5c75000 0 0x1000>,
+> +			      <0 0x5c52000 0 0x1000>,
+> +			      <0 0x5c53000 0 0x1000>,
+> +			      <0 0x5c6f000 0 0x4000>,
+> +			      <0 0x5c76000 0 0x4000>;
+> +			reg-names = "csid0",
+> +				    "csid1",
+> +				    "csiphy0",
+> +				    "csiphy1",
+> +				    "vfe0",
+> +				    "vfe1";
 
-All pci_host_bridge's which do not define a ->reset_slot() could be
-assigned a default callback which just calls pci_reset_secondary_bus().
+we also have a pair of TPGs at 0x5c6[68]000 - I think it would be good to
+describe them from the get-go
 
-Alternatively, pcibios_reset_secondary_bus() could be made to invoke the
-pci_host_bridge's ->reset_slot() callback if it's not NULL, else
-pci_reset_secondary_bus().  And in that case, the __weak attribute
-could be removed as well as the powerpc-specific version of
-pcibios_reset_secondary_bus().
+> +
+> +			interrupts = <GIC_SPI 210 IRQ_TYPE_EDGE_RISING>,
+> +				     <GIC_SPI 212 IRQ_TYPE_EDGE_RISING>,
+> +				     <GIC_SPI 72 IRQ_TYPE_EDGE_RISING>,
+> +				     <GIC_SPI 73 IRQ_TYPE_EDGE_RISING>,
+> +				     <GIC_SPI 211 IRQ_TYPE_EDGE_RISING>,
+> +				     <GIC_SPI 213 IRQ_TYPE_EDGE_RISING>;
 
-I guess what I'm trying to say is, you don't *have* to plumb this
-into pcibios_reset_secondary_bus().  In fact, having a host bridge
-specific callback could be useful if the SoC contains several
-host bridges which require different callbacks to perform a reset.
+the two TPGs would have IRQs 309 and 310
 
-I just want to make sure that the code remains maintainable,
-i.e. we don't have two separate ways to override how a bus reset
-is performed.
+[...]
 
-Thanks,
+> +			interconnects = <&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
+> +					 &config_noc SLAVE_CAMERA_CFG RPM_ALWAYS_TAG>,
 
-Lukas
+This one should get a RPM_ACTIVE_TAG instead, on both endpoints
+
+Konrad
 
