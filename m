@@ -1,71 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-54511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC559A8B910
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:30:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B9E6AA8B914
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 14:30:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0CB3E188F967
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 12:30:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 41A85189786D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Apr 2025 12:30:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E49F0382;
-	Wed, 16 Apr 2025 12:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D88E211C;
+	Wed, 16 Apr 2025 12:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b="YCjA7j7W"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rbVhYiyh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-fw-80007.amazon.com (smtp-fw-80007.amazon.com [99.78.197.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2278136B;
-	Wed, 16 Apr 2025 12:30:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=99.78.197.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848DB5680
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 12:30:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744806627; cv=none; b=Z07Drukxd8jy+nfFOOmRm64b8pcyagKDBUZJb8Dua5uGWku7yGwLrU7hS0zppdSF+JsT9xCEE63r8U2vWQCAc1NtRYaazwYF2nrzIGVn2aSQQIR1LO8i/ZZFivCWrOMuNyelNRAEO1ZU3AhVu1Wi2MyeYqrMIuFbCZCBvnR7dQk=
+	t=1744806635; cv=none; b=nGAScr22Il9+0oYCTHvNvLWwei3PfpPsoLuQT/4t+d3OHSYPxyDTzzZrKqWyApd3c/Dnu6sZKm551WEbNFnoFV/dw6dh05vF5Mq1noptD+FYw+KoF4VZWCqQr+7iRmd0esfuuvU+xXdr8ogF/myuuNipX6ji1x8VaZBSWKVqhXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744806627; c=relaxed/simple;
-	bh=w4TAR/yH3VcS9OoJH0esVNtvvSK6jM0c6R3XkuFx4Xo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jd8cASZZndqIeQE8BUAIGl9g5O4Fca0/OntDd2xOAFoU0A/yFqKeXuOanHQK01rYYEFy/MjKpyOboWC0xTSfw8XToFaaBIMQIOgjIpOHxVFLYg0H3ze4U6lzdv6OY9POgF52vdbVrbTBtGCrz965rQ6Mg+MOaGn6bV4WwBmtHmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk; spf=pass smtp.mailfrom=amazon.co.uk; dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b=YCjA7j7W; arc=none smtp.client-ip=99.78.197.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.uk
+	s=arc-20240116; t=1744806635; c=relaxed/simple;
+	bh=7Gy1XVsPqVy3jE8rob90X3GhP46KcENk/TqZx1KA2ao=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Z8zBB8wgwk7MYT4SICp1SQLkamWtescLiYnJ2pNyqbo9eajN0ehGIciNxlqU1KlOIuZT/JNZ4hQB3i2zNrXA8rRiclJ0fRVCJjJqQUgQ2kMIYVZcuWou4kDVLPusrU/JFwA2gvdC7qV252NY9nQaPVZeRYGhY6A1pk/8isgIO6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rbVhYiyh; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43cf58eea0fso34502555e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 05:30:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.co.uk; i=@amazon.co.uk; q=dns/txt;
-  s=amazon201209; t=1744806626; x=1776342626;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=sFqE0U8biMo7h/rFvupA/Vgek3MDfQSR208Nzfq3VY8=;
-  b=YCjA7j7Wq8NXJLPYeNndv7vJtO0lp+Q+GXU74rlVzxmNgral1IEiQ/Xe
-   FKzCQWoGuttB6WJoBr5M0iTN6EUzJxnv+It4NsHybYUFSECFOpDNl7Y9M
-   OZCdmhvwPZCGLWpUOgERo5eVh3BcD6AOKRSoZrWmUxyld7dGoyxQfPEz9
-   4=;
-X-IronPort-AV: E=Sophos;i="6.15,216,1739836800"; 
-   d="scan'208";a="396347607"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO smtpout.prod.us-east-1.prod.farcaster.email.amazon.dev) ([10.25.36.210])
-  by smtp-border-fw-80007.pdx80.corp.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Apr 2025 12:30:23 +0000
-Received: from EX19MTAUEA001.ant.amazon.com [10.0.44.209:64083]
- by smtpin.naws.us-east-1.prod.farcaster.email.amazon.dev [10.0.62.158:2525] with esmtp (Farcaster)
- id 5cd90893-39c7-408c-bd64-a8f3f4ff1016; Wed, 16 Apr 2025 12:30:23 +0000 (UTC)
-X-Farcaster-Flow-ID: 5cd90893-39c7-408c-bd64-a8f3f4ff1016
-Received: from EX19EXOUEB002.ant.amazon.com (10.252.135.74) by
- EX19MTAUEA001.ant.amazon.com (10.252.134.203) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
- Wed, 16 Apr 2025 12:30:17 +0000
-Received: from EX19MTAUEB001.ant.amazon.com (10.252.135.108) by
- EX19EXOUEB002.ant.amazon.com (10.252.135.74) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
- Wed, 16 Apr 2025 12:30:17 +0000
-Received: from email-imr-corp-prod-iad-all-1a-f1af3bd3.us-east-1.amazon.com
- (10.43.8.2) by mail-relay.amazon.com (10.252.135.35) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id
- 15.2.1544.14 via Frontend Transport; Wed, 16 Apr 2025 12:30:17 +0000
-Received: from [127.0.0.1] (dev-dsk-roypat-1c-dbe2a224.eu-west-1.amazon.com [172.19.88.180])
-	by email-imr-corp-prod-iad-all-1a-f1af3bd3.us-east-1.amazon.com (Postfix) with ESMTPS id E8E47413B0;
-	Wed, 16 Apr 2025 12:30:10 +0000 (UTC)
-Message-ID: <392fc76a-5d2a-441d-99c8-532c0bbb052b@amazon.co.uk>
-Date: Wed, 16 Apr 2025 13:30:10 +0100
+        d=linaro.org; s=google; t=1744806631; x=1745411431; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=thGiGMIGVkipYVBXzz8o4Lh3YcuPkNg0CxEG2aMR7f0=;
+        b=rbVhYiyh5mrD6Iw0iz1g/9OiDFoXhg5jm5Z4399iuP6IMg5Tujq/Ce9g4xY3bIaVBb
+         gcEZOCBrvx5FxxUI/Gh8lqzAIvHf9FItHZZ6TgpAT9D4/guzuJYiJ6LFMobgmYAA5CUT
+         9c1wJoqWX6dJr4y1CQ41KC51lF79xhNAZz+vsi3DxDUzUWZVwpUdTbN1L/N/RyIbJvnS
+         GmSm6F2uYxW27lpbyUASYi8UnsNvkEYi8v7i0OIqkjzHnLvkwJZWQe+tRXpjVFuc1cFG
+         Xtnbyts4AgxYjGmqOFmPBxwuB4yedZbSROHFfcqQ3T49o8cr6KzbrbFvEuuuxoAiNH9D
+         dFAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744806631; x=1745411431;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=thGiGMIGVkipYVBXzz8o4Lh3YcuPkNg0CxEG2aMR7f0=;
+        b=urR4M4KmHQMTW5xqnWX60mplrwyyX03Lv3/NG2seEvjErWn0YeCuv05E1LFLH6gUaO
+         PjwASfza8BGkOHD7X+t09D3nJK+kEjVA48mv9iBlrGqYW9cvue9JiQGIopa6klAdDa2W
+         efwf3r4bK6U+0fU+bzubuUKzW9EL1P2lKkmbrsmGwC1Hlw9GawNiHcZoCx0OZvgFQ/BY
+         xymLmLGmgv9kTDSLWQdrMBku7BRd7mKxVlBQj5wDz5jI869FEV5sUKek6+o4m8d8QkUh
+         AmcmybTVN0yJHjMr7EkVeBn9T4iPYNAdKe9YmIqboJvbi+JBUN2Q3zlZ/1KrhW5+bYRW
+         YAGQ==
+X-Gm-Message-State: AOJu0YwFW2vPYT+GpjB7OgCWKQHZiEfZDYhNc64UajFWol58F53CuZnB
+	TMoMotV2mZmrEKlRZ6JP/qLARPHMUMGOro5FmHsDun7R6mBIwlFBL1rcLd3Co54=
+X-Gm-Gg: ASbGnctdnyFEG/Gpf2sUwOGDOGqnbfhKhuPQPHTcm5rN7PvtdGQDF2tkwaXuH2HXduK
+	jAjFvO9P7GNQzIZlOVIE8Od4G8lEucmDvW/qF+qZv0y4F9rqjAQBGyyCiAseyEsTXE6iRl2zHhV
+	/NWfqqKQp3fZ/Q8c4FqR6gMpvVXsNszBdYugeXMHKxHja9Y+IevQ53JivkPqRDz0X29a63CscjP
+	vdv1SvXl7JxMlFnayyFTLCoIUgh5vUpouB7NQIAPUorc91GiSURGPu4xMuve8X0soHKdxj/Xfo6
+	28GVTQJeEZIr+pkAdj2RZ7G712Hv6/1lCdA2rST+QleyDouFp2dsYGunNRF4oiutMINDZB4NSze
+	mCNvJZQ==
+X-Google-Smtp-Source: AGHT+IFV0ZUT9ojBwHgcXFzd6sA+i/GEKN9pAQWxVGmSBZdhA5mXH0KdaL62ftj/T9v6Ry/7NbUk5Q==
+X-Received: by 2002:a05:600c:350f:b0:43d:7588:66a5 with SMTP id 5b1f17b1804b1-4405d6cc4damr18163555e9.31.1744806630866;
+        Wed, 16 Apr 2025 05:30:30 -0700 (PDT)
+Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4405b4c8188sm20161775e9.5.2025.04.16.05.30.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Apr 2025 05:30:30 -0700 (PDT)
+Message-ID: <3483e6d2-23f7-40e8-a56d-d7419b808290@linaro.org>
+Date: Wed, 16 Apr 2025 13:30:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,134 +81,29 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/9] KVM: guest_memfd: Handle in-place shared memory as
- guest_memfd backed memory
-To: David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>,
-	<kvm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>, <linux-mm@kvack.org>
-CC: <pbonzini@redhat.com>, <chenhuacai@kernel.org>, <mpe@ellerman.id.au>,
-	<anup@brainfault.org>, <paul.walmsley@sifive.com>, <palmer@dabbelt.com>,
-	<aou@eecs.berkeley.edu>, <seanjc@google.com>, <viro@zeniv.linux.org.uk>,
-	<brauner@kernel.org>, <willy@infradead.org>, <akpm@linux-foundation.org>,
-	<xiaoyao.li@intel.com>, <yilun.xu@intel.com>, <chao.p.peng@linux.intel.com>,
-	<jarkko@kernel.org>, <amoorthy@google.com>, <dmatlack@google.com>,
-	<isaku.yamahata@intel.com>, <mic@digikod.net>, <vbabka@suse.cz>,
-	<vannapurve@google.com>, <ackerleytng@google.com>,
-	<mail@maciej.szmigiero.name>, <michael.roth@amd.com>, <wei.w.wang@intel.com>,
-	<liam.merwick@oracle.com>, <isaku.yamahata@gmail.com>,
-	<kirill.shutemov@linux.intel.com>, <suzuki.poulose@arm.com>,
-	<steven.price@arm.com>, <quic_eberman@quicinc.com>,
-	<quic_mnalajal@quicinc.com>, <quic_tsoni@quicinc.com>,
-	<quic_svaddagi@quicinc.com>, <quic_cvanscha@quicinc.com>,
-	<quic_pderrin@quicinc.com>, <quic_pheragu@quicinc.com>,
-	<catalin.marinas@arm.com>, <james.morse@arm.com>, <yuzenghui@huawei.com>,
-	<oliver.upton@linux.dev>, <maz@kernel.org>, <will@kernel.org>,
-	<qperret@google.com>, <keirf@google.com>, <shuah@kernel.org>,
-	<hch@infradead.org>, <jgg@nvidia.com>, <rientjes@google.com>,
-	<jhubbard@nvidia.com>, <fvdl@google.com>, <hughd@google.com>,
-	<jthoughton@google.com>, <peterx@redhat.com>
-References: <20250318161823.4005529-1-tabba@google.com>
- <20250318161823.4005529-5-tabba@google.com>
- <8ebc66ae-5f37-44c0-884b-564a65467fe4@redhat.com>
-From: Patrick Roy <roypat@amazon.co.uk>
+Subject: Re: [PATCH 1/6] media: qcom: camss: Add support for TFE (Spectra 340)
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>, bryan.odonoghue@linaro.org,
+ rfoss@kernel.org, konradybcio@kernel.org, andersson@kernel.org,
+ krzk+dt@kernel.org, robh@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <yD7X4MYItg2wLMb5iPs1JXadfzhFB7wSFqo_hFbs6K72VbLmTtoOrnwcLJrP4WBvndDUd2eklJl3R4GRWLbl6Q==@protonmail.internalid>
+ <20250416120908.206873-1-loic.poulain@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=roypat@amazon.co.uk; keydata=
- xjMEY0UgYhYJKwYBBAHaRw8BAQdA7lj+ADr5b96qBcdINFVJSOg8RGtKthL5x77F2ABMh4PN
- NVBhdHJpY2sgUm95IChHaXRodWIga2V5IGFtYXpvbikgPHJveXBhdEBhbWF6b24uY28udWs+
- wpMEExYKADsWIQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbAwULCQgHAgIiAgYVCgkI
- CwIEFgIDAQIeBwIXgAAKCRBVg4tqeAbEAmQKAQC1jMl/KT9pQHEdALF7SA1iJ9tpA5ppl1J9
- AOIP7Nr9SwD/fvIWkq0QDnq69eK7HqW14CA7AToCF6NBqZ8r7ksi+QLOOARjRSBiEgorBgEE
- AZdVAQUBAQdAqoMhGmiXJ3DMGeXrlaDA+v/aF/ah7ARbFV4ukHyz+CkDAQgHwngEGBYKACAW
- IQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbDAAKCRBVg4tqeAbEAtjHAQDkh5jZRIsZ
- 7JMNkPMSCd5PuSy0/Gdx8LGgsxxPMZwePgEAn5Tnh4fVbf00esnoK588bYQgJBioXtuXhtom
- 8hlxFQM=
-In-Reply-To: <8ebc66ae-5f37-44c0-884b-564a65467fe4@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250416120908.206873-1-loic.poulain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi!
+On 16/04/2025 13:09, Loic Poulain wrote:
+> Add support for TFE (Thin Front End) found in QCM2290.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Maybe I didn't receive but missing cover-letter for me.
 
-On Mon, 2025-04-14 at 12:51 +0100, David Hildenbrand wrote:
->
+In v2 could you please give an example of how you have tested in your 
+cover letter, if not already done so.
 
-[...]
-
-> On top of that, I was wondering if we could look into doing something like
-> the following. It would also allow for pulling pages out of gmem for
-> existing SW-protected VMs once they enable shared memory for GMEM IIUC.
-> 
-> 
-> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-> index 08eebd24a0e18..6f878cab0f466 100644
-> --- a/arch/x86/kvm/mmu/mmu.c
-> +++ b/arch/x86/kvm/mmu/mmu.c
-> @@ -4495,11 +4495,6 @@ static int kvm_mmu_faultin_pfn_gmem(struct kvm_vcpu *vcpu,
->  {
->         int max_order, r;
-> 
-> -       if (!kvm_slot_has_gmem(fault->slot)) {
-> -               kvm_mmu_prepare_memory_fault_exit(vcpu, fault);
-> -               return -EFAULT;
-> -       }
-> -
->         r = kvm_gmem_get_pfn(vcpu->kvm, fault->slot, fault->gfn, &fault->pfn,
->                              &fault->refcounted_page, &max_order);
->         if (r) {
-> @@ -4518,8 +4513,19 @@ static int __kvm_mmu_faultin_pfn(struct kvm_vcpu *vcpu,
->                                  struct kvm_page_fault *fault)
->  {
->         unsigned int foll = fault->write ? FOLL_WRITE : 0;
-> +       bool use_gmem = false;
-> +
-> +       if (fault->is_private) {
-> +               if (!kvm_slot_has_gmem(fault->slot)) {
-> +                       kvm_mmu_prepare_memory_fault_exit(vcpu, fault);
-> +                       return -EFAULT;
-> +               }
-> +               use_gmem = true;
-> +       } else if (kvm_slot_has_gmem_with_shared(fault->slot)) {
-> +               use_gmem = true;
-> +       }
-> 
-> -       if (fault->is_private)
-> +       if (use_gmem)
->                 return kvm_mmu_faultin_pfn_gmem(vcpu, fault);
-> 
->         foll |= FOLL_NOWAIT;
-> 
-> 
-> That is, we'd not claim that things are private when they are not, but instead
-> teach the code about shared memory coming from gmem.
-> 
-> There might be some more missing, just throwing it out there if I am completely off.
-
-I think I arrived at the need for this as well while experimenting with
-building a Firecracker version that works with my direct map removal
-patches.
-
-With this patch series, on ARM, as soon as a memslot has a guest_memfd
-associated with it, all guest faults go through kvm_gmem_get_pfn, but on
-x86, they go through slot->userspace_addr by default, as
-CONFIG_KVM_SW_PROTECTED_VM selects CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES.
-There's no real difference between these if slot->userspace_addr can be
-GUP'd, but if its a VMA of a guest_memfd without direct map entries,
-faulting through slot->userspace_addr wont work. So on x86 Firecracker
-has to formally set the memory attributes to private, while on ARM it
-doesn't [1], which is a bit awkward.
-
-David, I couldn't find an implementation of
-kvm_slot_has_gmem_with_shared() in the branch you shared, but would it
-be something like "slot->userspace_addr points to a gmem VMA,
-particularly to a VMA of the gmem that's associated with this memslot,
-mapped at the same offset"?
-
-Best, 
-Patrick
-
-[1]: https://github.com/firecracker-microvm/firecracker/blob/feature/secret-hiding/src/vmm/src/builder.rs#L268
-
-> -- 
-> Cheers,
-> 
-> David / dhildenb
-> 
+---
+bod
 
