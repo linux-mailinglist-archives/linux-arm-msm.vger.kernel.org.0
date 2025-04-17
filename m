@@ -1,272 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-54579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04ACFA91040
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 02:23:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76CE5A91184
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 04:14:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 834DF7A5C01
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 00:22:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D6936189146A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 02:14:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCBC3145B24;
-	Thu, 17 Apr 2025 00:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D14941C3F30;
+	Thu, 17 Apr 2025 02:13:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ee1dAV2d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bmailout2.hostsharing.net (bmailout2.hostsharing.net [83.223.78.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B238632E;
-	Thu, 17 Apr 2025 00:23:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.78.240
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30B62F24;
+	Thu, 17 Apr 2025 02:13:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744849412; cv=none; b=B/wOkChvLS45IbBFIVLsy8sANBMFEQkw6c/c/oW2CtOEZqsW1AI/NzN0skgGoj/spc2Ny1C5UdeZdTGbApPSewRYDFQpIPnDXfKkCh9u7NUhOCPkAo1Jb4lKaGeT6vfaMgP9m6Yuq4TgwVuiMoKoXLvUD6d61W/uRc9AjQCo6fQ=
+	t=1744856035; cv=none; b=bwmudyNOxBwPC4miIjavyKnMucXlEaMVPMLt6g748WIVde1h4uBHxo52XJKcI5JdBg9Z7yokv4vyeS90dVGERK2CpoQFy+juFpxwgCq30r7oNOUvfrJJsRVqPmlESNlSD4www71NC9c2OTQOyM6vPIAz6j7t+b+leWcFT6bc0m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744849412; c=relaxed/simple;
-	bh=1cC1zkkpxx9QtygR1jzi0pnPO98RzJxPsGGbSVcb2yU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AWlaP3IKymMpCvASPBvnJ9zvnrsvJXwXT5+uWSRFkZDwKk18elkSG9f1sQdItcSJy0mydc++ytLNw97nnaIp5cu/HD/49Nym/vDqa2t0wB9jVouQseHGIxBbixEgxC79bVH5VbkUR3IVNzaoxmLOX148mpplRr4L1wf3LiIU5m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=83.223.78.240
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
-Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
-	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
-	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
-	by bmailout2.hostsharing.net (Postfix) with ESMTPS id 62FA7200A46D;
-	Thu, 17 Apr 2025 02:23:19 +0200 (CEST)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id 7A2566AABD; Thu, 17 Apr 2025 02:23:26 +0200 (CEST)
-Date: Thu, 17 Apr 2025 02:23:26 +0200
-From: Lukas Wunner <lukas@wunner.de>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
-	Oliver O'Halloran <oohall@gmail.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof Wilczy??ski <kw@linux.com>, Rob Herring <robh@kernel.org>,
-	dingwei@marvell.com, cassel@kernel.org,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/4] PCI/ERR: Add support for resetting the slot in a
- platforms specific way
-Message-ID: <aABJ_u8-FXeJoPyF@wunner.de>
-References: <20250404-pcie-reset-slot-v1-0-98952918bf90@linaro.org>
- <20250404-pcie-reset-slot-v1-2-98952918bf90@linaro.org>
- <Z--cY5Uf6JyTYL9y@wunner.de>
- <3dokyirkf47lqxgx5k2ybij5b5an6qnceifsub3mcmjvzp3kdb@sm7f2jxxepdc>
- <Z__AyQeZmXiNwT7c@wunner.de>
- <rrqn7hlefn7klaczi2jkfta72pwmtentj3zp37yvw3brwpnalk@3eapwfeo5y4d>
+	s=arc-20240116; t=1744856035; c=relaxed/simple;
+	bh=1Q1P44umereBP6tcw6zfsMWt2C24FKVLfm0MbrgtGSo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dTVOjTXU8z0l52GCpCLdnFnXG5NJKjBZNtKD2jSoZh90ccexvsZqR4/26VhfkzRK5X//gGrMaM/sa/SzD+UaT53DNcI8W5AWHoChSh8IQEudVTGLfvreq9nZF/Qj8mn9r7khiQR4arZF99kLUJzP+PhjS36vUguSreDV5w9xE1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ee1dAV2d; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-39c1efc4577so140718f8f.0;
+        Wed, 16 Apr 2025 19:13:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744856032; x=1745460832; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Glni7Ctegs0Uy0pmEHCLGfEY/faO7Dp8uDE4yyi7B7E=;
+        b=ee1dAV2dmQ2icScQ9MbQhML0D/WQD7j9cfSrB14Ym2r/bQMvae++X2h5KGIzcy6tpJ
+         xRLqiv+itKf1a2j+Q2aEg7tzdS4fTLcBIvDyFXMzR/2zIbMC0Zh2d7fLMxon9kvID/yD
+         lRieBV9mRxl8pFOQXyfbZ9kB35urwn+o0+uGX8pmKk6KISn5DY01wmCVi1wllJoey9yF
+         FEcGYICLZCCts8A5NMyQ2PvALyx/tBu8ELVfBPQ3IYabtnrWAlz8Tb4DNX7CE97WhcQM
+         zrJ0WvOpw2Z7tTq7jhS1PovQO2bjcBi/SEAK6AvZCk6beAi1SHMM/k8zdqKIsGaeB/WE
+         TY7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744856032; x=1745460832;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Glni7Ctegs0Uy0pmEHCLGfEY/faO7Dp8uDE4yyi7B7E=;
+        b=d6oMR3mdm7La82TehJzoF0a4+gaZ9kJO2WQiP0KhU8dtuKvAgf+xGMlHEFAwgKvXkv
+         8zFQDBodWm1eHmaWVBQMk0yQwdY6KRruMxJWzk015ttxZaBAqp7OYmxaxsq75lOQhZj2
+         8l25xPvz0mr3S/a817mian73kmq031WEfzxnOKo2QTvJaX9EOSAy6lWjkmQNtjs5bqq5
+         XUouSLCGgYsfoSD0Ld0O1tzsKS4KG1gEgKhbR2l3xjFbkXHRpCBAbpSr4NvBuzOxA2fZ
+         6vQ1M3tNE132uwhMFpM0yO7+E49ledj5ngbG2qL7ZoIo/LimejzngzmLub89IhQ5VZlO
+         2RIA==
+X-Forwarded-Encrypted: i=1; AJvYcCV3RSZT9/8+flRGb5ka8D1dm+wesKOtmP5dyfM/ctXHb20DAGuZJK+tn7Ls/68H0x8UlKlQnq9opdQKrAPL@vger.kernel.org, AJvYcCW6jjto0LXresQbh/A8+GKVGrVvBh/HilrhbCtKihZhlI/USNanmq/utX1L9+KqyNEIh7gFDjvaaMIXxaV1@vger.kernel.org
+X-Gm-Message-State: AOJu0YwN2nl0JjEYnQrOprP1/zS6YZor7TNenGOeNxIC6RRgEERKa162
+	W4h2d01O8CGhBgWnmi4vpJ+Wf+vMpCtZkxRfFQThHcA0XHmsZXY=
+X-Gm-Gg: ASbGnctyPj4iC8lzsz20cNtXpY33d4QuTgHwm4dw+BpeLBRIEihZ2aLSZDLq8UaWKQl
+	ozR/gvjmg6xOHXktkw34GY56mvYD8OzsfwmKybN1kjAR0o/3h7zQFbKeGgZK1w+bXMNSve5qZ7c
+	5w9/7VRIqjfQN4g1nGTaZFadV/0Fp1WPXkZ1pA7HF53+TvPvfT8cqmIc5/ckUb1CKeIL+8GuTOR
+	aiA22vndhqo0l/h3wWrTfZSWGOXOEsbA7+1SeYj2eDUo7bNtey1KoyqCnSVsIpTe+z03hGOEJ50
+	XhU5VVssZWnWpEtw0pQ96ZcAzJ7Yeh4w8aPVMn0a9fze4A==
+X-Google-Smtp-Source: AGHT+IF6yRq9L3wSEJqVWwemj1Z9rNAIRILp+bcwijkxSF4HMMr/lypABvlcr6xh1EKHH98BRkJuqg==
+X-Received: by 2002:a5d:64ae:0:b0:39c:11c0:eb98 with SMTP id ffacd0b85a97d-39ee5b9f651mr3707652f8f.39.1744856031791;
+        Wed, 16 Apr 2025 19:13:51 -0700 (PDT)
+Received: from alex-x1.lan ([84.226.118.249])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4405b4d1236sm36940485e9.13.2025.04.16.19.13.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Apr 2025 19:13:51 -0700 (PDT)
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+To: Dmitry Baryshkov <lumag@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	dmitry.baryshkov@oss.qualcomm.com
+Cc: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	laurentiu.tudor1@dell.com,
+	abel.vesa@linaro.org,
+	johan@kernel.org,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Subject: drm/msm/dp: Introduce link training per-segment for LTTPRs
+Date: Thu, 17 Apr 2025 04:10:31 +0200
+Message-ID: <20250417021349.148911-1-alex.vinarskis@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <rrqn7hlefn7klaczi2jkfta72pwmtentj3zp37yvw3brwpnalk@3eapwfeo5y4d>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Apr 16, 2025 at 08:34:21PM +0530, Manivannan Sadhasivam wrote:
-> I don't think it is possible to get rid of the powerpc version. It has
-> its own pci_dev::sysdata pointing to 'struct pci_controller' pointer
-> which is internal to powerpc arch code. And the generic code would need
-> 'struct pci_host_bridge' to access the callback.
+Recently added Initial LTTPR support in msm/dp has configured LTTPR(s)
+to non-transparent mode to enable video output on X1E-based devices
+that come with LTTPR on the motherboards. However, video would not work
+if additional LTTPR(s) are present between sink and source, which is
+the case for USB Type-C docks (eg. Dell WD19TB/WD22TB4), and at least
+some universal Thunderbolt/USB Type-C monitors (eg. Dell U2725QE).
 
-Below is my proposal to convert powerpc to the new ->slot_reset() callback.
-Compile-tested only.
+First, take into account LTTPR capabilities when computing max link
+rate, number of lanes. Take into account previous discussion on the
+lists - exit early if reading DPCD caps failed. This also fixes
+"*ERROR* panel edid read failed" on some monitors which seems to be
+caused by msm_dp_panel_read_sink_caps running before LTTPR(s) are
+initialized.
 
-Feel free to include this in your series, alternatively I can submit it
-to powerpc maintainers once your series has landed.  Thanks!
+Finally, implement link training per-segment. Pass lttpr_count to all
+required helpers.
+This seems to also partially improve UI (Wayland) hanging when
+changing external display's link parameters (resolution, framerate):
+* Prior to this series, via direct USB Type-C to display connection,
+  attempt to change resolution or framerate hangs the UI, setting does
+  not stick. Some back and forth replugging finally sets desired
+  parameters.
+* With this series, via direct USB Type-C to display connection,
+  changing parameters works most of the time, without UI freezing. Via
+  docking station/multiple LTTPRs the setting again does not stick.
+* On Xorg changing link paramaters works in all combinations.
 
--- >8 --
+These appear to be mainlink initialization related, as in all cases LT
+passes successfully.
 
-From: Lukas Wunner <lukas@wunner.de>
-Subject: [PATCH] powerpc/powernv/pci: Migrate to pci_host_bridge::reset_slot
- callback
+Test matrix:
+* Dell XPS 9345, Ubuntu 24.10, Gnome 47, Wayland (myself)
+	* Left USB Type-C, Right USB Type-C
+	* Direct monitor connection, Dell WD19TB, Dell WD22TB4, USB
+          Type-C to HDMI dongle, USB Type-C to DP dongle
+	* Dell AW3423DWF, Samsung LS24A600, dual Samsung LS24A600 (one
+	  monitor per USB Type-C connector)
+* Dell XPS 9345, Ubuntu 24.10, Gnome 47, Wayland (myself)
+	* Left USB Type-C, Right USB Type-C
+	* Direct monitor connection
+	* Samsung S34BG85 (USB Type-C), Dell U2725QE (universal
+          Thunderbolt/USB Type-C, probes with an LTTPR when in USB
+          Type-C/DP Alt mode)
+* Dell XPS 9345, Debian trixie/sid, Gnome 48, Wayland (Stefan Schmidt)
+        * Left USB Type-C, Right USB Type-C
+        * Dell WD15 Dock with DisplayPort connected
+        * Dell HD22Q dock with HDMI connected
+        * USB Type-C to HDMI dongle
+        * Dell U3417W
 
-struct pci_host_bridge has just been amended with a ->reset_slot()
-callback to allow for a per-host-bridge Secondary Bus Reset procedure.
+In both cases, "Thunderbot Support"/"USB4 PCIE Tunneling" was disabled
+in UEFI to force universal Thunderbolt/USB Type-C devices to work in
+DP Alt mode.
+In both cases laptops had HBR3 patches applied [1], resulting in
+maximum successful link at 3440x1440@100hz and 4k@60hz respectively.
+When using Dell WD22TB4/U2725QE, USB Type-C pin assigment D got enabled
+and USB3.0 devices were working in parallel to video ouput.
 
-PowerNV needs a platform-specific reset procedure and has historically
-implemented it by overriding pcibios_reset_secondary_bus().
+Known issues:
+* As mentioned above, it appears that on Gnome+Wayland framerate and
+  resolution parameter adjustment is not stable.
 
-Migrate PowerNV to the new ->reset_slot() callback for simplicity and
-cleanliness.  Assign the callback as soon as the pci_host_bridge is
-allocated through the following call chain:
+Due to lack of access to the official DisplayPort specfication, changes
+were primarily inspired by/reverse engineered from Intel's i915 driver.
 
-pcibios_init()
-  pcibios_scan_phb()
-    pci_create_root_bus()
-      pci_register_host_bridge()
-        pcibios_root_bridge_prepare()
+[1] https://lore.kernel.org/all/20250226231436.16138-2-alex.vinarskis@gmail.com/
 
-The powerpc-specific implementation of pcibios_reset_secondary_bus() can
-thus be deleted and the remaining default implementation in the PCI core
-can be made private.  The ->reset_secondary_bus() callback in struct
-pci_controller_ops likewise becomes obsolete and can be deleted.
+Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
 ---
- arch/powerpc/include/asm/pci-bridge.h        |  1 -
- arch/powerpc/kernel/pci-common.c             | 12 ------------
- arch/powerpc/platforms/powernv/eeh-powernv.c | 14 +++++++++-----
- arch/powerpc/platforms/powernv/pci-ioda.c    |  9 +++++++--
- arch/powerpc/platforms/powernv/pci.h         |  3 ++-
- drivers/pci/pci.c                            |  2 +-
- include/linux/pci.h                          |  1 -
- 7 files changed, 19 insertions(+), 23 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/pci-bridge.h b/arch/powerpc/include/asm/pci-bridge.h
-index 2aa3a091ef20..0de09fc90641 100644
---- a/arch/powerpc/include/asm/pci-bridge.h
-+++ b/arch/powerpc/include/asm/pci-bridge.h
-@@ -36,7 +36,6 @@ struct pci_controller_ops {
- 					    unsigned long type);
- 	void		(*setup_bridge)(struct pci_bus *bus,
- 					unsigned long type);
--	void		(*reset_secondary_bus)(struct pci_dev *pdev);
- 
- #ifdef CONFIG_PCI_MSI
- 	int		(*setup_msi_irqs)(struct pci_dev *pdev,
-diff --git a/arch/powerpc/kernel/pci-common.c b/arch/powerpc/kernel/pci-common.c
-index eac84d687b53..dad15fbec4e0 100644
---- a/arch/powerpc/kernel/pci-common.c
-+++ b/arch/powerpc/kernel/pci-common.c
-@@ -233,18 +233,6 @@ void pcibios_setup_bridge(struct pci_bus *bus, unsigned long type)
- 		hose->controller_ops.setup_bridge(bus, type);
- }
- 
--void pcibios_reset_secondary_bus(struct pci_dev *dev)
--{
--	struct pci_controller *phb = pci_bus_to_host(dev->bus);
--
--	if (phb->controller_ops.reset_secondary_bus) {
--		phb->controller_ops.reset_secondary_bus(dev);
--		return;
--	}
--
--	pci_reset_secondary_bus(dev);
--}
--
- resource_size_t pcibios_default_alignment(void)
- {
- 	if (ppc_md.pcibios_default_alignment)
-diff --git a/arch/powerpc/platforms/powernv/eeh-powernv.c b/arch/powerpc/platforms/powernv/eeh-powernv.c
-index db3370d1673c..9b9517cb6ab7 100644
---- a/arch/powerpc/platforms/powernv/eeh-powernv.c
-+++ b/arch/powerpc/platforms/powernv/eeh-powernv.c
-@@ -890,18 +890,22 @@ static int pnv_eeh_bridge_reset(struct pci_dev *pdev, int option)
- 	return (rc == OPAL_SUCCESS) ? 0 : -EIO;
- }
- 
--void pnv_pci_reset_secondary_bus(struct pci_dev *dev)
-+int pnv_pci_reset_secondary_bus(struct pci_host_bridge *host,
-+				struct pci_dev *dev)
- {
- 	struct pci_controller *hose;
-+	int rc_hot, rc_dea;
- 
- 	if (pci_is_root_bus(dev->bus)) {
- 		hose = pci_bus_to_host(dev->bus);
--		pnv_eeh_root_reset(hose, EEH_RESET_HOT);
--		pnv_eeh_root_reset(hose, EEH_RESET_DEACTIVATE);
-+		rc_hot = pnv_eeh_root_reset(hose, EEH_RESET_HOT);
-+		rc_dea = pnv_eeh_root_reset(hose, EEH_RESET_DEACTIVATE);
- 	} else {
--		pnv_eeh_bridge_reset(dev, EEH_RESET_HOT);
--		pnv_eeh_bridge_reset(dev, EEH_RESET_DEACTIVATE);
-+		rc_hot = pnv_eeh_bridge_reset(dev, EEH_RESET_HOT);
-+		rc_dea = pnv_eeh_bridge_reset(dev, EEH_RESET_DEACTIVATE);
- 	}
-+
-+	return rc_hot ? : rc_dea ? : 0;
- }
- 
- static void pnv_eeh_wait_for_pending(struct pci_dn *pdn, const char *type,
-diff --git a/arch/powerpc/platforms/powernv/pci-ioda.c b/arch/powerpc/platforms/powernv/pci-ioda.c
-index ae4b549b5ca0..e1b75a4bc681 100644
---- a/arch/powerpc/platforms/powernv/pci-ioda.c
-+++ b/arch/powerpc/platforms/powernv/pci-ioda.c
-@@ -2145,6 +2145,12 @@ static void pnv_pci_ioda_fixup(void)
- #endif
- }
- 
-+static int pnv_pci_root_bridge_prepare(struct pci_host_bridge *bridge)
-+{
-+	bridge->reset_slot = pnv_pci_reset_secondary_bus;
-+	return 0;
-+}
-+
- /*
-  * Returns the alignment for I/O or memory windows for P2P
-  * bridges. That actually depends on how PEs are segmented.
-@@ -2504,7 +2510,6 @@ static const struct pci_controller_ops pnv_pci_ioda_controller_ops = {
- 	.release_device		= pnv_pci_release_device,
- 	.window_alignment	= pnv_pci_window_alignment,
- 	.setup_bridge		= pnv_pci_fixup_bridge_resources,
--	.reset_secondary_bus	= pnv_pci_reset_secondary_bus,
- 	.shutdown		= pnv_pci_ioda_shutdown,
- #ifdef CONFIG_IOMMU_API
- 	.device_group		= pnv_pci_device_group,
-@@ -2515,7 +2520,6 @@ static const struct pci_controller_ops pnv_npu_ocapi_ioda_controller_ops = {
- 	.enable_device_hook	= pnv_ocapi_enable_device_hook,
- 	.release_device		= pnv_pci_release_device,
- 	.window_alignment	= pnv_pci_window_alignment,
--	.reset_secondary_bus	= pnv_pci_reset_secondary_bus,
- 	.shutdown		= pnv_pci_ioda_shutdown,
- };
- 
-@@ -2724,6 +2728,7 @@ static void __init pnv_pci_init_ioda_phb(struct device_node *np,
- 	}
- 
- 	ppc_md.pcibios_default_alignment = pnv_pci_default_alignment;
-+	ppc_md.pcibios_root_bridge_prepare = pnv_pci_root_bridge_prepare;
- 
- #ifdef CONFIG_PCI_IOV
- 	ppc_md.pcibios_fixup_sriov = pnv_pci_ioda_fixup_iov;
-diff --git a/arch/powerpc/platforms/powernv/pci.h b/arch/powerpc/platforms/powernv/pci.h
-index 42075501663b..44e8969c7729 100644
---- a/arch/powerpc/platforms/powernv/pci.h
-+++ b/arch/powerpc/platforms/powernv/pci.h
-@@ -275,7 +275,8 @@ extern struct iommu_table *pnv_pci_table_alloc(int nid);
- 
- extern void pnv_pci_init_ioda2_phb(struct device_node *np);
- extern void pnv_pci_init_npu2_opencapi_phb(struct device_node *np);
--extern void pnv_pci_reset_secondary_bus(struct pci_dev *dev);
-+extern int pnv_pci_reset_secondary_bus(struct pci_host_bridge *host,
-+				       struct pci_dev *dev);
- extern int pnv_eeh_phb_reset(struct pci_controller *hose, int option);
- 
- extern struct pnv_ioda_pe *pnv_pci_bdfn_to_pe(struct pnv_phb *phb, u16 bdfn);
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 13709bb898a9..fe66d69c6429 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -4980,7 +4980,7 @@ void pci_reset_secondary_bus(struct pci_dev *dev)
- 	pci_write_config_word(dev, PCI_BRIDGE_CONTROL, ctrl);
- }
- 
--void __weak pcibios_reset_secondary_bus(struct pci_dev *dev)
-+static void pcibios_reset_secondary_bus(struct pci_dev *dev)
- {
- 	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
- 	int ret;
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 76e977af2d52..43d952361e84 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -1398,7 +1398,6 @@ int pci_probe_reset_slot(struct pci_slot *slot);
- int pci_probe_reset_bus(struct pci_bus *bus);
- int pci_reset_bus(struct pci_dev *dev);
- void pci_reset_secondary_bus(struct pci_dev *dev);
--void pcibios_reset_secondary_bus(struct pci_dev *dev);
- void pci_update_resource(struct pci_dev *dev, int resno);
- int __must_check pci_assign_resource(struct pci_dev *dev, int i);
- void pci_release_resource(struct pci_dev *dev, int resno);
+Changes in v3:
+- Split 1st patch into 3
+- Simplified handling of max_lttpr_lanes/max_lttpr_rate
+- Moved lttpr_common_caps to msm_dp_link (not msm_dp_panel, as LTTPRs
+  are link related, not panel related)
+- Picked Stefan's T-b tag (last patch only, as 1st one is getting split)
+- Droped Abel's R-b tags from 1st patch that got split due to high diff
+- Fixed alignment issues, initialization of variables, debug prints
+- Moved lttpr_count to avoid ugly pointer
+- Link to v2: https://lore.kernel.org/all/20250311234109.136510-1-alex.vinarskis@gmail.com/
+
+Changes in v2:
+- Picked up Abel's R-b tags
+- Fixed typo as per Abel, fixed readability as per Johan
+- Updated cover and commit message on mailink issue which appears to be 
+  specific to Gnome+Wayland. No problems on Xorg.
+- Link to v1: https://lore.kernel.org/all/20250310211039.29843-1-alex.vinarskis@gmail.com/
+
+Aleksandrs Vinarskis (4):
+  drm/msm/dp: Fix support of LTTPR initialization
+  drm/msm/dp: Account for LTTPRs capabilities
+  drm/msm/dp: Prepare for link training per-segment for LTTPRs
+  drm/msm/dp: Introduce link training per-segment for LTTPRs
+
+ drivers/gpu/drm/msm/dp/dp_ctrl.c    | 126 ++++++++++++++++++++--------
+ drivers/gpu/drm/msm/dp/dp_display.c |  27 ++++--
+ drivers/gpu/drm/msm/dp/dp_link.h    |   4 +
+ drivers/gpu/drm/msm/dp/dp_panel.c   |  12 ++-
+ 4 files changed, 122 insertions(+), 47 deletions(-)
+
 -- 
-2.43.0
+2.45.2
 
 
