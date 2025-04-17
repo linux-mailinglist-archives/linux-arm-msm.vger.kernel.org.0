@@ -1,246 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-54613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 628CFA913EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 08:20:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AFD7A91431
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 08:39:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF7E73B96A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 06:20:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E698D5A1511
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 06:39:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DECB71F8EEC;
-	Thu, 17 Apr 2025 06:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC90E2066D9;
+	Thu, 17 Apr 2025 06:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="kKGEobHR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="alHWxbM0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E071E5B75;
-	Thu, 17 Apr 2025 06:20:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E439C2040B0;
+	Thu, 17 Apr 2025 06:39:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744870841; cv=none; b=XkJ6GgzPgD5D2e2MXQ1MPiK+GG1nHmVAR9QV1zze0IGKrUMymaPwAOrICC0Jwvox6++iFrlwWrLD7E+69oxwZPkXnGZdY8WHhPZ3qWDd1kvUP6Fb1o/IyBoLMZ0kG6NTZ3qLtS+XvYNBs6yQ/JZx3r23jFDbfnAuOzvBXCyt3uw=
+	t=1744871960; cv=none; b=UhWfeSy+To87vVaGAdwKSWGZOLncZvdyLa99AXX+jsfsnHS/CU6gWprBopi+anorYzHJxbzZTNhntMKPO7Ep36CQrRwohKYWpl0ThW1pPlQNNVzGuA2WUYvC5B6ypDb1RCXsf2V2UmiQ3L7oCwecSrqMARYVlXfWsm5eTon+Pp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744870841; c=relaxed/simple;
-	bh=jWdWYL2xljv5vybxvl3qY4QI5KxWxjAA4vZnrXfmHks=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=HUdQkIuev1g9f/hqDijqhyLMItJqIeLDDrxFMJ/XD2QV8AxZ86pqYg5QfM9Bch+PgLRdPW4nmhNXgFhhtvH0GedTR2kkjE4CaHQvQUQkky+E7QC+837sGGPTTA58LWaDlPmxLg1sBbrKJ92nWdedXumsJbus80sqbByzMPStEx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=kKGEobHR; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from localhost (web.docker-mailserver_default [172.18.0.2])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 6B705BBAD2;
-	Thu, 17 Apr 2025 06:20:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1744870836;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vINGxXd1a/HvJqBAZg5qAK4jrccoMyLLJvCH80uIjEo=;
-	b=kKGEobHRSReKJ1RvO2JA11xM/eViImkOIcHP3mrAOubxN+UtDvrII4KRy90i6k5bPBDIxT
-	szymDQiM9mbUgeEAd+KC8kJj4nNTqMOtsXfegsmboLsNM9nF0NaFXgRLtF8reYVZ+X4j70
-	eWpZCm1qaIh+JSMAaxId0BwWa/iiFqEdOiJfPZY9M7Q7DTHYq8khJz7+GBYZmI/KXdUHej
-	GWRv94Oq5IAOHG+4U3UoYBhps/O6touiPhMBHdgavS8A24LcSel9RT68m+cRBoGYoD2Ojw
-	vqEltuN9kIh+Qe0hYbnsP36WWfGc0tbAdntaxQ7ro6DSZmtgp2I3ulVQygqZmQ==
+	s=arc-20240116; t=1744871960; c=relaxed/simple;
+	bh=WKyAGawzprVwrTkfFvckDEJqm6+VK+OPjXyaZOlYxxo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=D99TAZqWLlcv5x1Ica87/JpfsIqVFjFNSLgOj2KOwWuGc/c6tSGb98w8f9RuWa6Q1vZUrR5ebYUbI7hFc2jkWsLowddpSoOtyJhtg7ip87aD9YirPg2M0JuyjxfpKeAgB4viL9LgbbZGO8T9JsJVmzCmWBu6jsnx42A9GbQHG1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=alHWxbM0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53H5laLo031368;
+	Thu, 17 Apr 2025 06:39:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	lPuo4akm7drMI1PBgwsJ69tuzpSeETP77j5Q17EJVJM=; b=alHWxbM0RFNNlBWi
+	SSVByXzfNYXhvcwnJXwnX/e9GzAp58JEuXzV6AnWrnNEWRJXgPuhe9juwa/VCYLs
+	hmENAUyUUAob/jK2Z8j2uVd4gGs34zGDwtxgGPn2hStl46P16zRrhFMv0EfADbl4
+	lf/YhjHpL5uS73w4IgK8YfzeIPng/kIFta4dGPbtpSwdAlOT3sbB55aIq9ZhMKj8
+	umBeX2qxooDtwNeugOk4Jus0niF6Oa8YMLqNGq7zGGR99/h45z2Je+P76IGtc6J1
+	+dKBfnFsfeuOxQ+vOUwZpt7StmKUzg3/Xh+2RXfYI5/Nwr7Pe7S7tIEWCeP01RvG
+	zek0DA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yf69wwsx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Apr 2025 06:39:13 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53H6dCF8020507
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Apr 2025 06:39:12 GMT
+Received: from [10.216.50.229] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 16 Apr
+ 2025 23:39:07 -0700
+Message-ID: <b592a51d-41f3-4a2b-a9f3-0f45c9bef967@quicinc.com>
+Date: Thu, 17 Apr 2025 12:09:04 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 17 Apr 2025 08:20:36 +0200
-From: barnabas.czeman@mainlining.org
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette
- <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>,
- =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, Linus Walleij
- <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>, Srinivas Kandagatla
- <srinivas.kandagatla@linaro.org>, Joerg Roedel <joro@8bytes.org>, Will
- Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, Konrad Dybcio
- <konradybcio@kernel.org>, Rob Clark <robdclark@gmail.com>, Sean Paul
- <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>, Marijn Suijten
- <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, Simona
- Vetter <simona@ffwll.ch>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, Dmitry Baryshkov
- <lumag@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- iommu@lists.linux.dev, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org, Dang Huynh
- <danct12@riseup.net>
-Subject: Re: [PATCH v4 4/6] arm64: dts: qcom: Add initial support for MSM8937
-In-Reply-To: <f85195a1-f55e-41ea-967d-b758014cba06@oss.qualcomm.com>
-References: <20250315-msm8937-v4-0-1f132e870a49@mainlining.org>
- <20250315-msm8937-v4-4-1f132e870a49@mainlining.org>
- <f85195a1-f55e-41ea-967d-b758014cba06@oss.qualcomm.com>
-Message-ID: <93ea35691deaa1ff38d229225e26cf41@mainlining.org>
-X-Sender: barnabas.czeman@mainlining.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs8300: Add cpufreq scaling node
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        "Rafael J. Wysocki"
+	<rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20250313-qcs8300-cpufreq-scaling-v1-0-d4cd3bd9c018@quicinc.com>
+ <20250313-qcs8300-cpufreq-scaling-v1-2-d4cd3bd9c018@quicinc.com>
+ <ce00f7e3-86a1-4fdd-9274-c1a9896c0f12@oss.qualcomm.com>
+Content-Language: en-US
+From: Imran Shaik <quic_imrashai@quicinc.com>
+In-Reply-To: <ce00f7e3-86a1-4fdd-9274-c1a9896c0f12@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xSGqB3RW_Cg5UkcZbFxVwPCWDuayVC8M
+X-Authority-Analysis: v=2.4 cv=JNc7s9Kb c=1 sm=1 tr=0 ts=6800a211 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=_WaFmQAp6mqnBGjcp68A:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: xSGqB3RW_Cg5UkcZbFxVwPCWDuayVC8M
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-17_01,2025-04-15_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ suspectscore=0 mlxlogscore=820 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 clxscore=1015 phishscore=0 adultscore=0 priorityscore=1501
+ spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504170050
 
-On 2025-04-14 22:55, Konrad Dybcio wrote:
-> On 3/15/25 3:57 PM, Barnabás Czémán wrote:
->> From: Dang Huynh <danct12@riseup.net>
->> 
->> Add initial support for MSM8937 SoC.
->> 
->> Signed-off-by: Dang Huynh <danct12@riseup.net>
->> Co-developed-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+
+
+On 4/14/2025 4:36 PM, Konrad Dybcio wrote:
+> On 3/13/25 7:03 AM, Imran Shaik wrote:
+>> Add cpufreq-hw node to support cpufreq scaling on QCS8300.
+>>
+>> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
 >> ---
 > 
 > [...]
 > 
->> +			power-domains = <&cpu_pd0>;
->> +			power-domain-names = "psci";
+>> +		cpufreq_hw: cpufreq@18591000 {
+>> +			compatible = "qcom,qcs8300-cpufreq-epss", "qcom,cpufreq-epss";
+>> +			reg = <0x0 0x18591000 0x0 0x1000>,
+>> +			      <0x0 0x18594000 0x0 0x1000>,
+>> +			      <0x0 0x18593000 0x0 0x1000>;
+>> +			reg-names = "freq-domain0", "freq-domain1", "freq-domain2";
 > 
-> So CPU4-7 get "nicer" idle, but 0-3 don't?
+> Please turn these into vertical lists> +
+>> +			interrupts = <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
+>> +			interrupt-names = "dcvsh-irq-0", "dcvsh-irq-1", "dcvsh-irq-2";
 > 
-> [...]
+> Since these labels don't match the hardware anyway, please sort them by address
 > 
->> +		cpu-map {
->> +			/* The MSM8937 has 2 cluster A53 setup. */
-> 
-> This comment seems superfluous
-> 
-> [...]
-> 
->> +	timer {
-> 
-> 'p' < 't', please sort top-level nodes alphabetically
-> 
-> [...]
-> 
->> +				wcss-wlan2-pins {
->> +					pins = "gpio76";
->> +					function = "wcss_wlan2";
->> +					drive-strength = <6>;
-> 
-> please unify this order (drive-strength before bias)
-> 
->> +					bias-pull-up;
->> +
->> +				};
-> 
-> Extra newline
-> 
-> [...]
-> 
->> +		gpu: gpu@1c00000 {
->> +			compatible = "qcom,adreno-505.0", "qcom,adreno";
->> +			reg = <0x1c00000 0x40000>;
->> +			reg-names = "kgsl_3d0_reg_memory";
->> +			interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "kgsl_3d0_irq";
->> +			#cooling-cells = <2>;
->> +			clocks = <&gcc GCC_OXILI_GFX3D_CLK>,
->> +				<&gcc GCC_OXILI_AHB_CLK>,
->> +				<&gcc GCC_BIMC_GFX_CLK>,
->> +				<&gcc GCC_BIMC_GPU_CLK>,
->> +				<&gcc GCC_OXILI_TIMER_CLK>,
->> +				<&gcc GCC_OXILI_AON_CLK>;
-> 
-> Please align the <s
-> 
->> +			clock-names = "core",
->> +				      "iface",
->> +				      "mem_iface",
->> +				      "alt_mem_iface",
->> +				      "rbbmtimer",
->> +				      "alwayson";
->> +			operating-points-v2 = <&gpu_opp_table>;
->> +			power-domains = <&gcc OXILI_GX_GDSC>;
->> +
->> +			iommus = <&adreno_smmu 0>;
->> +
->> +			status = "disabled";
->> +
->> +			gpu_opp_table: opp-table {
->> +				compatible = "operating-points-v2";
->> +
->> +				opp-19200000 {
->> +					opp-hz = /bits/ 64 <19200000>;
->> +					opp-supported-hw = <0xFF>;
-> 
-> 0xff is overly broad, please document the existing known speed bins
-There are no speedbins for 8937 gpu. 8940 have but 8940 is not scope of 
-this series.
-> 
-> [...]
-> 
->> +		adreno_smmu: iommu@1c40000 {
->> +			compatible = "qcom,msm8996-smmu-v2",
->> +				     "qcom,adreno-smmu",
->> +				     "qcom,smmu-v2";
->> +			reg = <0x1c40000 0x10000>;
-> 
-> Does it work as-is, without iommu changes?
-> 
-> [...]
-> 
->> +	thermal_zones: thermal-zones {
->> +		aoss-thermal {
->> +			polling-delay-passive = <250>;
-> 
-> There are no passive trip points> +
->> +			thermal-sensors = <&tsens 0>;
->> +
->> +			trips {
->> +				aoss_alert0: trip-point0 {
->> +					temperature = <85000>;
->> +					hysteresis = <2000>;
->> +					type = "hot";
->> +				};
-> 
-> Please convert these to 'critical' instead
-> 
-> [...]
-> 
->> +		cpuss1-thermal {
->> +			polling-delay-passive = <250>;
-> 
-> You can drop polling-delay-passive under CPU tzones, as threshold
-> crossing is interrupt-driven
-> 
->> +
->> +			thermal-sensors = <&tsens 4>;
->> +
->> +			cooling-maps {
->> +				map0 {
->> +					trip = <&cpuss1_alert0>;
->> +					cooling-device = <&cpu4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&cpu5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&cpu6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&cpu7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +			};
->> +
->> +			trips {
->> +				cpuss1_alert0: trip-point0 {
->> +					temperature = <75000>;
->> +					hysteresis = <2000>;
->> +					type = "passive";
->> +				};
->> +
->> +				cpuss1_alert1: trip-point1 {
->> +					temperature = <85000>;
->> +					hysteresis = <2000>;
->> +					type = "hot";
->> +				};
-> 
-> On newer platforms we rely on LMH to shut down the device if it
-> were to reach the junction temperature, but let's leave them here
-> as probably no one remembers for sure how reliable that is on these
-> older platforms and you're most likely not willing to test that
-> 
+
+Sure, I will take care of the above comments and post another series.
+
+Thanks,
+Imran
 > Konrad
+> 
+>> +
+>> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
+>> +			clock-names = "xo", "alternate";
+>> +
+>> +			#freq-domain-cells = <1>;
+>> +		};
+>> +
+>>  		remoteproc_gpdsp: remoteproc@20c00000 {
+>>  			compatible = "qcom,qcs8300-gpdsp-pas", "qcom,sa8775p-gpdsp0-pas";
+>>  			reg = <0x0 0x20c00000 0x0 0x10000>;
+>>
+
 
