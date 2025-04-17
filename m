@@ -1,318 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-54646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D54B5A91F1E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 16:07:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B899A9200A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 16:43:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3DBCE3BD866
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 14:07:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E65A3A740A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 14:43:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 717D3241CBA;
-	Thu, 17 Apr 2025 14:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BB832517B9;
+	Thu, 17 Apr 2025 14:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aLKgdeeJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A2cl2VpN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608E215A8;
-	Thu, 17 Apr 2025 14:07:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0022517A7;
+	Thu, 17 Apr 2025 14:43:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744898850; cv=none; b=OsyLkxVea3AUpLCCASL27nMD9Crlnw0ioO31nziaClLjTDSVLUMcLZ12319QIAZfVXpGG/Z3sytsWttupuEfQ9/Tc9/itg36ZBEihVeQ1fwTQ3kEADK+sXg2W6GW5Of45y0SnBWF4vORc+6+Mehe6+LEb4HCT/BpcZNPw6X0TDs=
+	t=1744901017; cv=none; b=UG/ydPsw2bLHtud4qk5SYOFpSTGmfnNk+qZ22zCgMtwBdrH4sx05aQD4MBzXgWBu7RCvR9fAyf6NXUX3PLrFaFBahzkw+0WYHA55i26UWuljnFeBTnnRKGi3D+/2jjOFv129iX31em9QJbpMuO3/2IbIEVAia5U68v3j21klrsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744898850; c=relaxed/simple;
-	bh=4D2BTjShe/OVtYJ+jQ1FkBPe/v1Y6FR69xEpB9nQ7FY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=hmasz17qlBVWaxG443YrYJPeVo3tOmNQLUMRacMdOKRSES30m/+9c/RcxKXkA6YNZ5D8p57nzIIqE3Dw69tQNPZ1pVmpey29b8+VSiS3PspoQfKFans8V4n8cXBaTmK3cQXu7fY1IEffb6SLc09NCpcdCU2fPt3f0OY6JEwpd5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aLKgdeeJ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53HClLLi001246;
-	Thu, 17 Apr 2025 14:07:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ebljc4HXRFqnMj/alss7Wxhd0z9M0KbmucyUjzkQeBc=; b=aLKgdeeJS92hll++
-	LQ+yx82dKkLmI2H+eY9QbjZsjHB75JkD1+2+9Vf+OTzZB1W5hI/u/wlDwQac9wl0
-	St9XWthaQp9KvBK3pq3tT7CjOjJWCt2mqGMho3XebblZp001UlFe9QnBac+WCWyL
-	qzN15MpkxgwSkG4Ge4sHgTqBTA1/M5l52ccjxyy5CiaG/q+uNTY1ivXL9MPjpX7u
-	mhgA1fnq8RGxCFYj+mzz6nMEf/uEAU4o/HsPfXFcb4gMbp3bw6e/PXv92ebfkDQm
-	pvYx28nubXW4TtNy36oyB+4RyRIDaFpf4d54WNipbivDZYFjw/M49E+b73I4euuI
-	f4Lcig==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ydvjfd8y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Apr 2025 14:07:15 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53HE7E4U009130
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Apr 2025 14:07:14 GMT
-Received: from [10.216.1.40] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 17 Apr
- 2025 07:07:10 -0700
-Message-ID: <27ad27a6-7ead-b265-c461-940181889bb4@quicinc.com>
-Date: Thu, 17 Apr 2025 19:36:59 +0530
+	s=arc-20240116; t=1744901017; c=relaxed/simple;
+	bh=S5ZVaseqUuvrABoaIpwk0yu6FEYrxOLklzkrs//Q+eQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rQXthp6X8IC0ueYret/w18hvpz5Kd3YANABzcC4GO21l6j8r1Ek4STK2aQeq0vwlwV5rQf8WiImM43L2ERwsjdWjOs+0b8D6XleCUaEXUkUvJg/ZZmtYmyGuRAGL7LGwKOyJJ/xFGweSfjZpCddPG5v6pISohQo07UZAl/C+iOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A2cl2VpN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90346C4CEEA;
+	Thu, 17 Apr 2025 14:43:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744901016;
+	bh=S5ZVaseqUuvrABoaIpwk0yu6FEYrxOLklzkrs//Q+eQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=A2cl2VpN0eoon2IuVVtJZ84THZGWSgoQt4AZf+EudG7D3pBjk/4CeZCY4GHhhtOZU
+	 7fKp+/5U3Q5+/e/h65mXl++6XQPlOAqSWJiRPYKsHlJkzVeG3YB6uW8LIIfwGz8HV9
+	 BATM0TdruGKibHKJFXc59Ub6l+6n2Pd3EZAfcC+uagnoAtCP7aBtAV6HyeSwOe4++F
+	 x2SQCUuvfW6hhiY/iRdYI0QsGw8N30r3V753hxkx/WKHHv9rnO2PHmDZK4jFjmUULx
+	 E/Z7HXHFW8OjsAjPLlJzv7nmP87tZrEW6csnYlxs3kg2u5deILG849IgbAXljxAVu0
+	 0O+Xlob8ylo2w==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1u5QSm-0000000016t-457c;
+	Thu, 17 Apr 2025 16:43:37 +0200
+Date: Thu, 17 Apr 2025 16:43:36 +0200
+From: Johan Hovold <johan@kernel.org>
+To: jens.glathe@oldschoolsolutions.biz
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: add
+ retimers, dp altmode support
+Message-ID: <aAETmEB4liEf29bP@hovoldconsulting.com>
+References: <20250417-slim7x-retimer-v1-1-5813a7835903@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v6 7/7] media: platform: qcom/iris: add sm8650 support
-To: <neil.armstrong@linaro.org>, Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel
-	<p.zabel@pengutronix.de>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250415-topic-sm8x50-iris-v10-v6-0-8ad319094055@linaro.org>
- <20250415-topic-sm8x50-iris-v10-v6-7-8ad319094055@linaro.org>
- <085acdab-87b0-3a94-72fd-881d517d95cb@quicinc.com>
- <68313fff-89d6-4a17-9006-75db971554c0@linaro.org>
-Content-Language: en-US
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <68313fff-89d6-4a17-9006-75db971554c0@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=ZIrXmW7b c=1 sm=1 tr=0 ts=68010b13 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=GFKehwC6CmmHh3UBcFkA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: AkVrCWMMiMIh-9NpAPdab_l9YSfFYFyh
-X-Proofpoint-ORIG-GUID: AkVrCWMMiMIh-9NpAPdab_l9YSfFYFyh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-17_04,2025-04-17_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
- clxscore=1015 priorityscore=1501 bulkscore=0 phishscore=0 mlxlogscore=999
- spamscore=0 impostorscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504170105
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250417-slim7x-retimer-v1-1-5813a7835903@oldschoolsolutions.biz>
 
+On Thu, Apr 17, 2025 at 01:38:39PM +0200, Jens Glathe via B4 Relay wrote:
+> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> 
+> comparing with CRD and other dts for a more complete support of the 7X
+> 
+> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+ 
+>  #include <dt-bindings/gpio/gpio.h>
+>  #include <dt-bindings/input/gpio-keys.h>
+> +#include <dt-bindings/input/input.h>
 
-On 4/17/2025 2:20 PM, Neil Armstrong wrote:
-> On 16/04/2025 12:25, Dikshita Agarwal wrote:
->>
->>
->> On 4/15/2025 7:17 PM, Neil Armstrong wrote:
->>> Add support for the SM8650 platform by re-using the SM8550
->>> definitions and using the vpu33 ops.
->>>
->>> Move the reset tables that diffes in a per-SoC platform
->>> header, that will contain mode SoC specific data when
->>> more codecs are introduced.
->>>
->>> The SM8650/vpu33 requires more reset lines, but the H.264
->>> decoder capabilities are identical.
->>>
->>> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # x1e Dell
->>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>> ---
->>>   .../platform/qcom/iris/iris_platform_common.h      |  1 +
->>>   .../media/platform/qcom/iris/iris_platform_gen2.c  | 65 +++++++++++++++++++++-
->>>   .../platform/qcom/iris/iris_platform_sm8550.h      | 11 ++++
->>>   .../platform/qcom/iris/iris_platform_sm8650.h      | 13 +++++
->>>   drivers/media/platform/qcom/iris/iris_probe.c      |  4 ++
->>>   5 files changed, 92 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h
->>> b/drivers/media/platform/qcom/iris/iris_platform_common.h
->>> index
->>> fdd40fd80178c4c66b37e392d07a0a62f492f108..6bc3a7975b04d612f6c89206eae95dac678695fc 100644
->>> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
->>> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
->>> @@ -35,6 +35,7 @@ enum pipe_type {
->>>     extern struct iris_platform_data sm8250_data;
->>>   extern struct iris_platform_data sm8550_data;
->>> +extern struct iris_platform_data sm8650_data;
->>>     enum platform_clk_type {
->>>       IRIS_AXI_CLK,
->>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
->>> b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
->>> index
->>> 35d278996c430f2856d0fe59586930061a271c3e..6d1771bd68689d96b5b9087b0ad32b934f7295ee 100644
->>> --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
->>> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
->>> @@ -10,6 +10,9 @@
->>>   #include "iris_platform_common.h"
->>>   #include "iris_vpu_common.h"
->>>   +#include "iris_platform_sm8550.h"
->>> +#include "iris_platform_sm8650.h"
->>> +
->>>   #define VIDEO_ARCH_LX 1
->>>     static struct platform_inst_fw_cap inst_fw_cap_sm8550[] = {
->>> @@ -142,8 +145,6 @@ static const struct icc_info sm8550_icc_table[] = {
->>>       { "video-mem",  1000, 15000000 },
->>>   };
->>>   -static const char * const sm8550_clk_reset_table[] = { "bus" };
->>> -
->>>   static const struct bw_info sm8550_bw_table_dec[] = {
->>>       { ((4096 * 2160) / 256) * 60, 1608000 },
->>>       { ((4096 * 2160) / 256) * 30,  826000 },
->>> @@ -264,3 +265,63 @@ struct iris_platform_data sm8550_data = {
->>>       .dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
->>>       .dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
->>>   };
->>> +
->>> +/*
->>> + * Shares most of SM8550 data except:
->>> + * - vpu_ops to iris_vpu33_ops
->>> + * - clk_rst_tbl to sm8650_clk_reset_table
->>> + * - controller_rst_tbl to sm8650_controller_reset_table
->>> + * - fwname to "qcom/vpu/vpu33_p4.mbn"
->>> + */
->>> +struct iris_platform_data sm8650_data = {
->>> +    .get_instance = iris_hfi_gen2_get_instance,
->>> +    .init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
->>> +    .init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
->>> +    .vpu_ops = &iris_vpu33_ops,
->>> +    .set_preset_registers = iris_set_sm8550_preset_registers,
->>> +    .icc_tbl = sm8550_icc_table,
->>> +    .icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
->>> +    .clk_rst_tbl = sm8650_clk_reset_table,
->>> +    .clk_rst_tbl_size = ARRAY_SIZE(sm8650_clk_reset_table),
->>> +    .controller_rst_tbl = sm8650_controller_reset_table,
->>> +    .controller_rst_tbl_size = ARRAY_SIZE(sm8650_controller_reset_table),
->>> +    .bw_tbl_dec = sm8550_bw_table_dec,
->>> +    .bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
->>> +    .pmdomain_tbl = sm8550_pmdomain_table,
->>> +    .pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
->>> +    .opp_pd_tbl = sm8550_opp_pd_table,
->>> +    .opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
->>> +    .clk_tbl = sm8550_clk_table,
->>> +    .clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
->>> +    /* Upper bound of DMA address range */
->>> +    .dma_mask = 0xe0000000 - 1,
->>> +    .fwname = "qcom/vpu/vpu33_p4.mbn",
->>> +    .pas_id = IRIS_PAS_ID,
->>> +    .inst_caps = &platform_inst_cap_sm8550,
->>> +    .inst_fw_caps = inst_fw_cap_sm8550,
->>> +    .inst_fw_caps_size = ARRAY_SIZE(inst_fw_cap_sm8550),
->>> +    .tz_cp_config_data = &tz_cp_config_sm8550,
->>> +    .core_arch = VIDEO_ARCH_LX,
->>> +    .hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
->>> +    .ubwc_config = &ubwc_config_sm8550,
->>> +    .num_vpp_pipe = 4,
->>> +    .max_session_count = 16,
->>> +    .max_core_mbpf = ((8192 * 4352) / 256) * 2,
->>> +    .input_config_params =
->>> +        sm8550_vdec_input_config_params,
->>> +    .input_config_params_size =
->>> +        ARRAY_SIZE(sm8550_vdec_input_config_params),
->>> +    .output_config_params =
->>> +        sm8550_vdec_output_config_params,
->>> +    .output_config_params_size =
->>> +        ARRAY_SIZE(sm8550_vdec_output_config_params),
->>> +    .dec_input_prop = sm8550_vdec_subscribe_input_properties,
->>> +    .dec_input_prop_size = ARRAY_SIZE(sm8550_vdec_subscribe_input_properties),
->>> +    .dec_output_prop = sm8550_vdec_subscribe_output_properties,
->>> +    .dec_output_prop_size =
->>> ARRAY_SIZE(sm8550_vdec_subscribe_output_properties),
->>> +
->>> +    .dec_ip_int_buf_tbl = sm8550_dec_ip_int_buf_tbl,
->>> +    .dec_ip_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_ip_int_buf_tbl),
->>> +    .dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
->>> +    .dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
->>> +};
->>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8550.h
->>> b/drivers/media/platform/qcom/iris/iris_platform_sm8550.h
->>> new file mode 100644
->>> index
->>> 0000000000000000000000000000000000000000..ac8847edb585e4a9ce6b669a3a5988e7809972af
->>> --- /dev/null
->>> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8550.h
->>> @@ -0,0 +1,11 @@
->>> +/* SPDX-License-Identifier: GPL-2.0-only */
->>> +/*
->>> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights
->>> reserved.
->>> + */
->>> +
->>> +#ifndef __IRIS_PLATFORM_SM8550_H__
->>> +#define __IRIS_PLATFORM_SM8550_H__
->>> +
->>> +static const char * const sm8550_clk_reset_table[] = { "bus" };
->>> +
->>> +#endif
->> There is no need of iris_platform_sm8550.h, you can keep this entry in
->> gen2.c file itself. As we are making that our base.
->> You can just have iris_platform_sm8650.h which overrides this entry with
->> SOC specific reset requirements for SM8650.
-> 
-> Ok, so this was requested by Vikash, but it seemed weird, but as Dmitry sais
-> kind of symmetrical and ok in fact.
-My point was to introduce an header for 8650, never was the plan to introduce
-for 8550. We wanted to keep that as base and any other SOC, bringing in delta
-would introduce the delta via SOC header.
-> 
-> But I'll respin without this file if you request it.
-Thank you.
+Unrelated change.
 
-Regards,
-Vikash
-> 
-> neil
-> 
->>
->> Thanks,
->> Dikshita
->>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8650.h
->>> b/drivers/media/platform/qcom/iris/iris_platform_sm8650.h
->>> new file mode 100644
->>> index
->>> 0000000000000000000000000000000000000000..75e9d572e788de043a56cf85a4cb634bd02226b9
->>> --- /dev/null
->>> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8650.h
->>> @@ -0,0 +1,13 @@
->>> +/* SPDX-License-Identifier: GPL-2.0-only */
->>> +/*
->>> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights
->>> reserved.
->>> + */
->>> +
->>> +#ifndef __IRIS_PLATFORM_SM8650_H__
->>> +#define __IRIS_PLATFORM_SM8650_H__
->>> +
->>> +static const char * const sm8650_clk_reset_table[] = { "bus", "core" };
->>> +
->>> +static const char * const sm8650_controller_reset_table[] = { "xo" };
->>> +
->>> +#endif
->>> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c
->>> b/drivers/media/platform/qcom/iris/iris_probe.c
->>> index
->>> 4f8bce6e2002bffee4c93dcaaf6e52bf4e40992e..7cd8650fbe9c09598670530103e3d5edf32953e7 100644
->>> --- a/drivers/media/platform/qcom/iris/iris_probe.c
->>> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
->>> @@ -345,6 +345,10 @@ static const struct of_device_id iris_dt_match[] = {
->>>               .data = &sm8250_data,
->>>           },
->>>   #endif
->>> +    {
->>> +        .compatible = "qcom,sm8650-iris",
->>> +        .data = &sm8650_data,
->>> +    },
->>>       { },
->>>   };
->>>   MODULE_DEVICE_TABLE(of, iris_dt_match);
->>>
-> 
+> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+
+Not needed with another unrelated change further down dropped.
+
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  
+>  #include "x1e80100.dtsi"
+
+> +&pm8550ve_8_gpios {
+> +	misc_3p3_reg_en: misc-3p3-reg-en-state {
+> +		pins = "gpio6";
+> +		function = "normal";
+> +		bias-disable;
+> +		input-disable;
+> +		output-enable;
+> +		drive-push-pull;
+> +		power-source = <1>; /* 1.8 V */
+> +		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
+> +	};
+> +};
+
+Unrelated change.
+
+Johan
 
