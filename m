@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-54644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 530B2A91EAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 15:51:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8804A91EAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 15:51:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 62549179F44
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 13:51:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B8158A1069
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 13:50:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 080E724E4A8;
-	Thu, 17 Apr 2025 13:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7F8B24EA81;
+	Thu, 17 Apr 2025 13:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NFyqnc1m"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FpHK1+eD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6732139DC;
-	Thu, 17 Apr 2025 13:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DF52139DC;
+	Thu, 17 Apr 2025 13:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744897862; cv=none; b=B/RZg+VkzPxKAZpxOZqWpfdH5EToRCH6W0RuJSH2ceWJYKM/4IQcHRdN9a7QO48zEk96Clmm7QlMCQX4Vx5/Xb/Lpb861ZRKXiFLwqQX1q2Y5SDMsjVcJLvxNcMtWeWMl65jOaveKPLuH0aPH9dB+79h/zOfEAF/PNcSwdvxHTA=
+	t=1744897864; cv=none; b=MZc+wzg+cZPpZEe51GXoYmOMr4GG7qau4Juh0bvZktALWGbA6bV7AclnidU0UWnXKdjCzzIBQgWBfAYPgEJAxjCRhnN7jySaSiLyQi8cJHF4meMqVIyXRga7nT9hOog0dy9JWD0iJYvJ5FlT8qGIAiXO4c57U885Jt3OK6X1bxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744897862; c=relaxed/simple;
-	bh=sFxKFtm2l7o0U4719U+5robMIUF6Yyewgq4pQya5YHg=;
+	s=arc-20240116; t=1744897864; c=relaxed/simple;
+	bh=lYK4pj/r9Xudb2nVt3/iLvT2yys4OYhshyiKWFUrNmY=;
 	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=incn+glMwTcq6jE5ywwSQkE8muAaD2CkmgZ6CDpFjJjWk/7AGkeNAzKmb4HfpT6MHvI/nZee0VJDLxEUH3IVVgCxpEkxj/O3YH5uCcGInVo4+t4jvu8kyucmT1ZdHvFeoUMgbsNuABLAFazPkfY39Wozdz8N7S6YENWKiBEk/0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NFyqnc1m; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6382CC4CEE4;
-	Thu, 17 Apr 2025 13:51:02 +0000 (UTC)
+	 Message-Id:Subject; b=LEY6qaETg64jAeNmMRhmVWKvvIeZVXph5Y3+fk8jXEHRYX09aa3yP7JjmZUXkPEhL5Elo5ltiYdJj8g/+igGaOs+8OKaT9J1mjYmxDH4bG+LmUnnZROIe+A9xQpfBJ1S8iqP0ARyBmbJh66hqyJbBlRZCjQuxPhcgDvl7DJvqQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FpHK1+eD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10095C4CEEA;
+	Thu, 17 Apr 2025 13:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744897862;
-	bh=sFxKFtm2l7o0U4719U+5robMIUF6Yyewgq4pQya5YHg=;
+	s=k20201202; t=1744897864;
+	bh=lYK4pj/r9Xudb2nVt3/iLvT2yys4OYhshyiKWFUrNmY=;
 	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=NFyqnc1m5HIpT7QvL3J8PQtBui0KGNGvz1+d+5P8C/B6UuFqr/ykwmU0FFnn9botR
-	 a7kkmdQV+GIJ0dDycVUqlQZwF5armvAZx1i9XkSIfF8cVRnAduHEKXsXumz/VqmvI9
-	 PB54BHcwJtcFgrw/OWu9sk6SdCBo69u4PJ092Cq7hKW3sW7VMelquqdZPuFsYlB+Ba
-	 Upqj7DYDOvHtovVS8QpeD9yhhDplHPu53epIGPhvhQJF1Qh8iqHQEGM/1oAh54Uvmj
-	 5KjgtKI4ZSKU5BEqRxQ7kT5FP1ZGyu9WFwNFu2bOezS6qWn6zcwRExqNus3QgJ/4Ap
-	 4Mc/IT6vuq4pw==
-Date: Thu, 17 Apr 2025 08:51:00 -0500
+	b=FpHK1+eDGri/Q06V1lMnLWhOP49mBDukV/gF+Rs/IkycbV9ny4rbWaMtBCsUEg7Jm
+	 T/ex9G3w+Vd5RhzeBwAnfgZfexSq12/jqvIXdIjLl+Ds0+sJAb5TAyL1qFERazvvgO
+	 v4p9qVZWXpCR/NBnBllQi5FPpIKDS3SyFZ3WLWVQPrPONZ/XGFLqdGmCNydptKUiL8
+	 38/kLvLlq9aB6S930EWPMCRDk98NMd6JTKNicPyfBpGexX4wb0mmRGTLk69JLJzKU4
+	 tKUCU1HNrVR83FJrdsrFHoeXtNy42A1InIzwkNp0MxKA9G2IcKk5NMG23PfxKFoWuG
+	 /2uRR5HG/XdQA==
+Date: Thu, 17 Apr 2025 08:51:02 -0500
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,121 +51,134 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: conor+dt@kernel.org, mathieu.poirier@linaro.org, 
- vignesh.viswanathan@oss.qualcomm.com, krzk+dt@kernel.org, 
- konradybcio@kernel.org, devicetree@vger.kernel.org, 
- quic_srichara@quicinc.com, andersson@kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
- quic_mmanikan@quicinc.com
-To: Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>
-In-Reply-To: <20250417061245.497803-1-gokul.sriram.p@oss.qualcomm.com>
-References: <20250417061245.497803-1-gokul.sriram.p@oss.qualcomm.com>
-Message-Id: <174489760501.1657232.1882523053763202826.robh@kernel.org>
-Subject: Re: [PATCH V5 0/6] Add new driver for WCSS secure PIL loading
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-clk@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
+ Robert Foss <rfoss@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, 
+ Todor Tomov <todor.too@gmail.com>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-media@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250417-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-0-3fd4124cf35a@linaro.org>
+References: <20250417-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-0-3fd4124cf35a@linaro.org>
+Message-Id: <174489760555.1657266.9336071214730240829.robh@kernel.org>
+Subject: Re: [PATCH v7 0/6] Add dt-bindings and dtsi changes for CAMSS on
+ x1e80100 silicon
 
 
-On Thu, 17 Apr 2025 11:42:39 +0530, Gokul Sriram Palanisamy wrote:
-> This series depends on Sricharan's tmel-qmp mailbox driver series v4 [1].
+On Thu, 17 Apr 2025 12:27:01 +0100, Bryan O'Donoghue wrote:
+> Changes in v7:
+> - camss compat string is in media-comitters for 6.16 so it should
+>   be possible to merge the core DTSI stuff in this series now.
+> - Adds RB as indicated in previous cycle.
+> - Changes <0 0xvalue 0 0xvalue> to <0x0 0xvalue 0x0 0xvalue> per
+>   current comments on linux-arm-msm.
+> - Includes CRD dtsi for the ov08x40.
+> - Link to v6: https://lore.kernel.org/r/20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-0-edcb2cfc3122@linaro.org
+> - Link to media-comitters: https://gitlab.freedesktop.org/linux-media/media-committers
 > 
-> - Secure PIL is signed, split firmware images which only TrustZone (TZ)
->   can authenticate and load. Linux kernel will send a request to TZ to
->   authenticate and load the PIL images.
+> Changes in v6:
+> - Removes 'A phandle to an OPP node describing' per Krzysztof's comment
+>   on patch #1
+> - Drops Fixes: from patch #1 - Krzysztof
+> - The ordering of opp description MXC and MMXC is kept as it matches the
+>   power-domain ordering - Krzysztof/bod
+> - Link to v5: https://lore.kernel.org/r/20250313-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v5-0-846c9a6493a8@linaro.org
 > 
-> - When secure PIL support was added to the existing wcss PIL driver
->   earlier in [2], Bjorn suggested not to overload the existing WCSS
->   rproc driver, instead post a new driver for PAS based IPQ WCSS driver.
->   This series adds a new secure PIL driver for the same.
+> v5:
+> - Picks up a Fixes: that is a valid precursor for this series - Vlad
+> - Applies RB from Vlad
+> - Drops "cam" prefix in interconnect names - Krzysztof/Vlad
+> - Amends sorting of regs, clocks consistent with recent 8550 - Depeng/Vlad
+> - Link to v4: https://lore.kernel.org/r/20250119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v4-0-c2964504131c@linaro.org
 > 
-> - Also adds changes to scm to pass metadata size as required for IPQ5332,
->   reposted from [3].
+> v4:
+> - Applies RB from Konrad
+> - Adds the second CCI I2C bus to CCI commit log description.
+>   I previously considered leaving out the always on pins but, decided
+>   to include them in the end and forgot to align the commit log.
+> - Alphabetises the camcc.h included in the dtsi. - Vlad
+> - Link to v3: https://lore.kernel.org/r/20250102-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v3-0-cb66d55d20cc@linaro.org
 > 
-> [1]
-> https://patchwork.kernel.org/project/linux-arm-msm/cover/20250327181750.3733881-1-quic_srichara@quicinc.com/
+> v3:
+> - Fixes ordering of headers in dtsi - Vlad
+> - Changes camcc to always on - Vlad
+> - Applies RB as indicated - Krzysztof, Konrad
+> - Link to v2: https://lore.kernel.org/r/20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-0-06fdd5a7d5bb@linaro.org
 > 
-> [2]
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/1611984013-10201-3-git-send-email-gokulsri@codeaurora.org/
+> v2:
 > 
-> [3]
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/20240820055618.267554-6-quic_gokulsri@quicinc.com/
+> I've gone through each comment and implemented each suggestion since IMO
+> they were all good/correct comments.
 > 
-> changes in v5:
-> 	- retained all the patches as in v3 and addressed comments in
-> 	  v3.
-> 	- reverted changes to dt-bindings done in v4 and retained as in
-> 	  v3 and fixed firmware format from .mdt to .mbn and retained
-> 	  reviewed-by.
-> 	- dropped 2 patches in v4 that adds support for q6 dtb loading.
-> 	  Will post them as a new series.
+> Detail:
 > 
-> 	Following tests were done:
-> 	- checkpatch
-> 	- dt_binding_check and dtbs_check
+> - Moves x1e80100 camcc to its own yaml - Krzysztof
+> - csid_wrapper comes first because it is the most relevant
+>   register set - configuring all CSID blocks subordinate to it - bod, Krzysztof
+> - Fixes missing commit log - Krz
+> - Updates to latest format established @ sc7280 - bod
+> - Includes CSID lite which I forgot to add @ v1 - Konrad, bod
+> - Replaces static ICC parameters with defines - Konrad
+> - Drops newlines between x and x-name - Konrad
+> - Drops redundant iommu extents - Konrad
+> - Leaves CAMERA_AHB_CLK as-is - Kronrad, Dmitry
+>   Link: https://lore.kernel.org/r/3f1a960f-062e-4c29-ae7d-126192f35a8b@oss.qualcomm.com
+> - Interrupt EDGE_RISING - Vladimir
+> - Implements suggested regulator names pending refactor to PHY API - Vladimir
+> - Drop slow_ahb_src clock - Vladimir
 > 
-> changes in v4:
->         - changed q6 firmware image format from .mdt to .mbn
->         - corrected arrangement of variable assignemnts as per comments
->           in qcom_scm.c
->         - added scm call to get board machid
->         - added support for q6 dtb loading with support for additional
->           reserved memory for q6 dtb in .mbn format
->         - updated dt-bindings to include new dts entry qcom,q6-dtb-info
->           and additional item in memory-region for q6 dtb region.
->         - removed unnecessary dependency for QCOM_Q6V5_WCSS_SEC in
->           Kconfig
->         - removed unwanted header files in qcom_q6v5_wcss_sec.c
->         - removed repeated dtb parsing during runtime in qcom_q6v5_wcss_sec.c
->         - added required check for using tmelcom, if available. Enabled
->           fallback to scm based authentication, if tmelcom is unavailable.
->         - added necessary padding for 8digt hex address in dts
+> Link to v1:
+> https://lore.kernel.org/r/20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-0-54075d75f654@linaro.org
 > 
-> 	Following tests were done:
-> 	- checkpatch
-> 	- kernel-doc
-> 	- dt_binding_check and dtbs_check
+> Working tree:
+> https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/arm-laptop/wip/x1e80100-6.13-rc3
 > 
-> changes in v3:
->         - fixed copyright years and markings based on Jeff's comments.
->         - replaced devm_ioremap_wc() with ioremap_wc() in
->           wcss_sec_copy_segment().
->         - replaced rproc_alloc() and rproc_add() with their devres
->           counterparts.
->         - added mailbox call to tmelcom for secure image authentication
->           as required for IPQ5424. Added ipq5424 APCS comatible required.
->         - added changes to scm call to pass metadata size as required for
->           IPQ5332.
+> v1:
 > 
-> changes in v2:
->         - Removed dependency of this series to q6 clock removal series
->           as recommended by Krzysztof
+> This series adds dt-bindings and dtsi for CAMSS on x1e80100.
 > 
-> Gokul Sriram Palanisamy (1):
->   arm64: dts: qcom: ipq5424: add nodes to bring up q6
+> The primary difference between x1e80100 and other platforms is a new VFE
+> and CSID pair at version 680.
 > 
-> Manikanta Mylavarapu (4):
->   firmware: qcom_scm: ipq5332: add support to pass metadata size
->   dt-bindings: remoteproc: qcom: document hexagon based WCSS secure PIL
->   arm64: dts: qcom: ipq5332: add nodes to bringup q6
->   arm64: dts: qcom: ipq9574: add nodes to bring up q6
+> Some minor driver churn will be required to support outside of the new VFE
+> and CSID blocks but nothing too major.
 > 
-> Vignesh Viswanathan (1):
->   remoteproc: qcom: add hexagon based WCSS secure PIL driver
+> The CAMCC in this silicon requires two, not one power-domain requiring
+> either this fix I've proposed here or something similar:
 > 
->  .../remoteproc/qcom,wcss-sec-pil.yaml         | 131 ++++++
->  arch/arm64/boot/dts/qcom/ipq5332.dtsi         |  64 ++-
->  arch/arm64/boot/dts/qcom/ipq5424.dtsi         |  82 +++-
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  60 ++-
->  drivers/firmware/qcom/qcom_scm.c              |  17 +-
->  drivers/firmware/qcom/qcom_scm.h              |   1 +
->  drivers/remoteproc/Kconfig                    |  19 +
->  drivers/remoteproc/Makefile                   |   1 +
->  drivers/remoteproc/qcom_q6v5_wcss_sec.c       | 399 ++++++++++++++++++
->  include/linux/remoteproc.h                    |   2 +
->  10 files changed, 769 insertions(+), 7 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcss-sec-pil.yaml
->  create mode 100644 drivers/remoteproc/qcom_q6v5_wcss_sec.c
+> https://lore.kernel.org/linux-arm-msm/bad60452-41b3-42fb-acba-5b7226226d2d@linaro.org/T/#t
 > 
+> That doesn't gate adoption of the binding description though.
+> 
+> A working tree in progress can be found here:
+> https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/x1e80100-6.12-rc7+camss?ref_type=heads
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+> Bryan O'Donoghue (6):
+>       arm64: dts: qcom: x1e80100: Add CAMCC block definition
+>       arm64: dts: qcom: x1e80100: Add CCI definitions
+>       arm64: dts: qcom: x1e80100: Add CAMSS block definition
+>       arm64: dts: qcom: x1e80100-crd: Define RGB camera clock and reset pinout
+>       arm64: dts: qcom: x1e80100-crd: Add pm8010 CRD pmic,id=m regulators
+>       arm64: dts: qcom: x1e80100-crd: Define RGB sensor for cci1_i2c1
+> 
+>  arch/arm64/boot/dts/qcom/x1-crd.dtsi   | 106 ++++++++++
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 352 +++++++++++++++++++++++++++++++++
+>  2 files changed, 458 insertions(+)
+> ---
+> base-commit: 0316f040a04804ff1f45e51ccd42b45552c54a60
+> change-id: 20250313-b4-linux-next-25-03-13-dtsi-x1e80100-camss-1506f74bbd3a
+> 
+> Best regards,
 > --
-> 2.34.1
+> Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > 
 > 
 > 
@@ -186,15 +199,25 @@ make sure dt-schema is up to date:
 
 
 This patch series was applied (using b4) to base:
- Base: attempting to guess base-commit...
- Base: tags/next-20250417 (exact match)
+ Base: using specified base-commit 0316f040a04804ff1f45e51ccd42b45552c54a60
 
 If this is not the correct base, please add 'base-commit' tag
 (or use b4 which does this automatically)
 
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250417061245.497803-1-gokul.sriram.p@oss.qualcomm.com:
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250417-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-0-3fd4124cf35a@linaro.org:
 
-arch/arm64/boot/dts/qcom/ipq5424-rdp466.dtb: /soc@0/qmp@32090000: failed to match any schema with compatible: ['qcom,ipq5424-tmel']
+arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: /soc@0/isp@acb6000: failed to match any schema with compatible: ['qcom,x1e80100-camss']
+arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dtb: /soc@0/isp@acb6000: failed to match any schema with compatible: ['qcom,x1e80100-camss']
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dtb: /soc@0/isp@acb6000: failed to match any schema with compatible: ['qcom,x1e80100-camss']
+arch/arm64/boot/dts/qcom/x1p42100-crd.dtb: /soc@0/isp@acb6000: failed to match any schema with compatible: ['qcom,x1e80100-camss']
+arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: /soc@0/isp@acb6000: failed to match any schema with compatible: ['qcom,x1e80100-camss']
+arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dtb: /soc@0/isp@acb6000: failed to match any schema with compatible: ['qcom,x1e80100-camss']
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: /soc@0/isp@acb6000: failed to match any schema with compatible: ['qcom,x1e80100-camss']
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtb: /soc@0/isp@acb6000: failed to match any schema with compatible: ['qcom,x1e80100-camss']
+arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: /soc@0/isp@acb6000: failed to match any schema with compatible: ['qcom,x1e80100-camss']
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: /soc@0/isp@acb6000: failed to match any schema with compatible: ['qcom,x1e80100-camss']
+arch/arm64/boot/dts/qcom/x1e80100-crd.dtb: /soc@0/isp@acb6000: failed to match any schema with compatible: ['qcom,x1e80100-camss']
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: /soc@0/isp@acb6000: failed to match any schema with compatible: ['qcom,x1e80100-camss']
 
 
 
