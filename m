@@ -1,148 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-54604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9609CA9138A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 08:07:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9AA6A91399
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 08:12:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 34D627A9DB6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 06:06:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B5D33A7EE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 06:12:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F22631F4720;
-	Thu, 17 Apr 2025 06:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FFB91F3FE3;
+	Thu, 17 Apr 2025 06:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B3L/KVTG"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XLUoC/Zc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A053E1F12F2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Apr 2025 06:07:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EC31EB5CE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Apr 2025 06:12:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744870065; cv=none; b=Rv7i9ckuprlHRZ6qf5lZWPlCgNWeM5BcjZOMPlAxEZJVr6cI+Sd+hRnCBWAoixNwz1dDsk2kb77T8eiQSaOSX9X9BMP/D6bgk8MGnUtNUQPlh/7eJx2MGFP/R89e/u3fLKpIAA2/GxXquQJAeB6Rn7lRibn02rII9DFLlwwg/ew=
+	t=1744870374; cv=none; b=kMtlHymanjOBFpDannRf9969o8eF1pWlOp9Oy1AP8qZMqUDr0LhytycY4iBlAGwMOfjDpbqRGK3t9W0UPh39gUtmGif364E32tHxIy14hct44UR3PkJrlZMHJC6aHPzcZdsG4OalM+YXaE5tjKQ0LjZP8snVLc4Very3J5ccg/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744870065; c=relaxed/simple;
-	bh=SJ5pp2PEFU9Mosrf8HZCUtQXVnazURuiUC73cKCZalg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OB9xLh8XVoME29354bgpSf++2mzQ4cUjTzk4sp+VkPk40uCLP3ci4UtqKlBocl11YLZymOEIjVK3wATX+QfMaGOGZS9YOkIjLxi3jLLWH1EiH70Bl/qCTrUGsIpUNEVsmhp2tjZa35Z1vnYSKytmAmHL5sLvEJEbkux/zdiWJP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B3L/KVTG; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7394945d37eso291509b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 23:07:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744870063; x=1745474863; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Pd6OOWCuIIKAwnNGxCiRtg0jiUDcshaa45Tlc/bukVw=;
-        b=B3L/KVTGfswXOANfd8zfHIHCi2/25FkO3qJf9/Ju8b8fvrUzjuK6ZjErL1neYzsJXz
-         dkVU4OnqlgHmFjbuMxHYCH+g1a6PyR9lJflK+CeI3lJE/xrycUNIaMaPgQ9WHiAHf7wp
-         EEECLJa9tEVoKrBqTmq7lLoyeFhpJgXbogr3Pw6iR+sSI0nuRaORIBEPih/lZgaeITf1
-         ZgTODtNrugc4IU5cZ0ZFkiZGVES8B4hc9UYznpJlwJPZ815QBKbWQ3XfF+kE8bER/fnR
-         YXrCAfCuh+43sZxbfFxOaQ4wqX0h7WqPjbIruEc4NgzvX3+CSLegN73HNAZY+VMVdb+4
-         UKPQ==
+	s=arc-20240116; t=1744870374; c=relaxed/simple;
+	bh=cgtO14Bpvt6Wb55LWPr7WF1fABYqx6pYYyQ6s4+ktgI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=IefrA3NZw+m19W5XNw8qEjR3dGIjFlzOOU1dO1W6yJOdtENuLg1QhT+Y3jLfjjBCNYE2Sp1ngIY9SgCGnix4/Vor46ctF2iyb/zm00C8WARraUSeb5LDL+Cf70XqSqtaL8q8BdNeL5Vd5WJHJaCGjIsduDf0IZ/oeoVRw8SVR5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XLUoC/Zc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53H5l76f003033
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Apr 2025 06:12:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=qmgG5UzNxXN5PBPdTRUaB2bKva2zzhOulRy
+	r2SSIuUM=; b=XLUoC/ZcbgRR9TVEuzdrK5YdoC3rXF/UZ2HWVyXAr6K+K1Zs8Tj
+	UmQ2ZAIKbHGjM090gVErYXfJHEmjUqdvyHE4KAQNME23vZLcdjrvgj2ZTBQlz3G4
+	eCso8W4FpqnVvmra3oVYIqrw+r/bK0WYGhR25dGcl/+KLui88kXg3RximTh6uDxn
+	zqLvRveF5krBcgaIeqgN2rhSVsYvDMLsZGRpkGO9D83Dl+LSpZOCZL5/Xp5EnC6w
+	VtCrLfbmbka9yBbNQ5YqEguSuNSMBOf/giGGQoTz1jciCSY2dr0Dz6VWl/u89/xG
+	iHa3OWD8AIKmzJ6zdCU+MW9WfoicLBI+PBg==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygxk5r9n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Apr 2025 06:12:51 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-229170fbe74so5197435ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Apr 2025 23:12:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744870063; x=1745474863;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pd6OOWCuIIKAwnNGxCiRtg0jiUDcshaa45Tlc/bukVw=;
-        b=gIMk22Fgi1yCfuXD3Mx84Hh+pcTzmlRyh0LQk5IKraNk/dpJhpSs82OuXFuDCd5tk4
-         FKNQLh6vL9XIOxR5w9Ipzsa78BKSMMGWZo7qyCrSq2gaYs5nb9IRF3B5XTdKMS3hhNL+
-         wUFXwoHnQ3Scb9r5e4NYAMG/Zu4IRXGG0gbqDw1oa945D/3wyuI3hRDtaRhzI9B9CCmK
-         3F5nxwwRjvHLIXkmvjnjQLl4+NmSaqILrJ8SQdlEZCDOgICOoT+Xu+StwhlouxkRt9+V
-         rVtbQgeeJVx/BvS3BZbL1qzoz9uSJgMrEctgtKpzjhay3lGZzOq+OjcsA7RI9q/DA8Pw
-         8X1A==
-X-Forwarded-Encrypted: i=1; AJvYcCXN8W1jNK9jZjpQWH4S0wue3wWbKSv/umaJ37ZxlVaQ2GJp+xBm3ae95aeNRDS+o5oPrZ5DJNreqW0Y4GNX@vger.kernel.org
-X-Gm-Message-State: AOJu0YxdOTE6jfTcPDui+5y8Oh69XdHhxFpi2xxwJ31Piyhg9KOGLimr
-	NyQOooruM+C2IH+KGRqmtyNzv6Kg5B4C5wYpBbT0KK5XWfUiTodT8kkhDuLrSQ==
-X-Gm-Gg: ASbGncsyFK3vU79ZgjRyY6c9xe94g3f+2sqH8bQV6ehq4sOEEd/8kqSzxztvrpQjnnV
-	6Xoz70wkjjYE4NeKQ64IkTF4Sn9XlI0smouQib7CRluVHw+AqU/JXjvde7tOCW5Iq5bAWQE1qtk
-	D8H6xRykqtkVwXIEetuMDCHJCpRurP4Y+eOMHGN3OH6FkVIXVHbU0hF3Wq42XWTn3/XKiJTR9EC
-	xNfltSVpQJgVEncYhNOYDD2cW+iXo5o6DdOS+EMgf3HwELfgcXP2RdbzkkdCMFp4mZGUCmAOldK
-	tjcH9PjbdcuyhoimqCDwNJHgB3OcR0bB3rs/mmHr/pQgKyeN
-X-Google-Smtp-Source: AGHT+IEGKe8IgUll51m3XVZ/pKTgzfl3xR85lF+5Mw9zim0JsXl11h/TRDH0YYgMcdLUzmlGXqar4A==
-X-Received: by 2002:a05:6a00:240c:b0:736:5725:59b4 with SMTP id d2e1a72fcca58-73c266b5fcfmr7618028b3a.3.1744870062780;
-        Wed, 16 Apr 2025 23:07:42 -0700 (PDT)
-Received: from thinkpad ([120.60.54.0])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73bd23351fbsm11902923b3a.171.2025.04.16.23.07.40
+        d=1e100.net; s=20230601; t=1744870371; x=1745475171;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qmgG5UzNxXN5PBPdTRUaB2bKva2zzhOulRyr2SSIuUM=;
+        b=K+psb05sccMNzp0KiviSBaUrQZdH5nUnoczc8yKYLHkfYnh0iVwWJAS6J5+FfgcFo1
+         UA+ltQpZijypI3toydrC19ql8sd4GUCb+09PIPyIorPLRD3gQV+fAcnl66wqUFUsuwea
+         StidsyyYCZHaE6h/eae0kNSOUTGnyeMoWL9GiezxVoMypSbldp8CiPieAJ1drqcdcRNN
+         Gn4/i6T8/R+zXa3JAT5iS+nktDQDnU4i0SUlOa4uxDOjgrGWHHsW2obQpb6VRjY+SjY+
+         aTeG+LS2OXXtkxwnu22dBANGt6e9rb4eEygoipuaUPEvKdoypCmgeoaOfW8ZE0mT64pc
+         NoqA==
+X-Forwarded-Encrypted: i=1; AJvYcCWk70WUhE75pM6pPiglDplupmckeJjByxbOojF7KIdmiuua1zE7IYna2S1P02eRLMxkhtX7Q9ouPAafn9Gf@vger.kernel.org
+X-Gm-Message-State: AOJu0YweKZBeZVeGSKfjvSpMHxPwBozPyhO6LW5T0bwOFs+4D+BFgDNN
+	lmNU5IPeYKQ8/Uma83NAWAmk4DhNLsKp24l3HKb1fC5/6VW1SO2HAoVkTaPFpEkXlTxrtIjzrc/
+	CXfulP/JYtvY4E1o8vlcAvTl8hQGQpjWsaHtMwrMMGQGoP7a4KL6K0p0hRiwxNssH
+X-Gm-Gg: ASbGncvsHPy/5RYWH+2Q3LM7GiCX+G0mN9lyherE+Ix/d/JQmaAJsGYrdb9pIzBF0DL
+	C1Ckvf/3qZPfgsvz9HGPMvG9CvU0SRC4G8YqpvMyvO5cIu8uQj+JfoWs5Z5yoGxsSOwRQBuzCO7
+	5LznKLZWpu/6pyHEXHTpI0QTsLMqh+kqT4ildeILpGkpoQL92OemH1UfWBp6TQiq//5Eg/sZ5pW
+	Bbn13VIaZkPCN2JC9hNx6Lx7XbM0jMseZ0bZwLAEkB2+GBUBup39BD5cqfY4BBhQDSMGPJfxctg
+	5wKyduvrPPu7XI9ugx7iVH3AQ70UjtM0tPZO9lSobYrTq59ARHSjmizkPryjuL/WTx2/f3f2Vsj
+	6jQEtrwsTKNWBL1VDQfAIldCCf1x/Lbsq3nE=
+X-Received: by 2002:a17:902:e542:b0:224:249f:9734 with SMTP id d9443c01a7336-22c358c5261mr71251075ad.4.1744870370908;
+        Wed, 16 Apr 2025 23:12:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHCQAlvcNuZzfshnIDcwN9Wn+dmeRTS2l91t+hdzoOVBIq0mrD0PPxzu2ly2DtwXNhUB0CVBQ==
+X-Received: by 2002:a17:902:e542:b0:224:249f:9734 with SMTP id d9443c01a7336-22c358c5261mr71250745ad.4.1744870370439;
+        Wed, 16 Apr 2025 23:12:50 -0700 (PDT)
+Received: from hu-gokulsri-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22c33fcee11sm25159725ad.191.2025.04.16.23.12.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Apr 2025 23:07:42 -0700 (PDT)
-Date: Thu, 17 Apr 2025 11:37:38 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Veerabhadrarao Badiganti <quic_vbadigan@quicinc.com>
-Cc: Vivek Pernamitta <quic_vpernami@quicinc.com>, mhi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: host: pci: Disable runtime PM for QDU100
-Message-ID: <o7rv3xgg3btaoqjlzfenbfkrp3fuw54cx6zqojclcfslfg3ha4@c3sqaqqdjdjv>
-References: <20250414-vdev_next-20250411_pm_disable-v1-1-e963677636ca@quicinc.com>
- <ec99379e-fd54-42b0-a383-8ed212072396@quicinc.com>
+        Wed, 16 Apr 2025 23:12:50 -0700 (PDT)
+From: Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>
+To: andersson@kernel.org, mathieu.poirier@linaro.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
+        quic_mmanikan@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
+Cc: quic_srichara@quicinc.com, vignesh.viswanathan@oss.qualcomm.com,
+        gokul.sriram.p@oss.qualcomm.com
+Subject: [PATCH V5 0/6] Add new driver for WCSS secure PIL loading
+Date: Thu, 17 Apr 2025 11:42:39 +0530
+Message-Id: <20250417061245.497803-1-gokul.sriram.p@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ec99379e-fd54-42b0-a383-8ed212072396@quicinc.com>
+X-Authority-Analysis: v=2.4 cv=WecMa1hX c=1 sm=1 tr=0 ts=68009be3 cx=c_pps a=JL+w9abYAAE89/QcEU+0QA==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=LpQP-O61AAAA:8 a=iXkry-JSjlV61FjWxUcA:9 a=324X-CrmTo6CU4MGRt3R:22
+ a=TjNXssC_j7lpFel5tvFf:22 a=pioyyrs4ZptJ924tMmac:22
+X-Proofpoint-GUID: L6kuvuM2-bqq6WdL8faa3XW8KFJFQwmF
+X-Proofpoint-ORIG-GUID: L6kuvuM2-bqq6WdL8faa3XW8KFJFQwmF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-17_01,2025-04-15_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ adultscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0 mlxscore=0
+ impostorscore=0 mlxlogscore=999 spamscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504170046
 
-On Thu, Apr 17, 2025 at 10:00:38AM +0530, Veerabhadrarao Badiganti wrote:
-> 
-> On 4/14/2025 1:17 PM, Vivek Pernamitta wrote:
-> > The QDU100 device does not support the MHI M3 state, necessitating the
-> > disabling of runtime PM for this device. Since the PCIe core framework
-> > enables runtime PM by default for all clients, it is essential to disable
-> > runtime PM if the device does not support Low Power Mode (LPM).
-> > 
-> > Signed-off-by: Vivek Pernamitta<quic_vpernami@quicinc.com>
-> > ---
-> >   drivers/bus/mhi/host/pci_generic.c | 10 ++++++++++
-> >   1 file changed, 10 insertions(+)
-> > 
-> > diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> > index 03aa887952098661a488650053a357f883d1559b..a011fd2d48c57cf9d1aec74040153267a206d797 100644
-> > --- a/drivers/bus/mhi/host/pci_generic.c
-> > +++ b/drivers/bus/mhi/host/pci_generic.c
-> > @@ -43,6 +43,7 @@
-> >    * @mru_default: default MRU size for MBIM network packets
-> >    * @sideband_wake: Devices using dedicated sideband GPIO for wakeup instead
-> >    *		   of inband wake support (such as sdx24)
-> > + * @pm_disable: disables runtime PM (optional)
-> >    */
-> >   struct mhi_pci_dev_info {
-> >   	const struct mhi_controller_config *config;
-> > @@ -54,6 +55,7 @@ struct mhi_pci_dev_info {
-> >   	unsigned int dma_data_width;
-> >   	unsigned int mru_default;
-> >   	bool sideband_wake;
-> > +	bool pm_disable;
-> >   };
-> >   #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
-> > @@ -295,6 +297,7 @@ static const struct mhi_pci_dev_info mhi_qcom_qdu100_info = {
-> >   	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> >   	.dma_data_width = 32,
-> >   	.sideband_wake = false,
-> > +	.pm_disable = true,
-> 
-> |no_m3|orno_|m3_support|would be more suitable than|pm_disable|
+This series depends on Sricharan's tmel-qmp mailbox driver series v4 [1].
 
-Yes!
+- Secure PIL is signed, split firmware images which only TrustZone (TZ)
+  can authenticate and load. Linux kernel will send a request to TZ to
+  authenticate and load the PIL images.
 
-But does the device not supporting M3 only or D3Hot also? If the former, then we
-should prevent MHI host to enter/exit M3 state in mhi_pm_suspend/ mhi_pm_resume.
-There is an incentive in allowing D3Hot if the device supports it.
+- When secure PIL support was added to the existing wcss PIL driver
+  earlier in [2], Bjorn suggested not to overload the existing WCSS
+  rproc driver, instead post a new driver for PAS based IPQ WCSS driver.
+  This series adds a new secure PIL driver for the same.
 
-Also, is there a way we could probe M3 support in the device so that we can
-check it during runtime?
+- Also adds changes to scm to pass metadata size as required for IPQ5332,
+  reposted from [3].
 
-- Mani
+[1]
+https://patchwork.kernel.org/project/linux-arm-msm/cover/20250327181750.3733881-1-quic_srichara@quicinc.com/
+
+[2]
+https://patchwork.kernel.org/project/linux-arm-msm/patch/1611984013-10201-3-git-send-email-gokulsri@codeaurora.org/
+
+[3]
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20240820055618.267554-6-quic_gokulsri@quicinc.com/
+
+changes in v5:
+	- retained all the patches as in v3 and addressed comments in
+	  v3.
+	- reverted changes to dt-bindings done in v4 and retained as in
+	  v3 and fixed firmware format from .mdt to .mbn and retained
+	  reviewed-by.
+	- dropped 2 patches in v4 that adds support for q6 dtb loading.
+	  Will post them as a new series.
+
+	Following tests were done:
+	- checkpatch
+	- dt_binding_check and dtbs_check
+
+changes in v4:
+        - changed q6 firmware image format from .mdt to .mbn
+        - corrected arrangement of variable assignemnts as per comments
+          in qcom_scm.c
+        - added scm call to get board machid
+        - added support for q6 dtb loading with support for additional
+          reserved memory for q6 dtb in .mbn format
+        - updated dt-bindings to include new dts entry qcom,q6-dtb-info
+          and additional item in memory-region for q6 dtb region.
+        - removed unnecessary dependency for QCOM_Q6V5_WCSS_SEC in
+          Kconfig
+        - removed unwanted header files in qcom_q6v5_wcss_sec.c
+        - removed repeated dtb parsing during runtime in qcom_q6v5_wcss_sec.c
+        - added required check for using tmelcom, if available. Enabled
+          fallback to scm based authentication, if tmelcom is unavailable.
+        - added necessary padding for 8digt hex address in dts 
+
+	Following tests were done:
+	- checkpatch
+	- kernel-doc
+	- dt_binding_check and dtbs_check
+
+changes in v3:
+        - fixed copyright years and markings based on Jeff's comments.
+        - replaced devm_ioremap_wc() with ioremap_wc() in
+          wcss_sec_copy_segment().
+        - replaced rproc_alloc() and rproc_add() with their devres
+          counterparts.
+        - added mailbox call to tmelcom for secure image authentication
+          as required for IPQ5424. Added ipq5424 APCS comatible required.
+        - added changes to scm call to pass metadata size as required for
+          IPQ5332.
+
+changes in v2:
+        - Removed dependency of this series to q6 clock removal series
+          as recommended by Krzysztof
+
+Gokul Sriram Palanisamy (1):
+  arm64: dts: qcom: ipq5424: add nodes to bring up q6
+
+Manikanta Mylavarapu (4):
+  firmware: qcom_scm: ipq5332: add support to pass metadata size
+  dt-bindings: remoteproc: qcom: document hexagon based WCSS secure PIL
+  arm64: dts: qcom: ipq5332: add nodes to bringup q6
+  arm64: dts: qcom: ipq9574: add nodes to bring up q6
+
+Vignesh Viswanathan (1):
+  remoteproc: qcom: add hexagon based WCSS secure PIL driver
+
+ .../remoteproc/qcom,wcss-sec-pil.yaml         | 131 ++++++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         |  64 ++-
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi         |  82 +++-
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  60 ++-
+ drivers/firmware/qcom/qcom_scm.c              |  17 +-
+ drivers/firmware/qcom/qcom_scm.h              |   1 +
+ drivers/remoteproc/Kconfig                    |  19 +
+ drivers/remoteproc/Makefile                   |   1 +
+ drivers/remoteproc/qcom_q6v5_wcss_sec.c       | 399 ++++++++++++++++++
+ include/linux/remoteproc.h                    |   2 +
+ 10 files changed, 769 insertions(+), 7 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcss-sec-pil.yaml
+ create mode 100644 drivers/remoteproc/qcom_q6v5_wcss_sec.c
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.34.1
+
 
