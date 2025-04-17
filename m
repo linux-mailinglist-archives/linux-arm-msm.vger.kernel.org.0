@@ -1,230 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-54682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9260AA9245D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 19:50:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8200A92B65
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 21:01:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A1A6E4627EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 17:50:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EDF193AC8BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 18:58:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5185A2561DA;
-	Thu, 17 Apr 2025 17:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EFBF25B663;
+	Thu, 17 Apr 2025 18:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R/bv6tIG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AQqPdT5i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA83245020;
-	Thu, 17 Apr 2025 17:50:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662D91D5CCD;
+	Thu, 17 Apr 2025 18:57:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744912247; cv=none; b=QTMK9cRyY97MzrUBCyK5hfsleuxK07LRRWu5h4mEZgkw6D2pqHZVp8J9AcGS2ZqeBTxpt7rrzy5i+OZSlrz+7U09iSrskWkj0mZUj2TBG1M3Lpy3nkU4f8ob/J6TfnpkRPoARdANU6drTdRMTkzKNAA3rtEHK33tJy/9bC0t2Uw=
+	t=1744916281; cv=none; b=Fj17JEaC+JJIUaGMY/q2DwAZY928uxHtj0LnDBepnzcbwcv8By7xx/eJsIe78xvQgIfORU0vm9+SuktkE89mOcXKQ4bSEYHVqphhtuqHVpDeyvX9dZC0U3sUImV/CDyeUCqnefNQZvbBoEX4jKSgPJhs5rPhq+4BvXobOIrODd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744912247; c=relaxed/simple;
-	bh=sTyGtcQUUZ5500fifnvKW9nGT1pncjcRhU4Z9XW7OpU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ea4IB1sul2+342neCtxZiuqP9qwlZmiqcN8tICUtgWvLpRtdHClmR2MJDzWJypoi0Xl/a7f+4lbD0NNLa3GSn/4PHvSuJrXwq/v7iDBqWqq5yij6VjjrjclD2jIJpcGR4hfnIQnJ3Vn04qEUP9uX4rP1M50W1WivqnJLHZszuGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=R/bv6tIG; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1744916281; c=relaxed/simple;
+	bh=GPBMti6d1eSxgbQ8ztbQA0OHM3kaeJTJ/wvTbSk+gUg=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=d4ZAKYYs9hbB6+zf6NlUplKS33swYQEUIhfyNuUmiyhNIxcEU77TgBZEMibIAekLea/alZj4WM7Ejn45ALo5eQqDBZfuhJA2nw908yxvur0mYdi/6wIYRE81uVD3NhdlDWudlRwhcWEZGXDbgL1ft9I5n2rQosO8tH55GV4vutw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AQqPdT5i; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53HClUpC013325;
-	Thu, 17 Apr 2025 17:50:35 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53HClbql032076;
+	Thu, 17 Apr 2025 18:57:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rtVvrMeTc6F3JJHkRyxqWivaPaY3sC3Dhgxn6S1HvY8=; b=R/bv6tIGWCs2g9v+
-	4jUStXZY1cTFa5c2PqqHnq2RYMMjuCF9TzcHP4/Xa64d7tK/OZDK8RW+L5aqgtAO
-	R9AbTO1HVcJRBkILrkdKUAAz9XOFdLbr1UUID6fG5XMS4e1fkGi3rLDbIsJjNcsr
-	2o/fFf6tuKgPt7NeGAEJfT+wR/EOui8BzIG3ocXamdkRX9nEifufVSFTz0dZJBfN
-	MGmZxoG1PJR5HSrzCshz+SyNgDc+G3cJ5xkYr6lgSmUMdHVY3GH+hOUVO1Ycd7KT
-	4zSvO+4lMUvarq6Zb7hzJQdKXlUhbL7tpiiIeolLZACWbTtUsO5aalmbswHPrOXB
-	PQ7MAQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4628rvd2e4-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=OBfeZV99OcZGZ91PDlA/RN
+	KVq2HYA5a7cy8i2TvYJsE=; b=AQqPdT5iHWRJceMlyC5Sbm8qDVNeqVOvAPJxnl
+	93jevP10+ubxkOKdFdZhwtkqGSm2QhY2Xz7mF+IGv+JB+8dYGlYOOv0D8d3k/GFT
+	pO2wKxDjMwIan3H3JA1H+XwmeUWKn8dzYlIHLuquPrNOtgf4OMTGeHSaNKGRA1C8
+	lhBHWVAiGjjCHWZGS+7OC0udy5Y7Pkl45nn7EZkeNyyTNmnI74gbgQFQ01BRHLvz
+	66SyTzW8sreCN8aAwaJc4H2fW4VGjQiNNpa7qgqaGBViuJM03jqZ68zMRZ8Fa2GR
+	5+8tvQy4ddZU8TbON334+7v8GKDblNIYbz5Y5zqXe/b6oHfg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yg8wr04w-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Apr 2025 17:50:35 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53HHoYCb020419
+	Thu, 17 Apr 2025 18:57:55 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53HIvstZ026641
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Apr 2025 17:50:34 GMT
-Received: from [10.216.6.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 17 Apr
- 2025 10:50:28 -0700
-Message-ID: <1282bf58-e431-4a07-97e5-628437e7ce5f@quicinc.com>
-Date: Thu, 17 Apr 2025 23:20:25 +0530
+	Thu, 17 Apr 2025 18:57:54 GMT
+Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 17 Apr 2025 11:57:49 -0700
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+Subject: [PATCH 0/4] media: qcom: iris: add support for QCS8300
+Date: Fri, 18 Apr 2025 00:27:30 +0530
+Message-ID: <20250418-qcs8300_iris-v1-0-67792b39ba21@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] drm/msm/a6xx: Get HBB dynamically, if available
-To: Connor Abbott <cwabbott0@gmail.com>
-CC: Konrad Dybcio <konradybcio@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>, Kees Cook <kees@kernel.org>,
-        "Gustavo A. R. Silva"
-	<gustavoars@kernel.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul
-	<sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Dmitry Baryshkov
-	<lumag@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABpPAWgC/0XOzQqDMAzA8VeRnlfoR6rVVxky2hq3HNTZOhHEd
+ 1+nhx3/IfmRnSWMhIk1xc4irpRoGnPIW8HCy41P5NTlZkooI0BaPodktRAPipR45WrEUoCW4Fg
+ +eUfsaTu5e3t1xPmT1eUa/tGmOEmlDF+mNwWeBrsZwU93lYI7JWtvnfVQVc1a/XjvEvIwDQMt+
+ UUApfugHeTN3oMuu85ZA0ZoXWNQvpe19Lpk7XF8AUEoPLjnAAAA
+X-Change-ID: 20250418-qcs8300_iris-7a9ee604314a
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>
-References: <20250410-topic-smem_dramc-v2-0-dead15264714@oss.qualcomm.com>
- <20250410-topic-smem_dramc-v2-3-dead15264714@oss.qualcomm.com>
- <20911703-ab4e-4eb2-8611-294730a06d2f@quicinc.com>
- <CACu1E7HDmQXDNtEQCXpHXsOKPCOgrWgo+_kcgizo9Mp1ntjDbA@mail.gmail.com>
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <CACu1E7HDmQXDNtEQCXpHXsOKPCOgrWgo+_kcgizo9Mp1ntjDbA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+	<konradybcio@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1744916269; l=1713;
+ i=quic_vgarodia@quicinc.com; s=20241104; h=from:subject:message-id;
+ bh=GPBMti6d1eSxgbQ8ztbQA0OHM3kaeJTJ/wvTbSk+gUg=;
+ b=JxvPIIpXzVobX6XWCUpH7zkvmajQDjhSQD6SX5Kd3DO7mVHUOd6tMSdtrlFZcG0lqmoofYaPy
+ 4xTPorS2x+vD7zwjKSnmWcJp9HqdndH46yNZS1XHNZx5JL798SLlFYr
+X-Developer-Key: i=quic_vgarodia@quicinc.com; a=ed25519;
+ pk=LY9Eqp4KiHWxzGNKGHbwRFEJOfRCSzG/rxQNmvZvaKE=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: cMn6x-EFO9oBXysgklTroujnCc8dLfN4
-X-Authority-Analysis: v=2.4 cv=RbSQC0tv c=1 sm=1 tr=0 ts=68013f6b cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=XE3sDmP-oFqBkbK9aEsA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: cMn6x-EFO9oBXysgklTroujnCc8dLfN4
+X-Authority-Analysis: v=2.4 cv=E9TNpbdl c=1 sm=1 tr=0 ts=68014f33 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8
+ a=5mqJRpXAQT99iV-CYE4A:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: FOljNYk_acLNy_8B4W7xz36lQ7QKZQoE
+X-Proofpoint-GUID: FOljNYk_acLNy_8B4W7xz36lQ7QKZQoE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-17_06,2025-04-17_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- suspectscore=0 adultscore=0 impostorscore=0 clxscore=1015 bulkscore=0
- phishscore=0 priorityscore=1501 spamscore=0 mlxscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ mlxscore=0 bulkscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
+ suspectscore=0 mlxlogscore=892 spamscore=0 priorityscore=1501
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504170131
+ definitions=main-2504170139
 
-On 4/17/2025 9:02 PM, Connor Abbott wrote:
-> On Thu, Apr 17, 2025 at 3:45 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->>
->> On 4/10/2025 11:13 PM, Konrad Dybcio wrote:
->>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>>
->>> The Highest Bank address Bit value can change based on memory type used.
->>>
->>> Attempt to retrieve it dynamically, and fall back to a reasonable
->>> default (the one used prior to this change) on error.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>> ---
->>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 15 ++++++++++++++-
->>>  1 file changed, 14 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>> index 06465bc2d0b4b128cddfcfcaf1fe4252632b6777..a6232b382bd16319f20ae5f8f5e57f38ecc62d9f 100644
->>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>> @@ -13,6 +13,7 @@
->>>  #include <linux/firmware/qcom/qcom_scm.h>
->>>  #include <linux/pm_domain.h>
->>>  #include <linux/soc/qcom/llcc-qcom.h>
->>> +#include <linux/soc/qcom/smem.h>
->>>
->>>  #define GPU_PAS_ID 13
->>>
->>> @@ -587,6 +588,8 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
->>>
->>>  static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
->>>  {
->>> +     int hbb;
->>> +
->>>       gpu->ubwc_config.rgb565_predicator = 0;
->>>       gpu->ubwc_config.uavflagprd_inv = 0;
->>>       gpu->ubwc_config.min_acc_len = 0;
->>> @@ -635,7 +638,6 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
->>>           adreno_is_a690(gpu) ||
->>>           adreno_is_a730(gpu) ||
->>>           adreno_is_a740_family(gpu)) {
->>> -             /* TODO: get ddr type from bootloader and use 2 for LPDDR4 */
->>>               gpu->ubwc_config.highest_bank_bit = 16;
->>>               gpu->ubwc_config.amsbc = 1;
->>>               gpu->ubwc_config.rgb565_predicator = 1;
->>> @@ -664,6 +666,13 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
->>>               gpu->ubwc_config.highest_bank_bit = 14;
->>>               gpu->ubwc_config.min_acc_len = 1;
->>>       }
->>> +
->>> +     /* Attempt to retrieve the data from SMEM, keep the above defaults in case of error */
->>> +     hbb = qcom_smem_dram_get_hbb();
->>> +     if (hbb < 0)
->>> +             return;
->>> +
->>> +     gpu->ubwc_config.highest_bank_bit = hbb;
->>
->> I am worried about blindly relying on SMEM data directly for HBB for
->> legacy chipsets. There is no guarantee it is accurate on every chipset
->> and every version of firmware. Also, until recently, this value was
->> hardcoded in Mesa which matched the value in KMD.
-> 
-> To be clear about this, from the moment we introduced host image
-> copies in Mesa we added support for querying the HBB from the kernel,
-> explicitly so that we could do what this series does without Mesa ever
-> breaking. Mesa will never assume the HBB unless the kernel is too old
-> to support querying it. So don't let Mesa be the thing that stops us
-> here.
+add support for video hardware acceleration on QCS8300 platform.
 
-Thanks for clarifying about Mesa. I still don't trust a data source that
-is unused in production.
+This series depends on
+https://lore.kernel.org/all/20250417-topic-sm8x50-iris-v10-v7-1-f020cb1d0e98@linaro.org/
 
-I have a related question about HBB. Blob driver doesn't support
-host_image_copy, but it still use HBB configuration. I was under the
-impression this was required for UMD for compression related
-configurations. Is that not true for turnip/freedreno?
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+---
+Vikash Garodia (4):
+      dt-bindings: media: qcom,sm8550-iris: document QCS8300 IRIS accelerator
+      arm64: dts: qcom: qcs8300: add support for video node
+      arm64: dts: qcom: qcs8300-ride: enable video
+      media: iris: add qcs8300 platform data
 
--Akhil.
+ .../bindings/media/qcom,sm8550-iris.yaml           |   1 +
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts          |   4 +
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi              |  71 ++++++++++++
+ .../platform/qcom/iris/iris_platform_common.h      |   1 +
+ .../media/platform/qcom/iris/iris_platform_gen2.c  |  57 ++++++++++
+ .../platform/qcom/iris/iris_platform_qcs8300.h     | 124 +++++++++++++++++++++
+ drivers/media/platform/qcom/iris/iris_probe.c      |   4 +
+ 7 files changed, 262 insertions(+)
+---
+base-commit: 14423fc3a4a21fb436dda85450339ec2bf191b36
+change-id: 20250418-qcs8300_iris-7a9ee604314a
+prerequisite-change-id: 20250225-topic-sm8x50-iris-v10-a219b8a8b477:v7
+prerequisite-patch-id: afffe7096c8e110a8da08c987983bc4441d39578
+prerequisite-patch-id: b93c37dc7e09d1631b75387dc1ca90e3066dce17
+prerequisite-patch-id: b7b50aa1657be59fd51c3e53d73382a1ee75a08e
+prerequisite-patch-id: 30960743105a36f20b3ec4a9ff19e7bca04d6add
+prerequisite-patch-id: 2bba98151ca103aa62a513a0fbd0df7ae64d9868
+prerequisite-patch-id: 0e43a6d758b5fa5ab921c6aa3c19859e312b47d0
+prerequisite-patch-id: 35f8dae1416977e88c2db7c767800c01822e266e
 
-> 
-> Connor
-> 
->> So it is better to
->> make this opt in, for newer chipsets or those which somebody can verify.
->> We can invert this logic to something like this:
->>
->> if (!gpu->ubwc_config.highest_bank_bit)
->>     gpu->ubwc_config.highest_bank_bit = qcom_smem_dram_get_hbb();
->>
->>>  }
->>>
->>>  static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
->>> @@ -2467,6 +2476,10 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->>>       bool is_a7xx;
->>>       int ret;
->>>
->>> +     /* We need data from SMEM to retrieve HBB in calc_ubwc_config() */
->>> +     if (!qcom_smem_is_available())
->>> +             return ERR_PTR(-EPROBE_DEFER);
->>> +
->>
->> We should add "depends on QCOM_SMEM" to Kconfig. Is SMEM device present
->> in all Qcom SoC devicetrees? I wonder if there is a scenario where there
->> might be an infinite EPROBE_DEFER here.
->>
->> -Akhil.
->>
->>>       a6xx_gpu = kzalloc(sizeof(*a6xx_gpu), GFP_KERNEL);
->>>       if (!a6xx_gpu)
->>>               return ERR_PTR(-ENOMEM);
->>>
->>
+Best regards,
+-- 
+Vikash Garodia <quic_vgarodia@quicinc.com>
 
 
