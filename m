@@ -1,52 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-54671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1BDAA922CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 18:35:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65F0DA9236E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 19:08:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C2A17165C2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 16:35:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A5AF465C7D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 17:08:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9371D2528F2;
-	Thu, 17 Apr 2025 16:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0034254AF6;
+	Thu, 17 Apr 2025 17:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uLR+wWbc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YFH4n0xb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FCF2DFA36;
-	Thu, 17 Apr 2025 16:35:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78071B6CE5;
+	Thu, 17 Apr 2025 17:08:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744907747; cv=none; b=nRygORWIHJenBDnt12gRO61TcGhuG9VsHxsx/UqIyERcXtpGXHt5jsxkynDkvzRs1lcWNXq0KlxXZ3tWzM6G4W2Y8sbY680I8dIpBGSbGJf90VcfDgf2D0vKFdsZO3CvUBXGcQ3b7elNQX1zEq6D4+QcKbIPQ/ug1JJZ7yhe4aI=
+	t=1744909686; cv=none; b=D8vs31RC+bqnf6Cl/BdzeUPr0jHCWLAmMwMYSaB3KzM2gqRkDytOd7W6e6ZUaxvammJHsZWct8RQ5EsUvDtCW9QdVm341Y5Jlc1bZwE4BIiPRtXn5a319TuWZzvwge/EZ1dQNzjiLynt7G/YuiFEvw5s+LKoiG6HGTPw0jfTCJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744907747; c=relaxed/simple;
-	bh=uDSrfL35Zw/i3cF+c5QmMr7z6U+d1knQbbUxSTvkJUE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=uIsELjbc/cVOJmRgHxtv+bLFKSk/ahurd6I4hBfXx3UVJg0JxTH7zvIdBTJ4tOsgJrfbcd5FAW4O/AFJr478Oyc6RqkN7+/XStqGD3Ujq18hHVQJksD4XuPt+orB3PK+4tL+swiULIQ7wMW6s7Vm4N9XOotrverbtr3LlE/qOUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uLR+wWbc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C605EC4CEEA;
-	Thu, 17 Apr 2025 16:35:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744907746;
-	bh=uDSrfL35Zw/i3cF+c5QmMr7z6U+d1knQbbUxSTvkJUE=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=uLR+wWbcFD8Oo8r8pJtjyBC9+a3tBrz1JoEdnfAK2C3wD/gmLMKabDFFZWusZGTpD
-	 1lG30hz8KWpo4p25ucpQCReHmupoV9rf5OLvTedbhj7Gl4qVpwiGkEniilHnAVKrOD
-	 ZRQNfi3C24ZS3YMpiSLgoygzWMmc0iymIufLgwYuhS5RZu94myXs1Fph0+Fg4F15Qc
-	 pBE64pnVkNMk4oP0MQfLoYCnUEdyOrAz+O/nUE9CYW6CWQi4rrPCDIJMdKtcT6QsCw
-	 9LYovgRCdBXxgIcEgYqA4FcyzITdfUfx/Y7RGOejWICli6d9YUSF18J3si6FDU1/XU
-	 MhWSZPIsARWmg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6B28C369B2;
-	Thu, 17 Apr 2025 16:35:46 +0000 (UTC)
-From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
-Date: Thu, 17 Apr 2025 18:35:44 +0200
-Subject: [PATCH v2] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: add
- retimers, dp altmode support
+	s=arc-20240116; t=1744909686; c=relaxed/simple;
+	bh=P6WoVi4ryTfmG7rzbEbizit9HWFl+3mgjgEU9XKwk84=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=Ja972g356s+rxHU/xtpG57MA6LH4pHECh3HJ5TvBDJK3IucShwiG2P8BBufCT82UdMuGKjmARFDjfWuEDRUZMTtCEalUs+sK8LqNyzslK3GuwSspYziiKSytRwlqp10aUds4yzcel9nLQyUtS98qZgaOmok7zWnXdEqNXv07gDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YFH4n0xb; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53HClKIE014436;
+	Thu, 17 Apr 2025 17:08:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=+6ES9yVqy0rpTR+mjru3bG
+	JLqoJwMupw2CdCmzfVYWU=; b=YFH4n0xbtY2Rn/9zc8lFdJCQc8jCLntoZx85y2
+	z1N+ztyOjOgxGpLT0DGymVm+WyYGFfSjrtq7cMcUiE8qQTwWPR9LOs+sC68wlqpz
+	cv3H5ZPTOJfOudrgO8uGYNgvGTWFQsDusOF8nd07XmY9iSS5hCyNbxy/pNaI6Rht
+	AqRkuqI/zx8qiDFgVgMaNhY8zfDSzSpVwrTG/yputTdG6KiEsyC2UUtmdFFSRnKc
+	6wzVHn0rU1tBzqeIsdNqzGcKYV00aEeKQ1vmMiPdIMB1Av/RyplJR5XxpWQlPyzj
+	yyt3cpWMbtqT6F4pg0CKWM0ZXjPQE/ERtg0BPvg1tax2EPiA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygd6qrww-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Apr 2025 17:07:59 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53HH7w3E024374
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Apr 2025 17:07:59 GMT
+Received: from hu-ajipan-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 17 Apr 2025 10:07:54 -0700
+From: Ajit Pandey <quic_ajipan@quicinc.com>
+Subject: [PATCH 0/3] pmdomain: qcom: rpmhpd: Add SM4450 power domains
+Date: Thu, 17 Apr 2025 22:37:38 +0530
+Message-ID: <20250417-sm4450_rpmhpd-v1-0-361846750d3a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,634 +66,63 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250417-slim7x-retimer-v2-1-dbe2dd511137@oldschoolsolutions.biz>
-X-B4-Tracking: v=1; b=H4sIAN8tAWgC/13Oyw6CMBCF4Vchs7amUy5FV76HYcFllEkKNR0kK
- OHdrSRuXP4nmS+zglBgEjgnKwSaWdiPMcwhgbavxzsp7mKD0SbXGRZKHA92UYEmHigoqxukwjb
- YZQbi0SPQjZcdvFaxe5bJh9fuz/hdf5T9p2ZUqPIS09qWaX7S6cW7TtreeyfePaf4mRwbfkO1b
- dsHHgL0irkAAAA=
-X-Change-ID: 20250416-slim7x-retimer-70b1e67b1d42
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>, 
- Jos Dehaes <jos.dehaes@gmail.com>, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+X-B4-Tracking: v=1; b=H4sIAFo1AWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDE0Nz3eJcExNTg/iigtyMghRds0RzE3NLkxSD5MQkJaCegqLUtMwKsHn
+ RsbW1AOLFRH1fAAAA
+X-Change-ID: 20250417-sm4450_rpmhpd-6a74794d0cab
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: Imran Shaik <quic_imrashai@quicinc.com>,
+        Taniya Das
+	<quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        "Satya
+ Priya Kakitapalli" <quic_skakitap@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        Ajit Pandey
+	<quic_ajipan@quicinc.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1744907745; l=13368;
- i=jens.glathe@oldschoolsolutions.biz; s=20240919;
- h=from:subject:message-id;
- bh=DZAL7KsODjdxeAcP8P2DJUA/Mx25qyBJ0Vx8psZ7vds=;
- b=2EULnk2gVDLoDqaB3tecLDRI7RkzGbg5Yc6MsO0J3K5iklmxatGVjTrOhJ7NAYygVDRuUbP88
- +roPjIJpjAOCg4T7UvDEw7Y0vL0oM3btG8sgZRSXHInyw5NdRJW7mUl
-X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
- pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
-X-Endpoint-Received: by B4 Relay for
- jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
-X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Reply-To: jens.glathe@oldschoolsolutions.biz
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: yYaou16QsglqcelIR8jYYhxhjpn14VUU
+X-Proofpoint-GUID: yYaou16QsglqcelIR8jYYhxhjpn14VUU
+X-Authority-Analysis: v=2.4 cv=ANaQCy7k c=1 sm=1 tr=0 ts=6801356f cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=DN_wUKf7fpAkojsRBh4A:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-17_05,2025-04-17_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ mlxlogscore=685 suspectscore=0 clxscore=1011 lowpriorityscore=0
+ phishscore=0 impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504170125
 
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+This series add power domains exposed by RPMh in the Qualcomm SM4450 platform.
 
-comparing with CRD and other dts for a more complete support of the 7X
-only retimers, gpios, regulators, dp outputs
-
-Tested-by: Rob Clark <robdclark@gmail.com>
-Tested-by: Jos Dehaes <jos.dehaes@gmail.com>
-Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
 ---
-This patch adds the required nodes to support DP Altmode on all three type-c
-ports. The definition is derived from the CRD. Since they are all marked 40Gbps,
-I assume there are 3 PS8830 retimers. 
-This modification is now for ~8 weeks in my tree with little to no complaints. I 
-don't have access to a Yoga Slim 7X, however many people on #aarch64-laptops do 
-and some are using this patch.
----
-Changes in v2:
-- removed changes not relevant to retimers and dp altmode (thanks Johan)
-- Link to v1: https://lore.kernel.org/r/20250417-slim7x-retimer-v1-1-5813a7835903@oldschoolsolutions.biz
----
- .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 476 ++++++++++++++++++++-
- 1 file changed, 470 insertions(+), 6 deletions(-)
+Ajit Pandey (3):
+      dt-bindings: power: qcom,rpmpd: Add SM4450 compatible
+      pmdomain: qcom: rpmhpd: Add SM4450 power domains
+      arm64: dts: qcom: sm4450: Add RPMh power domains support
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-index 445d97d67d325853b7dcd2060523e7469ed4e6ea..6f1a9eec0c48bdffb6cf60ff270dffa6bf64b710 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-@@ -72,7 +72,15 @@ port@1 {
- 					reg = <1>;
- 
- 					pmic_glink_ss0_ss_in: endpoint {
--						remote-endpoint = <&usb_1_ss0_qmpphy_out>;
-+						remote-endpoint = <&retimer_ss0_ss_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_ss0_con_sbu_in: endpoint {
-+						remote-endpoint = <&retimer_ss0_con_sbu_out>;
- 					};
- 				};
- 			};
-@@ -101,7 +109,15 @@ port@1 {
- 					reg = <1>;
- 
- 					pmic_glink_ss1_ss_in: endpoint {
--						remote-endpoint = <&usb_1_ss1_qmpphy_out>;
-+						remote-endpoint = <&retimer_ss1_ss_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_ss1_con_sbu_in: endpoint {
-+						remote-endpoint = <&retimer_ss1_con_sbu_out>;
- 					};
- 				};
- 			};
-@@ -130,7 +146,15 @@ port@1 {
- 					reg = <1>;
- 
- 					pmic_glink_ss2_ss_in: endpoint {
--						remote-endpoint = <&usb_1_ss2_qmpphy_out>;
-+						remote-endpoint = <&retimer_ss2_ss_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_ss2_con_sbu_in: endpoint {
-+						remote-endpoint = <&retimer_ss2_con_sbu_out>;
- 					};
- 				};
- 			};
-@@ -226,6 +250,150 @@ vreg_nvme: regulator-nvme {
- 		regulator-boot-on;
- 	};
- 
-+	vreg_rtmr0_1p15: regulator-rtmr0-1p15 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR0_1P15";
-+		regulator-min-microvolt = <1150000>;
-+		regulator-max-microvolt = <1150000>;
-+
-+		gpio = <&pmc8380_5_gpios 8 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb0_pwr_1p15_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr0_1p8: regulator-rtmr0-1p8 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR0_1P8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&pm8550ve_9_gpios 8 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb0_1p8_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr0_3p3: regulator-rtmr0-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR0_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&pm8550_gpios 11 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb0_3p3_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr1_1p15: regulator-rtmr1-1p15 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR1_1P15";
-+		regulator-min-microvolt = <1150000>;
-+		regulator-max-microvolt = <1150000>;
-+
-+		gpio = <&tlmm 188 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb1_pwr_1p15_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr1_1p8: regulator-rtmr1-1p8 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR1_1P8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&tlmm 175 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb1_pwr_1p8_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr1_3p3: regulator-rtmr1-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR1_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 186 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb1_pwr_3p3_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr2_1p15: regulator-rtmr2-1p15 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR2_1P15";
-+		regulator-min-microvolt = <1150000>;
-+		regulator-max-microvolt = <1150000>;
-+
-+		gpio = <&tlmm 189 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb2_pwr_1p15_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr2_1p8: regulator-rtmr2-1p8 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR2_1P8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&tlmm 126 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb2_pwr_1p8_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr2_3p3: regulator-rtmr2-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR2_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 187 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb2_pwr_3p3_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
- 	vph_pwr: regulator-vph-pwr {
- 		compatible = "regulator-fixed";
- 
-@@ -567,6 +735,178 @@ keyboard@3a {
- 	};
- };
- 
-+&i2c1 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	typec-mux@8 {
-+		compatible = "parade,ps8830";
-+		reg = <0x08>;
-+
-+		clocks = <&rpmhcc RPMH_RF_CLK5>;
-+
-+		vdd-supply = <&vreg_rtmr2_1p15>;
-+		vdd33-supply = <&vreg_rtmr2_3p3>;
-+		vdd33-cap-supply = <&vreg_rtmr2_3p3>;
-+		vddar-supply = <&vreg_rtmr2_1p15>;
-+		vddat-supply = <&vreg_rtmr2_1p15>;
-+		vddio-supply = <&vreg_rtmr2_1p8>;
-+
-+		reset-gpios = <&tlmm 185 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&rtmr2_default>;
-+		pinctrl-names = "default";
-+
-+		orientation-switch;
-+		retimer-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				retimer_ss2_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss2_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				retimer_ss2_ss_in: endpoint {
-+					remote-endpoint = <&usb_1_ss2_qmpphy_out>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+
-+				retimer_ss2_con_sbu_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss2_con_sbu_in>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&i2c3 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	typec-mux@8 {
-+		compatible = "parade,ps8830";
-+		reg = <0x08>;
-+
-+		clocks = <&rpmhcc RPMH_RF_CLK3>;
-+
-+		vdd-supply = <&vreg_rtmr0_1p15>;
-+		vdd33-supply = <&vreg_rtmr0_3p3>;
-+		vdd33-cap-supply = <&vreg_rtmr0_3p3>;
-+		vddar-supply = <&vreg_rtmr0_1p15>;
-+		vddat-supply = <&vreg_rtmr0_1p15>;
-+		vddio-supply = <&vreg_rtmr0_1p8>;
-+
-+		reset-gpios = <&pm8550_gpios 10 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&rtmr0_default>;
-+		pinctrl-names = "default";
-+
-+		retimer-switch;
-+		orientation-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				retimer_ss0_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss0_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				retimer_ss0_ss_in: endpoint {
-+					remote-endpoint = <&usb_1_ss0_qmpphy_out>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+
-+				retimer_ss0_con_sbu_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss0_con_sbu_in>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&i2c7 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	typec-mux@8 {
-+		compatible = "parade,ps8830";
-+		reg = <0x8>;
-+
-+		clocks = <&rpmhcc RPMH_RF_CLK4>;
-+
-+		vdd-supply = <&vreg_rtmr1_1p15>;
-+		vdd33-supply = <&vreg_rtmr1_3p3>;
-+		vdd33-cap-supply = <&vreg_rtmr1_3p3>;
-+		vddar-supply = <&vreg_rtmr1_1p15>;
-+		vddat-supply = <&vreg_rtmr1_1p15>;
-+		vddio-supply = <&vreg_rtmr1_1p8>;
-+
-+		reset-gpios = <&tlmm 176 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&rtmr1_default>;
-+		pinctrl-names = "default";
-+
-+		retimer-switch;
-+		orientation-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				retimer_ss1_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss1_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				retimer_ss1_ss_in: endpoint {
-+					remote-endpoint = <&usb_1_ss1_qmpphy_out>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+
-+				retimer_ss1_con_sbu_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss1_con_sbu_in>;
-+				};
-+			};
-+
-+		};
-+	};
-+};
-+
- &i2c8 {
- 	clock-frequency = <400000>;
- 
-@@ -614,6 +954,33 @@ &mdss {
- 	status = "okay";
- };
- 
-+&mdss_dp0 {
-+	status = "okay";
-+};
-+
-+&mdss_dp0_out {
-+	data-lanes = <0 1>;
-+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+};
-+
-+&mdss_dp1 {
-+	status = "okay";
-+};
-+
-+&mdss_dp1_out {
-+	data-lanes = <0 1>;
-+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+};
-+
-+&mdss_dp2 {
-+	status = "okay";
-+};
-+
-+&mdss_dp2_out {
-+	data-lanes = <0 1>;
-+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+};
-+
- &mdss_dp3 {
- 	compatible = "qcom,x1e80100-dp";
- 	/delete-property/ #sound-dai-cells;
-@@ -701,6 +1068,37 @@ &pcie6a_phy {
- 	status = "okay";
- };
- 
-+&pm8550_gpios {
-+	rtmr0_default: rtmr0-reset-n-active-state {
-+		pins = "gpio10";
-+		function = "normal";
-+		power-source = <1>; /* 1.8V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
-+
-+	usb0_3p3_reg_en: usb0-3p3-reg-en-state {
-+		pins = "gpio11";
-+		function = "normal";
-+		power-source = <1>; /* 1.8V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
-+};
-+
-+&pm8550ve_9_gpios {
-+	usb0_1p8_reg_en: usb0-1p8-reg-en-state {
-+		pins = "gpio8";
-+		function = "normal";
-+		power-source = <1>; /* 1.8V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
-+};
-+
- &pmc8380_3_gpios {
- 	edp_bl_en: edp-bl-en-state {
- 		pins = "gpio4";
-@@ -711,6 +1109,17 @@ edp_bl_en: edp-bl-en-state {
- 	};
- };
- 
-+&pmc8380_5_gpios {
-+	usb0_pwr_1p15_reg_en: usb0-pwr-1p15-reg-en-state {
-+		pins = "gpio8";
-+		function = "normal";
-+		power-source = <1>; /* 1.8V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
-+};
-+
- &qupv3_0 {
- 	status = "okay";
- };
-@@ -919,6 +1328,20 @@ wake-n-pins {
- 		};
- 	};
- 
-+	rtmr1_default: rtmr1-reset-n-active-state {
-+		pins = "gpio176";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	rtmr2_default: rtmr2-reset-n-active-state {
-+		pins = "gpio185";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	tpad_default: tpad-default-state {
- 		pins = "gpio3";
- 		function = "gpio";
-@@ -940,6 +1363,47 @@ reset-n-pins {
- 		};
- 	};
- 
-+	usb1_pwr_1p15_reg_en: usb1-pwr-1p15-reg-en-state {
-+		pins = "gpio188";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb1_pwr_1p8_reg_en: usb1-pwr-1p8-reg-en-state {
-+		pins = "gpio175";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb1_pwr_3p3_reg_en: usb1-pwr-3p3-reg-en-state {
-+		pins = "gpio186";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb2_pwr_1p15_reg_en: usb2-pwr-1p15-reg-en-state {
-+		pins = "gpio189";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb2_pwr_1p8_reg_en: usb2-pwr-1p8-reg-en-state {
-+		pins = "gpio126";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb2_pwr_3p3_reg_en: usb2-pwr-3p3-reg-en-state {
-+		pins = "gpio187";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
- };
- 
- &uart21 {
-@@ -976,7 +1440,7 @@ &usb_1_ss0_dwc3_hs {
- };
- 
- &usb_1_ss0_qmpphy_out {
--	remote-endpoint = <&pmic_glink_ss0_ss_in>;
-+	remote-endpoint = <&retimer_ss0_ss_in>;
- };
- 
- &usb_1_ss1_hsphy {
-@@ -1008,7 +1472,7 @@ &usb_1_ss1_dwc3_hs {
- };
- 
- &usb_1_ss1_qmpphy_out {
--	remote-endpoint = <&pmic_glink_ss1_ss_in>;
-+	remote-endpoint = <&retimer_ss1_ss_in>;
- };
- 
- &usb_1_ss2_hsphy {
-@@ -1040,5 +1504,5 @@ &usb_1_ss2_dwc3_hs {
- };
- 
- &usb_1_ss2_qmpphy_out {
--	remote-endpoint = <&pmic_glink_ss2_ss_in>;
-+	remote-endpoint = <&retimer_ss2_ss_in>;
- };
-
+ .../devicetree/bindings/power/qcom,rpmpd.yaml      |  1 +
+ arch/arm64/boot/dts/qcom/sm4450.dtsi               | 68 ++++++++++++++++++++++
+ drivers/pmdomain/qcom/rpmhpd.c                     | 16 +++++
+ 3 files changed, 85 insertions(+)
 ---
 base-commit: f660850bc246fef15ba78c81f686860324396628
-change-id: 20250416-slim7x-retimer-70b1e67b1d42
+change-id: 20250417-sm4450_rpmhpd-6a74794d0cab
 
 Best regards,
 -- 
-Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-
+Ajit Pandey <quic_ajipan@quicinc.com>
 
 
