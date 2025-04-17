@@ -1,701 +1,299 @@
-Return-Path: <linux-arm-msm+bounces-54634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FA1BA91B0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 13:38:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7173A91B1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 13:43:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 84A951899620
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 11:38:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 63CED188995B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 11:43:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9741A23CEF9;
-	Thu, 17 Apr 2025 11:38:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QeYhCD42"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D0FB23F420;
+	Thu, 17 Apr 2025 11:43:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bmailout3.hostsharing.net (bmailout3.hostsharing.net [176.9.242.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C06E8460;
-	Thu, 17 Apr 2025 11:38:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F019C23E346;
+	Thu, 17 Apr 2025 11:43:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=176.9.242.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744889924; cv=none; b=hhXlijEB2Bd96iM5/uQXRp70GHVVkDnJNOIDs9luytQvWpXEgPt1hpND7eMmFKtIcblq2tmOBpVHux7Z6Fi3wWZPvCKbiShVOAPFbwHtPPlNYEjGmdcZvaipTS21B3zQIMjijRATaf+ewPnj+AeHYL2S9UwrV5TmMohaq5JFWT8=
+	t=1744890187; cv=none; b=hHLJQHjsZqa15Owngx9Kl9Hn2re8O44nMQNA0A+VaNDs1h5dfgcjZfi9JvTCanx+Lc2iK0MCaXrnbA8eSrRn6PouBN3n+yBmLYRq74k3m0tLTnujn6AdFYdlMAQFrLEcL3bK9IZKVXX5BQE50rdowPBFQL+oo5y/n3epHFoiAKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744889924; c=relaxed/simple;
-	bh=FDzo0ra69SUHnhT2dxhXFQWMQGsiUi03WLi5IVRl6Ek=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ionb+cBHLzBDd6KJ6iMdN21n8HPzBnNw5pBInQuLyFYTl2dNWf0Fc9ZVYEv0Kg+ZSOs7/JSbk8FCuFX8MIktUI3aSiG7sWNqt70UZN01JCnLr0fWvLrCh9/+qCTQbw1hIEOes7LJXkwbxzp/3HYY1kmAmB2BZ7Z2GS8pic0cVB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QeYhCD42; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 22297C4CEE4;
-	Thu, 17 Apr 2025 11:38:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744889924;
-	bh=FDzo0ra69SUHnhT2dxhXFQWMQGsiUi03WLi5IVRl6Ek=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=QeYhCD42khS3iefsBDIFoN+qeADOKCuweYFBdXhbU13jnGLgzP+1BMVJRE7yWHMw9
-	 esEYzesQZbj2lE6r1aIDjOd26/us3KJU7Mo4ioCZar9f626MAKCz+7ii/jmi3S040I
-	 e97XWIjpUU42L8VhU0CG6S+oclV1hWadBkALrU8zA7/rVf6lp4HX9sVXrP8hLlLIK6
-	 8Ewso7O6iu36TOamAKDQ1cd7hHTfY+O+yrZg7q+hFJZa8o3d1Ux3dKUY4vhuInhvOu
-	 FrwTpsRKdUR/xld+uzfwgUPrebABc5ZxBgafGHb2+XUXCr8TbzsICWfs3qR5tDOgE/
-	 y55xdqbv+Of2Q==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E022C369B2;
-	Thu, 17 Apr 2025 11:38:44 +0000 (UTC)
-From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
-Date: Thu, 17 Apr 2025 13:38:39 +0200
-Subject: [PATCH] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: add
- retimers, dp altmode support
+	s=arc-20240116; t=1744890187; c=relaxed/simple;
+	bh=3hqhko1U0mB8lse8v5cIdGEm9RtT3mWOd5RZXTzF76E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n7/h8mTcBXoWhHz0hLQNCfveE7CYCckM1kuIJcXo73K+DrKyQwksnIhaQ9RyG4/cMNrugl4VJMpyQRlBLF0hOtCC6N0b+iaGaniPnaP2TAX2oX672Fx+u2jq6cWWQoNrPkktqWxU+lJmhx7vrZc7fhaSLl9fnOdzsv0blaXSZco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=176.9.242.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
+Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
+	by bmailout3.hostsharing.net (Postfix) with ESMTPS id A152F2C05243;
+	Thu, 17 Apr 2025 13:42:58 +0200 (CEST)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id 02911B1FD0; Thu, 17 Apr 2025 13:43:00 +0200 (CEST)
+Date: Thu, 17 Apr 2025 13:42:59 +0200
+From: Lukas Wunner <lukas@wunner.de>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+	Oliver O'Halloran <oohall@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof Wilczy??ski <kw@linux.com>, Rob Herring <robh@kernel.org>,
+	dingwei@marvell.com, cassel@kernel.org,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/4] PCI/ERR: Add support for resetting the slot in a
+ platforms specific way
+Message-ID: <aADpQ0rbuj571B4R@wunner.de>
+References: <20250404-pcie-reset-slot-v1-0-98952918bf90@linaro.org>
+ <20250404-pcie-reset-slot-v1-2-98952918bf90@linaro.org>
+ <Z--cY5Uf6JyTYL9y@wunner.de>
+ <3dokyirkf47lqxgx5k2ybij5b5an6qnceifsub3mcmjvzp3kdb@sm7f2jxxepdc>
+ <Z__AyQeZmXiNwT7c@wunner.de>
+ <rrqn7hlefn7klaczi2jkfta72pwmtentj3zp37yvw3brwpnalk@3eapwfeo5y4d>
+ <aABJ_u8-FXeJoPyF@wunner.de>
+ <jb4iq364iqwk3swux5cjiczyvdyrkjtqjclefyfjrntepvroyn@7vbvbzu3pd3p>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250417-slim7x-retimer-v1-1-5813a7835903@oldschoolsolutions.biz>
-X-B4-Tracking: v=1; b=H4sIAD7oAGgC/x3MQQqAIBBA0avErBNUKqGrRIvMqQbSYiYiCO+et
- HyL/18QZEKBvnqB8SahIxWYuoJ5m9KKikIxWG1b3ZhOyU7RPYrxooisnPYGO+dNaCyU6GRc6Pm
- Hw5jzBywC6ytgAAAA
-X-Change-ID: 20250416-slim7x-retimer-70b1e67b1d42
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1744889923; l=13597;
- i=jens.glathe@oldschoolsolutions.biz; s=20240919;
- h=from:subject:message-id;
- bh=J6YWAW2wf4sKpbRrC5khUuwPY4J2N1kA7a8SA4AMQZE=;
- b=5WjpAjOwGwWynfspg+4RvEOtDInkV/o3tsZd3HtV9HMtEAF7NdgXGizmlHEIHHZ81+C8mZIYu
- KNv6Nhh/za6BfiE4JJZI0vMpMdsJPv/sJ5HSKeDqI2Xv5XnodMiJ4n2
-X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
- pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
-X-Endpoint-Received: by B4 Relay for
- jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
-X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Reply-To: jens.glathe@oldschoolsolutions.biz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <jb4iq364iqwk3swux5cjiczyvdyrkjtqjclefyfjrntepvroyn@7vbvbzu3pd3p>
 
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+On Thu, Apr 17, 2025 at 11:09:21AM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Apr 17, 2025 at 02:23:26AM +0200, Lukas Wunner wrote:
+> > On Wed, Apr 16, 2025 at 08:34:21PM +0530, Manivannan Sadhasivam wrote:
+> > > I don't think it is possible to get rid of the powerpc version. It has
+> > > its own pci_dev::sysdata pointing to 'struct pci_controller' pointer
+> > > which is internal to powerpc arch code. And the generic code would need
+> > > 'struct pci_host_bridge' to access the callback.
+> > 
+> > Below is my proposal to convert powerpc to the new ->slot_reset() callback.
+> > Compile-tested only.
+> > 
+> > Feel free to include this in your series, alternatively I can submit it
+> > to powerpc maintainers once your series has landed.  Thanks!
+> 
+> Looks good to me, thanks! I think it would be better if it is submitted
+> once my series has landed in mainline (just to avoid immutable branch
+> hassle between powerpc and PCI trees).
 
-comparing with CRD and other dts for a more complete support of the 7X
+Sure, this can wait until your series has landed.  It would also be
+possible to merge through the pci tree if powerpc maintainers ack the
+patch.
 
-Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+I've realized that pci_reset_secondary_bus() can be made private as well,
+so below is an updated patch.  Just putting this out there FWIW.
+
+-- 8< --
+
+From: Lukas Wunner <lukas@wunner.de>
+Subject: [PATCH] powerpc/powernv/pci: Migrate to pci_host_bridge::reset_slot
+ callback
+
+struct pci_host_bridge has just been amended with a ->reset_slot()
+callback to allow for a host-bridge-specific bus reset procedure.
+
+PowerNV needs a platform-specific bus reset procedure and has historically
+implemented it by overriding pcibios_reset_secondary_bus().
+
+Migrate PowerNV to the new ->reset_slot() callback to avoid having to
+maintain two different mechanisms for platform- and host-bridge-specific
+bus reset procedures.  Assign the callback as soon as the pci_host_bridge
+is allocated through the following call chain:
+
+pcibios_init()
+  pcibios_scan_phb()
+    pci_create_root_bus()
+      pci_register_host_bridge()
+        pcibios_root_bridge_prepare()
+
+The powerpc-specific implementation of pcibios_reset_secondary_bus() can
+thus be deleted and the remaining default implementation in the PCI core
+can be made private.  pci_reset_secondary_bus() can also be made private.
+The ->reset_secondary_bus() callback in struct pci_controller_ops becomes
+obsolete and can be deleted.
+
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
 ---
-This patch adds the required nodes to support DP Altmode on all three type-c
-ports. The definition is derived from the CRD. Since they are all marked 40Gbps,
-I assume there are 3 PS8830 retimers. 
-This modification is now for ~8 weeks in my tree with little to no complaints. I 
-don't have access to a Yoga Slim 7X, however many people on #aarch64-laptops do 
-and some are using this patch.
----
- .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 491 ++++++++++++++++++++-
- 1 file changed, 485 insertions(+), 6 deletions(-)
+ arch/powerpc/include/asm/pci-bridge.h        |  1 -
+ arch/powerpc/kernel/pci-common.c             | 12 ------------
+ arch/powerpc/platforms/powernv/eeh-powernv.c | 14 +++++++++-----
+ arch/powerpc/platforms/powernv/pci-ioda.c    |  9 +++++++--
+ arch/powerpc/platforms/powernv/pci.h         |  3 ++-
+ drivers/pci/pci.c                            |  4 ++--
+ include/linux/pci.h                          |  2 --
+ 7 files changed, 20 insertions(+), 25 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-index 445d97d67d325853b7dcd2060523e7469ed4e6ea..129ab64c0f915e8f361a9300c2919cf69bbfda29 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-@@ -7,6 +7,8 @@
+diff --git a/arch/powerpc/include/asm/pci-bridge.h b/arch/powerpc/include/asm/pci-bridge.h
+index 2aa3a091ef20..0de09fc90641 100644
+--- a/arch/powerpc/include/asm/pci-bridge.h
++++ b/arch/powerpc/include/asm/pci-bridge.h
+@@ -36,7 +36,6 @@ struct pci_controller_ops {
+ 					    unsigned long type);
+ 	void		(*setup_bridge)(struct pci_bus *bus,
+ 					unsigned long type);
+-	void		(*reset_secondary_bus)(struct pci_dev *pdev);
  
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/gpio-keys.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #ifdef CONFIG_PCI_MSI
+ 	int		(*setup_msi_irqs)(struct pci_dev *pdev,
+diff --git a/arch/powerpc/kernel/pci-common.c b/arch/powerpc/kernel/pci-common.c
+index eac84d687b53..dad15fbec4e0 100644
+--- a/arch/powerpc/kernel/pci-common.c
++++ b/arch/powerpc/kernel/pci-common.c
+@@ -233,18 +233,6 @@ void pcibios_setup_bridge(struct pci_bus *bus, unsigned long type)
+ 		hose->controller_ops.setup_bridge(bus, type);
+ }
  
- #include "x1e80100.dtsi"
-@@ -72,7 +74,15 @@ port@1 {
- 					reg = <1>;
+-void pcibios_reset_secondary_bus(struct pci_dev *dev)
+-{
+-	struct pci_controller *phb = pci_bus_to_host(dev->bus);
+-
+-	if (phb->controller_ops.reset_secondary_bus) {
+-		phb->controller_ops.reset_secondary_bus(dev);
+-		return;
+-	}
+-
+-	pci_reset_secondary_bus(dev);
+-}
+-
+ resource_size_t pcibios_default_alignment(void)
+ {
+ 	if (ppc_md.pcibios_default_alignment)
+diff --git a/arch/powerpc/platforms/powernv/eeh-powernv.c b/arch/powerpc/platforms/powernv/eeh-powernv.c
+index db3370d1673c..9ea2fa892efc 100644
+--- a/arch/powerpc/platforms/powernv/eeh-powernv.c
++++ b/arch/powerpc/platforms/powernv/eeh-powernv.c
+@@ -890,18 +890,22 @@ static int pnv_eeh_bridge_reset(struct pci_dev *pdev, int option)
+ 	return (rc == OPAL_SUCCESS) ? 0 : -EIO;
+ }
  
- 					pmic_glink_ss0_ss_in: endpoint {
--						remote-endpoint = <&usb_1_ss0_qmpphy_out>;
-+						remote-endpoint = <&retimer_ss0_ss_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_ss0_con_sbu_in: endpoint {
-+						remote-endpoint = <&retimer_ss0_con_sbu_out>;
- 					};
- 				};
- 			};
-@@ -101,7 +111,15 @@ port@1 {
- 					reg = <1>;
+-void pnv_pci_reset_secondary_bus(struct pci_dev *dev)
++int pnv_pci_reset_secondary_bus(struct pci_host_bridge *host,
++				struct pci_dev *dev)
+ {
+ 	struct pci_controller *hose;
++	int rc_hot, rc_dea;
  
- 					pmic_glink_ss1_ss_in: endpoint {
--						remote-endpoint = <&usb_1_ss1_qmpphy_out>;
-+						remote-endpoint = <&retimer_ss1_ss_out>;
-+					};
-+				};
+ 	if (pci_is_root_bus(dev->bus)) {
+ 		hose = pci_bus_to_host(dev->bus);
+-		pnv_eeh_root_reset(hose, EEH_RESET_HOT);
+-		pnv_eeh_root_reset(hose, EEH_RESET_DEACTIVATE);
++		rc_hot = pnv_eeh_root_reset(hose, EEH_RESET_HOT);
++		rc_dea = pnv_eeh_root_reset(hose, EEH_RESET_DEACTIVATE);
+ 	} else {
+-		pnv_eeh_bridge_reset(dev, EEH_RESET_HOT);
+-		pnv_eeh_bridge_reset(dev, EEH_RESET_DEACTIVATE);
++		rc_hot = pnv_eeh_bridge_reset(dev, EEH_RESET_HOT);
++		rc_dea = pnv_eeh_bridge_reset(dev, EEH_RESET_DEACTIVATE);
+ 	}
 +
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_ss1_con_sbu_in: endpoint {
-+						remote-endpoint = <&retimer_ss1_con_sbu_out>;
- 					};
- 				};
- 			};
-@@ -130,7 +148,15 @@ port@1 {
- 					reg = <1>;
++	return rc_hot ? : rc_dea;
+ }
  
- 					pmic_glink_ss2_ss_in: endpoint {
--						remote-endpoint = <&usb_1_ss2_qmpphy_out>;
-+						remote-endpoint = <&retimer_ss2_ss_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_ss2_con_sbu_in: endpoint {
-+						remote-endpoint = <&retimer_ss2_con_sbu_out>;
- 					};
- 				};
- 			};
-@@ -226,6 +252,150 @@ vreg_nvme: regulator-nvme {
- 		regulator-boot-on;
- 	};
+ static void pnv_eeh_wait_for_pending(struct pci_dn *pdn, const char *type,
+diff --git a/arch/powerpc/platforms/powernv/pci-ioda.c b/arch/powerpc/platforms/powernv/pci-ioda.c
+index ae4b549b5ca0..e1b75a4bc681 100644
+--- a/arch/powerpc/platforms/powernv/pci-ioda.c
++++ b/arch/powerpc/platforms/powernv/pci-ioda.c
+@@ -2145,6 +2145,12 @@ static void pnv_pci_ioda_fixup(void)
+ #endif
+ }
  
-+	vreg_rtmr0_1p15: regulator-rtmr0-1p15 {
-+		compatible = "regulator-fixed";
++static int pnv_pci_root_bridge_prepare(struct pci_host_bridge *bridge)
++{
++	bridge->reset_slot = pnv_pci_reset_secondary_bus;
++	return 0;
++}
 +
-+		regulator-name = "VREG_RTMR0_1P15";
-+		regulator-min-microvolt = <1150000>;
-+		regulator-max-microvolt = <1150000>;
-+
-+		gpio = <&pmc8380_5_gpios 8 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb0_pwr_1p15_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr0_1p8: regulator-rtmr0-1p8 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR0_1P8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&pm8550ve_9_gpios 8 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb0_1p8_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr0_3p3: regulator-rtmr0-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR0_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&pm8550_gpios 11 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb0_3p3_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr1_1p15: regulator-rtmr1-1p15 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR1_1P15";
-+		regulator-min-microvolt = <1150000>;
-+		regulator-max-microvolt = <1150000>;
-+
-+		gpio = <&tlmm 188 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb1_pwr_1p15_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr1_1p8: regulator-rtmr1-1p8 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR1_1P8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&tlmm 175 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb1_pwr_1p8_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr1_3p3: regulator-rtmr1-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR1_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 186 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb1_pwr_3p3_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr2_1p15: regulator-rtmr2-1p15 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR2_1P15";
-+		regulator-min-microvolt = <1150000>;
-+		regulator-max-microvolt = <1150000>;
-+
-+		gpio = <&tlmm 189 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb2_pwr_1p15_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr2_1p8: regulator-rtmr2-1p8 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR2_1P8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&tlmm 126 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb2_pwr_1p8_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_rtmr2_3p3: regulator-rtmr2-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_RTMR2_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 187 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&usb2_pwr_3p3_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
- 	vph_pwr: regulator-vph-pwr {
- 		compatible = "regulator-fixed";
- 
-@@ -567,6 +737,178 @@ keyboard@3a {
- 	};
+ /*
+  * Returns the alignment for I/O or memory windows for P2P
+  * bridges. That actually depends on how PEs are segmented.
+@@ -2504,7 +2510,6 @@ static const struct pci_controller_ops pnv_pci_ioda_controller_ops = {
+ 	.release_device		= pnv_pci_release_device,
+ 	.window_alignment	= pnv_pci_window_alignment,
+ 	.setup_bridge		= pnv_pci_fixup_bridge_resources,
+-	.reset_secondary_bus	= pnv_pci_reset_secondary_bus,
+ 	.shutdown		= pnv_pci_ioda_shutdown,
+ #ifdef CONFIG_IOMMU_API
+ 	.device_group		= pnv_pci_device_group,
+@@ -2515,7 +2520,6 @@ static const struct pci_controller_ops pnv_npu_ocapi_ioda_controller_ops = {
+ 	.enable_device_hook	= pnv_ocapi_enable_device_hook,
+ 	.release_device		= pnv_pci_release_device,
+ 	.window_alignment	= pnv_pci_window_alignment,
+-	.reset_secondary_bus	= pnv_pci_reset_secondary_bus,
+ 	.shutdown		= pnv_pci_ioda_shutdown,
  };
  
-+&i2c1 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	typec-mux@8 {
-+		compatible = "parade,ps8830";
-+		reg = <0x08>;
-+
-+		clocks = <&rpmhcc RPMH_RF_CLK5>;
-+
-+		vdd-supply = <&vreg_rtmr2_1p15>;
-+		vdd33-supply = <&vreg_rtmr2_3p3>;
-+		vdd33-cap-supply = <&vreg_rtmr2_3p3>;
-+		vddar-supply = <&vreg_rtmr2_1p15>;
-+		vddat-supply = <&vreg_rtmr2_1p15>;
-+		vddio-supply = <&vreg_rtmr2_1p8>;
-+
-+		reset-gpios = <&tlmm 185 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&rtmr2_default>;
-+		pinctrl-names = "default";
-+
-+		orientation-switch;
-+		retimer-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				retimer_ss2_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss2_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				retimer_ss2_ss_in: endpoint {
-+					remote-endpoint = <&usb_1_ss2_qmpphy_out>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+
-+				retimer_ss2_con_sbu_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss2_con_sbu_in>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&i2c3 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	typec-mux@8 {
-+		compatible = "parade,ps8830";
-+		reg = <0x08>;
-+
-+		clocks = <&rpmhcc RPMH_RF_CLK3>;
-+
-+		vdd-supply = <&vreg_rtmr0_1p15>;
-+		vdd33-supply = <&vreg_rtmr0_3p3>;
-+		vdd33-cap-supply = <&vreg_rtmr0_3p3>;
-+		vddar-supply = <&vreg_rtmr0_1p15>;
-+		vddat-supply = <&vreg_rtmr0_1p15>;
-+		vddio-supply = <&vreg_rtmr0_1p8>;
-+
-+		reset-gpios = <&pm8550_gpios 10 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&rtmr0_default>;
-+		pinctrl-names = "default";
-+
-+		retimer-switch;
-+		orientation-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				retimer_ss0_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss0_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				retimer_ss0_ss_in: endpoint {
-+					remote-endpoint = <&usb_1_ss0_qmpphy_out>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+
-+				retimer_ss0_con_sbu_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss0_con_sbu_in>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&i2c7 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	typec-mux@8 {
-+		compatible = "parade,ps8830";
-+		reg = <0x8>;
-+
-+		clocks = <&rpmhcc RPMH_RF_CLK4>;
-+
-+		vdd-supply = <&vreg_rtmr1_1p15>;
-+		vdd33-supply = <&vreg_rtmr1_3p3>;
-+		vdd33-cap-supply = <&vreg_rtmr1_3p3>;
-+		vddar-supply = <&vreg_rtmr1_1p15>;
-+		vddat-supply = <&vreg_rtmr1_1p15>;
-+		vddio-supply = <&vreg_rtmr1_1p8>;
-+
-+		reset-gpios = <&tlmm 176 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&rtmr1_default>;
-+		pinctrl-names = "default";
-+
-+		retimer-switch;
-+		orientation-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				retimer_ss1_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss1_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				retimer_ss1_ss_in: endpoint {
-+					remote-endpoint = <&usb_1_ss1_qmpphy_out>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+
-+				retimer_ss1_con_sbu_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss1_con_sbu_in>;
-+				};
-+			};
-+
-+		};
-+	};
-+};
-+
- &i2c8 {
- 	clock-frequency = <400000>;
+@@ -2724,6 +2728,7 @@ static void __init pnv_pci_init_ioda_phb(struct device_node *np,
+ 	}
  
-@@ -614,6 +956,33 @@ &mdss {
- 	status = "okay";
- };
+ 	ppc_md.pcibios_default_alignment = pnv_pci_default_alignment;
++	ppc_md.pcibios_root_bridge_prepare = pnv_pci_root_bridge_prepare;
  
-+&mdss_dp0 {
-+	status = "okay";
-+};
-+
-+&mdss_dp0_out {
-+	data-lanes = <0 1>;
-+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+};
-+
-+&mdss_dp1 {
-+	status = "okay";
-+};
-+
-+&mdss_dp1_out {
-+	data-lanes = <0 1>;
-+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+};
-+
-+&mdss_dp2 {
-+	status = "okay";
-+};
-+
-+&mdss_dp2_out {
-+	data-lanes = <0 1>;
-+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+};
-+
- &mdss_dp3 {
- 	compatible = "qcom,x1e80100-dp";
- 	/delete-property/ #sound-dai-cells;
-@@ -701,6 +1070,50 @@ &pcie6a_phy {
- 	status = "okay";
- };
+ #ifdef CONFIG_PCI_IOV
+ 	ppc_md.pcibios_fixup_sriov = pnv_pci_ioda_fixup_iov;
+diff --git a/arch/powerpc/platforms/powernv/pci.h b/arch/powerpc/platforms/powernv/pci.h
+index 42075501663b..44e8969c7729 100644
+--- a/arch/powerpc/platforms/powernv/pci.h
++++ b/arch/powerpc/platforms/powernv/pci.h
+@@ -275,7 +275,8 @@ extern struct iommu_table *pnv_pci_table_alloc(int nid);
  
-+&pm8550_gpios {
-+	rtmr0_default: rtmr0-reset-n-active-state {
-+		pins = "gpio10";
-+		function = "normal";
-+		power-source = <1>; /* 1.8V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
-+
-+	usb0_3p3_reg_en: usb0-3p3-reg-en-state {
-+		pins = "gpio11";
-+		function = "normal";
-+		power-source = <1>; /* 1.8V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
-+};
-+
-+&pm8550ve_8_gpios {
-+	misc_3p3_reg_en: misc-3p3-reg-en-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+		drive-push-pull;
-+		power-source = <1>; /* 1.8 V */
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
-+	};
-+};
-+
-+&pm8550ve_9_gpios {
-+	usb0_1p8_reg_en: usb0-1p8-reg-en-state {
-+		pins = "gpio8";
-+		function = "normal";
-+		power-source = <1>; /* 1.8V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
-+};
-+
- &pmc8380_3_gpios {
- 	edp_bl_en: edp-bl-en-state {
- 		pins = "gpio4";
-@@ -711,6 +1124,17 @@ edp_bl_en: edp-bl-en-state {
- 	};
- };
+ extern void pnv_pci_init_ioda2_phb(struct device_node *np);
+ extern void pnv_pci_init_npu2_opencapi_phb(struct device_node *np);
+-extern void pnv_pci_reset_secondary_bus(struct pci_dev *dev);
++extern int pnv_pci_reset_secondary_bus(struct pci_host_bridge *host,
++				       struct pci_dev *dev);
+ extern int pnv_eeh_phb_reset(struct pci_controller *hose, int option);
  
-+&pmc8380_5_gpios {
-+	usb0_pwr_1p15_reg_en: usb0-pwr-1p15-reg-en-state {
-+		pins = "gpio8";
-+		function = "normal";
-+		power-source = <1>; /* 1.8V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
-+};
-+
- &qupv3_0 {
- 	status = "okay";
- };
-@@ -919,6 +1343,20 @@ wake-n-pins {
- 		};
- 	};
+ extern struct pnv_ioda_pe *pnv_pci_bdfn_to_pe(struct pnv_phb *phb, u16 bdfn);
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 13709bb898a9..28cdcd698914 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -4962,7 +4962,7 @@ int pci_bridge_wait_for_secondary_bus(struct pci_dev *dev, char *reset_type)
+ 			    PCIE_RESET_READY_POLL_MS - delay);
+ }
  
-+	rtmr1_default: rtmr1-reset-n-active-state {
-+		pins = "gpio176";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	rtmr2_default: rtmr2-reset-n-active-state {
-+		pins = "gpio185";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	tpad_default: tpad-default-state {
- 		pins = "gpio3";
- 		function = "gpio";
-@@ -940,6 +1378,47 @@ reset-n-pins {
- 		};
- 	};
+-void pci_reset_secondary_bus(struct pci_dev *dev)
++static void pci_reset_secondary_bus(struct pci_dev *dev)
+ {
+ 	u16 ctrl;
  
-+	usb1_pwr_1p15_reg_en: usb1-pwr-1p15-reg-en-state {
-+		pins = "gpio188";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb1_pwr_1p8_reg_en: usb1-pwr-1p8-reg-en-state {
-+		pins = "gpio175";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb1_pwr_3p3_reg_en: usb1-pwr-3p3-reg-en-state {
-+		pins = "gpio186";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb2_pwr_1p15_reg_en: usb2-pwr-1p15-reg-en-state {
-+		pins = "gpio189";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb2_pwr_1p8_reg_en: usb2-pwr-1p8-reg-en-state {
-+		pins = "gpio126";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb2_pwr_3p3_reg_en: usb2-pwr-3p3-reg-en-state {
-+		pins = "gpio187";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
- };
+@@ -4980,7 +4980,7 @@ void pci_reset_secondary_bus(struct pci_dev *dev)
+ 	pci_write_config_word(dev, PCI_BRIDGE_CONTROL, ctrl);
+ }
  
- &uart21 {
-@@ -976,7 +1455,7 @@ &usb_1_ss0_dwc3_hs {
- };
- 
- &usb_1_ss0_qmpphy_out {
--	remote-endpoint = <&pmic_glink_ss0_ss_in>;
-+	remote-endpoint = <&retimer_ss0_ss_in>;
- };
- 
- &usb_1_ss1_hsphy {
-@@ -1008,7 +1487,7 @@ &usb_1_ss1_dwc3_hs {
- };
- 
- &usb_1_ss1_qmpphy_out {
--	remote-endpoint = <&pmic_glink_ss1_ss_in>;
-+	remote-endpoint = <&retimer_ss1_ss_in>;
- };
- 
- &usb_1_ss2_hsphy {
-@@ -1040,5 +1519,5 @@ &usb_1_ss2_dwc3_hs {
- };
- 
- &usb_1_ss2_qmpphy_out {
--	remote-endpoint = <&pmic_glink_ss2_ss_in>;
-+	remote-endpoint = <&retimer_ss2_ss_in>;
- };
-
----
-base-commit: f660850bc246fef15ba78c81f686860324396628
-change-id: 20250416-slim7x-retimer-70b1e67b1d42
-
-Best regards,
+-void __weak pcibios_reset_secondary_bus(struct pci_dev *dev)
++static void pcibios_reset_secondary_bus(struct pci_dev *dev)
+ {
+ 	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
+ 	int ret;
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 76e977af2d52..829d7cbbf258 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1397,8 +1397,6 @@ int pci_try_reset_function(struct pci_dev *dev);
+ int pci_probe_reset_slot(struct pci_slot *slot);
+ int pci_probe_reset_bus(struct pci_bus *bus);
+ int pci_reset_bus(struct pci_dev *dev);
+-void pci_reset_secondary_bus(struct pci_dev *dev);
+-void pcibios_reset_secondary_bus(struct pci_dev *dev);
+ void pci_update_resource(struct pci_dev *dev, int resno);
+ int __must_check pci_assign_resource(struct pci_dev *dev, int i);
+ void pci_release_resource(struct pci_dev *dev, int resno);
 -- 
-Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-
+2.43.0
 
 
