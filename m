@@ -1,144 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-54641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AB74A91CC5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 14:48:09 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF394A91E4B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 15:41:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B6A7519E675C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 12:48:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 634917A7BA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 13:40:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1243424886A;
-	Thu, 17 Apr 2025 12:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6673524C099;
+	Thu, 17 Apr 2025 13:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="U+MTvQ+s"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="e7V8X+pK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B44245017;
-	Thu, 17 Apr 2025 12:47:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A3924C066
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Apr 2025 13:41:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744894041; cv=none; b=qinaQuehdcM4aNbWMco/kVf8UC+ABjwQvqCyJDJekrRsOF6TXFbfykROFLuR3fU6mvmcaYwptPDES5wcCU6SKdbmk3Zl1icPBsYvDkQkU+Jhc5r8p1UEJYqmkjvzKQmYSsNDiepSFJQxArJZCV6RvFwKKko2U0Z42BmclqciJIk=
+	t=1744897294; cv=none; b=bI9KUkJZMhTGukm7bcmLIKlaUDBNy9oarLRTCLq4cKZDzOww8pzUUhzUmNhd6vcBRN0Hw8mP6QgpSN0hq80wWzp253RyH5UdECLSbmWwEiNyQS6uXqClf86GZaSjUJWLjj3bTB6YlafbSOtxX+xq4VbbxSCUIQaOT1+/T2dLgTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744894041; c=relaxed/simple;
-	bh=LiuE/7Hvqxov9Zq2+v/0W2sw6XtF+cZL6hiw0yCmTVo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5MqFYzJdSc1+TjqbHcGi50jNjSlrgXZQBD/9nLpa+mWWQ3B+hgcm55GPsXm6mbRBOgDi6bRf+W6tXd9oA2cPqxV9kPc/H6NmNdXOtM4YNj3aGiJ+R1PS3zhrB+ISSIUHjHY1CBim+dI+MIf0SA4RmGgOm3OXixs5s+OGUuZ/k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=U+MTvQ+s; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53HCHvA7025144;
-	Thu, 17 Apr 2025 12:46:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=MhYB+fQY5/H
-	wxFMNmLwlVkIaxwQ//b1WEkAR46glzpg=; b=U+MTvQ+swe05UvI1FOT5ziXxG/K
-	d2ZukcPHhQJTvI4WAQ2SaZ2DUJ9wygPbO66/wLVawewy8hX3tq3uzgTJbKNkTP0n
-	QGAQ/GSxm29P+SGkcLrOSiRYM7tX+Z/1Xk0T9sPeb0neoR0VHVSsU4fS8Tomh3ld
-	8TrWv5ulg0zZxnFT5TSpvZGQrs1dzVtmI6geKLsuBbnafS+PzuqMYZwAjino9P69
-	6UKV5PW3sZXB4Ecl3CD44zqd2UUbszGlumpaMz0+VFoK038VkrPSYtkBYM9/uQMK
-	oLEIcOVJWHCOtIqHtmtq4MdWMifylqg0ea7YI3Frw3KBrUzY5/7qBddCsCQ==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygd6q18n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Apr 2025 12:46:53 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 53HCknrb017631;
-	Thu, 17 Apr 2025 12:46:50 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 462f5drtts-1;
-	Thu, 17 Apr 2025 12:46:50 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53HCkorw017649;
-	Thu, 17 Apr 2025 12:46:50 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 53HCkoi1017648;
-	Thu, 17 Apr 2025 12:46:50 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-	id AF97C501598; Thu, 17 Apr 2025 18:16:49 +0530 (+0530)
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-To: alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
-        krzk+dt@kernel.org, robh@kernel.org, mani@kernel.org,
-        conor+dt@kernel.org, James.Bottomley@HansenPartnership.com,
-        martin.petersen@oracle.com, beanhuo@micron.com,
-        peter.wang@mediatek.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: [PATCH V1 3/3] scsi: ufs: qcom: Add support to disable UFS LPM Feature
-Date: Thu, 17 Apr 2025 18:16:45 +0530
-Message-ID: <20250417124645.24456-4-quic_nitirawa@quicinc.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250417124645.24456-1-quic_nitirawa@quicinc.com>
-References: <20250417124645.24456-1-quic_nitirawa@quicinc.com>
+	s=arc-20240116; t=1744897294; c=relaxed/simple;
+	bh=kuAfYP5UvARagG4xlp5uWE7wPsCM5ITfhZ2pP4vf4pA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=Z/d4azugfdRvJglau9aobRW5jBN9dYhqjgJhP+QKpRz1D9tbXrAtBWPN5srMT/ftaSRgV48TejRq4lY3PjQpPQMzP8qmsEyaMXOzWpqUPvOM+kuT1pW0REMj1I6d3PBPbcHUCAiBBltzZdEAovYgIKQLxrumkwT83EViG1EaOKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=e7V8X+pK; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ac3b12e8518so148597466b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Apr 2025 06:41:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1744897291; x=1745502091; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8b5UBlhI7tagceuxs0zjhouMKp8JoC3Qnn8Fd0hnCOc=;
+        b=e7V8X+pKH54rHfUok1XqYDVkfCc0Kqg1XRvfabg7z5wgC4hk4PG0jEERDHtxYc+tht
+         FuI8JiTw4Z6wUMwJmM1c2UcWZHunRZI9xHAWJh1aEDNP7Mju+KbBXSgMLl774giDiJNK
+         XCvqaqMpZ16jf6cxu7k7DUi064Vo9z31+KQ9FA7mggmVtjxXWSssJFmnYoxFsUVephXz
+         Ftt70HTGryZjVDoxwoHxOb1pPGPwOyUezcAJQAbqArakjzuvJJtywcxftjY2zb2RGUmZ
+         bOSPy+oGzbWSsOht7feXVQguGxHcAgLPek6omtkAdCp6cHy5UBpAq8ubxAKSSN2AlfYk
+         2qVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744897291; x=1745502091;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8b5UBlhI7tagceuxs0zjhouMKp8JoC3Qnn8Fd0hnCOc=;
+        b=gMlwqmrYIBKsJ+3jF7s54pn923+mS/RABioV2efhWrz/6JdCmC9KF3xfHE6wOt+wZ1
+         plU9zOEXYw96rsvMtG07vcHGX8N51ZN9fG1epI9Lrs1I7CU8G4tb7CWQ2qSqRXqUWdpQ
+         X5Awrlqp9k8m7JR9Fdkjr6BxwTDj6u6YeI5XwOTdLLR1j0eYnZ7BSIPfOMuaYxWuhrWT
+         1d9+yhKrZp3IAWyxIZpjocd3X/N9YtHF4XUIxGebA/jvoQYpp0Dq6HtpJJhdCn+o0nus
+         RbOjPzwyXprpq3FtdNKGG1/Fw35bfvaJLriMe+11XTPjukzaJWddEFItDjsflW5+62cD
+         k7bw==
+X-Forwarded-Encrypted: i=1; AJvYcCWXpVDgpmN/xm1dgXgcSUbVE7Xzl23byGe08cp0vPheBHkRGMpHxntmbSh0M1vyKVZWcoPoZvsk7JQ8lhNU@vger.kernel.org
+X-Gm-Message-State: AOJu0YzLkrVyDJQwo9NC4NB+CnO8rqxCZINY7/J9Udgv48b+GHvDLu7g
+	LFPyOZoZP0fLO3CxY/J5wm+mClpSw0md0vlUqeOZai7rqT2SlehfG51TwugE/Co=
+X-Gm-Gg: ASbGncuZnpcch1dThiJA78xo4hqdvBl9zVCGAsA2mMr4hq/mspFPKRzhBjVR9DdSs0z
+	WvGTYi4+ehjAmF8tx2nHVIqHUu+UJWCw7U0t5FFDLKJGQXToo8cdR2+6/JvogOI1opDtm481i3Q
+	SRtKgP9NCZ7MAaTC7GaK2Ulkfy9CJZwdUCWyJ+YgouMbc6aDFnh8dI1l3xrhahwvHm2/AyD5mOb
+	/LoJcCch+NR54bAdGgHnGT3VFua6w27g7atEY7WoQcMWeGWCwLXftyZqK0CuCrKWhANZ+nu6Qik
+	7ZGxvUtaz5MjrCthIcF4H/SjBkb0NL/ZNCVg8nmuq7VCswRNGtUq8AW/25BGTCdYioa5nt9iWC0
+	8YILKOPdsDQ==
+X-Google-Smtp-Source: AGHT+IEJ4vU8prXmzLSN5mk9ksAdjmPcFn2w8rEFHTB4zYx6IwyrLaLSsVIaikyfHr12C+NZTNoQWQ==
+X-Received: by 2002:a17:907:9624:b0:ac7:391b:e688 with SMTP id a640c23a62f3a-acb42cc678dmr478100566b.58.1744897290726;
+        Thu, 17 Apr 2025 06:41:30 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acb608b1378sm97199166b.78.2025.04.17.06.41.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Apr 2025 06:41:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: i_G93qBxi1AmiFQD0O3d6ZfPKPuSg1vY
-X-Proofpoint-GUID: i_G93qBxi1AmiFQD0O3d6ZfPKPuSg1vY
-X-Authority-Analysis: v=2.4 cv=ANaQCy7k c=1 sm=1 tr=0 ts=6800f83e cx=c_pps a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=TfDKAR2Pkyhr9upUyPUA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-17_03,2025-04-17_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- mlxlogscore=999 suspectscore=0 clxscore=1015 lowpriorityscore=0
- phishscore=0 impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0
- bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504170095
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 17 Apr 2025 15:41:29 +0200
+Message-Id: <D98YGSPT9OB6.26E97T9QSD4NW@fairphone.com>
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>, "Rob Clark"
+ <robdclark@gmail.com>
+Cc: <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+ <linux-arm-msm@vger.kernel.org>, "Rob Clark" <robdclark@chromium.org>,
+ "Sean Paul" <sean@poorly.run>, "Konrad Dybcio" <konradybcio@kernel.org>,
+ "Abhinav Kumar" <quic_abhinavk@quicinc.com>, "Dmitry Baryshkov"
+ <lumag@kernel.org>, "Marijn Suijten" <marijn.suijten@somainline.org>,
+ "David Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>,
+ "open list" <linux-kernel@vger.kernel.org>, <luca@lucaweiss.eu>
+Subject: Re: [PATCH v2 08/34] drm/msm: Remove vram carveout support
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <20250319145425.51935-1-robdclark@gmail.com>
+ <20250319145425.51935-9-robdclark@gmail.com>
+ <q2tzc2cvzfu7hirxcd6l6vi7veynqdopdg2myjbjkzbslcu5bi@52pmnd3thdil>
+In-Reply-To: <q2tzc2cvzfu7hirxcd6l6vi7veynqdopdg2myjbjkzbslcu5bi@52pmnd3thdil>
 
-There are emulation FPGA platforms or other platforms where UFS low
-power mode is either unsupported or power efficiency is not a critical
-requirement.
+On Thu Apr 17, 2025 at 1:20 AM CEST, Dmitry Baryshkov wrote:
+> On Wed, Mar 19, 2025 at 07:52:20AM -0700, Rob Clark wrote:
+>> From: Rob Clark <robdclark@chromium.org>
+>>=20
+>> It is standing in the way of drm_gpuvm / VM_BIND support.  Not to
+>> mention frequently broken and rarely tested.  And I think only needed
+>> for a 10yr old not quite upstream SoC (msm8974).
+>
+> Well... MSM8974 is quite upstream, but anyway, let's drop it. Maybe
+> somebody will write an IOMMU driver.
 
-Disable all low power mode UFS feature based on the "disable-lpm" device
-tree property parsed in platform driver.
+msm8226 is also using this!
 
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+Sad to see this happening, but I get the reasoning. Unfortunately nobody
+who really knows GPU and IOMMU bits has looked at this in recent years,
+for msm8974 we (mostly Matti Lehtim=C3=A4ki and me) have a semi-working
+branch but hitting random issues with it.
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 1b37449fbffc..1024edf36b68 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1014,13 +1014,14 @@ static void ufs_qcom_set_host_caps(struct ufs_hba *hba)
+Would've been nice if somebody made functional IOMMU support back in
+like 2015-2016 when more people looked at this platform.
 
- static void ufs_qcom_set_caps(struct ufs_hba *hba)
- {
--	hba->caps |= UFSHCD_CAP_CLK_GATING | UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
--	hba->caps |= UFSHCD_CAP_CLK_SCALING | UFSHCD_CAP_WB_WITH_CLK_SCALING;
--	hba->caps |= UFSHCD_CAP_AUTO_BKOPS_SUSPEND;
--	hba->caps |= UFSHCD_CAP_WB_EN;
--	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
--	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
--
-+	if (!hba->disable_lpm) {
-+		hba->caps |= UFSHCD_CAP_CLK_GATING | UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
-+		hba->caps |= UFSHCD_CAP_CLK_SCALING | UFSHCD_CAP_WB_WITH_CLK_SCALING;
-+		hba->caps |= UFSHCD_CAP_AUTO_BKOPS_SUSPEND;
-+		hba->caps |= UFSHCD_CAP_WB_EN;
-+		hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
-+		hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
-+	}
- 	ufs_qcom_set_host_caps(hba);
- }
+Regards
+Luca
 
---
-2.48.1
+>
+>>=20
+>> Maybe we can add support back in later, but I'm doubtful.
+>>=20
+>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>> ---
+>>  drivers/gpu/drm/msm/adreno/a2xx_gpu.c      |   6 +-
+>>  drivers/gpu/drm/msm/adreno/a3xx_gpu.c      |  13 +-
+>>  drivers/gpu/drm/msm/adreno/a4xx_gpu.c      |  13 +-
+>>  drivers/gpu/drm/msm/adreno/adreno_device.c |   4 -
+>>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |   1 -
+>>  drivers/gpu/drm/msm/msm_drv.c              | 117 +-----------------
+>>  drivers/gpu/drm/msm/msm_drv.h              |  11 --
+>>  drivers/gpu/drm/msm/msm_gem.c              | 131 ++-------------------
+>>  drivers/gpu/drm/msm/msm_gem.h              |   5 -
+>>  drivers/gpu/drm/msm/msm_gem_submit.c       |   5 -
+>>  10 files changed, 19 insertions(+), 287 deletions(-)
 
 
