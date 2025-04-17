@@ -1,347 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-54666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CDEBA921A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 17:31:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1067CA921B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 17:32:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D32816B857
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 15:31:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 210DE16EA41
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 15:32:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5162E253331;
-	Thu, 17 Apr 2025 15:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4726E25334C;
+	Thu, 17 Apr 2025 15:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QniYFnzs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZWXTavXK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F18225335B;
-	Thu, 17 Apr 2025 15:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CE413B284;
+	Thu, 17 Apr 2025 15:32:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744903862; cv=none; b=tR96tufq3bYmSnm/4V/tEQ+Sq0Ct5MkoQiZVvB8UINLudZ1SRdJHBwSFY6U/ZubuLUs5XR7lFffDS0/N6JJyDUq2t7bGmC2WDLwJhHIvnxwh3Ea7kb/Q5Rq5Id1woW6jTl6kFgIgms4Ru+FWsWLPakMG2d8UPwwMu2eWgUfPkZk=
+	t=1744903960; cv=none; b=neHI2wQQiuqqmXo4ufMQdP5GduXpiDolOMrwX94GPqBrgYbJ3la+fmXVIPE0Y8ecIublJsvpzQVEwm5HBlNPY4q3/sI8p5FcVhwLYYwvPmR//WR6bdktJWUK1HoKt2fy7NKMCLha7haFfSacYZcNXzndm9ev2+x64nUoxrZbCB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744903862; c=relaxed/simple;
-	bh=Kmys8SSH5kmbquel9jpMM2l574LuDV5zjTeaZyyURL8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=BeLUZtCpeqGavJ95qKPZGM6VFbGOFbqTtzqQxeA0sSIsJv8AL4qVxd5msiImd6kfOVO4xi6x5tVZFiFcVC0CNqaoeRZp6bltgnxDZe2N5IAVYJJgZsNThUbqgNrtK2RSIkL/M3BzZUSYrRwypFAKILYWm+7lhAziDOvd2rKdb1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QniYFnzs; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53HClSVV015956;
-	Thu, 17 Apr 2025 15:30:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xoAUXkcWfUCFyDJ1tTdVeqoOUSh2RKKgBU7cTtK4Os0=; b=QniYFnzsIwte1Ovu
-	x681dDJBjwuhjfuOO8U7TSr1XBLvnqpFxPAhaJ8QFCcQEHjTy5CpkmgkebSy7E0v
-	GFf4Ob/OwlxsNKgeJH8BhU2mOO2+WLD8AJnzYw49iZpEhaYqt9RRiaMjnXJssi+x
-	G9jwLlADrForCOpEQOVXZEQ41VRbYUr03DqoWF4OQJx9JN+FZSlVEABELrdClQj5
-	QBiu/He7FsCAi4mpi7B1dajupOxM25/W0ncIQXtal509kJ1HXz1Z+3sFC3SQeSVf
-	5/PTQ+2Sg2cYN+WbQiYL1CvJiJ+g1GzvOnHlUbTVuLMPxYygEj9U7xuA7rpoDr5h
-	MmM5hg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ydhqfmxy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Apr 2025 15:30:52 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53HFUphh000372
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Apr 2025 15:30:51 GMT
-Received: from [10.216.1.40] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 17 Apr
- 2025 08:30:46 -0700
-Message-ID: <300a2861-8602-e7fd-dc12-2e94cc65e0c3@quicinc.com>
-Date: Thu, 17 Apr 2025 21:00:43 +0530
+	s=arc-20240116; t=1744903960; c=relaxed/simple;
+	bh=2h6/Nzpr79ivuIRUmRHxbY6xRJap+DrNqvXM5a86Sn4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=quDFPeOeYUCqhGZTWTCFVwg7I0KGS0L3By9CDz7abF+w9OKIbjoK36gqcs2jF7JroLkOQ9SjvcB6qrvsu5yWVWFUU1TztalUfCqjJojyzLagdDYZk8+V7583jpsiMBDBrnFYE7Hvb5aIC4asUXWNH9poWKXawQaAWonndPCgqSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZWXTavXK; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-736abdac347so63874b3a.2;
+        Thu, 17 Apr 2025 08:32:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744903958; x=1745508758; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hjUaDefyEQ6W4VYwAVRnmpwPnaJPpd/esXUe2Z+J9U0=;
+        b=ZWXTavXKcbKRMtcNvI6aFpLkomrlRLULIqHtauP2FaEXaMixcZBv8AxQhQ13g53q/l
+         66GjU8m5blseESCxG9hD2EHZdX6uFP3kibb1arN9tGrUbt9/Gjje6xIy0X8vC6uiDirM
+         dYujUDkc+sA77GAJVWWWwREusxMqRlNgB2QfiDjGcD8CILqEelBN/sbxEendUbwYFptF
+         M8m1Tc/gWTQm+65JDTQ967jmFMkg1Ra/s7WlVJEmVfgrIIaIQLK5Go4tYuUzTnT7xlTF
+         B08FNhdOZGjgl5sSwUigvqjx13KJcdmhspMgMsAvPSBCXSDD2EJtePgRu53ye6r1eADO
+         oBKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744903958; x=1745508758;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hjUaDefyEQ6W4VYwAVRnmpwPnaJPpd/esXUe2Z+J9U0=;
+        b=xFDYvCqxynANrxLSS/Tgys1rBbzICx57eyUpWyc2qfBBPh0ZUbH0tQxnzzfGJb3bhd
+         7YU1QQ8rV/Ek2QVvQwN0NBddExtHDw0CsHXYNa9Ms0y7v2qC8HzWyIuPBOxSPdILbnO0
+         i0IpYaL7dFaUdb70/TSsqcv7yNP6uqHB4wUU1ugAanB2gybM4scykkT23JlUELX10m+R
+         HmbfCFJ2Zw6JWVmKnjYFOd0omeqtdrm0qHi1BEzGy5ZKEwWZQDGImpkO9g68AV+hSJFJ
+         gMUfOn6YUzI1xqC1ZvY/tzUSBdgf9OFXa+wxd1EO673x69Sj9yJAjJOltHy4ZjBVWVi+
+         S39Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUqKddJzDkhRYPOeDajoNb0QTNR1TnyMZUHfFcw4eS2Vb4nlk9h4t6a7UXwaFhMUzsKar22xvFQtszzpTiUiDkO@vger.kernel.org, AJvYcCVBStu/hHSSfvJDzeQO/EfknAbeePTKia9hhWcaNrJ6hGkUNRtZ9JcALUnacj4V5dymyVew6thTQFHzuJDB@vger.kernel.org, AJvYcCVBenTsDigME0x4PLGO7J27a6Ib5MwJYjWkf3OCMrP6Nk8Vi6TYT+awH3W5GMBmtN6xivtN//KrYwDd9vhL@vger.kernel.org
+X-Gm-Message-State: AOJu0YxJ26Nyrpt7qD/k/9MJYC3gE5AflDNXLk1Eo45AtKfj/pzJhCNo
+	TCgi0DtjDgvPnJ3YHvGbCDOzLyDqQTsVJ8nr367b6PQrkLt/PLFQhDoT18JzjY013sWRhWLKWLQ
+	vcGi/o8XMMrw0AtymmcljpKf0Wqk=
+X-Gm-Gg: ASbGnctZIDw+wLWgsboKCsIKTEp1jhzkyoPZsafg8U71vLE3/OPowtOJFU/dd9aUXd4
+	q7gtj/DufG28aoAyJhvZ8BTl7TguA4Boa3f1ydBtG/+Zf3fH6LXIcV0qpBuqN3mzaFvZmlkJ5A2
+	STqo8TiIpa/4WY0650St5cHQ==
+X-Google-Smtp-Source: AGHT+IE6OhXZMCc9wpiri+W4GcoHWYxzV1G7qF+USV2g8DAn6FuLuDMgrsi+iGOQM3HWGaFndQOBglxe7DtHrJLrQFg=
+X-Received: by 2002:a05:6a00:a94:b0:737:6589:81e5 with SMTP id
+ d2e1a72fcca58-73c31bb50edmr2482676b3a.2.1744903957824; Thu, 17 Apr 2025
+ 08:32:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v7 5/7] media: platform: qcom/iris: add support for vpu33
-Content-Language: en-US
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Dikshita Agarwal
-	<quic_dikshita@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250417-topic-sm8x50-iris-v10-v7-0-f020cb1d0e98@linaro.org>
- <20250417-topic-sm8x50-iris-v10-v7-5-f020cb1d0e98@linaro.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20250417-topic-sm8x50-iris-v10-v7-5-f020cb1d0e98@linaro.org>
+References: <20250410-topic-smem_dramc-v2-0-dead15264714@oss.qualcomm.com>
+ <20250410-topic-smem_dramc-v2-3-dead15264714@oss.qualcomm.com> <20911703-ab4e-4eb2-8611-294730a06d2f@quicinc.com>
+In-Reply-To: <20911703-ab4e-4eb2-8611-294730a06d2f@quicinc.com>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Thu, 17 Apr 2025 11:32:26 -0400
+X-Gm-Features: ATxdqUFdx8uZJbCBVyTuqT8Yis-K6K8ZkpwgS9WYh0KUtOUx2ershvG0Vfr4j4E
+Message-ID: <CACu1E7HDmQXDNtEQCXpHXsOKPCOgrWgo+_kcgizo9Mp1ntjDbA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] drm/msm/a6xx: Get HBB dynamically, if available
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: u7reqMd5zQDQ4XhOgAj1W1VGVaxR0O0o
-X-Authority-Analysis: v=2.4 cv=C7DpyRP+ c=1 sm=1 tr=0 ts=68011eac cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=locApedIml024nHU32MA:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: u7reqMd5zQDQ4XhOgAj1W1VGVaxR0O0o
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-17_04,2025-04-17_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0 bulkscore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 mlxscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504170115
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Apr 17, 2025 at 3:45=E2=80=AFAM Akhil P Oommen <quic_akhilpo@quicin=
+c.com> wrote:
+>
+> On 4/10/2025 11:13 PM, Konrad Dybcio wrote:
+> > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> >
+> > The Highest Bank address Bit value can change based on memory type used=
+.
+> >
+> > Attempt to retrieve it dynamically, and fall back to a reasonable
+> > default (the one used prior to this change) on error.
+> >
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > ---
+> >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 15 ++++++++++++++-
+> >  1 file changed, 14 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/ms=
+m/adreno/a6xx_gpu.c
+> > index 06465bc2d0b4b128cddfcfcaf1fe4252632b6777..a6232b382bd16319f20ae5f=
+8f5e57f38ecc62d9f 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > @@ -13,6 +13,7 @@
+> >  #include <linux/firmware/qcom/qcom_scm.h>
+> >  #include <linux/pm_domain.h>
+> >  #include <linux/soc/qcom/llcc-qcom.h>
+> > +#include <linux/soc/qcom/smem.h>
+> >
+> >  #define GPU_PAS_ID 13
+> >
+> > @@ -587,6 +588,8 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu=
+)
+> >
+> >  static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+> >  {
+> > +     int hbb;
+> > +
+> >       gpu->ubwc_config.rgb565_predicator =3D 0;
+> >       gpu->ubwc_config.uavflagprd_inv =3D 0;
+> >       gpu->ubwc_config.min_acc_len =3D 0;
+> > @@ -635,7 +638,6 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu=
+ *gpu)
+> >           adreno_is_a690(gpu) ||
+> >           adreno_is_a730(gpu) ||
+> >           adreno_is_a740_family(gpu)) {
+> > -             /* TODO: get ddr type from bootloader and use 2 for LPDDR=
+4 */
+> >               gpu->ubwc_config.highest_bank_bit =3D 16;
+> >               gpu->ubwc_config.amsbc =3D 1;
+> >               gpu->ubwc_config.rgb565_predicator =3D 1;
+> > @@ -664,6 +666,13 @@ static void a6xx_calc_ubwc_config(struct adreno_gp=
+u *gpu)
+> >               gpu->ubwc_config.highest_bank_bit =3D 14;
+> >               gpu->ubwc_config.min_acc_len =3D 1;
+> >       }
+> > +
+> > +     /* Attempt to retrieve the data from SMEM, keep the above default=
+s in case of error */
+> > +     hbb =3D qcom_smem_dram_get_hbb();
+> > +     if (hbb < 0)
+> > +             return;
+> > +
+> > +     gpu->ubwc_config.highest_bank_bit =3D hbb;
+>
+> I am worried about blindly relying on SMEM data directly for HBB for
+> legacy chipsets. There is no guarantee it is accurate on every chipset
+> and every version of firmware. Also, until recently, this value was
+> hardcoded in Mesa which matched the value in KMD.
 
+To be clear about this, from the moment we introduced host image
+copies in Mesa we added support for querying the HBB from the kernel,
+explicitly so that we could do what this series does without Mesa ever
+breaking. Mesa will never assume the HBB unless the kernel is too old
+to support querying it. So don't let Mesa be the thing that stops us
+here.
 
-On 4/17/2025 8:29 PM, Neil Armstrong wrote:
-> The IRIS acceleration found in the SM8650 platforms uses the vpu33
-> hardware version, and requires a slighly different reset and power off
-> sequences in order to properly get out of runtime suspend.
-> 
-> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # x1e Dell
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/media/platform/qcom/iris/iris_vpu3x.c      | 160 ++++++++++++++++++++-
->  drivers/media/platform/qcom/iris/iris_vpu_common.h |   1 +
->  2 files changed, 157 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu3x.c b/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> index 13dab61427b8bd0491b69a9bc5f5144d27d17362..9b7c9a1495ee2f51c60b1142b2ed4680ff798f0a 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> @@ -4,20 +4,39 @@
->   */
->  
->  #include <linux/iopoll.h>
-> +#include <linux/reset.h>
->  
->  #include "iris_instance.h"
->  #include "iris_vpu_common.h"
->  #include "iris_vpu_register_defines.h"
->  
-> +#define WRAPPER_TZ_BASE_OFFS			0x000C0000
-> +#define AON_BASE_OFFS				0x000E0000
->  #define AON_MVP_NOC_RESET			0x0001F000
->  
-> +#define WRAPPER_DEBUG_BRIDGE_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x54)
-> +#define WRAPPER_DEBUG_BRIDGE_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x58)
-> +#define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
-> +#define REQ_POWER_DOWN_PREP			BIT(0)
-> +#define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
->  #define WRAPPER_CORE_CLOCK_CONFIG		(WRAPPER_BASE_OFFS + 0x88)
->  #define CORE_CLK_RUN				0x0
->  
-> +#define WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG		(WRAPPER_TZ_BASE_OFFS + 0x14)
-> +#define CTL_AXI_CLK_HALT			BIT(0)
-> +#define CTL_CLK_HALT				BIT(1)
-> +
-> +#define WRAPPER_TZ_QNS4PDXFIFO_RESET		(WRAPPER_TZ_BASE_OFFS + 0x18)
-> +#define RESET_HIGH				BIT(0)
-> +
->  #define CPU_CS_AHB_BRIDGE_SYNC_RESET		(CPU_CS_BASE_OFFS + 0x160)
->  #define CORE_BRIDGE_SW_RESET			BIT(0)
->  #define CORE_BRIDGE_HW_RESET_DISABLE		BIT(1)
->  
-> +#define CPU_CS_X2RPMH				(CPU_CS_BASE_OFFS + 0x168)
-> +#define MSK_SIGNAL_FROM_TENSILICA		BIT(0)
-> +#define MSK_CORE_POWER_ON			BIT(1)
-> +
->  #define AON_WRAPPER_MVP_NOC_RESET_REQ		(AON_MVP_NOC_RESET + 0x000)
->  #define VIDEO_NOC_RESET_REQ			(BIT(0) | BIT(1))
->  
-> @@ -25,7 +44,16 @@
->  
->  #define VCODEC_SS_IDLE_STATUSN			(VCODEC_BASE_OFFS + 0x70)
->  
-> -static bool iris_vpu3_hw_power_collapsed(struct iris_core *core)
-> +#define AON_WRAPPER_MVP_NOC_LPI_CONTROL		(AON_BASE_OFFS)
-> +#define AON_WRAPPER_MVP_NOC_LPI_STATUS		(AON_BASE_OFFS + 0x4)
-> +
-> +#define AON_WRAPPER_MVP_NOC_CORE_SW_RESET	(AON_BASE_OFFS + 0x18)
-> +#define SW_RESET				BIT(0)
-> +#define AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL	(AON_BASE_OFFS + 0x20)
-> +#define NOC_HALT				BIT(0)
-> +#define AON_WRAPPER_SPARE			(AON_BASE_OFFS + 0x28)
-> +
-> +static bool iris_vpu3x_hw_power_collapsed(struct iris_core *core)
->  {
->  	u32 value, pwr_status;
->  
-> @@ -40,7 +68,7 @@ static void iris_vpu3_power_off_hardware(struct iris_core *core)
->  	u32 reg_val = 0, value, i;
->  	int ret;
->  
-> -	if (iris_vpu3_hw_power_collapsed(core))
-> +	if (iris_vpu3x_hw_power_collapsed(core))
->  		goto disable_power;
->  
->  	dev_err(core->dev, "video hw is power on\n");
-> @@ -79,7 +107,125 @@ static void iris_vpu3_power_off_hardware(struct iris_core *core)
->  	iris_vpu_power_off_hw(core);
->  }
->  
-> -static u64 iris_vpu3_calculate_frequency(struct iris_inst *inst, size_t data_size)
-> +static void iris_vpu33_power_off_hardware(struct iris_core *core)
-> +{
-> +	u32 reg_val = 0, value, i;
-> +	int ret;
-> +
-> +	if (iris_vpu3x_hw_power_collapsed(core))
-> +		goto disable_power;
-> +
-> +	dev_err(core->dev, "video hw is power on\n");
-> +
-> +	value = readl(core->reg_base + WRAPPER_CORE_CLOCK_CONFIG);
-> +	if (value)
-> +		writel(CORE_CLK_RUN, core->reg_base + WRAPPER_CORE_CLOCK_CONFIG);
-> +
-> +	for (i = 0; i < core->iris_platform_data->num_vpp_pipe; i++) {
-> +		ret = readl_poll_timeout(core->reg_base + VCODEC_SS_IDLE_STATUSN + 4 * i,
-> +					 reg_val, reg_val & 0x400000, 2000, 20000);
-> +		if (ret)
-> +			goto disable_power;
-> +	}
-> +
-> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_NOC_LPI_STATUS,
-> +				 reg_val, reg_val & BIT(0), 200, 2000);
-> +	if (ret)
-> +		goto disable_power;
-> +
-> +	/* set MNoC to low power, set PD_NOC_QREQ (bit 0) */
-> +	writel(BIT(0), core->reg_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
-> +
-> +	writel(CORE_BRIDGE_SW_RESET | CORE_BRIDGE_HW_RESET_DISABLE,
-> +	       core->reg_base + CPU_CS_AHB_BRIDGE_SYNC_RESET);
-> +	writel(CORE_BRIDGE_HW_RESET_DISABLE, core->reg_base + CPU_CS_AHB_BRIDGE_SYNC_RESET);
-> +	writel(0x0, core->reg_base + CPU_CS_AHB_BRIDGE_SYNC_RESET);
-> +
-> +disable_power:
-> +	iris_vpu_power_off_hw(core);
-> +}
-> +
-> +static int iris_vpu33_power_off_controller(struct iris_core *core)
-> +{
-> +	u32 xo_rst_tbl_size = core->iris_platform_data->controller_rst_tbl_size;
-> +	u32 clk_rst_tbl_size = core->iris_platform_data->clk_rst_tbl_size;
-> +	u32 val = 0;
-> +	int ret;
-> +
-> +	writel(MSK_SIGNAL_FROM_TENSILICA | MSK_CORE_POWER_ON, core->reg_base + CPU_CS_X2RPMH);
-> +
-> +	writel(REQ_POWER_DOWN_PREP, core->reg_base + WRAPPER_IRIS_CPU_NOC_LPI_CONTROL);
-> +
-> +	ret = readl_poll_timeout(core->reg_base + WRAPPER_IRIS_CPU_NOC_LPI_STATUS,
-> +				 val, val & BIT(0), 200, 2000);
-> +	if (ret)
-> +		goto disable_power;
-> +
-> +	writel(0x0, core->reg_base + WRAPPER_DEBUG_BRIDGE_LPI_CONTROL);
-> +
-> +	ret = readl_poll_timeout(core->reg_base + WRAPPER_DEBUG_BRIDGE_LPI_STATUS,
-> +				 val, val == 0, 200, 2000);
-> +	if (ret)
-> +		goto disable_power;
-> +
-> +	writel(CTL_AXI_CLK_HALT | CTL_CLK_HALT,
-> +	       core->reg_base + WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG);
-> +	writel(RESET_HIGH, core->reg_base + WRAPPER_TZ_QNS4PDXFIFO_RESET);
-> +	writel(0x0, core->reg_base + WRAPPER_TZ_QNS4PDXFIFO_RESET);
-> +	writel(0x0, core->reg_base + WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG);
-> +
-> +	reset_control_bulk_reset(clk_rst_tbl_size, core->resets);
-> +
-> +	/* Disable MVP NoC clock */
-> +	val = readl(core->reg_base + AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL);
-> +	val |= NOC_HALT;
-> +	writel(val, core->reg_base + AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL);
-> +
-> +	/* enable MVP NoC reset */
-> +	val = readl(core->reg_base + AON_WRAPPER_MVP_NOC_CORE_SW_RESET);
-> +	val |= SW_RESET;
-> +	writel(val, core->reg_base + AON_WRAPPER_MVP_NOC_CORE_SW_RESET);
-> +
-> +	/* poll AON spare register bit0 to become zero with 50ms timeout */
-> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_SPARE,
-> +				 val, (val & BIT(0)) == 0, 1000, 50000);
-> +	if (ret)
-> +		goto disable_power;
-> +
-> +	/* enable bit(1) to avoid cvp noc xo reset */
-> +	val = readl(core->reg_base + AON_WRAPPER_SPARE);
-> +	val |= BIT(1);
-> +	writel(val, core->reg_base + AON_WRAPPER_SPARE);
-> +
-> +	reset_control_bulk_assert(xo_rst_tbl_size, core->controller_resets);
-> +
-> +	/* De-assert MVP NoC reset */
-> +	val = readl(core->reg_base + AON_WRAPPER_MVP_NOC_CORE_SW_RESET);
-> +	val &= ~SW_RESET;
-> +	writel(val, core->reg_base + AON_WRAPPER_MVP_NOC_CORE_SW_RESET);
-> +
-> +	usleep_range(80, 100);
-> +
-> +	reset_control_bulk_deassert(xo_rst_tbl_size, core->controller_resets);
-> +
-> +	/* reset AON spare register */
-> +	writel(0, core->reg_base + AON_WRAPPER_SPARE);
-> +
-> +	/* Enable MVP NoC clock */
-> +	val = readl(core->reg_base + AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL);
-> +	val &= ~NOC_HALT;
-> +	writel(val, core->reg_base + AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL);
-> +
-> +	iris_disable_unprepare_clock(core, IRIS_CTRL_CLK);
-> +
-> +disable_power:
-> +	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
-> +	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
-> +
-> +	return 0;
-> +}
-> +
-> +static u64 iris_vpu3x_calculate_frequency(struct iris_inst *inst, size_t data_size)
->  {
->  	struct platform_inst_caps *caps = inst->core->iris_platform_data->inst_caps;
->  	struct v4l2_format *inp_f = inst->fmt_src;
-> @@ -119,5 +265,11 @@ static u64 iris_vpu3_calculate_frequency(struct iris_inst *inst, size_t data_siz
->  const struct vpu_ops iris_vpu3_ops = {
->  	.power_off_hw = iris_vpu3_power_off_hardware,
->  	.power_off_controller = iris_vpu_power_off_controller,
-> -	.calc_freq = iris_vpu3_calculate_frequency,
-> +	.calc_freq = iris_vpu3x_calculate_frequency,
-> +};
-> +
-> +const struct vpu_ops iris_vpu33_ops = {
-> +	.power_off_hw = iris_vpu33_power_off_hardware,
-> +	.power_off_controller = iris_vpu33_power_off_controller,
-> +	.calc_freq = iris_vpu3x_calculate_frequency,
->  };
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.h b/drivers/media/platform/qcom/iris/iris_vpu_common.h
-> index f8965661c602f990d5a7057565f79df4112d097e..93b7fa27be3bfa1cf6a3e83cc192cdb89d63575f 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.h
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.h
-> @@ -10,6 +10,7 @@ struct iris_core;
->  
->  extern const struct vpu_ops iris_vpu2_ops;
->  extern const struct vpu_ops iris_vpu3_ops;
-> +extern const struct vpu_ops iris_vpu33_ops;
->  
->  struct vpu_ops {
->  	void (*power_off_hw)(struct iris_core *core);
-> 
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Connor
+
+> So it is better to
+> make this opt in, for newer chipsets or those which somebody can verify.
+> We can invert this logic to something like this:
+>
+> if (!gpu->ubwc_config.highest_bank_bit)
+>     gpu->ubwc_config.highest_bank_bit =3D qcom_smem_dram_get_hbb();
+>
+> >  }
+> >
+> >  static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+> > @@ -2467,6 +2476,10 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device =
+*dev)
+> >       bool is_a7xx;
+> >       int ret;
+> >
+> > +     /* We need data from SMEM to retrieve HBB in calc_ubwc_config() *=
+/
+> > +     if (!qcom_smem_is_available())
+> > +             return ERR_PTR(-EPROBE_DEFER);
+> > +
+>
+> We should add "depends on QCOM_SMEM" to Kconfig. Is SMEM device present
+> in all Qcom SoC devicetrees? I wonder if there is a scenario where there
+> might be an infinite EPROBE_DEFER here.
+>
+> -Akhil.
+>
+> >       a6xx_gpu =3D kzalloc(sizeof(*a6xx_gpu), GFP_KERNEL);
+> >       if (!a6xx_gpu)
+> >               return ERR_PTR(-ENOMEM);
+> >
+>
 
