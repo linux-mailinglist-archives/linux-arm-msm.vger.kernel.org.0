@@ -1,145 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-54642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF394A91E4B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 15:41:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79D72A91EA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 15:49:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 634917A7BA6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 13:40:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD3248A0E67
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 13:49:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6673524C099;
-	Thu, 17 Apr 2025 13:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4D7923F427;
+	Thu, 17 Apr 2025 13:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="e7V8X+pK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mL/W646P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A3924C066
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Apr 2025 13:41:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6DD2139DC;
+	Thu, 17 Apr 2025 13:49:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744897294; cv=none; b=bI9KUkJZMhTGukm7bcmLIKlaUDBNy9oarLRTCLq4cKZDzOww8pzUUhzUmNhd6vcBRN0Hw8mP6QgpSN0hq80wWzp253RyH5UdECLSbmWwEiNyQS6uXqClf86GZaSjUJWLjj3bTB6YlafbSOtxX+xq4VbbxSCUIQaOT1+/T2dLgTg=
+	t=1744897771; cv=none; b=J+0Nqq7TgXQwIl2QRPBM/Uc04GA/siBBAcfLNS5fACHJs4ve4ReBZKTfDee9g4IGoNapyffzxTEQJHCYA6pVmHoY7x1Fi7n2uhUi7mj/4A54X1qETGhP2mi8pPzqFwFKPcX4sjiS9gFF4CDQ1O0qE7ljAgKX2VTYqVxRqBX/aNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744897294; c=relaxed/simple;
-	bh=kuAfYP5UvARagG4xlp5uWE7wPsCM5ITfhZ2pP4vf4pA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=Z/d4azugfdRvJglau9aobRW5jBN9dYhqjgJhP+QKpRz1D9tbXrAtBWPN5srMT/ftaSRgV48TejRq4lY3PjQpPQMzP8qmsEyaMXOzWpqUPvOM+kuT1pW0REMj1I6d3PBPbcHUCAiBBltzZdEAovYgIKQLxrumkwT83EViG1EaOKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=e7V8X+pK; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ac3b12e8518so148597466b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Apr 2025 06:41:32 -0700 (PDT)
+	s=arc-20240116; t=1744897771; c=relaxed/simple;
+	bh=tD9L2G1q3AXctDlXfheyo3hs4eKzbFyfJj4WF7/6ZRc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=QIVCpUNeWAPHwnbyMRgflf7j8YvX3tVh/UFLEWsuwFkiOGvtrLdlXkNcX1XZGoosXhBLTxLVwAk1jUPv8kAHV2MGgWNJMpMqfCkHRiz3OUVVDo559lIOnxLsrETP4RcBkkapaGs6M+X/GveaHe/h3h0T2SzgkCb5U86n32AhuuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mL/W646P; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-39bf44be22fso565227f8f.0;
+        Thu, 17 Apr 2025 06:49:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1744897291; x=1745502091; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1744897768; x=1745502568; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8b5UBlhI7tagceuxs0zjhouMKp8JoC3Qnn8Fd0hnCOc=;
-        b=e7V8X+pKH54rHfUok1XqYDVkfCc0Kqg1XRvfabg7z5wgC4hk4PG0jEERDHtxYc+tht
-         FuI8JiTw4Z6wUMwJmM1c2UcWZHunRZI9xHAWJh1aEDNP7Mju+KbBXSgMLl774giDiJNK
-         XCvqaqMpZ16jf6cxu7k7DUi064Vo9z31+KQ9FA7mggmVtjxXWSssJFmnYoxFsUVephXz
-         Ftt70HTGryZjVDoxwoHxOb1pPGPwOyUezcAJQAbqArakjzuvJJtywcxftjY2zb2RGUmZ
-         bOSPy+oGzbWSsOht7feXVQguGxHcAgLPek6omtkAdCp6cHy5UBpAq8ubxAKSSN2AlfYk
-         2qVQ==
+        bh=8OU1hhnHteDFAeBeMeJP9LfU6C0OSCqIF4e8ockEnxA=;
+        b=mL/W646PujrQ+ftw3Lk+vU/FDrcdonV1TvdE2uYXKFUl8ja6tGJOuAyzADpVvjeot6
+         38zPGiRA1MiEoNjc4gkL5YW5swJbaG3/HYFWohyp8H1/15YJFBGEZufktclqAqMtcgjg
+         SJXntGI9GUaSBdiYaHIj00+CdgyrJZ21Bwtm3yfcTDXocDex9m/rx/BZHcm2yk+YjcOp
+         FUNukOKbqjP6yfI8VDZsDtREG4GvFGJ4xiK5LpDfjOcmfPmcAy/ODkjnENmlKCYQ8mj9
+         xexUZpoV4ePW4lHVL+z92Gz+AuRXxZ7+zyy8+ETJgmhCdnTe/rvvPisGcmav7gYsErmh
+         u1nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744897291; x=1745502091;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8b5UBlhI7tagceuxs0zjhouMKp8JoC3Qnn8Fd0hnCOc=;
-        b=gMlwqmrYIBKsJ+3jF7s54pn923+mS/RABioV2efhWrz/6JdCmC9KF3xfHE6wOt+wZ1
-         plU9zOEXYw96rsvMtG07vcHGX8N51ZN9fG1epI9Lrs1I7CU8G4tb7CWQ2qSqRXqUWdpQ
-         X5Awrlqp9k8m7JR9Fdkjr6BxwTDj6u6YeI5XwOTdLLR1j0eYnZ7BSIPfOMuaYxWuhrWT
-         1d9+yhKrZp3IAWyxIZpjocd3X/N9YtHF4XUIxGebA/jvoQYpp0Dq6HtpJJhdCn+o0nus
-         RbOjPzwyXprpq3FtdNKGG1/Fw35bfvaJLriMe+11XTPjukzaJWddEFItDjsflW5+62cD
-         k7bw==
-X-Forwarded-Encrypted: i=1; AJvYcCWXpVDgpmN/xm1dgXgcSUbVE7Xzl23byGe08cp0vPheBHkRGMpHxntmbSh0M1vyKVZWcoPoZvsk7JQ8lhNU@vger.kernel.org
-X-Gm-Message-State: AOJu0YzLkrVyDJQwo9NC4NB+CnO8rqxCZINY7/J9Udgv48b+GHvDLu7g
-	LFPyOZoZP0fLO3CxY/J5wm+mClpSw0md0vlUqeOZai7rqT2SlehfG51TwugE/Co=
-X-Gm-Gg: ASbGncuZnpcch1dThiJA78xo4hqdvBl9zVCGAsA2mMr4hq/mspFPKRzhBjVR9DdSs0z
-	WvGTYi4+ehjAmF8tx2nHVIqHUu+UJWCw7U0t5FFDLKJGQXToo8cdR2+6/JvogOI1opDtm481i3Q
-	SRtKgP9NCZ7MAaTC7GaK2Ulkfy9CJZwdUCWyJ+YgouMbc6aDFnh8dI1l3xrhahwvHm2/AyD5mOb
-	/LoJcCch+NR54bAdGgHnGT3VFua6w27g7atEY7WoQcMWeGWCwLXftyZqK0CuCrKWhANZ+nu6Qik
-	7ZGxvUtaz5MjrCthIcF4H/SjBkb0NL/ZNCVg8nmuq7VCswRNGtUq8AW/25BGTCdYioa5nt9iWC0
-	8YILKOPdsDQ==
-X-Google-Smtp-Source: AGHT+IEJ4vU8prXmzLSN5mk9ksAdjmPcFn2w8rEFHTB4zYx6IwyrLaLSsVIaikyfHr12C+NZTNoQWQ==
-X-Received: by 2002:a17:907:9624:b0:ac7:391b:e688 with SMTP id a640c23a62f3a-acb42cc678dmr478100566b.58.1744897290726;
-        Thu, 17 Apr 2025 06:41:30 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acb608b1378sm97199166b.78.2025.04.17.06.41.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Apr 2025 06:41:30 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744897768; x=1745502568;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8OU1hhnHteDFAeBeMeJP9LfU6C0OSCqIF4e8ockEnxA=;
+        b=D/INSlrokBvt7oXPpv2VyiCi54p8MV0F4ITTZ4N00cLeTJe/P0JUz31sY5gdgGEJmb
+         y4FZ0CzAvREBCQLw8HCIa1MftxJSNpp2Tev6JxqD1moQqLA8TPdLYxU+BzBh/zu0W1zQ
+         iUzuqgYw8T/YQ5VSexqtJDdVFKc11Df5Egk4zHv2BApQE+Ae47XvyLIw3cLM1Qj7FQWv
+         zGxa+VAfFKkkMLOisIePegWR5x3T+xtNzKHyWAXH9OPpFtYSRrIgHxN26CYxo1/VYo/M
+         hBct29SESVGQigD4k+dbkEC9cxzbiT1PBjHsdpzAKqF37i323PlBYvez45imsNHBh4CU
+         ybag==
+X-Forwarded-Encrypted: i=1; AJvYcCUTkLtyPKjzWSbvUSzLxfesFrTmQ9inQsEGaXeyMMM2LWK3qFJPR4fq4VNaelF1mFxIpBXCG+SwyHntjnvxtA==@vger.kernel.org, AJvYcCVVrvdWF0uYavkR6OR44IP/bcp0QzUULbsqOH5BLSIwhvKMy6M6EIe71zGRKHtUsLA8eU98cizu8nBc@vger.kernel.org, AJvYcCX0eHrHQ3NOxuft9WYIUFaYl8ZFofx1vw0bfX1y2x9OatI4kuH23iSTulzesEwy5XVhwCbJfR4Tz6v6CPls@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx25NN2LUAkGvud7KYGLwYoGMR18frXTvGfrkzc5rSKTGfzeHxz
+	tg0dZpEmNqc3aWO79dBoMj+OPwgxBC/7YOzykorbQpRxy/6wIJ8A3bGqRoYcUaI=
+X-Gm-Gg: ASbGncvs7IzQMhhWjFLyeBBOtPaBLHEtWHQ1AxRYVnFlBbPyhMdDtaTwrvB4iUs8MHq
+	4A11Rb7gA25Iau6wGN+URBSly84qfzr784DoBYV7s5xlQfe7X0jdwqCFVLmTKeiupbEWmbBsKje
+	+Xvji31ORnV4mUkG4kPNi8OkR6nPvXuhQ4HEYqErpZ3Xfm2K3aWJ8bz3IM8oomzHMejLwXhp4Xg
+	5WSXwrN6rIkfjHpVMasdGH73uei9DvsHwJy+5ELatu5lzILMUOlSrtJnNbrACbn65ohxg4Dnzmn
+	9wPKInYe2bQMmXA19IECFuoZyQuD9gDhggG0Ylz9nmZuZ69xF6p32QWJxENLOwvb7J1MGBzhv8I
+	RgATZTHNtL9deVOFDkGviqYSpdX/LJA==
+X-Google-Smtp-Source: AGHT+IE1l5TinZk3fw4rYI45LCNcZIGxU9HSxkRZB7cKZEKqJ/ObrWseU30Wz4dbH9zqcAsfcTw8Wg==
+X-Received: by 2002:a5d:6d8b:0:b0:39e:e499:3efd with SMTP id ffacd0b85a97d-39ee5b89d9amr4871098f8f.42.1744897768222;
+        Thu, 17 Apr 2025 06:49:28 -0700 (PDT)
+Received: from localhost.localdomain (62.13-121-193.fia-dyn.isp.proximus.be. [193.121.13.62])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4405b5a94c5sm54097365e9.34.2025.04.17.06.49.27
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 17 Apr 2025 06:49:27 -0700 (PDT)
+From: Jos Dehaes <jos.dehaes@gmail.com>
+To: devnull+jens.glathe.oldschoolsolutions.biz@kernel.org
+Cc: andersson@kernel.org,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	jens.glathe@oldschoolsolutions.biz,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	robh@kernel.org,
+	Jos Dehaes <jos.dehaes@gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: add retimers, dp altmode support
+Date: Thu, 17 Apr 2025 15:49:21 +0200
+Message-ID: <20250417134921.45329-1-jos.dehaes@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250417-slim7x-retimer-v1-1-5813a7835903@oldschoolsolutions.biz>
+References: <20250417-slim7x-retimer-v1-1-5813a7835903@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 17 Apr 2025 15:41:29 +0200
-Message-Id: <D98YGSPT9OB6.26E97T9QSD4NW@fairphone.com>
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>, "Rob Clark"
- <robdclark@gmail.com>
-Cc: <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
- <linux-arm-msm@vger.kernel.org>, "Rob Clark" <robdclark@chromium.org>,
- "Sean Paul" <sean@poorly.run>, "Konrad Dybcio" <konradybcio@kernel.org>,
- "Abhinav Kumar" <quic_abhinavk@quicinc.com>, "Dmitry Baryshkov"
- <lumag@kernel.org>, "Marijn Suijten" <marijn.suijten@somainline.org>,
- "David Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>,
- "open list" <linux-kernel@vger.kernel.org>, <luca@lucaweiss.eu>
-Subject: Re: [PATCH v2 08/34] drm/msm: Remove vram carveout support
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a
-References: <20250319145425.51935-1-robdclark@gmail.com>
- <20250319145425.51935-9-robdclark@gmail.com>
- <q2tzc2cvzfu7hirxcd6l6vi7veynqdopdg2myjbjkzbslcu5bi@52pmnd3thdil>
-In-Reply-To: <q2tzc2cvzfu7hirxcd6l6vi7veynqdopdg2myjbjkzbslcu5bi@52pmnd3thdil>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Thu Apr 17, 2025 at 1:20 AM CEST, Dmitry Baryshkov wrote:
-> On Wed, Mar 19, 2025 at 07:52:20AM -0700, Rob Clark wrote:
->> From: Rob Clark <robdclark@chromium.org>
->>=20
->> It is standing in the way of drm_gpuvm / VM_BIND support.  Not to
->> mention frequently broken and rarely tested.  And I think only needed
->> for a 10yr old not quite upstream SoC (msm8974).
->
-> Well... MSM8974 is quite upstream, but anyway, let's drop it. Maybe
-> somebody will write an IOMMU driver.
+> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> 
+> comparing with CRD and other dts for a more complete support of the 7X
+> 
+> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> ---
+> This patch adds the required nodes to support DP Altmode on all three type-c
+> ports. The definition is derived from the CRD. Since they are all marked 40Gbps,
+> I assume there are 3 PS8830 retimers. 
+> This modification is now for ~8 weeks in my tree with little to no complaints. I 
+> don't have access to a Yoga Slim 7X, however many people on #aarch64-laptops do 
+> and some are using this patch.
+> ---
 
-msm8226 is also using this!
+Tested-by: Jos Dehaes <jos.dehaes@gmail.com>
 
-Sad to see this happening, but I get the reasoning. Unfortunately nobody
-who really knows GPU and IOMMU bits has looked at this in recent years,
-for msm8974 we (mostly Matti Lehtim=C3=A4ki and me) have a semi-working
-branch but hitting random issues with it.
-
-Would've been nice if somebody made functional IOMMU support back in
-like 2015-2016 when more people looked at this platform.
-
-Regards
-Luca
-
->
->>=20
->> Maybe we can add support back in later, but I'm doubtful.
->>=20
->> Signed-off-by: Rob Clark <robdclark@chromium.org>
->> ---
->>  drivers/gpu/drm/msm/adreno/a2xx_gpu.c      |   6 +-
->>  drivers/gpu/drm/msm/adreno/a3xx_gpu.c      |  13 +-
->>  drivers/gpu/drm/msm/adreno/a4xx_gpu.c      |  13 +-
->>  drivers/gpu/drm/msm/adreno/adreno_device.c |   4 -
->>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |   1 -
->>  drivers/gpu/drm/msm/msm_drv.c              | 117 +-----------------
->>  drivers/gpu/drm/msm/msm_drv.h              |  11 --
->>  drivers/gpu/drm/msm/msm_gem.c              | 131 ++-------------------
->>  drivers/gpu/drm/msm/msm_gem.h              |   5 -
->>  drivers/gpu/drm/msm/msm_gem_submit.c       |   5 -
->>  10 files changed, 19 insertions(+), 287 deletions(-)
-
+Tested on yoga slim 7x with a USB C cable to Iiyama screen@1440p. Was able to extend the screen on GNOME desktop. 
 
