@@ -1,310 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-54681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4E43A923BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 19:17:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9260AA9245D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 19:50:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B5712168EC7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 17:17:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A1A6E4627EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Apr 2025 17:50:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 231642561BA;
-	Thu, 17 Apr 2025 17:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5185A2561DA;
+	Thu, 17 Apr 2025 17:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NCpR/Ca4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R/bv6tIG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C5F2550DE;
-	Thu, 17 Apr 2025 17:16:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA83245020;
+	Thu, 17 Apr 2025 17:50:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744910197; cv=none; b=W/ulm8H8YG4qAPWfKhJrzxkdgE6pB3mEi6EMOOlR2Ljs+dnqcFHGiZbJdRdEtqoP6DHmfr68mMQ06EOIuq3av3D4LMW6ueiT3Pttlle+I3RD3TNXefTAoG3pw060tRh9txnwraCYeAHckfPMHq7Mhf2/Yw6S0RnT3cAckZCm0lA=
+	t=1744912247; cv=none; b=QTMK9cRyY97MzrUBCyK5hfsleuxK07LRRWu5h4mEZgkw6D2pqHZVp8J9AcGS2ZqeBTxpt7rrzy5i+OZSlrz+7U09iSrskWkj0mZUj2TBG1M3Lpy3nkU4f8ob/J6TfnpkRPoARdANU6drTdRMTkzKNAA3rtEHK33tJy/9bC0t2Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744910197; c=relaxed/simple;
-	bh=KCV1iT8WMRH+l5LBGG+rXSmP2tVeZLWG6EnkHpY31/A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aE9vZ1Jlr+qqJDf7SU9j+4PtedVvnmeOuK4SFnLF17AbHdL/hz9reBASPl27oeAsy6AcUulx9hiJNfObaNAbF6S56L1HRA0qShhDb6oIgZ1UT7LK1FypmnAQmHamJOrtJrHdRA1chWX7cGuYnezru5fyihwEAZcr8DhVOBy7Lg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NCpR/Ca4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 37A41C4AF18;
-	Thu, 17 Apr 2025 17:16:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744910197;
-	bh=KCV1iT8WMRH+l5LBGG+rXSmP2tVeZLWG6EnkHpY31/A=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=NCpR/Ca4drOZO/oB/h5cd0gecR61NjHWVfGlKtC354DYmLj/h0zKIozoB+tHYcI9s
-	 ACmhKqN4hqdPSefK/9gHVfYGOAvzXE4E0XegZh4FYoUYKqOrf3nRbjcZ32SvYTzrN+
-	 HESbSb7KdwuKmm6cjRMoj/KJQj8C4ixJvDVdEKfSvZQzMjjGANOzVuyo72AhexLsqx
-	 HOq23Z036bOiKuPbUOG6JeFhbmmIoXSnJVFoxNp/SmPkTjcpur8HPz34dCCk0V1eL/
-	 i+Y+rsTB7UQLeVIJ59rI/mi77IH36m0DlJhki+nGATV5iSKxbgHjg4Q6bltkv1Z43P
-	 kJlnQ5n9T2kfQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C107C369CF;
-	Thu, 17 Apr 2025 17:16:37 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
-Date: Thu, 17 Apr 2025 22:46:31 +0530
-Subject: [PATCH v3 5/5] PCI: qcom: Add support for resetting the slot due
- to link down event
+	s=arc-20240116; t=1744912247; c=relaxed/simple;
+	bh=sTyGtcQUUZ5500fifnvKW9nGT1pncjcRhU4Z9XW7OpU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ea4IB1sul2+342neCtxZiuqP9qwlZmiqcN8tICUtgWvLpRtdHClmR2MJDzWJypoi0Xl/a7f+4lbD0NNLa3GSn/4PHvSuJrXwq/v7iDBqWqq5yij6VjjrjclD2jIJpcGR4hfnIQnJ3Vn04qEUP9uX4rP1M50W1WivqnJLHZszuGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=R/bv6tIG; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53HClUpC013325;
+	Thu, 17 Apr 2025 17:50:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	rtVvrMeTc6F3JJHkRyxqWivaPaY3sC3Dhgxn6S1HvY8=; b=R/bv6tIGWCs2g9v+
+	4jUStXZY1cTFa5c2PqqHnq2RYMMjuCF9TzcHP4/Xa64d7tK/OZDK8RW+L5aqgtAO
+	R9AbTO1HVcJRBkILrkdKUAAz9XOFdLbr1UUID6fG5XMS4e1fkGi3rLDbIsJjNcsr
+	2o/fFf6tuKgPt7NeGAEJfT+wR/EOui8BzIG3ocXamdkRX9nEifufVSFTz0dZJBfN
+	MGmZxoG1PJR5HSrzCshz+SyNgDc+G3cJ5xkYr6lgSmUMdHVY3GH+hOUVO1Ycd7KT
+	4zSvO+4lMUvarq6Zb7hzJQdKXlUhbL7tpiiIeolLZACWbTtUsO5aalmbswHPrOXB
+	PQ7MAQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4628rvd2e4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Apr 2025 17:50:35 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53HHoYCb020419
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Apr 2025 17:50:34 GMT
+Received: from [10.216.6.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 17 Apr
+ 2025 10:50:28 -0700
+Message-ID: <1282bf58-e431-4a07-97e5-628437e7ce5f@quicinc.com>
+Date: Thu, 17 Apr 2025 23:20:25 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250417-pcie-reset-slot-v3-5-59a10811c962@linaro.org>
-References: <20250417-pcie-reset-slot-v3-0-59a10811c962@linaro.org>
-In-Reply-To: <20250417-pcie-reset-slot-v3-0-59a10811c962@linaro.org>
-To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
- Oliver O'Halloran <oohall@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- Rob Herring <robh@kernel.org>, Zhou Wang <wangzhou1@hisilicon.com>, 
- Will Deacon <will@kernel.org>, Robert Richter <rric@kernel.org>, 
- Alyssa Rosenzweig <alyssa@rosenzweig.io>, Marc Zyngier <maz@kernel.org>, 
- Conor Dooley <conor.dooley@microchip.com>, 
- Daire McNamara <daire.mcnamara@microchip.com>
-Cc: dingwei@marvell.com, cassel@kernel.org, Lukas Wunner <lukas@wunner.de>, 
- Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
- linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-riscv@lists.infradead.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6894;
- i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=F8rjzuhgErigDd+67mYFhyxszrxpDL8l0bnIc6Ml+ng=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBoATdxsG341Wf5dBlOsI8tJmdXDVYFgFqoRpofL
- CEHKYEUUJmJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaAE3cQAKCRBVnxHm/pHO
- 9ZrfB/42ORiF/Z6dza/s1zud3oUewjLIhKQXIvAaBQGTZ596+MFN4a6uCB2TjBxdHj+d5oY3FQa
- Qrgl7Kxh18wo27x0w998SmXalgBL6rpA1kWD748rFI8JITVoGofp3h6v/ltYvEZdoNWUiZ7NqtS
- u5RibOHN1cvIGFcDKOx0DlYs37iTjr6+oV3WRYOm/K/Ts20aqGdnOVQMepiai4J4T0XEejbSg/C
- Ox3WiPW79vr8Uh6fv4Hvt2nx4gPGGFhfDpO38jMTbubnHYJw8o0bmgGpbjK4+hxBrxeRIW6w6pc
- 2MT0Q149ejvN8avjAc0arW8Ue/QDOODzKESk7WYbwcQF4kKq
-X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@linaro.org/default with auth_id=185
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reply-To: manivannan.sadhasivam@linaro.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] drm/msm/a6xx: Get HBB dynamically, if available
+To: Connor Abbott <cwabbott0@gmail.com>
+CC: Konrad Dybcio <konradybcio@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>, Kees Cook <kees@kernel.org>,
+        "Gustavo A. R. Silva"
+	<gustavoars@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul
+	<sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>,
+        David Airlie
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Dmitry Baryshkov
+	<lumag@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-hardening@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+References: <20250410-topic-smem_dramc-v2-0-dead15264714@oss.qualcomm.com>
+ <20250410-topic-smem_dramc-v2-3-dead15264714@oss.qualcomm.com>
+ <20911703-ab4e-4eb2-8611-294730a06d2f@quicinc.com>
+ <CACu1E7HDmQXDNtEQCXpHXsOKPCOgrWgo+_kcgizo9Mp1ntjDbA@mail.gmail.com>
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <CACu1E7HDmQXDNtEQCXpHXsOKPCOgrWgo+_kcgizo9Mp1ntjDbA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: cMn6x-EFO9oBXysgklTroujnCc8dLfN4
+X-Authority-Analysis: v=2.4 cv=RbSQC0tv c=1 sm=1 tr=0 ts=68013f6b cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=XE3sDmP-oFqBkbK9aEsA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: cMn6x-EFO9oBXysgklTroujnCc8dLfN4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-17_06,2025-04-17_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ suspectscore=0 adultscore=0 impostorscore=0 clxscore=1015 bulkscore=0
+ phishscore=0 priorityscore=1501 spamscore=0 mlxscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504170131
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On 4/17/2025 9:02 PM, Connor Abbott wrote:
+> On Thu, Apr 17, 2025 at 3:45 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>>
+>> On 4/10/2025 11:13 PM, Konrad Dybcio wrote:
+>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>
+>>> The Highest Bank address Bit value can change based on memory type used.
+>>>
+>>> Attempt to retrieve it dynamically, and fall back to a reasonable
+>>> default (the one used prior to this change) on error.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>> ---
+>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 15 ++++++++++++++-
+>>>  1 file changed, 14 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>> index 06465bc2d0b4b128cddfcfcaf1fe4252632b6777..a6232b382bd16319f20ae5f8f5e57f38ecc62d9f 100644
+>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>> @@ -13,6 +13,7 @@
+>>>  #include <linux/firmware/qcom/qcom_scm.h>
+>>>  #include <linux/pm_domain.h>
+>>>  #include <linux/soc/qcom/llcc-qcom.h>
+>>> +#include <linux/soc/qcom/smem.h>
+>>>
+>>>  #define GPU_PAS_ID 13
+>>>
+>>> @@ -587,6 +588,8 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
+>>>
+>>>  static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+>>>  {
+>>> +     int hbb;
+>>> +
+>>>       gpu->ubwc_config.rgb565_predicator = 0;
+>>>       gpu->ubwc_config.uavflagprd_inv = 0;
+>>>       gpu->ubwc_config.min_acc_len = 0;
+>>> @@ -635,7 +638,6 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+>>>           adreno_is_a690(gpu) ||
+>>>           adreno_is_a730(gpu) ||
+>>>           adreno_is_a740_family(gpu)) {
+>>> -             /* TODO: get ddr type from bootloader and use 2 for LPDDR4 */
+>>>               gpu->ubwc_config.highest_bank_bit = 16;
+>>>               gpu->ubwc_config.amsbc = 1;
+>>>               gpu->ubwc_config.rgb565_predicator = 1;
+>>> @@ -664,6 +666,13 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+>>>               gpu->ubwc_config.highest_bank_bit = 14;
+>>>               gpu->ubwc_config.min_acc_len = 1;
+>>>       }
+>>> +
+>>> +     /* Attempt to retrieve the data from SMEM, keep the above defaults in case of error */
+>>> +     hbb = qcom_smem_dram_get_hbb();
+>>> +     if (hbb < 0)
+>>> +             return;
+>>> +
+>>> +     gpu->ubwc_config.highest_bank_bit = hbb;
+>>
+>> I am worried about blindly relying on SMEM data directly for HBB for
+>> legacy chipsets. There is no guarantee it is accurate on every chipset
+>> and every version of firmware. Also, until recently, this value was
+>> hardcoded in Mesa which matched the value in KMD.
+> 
+> To be clear about this, from the moment we introduced host image
+> copies in Mesa we added support for querying the HBB from the kernel,
+> explicitly so that we could do what this series does without Mesa ever
+> breaking. Mesa will never assume the HBB unless the kernel is too old
+> to support querying it. So don't let Mesa be the thing that stops us
+> here.
 
-The PCIe link can go down under circumstances such as the device firmware
-crash, link instability, etc... When that happens, the PCIe slot needs to
-be reset to make it operational again. Currently, the driver is not
-handling the link down event, due to which the users have to restart the
-machine to make PCIe link operational again. So fix it by detecting the
-link down event and resetting the slot.
+Thanks for clarifying about Mesa. I still don't trust a data source that
+is unused in production.
 
-Since the Qcom PCIe controllers report the link down event through the
-'global' IRQ, enable the link down event by setting PARF_INT_ALL_LINK_DOWN
-bit in PARF_INT_ALL_MASK register.
+I have a related question about HBB. Blob driver doesn't support
+host_image_copy, but it still use HBB configuration. I was under the
+impression this was required for UMD for compression related
+configurations. Is that not true for turnip/freedreno?
 
-Then in the case of the event, call pci_host_handle_link_down() API
-in the handler to let the PCI core handle the link down condition.
+-Akhil.
 
-The API will internally call, 'pci_host_bridge::reset_slot()' callback to
-reset the slot in a platform specific way. So implement the callback to
-reset the slot by first resetting the PCIe core, followed by reinitializing
-the resources and then finally starting the link again.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/controller/dwc/Kconfig     |  1 +
- drivers/pci/controller/dwc/pcie-qcom.c | 90 +++++++++++++++++++++++++++++++++-
- 2 files changed, 89 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-index d9f0386396edf66ad0e514a0f545ed24d89fcb6c..ce04ee6fbd99cbcce5d2f3a75ebd72a17070b7b7 100644
---- a/drivers/pci/controller/dwc/Kconfig
-+++ b/drivers/pci/controller/dwc/Kconfig
-@@ -296,6 +296,7 @@ config PCIE_QCOM
- 	select PCIE_DW_HOST
- 	select CRC8
- 	select PCIE_QCOM_COMMON
-+	select PCI_HOST_COMMON
- 	help
- 	  Say Y here to enable PCIe controller support on Qualcomm SoCs. The
- 	  PCIe controller uses the DesignWare core plus Qualcomm-specific
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index dc98ae63362db0422384b1879a2b9a7dc564d091..6b18a2775e7fcde1d634b3f58327ecc7d028e4ec 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -34,6 +34,7 @@
- #include <linux/units.h>
- 
- #include "../../pci.h"
-+#include "../pci-host-common.h"
- #include "pcie-designware.h"
- #include "pcie-qcom-common.h"
- 
-@@ -55,6 +56,7 @@
- #define PARF_INT_ALL_STATUS			0x224
- #define PARF_INT_ALL_CLEAR			0x228
- #define PARF_INT_ALL_MASK			0x22c
-+#define PARF_STATUS				0x230
- #define PARF_SID_OFFSET				0x234
- #define PARF_BDF_TRANSLATE_CFG			0x24c
- #define PARF_DBI_BASE_ADDR_V2			0x350
-@@ -130,8 +132,11 @@
- 
- /* PARF_LTSSM register fields */
- #define LTSSM_EN				BIT(8)
-+#define SW_CLEAR_FLUSH_MODE			BIT(10)
-+#define FLUSH_MODE				BIT(11)
- 
- /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
-+#define PARF_INT_ALL_LINK_DOWN			BIT(1)
- #define PARF_INT_ALL_LINK_UP			BIT(13)
- #define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
- 
-@@ -145,6 +150,9 @@
- /* PARF_BDF_TO_SID_CFG fields */
- #define BDF_TO_SID_BYPASS			BIT(0)
- 
-+/* PARF_STATUS fields */
-+#define FLUSH_COMPLETED				BIT(8)
-+
- /* ELBI_SYS_CTRL register fields */
- #define ELBI_SYS_CTRL_LT_ENABLE			BIT(0)
- 
-@@ -169,6 +177,7 @@
- 						PCIE_CAP_SLOT_POWER_LIMIT_SCALE)
- 
- #define PERST_DELAY_US				1000
-+#define FLUSH_TIMEOUT_US			100
- 
- #define QCOM_PCIE_CRC8_POLYNOMIAL		(BIT(2) | BIT(1) | BIT(0))
- 
-@@ -274,11 +283,14 @@ struct qcom_pcie {
- 	struct icc_path *icc_cpu;
- 	const struct qcom_pcie_cfg *cfg;
- 	struct dentry *debugfs;
-+	int global_irq;
- 	bool suspended;
- 	bool use_pm_opp;
- };
- 
- #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-+static int qcom_pcie_reset_slot(struct pci_host_bridge *bridge,
-+				  struct pci_dev *pdev);
- 
- static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
- {
-@@ -1263,6 +1275,8 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 			goto err_assert_reset;
- 	}
- 
-+	pp->bridge->reset_slot = qcom_pcie_reset_slot;
-+
- 	return 0;
- 
- err_assert_reset:
-@@ -1300,6 +1314,73 @@ static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
- 	.post_init	= qcom_pcie_host_post_init,
- };
- 
-+static int qcom_pcie_reset_slot(struct pci_host_bridge *bridge,
-+				  struct pci_dev *pdev)
-+{
-+	struct pci_bus *bus = bridge->bus;
-+	struct dw_pcie_rp *pp = bus->sysdata;
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-+	struct device *dev = pcie->pci->dev;
-+	u32 val;
-+	int ret;
-+
-+	/* Wait for the pending transactions to be completed */
-+	ret = readl_relaxed_poll_timeout(pcie->parf + PARF_STATUS, val,
-+					 val & FLUSH_COMPLETED, 10,
-+					 FLUSH_TIMEOUT_US);
-+	if (ret) {
-+		dev_err(dev, "Flush completion failed: %d\n", ret);
-+		goto err_host_deinit;
-+	}
-+
-+	/* Clear the FLUSH_MODE to allow the core to be reset */
-+	val = readl(pcie->parf + PARF_LTSSM);
-+	val |= SW_CLEAR_FLUSH_MODE;
-+	writel(val, pcie->parf + PARF_LTSSM);
-+
-+	/* Wait for the FLUSH_MODE to clear */
-+	ret = readl_relaxed_poll_timeout(pcie->parf + PARF_LTSSM, val,
-+					 !(val & FLUSH_MODE), 10,
-+					 FLUSH_TIMEOUT_US);
-+	if (ret) {
-+		dev_err(dev, "Flush mode clear failed: %d\n", ret);
-+		goto err_host_deinit;
-+	}
-+
-+	qcom_pcie_host_deinit(pp);
-+
-+	ret = qcom_pcie_host_init(pp);
-+	if (ret) {
-+		dev_err(dev, "Host init failed\n");
-+		return ret;
-+	}
-+
-+	ret = dw_pcie_setup_rc(pp);
-+	if (ret)
-+		goto err_host_deinit;
-+
-+	/*
-+	 * Re-enable global IRQ events as the PARF_INT_ALL_MASK register is
-+	 * non-sticky.
-+	 */
-+	if (pcie->global_irq)
-+		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_ALL_LINK_DOWN |
-+			       PARF_INT_MSI_DEV_0_7, pcie->parf + PARF_INT_ALL_MASK);
-+
-+	qcom_pcie_start_link(pci);
-+	dw_pcie_wait_for_link(pci);
-+
-+	dev_dbg(dev, "Slot reset completed\n");
-+
-+	return 0;
-+
-+err_host_deinit:
-+	qcom_pcie_host_deinit(pp);
-+
-+	return ret;
-+}
-+
- /* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
- static const struct qcom_pcie_ops ops_2_1_0 = {
- 	.get_resources = qcom_pcie_get_resources_2_1_0,
-@@ -1571,6 +1652,9 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
- 		pci_unlock_rescan_remove();
- 
- 		qcom_pcie_icc_opp_update(pcie);
-+	} else if (FIELD_GET(PARF_INT_ALL_LINK_DOWN, status)) {
-+		dev_dbg(dev, "Received Link down event\n");
-+		pci_host_handle_link_down(pp->bridge);
- 	} else {
- 		dev_WARN_ONCE(dev, 1, "Received unknown event. INT_STATUS: 0x%08x\n",
- 			      status);
-@@ -1732,8 +1816,10 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 			goto err_host_deinit;
- 		}
- 
--		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_MSI_DEV_0_7,
--			       pcie->parf + PARF_INT_ALL_MASK);
-+		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_ALL_LINK_DOWN |
-+			       PARF_INT_MSI_DEV_0_7, pcie->parf + PARF_INT_ALL_MASK);
-+
-+		pcie->global_irq = irq;
- 	}
- 
- 	qcom_pcie_icc_opp_update(pcie);
-
--- 
-2.43.0
-
+> 
+> Connor
+> 
+>> So it is better to
+>> make this opt in, for newer chipsets or those which somebody can verify.
+>> We can invert this logic to something like this:
+>>
+>> if (!gpu->ubwc_config.highest_bank_bit)
+>>     gpu->ubwc_config.highest_bank_bit = qcom_smem_dram_get_hbb();
+>>
+>>>  }
+>>>
+>>>  static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+>>> @@ -2467,6 +2476,10 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+>>>       bool is_a7xx;
+>>>       int ret;
+>>>
+>>> +     /* We need data from SMEM to retrieve HBB in calc_ubwc_config() */
+>>> +     if (!qcom_smem_is_available())
+>>> +             return ERR_PTR(-EPROBE_DEFER);
+>>> +
+>>
+>> We should add "depends on QCOM_SMEM" to Kconfig. Is SMEM device present
+>> in all Qcom SoC devicetrees? I wonder if there is a scenario where there
+>> might be an infinite EPROBE_DEFER here.
+>>
+>> -Akhil.
+>>
+>>>       a6xx_gpu = kzalloc(sizeof(*a6xx_gpu), GFP_KERNEL);
+>>>       if (!a6xx_gpu)
+>>>               return ERR_PTR(-ENOMEM);
+>>>
+>>
 
 
