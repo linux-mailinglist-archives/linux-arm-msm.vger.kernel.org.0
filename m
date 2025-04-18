@@ -1,175 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-54747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2275DA937DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 15:23:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A6D5A937EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 15:27:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 280C93BE728
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 13:23:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D518C1B62076
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 13:27:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AFFD27602E;
-	Fri, 18 Apr 2025 13:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F4F5278143;
+	Fri, 18 Apr 2025 13:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Un7bvDB2"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="jXgqJ3X8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D71726B95E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 13:23:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B632777E9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 13:27:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744982606; cv=none; b=mjYn4JUVhYRViZG4d38HKNHX8S2UouSsMudcG1Sj7eV1jl0nK2HTOs7mux/qh+iEg4poJ3GuflYfIOLxHHiZwXy8ZbGg0bLXZTX+CPJ3/QWqs1Cohtctn6cqECJ8x1fqTC/24JotuMp2Icuu1NYQFDBdu+378SPFMUtsof77kEE=
+	t=1744982847; cv=none; b=O0ULWkFPe91snQ7IfWfELIGNwvtx161k9Ajyc+1z6EQT/3eELA9v6Ys6VXMbS3B6T7bU3SuSmFhyXUWBPimORm+91DqOg+lPsapXa6OcOn+sDQiWeqdKaht0SnAd5ePBydA2WilXnF9EKXmlm+AoQzmeW4DrvmHsVrCoHiU3WwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744982606; c=relaxed/simple;
-	bh=Oia/rkgNKHh2/N++KZlkJWuabXAo8hJuINnL3w3Ncyk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=nt4Q6FStuMCQf4+jrROnF/ZQXmqKlPW0P9Qf8iWM0amLZt/Gp21b+4l2mKW0eCxEfeYxUTaMqNTkxZUDP71vw/NWxVgsnzK/jZe97fXVAAKSiPrI9QiV2HkiYJJ+znOrkWftwU3wjddHc1AVa3MbUSQbYG3ZFFOGpCHy01zOM3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Un7bvDB2; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43cfe63c592so21604645e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 06:23:24 -0700 (PDT)
+	s=arc-20240116; t=1744982847; c=relaxed/simple;
+	bh=ZfQD3/+RCCp6w2X5pFl73K13VoUBihGR1tLCPPFL6bs=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=LYUVSXo/QHhQYu4/ksbPSNKlriEMKlYW6so3V7pcQf9vHnP3Bmr+I48C/XOJJ3XFD+PbJJOVvfLG9479C46JcJTd+TPtIlunz6Ikxq1BYIZ5/rRSUYlCMxs7Pl/4WZy3jlCyzK3AaVt6X1fFb/p1wZQkTxEe9mLE2AIhA9cY/uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=jXgqJ3X8; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ac25d2b2354so288045366b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 06:27:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744982603; x=1745587403; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8+0uPBCTRcJa+XJIyDOCaVN9ER8Mys0My2OlQ2q8Nbw=;
-        b=Un7bvDB2n3MWTJUSop6RjsQMFykd4GvIyaDJAzjqubH0ePTUizdxRJO0oNrrGVLXIi
-         PPC7cVfIjLjHCNefyJocFea1Luojl48UXhl2BkyRvB7TP+m17UIwme1rjyEu4gGHf4AP
-         NKaWhNWZB+tRnld0hcbGiM1WSPrCebxa40USYClx8RL1X/hQN4+mR+panwNzOxfcTqIm
-         H5pQqfE1iOfd+lX70q3LgLOvvgYuDIka1HZhM4KMe85zBk2+zbp9WZdJhw1Csoj1uRmn
-         yFt5C8gmEAEEtVTS/djp2QXa2+nf0iedwp3PcKPSZLItcBYC9mBPHIL8hMPsT8WbxW0x
-         dbKw==
+        d=fairphone.com; s=fair; t=1744982844; x=1745587644; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uxgFXjvo+MA6Q5OOS8hwkxxF0ljFWJI+c946KCUiiiw=;
+        b=jXgqJ3X8/5NVJl2RhmCLQjS7E3JUA6AiBSWizYSR+H4JAkuCKdxEfMe8qp5cqWNAC/
+         0MXao4deM+fegnNiCrBB5qRriM7dTE6TsC459xX+SlFe+mTrhQVJcH5JKSLgqY3Zk9qs
+         /yLCJiV0Bg2a/XUH3MywNBQKSfZaaVh4XoNoHkoeg64kd0UI3ZvL8ooLcmRj0V9+rlD9
+         6H4gB2SC1aL1lGeWNK5uv/oHEz3aPmUhtcA8yQtddagczy4W6EUkL7ym0fqsCgDNfIhz
+         LcoKVBA57qc5zC2d9u3zIecATIGoEXbRvQXR4x0yfbfp/PCJP4BBP05ksMQUHf9tjCzJ
+         wzQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744982603; x=1745587403;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8+0uPBCTRcJa+XJIyDOCaVN9ER8Mys0My2OlQ2q8Nbw=;
-        b=wOxZ9V4c+zM0SMXEXej5TGUglueTB9INNDuAPdaxM6CYIg9w3r3Fg4szWIoxEHJc2N
-         caod6wAqTxV8HOryrO1d7dnONKzj0hViw+M8vszYdCh3bX1kFupw/f2Lv86eczEgT4nD
-         OqVlD3HMqNWzxUy7EVqBWdSoXVMe6qv+ga+P6dkXOrBExR1dvOdzvbjYttqKY3rWN6gX
-         LG1ThG7bvr3atPoOrVdZt7pCO1VyYiSLjjCgP3HuUJAV0Go/39OPJPkr8CuZ9T8Bs+BH
-         TZKQUnjezyb8jQsGyIFAFx81w90wfRm9xvtAqFooNNtQBDZ1B0ct9bHzMwnjt6tukLoF
-         Ju5g==
-X-Gm-Message-State: AOJu0Yy8AAlYgaLhyuJP7yx3aY0FB3h9WI1Nc+wzOBVWx8MK3Xxcnv2y
-	n4ixkOBQp72PWXTKg9IG2tA9+6g5tfrEOXgPjVgFNOyZqE0ds9zijyDjZZpPpx4=
-X-Gm-Gg: ASbGncsF1vHsyJuFFRjvmYZAJpvBjtAso1O3rgV0nevTZesstxG/TEvWNjiM8QVviiq
-	JEATfdwITHhyLUMpp4ltzf19ibo0HD8gjGmm4Q0a2Tkj8c4+SoSz5UMdR+Wg3sSemAaV041jXfb
-	RBZvnegyzh+PV46BBX/rJhk8ZEMHuXizWFk9tHh4ikqH+0PA67A4JWQqqQ+am/AjAmMdV9nWH36
-	OZ4oZu685YNfW5IEyjgl6fj81hg79hAAHMU6sg4c67tO6eXovl+qRCg1YenF4r590waC2hBWs/N
-	dXJo3KY4Z6TQmRNk/1383qlin7Cx2SAaYSSGuYwnRh+i4WqKao1SCa5RjWrguJyUAreOKHupzoV
-	CIl3QG9b06jFIIS0ycg==
-X-Google-Smtp-Source: AGHT+IGJzh9R71bSIKxTajSqWiIGIo/+gzFHTQInZvegKY/vJp4hnU48uSfbPDcFzy+R16bgsGHN1Q==
-X-Received: by 2002:a05:600c:3485:b0:43d:b32:40aa with SMTP id 5b1f17b1804b1-4406ab6897fmr29952425e9.3.1744982603014;
-        Fri, 18 Apr 2025 06:23:23 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:f8ba:7c24:7066:d010? ([2a01:e0a:3d9:2080:f8ba:7c24:7066:d010])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4406d5a9ecesm22619665e9.2.2025.04.18.06.23.22
+        d=1e100.net; s=20230601; t=1744982844; x=1745587644;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uxgFXjvo+MA6Q5OOS8hwkxxF0ljFWJI+c946KCUiiiw=;
+        b=LBnDfewW1mmRAsR+6TKWQz6Vb72CxkrmRpGC4GamgyTLxQBZpcV3kkPdhXJpIe/LOo
+         h+r6b9k0RGwRCHp/Huj50E1xMdH4jOdlMwP/Lim4c1I5Xqbc/j3qI52O6PCHfkMV4i6O
+         U1cXD24cJ5dinASANFzcunUzmWLU8c/NOBHwkziUVPdBQmUc1NihTsWH8MhiUA7kH4Dh
+         IWAJ6MZEv7xpB2Vp6Y+5DPOJB3wH4rzimKwQuGzjvSXsALjEdGUiAambP9KggmAM/pcg
+         pAf/4Xj+g5qbKgNBXSuSIUGP8e96FOFlyC45P2UGFzZn92xUK8snAKiy6lLCtXyrM/hz
+         coXA==
+X-Forwarded-Encrypted: i=1; AJvYcCWtUIiSjmmEUZChWLEpTlN7tmYXCaX7Gmu6rMiGbC5IcyKREI3n1U6USzOjqBO3f2aCz5zy71Bx1Uq0jlDu@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfX28aZw4E30DDPyqPBdXP6FJCRxQhxdGuSVZisCNbW45t7emS
+	4jMc/ah/JJi/rEtwTOGwfgwaG79BdxjrwgGSBT/0cEqDIaoRaUVGS9awznvrbjI=
+X-Gm-Gg: ASbGncvDaPTBKhhVnDUazgDhrFZQn4vefwc2Cyr6gzj1VPUuAyDAz21gIhqF9ox8M6A
+	Wa1XWAkQnpSvONm5QUGQDQf8PivSdcYaFP1dF98Jsa58uBkswSudOPImNM3m/XKQCTqyjHNf6xc
+	mk2BqTBZpdR7aJST3a9QQpzhrhRbpz7Dy5J/EQ/mMpdiLW4Pwv3fFB+jriAAT8zWXIk4QdPBlRz
+	5J7XyNtCUif8aDVK10uNeC1qGH6PbPbAvA/LX8tfAk1WGvTEswWwN95+US2t/PRPjxnmOLE4T1+
+	6QsuLEnYuGioTCA+X9+q+7vXuaK39nb7yytcfs2LAFSBUubt2IHJYbmvijFnq8qB4uMoKnzLNJN
+	+lg4pHEXj1Q==
+X-Google-Smtp-Source: AGHT+IG5MqN3XHhnQCGQht4kZrrXV6XlNR9m/tX+qwXV2gswzunEL45vEdv1W+p+F4CE0N6b52FGXw==
+X-Received: by 2002:a17:907:d716:b0:acb:39c6:3974 with SMTP id a640c23a62f3a-acb74aa9634mr240183966b.5.1744982843560;
+        Fri, 18 Apr 2025 06:27:23 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acb6eefcf5bsm120065366b.117.2025.04.18.06.27.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Apr 2025 06:23:22 -0700 (PDT)
-Message-ID: <9eab3246-9ae1-46bd-8058-aff7774820a6@linaro.org>
-Date: Fri, 18 Apr 2025 15:23:22 +0200
+        Fri, 18 Apr 2025 06:27:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] clk: qcom: gcc-sm8650: Do not turn off USB GDSCs during
- gdsc_disable()
-To: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250305-topic-sm8650-upstream-fix-usb-suspend-v1-1-649036ab0557@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250305-topic-sm8650-upstream-fix-usb-suspend-v1-1-649036ab0557@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 18 Apr 2025 15:27:22 +0200
+Message-Id: <D99SSJAOJE3V.ENIEJ9IWFZLF@fairphone.com>
+Cc: "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ <cros-qcom-dts-watchers@chromium.org>,
+ <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, "Konrad Dybcio"
+ <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/3] Fairphone 5 DisplayPort over USB-C support
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Luca Weiss" <luca.weiss@fairphone.com>, "Dmitry Baryshkov"
+ <lumag@kernel.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <20250312-fp5-pmic-glink-dp-v2-0-a55927749d77@fairphone.com>
+ <y7dfv4mmtzkv2umvverkn6qvjt3tg7cz4jj4zsb4t6vu4heh4d@64zpkjihjc23>
+ <D8V75HO8O4CO.33RMUJLKQ7UG5@fairphone.com>
+In-Reply-To: <D8V75HO8O4CO.33RMUJLKQ7UG5@fairphone.com>
 
-Hi Bjorn,
+Hi Krzysztof, hi Dmitry,
 
-On 05/03/2025 20:00, Neil Armstrong wrote:
-> With PWRSTS_OFF_ON, USB GDSCs are turned off during gdsc_disable(). This
-> can happen during scenarios such as system suspend and breaks the resume
-> of USB controller from suspend.
-> 
-> So use PWRSTS_RET_ON to indicate the GDSC driver to not turn off the GDSCs
-> during gdsc_disable() and allow the hardware to transition the GDSCs to
-> retention when the parent domain enters low power state during system
-> suspend.
-> 
-> Fixes: c58225b7e3d7 ("clk: qcom: add the SM8650 Global Clock Controller driver, part 1")
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   drivers/clk/qcom/gcc-sm8650.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-sm8650.c b/drivers/clk/qcom/gcc-sm8650.c
-> index 9dd5c48f33bed5b944a0b25959ef69e7862d0449..fa1672c4e7d814e1e08c79f9cda9463bf1cd1598 100644
-> --- a/drivers/clk/qcom/gcc-sm8650.c
-> +++ b/drivers/clk/qcom/gcc-sm8650.c
-> @@ -3497,7 +3497,7 @@ static struct gdsc usb30_prim_gdsc = {
->   	.pd = {
->   		.name = "usb30_prim_gdsc",
->   	},
-> -	.pwrsts = PWRSTS_OFF_ON,
-> +	.pwrsts = PWRSTS_RET_ON,
->   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
->   };
->   
-> @@ -3506,7 +3506,7 @@ static struct gdsc usb3_phy_gdsc = {
->   	.pd = {
->   		.name = "usb3_phy_gdsc",
->   	},
-> -	.pwrsts = PWRSTS_OFF_ON,
-> +	.pwrsts = PWRSTS_RET_ON,
->   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
->   };
->   
-> 
-> ---
-> base-commit: 7ec162622e66a4ff886f8f28712ea1b13069e1aa
-> change-id: 20250305-topic-sm8650-upstream-fix-usb-suspend-20979d5a0170
-> 
-> Best regards,
+Any feedback on the below proposed patch?
 
-Gentle ping !
+I can also send out a v3 with this patch included soon if that makes it
+easier to review.
 
-Neil
+Regards
+Luca
+
+On Tue Apr 1, 2025 at 11:32 AM CEST, Luca Weiss wrote:
+> Hi Dmitry,
+>
+> On Wed Mar 12, 2025 at 8:06 PM CET, Dmitry Baryshkov wrote:
+>> On Wed, Mar 12, 2025 at 01:05:07PM +0100, Luca Weiss wrote:
+>>> This series adds all the necessary bits to enable DisplayPort-out over
+>>> USB-C on Fairphone 5.
+>>>=20
+>>> There's currently a dt validation error with this, not quite sure how t=
+o
+>>> resolve this:
+>>>=20
+>>>   arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dtb: typec-mux@42: por=
+t:endpoint: Unevaluated properties are not allowed ('data-lanes' was unexpe=
+cted)
+>>>           from schema $id: http://devicetree.org/schemas/usb/fcs,fsa448=
+0.yaml#
+>>
+>> This comes from usb-switch.yaml, it requires that 'port' adheres to the
+>> /schemas/graph.yaml#/properties/port (which forbids extra properties).
+>> The usb-switch.yaml needs to be fixed to use port-base for that node.
+>
+> Thanks, do you think the attached patch would be suitable? It does fix
+> the warning for me, but not sure if it's too lax or doing the wrong
+> thing.
+>
+> diff --git a/Documentation/devicetree/bindings/usb/usb-switch.yaml b/Docu=
+mentation/devicetree/bindings/usb/usb-switch.yaml
+> index da76118e73a5..9598c1748d35 100644
+> --- a/Documentation/devicetree/bindings/usb/usb-switch.yaml
+> +++ b/Documentation/devicetree/bindings/usb/usb-switch.yaml
+> @@ -26,11 +26,15 @@ properties:
+>      type: boolean
+> =20
+>    port:
+> -    $ref: /schemas/graph.yaml#/properties/port
+> +    $ref: /schemas/graph.yaml#/$defs/port-base
+>      description:
+>        A port node to link the device to a TypeC controller for the purpo=
+se of
+>        handling altmode muxing and orientation switching.
+> =20
+> +    patternProperties:
+> +      "^endpoint(@[0-9a-f]+)?$":
+> +        $ref: /schemas/graph.yaml#/$defs/endpoint-base
+> +
+>    ports:
+>      $ref: /schemas/graph.yaml#/properties/ports
+>      properties:
+>
+>
+> Regards
+> Luca
+>
+>>
+>>>=20
+>>> See also this mail plus replies:
+>>> * https://lore.kernel.org/linux-arm-msm/D0H3VE6RLM2I.MK2NT1P9N02O@fairp=
+hone.com/
+>>>=20
+>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> ---
+>>> Changes in v2:
+>>> - Move adding "*-switch;" properties already in earlier patches
+>>> - Move wiring up SS USB & DP to SoC instead of being done in device
+>>> - Pick up tags
+>>> - Link to v1: https://lore.kernel.org/r/20250226-fp5-pmic-glink-dp-v1-0=
+-e6661d38652c@fairphone.com
+>>>=20
+>>> ---
+>>> Luca Weiss (3):
+>>>       arm64: dts: qcom: qcm6490-fairphone-fp5: Add PTN36502 redriver
+>>>       arm64: dts: qcom: qcm6490-fairphone-fp5: Add OCP96011 audio switc=
+h
+>>>       arm64: dts: qcom: qcm6490-fairphone-fp5: Hook up DisplayPort over=
+ USB-C
+>>>=20
+>>>  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 103 +++++++++++++=
+++++++--
+>>>  arch/arm64/boot/dts/qcom/sc7280.dtsi               |   9 +-
+>>>  2 files changed, 104 insertions(+), 8 deletions(-)
+>>> ---
+>>> base-commit: dcb11dc4740372cd4cce0b763a4a8ec4e9f347a6
+>>> change-id: 20231208-fp5-pmic-glink-dp-216b76084bee
+>>>=20
+>>> Best regards,
+>>> --=20
+>>> Luca Weiss <luca.weiss@fairphone.com>
+>>>=20
+
 
