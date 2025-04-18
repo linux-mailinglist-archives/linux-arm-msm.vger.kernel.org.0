@@ -1,371 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-54728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E520A9360B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 12:35:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70CDBA93632
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 12:54:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 21F5219E879C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 10:36:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EBC9E1B60E76
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 10:54:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E15C4221F1A;
-	Fri, 18 Apr 2025 10:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 538D3270ECF;
+	Fri, 18 Apr 2025 10:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OJkJhd3I"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nyHS+5cN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA473212D8A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 10:35:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CDF2222BB
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 10:54:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744972548; cv=none; b=pgmYxknczbFHiGsHr6lpSTyyzvhcIdxHshSCPrJK0pS1GRqQeZh1y4Me7QcLjOxTyI+/aNkPBpZBB3UfZP9iCLYd93Uvn3WB9z0xrOrpPiAL6UMW3eIAGiTkTYADVYuePboIBqCWKeS//lA4zBtJMSXvCFZ8O2NL7kpR7qZKI/w=
+	t=1744973669; cv=none; b=KHmOhC8OETzPRwoYBrNrdoSuAyflNNL4WFlUlyCef8umli9X+mkzrRqppC401cC+rjfD+WU9zogIU4OtmhcLLG+wOoo9RqwnTn5IYnOEFi8nlXjh/ZOlU2WXA793GazNwTyoLMyI+cBzbaNrrxBhdyBJtgYavnSVCFDvVitfUSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744972548; c=relaxed/simple;
-	bh=qfCYl+OJzIRFinR3TpG+qTi/erJTDER0ehv05sjy6vQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nxqxhaWL0W1n0AukrXrpdQhCJvL5JZ8l3qZn4DZJ1jhepIgzrI8bWKmrdu8i7zRmidgJMDexCuZoNcm8+ruYoKASkc/M/hfo67HrKMVn22jGhwwtf6K2DUgrwpQvgrkl4cSZ8PoKVvs7+cx6qR3iCLBp9tvvEsLTOQSdYK4jvHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OJkJhd3I; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1744973669; c=relaxed/simple;
+	bh=1/8UG517LA2DgnY4VMkVPhPvNHydcaS9/NaQ2b/Q90M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rdFmhB6taYvz4zANnmWSAv8T0HhYZ9xmaKjZDFMj7SiSAGdc6gY3B6yFBunYeDln62xm/etcjxP13OZTHK2c9+kON4GXNykCgSuTkq6Y6oB5m2cjs9ixwC6ywM5Dv4B6TxkRZxTRXdqCnkbTMDA/laK5nmD2PWgr3G9IA0oYfH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nyHS+5cN; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-39ee5a5bb66so1077988f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 03:35:46 -0700 (PDT)
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-39141ffa9fcso2134443f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 03:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744972545; x=1745577345; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XyW2t+GtwgeOQ8iFogAaRYVPbyvbI7FZnfPpco3ULPs=;
-        b=OJkJhd3I8ofGTvelv+oxsLn18zOm3NDtUWhryu8yiE6fhaICQ1f+WcrRt+/Fw2RmVM
-         Y9SlUMsxIRKWYp+9h31FgcqK4MzZktONf3lAkqrl8vv9lxAQ0WhhQvqrkwr+9C+++LAq
-         VlzAlnzqmsVdU9b/kKXq2Bu+QPFtbVd7EU1wEY/UmVqNFVoEaNmn31UUgKpBAYEdi3FE
-         zDZcRU96NeMtNgDpe3h15m+ncNjPITqx6EuS6C4u6pOTR6z8V+7na8W4wF1djSU2nKeC
-         2NxzlgYpzLRaqFKPYgigC7yUtaezaCB/aReTbaCrwQAOBA4swy2SNAdNuhdSzfi3rVNH
-         z4EQ==
+        d=linaro.org; s=google; t=1744973665; x=1745578465; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=au9euEFgTYdZixK5I9CPSxaI0WV2CLlMT4SQ96By6cs=;
+        b=nyHS+5cNr6eWds5AqONKF1uROf4lcdCEM54KUMdsTKX4uahJ5hQvMDixs2JMIXHm/X
+         P4h4f+H7yKEAw5sdtOc/FIZnI37lZxIBKlvny11mhsE8BoJIhzl9c+miTrHj6ORGFjWy
+         LsNCmmE5E8SG9MsZ38qsmlzxsO6ichgjj98sCE8HeS+ui6KGut4sPi982HyysnHZLClz
+         EfcelFSQ/5gx+yqRNGlbt9GQCE5nkfEeXxHnf3HoRsMqmlg2tjD7hi13vMmBRAxBJW9J
+         SaFXOmMVxMot7/svdsieVlbOai3jIQ3VdYPfQuvGy/k6hJxE7R0Yd3GK4TTnnh9o9a9b
+         cxIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744972545; x=1745577345;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1744973665; x=1745578465;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XyW2t+GtwgeOQ8iFogAaRYVPbyvbI7FZnfPpco3ULPs=;
-        b=JvfDH9ZwkVliRDYPRnPV46KNY9UVpXP4AH0qVspvHTzLEptH7kyShX/bLYgF4Fw9ox
-         XuplD5m49vFAGNq0GlK94CggK8h98/KKcEb95830a5AR2qlfQsdzAyVP4yYrDOQumOTc
-         V9Hq7BoC6k0Ff3TImN+9vzumoLqqJ1/yzMG+PsBZhrWzP+ojAAIWlZBAGSIecioiwUTt
-         Ln+V9hdMc2vErctrwJDZmG3/CCey6fie3zRsB9ZbO9svqhxxZPuoAMR/kgkBZuEIc7kP
-         1n1ZxpKWlvFpSolKZoJOXWwO7P8h6Dfe4fcebBp8XfEvBtsE4yGMyfT0zIPKSZc61oez
-         2Q9A==
-X-Forwarded-Encrypted: i=1; AJvYcCW1Gjy27RuVoEJ4eX/Xx9uE91RNZcs8cj4npdkXY0i9Xca1pOrbit8z6lK6bZ3weU93isZsaTnO6CxFZBe8@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywba4Fp/EUf3R6942fSOeFC/nCqsTJYRCbhtFyEwKNT/Mx76Iuc
-	ge4bn9rNPq1PsCzTB5fDu+w/dM2hQ4nVxzT5LY48OSxTcB28BDyO56Cbsjk+bQE=
-X-Gm-Gg: ASbGncuNDND2Tqk7jffWdb8Wtu45i6CVF9ylV+snINT/KLnqWGCDj0Pfg7HQ/FC5q3C
-	reKKA1K3O/IL/tF8SyEaaBJVHaLMeNeevH+UjWel/AqEgdZ9Yz4Hk6ex88woyYpkIOAYnS9Z8yb
-	eqptLP24uMu6ykZo9VQI7PB+DFLiyxhQOvMdXn5pi+VFncwfpWktRdEWNxkSoeKCITaASu/zUGp
-	sV/GMJZqOjxKW8PBDnwX/oq4vpPxh04gry++v5DTwvy70QTF9csAP5SCeArAXdd+35YCBJ8V8P6
-	q3USEliVPx1JIj/eZaUtmt2jKjrdzvUSHiuQd7jIJKwX2A3A9pDfD143bffFiBM9GbwXt/B25lt
-	iQ0muAg==
-X-Google-Smtp-Source: AGHT+IG1ldrPaFqZ19ooBr1X8BkUfim3jehNH+IxNKoWTFlbOTGloFPIDBOe5Sy+jV5arTlmIQ6fJg==
-X-Received: by 2002:a05:6000:1acb:b0:390:f6aa:4e80 with SMTP id ffacd0b85a97d-39efbaf1ee3mr1914119f8f.53.1744972544885;
-        Fri, 18 Apr 2025 03:35:44 -0700 (PDT)
-Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4406d5bbd35sm17111785e9.22.2025.04.18.03.35.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Apr 2025 03:35:44 -0700 (PDT)
-Message-ID: <59ffb7c7-95b8-47e9-91ab-3c7cd7b3fe02@linaro.org>
-Date: Fri, 18 Apr 2025 11:35:43 +0100
+        bh=au9euEFgTYdZixK5I9CPSxaI0WV2CLlMT4SQ96By6cs=;
+        b=MlcUsFyjqwRtp8DybWmMucTsnbheUMCHhOqK2qNtTLFId7sY+r/WykHF/VP/nlK9vZ
+         8z0B/MUfayqqRUe3w9GS3iYC79O1nME8b5dqRBZjEmMBCL0kud9JSpPKO7dPxQU4hFNP
+         cYnOL5bwSFx4ai46YVN6+VSHDsnv0zjBhekWUzkqNFOutEBRS3pu2srGGNEXa5AqH+3X
+         N7ikeu5w05ZqKgaSqfi2wRUxrIAwjlXds7c9z1JjCfu1SImTV1QE/lySE/OpyAc1okGO
+         aFr45FbrtluzbkN/zWQS8UR2/GQhqe4JAVuqTr+knmbS4f4OTWUrHOcjUS1rbBANmcH7
+         41JA==
+X-Forwarded-Encrypted: i=1; AJvYcCX8buMbmbmJ+v8r0iAyo8XNyTe25Y2JkOGS2C2dJR8o61xYQf22tRxUzb0Y0vbL1JBZ6tvzQsnapbO+0W0D@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyj9ifWqrxm45OR4Tk8gVNs7UWPN2p/Wby7OQHQW6jq2msATuz/
+	lYMimvfIv5Ui65HuNzEQwvpB1J7njzpS2Ehfv9xAN8wkT7qRgw/PHshPGXqY67s=
+X-Gm-Gg: ASbGncuCBU/i9apP/FGFxWpgNxPuBw9SY+lKVj/kaSmZwmq1vX2dAbFiMnXBZmfxoXq
+	qI4RoTXpf0pTybJMmvA37NBYrG/HFjvW7nMwrmiRwVJn6GsCT6ldaJdyKuqH2cEsHHD1d3Jo1rK
+	wNeSAH2zSfo0tJi+Llb7R5QCuPtRHV0wRP7nSH3teE+SfyIdx0+ogbSmJFqK5FWzAbUZ5IVB0SQ
+	PzKmXgwElQRjgnofErIui9C11wt3fiQ0Mj1E0MnJg2oHCuNVqTYFzB3BkoF7dYgEnexiRRz5ZGj
+	MbCSCUZVfzsCVwHC+zH+0+jZMEPlWUAQ+x4m4WuX7asKsBpzwUw3Mf4jMvXmxuDbYY7y8YS1rQW
+	Q7MMvMLEGtLBxzA==
+X-Google-Smtp-Source: AGHT+IGFn7+MSrW5VzenZnnJ9w528Q6bQtEiGXih7aQhRS/wsl6XbxhTNW3ERnJTPiWNnQMdxNNYxQ==
+X-Received: by 2002:a5d:598b:0:b0:39c:cc7:3c97 with SMTP id ffacd0b85a97d-39efbaf133dmr1825540f8f.50.1744973665370;
+        Fri, 18 Apr 2025 03:54:25 -0700 (PDT)
+Received: from mai.linaro.org (146725694.box.freepro.com. [130.180.211.218])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4406d5acca9sm17735885e9.12.2025.04.18.03.54.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Apr 2025 03:54:24 -0700 (PDT)
+Date: Fri, 18 Apr 2025 12:54:22 +0200
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
+To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+Cc: amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
+	rui.zhang@intel.com, lukasz.luba@arm.com,
+	david.collins@oss.qualcomm.com, srinivas.kandagatla@linaro.org,
+	stefan.schmidt@linaro.org, quic_tsoni@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, dmitry.baryshkov@linaro.org
+Subject: Re: [PATCH v3 1/5 RESEND] thermal: qcom-spmi-temp-alarm: enable
+ stage 2 shutdown when required
+Message-ID: <aAIvXnAmlPKbcV45@mai.linaro.org>
+References: <20250320202408.3940777-1-anjelique.melendez@oss.qualcomm.com>
+ <20250320202408.3940777-2-anjelique.melendez@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] media: iris: add qcs8300 platform data
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250418-qcs8300_iris-v2-0-1e01385b90e9@quicinc.com>
- <20250418-qcs8300_iris-v2-4-1e01385b90e9@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250418-qcs8300_iris-v2-4-1e01385b90e9@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250320202408.3940777-2-anjelique.melendez@oss.qualcomm.com>
 
-On 18/04/2025 07:28, Vikash Garodia wrote:
-> QCS8300 has a downscaled video core compared to SM8550, while it has
-> same bindings as that of SM8550. QCS8300.h captures the capabilities for
-> QCS8300 which is delta from SM8550.
-
-QCS8300 as a down-scaled .... compared to the SM8550.
-QSC8300 has the same bindings as SM8550 ?
-
-Actually that makes not a world of sense as I read it.
-
-I'd suggest rewording this commit to just state what the QSC8300 itself 
-can do without assuming the reader has any prior knowledge of the SM8550.
-
-Same comment for the other commits.
-
-Tell us what the QCS8300 is and what it does.
-
-> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+On Thu, Mar 20, 2025 at 01:24:04PM -0700, Anjelique Melendez wrote:
+> From: David Collins <david.collins@oss.qualcomm.com>
+> 
+> Certain TEMP_ALARM GEN2 PMIC peripherals need over-temperature
+> stage 2 automatic PMIC partial shutdown to be enabled in order to
+> avoid repeated faults in the event of reaching over-temperature
+> stage 3.  Modify the stage 2 shutdown control logic to ensure that
+> stage 2 shutdown is enabled on all affected PMICs.  Read the
+> digital major and minor revision registers to identify these
+> PMICs.
+> 
+> Signed-off-by: David Collins <david.collins@oss.qualcomm.com>
+> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
 > ---
->   .../platform/qcom/iris/iris_platform_common.h      |   1 +
->   .../media/platform/qcom/iris/iris_platform_gen2.c  |  57 ++++++++++
->   .../platform/qcom/iris/iris_platform_qcs8300.h     | 124 +++++++++++++++++++++
->   drivers/media/platform/qcom/iris/iris_probe.c      |   4 +
->   4 files changed, 186 insertions(+)
+>  drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 32 +++++++++++++++++++--
+>  1 file changed, 30 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> index 6bc3a7975b04d612f6c89206eae95dac678695fc..3191a910653ce4bd71de9a0b4465fd583602adf6 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> @@ -36,6 +36,7 @@ enum pipe_type {
->   extern struct iris_platform_data sm8250_data;
->   extern struct iris_platform_data sm8550_data;
->   extern struct iris_platform_data sm8650_data;
-> +extern struct iris_platform_data qcs8300_data;
->   
->   enum platform_clk_type {
->   	IRIS_AXI_CLK,
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-> index 5ff82296ee8ea5ad3954bd2254594048adcb8404..723e9f4cef42408168aca22b34ccd0a674a4fd25 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-> @@ -11,6 +11,7 @@
->   #include "iris_vpu_common.h"
->   
->   #include "iris_platform_sm8650.h"
-> +#include "iris_platform_qcs8300.h"
->   
->   #define VIDEO_ARCH_LX 1
->   
-> @@ -326,3 +327,59 @@ struct iris_platform_data sm8650_data = {
->   	.dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
->   	.dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
->   };
+> diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+> index c2d59cbfaea9..b2077ff9fe73 100644
+> --- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+> +++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /*
+>   * Copyright (c) 2011-2015, 2017, 2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+>  #include <linux/bitops.h>
+> @@ -16,6 +17,7 @@
+>  
+>  #include "../thermal_hwmon.h"
+>  
+> +#define QPNP_TM_REG_DIG_MINOR		0x00
+>  #define QPNP_TM_REG_DIG_MAJOR		0x01
+>  #define QPNP_TM_REG_TYPE		0x04
+>  #define QPNP_TM_REG_SUBTYPE		0x05
+> @@ -71,6 +73,7 @@ struct qpnp_tm_chip {
+>  	struct device			*dev;
+>  	struct thermal_zone_device	*tz_dev;
+>  	unsigned int			subtype;
+> +	unsigned int			dig_revision;
+>  	long				temp;
+>  	unsigned int			thresh;
+>  	unsigned int			stage;
+> @@ -78,6 +81,7 @@ struct qpnp_tm_chip {
+>  	/* protects .thresh, .stage and chip registers */
+>  	struct mutex			lock;
+>  	bool				initialized;
+> +	bool				require_s2_shutdown;
+>  
+>  	struct iio_channel		*adc;
+>  	const long			(*temp_map)[THRESH_COUNT][STAGE_COUNT];
+> @@ -255,7 +259,7 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
+>  
+>  skip:
+>  	reg |= chip->thresh;
+> -	if (disable_s2_shutdown)
+> +	if (disable_s2_shutdown && !chip->require_s2_shutdown)
+>  		reg |= SHUTDOWN_CTRL1_OVERRIDE_S2;
+>  
+>  	return qpnp_tm_write(chip, QPNP_TM_REG_SHUTDOWN_CTRL1, reg);
+> @@ -350,7 +354,7 @@ static int qpnp_tm_probe(struct platform_device *pdev)
+>  {
+>  	struct qpnp_tm_chip *chip;
+>  	struct device_node *node;
+> -	u8 type, subtype, dig_major;
+> +	u8 type, subtype, dig_major, dig_minor;
+>  	u32 res;
+>  	int ret, irq;
+>  
+> @@ -403,6 +407,30 @@ static int qpnp_tm_probe(struct platform_device *pdev)
+>  		return dev_err_probe(&pdev->dev, ret,
+>  				     "could not read dig_major\n");
+>  
+> +	ret = qpnp_tm_read(chip, QPNP_TM_REG_DIG_MINOR, &dig_minor);
+> +	if (ret < 0) {
+> +		dev_err(&pdev->dev, "could not read dig_minor\n");
+> +		return ret;
+> +	}
 > +
-> +/*
-> + * Shares most of SM8550 data except:
-> + * - inst_caps to platform_inst_cap_qcs8300
-> + * - inst_fw_caps to inst_fw_cap_qcs8300
-> + */
-> +struct iris_platform_data qcs8300_data = {
-> +	.get_instance = iris_hfi_gen2_get_instance,
-> +	.init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
-> +	.init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
-> +	.vpu_ops = &iris_vpu3_ops,
-> +	.set_preset_registers = iris_set_sm8550_preset_registers,
-> +	.icc_tbl = sm8550_icc_table,
-> +	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
-> +	.clk_rst_tbl = sm8550_clk_reset_table,
-> +	.clk_rst_tbl_size = ARRAY_SIZE(sm8550_clk_reset_table),
-> +	.bw_tbl_dec = sm8550_bw_table_dec,
-> +	.bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
-> +	.pmdomain_tbl = sm8550_pmdomain_table,
-> +	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
-> +	.opp_pd_tbl = sm8550_opp_pd_table,
-> +	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
-> +	.clk_tbl = sm8550_clk_table,
-> +	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
-> +	/* Upper bound of DMA address range */
-> +	.dma_mask = 0xe0000000 - 1,
-> +	.fwname = "qcom/vpu/vpu30_p4_s6.mbn",
-> +	.pas_id = IRIS_PAS_ID,
-> +	.inst_caps = &platform_inst_cap_qcs8300,
-> +	.inst_fw_caps = inst_fw_cap_qcs8300,
-> +	.inst_fw_caps_size = ARRAY_SIZE(inst_fw_cap_qcs8300),
-> +	.tz_cp_config_data = &tz_cp_config_sm8550,
-> +	.core_arch = VIDEO_ARCH_LX,
-> +	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
-> +	.ubwc_config = &ubwc_config_sm8550,
-> +	.num_vpp_pipe = 2,
-> +	.max_session_count = 16,
-> +	.max_core_mbpf = ((4096 * 2176) / 256) * 4,
-> +	.input_config_params =
-> +		sm8550_vdec_input_config_params,
-> +	.input_config_params_size =
-> +		ARRAY_SIZE(sm8550_vdec_input_config_params),
-> +	.output_config_params =
-> +		sm8550_vdec_output_config_params,
-> +	.output_config_params_size =
-> +		ARRAY_SIZE(sm8550_vdec_output_config_params),
-> +	.dec_input_prop = sm8550_vdec_subscribe_input_properties,
-> +	.dec_input_prop_size = ARRAY_SIZE(sm8550_vdec_subscribe_input_properties),
-> +	.dec_output_prop = sm8550_vdec_subscribe_output_properties,
-> +	.dec_output_prop_size = ARRAY_SIZE(sm8550_vdec_subscribe_output_properties),
-> +
-> +	.dec_ip_int_buf_tbl = sm8550_dec_ip_int_buf_tbl,
-> +	.dec_ip_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_ip_int_buf_tbl),
-> +	.dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
-> +	.dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
-> +};
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_qcs8300.h b/drivers/media/platform/qcom/iris/iris_platform_qcs8300.h
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..f82355d72fcffe7e361bd30877cccb83fe9b549f
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_qcs8300.h
-> @@ -0,0 +1,124 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2022-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +static struct platform_inst_fw_cap inst_fw_cap_qcs8300[] = {
-> +	{
-> +		.cap_id = PROFILE,
-> +		.min = V4L2_MPEG_VIDEO_H264_PROFILE_BASELINE,
-> +		.max = V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH,
-> +		.step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_PROFILE_BASELINE) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_BASELINE) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_PROFILE_MAIN) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_PROFILE_HIGH),
-> +		.value = V4L2_MPEG_VIDEO_H264_PROFILE_HIGH,
-> +		.hfi_id = HFI_PROP_PROFILE,
-> +		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-> +		.set = iris_set_u32_enum,
-> +	},
-> +	{
-> +		.cap_id = LEVEL,
-> +		.min = V4L2_MPEG_VIDEO_H264_LEVEL_1_0,
-> +		.max = V4L2_MPEG_VIDEO_H264_LEVEL_6_2,
-> +		.step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_0) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1B)  |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_1) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_2) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_3) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_0) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_1) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_2) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_0) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_1) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_2) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_0) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_1) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_2) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_5_0) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_5_1) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_5_2) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_6_0) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_6_1) |
-> +			BIT(V4L2_MPEG_VIDEO_H264_LEVEL_6_2),
-> +		.value = V4L2_MPEG_VIDEO_H264_LEVEL_6_1,
-> +		.hfi_id = HFI_PROP_LEVEL,
-> +		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-> +		.set = iris_set_u32_enum,
-> +	},
-> +	{
-> +		.cap_id = INPUT_BUF_HOST_MAX_COUNT,
-> +		.min = DEFAULT_MAX_HOST_BUF_COUNT,
-> +		.max = DEFAULT_MAX_HOST_BURST_BUF_COUNT,
-> +		.step_or_mask = 1,
-> +		.value = DEFAULT_MAX_HOST_BUF_COUNT,
-> +		.hfi_id = HFI_PROP_BUFFER_HOST_MAX_COUNT,
-> +		.flags = CAP_FLAG_INPUT_PORT,
-> +		.set = iris_set_u32,
-> +	},
-> +	{
-> +		.cap_id = STAGE,
-> +		.min = STAGE_1,
-> +		.max = STAGE_2,
-> +		.step_or_mask = 1,
-> +		.value = STAGE_2,
-> +		.hfi_id = HFI_PROP_STAGE,
-> +		.set = iris_set_stage,
-> +	},
-> +	{
-> +		.cap_id = PIPE,
-> +		.min = PIPE_1,
-> +		.max = PIPE_2,
-> +		.step_or_mask = 1,
-> +		.value = PIPE_2,
-> +		.hfi_id = HFI_PROP_PIPE,
-> +		.set = iris_set_pipe,
-> +	},
-> +	{
-> +		.cap_id = POC,
-> +		.min = 0,
-> +		.max = 2,
-> +		.step_or_mask = 1,
-> +		.value = 1,
-> +		.hfi_id = HFI_PROP_PIC_ORDER_CNT_TYPE,
-> +	},
-> +	{
-> +		.cap_id = CODED_FRAMES,
-> +		.min = CODED_FRAMES_PROGRESSIVE,
-> +		.max = CODED_FRAMES_PROGRESSIVE,
-> +		.step_or_mask = 0,
-> +		.value = CODED_FRAMES_PROGRESSIVE,
-> +		.hfi_id = HFI_PROP_CODED_FRAMES,
-> +	},
-> +	{
-> +		.cap_id = BIT_DEPTH,
-> +		.min = BIT_DEPTH_8,
-> +		.max = BIT_DEPTH_8,
-> +		.step_or_mask = 1,
-> +		.value = BIT_DEPTH_8,
-> +		.hfi_id = HFI_PROP_LUMA_CHROMA_BIT_DEPTH,
-> +	},
-> +	{
-> +		.cap_id = RAP_FRAME,
-> +		.min = 0,
-> +		.max = 1,
-> +		.step_or_mask = 1,
-> +		.value = 1,
-> +		.hfi_id = HFI_PROP_DEC_START_FROM_RAP_FRAME,
-> +		.flags = CAP_FLAG_INPUT_PORT,
-> +		.set = iris_set_u32,
-> +	},
-> +};
-> +
-> +static struct platform_inst_caps platform_inst_cap_qcs8300 = {
-> +	.min_frame_width = 96,
-> +	.max_frame_width = 4096,
-> +	.min_frame_height = 96,
-> +	.max_frame_height = 4096,
-> +	.max_mbpf = (4096 * 2176) / 256,
-> +	.mb_cycles_vpp = 200,
-> +	.mb_cycles_fw = 326389,
-> +	.mb_cycles_fw_vpp = 44156,
-> +	.num_comv = 0,
-> +};
-> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
-> index 7cd8650fbe9c09598670530103e3d5edf32953e7..e5f1896e55c390e920d206e7fc2c2be283bb39d8 100644
-> --- a/drivers/media/platform/qcom/iris/iris_probe.c
-> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
-> @@ -349,6 +349,10 @@ static const struct of_device_id iris_dt_match[] = {
->   		.compatible = "qcom,sm8650-iris",
->   		.data = &sm8650_data,
->   	},
-> +	{
-> +		.compatible = "qcom,qcs8300-iris",
-> +		.data = &qcs8300_data,
-> +	},
-This is out-of-order, alphanumeric sorting puts qcs8300 before smX.
+> +	chip->dig_revision = (dig_major << 8) | dig_minor;
 
->   	{ },
->   };
->   MODULE_DEVICE_TABLE(of, iris_dt_match);
+I would move this inside the block below.
+
+> +	if (chip->subtype == QPNP_TM_SUBTYPE_GEN2) {
+> +		/*
+> +		 * Check if stage 2 automatic partial shutdown must remain
+> +		 * enabled to avoid potential repeated faults upon reaching
+> +		 * over-temperature stage 3.
+> +		 */
+> +		switch (chip->dig_revision) {
+> +		case 0x0001:
+> +		case 0x0002:
+> +		case 0x0100:
+> +		case 0x0101:
+> +			chip->require_s2_shutdown = true;
+> +			break;
+> +		}
+> +	}
+
+And move this block after the test below
+
+> +
+>  	if (type != QPNP_TM_TYPE || (subtype != QPNP_TM_SUBTYPE_GEN1
+>  				     && subtype != QPNP_TM_SUBTYPE_GEN2)) {
+>  		dev_err(&pdev->dev, "invalid type 0x%02x or subtype 0x%02x\n",
+> -- 
+> 2.34.1
 > 
 
-Also the ordering of this patch in the series is a bit odd.
+-- 
 
-- Compat string
-- Driver changes
-- DT updates
+ <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-Please fix.
-
----
-bod
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
 
