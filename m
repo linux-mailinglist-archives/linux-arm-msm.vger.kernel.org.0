@@ -1,79 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-54704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEDE0A9335C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 09:17:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57E56A9336E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 09:29:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 251668E4A30
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 07:17:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 697FB447490
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 07:29:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20050251799;
-	Fri, 18 Apr 2025 07:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11205263C69;
+	Fri, 18 Apr 2025 07:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mXPfdHP+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nmF1F4xI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB7D1D86D6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 07:17:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E72D8C0E;
+	Fri, 18 Apr 2025 07:29:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744960652; cv=none; b=VH9ueAB9jzyMdorOAJ/LNB1US8szU86pZeUF2MVtsUzDvAdxMI4e5Wss1ZEm6KA1uN51C/6vvmmPCgNKhrgxJdap3WJqssQxAfpk7EzOyv3QDSfDt4Ytv1ddEk1NNc6dU3kzohdcMt7QFU3kxKxfGIlZGXR6vnF7Xw7nB62fgl4=
+	t=1744961362; cv=none; b=p8vqzjZRHpM/CIKLKZSmO45OBCD2acQfdKFtt/jwrjVyVOUKSWjk5Ekd092DpKIH5C5p5hZQn27XqcoJysQMcbYR2T1tnUAQNe+s9iElxTSyvgb6L+UDBWk1wEtbIwb+Kd8pyH+EpUxBFKCfz1NsO9JwJTbroy0ESxdn9hfKp94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744960652; c=relaxed/simple;
-	bh=1NYAZ9s3FN912r5R1+nyOhEXkSHN8iTTBsPkviYmqIk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YkqM+pQ8P+wIJ7If/dEThSJ7FnxwWlZY58ZDzNHYMHNRhfiQSlao3dK5aOlUVFcZzBdD8mUR/bOYc1pO6XYH6XWg7qN7RghWBQw96SwNnXkTCyX1GhOT3R18TofOfuh/Pr1qsSUaNRLiFZK68vGihXUR+A+Laib/O1mOu4wG0DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mXPfdHP+; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-39ee651e419so893460f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 00:17:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744960648; x=1745565448; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TvGO0qefvKjUH/UIq4IcUVMh3abWe/Yo1dAdnvmOivg=;
-        b=mXPfdHP+89ocyglTl1dPcUl2BBsJErkbeXWXqsg2OZeQmXflxHkEFDIrQs0zPOT8iU
-         S0Y426bhV3fouyw/K56M91oJMLdj+/ddD96NxK8T81qDIhHi1SEy9BcCCQX+MHWx7jsC
-         mY3CcfbQWJbiXHbxd4r3jMz9zlTOeHWWmpccBkbg4TPjeNsc75wIKTnwAlGam0TArsDv
-         MK9HbtCaoiPgUC4zB0rMn5avJ5/NUINJCCz9siwD6D3qPqbMPhwUwAgb5qcP8pcJtSA/
-         /lExW6oes87d7gy1peO+zuKiBh9rZwoe8ulucjKfKyWdRXZMKJa0ytIU02bzCU3hsBpC
-         Ruxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744960648; x=1745565448;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TvGO0qefvKjUH/UIq4IcUVMh3abWe/Yo1dAdnvmOivg=;
-        b=sfdtuJYFMlvjXiR3bScIl0BCSrhTvDWLEfDBfujfeaUcNkFk3UT13Ze+uhcSRIoUpu
-         ggNjzOv06LACn/59gkjVmUiFe2JxDoOI/UGZbAQmFGWJMCdhYb6fCPaBEWQ1Ms7QgVRt
-         Miweb9XDLV/rY+Pu1gYPjnZzS4i6SmQJ860iP1klBX7tmm0hGX1SuLl53xXG7FZQKq7R
-         9o4tAIQRdLQ//MyN4RX3AhNqDW+9Hir6LCGu6nMAevPuBIR+BtPc4mnNYU6hEdFmZSXy
-         WgV0AVF3blqIUMKpF0axTQ/k30csVLgxuAzEZC8IWxs7PXent2WCEfQ3TxFgGr1bMrQJ
-         dzEg==
-X-Gm-Message-State: AOJu0Ywg/UDpwVKad0Xxcxb8QTMkga6gN84ZPRkHoMIz933q1kLc29A8
-	flCOf5vDkJzJHkc9YYxhICIgxd6xbKbj14IY9dU3bOD+NNFA1mX9mlCKYcGbm7k=
-X-Gm-Gg: ASbGncsHhiX0b2GDelI8aI9ELV26jjQnpTQyHaW50HwrcH1drHoHidVHt2samee7c2o
-	Ow15DQTK9cA1adHKohGy2I0gLmc4c7Rc/MTI4oDOCKX+BEce93YwRcDWYMq4ybiRE3+SVfWlX6K
-	hKyN/SgYs7/JiY5Zr6G+raQBY0fKhHw1Gms/XdSJhDgGe4RDDkxjp13ladlXTE3+zMLHL/aIVCP
-	IyC+FS0o7JIYHEjx3RpoAYlWX6Ayr7ZOEpNwlrDKBRkszMsVMWM3wm5alHcAH5vvNwnLyog+c3m
-	F/qaBVS9PlgXI5mXzEedcbTwHbUN+23ZPvEdq/87ZxiB4TiEbVuSmR+tcYGZ02CaPchKZ+COZC8
-	baLImAA==
-X-Google-Smtp-Source: AGHT+IFrbkI7BRFQfNl6ji1CHGR4492NPN5WPdfXqNCSKuMlVcr/3YVSjwhWaQNknXlP4E/Z6hB9pQ==
-X-Received: by 2002:a05:6000:40df:b0:391:ab2:9e80 with SMTP id ffacd0b85a97d-39efba51048mr1234524f8f.24.1744960648222;
-        Fri, 18 Apr 2025 00:17:28 -0700 (PDT)
-Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39efa433303sm1881239f8f.24.2025.04.18.00.17.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Apr 2025 00:17:27 -0700 (PDT)
-Message-ID: <a29cdbe9-f980-4912-9aea-14d8942fb941@linaro.org>
-Date: Fri, 18 Apr 2025 08:17:26 +0100
+	s=arc-20240116; t=1744961362; c=relaxed/simple;
+	bh=49VNuVmkw9o4pRlMwp2CRvW5yS2aKlA6AGaF1i69I+0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=CWwUtIZJ38TeDBYIvNM8PDea/5p6Lhty1epv2cEfTRvUYonnpdOpqVF0a1ii44CDUxyU/zO77iHKx43FSO17oY7hW9RQ6GeMMge31yYPrc9VSi5LgTcSnuS11NO3uXAj9MLaVYz5kdFm/crOjP2wgRoirpsXAXuDChK8gQ5nPEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nmF1F4xI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53I1f3mY001224;
+	Fri, 18 Apr 2025 07:29:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	E6kfTTUe2SJkB4ocesJpwtBEmUKPSMD3W1XeWivw2/I=; b=nmF1F4xIxhQm0hyJ
+	XbY1M3Sad6aol6BszePs/4QkBJCG9tNCfMhZcpEK8ffckihH00Vtb9Oz11HiWCm7
+	YQSMP149nsPcu/6VMvQIXqz/a03PASFoVwIw6S4uHnfEBWNnDBBOwrvbhla7Ivca
+	OFwpLbWJzhyn3hcXLD6cg9dRNqCzwl+PMFKvHEReioOsGq3nSY1RXJFj8ZFlcNwy
+	Jm9T6XfaoEekrO6zP4m7d+m8pxT94037+Tk7kyp6DEm8lDW/j0YoNjNm8rtpkRBv
+	e102n4bghR289babDy+ndzt/6nIjowoQDzW0tfx5eeYtUQfgZhUXnxBqlHAtePfC
+	/LllWA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ydvjhjth-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 18 Apr 2025 07:29:05 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53I7T4e7024662
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 18 Apr 2025 07:29:04 GMT
+Received: from [10.216.47.89] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 18 Apr
+ 2025 00:28:57 -0700
+Message-ID: <7fd92093-3efc-4f24-967d-7e267162b26d@quicinc.com>
+Date: Fri, 18 Apr 2025 12:58:53 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,163 +65,106 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/6] media: qcom: camss: csiphy-3ph: Add CSIPHY 2ph
- DPHY v2.0.1 init sequence
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>, rfoss@kernel.org,
- konradybcio@kernel.org, andersson@kernel.org, krzk+dt@kernel.org,
- robh@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com
-References: <20250417145819.626733-1-loic.poulain@oss.qualcomm.com>
- <20250417145819.626733-4-loic.poulain@oss.qualcomm.com>
+Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: sa8775p: Add support for camss
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <hverkuil-cisco@xs4all.nl>,
+        <cros-qcom-dts-watchers@chromium.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Suresh Vankadara <quic_svankada@quicinc.com>
+References: <20250210155605.575367-1-quic_vikramsa@quicinc.com>
+ <20250210155605.575367-3-quic_vikramsa@quicinc.com>
+ <65663927-cc11-4810-8714-7600786f299b@oss.qualcomm.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250417145819.626733-4-loic.poulain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Vikram Sharma <quic_vikramsa@quicinc.com>
+In-Reply-To: <65663927-cc11-4810-8714-7600786f299b@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=ZIrXmW7b c=1 sm=1 tr=0 ts=6801ff41 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=7gLDDzRWUVhiidtGMTcA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: NFa8SKs0Fzf1ME-yH9sPgRCfNjok_44g
+X-Proofpoint-ORIG-GUID: NFa8SKs0Fzf1ME-yH9sPgRCfNjok_44g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-18_02,2025-04-17_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ clxscore=1015 priorityscore=1501 bulkscore=0 phishscore=0 mlxlogscore=936
+ spamscore=0 impostorscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504180053
 
-On 17/04/2025 15:58, Loic Poulain wrote:
-> This is the CSI PHY version found in QCS2290/QCM2290 SoCs.
-> The table is extracted from downstream camera driver.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> ---
->   .../qcom/camss/camss-csiphy-3ph-1-0.c         | 89 +++++++++++++++++++
->   drivers/media/platform/qcom/camss/camss.h     |  1 +
->   2 files changed, 90 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> index f732a76de93e..1857c802cf70 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> @@ -319,6 +319,90 @@ csiphy_lane_regs lane_regs_sm8250[] = {
->   	{0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->   };
->   
-> +/* GEN2 2.0.1 2PH DPHY mode */
 
-I'd be grateful if the comment could be more specific here:
+On 4/14/2025 7:18 PM, Konrad Dybcio wrote:
+> On 2/10/25 4:56 PM, Vikram Sharma wrote:
+>> Add changes to support the camera subsystem on the SA8775P.
+>>
+>> Co-developed-by: Suresh Vankadara <quic_svankada@quicinc.com>
+>> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
+>> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+>> ---
+> [...]
+>
+>> +			interrupts = <GIC_SPI 565 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 564 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 759 IRQ_TYPE_EDGE_RISING>,
+> 760> +				     <GIC_SPI 758 IRQ_TYPE_EDGE_RISING>,
 
-https://gitlab.freedesktop.org/linux-media/media-committers/-/blob/next/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c?ref_type=heads#L427
+Hi Konrad,
 
-Process node and "mission mode" if you can find it would be appreciated.
+We cross checked internal documents to confirm IRQ number for 
+csid_lite2/3 and vfe_lite2/3
+Calculation for IRQ number is done with respect to vector number as
+irq_num = (vector - 32).
+csid_lite2 vector -> 791
+csid_lite3 vector -> 790
+vfe_lite2  vector -> 793
+vfe_lite3  vector -> 792
 
-> +static const struct
-> +csiphy_lane_regs lane_regs_qcm2290[] = {
-> +	{0x0030, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x002c, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0034, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0028, 0x04, 0x00, CSIPHY_DNP_PARAMS},
-> +	{0x003c, 0xb8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x001c, 0x0a, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0000, 0xd7, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0004, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0020, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0008, 0x04, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +	{0x000c, 0xff, 0x00, CSIPHY_DNP_PARAMS},
-> +	{0x0010, 0x50, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0038, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0060, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0064, 0x3f, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +
-> +	{0x0730, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x072c, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0734, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0728, 0x04, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x073c, 0xb8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x071c, 0x0a, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0700, 0xc0, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0704, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0720, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0708, 0x04, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +	{0x070c, 0xff, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0710, 0x50, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0738, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0760, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0764, 0x3f, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +
-> +	{0x0230, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x022c, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0234, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0228, 0x04, 0x00, CSIPHY_DNP_PARAMS},
-> +	{0x023c, 0xb8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x021c, 0x0a, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0200, 0xd7, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0204, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0220, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0208, 0x04, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +	{0x020c, 0xff, 0x00, CSIPHY_DNP_PARAMS},
-> +	{0x0210, 0x50, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0238, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0260, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0264, 0x3f, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +
-> +	{0x0430, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x042c, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0434, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0428, 0x04, 0x00, CSIPHY_DNP_PARAMS},
-> +	{0x043c, 0xb8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x041c, 0x0a, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0400, 0xd7, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0404, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0420, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0408, 0x04, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +	{0x040C, 0xff, 0x00, CSIPHY_DNP_PARAMS},
-> +	{0x0410, 0x50, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0438, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0460, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0464, 0x3f, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +
-> +	{0x0630, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x062c, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0634, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0628, 0x04, 0x00, CSIPHY_DNP_PARAMS},
-> +	{0x063c, 0xb8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x061c, 0x0a, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0600, 0xd7, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0604, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0620, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0608, 0x04, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +	{0x060C, 0xff, 0x00, CSIPHY_DNP_PARAMS},
-> +	{0x0610, 0x50, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0638, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0660, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +	{0x0664, 0x3f, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +};
-> +
->   /* GEN2 2.1.2 2PH DPHY mode */
->   static const struct
->   csiphy_lane_regs lane_regs_sm8550[] = {
-> @@ -744,6 +828,7 @@ static bool csiphy_is_gen2(u32 version)
->   	bool ret = false;
->   
->   	switch (version) {
-> +	case CAMSS_2290:
->   	case CAMSS_7280:
->   	case CAMSS_8250:
->   	case CAMSS_8280XP:
-> @@ -829,6 +914,10 @@ static int csiphy_init(struct csiphy_device *csiphy)
->   		regs->lane_regs = &lane_regs_sdm845[0];
->   		regs->lane_array_size = ARRAY_SIZE(lane_regs_sdm845);
->   		break;
-> +	case CAMSS_2290:
-> +		regs->lane_regs = &lane_regs_qcm2290[0];
-> +		regs->lane_array_size = ARRAY_SIZE(lane_regs_qcm2290);
-> +		break;
->   	case CAMSS_7280:
->   	case CAMSS_8250:
->   		regs->lane_regs = &lane_regs_sm8250[0];
-> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-> index 63c0afee154a..377707d91ff2 100644
-> --- a/drivers/media/platform/qcom/camss/camss.h
-> +++ b/drivers/media/platform/qcom/camss/camss.h
-> @@ -78,6 +78,7 @@ enum pm_domain {
->   
->   enum camss_version {
->   	CAMSS_660,
-> +	CAMSS_2290,
->   	CAMSS_7280,
->   	CAMSS_8x16,
->   	CAMSS_8x53,
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+thus irqs are as
+csid_lite2 -> 759
+csid_lite3 -> 758
+vfe_lite2  -> 761
+vfe_lite3  -> 760
+
+Please let me know if this looks fine to you?
+
+>
+> 759
+>
+>> +				     <GIC_SPI 604 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 545 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 546 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 547 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>,
+>> +				     <GIC_SPI 761 IRQ_TYPE_EDGE_RISING>,
+> 762
+>
+>> +				     <GIC_SPI 760 IRQ_TYPE_EDGE_RISING>,
+> 761
+>
+> Konrad
+
+Best Regards,
+
+Vikram
+
 
