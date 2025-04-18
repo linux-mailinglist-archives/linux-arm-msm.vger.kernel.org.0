@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-54729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70CDBA93632
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 12:54:33 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBAC4A9365B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 13:16:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EBC9E1B60E76
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 10:54:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 68A547B24C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 11:15:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 538D3270ECF;
-	Fri, 18 Apr 2025 10:54:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 323022749D7;
+	Fri, 18 Apr 2025 11:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nyHS+5cN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V8iWYNMW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CDF2222BB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 10:54:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D11274676
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 11:15:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744973669; cv=none; b=KHmOhC8OETzPRwoYBrNrdoSuAyflNNL4WFlUlyCef8umli9X+mkzrRqppC401cC+rjfD+WU9zogIU4OtmhcLLG+wOoo9RqwnTn5IYnOEFi8nlXjh/ZOlU2WXA793GazNwTyoLMyI+cBzbaNrrxBhdyBJtgYavnSVCFDvVitfUSo=
+	t=1744974957; cv=none; b=swdRTtUu5xwIjs3NiqV9SG2eW1+mkfsLzR9cJxddRj6VgygwfHsc8Z56s/SIS+3E8go7x4zHOeHoZKHJKaFxS+vHBiVCS+tDJ7w/1gNUT6W7P4V5+9h0UfunWJmDDhqC5rhl9bHrfRtARVaF4AcLofwmhwhF1a8WZbPSh0Noptc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744973669; c=relaxed/simple;
-	bh=1/8UG517LA2DgnY4VMkVPhPvNHydcaS9/NaQ2b/Q90M=;
+	s=arc-20240116; t=1744974957; c=relaxed/simple;
+	bh=n4swobHnDNUwLAENenY29umYN5A4cEqdjrUkZ0UBV5Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rdFmhB6taYvz4zANnmWSAv8T0HhYZ9xmaKjZDFMj7SiSAGdc6gY3B6yFBunYeDln62xm/etcjxP13OZTHK2c9+kON4GXNykCgSuTkq6Y6oB5m2cjs9ixwC6ywM5Dv4B6TxkRZxTRXdqCnkbTMDA/laK5nmD2PWgr3G9IA0oYfH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nyHS+5cN; arc=none smtp.client-ip=209.85.221.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jys1wv+YQAQxexybJW781/S33FQ065aWQlLAEohXeAafaI0vPL/37sYfpx6HVYHlimskPPg8bqo6RxiSkDHN8PP2ax6pIDWw9lSiSTahzi8xW7A0dt+i4dGIY4DI9qqc3oSa/oSscrmtAsqwvPC1AuRIvTqMpttQVUvlepR3lZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V8iWYNMW; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-39141ffa9fcso2134443f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 03:54:26 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43d04dc73b7so17013895e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 04:15:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744973665; x=1745578465; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1744974953; x=1745579753; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=au9euEFgTYdZixK5I9CPSxaI0WV2CLlMT4SQ96By6cs=;
-        b=nyHS+5cNr6eWds5AqONKF1uROf4lcdCEM54KUMdsTKX4uahJ5hQvMDixs2JMIXHm/X
-         P4h4f+H7yKEAw5sdtOc/FIZnI37lZxIBKlvny11mhsE8BoJIhzl9c+miTrHj6ORGFjWy
-         LsNCmmE5E8SG9MsZ38qsmlzxsO6ichgjj98sCE8HeS+ui6KGut4sPi982HyysnHZLClz
-         EfcelFSQ/5gx+yqRNGlbt9GQCE5nkfEeXxHnf3HoRsMqmlg2tjD7hi13vMmBRAxBJW9J
-         SaFXOmMVxMot7/svdsieVlbOai3jIQ3VdYPfQuvGy/k6hJxE7R0Yd3GK4TTnnh9o9a9b
-         cxIw==
+        bh=4z+4vitFF1HLmYGp5qH1vxFH58VNRpmJ23zED24ccPg=;
+        b=V8iWYNMWKmMi4XNcOCybvrj1m1u96A0Itwh5WAUEbkmR5e2AyM4oXOLWjH+fS+Rrcy
+         SMyGwKrOsJT9eQgELLv7fbtorxM9U1YG7wMAIEFUEnnQdMDDk8bU2nL2jLw/c2IzhGfa
+         tmk7RQuv9M4yac+/DnbiTJ31scqHtktUowdmIZHPumBMsMQbX2wsMT7WXtMT00WTtsYj
+         qAzc1/ES+1ei+hg8dJuEc4IKOEhw/zfMBZqQPoc0qjLKNIYNR8Wxr+/By6XtuL4G69yu
+         BmEaTVW87kiZs4d/aknM4Sz3BBt13r2g2UopHpuxsNUqJM22MycpMKxkN8etcp+kadw/
+         Abzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744973665; x=1745578465;
+        d=1e100.net; s=20230601; t=1744974953; x=1745579753;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=au9euEFgTYdZixK5I9CPSxaI0WV2CLlMT4SQ96By6cs=;
-        b=MlcUsFyjqwRtp8DybWmMucTsnbheUMCHhOqK2qNtTLFId7sY+r/WykHF/VP/nlK9vZ
-         8z0B/MUfayqqRUe3w9GS3iYC79O1nME8b5dqRBZjEmMBCL0kud9JSpPKO7dPxQU4hFNP
-         cYnOL5bwSFx4ai46YVN6+VSHDsnv0zjBhekWUzkqNFOutEBRS3pu2srGGNEXa5AqH+3X
-         N7ikeu5w05ZqKgaSqfi2wRUxrIAwjlXds7c9z1JjCfu1SImTV1QE/lySE/OpyAc1okGO
-         aFr45FbrtluzbkN/zWQS8UR2/GQhqe4JAVuqTr+knmbS4f4OTWUrHOcjUS1rbBANmcH7
-         41JA==
-X-Forwarded-Encrypted: i=1; AJvYcCX8buMbmbmJ+v8r0iAyo8XNyTe25Y2JkOGS2C2dJR8o61xYQf22tRxUzb0Y0vbL1JBZ6tvzQsnapbO+0W0D@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyj9ifWqrxm45OR4Tk8gVNs7UWPN2p/Wby7OQHQW6jq2msATuz/
-	lYMimvfIv5Ui65HuNzEQwvpB1J7njzpS2Ehfv9xAN8wkT7qRgw/PHshPGXqY67s=
-X-Gm-Gg: ASbGncuCBU/i9apP/FGFxWpgNxPuBw9SY+lKVj/kaSmZwmq1vX2dAbFiMnXBZmfxoXq
-	qI4RoTXpf0pTybJMmvA37NBYrG/HFjvW7nMwrmiRwVJn6GsCT6ldaJdyKuqH2cEsHHD1d3Jo1rK
-	wNeSAH2zSfo0tJi+Llb7R5QCuPtRHV0wRP7nSH3teE+SfyIdx0+ogbSmJFqK5FWzAbUZ5IVB0SQ
-	PzKmXgwElQRjgnofErIui9C11wt3fiQ0Mj1E0MnJg2oHCuNVqTYFzB3BkoF7dYgEnexiRRz5ZGj
-	MbCSCUZVfzsCVwHC+zH+0+jZMEPlWUAQ+x4m4WuX7asKsBpzwUw3Mf4jMvXmxuDbYY7y8YS1rQW
-	Q7MMvMLEGtLBxzA==
-X-Google-Smtp-Source: AGHT+IGFn7+MSrW5VzenZnnJ9w528Q6bQtEiGXih7aQhRS/wsl6XbxhTNW3ERnJTPiWNnQMdxNNYxQ==
-X-Received: by 2002:a5d:598b:0:b0:39c:cc7:3c97 with SMTP id ffacd0b85a97d-39efbaf133dmr1825540f8f.50.1744973665370;
-        Fri, 18 Apr 2025 03:54:25 -0700 (PDT)
+        bh=4z+4vitFF1HLmYGp5qH1vxFH58VNRpmJ23zED24ccPg=;
+        b=RUUj6xNaq7mP4tWwcgX9XX6HwdsXfTdmLgA22uZiXbAOFHavlqwwf1rY8R7FSmBLKS
+         t7FwLRZyip/NoD2AniTHHca5ItuynUO0Br2iLjiUDuQS4G3xjndp3Qo6pirpzw1rgx71
+         UlihTxLuSePUtiAIPcVbfVG+8+cOpIzh491KeBR4S+Bwz0RorAzBFs3cREkoY/k5soi3
+         h7tyVbpOFyG5pt5QgtNAe9AJida8oKRqpIJbDU3/ivIOADry8/oEImGqDCrnCHgn+M/Y
+         NmQJ1Ss6MmALsaMwI98Oh9iXuEGxrR/M1xVH7USRyME0yc3bgMNdVUWiPdCvtI67R0AN
+         xRAw==
+X-Forwarded-Encrypted: i=1; AJvYcCWm7ZqXqYNabaA50NQZ32Jm8CYmsM2Ay792Soeuj1DtHVA4/zUE1G9TI0g/AuB17dvvmaly9LorZ0xak+vc@vger.kernel.org
+X-Gm-Message-State: AOJu0YyY3uypyJUsnfqOSamez/igOhAmnQvjHaEnr7HXEj9PYh5RsFie
+	rWgP28UmjovuoZUmhLWk8uZHfHRZ9O/TTwsTXBAxmB0s8qgo688WNsiYvAvnu/w=
+X-Gm-Gg: ASbGncvAkwOiDCEiV0QAvesUtfHl4wlNHnNilI8/kmzOykXR8AV5aVeXCENnEY87PP7
+	Z6OOxBPNJOA4ENREIk9ze1qeFdX+a+w7c4ySsrhacWYMoZPquJlvlByUM8671qMSUGCFD+Azog0
+	AZcPNTmLPQyMXo1Uy3fDerqc55dXSTHVCPaeZwNZBPU07PcOEdOHW69GyOSKNJIr9DTkGyC9PC7
+	pYbrJya7oItXexPn7R3UBdr2kdSCRfUGjlAPYC7bymBptZ/qROOxfPprYqezllWhk88AWxoKR9u
+	xb/bzQ1qJXCmwEutDVx352RLES2cNNXd9Ouk569GyWktsvCoeYq3T/q7tvBcDN7X4f+Ss/YHSU8
+	KMKM=
+X-Google-Smtp-Source: AGHT+IGgzDneWpjqDYsrvMrlNm2kziIqWIKfA6WRzSUivYakLEXrOn3tJvonIi77xE/vY/on/myTfg==
+X-Received: by 2002:a05:600c:8508:b0:43c:fe15:41cb with SMTP id 5b1f17b1804b1-4406aba4af7mr24333745e9.15.1744974953462;
+        Fri, 18 Apr 2025 04:15:53 -0700 (PDT)
 Received: from mai.linaro.org (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4406d5acca9sm17735885e9.12.2025.04.18.03.54.23
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4406d5bbd35sm18383865e9.22.2025.04.18.04.15.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Apr 2025 03:54:24 -0700 (PDT)
-Date: Fri, 18 Apr 2025 12:54:22 +0200
+        Fri, 18 Apr 2025 04:15:52 -0700 (PDT)
+Date: Fri, 18 Apr 2025 13:15:50 +0200
 From: Daniel Lezcano <daniel.lezcano@linaro.org>
 To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
 Cc: amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
@@ -82,11 +82,11 @@ Cc: amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
 	stefan.schmidt@linaro.org, quic_tsoni@quicinc.com,
 	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org, dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH v3 1/5 RESEND] thermal: qcom-spmi-temp-alarm: enable
- stage 2 shutdown when required
-Message-ID: <aAIvXnAmlPKbcV45@mai.linaro.org>
+Subject: Re: [PATCH v3 3/5 RESEND] thermal: qcom-spmi-temp-alarm: Prepare to
+ support additional Temp Alarm subtypes
+Message-ID: <aAI0Zm5M9ba9ehyI@mai.linaro.org>
 References: <20250320202408.3940777-1-anjelique.melendez@oss.qualcomm.com>
- <20250320202408.3940777-2-anjelique.melendez@oss.qualcomm.com>
+ <20250320202408.3940777-4-anjelique.melendez@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,115 +96,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250320202408.3940777-2-anjelique.melendez@oss.qualcomm.com>
+In-Reply-To: <20250320202408.3940777-4-anjelique.melendez@oss.qualcomm.com>
 
-On Thu, Mar 20, 2025 at 01:24:04PM -0700, Anjelique Melendez wrote:
-> From: David Collins <david.collins@oss.qualcomm.com>
+On Thu, Mar 20, 2025 at 01:24:06PM -0700, Anjelique Melendez wrote:
+> In preparation to support newer temp alarm subtypes, add the "ops" and
+> "configure_trip_temps" references to spmi_temp_alarm_data. This will
+> allow for each Temp Alarm subtype to define its own
+> thermal_zone_device_ops and properly configure thermal trip temperature.
 > 
-> Certain TEMP_ALARM GEN2 PMIC peripherals need over-temperature
-> stage 2 automatic PMIC partial shutdown to be enabled in order to
-> avoid repeated faults in the event of reaching over-temperature
-> stage 3.  Modify the stage 2 shutdown control logic to ensure that
-> stage 2 shutdown is enabled on all affected PMICs.  Read the
-> digital major and minor revision registers to identify these
-> PMICs.
-> 
-> Signed-off-by: David Collins <david.collins@oss.qualcomm.com>
 > Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
 > ---
->  drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 32 +++++++++++++++++++--
->  1 file changed, 30 insertions(+), 2 deletions(-)
+>  drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 38 ++++++++++++++-------
+>  1 file changed, 26 insertions(+), 12 deletions(-)
 > 
 > diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> index c2d59cbfaea9..b2077ff9fe73 100644
+> index 1cc9369ca9e1..514772e94a28 100644
 > --- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
 > +++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> @@ -1,6 +1,7 @@
+> @@ -1,7 +1,7 @@
 >  // SPDX-License-Identifier: GPL-2.0-only
 >  /*
 >   * Copyright (c) 2011-2015, 2017, 2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> - * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2024-2025, Qualcomm Innovation Center, Inc. All rights reserved.
 >   */
 >  
->  #include <linux/bitops.h>
-> @@ -16,6 +17,7 @@
+>  #include <linux/bitfield.h>
+> @@ -71,8 +71,10 @@ static const long temp_map_gen2_v1[THRESH_COUNT][STAGE_COUNT] = {
+>  struct qpnp_tm_chip;
 >  
->  #include "../thermal_hwmon.h"
+>  struct spmi_temp_alarm_data {
+> +	const struct thermal_zone_device_ops *ops;
+>  	const long (*temp_map)[THRESH_COUNT][STAGE_COUNT];
+>  	int (*get_temp_stage)(struct qpnp_tm_chip *chip);
+> +	int (*configure_trip_temps)(struct qpnp_tm_chip *chip);
+>  };
 >  
-> +#define QPNP_TM_REG_DIG_MINOR		0x00
->  #define QPNP_TM_REG_DIG_MAJOR		0x01
->  #define QPNP_TM_REG_TYPE		0x04
->  #define QPNP_TM_REG_SUBTYPE		0x05
-> @@ -71,6 +73,7 @@ struct qpnp_tm_chip {
->  	struct device			*dev;
->  	struct thermal_zone_device	*tz_dev;
->  	unsigned int			subtype;
-> +	unsigned int			dig_revision;
->  	long				temp;
->  	unsigned int			thresh;
->  	unsigned int			stage;
-> @@ -78,6 +81,7 @@ struct qpnp_tm_chip {
->  	/* protects .thresh, .stage and chip registers */
->  	struct mutex			lock;
->  	bool				initialized;
-> +	bool				require_s2_shutdown;
+>  struct qpnp_tm_chip {
+> @@ -312,18 +314,39 @@ static irqreturn_t qpnp_tm_isr(int irq, void *data)
+>  	return IRQ_HANDLED;
+>  }
 >  
->  	struct iio_channel		*adc;
->  	const long			(*temp_map)[THRESH_COUNT][STAGE_COUNT];
-> @@ -255,7 +259,7 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
+> +static int qpnp_tm_configure_trip_temp(struct qpnp_tm_chip *chip)
+> +{
+> +	int crit_temp, ret;
+> +
+> +	mutex_unlock(&chip->lock);
+> +
+> +	ret = thermal_zone_get_crit_temp(chip->tz_dev, &crit_temp);
+> +	if (ret)
+> +		crit_temp = THERMAL_TEMP_INVALID;
+> +
+> +	mutex_lock(&chip->lock);
+> +
+> +	return qpnp_tm_update_critical_trip_temp(chip, crit_temp);
+> +}
+
+The qpnp_tm_configure_trip_temp() is called with the lock held which is really
+unusual to have this assymetry when dealing with the locks.
+
+In the other side, this code assume it is ok the userspace can change the
+critical temperature of the board. Is it really a good idea ?
+
+>  static const struct spmi_temp_alarm_data spmi_temp_alarm_data = {
+> +	.ops = &qpnp_tm_sensor_ops,
+>  	.temp_map = &temp_map_gen1,
+> +	.configure_trip_temps = qpnp_tm_configure_trip_temp,
+>  	.get_temp_stage = qpnp_tm_gen1_get_temp_stage,
+>  };
 >  
->  skip:
->  	reg |= chip->thresh;
-> -	if (disable_s2_shutdown)
-> +	if (disable_s2_shutdown && !chip->require_s2_shutdown)
->  		reg |= SHUTDOWN_CTRL1_OVERRIDE_S2;
+>  static const struct spmi_temp_alarm_data spmi_temp_alarm_gen2_data = {
+> +	.ops = &qpnp_tm_sensor_ops,
+>  	.temp_map = &temp_map_gen1,
+> +	.configure_trip_temps = qpnp_tm_configure_trip_temp,
+>  	.get_temp_stage = qpnp_tm_gen2_get_temp_stage,
+>  };
 >  
->  	return qpnp_tm_write(chip, QPNP_TM_REG_SHUTDOWN_CTRL1, reg);
-> @@ -350,7 +354,7 @@ static int qpnp_tm_probe(struct platform_device *pdev)
+>  static const struct spmi_temp_alarm_data spmi_temp_alarm_gen2_rev1_data = {
+> +	.ops = &qpnp_tm_sensor_ops,
+>  	.temp_map = &temp_map_gen2_v1,
+> +	.configure_trip_temps = qpnp_tm_configure_trip_temp,
+>  	.get_temp_stage = qpnp_tm_gen2_get_temp_stage,
+>  };
+>  
+> @@ -336,7 +359,6 @@ static int qpnp_tm_init(struct qpnp_tm_chip *chip)
 >  {
->  	struct qpnp_tm_chip *chip;
->  	struct device_node *node;
-> -	u8 type, subtype, dig_major;
-> +	u8 type, subtype, dig_major, dig_minor;
->  	u32 res;
->  	int ret, irq;
+>  	int ret;
+>  	u8 reg = 0;
+> -	int crit_temp;
 >  
-> @@ -403,6 +407,30 @@ static int qpnp_tm_probe(struct platform_device *pdev)
->  		return dev_err_probe(&pdev->dev, ret,
->  				     "could not read dig_major\n");
+>  	mutex_lock(&chip->lock);
 >  
-> +	ret = qpnp_tm_read(chip, QPNP_TM_REG_DIG_MINOR, &dig_minor);
-> +	if (ret < 0) {
-> +		dev_err(&pdev->dev, "could not read dig_minor\n");
-> +		return ret;
-> +	}
-> +
-> +	chip->dig_revision = (dig_major << 8) | dig_minor;
-
-I would move this inside the block below.
-
-> +	if (chip->subtype == QPNP_TM_SUBTYPE_GEN2) {
-> +		/*
-> +		 * Check if stage 2 automatic partial shutdown must remain
-> +		 * enabled to avoid potential repeated faults upon reaching
-> +		 * over-temperature stage 3.
-> +		 */
-> +		switch (chip->dig_revision) {
-> +		case 0x0001:
-> +		case 0x0002:
-> +		case 0x0100:
-> +		case 0x0101:
-> +			chip->require_s2_shutdown = true;
-> +			break;
-> +		}
-> +	}
-
-And move this block after the test below
-
-> +
->  	if (type != QPNP_TM_TYPE || (subtype != QPNP_TM_SUBTYPE_GEN1
->  				     && subtype != QPNP_TM_SUBTYPE_GEN2)) {
->  		dev_err(&pdev->dev, "invalid type 0x%02x or subtype 0x%02x\n",
+> @@ -355,15 +377,7 @@ static int qpnp_tm_init(struct qpnp_tm_chip *chip)
+>  	if (chip->stage)
+>  		chip->temp = qpnp_tm_decode_temp(chip, chip->stage);
+>  
+> -	mutex_unlock(&chip->lock);
+> -
+> -	ret = thermal_zone_get_crit_temp(chip->tz_dev, &crit_temp);
+> -	if (ret)
+> -		crit_temp = THERMAL_TEMP_INVALID;
+> -
+> -	mutex_lock(&chip->lock);
+> -
+> -	ret = qpnp_tm_update_critical_trip_temp(chip, crit_temp);
+> +	ret = chip->data->configure_trip_temps(chip);
+>  	if (ret < 0)
+>  		goto out;
+>  
+> @@ -483,7 +497,7 @@ static int qpnp_tm_probe(struct platform_device *pdev)
+>  	 * before the hardware initialization is completed.
+>  	 */
+>  	chip->tz_dev = devm_thermal_of_zone_register(
+> -		&pdev->dev, 0, chip, &qpnp_tm_sensor_ops);
+> +		&pdev->dev, 0, chip, chip->data->ops);
+>  	if (IS_ERR(chip->tz_dev))
+>  		return dev_err_probe(&pdev->dev, PTR_ERR(chip->tz_dev),
+>  				     "failed to register sensor\n");
 > -- 
 > 2.34.1
 > 
