@@ -1,87 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-54788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0043A941D3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Apr 2025 07:44:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 31C59A94202
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Apr 2025 08:55:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D8DB8E1C23
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Apr 2025 05:43:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 537448E0272
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Apr 2025 06:54:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3123415CD74;
-	Sat, 19 Apr 2025 05:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EC4B193077;
+	Sat, 19 Apr 2025 06:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B3tfcXbF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CjYh+aDd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856A719066D
-	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Apr 2025 05:43:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E991D1547F5
+	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Apr 2025 06:55:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745041415; cv=none; b=TKj0uHeZXUeUVZ56i9CqRp5ePSoILOpchBqXowYkbT9nhlaWb5jxsW+MdmTDatdFf1vbPLQeY7YD5v5rE5YgNgzrZ5zuU/hByueWe7z3ddCfXHIsyLgbvnowuWvDm5AJlQ/PC0PBrTqzg3CltsQGYXYbxZ2Q/9NaecXPThXYPUY=
+	t=1745045705; cv=none; b=lpEKk6XzJRvH/gyPv44qnfwdqSw/AuDNmlCWKb9UA3MS57eMyIv8OBs+aT5uEqRSTx07ddGV8V8gFEf/cbiuaYTYtSLYXvRnTfAZ8mxz5LvY9C3keaomJHQY49I+l0Lid7pxQqKygzr2JOnToZZdHqQNiDLNPwitCXewWtzPkcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745041415; c=relaxed/simple;
-	bh=l+iLQRs3Sd9q7CUv85IAG9PJ5au9ED/F26dF58ymUtk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hFXAaPnD2UvEQmYXqOdIyUEwVyfyBTYfngMKzM6B8uTEzloPlNsaJNrp+AmVIbcZdDFVIA5uAjn2DnyklkJW+1Gz6ZNjpQS75J5futqS2gHMlJTH9IBWE5+OPS8CBstJwMXayvN5OLOUXSS5MMd5/8S5UXCXkdHke0GJQEMFKr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B3tfcXbF; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53J4etCt020836
-	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Apr 2025 05:43:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	HBnyWza8rS1v7HrmjjSzQ1pFiEcjxC/rJnoS7wzUeqY=; b=B3tfcXbF88TMtoNU
-	OyzIzxLDCHBGM/Kc9nQOwItkQ6M/XoT2DGsLx6TmsLZzevrG4LHEN7HDVJYiMi2+
-	Ld0jCnpyf3yLbfGVrpavWUCVs0QVxvf6XTyumJXgJ/SvyBcMT7GluJa9llc7qSuY
-	agvY65shLDtBkKM4s60FZg+NO1eQSqJLI1dcyv+NRNxZtjfeFVyRaH+WSljjH5Tq
-	1jn4gvtQA3XuL42w3Nqyzw+hJXrL03N/wDGdS0I8CDe4UwaDaaBChX01DHgKkWTz
-	fayzgJB6fsnkTfIBWhtFzLdH/2rgqImvwj4ASmP3ERi6rRhJwW2pwfTQl1YJMB1s
-	sht2bQ==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46450p820y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Apr 2025 05:43:32 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-2ff53a4754aso3400438a91.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 22:43:32 -0700 (PDT)
+	s=arc-20240116; t=1745045705; c=relaxed/simple;
+	bh=7V8yw5J+1i1mhYMW7TfQ/SiJZ+3ro2qr9nOVTet9OK8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ZNWm9y4UOiPkhrhb5IQwNhRW28F3MuMPd7XY73c7Mr52WXmUvsUhhzgkqpb2RCJ8EewXsVBzz0leBCkrAcgvJkp/xK+bn05eJwekTUK4XarZAZ6j7AzdCG+8FxCbuPQ4ZxmPUgBRkVGu8z+Agh4o4gfLVZOsVYr7w7LnPq8/Ebg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CjYh+aDd; arc=none smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-af59c920d32so1698366a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 23:55:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1745045703; x=1745650503; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TICD64AIOfQs/ZYDCIR8qIZ9IkU5scdShX781+egCtQ=;
+        b=CjYh+aDdsGaFzFCww/y1+WE/ILdbPlvJIS4u2LADV5HY5o+/yePU7RAFGHDe13afQh
+         tVOYTE7fVZPkhuP/tpJ3JPAfDNOyfqw0XvvcoVx9bNx4pFTJM7b6m+5SJN/G75NXLf+r
+         qOazSH9n1UMrg4brq7ugh/BCbI5SuFpPw58N2tXt6a+Sd9nxM1/fq9s+3S57X9CO7TqJ
+         ovu0DcEMQXqsOjur2i8yilgdfk+3N/TTxA1jt1/Mwr5pUmSanLFOGNBOSPLdq72LXcS9
+         SdZPlr1kLCq47CpzYPJXg2uV4TGsotzdVStTxMlbGVY4FdggR+C/feORJ207YYUCCy/t
+         lQpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745041412; x=1745646212;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1745045703; x=1745650503;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HBnyWza8rS1v7HrmjjSzQ1pFiEcjxC/rJnoS7wzUeqY=;
-        b=AMqJ+foDuAv0D1tI1ZT6/BMVfX9Yhc7aNWp1Qlmyqc/2FPb9d6d6IjyTOgfdlurB87
-         tywX3E5k75aXmpdyUWXwPRYQQMbuQY9YJdhU6heaHiKZw8NVLOEnXH/v9q3uue48Sh+0
-         WSMnoDZ4kqXiIVaK+3wvpVXKNv2/UirMKiwEdPYqTOS4GgnnFCQ1XKhSAMPFLa1bN4GE
-         FJV6ynGw7AAF2aGW/cmUEFvSiQ5TcuDpLmcXspPWMTFM+o9fRIU6p1lj7fdo+D6Hb1YT
-         HyLX+ur3+GWsWJJBRgbCcMHnpssnQ1vvRmGymeneGFb7yYR0Qsg/MmeNtO/1op7417xx
-         N0Rw==
-X-Gm-Message-State: AOJu0YzC5us7y8W7y/eCuN3wAABfn0dONrc/sSo6HVNPmB+4pLa13UTI
-	plgvWxQV/9e6hmJKjb9J1tJf/yz/nxA5a1VMaGibHWScjIrSPKoR2uwI18IpCprBJ04edL+1uWX
-	Or29j20+O9wcApEwxzahSXPkbNBosuIon8imDV2PPiTUSz/Y2jbo+2ALI9gFfgm0N
-X-Gm-Gg: ASbGnctXz4tPsjMZy2eTEcJR/JYf2PpMKqQXXoIwQOYQqpe4H5U4Vv1fog9ZX6krZfO
-	M4P38YwsJM9967qLnNNaTvez+N5xsM8sjgmNt9BACZ8hUqoHFp483rYOY4UwaJhJjTSiwcM0LoT
-	0rRhg6fXxeKGHNbMc6+T28vNSsbYnOjNTJ4yUvu/K+Ijw8CfzR/bIC3X5e8vNfe+mMQYSUQo9CS
-	F3YNgpc4StFqzubGXdV/yax5Coo1qmdU1dbOHBPkSGQlmOougCF2dpdIpqjd6Rgm2dq2H1CH2IC
-	gnfwbzqTyg0OiDhvlFKDWQ4PFGxZSSxyjEKxtOpdEjQyykY=
-X-Received: by 2002:a17:903:32d1:b0:224:fa0:36da with SMTP id d9443c01a7336-22c5358321dmr58141445ad.18.1745041411763;
-        Fri, 18 Apr 2025 22:43:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGzWEAMRvo6PUazfjfHTnWx8uUrubDqpzpgGItMl2BoJHPEaH7gA3csflj14Pu/DY/NJrWd/w==
-X-Received: by 2002:a17:903:32d1:b0:224:fa0:36da with SMTP id d9443c01a7336-22c5358321dmr58141215ad.18.1745041411390;
-        Fri, 18 Apr 2025 22:43:31 -0700 (PDT)
-Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22c50eceb37sm26014945ad.179.2025.04.18.22.43.27
+        bh=TICD64AIOfQs/ZYDCIR8qIZ9IkU5scdShX781+egCtQ=;
+        b=TBCGCXLK7rbALfeeAyIsMUMiQZJVrb9oRPtc6mORjJ9sLOVh54s8HB8NlscC2jYmtk
+         3CCZY39x8MCGwJpb7v37JVox4EKq3yVDAcr3Ha74VTKS0Lr/YdCrasg9aiT0/1CxxJlc
+         3xuRFyt9ZFmSTHmubz0OUh1vCIVzgyGj8PUmPXD5Fl6J+zCHEiHIdv7+DmOeXFvGVXPX
+         Nl9F2m37bLgk/PscJICLnAwXNJFvMiqjW4hNTRWDNj4pSS0qTnaq9I375nBoHKsUDC3g
+         BLPMUh+smz/J1emnmReQuupb7G5+q7V6fpqw9rOsD2D2vakluqCOU/QpBDEGQrQnf0Rv
+         xaCg==
+X-Forwarded-Encrypted: i=1; AJvYcCV8V/pgTngi45U2Mqf3VB5GpfO8RsFU/aW+/b8cjPmiL3GflZx/smJrKxBXbAoZlqY0FzeKnYI7dhTojJLj@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSmhlah+lodPkYku2oXu26b2+7iXMhQ4eHoiU03S2dBzfzlJrU
+	GOAeKzNxIrFztale7pMpYs+ecx1Y1npcELa/Ap80jKrmEY0FEtnaNcxzpnYKEQ==
+X-Gm-Gg: ASbGncsR97kWBIC+fXQya9nnGv7nl2nJn5XHKfkVPID5RpUmrLpyn4aLJZosjQZHK/7
+	EhjMk31PBQaLPOi63dAa0ivRVD2Z8kctGqSPjD0doDcyXsRzbDLWUcZGRqCIPQQzMXKQBM0QS6n
+	Q1UOyX8QUjmDJo1s3Fbp8sAKEIshTgR8aIlleuzjFHncsHUqZ0Tdt4Somgcf7OEwlHHPIR+LGj9
+	IzQsVBu0Td+m8bng534RXLEx+JKJPwXwEQLvzAP1/g3yny2uENYWAlYwvGo3QMhM0aGW9xOP1Q9
+	ZnGBi8BFjOSs08WFXAmbffYs4Qn7mvxczQ6YNvQJR2uNHd0Xo8AQIA==
+X-Google-Smtp-Source: AGHT+IEF+s5cUaANZHoNtJTxHRWI2o+ROo6OeQ0i0fU+x5mBKy6gzJ99hJDGFllQSCcfHn9Y0iJK4Q==
+X-Received: by 2002:a17:90b:5827:b0:2ee:f076:20f1 with SMTP id 98e67ed59e1d1-3087ba53cd7mr8741809a91.0.1745045703223;
+        Fri, 18 Apr 2025 23:55:03 -0700 (PDT)
+Received: from thinkpad.. ([36.255.17.167])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3087e1149bcsm2380251a91.41.2025.04.18.23.54.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Apr 2025 22:43:31 -0700 (PDT)
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Date: Sat, 19 Apr 2025 11:13:04 +0530
-Subject: [PATCH v2 2/2] PCI: Add support for PCIe wake interrupt
+        Fri, 18 Apr 2025 23:55:02 -0700 (PDT)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	quic_mrana@quicinc.com,
+	quic_vbadigan@quicinc.com,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v9 0/5] PCI: dwc: Add support for configuring lane equalization presets
+Date: Sat, 19 Apr 2025 12:24:49 +0530
+Message-ID: <174504563258.14560.1691218790091373846.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250328-preset_v6-v9-0-22cfa0490518@oss.qualcomm.com>
+References: <20250328-preset_v6-v9-0-22cfa0490518@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,209 +104,38 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250419-wake_irq_support-v2-2-06baed9a87a1@oss.qualcomm.com>
-References: <20250419-wake_irq_support-v2-0-06baed9a87a1@oss.qualcomm.com>
-In-Reply-To: <20250419-wake_irq_support-v2-0-06baed9a87a1@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Bjorn Helgaas <bhelgaas@google.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com,
-        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1745041398; l=5149;
- i=krishna.chundru@oss.qualcomm.com; s=20230907; h=from:subject:message-id;
- bh=l+iLQRs3Sd9q7CUv85IAG9PJ5au9ED/F26dF58ymUtk=;
- b=Y3KF+GIIZYUGLI6u3qqIz8HUKIe4N/LUFLwc4f/nbvf/ewo8/wiGDrihcavfWs4SaYd9VSleO
- s+isiQTAOLfDcGjNQPpie72yhaQFIUqCPiiKgGS72yxjAIgT6hoHMeH
-X-Developer-Key: i=krishna.chundru@oss.qualcomm.com; a=ed25519;
- pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-Authority-Analysis: v=2.4 cv=Hd0UTjE8 c=1 sm=1 tr=0 ts=68033804 cx=c_pps a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=iljMX2kAvVRlE-iODa4A:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-GUID: lLZJSMYnEsPjwMtZnVQHw1rtLFPZ3J43
-X-Proofpoint-ORIG-GUID: lLZJSMYnEsPjwMtZnVQHw1rtLFPZ3J43
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-19_02,2025-04-17_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 mlxscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- adultscore=0 mlxlogscore=999 phishscore=0 clxscore=1015 spamscore=0
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504190043
+Content-Transfer-Encoding: 8bit
 
-PCIe wake interrupt is needed for bringing back PCIe device state
-from D3cold to D0.
 
-Implement new functions, of_pci_setup_wake_irq() and
-of_pci_teardown_wake_irq(), to manage wake interrupts for PCI devices
-using the Device Tree.
+On Fri, 28 Mar 2025 15:58:28 +0530, Krishna Chaitanya Chundru wrote:
+> PCIe equalization presets are predefined settings used to optimize
+> signal integrity by compensating for signal loss and distortion in
+> high-speed data transmission.
+> 
+> As per PCIe spec 6.0.1 revision section 8.3.3.3 & 4.2.4 for data rates
+> of 8.0 GT/s, 16.0 GT/s, 32.0 GT/s, and 64.0 GT/s, there is a way to
+> configure lane equalization presets for each lane to enhance the PCIe
+> link reliability. Each preset value represents a different combination
+> of pre-shoot and de-emphasis values. For each data rate, different
+> registers are defined: for 8.0 GT/s, registers are defined in section
+> 7.7.3.4; for 16.0 GT/s, in section 7.7.5.9, etc. The 8.0 GT/s rate has
+> an extra receiver preset hint, requiring 16 bits per lane, while the
+> remaining data rates use 8 bits per lane.
+> 
+> [...]
 
-From the port bus driver call these functions to enable wake support
-for bridges.
+Applied to controller/qcom, thanks!
 
-Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
----
- drivers/pci/of.c           | 60 ++++++++++++++++++++++++++++++++++++++++++++++
- drivers/pci/pci.h          |  6 +++++
- drivers/pci/pcie/portdrv.c | 12 +++++++++-
- 3 files changed, 77 insertions(+), 1 deletion(-)
+[2/5] PCI: of: Add of_pci_get_equalization_presets() API
+      commit: 2f12e20457a27599b6e1e1b0f08e6175e37c7e05
+[3/5] PCI: dwc: Update pci->num_lanes to maximum supported link width
+      commit: f1eb5da4d28b3788049ef98428b395fbab3478fd
+[4/5] PCI: Add lane equalization register offsets
+      commit: 165d80061e771390da26a29d362ceff96ab75da8
+[5/5] PCI: dwc: Add support for configuring lane equalization presets
+      commit: 3b35b43825f4e906d46519908dfff76a58d58bbb
 
-diff --git a/drivers/pci/of.c b/drivers/pci/of.c
-index ab7a8252bf4137a17971c3eb8ab70ce78ca70969..13623797c88a03dfb9d9079518d87a5e1e68df38 100644
---- a/drivers/pci/of.c
-+++ b/drivers/pci/of.c
-@@ -7,6 +7,7 @@
- #define pr_fmt(fmt)	"PCI: OF: " fmt
- 
- #include <linux/cleanup.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/irqdomain.h>
- #include <linux/kernel.h>
- #include <linux/pci.h>
-@@ -15,6 +16,7 @@
- #include <linux/of_address.h>
- #include <linux/of_pci.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_wakeirq.h>
- #include "pci.h"
- 
- #ifdef CONFIG_PCI
-@@ -966,3 +968,61 @@ u32 of_pci_get_slot_power_limit(struct device_node *node,
- 	return slot_power_limit_mw;
- }
- EXPORT_SYMBOL_GPL(of_pci_get_slot_power_limit);
-+
-+/**
-+ * of_pci_setup_wake_irq - Set up wake interrupt for PCI device
-+ * @pdev: The PCI device structure
-+ *
-+ * This function sets up the wake interrupt for a PCI device by getting the
-+ * corresponding GPIO pin from the device tree, and configuring it as a
-+ * dedicated wake interrupt.
-+ *
-+ * Return: 0 if the wake gpio is not available or successfully parsed else
-+ * errno otherwise.
-+ */
-+int of_pci_setup_wake_irq(struct pci_dev *pdev)
-+{
-+	struct gpio_desc *wake;
-+	struct device_node *dn;
-+	int ret, wake_irq;
-+
-+	dn = pci_device_to_OF_node(pdev);
-+	if (!dn)
-+		return 0;
-+
-+	wake = devm_fwnode_gpiod_get(&pdev->dev, of_fwnode_handle(dn),
-+				     "wake", GPIOD_IN, NULL);
-+	if (IS_ERR(wake)) {
-+		dev_warn(&pdev->dev, "Cannot get wake GPIO\n");
-+		return 0;
-+	}
-+
-+	wake_irq = gpiod_to_irq(wake);
-+	device_init_wakeup(&pdev->dev, true);
-+
-+	ret = dev_pm_set_dedicated_wake_irq(&pdev->dev, wake_irq);
-+	if (ret < 0) {
-+		dev_err(&pdev->dev, "Failed to set wake IRQ: %d\n", ret);
-+		device_init_wakeup(&pdev->dev, false);
-+		return ret;
-+	}
-+	irq_set_irq_type(wake_irq, IRQ_TYPE_EDGE_FALLING);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(of_pci_setup_wake_irq);
-+
-+/**
-+ * of_pci_teardown_wake_irq - Teardown wake interrupt setup for PCI device
-+ *
-+ * @pdev: The PCI device structure
-+ *
-+ * This function tears down the wake interrupt setup for a PCI device,
-+ * clearing the dedicated wake interrupt and disabling device wake-up.
-+ */
-+void of_pci_teardown_wake_irq(struct pci_dev *pdev)
-+{
-+	dev_pm_clear_wake_irq(&pdev->dev);
-+	device_init_wakeup(&pdev->dev, false);
-+}
-+EXPORT_SYMBOL_GPL(of_pci_teardown_wake_irq);
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index b81e99cd4b62a3022c8b07a09f212f6888674487..b2f65289f4156fa1851c2d2f20c4ca948f36258f 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -888,6 +888,9 @@ void pci_release_of_node(struct pci_dev *dev);
- void pci_set_bus_of_node(struct pci_bus *bus);
- void pci_release_bus_of_node(struct pci_bus *bus);
- 
-+int of_pci_setup_wake_irq(struct pci_dev *pdev);
-+void of_pci_teardown_wake_irq(struct pci_dev *pdev);
-+
- int devm_of_pci_bridge_init(struct device *dev, struct pci_host_bridge *bridge);
- bool of_pci_supply_present(struct device_node *np);
- 
-@@ -931,6 +934,9 @@ static inline int devm_of_pci_bridge_init(struct device *dev, struct pci_host_br
- 	return 0;
- }
- 
-+static int of_pci_setup_wake_irq(struct pci_dev *pdev) { return 0; }
-+static void of_pci_teardown_wake_irq(struct pci_dev *pdev) { }
-+
- static inline bool of_pci_supply_present(struct device_node *np)
- {
- 	return false;
-diff --git a/drivers/pci/pcie/portdrv.c b/drivers/pci/pcie/portdrv.c
-index e8318fd5f6ed537a1b236a3a0f054161d5710abd..33220ecf821c348d49782855eb5aa3f2fe5c335e 100644
---- a/drivers/pci/pcie/portdrv.c
-+++ b/drivers/pci/pcie/portdrv.c
-@@ -694,12 +694,18 @@ static int pcie_portdrv_probe(struct pci_dev *dev,
- 	     (type != PCI_EXP_TYPE_RC_EC)))
- 		return -ENODEV;
- 
-+	status = of_pci_setup_wake_irq(dev);
-+	if (status)
-+		return status;
-+
- 	if (type == PCI_EXP_TYPE_RC_EC)
- 		pcie_link_rcec(dev);
- 
- 	status = pcie_port_device_register(dev);
--	if (status)
-+	if (status) {
-+		of_pci_teardown_wake_irq(dev);
- 		return status;
-+	}
- 
- 	pci_save_state(dev);
- 
-@@ -732,6 +738,8 @@ static void pcie_portdrv_remove(struct pci_dev *dev)
- 
- 	pcie_port_device_remove(dev);
- 
-+	of_pci_teardown_wake_irq(dev);
-+
- 	pci_disable_device(dev);
- }
- 
-@@ -744,6 +752,8 @@ static void pcie_portdrv_shutdown(struct pci_dev *dev)
- 	}
- 
- 	pcie_port_device_remove(dev);
-+
-+	of_pci_teardown_wake_irq(dev);
- }
- 
- static pci_ers_result_t pcie_portdrv_error_detected(struct pci_dev *dev,
-
+Best regards,
 -- 
-2.34.1
-
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
