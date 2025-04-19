@@ -1,150 +1,310 @@
-Return-Path: <linux-arm-msm+bounces-54779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A8E2A9405A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Apr 2025 01:41:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C45BA94161
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Apr 2025 05:24:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 71EAB188E170
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Apr 2025 23:41:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE91F189F8CE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Apr 2025 03:24:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 949962550A4;
-	Fri, 18 Apr 2025 23:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39F0E7DA9C;
+	Sat, 19 Apr 2025 03:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mE6nSEC5"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BLqCOI0v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1953C254AFC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 23:41:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749DD6BFC0
+	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Apr 2025 03:24:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745019681; cv=none; b=p8WWny6CLdYsQoxIC19M4R///PK9BoOFEWY3Ple3hQDAO0prbgF5CRuk8GdG+yMl4ZLttTKBhpw9fo0fzqctc4jOAxoh0hZpsYBTaUyfuQTeHXk2F15u4DSXos7dN4AD76j9as08mG5z7w7ru0beiFCii4wE+gP0ayOrduBkeac=
+	t=1745033081; cv=none; b=aCa+yllarLTsaCPGbA2mE7RuD+CxgXGZSEl7TQn9ehjr6C0H5Jtg9pnR3BGSSBzA0Y/Cg/8NgM83eSTVMnN9voZhfMPscigwAfKxGul/cl6FAHS66j/f1MW2939ljZsMX56xC0KyP9r4GtfnD6IiHluoWNyv0syh1zjxgGh1Ug4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745019681; c=relaxed/simple;
-	bh=6C0vozgC31EMiPaikNIk3gz1e5iKRvGvdRxBSvzVylA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=df9lOTKxupZm2S3gvgLESYKfjHkb9Fh8yXJj2wcu2tzeYkr+JlApf4L18IyyBHyL4B80IqbkbD/mLOZCSHgVeCiQuiNjlyS46n5CglsLSob/Ey/e935N9PsdyYAahHW1Chhaw8LiJqJuxRITAXgpbaxXnRsfF7LaJJAPvsVVgL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mE6nSEC5; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1745033081; c=relaxed/simple;
+	bh=OjoyexC/a8B3NPw4OLfb63A5mQlxHOsn31wFhSrjImc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=K8BR3L7pKEieA0gHJnQexBZiQoIfLIF/23ZgliocymCZ19rSV5Gs7IKzY8lkb3XMxz0fryLo2qpsDQoVt3riZEDUztndEjJqJroJwLD695taIXfSJMzGGPLIB47RIlce6qZ+2QMPJI1/5MaDhDXr13PGSjURM7mNhtevoz3TgLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BLqCOI0v; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53IG064l013691
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 23:41:16 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53J2sxjo016488
+	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Apr 2025 03:24:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=QGWkrsI6bbJMRZrZKPu35wIq
-	Uji9PLOWunitcRgxc4M=; b=mE6nSEC5ujtcc8FOu5n1qH0jOhzQscWdH2jBNdcf
-	dBGmsntq4ab3ANwzCQMSw+sJcfj1/Eszp0KMV2XuhNgLtQfspSyTtmL8vnonxxRX
-	qcNQyq71t7PaiXw63ryZzQeCZZph6waGNHHBRacOsgXbxbZG4Vh+f4fA9f3ygl7Q
-	ipDdffRxIZuAaz+ANEG1ED4+lyRvNsZV0pBidyxT5oftz2SAnRjoL4ABb51op8lX
-	qG5GJUa0heBfNELFOdQy6zHIHlA/owE1KqQunjbcZYr7gwZG9mnyOqMBmJFoe58P
-	goKIHEHmMKzJr1J1QuRaNfo1oo9eZF0FNJKPQFqePKp4pg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yfgju18y-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	suKD7mWbPV8Dc98D+W+coKtB4Sr9t1aOwqOO9XwuSNk=; b=BLqCOI0v7+3gQ4Xo
+	zNpVmRWZpXNf7urLEOWpnkAA6wZKqJgWbzP+4DAUT93aNRlhS1hrWS+ctm7+uBjn
+	/3xzbL7A3l37JdZKAtKMouipMMkkDFCZYZgXxMejh1fer0gYhJgjAZoZv6+Jgh4p
+	/zP9hNda6NtuerHmvTgMERG+bt2IaORaPuDePHg6IBbA56w+CsBgXHWTJeLmpH4g
+	BpbbnHxslEyE10lYF8X/yqZZ8r+ZnTDuLzo3BCyGPQFYKHLE8PGeZm6T4Iw44zw8
+	/77BV35ssHHH8WfLhOEbEOsq80mAIU5hazrifK2hUO8jxe19lRJ107Ob+Mek/XmP
+	YBsgJw==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4641hhg55j-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 23:41:16 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c5f876bfe0so361933885a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 16:41:16 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Apr 2025 03:24:38 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-73720b253fcso1935382b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Apr 2025 20:24:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745019676; x=1745624476;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QGWkrsI6bbJMRZrZKPu35wIqUji9PLOWunitcRgxc4M=;
-        b=BvKH8wsC9UJtK/uiLnE48r0iQ8fnvT/NfJyNcmnwzIA3FlgnIVIM0XWFYS5E3uzfXp
-         6OB6PEQv9KUvMV1apO2Z1I13bR4B3QNuyTAjOMkXc5yt7pasHxQ7Vvfz5kK4on0hNNv3
-         +V4jFIhZ/FJFGIfSu2v0LxD5Nmrk+SvxciudpebUvJttsoZHB5sTzxwDbizMHdLEjUX9
-         Xbc0zKp+xXkbs+UAhCnTJfOdFhBIZa7cCIBe+PTRBX6ataJyQUNwhfACe7yMezGQQaxh
-         fefh3YqgDHC6bMuQABs/VAc4SANVlmNHHVkAio5WUMaMnk1pwNPHlCBpKttM1/rXY4VS
-         FlUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXQl5CinGIIAxB5IOY8zPYU7Fz3u+kNPBU7Mqz0Itw027te0AhHPwJeIMbTmt6b/LzngHwCz/JkpXlRllGp@vger.kernel.org
-X-Gm-Message-State: AOJu0YwVGt7JgsOqUa8MJYz3Y80bC4G3YUxHG71DFVF8D4zTDEJFd3/7
-	ZTyl9UcljioTff2ZLv5OVhbyaD2uWi9NYWM2RQakla1xP5opLatrIr8vQpFm7h2s6dsGzUrq70V
-	xni5m+7dP55WJ6XWHuk+WnOiznlXT4TnyJLLcvPkIgcYIMq523Y1gwHRWEbXkWl7C
-X-Gm-Gg: ASbGncvcY1qBeRAWr78ipdW9pnlGOtoq4gXsTqlb0DAnuGbZFZOX/I4nK8oluNgu1p+
-	DQVR6U6LWET0Je+79hQcgckynXkkl4XiLM33LeqClEjqAPsPRRN1x6LeYDTYXaJmQ9A+lnMGcDh
-	1pi06Paus8ktYc88MUH+GkwFjT/er2Xvi3XD0S7ph0AAQ9565/2MkBsYWcRRJAhPwEflVwnMSQ9
-	o+giES1Tg7VcKStLVN5ENNx3VvkelwU7kVukQIMa0OWhi4PCoaXug2FysEOq53fLcrpOa+UOkfK
-	K4SDht1wFcyqQ8E262q44nb5fuoL3YeVP8Pqrdm9/TEE8P+NgE8SJvrYTXKaxWVLUcykKRnZCwU
-	=
-X-Received: by 2002:a05:620a:2887:b0:7c5:5d13:f188 with SMTP id af79cd13be357-7c927fb9062mr570341485a.26.1745019675895;
-        Fri, 18 Apr 2025 16:41:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNEOqCTwH7E7vLdne7Oh6e7Mb+h93X+PhMq8Qo+whymIytCNczG+rD7jrHK6N9QiZxVSL+pA==
-X-Received: by 2002:a05:620a:2887:b0:7c5:5d13:f188 with SMTP id af79cd13be357-7c927fb9062mr570338685a.26.1745019675504;
-        Fri, 18 Apr 2025 16:41:15 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54d6e5cf943sm305840e87.137.2025.04.18.16.41.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Apr 2025 16:41:14 -0700 (PDT)
-Date: Sat, 19 Apr 2025 02:41:12 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Srinivas Kandagatla <srini@kernel.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: qcm6490-fairphone-fp5: Add
- DisplayPort sound support
-Message-ID: <q6eqlq4ltz6nnnqrja3obpv35qjbuqjqqj25ekcl5wgd4yubeq@gw3n6r44g32d>
-References: <20250418-fp5-dp-sound-v2-0-05d65f084b05@fairphone.com>
- <20250418-fp5-dp-sound-v2-5-05d65f084b05@fairphone.com>
+        d=1e100.net; s=20230601; t=1745033077; x=1745637877;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=suKD7mWbPV8Dc98D+W+coKtB4Sr9t1aOwqOO9XwuSNk=;
+        b=LR/ozUPPDYNxrky9ttxXGicPskYtiYSe0lVEKHZLKfet0AWB3y6FtAxcwQtetIUYTW
+         57ceJuiBG9aFNXANgiKqSTEEP3pFRSjLJJwusLw7vTn57Hr5oXv0jpnzSkDtXmfPC0/z
+         xME8tDCKKU9PKy5Xa+rDyvsYaywWQngNNuATnDJsMv138X4kQi0lLCCt7k0IkNMkbw1v
+         ps4RmSYFl5grmmf2RBZwZy2Qq6nVm+mZwhmG3SZ9nFhXfxsrlhTwOacGIH31XYj0hzTO
+         KY80rx8fZ/rdF9kYTPdlkwP+7YwF6mzKhC3+584m3i+kw1HTRu1zC+GY55fP4zcdNE61
+         G1Jw==
+X-Forwarded-Encrypted: i=1; AJvYcCXIC62SwKSIknLX7g43GmDVRUwhUKlw4q8tcr6pOB3Z5aYPTxz8nNbaQTOmTwvtwpMBNEgOQtswKmOKptUp@vger.kernel.org
+X-Gm-Message-State: AOJu0YzL4JgV95CikS6WEGoqHZvxEF2unjiNvbdlpISH4lrcHfhFD9Fs
+	d0Vig2QBIyBTRHUsqdehQqm/rxbIWWuy/IPmB0k2182WwnLxDW0tabS+AGKZBkI2rjk8nBWgH0d
+	JzZ4e9KGTPVWGCXZABKPYy+NbOVQMeZYpEfZeMq8NLiI/7xIh5FlfeYZgUwKcvJYD
+X-Gm-Gg: ASbGncuHWxwAC3YOMGawHyu5I+cbIWY9vKozO26YwfIP3SSYLu9xXWdwX/wtejz4ddp
+	1qKyBCgNO2LU7ed7e7MVXz7KA7vQfpY4mJXLxFFaXXyEStc0HdWRcMKm+yWJqR+P2Kl4Rhxiwyr
+	8IgQkFauniCpBxJu2TQV0IAD4GCNH4mFqpiWWi6Ahj/v3IPHvE90/8AaQu/OSbEerQOHMH9ueBi
+	DxRQkSWb6SOvqTmsWAsk3mAWl35CZjHreQKWyJ2EsKONcc6ppzZOtbH1qnuZGywkmBs62BV5F0k
+	z8EPU7YP3QJ81OJA0ZCE4ZS4KCm3Z2zQSkdhG+Qv9io=
+X-Received: by 2002:a05:6a00:3d02:b0:736:4e0a:7e82 with SMTP id d2e1a72fcca58-73dc1480119mr5697357b3a.10.1745033077232;
+        Fri, 18 Apr 2025 20:24:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHaTLsO8K9DHo37Za0IPN5HYN8SJIK2QtZbWVmGymla/Zh5qrFN4liImOueE+bM2dukZ9s+aQ==
+X-Received: by 2002:a05:6a00:3d02:b0:736:4e0a:7e82 with SMTP id d2e1a72fcca58-73dc1480119mr5697337b3a.10.1745033076682;
+        Fri, 18 Apr 2025 20:24:36 -0700 (PDT)
+Received: from [192.168.29.92] ([49.43.228.124])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73dbf8c0857sm2463609b3a.16.2025.04.18.20.24.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Apr 2025 20:24:36 -0700 (PDT)
+Message-ID: <115bcef9-c35c-6a80-e0a6-c862e6b6f011@oss.qualcomm.com>
+Date: Sat, 19 Apr 2025 08:54:26 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250418-fp5-dp-sound-v2-5-05d65f084b05@fairphone.com>
-X-Proofpoint-GUID: pVFWO-2hzcMs3L6htF_5DHUsT6wJLj2q
-X-Proofpoint-ORIG-GUID: pVFWO-2hzcMs3L6htF_5DHUsT6wJLj2q
-X-Authority-Analysis: v=2.4 cv=Cve/cm4D c=1 sm=1 tr=0 ts=6802e31c cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=6H0WHjuAAAAA:8 a=EUspDBNiAAAA:8 a=CXSf308d6hWwThVqTUoA:9 a=CjuIK1q_8ugA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=Soq9LBFxuPC4vsCAQt-j:22
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v5 8/9] PCI: pwrctrl: Add power control driver for tc9563
+Content-Language: en-US
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        chaitanya chundru <quic_krichai@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, Jingoo Han <jingoohan1@gmail.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicnic.com,
+        amitk@kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, jorge.ramirez@oss.qualcomm.com,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20250418201631.GA82526@bhelgaas>
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+In-Reply-To: <20250418201631.GA82526@bhelgaas>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Fe43xI+6 c=1 sm=1 tr=0 ts=68031776 cx=c_pps a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=M6NtEvFuFW5htA+UmNA0rQ==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=gmMK7q8T0ENcM4QI6agA:9 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-GUID: ygj1UMBiJo7puyiIKu9PErdilUuToreK
+X-Proofpoint-ORIG-GUID: ygj1UMBiJo7puyiIKu9PErdilUuToreK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-18_09,2025-04-17_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- malwarescore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0
- suspectscore=0 impostorscore=0 mlxlogscore=999 mlxscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504180181
+ definitions=2025-04-19_01,2025-04-17_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ bulkscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0 adultscore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504190025
 
-On Fri, Apr 18, 2025 at 03:13:46PM +0200, Luca Weiss wrote:
-> Add the required nodes for sound playback via a connected external
-> display (DisplayPort over USB-C).
-> 
-> In user space just the following route needs to be set (e.g. using
-> ALSA UCM):
-> 
->   amixer -c0 cset name='DISPLAY_PORT_RX Audio Mixer MultiMedia1' 1
-> 
-> Afterwards one can play audio on the MultiMedia1 sound device, e.g.:
-> 
->   aplay -D plughw:0,0 test.wav
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 31 ++++++++++++++++++++++
->  1 file changed, 31 insertions(+)
-> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
--- 
-With best wishes
-Dmitry
+On 4/19/2025 1:46 AM, Bjorn Helgaas wrote:
+> On Sat, Apr 12, 2025 at 07:19:57AM +0530, Krishna Chaitanya Chundru wrote:
+>> TC9563 is a PCIe switch which has one upstream and three downstream
+>> ports. To one of the downstream ports ethernet MAC is connected as endpoint
+>> device. Other two downstream ports are supposed to connect to external
+>> device. One Host can connect to TC9563 by upstream port. TC9563 switch
+>> needs to be configured after powering on and before PCIe link was up.
+> 
+> This is described as a generic driver for TC9563, but the ethernet MAC
+> stuff built into doesn't sound generic.  Maybe this could be clarified
+> here and in the Kconfig help text.
+> 
+The switch has a DSP to which embedded ethernet was connected, I will
+update the text in next patch.
+>> +#define TC9563_GPIO_CONFIG		0x801208
+>> +#define TC9563_RESET_GPIO		0x801210
+> 
+> I guess these are i2c register addresses?
+> 
+yes
+>> +#define TC9563_BUS_CONTROL		0x801014
+> 
+> Unused.
+> 
+I will remove
+>> +#define TC9563_PORT_L0S_DELAY		0x82496c
+>> +#define TC9563_PORT_L1_DELAY		0x824970
+> 
+> I guess these correspond to "L0s Exit Latency" and "L1 Exit Latency"
+> in the PCIe spec?  Can we name them to suggest that?  Where do the
+> values come from?
+> 
+ack
+>> +#define TC9563_EMBEDDED_ETH_DELAY	0x8200d8
+>> +#define TC9563_ETH_L1_DELAY_MASK	GENMASK(27, 18)
+>> +#define TC9563_ETH_L1_DELAY_VALUE(x)	FIELD_PREP(TC9563_ETH_L1_DELAY_MASK, x)
+>> +#define TC9563_ETH_L0S_DELAY_MASK	GENMASK(17, 13)
+>> +#define TC9563_ETH_L0S_DELAY_VALUE(x)	FIELD_PREP(TC9563_ETH_L0S_DELAY_MASK, x)
+> 
+>> +#define TC9563_PWRCTL_MAX_SUPPLY	6
+>> +
+>> +struct tc9563_pwrctrl_ctx {
+>> +	struct regulator_bulk_data supplies[TC9563_PWRCTL_MAX_SUPPLY];
+>> +	struct tc9563_pwrctrl_cfg cfg[TC9563_MAX];
+>> +	struct gpio_desc *reset_gpio;
+>> +	struct i2c_adapter *adapter;
+>> +	struct i2c_client *client;
+>> +	struct pci_pwrctrl pwrctrl;
+>> +};
+> 
+>> +static int tc9563_pwrctrl_i2c_write(struct i2c_client *client,
+>> +				    u32 reg_addr, u32 reg_val)
+>> +{
+>> +	struct i2c_msg msg;
+>> +	u8 msg_buf[7];
+>> +	int ret;
+>> +
+>> +	msg.addr = client->addr;
+>> +	msg.len = 7;
+>> +	msg.flags = 0;
+>> +
+>> +	/* Big Endian for reg addr */
+>> +	put_unaligned_be24(reg_addr, &msg_buf[0]);
+> 
+> Of the 1000+ calls to i2c_transfer(), I only see about 25 uses of
+> put_unaligned_be*() beforehand.  Are most of the other 975 calls
+> broken?  Or maybe they are only used on platforms of known endianness
+> so they don't need it?  Just a question; I have no idea how i2c works.
+> 
+The I2C in the switch expects big endian format for address and this
+requirement is specific to i2c on this switch only. Not every i2c
+devices may have this requirement.
+>> +	/* Little Endian for reg val */
+>> +	put_unaligned_le32(reg_val, &msg_buf[3]);
+>> +
+>> +	msg.buf = msg_buf;
+>> +	ret = i2c_transfer(client->adapter, &msg, 1);
+>> +	return ret == 1 ? 0 : ret;
+>> +}
+> 
+>> +	ret = of_property_read_u8_array(node, "nfts", cfg->nfts, 2);
+>> +	if (ret && ret != -EINVAL)
+>> +		return ret;
+> 
+> Asked elsewhere whether "nfts" is supposed to match the DT "n-fts"
+> property.
+> 
+ack it is a miss from my side, I will fix in next patch.
+Thanks for catching this.
+>> +static int tc9563_pwrctrl_bring_up(struct tc9563_pwrctrl_ctx *ctx)
+>> +{
+>> +	struct tc9563_pwrctrl_cfg *cfg;
+>> +	int ret, i;
+>> +
+>> +	ret = regulator_bulk_enable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
+>> +	if (ret < 0)
+>> +		return dev_err_probe(ctx->pwrctrl.dev, ret, "cannot enable regulators\n");
+>> +
+>> +	gpiod_set_value(ctx->reset_gpio, 0);
+>> +
+>> +	 /* wait for the internal osc frequency to stablise */
+> 
+> s/stablise/stabilize/ (or "stabilise" if you prefer)
+> 
+>> +	usleep_range(10000, 10500);
+> 
+> Where do these values come from?  Can we add a spec citation?
+>
+This is from The tc9653 databook. I will add spec citation in next
+patch.
+
+>> +		ret = tc9563_pwrctrl_set_l0s_l1_entry_delay(ctx, i, false, cfg->l0s_delay);
+>> +		if (ret) {
+>> +			dev_err(ctx->pwrctrl.dev, "Setting L0s entry delay failed\n");
+> 
+> Since these are *entry* delays, maybe they're not related to the "Exit
+> Latencies" from the PCIe spec.  But if they *are* related, can we use
+> the same terms here?
+>
+These are entry delays, not the exit latencies from the Spec.
+
+>> +		ret = tc9563_pwrctrl_set_l0s_l1_entry_delay(ctx, i, true, cfg->l1_delay);
+>> +		if (ret) {
+>> +			dev_err(ctx->pwrctrl.dev, "Setting L1 entry delay failed\n");
+> 
+>> +		ret = tc9563_pwrctrl_set_tx_amplitude(ctx, i, cfg->tx_amp);
+>> +		if (ret) {
+>> +			dev_err(ctx->pwrctrl.dev, "Setting Tx amplitube failed\n");
+> 
+> s/amplitube/amplitude/
+> 
+>> +			goto power_off;
+>> +		}
+>> +
+>> +		ret = tc9563_pwrctrl_set_nfts(ctx, i, cfg->nfts);
+>> +		if (ret) {
+>> +			dev_err(ctx->pwrctrl.dev, "Setting nfts failed\n");
+> 
+> s/nfts/N_FTS/ to match spec usage.
+> 
+>> +static int tc9563_pwrctrl_probe(struct platform_device *pdev)
+>> +{
+> 
+>> ...
+>> +	ctx->supplies[0].supply = "vddc";
+>> +	ctx->supplies[1].supply = "vdd18";
+>> +	ctx->supplies[2].supply = "vdd09";
+>> +	ctx->supplies[3].supply = "vddio1";
+>> +	ctx->supplies[4].supply = "vddio2";
+>> +	ctx->supplies[5].supply = "vddio18";
+> 
+> Seems like this could be made into a const static array, maybe next to
+> TC9563_PWRCTL_MAX_SUPPLY?
+> 
+ack
+>> +	for_each_child_of_node_scoped(pdev->dev.of_node, child) {
+>> +		ret = tc9563_pwrctrl_parse_device_dt(ctx, child, port++);
+>> +		if (ret)
+>> +			break;
+>> +		/* Embedded ethernet device are under DSP3 */
+>> +		if (port == TC9563_DSP3)
+> 
+> Is this ethernet thing integrated into the TC9563?  Seems like the
+> sort of topology thing that would normally be described via DT.
+> 
+The switch has inbuilt integrated ethernet and we described in the DT
+for the same.
+
+- Krishna Chaitanya.
+>> +			for_each_child_of_node_scoped(child, child1) {
+>> +				ret = tc9563_pwrctrl_parse_device_dt(ctx, child1, port++);
+>> +				if (ret)
+>> +					break;
+>> +			}
+>> +	}
+> 
+> Bjorn
 
