@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-54868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19382A9534E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 17:07:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD860A95352
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 17:08:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5011516BDD7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 15:07:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B999D1891910
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 15:08:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47F081D7E42;
-	Mon, 21 Apr 2025 15:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F6A21DE2A8;
+	Mon, 21 Apr 2025 15:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GNeRvD3u"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W3dbrZmg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C78F1D5CF2;
-	Mon, 21 Apr 2025 15:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9BF1DDC04;
+	Mon, 21 Apr 2025 15:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745248054; cv=none; b=GuLTULuXP76bwBmqVpwfgq7NLe+mfrdjfeUfby5zzYMvzfrC9aB1iNBialiaN4E3J1UraMzGDvXXv9QIuMq+dtmMSZnCrr3spm7jC2nA57YL49SgQrY0Gl72cU4s284eAyyDuCKU2p91u6kIdoRtP6JVtpUYccBMJSeEgReywqs=
+	t=1745248056; cv=none; b=pBOLPsTvRiyEayG6uvNBbVKYmmY/hkHW5BJpKm65DmBlI+ERwFPk7rPO5Ey4qhAfXrAP7No64TTPrxCVZSNEhMg6AR7g8moSTbmwWp+87EKW7dTpgb0eWUhRsvAjUeqEzrb0GfudODiUS1v4kjLn7q5OhqAXIMVVCGrjxQY/lXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745248054; c=relaxed/simple;
-	bh=kw64iU4YMwLhqLglY+NTrWxwg2cQIuZ8MS4yYFaqHeQ=;
+	s=arc-20240116; t=1745248056; c=relaxed/simple;
+	bh=0xCh5wqVJ+Pwx9Dj6kk6jwRIQyw4IxE9zWEwRgW0SGw=;
 	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=ABMYfRXRxggvToVzZkwj6RpglKF3rKMmf+5roDNX/8IqH5lyU87xqiXbO+qXJZEnNOeFfz/qfxsnP9k5vhn80VKgC+tgzzNyhzijzM42lSF4KJ/kTmO4gJsH43NctKhc6SC7UpY4dZyhgRAwLwFbEHD6yRmaHLbn85GySlgkuN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GNeRvD3u; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C821AC4CEEA;
-	Mon, 21 Apr 2025 15:07:33 +0000 (UTC)
+	 Message-Id:Subject; b=Lj5Wbd98Adly1Wfm62/tV9u3Slc54xjk/v8n25fcOhq9h7Os/Z+7DSoT1G/T6jKobvsheZdSsWB8KcPui41fjvq2nZzdqv/qtjcqhh2yxe9/MaHS/mHd8vY7rOlgJK+of4983NEk1RKqFbDOMp5K0k6YfpSYAJWOA0MCKlT6g+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W3dbrZmg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB2CC4CEE4;
+	Mon, 21 Apr 2025 15:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745248054;
-	bh=kw64iU4YMwLhqLglY+NTrWxwg2cQIuZ8MS4yYFaqHeQ=;
+	s=k20201202; t=1745248055;
+	bh=0xCh5wqVJ+Pwx9Dj6kk6jwRIQyw4IxE9zWEwRgW0SGw=;
 	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=GNeRvD3u4ATE9GpIi6Q0jAaR2uoIXpToaPo4IH2ocdP+4AhlIUsBgbjqdn7ZnQgj6
-	 VjHsh9qA0wIXWhTrNj0cveKObg5agc/g4GKFGbQgYZguXXPOZmF/VGlsHwWXoNT33X
-	 vrDjrXE5qndoU34TM4Pw1ovM5vpPksk8iRKdqx98pVwdaF+7NwhYVO1H0nWX+302Jk
-	 R/GBdaa1ImCc4t3C/be19fWpj72TyOXWi+puBy0N5o7K9vBNl1rPLDEJMbJLkXQObJ
-	 4mL/nuKUZY4ItsHtfqJl9MCDkvjsJUz+bjkRZ6WuG/QnGIyKehX+V7AfhjwayK9HJ5
-	 vRcZhwz+qDJrA==
-Date: Mon, 21 Apr 2025 10:07:32 -0500
+	b=W3dbrZmgZvdGa42yEBSI6hSjt55QDwL26LNH8cg3NkVSOsUY/ae0r8sEFxdfwHpz1
+	 luXq7JJH21WyiRuoSyqUbz9NNBiFRMO/hsbM8AbASU0ZQfaSvKGtxgEMJghf3RGXki
+	 jIZ7So4QOXrh+uLKKrjzYF2cbFAJd79Gi0QFHXhWIQq52utZS1/xLeLZfT1YnF8OQM
+	 LhoSMhywASKSEa1spU3HcvlTfNjSV30eRopAfef8FpciFEGnnQWOorCNG1skAS/iIp
+	 nEu/D+o+eBWUQQ6ikZzGjgotO/NaZIdlv0V00ONvAxkg666yni2G6eUj0Qwt+NCBYk
+	 5pWIx02FM2naQ==
+Date: Mon, 21 Apr 2025 10:07:34 -0500
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,31 +51,31 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
- linux-arm-msm@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-In-Reply-To: <20250418-topic-sm8x50-upstream-iris-8650-dt-v1-1-80a6ae50bf10@linaro.org>
-References: <20250418-topic-sm8x50-upstream-iris-8650-dt-v1-1-80a6ae50bf10@linaro.org>
-Message-Id: <174524752131.2425678.9933516191586672546.robh@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: add iris DT node
+Cc: ~postmarketos/upstreaming@lists.sr.ht, 
+ Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, 
+ Adam Honse <calcprogrammer1@gmail.com>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, phone-devel@vger.kernel.org
+To: Luca Weiss <luca@lucaweiss.eu>
+In-Reply-To: <20250419-hlte-touchkey-v1-1-9d93c3e2b31f@lucaweiss.eu>
+References: <20250419-hlte-touchkey-v1-1-9d93c3e2b31f@lucaweiss.eu>
+Message-Id: <174524752186.2425711.13225157448230184467.robh@kernel.org>
+Subject: Re: [PATCH] ARM: dts: qcom: msm8974-samsung-hlte: Add touchkey
+ support
 
 
-On Fri, 18 Apr 2025 15:20:35 +0200, Neil Armstrong wrote:
-> Add DT entries for the sm8650 iris decoder.
+On Sat, 19 Apr 2025 11:08:19 +0200, Luca Weiss wrote:
+> From: Adam Honse <calcprogrammer1@gmail.com>
 > 
-> Since the firmware is required to be signed, only enable
-> on Qualcomm development boards where the firmware is
-> available.
+> Add support for the touchkeys on the Samsung Galaxy Note 3 (hlte).
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Adam Honse <calcprogrammer1@gmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/sm8650-hdk.dts |  5 ++
->  arch/arm64/boot/dts/qcom/sm8650-mtp.dts |  5 ++
->  arch/arm64/boot/dts/qcom/sm8650-qrd.dts |  5 ++
->  arch/arm64/boot/dts/qcom/sm8650.dtsi    | 94 +++++++++++++++++++++++++++++++++
->  4 files changed, 109 insertions(+)
+> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+> ---
+>  .../boot/dts/qcom/qcom-msm8974-samsung-hlte.dts    | 45 ++++++++++++++++++++++
+>  1 file changed, 45 insertions(+)
 > 
 
 
@@ -94,18 +94,17 @@ make sure dt-schema is up to date:
 
 
 This patch series was applied (using b4) to base:
- Base: base-commit a7dca088884312d607fff89f2666c670cb7073ac not known, ignoring
- Base: attempting to guess base-commit...
- Base: tags/next-20250417 (exact match)
+ Base: using specified base-commit 8ffd015db85fea3e15a77027fda6c02ced4d2444
 
 If this is not the correct base, please add 'base-commit' tag
 (or use b4 which does this automatically)
 
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250418-topic-sm8x50-upstream-iris-8650-dt-v1-1-80a6ae50bf10@linaro.org:
+New warnings running 'make CHECK_DTBS=y for arch/arm/boot/dts/qcom/' for 20250419-hlte-touchkey-v1-1-9d93c3e2b31f@lucaweiss.eu:
 
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: /soc@0/video-codec@aa00000: failed to match any schema with compatible: ['qcom,sm8650-iris']
-arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: /soc@0/video-codec@aa00000: failed to match any schema with compatible: ['qcom,sm8650-iris']
-arch/arm64/boot/dts/qcom/sm8650-qrd.dtb: /soc@0/video-codec@aa00000: failed to match any schema with compatible: ['qcom,sm8650-iris']
+arch/arm/boot/dts/qcom/qcom-msm8974-samsung-hlte.dtb: i2c-gpio-touchkey (i2c-gpio): $nodename:0: 'i2c-gpio-touchkey' does not match '^i2c(@.+|-[a-z0-9]+)?$'
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-gpio.yaml#
+arch/arm/boot/dts/qcom/qcom-msm8974-samsung-hlte.dtb: i2c-gpio-touchkey (i2c-gpio): Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'touchkey@20' were unexpected)
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-gpio.yaml#
 
 
 
