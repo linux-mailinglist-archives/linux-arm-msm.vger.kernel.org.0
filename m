@@ -1,142 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-54845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96E93A94E89
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 11:22:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 67B5AA94EAE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 11:33:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 78FE11891ACD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 09:22:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D0D61892C19
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 09:33:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43509213230;
-	Mon, 21 Apr 2025 09:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA2781DA62E;
+	Mon, 21 Apr 2025 09:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="QEt53vUz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NsKCMx0E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F2921019C;
-	Mon, 21 Apr 2025 09:22:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464DC19ADA4;
+	Mon, 21 Apr 2025 09:33:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745227330; cv=none; b=qFlIPl3fExW8NWuCQ66ui5p1OSSwr/IuieMstnFS887FWnoeBHvRysL1tSKlbxPTtiRZgz8pb6+hyBOfYXeOvldxnneHm4H9FihnQ4zeY+euK3VO50MLhBOas82TbMHIMNum5jMhnUf6XT1MMLKJFMOXcsACO1bA2/2J93pOR8A=
+	t=1745228009; cv=none; b=X/EoMWAxNy/x2REiBEPk1edG9pKktUTJ5Ls4BPOK25qNqtk/HOmqi4s33BwvzFQQfO55Ptf2AHHR0o4G2AKtLhH45QykPfYYqLp9Tlk5ZIAsx+TfziRCkAUGnTRAhRlerCYGRGVFU/hRLt+1yC9ml/jZg5CQev5VdJol3cvnluU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745227330; c=relaxed/simple;
-	bh=9+q9+ZYkm2253YwEXnz5fx8Lxlx6oh/OBIHDeozyHxc=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=hTqHpbXnRg9LvaUsj7sogD2xKk7lQI9GoGK1zBWABgSZxVTzq+kz8yZl1GFwgMPkTUG+otWy6jraKa1zZT8gK4bDv5DV0faDTZGVW8N1XQG5zwU4gvy2zCjCACQINyUed2nliP7LiSQFm7JAtII0vFqAmo+qA7tPw0K2/dsboA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=QEt53vUz; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from localhost (web.docker-mailserver_default [172.18.0.2])
-	by mail.mainlining.org (Postfix) with ESMTPSA id B9614BBAD2;
-	Mon, 21 Apr 2025 09:22:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1745227325;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9TVwWh/ybLUmoattVNjgJ0THd62L8OQPjQmgm+QFudI=;
-	b=QEt53vUzTY9Xsd5obVxIe7P/xmtPrT3Sl70u60F7eip1QFae7ReZEyjAV2t01yWNWTKsK/
-	CE/d2fiQRjLmoIjHcGl1HbWLZM+a7IwEowf+bDxbtVIECYNo6fhP9V1pSNS/qeahf0M4Yl
-	9L04/aW69s7GJw/F0LJFX255uhjlE3a92r7mEOZvX88A/r+yxcfG1+76f/OmprLJToqdvE
-	yQhDqWe7ZlBeUkfU787fQawkh2x8xUkEZ+NJvw/BZiOvp7pxHDlNP/0JNMdzOWOaC57qQR
-	pehYh+Lpg0icIs8+NOWHQMJsh9i+HUXE0CQDuQppS7qblZFSmrf3twwVLNzlsQ==
+	s=arc-20240116; t=1745228009; c=relaxed/simple;
+	bh=bCswh5FBBRyF2VqJQOKVkSI9+RFrKt7H073L5B8LSVE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lJ4SvWe1JZe7pQ3sZRr7R7LZN1Eb8njM8lv862QNUgxUdDBA8tsWQet1gfx3NY02QLF3W5/CB9Fvv7AiLOqlm47HrUCOV51boqHrjjM5H0PhqEQFFdDpbnqovadqviwec/Ezn4CUFsSQ9X+S72+eOify5YfGUR8GEgLD5FqtwuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NsKCMx0E; arc=none smtp.client-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-301918a4e3bso4334264a91.3;
+        Mon, 21 Apr 2025 02:33:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745228007; x=1745832807; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bCswh5FBBRyF2VqJQOKVkSI9+RFrKt7H073L5B8LSVE=;
+        b=NsKCMx0EDOtwtfBkK/6tHptgElCVixq9fdKDHotuhWK6FfqvX8pNVaJ6delVKzWBcm
+         lEAz4ZhmFE7Ayqg9Zjz7UBpsdJVQiHQ4vpgMXtNXTDNzV0D4Rf/k+PLea/HDxJ7KjQ4q
+         7VJr9as3Tfu+T2262mk/zIEzbFsalAKvdO1qevPKtbCoWPZxKX+Ra8BO94kWRzcNnr/q
+         C7tOmr5UkKmDiJdIJ035alsLnyvsrYDLiR6Pu7RCJk5HEEu0xXkvqSfK7EFjeD+jDiuF
+         t21dznQWunnqsWDPwqiIrXsCpYqzHtzCSQ5Xvl6dqQTo7L8z/VdA4BI16237EWfmratH
+         HSAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745228007; x=1745832807;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bCswh5FBBRyF2VqJQOKVkSI9+RFrKt7H073L5B8LSVE=;
+        b=F3uj/iLY5VZrRq7K1pcpX1xyAI6AjgwpMdGz8pY051EYI7iuXDlNCUzU0d7hbt1LIA
+         RlxxnzDX35+HZUdyJfIVFMZsti1IJN3ziDmt91RmeYq/WqgMOhwV6Rj9dfPCST1iM8wu
+         Xn+OiogcQJPeBtc7DdfKMjx6MuHx6fVmr38mb/ODs1x0JyLHCj4hJst1U+0znu/u+Dn1
+         vhXJPuBjqguVDzzndj8ZIddfsrxSmc/LcS5gauv6UdO5UZOgcefNlhNQap52QYSfp8l1
+         IdIg17kJqdgZrWJgDGxhimEKmHztikNdaDvQlgDvMXD2P4Ats5vWGvIl1Kiqcwibnoct
+         PVkg==
+X-Forwarded-Encrypted: i=1; AJvYcCV++/CVr04WF1IRjdOvn8vOWapNO+DnOyYQwBupoZ0C5MHroHm51aT0Ysu73m2dC5yhWaG/8dXjfQcAsSS7@vger.kernel.org, AJvYcCW7avKsHF7xSx+Nulu9cgsHmy/B3a+5jAewop8IDJRE+GGw+0VcYrySo5/4fvjzWA/6SOK4SJq5fj/B1okZZQ==@vger.kernel.org, AJvYcCWEiUIYkP9Ov54qI6oZYPTi/Q6gow+rfVNv2eOgyLqlRK+pGxrqIpYOL8LFi2XcktNrfkbO+09yL4U7@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWRXAn+BUdRSv3Y+VC/4XROBa7rIWCyJGIVc1YbB9XM6gz5oL3
+	8xfUPsIX32pu6ct7ZpyzufydA5SBHhyqX8hYWoOxEBLc7On23Sp7HTA2Geu6/LIOr0qv8YzS7ni
+	Q7BBOuWSwTf1+YgeD3aTeQVMAOFc=
+X-Gm-Gg: ASbGncuBgVICiAJKuZqZU5DbKXsG3cWlDeTre6QLoVWS2dEbUOxglYaw9c0KEDJJr/q
+	1sq3q6HrGZt70UASLvRibWB3eps4JcvALcVa782Mo5gaH+oKbtQSv4q/nUgIyKnOqM47Sg3jy14
+	asgl8Cl8Ww1GFg+1bJvhvdqP+8vjBcJwK198IhCgI94WHxUSwrr4bTVw==
+X-Google-Smtp-Source: AGHT+IHrv/CfywC3Z3w3v+tLaCUyWoTMwBYk/eQj5k5woE2zOueaVZuMH+tFBRRVB2z8ZWvLPsMmutvF4JK+qBcJAgo=
+X-Received: by 2002:a17:90b:17c9:b0:308:5273:4dfd with SMTP id
+ 98e67ed59e1d1-3087bbc19c7mr12876797a91.26.1745228007374; Mon, 21 Apr 2025
+ 02:33:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 21 Apr 2025 11:22:05 +0200
-From: barnabas.czeman@mainlining.org
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Konrad
- Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <lumag@kernel.org>, Marijn Suijten
- <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, Simona
- Vetter <simona@ffwll.ch>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: msm8953: sort adreno clocks
-In-Reply-To: <nxv2k2ofiao47w7gmqcgfgn57heucs6yp2og3lkzlavjarado7@p5u4663yw3oz>
 References: <20250421-a5xx-schema-v1-0-7d96b889322a@mainlining.org>
- <20250421-a5xx-schema-v1-2-7d96b889322a@mainlining.org>
- <nxv2k2ofiao47w7gmqcgfgn57heucs6yp2og3lkzlavjarado7@p5u4663yw3oz>
-Message-ID: <4688d4d4ecee7078e535bb940b6055b9@mainlining.org>
-X-Sender: barnabas.czeman@mainlining.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
+ <20250421-a5xx-schema-v1-2-7d96b889322a@mainlining.org> <nxv2k2ofiao47w7gmqcgfgn57heucs6yp2og3lkzlavjarado7@p5u4663yw3oz>
+ <4688d4d4ecee7078e535bb940b6055b9@mainlining.org>
+In-Reply-To: <4688d4d4ecee7078e535bb940b6055b9@mainlining.org>
+From: Dmitry Baryshkov <dbaryshkov@gmail.com>
+Date: Mon, 21 Apr 2025 12:33:15 +0300
+X-Gm-Features: ATxdqUGr9nPPKaBUMkNhLDRXQwqcoCYwQ0iMeD2IUAxFlF5xQe-JH9lP3m5xflQ
+Message-ID: <CALT56yOyowxkeu5a7MixkujYh8UmBb8wy-L2y3m5Pp-zEZ6p8Q@mail.gmail.com>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: msm8953: sort adreno clocks
+To: barnabas.czeman@mainlining.org
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2025-04-21 10:16, Dmitry Baryshkov wrote:
-> On Mon, Apr 21, 2025 at 05:09:22AM +0200, Barnabás Czémán wrote:
->> Sort adreno clocks in alphabetical order.
-> 
-> Why? The order of the clocks here matches the order in which they 
-> should
-> be brought up.
-Simple misunderstanding from previous attempts of documenting the 
-alwayson clock.
-By the way i have find out a508/a509/a512 clock bring up order is 
-different from downstream.
-Upstream: iface, rbmmtimer, mem, mem_iface, rbcpr, core
-Downstream: core, iface, rbmmtimer, mem, alt_mem_iface, rbcpr
-https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/LA.UM.7.2.c27-07400-sdm660.0/arch/arm/boot/dts/qcom/sdm630-gpu.dtsi#L85
-https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/LA.UM.7.2.c27-07400-sdm660.0/arch/arm/boot/dts/qcom/sdm660-gpu.dtsi#L87
-Should I fix it?
-> 
->> 
->> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> ---
->>  arch/arm64/boot/dts/qcom/msm8953.dtsi | 16 ++++++++--------
->>  1 file changed, 8 insertions(+), 8 deletions(-)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi 
->> b/arch/arm64/boot/dts/qcom/msm8953.dtsi
->> index 
->> 4793a60fa946195d3220b6c44dec170d443f56db..8a7e80c959fad09f950fe202eba76d3aae01d1ea 
->> 100644
->> --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
->> @@ -1052,18 +1052,18 @@ gpu: gpu@1c00000 {
->>  			reg-names = "kgsl_3d0_reg_memory";
->>  			interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
->> 
->> -			clocks = <&gcc GCC_OXILI_GFX3D_CLK>,
->> +			clocks = <&gcc GCC_BIMC_GPU_CLK>,
->> +				 <&gcc GCC_OXILI_AON_CLK>,
->> +				 <&gcc GCC_OXILI_GFX3D_CLK>,
->>  				 <&gcc GCC_OXILI_AHB_CLK>,
->>  				 <&gcc GCC_BIMC_GFX_CLK>,
->> -				 <&gcc GCC_BIMC_GPU_CLK>,
->> -				 <&gcc GCC_OXILI_TIMER_CLK>,
->> -				 <&gcc GCC_OXILI_AON_CLK>;
->> -			clock-names = "core",
->> +				 <&gcc GCC_OXILI_TIMER_CLK>;
->> +			clock-names = "alt_mem_iface",
->> +				      "alwayson",
->> +				      "core",
->>  				      "iface",
->>  				      "mem_iface",
->> -				      "alt_mem_iface",
->> -				      "rbbmtimer",
->> -				      "alwayson";
->> +				      "rbbmtimer";
->>  			power-domains = <&gcc OXILI_GX_GDSC>;
->> 
->>  			iommus = <&gpu_iommu 0>;
->> 
->> --
->> 2.49.0
->> 
+On Mon, 21 Apr 2025 at 12:22, <barnabas.czeman@mainlining.org> wrote:
+>
+> On 2025-04-21 10:16, Dmitry Baryshkov wrote:
+> > On Mon, Apr 21, 2025 at 05:09:22AM +0200, Barnab=C3=A1s Cz=C3=A9m=C3=A1=
+n wrote:
+> >> Sort adreno clocks in alphabetical order.
+> >
+> > Why? The order of the clocks here matches the order in which they
+> > should
+> > be brought up.
+> Simple misunderstanding from previous attempts of documenting the
+> alwayson clock.
+> By the way i have find out a508/a509/a512 clock bring up order is
+> different from downstream.
+> Upstream: iface, rbmmtimer, mem, mem_iface, rbcpr, core
+> Downstream: core, iface, rbmmtimer, mem, alt_mem_iface, rbcpr
+> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/LA.UM.7.2.c27-074=
+00-sdm660.0/arch/arm/boot/dts/qcom/sdm630-gpu.dtsi#L85
+> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/LA.UM.7.2.c27-074=
+00-sdm660.0/arch/arm/boot/dts/qcom/sdm660-gpu.dtsi#L87
+> Should I fix it?
+
+Good question. I will check the msm-4.4 sources later.
+
+
+--=20
+With best wishes
+Dmitry
 
