@@ -1,162 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-54863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 533DAA952E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 16:37:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E142FA952EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 16:47:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DFCB47A186A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 14:35:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0D213B0051
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 14:47:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 487141C3BE0;
-	Mon, 21 Apr 2025 14:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08122134BD;
+	Mon, 21 Apr 2025 14:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B5wcgbML"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FhOIiwZS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F6F1A3150;
-	Mon, 21 Apr 2025 14:36:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6BA647;
+	Mon, 21 Apr 2025 14:47:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745246203; cv=none; b=bTQ7dDrUOx7TH57H+4kUzuGeexqCSscIrWp8jPY2n704D7q5MQmtQrIH8T039uNV5njGJr1CRet8hBYxpUBboSCaM2PqE4EEUzOdP8rh+cqcJPwd59TSqSwuKqbXkUcPleAstKduJR4EUDnhI0ialrtzwONuJx9c3pKiaJYBkk0=
+	t=1745246844; cv=none; b=f2bdBu+2H+P8tSc9CA2VkIhbA5rKyCf0qMpOp8C9wZq8MRVKnGANL17dJMcHgmxqJpmUz3Wr5GczYRMLelfh9/XPHI9xTSO1/0eVW8cTvyj7rOBZSECY9cHKwTeYethzjmQY0LBkAVHx0PK4zuqMBRVFw9rHy8jnxQceQMOwwFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745246203; c=relaxed/simple;
-	bh=/2K7IVPpkiZRln/JiYfTiki7Tdib7ROz7ZBUlHe3nnc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l+JogfCQl6qR5NByP9WXXMN5wUIrskMpAuNsR539OALAjaK3ohSNg5EQ6QnFHldhlfGTZS2JrjS6lEYRK1HX/XRI+CmTx/01QnsMIdnMbw4rRJQZqxbiolp1WsSziuzhygydMR6e3mbVo7+NW+tV6l2O9GGsI19kPNdkkC3laVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B5wcgbML; arc=none smtp.client-ip=209.85.166.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-3d8fc9dbce4so6393475ab.0;
-        Mon, 21 Apr 2025 07:36:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745246201; x=1745851001; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/2K7IVPpkiZRln/JiYfTiki7Tdib7ROz7ZBUlHe3nnc=;
-        b=B5wcgbMLIxOJLkMrEXRNj2/ZVejvvjIegwX15slJACmi0aGgdfpHWEaM8Ng5NvlyrI
-         Jx9gpizcLwEi5cR1y/xHuAcbkdmfCctTwApdMyRe6WYeuZMFyfLZyXAXT0bc5vtba5Tn
-         swm2reyHYgb8MSl8CWVwMinfVldz42RZq0zbzn7Q808iZNB7KOD7Xp3cin8sQwmaeClV
-         V4ghkD9/ZUkqo09yUpcq8NxWdQf3S3hPOpuHzW8R94iI84/GQajRJe92ZBm49A7WBhTt
-         /BZHGFMxSv7fSqncMpVoM8JLG8qCHYdsV6ABG5vIRYN5pnNUkYvMR4H7tmdEkY+KdW1K
-         C5yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745246201; x=1745851001;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/2K7IVPpkiZRln/JiYfTiki7Tdib7ROz7ZBUlHe3nnc=;
-        b=a6PrlbOSym0OgQ16oiNGOJuNPv3OqaCzlgiw4A7OfauSi28Lcx7f9GmAcJYYVY4o/u
-         2Ug/XSoD5CKTr2MfhbHhIk6m7FhuenRzhSF/y71f76reJwvWsxGBfYesGDBl8ewRfYtG
-         BI3bFJJEjQUFqplU36bCfagC7zkfICYP0xt0NXHNvPAfsIG4JEvpWLAM7PI/Y8fKKx8l
-         5KzZZBikYrqTI/RY36rPjQsWsf8+gDA5lXF4UgTv+VLb35cNxtNNclhrPLbp/XgM22wX
-         PSmcTEBc1B7iH08sbUKUR6sYYe20dpSl5TyZTr4EA/FW3YcqRHQ4gXlvSbOm3BNOJxrs
-         iY/g==
-X-Forwarded-Encrypted: i=1; AJvYcCULY+u8nPWzUMkvI3pwPt/f8vrVQ++6hJLAjfqzyxmt1g3M3oiXpXJHJZVpIwsibs9+WE0aUw20X3mP@vger.kernel.org, AJvYcCUXYGEQHG/6rdf11kIRHBol3SiOFzE2luDckqy8ijgQZjBZXjFrZRECzWXX//lcA9Jbegixs8PhvLjx@vger.kernel.org, AJvYcCVO1xXpluOAACN23J31g5wF5edP+HbZA2IhH1DBa+K6PFXMqqrlIb1NLprrSCAGkzkx86sQ6SGIHHPQz3hwWg==@vger.kernel.org, AJvYcCX+vk4jVEl4poqQ/BKdegISVMX35yw0tWCG67TH0OtBw01wygGoeNNn6IgEczBzUjPTeYU3XJcAymdCRsL7@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7s50+VqSK+yJpIEnpXz3z/KaQnVaFQe4ry2qG1sWEhP77lFQz
-	YueTBU0dN2TNsC11+1dbG0JS0qcqNewGjQz0dMV75W1YjE+5Szf0w66tYu7m7//BpDNHPWjdfgG
-	R+jX+w67XoupgcFumwhIPnE29hes=
-X-Gm-Gg: ASbGncvhv3Thpy9W1zcIHqZO/faQIGmqpKaPKrqNY7evRBZrqDRwYF9JCgTXVliIhzL
-	t5SjVwmJ7XN6HEpi39SWxIOHAlYfJ1rXarqAa7F9YRQ7/WgpJyBwPq8N+Kzzy6D7v39c6rthMBg
-	k0/PPw22FvFARyfz0QHP8DBoGY+cz1jcbIrq++VYcJ+0f4yFlKti/f
-X-Google-Smtp-Source: AGHT+IHzxhf+U9PepZ/IDthCt00hJJp/yp/MeNIIWjESRtsobvwQIbW+O9TvwfEKUN0l8hvXgbPjNieg66LpQnwCv54=
-X-Received: by 2002:a05:6e02:1649:b0:3d1:84ad:165e with SMTP id
- e9e14a558f8ab-3d821ea72f8mr109372935ab.7.1745246200649; Mon, 21 Apr 2025
- 07:36:40 -0700 (PDT)
+	s=arc-20240116; t=1745246844; c=relaxed/simple;
+	bh=GJP+NzoZRbU0xIH+5vo6gpsqentwg0czNwjfZAOG/kg=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=ql6YFPjjVEbhvQlXHeBjQRZCvIl6xJcO2MyR75cUKuwpIzyaRZlS10EC6F13pU/fXeMjLDCUGdetvZdia2d8tJp4zLd98KLM5IYZ1aOBNSUjScVZDC505IH4Rx71bZY4kyvyrXq0l20mvXz5n/YBPonJMV0aA4KX/LReQdA6asw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FhOIiwZS; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53LA0moL011086;
+	Mon, 21 Apr 2025 14:47:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Z7yhPAhQJaMyvHPEF9d6vS
+	0lc/iN28y7qUQsWT4DGro=; b=FhOIiwZSV23aYGTDi1zRA5aTZAiyNIP5juqNGQ
+	DOR0QSOQRRZdEkrOD/Kh5xqukZ06op0NpeK2fOxUHhANfoU/hd6KBrBheEHr4u4T
+	Y6H0fVbZ6HN6TVi53CgZHuOpszJdjn8jec6wzmiUpUSIloDn9rUBFxr/dt2I37Hm
+	aCaW/J++t8s7n6Ts1CBVf3VaP1dT5b32H3yMAq1TQG+xu6JcKdlPns9QefcJ0vcK
+	4ql0FDVdH/5uSg6W/9Xdq08PdPTp+OrzH0tzCDdII4rycXUnutpBowNcGatBuKyb
+	bOAqyqfvpqhk58CYEbBBQRBvcyRmZtt49kP/Tus2r52dsexg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4642u9chky-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 21 Apr 2025 14:47:18 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53LElHUk028085
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 21 Apr 2025 14:47:17 GMT
+Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 21 Apr 2025 07:47:12 -0700
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+Subject: [PATCH v5 0/3] media: qcom: iris: add support for SA8775P
+Date: Mon, 21 Apr 2025 20:16:54 +0530
+Message-ID: <20250421-dtbinding-v5-0-363c1c05bc80@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250120144152.11949-1-johan+linaro@kernel.org> <20250127002026.GA2534668-robh@kernel.org>
-In-Reply-To: <20250127002026.GA2534668-robh@kernel.org>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 21 Apr 2025 07:36:28 -0700
-X-Gm-Features: ATxdqUEWUGd6HHT0L1UvSEXAA_vQSQxLK3W6gP0ue6F-PKOCMrzm5vSh8JiNzhA
-Message-ID: <CAF6AEGsfke=x0p1b2-uNX6DuQfRyEjVbJaxTbVLDT2YvSkGJbg@mail.gmail.com>
-Subject: Re: [PATCH 0/7] arm64: dts: qcom: x1e80100: enable rtc
-To: Rob Herring <robh@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Jonathan Marek <jonathan@marek.ca>, 
-	linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAF5aBmgC/3WOQQrCMBBFryJZG8kkpq2uvIe4SCcTnYWpNhoU6
+ d1NC0JFXL7PvMe8RKKeKYnt4iV6ypy4iwXsciHw5OKRJPvCQittlQEl/a3l6DkeZbPR0AYEC7Q
+ R5f7SU+DH1NofCp843br+OaUzjOunArNKBqmkxUbV3phQO9pd74wccYXdWYydrGeunn+QdXEb3
+ 5Bza6orxF/X/HVNcbWDKiB5C95+u8MwvAFe3rBqHAEAAA==
+X-Change-ID: 20250310-dtbinding-8921bfc151e9
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konradybcio@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@oss.qualcomm.com>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1745246832; l=1452;
+ i=quic_vgarodia@quicinc.com; s=20241104; h=from:subject:message-id;
+ bh=GJP+NzoZRbU0xIH+5vo6gpsqentwg0czNwjfZAOG/kg=;
+ b=MZrJnwkQn6TJ0QamAk0ln8+iJmgm0+d3aY9q1C9mgUf7TPy4Wa6ewbTYzSi/6052rZqM8vv6/
+ RJUAUHhuinVC7spCzm04chx5znCM0S0XO/wVuSCq8kXV5xGyk2g0Jd8
+X-Developer-Key: i=quic_vgarodia@quicinc.com; a=ed25519;
+ pk=LY9Eqp4KiHWxzGNKGHbwRFEJOfRCSzG/rxQNmvZvaKE=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=TYaWtQQh c=1 sm=1 tr=0 ts=68065a76 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=uUO1Guatd2edvWoe2zcA:9
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: -j7GK614oiUGl4tF7WE9YSXUn4fXKslU
+X-Proofpoint-GUID: -j7GK614oiUGl4tF7WE9YSXUn4fXKslU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-21_07,2025-04-21_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 suspectscore=0 adultscore=0 clxscore=1015 priorityscore=1501
+ mlxlogscore=980 mlxscore=0 malwarescore=0 spamscore=0 impostorscore=0
+ phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504210115
 
-On Sun, Jan 26, 2025 at 4:20=E2=80=AFPM Rob Herring <robh@kernel.org> wrote=
-:
->
-> On Mon, Jan 20, 2025 at 03:41:45PM +0100, Johan Hovold wrote:
-> > This series adds support for utilising the UEFI firmware RTC offset to
-> > the Qualcomm PMIC RTC driver and uses that to enable the RTC on all X
-> > Elite machines.
-> >
-> > Included is also a patch to switch the Lenovo ThinkPad X13s over to
-> > using the UEFI offset.
-> >
-> > The RTCs in many Qualcomm devices are effectively broken due to the tim=
-e
-> > registers being read-only. Instead some other non-volatile memory can b=
-e
-> > used to store an offset which a driver can take into account. On Window=
-s
-> > on Arm laptops, the UEFI firmware (and Windows) use a UEFI variable for
-> > storing such an offset.
-> >
-> > When RTC support for the X13s was added two years ago we did not yet
-> > have UEFI variable support for these machines in mainline and there wer=
-e
-> > also some concerns regarding flash wear. [1] As not all Qualcomm
-> > platforms have UEFI firmware anyway, we instead opted to use a PMIC
-> > scratch register for storing the offset. [2]
-> >
-> > On the UEFI machines in question this is however arguable not correct
-> > as it means that the RTC time can differ between the UEFI firmware (and
-> > Windows) and Linux.
-> >
-> > Now that the (reverse engineered) UEFI variable implementation has been
-> > merged and thoroughly tested, let's switch to using that to store the
-> > RTC offset also on Linux. The flash wear concerns can be mitigated by
-> > deferring writes due to clock drift until shutdown.
-> >
-> > Note that this also avoids having to wait for months for Qualcomm to
-> > provide a free PMIC SDAM scratch register for X1E and future platforms,
-> > and specifically allows us to enable the RTC on X1E laptops today.
-> >
-> > Rob had some concerns about adding a DT property for indicating that a
-> > machine uses UEFI for storing the offset and suggested that the driver
-> > should probe for this instead. Unfortunately, this is easier said than
-> > done given that UEFI variable support itself is probed for and may not
-> > be available until after the RTC driver probes.
->
-> This information would be useful in the binding commit...
->
-> Seems like something I would say, but this is v1 and I have no memory of
-> discussing this. I would also say probe ordering is not a DT problem,
-> but sounds like an OS problem. Aren't there other things needing EFI
-> variables earlyish too? Do you really want to have to update the DT to
-> enable this?
+add support for video hardware acceleration on SA8775P platform.
 
-I was debugging why RTC offset was not working properly for me, and
-eventually realized it was exactly this problem (efivars not avail
-when rtc probes).
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+---
+Changes in v5:
+- Fix clock corner and a power domain specifier
+- Link to v4: https://lore.kernel.org/all/20250321-dtbinding-v4-0-6abd4575bff4@quicinc.com
 
-Hacking up rtc-pm8xxx to return -EPROBE_DEFER "fixes" it
+Changes in v4:
+- Fix the order of video node.
+- Link to v3: https://lore.kernel.org/r/20250320-dtbinding-v3-0-2a16fced51d5@quicinc.com
 
-BR,
--R
+Changes in v3:
+- Fix nit review comments.
+- Link to v2: https://lore.kernel.org/r/20250320-dtbinding-v2-0-8d8eaa4e76cc@quicinc.com
 
-> OTOH, it's one property, meh.
->
-> Rob
->
+Changes in v2:
+- Drop 01/04 patch as it was not needed.
+- Introduce sa8775p as fallback compatible to sm8550.
+- Move firmware files to board DT
+- Link to v1: https://lore.kernel.org/r/20250311-dtbinding-v1-0-5c807d33f7ae@quicinc.com
+
+---
+Vikash Garodia (3):
+      dt-bindings: media: qcom,sm8550-iris: document SA8775p IRIS accelerator
+      arm64: dts: qcom: sa8775p: add support for video node
+      arm64: dts: qcom: sa8775p-ride: enable video
+
+ .../bindings/media/qcom,sm8550-iris.yaml           |  7 ++-
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi         |  6 ++
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 71 ++++++++++++++++++++++
+ 3 files changed, 83 insertions(+), 1 deletion(-)
+---
+base-commit: f2151613e040973c868d28c8b00885dfab69eb75
+change-id: 20250310-dtbinding-8921bfc151e9
+
+Best regards,
+-- 
+Vikash Garodia <quic_vgarodia@quicinc.com>
+
 
