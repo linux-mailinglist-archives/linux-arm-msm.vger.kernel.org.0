@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-54855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0734A950DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 14:27:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7434A950FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 14:33:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C112B3A1F52
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 12:27:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D555A16BF8F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 12:33:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2B4C264A77;
-	Mon, 21 Apr 2025 12:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26286264A7C;
+	Mon, 21 Apr 2025 12:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cncwPx8b"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fjRH5zQB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078624C85;
-	Mon, 21 Apr 2025 12:27:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8E413212A;
+	Mon, 21 Apr 2025 12:33:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745238473; cv=none; b=GJhyaNG4wACHrw1zKI+05Ic0wSsiP1lUTVY9j41Pxqf9og9inEbx5tFm56z6q7TBjI517jyJoxM4CEb6BW4NTFE5y7riVJEFN9yacHPoYz6w9xdYuVuGoIp5Gx0M18SFUUxVjv/R8URRH3FtWGqo0MqwQCmLnoxdimbdmH9Jv2E=
+	t=1745238834; cv=none; b=YtGJMgUZ/JgEF8Bz7bDBbxWUdVMocLVbewJl8sSZ8gNMwnYbsAL6niQT/u3qzDTR0YNoLtfgIG9mPA4E+zBHjyq/BAouSwgtbmThnT9pP5NcJR6W1r3d0kjb2hZqWuIARa01ELu+ysIgBs2aPojxSlNDHPJzeZAKlJzDkykg1ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745238473; c=relaxed/simple;
-	bh=Lga4SQ1YKdH047BqCjt4UvsjVVRdjKUATPZCmLak1Yk=;
+	s=arc-20240116; t=1745238834; c=relaxed/simple;
+	bh=w3jVRkUzSU6xT+Vsxh3flhA4WFck7Z0fyeNRc1U9o2I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rYIsmwo8W1eubnjyDRrDycEskN+5BRnX/HVp2O6plQmTf5h25YDyAabR8kAZoiam7qcJ7gJUxJWvnkxurQRf3Lo9PN0i9Yum9J201SGaUShj8XL7znKzyv8kU1LiDGk2cPEQMYWo6RjumYJIMs4XZ5q1tmlopcXA+xKaHKb5fL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cncwPx8b; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=D56oNxkwx3yt3UntkgKX6fP05PbIvRwbRcJPRwdqsLBGjfGxqI3/MgEkLHUeSeaBxExMhJwlVjlN64/eWeId5XPgJkOTvvBhNeXKfrKO5Hn1/MvB0yf3lCEMho4liSPikaYDh5gwUEzhw2uf3mIdCPjPRHPwceVhCFsndsndlwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fjRH5zQB; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53LAWNUZ025412;
-	Mon, 21 Apr 2025 12:27:48 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53LA5WM7005727;
+	Mon, 21 Apr 2025 12:33:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pqZ9U1jRsr96bYu87sJMOtDCiZGC2tEtmMG3JM3z/eU=; b=cncwPx8bLKBz5VSo
-	XOwOObljaUxnhPfJlHzYvcUCDxpR2LIEltgL8+ULZG63RQg3y5hPaW5E/XXSCFxv
-	JkwfoEanV9FuFa8+weAiocizSgKBGupQN0Z2OCBP/N3/r6cylUHNmW6q3jt/BXKU
-	TxzNfHP7tFCTAkULWULFykwqUs0JQy5JQQFiYsz3j7ziEfpUs76n3snB4tgmIUYb
-	wqtgBTG3OK/0ItTs9TXMmzvBg0e/ZB1qy0EPReKrDO+xccQ/UcsAX/4deLO+Peco
-	PxI88vOTjsIg8MXZme/lco/7NjYFJNzRBhACoSxkqyVFVVeNnyd/P76eawlz22Bz
-	yP206A==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4642u9c7cb-1
+	iAStOVR6nXLVjg+Wn12gPmbybLZ9XWQDUMuqXipQ2xA=; b=fjRH5zQBraCfroZ/
+	gmQtH4kaVI5nV5XNWIl8r38/3Uh7JnoqREEeHzRvJoDVbnXyt/mWhEUiZFxIsXtB
+	56Vvx+VgneLPX7qDyRK2b83YW6NieFyhUOsKy65bIuBJqmSExp8sR2cgit2SzEWD
+	cDdltCKSvTul6RXZKSMFKAqee0nUkolb58s7puKeHYR6+KeLbF40u0kox7rDEqYP
+	ZdYO9qflxI4G8pGeIAI3xo8KAq2NKl6J4evgHFo+1SquLScZOTtko0PNT3q1kR1A
+	Kw/ghmUze0YlRNrg75MCUtpqVJ08FJXpNjhRVbgQ7lvWd+bW/cemQHAL78tKlQZb
+	uesGWA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 464426m41m-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Apr 2025 12:27:47 +0000 (GMT)
+	Mon, 21 Apr 2025 12:33:48 +0000 (GMT)
 Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53LCRk97031800
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53LCXlHc024734
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Apr 2025 12:27:46 GMT
+	Mon, 21 Apr 2025 12:33:47 GMT
 Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
  (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 21 Apr
- 2025 05:27:43 -0700
-Message-ID: <fc38532c-06c9-2bc7-cbf9-9554e1f25ce6@quicinc.com>
-Date: Mon, 21 Apr 2025 17:57:40 +0530
+ 2025 05:33:43 -0700
+Message-ID: <71f3e23d-4f47-b047-9d41-9e3818f08849@quicinc.com>
+Date: Mon, 21 Apr 2025 18:03:41 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,8 +66,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
-Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: qcs8300: add support for video
- node
+Subject: Re: [PATCH v2 4/4] media: iris: add qcs8300 platform data
 Content-Language: en-US
 To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         Dikshita Agarwal
@@ -83,127 +82,308 @@ To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
 CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
 References: <20250418-qcs8300_iris-v2-0-1e01385b90e9@quicinc.com>
- <20250418-qcs8300_iris-v2-2-1e01385b90e9@quicinc.com>
- <df97067e-a293-424d-aa19-24a99670a354@linaro.org>
+ <20250418-qcs8300_iris-v2-4-1e01385b90e9@quicinc.com>
+ <59ffb7c7-95b8-47e9-91ab-3c7cd7b3fe02@linaro.org>
 From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <df97067e-a293-424d-aa19-24a99670a354@linaro.org>
+In-Reply-To: <59ffb7c7-95b8-47e9-91ab-3c7cd7b3fe02@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=TYaWtQQh c=1 sm=1 tr=0 ts=680639c4 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=pr9gLcTrLKOj9eJSbYgA:9
- a=nbm2OD6Gl27TcRA3:21 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: ZoipHZbbzAtDevHAf7Iv0oxrzSqEVRfh
-X-Proofpoint-GUID: ZoipHZbbzAtDevHAf7Iv0oxrzSqEVRfh
+X-Proofpoint-ORIG-GUID: zDI7HLxZxuzDNxDuCva5mUHONCBLvRS1
+X-Proofpoint-GUID: zDI7HLxZxuzDNxDuCva5mUHONCBLvRS1
+X-Authority-Analysis: v=2.4 cv=IP8CChvG c=1 sm=1 tr=0 ts=68063b2c cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=W6ytlbDq_6f7t7Mh7GMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-21_06,2025-04-21_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 suspectscore=0 adultscore=0 clxscore=1015 priorityscore=1501
- mlxlogscore=999 mlxscore=0 malwarescore=0 spamscore=0 impostorscore=0
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
+ mlxscore=0 malwarescore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ suspectscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2504210097
 
 
-
-On 4/18/2025 3:57 PM, Bryan O'Donoghue wrote:
+On 4/18/2025 4:05 PM, Bryan O'Donoghue wrote:
 > On 18/04/2025 07:28, Vikash Garodia wrote:
->> Video node enables video on Qualcomm QCS8300 platform.
+>> QCS8300 has a downscaled video core compared to SM8550, while it has
+>> same bindings as that of SM8550. QCS8300.h captures the capabilities for
+>> QCS8300 which is delta from SM8550.
 > 
-> Add the IRIS video-codec node on QCS8300.
-Ok.
+> QCS8300 as a down-scaled .... compared to the SM8550.
+> QSC8300 has the same bindings as SM8550 ?>
+> Actually that makes not a world of sense as I read it.
+> 
+> I'd suggest rewording this commit to just state what the QSC8300 itself can do
+> without assuming the reader has any prior knowledge of the SM8550.
+> 
+> Same comment for the other commits.
+> 
+> Tell us what the QCS8300 is and what it does.
+Given the patch adds the structures which are delta over 8550, it is more
+relevant to compare with 8550 and describe the delta aspects.
 > 
 >> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 >> ---
->>   arch/arm64/boot/dts/qcom/qcs8300.dtsi | 71 +++++++++++++++++++++++++++++++++++
->>   1 file changed, 71 insertions(+)
+>>   .../platform/qcom/iris/iris_platform_common.h      |   1 +
+>>   .../media/platform/qcom/iris/iris_platform_gen2.c  |  57 ++++++++++
+>>   .../platform/qcom/iris/iris_platform_qcs8300.h     | 124 +++++++++++++++++++++
+>>   drivers/media/platform/qcom/iris/iris_probe.c      |   4 +
+>>   4 files changed, 186 insertions(+)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->> b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h
+>> b/drivers/media/platform/qcom/iris/iris_platform_common.h
 >> index
->> 4a057f7c0d9fae0ebd1b3cf3468746b382bc886b..158779434f610b10ea82d2cdae08090a7a4402de 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->> @@ -2929,6 +2929,77 @@ usb_2_dwc3: usb@a400000 {
->>               };
->>           };
->>   +        iris: video-codec@aa00000 {
->> +            compatible = "qcom,qcs8300-iris";
+>> 6bc3a7975b04d612f6c89206eae95dac678695fc..3191a910653ce4bd71de9a0b4465fd583602adf6 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
+>> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+>> @@ -36,6 +36,7 @@ enum pipe_type {
+>>   extern struct iris_platform_data sm8250_data;
+>>   extern struct iris_platform_data sm8550_data;
+>>   extern struct iris_platform_data sm8650_data;
+>> +extern struct iris_platform_data qcs8300_data;
+>>     enum platform_clk_type {
+>>       IRIS_AXI_CLK,
+>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+>> b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+>> index
+>> 5ff82296ee8ea5ad3954bd2254594048adcb8404..723e9f4cef42408168aca22b34ccd0a674a4fd25 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+>> @@ -11,6 +11,7 @@
+>>   #include "iris_vpu_common.h"
+>>     #include "iris_platform_sm8650.h"
+>> +#include "iris_platform_qcs8300.h"
+>>     #define VIDEO_ARCH_LX 1
+>>   @@ -326,3 +327,59 @@ struct iris_platform_data sm8650_data = {
+>>       .dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
+>>       .dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
+>>   };
 >> +
->> +            reg = <0x0 0x0aa00000 0x0 0xf0000>;
->> +            interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+>> +/*
+>> + * Shares most of SM8550 data except:
+>> + * - inst_caps to platform_inst_cap_qcs8300
+>> + * - inst_fw_caps to inst_fw_cap_qcs8300
+>> + */
+>> +struct iris_platform_data qcs8300_data = {
+>> +    .get_instance = iris_hfi_gen2_get_instance,
+>> +    .init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
+>> +    .init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
+>> +    .vpu_ops = &iris_vpu3_ops,
+>> +    .set_preset_registers = iris_set_sm8550_preset_registers,
+>> +    .icc_tbl = sm8550_icc_table,
+>> +    .icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
+>> +    .clk_rst_tbl = sm8550_clk_reset_table,
+>> +    .clk_rst_tbl_size = ARRAY_SIZE(sm8550_clk_reset_table),
+>> +    .bw_tbl_dec = sm8550_bw_table_dec,
+>> +    .bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
+>> +    .pmdomain_tbl = sm8550_pmdomain_table,
+>> +    .pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
+>> +    .opp_pd_tbl = sm8550_opp_pd_table,
+>> +    .opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
+>> +    .clk_tbl = sm8550_clk_table,
+>> +    .clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
+>> +    /* Upper bound of DMA address range */
+>> +    .dma_mask = 0xe0000000 - 1,
+>> +    .fwname = "qcom/vpu/vpu30_p4_s6.mbn",
+>> +    .pas_id = IRIS_PAS_ID,
+>> +    .inst_caps = &platform_inst_cap_qcs8300,
+>> +    .inst_fw_caps = inst_fw_cap_qcs8300,
+>> +    .inst_fw_caps_size = ARRAY_SIZE(inst_fw_cap_qcs8300),
+>> +    .tz_cp_config_data = &tz_cp_config_sm8550,
+>> +    .core_arch = VIDEO_ARCH_LX,
+>> +    .hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
+>> +    .ubwc_config = &ubwc_config_sm8550,
+>> +    .num_vpp_pipe = 2,
+>> +    .max_session_count = 16,
+>> +    .max_core_mbpf = ((4096 * 2176) / 256) * 4,
+>> +    .input_config_params =
+>> +        sm8550_vdec_input_config_params,
+>> +    .input_config_params_size =
+>> +        ARRAY_SIZE(sm8550_vdec_input_config_params),
+>> +    .output_config_params =
+>> +        sm8550_vdec_output_config_params,
+>> +    .output_config_params_size =
+>> +        ARRAY_SIZE(sm8550_vdec_output_config_params),
+>> +    .dec_input_prop = sm8550_vdec_subscribe_input_properties,
+>> +    .dec_input_prop_size = ARRAY_SIZE(sm8550_vdec_subscribe_input_properties),
+>> +    .dec_output_prop = sm8550_vdec_subscribe_output_properties,
+>> +    .dec_output_prop_size = ARRAY_SIZE(sm8550_vdec_subscribe_output_properties),
 >> +
->> +            power-domains = <&videocc VIDEO_CC_MVS0C_GDSC>,
->> +                    <&videocc VIDEO_CC_MVS0_GDSC>,
->> +                    <&rpmhpd RPMHPD_MX>,
->> +                    <&rpmhpd RPMHPD_MMCX>;
->> +            power-domain-names = "venus",
->> +                         "vcodec0",
->> +                         "mxc",
->> +                         "mmcx";
+>> +    .dec_ip_int_buf_tbl = sm8550_dec_ip_int_buf_tbl,
+>> +    .dec_ip_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_ip_int_buf_tbl),
+>> +    .dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
+>> +    .dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
+>> +};
+>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_qcs8300.h
+>> b/drivers/media/platform/qcom/iris/iris_platform_qcs8300.h
+>> new file mode 100644
+>> index
+>> 0000000000000000000000000000000000000000..f82355d72fcffe7e361bd30877cccb83fe9b549f
+>> --- /dev/null
+>> +++ b/drivers/media/platform/qcom/iris/iris_platform_qcs8300.h
+>> @@ -0,0 +1,124 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2022-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
 >> +
->> +            operating-points-v2 = <&iris_opp_table>;
+>> +static struct platform_inst_fw_cap inst_fw_cap_qcs8300[] = {
+>> +    {
+>> +        .cap_id = PROFILE,
+>> +        .min = V4L2_MPEG_VIDEO_H264_PROFILE_BASELINE,
+>> +        .max = V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH,
+>> +        .step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_PROFILE_BASELINE) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_BASELINE) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_PROFILE_MAIN) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_PROFILE_HIGH),
+>> +        .value = V4L2_MPEG_VIDEO_H264_PROFILE_HIGH,
+>> +        .hfi_id = HFI_PROP_PROFILE,
+>> +        .flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
+>> +        .set = iris_set_u32_enum,
+>> +    },
+>> +    {
+>> +        .cap_id = LEVEL,
+>> +        .min = V4L2_MPEG_VIDEO_H264_LEVEL_1_0,
+>> +        .max = V4L2_MPEG_VIDEO_H264_LEVEL_6_2,
+>> +        .step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_0) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1B)  |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_1) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_2) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_3) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_0) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_1) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_2) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_0) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_1) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_2) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_0) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_1) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_2) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_5_0) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_5_1) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_5_2) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_6_0) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_6_1) |
+>> +            BIT(V4L2_MPEG_VIDEO_H264_LEVEL_6_2),
+>> +        .value = V4L2_MPEG_VIDEO_H264_LEVEL_6_1,
+>> +        .hfi_id = HFI_PROP_LEVEL,
+>> +        .flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
+>> +        .set = iris_set_u32_enum,
+>> +    },
+>> +    {
+>> +        .cap_id = INPUT_BUF_HOST_MAX_COUNT,
+>> +        .min = DEFAULT_MAX_HOST_BUF_COUNT,
+>> +        .max = DEFAULT_MAX_HOST_BURST_BUF_COUNT,
+>> +        .step_or_mask = 1,
+>> +        .value = DEFAULT_MAX_HOST_BUF_COUNT,
+>> +        .hfi_id = HFI_PROP_BUFFER_HOST_MAX_COUNT,
+>> +        .flags = CAP_FLAG_INPUT_PORT,
+>> +        .set = iris_set_u32,
+>> +    },
+>> +    {
+>> +        .cap_id = STAGE,
+>> +        .min = STAGE_1,
+>> +        .max = STAGE_2,
+>> +        .step_or_mask = 1,
+>> +        .value = STAGE_2,
+>> +        .hfi_id = HFI_PROP_STAGE,
+>> +        .set = iris_set_stage,
+>> +    },
+>> +    {
+>> +        .cap_id = PIPE,
+>> +        .min = PIPE_1,
+>> +        .max = PIPE_2,
+>> +        .step_or_mask = 1,
+>> +        .value = PIPE_2,
+>> +        .hfi_id = HFI_PROP_PIPE,
+>> +        .set = iris_set_pipe,
+>> +    },
+>> +    {
+>> +        .cap_id = POC,
+>> +        .min = 0,
+>> +        .max = 2,
+>> +        .step_or_mask = 1,
+>> +        .value = 1,
+>> +        .hfi_id = HFI_PROP_PIC_ORDER_CNT_TYPE,
+>> +    },
+>> +    {
+>> +        .cap_id = CODED_FRAMES,
+>> +        .min = CODED_FRAMES_PROGRESSIVE,
+>> +        .max = CODED_FRAMES_PROGRESSIVE,
+>> +        .step_or_mask = 0,
+>> +        .value = CODED_FRAMES_PROGRESSIVE,
+>> +        .hfi_id = HFI_PROP_CODED_FRAMES,
+>> +    },
+>> +    {
+>> +        .cap_id = BIT_DEPTH,
+>> +        .min = BIT_DEPTH_8,
+>> +        .max = BIT_DEPTH_8,
+>> +        .step_or_mask = 1,
+>> +        .value = BIT_DEPTH_8,
+>> +        .hfi_id = HFI_PROP_LUMA_CHROMA_BIT_DEPTH,
+>> +    },
+>> +    {
+>> +        .cap_id = RAP_FRAME,
+>> +        .min = 0,
+>> +        .max = 1,
+>> +        .step_or_mask = 1,
+>> +        .value = 1,
+>> +        .hfi_id = HFI_PROP_DEC_START_FROM_RAP_FRAME,
+>> +        .flags = CAP_FLAG_INPUT_PORT,
+>> +        .set = iris_set_u32,
+>> +    },
+>> +};
 >> +
->> +            clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
->> +                 <&videocc VIDEO_CC_MVS0C_CLK>,
->> +                 <&videocc VIDEO_CC_MVS0_CLK>;
->> +            clock-names = "iface",
->> +                      "core",
->> +                      "vcodec0_core";
->> +
->> +            interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
->> +                     &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
->> +                    <&mmss_noc MASTER_VIDEO_P0 QCOM_ICC_TAG_ALWAYS
->> +                     &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
->> +            interconnect-names = "cpu-cfg",
->> +                         "video-mem";
->> +
->> +            memory-region = <&video_mem>;
->> +
->> +            resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>;
->> +            reset-names = "bus";
->> +
->> +            iommus = <&apps_smmu 0x0880 0x0400>,
->> +                 <&apps_smmu 0x0887 0x0400>;
->> +            dma-coherent;
->> +
->> +            status = "disabled";
->> +
->> +            iris_opp_table: opp-table {
->> +                compatible = "operating-points-v2";
->> +
->> +                opp-366000000 {
->> +                    opp-hz = /bits/ 64 <366000000>;
->> +                    required-opps = <&rpmhpd_opp_svs_l1>,
->> +                            <&rpmhpd_opp_svs_l1>;
->> +                };
->> +
->> +                opp-444000000 {
->> +                    opp-hz = /bits/ 64 <444000000>;
->> +                    required-opps = <&rpmhpd_opp_nom>,
->> +                            <&rpmhpd_opp_nom>;
->> +                };
->> +
->> +                opp-533333334 {
->> +                    opp-hz = /bits/ 64 <533333334>;
->> +                    required-opps = <&rpmhpd_opp_turbo>,
->> +                            <&rpmhpd_opp_turbo>;
->> +                };
->> +
->> +                opp-560000000 {
->> +                    opp-hz = /bits/ 64 <560000000>;
->> +                    required-opps = <&rpmhpd_opp_turbo_l1>,
->> +                            <&rpmhpd_opp_turbo_l1>;
->> +                };
->> +            };
->> +        };
->> +
->>           videocc: clock-controller@abf0000 {
->>               compatible = "qcom,qcs8300-videocc";
->>               reg = <0x0 0x0abf0000 0x0 0x10000>;
+>> +static struct platform_inst_caps platform_inst_cap_qcs8300 = {
+>> +    .min_frame_width = 96,
+>> +    .max_frame_width = 4096,
+>> +    .min_frame_height = 96,
+>> +    .max_frame_height = 4096,
+>> +    .max_mbpf = (4096 * 2176) / 256,
+>> +    .mb_cycles_vpp = 200,
+>> +    .mb_cycles_fw = 326389,
+>> +    .mb_cycles_fw_vpp = 44156,
+>> +    .num_comv = 0,
+>> +};
+>> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c
+>> b/drivers/media/platform/qcom/iris/iris_probe.c
+>> index
+>> 7cd8650fbe9c09598670530103e3d5edf32953e7..e5f1896e55c390e920d206e7fc2c2be283bb39d8 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_probe.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
+>> @@ -349,6 +349,10 @@ static const struct of_device_id iris_dt_match[] = {
+>>           .compatible = "qcom,sm8650-iris",
+>>           .data = &sm8650_data,
+>>       },
+>> +    {
+>> +        .compatible = "qcom,qcs8300-iris",
+>> +        .data = &qcs8300_data,
+>> +    },
+> This is out-of-order, alphanumeric sorting puts qcs8300 before smX.
+ok.
+> 
+>>       { },
+>>   };
+>>   MODULE_DEVICE_TABLE(of, iris_dt_match);
 >>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> 
+> Also the ordering of this patch in the series is a bit odd.
+> 
+> - Compat string
+> - Driver changes
+> - DT updates
+> 
+> Please fix.
+above sugested order looks better.
+
+Regards,
+Vikash
+> 
+> ---
+> bod
 
