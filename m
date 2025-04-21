@@ -1,126 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-54835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C187A94B66
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 05:10:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49226A94BFB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 06:28:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 487893B03BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 03:09:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F0E316FC6D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 04:28:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 875C52586C1;
-	Mon, 21 Apr 2025 03:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 066E6257422;
+	Mon, 21 Apr 2025 04:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="bmmBAkN9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gda07qmI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE54325743C;
-	Mon, 21 Apr 2025 03:09:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6CCD531;
+	Mon, 21 Apr 2025 04:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745204974; cv=none; b=LmepqQdl4stKCpxOLmLMbYB7fKyj9cQisvM18VLgThJiVg5iR3AZfXSbiqU/2J6d5gqYzBtJGjTqrDWheBoppNFumYUVgMvexIN7k0tnl8Kd5laiort8o+FhJ92a80bwvVCDwOodR22jhz9c+2BV8qGzAdtaiPFDbQ7l+9l6UzU=
+	t=1745209709; cv=none; b=I5VCUmc2CXFuXnutg9ivdMzkbfsZCKxfl/6lhN991ejriVI7ftuOHUd0iHQIAvFBGDcuEp+p9cq1jmYLdJuvekNDhkt1X9i5Syyw5ioXXQf7uK57TgEEC8LyeS5r5KlzulqoCGFpRJpWLmk7MhDR6y7LwSf2FuFWiAYdubRZF40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745204974; c=relaxed/simple;
-	bh=fAfyXieDjeLVW7PmrL+oK+9YbBprYzNzlpQ7ltV8A0Q=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hcT7Cw1IIDEFX3BW2Fp8JflyWDQq0ovexjdYcOBrJIWkIZGqpX9kVL94NFg9K+gxvBKKNuEKRsZr9cYrgTFRoGEHSoTJ3y15pE6/FizcIpP0kon0Hqq9Jvo+GQ+jMcfbRY/p56fn1XQS6hALwZ4G033hrTKXCowALNX1WUyAwuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=bmmBAkN9; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from [192.168.183.162] (254C255A.nat.pool.telekom.hu [37.76.37.90])
-	by mail.mainlining.org (Postfix) with ESMTPSA id ADECDBBB03;
-	Mon, 21 Apr 2025 03:09:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1745204970;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=D4erXkx1N6odG+LR0LejQIlj+eK/ZO/Lp1JgPLjIo9Q=;
-	b=bmmBAkN95K4IlrqMxNY9XRjPbRR7+U9XQ1PN253AF6O+qtZ/rJ2zhkfdBuujpGAjswLrk5
-	uc2dsvR+fC5qjaRUWDwvgNhR98xeuuN3dp5sJSBdtuC96w74VTehS4kSC7FgQDnSqexoxc
-	Lq2KADQU1Lm8/0KUCYsQsIjoenI/eeqZnKUJ4twcgFlIPOY1WcBZbbh7Be6Uk0Q4rrWG4W
-	VS7iUEhEU3MtgKez7B5XoZUKtkxnsOjvxTNdLnepRgfOysoen2GwhkSzYHcLUNZQ9GUXvG
-	7BpoFv64ZFzt2luPMYJ1CqSwgyorNPrEQ17kK4ZBdyfSGm02+W02HLmz6T3fnw==
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Mon, 21 Apr 2025 05:09:23 +0200
-Subject: [PATCH 3/3] arm64: dts: qcom: msm8976: sort adreno clocks
+	s=arc-20240116; t=1745209709; c=relaxed/simple;
+	bh=7RTjC413WFNTnsJ+sW8AYTWPri18G27NFZBUWSw+9jY=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=hmByGaEpCKvoCxre3IzL21zh2gTqDqWdlBoej7xGhYKJvUIA0YsZMiJc4eFZpKLd2I89Zi9Sv75IQdFs8sZHVkahy8tbraHEVV309HgV+zp3P08bXxnCdxmnMvuIzFj2Lu5rHnXF9XkqOdbT1bt60FUm2a00ysgKgHy6x0isjT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gda07qmI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC41C4CEEB;
+	Mon, 21 Apr 2025 04:28:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745209709;
+	bh=7RTjC413WFNTnsJ+sW8AYTWPri18G27NFZBUWSw+9jY=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=gda07qmIq4zjbljH2XaqDeIlFaDNEcWJ94MEuYowVNAeWl2WSVru4XnzlYVwIntgT
+	 i6ZPsySZnkqdfF782pC1R5Yl2KnMVu7+9WRXRmzBbMfP6V3i3/FsgFep3TVXz4/rwy
+	 uEp5JRNE7DBD5vK625t9740OVCJnLlsVgaotWh/posQF1UwLJPNrdu5c5DTSHn6FgI
+	 G6+yjEDVqLx6PzadoSvbxRRlPkuex+LeD3lSPMGozrwUC9tcxpkl7UfQMRTEyeW0U9
+	 AzYApueuj4mdi6ndXGQ6Yfx6pdHr1doOT+QHcjkYFUinD4Gfp/qrAf5ZcpMM5yDqDx
+	 oBRR/fO1tq8pg==
+Date: Sun, 20 Apr 2025 23:28:27 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250421-a5xx-schema-v1-3-7d96b889322a@mainlining.org>
-References: <20250421-a5xx-schema-v1-0-7d96b889322a@mainlining.org>
-In-Reply-To: <20250421-a5xx-schema-v1-0-7d96b889322a@mainlining.org>
-To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Rob Clark <robdclark@gmail.com>, Maxime Ripard <mripard@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1745204964; l=1290;
- i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=fAfyXieDjeLVW7PmrL+oK+9YbBprYzNzlpQ7ltV8A0Q=;
- b=k+ltu8PJiKWj7fBFhPfjLb0vyR3IdskK9K/Dotz1CAdug3F4FC1aBBsn6aKX4LIQxplwPNPg5
- 2kURV563nu8CQVvBohjt8M6PWcd+KTqeVtpyZvpvbGipgmfjYTTsLcg
-X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
- pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
+ Simona Vetter <simona@ffwll.ch>, Bjorn Andersson <andersson@kernel.org>, 
+ linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org, 
+ devicetree@vger.kernel.org, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, Konrad Dybcio <konradybcio@kernel.org>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+To: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+In-Reply-To: <20250421-a5xx-schema-v1-1-7d96b889322a@mainlining.org>
+References: <20250421-a5xx-schema-v1-0-7d96b889322a@mainlining.org>
+ <20250421-a5xx-schema-v1-1-7d96b889322a@mainlining.org>
+Message-Id: <174520970724.607579.8539771287232502050.robh@kernel.org>
+Subject: Re: [PATCH 1/3] dt-bindings: display/msm/gpu: Document clocks of
+ Adreno 505/506/510
 
-Sort adreno clocks in alphabetical order.
 
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
----
- arch/arm64/boot/dts/qcom/msm8976.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+On Mon, 21 Apr 2025 05:09:21 +0200, Barnabás Czémán wrote:
+> Adreno 505/506/510 have previously undocumented alwayson clock.
+> Document clocks for them and enforce their order.
+> 
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> ---
+>  .../devicetree/bindings/display/msm/gpu.yaml       | 83 +++++++++++++++++++++-
+>  1 file changed, 82 insertions(+), 1 deletion(-)
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-index e2ac2fd6882fcf47e846a92d45e0fcb9beba633a..86a9d24da0faab2dc7ecc53d60aa0c78703eef91 100644
---- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
-@@ -1129,18 +1129,18 @@ adreno_gpu: gpu@1c00000 {
- 			interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "kgsl_3d0_irq";
- 
--			clocks = <&gcc GCC_GFX3D_OXILI_CLK>,
-+			clocks = <&gcc GCC_GFX3D_OXILI_AON_CLK>,
-+				 <&gcc GCC_GFX3D_OXILI_CLK>,
- 				 <&gcc GCC_GFX3D_OXILI_AHB_CLK>,
- 				 <&gcc GCC_GFX3D_OXILI_GMEM_CLK>,
- 				 <&gcc GCC_GFX3D_BIMC_CLK>,
--				 <&gcc GCC_GFX3D_OXILI_TIMER_CLK>,
--				 <&gcc GCC_GFX3D_OXILI_AON_CLK>;
--			clock-names = "core",
-+				 <&gcc GCC_GFX3D_OXILI_TIMER_CLK>;
-+			clock-names = "alwayson",
-+				      "core",
- 				      "iface",
- 				      "mem",
- 				      "mem_iface",
--				      "rbbmtimer",
--				      "alwayson";
-+				      "rbbmtimer";
- 
- 			power-domains = <&gcc OXILI_GX_GDSC>;
- 
+My bot found errors running 'make dt_binding_check' on your patch:
 
--- 
-2.49.0
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/gpu.yaml: allOf:1:then:properties:clock-names: {'items': [{'const': 'alt_mem_iface', 'description': 'GPU Alternative Memory Interface clock'}, {'const': 'alwayson', 'description': 'GPU Always-On clock'}, {'const': 'core', 'description': 'GPU Core clock'}, {'const': 'iface', 'description': 'GPU Interface clock'}, {'const': 'mem_iface', 'description': 'GPU Memory Interface clock'}, {'const': 'rbbmtimer', 'description': 'GPU RBBM Timer for Adreno 5xx series'}], 'minItems': 6, 'maxItems': 6} should not be valid under {'required': ['maxItems']}
+	hint: "maxItems" is not needed with an "items" list
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/gpu.yaml: allOf:1:then:properties:clock-names: 'oneOf' conditional failed, one must be fixed:
+	[{'const': 'alt_mem_iface', 'description': 'GPU Alternative Memory Interface clock'}, {'const': 'alwayson', 'description': 'GPU Always-On clock'}, {'const': 'core', 'description': 'GPU Core clock'}, {'const': 'iface', 'description': 'GPU Interface clock'}, {'const': 'mem_iface', 'description': 'GPU Memory Interface clock'}, {'const': 'rbbmtimer', 'description': 'GPU RBBM Timer for Adreno 5xx series'}] is too long
+	[{'const': 'alt_mem_iface', 'description': 'GPU Alternative Memory Interface clock'}, {'const': 'alwayson', 'description': 'GPU Always-On clock'}, {'const': 'core', 'description': 'GPU Core clock'}, {'const': 'iface', 'description': 'GPU Interface clock'}, {'const': 'mem_iface', 'description': 'GPU Memory Interface clock'}, {'const': 'rbbmtimer', 'description': 'GPU RBBM Timer for Adreno 5xx series'}] is too short
+	False schema does not allow 6
+	1 was expected
+	6 is greater than the maximum of 2
+	6 is greater than the maximum of 3
+	6 is greater than the maximum of 4
+	6 is greater than the maximum of 5
+	hint: "minItems" is only needed if less than the "items" list length
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/gpu.yaml: allOf:2:then:properties:clock-names: {'items': [{'const': 'alwayson', 'description': 'GPU Always-On clock'}, {'const': 'core', 'description': 'GPU Core clock'}, {'const': 'iface', 'description': 'GPU Interface clock'}, {'const': 'mem', 'description': 'GPU Memory clock'}, {'const': 'mem_iface', 'description': 'GPU Memory Interface clock'}, {'const': 'rbbmtimer', 'description': 'GPU RBBM Timer for Adreno 5xx series'}], 'minItems': 6, 'maxItems': 6} should not be valid under {'required': ['maxItems']}
+	hint: "maxItems" is not needed with an "items" list
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/gpu.yaml: allOf:2:then:properties:clock-names: 'oneOf' conditional failed, one must be fixed:
+	[{'const': 'alwayson', 'description': 'GPU Always-On clock'}, {'const': 'core', 'description': 'GPU Core clock'}, {'const': 'iface', 'description': 'GPU Interface clock'}, {'const': 'mem', 'description': 'GPU Memory clock'}, {'const': 'mem_iface', 'description': 'GPU Memory Interface clock'}, {'const': 'rbbmtimer', 'description': 'GPU RBBM Timer for Adreno 5xx series'}] is too long
+	[{'const': 'alwayson', 'description': 'GPU Always-On clock'}, {'const': 'core', 'description': 'GPU Core clock'}, {'const': 'iface', 'description': 'GPU Interface clock'}, {'const': 'mem', 'description': 'GPU Memory clock'}, {'const': 'mem_iface', 'description': 'GPU Memory Interface clock'}, {'const': 'rbbmtimer', 'description': 'GPU RBBM Timer for Adreno 5xx series'}] is too short
+	False schema does not allow 6
+	1 was expected
+	6 is greater than the maximum of 2
+	6 is greater than the maximum of 3
+	6 is greater than the maximum of 4
+	6 is greater than the maximum of 5
+	hint: "minItems" is only needed if less than the "items" list length
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250421-a5xx-schema-v1-1-7d96b889322a@mainlining.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
 
