@@ -1,251 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-54842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0ED1A94DFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 10:21:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52F9DA94E0D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 10:25:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78A913B32B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 08:21:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7973216FE14
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 08:25:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 585FD1A3BD7;
-	Mon, 21 Apr 2025 08:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D38EA20E01E;
+	Mon, 21 Apr 2025 08:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fF5ZcrPe"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YH1+Q21i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C33B20E022;
-	Mon, 21 Apr 2025 08:21:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32130171D2
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Apr 2025 08:25:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745223684; cv=none; b=m5s1oA0JzaoL8QtkPxhxflpohKsWjogWMQBgy2Of/ell+J0rvaiYlrAHli/d0JIAjhHsIS+7wJG0ZcTSvosvVJVDGgOGAOMft5ydASWUtZzGepOjy0Xr1kS6SEwAkpysTB/OEwQm9DjqDDsiP4F3l0jOq7CPXdP/PULyGuU0oQw=
+	t=1745223946; cv=none; b=K+XY5FT5nNMerdpUiCiBWDXUOHVFtVNtpIq3fWz2CtKQqlBKC5XGFwhr2XNRzmzOUSm641W1Ru5Hf7c+CoyC568nzVaancjbJB0UDKA6txy9rx4w7UyxNtRrrZ+UU1A2JIonzZqc6G2Vl4yKNyYKc5U8ow0kWcg/ZWxLlRdOHBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745223684; c=relaxed/simple;
-	bh=/yKKvnRlcN9NGg4ztsPOr6z3yJB46gnXAwiFHabDibk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=D58TUqjfUpHRpLQp0fFvcowEn36kzwSh3qWD4mNCqy2M3G9G4a5H3XK8UToXpWJWzr1RMzkGWktN1BMDVBkHJbcZVg5JR07jwpZunhGpd4snMlSyj7ftrJW3pc4aHDVVWjxNDs3xdjCTYi3s4cHs/HSP/Eh2M9GCmRQByM/Ul10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fF5ZcrPe; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53KMZ2SV027279;
-	Mon, 21 Apr 2025 08:21:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qNs/J9m39Uidu+QdUO3qS4CL1UPeG+3VJtONZ2Yk+GQ=; b=fF5ZcrPeWXUm238u
-	Kbf1EtVVIPafrIauPBder/XX3QiOwDS1ijMV/z/aneGsJVyCjkPnWcvNgD09thCc
-	7qqzuvt1YUhHGiRJ44hJDTp2h0N82eoaVipmz83p7BvwuyVhiLC2HsY2qpLQwXDB
-	aZKgchnqwxASlo+HyDoFetV5TXcnbyo+XhKcKvjw3vkRf/UT/kslubOamY9lJ3FU
-	kNja+JK8JqQMVMM28Go17vZ+VnctJ1bEieHolKRWSg1VANDnwPUH8/+d4iVAcwca
-	H7x7G6zwnoLWSbO/QnG5PuxxcumcHXo1bwJ0UcOj7p9WWUjY3dQf+4EBa54bVTNj
-	7YJ2ug==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 464426ke0d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Apr 2025 08:21:15 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53L8LEga004237
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Apr 2025 08:21:14 GMT
-Received: from [10.213.62.209] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 21 Apr
- 2025 01:21:11 -0700
-Message-ID: <20e60deb-f1f3-4f96-a454-9cb9d8cc7c1d@quicinc.com>
-Date: Mon, 21 Apr 2025 13:51:09 +0530
+	s=arc-20240116; t=1745223946; c=relaxed/simple;
+	bh=7xJP6Yy/B37Y8apR0mdSnVjJHCFypBW0KXssFokEAmU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=G5IT4m+N2YlbeoS3QQmid8aJWMIVoML35m94gCNBkf3GK+gci1tWLkd0KG6s4tNyiW9KVfZj7KZB/MEONGjKg7mhN+zOLykQssBMRFWmgkSLp4QBj5VVvuiXvxT6LS5D/H+wU1OwJ6dm1G6MfdmZHuENvtaTIergGuHeOBt/1X4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YH1+Q21i; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53KNQI07015515
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Apr 2025 08:25:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=FRb6vmGaZWj66VKHke2gwyzE
+	xYa6h3+rIt/MDpsOeAI=; b=YH1+Q21ixLsZoKOFBaFCve80V8EjcW9WBgn4y8X1
+	CbKmC/skwooMzbudLcoFWR2xDA7v6/fhCvCYPkUa+d7POH29TIrCeNPF6O6dc+Dj
+	SEAdWZXKV2a4+tes+UPcogaQgRrBrE+Ze3rmo3s2g6QgsoWSONjJ6kpdBJWBzR3K
+	zQESnLM38pmIejBjxsDU1UyruF6FI4gRjF+c+l3CbjUJzz2XjNrqPamDiL6ldZpb
+	d1xRgwfEaXroI8sYAevtIDQbD/a1xWyyVsmAnAWmb42VF7pov/oZFN9q2H/B2jat
+	bQJEjy03rJ/SYqQBOJYwGSC7gqjsdN742sDtobFgh3qWPA==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46416qunrm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Apr 2025 08:25:38 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6e916df0d5dso70390986d6.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Apr 2025 01:25:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745223937; x=1745828737;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FRb6vmGaZWj66VKHke2gwyzExYa6h3+rIt/MDpsOeAI=;
+        b=BqCEC9l1LTdGtElsV3fOP3279a5fCJsTQzr7ka/itKqLBHiVqN2ZImvZrH+HY4ntVX
+         wlAvO3q6pxn+gr/TzdM3guRZPiORomW5CKtGj2sqylK9WGe58dUjIQRzmW5NXS9uZTSh
+         EOBe6R0F0GGwLCfeo0u9CfdDvicX88coYcxxvI0+YsdxB919sCJYR3mwllj6IWXSVave
+         dEP8bjSbw8HtDPbGGi+NPqIAqr5IF3ERPz0j76PbuIgjdaPLtTs1jW8IWo82btSC0f6J
+         LpCVn2gOxNjLO0plP1dfQx2qUnYurrV6VPqecRov3qWI+pZ0Kdc4KsNrmrqkwDEFCtaj
+         cwhg==
+X-Forwarded-Encrypted: i=1; AJvYcCXqOfBCgPv2sQRxP8Y7TzT5XX1+Jji9q4IBjkgOoxqzVOJBy/JLos+l5FOoIRTjKRQlej4dgi9NPCfO0R9C@vger.kernel.org
+X-Gm-Message-State: AOJu0YxmwuAU41pXUBmi7ey2E75btU1CK6rnCwnVBhc+XvgskO+veBJv
+	J0gutUPHg0UTOjq8ScdGnnCII3UXIAB4f2ibaCYgHxuxRp1pF9esk45I7ZYNDIgXa0YjmpSo9QK
+	SkbxwCT4KsitQJPE6oRuFU9xMvTyQnfKTTDsPNXlGTT4dkAC3FjypV0RlyipybPoy
+X-Gm-Gg: ASbGncsn1kpkefTUEDIM5TrgVK5agAjazdByXXpDNFAaChVNJccSaa7vyXyT12UYoUg
+	OTmjZ+pTLZDl01Xpp+qSdSWHht75jykxNkMb6f2hfNPgJk/1mupK5WoPe+rOYh/jSvgNlNTKcxn
+	e1qbrv3dhYCWmh//d23hdaNXYc1vnnhcVUsMnurjVVWwNnMA4Me/6XNjUvj+CFly8pu4SngGQa6
+	fZZShpHcInA4i8ufDMjbaowgAYAs1yEWJC/rCNdESO44CqMJWaxMQisO12GCa0SkIaVzRXasUZW
+	NY9vJ1FeivhdfauEFzpHbA/tgUA7j3dD+7zFYnxtpVhphdiIiH/YtTxSS7REbPo2fTA6favaAaQ
+	=
+X-Received: by 2002:ad4:5965:0:b0:6e8:e828:820d with SMTP id 6a1803df08f44-6f2c4655860mr234166416d6.36.1745223937555;
+        Mon, 21 Apr 2025 01:25:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGcwFV65OMdQz9ncrfoufy1rJ3V3naoM3eXJeqCGxfS+6c9u1tp+a8GZ25KDTC2huv5liCQYQ==
+X-Received: by 2002:ad4:5965:0:b0:6e8:e828:820d with SMTP id 6a1803df08f44-6f2c4655860mr234166086d6.36.1745223937199;
+        Mon, 21 Apr 2025 01:25:37 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3109075e91bsm10810151fa.1.2025.04.21.01.25.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Apr 2025 01:25:36 -0700 (PDT)
+Date: Mon, 21 Apr 2025 11:25:34 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Maya Matuszczyk <maccraft123mc@gmail.com>
+Subject: Re: [PATCH v4 5/7] dt-bindings: opp: Add v2-qcom-adreno vendor
+ bindings
+Message-ID: <fvi3cshu253kfxiwreny66g3niff6zjdpv2xwfr3644gbrj4et@ypzjy4naj55f>
+References: <20250109-gpu-acd-v4-0-08a5efaf4a23@quicinc.com>
+ <20250109-gpu-acd-v4-5-08a5efaf4a23@quicinc.com>
+ <0cd538c0-7d1f-44a4-b89d-f285535c0fcb@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 4/4] misc: fastrpc: Add debugfs support for fastrpc
-To: Greg KH <gregkh@linuxfoundation.org>
-CC: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        <dmitry.baryshkov@oss.qualcomm.com>, <srinivas.kandagatla@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
-References: <20241118084046.3201290-5-quic_ekangupt@quicinc.com>
- <2024111804-doze-reflected-0feb@gregkh>
- <c3b285b0-33d1-4bfa-b8ab-6783ff5ed78d@quicinc.com>
- <cn7pqvhw4x4y7s5hbgzjpvyjnw4g6hoyepic4jai7x2fjdenxr@ikr4hkorbuwb>
- <365c4709-b421-4af8-b521-a195630242de@quicinc.com>
- <nsaq3zungvyhuikz35arvxmle2fovxh422jpyqxuleh57ufqnk@bekeh7qr7y76>
- <697e90db-6ecc-44ac-af86-6c7f910fc902@quicinc.com>
- <CAA8EJppbptPryu_O3G3YAapHT=Ai+MAdA38FtSU=YvWb+mqa1g@mail.gmail.com>
- <e1c23027-94c3-4fdf-b842-b154179aa2b8@oss.qualcomm.com>
- <a3addff2-1ee6-45aa-ac2c-693ffe804948@quicinc.com>
- <2025041534-subdivide-upward-1eca@gregkh>
-Content-Language: en-US
-From: Deepika Singh <quic_dsi@quicinc.com>
-In-Reply-To: <2025041534-subdivide-upward-1eca@gregkh>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: qe_ycINY0Qlh5SGUHoh1MmdsZAoWxXCA
-X-Proofpoint-GUID: qe_ycINY0Qlh5SGUHoh1MmdsZAoWxXCA
-X-Authority-Analysis: v=2.4 cv=IP8CChvG c=1 sm=1 tr=0 ts=6805fffb cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=spRR_jhHhYAkHvlMeisA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0cd538c0-7d1f-44a4-b89d-f285535c0fcb@quicinc.com>
+X-Authority-Analysis: v=2.4 cv=N7UpF39B c=1 sm=1 tr=0 ts=68060102 cx=c_pps a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=gEfo2CItAAAA:8 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=COk6AnOGAAAA:8 a=DdzL4o_DZVg8PLORQZwA:9
+ a=CjuIK1q_8ugA:10 a=OIgjcC2v60KrkQgK7BGD:22 a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: ja3b5TI-8mni97999thfCX30y71QfFoz
+X-Proofpoint-ORIG-GUID: ja3b5TI-8mni97999thfCX30y71QfFoz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-21_04,2025-04-21_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
- mlxscore=0 malwarescore=0 clxscore=1015 priorityscore=1501 bulkscore=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ mlxscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
+ mlxlogscore=999 impostorscore=0 bulkscore=0 spamscore=0 malwarescore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504210064
+ definitions=main-2504210065
 
+On Sat, Apr 19, 2025 at 08:03:35PM +0530, Akhil P Oommen wrote:
+> On 1/9/2025 2:10 AM, Akhil P Oommen wrote:
+> > Add a new schema which extends opp-v2 to support a new vendor specific
+> > property required for Adreno GPUs found in Qualcomm's SoCs. The new
+> > property called "qcom,opp-acd-level" carries a u32 value recommended
+> > for each opp needs to be shared to GMU during runtime.
+> > 
+> > Also, update MAINTAINERS file include the new opp-v2-qcom-adreno.yaml.
+> > 
+> > Cc: Rob Clark <robdclark@gmail.com>
+> > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> > ---
+> >  .../bindings/opp/opp-v2-qcom-adreno.yaml           | 97 ++++++++++++++++++++++
+> >  MAINTAINERS                                        |  1 +
+> >  2 files changed, 98 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
+> > new file mode 100644
+> > index 000000000000..de1f7c6c4f0e
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
+> > @@ -0,0 +1,97 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/opp/opp-v2-qcom-adreno.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm Adreno compatible OPP supply
+> > +
+> > +description:
+> > +  Adreno GPUs present in Qualcomm's Snapdragon chipsets uses an OPP specific
+> > +  ACD related information tailored for the specific chipset. This binding
+> > +  provides the information needed to describe such a hardware value.
+> > +
+> > +maintainers:
+> > +  - Rob Clark <robdclark@gmail.com>
+> > +
+> > +allOf:
+> > +  - $ref: opp-v2-base.yaml#
+> > +
+> > +properties:
+> > +  compatible:
+> > +    items:
+> > +      - const: operating-points-v2-adreno
+> > +      - const: operating-points-v2
+> 
+> https://lore.kernel.org/all/173637143564.1057127.5997544431977689674.robh@kernel.org/
+> 
+> Krzysztof, sorry for the late response. I was checking further about the
+> above bot error. AFAIU, we should not include "const:
+> operating-points-v2" here, otherwise all opp tables compatible with
+> "operating-points-v2" get matched with opp-v2-qcom-adreno.yaml during
+> validation. So I am sending the v5 revision with the below fix:
 
+This is not quite correct. The table is compatible with op-v2. Instead
+you should add 'select:' clause which will limit the cases where this
+schema gets selected.
 
-On 4/15/2025 6:47 PM, Greg KH wrote:
-> On Mon, Apr 14, 2025 at 12:41:47PM +0530, Deepika Singh wrote:
->>
->>
->> On 4/11/2025 1:55 PM, Ekansh Gupta wrote:
->>>
->>>
->>> On 12/3/2024 5:27 PM, Dmitry Baryshkov wrote:
->>>> On Tue, 3 Dec 2024 at 07:22, Ekansh Gupta <quic_ekangupt@quicinc.com> wrote:
->>>>>
->>>>>
->>>>> On 12/2/2024 6:18 PM, Dmitry Baryshkov wrote:
->>>>>> On Mon, Dec 02, 2024 at 03:27:43PM +0530, Ekansh Gupta wrote:
->>>>>>> On 11/22/2024 12:23 AM, Dmitry Baryshkov wrote:
->>>>>>>> On Thu, Nov 21, 2024 at 12:12:17PM +0530, Ekansh Gupta wrote:
->>>>>>>>> On 11/18/2024 7:32 PM, Greg KH wrote:
->>>>>>>>>> On Mon, Nov 18, 2024 at 02:10:46PM +0530, Ekansh Gupta wrote:
->>>>>>>>>>> Add changes to support debugfs. The fastrpc directory will be
->>>>>>>>>>> created which will carry debugfs files for all fastrpc processes.
->>>>>>>>>>> The information of fastrpc user and channel contexts are getting
->>>>>>>>>>> captured as part of this change.
->>>>>>>>>>>
->>>>>>>>>>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->>>>>>>>>>> ---
->>>>>>>>>>>    drivers/misc/fastrpc/Makefile        |   3 +-
->>>>>>>>>>>    drivers/misc/fastrpc/fastrpc_debug.c | 156 +++++++++++++++++++++++++++
->>>>>>>>>>>    drivers/misc/fastrpc/fastrpc_debug.h |  31 ++++++
->>>>>>>>>>>    drivers/misc/fastrpc/fastrpc_main.c  |  18 +++-
->>>>>>>>>>>    4 files changed, 205 insertions(+), 3 deletions(-)
->>>>>>>>>>>    create mode 100644 drivers/misc/fastrpc/fastrpc_debug.c
->>>>>>>>>>>    create mode 100644 drivers/misc/fastrpc/fastrpc_debug.h
->>>>>>>>>>>
->>>>>>>>>>> diff --git a/drivers/misc/fastrpc/Makefile b/drivers/misc/fastrpc/Makefile
->>>>>>>>>>> index 020d30789a80..4ff6b64166ae 100644
->>>>>>>>>>> --- a/drivers/misc/fastrpc/Makefile
->>>>>>>>>>> +++ b/drivers/misc/fastrpc/Makefile
->>>>>>>>>>> @@ -1,3 +1,4 @@
->>>>>>>>>>>    # SPDX-License-Identifier: GPL-2.0
->>>>>>>>>>>    obj-$(CONFIG_QCOM_FASTRPC)      += fastrpc.o
->>>>>>>>>>> -fastrpc-objs    := fastrpc_main.o
->>>>>>>>>>> \ No newline at end of file
->>>>>>>>>>> +fastrpc-objs    := fastrpc_main.o \
->>>>>>>>>>> +                fastrpc_debug.o
->>>>>>>>>> Only build this file if debugfs is enabled.
->>>>>>>>>>
->>>>>>>>>> And again, "debug.c"?
->>>>>>>>> I'll add change to build this only if debugfs is enabled. Going forward I have plans to add
->>>>>>>>> few more debug specific changes, maybe then I'll need to change the build rules again.
->>>>>>>>>>> diff --git a/drivers/misc/fastrpc/fastrpc_debug.c b/drivers/misc/fastrpc/fastrpc_debug.c
->>>>>>>>>>> new file mode 100644
->>>>>>>>>>> index 000000000000..cdb4fc6845a8
->>>>>>>>>>> --- /dev/null
->>>>>>>>>>> +++ b/drivers/misc/fastrpc/fastrpc_debug.c
->>>>>>>>>>> @@ -0,0 +1,156 @@
->>>>>>>>>>> +// SPDX-License-Identifier: GPL-2.0
->>>>>>>>>>> +// Copyright (c) 2024 Qualcomm Innovation Center.
->>>>>>>>>>> +
->>>>>>>>>>> +#include <linux/debugfs.h>
->>>>>>>>>>> +#include <linux/seq_file.h>
->>>>>>>>>>> +#include "fastrpc_shared.h"
->>>>>>>>>>> +#include "fastrpc_debug.h"
->>>>>>>>>>> +
->>>>>>>>>>> +#ifdef CONFIG_DEBUG_FS
->>>>>>>>>> Please put the #ifdef in the .h file, not in the .c file.
->>>>>>>>> Ack
->>>>>>>>>>> +void fastrpc_create_user_debugfs(struct fastrpc_user *fl)
->>>>>>>>>>> +{
->>>>>>>>>>> +        char cur_comm[TASK_COMM_LEN];
->>>>>>>>>>> +        int domain_id, size;
->>>>>>>>>>> +        char *debugfs_buf;
->>>>>>>>>>> +        struct dentry *debugfs_dir = fl->cctx->debugfs_dir;
->>>>>>>>>>> +
->>>>>>>>>>> +        memcpy(cur_comm, current->comm, TASK_COMM_LEN);
->>>>>>>>>>> +        cur_comm[TASK_COMM_LEN-1] = '\0';
->>>>>>>>>>> +        if (debugfs_dir != NULL) {
->>>>>>>>>>> +                domain_id = fl->cctx->domain_id;
->>>>>>>>>>> +                size = snprintf(NULL, 0, "%.10s_%d_%d_%d", cur_comm,
->>>>>>>>>>> +                                current->pid, fl->tgid, domain_id) + 1;
->>>>>>>>>>> +                debugfs_buf = kzalloc(size, GFP_KERNEL);
->>>>>>>>>>> +                if (debugfs_buf == NULL)
->>>>>>>>>>> +                        return;
->>>>>>>>>>> +                /*
->>>>>>>>>>> +                 * Use HLOS process name, HLOS PID, fastrpc user TGID,
->>>>>>>>>>> +                 * domain_id in debugfs filename to create unique file name
->>>>>>>>>>> +                 */
->>>>>>>>>>> +                snprintf(debugfs_buf, size, "%.10s_%d_%d_%d",
->>>>>>>>>>> +                        cur_comm, current->pid, fl->tgid, domain_id);
->>>>>>>>>>> +                fl->debugfs_file = debugfs_create_file(debugfs_buf, 0644,
->>>>>>>>>>> +                                debugfs_dir, fl, &fastrpc_debugfs_fops);
->>>>>>>>>> Why are you saving the debugfs file?  What do you need to do with it
->>>>>>>>>> that you can't just delete the whole directory, or look up the name
->>>>>>>>>> again in the future when removing it?
->>>>>>>>> fl structure is specific to a process using fastrpc driver. The reason to save
->>>>>>>>> this debugfs file is to delete is when the process releases fastrpc device.
->>>>>>>>> If the file is not deleted, it might flood multiple files in debugfs directory.
->>>>>>>>>
->>>>>>>>> As part of this change, only the file that is getting created by a process is
->>>>>>>>> getting removed when process is releasing device and I don't think we
->>>>>>>>> can clean up the whole directory at this point.
->>>>>>>> My 2c: it might be better to create a single file that conains
->>>>>>>> information for all the processes instead of that. Or use fdinfo data to
->>>>>>>> export process / FD information to userspace.
->>>>>>> Thanks for your review. The reason of not having single file for all processes is that
->>>>>>> I can run 100s of iteration for any process(say calculator) and every time the properties
->>>>>>> of the process can differ(like buffer, session etc.). For this reason, I'm creating and
->>>>>>> deleting the debugfs files for every process run.
->>>>>>>
->>>>>>> Do you see any advantage of using fdinfo over debugfs? I'm not sure if we can add all
->>>>>>> the information(like in debugfs) here.
->>>>>> Which information is actually useful / interesting for application
->>>>>> developers? If not for the fdinfo, I might still vote for a single file
->>>>>> rather than a pile of per-process data.
->> Let’s say I am trying to do debugfs read when 10+ or more sessions are
->> active per channel, then for pushing data of nth process in a single file, I
->> would have to wait for n-1 processes, by that time process data might get
->> changed. How do you suggest handling this?
 > 
-> I suggest you NEVER use debugfs for anything that you care about this
-> type of thing for.
+> +++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
+> @@ -19,9 +19,8 @@ allOf:
 > 
-> debugfs is for debugging.  Don't expect to rely on it for anything
-> relating to performance, and many/most systems don't even have it
-> enabled.  It also can NOT be used for anything that actually is a real
-> functionality of the system, and MUST work properly if it is not enabled
-> or a failure happens with the creation of a debugfs file.
+>  properties:
+>    compatible:
+> -    items:
+> -      - const: operating-points-v2-adreno
+> -      - const: operating-points-v2
+> +    contains:
+> +      const: operating-points-v2-adreno
 > 
-> So why would this even be an issue, as surely you aren't expecting that
-> debugfs be the main api for your driver, right?  :)
+> -Akhil.
 > 
-> thanks,
-> 
-> greg k-h
-I am not going to rely on debugfs for anything related to performance or 
-real functionality. It would be used for debugging alone. Concern here 
-is if i push all processes data to one file, then data might get updated 
-by the time nth process's data is pushed and I might not get get correct 
-data for nth process.
 
+-- 
+With best wishes
+Dmitry
 
