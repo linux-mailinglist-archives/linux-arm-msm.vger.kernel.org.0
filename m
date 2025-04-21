@@ -1,53 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-54832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83667A94B57
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 05:09:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 22A17A94B5A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 05:09:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5A9697A64B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 03:08:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C97377A66AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 03:08:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A4A0256C7B;
-	Mon, 21 Apr 2025 03:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF8742571DB;
+	Mon, 21 Apr 2025 03:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="ZhqEXXby"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="eMihUr7y"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65591BA42;
-	Mon, 21 Apr 2025 03:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B808C155A25;
+	Mon, 21 Apr 2025 03:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745204970; cv=none; b=KtTRCj1t3uQdBGNee4a4wzclqtQZiky0m+Hwy8KqlxYGRHJvZFFxqHy5smeoYHiiRYF1vAlvMHDf2ea2irAA5WQd/sdfmz03ndoM6Y0j8sWZ98xanheGiKUppI0aLOQprEbWQrZ453yy2vfZ4T4uzTC1vuHqrtvipe48Rz5/17A=
+	t=1745204971; cv=none; b=WTxbvcP4nEhgVsaB0CMNivHXL8jkoI3zWYdtpM7rojSHX/6lZF+XuiM+tyyhFUy+Vll4OgiWTg4WpeavUxezEfO8j/1jXU9sVnsd02aN8HnO/1i/dmREte05ViDbcUcSsdRDG5gFpHe3ymj3/gqVqPX/p4Mbr/tDCkS+NcVKROw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745204970; c=relaxed/simple;
-	bh=udvxFOdL1d8Pc5hkXWwwmhNUJU7Z9gB45D344Dqsgnc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kQ2QvI7szoEdlYho1WlzDD04cB9uvtnFZyiJTaCRPYYdYYENgyeCABkCadRzkTBQ/z7m0wLIM8MDwOAXP/DAN5LXiduXXe7H96nitoONEKC5Ag5XNhzom6mxbsziSEUii77qumTT4R6aoFLYzXY61KxsEWzUtj72TMoAuDYMYzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=ZhqEXXby; arc=none smtp.client-ip=5.75.144.95
+	s=arc-20240116; t=1745204971; c=relaxed/simple;
+	bh=lzeMZZicsr6WmBaXdWWx1KPxvF87FdOYn3YHNNuQLxg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=NhEWcfvzyrvFlaexiJhKeOiCqEmriLLrwlVoRlj0yLnaV6dP00nqtr9rkbjkk2Of3TRiNgZeQc1YPn+po+i45wXxxBHorbz6Y28xvhliCqO8/HkAdzfS0VBFB9jyoekXVhZTwZnJs4FjGlOwDP6YpzNYYALFJ7R9g/20cjlhUAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=eMihUr7y; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 Received: from [192.168.183.162] (254C255A.nat.pool.telekom.hu [37.76.37.90])
-	by mail.mainlining.org (Postfix) with ESMTPSA id C66E2BBAD3;
-	Mon, 21 Apr 2025 03:09:24 +0000 (UTC)
+	by mail.mainlining.org (Postfix) with ESMTPSA id 57442BBB01;
+	Mon, 21 Apr 2025 03:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1745204966;
+	s=psm; t=1745204967;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=upc2Z9fNOesc767S0bVo32jvZMookaLGNX2YH6V7peE=;
-	b=ZhqEXXbyiKMc568CgSt9qOAEbmV1gJxaCuiqa9Jk+6EdjHnquXp4+/2XSMjkjRwy33XJ2u
-	JcF/0mOp1vM2nVQYlZJS3CfkDYhV5Eaj/xNHeyjjPXGiTRMy9Ht3ZkHBASXiVghJNEkQiG
-	3IgqWbtnThvpGNGCJqx7LvAFKMpM6IJbPsk5UL5VCMwh00Ocg3eJCpai6cnLeMULDD1ITc
-	btBiPL9Dkc6JJflNiyEUSC1sCxmLaNnGwXS+Ij0DxUVhzxZQKSqHh9q4sXH/lQGYnkiZKd
-	GsfBCaL62i12flaTQxEcnMHyzuqfNFObid1HuuW0Oo0Bg6FRUcj7WkSb9NubxA==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/Ad5/d+z8KrjjvmBmulUtL2f1YSp3eQSodvgRpnzSG8=;
+	b=eMihUr7yApDlQ6zKtnskCUD75StFKbJsxxHtGKIyZ6sqlmFac9cbvFJQBYyQp344DoMigv
+	vGUyYG/c76DjsBCxTW0WJDKb7EIynqMN7SUibFUANExJYH2nodTld/aBYUuJ4i6OB0dZ82
+	BR7cs0GPv99rlWmXiLkPud4ui71WXqExACuMXnnfaQd5bK9hD7mbozh+2FiGVnE7lOwhKD
+	c5W3sYtWJgE66zktEofNbc+Kg421+ngCEmEHQVctzDU1djfmef3WB/zbOdk0ZPKtXb5egA
+	79hDC0ZIfZ1dfSSihnEMksEUEAva1K+syERdG/2dBU4kSDJJ9gkcLOSmIl4wBw==
 From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Subject: [PATCH 0/3] Document clocks of Adreno 505/506/510
-Date: Mon, 21 Apr 2025 05:09:20 +0200
-Message-Id: <20250421-a5xx-schema-v1-0-7d96b889322a@mainlining.org>
+Date: Mon, 21 Apr 2025 05:09:21 +0200
+Subject: [PATCH 1/3] dt-bindings: display/msm/gpu: Document clocks of
+ Adreno 505/506/510
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,10 +58,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAOC2BWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDEyND3UTTigrd4uSM1NxE3UTLJDMTy6RkixTTVCWgjoKi1LTMCrBp0bG
- 1tQDv0iQJXQAAAA==
-X-Change-ID: 20250421-a5xx-schema-a9b649bc8d5e
+Message-Id: <20250421-a5xx-schema-v1-1-7d96b889322a@mainlining.org>
+References: <20250421-a5xx-schema-v1-0-7d96b889322a@mainlining.org>
+In-Reply-To: <20250421-a5xx-schema-v1-0-7d96b889322a@mainlining.org>
 To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
  Konrad Dybcio <konradybcio@kernel.org>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
@@ -75,34 +76,125 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  linux-kernel@vger.kernel.org, 
  =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1745204964; l=835;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1745204964; l=3292;
  i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=udvxFOdL1d8Pc5hkXWwwmhNUJU7Z9gB45D344Dqsgnc=;
- b=XQxscjx86DEwyCIYjFi0UMlJYf0J5p1deNHt1PhSjkWian1grQ0/X8Y+zsx5bySwCVGH+QtFS
- 2TaSeA8qtV5A4E47uFPxz2Z8qm7OkXXOYdaQelGORsHYaG5nYMdpz/x
+ bh=lzeMZZicsr6WmBaXdWWx1KPxvF87FdOYn3YHNNuQLxg=;
+ b=tpTCBV2ld4wi+iC5y1LQg1zJjT4UYKTwlyGTSfJJHgtp2E3G440aLQt098eR95/yPXQuAo2SC
+ nZP4JP3Dy/XDOiIuDfLniEp7CtlgWSSd80KQcZPRVkzy/ycWKwM8+vo
 X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
  pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-This patch set documents Adreno 505/506/510 clocks
-with the missing alwayson clock and enforce their order.
+Adreno 505/506/510 have previously undocumented alwayson clock.
+Document clocks for them and enforce their order.
 
 Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 ---
-Barnabás Czémán (3):
-      dt-bindings: display/msm/gpu: Document clocks of Adreno 505/506/510
-      arm64: dts: qcom: msm8953: sort adreno clocks
-      arm64: dts: qcom: msm8976: sort adreno clocks
-
  .../devicetree/bindings/display/msm/gpu.yaml       | 83 +++++++++++++++++++++-
- arch/arm64/boot/dts/qcom/msm8953.dtsi              | 16 ++---
- arch/arm64/boot/dts/qcom/msm8976.dtsi              | 12 ++--
- 3 files changed, 96 insertions(+), 15 deletions(-)
----
-base-commit: bc8aa6cdadcc00862f2b5720e5de2e17f696a081
-change-id: 20250421-a5xx-schema-a9b649bc8d5e
+ 1 file changed, 82 insertions(+), 1 deletion(-)
 
-Best regards,
+diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+index 6ddc72fd85b04537ea270754a897b4e7eb269641..2bf562708f566018aff80b7b5e02f1dd7e0da26e 100644
+--- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
++++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+@@ -146,7 +146,19 @@ allOf:
+       properties:
+         compatible:
+           contains:
+-            pattern: '^qcom,adreno-[3-5][0-9][0-9]\.[0-9]+$'
++            enum:
++              - qcom,adreno-305.18
++              - qcom,adreno-306.0
++              - qcom,adreno-306.32
++              - qcom,adreno-320.2
++              - qcom,adreno-330.1
++              - qcom,adreno-330.2
++              - qcom,adreno-405.0
++              - qcom,adreno-508.0
++              - qcom,adreno-509.0
++              - qcom,adreno-512.0
++              - qcom,adreno-530.2
++              - qcom,adreno-540.1
+ 
+     then:
+       properties:
+@@ -180,6 +192,75 @@ allOf:
+         - clocks
+         - clock-names
+ 
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,adreno-505.0
++              - qcom,adreno-506.0
++
++    then:
++      properties:
++        clocks:
++          minItems: 6
++          maxItems: 6
++
++        clock-names:
++          items:
++            - const: alt_mem_iface
++              description: GPU Alternative Memory Interface clock
++            - const: alwayson
++              description: GPU Always-On clock
++            - const: core
++              description: GPU Core clock
++            - const: iface
++              description: GPU Interface clock
++            - const: mem_iface
++              description: GPU Memory Interface clock
++            - const: rbbmtimer
++              description: GPU RBBM Timer for Adreno 5xx series
++          minItems: 6
++          maxItems: 6
++
++      required:
++        - clocks
++        - clock-names
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,adreno-510.0
++
++    then:
++      properties:
++        clocks:
++          minItems: 6
++          maxItems: 6
++
++        clock-names:
++          items:
++            - const: alwayson
++              description: GPU Always-On clock
++            - const: core
++              description: GPU Core clock
++            - const: iface
++              description: GPU Interface clock
++            - const: mem
++              description: GPU Memory clock
++            - const: mem_iface
++              description: GPU Memory Interface clock
++            - const: rbbmtimer
++              description: GPU RBBM Timer for Adreno 5xx series
++          minItems: 6
++          maxItems: 6
++
++      required:
++        - clocks
++        - clock-names
++
+   - if:
+       properties:
+         compatible:
+
 -- 
-Barnabás Czémán <barnabas.czeman@mainlining.org>
+2.49.0
 
 
