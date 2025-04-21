@@ -1,123 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-54851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0CABA95058
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 13:41:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 229EFA9506E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 13:51:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C31D53A7D99
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 11:41:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 09E871893AA3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 11:51:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 800DE264628;
-	Mon, 21 Apr 2025 11:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 912F8264636;
+	Mon, 21 Apr 2025 11:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Bh11iVxV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jiMfBl+W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DF12641F4;
-	Mon, 21 Apr 2025 11:40:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5214B263F45;
+	Mon, 21 Apr 2025 11:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745235655; cv=none; b=u+htLhft8nOqCuS7I9HGFJvfAsfArDN8rDzJebS/WWWGcJRkJe7UKwct3GYUhhQ9VQs7g3oH2hQ5JK8GL6EVpsn7TjY9ewQ3jTHiuMRWV9YA5BcPRyUzr8+Fv/XINaYVwRtQp2BLR1a1+Os2pUaoXYHHbrgfx0nm6ZBeMSxIn+c=
+	t=1745236261; cv=none; b=VRVxVElRsTSqtvSfStUzBdP9+aqYWxb4+IHTw8kWKB2rrf10vhQr7CHfmamMp9GVe4xPS2TZvx2B6T3VktkeOXCNA7vEt7Ypz/dibuSHRJpqTKqER/XxmP5qKPVKkNqQNkjkW5R7+GaVqSV2k767SDivhA+UNPKj2aKA1aJT0vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745235655; c=relaxed/simple;
-	bh=+G+QJR8daWICJSND6Y6z9zPJMawS12+eS2mqBW9L5cI=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=Ho3dPZzUWk5DTodifVWrDiF/aGoZPmZb/gPdjSBn2nEF2MF0WazA70V/lvZndJ5EL3hDSwqGIW8BRhZ7ofwXvVpfHGCBzGF8r9pakYavCV5eIzeR/8a+mfXXBp0WY/jBX7iG1zTr7RPspb8IqdpOUmqijQVtZ4PmZv00n0l1vVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Bh11iVxV; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from localhost (web.docker-mailserver_default [172.18.0.2])
-	by mail.mainlining.org (Postfix) with ESMTPSA id D24EBBBAD3;
-	Mon, 21 Apr 2025 11:40:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1745235650;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dzZQUtNftwdikjUTgmz8pxhPpBMvvcvZ+Al8SAKHIww=;
-	b=Bh11iVxVrek3iHmj7JnmhVDudJBjbYPbDN3/q3LAjd+grbzf/l+yMiggD/ihDGJVJasJMM
-	L2NrCYKzdVxrIdVNZgitTnvb/IS+sdBKdZe9G92zPOzdKF0b+iA86fX6psU97TDcHHOPBu
-	PwrifjQTZT9yjEeWOH0D2aPuB2F2s+DLqBVFHghTEL6bd3m90mBOLsvjRecWTQfKDIS79F
-	7WTf4Inc4aU7iGjURdf052g+ZfqGwzWUm3kGEMOa0zw5Pp3X2RrIb1h0n804IkN/inb6nn
-	IxBCTN++oSiuKWM+rEkIi1VDQqcZPmCxsL+w5ABAUYwf5SJRSKEXh4ddRt9axw==
+	s=arc-20240116; t=1745236261; c=relaxed/simple;
+	bh=iqzPLokdK52iTpABVBzXV5mawjNYeU3GNuEBmXtj0Sc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oDsbAK0Ox23FyFAGudS0IxjlF0GLDpzRbKYffkDSSiH4dCbC7LCgvoBBp6ymR2/buGA8KNOKH8JXVpIIgN0bjCeOTHzoSQXoiI4xq4rM5fsRkRmC4afEWJz1eLi3mB/pXR5tm4d0a733GnCv2aQNLtXSuiCsEBDWDyD+5i1PJXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jiMfBl+W; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC73CC4CEE4;
+	Mon, 21 Apr 2025 11:51:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745236261;
+	bh=iqzPLokdK52iTpABVBzXV5mawjNYeU3GNuEBmXtj0Sc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jiMfBl+WiGNzMNDskLdjxsWJ1xbphBDHUNEzCl6zgnu5E+6vHSqP8G2CoxpwDt0Kk
+	 JCFz16JEJdx3r4rESJM9MR0odx5QryDpXs4u3foDhLVrGf8DENFn9STrR5c0kagkUl
+	 m1l6u7L0dbcaE7iOC9H8p3VVrCq+nyymT6nwYl+3zodawnrLFirgk2dox+qDmkeGpm
+	 L1/pvNcH/KFj5gq8U7m3ghqVo4M2cXDSJKtXDEoFCb2sjIR0udC4CbZIqF38/SgwtH
+	 fawJN+jS/4G/TrVkjXRcCoxHk9/7uV50JbznoV7ajndhtJGQBANkRRJw7/X2OMuXaW
+	 xr19/OfSuLiTQ==
+Date: Mon, 21 Apr 2025 06:50:59 -0500
+From: Rob Herring <robh@kernel.org>
+To: Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] dt-bindings: media: qcom,sm8550-iris: document
+ QCS8300 IRIS accelerator
+Message-ID: <20250421115059.GA1624060-robh@kernel.org>
+References: <20250418-qcs8300_iris-v2-0-1e01385b90e9@quicinc.com>
+ <20250418-qcs8300_iris-v2-1-1e01385b90e9@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 21 Apr 2025 13:40:50 +0200
-From: barnabas.czeman@mainlining.org
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier
- <mathieu.poirier@linaro.org>, Tudor Ambarus <tudor.ambarus@linaro.org>,
- Jassi Brar <jassisinghbrar@gmail.com>, Konrad Dybcio
- <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org, Luca Weiss
- <luca@lucaweiss.eu>
-Subject: Re: [PATCH 1/2] rpmsg: qcom_smd: Fix fallback to qcom,ipc parse
-In-Reply-To: <viki5krjvs3vs5jf2lrhah6v5rziqju7jv5kbwz7yyvdfjwhh5@6gieypw5owfp>
-References: <20250421-fix-qcom-smd-v1-0-574d071d3f27@mainlining.org>
- <20250421-fix-qcom-smd-v1-1-574d071d3f27@mainlining.org>
- <viki5krjvs3vs5jf2lrhah6v5rziqju7jv5kbwz7yyvdfjwhh5@6gieypw5owfp>
-Message-ID: <114814a2fc59b0fa3dd5a2863394c0f2@mainlining.org>
-X-Sender: barnabas.czeman@mainlining.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250418-qcs8300_iris-v2-1-1e01385b90e9@quicinc.com>
 
-On 2025-04-21 12:38, Dmitry Baryshkov wrote:
-> On Mon, Apr 21, 2025 at 04:04:16AM +0200, Barnabás Czémán wrote:
->> mbox_request_channel() returning value was changed in case of error.
->> It uses returning value of of_parse_phandle_with_args().
->> It is returning with -ENOENT instead of -ENODEV when no mboxes 
->> property
->> exists.
+On Fri, Apr 18, 2025 at 11:58:39AM +0530, Vikash Garodia wrote:
+> Document the IRIS video decoder and encoder accelerator found in the
+> QCS8300 platform. QCS8300 is a downscaled version of SM8550, thereby
+> have different(lower) capabilities when compared to SM8550.
 > 
-> Why? What is the rationale?
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/of/base.c#n1390
-mailbox: use error ret code of of_parse_phandle_with_args() this commit 
-was changed the return value
-from ENODEV to use retrun value of of_parse_phandle_with_args what is 
-returnung with EINVAL or ENOENT.
-It makes skipping fallback path to parse qcom,ipc if there is no mboxes 
-property defined.
-As far as I know qcom,ipc now only needed for rpm smd-edge on some SoCs 
-like 8939, 8916, 8976, 8917.
-arm64: dts: qcom: msm8939: revert use of APCS mbox for RPM
+> This patch depends on patch 20250225-topic-sm8x50-iris-v10-a219b8a8b477
+
+An incomplete message-id is not useful. It also should go below the 
+'---' so it is not recorded in git forever.
+
 > 
->> 
->> Fixes: 24fdd5074b20 ("mailbox: use error ret code of 
->> of_parse_phandle_with_args()")
->> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> ---
->>  drivers/rpmsg/qcom_smd.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
->> index 
->> 40d386809d6b78e209861c23d934e1b9fd743606..e552a9af578e48cfd854a228a4d91e4fa04bf29d 
->> 100644
->> --- a/drivers/rpmsg/qcom_smd.c
->> +++ b/drivers/rpmsg/qcom_smd.c
->> @@ -1368,7 +1368,7 @@ static int qcom_smd_parse_edge(struct device 
->> *dev,
->>  	edge->mbox_client.knows_txdone = true;
->>  	edge->mbox_chan = mbox_request_channel(&edge->mbox_client, 0);
->>  	if (IS_ERR(edge->mbox_chan)) {
->> -		if (PTR_ERR(edge->mbox_chan) != -ENODEV) {
->> +		if (PTR_ERR(edge->mbox_chan) != -ENOENT) {
->>  			ret = PTR_ERR(edge->mbox_chan);
->>  			goto put_node;
->>  		}
->> 
->> --
->> 2.49.0
->> 
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> index f567f84bd60d439b151bb1407855ba73582c3b83..3dee25e99204169c6c80f7db4bad62775aaa59b5 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> @@ -24,6 +24,7 @@ properties:
+>        - enum:
+>            - qcom,sm8550-iris
+>            - qcom,sm8650-iris
+> +          - qcom,qcs8300-iris
+>  
+>    power-domains:
+>      maxItems: 4
+> 
+> -- 
+> 2.34.1
+> 
 
