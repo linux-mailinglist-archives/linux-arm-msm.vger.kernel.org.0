@@ -1,61 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-54873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CACFBA955FB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 20:32:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 360E5A95626
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 20:50:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B61EA1894DFD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 18:32:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 22E03188F483
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Apr 2025 18:50:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBE5D1E0DF5;
-	Mon, 21 Apr 2025 18:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86C671E5729;
+	Mon, 21 Apr 2025 18:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L0CUXXPy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WpuxiXiO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4D91519B8;
-	Mon, 21 Apr 2025 18:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55580DDAB;
+	Mon, 21 Apr 2025 18:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745260327; cv=none; b=ThwdGNxY4r7BUnGHBo55hcFxbykx9a1rZ/pzmaFkz/lS3yS7XCUIUZOfkwEwPrMsCjsGsn6ONQB/zdnCfROBX5k6M5G6d6jIF2g8gaHIp+HCvD1dRWdOFbzJovikanNO5tO1/ZnHLB5V0K8eZzchPvM6DI4SkhfGrE+EC27T2G8=
+	t=1745261398; cv=none; b=fn1w/cdPjbgVP8lomRnKBNPdunrkni8HulJmDNlpYCR9TOPSkDlmaum0x+hClimNKvp06QnFGZxoDl6YQ6EgrQ8GuivVRC2Db3xkwLhB1KhZJ65edms/+Lgqw7rSHxTrCv/Hh1t/WWBvbhioRzb8pt6eA824fDIgCr7kMyv1ZOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745260327; c=relaxed/simple;
-	bh=MSwfIUdh67VlXODh5jeQ8Hf4YamBkvYNgv34xQPDdNI=;
+	s=arc-20240116; t=1745261398; c=relaxed/simple;
+	bh=lDbftSNIEikgRhntgpA6Z4L2uXGo5/b2EApsGIWA/8U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qzQQP0c/W9vP9DNWk9IkOCD/WKFCeD6gMAdSFNTi60DhIaUqev2WdD8TpNQSH/bh6f/otyQU5/DOn5ojpHmbQ8v6hV99R8ki1d79MJLqZoTsTcZexGZOOMWW+T06+P7d9zZgx7ru+fZgePitMRXGRAoirwCr0dudx2vlMhkbjB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L0CUXXPy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE48DC4CEE4;
-	Mon, 21 Apr 2025 18:32:06 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=gBdQ/F7+3oM2wo5HCC0vkpi6NP9615rJTyR7oDkMQyv6+1w6/a/54jcFDHkqdt8JqBWOttdVTq6Ivfkw2gzdrJps5MCOCmaJgWIyWU8cXFwbMYGJD4FlLBFDyLeA3bMsu0Ix/06REsCK06uNJpt7HmV+H0a5QQrj8Cs2/JbTvTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WpuxiXiO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DED2C4CEE4;
+	Mon, 21 Apr 2025 18:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745260327;
-	bh=MSwfIUdh67VlXODh5jeQ8Hf4YamBkvYNgv34xQPDdNI=;
+	s=k20201202; t=1745261396;
+	bh=lDbftSNIEikgRhntgpA6Z4L2uXGo5/b2EApsGIWA/8U=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=L0CUXXPyvat9Ny6XB4ukzq55rF6L5X4/PFZ7mwObD0qSZ/zz+kaYmGTc/m2KolGkq
-	 16qMxvhdx0QFz06hPAeSvaV7sPOAT2zO4I0pNy930pJD9fpZoAynHJ4XJo/yemwsl+
-	 sjwLwKFfl0djDMStpwoq9Ln6MAnoWBian2lM+EOYhLOQcpv/PEAeX2LmuTGB9w6cqx
-	 wWzUfRkaF5yTPap0FcGq6pkdHA7TWriPFSbeZvZ0r4oRbNDvo5cp8Gw2gLpzTueThq
-	 2WjdeS7n7UkxkgqXtoM8UPFBIbZsqasfjXmJ7eCMHNuoj8iGLPvJ0NN6RAYzy/e3RZ
-	 8RbvWqUi8vk1g==
-Date: Mon, 21 Apr 2025 13:32:05 -0500
+	b=WpuxiXiOyhaxU8OB68p5G21YEFTX1lbQF+2MUlJMDdpxVDIGw6mHogL+/UTZU7zC+
+	 QyBh+RQP3WwCE0DXAoiCCtscNjSWAygCiP+V7Qvu7BZIUlRTw8osQ1iFpGFULWJ/Ok
+	 vOM+6BEMRVv1wQNDYo1T2zXGi6bsOWATx5iEt7JpjA2D+CbME5aK6bMRudyvRUwDuj
+	 hMMa+TOpSPLaJhqzzmpHBIL7IGruKHFaBgHGD1b8QJVeClraZw9BAt4NaxyZr0HAiv
+	 y7lbfIEilr9qarI2WeriEF/ERU+DkqENj7wPpDmuJukyNmTVwJdcbn2n0xQdTVL99v
+	 2y8yO5j7npbyA==
+Date: Mon, 21 Apr 2025 13:49:55 -0500
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Kaushal Kumar <quic_kaushalk@quicinc.com>
-Cc: manivannan.sadhasivam@linaro.org, krzk+dt@kernel.org,
-	linux-mtd@lists.infradead.org, andersson@kernel.org,
-	miquel.raynal@bootlin.com, agross@kernel.org, richard@nod.at,
-	vigneshr@ti.com, vkoul@kernel.org, konradybcio@kernel.org,
-	devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
-	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/5] dt-bindings: dma: qcom,bam: Document dma-coherent
- property
-Message-ID: <174526032446.2585027.3719839146163780221.robh@kernel.org>
-References: <20250415072756.20046-1-quic_kaushalk@quicinc.com>
- <20250415072756.20046-3-quic_kaushalk@quicinc.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Georgi Djakov <djakov@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: sm8650: document the
+ MASTER_APSS_NOC
+Message-ID: <174526139452.2609990.4054781869897634300.robh@kernel.org>
+References: <20250415-topic-sm8650-upstream-icc-apss-noc-v1-0-9e6bea3943d8@linaro.org>
+ <20250415-topic-sm8650-upstream-icc-apss-noc-v1-1-9e6bea3943d8@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,17 +61,17 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250415072756.20046-3-quic_kaushalk@quicinc.com>
+In-Reply-To: <20250415-topic-sm8650-upstream-icc-apss-noc-v1-1-9e6bea3943d8@linaro.org>
 
 
-On Tue, 15 Apr 2025 12:57:53 +0530, Kaushal Kumar wrote:
-> Qualcomm BAM DMA controller has DMA-coherent support so define it in the
-> properties section.
+On Tue, 15 Apr 2025 16:03:47 +0200, Neil Armstrong wrote:
+> Document the MASTER_APSS_NOC interconnect node for the SM8650
+> SoC system NoC.
 > 
-> Signed-off-by: Kaushal Kumar <quic_kaushalk@quicinc.com>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
->  Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  include/dt-bindings/interconnect/qcom,sm8650-rpmh.h | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
 Acked-by: Rob Herring (Arm) <robh@kernel.org>
