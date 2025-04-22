@@ -1,82 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-54910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CDF7A95EFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 09:08:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBDEDA95F37
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 09:24:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5B86D3B52CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 07:08:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E013316C926
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 07:24:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF489238C15;
-	Tue, 22 Apr 2025 07:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4537023AE96;
+	Tue, 22 Apr 2025 07:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tLCQbjNY"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="dttW3+Md"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8B3230987
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 07:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745305669; cv=none; b=X0AFz9bkNVbO0ssO79NRygqEvYp7o89Ut4mlS26Fy+f0LoG6nra7fOVIYsAhXkyulFRv3U6wpSppl1OkEvzs1f5ddYx16LQQAI29r1gZ3DBlwRYrdujhzdnmCc/UXKdyd2un6syG0zKubaNU0VfTvloGWiROlecanThIw5hQExQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745305669; c=relaxed/simple;
-	bh=HjhLzE9Y/Q52iV3cqMbiQuwB2APqQ9fAC4HSJMOmcWI=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=DkeqtKRz7sa4Fj2HCgVxA3PxYSoJoAYArY/o4AQKtjACz9xHKl2vBHDYx6RhgbhSvyI7KZIt/i+G+TxmEPqWOKkh6pBHo4Y5HikmXE8CZlQClxiE86fOQO7js4cC8JGj7yaiV4/OWD41s7IbhuuuAdATnHKo8cEd0LlQaeXAlWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tLCQbjNY; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43ce70f9afbso41007265e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 00:07:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745305665; x=1745910465; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i6a3BQRbJn5uKf8xLcqr/agF+8C8ycJ/35awjwM1MZ8=;
-        b=tLCQbjNYU4vONWrULizgRgx4kXgG4Q+cT54FK6XVHT4ILwOMdxMbgeCeICWXS/hkDu
-         xktrtHLHx1QZG8oyFVwMHGoiH9h5tedIIpxP8Alg+hUBAw79IkCD5KgwMlaDCytkcPHN
-         hsAKlIu8PDT17/fCtO5AkQQ4XEx9RSqEuZiWkXHBpHXoFCCyQFlE9DtIpYCP+MwKL4JY
-         tNPtj1BP04TEtyentwGET2ojANmWkfZB9ts+IRH/Xv+j4hXgIq2ccjMSXicFj7WonRF4
-         A2EEJjtjjlmySMFz9iDN0yDQKSOUKgMuT/f7F4IECcZT3n8dRdnO6d0VYE4ZU86dJHBu
-         fVww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745305665; x=1745910465;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=i6a3BQRbJn5uKf8xLcqr/agF+8C8ycJ/35awjwM1MZ8=;
-        b=rgmihQj6J+TDXptocev0SwhGjEVXYG3TgGeaQ26DtWNi+DvEdQDFvcaWNrNHLxQCwf
-         1geoxCoK9CIJ1mhN6ExL+vkDgaonu0zunuizlC1Clts7JqYCvC0NMhIhe8hefjvud1o0
-         eI66d8i9i2mbitq1+a1cBSCjXNtsRJurVq2Yx7ktn6Rjy/TweS67lhNTg/rZ05oj18pL
-         r95V05sxYg84LbIZAjqoiWVMxblqhcGBYHzXvEFTOvNuJq6D5FmbeGSGC7bhrQSuJPRP
-         4F8KTDF6MiY+EnhgeM/NB7sGAc1kPdlVedYtEWAnLUB68bSZKL3WC8MGDz3BtmTFz8xD
-         k0hw==
-X-Forwarded-Encrypted: i=1; AJvYcCWxCj3BPPPPXVjEPlLPsa+clAdpzU2w3SoSMij3Dn4LQMCMb2V1fGsKF2j9qHowSaiKZH+n0vDH9yP0Fybm@vger.kernel.org
-X-Gm-Message-State: AOJu0YwlUdczKfjqg1aqpn92/r7nYMgJUYVukZB+Uk0b0lDeFxSOTUZk
-	xyid67Mj5TJIYfd3tQr12MNspZ9oXT2/ZCxvTcvkOwfw/sDBu0VLrlZ4H0Hs7x0=
-X-Gm-Gg: ASbGnctJtjj5ghLAPK+0/lSJnuXHigX5pn8r4Ji+7REWhu70Ssjt0h50oIwW7tro1Qk
-	+KzuY6wwqR3uMg940iXwO+c+pYLDpwaZG1oJYLDj6goYt5pRVaXypy4Xy0PkkXQktRfCwn/SeBi
-	JT69aRTZn9CQIdfpsXuP4wD67ToqfaKF9ggyG/pHp7SVTBrnNaKsEJI742867jYb+8gwM8CiyGA
-	Hd9GQn9r3QanMQZPyvu2UkAfrR/MrRxpaYn1zpa81f3a0dT8yVONHBdRjt4mcn/qsgjcjkOHDfT
-	x1hwsC20CQTUE2kjhlrbVxsYmQtZD5by1rx0xRi7BJwIKGHdNV1gnaco/Gp0vb+Z8+Kwu5/D4yy
-	3geREsRpi7nMzKOzCrg==
-X-Google-Smtp-Source: AGHT+IHoQqch/rixFWxT15tJy0SJvow1uQ/1aou3lnDMI0B3Bb0LfLM25ogmt9gQblE5yATucRyg5Q==
-X-Received: by 2002:a05:600c:1e0c:b0:43d:fa59:bcee with SMTP id 5b1f17b1804b1-4406ac1feebmr119671555e9.33.1745305665458;
-        Tue, 22 Apr 2025 00:07:45 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:b137:7670:8eb9:746f? ([2a01:e0a:3d9:2080:b137:7670:8eb9:746f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4406d5a9e38sm165457015e9.2.2025.04.22.00.07.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Apr 2025 00:07:45 -0700 (PDT)
-Message-ID: <571b6484-d3ac-4aca-a055-c143f7e4a5dd@linaro.org>
-Date: Tue, 22 Apr 2025 09:07:41 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E0923A9AC;
+	Tue, 22 Apr 2025 07:23:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745306631; cv=pass; b=t9QQUTEuuqZ/mZpezbUTfQwtjlYm1wmCBmOpwOLJADunG1UkhmIMZqhL/YBoCHy4Q6iEzY+jGAa3kE7rA0NfP8x3hjGkH/qMd70TXW0/mbp3U07GPsm3i9tSX3hFE/DmhLrdj8WqWQS1IJPCGZebjh9m4CWOtKWcjP61xn+snb4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745306631; c=relaxed/simple;
+	bh=qxGmdTUUVtRQJVs06CMIGU4NOobJU9B0mpBRWYFWtfM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jkW2gTOaJ/vIotDaFI/DNTxc0ggSbVPQOTaJDj/gmx6U7BcavCbwWqxLqgwPLTeTS3m9A4F+EoSOG/tvN2um2/E0LVjTm9aNnCn9R68YWWoVL/t1tR9XCj9FU823CDXThk7R2m8MpHkBd5bR4tNqzfFK8qAmlkE7PeIjShLQDeg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=dttW3+Md; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1745306594; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=GDnCa7CSKWBHKjYhDVczW/mMrfcPwDU1sUCc0MevFwLUCvd4NcoPizYCU/6G5i/7F1JmaRyjNs0q62xdEWD0Fbxilbl92lJtTCh29hFbbnsNI+THuEFHEDjin4n4yhPm/MeMT2o3BTcgeRShq/P089tKsnEu/aBTWUJSM4MfeBA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1745306594; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=koqDyNKGQKcTOFROOVdPEIjL8A0vo5aApu1lGJhvNxs=; 
+	b=lIUcwZorjEP0FfJneApPY7wNvpWFiSPlu1YzjMaC31fTenpjF8fjVq/upqZFfq5IYTl0DDefqhIGaG8oTAgX/t8/h38W1PQgUKkgC06/wKJujVMAH5XsXQXcQ3Mm7+ouhVZU/T1Gi2JZChF/OPDJfGGL04TjOUNU75ZOd3af7ms=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
+	dmarc=pass header.from=<usama.anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1745306594;
+	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=koqDyNKGQKcTOFROOVdPEIjL8A0vo5aApu1lGJhvNxs=;
+	b=dttW3+MdHV0ZvUPfId1ImDLKbcLxB71yIt2cwy5XeOjHQ06D7N0gKM2wOpdpNtrJ
+	UxuQYE2Ufy8xn+giIF7ZlZOXjvH76522qxaUeV1kyy+KAA5FpZ8C+L5uCvSfg9ov5uF
+	rgsqCwePNdsMb3KLFsPc0NoYUj3Y7G4FnWsfaDv0=
+Received: by mx.zohomail.com with SMTPS id 174530659195343.6404687687517;
+	Tue, 22 Apr 2025 00:23:11 -0700 (PDT)
+Message-ID: <1bf328cd-d301-4d1f-a8f5-7020d9e25ea5@collabora.com>
+Date: Tue, 22 Apr 2025 12:23:01 +0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,126 +60,144 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: add iris DT node
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250418-topic-sm8x50-upstream-iris-8650-dt-v1-1-80a6ae50bf10@linaro.org>
- <asfwnyn5grm426vq5qatrxfffv3wmbuzx6266rblanzqepffzx@7773dcxfaqe4>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <asfwnyn5grm426vq5qatrxfffv3wmbuzx6266rblanzqepffzx@7773dcxfaqe4>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v2] bus: mhi: host: don't free bhie tables during
+ suspend/hibernation
+To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+ Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Johannes Berg <johannes@sipsolutions.net>, Jeff Johnson
+ <jjohnson@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Yan Zhen <yanzhen@vivo.com>, Youssef Samir <quic_yabdulra@quicinc.com>,
+ Qiang Yu <quic_qianyu@quicinc.com>, Alex Elder <elder@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Kunwu Chan <chentao@kylinos.cn>
+Cc: kernel@collabora.com, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
+ ath11k@lists.infradead.org
+References: <20250410145704.207969-1-usama.anjum@collabora.com>
+ <ba09ae0c-fe8d-8f4e-a1b8-9c7e5913c84e@quicinc.com>
+ <fc9ca0da-9f6a-42b5-aa79-abcd43c97043@collabora.com>
+ <e0159cb8-fe21-7f71-1ebe-744ed26bd698@quicinc.com>
+ <85580a01-289a-461b-b0f1-38fa1b96717c@collabora.com>
+ <1c0b2217-49d9-360c-ed60-db517eaf2ccc@quicinc.com>
+ <7d6b074c-8499-4984-b235-d1285b006ab3@collabora.com>
+ <ad5e99e8-3ff1-4727-aed6-528ac747f409@oss.qualcomm.com>
+ <5dcf3ddf-6b0a-4b4c-b4a3-6e015a7e2f53@collabora.com>
+ <822543a0-d7e1-4aec-ae1b-018b32985d1f@oss.qualcomm.com>
+Content-Language: en-US
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+In-Reply-To: <822543a0-d7e1-4aec-ae1b-018b32985d1f@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On 19/04/2025 01:05, Dmitry Baryshkov wrote:
-> On Fri, Apr 18, 2025 at 03:20:35PM +0200, Neil Armstrong wrote:
->> Add DT entries for the sm8650 iris decoder.
+On 4/18/25 7:08 PM, Jeff Hugo wrote:
+> On 4/18/2025 2:10 AM, Muhammad Usama Anjum wrote:
+>> On 4/14/25 7:14 PM, Jeff Hugo wrote:
+>>> On 4/14/2025 1:32 AM, Muhammad Usama Anjum wrote:
+>>>> On 4/12/25 6:22 AM, Krishna Chaitanya Chundru wrote:
+>>>>>
+>>>>> On 4/12/2025 12:02 AM, Muhammad Usama Anjum wrote:
+>>>>>> On 4/11/25 1:39 PM, Krishna Chaitanya Chundru wrote:
+>>>>>>>
+>>>>>>>
+>>>>>>> On 4/11/2025 12:32 PM, Muhammad Usama Anjum wrote:
+>>>>>>>> On 4/11/25 8:37 AM, Krishna Chaitanya Chundru wrote:
+>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> On 4/10/2025 8:26 PM, Muhammad Usama Anjum wrote:
+>>>>>>>>>> Fix dma_direct_alloc() failure at resume time during bhie_table
+>>>>>>>>>> allocation. There is a crash report where at resume time, the
+>>>>>>>>>> memory
+>>>>>>>>>> from the dma doesn't get allocated and MHI fails to re-
+>>>>>>>>>> initialize.
+>>>>>>>>>> There may be fragmentation of some kind which fails the
+>>>>>>>>>> allocation
+>>>>>>>>>> call.
+>>>>>>>>>>
+>>>>>>>>>> To fix it, don't free the memory at power down during suspend /
+>>>>>>>>>> hibernation. Instead, use the same allocated memory again after
+>>>>>>>>>> every
+>>>>>>>>>> resume / hibernation. This patch has been tested with resume and
+>>>>>>>>>> hibernation both.
+>>>>>>>>>>
+>>>>>>>>>> The rddm is of constant size for a given hardware. While the
+>>>>>>>>>> fbc_image
+>>>>>>>>>> size depends on the firmware. If the firmware changes, we'll
+>>>>>>>>>> free and
+>>>>>>>>> If firmware image will change between suspend and resume ?
+>>>>>>>> Yes, correct.
+>>>>>>>>
+>>>>>>> why the firmware image size will change between suspend & resume?
+>>>>>>> who will update the firmware image after bootup?
+>>>>>>> It is not expected behaviour.
+>>>>>> I was trying to research if the firmware can change or not. I've not
+>>>>>> found any documentation on it.
+>>>>>>
+>>>>>> If the firmare is updated in filesystem before suspend/hibernate,
+>>>>>> would
+>>>>>> the new firwmare be loaded the next time kernel resumes as the older
+>>>>>> firmware is no where to be found?
+>>>>>>
+>>>>>> What do you think about this?
+>>>>>>
+>>>>> I don't think firmware can be updated before suspend/hibernate. I
+>>>>> don't
+>>>>> see any reason why it can be updated. If you think it can be updated
+>>>>> please quote relevant doc.
+>>>> I've not found any documentation on it. Let's wait for others to review
+>>>> and it it cannot be updated, I'll remove this part.
+>>>>
+>>>
+>>> Wouldn't this be trivial to test?  Boot the device, go modify the
+>>> firmware on the filesystem, then go through a suspend cycle.
+>> I just tested this. I've used an old firmware from last year vs the
+>> latest one.
 >>
->> Since the firmware is required to be signed, only enable
->> on Qualcomm development boards where the firmware is
->> available.
+>> Firmware A: old firmware size: 5349376
+>> Firmware B: new firmware size: 5165056
 >>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8650-hdk.dts |  5 ++
->>   arch/arm64/boot/dts/qcom/sm8650-mtp.dts |  5 ++
->>   arch/arm64/boot/dts/qcom/sm8650-qrd.dts |  5 ++
-> 
-> I'd say that these are 4 commits.
-
-I could make 10 and still be coherent, but do we really need 4 here ?
-
-> 
->>   arch/arm64/boot/dts/qcom/sm8650.dtsi    | 94 +++++++++++++++++++++++++++++++++
->>   4 files changed, 109 insertions(+)
+>> A here has bigger size.
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
->> index d0912735b54e5090f9f213c2c9341e03effbbbff..69db971d9d2d32cdee7bb1c3093c7849b94798a0 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
->> @@ -894,6 +894,11 @@ &ipa {
->>   	status = "okay";
->>   };
->>   
->> +&iris {
->> +	firmware-name = "qcom/vpu/vpu33_p4.mbn";
+>> 1. I loaded A at boot and then replaced the firmwares in filesystem with
+>> B before syspend. At resume time, B was loaded fine by freeing the
+>> bigger memory area and allocating the smaller one.
+>>
+>> 2. I loaded B and then replaced A in its place before suspend. At resume
+>> time, memory was freed and larger memory was allocated. But driver
+>> wasn't able to initialize correctly:
+>>
+>> [  184.051902] ath11k_pci 0000:03:00.0: timeout while waiting for
+>> restart complete
+>> [  184.051916] ath11k_pci 0000:03:00.0: failed to resume core: -110
+>> [  184.051923] ath11k_pci 0000:03:00.0: PM: dpm_run_callback():
+>> pci_pm_resume returns -110
+>> [  184.051945] ath11k_pci 0000:03:00.0: PM: failed to resume async:
+>> error -110
+>> [  187.251911] ath11k_pci 0000:03:00.0: wmi command 16387 timeout
+>> [  187.251924] ath11k_pci 0000:03:00.0: failed to send
+>> WMI_PDEV_SET_PARAM cmd
+>> [  187.251933] ath11k_pci 0000:03:00.0: failed to enable dynamic bw: -11
+>>
+>> So should we generalize above that changing firmware at
+>> suspend/hibernation time isn't supported. If firmware package is
+>> updated, does user restarts every time?
 > 
-> You shouldn't need to specify this, it matches the default one.
-
-Hmm ok
-
+> You may want to review how other devices handle this.  I can think of
+> these threads as potential reference
 > 
->> +	status = "okay";
->> +};
->> +
->>   &gpu {
->>   	status = "okay";
->>   
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
->> index 76ef43c10f77d8329ccf0a05c9d590a46372315f..04108235d9bc6f977e9cf1b887b0c89537723387 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
->> @@ -585,6 +585,11 @@ vreg_l7n_3p3: ldo7 {
->>   	};
->>   };
->>   
->> +&iris {
->> +	firmware-name = "qcom/vpu/vpu33_p4.mbn";
->> +	status = "okay";
->> +};
->> +
->>   &lpass_tlmm {
->>   	spkr_1_sd_n_active: spkr-1-sd-n-active-state {
->>   		pins = "gpio21";
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
->> index 71033fba21b56bc63620dca3e453c14191739675..58bdc6619ac55eda122f3fe6e680e0e61967d019 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
->> @@ -824,6 +824,11 @@ &ipa {
->>   	status = "okay";
->>   };
->>   
->> +&iris {
->> +	firmware-name = "qcom/vpu/vpu33_p4.mbn";
->> +	status = "okay";
->> +};
->> +
->>   &gpu {
->>   	status = "okay";
->>   
-> 
+> https://lore.kernel.org/all/
+> CAPM=9twyvq3EWkwUeoTdMMj76u_sRPmUDHWrzbzEZFQ8eL++BQ@mail.gmail.com/
+> https://lore.kernel.org/all/20250207012531.621369-1-airlied@gmail.com/
+They are talking about firmware cache which is not being used in the
+wireless drivers. In my kernel config, firwmare cache is enabeld. But
+everytime kernel needs to read the firwamre, it reads from the filesystem.
 
-Thanks,
-Neil
+What can be the way forward for this patch? Assuming my previous
+experiment with changed firmwares across suspend/resume failed, I should
+remove reuse logic and send again?
 
+-- 
+Regards,
+Usama
 
