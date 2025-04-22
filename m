@@ -1,169 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-54996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CACA5A977F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 22:46:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 96EE8A978A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 23:33:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5801A7A9BCA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 20:44:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 289A37A214A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 21:32:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61AA62D9979;
-	Tue, 22 Apr 2025 20:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F40F31F190E;
+	Tue, 22 Apr 2025 21:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="O0fw7DBu"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="Qx7BQUmk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from send129.i.mail.ru (send129.i.mail.ru [89.221.237.224])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82141264FBB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 20:45:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F101D1E9915;
+	Tue, 22 Apr 2025 21:32:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.221.237.224
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745354758; cv=none; b=adNoRmBFoND47l7oW8zSidKFnU7KGRl554mS2L9AYatx8r5BNbIOI20NV7RHra31x0SULdB6FnU0X4bvHubhkt2oU0P0NCsFOiArwpEGoQLvyIY5dPkDsLjsod4K54ArAkYlDNl2AbfkvS7Tgu9IinBmsAFGorUffiDjR1msJPA=
+	t=1745357575; cv=none; b=T5le1sHac/1RExMu5AIZm9QeToaY4k5mrzIrR5GAVZdmIxsLHq7Se/FRT7RAymDJg+ieRuT+YU/6FnY8vuwcVN+oDbD9D8aSJM+kgZPqq1r1QrPEQ+oqwwDXn3INQVAiyjaPbXblg+HH+0iIPYy4CUo3zYMtOiO+GCFBLhHTaLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745354758; c=relaxed/simple;
-	bh=T8MBUVCWxYofTrKp4GRcnmCtd9t0xV55BNUyuCp6fVo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QtMjtlR8FtZS6QCu6pfGegfVrLXgD3nJk0DFKK7fM7/GCRl7UB3ltM9KHlB88sk5HG52nJixBvaCcOio2+wPWlKcFVd6WJbMHRfZMeMJFxtUMa/q+7KivEyF/q9lkXqmLNHv6liQw0iZp0O/JnNsVUOoHYpzml1rVxxtClqu06w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=O0fw7DBu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53MI6uY7026361
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 20:45:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Qe1AqUfBNNSz2We8dhDKc49BliCl8BOCKYFYp/kgBg8=; b=O0fw7DBuJnfEFTnJ
-	doKyeUJQmi49b4Mqt75zHKsEGvJz82mtOsWCgUUxG78rmII4YRUWcJ4gQnmAEJDy
-	zxMLNpP25vEBpewt5Fx+vNdvt3kGgrKlhGf/x9nTkMKDx7pCnvvRYBDVkDpB78Te
-	FH/3XL2U6B8lmKf6EA3FX7gQq1i+j4S3NwqQcg36uWuJcjgh3sttd5XSnEEdZG/u
-	SdkiVSovdrKooOQc9+IOdSyxgy9yRMibXmrup+HrckobA6U5LUVi538qAMAus56t
-	PJ10gy/hZihw9nu/MhlBq7nGdJ/SxYJ7t9bvEigrnMbBvLF4ODsjlsyIP+uA01ZE
-	19Sbsg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46450pgske-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 20:45:54 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c555d4ad75so24058685a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 13:45:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745354753; x=1745959553;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qe1AqUfBNNSz2We8dhDKc49BliCl8BOCKYFYp/kgBg8=;
-        b=lw1HGp3mSK/EhHxN8y6xZfHCVdC7oZgzc4FEJ8KeUk1FkngHz0AZ+kqsi7osSmJnzw
-         iGZMZ6mslgDk7XHHucN7TftG/oqD1eWy7ien6xrssUZpwTn00W6iG1jppUKsPxEiFG5T
-         NRXZvRT/SbejZUoHbJ5rQClh8ildVpgVqSx4YrZ9MIgac2dWMbUmjfn55lYnQdc1OUTk
-         WPzvehcJ6GNP9+IrLFutvpiTisISWjrVKFDpNf+NfBD05QbJWnXGziqHSsCZFk11iihA
-         31UFn2cBHXDQciJr2WY/3K0fa3efKVL8+s3z32gi/5u7UTkL0nethM5vDd5UXKPvnxUz
-         Kk2g==
-X-Gm-Message-State: AOJu0YzBwbQsIg5lkZvxspHY9dvL/cH/L4bh5PbB9F7y+7D+vAGm1rdW
-	mEKAIWjYXpZO/dNuwnmWAw6456XzRppXbuBPrVCo40COA2qrAefO4E9bo89ntuR9NA331DIp9Ac
-	IYen0+JHBcEMo6jc9vxwVikQog/7hhjbf6FpGJXkxMaDBsWAi6NQ0QGT0NjlC8XFN
-X-Gm-Gg: ASbGncuKDQ2DO2cutp3ydxVFr26YFvLhtb4UyAAAoEOs6tXwEGEm7Lu4kD/fR/wSzjT
-	yfplO8B4Ue+iBaU8+UkVBAnWR5UjfhjfDlddbqY8c1ZXnTYZ0X8q6nnw63jr5ffnukEpXbp+ADm
-	bmZJHAaLPAkxf6RyN9jqmGAHgwAes2h3WwsiDPBWMP0bnVjIrS8DDU2WTNaGarcqsOJT3GraY3v
-	XD6DmLDKXa9ui/Fpkij4xhEy2kPzElGsImf4CP0PEdLER+pcY7EH34Gx5rt7xgDGuZcZy3TOLdR
-	Dx2a4syYJeCWxk6lDMPQvWTyexMxoQ8QuO6hKrepdd/+uSZmBZvbLveWR+M0coLDFjY=
-X-Received: by 2002:a05:620a:2584:b0:7c7:a574:c0ac with SMTP id af79cd13be357-7c94d234d2bmr49139585a.3.1745354753277;
-        Tue, 22 Apr 2025 13:45:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGzE1JLopbHa8TgCguglBA6+yMgoTOr4plS4X95RX42YJC/ZKWJV+SYHIWUESjwqyFN1LJYVA==
-X-Received: by 2002:a05:620a:2584:b0:7c7:a574:c0ac with SMTP id af79cd13be357-7c94d234d2bmr49137685a.3.1745354752949;
-        Tue, 22 Apr 2025 13:45:52 -0700 (PDT)
-Received: from [192.168.65.141] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acb6eefd8e3sm704214066b.98.2025.04.22.13.45.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Apr 2025 13:45:52 -0700 (PDT)
-Message-ID: <9be69535-08dd-4d60-b007-e9c50e706a58@oss.qualcomm.com>
-Date: Tue, 22 Apr 2025 22:45:49 +0200
+	s=arc-20240116; t=1745357575; c=relaxed/simple;
+	bh=D2Z2120osV1zGidlsGtM1CxGehmG5HCvLBI4TCjw5oU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JmNHV54Sv7gdXkTwHGyVPFUlswj7nNJal65V5gwS420PR+NMX4pegmIyd2hfjUMVgnMYZlaslVr8s4z0g6mnWAFNgMA9av0S/Hq993k27dvRad6wqIYr7wFxFLLhmHGRLDxUnr9nqE/aTAThorc2mVGmK60FKhLXb6nkPC3YcHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=Qx7BQUmk; arc=none smtp.client-ip=89.221.237.224
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=bld9yfzn86wlglnQDrTY4IrNXau4T8wzciT13/xgVdQ=; t=1745357573; x=1745447573; 
+	b=Qx7BQUmk1L7M8Yri3M+FkBG6iZ7jmPGn+sJY2ExKu+XPWNZL8k8RaEosOMaehFt1FY7jnIXtMb1
+	tq8NUcHoU4G+5U0WwV1PV4Cuc8wYfoNNd28uD+KL9hP4Rj0NatSExS3E3m34aMova/i/gWnpq5oGx
+	xRQ7+1cF24Qm6JMbhg4=;
+Received: by exim-smtp-77d8cdf77b-wlhm8 with esmtpa (envelope-from <danila@jiaxyga.com>)
+	id 1u7LE4-00000000BOp-1gV2; Wed, 23 Apr 2025 00:32:21 +0300
+From: Danila Tikhonov <danila@jiaxyga.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+	Lee Jones <lee@kernel.org>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Alex Elder <elder@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Andy Gross <agross@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Robert Foss <rfoss@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Kees Cook <kees@kernel.org>,
+	Tony Luck <tony.luck@intel.com>,
+	"Guilherme G . Piccoli" <gpiccoli@igalia.com>,
+	David Wronek <david@mainlining.org>,
+	Jens Reidel <adrian@mainlining.org>
+Cc: devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-watchdog@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-mmc@vger.kernel.org,
+	netdev@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	linux-i2c@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	iommu@lists.linux.dev,
+	linux-remoteproc@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linux-hardening@vger.kernel.org,
+	linux@mainlining.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	Danila Tikhonov <danila@jiaxyga.com>
+Subject: [PATCH 17/33] dt-bindings: nvmem: qfprom: Add the SM7150 compatible
+Date: Wed, 23 Apr 2025 00:31:21 +0300
+Message-ID: <20250422213137.80366-1-danila@jiaxyga.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] PCI: qcom: Add support for multi-root port
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com
-References: <20250419-perst-v3-0-1afec3c4ea62@oss.qualcomm.com>
- <20250419-perst-v3-2-1afec3c4ea62@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250419-perst-v3-2-1afec3c4ea62@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Hd0UTjE8 c=1 sm=1 tr=0 ts=68080002 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=UglFlXkU1CO26sHhVHIA:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: MTecCCJ28al736y7tto09Yuhf3-cvJcI
-X-Proofpoint-ORIG-GUID: MTecCCJ28al736y7tto09Yuhf3-cvJcI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-22_10,2025-04-22_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 mlxscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- adultscore=0 mlxlogscore=999 phishscore=0 clxscore=1015 spamscore=0
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504220156
+Content-Transfer-Encoding: 8bit
+Authentication-Results: exim-smtp-77d8cdf77b-wlhm8; auth=pass smtp.auth=danila@jiaxyga.com smtp.mailfrom=danila@jiaxyga.com
+X-Mailru-Src: smtp
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD985535D2C87FE65BB7FDAA9A1A9DEF7953CA198E32028564300894C459B0CD1B921390C07D720BC3C33594132A326AF8BA51A7878B8140C993EEA0038D781BD3B750FC9643A608EC1
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE77EA152918BB9CDE0EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006374F960C921106F05B8638F802B75D45FF914D58D5BE9E6BC1A93B80C6DEB9DEE97C6FB206A91F05B2C3CCA644F7CEBFFC2E070BE324C7D3C4C54A791AF0D2BFD9F6B57BC7E64490618DEB871D839B73339E8FC8737B5C224952D31B9D28593E51CC7F00164DA146DAFE8445B8C89999729449624AB7ADAF37F6B57BC7E64490611E7FA7ABCAF51C92176DF2183F8FC7C0DEC8C2C8BCD2534D8941B15DA834481F9449624AB7ADAF37BA3038C0950A5D3613377AFFFEAFD269176DF2183F8FC7C02271980798FBD5E27B076A6E789B0E97A8DF7F3B2552694AD5FFEEA1DED7F25D49FD398EE364050F0AC5B80A05675ACD0A5971FBB7557E96B3661434B16C20ACC84D3B47A649675FE827F84554CEF5019E625A9149C048EE9ECD01F8117BC8BEE2021AF6380DFAD18AA50765F790063735872C767BF85DA227C277FBC8AE2E8BDAE3FA6833AEA0C275ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
+X-C1DE0DAB: 0D63561A33F958A5B0AC79FA2AC9EC4F5002B1117B3ED6966415959F9F8A24A2E99897350C7C491E823CB91A9FED034534781492E4B8EEAD1B01FEBA22ADC20FF36E2E0160E5C55395B8A2A0B6518DF68C46860778A80D548E8926FB43031F38
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CF650C047DAD35C9D397F033D0B969C5191B657C064F30B72D2C9532FBC67315D51EB2640544212C8968A835CA8743990B245D2C3B7FD8CF06D59B53E1D0EAB012FB852D94B68F16E0EFF8118B638B08AA02C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXMZebaIdHP2ghjoIc/363UZI6Kf1ptIMVS+uSU+BUhgvOBkReg5Dq6k=
+X-Mailru-Sender: 9EB879F2C80682A0D0AE6A344B45275F39BBC4D52E44B0681356DD24693B53BCCBF40968ACDF6B91D2497E86D6F95D602C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
 
-On 4/19/25 7:19 AM, Krishna Chaitanya Chundru wrote:
-> Move phy, perst handling to root port and provide a way to have multi-port
-> logic.
-> 
-> Currently, qcom controllers only support single port, and all properties
-> are present in the controller node itself. This is incorrect, as
-> properties like phy, perst, wake, etc. can vary per port and should be
-> present in the root port node.
-> 
-> To maintain DT backwards compatibility, fallback to the legacy method of
-> parsing the controller node if the port parsing fails.
-> 
-> pci-bus-common.yaml uses reset-gpios property for representing PERST, use
-> same property instead of perst-gpios.
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
+Document QFPROM compatible for SM7150.
 
-[...]
+Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+---
+ Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-> -static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
-> +static void qcom_perst_assert_deassert(struct qcom_pcie *pcie, bool assert)
->  {
-> -	gpiod_set_value_cansleep(pcie->reset, 1);
-> +	struct qcom_pcie_port *port, *tmp;
-> +	int val = assert ? 1 : 0;
-
-assert is already a boolean - are some checkers complaining?
-
-[...]
-
-> +	/*
-> +	 * In the case of failure in parsing the port nodes, fallback to the
-> +	 * legacy method of parsing the controller node. This is to maintain DT
-> +	 * backwards compatibility.
-
-It'd be simpler to call qcom_pcie_parse_port on the PCIe controller's
-OF node, removing the need for the if-else-s throughout the patch
-
-Konrad
-
+diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+index 3f6dc6a3a9f1..35e43103d0c5 100644
+--- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
++++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+@@ -49,6 +49,7 @@ properties:
+           - qcom,sm6115-qfprom
+           - qcom,sm6350-qfprom
+           - qcom,sm6375-qfprom
++          - qcom,sm7150-qfprom
+           - qcom,sm8150-qfprom
+           - qcom,sm8250-qfprom
+           - qcom,sm8450-qfprom
+-- 
+2.49.0
 
 
