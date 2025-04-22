@@ -1,191 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-54920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DEDDA966C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 13:02:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5739FA966D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 13:04:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 610EA1887508
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 11:03:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C0A98189F408
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 11:04:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99C0D238C39;
-	Tue, 22 Apr 2025 11:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76489274FF6;
+	Tue, 22 Apr 2025 11:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lv9deyP0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wvdVwnhq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B312749E3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 11:02:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEFC27510B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 11:03:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745319771; cv=none; b=X1L5qoll4Xp8/t6rJGDsRT6Tt4IhYxdjFzED+mkRkMYNPNdnWLy6WeCaxKgJ0fZ3kD4c+PVT8vnWezmAxz1vmAa2alb7MdZMUTlvqhv9UnDrHO9YBuFa01Tn5TeU6k61Z6bVJ2dbXslcwyIFeWPNw2Ga9cWegf5zROsIGBxVp1I=
+	t=1745319825; cv=none; b=MmEsn4czhneqZkr6OBakUIdBHAYyyiDIn9jeIaVu+CuXvtvEfOVPS7aHvMNz/SIT+G0WImxUqtbI18sIcZcrT67PQsxleEPD0/7Gh/NUlUc2Oo5ovE3e1MLpprg5oiekTpjGWLPu7ioYSZTKKQy6A6tMvsHFnSN0jbQKF/JuaWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745319771; c=relaxed/simple;
-	bh=X1Q1xjwPG2pD1HclX9JEf+yJ3b/ehvuIOj9c3epR+XY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ibngsaL+ARqKjOicX0jNVabJUxMspGiD1C+w1H9xDxovwXY6VE/NonpfkohHGvO1MGCFtznk0nYSJmNNAeHRXNm2vrLaQEu+on4BStUKBo/HlgsIMUJ78jMJb5L87MVCqe2djhtwfYEHm2I0kfZAy6y4AOT7G8EPkKXcIsxPYRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lv9deyP0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53M4OZA5025905
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 11:02:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=sJhtSdw5nK1pkgx2a60KWDZ+
-	+Ku84pOdAteitB7NlXw=; b=lv9deyP0hg7JX5LqUsV8SP8lgKAQfS9cGDSlrN24
-	KXiAQzT1X5p2TU4H1meirbYwqPraKBqT/HgqEY3tdBjxMT9OplOHv75wdVVztgA+
-	VBahFk6NYoR4/K+nE4FCPJhzvEJjqBzG0UI71PIY1HUcMSCdSa5OPuG9W7PoPCw2
-	Gqe7bO8lrdeUBwgOhnlu0iN/U7Yh1GSK69iXvRYhKiUmxtExDc6GKJxiVS9u7BV6
-	ggAV74OWgBSFEZVKcCm5sgLfpmsHnvrOvE1lQF9AKYEyts6L8Nht6TyU1wulKVDr
-	l4movz6vzHEFwGInOy1QKvEgQlIbjid3tGGSHb6rJzkzpg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4644kjf1pc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 11:02:49 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c549ea7166so739772785a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 04:02:49 -0700 (PDT)
+	s=arc-20240116; t=1745319825; c=relaxed/simple;
+	bh=huaRCgTVnoU4ujqM6yRWiZZZluuDLRVVHL6ECRdplqs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=O3dAZy/Fsc7iIs0Ki6XMXgZFDGilOC2txGblO1I1R5HOnN++95JjPc/Qm7HwfaIrjDAVFD0BSVs/0V6Xpza5zKMXQ4bFv1r5K4F8A+GsqTAcw/AROoCTU4eMkIN/R/GDJIEVpdGv6xtBu7MfyK1JdxYr6Nz+0B5GWEJTPWHShA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wvdVwnhq; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5f620c5f7b9so5198354a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 04:03:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1745319821; x=1745924621; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hPR5KSp4R+lImMTEyIVXZliHdY6c2d0H/1+T0vAPSew=;
+        b=wvdVwnhqIAH50n8DitYGfa11jqjXHOkeY6WSqsaCvD0iYzIxlPs+fc+2HgJfGT1f3Q
+         HDInH5nVrB1VWjUd1J31sbMzFGKr03ZJo9SnMUIMftSRFzotTVT2jJb+OpswmgSGrtm2
+         Xg1hEJH+M6NPUH4GuEEmELV0FjMjoq7ZGeCD6p/J46VquDb9qbe2U2KxvWJEW+11fZG8
+         wkq1yC96nHwOTfLl/GzDrLxpE/QMKbsziRArpTFxg777hq5cJcGd7Eu8CELAMiX1xdYv
+         CwIkFQIlIS8+69+roQbtRfofl6sA7K7er6PWMStykNaU5QPz2IDzUGiHTPaCYNVL1rRQ
+         2tsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745319768; x=1745924568;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sJhtSdw5nK1pkgx2a60KWDZ++Ku84pOdAteitB7NlXw=;
-        b=qLbqrIjZLdVDtzX3fUKN5yObakXSmWK8aO1gw5MnhQaWarSMXDGLmVh74WogIUGNp9
-         sVZP5u75K1RLjx14fcxjLwKJTuYzWMgBPe6tzX4uG6/+j0e9b3waLEA/6APEPC5is16B
-         XEyKW2jbQYARhVzUIHdib4//bF6hA0snlJMNp1IFvlMceSEtL2KoJHRmd4gMdJGb1Fjv
-         rsNgXA8zbFWwNYdfef7Y0ccIp1wnImF56KIamphMGd1vh+mxWAYQ1FB8FYYITxWPCFHF
-         IiHBz9OKAkCHzqJrSgKjhsJV0HrNjA9i5qSSvFDxvfYH126+3YxLqxQMwwGdN9C5Jw7Z
-         5CAg==
-X-Forwarded-Encrypted: i=1; AJvYcCUL2YJMF8+F71faIr14jCIXckJy+46ZbN2C4n2VmAIAreClBCtjS/gvHKcgdxJPj4CDCWR96I+VpdDH1KpN@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+j9SX5jmVa1iIhPLKBGU6DxKNLg6i+dxDtXosXChegsdyYjnA
-	gKVDSQPLnSLGdukwsfH9TEv4jFsayIQB+qo2TvIiiCTyLhmUP+wk8bLC3nDmaId2PQFjHrnXz62
-	sRxF4K0qgjWQyAHwsj9hM8Z9F3CXKlU9b/9IMsKDMXuRNTIgSgSuRTr3zbNkPXTjM
-X-Gm-Gg: ASbGncvGTnNk2gPoWgGWKrYDiRvz7Dpd29MFv35/ibzWZgihDNFS9K5MZgp8Earjalk
-	TES9sBnYe1/1Cww/ahQ2huRNZAb5gdU7Fx6D0t2BiZm107oE7Z9U7FWh1P/vcH1xPChTZSJUeB+
-	1tT1nwQbslJC809VZJ0rCF5xsJF5xOzxvEVkwzbYygo4RCRCbn/iwuAtQqyMLMLR9MZKEqc7kF8
-	2OI9CyIWmoV6s9MOfePG04Mag3i40N1Ry7Usa69aSZfiLJKW27yF343YG8EJRXRpZvWEYoZj4oy
-	5zhfF2bejk3xc5+GqBi2vggx0cPen6iXxThwRzxt8Aim5VsTZEMNS/rki7AKSTpItK2ttMxvWpg
-	=
-X-Received: by 2002:a05:620a:17aa:b0:7c5:a41a:b1a with SMTP id af79cd13be357-7c927f6b4e5mr2210332985a.10.1745319767863;
-        Tue, 22 Apr 2025 04:02:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFN4wwPzrrHx8nsqrV5sbJ9OQl73YTYbgT962Arex3Cx5QfII5Wsr6EMD6ZHVslJXEdDC01pg==
-X-Received: by 2002:a05:620a:17aa:b0:7c5:a41a:b1a with SMTP id af79cd13be357-7c927f6b4e5mr2210328785a.10.1745319767506;
-        Tue, 22 Apr 2025 04:02:47 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54d6e5251f5sm1189258e87.51.2025.04.22.04.02.46
+        d=1e100.net; s=20230601; t=1745319821; x=1745924621;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hPR5KSp4R+lImMTEyIVXZliHdY6c2d0H/1+T0vAPSew=;
+        b=hPzljAQlCtp5XOBhxKFuMW51g8DYKvqwHqH895YwBwBP8XUZCpL7918T9ZaEL3C/6p
+         yp81fmhzk5TYnTkHu/DF1FXr5HxJF6U4Y/lcQ7c7BIsxuBSJ/jHO7KC8UtXUrkFtDis5
+         2/L3DvTqJWb2FcVAbSQU4B80Z6Mp/UUbqdR7aaM6ZVdFbqFdtRHZ9Bgci8ecYnUoG4pH
+         ZeEc3zSRO+qhZXhhJAUAITqG+lVVIMFDhUDBoMx9SCKfd6L6r5zln+ZlEEiVl0c/TESN
+         HXmsM0ufyhRILtQlWe6RcOKrHU3Cy29K/tgoyZ120PwZ3sbK0pQ6uhEq5aM/hQkmQB6o
+         Vy2Q==
+X-Gm-Message-State: AOJu0YzBb0J31GolrIYBZWF8zc5d3Efwcnd5k4CU32EQhx32uIHFR7HZ
+	uhC5RBgagmEi+kJVkERT1FYsu6k8K6jR+ByyAHg8+X3svneyY7lxIijtpqWiFAM=
+X-Gm-Gg: ASbGncssooGCUUv3GibP0bedJ5gMTilGgLNqbPQlsLwHi55TZcj8tW2X//VHwcJJgvm
+	OsPVm7QeZEoDU6t/iaJ5B+pzirn33qddzrvB1LV04T+P/qu3/z686g4Wb4QMpWFrjuGL4FsE9+R
+	09tFgnt2X/o6GixuvL1WYDt+p5VxltWIQU+GVmiTC5v1DT85mNveE9r7jTnUO/cFPZmMnkW4P5P
+	59tiLDOsuU5VKw37+w4bvCuwN71udt8GwaZoSlzeLBS/Ucm8qSbA5v9gcCIT82W9WOPIRREYNwU
+	0pUeIY+totRuYPVvauULV/7aYpZzT7U8A0ZczK8=
+X-Google-Smtp-Source: AGHT+IHyR8xd5cZJWHsTUNdku8nt1qwWkdqsAnZ5XMN2nR7jFivttenunL1Z4EoJjDpq0m8Ab7J8BQ==
+X-Received: by 2002:a17:907:7b96:b0:abf:742e:1fd7 with SMTP id a640c23a62f3a-acb74dd80c8mr1391000066b.57.1745319820709;
+        Tue, 22 Apr 2025 04:03:40 -0700 (PDT)
+Received: from [127.0.1.1] ([62.231.96.41])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acb6efadd16sm653085466b.172.2025.04.22.04.03.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Apr 2025 04:02:46 -0700 (PDT)
-Date: Tue, 22 Apr 2025 14:02:44 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Ayushi Makhija <quic_amakhija@quicinc.com>
-Cc: Ayushi Makhija <amakhija@qti.qualcomm.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robdclark@gmail.com, sean@poorly.run, marijn.suijten@somainline.org,
-        andersson@kernel.org, robh@kernel.org, robh+dt@kernel.org,
-        krzk+dt@kernel.org, konradybcio@kernel.org, conor+dt@kernel.org,
-        andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org,
-        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
-        jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com,
-        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
-        quic_jesszhan@quicinc.com
-Subject: Re: [PATCH v4 07/11] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
- to DP bridge nodes
-Message-ID: <2qpcmniww7uaemu5tvgbjpnijqqzlrcvf2dkewvumffnsdpsib@fl3tvbldtjds>
-References: <20250417053909.1051416-1-amakhija@qti.qualcomm.com>
- <20250417053909.1051416-8-amakhija@qti.qualcomm.com>
- <qnhfnxvdsgnw5jh4xxaqz3p2x67qcrr7kn3vwdnyz5huchdtzy@aagflznjrvly>
- <d77353b0-94e6-4461-bd34-44c8cb80eb07@quicinc.com>
+        Tue, 22 Apr 2025 04:03:39 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Date: Tue, 22 Apr 2025 14:03:16 +0300
+Subject: [PATCH] arm64: dts: qcom: x1e80100: Fix PCIe 3rd controller DBI
+ size
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d77353b0-94e6-4461-bd34-44c8cb80eb07@quicinc.com>
-X-Proofpoint-GUID: 1xIu0YtNJpdRe_BJizylEbKuCrIcU43v
-X-Authority-Analysis: v=2.4 cv=f5pIBPyM c=1 sm=1 tr=0 ts=68077759 cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=Ofgg3MdZYWJxeOF5shIA:9 a=CjuIK1q_8ugA:10 a=NFOGd7dJGGMPyQGDc5-O:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: 1xIu0YtNJpdRe_BJizylEbKuCrIcU43v
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-22_05,2025-04-21_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- mlxlogscore=999 mlxscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- clxscore=1015 suspectscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504220083
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250422-x1e80100-dts-fix-pcie3-dbi-size-v1-1-c197701fd7e4@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAHN3B2gC/x2NSwqFMAwAryJZv0BSP4hXkbeobdRsVBoRUby7x
+ eXAMHODSVIx6Iobkhxqui4Z+FdAmP0yCWrMDI5cTZVzeLK0xEQYd8NRT9yCSolxUDS9BOtmDMz
+ kfdlEyJUtSba+Q/9/nheHQUqGcQAAAA==
+X-Change-ID: 20250422-x1e80100-dts-fix-pcie3-dbi-size-56fc110aa36d
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Qiang Yu <quic_qianyu@quicinc.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Johan Hovold <johan+linaro@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1161; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=huaRCgTVnoU4ujqM6yRWiZZZluuDLRVVHL6ECRdplqs=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBoB3eFYQA6McFojm6TYHFp6Ic5jRHrXj/gA1xhF
+ pfaTBGh8RWJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaAd3hQAKCRAbX0TJAJUV
+ VizBD/kBAO13UvafFHuA3rOP4JUWc4uMmYjD+jqLpWQcZbcApHDYnb24+PkReRkMPaPu5IUAzX0
+ DTpoBjqQkiYL0G78akN9YE1rD7/mZSjV2AcNUhPiKfDxMaiYx1EO5ieL3pwuS8VMmSE/5hLx5Wo
+ 9jleY363mhEiJw4vIj/B5f8Lh5qA6gvvE8sUgbUiI+QQzAHCdJioAjX+RL73pbLIRMtcLQH5XLb
+ 1Mc+8KpOgBsYgRsM/kPTtEX85zw96blxV7acKRp62HoZmtIrpi9/1/UdiORV7IvDXx6DDoBk8OV
+ 1/FXlFGvmwlTKjK0KMFRCgi/aIvpXXniZMoX6y+PVZwSf4VT9OJjK8juWx3uWjke64SBzLkATdr
+ 9hdznYY+UOT1aINlOSV680ETpI8RqW1lYmylx7wGdKVESJ0WikLpTbGxtUSJ3Xjm6/EnNvmsToX
+ fUyREDIONpOsY352SaEQ9ftKQLXeBVtXEFmH8LrPxumcNtTXbpXa0zdmwRivjYSBt5/xyGrVgPI
+ c3uBcP0cAuwdp7UWjhT2dnmwM+pQhKo/fMZohSi6Wkzj8pyqFH8JdvdSE7Q4QhAOO/TEWChxvpp
+ Hadh3jNo2NeFahuB2zCbhch+BW7A7Aw+vSjcIfPvMolJ94Bs1P8el4B6ex5lm8RPAjclMLXgn1D
+ myFCohF9ZsUXLcg==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On Tue, Apr 22, 2025 at 12:28:20PM +0530, Ayushi Makhija wrote:
-> On 4/17/2025 4:10 PM, Dmitry Baryshkov wrote:
-> > On Thu, Apr 17, 2025 at 11:09:05AM +0530, Ayushi Makhija wrote:
-> >> From: Ayushi Makhija <quic_amakhija@quicinc.com>
-> >>
-> >> Add anx7625 DSI to DP bridge device nodes.
-> >>
-> >> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
-> >> ---
-> >>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 180 +++++++++++++++++++++
-> >>  1 file changed, 180 insertions(+)
-> >>
-> >> @@ -519,7 +550,107 @@ &i2c18 {
-> >>  	clock-frequency = <400000>;
-> >>  	pinctrl-0 = <&qup_i2c18_default>;
-> >>  	pinctrl-names = "default";
-> >> +
-> >>  	status = "okay";
-> >> +
-> >> +	io_expander: gpio@74 {
-> >> +		compatible = "ti,tca9539";
-> >> +		reg = <0x74>;
-> >> +		interrupts-extended = <&tlmm 98 IRQ_TYPE_EDGE_BOTH>;
-> >> +		gpio-controller;
-> >> +		#gpio-cells = <2>;
-> >> +		interrupt-controller;
-> >> +		#interrupt-cells = <2>;
-> > 
-> > No reset-gpios? Is the expander being used by something else so that we
-> > don't want it to be reset during the bootup?
-> > 
-> Hi Dmitry,
-> 
-> Please, ignore the previous reply.
-> 
-> This io_expander is used by anx7625 bridge only. I have defined the gpio in pinctrl setting and so far it was helping out indirectly to bring io_expander out
-> of the reset. The reset-gpios is optional for tca9539, because of which the io_expander driver didn't throw an error and I never realize that I should add this property.
-> 
-> I tested by adding the reset-gpios entry and it's working fine. I will update in the next patchset.
-> 
-> + reset-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>; 
-> 
-> Thanks again, for pointing it out.
+According to documentation, the DBI range size is 0xf20. So fix it.
 
-SGTM
+Cc: stable@vger.kernel.org # 6.14
+Fixes: f8af195beeb0 ("arm64: dts: qcom: x1e80100: Add support for PCIe3 on x1e80100")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> 
-> Thanks,
-> Ayushi
-> 
-> >> +
-> >> +		pinctrl-0 = <&io_expander_intr_active>,
-> >> +			    <&io_expander_reset_active>;
-> >> +		pinctrl-names = "default";
-> >> +	};
-> >> +
-> > 
-> > The rest LGTM
-> > 
-> 
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 46b79fce92c90d969e3de48bc88e27915d1592bb..34ccabc3cc302b17e944b4343a37fab0bb6334e9 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -3126,7 +3126,7 @@ pcie3: pcie@1bd0000 {
+ 			device_type = "pci";
+ 			compatible = "qcom,pcie-x1e80100";
+ 			reg = <0x0 0x01bd0000 0x0 0x3000>,
+-			      <0x0 0x78000000 0x0 0xf1d>,
++			      <0x0 0x78000000 0x0 0xf20>,
+ 			      <0x0 0x78000f40 0x0 0xa8>,
+ 			      <0x0 0x78001000 0x0 0x1000>,
+ 			      <0x0 0x78100000 0x0 0x100000>,
 
+---
+base-commit: bc8aa6cdadcc00862f2b5720e5de2e17f696a081
+change-id: 20250422-x1e80100-dts-fix-pcie3-dbi-size-56fc110aa36d
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Abel Vesa <abel.vesa@linaro.org>
+
 
