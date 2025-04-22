@@ -1,64 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-54904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C80D1A95D6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 07:42:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 297A5A95D71
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 07:42:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73DEE3B8D62
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 05:42:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D412177659
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 05:42:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38D2A1A83FF;
-	Tue, 22 Apr 2025 05:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E0441EC014;
+	Tue, 22 Apr 2025 05:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BoRHcvnu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MDVEeFVA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AF1A59;
-	Tue, 22 Apr 2025 05:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE51A59;
+	Tue, 22 Apr 2025 05:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745300555; cv=none; b=dkm0bY/zPwyYuZrTBXjsK42+rEQrjEiP3ht12KYuKi9B69OzOeu0/teXcx4yDxQGN33RutDq2NSIKNdQYZIW3os7SD8kKHrsnicCZorksRmy2SwtBLcM83rMbDyIj97hxjj4EJXRkq1pCUTA1T52UlTiCeoVselLeh9pR63Z+x0=
+	t=1745300560; cv=none; b=OD8eEjO+9sIo5sqI18csKZMBAWMnHcrGkAbNaUVTrYATouXU667oXUIudh1CNPH8BlVawIbB67R338D17Y2zJ8e/v55Ii9pMhk3vyvKtGmEdFe3HKv8dMldkyTtWB1HQMZsoQmb8DwMB3n9Xc0kN+1maRrl49AeVywhnkOpksk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745300555; c=relaxed/simple;
-	bh=I/eaYPiPD4/vR9fji1kZ2T1ODATHcon+1LC3SCxLVrQ=;
-	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=AvaeRfmvMagJr51/JeL/lERZUiReDESA21cB3sgNR1iWAFckmTLLVmssuER1w1g9/smU+wC8QeeUjP/SFIQIa9g2pHKz2nA0L/8887PpNksOlHQwQIxUuUcXd17pe3aB0NsVBzL0elmEA6LgBVEL500n0pguMI9t/s9gnagmtNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BoRHcvnu; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1745300560; c=relaxed/simple;
+	bh=2/fmvvBQrS9yDhFXxBOe0T549EL6tQE68n/yCWavJu4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=J7TYZbxHZGeeUXZOuy5T9EicWtK+AjfGeacrTl2G6j6/lpzETAAidkeFBOqx355BBFTb3vXIMqonMBg4RnU79BIHXQNxhv3ZrkLVXc4tNnEyIFs/s/S3mlL9aGtUZXsvYIdV2G6URVcLbDGVgP2af4bJqoaRoMGENfHUpmIAKWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MDVEeFVA; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53M4OcVY019396;
-	Tue, 22 Apr 2025 05:42:30 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53M4PYDX000493;
+	Tue, 22 Apr 2025 05:42:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=VwTKnYwHVBUp8m+jvjJ/hJ
-	jElEfSxcZXInmyV6mUX70=; b=BoRHcvnuukEFH7cf+xjm81Hys1g4yCg+W96CYC
-	Mr5+WkPlCY5jFBILLQcv04lfWkQaFWBXq48vIOmZcgWeYrG6wGDGTV70Ba6dYfUk
-	mucUPMi7E1BAysQMFMPJIugQBR3tipUubRxY/O7xiuBvMmXXOzwtRmuVN1az7G6q
-	A3g5Z0cAwOAlvJdxyrYtOp2d1kfH/M+lx7BcHKvusC/k8WjvwcpfNYJqEGAcwkXv
-	KaUs5B+OqbqHci87j5JpUF34T0hGuHeZ6KhTIaK16jSkPcngGdbr9Bu1wUpJtY1I
-	mV+U4MTjzmGt0zrTu9ugSRoa4JgjpwUrTNzFA3RxvS1Mu7pA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46454bp693-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4aO1QCALmqx5XWm/dxVwWjP+d+UJzRnGkBax5SaGnTw=; b=MDVEeFVABR0Ksdic
+	6yZW7rVjBB1NHF10uypEfLN338a45cvQZe74KcORLm8YTKMHeRd1V678wfVfAufY
+	kOuQU0nXFpEyuOrOxt/tX2GPMjMye4EV1pTcSkZVEcOfvFlzt8/7oFS3072+tIL5
+	sVSJhttwmW5KPmqpF59kig6v4qXua8PVQI27CEDQH7ikxcISpetU+1Qqu8SYZZ7o
+	E9Jbjy//Sgg73yA7+3I5GNvuAad/lbmH3zO/22a6IOjKNrlIV6odwB40J05ohKWU
+	jxS84CJHp2aqiDXrOiz6Et5ARKgfcqeHAIoxvazQ/TkAzdhlDJz8pNPwyH6J+/PE
+	qxGEmw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4641hhpcvb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Apr 2025 05:42:30 +0000 (GMT)
+	Tue, 22 Apr 2025 05:42:34 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53M5gTOc000862
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53M5gYlo029791
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Apr 2025 05:42:29 GMT
+	Tue, 22 Apr 2025 05:42:34 GMT
 Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 21 Apr 2025 22:42:24 -0700
+ 15.2.1544.9; Mon, 21 Apr 2025 22:42:29 -0700
 From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Subject: [PATCH 0/3] clk: qcom: Add camera clock controller support for
- sc8180x
-Date: Tue, 22 Apr 2025 11:12:09 +0530
-Message-ID: <20250422-sc8180x-camcc-support-v1-0-691614d13f06@quicinc.com>
+Date: Tue, 22 Apr 2025 11:12:10 +0530
+Subject: [PATCH 1/3] dt-bindings: clock: Add Qualcomm SC8180X Camera clock
+ controller
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,10 +68,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIADEsB2gC/x2MQQqDMBAAvyJ77kKyKsZ+pfQQ1rXdgzFkaxHEv
- xs8DsPMASZFxeDZHFDkr6ZrquAfDfA3po+gTpWBHPWuI0Lj4IPbkePCjLblvJYfjjFUP0wU2xF
- qm4vMut/f1/s8L/CkxutnAAAA
-X-Change-ID: 20250422-sc8180x-camcc-support-9a82507d2a39
+Message-ID: <20250422-sc8180x-camcc-support-v1-1-691614d13f06@quicinc.com>
+References: <20250422-sc8180x-camcc-support-v1-0-691614d13f06@quicinc.com>
+In-Reply-To: <20250422-sc8180x-camcc-support-v1-0-691614d13f06@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Michael Turquette
 	<mturquette@baylibre.com>,
@@ -95,43 +95,289 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=cdrSrmDM c=1 sm=1 tr=0 ts=68072c46 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=OrtqDbjkpIUBgnuzYQYA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: tHm99u_fWYB3Ex6tn6AFyGgPrjNvKe3D
-X-Proofpoint-GUID: tHm99u_fWYB3Ex6tn6AFyGgPrjNvKe3D
+X-Authority-Analysis: v=2.4 cv=Fe43xI+6 c=1 sm=1 tr=0 ts=68072c4a cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=gEfo2CItAAAA:8 a=COk6AnOGAAAA:8 a=Jqf9mqQlaltseLjGtE8A:9
+ a=QEXdDO2ut3YA:10 a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: Alz2ROOtEWguiqgy5S79esbwFH3TfD0H
+X-Proofpoint-ORIG-GUID: Alz2ROOtEWguiqgy5S79esbwFH3TfD0H
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-22_03,2025-04-21_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- phishscore=0 adultscore=0 mlxlogscore=801 malwarescore=0 clxscore=1011
- spamscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
- bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ bulkscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0 adultscore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
  adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504220041
+ definitions=main-2504220042
 
-This series adds support for camera clock controller base driver,
-bindings and DT support on sc8180x platform.
+Add device tree bindings for the camera clock controller on
+Qualcomm SC8180X platform.
 
 Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 ---
-Satya Priya Kakitapalli (3):
-      dt-bindings: clock: Add Qualcomm SC8180X Camera clock controller
-      clk: qcom: camcc-sc8180x: Add SC8180X camera clock controller driver
-      arm64: dts: qcom: Add camera clock controller for sc8180x
+ .../bindings/clock/qcom,sc8180x-camcc.yaml         |  65 ++++++++
+ include/dt-bindings/clock/qcom,sc8180x-camcc.h     | 181 +++++++++++++++++++++
+ 2 files changed, 246 insertions(+)
 
- .../bindings/clock/qcom,sc8180x-camcc.yaml         |   65 +
- arch/arm64/boot/dts/qcom/sc8180x.dtsi              |   13 +
- drivers/clk/qcom/Kconfig                           |   10 +
- drivers/clk/qcom/Makefile                          |    1 +
- drivers/clk/qcom/camcc-sc8180x.c                   | 2896 ++++++++++++++++++++
- include/dt-bindings/clock/qcom,sc8180x-camcc.h     |  181 ++
- 6 files changed, 3166 insertions(+)
----
-base-commit: bc8aa6cdadcc00862f2b5720e5de2e17f696a081
-change-id: 20250422-sc8180x-camcc-support-9a82507d2a39
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..b17f40ee53a3002b2942869d60773dbecd764134
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml
+@@ -0,0 +1,65 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,sc8180x-camcc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Camera Clock & Reset Controller on SC8180X
++
++maintainers:
++  - Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
++
++description: |
++  Qualcomm camera clock control module provides the clocks, resets and
++  power domains on SC8180X.
++
++  See also: include/dt-bindings/clock/qcom,sc8180x-camcc.h
++
++properties:
++  compatible:
++    const: qcom,sc8180x-camcc
++
++  clocks:
++    items:
++      - description: Board XO source
++      - description: Sleep clock source
++
++  power-domains:
++    maxItems: 1
++    description:
++      A phandle and PM domain specifier for the MMCX power domain.
++
++  required-opps:
++    maxItems: 1
++    description:
++      A phandle to an OPP node describing required MMCX performance point.
++
++allOf:
++  - $ref: qcom,gcc.yaml#
++
++required:
++  - compatible
++  - clocks
++  - power-domains
++  - required-opps
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-sc8180x.h>
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
++    clock-controller@ad00000 {
++      compatible = "qcom,sc8180x-camcc";
++      reg = <0x0ad00000 0x20000>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>,
++               <&sleep_clk>;
++      power-domains = <&rpmhpd SC8180X_MMCX>;
++      required-opps = <&rpmhpd_opp_low_svs>;
++
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,sc8180x-camcc.h b/include/dt-bindings/clock/qcom,sc8180x-camcc.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..3e57b80f65e82518247bac5a7d73d1218df8bd4e
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,sc8180x-camcc.h
+@@ -0,0 +1,181 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_CAM_CC_SC8180X_H
++#define _DT_BINDINGS_CLK_QCOM_CAM_CC_SC8180X_H
++
++/* CAM_CC clocks */
++#define CAM_CC_BPS_AHB_CLK					0
++#define CAM_CC_BPS_AREG_CLK					1
++#define CAM_CC_BPS_AXI_CLK					2
++#define CAM_CC_BPS_CLK						3
++#define CAM_CC_BPS_CLK_SRC					4
++#define CAM_CC_CAMNOC_AXI_CLK					5
++#define CAM_CC_CAMNOC_AXI_CLK_SRC				6
++#define CAM_CC_CAMNOC_DCD_XO_CLK				7
++#define CAM_CC_CCI_0_CLK					8
++#define CAM_CC_CCI_0_CLK_SRC					9
++#define CAM_CC_CCI_1_CLK					10
++#define CAM_CC_CCI_1_CLK_SRC					11
++#define CAM_CC_CCI_2_CLK					12
++#define CAM_CC_CCI_2_CLK_SRC					13
++#define CAM_CC_CCI_3_CLK					14
++#define CAM_CC_CCI_3_CLK_SRC					15
++#define CAM_CC_CORE_AHB_CLK					16
++#define CAM_CC_CPAS_AHB_CLK					17
++#define CAM_CC_CPHY_RX_CLK_SRC					18
++#define CAM_CC_CSI0PHYTIMER_CLK					19
++#define CAM_CC_CSI0PHYTIMER_CLK_SRC				20
++#define CAM_CC_CSI1PHYTIMER_CLK					21
++#define CAM_CC_CSI1PHYTIMER_CLK_SRC				22
++#define CAM_CC_CSI2PHYTIMER_CLK					23
++#define CAM_CC_CSI2PHYTIMER_CLK_SRC				24
++#define CAM_CC_CSI3PHYTIMER_CLK					25
++#define CAM_CC_CSI3PHYTIMER_CLK_SRC				26
++#define CAM_CC_CSIPHY0_CLK					27
++#define CAM_CC_CSIPHY1_CLK					28
++#define CAM_CC_CSIPHY2_CLK					29
++#define CAM_CC_CSIPHY3_CLK					30
++#define CAM_CC_FAST_AHB_CLK_SRC					31
++#define CAM_CC_FD_CORE_CLK					32
++#define CAM_CC_FD_CORE_CLK_SRC					33
++#define CAM_CC_FD_CORE_UAR_CLK					34
++#define CAM_CC_ICP_AHB_CLK					35
++#define CAM_CC_ICP_CLK						36
++#define CAM_CC_ICP_CLK_SRC					37
++#define CAM_CC_IFE_0_AXI_CLK					38
++#define CAM_CC_IFE_0_CLK					39
++#define CAM_CC_IFE_0_CLK_SRC					40
++#define CAM_CC_IFE_0_CPHY_RX_CLK				41
++#define CAM_CC_IFE_0_CSID_CLK					42
++#define CAM_CC_IFE_0_CSID_CLK_SRC				43
++#define CAM_CC_IFE_0_DSP_CLK					44
++#define CAM_CC_IFE_1_AXI_CLK					45
++#define CAM_CC_IFE_1_CLK					46
++#define CAM_CC_IFE_1_CLK_SRC					47
++#define CAM_CC_IFE_1_CPHY_RX_CLK				48
++#define CAM_CC_IFE_1_CSID_CLK					49
++#define CAM_CC_IFE_1_CSID_CLK_SRC				50
++#define CAM_CC_IFE_1_DSP_CLK					51
++#define CAM_CC_IFE_2_AXI_CLK					52
++#define CAM_CC_IFE_2_CLK					53
++#define CAM_CC_IFE_2_CLK_SRC					54
++#define CAM_CC_IFE_2_CPHY_RX_CLK				55
++#define CAM_CC_IFE_2_CSID_CLK					56
++#define CAM_CC_IFE_2_CSID_CLK_SRC				57
++#define CAM_CC_IFE_2_DSP_CLK					58
++#define CAM_CC_IFE_3_AXI_CLK					59
++#define CAM_CC_IFE_3_CLK					60
++#define CAM_CC_IFE_3_CLK_SRC					61
++#define CAM_CC_IFE_3_CPHY_RX_CLK				62
++#define CAM_CC_IFE_3_CSID_CLK					63
++#define CAM_CC_IFE_3_CSID_CLK_SRC				64
++#define CAM_CC_IFE_3_DSP_CLK					65
++#define CAM_CC_IFE_LITE_0_CLK					66
++#define CAM_CC_IFE_LITE_0_CLK_SRC				67
++#define CAM_CC_IFE_LITE_0_CPHY_RX_CLK				68
++#define CAM_CC_IFE_LITE_0_CSID_CLK				69
++#define CAM_CC_IFE_LITE_0_CSID_CLK_SRC				70
++#define CAM_CC_IFE_LITE_1_CLK					71
++#define CAM_CC_IFE_LITE_1_CLK_SRC				72
++#define CAM_CC_IFE_LITE_1_CPHY_RX_CLK				73
++#define CAM_CC_IFE_LITE_1_CSID_CLK				74
++#define CAM_CC_IFE_LITE_1_CSID_CLK_SRC				75
++#define CAM_CC_IFE_LITE_2_CLK					76
++#define CAM_CC_IFE_LITE_2_CLK_SRC				77
++#define CAM_CC_IFE_LITE_2_CPHY_RX_CLK				78
++#define CAM_CC_IFE_LITE_2_CSID_CLK				79
++#define CAM_CC_IFE_LITE_2_CSID_CLK_SRC				80
++#define CAM_CC_IFE_LITE_3_CLK					81
++#define CAM_CC_IFE_LITE_3_CLK_SRC				82
++#define CAM_CC_IFE_LITE_3_CPHY_RX_CLK				83
++#define CAM_CC_IFE_LITE_3_CSID_CLK				84
++#define CAM_CC_IFE_LITE_3_CSID_CLK_SRC				85
++#define CAM_CC_IPE_0_AHB_CLK					86
++#define CAM_CC_IPE_0_AREG_CLK					87
++#define CAM_CC_IPE_0_AXI_CLK					88
++#define CAM_CC_IPE_0_CLK					89
++#define CAM_CC_IPE_0_CLK_SRC					90
++#define CAM_CC_IPE_1_AHB_CLK					91
++#define CAM_CC_IPE_1_AREG_CLK					92
++#define CAM_CC_IPE_1_AXI_CLK					93
++#define CAM_CC_IPE_1_CLK					94
++#define CAM_CC_JPEG_CLK						95
++#define CAM_CC_JPEG_CLK_SRC					96
++#define CAM_CC_LRME_CLK						97
++#define CAM_CC_LRME_CLK_SRC					98
++#define CAM_CC_MCLK0_CLK					99
++#define CAM_CC_MCLK0_CLK_SRC					100
++#define CAM_CC_MCLK1_CLK					101
++#define CAM_CC_MCLK1_CLK_SRC					102
++#define CAM_CC_MCLK2_CLK					103
++#define CAM_CC_MCLK2_CLK_SRC					104
++#define CAM_CC_MCLK3_CLK					105
++#define CAM_CC_MCLK3_CLK_SRC					106
++#define CAM_CC_MCLK4_CLK					107
++#define CAM_CC_MCLK4_CLK_SRC					108
++#define CAM_CC_MCLK5_CLK					109
++#define CAM_CC_MCLK5_CLK_SRC					110
++#define CAM_CC_MCLK6_CLK					111
++#define CAM_CC_MCLK6_CLK_SRC					112
++#define CAM_CC_MCLK7_CLK					113
++#define CAM_CC_MCLK7_CLK_SRC					114
++#define CAM_CC_PLL0						115
++#define CAM_CC_PLL0_OUT_EVEN					116
++#define CAM_CC_PLL0_OUT_ODD					117
++#define CAM_CC_PLL1						118
++#define CAM_CC_PLL2						119
++#define CAM_CC_PLL2_OUT_MAIN					120
++#define CAM_CC_PLL3						121
++#define CAM_CC_PLL4						122
++#define CAM_CC_PLL5						123
++#define CAM_CC_PLL6						124
++#define CAM_CC_SLOW_AHB_CLK_SRC					125
++#define CAM_CC_XO_CLK_SRC					126
++
++
++/* CAM_CC power domains */
++#define BPS_GDSC						0
++#define IFE_0_GDSC						1
++#define IFE_1_GDSC						2
++#define IFE_2_GDSC						3
++#define IFE_3_GDSC						4
++#define IPE_0_GDSC						5
++#define IPE_1_GDSC						6
++#define TITAN_TOP_GDSC						7
++
++/* CAM_CC resets */
++#define CAM_CC_BPS_BCR						0
++#define CAM_CC_CAMNOC_BCR					1
++#define CAM_CC_CCI_BCR						2
++#define CAM_CC_CPAS_BCR						3
++#define CAM_CC_CSI0PHY_BCR					4
++#define CAM_CC_CSI1PHY_BCR					5
++#define CAM_CC_CSI2PHY_BCR					6
++#define CAM_CC_CSI3PHY_BCR					7
++#define CAM_CC_FD_BCR						8
++#define CAM_CC_ICP_BCR						9
++#define CAM_CC_IFE_0_BCR					10
++#define CAM_CC_IFE_1_BCR					11
++#define CAM_CC_IFE_2_BCR					12
++#define CAM_CC_IFE_3_BCR					13
++#define CAM_CC_IFE_LITE_0_BCR					14
++#define CAM_CC_IFE_LITE_1_BCR					15
++#define CAM_CC_IFE_LITE_2_BCR					16
++#define CAM_CC_IFE_LITE_3_BCR					17
++#define CAM_CC_IPE_0_BCR					18
++#define CAM_CC_IPE_1_BCR					19
++#define CAM_CC_JPEG_BCR						20
++#define CAM_CC_LRME_BCR						21
++#define CAM_CC_MCLK0_BCR					22
++#define CAM_CC_MCLK1_BCR					23
++#define CAM_CC_MCLK2_BCR					24
++#define CAM_CC_MCLK3_BCR					25
++#define CAM_CC_MCLK4_BCR					26
++#define CAM_CC_MCLK5_BCR					27
++#define CAM_CC_MCLK6_BCR					28
++#define CAM_CC_MCLK7_BCR					29
++
++#endif
 
-Best regards,
 -- 
-Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+2.25.1
 
 
