@@ -1,113 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-54960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39D90A96D17
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 15:39:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CA5DA96D1E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 15:39:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3A0E616C022
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 13:39:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4590D16B07F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 13:39:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3059C284675;
-	Tue, 22 Apr 2025 13:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 052C0280CE5;
+	Tue, 22 Apr 2025 13:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ox0YFe1O"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ecEvA8KN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F5C283CB7;
-	Tue, 22 Apr 2025 13:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C812D280CD2;
+	Tue, 22 Apr 2025 13:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745329134; cv=none; b=gWVuQaM6NjpPm+9uHgHv3Z9QdC5cjgiiljqnoplIvAx9+nJnJl1pJJawuG2ldg8hQJyOiSz8cvWgGJHTiVVZTXEYEZ+9u1JMpXNyS4uQ+loTExwKIvj/++w5oFBKjjCEqbSHB6aKJSbA05QJ9lSzg9gKIJOg7MIe1QFReirwh9w=
+	t=1745329189; cv=none; b=tP+GmjSf249bk3cG6qYBj1a5iDX+tf5r9Ii++YcXPMgbPGhhDWB7QiY2zi5ptd35KYlK7IhexZNKqm27ON5xHmCYTSADVsQI6RE3dCkfvBQqMEfd8HMQChrmX52zBDlK+s1qFdOCObrd3iBtx9XSPVNJTNsNm10NrkTLOZSkzNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745329134; c=relaxed/simple;
-	bh=p+xn3jOonIgfJyv3cyPJsUoHSKSwu7zbUq+3berdi+Y=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=WSpOvARAr8mRpgUACzaeGDLdXtczi5BDQ9g6ZrJpR+71W+JcoXJy+Y0E2D18EHGoQHyJ00Co8J0RWzGPL2t5gvNJ0hQvcSJGcRTBpjKvOtDruLxFfsWfKjiVKM8tQfdNAeMhnU37m1K3lmHhebdwnghh6e3ZZwQoj9vgcn46OX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ox0YFe1O; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12434C4CEEC;
-	Tue, 22 Apr 2025 13:38:52 +0000 (UTC)
+	s=arc-20240116; t=1745329189; c=relaxed/simple;
+	bh=RRMkSQ6dpu08+r+o2kINCZkfxWvHTejP9hsfltA7pwA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E/oSt6Cfohcu5nFbQV3gE4jh0jnIer2gZLnwAf30G/byL0wBv5nLkKNrUASAKqF+gqum9HQ0ARLWObUnQ8Ot8tQKRgpTkyX4IJaRVfVVNQpMrGoDYKwISvEG+5qHz7hCAoXxphLeT+wP3rRX4QLGIHNgg3ulRHnZb5eZRI55tkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ecEvA8KN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E25C4CEE9;
+	Tue, 22 Apr 2025 13:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745329133;
-	bh=p+xn3jOonIgfJyv3cyPJsUoHSKSwu7zbUq+3berdi+Y=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=ox0YFe1OKlv00myMPjwMz8L1HIUmUfkBpdZxj5kSYsZNzpiaZ0tHND41JUZPSsDHB
-	 pkP2RwaL1k4mkPnhO6n4QbqgYuJRNFeC/7xq/ZHbzALPDgzbgWGeygGFnkftSxDhz0
-	 hVHc+ooUX8SGogt6nK7a9N4V2cKFS3IcM1ZWFH4yWqP1K87hdX3yHQ32k+QF+WzfJc
-	 FL77uCMA5+psm3m2BdFQrUDLuqakoD3x2tDjkjP82to//uANvA5Vta9DJjQla1EBEI
-	 /Y6FloR6rQ+Fo5D96bcgyLjbB+AXtfKc9ImP5mXnv0fULUCsW3RMaKsrcrS4ggyO3l
-	 3dRByhv5CDk3A==
-Date: Tue, 22 Apr 2025 08:38:51 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1745329189;
+	bh=RRMkSQ6dpu08+r+o2kINCZkfxWvHTejP9hsfltA7pwA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ecEvA8KNq5aqRqgySwz19zoc5spezyErx6ZrvJS3CLpyo15NfNPnUhKqXMnn0Gaxd
+	 7k1Tt49aQAGe9+g19yQxZjVl07jzdFT+6b55nRkHE2poFZNVYlSZtGKEkMKbYt6fHz
+	 nZamK3v7b8RV0Spb7bMRJvB4rYKJzVUYCQQG31Wji8wDhAqU0QctoEiYvygAwWv9mS
+	 RHNddLw3L0EwI0OC90BLILKWFmJpAlARfB/NaY0OCX9nY3doSOTzZAELOcRg6Obdt8
+	 8yPk1/IMJzuh0rwSfAq2oiqkLZdSJ3JQ3S0IoVhTelN/Im8/IjNNIbifTr5D5l0rQI
+	 d5TSy8WSKEHYA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1u7Dqk-000000005rC-3LpE;
+	Tue, 22 Apr 2025 15:39:47 +0200
+Date: Tue, 22 Apr 2025 15:39:46 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Rob Clark <robdclark@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
+	linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>
+Subject: Re: [PATCH 0/7] arm64: dts: qcom: x1e80100: enable rtc
+Message-ID: <aAecIkgmTTlThKEZ@hovoldconsulting.com>
+References: <20250120144152.11949-1-johan+linaro@kernel.org>
+ <20250127002026.GA2534668-robh@kernel.org>
+ <CAF6AEGsfke=x0p1b2-uNX6DuQfRyEjVbJaxTbVLDT2YvSkGJbg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- kernel@quicinc.com, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org
-To: Song Xue <quic_songxue@quicinc.com>
-In-Reply-To: <20250422-add_psci_sys_reset2_modes_for_qcs615-v1-1-7faaf877366e@quicinc.com>
-References: <20250422-add_psci_sys_reset2_modes_for_qcs615-v1-1-7faaf877366e@quicinc.com>
-Message-Id: <174532908966.1111913.12713682553446003215.robh@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: qcs615-ride: Add PSCI SYSTEM_RESET2
- types
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGsfke=x0p1b2-uNX6DuQfRyEjVbJaxTbVLDT2YvSkGJbg@mail.gmail.com>
 
+On Mon, Apr 21, 2025 at 07:36:28AM -0700, Rob Clark wrote:
+> On Sun, Jan 26, 2025 at 4:20 PM Rob Herring <robh@kernel.org> wrote:
+> > On Mon, Jan 20, 2025 at 03:41:45PM +0100, Johan Hovold wrote:
+> > > This series adds support for utilising the UEFI firmware RTC offset to
+> > > the Qualcomm PMIC RTC driver and uses that to enable the RTC on all X
+> > > Elite machines.
 
-On Tue, 22 Apr 2025 15:39:54 +0800, Song Xue wrote:
-> Add properties to support Bootloader and Edl mode for PSCI system
-> reset2 reboot modes. The cookie and magic values set will be used
-> by SYSTEM_RESET2 call.
+> > > Rob had some concerns about adding a DT property for indicating that a
+> > > machine uses UEFI for storing the offset and suggested that the driver
+> > > should probe for this instead. Unfortunately, this is easier said than
+> > > done given that UEFI variable support itself is probed for and may not
+> > > be available until after the RTC driver probes.
+> >
+> > This information would be useful in the binding commit...
+> >
+> > Seems like something I would say, but this is v1 and I have no memory of
+> > discussing this. I would also say probe ordering is not a DT problem,
+> > but sounds like an OS problem. Aren't there other things needing EFI
+> > variables earlyish too? Do you really want to have to update the DT to
+> > enable this?
 > 
-> Signed-off-by: Song Xue <quic_songxue@quicinc.com>
-> ---
-> Dependencies:
-> Link to bindings and driver changes:
-> https://lore.kernel.org/all/20250303-arm-psci-system_reset2-vendor-reboots-v9-0-b2cf4a20feda@oss.qualcomm.com/
-> ---
->  arch/arm64/boot/dts/qcom/qcs615-ride.dts | 7 +++++++
->  arch/arm64/boot/dts/qcom/qcs615.dtsi     | 2 +-
->  2 files changed, 8 insertions(+), 1 deletion(-)
-> 
+> I was debugging why RTC offset was not working properly for me, and
+> eventually realized it was exactly this problem (efivars not avail
+> when rtc probes).
 
+Hmm. It seems dropping that property for v2 under the assumption that
+efivars would be available at module init time (since the driver can
+only be built-in) was a mistake.
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+I see now that the current qcom efivars driver does not probe until
+module init time itself, but even if we change that the scm driver
+depends on an interconnect driver which can be built as a module...
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+> Hacking up rtc-pm8xxx to return -EPROBE_DEFER "fixes" it
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
+> > OTOH, it's one property, meh.
 
-  pip3 install dtschema --upgrade
+I guess we need that property on these platforms as I had initially
+concluded after all. As with the rest of this driver, hopefully all of
+this goes away for future Qualcomm platforms once they fix their UEFI
+implementation so that the time service can be used directly.
 
-
-This patch series was applied (using b4) to base:
- Base: using specified base-commit e21edb1638e82460f126a6e49bcdd958d452929c
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250422-add_psci_sys_reset2_modes_for_qcs615-v1-1-7faaf877366e@quicinc.com:
-
-arch/arm64/boot/dts/qcom/qcs615-ride.dtb: psci (arm,psci-1.0): 'reset-types' does not match any of the regexes: '^pinctrl-[0-9]+$', '^power-domain-'
-	from schema $id: http://devicetree.org/schemas/arm/psci.yaml#
-
-
-
-
-
+Johan
 
