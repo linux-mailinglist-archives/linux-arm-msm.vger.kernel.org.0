@@ -1,63 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-54909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02064A95EC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 08:59:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CDF7A95EFF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 09:08:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BD46016B5DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 06:58:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5B86D3B52CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 07:08:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50EFE22A810;
-	Tue, 22 Apr 2025 06:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF489238C15;
+	Tue, 22 Apr 2025 07:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jgxllVWd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tLCQbjNY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2481A5B86;
-	Tue, 22 Apr 2025 06:58:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8B3230987
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 07:07:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745305128; cv=none; b=UPfsxSp/lmV80I5MGx5uh3ZUzSunniQfJi539rWGN6aKUkJfhlPKv8Z/EfEuz2xwE3+noISE84wvHF24tutStWtAmRcgB40WmXue0rOxwQvATvu0DQaLOwiMiQBWrST9iT/yDLsJS3vxCp7fGl6xBqGBDGbaN6MXO+e/W+1YVjU=
+	t=1745305669; cv=none; b=X0AFz9bkNVbO0ssO79NRygqEvYp7o89Ut4mlS26Fy+f0LoG6nra7fOVIYsAhXkyulFRv3U6wpSppl1OkEvzs1f5ddYx16LQQAI29r1gZ3DBlwRYrdujhzdnmCc/UXKdyd2un6syG0zKubaNU0VfTvloGWiROlecanThIw5hQExQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745305128; c=relaxed/simple;
-	bh=uMq9Yaaidygfns+/1ADH1JZ8AsHopf6/JsvpjUR1rYU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DkpsTxRmXKX0D1W/frxwzc3spsDp16N6A80+l+6gHNWBCU5I1oMyZ/ru85i2U/QoFBIfbDO3hXElrw8AoYzWgSbYfo2BF8rbnr4s9aG0y1zPxlqXkoDZWEvkZmqzG0RyLiLCw28sExKe0SKJdWlpBMeblnVSZ4rmi9D0pSVzc0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jgxllVWd; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53M4Oohx019535;
-	Tue, 22 Apr 2025 06:58:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZmNhp6IS4qDHzzExCOLDgWRkIsbXzXs/M/jKX/6Spns=; b=jgxllVWd1gWzzvIT
-	NiwQOBOqNldOXHhGhrYh4oZa26K2B5XoPZI19+vEzHO5fK0FRNjnP2PbDClAvqYX
-	M1TZ5EencLowilJR2uxbi15ZdbPLuNv5qd8XpH6Mmz2QQgO/khfMQZ1OWeXU37dv
-	iz6Dzo1tF3pVUSNH7eS4DKcclZmhOSMeHvChRvbDVLk98TuncPzVcUZ7W6VWai6s
-	HZtpRBGzI8StiqoWm5tVUYmBh5tf8rf5qe6w3Bj5AUFFaAdePe+Yo5St6Mi+5cR+
-	Y3ASoECGPFxSCYFBONmsgf4Rf3TzbPizXnoElhjo8XJgJXNjV39YC8srUTt4hvl9
-	7SymOQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46454bpc94-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Apr 2025 06:58:31 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53M6wU1B002047
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Apr 2025 06:58:30 GMT
-Received: from [10.206.97.61] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 21 Apr
- 2025 23:58:23 -0700
-Message-ID: <d77353b0-94e6-4461-bd34-44c8cb80eb07@quicinc.com>
-Date: Tue, 22 Apr 2025 12:28:20 +0530
+	s=arc-20240116; t=1745305669; c=relaxed/simple;
+	bh=HjhLzE9Y/Q52iV3cqMbiQuwB2APqQ9fAC4HSJMOmcWI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=DkeqtKRz7sa4Fj2HCgVxA3PxYSoJoAYArY/o4AQKtjACz9xHKl2vBHDYx6RhgbhSvyI7KZIt/i+G+TxmEPqWOKkh6pBHo4Y5HikmXE8CZlQClxiE86fOQO7js4cC8JGj7yaiV4/OWD41s7IbhuuuAdATnHKo8cEd0LlQaeXAlWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tLCQbjNY; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43ce70f9afbso41007265e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 00:07:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1745305665; x=1745910465; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i6a3BQRbJn5uKf8xLcqr/agF+8C8ycJ/35awjwM1MZ8=;
+        b=tLCQbjNYU4vONWrULizgRgx4kXgG4Q+cT54FK6XVHT4ILwOMdxMbgeCeICWXS/hkDu
+         xktrtHLHx1QZG8oyFVwMHGoiH9h5tedIIpxP8Alg+hUBAw79IkCD5KgwMlaDCytkcPHN
+         hsAKlIu8PDT17/fCtO5AkQQ4XEx9RSqEuZiWkXHBpHXoFCCyQFlE9DtIpYCP+MwKL4JY
+         tNPtj1BP04TEtyentwGET2ojANmWkfZB9ts+IRH/Xv+j4hXgIq2ccjMSXicFj7WonRF4
+         A2EEJjtjjlmySMFz9iDN0yDQKSOUKgMuT/f7F4IECcZT3n8dRdnO6d0VYE4ZU86dJHBu
+         fVww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745305665; x=1745910465;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=i6a3BQRbJn5uKf8xLcqr/agF+8C8ycJ/35awjwM1MZ8=;
+        b=rgmihQj6J+TDXptocev0SwhGjEVXYG3TgGeaQ26DtWNi+DvEdQDFvcaWNrNHLxQCwf
+         1geoxCoK9CIJ1mhN6ExL+vkDgaonu0zunuizlC1Clts7JqYCvC0NMhIhe8hefjvud1o0
+         eI66d8i9i2mbitq1+a1cBSCjXNtsRJurVq2Yx7ktn6Rjy/TweS67lhNTg/rZ05oj18pL
+         r95V05sxYg84LbIZAjqoiWVMxblqhcGBYHzXvEFTOvNuJq6D5FmbeGSGC7bhrQSuJPRP
+         4F8KTDF6MiY+EnhgeM/NB7sGAc1kPdlVedYtEWAnLUB68bSZKL3WC8MGDz3BtmTFz8xD
+         k0hw==
+X-Forwarded-Encrypted: i=1; AJvYcCWxCj3BPPPPXVjEPlLPsa+clAdpzU2w3SoSMij3Dn4LQMCMb2V1fGsKF2j9qHowSaiKZH+n0vDH9yP0Fybm@vger.kernel.org
+X-Gm-Message-State: AOJu0YwlUdczKfjqg1aqpn92/r7nYMgJUYVukZB+Uk0b0lDeFxSOTUZk
+	xyid67Mj5TJIYfd3tQr12MNspZ9oXT2/ZCxvTcvkOwfw/sDBu0VLrlZ4H0Hs7x0=
+X-Gm-Gg: ASbGnctJtjj5ghLAPK+0/lSJnuXHigX5pn8r4Ji+7REWhu70Ssjt0h50oIwW7tro1Qk
+	+KzuY6wwqR3uMg940iXwO+c+pYLDpwaZG1oJYLDj6goYt5pRVaXypy4Xy0PkkXQktRfCwn/SeBi
+	JT69aRTZn9CQIdfpsXuP4wD67ToqfaKF9ggyG/pHp7SVTBrnNaKsEJI742867jYb+8gwM8CiyGA
+	Hd9GQn9r3QanMQZPyvu2UkAfrR/MrRxpaYn1zpa81f3a0dT8yVONHBdRjt4mcn/qsgjcjkOHDfT
+	x1hwsC20CQTUE2kjhlrbVxsYmQtZD5by1rx0xRi7BJwIKGHdNV1gnaco/Gp0vb+Z8+Kwu5/D4yy
+	3geREsRpi7nMzKOzCrg==
+X-Google-Smtp-Source: AGHT+IHoQqch/rixFWxT15tJy0SJvow1uQ/1aou3lnDMI0B3Bb0LfLM25ogmt9gQblE5yATucRyg5Q==
+X-Received: by 2002:a05:600c:1e0c:b0:43d:fa59:bcee with SMTP id 5b1f17b1804b1-4406ac1feebmr119671555e9.33.1745305665458;
+        Tue, 22 Apr 2025 00:07:45 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:b137:7670:8eb9:746f? ([2a01:e0a:3d9:2080:b137:7670:8eb9:746f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4406d5a9e38sm165457015e9.2.2025.04.22.00.07.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Apr 2025 00:07:45 -0700 (PDT)
+Message-ID: <571b6484-d3ac-4aca-a055-c143f7e4a5dd@linaro.org>
+Date: Tue, 22 Apr 2025 09:07:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,151 +84,126 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/11] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
- to DP bridge nodes
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Ayushi Makhija
-	<amakhija@qti.qualcomm.com>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <marijn.suijten@somainline.org>,
-        <andersson@kernel.org>, <robh@kernel.org>, <robh+dt@kernel.org>,
-        <krzk+dt@kernel.org>, <konradybcio@kernel.org>, <conor+dt@kernel.org>,
-        <andrzej.hajda@intel.com>, <neil.armstrong@linaro.org>,
-        <rfoss@kernel.org>, <Laurent.pinchart@ideasonboard.com>,
-        <jonas@kwiboo.se>, <jernej.skrabec@gmail.com>,
-        <quic_abhinavk@quicinc.com>, <quic_rajeevny@quicinc.com>,
-        <quic_vproddut@quicinc.com>, <quic_jesszhan@quicinc.com>
-References: <20250417053909.1051416-1-amakhija@qti.qualcomm.com>
- <20250417053909.1051416-8-amakhija@qti.qualcomm.com>
- <qnhfnxvdsgnw5jh4xxaqz3p2x67qcrr7kn3vwdnyz5huchdtzy@aagflznjrvly>
-Content-Language: en-US
-From: Ayushi Makhija <quic_amakhija@quicinc.com>
-In-Reply-To: <qnhfnxvdsgnw5jh4xxaqz3p2x67qcrr7kn3vwdnyz5huchdtzy@aagflznjrvly>
-Content-Type: text/plain; charset="UTF-8"
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8650: add iris DT node
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250418-topic-sm8x50-upstream-iris-8650-dt-v1-1-80a6ae50bf10@linaro.org>
+ <asfwnyn5grm426vq5qatrxfffv3wmbuzx6266rblanzqepffzx@7773dcxfaqe4>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <asfwnyn5grm426vq5qatrxfffv3wmbuzx6266rblanzqepffzx@7773dcxfaqe4>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=cdrSrmDM c=1 sm=1 tr=0 ts=68073e17 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=174sz1Ju-uvedw1KsVAA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: 90qiLFkghPTaMIsNlUuo9KD-nYnuIL4g
-X-Proofpoint-GUID: 90qiLFkghPTaMIsNlUuo9KD-nYnuIL4g
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-22_03,2025-04-21_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- phishscore=0 adultscore=0 mlxlogscore=999 malwarescore=0 clxscore=1015
- spamscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
- bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504220052
 
-On 4/17/2025 4:10 PM, Dmitry Baryshkov wrote:
-> On Thu, Apr 17, 2025 at 11:09:05AM +0530, Ayushi Makhija wrote:
->> From: Ayushi Makhija <quic_amakhija@quicinc.com>
+On 19/04/2025 01:05, Dmitry Baryshkov wrote:
+> On Fri, Apr 18, 2025 at 03:20:35PM +0200, Neil Armstrong wrote:
+>> Add DT entries for the sm8650 iris decoder.
 >>
->> Add anx7625 DSI to DP bridge device nodes.
+>> Since the firmware is required to be signed, only enable
+>> on Qualcomm development boards where the firmware is
+>> available.
 >>
->> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 >> ---
->>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 180 +++++++++++++++++++++
->>  1 file changed, 180 insertions(+)
+>>   arch/arm64/boot/dts/qcom/sm8650-hdk.dts |  5 ++
+>>   arch/arm64/boot/dts/qcom/sm8650-mtp.dts |  5 ++
+>>   arch/arm64/boot/dts/qcom/sm8650-qrd.dts |  5 ++
+> 
+> I'd say that these are 4 commits.
+
+I could make 10 and still be coherent, but do we really need 4 here ?
+
+> 
+>>   arch/arm64/boot/dts/qcom/sm8650.dtsi    | 94 +++++++++++++++++++++++++++++++++
+>>   4 files changed, 109 insertions(+)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
->> index 175f8b1e3b2d..d5b2dabe927d 100644
->> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
->> @@ -28,6 +28,13 @@ chosen {
->>  		stdout-path = "serial0:115200n8";
->>  	};
->>  
->> +	vph_pwr: vph-pwr-regulator {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "vph_pwr";
->> +		regulator-always-on;
->> +		regulator-boot-on;
->> +	};
->> +
->>  	vreg_conn_1p8: vreg_conn_1p8 {
->>  		compatible = "regulator-fixed";
->>  		regulator-name = "vreg_conn_1p8";
->> @@ -128,6 +135,30 @@ dp1_connector_in: endpoint {
->>  			};
->>  		};
->>  	};
->> +
->> +	dp-dsi0-connector {
->> +		compatible = "dp-connector";
->> +		label = "DSI0";
->> +		type = "full-size";
->> +
->> +		port {
->> +			dp_dsi0_connector_in: endpoint {
->> +				remote-endpoint = <&dsi2dp_bridge0_out>;
->> +			};
->> +		};
->> +	};
->> +
->> +	dp-dsi1-connector {
->> +		compatible = "dp-connector";
->> +		label = "DSI1";
->> +		type = "full-size";
->> +
->> +		port {
->> +			dp_dsi1_connector_in: endpoint {
->> +				remote-endpoint = <&dsi2dp_bridge1_out>;
->> +			};
->> +		};
->> +	};
->>  };
->>  
->>  &apps_rsc {
->> @@ -519,7 +550,107 @@ &i2c18 {
->>  	clock-frequency = <400000>;
->>  	pinctrl-0 = <&qup_i2c18_default>;
->>  	pinctrl-names = "default";
->> +
->>  	status = "okay";
->> +
->> +	io_expander: gpio@74 {
->> +		compatible = "ti,tca9539";
->> +		reg = <0x74>;
->> +		interrupts-extended = <&tlmm 98 IRQ_TYPE_EDGE_BOTH>;
->> +		gpio-controller;
->> +		#gpio-cells = <2>;
->> +		interrupt-controller;
->> +		#interrupt-cells = <2>;
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+>> index d0912735b54e5090f9f213c2c9341e03effbbbff..69db971d9d2d32cdee7bb1c3093c7849b94798a0 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+>> @@ -894,6 +894,11 @@ &ipa {
+>>   	status = "okay";
+>>   };
+>>   
+>> +&iris {
+>> +	firmware-name = "qcom/vpu/vpu33_p4.mbn";
 > 
-> No reset-gpios? Is the expander being used by something else so that we
-> don't want it to be reset during the bootup?
+> You shouldn't need to specify this, it matches the default one.
+
+Hmm ok
+
 > 
-Hi Dmitry,
-
-Please, ignore the previous reply.
-
-This io_expander is used by anx7625 bridge only. I have defined the gpio in pinctrl setting and so far it was helping out indirectly to bring io_expander out
-of the reset. The reset-gpios is optional for tca9539, because of which the io_expander driver didn't throw an error and I never realize that I should add this property.
-
-I tested by adding the reset-gpios entry and it's working fine. I will update in the next patchset.
-
-+ reset-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>; 
-
-Thanks again, for pointing it out.
+>> +	status = "okay";
+>> +};
+>> +
+>>   &gpu {
+>>   	status = "okay";
+>>   
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
+>> index 76ef43c10f77d8329ccf0a05c9d590a46372315f..04108235d9bc6f977e9cf1b887b0c89537723387 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
+>> @@ -585,6 +585,11 @@ vreg_l7n_3p3: ldo7 {
+>>   	};
+>>   };
+>>   
+>> +&iris {
+>> +	firmware-name = "qcom/vpu/vpu33_p4.mbn";
+>> +	status = "okay";
+>> +};
+>> +
+>>   &lpass_tlmm {
+>>   	spkr_1_sd_n_active: spkr-1-sd-n-active-state {
+>>   		pins = "gpio21";
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+>> index 71033fba21b56bc63620dca3e453c14191739675..58bdc6619ac55eda122f3fe6e680e0e61967d019 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+>> @@ -824,6 +824,11 @@ &ipa {
+>>   	status = "okay";
+>>   };
+>>   
+>> +&iris {
+>> +	firmware-name = "qcom/vpu/vpu33_p4.mbn";
+>> +	status = "okay";
+>> +};
+>> +
+>>   &gpu {
+>>   	status = "okay";
+>>   
+> 
 
 Thanks,
-Ayushi
-
->> +
->> +		pinctrl-0 = <&io_expander_intr_active>,
->> +			    <&io_expander_reset_active>;
->> +		pinctrl-names = "default";
->> +	};
->> +
-> 
-> The rest LGTM
-> 
+Neil
 
 
