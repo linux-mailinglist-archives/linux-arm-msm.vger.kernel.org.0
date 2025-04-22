@@ -1,109 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-54974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF3C6A97515
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 21:02:52 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7319A97530
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 21:14:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 085D81795BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 19:02:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 329A67A548B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 19:13:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A17C298989;
-	Tue, 22 Apr 2025 19:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36E69297A64;
+	Tue, 22 Apr 2025 19:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=joelselvaraj.com header.i=@joelselvaraj.com header.b="HCsFCcCM"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AOk5D0rZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-4317.protonmail.ch (mail-4317.protonmail.ch [185.70.43.17])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B70285414;
-	Tue, 22 Apr 2025 19:02:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1C81DDA1E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 19:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745348560; cv=none; b=plg8stc769vwxfzcalLRKjZxQDhc8QStJNYPZi1lP0U7oRiBhH4WykxubX5YuKtCl1qgSdRgXs8n8bplnWVSctDILKiZAL6OE3jxHesAxRdO2XN6mMQRXpITBhSBU5tzqASFH4Fmn0zgUKUZrqRTB5DNzh2lh43lMmpt53RXfn4=
+	t=1745349255; cv=none; b=iropxmdlqPmuGfjgqkrV/I2d1LoUZbeORJtvMbnPKWLgLGSMVvQ2NGoKlFS6l6Zrk4kIYqB0KoxSQqKktbYYoYN8oGMcAI1XghcjnraLlF4yS4/dLSZSFu9G1aa4Zdioacv7aE8ov+iTfAjXNfbidGDbFose4RZ5U4pTl9C5vVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745348560; c=relaxed/simple;
-	bh=0+rggnwaWmlNWpjJmv1c2bbt4PZ1XHqtGeq99yflNHE=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MAPqPan2GLfSMMmtgqp4hb1t6U1hlm5/6aNshia/eZ15ecnQ6QhuPUOL4dkx9CB+v9W+VOfQKjTz3qHg7AZXRvZ2yBPOuVrT8h/rysPnwxeIVSA4NHIFOe6AdHbUJcy2WB5xErqClOvxACbCgskXsrC0RZ799qlZFQZqDz4nfVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=joelselvaraj.com; spf=pass smtp.mailfrom=joelselvaraj.com; dkim=pass (2048-bit key) header.d=joelselvaraj.com header.i=@joelselvaraj.com header.b=HCsFCcCM; arc=none smtp.client-ip=185.70.43.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=joelselvaraj.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=joelselvaraj.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=joelselvaraj.com;
-	s=protonmail2; t=1745348550; x=1745607750;
-	bh=0+rggnwaWmlNWpjJmv1c2bbt4PZ1XHqtGeq99yflNHE=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=HCsFCcCMj3OjtsbUaFDP5z+ktC928HKV1kVwp77HCG5ui1hrGLqNl8WwsJCHEVqYG
-	 yNJYK8PEIKZ/4I/27DGrn376GDDNeyvVFnyXlytDIadjvVo7yWcMkEKY/TDe1YnkAl
-	 U+BlhWAAJzjvo/G2kxNsgNWSy31Uf5WdeTdfnIKVEfiW+3OYqDupb5PBA3zJk/u3Ix
-	 u3u58jjQkQeuHZlG68rYMmy+Qk4R7/q4UODdphwIm49IMSeVlXnhG9rkt9BOY7vxOW
-	 OMaVN5jgaCet1+QAZG3NDFs1eFxA77dcfPrFICcdwZsWKR/9rgE+75JHFhDNNzqxSO
-	 6kzt7TQIJzoEg==
-Date: Tue, 22 Apr 2025 19:02:26 +0000
-To: Bjorn Andersson <andersson@kernel.org>, Dmitry Torokhov <dmitry.torokhov@gmail.com>
-From: Joel Selvaraj <foss@joelselvaraj.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-input@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v4 1/4] dt-bindings: input: touchscreen: edt-ft5x06: use unevaluatedProperties
-Message-ID: <220cbe91-07d1-4512-bc7e-a5af8c03eb5b@joelselvaraj.com>
-In-Reply-To: <lrgjgfupvtceac54tag7rn2hgglgaogic2n33q6vshbvv5exgq@eqefsbvvdkdz>
-References: <20250303-pocof1-touchscreen-support-v4-0-cdc3bebc3942@joelselvaraj.com> <20250303-pocof1-touchscreen-support-v4-1-cdc3bebc3942@joelselvaraj.com> <Z8fzD-aF-hN0PeyD@google.com> <lrgjgfupvtceac54tag7rn2hgglgaogic2n33q6vshbvv5exgq@eqefsbvvdkdz>
-Feedback-ID: 113812696:user:proton
-X-Pm-Message-ID: 1b3f7eb186d3e0b6746a3446f07aff7f74ffd266
+	s=arc-20240116; t=1745349255; c=relaxed/simple;
+	bh=ktElfp4y9jLiB76b0Lw+Bu81gNc+EGDgrxca1gyyqYw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=q2bx/8kARZg1xkOV0UEA7C5aj0jVJYnS+E4TWqCzQDW8QxEPNAwxg4xM5SL6BEKRaXcTEk5j5P7s/fGINxlZUD+oxNphwaAd5AY2WgebVh1WHze63K6AXHEMIrtd88U6aERNfgsYzpvoVaSo9TGEH/fEAQS3RvoJ9kcoq5Bkxis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AOk5D0rZ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53MI6m13024848
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 19:14:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vDfBUzxdqcOodqK0x53+9B7Qwb91WQYtR62iZ46QXiI=; b=AOk5D0rZ8GXmkTGS
+	OTj0/lfCOFxNMK6SvsP0kJMxehSGUc0NnT0KYybKGvV4ScuIejqCb4j8mPlBS2rI
+	Aox8SXAC9p90WKSmW2geLKOFac/HW5/ox5X6ckOHiVskWuIqgcI1AZ/4GQF1fEWd
+	PpoSYprpXpZPeNMzlS99PlhMZsi57RvZXde9En5AZ2JhkMe/XJ0bRgtf2l1vZ+iA
+	S0nKczjlkspJohAj8QiANmAmkwPAWvSQD0ZV3+EivpDpvtv4BbftgRIT/K7Ke8Ns
+	B0Hi9LNG2zx3RgFSTgV+jm5sjWZGKS787lg//pP8C1MvrYY8qfMK/i6YcLMpO1SB
+	yx7UXw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 464426rp3q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 19:14:11 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c547ab8273so44448885a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 12:14:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745349250; x=1745954050;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vDfBUzxdqcOodqK0x53+9B7Qwb91WQYtR62iZ46QXiI=;
+        b=JKqGiBisscfY6aLnvWSaG6UlB1znwhdJCqHzFSUDvFtIEbJyx1jIj9Ij9dxcpuxnYn
+         MLlqNGBoUGW7pIin2cCD5LNkVA9QYHK4B/l+YrpCrPe04rdHEt5qtadwJ+awogepKf5m
+         uaVvCbSP/PsG5jrknO/SulpRwahSy8zcJ1i/S1B9o8Czjm1pLQtaJu+LwnNNu0SCCLk4
+         d8sU7g0JJZ6cl0oNITTPJOGYYTr9x4s0Cr7D+ROs6eSn5zUZAMFvOR7xn07jBQvVBA+Q
+         WYP0l3C2tHqfdJmP9jmt2vbDYgamFJotQgkf1eK7rXX8TGE/bynkTR9YR6UnKgXmPeVn
+         I3Bw==
+X-Gm-Message-State: AOJu0Ywb6yZog5r8ftNfIBZbrc05TFrSRcs8681CM6xxtEO1+gx7hPbe
+	/vP+54qAzWFBD71ESKN/vo5SMRSLNiabzs5JgCCZ80qT2M2wVcm8Xh0FAXZcz01OGPIHKk15IBH
+	FomAsEZqyIiCjRfpaMHeJteXbkVLLAyDtjZwRxGJdZkXxWSrXDDTMQ/RkRz/5wgAX
+X-Gm-Gg: ASbGnctT7tUuld29d+8R1KpZyCh+fjAbp65CGYU6GknYo4wiMC6v7zmfeZCQrIAbOIG
+	av0T09Md/9VFf+BD8VsHT1c5QQbeEpmpfZvX/DaH2S9bQUOAl61sfBorefob5HK512QeYJXUzdc
+	Lc6eUdfGUwggXOhSh2G75Ir8suzQoxPnyVtS7k4a/Kw7Jk7rZgK5yJARFBlspotU+EvvyvA0vTM
+	vzDbplIE4u/24CZ5l9EtlPImzVWwhgP06ElAc/elswMnx8d+R1PnH5oEnDfz+RcZvzpEMfyVQtj
+	6c3JuMnuJPdB7OdD/Co+SGSlxKsuzhfdilyS03YNbI4aP6KxHxVpDtWIHk4eHr/4T2g=
+X-Received: by 2002:a05:620a:4095:b0:7c5:687f:d79d with SMTP id af79cd13be357-7c94d29ade9mr27751585a.8.1745349250430;
+        Tue, 22 Apr 2025 12:14:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG7HiqvOyIsraSAjIugd3xjXilpVZSiFuqvb5lB5h6IcYI3MvuV9H6EVgiP8btR3FsQ1k8Z9g==
+X-Received: by 2002:a05:620a:4095:b0:7c5:687f:d79d with SMTP id af79cd13be357-7c94d29ade9mr27749785a.8.1745349250048;
+        Tue, 22 Apr 2025 12:14:10 -0700 (PDT)
+Received: from [192.168.65.141] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f625596138sm6572178a12.45.2025.04.22.12.14.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Apr 2025 12:14:09 -0700 (PDT)
+Message-ID: <1f36d303-fcfc-4aed-8d8d-01a3c4dae57e@oss.qualcomm.com>
+Date: Tue, 22 Apr 2025 21:14:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: msm8953: Add interconnects
+To: Luca Weiss <luca@lucaweiss.eu>, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250420-msm8953-interconnect-v2-0-828715dcb674@lucaweiss.eu>
+ <20250420-msm8953-interconnect-v2-2-828715dcb674@lucaweiss.eu>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250420-msm8953-interconnect-v2-2-828715dcb674@lucaweiss.eu>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: KvPs0GRgU-G9s2qzAuVZUQ4lUgopl8HI
+X-Proofpoint-GUID: KvPs0GRgU-G9s2qzAuVZUQ4lUgopl8HI
+X-Authority-Analysis: v=2.4 cv=IP8CChvG c=1 sm=1 tr=0 ts=6807ea83 cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=pGLkceISAAAA:8 a=dlmhaOwlAAAA:8 a=EUspDBNiAAAA:8 a=Dw-YgVe96UOjDrfUO-cA:9
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=y4cfut4LVr_MrANMpYTh:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-22_09,2025-04-22_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=987 spamscore=0
+ mlxscore=0 malwarescore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ suspectscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504220144
 
-Hi Bjorn Andersson and Dmitry Torokhov,
+On 4/20/25 5:12 PM, Luca Weiss wrote:
+> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+> 
+> Add the nodes for the bimc, pcnoc, snoc and snoc_mm. And wire up the
+> interconnects where applicable.
+> 
+> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> [luca: Prepare patch for upstream submission]
+> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+> ---
 
-On 3/13/25 17:18, Bjorn Andersson wrote:
-> On Tue, Mar 04, 2025 at 10:45:35PM -0800, Dmitry Torokhov wrote:
->> On Mon, Mar 03, 2025 at 04:36:55PM -0600, Joel Selvaraj via B4 Relay wro=
-te:
->>> From: Joel Selvaraj <foss@joelselvaraj.com>
->>>
->>> In Xiaomi Poco F1 (qcom/sdm845-xiaomi-beryllium-ebbg.dts), the FocalTec=
-h
->>> FT8719 touchscreen is integrally connected to the display panel
->>> (EBBG FT8719) and thus should be power sequenced together with display
->>> panel using the panel property. Since the edt-ft5x06 touchscreen bindin=
-g
->>> uses almost all the properties present in touchscreen.yaml, let's remov=
-e
->>> additionalProperties: false and use unevaluatedProperties to include al=
-l
->>> the properties, including the needed panel property.
->>>
->>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> Signed-off-by: Joel Selvaraj <foss@joelselvaraj.com>
->>
->> I believe this is better be merged through the arch tree together with
->> the dts changes.
->>
->=20
-> Then I will have to come up with a motivation to why it needed to go
-> together with the dts change ;)
->=20
-> Please pick the binding change through the input tree and I'll pick the
-> dts changes once the binding has landed in linux-next.
->=20
->> Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
->>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-A gently ping on this patch. It seems there was a confusion on which=20
-tree the patch should go, but ended up not landing yet. Kindly let me=20
-know if any further fixes are needed from my end. Would be nice to get=20
-this landed. Thank you both.
-
-Regards,
-Joel Selvaraj
-
+Konrad
 
