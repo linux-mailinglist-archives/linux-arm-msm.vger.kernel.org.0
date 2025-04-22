@@ -1,174 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-54968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA0C6A97303
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 18:47:16 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7799FA97333
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 18:59:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9CC633A357A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 16:46:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7480E1B60B4C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 16:59:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71ED0EC5;
-	Tue, 22 Apr 2025 16:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F43F296166;
+	Tue, 22 Apr 2025 16:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lxKst7I/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="osaZni8u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A8A278176
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 16:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9CE84A35;
+	Tue, 22 Apr 2025 16:59:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745340433; cv=none; b=rioVZM0r7N2GRiw1FyYgONs2iGmdaHnLDUsoDwXghWYlV2o0FXrZiJJJNZzXLEe6cvLantecFeKfmxro/a/IGlnC4lH4zQculvwLgAOFJ2qArBGibIViHAWM7iiGf4dswiKPJ7jIKlLaL7Cmt90L2LoiEDXG7LKKgyxnOdP5TxY=
+	t=1745341177; cv=none; b=r0FRoKWT76t/xsBxs/aNZszQd9ciPibskz4My/lmiCavTi08iCiTc1JRB9oA/bqO+IP60Wga0khz6jRtf+LQat8zARyUD0gmnD7UOzS1TSZwS9UCTQjPPxazs6IsRDBJ6EIwpSRCtriNDob2pKWmS4YddRYsEDvA1j/w+Bkqdx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745340433; c=relaxed/simple;
-	bh=q41FPq0f05JtlihZrGKwdFbEk/8bWbV9HQOdX61yRiM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HLQbmpRQ7ZabJeFN/y3UjMpq8NTkxS6RkeZBFKeQ7m+FuH3vr4EUmFO0SEscno5CcyXgJDI20AVwCg1zsccKMPu9IDEZp7IuK47UcU/6qF14Fq85wsEZlgbtgQicRYrOKA20/tAPiAR7VcE6GuluwTaP4I4Z64EjQX6ni3Z8Z4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lxKst7I/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53MCg4oK006593
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 16:47:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1745341177; c=relaxed/simple;
+	bh=HPm7ebMS1pT5xFP2rNYsmOVPV0KcSwCCVw0mVMUXIY8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qi+vnnmCyIPZTL3rtLvZugeA6XICmSYGMIvdtYL8NlyRZ6Cjub/GiaMJp2NSnDNhBe2jCOs+vJtR4vDVG1AzyyC+HjYAjD2EhvFEc1iPryajgDRIcIzICntHwt2Fs3y64kc7Jnlmru5/EIM7dugfFvu9PfdLJt0njTL9OEb3XYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=osaZni8u; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53MD0E6g018249;
+	Tue, 22 Apr 2025 16:59:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7esB2aoHj/zc0balrbTUPwT6TMFaoUq/f2Uz5vJdfmo=; b=lxKst7I/+9Bi83c5
-	mRfFLwOADJxxj31+h04X6djc8PCdSjKmy3psDs1N7IPwiw46AaRQOI+xx886sWao
-	oFTb9r3nMQ7Lg2BfYh+NaUO50e7l9RO/xl9ju8LySWm0igAtHzArqnYeNOMBiTwM
-	5cpUE+hdF942nJy1MIEIfL9YMtlSzZX5L6npAC3Wz/g6+fzSso1u5Irln0QHlpPX
-	SQjgslyYLA4kz1pemYVz/Yh6EiS+lENZs0UOhohkV0TPpHJLrYZ2f/bI1tbvbkUW
-	s0fRdZg6ilKSmDNZ1tco7UAghvVvwOsHIU1iumvIu46UaD+zxbXZ+Flmo+KzEwxm
-	2LRBFw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 464426r9xt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 16:47:10 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c5f876bfe0so847854185a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 09:47:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745340429; x=1745945229;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7esB2aoHj/zc0balrbTUPwT6TMFaoUq/f2Uz5vJdfmo=;
-        b=hfR21AccD8elwNVJeVzBbBj/J/QKluhizAV32HKE9pU2WUDOsDG9RZ3NuABMuBhFCf
-         8e110qkQ9KOQxc3xZTskmh/C0brFFWYOqT8jDPOo+Zx+hXYP0pV8eN2zGN9OBC9e18oZ
-         OCecBLluD6Ta/OkhktTVTJYi6ogVDdcyuMjsWupfCAmGnfMNx1A7WfjmDCOhirn1+yDj
-         rq33tAVaPCVdhaokWQcIUh7iIXzlYcc2oM+MbINNTFR/ncUg64meN0NXurCoeX8uuFir
-         tR7hL/olgFT44Qt3U/uljMjMdOmwCB3Dlxkqa4KTOjnunwRvBHS2uVrA/a0CXz57+0hJ
-         A07Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVNlreoHyidNwHkY0/CdjLIha2Hpq8asJ37ZBZp0CGtud9c9oFtyostcdg9ib5kMvHOq5sBfX5EtsDnVmR6@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz612ZtTLbq4qpFnxxfNz0BWNhQcXmcfQzRlqE0+5EB/Twe3DEH
-	cbIisnHMrV1BHhs8N4J9hmnIIG4L9K7Gq5HxIdOUK+4fwd5ffGfLdRUGoUziBNAMlbPiSJIs026
-	Rp2LT3q0KEZXlF0S/36zMLc7hQHcluMNH1/O66C0RDTDfzqWlUuyNunzQ235uh+NX+P07TooQ7e
-	vDg1ejjgrnvAC1DrEcSaTm/LwZZK4AJL1dGZYzUMk=
-X-Gm-Gg: ASbGncu5UfSHnMaqFI31uav4f9XHdG9JZl5P/IfqIVPbl1JaJfTawRcphRpYPgvJFS2
-	Zoqr3YOpFuTsNqelBUkdjenOytSuyDOzw+87tqJXKq/ubYE62zcmz66ZRtySCmHTkv0vL8Q==
-X-Received: by 2002:a05:620a:d8b:b0:7c5:4463:29a3 with SMTP id af79cd13be357-7c927fb6abemr2521237985a.25.1745340429672;
-        Tue, 22 Apr 2025 09:47:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEG3qOQXOo9TwfXy+ZCRASfPs61YghUNcjXEoKQ9Cb2mxOyUAtnFLUy/fxANhDcySjFS+vdZv7enndytIuRPD4=
-X-Received: by 2002:a05:620a:d8b:b0:7c5:4463:29a3 with SMTP id
- af79cd13be357-7c927fb6abemr2521232685a.25.1745340429232; Tue, 22 Apr 2025
- 09:47:09 -0700 (PDT)
+	6B5gQZViqAt6vdbEtYYBmsgMhaXVPhTXCt1gQpeDBTE=; b=osaZni8uucwFz7nw
+	fULqIphI2LPOI25x1tGjzs8BbyOzkkTbrhqJLZv7ZPS0VUVs3idJQ/648+EMM/Wb
+	8jJPqEmoLhviScPt047VG46/Coi6LJl4ji8U9JS1oAs5uNKA6jvHu6j6DYKiUmN+
+	69NVXx+ozp8mMpJphH+aMFvkhfJM2jFKJaKVoirwaZE4mtBQ6AkTyaz5dOIvw431
+	JPct0j1bz73hb/g1t45VuLTKKAKpWZT41FrSHXptEhhx6SCkYBA6w9xjdai0BEsK
+	6VW4F5r7NaTVJbU7/iTCnaazw30GAFgHvps5o5KgLOzrFwpwTVo/G58dxf3YCT14
+	rhAuvg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46416r0q2y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Apr 2025 16:59:29 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53MGxSKv028867
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Apr 2025 16:59:28 GMT
+Received: from [10.216.4.61] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Apr
+ 2025 09:59:23 -0700
+Message-ID: <04b7212c-d048-46d2-b5d4-e929cfc17f63@quicinc.com>
+Date: Tue, 22 Apr 2025 22:29:19 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250418141147.205179-1-loic.poulain@oss.qualcomm.com>
- <20250418141147.205179-6-loic.poulain@oss.qualcomm.com> <20250422-nonchalant-bald-mink-7c2d34@kuoka>
-In-Reply-To: <20250422-nonchalant-bald-mink-7c2d34@kuoka>
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Date: Tue, 22 Apr 2025 18:46:58 +0200
-X-Gm-Features: ATxdqUFjcv7S-nnV4aqImBi-gZ-qp_DaZjNj_vXIRlmLVC63QNcKlWPv4CoSSKA
-Message-ID: <CAFEp6-365xBQJL7A6vP99R5sBcYPDgwJEQyUfoFtuBBMRO2WVw@mail.gmail.com>
-Subject: Re: [PATCH v3 5/6] media: dt-bindings: media: camss: Add
- qcom,qcm2290-camss binding
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: bryan.odonoghue@linaro.org, rfoss@kernel.org, konradybcio@kernel.org,
-        andersson@kernel.org, krzk+dt@kernel.org, robh@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: rx4AewCpmVpQXXOlc5UHmASNhxhALS9c
-X-Proofpoint-GUID: rx4AewCpmVpQXXOlc5UHmASNhxhALS9c
-X-Authority-Analysis: v=2.4 cv=IP8CChvG c=1 sm=1 tr=0 ts=6807c80e cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=FiTWQ0jTrq8e0WeyI4oA:9 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/8] arm64: dts: qcom: qcs6490-rb3gen2: Modify WSA and
+ VA macro clock nodes for audioreach solution
+To: Luca Weiss <luca.weiss@fairphone.com>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@oss.qualcomm.com>, Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+References: <20250317054151.6095-1-quic_pkumpatl@quicinc.com>
+ <20250317054151.6095-4-quic_pkumpatl@quicinc.com>
+ <4c27d6b9-781b-4106-8165-97c9750cf99f@oss.qualcomm.com>
+ <D8XO1JU37NEV.YN595H7NEOU7@fairphone.com>
+Content-Language: en-US
+From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+In-Reply-To: <D8XO1JU37NEV.YN595H7NEOU7@fairphone.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=N7UpF39B c=1 sm=1 tr=0 ts=6807caf1 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=iUpcbqiyXAxGOh159EUA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: fTE02pQjfL6OqxssP8D5mT1R94alvSCy
+X-Proofpoint-ORIG-GUID: fTE02pQjfL6OqxssP8D5mT1R94alvSCy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-22_08,2025-04-22_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
- mlxscore=0 malwarescore=0 clxscore=1015 priorityscore=1501 bulkscore=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ mlxscore=0 clxscore=1011 lowpriorityscore=0 priorityscore=1501
+ mlxlogscore=999 impostorscore=0 bulkscore=0 spamscore=0 malwarescore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504220126
-
-On Tue, Apr 22, 2025 at 11:15=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel.o=
-rg> wrote:
->
-> On Fri, Apr 18, 2025 at 04:11:46PM GMT, Loic Poulain wrote:
-> > Add bindings for qcom,qcm2290-camss in order to support the camera
-> > subsystem found in the Qualcomm Robotics RB1 Platform (QRB2210).
-> >
->
-> Just one subject prefix media. No need for two. See DT submitting
-> patches.
-
-Thanks for the review. I will resubmit with the corrected subject,
-keeping the supply names listed below unchanged, if you're ok with
-Bryan's comment.
+ definitions=main-2504220127
 
 
->
-> > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> > ---
-> >  .../bindings/media/qcom,qcm2290-camss.yaml    | 243 ++++++++++++++++++
-> >  1 file changed, 243 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/media/qcom,qcm229=
-0-camss.yaml
-> >
->
-> ...
->
-> > +  interconnects:
-> > +    maxItems: 3
-> > +
-> > +  interconnect-names:
-> > +    items:
-> > +      - const: ahb
-> > +      - const: hf_mnoc
-> > +      - const: sf_mnoc
-> > +
-> > +  iommus:
-> > +    maxItems: 4
-> > +
-> > +  power-domains:
-> > +    items:
-> > +      - description: GDSC CAMSS Block, Global Distributed Switch Contr=
-oller.
-> > +
-> > +  vdda-csiphy-1p2-supply:
->
-> Why isn't this named vdd-phy-supply like in every other binding?
->
-> > +    description:
-> > +      Phandle to a 1.2V regulator supply to CSI PHYs.
-> > +
-> > +  vdda-pll-1p8-supply:
->
-> Similar question.
->
-> > +    description:
-> > +      Phandle to 1.8V regulator supply to CAMSS refclk pll block.
->
-> Best regards,
-> Krzysztof
->
+
+On 4/4/2025 12:42 PM, Luca Weiss wrote:
+> Hi Konrad,
+> 
+> On Tue Apr 1, 2025 at 6:05 PM CEST, Konrad Dybcio wrote:
+>> On 3/17/25 6:41 AM, Prasad Kumpatla wrote:
+>>> From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>>>
+>>> Modify and enable WSA, VA and lpass_tlmm clock properties.
+>>> For audioreach solution mclk, npl and fsgen clocks
+>>> are enabled through the q6prm clock driver.
+>>>
+>>> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>>> Co-developed-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+>>> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+>>> ---
+>>
+>> Instead, put the inverse changes in sc7280-chrome-common.dtsi please
+> 
+> How are we going to handle other sc7280-based platforms, such as my
+> QCM6490 Fairphone 5 needing to use q6afecc instead of q6prmcc which gets
+> used in this patchset?
+> 
+> One solution might be to put q6afecc into the base sc7280.dtsi file,
+> then we have a sc7280-audioreach.dtsi which overwrites q6afecc with
+> q6prmcc which then gets included by boards using audioreach.
+> 
+> I also don't think we can split this across sc7280 vs qcm6490 vs sm7325,
+> there seems to be any combination possible on any of these SoCs -
+> depending on the firmware shipped with it.
+> 
+> So somewhat similar to the current sc7280-chrome-common.dtsi but just
+> for audioreach.
+> 
+> Regards
+> Luca
+ACK, We will handle in next patchset version by creating a new 
+qcs6490-audioreach.dtsi file.
+
+Thanks,
+Prasad>
+>>
+>> Konrad
+> 
+
 
