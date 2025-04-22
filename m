@@ -1,70 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-54918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA67EA9634A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 10:59:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27801A963FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 11:19:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F30A8441D5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 08:53:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C869C18829D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 09:15:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C32E266EE6;
-	Tue, 22 Apr 2025 08:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EAAF1F12FA;
+	Tue, 22 Apr 2025 09:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QmYN7D6/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fItYFOUB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD452580E0;
-	Tue, 22 Apr 2025 08:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189271EFF8E;
+	Tue, 22 Apr 2025 09:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745311588; cv=none; b=EOZb1HkVJL9M+wEms59b0HQxMLLYr8T3S2SMXH9kbKTKXok8ndCW+M1myS+RK5Z4NIUdX/r3ET3JaYpXILVS5IMlApfEXj0T6PdwjNCuU7glVtS8TCi8CWA2LaalWydJRWm9SVSVkgY5Qxgw9G67Ne4777IWDr6M/T1nfvBcFQM=
+	t=1745313311; cv=none; b=GcxPLWhZ1SjwsjYHXeKj1APeb0TW0RO2iDKQOmJTm2cCA9Y0+zA+0t0rB1bDB+bn0h4nlu/y4WWgn8Dmat/6UbLbVD5D1GDVGuanWi9ypa82+YEOeNHzv3Fn8IvndQldVfZvLVXaK2mhZlHr73Qfz7lZOgHA8pgfyreFxBseQFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745311588; c=relaxed/simple;
-	bh=H44nKWfJpflFFXOrn5cncTRUymqZaUjYXbKXiW88Txw=;
+	s=arc-20240116; t=1745313311; c=relaxed/simple;
+	bh=vFat0su/4X5yP1ZpaEZzgKt0hc7bkHOFHvaRVkfn9OI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B6JV5+oCgSKSEeDYrthd0hku+ZHi1+r3Ic3fSI4kBJlcDNoVp45gT/rauM+ksatTf1t1w566xNWWNnG3pOpMSEcIf7tR44k5enaW5YI3ayGRz0P3KP8GqhKZwQCVPXo1xAS5TBMR0fvPxaXyc9o5DwybSHMuGESsX2i82KW4VE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QmYN7D6/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A82C4CEE9;
-	Tue, 22 Apr 2025 08:46:26 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=RJBI3GvtQEXLGYI0gjl4q9pRX3igFtxj8WQue4v4KHV10Y2zG9Mapk5Am8T/o4lk3DhnSYAdb5/lteannaHhu4K5teEm2LdgvdwfdcOWCsJ+qfa5L6bIIWdnQfvE+HnSqtK03rdGEy3HnlfUVbinJeBHfrW60cygekreIb+Dt2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fItYFOUB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88767C4CEE9;
+	Tue, 22 Apr 2025 09:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745311587;
-	bh=H44nKWfJpflFFXOrn5cncTRUymqZaUjYXbKXiW88Txw=;
+	s=k20201202; t=1745313310;
+	bh=vFat0su/4X5yP1ZpaEZzgKt0hc7bkHOFHvaRVkfn9OI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QmYN7D6/vQ3fhyXfvF2TBLjn9Eh6HHivB2z2YJK9Q1otgITmYvXWco87nUQ/XQFej
-	 d24PAugK941acJt881sWsHAnIbR9eKNrky+nbiRiL4mup5twIh0m67xqu46jrSWmRD
-	 8EPJxxMkxH/Vj/arYSTCAmWqj9iHXT7hyxLH9R9ouO3DvdjiwDA57a1hsnfA2oh+l/
-	 e9VnSQ8AiR2H7lLMrYiS9GbwvK3nvogHF+tFOyZtAZ5JPdY+8Mv7Fqt+XS2A39TlML
-	 XwuNTkJURqd4th6YNyQVCEGs1aHB+mD21WwZyZKVOSEvInoYdj422SG6TzvMh2cnJp
-	 NpNyOEY6X8TCQ==
-Date: Tue, 22 Apr 2025 10:46:24 +0200
+	b=fItYFOUBxL6mdje/VfZQ1pv1ekKhU7midy//z+ARxoMiwgjYn1OReMDpshtbFL/fC
+	 zjKOYiPDZPEg7aWqvZWDoen4KpmsFRXdoorUD8BkdzGff7Qy0zIK6x7+WZObRbiY0X
+	 DiB6u/wqYqZtMJxGlOp6z5as4zfjFxphjni2nBfZH2j4L1y9joT/Ox2JpTPVvdC/Hv
+	 G6B7+hFSgB3Z0aBw5FQbAtwmIfcPrxZ7jFoFkZXY2kLJRB150ItKgkE0L1BaxsifDJ
+	 EEwjF7QIPBmUm6/QvTEmQPJSfogjNb4UJuselZsMCUTp3KglyhiCQ5FmHgHFbr4ma6
+	 1xykwWt0EGRzQ==
+Date: Tue, 22 Apr 2025 11:15:06 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: =?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Stephan Gerhold <stephan@gerhold.net>, Otto =?utf-8?Q?Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
-	Linus Walleij <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>, Joerg Roedel <joro@8bytes.org>, 
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Adam Skladowski <a_skl39@protonmail.com>, Sireesh Kodali <sireeshkodali@protonmail.com>, 
-	Srinivas Kandagatla <srini@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	iommu@lists.linux.dev, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org
-Subject: Re: [PATCH v5 1/5] dt-bindings: clock: qcom: Add MSM8937 Global
- Clock Controller
-Message-ID: <20250422-ermine-of-pastoral-courage-bb7bcd@kuoka>
-References: <20250421-msm8937-v5-0-bf9879ef14d9@mainlining.org>
- <20250421-msm8937-v5-1-bf9879ef14d9@mainlining.org>
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: bryan.odonoghue@linaro.org, rfoss@kernel.org, konradybcio@kernel.org, 
+	andersson@kernel.org, krzk+dt@kernel.org, robh@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, devicetree@vger.kernel.org, 
+	dmitry.baryshkov@oss.qualcomm.com
+Subject: Re: [PATCH v3 5/6] media: dt-bindings: media: camss: Add
+ qcom,qcm2290-camss binding
+Message-ID: <20250422-nonchalant-bald-mink-7c2d34@kuoka>
+References: <20250418141147.205179-1-loic.poulain@oss.qualcomm.com>
+ <20250418141147.205179-6-loic.poulain@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,23 +61,54 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20250421-msm8937-v5-1-bf9879ef14d9@mainlining.org>
+In-Reply-To: <20250418141147.205179-6-loic.poulain@oss.qualcomm.com>
 
-On Mon, Apr 21, 2025 at 10:18:23PM GMT, Barnab=C3=A1s Cz=C3=A9m=C3=A1n wrot=
-e:
-> Add device tree bindings for the global clock controller on Qualcomm
-> MSM8937 platform.
->=20
-> Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <barnabas.czeman@mainlining=
-=2Eorg>
+On Fri, Apr 18, 2025 at 04:11:46PM GMT, Loic Poulain wrote:
+> Add bindings for qcom,qcm2290-camss in order to support the camera
+> subsystem found in the Qualcomm Robotics RB1 Platform (QRB2210).
+> 
+
+Just one subject prefix media. No need for two. See DT submitting
+patches.
+
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 > ---
->  .../devicetree/bindings/clock/qcom,gcc-msm8953.yaml   | 11 ++++++++---
->  include/dt-bindings/clock/qcom,gcc-msm8917.h          | 19 +++++++++++++=
-++++++
->  2 files changed, 27 insertions(+), 3 deletions(-)
+>  .../bindings/media/qcom,qcm2290-camss.yaml    | 243 ++++++++++++++++++
+>  1 file changed, 243 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/qcom,qcm2290-camss.yaml
+>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+...
+
+> +  interconnects:
+> +    maxItems: 3
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: ahb
+> +      - const: hf_mnoc
+> +      - const: sf_mnoc
+> +
+> +  iommus:
+> +    maxItems: 4
+> +
+> +  power-domains:
+> +    items:
+> +      - description: GDSC CAMSS Block, Global Distributed Switch Controller.
+> +
+> +  vdda-csiphy-1p2-supply:
+
+Why isn't this named vdd-phy-supply like in every other binding?
+
+> +    description:
+> +      Phandle to a 1.2V regulator supply to CSI PHYs.
+> +
+> +  vdda-pll-1p8-supply:
+
+Similar question.
+
+> +    description:
+> +      Phandle to 1.8V regulator supply to CAMSS refclk pll block.
 
 Best regards,
 Krzysztof
