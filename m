@@ -1,175 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-54958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D85CA96D0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 15:38:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 357B7A96D20
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 15:40:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DEDB4169EAD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 13:38:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 528AD189D534
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 13:39:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D948227700A;
-	Tue, 22 Apr 2025 13:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D7392836BD;
+	Tue, 22 Apr 2025 13:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="i+stn940"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H2du47yr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BFA27CCF1
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 13:38:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22B0226CE4;
+	Tue, 22 Apr 2025 13:38:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745329103; cv=none; b=riHKmjodPf+1/51qKcPZCJYYb825vJRsQMRylrVVOr8D5q+tipPYqxnP+HFUNldfsInWycoCYjivAj6Pn8sXmdOEGhUdyIODjh0mbtXDOhdXEqEGKVcEXrkrCXC2HbhwjU4pT8QxMk5yhCJwEOcMqKqKaogizWP6L0PNl55/N88=
+	t=1745329132; cv=none; b=WHmk5VS5kQdMv8uERiIvc5QgmGJZH9SNAsMyY4uAMUisyF8DStdu8wqGLUBF77gSMQzCjKx4pgSLYE2ce2mK6AVDFb3YkI4+S3tWAxYFuWVyXRolVuy52+5WBUrVrkSjjrTrkOlUDioWqWNwLQLa3auOebNX0BqLYfDuVX6PA9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745329103; c=relaxed/simple;
-	bh=Vo7LBJ4qSIokdM3rXBUtbQW8y1+BMQJz9X4whpI4Mdo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I8MQ3VY4JzNs1Ie2CtSSYikce+BsVx6g/Ri5g4QXCgCHdz38Y6JR8Wo3wWUJbtkVepeHLZTdECkl6APv1GMZMTP8pAdUzmXhBKBTSWZnqbkTtJ5NL43ZyAYukd0vwLza/jkzp5L8EdqlNbMmsg6fwFpyJfY1uuOxwV6xK0M3cfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=i+stn940; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53MCgmrx025931
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 13:38:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ilHPkZ1uHxo7brGrnzMpOnSz1Ev4aJ+rhxk80FeLFKg=; b=i+stn940t91WbXDA
-	o5gYe7W82IjavkwiooQZ1/bma9l+Hv/5LvSTaO69FLB7g3K7YOjyGRS0OtBydMSD
-	oMbjG/ZUPIjeTqRE864tgzV7t5QKJlC6VUEy66apEuKkeyyK5nkuuUwDH8t6f9wK
-	NDNPnEQFQVhE7FiRmx5F7zdMbkOHB1wR4dcTddOs/umQKZ9exOYy4ksPAg60kNVX
-	pVnSEPxqnhBs2BFjFLusEhjBoE7f7JzxaQcDoO+N/lUZw1CFhZ0KTcKX37VrYSdd
-	tQzt40BXFCC5dN/8RHoJOoLVDNna+NMJyK7wvl+x8essW22rB8ggVrEXsu8iElbc
-	6G5rKQ==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4644kjffg1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 13:38:21 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6f2c7056506so85592316d6.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 06:38:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745329100; x=1745933900;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ilHPkZ1uHxo7brGrnzMpOnSz1Ev4aJ+rhxk80FeLFKg=;
-        b=qrKQy6iQd1IhkcHUUgsF3z7+hd/bCbw0rAEFTIGyVZ0fo9c7cG7+0/Uz1WVnd1/qOk
-         ZTCogsRjy1lMQpVtz2FWzBv2E86i08Iqmus0ZKRhCFfca+MzzgrlssL9fClLHqDjTjY4
-         aviLrjpBXzJZKaMWfIZb6rIzGSD7aj7rEYOF4IC9bIFMpiXdcxEY5lE5mAgI0iRBgzIi
-         Q2qnk3F5TkH4Sc7uTDLDl3NU6MhLPWrGLHJ1DnIqkcVfBUZbeZDITSh63yRVLOeXgF7u
-         Cpl4ghxTjxIHGckbSGRaZbvqERtXobDDNFVs55LQhqKFNI5F32xORCSXMz63Sw44rbF+
-         ONYA==
-X-Forwarded-Encrypted: i=1; AJvYcCVIgFnXRbpLY3xL3Zq4JT7GN66sU/8t1MI2ET1vD9RJ0aCw0CMk8OuFdm73r9pMoonIrUZzuzBYiaau2Bug@vger.kernel.org
-X-Gm-Message-State: AOJu0YxFSAA6MuOrAHhgmGWCsv2RSjblooFF7dtB7pzIVOiJEcRUCsqH
-	XFeCZ8nJUN9TGuMBfHgCN9RdtlI4eQddigrY6vkmz+1gaYrsd4bGEO2XGU2G62iu48mafJMHDSU
-	HVIR12g1PN6bUBwDS8MQGGFlU1qjtxV0TWU4stlJZcajh8ngTVaR0l/F+M5vjhjZ1
-X-Gm-Gg: ASbGnctutIa6f+JxGDcPV3xaj/N659nSIEzSVwzisMeb+DjJJNhsFoJ5d6lMYEv0f0X
-	mHg+Kc1MUIoUH+F/Dy/MaV3TmRkWfqYP71pKDHy9uA5E8cp8imH7MWCA/RHHSfLz+yJy3NebOZE
-	OzTo6UgFZUHLRWjIf9CGGATfObSzsiT70MUZ/BwLwHH3Pvzo56eNG93XzGiPvyfthRsNxZrJ8H7
-	YbrpElRQ1lfPo6M43Qji+PHKBM3/BCX8LGaBPHyrpMpxQbfCmyjirhYyq/JnL2dnPgdeccfZQJv
-	J/FbHbQNMgl9rf9uoP8J81r2ThkN7IBmGMVQNT3GbHj6kNnojf7Wnm3tE1bMs2MLTe1QPavI0iz
-	HleOZRp4DOrBv7oSmAXFQWfsm0Ntux7DwSOYF2n7K14YvqT0+NC5h6BNFq+fqtk3D
-X-Received: by 2002:a05:6214:4004:b0:6e8:f3af:ed59 with SMTP id 6a1803df08f44-6f2c4578776mr209862476d6.22.1745329099934;
-        Tue, 22 Apr 2025 06:38:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFg1jhTk3vOeJXRA+sWOMATxjA7QzH73/aaZLzAmeAZgcQaBJj9d8Zf2ioNUSQsH0+gO0UvEw==
-X-Received: by 2002:a05:6214:4004:b0:6e8:f3af:ed59 with SMTP id 6a1803df08f44-6f2c4578776mr209862156d6.22.1745329099609;
-        Tue, 22 Apr 2025 06:38:19 -0700 (PDT)
-Received: from ?IPV6:2001:14bb:a2:9556:18c8:3d0b:b936:c848? (2001-14bb-a2-9556-18c8-3d0b-b936-c848.rev.dnainternet.fi. [2001:14bb:a2:9556:18c8:3d0b:b936:c848])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-310907a8655sm14444531fa.62.2025.04.22.06.38.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Apr 2025 06:38:18 -0700 (PDT)
-Message-ID: <6eeb7bca-6018-46de-a7db-7189d60c0942@oss.qualcomm.com>
-Date: Tue, 22 Apr 2025 16:38:17 +0300
+	s=arc-20240116; t=1745329132; c=relaxed/simple;
+	bh=CkhGofHYVtZe5hwWpqyifYoxIzURV+H5yr2M2EHIPvQ=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=WRW0KEVgzvrlvoOgpND4nvuOvOOlG/xRzDQEF3zpwLeEtxWpZU/99cWj9oOBfiP8JZ8KiFCixYH5UAz8JUujbrDVMo2stRHTqQH/YUWZZsa+G6NDvsDpK7SwIfmLrA2qWL6iO2BHulFvBQJkWFW5S6HlZN3P+WUSY42TCN6rX4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H2du47yr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A7EC4CEE9;
+	Tue, 22 Apr 2025 13:38:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745329131;
+	bh=CkhGofHYVtZe5hwWpqyifYoxIzURV+H5yr2M2EHIPvQ=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=H2du47yr54JJf2eJXq1fEyDIO61CAboibIcuOQ7VcI+rIdG2W1wJgmQrhvBmEaGKs
+	 hmIhFHGC4C07bWoPtdDTwxQ1BxF5j+3vwVBOmai2Eh/bRpeD3Ms/d8/YvJiniutJR6
+	 G3sB9QpbxaidBuAO8Or2Oe5SpWZ9/DyionsQfwL7+GY1pt138NaGRoh6m3qtAgDZwO
+	 Tx0odcrYGghj1dofU4kYtKvA1qENMWaLrhXqbC2I7HbHEAqcGvoH0U5Z6I+14j07n5
+	 EeZGKZdtB+OYr4H6DDgvVn8hK6MfMAwYZpfJD6lC+OVlTPB5rIgrQ/0TXUKVUpGas3
+	 GWGodsm8oA0rQ==
+Date: Tue, 22 Apr 2025 08:38:49 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] platform/chrome: cros_ec_typec: No pending status
- means attention
-To: Stephen Boyd <swboyd@chromium.org>, Tzung-Bi Shih <tzungbi@kernel.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Conor Dooley <conor+dt@kernel.org>, Benson Leung <bleung@chromium.org>,
-        chrome-platform@lists.linux.dev, Pin-yen Lin <treapking@chromium.org>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        =?UTF-8?Q?=C5=81ukasz_Bartosik?= <ukaszb@chromium.org>,
-        Jameson Thies <jthies@google.com>,
-        Andrei Kuchynski <akuchynski@chromium.org>
-References: <20250416000208.3568635-1-swboyd@chromium.org>
- <20250416000208.3568635-2-swboyd@chromium.org>
-Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <20250416000208.3568635-2-swboyd@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 3TkaHxG3KR6xiFyRtv_6aGtQchDHP53S
-X-Authority-Analysis: v=2.4 cv=f5pIBPyM c=1 sm=1 tr=0 ts=68079bcd cx=c_pps a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=cm27Pg_UAAAA:8 a=VwQbUJbxAAAA:8 a=1XWaLZrsAAAA:8 a=o0b5XE3H0qlelF4PaLgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-ORIG-GUID: 3TkaHxG3KR6xiFyRtv_6aGtQchDHP53S
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-22_06,2025-04-21_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- mlxlogscore=999 mlxscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- clxscore=1015 suspectscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504220103
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Daniil Titov <daniilt971@gmail.com>, 
+ Linus Walleij <linus.walleij@linaro.org>, 
+ Maxime Ripard <mripard@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, iommu@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+ Dmitry Baryshkov <lumag@kernel.org>, dri-devel@lists.freedesktop.org, 
+ Will Deacon <will@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Rob Clark <robdclark@gmail.com>, 
+ Sireesh Kodali <sireeshkodali@protonmail.com>, linux-clk@vger.kernel.org, 
+ Thomas Zimmermann <tzimmermann@suse.de>, Joerg Roedel <joro@8bytes.org>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Konrad Dybcio <konradybcio@kernel.org>, David Airlie <airlied@gmail.com>, 
+ Srinivas Kandagatla <srini@kernel.org>, Lee Jones <lee@kernel.org>, 
+ linux@mainlining.org, phone-devel@vger.kernel.org, 
+ Robin Murphy <robin.murphy@arm.com>, Stephan Gerhold <stephan@gerhold.net>, 
+ linux-arm-msm@vger.kernel.org, 
+ =?utf-8?q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
+ ~postmarketos/upstreaming@lists.sr.ht, 
+ Adam Skladowski <a_skl39@protonmail.com>, Sean Paul <sean@poorly.run>, 
+ freedreno@lists.freedesktop.org, Simona Vetter <simona@ffwll.ch>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
+ Dang Huynh <danct12@riseup.net>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ devicetree@vger.kernel.org
+To: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+In-Reply-To: <20250421-msm8937-v5-0-bf9879ef14d9@mainlining.org>
+References: <20250421-msm8937-v5-0-bf9879ef14d9@mainlining.org>
+Message-Id: <174532908923.1111892.11576927834327283251.robh@kernel.org>
+Subject: Re: [PATCH v5 0/5] Initial support of MSM8937 and Xiaomi Redmi 3S
 
-On 16/04/2025 03:02, Stephen Boyd wrote:
-> If we aren't expecting a status update when
-> cros_typec_displayport_status_update() is called then we're handling an
-> attention message, like HPD high/low or IRQ. Call
-> typec_altmode_attention() in this case so that HPD signaling works in
-> the DP altmode driver.
 
-Fixes?
-
+On Mon, 21 Apr 2025 22:18:22 +0200, Barnabás Czémán wrote:
+> This patch series add initial support for MSM8937 SoC
+> and Xiaomi Redmi 3S (land).
 > 
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Cc: Pin-yen Lin <treapking@chromium.org>
-> Cc: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> Cc: Łukasz Bartosik <ukaszb@chromium.org>
-> Cc: Jameson Thies <jthies@google.com>
-> Cc: Andrei Kuchynski <akuchynski@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> The series is extending the MSM8917 gcc and pinctrl drivers
+> because they are sibling SoCs.
+> MSM8937 have 4 more A53 cores and have one more dsi port then
+> MSM8917.
+> It implements little-big architecture and uses Adreno 505.
+> 
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 > ---
->   drivers/platform/chrome/cros_typec_altmode.c | 7 ++-----
->   1 file changed, 2 insertions(+), 5 deletions(-)
+> Changes in v5:
+> - msm8937:
+>   - Remove wrongly defined idle-states.
+>   - Fix thermal zones.
+>   - Use the header with DSI phy clock IDs.
+>   - Fix the nodes order.
+>   - Fix the pinctrls style.
+>   - Follow gcc header changes.
+> - msm8937-xiaomi-land:
+>   - Remove headphone switch and speaker amplifier bindings.
+>   - Unify status property style.
+> - gcc bindings:
+>   - Expand MSM8953 gcc schema with MSM8937.
+>   - Add MSM8937 prefix for MSM8937 specific clocks.
+> - gcc:
+>   - Follow the bindings changes.
+> - Drop alwayson clock documentation it will be handled in another
+>   patchset.
+> - Link to v4: https://lore.kernel.org/r/20250315-msm8937-v4-0-1f132e870a49@mainlining.org
 > 
-> diff --git a/drivers/platform/chrome/cros_typec_altmode.c b/drivers/platform/chrome/cros_typec_altmode.c
-> index 557340b53af0..c2d9c548b5e8 100644
-> --- a/drivers/platform/chrome/cros_typec_altmode.c
-> +++ b/drivers/platform/chrome/cros_typec_altmode.c
-> @@ -280,11 +280,8 @@ int cros_typec_displayport_status_update(struct typec_altmode *altmode,
->   		typec_altmode_get_drvdata(altmode);
->   	struct cros_typec_altmode_data *adata = &dp_data->adata;
->   
-> -	if (!dp_data->pending_status_update) {
-> -		dev_dbg(&altmode->dev,
-> -			"Got DPStatus without a pending request\n");
-> -		return 0;
-> -	}
-> +	if (!dp_data->pending_status_update)
-> +		return typec_altmode_attention(altmode, data->status);
->   
->   	if (dp_data->configured && dp_data->data.conf != data->conf)
->   		dev_dbg(&altmode->dev,
+> Changes in v4:
+> - Add missing rpmcc include for qcom,gcc-msm8937 dtbinding exmaple.
+> - msm8937: add missing space after s9-p1@230
+> - msm8937-xiaomi-land: replace LED_FUNCTION_INDICATOR to LED_FUNCTION_STATUS
+> - Remove applied patches
+> - Link to v3: https://lore.kernel.org/r/20250224-msm8937-v3-0-dad7c182cccb@mainlining.org
+> 
+> Changes in v3:
+> - Fix qcom,gcc-msm8937 dtbinding example
+> - Link to v2: https://lore.kernel.org/r/20250223-msm8937-v2-0-b99722363ed3@mainlining.org
+> 
+> Changes in v2:
+> - drop applied patches
+> - drop gcc schema commits infavor of a new schema for gcc-msm8937
+> - document always on clock for adreno 505/506/510
+> - msm8937:
+>   - set cache size
+>   - rename cpu labels
+>   - fix style issues addressed by review
+> - msm8937-xiaom-land:
+>   - remove unused serial0 alias
+>   - remove regulator-always-on from pm8937_l6
+>   - add blue indicator led for aw2013
+> - Link to v1: https://lore.kernel.org/r/20250211-msm8937-v1-0-7d27ed67f708@mainlining.org
+> 
+> ---
+> Barnabás Czémán (3):
+>       dt-bindings: clock: qcom: Add MSM8937 Global Clock Controller
+>       dt-bindings: arm: qcom: Add Xiaomi Redmi 3S
+>       arm64: dts: qcom: Add Xiaomi Redmi 3S
+> 
+> Dang Huynh (1):
+>       arm64: dts: qcom: Add initial support for MSM8937
+> 
+> Daniil Titov (1):
+>       clk: qcom: gcc: Add support for Global Clock controller found on MSM8937
+> 
+>  Documentation/devicetree/bindings/arm/qcom.yaml    |    7 +
+>  .../bindings/clock/qcom,gcc-msm8953.yaml           |   11 +-
+>  arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+>  arch/arm64/boot/dts/qcom/msm8937-xiaomi-land.dts   |  381 ++++
+>  arch/arm64/boot/dts/qcom/msm8937.dtsi              | 2069 ++++++++++++++++++++
+>  drivers/clk/qcom/Kconfig                           |    6 +-
+>  drivers/clk/qcom/gcc-msm8917.c                     |  617 +++++-
+>  include/dt-bindings/clock/qcom,gcc-msm8917.h       |   19 +
+>  8 files changed, 3101 insertions(+), 10 deletions(-)
+> ---
+> base-commit: 5b37f7bfff3b1582c34be8fb23968b226db71ebd
+> change-id: 20250210-msm8937-228ef0dc3ec9
+> 
+> Best regards,
+> --
+> Barnabás Czémán <barnabas.czeman@mainlining.org>
+> 
+> 
+> 
 
 
--- 
-With best wishes
-Dmitry
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+This patch series was applied (using b4) to base:
+ Base: using specified base-commit 5b37f7bfff3b1582c34be8fb23968b226db71ebd
+
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250421-msm8937-v5-0-bf9879ef14d9@mainlining.org:
+
+arch/arm64/boot/dts/qcom/msm8937-xiaomi-land.dtb: gpu@1c00000 (qcom,adreno-505.0): clock-names:5: 'alwayson' is not one of ['core', 'iface', 'mem', 'mem_iface', 'alt_mem_iface', 'gfx3d', 'rbbmtimer', 'rbcpr']
+	from schema $id: http://devicetree.org/schemas/display/msm/gpu.yaml#
+
+
+
+
+
 
