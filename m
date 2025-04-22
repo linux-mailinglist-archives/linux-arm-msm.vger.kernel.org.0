@@ -1,121 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-54902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-54903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CF17A95AC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 03:59:16 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6D5CA95D4F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 07:29:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0D8D41890FFC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 01:59:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0F8CE174ABA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Apr 2025 05:29:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F5A731A89;
-	Tue, 22 Apr 2025 01:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 079D81E47A9;
+	Tue, 22 Apr 2025 05:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="k/MaKwZG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MVKaUbsg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98E2C2ED;
-	Tue, 22 Apr 2025 01:59:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.165.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7911913541B;
+	Tue, 22 Apr 2025 05:29:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745287151; cv=none; b=G0mtK+wktD9caxPCJpFwGoBKpXOEArm0PTKKLGPKkXaaH+2uEtKnZ2NQIBXdAbD35VIsn8ACoDoG47RLH1oCiw5FQ7+3vBi/X/A1hES+V87Lj5QORQLeWWrAB0qxGbBJCbIK28pZDWA+r5T2PG/6P2loBhKad96x6qaA1jlqZLY=
+	t=1745299753; cv=none; b=sb2IuxPS/qxlcDn+E/Ngh5pI0jlGelIO8qw/pX/8KmJfls8MHVjzc6ylqWSUc/kbFCxqqC9zm2JUFWU+A7Mf5aTA6xsTOe0sAhKmM7JY0BfzU2V3cTJuxM3Hst0/XMXrrPJkRGu8Qb6J/+gpuCJd3+gELMxYwAfymYfGB+qcQO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745287151; c=relaxed/simple;
-	bh=lO8C/lxiz/hcIzhlxucykGknudyPv0eRAuZaDHXQXj4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pVa7k4cnfy2FJCm+j0HaLeWRe8cJJFBojU676B0GePJEAO9BKscX8lmTzjh2uEgMhgEFlB2bhvrwY5osXZBz44UernJCeXehJb6OIOL7dSkabgZKx9d8QVO2LrKg54Vmk0F6dDuZkS9PKTr8Ph0FaNmVM0q5EbZBmGFhKnrBBto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=k/MaKwZG; arc=none smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53M0gF64021737;
-	Tue, 22 Apr 2025 01:58:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	corp-2023-11-20; bh=bCv+LXjgnzxEsdWKBfq+4uHrOKdDTePNNUTUf0872es=; b=
-	k/MaKwZGhts+icGwuqr9mq7ccEGmZ8BTd01wRrElHgDs62mIXGASgnvGGhG0Evcv
-	PiCfJ6le9GYXDGw6VKysh6Wu4pISwXcNuJUQx9f9u4/Ps9pAGCrjBC/bJPfMg1N1
-	qwvstRIsqnxFxTip/ICI6NADRYOGRkj+TlZgvNrmvtZY7zwzu8RLrpvok0Y+K+a5
-	XobSoLMfcBPEkiUEzGWGu0vd644RjUYEWn2G8X+EL9x6EhRysZ68vcE6CKcpQDKy
-	Jjj7Ojy9xrWQflM/GUMc2OL5jjcWnXO/4Yxe4GIFk6FBKS4ps5IHhQmU4gLJ0muU
-	xx9h4oPyVhMG0MkBGZT/dA==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4643q8uhga-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 22 Apr 2025 01:58:50 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 53M10Vvo003082;
-	Tue, 22 Apr 2025 01:58:49 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 464298r1sv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 22 Apr 2025 01:58:49 +0000
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53M1wn3Q010103;
-	Tue, 22 Apr 2025 01:58:49 GMT
-Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id 464298r1s5-1;
-	Tue, 22 Apr 2025 01:58:49 +0000
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-To: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Manish Pandey <quic_mapa@quicinc.com>
-Cc: "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com,
-        quic_rampraka@quicinc.com, quic_cang@quicinc.com,
-        quic_nguyenb@quicinc.com
-Subject: Re: [PATCH V3 0/2] scsi: ufs: Implement Quirks for Samsung UFS Devices
-Date: Mon, 21 Apr 2025 21:58:12 -0400
-Message-ID: <174528706573.2687990.11863305784928158386.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250411121630.21330-1-quic_mapa@quicinc.com>
-References: <20250411121630.21330-1-quic_mapa@quicinc.com>
+	s=arc-20240116; t=1745299753; c=relaxed/simple;
+	bh=UiVkfFLo8rqwxy97qc/BuLHfWyb96rKKOjclnQ94cno=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=hIwGjYuWlWoT1EJzss4UNLEmGoMCExftSWQ5N7j+Y03GczHt9Kyl9cXdGvA/nfvHhyz+s0OurqWwR9AeUT5nms72N1ejVsiqbzxxHyzrmHhqEGhWIcakHmBfB4aVvPYPvb8Jx+W1xwmPxA5guVpKALEMhJE9QbKNOD+WlOuCATU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MVKaUbsg; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53M4OsP4011415;
+	Tue, 22 Apr 2025 05:28:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	SGo+5kHX90davWHoF4JP27rYZAn0DXVkykLLUqXlGDM=; b=MVKaUbsguomy7AYB
+	QhsdsPWfyJhE7r7YruI1ViLDMqX83sv9P1HUipzNO6EBZx4iIODSk+qnmpQ971KU
+	RZbaam/z4UxL9zL33HXShqNgGHsSXd5gX+tQcoMc+I0NdO/Fq/NkkIwRybPZwKEj
+	J9vzgPtYgIlyIO/TzWyiMQi702Zjr0EecxFC3s1KZpiDwKRo89JX9VhOXGEiAx7A
+	fO8iYCCbIZRMTbFEdsCrhzaGVaRwQa3hjCN6u7L017nDMbTIEfk/dXQZ7RGjA/hY
+	w+dorfJpoyab6xBLVyq+zzzmolMY7jQYxb68xrQjZm4PHTSeTvDOgNtrtjYaJDF0
+	BaYsBg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46450pe32s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Apr 2025 05:28:56 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53M5StYH003021
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Apr 2025 05:28:55 GMT
+Received: from [10.204.66.137] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 21 Apr
+ 2025 22:28:49 -0700
+Message-ID: <cadaeb59-9f6a-4132-8570-212c3817efa9@quicinc.com>
+Date: Tue, 22 Apr 2025 10:58:46 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 07/11] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
+ to DP bridge nodes
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Ayushi Makhija
+	<amakhija@qti.qualcomm.com>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <marijn.suijten@somainline.org>,
+        <andersson@kernel.org>, <robh@kernel.org>, <robh+dt@kernel.org>,
+        <krzk+dt@kernel.org>, <konradybcio@kernel.org>, <conor+dt@kernel.org>,
+        <andrzej.hajda@intel.com>, <neil.armstrong@linaro.org>,
+        <rfoss@kernel.org>, <Laurent.pinchart@ideasonboard.com>,
+        <jonas@kwiboo.se>, <jernej.skrabec@gmail.com>,
+        <quic_abhinavk@quicinc.com>, <quic_rajeevny@quicinc.com>,
+        <quic_vproddut@quicinc.com>, <quic_jesszhan@quicinc.com>
+References: <20250417053909.1051416-1-amakhija@qti.qualcomm.com>
+ <20250417053909.1051416-8-amakhija@qti.qualcomm.com>
+ <qnhfnxvdsgnw5jh4xxaqz3p2x67qcrr7kn3vwdnyz5huchdtzy@aagflznjrvly>
+Content-Language: en-US
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
+In-Reply-To: <qnhfnxvdsgnw5jh4xxaqz3p2x67qcrr7kn3vwdnyz5huchdtzy@aagflznjrvly>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=Hd0UTjE8 c=1 sm=1 tr=0 ts=68072918 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=174sz1Ju-uvedw1KsVAA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: uGDgHQO1p69jAn046d_FxfeytHtXYAZ1
+X-Proofpoint-ORIG-GUID: uGDgHQO1p69jAn046d_FxfeytHtXYAZ1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-22_01,2025-04-21_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 bulkscore=0 phishscore=0
- malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0 mlxlogscore=814
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502280000
- definitions=main-2504220013
-X-Proofpoint-GUID: MIj0yV2SWP7OWV_MJRHQKbdzuKJsveHo
-X-Proofpoint-ORIG-GUID: MIj0yV2SWP7OWV_MJRHQKbdzuKJsveHo
+ definitions=2025-04-22_02,2025-04-21_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ priorityscore=1501 mlxscore=0 malwarescore=0 suspectscore=0 bulkscore=0
+ adultscore=0 mlxlogscore=999 phishscore=0 clxscore=1015 spamscore=0
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504220040
 
-On Fri, 11 Apr 2025 17:46:28 +0530, Manish Pandey wrote:
-
-> Introduce quirks for Samsung UFS devices to modify the PA TX HSG1 sync
-> length and TX_HS_EQUALIZER settings on the Qualcomm UFS Host controller.
+On 4/17/2025 4:10 PM, Dmitry Baryshkov wrote:
+> On Thu, Apr 17, 2025 at 11:09:05AM +0530, Ayushi Makhija wrote:
+>> From: Ayushi Makhija <quic_amakhija@quicinc.com>
+>>
+>> Add anx7625 DSI to DP bridge device nodes.
+>>
+>> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 180 +++++++++++++++++++++
+>>  1 file changed, 180 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>> index 175f8b1e3b2d..d5b2dabe927d 100644
+>> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>> @@ -28,6 +28,13 @@ chosen {
+>>  		stdout-path = "serial0:115200n8";
+>>  	};
+>>  
+>> +	vph_pwr: vph-pwr-regulator {
+>> +		compatible = "regulator-fixed";
+>> +		regulator-name = "vph_pwr";
+>> +		regulator-always-on;
+>> +		regulator-boot-on;
+>> +	};
+>> +
+>>  	vreg_conn_1p8: vreg_conn_1p8 {
+>>  		compatible = "regulator-fixed";
+>>  		regulator-name = "vreg_conn_1p8";
+>> @@ -128,6 +135,30 @@ dp1_connector_in: endpoint {
+>>  			};
+>>  		};
+>>  	};
+>> +
+>> +	dp-dsi0-connector {
+>> +		compatible = "dp-connector";
+>> +		label = "DSI0";
+>> +		type = "full-size";
+>> +
+>> +		port {
+>> +			dp_dsi0_connector_in: endpoint {
+>> +				remote-endpoint = <&dsi2dp_bridge0_out>;
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	dp-dsi1-connector {
+>> +		compatible = "dp-connector";
+>> +		label = "DSI1";
+>> +		type = "full-size";
+>> +
+>> +		port {
+>> +			dp_dsi1_connector_in: endpoint {
+>> +				remote-endpoint = <&dsi2dp_bridge1_out>;
+>> +			};
+>> +		};
+>> +	};
+>>  };
+>>  
+>>  &apps_rsc {
+>> @@ -519,7 +550,107 @@ &i2c18 {
+>>  	clock-frequency = <400000>;
+>>  	pinctrl-0 = <&qup_i2c18_default>;
+>>  	pinctrl-names = "default";
+>> +
+>>  	status = "okay";
+>> +
+>> +	io_expander: gpio@74 {
+>> +		compatible = "ti,tca9539";
+>> +		reg = <0x74>;
+>> +		interrupts-extended = <&tlmm 98 IRQ_TYPE_EDGE_BOTH>;
+>> +		gpio-controller;
+>> +		#gpio-cells = <2>;
+>> +		interrupt-controller;
+>> +		#interrupt-cells = <2>;
 > 
-> Additionally, Samsung UFS devices require extra time in hibern8 mode
-> before exiting, beyond the standard handshaking phase between the host
-> and device. Introduce a quirk to increase the PA_HIBERN8TIME parameter
-> by 100 µs to ensure a proper hibernation process.
+> No reset-gpios? Is the expander being used by something else so that we
+> don't want it to be reset during the bootup?
 > 
-> [...]
 
-Applied to 6.15/scsi-fixes, thanks!
+Hi Dmitry,
 
-[1/2] ufs: qcom: Add quirks for Samsung UFS devices
-      https://git.kernel.org/mkp/scsi/c/f8cba9a700cf
-[2/2] scsi: ufs: introduce quirk to extend PA_HIBERN8TIME for UFS devices
-      https://git.kernel.org/mkp/scsi/c/569330a34a31
+Reset-gpios is optional for tca9539, because of which it is not throwing an error.
+After adding reset-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>; it is working. Will add it in next
+patchset.
 
--- 
-Martin K. Petersen	Oracle Linux Engineering
+Thanks,
+Ayushi
+
+>> +
+>> +		pinctrl-0 = <&io_expander_intr_active>,
+>> +			    <&io_expander_reset_active>;
+>> +		pinctrl-names = "default";
+>> +	};
+>> +
+> 
+> The rest LGTM
+> 
+
 
