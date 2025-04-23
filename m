@@ -1,61 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-55164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9295EA993C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 18:03:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92DABA99409
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 18:07:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6F129A3818
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 15:52:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF7639A6376
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 15:51:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10B8729B79D;
-	Wed, 23 Apr 2025 15:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A69C228D849;
+	Wed, 23 Apr 2025 15:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W7VpmJYj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T01Ahhfn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D240329B78E;
-	Wed, 23 Apr 2025 15:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FAD28A1DB;
+	Wed, 23 Apr 2025 15:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422756; cv=none; b=ReHduaD/wAuRQXjRbKGrIV0UbNABmGrzg/FF+4OZLcBsqdDehz9QUUjR2zHiZ7emRoouTaV3hwj4HMlwWCQOUuM4Eg7jOAndBHGxo0Ws0RGKVkREjkW4mFbruqqCSaJGHBoxZ9PKbVsxsNBhunXWHisbOdODw2Z6bwPy5p3Qgv8=
+	t=1745422695; cv=none; b=OJednE2wUBZx9a/27uDu1vs4C63y2swrKQSXfWrW4mfRUsL9PQxSEaQv3qctIT/eHEtqrPM8bQ1eAH+CSB37x+PWqhE4LU2dL2rkC+AS4YClQJbxAlAulkP3oGUHb3bSQ4ojDREDClfwtQDvdMxOiMlf1rfYRGM/RYOOv50qu2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422756; c=relaxed/simple;
-	bh=Rf1l2OopktqxYqDNnHpIAJYUYrIzgYLt+auAQdNmub4=;
+	s=arc-20240116; t=1745422695; c=relaxed/simple;
+	bh=IaaWKmBkn5xlCdfV5Tc/lHW54iBmhXUi5MviWMueOo0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BCvofyou+s+/EFjOU9BEFIUJywo6tqOHa7lG2opTXSk8ian2ozhpS+uSwnhIo1UOem3FyEJmYqSV6Mr2xQgXLemP3kAOAqqFIwU12o6APOfyV5KydgIjpWJIMcm3gxKFuh7ue0HkbMS4rmDmCjQa/Qnf/gAYde8FQL6rACpcgnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W7VpmJYj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5725EC4CEE2;
-	Wed, 23 Apr 2025 15:39:15 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ipm5vX45SDktW1ZtLrgNZqfb5bQkwrpSgjb1qiv8ZOqa0L/EzUKVsAsDZ3J6rDsuUw5DpMAcy/fXnTjeO5uSuUF77NXWbLkN61mG5PE7RL3Lc4ZBwDec7dZe7LRWyCAbZdqJKs09DqZKZ3+EJLRNOXSfQ3vx+bDXecRyUDWTRb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T01Ahhfn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E47EC4CEE2;
+	Wed, 23 Apr 2025 15:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745422755;
-	bh=Rf1l2OopktqxYqDNnHpIAJYUYrIzgYLt+auAQdNmub4=;
+	s=k20201202; t=1745422695;
+	bh=IaaWKmBkn5xlCdfV5Tc/lHW54iBmhXUi5MviWMueOo0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=W7VpmJYjbudkZYJq6HWOPTumUvKRSJJfmsz8agWpK5fsRb8HnmBpg9/3O4ORCJbpu
-	 cQM8uH74iSUNFIwN+QnEHKsmEGsZ4EGKHayc92GQXoyUF/n94nl7AjksfzEAmmKybM
-	 7Z90GIJk2Ss7cPO9FpMNzDK57q6Qqz3nM0PPNlMMF9pzjq51KIgEieMVw6phW0foVx
-	 cGC7H4MSe8lLaaSy2s85pMyzYwGe2bmxFAGTKnX9joUZm3J0N7QORe2wZZRvqiiI2c
-	 VJC2X4og3JBewv97lgnOnUIfIrIQW4TQadI1TSSDdu+G4YIDbk1jeASUIP8tPa1jTB
-	 /ThQeg25gy2ZA==
-Date: Wed, 23 Apr 2025 10:39:13 -0500
+	b=T01Ahhfn32j66N81kHE9Doy0oHXEWbktmsfLpFjf0g8br7wl8u/uOvsaF0mRueV1X
+	 I/UXtyC/A3ZUqAkMCJhRbFpqRaGXvQEPfXdZwUGqA1sWn/+AMlh2+fJwDAw2V0MPeG
+	 MbarfDODtoomYQ/bgLi2wFxZfeaoQL/dpzSlZtwNAcJAWkcXtdJfDshpDhesq8bXqj
+	 0maEsfIIaPbJrttTYSEMbiKFJ7NEnYOeDbL8mosiviPh8oN+FKnuEtdaXfYtT5IU84
+	 8SVKlJ7CHBnoO9TZHa6e9Jidvv9FRj62pnFB0h1sRbLthBTF5+BBc0t3omXq0ktcDd
+	 OEX+ZTYJnzFkw==
+Date: Wed, 23 Apr 2025 10:38:13 -0500
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Kevin Widjaja <kevin.widjaja21@gmail.com>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht,
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: quic_vbadigan@quicinc.com, Bjorn Helgaas <bhelgaas@google.com>,
+	cros-qcom-dts-watchers@chromium.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: Re: [PATCH 3/4] dt-bindings: arm: qcom: Add Sony Xperia Z Ultra
- (togari)
-Message-ID: <174542275325.568386.14142528587023149670.robh@kernel.org>
-References: <20250419-togari-v1-0-45840c677364@lucaweiss.eu>
- <20250419-togari-v1-3-45840c677364@lucaweiss.eu>
+	devicetree@vger.kernel.org, quic_mrana@quicinc.com,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] dt-bindings: PCI: qcom: Move phy, wake & reset
+ gpio's to root port
+Message-ID: <174542269294.567149.8123466089628259520.robh@kernel.org>
+References: <20250419-perst-v3-0-1afec3c4ea62@oss.qualcomm.com>
+ <20250419-perst-v3-1-1afec3c4ea62@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,21 +69,30 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250419-togari-v1-3-45840c677364@lucaweiss.eu>
+In-Reply-To: <20250419-perst-v3-1-1afec3c4ea62@oss.qualcomm.com>
 
 
-On Sat, 19 Apr 2025 11:00:40 +0200, Luca Weiss wrote:
-> From: Kevin Widjaja <kevin.widjaja21@gmail.com>
+On Sat, 19 Apr 2025 10:49:24 +0530, Krishna Chaitanya Chundru wrote:
+> Move the phy, phy-names, wake-gpio's to the pcie root port node instead of
+> the bridge node, as agreed upon in multiple places one instance is[1].
 > 
-> Based on the msm8974.
+> Update the qcom,pcie-common.yaml to include the phy, phy-names, and
+> wake-gpios properties in the root port node. There is already reset-gpios
+> defined for PERST# in pci-bus-common.yaml, start using that property
+> instead of perst-gpio.
 > 
-> Signed-off-by: Kevin Widjaja <kevin.widjaja21@gmail.com>
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+> For backward compatibility, do not remove any existing properties in the
+> bridge node.
+> 
+> [1] https://lore.kernel.org/linux-pci/20241211192014.GA3302752@bhelgaas/
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  .../devicetree/bindings/pci/qcom,pcie-common.yaml  | 36 ++++++++++++++++++++--
+>  .../devicetree/bindings/pci/qcom,pcie-sc7280.yaml  | 16 +++++++---
+>  2 files changed, 46 insertions(+), 6 deletions(-)
 > 
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 
 
