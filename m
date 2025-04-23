@@ -1,187 +1,4905 @@
-Return-Path: <linux-arm-msm+bounces-55027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2728EA97D30
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 05:11:23 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54947A97DE8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 06:47:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0FB143BFDF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 03:10:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4E0E67A2938
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 04:46:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21DC2264624;
-	Wed, 23 Apr 2025 03:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BE561A23A1;
+	Wed, 23 Apr 2025 04:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="McQeihew"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lL/YqdQ5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721D245948
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 03:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B141FDD;
+	Wed, 23 Apr 2025 04:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745377868; cv=none; b=GVkIPENLz8U1u2MGSPEUI+vwi4u3WyTPILXrqKtfjd0Updkq0/yGTE9SsphycRhod9/wAskq3taxaudgfYqk3HRaE//daJnAcw8f4IDdblBVI0/9qkgZ5taVkqZipXuuhcOuc1RyP3yKwvVOnWJFTbgyN7szXl77ZoPl6XBUesM=
+	t=1745383646; cv=none; b=GxwWf14gJSEgjRAFhXy2wI2aJ80YLe88kI1PrvuoLIpW1ITH0/+hltKM2HgfUQYWrKvVNaB2ADhBzRPKdQCA/3YgJQ/O+vIjJtkmiPmzlrNdm5UatJq73boPKsa6aMdotn2/RPOB8KEzLmhzzRL2Mz+ZDfsszlQXOsL7H+BZg3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745377868; c=relaxed/simple;
-	bh=gNDyOiqvvJnSJH9LoREom7MMlXsJ1YgY/lC4EhEpN/4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RXUZ8S1lFGPu7ZiCywg69qiVfTe+WLC/B+b92CQ/61YSC3WUseiihQt4eQYeXCsxUEJHWNfMhaCiVl9ewikN9jSIuyc4HwBgpIP/tt+6vBhlmhpyYEWoxlG71APVZhLm3+PXLHIs1grUSAiGwA/XW5ih42bkXm5qxP7Mwva7JsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=McQeihew; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53N0iAcL016178
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 03:11:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1745383646; c=relaxed/simple;
+	bh=swv0pg73WY3xrpaaGVY6sC0mN2yXZ1yiHKf3EAW4tm0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=oRfjmqHWnu66tGhwCYCsiDTU6Ctjr/L8i50Gxfk8+YqxcJtJNOUg98grqQsVM2jo6EtnMPezNcnhvFKZs5Yv1xmjyrYacfXwKvL9u0DWVutMYfWhGn0pBQ666qQ8Yxp63nxBv0uQPo07zDCoPjDbvmbD5Cj0EHIaR5F2R11pbP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lL/YqdQ5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53N0i8MX003044;
+	Wed, 23 Apr 2025 04:47:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AUzM1IQQBSoW4Yzoz+0un0e1UZB9NVH9M6aYGCfVdkg=; b=McQeihewsgL9ZGYk
-	hvNAa1i78p6iRXk7f/FwnMreYxzUpj2qVSssrdqA1h7coGU1vlzvd8D6F7fIqDM7
-	ex9WWgUPu0swBXETxRZk8fk5Q6NFopc8beq7y+OuJ7NWj269NrhcGAMa46iVGz6z
-	c0NGDdV/uFtmAeHvIV9TnIhYYgfuYIVPN8Veu4b2YVumjfwRWS8R4x0tfB++U4fb
-	3T3Vx/eTaZPVahcSAfm9qcWgPpxX7FXc15dNKGQCVX8W0vBhtFccBh3y1znBfoWt
-	fxz2g+Qc/gzWWVhPUe+6JJf819aLdBiGQW7Z09pU/zGfvkMPtF4C5kQG1X0soIoE
-	752Q4w==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh3gp5b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 03:11:05 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-2ff68033070so5139800a91.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 20:11:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745377864; x=1745982664;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AUzM1IQQBSoW4Yzoz+0un0e1UZB9NVH9M6aYGCfVdkg=;
-        b=HIe2KQadqtu8QXwTMZ5TtjuhS/1iZMK8yjLq8jVJre+9FQ5K3DpA8gRcdPV9ME/O8I
-         E0nuF0YjVnsszScDBMWs6BMEAgRSbjCTFzuuf+p/cq7xfb2AdTi0tCw7vqjj+6B890tK
-         wegKcVYosz2je/fnIWN7quhbspSMGH5YqCat0NOHMwyNOg9Tgd2ntK9hQBTFT1RNOEq5
-         YQfrmEIaLeASGmH+oNODnAqehU7BhHpToKGYt4bPYRlamnMouEMycXfVSxT9CkDnHuew
-         n5Qda3g68aMwUL4tLY+Pl0G0y1ZPvsmx0N/CLrIOxCws6cEW8tMeOKx1yLnmENtrXbmr
-         U8Fg==
-X-Gm-Message-State: AOJu0YweqUStehFzKhpVfUCSr44NpugEY0NsydnnulJfuHxny+Ve9tlM
-	L7sKF8yxBuL05KHy3aRR+RTP4qFOFMJd4VYRo/ngjk1u4ze7vOVwco3z5vKSdah7vk1KVqUKn90
-	7Flh6Y0Yx3kqlLhcp0Ipzsc/NVF/bOXE4OcA2EetvdnKHuVrKW4uKmieBH3Zc9A72
-X-Gm-Gg: ASbGncv7IYER/3VEBRJC7i0VoSbniDZpPN6VXa8W669tyugBOHeiz7nbJOvZ/b6To1u
-	SoNNXusL1vSSzR6xlokJRXVcQOdOr0nCZIrM9wL/aHO2Ls6dIYnZLbc5fchJYJHL8LqZ4ZBZDGh
-	GM8HEKJV4MSos9iri08nrEaBErCxC5Yy0TUG2SUpkTUQ/nesUuhbCyY2mJhinlCbUZM/dsyo/oA
-	tbl++yw4f4PuZtqi1QUmd21JmDe8y85eIvXnu1oVuuirUAkkiNkmyUwidZBARekDFS/mNzxoXz1
-	qmRw/uAf/frA8dO2PVjLXqvdLjnEZ9Ln5ag/SbxM+A==
-X-Received: by 2002:a17:90b:280b:b0:2fe:b470:dde4 with SMTP id 98e67ed59e1d1-3087bb48e31mr33085516a91.12.1745377863731;
-        Tue, 22 Apr 2025 20:11:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHqND8/PeqFUb5GQNFXy8yeKg5wopuUfA3/3IcqnNMYrM8oX9zPImajp1J92zZXyURB0FbG8w==
-X-Received: by 2002:a17:90b:280b:b0:2fe:b470:dde4 with SMTP id 98e67ed59e1d1-3087bb48e31mr33085475a91.12.1745377863263;
-        Tue, 22 Apr 2025 20:11:03 -0700 (PDT)
-Received: from [10.218.37.122] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22c50eb448esm93082285ad.152.2025.04.22.20.10.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Apr 2025 20:11:02 -0700 (PDT)
-Message-ID: <347a7348-664f-3636-604e-8dc6429691b9@oss.qualcomm.com>
-Date: Wed, 23 Apr 2025 08:40:56 +0530
+	uRBxYCetDA8Ljhx0ZIq5ZiTopItZJNOp6U8xx9pVjlk=; b=lL/YqdQ5Z/voS3q4
+	dIbKeBdzi+S49VDeqy1nrLe5fr47YfZzeiMr+7Pbb9TRrwegfRw9GYMmy0LxoZ61
+	6hsHETkcHGsPsVk3BnoruucFD8OY80MKkZ2UOA5jOWRx5Bs4gVwSNYzV5ckRq208
+	ul3/9dCtX6rvuGdcltirFvFnLn0LFQBoR3Vt1uKJVxu1k+5u58Uwe0NdVu8j+49j
+	H7/+VTDHvLAfnohC8/i6mSW4R4OGkdmryksFgCUIHUY8gnVENjIRfE3jzGFRRUOg
+	ACgMbOQjClcXtBmr/fMTpxM93lnvbe//cEG/RIL3iqtMZEOu0jpGNydmSEGXMUik
+	kJtUrg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jgy0v3e-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Apr 2025 04:47:11 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53N4lAFo002775
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Apr 2025 04:47:10 GMT
+Received: from [10.218.20.114] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Apr
+ 2025 21:47:06 -0700
+Message-ID: <0482cd6b-53ca-41eb-8721-a83ce8a7c733@quicinc.com>
+Date: Wed, 23 Apr 2025 10:16:57 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v3 2/3] PCI: qcom: Add support for multi-root port
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] arm64: dts: qcom: add initial support for qcom
+ sa8255p-ride
+To: Deepti Jaggi <quic_djaggi@quicinc.com>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <quic_psodagud@quicinc.com>
+CC: <quic_ptalari@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250422231249.871995-1-quic_djaggi@quicinc.com>
 Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com
-References: <20250419-perst-v3-0-1afec3c4ea62@oss.qualcomm.com>
- <20250419-perst-v3-2-1afec3c4ea62@oss.qualcomm.com>
- <9be69535-08dd-4d60-b007-e9c50e706a58@oss.qualcomm.com>
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <9be69535-08dd-4d60-b007-e9c50e706a58@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Shazad Hussain <quic_shazhuss@quicinc.com>
+In-Reply-To: <20250422231249.871995-1-quic_djaggi@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 6edcnobgqbntArzQ8RFOIQ9jHZg3lt4x
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDIzMDAxOSBTYWx0ZWRfX5X3ntSaCX1Vi 192KORtDZkQFPD/qJtBKAli4CEaUY1gIGXA2Hk1doXP3lXiIF+Ay+FmbMWUGTOtvN2k3ZnloGSk MwzIi22exlFQ5IP6B3dge36jVm3uyud2JcGuwrQ/Scl8kqB+iueO5AyRD4Ae2XF7cHm3SWAz2RS
- ivKKevIDKuECaCUSrWF+h0XgqCvVABQREra2PiZKa67VJ831DmcP6hkLoJntl/GmEUOO2ZXtlAH 1061O8ZUAwjeNKUYwURTGGmg4pAvNZiU7G/UPDas7e/5MWoO/i+nUiGz133V/lvmtQmD9BRp3Je t98C0VyOgITzqb3iu9cdi0UDB1hf0C2ukiDzAm3SZf/k3EVwNu92M4T4f5q0e4Dlsa6ROk0m2SJ
- KjVv8q8WwjU9IVxb9ds0k2xXFe9NdWC3R5O8dkNTajloFMJ6GjAGsff+E9xhMWTfG6p0Dbxe
-X-Authority-Analysis: v=2.4 cv=ELgG00ZC c=1 sm=1 tr=0 ts=68085a49 cx=c_pps a=RP+M6JBNLl+fLTcSJhASfg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=1RYYy9rr-L5vwPXD2fUA:9 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-GUID: 6edcnobgqbntArzQ8RFOIQ9jHZg3lt4x
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDIzMDAyOCBTYWx0ZWRfX1uj7P0ZBOYp/ MnnvRlyO2kVf0rQLC/5JvzUJH/UkR0PRgSItSMI+FenrPYIzHzy3BMNTM9EhQR9jHEyLMzJ5vBq zAxW3I0LXAkLxGPp4fs4qZA656p5sOFPGOEfrsqdCXd6+Jjzm4Trsj9z9qQMo3186u/b+TkNGQu
+ RfCTXoZUVYja6NTFLaieaNg/0l+BsZwNm07SDe9YT3C0NUdlASI9seN5Qo2RNjPQv5bKml33wfy 2po+bOSlthDDXf6oFL3W+1Ap7qGOTO9j1id8YtD3NgNI5p/KH9oz/BXmefFnGkbxZreDIikUdwJ In4psPHDisyf4KpPZdUcX+tpGklq+Pc8h2V5eduuzCCh4phgt/zeVKaE/1T218T+Ra1PTymCWvf
+ 1svfwSFaPiDLRU7iQFqq6JJiAcn4iLFWVwZKxn0e1MWp6dhYNNP6wSVtQltQjVZoTxmePAeC
+X-Proofpoint-GUID: GxjBuB7onPeSlX36iXx6T-pH0eI5Yack
+X-Proofpoint-ORIG-GUID: GxjBuB7onPeSlX36iXx6T-pH0eI5Yack
+X-Authority-Analysis: v=2.4 cv=M5VNKzws c=1 sm=1 tr=0 ts=680870d0 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=M7xvV7N_ssvs_x_3L7MA:9
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-23_01,2025-04-22_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ definitions=2025-04-23_02,2025-04-22_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 priorityscore=1501 mlxscore=0
+ mlxlogscore=999 malwarescore=0 impostorscore=0 clxscore=1011
+ suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504230019
+ definitions=main-2504230028
 
 
 
-On 4/23/2025 2:15 AM, Konrad Dybcio wrote:
-> On 4/19/25 7:19 AM, Krishna Chaitanya Chundru wrote:
->> Move phy, perst handling to root port and provide a way to have multi-port
->> logic.
->>
->> Currently, qcom controllers only support single port, and all properties
->> are present in the controller node itself. This is incorrect, as
->> properties like phy, perst, wake, etc. can vary per port and should be
->> present in the root port node.
->>
->> To maintain DT backwards compatibility, fallback to the legacy method of
->> parsing the controller node if the port parsing fails.
->>
->> pci-bus-common.yaml uses reset-gpios property for representing PERST, use
->> same property instead of perst-gpios.
->>
->> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
->> ---
+On 4/23/2025 4:42 AM, Deepti Jaggi wrote:
+> From: Nikunj Kela <quic_nkela@quicinc.com>
 > 
-> [...]
+> This adds basic support for the Qualcomm sa8255p platform and the
+> reference board: sa8255p-ride. The dt files describe the basics of the
+> SoC and enable booting to shell with ramdisk.
 > 
->> -static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
->> +static void qcom_perst_assert_deassert(struct qcom_pcie *pcie, bool assert)
->>   {
->> -	gpiod_set_value_cansleep(pcie->reset, 1);
->> +	struct qcom_pcie_port *port, *tmp;
->> +	int val = assert ? 1 : 0;
+> The Qualcomm automotive sa8255p SoC utilizes firmware to configure platform
+> resources such as clocks, interconnects, and TLMM. Device drivers request
+> these resources through the SCMI power and performance protocols. The SCMI
+> platform supports resource aggregation and handles parallel requests from
+> agents, with each driver having a dedicated SCMI channel for communication.
 > 
-> assert is already a boolean - are some checkers complaining?
-Ack, I will remove this in next patch.
+> Co-developed-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+> Signed-off-by: Deepti Jaggi <quic_djaggi@quicinc.com>
+> ---
+> This patch is dependent on [2] for booting to shell and DT bindings.
 > 
-> [...]
+> Changes in v3:
+>          Removed the patches from original series [1].
+>          Added arm,max-msg and arm,max-msg-size DT property in scmi nodes.
+>          Changed max-rx-timeout-ms to arm,max-rx-timeout-ms in scmi nodes.
+>          Updated commit text.
+>          Reordered range property for qupv3_id_0, qupv3_id_1 and qupv3_id_3 nodes.
+>          Reordered vendor property(#qcom,sensors) for tsens* nodes.
+>          Changed cache labels to lower case.
+>          Removed unused i2c,spi and tlmm nodes.
+>          Updated reserved memory nodes.
 > 
->> +	/*
->> +	 * In the case of failure in parsing the port nodes, fallback to the
->> +	 * legacy method of parsing the controller node. This is to maintain DT
->> +	 * backwards compatibility.
+> Changes in v2:
+>          Removed scmichannels label and alias
+>          Modified scmi node name to conform to schema
+>          Moved status property to be the last one in scmi instances
+>          Changed to lower case for cpu labels
+>          Added fallback compatible for tlmm node
 > 
-> It'd be simpler to call qcom_pcie_parse_port on the PCIe controller's
-> OF node, removing the need for the if-else-s throughout the patch
+> [1]: https://lore.kernel.org/all/20240903220240.2594102-1-quic_nkela@quicinc.com/
+> [2]: https://lore.kernel.org/all/20250418151235.27787-1-quic_ptalari@quicinc.com/
+> ---
+>   arch/arm64/boot/dts/qcom/Makefile           |    1 +
+>   arch/arm64/boot/dts/qcom/sa8255p-pmics.dtsi |   80 +
+>   arch/arm64/boot/dts/qcom/sa8255p-ride.dts   |   94 +
+>   arch/arm64/boot/dts/qcom/sa8255p-scmi.dtsi  | 2440 +++++++++++++++++++
+>   arch/arm64/boot/dts/qcom/sa8255p.dtsi       | 2075 ++++++++++++++++
+>   5 files changed, 4690 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/sa8255p-pmics.dtsi
+>   create mode 100644 arch/arm64/boot/dts/qcom/sa8255p-ride.dts
+>   create mode 100644 arch/arm64/boot/dts/qcom/sa8255p-scmi.dtsi
+>   create mode 100644 arch/arm64/boot/dts/qcom/sa8255p.dtsi
 > 
-There is difference in perst property name for controller's OF node and
-the root port OF node. controller use perst-gpios, where as the root
-port node uses the pci-bus-common.yaml defined way of perst i.e
-reset-gpios.
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index adb4d026bcc4..7437e51e5849 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -134,6 +134,7 @@ qrb5165-rb5-vision-mezzanine-dtbs	:= qrb5165-rb5.dtb qrb5165-rb5-vision-mezzanin
+>   dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5-vision-mezzanine.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= qru1000-idp.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sa8255p-ride.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sa8540p-ride.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sa8775p-ride.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sa8255p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8255p-pmics.dtsi
+> new file mode 100644
+> index 000000000000..b00c2b05cef7
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sa8255p-pmics.dtsi
+> @@ -0,0 +1,80 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2024-2025, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/ {
+> +	thermal-zones {
+> +		pmm8654au_0_thermal: pm8255-0-thermal {
+> +			polling-delay-passive = <100>;
+> +
+> +			trips {
+> +				trip0 {
+> +					temperature = <105000>;
+> +					hysteresis = <0>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip1 {
+> +					temperature = <125000>;
+> +					hysteresis = <0>;
+> +					type = "critical";
+> +				};
+> +			};
+> +		};
+> +
+> +		pmm8654au_1_thermal: pm8255-1-thermal {
+> +			polling-delay-passive = <100>;
+> +
+> +			trips {
+> +				trip0 {
+> +					temperature = <105000>;
+> +					hysteresis = <0>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip1 {
+> +					temperature = <125000>;
+> +					hysteresis = <0>;
+> +					type = "critical";
+> +				};
+> +			};
+> +		};
+> +
+> +		pmm8654au_2_thermal: pm8255-2-thermal {
+> +			polling-delay-passive = <100>;
+> +
+> +			trips {
+> +				trip0 {
+> +					temperature = <105000>;
+> +					hysteresis = <0>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip1 {
+> +					temperature = <125000>;
+> +					hysteresis = <0>;
+> +					type = "critical";
+> +				};
+> +			};
+> +		};
+> +
+> +		pmm8654au_3_thermal: pm8255-3-thermal {
+> +			polling-delay-passive = <100>;
+> +
+> +			trips {
+> +				trip0 {
+> +					temperature = <105000>;
+> +					hysteresis = <0>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip1 {
+> +					temperature = <125000>;
+> +					hysteresis = <0>;
+> +					type = "critical";
+> +				};
+> +			};
+> +		};
+> +	};
+> +};
 
-It's better to have this way then having if else condition in the
-qcom_pcie_parse_port.
+PMIC is handled by firmware on this SoC and in my openion we do not need
+to have a dedicated sa8255p-pmics.dtsi only to have thermal zones nodes.
+Can we keep these pmic thermal zones to sa8255p.dtsi with other thermal
+zones nodes ?
 
-- Krishna Chaitanya.
-> Konrad
+
+> diff --git a/arch/arm64/boot/dts/qcom/sa8255p-ride.dts b/arch/arm64/boot/dts/qcom/sa8255p-ride.dts
+> new file mode 100644
+> index 000000000000..cb866f897d0a
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sa8255p-ride.dts
+> @@ -0,0 +1,94 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/gpio/gpio.h>
+> +
+> +#include "sa8255p.dtsi"
+> +#include "sa8255p-pmics.dtsi"
+> +#include "sa8255p-scmi.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. SA8255P Ride";
+> +	compatible = "qcom,sa8255p-ride", "qcom,sa8255p";
+> +
+> +	aliases {
+> +		serial0 = &uart10;
+> +		serial1 = &uart4;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +};
+> +
+> +&adreno_smmu {
+> +	power-domains = <&scmi15_pd 0>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&gpll0_board_clk {
+> +	clock-frequency = <300000000>;
+> +};
+> +
+> +&pmm8654au_0_thermal {
+> +	thermal-sensors = <&scmi23_sensor 0>;
+> +};
+> +
+> +&pmm8654au_1_thermal {
+> +	thermal-sensors = <&scmi23_sensor 1>;
+> +};
+> +
+> +&pmm8654au_2_thermal {
+> +	thermal-sensors = <&scmi23_sensor 2>;
+> +};
+> +
+> +&pmm8654au_3_thermal {
+> +	thermal-sensors = <&scmi23_sensor 3>;
+> +};
+> +
+> +&qupv3_id_0 {
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_id_1 {
+> +	status = "okay";
+> +};
+> +
+> +&scmi11 {
+> +	status = "okay";
+> +};
+> +
+> +&scmi15 {
+> +	status = "okay";
+> +};
+> +
+> +&scmi23 {
+> +	status = "okay";
+> +};
+> +
+> +&sleep_clk {
+> +	clock-frequency = <32000>;
+> +};
+> +
+> +&uart4 {
+> +	power-domains = <&scmi11_pd 4>, <&scmi11_dvfs 4>;
+> +	power-domain-names = "power", "perf";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&uart10 {
+> +	power-domains = <&scmi11_pd 10>, <&scmi11_dvfs 10>;
+> +	power-domain-names = "power", "perf";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&xo_board_clk {
+> +	clock-frequency = <38400000>;
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sa8255p-scmi.dtsi b/arch/arm64/boot/dts/qcom/sa8255p-scmi.dtsi
+> new file mode 100644
+> index 000000000000..589bb09f027b
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sa8255p-scmi.dtsi
+> @@ -0,0 +1,2440 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +&firmware {
+> +	scmi0: scmi-0 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem0>;
+> +
+> +		interrupts = <GIC_SPI 963 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi0_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi0_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi0_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi1: scmi-1 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem1>;
+> +
+> +		interrupts = <GIC_SPI 964 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi1_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi1_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi1_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi2: scmi-2 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem2>;
+> +
+> +		interrupts = <GIC_SPI 965 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi2_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi2_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi2_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi3: scmi-3 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem3>;
+> +
+> +		interrupts = <GIC_SPI 966 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi3_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi3_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi3_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi4: scmi-4 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem4>;
+> +
+> +		interrupts = <GIC_SPI 967 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi4_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi4_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi4_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi5: scmi-5 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem5>;
+> +
+> +		interrupts = <GIC_SPI 968 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi5_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi5_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi5_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi6: scmi-6 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem6>;
+> +
+> +		interrupts = <GIC_SPI 969 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi6_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi6_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi6_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi7: scmi-7 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem7>;
+> +
+> +		interrupts = <GIC_SPI 970 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi7_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi7_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi7_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi8: scmi-8 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem8>;
+> +
+> +		interrupts = <GIC_SPI 971 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi8_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi8_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi8_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi9: scmi-9 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem9>;
+> +
+> +		interrupts = <GIC_SPI 972 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi9_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi9_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi9_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi10: scmi-10 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem10>;
+> +
+> +		interrupts = <GIC_SPI 973 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi10_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi10_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi10_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi11: scmi-11 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem11>;
+> +
+> +		interrupts = <GIC_SPI 974 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi11_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi11_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi11_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi12: scmi-12 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem12>;
+> +
+> +		interrupts = <GIC_SPI 975 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi12_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi12_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi12_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi13: scmi-13 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem13>;
+> +
+> +		interrupts = <GIC_SPI 976 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi13_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi13_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi13_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi14: scmi-14 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem14>;
+> +
+> +		interrupts = <GIC_SPI 977 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi14_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi14_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi14_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi15: scmi-15 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem15>;
+> +
+> +		interrupts = <GIC_SPI 978 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi15_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi15_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi15_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi16: scmi-16 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem16>;
+> +
+> +		interrupts = <GIC_SPI 979 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi16_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi16_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi16_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi17: scmi-17 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem17>;
+> +
+> +		interrupts = <GIC_SPI 980 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi17_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi17_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi17_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi18: scmi-18 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem18>;
+> +
+> +		interrupts = <GIC_SPI 981 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi18_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi18_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi18_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi19: scmi-19 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem19>;
+> +
+> +		interrupts = <GIC_SPI 982 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi19_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi19_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi19_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi20: scmi-20 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem20>;
+> +
+> +		interrupts = <GIC_SPI 983 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi20_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi20_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi20_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi21: scmi-21 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem21>;
+> +
+> +		interrupts = <GIC_SPI 984 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi21_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi21_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi21_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi22: scmi-22 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem22>;
+> +
+> +		interrupts = <GIC_SPI 985 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi22_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi22_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi22_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi23: scmi-23 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem23>;
+> +
+> +		interrupts = <GIC_SPI 986 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi23_sensor: protocol@15 {
+> +			reg = <0x15>;
+> +			#thermal-sensor-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi24: scmi-24 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem24>;
+> +
+> +		interrupts = <GIC_SPI 987 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi24_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi24_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi24_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi25: scmi-25 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem25>;
+> +
+> +		interrupts = <GIC_ESPI 0 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi25_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi25_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi25_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi26: scmi-26 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem26>;
+> +
+> +		interrupts = <GIC_ESPI 1 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi26_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi26_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi26_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi27: scmi-27 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem27>;
+> +
+> +		interrupts = <GIC_ESPI 2 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi27_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi27_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi27_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi28: scmi-28 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem28>;
+> +
+> +		interrupts = <GIC_ESPI 3 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi28_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi28_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi28_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi29: scmi-29 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem29>;
+> +
+> +		interrupts = <GIC_ESPI 4 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi29_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi29_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi29_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi30: scmi-30 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem30>;
+> +
+> +		interrupts = <GIC_ESPI 5 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi30_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi30_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi30_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi31: scmi-31 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem31>;
+> +
+> +		interrupts = <GIC_ESPI 6 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi31_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi31_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi31_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi32: scmi-32 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem32>;
+> +
+> +		interrupts = <GIC_ESPI 7 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi32_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi32_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi32_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi33: scmi-33 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem33>;
+> +
+> +		interrupts = <GIC_ESPI 8 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi33_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi33_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi33_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi34: scmi-34 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem34>;
+> +
+> +		interrupts = <GIC_ESPI 9 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi34_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi34_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi34_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi35: scmi-35 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem35>;
+> +
+> +		interrupts = <GIC_ESPI 10 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi35_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi35_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi35_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi36: scmi-36 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem36>;
+> +
+> +		interrupts = <GIC_ESPI 11 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi36_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi36_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi36_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi37: scmi-37 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem37>;
+> +
+> +		interrupts = <GIC_ESPI 12 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi37_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi37_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi37_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi38: scmi-38 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem38>;
+> +
+> +		interrupts = <GIC_ESPI 13 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi38_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi38_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi38_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi39: scmi-39 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem39>;
+> +
+> +		interrupts = <GIC_ESPI 14 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi39_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi39_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi39_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi40: scmi-40 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem40>;
+> +
+> +		interrupts = <GIC_ESPI 15 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi40_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi40_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi40_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi41: scmi-41 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem41>;
+> +
+> +		interrupts = <GIC_ESPI 16 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi41_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi41_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi41_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi42: scmi-42 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem42>;
+> +
+> +		interrupts = <GIC_ESPI 17 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi42_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi42_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi42_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi43: scmi-43 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem43>;
+> +
+> +		interrupts = <GIC_ESPI 18 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi43_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi43_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi43_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi44: scmi-44 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem44>;
+> +
+> +		interrupts = <GIC_ESPI 19 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi44_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi44_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi44_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi45: scmi-45 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem45>;
+> +
+> +		interrupts = <GIC_ESPI 20 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi45_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi45_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi45_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi46: scmi-46 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem46>;
+> +
+> +		interrupts = <GIC_ESPI 21 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi46_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi46_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi46_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi47: scmi-47 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem47>;
+> +
+> +		interrupts = <GIC_ESPI 22 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi47_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi47_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi47_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi48: scmi-48 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem48>;
+> +
+> +		interrupts = <GIC_ESPI 23 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi48_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi48_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi48_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi49: scmi-49 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem49>;
+> +
+> +		interrupts = <GIC_ESPI 24 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi49_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi49_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi49_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi50: scmi-50 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem50>;
+> +
+> +		interrupts = <GIC_ESPI 25 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi50_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi50_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi50_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi51: scmi-51 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem51>;
+> +
+> +		interrupts = <GIC_ESPI 26 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi51_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi51_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi51_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi52: scmi-52 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem52>;
+> +
+> +		interrupts = <GIC_ESPI 27 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi52_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi52_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi52_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi53: scmi-53 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem53>;
+> +
+> +		interrupts = <GIC_ESPI 28 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi53_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi53_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi53_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi54: scmi-54 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem54>;
+> +
+> +		interrupts = <GIC_ESPI 29 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi54_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi54_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi54_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi55: scmi-55 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem55>;
+> +
+> +		interrupts = <GIC_ESPI 30 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi55_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi55_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi55_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi56: scmi-56 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem56>;
+> +
+> +		interrupts = <GIC_ESPI 31 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi56_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi56_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi56_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi57: scmi-57 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem57>;
+> +
+> +		interrupts = <GIC_ESPI 32 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi57_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi57_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi57_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi58: scmi-58 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem58>;
+> +
+> +		interrupts = <GIC_ESPI 33 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi58_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi58_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi58_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi59: scmi-59 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem59>;
+> +
+> +		interrupts = <GIC_ESPI 34 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi59_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi59_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi59_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi60: scmi-60 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem60>;
+> +
+> +		interrupts = <GIC_ESPI 35 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi60_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi60_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi60_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi61: scmi-61 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem61>;
+> +
+> +		interrupts = <GIC_ESPI 36 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi61_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi61_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi61_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi62: scmi-62 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem62>;
+> +
+> +		interrupts = <GIC_ESPI 37 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi62_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi62_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi62_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +
+> +	scmi63: scmi-63 {
+> +		compatible = "qcom,scmi-smc";
+> +		arm,smc-id = <0xc6008012>;
+> +		shmem = <&shmem63>;
+> +
+> +		interrupts = <GIC_ESPI 38 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-names = "a2p";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		arm,max-msg = <10>;
+> +		arm,max-msg-size = <256>;
+> +		arm,max-rx-timeout-ms = <3000>;
+> +
+> +		status = "disabled";
+> +
+> +		scmi63_pd: protocol@11 {
+> +			reg = <0x11>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi63_dvfs: protocol@13 {
+> +			reg = <0x13>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		scmi63_rst: protocol@16 {
+> +			reg = <0x16>;
+> +			#reset-cells = <1>;
+> +		};
+> +	};
+> +};
+> +
+> +&soc {
+> +	sram@d0000000 {
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		compatible = "mmio-sram";
+> +		reg = <0x0 0xd0000000 0x0 0x40000>;
+> +		ranges = <0x0 0x0 0x0 0xffffffff>;
+> +
+> +		shmem0: scmi-sram@d0000000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0000000 0x1000>;
+> +		};
+> +
+> +		shmem1: scmi-sram@d0001000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0001000 0x1000>;
+> +		};
+> +
+> +		shmem2: scmi-sram@d0002000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0002000 0x1000>;
+> +		};
+> +
+> +		shmem3: scmi-sram@d0003000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0003000 0x1000>;
+> +		};
+> +
+> +		shmem4: scmi-sram@d0004000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0004000 0x1000>;
+> +		};
+> +
+> +		shmem5: scmi-sram@d0005000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0005000 0x1000>;
+> +		};
+> +
+> +		shmem6: scmi-sram@d0006000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0006000 0x1000>;
+> +		};
+> +
+> +		shmem7: scmi-sram@d0007000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0007000 0x1000>;
+> +		};
+> +
+> +		shmem8: scmi-sram@d0008000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0008000 0x1000>;
+> +		};
+> +
+> +		shmem9: scmi-sram@d0009000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0009000 0x1000>;
+> +		};
+> +
+> +		shmem10: scmi-sram@d000a000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd000a000 0x1000>;
+> +		};
+> +
+> +		shmem11: scmi-sram@d000b000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd000b000 0x1000>;
+> +		};
+> +
+> +		shmem12: scmi-sram@d000c000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd000c000 0x1000>;
+> +		};
+> +
+> +		shmem13: scmi-sram@d000d000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd000d000 0x1000>;
+> +		};
+> +
+> +		shmem14: scmi-sram@d000e000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd000e000 0x1000>;
+> +		};
+> +
+> +		shmem15: scmi-sram@d000f000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd000f000 0x1000>;
+> +		};
+> +
+> +		shmem16: scmi-sram@d0010000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0010000 0x1000>;
+> +		};
+> +
+> +		shmem17: scmi-sram@d0011000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0011000 0x1000>;
+> +		};
+> +
+> +		shmem18: scmi-sram@d0012000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0012000 0x1000>;
+> +		};
+> +
+> +		shmem19: scmi-sram@d0013000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0013000 0x1000>;
+> +		};
+> +
+> +		shmem20: scmi-sram@d0014000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0014000 0x1000>;
+> +		};
+> +
+> +		shmem21: scmi-sram@d0015000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0015000 0x1000>;
+> +		};
+> +
+> +		shmem22: scmi-sram@d0016000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0016000 0x1000>;
+> +		};
+> +
+> +		shmem23: scmi-sram@d0017000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0017000 0x1000>;
+> +		};
+> +
+> +		shmem24: scmi-sram@d0018000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0018000 0x1000>;
+> +		};
+> +
+> +		shmem25: scmi-sram@d0019000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0019000 0x1000>;
+> +		};
+> +
+> +		shmem26: scmi-sram@d001a000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd001a000 0x1000>;
+> +		};
+> +
+> +		shmem27: scmi-sram@d001b000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd001b000 0x1000>;
+> +		};
+> +
+> +		shmem28: scmi-sram@d001c000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd001c000 0x1000>;
+> +		};
+> +
+> +		shmem29: scmi-sram@d001d000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd001d000 0x1000>;
+> +		};
+> +
+> +		shmem30: scmi-sram@d001e000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd001e000 0x1000>;
+> +		};
+> +
+> +		shmem31: scmi-sram@d001f000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd001f000 0x1000>;
+> +		};
+> +
+> +		shmem32: scmi-sram@d0020000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0020000 0x1000>;
+> +		};
+> +
+> +		shmem33: scmi-sram@d0021000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0021000 0x1000>;
+> +		};
+> +
+> +		shmem34: scmi-sram@d0022000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0022000 0x1000>;
+> +		};
+> +
+> +		shmem35: scmi-sram@d0023000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0023000 0x1000>;
+> +		};
+> +
+> +		shmem36: scmi-sram@d0024000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0024000 0x1000>;
+> +		};
+> +
+> +		shmem37: scmi-sram@d0025000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0025000 0x1000>;
+> +		};
+> +
+> +		shmem38: scmi-sram@d0026000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0026000 0x1000>;
+> +		};
+> +
+> +		shmem39: scmi-sram@d0027000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0027000 0x1000>;
+> +		};
+> +
+> +		shmem40: scmi-sram@d0028000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0028000 0x1000>;
+> +		};
+> +
+> +		shmem41: scmi-sram@d0029000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0029000 0x1000>;
+> +		};
+> +
+> +		shmem42: scmi-sram@d002a000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd002a000 0x1000>;
+> +		};
+> +
+> +		shmem43: scmi-sram@d002b000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd002b000 0x1000>;
+> +		};
+> +
+> +		shmem44: scmi-sram@d002c000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd002c000 0x1000>;
+> +		};
+> +
+> +		shmem45: scmi-sram@d002d000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd002d000 0x1000>;
+> +		};
+> +
+> +		shmem46: scmi-sram@d002e000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd002e000 0x1000>;
+> +		};
+> +
+> +		shmem47: scmi-sram@d002f000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd002f000 0x1000>;
+> +		};
+> +
+> +		shmem48: scmi-sram@d0030000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0030000 0x1000>;
+> +		};
+> +
+> +		shmem49: scmi-sram@d0031000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0031000 0x1000>;
+> +		};
+> +
+> +		shmem50: scmi-sram@d0032000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0032000 0x1000>;
+> +		};
+> +
+> +		shmem51: scmi-sram@d0033000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0033000 0x1000>;
+> +		};
+> +
+> +		shmem52: scmi-sram@d0034000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0034000 0x1000>;
+> +		};
+> +
+> +		shmem53: scmi-sram@d0035000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0035000 0x1000>;
+> +		};
+> +
+> +		shmem54: scmi-sram@d0036000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0036000 0x1000>;
+> +		};
+> +
+> +		shmem55: scmi-sram@d0037000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0037000 0x1000>;
+> +		};
+> +
+> +		shmem56: scmi-sram@d0038000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0038000 0x1000>;
+> +		};
+> +
+> +		shmem57: scmi-sram@d0039000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd0039000 0x1000>;
+> +		};
+> +
+> +		shmem58: scmi-sram@d003a000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd003a000 0x1000>;
+> +		};
+> +
+> +		shmem59: scmi-sram@d003b000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd003b000 0x1000>;
+> +		};
+> +
+> +		shmem60: scmi-sram@d003c000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd003c000 0x1000>;
+> +		};
+> +
+> +		shmem61: scmi-sram@d003d000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd003d000 0x1000>;
+> +		};
+> +
+> +		shmem62: scmi-sram@d003e000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd003e000 0x1000>;
+> +		};
+> +
+> +		shmem63: scmi-sram@d003f000 {
+> +			compatible = "arm,scmi-shmem";
+> +			reg = <0xd003f000 0x1000>;
+> +		};
+> +	};
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sa8255p.dtsi b/arch/arm64/boot/dts/qcom/sa8255p.dtsi
+> new file mode 100644
+> index 000000000000..bde94f8af8f7
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sa8255p.dtsi
+> @@ -0,0 +1,2075 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/mailbox/qcom-ipcc.h>
+> +
+> +/ {
+> +	interrupt-parent = <&intc>;
+> +
+> +	#address-cells = <2>;
+> +	#size-cells = <2>;
+> +
+> +	clocks {
+> +		xo_board_clk: xo-board-clk {
+> +			compatible = "fixed-clock";
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		sleep_clk: sleep-clk {
+> +			compatible = "fixed-clock";
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		gpll0_board_clk: gpll0-board-clk {
+> +			compatible = "fixed-clock";
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		bi_tcxo_div2: bi-tcxo-div2-clk {
+> +			compatible = "fixed-factor-clock";
+> +			clocks = <&xo_board_clk>;
+> +			clock-mult = <1>;
+> +			clock-div = <2>;
+> +			#clock-cells = <0>;
+> +		};
+
+Let's keep above four in alphabatical order.
+
+> +	};
+> +
+> +	cpus {
+> +		#address-cells = <2>;
+> +		#size-cells = <0>;
+> +
+> +		cpu0: cpu@0 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo";
+> +			reg = <0x0 0x0>;
+> +			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 0>;
+> +			next-level-cache = <&l2_0>;
+> +			l2_0: l2-cache {
+> +				compatible = "cache";
+> +				cache-level = <2>;
+> +				cache-unified;
+> +				next-level-cache = <&l3_0>;
+> +				l3_0: l3-cache {
+> +					compatible = "cache";
+> +					cache-level = <3>;
+> +					cache-unified;
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu1: cpu@100 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo";
+> +			reg = <0x0 0x100>;
+> +			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 0>;
+> +			next-level-cache = <&l2_1>;
+> +			l2_1: l2-cache {
+> +				compatible = "cache";
+> +				cache-level = <2>;
+> +				cache-unified;
+> +				next-level-cache = <&l3_0>;
+> +			};
+> +		};
+> +
+> +		cpu2: cpu@200 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo";
+> +			reg = <0x0 0x200>;
+> +			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 0>;
+> +			next-level-cache = <&l2_2>;
+> +			l2_2: l2-cache {
+> +				compatible = "cache";
+> +				cache-level = <2>;
+> +				cache-unified;
+> +				next-level-cache = <&l3_0>;
+> +			};
+> +		};
+> +
+> +		cpu3: cpu@300 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo";
+> +			reg = <0x0 0x300>;
+> +			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 0>;
+> +			next-level-cache = <&l2_3>;
+> +			l2_3: l2-cache {
+> +				compatible = "cache";
+> +				cache-level = <2>;
+> +				cache-unified;
+> +				next-level-cache = <&l3_0>;
+> +			};
+> +		};
+> +
+> +		cpu4: cpu@10000 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo";
+> +			reg = <0x0 0x10000>;
+> +			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 1>;
+> +			next-level-cache = <&l2_4>;
+> +			l2_4: l2-cache {
+> +				compatible = "cache";
+> +				cache-level = <2>;
+> +				cache-unified;
+> +				next-level-cache = <&l3_1>;
+> +				l3_1: l3-cache {
+> +					compatible = "cache";
+> +					cache-level = <3>;
+> +					cache-unified;
+> +				};
+> +
+> +			};
+> +		};
+> +
+> +		cpu5: cpu@10100 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo";
+> +			reg = <0x0 0x10100>;
+> +			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 1>;
+> +			next-level-cache = <&l2_5>;
+> +			l2_5: l2-cache {
+> +				compatible = "cache";
+> +				cache-level = <2>;
+> +				cache-unified;
+> +				next-level-cache = <&l3_1>;
+> +			};
+> +		};
+> +
+> +		cpu6: cpu@10200 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo";
+> +			reg = <0x0 0x10200>;
+> +			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 1>;
+> +			next-level-cache = <&l2_6>;
+> +			l2_6: l2-cache {
+> +				compatible = "cache";
+> +				cache-level = <2>;
+> +				cache-unified;
+> +				next-level-cache = <&l3_1>;
+> +			};
+> +		};
+> +
+> +		cpu7: cpu@10300 {
+> +			device_type = "cpu";
+> +			compatible = "qcom,kryo";
+> +			reg = <0x0 0x10300>;
+> +			enable-method = "psci";
+> +			qcom,freq-domain = <&cpufreq_hw 1>;
+> +			next-level-cache = <&l2_7>;
+> +			l2_7: l2-cache {
+> +				compatible = "cache";
+> +				cache-level = <2>;
+> +				cache-unified;
+> +				next-level-cache = <&l3_1>;
+> +			};
+> +		};
+> +
+> +		cpu-map {
+> +			cluster0 {
+> +				core0 {
+> +					cpu = <&cpu0>;
+> +				};
+> +
+> +				core1 {
+> +					cpu = <&cpu1>;
+> +				};
+> +
+> +				core2 {
+> +					cpu = <&cpu2>;
+> +				};
+> +
+> +				core3 {
+> +					cpu = <&cpu3>;
+> +				};
+> +			};
+> +
+> +			cluster1 {
+> +				core0 {
+> +					cpu = <&cpu4>;
+> +				};
+> +
+> +				core1 {
+> +					cpu = <&cpu5>;
+> +				};
+> +
+> +				core2 {
+> +					cpu = <&cpu6>;
+> +				};
+> +
+> +				core3 {
+> +					cpu = <&cpu7>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	firmware: firmware {
+> +		scm {
+> +			compatible = "qcom,scm-sa8255p", "qcom,scm";
+> +			memory-region = <&tz_ffi_mem>;
+> +			qcom,dload-mode = <&tcsr 0x13000>;
+> +		};
+> +	};
+> +
+> +	memory@80000000 {
+> +		device_type = "memory";
+> +		reg = <0x0 0x80000000 0x0 0x0>;
+> +	};
+> +
+> +	pmu {
+> +		compatible = "arm,armv8-pmuv3";
+> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
+> +	};
+> +
+> +	psci {
+> +		compatible = "arm,psci-1.0";
+> +		method = "smc";
+> +	};
+> +
+> +	reserved-memory {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		sail_ss_mem: sail-ss@80000000 {
+> +			reg = <0x0 0x80000000 0x0 0x10000000>;
+> +			no-map;
+> +		};
+> +
+> +		hyp_mem: hyp@90000000 {
+> +			reg = <0x0 0x90000000 0x0 0x600000>;
+> +			no-map;
+> +		};
+> +
+> +		xbl_boot_mem: xbl-boot@90700000 {
+> +			reg = <0x0 0x90700000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		aop_image_mem: aop-image@90800000 {
+> +			reg = <0x0 0x90800000 0x0 0x60000>;
+> +			no-map;
+> +		};
+> +
+> +		aop_cmd_db_mem: aop-cmd-db@90860000 {
+> +			compatible = "qcom,cmd-db";
+> +			reg = <0x0 0x90860000 0x0 0x20000>;
+> +			no-map;
+> +		};
+> +
+> +		uefi_log: uefi-log@908b0000 {
+> +			reg = <0x0 0x908b0000 0x0 0x10000>;
+> +			no-map;
+> +		};
+> +
+> +		ddr_training_checksum: ddr-training-checksum@908c0000 {
+> +			reg = <0x0 0x908c0000 0x0 0x1000>;
+> +			no-map;
+> +		};
+> +
+> +		reserved_mem: reserved@908f0000 {
+> +			reg = <0x0 0x908f0000 0x0 0xe000>;
+> +			no-map;
+> +		};
+> +
+> +		secdata_apss_mem: secdata-apss@908fe000 {
+> +			reg = <0x0 0x908fe000 0x0 0x2000>;
+> +			no-map;
+> +		};
+> +
+> +		smem_mem: smem@90900000 {
+> +			compatible = "qcom,smem";
+> +			reg = <0x0 0x90900000 0x0 0x200000>;
+> +			no-map;
+> +			hwlocks = <&tcsr_mutex 3>;
+> +		};
+> +
+> +		tz_sail_mailbox_mem: tz-sail-mailbox@90c00000 {
+> +			reg = <0x0 0x90c00000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		sail_mailbox_mem: sail-ss@90d00000 {
+> +			reg = <0x0 0x90d00000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		sail_ota_mem: sail-ss@90e00000 {
+> +			reg = <0x0 0x90e00000 0x0 0x300000>;
+> +			no-map;
+> +		};
+> +
+> +		hyp_md_mem: hyp-md@91a80000 {
+> +			no-map;
+> +			reg = <0x0 0x91a80000 0x0 0x80000>;
+> +		};
+> +
+> +		aoss_backup_mem: aoss-backup@91b00000 {
+> +			reg = <0x0 0x91b00000 0x0 0x40000>;
+> +			no-map;
+> +		};
+> +
+> +		cpucp_backup_mem: cpucp-backup@91b40000 {
+> +			reg = <0x0 0x91b40000 0x0 0x40000>;
+> +			no-map;
+> +		};
+> +
+> +		tz_config_backup_mem: tz-config-backup@91b80000 {
+> +			reg = <0x0 0x91b80000 0x0 0x10000>;
+> +			no-map;
+> +		};
+> +
+> +		ddr_training_data_mem: ddr-training-data@91b90000 {
+> +			reg = <0x0 0x91b90000 0x0 0x10000>;
+> +			no-map;
+> +		};
+> +
+> +		cdt_data_backup_mem: cdt-data-backup@91ba0000 {
+> +			reg = <0x0 0x91ba0000 0x0 0x1000>;
+> +			no-map;
+> +		};
+> +
+> +		tz_ffi_mem: tz-ffi@91c00000 {
+> +			compatible = "shared-dma-pool";
+> +			reg = <0x0 0x91c00000 0x0 0x1400000>;
+> +			no-map;
+> +		};
+> +
+> +		lpass_machine_learning_mem: lpass-machine-learning@93b00000 {
+> +			reg = <0x0 0x93b00000 0x0 0xf00000>;
+> +			no-map;
+> +		};
+> +
+> +		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap@94a00000 {
+> +			reg = <0x0 0x94a00000 0x0 0x800000>;
+> +			no-map;
+> +		};
+> +
+> +		pil_camera_mem: pil-camera@95200000 {
+> +			reg = <0x0 0x95200000 0x0 0x500000>;
+> +			no-map;
+> +		};
+> +
+> +		pil_adsp_mem: pil-adsp@95c00000 {
+> +			reg = <0x0 0x95c00000 0x0 0x1e00000>;
+> +			no-map;
+> +		};
+> +
+> +		pil_adsp_dtb_mem: q6-adsp-dtb@97a00000 {
+> +			no-map;
+> +			reg = <0x0 0x97a00000 0x0 0x80000>;
+> +		};
+> +
+> +		pil_gdsp0_dtb_mem: pil-gdsp0-dtb@97a80000 {
+> +			no-map;
+> +			reg = <0x0 0x97a80000 0x0 0x80000>;
+> +		};
+> +
+> +		pil_gdsp0_mem: pil-gdsp0@97b00000 {
+> +			reg = <0x0 0x97b00000 0x0 0x1e00000>;
+> +			no-map;
+> +		};
+> +
+> +		pil_gdsp1_mem: pil-gdsp1@99900000 {
+> +			reg = <0x0 0x99900000 0x0 0x1e00000>;
+> +			no-map;
+> +		};
+> +
+> +		pil_gdsp1_dtb_mem: pil-gdsp1-dtb@9b700000 {
+> +			no-map;
+> +			reg = <0x0 0x9b700000 0x0 0x80000>;
+> +		};
+> +
+> +		pil_cdsp0_dtb_mem: pil-cdsp0-dtb@9b780000 {
+> +			no-map;
+> +			reg = <0x0 0x9b780000 0x0 0x80000>;
+> +		};
+> +
+> +		pil_cdsp0_mem: pil-cdsp0@9b800000 {
+> +			reg = <0x0 0x9b800000 0x0 0x1e00000>;
+> +			no-map;
+> +		};
+> +
+> +		pil_gpu_mem: pil-gpu@9d600000 {
+> +			reg = <0x0 0x9d600000 0x0 0x2000>;
+> +			no-map;
+> +		};
+> +
+> +		pil_cdsp1_dtb_mem: pil-cdsp1-dtb@9d680000 {
+> +			no-map;
+> +			reg = <0x0 0x9d680000 0x0 0x80000>;
+> +		};
+> +
+> +		pil_cdsp1_mem: pil-cdsp1@9d700000 {
+> +			reg = <0x0 0x9d700000 0x0 0x1e00000>;
+> +			no-map;
+> +		};
+> +
+> +		pil_cvp_mem: pil-cvp@9f500000 {
+> +			reg = <0x0 0x9f500000 0x0 0x700000>;
+> +			no-map;
+> +		};
+> +
+> +		pil_video_mem: pil-video@9fc00000 {
+> +			reg = <0x0 0x9fc00000 0x0 0x700000>;
+> +			no-map;
+> +		};
+> +
+> +		audio_config_mem: audio-config-region@ac600000 {
+> +			no-map;
+> +			reg = <0x0 0xac600000 0x0 0xa00000>;
+> +		};
+> +
+> +		audio_mdf_mem: audio-mdf-region@ad000000 {
+> +			reg = <0x0 0xad000000 0x0 0x2000000>;
+> +			no-map;
+> +		};
+> +
+> +		firmware_mem: firmware-region@b0000000 {
+> +			reg = <0x0 0xb0000000 0x0 0x800000>;
+> +			no-map;
+> +		};
+> +
+> +		hyptz_reserved_mem: hyptz-reserved@beb00000 {
+> +			reg = <0x0 0xbeb00000 0x0 0x11500000>;
+> +			no-map;
+> +		};
+> +
+> +		scmi_mem: scmi-region@d0000000 {
+> +			reg = <0x0 0xd0000000 0x0 0x40000>;
+> +			no-map;
+> +		};
+> +
+> +		firmware_logs_mem: firmware-logs@d0040000 {
+> +			reg = <0x0 0xd0040000 0x0 0x10000>;
+> +			no-map;
+> +		};
+> +
+> +		firmware_audio_mem: firmware-audio@d0050000 {
+> +			reg = <0x0 0xd0050000 0x0 0x4000>;
+> +			no-map;
+> +		};
+> +
+> +		firmware_camera_mem: firmware-camera@d0054000 {
+> +			no-map;
+> +			reg = <0x0 0xd0054000 0x0 0x2000>;
+> +		};
+> +
+> +		firmware_reserved_mem: firmware-reserved@d0056000 {
+> +			reg = <0x0 0xd0056000 0x0 0x9a000>;
+> +			no-map;
+> +		};
+> +
+> +		firmware_quantum_test_mem: firmware-quantum-test@d00f0000 {
+> +			reg = <0x0 0xd00f0000 0x0 0x10000>;
+> +			no-map;
+> +		};
+> +
+> +		tags_mem: tags@d0100000 {
+> +			reg = <0x0 0xd0100000 0x0 0x1200000>;
+> +			no-map;
+> +		};
+> +
+> +		qtee_mem: qtee@d1300000 {
+> +			reg = <0x0 0xd1300000 0x0 0x500000>;
+> +			no-map;
+> +		};
+> +
+> +		deepsleep_backup_mem: deepsleep-backup@d1800000 {
+> +			reg = <0x0 0xd1800000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		trusted_apps_mem: trusted-apps@d1900000 {
+> +			reg = <0x0 0xd1900000 0x0 0x3800000>;
+> +			no-map;
+> +		};
+> +
+> +		tz_stat_mem: tz-stat@db100000 {
+> +			reg = <0x0 0xdb100000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		cpucp_fw_mem: cpucp-fw@db200000 {
+> +			reg = <0x0 0xdb200000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		cma: linux,cma {
+> +			compatible = "shared-dma-pool";
+> +			alloc-ranges = <0x0 0x00000000 0x0 0xdfffffff>;
+> +			reusable;
+> +			alignment = <0x0 0x400000>;
+> +			size = <0x0 0x2000000>;
+> +			linux,cma-default;
+> +		};
+> +	};
+> +
+> +	soc: soc@0 {
+> +		compatible = "simple-bus";
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges = <0 0 0 0 0x10 0>;
+> +
+> +		ipcc0: mailbox@408000 {
+> +			compatible = "qcom,sa8255p-ipcc", "qcom,ipcc";
+> +			reg = <0x0 0x00408000 0x0 0x1000>;
+> +			interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <3>;
+> +			#mbox-cells = <2>;
+> +		};
+> +
+> +		ipcc1: mailbox@488000 {
+> +			compatible = "qcom,sa8255p-ipcc", "qcom,ipcc";
+> +			reg = <0x0 0x00488000 0x0 0x1000>;
+> +			interrupts = <GIC_SPI 231 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <3>;
+> +			#mbox-cells = <2>;
+> +			status = "disabled";
+> +		};
+> +
+> +		qupv3_id_2: geniqup@8c0000 {
+> +			compatible = "qcom,sa8255p-geni-se-qup";
+> +			reg = <0x0 0x008c0000 0x0 0x6000>;
+> +			ranges;
+> +			iommus = <&apps_smmu 0x5a3 0x0>;
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			status = "disabled";
+> +
+> +			uart14: serial@880000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x00880000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 373 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart15: serial@884000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x00884000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 583 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart16: serial@888000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x00888000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 584 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart17: serial@88c000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x0088c000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 585 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart18: serial@890000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x00890000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 586 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart19: serial@894000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x00894000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 587 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart20: serial@898000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x00898000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 834 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +		};
+> +
+> +		qupv3_id_0: geniqup@9c0000 {
+> +			compatible = "qcom,sa8255p-geni-se-qup";
+> +			reg = <0x0 0x9c0000 0x0 0x6000>;
+> +			ranges;
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			iommus = <&apps_smmu 0x403 0x0>;
+> +			status = "disabled";
+> +
+> +			uart0: serial@980000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x980000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 550 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart1: serial@984000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x984000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 551 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart2: serial@988000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x988000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 529 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart3: serial@98c000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x98c000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 530 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart4: serial@990000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x990000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 531 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart5: serial@994000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x994000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 535 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +		};
+> +
+> +		qupv3_id_1: geniqup@ac0000 {
+> +			compatible = "qcom,sa8255p-geni-se-qup";
+> +			reg = <0x0 0x00ac0000 0x0 0x6000>;
+> +			ranges;
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			iommus = <&apps_smmu 0x443 0x0>;
+> +			status = "disabled";
+> +
+> +			uart7: serial@a80000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x00a80000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart8: serial@a84000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x00a84000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart9: serial@a88000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0xa88000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart10: serial@a8c000 {
+> +				compatible = "qcom,sa8255p-geni-debug-uart";
+> +				reg = <0x0 0x00a8c000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart11: serial@a90000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x00a90000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			uart12: serial@a94000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x00a94000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +		};
+> +
+> +		qupv3_id_3: geniqup@bc0000 {
+> +			compatible = "qcom,sa8255p-geni-se-qup";
+> +			reg = <0x0 0xbc0000 0x0 0x6000>;
+> +			ranges;
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			iommus = <&apps_smmu 0x43 0x0>;
+> +			status = "disabled";
+> +
+> +			uart21: serial@b80000 {
+> +				compatible = "qcom,sa8255p-geni-uart";
+> +				reg = <0x0 0x00b80000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 831 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +		};
+> +
+> +		rng: rng@10d2000 {
+> +			compatible = "qcom,sa8255p-trng", "qcom,trng";
+> +			reg = <0x0 0x010d2000 0x0 0x1000>;
+> +		};
+> +
+> +		tcsr_mutex: hwlock@1f40000 {
+> +			compatible = "qcom,tcsr-mutex";
+> +			reg = <0x0 0x01f40000 0x0 0x20000>;
+> +			#hwlock-cells = <1>;
+> +		};
+> +
+> +		tcsr: syscon@1fc0000 {
+> +			compatible = "qcom,sa8255p-tcsr", "syscon";
+> +			reg = <0x0 0x1fc0000 0x0 0x30000>;
+> +		};
+> +
+> +		adreno_smmu: iommu@3da0000 {
+> +			compatible = "qcom,sa8255p-smmu-500", "qcom,adreno-smmu",
+> +				     "qcom,smmu-500", "arm,mmu-500";
+> +			reg = <0x0 0x03da0000 0x0 0x20000>;
+> +			#iommu-cells = <2>;
+> +			#global-interrupts = <2>;
+> +			dma-coherent;
+> +			interrupts = <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 674 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
+> +		};
+> +
+> +		pdc: interrupt-controller@b220000 {
+> +			compatible = "qcom,sa8255p-pdc", "qcom,pdc";
+> +			reg = <0x0 0x0b220000 0x0 0x30000>,
+> +			      <0x0 0x17c000f0 0x0 0x64>;
+> +			qcom,pdc-ranges = <0 480 40>,
+> +					  <40 140 14>,
+> +					  <54 263 1>,
+> +					  <55 306 4>,
+> +					  <59 312 3>,
+> +					  <62 374 2>,
+> +					  <64 434 2>,
+> +					  <66 438 2>,
+> +					  <70 520 1>,
+> +					  <73 523 1>,
+> +					  <118 568 6>,
+> +					  <124 609 3>,
+> +					  <159 638 1>,
+> +					  <160 720 3>,
+> +					  <169 728 30>,
+> +					  <199 416 2>,
+> +					  <201 449 1>,
+> +					  <202 89 1>,
+> +					  <203 451 1>,
+> +					  <204 462 1>,
+> +					  <205 264 1>,
+> +					  <206 579 1>,
+> +					  <207 653 1>,
+> +					  <208 656 1>,
+> +					  <209 659 1>,
+> +					  <210 122 1>,
+> +					  <211 699 1>,
+> +					  <212 705 1>,
+> +					  <213 450 1>,
+> +					  <214 643 2>,
+> +					  <216 646 5>,
+> +					  <221 390 5>,
+> +					  <226 700 2>,
+> +					  <228 440 1>,
+> +					  <229 663 1>,
+> +					  <230 524 2>,
+> +					  <232 612 3>,
+> +					  <235 723 5>;
+> +			#interrupt-cells = <2>;
+> +			interrupt-parent = <&intc>;
+> +			interrupt-controller;
+> +		};
+> +
+> +		tsens2: thermal-sensor@c251000 {
+> +			compatible = "qcom,sa8255p-tsens", "qcom,tsens-v2";
+> +			reg = <0x0 0x0c251000 0x0 0x1ff>,
+> +			      <0x0 0x0c224000 0x0 0x8>;
+> +			interrupts = <GIC_SPI 572 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 609 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow", "critical";
+> +			#thermal-sensor-cells = <1>;
+> +			#qcom,sensors = <13>;
+> +		};
+> +
+> +		tsens3: thermal-sensor@c252000 {
+> +			compatible = "qcom,sa8255p-tsens", "qcom,tsens-v2";
+> +			reg = <0x0 0x0c252000 0x0 0x1ff>,
+> +			      <0x0 0x0c225000 0x0 0x8>;
+> +			interrupts = <GIC_SPI 573 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 610 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow", "critical";
+> +			#thermal-sensor-cells = <1>;
+> +			#qcom,sensors = <13>;
+> +		};
+> +
+> +		tsens0: thermal-sensor@c263000 {
+> +			compatible = "qcom,sa8255p-tsens", "qcom,tsens-v2";
+> +			reg = <0x0 0x0c263000 0x0 0x1ff>,
+> +			      <0x0 0x0c222000 0x0 0x8>;
+> +			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow", "critical";
+> +			#thermal-sensor-cells = <1>;
+> +			#qcom,sensors = <12>;
+> +		};
+> +
+> +		tsens1: thermal-sensor@c265000 {
+> +			compatible = "qcom,sa8255p-tsens", "qcom,tsens-v2";
+> +			reg = <0x0 0x0c265000 0x0 0x1ff>,
+> +			      <0x0 0x0c223000 0x0 0x8>;
+> +			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow", "critical";
+> +			#thermal-sensor-cells = <1>;
+> +			#qcom,sensors = <12>;
+> +		};
+> +
+> +		aoss_qmp: power-management@c300000 {
+> +			compatible = "qcom,sa8255p-aoss-qmp", "qcom,aoss-qmp";
+> +			reg = <0x0 0x0c300000 0x0 0x400>;
+> +			interrupts-extended = <&ipcc0 IPCC_CLIENT_AOP
+> +					       IPCC_MPROC_SIGNAL_GLINK_QMP
+> +					       IRQ_TYPE_EDGE_RISING>;
+> +			mboxes = <&ipcc0 IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>;
+> +			#clock-cells = <0>;
+> +		};
+> +
+> +		tlmm: pinctrl@f000000 {
+> +			compatible = "qcom,sa8255p-tlmm", "qcom,sa8775p-tlmm";
+> +			reg = <0x0 0x0f000000 0x0 0x1000000>;
+> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> +			gpio-controller;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +			gpio-ranges = <&tlmm 0 0 149>;
+> +			wakeup-parent = <&pdc>;
+> +		};
+> +
+> +		apps_smmu: iommu@15000000 {
+> +			compatible = "qcom,sa8255p-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+> +			reg = <0x0 0x15000000 0x0 0x100000>;
+> +			#iommu-cells = <2>;
+> +			#global-interrupts = <2>;
+> +
+> +			interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 105 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 106 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 107 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 181 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 182 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 185 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 188 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 191 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 192 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 315 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 316 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 317 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 320 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 321 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 322 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 323 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 324 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 325 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 327 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 328 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 329 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 331 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 332 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 333 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 334 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 335 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 336 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 337 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 339 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 340 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 342 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 343 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 344 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 345 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 395 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 396 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 397 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 398 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 399 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 400 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 401 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 402 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 403 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 404 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 406 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 407 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 408 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 409 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 412 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 706 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 689 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 690 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 691 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 692 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 693 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 694 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 695 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 696 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 410 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 411 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 413 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 707 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 708 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 709 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 710 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 711 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 712 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 713 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 714 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 715 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 912 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 911 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 910 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 909 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 908 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 907 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 906 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 905 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 904 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 903 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 902 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 901 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 900 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 899 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 898 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 897 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 896 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 895 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 894 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 893 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 892 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 891 IRQ_TYPE_LEVEL_HIGH>;
+> +		};
+> +
+> +		intc: interrupt-controller@17a00000 {
+> +			compatible = "arm,gic-v3";
+> +			reg = <0x0 0x17a00000 0x0 0x10000>,	/* GICD */
+> +			      <0x0 0x17a60000 0x0 0x100000>;	/* GICR * 8 */
+> +			interrupt-controller;
+> +			#interrupt-cells = <3>;
+> +			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+> +			#redistributor-regions = <1>;
+> +			redistributor-stride = <0x0 0x20000>;
+> +		};
+> +
+> +		watchdog@17c10000 {
+> +			compatible = "qcom,apss-wdt-sa8255p", "qcom,kpss-wdt";
+> +			reg = <0x0 0x17c10000 0x0 0x1000>;
+> +			clocks = <&sleep_clk>;
+> +			interrupts = <GIC_SPI 0 IRQ_TYPE_EDGE_RISING>;
+> +		};
+> +
+> +		memtimer: timer@17c20000 {
+> +			compatible = "arm,armv7-timer-mem";
+> +			reg = <0x0 0x17c20000 0x0 0x1000>;
+> +			ranges = <0x0 0x0 0x0 0x20000000>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +
+> +			frame@17c21000 {
+> +				reg = <0x17c21000 0x1000>,
+> +				      <0x17c22000 0x1000>;
+> +				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
+> +					     <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <0>;
+> +			};
+> +
+> +			frame@17c23000 {
+> +				reg = <0x17c23000 0x1000>;
+> +				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <1>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17c25000 {
+> +				reg = <0x17c25000 0x1000>;
+> +				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <2>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17c27000 {
+> +				reg = <0x17c27000 0x1000>;
+> +				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <3>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17c29000 {
+> +				reg = <0x17c29000 0x1000>;
+> +				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <4>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17c2b000 {
+> +				reg = <0x17c2b000 0x1000>;
+> +				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <5>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17c2d000 {
+> +				reg = <0x17c2d000 0x1000>;
+> +				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <6>;
+> +				status = "disabled";
+> +			};
+> +		};
+> +
+> +		cpufreq_hw: cpufreq@18591000 {
+> +			compatible = "qcom,sa8255p-cpufreq-epss",
+> +				     "qcom,cpufreq-epss";
+> +			reg = <0x0 0x18591000 0x0 0x1000>,
+> +			      <0x0 0x18593000 0x0 0x1000>;
+> +			reg-names = "freq-domain0", "freq-domain1";
+
+This needs dcvsh interrupts as well.
+interrupts = <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
+	 <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
+interrupt-names = "dcvsh-irq-0", "dcvsh-irq-1";
+
+> +			clocks = <&bi_tcxo_div2>, <&gpll0_board_clk>;
+> +			clock-names = "xo", "alternate";
+> +			#freq-domain-cells = <1>;
+> +		};
+> +	};
+> +
+> +	thermal-zones {
+> +		aoss-0-thermal {
+> +			thermal-sensors = <&tsens0 0>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+
+All below hysteresis needs to be updated to 10degC in this file.
+hysteresis = <10000>;
+
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-0-0-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens0 1>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-0-1-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens0 2>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-0-2-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens0 3>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-0-3-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens0 4>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		gpuss-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens0 5>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		gpuss-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens0 6>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		gpuss-2-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens0 7>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		audio-thermal {
+> +			thermal-sensors = <&tsens0 8>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		camss-0-thermal {
+> +			thermal-sensors = <&tsens0 9>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		pcie-0-thermal {
+> +			thermal-sensors = <&tsens0 10>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpuss-0-0-thermal {
+> +			thermal-sensors = <&tsens0 11>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		aoss-1-thermal {
+> +			thermal-sensors = <&tsens1 0>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-0-0-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens1 1>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-0-1-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens1 2>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-0-2-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens1 3>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-0-3-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens1 4>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		gpuss-3-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens1 5>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		gpuss-4-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens1 6>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		gpuss-5-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens1 7>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		video-thermal {
+> +			thermal-sensors = <&tsens1 8>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		camss-1-thermal {
+> +			thermal-sensors = <&tsens1 9>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		pcie-1-thermal {
+> +			thermal-sensors = <&tsens1 10>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpuss-0-1-thermal {
+> +			thermal-sensors = <&tsens1 11>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		aoss-2-thermal {
+> +			thermal-sensors = <&tsens2 0>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-1-0-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens2 1>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-1-1-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens2 2>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-1-2-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens2 3>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-1-3-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens2 4>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		nsp-0-0-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens2 5>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		nsp-0-1-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens2 6>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		nsp-0-2-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens2 7>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		nsp-1-0-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens2 8>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		nsp-1-1-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens2 9>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		nsp-1-2-0-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens2 10>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		ddrss-0-thermal {
+> +			thermal-sensors = <&tsens2 11>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpuss-1-0-thermal {
+> +			thermal-sensors = <&tsens2 12>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		aoss-3-thermal {
+> +			thermal-sensors = <&tsens3 0>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-1-0-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens3 1>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-1-1-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens3 2>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-1-2-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens3 3>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpu-1-3-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens3 4>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		nsp-0-0-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens3 5>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		nsp-0-1-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens3 6>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		nsp-0-2-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens3 7>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		nsp-1-0-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens3 8>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		nsp-1-1-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens3 9>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		nsp-1-2-1-thermal {
+> +			polling-delay-passive = <10>;
+> +
+> +			thermal-sensors = <&tsens3 10>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		ddrss-1-thermal {
+> +			thermal-sensors = <&tsens3 11>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		cpuss-1-1-thermal {
+> +			thermal-sensors = <&tsens3 12>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <105000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	arch_timer: timer {
+> +		compatible = "arm,armv8-timer";
+> +		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+> +	};
+> +};
 > 
-> 
+> base-commit: f6b66b288edf32f91d2330eaf8b84714819ac50a
+
+-Shazad
 
