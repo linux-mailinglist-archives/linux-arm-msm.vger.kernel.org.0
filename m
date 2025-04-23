@@ -1,125 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-55030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B5E9A97E16
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 07:36:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B7DBA97F16
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 08:25:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 94587179230
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 05:36:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4216F17A933
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 06:25:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E021A265624;
-	Wed, 23 Apr 2025 05:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8994266B54;
+	Wed, 23 Apr 2025 06:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yfn0ie8l"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D/ggPlTa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BBD266593
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 05:36:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA179253F35;
+	Wed, 23 Apr 2025 06:25:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745386570; cv=none; b=uRhgRYh8dlXAJjqp+DJErwrQnMHMchNkTlqtX4Uc0a7XlV1xqN0gczx9q+qnuK7RT6tYNdT8Ewf20iMuRaeYaHVbKd7A4EwJdRoN43whtXmXFmS458JQNm72d3BrnOSxt/1NEozjJUMzJ6nhzQKnWe8zD2Spimmd22FmRf7tiks=
+	t=1745389522; cv=none; b=W+cDpeF+GsrQahtUqdsYXKjLXyIt1k4I5Bi9KwyMwbU2m3OB59ajZrKhbFcJz2xO1atiEoQ+U5xdhdyrDGiXIvaFbcGG09fFn232Tkctdxzushy+9UPE1VznQkgOcNJ+ZTzJC7VWUQF93EtYW/rkP4Q9oF9+XMYmfhmT8dTwLYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745386570; c=relaxed/simple;
-	bh=znd3Gx+1i6NPOJ5fHPpMjC5QdTJie7kovH5k6mPOKO4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dwBZT/mCcfpr9iSDGefjGunL+8SRl26orUfuhDNpb7jIcmwnBBJ+P52g8oLfOT1aBHb5ibhs32SCoHokMolgA1AhoKzfkpBxyjogRIPCz282+RxZmSZvIlslNlUHhYFQ5oH4BL4SI+K6mQzgD3NYE0CfM+gaDpUO9nUURJhh3sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yfn0ie8l; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-739b3fe7ce8so5048373b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Apr 2025 22:36:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745386568; x=1745991368; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=FqXZmhQqMpQ55WXDkvwtb6bzPG8ypT7T0jmt2s5ZCM4=;
-        b=yfn0ie8l1kYua/HCnXdMB4UPmI749NcR0wtsumJFxdtMr9ul2cJXyy2NrmAIvbZBqz
-         KG6dYBb3ySWWeVEbv3kdV6gNwEl7ynbZ2uZ1VIU/HjliuFsaG3Ci/0gNu4JaRaASuzck
-         WHSqgSShz3DWLxdMlaDw5q7LVbSN8Irg20jqFCyADjw3a/frVe3aL0vhvYHcuWL+iWiE
-         9TWtX/URv0O784ADQO0wD21sFD+Q3VaL2dj9x5ZWpmK5WMVMfQ2MwL3gVzfOcdqnGOMf
-         WlayqPWJc+GbFVX4ebBY5Xm8y9hq7D0U7O73gEH+LiZg2xr2TRemVM67QzhZpgrRjAQb
-         HMJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745386568; x=1745991368;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FqXZmhQqMpQ55WXDkvwtb6bzPG8ypT7T0jmt2s5ZCM4=;
-        b=uN3C5sji3Y7zhkqMN5BBst6tVfATPGqFQPxkNvK/h2Sfy937O7q1lXa6WK/Tn3V1P4
-         l6wFP2UkDou5RtBVpK5ECo3nNjA0UgT3f2Wlx/15zq6O/U/MvJ8xdSgMcKmAGlOZfm1E
-         yBWgXHjHhzHepJBaYk9T5zJaveTa5eILtyLaNExEg18SqiOy/B4/hxeT9ywPhRSTRs+s
-         w57nJDK3Va0UZ7iG+A0FK9ZMfr4vCnXcsW0RQdJxs5bLC85nGg5fqKP4xCLaX32yw5ID
-         hJg4l4kqscxxY23r7rWc4Q/r9xnrgPv6AOg/rgSHPqI+U1jG/qkVI0zRx1hZplnHicj/
-         tOBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWhqO6R4ApOgv+fQUhgANG6++v1EMWJ7DmRpllVA6+LNTv9wKzirSUZPB9ojK86sjlQXXVtLMgWm3IB3U0p@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7tHt89XIpU+eMmFg7v7tkqrNBt1RQRIBNQTBQYpR9PJnsoMPq
-	/sBKYmTv4nJX4SishaIJkGprKdYRYsz4/RbMQEt/M2S1dXZOMIH2BAB2GH9V7Xk=
-X-Gm-Gg: ASbGncsRWSn5sVtxAScVlvgIdCORrC1fhTdAHbYyB6osLzK1ALWAr6wn8aL+9XE8zlb
-	rVEZq9kuJ46n1lJykVbCFsYWj6jF0Gqh6c24C6YfKa9nH0fCHKZp7uPWRfpSqpgCjAru2K4kGeO
-	XuUl4I+khICSrly4HDSauFf6HqzCcmdCt3DTq02i08H9zznC9V+XgSNLhEXFd57kCmOaFFQHPBl
-	dbozzj33XEwMSYRUZHvb4jXVCeVMQrmzdB3KJ2OU7sZcYxt44B106cDiwwz0H6q4yP/n6yOHv7s
-	CAYDqQiyQj9n3XwbkWs6Wc9QaYakK2XNCr+QAfp84A==
-X-Google-Smtp-Source: AGHT+IGH5CEH3qbiKs7N8VcrCjZGvYVDP7IFgmEG+4RsZjJN0YJwU+Ch1jF6olLdlhwBTsOOZVjUQg==
-X-Received: by 2002:a05:6a00:3928:b0:736:755b:8317 with SMTP id d2e1a72fcca58-73dc15d32b0mr25849726b3a.21.1745386568035;
-        Tue, 22 Apr 2025 22:36:08 -0700 (PDT)
-Received: from localhost ([122.172.83.32])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73dbf8be876sm9697501b3a.36.2025.04.22.22.36.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Apr 2025 22:36:07 -0700 (PDT)
-Date: Wed, 23 Apr 2025 11:06:05 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Praveen Talari <quic_ptalari@quicinc.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-pm@vger.kernel.org, psodagud@quicinc.com, djaggi@quicinc.com,
-	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
-	quic_arandive@quicinc.com, quic_mnaresh@quicinc.com,
-	quic_shazhuss@quicinc.com, Nikunj Kela <quic_nkela@quicinc.com>
-Subject: Re: [PATCH v2 1/9] opp: add new helper API dev_pm_opp_set_level()
-Message-ID: <20250423053605.63njjtz3s3krdeqb@vireshk-i7>
-References: <20250418151235.27787-1-quic_ptalari@quicinc.com>
- <20250418151235.27787-2-quic_ptalari@quicinc.com>
- <20250421074004.yttb42qq4p5xzi3o@vireshk-i7>
- <e6e1ee6d-a12f-4e18-b2d7-65d1ccca5308@quicinc.com>
+	s=arc-20240116; t=1745389522; c=relaxed/simple;
+	bh=6qnxKc0f9rvCcfHiQkorFfqk2KNxYLg7OSH1dxyGexA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=iGe+hW9bAYNTdw5s7YcWQXa227DwMOg7QQqf7ZaTz+DfAZVKoi5HK4r6p31gAIPfbgYASOXvRk1oXxnj5v8x1h2dytSU2WqSJCjo6yEykeRPumeLj1UuuYdejHCtrPXom4++lKVbRHHEZEb06N8S+0BfWML0lbb5AbUgVSnEbHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D/ggPlTa; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53N0iAbp016181;
+	Wed, 23 Apr 2025 06:24:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	c0h6gBE7xHeyNQK25TtzLbx21KR/zAHGHaZbS28nq3k=; b=D/ggPlTawwKCL/d/
+	rGp2zjTrNVlLWqhuogssAKtRWfLzUo2TcKo636nkR3vWE1K2eC/Cx90Dg4Rwmzp1
+	VD06+yb48PudFD1rh8gRLAbjeZc9+qQToO1WR675/3pcKV6IrNGzBRH9xkG7/uXR
+	B21Wi5vcKQxYqcMGVKFTFE9Ip094rnZ2zvmfUFS8lYve149bpuJB8OUYHYD7uTy5
+	+m5QjqYhNqYi9iQS186fHQCiqb4OrKBpCNsjzFWevvQhnTt+rA0kfNtzsj5leM1h
+	7byVWxGebwa1SH90FSNxbP4aL9GximqnNfoDzPFeRY/bcyLBuSR+uDiRxGmIwef2
+	C2kEZg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh3h2pt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Apr 2025 06:24:51 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53N6OoCR023755
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Apr 2025 06:24:50 GMT
+Received: from [10.216.16.5] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Apr
+ 2025 23:24:45 -0700
+Message-ID: <e7717264-a975-475b-8db3-be360e0edd6f@quicinc.com>
+Date: Wed, 23 Apr 2025 11:54:42 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1 3/3] scsi: ufs: qcom: Add support to disable UFS LPM
+ Feature
+To: =?UTF-8?B?UGV0ZXIgV2FuZyAo546L5L+h5Y+LKQ==?= <peter.wang@mediatek.com>,
+        "avri.altman@wdc.com" <avri.altman@wdc.com>,
+        "beanhuo@micron.com"
+	<beanhuo@micron.com>,
+        "robh@kernel.org" <robh@kernel.org>,
+        "bvanassche@acm.org" <bvanassche@acm.org>,
+        "alim.akhtar@samsung.com"
+	<alim.akhtar@samsung.com>,
+        "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
+        "conor+dt@kernel.org" <conor+dt@kernel.org>,
+        "mani@kernel.org"
+	<mani@kernel.org>,
+        "James.Bottomley@HansenPartnership.com"
+	<James.Bottomley@HansenPartnership.com>,
+        "martin.petersen@oracle.com"
+	<martin.petersen@oracle.com>
+CC: "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20250417124645.24456-1-quic_nitirawa@quicinc.com>
+ <20250417124645.24456-4-quic_nitirawa@quicinc.com>
+ <070f15425ba2535a0bb165d61243dc3e3f63d672.camel@mediatek.com>
+Content-Language: en-US
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <070f15425ba2535a0bb165d61243dc3e3f63d672.camel@mediatek.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e6e1ee6d-a12f-4e18-b2d7-65d1ccca5308@quicinc.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Vzsk_YJ29Xg95rd4mOVhZvLW7ll_ib7K
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDIzMDA0MSBTYWx0ZWRfXw+qCni5+e+1f LtdozlQo/cEe50VzU9D46YqZV5J275eGkDi6REMc7hSwwTi2AdLokQNHIwUHEpMxZP8Rb0Z13de rIgTlnF2QojfB6NbwtMRHi9xeZ6FuwvNbssy2rMKsgeuiTfRzqIz+Dyap4X3nliVrcGLO65Tpwd
+ c+4cM8oBQ933onL70xv+J2yfQdQXqzMaBYIXGvZxHTjyMaBrbgTR5Sw4dbsmYydPUjoezDnsfJh updt9t2Gmhju+74kb4hhR4akvxcjjMo5LAG4g6Rjx0k4EgJbiHspCDFFKic4YGHwDzNP7IeIE57 LlfWPck0zIFbsVNmd/Z5HsYqucKOpBLTYXJFoaLcLh4kek032h4HlK3N4ClUKb2XeaM5TGLaZLl
+ xaJldH1MRAGUZpGvh3fSI/XVALoZJs7Ru5qQSztyshIMIEskuJont5Hu4MaqDDezWUEzBuU4
+X-Authority-Analysis: v=2.4 cv=ELgG00ZC c=1 sm=1 tr=0 ts=680887b3 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=DBNj-jGEmPe37kIgScQA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: Vzsk_YJ29Xg95rd4mOVhZvLW7ll_ib7K
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-23_03,2025-04-22_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0 spamscore=0
+ mlxscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
+ mlxlogscore=848 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504230041
 
-On 22-04-25, 22:37, Praveen Talari wrote:
-> most of helper APIs in core.c and even i don't see any helper API in
-> pm_opp.c.
 
-This is more of a wrapper over the existing C routines which is being
-added to reduce some boilerplate code from drivers. And so it makes
-sense to add this as an inline helper. May be there are others which
-can be moved too.
 
-> as reference of APIs in core.c, i have used� -EINVAl instead of IS_ERR(opp).
+On 4/23/2025 10:30 AM, Peter Wang (王信友) wrote:
+> On Thu, 2025-04-17 at 18:16 +0530, Nitin Rawat wrote:
+>>
+>> External email : Please do not click links or open attachments until
+>> you have verified the sender or the content.
+>>
+>>
+>> There are emulation FPGA platforms or other platforms where UFS low
+>> power mode is either unsupported or power efficiency is not a
+>> critical
+>> requirement.
+>>
+>> Disable all low power mode UFS feature based on the "disable-lpm"
+>> device
+>> tree property parsed in platform driver.
+>>
+>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+>> ---
+>>   drivers/ufs/host/ufs-qcom.c | 15 ++++++++-------
+>>   1 file changed, 8 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-
+>> qcom.c
+>> index 1b37449fbffc..1024edf36b68 100644
+>> --- a/drivers/ufs/host/ufs-qcom.c
+>> +++ b/drivers/ufs/host/ufs-qcom.c
+>> @@ -1014,13 +1014,14 @@ static void ufs_qcom_set_host_caps(struct
+>> ufs_hba *hba)
+>>
+>>   static void ufs_qcom_set_caps(struct ufs_hba *hba)
+>>   {
+>> -       hba->caps |= UFSHCD_CAP_CLK_GATING |
+>> UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
+>> -       hba->caps |= UFSHCD_CAP_CLK_SCALING |
+>> UFSHCD_CAP_WB_WITH_CLK_SCALING;
+>> -       hba->caps |= UFSHCD_CAP_AUTO_BKOPS_SUSPEND;
+>> -       hba->caps |= UFSHCD_CAP_WB_EN;
+>> -       hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
+>> -       hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
+>> -
+>> +       if (!hba->disable_lpm) {
+>> +               hba->caps |= UFSHCD_CAP_CLK_GATING |
+>> UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
+>> +               hba->caps |= UFSHCD_CAP_CLK_SCALING |
+>> UFSHCD_CAP_WB_WITH_CLK_SCALING;
+>> +               hba->caps |= UFSHCD_CAP_AUTO_BKOPS_SUSPEND;
+>> +               hba->caps |= UFSHCD_CAP_WB_EN;
+>>
+> 
+> Hi, Nitin,
+> 
+> If hba->disable_lpm is true, WB should enable?
+> Normally, you don't care about low power, so why wouldn't you enable
+> WB?
+> 
+Hi Peter,
 
-That would likely be wrong, maybe we should fix those too.
+Thanks for review. Agree with you.
+I will update this in next patchset.
 
--- 
-viresh
+Regards,
+Nitin
+
+
+> Thanks.
+> Peter
+> 
+> 
+> 
+>> +               hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
+>> +               hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
+>> +       }
+>>          ufs_qcom_set_host_caps(hba);
+>>   }
+>>
+>> --
+>> 2.48.1
+>>
+> 
+
 
