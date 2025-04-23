@@ -1,146 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-55173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BB2AA99525
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 18:31:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1E32A9964B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 19:17:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E73B89258BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 16:26:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F784188AC64
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 17:17:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FCAF280CF6;
-	Wed, 23 Apr 2025 16:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F10F428935A;
+	Wed, 23 Apr 2025 17:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s0ZQsBGx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QxPnZ76B"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABA1280CDC;
-	Wed, 23 Apr 2025 16:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0E82857C3;
+	Wed, 23 Apr 2025 17:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745425579; cv=none; b=ch6H/3y3S0al7KnV+BN/qRIinXpmzo2SzUX0dTdJd+U58S0hnSrYP6jxKeCaaZSnwp0JXMVTbxHLebng5Oc7g9MqgsFXGJPij6IepfNhfOwNlHjjgR04U3RwBq7NxByKN89F+39zn6gxYp+qh99x8jEZv8t7YFjLcyymHXnYEl4=
+	t=1745428637; cv=none; b=GsA/7WTDPFttdKDdwYihZMOEhqtEUQi0ymiqYyclh1+Or0M+pZNS/hol7QiFgKs2any+DgT6di908PyyZ2TNMXM6y4WGMz7LUWICfVPxBAijpqHRYWlfQJ8omAjgEcIVFG6WE9CUANB44JnlNreWdO/Ex+rJXocnynBrTBbeSQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745425579; c=relaxed/simple;
-	bh=ogMKzGyxgNsRLI52o+wQUuU/FxCjNBZR167etGTl+Eg=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NYKRkuNXlEz+XlAcEfxsNnd3YH5HyMfTEZY7NkSTnOmpxgH17jLFVeeo3tXk65E+KuvLtHzFxHSNj8xY1C/q8V/Tbh0xxyIpRByeHQreXa/mNAg5lQN7PJFTCTx6CCCXkz1uuuKf/fkMrYXSpb4Z2/QHmBiGEBOfNnB1+jYL228=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s0ZQsBGx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE821C4CEEA;
-	Wed, 23 Apr 2025 16:26:15 +0000 (UTC)
+	s=arc-20240116; t=1745428637; c=relaxed/simple;
+	bh=5zuLKKZD6t7o07tEGhpoSHITV1456s45wx0bf1ltqFY=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=Bu003cpWzRvLO6FmuyfPVYMrkfuIrCJFCifcauCDpqzNmFy7UQHAozKosDK67AuMfFmToNjxfjBEpaP53sP4iCgGFMh/oRGDQQFjKUwgsIPKQ0HtR9UZ9e3W/1Qnh/6/kjC431Uo/2wJvu8pdTYl559y5KR3Zbj0q7QmLVEY2N0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QxPnZ76B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12F3C4CEE2;
+	Wed, 23 Apr 2025 17:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745425578;
-	bh=ogMKzGyxgNsRLI52o+wQUuU/FxCjNBZR167etGTl+Eg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=s0ZQsBGxMLPVHZuPTsdOLlbDPlnzQruO2+xnEAnaSGhG0hXAl+/1GmhrtmJZqNLiF
-	 CVLwMyNfM08ZoQJinvdltnGc7pvzw4EH7tYWWqTuY+oy8NbMsOasEbgL727PLY0q1f
-	 uKA5jXBjRwpUhE9gmAE2hJ8/arLLsx4a+1YkCAQBlRlb5JUygY+b7iBCLHzT2gR5kl
-	 IjfaKapJbFENs/TfRHV9Ej8iRirSgo5ydnTH27DhqO9lPZ1/od+PAINDdY2YUEeSgV
-	 +zpqB2WoKwck15W65xIq7C9PMX+2uCnxtjBuxtKo2BnovxE/kodlcLspiRQQfI/68u
-	 FX98fKgpG/Zuw==
-From: Arnd Bergmann <arnd@kernel.org>
-To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	s=k20201202; t=1745428637;
+	bh=5zuLKKZD6t7o07tEGhpoSHITV1456s45wx0bf1ltqFY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=QxPnZ76Bip0N0EzbDxLFq45byCvtqYqWbORH1JnPdt3SM0Q1yn8SRPrsr5JwCT8MX
+	 yzG2x3Rsg/5ZMowmZAiXcEetxAaDmRRD+DqMmN7eawirBaL12ETTQLq6Hdr6GjOZWu
+	 XT3sSvEVKKOZ6YSqP6isJEKsRO0lMWp+pqng57bRI6x4KQ4eUFw2KPW/avjtGqGGWa
+	 36JN6n2NcmrT3LqSvKXMEkN7mWsj+yFq4oIphytGaAfAsqbaz2WMXldmidYKxBCvzQ
+	 mP1Zy7n8BGLdGsCmJEeWjbs1NEEW6QaVH2ehHmz2fGmdx4ZGeFKMPRJJdrB55eaO+I
+	 fm6TIGtoIPbCA==
+Date: Wed, 23 Apr 2025 12:17:15 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_mrana@quicinc.com,
+	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+	quic_vpernami@quicinc.com,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] usb: dwc3: qcom: use modern PM macros
-Date: Wed, 23 Apr 2025 18:26:09 +0200
-Message-Id: <20250423162613.2082417-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.39.5
+	"Rafael J. Wysocki" <rjw@rjwysocki.net>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	netdev@vger.kernel.org, Niklas Cassel <cassel@kernel.org>
+Subject: Re: [PATCH] PCI: qcom: Implement shutdown() callback
+Message-ID: <20250423171715.GA430351@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250401-shutdown-v1-1-f699859403ae@oss.qualcomm.com>
 
-From: Arnd Bergmann <arnd@arndb.de>
+[+cc Greg, Rafael, Danilo for driver model .shutdown() question]
+[+cc Heiner et al for related conversation at
+https://lore.kernel.org/r/20250415095335.506266-2-cassel@kernel.org]
 
-The use of the old SET_SYSTEM_SLEEP_PM_OPS/SET_RUNTIME_PM_OPS macros
-without __maybe_unused annotations causes warnings when build testing
-without CONFIG_PM:
+On Tue, Apr 01, 2025 at 04:51:37PM +0530, Krishna Chaitanya Chundru wrote:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> PCIe host controller drivers are supposed to properly remove the
+> endpoint drivers and release the resources during host shutdown/reboot
+> to avoid issues like smmu errors, NOC errors, etc.
 
-drivers/usb/dwc3/dwc3-qcom.c:421:12: error: unused function 'dwc3_qcom_suspend' [-Werror,-Wunused-function]
-  421 | static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
-      |            ^~~~~~~~~~~~~~~~~
-drivers/usb/dwc3/dwc3-qcom.c:457:12: error: unused function 'dwc3_qcom_resume' [-Werror,-Wunused-function]
-  457 | static int dwc3_qcom_resume(struct dwc3_qcom *qcom, bool wakeup)
+The effect of this patch is:
 
-Change these to the modern SYSTEM_SLEEP_PM_OPS/RUNTIME_PM_OPS/pm_ptr
-macros, which avoids the warnings and improves readability at the same
-time.
+    .shutdown()
+  +   qcom_pcie_shutdown
+  +     dw_pcie_host_deinit
+  +       pci_stop_root_bus     # release all drivers of downstream pci_devs
+  +       pci_remove_root_bus   # remove all downstream pci_devs
 
-Fixes: 1881a32fe14d ("usb: dwc3: qcom: Transition to flattened model")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/usb/dwc3/dwc3-qcom.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+I'm not sure about removing all these drivers in the .shutdown() path.
+The generic .shutdown() doc is "quiesce the device" [1], and my
+current interpretation for PCI is that it should disable DMA and
+interrupts from the device [2].
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index d512002e1e88..cbba11589cd0 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -832,7 +832,6 @@ static void dwc3_qcom_remove(struct platform_device *pdev)
- 	reset_control_assert(qcom->resets);
- }
- 
--#ifdef CONFIG_PM_SLEEP
- static int dwc3_qcom_pm_suspend(struct device *dev)
- {
- 	struct dwc3 *dwc = dev_get_drvdata(dev);
-@@ -886,12 +885,7 @@ static int dwc3_qcom_prepare(struct device *dev)
- 
- 	return dwc3_pm_prepare(dwc);
- }
--#else
--#define dwc3_qcom_complete NULL
--#define dwc3_qcom_prepare NULL
--#endif /* CONFIG_PM_SLEEP */
- 
--#ifdef CONFIG_PM
- static int dwc3_qcom_runtime_suspend(struct device *dev)
- {
- 	struct dwc3 *dwc = dev_get_drvdata(dev);
-@@ -922,14 +916,13 @@ static int dwc3_qcom_runtime_idle(struct device *dev)
- {
- 	return dwc3_runtime_idle(dev_get_drvdata(dev));
- }
--#endif /* CONFIG_PM */
- 
- static const struct dev_pm_ops dwc3_qcom_dev_pm_ops = {
--	SET_SYSTEM_SLEEP_PM_OPS(dwc3_qcom_pm_suspend, dwc3_qcom_pm_resume)
--	SET_RUNTIME_PM_OPS(dwc3_qcom_runtime_suspend, dwc3_qcom_runtime_resume,
-+	SYSTEM_SLEEP_PM_OPS(dwc3_qcom_pm_suspend, dwc3_qcom_pm_resume)
-+	RUNTIME_PM_OPS(dwc3_qcom_runtime_suspend, dwc3_qcom_runtime_resume,
- 			   dwc3_qcom_runtime_idle)
--	.complete = dwc3_qcom_complete,
--	.prepare = dwc3_qcom_prepare,
-+	.complete = pm_sleep_ptr(dwc3_qcom_complete),
-+	.prepare = pm_sleep_ptr(dwc3_qcom_prepare),
- };
- 
- static const struct of_device_id dwc3_qcom_of_match[] = {
-@@ -943,7 +936,7 @@ static struct platform_driver dwc3_qcom_driver = {
- 	.remove		= dwc3_qcom_remove,
- 	.driver		= {
- 		.name	= "dwc3-qcom",
--		.pm	= &dwc3_qcom_dev_pm_ops,
-+		.pm	= pm_ptr(&dwc3_qcom_dev_pm_ops),
- 		.of_match_table	= dwc3_qcom_of_match,
- 	},
- };
--- 
-2.39.5
+If PCI host controller drivers are supposed to remove all downstream
+drivers and devices in .shutdown(), they're all broken because that's
+currently only done in .remove() (and not even all of those).
 
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/linux/device/driver.h?id=v6.14#n73
+[2] https://lore.kernel.org/all/61f70fd6-52fd-da07-ce73-303f95132131@codeaurora.org/
+
+> So, stop and remove the root bus and its associated devices and release
+> its resources during system shutdown to ensure a clean shutdown/reboot.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index e4d3366ead1f9198693e6f9da4ae1dc40a3a0519..926811a0e63eb3663c1f41dc598659993546d832 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1754,6 +1754,16 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	return ret;
+>  }
+>  
+> +static void qcom_pcie_shutdown(struct platform_device *pdev)
+> +{
+> +	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
+> +
+> +	dw_pcie_host_deinit(&pcie->pci->pp);
+> +	phy_exit(pcie->phy);
+> +	pm_runtime_put(&pdev->dev);
+> +	pm_runtime_disable(&pdev->dev);
+> +}
+> +
+>  static int qcom_pcie_suspend_noirq(struct device *dev)
+>  {
+>  	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> @@ -1890,5 +1900,6 @@ static struct platform_driver qcom_pcie_driver = {
+>  		.pm = &qcom_pcie_pm_ops,
+>  		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
+>  	},
+> +	.shutdown = qcom_pcie_shutdown,
+>  };
+>  builtin_platform_driver(qcom_pcie_driver);
 
