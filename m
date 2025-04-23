@@ -1,49 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-55186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E467A998D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 21:43:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8CF0A998DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 21:44:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44E844A2697
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 19:43:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D5A01B86BF7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 19:44:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 794B92949E3;
-	Wed, 23 Apr 2025 19:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9821F2957DD;
+	Wed, 23 Apr 2025 19:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mrU11t9m"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aO5Uf8JE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47197293B47;
-	Wed, 23 Apr 2025 19:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658452957D0;
+	Wed, 23 Apr 2025 19:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745437362; cv=none; b=maknA35t5Bu21nnjYKtocgAGm2/HdNVkRH/aLBub74rLhGUjUkkqqf+Z6WQZzMWAmt+wwacOQ2PCMl4IWNCXUgbLbAQaoBgmFlzBsTTdadq4jF8oeuUtxEcWGd2IGKtt25RtPm0oQAsFVhRUVqdNp9DmsuJrNbol/KIkdkfUp9Y=
+	t=1745437364; cv=none; b=Qnszgz2h7mB1coCUOiynykxsa+PcTh8bZ8jk34QRqAbsEihjW2VWONMaHhfQm9dsVE2HxvO3XUthmapK9F39F0DqVObJpJZOYiZHMoEekG7OWis9MqRtVwWQhnWO8WZhXwSubwwg23U+KQN1guCLzMuGDsGOlh7FYW0TuEyJcsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745437362; c=relaxed/simple;
-	bh=TnT5WVpQCYGJKh3P2I4Fm1o0/+22/GE4VkIuIPQ7b/4=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hqnNlY11jZrMguaYGj3BN2qrjEIAKF9+HG7voDSr6w4SA0Bj1ewESk6uaQnE7I5QkXyxr1mRG42MNs9D1hoqM9Zl/Qx78oVS+obXyxCTTl0qgeVqSpPbAc2tFY59ISGSUh5ufHPzZ1ilQ/v6gnIZuLHZquuk0qaz6pdRY/VKoOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mrU11t9m; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C7BC4CEE2;
-	Wed, 23 Apr 2025 19:42:41 +0000 (UTC)
+	s=arc-20240116; t=1745437364; c=relaxed/simple;
+	bh=ctYGyuPhpbkQw/STF5j4HRUKC3D1Ft1TdkVeReqE1QM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=cT59+B1FXr5La1fq+xJQP4dTRhYHg5rvPobNg3OGHZnMFP/PcgyjaK41LlDvlViZB5OeQpqgvICvjW/DSsn7C+qxJoBAh4Pcy6m5d2sFBs48IUO2nPElfwSzZbB4sDh4n611bRSgs4pFdAHrCBbNjHtCdsHTHkvDZsxLozaaVns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aO5Uf8JE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CED2C4CEE2;
+	Wed, 23 Apr 2025 19:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745437361;
-	bh=TnT5WVpQCYGJKh3P2I4Fm1o0/+22/GE4VkIuIPQ7b/4=;
-	h=From:Subject:Date:To:Cc:From;
-	b=mrU11t9mU7Qy/iG/bmQPjQWMfW+P79ei4JW5vf9T6v2w9PFz26kb4XMK+F1i8AjjS
-	 OekTGSki2lbGXRsIvoWBCAadZprzmI8TkRvJP7iEDr6xj2K1vBmbi5iKx6JBo4Ximo
-	 SWhzfvXnCkFBftDegHOUviYnUM31Ea9xJUibEzIf5NwFkZQSB4fBBQq7Qn9QLFIHsp
-	 TyILjCOmie9q2AH/VImwHdouqGW3nJNL5PN/GLLSIZFbBirJsJqLvvWbmvJXpSgb44
-	 vWBemGESoirKHJnA1GeZ1r/7IExHwiBFFN0aUQrjG7l9DbO2cFXsqehsFa3jfjUxqJ
-	 Jx6dxjUaY00Rw==
+	s=k20201202; t=1745437363;
+	bh=ctYGyuPhpbkQw/STF5j4HRUKC3D1Ft1TdkVeReqE1QM=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=aO5Uf8JED7xdR5Sqpkq0LFktP3AlooyJkQrzX/3l9vvfYa+HCX/fc5UMvNv6g5biA
+	 tKCLD1YgmcoGOrrqDxvU04wl5xLzW3RaqbHakFCkVMjoEueRDlaqQEVFCFsHlPI4Bs
+	 yGLgAMVG5CwDsnWy7ADvwPYjlNA0aGZVriCX+9jAqElA3El1L50sXRoHmA15I5Kn04
+	 /5zVRKtCXE0xJvKIi9Kgr6C+RKN1O6sdjXRngjopN/QKPAM+Jz5Qtx0m5vcdKyCv7/
+	 E5AVhxDzb4XKtVQvEw5Vs4cVuzVZ6VrzF5wOlnpfRLuLtsvEAgpX3ihHTcyg2MoJPr
+	 +dQ9ZoKYdCfDQ==
 From: "Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH v2 0/4] of: Common "memory-region" parsing
-Date: Wed, 23 Apr 2025 14:42:12 -0500
-Message-Id: <20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org>
+Date: Wed, 23 Apr 2025 14:42:13 -0500
+Subject: [PATCH v2 1/4] of: reserved_mem: Add functions to parse
+ "memory-region"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,10 +53,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJRCCWgC/x2MQQ5AMBAAvyJ7tglLHXxFHKoWe2jJVoQ0/q5xn
- GRmEkRW4Qh9kUD5kih7yEBlAW6zYWWUOTNQRaZqqcH5RM9+1weV1yzjRWhpqo2z1rmugVweyov
- c/3UY3/cDrwxX8WUAAAA=
-X-Change-ID: 20250423-dt-memory-region-v2-a2b15caacc63
+Message-Id: <20250423-dt-memory-region-v2-v2-1-2fbd6ebd3c88@kernel.org>
+References: <20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org>
+In-Reply-To: <20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org>
 To: Saravana Kannan <saravanak@google.com>, 
  Andrew Morton <akpm@linux-foundation.org>, 
  Bjorn Andersson <andersson@kernel.org>, 
@@ -75,62 +75,171 @@ Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  Daniel Baluta <daniel.baluta@nxp.com>
 X-Mailer: b4 0.15-dev
 
-While there's a common function to parse "memory-region" properties for
-DMA pool regions, there's not anything for driver private regions. As a
-result, drivers have resorted to parsing "memory-region" properties
-themselves repeating the same pattern over and over. To fix this, this
-series adds 2 functions to handle those cases:
-of_reserved_mem_region_to_resource() and of_reserved_mem_region_count().
+Drivers with "memory-region" properties currently have to do their own
+parsing of "memory-region" properties. The result is all the drivers
+have similar patterns of a call to parse "memory-region" and then get
+the region's address and size. As this is a standard property, it should
+have common functions for drivers to use. Add new functions to count the
+number of regions and retrieve the region's address as a resource.
 
-I've converted the whole tree, but just including remoteproc here as
-it has the most cases. I intend to apply the first 3 patches for 6.16
-so the driver conversions can be applied for 6.17.
-
-A git tree with all the drivers converted is here[1].
-
-v2:
-- Fix of_dma_set_restricted_buffer() to maintain behavior on warning msg
-- Export devm_ioremap_resource_wc()
-- Rework handling of resource name to drop unit-address from name as it 
-  was before.
-- Link to v1: 
-  https://lore.kernel.org/all/20250317232426.952188-1-robh@kernel.org
-
-[1] git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git dt/memory-region
-
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 ---
-Rob Herring (Arm) (4):
-      of: reserved_mem: Add functions to parse "memory-region"
-      of: Simplify of_dma_set_restricted_buffer() to use of_for_each_phandle()
-      devres: Export devm_ioremap_resource_wc()
-      remoteproc: Use of_reserved_mem_region_* functions for "memory-region"
-
- drivers/of/device.c                       | 31 +++++-------
- drivers/of/of_reserved_mem.c              | 80 +++++++++++++++++++++++++++++++
- drivers/remoteproc/imx_dsp_rproc.c        | 45 +++++++----------
- drivers/remoteproc/imx_rproc.c            | 68 +++++++++++---------------
- drivers/remoteproc/qcom_q6v5_adsp.c       | 24 ++++------
- drivers/remoteproc/qcom_q6v5_mss.c        | 60 ++++++++---------------
- drivers/remoteproc/qcom_q6v5_pas.c        | 69 ++++++++++----------------
- drivers/remoteproc/qcom_q6v5_wcss.c       | 25 ++++------
- drivers/remoteproc/qcom_wcnss.c           | 23 ++++-----
- drivers/remoteproc/rcar_rproc.c           | 36 ++++++--------
- drivers/remoteproc/st_remoteproc.c        | 41 ++++++++--------
- drivers/remoteproc/stm32_rproc.c          | 44 ++++++++---------
- drivers/remoteproc/ti_k3_dsp_remoteproc.c | 28 +++++------
- drivers/remoteproc/ti_k3_m4_remoteproc.c  | 28 +++++------
- drivers/remoteproc/ti_k3_r5_remoteproc.c  | 28 +++++------
- drivers/remoteproc/xlnx_r5_remoteproc.c   | 51 ++++++++------------
- include/linux/of_reserved_mem.h           | 26 ++++++++++
- lib/devres.c                              |  1 +
- 18 files changed, 339 insertions(+), 369 deletions(-)
+v2:
+ - Wrap function parameters
 ---
-base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
-change-id: 20250423-dt-memory-region-v2-a2b15caacc63
+ drivers/of/of_reserved_mem.c    | 80 +++++++++++++++++++++++++++++++++++++++++
+ include/linux/of_reserved_mem.h | 26 ++++++++++++++
+ 2 files changed, 106 insertions(+)
 
-Best regards,
+diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
+index ee2e31522d7e..f87915cce961 100644
+--- a/drivers/of/of_reserved_mem.c
++++ b/drivers/of/of_reserved_mem.c
+@@ -12,6 +12,7 @@
+ #define pr_fmt(fmt)	"OF: reserved mem: " fmt
+ 
+ #include <linux/err.h>
++#include <linux/ioport.h>
+ #include <linux/libfdt.h>
+ #include <linux/of.h>
+ #include <linux/of_fdt.h>
+@@ -740,3 +741,82 @@ struct reserved_mem *of_reserved_mem_lookup(struct device_node *np)
+ 	return NULL;
+ }
+ EXPORT_SYMBOL_GPL(of_reserved_mem_lookup);
++
++/**
++ * of_reserved_mem_region_to_resource() - Get a reserved memory region as a resource
++ * @np:		node containing 'memory-region' property
++ * @idx:	index of 'memory-region' property to lookup
++ * @res:	Pointer to a struct resource to fill in with reserved region
++ *
++ * This function allows drivers to lookup a node's 'memory-region' property
++ * entries by index and return a struct resource for the entry.
++ *
++ * Returns 0 on success with @res filled in. Returns -ENODEV if 'memory-region'
++ * is missing or unavailable, -EINVAL for any other error.
++ */
++int of_reserved_mem_region_to_resource(const struct device_node *np,
++				       unsigned int idx, struct resource *res)
++{
++	struct reserved_mem *rmem;
++
++	if (!np)
++		return -EINVAL;
++
++	struct device_node __free(device_node) *target = of_parse_phandle(np, "memory-region", idx);
++	if (!target || !of_device_is_available(target))
++		return -ENODEV;
++
++	rmem = of_reserved_mem_lookup(target);
++	if (!rmem)
++		return -EINVAL;
++
++	resource_set_range(res, rmem->base, rmem->size);
++	res->name = rmem->name;
++	return 0;
++}
++EXPORT_SYMBOL_GPL(of_reserved_mem_region_to_resource);
++
++/**
++ * of_reserved_mem_region_to_resource_byname() - Get a reserved memory region as a resource
++ * @np:		node containing 'memory-region' property
++ * @name:	name of 'memory-region' property entry to lookup
++ * @res:	Pointer to a struct resource to fill in with reserved region
++ *
++ * This function allows drivers to lookup a node's 'memory-region' property
++ * entries by name and return a struct resource for the entry.
++ *
++ * Returns 0 on success with @res filled in. Returns -ENODEV if 'memory-region'
++ * is missing or unavailable, -EINVAL for any other error.
++ */
++int of_reserved_mem_region_to_resource_byname(const struct device_node *np,
++					      const char *name,
++					      struct resource *res)
++{
++	int idx;
++
++	if (!name)
++		return -EINVAL;
++
++	idx = of_property_match_string(np, "memory-region-names", name);
++	if (idx < 0)
++		return idx;
++
++	return of_reserved_mem_region_to_resource(np, idx, res);
++}
++EXPORT_SYMBOL_GPL(of_reserved_mem_region_to_resource_byname);
++
++/**
++ * of_reserved_mem_region_count() - Return the number of 'memory-region' entries
++ * @np:		node containing 'memory-region' property
++ *
++ * This function allows drivers to retrieve the number of entries for a node's
++ * 'memory-region' property.
++ *
++ * Returns the number of entries on success, or negative error code on a
++ * malformed property.
++ */
++int of_reserved_mem_region_count(const struct device_node *np)
++{
++	return of_count_phandle_with_args(np, "memory-region", NULL);
++}
++EXPORT_SYMBOL_GPL(of_reserved_mem_region_count);
+diff --git a/include/linux/of_reserved_mem.h b/include/linux/of_reserved_mem.h
+index e338282da652..f573423359f4 100644
+--- a/include/linux/of_reserved_mem.h
++++ b/include/linux/of_reserved_mem.h
+@@ -7,6 +7,7 @@
+ 
+ struct of_phandle_args;
+ struct reserved_mem_ops;
++struct resource;
+ 
+ struct reserved_mem {
+ 	const char			*name;
+@@ -39,6 +40,12 @@ int of_reserved_mem_device_init_by_name(struct device *dev,
+ void of_reserved_mem_device_release(struct device *dev);
+ 
+ struct reserved_mem *of_reserved_mem_lookup(struct device_node *np);
++int of_reserved_mem_region_to_resource(const struct device_node *np,
++				       unsigned int idx, struct resource *res);
++int of_reserved_mem_region_to_resource_byname(const struct device_node *np,
++					      const char *name, struct resource *res);
++int of_reserved_mem_region_count(const struct device_node *np);
++
+ #else
+ 
+ #define RESERVEDMEM_OF_DECLARE(name, compat, init)			\
+@@ -63,6 +70,25 @@ static inline struct reserved_mem *of_reserved_mem_lookup(struct device_node *np
+ {
+ 	return NULL;
+ }
++
++static inline int of_reserved_mem_region_to_resource(const struct device_node *np,
++						     unsigned int idx,
++						     struct resource *res)
++{
++	return -ENOSYS;
++}
++
++static inline int of_reserved_mem_region_to_resource_byname(const struct device_node *np,
++							    const char *name,
++							    struct resource *res)
++{
++	return -ENOSYS;
++}
++
++static inline int of_reserved_mem_region_count(const struct device_node *np)
++{
++	return 0;
++}
+ #endif
+ 
+ /**
+
 -- 
-Rob Herring (Arm) <robh@kernel.org>
+2.47.2
 
 
