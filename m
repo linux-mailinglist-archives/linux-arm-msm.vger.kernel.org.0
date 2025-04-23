@@ -1,159 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-55155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50375A98D8E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 16:47:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CE21A98EC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 16:59:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 251321891F9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 14:46:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2F2A71B8204B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 14:56:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF7D6280CF6;
-	Wed, 23 Apr 2025 14:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2794727D76E;
+	Wed, 23 Apr 2025 14:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="TWoHECXV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O+tZeBBe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B34280CD2;
-	Wed, 23 Apr 2025 14:46:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68288143736;
+	Wed, 23 Apr 2025 14:55:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745419568; cv=none; b=aKK2i5fIW6xm9iV2zOmGa2o5+VNMDj7Ag9NPhX1Yb3xU+bXbB6CNgsM91lA8hs7L2L4GJpyOIur2v+5Fx+Qd32DEPLZIx0/1DzrP9fKE02JPNYvpWyAgM4ecb55B0/4tYcVPj35okG9pFtbDZ4jgQUs9NdL8l848mOzY6gN/u3s=
+	t=1745420156; cv=none; b=JXxePK92pjtlfUIhL36ZtF+wqBDBSs7Ld53UMInX0aIKBzppzgYhtc773kIJhF56YEGqOpKk+c/UF8KI8dBvYmeLdTpW52w7vFyH/xEAZLfA++qNZH4zBmlrGmeASWCKhS97CaDCB1WpeL85anT11IPo61g8wcV1TvcfgGSnAtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745419568; c=relaxed/simple;
-	bh=xguUTgtQfB5ymNwtCZa/MB5eCO/TXBVnXyGl/tCSe5E=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=GJUIvVoZniig7W06extcwkYAcJmlI7s1Y8jnU1F/pIxnxnmtOBte05Cvy1HRsldjVBcfU+NLx4Ao/eUFrh2PUOkNTahdYtkFsUpvgjXQfKQW1Zp3VdglGRF43aoAv7OBjUmJEkclDRUF/zq2dVogKWKMTD0D+KaAiv58UEPbnUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=TWoHECXV; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from localhost (web.docker-mailserver_default [172.18.0.2])
-	by mail.mainlining.org (Postfix) with ESMTPSA id D5499BBAD2;
-	Wed, 23 Apr 2025 14:46:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1745419564;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qt4FkHi2EY45p4uPV+pG4bxirlNtonFL07/CXVit5gw=;
-	b=TWoHECXVZKAY5+HLO5u5if3eku6fLJsTBNmm+T/qN58v4Gf5mlGJIlZpBJ+gA2DWyzfsfG
-	GOYQE93zyxX1Amfgnt1UNJgzoPPpfpr0A5xuV8erHXaOrfi62K0A9sod6d/kW4RRDB7Due
-	+pFhmYBw1Fur2KCgAg2it5U4mcV+1xHFNYPGhp2TaPFUuyImiqd30xUSYWdck+Qsn0J3kj
-	+tcai4piLl0bX6PSLU+eNecBkc2S4CfPx02p9yJcac5IZRhpiLpscC/aQZzf5U5h+h2wZu
-	kN8aV4fU6tyEn0IvhRsG7r+eDp1KKo7B4iwBBuI+YSpH7mdTfeQZfMly16CMpg==
+	s=arc-20240116; t=1745420156; c=relaxed/simple;
+	bh=oy2rWzpZW0dwz08a8V5Sf9Lmno1gccMy0jYnU3T9mcQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CxF5q2RHuEZPm9d1+nFHf/dCHZbIGYx+GEhNJNGos1bSlg54Kalo6GkSSmatabmil4RBpDm5x1hcXtsKtnI+QErreyw05ioT1bEl5qFqALsoS6reBMhcmMVCJ2vdKCKvfY5pUkrWoG8R7Wd423v6wITDh5juaa+msluTYz1MFB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O+tZeBBe; arc=none smtp.client-ip=209.85.166.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-861d7a09c88so126399639f.2;
+        Wed, 23 Apr 2025 07:55:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745420152; x=1746024952; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7m0UzjQSlAnchYu9ifeHwkg6qMlyGsq9HZFdL9+SCys=;
+        b=O+tZeBBeJK48Bo5maE7I1JB8l/o5SEWChRWtrTuTS/kyFSNwxEngQ1V04wGiwXnnBI
+         6R73xnRBTYA7jScCh2To8OpbdInx0jTaMEDvpmhdm3Qt5BNPbLZaatRzuCGerJJEIZD4
+         zFymSNCVuCkfR/U4NyEc+yEhfQA8hgj+dTyd5kIEouFvsGeofJvLKRX1hGjfqkLMfP14
+         F6c/T/RS2Bz5akTcCc927iEbBjaM7+A0PFuFq0JRKOWvUyOmNeEV+dTvhMZLYfrd+0Fi
+         EOZNhAjL7gGaAXmIG6rQkj8xcAt4nAqBU9IDBIJJ6vm/q0jQ0Xi5hiqaTldk+AM11dI7
+         4Upw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745420152; x=1746024952;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7m0UzjQSlAnchYu9ifeHwkg6qMlyGsq9HZFdL9+SCys=;
+        b=TSF1gTqkCtHXgcvMFHueg5WBWecH1AAGl8WoB/G/ByOZ5imNZ8estHxtLzKP8QRkhr
+         Wq/IBq4Ui7hnmPsYtuIvPU7OAxXOSFEQ+na3SOLh7MzLpIEA75agce4Q1/Y5EZfzkb8D
+         69m4sNUNQfpdkgIfC7cWPYKFa3yKMMi8mq1lZyi5ngkk0+RQXpurkwueoWzFOZWtHLcg
+         qP3+Bqqr8v2VThgkcd5L1TJ7a7XgDJ/O7rlkIKBVfaWf9j4+KKWjG4f6vRV28lVBMrLC
+         /rvosND3wpvQS9N7qKcqfxKzpEKEYzxNqXtyQyAOhH1rhivNI5WR5EvB0Ic4WNBKPYmr
+         z9ZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV6MB2bT6puhNdZx2foclg37eY9rxKzMhtkFTPaSguuyscv/6etPz6Zn43SlpWgMMXyUHRWr5sO49KP7NdQ@vger.kernel.org, AJvYcCVVBr8aNT94Q5xfMDxRY054FKZF35tSuhGwoZgew5yjMfsu+jTvCZnI/0K+DIqa4SWjqcugcESvyryQbtJY@vger.kernel.org, AJvYcCX8AA52YlUeevOEkwCbl8TTnSj7Bb5PCKn5hXJ/pJIU5VPQ7lh0kaMXHcZbDuXqqN/bwmbgvMUYM9nZKTJGgZgA@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIpjCeYEtmgJe88ZOcO3RoEjRWy/Ce5h5K6hflbqOZXcxWzXh7
+	WEvDHg8LcJg0e+ZXz9sUlUBHLaoDoWLnAcFvghe1E2X3CT8IuBrmcmAB32sWIsr+5ZVkyPBGyJD
+	2ACtCJtKmV1RCSdLDQ+XRKi5lxhw=
+X-Gm-Gg: ASbGnctekuBmFaRCaVYEmBXgMky146fxV5Q1oiTBqWuk5wvEj0XGzEdj6tsTsILTDo2
+	9+zsrzsb+B8lJ27XXmn+tYmwL96TZD8k60jv2Ps2ZpoM/PfD72EjS4dVgr1iwvG3J4pP/PAHSv3
+	dvvtz/XcsqGRVnQ8R7zYayIOLuafIEhHJy/k/J7wWtncq4ORi9jkF5
+X-Google-Smtp-Source: AGHT+IH/HosXjxOmwFPtGeWQfhxekC8P6qoxTmos7b0mOc58p0+QS9G2JnlqUawjIQiGiopnQR3O+V/TuYdD8NWDOvo=
+X-Received: by 2002:a92:ca48:0:b0:3d0:47cf:869c with SMTP id
+ e9e14a558f8ab-3d8942886e8mr197937005ab.19.1745420152327; Wed, 23 Apr 2025
+ 07:55:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 23 Apr 2025 16:46:03 +0200
-From: barnabas.czeman@mainlining.org
+References: <20250410-topic-smem_dramc-v2-0-dead15264714@oss.qualcomm.com>
+ <20250410-topic-smem_dramc-v2-3-dead15264714@oss.qualcomm.com>
+ <20911703-ab4e-4eb2-8611-294730a06d2f@quicinc.com> <CACu1E7HDmQXDNtEQCXpHXsOKPCOgrWgo+_kcgizo9Mp1ntjDbA@mail.gmail.com>
+ <1282bf58-e431-4a07-97e5-628437e7ce5f@quicinc.com> <CACu1E7GwMCt6+JJQGgSvJObTMMWYLPd69owyFo7S=sxu_EEsUw@mail.gmail.com>
+ <16845de2-a40a-4e3d-b3aa-c91e7072b57f@quicinc.com> <CAF6AEGvyeRLHFBYmxkevgT+hosXGiH_w8Z+UjQmL+LdbNfVZ+w@mail.gmail.com>
+ <acd1c8dd-286b-40b7-841d-e53e2d155a61@oss.qualcomm.com>
+In-Reply-To: <acd1c8dd-286b-40b7-841d-e53e2d155a61@oss.qualcomm.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 23 Apr 2025 07:55:39 -0700
+X-Gm-Features: ATxdqUHj4F4rmzIJwqK9WlP6_xORQ21GMzISXDUuQYh93b8M4VTvVt2-yaAaxlY
+Message-ID: <CAF6AEGts5rWvgyZy8RtAaUOsad362AG-uNjxF9vyj4szg=b5Bw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] drm/msm/a6xx: Get HBB dynamically, if available
 To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette
- <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>,
- =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, Linus Walleij
- <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>, Joerg Roedel
- <joro@8bytes.org>, Will Deacon <will@kernel.org>, Robin Murphy
- <robin.murphy@arm.com>, Konrad Dybcio <konradybcio@kernel.org>, Rob Clark
- <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten
- Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
- <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Dmitry
- Baryshkov <lumag@kernel.org>, Adam Skladowski <a_skl39@protonmail.com>,
- Sireesh Kodali <sireeshkodali@protonmail.com>, Srinivas Kandagatla
- <srini@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- iommu@lists.linux.dev, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org, Dang Huynh
- <danct12@riseup.net>
-Subject: Re: [PATCH v5 3/5] arm64: dts: qcom: Add initial support for MSM8937
-In-Reply-To: <2e3d94a4-d9e1-429e-9f65-d004c80180e5@oss.qualcomm.com>
-References: <20250421-msm8937-v5-0-bf9879ef14d9@mainlining.org>
- <20250421-msm8937-v5-3-bf9879ef14d9@mainlining.org>
- <2e3d94a4-d9e1-429e-9f65-d004c80180e5@oss.qualcomm.com>
-Message-ID: <790a0b7537e0b82b70bc4b32612ecee6@mainlining.org>
-X-Sender: barnabas.czeman@mainlining.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
+Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>, Connor Abbott <cwabbott0@gmail.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, Sean Paul <sean@poorly.run>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, linux-kernel <linux-kernel@vger.kernel.org>, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, linux-hardening@vger.kernel.org, 
+	dri-devel <dri-devel@lists.freedesktop.org>, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2025-04-23 16:03, Konrad Dybcio wrote:
-> On 4/21/25 10:18 PM, Barnabás Czémán wrote:
->> From: Dang Huynh <danct12@riseup.net>
->> 
->> Add initial support for MSM8937 SoC.
->> 
->> Signed-off-by: Dang Huynh <danct12@riseup.net>
->> Co-developed-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> ---
-> 
-> [...]
-> 
->> +			tsens_base1: base1@1d8 {
->> +				reg = <0x1d8 1>;
-> 
-> The size part should be hex too
-> 
-> [...]
-> 
->> +				wcss-wlan2-pins {
->> +					pins = "gpio76";
->> +					function = "wcss_wlan2";
->> +					drive-strength = <6>;
->> +					bias-pull-up;
->> +
->> +				};
->> +
->> +			};
-> 
-> random newline /\
-> 
-> [...]
-> 
->> +		mdss: display-subsystem@1a00000 {
->> +			compatible = "qcom,mdss";
->> +			reg = <0x01a00000 0x1000>,
->> +			      <0x01ab0000 0x1040>;
-> 
-> The latter region is 0x3000-long
-> 
->> +			reg-names = "mdss_phys", "vbif_phys";
-> 
-> Please make reg-names a vertical list too
-> 
-> [...]
-> 
-> 
->> +		gpu: gpu@1c00000 {
->> +			compatible = "qcom,adreno-505.0", "qcom,adreno";
->> +			reg = <0x1c00000 0x40000>;
-> 
-> Please pad the address part to 8 hex digits
-> 
-> [...]
-> 
->> +			gpu_opp_table: opp-table {
->> +				compatible = "operating-points-v2";
->> +
->> +				opp-19200000 {
->> +					opp-hz = /bits/ 64 <19200000>;
->> +					opp-supported-hw = <0xff>;
-> 
-> The comment from the previous revision still stands
-If i remove opp-supported-hw i will got -22 EINVAL messages and the opp 
-will be not fine.
-> 
-> Konrad
+On Tue, Apr 22, 2025 at 4:57=E2=80=AFPM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
+>
+> On 4/21/25 10:13 PM, Rob Clark wrote:
+> > On Fri, Apr 18, 2025 at 9:00=E2=80=AFAM Akhil P Oommen <quic_akhilpo@qu=
+icinc.com> wrote:
+> >>
+> >> On 4/18/2025 6:40 AM, Connor Abbott wrote:
+> >>> On Thu, Apr 17, 2025, 1:50=E2=80=AFPM Akhil P Oommen <quic_akhilpo@qu=
+icinc.com> wrote:
+> >>>>
+> >>>> On 4/17/2025 9:02 PM, Connor Abbott wrote:
+> >>>>> On Thu, Apr 17, 2025 at 3:45=E2=80=AFAM Akhil P Oommen <quic_akhilp=
+o@quicinc.com> wrote:
+> >>>>>>
+> >>>>>> On 4/10/2025 11:13 PM, Konrad Dybcio wrote:
+> >>>>>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> >>>>>>>
+> >>>>>>> The Highest Bank address Bit value can change based on memory typ=
+e used.
+> >>>>>>>
+> >>>>>>> Attempt to retrieve it dynamically, and fall back to a reasonable
+> >>>>>>> default (the one used prior to this change) on error.
+> >>>>>>>
+> >>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> >>>>>>> ---
+> >>>>>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 15 ++++++++++++++-
+> >>>>>>>  1 file changed, 14 insertions(+), 1 deletion(-)
+> >>>>>>>
+> >>>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/=
+drm/msm/adreno/a6xx_gpu.c
+> >>>>>>> index 06465bc2d0b4b128cddfcfcaf1fe4252632b6777..a6232b382bd16319f=
+20ae5f8f5e57f38ecc62d9f 100644
+> >>>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >>>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >>>>>>> @@ -13,6 +13,7 @@
+> >>>>>>>  #include <linux/firmware/qcom/qcom_scm.h>
+> >>>>>>>  #include <linux/pm_domain.h>
+> >>>>>>>  #include <linux/soc/qcom/llcc-qcom.h>
+> >>>>>>> +#include <linux/soc/qcom/smem.h>
+> >>>>>>>
+> >>>>>>>  #define GPU_PAS_ID 13
+> >>>>>>>
+> >>>>>>> @@ -587,6 +588,8 @@ static void a6xx_set_cp_protect(struct msm_gp=
+u *gpu)
+> >>>>>>>
+> >>>>>>>  static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+> >>>>>>>  {
+> >>>>>>> +     int hbb;
+> >>>>>>> +
+> >>>>>>>       gpu->ubwc_config.rgb565_predicator =3D 0;
+> >>>>>>>       gpu->ubwc_config.uavflagprd_inv =3D 0;
+> >>>>>>>       gpu->ubwc_config.min_acc_len =3D 0;
+> >>>>>>> @@ -635,7 +638,6 @@ static void a6xx_calc_ubwc_config(struct adre=
+no_gpu *gpu)
+> >>>>>>>           adreno_is_a690(gpu) ||
+> >>>>>>>           adreno_is_a730(gpu) ||
+> >>>>>>>           adreno_is_a740_family(gpu)) {
+> >>>>>>> -             /* TODO: get ddr type from bootloader and use 2 for=
+ LPDDR4 */
+> >>>>>>>               gpu->ubwc_config.highest_bank_bit =3D 16;
+> >>>>>>>               gpu->ubwc_config.amsbc =3D 1;
+> >>>>>>>               gpu->ubwc_config.rgb565_predicator =3D 1;
+> >>>>>>> @@ -664,6 +666,13 @@ static void a6xx_calc_ubwc_config(struct adr=
+eno_gpu *gpu)
+> >>>>>>>               gpu->ubwc_config.highest_bank_bit =3D 14;
+> >>>>>>>               gpu->ubwc_config.min_acc_len =3D 1;
+> >>>>>>>       }
+> >>>>>>> +
+> >>>>>>> +     /* Attempt to retrieve the data from SMEM, keep the above d=
+efaults in case of error */
+> >>>>>>> +     hbb =3D qcom_smem_dram_get_hbb();
+> >>>>>>> +     if (hbb < 0)
+> >>>>>>> +             return;
+> >>>>>>> +
+> >>>>>>> +     gpu->ubwc_config.highest_bank_bit =3D hbb;
+> >>>>>>
+> >>>>>> I am worried about blindly relying on SMEM data directly for HBB f=
+or
+> >>>>>> legacy chipsets. There is no guarantee it is accurate on every chi=
+pset
+> >>>>>> and every version of firmware. Also, until recently, this value wa=
+s
+> >>>>>> hardcoded in Mesa which matched the value in KMD.
+> >>>>>
+> >>>>> To be clear about this, from the moment we introduced host image
+> >>>>> copies in Mesa we added support for querying the HBB from the kerne=
+l,
+> >>>>> explicitly so that we could do what this series does without Mesa e=
+ver
+> >>>>> breaking. Mesa will never assume the HBB unless the kernel is too o=
+ld
+> >>>>> to support querying it. So don't let Mesa be the thing that stops u=
+s
+> >>>>> here.
+> >>>>
+> >>>> Thanks for clarifying about Mesa. I still don't trust a data source =
+that
+> >>>> is unused in production.
+> >>>
+> >>> Fair enough, I'm not going to argue with that part. Just wanted to
+> >>> clear up any confusion about Mesa.
+> >>>
+> >>> Although, IIRC kgsl did set different values for a650 depending on
+> >>> memory type... do you know what source that used?
+> >>
+> >> KGSL relies on an undocumented devicetree node populated by bootloader
+> >> to detect ddrtype and calculates the HBB value based on that.
+> >
+> > Would it be reasonable to use the smem value, but if we find the
+> > undocumented dt property, WARN_ON() if it's value disagrees with smem?
+> >
+> > That would at least give some confidence, or justified un-confidence
+> > about the smem values
+>
+> The aforementioned value is populated based on the data that this
+> driver reads out, and only on the same range of platforms that this
+> driver happens to cater to
+
+Did I understand that correctly to mean that the dt property is based
+on the same smem value that you are using?  In that case, there should
+be no argument against using the smem value as the source of truth.
+
+BR,
+-R
 
