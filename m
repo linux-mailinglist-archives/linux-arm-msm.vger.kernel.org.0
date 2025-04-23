@@ -1,89 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-55194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51A0FA99A0A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 23:10:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 91444A99A04
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 23:10:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 913923B2795
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 21:10:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 399295A3A38
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 21:10:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D441281531;
-	Wed, 23 Apr 2025 21:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F16592561A3;
+	Wed, 23 Apr 2025 21:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="S3rNxQJQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="b0d6YnPr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DDB27E1D0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 21:10:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EDE27A131
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 21:10:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745442621; cv=none; b=H9JJAh1pFKbItKnV1J00e9lTc9zGOB1UQ5TBixAGvGx424MG8Mz2RN049CxSJWQo9dbdd+f4n5MMy0VYFAUluEIGfM8YlaHbxm+qnOtAIPG6aOxEL14Aoy/XZylAgjXGSz3O1th70CpzQf4IsNGfBXZZQfoG1tIA5hOt0J6UKDE=
+	t=1745442618; cv=none; b=kKMF18sKCvukOiyvwu7qAYj250DurihxNqnYSc1x4pN9YRgdZwvfc1PoIFGPSuWylxdNuOGvSpB2T41TIFfiM3HUu1KhDJzHwi0CgfbG5lJxLNT7NZ3o2KBPR0jMEWb7oPx/YcAQzUg5Hy2sbB3jQKZ+hFu/VVV5EckVQvP/Y9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745442621; c=relaxed/simple;
-	bh=26I8qPadGBI3Rlea3V7F1/zcNl+apgLPCwuzy3KLrpc=;
+	s=arc-20240116; t=1745442618; c=relaxed/simple;
+	bh=eff0mjuW4AqzJCHnRPVLxFyRhHVHW/VltTRzkb6uwFA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WuTdllsPl8lZjD0Y43HNxr7PMaUvwzF3RVgeALMYubHPlQXMtrvClUj6wEW8m7/BJ56ZikEqjgPvobe9mAYX+jDuaaivE2u72c7ewMU1q1/bQr/E+nkEFzveEU3CLFIp41tl4c2fXkwDqTVe118/qxWirkLhGTy39GqsFAmZfmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=S3rNxQJQ; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=Yi/ENyNpidN6sOeNvOs8OVa/1m7ipOMn3JJjVq52oejBlFmIeebwglbiZ7+wXHZpaADin9u2xGdGRXfFMS1C+1CM/iASOxBuTiADfzcloFVsrUNx29LHhcRSpar3sVKxGwDv+wrZAwIHusiBWjDbE4fVOmEPZAIiRmkUvlWb8E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b0d6YnPr; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53NB2rnd021819
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 21:10:13 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53NA5mrO016163
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 21:10:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JRXCPSZfKz+DlXPuaTXqEvhoI/h4QSedlOHHVJ7bZgQ=; b=S3rNxQJQeBYGSWL/
-	FklUW8brM5mIAZCTknzBnKk2OG7cWU0hVc8vwVCA7kOSWsL/fQT0tZexhPFhXuot
-	ZFI9Rm6TzEIL/cfKz6Wqqw5PDhCYB0Ob61XztyV0t6oXOBg08CF6ShVc0qUJtNtr
-	XdLVCr9JdNH6KXTI0wB7uf45vBMR+dDiDurhmhsyUbZg36sQ4i5OLNalwEAJAj+z
-	mx6t7gRGr6+LmAWOFBnaWoPFxkMYt1qR+aLJL2dmoARazZJh7mnuB7pYgUJvBdTW
-	ZcH/MegmorIl0TL8gh9wajEsWtavZozgzxCo9V4wZSX/NDh4l+3HQWSFJxxkrFkQ
-	N77+Gg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh23dwb-1
+	ChAM2xKxlDkjz0AThAkIyY93M2U2f989jpdxi9wG/O0=; b=b0d6YnPr6hC21lU3
+	YqhDq1qbhliZTxwUPQTRHLwpZuoEG60VdLwyi7gXSy1bZIUArCg9tg23A7ZAF3ke
+	nzFUghbXzoZX3Am0VhJtY1QXtSTri1slO+PLsH8cY7psgwcR4vN1qDQcAkgpRLWJ
+	WKXYY5PrrGrycu1lEF7nF+HRe/vAUerln+X+81Olc6mcuivaU/zht1BPXbdKft3h
+	oWK5B/FjSQP2qeTIqXH7C+YlOL0OYIGaL/0QgY0bCMt3vsW+JSZsFfO9EHs8hDf0
+	A5BM6XuSg/1ASJjVt2jOlW72urQ6vXdlaQSFbT8zJ3QdEnACdccPggKnTynwcgeH
+	rCowLg==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh3kda5-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 21:10:13 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c955be751aso43820585a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 14:10:12 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 21:10:15 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6f0e2d30ab4so5915076d6.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 14:10:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745442611; x=1746047411;
+        d=1e100.net; s=20230601; t=1745442614; x=1746047414;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JRXCPSZfKz+DlXPuaTXqEvhoI/h4QSedlOHHVJ7bZgQ=;
-        b=hr7OhR3qRQckSeGpjXp0z9jmZbV5lL3GnUUkiDfaO6Df6v7Pt6b4FLGXU6DxrJDNgl
-         AiKibhnIvoulgJ3vjahZE74yZuqQ8Xy2Axa/LJVZsWFy5Xz0RZgypw+PDhJUeaZEdhjK
-         hGxI9ZLzTJlYXne2FoBYwjs2rVOg6ySsFSfsPCz7BmPht71Ltj2qDU3QnyGrGQ+ANlHm
-         wnjZOxh25fFO1TNhEaoiqnB+Ad+QHRdBAeuJSggSYBR/z/SX/lovFR8ymq4lvHXpeXTY
-         FZg6V+3q/li+GrfyaJFGmW9hd3McI5d9602QLPHYtxiCmHcfdb3WzqLE4TsCdlBbFgdm
-         y5xw==
-X-Gm-Message-State: AOJu0Yx5a7YByZLeXUdvS26pHd+mT1+gaWKhtNk3J58mSdtKkwWsISMf
-	OuFF2zGRp5dbJUS0NAvvRFGemQs/jhQmk5lWhFsQgMn28848uGwG1sw1w2f7YUbPlHl+xNBfd35
-	IcWXNsd5MOjFAH5OyQaOneVqTQCK1YAxWdtMG+xWGH5nJFxhh/F1hOxBIZasjkdqs
-X-Gm-Gg: ASbGncs0mkPpIXhb3Jlp0xDu3j2aqo0I4rgl5z68DitV87Q2OMwiNgz/ANaFBjlI9SH
-	W/GLCaS79Eq9lNc9XQKyxstBcX9gr9xpCQGyMyumP9KrOJ4YEGPyBaeMHLVyreLVnQB9G831bTV
-	F1SpCJ2PyUTYhJr0mT/LJ8s1DLaLIUilXhDtisEV/nG3QzCU8N9VWn3N6tfC1mjfsJSV7kXIFbM
-	sGhEyCeuKIwATCESchliimkFjhwOFiQk5yQ1cxn1s42bDlTtV4iEN2k/WU+Wej+wWbY90G6vGUT
-	VTtOhy35BtxBP3JMaNIOEOQxU8V0wiXJ16X/1scftdBJilVadx6vaBjSxqJ06QtGKeCXoljwkmr
-	zHT3cL3Mnb82lb8uo4Vb8VlB2
-X-Received: by 2002:a05:620a:2984:b0:7c5:a951:3518 with SMTP id af79cd13be357-7c956f34a34mr46304685a.39.1745442611600;
-        Wed, 23 Apr 2025 14:10:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHu9UktEg24Y6pBfXuYiW9VCkLD02oK4oHuXzlXTXwu2vpQ+/Rw+H3gqu922br8qUWbb1+zzg==
-X-Received: by 2002:a05:620a:2984:b0:7c5:a951:3518 with SMTP id af79cd13be357-7c956f34a34mr46301085a.39.1745442611259;
-        Wed, 23 Apr 2025 14:10:11 -0700 (PDT)
+        bh=ChAM2xKxlDkjz0AThAkIyY93M2U2f989jpdxi9wG/O0=;
+        b=Kd1x4sMB6EMxYinU6wMxHrqK79e9sm0Uun80+zFv/tycHKm6vThRmQ+BMKsKpPskYY
+         7Mo4N7Gp6dhQQKhivIolz8XfvhciUqBYnzy67l3GulzJO5bQRtmCNx2a2PfvP4WMmIYC
+         SnTpB2c2on1TcUV/brfQps8l/IDiV1AjDPFjk5cSNE38OpOId+Yi42Sukcup9HlXVfxZ
+         i2MMnaOnR27jPjWLwU/sK4ZH8ZdjPCFEiKWqakNSuWdIihLt0x+OP7oTfq6sTSPJGqTi
+         tdDKuxJ2nLSYBYmPJ6SXIrGJu3/ox2z850bUaFTD8XAtUcC+ZPqUnTAWHyMsf3xbW55f
+         /T/w==
+X-Gm-Message-State: AOJu0YxluU/TDRO4dfAuomRcxUHnoLOr/kdeNLPpZKs1I/U4KEAMkz5b
+	h9jD4JFwqN7PDJ8/PkuANbNY5m0Lv5BMCT0n0q7ts6Yk84zYNroBmbUSkv0EHpD8K3sUrIs4+Yq
+	+AM9qwlEWjpjx0wWbIBUHQtdm0MUmVF7ZbqvQaQk2tht9BnRsI816YCXBks41IyuH
+X-Gm-Gg: ASbGncuc4ERNfAksdY2Ve2l5AjPOhT4/x6KH85wKG8Jf3bcP7RAyjz6+bhkqFGtKVER
+	p3NfAWrwYf2lQUWoLu/IlQSyzpqWoY/TewmqQvbqsWi9RWR+p6xWkDAi7VYpacD+MOZ6QjTPO30
+	opKTFjjtvMKZN28VYaAlto3Vw5/Py0+BokYmE/NVRPe3g4yAA0wiHfcsL8T82FwDnMufuZdeY5g
+	TON9kp3rdHXfMcPcDXLvjLgQLraIXiaTRGwCBXZDj8SBZKf5D5JHcSHP2fdj2T6rIIdKy5ELdT4
+	XY9LlgwZgUPuU8vcvKW3LwBe16lOrglYFhM6AVq3qVq8vHrb3wuPqcktRWwG/meLoc3G4G9jXlt
+	yy4kYozDfrMl991OmW+dhpD3y
+X-Received: by 2002:a05:6214:2349:b0:6f2:b14e:46e6 with SMTP id 6a1803df08f44-6f4bfbe07d3mr4037606d6.17.1745442614201;
+        Wed, 23 Apr 2025 14:10:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IErrS3K76BJYaG7A0MIve9v/SjGy38dxpovK8hu3rFc4RCXLAfYAD2TRX1xQ/wSBobjzuyq8w==
+X-Received: by 2002:a05:6214:2349:b0:6f2:b14e:46e6 with SMTP id 6a1803df08f44-6f4bfbe07d3mr4037176d6.17.1745442613743;
+        Wed, 23 Apr 2025 14:10:13 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7cb3987csm3852e87.59.2025.04.23.14.10.08
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7cb3987csm3852e87.59.2025.04.23.14.10.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Apr 2025 14:10:10 -0700 (PDT)
+        Wed, 23 Apr 2025 14:10:11 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Thu, 24 Apr 2025 00:09:57 +0300
-Subject: [PATCH v2 01/33] drm/msm/dpu: stop passing mdss_ver to
- setup_timing_gen()
+Date: Thu, 24 Apr 2025 00:09:58 +0300
+Subject: [PATCH v2 02/33] drm/msm/dpu: drop INTF_SC7280_MASK
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,7 +91,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250424-dpu-drop-features-v2-1-0a9a66a7b3a2@oss.qualcomm.com>
+Message-Id: <20250424-dpu-drop-features-v2-2-0a9a66a7b3a2@oss.qualcomm.com>
 References: <20250424-dpu-drop-features-v2-0-0a9a66a7b3a2@oss.qualcomm.com>
 In-Reply-To: <20250424-dpu-drop-features-v2-0-0a9a66a7b3a2@oss.qualcomm.com>
 To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -105,119 +104,504 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         Dmitry Baryshkov <lumag@kernel.org>,
         Dmitry Baryshkov <lumag@kernel.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3649;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=19101;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=sURLU3QRO4lBSIODQBucrC/9R5zvezCH7Xkam1qgsTU=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoCVcqXsu4xhdRSNpxf1vhPNERvfOkWG3poRbfM
- CrhAy+HVq2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaAlXKgAKCRCLPIo+Aiko
- 1ZEkB/4y8zKnbxVkHnCP4niz6CVZfFW4WHfBUHAkpxHYVtB7lCvcxwr8n17GJUt/CauoNb6Q7Wi
- wIH2wpZWXjtshGwzfjK8ZYNQ10OEhtzquVChrXHpOI8q8a5sopy0A0IRjPuD60fuJ6cKdF3UsLb
- BxbT/yQqQviLLgwqzzVF0OPU2ErCSViHmcrXcJMTgXBzj+ORyxQk5NzFADvHJHJxGv3/CiHkSTu
- 5TWZgb9KJmilekStX9MSsMvWpgt09mXU9CfCVsQEBqrMZpBY6dLUuJzdH5eox2uJ7T4G0DShHGn
- WPKCDVkVIGk9TJIXQxD8fn1Ax0zfViyM8M2jhytBSCsWsukt
+ bh=xlGqFQKejkBi19WJTCfzWwC/AtKB39a4TtFtZ23pzus=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoCVcqfb51aXfcjSII8EXwam+YPbIAaPdjTbHVD
+ tMYo45/fViJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaAlXKgAKCRCLPIo+Aiko
+ 1Rl/B/9/dEubdSsj9c0OqNjLYjxtk1yRHzHcaGZw6smJwhsUlsEigW0hsYYJQn8brJch5rB1v57
+ MxGZa/Pwczz37J2sGqZwmGOwX16L+nhM2cyLQhl2kh0iH4OJwIul4sRF6xeNQ9Pyc3S+WdFY0Rm
+ Mma5i/UfLN67eGC52XoNjTqBRilQ/qXZlmGc+uVukwtscDkTnsdiuPBa4KSReHs+ecqCJ9LIybJ
+ laZBw8jUnTIUFBPHxSl/ZjrWf1MZYoZb4iZbmQtfhbCCB1zmEXOBkiCb5OItqNA9l589hJm5ZpT
+ 3fdLMBKuwOFS2bVVy8ce7d1l1qfj5YN616sAUIHblUllUJav
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Authority-Analysis: v=2.4 cv=EtLSrTcA c=1 sm=1 tr=0 ts=68095735 cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=Fc1Z5Xec4v_XsjI5eh8A:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: MWcYRxpEc_VKu9L7GAlp_v64gThEQDVb
-X-Proofpoint-ORIG-GUID: MWcYRxpEc_VKu9L7GAlp_v64gThEQDVb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDIzMDE0MyBTYWx0ZWRfXwRoB3bNVNkq3 xJVcmXR4Xl0DTIxhnN9gQMFpC5BGeOioO2z+3uvSSiT6EceEkLjamzI7fbyzS/c7muI7u6WFTFu zGLpiijEp0PbzadrMKqLT5J/r/o4tvrFmYY45votBGInRZ9iyWzxc9hHlyg1li0jnkFrkihDYNJ
- AVMEXZF1C8poHcYdgDxZJkSYRX0htD3xOSb8Jo1q24bnaV2VNSuAhYHV/Le7AgcBW1X6XHqF5fo hNn0uiun0OD6RIgs01A8mNUdP/0NSKyYyHhtzB0KsMPqmnRK5+AqPLxC+89qoaSVY6a8SIrQOLk VbT8zlErpDfg5saSD1mnzAamos9+Pa9mjKiPaHx88X9MXxd1Z5s+joDXbSggDkyE4g2ph+p6pOH
- RS5tyO+NCrODFPj0ME1rlL/dvAPw5IAdoNi3loxRssxHBUtcAWQaTh0wK6yEgxxAOIKUzgC7
+X-Proofpoint-ORIG-GUID: XJrsOHKe2yTAZn3BpAfY5X60ZvNZm-1U
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDIzMDE0MyBTYWx0ZWRfX0eKOLRf5wafr jna6VfeDzTLRG7t/guyo/fOnkv0ggjWiJ4hYqQnDQT4HRpeQCXGAWuhilKHk6OFsKVWyNXaCEZU +zQ/mE2RGUJuub0aLx6LlrPeLCHBCvkhHoqZg7kO4UHUDxODRjjru3p9xytkKiZA5mFj+WGXLaz
+ lIJooeZiMo5t+D1gpUxKcWRPF3AGprmJCb5I1gSlMVY8u0qNazKTNqqtI3KFl6VMc18rSzEIjx1 yIOHDG5qlGtOhyIie4fy7ThDz1tfsMZ98Bg0x4E9udornaxsY5+t/zB5TgSzp0G5DIF8N9s/Pj/ 5nEFNaiF4OGlz32xU84jhTtBMi/UeNhPbJHSuFR9GHPhsPkUCIgpzqBxNoh2adgqoEZ0/uYbYUB
+ 3NxVh2pmoOIpeY2scbEtv3bP7LuUPdQezUpSL9nPKrntbkC7uJTrUpBT3bjOXNuvuDbF6K00
+X-Authority-Analysis: v=2.4 cv=ELgG00ZC c=1 sm=1 tr=0 ts=68095737 cx=c_pps a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=VRwz4S5yodoF-XQobIwA:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: XJrsOHKe2yTAZn3BpAfY5X60ZvNZm-1U
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.680,FMLib:17.12.80.40
  definitions=2025-04-23_11,2025-04-22_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- suspectscore=0 mlxscore=0 clxscore=1015 spamscore=0 mlxlogscore=999
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
- adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0 spamscore=0
+ mlxscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
+ mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
  definitions=main-2504230143
 
 From: Dmitry Baryshkov <lumag@kernel.org>
 
-As a preparation to further MDSS-revision cleanups stop passing MDSS
-revision to the setup_timing_gen() callback. Instead store a pointer to
-it inside struct dpu_hw_intf and use it diretly. It's not that the MDSS
-revision can chance between dpu_hw_intf_init() and
-dpu_encoder_phys_vid_setup_timing_engine().
+The INTF_SC7280_MASK is equal to the INTF_SC7180_MASK. Stop defining a
+separate symbol and use the INTF_SC7180_MASK instead.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 7 ++++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          | 5 +++--
- 3 files changed, 8 insertions(+), 7 deletions(-)
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h    |  8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |  6 +++---
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   | 18 +++++++++---------
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  8 ++++----
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h    | 16 ++++++++--------
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  8 ++++----
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   | 18 +++++++++---------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c         |  2 --
+ 9 files changed, 45 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index abd6600046cb3a91bf88ca240fd9b9c306b0ea2e..3e0f1288ad17e19f6d0b7c5dcba19d3e5977a461 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -307,8 +307,7 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h
+index 6ac97c378056c08c937ed992b81d139cbb1fbbb0..a8b5c5b5a2e8d9d67ee185f00d92feeec42e490f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h
+@@ -375,7 +375,7 @@ static const struct dpu_intf_cfg sm8650_intf[] = {
+ 	{
+ 		.name = "intf_0", .id = INTF_0,
+ 		.base = 0x34000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -384,7 +384,7 @@ static const struct dpu_intf_cfg sm8650_intf[] = {
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x300,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -394,7 +394,7 @@ static const struct dpu_intf_cfg sm8650_intf[] = {
+ 	}, {
+ 		.name = "intf_2", .id = INTF_2,
+ 		.base = 0x36000, .len = 0x300,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -404,7 +404,7 @@ static const struct dpu_intf_cfg sm8650_intf[] = {
+ 	}, {
+ 		.name = "intf_3", .id = INTF_3,
+ 		.base = 0x37000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+index 0c860e804cab8ece8966596f4ec2b17ff3aa226f..93427f7cac3a370fdac3f119134bf9fee8b87a17 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+@@ -319,7 +319,7 @@ static const struct dpu_intf_cfg sm8350_intf[] = {
+ 	{
+ 		.name = "intf_0", .id = INTF_0,
+ 		.base = 0x34000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -328,7 +328,7 @@ static const struct dpu_intf_cfg sm8350_intf[] = {
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x2c4,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -338,7 +338,7 @@ static const struct dpu_intf_cfg sm8350_intf[] = {
+ 	}, {
+ 		.name = "intf_2", .id = INTF_2,
+ 		.base = 0x36000, .len = 0x2c4,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -348,7 +348,7 @@ static const struct dpu_intf_cfg sm8350_intf[] = {
+ 	}, {
+ 		.name = "intf_3", .id = INTF_3,
+ 		.base = 0x37000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+index e9625c48c5677ef221b8fc80e7f9df8957b847e2..1edec0644b078ac1fff129354d4d02eec015a331 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+@@ -183,7 +183,7 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
+ 	{
+ 		.name = "intf_0", .id = INTF_0,
+ 		.base = 0x34000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -192,7 +192,7 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x2c4,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -202,7 +202,7 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
+ 	}, {
+ 		.name = "intf_5", .id = INTF_5,
+ 		.base = 0x39000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+index fcee1c3665f88a9defca4fec38dd76d56c97297e..7d698fc354666a2dc468a71ff08cb8df0c37234c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+@@ -315,7 +315,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 	{
+ 		.name = "intf_0", .id = INTF_0,
+ 		.base = 0x34000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -324,7 +324,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x300,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -334,7 +334,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 	}, {
+ 		.name = "intf_2", .id = INTF_2,
+ 		.base = 0x36000, .len = 0x300,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -344,7 +344,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 	}, {
+ 		.name = "intf_3", .id = INTF_3,
+ 		.base = 0x37000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_NONE,
+ 		.controller_id = MSM_DP_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -353,7 +353,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 	}, {
+ 		.name = "intf_4", .id = INTF_4,
+ 		.base = 0x38000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -362,7 +362,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 	}, {
+ 		.name = "intf_5", .id = INTF_5,
+ 		.base = 0x39000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_3,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -371,7 +371,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 	}, {
+ 		.name = "intf_6", .id = INTF_6,
+ 		.base = 0x3a000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_2,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -380,7 +380,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 	}, {
+ 		.name = "intf_7", .id = INTF_7,
+ 		.base = 0x3b000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_NONE,
+ 		.controller_id = MSM_DP_CONTROLLER_2,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -389,7 +389,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+ 	}, {
+ 		.name = "intf_8", .id = INTF_8,
+ 		.base = 0x3c000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_NONE,
+ 		.controller_id = MSM_DP_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+index 19b2ee8bbd5fd3ab6096ea1c9dc2e0f804bec973..ce050c898b9f21e69e5ff967c2af7c2df1e08232 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+@@ -335,7 +335,7 @@ static const struct dpu_intf_cfg sm8450_intf[] = {
+ 	{
+ 		.name = "intf_0", .id = INTF_0,
+ 		.base = 0x34000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -344,7 +344,7 @@ static const struct dpu_intf_cfg sm8450_intf[] = {
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x300,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -354,7 +354,7 @@ static const struct dpu_intf_cfg sm8450_intf[] = {
+ 	}, {
+ 		.name = "intf_2", .id = INTF_2,
+ 		.base = 0x36000, .len = 0x300,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -364,7 +364,7 @@ static const struct dpu_intf_cfg sm8450_intf[] = {
+ 	}, {
+ 		.name = "intf_3", .id = INTF_3,
+ 		.base = 0x37000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
+index 4d96ce71746f2595427649d0fdb73dae0c18be60..4291b4f9ce324eb517022eabe3ab6078b1c3a2fb 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
+@@ -345,7 +345,7 @@ static const struct dpu_intf_cfg sa8775p_intf[] = {
+ 	{
+ 		.name = "intf_0", .id = INTF_0,
+ 		.base = 0x34000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -354,7 +354,7 @@ static const struct dpu_intf_cfg sa8775p_intf[] = {
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x300,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -364,7 +364,7 @@ static const struct dpu_intf_cfg sa8775p_intf[] = {
+ 	}, {
+ 		.name = "intf_2", .id = INTF_2,
+ 		.base = 0x36000, .len = 0x300,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -374,7 +374,7 @@ static const struct dpu_intf_cfg sa8775p_intf[] = {
+ 	}, {
+ 		.name = "intf_3", .id = INTF_3,
+ 		.base = 0x37000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_NONE,
+ 		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -383,7 +383,7 @@ static const struct dpu_intf_cfg sa8775p_intf[] = {
+ 	}, {
+ 		.name = "intf_4", .id = INTF_4,
+ 		.base = 0x38000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -392,7 +392,7 @@ static const struct dpu_intf_cfg sa8775p_intf[] = {
+ 	}, {
+ 		.name = "intf_6", .id = INTF_6,
+ 		.base = 0x3A000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_NONE,
+ 		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -401,7 +401,7 @@ static const struct dpu_intf_cfg sa8775p_intf[] = {
+ 	}, {
+ 		.name = "intf_7", .id = INTF_7,
+ 		.base = 0x3b000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_NONE,
+ 		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -410,7 +410,7 @@ static const struct dpu_intf_cfg sa8775p_intf[] = {
+ 	}, {
+ 		.name = "intf_8", .id = INTF_8,
+ 		.base = 0x3c000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_NONE,
+ 		.controller_id = MSM_DP_CONTROLLER_1,	/* pair with intf_4 for DP MST */
+ 		.prog_fetch_lines_worst_case = 24,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+index 24f988465bf6ba8e3d3d2691534f0981f222fa27..a6ab5c49654010194bfc1d4991ffec411ef6e6fd 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+@@ -330,7 +330,7 @@ static const struct dpu_intf_cfg sm8550_intf[] = {
+ 	{
+ 		.name = "intf_0", .id = INTF_0,
+ 		.base = 0x34000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -339,7 +339,7 @@ static const struct dpu_intf_cfg sm8550_intf[] = {
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x300,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -349,7 +349,7 @@ static const struct dpu_intf_cfg sm8550_intf[] = {
+ 	}, {
+ 		.name = "intf_2", .id = INTF_2,
+ 		.base = 0x36000, .len = 0x300,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -359,7 +359,7 @@ static const struct dpu_intf_cfg sm8550_intf[] = {
+ 	}, {
+ 		.name = "intf_3", .id = INTF_3,
+ 		.base = 0x37000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
+index 6417baa84f826feb3bc6eaa6b063ad75e597a9d7..ad486b03c54d9beb6d77df4d6b5f142fd1dd8d8d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
+@@ -331,7 +331,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 	{
+ 		.name = "intf_0", .id = INTF_0,
+ 		.base = 0x34000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -340,7 +340,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 	}, {
+ 		.name = "intf_1", .id = INTF_1,
+ 		.base = 0x35000, .len = 0x300,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_0,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -350,7 +350,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 	}, {
+ 		.name = "intf_2", .id = INTF_2,
+ 		.base = 0x36000, .len = 0x300,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DSI,
+ 		.controller_id = MSM_DSI_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -360,7 +360,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 	}, {
+ 		.name = "intf_3", .id = INTF_3,
+ 		.base = 0x37000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_NONE,
+ 		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -369,7 +369,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 	}, {
+ 		.name = "intf_4", .id = INTF_4,
+ 		.base = 0x38000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_1,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -378,7 +378,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 	}, {
+ 		.name = "intf_5", .id = INTF_5,
+ 		.base = 0x39000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_3,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -387,7 +387,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 	}, {
+ 		.name = "intf_6", .id = INTF_6,
+ 		.base = 0x3A000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_DP,
+ 		.controller_id = MSM_DP_CONTROLLER_2,
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -396,7 +396,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 	}, {
+ 		.name = "intf_7", .id = INTF_7,
+ 		.base = 0x3b000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_NONE,
+ 		.controller_id = MSM_DP_CONTROLLER_2,	/* pair with intf_6 for DP MST */
+ 		.prog_fetch_lines_worst_case = 24,
+@@ -405,7 +405,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
+ 	}, {
+ 		.name = "intf_8", .id = INTF_8,
+ 		.base = 0x3c000, .len = 0x280,
+-		.features = INTF_SC7280_MASK,
++		.features = INTF_SC7180_MASK,
+ 		.type = INTF_NONE,
+ 		.controller_id = MSM_DP_CONTROLLER_1,	/* pair with intf_4 for DP MST */
+ 		.prog_fetch_lines_worst_case = 24,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 64265ca4656a04d8c5a1d9582d7124c7eb897099..671e1ba35d28a20ca3a483bfc6412a8e53c25709 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -126,8 +126,6 @@
+ 	 BIT(DPU_INTF_STATUS_SUPPORTED) | \
+ 	 BIT(DPU_DATA_HCTL_EN))
  
- 	spin_lock_irqsave(phys_enc->enc_spinlock, lock_flags);
- 	phys_enc->hw_intf->ops.setup_timing_gen(phys_enc->hw_intf,
--			&timing_params, fmt,
--			phys_enc->dpu_kms->catalog->mdss_ver);
-+			&timing_params, fmt);
- 	phys_enc->hw_ctl->ops.setup_intf_cfg(phys_enc->hw_ctl, &intf_cfg);
- 
- 	/* setup which pp blk will connect to this intf */
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-index fb1d25baa518057e74fec3406faffd48969d492b..1d56c21ac79095ab515aeb485346e1eb5793c260 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-@@ -98,8 +98,7 @@
- 
- static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *intf,
- 		const struct dpu_hw_intf_timing_params *p,
--		const struct msm_format *fmt,
--		const struct dpu_mdss_version *mdss_ver)
-+		const struct msm_format *fmt)
- {
- 	struct dpu_hw_blk_reg_map *c = &intf->hw;
- 	u32 hsync_period, vsync_period;
-@@ -180,7 +179,7 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *intf,
- 
- 	/* TODO: handle DSC+DP case, we only handle DSC+DSI case so far */
- 	if (p->compression_en && !dp_intf &&
--	    mdss_ver->core_major_ver >= 7)
-+	    intf->mdss_ver->core_major_ver >= 7)
- 		intf_cfg2 |= INTF_CFG2_DCE_DATA_COMPRESS;
- 
- 	hsync_data_start_x = hsync_start_x;
-@@ -580,6 +579,8 @@ struct dpu_hw_intf *dpu_hw_intf_init(struct drm_device *dev,
- 	c->idx = cfg->id;
- 	c->cap = cfg;
- 
-+	c->mdss_ver = mdss_rev;
-+
- 	c->ops.setup_timing_gen = dpu_hw_intf_setup_timing_engine;
- 	c->ops.setup_prg_fetch  = dpu_hw_intf_setup_prg_fetch;
- 	c->ops.get_status = dpu_hw_intf_get_status;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-index 114be272ac0ae67fe0d4dfc0c117baa4106f77c9..f31067a9aaf1d6b96c77157135122e5e8bccb7c4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-@@ -81,8 +81,7 @@ struct dpu_hw_intf_cmd_mode_cfg {
- struct dpu_hw_intf_ops {
- 	void (*setup_timing_gen)(struct dpu_hw_intf *intf,
- 			const struct dpu_hw_intf_timing_params *p,
--			const struct msm_format *fmt,
--			const struct dpu_mdss_version *mdss_ver);
-+			const struct msm_format *fmt);
- 
- 	void (*setup_prg_fetch)(struct dpu_hw_intf *intf,
- 			const struct dpu_hw_intf_prog_fetch *fetch);
-@@ -126,6 +125,8 @@ struct dpu_hw_intf {
- 	enum dpu_intf idx;
- 	const struct dpu_intf_cfg *cap;
- 
-+	const struct dpu_mdss_version *mdss_ver;
-+
- 	/* ops */
- 	struct dpu_hw_intf_ops ops;
- };
+-#define INTF_SC7280_MASK (INTF_SC7180_MASK)
+-
+ #define WB_SDM845_MASK (BIT(DPU_WB_LINE_MODE) | \
+ 			 BIT(DPU_WB_UBWC) | \
+ 			 BIT(DPU_WB_YUV_CONFIG) | \
 
 -- 
 2.39.5
