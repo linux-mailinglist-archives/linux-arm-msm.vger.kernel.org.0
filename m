@@ -1,104 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-55172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56BF0A99482
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 18:16:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BB2AA99525
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 18:31:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF88A1BA5586
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 16:10:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E73B89258BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 16:26:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35633279792;
-	Wed, 23 Apr 2025 16:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FCAF280CF6;
+	Wed, 23 Apr 2025 16:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l6NZmtv4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s0ZQsBGx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719E7F510
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 16:10:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABA1280CDC;
+	Wed, 23 Apr 2025 16:26:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745424632; cv=none; b=KI7CB09Q0wcP2t0POXRK+DOpazSrluxQHmkhyNXVGWuIh5RlZUJq6b97UuqzuXt1N0CYYDcUIuW1wvTY2kHMCKhq5/EkzoXMtpF2M9Yv5sD5aAdTRj0011xZKr9cNtvJ48zkRoEFs3W7d1VbhSK2nZ13HiBr2v4ziuEJdu+qP+M=
+	t=1745425579; cv=none; b=ch6H/3y3S0al7KnV+BN/qRIinXpmzo2SzUX0dTdJd+U58S0hnSrYP6jxKeCaaZSnwp0JXMVTbxHLebng5Oc7g9MqgsFXGJPij6IepfNhfOwNlHjjgR04U3RwBq7NxByKN89F+39zn6gxYp+qh99x8jEZv8t7YFjLcyymHXnYEl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745424632; c=relaxed/simple;
-	bh=KETMSnGNR3tbXWXQzryJPlirlcO9wJFz4VEed4/1puM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=srpW5X7qc/Tsjg5cARoqt2jBJqCuCmk1wxobgq2Nkfp86bnLFchbHyh7f/g1Wnv4GdL7Wh2T+ziNHlJlww3quzvStDNyF/Dr934tToIUm5DxMvC4oZBKjZFueoA0mu8BGi7SZHFQxP/nWcSvmh5wLOgHwDTbuvRd8O0QW/UhU60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=l6NZmtv4; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-39c31e4c3e5so7802f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 09:10:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745424628; x=1746029428; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Q9dNm4Mv59VA3ad8rZ62QdUhGrrNxr3iS8eu+GOGB7c=;
-        b=l6NZmtv4Z96kEhnOG1OPxcMMAUzPbZjSM/YmIsJ+I8cEqWJQjaOyOH/QGnzGvrIORe
-         7RocmwZrpfS2IgokCqw78noiCiYG1UEQgyXxbrvMHZIRuGBQpteREPFFlSmhLLX4WymY
-         i80b78GD2F9xKSwYMr1PyY9mV3GJ7BTKfAj189ZThZMj4NhGxYc88LiE4Xnmvixnr0+x
-         ooeNNx3Ss4S7oFcZ6RYm0QTpBxG3aQuST5bEQlj0sxUvF0oE6QUiZjVz8b0Yot7M9GHi
-         RGQ3dl4rb6fmqUVkSg2/+w/VPM7llPrYqd7j6EQt9lcMCZrntLDgBImE87FQ9PkA+djy
-         PNGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745424628; x=1746029428;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q9dNm4Mv59VA3ad8rZ62QdUhGrrNxr3iS8eu+GOGB7c=;
-        b=qCvurXoevzvTX1X1jGWSEyl2DgJib2Ff//D9O1v7GHNGlWnLXn3WCRvcGIGdk+xWsJ
-         iNCb7DVuS8uBcWeuB5ib9Dwuelk4q49kMEeF5G0GnUek6vvsI6cr9AGh84Av1GdkZViW
-         jLfDalKps5q3GxVPYynWaohG7IKt5JoqLbB9cmq4EpnFxrqAXj9NrLlT0iYD6NzG+hoy
-         Awu2qztkzKlUTR/UFqXuUJiFTGYvGfIZ/52pwsGEfjHHkWu9tc0TPya/w+atCzwooh86
-         U06ctDO0amISSxoH2ZSjUSseEUVO0xk+YK3Nx3aTbikPCAeQO7IIMcv3gd9pPnKjHT8M
-         3k0A==
-X-Gm-Message-State: AOJu0YzX2SrhyNRIVSVYE0aHuVK8b3fg0Te1I0T8TP4utKvdlQYLowFE
-	MM1Wh8z32abEKBu3E9Vc0ZRvnpDUKIOXys3CL5BXm0EaHScT7BMYDlUNeBXKLPs=
-X-Gm-Gg: ASbGncudKsmcNPa0nuw1RR+ZG9GhJNdV/DtwE9WDR7v3YH6rhB1/dyGx0hWYACUgXDD
-	ik+ce6yNCEztco9vJFEO5e3NuFgVxeohKsvwceYxTj+/2XN9JOQK/k/jVueWohtK7z6WiXLc9Kz
-	ddGbkVygGlfnegRf1dTuPSTmk9bh4nc2nXntAitXUgxsI5vwBGsm0fEWHzJ29xvNcnAIAzLJSuM
-	YTCgS9NVIZ5/MiorfPV+kjk3YCA1HNW11GJ46dt1wpJDQQl9WQnidP+6J8MqcEvP8+NS/tOJyF2
-	tSi5jK8Lh1uoyLw3d6d2Whgxivb7TK2sNWcsh+A8jX2ai+SFAbPYizOdA10e7/rE6YfQ6xavmoT
-	m/DGkwS6WefSBKQ6F
-X-Google-Smtp-Source: AGHT+IEiNUqHKXP0FOA/VJGdZhBM+aHyxLj38PvjBnyr6i5o89vS0cwgedHvIQlvdRJOfYD1dX9Rsg==
-X-Received: by 2002:a05:6000:2901:b0:39c:dfb:9e8e with SMTP id ffacd0b85a97d-39efba398b5mr15909160f8f.8.1745424627758;
-        Wed, 23 Apr 2025 09:10:27 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39efa3a1685sm19222189f8f.0.2025.04.23.09.10.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Apr 2025 09:10:27 -0700 (PDT)
-Message-ID: <dd95bb52-291f-4551-93f7-a1f272baee7c@linaro.org>
-Date: Wed, 23 Apr 2025 17:10:26 +0100
+	s=arc-20240116; t=1745425579; c=relaxed/simple;
+	bh=ogMKzGyxgNsRLI52o+wQUuU/FxCjNBZR167etGTl+Eg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NYKRkuNXlEz+XlAcEfxsNnd3YH5HyMfTEZY7NkSTnOmpxgH17jLFVeeo3tXk65E+KuvLtHzFxHSNj8xY1C/q8V/Tbh0xxyIpRByeHQreXa/mNAg5lQN7PJFTCTx6CCCXkz1uuuKf/fkMrYXSpb4Z2/QHmBiGEBOfNnB1+jYL228=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s0ZQsBGx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE821C4CEEA;
+	Wed, 23 Apr 2025 16:26:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745425578;
+	bh=ogMKzGyxgNsRLI52o+wQUuU/FxCjNBZR167etGTl+Eg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=s0ZQsBGxMLPVHZuPTsdOLlbDPlnzQruO2+xnEAnaSGhG0hXAl+/1GmhrtmJZqNLiF
+	 CVLwMyNfM08ZoQJinvdltnGc7pvzw4EH7tYWWqTuY+oy8NbMsOasEbgL727PLY0q1f
+	 uKA5jXBjRwpUhE9gmAE2hJ8/arLLsx4a+1YkCAQBlRlb5JUygY+b7iBCLHzT2gR5kl
+	 IjfaKapJbFENs/TfRHV9Ej8iRirSgo5ydnTH27DhqO9lPZ1/od+PAINDdY2YUEeSgV
+	 +zpqB2WoKwck15W65xIq7C9PMX+2uCnxtjBuxtKo2BnovxE/kodlcLspiRQQfI/68u
+	 FX98fKgpG/Zuw==
+From: Arnd Bergmann <arnd@kernel.org>
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] usb: dwc3: qcom: use modern PM macros
+Date: Wed, 23 Apr 2025 18:26:09 +0200
+Message-Id: <20250423162613.2082417-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: qcm2290: Add CAMSS node
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>, rfoss@kernel.org,
- konradybcio@kernel.org, andersson@kernel.org, krzk+dt@kernel.org,
- robh@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com
-References: <20250423072044.234024-1-loic.poulain@oss.qualcomm.com>
- <20250423072044.234024-7-loic.poulain@oss.qualcomm.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250423072044.234024-7-loic.poulain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 23/04/2025 08:20, Loic Poulain wrote:
-> Add node for the QCM2290 camera subsystem.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> ---
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Arnd Bergmann <arnd@arndb.de>
+
+The use of the old SET_SYSTEM_SLEEP_PM_OPS/SET_RUNTIME_PM_OPS macros
+without __maybe_unused annotations causes warnings when build testing
+without CONFIG_PM:
+
+drivers/usb/dwc3/dwc3-qcom.c:421:12: error: unused function 'dwc3_qcom_suspend' [-Werror,-Wunused-function]
+  421 | static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
+      |            ^~~~~~~~~~~~~~~~~
+drivers/usb/dwc3/dwc3-qcom.c:457:12: error: unused function 'dwc3_qcom_resume' [-Werror,-Wunused-function]
+  457 | static int dwc3_qcom_resume(struct dwc3_qcom *qcom, bool wakeup)
+
+Change these to the modern SYSTEM_SLEEP_PM_OPS/RUNTIME_PM_OPS/pm_ptr
+macros, which avoids the warnings and improves readability at the same
+time.
+
+Fixes: 1881a32fe14d ("usb: dwc3: qcom: Transition to flattened model")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ drivers/usb/dwc3/dwc3-qcom.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index d512002e1e88..cbba11589cd0 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -832,7 +832,6 @@ static void dwc3_qcom_remove(struct platform_device *pdev)
+ 	reset_control_assert(qcom->resets);
+ }
+ 
+-#ifdef CONFIG_PM_SLEEP
+ static int dwc3_qcom_pm_suspend(struct device *dev)
+ {
+ 	struct dwc3 *dwc = dev_get_drvdata(dev);
+@@ -886,12 +885,7 @@ static int dwc3_qcom_prepare(struct device *dev)
+ 
+ 	return dwc3_pm_prepare(dwc);
+ }
+-#else
+-#define dwc3_qcom_complete NULL
+-#define dwc3_qcom_prepare NULL
+-#endif /* CONFIG_PM_SLEEP */
+ 
+-#ifdef CONFIG_PM
+ static int dwc3_qcom_runtime_suspend(struct device *dev)
+ {
+ 	struct dwc3 *dwc = dev_get_drvdata(dev);
+@@ -922,14 +916,13 @@ static int dwc3_qcom_runtime_idle(struct device *dev)
+ {
+ 	return dwc3_runtime_idle(dev_get_drvdata(dev));
+ }
+-#endif /* CONFIG_PM */
+ 
+ static const struct dev_pm_ops dwc3_qcom_dev_pm_ops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(dwc3_qcom_pm_suspend, dwc3_qcom_pm_resume)
+-	SET_RUNTIME_PM_OPS(dwc3_qcom_runtime_suspend, dwc3_qcom_runtime_resume,
++	SYSTEM_SLEEP_PM_OPS(dwc3_qcom_pm_suspend, dwc3_qcom_pm_resume)
++	RUNTIME_PM_OPS(dwc3_qcom_runtime_suspend, dwc3_qcom_runtime_resume,
+ 			   dwc3_qcom_runtime_idle)
+-	.complete = dwc3_qcom_complete,
+-	.prepare = dwc3_qcom_prepare,
++	.complete = pm_sleep_ptr(dwc3_qcom_complete),
++	.prepare = pm_sleep_ptr(dwc3_qcom_prepare),
+ };
+ 
+ static const struct of_device_id dwc3_qcom_of_match[] = {
+@@ -943,7 +936,7 @@ static struct platform_driver dwc3_qcom_driver = {
+ 	.remove		= dwc3_qcom_remove,
+ 	.driver		= {
+ 		.name	= "dwc3-qcom",
+-		.pm	= &dwc3_qcom_dev_pm_ops,
++		.pm	= pm_ptr(&dwc3_qcom_dev_pm_ops),
+ 		.of_match_table	= dwc3_qcom_of_match,
+ 	},
+ };
+-- 
+2.39.5
+
 
