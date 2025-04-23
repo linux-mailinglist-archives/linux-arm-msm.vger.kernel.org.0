@@ -1,139 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-55040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8967A97F29
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 08:28:45 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0ADB1A97F39
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 08:32:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D385E1896E55
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 06:28:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 183AE7ABD80
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 06:31:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23945266B65;
-	Wed, 23 Apr 2025 06:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED60126738C;
+	Wed, 23 Apr 2025 06:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="amOuxyhc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ePhdXMsP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CC5A95E;
-	Wed, 23 Apr 2025 06:28:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2D5266EF5;
+	Wed, 23 Apr 2025 06:31:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745389721; cv=none; b=i0PQbJklyEMFpSFEGYVwcX73howizlE5j19Z0mXh7CuBFuBasvnBBezsyB9U89JdQ4U57IIf6lEsPSy1/FDcGR5F6c3zoyNTiP7LShxhvfOoTYSGG6vuDBfQECn+rXAb8B+2NycecBGvCfZAS+6hoGyg+23qkGpQqcuA/yc/cyY=
+	t=1745389915; cv=none; b=nglc6gimYJiZ1bmnmmbJFVCtzFvE8WL9vA55Q3eUsV9jDuGDTYDuLbGSwwOaW1+ubkySmjsqoJPZNRROrz6dzpnfKs2i16VnRHvOh6OLmdncfNMB/bSn1ZvKlz3nfkpYJ65BEeS1GrV8f/UmMtN5rS/eSVyFgrAmCBsKuNjfIyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745389721; c=relaxed/simple;
-	bh=WDYlnT1pVakmNI/GWTpsN6Uo55Yfh7hzS3h+/RSVzd8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=OMepCxvh1nwp0FJ2yzmiOX0zoWMbejHwBRVXVldjnUtncOIcRJ27qXgCxlS0eTnAM31wM6J/uDynU594a5j2VVQUJek1UpYYZSk3oz5cKdLa8GEpuVUwdjUgqE/X5+iaJlQsxBgu1xJTYPP28YFDU3WJ8eAtMn3UoKEyXd0AeEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=amOuxyhc; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1745389915; c=relaxed/simple;
+	bh=+annVE2q0ppxD8ITBko0jmqklIyHebktuLn+jcbQ/9s=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=JDFOlOgCcS4FuXDNNEJLPaY+UEovc4YUmrMdu/fqsyU8z2/NCo5wC8Yl2rdpI/u2ZlNqTf+HsLcLfVP3JRdHZpP9IPSPZaZmQnY5C+WoEEeFMRjcl7Z2G99yAnJe6d0/sYGs08m3KiFyAQJZRRul2RL/CesQFuP9lPeGUnzQR18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ePhdXMsP; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53N0iA2t016256;
-	Wed, 23 Apr 2025 06:28:26 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53N0iAiq023892;
+	Wed, 23 Apr 2025 06:31:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WDYlnT1pVakmNI/GWTpsN6Uo55Yfh7hzS3h+/RSVzd8=; b=amOuxyhcNMyVBEG5
-	aaCM9VqxPA7ifN/DAFV9EgBwzRozNymZX2NDfuJbZ3MZUqVCkwYbYqJ/rB8XffVe
-	3A8bOlvRjaDpxVkGSjrY4WjiXyP7MU39aMyx+Wxrc/5cM2Ua1lAMKEt+QHJxt789
-	P7gbytmoebVxowK4O2QQ8hSL5jm+ieJn2ONtgButI0pBfvUH5FYbGpvnzHLCAccL
-	BpFkTYFlaIhws2lS1Ln+GbQM1wS2iZrmzHur2jE8hEGZAgfo+RLxBdqf3N5OOL5e
-	v+KFN3f9kfzO1a2ZY3zv3jMobEdt4qiVaJH4auY2MoFstEZR1Eq/PRfZtt1AM6MO
-	NixD+Q==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh3h32h-1
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=+6WqrjoXPvdWgCP7F3pe1fIcKrBi1oigzlwoSjidNJg=; b=eP
+	hdXMsPPffFKIV/rTqQt0aqQNRFgthkVTr+Td3xA3WgBdI2w8NDPxXpWJegFVab/w
+	ouqH8cUvceiX38PelFTyyM6zSYG8iC03Mvo5xdN3vIvumTSe5n2fjdP9qj0v4ftE
+	DcgX/Dp0fZP2vWNHCkgzk8a6aog5oPpvdHSnFcfVAFEtZvHhFmH+JYrRogqaOJ6M
+	sUwgUPKUWGcnqA5CyUEpsYOdCnr0gnF3J7AWE+aj8SH0gZkPYAPdvvjVzqy8k8xM
+	tf03lVgNxBitsKH7iaGJ5aI3EcRNr9suYMeab8e7cLq8585ees7bXInjxZH4ro+Q
+	gmfHRlCzYHckglmSi0iQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh393hx-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Apr 2025 06:28:26 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53N6SPnk011165
+	Wed, 23 Apr 2025 06:31:38 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53N6VccK024144
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Apr 2025 06:28:25 GMT
-Received: from [10.216.54.177] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Apr
- 2025 23:28:18 -0700
-Message-ID: <66e30117-3944-4731-955e-62d1c78ff456@quicinc.com>
-Date: Wed, 23 Apr 2025 11:58:15 +0530
+	Wed, 23 Apr 2025 06:31:38 GMT
+Received: from hu-kaushalk-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 22 Apr 2025 23:31:33 -0700
+From: Kaushal Kumar <quic_kaushalk@quicinc.com>
+To: <vkoul@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <manivannan.sadhasivam@linaro.org>,
+        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>, <agross@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mtd@lists.infradead.org>,
+        Kaushal Kumar <quic_kaushalk@quicinc.com>
+Subject: [PATCH v3 0/5] Enable QPIC BAM and QPIC NAND support for SDX75
+Date: Wed, 23 Apr 2025 12:00:49 +0530
+Message-ID: <20250423063054.28795-1-quic_kaushalk@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/9] opp: add new helper API dev_pm_opp_set_level()
-To: Viresh Kumar <viresh.kumar@linaro.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby
-	<jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Viresh Kumar
-	<vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd
-	<sboyd@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <psodagud@quicinc.com>,
-        <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
-        <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
-        <quic_mnaresh@quicinc.com>, <quic_shazhuss@quicinc.com>,
-        Nikunj Kela <quic_nkela@quicinc.com>
-References: <20250418151235.27787-1-quic_ptalari@quicinc.com>
- <20250418151235.27787-2-quic_ptalari@quicinc.com>
- <20250421074004.yttb42qq4p5xzi3o@vireshk-i7>
- <e6e1ee6d-a12f-4e18-b2d7-65d1ccca5308@quicinc.com>
- <20250423053605.63njjtz3s3krdeqb@vireshk-i7>
-Content-Language: en-US
-From: Praveen Talari <quic_ptalari@quicinc.com>
-In-Reply-To: <20250423053605.63njjtz3s3krdeqb@vireshk-i7>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gX7GzNgdLmcAW09nUkWLVsUPSpZAx8If
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDIzMDA0MSBTYWx0ZWRfX6GKgVV7QNeZ8 S+/VCHHKLqFmG+t6hpmAN5tKYxvQpCCoXLLeSMHM7n91rjkwki9Am8wqqVt8Jol/s8XEpGWc3lj UXF6OnDVwFFC8Kl8K4zXxW3uD/pi9CGEdz98iHyiF+DcXH5O7VJ57lkXipptUld4fsCe65GSEW2
- m2DQh+apYruIx9qIhk/YgLefus4b0cz38zMMxmLjqaPDmx05+DAhkU4he0PFy14IfEaUhyGU+Mn oo+x7gRiPAmNq5QyGRbBJuja9KrocV4pbma+36Ij50Rlpq9LHQse8nAiAiFb8O3rmbazmZK1wPt xoep1L/UjLUV+/UdUU6B6Jr3i572d7b9dtiXY25KFsXN0z/3gd7PGyH7WNgRVjQn9WQbgmkSFsa
- CEsZ0RSq1xcJSFi9pOaRv/mdZKvmS0H6QynTGC0iso4hrILfj6M4lBh19a+u/2p0JkYxOzML
-X-Authority-Analysis: v=2.4 cv=ELgG00ZC c=1 sm=1 tr=0 ts=6808888a cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VUDmVVODwOu91iT8A_oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: gX7GzNgdLmcAW09nUkWLVsUPSpZAx8If
+X-Proofpoint-ORIG-GUID: wRCdQKavkm4O_6Khebeo3s8W026o0uJr
+X-Proofpoint-GUID: wRCdQKavkm4O_6Khebeo3s8W026o0uJr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDIzMDA0MyBTYWx0ZWRfX/5DoX8SE+eSG vstYSon9NgCD9QjRgbHLZXOViiEkjWJ4W5CnvS03O66cgTbgHhjdNW6Rj7lZv8WfBomu3LgQBSL ocj3GLAqFwHdVrfCNBXmd5Mqvo2LPEyDhewLz4AVDUNGd+bToAUHHoHDj9PNJZgPzQQRiWUZLTN
+ RadlVeLOZWcX0RYZsDZjFsO2xCsq2/rRCsmKdzexy39jMx/k6GyU9AdIAPA8+XC0BiqnUZPR5Mm oD/jicpfQnvtS++eCsp4iUX9rtWq1KkHf6QWGBXn5vl0+jj1cisjrc2UmZhv6Vwp64L/uEK3z70 WWnDXgx+HZxXQcFzrvYRf42XBqENDUMcAWpB+bLzu8CuWug1/nMmZmtbQiAIdfn1hviKnBfwxpS
+ oQ7Gi3SzlXMln1/15KwHaBLFRD0uGXpwG0+uYNgxe8rkppoYEXCZPqfjPz72crPCkR2cCWUv
+X-Authority-Analysis: v=2.4 cv=Mepsu4/f c=1 sm=1 tr=0 ts=6808894a cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=c2BNjoVmnf2s0oQOp70A:9
+ a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-23_03,2025-04-22_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-23_05,2025-04-22_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ adultscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 malwarescore=0
+ priorityscore=1501 mlxscore=0 impostorscore=0 clxscore=1015
+ mlxlogscore=767 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504230041
+ definitions=main-2504230043
 
-Hi Viresh
+Hello,
 
-Thank you for reviewing.
+This series adds and enables devicetree nodes for QPIC BAM and QPIC NAND
+for Qualcomm SDX75 platform.
 
-On 4/23/2025 11:06 AM, Viresh Kumar wrote:
-> On 22-04-25, 22:37, Praveen Talari wrote:
->> most of helper APIs in core.c and even i don't see any helper API in
->> pm_opp.c.
-> This is more of a wrapper over the existing C routines which is being
-> added to reduce some boilerplate code from drivers. And so it makes
-> sense to add this as an inline helper. May be there are others which
-> can be moved too.
-i agree and move to pm_opp.h. Will update in next
->
->> as reference of APIs in core.c, i have used  -EINVAl instead of IS_ERR(opp).
-> That would likely be wrong, maybe we should fix those too.
-Ok i will update as per if statement check for return as well.
->
+This patch series depends on the below patches:
+https://lore.kernel.org/linux-spi/20250410100019.2872271-1-quic_mdalam@quicinc.com/
+
+---
+Changes since v2:
+ - Add qcom,bam-v1.7.4 as a compatible for QPIC BAM DMA controller DT node.
+ - Link to v2: https://lore.kernel.org/all/20250415072756.20046-1-quic_kaushalk@quicinc.com/
+
+Changes since v1:
+ - Use sleep clock instead of adding a dummy clock for QPIC NAND since
+   sleep clock has the required properties.
+ - QPIC BAM controllers have dma-coherent support hence document it as a
+   global property.
+ - dma-coherent property is not applicable for QPIC NAND controller so
+   remove it.
+ - iommus items is fixed for SDX75 NAND controller so document it likewise.
+ - Merge QPIC NAND and BAM devicetree enablement into a single patch.
+ - Fix minor coding style issues.
+ - Link to v1: https://lore.kernel.org/all/5a1b52a3-962b-04f9-cdfc-4e38983610b5@quicinc.com/
+
+Kaushal Kumar (5):
+  dt-bindings: mtd: qcom,nandc: Document the SDX75 NAND controller
+  dt-bindings: dma: qcom,bam: Document dma-coherent property
+  arm64: dts: qcom: sdx75: Add QPIC BAM support
+  arm64: dts: qcom: sdx75: Add QPIC NAND support
+  arm64: dts: qcom: sdx75-idp: Enable QPIC BAM & QPIC NAND support
+
+ .../devicetree/bindings/dma/qcom,bam-dma.yaml |  2 ++
+ .../devicetree/bindings/mtd/qcom,nandc.yaml   | 30 +++++++++++++----
+ arch/arm64/boot/dts/qcom/sdx75-idp.dts        | 18 ++++++++++
+ arch/arm64/boot/dts/qcom/sdx75.dtsi           | 33 +++++++++++++++++++
+ 4 files changed, 77 insertions(+), 6 deletions(-)
+
+--
+2.17.1
+
 
