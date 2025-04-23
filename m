@@ -1,133 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-55083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76938A98114
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 09:34:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75E21A981CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 09:54:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 04D157A7481
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 07:33:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 24CE25A2208
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 07:54:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FCA5275866;
-	Wed, 23 Apr 2025 07:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36C9526D4E2;
+	Wed, 23 Apr 2025 07:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dXWaERWU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u3wP0MK4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D504426AABD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 07:30:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDA726C3AC;
+	Wed, 23 Apr 2025 07:54:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745393445; cv=none; b=ndzieenXkVHEGZjRc5QPA4LvXl8fwmGlyVMhIi8ULPwajvsmCH1UWimjM7nclkf9ZVVYiOM/z5cof3FZgqZSdZ6O1lWXlZQbqeLpWF9god0dtytKN4UsBVGMFBisGocGcOcPZvaBbUUULmZ5pm28xNse3XZw+iazRJ6YNSSPn1w=
+	t=1745394841; cv=none; b=PlW/SKkFvMILd6pckHRtJ1xIX7ND/KUXGFN3qqYoFBJtVIe+GkIFHsRYjXww7dDsJ8dOaAl5is3x96g0l98HIlatG9uVHm5oI6o0w/tDtfxqQmdFrd+CEtsOjsaXBeMfTLORUI6FWbdkr8Dvll2GDQlIKxikkbsiT2iGJQYqu78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745393445; c=relaxed/simple;
-	bh=hyNieFNcuS/h91PtLLt8b0OUKH7mzpDZpGCaVOfzJt4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LAieyCYe7tu6lLd8VW03KAFmVoEo9zwhajhLgVySS4i9VlrBE/OyN8NLIC0wrCvPCmVBKfTcGClAqUUuCdmTKwRYxY+O/wThUyz8QW9JH96iHkPVKRrFhhkbjXY2fRjKD7dGJSGf+wfuzAajkiX7yRvsYTGaHQfrJK5yrW/qV6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dXWaERWU; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-39ee682e0ddso3484886f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 00:30:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745393442; x=1745998242; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GGM4sN065n0kuohgFrVzt2nCge5uH+nnpNW+1fSbZEo=;
-        b=dXWaERWUKBYhIdjvKj3qnuHuJ+B1ELPXq2vgs+PbzpjpyJcrqtOsPmdw9F4ZzPXSST
-         QUHvLE68xgQeYnqoNVnN+uwAmNhu7FeRZ7+ljw8vVS2MNGQfTND5nvonTtJhBPg+PSfK
-         on/YHufw3+MY69vIwcKjBSci+M71yCJF4Zxni+JkO7FfF3qxHl3Uz7hvf2kSMoCQsx5/
-         yiak6pdN7yFAPMb0eJ5M/Jtssizjjbvx4jqQHdljR3I+yQKsfBVVsx2dGJSQFmTKYNAI
-         2QaFC/H1vXDrqEPrHtdtG1VmkuUV3PvjdWlmDwtFutxcJk3gTObpHEdQKGzyl9LOUlfY
-         ANJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745393442; x=1745998242;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GGM4sN065n0kuohgFrVzt2nCge5uH+nnpNW+1fSbZEo=;
-        b=sgXon4Ks16rw9yqNHhSvzjvaMbDv1FGiRAhTo6ETGi6IZDOP2Ssa64yOoZjDBWIH4S
-         Spei6Pc4Oj6Ma6dzCEiuhc06YnmKM41MKrslFvX8QDlczCdPeWaGcJdvYr5pcOigvmcu
-         a3UpHvIIukqIWNBkm1duwhOuRuKSb9/cnltgUnzq0MxGpfG0uBVnFoqGIyZuRhD3dFsn
-         h1+s8l4BfotKG8qhGIyXSKvidY/S7mDyaKl24TU8Cu2KEGFul/YxABa2msdBeBxZJmJK
-         lcdrPqEkbGti4Zu2a/HnxVRz5wIrgA9gLx8PESDGfTf09Z1NKMRJAz3sEWVUY1pZ7p6i
-         i89g==
-X-Forwarded-Encrypted: i=1; AJvYcCXryCdK9XTbQQ9NZydRRea5Rcuwd03yRly5mJMG/qKRWfcOFhGWDLuE4HNl6jeCjGUoig9XxuoCGQQLz0ck@vger.kernel.org
-X-Gm-Message-State: AOJu0YxVo5RhQT2lai6A0SCiOj1O6OBALBV++DQ5j37umuKOCux2qkRL
-	ukLrhOpoowYGvZRyFUQEfyKNLwOgmq1/6950TUShtQY19PQ89v49C9hfZM98i/E=
-X-Gm-Gg: ASbGncv49sETBl67vQybMolh4JmZxrARjsMYDmMVQ/On5qgW5/BoN8YRSHRpExUEuex
-	OkK1Q9VM7xmkbcWTbuZgvBXdIJ/Lysfaj+5bluor9q10Xtirmc9yqPigpafiJn90e20MCD16UqR
-	SASyDT58gZFCSc3IPrT6kRhFpg+tiTvAWmvTPdZaRNzx/cwPOATvXgky+CGF/BUr/V5dIVnxKsD
-	QNKqit5V+ok/pc2zTNfp2P0riERpnnmScEcFhbpQsYVdFsFnSxJZoaSla5Ri/muiAjNvAOC7Uf8
-	Xwi9OJW+9MqNT09AvttuTZISVi3BJpmmUrYXKdUDq3zZFq/ZHar+gvA=
-X-Google-Smtp-Source: AGHT+IGrdd00HBZwMyBAnnRIXBCUiZx6DleTy84BgVuyF9Z71TJR+EqNYK80pzcndTozf3SpVp1E2Q==
-X-Received: by 2002:a5d:5987:0:b0:39c:3107:d68d with SMTP id ffacd0b85a97d-39efbaf665cmr13784126f8f.49.1745393442038;
-        Wed, 23 Apr 2025 00:30:42 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:67a8:3ed8:e19f:5eaa])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39efa493115sm17761699f8f.78.2025.04.23.00.30.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Apr 2025 00:30:41 -0700 (PDT)
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Wed, 23 Apr 2025 09:30:12 +0200
-Subject: [PATCH 6/6] arm64: dts: qcom: x1e80100-qcp: Fix vreg_l2j_1p2
- voltage
+	s=arc-20240116; t=1745394841; c=relaxed/simple;
+	bh=w3N1b5wUaWGFT1fCSk/q4Qs8p2Hl8Jq/47UGxXM5li8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ijibjzFNAmTzGmI4PnpIsA+hsbDKCoN3CmszZPa6wczc/ToNPcCNbNXqP48Y+9LvWvCvTiEziMuP5xztgFYvUsMOCXMRl5c/fjd35g5OFZ73xHf8eEDj/CHLNJgXEjfiTvpeQtEoR/I5PlJ6C+TJHVoBoAMexkVDqnt3q3uVZXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u3wP0MK4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC181C4CEEA;
+	Wed, 23 Apr 2025 07:54:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745394840;
+	bh=w3N1b5wUaWGFT1fCSk/q4Qs8p2Hl8Jq/47UGxXM5li8=;
+	h=From:To:Cc:Subject:Date:From;
+	b=u3wP0MK4FEDGfkOEOAmbjKjRknuKSNmzGC2pqAMfl2hLmtLN166yr6TgGT31Q5+7i
+	 2BCdI8a/BCmC8QoSTBAl+Pu/LPtueHcBYS7y/Xa91JYKXbQ/ixo8I7/zYu5sLPjkKO
+	 dDGphDs0/HUbZKJxcc0m5jE0afllZyMnhVT9XLOIeS3oAZJdoQfTZMVAyN/GwMKx5Y
+	 avn1UHPnrrD9KjTxjiiRP5gosqafiaTFwWlYyOZZbc5AMRrybvQjQ7fpY8KCfD5cg0
+	 IuqQ9CDFyiI1hOzvvo4ACZM5l3349TuiS/a1cd88GnePZFSI9NSfOjjW7XhexU7Seb
+	 CBffiP+SM3d4Q==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1u7Uve-000000002xB-2OFB;
+	Wed, 23 Apr 2025 09:53:59 +0200
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 0/4] rtc: pm8xxx: fix uefi offset lookup
+Date: Wed, 23 Apr 2025 09:51:39 +0200
+Message-ID: <20250423075143.11157-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250423-x1e-vreg-l2j-voltage-v1-6-24b6a2043025@linaro.org>
-References: <20250423-x1e-vreg-l2j-voltage-v1-0-24b6a2043025@linaro.org>
-In-Reply-To: <20250423-x1e-vreg-l2j-voltage-v1-0-24b6a2043025@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>, 
- Sibi Sankar <quic_sibis@quicinc.com>, Marc Zyngier <maz@kernel.org>, 
- Xilin Wu <wuxilin123@gmail.com>, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
- Srinivas Kandagatla <srini@kernel.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Johan Hovold <johan@kernel.org>
-X-Mailer: b4 0.14.2
+Content-Transfer-Encoding: 8bit
 
-In the ACPI DSDT table, PPP_RESOURCE_ID_LDO2_J is configured with 1256000
-uV instead of the 1200000 uV we have currently in the device tree. Use the
-same for consistency and correctness.
+On many Qualcomm platforms the PMIC RTC control and time registers are
+read-only so that the RTC time can not be updated. Instead an offset
+needs be stored in some machine-specific non-volatile memory, which a
+driver can take into account.
 
-Cc: stable@vger.kernel.org
-Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
----
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+On platforms where the offset is stored in a Qualcomm specific UEFI
+variable the variables are also accessed in a non-standard way, which
+means that the OS cannot assume that the variable service is available
+by the time the driver probes.
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-index 470c4f826d49866a2af87f5e109672d51c9bc9cd..c0c8ecb666e178752da8e1d5c22ec2b632776129 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-@@ -773,8 +773,8 @@ vreg_l1j_0p8: ldo1 {
- 
- 		vreg_l2j_1p2: ldo2 {
- 			regulator-name = "vreg_l2j_1p2";
--			regulator-min-microvolt = <1200000>;
--			regulator-max-microvolt = <1200000>;
-+			regulator-min-microvolt = <1256000>;
-+			regulator-max-microvolt = <1256000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
+This series adds a 'qcom,uefi-rtc-info' boolean DT property to indicate
+that the RTC offset is stored in a Qualcomm specific UEFI variable so
+that the OS can determine whether to wait for it to become available.
+
+I used such a property in v1 of the series adding support for the UEFI
+offset [1], but mistakenly convinced myself that it was not needed given
+that the efivars driver would need to remain built in. As Rob Clark
+noticed, this is however not sufficient and the driver can currently
+fail to look up the offset if the RTC driver is built in or if a
+dependency of the efivars driver is built as a module. [2]
+
+As with the rest of this driver, hopefully all of this goes away (for
+future platforms) once Qualcomm fix their UEFI implementation so that
+the time service can be used directly.
+
+Preferably the binding and driver fix can be merged for 6.15-rc by
+Alexandre, while Bjorn takes the DT changes through the branch which has
+the DT patches from v2 (which unfortunately missed 6.15 but may possibly
+be sent as hw enablement fixups). [3]
+
+Johan
+
+
+[1] https://lore.kernel.org/all/20250120144152.11949-1-johan+linaro@kernel.org/
+[2] https://lore.kernel.org/all/aAecIkgmTTlThKEZ@hovoldconsulting.com/
+[3] https://lore.kernel.org/lkml/20250219134118.31017-1-johan+linaro@kernel.org/
+
+Johan Hovold (4):
+  dt-bindings: rtc: qcom-pm8xxx: add uefi-variable offset
+  rtc: pm8xxx: fix uefi offset lookup
+  arm64: dts: qcom: sc8280xp-x13s: describe uefi rtc offset
+  arm64: dts: qcom: x1e80100: describe uefi rtc offset
+
+ .../bindings/rtc/qcom-pm8xxx-rtc.yaml           |  6 ++++++
+ .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts  |  2 ++
+ arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi    |  1 +
+ drivers/rtc/rtc-pm8xxx.c                        | 17 ++++++++++++-----
+ 4 files changed, 21 insertions(+), 5 deletions(-)
 
 -- 
-2.47.2
+2.49.0
 
 
