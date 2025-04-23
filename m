@@ -1,152 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-55076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 716C8A980C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 09:27:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C702BA980F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 09:32:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A2C1E17EBCF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 07:27:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 04A5617A6F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 07:32:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC6C426A0FF;
-	Wed, 23 Apr 2025 07:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B3801FFC59;
+	Wed, 23 Apr 2025 07:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WJsYG4G5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TICk2Rj1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F175A268689
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 07:26:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31DD26B0A0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 07:30:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745393223; cv=none; b=LTe0Ogdra8pBdbr9ErCCyB+xTCXmlrgQf1KUEJwABGGvRzBbHSlo2OqayMYGOAeH94d28JKQXjulduuxcD49y91fOcO8zK6x8NVNWcX33PQkFUT4KwFlpDwvcaXB7aVUn7LShCuXxy2mRQEJ3vxO1Dys0E5gnOt2j7uAhNOcXRQ=
+	t=1745393440; cv=none; b=bLIlVmLXC9vOPuElMO7gAoImIDhuXb2Di9nbs+66R+jE8kxAGTTWXjqBgknRLO1VJ4f/zBDSM/01nvjekZ4G6TZ8v3o06SZxMzo77rB000jQDZfRPQaomwfy6z6wedgymnqw+9shz6s6erBN0hN7kDIyogspnIgnDy+ZtWUbzxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745393223; c=relaxed/simple;
-	bh=Jrbw0OKpQbJ1dFid4p4N4XtPsI8/qSLnEpsHW9bCCKg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=JhZawhuxbsFYyaRCfWCy6ty9/YmQ1TkKl1AaB1GCifoQLlj8DBM6d3AER0qW4h/EL3I/6hDJxkuUbgy/ilPTUGHXMUSK+/gpk6tVfygaXKOOyt9NuhsPtDTMj26unuHtuzZIK2dBb/6IOQlmTeK5f8nbvE+cImGql1y+iwHbQXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WJsYG4G5; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1745393440; c=relaxed/simple;
+	bh=ugdh0Jwg8OtNDnnvSXX+JcwFs/E/9kEcCZ1PVSsw1oo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CPWIUdY+s/CGn0kVPdJIwN/+QsAZFPIkpDSq7J+ukwnLfSg/z+IZLq0OwsKNbj7sPgEBT3DQlJBHCR7jGyOliT7oHc0UYI/TEzsHZXkH3ZGsj+BPtPfykbx+PLAMVVbbGu7bgIA4Si+bwlJE19hV1dmC8jdrR0uPULu4iTPs3uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TICk2Rj1; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43cf58eea0fso28933625e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 00:26:59 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4394a0c65fcso64766995e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 00:30:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745393218; x=1745998018; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kn/kdeC0hIJ6fPjKrtocu5NnRgujubxfAbJ5Urbgh9w=;
-        b=WJsYG4G5Le7NxcMduHBEdH1Cuadj5L7FAZjqaEd5mYiMF/Qi6ppXkTUuDDk22WovVY
-         O7B5DQAXeTfnr8i6cS+KbgmElCDTMFYIy2ECwPXpJaB3JeoMNYQZ/2ll4krvLhDrl0ry
-         XWWTUjEF+7PJnsDC+7ryWRsgboKsQww8oCHwjnyrsKXY0gIeOF3zFgeZ4kyZGKIkcSA/
-         8PxE1bS7/EyDFy8xpBfc+BpcJI9Cro2kEeAw/dG8GeFSA4Ky0taUyAn5Rs/tCD4hcZAp
-         J/CUYtr3Rlwo+y9zOka/9al+MhVV66wL+2jOPfBCVsxlMCkn7Y45wIQSBrCGS1BpJrx8
-         qsYg==
+        d=linaro.org; s=google; t=1745393436; x=1745998236; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IAVOf9WwZt5yb8GSwQ0W6u8pvseS1B6MX+loQMEGJLQ=;
+        b=TICk2Rj1l2YRJmLdqOz5FZwY43nDW2Lk32jG8grGPWZPJneWLq7G9cL+ffkwAclNsE
+         Rz/0Atm00/xafJJfGnHaNe2rSY6AuE6tjc6Hhp6UM0r+MK++tJP+rRntbBXwS1lHPtt8
+         lt8rGmFOCk2ElOs5VUEHS2Ck+7AjbUonhJ+FfhBLyIqSy/rd33MVj5M/rEMGbmfrRThA
+         KVgbXeR2QkZA4ixX3D616vpaga9OH1g9mPyV4hVBiG2tgX6+WxByuzPQ7Qp12fSl8wLF
+         RJAcoGFUTMYnfDVXD0ZCIGw4xWctHP9TbMho/W6aqwt08gDbOWBkSWuNmFab3/0hgqIX
+         fOMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745393218; x=1745998018;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=kn/kdeC0hIJ6fPjKrtocu5NnRgujubxfAbJ5Urbgh9w=;
-        b=l6dDeeupXknIoAHrnMqc4+BTdCCJIW9NhFMnu1CAy2+zI+4bmUcUJuKC+Nx4bWs/Ho
-         RTTtBcp027fNX6ZumINn8M4GjZCa5QzcKy82RuZO5bUs87l3u/Ay4DMkGyOLzIwrv0Vy
-         8O93dzoTvg15NlVwda/QoZ1pAlxD0fsKdKZtn98kdwxH0PjS06/LFLsPPja5Low6jvLO
-         DUoVjb+5HDj88MyO5SG36L049j3+E0JF8daSBgbkpH6f74Cg1d0avMqObq5CIEiiJsa7
-         IKVpOKVpmz2IBO07bhzJNwwOvAjTxtbAVpH14Jn8vjGy68s0URuAzm0FWihb+nQ6LoQy
-         gR/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWPTkQyV6ZGYRwA9jju5pR1FtDwFoG0r4IE1rxyLP0n0FyxaLVmXL/679iwmNE5yGDRulLHrknHQJPh2U4E@vger.kernel.org
-X-Gm-Message-State: AOJu0YwGlG24ATb+ypAO4RqdriHsIHu8vwCnuFuXFmqPHfrvWIQuBnTC
-	ZT7/Lt9eX/DKcE4sF9lHZLHTK9knT53CxPGI61GU791uXWM8QsRM40C0Nq441y8=
-X-Gm-Gg: ASbGnctUvNbAScVcsLgJlOQlTMYkRnfowsUpG45f0RDC/nV8yJiOBjRXUsYANE6uVPK
-	O4Wr11T2/j3T1HmSapv3iBje+9AMvhln7yK9efNkPuMnzuwCnr74mbqdhwCuaZLRetcojne75uw
-	yGCSs1nnBUpLVV8S7R/lMrktyCYYYNQG/nkZZ72Apyqe1My83xfnTtzttKYWIYbZo5CFslqAKq5
-	w65pbGsKpmNuqgM/rj7Yfq8o1qIl6N5OE6B5NqyI/xkonJQbK82bYRAHkeHBL2Qm9YlklD2TQyo
-	VhO8PGOvgOTQ1nXKVTu4f0MkIZODmXC6DmGhXOB+rgIygPpz8MBw6Rkd2HTLa1st++OXA1dGguW
-	+WufCmEV3JOFhYO+e+w==
-X-Google-Smtp-Source: AGHT+IGQjZAyp9xHW8ASlQKrR9fCiGMeMbCakgAb3SkKNca/+Rt6CnnTlRW63K73V1hHmlOCRLIMvA==
-X-Received: by 2002:a05:600c:1c8f:b0:43c:fe5e:f040 with SMTP id 5b1f17b1804b1-4406abffc5emr134620725e9.23.1745393218300;
-        Wed, 23 Apr 2025 00:26:58 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:2835:c2f4:c226:77dd? ([2a01:e0a:3d9:2080:2835:c2f4:c226:77dd])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-44092db2bd5sm15015645e9.26.2025.04.23.00.26.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Apr 2025 00:26:57 -0700 (PDT)
-Message-ID: <283096ad-ae1b-42b8-8312-b192f735fc80@linaro.org>
-Date: Wed, 23 Apr 2025 09:26:56 +0200
+        d=1e100.net; s=20230601; t=1745393436; x=1745998236;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IAVOf9WwZt5yb8GSwQ0W6u8pvseS1B6MX+loQMEGJLQ=;
+        b=nE30XiHvR/wrVU+k0Jj5JjGBXGcfZpRBbyFZmeG7vRe7/4Gyzv/3RKTi5hpemIMyjg
+         goY5bM0YAd/rOGzz1b9q+k1OFRTyBuNwUDkqSz/jqKo+sT4tXhGdYS6gO/Maa5JCdxVU
+         t+haTKw15qC5MhpeNHw9n6TIzg/+8VjMVeoNGj79KzPFbtAgsGzLyDUEyTRKSRU2BJ25
+         ptJGKC9WRrlRUnMf+TgPNsb7UHXFK8wuYlzHw/CT9PowVI2NsUVqU9Qiwh2HJBuK2EvL
+         XQpsFlOYd5JDUKtzMNeL9Q/I1SXlrC3GkvTWWm4gt2LgvHdv+LdYgi302XHtiOGwYhmv
+         w1EQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXIvRG0k0YQjr/LiAPCkaSYXeCNzRI7m+ncTPpGwNltywf6eKb8tNpfax0PZaPCiJeMA/xc5XpmNsQgphJ4@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx6HqWN/IXpP1CTMLf8awtW6k85AqaReXTAZonzCMx1qbbDi0fh
+	yBOF+227/6DGVc+Gm69517tjKYKc3tb8KON5ToM27Uw0Wl7BeshfwdUddwtF6os=
+X-Gm-Gg: ASbGncsxbxAzT4kpbEPn9auYmqmvNUwPT/eiOh65BOc7gvhVfQVKVElpuxJPUoCfzjx
+	KlZjVP6Ni5Lf8Jrl3qwzeOEtgF6GLCqrKtKmd1/049mkNnmX8WjLSzpSC8GednbqPnO0473Jjsy
+	Q42Qp2hLXnJxifnYB4sY9IGdpkr3Zsn7PpzuF6jFT3KlSCY3MfdMcdxGtVO9Py/VgubFHPC+PGc
+	lvnyWS5V9vwexktQmNZDL1fooUMCkmOcHuSxTwYNdT4V6YXfbqe2PJlnqp29UVONYPs6oD/cOFI
+	2b2vuumyuvEa+Z/OnrwvXg3b5n+GVWYrXEeKvngX8Maf5fEtSXRXYkk=
+X-Google-Smtp-Source: AGHT+IFDeOQJ84DRhqUsU2I2qejWhkxN7owbw0EAeDx/ORw4YLo17BdfeLQzG90l677GOD8n8erpdw==
+X-Received: by 2002:a05:6000:438a:b0:391:298c:d673 with SMTP id ffacd0b85a97d-39efbade41emr14796194f8f.40.1745393436055;
+        Wed, 23 Apr 2025 00:30:36 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:67a8:3ed8:e19f:5eaa])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39efa493115sm17761699f8f.78.2025.04.23.00.30.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Apr 2025 00:30:35 -0700 (PDT)
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+Subject: [PATCH 0/6] arm64: dts: qcom: x1*: Fix vreg_l2j_1p2 voltage
+Date: Wed, 23 Apr 2025 09:30:06 +0200
+Message-Id: <20250423-x1e-vreg-l2j-voltage-v1-0-24b6a2043025@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 00/33] Add support for Qualcomm Snapdragon SM7150 SoC and
- Google Pixel 4a
-To: Jens Reidel <adrian@mainlining.org>, Danila Tikhonov <danila@jiaxyga.com>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-watchdog@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-mmc@vger.kernel.org,
- netdev@vger.kernel.org, linux-scsi@vger.kernel.org,
- dmaengine@vger.kernel.org, linux-crypto@vger.kernel.org,
- linux-i2c@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- linux-remoteproc@vger.kernel.org, dri-devel@lists.freedesktop.org,
- linux-hardening@vger.kernel.org, linux@mainlining.org,
- ~postmarketos/upstreaming@lists.sr.ht, Connor Mitchell <c.dog29@hotmail.com>
-References: <20250422-sm7150-upstream-v1-0-bf9a9081631d@jiaxyga.com>
- <2ca2b774-fd7f-4612-b38d-f60e32ff6f9a@mainlining.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <2ca2b774-fd7f-4612-b38d-f60e32ff6f9a@mainlining.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAP6WCGgC/x2MQQqAIBAAvyJ7biEXw+gr0SFyqw3R0JAg+nvSc
+ WBmHsichDMM6oHERbLEUEE3CpZ9DhujuMpALXWtIcJbM5bEG3o6sER/zdUx1GvnrLFke6jpmXi
+ V+9+O0/t+/insk2YAAAA=
+X-Change-ID: 20250422-x1e-vreg-l2j-voltage-4281dd747278
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
+ Rajendra Nayak <quic_rjendra@quicinc.com>, 
+ Sibi Sankar <quic_sibis@quicinc.com>, Marc Zyngier <maz@kernel.org>, 
+ Xilin Wu <wuxilin123@gmail.com>, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
+ Srinivas Kandagatla <srini@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Johan Hovold <johan@kernel.org>
+X-Mailer: b4 0.14.2
 
-Hi,
+Several of the Qualcomm X1* device trees upstream specify the wrong voltage
+for the L2J regulator. In the ACPI DSDT table, PPP_RESOURCE_ID_LDO2_J is
+configured with 1256000 uV instead of the 1200000 uV. Change all affected
+device trees to use the same for consistency and correctness.
 
-On 23/04/2025 00:07, Jens Reidel wrote:
-> Hi everyone,
-> 
-> apologies for the mess this created. Danila's mail provider ratelimited him halfway through sending the series and the attempt to re-try sending the second half an hour later ended up with a new message ID (I think due to not using --in-reply-to).
-> He asked me to let you know that this will be resolved later and the whole series will be re-sent once the problems are resolved.
+In the other device trees upstream, the voltage is already correct:
+ - x1e78100-lenovo-thinkpad-t14s.dtsi
+ - x1e80100-dell-xps13-9345.dts
+ - x1e80100-microsoft-romulus.dtsi
 
-The b4 web submission is a great alternative when the mail provider is rate limited:
-https://b4.docs.kernel.org/en/latest/contributor/send.html#web-endpoint
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+---
+Stephan Gerhold (6):
+      arm64: dts: qcom: x1-crd: Fix vreg_l2j_1p2 voltage
+      arm64: dts: qcom: x1e001de-devkit: Fix vreg_l2j_1p2 voltage
+      arm64: dts: qcom: x1e80100-asus-vivobook-s15: Fix vreg_l2j_1p2 voltage
+      arm64: dts: qcom: x1e80100-hp-omnibook-x14: Fix vreg_l2j_1p2 voltage
+      arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Fix vreg_l2j_1p2 voltage
+      arm64: dts: qcom: x1e80100-qcp: Fix vreg_l2j_1p2 voltage
 
-Neil
+ arch/arm64/boot/dts/qcom/x1-crd.dtsi                     | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e001de-devkit.dts             | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts  | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts    | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts                | 4 ++--
+ 6 files changed, 12 insertions(+), 12 deletions(-)
+---
+base-commit: 39155a896925c3af2156ad61e821aa9fa5a1dbdb
+change-id: 20250422-x1e-vreg-l2j-voltage-4281dd747278
 
-> 
-> Best regards,
-> Jens
+Best regards,
+-- 
+Stephan Gerhold <stephan.gerhold@linaro.org>
 
 
