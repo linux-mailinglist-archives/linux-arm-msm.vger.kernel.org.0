@@ -1,79 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-55123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 169D0A98909
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 14:01:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FF68A98914
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 14:04:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 36BC53A825D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 12:00:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 083F53A9236
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 12:03:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03D471F8BC7;
-	Wed, 23 Apr 2025 12:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C340F214238;
+	Wed, 23 Apr 2025 12:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u2aOr6uN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SG9Tmj7y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CF51C5D59
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 12:01:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3136D2046A6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 12:04:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745409667; cv=none; b=KpdUuAz/SAJ83iNaaDVJWXONYTNLyskQjaEZAbZAi0+4DpZae4A4zo5wi6CIHlT7xF6JcWsUeFAX4zKd8QCYRP0KT2Jf4TrD2m/zHI5UbF5PL2BDjiLnUCiWUhTKPfGlQE1cOBQolCTj05JW7kv8QJLibyfmBZwftRJ/Ko+F9Zk=
+	t=1745409848; cv=none; b=qsAi2Ct6aGxhPSJCA9+n1XbFoGd6jPQfWxLYax2tgA60xemdOGAe8dKGSLf3Hc+JhZ53bHC5ON3fwkOe8vf1i833twvZi+SnHXcaEp2hGCb39GBe87qXKbXsJO4FYVNqHakIRYzfXQz0hQkhiYzku19+PoRlqvY6egsKH3OmHYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745409667; c=relaxed/simple;
-	bh=v/okh2uK9db6XGoYeKy4qfBc5/ALnGtlhgKKSff6lk0=;
+	s=arc-20240116; t=1745409848; c=relaxed/simple;
+	bh=nO6Rg8RoPt3fGEMckf1bI8pF/9LXP6clHDAG+/ggTdA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dPeD4jouHhlMKL0jzF1gwgSRM2UmtwNCVr74tlWtIl46gkdifw27AmpgUY3/yV1p+9IDAp4iDsHy7Uef64n7wLOMCTIuQ2MEUujLIyOl0RtN21K7P6kPKTDL6uHif2r8eG+dvSmdrQUTxE+OA5kIp8bdNQHANGJejeGpO7hB8Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u2aOr6uN; arc=none smtp.client-ip=209.85.128.50
+	 In-Reply-To:Content-Type; b=X8AkmYadWF855tMuCaO4IqpcywV2tvtTuU3pc2sVTFCM8xt2C/GeG+LBqEEbBd513NrSCATcBBemcTB2xTpwEaCnN1R3PW9rSG+n8qno/pPZGuPZVVdIhyonN9K2tKVBFkVBkO0IJkKWoSX2l+rYZq1qpqCucNCgsh6SO6qlKZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SG9Tmj7y; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43d72b749dcso7139385e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 05:01:04 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43cfe99f2a7so7544915e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 05:04:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745409663; x=1746014463; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1745409844; x=1746014644; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y81CZwpFg9ie+5P81GkFfG9Mtt+/NjlSJj14vXvrx80=;
-        b=u2aOr6uNEwC62RKyRu+XWCOxi8425nzu138vAB74u4kk0C1AolMHSi5Z4bnalrIYwD
-         /oiEbQzBmkpqfRTniQ/n6Ea+RZT+6t7VTf9s/pNqUKGcxXAOzucfAbysLYuEVLYz7FXw
-         ieO81r1tV6Pu70+5JoBqd2BrszIW/JqGlcf3rToGaBYX7gmLtnWi/iu8uFKFKosTU1Pt
-         L7B0jO62rXM9OwrdZ4Dlx81GzXHfRRhEHJVGmGnaATYi8ggCux6b38rWyUYgQe3fJw9Q
-         RZIhbVniSn1GVMFEEKkYfPrigiKMZVWAe0pO06TSr8lZmXJA5F4/urCoVK9M/E2W4F10
-         e73A==
+        bh=nO6Rg8RoPt3fGEMckf1bI8pF/9LXP6clHDAG+/ggTdA=;
+        b=SG9Tmj7yVHO80wQItgxm9Y5e+gR+cmIMI6DdQnA9l3Ukm+K2Z7PJcYy1hWUPNQ0h9B
+         HrypxPLziXhDMgfkBiBQTq5k5h0O6SjP1wW8qJ1xawkdQJoERI/mj0e6XPwPaBcL9aKD
+         rNa14hoUHZs7wu8dGfQFiseBp35SVlYTRupr0wHCoHFsMN4fce+C0HkCBefNdXucmq2Z
+         7Ak4wVd059DaVedVezhtJPRwhOVzWJQAbQP/jVjbNo/VcWPtZrXwe8NETK2uL2w3bf6M
+         Gt2BbzSzkl+aTTuWy1x1uyQODNHS//KxC1ZsWKiJ1ydUzbBLTXMJZsmMEips+tm51WxO
+         3NDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745409663; x=1746014463;
+        d=1e100.net; s=20230601; t=1745409844; x=1746014644;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Y81CZwpFg9ie+5P81GkFfG9Mtt+/NjlSJj14vXvrx80=;
-        b=TR8IQAd509Hzf3wk3WaAfvCR6peC9QqB0RfR9koAGWml6DhN6xd9+qcrZWWkZvWvRE
-         a7Nj2o1TpaIG37ikY7po3gBCQRUU9CpfFpxSOdl2dAvl+e4qeK/d9wjIDvRilOmoEncO
-         YaVFfwRWxUO75ymCu3R1GeFsBO59lEF+Pye8yZWSm+AjWB5336BemJAtHnpQVu7pdtUq
-         IA6smOb9G731B/3gvUzvPJfpnNESsPZV+2rq9pJhzXVB5HH4lOsi9uhiypdmgtYLEqFl
-         HA3KtVvELMfFxcN/7ZBDS3DK4h0Dw+zpIgW1Dw5zO/rqcgzlBkfUrr5WnnP1xU6Fhky8
-         gzJA==
-X-Gm-Message-State: AOJu0Yz43yKwO3cs5tzup1h62v1evaIJr6uZJ+Pcl7q+L96kp+LUxabA
-	rdKinyembkEVNtLgotCuEYCbHZpLOSJJ5A+xsDvrI7I9sMWN3O6VipdMKp3yAI0=
-X-Gm-Gg: ASbGncut4E0woOGMKJLvSel1lkmF51ClhWrUOjdifc+p31552DgnKWjIZre0KuxTWPr
-	QIE85/PV2gQwFh7g0j17uKPZjSHI/kQoIXxXi1b6JVG2pECYQINvNq5yIU8Hx0FOnY9uyxl896C
-	a+foT0tQA42mc7tj1r+vcbyARBPrwRc5SeYFrYijtMsdZD3JBl6Er4b2qi74E4d1nVYMp7IyJhS
-	HxRsyuDr0U57l0/LGO+ABJx0EX3ZpvB/AePqa9lIDKAa+PkeaMYzt569FOSUCNivXqYTLFaNv1p
-	thHfn4JhWiXS0Z/tnnQQ3qnDDQlR2JzSt6/IPnduIMgkEkKuE24W0ubtiuA=
-X-Google-Smtp-Source: AGHT+IFkNpS+m9hBoAcVWPsQ+C2Qhq/pvGp6FhIJiQKGlG/tVJfm2X3Kvad2zSlhOC8APsCG+arKYg==
-X-Received: by 2002:a05:600c:1c12:b0:439:9a1f:d73d with SMTP id 5b1f17b1804b1-4406aca6d18mr64322055e9.8.1745409663505;
-        Wed, 23 Apr 2025 05:01:03 -0700 (PDT)
+        bh=nO6Rg8RoPt3fGEMckf1bI8pF/9LXP6clHDAG+/ggTdA=;
+        b=rk2sxg5UdjR/vntJETWcLpdB1nREQgH+/D7LEFSc6T3grqkL640wZmwKxHTE4nHQKZ
+         b+VYk6y8WBZVy5MG6W3VBOKFunwJqQBDlvrRcqvTpjQ4KdmRa0GvgKzjIJEsnqkoEFfH
+         qm/ELsd5taMigiv0oQN+6C42Zh00MOrHDLOzdZ13PZglJfy3I8QpAdnK/dRM4PA3VV1J
+         TXf0vkuk6/t5rORtwrhdH5irACVPyTdImzB+3awxLq3e9N85XoM69DD1W6xMeX5mZx7c
+         bbktx5Q5jrQrBSGyDhzQWeL6S8nDZEVElSDNvgkz8Z7QqnUFbsw0VRivx1Z7u8fplAvk
+         tSnA==
+X-Forwarded-Encrypted: i=1; AJvYcCVeMnc49rMwpUrhQ1dEddOF5F19LdO+JplnewrZVzuKJ8RP8URQYHRvC8KYPEtrnC5kFnrhMYGMiZzGLXKG@vger.kernel.org
+X-Gm-Message-State: AOJu0YxJe+fCJttKpiNCBPzCK/z2Ih7CCULAOfHtCYU0gSdKCbWKmlIz
+	dRw+uVfxTdI6UesY7hEGavDOGTtRCxcFFS5Aw45pMo4FhlO9+lJ1SDOwyVBXYJ8=
+X-Gm-Gg: ASbGncuwsAJHYsML6u16XgGv2PwzpQVnvHWvah8sxh1nB+2sK5N2/BYYZ3bVqjnyBXs
+	GTdSgZWlP4Jmb5doHKeeN+PpX5/Cs7gHROuPQPqBAa5UToOckVq9iiCmz0MH5VDsRRwcmGBB4+H
+	0HC0HJl4PRX+M1+IcfCpVO5ev+o0FZrEQvdlwdFuSuv+MTk/7rZq52DA+2v7pWZrMCdqJGBdGGt
+	Vq+W1JzM7VzNLSAZ9LyCrdMXpJ9cixbKP5D8Seima8kmYtCK3ICVs0mxCFWgRkU6XpS20qqXulD
+	DFGhNgSWz0wc8tHxh8EvFdgJR/6F/z/dei9A8mQPQCj2pOdub9/o56bHnf8=
+X-Google-Smtp-Source: AGHT+IHBmQn5KrPTQJfeGklq9iOK8t35CZPk8g0XpKG9bcIRUP76LQys6TvjZPdcNOM3Gg/IO+LciQ==
+X-Received: by 2002:a05:600c:1c12:b0:439:9a1f:d73d with SMTP id 5b1f17b1804b1-4406aca6d18mr64398105e9.8.1745409844268;
+        Wed, 23 Apr 2025 05:04:04 -0700 (PDT)
 Received: from [192.168.1.29] ([178.197.207.88])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4408d18daaesm24345165e9.1.2025.04.23.05.01.00
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39efa433141sm18723340f8f.35.2025.04.23.05.03.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Apr 2025 05:01:01 -0700 (PDT)
-Message-ID: <1d75a955-409a-409e-8708-754e89d6f046@linaro.org>
-Date: Wed, 23 Apr 2025 14:00:59 +0200
+        Wed, 23 Apr 2025 05:04:03 -0700 (PDT)
+Message-ID: <6166e76f-286a-4c59-be78-e188e5847ea9@linaro.org>
+Date: Wed, 23 Apr 2025 14:03:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,14 +82,62 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] dt-bindings: arm: qcom: add SA8255p Ride board
-To: Deepti Jaggi <quic_djaggi@quicinc.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_ptalari@quicinc.com,
- quic_psodagud@quicinc.com, quic_shazhuss@quicinc.com
-References: <20250423003845.3980330-1-quic_djaggi@quicinc.com>
+Subject: Re: [PATCH 00/33] Add support for Qualcomm Snapdragon SM7150 SoC and
+ Google Pixel 4a
+To: Danila Tikhonov <danila@jiaxyga.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
+ <linux@roeck-us.net>, Rajendra Nayak <quic_rjendra@quicinc.com>,
+ Jassi Brar <jassisinghbrar@gmail.com>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
+ Lukasz Luba <lukasz.luba@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Wesley Cheng <quic_wcheng@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Ulf Hansson <ulf.hansson@linaro.org>,
+ Souradeep Chowdhury <quic_schowdhu@quicinc.com>, Lee Jones <lee@kernel.org>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Alex Elder <elder@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
+ Andy Gross <agross@kernel.org>, Srinivas Kandagatla <srini@kernel.org>,
+ Herbert Xu <herbert@gondor.apana.org.au>, Georgi Djakov <djakov@kernel.org>,
+ Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
+ <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Sibi Sankar <quic_sibis@quicinc.com>, Will Deacon <will@kernel.org>,
+ Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>,
+ "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+ David Wronek <david@mainlining.org>, Jens Reidel <adrian@mainlining.org>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-watchdog@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-mmc@vger.kernel.org,
+ netdev@vger.kernel.org, linux-scsi@vger.kernel.org,
+ dmaengine@vger.kernel.org, linux-crypto@vger.kernel.org,
+ linux-i2c@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+ linux-remoteproc@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ linux-hardening@vger.kernel.org, linux@mainlining.org,
+ ~postmarketos/upstreaming@lists.sr.ht, Connor Mitchell <c.dog29@hotmail.com>
+References: <20250422-sm7150-upstream-v1-0-bf9a9081631d@jiaxyga.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -135,24 +184,19 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20250423003845.3980330-1-quic_djaggi@quicinc.com>
+In-Reply-To: <20250422-sm7150-upstream-v1-0-bf9a9081631d@jiaxyga.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 23/04/2025 02:38, Deepti Jaggi wrote:
-> From: Nikunj Kela <quic_nkela@quicinc.com>
-> 
-> Document the SA8255p SoC and its reference board: sa8255p-ride.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
-> Signed-off-by: Deepti Jaggi <quic_djaggi@quicinc.com>
-> ---
-> Changes in v3:
-> 	Removed the patches from original series[1]
+On 22/04/2025 22:17, Danila Tikhonov wrote:
+> This patch series adds support for the Qualcomm Snapdragon 730/730G/732G
+> (SM7150) platform along with the Google Pixel 4a (sunfish) device. Since
+> the most critical drivers were submitted and applied in separate patch
+> series, this series is largely composed of DT bindings and device‑trees.
 
-Why? This makes no sense on its own. Binding goes with the user. No
-user? No binding.
+Targeting 20 or 30 different maintainers in one patchset is not the way
+to go. The minimum is to split/group by few patches (e.g. you have few
+remoteprocs, so separate).
 
 Best regards,
 Krzysztof
