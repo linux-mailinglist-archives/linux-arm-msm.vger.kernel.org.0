@@ -1,227 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-55111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18DB5A986EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 12:13:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EE80A987C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 12:42:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7DE04188C797
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 10:13:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 811224449A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Apr 2025 10:42:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0ACD92749C4;
-	Wed, 23 Apr 2025 10:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E20F626C387;
+	Wed, 23 Apr 2025 10:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CZglPaG/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IiU+rpCM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7EC2741B7;
-	Wed, 23 Apr 2025 10:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6751626A092
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 10:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745403109; cv=none; b=OIsk/cb3RfCXP/J0/hR7OiiozXt2fIKByxgiqaIE8PYTqefkhppjT8LzQwcR4HUZa6M533sPSs03QLC9OfdiVhsDetsJ4KT4SzKpsbNzHetw3hn4jv3tR4BGjvGr9xLGa5W6lOQ7CEMIwX5VetUf+gakE3NvY/HJcOCHrpYFcus=
+	t=1745404943; cv=none; b=EQC5d21vdmrE68BXK9MeQMzocmYoiL8HNrY/q+145R/pV7EtuBTlZ7UO90HLmzE5p5xJYGA/G2hkmYMr/xna4hrXVdxISyLiNveZq8DV36qum9vqBefcRgfyASWi7MNNM4l4TRPHimwzmDYy0F/AqpbEwyBrtE2BJ/bfhisfiIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745403109; c=relaxed/simple;
-	bh=cIKvuzizy2GK/U5rJ33c7ePxU6KGY6hs1Nj9utVsEFo=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QHwByv8rUDrNYsxmYJF+S1/XCuMQxepOx4sZPKrwxQOeqk0jXp8X2YxukCm/Pz5xfzFx4n2s4pHoOI3SDQ3yTGLDgOsxPcD3mjaL4A4RJVLXbP3XmO7BMapjF4zUkB/PG5cxD5CfpQU/HDbOvgmIzyLRYq8OGQuFncfSwRbWRQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CZglPaG/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53N0i7SV022437;
-	Wed, 23 Apr 2025 10:11:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1745404943; c=relaxed/simple;
+	bh=+qd2CcY6IxK8CQAlvfKvFE8WrtuvDbfJCfTWsUc/asw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cnf3Kp/tipzpdJQN3TbTWuQYTUlbib8NL73UGT+x317ubiIkxl5RiQVMN1bJSJ6n3A5cX7bTdeRDcBDTPrjc9I7aBq+NpBKubWWwAflVkAHN7b03qPPgKkhBLIyRN3mA8+L2ILUysTMjHl9lQSqN4hQBV/wxQ2zO1xbuuk7m658=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IiU+rpCM; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53N0iU2G014204
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 10:42:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cg2vc7IT4AFysQebcXg1sFQ25+QiyXdjEbxwg67yizc=; b=CZglPaG/22Lt/895
-	cxp/sQay+BSvQIlD+W26fi3upi63DUWjm086otICymVvauZthWgCFejT4NmqPilV
-	ONpk9l7svkZUjWKC++TCkpPNgyH19WLk3xA3Q+77FW6W4FJiNcZSiKlf7Y9mjkqS
-	DSo6nSfaC8zympgpr4QxINJlVdpoTP4cg0e7VaKRgkY9fc3mZkiE9XjzMB7QjpHT
-	zqvzKC5ueCZLW3IyWkSGVxCBXDjPtFX2l+EzpN6mEl95dccDytUWk2QOxqaeYaU0
-	Pf0dRt7shvDLVAc8nTPkpiZqbEttpoZEB4RlxoV/tMnIElV9ZGkDw+UH8WOI/T2q
-	JT/3gw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh29r2b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Apr 2025 10:11:39 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53NABcbT030654
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Apr 2025 10:11:38 GMT
-Received: from ap-cloud-sh02-lnx.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 23 Apr 2025 03:11:35 -0700
-From: Songwei Chai <quic_songchai@quicinc.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
-        Alexander
- Shishkin <alexander.shishkin@linux.intel.com>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
-Subject: [PATCH v4 7/7] coresight-tgu: add reset node to initialize
-Date: Wed, 23 Apr 2025 18:10:54 +0800
-Message-ID: <20250423101054.954066-8-quic_songchai@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250423101054.954066-1-quic_songchai@quicinc.com>
-References: <20250423101054.954066-1-quic_songchai@quicinc.com>
+	B/sUVk9OKoRUIb1LnNSnSHgYKaMS9g0fDBib8P+9OBo=; b=IiU+rpCMYxFJiHvO
+	+HIoPm450HBMyp2/oWkQm2mY9CR70Z8whPzjZGhAk/IyZRSfWGH0p9EBggmsGTmx
+	5SM6b07V62/6+9pY/ewyDAo2NozPqfZ8ilG6Bfgz4BDVnYZeO8lp1gqR3IaHMQ2I
+	/SuIXkgnYcpw1aOYL0rK3vwBmoqZScauKBgvZCAnCwlqrQdeFK69SnunOZuoJVMU
+	FF3Tp1IE5haUORVjnilSPfPF6ZWClMianHp0rY9n1eIcVUQqqv2/jR6vV8q+k2jP
+	0k1PF3fgyMGPEosjFsbyMBqIeISr9nYC5mNHC3HywwPmqhwtqKAcq1pclbFYf9Zg
+	u9hFgw==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh39t18-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 10:42:20 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6e8fec7ab4dso14753596d6.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 03:42:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745404939; x=1746009739;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=B/sUVk9OKoRUIb1LnNSnSHgYKaMS9g0fDBib8P+9OBo=;
+        b=pD8PjdYtjYAf8wDXL2HKvfu8FNtVui73IhASUZSaz3coXjLH/7xzOKC+cVPTBgRg53
+         CvHnC2gTg9PtBlpPqhPgn6wN5PWVmqz1Y8oBwanBcin3PxO9QyUIgLHlhrmZOcECz8EU
+         5VWc9e/F/Cb1aafZGdHoGpK4aPcPWhH0VSZHb0GRhoii+ktD/YsTVMTfPl6xMhJP7i45
+         mQ0AIE/B5IxmBtcX6gKj3h3FcePXTHIJGZGRWlenaB64/Z8Pf5vgwDj1US+QmGLjlHtT
+         7qfcWD2eE9XFyrAIgvu7B5otyaNQ1ndP0FoTtDsv/ST9oPxUvaMftQ/PfgbK57ChYriF
+         qKoA==
+X-Forwarded-Encrypted: i=1; AJvYcCWMKzSjHSrSwIaiUqRnnZxRJaIh1D9hAnQBbNYXBZ9rUTxvAOgIpO5d/Ew4Zyc1XXA/LJBrSnYnW5nvOGBs@vger.kernel.org
+X-Gm-Message-State: AOJu0YxFSAOdktUweHt4qsJfxDyupOwGSuOPn4V+lV5sSOdwLQsYMNvI
+	6qgGWYsDvA/ix+u5pxwf2wy/IiASdVfS7duF8etnwvlE8h8jUDd5UUly587sXOM+vUnrf7BRF20
+	osAvrGS628RyMGfg/Ax0+45eZ4uOQvgqV8/IfxAtfLiFDKxKtKYzmw3ldOD2lRn1Y
+X-Gm-Gg: ASbGnctnKUBmqNrzDbU6o+jSwMJoKuCudz8eVG/9+R72J7FdPRAtDqXCmN6lFzLD7nY
+	tv3GkIiv0Wq2TRNaS5yhKRtVtzv5tH1eqHOehnYOH4wi6tTedM/raiySpNzEowBjCXrmN88Rbe0
+	J+KzyFmJLjcghpYzt7wJm1ZO+rohLWvyD3Uur0Uqm6bQMjZ7A59GfqoR/+Z2ubq8PQROthRo0t5
+	IdImSWF3DCrFX2MWfg5hn67n3TRTK82vzmqlBWUkTmVUhFMH3SLDTxzrkhoH6zRLx9kMe7yGRJi
+	CfZbvX95MYMDLqgKzsEGM2vnjjO1A5sufy6k5EZy1HqtMOL26NH0GepeGpGny4fXTCI=
+X-Received: by 2002:a05:622a:2d1:b0:474:e213:7482 with SMTP id d75a77b69052e-47aec49d152mr115859631cf.11.1745404939178;
+        Wed, 23 Apr 2025 03:42:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGiwe0IYpezKkV2uUZMKDuNbDxC8roBj3sADr4v35lgHslXOIiXv/KaGkpVkodjQUBRrJJZSA==
+X-Received: by 2002:a05:622a:2d1:b0:474:e213:7482 with SMTP id d75a77b69052e-47aec49d152mr115859471cf.11.1745404938830;
+        Wed, 23 Apr 2025 03:42:18 -0700 (PDT)
+Received: from [192.168.65.183] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f625577f3esm7330749a12.21.2025.04.23.03.42.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Apr 2025 03:42:17 -0700 (PDT)
+Message-ID: <3735f288-5ba2-4582-afbe-8b3f5d0f280c@oss.qualcomm.com>
+Date: Wed, 23 Apr 2025 12:42:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mVgfIgoyRZNrd-9AF9KkZNaPDzIR6ppl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDIzMDA2OCBTYWx0ZWRfX086xUy43VpIW zI9u/RssFUAEUKdtI+R6AFG53XXJR8YDfyTmMlAmeLBVzNCiZvsUXaFxgrrPPL+0pISCp6O9ukM BitxBPZFITGPcuixRGT6CrGCIF3CO8selmgt1VhVJYKndg0FpYg4CcOMQcGtiRNef6pJT8wSuq1
- 1DViVJ8dNVb5ukYuaIY6cwCPd2bugxcm7b0tzpFbeCrb7/jYAl0vZOnCOH6lZm3veBy1/ZnBtqq jJ2GKHtSze98PxXcUhYl6hcJ+Ac0uB8Lp48OZu2QrJcjZr63aI559RSRKbZqEtTzDbLW66PWFrS xg/xgweXb2E0Ww0wYoXMu7a/joLqXTrq6L97/hgbX5J7ZfYGQ5xF/y1uvvg+XaeiDbQf5jW3hor
- AjpmBMsq6M0x4TdifEZ37TdrJf57MR8ebC6kSlcC2lpyg9BjaxYDExbnOHcXTuL3qaTW/7Rj
-X-Authority-Analysis: v=2.4 cv=Tu/mhCXh c=1 sm=1 tr=0 ts=6808bcdb cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=TW7uPGGm3D3UErKGQS8A:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: mVgfIgoyRZNrd-9AF9KkZNaPDzIR6ppl
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 1/9] scsi: ufs: qcom: add a new phy calibrate API call
+To: Nitin Rawat <quic_nitirawa@quicinc.com>, vkoul@kernel.org,
+        kishon@kernel.org, manivannan.sadhasivam@linaro.org,
+        James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com,
+        bvanassche@acm.org, bjorande@quicinc.com, neil.armstrong@linaro.org
+Cc: quic_rdwivedi@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+References: <20250410090102.20781-1-quic_nitirawa@quicinc.com>
+ <20250410090102.20781-2-quic_nitirawa@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250410090102.20781-2-quic_nitirawa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDIzMDA3MyBTYWx0ZWRfXyzeOD44akN6r i/qfFQLiArt0cfQYCaA/t8Af+uzKjmoDlpaKtlcKGIDee5oP5FuCjfKFpsSnfBVPYinVNurunbF 674sa+Nlqs6CtIvRFVJ2MbGwaT40Go5fXPNWIJF/NuIP/76BJbU/O652SF5+ylpMbI0IUQYMgXP
+ nZfs003ihUVqhxpprknfS0q/r5HKdlWxjdI+6cqOaAihUQR47qdKyjKi3f82RuozqqZaGKO1f1A J95qLNUUpisVAI0ckkPBDeCW2CNbhKCha3PQLUjhcHS/972gYd7dsAF7YrQgAUa17Tr3mtY/kXJ 99fzDOq4AezQyMrhBpVJZGzoJr35rTJ6UTY+IkPV21JPawa40QvrOjpI9segPAezFYXphB4/WBy
+ 1U0CBZNHpQG2/stloQyKgqJBQb+juESdc7+Oq6NRlO5QsP55fLxD6BycQV1QDTekugQPjNZc
+X-Authority-Analysis: v=2.4 cv=bs1MBFai c=1 sm=1 tr=0 ts=6808c40c cx=c_pps a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=P7VlLZW0XDfqy93HOhEA:9 a=QEXdDO2ut3YA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: _clEPQ69S-thegmM51kGebs0RZsU0Y4P
+X-Proofpoint-GUID: _clEPQ69S-thegmM51kGebs0RZsU0Y4P
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-23_06,2025-04-22_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
- impostorscore=0 adultscore=0 phishscore=0 mlxlogscore=999 bulkscore=0
- mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504230068
+ definitions=2025-04-23_07,2025-04-22_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=999 mlxscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 impostorscore=0 malwarescore=0
+ clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504230073
 
-Add reset node to initialize the value of
-priority/condition_decode/condition_select/timer/counter nodes
+On 4/10/25 11:00 AM, Nitin Rawat wrote:
+> Introduce a new phy calibrate API call in the UFS Qualcomm driver to
+> separate phy calibration from phy power-on. This change is a precursor
+> to the next patchset in this series, which requires these two operations
+> to be distinct.
+> 
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 1b37449fbffc..4998656e9267 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -473,6 +473,12 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>  		goto out_disable_phy;
+>  	}
+>  
+> +	ret = phy_calibrate(phy);
+> +	if (ret) {
+> +		dev_err(hba->dev, "%s: Failed to calibrate PHY %d\n",
 
-Signed-off-by: Songwei Chai <quic_songchai@quicinc.com>
----
- .../testing/sysfs-bus-coresight-devices-tgu   |  7 ++
- drivers/hwtracing/coresight/coresight-tgu.c   | 75 +++++++++++++++++++
- 2 files changed, 82 insertions(+)
+Please add a colon, so that it becomes "..PHY: %d\n"
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
-index 2843cecead55..117e648d2853 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
-@@ -42,3 +42,10 @@ KernelVersion   6.15
- Contact:        Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Sam Chai (QUIC) <quic_songchai@quicinc.com>
- Description:
-                 (RW) Set/Get the counter value with specific step for TGU.
-+
-+What:           /sys/bus/coresight/devices/<tgu-name>/reset_tgu
-+Date:           February 2025
-+KernelVersion   6.15
-+Contact:        Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Sam Chai (QUIC) <quic_songchai@quicinc.com>
-+Description:
-+                (Write) Write 1 to reset the dataset for TGU.
-diff --git a/drivers/hwtracing/coresight/coresight-tgu.c b/drivers/hwtracing/coresight/coresight-tgu.c
-index 4a58f2cb8d8c..b44c876e7cc7 100644
---- a/drivers/hwtracing/coresight/coresight-tgu.c
-+++ b/drivers/hwtracing/coresight/coresight-tgu.c
-@@ -477,6 +477,80 @@ static ssize_t enable_tgu_store(struct device *dev,
- }
- static DEVICE_ATTR_RW(enable_tgu);
- 
-+/* reset_tgu_store - Reset Trace and Gating Unit (TGU) configuration. */
-+static ssize_t reset_tgu_store(struct device *dev,
-+			       struct device_attribute *attr, const char *buf,
-+			       size_t size)
-+{
-+	unsigned long value;
-+	struct tgu_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	int i, j, ret;
-+
-+	if (kstrtoul(buf, 0, &value) || value == 0)
-+		return -EINVAL;
-+
-+	if (!drvdata->enable) {
-+		ret = pm_runtime_get_sync(drvdata->dev);
-+		if (ret < 0) {
-+			pm_runtime_put(drvdata->dev);
-+			return ret;
-+		}
-+	}
-+
-+	spin_lock(&drvdata->spinlock);
-+	CS_UNLOCK(drvdata->base);
-+
-+	tgu_writel(drvdata, 0, TGU_CONTROL);
-+
-+	if (drvdata->value_table->priority)
-+		memset(drvdata->value_table->priority, 0,
-+			    MAX_PRIORITY * drvdata->max_step *
-+				drvdata->max_reg * sizeof(unsigned int));
-+
-+	if (drvdata->value_table->condition_decode)
-+		memset(drvdata->value_table->condition_decode, 0,
-+			    drvdata->max_condition_decode * drvdata->max_step *
-+				sizeof(unsigned int));
-+
-+		/* Initialize all condition registers to NOT(value=0x1000000) */
-+	for (i = 0; i < drvdata->max_step; i++) {
-+		for (j = 0; j < drvdata->max_condition_decode; j++) {
-+			drvdata->value_table
-+			->condition_decode[calculate_array_location(
-+			drvdata, i, TGU_CONDITION_DECODE, j)] =
-+			0x1000000;
-+		}
-+	}
-+
-+	if (drvdata->value_table->condition_select)
-+		memset(drvdata->value_table->condition_select, 0,
-+				drvdata->max_condition_select * drvdata->max_step *
-+				sizeof(unsigned int));
-+
-+	if (drvdata->value_table->timer)
-+		memset(drvdata->value_table->timer, 0,
-+			    (drvdata->max_step) *
-+				(drvdata->max_timer) *
-+				sizeof(unsigned int));
-+
-+	if (drvdata->value_table->counter)
-+		memset(drvdata->value_table->counter, 0,
-+			    (drvdata->max_step) *
-+				(drvdata->max_counter) *
-+				sizeof(unsigned int));
-+
-+	dev_dbg(dev, "Coresight-TGU reset complete\n");
-+
-+	CS_LOCK(drvdata->base);
-+
-+	drvdata->enable = false;
-+	spin_unlock(&drvdata->spinlock);
-+	pm_runtime_put(drvdata->dev);
-+
-+	return size;
-+}
-+static DEVICE_ATTR_WO(reset_tgu);
-+
- static const struct coresight_ops_helper tgu_helper_ops = {
- 	.enable = tgu_enable,
- 	.disable = tgu_disable,
-@@ -488,6 +562,7 @@ static const struct coresight_ops tgu_ops = {
- 
- static struct attribute *tgu_common_attrs[] = {
- 	&dev_attr_enable_tgu.attr,
-+	&dev_attr_reset_tgu.attr,
- 	NULL,
- };
- 
+> +			__func__, ret);
+Avoid __func__, this print is fine without it
+
+Shouldn't we fail the power-on if this can't succeed?
+
+Konrad
 
