@@ -1,132 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-55377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAACEA9ABB5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 13:28:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C3F4A9ABC5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 13:30:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 49D129273C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 11:28:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA4634A4FE5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 11:29:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA792223DEA;
-	Thu, 24 Apr 2025 11:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D62FB22489A;
+	Thu, 24 Apr 2025 11:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="WTO+fOKy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hECWH0BD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE767433A8;
-	Thu, 24 Apr 2025 11:28:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35CA223DE5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 11:29:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745494096; cv=none; b=DXfDeqmytS2DtM36d9QGvSOwQp83NGbqtmYw7B3JcZTYPcN3Cz3DEsN5xYfVGFXVvj8iTx0qrmBJgqhV4oYVui/4DziRwitP+1YO4BNZK0aKRffGcFfRnimNVL9XNnHJuZMh0S17WUMzHLm2YHl2oekRMzCCaUPzLMlgCqZQv30=
+	t=1745494184; cv=none; b=LapZ2zLfdkC18lzuMTPY554xBWykIUaSzEKkLmCAKCmDj6zjj/39lcTKZjXIo3PFVoMO4kNiutycivjY1b8bQZNv9dfOSxkeI5g70LqS9WZ+N8RvOMOw4QcvVejGjl3tdkpj5J1cf+PltNwuJ+BbBGziMbg7MOmvBAg5bnW0xC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745494096; c=relaxed/simple;
-	bh=CyJVoe2ZUL2gvSariDtI00c71P95ZF57iP9ul8EBZy0=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bwzw219P8xy4gPJpRxTlZeR9FJFmKFCz6PGBJx3KiiEIRfye5hOTSmch2XUjYIOHbAe97bsCN7XbN9Iv6QHggXAwty3Pm+auBFrQosbeAf8NK75S02EVmjL/QG+CDc0tcyFyiGg5XUzBfNaj34hAP6KREGh+D51qJP2LgXWBL38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=WTO+fOKy; arc=none smtp.client-ip=217.70.183.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 3AD1F43A07;
-	Thu, 24 Apr 2025 11:28:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1745494091;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Bz9b9HTv2sWKqYaZLjCkIaHyjCRTMEZ4N5CM7lBAIjs=;
-	b=WTO+fOKy08+k3R6VOo4FgIrrMPsiB/nAVAOfJMQAdVSxjWQogtIY5cFgPAk1SOOSNg84v5
-	YAycUQfirISNqB46b6Rq2Kb0/kVJ/dVEDf6CJhl7XDUG4q1uUDmCk208gBMtVQ1QLCcowA
-	g+fPgfDstAalRZjliFX6HSgfLCdZRZcUtPau+3ZpOneb+uQBqfC5TO3g1NgDEjHo5A2vBl
-	J+gh7wITo8g5J8vLAI13NXWX+GLjyMQP1oVXIARzj/ipCf1WquNYUKY8S/ZYFKBK0oZlOQ
-	bt2f1BodPSa+XQVEebdOJs0qRrfqWeThlK3iYiydfl+WN4DaUXnuKi9a5EyTRA==
-Date: Thu, 24 Apr 2025 13:28:04 +0200
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-To: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Cc: Anusha Srivatsa <asrivats@redhat.com>, Paul Kocialkowski
- <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, =?UTF-8?B?SGVy?=
- =?UTF-8?B?dsOp?= Codina <herve.codina@bootlin.com>, Hui Pu
- <Hui.Pu@gehealthcare.com>, Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
- dri-devel@lists.freedesktop.org, asahi@lists.linux.dev,
- linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev,
- imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
- linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com,
- Michal Simek <michal.simek@amd.com>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman
- <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki
- <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
- <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Douglas Anderson
- <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, Krzysztof
- Kozlowski <krzk@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH 29/34] drm: zynqmp_dp: convert to
- devm_drm_bridge_alloc() API
-Message-ID: <20250424132804.30bcc49a@booty>
-In-Reply-To: <6b699329-8ed4-4be6-81bb-17b4bf800d34@ideasonboard.com>
-References: <20250407-drm-bridge-convert-to-alloc-api-v1-0-42113ff8d9c0@bootlin.com>
-	<20250407-drm-bridge-convert-to-alloc-api-v1-29-42113ff8d9c0@bootlin.com>
-	<6b699329-8ed4-4be6-81bb-17b4bf800d34@ideasonboard.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1745494184; c=relaxed/simple;
+	bh=73VMJJMB6i8oFzFknLVb9MdE7m/1cEhj6Q3/0RdUoh0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bjDJwkbgt/101pIxOUwDzAD/YSxRkKrNsKoOWPXdvsasAZcedF/LSxN3SOM0HcNcFmXrO4Zuy8idXE1lPD/mpJ8X5C1s/xpmV8H1hHobUKD5usxlvyVS+q84/Nz22AwXIVFgIxe2BsNphC9ahYFyrPCgVKUNiV5BhzHVJFmiE60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hECWH0BD; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-39c0dfba946so629188f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 04:29:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1745494181; x=1746098981; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jrtsDrUlmX7+CYrZdAD+RGxT3LfUayvvHtZlEV2ANSk=;
+        b=hECWH0BDWb4pdIyjOWaRXgN3nkc8Mp4FQbkC1YLz0caL4nZ5NSHEzAEiLyHW3sqCTL
+         6f6QbltY/qjl4mXjgABi9ziDAdFivNy4IoWKHIDwtSn2HxK7MJ9LS/6CLJSq3QAQRSKK
+         f1VomrxdR/ukSg9CK8DEc9t4oZlJAD1qSadjggH40pJeNS8i8Qd8FDqdmK8wfSaRoBYy
+         m0cF2mEck3x6ZxTDCiNBRZOL5UtOYezQg6O3iBufZ/UgqNqqKP0gThP3YMzTaYwDl1Iy
+         OyHMa2JgMhBYTpnLmyH9KWyckXGiqUc5YMBEon7XrNn8bJptzVMMDyGOul0wqKh6g5zF
+         AW+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745494181; x=1746098981;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jrtsDrUlmX7+CYrZdAD+RGxT3LfUayvvHtZlEV2ANSk=;
+        b=CMuT7Usvnuh9VGZ40J7D63qtw5R2Y/G4nwqeYX+xtJ3aPdmC0UFyuxX0NBVgXTRn9S
+         8KKuqq9Qsu+oca2OxYvcsKQXDGxIisldRv7GqnWMY2BpKLnMdbqeNeMPw/iGuvmzhl3C
+         fHMyJq02k5VTJDtxYT/mP+WgDuW7JITNAiWORjz20WkwCHJPE1lpBOaOqripBBYf+XAa
+         JDP4R1Y4Pj/GHTgRMRbq6WLY2GYFHcJakHZRrwL5xgsPizmNpNTvB0V/aTM5PQ0Zli6j
+         xcReG/hOncbkfUXQwgRwNQ5MPM1yiys1ibTRec2yXKbujBDiJXUfhCLp66uuS4jTfxAD
+         qXhw==
+X-Forwarded-Encrypted: i=1; AJvYcCXZe6luMnzpxB+BQlScViHeoZZ1/cd2Mw71ia//kpkAiPDKeRYv4UznrEhuZ6eiEBQ6Lt/rA5EVnooSoXMA@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzUsCiWG7bpskEh0zKjGCSaVZpa3LbJ6TPVL30o3N1oLgaTo9v
+	/31wkRlZtdVX0v2/xWjKjiBvu39OoR1hyoBJMJ+olYDlUwhWMWd+GFJNgeCmSWw=
+X-Gm-Gg: ASbGnctHvPP8kWO6i/YGgn2jIZpcCT1GZn1/YPZ3op+nPXrTxYGAQegkWEZaB/v3gA4
+	LLyAhlLyvlLPE6/axkeu4grtMrB7wf+DcP4XC1BfrpkRKbf50CuHWwp20GU/szjMkegFGdte1zN
+	6s3US/CVg5VwZ77VGKbbBADzAb9YdL+frH7+o0FfVknzSLMOLwuO21z7GHrLkBBWECC2YOZlWTl
+	bI9gqQ0sJqGhvevNfOEY99dpj7i9+aLvR3XHx/Xs3b3+IhZ2GBOyFXkC/OGe152Z2u27vBU8Qo9
+	ewNWcwid27g/aMZrBxzFXGPaQlGlIXepnQge+ppPZEh4gi+Dsx8n1G7VRAkSI2p6GIrNOl4BDgc
+	PApgQLA==
+X-Google-Smtp-Source: AGHT+IG8y1FTZe1dgMPfnhNIz1U2o0nx+jVk2Oo5YgUgntxJOGG4Efw53H1Ek38xA6mQECpCwY9DVA==
+X-Received: by 2002:a5d:47aa:0:b0:39a:d336:16 with SMTP id ffacd0b85a97d-3a06cf62a35mr1844165f8f.34.1745494181044;
+        Thu, 24 Apr 2025 04:29:41 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a06d4a8003sm1778095f8f.1.2025.04.24.04.29.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Apr 2025 04:29:40 -0700 (PDT)
+Message-ID: <f05cba73-6d8b-4b7b-9ebe-366fcd92a079@linaro.org>
+Date: Thu, 24 Apr 2025 12:29:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/5] dt-bindings: media: Add qcom,x1e80100-camss
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+References: <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-0-edcb2cfc3122@linaro.org>
+ <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-2-edcb2cfc3122@linaro.org>
+ <3ec3fd62-bf21-47e7-873c-ce151589d743@linaro.org>
+ <54eeb470-cd90-4bc2-b415-6dea1ce2321d@linaro.org>
+ <0ab31397-580f-4e5a-b9ad-d9bf79d29106@linaro.org>
+ <36feffed-4558-4e59-97db-2f0e916dbfc7@linaro.org>
+ <krofzevprczeuptn6yfj4n656qsw52s52c7cgiwotidxmi2xo6@d3q5bb5zbccc>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <krofzevprczeuptn6yfj4n656qsw52s52c7cgiwotidxmi2xo6@d3q5bb5zbccc>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeelfeehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeertdertddvnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeelffefgfehhfdtvdefueefieevkefggfelkeeiudetkeektedvhedukefgvddvnecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepgedvpdhrtghpthhtohepthhomhhirdhvrghlkhgvihhnvghnsehiuggvrghsohhnsghorghrugdrtghomhdprhgtphhtthhopegrshhrihhvrghtshesrhgvughhrghtrdgtohhmpdhrtghpthhtohepphgruhhlkhesshihshdqs
- ggrshgvrdhiohdprhgtphhtthhopehluhhmrghgsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehhvghrvhgvrdgtohguihhnrgessghoohhtlhhinhdrtghomhdprhgtphhtthhopefjuhhirdfruhesghgvhhgvrghlthhhtggrrhgvrdgtohhmpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtohepughrihdquggvvhgvlheslhhishhtshdrfhhrvggvuggvshhkthhophdrohhrgh
-X-GND-Sasl: luca.ceresoli@bootlin.com
 
-Hello Tomi,
+On 24/04/2025 11:45, Dmitry Baryshkov wrote:
+>> Which would then be consistent across SoCs for as long as 0p9 and 1p2 are
+>> the power-domains used by these PHYs.
+> This won't be consistent with other cases where we have a shared power
+> pin. For example, for PMICs we provide supply names which match pin
+> names rather than one-supply-per-LDO.
 
-On Wed, 16 Apr 2025 15:31:41 +0300
-Tomi Valkeinen <tomi.valkeinen@ideasonboard.com> wrote:
+Yes but taking a random example from a PMIC vdd-l2-l13-l14-supply is 
+specific to a given PMIC, so you need to name it specifically wrt its 
+PMIC pin-name whereas csiphyX-1p2 is there for every CSIPHY we have.
 
-> Hi,
-> 
-> On 07/04/2025 17:23, Luca Ceresoli wrote:
-> > This is the new API for allocating DRM bridges.
-> > 
-> > This driver has a peculiar structure. zynqmp_dpsub.c is the actual driver,
-> > which delegates to a submodule (zynqmp_dp.c) the allocation of a
-> > sub-structure embedding the drm_bridge and its initialization, however it
-> > does not delegate the drm_bridge_add(). Hence, following carefully the code
-> > flow, it is correct to change the allocation function and .funcs assignment
-> > in the submodule, while the drm_bridge_add() is not in that submodule.
-> > 
-> > Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+For example on qcom2290 there's a shared power-pin for 
+VDD_A_CAMSS_PLL_1P8 but then individual power-pins for VDD_A_CSI_0_1P2 
+and VDD_A_CSI_1_1P2.
 
-[...]
+If we follow the general proposal of
 
-> To add to my last mail, this clearly cannot be right, as it changes 
-> kzalloc call to devm_* call, without removing the kfree()s...
+vdd-csiphyX-1p2-supply
+vdd-csiphyX-0p9-supply
 
-Thank you very much for having tested this patch and found the mistake!
-I have checked all other patches in the series and found no other
-instance of this specific flaw, but a couple flaws of a different
-nature. I'm now fixing all of them and will send v2 later today.
+in the yaml, then whether SoCs like qcm2290 share 1p8 or SoCs like 
+sm8650, sm8450, x1e have individual 1p8 pins is up to the dtsi to decide.
 
-Luca
-
--- 
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+---
+bod
 
