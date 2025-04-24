@@ -1,185 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-55442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E026EA9B136
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:39:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C446CA9B1EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 17:18:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D7EB8194219D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:39:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5F911169438
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 15:18:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4F15185B48;
-	Thu, 24 Apr 2025 14:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 126EC1A3161;
+	Thu, 24 Apr 2025 15:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dLgWaQfQ"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="FtyAuiP8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA81117A5BD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:39:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D0E14F9EB;
+	Thu, 24 Apr 2025 15:18:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745505575; cv=none; b=E5Vl+/T94rV4jue553c6puq1QZ4ubVhwTT/wb3EDSPiuZwQIt2nnCrOx0Cm7kWx5xF/RNmJjeNJLUJ4bcIKcoGn14KIkLbl7JknJvIBQUUYrOkbdWpYKMfCpf46ZE9YfHlUpAMd5CQat1+m6oFQx/leB7Rh5b2JZvo8T76HEqf4=
+	t=1745507928; cv=none; b=f67fAfih1sdbHwMUc6y+fhvn9WjZc5GMju2eJ4Q3DmdjvXHzfHulkSrjpaVgEUz5RZk56VwSfMtz709VCcJa/JjcOK+qpU3wAjhLspGc3XUVENOqNmdKKtx8/flAjSuG1riWl3tI7Eo6/c/99iqIfjuRiEPaO1++huZr4FHxIs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745505575; c=relaxed/simple;
-	bh=tjTun3+QMHsb18vgwjRVBQvaVSnTULRZQf43KMXODKA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GdiBSCLafM5de2W2gbuKQ9VY2fdEGWP7n9FnqiUMRYXkq9RJEX1hR0tBGPZKAFpaPoy+DvdhuqywUdPU+yDNKMvSB4rfUK8E8Q/HCW+uQ+QLSuPFtoQZieJtvnAnQ7zC2SgvYmF1dy7bZb4bQeDAHjYPnuA2PQ/WzD7FHrMLShU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dLgWaQfQ; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-391295490c8so72165f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:39:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745505572; x=1746110372; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=f7qUmlXZ2pLbCIPmypgfiGHhX5nNOykglYCDqUy1IAI=;
-        b=dLgWaQfQa8O0/IV376duLGMgnGM3QvVPYy51vdwRTCoUpaiNM51ePE9sYx3Ir7m48y
-         Mpp/N6NG0fVd8BijJDu3OQNOH0dN6Ba5iuuidtecbMAm3v8nbMmSsqy/Y5QYC7VESzd5
-         s4nlfY9sM5tqHxB004vMaxMTnHqaPTXZE3U4DCPM8bkxDMipDs4mAfbMB81j0hhnIlZy
-         rtt/ALQyPTC/W6LjFQl82QVVzM92zXkVSKsMU0t0UzW/aFSglkzNYStqGop/lgYBYU25
-         jdFHiKDheHMyHefMRjAULp81msM3j/N+sbouOdxzYnoj1YViYf1BSFHcVZ6JrPIqiwnC
-         IdMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745505572; x=1746110372;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f7qUmlXZ2pLbCIPmypgfiGHhX5nNOykglYCDqUy1IAI=;
-        b=r3kgpidkrqBySCOkivE85qwZeO1w3G7LvSRkLuMHNqYN05BSgSpiJqjW2TCSRq4/g7
-         OJZm6VLbaiRo1D68Ry8StmaKxevK9bNnz/++JiC1Dmu6ntioqPV0YEtQi9ETZLWQ33ts
-         Q3hqM6zfPuD8g66Nrz5JbkhC20UW7n1RARDo7dFbBJQZoadKhu0OQzCf5EHsAuA+9Dtw
-         XocthV6vrwZY1jjdnEh0PY5y+1Oz5zfKOjZU5Ar+ebzUaJ8Bx+qZH9tvsnyqcxlUiYHK
-         v3j36hjVQX0Qk1IKMNdWLx/d6eMn+8ef0P7Qn+mxkHo7Bt+VX+BqMsfrmWv/HlC/FQQw
-         yxCw==
-X-Forwarded-Encrypted: i=1; AJvYcCXm8qc9zMEYuNT04UF5KbRW2t3rJW47cBQwM94fQpnKWp05uhXCYr3ISq9+O0ykQkyI6r9RsZPwKFz3YREo@vger.kernel.org
-X-Gm-Message-State: AOJu0YznlHmssaOVXg5CH++UAbzYwfB97rARBCIOezYyXlrjKh4ctwUV
-	DROsiQSqUUs/MK3MwRIRNlNfyB+NF0kULgYiutRAekXxeDYvsUNXa8rJqJL2WBA=
-X-Gm-Gg: ASbGnctIEWYsKHOhTsx4n+Wqt+rnQHjyNAw96Cbnw7KEXkTyZd9XuQeEezGuNJVrsEW
-	04k7FaTgBJiNdGbtg4VoSHigzL7G1Rvv5JBXqUbn6aq5br8ERnbnyhlt5lM9LUkxzQtb6yWGYlo
-	8FxLXeOLX5BrvVlEa/4Hjm7BT/ixvV6ZD8b+yQVacMrLSyp1FuQB/lC2wei4gyE3xJmNH0vo09Y
-	nGvHr/S1oKPFIZHpkCkDCnCE/h2J5jTD2Sfu/KhsINB4MjwxudkW0Z0jJiQ+TqXlIP4lakOHmKU
-	bmhDLey4weuOoPwVYMUf2s5gEbwev/qO8/G9F0vDjSi1FmXXJkn4eeRoS7c=
-X-Google-Smtp-Source: AGHT+IGpXKfd7zkb5GxIWBKYkreXNXNfFhHP54+thzmnG0KgMIvx4hnph/tOHz06RnPnR7UjEWxDUA==
-X-Received: by 2002:a05:6000:1846:b0:386:3a50:8c52 with SMTP id ffacd0b85a97d-3a06cf5beeamr952306f8f.7.1745505571888;
-        Thu, 24 Apr 2025 07:39:31 -0700 (PDT)
-Received: from [192.168.1.29] ([178.197.207.88])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a06d4a804fsm2386814f8f.10.2025.04.24.07.39.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Apr 2025 07:39:31 -0700 (PDT)
-Message-ID: <3818d7c2-187f-409f-8479-bcdd6c0e9be3@linaro.org>
-Date: Thu, 24 Apr 2025 16:39:29 +0200
+	s=arc-20240116; t=1745507928; c=relaxed/simple;
+	bh=Cfwo3zn+LUVCR2Nba2kjhqU4b8JvbapZ+dJDwNIQvR0=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=EpAfHHM/cZW7QZDcODT5v0gXgGQUq9JGpQnUL0jhw5qEFqJ3uxspALMaQT6hra1eHfVdreNJzdhQRVZRFYMCvUXs+zH/Rs2a3P1+iZzGqNOQmTdRiApqYiXlpAcvye58xJPlbxrLFaQhvgd6N4CLZtLGe84wVeDr+SCL2c+w8Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=FtyAuiP8; arc=none smtp.client-ip=217.70.183.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 4481743B2E;
+	Thu, 24 Apr 2025 15:18:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1745507923;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8IVmwrk7aGTZcp/7NN8zrGIfqqXduX0J3M9hpB/pHPA=;
+	b=FtyAuiP8ARUUv2xs4PPtC4FuRrb5XYgrq7nTPDnp6BcGNmDvjt3hiUhZJ4gakGWOTMm285
+	izxLY19qRdbJgJHFDSKAmWuF147STQIQIY3Vvwl7qEaG7qJvaXjNpLiY9Vfya0P+MRrZDU
+	AaSSvmPNKnk2zfXYGcIo6csHPDBpesNfnl+mfWjAWossSdTGC2MKU8egwvpd6GBwyGo54M
+	fRZ/GwgbtAhX6Rj0x9SRnbLCNylZJ2rKp10NgYWNfJY6XoWyZWuZlAVflEcsvXYf2Mdzcj
+	OQ1uc5DdEPbXp2iO9ebp0rO3bbg1DWD4/1SRv2zche6VhM3c2W8AAxGm0SHemw==
+Date: Thu, 24 Apr 2025 17:18:38 +0200
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+To: Maxime Ripard <mripard@kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann
+ <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter
+ <simona@ffwll.ch>, Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong
+ <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, Laurent
+ Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman
+ <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki
+ <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
+ <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Douglas Anderson
+ <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, Krzysztof
+ Kozlowski <krzk@kernel.org>, Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>, Anusha Srivatsa <asrivats@redhat.com>, Paul
+ Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>,
+ =?UTF-8?B?SGVydsOp?= Codina <herve.codina@bootlin.com>, Hui Pu
+ <Hui.Pu@gehealthcare.com>, Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+ dri-devel@lists.freedesktop.org, asahi@lists.linux.dev,
+ linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev,
+ imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH 34/34] drm/bridge: panel: convert to
+ devm_drm_bridge_alloc() API
+Message-ID: <20250424171838.21a95d80@booty>
+In-Reply-To: <20250408-thankful-husky-of-weather-355cae@houat>
+References: <20250407-drm-bridge-convert-to-alloc-api-v1-0-42113ff8d9c0@bootlin.com>
+	<20250407-drm-bridge-convert-to-alloc-api-v1-34-42113ff8d9c0@bootlin.com>
+	<20250408-thankful-husky-of-weather-355cae@houat>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC/WIP 3/4] arm64: dts: qcom: sm8750-mtp: Enable USB
- headset and Type-C altmode
-To: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Jessica Zhang <jesszhan@quicinc.com>, Abhinav Kumar
- <abhinavk@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250424-sm8750-display-dts-v1-0-6fb22ca95f38@linaro.org>
- <20250424-sm8750-display-dts-v1-3-6fb22ca95f38@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20250424-sm8750-display-dts-v1-3-6fb22ca95f38@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeelkedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeertdertddvnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeelffefgfehhfdtvdefueefieevkefggfelkeeiudetkeektedvhedukefgvddvnecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepgedtpdhrtghpthhtohepmhhrihhprghrugeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrrghrthgvnhdrlhgrnhhkhhhorhhstheslhhinhhugidrihhnthgvlhdrtghomhdprhgtphhtthhopehtiihimhhmvghrmhgrn
+ hhnsehsuhhsvgdruggvpdhrtghpthhtoheprghirhhlihgvugesghhmrghilhdrtghomhdprhgtphhtthhopehsihhmohhnrgesfhhffihllhdrtghhpdhrtghpthhtoheprghnughriigvjhdrhhgrjhgurgesihhnthgvlhdrtghomhdprhgtphhtthhopehnvghilhdrrghrmhhsthhrohhngheslhhinhgrrhhordhorhhgpdhrtghpthhtoheprhhfohhssheskhgvrhhnvghlrdhorhhg
+X-GND-Sasl: luca.ceresoli@bootlin.com
 
-On 24/04/2025 15:04, Krzysztof Kozlowski wrote:
-> MTP8750 does not have audio jack connected and relies on USB mux
-> (WCD9395).  Add necessary nodes for proper audio headset support along
-> with USB Type-C altmode and orientation.
+Hi Maxime,
+
+On Tue, 8 Apr 2025 17:51:08 +0200
+Maxime Ripard <mripard@kernel.org> wrote:
+
+> Hi,
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 58 +++++++++++++++++++++++++++++++++
->  1 file changed, 58 insertions(+)
+> On Mon, Apr 07, 2025 at 05:27:39PM +0200, Luca Ceresoli wrote:
+> > This is the new API for allocating DRM bridges.
+> > 
+> > The devm lifetime management of this driver is peculiar. The underlying
+> > device for the panel_bridge is the panel, and the devm lifetime is tied the
+> > panel device (panel->dev). However the panel_bridge allocation is not
+> > performed by the panel driver, but rather by a separate entity (typically
+> > the previous bridge in the encoder chain).
+> > 
+> > Thus when that separate entoty is destroyed, the panel_bridge is not
+> > removed automatically by devm, so it is rather done explicitly by calling
+> > drm_panel_bridge_remove(). This is the function that does devm_kfree() the
+> > panel_bridge in current code, so update it as well to put the bridge
+> > reference instead.
+> > 
+> > Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+
+[...]
+
+> > --- a/drivers/gpu/drm/bridge/panel.c
+> > +++ b/drivers/gpu/drm/bridge/panel.c
+> > @@ -287,15 +287,14 @@ struct drm_bridge *drm_panel_bridge_add_typed(struct drm_panel *panel,
+> >  	if (!panel)
+> >  		return ERR_PTR(-EINVAL);
+> >  
+> > -	panel_bridge = devm_kzalloc(panel->dev, sizeof(*panel_bridge),
+> > -				    GFP_KERNEL);
+> > -	if (!panel_bridge)
+> > -		return ERR_PTR(-ENOMEM);
+> > +	panel_bridge = devm_drm_bridge_alloc(panel->dev, struct panel_bridge, bridge,
+> > +					     &panel_bridge_bridge_funcs);
+> > +	if (IS_ERR(panel_bridge))
+> > +		return (void *)panel_bridge;
+> >  
+> >  	panel_bridge->connector_type = connector_type;
+> >  	panel_bridge->panel = panel;
+> >  
+> > -	panel_bridge->bridge.funcs = &panel_bridge_bridge_funcs;
+> >  	panel_bridge->bridge.of_node = panel->dev->of_node;
+> >  	panel_bridge->bridge.ops = DRM_BRIDGE_OP_MODES;
+> >  	panel_bridge->bridge.type = connector_type;
+> > @@ -327,7 +326,7 @@ void drm_panel_bridge_remove(struct drm_bridge *bridge)
+> >  	panel_bridge = drm_bridge_to_panel_bridge(bridge);
+> >  
+> >  	drm_bridge_remove(bridge);
+> > -	devm_kfree(panel_bridge->panel->dev, bridge);
+> > +	devm_drm_put_bridge(panel_bridge->panel->dev, bridge);
+> >  }
+> >  EXPORT_SYMBOL(drm_panel_bridge_remove);  
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-> index bd0918e8a7a7e03530eea577c7609454fecfdaf7..c3470e1daa6b7f31196645759be23fb168ce8eb7 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-> @@ -53,6 +53,15 @@ wcd939x: audio-codec {
->  		vdd-mic-bias-supply = <&vreg_bob1>;
->  
->  		#sound-dai-cells = <1>;
-> +
-> +		mode-switch;
-> +		orientation-switch;
-> +
-> +		port {
-> +			wcd_codec_headset_in: endpoint {
-> +				remote-endpoint = <&wcd_usbss_headset_out>;
-> +			};
-> +		};
->  	};
->  
->  	chosen {
-> @@ -220,6 +229,14 @@ port@1 {
->  					pmic_glink_ss_in: endpoint {
+> I'm fine with it on principle, but as a temporary measure.
+> 
+> Now that we have the panel allocation function in place, we can just
+> allocate a bridge for each panel and don't need drm_panel_bridge_add_*
+> at all.
+> 
+> As I was saying before, it doesn't need to happen right now, or before
+> the rest of your work for hotplug goes in. But this needs to be tackled
+> at some point.
 
-port@0 and port@1 need updates for endpoints as well. I will do that in v2.
+I totally agree this needs to be handled eventually, and also to get
+there in steps.
 
+The current status of this driver is not ideal, so I paid attention to
+not make it unnecessarily worse when writing this patch. Do you think
+the current patch is OK for the next step? I'm going to send v2 in a
+few hours, so don't hesitate to mention any improvements you deem
+necessary.
 
+Luca
 
-Best regards,
-Krzysztof
+-- 
+Luca Ceresoli, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
