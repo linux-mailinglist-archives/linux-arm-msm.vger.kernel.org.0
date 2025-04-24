@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-55417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97C42A9B07D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:19:11 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B72CA9B07F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:19:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B93C27B6818
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:17:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 983B57A688D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:17:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E3F2289346;
-	Thu, 24 Apr 2025 14:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA75028A1D9;
+	Thu, 24 Apr 2025 14:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aH33Dmtg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aAsLp2wi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFE7284B53
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:14:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A336288C8A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:14:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745504045; cv=none; b=IscAGrAGviNUYJ2yNkVvo/PSOccFrA/W5NQv0Y9JD3dePlU1hG5qA6R/rHjZlCiEcvXFEuEl8jkbZVtluXtrnZS8wUP9V2QduWPo6jV6aJZZ9UiViOxTbh2Pq/T5DqJPE4jMqTOS/CvZYooguqm9+1TlJd8RuE077yvuYZFYxb0=
+	t=1745504046; cv=none; b=K15OB8NXPbCkCX+R2AFXiEOUBFyECzRUNMJU9TyeAREUr1RgxcELYx0TE+S1xgkQCvP+pMwQ3DXt0FPEKePQC7jqcXzFA0zl+7YCSI1qfNX533At/1/XJ4QlwLWwweTJqXLE0bimLJw9MsJ/pOjEFGiLnmXT7Uf2pZ75YQ72C50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745504045; c=relaxed/simple;
-	bh=sOc+WgCBKAU0O5bB7WH2YBqY9uNwSXL1/wb8/ZYbbhE=;
+	s=arc-20240116; t=1745504046; c=relaxed/simple;
+	bh=cRJdZ/BvpG7Nf2HfvkjONlA6iN6G9YZT/kvCa6h8Pqk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EyEH7+4gifGenPY/Yd6oYlQkNJLC7AMm6H5QziGoT+UeQEpPHNkCYN+eDavr5Pe03oyldAK00f9gWian3OuNXbMKeXdeADEl6D9vHWqMfYZWlMe2cKhedCYil/gR6PW4D5wK2Qj/TPBW3uyMjuDSRII0Hs6+K8FzNCz5v82AhC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aH33Dmtg; arc=none smtp.client-ip=209.85.128.53
+	 MIME-Version; b=T6yRULJQ7TsQxXKV6ODxkoEUp0ixzfs63rgB6a/X7MlfGgtbZU4Ct+to6vH+2EEFkCWmJ/0N6mYXDoFdgYafYphtbcYUdPcSZDFyt1M+wrmXQNMXIJzP/42gTkCmWjapVPnHEv1Er0Q4shmV+Yc7qW5ZSMHlIJ7pjDRpTbRhmbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aAsLp2wi; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43cfe574976so7691715e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:14:02 -0700 (PDT)
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43d2d952eb1so7616575e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:14:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745504041; x=1746108841; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1745504042; x=1746108842; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OmKgb2P7k7ka3054x1IngydlF8noVj1FtGkMjW5J68k=;
-        b=aH33DmtgkOHqP2hwtI+u07WChhA2Fulbri6fmZWxNnrjT9saYqe/QqBtRtVXhmy4mf
-         Z5EXAZ1d8kblBZtjPBBu6of5eGkEaIx6RxIM9ZAoY2QreLBNLypaWtkE8SgCw+Wwy+Lq
-         beDcf6VKK7dfLO+SfEVGqoj1kMDTW32GRytELD1r9HRvEyNagr0FTcQEYNenN8TqHsUG
-         LFjBtao9OX7HlFxQGZdHxETlqI+oCLtPuZARLhzLK1ZCNKjga90rDDb1brJbUzGiqGbm
-         T7SnEpgHWa6qYBz/iWUCC88dfhzIHxczzTlYdnXNwhGuJRDXB2Kp3M9orQuiHaRDkKCl
-         QaZg==
+        bh=Iugp3VZMso7R61paVQ20sor9LWthQ+vE2iyUDGP7wsk=;
+        b=aAsLp2wiL4SnGGfuvk26Iktqh4BJnxFfKcsSxvjPEagGx7fi/GliYmXzZdgxm3FCgY
+         R/qwu/efZXZX7uKjiHZUoXchN/W/kcp5mMR2C5anR2hcIJ3vbCm0XaoUacmQvPV2g4gC
+         HvHEBkPZop2ckBPqpxuors2ZNP2+rwt8rpotniV0U9YiCzMm2V0lXTsv1bEPFgXatILl
+         U/awvhfv2MzQmr0N5FntwhNSvD/lPVBu2z7/NmOrnMklRKIOceLIopPA4Y1gRvEZFHOD
+         9Kr+mQE/POTKy/7qng9AwhhvaG/MFOECRAnsoxCXf/aZag79pLOhLgzi7sjdzUZ9WG4K
+         /FNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745504041; x=1746108841;
+        d=1e100.net; s=20230601; t=1745504042; x=1746108842;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OmKgb2P7k7ka3054x1IngydlF8noVj1FtGkMjW5J68k=;
-        b=IL9cDbHCiCtB1N/EmBD+xTnUVUEM7dfn5wtLh830xgjNuPr3NeezmN2yvDLYQ2HsEX
-         2dYzY34K/cGIjr6eSjqObLXW5nRRc98Jp0UwucxgWmpnpEmoUsv1dLG+4nCzfdl4iJPi
-         /6bhfwBEywJnrZkvhNyc0jQpF0c+YIAlMw4onc2FLH+DnkxNzfmVn/dKu6PGcigkq41/
-         POQE+KmpcIor4VPYTQxn5erKTROI2bWe7Hv5XlkiU/ETQsem5tHsXVykslXPDboL4nlZ
-         SYkU3JONZmkg/7vyHJg3leUyedrhhCd6yaLLTe1wjJnI/1KVKbAtwFkACFSSWa3zAiUS
-         cwWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXBou4wB8oU/mQxEe5UoLRkMXt2iTmteS/pIjOPEYa/K5U/GKhL6IcgAr9NDeKQVkl4OvwCB9J1/CBwqrLi@vger.kernel.org
-X-Gm-Message-State: AOJu0YwuWdoPgIp4ret3Q+2p925aCaSyda//CApTF1iNrR5tmZ+0rA65
-	biJNiFtWBBGpPX92p6Lb1lLHMaLBUNYOd8OA8d2nq1QrybqulmV8Rt2S9lG0qns=
-X-Gm-Gg: ASbGncuLnqVVP+P+NaJABZxEoER83JTijFVSAUNbzWiW7w11HpTmqRVXXS3fCzxWz++
-	U+mNk000jymmE8+PMrRSia4SJiKneg371JuBBVIK0TguMRR/veFTom58luCGoKUKJFBiVb5GAdF
-	o+/OQ1DVF6ryKCk0//swxJpammkQQC6xgWKBBvCCK65NA2tTIybnSGZuvN1H0Ia1Ka2ahau2LNv
-	9ovoveWZLrVxq7tSdWsOLFGjs0nzlWDqYtmARsSmXvJ3yIbogoFQhnKBkcM0yWx+CHMYPVSIrnT
-	IqvtEUUvRVf1pi4g1q9DnfTlAcdNSf5nnu94QMT6iIsl2riBzbsP6DywhVRG0Ek57/hCTe570cS
-	PW1E+c/gWcmdMnMpaqSMj3wvpq9s=
-X-Google-Smtp-Source: AGHT+IGfkZ98OulZ0pJYU5c1ld+aBqoKjFuSpgzRjo7Jvo/4HTkJCAjHkRJEje6F6WXTnu8CxQELEw==
-X-Received: by 2002:a05:600c:3b0c:b0:43c:e8ba:e166 with SMTP id 5b1f17b1804b1-4409bd83db4mr21261755e9.22.1745504040937;
-        Thu, 24 Apr 2025 07:14:00 -0700 (PDT)
+        bh=Iugp3VZMso7R61paVQ20sor9LWthQ+vE2iyUDGP7wsk=;
+        b=Gt4S4aHZ0LTE83aRMCkUt+sgr/w4wfHisuY/LNmYUu0HPZeMDWMOocB3JMNRbhoXb7
+         ElSJUDmV+GzJZ01fo80GDNkInfiMHSTdZ24ACFR5FWMcGdGBvxcp7EkHyf3sR3O+QrWY
+         YXThh2nzY2PysczoFqRH+jUeHgY5emMJHtrCmgrIrqBIAqU/pnkXzgAqJ+V6iA7RZz52
+         HJhr1EzjX6ul9Uarj1r+D/6DfmcSgufKKf6CoY/+OQ8/NO7pTPtopLwm+3NAstzZqjm0
+         HLYhZ1ssVpDUjRLh1RSBToquoft8dqom7pWqAEWJSmkADv0XFfxaAF/ilM37Yk6Bi9VE
+         dsSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXuLoDoG6C9bPDYyTKpry0hP7oL17JJBqFNpV/9WFm5kWSEhcEP7ejxEVtaEogAt0p+VUUdtZ9O2Z56j2Ed@vger.kernel.org
+X-Gm-Message-State: AOJu0YxGQdxyGoYJkaB40qE3JYg9l/1dgc6Na0GT9mF1P25MS4uGrzDY
+	xoUPpvaj7ppg8muLLe9Ps1i/l7ioU0l0knWGESJGUAbs6N2zDpAOmi4igWMCWMc=
+X-Gm-Gg: ASbGnct/aIa2aC095YWjp5ZKVt/xacSz/ZxtyCkYPSiuekcD0eDTLyC+UCicMldvIRx
+	ZJW+vaxXetlrhNA8iyiUOX6rsv6M3/FTENkuMto4oxvV93FRa9Iibpe8IGCMs/T6zNw6LUUTrVI
+	4PRFWVfSF49zvO8QQqqc+oOAqdWzxJNTEqSZ/qHSE/zYzIyGpXyIkvqg8YwOUaZ3q7V9RFdDhzp
+	R1G2NyPXU77WvmwhZugyx32Cw5dFI87PPVl9bMA9TzdN7KTHP8n72qPsMay08EPW4DXdp7ZmtA0
+	UCHot1x6iWczndDgm9BJNJWaX0OnpZq1BKpiCEV+rjVdAymU5jw6DPgkquxfLiI5/29iwIt7wm3
+	1gNi0K2ue91p5BNT5
+X-Google-Smtp-Source: AGHT+IFb5JrKaNG2KfYhmzfwfaDb/IjykBP33KVSW9og9BEhgmgsW+e69hlvAOQj6I5jNodxA+AwfQ==
+X-Received: by 2002:a05:600c:c092:b0:43c:e2dd:98ea with SMTP id 5b1f17b1804b1-4409c3b1e1amr23970305e9.22.1745504042259;
+        Thu, 24 Apr 2025 07:14:02 -0700 (PDT)
 Received: from seksu.systems-nuts.com (stevens.inf.ed.ac.uk. [129.215.164.122])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a06d4a8150sm2199951f8f.7.2025.04.24.07.13.59
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a06d4a8150sm2199951f8f.7.2025.04.24.07.14.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 07:14:00 -0700 (PDT)
+        Thu, 24 Apr 2025 07:14:01 -0700 (PDT)
 From: Karim Manaouil <karim.manaouil@linaro.org>
 To: linux-kernel@vger.kernel.org,
 	kvm@vger.kernel.org,
@@ -103,10 +103,12 @@ Cc: Karim Manaouil <karim.manaouil@linaro.org>,
 	Sreenivasulu Chalamcharla <sreeniva@qti.qualcomm.com>,
 	Trilok Soni <tsoni@quicinc.com>,
 	Stefan Schmidt <stefan.schmidt@linaro.org>,
-	Elliot Berman <quic_eberman@quicinc.com>
-Subject: [RFC PATCH 12/34] gunyah: Add hypervisor driver
-Date: Thu, 24 Apr 2025 15:13:19 +0100
-Message-Id: <20250424141341.841734-13-karim.manaouil@linaro.org>
+	Elliot Berman <quic_eberman@quicinc.com>,
+	Alex Elder <elder@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [RFC PATCH 13/34] gunyah: Add hypercalls to send and receive messages
+Date: Thu, 24 Apr 2025 15:13:20 +0100
+Message-Id: <20250424141341.841734-14-karim.manaouil@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250424141341.841734-1-karim.manaouil@linaro.org>
 References: <20250424141341.841734-1-karim.manaouil@linaro.org>
@@ -120,97 +122,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Elliot Berman <quic_eberman@quicinc.com>
 
-Add driver to detect when running under Gunyah. It performs basic
-identification hypercall and populates the platform bus for resource
-manager to probe.
+Add hypercalls to send and receive messages on a Gunyah message queue.
 
+Reviewed-by: Alex Elder <elder@linaro.org>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-Reviewed-by: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 Signed-off-by: Karim Manaouil <karim.manaouil@linaro.org>
 ---
- drivers/virt/Makefile        |  1 +
- drivers/virt/gunyah/Makefile |  3 +++
- drivers/virt/gunyah/gunyah.c | 52 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 56 insertions(+)
- create mode 100644 drivers/virt/gunyah/Makefile
- create mode 100644 drivers/virt/gunyah/gunyah.c
+ arch/arm64/gunyah/gunyah_hypercall.c | 55 ++++++++++++++++++++++++++++
+ include/linux/gunyah.h               |  8 ++++
+ 2 files changed, 63 insertions(+)
 
-diff --git a/drivers/virt/Makefile b/drivers/virt/Makefile
-index f29901bd7820..ef6a3835d078 100644
---- a/drivers/virt/Makefile
-+++ b/drivers/virt/Makefile
-@@ -10,3 +10,4 @@ obj-y				+= vboxguest/
- obj-$(CONFIG_NITRO_ENCLAVES)	+= nitro_enclaves/
- obj-$(CONFIG_ACRN_HSM)		+= acrn/
- obj-y				+= coco/
-+obj-y				+= gunyah/
-diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
-new file mode 100644
-index 000000000000..34f32110faf9
---- /dev/null
-+++ b/drivers/virt/gunyah/Makefile
-@@ -0,0 +1,3 @@
-+# SPDX-License-Identifier: GPL-2.0
-+
-+obj-$(CONFIG_GUNYAH) += gunyah.o
-diff --git a/drivers/virt/gunyah/gunyah.c b/drivers/virt/gunyah/gunyah.c
-new file mode 100644
-index 000000000000..3e795e3ba881
---- /dev/null
-+++ b/drivers/virt/gunyah/gunyah.c
-@@ -0,0 +1,52 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+diff --git a/arch/arm64/gunyah/gunyah_hypercall.c b/arch/arm64/gunyah/gunyah_hypercall.c
+index d44663334f38..1302e128be6e 100644
+--- a/arch/arm64/gunyah/gunyah_hypercall.c
++++ b/arch/arm64/gunyah/gunyah_hypercall.c
+@@ -37,6 +37,8 @@ EXPORT_SYMBOL_GPL(arch_is_gunyah_guest);
+ 
+ /* clang-format off */
+ #define GUNYAH_HYPERCALL_HYP_IDENTIFY		GUNYAH_HYPERCALL(0x8000)
++#define GUNYAH_HYPERCALL_MSGQ_SEND		GUNYAH_HYPERCALL(0x801B)
++#define GUNYAH_HYPERCALL_MSGQ_RECV		GUNYAH_HYPERCALL(0x801C)
+ /* clang-format on */
+ 
+ /**
+@@ -58,5 +60,58 @@ void gunyah_hypercall_hyp_identify(
+ }
+ EXPORT_SYMBOL_GPL(gunyah_hypercall_hyp_identify);
+ 
++/**
++ * gunyah_hypercall_msgq_send() - Send a buffer on a message queue
++ * @capid: capability ID of the message queue to add message
++ * @size: Size of @buff
++ * @buff: Address of buffer to send
++ * @tx_flags: See GUNYAH_HYPERCALL_MSGQ_TX_FLAGS_*
++ * @ready: If the send was successful, ready is filled with true if more
++ *         messages can be sent on the queue. If false, then the tx IRQ will
++ *         be raised in future when send can succeed.
 + */
-+
-+#include <linux/gunyah.h>
-+#include <linux/module.h>
-+#include <linux/of_platform.h>
-+#include <linux/platform_device.h>
-+
-+static int gunyah_probe(struct platform_device *pdev)
++enum gunyah_error gunyah_hypercall_msgq_send(u64 capid, size_t size, void *buff,
++					     u64 tx_flags, bool *ready)
 +{
-+	struct gunyah_hypercall_hyp_identify_resp gunyah_api;
++	struct arm_smccc_res res;
 +
-+	if (!arch_is_gunyah_guest())
-+		return -ENODEV;
++	arm_smccc_1_1_hvc(GUNYAH_HYPERCALL_MSGQ_SEND, capid, size,
++			  (uintptr_t)buff, tx_flags, 0, &res);
 +
-+	gunyah_hypercall_hyp_identify(&gunyah_api);
++	if (res.a0 == GUNYAH_ERROR_OK)
++		*ready = !!res.a1;
 +
-+	pr_info("Running under Gunyah hypervisor %llx/v%u\n",
-+		FIELD_GET(GUNYAH_API_INFO_VARIANT_MASK, gunyah_api.api_info),
-+		gunyah_api_version(&gunyah_api));
-+
-+	/* Might move this out to individual drivers if there's ever an API version bump */
-+	if (gunyah_api_version(&gunyah_api) != GUNYAH_API_V1) {
-+		pr_info("Unsupported Gunyah version: %u\n",
-+			gunyah_api_version(&gunyah_api));
-+		return -ENODEV;
-+	}
-+
-+	return devm_of_platform_populate(&pdev->dev);
++	return res.a0;
 +}
++EXPORT_SYMBOL_GPL(gunyah_hypercall_msgq_send);
 +
-+static const struct of_device_id gunyah_of_match[] = {
-+	{ .compatible = "qcom,gunyah-hypervisor" },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(of, gunyah_of_match);
++/**
++ * gunyah_hypercall_msgq_recv() - Send a buffer on a message queue
++ * @capid: capability ID of the message queue to add message
++ * @buff: Address of buffer to copy received data into
++ * @size: Size of @buff
++ * @recv_size: If the receive was successful, recv_size is filled with the
++ *             size of data received. Will be <= size.
++ * @ready: If the receive was successful, ready is filled with true if more
++ *         messages are ready to be received on the queue. If false, then the
++ *         rx IRQ will be raised in future when recv can succeed.
++ */
++enum gunyah_error gunyah_hypercall_msgq_recv(u64 capid, void *buff, size_t size,
++					     size_t *recv_size, bool *ready)
++{
++	struct arm_smccc_res res;
 +
-+/* clang-format off */
-+static struct platform_driver gunyah_driver = {
-+	.probe = gunyah_probe,
-+	.driver = {
-+		.name = "gunyah",
-+		.of_match_table = gunyah_of_match,
++	arm_smccc_1_1_hvc(GUNYAH_HYPERCALL_MSGQ_RECV, capid, (uintptr_t)buff,
++			  size, 0, &res);
++
++	if (res.a0 == GUNYAH_ERROR_OK) {
++		*recv_size = res.a1;
++		*ready = !!res.a2;
 +	}
-+};
-+/* clang-format on */
-+module_platform_driver(gunyah_driver);
 +
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Gunyah Driver");
++	return res.a0;
++}
++EXPORT_SYMBOL_GPL(gunyah_hypercall_msgq_recv);
++
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("Gunyah Hypervisor Hypercalls");
+diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
+index 33bcbd22d39f..acd70f982425 100644
+--- a/include/linux/gunyah.h
++++ b/include/linux/gunyah.h
+@@ -141,4 +141,12 @@ gunyah_api_version(const struct gunyah_hypercall_hyp_identify_resp *gunyah_api)
+ void gunyah_hypercall_hyp_identify(
+ 	struct gunyah_hypercall_hyp_identify_resp *hyp_identity);
+ 
++/* Immediately raise RX vIRQ on receiver VM */
++#define GUNYAH_HYPERCALL_MSGQ_TX_FLAGS_PUSH BIT(0)
++
++enum gunyah_error gunyah_hypercall_msgq_send(u64 capid, size_t size, void *buff,
++					     u64 tx_flags, bool *ready);
++enum gunyah_error gunyah_hypercall_msgq_recv(u64 capid, void *buff, size_t size,
++					     size_t *recv_size, bool *ready);
++
+ #endif
 -- 
 2.39.5
 
