@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-55279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AED3FA9A485
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 09:45:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF499A9A48A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 09:45:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ABDD916F3E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 07:45:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0365E9229DA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 07:45:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 557BF1F2C56;
-	Thu, 24 Apr 2025 07:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 881CB1F3B89;
+	Thu, 24 Apr 2025 07:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u+YPQDwb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jr2doCkb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C8F1F1520;
-	Thu, 24 Apr 2025 07:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568B1DDC3;
+	Thu, 24 Apr 2025 07:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745480510; cv=none; b=GsSKWmqqq3DUMe/7IOh31LsY4Y8dRuYVvDd0CXv44bFTODpJyJZWkeux3EOz3MDPfPRU/Z2C8dvfXzRK40zj+X6NtV9LRvBcgvqfKJXi8Z8hw+AKZYHGAj8v6nF0zXEJ4bN1NV/ZYZGjHfIR10vIaLjmZPmc5FStdKNl+/WZ8Kw=
+	t=1745480589; cv=none; b=tfAmVX5YK3swk6i/UYD/m2E0LuTM78ujY5flkpFb4BhybTADL9s5d3H3xxYFGlRJtuXBYpSTBg8lbu68wCs49Zt+SueBOO4Sw2ZwIT+JU6yx112llsmpSGi8XsAl9uuSlXpyCJ9gXIGn5zlQ1yA6gMOSlY8LkbyhfQ24ER63jLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745480510; c=relaxed/simple;
-	bh=Rln/ecTqDzkn2EEImME3bcgjSb5k+IMJNatHEmwxhhQ=;
+	s=arc-20240116; t=1745480589; c=relaxed/simple;
+	bh=19AGe4I5crT8eARVyy4tALpSA71c1A8Oh2Zbr2+77CQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UJ3cLSYLDh7FWQzXkyxOC/Uohzkco6AAqkLrdT8tHKw85ZatrQ4w3vOoaL8EOFNkRHRjMPRfaoU0D/iqRWG+KgFY0jFdXh3c82t+1tUSXLlATe3HMHZR286GWQKuJK7uhdcEv2O/BTpp1LdV+1NQEyhM5JOEsUCqpWY7Hj/cKuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u+YPQDwb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F70C4CEE3;
-	Thu, 24 Apr 2025 07:41:48 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=UVgDrRTVLbbB9vGJsKG7MqRUpo4X48i1QG4FcCAZ74eL4BBtdYj/FnbvNcAYezBT9SH5ufSntijR1jlsjAPdI3Ar3Xnu4eHjUMfZSCefEt3ufAyxzBQp3gCXH+gmQ98iaPit/C4uzQdBmZe5thrfU7yYQX8zzFhjypazgC7QPFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jr2doCkb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356FCC4CEE3;
+	Thu, 24 Apr 2025 07:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745480509;
-	bh=Rln/ecTqDzkn2EEImME3bcgjSb5k+IMJNatHEmwxhhQ=;
+	s=k20201202; t=1745480588;
+	bh=19AGe4I5crT8eARVyy4tALpSA71c1A8Oh2Zbr2+77CQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=u+YPQDwbVqC5K5izTZgCEhSQZwQUnGXEytAmw5w0nUsFCOAFXP2mgq9RrqjPIK+vj
-	 ahE/34DnCkqikBp83aiuRXd/AVE0u8U322NaOawJqKEzA2UmQRfYTtvvDDWej4NivJ
-	 qb8sztCer8fPMaT/OOy06bjvgSRFVcxKGu6Ss0SahT3Qz/QoT7ZR3gAgzKIqJu6fUM
-	 /DPTSTGbrywzU9F3QPOnMTUG1ODHQLsNgf5hyJTHaXYH0tBZV5aoPQRbcKsy/uVLaG
-	 jDOYKMJUFq1gvPxBML7gouZZofEjf2MHdOLKrTSVqRni1CHJk4/y4BzjM2VqParikq
-	 0mwKjX/blylnw==
-Date: Thu, 24 Apr 2025 09:41:47 +0200
+	b=Jr2doCkbLaSrM5VNH7akOYm+HMQGQ4vL9WOotJ5cUc2W99imoh2bY6vN0nNk3+HDx
+	 Dqfq2WtvHTQVqjL47Iy6TqwI7r9M9A8amEemaavqzesdcjrU9EwI07J9P+FaELtsN9
+	 C+PgyoBJNsjb21VOvrKG0ePd6t+7zkSkY1Ovfr5zKiQTdXKH/EdTo7VG1Z5lxsDiDg
+	 r0twvHfx99jMVZLyhKeNmetDXV2l/QQ6oy5d/DmjxHF4U3MXpX6bCJxl334/3edA4e
+	 o1VLr4dtqvFoVjMZf1AA0uKT7R/2PRpcwGKeRx0SpgPgSfdNRvBEDY+UbcVM1ntASv
+	 QfEXQZL4zrbMQ==
+Date: Thu, 24 Apr 2025 09:43:06 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Songwei Chai <quic_songchai@quicinc.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, 
-	Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@arm.com>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 1/7] dt-bindings: arm: Add support for Coresight TGU
- trace
-Message-ID: <20250424-silky-wombat-of-chivalry-42cdff@kuoka>
-References: <20250423101054.954066-1-quic_songchai@quicinc.com>
- <20250423101054.954066-2-quic_songchai@quicinc.com>
+To: Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/5] dt-bindings: media: qcom,sm8550-iris: document
+ QCS8300 IRIS accelerator
+Message-ID: <20250424-accomplished-therapeutic-chachalaca-9820de@kuoka>
+References: <20250424-qcs8300_iris-v4-0-6e66ed4f6b71@quicinc.com>
+ <20250424-qcs8300_iris-v4-1-6e66ed4f6b71@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,29 +64,35 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250423101054.954066-2-quic_songchai@quicinc.com>
+In-Reply-To: <20250424-qcs8300_iris-v4-1-6e66ed4f6b71@quicinc.com>
 
-On Wed, Apr 23, 2025 at 06:10:48PM GMT, Songwei Chai wrote:
-> +  in-ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +    additionalProperties: false
-> +
-> +    properties:
-> +      port:
-> +        description:
-> +          The port mechanism here ensures the relationship between TGU and
-> +          TPDM, as TPDM is one of the inputs for TGU. It will allow TGU to
-> +          function as TPDM's helper and enable TGU when the connected
-> +          TPDM is enabled.
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
+On Thu, Apr 24, 2025 at 01:03:31AM GMT, Vikash Garodia wrote:
+> Document the IRIS video decoder/encoder accelerator found in the QCS8300
+> platform. It belongs to same iris v3 family as that of SM8550 but is a
+> downscaled version of SM8550. It has 2 frame processing hardware blocks
+> while SM8550 has 4. Thereby QCS8300 have fewer capabilities than those
+> of SM8550.
+> 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> ---
+> This patch depends on patch
+> https://lore.kernel.org/all/20250417-topic-sm8x50-iris-v10-v7-1-f020cb1d0e98@linaro.org/
+> ---
+>  Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> index f567f84bd60d439b151bb1407855ba73582c3b83..3dee25e99204169c6c80f7db4bad62775aaa59b5 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> @@ -24,6 +24,7 @@ properties:
+>        - enum:
+>            - qcom,sm8550-iris
+>            - qcom,sm8650-iris
+> +          - qcom,qcs8300-iris
 
-You did not address my previous comment.
+Keep alphabetical order.
 
 Best regards,
 Krzysztof
