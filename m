@@ -1,303 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-55356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F19BA9A93E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 11:59:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE6D7A9A97D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 12:07:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F345F17436E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 09:59:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 242CC17BDE4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 10:08:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE7F61FC0FA;
-	Thu, 24 Apr 2025 09:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7FC5221267;
+	Thu, 24 Apr 2025 10:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ozqrHY8C"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BcKhbaev"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6341E8332
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 09:59:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D9621FF26
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 10:07:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745488762; cv=none; b=YOX/gED5AHUepq3hflmSPtmnFVSoC8cRskrfeC8nf6dPNIcvMXBQSudmlbyYazo6PkBUAx5l6P4W0y4tH9EMEl9VYzT1bUVMB/pWLlrQmDyxsfkrKmD2EjkoVLoBDSUTMl1bhn+OcxmWG5aPtznv2UYV22QIMeI+P+eu3ERikE8=
+	t=1745489273; cv=none; b=IR/nB8NwW3+IwSBYaxxSzQYIbncww+kQY1Qy6mOXCf5v+r7vwRQsN43JwrAFdPK2E8dwWR1U+7fhFhJObFSCTBHporAv8LlYAkzfdxXPz5LS+7FaYduZYlLOcza/DQQO/qdgT/jF1uc5bc+ZdcRui87GaWAV4AkiQb9u6msZJ+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745488762; c=relaxed/simple;
-	bh=aBtYyWx8XCPM8BgWwdjI1Z57YDtj0fMb9hGrxPmvmkk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=IDKT9X+XtA/7mPCIrXJ3+SkhWGk4mu0NNdfqxw4Sr8fmIhwN4sKu3L/LcW/2wGY6jlsQYLbaWUuSgURlzljawWOVYDLkz15dekf3/op1c2uejDTvUOOnDspmgI53nw4qAyktvlzK09DZ85zvx8S4E9YvwXFNZhi6603sQmC7vao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ozqrHY8C; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53O0F97U007631
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 09:59:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=zcarA8tjt9LwQKRWjZGBm+r2dm9TfpXygMW
-	2SA2rBLM=; b=ozqrHY8Clj2y/nJDVraoVAik3PrwMIQlRLQWGP4l8mU4+PtPf1C
-	yK2YHUZl8esTwpXYx1Sow7D/wG47Pv3k2GSpANaYx7c5kTwf+yF6B4tqns22DcdA
-	lu0nAURPcx4YL+RtBM9WBi9ViyeXznwigyBgBwKo3HZuJKiVUX1UOljCEKzGsiMi
-	+wNRyPgdKK2gqvvv2GqhtEPnE4F5bYypI2vqtG5kdyU/MJVG00Tu+Zlgy3QSGHPo
-	2gjY0Hc2+YP5dRTBP7FrfIomnFT+va7azHFcME+8qQ4+7aIu+GeFVN4QenhLzjQJ
-	NyqH/LMcNA8MG+wzc1/Aq2b0BJ8BdrmhZcw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh1n2xj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 09:59:20 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c5f876bfe0so138227785a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 02:59:19 -0700 (PDT)
+	s=arc-20240116; t=1745489273; c=relaxed/simple;
+	bh=qceSy5hmLa/hFRUfKhQk/prU9fcYlktOzA420wPj8Uc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GC4cdY2osEqzCi3KqldD/AE2eA7eEXkFzWSmnnk7d7pPM/JWHUNUEKWF00eTepIiGfLjKorQ2iJkU6xOzKbzpJHYdVYDq5JNhh0kEKvXIyu56cj/FiMgFP4Z+HpOQ/BVAa0aLxk86akVEVRBWd+aNMBJLcp3dmz0LmlkcTY3sCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BcKhbaev; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5e5b736b3fcso125063a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 03:07:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1745489270; x=1746094070; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Zi5+9wwSGNxwIY+5Uc5lT+h4faQt9l/26HLQUV9AlUM=;
+        b=BcKhbaev5FtRcf9ugsn9VnujpHRqLooBOHdhgrOor2yPfzjSYGuTtX62A8qa/3jaF+
+         9Idc+HtYZXLDDposmv5kaXD39a0dRWIBItuj8YJo8spADB9Eqi3QFcsdg8KLcuAPqRnr
+         Jfq1xxNf+SHf/QL4tgMcQDyV6yBovRuY8X5DP1z9rpkwauto4FX+OaicJtszYTmxM8ep
+         x00tfsfDGu6HzUTyjUBpO7N1UYRE9/TLEzDcaAWxEW8UvlILc9Az0t18zrjBX8AYJMZp
+         PYxTagHp8hVMk+bRa4p1hUP1Oh8yHnsKMThtxPYRvqfDS/DZw0oXXlklLx22Z8fbCV6T
+         kevA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745488759; x=1746093559;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1745489270; x=1746094070;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=zcarA8tjt9LwQKRWjZGBm+r2dm9TfpXygMW2SA2rBLM=;
-        b=NwNg6G0Y4T6LGEuEZXvFPJiutLWaRkFKjxCjwRiRDKD5x78xVOYEPvNZh/WUSZf8qB
-         QgBLonc6O5ZBTQsfBmvKQ+OLcwRpw+tBKCDHNaa7+zDL/ak0AUPsTWwcQ9habI3tBzWO
-         MUg7JzDfGxDNHq4c0hIE0CaWdDMi/Knu5cOO1vXDCetp7Hal0USf5jdPU9KYU1Wui1C6
-         mQRB2vSsloqKMk8ZzQ2Gz+8D2WhCPOezrhyII8dxqB0Wp3F2P1KjAHNo3eFoxwSICfvI
-         3kdw2gEzJBY5EltM2RRZHUmxtZdRep/VFU9YhFrp0PjUc45NfQwrNTyceBAJsCLy2wvY
-         vCnw==
-X-Gm-Message-State: AOJu0Yy7Se/MZuI0Z6Ouu2LNkzLoTim3/WstRFghHYRybzqI5wzJsrse
-	Zd/vUX59WEEYJKahl5ABke5qLRoe1xmbOtdrh/AT5EYwVPxZXCrpT/SVp8LseIdS+j06NigS9Uz
-	n/Gr6Z0reeaiC1IRlA541A+vuVvJxXqORSYogdxISD9uJP+7p5fQxVud1URU0QTmd
-X-Gm-Gg: ASbGncskFkIFfCikmlURIdr7XH/WIvAQXL3HsY964LwwxJtm9zLblrt/luhNai7mMfA
-	6EmId2/wrz2fK/VWcGmz/1ZkATmHM/c62ouqD/dYgKCqabaxvQ9tVAjPipjKL3H+qSDDDKmB2f8
-	wz4LUX4o+wJatRfdLWc4IRYLiZjEVOuWnaFEeQBj8p24EO7SBUiDi2RK3I0BLdKdc2Q1+6PSAlc
-	9WsXsqQfC056/zv+hnlCJCdpmbGvYvO1E8Q8LTq+NG8WtBJXx/N8ASNhBKORSDazBpvDURSLm6x
-	yi4QfcQ+ah201Ql03GHhmYZwfNL6mGzgXrqDcG1hmLUJTpE=
-X-Received: by 2002:a05:620a:1a13:b0:7c7:9349:e468 with SMTP id af79cd13be357-7c956eb3391mr298883085a.12.1745488758621;
-        Thu, 24 Apr 2025 02:59:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+PbLFGgfxmKngc18sdTh7HDWxy7uxe/5S9qAp/wZQ8BuKfUXAnsyHpZYkQxoxxgMcZTQpgA==
-X-Received: by 2002:a05:620a:1a13:b0:7c7:9349:e468 with SMTP id af79cd13be357-7c956eb3391mr298880085a.12.1745488758184;
-        Thu, 24 Apr 2025 02:59:18 -0700 (PDT)
-Received: from QCOM-eG0v1AUPpu.qualcomm.com ([2a01:e0a:82c:5f0:10e3:ecaa:2fb2:d23a])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace59c22e92sm80298566b.125.2025.04.24.02.59.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 02:59:17 -0700 (PDT)
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-To: lumag@kernel.org, robdclark@gmail.com, quic_abhinavk@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>
-Subject: [PATCH v2] drm/msm/dsi: Fix 14nm DSI PHY PLL Lock issue
-Date: Thu, 24 Apr 2025 11:59:14 +0200
-Message-Id: <20250424095914.4002346-1-loic.poulain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        bh=Zi5+9wwSGNxwIY+5Uc5lT+h4faQt9l/26HLQUV9AlUM=;
+        b=Xvv4DwsRdgTWmEnOPDbZylYmM3Igqtbr6Qjh8PghUdUprTn8szyYyFaCJJHIekWlNK
+         yJscjTjBKRhmDFIswJyl+R8mFBE8gzwLgybbCZpuEWli9VXIEAy7R+cfTcuDSY8HOFPA
+         MxbFxPcajUOgh47FZGNIfNzCTwTSUYjDez4cfLjlS4EokCGEhvljMnvQ7V7DLpoR+VX1
+         5gD3pLYu4gkk2kdochLOOIbCUkoFpMqhgllknFuJ9kVaLUmnRGFqbAZNpAVs0LPhrztP
+         kGFB8IMpZz+i5t3xL+6f48W29sDb+AH8CrIaUlOI180l2xorxZJP5fVEV5taYPz2EnKH
+         eKOQ==
+X-Gm-Message-State: AOJu0Yx363ufSjwZNTAeKdGWlQGWP00Aszajno9x3YYKcg7OT/Lr5Jbq
+	oEYDV8tRjTdEWEtUJgkkNqRSO2AmT5Wk2SBdWJ3mx1vIcBX8ykmAumzG9GLBkPg=
+X-Gm-Gg: ASbGncujbu22GomN+psFdOywbWjGGpZeQr5Eu0pbbIqzEBRgZtTjKuTVeoTHJv3kJGp
+	LX8sZcUS2+b7X8xl6qrDWmUg9w1ERGvXBmC8HuoB45kk+2oAVbJWV9kEpE4b25ij7w0OaiQxGBs
+	PN8n8VI8+ywhdArVUFfdiIY/QuSXTP1u6V21SSxDFPA1iZ1avZdXIvwSEmAp7WfUFx74R4AXZf4
+	xwGPRX6uwYM7DEeA1a3oNZhxRIoclGAo1Z03SZXwM6WKctmccZkl0Bdyju8C7WlNiS4dkKMG4zZ
+	mgrDw3DmeK7/5UJpNPhK7l2GP2Yv373FRbAkX0X+5xvZloY2lbT4h/NGYC/3y73K6s1ZWQ==
+X-Google-Smtp-Source: AGHT+IEP7t1FvQx4F+O6KQ/WXWxyD6s+fSt4oVkVTE6GiGr0seR86AplpqbJ3BP0je5FP4UsutB6bw==
+X-Received: by 2002:a17:906:c110:b0:ac7:3911:250f with SMTP id a640c23a62f3a-ace57537e8dmr63626366b.14.1745489270099;
+        Thu, 24 Apr 2025 03:07:50 -0700 (PDT)
+Received: from [192.168.1.29] ([178.197.207.88])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace59bbe0efsm82887266b.115.2025.04.24.03.07.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Apr 2025 03:07:49 -0700 (PDT)
+Message-ID: <0ab31397-580f-4e5a-b9ad-d9bf79d29106@linaro.org>
+Date: Thu, 24 Apr 2025 12:07:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: kOSEwGUWuC23gSbxCv7w0hcsJ3xpcaSw
-X-Proofpoint-ORIG-GUID: kOSEwGUWuC23gSbxCv7w0hcsJ3xpcaSw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDA2NiBTYWx0ZWRfX84waaw0EnELA /jQ+9wlFYVi/0DhFrxII9PQAp7oaW+Dh4x7aY8SwxkJ2fp3pOQFRP1kwH4SNgcvZOu+mQgVujAw 5PjRZzXCdH5Eao/CLAkKQhsOeta+a3Z/vQfoQ0JWlbYcxoBLhGhgtaJpEerVuoW/oSt7ZyQq5az
- z8jRBiM1ZW4Sdfh6oS9zXlqjy53x8F9yWlrrWayhUu9DdL+08L8D75Q134hMxlcOvYA3RqL7vH2 eC2l2kbPWnZgzg2rlSZ1z+3T+eaRCrTOtKv5uaEDq7XYHzDMNE8G/A/QaCtXsIy1pqHW3J50ci5 snW8dRfd/Nj2+97GwSXOELZvfl478QtdzsZayncOcvBgSyWOPJY1515+rtywphw3a8aUy/p94jN
- eg4nqjzJcuW5pc2PgwZ9Hie0QQSQLzRHGS5OT37Ll22mjTT6FcmMjtuDGoWL+0F9ty//PKUt
-X-Authority-Analysis: v=2.4 cv=ZpjtK87G c=1 sm=1 tr=0 ts=680a0b78 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=XR8D0OoHHMoA:10 a=QcRrIoSkKhIA:10 a=EUspDBNiAAAA:8 a=Hn5eap2Cq60OI_ydS0cA:9 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.680,FMLib:17.12.80.40
- definitions=2025-04-24_04,2025-04-22_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- lowpriorityscore=0 priorityscore=1501 phishscore=0 clxscore=1015
- bulkscore=0 suspectscore=0 mlxlogscore=999 spamscore=0 impostorscore=0
- mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504240066
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/5] dt-bindings: media: Add qcom,x1e80100-camss
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+References: <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-0-edcb2cfc3122@linaro.org>
+ <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-2-edcb2cfc3122@linaro.org>
+ <3ec3fd62-bf21-47e7-873c-ce151589d743@linaro.org>
+ <54eeb470-cd90-4bc2-b415-6dea1ce2321d@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <54eeb470-cd90-4bc2-b415-6dea1ce2321d@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-To configure and enable the DSI PHY PLL clocks, the MDSS AHB clock must
-be active for MMIO operations. Typically, this AHB clock is enabled as
-part of the DSI PHY interface enabling (dsi_phy_enable_resource).
+On 24/04/2025 11:34, Bryan O'Donoghue wrote:
+> On 24/04/2025 07:40, Krzysztof Kozlowski wrote:
+>>> +  vdd-csiphy-0p8-supply:
+>> Same comment as other series on the lists - this is wrong name. There
+>> are no pins named like this and all existing bindings use different name.
+> 
+> The existing bindings are unfortunately not granular enough.
+> 
+> I'll post s series to capture pin-names per the SoC pinout shortly.
+How are the pins/supplies actually called?
 
-However, since these PLL clocks are registered as clock entities, they
-can be enabled independently of the DSI PHY interface, leading to
-enabling failures and subsequent warnings:
-
-```
-msm_dsi_phy 5e94400.phy: [drm:dsi_pll_14nm_vco_prepare] *ERROR* DSI PLL lock failed
-------------[ cut here ]------------
-dsi0pllbyte already disabled
-WARNING: CPU: 3 PID: 1 at drivers/clk/clk.c:1194 clk_core_disable+0xa4/0xac
-CPU: 3 UID: 0 PID: 1 Comm: swapper/0 Tainted:
-Tainted: [W]=WARN
-Hardware name: Qualcomm Technologies, Inc. Robotics RB1 (DT)
-pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[...]
-```
-
-This issue is particularly prevalent at boot time during the disabling of
-unused clocks (clk_disable_unused()) which includes enabling the parent
-clock(s) when CLK_OPS_PARENT_ENABLE flag is set (this is the case for the
-14nm DSI PHY PLL consumers).
-
-To resolve this issue, we move the AHB clock as a PM dependency of the DSI
-PHY device (via pm_clk). Since the DSI PHY device is the parent of the PLL
-clocks, this resolves the PLL/AHB dependency. Now the AHB clock is enabled
-prior the PLL clk_prepare callback, as part of the runtime-resume chain.
-
-We also eliminate dsi_phy_[enable|disable]_resource functions, which are
-superseded by runtime PM.
-
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
----
- v2: Move AHB clock into a proper PM dep instead of manually toggling it
-     from the PLL clock driver.
-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 65 +++++++++++----------------
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h |  1 -
- 2 files changed, 25 insertions(+), 41 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index c0bcc6828963..7c1cc06eec28 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -5,6 +5,8 @@
- 
- #include <linux/clk-provider.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_clock.h>
-+#include <linux/pm_runtime.h>
- #include <dt-bindings/phy/phy.h>
- 
- #include "dsi_phy.h"
-@@ -511,30 +513,6 @@ int msm_dsi_cphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
- 	return 0;
- }
- 
--static int dsi_phy_enable_resource(struct msm_dsi_phy *phy)
--{
--	struct device *dev = &phy->pdev->dev;
--	int ret;
--
--	ret = pm_runtime_resume_and_get(dev);
--	if (ret)
--		return ret;
--
--	ret = clk_prepare_enable(phy->ahb_clk);
--	if (ret) {
--		DRM_DEV_ERROR(dev, "%s: can't enable ahb clk, %d\n", __func__, ret);
--		pm_runtime_put_sync(dev);
--	}
--
--	return ret;
--}
--
--static void dsi_phy_disable_resource(struct msm_dsi_phy *phy)
--{
--	clk_disable_unprepare(phy->ahb_clk);
--	pm_runtime_put(&phy->pdev->dev);
--}
--
- static const struct of_device_id dsi_phy_dt_match[] = {
- #ifdef CONFIG_DRM_MSM_DSI_28NM_PHY
- 	{ .compatible = "qcom,dsi-phy-28nm-hpm",
-@@ -692,24 +670,30 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	phy->ahb_clk = msm_clk_get(pdev, "iface");
--	if (IS_ERR(phy->ahb_clk))
--		return dev_err_probe(dev, PTR_ERR(phy->ahb_clk),
--				     "Unable to get ahb clk\n");
-+	platform_set_drvdata(pdev, phy);
- 
--	ret = devm_pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(dev);
- 	if (ret)
- 		return ret;
- 
--	/* PLL init will call into clk_register which requires
--	 * register access, so we need to enable power and ahb clock.
--	 */
--	ret = dsi_phy_enable_resource(phy);
-+	ret = devm_pm_clk_create(dev);
- 	if (ret)
- 		return ret;
- 
-+	ret = pm_clk_add(dev, "iface");
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret, "Unable to get iface clk\n");
-+
- 	if (phy->cfg->ops.pll_init) {
-+		/* PLL init will call into clk_register which requires
-+		 * register access, so we need to enable power and ahb clock.
-+		 */
-+		ret = pm_runtime_resume_and_get(dev);
-+		if (ret)
-+			return ret;
-+
- 		ret = phy->cfg->ops.pll_init(phy);
-+		pm_runtime_put(&pdev->dev);
- 		if (ret)
- 			return dev_err_probe(dev, ret,
- 					     "PLL init failed; need separate clk driver\n");
-@@ -721,18 +705,19 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, ret,
- 				     "Failed to register clk provider\n");
- 
--	dsi_phy_disable_resource(phy);
--
--	platform_set_drvdata(pdev, phy);
--
- 	return 0;
- }
- 
-+static const struct dev_pm_ops dsi_phy_pm_ops = {
-+	SET_RUNTIME_PM_OPS(pm_clk_suspend, pm_clk_resume, NULL)
-+};
-+
- static struct platform_driver dsi_phy_platform_driver = {
- 	.probe      = dsi_phy_driver_probe,
- 	.driver     = {
- 		.name   = "msm_dsi_phy",
- 		.of_match_table = dsi_phy_dt_match,
-+		.pm = &dsi_phy_pm_ops,
- 	},
- };
- 
-@@ -758,7 +743,7 @@ int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
- 
- 	dev = &phy->pdev->dev;
- 
--	ret = dsi_phy_enable_resource(phy);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "%s: resource enable failed, %d\n",
- 			__func__, ret);
-@@ -804,7 +789,7 @@ int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
- phy_en_fail:
- 	regulator_bulk_disable(phy->cfg->num_regulators, phy->supplies);
- reg_en_fail:
--	dsi_phy_disable_resource(phy);
-+	pm_runtime_put(dev);
- res_en_fail:
- 	return ret;
- }
-@@ -817,7 +802,7 @@ void msm_dsi_phy_disable(struct msm_dsi_phy *phy)
- 	phy->cfg->ops.disable(phy);
- 
- 	regulator_bulk_disable(phy->cfg->num_regulators, phy->supplies);
--	dsi_phy_disable_resource(phy);
-+	pm_runtime_put(&phy->pdev->dev);
- }
- 
- void msm_dsi_phy_set_usecase(struct msm_dsi_phy *phy,
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-index 1925418d9999..d4bfb7dd7ab1 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-@@ -101,7 +101,6 @@ struct msm_dsi_phy {
- 	phys_addr_t lane_size;
- 	int id;
- 
--	struct clk *ahb_clk;
- 	struct regulator_bulk_data *supplies;
- 
- 	struct msm_dsi_dphy_timing timing;
--- 
-2.34.1
-
+Best regards,
+Krzysztof
 
