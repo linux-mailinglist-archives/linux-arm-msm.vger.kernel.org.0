@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-55411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0304BA9B068
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:16:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6869DA9B06D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:17:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D7C1C3AF125
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:16:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A26FF4A414B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:17:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA9F3280A2C;
-	Thu, 24 Apr 2025 14:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00C3719E7F9;
+	Thu, 24 Apr 2025 14:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sTk4m9/r"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C6+9rZe2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CE427F74B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:13:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C767027FD6A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:13:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745504038; cv=none; b=BMR7L8khbMlKqDoTZD/lNZfmp8N7jFmsNTwokJlAO6tq3QlYor/Dra3ysC6Z+znedvbFsCYMKnSTHKQH9xZ+V4xDDVnrdwsoMr5bbiXUC+SY0yrXV8Eu09ca4xwWnDNXl7DL45nOh1eS566dVvqUYJKl8cVmMktpXBH/2TUHeGc=
+	t=1745504040; cv=none; b=tgMQEzFzlv7E4ovX1WOPP32FgBSFr0obM5faO8i9UVAoqMW5t2EfyHU7RnZNNivISHVNZtVHXD3jKvh7Bm2t4wXm3uur5zL8qJ097BdSvhVjsOHy5fLuhSFxoRsK7xLOWjoNYpw66uKpRmEcZizf9yqMjXEIOu6VP7TMHa3UekQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745504038; c=relaxed/simple;
-	bh=pMsi9MMq97g7CjVTvZZzMUKV739tetlHWJOghEinxps=;
+	s=arc-20240116; t=1745504040; c=relaxed/simple;
+	bh=DSNuQ7AXSuhIK9F2t1tEvg2Y4H20TKEQaYmf+C1AL10=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=d5qbRZ1AqjLu8oTLp9oRFVoGLYhHANJY5zUjdbHFOhXNkPHg+KQZNOXNOnJpExrv0OAqSXchmkuzjJ8FFEZsymhZHe69Bm4VK/DmLZ/Wu7ci2lDYhy2wDpcMqHZSVPtW5779BSY/jffE0QAv4QqnYxmhaYS5MRscSycmQk6ZxIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sTk4m9/r; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version; b=cbVE8GHxhL+QqCBxph0S/8R6fyR9Ue/GHEn7Pndn6Q1vOhMtAgtM6ZPCKj1S70RfZWltp/PJRlfqDlgxTh8Kv1A7UurkmFMkkF9seK3H0nItruyynndZPddMYHo0rc7UUtRsexoXTY2Ijav9jXBdxFWM9Cqq9g4hSgVT8ekcT6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C6+9rZe2; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-39c0dfba946so793440f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:13:55 -0700 (PDT)
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3912d2c89ecso912232f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:13:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745504034; x=1746108834; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1745504036; x=1746108836; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=S74NKpGFaVYOESsCH+rK4kh5DkFdas6Gq4YwtRp9OLI=;
-        b=sTk4m9/r/YqM6gAkyB9+f+Cf9v2YjMXe9/V7HSO7QbIMep386kIqnkxl+8b5ZgmaMi
-         vq11UPzDeTnTokkrMaJkq1om7bX7cplUE72LWmmRp55xsdwa8xhIOHfkaFCBWupg7bWu
-         r7rCnHfm8rpJMFtqLaSRxYaEy7UlfKA0KEbr52xdM6miVQnel9dDetTl4FMpxMkuR0dM
-         QFswRunRyDAjTnUH1ma3M3jX4DJL1/2E4yj7mgGDCP0h6+LhtvAXMqxx6zZjfdR+TDB3
-         ymPhFpTwlgSj4rRMQ7FTLfCHMZ2gFbLb8agEcLvCUWlIUGhnsRVx/KzpLAIKXO+7aBGD
-         mElA==
+        bh=Ys+r4b/bN1N9MasjKmdqEss1ssV3C7RnEHLMtxbroxU=;
+        b=C6+9rZe2ytaKfy31PFB1wcxiH/emj9kOFZMA/GobiGttgsHV8DN2J7qHDUtLWyOGce
+         BZ6rSf+K57Qgh7g99IxoF1d8LhSoFkNNOwOv0KHH6IBHd36eNHKmENIzmmCPxmxuy2Qm
+         8OKsThyJvgNswpgkfF+BqG9t1F6VdQcsCVOx5vbJ/FMHIlKtHrQDQFjmeHz4HK2zXwDY
+         0XAgA9WCObJbYTrt4fxANbZARkUmbaSfoSkV8qAT7wuBwtu7n8YStylxfe2wreoFuOHv
+         oX+JtpLTDBp4PZnRUTtZghzd6v3+YbuUWRhbkZWrxBiwO6bgKLTMLXzfehZrz72T+edk
+         ZiJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745504034; x=1746108834;
+        d=1e100.net; s=20230601; t=1745504036; x=1746108836;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=S74NKpGFaVYOESsCH+rK4kh5DkFdas6Gq4YwtRp9OLI=;
-        b=kdRfHu1gXmtO84B2O+RUxkKKD2LDsF49lvTwGEODLmZSFefpZ50LZQdm3jWeVBQzko
-         CXEOAwQem1h+gM/mS51p0M+F3Rt/hhNroWen3h97W3/5J2vV6lsShOayoiBBzuxnQOLB
-         ZHvtvD4rFYGY06kwSwN4jU4mPClKzjSJxv5oiG6eiaDogcH7sDlIBaIHcZT+Mx612/jk
-         7+S2O6q4oTXhJKnwnIzkjQAFXuSKqu9+v6xxXksSFKN6UmZtrUMBEn1RCs5Q9Nql1++u
-         9yf7wlumL+vrxBntc7jBMNgHnMylecqt9M+ez1xE11MRpiNXSMEBNwZAPrn5SWDbmQsI
-         c8YQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXQ+AKZ6W6ZzOS8nVAEBHq7z34dusW1hgRV0CHguuBDLk6UANIWw4Y8lm10E9+XhhU29vlfLbM84bwRmVgh@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxhkxOYddYIVYKgbh721t3vn1W8BRlZeblsHpPFD4iiOtbgz0f
-	k0rDu6T9F/h+HQElMOAOLIiMIqW5IRs8SpSWGFENzyoG0mqDmDsPUmJRevJ1a8Q=
-X-Gm-Gg: ASbGncuYpPQeARljvANnKGVNJWDdNX7fn9L26cYaPy+kyIHq2izRednvBuSev3aBUgh
-	d9GR+4zE0bXIOtdyU5+wvebNf80/X3BJ+8S1HtuUNfgxjWSIm/KKs50+aC42TJV6CDqjym7x5Gy
-	bipGNE3uNUFMfoCmWb6UUchhMkiwNrkJ6ERnIshVWO01qE2zNI1hliiu60C1aEVVWh2Cz2MxItw
-	EuVYa5NgscMtV2rfcAUA9cYgh6an/JBUK5893KSZQs06gYllesUH5lMEPT3+ER/10heJef38k+R
-	ED8uz0zQ6UhEfPdsf276L9/nrMfmCRuPr8bPWrqbPLhvRRtlbrppdmxmS52Oi48RqhAf0YMHSHb
-	GmpdvwuQMrdgoZKHP
-X-Google-Smtp-Source: AGHT+IHx9bXGbc/XwzdBX2sEvhGOWsNMsxK7elP9ZHfuoFqJa71fFuvenAr2zCrjXuMcvE5wd1GoWA==
-X-Received: by 2002:a05:6000:290d:b0:391:3b11:d604 with SMTP id ffacd0b85a97d-3a06cfa9d47mr2143588f8f.54.1745504034133;
-        Thu, 24 Apr 2025 07:13:54 -0700 (PDT)
+        bh=Ys+r4b/bN1N9MasjKmdqEss1ssV3C7RnEHLMtxbroxU=;
+        b=ghy/uG4cDE/NbT0befCm4QxUQZ0ilUliUm0PEGxTYKTBr+yOEua8WkCd9kJM1psiPQ
+         4zl0xdlXLwVQqMUOSHcewFsMY80ce1FzR7v/NYKRpUEt3N7kZOU35QJe2qntbBdoD5xd
+         jc4goKKi+pZCF8hKzSXS4zesUWjj2ELv2U3WuyYGcbiVWWkGgzIGo6HqfRMyjKd3QYHz
+         lzoVhjfbHhS9g8n3R1hT0mPnRDf6UGFUEHCLhDvSYFcFKqfCMHA4uLPfqlToJ4eni2nz
+         G40ToUhRIUk2zjnEvT1QKECauiaYDVt61U6vSEBQOys4ObNZRInbKF4e6Do5JNq5vBsO
+         wP+g==
+X-Forwarded-Encrypted: i=1; AJvYcCXGqqd8tvD3QsaawcHWGs42XSNP7w6/UXM0GDq07nl9RP36d+1MpHXuOL2gm+Vop97djQ5T4+LdPy8QszaM@vger.kernel.org
+X-Gm-Message-State: AOJu0YwnAMo+9t0gOdIey1n9rZZ1Q0FW5r5c2cjm5oJQ7E1VMni1ewxr
+	JddSlJjCz9t2HfNeMuqNK5Yva8UY5fwg/y33Kr/DeoDkVyciycTXP65Q0g5NFoo=
+X-Gm-Gg: ASbGncu3pX2m8j6T2JZt3SYfc7gvxc2ZP0DXfNZVhex6Pqqzv1rYdJRWqxCtyhqwQME
+	yKcCwsLbaeuTrYzmkZG9tWe/gckou9JdaHZEtM5lgcjOQVZCL+bKc2IQYQV14Ur2pMnMtB6CnIF
+	pFbTgB/QY+cllxi5i7T9Eq7Y7oeioUPdI5fXu4EUpEzXbVx/q4NXyci/HM34nIaQbL0qJM6RFMj
+	GKR2MnzNKv8UaAZ0W35T5nJN5aaoW5Jz2O7KCEdSOxDjBW6zotvBuvBn6qUl5QdW/m1uhUH2Jy7
+	yo4JnOmd+saVgai/tKN54SOBUzfmix2f2S9ft0FaxL71sk51snGclqIfi+5sT3xtNcDsEL4XMfO
+	3+K+gHx8VRoQ/HbjQ
+X-Google-Smtp-Source: AGHT+IEV5wfX7DpJOSMs66ZIGfzUTJLqW6iFySId3MuH6gASyxb/C/SH9jqJ4yi7vysyGZwOnlgesg==
+X-Received: by 2002:a5d:47cb:0:b0:391:3fa7:bf77 with SMTP id ffacd0b85a97d-3a06cf63697mr2421146f8f.31.1745504035418;
+        Thu, 24 Apr 2025 07:13:55 -0700 (PDT)
 Received: from seksu.systems-nuts.com (stevens.inf.ed.ac.uk. [129.215.164.122])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a06d4a8150sm2199951f8f.7.2025.04.24.07.13.53
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a06d4a8150sm2199951f8f.7.2025.04.24.07.13.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 07:13:53 -0700 (PDT)
+        Thu, 24 Apr 2025 07:13:54 -0700 (PDT)
 From: Karim Manaouil <karim.manaouil@linaro.org>
 To: linux-kernel@vger.kernel.org,
 	kvm@vger.kernel.org,
@@ -102,10 +102,11 @@ Cc: Karim Manaouil <karim.manaouil@linaro.org>,
 	Murali Nalajala <mnalajal@quicinc.com>,
 	Sreenivasulu Chalamcharla <sreeniva@qti.qualcomm.com>,
 	Trilok Soni <tsoni@quicinc.com>,
-	Stefan Schmidt <stefan.schmidt@linaro.org>
-Subject: [RFC PATCH 07/34] KVM: gunyah: Pin guest memory
-Date: Thu, 24 Apr 2025 15:13:14 +0100
-Message-Id: <20250424141341.841734-8-karim.manaouil@linaro.org>
+	Stefan Schmidt <stefan.schmidt@linaro.org>,
+	Elliot Berman <quic_eberman@quicinc.com>
+Subject: [RFC PATCH 08/34] docs: gunyah: Introduce Gunyah Hypervisor
+Date: Thu, 24 Apr 2025 15:13:15 +0100
+Message-Id: <20250424141341.841734-9-karim.manaouil@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250424141341.841734-1-karim.manaouil@linaro.org>
 References: <20250424141341.841734-1-karim.manaouil@linaro.org>
@@ -117,135 +118,255 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Qualcomm's Gunyah hypervisor allows to implement protected VMs, in which
-private memory given to the guest is no more accessible to the host (an
-access violation will be raised if the host tries to read/write that
-memory).
+From: Elliot Berman <quic_eberman@quicinc.com>
 
-In the context of protected VMs (aka confidential computing), the consensus
-to manage this memory is via guest_memfd. We would like this port to be
-be based on guest_memfd. However, for this RFC, the port allocates
-anonymous pages, which are subject to migration and swap out. That will
-trigger a violation if the memory is private, which is the case for most
-of the guest's main memory.
+Gunyah is an open-source Type-1 hypervisor developed by Qualcomm. It
+does not depend on any lower-privileged OS/kernel code for its core
+functionality. This increases its security and can support a smaller
+trusted computing based when compared to Type-2 hypervisors.
 
-Since the memory is allocated and given to the guest for possibly an
-unbounded amount of time, we longterm pin the pages to prevent the
-kernel from touching and possibly swapping or migrating those pages.
+Add documentation describing the Gunyah hypervisor and the main
+components of the Gunyah hypervisor which are of interest to Linux
+virtualization development.
 
-In upcoming versions of this port, we intend to move to guest_memfd.
-
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+Reviewed-by: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 Signed-off-by: Karim Manaouil <karim.manaouil@linaro.org>
 ---
- arch/arm64/include/asm/kvm_host.h |  3 ++
- arch/arm64/kvm/gunyah.c           | 68 ++++++++++++++++++++++++++++---
- 2 files changed, 66 insertions(+), 5 deletions(-)
+ Documentation/virt/gunyah/index.rst         | 135 ++++++++++++++++++++
+ Documentation/virt/gunyah/message-queue.rst |  68 ++++++++++
+ Documentation/virt/index.rst                |   1 +
+ 3 files changed, 204 insertions(+)
+ create mode 100644 Documentation/virt/gunyah/index.rst
+ create mode 100644 Documentation/virt/gunyah/message-queue.rst
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index efbfe31d262d..9c8e173fc9c1 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -229,6 +229,9 @@ struct kvm_s2_mmu {
- };
+diff --git a/Documentation/virt/gunyah/index.rst b/Documentation/virt/gunyah/index.rst
+new file mode 100644
+index 000000000000..fba2c7a11d0f
+--- /dev/null
++++ b/Documentation/virt/gunyah/index.rst
+@@ -0,0 +1,135 @@
++.. SPDX-License-Identifier: GPL-2.0
++
++=================
++Gunyah Hypervisor
++=================
++
++.. toctree::
++   :maxdepth: 1
++
++   message-queue
++
++Gunyah is a Type-1 hypervisor which is independent of any OS kernel, and runs in
++a more privileged CPU level (EL2 on Aarch64). It does not depend on a less
++privileged operating system for its core functionality. This increases its
++security and can support a much smaller trusted computing base than a Type-2
++hypervisor.
++
++Gunyah is an open source hypervisor. The source repository is available at
++https://github.com/quic/gunyah-hypervisor.
++
++Gunyah provides these following features.
++
++- Scheduling:
++
++  A scheduler for virtual CPUs (vCPUs) on physical CPUs enables time-sharing
++  of the CPUs. Gunyah supports two models of scheduling which can coexist on
++  a running system:
++
++    1. Hypervisor vCPU scheduling in which Gunyah hypervisor schedules vCPUS on
++       its own. The default is a real-time priority with round-robin scheduler.
++    2. "Proxy" scheduling in which an owner-VM can donate the remainder of its
++       own vCPU's time slice to an owned-VM's vCPU via a hypercall.
++
++- Memory Management:
++
++  APIs handling memory, abstracted as objects, limiting direct use of physical
++  addresses. Memory ownership and usage tracking of all memory under its control.
++  Memory partitioning between VMs is a fundamental security feature.
++
++- Interrupt Virtualization:
++
++  Interrupt ownership is tracked and interrupt delivery is directly to the
++  assigned VM. Gunyah makes use of hardware interrupt virtualization where
++  possible.
++
++- Inter-VM Communication:
++
++  There are several different mechanisms provided for communicating between VMs.
++
++    1. Message queues
++    2. Doorbells
++    3. Virtio MMIO transport
++    4. Shared memory
++
++- Virtual platform:
++
++  Architectural devices such as interrupt controllers and CPU timers are
++  directly provided by the hypervisor as well as core virtual platform devices
++  and system APIs such as ARM PSCI.
++
++- Device Virtualization:
++
++  Para-virtualization of devices is supported using inter-VM communication and
++  virtio transport support. Select stage 2 faults by virtual machines that use
++  proxy-scheduled vCPUs can be handled directly by Linux to provide Type-2
++  hypervisor style on-demand paging and/or device emulation.
++
++Architectures supported
++=======================
++AArch64 with a GICv3 or GICv4.1
++
++Resources and Capabilities
++==========================
++
++Services/resources provided by the Gunyah hypervisor are accessible to a
++virtual machine through capabilities. A capability is an access control
++token granting the holder a set of permissions to operate on a specific
++hypervisor object (conceptually similar to a file-descriptor).
++For example, inter-VM communication using Gunyah doorbells and message queues
++is performed using hypercalls taking Capability ID arguments for the required
++IPC objects. These resources are described in Linux as a struct gunyah_resource.
++
++Unlike UNIX file descriptors, there is no path-based or similar lookup of
++an object to create a new Capability, meaning simpler security analysis.
++Creation of a new Capability requires the holding of a set of privileged
++Capabilities which are typically never given out by the Resource Manager (RM).
++
++Gunyah itself provides no APIs for Capability ID discovery. Enumeration of
++Capability IDs is provided by RM as a higher level service to VMs.
++
++Resource Manager
++================
++
++The Gunyah Resource Manager (RM) is a privileged application VM supporting the
++Gunyah Hypervisor. It provides policy enforcement aspects of the virtualization
++system. The resource manager can be treated as an extension of the Hypervisor
++but is separated to its own partition to ensure that the hypervisor layer itself
++remains small and secure and to maintain a separation of policy and mechanism in
++the platform. The resource manager runs at arm64 NS-EL1, similar to other
++virtual machines.
++
++Communication with the resource manager from other virtual machines happens as
++described in message-queue.rst. Details about the specific messages can be found
++in drivers/virt/gunyah/rsc_mgr.c
++
++::
++
++  +-------+   +--------+   +--------+
++  |  RM   |   |  VM_A  |   |  VM_B  |
++  +-.-.-.-+   +---.----+   +---.----+
++    | |           |            |
++  +-.-.-----------.------------.----+
++  | | \==========/             |    |
++  |  \========================/     |
++  |            Gunyah               |
++  +---------------------------------+
++
++The source for the resource manager is available at
++https://github.com/quic/gunyah-resource-manager.
++
++The resource manager provides the following features:
++
++- VM lifecycle management: allocating a VM, starting VMs, destruction of VMs
++- VM access control policy, including memory sharing and lending
++- Interrupt routing configuration
++- Forwarding of system-level events (e.g. VM shutdown) to owner VM
++- Resource (capability) discovery
++
++A VM requires boot configuration to establish communication with the resource
++manager. This is provided to VMs via a 'hypervisor' device tree node which is
++overlaid to the VMs DT by the RM. This node lets guests know they are running
++as a Gunyah guest VM, how to communicate with resource manager, and basic
++description and capabilities of this VM. See
++Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml for a
++description of this node.
+diff --git a/Documentation/virt/gunyah/message-queue.rst b/Documentation/virt/gunyah/message-queue.rst
+new file mode 100644
+index 000000000000..96864708f442
+--- /dev/null
++++ b/Documentation/virt/gunyah/message-queue.rst
+@@ -0,0 +1,68 @@
++.. SPDX-License-Identifier: GPL-2.0
++
++Message Queues
++==============
++Message queue is a simple low-capacity IPC channel between two virtual machines.
++It is intended for sending small control and configuration messages. Each
++message queue is unidirectional and buffered in the hypervisor. A full-duplex
++IPC channel requires a pair of queues.
++
++The size of the queue and the maximum size of the message that can be passed is
++fixed at creation of the message queue. Resource manager is presently the only
++use case for message queues, and creates messages queues between itself and VMs
++with a fixed maximum message size of 240 bytes. Longer messages require a
++further protocol on top of the message queue messages themselves. For instance,
++communication with the resource manager adds a header field for sending longer
++messages which are split into smaller fragments.
++
++The diagram below shows how message queue works. A typical configuration
++involves 2 message queues. Message queue 1 allows VM_A to send messages to VM_B.
++Message queue 2 allows VM_B to send messages to VM_A.
++
++1. VM_A sends a message of up to 240 bytes in length. It makes a hypercall
++   with the message to request the hypervisor to add the message to
++   message queue 1's queue. The hypervisor copies memory into the internal
++   message queue buffer; the memory doesn't need to be shared between
++   VM_A and VM_B.
++
++2. Gunyah raises the corresponding interrupt for VM_B (Rx vIRQ) when any of
++   these happens:
++
++   a. gunyah_msgq_send() has PUSH flag. This is a typical case when the message
++      queue is being used to implement an RPC-like interface.
++   b. Explicitly with gunyah_msgq_push hypercall from VM_A.
++   c. Message queue has reached a threshold depth. Typically, this threshold
++      depth is the size of the queue (in other words: when queue is full, Rx
++      vIRQ is raised).
++
++3. VM_B calls gunyah_msgq_recv() and Gunyah copies message to requested buffer.
++
++4. Gunyah raises the corresponding interrupt for VM_A (Tx vIRQ) when the message
++   queue falls below a watermark depth. Typically, this is when the queue is
++   drained. Note the watermark depth and the threshold depth for the Rx vIRQ are
++   independent values. Coincidentally, this signal is conceptually similar to
++   Clear-to-Send.
++
++For VM_B to send a message to VM_A, the process is identical, except that
++hypercalls reference message queue 2's capability ID. The IRQ will be different
++for the second message queue.
++
++::
++
++      +-------------------+         +-----------------+         +-------------------+
++      |        VM_A       |         |Gunyah hypervisor|         |        VM_B       |
++      |                   |         |                 |         |                   |
++      |                   |         |                 |         |                   |
++      |                   |   Tx    |                 |         |                   |
++      |                   |-------->|                 | Rx vIRQ |                   |
++      |gunyah_msgq_send() | Tx vIRQ |Message queue 1  |-------->|gunyah_msgq_recv() |
++      |                   |<------- |                 |         |                   |
++      |                   |         |                 |         |                   |
++      |                   |         |                 |         |                   |
++      |                   |         |                 |   Tx    |                   |
++      |                   | Rx vIRQ |                 |<--------|                   |
++      |gunyah_msgq_recv() |<--------|Message queue 2  | Tx vIRQ |gunyah_msgq_send() |
++      |                   |         |                 |-------->|                   |
++      |                   |         |                 |         |                   |
++      |                   |         |                 |         |                   |
++      +-------------------+         +-----------------+         +---------------+
+diff --git a/Documentation/virt/index.rst b/Documentation/virt/index.rst
+index 7fb55ae08598..15869ee059b3 100644
+--- a/Documentation/virt/index.rst
++++ b/Documentation/virt/index.rst
+@@ -16,6 +16,7 @@ Virtualization Support
+    coco/sev-guest
+    coco/tdx-guest
+    hyperv/index
++   gunyah/index
  
- struct kvm_arch_memory_slot {
-+#ifdef CONFIG_GUNYAH
-+	struct page **pages;
-+#endif
- };
+ .. only:: html and subproject
  
- /**
-diff --git a/arch/arm64/kvm/gunyah.c b/arch/arm64/kvm/gunyah.c
-index 0095610166ad..9c37ab20d7e2 100644
---- a/arch/arm64/kvm/gunyah.c
-+++ b/arch/arm64/kvm/gunyah.c
-@@ -660,11 +660,47 @@ void kvm_arch_mmu_enable_log_dirty_pt_masked(struct kvm *kvm,
- {
- }
- 
--void kvm_arch_commit_memory_region(struct kvm *kvm,
--				   struct kvm_memory_slot *old,
--				   const struct kvm_memory_slot *new,
--				   enum kvm_mr_change change)
-+static int gunyah_pin_user_memory(struct kvm *kvm, struct kvm_memory_slot *memslot)
- {
-+	unsigned int gup_flags = FOLL_WRITE | FOLL_LONGTERM;
-+	unsigned long start = memslot->userspace_addr;
-+	struct vm_area_struct *vma;
-+	struct page **pages;
-+	int ret;
-+
-+	if (!memslot->npages)
-+		return 0;
-+
-+	/* It needs to be a valid VMA-backed region */
-+	mmap_read_lock(current->mm);
-+	vma = find_vma(current->mm, start);
-+	if (!vma || start < vma->vm_start) {
-+		mmap_read_unlock(current->mm);
-+		return 0;
-+	}
-+	if (!(vma->vm_flags & VM_READ) || !(vma->vm_flags & VM_WRITE)) {
-+		mmap_read_unlock(current->mm);
-+		return 0;
-+	}
-+	mmap_read_unlock(current->mm);
-+
-+	pages = kvcalloc(memslot->npages, sizeof(*pages), GFP_KERNEL);
-+	if (!pages)
-+		return -ENOMEM;
-+
-+	ret = pin_user_pages_fast(start, memslot->npages, gup_flags, pages);
-+	if (ret < 0) {
-+		goto err;
-+	} else if (ret != memslot->npages) {
-+		ret = -EIO;
-+		goto err;
-+	} else {
-+		memslot->arch.pages = pages;
-+		return 0;
-+	}
-+err:
-+	kvfree(pages);
-+	return ret;
- }
- 
- int kvm_arch_prepare_memory_region(struct kvm *kvm,
-@@ -672,11 +708,33 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
- 				   struct kvm_memory_slot *new,
- 				   enum kvm_mr_change change)
- {
--	return 0;
-+	int ret;
-+
-+	switch (change) {
-+	case KVM_MR_CREATE:
-+		ret = gunyah_pin_user_memory(kvm, new);
-+		break;
-+	default:
-+		return 0;
-+	}
-+	return ret;
-+}
-+
-+void kvm_arch_commit_memory_region(struct kvm *kvm,
-+				   struct kvm_memory_slot *old,
-+				   const struct kvm_memory_slot *new,
-+				   enum kvm_mr_change change)
-+{
- }
- 
- void kvm_arch_free_memslot(struct kvm *kvm, struct kvm_memory_slot *slot)
- {
-+	if (!slot->arch.pages)
-+		return;
-+
-+	unpin_user_pages(slot->arch.pages, slot->npages);
-+
-+	kvfree(slot->arch.pages);
- }
- 
- void kvm_arch_memslots_updated(struct kvm *kvm, u64 gen)
 -- 
 2.39.5
 
