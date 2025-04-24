@@ -1,86 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-55515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA6D1A9B8D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 22:09:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5273AA9B931
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 22:29:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 38EE17A9E1E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 20:07:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5FA0B1BC0AC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 20:29:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC6EF1F866B;
-	Thu, 24 Apr 2025 20:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A70A21D004;
+	Thu, 24 Apr 2025 20:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AMsspUme"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FuFXDoxV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56C11F4621
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 20:08:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421BB218EB9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 20:29:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745525323; cv=none; b=kNc9vVkpC6tL8MGBGlQ9Q1CQrXfhHMH8vOlBS82scMzeqqS7rV0q2Noe9kJ8nuI3tAfyUlaFAtDwyQ3JSZ+do52aOsdhqu2NpZafLNyeZoSh8JZwhUsPQBSgiI05f2juT9RTmhSBJcQX+2Smew6OoSpqsmO0ZgeOYggss7vx3y8=
+	t=1745526546; cv=none; b=Vwjeultz0x8hqiebhT8r1ts+p+mclVNKw4lf+m6rd1OC/I041iwOrn8FxlEL8xa6cvtDqKa32s47KXM6/bImlHxG9ZjUOx7za2hOqz/cZ/YmVY+33hNZtAOIlVSacqluAj/TTkQgFrUsxdVYaakbLxplHXCA5ey3D6RHv5mKEyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745525323; c=relaxed/simple;
-	bh=V3f6aXPJbQijd6ipBPnSJT6DHy2KjZMx3Pjb2cb1lhk=;
+	s=arc-20240116; t=1745526546; c=relaxed/simple;
+	bh=jaF2/WGmmF6IhprUJ3GJa+AzVehMU23iTKAX6lGzPnw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LLBteDoBlnDF5xKXK7mVfxjr2VE9/hwlScjMC460Y2dtaoRxiGQr6CRRLE5QOKCdmrPPZFJVVxxiM6xzb6Ia/X02nLQsWkTJuLex74ahPpzqgbKJlp0BzpoWdH5//UG/hfEldyEelaYaTv4NHBEpsDNj7CgcJPOtUiQGoQjS9s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AMsspUme; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=ZRXRP/ogwsrk2ygxYS7oVXhcbmu3gmAKrJnQYgXD58WDIjyMc+sfLetDjaqt692qeuLMVvbF2mU5XE4f8rO4Y3rENzOu8UeWBKUoImBAkjJtT6JpJXce4BuQoXhlYxxSJzalomvE7ERkMtx1QLmLfL6PCpOGWdaFjy7WiynVZcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FuFXDoxV; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53OJn428008723
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 20:08:40 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53OJnTaK010652
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 20:29:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	G9NkZBB78ocYZoBuxIUW+E3P4tAq4xlMh9aXpLYJZmU=; b=AMsspUmeDDTr6fVs
-	Zjc0G+CMRC0lqCwsh5MYoS3ndPg/wnpPgW/yQ6tV+H1CNUnOE6gzirWDXz0FSgoz
-	fz/AChZ8VmFt5vqzIbNi5QGeLIEp9TBsnHNT9KnDKhxXd+ERhVTRcgSEhpnAkaCZ
-	l3JIOVdpdGqZZssYB9IX6NuqWT6pfBKA6b4hNlaBHZnXODmIcEFSmCY1GYbFIccP
-	i4VWrbvJhY/GU+K5Go0sA1Wpso9MOdkJyUaFgzTV9NXpV4nB5Y/AFKym9O50tygz
-	VouZvcBUoITRLWpgWZUGkqed3vY6g7BKgOqGm98mYss+KpPqYYIvTjblpPgZVTnL
-	F3mt3w==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh3prh3-1
+	AE6pFsekqcqEpjtxscTH0U9yzSRkz2si1yg/1Rn6R0I=; b=FuFXDoxVcgsmKjY8
+	bMlQIDCswn+OWe9kpnZwSVbK/gROM10pRlRH+jjoT2NZ5o/BOvs/L1U1fk1WWelN
+	PRAh8+BzNJfrzr9fjgBU79QOpCGmwZYm+W1sV7zsUPL3NQdMRvYyiP7G8DTeL7Xo
+	AbUP/VmKBR4jeBQDSbtnSSP5o4SwTFVC+P4vVf3f7v9RAMugBeJaZghvaHOISPZF
+	xt1j+Ew1XUisdTeuFo1SjnkT9XeScVZoIyhBhD51u/phtHzuvgVgG/tWK563h3s7
+	G8tHf8aMxpPFSjY1c5DLX+RAXQ9EfWgmRbt8+ljbSB6cjvJfE9oQ9/ZrRpn3BwlV
+	rn4QDg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh1pvh7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 20:08:40 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c54be4b03aso29158585a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 13:08:40 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 20:29:03 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c552802e9fso26588285a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 13:29:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745525319; x=1746130119;
+        d=1e100.net; s=20230601; t=1745526542; x=1746131342;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=G9NkZBB78ocYZoBuxIUW+E3P4tAq4xlMh9aXpLYJZmU=;
-        b=I6OIG2F38RPzVl4/Y7SMpcRguYvWeYhIdjJaA8Gp1RG8N58EZUxV2yzja6YH4VxRXT
-         W4hbkglG2+KajmIJa+Mo60QOItdJQ3Za38jQe/IFUIWYBJRs/BLWUu6yy7cotxCLau6E
-         +qwXWrloI9S059NEhew2JUGXXeO7t96SpApTZzNrbVf6LIbYUyyORZGZYTR1ta3em36t
-         uwJYBmj9zRDZs0A4sy1iM4tu0XfescNIsPLy/uKffyPBHDH80T/CWnVuXkYSDoK4iFOa
-         d9znif5IIqv+sGEqJTxm1/A4VvK/Y+l+6/pzP8LX+hBDiUwQkKbHqhKXXEai3PHTqZtS
-         Xm2g==
-X-Gm-Message-State: AOJu0YzRDFzUrUDJz2+DlocZv83fUWPiJ2CtzZnkJVj6c9Fk3MWYuwi/
-	bAKqyrefelmimR11Dsx8yruXSwt+MVMYD7f6vOQ3ANV75eiw+wihRgnTi5Z9YgaZuXOMmmdnos2
-	o1llwxOfws6CkT6c64IxrrtNpWJTpm80NGp4NCsetItyIWruZB65ln5/8jgcFdAU5
-X-Gm-Gg: ASbGnctyZKiTfQu8Qxwrz3oA0CuJCud+CiuHURq8dG8zmDBh78i0Of6o9LZo+vludMB
-	vlnOkXW0L9g+FYkrfW7DM/szJgjubbtNvF+8CZm+tK7p8ErgGRHlFu2229slLem8IOz54V0OGuw
-	nj3VdLGcbZaR5UpcxVAnKIOr7+gD7eD6s040y70mKc0vaxvG+FYFHpzVAmXmaBi5KYs2msE9KsX
-	tX4TZ6uexj8ZoWr3DX8ZVdc1AgiKfAodAJmoyh0F2nBKPYl/9iF3t+QYD4roqVYrHCsd50/zdE2
-	pNKO28c/nxhz3KDFAQw1vneUNIvGXhzpfdlg+QWZCm6oTjQCvjEsORsSM4pYfw/u+DE=
-X-Received: by 2002:a05:620a:2952:b0:7c5:ac06:af8 with SMTP id af79cd13be357-7c958375c68mr215663085a.9.1745525319581;
-        Thu, 24 Apr 2025 13:08:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMmWKDcjybgaESS6WVurym3NYqKuP+fE4ZJpZgER8xsvh0anBTaORqzLN+6oFTx6wsgHq8Uw==
-X-Received: by 2002:a05:620a:2952:b0:7c5:ac06:af8 with SMTP id af79cd13be357-7c958375c68mr215660285a.9.1745525319127;
-        Thu, 24 Apr 2025 13:08:39 -0700 (PDT)
+        bh=AE6pFsekqcqEpjtxscTH0U9yzSRkz2si1yg/1Rn6R0I=;
+        b=mJMoPUu93CoTSEDFLN+d9lpylADL14Khzs2bPjVBtnmp3dDA67t5gItdS58MHQc0se
+         u6CWvmtVM+1TmgezVLw+WegY7CYU30K5o4+HG+kxEwogWjhsIdTXBG9jFb6ec+VY4bAs
+         aZFAG3qlipepzQIpQOQiQcdiIARfkLrX7MWRnJ/PcwbhrK4JyLUINhrqPmSaRsrkALbv
+         6AaBi+ibkm6Ke0+jX1QB4/MQYx7ShVF/nfGDTjRrmlkWq2A9j5mMYjogatYxvOWp0i9A
+         I8AkCzPlspG6f7sOOx9P9FLA3mMWrUOlRpDlsB+WfWi1qLyLvPdqr95uWWdfbjNyUXgk
+         WgHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWvAcDHPEqZq6KnE6Aubz8/ec1+WfUCoOTHVvcs7w6317VYxvVXAyLyqdzTfYb7EERcqCTWCzyhJ6y6/1TN@vger.kernel.org
+X-Gm-Message-State: AOJu0YxiITowikickJqMTM/sk1wslhu+tV/FhzlXE+oj2C8eR5wdRVle
+	qrbtSqmv+Q3LvDo9R4QkyR8nCd38XMcs0XKY6Birgr0zabDOmsYjK0ApemACbiCR7MMCNt/mrtp
+	eI6sDbAJh4uljdud2N+wzrIUdY6Njf8WxehKhNaxytY8m3agbnBRclenVl/VaFdNu
+X-Gm-Gg: ASbGncsofDFilTNjSyXhoVtlBUdXdaARoN7qHC9oEuyhwxMkH2/7lBkVQgR0YEoGPi5
+	L96vuJLemlTv7MyTqTegKvPeGb5Fd7Jm04UEd6JKq9B91wRU/bMuZDxc9kaMB952nB1Mx0jn774
+	KYHbceBuekTY8vAP0FZsYR0gxVK9eWpsIQRBhCu9XMGQUuM0NSyRz/u5uTnNqaFYEdZtFaULR8n
+	cmxShfYc04Y9k0dYHVD1SgQIbP1MEKWGu4CUbPzO/0JK3Ywaa4Ppzn0EbnfENfEBF/gywFOUmuy
+	ZQV+ZNAlX6PzeUS+1wjIXlWbvJQczRYGns9ofYmEbaQOAYxv9ZGJ2qZAgaAtnEpoTuI=
+X-Received: by 2002:a05:620a:390a:b0:7c0:b106:94ba with SMTP id af79cd13be357-7c956efd7fdmr209396085a.7.1745526541828;
+        Thu, 24 Apr 2025 13:29:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5WXJS8NaqdeMt/+KLcu9ZSJwqsayh1efliZCQC90ik+AnNBQkVEBnW9Khoq4PWXzzmvC+AQ==
+X-Received: by 2002:a05:620a:390a:b0:7c0:b106:94ba with SMTP id af79cd13be357-7c956efd7fdmr209392885a.7.1745526541344;
+        Thu, 24 Apr 2025 13:29:01 -0700 (PDT)
 Received: from [192.168.65.221] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6e41c71csm15120766b.4.2025.04.24.13.08.36
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6e4e7ccbsm17442766b.59.2025.04.24.13.28.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Apr 2025 13:08:38 -0700 (PDT)
-Message-ID: <d0958f7e-db81-4e4f-93e5-24ba0cd853fd@oss.qualcomm.com>
-Date: Thu, 24 Apr 2025 22:08:35 +0200
+        Thu, 24 Apr 2025 13:29:00 -0700 (PDT)
+Message-ID: <eac33841-4796-43bf-affe-31901344c5ff@oss.qualcomm.com>
+Date: Thu, 24 Apr 2025 22:28:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,102 +89,167 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/5] dt-bindings: media: Add qcom,x1e80100-camss
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Mauro Carvalho Chehab
- <mchehab@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-References: <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-0-edcb2cfc3122@linaro.org>
- <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-2-edcb2cfc3122@linaro.org>
- <3ec3fd62-bf21-47e7-873c-ce151589d743@linaro.org>
- <54eeb470-cd90-4bc2-b415-6dea1ce2321d@linaro.org>
- <0ab31397-580f-4e5a-b9ad-d9bf79d29106@linaro.org>
- <36feffed-4558-4e59-97db-2f0e916dbfc7@linaro.org>
- <6a4ec36c-c003-4ce8-9433-8c12ed3188ee@linaro.org>
- <d97194a7-2b7d-4a76-998b-92da495e8bd2@linaro.org>
+Subject: Re: [PATCH v2 3/4] drm/msm/a6xx: Get HBB dynamically, if available
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Rob Clark <robdclark@gmail.com>
+Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Connor Abbott <cwabbott0@gmail.com>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>, Kees Cook <kees@kernel.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-hardening@vger.kernel.org,
+        dri-devel
+ <dri-devel@lists.freedesktop.org>,
+        freedreno@lists.freedesktop.org
+References: <20250410-topic-smem_dramc-v2-0-dead15264714@oss.qualcomm.com>
+ <20250410-topic-smem_dramc-v2-3-dead15264714@oss.qualcomm.com>
+ <20911703-ab4e-4eb2-8611-294730a06d2f@quicinc.com>
+ <CACu1E7HDmQXDNtEQCXpHXsOKPCOgrWgo+_kcgizo9Mp1ntjDbA@mail.gmail.com>
+ <1282bf58-e431-4a07-97e5-628437e7ce5f@quicinc.com>
+ <CACu1E7GwMCt6+JJQGgSvJObTMMWYLPd69owyFo7S=sxu_EEsUw@mail.gmail.com>
+ <16845de2-a40a-4e3d-b3aa-c91e7072b57f@quicinc.com>
+ <CAF6AEGvyeRLHFBYmxkevgT+hosXGiH_w8Z+UjQmL+LdbNfVZ+w@mail.gmail.com>
+ <acd1c8dd-286b-40b7-841d-e53e2d155a61@oss.qualcomm.com>
+ <CAF6AEGts5rWvgyZy8RtAaUOsad362AG-uNjxF9vyj4szg=b5Bw@mail.gmail.com>
+ <6233171a-2964-4d57-986c-d3f1725eacd6@oss.qualcomm.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <d97194a7-2b7d-4a76-998b-92da495e8bd2@linaro.org>
+In-Reply-To: <6233171a-2964-4d57-986c-d3f1725eacd6@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: K8M76t7dd8eqSeAZv5ZZkyQLFUSu8ROn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDE0MSBTYWx0ZWRfXwvljbB3S+mcF +59L90b8D+lfNEk/WcgdBsTkf5q9kQCqQsvJb2yL1EHW34cIgaDT0YWepM23JNaWbGDbUW1vgfb Zn8695siP8NluQGKtSH/1GC3784aOVrxitfX5NISqhwARr4pJHHSEa5OiyCm3trT8hpgTN9nSQP
- YbLvEw/Z8lkHkH31U53LSeW2H52GYfkIlu60JWBQ4ntLFBouM1gQU/ziSFSSDtIrXIa/TDwnEwI d8Q5rHjagfbItZvTvvl+viAI7CK8mpvwEctI/GcC2skn8qjrhsyslMhXw4mvR05MidoSHkNhzCs Ar2PtfsXYZdk06kzEqSGCZ90u8e6Xc+Ife8hSJmBOriE2x5jpTgcc1EIcWCPeNBqIoUdWlQJQaz
- VUD103PpouBerOB26wnap/fTs5A9VOs6WdY1WA+cKTxaQw4SNFiWVwvOsHxG9Wt7sN4Qc2r5
-X-Authority-Analysis: v=2.4 cv=ELgG00ZC c=1 sm=1 tr=0 ts=680a9a48 cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=Wno-CeEu7Fx5tZoO0NsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-GUID: K8M76t7dd8eqSeAZv5ZZkyQLFUSu8ROn
+X-Proofpoint-GUID: EP7PUjtj6j1svqNV31XEsm2U2qo28p8T
+X-Proofpoint-ORIG-GUID: EP7PUjtj6j1svqNV31XEsm2U2qo28p8T
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDE0MyBTYWx0ZWRfX/1Llb3drKUrn yIpBTL/ErrPp8c1OsD4Rd3MWQ5UUXIlTNA4N0hVneaZ8nZ4X6V5CIV1Q2I5SrU9vMqN352/MlNq IeCd/+PVcm3fNQ0E8G1etJKSwitUA/ZOPTR4EM0Wt0kAYuVIO7iwMLntfejU0FLjSvec5f7mxc3
+ +BF2uoYD4DqPapfZYrper+FmUeqC2W4YH9DglWCe/NiQxLFQ0l7mHFrQE3OA4PDCzfJxrq2TgFI tGn3UEL+m8nn2k1FTyEF/vztkaTciqP5dDesg8dJl14M6etdja01/jLVhHjLzPN08lI6RQ6GaiK W5lc7XjCRxmnYon3mOdfg5t74QqlPxyKNTbwT0BEc3wObkv2z+wGzyMtJzkPzHgzb3EqzMaNfcb
+ z+Wnu/o8CgO60wDpi79sC4p+QWaVDSiQLAWFKuW5AD53uQ40rm8Hd8T8dpNasi8qF8mk14Lp
+X-Authority-Analysis: v=2.4 cv=ZpjtK87G c=1 sm=1 tr=0 ts=680a9f0f cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=U4o27yoWPFISaBf6hsEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-24_09,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504240141
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 clxscore=1015
+ bulkscore=0 suspectscore=0 mlxlogscore=999 spamscore=0 impostorscore=0
+ mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504240143
 
-On 4/24/25 6:13 PM, Bryan O'Donoghue wrote:
-> On 24/04/2025 16:54, Krzysztof Kozlowski wrote:
->> On 24/04/2025 12:17, Bryan O'Donoghue wrote:
->>> On 24/04/2025 11:07, Krzysztof Kozlowski wrote:
->>>> On 24/04/2025 11:34, Bryan O'Donoghue wrote:
->>>>> On 24/04/2025 07:40, Krzysztof Kozlowski wrote:
->>>>>>> +  vdd-csiphy-0p8-supply:
->>>>>> Same comment as other series on the lists - this is wrong name. There
->>>>>> are no pins named like this and all existing bindings use different name.
+On 4/23/25 5:23 PM, Dmitry Baryshkov wrote:
+> On 23/04/2025 17:55, Rob Clark wrote:
+>> On Tue, Apr 22, 2025 at 4:57 PM Konrad Dybcio
+>> <konrad.dybcio@oss.qualcomm.com> wrote:
+>>>
+>>> On 4/21/25 10:13 PM, Rob Clark wrote:
+>>>> On Fri, Apr 18, 2025 at 9:00 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
 >>>>>
->>>>> The existing bindings are unfortunately not granular enough.
+>>>>> On 4/18/2025 6:40 AM, Connor Abbott wrote:
+>>>>>> On Thu, Apr 17, 2025, 1:50 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>>>>>>>
+>>>>>>> On 4/17/2025 9:02 PM, Connor Abbott wrote:
+>>>>>>>> On Thu, Apr 17, 2025 at 3:45 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>>>>>>>>>
+>>>>>>>>> On 4/10/2025 11:13 PM, Konrad Dybcio wrote:
+>>>>>>>>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>>>>>>>>
+>>>>>>>>>> The Highest Bank address Bit value can change based on memory type used.
+>>>>>>>>>>
+>>>>>>>>>> Attempt to retrieve it dynamically, and fall back to a reasonable
+>>>>>>>>>> default (the one used prior to this change) on error.
+>>>>>>>>>>
+>>>>>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>>>>>>>> ---
+>>>>>>>>>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 15 ++++++++++++++-
+>>>>>>>>>>   1 file changed, 14 insertions(+), 1 deletion(-)
+>>>>>>>>>>
+>>>>>>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>>>>>>>> index 06465bc2d0b4b128cddfcfcaf1fe4252632b6777..a6232b382bd16319f20ae5f8f5e57f38ecc62d9f 100644
+>>>>>>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>>>>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>>>>>>>> @@ -13,6 +13,7 @@
+>>>>>>>>>>   #include <linux/firmware/qcom/qcom_scm.h>
+>>>>>>>>>>   #include <linux/pm_domain.h>
+>>>>>>>>>>   #include <linux/soc/qcom/llcc-qcom.h>
+>>>>>>>>>> +#include <linux/soc/qcom/smem.h>
+>>>>>>>>>>
+>>>>>>>>>>   #define GPU_PAS_ID 13
+>>>>>>>>>>
+>>>>>>>>>> @@ -587,6 +588,8 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
+>>>>>>>>>>
+>>>>>>>>>>   static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+>>>>>>>>>>   {
+>>>>>>>>>> +     int hbb;
+>>>>>>>>>> +
+>>>>>>>>>>        gpu->ubwc_config.rgb565_predicator = 0;
+>>>>>>>>>>        gpu->ubwc_config.uavflagprd_inv = 0;
+>>>>>>>>>>        gpu->ubwc_config.min_acc_len = 0;
+>>>>>>>>>> @@ -635,7 +638,6 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+>>>>>>>>>>            adreno_is_a690(gpu) ||
+>>>>>>>>>>            adreno_is_a730(gpu) ||
+>>>>>>>>>>            adreno_is_a740_family(gpu)) {
+>>>>>>>>>> -             /* TODO: get ddr type from bootloader and use 2 for LPDDR4 */
+>>>>>>>>>>                gpu->ubwc_config.highest_bank_bit = 16;
+>>>>>>>>>>                gpu->ubwc_config.amsbc = 1;
+>>>>>>>>>>                gpu->ubwc_config.rgb565_predicator = 1;
+>>>>>>>>>> @@ -664,6 +666,13 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+>>>>>>>>>>                gpu->ubwc_config.highest_bank_bit = 14;
+>>>>>>>>>>                gpu->ubwc_config.min_acc_len = 1;
+>>>>>>>>>>        }
+>>>>>>>>>> +
+>>>>>>>>>> +     /* Attempt to retrieve the data from SMEM, keep the above defaults in case of error */
+>>>>>>>>>> +     hbb = qcom_smem_dram_get_hbb();
+>>>>>>>>>> +     if (hbb < 0)
+>>>>>>>>>> +             return;
+>>>>>>>>>> +
+>>>>>>>>>> +     gpu->ubwc_config.highest_bank_bit = hbb;
+>>>>>>>>>
+>>>>>>>>> I am worried about blindly relying on SMEM data directly for HBB for
+>>>>>>>>> legacy chipsets. There is no guarantee it is accurate on every chipset
+>>>>>>>>> and every version of firmware. Also, until recently, this value was
+>>>>>>>>> hardcoded in Mesa which matched the value in KMD.
+>>>>>>>>
+>>>>>>>> To be clear about this, from the moment we introduced host image
+>>>>>>>> copies in Mesa we added support for querying the HBB from the kernel,
+>>>>>>>> explicitly so that we could do what this series does without Mesa ever
+>>>>>>>> breaking. Mesa will never assume the HBB unless the kernel is too old
+>>>>>>>> to support querying it. So don't let Mesa be the thing that stops us
+>>>>>>>> here.
+>>>>>>>
+>>>>>>> Thanks for clarifying about Mesa. I still don't trust a data source that
+>>>>>>> is unused in production.
+>>>>>>
+>>>>>> Fair enough, I'm not going to argue with that part. Just wanted to
+>>>>>> clear up any confusion about Mesa.
+>>>>>>
+>>>>>> Although, IIRC kgsl did set different values for a650 depending on
+>>>>>> memory type... do you know what source that used?
 >>>>>
->>>>> I'll post s series to capture pin-names per the SoC pinout shortly.
->>>> How are the pins/supplies actually called?
+>>>>> KGSL relies on an undocumented devicetree node populated by bootloader
+>>>>> to detect ddrtype and calculates the HBB value based on that.
 >>>>
->>>> Best regards,
->>>> Krzysztof
+>>>> Would it be reasonable to use the smem value, but if we find the
+>>>> undocumented dt property, WARN_ON() if it's value disagrees with smem?
+>>>>
+>>>> That would at least give some confidence, or justified un-confidence
+>>>> about the smem values
 >>>
->>> I don't think strictly algning to pin-names is what we want.
->>>
->>> Here are the input pins
->>>
->>> VDD_A_CSI_0_1_1P2
->>> VDD_A_CSI_2_4_1P2
->>> VDD_A_CSI_0_1_0P9
->>> VDD_A_CSI_2_4_0P9
->>>
->>> I think the right way to represent this
->>>
->>> yaml:
->>> csiphy0-1p2-supply
->>> csiphy1-1p2-supply
+>>> The aforementioned value is populated based on the data that this
+>>> driver reads out, and only on the same range of platforms that this
+>>> driver happens to cater to
 >>
->> But there is no separate supply for csiphy0 and csiphy1. Such split
->> feels fine if you have separate CSI phy device nodes, which now I wonder
->> - where are they?
->>
->> Best regards,
->> Krzysztof
+>> Did I understand that correctly to mean that the dt property is based
+>> on the same smem value that you are using?  In that case, there should
+>> be no argument against using the smem value as the source of truth.
 > 
-> The main hardware argument for it is probably these PHYs do live inside of the TITAN_TOP_GDSC power-domain, which is the same collapsible power-domain that all of the other CAMSS components live inside of.
-> 
-> As I recall we had a four way - albeit long discussion on this in Dublin, you, me, Vlad and Neil and my memory was we would implement multiple rails in the existing CAMSS PHY structure and then look at how to model the PHYs differently in DTS.
-> 
-> The Test Pattern Generators - TPGs would then also fit into this new model for the PHYs.
+> It is, but is done by the bootloader that knows exact format of the data.
 
-Maybe we could consider modeling various camss subdevices as separate DT nodes,
-perhaps on some sort of a `camss` simple-pm-bus or something alike
+Right, so the only point of concern here is the handwavy matching-by-size
+logic.
 
 Konrad
 
