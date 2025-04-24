@@ -1,163 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-55510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1EF7A9B7E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 21:07:38 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E87D7A9B7EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 21:08:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D6A0A7B06B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 19:06:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 13B577A4244
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 19:07:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 983F129E048;
-	Thu, 24 Apr 2025 19:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C61A929008D;
+	Thu, 24 Apr 2025 19:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Q3yeMYEV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KtuyTswE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD4129DB91;
-	Thu, 24 Apr 2025 19:01:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D6D28FFD5;
+	Thu, 24 Apr 2025 19:05:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745521302; cv=none; b=SSWOQlBhw729iR9znjzqDiUcLpD47/lBuTPTC78a1QIUn4zlo7EVH39gJLizIuM4G3lIkJIIA99h1V4GVMA51n26c+3XtsH1UlbSjP2un0putyyqPNeJqGcI/fmyhZ3y2p4sruE4xVJKfQVHPEIblkyzgQw5cUTQp2BuZu87cIw=
+	t=1745521511; cv=none; b=crZdeoBd7+CZuasM/4nUyFicmmlWFWUp0zUQnKhOoMtAKCLQkRm+O/9fT9X0KDMelBOHXvvEMXfnoKIxltZD3JlgHtuHKYJ9JHL252asBOoIWukhteghNtjvC97nqPw/WxiBXHM5DzpwUOrY78gz4f/SVwmbc1cb0wd8aXR/0t4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745521302; c=relaxed/simple;
-	bh=BlwyTyJ8GbfTf54SmArKeRkftXIM9eH+5wHtOTU+mZo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=U70SaWHCcBt/Vn2JKLf+AHxOgQQpDxSkFGNkyV9d1jU53cmAHObVBD8V2yi0p/LH8qZ7rU5X8NluWJH6KR1vg6lfSfe7NvxOUKpgMzCwZBVeAb9jW8FHOgL3eRuTl4N0BCgGyYi81I5Y5PmX2N7lZxUUUiX74dzbmjQCRXLtycs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Q3yeMYEV; arc=none smtp.client-ip=217.70.183.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id B6A97443A6;
-	Thu, 24 Apr 2025 19:01:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1745521298;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZiG+eY4/6DfmVhqwEGto1bBfeJJItjfMUvkQ8WFHCiM=;
-	b=Q3yeMYEVYzuYyyGJiR31+9UCksAyeaX696NZPd3iMQR37dr7Zy+bvWYlf1mAG88yQVg3Ps
-	yolDD0AcIw6YU0Y+6DwvOszsjC7X/owF0Bjt/APta662mls7fmYR/uNX5lQKsWDeMDX72L
-	UEDETa4ivQ9oAc/biBUcgvu1475piaUQaU3OKOKlIC6z5PBBouv5BFK4aV4hChYSoFc5k5
-	B+JvsfsG3WRyOBn+FFe0o6ftc1DFf3Fjt64H1uRNJ2x/uECljdePxgH0lf4WbERBhgHw+I
-	FD5KK6bx9eD19gjg5uKpM7lUi7h/5q+bXnM2k7vtI4bYo2Bf0VS/Ckv96UdoMw==
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Date: Thu, 24 Apr 2025 20:59:40 +0200
-Subject: [PATCH v2 33/34] drm/bridge: add devm_drm_put_bridge()
+	s=arc-20240116; t=1745521511; c=relaxed/simple;
+	bh=Sm3N+EFDuoJzdqd1YhzgxLoS15KUYF+jl7ejRzSDu/M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Cb4jGitkMp8TNgwWRqA4W02Siq3zeqcrdXY11RFZS29Rb+XgKYMG3TzL2R1GwR7iMdpj9jsRms/FU/7gSC+o59/jTC8ZdjayZ4VfNz8R4l15KHM73AbKHxLS5yfz1QFuxGOas+Gaa/NRUz8XVwZg9EOHptZHhLM3eM6+BUxzUn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KtuyTswE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0688AC4CEE3;
+	Thu, 24 Apr 2025 19:05:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745521511;
+	bh=Sm3N+EFDuoJzdqd1YhzgxLoS15KUYF+jl7ejRzSDu/M=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=KtuyTswEq/d9ogf6clbFjqLdijhnwWgmrCSHLZDwopx250NPh93izNpnCpJAPKINI
+	 TnHcBzoZDFzKmCWZCh4EtBlYvj1Iul6E9I6RiUgEqgpfU1bAe73+9l++Oxn+9+w0Jt
+	 26JG1mXLhp+XWqEJBujYNeW2AiktpTT4hMaH2mP9mC2pgmX+WNAO3CzQfdYz5RXkxz
+	 3WCkJoSaqqVJ5XhjKIaVHRAxJGbQ1m84advQUHWjGTKDPE2BdFMkajlqV6iQ/VmiSf
+	 xA/jIPzG7jgR3rFyoYu9P/MIjLZGOZuIkv2wcO82aAzcU9PQzVHy/lRj7ecMtMwd6K
+	 iipVWf06+4aIQ==
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5f62ef3c383so2734124a12.2;
+        Thu, 24 Apr 2025 12:05:10 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVZ3Xuy4Oc45vU8ojl7vUPEHbVJhF1iKA2HFtMjUkXfSXc/LmIxYkfTG4lrmaeyFLiB7+TuGpw/s8fLODw/Ww==@vger.kernel.org, AJvYcCW6gK8wOa8Ham8AjBsgvwbDWO9KD62DJ+ne42fgnbeA66oDXS8tGoicHPRQ4Ppoe+YstymcPv3sWsQ8Cg==@vger.kernel.org, AJvYcCWW279uWhfkQNf0JnlMapIMue/lK0BZkiXihhnu9B0ledgIp0kxXr5AG1HCWMU0zRAmPvWbFUAfosFxnKm9QXM=@vger.kernel.org, AJvYcCWobk4qWOLhU9uX3198LbkdS6M8rl8a7i6xwJD9IHqKephSApK23WYTssLnIrbw3DJ/OihQeeJM@vger.kernel.org, AJvYcCWynJTG/3x9kx9Mih+bYFhFTFOa/i+hQ028P2Tlv5pTII4NyM4B/RzfPQfYqOx9aMZtcxPrBqtFPpiwYvg1@vger.kernel.org, AJvYcCX0v1mWV75PTjnNsclUkCYhTOb0zjl1wYjaKM8OpAzQwRoNAKo/Bb/ByZWs9iktkcPF3ZxWRAXKvVvt+ZJ4JgA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzH1y2Ezz/4UIqT5H13xMhbYs22qY2bdG8oSiulx0G/8RZA1wvf
+	E20ntuaic+rk2aiK2VIn2nisQBIlhFiiQGcAGcQHECQFBiYuBw4KmzeoFkN4dH1Wa2Vth3zdPS5
+	v1u8IBGed7ewENsnaOD4vf6i5Ow==
+X-Google-Smtp-Source: AGHT+IGm7lm+b5Mr+cnYEdSkB8OI56BIVMt5nL9APzOm0qOr/4ImpeRmdhZ5NAUq0UWQDbHi8kbmShTWjc6+am4lBiQ=
+X-Received: by 2002:a05:6402:2686:b0:5e5:b572:a6d6 with SMTP id
+ 4fb4d7f45d1cf-5f6fabcda3dmr535218a12.10.1745521509605; Thu, 24 Apr 2025
+ 12:05:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250424-drm-bridge-convert-to-alloc-api-v2-33-8f91a404d86b@bootlin.com>
-References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
-In-Reply-To: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Andrzej Hajda <andrzej.hajda@intel.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Jagan Teki <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, 
- Douglas Anderson <dianders@chromium.org>, 
- Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
- Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Anusha Srivatsa <asrivats@redhat.com>, 
- Paul Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, 
- Hui Pu <Hui.Pu@gehealthcare.com>, 
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
- dri-devel@lists.freedesktop.org, asahi@lists.linux.dev, 
- linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev, 
- imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
- linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org, 
- linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
- linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com, 
- Luca Ceresoli <luca.ceresoli@bootlin.com>
-X-Mailer: b4 0.14.2
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedtvdehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomhepnfhutggrucevvghrvghsohhlihcuoehluhgtrgdrtggvrhgvshholhhisegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeeiieeuvdfftefgueduleehueetgffgjeeitedtteetkeeuueeuueekveevvdeuveenucfkphepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegrgeeivdemudgsuggumeeluddtudemvdelgehfnecuvehluhhsthgvrhfuihiivgepvdelnecurfgrrhgrmhepihhnvghtpedvrgdtvdemieejtdemvddtvddtmegvrgdtudemrgegiedvmedusgguugemledutddumedvleegfhdphhgvlhhopegludelvddrudeikedrudejkedruddukegnpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfeejpdhrtghpthhtohepkhhriihksehkvghrnhgvlhdrohhrghdprhgtphhtthhopegrnhgurhiivghjrdhhrghjuggrsehinhhtvghlrdgtohhmpdhrtghpthhtohepjhgrghgrnhesrghmrghruhhlrghsohhluhhtihhonhhsrdgtohhmpdhrt
- ghpthhtohepihhmgieslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehmrggrrhhtvghnrdhlrghnkhhhohhrshhtsehlihhnuhigrdhinhhtvghlrdgtohhmpdhrtghpthhtohepnfgruhhrvghnthdrphhinhgthhgrrhhtsehiuggvrghsohhnsghorghrugdrtghomhdprhgtphhtthhopehlihhnuhigqdhmvgguihgrthgvkheslhhishhtshdrihhnfhhrrgguvggrugdrohhrghdprhgtphhtthhopehfrhgvvggurhgvnhhosehlihhsthhsrdhfrhgvvgguvghskhhtohhprdhorhhg
-X-GND-Sasl: luca.ceresoli@bootlin.com
+References: <20250324-dt-bindings-network-class-v5-0-f5c3fe00e8f0@ixit.cz>
+ <20250324-dt-bindings-network-class-v5-3-f5c3fe00e8f0@ixit.cz>
+ <d8619ab4-3a91-467f-a3d4-f23b4e0383a4@kernel.org> <57701e2e-0005-4a8a-a3f5-ba098c97b480@kernel.org>
+ <4b040936baa8fa8669b34e36fe9dff6e08aeede9.camel@sipsolutions.net>
+ <f0e56cb2-17a6-44d4-ae71-8639966d565a@kernel.org> <8d8b7c3ad6a67a683abbb4fc6049898747300a16.camel@sipsolutions.net>
+ <CAL_JsqKGmoiW=yDD7G4Qznsa7S2wQ7x4Mh0i4puAyFsvcnHz1A@mail.gmail.com> <4e5d875c3f666be8d1c72fa19f6237f21b24f7ec.camel@sipsolutions.net>
+In-Reply-To: <4e5d875c3f666be8d1c72fa19f6237f21b24f7ec.camel@sipsolutions.net>
+From: Rob Herring <robh@kernel.org>
+Date: Thu, 24 Apr 2025 14:04:57 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJHdw5XOz5PLUvTZLVA0mUQTyGuqnXT0WTLTqNh27VWAw@mail.gmail.com>
+X-Gm-Features: ATxdqUHcl-CocjTcGXsOgyTDuLgwr5CqEc9QLMguz9q9ZTXAuu1QgWqCyAOM0fo
+Message-ID: <CAL_JsqJHdw5XOz5PLUvTZLVA0mUQTyGuqnXT0WTLTqNh27VWAw@mail.gmail.com>
+Subject: Re: [PATCH v5 3/5] dt-bindings: wireless: bcm4329-fmac: Use
+ wireless-controller.yaml schema
+To: Johannes Berg <johannes@sipsolutions.net>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, david@ixit.cz, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Mailing List <devicetree-spec-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, 
+	Lorenzo Bianconi <lorenzo@kernel.org>, van Spriel <arend@broadcom.com>, 
+	=?UTF-8?B?SsOpcsO0bWUgUG91aWxsZXI=?= <jerome.pouiller@silabs.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Andy Gross <agross@kernel.org>, Mailing List <devicetree-spec@vger.kernel.org>, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Janne Grunau <j@jannau.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Bridges obtained via devm_drm_bridge_alloc(dev, ...) will be put when the
-requesting device (@dev) is removed.
+On Thu, Apr 24, 2025 at 1:39=E2=80=AFPM Johannes Berg <johannes@sipsolution=
+s.net> wrote:
+>
+> On Thu, 2025-04-24 at 13:26 -0500, Rob Herring wrote:
+> > While it seems the reviews of the series caused more warnings for
+> > Apple, in general, schemas creating warnings is not breaking things.
+> > In a way, the whole point is to create warnings because if the .dts
+> > files were perfect already we wouldn't need schemas. The main
+> > requirement for schemas is only that they don't create warnings for
+> > the examples. There's still too many for .dts files to worry about it
+> > (and there's intermittent warnings from things getting merged via
+> > different trees).
+> >
+>
+> Oh, sure, but now if you want to apply the fixes you probably have to
+> wait for the broken patches in my tree to percolate all the way through
+> to Linus, then back to your tree, and then you can apply the fixes?
 
-However drivers which obtained them may need to put the obtained reference
-explicitly. One such case is if they bind the devm removal action to a
-different device than the one implemented by the driver itself and which
-might be removed at a different time, such as bridge/panel.c.
+No, I never take .dts changes. They all go via the individual platform
+trees. It's a bit weird if Krzysztof refers to the commit that's not
+in the linear history, but that shouldn't hold things up. The issues
+exist with or without the schema change. They might even be backported
+to stable while the schema change won't be.
 
-Add devm_drm_put_bridge() to manually release a devm-obtained bridge in
-such cases.
-
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
----
- drivers/gpu/drm/drm_bridge.c | 14 ++++++++++++++
- include/drm/drm_bridge.h     |  4 ++++
- 2 files changed, 18 insertions(+)
-
-diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-index b4c89ec01998b849018ce031c7cd84614e65e710..456363d86080b2a55035c3108c16afa4f9e57e06 100644
---- a/drivers/gpu/drm/drm_bridge.c
-+++ b/drivers/gpu/drm/drm_bridge.c
-@@ -1392,6 +1392,20 @@ struct drm_bridge *of_drm_find_bridge(struct device_node *np)
- EXPORT_SYMBOL(of_drm_find_bridge);
- #endif
- 
-+/**
-+ * devm_drm_put_bridge - Release a bridge reference obtained via devm
-+ * @dev: device that got the bridge via devm
-+ * @bridge: pointer to a struct drm_bridge obtained via devm
-+ *
-+ * Same as drm_bridge_put() for bridge pointers obtained via devm functions
-+ * such as devm_drm_bridge_alloc().
-+ */
-+void devm_drm_put_bridge(struct device *dev, struct drm_bridge *bridge)
-+{
-+	devm_release_action(dev, drm_bridge_put_void, bridge);
-+}
-+EXPORT_SYMBOL(devm_drm_put_bridge);
-+
- static void drm_bridge_debugfs_show_bridge(struct drm_printer *p,
- 					   struct drm_bridge *bridge,
- 					   unsigned int idx)
-diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
-index 4e418a29a9ff9d014d6ac0910a5d9bcf7118195e..6f00a3998ed6d026332b0f1e3bb5bee3cb5158e0 100644
---- a/include/drm/drm_bridge.h
-+++ b/include/drm/drm_bridge.h
-@@ -1265,6 +1265,8 @@ static inline struct drm_bridge *devm_drm_of_get_bridge(struct device *dev,
- 	return ERR_PTR(-ENODEV);
- }
- 
-+static inline void devm_drm_put_bridge(struct device *dev, struct drm_bridge *bridge) {}
-+
- static inline struct drm_bridge *drmm_of_get_bridge(struct drm_device *drm,
- 						     struct device_node *node,
- 						     u32 port,
-@@ -1274,6 +1276,8 @@ static inline struct drm_bridge *drmm_of_get_bridge(struct drm_device *drm,
- }
- #endif
- 
-+void devm_drm_put_bridge(struct device *dev, struct drm_bridge *bridge);
-+
- void drm_bridge_debugfs_params(struct dentry *root);
- void drm_bridge_debugfs_encoder_params(struct dentry *root, struct drm_encoder *encoder);
- 
-
--- 
-2.49.0
-
+Rob
 
