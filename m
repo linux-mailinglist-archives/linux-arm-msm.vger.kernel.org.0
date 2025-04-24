@@ -1,154 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-55472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00F4FA9B512
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 19:15:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECCC6A9B602
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 20:11:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7BE457B71D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 17:12:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 30E4992652A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 18:11:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1ED1819C540;
-	Thu, 24 Apr 2025 17:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10F4128CF69;
+	Thu, 24 Apr 2025 18:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AA9O/wDP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ODv49CDw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BCD628A1DF
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 17:13:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF7B20326;
+	Thu, 24 Apr 2025 18:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745514792; cv=none; b=tfy+3MjfCpLmAcQKxYkfw2rKFSpVRS1QANm83BkYgCY45W9Mtzhw+pSZCFzD5to8Ijt+8pVTEqrzOOGTHxHLEsOHRf8mwtZLkHeN3oTQTKW9ulYb6l1KIM8g9nIHoNcooFkdfzOcRju/0BpvlgEXDDTkQV3ro4kG9QzIk9z4kLM=
+	t=1745518278; cv=none; b=tPWgZcq6HK6ejgbblJvV/BvO0RPlZQM4yRxdTGIXLYvUu7zyzjGpPKlSCGQ5ePAU0DhdeyvVNvOJTSfownjBeKypqnXV+uHzA3V4ucNIkX6nPBWFze0EoKDILEtvju6ElQcTRkw+HQ83a9c3H2qJzbRw09iShMI7W8NAFSqACGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745514792; c=relaxed/simple;
-	bh=JQE3mBdHEHFMQzAYutq8p3AN1+1LsUeaQd7+qm3qC5g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c5fCwv3822L7yI7ixxJjLOxceFgbaAwy1oS1maW/9yBogGsKrlD6Otflvc5D6ZJswOWpltU5euFw1oTFtXdtkfwbUnvaWb1xPlX+dg86Gdw3HwBPeP94EMd7jEitu/NOF1tQTyK7SLeanmRuzxKrtbWh5U+oMs/yOoWnJsJz9jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AA9O/wDP; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53OC3FMk018488
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 17:13:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JQE3mBdHEHFMQzAYutq8p3AN1+1LsUeaQd7+qm3qC5g=; b=AA9O/wDPa+nYPvVI
-	R4eEslFYfvLM1An7w3T8bZ2pTX0nBASwy5MwVVj/ZIIKaap1xf9/E/v72dJuPRTR
-	Sp9cJAALFzkQOOkV5rK+7fibzQU6Y8qid9x22TpViRoVywQHtGWu8lhfBkZ8xTl0
-	1ya2vrJ2FnWNnATs4a3fwLtbXL0GBCedyd4Ot6orEGPQzIa510z8ktjSywE1imU2
-	NObbwy9H/BQT41Y6TvVdPX3kM8ATat3sSEFEdj1TqBb0OUmixgnEsAyCDqwLvP88
-	zRq3wBSX26DpJkxJAGdaxxqTlWQeeOI0lgyFGa0qKu/NiIvxqH6bL7o/Vu89YopT
-	pS35bw==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh3pb1a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 17:13:08 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-736cd36189bso1664547b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 10:13:08 -0700 (PDT)
+	s=arc-20240116; t=1745518278; c=relaxed/simple;
+	bh=5RAP25L7nywb72/J4oC+rYgQg3UgmwS3x7Uic0X3HBU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=pswS4hoDQpk1yHcdEZwpvY87xXja5aB42/vZQ/3Y4aN2vzISZ+Lvz/rqTgDe3HYYDomBXcf4Itnw2nmr/Dt2SxrbttZ0b3pgpyxIDbIi1Vbp7PH/XqnRicP1zN0NeJyPby/MOqQbWMz+RzHLsdYt5Vc/fp9Jhx4SuFSWaXptaBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ODv49CDw; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5e5deb6482cso4502734a12.1;
+        Thu, 24 Apr 2025 11:11:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745518274; x=1746123074; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=T0rGEYL8xcAHShUYEDJuRXwYgxLh5jv3eQQMoY4AZ/M=;
+        b=ODv49CDwgOcusUB1zk8B4a5GCoQw8xp5kry38cdwHWKtxqkmP309N3gDhVGrIhDzck
+         Z2DQGre1Yf9UU7fSjoF8wc0ecxy4oku8FRJZ/K1bPpllUQY7JqFXjp8SCOlcsBrKT966
+         4C0d2/lTHa8Dotnlc9IL3nn2PBX3ZZi1vMLYtsI1rNH15IJP0uJOarM6UY6Pkg1ne6jF
+         DCB2AtWq1BXv9Kuev/uGvy3mWqqfGHuE0+f9GabmKLNae2KV9YIVWSWwl/KwvXQti3PC
+         GcOsu9NOBoZEmqEbPp4vsqdemvR2EkItOkr7eQdv7K8CMaeC/L+OwstIn14v3fjIZrXi
+         WhQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745514788; x=1746119588;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JQE3mBdHEHFMQzAYutq8p3AN1+1LsUeaQd7+qm3qC5g=;
-        b=EebBH8r/xp9jTBHgW5vo1vXyG3sVFDYjuT//kMRUyVRIRURkmxETNavJz/2yucxgr3
-         u7dXYJZpxPrT1jOdQ6PtTG8ZdIftQy2Pu9J8jX438bxJsetsxKPKTDLY0LHP8EL05RJj
-         E801wyjaqqfxJX2o2px/5ZxBq4dtAostqzwPqKj9W4xq8j8x96JFfqP6GYME7Z3eXTQY
-         UzNDSDc+nW7yNchHFzmreoSUdFAQgFL0oa8w9r4zj1H3S+hGSDtQB6N6bQToRW3IFaDj
-         qYeb8DH43Nyq/QTVxhGyrpZzNKJDRHyu5JXVfB47zhN/TDAizGTFWMKPyl+gIxp0ew0A
-         BjkA==
-X-Gm-Message-State: AOJu0YxsYnPGtDnecCQNqeUrVaCUnW0E+Le7t8hzi39wihrh9o9mmkqv
-	FxrN5Iu/dMwlftfFJjJZ7H4AF7dj4cepU9HG4t0sGM1fmXqs9f2ab/SZjxGaqsQ/OyoUSZ7CX8v
-	jPcria/gXyiS+mEklUIytvHw8GRa6BajgnExXnknf8CeqjN5ZOY1isq+qLHiN/Wey
-X-Gm-Gg: ASbGncvpZme4tkuMpBbxKBCHr98Ps9iUV9EOBYhzjsxss52jrn0xf2fkGb4hCzmumXi
-	BKyR1NbCWtGhsgAAkAdK24IBomIQwsG86FJD+g2+iLJfu6CpogjGSU74Jrs1ByqitghaW7v0ow4
-	cda+sc4gG3CSXh+4/bAi+piY3NbUxoLMWnKSYCBgtKBnXp+a+GIditYvc7W9HW/iMxhJKsGLgxD
-	fy00/UBhkZME8OplqlBlQnUnMzrAFrtzUfibpUGFaytP6mgrutjucZhWgKuwI/BPm+IQj7m7Sj+
-	xEhE86MCgkNE8eGcSs5fQDIdqzVPJq56fwD91yoyyGUkRuZJ0LllFbNbbMHW9Y7MO/g=
-X-Received: by 2002:a05:6a21:6814:b0:204:4573:d856 with SMTP id adf61e73a8af0-2045658d414mr151665637.4.1745514787717;
-        Thu, 24 Apr 2025 10:13:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGBh6UbSZ7iBiPgDos14/2qpkdyV9G45BXz0sSqA0pmze/jGYg7FVG3UwSnpX6n3qo0KD+Oxg==
-X-Received: by 2002:a05:6a21:6814:b0:204:4573:d856 with SMTP id adf61e73a8af0-2045658d414mr151627637.4.1745514787332;
-        Thu, 24 Apr 2025 10:13:07 -0700 (PDT)
-Received: from [10.71.109.146] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b15fadec8c0sm1502146a12.68.2025.04.24.10.13.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Apr 2025 10:13:06 -0700 (PDT)
-Message-ID: <575d63e7-f390-46ef-8687-30112849b442@oss.qualcomm.com>
-Date: Thu, 24 Apr 2025 10:13:05 -0700
+        d=1e100.net; s=20230601; t=1745518274; x=1746123074;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T0rGEYL8xcAHShUYEDJuRXwYgxLh5jv3eQQMoY4AZ/M=;
+        b=lUOi8rzVyog5RObsDoPcuJn1eWcIUmAK/9rZf9Uy6yC6+X0N4RxaSZx1Mollj7kFuO
+         kSWftTpGNa3csHKLYTqSnuL/wXJ29itwc0MmYfK/87T/pvPPQ1byjVS6Sm863/YlThzU
+         XpIzEYmo2SQR4xF58fPP5/S9Al7xFUS/5P9hNbquvgc9QWLFE8+r4Coq6jNoCZo/xVN7
+         ks8Syp0UK9vY87yMVHf4NcfRI8Wwgavt30wXdqTCbFfEPzxDgcU/fEv4jbqLmyKO4F4G
+         KvQUNjc+s069X1hm1NvBIKcW8BcPYfyzvOdhkhZHrxv84GMZn40GQEHldxknfJHLk5Ao
+         DKbA==
+X-Forwarded-Encrypted: i=1; AJvYcCUNff2/iw+MuoJuUPRBkezKQIV0br/VGXvF7v6FbJDiNxZebKEE/XSDJNW0zt+VlC98tfPFh7+1UqtYCL/i@vger.kernel.org, AJvYcCVEAf8jUpq8CnA1IJvEFLFeGL7jl5lqINfH4EwpddqwdSqwXyEjHHf1Jcq3xasPBkR4oU93e+QAl/g4@vger.kernel.org, AJvYcCXiiUdb9f2UveiwV+tvhpiBz3RBFBuTsRNEoA6hICGXQZdTMuZlMkRq43DwUR6n59JVbsHldeGazoA81Wqh@vger.kernel.org
+X-Gm-Message-State: AOJu0YzVY6yKVrp6kEh4xioUUJ720SY3/8VAUkA5/SRfmNuHz/UUJeaa
+	5N7kjjbUsoPp9vPP7AGgQ9S7wz37UH3GjL+HOcwGaY+xXXxF4tRR
+X-Gm-Gg: ASbGncsh20LWg6Wz+f+F+VLwjYMlIHdtqPj8zeZBVnSvpjGFd+oLfGnLRnpqFAVygmr
+	2INiX70aOU4VzrVndqAKt3h9i7oev28rU6O1v3L+1E6ga0ms36bXtirB7I3Ib4JiBhser/jrbIf
+	v4ny8GYLAHWwWtoXAjk9AfntLDS1MCWcQFLtoPaMiZSbSwhZrZQY0cM6B7VqnNwLJ015FX4b9CD
+	jkQoHf6SeNhBq0ziCEVR7o9Pv9Ffh2k7LkA8s78wJIbjUzAy7tCkMNLzDvhU/eiRo+mzNtnQp0L
+	SBpSk5jE1fZ+0pmOms+JZkofaCzM/73t2JXZg6byScYDbZf415Ad3Cebz9Idk/fh5LV3LA==
+X-Google-Smtp-Source: AGHT+IGQmSlSNPBNOK3WSgbIcP/kR4aqhbsVeHUJLo6BKVnUP779PR0/3w1VN5vTx4zOyvyxFtBMyA==
+X-Received: by 2002:a05:6402:3592:b0:5db:68bd:ab78 with SMTP id 4fb4d7f45d1cf-5f6ef1cd09dmr3484395a12.10.1745518274388;
+        Thu, 24 Apr 2025 11:11:14 -0700 (PDT)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5f7011fc383sm24088a12.5.2025.04.24.11.11.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Apr 2025 11:11:13 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Thu, 24 Apr 2025 20:10:59 +0200
+Subject: [PATCH] spi: spi-qpic-snand: remove unused 'wlen' member of
+ 'struct qpic_spi_nand'
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 10/10] arm64: defconfig: Add M31 eUSB2 PHY config
-To: Krzysztof Kozlowski <krzk@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20250421-sm8750_usb_master-v5-0-25c79ed01d02@oss.qualcomm.com>
- <20250421-sm8750_usb_master-v5-10-25c79ed01d02@oss.qualcomm.com>
- <2d01bcd6-80e1-4c15-ab23-b5ea5b90f2b1@kernel.org>
-Content-Language: en-US
-From: Melody Olvera <melody.olvera@oss.qualcomm.com>
-In-Reply-To: <2d01bcd6-80e1-4c15-ab23-b5ea5b90f2b1@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: hR23xDSKrRgjToF4MilC8YY1KHwby1PJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDExOCBTYWx0ZWRfX1RUxPnGjhioi 14faGhMDt2RpBPSsO37Y5o1M01yopYjuXelsSDYy0VzHrIXKrDpFc7AaL5pqfSMEggAefQ2+peD 7a+BWGMH1UV3OgnAio4qPYsoasZH+hrhTHjEqFxU6f6Ae1qaEan9LFt3kQuVGASlqt0ha7XWWCn
- 1/8eCVnkXWsP9xvgbyGpkxkH2QbtrRcGz22m+gIwZW89Fga7poAfWZFCpvLEK7xIvVBPw4k6JGL TkoBOnmLBgj88HXgAqpoQ21DBr5W/VzPMoBw1IV6/03b5CgP1DcWS42oftafFZ1m7yM7YX/BlHa PW+5eObriv9B4cd/HU8Ttbm6r6D5Wd7yshVrozaKd2Fh3i8euhUcdGSvONsbY3W4DWHr7QLBGj7
- 9F+nOa7gUoc/zsLmLLxpZAYX7RUuI24d+UCTIf6gaVgUY8kEvx43cQmdaBNCQ0a2MDSc2h2O
-X-Authority-Analysis: v=2.4 cv=ELgG00ZC c=1 sm=1 tr=0 ts=680a7125 cx=c_pps a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=SMseXh0oWhwDNy9TrckA:9 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-GUID: hR23xDSKrRgjToF4MilC8YY1KHwby1PJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-24_07,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- mlxlogscore=770 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504240118
+Message-Id: <20250424-qpic-snand-remove-wlen-v1-1-2a7467ce2e3a@gmail.com>
+X-B4-Tracking: v=1; b=H4sIALJ+CmgC/x3MQQqEMBAF0atIr6chRsVhriKzCPFHG7TVBFQQ7
+ 25w+RZVFyVEQaJfcVHELkkWzSg/BfnR6QCWPpussY2pbc3bKp6TOu05Yl528DFB2RuPUH1N6dp
+ AOV4jgpzvuPvf9wMT5Eb3aAAAAA==
+X-Change-ID: 20250424-qpic-snand-remove-wlen-c0cef3801a7f
+To: Mark Brown <broonie@kernel.org>
+Cc: Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Md Sadre Alam <quic_mdalam@quicinc.com>, linux-spi@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 
+The 'wlen' member of the qpic_spi_nand structure is never used in the
+code so remove that.
 
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+ drivers/spi/spi-qpic-snand.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-On 4/24/2025 6:16 AM, Krzysztof Kozlowski wrote:
-> On 22/04/2025 00:00, Melody Olvera wrote:
->> The SM8750 SoCs use an eUSB2 PHY driver different from the
-> Qualcomm SM8750
->
-> That's a defconfig for all vendors.
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index 17eb67e19132612c4c1a84848fa6f7432b1130a8..5d364b881566d396288f7de7c23dc0ac60fc82dc 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -116,7 +116,6 @@ struct qpic_spi_nand {
+ 	struct nand_ecc_engine ecc_eng;
+ 	u8 *data_buf;
+ 	u8 *oob_buf;
+-	u32 wlen;
+ 	__le32 addr1;
+ 	__le32 addr2;
+ 	__le32 cmd;
 
-And...? Apologies, I understand what is actionable about this comment.
-Please be clear what you want done about this.
+---
+base-commit: 9c32cda43eb78f78c73aee4aa344b777714e259b
+change-id: 20250424-qpic-snand-remove-wlen-c0cef3801a7f
 
->
->> already existing M31 USB driver because it requires a connection
->> to an eUSB2 repeater. Thus, for USB to probe and work properly on
->> SM8750, enable the additional driver.
-> Commit msg should mention which board uses it.
+Best regards,
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
 
-Sure thing.
-
-Thanks,
-Melody
 
