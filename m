@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-55396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0559CA9AE9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 15:13:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3ADA2A9AEA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 15:13:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2570C18893BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 13:13:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4DE423BF702
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 13:13:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B15427C877;
-	Thu, 24 Apr 2025 13:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A106327C17F;
+	Thu, 24 Apr 2025 13:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CNC5a0xZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HK3RrC2X"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636F427C17E;
-	Thu, 24 Apr 2025 13:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C45827B4EA;
+	Thu, 24 Apr 2025 13:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745500375; cv=none; b=EFMH/XSEoJQ15RgPCvxeutq9yT1zzL7BB1pEKXPMn1RMe6ijiaKOl8H7lJJ7rJHCUqcfxxkH9Nkdf4pmfNLmFC+ZL9Dm2QXCvHUEm3QVjIx9r7MNtc/y9Oa0II+VVL6gIktP6ebZ99+76Xi9J0AVBfeTctLD1mUJsvin55SsAE4=
+	t=1745500384; cv=none; b=HNuK57/U+susuV/oxVGy97Z237gr3/sombChh/VnSSwkUDh7HvCarFv1kxx+W0Y46rG1IQ6tipyrr2JBDLtw6rghNsZhvR5QdcGrK62DCk1B9vMcL4QkerWWUBtkki6u8y63cYLsbRVsDyqRFzZDnexkOuYvlodUK8DVN9AVrKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745500375; c=relaxed/simple;
-	bh=74kMUmmh63Pt08J6ShCVCMsVK4mDwK70M+Gmhu/tpYk=;
+	s=arc-20240116; t=1745500384; c=relaxed/simple;
+	bh=osHU/xToyXcY3JPznSD0DVvUR+I+8au+m2pc56DP0oQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IsHJ6ZLJPG3Enk2Ukb98qxuDLn/4Fk7tZxLz+U6Yg2aVO6fc5GT2YEI33iyRy19+hjA4AJYQsHnBw5xX6WrXSlgPijAjqAgTWDTXKb+eNMQ4lwEuYQ78V4Lha3jqgMumFaXIjDp70tAbI9XbYE9TZCMhMwfuc3zA8kt41TL7Aas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CNC5a0xZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F69DC4CEE3;
-	Thu, 24 Apr 2025 13:12:50 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=PEGXJ4sph8pHE4/L2EU/wSzjBAMj8vttJjK/KBKLA43WydhQ7lwe+Jy3OPe4Ft3moRVBMl/Zhpto0EvNLk0XXCyhV3GsZzsC/BQcGdq8AEzNO5bKRgm/pjuNeFPiN17eYzJUdIU7Kd11iKHFQtBuQHtYgRI4MJWthpD8D/S7lUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HK3RrC2X; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F43C4CEE3;
+	Thu, 24 Apr 2025 13:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745500374;
-	bh=74kMUmmh63Pt08J6ShCVCMsVK4mDwK70M+Gmhu/tpYk=;
+	s=k20201202; t=1745500383;
+	bh=osHU/xToyXcY3JPznSD0DVvUR+I+8au+m2pc56DP0oQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CNC5a0xZDt9z8ukrvoEWLLOgvBOU5pMnQRJNyRwZ2ekba6Mp9+DhAPcqavk+aVlzP
-	 XHVNLcPZ6Lg2wGESCX4tiYJKFwciA91vPpdAlJg3WbCY9NTqY1ejC0g3ldBNwKMJws
-	 +NvEbFF8qnQGgYxjYSVBOVmyijOhNWP6R7RmOxHeteNsFUMI2DpabH6lU3az/UUhIY
-	 4z63GztLl7dAtpiZ1XQfks0pIvtEPFdGe015j7JrZL2uX4kZFn/1j2rNXbQnom1JYt
-	 AUhctaIP7gJqjnkL9JOh0UyUIXT5KKdP28zbaGJi/5+mrm2BvyTnLLaNW5f+xp3O+H
-	 fn/mz8i2eJGVw==
-Message-ID: <05ad5e49-9c03-4750-a1c3-775579b2479d@kernel.org>
-Date: Thu, 24 Apr 2025 15:12:48 +0200
+	b=HK3RrC2Xilb+OYhJDD2n3Zun+fvxFqRpeYRB58Go6EgAS8TlKgfbuG4b+Q4zGQJkH
+	 Iqn2czvortBOxExWiIYBj3urhngJxQPWADfzWNzXo5Ql+a+EK+mt9Plx0hmCCsUb8V
+	 dgYZqS10Jn+L0njDTNDGw2BejOemdvU6/55i6V10BvbfkDI81FL33J+dSymE4vLHsF
+	 EqtInslHutYjcFQVZ4MM4ZhGcnKfClFERdnXzcBJBhhiVlJuo15IdNueGsj3yFRh61
+	 UuWEd2TU2FA0yPhMy6EuDoZxQtkXA4/X1J0ddAd7GjYcBGYpWmljR/Pr6ZwBg/quj8
+	 GUZp5zyPd80zg==
+Message-ID: <11a7e42e-c9bd-44a3-8838-17469809aa4e@kernel.org>
+Date: Thu, 24 Apr 2025 15:12:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 09/10] arm64: dts: qcom: sm8750: Add USB support for
- SM8750 QRD platform
+Subject: Re: [PATCH v5 08/10] arm64: dts: qcom: sm8750: Add USB support for
+ SM8750 MTP platform
 To: Melody Olvera <melody.olvera@oss.qualcomm.com>,
  Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -67,7 +67,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
  Dmitry Baryshkov <lumag@kernel.org>
 References: <20250421-sm8750_usb_master-v5-0-25c79ed01d02@oss.qualcomm.com>
- <20250421-sm8750_usb_master-v5-9-25c79ed01d02@oss.qualcomm.com>
+ <20250421-sm8750_usb_master-v5-8-25c79ed01d02@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,20 +113,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250421-sm8750_usb_master-v5-9-25c79ed01d02@oss.qualcomm.com>
+In-Reply-To: <20250421-sm8750_usb_master-v5-8-25c79ed01d02@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 22/04/2025 00:00, Melody Olvera wrote:
 > From: Wesley Cheng <quic_wcheng@quicinc.com>
 > 
-> Enable USB support on SM8750 QRD variant.  The current definition
-> will start the USB controller in peripheral mode by default until
+> Enable USB support on SM8750 MTP variants.  The current definition will
+> start the USB controller in peripheral mode by default until
 > dependencies are added, such as USB role detection.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
 > Signed-off-by: Melody Olvera <melody.olvera@oss.qualcomm.com>
 > ---
