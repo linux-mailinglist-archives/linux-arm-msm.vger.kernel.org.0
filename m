@@ -1,190 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-55455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E02B4A9B31A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 17:55:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EB22A9B36A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 18:07:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7FC7617FABB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 15:55:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE6785A3BFC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:07:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66FE427E1B1;
-	Thu, 24 Apr 2025 15:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4154827FD69;
+	Thu, 24 Apr 2025 16:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zgDdO5UL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dZPqWYlK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911761805B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 15:54:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7AB27F741
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 16:07:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745510098; cv=none; b=RBHBCV62MzS65tYsgef9XR3LbSrokdSoJj0iFaL2JXTn7WgeiyA/C1XoFq044O+yK5X0Muo5rPzMZr7srmGnXz+hqK5dLa1NTJsCKiCeSsnm+STU89BEk/7it6SWS9w4baCAjbkZrxXpfd34zr2YEEKcyA4DDJQ6RRikWd6yP4s=
+	t=1745510853; cv=none; b=BT1zP/1nj2qaX2W4+qlAxTKOGwJxjjsvtXT1+C5yZvJzQBeerNYr04fWIzcbb1ywtFv6cqV9YcMwVs/5uFfw41BJiiah3GF847wvgQjhLkaP/GcnvTlpwGJCUSqVGEVHq8lCE5K0tqhQ0J8aXPVAsMFzHNFcx7AP8ka8CfshHmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745510098; c=relaxed/simple;
-	bh=5sNWFkSE0HMqAEQdZOHazqFU17O65RP6vgx/Ctae1zw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qFVg/up9+hMUjItPs7Hd8NsRTW3TvEtAwayvamNZuf+CaEeUvVBIqwEI2ok1MI3F7XJVAGBDqfQe5hZ8GcnUHI2HmluiJmdYsheEl7iwTENirJYmTifIwZnjAJVP0du+mkpmiNs3KUMPMIQZKQNHbfEs2Z/CpBTXXcSCFZFI8/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zgDdO5UL; arc=none smtp.client-ip=209.85.208.44
+	s=arc-20240116; t=1745510853; c=relaxed/simple;
+	bh=0Px7jvGhuJRiflMflGOKgJJn7q3qCKBYZy5iMa70b04=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Li9U4lcIcF8saMArHfavhizzCLsvMYKAvCnCtNQaAChJlaUaxRssBpUAetYHYNsPoLRsDKuZz+ntY6LuH/BQblednluxySTT1oHKdLQKH+DfYSHVjeFzUBqU0TfwfENHsGYr7XX8q2kyAG0mspZnvU6xFG8rIfsz35iKHvayKlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dZPqWYlK; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5f121612dabso171449a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 08:54:56 -0700 (PDT)
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-224019ad9edso17146865ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 09:07:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745510095; x=1746114895; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=NUCrMGYY+uv/Hbf5+CNqqfB5hrzXO8vOsQY2XR0yxgc=;
-        b=zgDdO5ULNKt/eG8J9TvJWyi1dmfd7nmWvR9Q6V3pfS+jyrFfUbLCYLzA03e9MCd21c
-         AXH0T3V4gn9trhODUVe8Auvk1i64qahgjthcJTXeeMjsZbAHj8AfhsF5srTaG6Dziwjv
-         ZOw8FazZBzPAzYIphjeJDKHrzi0Vzwq6MhgvZOb0KjaE9mBi191ng09FCLQWKyjb1SGG
-         nS61uizYyiJGmdHT5JnS9AtQxr7H7nXtRbyp1D0shlcuYEwEeWrpwQMHJ03itD8eq/Xu
-         vT97GFbz25HOpMLkXJFfH5Kmiyn5IkT8y2OQBJWjcKNzfTVTAYtREA6IHBr9wyPubVWo
-         p/qQ==
+        d=linaro.org; s=google; t=1745510851; x=1746115651; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3ztM6ZhwbBzqofjKNReosW9oAapXnNeASiHQKoNm3Vc=;
+        b=dZPqWYlKWVPgLCUMHvDxknlfp3vYBqrqa4qtrSEbn2Ehx1qWrqHMh8q8FeDByfZrZy
+         duMK3/3IF5pjV/18OVb2IunKvvFMdfKG7qGOfR4xynUB3MFZL7odf8M4hIy+kJ91MPxl
+         S320QPIZiC0CYHvL1iMdMj5Q2Z6dIsgEwPQa4mep+Ul8QiomgxCwER4TI57hmwWSEQqp
+         zYq4c6fGEAx3KlZsDmGfxS0R3qSPhR96iQ0+AZhlPZODWOIPIDnpci3h56eG0chN3wyI
+         0d5pOihxT6ezzMDewvRyqDbL0qxuL9Rk6Wy4RwKoe8KMKkJ4YsalNDN0OFdl9afBy+TP
+         XgQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745510095; x=1746114895;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1745510851; x=1746115651;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NUCrMGYY+uv/Hbf5+CNqqfB5hrzXO8vOsQY2XR0yxgc=;
-        b=Iq6x4ZxCJJhOxvyWYqad+LY9MPwTXsFWnGj9bcira0Mech0NZT87cBM0pAcBsesv7e
-         6y/oZhfuNaLe8wMNpKkI6TtdID2kuj4eDTz4czm++Cscz3JBWUTTTT2KCoLk/wN5YUt0
-         wu4Wgc0NJuwGJUXLZTbwn7V4HC+O6fu2KIHZICj4grmHQ2XC0JTi1ryjM1fPU8SfUGmz
-         u7MxUPydM8ylRkM143sPpOaFpMQkCVp8EVV+VyiAeWySBTiso3ACdilNmUeq2O9MVdxa
-         uzJelmhZLc8P+PipkesbD1RWiUHXbXTE6gCZtjcPR1r7lUdONw3LdjqFfgg5HYHB9HDQ
-         wj9g==
-X-Gm-Message-State: AOJu0YzlCPZ8Pl9O48cZEWD3tPXXP2/s9xyktrBMMcamhfRpZnkc9ymE
-	mPN44qrhuC16FWooCscS9rvDijkWkZJ/ggt0iN1w6NT24vTTEzuK4TkXr3jM/1M=
-X-Gm-Gg: ASbGncuCzvWuzok2bwO8h6HY0ZGh0BpvsbZU07guvUs5gUNTt/vvBi/eYZP/VgQCyJ3
-	kZ00sM2052Y+EXWMRLgFHCCzB9SL9ymkQLggZbHeIK7LHaSmZ94Mw3mSN0T8aC0OdG//lD0IKUf
-	+/5G7KUhms2ot29f12KvhhsO49XKk2CKzF5yA341//0WWeRnh3dA5WmQVv7aSly4NKTs/CO2Kuj
-	/tOVZw/FdMg5VCtMXrWkZ2cDsQ7e9An+7+/9eO+nxhbJh5Smih+TVpbK987y6max1Jt7qXcyVB6
-	JH2HVxng5MhZnJsZYQqwJ9UEYR8sM+fRxm+KUN73exScOX2fmdPGH3SJR3fMujazmldSkg==
-X-Google-Smtp-Source: AGHT+IGWZpO8UIv00PMMTcXRWuieY3g0tR/lRJADLQc7dFyPJlyjK8E2CtTh7Jpkh+Ijy+lRCMv5lA==
-X-Received: by 2002:a17:907:a4d:b0:acb:7df1:f8e8 with SMTP id a640c23a62f3a-ace5721551emr117743366b.3.1745510094736;
-        Thu, 24 Apr 2025 08:54:54 -0700 (PDT)
-Received: from [192.168.1.29] ([178.197.207.88])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace59830fe7sm128604466b.13.2025.04.24.08.54.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Apr 2025 08:54:54 -0700 (PDT)
-Message-ID: <6a4ec36c-c003-4ce8-9433-8c12ed3188ee@linaro.org>
-Date: Thu, 24 Apr 2025 17:54:52 +0200
+        bh=3ztM6ZhwbBzqofjKNReosW9oAapXnNeASiHQKoNm3Vc=;
+        b=TEskZfxyXsL4pVVTlpb2I5K5isIDLyLyXmsSet607jxorhLUPIvQuVXbQe0ZLgp/uC
+         Fn3ykNz6p8+sHtm5QGlx5bsiYIMmM0cqLQ3nHHO6D4/E21HcWMObE4qzsywNt+IdqFwR
+         S8GA3oNNllU1S6n4U81nlcy7zt/s1tZgyeTgkDKq5VnsS0saUVAiXzjLki1tfjMpTG+f
+         aPOUuncquZCQ5zPxfyqmfXUTC9P29UKHYXE6Rjsqm3zdlvWMPneJmS8OuqrlkDaSexu9
+         dk/iLmN1560TQjytJn9dUS6v60ysCwglH9Lz9oDQS56TAcnnE6RssaAyXxSCj9Bcz0iS
+         vU7w==
+X-Forwarded-Encrypted: i=1; AJvYcCVj/ChYkLugRfFmXJlfkWe0ANvz6kAJf51ovRl4qRdb/6gXTSGEaHOkFUtypbEKpw+E1VFCbRssd1h5eiVV@vger.kernel.org
+X-Gm-Message-State: AOJu0YyYBho1FLAhDLgr+PVxK6uVuzruzM1oXjUwZq72+w7MiIg1+e2V
+	yMYiEZMbSx23BxnrvxhrVf02w1UInd+aiFXPCi2ZhAb+5Ynn50iTcLOlfJeZaA==
+X-Gm-Gg: ASbGncvOnVtW8G+JwzZCVxT3IaOK/qgQGdbfcr2bD6VI5wWDN/Vtd74Tt3LplF6Ny6X
+	TCE3+cllppt+PVgCrHYsyFGAmCM+zDcFdihohFgQ260yvQzBn0dRvqvV5+uoBrCnKMkmO0eEOPy
+	Qi1w46u5xCe0rJ2YlzYqOrek82+0Bz5LP3uaZlzDE6eYfyUVYTNuxt4sohaZ/GwqoDaTdIo6xKg
+	OWr25CkQEzNoewGeWBn/oe3KOns/VU9L20n/K6bZkKznOCOzLyg5WWv0kIwL/Gne1II8XT/BIX7
+	fxS0t2mrlPEabeCNZaexUQB2kkZibURmzYaLkjl90/RA5IEeodv8Rnw=
+X-Google-Smtp-Source: AGHT+IEBGkJA01XOR5juVSwEwgYSL2iayGzzvTy9VnE5/0UWjwW9zVp7Des8tZPmxJhpSTd3lAmX8g==
+X-Received: by 2002:a17:902:e54f:b0:21f:1bd:efd4 with SMTP id d9443c01a7336-22db3be36b8mr49102425ad.19.1745510850701;
+        Thu, 24 Apr 2025 09:07:30 -0700 (PDT)
+Received: from [127.0.1.1] ([120.60.77.160])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22db5221656sm15262275ad.252.2025.04.24.09.07.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Apr 2025 09:07:30 -0700 (PDT)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 0/4] PCI: Add PTM debugfs support
+Date: Thu, 24 Apr 2025 21:37:15 +0530
+Message-Id: <20250424-pcie-ptm-v3-0-c929ebd2821c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/5] dt-bindings: media: Add qcom,x1e80100-camss
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-References: <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-0-edcb2cfc3122@linaro.org>
- <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-2-edcb2cfc3122@linaro.org>
- <3ec3fd62-bf21-47e7-873c-ce151589d743@linaro.org>
- <54eeb470-cd90-4bc2-b415-6dea1ce2321d@linaro.org>
- <0ab31397-580f-4e5a-b9ad-d9bf79d29106@linaro.org>
- <36feffed-4558-4e59-97db-2f0e916dbfc7@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <36feffed-4558-4e59-97db-2f0e916dbfc7@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALNhCmgC/23MQQ7CIBCF4as0sxZDgFp11XuYLoAO7SQKBBqia
+ bi72LXL/+Xl2yFjIsxw73ZIWChT8C3kqQO7ar8go7k1CC56LoVi0RKyuL0YDr25GeGcdQbaPSZ
+ 09D6ox9R6pbyF9DnkIn7rH6QIxpkd5quVF6WM0uOTvE7hHNICU631C8KwCH+hAAAA
+X-Change-ID: 20250324-pcie-ptm-e75b9b2ffcfb
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Jingoo Han <jingoohan1@gmail.com>
+Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3677;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=0Px7jvGhuJRiflMflGOKgJJn7q3qCKBYZy5iMa70b04=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBoCmG+CKMLlQHtFHJTVixNZ7ukdMa0FsFzKc+qh
+ 4qGb57vvxGJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaAphvgAKCRBVnxHm/pHO
+ 9Q/+B/0bm65cttTnyoDield/0CiSmBJ764HbXm0MKPCvBvVRSFVsN1BG3LvQrr8MmvBiLks7yIk
+ vlb00IomkkH63L5oLmeHC4XroaRk4V13luz7xBaUJ1ouMI1IgN2wk5tdgRhPS2SWsKukpM5I2vZ
+ I/9HPtUPMjpK6ahCJGc2pWkSdkBrJnPZF+uC8hUQhGhPE4sc8GvXBddv1sTYvONR/a4KT6XDIwX
+ U/NlxK2n8Xl2UHWZDIPMAYu2EmNBvGBYMX5vXQ4+jVlSN0kjUnVhqnzMMKeqBPNqH5Nj4lgpIbq
+ VegBAQwXMxpOHOEqdBEDJmRmTUnXwJy5m3IqikhugMNIvAsi
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-On 24/04/2025 12:17, Bryan O'Donoghue wrote:
-> On 24/04/2025 11:07, Krzysztof Kozlowski wrote:
->> On 24/04/2025 11:34, Bryan O'Donoghue wrote:
->>> On 24/04/2025 07:40, Krzysztof Kozlowski wrote:
->>>>> +  vdd-csiphy-0p8-supply:
->>>> Same comment as other series on the lists - this is wrong name. There
->>>> are no pins named like this and all existing bindings use different name.
->>>
->>> The existing bindings are unfortunately not granular enough.
->>>
->>> I'll post s series to capture pin-names per the SoC pinout shortly.
->> How are the pins/supplies actually called?
->>
->> Best regards,
->> Krzysztof
-> 
-> I don't think strictly algning to pin-names is what we want.
-> 
-> Here are the input pins
-> 
-> VDD_A_CSI_0_1_1P2
-> VDD_A_CSI_2_4_1P2
-> VDD_A_CSI_0_1_0P9
-> VDD_A_CSI_2_4_0P9
-> 
-> I think the right way to represent this
-> 
-> yaml:
-> csiphy0-1p2-supply
-> csiphy1-1p2-supply
+Hi,
 
-But there is no separate supply for csiphy0 and csiphy1. Such split
-feels fine if you have separate CSI phy device nodes, which now I wonder
-- where are they?
+This series adds debugfs support to expose the PTM context available in the
+capable PCIe controllers. Support for enabling PTM in the requester/responder is
+already available in drivers/pci/pcie.c and this series expands that file to
+add debugfs support for the PTM context info.
+
+The controller drivers are expected to call pcie_ptm_create_debugfs() with
+'pcie_ptm_ops' callbacks populated to create the debugfs entries and call
+pcie_ptm_destroy_debugfs() to destroy them.
+
+Patch 1 adds the necessary code in the drivers/pci/pcie.c to expose PTM
+context over debugfs and patch 2 adds PTM support in the DWC drivers (host and
+endpoint). Finally, patch 3 masks the PTM_UPDATING interrupt in the pcie-qcom-ep
+driver to avoid processing the interrupt for each PTM context update.
+
+Testing
+=======
+
+This series is tested on Qcom SA8775p Ride Mx platform where one SA8775p acts as
+RC and another as EP with following instructions:
+
+RC
+--
+
+$ echo 1 > /sys/kernel/debug/pcie_ptm_1c10000.pcie/context_valid
+
+EP
+--
+
+$ echo auto > /sys/kernel/debug/pcie_ptm_1c10000.pcie-ep/context_update
+
+$ cat /sys/kernel/debug/pcie_ptm_1c10000.pcie-ep/local_clock
+159612570424
+
+$ cat /sys/kernel/debug/pcie_ptm_1c10000.pcie-ep/master_clock
+159609466232
+
+$ cat /sys/kernel/debug/pcie_ptm_1c10000.pcie-ep/t1
+159609466112
+
+$ cat /sys/kernel/debug/pcie_ptm_1c10000.pcie-ep/t4
+159609466518
+
+NOTE: To make use of the PTM feature, the host PCIe client driver has to call
+'pci_enable_ptm()' API during probe. This series was tested with enabling PTM in
+the MHI host driver with a local change (which will be upstreamed later).
+Technically, PTM could also be enabled in the pci_endpoint_test driver, but I
+didn't add the change as I'm not sure we'd want to add random PCIe features in
+the test driver without corresponding code in pci-epf-test driver.
+
+Changes in v3:
+- Switched to debugfs interface based on comments from Bjorn
+- Added locking for context read/writes
+- Rebased on top of v6.15-rc1
+- Link to v2: https://lore.kernel.org/r/20250324-pcie-ptm-v2-0-c7d8c3644b4a@linaro.org
+
+Changes in v2:
+
+* Dropped the VSEC changes that got merged
+* Moved the PTM sysfs code from drivers/pci/controller/dwc to
+  drivers/pci/pcie/ptm.c to make it generic so that other controller drivers could
+  also benefit from it.
+* Rebased on top of pci/controller/dwc
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Manivannan Sadhasivam (4):
+      PCI: Add debugfs support for exposing PTM context
+      PCI: dwc: Pass DWC PCIe mode to dwc_pcie_debugfs_init()
+      PCI: dwc: Add debugfs support for PTM context
+      PCI: qcom-ep: Mask PTM_UPDATING interrupt
+
+ Documentation/ABI/testing/debugfs-pcie-ptm         |  70 +++++
+ MAINTAINERS                                        |   1 +
+ .../pci/controller/dwc/pcie-designware-debugfs.c   | 252 ++++++++++++++++-
+ drivers/pci/controller/dwc/pcie-designware-ep.c    |   2 +-
+ drivers/pci/controller/dwc/pcie-designware-host.c  |   2 +-
+ drivers/pci/controller/dwc/pcie-designware.c       |   6 +
+ drivers/pci/controller/dwc/pcie-designware.h       |  24 +-
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          |   8 +
+ drivers/pci/pcie/ptm.c                             | 300 +++++++++++++++++++++
+ include/linux/pci.h                                |  45 ++++
+ include/linux/pcie-dwc.h                           |   8 +
+ 11 files changed, 713 insertions(+), 5 deletions(-)
+---
+base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
+change-id: 20250324-pcie-ptm-e75b9b2ffcfb
 
 Best regards,
-Krzysztof
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
 
