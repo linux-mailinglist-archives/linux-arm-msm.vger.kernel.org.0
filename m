@@ -1,48 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-55270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C401BA9A26B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 08:39:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88F52A9A275
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 08:40:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DDD2417DB44
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 06:39:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1BE365A53C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 06:40:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A01A11E520C;
-	Thu, 24 Apr 2025 06:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA31D1E0DD9;
+	Thu, 24 Apr 2025 06:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JI3utGfg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sWYjbipT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7545A8BE8;
-	Thu, 24 Apr 2025 06:38:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10551A23B1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 06:40:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745476739; cv=none; b=lpIZ35+SxDpN+TbwRGw73e7uIwbjMN4zo/WExcNB4X1Bvd4SULfzlgazo7tWU/uVZqmaTocDIXEQI5scmJoJZbx0MmZ1fO5Ae92hIcn0OMPjnvQPQ8EPmgRg4Qrq1KSng0DD5axtwtI6jPW5uThJZgqJIJqtwyapuXSt3tUCG5I=
+	t=1745476809; cv=none; b=NgVKZVvt2q7hkilJ2MjXgwfmjjqNCNyqlzOdS4XJV/S+vg/PaVgU6aELftNoSwDpRrstzzDwSth5KAP5bh/k4eTAa6eqgw//EN7zpLWCig9A5IjfPNlLsCpA5Pl5g6v+QNWlq3pubQ7RtoM1k0nowv6xNgds8YxTgSP29BgQRpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745476739; c=relaxed/simple;
-	bh=w12aZPn4rMyCb86kAfCLyLHf4ZDx684PsnHBWNg79VI=;
+	s=arc-20240116; t=1745476809; c=relaxed/simple;
+	bh=n/EtL309SWS43VFBzrQ2115mc96wexuYCVq1BpP3F8A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IXs2pOzMzYz/1yriU2RnwgzXHLAaAzsZ1sQPegw1W4dRwdpSru61VYHhPYmPqclbkCyA+ccBi1eEpfYvuqcnFanzxPB1RbyHWZ8v/iE7UTdHcxLIenn5v1oQfZV8P/FEyaQdGwiA07tz5kZu2hJ+SB+rFbtRYQ9HNFjs7YhXx7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JI3utGfg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707E2C4CEEB;
-	Thu, 24 Apr 2025 06:38:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745476739;
-	bh=w12aZPn4rMyCb86kAfCLyLHf4ZDx684PsnHBWNg79VI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JI3utGfgXgLxWzrWmsz/F+IbyTL3PoXTepuGE7s1haiM1nM23vGcxpNJffmp8FnvR
-	 ynMk88aG0OHmgq5Uurt0DiWYv4bK9g3lqEU0rASqY6s+Smgd0p9Rq+BAQ6l7kmheqV
-	 V9zoEN7Vo4HZEUxDHEHG9/GXsPKwbqHlMinE/N0UKL6EYZ1UvW0/DLk6rftxLfek5g
-	 GfJxvLP6XE4cUd2PtyYP0NvGnT/cEPzioSA7ubP02bUVP0WqqghHkvFHe4/RIm/cO0
-	 B61OnwsMK0g3uSEdpqgCVSq4h3sdw0urJ/JVGgBJN2f47unSEb4zhR5Q8U3ewgn+qi
-	 8KANDCE+vEqRA==
-Message-ID: <b1dc0b10-03a2-4605-8837-a1698e8e6a3d@kernel.org>
-Date: Thu, 24 Apr 2025 08:38:54 +0200
+	 In-Reply-To:Content-Type; b=H+9MVpTTWlrfk+3y2i5IVya+/BtK/+yaj4jN4gGLqrUccnCNzpsH4caW+UTYhPGyoyny617pqOfvkMHr+6D+Ki6WOhrBJpIMas+vwMzG0NVfKtagig7L6Trn9CuQlSIXYSO5lDMP6X4Fynes2f5opSII6kgFhhsIzeAKElyG4vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sWYjbipT; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-acb5cf13996so7006966b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 23:40:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1745476806; x=1746081606; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=YHOVy0d6Jr81U5d80aHhQf/9l+Z+pnlxKv7sXKN+lK0=;
+        b=sWYjbipTU482vOem2XXKKpEXNw+ADf0tTUxG0hWMJjoLn1Ef326qH02vHSamkHA46D
+         QirSKO4XJTl8aFtFBWHnGxNvWMi3X1seUP4DL/o2UwVHZI/uHV1L4C+55zud1Jr8sH/+
+         q4eJ5TA1kgu+9INukenrj+NOW71q5Vf6m8XDbTvhwv7eJDBhynZ+BBZARlrhGGHmNFDo
+         SqEgj60gNzxUNVTPYoPahXzQ2+o9HjHknb9UJjrvCNkQjJu/wz2wURzvNLCYsXvQhY07
+         LrWNTdcyw9Ef8wGJvlgX+kBv8GUbdVfbPw3IFRX+Eie3wPXjLFFZqCo/v23ciAHl2F8T
+         1acA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745476806; x=1746081606;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YHOVy0d6Jr81U5d80aHhQf/9l+Z+pnlxKv7sXKN+lK0=;
+        b=PsZMiUpYgtV1oPiqzMqD4NYEqzvhaTyJsZI2OybFFV7XwujrBXgpEE0VEUTHzPEw7z
+         gcYG2EYq8NGhxGq8U7igFCOrdXfTWUl0+xKVJXTPPbVgP++viZJb9IgSganrzf94nufu
+         tWTflUJoQDK60kR8KzuJa/O3QuHGc7UILlLZrwooAh3Q7V2HcGend6yn/1HQSHxXrNeU
+         N+rdu80DUxrhjIMxr+QzBNxW5CmIq99DIzWSlLxna8/UgkJKa7H/PlnUqLphhWsdPC5H
+         0GFitvxSbXKe5YylASTS3cShS3qAWpDJhB0cDlkrMZsmkQr3M/2ijfQ6oQoWEMB0QFgs
+         lC3Q==
+X-Gm-Message-State: AOJu0YxZZrmwOOcaGM7uAZOO4dXj8E4DjvQUPmeeQhVfFn+2VWyWqslo
+	mAjBQuv32V6CMyvRBto18qblJ/Xq0UqmaYejWl9UjD2bblZdhzK0iz/ErvypV8g=
+X-Gm-Gg: ASbGncsU/cioFImEcYmeX+p1fN82oao7606wFUuJEbrXp2xAmBlBXXaut1MrwDyS3R3
+	HGfQ5E+hfBccWq05kDTMUhKB1Tq/eWNLdAR3r4f4U+VBWq455LnDL3RIWI6tEsEeEYruAyTeFPb
+	HIuZuD7fmhsR6t4gIzHbValPvC91Hbw/+vE2VjTlp4dbeyYObLBKeFoFfZCSn8wIPqBq04J0dzj
+	Ao8MBdfYE9Uv9yKfIK+dAOO6VToGBhxJsd1qR4/39bvfDxg6yo/H05POBr6oUXryOcIuzPmlzwc
+	XpQTVJicMzCAniLKPbizdAsAqi/PhDZLsH/POUkwqt9Y9psGDfVL8yaRgqk=
+X-Google-Smtp-Source: AGHT+IEBjSa7BEvi/m7HE+DJPaUWRCsNtnzB4sH4oGiI1fsR12c0IUMic4Va6Q3p9IyF2GmVP3cekA==
+X-Received: by 2002:a17:907:96a1:b0:ac7:25c9:5142 with SMTP id a640c23a62f3a-ace572b460emr52391766b.7.1745476805908;
+        Wed, 23 Apr 2025 23:40:05 -0700 (PDT)
+Received: from [192.168.1.29] ([178.197.207.88])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace59bbdbb5sm55424866b.90.2025.04.23.23.40.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Apr 2025 23:40:05 -0700 (PDT)
+Message-ID: <3ec3fd62-bf21-47e7-873c-ce151589d743@linaro.org>
+Date: Thu, 24 Apr 2025 08:40:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +81,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/6] media: dt-bindings: media: camss: Add
- qcom,qcm2290-camss binding
+Subject: Re: [PATCH v6 2/5] dt-bindings: media: Add qcom,x1e80100-camss
 To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: rfoss@kernel.org, konradybcio@kernel.org, andersson@kernel.org,
- krzk+dt@kernel.org, robh@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org,
- dmitry.baryshkov@oss.qualcomm.com
-References: <20250418141147.205179-1-loic.poulain@oss.qualcomm.com>
- <20250418141147.205179-6-loic.poulain@oss.qualcomm.com>
- <20250422-nonchalant-bald-mink-7c2d34@kuoka>
- <d19ce1ba-2b72-4c04-b405-f5a9d3df07e1@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+References: <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-0-edcb2cfc3122@linaro.org>
+ <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-2-edcb2cfc3122@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
  JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
@@ -74,69 +108,69 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  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
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <d19ce1ba-2b72-4c04-b405-f5a9d3df07e1@linaro.org>
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-2-edcb2cfc3122@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/04/2025 13:59, Bryan O'Donoghue wrote:
-> On 22/04/2025 10:15, Krzysztof Kozlowski wrote:
->> On Fri, Apr 18, 2025 at 04:11:46PM GMT, Loic Poulain wrote:
->>> +  vdda-csiphy-1p2-supply:
->>
->> Why isn't this named vdd-phy-supply like in every other binding?
->>
->>> +    description:
->>> +      Phandle to a 1.2V regulator supply to CSI PHYs.
->>> +
->>> +  vdda-pll-1p8-supply:
->>
->> Similar question.
->>
->>> +    description:
->>> +      Phandle to 1.8V regulator supply to CAMSS refclk pll block.
->>
->> Best regards,
->> Krzysztof
->>
-> 
-> In this series we agreed to include the voltage level in the regulator name.
-> 
-> https://lore.kernel.org/linux-arm-msm/20250314-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v6-0-edcb2cfc3122@linaro.org/
-So the series there might need fixes as well? The supply name should
-match (more or less) real pins and real pins do not have voltage name.
+On 14/03/2025 14:14, Bryan O'Donoghue wrote:
+> +
+> +  power-domains:
+> +    items:
+> +      - description: IFE0 GDSC - Image Front End, Global Distributed Switch Controller.
+> +      - description: IFE1 GDSC - Image Front End, Global Distributed Switch Controller.
+> +      - description: Titan Top GDSC - Titan ISP Block, Global Distributed Switch Controller.
+> +
+> +  power-domain-names:
+> +    items:
+> +      - const: ife0
+> +      - const: ife1
+> +      - const: top
+> +
+> +  vdd-csiphy-0p8-supply:
+
+Same comment as other series on the lists - this is wrong name. There
+are no pins named like this and all existing bindings use different name.
+
+> +    description:
+> +      Phandle to a 0.8V regulator supply to a PHY.
+> +
+> +  vdd-csiphy-1p2-supply:
+> +    description:
+> +      Phandle to 1.8V regulator supply to a PHY.
 
 Best regards,
 Krzysztof
