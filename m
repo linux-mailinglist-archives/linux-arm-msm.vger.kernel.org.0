@@ -1,380 +1,303 @@
-Return-Path: <linux-arm-msm+bounces-55355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19CC2A9A8D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 11:48:48 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F19BA9A93E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 11:59:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 04FB71B869F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 09:48:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F345F17436E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 09:59:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B1DE22B59C;
-	Thu, 24 Apr 2025 09:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE7F61FC0FA;
+	Thu, 24 Apr 2025 09:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lL/C0EU4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ozqrHY8C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F2B22A1E9
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 09:41:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6341E8332
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 09:59:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745487670; cv=none; b=garePj6AuH5tny2kW4akf4Rm+5WhCDTS4cPl4mdvf7qIjUT6ZJHRXkcqqR+tSY4Zi25YffUgvO8xDOQM8cGbprLTX3vTQ0w4EEqDyNnI1OtI4SkRZG+N42z3Ce6ODFbVfsvSXG2qn6J1B9ycWofB1jVZQruFB9KCxNwwUJy1MU0=
+	t=1745488762; cv=none; b=YOX/gED5AHUepq3hflmSPtmnFVSoC8cRskrfeC8nf6dPNIcvMXBQSudmlbyYazo6PkBUAx5l6P4W0y4tH9EMEl9VYzT1bUVMB/pWLlrQmDyxsfkrKmD2EjkoVLoBDSUTMl1bhn+OcxmWG5aPtznv2UYV22QIMeI+P+eu3ERikE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745487670; c=relaxed/simple;
-	bh=TBsg5Gw/8VRnL9eYpB9Ca+nqmePgCSvmXxRDLHsuTtw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eJeMR2lVeXYdzFGfEoSMujvij5hGZQH8ZLrGNGDl3NvffwmGNFxsp1K8oN76NC2mk62jazwYxtFXSWesGFQTIjMLE3/sJenq9P/3AMxAC1ec+hxm7ELzF0sNRKbTZQHocqU5I95Qqu2+AYuPu5KZl9jkX1H0+ZKRAYlCbi4CZaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lL/C0EU4; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-440668acbf3so1175655e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 02:41:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745487666; x=1746092466; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bjIVmmwPwi2abb7R3JFlYVKuU635PTKZL4Ry4YZxTjA=;
-        b=lL/C0EU4Ugq2LH4UOkRzI6XZDynDAroY3QiU3uolOdUPdnywpj4Uv6mg6uHWaO/Z+K
-         vrYD/oPpepCdSAAYxt4G18EO4QKPanAH3BJhJhgb8bBiFXTCQdjW3hmO7JYmxMWjg9eF
-         mi1r3l2pM5LPDBbqcDQK9+7U8J5haTA87cqwANa3pw/wiYff4sphSjh/T5MjoG7Lb7Sk
-         x4uS8/sgKzNFTgI5hAn5HvI/MQ15gan1klysREX113KdeRP9vZc5WNpKSFgaNBk8F8Tw
-         9yIN9lh3QngXRqVTiqBZ00jMK06k3Xf6u9Dd++NKEsl1uLduW2+5MFasTVgIfqvTrWGs
-         e3fg==
+	s=arc-20240116; t=1745488762; c=relaxed/simple;
+	bh=aBtYyWx8XCPM8BgWwdjI1Z57YDtj0fMb9hGrxPmvmkk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=IDKT9X+XtA/7mPCIrXJ3+SkhWGk4mu0NNdfqxw4Sr8fmIhwN4sKu3L/LcW/2wGY6jlsQYLbaWUuSgURlzljawWOVYDLkz15dekf3/op1c2uejDTvUOOnDspmgI53nw4qAyktvlzK09DZ85zvx8S4E9YvwXFNZhi6603sQmC7vao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ozqrHY8C; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53O0F97U007631
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 09:59:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=zcarA8tjt9LwQKRWjZGBm+r2dm9TfpXygMW
+	2SA2rBLM=; b=ozqrHY8Clj2y/nJDVraoVAik3PrwMIQlRLQWGP4l8mU4+PtPf1C
+	yK2YHUZl8esTwpXYx1Sow7D/wG47Pv3k2GSpANaYx7c5kTwf+yF6B4tqns22DcdA
+	lu0nAURPcx4YL+RtBM9WBi9ViyeXznwigyBgBwKo3HZuJKiVUX1UOljCEKzGsiMi
+	+wNRyPgdKK2gqvvv2GqhtEPnE4F5bYypI2vqtG5kdyU/MJVG00Tu+Zlgy3QSGHPo
+	2gjY0Hc2+YP5dRTBP7FrfIomnFT+va7azHFcME+8qQ4+7aIu+GeFVN4QenhLzjQJ
+	NyqH/LMcNA8MG+wzc1/Aq2b0BJ8BdrmhZcw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh1n2xj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 09:59:20 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c5f876bfe0so138227785a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 02:59:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745487666; x=1746092466;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bjIVmmwPwi2abb7R3JFlYVKuU635PTKZL4Ry4YZxTjA=;
-        b=U/b8KzJctLBmNMO3Eksj3LGinPlM46np0VdXZnNk71eKNFRip+SZTbtThJns0xfoNE
-         cymWY2nV/iGHSlralg7fvdBun0kp16/o3wFLjg+YLvSHAFB8ScapBZgh6ICLuhpyxc+r
-         O+H7jur/jOqvRuzCn5B/dxm/hwohfyZRi0YSN1kuajS6acf6TfDdqyyYjseQMdTfANhB
-         gHv6bAWBkdpXrHxRZoXdxO8dhMUIjiIp1XtV4v540d6kcGKwz/BCeu3Q/315mpu0COfC
-         ibU78SuLwQBYpmMBt5q86NupTxETd0d9p+MSOFtdfBodJXteFVdr8QrooHBoZtqceNKV
-         ocag==
-X-Gm-Message-State: AOJu0YzOKjOI20U/MHG0NdtGA9n87OGBQ4m7GMQG3X1c4lWQgITNUFo1
-	3nFsZjP/Vs1K27/3V1tT/LhH6HSfNqpUEjzyykRfkvPk5/mOoSsqX6F7WcmUmg8=
-X-Gm-Gg: ASbGnctXSxTxPsGY16eT7igyEO02FZTbHIu+yZseibSErslZN5bY2HCalXGCKngtAak
-	FNyUmZ3T37/7JrO9EdE4/esSAaQHnyfU8tkbfpXXkCtQkuRvf4PgkMKwa5nrUZAMJ5kNx81pPOr
-	KqhtwGY4kbXcM8A9Vmg/6aBwN+VeVEhA73dz7Lc9QPycJV+FHhyucDINXvzcUq68qVTjZOsV4K+
-	/CROPKSZLNG7WJ4+MMBlK0SlkwwWosACHSTsfi60piZUy+Opy0rckxL9vSIEJYP95XAOyNmH/x7
-	4Ya1yy3TpaTyKUjzQMzJAjJ93GQ+BH/CCSzafvVA4FAZMkj8PovW6AeA6ds=
-X-Google-Smtp-Source: AGHT+IHO6+G6nbwN5cAabfQNCEyEBsMncf95D8gvWL5KJRsDwm8ofE95JLIy0JYeePV9fJhO30RiYQ==
-X-Received: by 2002:a05:600c:1e26:b0:43b:c938:1d0e with SMTP id 5b1f17b1804b1-4409bd0ce01mr6010255e9.2.1745487665819;
-        Thu, 24 Apr 2025 02:41:05 -0700 (PDT)
-Received: from [192.168.1.29] ([178.197.207.88])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4408c8b0ea0sm41526975e9.2.2025.04.24.02.41.04
+        d=1e100.net; s=20230601; t=1745488759; x=1746093559;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zcarA8tjt9LwQKRWjZGBm+r2dm9TfpXygMW2SA2rBLM=;
+        b=NwNg6G0Y4T6LGEuEZXvFPJiutLWaRkFKjxCjwRiRDKD5x78xVOYEPvNZh/WUSZf8qB
+         QgBLonc6O5ZBTQsfBmvKQ+OLcwRpw+tBKCDHNaa7+zDL/ak0AUPsTWwcQ9habI3tBzWO
+         MUg7JzDfGxDNHq4c0hIE0CaWdDMi/Knu5cOO1vXDCetp7Hal0USf5jdPU9KYU1Wui1C6
+         mQRB2vSsloqKMk8ZzQ2Gz+8D2WhCPOezrhyII8dxqB0Wp3F2P1KjAHNo3eFoxwSICfvI
+         3kdw2gEzJBY5EltM2RRZHUmxtZdRep/VFU9YhFrp0PjUc45NfQwrNTyceBAJsCLy2wvY
+         vCnw==
+X-Gm-Message-State: AOJu0Yy7Se/MZuI0Z6Ouu2LNkzLoTim3/WstRFghHYRybzqI5wzJsrse
+	Zd/vUX59WEEYJKahl5ABke5qLRoe1xmbOtdrh/AT5EYwVPxZXCrpT/SVp8LseIdS+j06NigS9Uz
+	n/Gr6Z0reeaiC1IRlA541A+vuVvJxXqORSYogdxISD9uJP+7p5fQxVud1URU0QTmd
+X-Gm-Gg: ASbGncskFkIFfCikmlURIdr7XH/WIvAQXL3HsY964LwwxJtm9zLblrt/luhNai7mMfA
+	6EmId2/wrz2fK/VWcGmz/1ZkATmHM/c62ouqD/dYgKCqabaxvQ9tVAjPipjKL3H+qSDDDKmB2f8
+	wz4LUX4o+wJatRfdLWc4IRYLiZjEVOuWnaFEeQBj8p24EO7SBUiDi2RK3I0BLdKdc2Q1+6PSAlc
+	9WsXsqQfC056/zv+hnlCJCdpmbGvYvO1E8Q8LTq+NG8WtBJXx/N8ASNhBKORSDazBpvDURSLm6x
+	yi4QfcQ+ah201Ql03GHhmYZwfNL6mGzgXrqDcG1hmLUJTpE=
+X-Received: by 2002:a05:620a:1a13:b0:7c7:9349:e468 with SMTP id af79cd13be357-7c956eb3391mr298883085a.12.1745488758621;
+        Thu, 24 Apr 2025 02:59:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG+PbLFGgfxmKngc18sdTh7HDWxy7uxe/5S9qAp/wZQ8BuKfUXAnsyHpZYkQxoxxgMcZTQpgA==
+X-Received: by 2002:a05:620a:1a13:b0:7c7:9349:e468 with SMTP id af79cd13be357-7c956eb3391mr298880085a.12.1745488758184;
+        Thu, 24 Apr 2025 02:59:18 -0700 (PDT)
+Received: from QCOM-eG0v1AUPpu.qualcomm.com ([2a01:e0a:82c:5f0:10e3:ecaa:2fb2:d23a])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace59c22e92sm80298566b.125.2025.04.24.02.59.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 02:41:05 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Thu, 24 Apr 2025 11:40:53 +0200
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8750-mtp: Add sound (speakers,
- headset codec, dmics)
+        Thu, 24 Apr 2025 02:59:17 -0700 (PDT)
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+To: lumag@kernel.org, robdclark@gmail.com, quic_abhinavk@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@oss.qualcomm.com>
+Subject: [PATCH v2] drm/msm/dsi: Fix 14nm DSI PHY PLL Lock issue
+Date: Thu, 24 Apr 2025 11:59:14 +0200
+Message-Id: <20250424095914.4002346-1-loic.poulain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250424-sm8750-audio-part-2-v1-2-50133a0ec35f@linaro.org>
-References: <20250424-sm8750-audio-part-2-v1-0-50133a0ec35f@linaro.org>
-In-Reply-To: <20250424-sm8750-audio-part-2-v1-0-50133a0ec35f@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6636;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=TBsg5Gw/8VRnL9eYpB9Ca+nqmePgCSvmXxRDLHsuTtw=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoCgcrlv0Hrm+KiCF0Uw74/6za1QWwf6cMXe1GJ
- IcvvrXprSSJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaAoHKwAKCRDBN2bmhouD
- 17jPD/4usJQWPljbPzU/u73tBnbGfVtehlZpVCF1o7slU/rzS0L05KQcPEluPFE1TLsFUJs1JMw
- Xz7BDapU7u9RLJjrYRBLdWtyh0wXp+kGt96Kpo+pA2J+YLW6x3vCw7RD0BuSgGPMI2W2fOFhP2B
- chP7GR3cpBTQW7YBV3Q+M1WTZj3F8Wosqe1FKx0N+9VrUPd8A0jStQsU3KHhjoIgkRm5zvt5xsm
- wOuGk5yhTtXUIo9R5srpP1FyhV8uHmSViLox8d72hh94mMedmL2gGeLmPiJS9OOWj9kB1uLj758
- LayIlyfVHN7O8PfpVVI0nymToXsEnm+WDqC7i3jL4iFni2iTvaT8v4RNwUs5lgCwk9AWgzpK4ij
- /28/T8TKVzB5VDCElRx2hZe0Ffowzelq3UxB8L7CqpuaCloxPBA98MvvCuwCEJfrRBH60+EKIP3
- eVGP+9G2GEzreCggbeCvRRgOJa8WuwVsScYya4xZuDTDL8MjjOf/G2dAzeIO7zIkepO2o5Of3Xn
- H6uLyZ527vv6Ne8vOBOtxDhiszbRLhd9c+hcMFC8VGxyCi5NgsebtdLEYzbORcsJCkwr9dXmQX/
- abDxTlP9nMJAyWF6GgSrPXMoAW6oglBnnFoZ4cogGeg6ihSba/sud2ptJTUQWn9PIPh7DfZrd6r
- aqwcLfgjApqt7eA==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: kOSEwGUWuC23gSbxCv7w0hcsJ3xpcaSw
+X-Proofpoint-ORIG-GUID: kOSEwGUWuC23gSbxCv7w0hcsJ3xpcaSw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDA2NiBTYWx0ZWRfX84waaw0EnELA /jQ+9wlFYVi/0DhFrxII9PQAp7oaW+Dh4x7aY8SwxkJ2fp3pOQFRP1kwH4SNgcvZOu+mQgVujAw 5PjRZzXCdH5Eao/CLAkKQhsOeta+a3Z/vQfoQ0JWlbYcxoBLhGhgtaJpEerVuoW/oSt7ZyQq5az
+ z8jRBiM1ZW4Sdfh6oS9zXlqjy53x8F9yWlrrWayhUu9DdL+08L8D75Q134hMxlcOvYA3RqL7vH2 eC2l2kbPWnZgzg2rlSZ1z+3T+eaRCrTOtKv5uaEDq7XYHzDMNE8G/A/QaCtXsIy1pqHW3J50ci5 snW8dRfd/Nj2+97GwSXOELZvfl478QtdzsZayncOcvBgSyWOPJY1515+rtywphw3a8aUy/p94jN
+ eg4nqjzJcuW5pc2PgwZ9Hie0QQSQLzRHGS5OT37Ll22mjTT6FcmMjtuDGoWL+0F9ty//PKUt
+X-Authority-Analysis: v=2.4 cv=ZpjtK87G c=1 sm=1 tr=0 ts=680a0b78 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=XR8D0OoHHMoA:10 a=QcRrIoSkKhIA:10 a=EUspDBNiAAAA:8 a=Hn5eap2Cq60OI_ydS0cA:9 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.680,FMLib:17.12.80.40
+ definitions=2025-04-24_04,2025-04-22_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 clxscore=1015
+ bulkscore=0 suspectscore=0 mlxlogscore=999 spamscore=0 impostorscore=0
+ mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504240066
 
-Add device nodes for most of the sound support - WSA883x smart speakers,
-WCD9395 audio codec (headset) and sound card - which allows sound
-playback via speakers and recording via DMIC microphones.  Changes bring
-necessary foundation for headset playback/recording via USB, but that
-part is not yet ready.
+To configure and enable the DSI PHY PLL clocks, the MDSS AHB clock must
+be active for MMIO operations. Typically, this AHB clock is enabled as
+part of the DSI PHY interface enabling (dsi_phy_enable_resource).
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+However, since these PLL clocks are registered as clock entities, they
+can be enabled independently of the DSI PHY interface, leading to
+enabling failures and subsequent warnings:
+
+```
+msm_dsi_phy 5e94400.phy: [drm:dsi_pll_14nm_vco_prepare] *ERROR* DSI PLL lock failed
+------------[ cut here ]------------
+dsi0pllbyte already disabled
+WARNING: CPU: 3 PID: 1 at drivers/clk/clk.c:1194 clk_core_disable+0xa4/0xac
+CPU: 3 UID: 0 PID: 1 Comm: swapper/0 Tainted:
+Tainted: [W]=WARN
+Hardware name: Qualcomm Technologies, Inc. Robotics RB1 (DT)
+pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[...]
+```
+
+This issue is particularly prevalent at boot time during the disabling of
+unused clocks (clk_disable_unused()) which includes enabling the parent
+clock(s) when CLK_OPS_PARENT_ENABLE flag is set (this is the case for the
+14nm DSI PHY PLL consumers).
+
+To resolve this issue, we move the AHB clock as a PM dependency of the DSI
+PHY device (via pm_clk). Since the DSI PHY device is the parent of the PLL
+clocks, this resolves the PLL/AHB dependency. Now the AHB clock is enabled
+prior the PLL clk_prepare callback, as part of the runtime-resume chain.
+
+We also eliminate dsi_phy_[enable|disable]_resource functions, which are
+superseded by runtime PM.
+
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 214 ++++++++++++++++++++++++++++++++
- 1 file changed, 214 insertions(+)
+ v2: Move AHB clock into a proper PM dep instead of manually toggling it
+     from the PLL clock driver.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-index 72f081a890dfe49bfbee5e91b9e51da53b9d8baf..47645f15e6e327620840de8c3e03105540faf9cc 100644
---- a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-@@ -29,6 +29,32 @@ aliases {
- 		serial0 = &uart7;
- 	};
- 
-+	wcd939x: audio-codec {
-+		compatible = "qcom,wcd9395-codec", "qcom,wcd9390-codec";
-+
-+		pinctrl-0 = <&wcd_default>;
-+		pinctrl-names = "default";
-+
-+		qcom,micbias1-microvolt = <1800000>;
-+		qcom,micbias2-microvolt = <1800000>;
-+		qcom,micbias3-microvolt = <1800000>;
-+		qcom,micbias4-microvolt = <1800000>;
-+		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-+		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-+		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-+		qcom,rx-device = <&wcd_rx>;
-+		qcom,tx-device = <&wcd_tx>;
-+
-+		reset-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
-+
-+		vdd-buck-supply = <&vreg_l15b_1p8>;
-+		vdd-rxtx-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l15b_1p8>;
-+		vdd-mic-bias-supply = <&vreg_bob1>;
-+
-+		#sound-dai-cells = <1>;
-+	};
-+
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-@@ -81,6 +107,89 @@ key-volume-up {
- 		};
- 	};
- 
-+	sound {
-+		compatible = "qcom,sm8750-sndcard", "qcom,sm8450-sndcard";
-+		model = "SM8750-MTP";
-+		audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
-+				"SpkrRight IN", "WSA_SPK2 OUT",
-+				"IN1_HPHL", "HPHL_OUT",
-+				"IN2_HPHR", "HPHR_OUT",
-+				"AMIC2", "MIC BIAS2",
-+				"VA DMIC0", "MIC BIAS3", /* MIC4 on schematics */
-+				"VA DMIC1", "MIC BIAS3", /* MIC1 on schematics */
-+				"VA DMIC2", "MIC BIAS1",
-+				"VA DMIC3", "MIC BIAS1",
-+				"VA DMIC0", "VA MIC BIAS3",
-+				"VA DMIC1", "VA MIC BIAS3",
-+				"VA DMIC2", "VA MIC BIAS1",
-+				"VA DMIC3", "VA MIC BIAS1",
-+				"TX SWR_INPUT1", "ADC2_OUTPUT";
-+
-+		wcd-playback-dai-link {
-+			link-name = "WCD Playback";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&wcd939x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		wcd-capture-dai-link {
-+			link-name = "WCD Capture";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-+			};
-+
-+			codec {
-+				sound-dai = <&wcd939x 1>, <&swr2 0>, <&lpass_txmacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		wsa-dai-link {
-+			link-name = "WSA Playback";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&left_spkr>, <&right_spkr>, <&swr0 0>, <&lpass_wsamacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		va-dai-link {
-+			link-name = "VA Capture";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&lpass_vamacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+	};
-+
- 	vph_pwr: vph-pwr-regulator {
- 		compatible = "regulator-fixed";
- 
-@@ -702,6 +811,14 @@ vreg_l7n_3p3: ldo7 {
- 	};
- };
- 
-+&lpass_vamacro {
-+	pinctrl-0 = <&dmic01_default>, <&dmic23_default>;
-+	pinctrl-names = "default";
-+
-+	vdd-micb-supply = <&vreg_l1b_1p8>;
-+	qcom,dmic-sample-rate = <4800000>;
-+};
-+
- &pm8550_flash {
- 	status = "okay";
- 
-@@ -806,6 +923,74 @@ &remoteproc_mpss {
- 	status = "fail";
- };
- 
-+&swr0 {
-+	status = "okay";
-+
-+	/* WSA883x, left/front speaker */
-+	left_spkr: speaker@0,1 {
-+		compatible = "sdw10217020200";
-+		reg = <0 1>;
-+		pinctrl-0 = <&spkr_0_sd_n_active>;
-+		pinctrl-names = "default";
-+		powerdown-gpios = <&lpass_tlmm 17 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <0>;
-+		sound-name-prefix = "SpkrLeft";
-+		#thermal-sensor-cells = <0>;
-+		vdd-supply = <&vreg_l15b_1p8>;
-+	};
-+
-+	/* WSA883x, right/back speaker */
-+	right_spkr: speaker@0,2 {
-+		compatible = "sdw10217020200";
-+		reg = <0 2>;
-+		pinctrl-0 = <&spkr_1_sd_n_active>;
-+		pinctrl-names = "default";
-+		powerdown-gpios = <&lpass_tlmm 18 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <0>;
-+		sound-name-prefix = "SpkrRight";
-+		#thermal-sensor-cells = <0>;
-+		vdd-supply = <&vreg_l15b_1p8>;
-+	};
-+};
-+
-+&swr1 {
-+	status = "okay";
-+
-+	/* WCD9395 RX */
-+	wcd_rx: codec@0,4 {
-+		compatible = "sdw20217010e00";
-+		reg = <0 4>;
-+
-+		/*
-+		 * WCD9395 RX Port 1 (HPH_L/R)      <=> SWR1 Port 1 (HPH_L/R)
-+		 * WCD9395 RX Port 2 (CLSH)         <=> SWR1 Port 2 (CLSH)
-+		 * WCD9395 RX Port 3 (COMP_L/R)     <=> SWR1 Port 3 (COMP_L/R)
-+		 * WCD9395 RX Port 4 (LO)           <=> SWR1 Port 4 (LO)
-+		 * WCD9395 RX Port 5 (DSD_L/R)      <=> SWR1 Port 5 (DSD_L/R)
-+		 * WCD9395 RX Port 6 (HIFI_PCM_L/R) <=> SWR1 Port 9 (HIFI_PCM_L/R)
-+		 */
-+		qcom,rx-port-mapping = <1 2 3 4 5 9>;
-+	};
-+};
-+
-+&swr2 {
-+	status = "okay";
-+
-+	/* WCD9395 TX */
-+	wcd_tx: codec@0,3 {
-+		compatible = "sdw20217010e00";
-+		reg = <0 3>;
-+
-+		/*
-+		 * WCD9395 TX Port 1 (ADC1,2,3,4)         <=> SWR2 Port 2 (TX SWR_INPUT 0,1,2,3)
-+		 * WCD9395 TX Port 2 (ADC3,4 & DMIC0,1)   <=> SWR2 Port 2 (TX SWR_INPUT 0,1,2,3)
-+		 * WCD9395 TX Port 3 (DMIC0,1,2,3 & MBHC) <=> SWR2 Port 3 (TX SWR_INPUT 4,5,6,7)
-+		 * WCD9395 TX Port 4 (DMIC4,5,6,7)        <=> SWR2 Port 4 (TX SWR_INPUT 8,9,10,11)
-+		 */
-+		qcom,tx-port-mapping = <2 2 3 4>;
-+	};
-+};
-+
- &tlmm {
- 	/* reserved for secure world */
- 	gpio-reserved-ranges = <36 4>, <74 1>;
-@@ -814,3 +999,32 @@ &tlmm {
- &uart7 {
- 	status = "okay";
- };
-+
-+/* Pinctrl */
-+&lpass_tlmm {
-+	spkr_0_sd_n_active: spkr-0-sd-n-active-state {
-+		pins = "gpio17";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+
-+	spkr_1_sd_n_active: spkr-1-sd-n-active-state {
-+		pins = "gpio18";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+};
-+
-+&tlmm {
-+	wcd_default: wcd-reset-n-active-state {
-+		pins = "gpio101";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+};
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 65 +++++++++++----------------
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h |  1 -
+ 2 files changed, 25 insertions(+), 41 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+index c0bcc6828963..7c1cc06eec28 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -5,6 +5,8 @@
+ 
+ #include <linux/clk-provider.h>
+ #include <linux/platform_device.h>
++#include <linux/pm_clock.h>
++#include <linux/pm_runtime.h>
+ #include <dt-bindings/phy/phy.h>
+ 
+ #include "dsi_phy.h"
+@@ -511,30 +513,6 @@ int msm_dsi_cphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
+ 	return 0;
+ }
+ 
+-static int dsi_phy_enable_resource(struct msm_dsi_phy *phy)
+-{
+-	struct device *dev = &phy->pdev->dev;
+-	int ret;
+-
+-	ret = pm_runtime_resume_and_get(dev);
+-	if (ret)
+-		return ret;
+-
+-	ret = clk_prepare_enable(phy->ahb_clk);
+-	if (ret) {
+-		DRM_DEV_ERROR(dev, "%s: can't enable ahb clk, %d\n", __func__, ret);
+-		pm_runtime_put_sync(dev);
+-	}
+-
+-	return ret;
+-}
+-
+-static void dsi_phy_disable_resource(struct msm_dsi_phy *phy)
+-{
+-	clk_disable_unprepare(phy->ahb_clk);
+-	pm_runtime_put(&phy->pdev->dev);
+-}
+-
+ static const struct of_device_id dsi_phy_dt_match[] = {
+ #ifdef CONFIG_DRM_MSM_DSI_28NM_PHY
+ 	{ .compatible = "qcom,dsi-phy-28nm-hpm",
+@@ -692,24 +670,30 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	phy->ahb_clk = msm_clk_get(pdev, "iface");
+-	if (IS_ERR(phy->ahb_clk))
+-		return dev_err_probe(dev, PTR_ERR(phy->ahb_clk),
+-				     "Unable to get ahb clk\n");
++	platform_set_drvdata(pdev, phy);
+ 
+-	ret = devm_pm_runtime_enable(&pdev->dev);
++	ret = devm_pm_runtime_enable(dev);
+ 	if (ret)
+ 		return ret;
+ 
+-	/* PLL init will call into clk_register which requires
+-	 * register access, so we need to enable power and ahb clock.
+-	 */
+-	ret = dsi_phy_enable_resource(phy);
++	ret = devm_pm_clk_create(dev);
+ 	if (ret)
+ 		return ret;
+ 
++	ret = pm_clk_add(dev, "iface");
++	if (ret < 0)
++		return dev_err_probe(dev, ret, "Unable to get iface clk\n");
++
+ 	if (phy->cfg->ops.pll_init) {
++		/* PLL init will call into clk_register which requires
++		 * register access, so we need to enable power and ahb clock.
++		 */
++		ret = pm_runtime_resume_and_get(dev);
++		if (ret)
++			return ret;
++
+ 		ret = phy->cfg->ops.pll_init(phy);
++		pm_runtime_put(&pdev->dev);
+ 		if (ret)
+ 			return dev_err_probe(dev, ret,
+ 					     "PLL init failed; need separate clk driver\n");
+@@ -721,18 +705,19 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, ret,
+ 				     "Failed to register clk provider\n");
+ 
+-	dsi_phy_disable_resource(phy);
+-
+-	platform_set_drvdata(pdev, phy);
+-
+ 	return 0;
+ }
+ 
++static const struct dev_pm_ops dsi_phy_pm_ops = {
++	SET_RUNTIME_PM_OPS(pm_clk_suspend, pm_clk_resume, NULL)
++};
++
+ static struct platform_driver dsi_phy_platform_driver = {
+ 	.probe      = dsi_phy_driver_probe,
+ 	.driver     = {
+ 		.name   = "msm_dsi_phy",
+ 		.of_match_table = dsi_phy_dt_match,
++		.pm = &dsi_phy_pm_ops,
+ 	},
+ };
+ 
+@@ -758,7 +743,7 @@ int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
+ 
+ 	dev = &phy->pdev->dev;
+ 
+-	ret = dsi_phy_enable_resource(phy);
++	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "%s: resource enable failed, %d\n",
+ 			__func__, ret);
+@@ -804,7 +789,7 @@ int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
+ phy_en_fail:
+ 	regulator_bulk_disable(phy->cfg->num_regulators, phy->supplies);
+ reg_en_fail:
+-	dsi_phy_disable_resource(phy);
++	pm_runtime_put(dev);
+ res_en_fail:
+ 	return ret;
+ }
+@@ -817,7 +802,7 @@ void msm_dsi_phy_disable(struct msm_dsi_phy *phy)
+ 	phy->cfg->ops.disable(phy);
+ 
+ 	regulator_bulk_disable(phy->cfg->num_regulators, phy->supplies);
+-	dsi_phy_disable_resource(phy);
++	pm_runtime_put(&phy->pdev->dev);
+ }
+ 
+ void msm_dsi_phy_set_usecase(struct msm_dsi_phy *phy,
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+index 1925418d9999..d4bfb7dd7ab1 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+@@ -101,7 +101,6 @@ struct msm_dsi_phy {
+ 	phys_addr_t lane_size;
+ 	int id;
+ 
+-	struct clk *ahb_clk;
+ 	struct regulator_bulk_data *supplies;
+ 
+ 	struct msm_dsi_dphy_timing timing;
 -- 
-2.45.2
+2.34.1
 
 
