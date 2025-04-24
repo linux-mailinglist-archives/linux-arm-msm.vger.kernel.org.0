@@ -1,57 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-55278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B559A9A475
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 09:44:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AED3FA9A485
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 09:45:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6E51A7B1E95
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 07:43:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ABDD916F3E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 07:45:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 719D021C9EB;
-	Thu, 24 Apr 2025 07:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 557BF1F2C56;
+	Thu, 24 Apr 2025 07:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eo2RhD7v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u+YPQDwb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB7021C18A;
-	Thu, 24 Apr 2025 07:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C8F1F1520;
+	Thu, 24 Apr 2025 07:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745480265; cv=none; b=j81DNvIoBV0tfhRFhBZZVidrLd5oyUChXm8XuWxMDxucfPkvFVSvGGdPZ5AW0by3RqIFcC19AkJmowI7cD+KfEXps/x1VpeZWw7Mce0OLsc/XYdSwGK9TFUmY7MCRAj5QM/v74OQdSn8WjmmD8B9jBq2a4q+1YQ5pxbRETDx4gU=
+	t=1745480510; cv=none; b=GsSKWmqqq3DUMe/7IOh31LsY4Y8dRuYVvDd0CXv44bFTODpJyJZWkeux3EOz3MDPfPRU/Z2C8dvfXzRK40zj+X6NtV9LRvBcgvqfKJXi8Z8hw+AKZYHGAj8v6nF0zXEJ4bN1NV/ZYZGjHfIR10vIaLjmZPmc5FStdKNl+/WZ8Kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745480265; c=relaxed/simple;
-	bh=rqIQXLU4teKa3KV5UZ9eFWNKZcGmH9UFWtWigS0N56o=;
+	s=arc-20240116; t=1745480510; c=relaxed/simple;
+	bh=Rln/ecTqDzkn2EEImME3bcgjSb5k+IMJNatHEmwxhhQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PFfbHqxJv02GhNGNeaeSEJoZPJjRROfnsGvG9VJvcgk1LQ0nj/LG/F5A1bnACVt+l4yHYaZlzjJmXCDwLmhgmiESvt8/0Ri/qiI5/laOgQ4EHHDKzrIxbV48+vxNPmPHjZbeIezEAUQ6ujrm8eEXweMLttwS6d0xYFRYFB9uEhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eo2RhD7v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D47EC4CEE3;
-	Thu, 24 Apr 2025 07:37:43 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=UJ3cLSYLDh7FWQzXkyxOC/Uohzkco6AAqkLrdT8tHKw85ZatrQ4w3vOoaL8EOFNkRHRjMPRfaoU0D/iqRWG+KgFY0jFdXh3c82t+1tUSXLlATe3HMHZR286GWQKuJK7uhdcEv2O/BTpp1LdV+1NQEyhM5JOEsUCqpWY7Hj/cKuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u+YPQDwb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F70C4CEE3;
+	Thu, 24 Apr 2025 07:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745480264;
-	bh=rqIQXLU4teKa3KV5UZ9eFWNKZcGmH9UFWtWigS0N56o=;
+	s=k20201202; t=1745480509;
+	bh=Rln/ecTqDzkn2EEImME3bcgjSb5k+IMJNatHEmwxhhQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eo2RhD7v+yruovP5prL7D73p3h19vJO8XxOMKiMOadfRnH6eenLazD5LJwIarqLpb
-	 99gQMtrYHdqj7coifte7/wF/uGJbsQ5yFT+IcPmmJp2MbLYgouLciFzaJQg4nmrLWw
-	 Rv/s64GcU02uHGF3djJPjgMVwUFbSIz01CgIuVbF5ZV2U5/zHy/rAQdhhcGw+NTHWJ
-	 nBfX/A46+xbF5iihUvYDBHDwdw5a+GNA0L02tpNpPaFCbXsYtAGFvN204DKtD+NfoM
-	 uu9LDO3YcqzmTxr3SXkPohiXSgnGqUfVaQ7ArUgvu8hucO0/mnfoKL2FCIYjcHSnFa
-	 Q5QE9NSUuLV1Q==
-Date: Thu, 24 Apr 2025 09:37:42 +0200
+	b=u+YPQDwbVqC5K5izTZgCEhSQZwQUnGXEytAmw5w0nUsFCOAFXP2mgq9RrqjPIK+vj
+	 ahE/34DnCkqikBp83aiuRXd/AVE0u8U322NaOawJqKEzA2UmQRfYTtvvDDWej4NivJ
+	 qb8sztCer8fPMaT/OOy06bjvgSRFVcxKGu6Ss0SahT3Qz/QoT7ZR3gAgzKIqJu6fUM
+	 /DPTSTGbrywzU9F3QPOnMTUG1ODHQLsNgf5hyJTHaXYH0tBZV5aoPQRbcKsy/uVLaG
+	 jDOYKMJUFq1gvPxBML7gouZZofEjf2MHdOLKrTSVqRni1CHJk4/y4BzjM2VqParikq
+	 0mwKjX/blylnw==
+Date: Thu, 24 Apr 2025 09:41:47 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: bryan.odonoghue@linaro.org, rfoss@kernel.org, konradybcio@kernel.org, 
-	andersson@kernel.org, krzk+dt@kernel.org, robh@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, devicetree@vger.kernel.org, 
-	dmitry.baryshkov@oss.qualcomm.com
-Subject: Re: [PATCH v4 5/6] media: dt-bindings: Add qcom,qcm2290-camss
-Message-ID: <20250424-versatile-brown-chowchow-dfc4a9@kuoka>
-References: <20250423072044.234024-1-loic.poulain@oss.qualcomm.com>
- <20250423072044.234024-6-loic.poulain@oss.qualcomm.com>
+To: Songwei Chai <quic_songchai@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, 
+	Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@arm.com>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 1/7] dt-bindings: arm: Add support for Coresight TGU
+ trace
+Message-ID: <20250424-silky-wombat-of-chivalry-42cdff@kuoka>
+References: <20250423101054.954066-1-quic_songchai@quicinc.com>
+ <20250423101054.954066-2-quic_songchai@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,24 +64,29 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250423072044.234024-6-loic.poulain@oss.qualcomm.com>
+In-Reply-To: <20250423101054.954066-2-quic_songchai@quicinc.com>
 
-On Wed, Apr 23, 2025 at 09:20:43AM GMT, Loic Poulain wrote:
-> +  power-domains:
-> +    items:
-> +      - description: GDSC CAMSS Block, Global Distributed Switch Controller.
+On Wed, Apr 23, 2025 at 06:10:48PM GMT, Songwei Chai wrote:
+> +  in-ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +    additionalProperties: false
 > +
-> +  vdda-csiphy-1p2-supply:
-> +    description:
-> +      Phandle to a 1.2V regulator supply to CSI PHYs.
+> +    properties:
+> +      port:
+> +        description:
+> +          The port mechanism here ensures the relationship between TGU and
+> +          TPDM, as TPDM is one of the inputs for TGU. It will allow TGU to
+> +          function as TPDM's helper and enable TGU when the connected
+> +          TPDM is enabled.
+> +        $ref: /schemas/graph.yaml#/properties/port
 > +
-> +  vdda-pll-1p8-supply:
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
 
-
-How are the pins or input supplies called?
-
-Before sending new version, allow people to actually finish ongoing
-discussion.
+You did not address my previous comment.
 
 Best regards,
 Krzysztof
