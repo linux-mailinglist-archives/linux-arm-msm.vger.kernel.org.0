@@ -1,108 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-55475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32E25A9B682
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 20:39:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5EAEA9B68B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 20:40:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B48D73B0EDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 18:39:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1D1841776C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 18:40:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7897228F52A;
-	Thu, 24 Apr 2025 18:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 991C2291164;
+	Thu, 24 Apr 2025 18:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="c6pUqxbM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Xh3vreAP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E8827F74E;
-	Thu, 24 Apr 2025 18:39:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7A628DF09;
+	Thu, 24 Apr 2025 18:39:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745519953; cv=none; b=XiZBI0mtCBfUPdW0oMnIUmrzs+D9V1feJCMd/QLFxNCL0zawIIWizHgGnweDmQeYPyCiBirNE6LEPG/Ev8gvTC+gX8XfgDQ6qj0czq8WdorUv462m+VPjldNIwxElXHhy7dG/IdpPKX/b9DxeeUXsT9X+F2uyToPtuvjHqSemIA=
+	t=1745519971; cv=none; b=A2Xueaeh2z35pb9clz8kOcZ8qmGkKCUMsYzoehQHeOEhpRPOPorNqxcyTD2JrOPaGQSOljwcU/0SE3qxtId8W4tNfWs8WaAKRNwYYegu3CD3Tx2hDYgGbaKrlNulu/T/t0xDycuBGZSXrA93j7UDVseSl/Hl4onfpXaZnFU5MNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745519953; c=relaxed/simple;
-	bh=6bdpaVdvFvYiYPzJcAlvCLWS4TRiBZPClZi9eEprHSk=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=l5RwMnUk4iq7fcTHtlkT6yIdmGocFnIX196is7jD/GGXI0BHogCRPQNvE8Zerk1Jx62QKuXDp2lqkolfKwlvTQPzFTkTl4CpUBwRFVSCd2PZpMKgdEFzBElPkkKMp6drznJh+sKK64zGGcAHCdXFOazjZCdGWPVWzBnsY56Ys8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net; spf=pass smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=c6pUqxbM; arc=none smtp.client-ip=168.119.38.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sipsolutions.net
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-	Resent-Cc:Resent-Message-ID; bh=6bdpaVdvFvYiYPzJcAlvCLWS4TRiBZPClZi9eEprHSk=;
-	t=1745519952; x=1746729552; b=c6pUqxbMRusqXQdwwBsQDHgV+/ZrFqQ02j87oPcJ39EtrBo
-	49FYPn/EA7Li7f2mWmWwioG5mT2GmQoY9va5LYI7B2mTSBmAHfHbPajmITdhteGtXzJL4aLSi0N3Q
-	1Hc3Y37CAFtU03mPxUFe7sTfoxA+bbdmQJmip4Wu2CFvPdBRHXNQEdFTqtjS8xaraxd9wnKD7W+av
-	fuMnuAyIqCOhLxP6cbHmK05Qgr2msjLqcgnQkmLyOMvVY8m1cWn7egR/Y+B49Q0npk//mAaZvvyrv
-	GqGVRL1ICBmx87F/katan/F24iRPDlLI5ySg825T8leTnVy4Feq5MnHKYWXLDZXw==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.98.1)
-	(envelope-from <johannes@sipsolutions.net>)
-	id 1u81TT-00000000BVN-0Jsz;
-	Thu, 24 Apr 2025 20:39:03 +0200
-Message-ID: <4e5d875c3f666be8d1c72fa19f6237f21b24f7ec.camel@sipsolutions.net>
-Subject: Re: [PATCH v5 3/5] dt-bindings: wireless: bcm4329-fmac: Use
- wireless-controller.yaml schema
-From: Johannes Berg <johannes@sipsolutions.net>
-To: Rob Herring <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, david@ixit.cz, Andrew Lunn	
- <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, Eric
- Dumazet	 <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo
- Abeni	 <pabeni@redhat.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor
- Dooley	 <conor+dt@kernel.org>, Mailing List	
- <devicetree-spec-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, Lorenzo Bianconi
-	 <lorenzo@kernel.org>, van Spriel <arend@broadcom.com>, 
- =?ISO-8859-1?Q?J=E9r=F4me?= Pouiller	 <jerome.pouiller@silabs.com>, Bjorn
- Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Andy Gross <agross@kernel.org>, Mailing List	
- <devicetree-spec@vger.kernel.org>, netdev@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org, Janne Grunau
-	 <j@jannau.net>
-Date: Thu, 24 Apr 2025 20:39:01 +0200
-In-Reply-To: <CAL_JsqKGmoiW=yDD7G4Qznsa7S2wQ7x4Mh0i4puAyFsvcnHz1A@mail.gmail.com>
-References: <20250324-dt-bindings-network-class-v5-0-f5c3fe00e8f0@ixit.cz>
-	 <20250324-dt-bindings-network-class-v5-3-f5c3fe00e8f0@ixit.cz>
-	 <d8619ab4-3a91-467f-a3d4-f23b4e0383a4@kernel.org>
-	 <57701e2e-0005-4a8a-a3f5-ba098c97b480@kernel.org>
-	 <4b040936baa8fa8669b34e36fe9dff6e08aeede9.camel@sipsolutions.net>
-	 <f0e56cb2-17a6-44d4-ae71-8639966d565a@kernel.org>
-	 <8d8b7c3ad6a67a683abbb4fc6049898747300a16.camel@sipsolutions.net>
-	 <CAL_JsqKGmoiW=yDD7G4Qznsa7S2wQ7x4Mh0i4puAyFsvcnHz1A@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
+	s=arc-20240116; t=1745519971; c=relaxed/simple;
+	bh=Ujfhlv9mK/eR8ZFFupYha8mMYtZhYk6bDRRCR6pje38=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=RF31zrgDOMRjJUY3PieXCAJl3AKxOesYiMFEnzNcbNM7NkkphjRzs1uXSzsWNX1Gxc0PvEsIFzKnUqdIx1V6Ot9facnI6KjifhHvx9/0nGAsZv0yhZOUHrldE0xIhC3YOxwciz1FJs09aV0shxkm7a1Rbuvec2tE9LfjwtDDWFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Xh3vreAP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53OC3E4U006854;
+	Thu, 24 Apr 2025 18:39:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	mxLBzeuWZhCXuUx7GN5HKoSEL571jl+7JkCTFc6StIA=; b=Xh3vreAPaUyvNZNm
+	3qdGUOGBr7fLqp6fLkCTmjTYnmYS7D7wQ86MCIGmCU2FGk2wVnHsafJ7eo3ZK1QS
+	3SS2VW7utVePQW1wFjDPN3brPfeDbeF46ZtndsLWGI2zpJ4vpvk7eX+sZgD5WNXw
+	nYIjaVWP/x8eYExQ9btoegWcLzX6tZCom6LnsCAtwwcUgvMQkugzNuI+wcl8mv5C
+	iuHI+dA9xnHczRRIWZBe49570a5McLa4uCQb0dySckrfgBvx52NKCXEVVPKoCs7h
+	HNF0jgBe6r3TGUwkF1J1Rh4qYvCkZN0hJZQH9WqYJncoJs/E6q0fTizkr+hwlza1
+	XjB8OA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh5ekux-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Apr 2025 18:39:12 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53OIdB0E031348
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Apr 2025 18:39:11 GMT
+Received: from [10.134.71.99] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 24 Apr
+ 2025 11:39:10 -0700
+Message-ID: <0e452bde-6182-4779-8ad1-5019703da092@quicinc.com>
+Date: Thu, 24 Apr 2025 11:39:10 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-malware-bazaar: not-scanned
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 03/16] drm/msm/hdmi: convert clock and regulator arrays
+ to const arrays
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David
+ Airlie" <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Simona Vetter <simona.vetter@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20250209-fd-hdmi-hpd-v4-0-6224568ed87f@linaro.org>
+ <20250209-fd-hdmi-hpd-v4-3-6224568ed87f@linaro.org>
+Content-Language: en-US
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20250209-fd-hdmi-hpd-v4-3-6224568ed87f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDEyOSBTYWx0ZWRfXyrfj85aWAIbS Z3qfYoj+bJwXrAAINp1TJctRpMvjV2H8swyfrM7u34OBdYNguco4+COFKbNLsHll63FpqM1z5gN 7T1iGPrAXCfKn6Ah9Ii8K7KIXizKSRgfurKr4ZNKByfDDF/VSkkZpnLPqR6s1v4rHmxbzvntPos
+ HxhF+ia3fDYa0jGo/VeyyEb9bN+9beq6/pl5xQkRoq3yOWUrERpfrzOmIKQa1rCEuPeXcES7sTS Wj7rOJe8Wt4XekdkkeVyVi569KlnLvsMYz2tfgyRbLH8obMa8pdMqRha6uMbFgmqVZAYx4TF2Jz Q5OC5RCHDbKkLbiLm9Vo6KKetn4JkDPXDlYb187Ipf5cIzt0XwlYEonun/yteJpf6ZfxIcE1uFw
+ MsHppActh8bh8z+DUVuq4pAcuJxeCeKTkAvIk7m4F2A/OoOZBLV6I1IQ1bMK9soh8v8/SvJT
+X-Proofpoint-GUID: dHfsF6sTGtwWynzqtgjuASI4y4rUNOyY
+X-Authority-Analysis: v=2.4 cv=B/S50PtM c=1 sm=1 tr=0 ts=680a8550 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=LHP2PRoX459aX8Xl4qEA:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: dHfsF6sTGtwWynzqtgjuASI4y4rUNOyY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-24_08,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 suspectscore=0 mlxscore=0
+ priorityscore=1501 phishscore=0 malwarescore=0 spamscore=0 clxscore=1015
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504240129
 
-On Thu, 2025-04-24 at 13:26 -0500, Rob Herring wrote:
-> While it seems the reviews of the series caused more warnings for
-> Apple, in general, schemas creating warnings is not breaking things.
-> In a way, the whole point is to create warnings because if the .dts
-> files were perfect already we wouldn't need schemas. The main
-> requirement for schemas is only that they don't create warnings for
-> the examples. There's still too many for .dts files to worry about it
-> (and there's intermittent warnings from things getting merged via
-> different trees).
->=20
 
-Oh, sure, but now if you want to apply the fixes you probably have to
-wait for the broken patches in my tree to percolate all the way through
-to Linus, then back to your tree, and then you can apply the fixes?
+On 2/8/2025 9:04 PM, Dmitry Baryshkov wrote:
+> As a preparation to the next patches convert 'static const char *'
+> arrays to 'static const char * const', as required by the checkpatch.pl
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Seemed it'd be easier to send the fixes to me but it's all your call,
-just let me know what you prefer.
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-johannes
+
+> ---
+>   drivers/gpu/drm/msm/hdmi/hdmi.c | 10 +++++-----
+>   drivers/gpu/drm/msm/hdmi/hdmi.h |  8 ++++----
+>   2 files changed, 9 insertions(+), 9 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> index 248541ff449204c72cd444458dadb9ae4a0a53d1..9e9900882687fa2ae4a734d5cf10b5bae5af2f87 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> @@ -224,17 +224,17 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
+>   	.item ## _names = item ##_names_ ## entry, \
+>   	.item ## _cnt   = ARRAY_SIZE(item ## _names_ ## entry)
+>   
+> -static const char *hpd_reg_names_8960[] = {"core-vdda"};
+> -static const char *hpd_clk_names_8960[] = {"core", "master_iface", "slave_iface"};
+> +static const char * const hpd_reg_names_8960[] = {"core-vdda"};
+> +static const char * const hpd_clk_names_8960[] = {"core", "master_iface", "slave_iface"};
+>   
+>   static const struct hdmi_platform_config hdmi_tx_8960_config = {
+>   		HDMI_CFG(hpd_reg, 8960),
+>   		HDMI_CFG(hpd_clk, 8960),
+>   };
+>   
+> -static const char *pwr_reg_names_8x74[] = {"core-vdda", "core-vcc"};
+> -static const char *pwr_clk_names_8x74[] = {"extp", "alt_iface"};
+> -static const char *hpd_clk_names_8x74[] = {"iface", "core", "mdp_core"};
+> +static const char * const pwr_reg_names_8x74[] = {"core-vdda", "core-vcc"};
+> +static const char * const pwr_clk_names_8x74[] = {"extp", "alt_iface"};
+> +static const char * const hpd_clk_names_8x74[] = {"iface", "core", "mdp_core"};
+>   static unsigned long hpd_clk_freq_8x74[] = {0, 19200000, 0};
+>   
+>   static const struct hdmi_platform_config hdmi_tx_8974_config = {
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
+> index a5f481c39277631b7a19d294b086d6208be26511..381f957b34305494cb4da0b7dccb73b6ac3a1377 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.h
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
+> @@ -84,20 +84,20 @@ struct hdmi {
+>   /* platform config data (ie. from DT, or pdata) */
+>   struct hdmi_platform_config {
+>   	/* regulators that need to be on for hpd: */
+> -	const char **hpd_reg_names;
+> +	const char * const *hpd_reg_names;
+>   	int hpd_reg_cnt;
+>   
+>   	/* regulators that need to be on for screen pwr: */
+> -	const char **pwr_reg_names;
+> +	const char * const *pwr_reg_names;
+>   	int pwr_reg_cnt;
+>   
+>   	/* clks that need to be on for hpd: */
+> -	const char **hpd_clk_names;
+> +	const char * const *hpd_clk_names;
+>   	const long unsigned *hpd_freq;
+>   	int hpd_clk_cnt;
+>   
+>   	/* clks that need to be on for screen pwr (ie pixel clk): */
+> -	const char **pwr_clk_names;
+> +	const char * const *pwr_clk_names;
+>   	int pwr_clk_cnt;
+>   };
+>   
+>
 
