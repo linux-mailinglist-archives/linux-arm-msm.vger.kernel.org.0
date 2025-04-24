@@ -1,158 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-55460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57C34A9B374
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 18:08:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A8CEA9B399
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 18:14:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 929031773AE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:08:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 490C71BA4204
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:13:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04349284686;
-	Thu, 24 Apr 2025 16:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 885592820AA;
+	Thu, 24 Apr 2025 16:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kgFmSeCm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G8d5amNz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E72284679
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 16:07:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B1927FD6A;
+	Thu, 24 Apr 2025 16:13:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745510866; cv=none; b=Cnu1X79WlrsniQ1xs9VHnIMq6nH6MKjk/MMpaWdRdfu2QZ4DI1MMYUkZMkLKdWCZbZJPT0OgMPbFQjp9PbQF3iKRxIhGsgpBGrjlPZ3sUY8qDG6LascvbC+yJotSmoxrw8I4R7ohsTJd/BiAwCprpyvN4ZXiUsomSQYHvtnN7AA=
+	t=1745511201; cv=none; b=k81VwJTk+wsgOrGQEJJMxf+LquTb8hBSbIbX2eCrybVIuejTvX9pXsZk5YxuA/mGxuUA08ACz0f1hP1Wqe/I08ynkrU/0BJtAhbVZ2GfML9DbuC1e/IBik7Iz5zUarrRW0pu4qAbkhMHjC8T4FYKUEwXuslla5p5mYAs0vUT4/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745510866; c=relaxed/simple;
-	bh=t1yw/3IQY04ascExMYNkywVMbYb9sD04RFjXDUub5p0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hJrfQfZnpEsCOVmzdeTMu3THxTU/Rn2arawoSnvct/o7lw8z6GTugME97O9HCX8h+G4n8QaKTHKQXFKg7CSZBizsU3kpafwa0F4p073YAetigndNlp83FsCwqcZr1N/SnxPPxsfH67g4o1WVLf0iQrRhyVSZ6EyBEGPeW1N5ov4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kgFmSeCm; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-224171d6826so19208575ad.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 09:07:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745510865; x=1746115665; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KJu9k3uxYD0x67A2WlM7JrSR4XKb1B7H+/wMYgcPKG4=;
-        b=kgFmSeCmj77PlfxuwEKWnaZNRxDUzuYEKsgYjGDDrQwBd0YKLADe6Riu+wepmYmQzl
-         jw9TQwyZ4PywvFyQU7ARZ5iM0rYd6EXU3ANiRveTK1FEg9XmxmzcAS4DW/P6G/9bPifK
-         qTsi7hZByrO+hzQbQLbETQnBuHu/3t2fBP8RX3puXro7H4mWFxqPidyAEKVknnaHfdsW
-         y2gNhVuUgKXqFwWLkoNdT+qFy8ftD9kWoAUc9D2TJhYBomVaeBvkwk6Wd746HZ8KIU3p
-         k7HawLY8fl274y1c+IWLGWSXh56/+jcVZDfsUkPlKyZFjFKDVhE4RLwdD7+9DjanfFkK
-         POxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745510865; x=1746115665;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KJu9k3uxYD0x67A2WlM7JrSR4XKb1B7H+/wMYgcPKG4=;
-        b=dBlf+xaFfvIH4gQffe0NqLq48157WOB0hMSK50cp2MKaXV/SvXmEapBRgrHx2JFPUi
-         cAH8jwFTYc8rGw2P/QCGcgwcQNsmmuWmww84rCGH1JTeWfbzE1zHG+IfrcTV3sO8KTFL
-         BznCod8iRi0o03oTLWERLH8PAra9D2wKE+E01sDuHwkXqfHtsgrm2tnD/2sVHWnun+fM
-         ONMMdevKXgrWVmla+7grZFAUsY1nAB16pjXCMYzJINwxciH3WO88vQsm/qiLln+ChIkP
-         VqhC6dneH/rgnY5tfJJNUnLPjbNw+CUuX7+YPaxb0PWH8EXTs43RteHDTm/jgd5eAcdM
-         261A==
-X-Forwarded-Encrypted: i=1; AJvYcCU5QBHN9igFKBNq0thlDmAl6xMEhjN4LaR/sSOTuIPGe77/ZAZHMfRxJlaGRrCVkmFSjqW3+Ld2mQXVcyxK@vger.kernel.org
-X-Gm-Message-State: AOJu0YyxS9lxzbzXhx48h8WpoOyo3t3AW+hycsx4GxjONiizzyvgFPVo
-	TRccj6ODOuvC9HmFvG6wSt0IR0oOPw7X+ejWQlyfQT0Y4I1C/otYv5UOlgeUQHRvpGAhQpOc5/o
-	=
-X-Gm-Gg: ASbGnctL3yDgx1WI4PAUo+mcGr+Wmq1YZRz14U++oAFCSiNCRp4s229kEOeZBPkzQc/
-	yAT8HppXN8sB6ZeZnuvRRr1UqeVnIOTRwwrGaMh4tgrgGf/+tnn9P9PZQujRmB66VM+BIf1G6tC
-	VnQRNQu0KyzCuN9JbLP6zNb9gwwcO/cw3nyn7PJ+VmK2aAFFQ1pL0hAuOKxV2lK3/yfLSY1syG/
-	Y8xrjRcx59WScdDIohaDb19sslWxZ04M5tSbzXOVRaibHrFVk1sQEAq6Z2vXk4K1sXwGrgYFXAo
-	nhLTB/ElFMFAJpR+JWA0TMzxOQIMRChLk57GYvrJA+nHHXbZLKbxWZc=
-X-Google-Smtp-Source: AGHT+IF+cEnqtVqlvNmtgTBPOgGaQFGH2iL8KVeET2542DBGluS4OFgyWPgBX3nQcjgRsk8niFLIJA==
-X-Received: by 2002:a17:902:e742:b0:223:f928:4553 with SMTP id d9443c01a7336-22dbd478a8dmr446915ad.44.1745510864595;
-        Thu, 24 Apr 2025 09:07:44 -0700 (PDT)
-Received: from [127.0.1.1] ([120.60.77.160])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22db5221656sm15262275ad.252.2025.04.24.09.07.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 09:07:44 -0700 (PDT)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Date: Thu, 24 Apr 2025 21:37:19 +0530
-Subject: [PATCH v3 4/4] PCI: qcom-ep: Mask PTM_UPDATING interrupt
+	s=arc-20240116; t=1745511201; c=relaxed/simple;
+	bh=v1UxVa+PI6U3L36c4JFEJmFX8DLDGp5S2URvKxvrUsY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=cb6hqraL1pWAJLbEfczfgU8zZaZPUddf77+iQMvYf6Js2kfVzIQvsnssHxr8CH/Zur7K1//P6Zhx3QgH67pYCiqut7uRPTCkD+IZEO7LVZ2GWuMkdYupp0QrxRDscmDAlRav/VfvLrRM016+kpG6/Ai1mQmNfMymPnpehQwm1QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G8d5amNz; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53OC3FRs016629;
+	Thu, 24 Apr 2025 16:12:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	m2fYm5cJk3mUwObfRwx9NEss8EiojDmyTGH8I1ncS7w=; b=G8d5amNzs21FxE6y
+	KWrAAsMNFAZbDf1kD/BAVZQd58v6X9k5w0VnaewapXrwQwlU5YGvK0WYnnTWQHKU
+	1Ez2LwtU3XWJfpPD8Utex/RBvmdJnwyCZYLRfKtP+3sXybiBBPMfLpiMc4gwAdNN
+	HZjI/G4/U85auTHg1WQU46gXDR3rVYIXLDZg2o0FD2JDpIfCzH5HBglaK4omJMbh
+	co5blnxRbVHVKIqxBlgUj1zyrB8rzBCeijVc58jGgdbVs6xOeo67Rinh8pIidWvg
+	cjmPuonkguSsQLMHORRbeVP1Jlk5blsS/9+3AMCXPaPmFBQUcyRP6YsZKse/zV+g
+	AK5MeQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh269h4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Apr 2025 16:12:52 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53OGCpa7014068
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Apr 2025 16:12:51 GMT
+Received: from [10.110.125.18] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 24 Apr
+ 2025 09:12:50 -0700
+Message-ID: <75478fa1-77b9-4e1a-94e1-6907da7b03b8@quicinc.com>
+Date: Thu, 24 Apr 2025 09:12:49 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 00/34] Running Qualcomm's Gunyah Guests via KVM in EL1
+To: Oliver Upton <oliver.upton@linux.dev>,
+        Karim Manaouil
+	<karim.manaouil@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <kvm@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.linux.dev>,
+        Alexander Graf <graf@amazon.com>, Alex Elder
+	<elder@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Fuad Tabba
+	<tabba@google.com>, Joey Gouly <joey.gouly@arm.com>,
+        Jonathan Corbet
+	<corbet@lwn.net>, Marc Zyngier <maz@kernel.org>,
+        Mark Brown
+	<broonie@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+        Paolo Bonzini
+	<pbonzini@redhat.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Quentin Perret <qperret@google.com>, Rob Herring <robh@kernel.org>,
+        "Srinivas
+ Kandagatla" <srini@kernel.org>,
+        Srivatsa Vaddagiri
+	<quic_svaddagi@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Haripranesh S
+	<haripran@qti.qualcomm.com>,
+        Carl van Schaik <cvanscha@qti.qualcomm.com>,
+        Murali Nalajala <mnalajal@quicinc.com>,
+        Sreenivasulu Chalamcharla
+	<sreeniva@qti.qualcomm.com>,
+        Trilok Soni <tsoni@quicinc.com>,
+        Stefan Schmidt
+	<stefan.schmidt@linaro.org>
+References: <20250424141341.841734-1-karim.manaouil@linaro.org>
+ <aApaGnFPhsWBZoQ2@linux.dev>
+Content-Language: en-US
+From: Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <aApaGnFPhsWBZoQ2@linux.dev>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250424-pcie-ptm-v3-4-c929ebd2821c@linaro.org>
-References: <20250424-pcie-ptm-v3-0-c929ebd2821c@linaro.org>
-In-Reply-To: <20250424-pcie-ptm-v3-0-c929ebd2821c@linaro.org>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
- Jingoo Han <jingoohan1@gmail.com>
-Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1764;
- i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=t1yw/3IQY04ascExMYNkywVMbYb9sD04RFjXDUub5p0=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBoCmG/edV1s5zz7dUXotOLnVSoJ9f/l51DOl3bM
- CHdo33fe6eJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaAphvwAKCRBVnxHm/pHO
- 9QhXB/9KUDzr7Mex0zOAHucAJbxPOHMb886ePHgYIhd/So41Wf78Zzi0EOcvoPVe3FHikLzMWZG
- b8G76iKhkbFK0LHcOQFVWtQE/3blacVpV7/mNNoOwwVm+MaFxqE5S3dy3pHENBL4Kpvs2Rj8Z85
- rz3zTQX88e89h1dQGLXnp0C42qOVC3aHeC0YwZFJ0ktiFF0kfzoSar2gm9ShTdj0SohZWQxkrjC
- Y9Yw+VKhtSJRvtsMQTt0ph4pdeExmYq8ThjLYx6r9SeuuZMideNEup+clZ53bWBpbinqZv0HvDu
- pP3226Y5UReU1SB6zqCv42FKelMwz34UaMmmmjY8NZ3x4Wxo
-X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=EtLSrTcA c=1 sm=1 tr=0 ts=680a6304 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=Is-ihHZF1yIjBAXmSsYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 55dCfyNhftS-2YWHt7GAvMiwMYPx2D9y
+X-Proofpoint-ORIG-GUID: 55dCfyNhftS-2YWHt7GAvMiwMYPx2D9y
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDExMSBTYWx0ZWRfX61Lzpnir4GvW a7cJmVamFUabluoXWJ6BK2jcPXgg8kFSeQB7lNLcwVqiipHU5Zf0tYtXokJQrxkGd6vdibMRhB3 +yjk7k61b5guLM61T85iaBo6G8cV2sUcJJOx7fUBr3SCwMlvuhr3GtFB9p4BavDvZ8/YNxl7Pv4
+ kfSNAiRreWxvN172yqBYFAfnV1754cBD99jrHuegQ0jkI4Ll84JPhMmfPNDb7VVHApmwosGglCl xBBSC5iniMlR9SNTAbpJ3ohBJMtK/0GXLGUIGr2vorM8E1q++3zIhhvn11yTx7nRa7KbRc8hX+c lWN1fbyqbymnzA/mBEFdz2TS9Ip+QCaA1Cg7nRj5clGzbIcoft9O7IRhVQE9n+xBr8XxAtoNhXj
+ Z7AsCEHlqKWVM+yCKYEEBCT9nrP330P7C1RUDo2Wrp9PNiQSdx4OQpMhXJR5Yj35/lSyy5S6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-24_07,2025-04-24_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ suspectscore=0 mlxscore=0 clxscore=1011 spamscore=0 mlxlogscore=862
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
+ adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504240111
 
-When PTM is enabled, PTM_UPDATING interrupt will be fired for each PTM
-context update, which will be once every 10ms in the case of auto context
-update. Since the interrupt is not strictly needed for making use of PTM,
-mask it to avoid the overhead of processing it.
+On 4/24/2025 8:34 AM, Oliver Upton wrote:
+> On Thu, Apr 24, 2025 at 03:13:07PM +0100, Karim Manaouil wrote:
+>> This series introduces the capability of running Gunyah guests via KVM on
+>> Qualcomm SoCs shipped with Gunyah hypervisor [1] (e.g. RB3 Gen2).
+>>
+>> The goal of this work is to port the existing Gunyah hypervisor support from a
+>> standalone driver interface [2] to KVM, with the aim of leveraging as much of the
+>> existing KVM infrastructure as possible to reduce duplication of effort around
+>> memory management (e.g. guest_memfd), irqfd, and other core components.
+>>
+>> In short, Gunyah is a Type-1 hypervisor, meaning that it runs independently of any
+>> high-level OS kernel such as Linux and runs in a higher CPU privilege level than VMs.
+>> Gunyah is shipped as firmware and guests typically talk with Gunyah via hypercalls.
+>> KVM is designed to run as Type-2 hypervisor. This port allows KVM to run in EL1 and
+>> serve as the interface for VM lifecycle management,while offloading virtualization
+>> to Gunyah.
+> 
+> If you're keen on running your own hypervisor then I'm sorry, you get to
+> deal with it soup to nuts. Other hypervisors (e.g. mshv) have their own
+> kernel drivers for managing the host / UAPI parts of driving VMs.
+> 
+> The KVM arch interface is *internal* to KVM, not something to be
+> (ab)used for cramming in a non-KVM hypervisor. KVM and other hypervisors
+> can still share other bits of truly common infrastructure, like
+> guest_memfd.
+> 
+> I understand the value in what you're trying to do, but if you want it
+> to smell like KVM you may as well just let the user run it at EL2.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom-ep.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index 46b1c6d19974a5161c8567ece85750c7b0a270b4..9270429501ae1fbff7ece155af7c735216b61e1d 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -60,6 +60,7 @@
- #define PARF_DEVICE_TYPE			0x1000
- #define PARF_BDF_TO_SID_CFG			0x2c00
- #define PARF_INT_ALL_5_MASK			0x2dcc
-+#define PARF_INT_ALL_3_MASK			0x2e18
- 
- /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
- #define PARF_INT_ALL_LINK_DOWN			BIT(1)
-@@ -132,6 +133,9 @@
- /* PARF_INT_ALL_5_MASK fields */
- #define PARF_INT_ALL_5_MHI_RAM_DATA_PARITY_ERR	BIT(0)
- 
-+/* PARF_INT_ALL_3_MASK fields */
-+#define PARF_INT_ALL_3_PTM_UPDATING		BIT(4)
-+
- /* ELBI registers */
- #define ELBI_SYS_STTS				0x08
- #define ELBI_CS2_ENABLE				0xa4
-@@ -497,6 +501,10 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
- 		writel_relaxed(val, pcie_ep->parf + PARF_INT_ALL_5_MASK);
- 	}
- 
-+	val = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_3_MASK);
-+	val &= ~PARF_INT_ALL_3_PTM_UPDATING;
-+	writel_relaxed(val, pcie_ep->parf + PARF_INT_ALL_3_MASK);
-+
- 	ret = dw_pcie_ep_init_registers(&pcie_ep->pci.ep);
- 	if (ret) {
- 		dev_err(dev, "Failed to complete initialization: %d\n", ret);
+I agree, this is not the approach Qualcomm would like to use. Our approach
+will be similar to Elliot Berman's patches (v17). We will revive
+that series once Faud's patches are accepted on guest_memfd. 
 
 -- 
-2.43.0
-
+---Trilok Soni
 
