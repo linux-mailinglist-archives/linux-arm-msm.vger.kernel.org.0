@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-55338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A45CA9A872
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 11:41:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93F9EA9A861
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 11:40:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 177603B4D09
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 09:40:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 899E41B8449F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 09:40:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C22E322B8CB;
-	Thu, 24 Apr 2025 09:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C50522ACDC;
+	Thu, 24 Apr 2025 09:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fB/eYvah"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mwMO12kQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AF222A4FA;
-	Thu, 24 Apr 2025 09:33:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A9522170B;
+	Thu, 24 Apr 2025 09:33:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745487231; cv=none; b=RKnPMovfbbGUh2JjeXqICGb1ZOTT4TrRfjdSAu+VOkwwLyFp60rrm1+chbIK4o+jKyc8IyHWsvaOW7TJAEsZM9CAMVGy6zen8H9+KvB/54Vr/v6TvsHI7qaK32V+a7i2sVlGaORkgLozpuz9DN/7IfJd9J9LcDbWrpaGElTsXhA=
+	t=1745487230; cv=none; b=OqBrAe2Bxwn7dXyrrUywJmppWK8WQwk4EC4D13ECaKsrHiEKEm0kkz8zTUAWuKTubqDFF+4DBOZRioerlfhkastfnQv5IiNACa318PEifyYZObXC0zU4BHMe+/EQ/4xEVbMuaUGDabRJNyEXc0cbzPIhmMfqujTG6GNg+jyzbSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745487231; c=relaxed/simple;
-	bh=C0G/qfTm57wDnzcImkUhrPC6lDm7eqDsvwY0wmeJVs0=;
+	s=arc-20240116; t=1745487230; c=relaxed/simple;
+	bh=Ih7yatEZ5OP8KnZ0NsI6LTqEg8LXhlhkUAv1BURyzb4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=kXysxXrVo0L3OEYOzGAIOsamhwjhfS23CKX7r4P/Zrm1yg8E4ZlOk6XrE+YCPdwAMv8MtOpywpiJBq3hpztCTntq3Nmg3sX4ZdpWgctyeJPQw32L76xS3zxBj2f377Syw/Pg8t63B1CoWa6I9IiFsYMQHfijUZxqieMmdbLMEsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fB/eYvah; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:CC; b=P3aENNzepDf+NVC/PU4GXnu+HndkDnv4Aitrwzr0rbJ0qB/GIZPr8htQ8Q5u7e54IEstHayjomVM+2lkjx0pUWnToqUzm7YmSpCntoULl1kr6zjj8lDPnGb8S2LuS4XFdZO/hvRA4wRxkq3Pn47QS7jL0oxcq5xIvAXtFTd34Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mwMO12kQ; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53O0FACA005881;
-	Thu, 24 Apr 2025 09:33:33 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53O0FCgN000760;
+	Thu, 24 Apr 2025 09:33:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	DzuiVY5QgFLTpZg0beJVsjggRLwWgglUkSxevfV1ax8=; b=fB/eYvahgJm20wE5
-	zbMyr82Dui4pqDSDzmUY6SoEyNT/90ecgfwBb3u9TytBHSJgirh8QYh/nzC1tcyq
-	zbt961Rp2kwjlXyVS3Gi0pWd/9A+Pw7A0JpgDwQMRSMGUEHvCDLDvcMWhCpQCsvR
-	pgkyjPcRCnjH4StuGacHqI2vAaqhrl/88sXKNZnwN7cE4D0roS8LgM8vztja8aKZ
-	vSEpvWWpNVy6+Di8AalHMYtXdssQchK+IJ4vBaKzjxOD3t03/I36Uwr47M2vssD0
-	ySq/6kGR1t3i/VYKRozb8ReHeQNHGBCdE4S0Znzdq0I3JVA8+JOtRcjPCCk+PIk/
-	6d5JTA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh050gw-1
+	/g7WrsxRuOLV6+MKUoXVAWLPERPpM9CUzTGlkHlKMx0=; b=mwMO12kQLF65vlG8
+	gnzJ6tuv/BwtoI/mtDZNG8OhlqA17s0ml5UONgz2vVIHDIUfkq6ToVBFfNCsLGml
+	u9hLxI3nlYzyBer2+og+FwBbhq2dSP3ry1vwRAJXsuezna92s3yAI/jfsPoTHun2
+	Wer0D9BKW5MbzaNeXwIxSQA5sm/P36/HcYdFxAmI+1yvsohoIGINAwHhOTRKA8rM
+	lNJ1S93eN1JuT2WJfLg6yQXfu8g7Dxs3HHMJTIDwyM0CwLGkcnajEFrY7jYS4pQ3
+	CpmcMy6pEPmftQ2m4t1CvdF1UDAblDtxpXjySH4Tgl69Eq4mLcREID8jnNk7EYmc
+	1ZVbPA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh3cys0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 24 Apr 2025 09:33:32 +0000 (GMT)
+	Thu, 24 Apr 2025 09:33:37 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53O9XV9q028413
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53O9Xac0009021
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 24 Apr 2025 09:33:31 GMT
+	Thu, 24 Apr 2025 09:33:36 GMT
 Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 24 Apr 2025 02:33:26 -0700
+ 15.2.1544.9; Thu, 24 Apr 2025 02:33:31 -0700
 From: Taniya Das <quic_tdas@quicinc.com>
-Date: Thu, 24 Apr 2025 15:02:56 +0530
-Subject: [PATCH v8 01/10] clk: qcom: clk-alpha-pll: Add support for dynamic
- update for slewing PLLs
+Date: Thu, 24 Apr 2025 15:02:57 +0530
+Subject: [PATCH v8 02/10] dt-bindings: clock: Add Qualcomm QCS615 Camera
+ clock controller
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250424-qcs615-mm-v7-clock-controllers-v8-1-bacad5b3659a@quicinc.com>
+Message-ID: <20250424-qcs615-mm-v7-clock-controllers-v8-2-bacad5b3659a@quicinc.com>
 References: <20250424-qcs615-mm-v7-clock-controllers-v8-0-bacad5b3659a@quicinc.com>
 In-Reply-To: <20250424-qcs615-mm-v7-clock-controllers-v8-0-bacad5b3659a@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -95,224 +95,197 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDA2MyBTYWx0ZWRfX93tStydGR+qg Wm83GoYPwIEDVwBYg00WiZc79uQssxs5PRAsUywoFd4SKVy+8Icq+R0jVToYwtcGT4T1ZQDRT9Y KJrLNh+1xS25wkhZw7oaCGPzqYqAV9cZWJj/10tRO3rCyOjg91oFO++vh7EcQqi7rbfEq95HkiC
- sLj3J9WVLVgTScKjrvRFae/tasgUQDALcObLT2e6jWyHNZTVTe/hy5Uo7HEF0/Se2jMveTTC5Rt BWUCmMFhKgsJmXZJjENRh+Nx9sCnw0YH4lugUQM0O3EznZAQWG0GtFx6CWPfGmP0lvQkLEVAvXs AsKUPiDakENg8/rmV8plDJRaTiSHG5nWrafEPc6YuWdxHOG3ty7BkivoTmGL0el7WMfxMbnXqyL
- /WfkEC4iW4XJ2aZf0jCpeY36dqD9W+V+9AXAmIetBNdT1CUenVqptTCQdMnqpQSzEEWjbwzm
-X-Proofpoint-GUID: rIqH_2XEJCFY6hXwKntPAwRSAAuJd_AL
-X-Authority-Analysis: v=2.4 cv=ZuTtK87G c=1 sm=1 tr=0 ts=680a056c cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=mqrKFzemJvgpN0bEk_AA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: rIqH_2XEJCFY6hXwKntPAwRSAAuJd_AL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDA2MyBTYWx0ZWRfX1KKipsM6Iv5H JxTlEDlV8cGIh/DdeRZM9vHhIO+Ty31lCN+PHJy+abzEkuA6tIvtvtS4EqhqTuUJKd2Cv7YrCyn kScowhsW1KdRe+zmVfk8BE8j3ANIZhoAWr3DCABP9C85fvmyTm9ep2LtcRnLcDw5nJmqrT8MK+J
+ GnujepXSMJ0d1lvgT9NmTvn75X0WrOB0PtlbP2y5QPRzB4UtlyrK1AhWliJwJMOVHMjrKiz2/TL wiT6wgDz+J3v/rqZzaLX1fuPwFF4Huj2Qop+f4XpH0zC+VV+OHLj/YxFRmqUQETUDmCc7g31xsL LupjwZxZfhpob+QU+02chborCrDWSYIk+OTEKwtXHyrzgXylwinAdUy9KzliUwP5kTryx2HaEM0
+ up4EJEG5w+OawF3zxUHdk/HQMMBlF7MFRJB7ADD/qeIRENd6NtOrhryYh7LO+raiG1roTIbA
+X-Authority-Analysis: v=2.4 cv=bs1MBFai c=1 sm=1 tr=0 ts=680a0571 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=gEfo2CItAAAA:8 a=COk6AnOGAAAA:8 a=Ql2orbCSbd2v8qn6OVgA:9
+ a=QEXdDO2ut3YA:10 a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: rTIhs0VKP__fStlPtDqTq1vVEq575cTS
+X-Proofpoint-GUID: rTIhs0VKP__fStlPtDqTq1vVEq575cTS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.680,FMLib:17.12.80.40
  definitions=2025-04-24_04,2025-04-22_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 mlxscore=0 adultscore=0 lowpriorityscore=0
- mlxlogscore=999 priorityscore=1501 malwarescore=0 suspectscore=0
- spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=999 mlxscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 impostorscore=0 malwarescore=0
+ clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
  definitions=main-2504240063
 
-The alpha PLLs which slew to a new frequency at runtime would require
-the PLL to calibrate at the mid point of the VCO. Add the new PLL ops
-which can support the slewing of the PLL to a new frequency.
+Add DT bindings for the Camera clock on QCS615 platforms. Add the
+relevant DT include definitions as well.
 
-Reviewed-by: Imran Shaik <quic_imrashai@quicinc.com>
 Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 170 +++++++++++++++++++++++++++++++++++++++
- drivers/clk/qcom/clk-alpha-pll.h |   1 +
- 2 files changed, 171 insertions(+)
+ .../bindings/clock/qcom,qcs615-camcc.yaml          |  43 ++++++++
+ include/dt-bindings/clock/qcom,qcs615-camcc.h      | 110 +++++++++++++++++++++
+ 2 files changed, 153 insertions(+)
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index cec0afea8e446010f0d4140d4ef63121706dde47..5e4a755b849970281e7742ef83219b7eeaa406c3 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -2960,3 +2960,173 @@ const struct clk_ops clk_alpha_pll_regera_ops = {
- 	.set_rate = clk_zonda_pll_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_regera_ops);
+diff --git a/Documentation/devicetree/bindings/clock/qcom,qcs615-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,qcs615-camcc.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..2b811e66d406c16c70004bb3a9fce294422a5914
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,qcs615-camcc.yaml
+@@ -0,0 +1,43 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,qcs615-camcc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+static int clk_alpha_pll_slew_update(struct clk_alpha_pll *pll)
-+{
-+	int ret;
-+	u32 val;
++title: Qualcomm Camera Clock & Reset Controller on QCS615
 +
-+	regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_UPDATE, PLL_UPDATE);
-+	regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val);
++maintainers:
++  - Taniya Das <quic_tdas@quicinc.com>
 +
-+	ret = wait_for_pll_update(pll);
-+	if (ret)
-+		return ret;
-+	/*
-+	 * Hardware programming mandates a wait of at least 570ns before polling the LOCK
-+	 * detect bit. Have a delay of 1us just to be safe.
-+	 */
-+	mb();
-+	udelay(1);
++description: |
++  Qualcomm camera clock control module provides the clocks, resets and power
++  domains on QCS615.
 +
-+	return wait_for_pll_enable_lock(pll);
-+}
++  See also: include/dt-bindings/clock/qcom,qcs615-camcc.h
 +
-+static int clk_alpha_pll_slew_set_rate(struct clk_hw *hw, unsigned long rate,
-+					unsigned long parent_rate)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	unsigned long freq_hz;
-+	const struct pll_vco *curr_vco, *vco;
-+	u32 l;
-+	u64 a;
++properties:
++  compatible:
++    const: qcom,qcs615-camcc
 +
-+	freq_hz = alpha_pll_round_rate(rate, parent_rate, &l, &a, ALPHA_REG_BITWIDTH);
-+	if (freq_hz != rate) {
-+		pr_err("alpha_pll: Call clk_set_rate with rounded rates!\n");
-+		return -EINVAL;
-+	}
++  clocks:
++    items:
++      - description: Board XO source
 +
-+	curr_vco = alpha_pll_find_vco(pll, clk_hw_get_rate(hw));
-+	if (!curr_vco) {
-+		pr_err("alpha pll: not in a valid vco range\n");
-+		return -EINVAL;
-+	}
++allOf:
++  - $ref: qcom,gcc.yaml#
 +
-+	vco = alpha_pll_find_vco(pll, freq_hz);
-+	if (!vco) {
-+		pr_err("alpha pll: not in a valid vco range\n");
-+		return -EINVAL;
-+	}
++unevaluatedProperties: false
 +
-+	/*
-+	 * Dynamic pll update will not support switching frequencies across
-+	 * vco ranges. In those cases fall back to normal alpha set rate.
-+	 */
-+	if (curr_vco->val != vco->val)
-+		return clk_alpha_pll_set_rate(hw, rate, parent_rate);
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    clock-controller@ad00000 {
++      compatible = "qcom,qcs615-camcc";
++      reg = <0xad00000 0x10000>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>;
 +
-+	a <<= ALPHA_REG_BITWIDTH - ALPHA_BITWIDTH;
-+
-+	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
-+	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), lower_32_bits(a));
-+	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll), upper_32_bits(a));
-+
-+	/* Ensure that the write above goes before slewing the PLL */
-+	mb();
-+
-+	if (clk_hw_is_enabled(hw))
-+		return clk_alpha_pll_slew_update(pll);
-+
-+	return 0;
-+}
-+
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,qcs615-camcc.h b/include/dt-bindings/clock/qcom,qcs615-camcc.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..aec57dddc06735a5c6c48a1e93a8c498bdb8726a
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,qcs615-camcc.h
+@@ -0,0 +1,110 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
 +/*
-+ * Slewing plls should be bought up at frequency which is in the middle of the
-+ * desired VCO range. So after bringing up the pll at calibration freq, set it
-+ * back to desired frequency(that was set by previous clk_set_rate).
++ * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
 + */
-+static int clk_alpha_pll_calibrate(struct clk_hw *hw)
-+{
-+	unsigned long calibration_freq, freq_hz;
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	struct clk_hw *parent;
-+	const struct pll_vco *vco;
-+	u32 l;
-+	int rc;
-+	u64 a;
 +
-+	parent = clk_hw_get_parent(hw);
-+	if (!parent) {
-+		pr_err("alpha pll: no valid parent found\n");
-+		return -EINVAL;
-+	}
++#ifndef _DT_BINDINGS_CLK_QCOM_CAM_CC_QCS615_H
++#define _DT_BINDINGS_CLK_QCOM_CAM_CC_QCS615_H
 +
-+	vco = alpha_pll_find_vco(pll, clk_hw_get_rate(hw));
-+	if (!vco) {
-+		pr_err("alpha pll: not in a valid vco range\n");
-+		return -EINVAL;
-+	}
++/* CAM_CC clocks */
++#define CAM_CC_BPS_AHB_CLK					0
++#define CAM_CC_BPS_AREG_CLK					1
++#define CAM_CC_BPS_AXI_CLK					2
++#define CAM_CC_BPS_CLK						3
++#define CAM_CC_BPS_CLK_SRC					4
++#define CAM_CC_CAMNOC_ATB_CLK					5
++#define CAM_CC_CAMNOC_AXI_CLK					6
++#define CAM_CC_CCI_CLK						7
++#define CAM_CC_CCI_CLK_SRC					8
++#define CAM_CC_CORE_AHB_CLK					9
++#define CAM_CC_CPAS_AHB_CLK					10
++#define CAM_CC_CPHY_RX_CLK_SRC					11
++#define CAM_CC_CSI0PHYTIMER_CLK					12
++#define CAM_CC_CSI0PHYTIMER_CLK_SRC				13
++#define CAM_CC_CSI1PHYTIMER_CLK					14
++#define CAM_CC_CSI1PHYTIMER_CLK_SRC				15
++#define CAM_CC_CSI2PHYTIMER_CLK					16
++#define CAM_CC_CSI2PHYTIMER_CLK_SRC				17
++#define CAM_CC_CSIPHY0_CLK					18
++#define CAM_CC_CSIPHY1_CLK					19
++#define CAM_CC_CSIPHY2_CLK					20
++#define CAM_CC_FAST_AHB_CLK_SRC					21
++#define CAM_CC_ICP_ATB_CLK					22
++#define CAM_CC_ICP_CLK						23
++#define CAM_CC_ICP_CLK_SRC					24
++#define CAM_CC_ICP_CTI_CLK					25
++#define CAM_CC_ICP_TS_CLK					26
++#define CAM_CC_IFE_0_AXI_CLK					27
++#define CAM_CC_IFE_0_CLK					28
++#define CAM_CC_IFE_0_CLK_SRC					29
++#define CAM_CC_IFE_0_CPHY_RX_CLK				30
++#define CAM_CC_IFE_0_CSID_CLK					31
++#define CAM_CC_IFE_0_CSID_CLK_SRC				32
++#define CAM_CC_IFE_0_DSP_CLK					33
++#define CAM_CC_IFE_1_AXI_CLK					34
++#define CAM_CC_IFE_1_CLK					35
++#define CAM_CC_IFE_1_CLK_SRC					36
++#define CAM_CC_IFE_1_CPHY_RX_CLK				37
++#define CAM_CC_IFE_1_CSID_CLK					38
++#define CAM_CC_IFE_1_CSID_CLK_SRC				39
++#define CAM_CC_IFE_1_DSP_CLK					40
++#define CAM_CC_IFE_LITE_CLK					41
++#define CAM_CC_IFE_LITE_CLK_SRC					42
++#define CAM_CC_IFE_LITE_CPHY_RX_CLK				43
++#define CAM_CC_IFE_LITE_CSID_CLK				44
++#define CAM_CC_IFE_LITE_CSID_CLK_SRC				45
++#define CAM_CC_IPE_0_AHB_CLK					46
++#define CAM_CC_IPE_0_AREG_CLK					47
++#define CAM_CC_IPE_0_AXI_CLK					48
++#define CAM_CC_IPE_0_CLK					49
++#define CAM_CC_IPE_0_CLK_SRC					50
++#define CAM_CC_JPEG_CLK						51
++#define CAM_CC_JPEG_CLK_SRC					52
++#define CAM_CC_LRME_CLK						53
++#define CAM_CC_LRME_CLK_SRC					54
++#define CAM_CC_MCLK0_CLK					55
++#define CAM_CC_MCLK0_CLK_SRC					56
++#define CAM_CC_MCLK1_CLK					57
++#define CAM_CC_MCLK1_CLK_SRC					58
++#define CAM_CC_MCLK2_CLK					59
++#define CAM_CC_MCLK2_CLK_SRC					60
++#define CAM_CC_MCLK3_CLK					61
++#define CAM_CC_MCLK3_CLK_SRC					62
++#define CAM_CC_PLL0						63
++#define CAM_CC_PLL1						64
++#define CAM_CC_PLL2						65
++#define CAM_CC_PLL2_OUT_AUX2					66
++#define CAM_CC_PLL3						67
++#define CAM_CC_SLOW_AHB_CLK_SRC					68
++#define CAM_CC_SOC_AHB_CLK					69
++#define CAM_CC_SYS_TMR_CLK					70
 +
-+	/*
-+	 * As during slewing plls vco_sel won't be allowed to change, vco table
-+	 * should have only one entry table, i.e. index = 0, find the
-+	 * calibration frequency.
-+	 */
-+	calibration_freq = (pll->vco_table[0].min_freq + pll->vco_table[0].max_freq) / 2;
++/* CAM_CC power domains */
++#define BPS_GDSC						0
++#define IFE_0_GDSC						1
++#define IFE_1_GDSC						2
++#define IPE_0_GDSC						3
++#define TITAN_TOP_GDSC						4
 +
-+	freq_hz = alpha_pll_round_rate(calibration_freq, clk_hw_get_rate(parent),
-+					&l, &a, ALPHA_REG_BITWIDTH);
-+	if (freq_hz != calibration_freq) {
-+		pr_err("alpha_pll: call clk_set_rate with rounded rates!\n");
-+		return -EINVAL;
-+	}
++/* CAM_CC resets */
++#define CAM_CC_BPS_BCR						0
++#define CAM_CC_CAMNOC_BCR					1
++#define CAM_CC_CCI_BCR						2
++#define CAM_CC_CPAS_BCR						3
++#define CAM_CC_CSI0PHY_BCR					4
++#define CAM_CC_CSI1PHY_BCR					5
++#define CAM_CC_CSI2PHY_BCR					6
++#define CAM_CC_ICP_BCR						7
++#define CAM_CC_IFE_0_BCR					8
++#define CAM_CC_IFE_1_BCR					9
++#define CAM_CC_IFE_LITE_BCR					10
++#define CAM_CC_IPE_0_BCR					11
++#define CAM_CC_JPEG_BCR						12
++#define CAM_CC_LRME_BCR						13
++#define CAM_CC_MCLK0_BCR					14
++#define CAM_CC_MCLK1_BCR					15
++#define CAM_CC_MCLK2_BCR					16
++#define CAM_CC_MCLK3_BCR					17
++#define CAM_CC_TITAN_TOP_BCR					18
 +
-+	/* Setup PLL for calibration frequency */
-+	a <<= (ALPHA_REG_BITWIDTH - ALPHA_BITWIDTH);
-+
-+	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
-+	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), lower_32_bits(a));
-+	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll), upper_32_bits(a));
-+
-+	regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll), PLL_VCO_MASK << PLL_VCO_SHIFT,
-+				vco->val << PLL_VCO_SHIFT);
-+
-+	/* Bringup the pll at calibration frequency */
-+	rc = clk_alpha_pll_enable(hw);
-+	if (rc) {
-+		pr_err("alpha pll calibration failed\n");
-+		return rc;
-+	}
-+
-+	/*
-+	 * PLL is already running at calibration frequency.
-+	 * So slew pll to the previously set frequency.
-+	 */
-+	freq_hz = alpha_pll_round_rate(clk_hw_get_rate(hw),
-+			clk_hw_get_rate(parent), &l, &a, ALPHA_REG_BITWIDTH);
-+
-+	pr_debug("pll %s: setting back to required rate %lu, freq_hz %ld\n",
-+		clk_hw_get_name(hw), clk_hw_get_rate(hw), freq_hz);
-+
-+	/* Setup the PLL for the new frequency */
-+	a <<= (ALPHA_REG_BITWIDTH - ALPHA_BITWIDTH);
-+
-+	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
-+	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), lower_32_bits(a));
-+	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll), upper_32_bits(a));
-+
-+	regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll), PLL_ALPHA_EN, PLL_ALPHA_EN);
-+
-+	return clk_alpha_pll_slew_update(pll);
-+}
-+
-+static int clk_alpha_pll_slew_enable(struct clk_hw *hw)
-+{
-+	int rc;
-+
-+	rc = clk_alpha_pll_calibrate(hw);
-+	if (rc)
-+		return rc;
-+
-+	return clk_alpha_pll_enable(hw);
-+}
-+
-+const struct clk_ops clk_alpha_pll_slew_ops = {
-+	.enable = clk_alpha_pll_slew_enable,
-+	.disable = clk_alpha_pll_disable,
-+	.recalc_rate = clk_alpha_pll_recalc_rate,
-+	.round_rate = clk_alpha_pll_round_rate,
-+	.set_rate = clk_alpha_pll_slew_set_rate,
-+};
-+EXPORT_SYMBOL(clk_alpha_pll_slew_ops);
-diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-index 79aca8525262211ae5295245427d4540abf1e09a..1d19001605eb10fd8ae8041c56d951e928cbbe9f 100644
---- a/drivers/clk/qcom/clk-alpha-pll.h
-+++ b/drivers/clk/qcom/clk-alpha-pll.h
-@@ -204,6 +204,7 @@ extern const struct clk_ops clk_alpha_pll_rivian_evo_ops;
- #define clk_alpha_pll_postdiv_rivian_evo_ops clk_alpha_pll_postdiv_fabia_ops
- 
- extern const struct clk_ops clk_alpha_pll_regera_ops;
-+extern const struct clk_ops clk_alpha_pll_slew_ops;
- 
- void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 			     const struct alpha_pll_config *config);
++#endif
 
 -- 
 2.34.1
