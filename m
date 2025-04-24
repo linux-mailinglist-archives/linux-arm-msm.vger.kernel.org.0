@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-55410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7AA5A9B062
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:16:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B63BA9B067
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:16:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D5E9F4A3EA6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:16:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 258991B83B60
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:16:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87A2627FD55;
-	Thu, 24 Apr 2025 14:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5F6C280CDC;
+	Thu, 24 Apr 2025 14:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YyLEy0uC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NHz03KRf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A8325A65F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:13:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F3027D78C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:13:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745504037; cv=none; b=Xf4gmako7QbcwVpNrAvm1HeZ3R0J+DsP6jOEbRMSpsqCO7bTJYOlmoShWbIpVtF8HZ63mtoveeSwlfUOsQWtXzpDdYOGuvhPsrjuq7Hi+ssmZS2q0J9mc/CwmmtmpbDXSIV7q+R1cLy5JpOmBHxihwgLjuSw8pfwpB81BzPYLLc=
+	t=1745504038; cv=none; b=BQMzQkWowipzdtW28eiSRfOo+wIIAraCSISlpGLCLWjCsGD6J3wXjXbZ2NODq9mI+9B8pCbpQDzDENBog+QWGUBrnH4X3SVBtKpvc3SYpsULEGkD98kZ4+iN0rObNhdThQaJzRxTHaVNaFhbxQnaWW0NzjTJEVBRVZByaCeUauA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745504037; c=relaxed/simple;
-	bh=62G1u7Mmcj0LoLg/GsZOxRpsdU6hf0LcgEiDACKmXjQ=;
+	s=arc-20240116; t=1745504038; c=relaxed/simple;
+	bh=mRPK+89hbVEkRoZvoKf3k11XmtiTEyAylGP5LEAOcB4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rpm8l0EDvFeWRDvxROo9+TkOJ+lV5DLc1Seu0Phcy5gtClJdpBi/HiiqkSIdrWgIcDls1lgIOuDRr+0/pSqBljH0I2LQsq2fO84wr/hkZestEKLt+a98GssOXETSSIYFlAGWTibh+BnufwykfZdK3VBJLNqMpDkMl5/zdV0e5q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YyLEy0uC; arc=none smtp.client-ip=209.85.221.53
+	 MIME-Version; b=d++hSWMHPl9qkEWX7p4BW86bwew8jxGeiepTqmbKCKoWImhc/IZU8De1VFnaKm3QBnJB3dN50yhlCTXYg7xNsVZxQ0KFr7niK6jn7VSvrZHdqaHWDmUk+ADaI2JOZYqwIv3f0yz2c6fko5G+acddGY77PMEky3mMdgMUVPV+/a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NHz03KRf; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-39d83782ef6so1647886f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:13:53 -0700 (PDT)
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3913d129c1aso753236f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:13:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745504031; x=1746108831; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1745504033; x=1746108833; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BvSif0ZiFcbo45REElIUdI7xtRbISNuAr1Y97HbCqdI=;
-        b=YyLEy0uC+aKHIkM4oaNNOOvTEZxl/5B4cXMJWSiA5CH0VKETdRs1XxMP9euG6CgE2e
-         Z23rgG1SUAKMC/rdVHWjNbC+XWmyfueGcOirkOcsGMCQPLCujAKCkPge1SHWgctMolRg
-         VsK7AbhITHdDJZ/mZTkqKU2opmMA5akZbn1I1JWbXeLTDgeuLCR+bqweC7o3r8fqG0JP
-         rvxIZ6AW6JAFEQIIudhQnHCQgdgEg6zG4+kSRQJN8FbIPXzyGwglOHS25g10OTkEfunL
-         lbyuyS6pqq7X1Q8tQ/K+fZGkXN0vkHcZtBXrR60SkIIevTg4zC9iJj8ScVY3BHkXRwUW
-         mzag==
+        bh=8jfERcd+/8hI2lWUkL6Z3PV6Xql42InuHmm1RJaBik0=;
+        b=NHz03KRfKRU1ydrBTpF950pSDo/fHHj/qFQsZBAH0nAr4J9XrBebUanz4RG0Ixizpb
+         zizFOX7Vu6tkDrj2qPw3CD+XTvSRf647mi6yu15W/sUo85Ma/WYJ03VBSbAyl3QveuSj
+         y+rNVChsDvDU1Owq9C37MZKVnLhZcFMRtLzhu9lxwqU4fxn2gQzaTp0qmCCwCCdkyUob
+         GKkWZ9icDjECa2TnEhe8KvnOI/31ftMaK1j05MmE06f1oYp23/LsxAb0xjpcv5N66sz+
+         xsWF4R4435th0RzZhvo28yWhWepgCqYIkW7Is/iTl37ZQJa/SEUSfIzKb2Tm1RJkuXbn
+         BUjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745504031; x=1746108831;
+        d=1e100.net; s=20230601; t=1745504033; x=1746108833;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BvSif0ZiFcbo45REElIUdI7xtRbISNuAr1Y97HbCqdI=;
-        b=hX8n9gr/7pQ2NPvF3U2yVlX8zs3TjfV2ivfOo+qXEg1gJGl6EaXRR4NnjtG20U5GHB
-         9U+92vJMH8VOORA1XnqfnmzWoh7VbaTrgk23lz6V3FEcx/Qczb0V5sTqscPS6yoLUZTf
-         4ruDVfDF5IMmWWF8PZrKxnXX1JlTzBh+D9PAg44nSgDjuQkJ67B4TIJxjJGeaAYDCku8
-         XVPUTOO4sS161m+LD4KsDYFJFmsImVpZKMMr/RD0DUJ1mSMin4wz5YSFpW4Wo3UCtmRg
-         ANsCLLdSLLqH800m8T9IY2jSfvwxUEacNyrrJaSgVe5Nlm0aL6ir/oRJ/bQOjxcxcqOf
-         PI+g==
-X-Forwarded-Encrypted: i=1; AJvYcCUEAcgS9K/3dCZmvVCDdea2ta7FkpMN9/QbgjI5JYt9+FFsZVUzYDsFGjQdZuFIGv6rgJJ82uBf/ZRto3uq@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw5VtP+QlfnutJGg0f8+R6zmAyreziccJE+pKk2oWwAk5rogF2n
-	DOPcbGslO2bBg1YpjktQyCnHZ50ECPQGAcbEA/JSdDtLYG/gPC356ZOoQq/0Dd8=
-X-Gm-Gg: ASbGncting8RsHUb3Gzox+GGxYrGAGmvv74K4+/PfOZccdrIQNuYqjL5hlJ6LYN+K1q
-	esAmqGCDtMIapfSfXCSCm0fz37u65UmkLHdBCVebX9TnU1AQIiO4OOHJvHeb2tGYwvM1ljH4uAq
-	3yQXgugVZCsDx0IQY3F8nLupgC1G10+X7C9FWBxe+pTPfO7HfXFzyvu9ZF6lGf4nSQ8vgMhpPKo
-	8FN1OV9OtGW+E1gmenwavjWSZQ93G6CcKjBts7nYSYJF4a6LJan8fsaNQenpcHbZvfxe/IlxW3l
-	Cb2/IVoiVY76mfxg27bUpgqKEaEX7EdSU0GPjG6QKP6HVBmgny4AoecaewXAlC9BIvh9sfQU+Qp
-	3QnVnF2euL4ziISWy
-X-Google-Smtp-Source: AGHT+IGs6TOHidyOdLjO/aiH4v937+mffmDnW0sidZAyNfcPHTexYT+C0CxkEqdPf2DwJcaHqEXYnw==
-X-Received: by 2002:adf:ebcc:0:b0:39c:1efb:eec9 with SMTP id ffacd0b85a97d-3a06d673778mr1956533f8f.13.1745504031472;
-        Thu, 24 Apr 2025 07:13:51 -0700 (PDT)
+        bh=8jfERcd+/8hI2lWUkL6Z3PV6Xql42InuHmm1RJaBik0=;
+        b=oRURP7eUelyinXq38lCFsFEnynFcQNpeOmk27bGkQreyPAwu0dg/Y3yKgmejZI2955
+         6WXdzlh90dk7ZfwF53w/9OCuCkX3+Ins9i/cVesQudjQZEhXkYHn/mP0KpCUpSJambDq
+         vLl3QHK9AZzuUNLH6bbGhDU9sRqpbeMbKzYAYrhOW4/N7zb9RVhSP+e3NhUpzRB1MXW3
+         F0kabfN6NI4FXgqRyFGArmA5cbI2MsOqv2+vtn+P4DdrcOA5RAqlfAZQTwu25A/N3ye4
+         DyggRQGJIY+0Hk7dDSfv07ieK0fWmxxhn0Wp5o9tmDySQ1ACr4b1sUdQzylf+HYhxbK8
+         PYUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUTFKnixr1yPgine46OEddPuqg5Ya989PvhheGMyKqYySpxdfjy1MMx20oJ7vPwuY6b13rPmjKua/Z+j6KV@vger.kernel.org
+X-Gm-Message-State: AOJu0YwdYHVI0GW0cDEty8XuR+uVt0ERYu2VBGWsuoWoa+hEgH/dmmJ5
+	IZAcrlq1iPbvzpfsHfqEICH6uB107nVTYJhlax2EQpPTD7wC7M71zmBi7vrZpkQ=
+X-Gm-Gg: ASbGncsx4zE9dhc/9ssUZ8JNSSY+m020uZ/y+IbTPjiAHiFKAf4SkNWKVRE1xDS3Wkl
+	BRwuJMs5sQGjlf+OClny1X5ODlcRTYgvZu3D//COOxvgXjJnM9yZ1kKWTdXxPGg50tZ3rmVPiIE
+	MDhDc/b+7zTa7KLTh4mYWnhbNFY30BtofI5/B8N4IZodywx1a1/wjJ52AVeImJuHkC/URdv2M75
+	k6LK9/XLUOt+NIEHat5jfNOE2VpmKMlhu09LvEzVVEgt9EZM04IO+li3VGGTRrcyg6NQKAcKOwW
+	Cv4lEawomopgx1cc3iQ6S+uen7JkMS+35ubO7sPvWe8W72917yy/cF2cZpBm8Ka5W6cDfGONEM0
+	yRmd0FhQc8o9ubXH4
+X-Google-Smtp-Source: AGHT+IGx0xNiXWRY0y1pEy2kIqf26zFRwFHT6eClNX/GVzcfRlYZlyiUPQIhI5t0dInRmkb4qoBxLw==
+X-Received: by 2002:adf:e2d0:0:b0:39c:1f02:44d8 with SMTP id ffacd0b85a97d-3a06d647344mr1972721f8f.4.1745504032796;
+        Thu, 24 Apr 2025 07:13:52 -0700 (PDT)
 Received: from seksu.systems-nuts.com (stevens.inf.ed.ac.uk. [129.215.164.122])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a06d4a8150sm2199951f8f.7.2025.04.24.07.13.50
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a06d4a8150sm2199951f8f.7.2025.04.24.07.13.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 07:13:51 -0700 (PDT)
+        Thu, 24 Apr 2025 07:13:52 -0700 (PDT)
 From: Karim Manaouil <karim.manaouil@linaro.org>
 To: linux-kernel@vger.kernel.org,
 	kvm@vger.kernel.org,
@@ -103,9 +103,9 @@ Cc: Karim Manaouil <karim.manaouil@linaro.org>,
 	Sreenivasulu Chalamcharla <sreeniva@qti.qualcomm.com>,
 	Trilok Soni <tsoni@quicinc.com>,
 	Stefan Schmidt <stefan.schmidt@linaro.org>
-Subject: [RFC PATCH 05/34] KVM: Add KVM_SET_DTB_ADDRESS ioctl to pass guest DTB address from userspace
-Date: Thu, 24 Apr 2025 15:13:12 +0100
-Message-Id: <20250424141341.841734-6-karim.manaouil@linaro.org>
+Subject: [RFC PATCH 06/34] KVM: gunyah: Add initial Gunyah backend support
+Date: Thu, 24 Apr 2025 15:13:13 +0100
+Message-Id: <20250424141341.841734-7-karim.manaouil@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250424141341.841734-1-karim.manaouil@linaro.org>
 References: <20250424141341.841734-1-karim.manaouil@linaro.org>
@@ -117,102 +117,984 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some hypervisors, such as Gunyah, require access to the guest's
-device tree blob (DTB) in order to inspect and/or modify it before
-starting the guest. The userspace virtual machine monitor (e.g. QEMU)
-is responsible for loading the guest's DTB into memory at a guest
-physical address, but the hypervisor backend must be informed of that
-address and size.
+This patch introduces the initial skeleton for supporting the Gunyah
+hypervisor [1] as a KVM backend on arm64. The Gunyah backend implements
+a different KVM architecture backend under `arch/arm64/kvm/` alongside
+the existing support for AArch64's native virtualization. Please, note
+that the two are mutually exclusive at build time.
 
-To support this use case, introduce a new ioctl: KVM_SET_DTB_ADDRESS.
-This allows userspace to provide the guest physical address and size
-of the DTB via a `struct kvm_dtb`, which is now stored in `struct kvm`.
+Key highlights of this patch:
 
-The ioctl allows platform-specific backends like Gunyah to retrieve
-the DTB location when configuring the VM.
+- Introduces a new Kconfig split: `CONFIG_KVM_ARM` for native support,
+  and a variant for Gunyah-backed virtualization.
+- Adds `gunyah.c`, a new arch backend file that implements the minimal
+  KVM architecture callbacks and stub interfaces required by the KVM
+  core to build and boot.
+- Refactors Makefile and build rules to support mutually exclusive
+  builds of `CONFIG_KVM_ARM` and `CONFIG_GUNYAH`.
+- Introduces a dummy implementation of required KVM stubs such as:
+  `kvm_arch_init_vm()`, `kvm_arch_vcpu_create()`, `kvm_age_gfn()`, etc.
 
-This patch also increments the KVM API version to 13 to reflect the
-addition of this new ioctl.
+This serves as a starting point for developing virtualization
+support for guests running under the Gunyah hypervisor. Subsequent
+patches in the series will add support for memory mapping,
+virtual CPUs, IRQ injection, and other guest lifecycle mechanisms.
+
+CONFIG_GUNYAH is going to be introduced in the next patch imlpementing
+the Gunyah driver.
+
+[1] https://www.qualcomm.com/developer/blog/2024/01/gunyah-hypervisor-software-supporting-protected-vms-android-virtualization-framework
 
 Signed-off-by: Karim Manaouil <karim.manaouil@linaro.org>
 ---
- include/linux/kvm_host.h |  1 +
- include/uapi/linux/kvm.h | 14 ++++++++++----
- virt/kvm/kvm_main.c      |  8 ++++++++
- 3 files changed, 19 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/kvm_host.h     |   2 +-
+ arch/arm64/include/asm/virt.h         |   7 +
+ arch/arm64/kernel/cpufeature.c        |   4 +
+ arch/arm64/kernel/image-vars.h        |   2 +-
+ arch/arm64/kvm/Kconfig                |  22 +-
+ arch/arm64/kvm/Makefile               |  14 +-
+ arch/arm64/kvm/gunyah.c               | 736 ++++++++++++++++++++++++++
+ include/kvm/arm_pmu.h                 |   2 +-
+ include/linux/irqchip/arm-vgic-info.h |   2 +-
+ include/linux/perf/arm_pmu.h          |   2 +-
+ 10 files changed, 781 insertions(+), 12 deletions(-)
+ create mode 100644 arch/arm64/kvm/gunyah.c
 
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index 3461346b37e0..4e98c7cad2bd 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -862,6 +862,7 @@ struct kvm {
- 	/* Protected by slots_locks (for writes) and RCU (for reads) */
- 	struct xarray mem_attr_array;
- #endif
-+	struct kvm_dtb dtb;
- 	char stats_id[KVM_STATS_NAME_SIZE];
- };
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index e98cfe7855a6..efbfe31d262d 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -1417,7 +1417,7 @@ static inline bool kvm_pmu_counter_deferred(struct perf_event_attr *attr)
+ 	return (!has_vhe() && attr->exclude_host);
+ }
  
-diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
-index c6988e2c68d5..8f8161cd61a7 100644
---- a/include/uapi/linux/kvm.h
-+++ b/include/uapi/linux/kvm.h
-@@ -14,7 +14,7 @@
- #include <linux/ioctl.h>
- #include <asm/kvm.h>
+-#ifdef CONFIG_KVM
++#ifdef CONFIG_KVM_ARM
+ void kvm_set_pmu_events(u64 set, struct perf_event_attr *attr);
+ void kvm_clr_pmu_events(u64 clr);
+ bool kvm_set_pmuserenr(u64 val);
+diff --git a/arch/arm64/include/asm/virt.h b/arch/arm64/include/asm/virt.h
+index ebf4a9f943ed..80ddb409e0cb 100644
+--- a/arch/arm64/include/asm/virt.h
++++ b/arch/arm64/include/asm/virt.h
+@@ -82,11 +82,18 @@ bool is_kvm_arm_initialised(void);
  
--#define KVM_API_VERSION 12
-+#define KVM_API_VERSION 13
+ DECLARE_STATIC_KEY_FALSE(kvm_protected_mode_initialized);
+ 
++#ifndef CONFIG_KVM_ARM
++static inline bool is_pkvm_initialized(void)
++{
++	return false;
++}
++#else
+ static inline bool is_pkvm_initialized(void)
+ {
+ 	return IS_ENABLED(CONFIG_KVM) &&
+ 	       static_branch_likely(&kvm_protected_mode_initialized);
+ }
++#endif
+ 
+ /* Reports the availability of HYP mode */
+ static inline bool is_hyp_mode_available(void)
+diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+index 9c4d6d552b25..50a251c28a48 100644
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -3548,6 +3548,9 @@ static void verify_sme_features(void)
+ 	cpacr_restore(cpacr);
+ }
+ 
++#ifndef CONFIG_KVM_ARM
++static void verify_hyp_capabilities(void) { }
++#else
+ static void verify_hyp_capabilities(void)
+ {
+ 	u64 safe_mmfr1, mmfr0, mmfr1;
+@@ -3578,6 +3581,7 @@ static void verify_hyp_capabilities(void)
+ 		cpu_die_early();
+ 	}
+ }
++#endif
+ 
+ static void verify_mpam_capabilities(void)
+ {
+diff --git a/arch/arm64/kernel/image-vars.h b/arch/arm64/kernel/image-vars.h
+index 5e3c4b58f279..7688f53b55bd 100644
+--- a/arch/arm64/kernel/image-vars.h
++++ b/arch/arm64/kernel/image-vars.h
+@@ -72,7 +72,7 @@ PROVIDE(__pi__data                	= _data);
+ PROVIDE(__pi___bss_start		= __bss_start);
+ PROVIDE(__pi__end			= _end);
+ 
+-#ifdef CONFIG_KVM
++#ifdef CONFIG_KVM_ARM
  
  /*
-  * Backwards-compatible definitions.
-@@ -43,6 +43,11 @@ struct kvm_userspace_memory_region2 {
- 	__u64 pad2[14];
- };
+  * KVM nVHE code has its own symbol namespace prefixed with __kvm_nvhe_, to
+diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
+index 096e45acadb2..eb43eabcf61b 100644
+--- a/arch/arm64/kvm/Kconfig
++++ b/arch/arm64/kvm/Kconfig
+@@ -17,9 +17,25 @@ menuconfig VIRTUALIZATION
  
-+struct kvm_dtb {
-+	__u64 guest_phys_addr;
-+	__u64 size;
+ if VIRTUALIZATION
+ 
++###################### Gunyah-based KVM ######################
++menuconfig KVM
++	bool "Kernel-based Virtual Machine (KVM) under Gunyah"
++	depends on GUNYAH
++	select KVM_COMMON
++	select KVM_GENERIC_MMU_NOTIFIER
++	select KVM_MMIO
++	select HAVE_KVM_IRQCHIP
++	select HAVE_KVM_READONLY_MEM
++
++###################### Native ARM KVM ######################
++config KVM_ARM
++	bool
++	depends on !GUNYAH
++
+ menuconfig KVM
+ 	bool "Kernel-based Virtual Machine (KVM) support"
+-	depends on AS_HAS_ARMV8_4
++	depends on !GUNYAH && AS_HAS_ARMV8_4
++	select KVM_ARM
+ 	select KVM_COMMON
+ 	select KVM_GENERIC_HARDWARE_ENABLING
+ 	select KVM_GENERIC_MMU_NOTIFIER
+@@ -43,6 +59,8 @@ menuconfig KVM
+ 
+ 	  If unsure, say N.
+ 
++if KVM_ARM
++
+ config NVHE_EL2_DEBUG
+ 	bool "Debug mode for non-VHE EL2 object"
+ 	depends on KVM
+@@ -82,5 +100,5 @@ config PTDUMP_STAGE2_DEBUGFS
+ 	  kernel.
+ 
+ 	  If in doubt, say N.
+-
++endif # KVM_ARM
+ endif # VIRTUALIZATION
+diff --git a/arch/arm64/kvm/Makefile b/arch/arm64/kvm/Makefile
+index 209bc76263f1..5b54eb329ce2 100644
+--- a/arch/arm64/kvm/Makefile
++++ b/arch/arm64/kvm/Makefile
+@@ -8,12 +8,14 @@ ccflags-y += -I $(src)
+ include $(srctree)/virt/kvm/Makefile.kvm
+ 
+ obj-$(CONFIG_KVM) += kvm.o
+-obj-$(CONFIG_KVM) += hyp/
++obj-$(CONFIG_KVM_ARM) += hyp/
+ 
+ CFLAGS_sys_regs.o += -Wno-override-init
+ CFLAGS_handle_exit.o += -Wno-override-init
+ 
+-kvm-y += arm.o mmu.o mmio.o psci.o hypercalls.o pvtime.o \
++kvm-$(CONFIG_GUNYAH) += gunyah.o
++
++kvm-$(CONFIG_KVM_ARM) += arm.o mmu.o mmio.o psci.o hypercalls.o pvtime.o \
+ 	 inject_fault.o va_layout.o handle_exit.o \
+ 	 guest.o debug.o reset.o sys_regs.o stacktrace.o \
+ 	 vgic-sys-reg-v3.o fpsimd.o pkvm.o \
+@@ -25,9 +27,11 @@ kvm-y += arm.o mmu.o mmio.o psci.o hypercalls.o pvtime.o \
+ 	 vgic/vgic-mmio-v3.o vgic/vgic-kvm-device.o \
+ 	 vgic/vgic-its.o vgic/vgic-debug.o vgic/vgic-v3-nested.o
+ 
+-kvm-$(CONFIG_HW_PERF_EVENTS)  += pmu-emul.o pmu.o
+-kvm-$(CONFIG_ARM64_PTR_AUTH)  += pauth.o
+-kvm-$(CONFIG_PTDUMP_STAGE2_DEBUGFS) += ptdump.o
++ifeq ($(CONFIG_KVM_ARM),y)
++	kvm-$(CONFIG_HW_PERF_EVENTS)  += pmu-emul.o pmu.o
++	kvm-$(CONFIG_ARM64_PTR_AUTH)  += pauth.o
++	kvm-$(CONFIG_PTDUMP_STAGE2_DEBUGFS) += ptdump.o
++endif
+ 
+ always-y := hyp_constants.h hyp-constants.s
+ 
+diff --git a/arch/arm64/kvm/gunyah.c b/arch/arm64/kvm/gunyah.c
+new file mode 100644
+index 000000000000..0095610166ad
+--- /dev/null
++++ b/arch/arm64/kvm/gunyah.c
+@@ -0,0 +1,736 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * KVM port to Qualcomm's Gunyah Hypervisor
++ *
++ * Copyright (C) 2024-2025 Linaro Ltd.
++ *
++ * Author: Karim Manaouil <karim.manaouil@linaro.org>
++ *
++ */
++#include <linux/cpumask.h>
++#include <linux/kvm_host.h>
++#include <linux/kvm_irqfd.h>
++#include <asm/kvm_mmu.h>
++#include <linux/perf_event.h>
++
++static enum kvm_mode kvm_mode = KVM_MODE_DEFAULT;
++
++enum kvm_mode kvm_get_mode(void)
++{
++	return kvm_mode;
++}
++
++const struct _kvm_stats_desc kvm_vm_stats_desc[] = {
++	KVM_GENERIC_VM_STATS()
 +};
 +
- /*
-  * The bit 0 ~ bit 15 of kvm_userspace_memory_region::flags are visible for
-  * userspace, other bits are reserved for kvm internal use which are defined
-@@ -1190,11 +1195,12 @@ struct kvm_vfio_spapr_tce {
- #define KVM_SET_IDENTITY_MAP_ADDR _IOW(KVMIO,  0x48, __u64)
- #define KVM_SET_USER_MEMORY_REGION2 _IOW(KVMIO, 0x49, \
- 					 struct kvm_userspace_memory_region2)
-+#define KVM_SET_DTB_ADDRESS      _IOW(KVMIO, 0x50, struct kvm_dtb)
- 
- /* enable ucontrol for s390 */
--#define KVM_S390_UCAS_MAP        _IOW(KVMIO, 0x50, struct kvm_s390_ucas_mapping)
--#define KVM_S390_UCAS_UNMAP      _IOW(KVMIO, 0x51, struct kvm_s390_ucas_mapping)
--#define KVM_S390_VCPU_FAULT	 _IOW(KVMIO, 0x52, unsigned long)
-+#define KVM_S390_UCAS_MAP        _IOW(KVMIO, 0x55, struct kvm_s390_ucas_mapping)
-+#define KVM_S390_UCAS_UNMAP      _IOW(KVMIO, 0x56, struct kvm_s390_ucas_mapping)
-+#define KVM_S390_VCPU_FAULT	 _IOW(KVMIO, 0x57, unsigned long)
- 
- /* Device model IOC */
- #define KVM_CREATE_IRQCHIP        _IO(KVMIO,   0x60)
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index dbb7ed95523f..a984051e2470 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -5121,6 +5121,14 @@ static long kvm_vm_ioctl(struct file *filp,
- 		r = kvm_vm_ioctl_set_memory_region(kvm, &mem);
- 		break;
- 	}
-+	case KVM_SET_DTB_ADDRESS: {
-+		r = 0;
-+		if (copy_from_user(&kvm->dtb, argp, sizeof(struct kvm_dtb))) {
-+			r = -EFAULT;
-+			goto out;
++const struct kvm_stats_header kvm_vm_stats_header = {
++	.name_size = KVM_STATS_NAME_SIZE,
++	.num_desc = ARRAY_SIZE(kvm_vm_stats_desc),
++	.id_offset =  sizeof(struct kvm_stats_header),
++	.desc_offset = sizeof(struct kvm_stats_header) + KVM_STATS_NAME_SIZE,
++	.data_offset = sizeof(struct kvm_stats_header) + KVM_STATS_NAME_SIZE +
++		       sizeof(kvm_vm_stats_desc),
++};
++
++const struct _kvm_stats_desc kvm_vcpu_stats_desc[] = {
++	KVM_GENERIC_VCPU_STATS(),
++	STATS_DESC_COUNTER(VCPU, hvc_exit_stat),
++	STATS_DESC_COUNTER(VCPU, wfe_exit_stat),
++	STATS_DESC_COUNTER(VCPU, wfi_exit_stat),
++	STATS_DESC_COUNTER(VCPU, mmio_exit_user),
++	STATS_DESC_COUNTER(VCPU, mmio_exit_kernel),
++	STATS_DESC_COUNTER(VCPU, signal_exits),
++	STATS_DESC_COUNTER(VCPU, exits)
++};
++
++const struct kvm_stats_header kvm_vcpu_stats_header = {
++	.name_size = KVM_STATS_NAME_SIZE,
++	.num_desc = ARRAY_SIZE(kvm_vcpu_stats_desc),
++	.id_offset = sizeof(struct kvm_stats_header),
++	.desc_offset = sizeof(struct kvm_stats_header) + KVM_STATS_NAME_SIZE,
++	.data_offset = sizeof(struct kvm_stats_header) + KVM_STATS_NAME_SIZE +
++		       sizeof(kvm_vcpu_stats_desc),
++};
++
++static bool core_reg_offset_is_vreg(u64 off)
++{
++	return off >= KVM_REG_ARM_CORE_REG(fp_regs.vregs) &&
++		off < KVM_REG_ARM_CORE_REG(fp_regs.fpsr);
++}
++
++static u64 core_reg_offset_from_id(u64 id)
++{
++	return id & ~(KVM_REG_ARCH_MASK | KVM_REG_SIZE_MASK | KVM_REG_ARM_CORE);
++}
++
++static int core_reg_size_from_offset(const struct kvm_vcpu *vcpu, u64 off)
++{
++	int size;
++
++	switch (off) {
++	case KVM_REG_ARM_CORE_REG(regs.regs[0]) ...
++	     KVM_REG_ARM_CORE_REG(regs.regs[30]):
++	case KVM_REG_ARM_CORE_REG(regs.sp):
++	case KVM_REG_ARM_CORE_REG(regs.pc):
++	case KVM_REG_ARM_CORE_REG(regs.pstate):
++	case KVM_REG_ARM_CORE_REG(sp_el1):
++	case KVM_REG_ARM_CORE_REG(elr_el1):
++	case KVM_REG_ARM_CORE_REG(spsr[0]) ...
++	     KVM_REG_ARM_CORE_REG(spsr[KVM_NR_SPSR - 1]):
++		size = sizeof(__u64);
++		break;
++
++	case KVM_REG_ARM_CORE_REG(fp_regs.vregs[0]) ...
++	     KVM_REG_ARM_CORE_REG(fp_regs.vregs[31]):
++		size = sizeof(__uint128_t);
++		break;
++
++	case KVM_REG_ARM_CORE_REG(fp_regs.fpsr):
++	case KVM_REG_ARM_CORE_REG(fp_regs.fpcr):
++		size = sizeof(__u32);
++		break;
++
++	default:
++		return -EINVAL;
++	}
++
++	if (!IS_ALIGNED(off, size / sizeof(__u32)))
++		return -EINVAL;
++
++	/*
++	 * The KVM_REG_ARM64_SVE regs must be used instead of
++	 * KVM_REG_ARM_CORE for accessing the FPSIMD V-registers on
++	 * SVE-enabled vcpus:
++	 */
++	if (vcpu_has_sve(vcpu) && core_reg_offset_is_vreg(off))
++		return -EINVAL;
++
++	return size;
++}
++
++static void *core_reg_addr(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg)
++{
++	u64 off = core_reg_offset_from_id(reg->id);
++	int size = core_reg_size_from_offset(vcpu, off);
++
++	if (size < 0)
++		return NULL;
++
++	if (KVM_REG_SIZE(reg->id) != size)
++		return NULL;
++
++	switch (off) {
++	case KVM_REG_ARM_CORE_REG(regs.regs[0]) ...
++	     KVM_REG_ARM_CORE_REG(regs.regs[30]):
++		off -= KVM_REG_ARM_CORE_REG(regs.regs[0]);
++		off /= 2;
++		return &vcpu->arch.ctxt.regs.regs[off];
++
++	case KVM_REG_ARM_CORE_REG(regs.sp):
++		return &vcpu->arch.ctxt.regs.sp;
++
++	case KVM_REG_ARM_CORE_REG(regs.pc):
++		return &vcpu->arch.ctxt.regs.pc;
++
++	case KVM_REG_ARM_CORE_REG(regs.pstate):
++		return &vcpu->arch.ctxt.regs.pstate;
++
++	case KVM_REG_ARM_CORE_REG(sp_el1):
++		return __ctxt_sys_reg(&vcpu->arch.ctxt, SP_EL1);
++
++	case KVM_REG_ARM_CORE_REG(elr_el1):
++		return __ctxt_sys_reg(&vcpu->arch.ctxt, ELR_EL1);
++
++	case KVM_REG_ARM_CORE_REG(spsr[KVM_SPSR_EL1]):
++		return __ctxt_sys_reg(&vcpu->arch.ctxt, SPSR_EL1);
++
++	case KVM_REG_ARM_CORE_REG(spsr[KVM_SPSR_ABT]):
++		return &vcpu->arch.ctxt.spsr_abt;
++
++	case KVM_REG_ARM_CORE_REG(spsr[KVM_SPSR_UND]):
++		return &vcpu->arch.ctxt.spsr_und;
++
++	case KVM_REG_ARM_CORE_REG(spsr[KVM_SPSR_IRQ]):
++		return &vcpu->arch.ctxt.spsr_irq;
++
++	case KVM_REG_ARM_CORE_REG(spsr[KVM_SPSR_FIQ]):
++		return &vcpu->arch.ctxt.spsr_fiq;
++
++	case KVM_REG_ARM_CORE_REG(fp_regs.vregs[0]) ...
++	     KVM_REG_ARM_CORE_REG(fp_regs.vregs[31]):
++		off -= KVM_REG_ARM_CORE_REG(fp_regs.vregs[0]);
++		off /= 4;
++		return &vcpu->arch.ctxt.fp_regs.vregs[off];
++
++	case KVM_REG_ARM_CORE_REG(fp_regs.fpsr):
++		return &vcpu->arch.ctxt.fp_regs.fpsr;
++
++	case KVM_REG_ARM_CORE_REG(fp_regs.fpcr):
++		return &vcpu->arch.ctxt.fp_regs.fpcr;
++
++	default:
++		return NULL;
++	}
++}
++
++static int get_core_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg)
++{
++	/*
++	 * Because the kvm_regs structure is a mix of 32, 64 and
++	 * 128bit fields, we index it as if it was a 32bit
++	 * array. Hence below, nr_regs is the number of entries, and
++	 * off the index in the "array".
++	 */
++	__u32 __user *uaddr = (__u32 __user *)(unsigned long)reg->addr;
++	int nr_regs = sizeof(struct kvm_regs) / sizeof(__u32);
++	void *addr;
++	u32 off;
++
++	/* Our ID is an index into the kvm_regs struct. */
++	off = core_reg_offset_from_id(reg->id);
++	if (off >= nr_regs ||
++	    (off + (KVM_REG_SIZE(reg->id) / sizeof(__u32))) >= nr_regs)
++		return -ENOENT;
++
++	addr = core_reg_addr(vcpu, reg);
++	if (!addr)
++		return -EINVAL;
++
++	if (copy_to_user(uaddr, addr, KVM_REG_SIZE(reg->id)))
++		return -EFAULT;
++
++	return 0;
++}
++
++static int set_core_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg)
++{
++	__u32 __user *uaddr = (__u32 __user *)(unsigned long)reg->addr;
++	int nr_regs = sizeof(struct kvm_regs) / sizeof(__u32);
++	__uint128_t tmp;
++	void *valp = &tmp, *addr;
++	u64 off;
++	int err = 0;
++
++	/* Our ID is an index into the kvm_regs struct. */
++	off = core_reg_offset_from_id(reg->id);
++	if (off >= nr_regs ||
++	    (off + (KVM_REG_SIZE(reg->id) / sizeof(__u32))) >= nr_regs)
++		return -ENOENT;
++
++	addr = core_reg_addr(vcpu, reg);
++	if (!addr)
++		return -EINVAL;
++
++	if (KVM_REG_SIZE(reg->id) > sizeof(tmp))
++		return -EINVAL;
++
++	if (copy_from_user(valp, uaddr, KVM_REG_SIZE(reg->id))) {
++		err = -EFAULT;
++		goto out;
++	}
++
++	memcpy(addr, valp, KVM_REG_SIZE(reg->id));
++out:
++	return err;
++}
++
++static int get_sys_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg)
++{
++	__u32 __user *uaddr = (__u32 __user *)(unsigned long)reg->addr;
++	u64 dummy_val = 0;
++
++	if (copy_to_user(uaddr, &dummy_val, KVM_REG_SIZE(reg->id)))
++		return -EFAULT;
++
++	return 0;
++}
++
++static int copy_core_reg_indices(const struct kvm_vcpu *vcpu,
++				 u64 __user *uindices)
++{
++	unsigned int i;
++	int n = 0;
++
++	for (i = 0; i < sizeof(struct kvm_regs) / sizeof(__u32); i++) {
++		u64 reg = KVM_REG_ARM64 | KVM_REG_ARM_CORE | i;
++		int size = core_reg_size_from_offset(vcpu, i);
++
++		if (size < 0)
++			continue;
++
++		switch (size) {
++		case sizeof(__u32):
++			reg |= KVM_REG_SIZE_U32;
++			break;
++
++		case sizeof(__u64):
++			reg |= KVM_REG_SIZE_U64;
++			break;
++
++		case sizeof(__uint128_t):
++			reg |= KVM_REG_SIZE_U128;
++			break;
++
++		default:
++			WARN_ON(1);
++			continue;
 +		}
++
++		if (uindices) {
++			if (put_user(reg, uindices))
++				return -EFAULT;
++			uindices++;
++		}
++
++		n++;
++	}
++
++	return n;
++}
++
++static unsigned long num_core_regs(const struct kvm_vcpu *vcpu)
++{
++	return copy_core_reg_indices(vcpu, NULL);
++}
++
++int kvm_arm_get_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg)
++{
++	/* We currently use nothing arch-specific in upper 32 bits */
++	if ((reg->id & ~KVM_REG_SIZE_MASK) >> 32 != KVM_REG_ARM64 >> 32)
++		return -EINVAL;
++
++	switch (reg->id & KVM_REG_ARM_COPROC_MASK) {
++	case KVM_REG_ARM_CORE:
++		return get_core_reg(vcpu, reg);
++	case KVM_REG_ARM64_SYSREG:
++		return get_sys_reg(vcpu, reg);
++	default:
++		return -ENOENT;
++	}
++}
++
++int kvm_arm_set_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg)
++{
++	/* We currently use nothing arch-specific in upper 32 bits */
++	if ((reg->id & ~KVM_REG_SIZE_MASK) >> 32 != KVM_REG_ARM64 >> 32)
++		return -EINVAL;
++
++	switch (reg->id & KVM_REG_ARM_COPROC_MASK) {
++	case KVM_REG_ARM_CORE:
++		return set_core_reg(vcpu, reg);
++	default:
++		return -ENOENT;
++	}
++}
++
++int kvm_arch_vcpu_should_kick(struct kvm_vcpu *vcpu)
++{
++	return kvm_vcpu_exiting_guest_mode(vcpu) == IN_GUEST_MODE;
++}
++
++vm_fault_t kvm_arch_vcpu_fault(struct kvm_vcpu *vcpu, struct vm_fault *vmf)
++{
++	return VM_FAULT_SIGBUS;
++}
++
++void kvm_arch_create_vm_debugfs(struct kvm *kvm)
++{
++}
++
++void kvm_arch_destroy_vm(struct kvm *kvm)
++{
++	kvm_destroy_vcpus(kvm);
++	return;
++}
++
++long kvm_arch_dev_ioctl(struct file *filp,
++			unsigned int ioctl, unsigned long arg)
++{
++	return -EINVAL;
++}
++
++bool kvm_arch_irqchip_in_kernel(struct kvm *kvm)
++{
++	return false;
++}
++
++bool kvm_arch_intc_initialized(struct kvm *kvm)
++{
++	return true;
++}
++
++struct kvm_vcpu *kvm_arch_vcpu_alloc(void)
++{
++	return NULL;
++}
++
++int kvm_arch_vcpu_precreate(struct kvm *kvm, unsigned int id)
++{
++	return 0;
++}
++
++int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
++{
++	return -EINVAL;
++}
++
++void kvm_arch_vcpu_postcreate(struct kvm_vcpu *vcpu)
++{
++}
++
++void kvm_arch_vcpu_destroy(struct kvm_vcpu *vcpu)
++{
++}
++
++void kvm_arch_vcpu_blocking(struct kvm_vcpu *vcpu)
++{
++}
++
++void kvm_arch_vcpu_unblocking(struct kvm_vcpu *vcpu)
++{
++}
++
++void kvm_arch_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
++{
++}
++
++void kvm_arch_vcpu_put(struct kvm_vcpu *vcpu)
++{
++}
++
++int kvm_arch_vcpu_ioctl_get_mpstate(struct kvm_vcpu *vcpu,
++				    struct kvm_mp_state *mp_state)
++{
++	return -EINVAL;
++}
++
++int kvm_arch_vcpu_ioctl_set_mpstate(struct kvm_vcpu *vcpu,
++				    struct kvm_mp_state *mp_state)
++{
++	return -EINVAL;
++}
++
++int kvm_arch_vcpu_runnable(struct kvm_vcpu *v)
++{
++	return 0;
++}
++
++bool kvm_arch_vcpu_in_kernel(struct kvm_vcpu *vcpu)
++{
++	return false;
++}
++
++int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
++{
++	return -EINVAL;
++}
++
++long kvm_arch_vcpu_ioctl(struct file *filp,
++			 unsigned int ioctl, unsigned long arg)
++{
++	struct kvm_vcpu *vcpu = filp->private_data;
++	void __user *argp = (void __user *)arg;
++	long r;
++
++	switch (ioctl) {
++	case KVM_ARM_VCPU_INIT: {
++		struct kvm_vcpu_init init;
++
++		r = -EFAULT;
++		if (copy_from_user(&init, argp, sizeof(init)))
++			break;
++
++		vcpu_set_flag(vcpu, VCPU_INITIALIZED);
++		r = 0;
 +		break;
 +	}
- 	case KVM_GET_DIRTY_LOG: {
- 		struct kvm_dirty_log log;
++	case KVM_SET_ONE_REG:
++	case KVM_GET_ONE_REG: {
++		struct kvm_one_reg reg;
++
++		r = -ENOEXEC;
++		if (unlikely(!kvm_vcpu_initialized(vcpu)))
++			break;
++
++		r = -EFAULT;
++		if (copy_from_user(&reg, argp, sizeof(reg)))
++			break;
++
++		if (ioctl == KVM_SET_ONE_REG)
++			r = kvm_arm_set_reg(vcpu, &reg);
++		else
++			r = kvm_arm_get_reg(vcpu, &reg);
++		break;
++	}
++	case KVM_GET_REG_LIST: {
++		struct kvm_reg_list __user *user_list = argp;
++		struct kvm_reg_list reg_list;
++		unsigned n;
++
++		r = -ENOEXEC;
++		if (unlikely(!kvm_vcpu_initialized(vcpu)))
++			break;
++
++		r = -EFAULT;
++		if (copy_from_user(&reg_list, user_list, sizeof(reg_list)))
++			break;
++
++		n = reg_list.n;
++		reg_list.n = num_core_regs(vcpu);
++		if (copy_to_user(user_list, &reg_list, sizeof(reg_list)))
++			break;
++		r = -E2BIG;
++		if (n < reg_list.n)
++			break;
++
++		r = 0;
++		copy_core_reg_indices(vcpu, user_list->reg);
++		break;
++	}
++	case KVM_ARM_VCPU_FINALIZE: {
++		return 0;
++	}
++	default:
++		pr_info("gunyah: %s: unrecognised vcpu ioctl %u\n", __func__, ioctl);
++		r = -EINVAL;
++	}
++
++	return r;
++}
++
++int kvm_arch_vcpu_ioctl_get_regs(struct kvm_vcpu *vcpu, struct kvm_regs *regs)
++{
++	return -EINVAL;
++}
++
++int kvm_arch_vcpu_ioctl_set_regs(struct kvm_vcpu *vcpu, struct kvm_regs *regs)
++{
++	return -EINVAL;
++}
++
++int kvm_arch_vcpu_ioctl_get_sregs(struct kvm_vcpu *vcpu,
++				  struct kvm_sregs *sregs)
++{
++	return -EINVAL;
++}
++
++int kvm_arch_vcpu_ioctl_set_sregs(struct kvm_vcpu *vcpu,
++				  struct kvm_sregs *sregs)
++{
++	return -EINVAL;
++}
++
++int kvm_arch_vcpu_ioctl_get_fpu(struct kvm_vcpu *vcpu, struct kvm_fpu *fpu)
++{
++	return -EINVAL;
++}
++
++int kvm_arch_vcpu_ioctl_set_fpu(struct kvm_vcpu *vcpu, struct kvm_fpu *fpu)
++{
++	return -EINVAL;
++}
++
++int kvm_arch_vcpu_ioctl_translate(struct kvm_vcpu *vcpu,
++				  struct kvm_translation *tr)
++{
++	return -EINVAL;
++}
++
++int kvm_arch_vcpu_ioctl_set_guest_debug(struct kvm_vcpu *vcpu,
++					struct kvm_guest_debug *dbg)
++{
++	return -EINVAL;
++}
++
++void kvm_arch_vcpu_put_debug_state_flags(struct kvm_vcpu *vcpu)
++{
++}
++
++int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
++			    struct kvm_enable_cap *cap)
++{
++	return -EINVAL;
++}
++
++int kvm_arch_vm_ioctl(struct file *filp, unsigned int ioctl, unsigned long arg)
++{
++	void __user *argp = (void __user *)arg;
++
++	switch (ioctl) {
++	case KVM_ARM_PREFERRED_TARGET: {
++		struct kvm_vcpu_init init = {
++			.target = KVM_ARM_TARGET_GENERIC_V8,
++		};
++
++		if (copy_to_user(argp, &init, sizeof(init)))
++			return -EFAULT;
++
++		return 0;
++	}
++	case KVM_ARM_SET_COUNTER_OFFSET: {
++		return -ENXIO;
++	}
++	case KVM_ARM_SET_DEVICE_ADDR: {
++		struct kvm_arm_device_addr dev_addr;
++
++		if (copy_from_user(&dev_addr, argp, sizeof(dev_addr)))
++			return -EFAULT;
++
++		return -ENODEV;
++	}
++	case KVM_HAS_DEVICE_ATTR: {
++		return -ENXIO;
++	}
++	case KVM_SET_DEVICE_ATTR: {
++		return -ENXIO;
++	}
++	case KVM_ARM_GET_REG_WRITABLE_MASKS: {
++		return -ENXIO;
++	}
++	default:
++		return -EINVAL;
++	}
++}
++
++int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
++{
++	int r;
++
++	switch (ext) {
++	case KVM_CAP_IOEVENTFD:
++	case KVM_CAP_USER_MEMORY:
++	case KVM_CAP_SYNC_MMU:
++	case KVM_CAP_ONE_REG:
++	case KVM_CAP_READONLY_MEM:
++	case KVM_CAP_VCPU_ATTRIBUTES:
++	case KVM_CAP_ARM_USER_IRQ:
++	case KVM_CAP_ARM_SET_DEVICE_ADDR:
++		r = 1;
++		break;
++	case KVM_CAP_NR_VCPUS:
++		/*
++		 * ARM64 treats KVM_CAP_NR_CPUS differently from all other
++		 * architectures, as it does not always bound it to
++		 * KVM_CAP_MAX_VCPUS. It should not matter much because
++		 * this is just an advisory value.
++		 */
++		r = min_t(unsigned int, num_online_cpus(), KVM_MAX_VCPUS);
++		break;
++	case KVM_CAP_MAX_VCPUS:
++	case KVM_CAP_MAX_VCPU_ID:
++		r = KVM_MAX_VCPUS;
++		break;
++	default:
++		r = 0;
++	}
++
++	return r;
++}
++
++int kvm_vm_ioctl_irq_line(struct kvm *kvm, struct kvm_irq_level *irq_level,
++			  bool line_status)
++{
++	return -ENXIO;
++}
++
++int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
++{
++	return 0;
++}
++
++void kvm_arch_flush_shadow_all(struct kvm *kvm)
++{
++}
++
++int kvm_arch_flush_remote_tlbs(struct kvm *kvm)
++{
++	return -EINVAL;
++}
++
++int kvm_arch_flush_remote_tlbs_range(struct kvm *kvm,
++				      gfn_t gfn, u64 nr_pages)
++{
++	return -EINVAL;
++}
++
++void kvm_arch_mmu_enable_log_dirty_pt_masked(struct kvm *kvm,
++		struct kvm_memory_slot *slot,
++		gfn_t gfn_offset, unsigned long mask)
++{
++}
++
++void kvm_arch_commit_memory_region(struct kvm *kvm,
++				   struct kvm_memory_slot *old,
++				   const struct kvm_memory_slot *new,
++				   enum kvm_mr_change change)
++{
++}
++
++int kvm_arch_prepare_memory_region(struct kvm *kvm,
++				   const struct kvm_memory_slot *old,
++				   struct kvm_memory_slot *new,
++				   enum kvm_mr_change change)
++{
++	return 0;
++}
++
++void kvm_arch_free_memslot(struct kvm *kvm, struct kvm_memory_slot *slot)
++{
++}
++
++void kvm_arch_memslots_updated(struct kvm *kvm, u64 gen)
++{
++}
++
++void kvm_arch_flush_shadow_memslot(struct kvm *kvm,
++				   struct kvm_memory_slot *slot)
++{
++}
++
++bool kvm_age_gfn(struct kvm *kvm, struct kvm_gfn_range *range)
++{
++	return false;
++}
++
++
++bool kvm_test_age_gfn(struct kvm *kvm, struct kvm_gfn_range *range)
++{
++	return false;
++}
++
++bool kvm_unmap_gfn_range(struct kvm *kvm, struct kvm_gfn_range *range)
++{
++	return false;
++}
++
++int kvm_vm_ioctl_get_dirty_log(struct kvm *kvm, struct kvm_dirty_log *log)
++{
++	return -EINVAL;
++}
++
++__init void kvm_compute_layout(void)
++{
++}
++
++__init void kvm_apply_hyp_relocations(void)
++{
++}
++
++void __init kvm_hyp_reserve(void)
++{
++}
++
++void kvm_arch_sync_dirty_log(struct kvm *kvm, struct kvm_memory_slot *memslot)
++{
++}
++
++int kvm_cpu_has_pending_timer(struct kvm_vcpu *vcpu)
++{
++	return -EINVAL;
++}
++
++struct kvm *kvm_arch_alloc_vm(void)
++{
++	return NULL;
++}
+diff --git a/include/kvm/arm_pmu.h b/include/kvm/arm_pmu.h
+index 96754b51b411..575864e93f79 100644
+--- a/include/kvm/arm_pmu.h
++++ b/include/kvm/arm_pmu.h
+@@ -12,7 +12,7 @@
  
+ #define KVM_ARMV8_PMU_MAX_COUNTERS	32
+ 
+-#if IS_ENABLED(CONFIG_HW_PERF_EVENTS) && IS_ENABLED(CONFIG_KVM)
++#if IS_ENABLED(CONFIG_HW_PERF_EVENTS) && IS_ENABLED(CONFIG_KVM_ARM)
+ struct kvm_pmc {
+ 	u8 idx;	/* index into the pmu->pmc array */
+ 	struct perf_event *perf_event;
+diff --git a/include/linux/irqchip/arm-vgic-info.h b/include/linux/irqchip/arm-vgic-info.h
+index a75b2c7de69d..7a4a6051ffa6 100644
+--- a/include/linux/irqchip/arm-vgic-info.h
++++ b/include/linux/irqchip/arm-vgic-info.h
+@@ -36,7 +36,7 @@ struct gic_kvm_info {
+ 	bool		no_hw_deactivation;
+ };
+ 
+-#ifdef CONFIG_KVM
++#ifdef CONFIG_KVM_ARM
+ void vgic_set_kvm_info(const struct gic_kvm_info *info);
+ #else
+ static inline void vgic_set_kvm_info(const struct gic_kvm_info *info) {}
+diff --git a/include/linux/perf/arm_pmu.h b/include/linux/perf/arm_pmu.h
+index 6dc5e0cd76ca..c6cb2db9402a 100644
+--- a/include/linux/perf/arm_pmu.h
++++ b/include/linux/perf/arm_pmu.h
+@@ -170,7 +170,7 @@ int arm_pmu_acpi_probe(armpmu_init_fn init_fn);
+ static inline int arm_pmu_acpi_probe(armpmu_init_fn init_fn) { return 0; }
+ #endif
+ 
+-#ifdef CONFIG_KVM
++#ifdef CONFIG_KVM_ARM
+ void kvm_host_pmu_init(struct arm_pmu *pmu);
+ #else
+ #define kvm_host_pmu_init(x)	do { } while(0)
 -- 
 2.39.5
 
