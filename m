@@ -1,127 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-55473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECCC6A9B602
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 20:11:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13ED9A9B656
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 20:26:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 30E4992652A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 18:11:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3BD561883191
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 18:26:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10F4128CF69;
-	Thu, 24 Apr 2025 18:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E5B728DF09;
+	Thu, 24 Apr 2025 18:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ODv49CDw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SKkJpikB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF7B20326;
-	Thu, 24 Apr 2025 18:11:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2A61F09B4;
+	Thu, 24 Apr 2025 18:26:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745518278; cv=none; b=tPWgZcq6HK6ejgbblJvV/BvO0RPlZQM4yRxdTGIXLYvUu7zyzjGpPKlSCGQ5ePAU0DhdeyvVNvOJTSfownjBeKypqnXV+uHzA3V4ucNIkX6nPBWFze0EoKDILEtvju6ElQcTRkw+HQ83a9c3H2qJzbRw09iShMI7W8NAFSqACGA=
+	t=1745519185; cv=none; b=IP34JmmAW2P+eEMmpgek2UGI3mxcvCFYlvvNiRWwCg+DsHaD8AYC+yxbbefqt1m+NZxmEhMKaAmFfed/L2j99m7qTiISBFroHFfdE7UhVQgnQdzwOG1soOY+kwgUglGJkJMA224DrdUgmGDeP3M1NiB3S3zP7DHOnjk3lNlARGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745518278; c=relaxed/simple;
-	bh=5RAP25L7nywb72/J4oC+rYgQg3UgmwS3x7Uic0X3HBU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=pswS4hoDQpk1yHcdEZwpvY87xXja5aB42/vZQ/3Y4aN2vzISZ+Lvz/rqTgDe3HYYDomBXcf4Itnw2nmr/Dt2SxrbttZ0b3pgpyxIDbIi1Vbp7PH/XqnRicP1zN0NeJyPby/MOqQbWMz+RzHLsdYt5Vc/fp9Jhx4SuFSWaXptaBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ODv49CDw; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5e5deb6482cso4502734a12.1;
-        Thu, 24 Apr 2025 11:11:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745518274; x=1746123074; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=T0rGEYL8xcAHShUYEDJuRXwYgxLh5jv3eQQMoY4AZ/M=;
-        b=ODv49CDwgOcusUB1zk8B4a5GCoQw8xp5kry38cdwHWKtxqkmP309N3gDhVGrIhDzck
-         Z2DQGre1Yf9UU7fSjoF8wc0ecxy4oku8FRJZ/K1bPpllUQY7JqFXjp8SCOlcsBrKT966
-         4C0d2/lTHa8Dotnlc9IL3nn2PBX3ZZi1vMLYtsI1rNH15IJP0uJOarM6UY6Pkg1ne6jF
-         DCB2AtWq1BXv9Kuev/uGvy3mWqqfGHuE0+f9GabmKLNae2KV9YIVWSWwl/KwvXQti3PC
-         GcOsu9NOBoZEmqEbPp4vsqdemvR2EkItOkr7eQdv7K8CMaeC/L+OwstIn14v3fjIZrXi
-         WhQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745518274; x=1746123074;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=T0rGEYL8xcAHShUYEDJuRXwYgxLh5jv3eQQMoY4AZ/M=;
-        b=lUOi8rzVyog5RObsDoPcuJn1eWcIUmAK/9rZf9Uy6yC6+X0N4RxaSZx1Mollj7kFuO
-         kSWftTpGNa3csHKLYTqSnuL/wXJ29itwc0MmYfK/87T/pvPPQ1byjVS6Sm863/YlThzU
-         XpIzEYmo2SQR4xF58fPP5/S9Al7xFUS/5P9hNbquvgc9QWLFE8+r4Coq6jNoCZo/xVN7
-         ks8Syp0UK9vY87yMVHf4NcfRI8Wwgavt30wXdqTCbFfEPzxDgcU/fEv4jbqLmyKO4F4G
-         KvQUNjc+s069X1hm1NvBIKcW8BcPYfyzvOdhkhZHrxv84GMZn40GQEHldxknfJHLk5Ao
-         DKbA==
-X-Forwarded-Encrypted: i=1; AJvYcCUNff2/iw+MuoJuUPRBkezKQIV0br/VGXvF7v6FbJDiNxZebKEE/XSDJNW0zt+VlC98tfPFh7+1UqtYCL/i@vger.kernel.org, AJvYcCVEAf8jUpq8CnA1IJvEFLFeGL7jl5lqINfH4EwpddqwdSqwXyEjHHf1Jcq3xasPBkR4oU93e+QAl/g4@vger.kernel.org, AJvYcCXiiUdb9f2UveiwV+tvhpiBz3RBFBuTsRNEoA6hICGXQZdTMuZlMkRq43DwUR6n59JVbsHldeGazoA81Wqh@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVY6yKVrp6kEh4xioUUJ720SY3/8VAUkA5/SRfmNuHz/UUJeaa
-	5N7kjjbUsoPp9vPP7AGgQ9S7wz37UH3GjL+HOcwGaY+xXXxF4tRR
-X-Gm-Gg: ASbGncsh20LWg6Wz+f+F+VLwjYMlIHdtqPj8zeZBVnSvpjGFd+oLfGnLRnpqFAVygmr
-	2INiX70aOU4VzrVndqAKt3h9i7oev28rU6O1v3L+1E6ga0ms36bXtirB7I3Ib4JiBhser/jrbIf
-	v4ny8GYLAHWwWtoXAjk9AfntLDS1MCWcQFLtoPaMiZSbSwhZrZQY0cM6B7VqnNwLJ015FX4b9CD
-	jkQoHf6SeNhBq0ziCEVR7o9Pv9Ffh2k7LkA8s78wJIbjUzAy7tCkMNLzDvhU/eiRo+mzNtnQp0L
-	SBpSk5jE1fZ+0pmOms+JZkofaCzM/73t2JXZg6byScYDbZf415Ad3Cebz9Idk/fh5LV3LA==
-X-Google-Smtp-Source: AGHT+IGQmSlSNPBNOK3WSgbIcP/kR4aqhbsVeHUJLo6BKVnUP779PR0/3w1VN5vTx4zOyvyxFtBMyA==
-X-Received: by 2002:a05:6402:3592:b0:5db:68bd:ab78 with SMTP id 4fb4d7f45d1cf-5f6ef1cd09dmr3484395a12.10.1745518274388;
-        Thu, 24 Apr 2025 11:11:14 -0700 (PDT)
-Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5f7011fc383sm24088a12.5.2025.04.24.11.11.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 11:11:13 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Thu, 24 Apr 2025 20:10:59 +0200
-Subject: [PATCH] spi: spi-qpic-snand: remove unused 'wlen' member of
- 'struct qpic_spi_nand'
+	s=arc-20240116; t=1745519185; c=relaxed/simple;
+	bh=CHScCNXIVyd/VGxBgYpY/XP42OaAihqot4h2Nj/OKjE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oOtSmv9lL+lAnO36eJc3IR67wbB4A63JDMxXqJebbNMIlxikrkxgpdqPL+5eLoevtz3OwJ/wloQ4YH+GxqE6j9PlCEAfpJuzRa7RZ1rg/YNbzxebJRsTGWWQwk9+QGwB3MwcZP73raUI6vNfyrx2PcHNXR31dlyVTkATDLfOW5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SKkJpikB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8D8C4AF0B;
+	Thu, 24 Apr 2025 18:26:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745519184;
+	bh=CHScCNXIVyd/VGxBgYpY/XP42OaAihqot4h2Nj/OKjE=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=SKkJpikBw8teLtSB7WRreyv1/9vmWXIkN1GViZIboErjPpSRCQSZO114Xo5eFww8k
+	 vyJdpZC+gY8mgSSvxGUDRQ82f/bV2ckkgjpkuuPyM2i4MXOaSs1CqUX3as26MjdLL4
+	 DP7CY/IZ7Fy/fPk40MxD0/l0Hhx5eZyf2tC5R91d6zLCjlgRffpWWNtIoWnqxmOEGM
+	 YcI/uVKhNYRtcXv+UryAQ1suBGv/m0NaCk4EtbiE4o/wKkhySFyTRLxeb5S3Q+X+/e
+	 60w3fozZd4TIQ99IcAtdT1d8fKItbK/SWZ4HRFLeKfkVr85nIDNbh+/H/qG2EzJS0/
+	 QXyRHmiCsMhUA==
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ac2902f7c2aso238083966b.1;
+        Thu, 24 Apr 2025 11:26:24 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUDffNfJFi8BSVlMfaMYLvxiFxFWvxoebXfDSV7qsjxMm+cGUofnaV0nAB064VAwM8ZYz0URXuK4m1yNMxkGDA=@vger.kernel.org, AJvYcCVmjGF2MqJDBdXe/YReFReCQDvggrLRHB6XORIAMVOsDcoYy47cdbcn9SRsnudR/hfAhvMen2cySZY1kQ==@vger.kernel.org, AJvYcCWJ7MDsoakZiNsecGKCZ9soPxvGSPXeCKbLinMpZ0nB6Y5Bp2B6Avgdy6THXaUuFA0SCGad3RlXRMM2EhO+@vger.kernel.org, AJvYcCWyXaSZYKalM7xsu7JzzGKjpTk+1NgdCLkF9T1Pca4OVpqAK6riqHJU8kCmN886U7gsDbvOdowH@vger.kernel.org, AJvYcCXKtuPeNkasemhWKLIY0oE1whwGX7lS95Dugtdbnu8CkAi/i8zksur3NgdDbg95pPQoWPaWyxl1ggswtiPVhg==@vger.kernel.org, AJvYcCXlDZhSYdHBElbjH8TzfyuHJ4TikG7rUiznaMfHa7HL7DjfW0x1a+5YAkwpftBlTIeQ+j5bYTuMMcKhTrxbK+g=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxqWPzyj8HAudD8NwAOLthGHHO/PSBJrOFI2LdywFeMFgHpu09
+	34Hrcx6c1XhDQgUkGbSl36w547tMvXHkJkS1oAbS1o1pAxMjkrZzUnOfXtsv50V/j7PHZZdTy2u
+	9Q80co+u/C2N4hYV53ZZNEO2pSA==
+X-Google-Smtp-Source: AGHT+IHcANHsE+bdvnqkb2UnKhC0wdjfxj1hMco6j907XGhULHiQTFKk0sGPEoDGTWQ2tPxmo7m1kava8JyVOdEeOiQ=
+X-Received: by 2002:a17:907:944e:b0:acb:5070:dd19 with SMTP id
+ a640c23a62f3a-ace6b759bd9mr49595766b.61.1745519183439; Thu, 24 Apr 2025
+ 11:26:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250424-qpic-snand-remove-wlen-v1-1-2a7467ce2e3a@gmail.com>
-X-B4-Tracking: v=1; b=H4sIALJ+CmgC/x3MQQqEMBAF0atIr6chRsVhriKzCPFHG7TVBFQQ7
- 25w+RZVFyVEQaJfcVHELkkWzSg/BfnR6QCWPpussY2pbc3bKp6TOu05Yl528DFB2RuPUH1N6dp
- AOV4jgpzvuPvf9wMT5Eb3aAAAAA==
-X-Change-ID: 20250424-qpic-snand-remove-wlen-c0cef3801a7f
-To: Mark Brown <broonie@kernel.org>
-Cc: Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Md Sadre Alam <quic_mdalam@quicinc.com>, linux-spi@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+References: <20250324-dt-bindings-network-class-v5-0-f5c3fe00e8f0@ixit.cz>
+ <20250324-dt-bindings-network-class-v5-3-f5c3fe00e8f0@ixit.cz>
+ <d8619ab4-3a91-467f-a3d4-f23b4e0383a4@kernel.org> <57701e2e-0005-4a8a-a3f5-ba098c97b480@kernel.org>
+ <4b040936baa8fa8669b34e36fe9dff6e08aeede9.camel@sipsolutions.net>
+ <f0e56cb2-17a6-44d4-ae71-8639966d565a@kernel.org> <8d8b7c3ad6a67a683abbb4fc6049898747300a16.camel@sipsolutions.net>
+In-Reply-To: <8d8b7c3ad6a67a683abbb4fc6049898747300a16.camel@sipsolutions.net>
+From: Rob Herring <robh@kernel.org>
+Date: Thu, 24 Apr 2025 13:26:11 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKGmoiW=yDD7G4Qznsa7S2wQ7x4Mh0i4puAyFsvcnHz1A@mail.gmail.com>
+X-Gm-Features: ATxdqUFdarqKSYdeEAbhUblK1AO9Oheq1fLCxeCtymN54D8OfpcAV5pt8PJAs0g
+Message-ID: <CAL_JsqKGmoiW=yDD7G4Qznsa7S2wQ7x4Mh0i4puAyFsvcnHz1A@mail.gmail.com>
+Subject: Re: [PATCH v5 3/5] dt-bindings: wireless: bcm4329-fmac: Use
+ wireless-controller.yaml schema
+To: Johannes Berg <johannes@sipsolutions.net>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, david@ixit.cz, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Mailing List <devicetree-spec-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, 
+	Lorenzo Bianconi <lorenzo@kernel.org>, van Spriel <arend@broadcom.com>, 
+	=?UTF-8?B?SsOpcsO0bWUgUG91aWxsZXI=?= <jerome.pouiller@silabs.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Andy Gross <agross@kernel.org>, Mailing List <devicetree-spec@vger.kernel.org>, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Janne Grunau <j@jannau.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The 'wlen' member of the qpic_spi_nand structure is never used in the
-code so remove that.
+On Thu, Apr 24, 2025 at 10:42=E2=80=AFAM Johannes Berg
+<johannes@sipsolutions.net> wrote:
+>
+> On Thu, 2025-04-24 at 17:37 +0200, Krzysztof Kozlowski wrote:
+> > >
+> > > Thanks, I guess I'll hold the pull request for that. And I guess the
+> > > Apple ones are on David then.
+> > I think you can go ahead. I already referenced that commit from next in
+> > my patches, so I hope that SHA will not change (don't rebase your tree)=
+:
+> >
+> > https://lore.kernel.org/linux-devicetree/?q=3Df%3Akrzysztof+%22Align+wi=
+fi+node+name+with+bindings%22
+> >
+>
+> Hm. I thought this patchset broke it, and it is going through my tree.
+> Wouldn't it be much more complex for fixes on top of it to go through
+> another tree?
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
- drivers/spi/spi-qpic-snand.c | 1 -
- 1 file changed, 1 deletion(-)
+While it seems the reviews of the series caused more warnings for
+Apple, in general, schemas creating warnings is not breaking things.
+In a way, the whole point is to create warnings because if the .dts
+files were perfect already we wouldn't need schemas. The main
+requirement for schemas is only that they don't create warnings for
+the examples. There's still too many for .dts files to worry about it
+(and there's intermittent warnings from things getting merged via
+different trees).
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 17eb67e19132612c4c1a84848fa6f7432b1130a8..5d364b881566d396288f7de7c23dc0ac60fc82dc 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -116,7 +116,6 @@ struct qpic_spi_nand {
- 	struct nand_ecc_engine ecc_eng;
- 	u8 *data_buf;
- 	u8 *oob_buf;
--	u32 wlen;
- 	__le32 addr1;
- 	__le32 addr2;
- 	__le32 cmd;
-
----
-base-commit: 9c32cda43eb78f78c73aee4aa344b777714e259b
-change-id: 20250424-qpic-snand-remove-wlen-c0cef3801a7f
-
-Best regards,
--- 
-Gabor Juhos <j4g8y7@gmail.com>
-
+Rob
 
