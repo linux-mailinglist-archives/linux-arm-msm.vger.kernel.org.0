@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-55400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A1C0A9AEB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 15:15:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2A70A9AEC6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 15:17:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB04118855E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 13:15:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 06AF93B65EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 13:16:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1703F27D79B;
-	Thu, 24 Apr 2025 13:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED4A927C15E;
+	Thu, 24 Apr 2025 13:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="agzdKqoQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QK1Rt7Pi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D815527CCD3;
-	Thu, 24 Apr 2025 13:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E46221FAA;
+	Thu, 24 Apr 2025 13:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745500530; cv=none; b=r7iQ1dsZt8LMvnNzoBOGW0d4flKu5+7Wr7ovR17BWG2eqwh/Av5rsTrl6t4Cw1eo8TaTaa6sc+2fhh1AeXSXZiXx17SRNwZhvHprhk6v/QU0cu6UqIdpu0DE9ynQJ2I0zzBenIslOKU7X6ZHvVUgtjKK2Zv4bxUfzAr9UOmkSaI=
+	t=1745500603; cv=none; b=QcgNo7UjrzaS2+t/h2jAAjlIPGZrdeUITnASBGZb3rY5gr1C6IOiHFmAIbyf1glwPnMykJlEqeHdAeQ8YPyYM4wQ3uxtKKyBdCBhQ2MvHHLJD64b6TBKH6e/+fM7klYHLZOVewnHjq/DrvswLKmlbPtoFsfR9SSM7G1gFhfOlEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745500530; c=relaxed/simple;
-	bh=6revvVVhRd4vMEsIX5cXh8CkmckdE8eSYHBQbAtAcdY=;
+	s=arc-20240116; t=1745500603; c=relaxed/simple;
+	bh=FoS91EweKjkPkrPYIt/JPpjGNtuk+G6YDWUkr6+gAtI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bQ2so+7apQV8HBrmBJUbSb1prx4hVV1Zi/b14tf40rgJFpSiqoOH7ylM4WK4YXC62FzyvYXPp65AsxFIZBqWNzx8CclTOlI6Vu9BWrWygVh5xyLvkcpvq4MkIFqInm/trkgYdTuRDMWZCFFnzHr1HqdIDeCuAFK2hAFoh/JD3ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=agzdKqoQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0E0C4CEE3;
-	Thu, 24 Apr 2025 13:15:25 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=VVjicuLlA8WS+kDMBf/9qREZjViaQobECVWXdmd2xEhefqO8fCXP30nK0YrpZzdQJY0q5lL1ZQuA7u9ez4mR0yATFDsXeE5yZISIkZ90sW0QR41/oRxDoNIGB1YluJZbk7Xnxl0hN+862XO3Mr0W0/Fij12laAQ2h894PSXHI4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QK1Rt7Pi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8FEC4CEE3;
+	Thu, 24 Apr 2025 13:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745500529;
-	bh=6revvVVhRd4vMEsIX5cXh8CkmckdE8eSYHBQbAtAcdY=;
+	s=k20201202; t=1745500603;
+	bh=FoS91EweKjkPkrPYIt/JPpjGNtuk+G6YDWUkr6+gAtI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=agzdKqoQBB2FMs7cqK1RmXVZqD1grWy2E+ukkzybd9k0mTq1QiDMOt5Z6C+vg+fXw
-	 VHe8+pEzSjLVEWKEAPVHvinv9/JH5mfNsfNVGiDjNlIsLRyuA0Qq6izqVaCGhZ32CM
-	 piFlIC+U62ttvHviPz+iwTA1U/2IyNfzvwAed9n7IXzrK+83ynrT1Fm9EprOzgj4Ow
-	 lYC1Kv8xJsfs8ms8PHgu1ugZHCU5y2dNwQin51yX3MpNKa684p9hzfzIhd5N0FJFSW
-	 S8Bvlm/KyO0mZupC3yoIxxan+Sr9Ww1K17574t7YAPsFrzO+Pt2KV+dqOI8ad7rMyt
-	 H47Z/P3HZrTpA==
-Message-ID: <cf741154-5772-4328-bfd0-fe5d83c75f72@kernel.org>
-Date: Thu, 24 Apr 2025 15:15:23 +0200
+	b=QK1Rt7Pi8fP/SxHbOhnp1Cn5bLQgbVXpW7bkFYM9cPuoYW7EhjbPh8PP15X31wEyH
+	 QqE4G1IBzKFCF2wn6fy/lvbYRT+GfnzYjyQ5bIFBeSrs7+kuup4A8k6TnTjuvXEcrv
+	 xZwHy8w7Am5vxR27JRjQ0fhTjPfd/71Pv5qBtRWtfop+Lf7DPldjvQmvUbhNzMguE5
+	 l/ZPiDYwit9I894ycUVpeZqebMzu6IvY5kk2N1qoaXkw7KokYNE7ygknKrz/iAjsa6
+	 ImMYzBYtlJ4wQPqfqOQ6iTBz+bTGCGM/sqiVsYjpN8KkHFFI0YEB3U0OWUdBRGItZP
+	 PDctgGJPM8D0w==
+Message-ID: <2d01bcd6-80e1-4c15-ab23-b5ea5b90f2b1@kernel.org>
+Date: Thu, 24 Apr 2025 15:16:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 07/10] arm64: dts: qcom: sm8750: Add USB support to
- SM8750 SoCs
+Subject: Re: [PATCH v5 10/10] arm64: defconfig: Add M31 eUSB2 PHY config
 To: Melody Olvera <melody.olvera@oss.qualcomm.com>,
  Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -63,10 +62,9 @@ To: Melody Olvera <melody.olvera@oss.qualcomm.com>,
  Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+ linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 References: <20250421-sm8750_usb_master-v5-0-25c79ed01d02@oss.qualcomm.com>
- <20250421-sm8750_usb_master-v5-7-25c79ed01d02@oss.qualcomm.com>
+ <20250421-sm8750_usb_master-v5-10-25c79ed01d02@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,28 +110,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250421-sm8750_usb_master-v5-7-25c79ed01d02@oss.qualcomm.com>
+In-Reply-To: <20250421-sm8750_usb_master-v5-10-25c79ed01d02@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 22/04/2025 00:00, Melody Olvera wrote:
-> From: Wesley Cheng <quic_wcheng@quicinc.com>
-> 
-> Add the base USB devicetree definitions for SM8750 platforms.  The overall
-> chipset contains a single DWC3 USB3 controller (rev. 200a), SS QMP PHY
-> (rev. v8) and M31 eUSB2 PHY.  The major difference for SM8750 is the
-> transition to using the M31 eUSB2 PHY compared to previous SoCs.
-> 
-> Enable USB support on SM8750 MTP and QRD variants. SM8750 has a QMP combo
-> PHY for the SSUSB path, and a M31 eUSB2 PHY for the HSUSB path.
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> Signed-off-by: Melody Olvera <melody.olvera@oss.qualcomm.com>
-> ---
+> The SM8750 SoCs use an eUSB2 PHY driver different from the
 
+Qualcomm SM8750
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+That's a defconfig for all vendors.
+
+> already existing M31 USB driver because it requires a connection
+> to an eUSB2 repeater. Thus, for USB to probe and work properly on
+> SM8750, enable the additional driver.
+
+Commit msg should mention which board uses it.
 
 Best regards,
 Krzysztof
