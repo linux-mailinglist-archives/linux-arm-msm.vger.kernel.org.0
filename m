@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-55444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10A23A9B24C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 17:30:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57490A9B253
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 17:31:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C4E1F9A0F60
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 15:29:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7B33F1B86272
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 15:31:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B100221858E;
-	Thu, 24 Apr 2025 15:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D09E1991B2;
+	Thu, 24 Apr 2025 15:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q8U14aE6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X4CBKwly"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA361DDA32;
-	Thu, 24 Apr 2025 15:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BCE944C77;
+	Thu, 24 Apr 2025 15:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745508591; cv=none; b=scEZkzWFmsBgYFc/EI094vs3JJYZBRgJMTkp2ccc88axN+BvueNZI9xgm16YiEvQoSXLgE7R5wGiRLRAvA8w8TWNJmHDktFDmPzDppBcZjUJeTP1wCIUMe/zlvN05SOKXI8o7j8+67I4pgT1nuGnuEa1YmcGJ7kDCWRbm/gWne4=
+	t=1745508684; cv=none; b=a8Gt7NerOQjgz9IRYee7LJpIRrCE/MAia2TmsbJBTM9vwBhMaFmlO55oD5/vWVrRJnGin0DT5M0HO4R4mFWmAEO1rgMktWGo04aAoRFWhCruubi+Z3DMj+21P40PgFoFjVfIXxEzq6VCP9czCngUdnAbU0nmU7GCnNFWw7b4zoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745508591; c=relaxed/simple;
-	bh=TCVusWIEK4g/0u2BRPMJpmbAHQWi1WuKv5oV7hYjpQg=;
+	s=arc-20240116; t=1745508684; c=relaxed/simple;
+	bh=ggnqC+sRhooCK5oEVXjCBnDM2VOyq0O6DNpXNKZNRF8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m2zzFQ0yT+LhiJBzCjQNNadhdVLqgH0gBMHuL0RZAjNhpneV/12Rl9F4kakY4Qj98zfR3n5YN3xwYR301bDYX+yB2iflO+Lutm2bWjYpzWVQgHGrokitAmCw+qe4hvCqQucCbzKSxeCqVGto46lZh/KX4RS3BxS0bfLnELp76sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q8U14aE6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD411C4CEE3;
-	Thu, 24 Apr 2025 15:29:46 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=TQAChfY7hIQkW3+PY89C5LIm4dq+odpPkdSagb1R7kccJwHQZCohhqT19uyY8SkDff5YdDtCu6pT+34xuGWTWOsaFBgUaTfPMrHQGeo+2C55c8Yqtlw3HV4lteW7+4ZHfwS+dGYsNGXqTiJsc8JcRYX38kN6dNcB8cQmcgYeG6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X4CBKwly; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278D1C4CEE3;
+	Thu, 24 Apr 2025 15:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745508591;
-	bh=TCVusWIEK4g/0u2BRPMJpmbAHQWi1WuKv5oV7hYjpQg=;
+	s=k20201202; t=1745508683;
+	bh=ggnqC+sRhooCK5oEVXjCBnDM2VOyq0O6DNpXNKZNRF8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Q8U14aE6/cJ+ZKQgMA6I1Bk0+Qx4HU1wfm4PwP9rGyvtqhtm48FzsJ+25IXKvOfko
-	 ErgCarJWYCbOIP1PmjKEZHFjIrDVqWTJwAk4jtM+2i7Mg7cWJLDYXhch14V++8pYpQ
-	 1gyLGNa2MCrhpY7g+iY3Ui2IbbX67Dt1eeqohAftMgEg1dK0r7dMVa2UmipIe9dNF5
-	 GQHIFLnvs5WLIgoaycfeGEVl/EdQgfr61H3cSfIKbUO4M2byBeOa2Z+Ambzzpbxj81
-	 4YgsEN4T4yOR7/rBGi4q0CeSCFsQK/Ja+8I8KkELYju7iZVAZH/JbielqPoNZclIiz
-	 vjZrU+5g7OV9g==
-Message-ID: <3bbef5c3-1859-4a4a-b25a-83428dc15e98@kernel.org>
-Date: Thu, 24 Apr 2025 17:29:44 +0200
+	b=X4CBKwly6dh6eQb/Hq2ar0IvUVwlmhzEkl43VEf2jmIptexk12GVwoq+HWxHPsNGH
+	 5cAUNxTb/Q7gfF2oChV35sdQpHx7aLpYs3XmO6989GRDlHe2+A1e7Y2Q0vUVUmMInu
+	 Vl4ogRz8gjnCkT+MRPAzIBYQcZP+5uDtU6a38u6cmti+0PfNOLMod5bYQZn2xB3Qyw
+	 zlTmTtRbdqXiQTm0u4kGgYICzkoypjWeMfnTnDfyJ1X6UCRgUgE9ZKsev4C/7iLcoD
+	 Tn2jUze8MVlhS0Q90qAiMp8Ll3d0d9BkUKtGgT/kqj52gZoK0UcdQxx3M3rkmwfhuf
+	 Ux/AC95mz54ug==
+Message-ID: <1355515c-477e-455c-a910-a69dc1b77f07@kernel.org>
+Date: Thu, 24 Apr 2025 17:31:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 00/10] Add support for videocc, camcc, dispcc and gpucc
- on Qualcomm QCS615 platform
+Subject: Re: [PATCH v8 06/10] dt-bindings: clock: Add Qualcomm QCS615 Graphics
+ clock controller
 To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
  <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
  Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -62,12 +62,9 @@ Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
  Imran Shaik <quic_imrashai@quicinc.com>,
  Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
  linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Dmitry Baryshkov <lumag@kernel.org>
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 References: <20250424-qcs615-mm-v7-clock-controllers-v8-0-bacad5b3659a@quicinc.com>
- <94a5f0d7-b152-4fe3-b312-a0f7792cc076@kernel.org>
- <8552c048-df45-49ba-83b3-5c39d4b770fe@quicinc.com>
+ <20250424-qcs615-mm-v7-clock-controllers-v8-6-bacad5b3659a@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,34 +110,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <8552c048-df45-49ba-83b3-5c39d4b770fe@quicinc.com>
+In-Reply-To: <20250424-qcs615-mm-v7-clock-controllers-v8-6-bacad5b3659a@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/04/2025 13:13, Taniya Das wrote:
+On 24/04/2025 11:33, Taniya Das wrote:
+> Add DT bindings for the Graphics clock on QCS615 platforms. Add the
+> relevant DT include definitions as well.
 > 
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,qcs615-gpucc.yaml          | 49 ++++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,qcs615-gpucc.h      | 39 +++++++++++++++++
+>  2 files changed, 88 insertions(+)
 > 
-> On 4/24/2025 4:40 PM, Krzysztof Kozlowski wrote:
->> On 24/04/2025 11:32, Taniya Das wrote:
->>> Add support for multimedia clock controllers on Qualcomm QCS615 platform.
->>> Update the defconfig to enable these clock controllers.
->>>
->>> Global clock controller support
->>> https://lore.kernel.org/all/20241022-qcs615-clock-driver-v4-0-3d716ad0d987@quicinc.com/
->>>
->>> Changes in v8:
->>> - Drop the properties which are already covered as part of gcc.yaml [Krzysztof]
->>> - Drop the RB tag for dt-bindings for Camera clock controller.
->>
->> Why?
-> 
-> It had comments, so wanted to share the latest RB-by.
-So there were some comments and that's the basis to ask to do review
-twice? So anyone can comment on anything and you will remove people's
-review? I am not going through this again.
 
-Read carefully:
-https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
