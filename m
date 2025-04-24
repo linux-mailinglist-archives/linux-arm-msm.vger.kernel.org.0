@@ -1,78 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-55429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90D6CA9B0A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:23:39 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10EA3A9B0B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:25:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 15665188041E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:23:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5EF1F7B73F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:22:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A55142918EC;
-	Thu, 24 Apr 2025 14:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 996D429291C;
+	Thu, 24 Apr 2025 14:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l2sDkHvc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rQRWxIZ8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7559291148
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:14:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE840291171
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:14:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745504063; cv=none; b=r+ebFqmnBDmdIKkJKDJZZSNx1i5EMXyVj+zBkA47DemI3eA9WmnFgS3l/46AMfTk5FWD6Tl2F+7puQjRQDxUs5hSLrrEuxIj9H7f3pKrl/cjVCQCy01tpfjEHryHEhwvZLgiGrMO4S242olV4YSI6q8+z/au3iKq6IJOxb97YK8=
+	t=1745504064; cv=none; b=XhxHVzaMdGapTGUuKy0j3vZmklYbCJQLACaerhMlubJrOGaT2mPj33612dODlKfa46k3pnKziN87KhjoB2Sk+rmU/Yd2cNBtPMPtmY2BP1qtgPRyePTz89LxC0VpGIztMVdWL2iJEZlqKxqzsuhpc8mh+C66Rg6xFHESUQQh2uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745504063; c=relaxed/simple;
-	bh=jJJ9JgoTw3N1VJhubYw/1Fl9AFSEgg6AWN3vhACh320=;
+	s=arc-20240116; t=1745504064; c=relaxed/simple;
+	bh=l8MXGFGw31uuwPrLVCURxj+dBhiUP5Eq/JDGE+Ioyyo=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=SKfW8/vsRN+hX4Dc2XIcnROGTrnYNBeia2qEyksEEDxo9/0FiqEBjdDFOo+345G3zOoPfnRl124PHvgseUjBGHB+8rgdTfC6xvtt/fP2RCYDwbe/MiqPetd4zEVyUyjDq8TmilDWaKpB+7QU481osnodiyIfGePO9bxLMM9/qTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=l2sDkHvc; arc=none smtp.client-ip=209.85.221.46
+	 MIME-Version; b=aTchR76HhnFxPEQVix0P4olVbiBY6+BI7eyruJd5ShmPt5Gq3a+SfVFL1gDBt3kYQU1ZQ8gYCTb5JSHhMdO7L5CouEgSKps8gpqacU7giDkXZEyFtDCrLg15WX9rThNJRk15h8e+X/DMwHV3Cz/afmp+TqdeFG5eudjdK6/q0a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rQRWxIZ8; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3913958ebf2so866742f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:14:20 -0700 (PDT)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43d0c18e84eso5333545e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:14:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745504059; x=1746108859; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1745504060; x=1746108860; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JWj7uDN15UXCYW87dO7IIzOLdNiL+f7UvEUy/qTIHd4=;
-        b=l2sDkHvcTVBFdmyOzriXRy7V+POCWjRrzn/Rwj7DOrq3S1JzIBaq3FrRtBcpA8OwMp
-         Hir/SBUQIEXfJUrgAdjUlyNF563afxrDlJRhSr4WOfzLXQ2rK5TArXvAwDzZult/FV65
-         r6DDBHUY/qeAzFATXGba6ZBggzU9VoaB3DAyorTkS/mCC3BTqRiL8DiG6m53eEtZrwFJ
-         l89nyucBkjfbwad8dYxizW4TuSDIOCmCHCx4QVWDoSWdokMSBungKMUDhFXwiwfG4Xhn
-         CZOnmrDGcRcaau6dmfP0X/dN4oXzEgXEfA9EON6B3BMxVTgXNZST8w+6qss5uRZmoLmm
-         5KKg==
+        bh=ULK/WgQrAoOKgv7yTbnqoplbgLc/ybTV2ol4z7wD4V8=;
+        b=rQRWxIZ8fpXO6y7A7UEoBuCu58ZSGVRY0fjpUvj5yf8BrVkOihzZTjogYnJHmrD9OG
+         5bBkzKMlKMuW7rijJvKvn5tzGE4ax3rinG5VQMmuwWDDuQieJiCbQmPJDAMonyD/KNBe
+         cfZbIYruffocTqvtlrq7tyjPuoXof+RxuzdU2huHJcpAqTA1ujaVCIQRTZKoTztXvzwh
+         qZMS1XOZsce0KykvQTP+oDgnnDxzTkiBHhsH6l3NUVVKKeZ39mJEAUhN2/65eho8OO4X
+         IHXSFmu5YI3FeaFhWrHR1akw5UVoAhlIobKVnFlNNIkIfax5YE5OOBHoU4//QWZhg5DI
+         vofQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745504059; x=1746108859;
+        d=1e100.net; s=20230601; t=1745504060; x=1746108860;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JWj7uDN15UXCYW87dO7IIzOLdNiL+f7UvEUy/qTIHd4=;
-        b=xFxN5aKiWJPKkhHdwftYtrsES4R1FPLJNNiNyHLvLsDAz8b37W69LOn6npQZKIdrw1
-         5p1SJ+k6h+SuHyFKPRiLdD+BMQ4mbbwKCZhFiUHzABGoP6KI10mKqZGI/H9xwxDDwReZ
-         ldyl9PBYjMUIpyj6vTvtaUbJbajuKtxxiMnhSX/G64jgR2R4deaNajI3MfiYTV/r52Dh
-         Smd3255EEk6s0Sy7r/KDBwLeh1vCQvGgMfJZLNFvVoV+16rc7xEM5f2L05zAZ02OtPBl
-         E9FG3aJI2rzPd8XV7irpEfD5OjoYJf+lCS2VcMvmwVCgNNfzVv2Z621Sw8mtFo24O0Ze
-         LHNQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUu9cQFqOWn2tpeK5WZ4/Hcim4tTnqplWKlvYvCzYsbs/5m6V+Y0ohMnA23blnemO6LtWB3cl3wXcapcqkf@vger.kernel.org
-X-Gm-Message-State: AOJu0YxLRlW2rOqQSSTNbVau4E/8oBwfn2u37Y7CYN3WwnpBvgVbu0Tf
-	asWKHZH9u+7NlraD2R0vjZs6Ut1DfFyHs9fjJjixvmEUNGee07EPNaNrPpk+EqU=
-X-Gm-Gg: ASbGncsqKdzHfPeYZttWaVAbav2Dh5wt2C1cK1DBUkK5X2wf5+U+0J20U6au0GvetsY
-	ejbbu1ibAGhNlwbdhQURmgPv/oilNBBPPcHc9xlDuWKyRKd9u9dDWU3GWUlDk9FIzvWMDzaZ1Vd
-	/k1Fy4wRR6g9JL9iSihEYs4BjQkpypkee0YbTxeY6KBef2hXSIUza1RVHN+6J7nfWll8FsAbF9Y
-	2lE+SE5v89jFYp1S7wNZEjGIpSkvROy88Pttg0xmm2p8Bda4JtssWi2C6kX0Rzqx0dUimQj2FfR
-	bOuYOBpNWxMp1TPFrNk1UccOvDf6I77ZxBl9HHbkiHqlkKt/sB0BiA/cCnNfxHrALmzRX8GoaoX
-	sNx+s/28maIqZGDQ6rEHxgM/A8KE=
-X-Google-Smtp-Source: AGHT+IEZ62CGRLn02mw6Sp1FYoWsMMZ/LoDmb0ZQtBfZ0JQt0jIozyM3jnvRsN2MwUnOvlF4h+jCiw==
-X-Received: by 2002:a05:6000:184c:b0:39f:64ff:668d with SMTP id ffacd0b85a97d-3a06cfa5a65mr2546775f8f.40.1745504058677;
-        Thu, 24 Apr 2025 07:14:18 -0700 (PDT)
+        bh=ULK/WgQrAoOKgv7yTbnqoplbgLc/ybTV2ol4z7wD4V8=;
+        b=WNeSDdm+6G3pFFBmoHDLI23g+ePXZSd6Ms1Za0TjhiSIVZHrR7bylyBKeQNNV8ZRI/
+         FaYoWWfmUx/AMDYvrj2nWtkZ4AunVGu7BUWd+vxTqtH6yGsDKPK+qpIhnY1uaBEwv9+0
+         4obmWhaoMY7uzUgxWj66XD/A7ScTsNVLOCI4wIgPbn9WYxl2Xz80KkOwo7dcFTPIaKUD
+         bYMl/by1jiEzsuT+LS7swch2WHtPYzQP6fQ/rR38/l/vBIGAKA4F2XGzcGztABmaNkrc
+         eDIPPEPHaLl/sSjM+w3+qZxefAulrOpK1xClqT2rpbrprF29TmaXEkRogB7sDGNaSYeC
+         jp+A==
+X-Forwarded-Encrypted: i=1; AJvYcCVY5u/f9iK3MmmMvPgQdeT9t2fFrYnAEo8EYIgOQweu27XYaMV6JZ+jmkiuclRWbXwnoc3GuvgKBq8Al2vo@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6vTtwrhwM0B1T5D+L615WogVVHqAPyzOODPQLlJuE6xidT/GH
+	IyCG0m9Zw+BIjsPmWKNanZm8UZbadncWKBczDrKmYkqGt8RchsMKiHsrP4Xwhfo2W4wuv3gqDR6
+	p
+X-Gm-Gg: ASbGncuZYy9q3QaTNebcH7jzxhSuVImvdIUffB3I03gYPpi1I3PJxxH0mjdCKxKVufl
+	VkebxIperHOoVKFKZalyk9CvUT3W3f+dB3pza/vu0hN2Sy3Q1D6ztbwPitvTbBwErABB8GgvJFK
+	wAPT4Pn1Sr7oDwkF5FZMXUs++vG28kD4zu1S9QfbfcFmQwTue1rZpahc6PHDZKgV5hizTk0ngOZ
+	N2vw/2LCF3LioCO7jepwo1RtOEQum+MUOyYE3dbVW6QoSQK8EsuKCxGdmEUIOK5YWOJxyxeMDzo
+	Y/w2YAhn3MsDJ4ASCXeQjEGg91s5v/8GmjIieGd5XEK4knYmY6bimQYGF0O5VWJLxlco22s6SW9
+	7V93gfDSaSHyCLw53
+X-Google-Smtp-Source: AGHT+IFE5/vk9/X0Lu9aLCAdTyRnF+oi4a9Eo+hij9nbvfLjJtzlSBwWD4MqvNxQh/Fi8Qjri674AQ==
+X-Received: by 2002:a05:6000:220c:b0:3a0:65bc:3543 with SMTP id ffacd0b85a97d-3a06cf65a2bmr2283431f8f.35.1745504059899;
+        Thu, 24 Apr 2025 07:14:19 -0700 (PDT)
 Received: from seksu.systems-nuts.com (stevens.inf.ed.ac.uk. [129.215.164.122])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a06d4a8150sm2199951f8f.7.2025.04.24.07.14.17
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a06d4a8150sm2199951f8f.7.2025.04.24.07.14.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 07:14:18 -0700 (PDT)
+        Thu, 24 Apr 2025 07:14:19 -0700 (PDT)
 From: Karim Manaouil <karim.manaouil@linaro.org>
 To: linux-kernel@vger.kernel.org,
 	kvm@vger.kernel.org,
@@ -102,12 +103,10 @@ Cc: Karim Manaouil <karim.manaouil@linaro.org>,
 	Murali Nalajala <mnalajal@quicinc.com>,
 	Sreenivasulu Chalamcharla <sreeniva@qti.qualcomm.com>,
 	Trilok Soni <tsoni@quicinc.com>,
-	Stefan Schmidt <stefan.schmidt@linaro.org>,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	Alex Elder <elder@linaro.org>
-Subject: [RFC PATCH 25/34] gunyah: Add Qualcomm Gunyah platform ops
-Date: Thu, 24 Apr 2025 15:13:32 +0100
-Message-Id: <20250424141341.841734-26-karim.manaouil@linaro.org>
+	Stefan Schmidt <stefan.schmidt@linaro.org>
+Subject: [RFC PATCH 26/34] gunyah: Share memory parcels
+Date: Thu, 24 Apr 2025 15:13:33 +0100
+Message-Id: <20250424141341.841734-27-karim.manaouil@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250424141341.841734-1-karim.manaouil@linaro.org>
 References: <20250424141341.841734-1-karim.manaouil@linaro.org>
@@ -119,291 +118,108 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Elliot Berman <quic_eberman@quicinc.com>
+Gunyah Resource Manager sets up a virtual machine based on a device
+tree which lives in guest memory. Resource manager requires this memory
+to be provided as a memory parcel for it to read and manipulate.
+Implement a function to construct a memory parcel from the guest's
+pinned memory pages.
 
-Qualcomm platforms have a firmware entity which performs access control
-to physical pages. Dynamically started Gunyah virtual machines use the
-QCOM_SCM_RM_MANAGED_VMID for access. Linux thus needs to assign access
-to the memory used by guest VMs. Gunyah doesn't do this operation for us
-since it is the current VM (typically VMID_HLOS) delegating the access
-and not Gunyah itself. Use the Gunyah platform ops to achieve this so
-that only Qualcomm platforms attempt to make the needed SCM calls.
-
-Reviewed-by: Alex Elder <elder@linaro.org>
-Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 Signed-off-by: Karim Manaouil <karim.manaouil@linaro.org>
 ---
- drivers/virt/gunyah/Kconfig       |  13 ++
- drivers/virt/gunyah/Makefile      |   1 +
- drivers/virt/gunyah/gunyah_qcom.c | 220 ++++++++++++++++++++++++++++++
- 3 files changed, 234 insertions(+)
- create mode 100644 drivers/virt/gunyah/gunyah_qcom.c
+ arch/arm64/kvm/gunyah.c | 80 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 80 insertions(+)
 
-diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
-index 23ba523d25dc..fe2823dc48ba 100644
---- a/drivers/virt/gunyah/Kconfig
-+++ b/drivers/virt/gunyah/Kconfig
-@@ -4,6 +4,7 @@ config GUNYAH
- 	tristate "Gunyah Virtualization drivers"
- 	depends on ARM64
- 	select GUNYAH_PLATFORM_HOOKS
-+	imply GUNYAH_QCOM_PLATFORM if ARCH_QCOM
- 	help
- 	  The Gunyah drivers are the helper interfaces that run in a guest VM
- 	  such as basic inter-VM IPC and signaling mechanisms, and higher level
-@@ -14,3 +15,15 @@ config GUNYAH
+diff --git a/arch/arm64/kvm/gunyah.c b/arch/arm64/kvm/gunyah.c
+index 7216db642174..ef0971146b56 100644
+--- a/arch/arm64/kvm/gunyah.c
++++ b/arch/arm64/kvm/gunyah.c
+@@ -634,6 +634,86 @@ static int gunyah_memory_reclaim_folio(struct gunyah_vm *ghvm,
+ 	return ret;
+ }
  
- config GUNYAH_PLATFORM_HOOKS
- 	tristate
-+
-+config GUNYAH_QCOM_PLATFORM
-+	tristate "Support for Gunyah on Qualcomm platforms"
-+	depends on GUNYAH
-+	select GUNYAH_PLATFORM_HOOKS
-+	select QCOM_SCM
-+	help
-+	  Enable support for interacting with Gunyah on Qualcomm
-+	  platforms. Interaction with Qualcomm firmware requires
-+	  extra platform-specific support.
-+
-+	  Say Y/M here to use Gunyah on Qualcomm platforms.
-diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
-index 45cabba3110c..349c37e9f0ad 100644
---- a/drivers/virt/gunyah/Makefile
-+++ b/drivers/virt/gunyah/Makefile
-@@ -4,3 +4,4 @@ gunyah_rsc_mgr-y += rsc_mgr.o rsc_mgr_rpc.o
- 
- obj-$(CONFIG_GUNYAH) += gunyah.o gunyah_rsc_mgr.o
- obj-$(CONFIG_GUNYAH_PLATFORM_HOOKS) += gunyah_platform_hooks.o
-+obj-$(CONFIG_GUNYAH_QCOM_PLATFORM) += gunyah_qcom.o
-diff --git a/drivers/virt/gunyah/gunyah_qcom.c b/drivers/virt/gunyah/gunyah_qcom.c
-new file mode 100644
-index 000000000000..f2342d51a018
---- /dev/null
-+++ b/drivers/virt/gunyah/gunyah_qcom.c
-@@ -0,0 +1,220 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#include <linux/arm-smccc.h>
-+#include <linux/gunyah.h>
-+#include <linux/mm.h>
-+#include <linux/module.h>
-+#include <linux/firmware/qcom/qcom_scm.h>
-+#include <linux/types.h>
-+#include <linux/uuid.h>
-+
-+#define QCOM_SCM_RM_MANAGED_VMID 0x3A
-+#define QCOM_SCM_MAX_MANAGED_VMID 0x3F
-+
-+static int
-+qcom_scm_gunyah_rm_pre_mem_share(struct gunyah_rm *rm,
-+				 struct gunyah_rm_mem_parcel *mem_parcel)
++static int gunyah_share_memory_parcel(struct gunyah_vm *ghvm,
++		struct gunyah_rm_mem_parcel *parcel, gfn_t gfn, u64 nr)
 +{
-+	struct qcom_scm_vmperm *new_perms __free(kfree) = NULL;
-+	u64 src, src_cpy;
-+	int ret = 0, i, n;
-+	u16 vmid;
++	struct kvm *kvm = &ghvm->kvm;
++	struct kvm_memory_slot *memslot;
++	struct page **pages;
++	int ret;
++	u64 i;
 +
-+	new_perms = kcalloc(mem_parcel->n_acl_entries, sizeof(*new_perms),
-+			    GFP_KERNEL);
-+	if (!new_perms)
++	if (!nr)
++		return -EINVAL;
++
++	memslot = gfn_to_memslot(kvm, gfn);
++	if (!memslot)
++		return -ENOENT;
++
++	parcel->mem_entries = kcalloc(nr, sizeof(*parcel->mem_entries), GFP_KERNEL);
++	if (!parcel->mem_entries)
 +		return -ENOMEM;
++	parcel->n_mem_entries = nr;
 +
-+	for (n = 0; n < mem_parcel->n_acl_entries; n++) {
-+		vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
-+		if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
-+			new_perms[n].vmid = vmid;
-+		else
-+			new_perms[n].vmid = QCOM_SCM_RM_MANAGED_VMID;
-+		if (mem_parcel->acl_entries[n].perms & GUNYAH_RM_ACL_X)
-+			new_perms[n].perm |= QCOM_SCM_PERM_EXEC;
-+		if (mem_parcel->acl_entries[n].perms & GUNYAH_RM_ACL_W)
-+			new_perms[n].perm |= QCOM_SCM_PERM_WRITE;
-+		if (mem_parcel->acl_entries[n].perms & GUNYAH_RM_ACL_R)
-+			new_perms[n].perm |= QCOM_SCM_PERM_READ;
++	pages = memslot->arch.pages + (gfn - memslot->base_gfn);
++
++	for (i = 0; i < nr; i++) {
++		parcel->mem_entries[i].size = cpu_to_le64(PAGE_SIZE);
++		parcel->mem_entries[i].phys_addr = cpu_to_le64(page_to_phys(pages[i]));
 +	}
 +
-+	src = BIT_ULL(QCOM_SCM_VMID_HLOS);
-+
-+	for (i = 0; i < mem_parcel->n_mem_entries; i++) {
-+		src_cpy = src;
-+		ret = qcom_scm_assign_mem(
-+			le64_to_cpu(mem_parcel->mem_entries[i].phys_addr),
-+			le64_to_cpu(mem_parcel->mem_entries[i].size), &src_cpy,
-+			new_perms, mem_parcel->n_acl_entries);
-+		if (ret)
-+			break;
++	parcel->n_acl_entries = 1;
++	parcel->acl_entries = kcalloc(parcel->n_acl_entries,
++				      sizeof(*parcel->acl_entries), GFP_KERNEL);
++	if (!parcel->n_acl_entries) {
++		ret = -ENOMEM;
++		goto free_entries;
 +	}
++	parcel->acl_entries[0].vmid = cpu_to_le16(ghvm->vmid);
++	parcel->acl_entries[0].perms |= GUNYAH_RM_ACL_R;
++	parcel->acl_entries[0].perms |= GUNYAH_RM_ACL_W;
++	parcel->acl_entries[0].perms |= GUNYAH_RM_ACL_X;
++	parcel->mem_handle = GUNYAH_MEM_HANDLE_INVAL;
 +
-+	/* Did it work ok? */
-+	if (!ret)
-+		return 0;
++	ret = gunyah_rm_mem_share(ghvm->rm, parcel);
++	if (ret)
++		goto free_acl;
 +
-+	src = 0;
-+	for (n = 0; n < mem_parcel->n_acl_entries; n++) {
-+		vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
-+		if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
-+			src |= BIT_ULL(vmid);
-+		else
-+			src |= BIT_ULL(QCOM_SCM_RM_MANAGED_VMID);
-+	}
-+
-+	new_perms[0].vmid = QCOM_SCM_VMID_HLOS;
-+	new_perms[0].perm = QCOM_SCM_PERM_EXEC | QCOM_SCM_PERM_WRITE |
-+			    QCOM_SCM_PERM_READ;
-+
-+	for (i--; i >= 0; i--) {
-+		src_cpy = src;
-+		WARN_ON_ONCE(qcom_scm_assign_mem(
-+			le64_to_cpu(mem_parcel->mem_entries[i].phys_addr),
-+			le64_to_cpu(mem_parcel->mem_entries[i].size), &src_cpy,
-+			new_perms, 1));
-+	}
++	return ret;
++free_acl:
++	kfree(parcel->acl_entries);
++	parcel->acl_entries = NULL;
++free_entries:
++	kfree(parcel->mem_entries);
++	parcel->mem_entries = NULL;
++	parcel->n_mem_entries = 0;
 +
 +	return ret;
 +}
 +
-+static int
-+qcom_scm_gunyah_rm_post_mem_reclaim(struct gunyah_rm *rm,
-+				    struct gunyah_rm_mem_parcel *mem_parcel)
++static int gunyah_reclaim_memory_parcel(struct gunyah_vm *ghvm,
++		struct gunyah_rm_mem_parcel *parcel, gfn_t gfn, u64 nr)
 +{
-+	struct qcom_scm_vmperm new_perms;
-+	u64 src = 0, src_cpy;
-+	int ret = 0, i, n;
-+	u16 vmid;
++	int ret;
 +
-+	new_perms.vmid = QCOM_SCM_VMID_HLOS;
-+	new_perms.perm = QCOM_SCM_PERM_EXEC | QCOM_SCM_PERM_WRITE |
-+			 QCOM_SCM_PERM_READ;
-+
-+	for (n = 0; n < mem_parcel->n_acl_entries; n++) {
-+		vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
-+		if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
-+			src |= (1ull << vmid);
-+		else
-+			src |= (1ull << QCOM_SCM_RM_MANAGED_VMID);
++	if (parcel->mem_handle != GUNYAH_MEM_HANDLE_INVAL) {
++		ret = gunyah_rm_mem_reclaim(ghvm->rm, parcel);
++		if (ret) {
++			dev_err(ghvm->parent, "Failed to reclaim parcel: %d\n",
++				ret);
++			/* We can't reclaim the pages -- hold onto the pages
++			 * forever because we don't know what state the memory
++			 * is in
++			 */
++			return ret;
++		}
++		parcel->mem_handle = GUNYAH_MEM_HANDLE_INVAL;
++		kfree(parcel->mem_entries);
++		kfree(parcel->acl_entries);
 +	}
-+
-+	for (i = 0; i < mem_parcel->n_mem_entries; i++) {
-+		src_cpy = src;
-+		ret = qcom_scm_assign_mem(
-+			le64_to_cpu(mem_parcel->mem_entries[i].phys_addr),
-+			le64_to_cpu(mem_parcel->mem_entries[i].size), &src_cpy,
-+			&new_perms, 1);
-+		WARN_ON_ONCE(ret);
-+	}
-+
-+	return ret;
++	return 0;
 +}
 +
-+static int
-+qcom_scm_gunyah_rm_pre_demand_page(struct gunyah_rm *rm, u16 vmid,
-+				   enum gunyah_pagetable_access access,
-+				   struct folio *folio)
-+{
-+	struct qcom_scm_vmperm new_perms[2];
-+	unsigned int n = 1;
-+	u64 src;
-+
-+	new_perms[0].vmid = QCOM_SCM_RM_MANAGED_VMID;
-+	new_perms[0].perm = QCOM_SCM_PERM_EXEC | QCOM_SCM_PERM_WRITE |
-+			    QCOM_SCM_PERM_READ;
-+	if (access != GUNYAH_PAGETABLE_ACCESS_X &&
-+	    access != GUNYAH_PAGETABLE_ACCESS_RX &&
-+	    access != GUNYAH_PAGETABLE_ACCESS_RWX) {
-+		new_perms[1].vmid = QCOM_SCM_VMID_HLOS;
-+		new_perms[1].perm = QCOM_SCM_PERM_EXEC | QCOM_SCM_PERM_WRITE |
-+				    QCOM_SCM_PERM_READ;
-+		n++;
-+	}
-+
-+	src = BIT_ULL(QCOM_SCM_VMID_HLOS);
-+
-+	return qcom_scm_assign_mem(__pfn_to_phys(folio_pfn(folio)),
-+				   folio_size(folio), &src, new_perms, n);
-+}
-+
-+static int
-+qcom_scm_gunyah_rm_release_demand_page(struct gunyah_rm *rm, u16 vmid,
-+				       enum gunyah_pagetable_access access,
-+				       struct folio *folio)
-+{
-+	struct qcom_scm_vmperm new_perms;
-+	u64 src;
-+
-+	new_perms.vmid = QCOM_SCM_VMID_HLOS;
-+	new_perms.perm = QCOM_SCM_PERM_EXEC | QCOM_SCM_PERM_WRITE |
-+			 QCOM_SCM_PERM_READ;
-+
-+	src = BIT_ULL(QCOM_SCM_RM_MANAGED_VMID);
-+
-+	if (access != GUNYAH_PAGETABLE_ACCESS_X &&
-+	    access != GUNYAH_PAGETABLE_ACCESS_RX &&
-+	    access != GUNYAH_PAGETABLE_ACCESS_RWX)
-+		src |= BIT_ULL(QCOM_SCM_VMID_HLOS);
-+
-+	return qcom_scm_assign_mem(__pfn_to_phys(folio_pfn(folio)),
-+				   folio_size(folio), &src, &new_perms, 1);
-+}
-+
-+static struct gunyah_rm_platform_ops qcom_scm_gunyah_rm_platform_ops = {
-+	.pre_mem_share = qcom_scm_gunyah_rm_pre_mem_share,
-+	.post_mem_reclaim = qcom_scm_gunyah_rm_post_mem_reclaim,
-+	.pre_demand_page = qcom_scm_gunyah_rm_pre_demand_page,
-+	.release_demand_page = qcom_scm_gunyah_rm_release_demand_page,
-+};
-+
-+/* {19bd54bd-0b37-571b-946f-609b54539de6} */
-+static const uuid_t QCOM_EXT_UUID = UUID_INIT(0x19bd54bd, 0x0b37, 0x571b, 0x94,
-+					      0x6f, 0x60, 0x9b, 0x54, 0x53,
-+					      0x9d, 0xe6);
-+
-+#define GUNYAH_QCOM_EXT_CALL_UUID_ID                              \
-+	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_32, \
-+			   ARM_SMCCC_OWNER_VENDOR_HYP, 0x3f01)
-+
-+static bool gunyah_has_qcom_extensions(void)
-+{
-+	struct arm_smccc_res res;
-+	uuid_t uuid;
-+	u32 *up;
-+
-+	arm_smccc_1_1_smc(GUNYAH_QCOM_EXT_CALL_UUID_ID, &res);
-+
-+	up = (u32 *)&uuid.b[0];
-+	up[0] = lower_32_bits(res.a0);
-+	up[1] = lower_32_bits(res.a1);
-+	up[2] = lower_32_bits(res.a2);
-+	up[3] = lower_32_bits(res.a3);
-+
-+	return uuid_equal(&uuid, &QCOM_EXT_UUID);
-+}
-+
-+static int __init qcom_gunyah_platform_hooks_register(void)
-+{
-+	if (!gunyah_has_qcom_extensions())
-+		return -ENODEV;
-+
-+	pr_info("Enabling Gunyah hooks for Qualcomm platforms.\n");
-+
-+	return gunyah_rm_register_platform_ops(
-+		&qcom_scm_gunyah_rm_platform_ops);
-+}
-+
-+static void __exit qcom_gunyah_platform_hooks_unregister(void)
-+{
-+	gunyah_rm_unregister_platform_ops(&qcom_scm_gunyah_rm_platform_ops);
-+}
-+
-+module_init(qcom_gunyah_platform_hooks_register);
-+module_exit(qcom_gunyah_platform_hooks_unregister);
-+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Platform Hooks for Gunyah");
-+MODULE_LICENSE("GPL");
+ int kvm_arch_vcpu_should_kick(struct kvm_vcpu *vcpu)
+ {
+ 	return kvm_vcpu_exiting_guest_mode(vcpu) == IN_GUEST_MODE;
 -- 
 2.39.5
 
