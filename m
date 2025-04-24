@@ -1,134 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-55363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 822BCA9AA79
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 12:36:13 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CECBA9AB0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 12:52:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D36523AA629
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 10:35:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E16BC7B8756
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 10:40:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 121A02356C7;
-	Thu, 24 Apr 2025 10:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 308F3224B00;
+	Thu, 24 Apr 2025 10:38:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nsRkwkW5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FH9ORVNB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD1B2356A3;
-	Thu, 24 Apr 2025 10:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9703B221FBD;
+	Thu, 24 Apr 2025 10:38:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745490531; cv=none; b=J0hsAgUJvGrhsnKvrqQx+iQIVgZFz+IScy6VRsfXTybp2Y7kKIOg7dO1J4i7GUBLh9eNVAony7mYyz+XBDAI1mvOXz1vRSH/Wu9VGsMb9g7I+Ozi+AM0njDH+u05x3LIhIXfFbpsWRBblKK0X9TG/s8QGkBFuiVid1I5kzZilLU=
+	t=1745491106; cv=none; b=mEE/n4LMbn0l6JiNBF6LTqgOQ6t1p7lr1yi9xGPD1jeoFXRrfMV3tZ4rQWJCIHG1xfw7sUc4vSh4uS/pNhQ5JwgVgQ6nNPxeHL9xMLAXM/LUDfBFq77DXNJpbpaebt7e0aCCyKol96t5GtzeNonZCwgD2L1IvPhH7C8qOifXDIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745490531; c=relaxed/simple;
-	bh=fjBibVg0TAhDF6bexnN0iScy1Gh1RkE3bhaYxTCSFUY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=kv8NYeRzBK8/qeN4AG/lggv9s9j4sSKMNRAqw6krv60w/b/eZLiagPsOkHo3jrRO3TzmI8H+3sdGv7N8RCT2tSQCPUBeDkKjYTlUcXcAjzot5X2S+Y4YtzfdHPo54t8h4abJLNcjnJPGm/b9q5sQUbyf/Pky3/pJ8rSlQLmpxaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nsRkwkW5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53OADF1d011359;
-	Thu, 24 Apr 2025 10:28:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	uijds25zhk0ziOvFqYHAJPHCBakbQ/fBxuhU8qKq7OQ=; b=nsRkwkW5mHqFD2/q
-	hXAJ5Y5dLje7RwlUJKvMmp+V7sj8egpN7hUIZKM7jUhjdtuS4UbWL4Y0G8l/zbJ2
-	pBbBs6qnR3jb7jm3Q7Ph08lsvPSqG+TlLqxXNjcZxMDSBXAsqR7iFc9sszCQzHfe
-	EgJpPgJIEWJ3+RGsZpw/KjRMEG3zhetlyKehnGY+DBXrij4p4gUor7pIGzg3tZzV
-	xfABnRDU/I/o9y4yJjcgu8VoUC8QyuArl9Ww7NtSpDxL3A4HNmd8fmMM5BH5PXiC
-	8L/+0tyi5ke7NZOI699RksdbLa8Aeh+EEyjYOiET1xW+jnEItW6O+aGsA0cfavw8
-	/7bLHQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh256rr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 24 Apr 2025 10:28:46 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53OASj8K029304
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 24 Apr 2025 10:28:45 GMT
-Received: from [10.216.12.43] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 24 Apr
- 2025 03:28:41 -0700
-Message-ID: <d8db0361-b8d9-4ed5-0f92-f66f280f62e6@quicinc.com>
-Date: Thu, 24 Apr 2025 15:58:38 +0530
+	s=arc-20240116; t=1745491106; c=relaxed/simple;
+	bh=Nrgta2/7VEwA556j+K1CA7sPpFtBFe12i6Ec93SGicw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=dfdehJgkM866s/djmtBw9FfFfTHmp0LwAWPuwsBBDFQRv++BBiWQpCAFLgeqzNeBoFJFQMzsxH/5mPQ2IQ9Ir0nTVXeBlR0cBYTqSnNkUc0eVjI9d+kQG80TR1OClAQ999OUd6DZFpjQ0of/rXTM0CPAIMmpYPx2Of6+wqlen8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FH9ORVNB; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-736dd9c4b40so1735528b3a.0;
+        Thu, 24 Apr 2025 03:38:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745491104; x=1746095904; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Nrgta2/7VEwA556j+K1CA7sPpFtBFe12i6Ec93SGicw=;
+        b=FH9ORVNBD72y70zeWChjV33lpdCb/XitqOssOS6NauR14D6XK3XlqAv87pUHnPibv+
+         w6qcWm5/2+2OuptglAs5ntC/1tkNSAfdRc/qoreNVTxg4u62VfIV2nIw2rWwMzXTkVEw
+         +Wi/08HCs3iDKw/RT21lV2guGPlxjLMfqCORhlFE6oarMqWiabtVM/enhf6mU1B9OM8R
+         ucVVIi1pSCVbYq3iOU4/w9pVo1YM/5cZXR/kDk0ZxiMgeK7FZkA7Fz/LSwIYl4DcQRwm
+         2GjQEM32v1QGadGAlv+Vjpv1pmYVIF05LAt3lERQmbwILwVoE/6NyzRL8sAdZViQRJnv
+         XElg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745491104; x=1746095904;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Nrgta2/7VEwA556j+K1CA7sPpFtBFe12i6Ec93SGicw=;
+        b=lB8ijPuCUzOq/76UKtBRXDJTgQJiCdIp5LHkOTQaG1fVbHMExLyh9foeAclm5DfgkU
+         mKD53Hx/lE7Jvgst6N+MB7edoaotOkPJ5CP7MqPZLH0FUN4R7QGIebCVzRpV3yWpyRQ1
+         1mYj71sHygAGvZIIMvFLx2jbXNThmqBOoO72kqmbcv3bcYoKrtu/zVPQteEMZbLwdS7G
+         5naD+XXxb30U64stOehcTDCFa0h5wsErjcMt7nBznfq7uIIrr3lXVUcjxh6o845ve0KD
+         waNOy473eCem/zo/uCGkI3/YeclvShPuWOC1YK8wSkttGcrfGq0LudaQ57IXBL9KZOXo
+         rxYg==
+X-Forwarded-Encrypted: i=1; AJvYcCWSvfDvnK+oZwP0ogk1sgWZoD4dSitiCIfDouAzBOthwCNRVIHv4wxiePvAhjb8xrvhKNJgM9jAxkmbvxae@vger.kernel.org, AJvYcCWlEQxQGdp2CzPz85nhvER6ojgr0B1YWw3tZMHX3GG4SLhAVCEVezxvo6JPdjWvARBJtcO1eLHe+MJJiov7@vger.kernel.org
+X-Gm-Message-State: AOJu0YwPNMhSTmxc7GC9ynHSHEeYx8qPaCEYqk53vRebsftOVhs5O6kQ
+	z/Izj6Pk1kzt2itRwyJQEp3xMGaea2FKul83bER5KGXkbgvTigas
+X-Gm-Gg: ASbGncvp39EkbqynQ6IzQaCum3ffqbvbIspc4a2UP9mZcLzJIDpvgqNkzsaPOqGON/Y
+	QDB7+pkqlu5rtmnFUrs+O5z6cUnnh0qUq2CtxGZdBrJLzrbwbtWAVnXYpLvD/LiKIxQqdyY39mO
+	xrdLvbpi7NoZCe3pilIit/uLedS/jKbrl+SUvOk1M4UgOeu/rGSlfVFa3FWftDhy+0fT/tAxx5Z
+	Tzh5+FCLECpMJMrrui9YJ7xTRYD1+7l8YPhqTrdjDyICKrr8WdS1Zri0juiF1BtkEVL0iYsDtSm
+	CpThpf5ns5oC3cR1W458vLsaM+TiNvmVypwKUD4=
+X-Google-Smtp-Source: AGHT+IFblAEa2IajwDR48LGObFOr5YUTTm5hJ8f17L8YWgIJiEYZv9GGeLnUC1zETXQSojboHqvwfg==
+X-Received: by 2002:a05:6a21:9102:b0:1ee:d664:17a4 with SMTP id adf61e73a8af0-20445dea998mr2677158637.10.1745491103634;
+        Thu, 24 Apr 2025 03:38:23 -0700 (PDT)
+Received: from nuvole.. ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b15fa80fa97sm887608a12.51.2025.04.24.03.38.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Apr 2025 03:38:23 -0700 (PDT)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: jun.nie@linaro.org
+Cc: airlied@gmail.com,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	marijn.suijten@somainline.org,
+	mitltlatltl@gmail.com,
+	quic_abhinavk@quicinc.com,
+	quic_jesszhan@quicinc.com,
+	robdclark@gmail.com,
+	sean@poorly.run,
+	simona@ffwll.ch
+Subject: Re: [PATCH v8 00/15] drm/msm/dpu: Support quad pipe with dual-DSI
+Date: Thu, 24 Apr 2025 18:36:07 +0800
+Message-ID: <20250424103608.184295-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <CABymUCNL2FQax13vie8kqX_FpNOTZBPwKbxvKzmXHaXr2OjbAw@mail.gmail.com>
+References: <CABymUCNL2FQax13vie8kqX_FpNOTZBPwKbxvKzmXHaXr2OjbAw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v5 4/5] arm64: dts: qcom: qcs8300: add support for video
- node
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250424-qcs8300_iris-v5-0-f118f505c300@quicinc.com>
- <20250424-qcs8300_iris-v5-4-f118f505c300@quicinc.com>
- <47dtgkfqcpalixg36vxcurkmh5z52kdp7rbcvwl56wsyjsisdo@ylmmrvwde4nz>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <47dtgkfqcpalixg36vxcurkmh5z52kdp7rbcvwl56wsyjsisdo@ylmmrvwde4nz>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=EtLSrTcA c=1 sm=1 tr=0 ts=680a125e cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=hGvsmAcx_hqS3znI7bwA:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: ZPdYq27cK53dKVL1kn5e0NAcmSj0z8dU
-X-Proofpoint-ORIG-GUID: ZPdYq27cK53dKVL1kn5e0NAcmSj0z8dU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDA2NyBTYWx0ZWRfX5mxInmtVqmP4 JMcPJWwZCTWGJPRAHFYt43s8u0ozAzMwU7lOXtqZEEbT4L5faqJyEsHUWztwG1HKc/JqNi+j/Z5 ojo7xTzrWFIReI6bYrMh5v9GwyxEBg9Zx5tDpnGnwQioflF2zMEl/xKjPm2QpNYruzaVJRnuy3g
- CZ1Lj8lWa6zLUXUy0xD37Ks/4VAqYegnUOXJPzsX9B64ioQBByloqBUreBHHIWKjUVKtWPYlJ1z 7F1uQTcJC1q4OMqrDdrKFXWM1AoVf7FK3hdq1ImWhxwMAlpDApW3yC3FDuiit7acfuF8oJpZ8fE zkxDScBM6KLc5QQvESjSSMiAn+/eYR2bnU3etPter1APlqD0+K52Ex1vFbKeuJtb9Kw8yB9zPzI
- DNxOEqKaOESSQX5/dtEnvbuvLEBN+jc3P+Xu7s2dNN2XRjNxLL7Yck8u9n2Aj9Mpp3VtBS+q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.680,FMLib:17.12.80.40
- definitions=2025-04-24_05,2025-04-22_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- suspectscore=0 mlxscore=0 clxscore=1015 spamscore=0 mlxlogscore=792
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
- adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504240067
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+On Wed, Apr 23, 2025 at 10:50 AM Jun Nie <jun.nie@linaro.org> wrote:
+> Pengyu Luo <mitltlatltl@gmail.com> 于2025年4月19日周六 02:34写道：
+> >
+> > On Mon, 03 Mar 2025 23:14:29 +0800 Jun Nie <jun.nie@linaro.org> wrote:
+> > > 2 or more SSPPs and dual-DSI interface are need for super wide panel.
+> > > And 4 DSC are preferred for power optimal in this case due to width
+> > > limitation of SSPP and MDP clock rate constrain. This patch set
+> > > extends number of pipes to 4 and revise related mixer blending logic
+> > > to support quad pipe. All these changes depends on the virtual plane
+> > > feature to split a super wide drm plane horizontally into 2 or more sub
+> > > clip. Thus DMA of multiple SSPPs can share the effort of fetching the
+> > > whole drm plane.
+> > >
+> > > The first pipe pair co-work with the first mixer pair to cover the left
+> > > half of screen and 2nd pair of pipes and mixers are for the right half
+> > > of screen. If a plane is only for the right half of screen, only one
+> > > or two of pipes in the 2nd pipe pair are valid, and no SSPP or mixer is
+> > > assinged for invalid pipe.
+> > >
+> > > For those panel that does not require quad-pipe, only 1 or 2 pipes in
+> > > the 1st pipe pair will be used. There is no concept of right half of
+> > > screen.
+> > >
+> > > For legacy non virtual plane mode, the first 1 or 2 pipes are used for
+> > > the single SSPP and its multi-rect mode.
+> > >
+> > > To test bonded DSI on SM8650, the 5 patches for active-CTL improvement
+> > > are needed:
+> > > https://gitlab.freedesktop.org/lumag/msm/-/commits/dpu-4k?ref_type=heads
+> > >
+> >
+> > [...]
+> >
+> > > base-commit: b44251a8c179381b9f3ed3aa49be04fe1d516903
+> >
+> > Hi, Jun. The display of my sm8650 device requires 4:4:2(lm, dsc, intf)
+> > topology, I want to test this series, these patches can't be applied to
+> > the latest linux-next tree, and I can't find the commit id in linux-next
+> > or msm-next. Where can I fetch the tree?
+> >
+> > Best wishes,
+> > Pengyu
+>
+> This is staging patch set. Code clean and formatting is still needed.
+>
+> https://gitlab.com/jun.nie/linux/-/tree/sm8650/v6.15-quadpipe-staging?ref_type=heads
+>
 
-On 4/24/2025 2:51 PM, Dmitry Baryshkov wrote:
-> On Thu, Apr 24, 2025 at 02:20:48PM +0530, Vikash Garodia wrote:
->> Add the IRIS video-codec node on QCS8300.
-> 
-> Nit: you can not "add support for the video node". You can either add
-> video node or add support for video en/decoding.
-Makes sense. Will wait for any other comments, before resending.
+Sory, it seems that this repo is private or internal for linaro, it is
+unavailable in my end. Is it possible to set the repo publicly accessible?
 
-Regards,
-Vikash
-> 
->>
->> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/qcs8300.dtsi | 71 +++++++++++++++++++++++++++++++++++
->>  1 file changed, 71 insertions(+)
->>
-> 
+BTW, I had tried it with linux-6.14-rc2 as you mentioned in changelog,
+my display(PPC100HB1-1 binding with TDDI NT36532E) has the flag
+`BL_UPDATE_DELAY_UNTIL_FIRST_FRAME`, if there is no frame, backlight
+would refused to turn on. It turns out no frame is sent to display. I
+checked encoder in debugfs(/sys/kernel/debug/dri/0/encoder-0/status),
+found all frames underrun. Do you have any idea? Thanks in advance.
+
+Best wishes,
+Pengyu
 
