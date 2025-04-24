@@ -1,80 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-55453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99FEDA9B2C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 17:45:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27E1FA9B301
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 17:53:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF4CE1B8830C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 15:46:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E13A9A4076
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 15:51:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E18DE27F749;
-	Thu, 24 Apr 2025 15:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39BFA27F73B;
+	Thu, 24 Apr 2025 15:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V3HqOTgh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dvOEm7jl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E113F27F72C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 15:45:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063ED1B414E;
+	Thu, 24 Apr 2025 15:51:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745509548; cv=none; b=Wi5BatqMYQppi8URgUkPr9p3ABiDzuyWPe7rDmV1WLs2hCaLe7ccwOPWW/0CJso0WnubYFCXz9BNo6Z/IDUt3O9Cwno4qICi6gbxf7LahjGKygOBHHfRuwGheLymLcxoEBgkCWdXjqH9HSy9nKAgHQmlAhLDdtNhixQKF3pabPY=
+	t=1745509866; cv=none; b=rpslRt/lykUlr7vrXLX1NXBRS0nh3XgvuyHosbMSMQfgQtMEUkxpvT4XTZAqWG84M0CoKuKCNAM/3d6yIdoM9CXIKEh6TncpkC3lgl7WvVj0Y3J7nhUO1apXC/p2W1cccfalh9j2o63nZHF2ntk35z/iAeEVnBJF3G6GV1xr6B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745509548; c=relaxed/simple;
-	bh=m4WbnWF7hOg6KRt7LappWX+88S14yt6lsIPXp9lyGP8=;
+	s=arc-20240116; t=1745509866; c=relaxed/simple;
+	bh=u6z0M0NRrZxdS4RQaKNchv2vS9ceNCupNe34bbuHBkI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GFbLEKSnlFYsnVZe1+Y08JY8VEVS/o3G6IgCGXzm43szdXkkhU07baVYYktMMowQEx965SGcAbPrge52sCTsovJJCE2d+5su8aq0bjfvT8Ozy68O1n0zPEw2AbU+CcwivBN3d+/wlEse/DEuxSfnS2GKpl70OOOda7Acb7SrF0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V3HqOTgh; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43d0618746bso9243645e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 08:45:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745509544; x=1746114344; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CYKmLWCuVbbnS6eIg6jW3CASv6d/Gi88yqzFbMCKwu0=;
-        b=V3HqOTghesXjI28RkthhqQQRY43uzseyK/+bT9ZASfgV8mNPmgHjJYv759F+uJeti4
-         RyXx1Ysebgl0Mpx5b+xgYBMVUcEaY5GZytod7Gu7REVygHKQiaXTLdjDutPPfWzIY1RD
-         4VsqYDSfiPig0vq924xREfgbBOAGjSYfGUP3jBPn6eXwmojVpy/1po9WDeDi4bNiGURp
-         WvE9/AZyhhpp+hJaBuRkY0hmg+/1E0d/r+zskMpgfOzqZ6kjAXKj8XdoDMEueBRrQsbC
-         qRB5W86h0QVY6RZ/7X+L9x7+2UZLxk5T0Oop1INDceToyNk59+p4FMnxDJvwa2T7916w
-         VjCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745509544; x=1746114344;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CYKmLWCuVbbnS6eIg6jW3CASv6d/Gi88yqzFbMCKwu0=;
-        b=QlNMHH8LEr6c4VxPwctY2t1+SVcdsUJVNxwkq4S6CBUiqIGjyx0e3MT9LBXeyWHf5S
-         owXPCT38BtjSjdLrKOjsE4mPOYBRClpf9Z5Ti1gL5LiT7JNWiT7GUxqRpVkjTBRDTyvd
-         lS8Rd/8EjJn+TYhfs2s+w58tK8UM50FoAHDs9yctavGv/tj7TVJlkGNGdPvvVKE8pxNy
-         BCIdgxQsLvkWlca39ppm1dOZT8aJoyTTOrHMZTsNkv++k/espAMJKEpCn74fQka1fneR
-         9Z5KENFdNjIQqA7Q3vF8HdcKitI+oqRKPEllQNq28bRDq+GlJEJP9q4G/2ykwDgr2Foy
-         wKIg==
-X-Forwarded-Encrypted: i=1; AJvYcCXW1M9DIVaq7umhrmNnT2TzUmBod+ZWHCUfmA2MQ6q3awawrp7Tj3rOaDp1KsU3si1LrXETvJ9Bzo3gKROk@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVUje0IJipkgvZFuI7zMrd3o4uOzRwUosf7VaYtIcTyU84hg51
-	pE8i75MoWspqq8oQZglGfdwHBOgXdqdO6Q5kPpCdM508A4cFOrpzsWd331rfplQ=
-X-Gm-Gg: ASbGncvfamStM/BUnY5qNg27X+JVIA8+rjvBU1jJIUmUldnADdtNiCtwC314HfUWXnI
-	bLntVXIAX6jZEd8qQLxLBSk3YXPxLd2yKLO8o3SEXD+oBG7jQO0hTljQr/DVYtk9GAPIrVvUnpE
-	05FEjVN8MEYgRvm0i2axVOC45eUKtdnPNKrB4zbKZ6Ktnsl96Rbm9OpIHetPFmdvST70r5pz17K
-	+iAz6PMZ4KyVKg9IaWiTDiNmj8wFsVeCGjka2ikz5vB7a52ZYN3rE4ypFumHFxyKTSM9te+mZtD
-	KuW64sOaT4eMgcyO3gIYoqORIK27POaBC9G95zHUTknZPLTsFzwvppiblZp1lk5NJFL3nkDkhY9
-	DFoymzA==
-X-Google-Smtp-Source: AGHT+IHqzSozUZBGJRu1+oc+heY9EUUpamdaoOpxogVzGWw2jOs4uYMoj3kczTLG+0fz4WAByZJEXw==
-X-Received: by 2002:a05:600c:1d86:b0:43d:9d5:474d with SMTP id 5b1f17b1804b1-440a3055814mr329155e9.0.1745509544048;
-        Thu, 24 Apr 2025 08:45:44 -0700 (PDT)
-Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4409d2d88cdsm25225555e9.25.2025.04.24.08.45.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Apr 2025 08:45:43 -0700 (PDT)
-Message-ID: <b356cbb9-0a7b-49a8-8c2d-8dd3de3f7c2b@linaro.org>
-Date: Thu, 24 Apr 2025 16:45:42 +0100
+	 In-Reply-To:Content-Type; b=nSGXXRl8F8jnsQ6Tiey0HYwFlEaYrdYIT1xLCLYBZwFoPXqoity69PIULu+QtwF60ZASYYtvY3iss8Wj2nfxjnLx+CtAQdA39Wtop5ElobMH+4NuclycpF1kkhfnKlyDy5FEn7pWOWZRNnliJOCkt3sA9zdUpeE4fbGkR9Hdkz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dvOEm7jl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D39C4CEE3;
+	Thu, 24 Apr 2025 15:51:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745509865;
+	bh=u6z0M0NRrZxdS4RQaKNchv2vS9ceNCupNe34bbuHBkI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=dvOEm7jlTSmOTUbxvEq7JfkHHkVubBtl2G5lII0wrzKg9nWi3jinOQH5rK1kYtzl6
+	 6nDxvWiZxUBTyXpLZXVw04xeHvCD8+H9dB+yMWKUXQ65eZPixsg+zT+ysGoVQOvsl8
+	 MqqJPBCE1vc8dFdQCMZMX2I2UOf+QF0YPTo3IO9I5DR5TorWHVWJGDK6RDAmsu/AjK
+	 jz8P1CVHyFI3Q96V6f8/SKXJcqFuvDUg1JS+PYPJG92I09zdF81fLMSdADNJIUrTGZ
+	 dxkfY6cOSj6S6xgvnnHxoEGi7p8ganKCGSd81xTa1JY8K+8akJ6xCzmpcd+J4Nzg1m
+	 8KHoXTJrWqrBg==
+Message-ID: <e82a8733-a3b9-43de-9142-7454bc57474c@kernel.org>
+Date: Thu, 24 Apr 2025 17:51:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,46 +50,97 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] Add x1e Dell Inpsiron 14p
-To: Rob Clark <robdclark@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Rob Clark <robdclark@chromium.org>
-References: <20250424-qcom-linux-arm64-for-6-16-dell-inspiron14p-v1-0-ace76b31d024@linaro.org>
- <CAF6AEGtiMLQ6xWrmbkmdkpb7gsdbkXaFw7V84nXDDWtLA=4f9A@mail.gmail.com>
+Subject: Re: [PATCH v4 5/6] media: dt-bindings: Add qcom,qcm2290-camss
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: bryan.odonoghue@linaro.org, rfoss@kernel.org, konradybcio@kernel.org,
+ andersson@kernel.org, krzk+dt@kernel.org, robh@kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com
+References: <20250423072044.234024-1-loic.poulain@oss.qualcomm.com>
+ <20250423072044.234024-6-loic.poulain@oss.qualcomm.com>
+ <20250424-versatile-brown-chowchow-dfc4a9@kuoka>
+ <CAFEp6-0iXCPn80Y0s6Hoq2MjgNa+OYJEr0oWSKuXtah_OF6cAQ@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <CAF6AEGtiMLQ6xWrmbkmdkpb7gsdbkXaFw7V84nXDDWtLA=4f9A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <CAFEp6-0iXCPn80Y0s6Hoq2MjgNa+OYJEr0oWSKuXtah_OF6cAQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 24/04/2025 16:42, Rob Clark wrote:
->> - Bugs
->>    Occasionally when resuming I get a fencing error with hyperlock and
->>    freedreno, TBH it looks like something in the GPU or SMMU according to
->>    Rob Clark:https://pastebin.com/AWjCyaap
-> Did you have the same issues on v6.14 or earlier?
+On 24/04/2025 09:53, Loic Poulain wrote:
+> Hi Krzysztof,
 > 
-> The smmu pm usage count underflow is concerning, the smmu pm should be
-> tied to the GPU device via device_link_add().  I've never seen
-> something similar, but I'm still on v6.14.
+> On Thu, Apr 24, 2025 at 9:37 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>
+>> On Wed, Apr 23, 2025 at 09:20:43AM GMT, Loic Poulain wrote:
+>>> +  power-domains:
+>>> +    items:
+>>> +      - description: GDSC CAMSS Block, Global Distributed Switch Controller.
+>>> +
+>>> +  vdda-csiphy-1p2-supply:
+>>> +    description:
+>>> +      Phandle to a 1.2V regulator supply to CSI PHYs.
+>>> +
+>>> +  vdda-pll-1p8-supply:
+>>
+>>
+>> How are the pins or input supplies called?
 > 
-> Could you try reverting commit 0a679336dc17 ("iommu/arm-smmu: Set rpm
-> auto_suspend once during probe")
-> 
-> BR,
-> -R
+> Pins are called:
+> - VDD_A_CSI_0_1P2 (for csiphy 0)
+> - VDD_A_CSI_1_1P2 (for csiphy 1)
 
-6.15-rc1
+OK. This however starts new questions: why aren't there separate nodes
+for the CSI PHY controllers? These are separate blocks with their own
+address space, own power rails, own interrupts and own clocks.
 
-I've seen this bug exactly twice. NP to revert but not so sure with only 
-a sample set of two, I could say the change fixes.
+> (both of the above are supplied together without individual control)
+> - VDD_A_CAMSS_PLL_1P8
+This does not need voltage name then.
 
-Anyway, I'll revert and if I see the bug again, we know its not that.
 
----
-bod
+Best regards,
+Krzysztof
 
