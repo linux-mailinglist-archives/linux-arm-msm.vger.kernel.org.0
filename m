@@ -1,55 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-55513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28D08A9B821
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 21:16:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD733A9B86B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 21:42:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6B6157A9050
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 19:15:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5BD8B1B87E0D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 19:42:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE75C28EA50;
-	Thu, 24 Apr 2025 19:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88D5A293B53;
+	Thu, 24 Apr 2025 19:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="WsBvaANT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OufSxmzq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E77ADDC1;
-	Thu, 24 Apr 2025 19:16:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE1329347D;
+	Thu, 24 Apr 2025 19:42:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745522205; cv=none; b=kpEjU+4zeIPs9QSf1ixRgqOgbJFvqV/A71rzMfTHs1dvIzLMH59CAIyeGpBkcelBVvK2ncwVvwqhf67ctels7td8UqXZbH1fVlEZYEY7ZyNqkKD3v+uvtK+dvhJmzKkeMIiYoDFuyMuFbTr+MJhXz0+rTgPZUcnkAQLwKUyC2xk=
+	t=1745523733; cv=none; b=iSkJGjk61ek1siPj8jfIwLoH/pnpo7jBDoQwAPHwFr07Ezq1rcJ+TMn5nmpbDyXoG2CVTXYLpLapYTCKfsfMW/fQ/29a36gtT6XWNKyKlnpZquNRbi64TZJYvuo5cbDGFEUFOlbfMntti9UEDL0eAmr+MKpUIUFA1UbwIvsZ28I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745522205; c=relaxed/simple;
-	bh=BeGRHNVg6BvIeAlm3dPnlkLRvWWekhEyXNNMSQVYXzQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uNPiqGVHSY7Z/R4y3ODBiKqgV8NkjtZr2OWBYrN4YvrUXs2H6K5oVCiEAwXAB/kovVDxvYTDPzhoYrao6XfeokhrEz8xMnXwxoNQ+wr/IR1HcgFxsTiet13Ql+kviYVDfllnwS1YzMTu38b25mz+i4iAUa7miNfvbycfO9D6OcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=WsBvaANT; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1745522201;
-	bh=BeGRHNVg6BvIeAlm3dPnlkLRvWWekhEyXNNMSQVYXzQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WsBvaANTHgbnS3+9c5su2ftn0YjtROxchfOZzyFaP0OViUemYI5shQEMQmVffBzVt
-	 PmZ1MDn9UmcJ/gFKtl2U8lfYMtj01Gt9COqI5kqweExVTk3aMT1FwVND/4YfW6Hmba
-	 y2t6w4FPZOUbhTdXwGAAe9gbe5AVCNKJQMf8jZqJBo5Oj1YEOqtWoFpDevbw1eFUdo
-	 sY0IjJmv+TO0YtHLQYbptz8R5Ek6CyGZYRJEk9cyJci7Uj/10jM8vZaMY20SFaguo9
-	 PIkIVhmRyfnbns6cTEHyX6nNZOkHygBUCY42F9sn/DC4Re3KRdIjGG5cBIITsgLPOv
-	 Rp1VkPawFdPjg==
-Received: from [192.168.1.90] (unknown [82.76.59.226])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: cristicc)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 708F717E0402;
-	Thu, 24 Apr 2025 21:16:39 +0200 (CEST)
-Message-ID: <25de7fc3-2628-42c9-8d66-b1cab2896c3d@collabora.com>
-Date: Thu, 24 Apr 2025 22:16:38 +0300
+	s=arc-20240116; t=1745523733; c=relaxed/simple;
+	bh=vF+KNBYFMBQCyzsAPOtbGM3g7L5+97Heym3oBaDvsHs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Ek5WxlW/p3TPyt9Gua3LJpqKfVl2wG3Z00l7lA5qHEWrXyFNKAvNfYxvBuJtI1fJGde2GG/uDn4yiHMDR9W+4gWv90SIMLQ6U/2JS+WUyaGpKETBq5+ydMAVsN1UEpK2Djd/BBxFU0pz+h/+FAjhWJKodlHgb9iKkzf4RsY6CA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OufSxmzq; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53OC3CFT013019;
+	Thu, 24 Apr 2025 19:41:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	kmrdY01l/P1o7a+YzkNeqbcMF6GdVsxYqz3ZJBSMMoQ=; b=OufSxmzqd39nivK6
+	y83oZX6KyORiGGh/dpBIGtoL969ZQkMiuyPTpuN3KMY+eVh05GjSJ8NyQ6H31EfF
+	1nJu5o/lPaWoJalsUs6oHuqEHH+r2XIaOtdqP+FHm5QcTxXanaM9XJlaA5zLj57X
+	tA1opXxxc6etAIjc78MYFdUAgNp9WZm/Wu0VhbVG55jUXfdw4EvRo2GuW5MBy3Wc
+	OUS4ZUc+RHkp/gnLdkvCfLHOMa7xeUSDRoldxozVI/QUB4iHyfO958AXmzf1NXzO
+	rogegBFTX7bfsy5hDAJsvbyOKBBAP57bomRR2xKNwGQJbuF13SB/nphhVLEY9rpx
+	I7yijw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh06rn6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Apr 2025 19:41:53 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53OJfqkG002909
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 24 Apr 2025 19:41:52 GMT
+Received: from [10.110.70.248] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 24 Apr
+ 2025 12:41:51 -0700
+Message-ID: <b0d81293-af00-4d84-96b4-2a26e1ea8677@quicinc.com>
+Date: Thu, 24 Apr 2025 12:41:50 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,52 +65,126 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/34] drm/bridge: dw-hdmi: convert to
- devm_drm_bridge_alloc() API
-To: Luca Ceresoli <luca.ceresoli@bootlin.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Jagan Teki <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Douglas Anderson
- <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>,
- Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Anusha Srivatsa <asrivats@redhat.com>,
- Paul Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>,
- Hui Pu <Hui.Pu@gehealthcare.com>,
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
- dri-devel@lists.freedesktop.org, asahi@lists.linux.dev,
- linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev,
- imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
- linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com
-References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
- <20250424-drm-bridge-convert-to-alloc-api-v2-11-8f91a404d86b@bootlin.com>
+Subject: Re: [PATCH v3 3/7] drm/msm/mdp4: register the LVDS PLL as a clock
+ provider
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+References: <20250227-fd-mdp4-lvds-v3-0-c983788987ae@linaro.org>
+ <20250227-fd-mdp4-lvds-v3-3-c983788987ae@linaro.org>
+ <029f3bfb-a031-4dfe-a2b4-bc41a0da7772@quicinc.com>
+ <orh3v7knajhmpv4uzmarpgdbfhkhtipjxc7agfmvlqdzggpwzz@yohc5d763ynp>
 Content-Language: en-US
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-In-Reply-To: <20250424-drm-bridge-convert-to-alloc-api-v2-11-8f91a404d86b@bootlin.com>
-Content-Type: text/plain; charset=UTF-8
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <orh3v7knajhmpv4uzmarpgdbfhkhtipjxc7agfmvlqdzggpwzz@yohc5d763ynp>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDEzNyBTYWx0ZWRfX3P9lTmTh1nzA GZkD/jsp/3Z6etBOcdqVOaFYzwTlZN9w4KMyZeaSBHWmTfbwGznlPrJVnGNDdanLNgYXawWUgbS Y5yhCh8mVaUVzdMF86KExfivM9T3OgoYc/+MsD+R5IUKdO+SCF2p/bJrKxmPW+HG0Da/zLgjfHn
+ tlnlYyq4LKjFO2DxBztzRZx2VKoKXjPNjmq+aFMe6xHJ0uZKHTzNQaAl/urZv15MAqnhCtcFrxs NaVzOBcIhETv7v+cyk3Ud0cYV66AX3N3MG9SjQjvmZcIaaRg7cn7dlbJ3ndU9u+Mln6l6G5K5Tu nsFDziZdirsluywhgsEY7LcTI8CenFPLCCdAW5YHCEri9Hc1oJTU6+FD2VrsJvieAhALpryYduR
+ 27L5kFPN48/sVlleqz2AtO1HcjaA2GUeEf1XYX+5rMOSF9FLIK1jYp0cJ7GmNOtOkmLTyxVj
+X-Proofpoint-GUID: aTsTeaZslzfWCmtMOsf1f2bO3Chcbxq-
+X-Authority-Analysis: v=2.4 cv=ZuTtK87G c=1 sm=1 tr=0 ts=680a9401 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=3cKAJhnaDEdsQ5v88lUA:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: aTsTeaZslzfWCmtMOsf1f2bO3Chcbxq-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-24_08,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1011
+ impostorscore=0 bulkscore=0 mlxscore=0 adultscore=0 lowpriorityscore=0
+ mlxlogscore=999 priorityscore=1501 malwarescore=0 suspectscore=0
+ spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504240137
 
-On 4/24/25 9:59 PM, Luca Ceresoli wrote:
-> This is the new API for allocating DRM bridges.
-> 
-> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-> 
-> ---
-> 
-> Cc: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-> ---
->  drivers/gpu/drm/bridge/synopsys/dw-hdmi.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
 
-Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+
+On 4/24/2025 3:22 AM, Dmitry Baryshkov wrote:
+> On Wed, Apr 23, 2025 at 03:54:13PM -0700, Abhinav Kumar wrote:
+>>
+>>
+>> On 2/26/2025 6:25 PM, Dmitry Baryshkov wrote:
+>>> The LVDS/LCDC controller uses pixel clock coming from the multimedia
+>>> controller (mmcc) rather than using the PLL directly. Stop using LVDS
+>>> PLL directly and register it as a clock provider. Use lcdc_clk as a
+>>> pixel clock for the LCDC.
+>>>
+>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h          |  2 +-
+>>>    drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c |  8 +++++++-
+>>>    drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_pll.c     | 22 +++++++---------------
+>>>    3 files changed, 15 insertions(+), 17 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+>>> index 142ccb68b435263f91ba1ab27676e426d43e5d84..b8bdc3712c73b14f3547dce3439a895e3d10f193 100644
+>>> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+>>> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+>>> @@ -207,6 +207,6 @@ static inline struct drm_encoder *mdp4_dsi_encoder_init(struct drm_device *dev)
+>>>    }
+>>>    #endif
+>>> -struct clk *mpd4_lvds_pll_init(struct drm_device *dev);
+>>> +int mpd4_lvds_pll_init(struct drm_device *dev);
+>>>    #endif /* __MDP4_KMS_H__ */
+>>> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+>>> index 8bbc7fb881d599e7d309cc61bda83697fecd253a..db93795916cdaa87ac8e61d3b44c2dadac10fd9e 100644
+>>> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+>>> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+>>> @@ -381,7 +381,13 @@ struct drm_encoder *mdp4_lcdc_encoder_init(struct drm_device *dev,
+>>>    	drm_encoder_helper_add(encoder, &mdp4_lcdc_encoder_helper_funcs);
+>>>    	/* TODO: do we need different pll in other cases? */
+>>> -	mdp4_lcdc_encoder->lcdc_clk = mpd4_lvds_pll_init(dev);
+>>> +	ret = mpd4_lvds_pll_init(dev);
+>>> +	if (ret) {
+>>> +		DRM_DEV_ERROR(dev->dev, "failed to register LVDS PLL\n");
+>>> +		return ERR_PTR(ret);
+>>> +	}
+>>> +
+>>> +	mdp4_lcdc_encoder->lcdc_clk = devm_clk_get(dev->dev, "lcdc_clk");
+>>>    	if (IS_ERR(mdp4_lcdc_encoder->lcdc_clk)) {
+>>>    		DRM_DEV_ERROR(dev->dev, "failed to get lvds_clk\n");
+>>>    		return ERR_CAST(mdp4_lcdc_encoder->lcdc_clk);
+>>
+>> Change seems fine to me, one question on the order of changes, DT change has
+>> to be merged first otherwise it will fail here?
+> 
+> It is already semi-broken, as just enabling the PLL is not enough. The
+> branch clocks in MMSS are to be toggled / manipulated. As such, it's
+> questionable if we need to coordinate or not.
+> 
+
+Yes but wouldnt this cause mdp4_lcdc_encoder_init() failure which in 
+turn will cause mdp4_kms_init() failure?
+
+So I thought that by merging the DTSI piece first this can be avoided.
+
+>>
+>> Will that be managed by co-ordinating with the DT maintainer?
+>>
+> 
+
 
