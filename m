@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-55446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CC50A9B258
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 17:31:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BF0EA9B25E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 17:32:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 854F79A1AE6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 15:31:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3BF1F188E076
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 15:32:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 205531A5B94;
-	Thu, 24 Apr 2025 15:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5796274FD8;
+	Thu, 24 Apr 2025 15:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bJckp0J8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="saua5hhj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E302E1A2381;
-	Thu, 24 Apr 2025 15:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E371B412B;
+	Thu, 24 Apr 2025 15:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745508703; cv=none; b=jJSZAaPp8rlKtWbac53ycXAA8obo6Xb65+PPlqFbzBFfxDx6uBq14N+xHRgVq+2yFjgtAKu1pb5qpwDyWHna1hAQO6+Spks9/0qrfFHgxLDUN1Kgdi3VWHYkdv9kpcHBhqgIDcFrJS6En25OQYUthVgyicXZ+95TyWUVfjtQ1jA=
+	t=1745508741; cv=none; b=mrFnbNoLcW/fXcO56ZZOx/C/7mhhL5Db/eg/2cluNw7FRjJ+KrcBoWVnZXZxuOK5jlKWncv8AZlH5nKzEq/w0DYXPCNPh+Zo4xLtAeA5CeQ0UAHAuY6K7b5Hskq1xgzz4ItxaOuav0RTzQ9Gt5d3ybfgnt46YBLsC7T4aiI+sfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745508703; c=relaxed/simple;
-	bh=sEbS0E7VU7Vg8M20K9CiU0mxPDrl00NG1g/pKKcpJjI=;
+	s=arc-20240116; t=1745508741; c=relaxed/simple;
+	bh=qt3ykPPEN5HX2Dvj1RzGEvJBEIn78j9EcQ0h1TqfgeU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HYPAFsweB2bQO1XRPePDEg0TPXgZ43HtPp1bp2DQmDLuIPfsT6tY6AxhZS1Uk4EpZUz7grBMJOYTQ1saC6/5/BJcdL96FEGKml0/500C4psbwmaqcB4Wt6QNaUMJ9/rnuH06Gyh7Cqhpf3/r6b8NUQ435i/X4wTVjyMmflwibRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bJckp0J8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC2DC4CEE3;
-	Thu, 24 Apr 2025 15:31:38 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=PYNihqwRo1di9ILvXvNnGhSYOFvPCV9CRu3n3ROx73rOPIWSVaMdQukRgDjJVFvV1COReF5lmZXrIt0G9/qXN10RnVOhzQFLcm3VvHSv/l3nvgiCN2rAQ+cYSk2rY0ohAKpBqzaVpRPSoAaCcYCYRLaCnsIPp8RC/OGQKVfPAF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=saua5hhj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16046C4CEE8;
+	Thu, 24 Apr 2025 15:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745508702;
-	bh=sEbS0E7VU7Vg8M20K9CiU0mxPDrl00NG1g/pKKcpJjI=;
+	s=k20201202; t=1745508741;
+	bh=qt3ykPPEN5HX2Dvj1RzGEvJBEIn78j9EcQ0h1TqfgeU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bJckp0J863hQjh6KFpzQDOeTXxS+wGvSwGujDHeBAh94IgxNusq9+5zHQSyJhpj6L
-	 0s65Na+z+Dri2mmavkirbMqQrIefT/XALSRjwCwzd2Mcy59DhvEkfe+blabIEaUi/I
-	 EPwilZ2McB4pF7AWNEwGxL9x7TCLeVzQMHWud/r6yiuCAbapcWUUs9je9MZrlUNEoN
-	 u+ZrmtqIKsa/Wf5MYSTB1+szapUUvbypLaNmlY3jxouS3MCHEdEb2X0BxDUofnF5W1
-	 Sctzis+ivvVES/ujMTviBn3XBglJao7VI15aoh4ikFnwg3EU5LHsd5ALgei6kCNtkQ
-	 EnliE69gGhEJw==
-Message-ID: <1a3c2366-f893-4799-a4bc-0c9c53d8c155@kernel.org>
-Date: Thu, 24 Apr 2025 17:31:36 +0200
+	b=saua5hhjCeDZHZ34st4C4NJOx4D2hsEGLELI9SEfsjcZAGgHd+o8MDuevx+yGoxHx
+	 CYU7a924CGVpfmuuYjnEE5wZAdSnhPmnych7Sr/FP9mhbbjFJJkhHuK5YiprCLVn8m
+	 uV+MIGODBGFDEVouuQcr5CFh2fo7gunO1yfpjn3uH6xkzYE4zBcSTj2nDAP4rODf0f
+	 lWNyhCNOg+NAeg1Gug97z8gnjtilKNDvNvIgoGkcfMoNNQHA3H/1YRSUjyT0sbNQiF
+	 qvR8Qk14MjB4NZVMd2Ow4ib+lild1WQmzWHP6zxszOLOB3Dp91psrhGx/zr5oki8Y2
+	 Kz7eNylsdeaVA==
+Message-ID: <98a7120a-7c77-4373-bd2e-f03611bc76fc@kernel.org>
+Date: Thu, 24 Apr 2025 17:32:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 08/10] dt-bindings: clock: Add Qualcomm QCS615 Video
+Subject: Re: [PATCH v8 04/10] dt-bindings: clock: Add Qualcomm QCS615 Display
  clock controller
 To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
  <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
@@ -64,7 +64,7 @@ Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
  linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 References: <20250424-qcs615-mm-v7-clock-controllers-v8-0-bacad5b3659a@quicinc.com>
- <20250424-qcs615-mm-v7-clock-controllers-v8-8-bacad5b3659a@quicinc.com>
+ <20250424-qcs615-mm-v7-clock-controllers-v8-4-bacad5b3659a@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,16 +110,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250424-qcs615-mm-v7-clock-controllers-v8-8-bacad5b3659a@quicinc.com>
+In-Reply-To: <20250424-qcs615-mm-v7-clock-controllers-v8-4-bacad5b3659a@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/04/2025 11:33, Taniya Das wrote:
-> Add DT bindings for the Video clock on QCS615 platforms. Add the
+On 24/04/2025 11:32, Taniya Das wrote:
+> Add DT bindings for the Display clock on QCS615 platforms. Add the
 > relevant DT include definitions as well.
 > 
 > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
+>  .../bindings/clock/qcom,qcs615-dispcc.yaml         | 55 ++++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,qcs615-dispcc.h     | 52 ++++++++++++++++++++
+>  2 files changed, 107 insertions(+)
+
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
