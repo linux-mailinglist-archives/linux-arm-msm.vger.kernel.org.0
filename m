@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-55421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F091FA9B0A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:23:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC492A9B090
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:21:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E8527AA795
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:18:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9C9E57B6DD3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:19:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A095628D827;
-	Thu, 24 Apr 2025 14:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 970BB28B505;
+	Thu, 24 Apr 2025 14:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b3AS8B4F"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZVrYkVnP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548CC281376
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B56228C5A4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:14:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745504051; cv=none; b=CTPfxAn82BtlvSXHOSWZp2kExn9XLY96H5094DDRsPPNscGcFzRj7H06ff1j7mytu2m89FTjR4tG2X34uIxph0jMMmGQaNhx5V9Rgkc/94HlWED0PTj7FyYEH7WL3kbXlMfKsPms7+MFp5VTRhaQCZ7jr5pnPPPNfQMCM2Oppvk=
+	t=1745504053; cv=none; b=aguxTBwopfs0BjMqHxJRRUTEwTkBij5fJZecpivlsqzCJ3Knv+AUHua/d3D8qtoI9AiCVnVyVHWeOzAj96PX9cnx8w319lSC9S7/Wyx9za+LX+mO6gqeHbCGVAarCqAB0wb6Uv0ZSh/Afli5vOFmaeUW4F/21RXNVCo5MFzP1Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745504051; c=relaxed/simple;
-	bh=o5jUxv0nZ8uJl1blXMpoQdyQe0eMlKyDBmLFSdRHE2s=;
+	s=arc-20240116; t=1745504053; c=relaxed/simple;
+	bh=S+aezV66gXf4D+s9yS2EKNbYmZv94XHap0Nf+ZRRUHk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BnUfUxRKH+nZMDm8dj4A1jCCPYiklITCiR9p074+IGL3xob+q5xk57JTxffJxr/D9wCBkomWY/t/2P0qRcQayZu0HKA+zx66LDBF/R5+ETC168gyGxes6nufbS4mnaHEMAEvoEEvLFF928Y9l9r3Y5Ij9QkKF5Iy+DXGl3sgI0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b3AS8B4F; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version; b=Qq+oLS4Mq9AdCdZnIbtyyCTm5pwzS5HOTXx7J835U7tNewBUEn678j0mTRW4oky+IiDrTbg6+cE1c1XkdXW4B0PoaoizbhcZDlLPy8RYpUz53BvaK6jy+oKU1yBKQrMA+1RqfgqW+NOs/OtNw7N3KH8OBkHbJpuwwS/WO+yHpD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZVrYkVnP; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43cf58eea0fso5047985e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:14:08 -0700 (PDT)
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-39d83782ef6so1648172f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:14:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745504046; x=1746108846; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1745504048; x=1746108848; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UoVyA4T/XR+PrBla9t1/dUC6ibbVMr9f/wkTq4NWm5c=;
-        b=b3AS8B4FhCvDA56c2cSPpxuBmsrjqdga0bD6lbyS8PvkIA8cf7zlRq6z9fzmPupRgA
-         /YnSM9O7e/PrryqZAq6/G3a4y/TkQBZFSIAc02ai8aEvNP4AvSxYq1D4Sl5VPOHgZGYc
-         2LrFTQeSnpc1eMY5/9YihDnNsyuSakGuC/dtwQxrU8BZx3iK+9FKcx8IIrQM2z2l6p4O
-         MD8VKCRcCSBpAlWE6T371f7EkZZpH/XyyM6Wv36SIm7EmyZeQweTmv0Jw0Q+kAzlnh1y
-         eju6ObBdHz0TqpVVqjmihnPbh1sJDmyc6gvm/YBsXQr9tZC87D4B2YdvUpou/brTXAIh
-         GK6g==
+        bh=98GtKQowyHwUXJ3/oi0BeOIZGrWAP4CATPU0kL4zC8c=;
+        b=ZVrYkVnPnl9Ys6EiWjO0nW/ZKL9GZPhxZM8Jdq4yhpWJfZHOL7zyEOxMrBZQgE4ywb
+         S/dHcmgPS1jkO5i8DXxJ+fn8JUsYf3LS8ffoJXnN9Obvw7bF4KK95uYdIdxYSk3FOog7
+         4gZdjcJDvoxbNYrVrTnD6TfC3gXwFj0Q7fKu28uJZMdpJQQ9WazFoPCxhnuMNwow6cLm
+         SwXd2GQgnZH64avWP2TPUZEJ5EEpzYL2FwLsoeVkaOXNR0FrskyMcsvHbDAlTyEBhCCH
+         fBNLGXr2xfE/z7LpOxCBiHFnskchBvSkkplqymZ6IXk/VkZsoT4gAZf1MYFXX32dFOmo
+         V/hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745504046; x=1746108846;
+        d=1e100.net; s=20230601; t=1745504048; x=1746108848;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UoVyA4T/XR+PrBla9t1/dUC6ibbVMr9f/wkTq4NWm5c=;
-        b=jYdJo2E+NlTYFkbfPsomTCQOgSxliZ5oQACxlBUGUVPpTOO95j3sUfvcQxyN759F5d
-         mp9+XB8l/AWi6QbmONWG0Iongwyu4RTcPlgowgAYN+oJjB1mHDDng0xINMb2rO3AEDJz
-         R3fxv9aIrkAB0dstVfVlk9014bSN6RbdvSjVeMdovRiYpT6UVAp4I5dO29i/4JKdvxkf
-         X/fBiGEdVZtboNOdoos75FM85mrCW5FRlpW7CxuDi3gfh6c7548/2MeZqSF2iIFuu53Y
-         r7FuTtpi9DPwvB3PI1JUg2enWH021dH7/F/OBamb3pDcHeg19OltyXT6BHZ5ExqsVtKS
-         OjYA==
-X-Forwarded-Encrypted: i=1; AJvYcCU2iZE97HEaR5o2VpUfSqlxC9QK5GGGZIsLZl1yRVXE6lBQPFvayxhgwHXF0CCo02/L8SLGSpaOCSkn5yNj@vger.kernel.org
-X-Gm-Message-State: AOJu0YzxpTnWIoEp8z7E9jWi31HcUy3M+Y0O65IdjRG3rQBr7QJjFsaY
-	//wtOEg0YnHqhBuRUaFl3Mf3DvdmQkhWH+gSEn8TUE0ml4r/4c86o2Zq/NnrD54=
-X-Gm-Gg: ASbGncs9CBZ2CQJQhygwXojtcOCQ/AyuN2BEnWrChYIJKSr6cHzx6LCI8arMLmErcqp
-	MHu6qOe1klhoy4VrzYfmy5Ff2yRqxOy6eWyAck/lMkyma8LEayH2LtK5nQA1GF+RSr7ZWOfemGO
-	dSOjwOWGkcwHoLXkaPg0Mqg6mhGGug7NR5xNXP210J3HpOUaJ3xYWHkLsQIOklnRL3ueb3kSXfw
-	m6MahXqNLpPPY7kHGA+W6YDZScBr6pIxDlRAqgAe5amHwPLdBD7VlPrZQFwlWVKlKzckwxaaTGl
-	vAgG6R1pLUulZMcBHix2WQdkJr0flCd9GAqMnRoHREAyw3ZkNbc5OcNyXdDjrwvIzLL51gTJJu3
-	Hl1U2NDXMKemkA1of
-X-Google-Smtp-Source: AGHT+IFaUaoW58kCoH3cGCkS9884/3gN3P0U2I1fqPQYARfS16RUhRZKrV74ekkuGWYubSRTquJKGQ==
-X-Received: by 2002:a5d:64ab:0:b0:391:2a9f:2fcb with SMTP id ffacd0b85a97d-3a06cfa8400mr2501557f8f.36.1745504046320;
-        Thu, 24 Apr 2025 07:14:06 -0700 (PDT)
+        bh=98GtKQowyHwUXJ3/oi0BeOIZGrWAP4CATPU0kL4zC8c=;
+        b=kIOV3LIP+OT51UvriFPlvJQlljftoUSaycPKUHGmztmwA53w0go3CWJZ88bQlTBuBx
+         xXXx0GMlGkXduXjjTqz+HZ9pnct/Crf31SBFitfrvwfK462ZUCc5HIi3vMThUw58wVZp
+         EiXdVhdzynTLck9LDxZcAID/DL0qtVZZlqtX9lr6Tl2HIClHgTQbX6ftlKEQkkMOSUSo
+         sKnq55IKJgOZVaWQqTantuysoReDbYULlA5w4ZydEjy5otz1EooByrp4PC8SFBFptiN6
+         8aAGA+sxjXDKS6oWVY+Ayq9vxKO9a1lmHUyssZI45bvzrIj1YfaNzyxBubSwOHVXwaMF
+         lRKw==
+X-Forwarded-Encrypted: i=1; AJvYcCUDK9a8kn3uvEJKI0jBwCoCREus6QP4xL/2tW14NQmANyW/mdNvS0u0rtqoN7j3I2BSO/QdvEk2Wd10vAN9@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRyYU1AhvmJMNEHWm88UtqKmdT+ahUETxAzeQPOOpaUUetUZmS
+	jGMIDVzStvA926ZuVxShqWEtXURxL9yoFH+fFi6L2o8R7U7AzuVtGw0alcefQ0M=
+X-Gm-Gg: ASbGncuvZ2gfuZWdW9mAtOfSfQo4vz1gE7MGKUst3tMt/KijCo3lVtb1MBSYQHVCKKc
+	ZaWirPW/mi7YmXlsl7ydp8y4KCEgWa+I7gwVvqccx+ZqUgITn9ERDuTVwhL5JdAdQ2rObdKa+AR
+	Vrhsca2M4h0MxIEkmUm8robL6lveV/MwiwODimkxV2RTmcZpjdLhzcNLsMMCBM+QvyVtAxb61kI
+	z3Nj7LIt4LYCOQAhLRwodv/Q8hiFpoyFwCz27THNJaXi07sIw8kJhIqwiDOpOwrywOti3xy/sF9
+	mVSkJzWRcAYbLUR5qFITohW3oYK1qyZW0+PA/R6ihFia+XA5nWj3DFV9U6EqsEQ1Yx3A1EnP+Ek
+	YhEgfqvIUuwkXa/QH
+X-Google-Smtp-Source: AGHT+IFQAg02MXbpqUbddZDz1Nf5W/i1x6IwVsYQPoOcChQDsuxBB7Db2uzIfhJZTYe0HZGVw3TbTg==
+X-Received: by 2002:a05:6000:18ae:b0:39f:cd2:1fa1 with SMTP id ffacd0b85a97d-3a06d647026mr2922759f8f.3.1745504048036;
+        Thu, 24 Apr 2025 07:14:08 -0700 (PDT)
 Received: from seksu.systems-nuts.com (stevens.inf.ed.ac.uk. [129.215.164.122])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a06d4a8150sm2199951f8f.7.2025.04.24.07.14.05
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a06d4a8150sm2199951f8f.7.2025.04.24.07.14.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 07:14:05 -0700 (PDT)
+        Thu, 24 Apr 2025 07:14:07 -0700 (PDT)
 From: Karim Manaouil <karim.manaouil@linaro.org>
 To: linux-kernel@vger.kernel.org,
 	kvm@vger.kernel.org,
@@ -104,9 +104,9 @@ Cc: Karim Manaouil <karim.manaouil@linaro.org>,
 	Trilok Soni <tsoni@quicinc.com>,
 	Stefan Schmidt <stefan.schmidt@linaro.org>,
 	Elliot Berman <quic_eberman@quicinc.com>
-Subject: [RFC PATCH 16/34] gunyah: Add basic VM lifecycle management
-Date: Thu, 24 Apr 2025 15:13:23 +0100
-Message-Id: <20250424141341.841734-17-karim.manaouil@linaro.org>
+Subject: [RFC PATCH 17/34] gunyah: Translate gh_rm_hyp_resource into gunyah_resource
+Date: Thu, 24 Apr 2025 15:13:24 +0100
+Message-Id: <20250424141341.841734-18-karim.manaouil@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250424141341.841734-1-karim.manaouil@linaro.org>
 References: <20250424141341.841734-1-karim.manaouil@linaro.org>
@@ -116,335 +116,216 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This patch hooks up Gunyah virtual machine lifecycle management with the
-KVM backend by implementing the kvm_arch_alloc_vm(), kvm_arch_destroy_vm(),
-and kvm_arch_free_vm() hooks.
+From: Elliot Berman <quic_eberman@quicinc.com>
 
-The Gunyah VM management logic—VMID allocation, configuration,
-initialization, start/stop, teardown, and notifier handling—is based on
-the implementation introduced in [1], authored by Elliot Berman and
-Prakruthi Deepak Heragu.
+When booting a Gunyah virtual machine, the host VM may gain capabilities
+to interact with resources for the guest virtual machine. Examples of
+such resources are vCPUs or message queues. To use those resources, we
+need to translate the RM response into a gunyah_resource structure which
+are useful to Linux drivers. Presently, Linux drivers need only to know
+the type of resource, the capability ID, and an interrupt.
 
-The original code added a special ioctl interface to support userspace
-initialization of guest VMs. This patch reuses the same logic, but
-ported to KVM, allowing to use KVM's ioctl interface to create
-Gunyah-based guests.
+On ARM64 systems, the interrupt reported by Gunyah is the GIC interrupt
+ID number and always a SPI or extended SPI.
 
-[1] Commit: 532788ce71c9 ("gunyah: vm_mgr: Add VM start/stop")
-    Link: https://lore.kernel.org/lkml/20240222-gunyah-v17-10-1e9da6763d38@quicinc.com/
-
-Co-developed-by: Elliot Berman <quic_eberman@quicinc.com>
-Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+Reviewed-by: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 Signed-off-by: Karim Manaouil <karim.manaouil@linaro.org>
 ---
- arch/arm64/include/asm/kvm_host.h |   5 +
- arch/arm64/kvm/gunyah.c           | 196 ++++++++++++++++++++++++++++--
- drivers/virt/gunyah/rsc_mgr_rpc.c |   2 +-
- include/linux/gunyah.h            |  32 +++++
- 4 files changed, 227 insertions(+), 8 deletions(-)
+ arch/arm64/include/asm/gunyah.h | 35 +++++++++++++++++
+ drivers/virt/gunyah/rsc_mgr.c   | 68 +++++++++++++++++++++++++++++++++
+ include/linux/gunyah.h          |  2 +
+ include/linux/gunyah_rsc_mgr.h  |  4 ++
+ 4 files changed, 109 insertions(+)
+ create mode 100644 arch/arm64/include/asm/gunyah.h
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 9c8e173fc9c1..53358d3f5fa8 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -1591,4 +1591,9 @@ void kvm_set_vm_id_reg(struct kvm *kvm, u32 reg, u64 val);
- #define kvm_has_s1poe(k)				\
- 	(kvm_has_feat((k), ID_AA64MMFR3_EL1, S1POE, IMP))
- 
-+#ifndef CONFIG_KVM_ARM
-+#define __KVM_HAVE_ARCH_VM_FREE
-+void kvm_arch_free_vm(struct kvm *kvm);
-+#endif
+diff --git a/arch/arm64/include/asm/gunyah.h b/arch/arm64/include/asm/gunyah.h
+new file mode 100644
+index 000000000000..29079d1a4df2
+--- /dev/null
++++ b/arch/arm64/include/asm/gunyah.h
+@@ -0,0 +1,35 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++#ifndef _ASM_GUNYAH_H
++#define _ASM_GUNYAH_H
 +
- #endif /* __ARM64_KVM_HOST_H__ */
-diff --git a/arch/arm64/kvm/gunyah.c b/arch/arm64/kvm/gunyah.c
-index 9c37ab20d7e2..a3c29ae985c9 100644
---- a/arch/arm64/kvm/gunyah.c
-+++ b/arch/arm64/kvm/gunyah.c
-@@ -13,6 +13,12 @@
- #include <asm/kvm_mmu.h>
- #include <linux/perf_event.h>
- 
-+#include <linux/gunyah_rsc_mgr.h>
-+#include <linux/gunyah.h>
++#include <linux/irq.h>
++#include <linux/irqdomain.h>
 +
-+#undef pr_fmt
-+#define pr_fmt(fmt) "gunyah: " fmt
-+
- static enum kvm_mode kvm_mode = KVM_MODE_DEFAULT;
- 
- enum kvm_mode kvm_get_mode(void)
-@@ -338,12 +344,6 @@ void kvm_arch_create_vm_debugfs(struct kvm *kvm)
- {
- }
- 
--void kvm_arch_destroy_vm(struct kvm *kvm)
--{
--	kvm_destroy_vcpus(kvm);
--	return;
--}
--
- long kvm_arch_dev_ioctl(struct file *filp,
- 			unsigned int ioctl, unsigned long arg)
- {
-@@ -788,7 +788,189 @@ int kvm_cpu_has_pending_timer(struct kvm_vcpu *vcpu)
- 	return -EINVAL;
- }
- 
-+static int gunyah_vm_rm_notification_status(struct gunyah_vm *ghvm, void *data)
++static inline int arch_gunyah_fill_irq_fwspec_params(u32 virq,
++						 struct irq_fwspec *fwspec)
 +{
-+	struct gunyah_rm_vm_status_payload *payload = data;
-+
-+	if (le16_to_cpu(payload->vmid) != ghvm->vmid)
-+		return NOTIFY_OK;
-+
-+	/* All other state transitions are synchronous to a corresponding RM call */
-+	if (payload->vm_status == GUNYAH_RM_VM_STATUS_RESET) {
-+		down_write(&ghvm->status_lock);
-+		ghvm->vm_status = payload->vm_status;
-+		up_write(&ghvm->status_lock);
-+		wake_up(&ghvm->vm_status_wait);
++	/* Assume that Gunyah gave us an SPI or ESPI; defensively check it */
++	if (WARN(virq < 32, "Unexpected virq: %d\n", virq)) {
++		return -EINVAL;
++	} else if (virq <= 1019) {
++		fwspec->param_count = 3;
++		fwspec->param[0] = 0; /* GIC_SPI */
++		fwspec->param[1] = virq - 32; /* virq 32 -> SPI 0 */
++		fwspec->param[2] = IRQ_TYPE_EDGE_RISING;
++	} else if (WARN(virq < 4096, "Unexpected virq: %d\n", virq)) {
++		return -EINVAL;
++	} else if (virq < 5120) {
++		fwspec->param_count = 3;
++		fwspec->param[0] = 2; /* GIC_ESPI */
++		fwspec->param[1] = virq - 4096; /* virq 4096 -> ESPI 0 */
++		fwspec->param[2] = IRQ_TYPE_EDGE_RISING;
++	} else {
++		WARN(1, "Unexpected virq: %d\n", virq);
++		return -EINVAL;
 +	}
-+
-+	return NOTIFY_DONE;
-+}
-+
-+static int gunyah_vm_rm_notification_exited(struct gunyah_vm *ghvm, void *data)
-+{
-+	struct gunyah_rm_vm_exited_payload *payload = data;
-+
-+	if (le16_to_cpu(payload->vmid) != ghvm->vmid)
-+		return NOTIFY_OK;
-+
-+	down_write(&ghvm->status_lock);
-+	ghvm->vm_status = GUNYAH_RM_VM_STATUS_EXITED;
-+	up_write(&ghvm->status_lock);
-+	wake_up(&ghvm->vm_status_wait);
-+
-+	return NOTIFY_DONE;
-+}
-+
-+static int gunyah_vm_rm_notification(struct notifier_block *nb,
-+		unsigned long action, void *data)
-+{
-+	struct gunyah_vm *ghvm = container_of(nb, struct gunyah_vm, nb);
-+
-+	switch (action) {
-+	case GUNYAH_RM_NOTIFICATION_VM_STATUS:
-+		return gunyah_vm_rm_notification_status(ghvm, data);
-+	case GUNYAH_RM_NOTIFICATION_VM_EXITED:
-+		return gunyah_vm_rm_notification_exited(ghvm, data);
-+	default:
-+		return NOTIFY_OK;
-+	}
-+}
-+
-+static void gunyah_vm_stop(struct gunyah_vm *ghvm)
-+{
-+	int ret;
-+
-+	if (ghvm->vm_status == GUNYAH_RM_VM_STATUS_RUNNING) {
-+		ret = gunyah_rm_vm_stop(ghvm->rm, ghvm->vmid);
-+		if (ret)
-+			pr_warn("Failed to stop VM: %d\n", ret);
-+	}
-+
-+	wait_event(ghvm->vm_status_wait,
-+		   ghvm->vm_status != GUNYAH_RM_VM_STATUS_RUNNING);
-+}
-+
-+static int gunyah_vm_start(struct gunyah_vm *ghvm)
-+{
-+	int ret;
-+
-+	down_write(&ghvm->status_lock);
-+	if (ghvm->vm_status != GUNYAH_RM_VM_STATUS_NO_STATE) {
-+		up_write(&ghvm->status_lock);
-+		return 0;
-+	}
-+
-+	ghvm->nb.notifier_call = gunyah_vm_rm_notification;
-+	ret = gunyah_rm_notifier_register(ghvm->rm, &ghvm->nb);
-+	if (ret)
-+		goto err;
-+
-+	ret = gunyah_rm_alloc_vmid(ghvm->rm, 0);
-+	if (ret < 0) {
-+		gunyah_rm_notifier_unregister(ghvm->rm, &ghvm->nb);
-+		goto err;
-+	}
-+	ghvm->vmid = ret;
-+	ghvm->vm_status = GUNYAH_RM_VM_STATUS_LOAD;
-+
-+	ret = gunyah_rm_vm_configure(ghvm->rm, ghvm->vmid, ghvm->auth, 0, 0, 0, 0, 0);
-+	if (ret) {
-+		pr_warn("Failed to configure VM: %d\n", ret);
-+		goto err;
-+	}
-+
-+	ret = gunyah_rm_vm_init(ghvm->rm, ghvm->vmid);
-+	if (ret) {
-+		ghvm->vm_status = GUNYAH_RM_VM_STATUS_INIT_FAILED;
-+		pr_warn("Failed to initialize VM: %d\n", ret);
-+		goto err;
-+	}
-+	ghvm->vm_status = GUNYAH_RM_VM_STATUS_READY;
-+
-+	ret = gunyah_rm_vm_start(ghvm->rm, ghvm->vmid);
-+	if (ret) {
-+		pr_warn("Failed to start VM: %d\n", ret);
-+		goto err;
-+	}
-+
-+	ghvm->vm_status = GUNYAH_RM_VM_STATUS_RUNNING;
-+	up_write(&ghvm->status_lock);
 +	return 0;
-+err:
-+	up_write(&ghvm->status_lock);
-+	return ret;
 +}
-+
-+static struct gunyah_vm *gunyah_vm_alloc(struct gunyah_rm *rm)
-+{
-+	struct gunyah_vm *ghvm;
-+
-+	ghvm = kzalloc(sizeof(*ghvm), GFP_KERNEL);
-+	if (!ghvm)
-+		return ERR_PTR(-ENOMEM);
-+
-+	ghvm->vmid = GUNYAH_VMID_INVAL;
-+	ghvm->rm = rm;
-+
-+	init_rwsem(&ghvm->status_lock);
-+	init_waitqueue_head(&ghvm->vm_status_wait);
-+	ghvm->vm_status = GUNYAH_RM_VM_STATUS_NO_STATE;
-+
-+	return ghvm;
-+}
-+
-+static void gunyah_destroy_vm(struct gunyah_vm *ghvm)
-+{
-+	int ret;
-+
-+	/**
-+	 * We might race with a VM exit notification, but that's ok:
-+	 * gh_rm_vm_stop() will just return right away.
-+	 */
-+	if (ghvm->vm_status == GUNYAH_RM_VM_STATUS_RUNNING)
-+		gunyah_vm_stop(ghvm);
-+
-+	if (ghvm->vm_status == GUNYAH_RM_VM_STATUS_EXITED ||
-+	    ghvm->vm_status == GUNYAH_RM_VM_STATUS_READY ||
-+	    ghvm->vm_status == GUNYAH_RM_VM_STATUS_INIT_FAILED) {
-+		ret = gunyah_rm_vm_reset(ghvm->rm, ghvm->vmid);
-+		if (!ret)
-+			wait_event(ghvm->vm_status_wait,
-+				   ghvm->vm_status == GUNYAH_RM_VM_STATUS_RESET);
-+		else
-+			pr_warn("Failed to reset the vm: %d\n", ret);
-+	}
-+
-+	if (ghvm->vm_status > GUNYAH_RM_VM_STATUS_NO_STATE) {
-+		gunyah_rm_notifier_unregister(ghvm->rm, &ghvm->nb);
-+		ret = gunyah_rm_dealloc_vmid(ghvm->rm, ghvm->vmid);
-+		if (ret)
-+			pr_warn("Failed to deallocate vmid: %d\n", ret);
-+	}
-+}
-+
- struct kvm *kvm_arch_alloc_vm(void)
- {
--	return NULL;
-+	struct gunyah_vm *ghvm;
-+
-+	ghvm = gunyah_vm_alloc(gunyah_rm);
-+	if (IS_ERR(ghvm))
-+		return NULL;
-+
-+	return &ghvm->kvm;
-+}
-+
-+void kvm_arch_destroy_vm(struct kvm *kvm)
-+{
-+	struct gunyah_vm *ghvm = kvm_to_gunyah(kvm);
-+
-+	kvm_destroy_vcpus(kvm);
-+	gunyah_destroy_vm(ghvm);
-+}
-+
-+void kvm_arch_free_vm(struct kvm *kvm)
-+{
-+	struct gunyah_vm *ghvm = kvm_to_gunyah(kvm);
-+
-+	kfree(ghvm);
- }
-diff --git a/drivers/virt/gunyah/rsc_mgr_rpc.c b/drivers/virt/gunyah/rsc_mgr_rpc.c
-index 626ad2565548..936592177ddb 100644
---- a/drivers/virt/gunyah/rsc_mgr_rpc.c
-+++ b/drivers/virt/gunyah/rsc_mgr_rpc.c
-@@ -3,8 +3,8 @@
-  * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
++#endif
+diff --git a/drivers/virt/gunyah/rsc_mgr.c b/drivers/virt/gunyah/rsc_mgr.c
+index 75fc86887868..2d34b0ba98b2 100644
+--- a/drivers/virt/gunyah/rsc_mgr.c
++++ b/drivers/virt/gunyah/rsc_mgr.c
+@@ -9,8 +9,10 @@
+ #include <linux/mutex.h>
+ #include <linux/notifier.h>
+ #include <linux/of.h>
++#include <linux/of_irq.h>
+ #include <linux/platform_device.h>
  
-+#include <linux/slab.h>
- #include <linux/error-injection.h>
--
++#include <asm/gunyah.h>
  #include <linux/gunyah_rsc_mgr.h>
  
- /* Message IDs: VM Management */
-diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
-index acd70f982425..1f4389eb21fb 100644
---- a/include/linux/gunyah.h
-+++ b/include/linux/gunyah.h
-@@ -11,6 +11,12 @@
- #include <linux/interrupt.h>
- #include <linux/limits.h>
- #include <linux/types.h>
-+#include <linux/kvm_host.h>
+ /* clang-format off */
+@@ -118,6 +120,7 @@ struct gunyah_rm_message {
+  * @send_lock: synchronization to allow only one request to be sent at a time
+  * @send_ready: completed when we know Tx message queue can take more messages
+  * @nh: notifier chain for clients interested in RM notification messages
++ * @parent_fwnode: Parent IRQ fwnode to translate Gunyah hwirqs to Linux irqs
+  */
+ struct gunyah_rm {
+ 	struct device *dev;
+@@ -133,6 +136,8 @@ struct gunyah_rm {
+ 	struct mutex send_lock;
+ 	struct completion send_ready;
+ 	struct blocking_notifier_head nh;
 +
-+#include <linux/gunyah_rsc_mgr.h>
-+
-+#define kvm_to_gunyah(kvm_ptr) \
-+	container_of(kvm_ptr, struct gunyah_vm, kvm)
- 
- /* Matches resource manager's resource types for VM_GET_HYP_RESOURCES RPC */
- enum gunyah_resource_type {
-@@ -31,6 +37,32 @@ struct gunyah_resource {
- 	unsigned int irq;
++	struct fwnode_handle *parent_fwnode;
  };
  
-+/**
-+ * struct gunyah_vm - Main representation of a Gunyah Virtual machine
-+                              memory shared with the guest.
-+ * @vmid: Gunyah's VMID for this virtual machine
-+ * @kvm: kvm instance for this VM
-+ * @rm: Pointer to the resource manager struct to make RM calls
-+ * @nb: Notifier block for RM notifications
-+ * @vm_status: Current state of the VM, as last reported by RM
-+ * @vm_status_wait: Wait queue for status @vm_status changes
-+ * @status_lock: Serializing state transitions
-+ * @auth: Authentication mechanism to be used by resource manager when
-+ *        launching the VM
-+ */
-+struct gunyah_vm {
-+	u16 vmid;
-+	struct kvm kvm;
-+	struct gunyah_rm *rm;
+ /* Global resource manager instance */
+@@ -177,6 +182,53 @@ static inline int gunyah_rm_error_remap(enum gunyah_rm_error rm_error)
+ 	}
+ }
+ 
++struct gunyah_resource *
++gunyah_rm_alloc_resource(struct gunyah_rm *rm,
++			 struct gunyah_rm_hyp_resource *hyp_resource)
++{
++	struct gunyah_resource *ghrsc;
++	int ret;
 +
-+	struct notifier_block nb;
-+	enum gunyah_rm_vm_status vm_status;
-+	wait_queue_head_t vm_status_wait;
-+	struct rw_semaphore status_lock;
++	ghrsc = kzalloc(sizeof(*ghrsc), GFP_KERNEL);
++	if (!ghrsc)
++		return NULL;
 +
-+	enum gunyah_rm_vm_auth_mechanism auth;
-+};
++	ghrsc->type = hyp_resource->type;
++	ghrsc->capid = le64_to_cpu(hyp_resource->cap_id);
++	ghrsc->irq = IRQ_NOTCONNECTED;
++	ghrsc->rm_label = le32_to_cpu(hyp_resource->resource_label);
++	if (hyp_resource->virq) {
++		struct irq_fwspec fwspec;
 +
- /******************************************************************************/
- /* Common arch-independent definitions for Gunyah hypercalls                  */
- #define GUNYAH_CAPID_INVAL U64_MAX
++
++		fwspec.fwnode = rm->parent_fwnode;
++		ret = arch_gunyah_fill_irq_fwspec_params(le32_to_cpu(hyp_resource->virq), &fwspec);
++		if (ret) {
++			dev_err(rm->dev,
++				"Failed to translate interrupt for resource %d label: %d: %d\n",
++				ghrsc->type, ghrsc->rm_label, ret);
++		}
++
++		ret = irq_create_fwspec_mapping(&fwspec);
++		if (ret < 0) {
++			dev_err(rm->dev,
++				"Failed to allocate interrupt for resource %d label: %d: %d\n",
++				ghrsc->type, ghrsc->rm_label, ret);
++			kfree(ghrsc);
++			return NULL;
++		}
++		ghrsc->irq = ret;
++	}
++
++	return ghrsc;
++}
++
++void gunyah_rm_free_resource(struct gunyah_resource *ghrsc)
++{
++	irq_dispose_mapping(ghrsc->irq);
++	kfree(ghrsc);
++}
++
+ static int gunyah_rm_init_message_payload(struct gunyah_rm_message *message,
+ 					  const void *msg, size_t hdr_size,
+ 					  size_t msg_size)
+@@ -676,6 +728,7 @@ static int gunyah_rm_probe_rx_msgq(struct gunyah_rm *rm,
+ 
+ static int gunyah_rm_probe(struct platform_device *pdev)
+ {
++	struct device_node *parent_irq_node;
+ 	int ret;
+ 
+ 	gunyah_rm = devm_kzalloc(&pdev->dev, sizeof(*gunyah_rm), GFP_KERNEL);
+@@ -695,6 +748,21 @@ static int gunyah_rm_probe(struct platform_device *pdev)
+ 	ret = gunyah_rm_probe_tx_msgq(gunyah_rm, pdev);
+ 	if (ret)
+ 		return ret;
++
++	parent_irq_node = of_irq_find_parent(pdev->dev.of_node);
++	if (!parent_irq_node) {
++		dev_err(&pdev->dev,
++			"Failed to find interrupt parent of resource manager\n");
++		return -ENODEV;
++	}
++
++	gunyah_rm->parent_fwnode = of_node_to_fwnode(parent_irq_node);
++	if (!gunyah_rm->parent_fwnode) {
++		dev_err(&pdev->dev,
++			"Failed to find interrupt parent domain of resource manager\n");
++		return -ENODEV;
++	}
++
+ 	/* assume RM is ready to receive messages from us */
+ 	complete(&gunyah_rm->send_ready);
+ 
+diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
+index 1f4389eb21fb..40ea21b17195 100644
+--- a/include/linux/gunyah.h
++++ b/include/linux/gunyah.h
+@@ -35,6 +35,8 @@ struct gunyah_resource {
+ 	enum gunyah_resource_type type;
+ 	u64 capid;
+ 	unsigned int irq;
++
++	u32 rm_label;
+ };
+ 
+ /**
+diff --git a/include/linux/gunyah_rsc_mgr.h b/include/linux/gunyah_rsc_mgr.h
+index 294e847c27ed..c0fe516d54a8 100644
+--- a/include/linux/gunyah_rsc_mgr.h
++++ b/include/linux/gunyah_rsc_mgr.h
+@@ -97,6 +97,10 @@ struct gunyah_rm_hyp_resources {
+ 
+ int gunyah_rm_get_hyp_resources(struct gunyah_rm *rm, u16 vmid,
+ 				struct gunyah_rm_hyp_resources **resources);
++struct gunyah_resource *
++gunyah_rm_alloc_resource(struct gunyah_rm *rm,
++			 struct gunyah_rm_hyp_resource *hyp_resource);
++void gunyah_rm_free_resource(struct gunyah_resource *ghrsc);
+ 
+ int gunyah_rm_call(struct gunyah_rm *rsc_mgr, u32 message_id,
+ 		   const void *req_buf, size_t req_buf_size, void **resp_buf,
 -- 
 2.39.5
 
