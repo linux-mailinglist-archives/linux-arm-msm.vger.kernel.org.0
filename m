@@ -1,163 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-55440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C20CA9B0C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:27:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57045A9B0E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 16:30:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E6B81B817A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:27:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2E839921DF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 14:29:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FE06297A61;
-	Thu, 24 Apr 2025 14:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED3A827F4CA;
+	Thu, 24 Apr 2025 14:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UwUk0Yat"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="J+oi5kaV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3442973AC
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:14:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B0D19CC3E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:24:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745504076; cv=none; b=HYq2XKR6hm/nVezVUvxZA/+sx1GejX3jb7rTv+i/YJE+a0U8BJahFZLIPH7eL9devhRhoVbPtLzbNTLm9EdYxSESWAA8Cv1CJRcpU0SEIAHnleWNNcfJ4482KlquzE2s0xukiEdfYM19K1GgN+nxDOXpvo0Dxc4LI5efSlQIJro=
+	t=1745504670; cv=none; b=dcB92xhG5U/fMdC/wsQPyAb9LA0FanXhMaJcwy1aoQmHwKCXZ+7S/Yc6qQFWnmjbetuy+MwNtNNp6MWci53AXrw5VoMflmdsa25W16Kac1eC29AYyEzlGLUDMoHevhE3AoLFs98iCcYBfTrjiuIJQXZFcbYpt4cxzsvwDa+SFUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745504076; c=relaxed/simple;
-	bh=hc3NuIx//WjHKdboDZgQCca1SVN0OX6YOp4RVVhyM/A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RQQq3hAa+nf557oGUGchTP7qfAfX0TkYuzTZrg8n89L7HgEYwlQBwvqYmInPyfzGTq3RlolMn6PNwjryc5cL5WvWTt8oc1IePPERITr3B9HbS62DTxjiW0eVenRm/ZckijyDJou2IhAFU9c7p6I/7xfPY7kHISV2RWr7Z4/32uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UwUk0Yat; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-30c44a87b9cso9592331fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:14:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745504072; x=1746108872; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DIIOezRQ1iEeyh6wP7pxRulzkeF5lSrui5rZPEB2VUc=;
-        b=UwUk0YatGqkihCHcRF0WXCpJdbvOfbr19WV0vXckF6HbEABibwa4CVO/OAXrn8LE2K
-         Qtjqr5hysn2lIIyCIbEd5tzTWUcvnhXssACBU8hiMTKhl2J5LLVCZGtbFLxJtiWb+eED
-         Noss6jgFurG+cW6ZtrPOZmAPuVNyz8dStIMOjOVs2YWBcPdCrPnXPZApCqUEhrbkesAt
-         fstmM6LzmJnQRrT/dYOSxgc757S5707GF+imQNkxH+KX9Rtap0GeOZL3ZoyqE2ZSDvYy
-         ui8SWR5ZIkhASTH78Z+6DVD5xKKG6a7Jds3Z3YM+E/Aiq+tnEfHCHgAvk3UBmwW0rjTs
-         gTmw==
+	s=arc-20240116; t=1745504670; c=relaxed/simple;
+	bh=Tz47M5iSwvuJI43VgdSbVvZXDbfVclPcKwW5AF1Dppo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eVRtdajT7t017NqwPdNB7fWJ4coHQgeheh11kWqn5kWszDX/5Y7KBUSiZozE6kpNNcGas56isz7T0zmRamZJLFSWoILv3J9qXp7/7PfCF8+d5FESAsl7WergAOvXyHOAxwJjcxcy1bXFgSUmD9CI+djoS+ZBlNvhOToMYyLjleU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=J+oi5kaV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53OC3Eci016620
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:24:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=aCpv1/9HQmDsE2c9o+kjey5K
+	k7J2MtEAbNBgEXq7aGU=; b=J+oi5kaV6+sm0mAyOvWVj14wdp/0IZTosSQp/WAJ
+	x/2r1yBDDOIyFOt9hYCybBAL5s9BedLQf7EUWdtHEgz83lMjfjDvoRHJdPEskmUP
+	hYAu9QhBEElArModXFUn6t/k1ZbjDfrAvWBobH8ixNJRyavJKVCbNQ6v3UMIxP5j
+	1CmnBjnrwS9gFb7fKyzGt0TiEuP+ZRuKZcTHl87JmsI962dbtcunzewmU2fycqq7
+	6OT7gLlURnziTxIBE58/jXTEBGnXu40/LVGyqtHr26F9iAAIehDDsJ4A+OoWIMPM
+	C7mTsbh7x5bhiWf8biaoyXlKyoH+XQcct0N6HrhIQqLi1A==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh25xbs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 14:24:28 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c95556f824so125651785a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 07:24:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745504072; x=1746108872;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DIIOezRQ1iEeyh6wP7pxRulzkeF5lSrui5rZPEB2VUc=;
-        b=rdCkZYqI5pqniaVGeIH4x7iOmqCUw2jBxYSCXjZfZyXWmMsXp1UKlQ9pS/6umShUjJ
-         Gep5YumNDGEBC+TTwOMZ3CpzwXSmTH05wCx2nQldoFA1zan1UM27VmK1xh962bCl5Uhz
-         qhiq2tJjm6oGPn1ghyA1SgUJMnJBM0WmBSaTePBuCnEO2rH+EFL0FkjZogum0irxv6JG
-         PCMqRvMWeLltcpx+mJJ9gZB9LYRBInLqXvYaMAGnvYlRJf5OUzZpPiA5bq5RAaJa0jI9
-         wTdCZoZ6b8HrZuZ66DS4AJKZZeRqwEHEsFduY/kVVOWAF+Pz3lbYw9Uq7zULS1icGech
-         ja2g==
-X-Forwarded-Encrypted: i=1; AJvYcCWQlN5akcMkdpnrfnR9eT3aL6PTScgIlN6njyAjKg2Tb0McJ9GjXcijSbDlHXCNJO9fYHgPvyQoduoutXuS@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzj+pZfbb7q5g0dkFrvcA1QvyGd6Gj2q1m45iiPcaZiqBx8i0O3
-	V3v6wXjE14bYSe4Ze8G1MDy4bqLXgkFmCrn3yp9EUZQ8vN7l3aKaRBcEYYPyZqmYOFOu7rnCEZn
-	KO6HAh4mVAxfS3MWjn7t++TMLDv0XNI4eFeMvtg==
-X-Gm-Gg: ASbGncv4C0z+tAvPSU5ufOSXx9TgUqYMjnrdGfE2Fu2HNjJOdl0tJnJEcgG7bVj9keO
-	UqMV05HvjbgnEU9rkRXkeSCuxGMQ7qmemeivT6MlGBBwZ6rGruIJzuFNILwlhToHDDqa3Zxw9tb
-	8qvyQP8meOmk4CqVQTjMvb4NWRmCTMHqu6w5m7ky+hqyZYeVDz7c1j+c+w
-X-Google-Smtp-Source: AGHT+IGTSgfmE4C9KUY01cBQCa6U+zujjBr3JQn5JFHu87otSRTtbM+9TibC6Ub/YfaplbG5HQdBpJHJtYPG69/HM40=
-X-Received: by 2002:a05:651c:885:b0:30d:e104:cd56 with SMTP id
- 38308e7fff4ca-3179ffc1202mr10727731fa.39.1745504072212; Thu, 24 Apr 2025
- 07:14:32 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1745504667; x=1746109467;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aCpv1/9HQmDsE2c9o+kjey5Kk7J2MtEAbNBgEXq7aGU=;
+        b=rYlTcTsc0XQMIKmTgkX7pRkRMVVSUWjofUCgAj9HiSlWxp8AHKSziklPkFpR9oJm/0
+         gJXTuN1LDBoq/6mB4T/TSDa0d8SwaXiM5s0C2IDjjPISLq/pmYEmcBt49BWNY+wB6Fyc
+         +Yh8YIQymSKa+vdMTk/If18iT9U32NFqK1q58JSoYuxeMADk5vUoEEZUZwNf/GB1iF2w
+         1QUh6G8D0qkpCAwzswjC4GMQo7jyFDmVvQPh6dzPMva9vxBfxadKBCmeBGslpW9sAiRP
+         zXsroQEKSeEMpvyJiKYmgLLo9EY83Lv8R0lICCWdcmeEgMu1B/1Lw8x8ZnY1N2s+46RL
+         aaCw==
+X-Forwarded-Encrypted: i=1; AJvYcCUKT+sUtYJ31zHR030aFN77asrOVwnbHnGYjvYpCBFxgyHgzP+oLjtdU1wN3XmkGaiVQST/LxHudD5esDp+@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBcYZ76eOSXRzomzqSomRFSXk0kREnAs8GUT9aTzgfQnqgorDT
+	tLGjtXBCq1TnNzvhRKuYHcD6NTGCSz1bYr7zqnnNlf/F4JjlAN2GqR9JBI5lO14udhnu3UJlMGt
+	3tYONqctXaO90d0BlB9fXc2dECp0AHjTV2Yp2csbfG8zjPR+iJ0umKO5bT8NQmdWR
+X-Gm-Gg: ASbGncvQTtmToUerKxSSNNZLUE0wURe6F0bFMqFeMygP0r4LPdXKPIBGCUtkfmPXfNo
+	XiPP4nZNERRnNgACHnLRIGoeqeYzFiXkvpYeRzmJ0kwv+E3O+9CmNjfkH22lPYUaMlIndTL4ETZ
+	sKEYqqROlnf29mQYaodOaW/EsFnfm/q07ePGRe4za2teqfOe2bsHKZvUiI5zMsG1WaHud144Z7P
+	9q96W8wkUhawarFdl3yMbmkylejwaAOChts/s5WFxGxIlyuZm6Hah0VA2GKe+6PvKoEGZo/3uSt
+	AGhd9x1Cz2wjE46ZujODrzeo/zr6nUdovxVUaWTw16e4ODvdunYglSktpV3StwE2CjJuTbfNUkU
+	=
+X-Received: by 2002:a05:620a:1a88:b0:7c5:5286:4369 with SMTP id af79cd13be357-7c956ed827emr388682485a.28.1745504666867;
+        Thu, 24 Apr 2025 07:24:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGfMCTiWC271FmjAeFR05t6YSH7H+j2ilbNg+3NlJxeCkNaMiYMkNfy1W2POn/mCNlUl/nf/w==
+X-Received: by 2002:a05:620a:1a88:b0:7c5:5286:4369 with SMTP id af79cd13be357-7c956ed827emr388679485a.28.1745504666491;
+        Thu, 24 Apr 2025 07:24:26 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7cc9e8d5sm254689e87.123.2025.04.24.07.24.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Apr 2025 07:24:25 -0700 (PDT)
+Date: Thu, 24 Apr 2025 17:24:24 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8650: add iris DT node
+Message-ID: <hdoa3sxaxrg6ibxj4sp34zjczdslq3hx4vz4dalbzgrksvl5mz@gaf5ru6jqrs3>
+References: <20250418-topic-sm8x50-upstream-iris-8650-dt-v1-1-80a6ae50bf10@linaro.org>
+ <asfwnyn5grm426vq5qatrxfffv3wmbuzx6266rblanzqepffzx@7773dcxfaqe4>
+ <571b6484-d3ac-4aca-a055-c143f7e4a5dd@linaro.org>
+ <i3kzq27v2cqhyuyqjq6dll4h6u2hjl5kpbws3qioe3lzarkhnl@oz7gzssnx7kq>
+ <dafa92f7-1bcf-46a1-9a86-5b41e31ab7bc@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org>
-In-Reply-To: <20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org>
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-Date: Thu, 24 Apr 2025 08:14:20 -0600
-X-Gm-Features: ATxdqUEG7UgU0b-fYJDsj-X6YeibPATP71Sc8xsrfndaXkHmANCAN6IFo1WtuOI
-Message-ID: <CANLsYkxKHhCHYrbAGzQ48QGpL_DbuLnX3=ppmpyu0vjuuvvODg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] of: Common "memory-region" parsing
-To: "Rob Herring (Arm)" <robh@kernel.org>, Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, 
-	Daniel Baluta <daniel.baluta@nxp.com>, Iuliana Prodan <iuliana.prodan@nxp.com>, 
-	"Andrew F. Davis" <afd@ti.com>, "Shah, Tanmay" <tanmay.shah@amd.com>
-Cc: Saravana Kannan <saravanak@google.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Chen-Yu Tsai <wens@kernel.org>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-remoteproc@vger.kernel.org, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dafa92f7-1bcf-46a1-9a86-5b41e31ab7bc@linaro.org>
+X-Authority-Analysis: v=2.4 cv=EtLSrTcA c=1 sm=1 tr=0 ts=680a499c cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=drfrMuxTHZ_Whhv-szoA:9 a=CjuIK1q_8ugA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: l4o2xVEit94-TRYutk1nwCw18Y-r3Pvg
+X-Proofpoint-ORIG-GUID: l4o2xVEit94-TRYutk1nwCw18Y-r3Pvg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDA5NyBTYWx0ZWRfX0uZfR0EuUYdA iLbXC7R3xZkgTXwOpiBgThdM2FM6yfm9hIGwvJETQkg5dxw2mwdhrDG/BxsdVNSAh/NAf31+xVL 41iahwlAIKMUx5SQPen4XwKgE68wYcejzted8/3HwpW/sIuZIzdXwTSdpusL8exlWYdXdADr5rJ
+ Xtn0TsUMezQjwbwELrPjogye5xrJdIy/3Olnh+9kGzM4w/v6BCtCyFjFwC3tUfCcQWdAMfqmZ9q nTb3vUvh00st6HcVXJ2cp2KTcjEp/16mafU36aJC9Dmj8cvbICi24GQFps7tJCs14F+X02N969m 8MbVVfZ27v1CY1uw9ZUAXi1NuZ8EqMI9OcQP0RYSmllFfuU3ohsmlFcAMCes1u42tosriDxEB5Z
+ bKdg4GQl0fNfvzZ2baKeGOcFKHzeMVDLEPwJ5yNkoH/EK96AEaYgb1YnrbGYoy0pOKTl6bnV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-24_06,2025-04-24_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ suspectscore=0 mlxscore=0 clxscore=1015 spamscore=0 mlxlogscore=999
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
+ adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504240097
 
-Arnaud, Daniel, Iuliana, Andrew and Tanmay - please test this patchset
-on the platforms you are working on.
+On Thu, Apr 24, 2025 at 02:43:21PM +0200, Neil Armstrong wrote:
+> On 24/04/2025 13:17, Dmitry Baryshkov wrote:
+> > On Tue, Apr 22, 2025 at 09:07:41AM +0200, Neil Armstrong wrote:
+> > > On 19/04/2025 01:05, Dmitry Baryshkov wrote:
+> > > > On Fri, Apr 18, 2025 at 03:20:35PM +0200, Neil Armstrong wrote:
+> > > > > Add DT entries for the sm8650 iris decoder.
+> > > > > 
+> > > > > Since the firmware is required to be signed, only enable
+> > > > > on Qualcomm development boards where the firmware is
+> > > > > available.
+> > > > > 
+> > > > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > > > > ---
+> > > > >    arch/arm64/boot/dts/qcom/sm8650-hdk.dts |  5 ++
+> > > > >    arch/arm64/boot/dts/qcom/sm8650-mtp.dts |  5 ++
+> > > > >    arch/arm64/boot/dts/qcom/sm8650-qrd.dts |  5 ++
+> > > > 
+> > > > I'd say that these are 4 commits.
+> > > 
+> > > I could make 10 and still be coherent, but do we really need 4 here ?
+> > 
+> > The usual pattern was sm8650.dtsi + one for each board.
+> 
+> For big changes per board yes, I still don't think we need separate commits
+> for boards.
 
-Thanks,
-Mathieu
+Well, either way:
 
-On Wed, 23 Apr 2025 at 13:42, Rob Herring (Arm) <robh@kernel.org> wrote:
->
-> While there's a common function to parse "memory-region" properties for
-> DMA pool regions, there's not anything for driver private regions. As a
-> result, drivers have resorted to parsing "memory-region" properties
-> themselves repeating the same pattern over and over. To fix this, this
-> series adds 2 functions to handle those cases:
-> of_reserved_mem_region_to_resource() and of_reserved_mem_region_count().
->
-> I've converted the whole tree, but just including remoteproc here as
-> it has the most cases. I intend to apply the first 3 patches for 6.16
-> so the driver conversions can be applied for 6.17.
->
-> A git tree with all the drivers converted is here[1].
->
-> v2:
-> - Fix of_dma_set_restricted_buffer() to maintain behavior on warning msg
-> - Export devm_ioremap_resource_wc()
-> - Rework handling of resource name to drop unit-address from name as it
->   was before.
-> - Link to v1:
->   https://lore.kernel.org/all/20250317232426.952188-1-robh@kernel.org
->
-> [1] git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git dt/memory-region
->
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> ---
-> Rob Herring (Arm) (4):
->       of: reserved_mem: Add functions to parse "memory-region"
->       of: Simplify of_dma_set_restricted_buffer() to use of_for_each_phandle()
->       devres: Export devm_ioremap_resource_wc()
->       remoteproc: Use of_reserved_mem_region_* functions for "memory-region"
->
->  drivers/of/device.c                       | 31 +++++-------
->  drivers/of/of_reserved_mem.c              | 80 +++++++++++++++++++++++++++++++
->  drivers/remoteproc/imx_dsp_rproc.c        | 45 +++++++----------
->  drivers/remoteproc/imx_rproc.c            | 68 +++++++++++---------------
->  drivers/remoteproc/qcom_q6v5_adsp.c       | 24 ++++------
->  drivers/remoteproc/qcom_q6v5_mss.c        | 60 ++++++++---------------
->  drivers/remoteproc/qcom_q6v5_pas.c        | 69 ++++++++++----------------
->  drivers/remoteproc/qcom_q6v5_wcss.c       | 25 ++++------
->  drivers/remoteproc/qcom_wcnss.c           | 23 ++++-----
->  drivers/remoteproc/rcar_rproc.c           | 36 ++++++--------
->  drivers/remoteproc/st_remoteproc.c        | 41 ++++++++--------
->  drivers/remoteproc/stm32_rproc.c          | 44 ++++++++---------
->  drivers/remoteproc/ti_k3_dsp_remoteproc.c | 28 +++++------
->  drivers/remoteproc/ti_k3_m4_remoteproc.c  | 28 +++++------
->  drivers/remoteproc/ti_k3_r5_remoteproc.c  | 28 +++++------
->  drivers/remoteproc/xlnx_r5_remoteproc.c   | 51 ++++++++------------
->  include/linux/of_reserved_mem.h           | 26 ++++++++++
->  lib/devres.c                              |  1 +
->  18 files changed, 339 insertions(+), 369 deletions(-)
-> ---
-> base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
-> change-id: 20250423-dt-memory-region-v2-a2b15caacc63
->
-> Best regards,
-> --
-> Rob Herring (Arm) <robh@kernel.org>
->
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
+
+> 
+> Neil
+> 
+> > 
+> > > 
+> > > > 
+> > > > >    arch/arm64/boot/dts/qcom/sm8650.dtsi    | 94 +++++++++++++++++++++++++++++++++
+> > > > >    4 files changed, 109 insertions(+)
+> > > > > 
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+> > > > > index d0912735b54e5090f9f213c2c9341e03effbbbff..69db971d9d2d32cdee7bb1c3093c7849b94798a0 100644
+> > > > > --- a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+> > > > > +++ b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+> > > > > @@ -894,6 +894,11 @@ &ipa {
+> > > > >    	status = "okay";
+> > > > >    };
+> > > > > +&iris {
+> > > > > +	firmware-name = "qcom/vpu/vpu33_p4.mbn";
+> > > > 
+> > > > You shouldn't need to specify this, it matches the default one.
+> > > 
+> > > Hmm ok
+> > > 
+> > > > 
+> > > > > +	status = "okay";
+> > > > > +};
+> > > > > +
+> > > > >    &gpu {
+> > > > >    	status = "okay";
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
+> > > > > index 76ef43c10f77d8329ccf0a05c9d590a46372315f..04108235d9bc6f977e9cf1b887b0c89537723387 100644
+> > > > > --- a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
+> > > > > +++ b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
+> > > > > @@ -585,6 +585,11 @@ vreg_l7n_3p3: ldo7 {
+> > > > >    	};
+> > > > >    };
+> > > > > +&iris {
+> > > > > +	firmware-name = "qcom/vpu/vpu33_p4.mbn";
+> > > > > +	status = "okay";
+> > > > > +};
+> > > > > +
+> > > > >    &lpass_tlmm {
+> > > > >    	spkr_1_sd_n_active: spkr-1-sd-n-active-state {
+> > > > >    		pins = "gpio21";
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+> > > > > index 71033fba21b56bc63620dca3e453c14191739675..58bdc6619ac55eda122f3fe6e680e0e61967d019 100644
+> > > > > --- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+> > > > > +++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+> > > > > @@ -824,6 +824,11 @@ &ipa {
+> > > > >    	status = "okay";
+> > > > >    };
+> > > > > +&iris {
+> > > > > +	firmware-name = "qcom/vpu/vpu33_p4.mbn";
+> > > > > +	status = "okay";
+> > > > > +};
+> > > > > +
+> > > > >    &gpu {
+> > > > >    	status = "okay";
+> > > > 
+> > > 
+> > > Thanks,
+> > > Neil
+> > > 
+> > 
+> 
+
+-- 
+With best wishes
+Dmitry
 
