@@ -1,297 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-55253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DDFBA9A06D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 07:27:16 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09AA2A9A082
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 07:37:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6FCFD1884921
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 05:27:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 70D6D7AF7D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Apr 2025 05:35:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C516C1B043E;
-	Thu, 24 Apr 2025 05:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F243A1AF0CE;
+	Thu, 24 Apr 2025 05:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xriiRtkx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZdRnFw1U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C9A1B0F2C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 05:27:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC60E1953BB;
+	Thu, 24 Apr 2025 05:36:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745472433; cv=none; b=k0uh8ueciohPAEHX26eze4weC1k5YeT/ThGUie7XuhETwF5+GI2/EpL5PdeKVDheogcP1XdZ9dyT0ryFQPDITf0r21mcZsBQZhmjexios81Grj7oJibXR7ri4HCXX6cpDDpUktdw12oGr+EKFhsYryjOdxmv05PixYiu7kp6AvM=
+	t=1745473017; cv=none; b=sY5LGCcv/FToUP7dzFJjJxkwO4G/YrjwkavzZJrav72UhPElBOfpLd0bm6o5RbtAClBeNICfmozsCN2x8rmQD6DR5bxS+qPaGwOpIUZYIHbHTvtNDuHPQIUWCvFnobTRvkT2paxaMHk8Jm0/fpc5K7PjIziRe9KL5kTxNpFzzVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745472433; c=relaxed/simple;
-	bh=QVve6SNFxQ7c7t5apaYCSIxKah6vut+7W/vl9gX9VUY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NVmw9cmN+K9gh0PIMt/5OTho/147DReqrVSt4Lfw51GTHrL+i1kWC2U96kMXZ4/taP6PHcJO98zLU7JPtWNY1LAZjVl0qcWRWERCsfz3mmJzofaB3LHaj3A1+jWEJScuw0Im8Cel8wl46Lvn3cBOQm1TRdti+OwjMyczSzorxz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xriiRtkx; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-af590aea813so1752498a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Apr 2025 22:27:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745472431; x=1746077231; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=cZUPcM2JRXU1EZUeYvnEV+B9VdnBQw7RuAghQfhbC98=;
-        b=xriiRtkxxm0kjh+F4DHHvxldPNPL4fcvEUhzYMNIh++uvqEFYuMZh8znb1bQxm5b85
-         OhtIlENpFeS5cFrNYe2EWYqdyy49AWpHBAMwaKASNg04rjI4bYA+ihax4x0yFUcYI24t
-         jzgq/qslOn/ymlxiHA18zkxhBvBJQRRCdafUfgG6ZYth0pKKYGRWgHZnkTxUixKlbwE9
-         hru2CE2FZ24m4EkbeuO1ZhZT7hnLup9Ay5uJy7Z6p+dDkK7h5OEYhoakeOTpPQJhRrCT
-         xIhxaeFS5ALbacJ/Gk36YSIZqqM956HBXdKrFKnBcr1gU4bOdpw6e15Z4EvNl/1VD62n
-         blfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745472431; x=1746077231;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cZUPcM2JRXU1EZUeYvnEV+B9VdnBQw7RuAghQfhbC98=;
-        b=s8z2YEyvaXB8K0NW3fEyfYaAc1tvC3loHOt59dYjrckwRoV9H4M+go921wnu9vjFPp
-         aWlhg1r6fJiCwukG53ABrWddDuathjGMKlf9lJDCAn4MejSGGrrj8iPm8MLRWI9Qd0xv
-         jcmMidRKbqk15JFa2RWc6XDW3upj0rvE5ecGvudDDnxGoWZwCI0P2PxvdUcjHLPsCisF
-         WQxzpj4WyFjo2ROAP7ve8/2+BDJI8Wly0FwWyMAVbLDv5ViHMqYzB0yzEnCMAe0aN/+g
-         xNI67zWY3IfU//ZiulXJXAyzkdRjNUAs5wRVcMhAc6Fw5WmzJz1wNW7Xq5d4kHtQTU2E
-         ZLCg==
-X-Forwarded-Encrypted: i=1; AJvYcCWQUsLYz2hCDezccjAR+779IjhrL4YglaKJ9POL0QLNDoLvIWVMnVGxFOhwkXNRq3h72L0GFSLrGV47GLsY@vger.kernel.org
-X-Gm-Message-State: AOJu0YwOSIzs0d+0d9mcPhcesjyhnzNvWhmNujU/NBTsCkJ06DR2sF12
-	9lyzS5tuHNYsa1hl37y7tTrEMtMQXi+6Ai0lG0gZMr54Y8drBu41aYHD/Qgb8w==
-X-Gm-Gg: ASbGncswCDzHsw9x9VQLNmsk0PjfoqPeOjUzDGl1i1me1dOfsbkV4fGtvfWcL00JFIM
-	uCaj8TL5GJxk8/e8Gsc4M0ICo7HsboIx+mVw6XMrlPNTqeBGMvduAtT+MS1i6YZh1FRKGGBR+kC
-	HFmZVlz42gz8GxQ6Uwjtjyr+MOQfp3+VNxEZD4megQprmk+7wW/jccNw+OP09KTN2BNRdHGePvy
-	Le2dZKVJmMn0/NARZyrfk4Zmh1j1GJ5fN0DZFSqeUNaJn97mhI1LZUOWegJ3jkB1xWYz/dGtzrx
-	7VRpERkiH66upjGRk/THbRyHFlyxbrjWa1Ny5HbxAuS8AmuoOwQ=
-X-Google-Smtp-Source: AGHT+IEwbpxTA4Qj4NM5rAHZdl1TYE4GZFHTARebZEX16BK4YArP6CGqoSYBRcTbYJYiLhgXJ62sqw==
-X-Received: by 2002:a17:90b:45:b0:2f9:d0cd:3403 with SMTP id 98e67ed59e1d1-309ee3b5de0mr1568292a91.16.1745472430905;
-        Wed, 23 Apr 2025 22:27:10 -0700 (PDT)
-Received: from thinkpad ([120.60.139.78])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-309ef1385d2sm347425a91.41.2025.04.23.22.27.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Apr 2025 22:27:10 -0700 (PDT)
-Date: Thu, 24 Apr 2025 10:57:02 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
-	Oliver O'Halloran <oohall@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Zhou Wang <wangzhou1@hisilicon.com>, 
-	Will Deacon <will@kernel.org>, Robert Richter <rric@kernel.org>, 
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>, Marc Zyngier <maz@kernel.org>, 
-	Conor Dooley <conor.dooley@microchip.com>, Daire McNamara <daire.mcnamara@microchip.com>, 
-	dingwei@marvell.com, cassel@kernel.org, Lukas Wunner <lukas@wunner.de>, 
-	linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v3 5/5] PCI: qcom: Add support for resetting the slot due
- to link down event
-Message-ID: <mr5kunnsv5syckqbclcw2xi6es36fnsnfvrvughqlmv2kblxof@tltliisb5upf>
-References: <20250417-pcie-reset-slot-v3-0-59a10811c962@linaro.org>
- <20250417-pcie-reset-slot-v3-5-59a10811c962@linaro.org>
- <f32b2ece-f7ed-45ab-2867-9d276b88cf62@oss.qualcomm.com>
- <hmyeha6ygi6mxzsdivo2z5ccpvl5l2xietr3axxpl4zwojiavo@wuli4qazg446>
- <31f071d7-db56-f032-749e-92bc387238b8@oss.qualcomm.com>
+	s=arc-20240116; t=1745473017; c=relaxed/simple;
+	bh=ABXHbVwLQcuJdhcmr+KvmkNayeZgHJI6vYnH8pSInZk=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=pDm94Pl9KV6Q9L/Ke3U6DpMKSW/VRzwqqG9cDmAPSlsoNZeUfaL/COIcu/bvMdqCsEI/vigwZobd3Eh6REiI+ZXv4slYmJ7vTagRo2XdoRJWilkt8ILQmHphgT37hHEA6pOh8uLjhmqAARUJfi7lGTjHRE0ZM/uSJjWrhV0Ym5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZdRnFw1U; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADC2C4CEE3;
+	Thu, 24 Apr 2025 05:36:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745473017;
+	bh=ABXHbVwLQcuJdhcmr+KvmkNayeZgHJI6vYnH8pSInZk=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=ZdRnFw1U4X+JULTVPLk0DVyljEjUvmcT2ItgugX7qm9xS9sPYIz4gJdOBr554eALd
+	 j+4av0+YaoM7oTlrpoMegQLy9/rsJQ4U3PW39VeCkAMYOZoW5Kg1ZGMLX7msb9Q7YX
+	 8/ObCYsYaqMh5nKJTo4td1HqftSsJV8Sv5IFAKS938ZZ3y3JTMu/l0U4xUcYu2XbEF
+	 AFgucCU2c3TN+dh6brkmkxyyw/lA57iw1f9DeTHn3iC8nKJyyF5EZN+9RDJyD0Dw8L
+	 4piHM2rI4/0f9qKv7NGA4SzL7n3GCo0XEvvBj0rzBR2mXP5SGh7lccD3ilyX2rgHPS
+	 9O+OEWxGfGL+w==
+From: Vinod Koul <vkoul@kernel.org>
+To: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+ manivannan.sadhasivam@linaro.org, miquel.raynal@bootlin.com, richard@nod.at, 
+ vigneshr@ti.com, andersson@kernel.org, konradybcio@kernel.org, 
+ agross@kernel.org, Kaushal Kumar <quic_kaushalk@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-mtd@lists.infradead.org
+In-Reply-To: <20250423063054.28795-1-quic_kaushalk@quicinc.com>
+References: <20250423063054.28795-1-quic_kaushalk@quicinc.com>
+Subject: Re: (subset) [PATCH v3 0/5] Enable QPIC BAM and QPIC NAND support
+ for SDX75
+Message-Id: <174547301233.316124.15937980058360184263.b4-ty@kernel.org>
+Date: Thu, 24 Apr 2025 11:06:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <31f071d7-db56-f032-749e-92bc387238b8@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.2
 
-On Thu, Apr 24, 2025 at 10:41:24AM +0530, Krishna Chaitanya Chundru wrote:
+
+On Wed, 23 Apr 2025 12:00:49 +0530, Kaushal Kumar wrote:
+> This series adds and enables devicetree nodes for QPIC BAM and QPIC NAND
+> for Qualcomm SDX75 platform.
 > 
-> 
-> On 4/24/2025 10:30 AM, Manivannan Sadhasivam wrote:
-> > On Fri, Apr 18, 2025 at 08:11:47AM +0530, Krishna Chaitanya Chundru wrote:
-> > > 
-> > > 
-> > > On 4/17/2025 10:46 PM, Manivannan Sadhasivam via B4 Relay wrote:
-> > > > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > 
-> > > > The PCIe link can go down under circumstances such as the device firmware
-> > > > crash, link instability, etc... When that happens, the PCIe slot needs to
-> > > > be reset to make it operational again. Currently, the driver is not
-> > > > handling the link down event, due to which the users have to restart the
-> > > > machine to make PCIe link operational again. So fix it by detecting the
-> > > > link down event and resetting the slot.
-> > > > 
-> > > > Since the Qcom PCIe controllers report the link down event through the
-> > > > 'global' IRQ, enable the link down event by setting PARF_INT_ALL_LINK_DOWN
-> > > > bit in PARF_INT_ALL_MASK register.
-> > > > 
-> > > > Then in the case of the event, call pci_host_handle_link_down() API
-> > > > in the handler to let the PCI core handle the link down condition.
-> > > > 
-> > > > The API will internally call, 'pci_host_bridge::reset_slot()' callback to
-> > > > reset the slot in a platform specific way. So implement the callback to
-> > > > reset the slot by first resetting the PCIe core, followed by reinitializing
-> > > > the resources and then finally starting the link again.
-> > > > 
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > ---
-> > > >    drivers/pci/controller/dwc/Kconfig     |  1 +
-> > > >    drivers/pci/controller/dwc/pcie-qcom.c | 90 +++++++++++++++++++++++++++++++++-
-> > > >    2 files changed, 89 insertions(+), 2 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-> > > > index d9f0386396edf66ad0e514a0f545ed24d89fcb6c..ce04ee6fbd99cbcce5d2f3a75ebd72a17070b7b7 100644
-> > > > --- a/drivers/pci/controller/dwc/Kconfig
-> > > > +++ b/drivers/pci/controller/dwc/Kconfig
-> > > > @@ -296,6 +296,7 @@ config PCIE_QCOM
-> > > >    	select PCIE_DW_HOST
-> > > >    	select CRC8
-> > > >    	select PCIE_QCOM_COMMON
-> > > > +	select PCI_HOST_COMMON
-> > > >    	help
-> > > >    	  Say Y here to enable PCIe controller support on Qualcomm SoCs. The
-> > > >    	  PCIe controller uses the DesignWare core plus Qualcomm-specific
-> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > index dc98ae63362db0422384b1879a2b9a7dc564d091..6b18a2775e7fcde1d634b3f58327ecc7d028e4ec 100644
-> > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > @@ -34,6 +34,7 @@
-> > > >    #include <linux/units.h>
-> > > >    #include "../../pci.h"
-> > > > +#include "../pci-host-common.h"
-> > > >    #include "pcie-designware.h"
-> > > >    #include "pcie-qcom-common.h"
-> > > > @@ -55,6 +56,7 @@
-> > > >    #define PARF_INT_ALL_STATUS			0x224
-> > > >    #define PARF_INT_ALL_CLEAR			0x228
-> > > >    #define PARF_INT_ALL_MASK			0x22c
-> > > > +#define PARF_STATUS				0x230
-> > > >    #define PARF_SID_OFFSET				0x234
-> > > >    #define PARF_BDF_TRANSLATE_CFG			0x24c
-> > > >    #define PARF_DBI_BASE_ADDR_V2			0x350
-> > > > @@ -130,8 +132,11 @@
-> > > >    /* PARF_LTSSM register fields */
-> > > >    #define LTSSM_EN				BIT(8)
-> > > > +#define SW_CLEAR_FLUSH_MODE			BIT(10)
-> > > > +#define FLUSH_MODE				BIT(11)
-> > > >    /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
-> > > > +#define PARF_INT_ALL_LINK_DOWN			BIT(1)
-> > > >    #define PARF_INT_ALL_LINK_UP			BIT(13)
-> > > >    #define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
-> > > > @@ -145,6 +150,9 @@
-> > > >    /* PARF_BDF_TO_SID_CFG fields */
-> > > >    #define BDF_TO_SID_BYPASS			BIT(0)
-> > > > +/* PARF_STATUS fields */
-> > > > +#define FLUSH_COMPLETED				BIT(8)
-> > > > +
-> > > >    /* ELBI_SYS_CTRL register fields */
-> > > >    #define ELBI_SYS_CTRL_LT_ENABLE			BIT(0)
-> > > > @@ -169,6 +177,7 @@
-> > > >    						PCIE_CAP_SLOT_POWER_LIMIT_SCALE)
-> > > >    #define PERST_DELAY_US				1000
-> > > > +#define FLUSH_TIMEOUT_US			100
-> > > >    #define QCOM_PCIE_CRC8_POLYNOMIAL		(BIT(2) | BIT(1) | BIT(0))
-> > > > @@ -274,11 +283,14 @@ struct qcom_pcie {
-> > > >    	struct icc_path *icc_cpu;
-> > > >    	const struct qcom_pcie_cfg *cfg;
-> > > >    	struct dentry *debugfs;
-> > > > +	int global_irq;
-> > > >    	bool suspended;
-> > > >    	bool use_pm_opp;
-> > > >    };
-> > > >    #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> > > > +static int qcom_pcie_reset_slot(struct pci_host_bridge *bridge,
-> > > > +				  struct pci_dev *pdev);
-> > > >    static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
-> > > >    {
-> > > > @@ -1263,6 +1275,8 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
-> > > >    			goto err_assert_reset;
-> > > >    	}
-> > > > +	pp->bridge->reset_slot = qcom_pcie_reset_slot;
-> > > > +
-> > > >    	return 0;
-> > > >    err_assert_reset:
-> > > > @@ -1300,6 +1314,73 @@ static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
-> > > >    	.post_init	= qcom_pcie_host_post_init,
-> > > >    };
-> > > > +static int qcom_pcie_reset_slot(struct pci_host_bridge *bridge,
-> > > > +				  struct pci_dev *pdev)
-> > > > +{
-> > > > +	struct pci_bus *bus = bridge->bus;
-> > > > +	struct dw_pcie_rp *pp = bus->sysdata;
-> > > > +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> > > > +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> > > > +	struct device *dev = pcie->pci->dev;
-> > > > +	u32 val;
-> > > > +	int ret;
-> > > > +
-> > > > +	/* Wait for the pending transactions to be completed */
-> > > > +	ret = readl_relaxed_poll_timeout(pcie->parf + PARF_STATUS, val,
-> > > > +					 val & FLUSH_COMPLETED, 10,
-> > > > +					 FLUSH_TIMEOUT_US);
-> > > > +	if (ret) {
-> > > > +		dev_err(dev, "Flush completion failed: %d\n", ret);
-> > > > +		goto err_host_deinit;
-> > > > +	}
-> > > > +
-> > > > +	/* Clear the FLUSH_MODE to allow the core to be reset */
-> > > > +	val = readl(pcie->parf + PARF_LTSSM);
-> > > > +	val |= SW_CLEAR_FLUSH_MODE;
-> > > > +	writel(val, pcie->parf + PARF_LTSSM);
-> > > > +
-> > > > +	/* Wait for the FLUSH_MODE to clear */
-> > > > +	ret = readl_relaxed_poll_timeout(pcie->parf + PARF_LTSSM, val,
-> > > > +					 !(val & FLUSH_MODE), 10,
-> > > > +					 FLUSH_TIMEOUT_US);
-> > > > +	if (ret) {
-> > > > +		dev_err(dev, "Flush mode clear failed: %d\n", ret);
-> > > > +		goto err_host_deinit;
-> > > > +	}
-> > > > +
-> > > > +	qcom_pcie_host_deinit(pp);
-> > > > +
-> > > > +	ret = qcom_pcie_host_init(pp);
-> > > > +	if (ret) {
-> > > > +		dev_err(dev, "Host init failed\n");
-> > > > +		return ret;
-> > > > +	}
-> > > > +
-> > > > +	ret = dw_pcie_setup_rc(pp);
-> > > > +	if (ret)
-> > > > +		goto err_host_deinit;
-> > > > +
-> > > > +	/*
-> > > > +	 * Re-enable global IRQ events as the PARF_INT_ALL_MASK register is
-> > > > +	 * non-sticky.
-> > > > +	 */
-> > > > +	if (pcie->global_irq)
-> > > > +		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_ALL_LINK_DOWN |
-> > > > +			       PARF_INT_MSI_DEV_0_7, pcie->parf + PARF_INT_ALL_MASK);
-> > > do we need to enable linkup again here, since all the devices are
-> > > enumerated previously, the linkup irq will do a rescan again which is
-> > > not needed.
-> > 
-> > Right. I was trying to keep the irq enablement on par with probe(), but LINK_UP
-> > is strictly not needed. I will drop it.
-> > 
-> > > Instead of linkup we update icc & opp bandwidths after
-> > > dw_pcie_wait_for_link() in the below.
-> > > 
-> > 
-> > Why do we need to update ICC and OPP?
-> After link retrain, if the link data rate has reduced due to some
-> electrical issue or some other reason we may need to update the icc and
-> opp votings here.
+> This patch series depends on the below patches:
+> https://lore.kernel.org/linux-spi/20250410100019.2872271-1-quic_mdalam@quicinc.com/
 > 
 
-Hmm, I was not expecting it to get changed, but considering the fact that the
-link down might be happening due to any link stability issues, it is plausible.
+Applied, thanks!
 
-I will add a call to qcom_pcie_icc_opp_update().
+[2/5] dt-bindings: dma: qcom,bam: Document dma-coherent property
+      commit: 5965fd614b18e77c56cfefbd2d747b6b1edf1497
 
-- Mani
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+~Vinod
+
+
 
