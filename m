@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-55538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EFC1A9BDF5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 07:43:59 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28113A9BDF8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 07:45:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9E2079284FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 05:43:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1B2A87A4F62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 05:43:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E07C022A4D1;
-	Fri, 25 Apr 2025 05:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 501A322A4F1;
+	Fri, 25 Apr 2025 05:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cbGHV2dm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y1KSezps"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C08215F49;
-	Fri, 25 Apr 2025 05:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E4722A4E2;
+	Fri, 25 Apr 2025 05:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745559833; cv=none; b=p7G6qPwyj3WV9BcCXxD1F9lbhypJZbXYRXpT5QaUVZfY4eK11s8od9O87aXO4wARxjd8O/OSteWH3kBIDjShCeNMXW0ACf/DRG5W+KmHURMLpbFaEUz+9yhVLi5NBpk4lqEpnXpJlGedbzVtYjzKhy3t840mfi82rpnm2QAQiO4=
+	t=1745559902; cv=none; b=cdBdR4+UgoQybJ1XhoJgc/lgrxxEfeoU0xxnVQt6veKXFWFlO1Mawm00fLnF6Vh15Ya2HkScKOujHnkdHsxQBNmvR2MbYpvqzGWzpooHf/pHZuUhje31Uub7GMwSRpHxv+KfQINCckFhA/haH7wcPvncvIb8beYPCpT671A1JW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745559833; c=relaxed/simple;
-	bh=seOqirivfphfTRGlIdn4Wi3To7EpJ8SMOXWFWZdjiwI=;
+	s=arc-20240116; t=1745559902; c=relaxed/simple;
+	bh=c/cQxcmPVIzq1Y/rQcWzaqLsIWaZOdbIdZzBhrqYqsQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ODe2PhDtI24oudGSTILAnjJteI9DNgfAL4b5mehCwd2cokW09F0VhlPPwYFYmwcndyVw2l4PZ1IbCjYIbhqZieCZsF84pjLqiQsziKLW1Z0d01qJ09OFyyC0ySY4kHo50Knr6WRVEuaI81WIObZIycC/cRzjat8HdaEpAgRodtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cbGHV2dm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64EC4C4CEEB;
-	Fri, 25 Apr 2025 05:43:50 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=U40YV2RngbMlICtjRAUsQrZSpQOuaxDjT8FvfuSmvwBWTk1JJuu9IJW0icGHbDGpOGZz8aZj8SZWc42EOTuW2fSgzprPBVTSYZxsAT5P50IzWcQ6oWXrNQ1afis+EoQrVup+u9RUnKTqy0reFy8FjAWEE8DOoHjVSRaZFYLC42k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y1KSezps; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CF0C4CEE4;
+	Fri, 25 Apr 2025 05:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745559833;
-	bh=seOqirivfphfTRGlIdn4Wi3To7EpJ8SMOXWFWZdjiwI=;
+	s=k20201202; t=1745559901;
+	bh=c/cQxcmPVIzq1Y/rQcWzaqLsIWaZOdbIdZzBhrqYqsQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=cbGHV2dmiVj+jMrSAR4S1lDS31mIiZo2Jy5bGBzs2OZY6oRMmvZ+e6f/QPCRNBbMz
-	 Jf0q45gFsawMjMPFxCT7ph0dFAXNOJW+hDFPwA+pFUjgVsmY4Yovmw6u64CoAXUu5a
-	 Pzqd3o40/RDxQ4zNYFra5h5li8OWMVFU/Iep7CpIYz5xxE0T5sboICGF4vRKSxvgAG
-	 K56SGr1/9+eCKItic2UWmSMf9XhegLgPMG8OLOsGMgvCL7nqMfwKgBuNEFQoTTJXxW
-	 XlA9E4XBlnjT8FZg08A7O7zjiRxph3lkyQ0jcahudHIaFGAcyk6xPWj6NQgUc6Vdze
-	 fv02R6XaKthxA==
-Message-ID: <7cf4302f-a4ba-41fb-bcef-0830013c5698@kernel.org>
-Date: Fri, 25 Apr 2025 07:43:48 +0200
+	b=Y1KSezpsHMpfS5Upkb+rdJI9zwna8UtbnvxEj++cCUXq5i2mSd+Yp8h80sxpNotTB
+	 QhJkFaxBj/BY92QnAgVGhzUGwF+g35amCwkBy/o6XoKgL9w6Mnnz/dbo5xqxWz6mSh
+	 R/aPGucwsBb2fTScDcN5fHlfRj7j1IYHLJVo2gDKaU2OmlIpEI63EIworPFtDis4e/
+	 t53lWtH2DA0yQosT9IKonp/7NtrZbh9ZHjtGBKxLe4ya8G1t+Aqr4Ar0oSJUWACPmT
+	 s0usuu9cHXBWg1jqYrUlTQJH9uKwGHCPR3VP4zrg5nyp+PPEblXDsrEKn+MsJIBMYI
+	 kgtJZMEtRdM4A==
+Message-ID: <98bbcfe8-c4bf-4302-8f12-38551eace750@kernel.org>
+Date: Fri, 25 Apr 2025 07:44:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] arm64: dts: qcom: add initial support for qcom
- sa8255p-ride
-To: Deepti Jaggi <quic_djaggi@quicinc.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, quic_psodagud@quicinc.com
-Cc: quic_ptalari@quicinc.com, linux-arm-msm@vger.kernel.org,
+Subject: Re: [PATCH v5 10/10] arm64: defconfig: Add M31 eUSB2 PHY config
+To: Melody Olvera <melody.olvera@oss.qualcomm.com>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Shazad Hussain <quic_shazhuss@quicinc.com>
-References: <20250422231249.871995-1-quic_djaggi@quicinc.com>
- <f385c9eb-31ef-47c3-84a5-9f4dc86ce6f0@kernel.org>
- <95c66338-87c0-4fce-866b-6c43c1d31cd1@quicinc.com>
+ linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20250421-sm8750_usb_master-v5-0-25c79ed01d02@oss.qualcomm.com>
+ <20250421-sm8750_usb_master-v5-10-25c79ed01d02@oss.qualcomm.com>
+ <2d01bcd6-80e1-4c15-ab23-b5ea5b90f2b1@kernel.org>
+ <575d63e7-f390-46ef-8687-30112849b442@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,57 +112,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <95c66338-87c0-4fce-866b-6c43c1d31cd1@quicinc.com>
+In-Reply-To: <575d63e7-f390-46ef-8687-30112849b442@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25/04/2025 06:53, Deepti Jaggi wrote:
+On 24/04/2025 19:13, Melody Olvera wrote:
 > 
 > 
-> On 4/23/25 23:19, Krzysztof Kozlowski wrote:
->> On 23/04/2025 01:12, Deepti Jaggi wrote:
->>> diff --git a/arch/arm64/boot/dts/qcom/sa8255p-ride.dts b/arch/arm64/boot/dts/qcom/sa8255p-ride.dts
->>> new file mode 100644
->>> index 000000000000..cb866f897d0a
->>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/qcom/sa8255p-ride.dts
->>> @@ -0,0 +1,94 @@
->>> +// SPDX-License-Identifier: BSD-3-Clause
->>> +/*
->>> + * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
->>> + */
->>> +
->>> +/dts-v1/;
->>> +
->>> +#include <dt-bindings/gpio/gpio.h>
->>> +
->>> +#include "sa8255p.dtsi"
->>> +#include "sa8255p-pmics.dtsi"
->>> +#include "sa8255p-scmi.dtsi"
->>> +
->>> +/ {
->>> +	model = "Qualcomm Technologies, Inc. SA8255P Ride";
->>> +	compatible = "qcom,sa8255p-ride", "qcom,sa8255p";
+> On 4/24/2025 6:16 AM, Krzysztof Kozlowski wrote:
+>> On 22/04/2025 00:00, Melody Olvera wrote:
+>>> The SM8750 SoCs use an eUSB2 PHY driver different from the
+>> Qualcomm SM8750
 >>
->> NAK
->>
->> Missing bindings. This is some weird process you have there. Reach to
->> your internal guideline before you start posting. It explains this.
->>
+>> That's a defconfig for all vendors.
 > 
-> I followed the approach used for other bindings [1] [2] [3], 
-> which were part of the original series and were sent as separate patches 
-> and accepted. I misjudged that the SoC binding could also be sent as a 
-> separate patch. I will combine the remaining bindings along with 
-> the device tree into a single series.
->  
-> The UART/QUP driver changes have been posted as a separate series [4] 
-> along with the UART bindings. Please advise if the UART/QUP bindings should
-> also be included as part of next series with dt changes.
+> And...? Apologies, I understand what is actionable about this comment.
+> Please be clear what you want done about this.
 
-I think existing docs have it well covered and explained. I advise to
-read all submitting patches documents.
-
+s/SM8750/Qualcomm SM8750/ because otherwise how anyone non-qcom would
+know what this commit is about?
 
 Best regards,
 Krzysztof
