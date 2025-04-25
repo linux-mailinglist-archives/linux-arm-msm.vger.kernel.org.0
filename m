@@ -1,63 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-55616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA0EDA9C696
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 13:03:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9ADDA9C7F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 13:43:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 195FC9A5DA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 11:01:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8237C1BC535A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 11:43:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 391A323F42A;
-	Fri, 25 Apr 2025 11:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD91D2459E7;
+	Fri, 25 Apr 2025 11:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ahko+Z7f"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="KjRgrNMd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551301FA272;
-	Fri, 25 Apr 2025 11:01:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745578897; cv=none; b=a3eRO35g48ZdHfxDEYvv7WqBBKI5ePlpH01zAEIL10C2mojXvU8esYGWTVWOXItlIkGgmZARgwTvAuE5rsQvtdtF7KaiLPKryPPeGM4lbqnqL41GLDpGBoIXZ0OWbGV/yFjide57KTa+CAIhYnbpk3CJiLUbPlNI1EfgUG6K5rM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745578897; c=relaxed/simple;
-	bh=RGHwiLFDEmsVz1diB/515yQaHzjj5w8Exur+yC06dFg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=pxrnvUivCVybc27TI10HweS3wEvYldHuHPq3sfKUFD0pzMCD1T2KnQ3CF6CEhQuV3wlcKISeuzizJCRahAdPjJ+H7nX73BjU5fKd3jdy9c5HO4GMru0rAh6FH0QkMIqWbMBXJ1HnGySToBE9QQQuonz/LvXg9TFSJxW8uavXnLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ahko+Z7f; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53P8TB34007411;
-	Fri, 25 Apr 2025 11:01:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	K38bVVgxXwdgs486b2Bk50D3WKbdjVT3p30AxM7Jjo0=; b=Ahko+Z7fkcqgX+x6
-	sxOCOrD/S6OibkPbyXKrrW9mhjgkgyI4LJR5lCdzsdw+zNhOY5IzKmbUZLSsxTVv
-	7+wqWivHaWjl7jbTL1e922bvMOappcdnvXDT3XWyW99CRvO2w+vFPqpOWMqMPm3s
-	gLRnZOQk2c48HD4UdyTjR5XYXdEnkJN7Xq8QDechq2dcdy0wZon/BR3nuUel5wzd
-	VBy9Ozr9iFRNhDSY07PgeyuwXgg6ho9zWUb2hXZCDttO7JlF1RlQMuDVqe4xjezl
-	g1VeIO0eKSH6OnkR37E4/TW5nuypxfdqiTitpaDZ9yLTeiw8zNM0Hq8ghIzqUnn+
-	5jBhWQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh0rn51-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Apr 2025 11:01:30 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53PB1TdB001538
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Apr 2025 11:01:29 GMT
-Received: from [10.216.10.223] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 25 Apr
- 2025 04:01:22 -0700
-Message-ID: <5d3033e7-0798-4246-a6ea-74ead8485053@quicinc.com>
-Date: Fri, 25 Apr 2025 16:31:19 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79F32459D7;
+	Fri, 25 Apr 2025 11:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745581351; cv=pass; b=HpjT9BaXRSjXSORFtWsk2eIaJ3rH5e+MZwWm1B9MKDU2gBpnhwZTGLivXe0j9ojxdoancXWC2JwnPPVMZdzA/qYsudvJuUVSpBrDr0FbcNuq0sQmGLzT1fRIQPfwtdn9OKin5mSjfvP1/TEWf08lzWw88Uid5IVHKpj763exa9o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745581351; c=relaxed/simple;
+	bh=1G6AweYjxm0kJiNi3tcdfVXSJehj5SwP9EIh79+Tjd0=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=tg5jpU52xhm0D21P03BUqC3lQaHWmVYcHpwf9ZJF5o4vISzs+9PnbqeKjS/aOmMqbmO8eWnTeA9xiMxQ8VGFZbCvOI3P6zwZs4t0gkev1xg4ZTK2K256un8iXVLdQPROnpHAr4WW0kvSJz5Xbu9tiVzDneruFgYcqDISOEhMup0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=KjRgrNMd; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1745581316; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=ATO62M49i6OKXGbXEsqzcVCpnUqkaDPw41NH+jE9uXMYRr4A4p2GnT2e0ExLoNzJYGZ6GttFkpGgICVCqQngHe8+x4QlmH61vOP07dPzlGvfOOsVfd4vVgth8vpIrq2T4mVivjRtmjIBRsjcOEFelzTs66eAlHm37O6yz5T376Y=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1745581316; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=l4DUDdg/nGvqN1UdcxVddkB5BkoJ1f3+rZUXbIsl6cU=; 
+	b=Wl8eOBZW8/wRHV/gJMpTqYzRfliBCChHOlLNx29kS1HVg2S5FQGYP+5/Ca7vK9csP/rUT4XZjctRmffH3h9BJpETshlcRklQKmL1kCbsgjs5JiEXyNkz2fIqzdgp9m5jfYUVt/3it37EOCG/8eD2oafhiLBQ+gfqBw8CX0Dlwm4=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
+	dmarc=pass header.from=<usama.anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1745581316;
+	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=l4DUDdg/nGvqN1UdcxVddkB5BkoJ1f3+rZUXbIsl6cU=;
+	b=KjRgrNMd+H1um2Hg8ung+jJ23G975Y9PLhHqT5paYiZ0mF18EGWqr9wlZRxNU1P8
+	YjGYi2bAbmEGxGhCj6Lo/aQSfqsRexvLRKagUlK+LBmKKEi2ZWwmai+dA4QflPJA1b2
+	rlHBTSYt1sYqeLLFRGJRxGE7hjRatpYkBqjjdGdg=
+Received: by mx.zohomail.com with SMTPS id 1745581313535618.4441025554677;
+	Fri, 25 Apr 2025 04:41:53 -0700 (PDT)
+Message-ID: <a403eb91-c90d-444c-b508-c428a8ef1447@collabora.com>
+Date: Fri, 25 Apr 2025 16:41:43 +0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,96 +60,139 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/9] dt-bindings: serial: describe SA8255p
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby
-	<jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Viresh Kumar
-	<vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd
-	<sboyd@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <psodagud@quicinc.com>,
-        <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
-        <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
-        <quic_mnaresh@quicinc.com>, <quic_shazhuss@quicinc.com>,
-        Nikunj Kela <quic_nkela@quicinc.com>
-References: <20250418151235.27787-1-quic_ptalari@quicinc.com>
- <20250418151235.27787-3-quic_ptalari@quicinc.com>
- <20250425-graceful-psychedelic-leopard-0da7fe@kuoka>
+Cc: usama.anjum@collabora.com, Johannes Berg <johannes@sipsolutions.net>,
+ Jeff Johnson <jjohnson@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Yan Zhen <yanzhen@vivo.com>, Youssef Samir <quic_yabdulra@quicinc.com>,
+ Qiang Yu <quic_qianyu@quicinc.com>, Alex Elder <elder@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Kunwu Chan <chentao@kylinos.cn>, kernel@collabora.com, mhi@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
+Subject: Re: [PATCH v2] bus: mhi: host: don't free bhie tables during
+ suspend/hibernation
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+References: <20250410145704.207969-1-usama.anjum@collabora.com>
+ <h2wv7drxntokziiwbzjw5xjzbctbomp6cfcba7ppfbih6o7so7@p6dazv32xfx4>
+ <1136c7cb-1c7b-410b-93d2-c74aec939196@collabora.com>
+ <cfb3sntvqhupyhm2m5tevpsl77r6mzl2aqzr3wtxvr22bezmp3@qjh7ftr2kdjy>
+ <4d87ef88-3533-4255-adc6-6c268818fe25@collabora.com>
+ <y5odcxzms6mwpz5bdxhbjxo7p6whsdgwm772usmmzqobhf6nam@p4ul7vn7d3an>
 Content-Language: en-US
-From: Praveen Talari <quic_ptalari@quicinc.com>
-In-Reply-To: <20250425-graceful-psychedelic-leopard-0da7fe@kuoka>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+In-Reply-To: <y5odcxzms6mwpz5bdxhbjxo7p6whsdgwm772usmmzqobhf6nam@p4ul7vn7d3an>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Fn8UqsQi3YZR_F308rkpyTo5a0umiDHj
-X-Authority-Analysis: v=2.4 cv=ftfcZE4f c=1 sm=1 tr=0 ts=680b6b8a cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=DaVkk8uXpmKKpUZFdwsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: Fn8UqsQi3YZR_F308rkpyTo5a0umiDHj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDA4MCBTYWx0ZWRfX1H/CV3QBI6o6 6nF7xBoyKc+3+1tV4z1swwYFBENLkPWMPXb+FqguQhqZId3sstEpkNqmlHlMQBFQyUeD7UgSVhx to6Mco5wMjCHwHzvxQZz+pcF7RKA8IPVwElHL2bC990Qj8d2yoTpW73znbWqEGE/W/VSxDq9+By
- BWnyPrN9XLlRNDzH0jbfmCkmQ9URkThXux3OLsApwkBd0WBRktgOry3eKCHFMBI2S6meFv62wyj RgOLMmrlG0pP/Ws3oBqQO3j2mzpWj3PL/4RTUx7WikvJzBtEUSphjXhtdGaCgZ4igKEpfzkh3Kk POytX41Vo7VAwk+Xz2riqDw2FqD7m2JAx1Fo8oQqk8fSuFr3ZQWxWW3ruYXxyuV+tcXbiJIRdmF
- McHqnGR6lLDMTLf9J8pbzrcgKKEiXUI6ali6Rh8DmlViglS1v3OYX2bhONpiQiXFMA5Yyclc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-25_03,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- suspectscore=0 mlxlogscore=999 lowpriorityscore=0 phishscore=0
- malwarescore=0 impostorscore=0 adultscore=0 spamscore=0 clxscore=1015
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504250080
+X-ZohoMailClient: External
 
-Hi
+On 4/25/25 1:59 PM, Manivannan Sadhasivam wrote:
+> On Fri, Apr 25, 2025 at 12:42:38PM +0500, Muhammad Usama Anjum wrote:
+>> On 4/25/25 12:32 PM, Manivannan Sadhasivam wrote:
+>>> On Fri, Apr 25, 2025 at 12:14:39PM +0500, Muhammad Usama Anjum wrote:
+>>>> On 4/25/25 12:04 PM, Manivannan Sadhasivam wrote:
+>>>>> On Thu, Apr 10, 2025 at 07:56:54PM +0500, Muhammad Usama Anjum wrote:
+>>>>>> Fix dma_direct_alloc() failure at resume time during bhie_table
+>>>>>> allocation. There is a crash report where at resume time, the memory
+>>>>>> from the dma doesn't get allocated and MHI fails to re-initialize.
+>>>>>> There may be fragmentation of some kind which fails the allocation
+>>>>>> call.
+>>>>>>
+>>>>>
+>>>>> If dma_direct_alloc() fails, then it is a platform limitation/issue. We cannot
+>>>>> workaround that in the device drivers. What is the guarantee that other drivers
+>>>>> will also continue to work? Will you go ahead and patch all of them which
+>>>>> release memory during suspend?
+>>>>>
+>>>>> Please investigate why the allocation fails. Even this is not a device issue, so
+>>>>> we cannot add quirks :/
+>>>> This isn't a platform specific quirk. We are only hitting it because
+>>>> there is high memory pressure during suspend/resume. This dma allocation
+>>>> failure can happen with memory pressure on any device.
+>>>>
+>>>
+>>> Yes.
+>> Thanks for understanding.
+>>
+>>>
+>>>> The purpose of this patch is just to make driver more robust to memory
+>>>> pressure during resume.
+>>>>
+>>>> I'm not sure about MHI. But other drivers already have such patches as
+>>>> dma_direct_alloc() is susceptible to failures when memory pressure is
+>>>> high. This patch was motivated from ath12k [1] and ath11k [2].
+>>>>
+>>>
+>>> Even if we patch the MHI driver, the issue is going to trip some other driver.
+>>> How does the DMA memory goes low during resume? So some other driver is
+>>> consuming more than it did during probe()?
+>> Think it like this. The first probe happens just after boot. Most of the
+>> RAM was empty. Then let's say user launches applications which not only
+>> consume entire RAM but also the Swap. The DMA memory area is the first
+>> ~4GB on x86_64 (if I'm not mistaken). Now at resume time when we want to
+>> allocate memory from dma, it may not be available entirely or because of
+>> fragmentation we cannot allocate that much contiguous memory.
+>>
+> 
+> Looks like you have a workload that consumes the limited DMA coherent memory.
+> Most likely the GPU applications I think.
+> 
+>> In our testing and real world cases, right now only wifi driver is
+>> misbehaving. Wifi is also very important. So we are hoping to make wifi
+>> driver robust.
+>>
+> 
+> Sounds fair. If you want to move forward, please modify the exisiting
+> mhi_power_down_keep_dev() to include this partial unprepare as well:
+> 
+> mhi_power_down_unprepare_keep_dev()
+> 
+> Since both APIs are anyway going to be used together, I don't see a need to
+> introduce yet another API.
+I've looked at usages of mhi_power_down_keep_dev(). Its getting used by
+ath12k and ath11k both. We would have to look at ath12k as well before
+we can change mhi_power_down_keep_dev(). Unfortunately, I don't have
+device using ath12k at hand.
 
-On 4/25/2025 3:42 PM, Krzysztof Kozlowski wrote:
-> On Fri, Apr 18, 2025 at 08:42:28PM GMT, Praveen Talari wrote:
->> +  interrupts:
->> +    minItems: 1
->> +    items:
->> +      - description: UART core irq
->> +      - description: Wakeup irq (RX GPIO)
->> +
->> +  interrupt-names:
->> +    description:
->> +      The UART interrupt and optionally the RX in-band wakeup interrupt.
-> Drop description. It is not even accurate because you do not allow
-> wakeup to be optional.
-Will update in next version.
->
->> +    items:
->> +      - const: uart
->> +      - const: wakeup
->> +
->> +  power-domains:
->> +    minItems: 2
->> +    maxItems: 2
->> +
->> +  power-domain-names:
->> +    items:
->> +      - const: power
->> +      - const: perf
->> +
->> +required:
->> +  - compatible
->> +  - interrupts
->> +  - reg
-> Keep the same order as in properties. You already got comment about
-> placement of 'reg'.
-I agree, will update in next version
->
-> Best regards,
-> Krzysztof
->
+Should we keep this new API or what should we do?
+
+> 
+> - Mani
+> 
+>>>
+>>>> [1]
+>>>> https://lore.kernel.org/all/20240419034034.2842-1-quic_bqiang@quicinc.com/
+>>>> [2]
+>>>> https://lore.kernel.org/all/20220506141448.10340-1-quic_akolli@quicinc.com/
+>>>>
+>>>> What do you think can be the way forward for this patch?
+>>>>
+>>>
+>>> Let's try first to analyze why the memory pressure happens during suspend. As I
+>>> can see, even if we fix the MHI driver, you are likely to hit this issue
+>>> somewhere else.>
+>>> - Mani
+>>>
+>>>>>
+>>>
+>>> [...]
+>>>
+>>>>> Did you intend to leak this information? If not, please remove it from
+>>>>> stacktrace.
+>>>> The device isn't private. Its fine.
+>>>>
+>>>
+>>> Okay.
+>>>
+>>> - Mani
+>>>
+>>
+>>
+>> -- 
+>> Regards,
+>> Usama
+> 
+
+
+-- 
+Regards,
+Usama
 
