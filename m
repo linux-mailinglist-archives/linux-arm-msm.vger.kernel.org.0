@@ -1,58 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-55617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9ADDA9C7F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 13:43:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E609A9C80F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 13:47:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8237C1BC535A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 11:43:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5D17216E515
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 11:47:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD91D2459E7;
-	Fri, 25 Apr 2025 11:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0913A242D99;
+	Fri, 25 Apr 2025 11:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="KjRgrNMd"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="d0L+Fz1B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79F32459D7;
-	Fri, 25 Apr 2025 11:42:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745581351; cv=pass; b=HpjT9BaXRSjXSORFtWsk2eIaJ3rH5e+MZwWm1B9MKDU2gBpnhwZTGLivXe0j9ojxdoancXWC2JwnPPVMZdzA/qYsudvJuUVSpBrDr0FbcNuq0sQmGLzT1fRIQPfwtdn9OKin5mSjfvP1/TEWf08lzWw88Uid5IVHKpj763exa9o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745581351; c=relaxed/simple;
-	bh=1G6AweYjxm0kJiNi3tcdfVXSJehj5SwP9EIh79+Tjd0=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=tg5jpU52xhm0D21P03BUqC3lQaHWmVYcHpwf9ZJF5o4vISzs+9PnbqeKjS/aOmMqbmO8eWnTeA9xiMxQ8VGFZbCvOI3P6zwZs4t0gkev1xg4ZTK2K256un8iXVLdQPROnpHAr4WW0kvSJz5Xbu9tiVzDneruFgYcqDISOEhMup0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=KjRgrNMd; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1745581316; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=ATO62M49i6OKXGbXEsqzcVCpnUqkaDPw41NH+jE9uXMYRr4A4p2GnT2e0ExLoNzJYGZ6GttFkpGgICVCqQngHe8+x4QlmH61vOP07dPzlGvfOOsVfd4vVgth8vpIrq2T4mVivjRtmjIBRsjcOEFelzTs66eAlHm37O6yz5T376Y=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1745581316; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=l4DUDdg/nGvqN1UdcxVddkB5BkoJ1f3+rZUXbIsl6cU=; 
-	b=Wl8eOBZW8/wRHV/gJMpTqYzRfliBCChHOlLNx29kS1HVg2S5FQGYP+5/Ca7vK9csP/rUT4XZjctRmffH3h9BJpETshlcRklQKmL1kCbsgjs5JiEXyNkz2fIqzdgp9m5jfYUVt/3it37EOCG/8eD2oafhiLBQ+gfqBw8CX0Dlwm4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
-	dmarc=pass header.from=<usama.anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1745581316;
-	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=l4DUDdg/nGvqN1UdcxVddkB5BkoJ1f3+rZUXbIsl6cU=;
-	b=KjRgrNMd+H1um2Hg8ung+jJ23G975Y9PLhHqT5paYiZ0mF18EGWqr9wlZRxNU1P8
-	YjGYi2bAbmEGxGhCj6Lo/aQSfqsRexvLRKagUlK+LBmKKEi2ZWwmai+dA4QflPJA1b2
-	rlHBTSYt1sYqeLLFRGJRxGE7hjRatpYkBqjjdGdg=
-Received: by mx.zohomail.com with SMTPS id 1745581313535618.4441025554677;
-	Fri, 25 Apr 2025 04:41:53 -0700 (PDT)
-Message-ID: <a403eb91-c90d-444c-b508-c428a8ef1447@collabora.com>
-Date: Fri, 25 Apr 2025 16:41:43 +0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C15A1DFDAB
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 11:47:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745581652; cv=none; b=VjTg0KOJfxGd52wYIltpAUEo6dxgXuE+UrVHG2ilWfJ48P+sa4AwYR1ArdEpJDAynpiDSaj0jIplDu8GBs7ZcuIj4QBIekIJZSDkedoAZNOMuDareM+fdafaq/UR/eBKdRMCCy2dj2CZTM/qu51DX70LVSuEYS+4m9x57UnuBkI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745581652; c=relaxed/simple;
+	bh=XO7eXHdqI8BqtXpaSUZZG5qhD1KGohbFDHON/kPDFUs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XnCR1/OtwfOTJoCVmqat1J64gzgv7RoAQ5Sh13y39uIHgVdB89o2MNNDakXGMjsBAPaNYGp1eNzD5t9vSTcqyf3MbGoylH9OFEkPqtEIlxYs90VhvjsyrnVc71cgXZMdWAoZngUbS4VP3b7+zzRGhk7pxAcdBD99/oZdADQyCIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=d0L+Fz1B; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53P8T7YC008600
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 11:47:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4EeiwX9qep+py+Z9/Et50dh896Nhy1ey1iEAX/LwG30=; b=d0L+Fz1BdCbFVdX5
+	3srrdgjirGruOnQOUxnqWFPGG2PH47ZwvaMXZFeu21j1TiVv6qeCzVf5U/2DJZ6s
+	CwyaNVYkKTW8lxu269mtw8grSneTkGNpd+hVqcXNxVGtgeiG1W5kZMPdGfk1q6gE
+	Z8ifz/6s1kY30y+gDIp7U2D/ebdbNpENS7oa/RxWg8SW69TtI8xfj/myzL03lCKQ
+	v1etWNx++/SZqy7s+VqVOJWYxMRDP+GahcQJ6fL2UlxWGlEO2MeMhCo9xWSbVjtJ
+	ZdBfm/WQeymlQQR52Fo/Zjnc+mVqxn9KLcYz8iogGmcXgL175qCObJ6rDqk+XLlU
+	ZO7h7Q==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jgy8v8t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 11:47:29 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6e8fb83e15fso5476956d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 04:47:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745581649; x=1746186449;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4EeiwX9qep+py+Z9/Et50dh896Nhy1ey1iEAX/LwG30=;
+        b=dtdI5/PHYTBsvEWG8ohkcS346+MXSjc7KJDQF41761QWCz9fJpJLjXkahmtbRIAKzJ
+         QqWaez6G1qySR795bWf5cLmoZSJoHkxFXTPajQuVMqli2Aj/DTwHcUvma8eT9erYljCi
+         M2i/X6BI/AIHc+1z7TZ2BVT8AAFONpGD+QYRh6B1GPHIFXtGQt33+vGXC6eOSeb1lofh
+         u3akEmEPhwR/UsQ7vG4mUs161lT1MPpXyVMWEOkF6NKrPErnFomLOlfMvva2zo/Xngb0
+         fgwIcNxdBKO07HcYouiZxPFFR9C5h08AO2XcvTgbRtoqKMBTmYs+JyemaT2Yqw4Rd7lh
+         gW7w==
+X-Forwarded-Encrypted: i=1; AJvYcCUuu/NAHuirHQthv2EmB3XsGulydBly9JnPwLP060Uh9GShi31g8Ih0J/lRIZxQqzta4p7RCf4JSTTeqvgu@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyj2eBIFFExzYT3BDc6RQ2PN+MLjHm1BW1cFS4ToNRgivVhRB8v
+	7t3YNMbKY6j51ouJvma1uu8P/CvuzHzQgCt3feE7XL1cYRqBiUZC1rl8grYJl/ClW0c7KZx8e6a
+	fJs1fmfLn87de8TplvtCgOnCSbM9aSDaLEZCOfrzNBIy/2n610utwQN6m4mhdKskt
+X-Gm-Gg: ASbGncsOmOGHhAT4dPFEGjlSwJB3SnqNT7qxdtj/8d8IedTjclRkejfRUoqyJc5UUem
+	diTiihTQR4iSE7EnXEdGNAr7nZKQNid+7oue7ONUmYPvwPrAujpjiT/Vu22iza4RPVAjce2E7r7
+	ey/rdjl+k8Onqhc/EmpK7m4y40/w2lRBmmNAk/dXKCbZ8zv1RX8qEx6R3ohYtP7DWepcCZA9vX/
+	8eG/Uz55WCeBA/nHikcpvMMVEcpJ0kxWkgLz5fl0j1wrshM/RP8q8RSAlrcUAr+AVxqkRAEtlhQ
+	8q/1TnhNl+8s0P+cAJcM2KCiV8lbIPBLA2js7whb68JY7uPqCewypk28DKtmk6oh
+X-Received: by 2002:a05:620a:254e:b0:7c5:606d:dccd with SMTP id af79cd13be357-7c9606a36b8mr125289385a.1.1745581649017;
+        Fri, 25 Apr 2025 04:47:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMoKRaTeGlfhGtgePJI4DvsKPnQLdcM67oaFtMLoRU5+ujh2fa+ywF19BWSakcsqA6J27vZA==
+X-Received: by 2002:a05:620a:254e:b0:7c5:606d:dccd with SMTP id af79cd13be357-7c9606a36b8mr125286785a.1.1745581648458;
+        Fri, 25 Apr 2025 04:47:28 -0700 (PDT)
+Received: from [192.168.65.5] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6ed729e5sm123047566b.151.2025.04.25.04.47.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Apr 2025 04:47:27 -0700 (PDT)
+Message-ID: <72f0d4f7-8d8a-4fc5-bac2-8094e971a0e3@oss.qualcomm.com>
+Date: Fri, 25 Apr 2025 13:47:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,139 +89,140 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: usama.anjum@collabora.com, Johannes Berg <johannes@sipsolutions.net>,
- Jeff Johnson <jjohnson@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Yan Zhen <yanzhen@vivo.com>, Youssef Samir <quic_yabdulra@quicinc.com>,
- Qiang Yu <quic_qianyu@quicinc.com>, Alex Elder <elder@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Kunwu Chan <chentao@kylinos.cn>, kernel@collabora.com, mhi@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH v2] bus: mhi: host: don't free bhie tables during
- suspend/hibernation
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-References: <20250410145704.207969-1-usama.anjum@collabora.com>
- <h2wv7drxntokziiwbzjw5xjzbctbomp6cfcba7ppfbih6o7so7@p6dazv32xfx4>
- <1136c7cb-1c7b-410b-93d2-c74aec939196@collabora.com>
- <cfb3sntvqhupyhm2m5tevpsl77r6mzl2aqzr3wtxvr22bezmp3@qjh7ftr2kdjy>
- <4d87ef88-3533-4255-adc6-6c268818fe25@collabora.com>
- <y5odcxzms6mwpz5bdxhbjxo7p6whsdgwm772usmmzqobhf6nam@p4ul7vn7d3an>
+Subject: Re: [PATCH V5 3/6] remoteproc: qcom: add hexagon based WCSS secure
+ PIL driver
+To: Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>,
+        andersson@kernel.org, mathieu.poirier@linaro.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
+        quic_mmanikan@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
+Cc: quic_srichara@quicinc.com, vignesh.viswanathan@oss.qualcomm.com
+References: <20250417061245.497803-1-gokul.sriram.p@oss.qualcomm.com>
+ <20250417061245.497803-4-gokul.sriram.p@oss.qualcomm.com>
 Content-Language: en-US
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-In-Reply-To: <y5odcxzms6mwpz5bdxhbjxo7p6whsdgwm772usmmzqobhf6nam@p4ul7vn7d3an>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250417061245.497803-4-gokul.sriram.p@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDA4NSBTYWx0ZWRfXwuSSM5nZQ3HP nP9snOJH+BnNFF8IYbN6PmXoUoM8T4FUrBtyTVvCIOk+4JCYPxKiDQf0CFFnYPeemcz4osZQVUE o8lalS99qEFLcKVJHC/FOwVDV/rk2cergxmXckt0IBd3ACHh78zvaY9QWRKt3L9YU+LraeYuJAi
+ H+kXTRXbmXcJCznT0L6IgxFo7Mm2rfnaLn9hgwHxeQ1s5TRPzKo8OwlrQIK7PMUQBegG/G2wwAm Mj38Vq/WjKpyRC56wDymIcg6uv3cbnQDciX9MVJ3UYZ3gkPG0ygd8wmEcYfHdsot9oUTMQlxxhR 3jS3dU0iPv5ZgUGg2cry7682oZ2lj2OJ0TPWo1xqtSpZe4HF4KKnIWQ/4D+K/fzmqL4YkUmDLwC
+ duWEZkWXMTzOkFKih1seBMx1XVChu9k/9xgpG0+1u3B57203efoJi8HAHVl1JrqbGwxfFmMl
+X-Proofpoint-GUID: PKRwBQmcWO44YLzACJLgJboi7ns86LqA
+X-Proofpoint-ORIG-GUID: PKRwBQmcWO44YLzACJLgJboi7ns86LqA
+X-Authority-Analysis: v=2.4 cv=M5VNKzws c=1 sm=1 tr=0 ts=680b7651 cx=c_pps a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=vBGl1dCRJspItBWZnfAA:9
+ a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-25_03,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 priorityscore=1501 mlxscore=0
+ mlxlogscore=659 malwarescore=0 impostorscore=0 clxscore=1015
+ suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504250085
 
-On 4/25/25 1:59 PM, Manivannan Sadhasivam wrote:
-> On Fri, Apr 25, 2025 at 12:42:38PM +0500, Muhammad Usama Anjum wrote:
->> On 4/25/25 12:32 PM, Manivannan Sadhasivam wrote:
->>> On Fri, Apr 25, 2025 at 12:14:39PM +0500, Muhammad Usama Anjum wrote:
->>>> On 4/25/25 12:04 PM, Manivannan Sadhasivam wrote:
->>>>> On Thu, Apr 10, 2025 at 07:56:54PM +0500, Muhammad Usama Anjum wrote:
->>>>>> Fix dma_direct_alloc() failure at resume time during bhie_table
->>>>>> allocation. There is a crash report where at resume time, the memory
->>>>>> from the dma doesn't get allocated and MHI fails to re-initialize.
->>>>>> There may be fragmentation of some kind which fails the allocation
->>>>>> call.
->>>>>>
->>>>>
->>>>> If dma_direct_alloc() fails, then it is a platform limitation/issue. We cannot
->>>>> workaround that in the device drivers. What is the guarantee that other drivers
->>>>> will also continue to work? Will you go ahead and patch all of them which
->>>>> release memory during suspend?
->>>>>
->>>>> Please investigate why the allocation fails. Even this is not a device issue, so
->>>>> we cannot add quirks :/
->>>> This isn't a platform specific quirk. We are only hitting it because
->>>> there is high memory pressure during suspend/resume. This dma allocation
->>>> failure can happen with memory pressure on any device.
->>>>
->>>
->>> Yes.
->> Thanks for understanding.
->>
->>>
->>>> The purpose of this patch is just to make driver more robust to memory
->>>> pressure during resume.
->>>>
->>>> I'm not sure about MHI. But other drivers already have such patches as
->>>> dma_direct_alloc() is susceptible to failures when memory pressure is
->>>> high. This patch was motivated from ath12k [1] and ath11k [2].
->>>>
->>>
->>> Even if we patch the MHI driver, the issue is going to trip some other driver.
->>> How does the DMA memory goes low during resume? So some other driver is
->>> consuming more than it did during probe()?
->> Think it like this. The first probe happens just after boot. Most of the
->> RAM was empty. Then let's say user launches applications which not only
->> consume entire RAM but also the Swap. The DMA memory area is the first
->> ~4GB on x86_64 (if I'm not mistaken). Now at resume time when we want to
->> allocate memory from dma, it may not be available entirely or because of
->> fragmentation we cannot allocate that much contiguous memory.
->>
+On 4/17/25 8:12 AM, Gokul Sriram Palanisamy wrote:
+> From: Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
 > 
-> Looks like you have a workload that consumes the limited DMA coherent memory.
-> Most likely the GPU applications I think.
+> Add support to bring up hexagon based WCSS using secure PIL. All IPQxxxx
+> SoCs support secure Peripheral Image Loading (PIL).
 > 
->> In our testing and real world cases, right now only wifi driver is
->> misbehaving. Wifi is also very important. So we are hoping to make wifi
->> driver robust.
->>
+> Secure PIL image is signed firmware image which only trusted software such
+> as TrustZone (TZ) can authenticate and load. Linux kernel will send a
+> Peripheral Authentication Service (PAS) request to TZ to authenticate and
+> load the PIL images. This change also introduces secure firmware
+> authentication using Trusted Management Engine-Lite (TME-L) which is
+> supported on IPQ5424 SoC. This driver uses mailbox based PAS request to
+> TME-L for image authentication if supported, else it will fallback to use
+> SCM call based PAS request to TZ.
 > 
-> Sounds fair. If you want to move forward, please modify the exisiting
-> mhi_power_down_keep_dev() to include this partial unprepare as well:
+> In order to avoid overloading the existing WCSS driver or PAS driver, we
+> came up with this new PAS based IPQ WCSS driver.
 > 
-> mhi_power_down_unprepare_keep_dev()
-> 
-> Since both APIs are anyway going to be used together, I don't see a need to
-> introduce yet another API.
-I've looked at usages of mhi_power_down_keep_dev(). Its getting used by
-ath12k and ath11k both. We would have to look at ath12k as well before
-we can change mhi_power_down_keep_dev(). Unfortunately, I don't have
-device using ath12k at hand.
+> Signed-off-by: Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> Signed-off-by: Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>
+> ---
 
-Should we keep this new API or what should we do?
+[...]
 
-> 
-> - Mani
-> 
->>>
->>>> [1]
->>>> https://lore.kernel.org/all/20240419034034.2842-1-quic_bqiang@quicinc.com/
->>>> [2]
->>>> https://lore.kernel.org/all/20220506141448.10340-1-quic_akolli@quicinc.com/
->>>>
->>>> What do you think can be the way forward for this patch?
->>>>
->>>
->>> Let's try first to analyze why the memory pressure happens during suspend. As I
->>> can see, even if we fix the MHI driver, you are likely to hit this issue
->>> somewhere else.>
->>> - Mani
->>>
->>>>>
->>>
->>> [...]
->>>
->>>>> Did you intend to leak this information? If not, please remove it from
->>>>> stacktrace.
->>>> The device isn't private. Its fine.
->>>>
->>>
->>> Okay.
->>>
->>> - Mani
->>>
->>
->>
->> -- 
->> Regards,
->> Usama
-> 
+> +static int wcss_sec_start(struct rproc *rproc)
+> +{
+> +	struct wcss_sec *wcss = rproc->priv;
+> +	struct device *dev = wcss->dev;
+> +	int ret;
+> +
+> +	ret = qcom_q6v5_prepare(&wcss->q6);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (!IS_ERR_OR_NULL(wcss->mbox_chan)) {
 
+You abort probe if wcss->mbox_chan returns an errno, please rework
+this to use if (use_tmelcom) or something
 
--- 
-Regards,
-Usama
+[...]
+
+> +static void wcss_sec_copy_segment(struct rproc *rproc,
+> +				  struct rproc_dump_segment *segment,
+> +				  void *dest, size_t offset, size_t size)
+> +{
+> +	struct wcss_sec *wcss = rproc->priv;
+> +	struct device *dev = wcss->dev;
+> +
+> +	if (!segment->io_ptr)
+> +		segment->io_ptr = ioremap_wc(segment->da, segment->size);
+> +
+> +	if (!segment->io_ptr) {
+> +		dev_err(dev, "Failed to ioremap segment %pad size 0x%zx\n",
+> +			&segment->da, segment->size);
+> +		return;
+> +	}
+> +
+> +	if (offset + size <= segment->size) {
+
+I believe this allows an off-by-one (remove '=')
+
+[...]
+
+> +		memcpy(dest, segment->io_ptr + offset, size);
+> +	} else {
+> +		iounmap(segment->io_ptr);
+> +		segment->io_ptr = NULL;
+> +	}
+> +}
+> +
+> +static int wcss_sec_dump_segments(struct rproc *rproc,
+> +				  const struct firmware *fw)
+> +{
+> +	struct device *dev = rproc->dev.parent;
+> +	struct reserved_mem *rmem = NULL;
+> +	struct device_node *node;
+> +	int num_segs, index;
+> +	int ret;
+> +
+> +	/*
+> +	 * Parse through additional reserved memory regions for the rproc
+> +	 * and add them to the coredump segments
+> +	 */
+> +	num_segs = of_count_phandle_with_args(dev->of_node,
+> +					      "memory-region", NULL);
+> +	for (index = 0; index < num_segs; index++) {
+> +		node = of_parse_phandle(dev->of_node,
+> +					"memory-region", index);
+
+https://lore.kernel.org/linux-arm-msm/20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org/
+
+[...]
+
+> +static const struct wcss_data wcss_sec_ipq5424_res_init = {
+> +	.pasid = MPD_WCSS_PAS_ID,
+> +	.ss_name = "q6wcss",
+> +	.tmelcom = true,
+
+"bool tmelcom" is very non-descriptive.. call it something like
+use_tmelcom, or maybe flip the condition and call it e.g.
+tz_managed
+
+Konrad
 
