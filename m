@@ -1,238 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-55564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC1DBA9C007
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 09:48:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BEADA9C060
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 10:07:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B97AA1B85B21
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 07:48:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F77F1BA2E66
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 08:07:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A404230981;
-	Fri, 25 Apr 2025 07:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A7E723315E;
+	Fri, 25 Apr 2025 08:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RWWFpaZx"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="cI1iGtz1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AE25A79B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 07:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245E8232785
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 08:07:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745567284; cv=none; b=ORvKeLoOQrXgStqcE57DXQbzpNH56aAHI5rmpFjcR/ZhiEsj3w1IMmlVBc+XW3GsrS7B4VgauQgnZwi1hvkGctLY/uGkkomUGUGGQsVdo5K2FOBLHCR4edXemQfbIHuM4rRJjUWp7zN/3cnZRNAJdYdeMTRzbNUW7p5Hcr8Kf7s=
+	t=1745568455; cv=none; b=CzijQcpDZoVXbMz2Gpj8Xi9LJchl0fs//EomZkf6ASCaRHiUqYqX6X5zekPjMxxDWh1OgV3IocCaxPDlSW+0utgMjPua/9P1yoWqg+4GnawTLqLkC/cVCQ9rbTssWjk1NwSP8BDnaihA5wbElQbC2HXn2m2uzksmEV2WS0cXrEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745567284; c=relaxed/simple;
-	bh=f7h8dxvV7ChOf0zR9pxS70TS/wjvGYnZMMlO0a4r8D8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VAzMqCMvPT+0Gw2NX+UnEhA/b7J6KnIEWAzOyoxbWpfiv9Wj6AP9qfS/jqB29WXske4wi2+hHcPrrVY5KczFd8gnRyOLVXAPMxuA5KpJ5Z9izDZTTNc1DekUaeFMBUmV/CsFy7xnWZbEBr92AaPQOk5sgLg7BwdB177XqdsMcXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RWWFpaZx; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-739525d4e12so1645542b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 00:48:01 -0700 (PDT)
+	s=arc-20240116; t=1745568455; c=relaxed/simple;
+	bh=IG5EYBIkkvxAjFWHA58vQMRAHNLYBMvaI/+axls57V4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=VB4PIF4fxhGqd7DFSn4+Ozuly8mhR+Tim+7GvQWyCCBuVXhf5/2euSNyMdYiz7zjpv1Vnlc69uxVU9qvqFsOFcZGYnus8V4RpE8FGJs/I7EPLG79Z5fbombC6BUKVWcFXDxysXvsHqkPBMzaFeIMmd7qz6lZZqnI2sKADVwSt0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=cI1iGtz1; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-39c266c2dd5so2076152f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 01:07:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745567281; x=1746172081; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=LXYXeX99yUYQ64wKe7OdIaME+qdUHpQKuv9wqgqo5Cs=;
-        b=RWWFpaZxkLRx+H2sOdgvh35bwYAVrE22g4rw6im295QLwFZN6SmuZ3dugN3oQifO3v
-         tQmr/eJU1WwyHisU0m9vpaE7QVrjx288n/Rz9R1Qbkn0R3VPaKE7bUpHq039VZvgvmCX
-         YLRoGCLzZovjuGK4gGOGFrG3P2pHNPkSsUbJx/WFaW9FKE46CPD7uzwH+f4cZ1xBPyAA
-         ZcPjCteXGiV08TVhlJHO8R8QTtEDpN1oCt8+apvor4xE2D6M49FRJqQheKFoxkT6c1S/
-         +09ltCMYnYlYoSPisMyPT7FI6C5vy6G8ozkH8scOu0yhy5IYmMd6p3d1/Fsqt3ay7Koe
-         7j6Q==
+        d=fairphone.com; s=fair; t=1745568451; x=1746173251; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hwsfA2vx1w0Hd+MxkBOwMy08bPVFTSGUVL5IKHTSRSw=;
+        b=cI1iGtz1IjGdprJaScSGS8CPYpwm/AHEfdJoZRU/q8qIvHOWz8lM0au8s075QFAYlX
+         6S3HbVEhZCemaDOfDPwgiov/kQqRf0/z07U7CPIILT+KA+3I1kkuUicIRZeB1J8Hqrbj
+         23mIgwjCHJD60Dxa+KtgOjDhgWxYScFyoRYGN3IruGS+uH39KfS2h4dw12r2WV6qCYym
+         rjkRYYTnCezc/c/dRYV+922AbdDYszgRDHrW43jbnY8vlxwrVdJ6hL2lPA7BaUpt4v5+
+         zrr0yLzpn7pPOvCvaV6yXqdBp21dUysARbg8fYoAB6xntpLwn3tuDfeCDiH6C/oQLl4e
+         UkFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745567281; x=1746172081;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LXYXeX99yUYQ64wKe7OdIaME+qdUHpQKuv9wqgqo5Cs=;
-        b=vmRbaA3hwp68tzNutBLaEN8ogljoTyMD/+mJ8LMLciXKUZ4zdBA68mNQIjs6IG/QJP
-         9SDphBhRU6PuEEXv36rbtozJ4mx/6ohnkUb6RaeWNWmNW+C85uDJXRZSb+UIE94EsKAN
-         aXcqTd4bDcFeaqt2JQycRVaZJVcwArR+Aw1Se1PR2O42va6NTC3whR7wbo2TK+1hRfqB
-         jz5uO/gc5RsV9R6Ks3fPECtiU8v5tvH+ZYlMn7CGCQNe4EgM15hmSpuarrOyDpDpTCFV
-         OIYvCkvVNyHnRBH5LDgKI446a8pRnYTpn8nzp1GLAn/rOK3tsiCpQkx8iC6e1v3dUbm5
-         FXsA==
-X-Forwarded-Encrypted: i=1; AJvYcCVLbU5aYuTsy3DHj5DkjAefTpVE2o2vN0lE3Kil7CdY7JSMNGUIYpKli29Me5bfSf4GyExiknITE0Jou9wT@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNSVz/sKk6Z30Jh1UHzu9016PgSLjp7s8JVD6SOrUJmHeh7wg4
-	fP2bdhF2x+mgKUuoVZyUB6MC5YEZEHGjBhnH7nIFj7RQys3QJX99TVEGtPTeMg==
-X-Gm-Gg: ASbGncuJG8G+ch9BM8Fu8CHG3R8PhbrT27HJQQ8GNDScyRJO8U55K/w4i/nAv024fKk
-	OSr7SXzjlVj747IkZGU76ztenjGP4zmQ5wR8rTpNNqxTnU9BZ15cb9sYEiReKnynSMcPSTEj+O9
-	HFPmhcyqZZop+TrURaOI8o2lQPNeYeff208aet+LLGRgjlUMzvSZcGzzbE1wyIVYc8POaYjeUGq
-	QAY3XdfJJvdQxlD2mobG+y4LzryeArSJMzMyuVqvLMwRAEVEkB5L/f+pbnaPJS9Q9x02nLzjQLJ
-	U5gNdLPgF0qDTuzWJnJ1gj+m1l+wZQPj/ZdwhjlIwsPnsWHSMrw=
-X-Google-Smtp-Source: AGHT+IFC/H/dBuQro0RKj49t41PCO5t1nJ6DAmlcyxyxl51nS8GK+dmHa5dgtUQcySuxJPxP0VqInQ==
-X-Received: by 2002:a05:6a00:179e:b0:730:927c:d451 with SMTP id d2e1a72fcca58-73fd90457demr1937127b3a.20.1745567280870;
-        Fri, 25 Apr 2025 00:48:00 -0700 (PDT)
-Received: from thinkpad ([120.60.77.160])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73e25a6a317sm2647101b3a.93.2025.04.25.00.47.57
+        d=1e100.net; s=20230601; t=1745568451; x=1746173251;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hwsfA2vx1w0Hd+MxkBOwMy08bPVFTSGUVL5IKHTSRSw=;
+        b=H3+4tUX5hrjfHXvCAt3rUmKNgtOqCMzUaOVHRaXAJN0Rt99ElAOAjyEsnSFyFi4wee
+         xqpLjns54E7mkwiJBTVzfDHKafEFrKNEe/L3QB/Rbyt3kU0Pb1pQ+Pd8FQSL+DXntWeN
+         HZaE1hTbbmMtPdpapDnISV/k87aJ6wbr2fByx1ATWPgOOsgi5iAkuM7axlBWTtwkrJYa
+         u+7duFecPDmDvWx0wm7r5cxn5XSgG/yZB00wyI9kio9RRi/2CmcqCf9TX50wXrA/tBar
+         m62fpsB/z8sJ9CAuU9GtU2Whba2llE6PrtuBs3us3WPtP+6diTqdxAlMi9KIWapICk5v
+         TtpA==
+X-Forwarded-Encrypted: i=1; AJvYcCXdrJ24JbuAMxEVmTo9VhOoM3BT9Mr+eGcuWThrWIacnmmHBzpaqaRWb4BBC+0Bm5s3Vh69zz3bn/nokVGf@vger.kernel.org
+X-Gm-Message-State: AOJu0YwUT0KM0moYWqTp7A7BtOshb0QpsvjGKeuVYYqQ9iYvHvD4JF5K
+	iYxUAHJQJUOs0HJRtl1P8dSC+KdPm2XPH30hDRksHgfJ7BEqT/q6hLvXoefMv6g=
+X-Gm-Gg: ASbGncshp/vP7OeE2qyYxQC0UoyUuojYn6AM8HUDrjLwOG04zGH6/sgP7FJUdS55UYZ
+	ZV2upyDQjNglVDNRSauI4Bx+Q0qZBRSgqlLA0yW7QMNjBfFvX5xNlxNrA8RaMYLSE4Ih4h0ciI9
+	Excl6JBerPCTKaNRFl51fevo/0pCDyRKqMcit/LbookIa567mQAko0DtU18lfUEj6p/LmISdfrd
+	5UNetcZHytZX0zkxwMERWhw+lwBTNzXXSH2GDBEEyOImAr1oNc36WWihmD46CqFgk6DN7mRbhIz
+	6ElGzlt+6I07dlnQZHY76isyODjGCdUrwQ3PHv9Aiq7+t0W+MZNlaahuWvQzo5FBRqn6512uyuW
+	Z21QxBBaqYirrdoBEqCsjdzpIxANkwCp3srJYsSoWnZS1zGgRXg8U1vcdUVPIANavfKQ=
+X-Google-Smtp-Source: AGHT+IED++efpf5n1mpdrpKSqo0nctSBfmgC5H7SE7rg0sC07MwBn9G01Iz8pW4KpUWARaD7Nc47rg==
+X-Received: by 2002:a05:6000:4203:b0:39c:2669:d7f4 with SMTP id ffacd0b85a97d-3a074f39913mr987084f8f.43.1745568451325;
+        Fri, 25 Apr 2025 01:07:31 -0700 (PDT)
+Received: from [100.64.0.4] (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e461casm1593513f8f.74.2025.04.25.01.07.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Apr 2025 00:48:00 -0700 (PDT)
-Date: Fri, 25 Apr 2025 13:17:54 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com, 
-	broonie@kernel.org, absahu@codeaurora.org, bbrezillon@kernel.org, 
-	architt@codeaurora.org, quic_srichara@quicinc.com, linux-mtd@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] mtd: rawnand: qcom: Pass 18 bit offset from NANDc
- base to BAM base
-Message-ID: <bsj6kvqjo3pfbsakex5quamk5tkrtigxdcoyu5bj3nt37zsgc5@7h7zidzbcs7p>
-References: <20250410100019.2872271-1-quic_mdalam@quicinc.com>
- <20250410100019.2872271-2-quic_mdalam@quicinc.com>
+        Fri, 25 Apr 2025 01:07:31 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v3 0/5] Add DisplayPort sound support for Fairphone 5
+ smartphone
+Date: Fri, 25 Apr 2025 10:07:24 +0200
+Message-Id: <20250425-fp5-dp-sound-v3-0-7cb45180091b@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250410100019.2872271-2-quic_mdalam@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALxCC2gC/3XMsQ7CIBSF4VcxzF5zodBSJ9/DOJQClkEgoETT9
+ N2lTVyaOP4nOd9MsknOZHI+zCSZ4rILvkZzPJBxGvzdgNO1CUPGUWIPNgrQEXJ4eQ2q6VppG6S
+ 90qReYjLWvTfueqs9ufwM6bPpha7rH6hQQNCdGtjIuG1Vf7GDS3EK3pzG8CArVtgPEMip3AGsA
+ ih0KyxKrlDsgWVZvmKzgnbtAAAA
+X-Change-ID: 20240809-fp5-dp-sound-b3768f3019bd
+To: Srinivas Kandagatla <srini@kernel.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.2
 
-On Thu, Apr 10, 2025 at 03:30:17PM +0530, Md Sadre Alam wrote:
-> The BAM command descriptor provides only 18 bits to specify the NAND
-> register offset. 
+Add the necessary sound card bits and some dts additions to enable sound
+over DisplayPort-over-USB-C, e.g. to a connected TV or monitor.
 
-s/NAND register offset/BAM register offset
+The UCM files can be found here:
+https://gitlab.postmarketos.org/postmarketOS/pmaports/-/tree/master/device/testing/device-fairphone-fp5/ucm
 
-> Additionally, in the BAM command descriptor, the NAND
-> register offset is supposed to be specified as "(NANDc base - BAM base)
+This series - in spirit - depends on the series enabling DisplayPort in
+the first place, but can land pretty independently, especially the ASoC
+bits:
+https://lore.kernel.org/linux-arm-msm/20250312-fp5-pmic-glink-dp-v2-0-a55927749d77@fairphone.com/
 
-Same here.
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v3:
+- Simplify return qcom_snd_wcd_jack_setup in machine driver
+- Pick up tags
+- Link to v2: https://lore.kernel.org/r/20250418-fp5-dp-sound-v2-0-05d65f084b05@fairphone.com
 
-> + reg_off". Since, the BAM controller expecting the value in the form of
-> "NANDc base - BAM base", so that added a new field 'bam_offset' in the NAND
-> properties structure and use it while preparing the command descriptor.
-> 
-> Previously, the driver was specifying the NANDc base address in the BAM
-> command descriptor.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 8d6b6d7e135e ("mtd: nand: qcom: support for command descriptor formation")
-> Tested-by: Lakshmi Sowjanya D <quic_laksd@quicinc.com>
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+Changes in v2:
+- Revamp series based on comments on v1, doesn't have much too much in
+  common anymore
+- Use sm8250 instead of sc8280xp sndcard file, so port other required
+  changes from sc8280xp.c to sm8250.c
+- This also changes the sound card compatible to from
+  qcom,qcm6490-sndcard to fairphone,fp5-sndcard
+- Link to v1: https://lore.kernel.org/r/20240809-fp5-dp-sound-v1-0-d7ba2c24f6b9@fairphone.com
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Luca Weiss (5):
+      ASoC: dt-bindings: qcom,sm8250: Add Fairphone 5 sound card
+      ASoC: qcom: sm8250: set card driver name from match data
+      ASoC: qcom: sm8250: add DisplayPort Jack support
+      ASoC: qcom: sm8250: Add Fairphone 5 soundcard compatible
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Add DisplayPort sound support
 
-- Mani
+ .../devicetree/bindings/sound/qcom,sm8250.yaml     |  1 +
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 31 ++++++++++++++++++++++
+ sound/soc/qcom/sm8250.c                            | 27 ++++++++++---------
+ 3 files changed, 47 insertions(+), 12 deletions(-)
+---
+base-commit: 7f1dd4e6634d085f3c9652d4e0f1903659fb96f9
+change-id: 20240809-fp5-dp-sound-b3768f3019bd
 
-> ---
->  drivers/mtd/nand/qpic_common.c       | 8 ++++----
->  drivers/mtd/nand/raw/qcom_nandc.c    | 4 ++++
->  drivers/spi/spi-qpic-snand.c         | 1 +
->  include/linux/mtd/nand-qpic-common.h | 4 +---
->  4 files changed, 10 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
-> index e0ed25b5afea..4dc4d65e7d32 100644
-> --- a/drivers/mtd/nand/qpic_common.c
-> +++ b/drivers/mtd/nand/qpic_common.c
-> @@ -236,21 +236,21 @@ int qcom_prep_bam_dma_desc_cmd(struct qcom_nand_controller *nandc, bool read,
->  	int i, ret;
->  	struct bam_cmd_element *bam_ce_buffer;
->  	struct bam_transaction *bam_txn = nandc->bam_txn;
-> +	u32 offset;
->  
->  	bam_ce_buffer = &bam_txn->bam_ce[bam_txn->bam_ce_pos];
->  
->  	/* fill the command desc */
->  	for (i = 0; i < size; i++) {
-> +		offset = nandc->props->bam_offset + reg_off + 4 * i;
->  		if (read)
->  			bam_prep_ce(&bam_ce_buffer[i],
-> -				    nandc_reg_phys(nandc, reg_off + 4 * i),
-> -				    BAM_READ_COMMAND,
-> +				    offset, BAM_READ_COMMAND,
->  				    reg_buf_dma_addr(nandc,
->  						     (__le32 *)vaddr + i));
->  		else
->  			bam_prep_ce_le32(&bam_ce_buffer[i],
-> -					 nandc_reg_phys(nandc, reg_off + 4 * i),
-> -					 BAM_WRITE_COMMAND,
-> +					 offset, BAM_WRITE_COMMAND,
->  					 *((__le32 *)vaddr + i));
->  	}
->  
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> index 5eaa0be367cd..ef2dd158ca34 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -2360,6 +2360,7 @@ static const struct qcom_nandc_props ipq806x_nandc_props = {
->  	.supports_bam = false,
->  	.use_codeword_fixup = true,
->  	.dev_cmd_reg_start = 0x0,
-> +	.bam_offset = 0x30000,
->  };
->  
->  static const struct qcom_nandc_props ipq4019_nandc_props = {
-> @@ -2367,6 +2368,7 @@ static const struct qcom_nandc_props ipq4019_nandc_props = {
->  	.supports_bam = true,
->  	.nandc_part_of_qpic = true,
->  	.dev_cmd_reg_start = 0x0,
-> +	.bam_offset = 0x30000,
->  };
->  
->  static const struct qcom_nandc_props ipq8074_nandc_props = {
-> @@ -2374,6 +2376,7 @@ static const struct qcom_nandc_props ipq8074_nandc_props = {
->  	.supports_bam = true,
->  	.nandc_part_of_qpic = true,
->  	.dev_cmd_reg_start = 0x7000,
-> +	.bam_offset = 0x30000,
->  };
->  
->  static const struct qcom_nandc_props sdx55_nandc_props = {
-> @@ -2382,6 +2385,7 @@ static const struct qcom_nandc_props sdx55_nandc_props = {
->  	.nandc_part_of_qpic = true,
->  	.qpic_version2 = true,
->  	.dev_cmd_reg_start = 0x7000,
-> +	.bam_offset = 0x30000,
->  };
->  
->  /*
-> diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-> index a2af731049d4..89c774bf85a6 100644
-> --- a/drivers/spi/spi-qpic-snand.c
-> +++ b/drivers/spi/spi-qpic-snand.c
-> @@ -1605,6 +1605,7 @@ static void qcom_spi_remove(struct platform_device *pdev)
->  
->  static const struct qcom_nandc_props ipq9574_snandc_props = {
->  	.dev_cmd_reg_start = 0x7000,
-> +	.bam_offset = 0x30000,
->  	.supports_bam = true,
->  };
->  
-> diff --git a/include/linux/mtd/nand-qpic-common.h b/include/linux/mtd/nand-qpic-common.h
-> index cd7172e6c1bb..e8462deda6db 100644
-> --- a/include/linux/mtd/nand-qpic-common.h
-> +++ b/include/linux/mtd/nand-qpic-common.h
-> @@ -199,9 +199,6 @@
->   */
->  #define dev_cmd_reg_addr(nandc, reg) ((nandc)->props->dev_cmd_reg_start + (reg))
->  
-> -/* Returns the NAND register physical address */
-> -#define nandc_reg_phys(chip, offset) ((chip)->base_phys + (offset))
-> -
->  /* Returns the dma address for reg read buffer */
->  #define reg_buf_dma_addr(chip, vaddr) \
->  	((chip)->reg_read_dma + \
-> @@ -454,6 +451,7 @@ struct qcom_nand_controller {
->  struct qcom_nandc_props {
->  	u32 ecc_modes;
->  	u32 dev_cmd_reg_start;
-> +	u32 bam_offset;
->  	bool supports_bam;
->  	bool nandc_part_of_qpic;
->  	bool qpic_version2;
-> -- 
-> 2.34.1
-> 
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Luca Weiss <luca.weiss@fairphone.com>
+
 
