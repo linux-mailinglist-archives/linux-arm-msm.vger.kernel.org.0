@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-55540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EA8BA9BE24
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 07:48:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C1575A9BE2A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 07:49:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6CE87172112
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 05:48:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C6FD5170E5C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 05:49:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67BE22222A5;
-	Fri, 25 Apr 2025 05:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 234BC22A4F3;
+	Fri, 25 Apr 2025 05:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AuCC/HAX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EZY8ElH5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D2310957;
-	Fri, 25 Apr 2025 05:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54E210957;
+	Fri, 25 Apr 2025 05:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745560113; cv=none; b=Nv6GNqyl1GM70htpf15993yJ7iKZwplu8H5M33Seevu6fJPQwp8ONfXPLCK4xdJSl61q56fKSH9cCaxrIsfq9bsklm1/1y8K9BJEhjabHjN7MLWANvN0priwPt1eumKhss8oEtQIi1V9vvNmETbA43dGlMCWBXe5MIrfd1hX0i8=
+	t=1745560153; cv=none; b=QeZTB5vDJN9QG8Ob46OKNHMP82YQifCpUoSSGnGr0Xjp1Wpa+islLPMjAo5q7hCye5gngBnV37tkgVNoeX1p3AsyH4rVu30kAbpQ1JM7jMzol5NNAV3ZCWkFbjaJHbcyAROo6rw3rT17XSHMf0D5sghN9LGrEP0kk19i70wpg6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745560113; c=relaxed/simple;
-	bh=BBjmjPectrPGAcY4myZkJlcjUVghCIetgXgh3U6vdrM=;
+	s=arc-20240116; t=1745560153; c=relaxed/simple;
+	bh=b8ldFslkgQ7KCKFFikNVZpOV3nvLSwoB5PkaORjEsEY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MLuhBjujCYCX7oYTbQMqbvHyDXW2Vnro9wZK56erwFfkd5Sne0lDQH4QrsPqWUxahGbO3WAa8I+ruXcxcttO3PXPYfLzXww/8XlL6hLA/KI18Mn5gixtsBhoFpdwz2c2w4KYhOki3/IFQtTjIznXOYB5cNXuuP3AOk4Gr1hpwrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AuCC/HAX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F12EC4CEE4;
-	Fri, 25 Apr 2025 05:48:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=b5uICguzunk32n7PB26S1MEQKDNsT66f1W0O1xLLe+8QcZuEb5dB1ul9a9KydBS7zotlUk8c6VYMCkwT9AYrXvBWGa8dOxGwaCmMbz/jx2ncEOyj4wzutsQtgckvJSl10OOWEgghagn74sqfhwmeX3aMmskhpfm6a3kfVvdhvHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EZY8ElH5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A54EC4CEE4;
+	Fri, 25 Apr 2025 05:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745560112;
-	bh=BBjmjPectrPGAcY4myZkJlcjUVghCIetgXgh3U6vdrM=;
+	s=k20201202; t=1745560152;
+	bh=b8ldFslkgQ7KCKFFikNVZpOV3nvLSwoB5PkaORjEsEY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AuCC/HAXNbfUmkDWPEKHnkEn+K4MsQp5GltmzkAFPhwv0pD/EMUFOWiuprFNOGUqk
-	 yzI35vcar18Uqc7YOVu/DgaASBpjlDdwmeyFVwxd4xeG+fF6DQx2uPV9OG9o5qa/OJ
-	 a/Djh3ymQUV5rCyap9tdgWLBZHIEMogN+fA8RWH5rKPqTPB9ocGc+w/9Tc6k9Tr6dj
-	 A/SIh46NVx/SMtN8SRm6RdnICEVynEzLvv5MAy8o3SifX8PBS04/ki7oOI8BBImgoG
-	 GBwoDaJ0J6evbjn4rgLwclzAVsiOB/3WEbFnVcpc2DyCDT3gGUgS0FANPJ3m0ElkYc
-	 r7SjB6RHCB/5Q==
-Message-ID: <47d9c1f4-e521-4e46-ad48-a23228d06fbb@kernel.org>
-Date: Fri, 25 Apr 2025 07:48:26 +0200
+	b=EZY8ElH5qOKrr4bclUijdXf1iIJr+2cmEz4fV3vKBIsQ+mmNEqwi3LUhSNjqTFXn2
+	 RJKNG4Kt/DFq5Fj3nEbcaygH6YKKXkg4rSpfcf7AuneRYBqQC6hXMV8lreBHr1e/iH
+	 nKfZdFJ1v7roPcV1wHawrTNOKQ8NmspeFIE9VmwgaqvvRELBrEt4+reIAi5Xe8s2we
+	 RTDDvy1OMQ1NshhBfi3B4fnUqTIHG9qQszWsYViJJL74p5rikCTzbTS+C+2xoOYL+u
+	 9DPRFGI1lolF4VNrIwS3oOqJ3AEWuttwiZH4gwhKZA2G9hBBn8sUVsENItJHndYPzD
+	 oo8ObvIICIvPw==
+Message-ID: <7415150b-e455-48ef-8c06-6abfdab22f08@kernel.org>
+Date: Fri, 25 Apr 2025 07:49:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 00/10] Add support for videocc, camcc, dispcc and gpucc
- on Qualcomm QCS615 platform
+Subject: Re: [PATCH v8 02/10] dt-bindings: clock: Add Qualcomm QCS615 Camera
+ clock controller
 To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
  <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
  Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -62,14 +62,9 @@ Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
  Imran Shaik <quic_imrashai@quicinc.com>,
  Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
  linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Dmitry Baryshkov <lumag@kernel.org>
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 References: <20250424-qcs615-mm-v7-clock-controllers-v8-0-bacad5b3659a@quicinc.com>
- <94a5f0d7-b152-4fe3-b312-a0f7792cc076@kernel.org>
- <8552c048-df45-49ba-83b3-5c39d4b770fe@quicinc.com>
- <3bbef5c3-1859-4a4a-b25a-83428dc15e98@kernel.org>
- <dfa2ed59-ba7c-4cb4-ac78-97f3de716b9b@quicinc.com>
+ <20250424-qcs615-mm-v7-clock-controllers-v8-2-bacad5b3659a@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,51 +110,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <dfa2ed59-ba7c-4cb4-ac78-97f3de716b9b@quicinc.com>
+In-Reply-To: <20250424-qcs615-mm-v7-clock-controllers-v8-2-bacad5b3659a@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/04/2025 18:28, Taniya Das wrote:
+On 24/04/2025 11:32, Taniya Das wrote:
+> Add DT bindings for the Camera clock on QCS615 platforms. Add the
+> relevant DT include definitions as well.
 > 
-> 
-> On 4/24/2025 8:59 PM, Krzysztof Kozlowski wrote:
->> On 24/04/2025 13:13, Taniya Das wrote:
->>>
->>>
->>> On 4/24/2025 4:40 PM, Krzysztof Kozlowski wrote:
->>>> On 24/04/2025 11:32, Taniya Das wrote:
->>>>> Add support for multimedia clock controllers on Qualcomm QCS615 platform.
->>>>> Update the defconfig to enable these clock controllers.
->>>>>
->>>>> Global clock controller support
->>>>> https://lore.kernel.org/all/20241022-qcs615-clock-driver-v4-0-3d716ad0d987@quicinc.com/
->>>>>
->>>>> Changes in v8:
->>>>> - Drop the properties which are already covered as part of gcc.yaml [Krzysztof]
->>>>> - Drop the RB tag for dt-bindings for Camera clock controller.
->>>>
->>>> Why?
->>>
->>> It had comments, so wanted to share the latest RB-by.
->> So there were some comments and that's the basis to ask to do review
->> twice? So anyone can comment on anything and you will remove people's
->> review? I am not going through this again.
->>
-> 
-> It was your comments, so I thought it would not be good to keep the RB
-> tag if it has so many comments. That was the reason to drop it.
-I was fine with the binding, then I gave some comments on other
-bindings, you implemented these comments and you claim that result:
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 
-	code already reviewed by me + implemented my comments
+Again:
 
-could be something I would not consider reviewed. Basically
-
-	my review + implemented my comments != my review
-
-I think it means I would be very inconsequential and unpredictable. I
-think this is creating unnecessary workload on me, but sure, if that was
-the intention I will do the work again.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
