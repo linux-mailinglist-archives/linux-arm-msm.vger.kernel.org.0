@@ -1,159 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-55575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB6EEA9C21F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 10:52:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B5D1A9C2AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 11:03:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CD73A1BA1E24
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 08:52:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA2454C1290
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 09:03:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4A2123370F;
-	Fri, 25 Apr 2025 08:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EF632367B4;
+	Fri, 25 Apr 2025 09:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gAfs3N16"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MGFA6Ng3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21851232386
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 08:51:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC88D2367A0
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 08:59:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745571101; cv=none; b=Og49wzD0kb+MfGZ/0Ue2p+4EVOfiiPU99cM5OvQOW+eN9sPrSEbMyzeHrXu1QhXyg8IRHfXNZiynym0m6LcLRMa+wd3GgiRyH7zStaZnLyxq8qKdiNLGD7aFxol6nmoDud7JMthhU+N6423/8IXd0o1ylKuiWjnolXnPv7BwGP0=
+	t=1745571600; cv=none; b=PailFedOhmzyUghDp+EUKcyB2XwOoQBibght1OSFfwH0Xj+9AdyZG4HKT6n7clIwpf2BY28m3UJUYqu1+s8IUc2JEj4Nb+npbzRowRXdRVqK+GghH2/CD11Vt+/ebINDdAN0S8Cinu0ev7ZQou0YmBIJDrbbckRvFJTO6hcTWlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745571101; c=relaxed/simple;
-	bh=bMSjABCClWfJSC4Hjs5jAPDO2W6FqdDcosI1jaZyaiE=;
+	s=arc-20240116; t=1745571600; c=relaxed/simple;
+	bh=+xSCE9MB+iXnfupVs0CKDPm7yuZw6BhgZRJ8oAX0TzQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gkFZncaDRUI136Iwy88EfHnV/D4DoZrHniluLyccMyy1Qomv+fspKKq9EjWrQ8QTnBwd6wPJ8t0NniJYiC4qX+GHhOpzMp8Ujb++7rmdkEjCYLFKfECzRar/Ok0aPD4zRPvGryqsgtjEiC/PCN9oUQHojMWaAAbDwN3a/lrZPbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gAfs3N16; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53P8T7f2016018
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 08:51:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=Zgto+NXLTWjeGis4250S7ueD
-	MaHv1HkfoBr/1cOtW7s=; b=gAfs3N16r3PEPHWUpj8lv3m9YE1gPmW86gv6hSp/
-	xNzifIfwOfnfjqcy4eLoaIRNL+B7qtMoctcqbVk8C0ukxff9zfgryTujT9BWtyhN
-	lMU0fD/GaeSE6DkzCrFa4xGyG9wLXXn5irhyZe6zFJs6de0eAnIqIBNfH17OxKXa
-	u+b/9aIF3AiwLVpSgrUkqvjqMvxu/BdAb4WEGpE9+TfmmZPzyLqwhb3uWXAHiD9z
-	m5c2igUsMvaEzNAjlBWiTCp3cn0O6yIooKBkKOPYeR+dOCKFcqbAD9Vizsxg/af7
-	+37KEbMvABs5mV4dDyul9+BiBkiNnyCDKcF5Le0VxJctqg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh08css-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 08:51:38 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c790dc38b4so363647085a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 01:51:38 -0700 (PDT)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nmco/3/W+WI0xbdbgWp5pUqIsgHE282NPEEeu06DakHjdDrCoAlBACDW3zfmYsvxRi7g6Fo2ebBd/vHiwPw03ZJ4q42bqPTGNKvANTlxE/PD85/uugo3rkjc/dLqczwEOHLLHnf46vddNNvdOHdvgIvOvNtSTPJ0aCLviUQOVjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MGFA6Ng3; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-7376dd56f60so1443853b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 01:59:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1745571598; x=1746176398; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QI7dIhq4gpO8qmw+kHNvoSNDB7nG2z7FjzlKM42EHH4=;
+        b=MGFA6Ng33aHaiphc4JPoqhxE8pOz8TySAC21Fsun0ihZIWo2F2P/bJErOap+DiRaTy
+         bb2YpBQiKVFyOiYxVc2n+eQe9WXuzisDAYpzjnzDLqSeqRcGrtdYYhfOoiRfAYdSh0Rb
+         CNSvmA2mu3C26K8Uzn0uVLBjIeCK8dDOHkHC+JyLwnPpoTzbi2NkNOdMYHc+7CJDPWgw
+         wYhk8Xw2uaWFA7INh2S+xXMb+9MoRteBbMKfFZZYST+oW4v40CeUkI0HTXBasouPFQzi
+         nalkuuwcg13DLewsN9x1q6A0X/oy5qiqKrtZjNQdBQGH9zJ6UAeJcxR/mnU649Cfl+CV
+         rcZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745571098; x=1746175898;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Zgto+NXLTWjeGis4250S7ueDMaHv1HkfoBr/1cOtW7s=;
-        b=luOw/FweXo5ER4b9Na+MaDkJ1V1YVYVGLHzuhWhldHw0Szi/z/FbRtawkvuEXiYVLZ
-         fZAvYlgL9xsFaaX2cDJeW0mIqP++1m2dSwpOgWyST1VC+OKtFHu23esyH5jm/eXZpTrV
-         Kbw2L+l2FMByFUWnwADKMQwY0rNpEG9d3WungT3viDKviyOA86ThCVVdYX57ntfEV51/
-         Hgyg3XxwJZY8ddzB1YEYjoOrbNpIcXhLmkYpI4NK2bdIhDXgK9E7hTABjyz/j0gGxsw3
-         K+LOzngoCR1T3uT6dzo35zXD9ot6gvMDPoGf+0dF9xxN1QSZo3fHT2aQq2ztIJh0Tg/L
-         qvIw==
-X-Forwarded-Encrypted: i=1; AJvYcCWZoi6rjNfU9mt0F4/+34bWDmSYJNv3zWHNxQJjM76PUzV00+0U9Xak4p85Wlooopg+1JW50w0oXTMRDiTQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFsmaNXlz6BADwFrqRuPYstS17n9KRt9tKQ8VvRaAI7pkgxq6W
-	D+FXwW7lxOTSEbUsO9Bh8VscD7QKQo8lOp+X1c0GjyF5t4LtMmZ9SEBdlw9hXNm1aNNES2sa1X4
-	tfEfLE51kzB/MmXaeShDL5QYJgTtS+pY2sC9R9HWUySc1mBvEG8KUvbbbmC55pyOu
-X-Gm-Gg: ASbGnctBp+cbR1hpFFWMM6/laXegcYoowVG8xs3TX+sBwxuQi5naBx1tHCjPcgLs5gg
-	fLzS4wvMZOYJ2jkIL4RrWOk+gnZBFIFNOJNShGSrMIiEeLUnvTaIK/X36Onh7b8QIqiFdCmI4Kp
-	x90WYi/NCf9V93qrvps/rKEb7IkQozpELtrRnoggmyYbHrk7cS9hhjcLdeH4z6/eEym2mDkE1aJ
-	7BsEr3vuknC+HPUVbgkwKYI+t4E/eZ4tiunq2KV6g3nNgKLzfxxSZuAYIYBIDP1U1WDE9vDJgPD
-	DkYfCApgFW9nHvsxtYZccnVwtEOLK/uX4HwUCcs/04oBo0R6dOY7mmr40iAARKhgRHzStDvREaM
-	=
-X-Received: by 2002:a05:620a:440d:b0:7c9:2e02:7dbe with SMTP id af79cd13be357-7c95863f8f6mr846010585a.22.1745571098222;
-        Fri, 25 Apr 2025 01:51:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqb+tfOsOT8jkUVnW74s9Wh1PyfJrzNtha5bWxQ7ns3s35ArAoiI4qP7ixfE831NFw1jsQJA==
-X-Received: by 2002:a05:620a:440d:b0:7c9:2e02:7dbe with SMTP id af79cd13be357-7c95863f8f6mr846006585a.22.1745571097864;
-        Fri, 25 Apr 2025 01:51:37 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-317d0019e18sm6269141fa.62.2025.04.25.01.51.36
+        d=1e100.net; s=20230601; t=1745571598; x=1746176398;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QI7dIhq4gpO8qmw+kHNvoSNDB7nG2z7FjzlKM42EHH4=;
+        b=S+2ydQQX5o1Hr6SiTpelFIAcYnn+fDWQLpbgueY3R4EE3va14dPVShOJM/a7uN3TWC
+         OV4afyse5wq1zNxnhnDsb11HIIf/SNtYZfxuHHVDCddw5ccWDjNfMNBdPCo4ho6L4RiV
+         lIL6r90B6sPsjaVATRtuoceCLDKRmBkjrS9O0o4Djv9bsUlxnighYc4XNo52q4vI8B7l
+         0eDIrbVzZ2L1bBuY+A/Lvh/FyVVOqeXAZ8KhgEbLsArRY77EZO4/wszUam2p0+/Xk0Kc
+         OByuVPtGVpverUu1Ma5PDiKoGvSjPDKJ4BynsxIhPBLPXWxf2am90+DMz/QIVVT6oPqQ
+         AKCw==
+X-Forwarded-Encrypted: i=1; AJvYcCXQ45UZi+v8DZJu9w4oB3sFqUoCFdkKy1n1ZTL0C2PAR5HPEhZHpFjcC8/qYXZvIfsbKyHnc8QKIon2cmvy@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBwIcTJaCk/OPenWwcWCe3RkDnlB1JHkZVzVm254xjPSJdtr/S
+	JGuhnFAYaSOMpucsPx+i4hTFN/HQQSJiAOlM7A0Z5BI7Nf3GcxV7CXDAzyGWrA==
+X-Gm-Gg: ASbGncukUVk5/dqoFffBL+wGMwgCgcSa3zdexLhTX5/l9S7O3W9EUaVBFS8QKtsSCz9
+	w/xX3y6LGCxsr4NiRzOvX+jA7ZMOpljLBrRIPLHm98s02a9pNqKq+TJKLW7jXbpLaJxhjmeAKDm
+	4t4/XWI4/sE5mVpsmdn947RAFoVYQ0i7CsetS1oWscH3aj2HSTI5uaxgiEk1sObsKFJIjV7FF1a
+	2jccmmaIXLgIHmDRR8fV/q/BkcPsvvcttbeqKdVGo3+6smg4JlRk1tYfj2YLWvQdcFliNcYXA0X
+	HVcStNjN3KLVEAjlh95SrL4gDRT1/GP00vCk/nRDe98WVjLL18epL9ehWdP0oQ==
+X-Google-Smtp-Source: AGHT+IFkKSjUiJTYpCxdE0/nSPU4m+TRaoZshePJKHL8MiFoZ1AglBgvtTwnzJQU1uuNvqEmm4Tfww==
+X-Received: by 2002:a05:6a00:21c6:b0:73e:359:acf4 with SMTP id d2e1a72fcca58-73fc7866454mr2183157b3a.0.1745571597887;
+        Fri, 25 Apr 2025 01:59:57 -0700 (PDT)
+Received: from thinkpad ([120.60.77.160])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73e25962f61sm2688128b3a.74.2025.04.25.01.59.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Apr 2025 01:51:37 -0700 (PDT)
-Date: Fri, 25 Apr 2025 11:51:35 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Subject: Re: [PATCH v6 2/5] dt-bindings: media: Add qcom,x1e80100-camss
-Message-ID: <luamtq6xhvmxat4ywhrawc5q5fjfhjnz3ku3c3k7aitjdbjacr@hmhf6ip76z7z>
-References: <3ec3fd62-bf21-47e7-873c-ce151589d743@linaro.org>
- <54eeb470-cd90-4bc2-b415-6dea1ce2321d@linaro.org>
- <0ab31397-580f-4e5a-b9ad-d9bf79d29106@linaro.org>
- <36feffed-4558-4e59-97db-2f0e916dbfc7@linaro.org>
- <krofzevprczeuptn6yfj4n656qsw52s52c7cgiwotidxmi2xo6@d3q5bb5zbccc>
- <f05cba73-6d8b-4b7b-9ebe-366fcd92a079@linaro.org>
- <lwv5pk3dtyyxgtrwxss43dyecesv7pvrzvgwacwrnztkiowfkp@jqosvhrs3jk5>
- <42b56d7d-26cc-4c10-aca2-a0a5a16b09f6@linaro.org>
- <3kprgpvzffupnjbh2aodsowwklliywpemzwpsftd2cng562yuw@37tpwmpemr2c>
- <2dd28ebe-f69c-49c3-90c2-aedc0484a00e@linaro.org>
+        Fri, 25 Apr 2025 01:59:57 -0700 (PDT)
+Date: Fri, 25 Apr 2025 14:29:50 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>, 
+	Jeff Johnson <jjohnson@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>, 
+	Yan Zhen <yanzhen@vivo.com>, Youssef Samir <quic_yabdulra@quicinc.com>, 
+	Qiang Yu <quic_qianyu@quicinc.com>, Alex Elder <elder@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Kunwu Chan <chentao@kylinos.cn>, kernel@collabora.com, 
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
+Subject: Re: [PATCH v2] bus: mhi: host: don't free bhie tables during
+ suspend/hibernation
+Message-ID: <y5odcxzms6mwpz5bdxhbjxo7p6whsdgwm772usmmzqobhf6nam@p4ul7vn7d3an>
+References: <20250410145704.207969-1-usama.anjum@collabora.com>
+ <h2wv7drxntokziiwbzjw5xjzbctbomp6cfcba7ppfbih6o7so7@p6dazv32xfx4>
+ <1136c7cb-1c7b-410b-93d2-c74aec939196@collabora.com>
+ <cfb3sntvqhupyhm2m5tevpsl77r6mzl2aqzr3wtxvr22bezmp3@qjh7ftr2kdjy>
+ <4d87ef88-3533-4255-adc6-6c268818fe25@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2dd28ebe-f69c-49c3-90c2-aedc0484a00e@linaro.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDA2MyBTYWx0ZWRfXwWMLHESoCzJL x5oFrgKSCMaU2A2513KMdAlvfyvrTKizr3dsLgn+fvhvNC48Kso8iksMrqXsJYgCTcP+yiPrx9S 2MXgdTH8WlM7X45dhGCJ5b/m1iGxrDWj8z7/dZ2eEZijBmN3XM21DbY7lbphJvnZMWDJTVEN4OB
- PM+OQMcn7yuOaEkB1tUFDWh5n2Bk1aaCZbj4m/LSugGmHGbZvwjyP9e95G3B8CM+V4gpSA4aEEp R0XPWVo8Ljf1T3VoSxpcN/kQtm+6vFKaSjg+TwdgBybLQIbS6f8AGYT469yV369UKqenzboGJBH M5MXNaMEVeB5ht3YMt3pMAUJ43ajxrQrxOhZIaWTVgwrUhMUpPp+8Zun2zlC7Iop3evw0zd8A3f
- OZoGDP2ly3sc2ghBBZ4452geJ3ezUnSJKW9BGojbT1atYeplun4nRtS0vTpv59xu1XX0t8BN
-X-Proofpoint-GUID: C8lCvuE5KaocY8rBecz26_ch06jTPUbb
-X-Authority-Analysis: v=2.4 cv=ZuTtK87G c=1 sm=1 tr=0 ts=680b4d1a cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=RRyVOxHS6r0Lc4ymnekA:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-ORIG-GUID: C8lCvuE5KaocY8rBecz26_ch06jTPUbb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-25_02,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 mlxscore=0 adultscore=0 lowpriorityscore=0
- mlxlogscore=747 priorityscore=1501 malwarescore=0 suspectscore=0
- spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504250063
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4d87ef88-3533-4255-adc6-6c268818fe25@collabora.com>
 
-On Fri, Apr 25, 2025 at 09:35:05AM +0100, Bryan O'Donoghue wrote:
-> On 25/04/2025 09:26, Dmitry Baryshkov wrote:
-> > What should driver do if:
+On Fri, Apr 25, 2025 at 12:42:38PM +0500, Muhammad Usama Anjum wrote:
+> On 4/25/25 12:32 PM, Manivannan Sadhasivam wrote:
+> > On Fri, Apr 25, 2025 at 12:14:39PM +0500, Muhammad Usama Anjum wrote:
+> >> On 4/25/25 12:04 PM, Manivannan Sadhasivam wrote:
+> >>> On Thu, Apr 10, 2025 at 07:56:54PM +0500, Muhammad Usama Anjum wrote:
+> >>>> Fix dma_direct_alloc() failure at resume time during bhie_table
+> >>>> allocation. There is a crash report where at resume time, the memory
+> >>>> from the dma doesn't get allocated and MHI fails to re-initialize.
+> >>>> There may be fragmentation of some kind which fails the allocation
+> >>>> call.
+> >>>>
+> >>>
+> >>> If dma_direct_alloc() fails, then it is a platform limitation/issue. We cannot
+> >>> workaround that in the device drivers. What is the guarantee that other drivers
+> >>> will also continue to work? Will you go ahead and patch all of them which
+> >>> release memory during suspend?
+> >>>
+> >>> Please investigate why the allocation fails. Even this is not a device issue, so
+> >>> we cannot add quirks :/
+> >> This isn't a platform specific quirk. We are only hitting it because
+> >> there is high memory pressure during suspend/resume. This dma allocation
+> >> failure can happen with memory pressure on any device.
+> >>
 > > 
-> > vdd-csiphy0-1p2-supply = <&vreg_1p2_ex0>; <- individual supply in PCB
-> > vdd-csiphy1-1p2-supply = <&vreg_1p2_ex1>; <- individual supply in PCB
-> > 
-> > vdd-csiphy0-0p8-supply = <&vreg_0p9_ex0>; <- shared pin in the SoC
-> > vdd-csiphy1-0p8-supply = <&vreg_0p9_ex1>; <- should be shared pin
-> > 
-> > I don't want to allow DT authors to make this kind of mistake.
+> > Yes.
+> Thanks for understanding.
 > 
-> I require anybody submitting patches to show how they tested this.
+> > 
+> >> The purpose of this patch is just to make driver more robust to memory
+> >> pressure during resume.
+> >>
+> >> I'm not sure about MHI. But other drivers already have such patches as
+> >> dma_direct_alloc() is susceptible to failures when memory pressure is
+> >> high. This patch was motivated from ath12k [1] and ath11k [2].
+> >>
+> > 
+> > Even if we patch the MHI driver, the issue is going to trip some other driver.
+> > How does the DMA memory goes low during resume? So some other driver is
+> > consuming more than it did during probe()?
+> Think it like this. The first probe happens just after boot. Most of the
+> RAM was empty. Then let's say user launches applications which not only
+> consume entire RAM but also the Swap. The DMA memory area is the first
+> ~4GB on x86_64 (if I'm not mistaken). Now at resume time when we want to
+> allocate memory from dma, it may not be available entirely or because of
+> fragmentation we cannot allocate that much contiguous memory.
 > 
-> So you'd have to lie about testing it for a mistake like that to get
-> through.
 
-It's easy to miss it.
+Looks like you have a workload that consumes the limited DMA coherent memory.
+Most likely the GPU applications I think.
 
-I think, the supplies should be reflecting actual pins on the SoC.
+> In our testing and real world cases, right now only wifi driver is
+> misbehaving. Wifi is also very important. So we are hoping to make wifi
+> driver robust.
+> 
+
+Sounds fair. If you want to move forward, please modify the exisiting
+mhi_power_down_keep_dev() to include this partial unprepare as well:
+
+mhi_power_down_unprepare_keep_dev()
+
+Since both APIs are anyway going to be used together, I don't see a need to
+introduce yet another API.
+
+- Mani
+
+> > 
+> >> [1]
+> >> https://lore.kernel.org/all/20240419034034.2842-1-quic_bqiang@quicinc.com/
+> >> [2]
+> >> https://lore.kernel.org/all/20220506141448.10340-1-quic_akolli@quicinc.com/
+> >>
+> >> What do you think can be the way forward for this patch?
+> >>
+> > 
+> > Let's try first to analyze why the memory pressure happens during suspend. As I
+> > can see, even if we fix the MHI driver, you are likely to hit this issue
+> > somewhere else.>
+> > - Mani
+> > 
+> >>>
+> > 
+> > [...]
+> > 
+> >>> Did you intend to leak this information? If not, please remove it from
+> >>> stacktrace.
+> >> The device isn't private. Its fine.
+> >>
+> > 
+> > Okay.
+> > 
+> > - Mani
+> > 
+> 
+> 
+> -- 
+> Regards,
+> Usama
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
