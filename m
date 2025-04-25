@@ -1,158 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-55534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36042A9BDB8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 07:01:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C631A9BDB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 07:00:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6554B1B661E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 05:01:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1372927666
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 05:00:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7E561DFD96;
-	Fri, 25 Apr 2025 05:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31CD31487E1;
+	Fri, 25 Apr 2025 05:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dAKaijZm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DSYU8inA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C8519BBC;
-	Fri, 25 Apr 2025 05:01:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8BE19BBC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 05:00:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745557268; cv=none; b=nFinoTAbzS6d96U0W0mk0o/rPryttC2ilvGDkjsiFy1liNWMqKCkRuj+PuV8szkH6jkhkd+Vy0Q0fFVeKJ5Q8aGgyocsgaf4sN4RhWSRTJGREJazcTWMTCBw/Fzw2s7VlJBGhq7ECujnIstAowZeYDy+sSp+LCVvj2sYQ/ro328=
+	t=1745557254; cv=none; b=MUYrnKtmAVhCC31RHTh3NwJtEJTT35OGp+xhKO8RslxDTawrRzBwM6YToJTSCl3Dbwh50SiSSPDbPkzz8O9EKNdw9w1mL4WprFGx0cpuLgJoaoi98/7cjLZfVi9YquQFo45m2ErsO3iDg4drDO8aS/WFKfNt0oyrD8oatvSSqy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745557268; c=relaxed/simple;
-	bh=VeXZdydpcTzvfbdj/IJPGAFHchV4PAKA5/tzzksro2I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TOEedpiIsxjg1CBROsEcXb7UiSmRe6EFQRZPmT8cGKzswSZ7L01+GLB/uVWhfYDyNu+SUlzc+qSInlO1nKbDimMiOzLya5nfd8hPDMO4ppvEd8INvinbqj6rI1XhNhpC4i4TmuQnvT9n6RnBRIn5Vbh2/fb7yYDw8RBQuXcN1FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dAKaijZm; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53P17gta014342;
-	Fri, 25 Apr 2025 04:53:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7/8Tj4IWVZ2RpvhQ2jso4DaJZWt77hpYridMwY7/gtU=; b=dAKaijZmeiyihAqB
-	re/zCee8sRXbJ8pRAwJKnEp6LoQA37iL6WxJLJUEAtci28ZEd41OiKhQjeRGMNFr
-	eHGlNZJjUkSBQa7zCsE/TiwwO8KpOCsHEVZUDl8Dpuv0Z+bObUWd2rWnG/6GSIPQ
-	oObjlBQTiEavsZYL/rOkDtD2pdcB4HlMe+XcoY7n9UBbdxWHxBGsWv/wSb7WtKKK
-	DsQEYrPqGnc/TQWqHzMmCsveCosUY4uDM3MMPnOsMUcxFgYEGWgEmBgEA03rYK/z
-	oT0kkTdo5nprcqtNEni3hPU6lzSe9xOgFrJyyowKOCOEmvuFDKRdaRd1WmWyqL8D
-	t++I1w==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh3fpy9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Apr 2025 04:53:37 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53P4raBi001518
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Apr 2025 04:53:36 GMT
-Received: from [10.47.235.76] (10.49.16.6) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 24 Apr
- 2025 21:53:36 -0700
-Message-ID: <95c66338-87c0-4fce-866b-6c43c1d31cd1@quicinc.com>
-Date: Thu, 24 Apr 2025 21:53:35 -0700
+	s=arc-20240116; t=1745557254; c=relaxed/simple;
+	bh=jsRsBQqqYuTiofqMBPr9zN2f/zxOJI3wwSvBcHgiFh8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mgtNFDaE2H3zEBrNeNyQ6pZ9rnSC3Z17nNJuvSQeb3rMuc29vok0H9U/XivUKNnmVnPwu7ltslB04oJJwqI+iCdly3EBft3J72Enzfd9vTcpAwOwY8GgasrUiPJt8CU9SDQeUKcecm7kiQq8Vwh2xtse2JH1p8PZDLNwrEuCZ4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DSYU8inA; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-af9a6b3da82so1190311a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Apr 2025 22:00:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1745557252; x=1746162052; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=bWUQw7BF6qOFvrmK64yOAiyAfdhX/yyNlejjZhluoEE=;
+        b=DSYU8inAH2BC3U7L0T9wGB9YJLmFw39y3odO5HV+O3DwkWu/FZLOeq2X2qwr2Qe6KS
+         qhVkuR6JLAZfFNUWAw0VkBpQk63Pi/q7tvYACmclQd/XUxenFkSGHS2PcNa7ZFQQDpuz
+         +LxkbibJk+NCekEbwrzrm39k9jDUUwrFT1WtQarRLJM+Wrtz149kMPwrJc+T/eK4fdI8
+         kX3ECCyJnBjBEWB8gntAGa8kJ5Vx94KNkvdpR3rdMXum1Rm5Jnl96sByxC4zrhqdkA4x
+         7rpriQCREvmEPVzpeUbUYr488vWXUwvRaQR9M9A5VFRec6mRStUBfWLkirGUbF2fuBpL
+         36Qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745557252; x=1746162052;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bWUQw7BF6qOFvrmK64yOAiyAfdhX/yyNlejjZhluoEE=;
+        b=iJeyjIOKMg6qCWe4HrGKDyaoD8cBh5JRnZ1hEMvO9rdUttiVYQfPBLqlky+iUzEtAP
+         Z1dAnhsPAU5lzmN1Uu+/5YDULN9iCgGtZFFsV1/suGqAqZ7XkQhijdkBZsgd7Z09PDJQ
+         OA6X9Hpha5c9xhPZ0NPK2VSNCQAeUOcIzDEJOaA+gpS0HKbUmwDVII8jUQRvdpybjWbO
+         h8rwePG0q950vCqQam8XWP6qM5QZMOqAVg3SMjiIV8YN/BCizkm6bXM8xQbkRrA9cekV
+         ZDUGa+TUwdDBErnU8YTYnrU1Hk5L4r7FEkd/rRTj6mT/D31FhBiopDQXIUtmykQn+6AC
+         xCAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUkfzVdiW7rW7V1uxEGHVCAae8wmoQDZSe4F5OPaJDEwURP8xDIQh9ZJmi3lqh92goWJ1Rpo5em9FiW95rw@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywj3f9+mhSdhLWp8j2FwXqVaOcOltUG9VgW5R9bhuV7Y/tRcR1I
+	UNeynv7GyDJkRScnRAOP8R5b/5rG1Xxs4R9XLNry4PIIp94QVbRpRFO/EnhYur9JdxfNXcduwQs
+	=
+X-Gm-Gg: ASbGnctiTkbHD6ew7K18KmtX1bbTBbOD4cUOxuMk45BBM1ettYSB3bsqaMpf9wGC+sh
+	/aTV9cGcYMyB9A0BCXAE3dl15Bq27vK6cvOfdFI1j61/9H6enlMXPUqxq8WwsKb64nLGd6pnEHu
+	BDrFF6RRZwGFmXibtBx2mZfjftot6g/CQmfO0RMjdhw7vyrQRaL6+rFq29xMmmbqWiJmby+9mb2
+	5u66d1Vuu07N4aNhiAKeEU4t39REjkKaUzRaN9aMpVRQoNSOauMs5pif/GXiuBByGUCXv6351UK
+	169QOap8XYYFVPqTnipoTapA8ksb5phmfg9qtXanwmOfcqaf9qc=
+X-Google-Smtp-Source: AGHT+IF+93Ze77YPoxfYOKdLnId7W7NxopgQ2nyluNktxUyk1Ns9mSAmPljJWg3qdOqk/ApQDZATqQ==
+X-Received: by 2002:a05:6a20:d04a:b0:1f5:80a3:afe8 with SMTP id adf61e73a8af0-2045b9fa8a0mr1169419637.39.1745557251625;
+        Thu, 24 Apr 2025 22:00:51 -0700 (PDT)
+Received: from thinkpad ([120.60.77.160])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73e259412a0sm2292743b3a.49.2025.04.24.22.00.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Apr 2025 22:00:51 -0700 (PDT)
+Date: Fri, 25 Apr 2025 10:30:46 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Daniele Palmas <dnlplm@gmail.com>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/1] bus: mhi: host: pci_generic: Add Telit FN920C04
+ modem support
+Message-ID: <6amoyqyaxbvcfzgqmsjeo2isao3ijrle4krda66ellfrd6ondq@upwnk43vlnpr>
+References: <20250401093458.2953872-1-dnlplm@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] arm64: dts: qcom: add initial support for qcom
- sa8255p-ride
-To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <quic_psodagud@quicinc.com>
-CC: <quic_ptalari@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Shazad Hussain
-	<quic_shazhuss@quicinc.com>
-References: <20250422231249.871995-1-quic_djaggi@quicinc.com>
- <f385c9eb-31ef-47c3-84a5-9f4dc86ce6f0@kernel.org>
-Content-Language: en-US
-From: Deepti Jaggi <quic_djaggi@quicinc.com>
-In-Reply-To: <f385c9eb-31ef-47c3-84a5-9f4dc86ce6f0@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SSSVvELA6MEtrpPWgc1xWc5uNQ3I0Mld
-X-Proofpoint-GUID: SSSVvELA6MEtrpPWgc1xWc5uNQ3I0Mld
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDAzMyBTYWx0ZWRfXzAk1/hxPigtp +/qhz/aTMIugzOCQjR2XAOwSHIHv2q6fRe9jdcFvxcnvVX+NU6fFDwZlWYAtM8HVQr2ULjrctvA obfN0bgMM0ceFhejlHrh02W/0yq0QIipOd7JT6gtxXcK5VRwLOD/GlVW9jGjg1g2xH3X9645S9H
- ltXbh5bS4fg1V1m8pOqOMlMYSXYYzF7wCYcXTfVfFtBLAJiVMMr/TqBinsQUyb7mY1vuj2gqLgu WV++4i5piWg9Z6GUXp+9e3AZH3QEmQwrYratJ/oD/ddXW5u7kyH8fqbH7QHTUUhbUPQ7MoyQRfd ZKu16yc9Je67sLbYpe3tLF6hE/RVOTpdG1rZf8KLTksHoFHaOgnLfG55lxj7/aygyEwy9kC43c3
- oNRyHvSpRb7HoLfOC4MPxA7nvEkJgOiDqIf3jfu4VC8ZSLfvnikWzJrZFRUvezjbW4WadsxJ
-X-Authority-Analysis: v=2.4 cv=Mepsu4/f c=1 sm=1 tr=0 ts=680b1551 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=3H110R4YSZwA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=Qp6CAqyRjOWTr3wja-QA:9
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-25_01,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- adultscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 malwarescore=0
- priorityscore=1501 mlxscore=0 impostorscore=0 clxscore=1011
- mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504250033
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250401093458.2953872-1-dnlplm@gmail.com>
 
-
-
-On 4/23/25 23:19, Krzysztof Kozlowski wrote:
-> On 23/04/2025 01:12, Deepti Jaggi wrote:
->> diff --git a/arch/arm64/boot/dts/qcom/sa8255p-ride.dts b/arch/arm64/boot/dts/qcom/sa8255p-ride.dts
->> new file mode 100644
->> index 000000000000..cb866f897d0a
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sa8255p-ride.dts
->> @@ -0,0 +1,94 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +/dts-v1/;
->> +
->> +#include <dt-bindings/gpio/gpio.h>
->> +
->> +#include "sa8255p.dtsi"
->> +#include "sa8255p-pmics.dtsi"
->> +#include "sa8255p-scmi.dtsi"
->> +
->> +/ {
->> +	model = "Qualcomm Technologies, Inc. SA8255P Ride";
->> +	compatible = "qcom,sa8255p-ride", "qcom,sa8255p";
+On Tue, Apr 01, 2025 at 11:34:58AM +0200, Daniele Palmas wrote:
+> Add SDX35 based modem Telit FN920C04.
 > 
-> NAK
+> $ lspci -vv
+> 01:00.0 Unassigned class [ff00]: Qualcomm Device 011a
+>         Subsystem: Device 1c5d:2020
 > 
-> Missing bindings. This is some weird process you have there. Reach to
-> your internal guideline before you start posting. It explains this.
+> Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+- Mani
+
+> ---
+>  drivers/bus/mhi/host/pci_generic.c | 39 ++++++++++++++++++++++++++++++
+>  1 file changed, 39 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index efe43592e170..57e2360c397b 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -782,6 +782,42 @@ static const struct mhi_pci_dev_info mhi_telit_fe990a_info = {
+>  	.mru_default = 32768,
+>  };
+>  
+> +static const struct mhi_channel_config mhi_telit_fn920c04_channels[] = {
+> +	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 64, 1),
+> +	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 64, 1),
+> +	MHI_CHANNEL_CONFIG_UL(14, "QMI", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL(15, "QMI", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL(92, "DUN2", 32, 1),
+> +	MHI_CHANNEL_CONFIG_DL(93, "DUN2", 32, 1),
+> +	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 2),
+> +	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
+> +};
+> +
+> +static const struct mhi_controller_config modem_telit_fn920c04_config = {
+> +	.max_channels = 128,
+> +	.timeout_ms = 50000,
+> +	.num_channels = ARRAY_SIZE(mhi_telit_fn920c04_channels),
+> +	.ch_cfg = mhi_telit_fn920c04_channels,
+> +	.num_events = ARRAY_SIZE(mhi_telit_fn990_events),
+> +	.event_cfg = mhi_telit_fn990_events,
+> +};
+> +
+> +static const struct mhi_pci_dev_info mhi_telit_fn920c04_info = {
+> +	.name = "telit-fn920c04",
+> +	.config = &modem_telit_fn920c04_config,
+> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +	.dma_data_width = 32,
+> +	.sideband_wake = false,
+> +	.mru_default = 32768,
+> +	.edl_trigger = true,
+> +};
+> +
+>  static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
+>  	.name = "netprisma-lcur57",
+>  	.edl = "qcom/prog_firehose_sdx24.mbn",
+> @@ -806,6 +842,9 @@ static const struct mhi_pci_dev_info mhi_netprisma_fcun69_info = {
+>  static const struct pci_device_id mhi_pci_id_table[] = {
+>  	{PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0116),
+>  		.driver_data = (kernel_ulong_t) &mhi_qcom_sa8775p_info },
+> +	/* Telit FN920C04 (sdx35) */
+> +	{PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x011a, 0x1c5d, 0x2020),
+> +		.driver_data = (kernel_ulong_t) &mhi_telit_fn920c04_info },
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+>  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
+>  	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, PCI_VENDOR_ID_QCOM, 0x010c),
+> -- 
+> 2.37.1
 > 
 
-I followed the approach used for other bindings [1] [2] [3], 
-which were part of the original series and were sent as separate patches 
-and accepted. I misjudged that the SoC binding could also be sent as a 
-separate patch. I will combine the remaining bindings along with 
-the device tree into a single series.
- 
-The UART/QUP driver changes have been posted as a separate series [4] 
-along with the UART bindings. Please advise if the UART/QUP bindings should
-also be included as part of next series with dt changes.
- 
-[1]: https://lore.kernel.org/all/20240910165926.2408630-1-quic_nkela@quicinc.com/ 
-[2]: https://lore.kernel.org/all/20240910171534.2412263-1-quic_nkela@quicinc.com/ 
-[3]: https://lore.kernel.org/all/20240905194741.3803345-1-quic_nkela@quicinc.com/ 
-[4]: https://lore.kernel.org/all/20250418151235.27787-2-quic_ptalari@quicinc.com/
- 
-> Best regards,
-> Krzysztof
-
---Regards,
-Deepti
+-- 
+மணிவண்ணன் சதாசிவம்
 
