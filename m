@@ -1,183 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-55671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1415A9CBFC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 16:47:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 211DEA9CC93
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 17:15:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 15BCE1BA84C5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 14:47:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CFF993B1101
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 15:13:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5313B2522B5;
-	Fri, 25 Apr 2025 14:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B30D2750F1;
+	Fri, 25 Apr 2025 15:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z79926m5"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="MiecbeKS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F08C248895
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 14:47:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C4326FDBB;
+	Fri, 25 Apr 2025 15:13:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745592444; cv=none; b=qvUiqtk/OdnCDSodS9o4RciI2tyl1zJA9q7qhdkz51iQWnRdeaGV/N9Ho9JcIfYx5oPFgXsN6km6NucO9NNc2xH760HDLQTTgGs9XgRB6i5XtT9P8r9YPlQbi9voWZXGFWar1XAE9lyZUvxk/VnN1I3eKNgARhtQXvWLrV9rhHU=
+	t=1745594035; cv=none; b=QC7bwwLl9wH4OJFjNXHuMhFr7XulQbuEP3f4GSXcR4I69pwKCEnu0qkTPKQT9vhiYNCFO5Qq0FmhnLzTulf6bdHmZXspwUoALKmOlgAf9silU+68cK+pIUKDhBX+FWyBh4pTa3kDNRCxBwwhG/srqLMJTVkeE7Ymhzam1r+uZVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745592444; c=relaxed/simple;
-	bh=fPAudd0pNdvSq70SAtg2Ygg2O9zP1xgrVtnfFsN3fh0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oBRCZ0mvRa1k1ytjBVldijKeSczp+PZRN7Hf4sIr2FEvhjrimYaoZeDVVbg9A5Ibhh0YtXoVdl1GVjCCqRpxN0GkepggDkRWi1tUN5qTyU53Apj2KMuuY9HFcovJExgT1dV4nWVABPd+mPKOrNktrArIMbJxIQBDR6nP+vnuSjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z79926m5; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-224191d92e4so26751605ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 07:47:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745592442; x=1746197242; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=tMds6CmcdH779xJQucw6BprWPQmeQRUV0l1L2HM0TV4=;
-        b=z79926m52YRywzSBxfcdXJ1kijC9lg3l4zWjYj9kuoguWruPIbvxz/h/oV0azWjgSt
-         prZMO2VkKjmKNWz3a8F8SegNkdWtFM6/+/zphXyds/jpIr60vasdyAP0ERwPvQv+foT9
-         Xg3gDXQpgK9W9MHw4fsYjySCMoFJD/Mhw0YYwiAC6gjyRbgErqbJ4sLW/owpNtIB0mop
-         VlKDQqUdIFtnc1JShaROE2sBJfzr1kpvB+VOuQTGvU3q/TWHOxXzUktlKuAwD/DfK7Uu
-         2hoiF405FR551wBJPZJbBLCb0YcqNcqq6DtLcUcdBXK+eq6q+4LN49S4RfOtr6tkixdY
-         hn5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745592442; x=1746197242;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tMds6CmcdH779xJQucw6BprWPQmeQRUV0l1L2HM0TV4=;
-        b=qHU5I8WTEs8kCFRI1tf/UfeYI2NMXqxyJznBhclgeGLtwKhioQv9dR03FanklwUrLg
-         BKoZUU4FyOnX0ma9wcg2U115VMGld6Mop2trj+IfjkRaOn0tj6eJr0reus5/quT783PO
-         yK2xx6GxgPXKnvsqmpn+Y15NGTJG/l1V9HpgYYl7jBxP6km9loI5W5ZskitN3cb5iFIm
-         qnU1p7a3WIrjf01aUwYsHl45XtM2OwcH4UYzBhuYTarSjkx1xvKDAN4NzYFAIIGVaO/d
-         Jg+DGbhIBxUY56legG0+BaHPp+uR9rNhnfyTJ+A3tql9kL8r/mb9BtKUQRYEAQSIOxuw
-         GcPw==
-X-Forwarded-Encrypted: i=1; AJvYcCV5NqCyFYbDRw+tJHua+kBur5Vl4G6Kcd5Jr1Ycl+UEDWP22S0hv+eAN3bjOI1bmYS2j+Z/2wHP3A427ErR@vger.kernel.org
-X-Gm-Message-State: AOJu0YzuSzkNnBqbVrGWOHEs05HoqBWGrkVSx0Uk8ttpwJeLkSG5bKMw
-	JuEvh0MtCmv5EEiAUend8uQ/24WLIzQBzzqpyqXnxWzQ5Oj1MHK6C+3FemnyKw==
-X-Gm-Gg: ASbGncvW5WOTNUuWSXerf4k0DlX6wtKKNYAYQL4mP2qd3uAGZGdbQt9ziNuDmknKZkh
-	21+VGqXhLr2PFVXkAaqDRtO7PAi0cFtWI57S6ref3YjlLy4Jl+QenAD6YaUB2edTNIdMEHDVyDN
-	LACRJOmZJ5g4IxjtpWDguyIzf8miisych3w1PxGu8xvr40MBE+Z4wC9W/CZrfeonswREPt36TPt
-	XcENEWXMsickpVXELbXUBYK2QM83d2zw/vjuKqhu+K02Zffif2s8GvnMRsujgFE++WK51RzU3Qo
-	dvjuPqhUUzck22PcTDZ0XTK7MROKLJj/ucFkFy7+fiQZKBQ80eop
-X-Google-Smtp-Source: AGHT+IGlccZ19AfD3jdnufZp8LMe8Yz57J7vptNmjyBiI0lLh+m+16U65auA9epwL1IrRm+aNvHWgg==
-X-Received: by 2002:a17:902:e805:b0:223:5de7:6c81 with SMTP id d9443c01a7336-22dbf5f34f9mr38226475ad.27.1745592441695;
-        Fri, 25 Apr 2025 07:47:21 -0700 (PDT)
-Received: from thinkpad ([120.56.201.179])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22db521614dsm32962505ad.215.2025.04.25.07.47.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Apr 2025 07:47:21 -0700 (PDT)
-Date: Fri, 25 Apr 2025 20:17:14 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>, 
-	Jeff Johnson <jjohnson@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>, 
-	Yan Zhen <yanzhen@vivo.com>, Youssef Samir <quic_yabdulra@quicinc.com>, 
-	Qiang Yu <quic_qianyu@quicinc.com>, Alex Elder <elder@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Kunwu Chan <chentao@kylinos.cn>, kernel@collabora.com, 
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH v2] bus: mhi: host: don't free bhie tables during
- suspend/hibernation
-Message-ID: <eypd4xigl3yydfj47usazm7ca3kplz5w7bkk7qf6piks4vtaa4@rmecjnlfix66>
-References: <20250410145704.207969-1-usama.anjum@collabora.com>
- <h2wv7drxntokziiwbzjw5xjzbctbomp6cfcba7ppfbih6o7so7@p6dazv32xfx4>
- <1136c7cb-1c7b-410b-93d2-c74aec939196@collabora.com>
- <cfb3sntvqhupyhm2m5tevpsl77r6mzl2aqzr3wtxvr22bezmp3@qjh7ftr2kdjy>
- <4d87ef88-3533-4255-adc6-6c268818fe25@collabora.com>
- <y5odcxzms6mwpz5bdxhbjxo7p6whsdgwm772usmmzqobhf6nam@p4ul7vn7d3an>
- <a403eb91-c90d-444c-b508-c428a8ef1447@collabora.com>
+	s=arc-20240116; t=1745594035; c=relaxed/simple;
+	bh=2Fr79h5WpW0sk+9jfuwv/EfIloErPvJaRV1TKBMbIms=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=utsOTm86+lxhmQ0E5dryYvTPeBQ343VJdA2z2ZRGlIgqzxyMCXQ7SAvUkzWJm3PSE3tn0j5dfpfz47BFlsrW89AGYIH5W+YJAwdUGFlsoPyl5nzrbm/fjF5RZlA88FR6sETabFqxuUJLg/Dq5189p4xQYecFzt+6MHgnWkV/ffs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=MiecbeKS; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from localhost (web.docker-mailserver_default [172.18.0.2])
+	by mail.mainlining.org (Postfix) with ESMTPSA id 4E4B2BBAC4;
+	Fri, 25 Apr 2025 15:13:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1745594025;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ECsaLysjp6B31lix5ePZqbR776k53fktpSr8Jb8kvHE=;
+	b=MiecbeKSC9qPTxgyzouBu54qd4VjFtmkfHV/2qTsOefPU2eAaK5cBCTcImhw+T75qlqO2+
+	xsNGxQQjX0OdP68jb2HZKFeV8do4HMOWxaZhIfySqXsdEKz5Op//pZWwxEqwnctK8A8rVg
+	P2WjEybiUv3PnKk+10v9R9AGnDIaowzlxTfxSncUT2oXgzv8YLcXGPbJ5rn9brvr+KfYzt
+	y9ZSgyOeTe1KRw4YfSE60ZQrWAbmyN8y261B96MCfrdyWbqrTrbHB4hEewS6ZzpxeAxnO5
+	sW1MJRWbpDrguja+qwxdVjlEkU+50iOBR8LfCx5VBQuphi1fOseWw4tM2FcHfg==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Date: Fri, 25 Apr 2025 17:13:45 +0200
+From: barnabas.czeman@mainlining.org
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette
+ <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>,
+ =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, Linus Walleij
+ <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>, Joerg Roedel
+ <joro@8bytes.org>, Will Deacon <will@kernel.org>, Robin Murphy
+ <robin.murphy@arm.com>, Konrad Dybcio <konradybcio@kernel.org>, Rob Clark
+ <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten
+ Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
+ <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Dmitry
+ Baryshkov <lumag@kernel.org>, Adam Skladowski <a_skl39@protonmail.com>,
+ Sireesh Kodali <sireeshkodali@protonmail.com>, Srinivas Kandagatla
+ <srini@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+ iommu@lists.linux.dev, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, phone-devel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org, Dang Huynh
+ <danct12@riseup.net>
+Subject: Re: [PATCH v5 3/5] arm64: dts: qcom: Add initial support for MSM8937
+In-Reply-To: <70635d75-03f9-49ea-8098-57cb144fda94@oss.qualcomm.com>
+References: <20250421-msm8937-v5-0-bf9879ef14d9@mainlining.org>
+ <20250421-msm8937-v5-3-bf9879ef14d9@mainlining.org>
+ <2e3d94a4-d9e1-429e-9f65-d004c80180e5@oss.qualcomm.com>
+ <790a0b7537e0b82b70bc4b32612ecee6@mainlining.org>
+ <70635d75-03f9-49ea-8098-57cb144fda94@oss.qualcomm.com>
+Message-ID: <5ccb39f9393b44761127717096a38a46@mainlining.org>
+X-Sender: barnabas.czeman@mainlining.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a403eb91-c90d-444c-b508-c428a8ef1447@collabora.com>
 
-On Fri, Apr 25, 2025 at 04:41:43PM +0500, Muhammad Usama Anjum wrote:
-> On 4/25/25 1:59 PM, Manivannan Sadhasivam wrote:
-> > On Fri, Apr 25, 2025 at 12:42:38PM +0500, Muhammad Usama Anjum wrote:
-> >> On 4/25/25 12:32 PM, Manivannan Sadhasivam wrote:
-> >>> On Fri, Apr 25, 2025 at 12:14:39PM +0500, Muhammad Usama Anjum wrote:
-> >>>> On 4/25/25 12:04 PM, Manivannan Sadhasivam wrote:
-> >>>>> On Thu, Apr 10, 2025 at 07:56:54PM +0500, Muhammad Usama Anjum wrote:
-> >>>>>> Fix dma_direct_alloc() failure at resume time during bhie_table
-> >>>>>> allocation. There is a crash report where at resume time, the memory
-> >>>>>> from the dma doesn't get allocated and MHI fails to re-initialize.
-> >>>>>> There may be fragmentation of some kind which fails the allocation
-> >>>>>> call.
-> >>>>>>
-> >>>>>
-> >>>>> If dma_direct_alloc() fails, then it is a platform limitation/issue. We cannot
-> >>>>> workaround that in the device drivers. What is the guarantee that other drivers
-> >>>>> will also continue to work? Will you go ahead and patch all of them which
-> >>>>> release memory during suspend?
-> >>>>>
-> >>>>> Please investigate why the allocation fails. Even this is not a device issue, so
-> >>>>> we cannot add quirks :/
-> >>>> This isn't a platform specific quirk. We are only hitting it because
-> >>>> there is high memory pressure during suspend/resume. This dma allocation
-> >>>> failure can happen with memory pressure on any device.
-> >>>>
-> >>>
-> >>> Yes.
-> >> Thanks for understanding.
-> >>
-> >>>
-> >>>> The purpose of this patch is just to make driver more robust to memory
-> >>>> pressure during resume.
-> >>>>
-> >>>> I'm not sure about MHI. But other drivers already have such patches as
-> >>>> dma_direct_alloc() is susceptible to failures when memory pressure is
-> >>>> high. This patch was motivated from ath12k [1] and ath11k [2].
-> >>>>
-> >>>
-> >>> Even if we patch the MHI driver, the issue is going to trip some other driver.
-> >>> How does the DMA memory goes low during resume? So some other driver is
-> >>> consuming more than it did during probe()?
-> >> Think it like this. The first probe happens just after boot. Most of the
-> >> RAM was empty. Then let's say user launches applications which not only
-> >> consume entire RAM but also the Swap. The DMA memory area is the first
-> >> ~4GB on x86_64 (if I'm not mistaken). Now at resume time when we want to
-> >> allocate memory from dma, it may not be available entirely or because of
-> >> fragmentation we cannot allocate that much contiguous memory.
-> >>
-> > 
-> > Looks like you have a workload that consumes the limited DMA coherent memory.
-> > Most likely the GPU applications I think.
-> > 
-> >> In our testing and real world cases, right now only wifi driver is
-> >> misbehaving. Wifi is also very important. So we are hoping to make wifi
-> >> driver robust.
-> >>
-> > 
-> > Sounds fair. If you want to move forward, please modify the exisiting
-> > mhi_power_down_keep_dev() to include this partial unprepare as well:
-> > 
-> > mhi_power_down_unprepare_keep_dev()
-> > 
-> > Since both APIs are anyway going to be used together, I don't see a need to
-> > introduce yet another API.
-> I've looked at usages of mhi_power_down_keep_dev(). Its getting used by
-> ath12k and ath11k both. We would have to look at ath12k as well before
-> we can change mhi_power_down_keep_dev(). Unfortunately, I don't have
-> device using ath12k at hand.
+On 2025-04-25 11:57, Konrad Dybcio wrote:
+> On 4/23/25 4:46 PM, barnabas.czeman@mainlining.org wrote:
+>> On 2025-04-23 16:03, Konrad Dybcio wrote:
+>>> On 4/21/25 10:18 PM, Barnabás Czémán wrote:
+>>>> From: Dang Huynh <danct12@riseup.net>
+>>>> 
+>>>> Add initial support for MSM8937 SoC.
+>>>> 
+>>>> Signed-off-by: Dang Huynh <danct12@riseup.net>
+>>>> Co-developed-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+>>>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+>>>> ---
 > 
-
-ath12k conversion looks trivial. So please go ahead with this new API conversion
-for that driver as well.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+> [...]
+> 
+>>>> +            gpu_opp_table: opp-table {
+>>>> +                compatible = "operating-points-v2";
+>>>> +
+>>>> +                opp-19200000 {
+>>>> +                    opp-hz = /bits/ 64 <19200000>;
+>>>> +                    opp-supported-hw = <0xff>;
+>>> 
+>>> The comment from the previous revision still stands
+>> If i remove opp-supported-hw i will got -22 EINVAL messages and the 
+>> opp will be not fine.
+> 
+> Right, I have a series pending to improve this situation a bit..
+> 
+> In the meantime, you should be able to define the nvmem cell and
+> fill in meaningful values for this platform
+As I wrote in the previous revision there is no nvmem for GPU on msm8937 
+only on msm8940.
+> 
+> Konrad
 
