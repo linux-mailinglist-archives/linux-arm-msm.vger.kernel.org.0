@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-55658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33457A9CB4E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 16:16:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06C04A9CB58
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 16:17:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE1B01BC7F88
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 14:16:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 130C54E4712
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 14:16:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1419725A2C2;
-	Fri, 25 Apr 2025 14:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5ED2A25A65C;
+	Fri, 25 Apr 2025 14:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="nVl3SwEP"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="dQW/yZXQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A60257AC1;
-	Fri, 25 Apr 2025 14:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE14258CC5;
+	Fri, 25 Apr 2025 14:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745590529; cv=none; b=OkSEOhV7HUVPFGhOyRqCvYNCkY223jYqWGv7ikZxg5bzwv/0zvtfAMxNwRLZX4o+1xJVuqVsT7SnyH2PyPOGVoAKypGUo3wFVsLm/PjZ/Jy1X7zT9JhISJpT/UoMSOay1YwbfHmRvn5jWRUS0ICk27aONcFVT4wBf+l+JnE/eVQ=
+	t=1745590531; cv=none; b=KBEmnELl9FsLd4ZbzChkghOHl82f251FPbVuNgUw9bm6vgEGF0vVV8WRD70b5fGrwqhwtEHuIVOy7vmrGnMCZPCRLnhGa+lna6T/kaksdEYUnI/Px6glfxHBKyoT1w4jpPikAddDmh8EH7M0FgUd6OguLeIYUfDRvuN2tIBskts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745590529; c=relaxed/simple;
-	bh=2jqfz104dr5wSPv3hYJmzUSTN0XJKE0K3+rKE5DObno=;
+	s=arc-20240116; t=1745590531; c=relaxed/simple;
+	bh=DXgMRN4qmAnzL6gIZ/xVUKmw54ugDstwrsjt4aVoeXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+2godT/uYID9R93KWFC4yhxnsuQLux/wKeumG2YXr5XyWaZ1VhgHwZW5GlDDNxeSygc1/nC4SHKX+hXmDG1pnjIBqoJXhtdeTsVHDkNmjiN4hNDT5WpRiRhsh0A3caEFsbP3No+Wkfo/qDr0nvL5DAKqetszQKO9J5RCVHpv7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=nVl3SwEP; arc=none smtp.client-ip=217.70.183.199
+	 MIME-Version; b=CEu+4GibqsKOjmcmkDc1ACYncojWKhBeySnzM6rw9bH8tpWG7xwBmtEjIMAzYFD+xaGMYJLLXeH68uZkHdhQZrZKjF/eShHfyUzSSvZyL0jSZH/F6rHZ2/JZkG6631l7yu32IoBqeX4ST7tVBx3RjBMikEwIc8T7oW0tbWLzkS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=dQW/yZXQ; arc=none smtp.client-ip=217.70.183.199
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 368E843A27;
-	Fri, 25 Apr 2025 14:15:24 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id B92EE43A23;
+	Fri, 25 Apr 2025 14:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1745590525;
+	t=1745590527;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Npx/N6SGSI9p7dYPddQhekDZh8yCAbytN6AmbP13YF8=;
-	b=nVl3SwEPcZrLbAiRLXpC3XswsEdz2G6sPLlaNdFMAV6+fjoyN3hJfqEfZ7v/bkVg42Mkfq
-	mJBiDGTr9NtJvPCftLyjW/XGOAvKotlu0SrzyrCn3m7+wAV9jfS2grAIdbVpYE0Ye+7Abm
-	2LhPukIPmUmtIu1Mb11SMSSReaWihFnJaNmGJnIVXsIY9ne1JCAFKXZdEny9abZe/6xm39
-	8OTGCltJqD9HI0gkhdvewaKIZ7pgD1oyRgyI3GsHJVM2HuaUumVXoSbuitYfOZ6O2dmQql
-	UeUjIcGYU1T4BzGWqkqrBD0PQ1xFudCAdAoXtzt+huldJp0ZqlDKTvW/rSEZqw==
+	bh=XBTC9Phxpleeo3vUJODBK/ObxnGehZI3KydsId8TYeI=;
+	b=dQW/yZXQ1iMmMB+8Y7Xneew8S5b9bbVZVHKBQmoKwq4himJ/f8Evm07WPZq0v/ZB2xhXZb
+	tsRTW7TpVwHkJeeqJ8BSBhJI+Kv/VTYh+O8UlYYTulhqi+xQmqcktYLVBY7Kf2Dr8NEvBK
+	Qei73/IyKgtN5frToH/k1ZOuf/gLVmePo6sUFERadpgNReG+CU0X2HNTHZE0aoQNtDHJ0L
+	fASIGeRoj+l2P/tCjPn4oTvdneC/WHmbpTv6s7GcVPTxLDKBmhlfyMguY3K9M8Mt6tEf6s
+	AULfijcU+NkW5NyHYIYGO/wwqqbrIYZJ6Yki5JMgV0IwlZMcZfKJoJPTurqdFQ==
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 To: davem@davemloft.net
 Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
@@ -77,9 +77,9 @@ Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Romain Gantois <romain.gantois@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: [PATCH net-next v5 06/14] net: phy: Introduce generic SFP handling for PHY drivers
-Date: Fri, 25 Apr 2025 16:14:59 +0200
-Message-ID: <20250425141511.182537-7-maxime.chevallier@bootlin.com>
+Subject: [PATCH net-next v5 07/14] net: phy: marvell-88x2222: Support SFP through phy_port interface
+Date: Fri, 25 Apr 2025 16:15:00 +0200
+Message-ID: <20250425141511.182537-8-maxime.chevallier@bootlin.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250425141511.182537-1-maxime.chevallier@bootlin.com>
 References: <20250425141511.182537-1-maxime.chevallier@bootlin.com>
@@ -96,185 +96,172 @@ X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvheehucetufdoteggode
  hgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehthhhomhgrshdrphgvthgriiiiohhnihessghoohhtlhhinhdrtghomhdprhgtphhtthhopegrnhgurhgvfieslhhunhhnrdgthhdprhgtphhtthhopehkuhgsrgeskhgvrhhnvghlrdhorhhg
 X-GND-Sasl: maxime.chevallier@bootlin.com
 
-There are currently 4 PHY drivers that can drive downstream SFPs:
-marvell.c, marvell10g.c, at803x.c and marvell-88x2222.c. Most of the
-logic is boilerplate, either calling into generic phylib helpers (for
-SFP PHY attach, bus attach, etc.) or performing the same tasks with a
-bit of validation :
- - Getting the module's expected interface mode
- - Making sure the PHY supports it
- - Optionnaly perform some configuration to make sure the PHY outputs
-   the right mode
-
-This can be made more generic by leveraging the phy_port, and its
-configure_mii() callback which allows setting a port's interfaces when
-the port is a serdes.
-
-Introduce a generic PHY SFP support. If a driver doesn't probe the SFP
-bus itself, but an SFP phandle is found in devicetree/firmware, then the
-generic PHY SFP support will be used, relying on port ops.
-
-PHY driver need to :
- - Register a .attach_port() callback
- - When a serdes port is registered to the PHY, drivers must set
-   port->interfaces to the set of PHY_INTERFACE_MODE the port can output
- - If the port has limitations regarding speed, duplex and aneg, the
-   port can also fine-tune the final linkmodes that can be supported
- - The port may register a set of ops, including .configure_mii(), that
-   will be called at module_insert time to adjust the interface based on
-   the module detected.
+The 88x2222 PHY from Marvell only supports serialised modes as its
+line-facing interfaces. Convert that driver to the generic phylib SFP
+handling.
 
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 ---
- drivers/net/phy/phy_device.c | 107 +++++++++++++++++++++++++++++++++++
- include/linux/phy.h          |   2 +
- 2 files changed, 109 insertions(+)
+ drivers/net/phy/marvell-88x2222.c | 96 +++++++++++++------------------
+ 1 file changed, 39 insertions(+), 57 deletions(-)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 5ab08d5f1a5b..e8320bc8ba98 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -1450,6 +1450,87 @@ void phy_sfp_detach(void *upstream, struct sfp_bus *bus)
- }
- EXPORT_SYMBOL(phy_sfp_detach);
+diff --git a/drivers/net/phy/marvell-88x2222.c b/drivers/net/phy/marvell-88x2222.c
+index fad2f54c1eac..3dba7b33a873 100644
+--- a/drivers/net/phy/marvell-88x2222.c
++++ b/drivers/net/phy/marvell-88x2222.c
+@@ -13,7 +13,7 @@
+ #include <linux/mdio.h>
+ #include <linux/marvell_phy.h>
+ #include <linux/of.h>
+-#include <linux/sfp.h>
++#include <linux/phy_port.h>
+ #include <linux/netdevice.h>
  
-+static int phy_sfp_module_insert(void *upstream, const struct sfp_eeprom_id *id)
+ /* Port PCS Configuration */
+@@ -473,90 +473,71 @@ static int mv2222_config_init(struct phy_device *phydev)
+ 	return 0;
+ }
+ 
+-static int mv2222_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
++static int mv2222_configure_serdes(struct phy_port *port, bool enable,
++				   phy_interface_t interface)
+ {
+-	DECLARE_PHY_INTERFACE_MASK(interfaces);
+-	struct phy_device *phydev = upstream;
+-	phy_interface_t sfp_interface;
++	struct phy_device *phydev = port_phydev(port);
+ 	struct mv2222_data *priv;
+-	struct device *dev;
+-	int ret;
+-
+-	__ETHTOOL_DECLARE_LINK_MODE_MASK(sfp_supported) = { 0, };
++	int ret = 0;
+ 
+ 	priv = phydev->priv;
+-	dev = &phydev->mdio.dev;
+-
+-	sfp_parse_support(phydev->sfp_bus, id, sfp_supported, interfaces);
+-	phydev->port = sfp_parse_port(phydev->sfp_bus, id, sfp_supported);
+-	sfp_interface = sfp_select_interface(phydev->sfp_bus, sfp_supported);
+-
+-	dev_info(dev, "%s SFP module inserted\n", phy_modes(sfp_interface));
++	priv->line_interface = interface;
+ 
+-	if (sfp_interface != PHY_INTERFACE_MODE_10GBASER &&
+-	    sfp_interface != PHY_INTERFACE_MODE_1000BASEX &&
+-	    sfp_interface != PHY_INTERFACE_MODE_SGMII) {
+-		dev_err(dev, "Incompatible SFP module inserted\n");
++	if (enable) {
++		linkmode_and(priv->supported, phydev->supported, port->supported);
+ 
+-		return -EINVAL;
+-	}
+-
+-	priv->line_interface = sfp_interface;
+-	linkmode_and(priv->supported, phydev->supported, sfp_supported);
++		ret = mv2222_config_line(phydev);
++		if (ret < 0)
++			return ret;
+ 
+-	ret = mv2222_config_line(phydev);
+-	if (ret < 0)
+-		return ret;
++		if (mutex_trylock(&phydev->lock)) {
++			ret = mv2222_config_aneg(phydev);
++			mutex_unlock(&phydev->lock);
++		}
+ 
+-	if (mutex_trylock(&phydev->lock)) {
+-		ret = mv2222_config_aneg(phydev);
+-		mutex_unlock(&phydev->lock);
++	} else {
++		linkmode_zero(priv->supported);
+ 	}
+ 
+ 	return ret;
+ }
+ 
+-static void mv2222_sfp_remove(void *upstream)
+-{
+-	struct phy_device *phydev = upstream;
+-	struct mv2222_data *priv;
+-
+-	priv = phydev->priv;
+-
+-	priv->line_interface = PHY_INTERFACE_MODE_NA;
+-	linkmode_zero(priv->supported);
+-	phydev->port = PORT_NONE;
+-}
+-
+-static void mv2222_sfp_link_up(void *upstream)
++static void mv2222_port_link_up(struct phy_port *port)
+ {
+-	struct phy_device *phydev = upstream;
++	struct phy_device *phydev = port_phydev(port);
+ 	struct mv2222_data *priv;
+ 
+ 	priv = phydev->priv;
+ 	priv->sfp_link = true;
+ }
+ 
+-static void mv2222_sfp_link_down(void *upstream)
++static void mv2222_port_link_down(struct phy_port *port)
+ {
+-	struct phy_device *phydev = upstream;
++	struct phy_device *phydev = port_phydev(port);
+ 	struct mv2222_data *priv;
+ 
+ 	priv = phydev->priv;
+ 	priv->sfp_link = false;
+ }
+ 
+-static const struct sfp_upstream_ops sfp_phy_ops = {
+-	.module_insert = mv2222_sfp_insert,
+-	.module_remove = mv2222_sfp_remove,
+-	.link_up = mv2222_sfp_link_up,
+-	.link_down = mv2222_sfp_link_down,
+-	.attach = phy_sfp_attach,
+-	.detach = phy_sfp_detach,
+-	.connect_phy = phy_sfp_connect_phy,
+-	.disconnect_phy = phy_sfp_disconnect_phy,
++static const struct phy_port_ops mv2222_port_ops = {
++	.link_up = mv2222_port_link_up,
++	.link_down = mv2222_port_link_down,
++	.configure_mii = mv2222_configure_serdes,
+ };
+ 
++static int mv2222_attach_port(struct phy_device *phydev, struct phy_port *port)
 +{
-+	struct phy_device *phydev = upstream;
-+	struct phy_port *port = phy_get_sfp_port(phydev);
++	if (!port->is_serdes)
++		return 0;
 +
-+	__ETHTOOL_DECLARE_LINK_MODE_MASK(sfp_support);
-+	DECLARE_PHY_INTERFACE_MASK(interfaces);
-+	phy_interface_t iface;
-+
-+	linkmode_zero(sfp_support);
-+
-+	if (!port)
-+		return -EINVAL;
-+
-+	sfp_parse_support(phydev->sfp_bus, id, sfp_support, interfaces);
-+
-+	if (phydev->n_ports == 1)
-+		phydev->port = sfp_parse_port(phydev->sfp_bus, id, sfp_support);
-+
-+	linkmode_and(sfp_support, port->supported, sfp_support);
-+
-+	if (linkmode_empty(sfp_support)) {
-+		dev_err(&phydev->mdio.dev, "incompatible SFP module inserted\n");
-+		return -EINVAL;
-+	}
-+
-+	iface = sfp_select_interface(phydev->sfp_bus, sfp_support);
-+
-+	/* Check that this interface is supported */
-+	if (!test_bit(iface, port->interfaces)) {
-+		dev_err(&phydev->mdio.dev, "incompatible SFP module inserted\n");
-+		return -EINVAL;
-+	}
-+
-+	if (port->ops && port->ops->configure_mii)
-+		return port->ops->configure_mii(port, true, iface);
++	__set_bit(PHY_INTERFACE_MODE_10GBASER, port->interfaces);
++	__set_bit(PHY_INTERFACE_MODE_1000BASEX, port->interfaces);
++	__set_bit(PHY_INTERFACE_MODE_SGMII, port->interfaces);
 +
 +	return 0;
 +}
 +
-+static void phy_sfp_module_remove(void *upstream)
-+{
-+	struct phy_device *phydev = upstream;
-+	struct phy_port *port = phy_get_sfp_port(phydev);
-+
-+	if (port && port->ops && port->ops->configure_mii)
-+		port->ops->configure_mii(port, false, PHY_INTERFACE_MODE_NA);
-+
-+	if (phydev->n_ports == 1)
-+		phydev->port = PORT_NONE;
-+}
-+
-+static void phy_sfp_link_up(void *upstream)
-+{
-+	struct phy_device *phydev = upstream;
-+	struct phy_port *port = phy_get_sfp_port(phydev);
-+
-+	if (port && port->ops && port->ops->link_up)
-+		port->ops->link_up(port);
-+}
-+
-+static void phy_sfp_link_down(void *upstream)
-+{
-+	struct phy_device *phydev = upstream;
-+	struct phy_port *port = phy_get_sfp_port(phydev);
-+
-+	if (port && port->ops && port->ops->link_down)
-+		port->ops->link_down(port);
-+}
-+
-+static const struct sfp_upstream_ops sfp_phydev_ops = {
-+	.attach = phy_sfp_attach,
-+	.detach = phy_sfp_detach,
-+	.module_insert = phy_sfp_module_insert,
-+	.module_remove = phy_sfp_module_remove,
-+	.link_up = phy_sfp_link_up,
-+	.link_down = phy_sfp_link_down,
-+	.connect_phy = phy_sfp_connect_phy,
-+	.disconnect_phy = phy_sfp_disconnect_phy,
-+};
-+
- static int phy_add_port(struct phy_device *phydev, struct phy_port *port)
+ static int mv2222_probe(struct phy_device *phydev)
  {
- 	int ret = 0;
-@@ -3351,6 +3432,13 @@ static int phy_setup_ports(struct phy_device *phydev)
- 	if (ret)
- 		return ret;
+ 	struct device *dev = &phydev->mdio.dev;
+@@ -592,7 +573,7 @@ static int mv2222_probe(struct phy_device *phydev)
+ 	priv->line_interface = PHY_INTERFACE_MODE_NA;
+ 	phydev->priv = priv;
  
-+	/* Use generic SFP probing only if the driver didn't do so already */
-+	if (!phydev->sfp_bus) {
-+		ret = phy_sfp_probe(phydev, &sfp_phydev_ops);
-+		if (ret)
-+			goto out;
-+	}
-+
- 	if (phydev->n_ports < phydev->max_n_ports) {
- 		ret = phy_default_setup_single_port(phydev);
- 		if (ret)
-@@ -3384,6 +3472,25 @@ static int phy_setup_ports(struct phy_device *phydev)
- 	return ret;
+-	return phy_sfp_probe(phydev, &sfp_phy_ops);
++	return 0;
  }
  
-+/**
-+ * phy_get_sfp_port() - Returns the first valid SFP port of a PHY
-+ * @phydev: pointer to the PHY device to get the SFP port from
-+ *
-+ * Returns: The first active SFP (serdes) port of a PHY device, NULL if none
-+ * exist.
-+ */
-+struct phy_port *phy_get_sfp_port(struct phy_device *phydev)
-+{
-+	struct phy_port *port;
-+
-+	list_for_each_entry(port, &phydev->ports, head)
-+		if (port->active && port->is_serdes)
-+			return port;
-+
-+	return NULL;
-+}
-+EXPORT_SYMBOL_GPL(phy_get_sfp_port);
-+
- /**
-  * fwnode_mdio_find_device - Given a fwnode, find the mdio_device
-  * @fwnode: pointer to the mdio_device's fwnode
-diff --git a/include/linux/phy.h b/include/linux/phy.h
-index 15ff45302222..b8f8f2d95a62 100644
---- a/include/linux/phy.h
-+++ b/include/linux/phy.h
-@@ -2091,6 +2091,8 @@ int __phy_hwtstamp_set(struct phy_device *phydev,
- 		       struct kernel_hwtstamp_config *config,
- 		       struct netlink_ext_ack *extack);
- 
-+struct phy_port *phy_get_sfp_port(struct phy_device *phydev);
-+
- extern const struct bus_type mdio_bus_type;
- 
- struct mdio_board_info {
+ static struct phy_driver mv2222_drivers[] = {
+@@ -609,6 +590,7 @@ static struct phy_driver mv2222_drivers[] = {
+ 		.suspend = mv2222_suspend,
+ 		.resume = mv2222_resume,
+ 		.read_status = mv2222_read_status,
++		.attach_port = mv2222_attach_port,
+ 	},
+ };
+ module_phy_driver(mv2222_drivers);
 -- 
 2.49.0
 
