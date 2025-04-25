@@ -1,86 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-55761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13C28A9D2AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 22:06:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C62C3A9D2CF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 22:18:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8A33C17E888
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 20:06:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 202639A6A18
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 20:18:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC902221700;
-	Fri, 25 Apr 2025 20:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7E8D219303;
+	Fri, 25 Apr 2025 20:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oUKhVsLY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="exEJJvoB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155AE1BD9E3
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 20:06:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38323190692;
+	Fri, 25 Apr 2025 20:18:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745611573; cv=none; b=biU3WVkeaqFbpWEuteOeM/cXrWnrpzbbhHLJdi/a7HTQ1oXBX7xYPqq9W4gOaQi0jmbJZkSCGkTUWwOIJd9NeHltu6tp6RDBI3+c2yJxn6UXYLILmu05u+Vo+Cn3R9jGQVXGNlbzHsKDaCqIFQcAVl0yGEZpCOrYUXRT6EbD69A=
+	t=1745612313; cv=none; b=C0/QlOh4djP7bTipiDNsjvcDErbGMCr5MJPOFWGo7b9r6jLEKTpmsj9uT2Kkiglw0QNnz1wuqHO1BDqfdofsEYmZIb+eBd0iipE4VOqKHfQp7I1PtWL+LLPROx7hi6hxpbJEfYmKEarFzxQOcbelVwi4jyrGpJgV/XWHIJS2Iw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745611573; c=relaxed/simple;
-	bh=oSnWoBvwiL8zXIfukoiTiTzqEKDcbv0yN7J/kywW3EM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VkofIoJxmnOv7N5n1Jzy1icTLO4LAjHpLnTtc40tLEjSIwW3SXF+wgkE2aZnoxc7wBljKmGXhmj/8xHkXhdhFI1nAtjXR7Hylq2fV+82qvQNgUaVPk6N2G9x7uQEK3f02m051eqVFAPyszpxrbdGyjB2oNHYZGH26KTETR3IxUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oUKhVsLY; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PGJwSi000437
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 20:06:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1745612313; c=relaxed/simple;
+	bh=gvYAN089JCt6WwSt7YZcbJ1WRkxTh2ktUaEg1PoBk/g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Xc6bETlJSMtfs0vKaO9NDmFsWKSS7NMIypJ5MkXrOfSIPuZhhxCLhHC+csfDZWEGnYSkTUJh08CAM8eOOgXIu97t+OsAGtFYk2wqb0A4UFvKeLbi8v/IL5wOVecO/IVzJpm5tUwoxPVK+GdskpjcJ/UF3HjpkIiPSrTrMRzUXrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=exEJJvoB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PGJplt031925;
+	Fri, 25 Apr 2025 20:18:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JbkzYlr9FcucS7S5VCQ3UfLEUKAWk1iYNuI80KBt6hs=; b=oUKhVsLYbYpS4gsG
-	Jo08Cx5fDePu9XX8NoSq5zbFvEp9MCchBV52OU1EEYxMRrsHhDDkD4a4tLDsKQ+s
-	JSSOB9swc/ZdirF1p/Tlf9N6Fhwbw1j+FTMvfqx9xHsluiHRi1X7FGdtXpgw4akc
-	qFb2GxQ3wLUZVPYwHPxXEktHjO+9pq9n0GFaMLzBhMVb4evvOF5RAb/06mBlrPim
-	jgYO8KA16bGjkGOe79jvFwZbUHPkqbiJ8NlN8Mmmr6pLdUHrhFW6sfpF0EGhrmKH
-	QindxyjxDKlW1MMTdvXQ0nBFO8aruSQEPq5EuUr37VVsAdi9WYKMYtq4G4sFi3yY
-	bEZtmQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh3j53x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 20:06:11 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-47aeab7b918so6031851cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 13:06:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745611570; x=1746216370;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JbkzYlr9FcucS7S5VCQ3UfLEUKAWk1iYNuI80KBt6hs=;
-        b=KoOg8IaOwsPGJyjPVpvco01ye76bjIAxoMlNYzJCE7GgSXuO0qQC61/iS1/ylqMuju
-         cn99kaXmjj9osHnSRO5HWjX1jQjr4x5jZJmNrbUqjtzzEz9PQsH9WRVbK7j8TSJSO8Jx
-         cKUixWHwV+hFR0SogrZv3607jAWS/98tMvwr2Tdx8VCZReS3d6a3lsj2IsBmGjCKRWPL
-         90WJeRufXE9ufWCbnupu9JYVJPFOGJX+3/ADuBK2S9oZTZO6tPUoCxAkgHdXsPN+FGXX
-         NMRGzPObako1KNFVhqwVi61NGaofTxoxdEgfSB4N+uukLB7rVaL4XlFsFUi60QTZx0M2
-         fWbQ==
-X-Gm-Message-State: AOJu0YwzbL/JV0ud1Nw6i508HYhYDkwC9gMS9EAwKX/lTCvuWOnNA3Li
-	hlIYbORCCeWWun70hTrdEo9ZQ2z9C8jaeGN0Yfm1loJDx1mPkqd1xmKGwchbRX9pEW3E1BBCGdz
-	/LTPd3o9RGEfe03VVKncsvLZp5DG73O4uxQniWbrPkbnXs0O04nRgSzumC7D5Gigq
-X-Gm-Gg: ASbGncsVXys13fMZSWAL7rqKRq5rYIpsQpQAU2uXg24y3nlySzA+iV44koe3BJ3tCcO
-	3/zu9GQjs5+0sgB+0U2a/YjnWUgtbusOZx3I3V5Q3Ik+Djx9dvVDEFzOtBsRlha7oiZdCNs0Z71
-	xsQ04asHVktQVLo9Gi/zeyXVN1+sTiTdfREntcXtQY5lz8SKhqyTbpHajeysiNQ8pO0NIweajtM
-	Cuwy1dolUQG8CtOQCIez/tT29xDPnoafToskIpUqPK5BzBlayFi/F/pzJ3MuClBRabpH9PRHfPj
-	VgtpVMYCzXGUdgqIM4/PFbgUMWIS9hveDx8q4MR4XiYzaFLTdORNKkkKxYoHZcxlpbg=
-X-Received: by 2002:a05:622a:20f:b0:474:e213:7480 with SMTP id d75a77b69052e-4801e6f355emr20583971cf.15.1745611569844;
-        Fri, 25 Apr 2025 13:06:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG9Hh7yNKXMC83orMEjh4un0cdx38I27WuSPe2cISBmPqnEl2ZJLXpyzGB/8t69yh0ofQvoFw==
-X-Received: by 2002:a05:622a:20f:b0:474:e213:7480 with SMTP id d75a77b69052e-4801e6f355emr20583801cf.15.1745611569404;
-        Fri, 25 Apr 2025 13:06:09 -0700 (PDT)
-Received: from [192.168.65.156] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6ecf8955sm181397866b.117.2025.04.25.13.06.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Apr 2025 13:06:08 -0700 (PDT)
-Message-ID: <891c7909-69ef-4d9c-a99c-8d6d08dbfd02@oss.qualcomm.com>
-Date: Fri, 25 Apr 2025 22:06:07 +0200
+	jJYqZXzdF32jhKcPVa2dqOGh8Ls4BKAg3Edx1wDdRiE=; b=exEJJvoBx9UTm2hv
+	Nr6IUOjoRsfdIFkhPpq5kNUatEYpOq6ehwJ0YgLU9lITU8iHhNbmllmYHnz18Lpq
+	/16i2kAoDUy1aV4r5ZXlpZ1cMH6feQCAfy1TcLGGjncoMTK6auKzdBCU9SdgerdB
+	PRf85x+83y4m+iMvXYXHqLl8uk4Ab/2eK5laKGlNd5H6VvDaz0RsPoCDM3M07+T6
+	yiUkpw4w+yd2cr+ILTDglFUYEpTl0YArRBctsQdyXWtsGohF11kzr6Pbrgty/+tP
+	SSFOuTAx1PKTeCVAk/dZQokGlJUc+Bjuq8a9bNWDxrZ0PrBbCQcITiXf9QTXgn69
+	YZKHzA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jgya6ca-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 25 Apr 2025 20:18:23 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53PKIM7a020914
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 25 Apr 2025 20:18:22 GMT
+Received: from [10.134.71.99] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 25 Apr
+ 2025 13:18:22 -0700
+Message-ID: <a5975b9d-fc0e-4db6-8f61-b6ae6f3f17fe@quicinc.com>
+Date: Fri, 25 Apr 2025 13:18:21 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,128 +65,167 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: Add support for X1E80100 Dell
- Inspirion 14 Plus 7441
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250424-qcom-linux-arm64-for-6-16-dell-inspiron14p-v1-0-ace76b31d024@linaro.org>
- <20250424-qcom-linux-arm64-for-6-16-dell-inspiron14p-v1-2-ace76b31d024@linaro.org>
+Subject: Re: [PATCH 1/5] drm/msm/dpu: enable SmartDMA on SM8150
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Dmitry Baryshkov <lumag@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20250308-dpu-rework-vig-masks-v1-0-f1b5d101ae0b@linaro.org>
+ <20250308-dpu-rework-vig-masks-v1-1-f1b5d101ae0b@linaro.org>
+ <bf242898-bf47-4235-9086-745bd4f05acf@quicinc.com>
+ <c62wafi73jwdf7qz5a7gp3xqhqg27aifn5ollr7dmufeaeyldr@rbzbtpbfenkc>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250424-qcom-linux-arm64-for-6-16-dell-inspiron14p-v1-2-ace76b31d024@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <c62wafi73jwdf7qz5a7gp3xqhqg27aifn5ollr7dmufeaeyldr@rbzbtpbfenkc>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: TFjd9k-hr79C2hPYvtax5e3hJ_DzQv_6
-X-Proofpoint-GUID: TFjd9k-hr79C2hPYvtax5e3hJ_DzQv_6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDE0NCBTYWx0ZWRfX4KKnbIJ8U9VL PhM3dilNh0AWmyrw9HCAV1sPveOXlimNpBjKI88uorjXOA3cDroKIKZ+AwoFDfUafcJZ0hOWi5O e9GwauJp8e3Aq7R/plOtZOOUF3Mz9GnHfsyQALEFVN0VPbgMJep9MexA/givkcsbC6THXmBs7yJ
- 8RqkOxBtOjVJ5RItGAwYh6S49nU3giLFD7HHNwda7PMiOiRQ7FHw0VO9MAXDU4c8NcmKsv9hhm8 BN/xwb5oSOmn48Nw7xYWLx1uCjE4gYlJGFviCHmDiwN59tniPXbn7BT3Yejf6oxxWwTIDBSXi2A uNGKkEuDF6HI9IP4cKCgsBLknLd+WBcq35+6Vg1fchHdI3NiZOsPz+EgNfZ/gRn4/SB3qX57ovR
- EcP+9gGcS1Irop82rd44OZi4Gp6jaeu/WyRpRvxIEjVfuXE5eiSGJNtVDtOpPICgPlwbRqWl
-X-Authority-Analysis: v=2.4 cv=Mepsu4/f c=1 sm=1 tr=0 ts=680beb33 cx=c_pps a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=LY3U4cgvXuRfn2pE898A:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDE0NCBTYWx0ZWRfX7XF499v8vR3I XEKEdy0bt8hD4F95LcvpzqL7ulOQjiXWc0xgIJOt8vYG0NSRpslXz37JcDmrJtXW3UNY9vQ7kVY ZuQ/K9abOX6ptoA+i1lxY33RJYqPP0P+yEIoLYOR7PcPrQHBZBkPhQlbqRUGbThYv1h7F3lr9ZU
+ enOiOZe7tcbEC50KXmnPuGFPIOuRxnYtVaBC5GpU+kNldgyuS8MmKhom62YmvdaMVPlltXDnxnv rsPx3HI/LivdcCZ9pG+N6JIM6A+OU6aDXicr7KUj1iIpS8zPKxZKxUjqgqNL0Yp77cKNLZ9PCa5 ud7Y+1DeGyxbYMZDWpQ9z+orm6HTgZVGpuVga853QMRPyO/3R76NgfpDLQq3GMLbTMLIT0RAPxz
+ VxjfNH9ptxsuWONE9QxdfiIfXt2Zkbpb32O0MIMjGg+Wco/iV/48l6oGoCetwoG+s6O9V7ZK
+X-Proofpoint-GUID: 6Cnef_pjvbNS2j5_wTmyn5xSX_7DXKXp
+X-Proofpoint-ORIG-GUID: 6Cnef_pjvbNS2j5_wTmyn5xSX_7DXKXp
+X-Authority-Analysis: v=2.4 cv=M5VNKzws c=1 sm=1 tr=0 ts=680bee0f cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=ep-ZKmNeXLTrS1u6wGwA:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-25_06,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- adultscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 malwarescore=0
- priorityscore=1501 mlxscore=0 impostorscore=0 clxscore=1015
- mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 priorityscore=1501 mlxscore=0
+ mlxlogscore=999 malwarescore=0 impostorscore=0 clxscore=1015
+ suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
  definitions=main-2504250144
 
-On 4/24/25 1:53 AM, Bryan O'Donoghue wrote:
-> Add support for Dell Inspiron 14p 7441.
+
+
+On 4/25/2025 11:53 AM, Dmitry Baryshkov wrote:
+> On Fri, Apr 25, 2025 at 11:26:20AM -0700, Jessica Zhang wrote:
+>>
+>>
+>> On 3/7/2025 9:38 PM, Dmitry Baryshkov wrote:
+>>> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>
+>>> Reworking of the catalog dropped the SmartDMA feature bit on the SM8150
+>>> platform. Renable SmartDMA support on this SoC.
+>>>
+>>> Fixes: 460c410f02e4 ("drm/msm/dpu: duplicate sdm845 catalog entries")
+>>
+>> Hi Dmitry,
+>>
+>> The code LGTM, but was just wondering why there's a fixes tag for the first
+>> two patches but not for the other catalog changes.
+>>
+>> Is there some context I'm missing with regards to this?
 > 
-> Working:
-> - WiFi
-> - Bluetooth
-> - USB Type-C x 2
-> - USB Type-A
-> - USB Finger Print reader
-> - Display
-> - NVME
-> - Keyboard
-> - Touchpad
+> As I wrote in the commit message, SmartDMA for these two platforms was
+> enabled previously, but then it got disabled by the mistake in the
+> commit 460c410f02e4 ("drm/msm/dpu: duplicate sdm845 catalog entries").
+> For the rest of the platforms SmartDMA supoprt was never enabled, so
+> no need for Fixes tags.
+
+Ah, sorry I missed that sdm845_sspp has the SDMA feature flag.
+
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+
 > 
-> WIP not included:
-> - Audio
-> - Camera
-> - Embedded Controller
-> - Battery
+>>
+>> Thanks,
+>>
+>> Jessica Zhang
+>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h | 16 ++++++++--------
+>>>    1 file changed, 8 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+>>> index 23188290001ffb45563a9953a9f710bacb4dac89..fe4de5b31644de33b77a882fa21a18f48ecd1790 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+>>> @@ -76,7 +76,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
+>>>    	{
+>>>    		.name = "sspp_0", .id = SSPP_VIG0,
+>>>    		.base = 0x4000, .len = 0x1f0,
+>>> -		.features = VIG_SDM845_MASK,
+>>> +		.features = VIG_SDM845_MASK_SDMA,
+>>>    		.sblk = &dpu_vig_sblk_qseed3_1_4,
+>>>    		.xin_id = 0,
+>>>    		.type = SSPP_TYPE_VIG,
+>>> @@ -84,7 +84,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
+>>>    	}, {
+>>>    		.name = "sspp_1", .id = SSPP_VIG1,
+>>>    		.base = 0x6000, .len = 0x1f0,
+>>> -		.features = VIG_SDM845_MASK,
+>>> +		.features = VIG_SDM845_MASK_SDMA,
+>>>    		.sblk = &dpu_vig_sblk_qseed3_1_4,
+>>>    		.xin_id = 4,
+>>>    		.type = SSPP_TYPE_VIG,
+>>> @@ -92,7 +92,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
+>>>    	}, {
+>>>    		.name = "sspp_2", .id = SSPP_VIG2,
+>>>    		.base = 0x8000, .len = 0x1f0,
+>>> -		.features = VIG_SDM845_MASK,
+>>> +		.features = VIG_SDM845_MASK_SDMA,
+>>>    		.sblk = &dpu_vig_sblk_qseed3_1_4,
+>>>    		.xin_id = 8,
+>>>    		.type = SSPP_TYPE_VIG,
+>>> @@ -100,7 +100,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
+>>>    	}, {
+>>>    		.name = "sspp_3", .id = SSPP_VIG3,
+>>>    		.base = 0xa000, .len = 0x1f0,
+>>> -		.features = VIG_SDM845_MASK,
+>>> +		.features = VIG_SDM845_MASK_SDMA,
+>>>    		.sblk = &dpu_vig_sblk_qseed3_1_4,
+>>>    		.xin_id = 12,
+>>>    		.type = SSPP_TYPE_VIG,
+>>> @@ -108,7 +108,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
+>>>    	}, {
+>>>    		.name = "sspp_8", .id = SSPP_DMA0,
+>>>    		.base = 0x24000, .len = 0x1f0,
+>>> -		.features = DMA_SDM845_MASK,
+>>> +		.features = DMA_SDM845_MASK_SDMA,
+>>>    		.sblk = &dpu_dma_sblk,
+>>>    		.xin_id = 1,
+>>>    		.type = SSPP_TYPE_DMA,
+>>> @@ -116,7 +116,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
+>>>    	}, {
+>>>    		.name = "sspp_9", .id = SSPP_DMA1,
+>>>    		.base = 0x26000, .len = 0x1f0,
+>>> -		.features = DMA_SDM845_MASK,
+>>> +		.features = DMA_SDM845_MASK_SDMA,
+>>>    		.sblk = &dpu_dma_sblk,
+>>>    		.xin_id = 5,
+>>>    		.type = SSPP_TYPE_DMA,
+>>> @@ -124,7 +124,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
+>>>    	}, {
+>>>    		.name = "sspp_10", .id = SSPP_DMA2,
+>>>    		.base = 0x28000, .len = 0x1f0,
+>>> -		.features = DMA_CURSOR_SDM845_MASK,
+>>> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
+>>>    		.sblk = &dpu_dma_sblk,
+>>>    		.xin_id = 9,
+>>>    		.type = SSPP_TYPE_DMA,
+>>> @@ -132,7 +132,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
+>>>    	}, {
+>>>    		.name = "sspp_11", .id = SSPP_DMA3,
+>>>    		.base = 0x2a000, .len = 0x1f0,
+>>> -		.features = DMA_CURSOR_SDM845_MASK,
+>>> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
+>>>    		.sblk = &dpu_dma_sblk,
+>>>    		.xin_id = 13,
+>>>    		.type = SSPP_TYPE_DMA,
+>>>
+>>
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
 
-[...]
-
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&cam_indicator_en>;
-
-property-n
-property-names
-
-file-wide, please
-
-[...]
-
-> +	/*
-> +	 * TODO: These two regulators are actually part of the removable M.2
-> +	 * card and not the CRD mainboard. Need to describe this differently.
-> +	 * Functionally it works correctly, because all we need to do is to
-> +	 * turn on the actual 3.3V supply above.
-> +	 */
-
-Well there's definitely no CRD mainboard in there.. not quite, anyway
-
-[...]
-
-> +&i2c5 {
-> +	clock-frequency = <400000>;
-> +
-> +	status = "okay";
-> +
-> +	/* Type A Port1 */
-
-But there only seems to be one?
-
-[...]
-
-> +	/* FRP eUSB */
-
-Factory Reset Protection?
-
-Please spell out Fingerprint scanner if that's what that is
-
-[...]
-
-> +&i2c20 {
-> +	/* GPIO_80, GPIO_81 */
-
-That can be tracked down by looking up the node definition, it
-would be however good to know what sits on this bus and at what
-addresses
-
-[...]
-
-> +	cam_rgb_default: cam-rgb-default-state {
-> +		mclk-pins {
-> +			/* cam_aon_mclk4 */
-
-I don't think this comment adds much
-
-[...]
-
-> +&usb_mp_dwc3 {
-> +	phys = <&usb_mp_hsphy0>, <&usb_mp_qmpphy0>;
-> +	phy-names = "usb2-0", "usb3-0";
-
-Any reason to limit these?
-
-looks nice otherwise
-
-Konrad
 
