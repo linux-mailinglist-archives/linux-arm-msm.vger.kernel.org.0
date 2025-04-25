@@ -1,87 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-55766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4D7EA9D2ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 22:24:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7DFBA9D2F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 22:24:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 47CBD4A311A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 20:24:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0B0B31BC6026
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 20:25:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADBF9221F02;
-	Fri, 25 Apr 2025 20:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4E7E221D9B;
+	Fri, 25 Apr 2025 20:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QYv9FjDj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e+CyW1H4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0066A221DB1
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 20:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FFB22068B;
+	Fri, 25 Apr 2025 20:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745612641; cv=none; b=omRtGMRnvMPjJ5YiaBPaMx7Dp5yfolzkCvobA1qAvHiD6nRcpurI8HnhwmNKcWlrhpzTOUnUXyyWB2fChNNn3n5qOFd7GdpY5wKf94mh4Uw4KVO92XWJz1rmGFXLrjy/eHzfcud4+yIWuxNv7vAeucX2OJSDkyahHJXCzRF1QfI=
+	t=1745612688; cv=none; b=JWtdGj6gi4oyQALtU1TIVOS5IRPbWJJwMHgmXklTYnvCeu7xqaBSj3B6KjlJbr56iIUMnlgHbHvPYf3IjGgQM15dDPBqUnr8YhmmNfy5qdkIqpAHyKlfk/XBBYgzq8JqaKj+avhkqPqsU04CrUhIFdUtHkV4T0UEsnIl0LvLn88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745612641; c=relaxed/simple;
-	bh=6jcOXtZ8yw/PG2mZRLKYqvuu9+gIse7sKPo4JRdFcpg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ix7U5z5XQpxTFdfiTn1kAaP32J4MHYmSJbCC99UUQtZNPV2CJNUu3bgd+7Ga699+ms+jFNvMKBMqPInNzW1l5N+1Q+xjRJo8HdSLer8Ts6Q9x3WH5h6eDiTJXKYXDJ2nS3j6HYQU6xx7niwKYaMriA5HVb1NDTxFmRFqx9kxaCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QYv9FjDj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PGJqbj004641
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 20:23:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1745612688; c=relaxed/simple;
+	bh=1XWxFj5nRr1x9vrMuHYbrtHZT6ZgbVTFoRVbQLvDzl4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LADE6C+mLKOzGml7d6c3nHnKcGSRZqAWFa2Eukw04rz61z6m4gnmITWt3/6aZAg8heLh9S7fZkxwHZH4acHwKBAvB/tco7/i10r7X5xWEz18Sp2vwtVdgKJ7L6iQMP1o48GUHfnUpImtAPXfGxGtQZ+AiLo29ywPeVvCpjG+0Ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=e+CyW1H4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PGJuB1024750;
+	Fri, 25 Apr 2025 20:24:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vZU3IwA+bgrpaQ2TBAaKogUm3yKHUkoHUnNFfaSufJk=; b=QYv9FjDj8TwUwwY9
-	1iz9od9cq1sS0Wjjd7QdWJ+WxcaR01vkUfE4LBYlnDkT3dYzB/VKKZnwMSlIwckn
-	SIW5ABcO1x5GfSaoIOkWCUmhudtAT+fOGW9EDPj9BgkcvDfYgRv35n/42BSkqymO
-	OqgV6UiexjZoTjWWU60Vow0z9JAVeJrbkMvcxBWjwKNu05s/Bqe+5BzN6YXGIaEo
-	KePUClJ3HX0TTPEO6MF/Qvm4GVbfX7WFlg0pLD+LI42ylFia9qGYA82pnSwUKbZx
-	AvhTB2nqb/oNJQGSUXrDOSCNJo+cWcDTENdjP49jDWpraFBGodvsAQ+xWoB8efZS
-	kMz0FQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh0a823-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 20:23:58 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-47aeab7b918so6068421cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 13:23:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745612638; x=1746217438;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vZU3IwA+bgrpaQ2TBAaKogUm3yKHUkoHUnNFfaSufJk=;
-        b=XdTG8nApUiQ1qhl8TcIeuckGeUHLxjU5LdhkYOG2gpIrQQjeAksVxxLRhhtAho2/gC
-         xCzfVCcEfQlmQdOJol6Y3lwHRFIxUimussbZ/mwBGtJCyh/DbdhKGMSWCEoGu7rXl3SQ
-         t2pL6Of0PEEFdzf0LsYP7mSM1i2OoB39n8aJGbE1pSh2q0BCfZHo8EitFuCZY1K9/F+K
-         2axjh6oh0fl0qubck/QMEPqlMrtMMKWOxVOZa6BrLVS1D7QDFlZ8+fmFu0pM46KR4tSI
-         iyRU6OYH4a5n9O3+Z1FMzBhySEMtOd56crw3drdeV+L//q/pvJ2Qlk6AFvfSQFuBZhoD
-         0Mog==
-X-Forwarded-Encrypted: i=1; AJvYcCUdMtT9jJ/rwqHSZDZeWxMlP16G4yJMC7GL+kN/d7TZJbT2IdmctkicAiB0ymFCo2Zk9T6E3SNmBMmMsgKO@vger.kernel.org
-X-Gm-Message-State: AOJu0YyoieUQCCXwqIZfIEhAPGchUnIi0V7Cocqa28d38qCr8Nu1aRGa
-	xShiXuN+sfLAa77sH5+y9hJLLt+PuS29kdKClyYshRfJ2ymLgWSz4APQraNia51sBQVUN+QwArP
-	Imli8UQEj/t7TYF/m039bhk74ux2WCFNWdpTDEncd7w+VyFIzN4o1jgaURqt6tH2t
-X-Gm-Gg: ASbGncvGX1bYsVhDJFWcG6j7hbvHsbHWKeTjCPRXtr3SjiYXYwGlz3kFZX0HhjI7VGv
-	61Z2IKsHUyTMn/qfJXaK4hXoArc5T+5iQwhSz4EtnLTS3jyKnWH4l+L7vcfhYdOxzD/kV62eAWa
-	97mSCvHijxpreFY+lb1VGNXj0awoK2/qmq49oHUgz+ZGE9W3gNcNwrnTXw1AthbB84KEWI8ZZA1
-	Vl0WGhPXEDxJK0nHnEkXzJ6XwlCdoax0Il6+hN5U71HvjHTayjwHNG0RsmFZsBbRNyYGYZOwqcL
-	1nGWGs0PMfWCYIXVTTb/nzQ1f3+Mo5fR5yYMAm/I+L4hhir2nxxNbUlLSozyjXNgfRY=
-X-Received: by 2002:ac8:5d4c:0:b0:477:686:b40b with SMTP id d75a77b69052e-4801e10d41cmr18419931cf.12.1745612637997;
-        Fri, 25 Apr 2025 13:23:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdHoZR5pCK2t6lb87QvYnJjLEk1VyW1AcMpSBdCT2VlKLRjguijyNKwCmllzoOHpr6Y73rfg==
-X-Received: by 2002:ac8:5d4c:0:b0:477:686:b40b with SMTP id d75a77b69052e-4801e10d41cmr18419781cf.12.1745612637564;
-        Fri, 25 Apr 2025 13:23:57 -0700 (PDT)
-Received: from [192.168.65.156] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6ed70b1fsm183172066b.157.2025.04.25.13.23.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Apr 2025 13:23:57 -0700 (PDT)
-Message-ID: <242f6059-a32f-4ee2-a794-8a29b6449e96@oss.qualcomm.com>
-Date: Fri, 25 Apr 2025 22:23:54 +0200
+	kcun9w3A1j/G1OzzsPcb3/mY7bDiEDLBGze6UIAGCZ0=; b=e+CyW1H4wfeZhM3O
+	N8ApVdvBP3jZC1FkvkUcBDaA2OMYxyf7GF0Az2iSWlJvtXLMEPH5HpqD6xEAvfUv
+	g1HnTJZaGLu6IpIHi31FXQJ6ap0s7xL/J3EPeMT43BKAmxbznUeGLUex5GCcgSNs
+	taI6v1/BnpKq9SR2UZ5AjbMKOnMIzoZIuFLQ4SWy6K0fWp14ssmIhOArMmyYRbZ4
+	A90fLkBpBbCUOBS05C70/meBy/OZfWdBLaa1X80IEkdLrl1v6Wcie1tmWssivRDY
+	2Q9K4Eh94p/6UXh7/uAcx+BFcn6BXRjr5Eirqya1zMofTa1dirOmgNKPwYQSH9iD
+	+PjKXg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh0t389-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 25 Apr 2025 20:24:37 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53PKOaJp003713
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 25 Apr 2025 20:24:36 GMT
+Received: from [10.134.71.99] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 25 Apr
+ 2025 13:24:35 -0700
+Message-ID: <f1afcf58-2937-4ad4-b5ad-8935c3367190@quicinc.com>
+Date: Fri, 25 Apr 2025 13:24:35 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,91 +65,137 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 4/6] arm64: dts: qcom: ipq5332: add nodes to bringup q6
-To: Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>,
-        andersson@kernel.org, mathieu.poirier@linaro.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
-        quic_mmanikan@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
-Cc: quic_srichara@quicinc.com, vignesh.viswanathan@oss.qualcomm.com
-References: <20250417061245.497803-1-gokul.sriram.p@oss.qualcomm.com>
- <20250417061245.497803-5-gokul.sriram.p@oss.qualcomm.com>
+Subject: Re: [PATCH 2/5] drm/msm/dpu: enable SmartDMA on SC8180X
+To: Dmitry Baryshkov <lumag@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20250308-dpu-rework-vig-masks-v1-0-f1b5d101ae0b@linaro.org>
+ <20250308-dpu-rework-vig-masks-v1-2-f1b5d101ae0b@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250417061245.497803-5-gokul.sriram.p@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20250308-dpu-rework-vig-masks-v1-2-f1b5d101ae0b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDE0NiBTYWx0ZWRfXxfRtOd4jzfnd 5BT3PUrS0ACTQrqw+AuCul6aionReVBiDril+BBVT8xvjptb0lGthhWmJAXmkqY6JEbML6ZbGEv 9fhcHGqg5wHbcanIXNEUXYs3XthfhJ6sFx0FuCcCL+iwoVVrGBqTsrddYbQX6SpA67tWSNdpanW
- sIfHe8kELmrhQPt2YfJX2cC8fp70cWND1uUxedKlMlYU8EzYr8a5IEzsthz4f1UG4ffgujs24lH DdKt8e4bDJJslN9iUGstV9+uNBGG+pNHfQVdSzl2BAi6F3mZJfUyh/dGzVfxYgaslTzqRJvAoxv q/2eVdi8+kxcr/cwcIQk1u9KhNwHujx/DUkavGPTpLtVNiUjYh1Q+WhcxsBiMNCoOPh6NoopKrC
- fwoXw8vwr8N53Cf978XqchLcQpSJ9HEtLGWxHfUJQe5NggSE0AG3dAKxyZv8DxzRXNoz0an1
-X-Proofpoint-GUID: rpOFj-rTND_8LLEwU_azMRcEoi-Vw-QH
-X-Authority-Analysis: v=2.4 cv=ZuTtK87G c=1 sm=1 tr=0 ts=680bef5e cx=c_pps a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=g0nLbwh1i6OCtKyAYTkA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: rpOFj-rTND_8LLEwU_azMRcEoi-Vw-QH
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: M5REsFV_lE3FfKzfgb6csjkq94wXydRw
+X-Authority-Analysis: v=2.4 cv=ftfcZE4f c=1 sm=1 tr=0 ts=680bef85 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=SJCa53jPp-AOw9btYvwA:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: M5REsFV_lE3FfKzfgb6csjkq94wXydRw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDE0NiBTYWx0ZWRfXxnXh3lYrrYuT SygwMhm5STjoyF5Sqb1zsYaFn8WnUmq6xaolKsgbc4ry5pR7Ccfn0wG1vrXMfuXdHADxvcV7yt/ YxNxxIcNiSSjSmzYj1Yz4jBpVOboyp04TXp9WljVKelPYTrE8m9yIeaxTEZLcWJYPjkhfj/0My9
+ zZN1PQgOEPxk+oCIaJyQozW0KBlEAkdlr1PVgcDhiz5Gbjbg/9YiX0w5kai+oYVnAXdsn36ZS5z eIjdg7qWhM6itC28yHwJVzN19rINH0BRcpJjw9Qrhet08acDdfCr3uYg5nOIzUPKDGsiiMfdEb8 0CGFHuyO1BJ2xShPtCkJkHPU/xLi6NJXcfzb/Y9WI1J7qda6pWKPK5SBGSgDZSFmXa0GCgnQGkz
+ C7/LBM2E//Irj+8Ow18Evk20RizOUAvtKY8IIZefeXV+IOd8sVn79N8aiC4LUl4RhezsbWz4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-25_06,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 mlxscore=0 adultscore=0 lowpriorityscore=0
- mlxlogscore=907 priorityscore=1501 malwarescore=0 suspectscore=0
- spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ suspectscore=0 mlxlogscore=999 lowpriorityscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 adultscore=0 spamscore=0 clxscore=1015
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
  definitions=main-2504250146
 
-On 4/17/25 8:12 AM, Gokul Sriram Palanisamy wrote:
-> From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+
+
+On 3/7/2025 9:38 PM, Dmitry Baryshkov wrote:
+> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> Enable nodes required for q6 remoteproc bring up.
+> Reworking of the catalog dropped the SmartDMA feature bit on the SC8180X
+> platform. Renable SmartDMA support on this SoC.
 > 
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> Signed-off-by: Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>
+> Fixes: 460c410f02e4 ("drm/msm/dpu: duplicate sdm845 catalog entries")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+
 > ---
-> changes since v3:
->         - added necessary padding for 8digt hex address in dts 
->         - fixed firmware-name to use .mbn format
+>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
 > 
->  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 64 ++++++++++++++++++++++++++-
->  1 file changed, 63 insertions(+), 1 deletion(-)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> index de8ccf589f1fe026ca0697d48f9533befda4659d..330490d10247e6347df71927ce601da1468f466e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> @@ -75,7 +75,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+>   	{
+>   		.name = "sspp_0", .id = SSPP_VIG0,
+>   		.base = 0x4000, .len = 0x1f0,
+> -		.features = VIG_SDM845_MASK,
+> +		.features = VIG_SDM845_MASK_SDMA,
+>   		.sblk = &dpu_vig_sblk_qseed3_1_4,
+>   		.xin_id = 0,
+>   		.type = SSPP_TYPE_VIG,
+> @@ -83,7 +83,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+>   	}, {
+>   		.name = "sspp_1", .id = SSPP_VIG1,
+>   		.base = 0x6000, .len = 0x1f0,
+> -		.features = VIG_SDM845_MASK,
+> +		.features = VIG_SDM845_MASK_SDMA,
+>   		.sblk = &dpu_vig_sblk_qseed3_1_4,
+>   		.xin_id = 4,
+>   		.type = SSPP_TYPE_VIG,
+> @@ -91,7 +91,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+>   	}, {
+>   		.name = "sspp_2", .id = SSPP_VIG2,
+>   		.base = 0x8000, .len = 0x1f0,
+> -		.features = VIG_SDM845_MASK,
+> +		.features = VIG_SDM845_MASK_SDMA,
+>   		.sblk = &dpu_vig_sblk_qseed3_1_4,
+>   		.xin_id = 8,
+>   		.type = SSPP_TYPE_VIG,
+> @@ -99,7 +99,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+>   	}, {
+>   		.name = "sspp_3", .id = SSPP_VIG3,
+>   		.base = 0xa000, .len = 0x1f0,
+> -		.features = VIG_SDM845_MASK,
+> +		.features = VIG_SDM845_MASK_SDMA,
+>   		.sblk = &dpu_vig_sblk_qseed3_1_4,
+>   		.xin_id = 12,
+>   		.type = SSPP_TYPE_VIG,
+> @@ -107,7 +107,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+>   	}, {
+>   		.name = "sspp_8", .id = SSPP_DMA0,
+>   		.base = 0x24000, .len = 0x1f0,
+> -		.features = DMA_SDM845_MASK,
+> +		.features = DMA_SDM845_MASK_SDMA,
+>   		.sblk = &dpu_dma_sblk,
+>   		.xin_id = 1,
+>   		.type = SSPP_TYPE_DMA,
+> @@ -115,7 +115,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+>   	}, {
+>   		.name = "sspp_9", .id = SSPP_DMA1,
+>   		.base = 0x26000, .len = 0x1f0,
+> -		.features = DMA_SDM845_MASK,
+> +		.features = DMA_SDM845_MASK_SDMA,
+>   		.sblk = &dpu_dma_sblk,
+>   		.xin_id = 5,
+>   		.type = SSPP_TYPE_DMA,
+> @@ -123,7 +123,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+>   	}, {
+>   		.name = "sspp_10", .id = SSPP_DMA2,
+>   		.base = 0x28000, .len = 0x1f0,
+> -		.features = DMA_CURSOR_SDM845_MASK,
+> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
+>   		.sblk = &dpu_dma_sblk,
+>   		.xin_id = 9,
+>   		.type = SSPP_TYPE_DMA,
+> @@ -131,7 +131,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+>   	}, {
+>   		.name = "sspp_11", .id = SSPP_DMA3,
+>   		.base = 0x2a000, .len = 0x1f0,
+> -		.features = DMA_CURSOR_SDM845_MASK,
+> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
+>   		.sblk = &dpu_dma_sblk,
+>   		.xin_id = 13,
+>   		.type = SSPP_TYPE_DMA,
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> index 69dda757925d..fc120fd8b274 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> @@ -2,7 +2,7 @@
->  /*
->   * IPQ5332 device tree source
->   *
-> - * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright (c) 2022-2025 Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
->  #include <dt-bindings/clock/qcom,apss-ipq.h>
-> @@ -146,6 +146,11 @@ smem@4a800000 {
->  
->  			hwlocks = <&tcsr_mutex 3>;
->  		};
-> +
-> +		q6_region: wcss@4a900000 {
-> +			reg = <0x0 0x4a900000 0x0 0x2b00000>;
-> +			no-map;
-> +		};
->  	};
->  
->  	soc@0 {
-> @@ -545,6 +550,39 @@ frame@b128000 {
->  				status = "disabled";
->  			};
->  		};
-> +
-> +		q6v5_wcss: remoteproc@d100000 {
-> +			compatible = "qcom,ipq5332-wcss-sec-pil";
-> +			reg = <0x0d100000 0x4040>;
 
-This is 0x10_000-long
-
-> +			firmware-name = "ath12k/IPQ5332/hw1.0/q6_fw0.mbn";
-
-Is the firmware OEM signed?
-
-Konrad
 
