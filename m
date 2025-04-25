@@ -1,254 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-55667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE619A9CB75
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 16:20:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A8D0A9CB81
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 16:21:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 95EBA1BC8319
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 14:19:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 395DD1C012D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 14:21:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 960F725E466;
-	Fri, 25 Apr 2025 14:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73CBD25A2B3;
+	Fri, 25 Apr 2025 14:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="GP5mtgAn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LcpjD4Tb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3456A25DB05;
-	Fri, 25 Apr 2025 14:15:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61754242D99;
+	Fri, 25 Apr 2025 14:19:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745590541; cv=none; b=sr75jlv6m85Lrz3b7qdk/W7hKUFGadnYY/bRid+hXsdf+/WEbuze/VqgpoR6vle9FCEZRbs+CQe44jbaQnxFb0DyIfrUIQSHKSVHvpK9ZOv0Qws7mi0u7UYCV7dSI4wkQe6USLEiSv+MUwFZYYgetoXlFAFSwYfALq9/1i6R2ik=
+	t=1745590749; cv=none; b=aTIHVSUfgJsExc7G0lnlBJXg17yTnx5adYhYp7pZzD1h/ytVzcutojYsdtIXcqsNHBDwfcvxh6DJ/s2L8mm7nk0W3cJ0YFfmWe6yDcoa2zb+Q5qnYrYqJrk7GYKzZXQBUIa0d3K87NwhVEKXYlRFE2ITVpHXThno8jakcC9CRkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745590541; c=relaxed/simple;
-	bh=Db9qQGiPZ0TTN7FGospWfUBApSHcBjmwbE1tAUnYMuw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NieERhHw9Cv4mdz2upExVW1dZmq8eGv3uzqI2b61bZtUusm4bz9Hnu7zhgQwuu3P/dNLjG3hZb0BjByas5FdXT/OtGnAxA0dHyMlToaHn+bDTwRy9jJKDiJdBNDuf0oYKj0fxht4lYvS8zCCGGsSVy9nVG8iwO5g1ryHptELcKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=GP5mtgAn; arc=none smtp.client-ip=217.70.183.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 763A9441FF;
-	Fri, 25 Apr 2025 14:15:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1745590537;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=puQGlCteO+0GFnat6rHWd7r7OMccCL/gwNOR4Sh2duc=;
-	b=GP5mtgAnbWm/4roNfbAJY2UUpTl3Dlcul901ASRraFr7jk8SCSuDUl9zckcroSh7EkL40m
-	gmQH7D/zR34nNfSHJ6pXFSWc20cu3YdSMPkPdNFW09i0UgVRzBbPFyZqfmUGCASREiRwQM
-	Eb476xdBNBTtRpyxCOl+WoOULMMX1RmJlbEsS9Qd8OUyjickyhxUxjvf4nng116FY49Ymv
-	6+twc4l97OmgjHtZxk521Tn+gP6umdOhOCoIOho/6MtXkd+k7jDD8E9I2VQ5gt1wBGN+SO
-	BvAPcb8972VyPj4zQcJXENUBKWtOlN9qGpxrZCCyUz9d9FkQXpp4ZocC8qDIDA==
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: davem@davemloft.net
-Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	thomas.petazzoni@bootlin.com,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Russell King <linux@armlinux.org.uk>,
-	linux-arm-kernel@lists.infradead.org,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?UTF-8?q?K=C3=B6ry=20Maincent?= <kory.maincent@bootlin.com>,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	=?UTF-8?q?Nicol=C3=B2=20Veronese?= <nicveronese@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	mwojtas@chromium.org,
-	Antoine Tenart <atenart@kernel.org>,
-	devicetree@vger.kernel.org,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: [PATCH net-next v5 14/14] Documentation: networking: Document the phy_port infrastructure
-Date: Fri, 25 Apr 2025 16:15:07 +0200
-Message-ID: <20250425141511.182537-15-maxime.chevallier@bootlin.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250425141511.182537-1-maxime.chevallier@bootlin.com>
-References: <20250425141511.182537-1-maxime.chevallier@bootlin.com>
+	s=arc-20240116; t=1745590749; c=relaxed/simple;
+	bh=AexMVO8fjC67c5unH1YsKkDaQ25ekn/4Lx4ExdJWDKE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bI1GDvvxusQZG+8xJfg3+uIEUzC4RuPEcXQ+KROn4f6NnW0kD3JhrusozF9qtgPQOJNbTyR6/6//keOSb23mBuFBKcDfAyz46KpJVq6heEwlMRAP0Irzhd7qY67yDXXnzS+QFkzdqiht3FJU5H8OvN3T8Fxg5Gh+jpGZH7jrcLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LcpjD4Tb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53P8TH3s012251;
+	Fri, 25 Apr 2025 14:19:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	5yjDv821Wi3ckO1AszK+lyZiFVArgHwipVwVKRxNCQM=; b=LcpjD4Tbuc75xQ4H
+	ond5vkgMBqF6PScSa3cO2+Vv7x15uRj7UCQ5K+8dTMd5pMY//+0uTbuXMPqegR6G
+	2HMib9fIGFrHbnoqfqDAqbBzucmVEvviTRufCnG+9Ax3YoqjqRE3S+KnLt04QYYp
+	CzlDDgIGstDxeAM0dfmfqVI+tlFmKJB1Wus+ocTLYlc5uJjfmG9W9TRJyBW/thRS
+	M2iBwjLprdT5bGGyStsW9FCoosMwuN8QB8blGMJTLo72cSKSA4+OlxEvrk05HROY
+	cpd47CaGBg+EDD4YCaMaQ/UfwTxyc42HQ2xydkWzkxeqX0S2EHHPZidCoUWZvTUU
+	NUSsrQ==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh1962r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 25 Apr 2025 14:19:01 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53PEJ09t013635
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 25 Apr 2025 14:19:00 GMT
+Received: from [10.216.10.223] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 25 Apr
+ 2025 07:18:53 -0700
+Message-ID: <3ffe00fd-1fbe-41c6-b82d-030bcf6d76d8@quicinc.com>
+Date: Fri, 25 Apr 2025 19:48:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvheehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeforgigihhmvgcuvehhvghvrghllhhivghruceomhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepveegtdffleffleevueellefgjeefvedvjefhheegfefgffdvfeetgeevudetffdtnecukfhppedvrgdtudemtggsudelmeekugegheemgeeltddtmeeiheeikeemvdelsgdumeelvghfheemvgektgejnecuvehluhhsthgvrhfuihiivgepuddtnecurfgrrhgrmhepihhnvghtpedvrgdtudemtggsudelmeekugegheemgeeltddtmeeiheeikeemvdelsgdumeelvghfheemvgektgejpdhhvghlohepfhgvughorhgrrdhhohhmvgdpmhgrihhlfhhrohhmpehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeefuddprhgtphhtthhopegurghvvghmsegurghvvghmlhhofhhtrdhnvghtpdhrtghpthhtohepmhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomhdprhgtphhtthhopehnvghtuggvvhesvhhgvghrr
- dhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
-X-GND-Sasl: maxime.chevallier@bootlin.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/9] Enable QUPs and Serial on SA8255p Qualcomm
+ platforms
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon
+	<nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "Rafael J. Wysocki"
+	<rafael@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+CC: <psodagud@quicinc.com>, <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
+        <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
+        <quic_mnaresh@quicinc.com>, <quic_shazhuss@quicinc.com>
+References: <20250418151235.27787-1-quic_ptalari@quicinc.com>
+ <6662b275-6b8e-40be-b62f-c17ae8e63dfa@oss.qualcomm.com>
+Content-Language: en-US
+From: Praveen Talari <quic_ptalari@quicinc.com>
+In-Reply-To: <6662b275-6b8e-40be-b62f-c17ae8e63dfa@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: yWItsxx6KJ97y4tpKlsNdZwd4vDXscRq
+X-Authority-Analysis: v=2.4 cv=OY6YDgTY c=1 sm=1 tr=0 ts=680b99d5 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=NEAV23lmAAAA:8 a=oNOacO-TtzJHBqNP3j4A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: yWItsxx6KJ97y4tpKlsNdZwd4vDXscRq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDEwMSBTYWx0ZWRfX9iW1noMtBIcn 5r+Xkeo1BMGjJVomKnjfobQ1unPzUcWKyK4KS4TWbQpfwC9rTz0kh7C6mGCx6dSZGa6GyjuFq7C Tv6LQuWji4diV4onMhmzNFnsruR6Hp6hTBwSQ7OT1/EAHlDsO5SzyIE2jXk5I+xhodxEXrKQwKO
+ vS8EgWijMjOVWB0C/xbfPmuRtddMu9mT86ur3v6/xBBllX1A2NILPmE1lLnwH/GbETnZx3X1pFC ClxYfewKWTdfBQssF8E33TGpZWOfEC6kRQzA1GhVAZIUMu4idIaVyXm35NDNqlO2mJmZMcdS3H6 y/H9c3yZRA/l6XWWM4KsowKKxBZvHNY8y8k5FyNxcMB9xslWiPspzI8N+K0XK2/Rq4WsXtcG3PQ
+ gi8g/hpl7vA6f55EAKPF5sVuA1ECUw+GrpRg722fwYpNJLyvbUqF6VGVhqKBFmz8XZytZvJ5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-25_04,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 suspectscore=0 mlxscore=0 clxscore=1015 malwarescore=0
+ mlxlogscore=999 phishscore=0 priorityscore=1501 spamscore=0 adultscore=0
+ bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504250101
 
-This documentation aims at describing the main goal of the phy_port
-infrastructure.
+Hi
 
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
----
- Documentation/networking/index.rst    |   1 +
- Documentation/networking/phy-port.rst | 111 ++++++++++++++++++++++++++
- MAINTAINERS                           |   1 +
- 3 files changed, 113 insertions(+)
- create mode 100644 Documentation/networking/phy-port.rst
+On 4/23/2025 6:31 PM, Konrad Dybcio wrote:
+> On 4/18/25 5:12 PM, Praveen Talari wrote:
+>> The Qualcomm automotive SA8255p SoC relies on firmware to configure
+>> platform resources, including clocks, interconnects and TLMM. The device
+>> drivers request resources operations over SCMI using power and
+>> performance protocols.
+>>
+>> The SCMI power protocol enables or disables resources like clocks,
+>> interconnect paths, and TLMM (GPIOs) using runtime PM framework APIs,
+>> such as resume/suspend, to control power states(on/off).
+>>
+>> The SCMI performance protocol manages UART baud rates, with each baud
+>> rate represented by a performance level. Drivers use the
+>> dev_pm_opp_set_level() API to request the desired baud rate by
+>> specifying the performance level.
+>>
+>> The QUP drivers are SCMI clients, with clocks, interconnects, pinctrl
+>> and power-domains abstracted by a SCMI server.
+> So I recently started working on abstracting away power controls from
+> the SE protocol drivers into a single place, among other improvements
+>
+> A snapshot of this work is available here
+>
+> https://github.com/quic-kdybcio/linux/commits/topic/single_node_genise/
+>
+> (not yet 100% ready..)
+>
+> I think it'd make sense to get it done first, so that we can condense
+> most of your changes in the common driver, where we'd swap out the clock
+> handling for perf level setting instead
+Thank you for the update and for sharing the snapshot of your work. The 
+improvements you're working on sound promising, especially the 
+abstraction of power controls into a single place.
+While we appreciate the direction you're taking, our patch has already 
+been pushed upstream with V2.
+To maintain our momentum, we would prefer to continue with our current 
+cleanups rather than waiting for your post if it's planned for a few 
+weeks from now.
 
-diff --git a/Documentation/networking/index.rst b/Documentation/networking/index.rst
-index ac90b82f3ce9..f60acc06e3f7 100644
---- a/Documentation/networking/index.rst
-+++ b/Documentation/networking/index.rst
-@@ -96,6 +96,7 @@ Contents:
-    packet_mmap
-    phonet
-    phy-link-topology
-+   phy-port
-    pktgen
-    plip
-    ppp_generic
-diff --git a/Documentation/networking/phy-port.rst b/Documentation/networking/phy-port.rst
-new file mode 100644
-index 000000000000..6d9d46ebe438
---- /dev/null
-+++ b/Documentation/networking/phy-port.rst
-@@ -0,0 +1,111 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+.. _phy_port:
-+
-+=================
-+Ethernet ports
-+=================
-+
-+This document is a basic description of the phy_port infrastructure,
-+introduced to represent physical interfaces of Ethernet devices.
-+
-+Without phy_port, we already have quite a lot of information about what the
-+media-facing interface of a NIC can do and looks like, through the
-+:c:type:`struct ethtool_link_ksettings <ethtool_link_ksettings>` attributes,
-+which includes :
-+
-+ - What the NIC can do through the :c:member:`supported` field
-+ - What the Link Partner advertises through :c:member:`lp_advertising`
-+ - Which features we're advertising through :c:member:`advertising`
-+
-+We also have info about the number of lanes and the PORT type. These settings
-+are built by aggregating together information reported by various devices that
-+are sitting on the link :
-+
-+  - The NIC itself, through the :c:member:`get_link_ksettings` callback
-+  - Precise information from the MAC and PCS by using phylink in the MAC driver
-+  - Information reported by the PHY device
-+  - Information reported by an SFP module (which can itself include a PHY)
-+
-+This model however starts showing its limitations when we consider devices that
-+have more than one media interface. In such a case, only information about the
-+actively used interface is reported, and it's not possible to know what the
-+other interfaces can do. In fact, we have very few information about whether or
-+not there are any other media interfaces.
-+
-+The goal of the phy_port representation is to provide a way of representing a
-+physical interface of a NIC, regardless of what is driving the port (NIC through
-+a firmware, SFP module, Ethernet PHY).
-+
-+Multi-port interfaces examples
-+==============================
-+
-+Several cases of multi-interface NICs have been observed so far :
-+
-+Internal MII Mux::
-+
-+  +------------------+
-+  | SoC              |
-+  |          +-----+ |           +-----+
-+  | +-----+  |     |-------------| PHY |
-+  | | MAC |--| Mux | |   +-----+ +-----+
-+  | +-----+  |     |-----| SFP |
-+  |          +-----+ |   +-----+
-+  +------------------+
-+
-+Internal Mux with internal PHY::
-+
-+  +------------------------+
-+  | SoC                    |
-+  |          +-----+ +-----+
-+  | +-----+  |     |-| PHY |
-+  | | MAC |--| Mux | +-----+   +-----+
-+  | +-----+  |     |-----------| SFP |
-+  |          +-----+       |   +-----+
-+  +------------------------+
-+
-+External Mux::
-+
-+  +---------+
-+  | SoC     |  +-----+  +-----+
-+  |         |  |     |--| PHY |
-+  | +-----+ |  |     |  +-----+
-+  | | MAC |----| Mux |  +-----+
-+  | +-----+ |  |     |--| PHY |
-+  |         |  +-----+  +-----+
-+  |         |     |
-+  |    GPIO-------+
-+  +---------+
-+
-+Double-port PHY::
-+
-+  +---------+
-+  | SoC     | +-----+
-+  |         | |     |--- RJ45
-+  | +-----+ | |     |
-+  | | MAC |---| PHY |   +-----+
-+  | +-----+ | |     |---| SFP |
-+  +---------+ +-----+   +-----+
-+
-+phy_port aims at providing a path to support all the above topologies, by
-+representing the media interfaces in a way that's agnostic to what's driving
-+the interface. the struct phy_port object has its own set of callback ops, and
-+will eventually be able to report its own ksettings::
-+
-+             _____      +------+
-+            (     )-----| Port |
-+ +-----+   (       )    +------+
-+ | MAC |--(   ???   )
-+ +-----+   (       )    +------+
-+            (_____)-----| Port |
-+                        +------+
-+
-+Next steps
-+==========
-+
-+As of writing this documentation, only ports controlled by PHY devices are
-+supported. The next steps will be to add the Netlink API to expose these
-+to userspace and add support for raw ports (controlled by some firmware, and directly
-+managed by the NIC driver).
-+
-+Another parallel task is the introduction of a MII muxing framework to allow the
-+control of non-PHY driver multi-port setups.
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 5a6f554905eb..ed4e3726d0cf 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -8773,6 +8773,7 @@ F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
- F:	Documentation/devicetree/bindings/net/ethernet-phy.yaml
- F:	Documentation/devicetree/bindings/net/mdio*
- F:	Documentation/devicetree/bindings/net/qca,ar803x.yaml
-+F:	Documentation/networking/phy-port.rst
- F:	Documentation/networking/phy.rst
- F:	drivers/net/mdio/
- F:	drivers/net/mdio/acpi_mdio.c
--- 
-2.49.0
+It would be greatly appreciated if you could take this patch and build 
+your ongoing work on top of it, as it would be somewhat similar to 
+optimize it from SE's protocol driver to the common geni driver for 
+power management.
 
+That being said, could you please provide an estimated completion date 
+for your work?
+
+
+Thanks,
+
+Praveen
+
+>
+> Konrad
 
