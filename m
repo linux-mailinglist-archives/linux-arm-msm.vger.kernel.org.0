@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-55554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B5C7A9BF4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 09:10:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90AACA9BF49
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 09:10:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BAD9B9A1A0D
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 036EF9A0778
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 07:09:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CD65233134;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67B352327A3;
 	Fri, 25 Apr 2025 07:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Fe4XRcHX"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="XCoVsl5Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BDE20C46A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 07:08:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B29230BCB
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 07:08:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745564939; cv=none; b=adfOMFXqLB4Bs7Vt3zQVz82uzoNzyu42hh2nbdVtkLMuY1i544aDpYABBephAj3WXs+zZ0ikMLfa+GxkQKVRhgsVFOVhuN7oxfebya9evuWqRu7MqRpGV1480Jy2fxbpZfEBMHGB89qlkoid7eFEuW0l/Jem+O8zIwi1IGXLLrw=
+	t=1745564939; cv=none; b=cohADejdrMtzqXWWtG/Ldn48r5Okxg2K4fePuT04ydZpee1T4k2DRXgwKyhGMLaITzt+zxur33TLMJzwGmPtzc6uRNi51ElvznvToiu7bRIt8XunFFEdFfgr3DbjLzfAat6XxWnHPA+QEsIezvfcRT/fFq4InfyIbI2OdRs7fxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1745564939; c=relaxed/simple;
-	bh=Fdj99F15NrodmliHWNzqnIaLNDZ9brmDoSEheiXAMlQ=;
+	bh=LA7q9pHIp9WcS0ADH7ddcSsLNvm3BotUh4LJ/goiaag=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XuaPdImMy+4xk6Fawg517hnXSdz0ewMAm/GBDdP1km5fSsASWmEdxM9aQQu25HJKHZEGAn7JNDeC6I3/jsE8+jF3hvRym1TbQbWqqxs19lvSxT62BPs4D6DVmCF39apHIhnaQG4syf3BHeBx9MV0x35loEU7zlYB7aZIJos4/cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Fe4XRcHX; arc=none smtp.client-ip=209.85.128.47
+	 In-Reply-To:To:Cc; b=UwHrvNwnLxFoi0jy/ezdlmZ6Fpo/g1w/9FEclzrnGhqveRPZcSE5e6cB4R0i4O/HDoS4nZbUCYfPKpNrsUvBOmbN0xbAJr/5P74w2HEfgCR4Mvbz+JZwENNt1JY0Iwy2EQTs5YaeB4eJiRtmV9Vze0lcobXRhUOtdCAKd5U/U1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=XCoVsl5Z; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43cfa7e7f54so12309445e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 00:08:55 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43ce70f9afbso15209545e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 00:08:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1745564934; x=1746169734; darn=vger.kernel.org;
+        d=fairphone.com; s=fair; t=1745564935; x=1746169735; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Vypambs+vDzLekBB8IzM17TAuFHn0wmPd4bpg5X3/QI=;
-        b=Fe4XRcHXWMTwmhtC6z8zpKW+zDzlBEGKcVobEE/yrz973VErnxHirWdTfYYvUEU/gY
-         zHW+xM9IrAhOEr9vBWoc85a8dWkscwfCx2dj8Vq2a0lwBPwc9jXW7dX1mVyLAipobVKV
-         NSPH7AVf1FPA7F12unKGm+1NxtkVs6bkSwXTtKpDNCWOG5gr4wvQKsMlGqpVBeGjMM8t
-         nCqP4QFStDOX+sZGihVkIm5r4MJhp3fThLjstaw6wwt/w+1r2vi4Dg+vGJM8GEJouZMt
-         U0lXiaEAXerDtMqZvxIiFd5rAAH496amvEcMJrg45SzdDcjZaTJ/MB04u3lG/tNmvkMa
-         WO+g==
+        bh=mm0mORpqXwGhjKCx6UTWDuYwmgBU3yr6fMoZERP6FVU=;
+        b=XCoVsl5ZxXwuomrxsqaEHsivgCge0RZPjrPu23jrVlGpFiC/k86I+zPjAHowiux/5L
+         5QvX4wtz/hrjEY4FSXtIftAWc6lmn3FVySpCHbeHMnSX723/np7uYB1Ymdk7pPGImEf6
+         hIuRh7g0iUXvvn7rn5iKawAOGQsVQukJYDnp5qr3eqvoXaW7faDlKNMla+PT9mbvu3ln
+         G7LxInQQnBN/5+zAQDz3j+JYY9P55SZQyv+48ctbym9iH7XhAb8n5OnakM6DRCYGUOS0
+         WP+j6fHLhZXb6qOK/XvpFg26VAtoiq8tKy2RZgxee7NQxJeFCfqLkOVzbN7N7DNQWReI
+         /TJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745564934; x=1746169734;
+        d=1e100.net; s=20230601; t=1745564935; x=1746169735;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Vypambs+vDzLekBB8IzM17TAuFHn0wmPd4bpg5X3/QI=;
-        b=TtttsPicymhMKBr8NLGAmOA/vq6dubHQJHq8COG/d8P6XrdVUqtfOQbw0v2lJJYMFi
-         /nIa7QKWG5/xGiJ14o9JL3C9gwm8SJdHJc6+9yIZZi7DALQnrvaSuR+8C8iCoKRXEsPD
-         AeHRczVVrhHf+vY8XKXMKgB1NPO184HjKWfVMDEdYkb0h7AukZ3wmpauH90ggwUR1BEl
-         GDwadTbnFHSpwYC2B3xkvEZQSC3MwcqZPLxm7E2NoO/7LcVzyHHhfuH3PiE+JVSXBEQL
-         q5pTvgbfkqTFmDy0rgyxLp/QfnZEWEeOtBX0i+j4CUuHs75Zj2J51l/LuP0hIfMvI5FV
-         Eqqg==
-X-Forwarded-Encrypted: i=1; AJvYcCUwrA+kcXHzoM7Un5/5P/OZ7tt/zZ0jv1aS5Tfcj25vkFhSrAwm++zryOsOpvbcblaJ1coJTP3wncu5IVc3@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy0BvPEkuIdSQ1w4WBwbYOuW9d1/2maozZVVdbf5P/BKjiBZdFr
-	hyQMqtedw22MO2/uEN7mdjyoeQnWPTxR8p8DtoQ7uXB6dK96QXxfL7XSoTkDUCc=
-X-Gm-Gg: ASbGnctr1SnW9YI5Rxvc8vYCQr9l5Vh86znm8JxvxZhFUwpn0jVqg347sds6fNd0zEY
-	cL056EBlGReoB8O0fA/Bl0hsyE1AyNR0pk7VXimNavItmr6g5yBPpSqpo3RMy8sB8NJCsL6E/fp
-	MyT8FczDKgt29j29b/4rEeWBBn12pE35CJpMBes07c2uRSlqRz8zRmc0GF2hefKtFfLVPdDmDJO
-	BNLR6LE+QXff5HRcKZOADLFF6lR2Q8QuTeZQF6m1tAFciYrWFBMZqaKCAmDOm88l0lyEgTQvAV2
-	uY7bU9M2IGaXHQ7ZklIqd1PcT12C7tjoyioIJr9jhwdJ1Yk+oGEjakFoq8SoXZdjM24cG9Xkvqr
-	zw4BDxkCeH/fDDfMWto8qsaihiBeidZD9R6svaCGuo1125zcNbBwZMmzr
-X-Google-Smtp-Source: AGHT+IGS9YIDgXntlFmkZIWZPmJJOfUr4x+N3jhTyetRa2YTZOmZBiwusqcoLISyjopO1bgF6+q5sg==
-X-Received: by 2002:a05:600c:55c7:b0:43b:4829:8067 with SMTP id 5b1f17b1804b1-4409c4615e0mr38383615e9.6.1745564933891;
-        Fri, 25 Apr 2025 00:08:53 -0700 (PDT)
+        bh=mm0mORpqXwGhjKCx6UTWDuYwmgBU3yr6fMoZERP6FVU=;
+        b=m+BbJJRaTXUWOFwrBL6WNFDYtxYobD+02t1GMVy3jaFwkb40J+PmkEY4ceLaAlXs+2
+         EwJycvnOV91ErRx67HhZ2+dKT/34IqZ0OGvwIYir5W97W0mG4RfmodlzO+fp+NchRj9C
+         nKV4DOnJp427178yv+Hhkze8kvivt+9MCSULCPLSP1zBUKX4xbSdSedTlrqJGuo0ZQ5w
+         h78S9nm/iexeqMv/cerQCZSUx4krxC+0z+RPoxcMN3TCvAUPiBeMLqmtrWbDpbX8aAC1
+         J7v+liXoqBOtMT6QgZsAnNYl2E2Q+uqnflvU5Jb78Hdsu5u9aAaaNvve8zRcx4PcXzPp
+         9q3A==
+X-Forwarded-Encrypted: i=1; AJvYcCV1ldQN8+MeC/2GNTsA5l8K+v1sjpcXKfFaDTsjuXkV78hbB1IIMDXbKPCJaZfuqj2JBh0H+RzCsz75fbaH@vger.kernel.org
+X-Gm-Message-State: AOJu0YxH5ynawjjXBnRA/vLZkZmu+wwcRLC9RSwA5l+rF8m5a49KZDDz
+	hHo+TpZL20J47nm1rNo494jbm7nFHWjtIN4q/EjUwwT4Yk8RB1WKd/0GWge8d08=
+X-Gm-Gg: ASbGnctJRjvAZ16THZ3vK3zSbttK70XwYH5SJMD8uVC3orhbfTQSl/VfgCYnVh8KfoP
+	oHWX7Vgs6zKkqLIhWwOE+VzpfCrWjBw7Hbh4VQX36m+jns/NWt5JqmCAsgxDRnFrKE0DdHCpLcA
+	Ade1RSKzqkFfB8p+P02IRxVKUDkOXxUf3qfnC8phJGn5N0cerAro010pXlh9UhEu4IbWQXRw6E0
+	HMkUCpzdyxjejKt1/agc5S1n1/ruCmLHJcZyOHWcYzciZNcxoi0TxH01NLZeJurJAyPMsMKMPdQ
+	OKp0b/O1hZuJNRnrfZtRVHv9M/JUJHocM+nq6FYxz4Djgje8/BP/sr5FmxTgei0v3ZgID9cpUcV
+	YhTPDVcOaFZQEmp2ipwRCiF5hAj8hF0Xn6gLd+EJ1KzxCqOEqPIpxKqgy
+X-Google-Smtp-Source: AGHT+IGLT5RMGJOi31Z4EljlBM6Dn6ye/misUQytVMeOZB5sQxwZhioVj8uoLgVjDj0pdiM3s3HzmQ==
+X-Received: by 2002:a05:600c:4ec6:b0:440:66a4:8d1a with SMTP id 5b1f17b1804b1-440a65ba116mr6484755e9.7.1745564935206;
+        Fri, 25 Apr 2025 00:08:55 -0700 (PDT)
 Received: from [100.64.0.4] (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4409d2ad112sm46202735e9.24.2025.04.25.00.08.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4409d2ad112sm46202735e9.24.2025.04.25.00.08.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Apr 2025 00:08:53 -0700 (PDT)
+        Fri, 25 Apr 2025 00:08:54 -0700 (PDT)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 25 Apr 2025 09:08:13 +0200
-Subject: [PATCH v3 2/4] arm64: dts: qcom: qcm6490-fairphone-fp5: Add
- PTN36502 redriver
+Date: Fri, 25 Apr 2025 09:08:14 +0200
+Subject: [PATCH v3 3/4] arm64: dts: qcom: qcm6490-fairphone-fp5: Add
+ OCP96011 audio switch
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250425-fp5-pmic-glink-dp-v3-2-cc9c2aeb42fb@fairphone.com>
+Message-Id: <20250425-fp5-pmic-glink-dp-v3-3-cc9c2aeb42fb@fairphone.com>
 References: <20250425-fp5-pmic-glink-dp-v3-0-cc9c2aeb42fb@fairphone.com>
 In-Reply-To: <20250425-fp5-pmic-glink-dp-v3-0-cc9c2aeb42fb@fairphone.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -102,75 +102,40 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
 
-Add a node for the "Type-C USB 3.1 Gen 1 and DisplayPort v1.2 combo
-redriver" found on this device.
+Add a node for the OCP96011 on the board which is used to handle USB-C
+analog audio switch and handles the SBU mux for DisplayPort-over-USB-C.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 35 +++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-index 0f1c83822f66f95b05d851a5d28b418ff048b09d..ea9f5517e8a083e37c4b7432322bd6d18fea84a5 100644
+index ea9f5517e8a083e37c4b7432322bd6d18fea84a5..e0470be9142caa4bac4285a191725bbd60e706fa 100644
 --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
 +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-@@ -166,6 +166,23 @@ vreg_oled_vci: regulator-oled-vci {
- 		regulator-boot-on;
+@@ -750,7 +750,19 @@ vreg_l7p: ldo7 {
  	};
  
-+	vreg_usb_redrive_1v8: regulator-usb-redrive-1v8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB_REDRIVE_1V8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
+ 	/* Pixelworks @ 26 */
+-	/* FSA4480 USB audio switch @ 42 */
 +
-+		gpio = <&tlmm 61 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
++	typec-mux@42 {
++		compatible = "ocs,ocp96011", "fcs,fsa4480";
++		reg = <0x42>;
 +
-+		vin-supply = <&vreg_bob>;
++		interrupts-extended = <&tlmm 7 IRQ_TYPE_LEVEL_LOW>;
 +
-+		regulator-boot-on;
++		vcc-supply = <&vreg_bob>;
 +
-+		pinctrl-0 = <&usb_redrive_1v8_en_default>;
-+		pinctrl-names = "default";
-+	};
-+
- 	reserved-memory {
- 		cont_splash_mem: cont-splash@e1000000 {
- 			reg = <0x0 0xe1000000 0x0 0x2300000>;
-@@ -747,7 +764,15 @@ &i2c2 {
- &i2c4 {
- 	status = "okay";
- 
--	/* PTN36502 USB redriver @ 1a */
-+	typec-mux@1a {
-+		compatible = "nxp,ptn36502";
-+		reg = <0x1a>;
-+
-+		vdd18-supply = <&vreg_usb_redrive_1v8>;
-+
-+		retimer-switch;
++		mode-switch;
 +		orientation-switch;
 +	};
- };
- 
- &i2c9 {
-@@ -1182,6 +1207,14 @@ sw_ctrl_default: sw-ctrl-default-state {
- 		function = "gpio";
- 		bias-pull-down;
- 	};
 +
-+	usb_redrive_1v8_en_default: usb-redrive-1v8-en-default-state {
-+		pins = "gpio61";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-high;
-+	};
+ 	/* AW86927FCR haptics @ 5a */
  };
  
- &uart5 {
 
 -- 
 2.49.0
