@@ -1,101 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-55732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02023A9D122
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 21:07:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D3E99A9D13B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 21:10:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E2BAD9A30DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 19:07:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 498253A61A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 19:10:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D947D215F72;
-	Fri, 25 Apr 2025 19:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C746192B6D;
+	Fri, 25 Apr 2025 19:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="S6TV0Lox"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VVRulpmP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D589217647
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 19:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961CF21A427
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 19:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745608041; cv=none; b=a2nYlOv0mhO9wCAXKR0ih2Qh8uiQn/8xMZypUohLFZR4Ri7KPPksiQhPgaEk4X0v+YlvD0T/GOvDJv0O2+42rm7YPjLnAz+wLAZVy+UNh3arnZqgW+y1Sc0dGHv02CszFhdcfATB0sSJLIIgbrqQc8Uc+HuCm/IzIN+fdey1Cqk=
+	t=1745608248; cv=none; b=sc18Cm3lvsHv3s44z3jGt6WloMdbcVts0wyOuSPWl3WAHwCVbN6dMf1D/XxhTyZ+jBzh67mTP+DGoSAmFvH40tVN0b4iiwo72K6eM0QZOaQZ95GdP3KkTMRhxt0JCIYbibP+BqtT/WiuCQc7QLBLa9yp7opM1T7ebRuJ4a5/p3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745608041; c=relaxed/simple;
-	bh=PptaosrMKIkszF9oY5swFi4VZ1gvZMuR9i7Ep8CGyvU=;
+	s=arc-20240116; t=1745608248; c=relaxed/simple;
+	bh=a4rBarla8/hOO7uy6LRhAvTU7DW8bfODgiliMWDQ8Yo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a96yC0ZQ34RISjQVGvmxN5ojDXZJ7iUrFgwRU1svxzPCIbffTfLgjChxiup/FVnn5iW0Jg78hm1zeZUULAuKjut9XU39VoD6kmCmToCq1skEQUpqfailH5dbKrlyt0T0FVSi3Ej7GiP7NOsgVEq86JF7X/tkO7BTY8Wpqx86qLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=S6TV0Lox; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=kQkA+vRJZ3gDBCdsT8z+0ceoXziDNCOcr0zUA25h+TYhgo2Q4kEFQ+JC9OLVv835hunoosfhuT2A1PG6QpuUGQ7U6QsArfJUxnGazTaWFWq5ZckjLEUtiHN4k2KeRf+tmeu8vz2C0pspkDIuyL9shR22F5xo2mjrvNwzSQSODWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VVRulpmP; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PGJwB2000447
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 19:07:18 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PGJurR000410
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 19:10:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=YJbYuN2gJ/vLBVO+7ggEakIk
-	yWo8fYN/fU1HKulgY6I=; b=S6TV0LoxN9Hg9UrUvaO+4Ci803NRAtkxU5Vfo6rY
-	80rUfOdGhN1a9MfOxX87Am9700jbKmaBiTQTkA1uXadpqDCPb5QEgrdrERyRE9NB
-	SMy3ULr6tezjisWlIiL+16hKKbxqPD2abNFbLi2n0s0qarzJsOVtpMgVB+TsjBmP
-	4Lqc0a3p1Dv3ErRpy7pLTi/qBB/3XEOo8nL08zhNKHi1+sYkCMvjvrsQrmCbjH+5
-	Uv5t3NKkQuino53SK5SE95mkEhprXs2L6YY+bsOxQu4TmkFNHeXYezhbVFYIfcxe
-	lW7ZjJZR1vPgn0+QNr1XW8EFcyOOOYZiLYqXy3nUMGBABw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh3j1dk-1
+	:references:subject:to; s=qcppdkim1; bh=SK52ISjMMPAwyYoKNjOnDdT8
+	tXPIN0birzElu7YYr84=; b=VVRulpmPP9Rz357ZIYahGqWXDWnoImjedTsJaoL3
+	guwDpfGCAY28V5D95reMgP7bnrJpO98xH/XBtzQQoSQVX7bgea6NUjedHo5xDrV0
+	cDXbOcmQvJR2SEkWlviPbJZhZMyb0XgaPc+oWF2fFplpMmo+FkMLAygPtMPFifa7
+	cxPfx+evQc7xgDbIIY2vhI7px8H4N3wMrfwrrTQY+g9GjzFucn2MaU7MMuia7mL7
+	65rhdQzeyqDogaYLmhbjfKap6Yr8IzLuCOCodhn4mrVnzxSZzX2yYLdn3/81f6HJ
+	fxBr651m7bAAWHkIadXn/xvwPBV18tD+OPpL0dGsCJGh0g==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh3j1nr-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 19:07:18 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c5e2a31f75so797828185a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 12:07:18 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 19:10:45 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c790dc38b4so468550085a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 12:10:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745608037; x=1746212837;
+        d=1e100.net; s=20230601; t=1745608237; x=1746213037;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YJbYuN2gJ/vLBVO+7ggEakIkyWo8fYN/fU1HKulgY6I=;
-        b=rmdSGLn/Qjgt9k4hvriwfi+eWMBd2h5yhJbgaBVT9onmgsm2qEZrWo6002gJ7R/jIl
-         /6XaGsHZyI8NFrjLSGmppMb+NQcjiezSDXU04tyrlVbXaAso+RQdXP7Mm0+d70KzyT41
-         HxAzbre+r2mcEXLnb/U7/1sGcf9dtv8Uj9sEwsT2k1pW/23Y3XM2eIKFXpdxN5YZ1Zew
-         azFocDlIRtzVxz7vmp2i5nHgspDt87Wrs9lJsLsK8OC7raRyMXQkjKheJZKLVnchshY/
-         uIY3AemHO2vYEssMs7T9gqS5bzo/4ovaLGc4bX26Y9TF+ISxLvAJ2Gqid6eORKUnvYyd
-         rL0g==
-X-Forwarded-Encrypted: i=1; AJvYcCUPZdCoTKJRZaK5svzD7lcAflRCVyjT4pY8wQEgNdwJERo6Ent3CMxeOg0r62ea+ncHpRnvlTUicC5g9Cks@vger.kernel.org
-X-Gm-Message-State: AOJu0YwaU1aFaEmM0sAjfHeDIp3PjUHITyd+Z62eEv+8YtJ1RxoV/skB
-	oIarDVwSKTemSTcRwapeN/jLJBNt90hz+RiUP3rfkJs040ywcptCrFpUVwfZrQ5xHtlOZ8V+2Ce
-	bQ9fkgsJIjTXWLvbGgLg0UdHnO0xiWzzzMrdrx+mnhbgBTIDPjeFul0m6EZ0+0rQ3jy6Mb4Ka
-X-Gm-Gg: ASbGncvn1zOBxmogEs/jTrQtFrmQ074blSEMZcjSLd0g8Xhhb7cxRzgimDPt+AJt0zv
-	P0dgEr7lSOV5CKiskxR3eLBq94Ygtyey5pNH4z6jgjj82C5+i5E/rAJjFudQh/u4YzbRcsQpkyB
-	whNQThnbXdcw/ZfU4OtgxjbAu0+YF+PpjiUys2ctlChdVcwy1RFr+vm0XL9zoA0spXyoNUa4Xdd
-	bpazvpUtACD20T3QKPKWME98LZk2sAvIML2ZZOyD3doB5BY7ZicNCJnc0A08N3isgH0okugC3XZ
-	q5qns1U3Zic5Px5fVLs7k2OmkVDuaxkH2aXK3M8sinbAcTnaTlGwqNe832LaRr9A0z0HPiagAlg
+        bh=SK52ISjMMPAwyYoKNjOnDdT8tXPIN0birzElu7YYr84=;
+        b=BJUyN/IPs0YR+XPJK9ugDUtMvbvdciv0+vtpdz2LhgbokfKyY655aSuXlG8jr0ZJXx
+         UKU0ksKQfwrMZ+qx79z+rwh3YsrYqpeiR7WhEaZG9s6Xni33quwQ2VquBwcZ+8De+5wY
+         7Zec66HesnlXx7umI4s64Pwq1bOUa8jKwtVt9ww7Nti5SdLrzD3Z7ZqfTlkWi2NjtqSC
+         3UemOlqqNvkrQ5vl71vncrk7UpHx69jMODwaAjNa2q9wGhx9wPqsFumSEX8b3ao0BcXE
+         XRI6hCgdpytwk6r2EEGibDh7BiLhzLi35URyOKXp4gB5c+LTDfE0ELqoyGY/rhHnd/96
+         1JRw==
+X-Forwarded-Encrypted: i=1; AJvYcCXYfjEd7jS0r++bKT95Vq5k+Uftn1vajO2SPL2ti2T6867+3/RDtD3FLVrgeNtr60KI8HZcUotGitpKVkg1@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5RDjI1FrFUL+4SkU+WRdxgl42PulIl4OCtAwIn8WHhMKDGSe3
+	ESl9w61Jb1JVz19zczxzWp4A0jmZZJX8a+nKXiOD8TbNKwZzekNHB7gBMV5/Y/+Roo8PPfXDuu0
+	DFJKUEW2ynqjxZevTazYmqEpYKXHX0Gee7nab08ENdn63G5qj/RMuD/L/ONgsjxdH
+X-Gm-Gg: ASbGncv2HLbPYvJXeKVopqfah1ovCAg8Pke1E5HMQXCPXfVMrkDAJfzkY/ESU8yhV1M
+	5ZAeC6k4ietbLFPgVZz8AgQzx+jSCwEnav9q8LAO7Nfgjbj2nyRB8c+iFLCa2oDR+ownk1b0+Rf
+	SouXU1S7s4KBtqJx+Tfj64h7Anh+7Vz1UxZruZWadsaScRtp1HNbt20RpBoSU4eIV+Cxfe5oPh6
+	bndOvYJzPeVPKYD9yaEjWQF+gnZtWLC7xaDXyayyNa3GSg7Y7mpaELXLuPrXOnbhhpDAWVrFxyR
+	kO0QOAeYowoYOdKFHQxp9W+sUqMGX2pyjN0uhFU8noBT1rE1GyLfaUWxQfuvTRgPFXMBQRbdET4
 	=
-X-Received: by 2002:a05:620a:4609:b0:7c5:6a66:5c1e with SMTP id af79cd13be357-7c9668cdc37mr115701385a.58.1745608036734;
-        Fri, 25 Apr 2025 12:07:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEfsamSTL36MZXKs1A+xdmyxqbS+5Cgy4qJPLYj7dmxRhp/lz8rumoOXUYE90g5yOpO1ztFkQ==
-X-Received: by 2002:a05:620a:4609:b0:7c5:6a66:5c1e with SMTP id af79cd13be357-7c9668cdc37mr115698685a.58.1745608036439;
-        Fri, 25 Apr 2025 12:07:16 -0700 (PDT)
+X-Received: by 2002:a05:620a:d89:b0:7c9:222a:d858 with SMTP id af79cd13be357-7c9585c43a9mr1080782285a.10.1745608237567;
+        Fri, 25 Apr 2025 12:10:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE7y2gVQYWKUcd3rSgI4jl/cjj7VjTLLTsX7uyEAt1iz8D5sKZWsC2LPXaLmIw0Vpqi8vjwLA==
+X-Received: by 2002:a05:620a:d89:b0:7c9:222a:d858 with SMTP id af79cd13be357-7c9585c43a9mr1080777785a.10.1745608237194;
+        Fri, 25 Apr 2025 12:10:37 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7ccb83b5sm712379e87.245.2025.04.25.12.07.14
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7cc9e921sm706334e87.152.2025.04.25.12.10.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Apr 2025 12:07:15 -0700 (PDT)
-Date: Fri, 25 Apr 2025 22:07:12 +0300
+        Fri, 25 Apr 2025 12:10:35 -0700 (PDT)
+Date: Fri, 25 Apr 2025 22:10:32 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Cc: Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        laurentiu.tudor1@dell.com, abel.vesa@linaro.org, johan@kernel.org,
-        Stefan Schmidt <stefan.schmidt@linaro.org>
-Subject: Re: [PATCH v3 4/4] drm/msm/dp: Introduce link training per-segment
- for LTTPRs
-Message-ID: <zb5fqcnersry6blohozlzc3f2it2q6ypi4xei3z2fvzp5ogszj@mj23wsa64nqi>
-References: <20250417021349.148911-1-alex.vinarskis@gmail.com>
- <20250417021349.148911-5-alex.vinarskis@gmail.com>
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Hermes Wu <Hermes.wu@ite.com.tw>, Dmitry Baryshkov <lumag@kernel.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v7] drm/msm/dp: reuse generic HDMI codec implementation
+Message-ID: <4isbdbp5z2kr4pnkp5gstridtwv2pyceqfea6lhkxaa7s3epvw@7s3qtp7m6ovl>
+References: <20250423-dp-hdmi-audio-v7-1-8407a23e55b2@oss.qualcomm.com>
+ <06448824-81a6-41de-b44f-32101b889258@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,50 +110,96 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250417021349.148911-5-alex.vinarskis@gmail.com>
-X-Proofpoint-ORIG-GUID: VS33-Jq136Gcu0swNktmpW9P78BTqXwD
-X-Proofpoint-GUID: VS33-Jq136Gcu0swNktmpW9P78BTqXwD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDEzNSBTYWx0ZWRfX0h5IZGz3nmCA /6F1PosIFQzZCW30MvnaglTF8gPtHlnyd7tenMLTiOmlW+sT/JMGhk+6G0Jue10UUPtZbMsspr6 13JFlp7WOCmYuGymv7L86D0/N255mTTiwoeOzd5O648T97yKJJvTVvIDHASU+43kOopku6LgxfK
- k7SebPg6VGzD4Gcz0OdMROnZ8Zngtw+mnQpyF6is5EhJqwU1SyR+ev/sAKQv7Wwrhxx3J2WFaTp Pk7XKc5bzUIeF6+FuuzVRtis+V8RokNUPat/6vLEx5r1uc6h74dduPS+DHJhGOsdT0euOGln1IX VaopmTH4MT8cBuloEJjwx34SnmUFvqwvA0qN5nsqxx6wKY/5493618jJfxedEVcCv+EM83T6J/R
- yCv1PAm2AHMAuGYSRzOvIyXJoxHUiQLtxaBT1/c8TzVLBDS5IEinBbxMtS2WXtld8rBhky/Q
-X-Authority-Analysis: v=2.4 cv=Mepsu4/f c=1 sm=1 tr=0 ts=680bdd66 cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=GOLd5LZXdg2kOnOye_0A:9 a=CjuIK1q_8ugA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
+In-Reply-To: <06448824-81a6-41de-b44f-32101b889258@quicinc.com>
+X-Proofpoint-ORIG-GUID: Klb8FSIxzHUDQymDxKF-yZtDyai9QJIi
+X-Proofpoint-GUID: Klb8FSIxzHUDQymDxKF-yZtDyai9QJIi
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDEzNyBTYWx0ZWRfX8N0U62L5h8W+ PX/KfxQSExC0eCUASito0qRdd8V45LkWZuUmq44nmJ5EoRKcbcg8HeD+x9mECLm+y1+VMI3bpGs H3lHpfp4wgpWgJr+X2869R0C7HbEFSElx/AqrvW5SJPAheu+9dJB6I6dRR2FmjimmN+0rSr1YJ8
+ 0uOYTUcYYAVa2q634VJwCS9OuArj9YkQwedAjcLQj/rRpblwQRa/m3Ldvn2mu17wTZsIjX70Qq5 GWCpwkrssTjExOpiahE3YKp6ahE8phzAhL8DuNWy2V6/zkFusp3Lp7PlZZOS7sroC5SAZ/CaZ3q zCEWscMnnGsLBDouXTIPpgY5fK2cxbp1h71sjKEtMpm+pgX6qc31LAVcSLAXmcQsMJNJYEVen+J
+ Tv6gMbbJE8VJYreeSIvG+FdBx83jfpNXw6oGaJbcAZqlvZG4fwFieIj5MxFg9u4y2COcpAFL
+X-Authority-Analysis: v=2.4 cv=Mepsu4/f c=1 sm=1 tr=0 ts=680bde35 cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=M9OHNA7gU70stU2frQkA:9 a=CjuIK1q_8ugA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-25_06,2025-04-24_02,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
  adultscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 malwarescore=0
  priorityscore=1501 mlxscore=0 impostorscore=0 clxscore=1015
- mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ mlxlogscore=661 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504250135
+ definitions=main-2504250137
 
-On Thu, Apr 17, 2025 at 04:10:35AM +0200, Aleksandrs Vinarskis wrote:
-> DisplayPort requires per-segment link training when LTTPR are switched
-> to non-transparent mode, starting with LTTPR closest to the source.
-> Only when each segment is trained individually, source can link train
-> to sink.
+On Thu, Apr 24, 2025 at 06:55:50PM -0700, Abhinav Kumar wrote:
 > 
-> Implement per-segment link traning when LTTPR(s) are detected, to
-> support external docking stations. On higher level, changes are:
 > 
-> * Pass phy being trained down to all required helpers
-> * Run CR, EQ link training per phy
-> * Set voltage swing, pre-emphasis levels per phy
+> On 4/23/2025 10:52 AM, Dmitry Baryshkov wrote:
+> > From: Dmitry Baryshkov <lumag@kernel.org>
+> > 
+> > The MSM DisplayPort driver implements several HDMI codec functions
+> > in the driver, e.g. it manually manages HDMI codec device registration,
+> > returning ELD and plugged_cb support. In order to reduce code
+> > duplication reuse drm_hdmi_audio_* helpers and drm_bridge_connector
+> > integration.
+> > 
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > ---
+> > A lot of DisplayPort bridges use HDMI Codec in order to provide audio
+> > support. Present DRM HDMI Audio support has been written with the HDMI
+> > and in particular DRM HDMI Connector framework support, however those
+> > audio helpers can be easily reused for DisplayPort drivers too.
+> > 
+> > Patches by Hermes Wu that targeted implementing HDMI Audio support in
+> > the iTE IT6506 driver pointed out the necessity of allowing one to use
+> > generic audio helpers for DisplayPort drivers, as otherwise each driver
+> > has to manually (and correctly) implement the get_eld() and plugged_cb
+> > support.
+> > 
+> > Implement necessary integration in drm_bridge_connector and provide an
+> > example implementation in the msm/dp driver.
+> > ---
+> > Changes in v7:
+> > - Dropped applied patches
+> > - Link to v6: https://lore.kernel.org/r/20250314-dp-hdmi-audio-v6-0-dbd228fa73d7@oss.qualcomm.com
+> > 
+> > Changes in v6:
+> > - Added DRM_BRIDGE_OP_DP_AUDIO and separate set of DisplayPort audio
+> >    callbacks to the drm_bridge interface (Maxime)
+> > - Link to v5: https://lore.kernel.org/r/20250307-dp-hdmi-audio-v5-0-f3be215fdb78@linaro.org
+> > 
+> > Changes in v5:
+> > - Rebased on top of linux-next, also handling HDMI audio piece of the
+> >    MSM HDMI driver.
+> > - Link to v4: https://lore.kernel.org/r/20250301-dp-hdmi-audio-v4-0-82739daf28cc@linaro.org
+> > 
+> > Changes in v4:
+> > - Rebased on linux-next, adding DRM_BRIDGE_OP_HDMI_AUDIO to Synopsys QP
+> >    HDMI driver.
+> > - Drop outdated comment regarding subconnector from the commit message.
+> > - Link to v3: https://lore.kernel.org/r/20250219-dp-hdmi-audio-v3-0-42900f034b40@linaro.org
+> > 
+> > Changes in v3:
+> > - Dropped DRM_BRIDGE_OP_DisplayPort, added DRM_BRIDGE_OP_HDMI_AUDIO
+> >    (Laurent, Maxime)
+> > - Dropped the subconnector patch (again)
+> > - Link to v2: https://lore.kernel.org/r/20250209-dp-hdmi-audio-v2-0-16db6ebf22ff@linaro.org
+> > 
+> > Changes in v2:
+> > - Added drm_connector_attach_dp_subconnector_property() patches
+> > - Link to v1: https://lore.kernel.org/r/20250206-dp-hdmi-audio-v1-0-8aa14a8c0d4d@linaro.org
+> > ---
+> >   drivers/gpu/drm/msm/Kconfig         |   1 +
+> >   drivers/gpu/drm/msm/dp/dp_audio.c   | 131 ++++--------------------------------
+> >   drivers/gpu/drm/msm/dp/dp_audio.h   |  27 ++------
+> >   drivers/gpu/drm/msm/dp/dp_display.c |  28 ++------
+> >   drivers/gpu/drm/msm/dp/dp_display.h |   6 --
+> >   drivers/gpu/drm/msm/dp/dp_drm.c     |   8 +++
+> >   6 files changed, 31 insertions(+), 170 deletions(-)
+> > 
 > 
-> This ensures successful link training both when connected directly to
-> the monitor (single LTTPR onboard most X1E laptops) and via the docking
-> station (at least two LTTPRs).
-> 
-> Tested-by: Stefan Schmidt <stefan.schmidt@linaro.org>
-> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c | 126 ++++++++++++++++++++++---------
->  1 file changed, 89 insertions(+), 37 deletions(-)
-> 
+> Looks fine to me, just one question, please confirm if DP audio was
+> re-verified after this change.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Yes
 
 -- 
 With best wishes
