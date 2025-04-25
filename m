@@ -1,80 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-55691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 700FEA9CF98
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 19:30:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B2A3A9CF90
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 19:29:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2AC627B3514
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 17:28:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 87BA23B342C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 17:29:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB22A1DE3DF;
-	Fri, 25 Apr 2025 17:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D1101F8BCB;
+	Fri, 25 Apr 2025 17:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CzJ5A5BP"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jsf3ZLbU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E211FBC92;
-	Fri, 25 Apr 2025 17:29:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED981F8724
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 17:29:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745602186; cv=none; b=pXPGjROEBY3CnZgenSyzQNn7bcEsdCrd0uV4V+fycUXDz1JFfwfPOLaWUMW1YDlvJF5Q7/gye/G75T+VZSfFjgrcNeqxBIZTD7+wqPam1WSFvTGPBx8i+xCpJLFTXkaTAvtBAk7aRSSBfuoXRiK7X2ks12wUuusBhxSOlfj+0aI=
+	t=1745602161; cv=none; b=XkjOM0esXmoISGE1UALyw9s6QIpMlX6ys3g4zydFV/J9Se7bLQZM1ou85RTJ8ekTP40Og7utTTAVJz32HB8+lLL7xozJR3bYVC+JMWirYDeA9NF62XAvTJOtbDIvy3ngF6qXD/QIZD/08oQ+juoOB+sGiyYKz/qv0LN4lHPotyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745602186; c=relaxed/simple;
-	bh=rIUIE776wCGre/V+cMF7M4GdfRE2LRV4+lSyBGHQX+c=;
+	s=arc-20240116; t=1745602161; c=relaxed/simple;
+	bh=Vq2kaZ1JliFPaYFvT1z/n9E9y0WnKdn/Apce+WVD+QE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sIua7WGSr2D16J5J2fXtFDFgGCM5mwRfe7AR156fAVQcCBlol/Mj+H0MylV19CZR81JTrnOIcClCjkJyZabFp3QzZ6KVIu1eXHygOIMaxCVjNjbHp/MVzXUW5T8f/W7ZhF7ca/mauzPF2x18K/ZvhelSro/gcAedK7LSGQWKLHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CzJ5A5BP; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1745602184; x=1777138184;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=rIUIE776wCGre/V+cMF7M4GdfRE2LRV4+lSyBGHQX+c=;
-  b=CzJ5A5BPpSsC1iXhJrh1kct9mtDFO6kE2AKO4o7iNlG33FWMpDIjX2t4
-   dNrZEDjplEpriPGkVeajFFMUn73umNEVrBpbtOc7ZRfIAafgwTNPqwS46
-   pHd09DGc09WmYTTPfUH3H/SesyjfZwS2mIrXNXH5GsHf7pHgR0mJ0gyPA
-   OOCLSHf8X0mmnQMX/SltsOmXRDAPZlH/bO3y6KihGBlsJ4NYTWE0TTyqK
-   ja3cwD1gbOh76vPMbYpDHY9iC5bm4urWNVDm2LWKXa4Mt9EBGyenUtr8A
-   80ebGSIEYXvBWMnvJIVxX361c7WD1AVXSod95I256eB3xHY/5STHOISio
-   A==;
-X-CSE-ConnectionGUID: 8uP4PM3XRvKhXx+j/4FYQA==
-X-CSE-MsgGUID: uaMwI02yQo+aHQddMrzhlQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11414"; a="57917788"
-X-IronPort-AV: E=Sophos;i="6.15,238,1739865600"; 
-   d="scan'208";a="57917788"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2025 10:29:42 -0700
-X-CSE-ConnectionGUID: OysVDFxzRcmRFl4PfL9zBw==
-X-CSE-MsgGUID: x0YhZtSzSKO6ext38AbRwQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,238,1739865600"; 
-   d="scan'208";a="133934294"
-Received: from lkp-server01.sh.intel.com (HELO 050dd05385d1) ([10.239.97.150])
-  by orviesa008.jf.intel.com with ESMTP; 25 Apr 2025 10:29:39 -0700
-Received: from kbuild by 050dd05385d1 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1u8Mro-0005Oh-1A;
-	Fri, 25 Apr 2025 17:29:36 +0000
-Date: Sat, 26 Apr 2025 01:29:04 +0800
-From: kernel test robot <lkp@intel.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
-	Jingoo Han <jingoohan1@gmail.com>
-Cc: oe-kbuild-all@lists.linux.dev, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v3 1/4] PCI: Add debugfs support for exposing PTM context
-Message-ID: <202504260126.wxQ1Dp0M-lkp@intel.com>
-References: <20250424-pcie-ptm-v3-1-c929ebd2821c@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=J7PhYYaK3W57C8TIs3xwI8zxq575sLyaA7KlQbZVg0uVOOV6Gkb031jBMEIPFpZ6lHHMy1pQ5AqdWr/23bBKrjqK7l2TjTZ5rcFzFwIVh2Pcu7bhKH8z40deqQxEWpuVnSYA/jF4b/VLqENrmLbd6fnCqx1dOrkAaifYaeAv5UA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jsf3ZLbU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PGKMY6001943
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 17:29:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=i2O5HicpG8+gCzYxjVsix8Kr
+	oj4gSwc+A6+ddsoGeAk=; b=jsf3ZLbU+4ZoZ1REhmf/vc+IG9xQqCBXrqfLtq73
+	kDNseSuCG6lqGOq8+gzFxqZIKGR15MZ8FC05Dzsx5JORjkQlgCLdE4SVRnH5ZWYn
+	9jH1i4pI5DAdRImw6WW7tHQHfm41u6MkXxb+JbQPODFB74VKiFTHJSnmo/ZZAKIm
+	e3fyLd6e0gOo7BL+otxn27SvuhX3JYgHEf6fdi4kHqGwLcmfzovU4g/JobLzH86H
+	hMlrezE82Fiuumk1ooA00K/itoOxmpq44c5ImIbruERcjaRAwKolOuWvf1CZJR9r
+	Rti7WDwpmPtrU6XUNdiRkJblZu5t8dLazbSjcR+e1rPV8w==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh3hsmq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 17:29:19 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6e8f9057432so50688196d6.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 10:29:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745602157; x=1746206957;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i2O5HicpG8+gCzYxjVsix8Kroj4gSwc+A6+ddsoGeAk=;
+        b=DZNdHzDYJ+voNyYZaKe36AeAhESVu9mttnyc7442Z2sW+2TTAziDHvlEiL+P6oKvxi
+         PoMK1Uv6t0cjeJ2F+ZxKRwPwL9dvTV3oMjzbZd0aUA+uYeN0DUUnUiQ607ZZJtEIa6tk
+         cO5n90bvQScQYpdGTAIy7O+XmiO+wd7uD6AOWRHJMHGmjmYWUNwYQkSJa9RflFqMvxSW
+         vmD/yet3aVo9g1RVmXWlIwpUpUPHcP5tOFCV6Qu0/9lDMDC+Q0XVPiwyunssr4uDK9zY
+         uTsYUBrDMU8EFI63iZibr1if2H01C9x8K1y+9Hp2ZtLLseS3qi0iwJWn5J6WPcFbXFrx
+         QoUg==
+X-Forwarded-Encrypted: i=1; AJvYcCVfbIZu/HrEqaIRH06MMci2uDWiNm8rtOeknQcCtX7OkmkO0pDP/Lceck5Gm2IlU6GOr0gQLivlL6WF7y51@vger.kernel.org
+X-Gm-Message-State: AOJu0YwZj5LpPjuW/Uaulx46drfSXgbW+D5yp6EBW4TDz5hyxrRclV29
+	vbtSqFJNxBFyqLPtqQGiVJvOf0pvJ6EXpR7+0a/0ERbZivgdiD9zplRf/huEyvTy+zRE9J2Ij6F
+	lud/edtjVp7LfoEMD5qMFvaT6dFNrW9xN8qFuAn7ykftXOwx8HX8oe6y9Nr2euezTTfOKjtx0
+X-Gm-Gg: ASbGncsT4zX4l5aYm7PLoOhETBFVAKXXwr+Ox7CaTXiaklMltrhaKXTytorANtHel17
+	hPqw+sKBWTbN5un2knG0xFm3SP0ghSJJhG66FgJGlm1dzNjLAwzc5snp8oT/i5kgLcMAd/pNa+W
+	+1WEjNU0pabqCZZ6uVs5zuncBXtI6FhvIucval+C1+dUD/ejUJWKe/I+O9IUT2Hk5ESHnYzIZY8
+	fJKrATQiT4pWfvHpn87BXvy3Pz5EtLQpblanpKzmRTQNCwy1dOIE85PHgnt7h2FI5nFdRWq+Lva
+	oFhdFUVOyNDv6dH88EQbj6QVZCWtoU1b76HJlxI8vSUamKu2okixpgps25P+48/t1dGgLUBJOJ8
+	=
+X-Received: by 2002:a05:6214:2306:b0:6f2:c88a:50c5 with SMTP id 6a1803df08f44-6f4d1f90d1amr4141236d6.32.1745602157701;
+        Fri, 25 Apr 2025 10:29:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGfwDIdtrIRKsVYjQf7vNsZsfKS3hF4nH7bFNPEubXKXlnRQxvHnj1wsLkMIzWwQQ+CY+aHVw==
+X-Received: by 2002:a05:6214:2306:b0:6f2:c88a:50c5 with SMTP id 6a1803df08f44-6f4d1f90d1amr4140906d6.32.1745602157324;
+        Fri, 25 Apr 2025 10:29:17 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7ccb899bsm670471e87.247.2025.04.25.10.29.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Apr 2025 10:29:16 -0700 (PDT)
+Date: Fri, 25 Apr 2025 20:29:15 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] soc: qcom: socinfo: Add support for new fields in
+ revision 22
+Message-ID: <7qviruo3hmtchsz5ubnvyocxh3bdixtmd5hqh2e63seuc45ixd@3c3qkottroze>
+References: <20250425135946.1087065-1-mukesh.ojha@oss.qualcomm.com>
+ <20250425135946.1087065-3-mukesh.ojha@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,53 +99,53 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250424-pcie-ptm-v3-1-c929ebd2821c@linaro.org>
+In-Reply-To: <20250425135946.1087065-3-mukesh.ojha@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: Qoctjc7L1D4ncZxH2mEX46kWw8GX5_Ho
+X-Proofpoint-GUID: Qoctjc7L1D4ncZxH2mEX46kWw8GX5_Ho
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDEyMyBTYWx0ZWRfX13OVQkvB7NLf /+9rAaG4/p1e8hOo7qAByx4xX8UP0ZRoHA3CQV1WR/d1Y0evdzvZ1U5qo1W2XLVz4qevkq9WmRL q2rWIc/ZEv4mMmqoFtwgfw8ypw07/VQqPifJ0vEUoXmx+Mbp4zdNQzhaDkyymdcyPjOhVCky6Ov
+ SEGj61a3Wj11+TEDgNMKs25RdaFfjikpjEuPBDVF0DGKyUDavZOja9ZjwVV1QMnzHYNTIWpTezn 7NddTjXq9h+HGru4Mr7TZH3Dv885ehWznxvQglDO1FvQNvZnLLWz32h7d/q0RDvdfKLybBPwoC9 uHXQ0+kPc43Bz2iyTQKxDEUS5xr7SxCBXpXEb8x4+t+q7bFuLAx6mUz6Zhv8u8kDTFg9bxOW9iI
+ FcGSiDqKt/uvG/SUGoKKfTxQdOUgg5X7RS2Xlbo+ZLN+zn/YPOO2+z9PyO/wSwrNz4QfeGad
+X-Authority-Analysis: v=2.4 cv=Mepsu4/f c=1 sm=1 tr=0 ts=680bc66f cx=c_pps a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=RlFFFbEGpoodJOQkPl8A:9 a=CjuIK1q_8ugA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-25_05,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ adultscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 malwarescore=0
+ priorityscore=1501 mlxscore=0 impostorscore=0 clxscore=1015
+ mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504250123
 
-Hi Manivannan,
+On Fri, Apr 25, 2025 at 07:29:46PM +0530, Mukesh Ojha wrote:
+> Add the ncluster_cores_array_offset field with socinfo structure
+> revision 22 which specifies no of cores present in each cluster.
+> 
+> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> ---
+> Changes in v2:
+>  - Added debugfs entry.
+> 
+>  drivers/soc/qcom/socinfo.c       | 6 ++++++
+>  include/linux/soc/qcom/socinfo.h | 2 ++
+>  2 files changed, 8 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+> index bac1485f1b27..13cf73744bd9 100644
+> --- a/drivers/soc/qcom/socinfo.c
+> +++ b/drivers/soc/qcom/socinfo.c
+> @@ -155,6 +155,7 @@ struct socinfo_params {
+>  	u32 boot_core;
+>  	u32 raw_package_type;
+>  	u32 nsubpart_feat_array_offset;
+> +	u32 ncluster_cores_array_offset;
 
-kernel test robot noticed the following build warnings:
+Same comment as the one for the previous patch.
 
-[auto build test WARNING on 0af2f6be1b4281385b618cb86ad946eded089ac8]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/PCI-Add-debugfs-support-for-exposing-PTM-context/20250425-001237
-base:   0af2f6be1b4281385b618cb86ad946eded089ac8
-patch link:    https://lore.kernel.org/r/20250424-pcie-ptm-v3-1-c929ebd2821c%40linaro.org
-patch subject: [PATCH v3 1/4] PCI: Add debugfs support for exposing PTM context
-config: riscv-randconfig-001-20250425 (https://download.01.org/0day-ci/archive/20250426/202504260126.wxQ1Dp0M-lkp@intel.com/config)
-compiler: riscv32-linux-gcc (GCC) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250426/202504260126.wxQ1Dp0M-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202504260126.wxQ1Dp0M-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   In file included from drivers/pci/pci-pf-stub.c:10:
-   include/linux/pci.h: In function 'pcie_ptm_create_debugfs':
->> include/linux/pci.h:1911:39: warning: no return statement in function returning non-void [-Wreturn-type]
-    1911 |                          const struct pcie_ptm_ops *ops) { }
-         |                                       ^~~~~~~~~~~~
-
-
-vim +1911 include/linux/pci.h
-
-  1903	
-  1904	#if IS_ENABLED(CONFIG_DEBUG_FS) && IS_ENABLED(CONFIG_PCIE_PTM)
-  1905	struct pci_ptm_debugfs *pcie_ptm_create_debugfs(struct device *dev, void *pdata,
-  1906							const struct pcie_ptm_ops *ops);
-  1907	void pcie_ptm_destroy_debugfs(struct pci_ptm_debugfs *ptm_debugfs);
-  1908	#else
-  1909	static inline struct pci_ptm_debugfs
-  1910	*pcie_ptm_create_debugfs(struct device *dev, void *pdata,
-> 1911				 const struct pcie_ptm_ops *ops) { }
-  1912	static inline void
-  1913	pcie_ptm_destroy_debugfs(struct pci_ptm_debugfs *ptm_debugfs) { }
-  1914	#endif
-  1915	
+>  };
+>  
+>  struct smem_image_version {
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+With best wishes
+Dmitry
 
