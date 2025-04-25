@@ -1,227 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-55739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA277A9D18F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 21:30:31 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A12ADA9D19B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 21:32:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4207C3ADBF8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 19:30:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4A25B7A1D53
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 19:31:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E7F31C4A24;
-	Fri, 25 Apr 2025 19:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28EF721ABBD;
+	Fri, 25 Apr 2025 19:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Fq2SFTqZ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eaPxL6V7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6504217C21C;
-	Fri, 25 Apr 2025 19:30:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B5B218EBD
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 19:32:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745609429; cv=none; b=GpDrMoSJ8z3KkfrPuy4mSarF6F1PgSZrXgZPULtBpwRdhYWSGkdutro5ecVzaEXCLhYwPjfckOk93g2IUfPWKAWXA0MaxhnP8Rl6doQAvCoFqeIhJ82c+Ptp5k3P14wJqzMUpYdE3mPcyVktEocxcSQHtHMe2XEfSka2emz5Maw=
+	t=1745609526; cv=none; b=CNZvsUbP9bhZxgl+sMdOsDRrxeO0hEk5OiDCn6JahY1YGMV994qz9O38xr2HUfLV0by2Y+lz9WIQjDNHEAqMoWZcPBqhUFOUtoTJsxacMELrtsevnFA0PaxYuyG17Vf/Lxsdbb3XvdKxQ3wtowK64rSzfPafsdYyi60BMha8e2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745609429; c=relaxed/simple;
-	bh=BZKHbe5Hs3Sal+r5XfLk2saC5O6k5lbgcDBg48LtcME=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=sccuCKiOlOV5wyOMCdw8LRWsV+A/WcXTpLZKF7ckc0X37N7KrXwBJRlfuw8kHzvp1ml3Xo7bXO0kMowJVwXJsxX7EoYPYko83Hpgd0VXpYnaWChHcov5oXBwrmoOu701aVWYCkIn+CBzC3rjLLkIMIzETX2dUd/jvONSCYQ9xcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Fq2SFTqZ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PGJqJk031955;
-	Fri, 25 Apr 2025 19:30:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6yRgw/mGA91CgTqDVNiG5wn/OI4tov++lM8KZITjZLI=; b=Fq2SFTqZgRlfGkt1
-	mp6w0EJ4/dLMdRZkFhB2a2X00A8lTAnGOa5kxsm0BR+KioYBpnIfmVbUypXcWE1S
-	kZTyDdZ2h4fd8bn7UaahAcYyV1+3tG/CAmKRsG8h1r6BdaPch1ds281mx1sbLIa0
-	QM9VABvoRspoRqvoD5RMRcP7+jWt8GGfjXpagZO+qTR4+djrgg3QUsY/CjheDbmd
-	6BGPsspV9XcuppF/mxmpSjBiAA6w2IbFOdLiqHyRtAn/O/gt6Mlbc467/ugwUQCw
-	e/f4hjhOsDCmFF+anjYaRi3eGeiI6FIV1Aq7Eob5euPOgiKnwcj6oaitGHlfEaHl
-	9GsppQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jgya3ag-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Apr 2025 19:30:18 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53PJUIOc002217
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Apr 2025 19:30:18 GMT
-Received: from [10.110.43.17] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 25 Apr
- 2025 12:30:16 -0700
-Message-ID: <acdc6e46-4c58-4756-a7c9-e4e30a0ae94d@quicinc.com>
-Date: Fri, 25 Apr 2025 12:30:15 -0700
+	s=arc-20240116; t=1745609526; c=relaxed/simple;
+	bh=cZYLFWcK+AS89wAOfGjXpAYwM+Shr97crXMQH84vsEI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EhgSMqowVeQu7Jqfx5/Xrh4hMim3SMLQeoCSZedsJjDP957j1x1J/ePNQStqvM7DaAwTIAef01ynP+vvXe4PNVjTySRan2B3g0Z+SGYPXQCLYG5C5Z1HKaBF9PW3hdyYOlzY6NsODyHiK0gesFaUKrc1t+q3334ty00bCOTzBYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eaPxL6V7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PGJrYc011042
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 19:32:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=KGuUzdqtIhx93PP1UIylBLxl
+	AAkaFyJuQQ5Zgzaz5MM=; b=eaPxL6V7mSSc0vuu4BknBscaogTBxNnAb3CNmZI6
+	Z+8MzdnD8UWOPaNeq7Bvic1r6/iBxd1MVHkkVWAp9/7MLqAdolLB085qSZSE4lOo
+	rdlmcwg/TCFpkv88F2ABGBWLV6eF6aoINK1GATwzyEkX4HO69gtR2WDLPOKAwvap
+	Fxz6ZCGrwSV7q4yx6GP2L8e2p5Uhp5XMw3WpBfIxlNIPrdqYBNyefrlHp03Z0Ypj
+	0SLRpMS4x9MiE+zv6Hm6+5E0IPiP2HV+jruZ8NeOkfJfju4nppQU/EHL/MWviWlZ
+	yU7+7xKFDcWbrvd9aVIgo9gLwwSeVWaW1rG6wxdSAi46rw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 466jh0j948-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 19:32:03 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c53e316734so425616685a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 12:32:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745609522; x=1746214322;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KGuUzdqtIhx93PP1UIylBLxlAAkaFyJuQQ5Zgzaz5MM=;
+        b=Bt9qhpccysDIo1WcBBq7L07uBOZeR0RyWEUmndcmjgh8bZqG8YTlSNPaADr6CpWixK
+         Rpsml7Wpp6oOGNaYZjs3TUSLPN1rq62yTttJ5zreMtnvf2PvSH3gAHQIDU0DOzDZH7vi
+         o63zEGLnzju3s5pPFINmVJcO6Je6FkbRHscnMfQ50AogC2FHeuvi7LdcHikc75rcK0GK
+         /vH9QncptwtwsFrjN6sAlqwtKA0BFA2Ab1GbIED0GSFzMNlQ3Taplw5OUtQoBaeXlSWT
+         K0Pi8unLDl6DIEKOQlkruKdb5DhRwJs2GbDA5vt8SCKzxHtOYinIyaycXmFf+ofpqPrY
+         do4w==
+X-Forwarded-Encrypted: i=1; AJvYcCWBo2lLF1HeRZeSt4BgtubMCHVFDeEB7OICe2x1lkDRmqY/4DKE/IOAV7dd60d7CRrE77RNHAT8vW5IeqQK@vger.kernel.org
+X-Gm-Message-State: AOJu0YwFNE/BZ9ScACE63EBHM3QAfjdzSwFiuAPYMpBJA2ibTerYfwsq
+	i8y2XFcZOjxG6GfRRUztGqRlCvUL/t53+KMD2YS7rHNyL7DDCptxxBJi51ixGUzCpAr/QLlsjJi
+	sfg3wKPRYRKaoq9jS36UjnATUWDdGrD9zpWe+790236hUxJYGNlK+/Z5MzyPhl2ft
+X-Gm-Gg: ASbGncsGAyss1DPPrsvIxeNDWh6hx6E8ZL+7nyxmHN6+bbIufXFs8dW4oLO4WNWpxf/
+	o/ZdYqIlNfquB2RRCgGrlbQ0WOgUKvbuKD8qvL70LFHF1TQRd3zvcVH95tEYWbmyHCKZ2IInRok
+	tbMdHXs6doNwhWIiDQyhn4se5ZTmrw0R/J/BHU/Y+l/WEmgFFn3ah07RCcseGSI5jJU27ckDSaW
+	6HjHezKXrhlUFYYgOABDhKwj2h7K/au7n2AqHSD3U+oURzufHGho3iBHN1zsX93mdBtm3Z9wbnc
+	3+9jnM72zFcyb6RD7bXSBNC72DYIEaq82mXblhHX0nPBSUewAhc20a6JcfGQ1h8rfsUYo1c5pKE
+	=
+X-Received: by 2002:a05:620a:4113:b0:7c5:48bc:8c77 with SMTP id af79cd13be357-7c9606b0aefmr440892385a.12.1745609522380;
+        Fri, 25 Apr 2025 12:32:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzn/o6ObQ/xxhr7InTaJwrYRheiEdWShDWyF+W4eomGBtYByJsXx/Wd9e7WmCER8UrfAZSLQ==
+X-Received: by 2002:a05:620a:4113:b0:7c5:48bc:8c77 with SMTP id af79cd13be357-7c9606b0aefmr440890285a.12.1745609522096;
+        Fri, 25 Apr 2025 12:32:02 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-317d16a834bsm8773091fa.73.2025.04.25.12.32.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Apr 2025 12:32:01 -0700 (PDT)
+Date: Fri, 25 Apr 2025 22:31:59 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: neil.armstrong@linaro.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+Subject: Re: [PATCH v3] arm64: dts: qcom: sm8550: add iris DT node
+Message-ID: <hqltmh3pixqnimr4zp4brcy2hn3qpqkz4q6bhb3cga4w4ndtux@gft5cjqj47oy>
+References: <20250424-topic-sm8x50-upstream-iris-8550-dt-v3-1-92f6b692bd52@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] drm/msm/dpu: enable SmartDMA on SC8280XP
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Jessica Zhang
-	<quic_jesszhan@quicinc.com>
-CC: Dmitry Baryshkov <lumag@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        "Sean Paul" <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        "David Airlie" <airlied@gmail.com>, Simona
- Vetter <simona@ffwll.ch>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20250308-dpu-rework-vig-masks-v1-0-f1b5d101ae0b@linaro.org>
- <20250308-dpu-rework-vig-masks-v1-3-f1b5d101ae0b@linaro.org>
- <aae55674-1ef1-4cf8-b1ef-e2b67c086b77@quicinc.com>
- <6kgxzonjqfmup7xvpddlk76w7zcnpf6c6x7isqy6plxk5los5z@hznswxtjoz4r>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <6kgxzonjqfmup7xvpddlk76w7zcnpf6c6x7isqy6plxk5los5z@hznswxtjoz4r>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDEzOSBTYWx0ZWRfX4exiXuxyxSvV PFBegtv3aVEaEXoctPDS7BenceGb9LVwyYv1c6ij8Fc7YGu08i0sZeGocNcqzjL1LqZ25VBjiBR fL3bOT7ZiVybqWsdKffeXNB1LdzZNNYVBmrMVCT2tNrg3fJtTXc2N8XzVVXci8vkQXYUTmDVXqn
- 2g5q8W2iYrmkY9UdrkfCQs1jtWyzFTO3SEKheHYF8MKDdzpP33mbadDsqo33u3gGlwF3Mb7QPyz SmZfu/emYDqio2oNBJgtzoN3tjmcm/gw2pXIbHHPQZXUn33rQqm74F5A08r9x+NkYs7bNuReA9K gFs5ADCGiUqhkAUSLQKr4CoH+4rzyU7hayqxY+tUSHA+VI4ApvPoqySIM/rmDSyO5TyBHkkVDR8
- RScWySITPUoM+MI80t64UByuebhikUl2/IR8bqVp1C+peD4+NywmMN90rtPEyeXRTNlxsA0i
-X-Proofpoint-GUID: cQUYIMpz4VzFGhU99eLgfwz2TNyW6wYN
-X-Proofpoint-ORIG-GUID: cQUYIMpz4VzFGhU99eLgfwz2TNyW6wYN
-X-Authority-Analysis: v=2.4 cv=M5VNKzws c=1 sm=1 tr=0 ts=680be2cb cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=t6Bq4GqqeoWYZpUzuW4A:9
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250424-topic-sm8x50-upstream-iris-8550-dt-v3-1-92f6b692bd52@linaro.org>
+X-Proofpoint-GUID: 9jiOOyI9kiGXkwqFV7k5FkleNLjLGb7t
+X-Proofpoint-ORIG-GUID: 9jiOOyI9kiGXkwqFV7k5FkleNLjLGb7t
+X-Authority-Analysis: v=2.4 cv=Fv0F/3rq c=1 sm=1 tr=0 ts=680be333 cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=gEkYAqE2pGcBd09D3BMA:9
+ a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDEzOSBTYWx0ZWRfX2GvUwSa3z1Kf R0jkIR4VWUZ4HtQ2KVTjySg4tQfm7MZpf6kSvBLL3ZelSZknEWj8nkljyBWDA5TfJPF5NXRSAan r7lBBd2o44R2bwHxPcHnNNmyA4jQDriQLrGQxDAu/FmKCFSmEnj4EXPrxNxaraaHHkDiRJVzdBe
+ gO71rgeLoE0Lq0w7QhajoiAvy4rQNWXkWOa95BN0iiIZRlSI+NHgtxEDxIH6/3hUX8oZvhU7W1+ PVfUtuM6PC15o3St87EVLQmh62Dyejm7nfVEjO6Rn0v3wI2qYg6iXQXBwZZCPtKL7EYuUtXi87J 5FsrkHs83X4XhkvJwkJdyy52o5uQajUjLscC5YzwxFtdIPUUWjAK+XuSnQUuLShoKAXhX3Dx+7t
+ nZlUaVqliAE5izS0Vmn93ZDxksCzlbOi5g26GIvTN4JbIsKfen6ODQupwrej21tdQdbc4IBq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-25_06,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 priorityscore=1501 mlxscore=0
- mlxlogscore=999 malwarescore=0 impostorscore=0 clxscore=1015
- suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ malwarescore=0 mlxlogscore=999 priorityscore=1501 suspectscore=0
+ adultscore=0 bulkscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
  definitions=main-2504250139
 
-
-
-On 4/25/2025 12:00 PM, Dmitry Baryshkov wrote:
-> On Fri, Apr 25, 2025 at 11:34:18AM -0700, Jessica Zhang wrote:
->>
->>
->> On 3/7/2025 9:38 PM, Dmitry Baryshkov wrote:
->>> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>>
->>> In order to support more versatile configuration of the display pipes on
->>> SC8280XP, enable SmartDMA for this platform.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>
->> Hi Dmitry,
->>
->> Seems like Abhinav's signed-off-by is missing for the patches that list him
->> as author.
->>
+On Thu, Apr 24, 2025 at 06:34:28PM +0200, neil.armstrong@linaro.org wrote:
+> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > 
-> Good point. I don't remember, why these patches mark him as an author,
-> but lack SoB. Googling doesn't point out any previous patches. I think
-> the easiest way to fix the issue would be for Abhinav to respond with
-> the SoB. Another option would be for me to reset the author.
+> Add DT entries for the sm8550 iris decoder.
 > 
-
-I dont recall myself. You can go ahead and drop me as the author.
-
->> Thanks,
->>
->> Jessica Zhang
->>
->>> ---
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 16 ++++++++--------
->>>    1 file changed, 8 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
->>> index fcee1c3665f88a9defca4fec38dd76d56c97297e..923afc202f5195fa15bcfc1e141fc44134c965e4 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
->>> @@ -74,7 +74,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
->>>    	{
->>>    		.name = "sspp_0", .id = SSPP_VIG0,
->>>    		.base = 0x4000, .len = 0x2ac,
->>> -		.features = VIG_SDM845_MASK,
->>> +		.features = VIG_SDM845_MASK_SDMA,
->>>    		.sblk = &dpu_vig_sblk_qseed3_3_0,
->>>    		.xin_id = 0,
->>>    		.type = SSPP_TYPE_VIG,
->>> @@ -82,7 +82,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
->>>    	}, {
->>>    		.name = "sspp_1", .id = SSPP_VIG1,
->>>    		.base = 0x6000, .len = 0x2ac,
->>> -		.features = VIG_SDM845_MASK,
->>> +		.features = VIG_SDM845_MASK_SDMA,
->>>    		.sblk = &dpu_vig_sblk_qseed3_3_0,
->>>    		.xin_id = 4,
->>>    		.type = SSPP_TYPE_VIG,
->>> @@ -90,7 +90,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
->>>    	}, {
->>>    		.name = "sspp_2", .id = SSPP_VIG2,
->>>    		.base = 0x8000, .len = 0x2ac,
->>> -		.features = VIG_SDM845_MASK,
->>> +		.features = VIG_SDM845_MASK_SDMA,
->>>    		.sblk = &dpu_vig_sblk_qseed3_3_0,
->>>    		.xin_id = 8,
->>>    		.type = SSPP_TYPE_VIG,
->>> @@ -98,7 +98,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
->>>    	}, {
->>>    		.name = "sspp_3", .id = SSPP_VIG3,
->>>    		.base = 0xa000, .len = 0x2ac,
->>> -		.features = VIG_SDM845_MASK,
->>> +		.features = VIG_SDM845_MASK_SDMA,
->>>    		.sblk = &dpu_vig_sblk_qseed3_3_0,
->>>    		.xin_id = 12,
->>>    		.type = SSPP_TYPE_VIG,
->>> @@ -106,7 +106,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
->>>    	}, {
->>>    		.name = "sspp_8", .id = SSPP_DMA0,
->>>    		.base = 0x24000, .len = 0x2ac,
->>> -		.features = DMA_SDM845_MASK,
->>> +		.features = DMA_SDM845_MASK_SDMA,
->>>    		.sblk = &dpu_dma_sblk,
->>>    		.xin_id = 1,
->>>    		.type = SSPP_TYPE_DMA,
->>> @@ -114,7 +114,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
->>>    	}, {
->>>    		.name = "sspp_9", .id = SSPP_DMA1,
->>>    		.base = 0x26000, .len = 0x2ac,
->>> -		.features = DMA_SDM845_MASK,
->>> +		.features = DMA_SDM845_MASK_SDMA,
->>>    		.sblk = &dpu_dma_sblk,
->>>    		.xin_id = 5,
->>>    		.type = SSPP_TYPE_DMA,
->>> @@ -122,7 +122,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
->>>    	}, {
->>>    		.name = "sspp_10", .id = SSPP_DMA2,
->>>    		.base = 0x28000, .len = 0x2ac,
->>> -		.features = DMA_CURSOR_SDM845_MASK,
->>> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
->>>    		.sblk = &dpu_dma_sblk,
->>>    		.xin_id = 9,
->>>    		.type = SSPP_TYPE_DMA,
->>> @@ -130,7 +130,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
->>>    	}, {
->>>    		.name = "sspp_11", .id = SSPP_DMA3,
->>>    		.base = 0x2a000, .len = 0x2ac,
->>> -		.features = DMA_CURSOR_SDM845_MASK,
->>> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
->>>    		.sblk = &dpu_dma_sblk,
->>>    		.xin_id = 13,
->>>    		.type = SSPP_TYPE_DMA,
->>>
->>
+> Since the firmware is required to be signed, only enable
+> on Qualcomm development boards where the firmware is
+> publicly distributed.
+> 
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+> Changes in v3:
+> - remove useless firmware-name
+> - Link to v2: https://lore.kernel.org/r/20250418-topic-sm8x50-upstream-iris-8550-dt-v2-1-9218636acbdd@linaro.org
+> 
+> Changes in v2:
+> - Only enable on qcom dev boards
+> - Link to v1: https://lore.kernel.org/r/20250407-topic-sm8x50-upstream-iris-8550-dt-v1-1-1f7ab3083f49@linaro.org
+> ---
+>  arch/arm64/boot/dts/qcom/sm8550-hdk.dts |  4 ++
+>  arch/arm64/boot/dts/qcom/sm8550-mtp.dts |  4 ++
+>  arch/arm64/boot/dts/qcom/sm8550-qrd.dts |  4 ++
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi    | 76 +++++++++++++++++++++++++++++++++
+>  4 files changed, 88 insertions(+)
 > 
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
+-- 
+With best wishes
+Dmitry
 
