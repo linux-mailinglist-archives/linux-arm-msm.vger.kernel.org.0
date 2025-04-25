@@ -1,136 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-55710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C540A9D003
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 19:50:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51A92A9D064
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 20:20:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C7A239C00B6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 17:50:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8582C7B5242
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 18:18:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F7F41F463F;
-	Fri, 25 Apr 2025 17:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 758A6217642;
+	Fri, 25 Apr 2025 18:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cbfCDDr+"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="L2zE90Bl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45591FE474;
-	Fri, 25 Apr 2025 17:50:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962EC214813
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 18:19:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745603446; cv=none; b=tn8K8NIYlq0oBjZ1xL+rHUhrj4bXBiWM3CjUFltaAQ/FEuePV0+K6/MNQo8hxIsCWLdiDS+lC2xQ+uHcQhh9cZ9sSSOoNIdPyN6t0J52Z1G+dQZGdUQCAdYMzNTzmD22ja1tTI5qcbJX02Gwa4IPt1is4xr4CfdGDApIcfVgu5k=
+	t=1745605196; cv=none; b=MjuvsrQkvPIMXyenDkSEm3dOJwMoVY/wlSrt1HJa2EGM+9rms+zLwfDIMKn2WqJdh/0IKFttSI25GpOnUTUaCdAVeYHRECEuvKoe9KqPZs30PvKVm+bxfzZFA331bIHBPECeMz7xSxBtPCFvhT2NYoTwtzy6/gXYrO8+V1C4rWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745603446; c=relaxed/simple;
-	bh=TBq9KdPLCYipEt3LMjYzBCNDiYSUDsww3Xlc/H/UU+M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TYd4U4IthUoxPTTbWx0DPfwGkl9+Rb6ywz9fRuk1dd1htNFhXjuihojEb1KLprvLr57T95gr1tEAHOA5smlUaPveaeH2NPI7hg4dZ37QZ8O2kvdGgoAfL9JIG3Gfdbo76w7YJpHGyGgZAfwap3El2Ptk3eyi/VeGhrZXn5tqDHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cbfCDDr+; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1745603443; x=1777139443;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=TBq9KdPLCYipEt3LMjYzBCNDiYSUDsww3Xlc/H/UU+M=;
-  b=cbfCDDr+zTzIKiw22K3BVohSoV27ka4hCifE4eZMUULts5OHs7Z2er20
-   Dx9IMI6Ib50jiqhRX7QQ/9poKg9WFk+LWkRxlfZyp7xuMpczNuwvJcWTe
-   /jR++co2/r2akqDQldT3oabZwoWW8RDMSyxS4IARdimYTdD5dtvEjyRLY
-   VbxQ6rTOXJfpVpconvstJV9HZnZWQo5aAJe8DfMYS+lcJspAOMrE6r+ky
-   FZOGX+aoAG92qUshDUgZVXte70qNRZuH7pn9Z3VIxsDLV6lb/WME3sZdx
-   TMROR22asioXvsqr1NOCfZmyyAyC577nXEwfYZ0kNj0UibvuN5dida0ma
-   g==;
-X-CSE-ConnectionGUID: cD8V9hISTCa+HKE+No7tsA==
-X-CSE-MsgGUID: HxGRcQBKQkm/VegN/UHJkw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11414"; a="57469605"
-X-IronPort-AV: E=Sophos;i="6.15,238,1739865600"; 
-   d="scan'208";a="57469605"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2025 10:50:43 -0700
-X-CSE-ConnectionGUID: u3EXHBnuTkygiJUYesUmYw==
-X-CSE-MsgGUID: 5pbw/rdKSqSbz0y4Pol9Iw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,238,1739865600"; 
-   d="scan'208";a="133488699"
-Received: from lkp-server01.sh.intel.com (HELO 050dd05385d1) ([10.239.97.150])
-  by orviesa007.jf.intel.com with ESMTP; 25 Apr 2025 10:50:41 -0700
-Received: from kbuild by 050dd05385d1 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1u8NCA-0005Pd-0P;
-	Fri, 25 Apr 2025 17:50:38 +0000
-Date: Sat, 26 Apr 2025 01:50:11 +0800
-From: kernel test robot <lkp@intel.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
-	Jingoo Han <jingoohan1@gmail.com>
-Cc: oe-kbuild-all@lists.linux.dev, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v3 3/4] PCI: dwc: Add debugfs support for PTM context
-Message-ID: <202504260156.kvLvB9N3-lkp@intel.com>
-References: <20250424-pcie-ptm-v3-3-c929ebd2821c@linaro.org>
+	s=arc-20240116; t=1745605196; c=relaxed/simple;
+	bh=IpSFoh4pYOY/HGqg1pleHeuH9QFifSvgR7QoQN+jals=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=Mhk3SwsDWAUz00sOn9XuyouhDxBIU3n2fBZOT0kQtf7bwhE/Y2G413glIw3PRC3Z0ne31CX3rLlyYtshUNE5UJllLhLLE9ladMN6Ix3RMfqDoIOWRamC8sHcxRQhqUjCuS9K0j/SDkcXhop+ZK0T/PghO0MXsEcLpMkdzvM4Ja8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=L2zE90Bl; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43edb40f357so18096985e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 11:19:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1745605193; x=1746209993; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IpSFoh4pYOY/HGqg1pleHeuH9QFifSvgR7QoQN+jals=;
+        b=L2zE90BlQkCwN8RxPhglh5+YQzR3YQ8NPSekKiGRb4u2Zs2dfJ/tItuWZaFHeDES1f
+         V5W+e3hYuUJdWUFXpzD7ozesoIyZ9euiDfsvy5aF6BGN67VAUFi9u1T/Xqlmtt+Fm/Bt
+         nHZXHjAjQo2Cs5df9yeqE4vu60ATz6pMTKTRV5vW0GNzbI7KPI0GHiCRj9gzGiIGCZCK
+         lPssUdlz3UXbcZ8ByT0YXjeDgGXVjsGq7iA5LoWzdHacW4tRqD74ODrKglFJLEoJ+wMB
+         FAut6WbA3gE5MJI45Oz4oTFNG/tBUup5rFhdDT9xhpxiWbqB1dmIF9CtoynWk1jJkd9X
+         Kpcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745605193; x=1746209993;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=IpSFoh4pYOY/HGqg1pleHeuH9QFifSvgR7QoQN+jals=;
+        b=p9TASNQkgXncJoPzqm8X7rIadPyxfnHheuXY+EMCEo7sStG5XGPEeOW4Z/rF6h9RkX
+         3unnjnSh+azdRrvWELzy0GeCHhmJO6tv8Mk1fOOxcIlh1y9Ru9Qr9ZeF83jeT1zsr2lM
+         4hSYt7nlccb9m7RvvQkUDrlRDGRggYba8n7IHRw3hdcYKp+MFwJToA7dW4dUkOlWM3C5
+         j1ArmJ12E6Ahqrp1/4DiFezKNAqhRn3tWR07kAer0fxlDDYE4Q/KPf7nVEMwhOi+qnWS
+         XMBfldxk/Z21zWsuAHe4uMRxb1GUHLjbGkqVXw2IH8aE7vmNqTV1+pECP5zLewI/PArt
+         RWVg==
+X-Forwarded-Encrypted: i=1; AJvYcCWHdhceEFTOOxwIoWMz1HtdAz02BguFEPzgLJpLgttvvrJ768OOXIMN6sb9janzUk/oC9YIIUj3k1KicsKt@vger.kernel.org
+X-Gm-Message-State: AOJu0YwjayXeQ34muSyjQcs+bYgCg+IhiBDGUKKzXUAPw9XL+BsihkXb
+	5qItV/SJQOFdksYHHBzOvXh49xNQLxVVBirq4U+B+IwWZ0z95Q2VAx2Atl87tQc=
+X-Gm-Gg: ASbGncuMJUGU/oKi3kwFWNueErDVh/OkFNRmqdtr6xbli75Q4rz+Kncfl8s5+6g2qzu
+	hKdUcUDKVgTxr1b1+KdbOUYeNIF3+n7j28c6p+JLIQGiBOSeNOUOq5v9vfCBXUDIerU+mPoHnTT
+	PFqVaJjzCeGXrLsD7d/ABNqliZ9isi+fX1EsVM8LZSym0mHMNZ7XcuUSaZ/YogYYg6cZIm7lL+B
+	E6ivZHhipNGxbwTsAjeb36x2aI5+FhBWmsMoKF1ZrRs1ufbr9Nm3DpNtdTY2Nc/qspqt0ZQqOeA
+	Lwsc/GKR/ss4XS8tjURjeBHDJCh/PkcucKyF8pV7VBXPJ+epQ/vO9BuezhslgSwHXauXW+Ynuru
+	tNljUmY7EPBe8sKPfl/oGSdYLH92ILnKnKDha91hKT00r/SJ7mr6q
+X-Google-Smtp-Source: AGHT+IFJByfdmWek2xSwsLT86f5MrKiJHwIbsxI4YxA+BfoGu8K395c02Fr79u8UPzgvjnNg9CP1eQ==
+X-Received: by 2002:a05:600c:1e03:b0:43d:24d:bbe2 with SMTP id 5b1f17b1804b1-440a66b7b14mr25609255e9.28.1745605192764;
+        Fri, 25 Apr 2025 11:19:52 -0700 (PDT)
+Received: from localhost (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-440a536a02csm32734525e9.27.2025.04.25.11.19.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Apr 2025 11:19:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250424-pcie-ptm-v3-3-c929ebd2821c@linaro.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 25 Apr 2025 20:19:39 +0200
+Message-Id: <D9FXE4TJ23QB.1CS3D6PU2FGMR@fairphone.com>
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Mark Brown" <broonie@kernel.org>
+Cc: "Srinivas Kandagatla" <srini@kernel.org>, "Banajit Goswami"
+ <bgoswami@quicinc.com>, "Liam Girdwood" <lgirdwood@gmail.com>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>,
+ "Takashi Iwai" <tiwai@suse.com>, "Bjorn Andersson" <andersson@kernel.org>,
+ "Konrad Dybcio" <konradybcio@kernel.org>,
+ <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@oss.qualcomm.com>, "Neil Armstrong"
+ <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v3 2/5] ASoC: qcom: sm8250: set card driver name from
+ match data
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <20250425-fp5-dp-sound-v3-0-7cb45180091b@fairphone.com>
+ <20250425-fp5-dp-sound-v3-2-7cb45180091b@fairphone.com>
+ <36904d64-68e1-43b2-baed-50b5fddc2bcb@sirena.org.uk>
+In-Reply-To: <36904d64-68e1-43b2-baed-50b5fddc2bcb@sirena.org.uk>
 
-Hi Manivannan,
+Hi Mark,
 
-kernel test robot noticed the following build warnings:
+On Fri Apr 25, 2025 at 2:12 PM CEST, Mark Brown wrote:
+> On Fri, Apr 25, 2025 at 10:07:26AM +0200, Luca Weiss wrote:
+>> Sound machine drivers for Qualcomm SoCs can be reused across multiple
+>> SoCs. But user space ALSA UCM files depend on the card driver name which
+>> should be set per board/SoC.
+>
+> This doesn't apply against current code, please check and resend.
 
-[auto build test WARNING on 0af2f6be1b4281385b618cb86ad946eded089ac8]
+I've based this series on next-20250417 tag, so this is probably due to
+the changes from the USB sound offloading series that Greg has picked
+up.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/PCI-Add-debugfs-support-for-exposing-PTM-context/20250425-001237
-base:   0af2f6be1b4281385b618cb86ad946eded089ac8
-patch link:    https://lore.kernel.org/r/20250424-pcie-ptm-v3-3-c929ebd2821c%40linaro.org
-patch subject: [PATCH v3 3/4] PCI: dwc: Add debugfs support for PTM context
-config: i386-buildonly-randconfig-005-20250425 (https://download.01.org/0day-ci/archive/20250426/202504260156.kvLvB9N3-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250426/202504260156.kvLvB9N3-lkp@intel.com/reproduce)
+So either Greg also picks up these changes when they're ready, or we
+wait until 6.17?
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202504260156.kvLvB9N3-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   In file included from drivers/perf/dwc_pcie_pmu.c:18:
-   include/linux/pci.h: In function 'pcie_ptm_create_debugfs':
-   include/linux/pci.h:1911:39: warning: no return statement in function returning non-void [-Wreturn-type]
-    1911 |                          const struct pcie_ptm_ops *ops) { }
-         |                                       ^~~~~~~~~~~~
-   In file included from drivers/perf/dwc_pcie_pmu.c:16:
-   include/linux/pcie-dwc.h: At top level:
->> include/linux/pcie-dwc.h:38:38: warning: 'dwc_pcie_ptm_vsec_ids' defined but not used [-Wunused-const-variable=]
-      38 | static const struct dwc_pcie_vsec_id dwc_pcie_ptm_vsec_ids[] = {
-         |                                      ^~~~~~~~~~~~~~~~~~~~~
-
-
-vim +/dwc_pcie_ptm_vsec_ids +38 include/linux/pcie-dwc.h
-
-    37	
-  > 38	static const struct dwc_pcie_vsec_id dwc_pcie_ptm_vsec_ids[] = {
-    39		{ .vendor_id = PCI_VENDOR_ID_QCOM, /* EP */
-    40		  .vsec_id = 0x03, .vsec_rev = 0x1 },
-    41		{ .vendor_id = PCI_VENDOR_ID_QCOM, /* RC */
-    42		  .vsec_id = 0x04, .vsec_rev = 0x1 },
-    43		{ }
-    44	};
-    45	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Regards
+Luca
 
