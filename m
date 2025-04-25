@@ -1,140 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-55548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8744A9BF22
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 09:04:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 211B7A9BF43
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 09:09:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CB0977A9766
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 07:03:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 227934A2348
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 07:09:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E88922D7B2;
-	Fri, 25 Apr 2025 07:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3C762309AA;
+	Fri, 25 Apr 2025 07:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uMCs14US"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="htd3/tO3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45EA22A4E3
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 07:04:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B7F22F173
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 07:08:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745564659; cv=none; b=geOmvYRkF7ez5RmtVeDrp8ifUWzZi4kGpTVgjtuurWpEmVeACNQT5GukyYYIKaHbJOTOiIMEEKwvwHE/m8Q53vPxwyyhS6AXJWWMTUnsdRVUoP2xTQZmED7ZRvTWcsYy4RKRAEqrBRKVrA3sx3+wIdZ/y0UOweKNhk94vXCCIqs=
+	t=1745564936; cv=none; b=ZGz5Udo0fhASYQIY2o6Mx5qmVQoE91YYpkwpF/q5dSP+18KlkP/yrNhMMOm8DlEX0cu9AwmKsdKn8lkBDzRF7rIMoscw5BEHeyU+0NvYKlFVd1XCFsOHhg/83yBXcUdWwnQ6AEOD5q/UMgPSLQnmfzJov1teDcutBUUSsYNnv2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745564659; c=relaxed/simple;
-	bh=kiVsHOtAUvNtO6KMgCqWAVEF+ip5WZJK6X2lYcCFLyg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F9Fsk/wVfL9aE405z3nUY0gXIvzfeFZLZ9MYHIPJaTBMWNYe5xKLgnGiBUV6WrZP3D3vES0mZYABAd4Sfbff72nDBtRPqjWHhHgnhnI4Idv8ic2zT3/Av8hZb4MZLxJlIuWKI//sXxXNPcYtrhnSvxxZrJ5Naj4FjuADxTk3JZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uMCs14US; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-301918a4e3bso2055776a91.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 00:04:17 -0700 (PDT)
+	s=arc-20240116; t=1745564936; c=relaxed/simple;
+	bh=QtPrcGpMh3mVwXvK9TpUt+VlyNAQdkk2FKBhOhf2Zcw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=HgowEDRtRwtjO7/NmViPJCqAzvwllpIEbDtCtceS+moq1obFTN0FnaaAJMTLppclryi3w0DidwZrAuM8hWloXC9Xv8rUdqfZm/aj9K3fiG2osjrLmr72OhEBvO5Oq21Xf27JivWvpyTV8NxxCx2aLFVtsN897cScxAEOzMscE44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=htd3/tO3; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43d0359b1fcso12638305e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 00:08:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745564657; x=1746169457; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8Te3ksqRJ+7OlpUSNfGlJHaCjELIs2UO0MQxGmKigXE=;
-        b=uMCs14USTT/ykuPJrlJcPk5RrOFO9d6IAXDWjjKXrookunBMtI18dxu1a4I/jXsHEF
-         sMeqRj9lZksg9UBAnf+BnpVbLfSCi+TFbl3WynIMoJpVCggnNIbDMo3T+lG8aX5QkHM7
-         fp47kqr78MCh8GK5gwni8yR4yN3v6drLvncSp36o1LtIs/MfoRP6Kj8/7g2LDwV8dtEO
-         nsGri/wJEX/8raVn+mQWR2Tr8gDozwBL+u0UhAXa6irSnePZ0odO+Dl5A7ZqAoIREuEG
-         om/QUaWhqMS3p0aiB9o7+OvulxV0nUhVda2rRQsm0TWF9NdznVvcWJTVTM6MPlYg7qtT
-         xpuA==
+        d=fairphone.com; s=fair; t=1745564931; x=1746169731; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=l/pFaQ+mrPPFB1oid9YI7FCJXak/BuW7x5kjtSlS5Ek=;
+        b=htd3/tO342rbCgFnOX/z+kZObT1w3Kwhe7I0aeU0u/bAm/PSS14uDrLUN5NPoaSI7r
+         iHrweZApcbC1r5JkyLkk7lbIiqBZ/Zis/0+WwfdhPeJKgpTHOi4MMkXNjZFGvBPIoB3i
+         UIgpLC+UAy48HNDnseN0Xp5j9Azcd5Y4vvHG6/zqKIhDFyEulfYiNkBpOcyWPqwOJy3T
+         uVPiXFxToJG2vUGmtMxGUyXGwZbJSHLD2+tIuACBWGRvw1EQonXqU4uHPBwOZLNFqCQd
+         nV3dLTP0tBHdVZX6y9lpVgRGZRn9zEdAop4qwBx+u6WJfTzm8+8iXUKZyQ2WcQKv3vHd
+         T7rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745564657; x=1746169457;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8Te3ksqRJ+7OlpUSNfGlJHaCjELIs2UO0MQxGmKigXE=;
-        b=rzByrenLmFxDYz+vD6tPudVXeC97ZuphXSsa+46eNCG815ffP9f+KRyfO1uX9npUzH
-         tmiGLRxEaZmKR1EGYWmun36f9sTmqMAT8BDD1nfrqTql+1tHn9Ye8wxCzeN7NfHtHDBl
-         6+t9ZovH4Ygl39W1fMMX4ptX6NrvabkU8WLVUbQ+Qn2b7UUjtK6vH7CM4o8oVyjOQZBa
-         li+JTKwp0TnHzpCkk+dmzeWfjkovaZgCV8j8v79yQV/eYrZsH6uVJXZYH/2FnUsyj+x2
-         CM5mw9iz8VBmffab/W6MDx5XHiofKAvHQnFXqExTx7HKuZ+KdZUt8gDMCBcLd7xhmyjd
-         m9Ng==
-X-Forwarded-Encrypted: i=1; AJvYcCXuTZggN2Yvk0YmiBxqFY8SZWL7VaF9S8tmMmm6SPPt7KeyCXevljGnY1WQpoyktNJQKJCzJxYukSRywkn2@vger.kernel.org
-X-Gm-Message-State: AOJu0YxbdYLrZWYdlVBlbSIE5hJbMNkwHesUsVuSQFZYsOTEB2P8OAVd
-	uTdkfJPTg3deXvG83YAH/R/q2/DK91Wrk0+rIJWpVl9IR1c8voFkzRTEiso+vw==
-X-Gm-Gg: ASbGnctNFazmUtkYl32UBQ7eTWExOUErA38ox4ICdyRr49uiEnXB7PzK5jM3CA/bfMm
-	ZkH+qRo8V8TCVmMSh2G0ZbK4VoScZ6z7Cth/mtCkyATjvlkQmcgTsm9dTakrGoehKS7GplciaEm
-	7b60dZLnt9tndSyzJMjWzVcrrWDXQKr2Nj1KqCdkZxeT5cFh4Uj8MU4ggyHIEHq4B7lFcEYX3y7
-	/Qw5FFmKjvwdjvh9pJ4IHFr+xp4dvdzllDvjrkzccBdDNowRLr0SxBKf74s+o/YjyMUS6/c4Dzc
-	16+oMPnCTsPXMOw1jOpliTDFXLnvr5NbMdfB4ZGDMGLX02bfl50=
-X-Google-Smtp-Source: AGHT+IFprbi4xKoK9kQYGafLrF0iV6P6sf27aP6lhIQIfke7L6VaLDQhys8cFeKJ/FRwTwPktrq5xA==
-X-Received: by 2002:a17:90b:2f4c:b0:2ee:53b3:3f1c with SMTP id 98e67ed59e1d1-309f7d99200mr2192871a91.5.1745564656964;
-        Fri, 25 Apr 2025 00:04:16 -0700 (PDT)
-Received: from thinkpad ([120.60.77.160])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22db5102ddcsm25163355ad.190.2025.04.25.00.04.12
+        d=1e100.net; s=20230601; t=1745564931; x=1746169731;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l/pFaQ+mrPPFB1oid9YI7FCJXak/BuW7x5kjtSlS5Ek=;
+        b=K57fy9rB4zl3AbTvlz35U02uPJXa7f4/Eu0vEYUlqygPxsxQkqAMjsQqoYwPnOqXH8
+         P6c2Rec3wNGOBw3TKzZIwe7EXLg+gzb+DDyo3NAhqe448eoLGN7v2e8uLJE8eS58Kbcm
+         fL2ZPmUWPnVrwC09hF/qWphGgSIiAzlaSIhm5UY9zFdHDDpSNC5i7bF+D8nSqKYm4d8f
+         ChDqaEIC+dqqp92hMK34pK1YKlnjHokLV7UZAoKq1I4nJEic6wn85j73Xmzrkap4zHja
+         Bn9Zc6S6QyGYUcgQSGxvUNFCMhs9UpFuDlA/D+YlP9BNdz8iLpGJohpNuwGsX9AKlEaM
+         CvDg==
+X-Forwarded-Encrypted: i=1; AJvYcCXOHdTQVg4abf312wzMAC33coLe67AirP87mBrxvQyxzEor2Y9P6MbbsTxqHfMl2fu/ZVUMnvccNmsdNLe5@vger.kernel.org
+X-Gm-Message-State: AOJu0YzsHkT6D17K4lJ40q3DC9V9NGyNulr+dUatWqF0ofpGPO/isGmo
+	FNIicrv0PyuzPr4yYcOC00ovpfz6GnXUm0BrrdT2Hf1qyttnNCSVkNjQBu1RJfk=
+X-Gm-Gg: ASbGncs6dIMDgFD2yZX/v8X4ceADBjmNg5jj8vZSYWBoJR+/gyUj0UfexGgj20ghowC
+	xaZQvTDJGt6aL4XZ22gD8GZm6mWO1dKMbNkUXWr3cHIZ0/uo58cjOHeNu8rj9MP8Mn94PQJbmix
+	iSrRXOa6XHX42WSTj1iLLD4tFq3G3d/WN90fIAV28XHP1KIfJrEUWKQFW/vktROsBagjuzEMIyn
+	IYT/kS0M3SZuvf8z9OwGWsFOQ43R82yUi36PQL8UzmXwwoQ+q5kjc60BAu0Mg5AI7mWIZ3yWhe3
+	ECDXI6yGo3tWEOU91aWyGo9moJfruel16vuCjZjJNjyrYebxcvpzvAgENzYQM7GHKbPHkDfuXKJ
+	HDvnuVUjW2k9AeQgUw9z+P/CT4jGwfkj6ExFeCVoFOt1e2E9eIH92J0hs
+X-Google-Smtp-Source: AGHT+IFzhPfcdeLBF728LvxKH2NQytv2+lwn8cMdeqMenQFWngddQx+8HhHl2rf3w1TkCbe6pFjxfg==
+X-Received: by 2002:a7b:c305:0:b0:440:67d4:ec70 with SMTP id 5b1f17b1804b1-4409c48b0e9mr40766735e9.8.1745564931526;
+        Fri, 25 Apr 2025 00:08:51 -0700 (PDT)
+Received: from [100.64.0.4] (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4409d2ad112sm46202735e9.24.2025.04.25.00.08.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Apr 2025 00:04:16 -0700 (PDT)
-Date: Fri, 25 Apr 2025 12:34:10 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>, 
-	Jeff Johnson <jjohnson@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>, 
-	Yan Zhen <yanzhen@vivo.com>, Youssef Samir <quic_yabdulra@quicinc.com>, 
-	Qiang Yu <quic_qianyu@quicinc.com>, Alex Elder <elder@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Kunwu Chan <chentao@kylinos.cn>, kernel@collabora.com, 
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH v2] bus: mhi: host: don't free bhie tables during
- suspend/hibernation
-Message-ID: <h2wv7drxntokziiwbzjw5xjzbctbomp6cfcba7ppfbih6o7so7@p6dazv32xfx4>
-References: <20250410145704.207969-1-usama.anjum@collabora.com>
+        Fri, 25 Apr 2025 00:08:50 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v3 0/4] Fairphone 5 DisplayPort over USB-C support
+Date: Fri, 25 Apr 2025 09:08:11 +0200
+Message-Id: <20250425-fp5-pmic-glink-dp-v3-0-cc9c2aeb42fb@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250410145704.207969-1-usama.anjum@collabora.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANs0C2gC/23OwQ6CMAyA4VchOzuzFbaBJ9/DeABWoFG2ZRiiI
+ by7g4uJ4fg36dcubMJIOLFLtrCIM03kXYr8lLF2qF2PnGxqBgJyCaLkXVA8jNTy/knuwW3gIHV
+ jtCiLBpGlvRCxo/du3u6pB5pePn72E7PcppumBIA+0GbJBUettbR5qRW0166mGAbv8Nz6kW3iD
+ D8lfXWkQFJqpSowpqisMf/Kuq5fxSyNlvwAAAA=
+X-Change-ID: 20231208-fp5-pmic-glink-dp-216b76084bee
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ linux-usb@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
 
-On Thu, Apr 10, 2025 at 07:56:54PM +0500, Muhammad Usama Anjum wrote:
-> Fix dma_direct_alloc() failure at resume time during bhie_table
-> allocation. There is a crash report where at resume time, the memory
-> from the dma doesn't get allocated and MHI fails to re-initialize.
-> There may be fragmentation of some kind which fails the allocation
-> call.
-> 
+This series adds all the necessary bits to enable DisplayPort-out over
+USB-C on Fairphone 5.
 
-If dma_direct_alloc() fails, then it is a platform limitation/issue. We cannot
-workaround that in the device drivers. What is the guarantee that other drivers
-will also continue to work? Will you go ahead and patch all of them which
-release memory during suspend?
+Devicetree (patch 2-4) patches go via qcom tree
 
-Please investigate why the allocation fails. Even this is not a device issue, so
-we cannot add quirks :/
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v3:
+- Add patch to fix dt-schema validation with fsa4480 extra properties
+- Link to v2: https://lore.kernel.org/r/20250312-fp5-pmic-glink-dp-v2-0-a55927749d77@fairphone.com
 
-> To fix it, don't free the memory at power down during suspend /
-> hibernation. Instead, use the same allocated memory again after every
-> resume / hibernation. This patch has been tested with resume and
-> hibernation both.
-> 
-> The rddm is of constant size for a given hardware. While the fbc_image
-> size depends on the firmware. If the firmware changes, we'll free and
-> allocate new memory for it.
-> 
-> Here are the crash logs:
-> 
-> [ 3029.338587] mhi mhi0: Requested to power ON
-> [ 3029.338621] mhi mhi0: Power on setup success
-> [ 3029.668654] kworker/u33:8: page allocation failure: order:7, mode:0xc04(GFP_NOIO|GFP_DMA32), nodemask=(null),cpuset=/,mems_allowed=0
-> [ 3029.668682] CPU: 4 UID: 0 PID: 2744 Comm: kworker/u33:8 Not tainted 6.11.11-valve10-1-neptune-611-gb69e902b4338 #1ed779c892334112fb968aaa3facf9686b5ff0bd7
-> [ 3029.668690] Hardware name: Valve Galileo/Galileo, BIOS F7G0112 08/01/2024
+Changes in v2:
+- Move adding "*-switch;" properties already in earlier patches
+- Move wiring up SS USB & DP to SoC instead of being done in device
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20250226-fp5-pmic-glink-dp-v1-0-e6661d38652c@fairphone.com
 
-Did you intend to leak this information? If not, please remove it from
-stacktrace.
+---
+Luca Weiss (4):
+      dt-bindings: usb: usb-switch: Allow data-lanes property in port
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Add PTN36502 redriver
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Add OCP96011 audio switch
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Hook up DisplayPort over USB-C
 
-- Mani
+ .../devicetree/bindings/usb/usb-switch.yaml        |  15 ++-
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 103 +++++++++++++++++++--
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |   9 +-
+ 3 files changed, 118 insertions(+), 9 deletions(-)
+---
+base-commit: 4157b0a73f61cbcb3593d2fc86eaceeb5c06e1ac
+change-id: 20231208-fp5-pmic-glink-dp-216b76084bee
 
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Luca Weiss <luca.weiss@fairphone.com>
+
 
