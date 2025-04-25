@@ -1,94 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-55676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D7B1A9CD81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 17:47:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C51BA9CDA0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 17:57:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 05C464C8997
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 15:47:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5DB684A6FB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Apr 2025 15:57:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C05E027932E;
-	Fri, 25 Apr 2025 15:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48F4828E614;
+	Fri, 25 Apr 2025 15:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j05UV5dP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J0oI7sat"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB4D28DF1C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 15:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350C5170A11
+	for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 15:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745595980; cv=none; b=oN6Qi6Lltt4W1k4ItV91sQR7qTIqUu1+YuG/ETXZOFL9iJxt+bS2XtWpcaSVQCx/yoGas+UnzInG7JEh4BZna3NaCH7HYTRX0I4vLE8d9mX9Phe2gofetCzEij50cVszWjM6JXg4i3cxhlM1xdCvXF1aEkAQ6I+0s5v8gVUYZiI=
+	t=1745596663; cv=none; b=uxG6w1qDWbyb3Mwl+upRAbpj81cmubVRZ7YV5XNChUPS/XW32+FWfnDQ+gtN8QLLSYW1KJ9+RVgicItEPbgFmmphJHb3DKITdk4xb/h4E32pq3Ni6RyrJoTGHg8uZPfaP2UAXKD/bxq4v1RbAIL3K5PzOnfZ4/7XdA1iBPfiP8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745595980; c=relaxed/simple;
-	bh=OEN/M7xAkfDtjvNwKlr/jucG4cQOWcjtHRGd69J9SGI=;
+	s=arc-20240116; t=1745596663; c=relaxed/simple;
+	bh=GrbOWzhD8A9EcQ9/oMNEwl0tUg9WzmBru/yKPO/Wkt4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OWTJIRr8eqPSZERDwM5NC6mOSvLbbgvlPZX7TdltbZoUHVv5ynAjOx90cGJY03P075E1+caVAJx96BKuA1mWhuzY3dL3Z1MkHziXto9CMPr232xsbXb305zozePfIOl57e/AC/NYLP5KYAuTgnM4vU8aSQgTjNuIMgjXwvndAA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j05UV5dP; arc=none smtp.client-ip=209.85.210.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=gPKcYBNXonpXMCkzrFZUMRb+v+G1UzLx5yDiNRaeLZMiQIbTywZdU2NHihbhkcKSmeiU1CUuvN3aiLoBwxvIxrRdIysa0nU6GMhs0KBLdH38OqE0O2Ht2svr41FMmDMQA8Lf8BDJ8ISqyuxFa8errh8NQRfOQwZ9+jAT50rr5qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J0oI7sat; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-7399838db7fso2615263b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 08:46:16 -0700 (PDT)
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-739b3fe7ce8so2430270b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 08:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745595976; x=1746200776; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1745596659; x=1746201459; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=b0yjiKObWEJiwO02DaOrPmXbmFq+eaftYKKT34xnJk0=;
-        b=j05UV5dPOBy43iHV+sWZT+yAPem7J7c/EFHZyA9g/WbDbkdHA4L4U5mlWTvXyZ/pya
-         1KZJEJJM8+mH1KufUe/KDFW17zAkJGGDWvnFdxr/+IdzMlfmg5rBFAfZppMbD+pPs9yq
-         SAfquee+kxH36o3IUKPzBN/PKsk66fQnTs8ouVt0hYQXar0wscnL7c+zFIrOgInHwI47
-         ImAPwxXq8Vj0/1RdLNd8DkqhtEZ4UrDL0MKceZzGhd3rnQfEMWKIoFYF/bhPuhYyOK7v
-         2GB9WWtKRTUxIOGhVnuVdqzrkCR4ab6v+RC47jbQWN2hoxuAdbFyqMcGs6N3jJHUEt9Z
-         wVaw==
+        bh=utSRlvWwaJPUba2da6V5YeBrAL7QiUQpMkQtkrVxrps=;
+        b=J0oI7satcWS5kMz1Pr/ksuZnUF9RXWls2CiZDEPvzSmesUlm6HU4g04ZWVjviV1Kfg
+         fKgax+rfKN+wfczorKW9S0PiSXxEQ8/7DKgqay5tT1jJI48bF8MCIHxiZZDwXctLteFc
+         4S8iUfhenJWhcINUT/eK/mpaBsReqSFlmvYUMpGtnaj0amK0k+OPfK9G4/TZFA38cpfX
+         XsEC9CCFnjke1OJryLa3/torC7IjSjMNfTmL9VZ8wcc+zNSfek1CfvXzywJUJei0TXP7
+         FNuI7Dg48ATDukh4fR/bsR37huZ00nX0hWwjzAw3LHy3rah3HW4s+4T4DzpbNh9Hj+uM
+         dysw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745595976; x=1746200776;
+        d=1e100.net; s=20230601; t=1745596659; x=1746201459;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b0yjiKObWEJiwO02DaOrPmXbmFq+eaftYKKT34xnJk0=;
-        b=ZeUDorB1I0k+8AwSaQcZ/pEVzpS7zvGJCVyqbfx6cva6jEBF++22xVGUhKz+WdzbLd
-         Xjp+PpqvoFUlWNVMsuwmWflJdXX71ujb4ak9LyMUhLX+HFF4Uqq7B9kLoCFVphFztZue
-         Bu9Z4wlJs2bAuUORXbYjacgerSbHDZlb0/is2Cb1kzs08tmBij0MX6ABZLWt6/gq1Gig
-         FdwhLMs0IVJK/urolssQ9a8EOgs9I03v6lTPm7fXjl1ss/iscnh96pIxp2/nw9oARE+7
-         tg5Uwby+CW7V5Ls2jtzkwqWu3iztZPLm15a6T1Q25ik/krq/TXpt+vVCDQoZHErKCPaY
-         XwQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXgN2BSH8Mnu3lPLD0NU5/T2uRuJANSZVPqoyanS21iOsgZntwTKxAN+qI8U7E7CJ1EXS0VfNkCuqtZ5Wub@vger.kernel.org
-X-Gm-Message-State: AOJu0YxcVxaSJ8Mq9TX7XSwXjyVa1pQbuPm/q1yIJTVzPsiQNUeNsu+H
-	aomJBOutS23Kw8cMQXvv6Qbq6AGCxBbBOtp8d4RRUFsXpzTWH0m0mIZdme1A3w==
-X-Gm-Gg: ASbGncvszzEebKneEGufwWoE/QuNDt2B8QYGcnJOQH1y4c/Z56RMdkkojEJ3RRxYUun
-	vZHbdZiUlwowPONJJtYXRMV5dSquWHgCds6jwYQsyB2mlsvnPj1N1v7ONmLZWJn7htFhcpFzDj5
-	nynDhbgDS25f1pttjb09SutL3o3gh42QoIuiHoPKLdnzp330tCYOw5OhltSK0bTSvDtmfJPvRv+
-	kDbDYVWnqJMKpB4ALzZ8nCXpwuvHl0KMmgyZRziuovSz8j0t1jyEzGsDa5axUQhpaHrYvgcbTfT
-	yY7uy6q1upe4AavjVRdOCMip8cLej/2xYPYaypdaHSNaqMSa1GU4
-X-Google-Smtp-Source: AGHT+IGs6qXZbOiWmzBGdrbn2GeizUSvYWBYF7LQu+E/gHowSvXPMU/F/cIhQAuYikQ05w1s5IHkLg==
-X-Received: by 2002:a05:6a00:e1b:b0:736:b3cb:5db with SMTP id d2e1a72fcca58-73e268ee7b6mr11186888b3a.11.1745595976351;
-        Fri, 25 Apr 2025 08:46:16 -0700 (PDT)
+        bh=utSRlvWwaJPUba2da6V5YeBrAL7QiUQpMkQtkrVxrps=;
+        b=HV5NNfTg7CG0L/hWtDzLRn1kFtCfKLz4r6N+sFwsivT/K6XxDgAkHhjsO8b23Pggyx
+         OthUci6vvzt58sRsQ0dvZX2p86c6SKzErDQW9k7J6flOb8VnQof9g8qIrryzWdx9gXW/
+         vJ8Bv+YQ/7F8nAa+KDgwpxV1NHWuP4jsc+LwU7N5WZXG26JRJufpo41q9QGx1A1e0gTA
+         4N+xolk92L5OsZ5C/JGZ/ydVpzlNilcLJoz4DkKjbo2zkKnSxOhmOppUtA+zRLmtVCgX
+         bOEdAzjvwXF811c4i3m4PcbpvrXyBjuyjuJKD6XsgtNoOU/F8uLKkJi9p/RPuHOp4eck
+         DZWA==
+X-Forwarded-Encrypted: i=1; AJvYcCVHFq0P/OpbQU54AEpCJgzxs4Lx5TwFhVsBjNg17Q+9+5wJno5HXTybEjoIT14RS/rDgD3uySllDLLQV8OP@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxgh6q/BBW3+VRc4CZATYQRED2/FS70262/Mt0o8ixXeRIdPDba
+	Py0BQIvAGijHMMogFIStmmWCQuxqwpVVp+YchKMzkfTLFv+ORJu2qtXCgR0WzQ==
+X-Gm-Gg: ASbGncvbUxKfdxM9vN8QV43n1SkeTR64CQxmRgw+OVrNLZ6YoY3zbr1OABzl4EycXDI
+	hzgqJOSlndedBhuUQ0hmJVqvqzlzZ5vgISzDnopWHZm35ulshvYYvrzvgVla3rFVVcExeoP7Sc8
+	gLFECd6+8oA6A+G0VHSWzlQOH5U6CBInPcyFWE3E1WceoTvZZ8ygTFE/y30Xb/zO9mjTeWvMjPm
+	NpC45dibTvn6NXBpSzBzUlrU1ojbQfYy2pnE/xtIifD+1PtH74nSV0iKJchyWDkhDoav/JLXv6o
+	LwTmpOk9/OFZty41rItfvnPGxyZ9qB4GVwidytZ70TiUiP0R5zA/
+X-Google-Smtp-Source: AGHT+IEv9WTyD1hNXstYJB7wgOh80HyepKndFk0b9Nsc+PbCz+wAO+jxkDebi/3q0xjNfV/24gj4Tg==
+X-Received: by 2002:a05:6a00:b93:b0:736:3be3:3d77 with SMTP id d2e1a72fcca58-73fd8b6be23mr3721308b3a.16.1745596659476;
+        Fri, 25 Apr 2025 08:57:39 -0700 (PDT)
 Received: from thinkpad ([120.56.201.179])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73e25967608sm3316408b3a.81.2025.04.25.08.46.10
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73e25912c94sm3344436b3a.3.2025.04.25.08.57.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Apr 2025 08:46:15 -0700 (PDT)
-Date: Fri, 25 Apr 2025 21:16:09 +0530
+        Fri, 25 Apr 2025 08:57:39 -0700 (PDT)
+Date: Fri, 25 Apr 2025 21:27:32 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
-	Jingoo Han <jingoohan1@gmail.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, 
-	Johannes Berg <johannes@sipsolutions.net>, Jeff Johnson <jjohnson@kernel.org>, linux-pci@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, 
-	linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, quic_pyarlaga@quicinc.com, 
-	quic_vbadigan@quicinc.com, quic_vpernami@quicinc.com, quic_mrana@quicinc.com, 
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 01/10] PCI: update current bus speed as part of
- pci_bus_add_devices()
-Message-ID: <azxdhgvf6vo6eilmdmxa2ryir33h5uqwuru2a7jrgjuunyncrb@q3fdjhcaskjm>
-References: <20250313-mhi_bw_up-v2-1-869ca32170bf@oss.qualcomm.com>
- <20250313170001.GA738398@bhelgaas>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, 
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, Johannes Berg <johannes@sipsolutions.net>, 
+	Jeff Johnson <jjohnson@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, linux-wireless@vger.kernel.org, 
+	ath11k@lists.infradead.org, quic_pyarlaga@quicinc.com, quic_vbadigan@quicinc.com, 
+	quic_vpernami@quicinc.com, quic_mrana@quicinc.com, 
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: Re: [PATCH v2 02/10] PCI/bwctrl: Add support to scale bandwidth
+ before & after link re-training
+Message-ID: <7njsbucxngxc2eninh57oexywiqsyysrbesyige5zwr4pmxf7t@rw6657lheg4j>
+References: <20250313-mhi_bw_up-v2-0-869ca32170bf@oss.qualcomm.com>
+ <20250313-mhi_bw_up-v2-2-869ca32170bf@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,53 +98,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250313170001.GA738398@bhelgaas>
+In-Reply-To: <20250313-mhi_bw_up-v2-2-869ca32170bf@oss.qualcomm.com>
 
-On Thu, Mar 13, 2025 at 12:00:01PM -0500, Bjorn Helgaas wrote:
-> [+cc Bartosz since this is related to pwrctrl]
+On Thu, Mar 13, 2025 at 05:10:09PM +0530, Krishna Chaitanya Chundru wrote:
+> If the driver wants to move to higher data rate/speed than the current data
+> rate then the controller driver may need to change certain votes so that
+> link may come up at requested data rate/speed like QCOM PCIe controllers
+> need to change their RPMh (Resource Power Manager-hardened) state. Once
+> link retraining is done controller drivers needs to adjust their votes
+> based on the final data rate.
 > 
-> On Thu, Mar 13, 2025 at 05:10:08PM +0530, Krishna Chaitanya Chundru wrote:
-> > If the link is not up till the pwrctl drivers enable power to endpoints
-> > then cur_bus_speed will not be updated with correct speed.
-> > 
-> > As part of rescan, pci_bus_add_devices() will be called and as part of
-> > it update the link bus speed.
-> > 
-> > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> > ---
-> >  drivers/pci/bus.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> > 
-> > diff --git a/drivers/pci/bus.c b/drivers/pci/bus.c
-> > index 98910bc0fcc4..994879071d4c 100644
-> > --- a/drivers/pci/bus.c
-> > +++ b/drivers/pci/bus.c
-> > @@ -432,6 +432,9 @@ void pci_bus_add_devices(const struct pci_bus *bus)
-> >  	struct pci_dev *dev;
-> >  	struct pci_bus *child;
-> >  
-> > +	if (bus->self)
-> > +		pcie_update_link_speed((struct pci_bus *)bus);
+> Some controllers also may need to update their bandwidth voting like
+> ICC bw votings etc.
 > 
-> Why the cast?  I guess to discard "const"?  I would prefer to avoid
-> that if we can.
+> So, add pre_scale_bus_bw() & post_scale_bus_bw() op to call before & after
+> the link re-train. There is no explicit locking mechanisms as these are
+> called by a single client endpoint driver.
 > 
-> The only existing callers of pcie_update_link_speed() are from bwctrl,
-> where it obviously makes sense because bwctrl manages link speed, and
-> from pci_set_bus_speed() in the pci_alloc_child_bus() path.
+> In case of PCIe switch, if there is a request to change target speed for a
+> downstream port then no need to call these function ops as these are
+> outside the scope of the controller drivers.
 > 
-> If we call pcie_update_link_speed() here, do we still need the
-> pci_set_bus_speed() in pci_alloc_child_bus()?
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/pcie/bwctrl.c | 15 +++++++++++++++
+>  include/linux/pci.h       | 13 +++++++++++++
+>  2 files changed, 28 insertions(+)
 > 
-> Bartosz, so you have any suggestions?  Is there a point in pwrctrl
-> where it would make sense to do this, similar to what bwctrl does?
-> 
+> diff --git a/drivers/pci/pcie/bwctrl.c b/drivers/pci/pcie/bwctrl.c
+> index 0a5e7efbce2c..b1d660359553 100644
+> --- a/drivers/pci/pcie/bwctrl.c
+> +++ b/drivers/pci/pcie/bwctrl.c
+> @@ -161,6 +161,8 @@ static int pcie_bwctrl_change_speed(struct pci_dev *port, u16 target_speed, bool
+>  int pcie_set_target_speed(struct pci_dev *port, enum pci_bus_speed speed_req,
+>  			  bool use_lt)
+>  {
+> +	struct pci_host_bridge *host = pci_find_host_bridge(port->bus);
+> +	bool is_rootport = pci_is_root_bus(port->bus);
 
-I'm not Bartosz, but I could speak for pwrctrl.
+s/rootport/rootbus
 
-This should really be part of pci_pwrctrl_notify() in pwrctrl driver. Pwrctrl
-driver is already getting notified with device additions and removals. So the
-update can be performed once the device addition happens.
+>  	struct pci_bus *bus = port->subordinate;
+>  	u16 target_speed;
+>  	int ret;
+> @@ -173,6 +175,16 @@ int pcie_set_target_speed(struct pci_dev *port, enum pci_bus_speed speed_req,
+>  
+>  	target_speed = pcie_bwctrl_select_speed(port, speed_req);
+>  
+> +	/*
+> +	 * The controller driver may need to be scaled for targeted speed
+
+s/controller/host bridge
+
+> +	 * otherwise link might not come up at requested speed.
+> +	 */
+> +	if (is_rootport && host->ops->pre_scale_bus_bw) {
+> +		ret = host->ops->pre_scale_bus_bw(host->bus, target_speed);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+>  	scoped_guard(rwsem_read, &pcie_bwctrl_setspeed_rwsem) {
+>  		struct pcie_bwctrl_data *data = port->link_bwctrl;
+>  
+> @@ -197,6 +209,9 @@ int pcie_set_target_speed(struct pci_dev *port, enum pci_bus_speed speed_req,
+>  	    !list_empty(&bus->devices))
+>  		ret = -EAGAIN;
+>  
+> +	if (is_rootport && host->ops->post_scale_bus_bw)
+> +		host->ops->post_scale_bus_bw(host->bus, pci_bus_speed2lnkctl2(bus->cur_bus_speed));
+> +
+>  	return ret;
+>  }
+>  
+> diff --git a/include/linux/pci.h b/include/linux/pci.h
+> index 47b31ad724fa..9ae199c1e698 100644
+> --- a/include/linux/pci.h
+> +++ b/include/linux/pci.h
+> @@ -804,6 +804,19 @@ struct pci_ops {
+>  	void __iomem *(*map_bus)(struct pci_bus *bus, unsigned int devfn, int where);
+>  	int (*read)(struct pci_bus *bus, unsigned int devfn, int where, int size, u32 *val);
+>  	int (*write)(struct pci_bus *bus, unsigned int devfn, int where, int size, u32 val);
+> +	/*
+> +	 * Callback to the drivers to update ICC bw votes, clock frequencies etc for
+
+s/drivers/host bridge drivers/
+
+> +	 * the link re-train to come up in targeted speed. These are called by a single
+> +	 * client endpoint driver, so there is no need for explicit locking mechanisms.
+
+You need to mention that these ops are meant to be called by devices attached
+to the root port.
 
 - Mani
 
