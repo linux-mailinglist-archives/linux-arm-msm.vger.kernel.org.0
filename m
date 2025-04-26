@@ -1,184 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-55799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE4A7A9D909
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 09:32:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 44C1BA9D92B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 09:45:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D86594C1D1B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 07:32:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F81B4C2E88
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 07:45:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B038B216E1B;
-	Sat, 26 Apr 2025 07:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AD7B1922D4;
+	Sat, 26 Apr 2025 07:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b="mfgQZGtZ"
+	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="luyXVycX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54B218870C;
-	Sat, 26 Apr 2025 07:31:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A76119AD48
+	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 07:45:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.123
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745652715; cv=none; b=oa6vuODdLW2uNFJzg/4LsjjBOZZR1hNizNpnMhfzdeCfS9U9xij78EgF3sO7calSkqblFRd7EXkODWzXuKCDciGn8cgRI5l3JgiQIplt25vEYDg+jKVVuoH+heTHLFfObjPyCWvjgUTr+tORh+rlyPP01pnQYq/uH639MyMbu3c=
+	t=1745653528; cv=none; b=pTBI1iBjH8+40v8jnxDEC9AMced5YU3z93HVAoC70/pgi+XRQKip5DSjc+YLkPEczJi02Dxgdfh3UKaEwB1AQTGVR8hRLYDvzFifKyoMazqo1W+gU6zR+fURaZeX1LxCRe64l71Gi5xGXeXGvWqFyPAaeDgBICcYcESgAOE6z7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745652715; c=relaxed/simple;
-	bh=usn3UhhvWYxA5R1L1n51sRf0wY9ZS5AhL2O38+3iocI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TeOMtKpd/qKmZl6AUeQdcSYYS8fMIglG/h8qnRt4thy7VbmgIe2OaLwNmcjaIb/h5XiNcgr+GJP+H0bdoh2czNwH76e2bNxkuHOrKLAagLA71wHYfaACpwDu8Py42LyS2XR13tf9ygq+06MGPF6iPQZeV5vgXnwOrHcNAUCDJKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz; spf=pass smtp.mailfrom=ucw.cz; dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b=mfgQZGtZ; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucw.cz
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 2F1521C00B2; Sat, 26 Apr 2025 09:31:43 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-	t=1745652703;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=5exbCp8CDaKtwnGNmQNuQzYNnvlYj2r8BcoFxqyUHf8=;
-	b=mfgQZGtZWV3YKRvc11Fy2WjXUhClzecJUpk8uWFAvgSynbJ4YLRl0zJKFI2+KRYmEv/vIS
-	nEGu1k4V7qVSC93t6IBB0MyDqO93+03canDSdfmPtS49p32DXiQ8kU9ZO1dLYEU+Xf6umH
-	NN3bTS8FxIdGst1L8YhkuJUoLzvidEA=
-Date: Sat, 26 Apr 2025 09:31:42 +0200
-From: Pavel Machek <pavel@ucw.cz>
-To: Danila Tikhonov <danila@jiaxyga.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-	Lee Jones <lee@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Alex Elder <elder@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Andy Gross <agross@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>, Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	David Wronek <david@mainlining.org>,
-	Jens Reidel <adrian@mainlining.org>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-mmc@vger.kernel.org, netdev@vger.kernel.org,
-	linux-scsi@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-crypto@vger.kernel.org, linux-i2c@vger.kernel.org,
-	linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	iommu@lists.linux.dev, linux-remoteproc@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, linux-hardening@vger.kernel.org,
-	linux@mainlining.org, ~postmarketos/upstreaming@lists.sr.ht,
-	Connor Mitchell <c.dog29@hotmail.com>
-Subject: Re: [PATCH 00/33] Add support for Qualcomm Snapdragon SM7150 SoC and
- Google Pixel 4a
-Message-ID: <aAyL3vl9yKlJ+JOi@duo.ucw.cz>
-References: <20250422-sm7150-upstream-v1-0-bf9a9081631d@jiaxyga.com>
+	s=arc-20240116; t=1745653528; c=relaxed/simple;
+	bh=w8RacVv7kD3lnn+AVvnyUBxmiCMUu8RBJaFo4l2EVyM=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=iupQp1ft4OtjnANtpGM0ZzchCeQnY608FsereojFRDfafFhJJ4EHj4s+b0p/66qvjJGrVPl1obApEsRvT7MFehoL8uRILR7oDv5Uj1UQR1lmlXna8YoleNEMD2SFbKVNCQSc6fA3f3qx11qMrbo/dkOgehzbN5ArX5XG5wrYT3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=luyXVycX; arc=none smtp.client-ip=185.125.188.123
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com [209.85.218.71])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 73E6B3F2A9
+	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 07:45:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1745653523;
+	bh=xQG8aR91QUiXJqe0zGBSMh1PwbLabEkgq2LJTt+r2Gg=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type;
+	b=luyXVycXjIa2SO5y5jEa/CR1zX3NptRZrTjaACkyul+CJYlD0A9+6wjec1ZkUZ0Jp
+	 iq0K6St3V54oJC5SdAVMO3oF7P2vZFOb9M2rC6SkNclDUK3TKkFEZ8gkozOQKcKzwH
+	 V5V4JicU2ccRdYp0mgwgfau4hlm8OAkGcZJxBW6+BaRxBT3bdDjHAslcwKmOPiKu5g
+	 3hsIfy329X2euI1nAllquTfUOS9ODt030zwBNLapZmSD8GIJebiXA7tfEGAkBHk62o
+	 atMC+kOw1TLhEDErQEPTK8uF/h5DSFYCjsmUn/BFVC5EggmiGpZqveVgUXTvdco++N
+	 QCzRUQ2cgo2Jw==
+Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-ac28a2c7c48so240714466b.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 00:45:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745653522; x=1746258322;
+        h=mime-version:organization:references:in-reply-to:message-id:subject
+         :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xQG8aR91QUiXJqe0zGBSMh1PwbLabEkgq2LJTt+r2Gg=;
+        b=wRZsnqWt1gdb1Q7PaR9OMAG9ZxCAjpe9Ub366TK24GjrBRFl4NLiu/klPApmmgtjdX
+         w/SLEGKlWdwhkPjTWvyqT1wz1DKTnJcXBIdnvSLfG8ZWh5DEwHzO1ZznWJE+iGjJNg/x
+         XSQlruZwupb4kXvsZpxWwYSCro55Uy88RwjPHGioH3XFSIyLRMwmFKK5axFuwmiVucaY
+         ckyPGHJt5VnoJMWG7Tyieq5V7aFsbOkWDCBo5EcOIYD/aEu51gHTFG57Y/x5vpZd46S7
+         tt0eQ7N4jNDN70R9djf6o+2Z64+hdk6j3egY7EXaMqcSIoy5b9IRPlVR8iyjU5HP1X+7
+         t+0w==
+X-Forwarded-Encrypted: i=1; AJvYcCVv/zv32h5O4wlLZNFICHKzzI4N6ANGSYSfpBoRyuViEff4nl+oExs3LY8Z8jgBvAT6VjX9OE2fvute8NIF@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy9NyN9KQhS/mceRQ3GUAzTvzHWTwQWE5fIDkZ2VzWXawtU00kB
+	m+7Siok380B+BdDFWyTZHsua2A4BAN9Irtp/BQKq8O0voC8+trXMjZ2u25qau19oOQ58Du4UzZ6
+	pcLw+YnsFg87ghQhDEtukLrW1bV9O/vu7ITfYeyErXlQQL5G3sBORX+BlIoIHt5M6hwHvOFbnq6
+	818y4=
+X-Gm-Gg: ASbGncvvfEgJBalcqEU5zaQfDqMM2rZpmr+TFyK080SWU3ld4j1G5rGoIZcLyFyijy0
+	CUbX1TO/q45ndhHIpxgikTNgPFLOVy/7SFp4Kz5V8AJhhoGfG1fj0ezNFghHzsIXp7yolJGXYd+
+	E5ritANXPxtMAy9k7XnWNKgbT9faXUrpDLe2ffYSW/5h8nCNTzgNrGQA7F0390PYgc/ASoj0o+V
+	4ewpHXHSaN1y/wEPMVySEX8Km/MTSRSPY1n++jgpQF3MpZrcsjSTB49Qv4J7ogOHjBc/jisuNVv
+	wOXWD8+9NYwLufqeplWD8ctJpG9WnTNOqW9hsCsHyyjuwzXJkHSdHg==
+X-Received: by 2002:a17:907:7f92:b0:ac7:4f1:65c5 with SMTP id a640c23a62f3a-ace84b4c6f6mr175863366b.54.1745653522576;
+        Sat, 26 Apr 2025 00:45:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHFac88syXkSEHa373nY7+k8VjAiVo/ZD5gaPuEp01MgkPmzBDXRMO1qk5C5k/b8KxWKQSeAw==
+X-Received: by 2002:a17:907:7f92:b0:ac7:4f1:65c5 with SMTP id a640c23a62f3a-ace84b4c6f6mr175860966b.54.1745653522112;
+        Sat, 26 Apr 2025 00:45:22 -0700 (PDT)
+Received: from smeagol (151-243-191-194.pool.dsl-net.ch. [194.191.243.151])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6edb1a48sm256429866b.179.2025.04.26.00.45.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Apr 2025 00:45:21 -0700 (PDT)
+Date: Sat, 26 Apr 2025 09:45:15 +0200
+From: Juerg Haefliger <juerg.haefliger@canonical.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+ konradybcio@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, robh@kernel.org
+Subject: Re: [PATCH v3 1/3] arm64: dts: qcom: x1e80100-hp-omnibook-x14: add
+ sound label and pull out the model
+Message-ID: <20250426094515.193e5f59@smeagol>
+In-Reply-To: <mit327e4qp3hch4xy6qmqmks35tq5w35rw4ybvs5s3q7osxbkv@bzvon2u3jsmn>
+References: <20250408145252.581060-1-juerg.haefliger@canonical.com>
+	<20250416094236.312079-1-juerg.haefliger@canonical.com>
+	<20250416094236.312079-2-juerg.haefliger@canonical.com>
+	<mit327e4qp3hch4xy6qmqmks35tq5w35rw4ybvs5s3q7osxbkv@bzvon2u3jsmn>
+Organization: Canonical Ltd
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jXuQpBURuH9Sxi9Z"
-Content-Disposition: inline
-In-Reply-To: <20250422-sm7150-upstream-v1-0-bf9a9081631d@jiaxyga.com>
+Content-Type: multipart/signed; boundary="Sig_/bs8.Q+hsXAsnuniQCI/K9Ru";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
 
-
---jXuQpBURuH9Sxi9Z
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--Sig_/bs8.Q+hsXAsnuniQCI/K9Ru
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: quoted-printable
 
-Hi!
+On Fri, 25 Apr 2025 22:44:42 +0300
+Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
 
-> This patch series adds support for the Qualcomm Snapdragon 730/730G/732G
-> (SM7150) platform along with the Google Pixel=C2=A04a (sunfish) device. S=
-ince
-> the most critical drivers were submitted and applied in separate patch
-> series, this series is largely composed of DT bindings and device=E2=80=
-=91trees.
+> On Wed, Apr 16, 2025 at 11:42:34AM +0200, Juerg Haefliger wrote:
+> > Add a label to the sound node and pull out the model name to make it
+> > explicit and easier to override it from other nodes.
+> >=20
+> > Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts | 7 +++++--
+> >  1 file changed, 5 insertions(+), 2 deletions(-)
+> >=20
+> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts b/ar=
+ch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
+> > index cd860a246c45..9595ced8b2cc 100644
+> > --- a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
+> > +++ b/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
+> > @@ -174,9 +174,8 @@ linux,cma {
+> >  		};
+> >  	};
+> > =20
+> > -	sound {
+> > +	sound: sound {
+> >  		compatible =3D "qcom,x1e80100-sndcard";
+> > -		model =3D "X1E80100-HP-OMNIBOOK-X14";
+> >  		audio-routing =3D "SpkrLeft IN", "WSA WSA_SPK1 OUT",
+> >  				"SpkrRight IN", "WSA WSA_SPK2 OUT",
+> >  				"IN1_HPHL", "HPHL_OUT",
+> > @@ -1691,3 +1690,7 @@ &usb_mp_qmpphy0 {
+> > =20
+> >  	status =3D "okay";
+> >  };
+> > +
+> > +&sound {
+> > +	model =3D "X1E80100-HP-OMNIBOOK-X14";
+> > +}; =20
 >=20
-> To date, we=E2=80=99ve tested SM7150 support on the following eleven devi=
-ces:
-> - Google Pixel=C2=A04a (sunfish)
-> - Samsung Galaxy=C2=A0A71 (a715f)
-> - Lenovo Tab=C2=A0P11=C2=A0Pro (j706f)
-> - Xiaomi POCO=C2=A0X2 (phoenix)
-> - Xiaomi POCO=C2=A0X3 (karna) / POCO=C2=A0X3=C2=A0NFC (surya)
-> - Xiaomi Redmi Note=C2=A010=C2=A0Pro (sweet)
-> - Xiaomi Redmi Note=C2=A012=C2=A0Pro (sweet_k6a)
-> - Xiaomi Mi=C2=A09T / Redmi K20 (davinci)
-> - Xiaomi Mi=C2=A0Note=C2=A010=C2=A0Lite (toco)
-> - Xiaomi Mi=C2=A0Note=C2=A010 (CC9=C2=A0Pro) & Mi=C2=A0Note=C2=A010=C2=A0=
-Pro (CC9=C2=A0Pro Premium) (tucana)
-> - Xiaomi Mi=C2=A011=C2=A0Lite=C2=A04G (courbet)
+> Usually the DT don't use this idea. Could you please bring the model
+> back to the node? The label is fine.
+
+Hm. Maybe I misunderstood but isn't that what Krzysztof requested here?
+https://lore.kernel.org/linux-arm-msm/bb95af7c-5e88-4c6a-87db-2ddd1fe211a5@=
+kernel.org/
+
+...Juerg
+
+
 >=20
-> A huge thank=E2=80=91you to the SM7150 community for all the devices-port=
-ing
-> work, testing efforts, and bug reports.
+> > --=20
+> > 2.43.0
+> >  =20
+>=20
 
-Thank you, looking forward for well supported phones.
 
-Please cc phone-devel@vger.kernel.org with phone patches.
-
-Best regards,
-								Pavel
---=20
-I don't work for Nazis and criminals, and neither should you.
-Boycott Putin, Trump, and Musk!
-
---jXuQpBURuH9Sxi9Z
-Content-Type: application/pgp-signature; name="signature.asc"
+--Sig_/bs8.Q+hsXAsnuniQCI/K9Ru
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaAyL3gAKCRAw5/Bqldv6
-8t6+AKCezW+X8tCRtch2mRMPqCnbTeMpmACgo7PqyT2Vhb5yFE9mqg8LMrPK+y8=
-=hK/X
+iQIyBAEBCgAdFiEEhZfU96IuprviLdeLD9OLCQumQrcFAmgMjwsACgkQD9OLCQum
+Qrd7LQ/4+q4xmthISwE892TSn8RgxS/c7Ti1v75eDFMPcuMXBPnbzt7ZLrRKksFf
+jILKVaqj/wxNrGx9xcZPy4KLMY3IQL2mSdgsEYtEKE5F0HxasMpFCo3caHZHR4+Z
+q5zuBLw0nOpOrDKSatHjlLefxWQdYOWhZlkzullTZrouh2IJ8jrIAVRGk/EJDyym
+6dSXwczKPhX3VLyuEdTNnwSpkSS68avDHHxhwc9Hm/ORbY6N91BR+OABZsJ9mGKR
+m7jDQUQkWeiqzNJWpyvE/0LmRUBOvHXA9xSEPX1NP5lyieCP6zjLmEfLYp7/wNN7
+4JAye09lIYZPKxf+ZiFPIQkzH00+eFC7k+1Gg80PXMJShHU+JzMXbfMp15e3VSVy
+hWhso40J6qAaLAuaMwEMR7Gs7Ozxgjzph2E0/oKyft78Sbx5eyHIRDlPoEkCyPP6
+8D5dOBXQprpB1YViCsjBekcfye0PqKRqZnZu1d/dQSDbOYk7Uevw2EmGfzSWZ1cc
+alfzejgVtLrnzAinWdr0A2YzzV5gqt2l0D/WZ4Ac2zaQC82oXeCCS0Ia8W9nTpIY
+WdmwZkJMyf+Pg1aCy9YZ307vltIPDkKitY2NPyoHlS/184AEQuMp9P7dYcUi1Wdw
+eKv4spD6t6WZtwJKU0b7xu8bQznbVXt8wXxjP3SFuZtR0GOLvw==
+=nqY8
 -----END PGP SIGNATURE-----
 
---jXuQpBURuH9Sxi9Z--
+--Sig_/bs8.Q+hsXAsnuniQCI/K9Ru--
 
