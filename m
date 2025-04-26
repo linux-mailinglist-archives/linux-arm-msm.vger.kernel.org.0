@@ -1,126 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-55797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6249EA9D7A8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 07:19:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C3E0A9D83A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 08:15:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1C85B7AA311
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 05:18:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EF6E317856D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 06:15:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D68F519DF6A;
-	Sat, 26 Apr 2025 05:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A68E6FC3;
+	Sat, 26 Apr 2025 06:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="br8Sn5oJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kkFI1IrL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CF029B0;
-	Sat, 26 Apr 2025 05:19:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA00211C;
+	Sat, 26 Apr 2025 06:15:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745644779; cv=none; b=e4dzdnQiBQlM9/l4L77qU0ifjgOQ3T9rX3l0kdF10siWEHlHn7/JYzUK5/5XJd2ZL0ZWquJLJx88QkR2LN3aF/r7Ej97sp0r8Sxb3pIJVhTtp6pliSU1g2RdEFKIaxFCXxMN8s6RCrjn7HF6sWYiru+IjmEZcEvF78gMDlFy6L8=
+	t=1745648132; cv=none; b=ts8S4XtDbxSeDYbm6TOoLIkFNmPZ1YWJlSmsv7l53oU6APE0VswnQRxXS9/6ZymQ2yQosA5DqRbIZgjE6JizDDE+a3k7EZa7GIKtwD9EEFprD681s+ZnF7JvP7Ww9pn4ajb7ydVUJYdTw3fcjneCXROwgsQFf6/8gZZOiApa/hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745644779; c=relaxed/simple;
-	bh=9Tk4kop98w2lSr6Z5mOouvA3XaaXVtHJfJpOm6sjYs4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QZYUc5VU+Sp9tdfc6reLpIvIQ2j421Hej3+T/SjiVnwGYip76/QtMccA66Pf4P2hcqoDrGkrwnTKo3BrLYsxnPB3nrQkKYbcYWLIWUuKC+UV6KlOxorKWVWg8rrzipPwV3Ad0oOKFy8/PEwaSYDruJTo6Iq3+wSZvb1OzHaTu2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=br8Sn5oJ; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1745644778; x=1777180778;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=9Tk4kop98w2lSr6Z5mOouvA3XaaXVtHJfJpOm6sjYs4=;
-  b=br8Sn5oJjDmNcdL6DOPMjTop+9b6FUL/vXjwnp/8JWsCGCZkNoki4va0
-   EpAxEe3V0Mlm3YUnn8RYlaamqIum31dSTwLk2Nsxd9wcn8/mTCAIkGO0h
-   Oe9J9mERpnMgMkFOStTCsjGHaRf0cSCAnuT1gwE8Lqx3w2Fn5tvWu/APl
-   ILICAlE3q7/vJIGQtZXYbCY8hKLDd1SuYMQnd7YFSRitGZUD1P39YdcHz
-   FLIitr5nnalSCoBkatkGmyNvbZZ6NoXtNPAZB8OcvWm4BOz8DCfYvScl+
-   0W88+Y1M7eQ0KNt9or6AEtfhD1+WwEh/4V52G7t5rPQS7NT17Q1VXuKK8
-   Q==;
-X-CSE-ConnectionGUID: qZLJEgnpQUiOitFpZdi1pA==
-X-CSE-MsgGUID: RsJ7DSh8Q8KR6CtDAU8ayQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11414"; a="64725237"
-X-IronPort-AV: E=Sophos;i="6.15,241,1739865600"; 
-   d="scan'208";a="64725237"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2025 22:19:37 -0700
-X-CSE-ConnectionGUID: 0Frs03buSWG25IAdY7GLsA==
-X-CSE-MsgGUID: /FaLD0w3R86Tlt1ZOcgp1Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,241,1739865600"; 
-   d="scan'208";a="137884504"
-Received: from lkp-server01.sh.intel.com (HELO 050dd05385d1) ([10.239.97.150])
-  by fmviesa005.fm.intel.com with ESMTP; 25 Apr 2025 22:19:33 -0700
-Received: from kbuild by 050dd05385d1 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1u8Xwp-0005i5-0u;
-	Sat, 26 Apr 2025 05:19:31 +0000
-Date: Sat, 26 Apr 2025 13:18:32 +0800
-From: kernel test robot <lkp@intel.com>
-To: Mao Jinlong <quic_jinlmao@quicinc.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Paul Gazzillo <paul@pgazz.com>,
-	Necip Fazil Yildiran <fazilyildiran@gmail.com>,
-	oe-kbuild-all@lists.linux.dev, coresight@lists.linaro.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 2/5] coresight: Add coresight QMI driver
-Message-ID: <202504261305.WCDIwfd5-lkp@intel.com>
-References: <20250424115854.2328190-3-quic_jinlmao@quicinc.com>
+	s=arc-20240116; t=1745648132; c=relaxed/simple;
+	bh=mxCUaaqj8mwcZsewtRcy5pF5fmWFDs+r5MaxX0wTrqc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=g++8uhXMpKmYBKrPmdEy2uQLWWbwce4LDXdSEPAHRSqaYJ2D/zB8x2LELQNmRwcb2f28gt9cBYkKbPVR/Y6ObFttFdCMkN1tbu8D9coJEpjPvAIrKaTLRxTcJz6WTZkcFLhgL4zUu3RnD1gvdyJ1nQJBptCwhq7I6axDuui78pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kkFI1IrL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9BBC4CEE2;
+	Sat, 26 Apr 2025 06:15:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745648131;
+	bh=mxCUaaqj8mwcZsewtRcy5pF5fmWFDs+r5MaxX0wTrqc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=kkFI1IrLTK0aACJ7gZ/yLEFFfaa+kNZAVkalayMKjTEutDzdEFjbKfOc6k11cF3YO
+	 f9D7W+VHPCZxh6zbj8Q00oAWB25M6c5DduTy4gaf97L3DYscuoR2dLwVnGlpYZj/xb
+	 Vpkf3a/gAOrHb9Y7ilOiAAq3D4KZ03gtZBY2p9+UlPifeafFCbDLWvz9zn2ijdw9yK
+	 9SaALKojSTRb9Vun73p+fZOB0nKh6k8g13K9bcfZkiIJ3OpsQNLqu1xRwMvAR1+ugy
+	 1zH1hTQHEoQuic1L4ns51BmidwYAN6YY18/k8gnHLn3JntxRqti3dBERrrcw0WRrWY
+	 jH4uWwuZltRcA==
+From: Kees Cook <kees@kernel.org>
+To: Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: Kees Cook <kees@kernel.org>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org
+Subject: [PATCH] media: iris: Cast iris_hfi_gen2_get_instance() allocation type
+Date: Fri, 25 Apr 2025 23:15:27 -0700
+Message-Id: <20250426061526.work.106-kees@kernel.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250424115854.2328190-3-quic_jinlmao@quicinc.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1624; i=kees@kernel.org; h=from:subject:message-id; bh=mxCUaaqj8mwcZsewtRcy5pF5fmWFDs+r5MaxX0wTrqc=; b=owGbwMvMwCVmps19z/KJym7G02pJDBk8lf8/L1zdfnqr/7SgAl+WQ4e2Ploz1zio/0rkxk4e2 wNL70/I6ChlYRDjYpAVU2QJsnOPc/F42x7uPlcRZg4rE8gQBi5OAZjIz5+MDDdOF5+KsT/2Obd6 8yX53/pB0m4rmiZulxKdO61pa9HNDQUMv9mPme83m7covjxsRss16Yuz56Uy/d6mlfbx2/mAA3K SEzgB
+X-Developer-Key: i=kees@kernel.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
+Content-Transfer-Encoding: 8bit
 
-Hi Mao,
+In preparation for making the kmalloc family of allocators type aware,
+we need to make sure that the returned type from the allocation matches
+the type of the variable being assigned. (Before, the allocator would
+always return "void *", which can be implicitly cast to any pointer type.)
 
-kernel test robot noticed the following build warnings:
+The assigned type is "struct iris_inst *", but the returned type is
+"struct iris_inst_hfi_gen2 *". The allocation is intentionally larger as
+the first member of struct iris_inst_hfi_gen2 is struct iris_inst, so
+this is by design. Cast the allocation type to match the assignment.
 
-[auto build test WARNING on robh/for-next]
-[also build test WARNING on linus/master v6.15-rc3 next-20250424]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Signed-off-by: Kees Cook <kees@kernel.org>
+---
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: <linux-media@vger.kernel.org>
+Cc: <linux-arm-msm@vger.kernel.org>
+---
+ drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Mao-Jinlong/dt-bindings-arm-Add-CoreSight-QMI-component-description/20250424-200202
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20250424115854.2328190-3-quic_jinlmao%40quicinc.com
-patch subject: [PATCH v5 2/5] coresight: Add coresight QMI driver
-config: arm64-kismet-CONFIG_QCOM_QMI_HELPERS-CONFIG_CORESIGHT_QMI-0-0 (https://download.01.org/0day-ci/archive/20250426/202504261305.WCDIwfd5-lkp@intel.com/config)
-reproduce: (https://download.01.org/0day-ci/archive/20250426/202504261305.WCDIwfd5-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202504261305.WCDIwfd5-lkp@intel.com/
-
-kismet warnings: (new ones prefixed by >>)
->> kismet: WARNING: unmet direct dependencies detected for QCOM_QMI_HELPERS when selected by CORESIGHT_QMI
-   WARNING: unmet direct dependencies detected for QCOM_QMI_HELPERS
-     Depends on [n]: NET [=n]
-     Selected by [y]:
-     - CORESIGHT_QMI [=y] && CORESIGHT [=y]
-
+diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+index a908b41e2868..351820deb893 100644
+--- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
++++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+@@ -953,5 +953,5 @@ void iris_hfi_gen2_command_ops_init(struct iris_core *core)
+ 
+ struct iris_inst *iris_hfi_gen2_get_instance(void)
+ {
+-	return kzalloc(sizeof(struct iris_inst_hfi_gen2), GFP_KERNEL);
++	return (struct iris_inst *)kzalloc(sizeof(struct iris_inst_hfi_gen2), GFP_KERNEL);
+ }
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.34.1
+
 
