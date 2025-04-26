@@ -1,204 +1,302 @@
-Return-Path: <linux-arm-msm+bounces-55821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 220C3A9DB59
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 16:03:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14E3EA9DC3F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 18:29:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4C21F5A7BEB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 14:03:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5698092191E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 16:29:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED83825C6EB;
-	Sat, 26 Apr 2025 14:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D899203704;
+	Sat, 26 Apr 2025 16:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="axSbnKP0"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XvUg6ll5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E243A25B699
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 14:03:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C06F1C5486;
+	Sat, 26 Apr 2025 16:29:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745676214; cv=none; b=R5XCUXum+Z4c7LiTGRXG4wKCf16PxOfDLlbLPzxD4FImcgo5Ge8SCHH37tKGxTojbKuzNTzhy9bHktstGygP93/ega9kZLJihWNMsxkN9yS9G2OhdQTl/1rqnALU6vR0NjjYCp6jrr4Y6SA+6LTNs7AJ3arfNGufdj4EoCwyew4=
+	t=1745684963; cv=none; b=IP+mOd/XII1DAB/T5kfNv20WEAp029ZRe5b4xDqTxKCjT/X5x+/0OcCovCAKj50QG4MaBmcr8LeFuHPd0QmLML64nsWOlXNcZ1dnEZxITTZmDuf8mNAil5oMUCNYPgBRT/5nqNj1bm6KlJRdZS8D76u+NLnDKi2wtzIc1ZI/hhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745676214; c=relaxed/simple;
-	bh=+/XlGJ40QyLJ1yxLqAsymj/3uMv2LvI3xGqt6JlJRkY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uGm74YtJoJ4pCWu/XP8kp5N1TtYzzDzdbp9WnvV2bmkZdPgWkjCT29g9N4ex3wg8lAy3mP/SwInhKN+CZ58KNDPX/7mm9feEIE97u2MbbKwvR6/JmAA/5Y3efWcqnuKmgNVNLpGe1MwLEucLOx2Sm5Sb77PcwmpVaOnUZAeBNcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=axSbnKP0; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-54d4ff564c5so502063e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 07:03:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745676211; x=1746281011; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vw+DsU15ptDiXJLxLZqHIzjz8lENUeO28XhBBnI/KzU=;
-        b=axSbnKP0wzkqrG+zVQ4JMEx9nZm/UAJm+bWflfONPHvMKBEks3/n6M8P3IHkF1GTsD
-         yRUGnayeerAJ4He7XxhCsDK+FWoel0bpLHpfILKT3nBBdzj0jenAfs65uYGGo6hHtZxS
-         Ns6ZJ3SOC6pEvCd4Z8yDsAmIsbtaiEDyKWo3bSC4Xex9D2JN6nEhIk55D9+v3R7f5Xxw
-         RrSqqMHpXjJXLBokbDwlOfpynUmtriP5IEjuUJNW5v+ZXM5tL7AzsmsDQz2MMLevGRuh
-         Mz8K5kcC5kYuvM0U+zQDIhhqQzr8qDKj5CgehznFpK3/XCUhJJVvjypAYG4p0JADtGXH
-         ZF7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745676211; x=1746281011;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vw+DsU15ptDiXJLxLZqHIzjz8lENUeO28XhBBnI/KzU=;
-        b=OW9e252sy/DvxnDTbwMDALN/aA8uxVFFek4CYPVFboSf25i95K8HU+ZoC2WDU2uPl7
-         9to4774hMDLB8ajNMQQWYyjQvnolZ0EAmh+sFefvx2U+sRzJz8NzvkQ/dwJHXPk1Mmjs
-         tgUKww/g95c/3z5aHH12Cln8G+HHb1u+p68nucip0Gat1SE49HLFk3XtSZtxCNzUoyWl
-         SAssWIWBWWnowJ9kY6ZosmLPFaRNgTZ2aCIu2iwtlTbI+RriToH/EnbY7AauJpC7mbc6
-         RU9/CF8d2SwWQsZtZnMYgGipb+DHSztXU+JDOwiGklUM2QtC9eJf4OU+AXYYQYaNtmaz
-         3KbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVQB6We1gM+kVwt2Qir1qmMVyOTU9UhqQ33pelKmlzvDTnD3sLwQie19xK8Kb3phqqVq6646bF32C1dxrnH@vger.kernel.org
-X-Gm-Message-State: AOJu0YyEncf+1H36aotbl8KqLAk2V1UA/8KgMenPjY1nsVXJ/wKgRYNd
-	QELY8Yvd+M7gGBn7cdo6/HNr5oWrbfLF1zjoCA+lHrv3cCMwngt2YhjOnz+T+zo=
-X-Gm-Gg: ASbGncul8QngHtZ1X6q7mpsLWOeAS4dfHPDNoT99qkqiP76lPk0Yv8MuWMuNHkm/LWr
-	WQobwbFsSNTzRRoMXhSJMXdNFFNan35HZDJRDENfHBarQlHCBcP9pRICFaoNPoha4GTdl/KttIs
-	urx1A5BIQ+VZgqZq2m6Zadl0hYo4YOavMlIH/dC9vZzAs4E542NQsTRasp+vrvdxrlsXlKtjf37
-	ILfAo+MuX8leqW3di3eiT+kuEgmtAUTVl43TpRVXxxVOFxuku2oVF0P9i9BUbIc+dAUez9GZgKg
-	KxgyYuPwLUXZHGE1uAJv4HdYOXdwSQSgybotjjB16aZDbuMHvlq/TXObqNuc6By8vnrCf0ck/UM
-	xvcozr3LgjmhrCVtTvk/cH2BY0m+ARg==
-X-Google-Smtp-Source: AGHT+IF1Ip7CcXoeKnygcwDIVwoNCBJjRB68C/jdSo6GKg66tIbe4aPB/aVZwdQypXq6CJVRBvutGQ==
-X-Received: by 2002:a05:6512:3d9f:b0:549:8b24:9884 with SMTP id 2adb3069b0e04-54e8cbd53d5mr523947e87.4.1745676210813;
-        Sat, 26 Apr 2025 07:03:30 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7cb2633asm1000722e87.10.2025.04.26.07.03.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Apr 2025 07:03:30 -0700 (PDT)
-Message-ID: <a4149ac8-7e47-48a9-84ef-42aa367d014e@linaro.org>
-Date: Sat, 26 Apr 2025 17:03:29 +0300
+	s=arc-20240116; t=1745684963; c=relaxed/simple;
+	bh=2GWhl92P7oAW9ExEf7++CKsqJSUvpkesZH5ExqqP6yI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zvbc0BTNC6aH2czuMQ39PFWU42gesxLGOiSXPvYUxpODmgEwalPXbj3JyNspESOPEhEdGtFw1fzVX3lVGJYgF+WCXggSv0uv3YIKmucQHehFEdLaYIf7TrFc26PmQ7mCgPhNCVnckcQbslXFqCH2mcrvI1qVxZ/Tc+O0etwi7Oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XvUg6ll5; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1745684962; x=1777220962;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=2GWhl92P7oAW9ExEf7++CKsqJSUvpkesZH5ExqqP6yI=;
+  b=XvUg6ll53Squ+koQ+RxwhvaG5GmN7BLKB8lyumSRMghkUHMmAy1CodGR
+   wylDp/+Wa8lTaKhXo4WIgP5JNTK095bCGRTT/bkRPCnbeXH1JNz3+Ei1v
+   NTQeg4S4XwNFLpqYnjdiYIu6qx3Rc1haM4K/w2D4Cbo8rmmEDjSfSArQO
+   /vSykO6reagKzUSTqFL35v+W5xHrOdrOoQVLx+Nz04xMyivHtfKHk6fiy
+   1DHpXmiAW501lOxjSqsGkvgQf7BLxbkujB6RX88eafxL+2BJK5UMH/9Z0
+   uK9His8VBxvAKJE7Xe1zGMAtMIBAw3ez7LdztdpfKwVPFIk9F5RJMzZ0T
+   w==;
+X-CSE-ConnectionGUID: uUWuzlPNSGGC2r3grSIx2A==
+X-CSE-MsgGUID: Nni3UlnfR1+GE200hyXRow==
+X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="47409888"
+X-IronPort-AV: E=Sophos;i="6.15,241,1739865600"; 
+   d="scan'208";a="47409888"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2025 09:29:21 -0700
+X-CSE-ConnectionGUID: EGaZ1FxsSOanIGctfTMPHA==
+X-CSE-MsgGUID: iwt7+TXJSHGMZGg0Ez2+EQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,241,1739865600"; 
+   d="scan'208";a="170359922"
+Received: from lkp-server01.sh.intel.com (HELO 050dd05385d1) ([10.239.97.150])
+  by orviesa001.jf.intel.com with ESMTP; 26 Apr 2025 09:29:19 -0700
+Received: from kbuild by 050dd05385d1 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1u8iOy-0005uv-1V;
+	Sat, 26 Apr 2025 16:29:16 +0000
+Date: Sun, 27 Apr 2025 00:28:21 +0800
+From: kernel test robot <lkp@intel.com>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Subject: Re: [PATCH v2 1/3] soc: qcom: socinfo: Add support for new fields in
+ revision 20
+Message-ID: <202504270011.Jftyvklb-lkp@intel.com>
+References: <20250425135946.1087065-1-mukesh.ojha@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: clock: Add Qualcomm SC8180X Camera clock
- controller
-Content-Language: ru-RU
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250422-sc8180x-camcc-support-v1-0-691614d13f06@quicinc.com>
- <20250422-sc8180x-camcc-support-v1-1-691614d13f06@quicinc.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20250422-sc8180x-camcc-support-v1-1-691614d13f06@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250425135946.1087065-1-mukesh.ojha@oss.qualcomm.com>
 
-On 4/22/25 08:42, Satya Priya Kakitapalli wrote:
-> Add device tree bindings for the camera clock controller on
-> Qualcomm SC8180X platform.
-> 
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-> ---
->   .../bindings/clock/qcom,sc8180x-camcc.yaml         |  65 ++++++++
->   include/dt-bindings/clock/qcom,sc8180x-camcc.h     | 181 +++++++++++++++++++++
->   2 files changed, 246 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..b17f40ee53a3002b2942869d60773dbecd764134
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml
-> @@ -0,0 +1,65 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,sc8180x-camcc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Camera Clock & Reset Controller on SC8180X
-> +
-> +maintainers:
-> +  - Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-> +
-> +description: |
-> +  Qualcomm camera clock control module provides the clocks, resets and
-> +  power domains on SC8180X.
-> +
-> +  See also: include/dt-bindings/clock/qcom,sc8180x-camcc.h
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sc8180x-camcc
-> +
-> +  clocks:
-> +    items:
-> +      - description: Board XO source
+Hi Mukesh,
 
- From sc8180x_rpmh_clocks[] in clk/qcom/clk-rpmh.c I get that there is
-RPMH_CXO_CLK_A clock also, shall it be added to this list then?
+kernel test robot noticed the following build warnings:
 
-If yes, and taking into account Konrad's ask for GCC_CAMERA_AHB_CLK, it
-implies that the new dt bindings can be omitted, instead please consider
-to add the 'qcom,sc8180x-camcc' compatible into qcom,sa8775p-camcc.yaml.
+[auto build test WARNING on linus/master]
+[also build test WARNING on v6.15-rc3 next-20250424]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-However still there is a difference, qcom,sa8775p-camcc and qcom,qcs8300-camcc
-does not contain 'required-opps' property, it might be an omission over
-there though, please double check it. The ultimate goal would be to get
-a shorter list of different camcc dt bindings.
+url:    https://github.com/intel-lab-lkp/linux/commits/Mukesh-Ojha/soc-qcom-socinfo-Add-support-for-new-fields-in-revision-21/20250425-220213
+base:   linus/master
+patch link:    https://lore.kernel.org/r/20250425135946.1087065-1-mukesh.ojha%40oss.qualcomm.com
+patch subject: [PATCH v2 1/3] soc: qcom: socinfo: Add support for new fields in revision 20
+config: arc-allyesconfig (https://download.01.org/0day-ci/archive/20250427/202504270011.Jftyvklb-lkp@intel.com/config)
+compiler: arc-linux-gcc (GCC) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250427/202504270011.Jftyvklb-lkp@intel.com/reproduce)
 
-> +      - description: Sleep clock source
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +    description:
-> +      A phandle and PM domain specifier for the MMCX power domain.
-> +
-> +  required-opps:
-> +    maxItems: 1
-> +    description:
-> +      A phandle to an OPP node describing required MMCX performance point.
-> +
-> +allOf:
-> +  - $ref: qcom,gcc.yaml#
-> +
-> +required:
-> +  - compatible
-> +  - clocks
-> +  - power-domains
-> +  - required-opps
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-sc8180x.h>
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +    #include <dt-bindings/power/qcom-rpmpd.h>
-> +    clock-controller@ad00000 {
-> +      compatible = "qcom,sc8180x-camcc";
-> +      reg = <0x0ad00000 0x20000>;
-> +      clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +               <&sleep_clk>;
-> +      power-domains = <&rpmhpd SC8180X_MMCX>;
-> +      required-opps = <&rpmhpd_opp_low_svs>;
-> +
-> +      #clock-cells = <1>;
-> +      #reset-cells = <1>;
-> +      #power-domain-cells = <1>;
-> +    };
-> +...
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202504270011.Jftyvklb-lkp@intel.com/
 
---
-Best wishes,
-Vladimir
+All warnings (new ones prefixed by >>):
+
+   drivers/soc/qcom/socinfo.c: In function 'socinfo_debugfs_init':
+>> drivers/soc/qcom/socinfo.c:613:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+     613 |                 debugfs_create_u32("raw_package_type", 0444, qcom_socinfo->dbg_root,
+         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     614 |                                    &qcom_socinfo->info.raw_package_type);
+         |                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/soc/qcom/socinfo.c:615:9: note: here
+     615 |         case SOCINFO_VERSION(0, 19):
+         |         ^~~~
+
+
+vim +613 drivers/soc/qcom/socinfo.c
+
+   592	
+   593	static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
+   594					 struct socinfo *info, size_t info_size)
+   595	{
+   596		struct smem_image_version *versions;
+   597		struct dentry *dentry;
+   598		size_t size;
+   599		int i;
+   600		unsigned int num_pmics;
+   601		unsigned int pmic_array_offset;
+   602	
+   603		qcom_socinfo->dbg_root = debugfs_create_dir("qcom_socinfo", NULL);
+   604	
+   605		qcom_socinfo->info.fmt = __le32_to_cpu(info->fmt);
+   606	
+   607		debugfs_create_x32("info_fmt", 0444, qcom_socinfo->dbg_root,
+   608				   &qcom_socinfo->info.fmt);
+   609	
+   610		switch (qcom_socinfo->info.fmt) {
+   611		case SOCINFO_VERSION(0, 20):
+   612			qcom_socinfo->info.raw_package_type = __le32_to_cpu(info->raw_package_type);
+ > 613			debugfs_create_u32("raw_package_type", 0444, qcom_socinfo->dbg_root,
+   614					   &qcom_socinfo->info.raw_package_type);
+   615		case SOCINFO_VERSION(0, 19):
+   616			qcom_socinfo->info.num_func_clusters = __le32_to_cpu(info->num_func_clusters);
+   617			qcom_socinfo->info.boot_cluster = __le32_to_cpu(info->boot_cluster);
+   618			qcom_socinfo->info.boot_core = __le32_to_cpu(info->boot_core);
+   619	
+   620			debugfs_create_u32("num_func_clusters", 0444, qcom_socinfo->dbg_root,
+   621					   &qcom_socinfo->info.num_func_clusters);
+   622			debugfs_create_u32("boot_cluster", 0444, qcom_socinfo->dbg_root,
+   623					   &qcom_socinfo->info.boot_cluster);
+   624			debugfs_create_u32("boot_core", 0444, qcom_socinfo->dbg_root,
+   625					   &qcom_socinfo->info.boot_core);
+   626			fallthrough;
+   627		case SOCINFO_VERSION(0, 18):
+   628		case SOCINFO_VERSION(0, 17):
+   629			qcom_socinfo->info.oem_variant = __le32_to_cpu(info->oem_variant);
+   630			debugfs_create_u32("oem_variant", 0444, qcom_socinfo->dbg_root,
+   631					   &qcom_socinfo->info.oem_variant);
+   632			fallthrough;
+   633		case SOCINFO_VERSION(0, 16):
+   634			qcom_socinfo->info.feature_code = __le32_to_cpu(info->feature_code);
+   635			qcom_socinfo->info.pcode = __le32_to_cpu(info->pcode);
+   636	
+   637			debugfs_create_u32("feature_code", 0444, qcom_socinfo->dbg_root,
+   638					   &qcom_socinfo->info.feature_code);
+   639			debugfs_create_u32("pcode", 0444, qcom_socinfo->dbg_root,
+   640					   &qcom_socinfo->info.pcode);
+   641			fallthrough;
+   642		case SOCINFO_VERSION(0, 15):
+   643			qcom_socinfo->info.nmodem_supported = __le32_to_cpu(info->nmodem_supported);
+   644	
+   645			debugfs_create_u32("nmodem_supported", 0444, qcom_socinfo->dbg_root,
+   646					   &qcom_socinfo->info.nmodem_supported);
+   647			fallthrough;
+   648		case SOCINFO_VERSION(0, 14):
+   649			qcom_socinfo->info.num_clusters = __le32_to_cpu(info->num_clusters);
+   650			qcom_socinfo->info.ncluster_array_offset = __le32_to_cpu(info->ncluster_array_offset);
+   651			qcom_socinfo->info.num_subset_parts = __le32_to_cpu(info->num_subset_parts);
+   652			qcom_socinfo->info.nsubset_parts_array_offset =
+   653				__le32_to_cpu(info->nsubset_parts_array_offset);
+   654	
+   655			debugfs_create_u32("num_clusters", 0444, qcom_socinfo->dbg_root,
+   656					   &qcom_socinfo->info.num_clusters);
+   657			debugfs_create_u32("ncluster_array_offset", 0444, qcom_socinfo->dbg_root,
+   658					   &qcom_socinfo->info.ncluster_array_offset);
+   659			debugfs_create_u32("num_subset_parts", 0444, qcom_socinfo->dbg_root,
+   660					   &qcom_socinfo->info.num_subset_parts);
+   661			debugfs_create_u32("nsubset_parts_array_offset", 0444, qcom_socinfo->dbg_root,
+   662					   &qcom_socinfo->info.nsubset_parts_array_offset);
+   663			fallthrough;
+   664		case SOCINFO_VERSION(0, 13):
+   665			qcom_socinfo->info.nproduct_id = __le32_to_cpu(info->nproduct_id);
+   666	
+   667			debugfs_create_u32("nproduct_id", 0444, qcom_socinfo->dbg_root,
+   668					   &qcom_socinfo->info.nproduct_id);
+   669			DEBUGFS_ADD(info, chip_id);
+   670			fallthrough;
+   671		case SOCINFO_VERSION(0, 12):
+   672			qcom_socinfo->info.chip_family =
+   673				__le32_to_cpu(info->chip_family);
+   674			qcom_socinfo->info.raw_device_family =
+   675				__le32_to_cpu(info->raw_device_family);
+   676			qcom_socinfo->info.raw_device_num =
+   677				__le32_to_cpu(info->raw_device_num);
+   678	
+   679			debugfs_create_x32("chip_family", 0444, qcom_socinfo->dbg_root,
+   680					   &qcom_socinfo->info.chip_family);
+   681			debugfs_create_x32("raw_device_family", 0444,
+   682					   qcom_socinfo->dbg_root,
+   683					   &qcom_socinfo->info.raw_device_family);
+   684			debugfs_create_x32("raw_device_number", 0444,
+   685					   qcom_socinfo->dbg_root,
+   686					   &qcom_socinfo->info.raw_device_num);
+   687			fallthrough;
+   688		case SOCINFO_VERSION(0, 11):
+   689			num_pmics = le32_to_cpu(info->num_pmics);
+   690			pmic_array_offset = le32_to_cpu(info->pmic_array_offset);
+   691			if (pmic_array_offset + 2 * num_pmics * sizeof(u32) <= info_size)
+   692				DEBUGFS_ADD(info, pmic_model_array);
+   693			fallthrough;
+   694		case SOCINFO_VERSION(0, 10):
+   695		case SOCINFO_VERSION(0, 9):
+   696			qcom_socinfo->info.foundry_id = __le32_to_cpu(info->foundry_id);
+   697	
+   698			debugfs_create_u32("foundry_id", 0444, qcom_socinfo->dbg_root,
+   699					   &qcom_socinfo->info.foundry_id);
+   700			fallthrough;
+   701		case SOCINFO_VERSION(0, 8):
+   702		case SOCINFO_VERSION(0, 7):
+   703			DEBUGFS_ADD(info, pmic_model);
+   704			DEBUGFS_ADD(info, pmic_die_rev);
+   705			fallthrough;
+   706		case SOCINFO_VERSION(0, 6):
+   707			qcom_socinfo->info.hw_plat_subtype =
+   708				__le32_to_cpu(info->hw_plat_subtype);
+   709	
+   710			debugfs_create_u32("hardware_platform_subtype", 0444,
+   711					   qcom_socinfo->dbg_root,
+   712					   &qcom_socinfo->info.hw_plat_subtype);
+   713			fallthrough;
+   714		case SOCINFO_VERSION(0, 5):
+   715			qcom_socinfo->info.accessory_chip =
+   716				__le32_to_cpu(info->accessory_chip);
+   717	
+   718			debugfs_create_u32("accessory_chip", 0444,
+   719					   qcom_socinfo->dbg_root,
+   720					   &qcom_socinfo->info.accessory_chip);
+   721			fallthrough;
+   722		case SOCINFO_VERSION(0, 4):
+   723			qcom_socinfo->info.plat_ver = __le32_to_cpu(info->plat_ver);
+   724	
+   725			debugfs_create_u32("platform_version", 0444,
+   726					   qcom_socinfo->dbg_root,
+   727					   &qcom_socinfo->info.plat_ver);
+   728			fallthrough;
+   729		case SOCINFO_VERSION(0, 3):
+   730			qcom_socinfo->info.hw_plat = __le32_to_cpu(info->hw_plat);
+   731	
+   732			debugfs_create_u32("hardware_platform", 0444,
+   733					   qcom_socinfo->dbg_root,
+   734					   &qcom_socinfo->info.hw_plat);
+   735			fallthrough;
+   736		case SOCINFO_VERSION(0, 2):
+   737			qcom_socinfo->info.raw_ver  = __le32_to_cpu(info->raw_ver);
+   738	
+   739			debugfs_create_u32("raw_version", 0444, qcom_socinfo->dbg_root,
+   740					   &qcom_socinfo->info.raw_ver);
+   741			fallthrough;
+   742		case SOCINFO_VERSION(0, 1):
+   743			DEBUGFS_ADD(info, build_id);
+   744			break;
+   745		}
+   746	
+   747		versions = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_IMAGE_VERSION_TABLE,
+   748					 &size);
+   749	
+   750		for (i = 0; i < ARRAY_SIZE(socinfo_image_names); i++) {
+   751			if (!socinfo_image_names[i])
+   752				continue;
+   753	
+   754			dentry = debugfs_create_dir(socinfo_image_names[i],
+   755						    qcom_socinfo->dbg_root);
+   756			debugfs_create_file("name", 0444, dentry, &versions[i],
+   757					    &qcom_image_name_ops);
+   758			debugfs_create_file("variant", 0444, dentry, &versions[i],
+   759					    &qcom_image_variant_ops);
+   760			debugfs_create_file("oem", 0444, dentry, &versions[i],
+   761					    &qcom_image_oem_ops);
+   762		}
+   763	}
+   764	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
