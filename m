@@ -1,189 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-55800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44C1BA9D92B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 09:45:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B53C2A9D935
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 10:08:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F81B4C2E88
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 07:45:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BD4734C3037
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 08:08:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AD7B1922D4;
-	Sat, 26 Apr 2025 07:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4296421772D;
+	Sat, 26 Apr 2025 08:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="luyXVycX"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cf2jZyql"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A76119AD48
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 07:45:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECDF86348
+	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 08:08:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745653528; cv=none; b=pTBI1iBjH8+40v8jnxDEC9AMced5YU3z93HVAoC70/pgi+XRQKip5DSjc+YLkPEczJi02Dxgdfh3UKaEwB1AQTGVR8hRLYDvzFifKyoMazqo1W+gU6zR+fURaZeX1LxCRe64l71Gi5xGXeXGvWqFyPAaeDgBICcYcESgAOE6z7E=
+	t=1745654897; cv=none; b=YMnUgdtjM+qQkyRdT0HHwpnnvA3mUK/i9rhutS4Cihb/rBm8WndprCy9RZ3id1ywUcrbPrZnwStCKOf9dqsewxhzVUr6uudT8RA3TQ8og38dHdbRlW/29QDA7zGw5OQf6+SZ7+hk/ZLOkT4cjAOO6OqSCWQ2W5JgMipXiQ/G2Ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745653528; c=relaxed/simple;
-	bh=w8RacVv7kD3lnn+AVvnyUBxmiCMUu8RBJaFo4l2EVyM=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iupQp1ft4OtjnANtpGM0ZzchCeQnY608FsereojFRDfafFhJJ4EHj4s+b0p/66qvjJGrVPl1obApEsRvT7MFehoL8uRILR7oDv5Uj1UQR1lmlXna8YoleNEMD2SFbKVNCQSc6fA3f3qx11qMrbo/dkOgehzbN5ArX5XG5wrYT3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=luyXVycX; arc=none smtp.client-ip=185.125.188.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com [209.85.218.71])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 73E6B3F2A9
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 07:45:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1745653523;
-	bh=xQG8aR91QUiXJqe0zGBSMh1PwbLabEkgq2LJTt+r2Gg=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type;
-	b=luyXVycXjIa2SO5y5jEa/CR1zX3NptRZrTjaACkyul+CJYlD0A9+6wjec1ZkUZ0Jp
-	 iq0K6St3V54oJC5SdAVMO3oF7P2vZFOb9M2rC6SkNclDUK3TKkFEZ8gkozOQKcKzwH
-	 V5V4JicU2ccRdYp0mgwgfau4hlm8OAkGcZJxBW6+BaRxBT3bdDjHAslcwKmOPiKu5g
-	 3hsIfy329X2euI1nAllquTfUOS9ODt030zwBNLapZmSD8GIJebiXA7tfEGAkBHk62o
-	 atMC+kOw1TLhEDErQEPTK8uF/h5DSFYCjsmUn/BFVC5EggmiGpZqveVgUXTvdco++N
-	 QCzRUQ2cgo2Jw==
-Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-ac28a2c7c48so240714466b.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 00:45:23 -0700 (PDT)
+	s=arc-20240116; t=1745654897; c=relaxed/simple;
+	bh=Dlt7aBLeCl4AlFXzSEuNAJxkcpY7ITvQ8b6Lp8UpIp0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YH3HsGi74PajaPv/V0hYp3em/CphDuATBas5gclQpwwNYrr6UsjtK19YeadjygNVEVFMHQW5wTqkyPGi5nMMeHXIv6Gt5TvO2kkvsafTv+gkNYH51MBChmhB2SNg3+kZDF+iYeC62DQZOfDx4vyLE1R2JsNeBeNpuwYP/SJC2gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cf2jZyql; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53Q1iApL029790
+	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 08:08:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=9EFbB47sE3xwvxvrhzJIeIl2
+	uzzkjB+RQMWDdNRqAoE=; b=cf2jZyqljKEJ43oOvrfz6BhuR8ZzdTpke2awjpy0
+	G33xKuAYvrNra4lBpJs797gOSphQnMt/jDKtvGMD96pKYCSeq9VoAJlgbggok230
+	i6wUdJoIrOMfAr64BsfbChROYVaCLENtdwsV9JwbfAsEwR9U6Nq0HZH4FKhsZFlS
+	Wd2abcqtvitW39FB/3hB8sh/V3zN6exaUURHiK69vECjZaLMU26uiyJaJmbcz9kO
+	f5259kJbc346VFmnMV2d7x3czh+2e94Wc1XfsD2yL9MyIEtJpC58HmK4Rny4+Ucq
+	0Pf+P5PuQ5IJop3t93qKvJXivoXFH2HEnwuka9ouLnAg7w==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468n6j8stb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 08:08:14 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c5bb68b386so871655285a.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 01:08:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745653522; x=1746258322;
-        h=mime-version:organization:references:in-reply-to:message-id:subject
-         :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1745654893; x=1746259693;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xQG8aR91QUiXJqe0zGBSMh1PwbLabEkgq2LJTt+r2Gg=;
-        b=wRZsnqWt1gdb1Q7PaR9OMAG9ZxCAjpe9Ub366TK24GjrBRFl4NLiu/klPApmmgtjdX
-         w/SLEGKlWdwhkPjTWvyqT1wz1DKTnJcXBIdnvSLfG8ZWh5DEwHzO1ZznWJE+iGjJNg/x
-         XSQlruZwupb4kXvsZpxWwYSCro55Uy88RwjPHGioH3XFSIyLRMwmFKK5axFuwmiVucaY
-         ckyPGHJt5VnoJMWG7Tyieq5V7aFsbOkWDCBo5EcOIYD/aEu51gHTFG57Y/x5vpZd46S7
-         tt0eQ7N4jNDN70R9djf6o+2Z64+hdk6j3egY7EXaMqcSIoy5b9IRPlVR8iyjU5HP1X+7
-         t+0w==
-X-Forwarded-Encrypted: i=1; AJvYcCVv/zv32h5O4wlLZNFICHKzzI4N6ANGSYSfpBoRyuViEff4nl+oExs3LY8Z8jgBvAT6VjX9OE2fvute8NIF@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9NyN9KQhS/mceRQ3GUAzTvzHWTwQWE5fIDkZ2VzWXawtU00kB
-	m+7Siok380B+BdDFWyTZHsua2A4BAN9Irtp/BQKq8O0voC8+trXMjZ2u25qau19oOQ58Du4UzZ6
-	pcLw+YnsFg87ghQhDEtukLrW1bV9O/vu7ITfYeyErXlQQL5G3sBORX+BlIoIHt5M6hwHvOFbnq6
-	818y4=
-X-Gm-Gg: ASbGncvvfEgJBalcqEU5zaQfDqMM2rZpmr+TFyK080SWU3ld4j1G5rGoIZcLyFyijy0
-	CUbX1TO/q45ndhHIpxgikTNgPFLOVy/7SFp4Kz5V8AJhhoGfG1fj0ezNFghHzsIXp7yolJGXYd+
-	E5ritANXPxtMAy9k7XnWNKgbT9faXUrpDLe2ffYSW/5h8nCNTzgNrGQA7F0390PYgc/ASoj0o+V
-	4ewpHXHSaN1y/wEPMVySEX8Km/MTSRSPY1n++jgpQF3MpZrcsjSTB49Qv4J7ogOHjBc/jisuNVv
-	wOXWD8+9NYwLufqeplWD8ctJpG9WnTNOqW9hsCsHyyjuwzXJkHSdHg==
-X-Received: by 2002:a17:907:7f92:b0:ac7:4f1:65c5 with SMTP id a640c23a62f3a-ace84b4c6f6mr175863366b.54.1745653522576;
-        Sat, 26 Apr 2025 00:45:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFac88syXkSEHa373nY7+k8VjAiVo/ZD5gaPuEp01MgkPmzBDXRMO1qk5C5k/b8KxWKQSeAw==
-X-Received: by 2002:a17:907:7f92:b0:ac7:4f1:65c5 with SMTP id a640c23a62f3a-ace84b4c6f6mr175860966b.54.1745653522112;
-        Sat, 26 Apr 2025 00:45:22 -0700 (PDT)
-Received: from smeagol (151-243-191-194.pool.dsl-net.ch. [194.191.243.151])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6edb1a48sm256429866b.179.2025.04.26.00.45.20
+        bh=9EFbB47sE3xwvxvrhzJIeIl2uzzkjB+RQMWDdNRqAoE=;
+        b=tjT9ZAjb0oD9WOuVioS8fuoSqzkngo2Z9q4aiRTO/7H/zLExeBmea4ygBJq4RDhXb6
+         tz8f5wdC/xHsUiUTQj0t638KtkoB5ZS2sjcZ4nrUJKbTKNHLiLit0Ks9n0uD1dKx2IX7
+         COru8q8lmJPyh5KNM9M8Ke9JBpVrvcr4MdCz4bCUzk4d14orSZSi7EwIBghlmBT8uhv1
+         F/U4OpwCkdvrxIXHa4fd0480PcgJ0G1xRJt9BGpmEIbcxykDQ+MFf1ELbckszIapsOVQ
+         dV/xZRdNU13pFqQIaihSQHwg/B/aH2OqVae30NBoxxrYT5cMJqLazwNxeOhyg19RxGhe
+         ShvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVGPynlUhSUgVuLOhHrC0KW4dfCfabhXWeY8fP8TRaG1T1K5dzzG9GhiikRHaUY8XMdbCBMQoNosExsyAwN@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXJvtIg2QzcCFinISnmQGE8hKC9CWnAR38t8bM79zhSArtTAcG
+	dLDIqkDylEZljvsVQXjNjusy3OXe1fmv3tcoAJLf8vwGJ5wKa9fYGszJrOdcwgnV6k1ECtYuGgM
+	0zEibfmWwXGo47VqREOVDWyZXRRa2agaGT7Vtel677HuzERKwXpYbI83cioNw0RBo
+X-Gm-Gg: ASbGncsLuoMZSnlWEcAvQmV3Y0s1ZCc/gJPs2jdipcYcLEGSMp7NKDyeXjtrq0Uf3v4
+	EsDn+zmklJ5jsnkPNsytYXreGQiQOii3SvZTtVijkG9DeWvTqYtXpBAVzhBFcfnY4oNBBoXyjYk
+	JqYgahWtinII7MJEbHUEr9i9N6D1mCnaB4ngHrvIpj9+YErml/VJV4pUj3jJvF6GX7yH3STwwrv
+	TnMAw2qgI1ENk1Dc56UA5r0dGJU93vA9anRs4o1BJ8XjXfDBAvsSSynKHlY4TmcJINJhMdXtIUh
+	P/nq+ezWJ392LNqqjpSAiLkH2ucKQ6M4SmEEl0kaGon+Hdr2ZwdRxz3Hpo5DRHAQMqOOLwQf2aY
+	=
+X-Received: by 2002:a05:620a:1a97:b0:7c7:a5ce:aaf1 with SMTP id af79cd13be357-7c9668bfd6cmr325404285a.35.1745654893389;
+        Sat, 26 Apr 2025 01:08:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFjGy3t361f7624u5g8frwWcUJjSKJlOuxkcWQgUhjMerF9jCifjeSU5oSzuYB53HD7UBLdXg==
+X-Received: by 2002:a05:620a:1a97:b0:7c7:a5ce:aaf1 with SMTP id af79cd13be357-7c9668bfd6cmr325401485a.35.1745654892970;
+        Sat, 26 Apr 2025 01:08:12 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7cb3a051sm905004e87.62.2025.04.26.01.08.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Apr 2025 00:45:21 -0700 (PDT)
-Date: Sat, 26 Apr 2025 09:45:15 +0200
-From: Juerg Haefliger <juerg.haefliger@canonical.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+        Sat, 26 Apr 2025 01:08:10 -0700 (PDT)
+Date: Sat, 26 Apr 2025 11:08:08 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Juerg Haefliger <juerg.haefliger@canonical.com>
 Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
- konradybcio@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, robh@kernel.org
+        konradybcio@kernel.org, krzk+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh@kernel.org
 Subject: Re: [PATCH v3 1/3] arm64: dts: qcom: x1e80100-hp-omnibook-x14: add
  sound label and pull out the model
-Message-ID: <20250426094515.193e5f59@smeagol>
-In-Reply-To: <mit327e4qp3hch4xy6qmqmks35tq5w35rw4ybvs5s3q7osxbkv@bzvon2u3jsmn>
+Message-ID: <y66ic2iatveficud7rdt2dtyqeaoqasa2a366hdovc7f3yzvic@yyj5w3hu57ln>
 References: <20250408145252.581060-1-juerg.haefliger@canonical.com>
-	<20250416094236.312079-1-juerg.haefliger@canonical.com>
-	<20250416094236.312079-2-juerg.haefliger@canonical.com>
-	<mit327e4qp3hch4xy6qmqmks35tq5w35rw4ybvs5s3q7osxbkv@bzvon2u3jsmn>
-Organization: Canonical Ltd
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
+ <20250416094236.312079-1-juerg.haefliger@canonical.com>
+ <20250416094236.312079-2-juerg.haefliger@canonical.com>
+ <mit327e4qp3hch4xy6qmqmks35tq5w35rw4ybvs5s3q7osxbkv@bzvon2u3jsmn>
+ <20250426094515.193e5f59@smeagol>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/bs8.Q+hsXAsnuniQCI/K9Ru";
- protocol="application/pgp-signature"; micalg=pgp-sha512
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250426094515.193e5f59@smeagol>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI2MDA1MSBTYWx0ZWRfXwoz3sFaIa5q8 Ix/yQH/xZDbWINyQc3JbDVz4yjCe2Vm/l46W60uUl5UNvKr6BmJIRaaUG64s/Vqx0oQoHQTiAIv PUfm4B7c7v9GDHMhH9Euvh9bqwJG7V8bcODdp5IsBimEqdFpJd0AQIO9TTV3nrBFmu4FtGerCL9
+ RMiicg3MacsuvKzmwrBgfakfpUSFPEdHr00Ob2YIafalA0La2sDpUMYu0PrJ2thCRHtmS2r0SGw UAT5OTd70ngkv+lCxUjGb7jK6Qh4FH94cgHhdvQ3bKrRMgnYS5vBx4EZjU0dskzRCOaobe6W1vP HN07O/etj9njZD8LhP+12ntLDtJZjTwZ8O/EcXiCy6HZoubP6A4wUhQWDOdr2xDMz+s2DQol5Uv
+ V+9uhCRGvRRwzNoA7/i49hm7pjE34YdV4mOjI8XMsVo9i901SUHxDxFAgrpxk61KoNxCEQ6t
+X-Proofpoint-GUID: 6Y3a6ShiGNa8U4SZaWqALOD-RWbEzb22
+X-Proofpoint-ORIG-GUID: 6Y3a6ShiGNa8U4SZaWqALOD-RWbEzb22
+X-Authority-Analysis: v=2.4 cv=C8fpyRP+ c=1 sm=1 tr=0 ts=680c946e cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=DfNHnWVPAAAA:8 a=9Q-tM1iNYF-87-NWVjoA:9 a=CjuIK1q_8ugA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=rjTVMONInIDnV1a_A2c_:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-26_02,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ mlxlogscore=981 priorityscore=1501 clxscore=1015 spamscore=0 adultscore=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 mlxscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504260051
 
---Sig_/bs8.Q+hsXAsnuniQCI/K9Ru
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On Sat, Apr 26, 2025 at 09:45:15AM +0200, Juerg Haefliger wrote:
+> On Fri, 25 Apr 2025 22:44:42 +0300
+> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> 
+> > On Wed, Apr 16, 2025 at 11:42:34AM +0200, Juerg Haefliger wrote:
+> > > Add a label to the sound node and pull out the model name to make it
+> > > explicit and easier to override it from other nodes.
+> > > 
+> > > Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts | 7 +++++--
+> > >  1 file changed, 5 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts b/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
+> > > index cd860a246c45..9595ced8b2cc 100644
+> > > --- a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
+> > > @@ -174,9 +174,8 @@ linux,cma {
+> > >  		};
+> > >  	};
+> > >  
+> > > -	sound {
+> > > +	sound: sound {
+> > >  		compatible = "qcom,x1e80100-sndcard";
+> > > -		model = "X1E80100-HP-OMNIBOOK-X14";
+> > >  		audio-routing = "SpkrLeft IN", "WSA WSA_SPK1 OUT",
+> > >  				"SpkrRight IN", "WSA WSA_SPK2 OUT",
+> > >  				"IN1_HPHL", "HPHL_OUT",
+> > > @@ -1691,3 +1690,7 @@ &usb_mp_qmpphy0 {
+> > >  
+> > >  	status = "okay";
+> > >  };
+> > > +
+> > > +&sound {
+> > > +	model = "X1E80100-HP-OMNIBOOK-X14";
+> > > +};  
+> > 
+> > Usually the DT don't use this idea. Could you please bring the model
+> > back to the node? The label is fine.
+> 
+> Hm. Maybe I misunderstood but isn't that what Krzysztof requested here?
+> https://lore.kernel.org/linux-arm-msm/bb95af7c-5e88-4c6a-87db-2ddd1fe211a5@kernel.org/
 
-On Fri, 25 Apr 2025 22:44:42 +0300
-Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
+In the override, yes.
 
-> On Wed, Apr 16, 2025 at 11:42:34AM +0200, Juerg Haefliger wrote:
-> > Add a label to the sound node and pull out the model name to make it
-> > explicit and easier to override it from other nodes.
-> >=20
-> > Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts | 7 +++++--
-> >  1 file changed, 5 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts b/ar=
-ch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
-> > index cd860a246c45..9595ced8b2cc 100644
-> > --- a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
-> > +++ b/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
-> > @@ -174,9 +174,8 @@ linux,cma {
-> >  		};
-> >  	};
-> > =20
-> > -	sound {
-> > +	sound: sound {
-> >  		compatible =3D "qcom,x1e80100-sndcard";
-> > -		model =3D "X1E80100-HP-OMNIBOOK-X14";
-> >  		audio-routing =3D "SpkrLeft IN", "WSA WSA_SPK1 OUT",
-> >  				"SpkrRight IN", "WSA WSA_SPK2 OUT",
-> >  				"IN1_HPHL", "HPHL_OUT",
-> > @@ -1691,3 +1690,7 @@ &usb_mp_qmpphy0 {
-> > =20
-> >  	status =3D "okay";
-> >  };
-> > +
-> > +&sound {
-> > +	model =3D "X1E80100-HP-OMNIBOOK-X14";
-> > +}; =20
->=20
-> Usually the DT don't use this idea. Could you please bring the model
-> back to the node? The label is fine.
-
-Hm. Maybe I misunderstood but isn't that what Krzysztof requested here?
-https://lore.kernel.org/linux-arm-msm/bb95af7c-5e88-4c6a-87db-2ddd1fe211a5@=
-kernel.org/
-
-...Juerg
+So, in this file you should still have:
 
 
->=20
-> > --=20
-> > 2.43.0
-> >  =20
->=20
+/ {
+	sound: sound {
+		model = "foo bar baz";
+		other-props;
+	};
+};
+
+in the DT overlay (dtso):
+
+&sound {
+	model = "other model";
+};
+
+Another, more common option:
+
+base.dtsi:
+
+/ {
+	sound: sound {
+		other-props;
+	};
+};
+
+one.dts:
+
+#include "base.dtsi"
+&sound {
+		model = "foo bar baz";
+};
+
+two.dts:
+
+#include "base.dtsi"
+&sound {
+	model = "other model";
+};
+
+> 
+> ...Juerg
+> 
+> 
+> > 
+> > > -- 
+> > > 2.43.0
+> > >   
+> > 
+> 
 
 
---Sig_/bs8.Q+hsXAsnuniQCI/K9Ru
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
 
------BEGIN PGP SIGNATURE-----
-
-iQIyBAEBCgAdFiEEhZfU96IuprviLdeLD9OLCQumQrcFAmgMjwsACgkQD9OLCQum
-Qrd7LQ/4+q4xmthISwE892TSn8RgxS/c7Ti1v75eDFMPcuMXBPnbzt7ZLrRKksFf
-jILKVaqj/wxNrGx9xcZPy4KLMY3IQL2mSdgsEYtEKE5F0HxasMpFCo3caHZHR4+Z
-q5zuBLw0nOpOrDKSatHjlLefxWQdYOWhZlkzullTZrouh2IJ8jrIAVRGk/EJDyym
-6dSXwczKPhX3VLyuEdTNnwSpkSS68avDHHxhwc9Hm/ORbY6N91BR+OABZsJ9mGKR
-m7jDQUQkWeiqzNJWpyvE/0LmRUBOvHXA9xSEPX1NP5lyieCP6zjLmEfLYp7/wNN7
-4JAye09lIYZPKxf+ZiFPIQkzH00+eFC7k+1Gg80PXMJShHU+JzMXbfMp15e3VSVy
-hWhso40J6qAaLAuaMwEMR7Gs7Ozxgjzph2E0/oKyft78Sbx5eyHIRDlPoEkCyPP6
-8D5dOBXQprpB1YViCsjBekcfye0PqKRqZnZu1d/dQSDbOYk7Uevw2EmGfzSWZ1cc
-alfzejgVtLrnzAinWdr0A2YzzV5gqt2l0D/WZ4Ac2zaQC82oXeCCS0Ia8W9nTpIY
-WdmwZkJMyf+Pg1aCy9YZ307vltIPDkKitY2NPyoHlS/184AEQuMp9P7dYcUi1Wdw
-eKv4spD6t6WZtwJKU0b7xu8bQznbVXt8wXxjP3SFuZtR0GOLvw==
-=nqY8
------END PGP SIGNATURE-----
-
---Sig_/bs8.Q+hsXAsnuniQCI/K9Ru--
+-- 
+With best wishes
+Dmitry
 
