@@ -1,141 +1,281 @@
-Return-Path: <linux-arm-msm+bounces-55802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C792A9D948
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 10:16:41 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19FB1A9D96A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 10:43:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A68D43B90F0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 08:16:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6AB317AD910
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 08:42:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB59C21D3E2;
-	Sat, 26 Apr 2025 08:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA6CF24E4BF;
+	Sat, 26 Apr 2025 08:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EKxNffB2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kY+47Ise"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288847A13A;
-	Sat, 26 Apr 2025 08:16:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2761598F4;
+	Sat, 26 Apr 2025 08:43:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745655396; cv=none; b=ZGJhjQqYqn0ciLgsEFSamDXDeVSHTy47rMXtp/Y1Wtx9sXh8HdE258T0deQxUk7BhmsjZ91cDn4gk99RvYWb91uO+65vnqQGVSusCdAL7rwatk0B3OfH3Zln5wwmgNzaDot2aGfbRgQOJlb2FHhH7SNjm/L1UqrRbwin3bNEE40=
+	t=1745656991; cv=none; b=O1qsEulf1GZQ7G0zxoQJt8s0A21Mf6GzNnqjjlVArbvc122JsjVg6SWaMvyjmldImMM82UO82/9VGh1Ad1dvAtA+ALA3pAqPKDSs92bxxEqLJP2u7OZbyHTH+0cqf6t3PdXh7rIgkYd+1rjNKXopvgQyBiQ4MnBL2YEWtzML5gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745655396; c=relaxed/simple;
-	bh=f5nFF9hrf8k+mrJsshn3YqKT1TsxR5hPPisEV2OefvY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jAfvkzidhxLYmWcp7dbkaEFHceFUSnEpcgP6aUZi1NMS8rpKDNUbOBaJGco7Jxry1S6o/wWZLOc2DFZ5xyvDfqnuNvXXrUY+v+40iujB8yMFjqgleZgtnWAcouZZksZEqe2wVnETsV1hHMIGuMP64vZCrc4UN6UHFnQUNRIs3VU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EKxNffB2; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-22d95f0dda4so48227015ad.2;
-        Sat, 26 Apr 2025 01:16:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745655394; x=1746260194; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f5nFF9hrf8k+mrJsshn3YqKT1TsxR5hPPisEV2OefvY=;
-        b=EKxNffB2kmw7X3O4tbt/WQxN0/bBYWR+9ySAASb03QPl/KWbvIwt+9YrH9Tlzqn5JP
-         ikR4r5KB6liNRX/H/5oqc0raK6GZjNKrSTW6+6ZtvbW/aozg6SpF6dz//LxWEEhjM7lb
-         sb38ikCCr4RYmaK6PVRtvKaq1GnsT4ty/ig32oHw4xv02nYJ7u3aznibMVpShOyxAaqi
-         v4w4DSwHqsiXGkbOKCqqRzv6TvxAMD/UhUd94iETFl7Xabit0PbSOyrAm3nPgj6EbYcA
-         oAaAyd/30Gz5m6BOY2/AaFFrlUTxLgy+FHwQD3oQHH3Ad93C2NwbZLGQm0uwd3jDrUEF
-         K8kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745655394; x=1746260194;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=f5nFF9hrf8k+mrJsshn3YqKT1TsxR5hPPisEV2OefvY=;
-        b=WL0mAk5XZCD7Ni6GQOywFhjL0g/zYqnlPCOiMAVCgdtE4OJC2X1VBwy5Un4z+5eijf
-         EWOrxjLdbBN999Svq1+5v/UdPY7ylNmAOYBV+jfI7oxHEiJrGMNTli+g9e2mp3ysQMt0
-         xbqj+XUJia4LccuTilyiV40KltRjm6x4AR89KFGC+bDqPV6qgs2W34tCnL33s4BliCSr
-         sqz5P5pc3NXtQGr1q6oMfrPNnDs3YtIK/TvmQX3aGRt7crlqOnakZTNL+hGjsfaK5AA+
-         eKNrsLSkJRqg309xYfgLwl6eKsFFCfReCfY9lZdVcJyDIdH3f2Mi109CtoDd1N3BgCHh
-         Ye5A==
-X-Forwarded-Encrypted: i=1; AJvYcCVKH6jmlq89Uh2+HPEPN2w9BPw46zW1/cEHjM+O1ms2eluxpAQjIl7IIjOSDwJzVQ7ESCtH1BVIER/CmfZF@vger.kernel.org, AJvYcCW9BHL+8f1ew7FIdJaNrU0DoK0QKN27Q8EicOeJj3i5EHJLXSPDqms/p3M8qrjAQ5nC/D6OlGi8ZomgtQByTg==@vger.kernel.org, AJvYcCXf96T4KjIiA0q1I5AkE49OiW3/Ig1fy6suhlf82VJJ1Xb3IMrF0bo68rjTYHSla4Ut95aMls0XThO7@vger.kernel.org
-X-Gm-Message-State: AOJu0YxX/oAfTVPg/gUqt08Uj/pZluL4/YNVjeQZutvSkWV7qnE4/+hb
-	PS+KgyrEdhtuPvKgvTY0UckTCcVcCzOLvsm6QMf8RAvLEKVyJRczUUhBDw==
-X-Gm-Gg: ASbGncvBTPUV47500yPXMTIeMkYXESYAMQ7kKGoQmPTgrbOirGYYU1Mgr9xFmCzL9MM
-	+9SI/oUzYvs17nvWcmBqsN/kPd9n4dCt/qNSPECVyrXVVFRUfaA8cAx/qTMKau29UTl7+jdQojl
-	vO8muObwDSFAHEvxgYNtgUTqVH8JY/mG68l3Aij1hO3wS714rzBO9ANflCb+44dAV00wxjypzJl
-	lkKJlwwD4xzq+PXO1tjMhqh4ODKpacLyMkHGEQEpUfpzqSlA0Y/lQ8VsfSrkU+XcHdsraiKMmm5
-	HkuYpTasmXzc07NU/LRdlR9VYWaDI4iYZx39nTM=
-X-Google-Smtp-Source: AGHT+IH2uRpVPaRuKcj/Dnooeg5tCZHg5INKprYzVhvYC8u33M/5h6/1Yrvk8VqXDWgVX0OSW7Ou1w==
-X-Received: by 2002:a17:903:41c8:b0:224:76f:9e44 with SMTP id d9443c01a7336-22dbf4c84e4mr63259185ad.8.1745655394358;
-        Sat, 26 Apr 2025 01:16:34 -0700 (PDT)
-Received: from nuvole.. ([144.202.86.13])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22db5219c47sm44906405ad.240.2025.04.26.01.16.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Apr 2025 01:16:33 -0700 (PDT)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: dmitry.baryshkov@oss.qualcomm.com
-Cc: abel.vesa@linaro.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	kishon@kernel.org,
-	krzk+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	mitltlatltl@gmail.com,
-	robh@kernel.org,
-	sfr@canb.auug.org.au,
-	vkoul@kernel.org
-Subject: Re: [PATCH v2 2/2] phy: qualcomm: phy-qcom-eusb2-repeater: rework reg override handler
-Date: Sat, 26 Apr 2025 16:14:23 +0800
-Message-ID: <20250426081424.422590-1-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <q6zqfk3l2khp3tkodxd4pzhufiesyjcypl66zoqzslolwoveyo@ltrw2iulrkqs>
-References: <q6zqfk3l2khp3tkodxd4pzhufiesyjcypl66zoqzslolwoveyo@ltrw2iulrkqs>
+	s=arc-20240116; t=1745656991; c=relaxed/simple;
+	bh=UnMJbEMg5DZndLS2FbG6beUOW6596QZPQHMn37N+3ww=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jUX15NEqKGhVVZjsrZn6l8VDV+WyUWIXpLcM6Iqjs8KF7jrpBVJwX/jZ3ls+QogpIMKARDaAGIbbKzJjWgg1hoYj713hMYj6fxLpqQ773jzVn9STrGK1rZDYnYEAs7q2OnXtiqjymQFQlx1SCU/biVwJ1Vc6ilg5D0NRRkxJwMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kY+47Ise; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DCD65C4CEE8;
+	Sat, 26 Apr 2025 08:43:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745656990;
+	bh=UnMJbEMg5DZndLS2FbG6beUOW6596QZPQHMn37N+3ww=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=kY+47IseXGHFhGsQqZJwRFrLsQtt6BtHZv+sSozAn/VqNXTEmaPEpv8thBS+XZjev
+	 7YHCfY4x0KnSLESBeXT3f79PJM60Fk9sL7LNmsKMNwqGHWiux7sUMDYW3xZPMdzskI
+	 ABCSG0JD/8aMyCYrN1XolVw7uFG13ODmPuE2klXe0RTHtSe0lKX/HhdKL6n2Vi+Wfb
+	 MsLZtI3xVn8ruPtsIwlfYIKILEbhh+rryCBI04CpzmCooM0jFstzuRoJ//E4qbFuPT
+	 g5iqyKY9h3dAefRP0PX1DR22nlTgXHlmFnFv4FmdA+eBKsTeENB+HJ8K1mTrpeAOas
+	 zE1ASHIMOqECQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5910C369CB;
+	Sat, 26 Apr 2025 08:43:10 +0000 (UTC)
+From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
+Date: Sat, 26 Apr 2025 10:43:02 +0200
+Subject: [PATCH] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: add
+ Bluetooth support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250426-slim7x-bt-v1-1-d68f961af886@oldschoolsolutions.biz>
+X-B4-Tracking: v=1; b=H4sIAJWcDGgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDEyMz3eKczFzzCt2kEl2zFANDQyNzI0vDFEMloPqCotS0zAqwWdGxtbU
+ AsijX1lsAAAA=
+X-Change-ID: 20250426-slim7x-bt-6d01127291d1
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1745656989; l=5031;
+ i=jens.glathe@oldschoolsolutions.biz; s=20240919;
+ h=from:subject:message-id;
+ bh=fZY+VhA1blNrTgyvbyjiGPWrn1nJCjJyTv1dlv+p2lo=;
+ b=mASlIzI9oKv+x14hqs8kCB4xEfP2AE+CdIqTyYQ74WGNTWYPs39FCch9NiJzygI4mocRt82hj
+ OVAX98vC8DyBlLyNdQr0FWVrjY4HOEnSHbGwEDxEVD0eUFEypDpaLOa
+X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
+ pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
+X-Endpoint-Received: by B4 Relay for
+ jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
+X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Reply-To: jens.glathe@oldschoolsolutions.biz
 
-On Sat, Apr 26, 2025 at 3:41 AM Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> On Wed, Apr 16, 2025 at 08:02:01PM +0800, Pengyu Luo wrote:
-> > In downstream tree, many registers need to be overridden, it varies
-> > from devices and platforms, with these registers getting more, adding
-> > a handler for this is helpful.
->
-> It should be noted that previously all values were applied during _init
-> phase, before checking the status etc. Now the overrides are programmed
-> from the set_mode. Should you still program sane defaults at the init
-> stage too?
->
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-I think programming in set_mode is ok. When we init(dwc3_core_init), we
-set_mode(dwc3_core_init_mode) later, please check
-https://elixir.bootlin.com/linux/v6.14.3/source/drivers/usb/dwc3/core.c#L2287
+To enable Bluetooth pwrseq appears to be required for the WCN7850.
+Add the nodes from QCP.
+Add uart14 for the BT interface.
 
-Actually, in the downstream, all the things are done in init, it
-overrides first, then masked write the deaults, finally it set_mode,
-you can check here
-https://github.com/OnePlusOSS/android_kernel_oneplus_sm8650/blob/oneplus/sm8650_v_15.0.0_pad_pro/drivers/usb/repeater/repeater-qti-pmic-eusb2.c#L356
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+---
+This patch adds the Bluetooth support for the WCN7850 card on this laptop.
+Since WCN7850 is supposed to need pwrseq, also added this from the QCP.
 
-> BTW, is there a real need to override those for the platform you are
-> working on? Could you please provide some details, maybe in the cover
-> letter.
+This is also part of my tree [1] for the Yoga Slim 7X, although with an older
+definition for the pwrseq and regulators.
 
-I am not quite sure, recently, I expirenced mode switching failure,
-when I `echo device > /sys/kernel/debug/usb/a600000.usb/mode`, Ethernet
-Gadget wouldn't work again, my desktop can't connect to it.
+[1] https://github.com/jglathe/linux_ms_dev_kit/blob/jg/ubuntu-qcom-x1e-6.15.0-rc3-jg-2/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts 
+---
+ .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 136 +++++++++++++++++++++
+ 1 file changed, 136 insertions(+)
 
-BTW, as you can see in line 356, it is most likely that overrides
-related to charging feature. I have not ported charging yet, but adding
-more overrides seems harmless, and if overriding, distinguishing which
-mode seems necessary, even if some devices use the same sequence. So I
-sent the patch.
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+index 445d97d67d325853b7dcd2060523e7469ed4e6ea..a91d63508f65efea3786686f0f86a89a4355e0f1 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+@@ -18,6 +18,7 @@ / {
+ 
+ 	aliases {
+ 		serial0 = &uart21;
++		serial1 = &uart14;
+ 	};
+ 
+ 	chosen {
+@@ -236,6 +237,101 @@ vph_pwr: regulator-vph-pwr {
+ 		regulator-always-on;
+ 		regulator-boot-on;
+ 	};
++
++	vreg_wcn_0p95: regulator-wcn-0p95 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_WCN_0P95";
++		regulator-min-microvolt = <950000>;
++		regulator-max-microvolt = <950000>;
++
++		vin-supply = <&vreg_wcn_3p3>;
++	};
++
++	vreg_wcn_1p9: regulator-wcn-1p9 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_WCN_1P9";
++		regulator-min-microvolt = <1900000>;
++		regulator-max-microvolt = <1900000>;
++
++		vin-supply = <&vreg_wcn_3p3>;
++	};
++
++	vreg_wcn_3p3: regulator-wcn-3p3 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_WCN_3P3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&wcn_sw_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	wcn7850-pmu {
++		compatible = "qcom,wcn7850-pmu";
++
++		vdd-supply = <&vreg_wcn_0p95>;
++		vddio-supply = <&vreg_l15b_1p8>;
++		vddaon-supply = <&vreg_wcn_0p95>;
++		vdddig-supply = <&vreg_wcn_0p95>;
++		vddrfa1p2-supply = <&vreg_wcn_1p9>;
++		vddrfa1p8-supply = <&vreg_wcn_1p9>;
++
++		wlan-enable-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
++		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&wcn_wlan_bt_en>;
++		pinctrl-names = "default";
++
++		regulators {
++			vreg_pmu_rfa_cmn: ldo0 {
++				regulator-name = "vreg_pmu_rfa_cmn";
++			};
++
++			vreg_pmu_aon_0p59: ldo1 {
++				regulator-name = "vreg_pmu_aon_0p59";
++			};
++
++			vreg_pmu_wlcx_0p8: ldo2 {
++				regulator-name = "vreg_pmu_wlcx_0p8";
++			};
++
++			vreg_pmu_wlmx_0p85: ldo3 {
++				regulator-name = "vreg_pmu_wlmx_0p85";
++			};
++
++			vreg_pmu_btcmx_0p85: ldo4 {
++				regulator-name = "vreg_pmu_btcmx_0p85";
++			};
++
++			vreg_pmu_rfa_0p8: ldo5 {
++				regulator-name = "vreg_pmu_rfa_0p8";
++			};
++
++			vreg_pmu_rfa_1p2: ldo6 {
++				regulator-name = "vreg_pmu_rfa_1p2";
++			};
++
++			vreg_pmu_rfa_1p8: ldo7 {
++				regulator-name = "vreg_pmu_rfa_1p8";
++			};
++
++			vreg_pmu_pcie_0p9: ldo8 {
++				regulator-name = "vreg_pmu_pcie_0p9";
++			};
++
++			vreg_pmu_pcie_1p8: ldo9 {
++				regulator-name = "vreg_pmu_pcie_1p8";
++			};
++		};
++	};
+ };
+ 
+ &apps_rsc {
+@@ -679,6 +775,16 @@ &pcie4_port0 {
+ 	wifi@0 {
+ 		compatible = "pci17cb,1107";
+ 		reg = <0x10000 0x0 0x0 0x0 0x0>;
++
++		vddaon-supply = <&vreg_pmu_aon_0p59>;
++		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
++		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
++		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
++		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
++		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
++		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
++		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
++		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
+ 	};
+ };
+ 
+@@ -940,6 +1046,36 @@ reset-n-pins {
+ 		};
+ 	};
+ 
++	wcn_sw_en: wcn-sw-en-state {
++		pins = "gpio214";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	wcn_wlan_bt_en: wcn-wlan-bt-en-state {
++		pins = "gpio116", "gpio117";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++};
++
++&uart14 {
++	status = "okay";
++
++	bluetooth {
++		compatible = "qcom,wcn7850-bt";
++		max-speed = <3200000>;
++
++		vddaon-supply = <&vreg_pmu_aon_0p59>;
++		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
++		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
++		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
++		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
++		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
++		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
++	};
+ };
+ 
+ &uart21 {
 
-Best wishes,
-Pengyu
+---
+base-commit: 393d0c54cae31317deaa9043320c5fd9454deabc
+change-id: 20250426-slim7x-bt-6d01127291d1
+
+Best regards,
+-- 
+Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
+
 
