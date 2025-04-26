@@ -1,110 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-55796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04F53A9D79F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 07:06:55 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6249EA9D7A8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 07:19:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 33E604684E2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 05:06:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1C85B7AA311
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 05:18:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EB63198E60;
-	Sat, 26 Apr 2025 05:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D68F519DF6A;
+	Sat, 26 Apr 2025 05:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UwiPqJcW"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="br8Sn5oJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C057917A304
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 05:06:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CF029B0;
+	Sat, 26 Apr 2025 05:19:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745644010; cv=none; b=HCGxlIynlqX9DSXWw8demI4Urvyq9TPWPmEIQbZhr+05SxLmjqr66MtSXbE9OV/QRv9mWC84l5JB950uVKkE8gxos+GImt3ODIsp5tBlODAjFwi47Fi05cCIzAVhdwBdGV+hslj/tzlbFr7MZnwruBUyZQCt3nzBurrmGRtnbrM=
+	t=1745644779; cv=none; b=e4dzdnQiBQlM9/l4L77qU0ifjgOQ3T9rX3l0kdF10siWEHlHn7/JYzUK5/5XJd2ZL0ZWquJLJx88QkR2LN3aF/r7Ej97sp0r8Sxb3pIJVhTtp6pliSU1g2RdEFKIaxFCXxMN8s6RCrjn7HF6sWYiru+IjmEZcEvF78gMDlFy6L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745644010; c=relaxed/simple;
-	bh=Q1gTwKlCAG4xFRHE8zkb/zQ2XTPqyY5iTVOl99pSpFQ=;
+	s=arc-20240116; t=1745644779; c=relaxed/simple;
+	bh=9Tk4kop98w2lSr6Z5mOouvA3XaaXVtHJfJpOm6sjYs4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rn6WtDJCpRnjoiZfnFWBTeKcZS88WvP434lBf1vAX9oJvhB+AVVlsTV05DHo9h7c/odGAmG5Xi/OzPeWV2U4D4K1TG+OM1eVMQFYwBTlH7lcjdLXaB/BAy6r4K0MrrHX2AqObV6EiSZ8eBNx5q7s/dFi+QvGUzL8vsJBNDkwSl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UwiPqJcW; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53Q4BreP000999
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 05:06:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=eIL0w0SaX4fEgbdtMZSS99AU
-	nD4HN81VW+RR9ZFL48M=; b=UwiPqJcWeRfXKGZLlT0agSw339wTDg3PCCVj8LQH
-	yA5RINtNoHEdSVM1JsHflF+FPX3yiiaGkso7Zz9lz09vSwtO79HJQ50Qh+g8nZX/
-	vHhrHJbs23P3OlGSTxLMtHWF3WGTZXU7YZ+MxbgrRvJBuW8D/jiwHBILVxoWvCx6
-	oLpQT9fRf9hSZrYbtlFjcNDFg9gAQ7yGtliUCQzzTopF8pV5qpbYkxAYVK41hg2m
-	SyXa3VebwcVirsIOEWrc4NQEOOZMmb+yzcfK/nWpZla4JSm/dGtOQbiMnTkGpME3
-	T4poN4r+p477qwePiZpI2s5rXEEQNpwZ569C0nlIG8SxBw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468r8hg3ty-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 26 Apr 2025 05:06:47 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c5c77aff78so852601685a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Apr 2025 22:06:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745644006; x=1746248806;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eIL0w0SaX4fEgbdtMZSS99AUnD4HN81VW+RR9ZFL48M=;
-        b=LA1MUi7zHgCnX7hZ8TvW7Y++wU+SiL66IIWNkg7vUZprRn/yhIVPeQOAlEdSJitUFG
-         dI4D62HnnqYo6iOLuD86uCoEemhNFChlSYhf7AV1iON9Dtp26ef8RJ5r0Q6L9lIpazsn
-         j7GcDlIcMiU73aGuMwSzi9rIG94nXIy5sWNMdaX+tecCR+66Sdui5FxH8YBX3m0Bp5kz
-         kn7w4uRzhhmwxTikma2WFO1uPZe/UzjX8g5yM0wF9MHP66GH9BBLdlJCoS7hPhIWO3/M
-         DqwBU3Lo7M2RiWxl8IeQqYvQ16jLYNJDIM7p9skn8v5NxYlZDviiP4ElF2H4/UrqmL2/
-         3SPA==
-X-Forwarded-Encrypted: i=1; AJvYcCVwxPpmOszWV+UlPTeHzRUgBmA1tRrbc7iiCI4MhZHn4xDjKi9iW46WPISz4HFbxcq/9KiJoX8X11S0p76S@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUOs32TcBJTnA5MhpTonr8MgBJXdmsjLlBQak0T5+aNzTHJ0g1
-	X2TDiVEgFZARhxV40hY1za8WXNDtT4X/ttZmo2FzaWfBVK5KY4aBowN3fzkn2MuwbvDH/m/P94F
-	jIW9lJh0svO6XJNV0S9FdAL/yk0L47Zb0tTS2fTyM+PgGcGxk7Z0cp5KdE4BdSITM
-X-Gm-Gg: ASbGncsFepEDnbVAhet3GPhQVkJ+CFZ/FoSbUIOdOq/efe0JuwX5KWXGsvQilKTKCFh
-	r82j0eLlUzRRulmibGfaaSysIMYxvf+p1m7QDa6CPaGdZHU/HJ7TWPHI2cOpgVRo/42pe+cle/1
-	LXtJmvOLKMjLBkHOkMTSx8DfELuHTTvbq7UjeKeLACk2fIkGoOOLh/RKhnC14JAO6iQ9VjlLs2a
-	vYoqaXRhSVBz4aMtCgbQ8w2dNqaGiQz/xXoVFT7Jf9S+tVa9/JOwD4WUukfYypaYFTr55/ewxvh
-	cHHLpQkwtH0kShGL1tXOEdk0NQaVfYVFHsFEddDzeJX7N0sN2nEA9ayEHTf36x6pBu6InhnBQWQ
-	=
-X-Received: by 2002:a05:620a:2894:b0:7c5:5e05:df33 with SMTP id af79cd13be357-7c9668cda1cmr346617685a.51.1745644006446;
-        Fri, 25 Apr 2025 22:06:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMaVXLId8fuUgq9yIofTuCxPmggQOFvjAUGTOfOuo8GXCozhFMNKAnbZiG2Wbb5ZGjE45ggQ==
-X-Received: by 2002:a05:620a:2894:b0:7c5:5e05:df33 with SMTP id af79cd13be357-7c9668cda1cmr346614185a.51.1745644006052;
-        Fri, 25 Apr 2025 22:06:46 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7ccb7bf9sm837712e87.215.2025.04.25.22.06.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Apr 2025 22:06:45 -0700 (PDT)
-Date: Sat, 26 Apr 2025 08:06:42 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: msm: qcom,mdss: Document
- interconnect paths
-Message-ID: <cmmongeaqwfsfnhpmwdsvozhjzkbdqncktiski4jvqgn5sjmsj@2lw4vesrcwjc>
-References: <20250420-msm8953-interconnect-v2-0-828715dcb674@lucaweiss.eu>
- <20250420-msm8953-interconnect-v2-1-828715dcb674@lucaweiss.eu>
+	 Content-Type:Content-Disposition:In-Reply-To; b=QZYUc5VU+Sp9tdfc6reLpIvIQ2j421Hej3+T/SjiVnwGYip76/QtMccA66Pf4P2hcqoDrGkrwnTKo3BrLYsxnPB3nrQkKYbcYWLIWUuKC+UV6KlOxorKWVWg8rrzipPwV3Ad0oOKFy8/PEwaSYDruJTo6Iq3+wSZvb1OzHaTu2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=br8Sn5oJ; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1745644778; x=1777180778;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=9Tk4kop98w2lSr6Z5mOouvA3XaaXVtHJfJpOm6sjYs4=;
+  b=br8Sn5oJjDmNcdL6DOPMjTop+9b6FUL/vXjwnp/8JWsCGCZkNoki4va0
+   EpAxEe3V0Mlm3YUnn8RYlaamqIum31dSTwLk2Nsxd9wcn8/mTCAIkGO0h
+   Oe9J9mERpnMgMkFOStTCsjGHaRf0cSCAnuT1gwE8Lqx3w2Fn5tvWu/APl
+   ILICAlE3q7/vJIGQtZXYbCY8hKLDd1SuYMQnd7YFSRitGZUD1P39YdcHz
+   FLIitr5nnalSCoBkatkGmyNvbZZ6NoXtNPAZB8OcvWm4BOz8DCfYvScl+
+   0W88+Y1M7eQ0KNt9or6AEtfhD1+WwEh/4V52G7t5rPQS7NT17Q1VXuKK8
+   Q==;
+X-CSE-ConnectionGUID: qZLJEgnpQUiOitFpZdi1pA==
+X-CSE-MsgGUID: RsJ7DSh8Q8KR6CtDAU8ayQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11414"; a="64725237"
+X-IronPort-AV: E=Sophos;i="6.15,241,1739865600"; 
+   d="scan'208";a="64725237"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2025 22:19:37 -0700
+X-CSE-ConnectionGUID: 0Frs03buSWG25IAdY7GLsA==
+X-CSE-MsgGUID: /FaLD0w3R86Tlt1ZOcgp1Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,241,1739865600"; 
+   d="scan'208";a="137884504"
+Received: from lkp-server01.sh.intel.com (HELO 050dd05385d1) ([10.239.97.150])
+  by fmviesa005.fm.intel.com with ESMTP; 25 Apr 2025 22:19:33 -0700
+Received: from kbuild by 050dd05385d1 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1u8Xwp-0005i5-0u;
+	Sat, 26 Apr 2025 05:19:31 +0000
+Date: Sat, 26 Apr 2025 13:18:32 +0800
+From: kernel test robot <lkp@intel.com>
+To: Mao Jinlong <quic_jinlmao@quicinc.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Paul Gazzillo <paul@pgazz.com>,
+	Necip Fazil Yildiran <fazilyildiran@gmail.com>,
+	oe-kbuild-all@lists.linux.dev, coresight@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 2/5] coresight: Add coresight QMI driver
+Message-ID: <202504261305.WCDIwfd5-lkp@intel.com>
+References: <20250424115854.2328190-3-quic_jinlmao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -113,42 +89,38 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250420-msm8953-interconnect-v2-1-828715dcb674@lucaweiss.eu>
-X-Proofpoint-ORIG-GUID: vL9WcZk49Nl83HMHexuvg1K1XfC0Mwim
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI2MDAzMCBTYWx0ZWRfXwzRwPVe7Wuh7 WQeooQ0/bsk0sE57dQCmlra64lAJnjNxKU4jB83R/FCCsXMFm1/J8mvyb9/2wwfJTqhfaPbf7yG Eo3N7U+RN8YjXigrSQEvfOyysyfKJkQWDEH3cZ+flKKHfXqOjeSpdnOYqVuZ/rq0pm60ADEUMJA
- HAbl3mRltxsaoyHoOa84Vcz1gyMXfNsLcqZ9uIya/NwcipkV63CPz8mW06TH4TlbMZiTXqHT1n5 fHNaCw88yxt/LWfE7lQBceQAN/40XwdXQWS43astNOYYCcrNj7i1jOrBWJ1t/LA2fPI2QiEKz4C dEC+Eav9RbmoQSr8bH+cQWtlVs9DXiNAVzCGC/gojj6ESyORMRz4TxApJWfkEOQ9plrV4rYqgPb
- 0CwsdnpMBUdGctsIWDOYsDAShBKTuRQdfwPD7eiLU+d0BP60fIctWyUwGHFWZ9yrXbiZRwNk
-X-Authority-Analysis: v=2.4 cv=cfzSrmDM c=1 sm=1 tr=0 ts=680c69e7 cx=c_pps a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=dlmhaOwlAAAA:8 a=EUspDBNiAAAA:8 a=z5yIEXyMNdJ1grE4PEwA:9 a=CjuIK1q_8ugA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=y4cfut4LVr_MrANMpYTh:22
-X-Proofpoint-GUID: vL9WcZk49Nl83HMHexuvg1K1XfC0Mwim
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-26_01,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 spamscore=0 mlxscore=0 mlxlogscore=999 adultscore=0
- clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504260030
+In-Reply-To: <20250424115854.2328190-3-quic_jinlmao@quicinc.com>
 
-On Sun, Apr 20, 2025 at 05:12:43PM +0200, Luca Weiss wrote:
-> Document two interconnect paths found on the MDSS on MSM8953.
-> 
-> Acked-by: Rob Herring (Arm) <robh@kernel.org>
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-> ---
-> There's also some interconnect paths defined in the mdp5 schema, both
-> drivers accept it. Newer mdss schemas seem to prefer mdp0-mem + cpu-cfg
-> in the mdss schema instead of in the dpu subnode. Since there's no
-> cpu-cfg defined with mdp5, I've added these paths here.
-> ---
->  Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
+Hi Mao,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on robh/for-next]
+[also build test WARNING on linus/master v6.15-rc3 next-20250424]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Mao-Jinlong/dt-bindings-arm-Add-CoreSight-QMI-component-description/20250424-200202
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20250424115854.2328190-3-quic_jinlmao%40quicinc.com
+patch subject: [PATCH v5 2/5] coresight: Add coresight QMI driver
+config: arm64-kismet-CONFIG_QCOM_QMI_HELPERS-CONFIG_CORESIGHT_QMI-0-0 (https://download.01.org/0day-ci/archive/20250426/202504261305.WCDIwfd5-lkp@intel.com/config)
+reproduce: (https://download.01.org/0day-ci/archive/20250426/202504261305.WCDIwfd5-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202504261305.WCDIwfd5-lkp@intel.com/
+
+kismet warnings: (new ones prefixed by >>)
+>> kismet: WARNING: unmet direct dependencies detected for QCOM_QMI_HELPERS when selected by CORESIGHT_QMI
+   WARNING: unmet direct dependencies detected for QCOM_QMI_HELPERS
+     Depends on [n]: NET [=n]
+     Selected by [y]:
+     - CORESIGHT_QMI [=y] && CORESIGHT [=y]
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
