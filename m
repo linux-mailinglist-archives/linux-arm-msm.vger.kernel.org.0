@@ -1,103 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-55798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C3E0A9D83A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 08:15:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE4A7A9D909
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 09:32:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EF6E317856D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 06:15:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D86594C1D1B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Apr 2025 07:32:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A68E6FC3;
-	Sat, 26 Apr 2025 06:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B038B216E1B;
+	Sat, 26 Apr 2025 07:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kkFI1IrL"
+	dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b="mfgQZGtZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA00211C;
-	Sat, 26 Apr 2025 06:15:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54B218870C;
+	Sat, 26 Apr 2025 07:31:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745648132; cv=none; b=ts8S4XtDbxSeDYbm6TOoLIkFNmPZ1YWJlSmsv7l53oU6APE0VswnQRxXS9/6ZymQ2yQosA5DqRbIZgjE6JizDDE+a3k7EZa7GIKtwD9EEFprD681s+ZnF7JvP7Ww9pn4ajb7ydVUJYdTw3fcjneCXROwgsQFf6/8gZZOiApa/hA=
+	t=1745652715; cv=none; b=oa6vuODdLW2uNFJzg/4LsjjBOZZR1hNizNpnMhfzdeCfS9U9xij78EgF3sO7calSkqblFRd7EXkODWzXuKCDciGn8cgRI5l3JgiQIplt25vEYDg+jKVVuoH+heTHLFfObjPyCWvjgUTr+tORh+rlyPP01pnQYq/uH639MyMbu3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745648132; c=relaxed/simple;
-	bh=mxCUaaqj8mwcZsewtRcy5pF5fmWFDs+r5MaxX0wTrqc=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=g++8uhXMpKmYBKrPmdEy2uQLWWbwce4LDXdSEPAHRSqaYJ2D/zB8x2LELQNmRwcb2f28gt9cBYkKbPVR/Y6ObFttFdCMkN1tbu8D9coJEpjPvAIrKaTLRxTcJz6WTZkcFLhgL4zUu3RnD1gvdyJ1nQJBptCwhq7I6axDuui78pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kkFI1IrL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9BBC4CEE2;
-	Sat, 26 Apr 2025 06:15:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745648131;
-	bh=mxCUaaqj8mwcZsewtRcy5pF5fmWFDs+r5MaxX0wTrqc=;
-	h=From:To:Cc:Subject:Date:From;
-	b=kkFI1IrLTK0aACJ7gZ/yLEFFfaa+kNZAVkalayMKjTEutDzdEFjbKfOc6k11cF3YO
-	 f9D7W+VHPCZxh6zbj8Q00oAWB25M6c5DduTy4gaf97L3DYscuoR2dLwVnGlpYZj/xb
-	 Vpkf3a/gAOrHb9Y7ilOiAAq3D4KZ03gtZBY2p9+UlPifeafFCbDLWvz9zn2ijdw9yK
-	 9SaALKojSTRb9Vun73p+fZOB0nKh6k8g13K9bcfZkiIJ3OpsQNLqu1xRwMvAR1+ugy
-	 1zH1hTQHEoQuic1L4ns51BmidwYAN6YY18/k8gnHLn3JntxRqti3dBERrrcw0WRrWY
-	 jH4uWwuZltRcA==
-From: Kees Cook <kees@kernel.org>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: Kees Cook <kees@kernel.org>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-hardening@vger.kernel.org
-Subject: [PATCH] media: iris: Cast iris_hfi_gen2_get_instance() allocation type
-Date: Fri, 25 Apr 2025 23:15:27 -0700
-Message-Id: <20250426061526.work.106-kees@kernel.org>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1745652715; c=relaxed/simple;
+	bh=usn3UhhvWYxA5R1L1n51sRf0wY9ZS5AhL2O38+3iocI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TeOMtKpd/qKmZl6AUeQdcSYYS8fMIglG/h8qnRt4thy7VbmgIe2OaLwNmcjaIb/h5XiNcgr+GJP+H0bdoh2czNwH76e2bNxkuHOrKLAagLA71wHYfaACpwDu8Py42LyS2XR13tf9ygq+06MGPF6iPQZeV5vgXnwOrHcNAUCDJKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz; spf=pass smtp.mailfrom=ucw.cz; dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b=mfgQZGtZ; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucw.cz
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 2F1521C00B2; Sat, 26 Apr 2025 09:31:43 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
+	t=1745652703;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5exbCp8CDaKtwnGNmQNuQzYNnvlYj2r8BcoFxqyUHf8=;
+	b=mfgQZGtZWV3YKRvc11Fy2WjXUhClzecJUpk8uWFAvgSynbJ4YLRl0zJKFI2+KRYmEv/vIS
+	nEGu1k4V7qVSC93t6IBB0MyDqO93+03canDSdfmPtS49p32DXiQ8kU9ZO1dLYEU+Xf6umH
+	NN3bTS8FxIdGst1L8YhkuJUoLzvidEA=
+Date: Sat, 26 Apr 2025 09:31:42 +0200
+From: Pavel Machek <pavel@ucw.cz>
+To: Danila Tikhonov <danila@jiaxyga.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+	Lee Jones <lee@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Alex Elder <elder@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Andy Gross <agross@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>, Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	David Wronek <david@mainlining.org>,
+	Jens Reidel <adrian@mainlining.org>, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+	linux-usb@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-mmc@vger.kernel.org, netdev@vger.kernel.org,
+	linux-scsi@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-crypto@vger.kernel.org, linux-i2c@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	iommu@lists.linux.dev, linux-remoteproc@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, linux-hardening@vger.kernel.org,
+	linux@mainlining.org, ~postmarketos/upstreaming@lists.sr.ht,
+	Connor Mitchell <c.dog29@hotmail.com>
+Subject: Re: [PATCH 00/33] Add support for Qualcomm Snapdragon SM7150 SoC and
+ Google Pixel 4a
+Message-ID: <aAyL3vl9yKlJ+JOi@duo.ucw.cz>
+References: <20250422-sm7150-upstream-v1-0-bf9a9081631d@jiaxyga.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1624; i=kees@kernel.org; h=from:subject:message-id; bh=mxCUaaqj8mwcZsewtRcy5pF5fmWFDs+r5MaxX0wTrqc=; b=owGbwMvMwCVmps19z/KJym7G02pJDBk8lf8/L1zdfnqr/7SgAl+WQ4e2Ploz1zio/0rkxk4e2 wNL70/I6ChlYRDjYpAVU2QJsnOPc/F42x7uPlcRZg4rE8gQBi5OAZjIz5+MDDdOF5+KsT/2Obd6 8yX53/pB0m4rmiZulxKdO61pa9HNDQUMv9mPme83m7covjxsRss16Yuz56Uy/d6mlfbx2/mAA3K SEzgB
-X-Developer-Key: i=kees@kernel.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jXuQpBURuH9Sxi9Z"
+Content-Disposition: inline
+In-Reply-To: <20250422-sm7150-upstream-v1-0-bf9a9081631d@jiaxyga.com>
 
-In preparation for making the kmalloc family of allocators type aware,
-we need to make sure that the returned type from the allocation matches
-the type of the variable being assigned. (Before, the allocator would
-always return "void *", which can be implicitly cast to any pointer type.)
 
-The assigned type is "struct iris_inst *", but the returned type is
-"struct iris_inst_hfi_gen2 *". The allocation is intentionally larger as
-the first member of struct iris_inst_hfi_gen2 is struct iris_inst, so
-this is by design. Cast the allocation type to match the assignment.
+--jXuQpBURuH9Sxi9Z
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Kees Cook <kees@kernel.org>
----
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: <linux-media@vger.kernel.org>
-Cc: <linux-arm-msm@vger.kernel.org>
----
- drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi!
 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-index a908b41e2868..351820deb893 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-@@ -953,5 +953,5 @@ void iris_hfi_gen2_command_ops_init(struct iris_core *core)
- 
- struct iris_inst *iris_hfi_gen2_get_instance(void)
- {
--	return kzalloc(sizeof(struct iris_inst_hfi_gen2), GFP_KERNEL);
-+	return (struct iris_inst *)kzalloc(sizeof(struct iris_inst_hfi_gen2), GFP_KERNEL);
- }
--- 
-2.34.1
+> This patch series adds support for the Qualcomm Snapdragon 730/730G/732G
+> (SM7150) platform along with the Google Pixel=C2=A04a (sunfish) device. S=
+ince
+> the most critical drivers were submitted and applied in separate patch
+> series, this series is largely composed of DT bindings and device=E2=80=
+=91trees.
+>=20
+> To date, we=E2=80=99ve tested SM7150 support on the following eleven devi=
+ces:
+> - Google Pixel=C2=A04a (sunfish)
+> - Samsung Galaxy=C2=A0A71 (a715f)
+> - Lenovo Tab=C2=A0P11=C2=A0Pro (j706f)
+> - Xiaomi POCO=C2=A0X2 (phoenix)
+> - Xiaomi POCO=C2=A0X3 (karna) / POCO=C2=A0X3=C2=A0NFC (surya)
+> - Xiaomi Redmi Note=C2=A010=C2=A0Pro (sweet)
+> - Xiaomi Redmi Note=C2=A012=C2=A0Pro (sweet_k6a)
+> - Xiaomi Mi=C2=A09T / Redmi K20 (davinci)
+> - Xiaomi Mi=C2=A0Note=C2=A010=C2=A0Lite (toco)
+> - Xiaomi Mi=C2=A0Note=C2=A010 (CC9=C2=A0Pro) & Mi=C2=A0Note=C2=A010=C2=A0=
+Pro (CC9=C2=A0Pro Premium) (tucana)
+> - Xiaomi Mi=C2=A011=C2=A0Lite=C2=A04G (courbet)
+>=20
+> A huge thank=E2=80=91you to the SM7150 community for all the devices-port=
+ing
+> work, testing efforts, and bug reports.
 
+Thank you, looking forward for well supported phones.
+
+Please cc phone-devel@vger.kernel.org with phone patches.
+
+Best regards,
+								Pavel
+--=20
+I don't work for Nazis and criminals, and neither should you.
+Boycott Putin, Trump, and Musk!
+
+--jXuQpBURuH9Sxi9Z
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaAyL3gAKCRAw5/Bqldv6
+8t6+AKCezW+X8tCRtch2mRMPqCnbTeMpmACgo7PqyT2Vhb5yFE9mqg8LMrPK+y8=
+=hK/X
+-----END PGP SIGNATURE-----
+
+--jXuQpBURuH9Sxi9Z--
 
