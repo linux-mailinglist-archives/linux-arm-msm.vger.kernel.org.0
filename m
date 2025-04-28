@@ -1,153 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-55932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 695A8A9F592
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 18:22:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 572B8A9F5E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 18:34:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 52FDC178557
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 16:22:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A1770189F20F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 16:34:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80B0F27A92F;
-	Mon, 28 Apr 2025 16:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C25DA27A93B;
+	Mon, 28 Apr 2025 16:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="drqJPcga"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="A5vI5CPA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18F527A920
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 16:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C4827A911;
+	Mon, 28 Apr 2025 16:34:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745857311; cv=none; b=WxBo+XyOjnI/JXNUxVRP4/rDLM3N/YhZXH4ZyisMzdtSx4C2kB50dVDth3Sxxu6uu+5Q56iS38V38ru712Osp4zQzdMOjGxoSRFmIZwx0Dy8a2WJERMqplLQ4g3st4/IttNFjLygetwWWC5VkyYnZ4B3xrK8/DHd7Vs34IBOGns=
+	t=1745858064; cv=none; b=Mms5IfFIfarjxhqpJPgwaM9KUWso023a04/qlaDKOzzGuR5xAjuBIoMbwBfSWywhYcKX91ul1l+vJr1FOJqszWCQZDtJhvZNBYI5cYhUdig8qzLu+PCq7vYw/WquK6Q91Hvy7XzWiNWU3Xm9gr4Z/kWd4CTOL9xFfE5Fc/Wy32U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745857311; c=relaxed/simple;
-	bh=FAk+/hIlJrLqvDt63zVfUl7GDqkiGBuO0+vRufRCo78=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gbSZ6azJ2CJmUWuqwUWYMNJ8unSXnUfCxxk7KzVZXx5XuRCjkv0+Ft9R23RfDJTW13mf4Jj9XSK/+GooWSX3HbImT3MDRJEA5SqO8qJoLBxjn9p5ew0xwcayGkKPHTt1DyVaGOnYYBes9PO/jJJKZtbaGM59LPQnR1gW/TKPMss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=drqJPcga; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53SAD6we026369
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 16:21:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zhk8zfFYK4MnpIXkJbMSmC3IFiPYjxX4pByTlAx/9gI=; b=drqJPcgaOkfRvzbc
-	q3Z7ZGrv42FsrIzKBCTn1tF1XqfIhOtPdqFUnT35mIocHjCauHomlDpn69PU8tms
-	eMGFSGoHDWDEf7A7V9hsq2LJ1v9/f67WnY8aHWql4Wie9NRtr4TwPR+dQ/x/50cg
-	V8cLTRb7tFFJDVtKheVEkiGbZtYIa4AZOdsmpLPbABaelNOdxO1M80xif8/rOEPp
-	8TapgnnX4LSdm2nLdH4btN2gBtt+OqAW7sZL2mCE+MH+UefTJkw0duv5+sxxyM0n
-	zDcXpX1zt9MbQvcpl2CEWH8gTCq38GZLna7oibbcFfVT1EaQhqvohxzSHI++tgRb
-	qecozg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468q321r27-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 16:21:48 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6e90b13f5c3so103327786d6.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 09:21:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745857308; x=1746462108;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zhk8zfFYK4MnpIXkJbMSmC3IFiPYjxX4pByTlAx/9gI=;
-        b=NsfcuBPRjA2siYHcB6kJ41q/ME9SmAylGPMI+8ga/MyxF1VTJBHqIqxKcsglDwbWST
-         +NCVGi7X4aDfyAmzbMihg8Ezu2q2M3Fza16tXd91TZWo9jQoR/aQpOGMimXAYa2znBWf
-         ucLXVUHbcR/brlPcwRw+ETr069LfFxYMJjE8Y/4yXIqelKmWwSHgX9hk56sUNilPPyEI
-         v+UMnmK9dAOmjK80IM5Kft14uW2JyKikoqkenPmJi7zt5zu/VWgZoTiFOFORP/t3/JOg
-         CMnKTkWySGY20j8FJDXqqnv4WQ6PG0sySU88Ys8mGr+Ab1V8onD84Bs1Jr7GQlkJEXmW
-         pm2A==
-X-Forwarded-Encrypted: i=1; AJvYcCUI5Fizl3WsVc2lJuAAIBmQ44oq0kw0huRwtX/Mh8I/dYtECgw0cVOUxDLeBl8wKHrpfDk3b6Zw22hpTZyR@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7DZUlAIqTBACWcr22qOARiT5Q9RI4ed0QYk1tuhnR2j1/B7ZN
-	PUYUQXzEpQJiObyNbV09gFETfFa50Br4BSNgeao2ht/cqmsRmsatJO7Nr8qsbvkM/P8BpFnS9N6
-	KEeO0o46f84pz/OzfCVVwZf+Mr21kuOJbH+uZh9kUAOT8KSmeQBCxdQp3yPPEakEeUPKktPLJ
-X-Gm-Gg: ASbGncu6e7n13tD0ZItXCK4vBbEGoHM1oXggHjlq9GD0ymLOHrtvuTYH0OeGH0aAuAB
-	LQ2yq69NR2YbCanMh8V0TWHKL3oiwmbiSUumrn86a4osCSN+bTmNHbze3bixBiRpg5RoOgIP13e
-	VzpXmEr/RChriUC3GS0tfz5iXTXdthfoxcTWHz8k7ovNsLglLOHlKocLy26jBzXbjL8SyQKrMFz
-	WUhE0Sbt8PGaEZK/GF4XXZTsuMmmeVM0KwEwcjjsw8/BjirDtbzotwP39yKwy9kU9ehy9Td2NEN
-	piSbS9jUJmkvrBOlsCyqmFMK2+pfbA6xH2JLWnd/yuaR/0rMkAfurI9jJK908nvG8ophRiRafK8
-	=
-X-Received: by 2002:a05:6214:19c4:b0:6e8:ee68:b4a1 with SMTP id 6a1803df08f44-6f4f058f110mr8388476d6.8.1745857307481;
-        Mon, 28 Apr 2025 09:21:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFIYoaNvRKG8//OnEjJanG3jFa3ZUwfVxoxZBR/HajeaP9e2qMwZlbuXIpdWarKogjDWjKqsg==
-X-Received: by 2002:a05:6214:19c4:b0:6e8:ee68:b4a1 with SMTP id 6a1803df08f44-6f4f058f110mr8387916d6.8.1745857307149;
-        Mon, 28 Apr 2025 09:21:47 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e8fd2d823sm1057195e87.194.2025.04.28.09.21.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Apr 2025 09:21:46 -0700 (PDT)
-Date: Mon, 28 Apr 2025 19:21:44 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: msm8998-lenovo-miix-630: add Venus
- node
-Message-ID: <vxwbzzds4lkixt2zsvjwnmfk22u3mmvp3cqk36aak2thomyagu@znr6b7gcue6w>
-References: <20250425-miix-630-venus-v2-1-cdfca385a0c8@oss.qualcomm.com>
- <CAOCk7NrcpwAnUKcVsc5D03Aazt=qWLZB034xa2FH2PF9LuL6ZA@mail.gmail.com>
+	s=arc-20240116; t=1745858064; c=relaxed/simple;
+	bh=XWL8UolMeNZmPHHotkwGV8h0TGYlW+ze8mtg/kLlngg=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BN9+zEaAx4wJj9rvWGWrfCFvOt+uLygC6hjPTZvjfOP2sCD3mmKlyjBGFrKDWE5wYZy9vnDWLW7QvvHNR7yC9BBWWPjWLQ43H3mr0QcT7MiggKkGB6F0r+zndcedKRK8Bzl6B3ui+TddAtLOxQ4u8WMUXVTnOYy+D3mkbP5532M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=A5vI5CPA; arc=none smtp.client-ip=217.70.183.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id F39DA43962;
+	Mon, 28 Apr 2025 16:33:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1745858053;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0+W4uodyxoQUQ7gTcLqHUOqlDvIcEkj4yx+1gWHy3Mc=;
+	b=A5vI5CPAhG7Ec31vAslCrct99yDYQUT4yEVpjGag1L5A3ypdDOeM06X6a2NpNi4YWnE6mC
+	2NyQNklaS4GH5N+Y0O0KorENjPo6XmIKRUe43hr2bljZ9KcS30qPhwmXIPUFXXOTPm5XIu
+	n26mA6Au7+KoHn580KonEgnc/bZs1s5A97JkVcqC4ISpJzXNYjj+t+twS22sMPY2EzjhQZ
+	iio59hjvBN4KHAeTHadmXNHM9e/08/R+WKLujQCoy1O7rhd/OkZ8uYxTFLAP+7H0ewrqHT
+	6PMrAxpgk6up77rZyTiJAqPjC9S4tcckhsI1eEGu3LR+due+PAeNxJSMadl6Qw==
+Date: Mon, 28 Apr 2025 18:33:58 +0200
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+To: Maxime Ripard <mripard@kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann
+ <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter
+ <simona@ffwll.ch>, Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong
+ <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, Laurent
+ Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman
+ <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki
+ <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
+ <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Douglas Anderson
+ <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, Krzysztof
+ Kozlowski <krzk@kernel.org>, Anusha Srivatsa <asrivats@redhat.com>, Paul
+ Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, Hui
+ Pu <Hui.Pu@gehealthcare.com>, Thomas Petazzoni
+ <thomas.petazzoni@bootlin.com>, dri-devel@lists.freedesktop.org,
+ asahi@lists.linux.dev, linux-kernel@vger.kernel.org,
+ chrome-platform@lists.linux.dev, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ linux-stm32@st-md-mailman.stormreply.com, Adam Ford <aford173@gmail.com>,
+ Adrien Grassein <adrien.grassein@gmail.com>, Aleksandr Mishin
+ <amishin@t-argos.ru>, Andy Yan <andy.yan@rock-chips.com>, AngeloGioacchino
+ Del Regno <angelogioacchino.delregno@collabora.com>, Benson Leung
+ <bleung@chromium.org>, Biju Das <biju.das.jz@bp.renesas.com>, Christoph
+ Fritz <chf.fritz@googlemail.com>, Cristian Ciocaltea
+ <cristian.ciocaltea@collabora.com>, Detlev Casanova
+ <detlev.casanova@collabora.com>, Dharma Balasubiramani
+ <dharma.b@microchip.com>, Guenter Roeck <groeck@chromium.org>, Heiko
+ Stuebner <heiko@sntech.de>, Jani Nikula <jani.nikula@intel.com>, Janne
+ Grunau <j@jannau.net>, Jerome Brunet <jbrunet@baylibre.com>, Jesse Van
+ Gavere <jesseevg@gmail.com>, Kevin Hilman <khilman@baylibre.com>, Kieran
+ Bingham <kieran.bingham+renesas@ideasonboard.com>, Liu Ying
+ <victor.liu@nxp.com>, Manikandan Muralidharan <manikandan.m@microchip.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Matthias Brugger
+ <matthias.bgg@gmail.com>, Philipp Zabel <p.zabel@pengutronix.de>, Phong LE
+ <ple@baylibre.com>, Sasha Finkelstein <fnkl.kernel@gmail.com>, Sugar Zhang
+ <sugar.zhang@rock-chips.com>, Sui Jingfeng <sui.jingfeng@linux.dev>, Tomi
+ Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>, Vitalii Mordan
+ <mordan@ispras.ru>, Ilpo =?UTF-8?B?SsOkcnZpbmVu?=
+ <ilpo.jarvinen@linux.intel.com>, Bryan O'Donoghue
+ <bryan.odonoghue@linaro.org>, Hans de Goede <hdegoede@redhat.com>, Uwe
+ =?UTF-8?B?S2xlaW5lLUvDtm5pZw==?= <u.kleine-koenig@baylibre.com>, Dmitry
+ Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, "Rob Herring (Arm)"
+ <robh@kernel.org>, Hsin-Te Yuan <yuanhsinte@chromium.org>, Pin-yen Lin
+ <treapking@chromium.org>, Xin Ji <xji@analogixsemi.com>, Aradhya Bhatia
+ <a-bhatia1@ti.com>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Ian
+ Ray <ian.ray@ge.com>, Martyn Welch <martyn.welch@collabora.co.uk>, Peter
+ Senna Tschudin <peter.senna@gmail.com>, Russell King
+ <linux@armlinux.org.uk>, Herve Codina <herve.codina@bootlin.com>, Alim
+ Akhtar <alim.akhtar@samsung.com>, Inki Dae <inki.dae@samsung.com>, Kyungmin
+ Park <kyungmin.park@samsung.com>, Seung-Woo Kim <sw0312.kim@samsung.com>,
+ Linus Walleij <linus.walleij@linaro.org>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>, Rob Clark
+ <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Helge Deller
+ <deller@gmx.de>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+ Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, Alexandre
+ Torgue <alexandre.torgue@foss.st.com>, Maxime Coquelin
+ <mcoquelin.stm32@gmail.com>, Philippe Cornu <philippe.cornu@foss.st.com>,
+ Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>, Yannick Fertre
+ <yannick.fertre@foss.st.com>, =?UTF-8?B?TWHDrXJh?= Canal
+ <mcanal@igalia.com>, Dave Stevenson <dave.stevenson@raspberrypi.com>,
+ Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, Alain Volmat
+ <alain.volmat@foss.st.com>, Raphael Gallais-Pou <rgallaispou@gmail.com>,
+ Michal Simek <michal.simek@amd.com>
+Subject: Re: [PATCH v2 00/34] drm: convert all bridges to
+ devm_drm_bridge_alloc()
+Message-ID: <20250428183358.4d28ca6a@booty>
+In-Reply-To: <20250428-colossal-fiery-alpaca-8c5fee@houat>
+References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
+	<20250428172457.23e23df5@booty>
+	<20250428-colossal-fiery-alpaca-8c5fee@houat>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOCk7NrcpwAnUKcVsc5D03Aazt=qWLZB034xa2FH2PF9LuL6ZA@mail.gmail.com>
-X-Authority-Analysis: v=2.4 cv=M7xNKzws c=1 sm=1 tr=0 ts=680fab1c cx=c_pps a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=uAVbjTU27lTVuhHKzXQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-GUID: 89dX7OzxO1tTdZFbUcZF00TG9TId2dND
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI4MDEzNCBTYWx0ZWRfX0D3cDES+OOH6 q2l9RWs0sgJW8c/afgVxL/I7C6irhZj4dllg90laFowOZOa1c4L2KGmY3MToi1D+1zE0oqFi9UI fF4Z28vkqqUDXh3J6pWfsWanoemhWJwPfx9GCAhIj/4KEzDmR1IsunA2EVOg5FBVG3orUp7S1dx
- lEo+zWT5YvNF//egr4CftDbl1t3kTnZHGjfDLQYAzr1Nwaq+taIThgoyaGVajqZH6ayeGZfd1Kc nVeCopTJJIM50+aItSFt7joJXIbXC8GvH8LExn3Mr/PpK2UfjEb4ynh9sHGASeDeYpvbdRYjUS0 /arhzALa3ibLONyp9LedkfQuw9iKZzjEacwuUgsIcXXqJROt+9iwEzwzqsMoiY5lBPEjz/0iSKF
- DqKHtOteyZWD/oGJuP9sE9qRtqeHZ28D1ZoW7tRyjS3BXPgI1+y0AmQpviG2r1m/3r/DKZsF
-X-Proofpoint-ORIG-GUID: 89dX7OzxO1tTdZFbUcZF00TG9TId2dND
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-28_06,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 clxscore=1015 mlxlogscore=999 spamscore=0 phishscore=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504280134
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedugeegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtqhertdertdejnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhephfetudeugfehheeliefhjeejuddvledtuddttdevledthfehgeeugfetheekgfffnecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepuddtkedprhgtphhtthhopehmrhhiphgrrhgusehkvghrnhgvlhdrohhrghdprhgtphhtthhopehmrggrrhhtvghnrdhlrghnkhhhohhrshhtsehlihhnuhigrdhinhhtvghlrdgtohhmpdhrtghpthhtohepthiiihhmmhgvrhhmr
+ ghnnhesshhushgvrdguvgdprhgtphhtthhopegrihhrlhhivggusehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhimhhonhgrsehffhiflhhlrdgthhdprhgtphhtthhopegrnhgurhiivghjrdhhrghjuggrsehinhhtvghlrdgtohhmpdhrtghpthhtohepnhgvihhlrdgrrhhmshhtrhhonhhgsehlihhnrghrohdrohhrghdprhgtphhtthhopehrfhhoshhssehkvghrnhgvlhdrohhrgh
+X-GND-Sasl: luca.ceresoli@bootlin.com
 
-On Mon, Apr 28, 2025 at 09:40:52AM -0600, Jeffrey Hugo wrote:
-> On Fri, Apr 25, 2025 at 12:28 PM Dmitry Baryshkov
-> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+Hi Maxime,
+
+On Mon, 28 Apr 2025 17:42:46 +0200
+Maxime Ripard <mripard@kernel.org> wrote:
+
+> On Mon, Apr 28, 2025 at 05:24:57PM +0200, Luca Ceresoli wrote:
+> > Hi Maxime, other DRM maintainers,
+> >=20
+> > On Thu, 24 Apr 2025 20:59:07 +0200
+> > Luca Ceresoli <luca.ceresoli@bootlin.com> wrote:
+> >  =20
+> > > devm_drm_bridge_alloc() [0] is the new API to allocate and initialize=
+ a DRM
+> > > bridge, and the only one supported from now on. It is also necessary =
+for
+> > > implementing reference counting and thus needed to support removal of
+> > > bridges from a still existing DRM pipeline without use-after-free.
+> > >=20
+> > > This series converts all DRM bridges to the new API.
+> > >=20
+> > > Patch 1 uses a coccinelle semantic patch to mass-convert some of those
+> > > drivers -- thanks Maxime for having suggested the patch that served a=
+s a
+> > > starting point for me. I was unable to come up with a better patch
+> > > converting more drivers though, so I converted all others manually. M=
+ost of
+> > > them were trivial. I left the non-trivial ones at the end of the seri=
+es to
+> > > help reviewers know where to look at more carefully.
+> > >=20
+> > > Due to the large number of touched files, the list of recipients gene=
+rated
+> > > by get_maintainers (b4 actually) was huge, 60~70 people (not counting
+> > > mailing lists), so I took the liberty of trimming the list as reasona=
+bly as
+> > > I could to DRM maintainers and frequent contributors, and added all o=
+ther
+> > > recipients individually per-patch. I hope this is fine. Don't hesitat=
+e to
+> > > suggest more people which should be Cc-ed in a future series, or a be=
+tter
+> > > Cc policy.
+> > >=20
+> > > Current plan and status of the DRM bridge refcounting work:
+> > >=20
+> > >  A. =E2=9C=94 add new alloc API and refcounting -> (now in drm-misc-n=
+ext)
+> > >  B. =E2=9E=9C convert all bridge drivers to new API (this series)
+> > >  C. =E2=80=A6 documentation, kunit tests, debugfs improvements (v1 un=
+der discussion)
+> > >  D. after (B), add get/put to drm_bridge_add/remove() + attach/detech=
+()
+> > >  E. after (B), convert accessors; this is a large work and can be done
+> > >     in chunks =20
 > >
-> > Enable Venus on Lenovo Miix 630 and specify corresponding firmware file.
-> 
-> I'm curious, how did this get validated?  I didn't think there was
-> enough infrastructure enabled on this platform to check that the
-> lights were even on on in Venus.
+> > Maintaining this long series is quite painful. Do you think at least
+> > patches with a R-by or T-by tag could be merged before I send v3, so
+> > we can relieve the maintenance effort, mail servers, and everybody's
+> > inboxes? =20
+>=20
+> Yes?
+>=20
+> What's stopping you though? You have at least a colleague that can apply
+> them, and you could just as well apply for commit rights yourself.
 
-I must admit, I basically checked that the firmware starts up. Marc
-Gonzalez worked on enablement of Venus on MSM8998 (on the freebox), so I
-didn't perform a thorough check.
+OK, thanks. Will do.
 
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > ---
-> > Changes in v2:
-> > - Rebasde on top of linux-next
-> > - Link to v1: https://lore.kernel.org/r/20250408-miix-630-venus-v1-1-771c330ee279@oss.qualcomm.com
-> > ---
-> >  arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> >
+The reason I haven't done it is this policy in DRM still appears a bit
+unusual to me, but if it works for DRM I'm OK with it. Only, in case of
+doubt, I didn't want to risk abusing of the commit rights.
 
--- 
-With best wishes
-Dmitry
+Best regards,
+Luca
+
+--=20
+Luca Ceresoli, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
