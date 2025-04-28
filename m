@@ -1,63 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-55870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06F12A9EA55
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 10:10:22 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C49E7A9EA99
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 10:20:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5443C172973
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 08:10:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 25E697AA8C1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 08:19:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 049DB22F17A;
-	Mon, 28 Apr 2025 08:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7929A25EF96;
+	Mon, 28 Apr 2025 08:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GcIGvSa4"
+	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="hdMwjSOR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5BD19F120;
-	Mon, 28 Apr 2025 08:10:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8207725E818;
+	Mon, 28 Apr 2025 08:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.207.212.93
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745827816; cv=none; b=nYrgIE8mrVcJR9HIuzMP1nzJA9z2FmAiwQT1XIp48tp3WhmLL1Ol10D0ToCLfZo+5pC7N7isJBEvxSx+oD46Q0f+7PqcYNp2pbky5YD8wu1TkqjWvGNl5qe3LkIIRZik9/XMRoZ93lVPbuoxLWT7dJpoxQbB75Q4UjRvSly53Ds=
+	t=1745828388; cv=none; b=gd2ozXF0WfUkYuTnf3EWw+aqdYJVlRmL8am3hZolYQwoCNSuDH/xjR2SXlN1PL0t4rQHLvhq4UzBiQPcwYuyAFj7l08r67tYGvQvFivMHZ5T6uTSbLdpZQSlwrKW7uiJs0IdN0RkoQbuuD7RG0Wl2mmfIsa4dX3lPZzfsez13Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745827816; c=relaxed/simple;
-	bh=k6GjsnctA/4cl8SfLk5wLQiT76FgSiWOFePnHmkkqu0=;
+	s=arc-20240116; t=1745828388; c=relaxed/simple;
+	bh=VK0BrH3ZZDN9Jgn9dD1/pWlMvI7r00jAXZwatq9vcEY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Wu4yOP6Iag8ZjLUTtaSfvoyAMplQ3YcNMTXWtrZW0PnXjjdKq1iL1agMVyoYJfR2XmJaU8wSxo1tuv1asYrd7AK7lpvbyXsSMYycm5r/jJFlQn92bqTERJc33eTUIKAn3pZUWnIMRndUCC/mFS4fUPiGnqgd52ffdyYRkHeSUwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GcIGvSa4; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53S6juTK018506;
-	Mon, 28 Apr 2025 08:10:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	 In-Reply-To:Content-Type; b=JXhkGvI6IwU/ZqUPszi8tAUAiZ0DX8ff/mjfKAYvIJhZVuJxyEx6Ke8UkVXifhoXsenSgqsNRFjwQc1/JWRNdrCkMlSZQJT0oQFtgHQxZFQ1djtTA6+nnw0s9DZpSnz45tdXpb61WhQt9TfEqe0gOh1iG+SxNkh0iO4r8F5Fqag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=hdMwjSOR; arc=none smtp.client-ip=91.207.212.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53S10w7P021339;
+	Mon, 28 Apr 2025 10:19:25 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ol6Xl6i68ZLMmEDC7rOpaP6hA8OHqTiZTmpHuGCG2KI=; b=GcIGvSa4eUsTamvs
-	T8oTe7GYtlArMy9xuCHLE6m498iyx/ucGtpzzaKIXVsRupPcPXlb05q/09d8hw9m
-	kTrWdq6LgFkDOSpez6svxmXG7Cc2rbyXQUccHvFu38tvtXADY+IpxYEzhSkvfHSK
-	xFseIGUYFC8E2LE+BP1OSF4oQM1zj1WDV+0RAdVbLYpkRCQswOrRoWG3l0sHQYMh
-	OHQRbWKYSMx7RTEVDRRbwb56vRLBWCwPu5YC7Gg1cZpjsNfEaAmOBDzvonmnJnq/
-	Ds8RnGuFwBF93Cp1BwKbb63MX8LLaJtvKybc/LVXuXexQSgaU9A3Czjab1tc/qgx
-	y6dyZA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468n6jfbdw-1
+	:message-id:mime-version:references:subject:to; s=selector1; bh=
+	yr7t1olrwsxTtck0/lM3DwdKRKb3Z1gEKVydU7fX9vg=; b=hdMwjSORmCF7wlLm
+	irCx7AnOE8qIJNbjPKSlLflA4pJaS5QX9+kDvKlOKc0Bryt1Z6wnrJJqERnf9NKD
+	c/3SU4ACwMwXZCt1byR8rs0K0MBb6CyEdDssM991Jrcw+OBgUW99LeD0Kml0SgsG
+	MqPhHzQYIEDEYR29tSwc4qAPBZQeG3+IFqbFliIB4E2AfL8rabyB5VxYeySrfx2M
+	6YEP1gmhXIxuN6EedCVN/QmI7Sg+leAeo3WruQudKtDMscZ/wXtdN4TMj0KCzzrt
+	cpWe80Mr2F2LtoOr0yOos5ZaBOWhByW6LWlANsoXQ0AwdHY6scYRQbTpxJMf5l+n
+	MGHDTg==
+Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
+	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 468mm9drpq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Apr 2025 08:10:02 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53S8A2lT005357
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Apr 2025 08:10:02 GMT
-Received: from [10.239.133.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 28 Apr
- 2025 01:09:58 -0700
-Message-ID: <b313ab73-850e-4d75-ae19-797a8c6a16f2@quicinc.com>
-Date: Mon, 28 Apr 2025 16:09:56 +0800
+	Mon, 28 Apr 2025 10:19:25 +0200 (MEST)
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 2352040048;
+	Mon, 28 Apr 2025 10:17:43 +0200 (CEST)
+Received: from Webmail-eu.st.com (eqndag1node5.st.com [10.75.129.134])
+	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 81ED0A2D14A;
+	Mon, 28 Apr 2025 10:16:05 +0200 (CEST)
+Received: from SAFDAG1NODE1.st.com (10.75.90.17) by EQNDAG1NODE5.st.com
+ (10.75.129.134) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 28 Apr
+ 2025 10:16:05 +0200
+Received: from [10.48.86.121] (10.48.86.121) by SAFDAG1NODE1.st.com
+ (10.75.90.17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 28 Apr
+ 2025 10:16:04 +0200
+Message-ID: <698066cd-6fee-4fd8-9caf-0f5fbd19fda6@foss.st.com>
+Date: Mon, 28 Apr 2025 10:16:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,116 +71,115 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] dt-bindings: arm: Add Qualcomm extended CTI
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Suzuki K Poulose
-	<suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>, James Clark
-	<james.clark@arm.com>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn
- Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof
- Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <coresight@lists.linaro.org>,
+Subject: Re: [PATCH v2 0/4] of: Common "memory-region" parsing
+To: "Rob Herring (Arm)" <robh@kernel.org>,
+        Saravana Kannan
+	<saravanak@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Mathieu Poirier
+	<mathieu.poirier@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer
+	<s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Patrice Chotard
+	<patrice.chotard@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Chen-Yu Tsai
+	<wens@kernel.org>
+CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <imx@lists.linux.dev>,
         <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20240903121847.6964-1-quic_jinlmao@quicinc.com>
- <20240903121847.6964-2-quic_jinlmao@quicinc.com>
- <8d203417-e3da-4969-87ea-f77cdb720756@kernel.org>
- <04d46109-d499-4e91-88aa-4187145b811d@quicinc.com>
- <cbb1191d-4e90-4887-9227-e4e8761a9b46@kernel.org>
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        Daniel Baluta
+	<daniel.baluta@nxp.com>
+References: <20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org>
 Content-Language: en-US
-From: Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <cbb1191d-4e90-4887-9227-e4e8761a9b46@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Organization: STMicroelectronics
+In-Reply-To: <20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI4MDA2NiBTYWx0ZWRfX9eHyGZaWihej jfrUeqzbopu3ZaXzKip2Xx6PCy0Kt84KlXPp3AhQKqJewb9HkpbyqT8W8L2RbnP35rBcJy4jTiR 9Z0UMitfi6fjm+A7E4qoj1KLxT4kSPR0FY16MRs4PAAdFF+wLt6QYPAxb1VmljAi+xSW96ogPCc
- BtZOjD4v+zKib0vtdplC2aRmh4XtA51VnVQEgfH3iSBS1RSu+syQ/GqBtwLnq1uebjK7Yjti6L/ jakkRZ+4IADmGF1GrjwS/ivQd/YDVNhsNzJP7Grf1iCu6S1bG+VXJXcbkk7cg2R+3i8PP84PkxE FXi/NcpQzGZo1ya1y6CkH8T0fGbp5F5zPOWrrqOtrBes+Z52bnc/fgNNEcB3awXdcJt4NJhOR7b
- ha35vtMUz0gHLd/f9DrfPAJE+zcWFZx/5NfkwsOCXQPvdE1j+opFF1vHmlmDJn960INkDJVE
-X-Proofpoint-GUID: dL9IIffQcO9w4mMrV81tiS6lhBQH1eiZ
-X-Proofpoint-ORIG-GUID: dL9IIffQcO9w4mMrV81tiS6lhBQH1eiZ
-X-Authority-Analysis: v=2.4 cv=C8fpyRP+ c=1 sm=1 tr=0 ts=680f37da cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=BB5YKCej9nSSSTOgEYYA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
+X-ClientProxiedBy: EQNCAS1NODE4.st.com (10.75.129.82) To SAFDAG1NODE1.st.com
+ (10.75.90.17)
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-28_03,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- mlxlogscore=999 priorityscore=1501 clxscore=1015 spamscore=0 adultscore=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 mlxscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504280066
 
 
 
-On 2025/4/28 15:39, Krzysztof Kozlowski wrote:
-> On 28/04/2025 09:31, Jinlong Mao wrote:
->>
->>
->> On 2024/9/3 20:42, Krzysztof Kozlowski wrote:
->>> On 03/09/2024 14:18, Mao Jinlong wrote:
->>>> Add Qualcomm extended CTI support in CTI binding file. Qualcomm
->>>> extended CTI supports up to 128 triggers.
->>>>
->>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>>> ---
->>>>    .../devicetree/bindings/arm/arm,coresight-cti.yaml | 14 ++++++++++++++
->>>>    1 file changed, 14 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
->>>> index 6a73eaa66a42..141efba7c697 100644
->>>> --- a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
->>>> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
->>>> @@ -87,6 +87,10 @@ properties:
->>>>              - const: arm,coresight-cti-v8-arch
->>>>              - const: arm,coresight-cti
->>>>              - const: arm,primecell
->>>> +      - items:
->>>> +          - const: qcom,coresight-cti-extended
->>>
->>> That's just enum in previous entry/list.
->> Sorry for the late response. This is a new CTI type. Need the three
->> items in compatible at the same time, just like other kind of CTIs.
+On 4/23/25 21:42, Rob Herring (Arm) wrote:
+> While there's a common function to parse "memory-region" properties for
+> DMA pool regions, there's not anything for driver private regions. As a
+> result, drivers have resorted to parsing "memory-region" properties
+> themselves repeating the same pattern over and over. To fix this, this
+> series adds 2 functions to handle those cases:
+> of_reserved_mem_region_to_resource() and of_reserved_mem_region_count().
 > 
+> I've converted the whole tree, but just including remoteproc here as
+> it has the most cases. I intend to apply the first 3 patches for 6.16
+> so the driver conversions can be applied for 6.17.
 > 
-> Comment stays valid, you did not address it at all.
-Hi Krzysztof,
+> A git tree with all the drivers converted is here[1].
+> 
+> v2:
+> - Fix of_dma_set_restricted_buffer() to maintain behavior on warning msg
+> - Export devm_ioremap_resource_wc()
+> - Rework handling of resource name to drop unit-address from name as it 
+>   was before.
+> - Link to v1: 
+>   https://lore.kernel.org/all/20250317232426.952188-1-robh@kernel.org
+> 
+> [1] git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git dt/memory-region
+> 
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> ---
+> Rob Herring (Arm) (4):
+>       of: reserved_mem: Add functions to parse "memory-region"
+>       of: Simplify of_dma_set_restricted_buffer() to use of_for_each_phandle()
+>       devres: Export devm_ioremap_resource_wc()
+>       remoteproc: Use of_reserved_mem_region_* functions for "memory-region"
+> 
+>  drivers/of/device.c                       | 31 +++++-------
+>  drivers/of/of_reserved_mem.c              | 80 +++++++++++++++++++++++++++++++
+>  drivers/remoteproc/imx_dsp_rproc.c        | 45 +++++++----------
+>  drivers/remoteproc/imx_rproc.c            | 68 +++++++++++---------------
+>  drivers/remoteproc/qcom_q6v5_adsp.c       | 24 ++++------
+>  drivers/remoteproc/qcom_q6v5_mss.c        | 60 ++++++++---------------
+>  drivers/remoteproc/qcom_q6v5_pas.c        | 69 ++++++++++----------------
+>  drivers/remoteproc/qcom_q6v5_wcss.c       | 25 ++++------
+>  drivers/remoteproc/qcom_wcnss.c           | 23 ++++-----
+>  drivers/remoteproc/rcar_rproc.c           | 36 ++++++--------
+>  drivers/remoteproc/st_remoteproc.c        | 41 ++++++++--------
+>  drivers/remoteproc/stm32_rproc.c          | 44 ++++++++---------
+>  drivers/remoteproc/ti_k3_dsp_remoteproc.c | 28 +++++------
+>  drivers/remoteproc/ti_k3_m4_remoteproc.c  | 28 +++++------
+>  drivers/remoteproc/ti_k3_r5_remoteproc.c  | 28 +++++------
+>  drivers/remoteproc/xlnx_r5_remoteproc.c   | 51 ++++++++------------
+>  include/linux/of_reserved_mem.h           | 26 ++++++++++
+>  lib/devres.c                              |  1 +
+>  18 files changed, 339 insertions(+), 369 deletions(-)
+> ---
+> base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
+> change-id: 20250423-dt-memory-region-v2-a2b15caacc63
+> 
 
-Do you mean we only need const: qcom,coresight-cti-extended here ?
-No need const: arm,coresight-cti and const: arm,primecell as they are
-in previous entry/list, right ?
+Testing of the series on the STM32MP15 platform has passed.
 
-> 
->>
->>>
->>>> +          - const: arm,coresight-cti
->>>> +          - const: arm,primecell
->>>>    
->>>>      reg:
->>>>        maxItems: 1
->>>> @@ -254,6 +258,16 @@ examples:
->>>>          clocks = <&soc_smc50mhz>;
->>>>          clock-names = "apb_pclk";
->>>>        };
->>>> +  # minimum extended CTI definition.
->>>> +  - |
->>>
->>> No need for new example. No differences here.
->> This is a new type CTI.
-> 
-> 
-> Comment stays valid, you did not address it at all.
-> 
+just one minor comment in patch 1/4.
+
+Acked-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+
+Thanks,
+Arnaud
+
+
+
+
 > Best regards,
-> Krzysztof
-
 
