@@ -1,153 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-55942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88910A9F843
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 20:16:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E032AA9F86E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 20:24:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D978F17FDCE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 18:16:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 449E01A83768
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 18:24:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39FD727B51B;
-	Mon, 28 Apr 2025 18:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82F582957B9;
+	Mon, 28 Apr 2025 18:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="U+dlezha"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ivE2iaT6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB697082F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 18:16:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922782951DF;
+	Mon, 28 Apr 2025 18:23:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745864191; cv=none; b=BXdLhuJ6NWDmyQ0uU41JCFvX5xVjsgD5cSiWXcUofdREK8CCgkcJIGROH01yH9D+8PVW9iZpdOZxwInXiwD8iuRQeexXhaXmSYHQKN45u38weS9CiL+h4l3YKWKgDsQcPg5+L704ZeOeql9eowDyhRl5LMSUj8+7oj0RR1OsJHI=
+	t=1745864640; cv=none; b=sQkOSvR1e3FWKodsfcR9bA7DlGy0m93Cw5Dzv/xn9Ph3O1pMdX2RvjNBPHoYixAl1lomRDKZ6+DF7oLNxqBtJJpQN07yUtaOqbcXDq51VvGqAwwVXCjrmf8RbNTbqw0Ps8ejetfbW0mUgcuDZSIuZRan0VkEGSBS0SxSK04gIPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745864191; c=relaxed/simple;
-	bh=J2NjDwqxbCREVF7cYbxWhVeVD5IjGCL+8llBMNF4IB0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=obi+ThJrzTmQscZi3SoTLWdlI/CrX1fXuWrgCUVbnagMthnz0beb3N2iR5ZhuWROJ0Lcon7tFsXlYKNhgfyku5sulx/XBZ7z8WYXCyp4pyQQvn0drdNz/X/cKLQKZvthf+Ai5K62fKpTmUY94F1Z/X57UC5veV86B+yiHUu04KE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=U+dlezha; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53SACsP4019747
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 18:16:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pyzYPzNdKJ5hQ6D4PSTvT03qdPB40WqZn1pcHvBuv1I=; b=U+dlezhaBSxpQQJ1
-	hbS01xOAyQrW/KVOqtyup9H//GPuLtniOmmFvSGngRTTUkDSFpxwTO8AuErYjhKf
-	PatmdMrXCAfq796TA7HUFXXGDw1FRpFyJnIkyf6WZ50dSNWk6c5mOxB1tCKbSfw0
-	KHVquU6LRrvwJ9BRZUeUQh/ZM/ps0Pu1VpORuRMYtAhi0bq3vOJ8tC6yOHINJ0RW
-	DOUFNBypgdE0aMT1+ZvpE6czD2SvcPQxRgWIe0l/fL5/1EzHVWXT7ZLNQjkeWCwA
-	sCqeIc2J45eoPa/6wx9incf5JhFD4HuqI710wfbDZkqaSMzy8hZ+tlmF/5xgIQR3
-	HrEJRA==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468pg9a2pw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 18:16:27 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4775bdbcdc3so11275081cf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 11:16:27 -0700 (PDT)
+	s=arc-20240116; t=1745864640; c=relaxed/simple;
+	bh=bfkSNuW9ZLA+zt1E4XJ6Y4jl13nx7BJaRR54OIX8urI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jsFwZ2PeLxH2XcMpWGwgUmSAzd6ydoe68BWF2Vt4lBB9K6N0MqspVv3nzjC7mrFOaYLKd/eyQ5nOM2+dOMWFkMGLQFeLDElnCiF7KApuLcXS50WlT80A0aDbRV9xnwNtAGnwgDWcr1KfpRHHISucBCbVj3oRx64nTmZf70Vpeek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ivE2iaT6; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-39c0dfad22aso3949869f8f.2;
+        Mon, 28 Apr 2025 11:23:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745864637; x=1746469437; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bfkSNuW9ZLA+zt1E4XJ6Y4jl13nx7BJaRR54OIX8urI=;
+        b=ivE2iaT69xIhxa6WVjG5FZso8P6OCIMankj/fpUFZ2EHqCs0hG899dGdPMLpMhcBzp
+         KojucRQnJqApfqFWWIlAHsOSXVH/MjAkizDxJ/532l+k5kpIAE/zVcUw3ybtXSfA+uGp
+         Y5UcDczTdHDUcjMEBi55K0+BySjYm1sIyKL3wSr4vVsN0Fck+9mLHePbYndIfFTBedAb
+         R/1MVY5bWEhltvkU/WWTpeCiaRyMoH0sS5DFblMaRxt96fct4g+QD0KPlb4a9mjuutTX
+         s9rQa8mWjp2oNMp2dyBbREScto8EWc80dpEUcwkTXqwTc68b9JFGGB2w7gDBvNE7i5x+
+         rsTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745864186; x=1746468986;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pyzYPzNdKJ5hQ6D4PSTvT03qdPB40WqZn1pcHvBuv1I=;
-        b=r2MWe2q4HUUAobLqQq+TMWfvQsHEwt1zGv7u8eRDvIP7fgcsllDNvk0s+lS5GCB0vt
-         85jRPtoW3gBBYd1i5TW/SkghysxsVEWTYeD6vyXSSxy8DG3hYzqnxvNJA5w0sfye4x+X
-         qjlWyFydhyp3AbSqdFiFp1/Z6sNXGtfkeLaZtgWQ3Ji3rc/toZTckzj6mkWqya93VKCd
-         yJxW+cfXACT5RPG3QLhT5KO/SNTPF5i04yg+7yDmjy6aUi8yxVLNZet9w1J5vALM3qw4
-         1iKDj17AgG7aeCHZ3mCNfte3BLbObeY0s2g3uk1vV+YxUXe7y2Z1uHVjTDHXGWzFgHX+
-         wi9g==
-X-Forwarded-Encrypted: i=1; AJvYcCVXlsvVKhyezkwuisko4isLNdi7sc7qgXq+kHvnNLt7VBwTRFcn3hNBkJ7FXJxaMm0d6JFWjNqijRABYsHb@vger.kernel.org
-X-Gm-Message-State: AOJu0YxOHCNEj9lClNKybe2gUtP0wE+bjUMdxDFdmQYUh2xoIzMUuImy
-	4PTzMruIx8jBrK5x2kX9QDNGBHAgoLeYFh5T5uFBmp2DK4WDEiO/YMdNHvjdhYkb+r9ADA3FUlO
-	q0b/rg+0KZgkxK24Y6al1qkdlBeikkZdPJND790EeCJ8jfTy7XgPYv3pC80aH63xE59EMMam5
-X-Gm-Gg: ASbGnctygvN1ZclPC3ch8lWFagQ+5GRakMD5LjpcEv20rL4/r6+rVkytfJQW6IHjUQ6
-	gMj/BczUB7oBzTp1DhI4xa54GtwCilG4y1jMGu/SJRY2cDMwZD/3zNQjzGEne4M1zFx6MPd90HF
-	/rxb3mo7murjqXPvUIBu/sA8OLvl6MlhnfUpgE4hp1rDJI5Wdh5hxX/TKnCSITy+Y7p8Vhagu2o
-	Z65IWUSZMDAPPs3p044ubq9vyWYJUXS56gn1vywdCheWQzxjJ6+DW4mlSahF+4J+d2DxiMvHvD8
-	EmHHYSxIYlS7SfPWrsi3uspzW29v6rt0hzN92fK5tzSPYNegdjdGiJtZFnRij1DvFA==
-X-Received: by 2002:ac8:5709:0:b0:476:add4:d2b5 with SMTP id d75a77b69052e-48864dc24aemr677491cf.2.1745864186511;
-        Mon, 28 Apr 2025 11:16:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFiBHTGPzXdz71tkCZQWognqMTsRKpmoKTruiCpJpeGT+JHe1UiZNWbwkpyFf9Bf70YBU8p6w==
-X-Received: by 2002:ac8:5709:0:b0:476:add4:d2b5 with SMTP id d75a77b69052e-48864dc24aemr677331cf.2.1745864186191;
-        Mon, 28 Apr 2025 11:16:26 -0700 (PDT)
-Received: from [192.168.65.47] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6ecfb339sm658100166b.115.2025.04.28.11.16.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Apr 2025 11:16:25 -0700 (PDT)
-Message-ID: <4b467493-5ea1-48d9-b4c0-56f05b7edb46@oss.qualcomm.com>
-Date: Mon, 28 Apr 2025 20:16:23 +0200
+        d=1e100.net; s=20230601; t=1745864637; x=1746469437;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bfkSNuW9ZLA+zt1E4XJ6Y4jl13nx7BJaRR54OIX8urI=;
+        b=i20uSrioku9zyF/E5Hq3eSfFS2WtDV/n/dtyO+Vf1HqVBA7WHIXZBBwZQ2pHCE8+2M
+         hsGBEnJ9Q/jRfe3wJHkI+7MJPE1UvMF95qOQEh0Gp1jPSwVeXIw7YsIS/JA8C7d8913a
+         9JH9JDjLk1AhibTCqMEFdCtsNiY/Q9J0KK+dWPTIAMiyYawUfOhcBoZuP7EWsXI5OVEu
+         pzBINhw5bRmoh10naOTneiPzM04imCThgFjC4g/IuwrZu2/jMeOuvoxD8Qzmbi0IVErO
+         yn0q7l2E4pGv6ruwc8YbJU0a3MABaRhmcAD9D/dimxS/n4EqT6EZmpJT5W+B7XqsiX7v
+         u0xg==
+X-Forwarded-Encrypted: i=1; AJvYcCVJRaBtUBfsHqqTtpV++PxtzyNurSksk2r45aHL54bGdiTDgCwiLh6FRz9OqgP7khE7jVuucpzg7HtSVR3L@vger.kernel.org, AJvYcCVbb1/PDATTyH0d5FE+SuslmdFY29ExDZau6EegkBQqfKdbGr+TmnMojit+rf9rJQl7y34MFZmJXC0ljbS/@vger.kernel.org
+X-Gm-Message-State: AOJu0YxsY4GROt6TZvPNy8cQ2dHXPUvqgLZXwx6vE0jWIFkDUHs51yT5
+	3GhiYUVQP80c6X9prFytDMlOr4prOB20mr1x4bYef3rzcHVoa/gyl5pfohK8GclHWdnPwgY79KP
+	jaE47CtOWdLyJXUmdi9t9k8Uutw==
+X-Gm-Gg: ASbGncvuHeTSxfo0YDdbPS5EN44yBlgPbHKkTKbClRrrQeWTOQ0tTjlyyoQ4CSUSeOc
+	Sdm9Zyq9PTqiyOVtZusIrqJyvNiC/is6+4839YK06omqzWjiszWc130y5vKx6kXPHzg6L42lvXa
+	fLmjI4l3zlyUrh3SdoeA4ldg==
+X-Google-Smtp-Source: AGHT+IFwDSjFDsXFqDEajGlCEG2JWphdEKba/Sl0xJc1WhGDflX1dA0OlyRMRIVd6p09uVXAOpHTVyL0aAWfZUYjs78=
+X-Received: by 2002:a05:6000:4310:b0:3a0:8549:302 with SMTP id
+ ffacd0b85a97d-3a08a371450mr255248f8f.35.1745864636424; Mon, 28 Apr 2025
+ 11:23:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: msm8998-lenovo-miix-630: add Venus
- node
-To: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250425-miix-630-venus-v2-1-cdfca385a0c8@oss.qualcomm.com>
- <CAOCk7NrcpwAnUKcVsc5D03Aazt=qWLZB034xa2FH2PF9LuL6ZA@mail.gmail.com>
- <vxwbzzds4lkixt2zsvjwnmfk22u3mmvp3cqk36aak2thomyagu@znr6b7gcue6w>
- <CAOCk7NqLQdpbvdknEHEB0NNU7OPhmmHkH3Q4PCYiOzf2fBQBkw@mail.gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <CAOCk7NqLQdpbvdknEHEB0NNU7OPhmmHkH3Q4PCYiOzf2fBQBkw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=ZpvtK87G c=1 sm=1 tr=0 ts=680fc5fb cx=c_pps a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=VeHn5rkiVmJbRrHcbRoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-ORIG-GUID: YvbuEGaUEI-THdSbeSenFPycqJeDtR1b
-X-Proofpoint-GUID: YvbuEGaUEI-THdSbeSenFPycqJeDtR1b
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI4MDE0NyBTYWx0ZWRfX/PD/Y5d+tFsU emkvbjBetX0hbhUTjkIneO8Q21PwLD1/xQALYLngxV8CBQKuMshqCoj3VbGp6p5HYxpX3obsU9l gpfnCNseGfuUO5lUic6/2UPWzIvkm57jUXWnXaG5UTiQPVNPpaziygsLPRT1uo2eToa4Ap+UQ84
- 7Lu8XkLze8xm75M0MW8Fp6tPm1wTGq0qcIlnyBPTdnz3cLQNXP8GFvdSaCN1bu0JfPYPsHMbdsG aiOXIFzLLYNi7jlFOo+jnKc0ZOb51Fn8UBsdwkWPLYpuXXGr9Vag4KKwlXPDgeUY5JnzuOBMaff HK0OmiB8mcmpFbL8wWCasH1t4e5N83mPywEI0odokMQ8AiFfj73dvbXUmyOTwEqmGJAT6lpR5T0
- LL8BZZqsgpe9d9pGUcsy8Mv72M4Opn8hp0sdNPCbaYBeZQy2/LPsrRC88m00weZQzDYON+4G
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-28_07,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- mlxscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0 adultscore=0
- clxscore=1015 priorityscore=1501 lowpriorityscore=0 suspectscore=0
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504280147
+References: <20250417021349.148911-1-alex.vinarskis@gmail.com>
+ <aA8yFI2Bvm-lFJTl@hovoldconsulting.com> <CAMcHhXpmii=Rc9YVeKXaB17mYv0piSFs02K=0r8kWe5tQGk7eA@mail.gmail.com>
+ <aA94yOjsayZHNDpx@hovoldconsulting.com> <aA+N8YHX0DZ6h9Uj@linaro.org>
+In-Reply-To: <aA+N8YHX0DZ6h9Uj@linaro.org>
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Date: Mon, 28 Apr 2025 20:23:45 +0200
+X-Gm-Features: ATxdqUFJV2eKUF6Ib5_rQijD8ZDNXLbxDy4yxnBcyxEjzsLTAojaiverpqjEJgQ
+Message-ID: <CAMcHhXpG-1AP7qP6bAfFcdxtDxsC+_3TYFqwByp5pkFiRYvmJQ@mail.gmail.com>
+Subject: Re: drm/msm/dp: Introduce link training per-segment for LTTPRs
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Johan Hovold <johan@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, laurentiu.tudor1@dell.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 4/28/25 7:48 PM, Jeffrey Hugo wrote:
-> On Mon, Apr 28, 2025 at 10:21 AM Dmitry Baryshkov
-> <dmitry.baryshkov@oss.qualcomm.com> wrote:
->>
->> On Mon, Apr 28, 2025 at 09:40:52AM -0600, Jeffrey Hugo wrote:
->>> On Fri, Apr 25, 2025 at 12:28 PM Dmitry Baryshkov
->>> <dmitry.baryshkov@oss.qualcomm.com> wrote:
->>>>
->>>> Enable Venus on Lenovo Miix 630 and specify corresponding firmware file.
->>>
->>> I'm curious, how did this get validated?  I didn't think there was
->>> enough infrastructure enabled on this platform to check that the
->>> lights were even on on in Venus.
->>
->> I must admit, I basically checked that the firmware starts up. Marc
->> Gonzalez worked on enablement of Venus on MSM8998 (on the freebox), so I
->> didn't perform a thorough check.
-> 
-> If you got the FW starting up, that is farther than I expected.  I
-> must be wrong about the capabilities then.
-> The DT node looks right to me.
+On Mon, 28 Apr 2025 at 16:17, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> On 25-04-28 14:47:04, Johan Hovold wrote:
+> > On Mon, Apr 28, 2025 at 11:06:39AM +0200, Aleksandrs Vinarskis wrote:
+> > > On Mon, 28 Apr 2025 at 09:45, Johan Hovold <johan@kernel.org> wrote:
+> > > > On Thu, Apr 17, 2025 at 04:10:31AM +0200, Aleksandrs Vinarskis wrote:
+> > > > > Recently added Initial LTTPR support in msm/dp has configured LTTPR(s)
+> > > > > to non-transparent mode to enable video output on X1E-based devices
+> > > > > that come with LTTPR on the motherboards. However, video would not work
+> > > > > if additional LTTPR(s) are present between sink and source, which is
+> > > > > the case for USB Type-C docks (eg. Dell WD19TB/WD22TB4), and at least
+> > > > > some universal Thunderbolt/USB Type-C monitors (eg. Dell U2725QE).
+> > > >
+> > > > Does this mean that the incomplete LTTPR support in 6.15-rc1 broke
+> > > > adapters or docks with retimers in transparent mode?
+> > >
+> > > I am actually not 100% sure.
+> > > - If without LTTPR initialization, they default to transparent mode,
+> > > then yes, incomplete LTTPR support sets them to non-transparent
+> > > without per-segment training and breaks docks with retimers, while it
+> > > would've worked if LTTPR(s) would've been left in default transparent
+> > > mode. Note that in this case, X1E devices with ps883x are somehow an
+> > > exception, because without LTTPR initialization at all the training
+> > > always fails.
+> >
+> > Right, I'm concerned about breaking working setups for users of machines
+> > like the X13s.
+> >
+> > > - If LTTPR has to be initialized either way, and explicitly set to
+> > > transparent mode if we do not want non-transparent, then no,
+> > > incomplete LTTPR support in 6.15-rcX did not explicitly break docks
+> > > with retimers, as those never worked in the first place. As per my
+> > > understanding, this is the case, unless something (firmware?) has
+> > > already placed LTTPR to transparent mode before the driver takes over
+> > > - then 1st case would be applicable.
+> > >
+> > > Docks with retimers do not work in 6.15-rcX, but I am unable to verify
+> > > if it did work before, as I do not have a Qualcomm based device
+> > > without LTTPR on the baseboard.
+> >
+> > Abel (or anyone else), do you have one of these docks that you could
+> > test with the X13s to confirm whether this series fixes a regression or
+> > not?
+>
+> Before the support for LTTPRs has been merged, if you would have one of
+> those docks (I do not own one) with LTTPRs, link training would've just
+> failed if the LTTPRs were not by default in transparent mode, which IIRC
+> is what the standard dictates.
+>
+> X13s doesn't have LTTPRs on-board so when reading the caps, LTTPRs count
+> would return 0 and none of the of the transparent/non-transparent setup
+> would happen. Now, as already mentioned, DP would be considered already
+> broken (or rather not supported) if you would connect a dock with LTTPRs in it.
+>
+> With the support in, if one such dock is used, the training should be
+> successful as all LTTPRs are set in transparent mode. This I was not
+> able to test myself as I do not own such a dock.
+>
+> >
+> > > > You describe at least one of this patches as a fix but I'm not seeing
+> > > > any Fixes tags or indication that these need to go into 6.15-rc to fix
+> > > > a regression.
+> > >
+> > > You are right, I will add Fixes tag to the 1st patch to make it clear:
+> > > Fixes 72d0af4accd (drm/msm/dp: Add support for LTTPR handling)
+> > >
+> > > Or should I mark the entire series with Fixes, so that the docking
+> > > stations with retimers can be fixed in 6.15 already? Landing only the
+> > > 1st patch will fix inconsistency with DP spec, but will not fix
+> > > docking stations with retimers. I guess this comes down to whether
+> > > existing LTTPR (but not multiple LTTPRs) support is considered a bug
+> > > (and patches 2,3,4 are a fix) or lack of functionality (and patches
+> > > 2,3,4 are a new feature).
+> >
+> > Indeed. If LTTPR support broke existing setups, then I think all should
+> > be marked with a Fixes tag and merged for 6.15. If we can't get it into
+> > 6.15 we may consider just disabling LTTPR support in 6.15 to address the
+> > regression and then enable it again once fixed in 6.16.
+>
+> The LTTPR support did not break existing (working) setups because on these
+> setups, LTTPR count would read 0 and would be basically a no-op.
+>
+> >
+> > But if this series is just enabling support for docks (and USB-C ports)
+> > that did not used to work, then I guess this can all wait for 6.16.
+>
+> I'm not sure about what this actually fixes. It might be that is
+> specific to a dock or something. But as far as X Elite boards go, even
+> without this "fix" display has been working fine.
+>
+> The change itself makes sense though and I think makes sense to be marked as a fix.
 
-If PIL accepts it, it's basically good to go
+Just to confirm, you mean to mark as fix only the 1st patch, correct?
+Since it's obvious now that the currently present partial LTTPR
+support did not break anything that used to work.
 
-Konrad
+Thanks,
+Alex
+
+>
+> >
+> > Johan
+>
+> Abel
 
