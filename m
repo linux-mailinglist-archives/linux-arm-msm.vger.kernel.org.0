@@ -1,270 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-55981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9394CA9FB9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 23:08:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29F00A9FBFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 23:13:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E44E54671DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 21:08:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B4F695A19A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 21:12:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45B7B1FDE01;
-	Mon, 28 Apr 2025 21:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 940BB1E1A3B;
+	Mon, 28 Apr 2025 21:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="VtHtO3s8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KpVk4me6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4891F872D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 21:07:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3319210186
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 21:08:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745874457; cv=none; b=Y+3zVW9p6+L+96YjOxL9A68igD6BJQhcgpdxX4PfVc3Jjh4hr21b1T+TC8hLd2NMedzJETY/G2MBG7eiucmFW7u7QGmi2RYwq/QOTjkTCK43XhArS4XBcGqlMj6Kd6ydH7JSrRvF9O243GqljwWZubn2F+C5SYEqMVqehD826w0=
+	t=1745874529; cv=none; b=KXvO4T/UzStmTcBiB5p1m3E2+XbAWfb1W4LbCUS2p51Cmem6sciQH+YpWsLP0Odz73CCx7Hta54dyG0MJP5dtXNc3cN0CGe1LbhFWJ+uAmAJ/8W3wunlZHO9BQh2xYzHq1mzqkX8GAsPdB0Q+zyq2TRTrHybyNb751ImnsI5Q8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745874457; c=relaxed/simple;
-	bh=sehDf/wz1Jc2NfNVJoDIU1m599/TWswRXczsp9U/qmw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PcXNKd1kn+kA0ySEGURzcWC63BrM+4ggdnt5QsyjwW5GMkBSfakJN0VeeImMMv/G4NADopC0Yfboi5tyOChBZy2XEgBT8/Li4w8kq22d1+miMebkeYERFtr0fRHdbcIErwccuMikW9mcqQAGFyasfBeopNZGVe96e9F/QXkmH/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=VtHtO3s8; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7c5aecec8f3so940586485a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 14:07:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1745874453; x=1746479253; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0HZyp8budJTYWJ9MOmTZnBjDzB8PV0g52ckHb+nyRQs=;
-        b=VtHtO3s8DKKH3RXchhMoeBAByYDVwJIqkdpe5K0ftf+MCaWOr/2hJanZJ+xkCk02RX
-         OEBbW4aYwgX3S0+vCQY4kdxbGPlh9Xs4UgViHExwk5E1YnaByHoH+ucU6IIDzZaH3Qd+
-         gcZZDxT5d4mgPh28KT72PWkaSFxGr8hEHrmR0=
+	s=arc-20240116; t=1745874529; c=relaxed/simple;
+	bh=+Mncv3XAM9ZlakZKZDxGcDlDZcBAUXMdFsB21K/amtI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SIuDXNi/ulyWNnvTmiPbh080HSlqVtJySq13MtKnYGHjribwSqygtTYwudYQeLdvLulXmhUQ9CBNIcyN08lu+Jp5Lb55GSq4faXJtZX8Xg8KPHts70soKlyQkQIafsBMV2xSpriG7J2TGCdkS9Lqw/yOz4T5yFm38DWnwzhtwYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KpVk4me6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53SACapv025877
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 21:08:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YIIsicJwTNFSWBak9gbUD+9k9AX9vew+4qjNtRrWd3I=; b=KpVk4me6NdRtUiFS
+	q0u9RAdDQ5YosLHk2ZkzWqdWGobtRyWfBIUmMCq+xUPqunGwJMyhnNrFZNaH7QJ2
+	71VQsTzFoJakmbM8W/3yime/PQXD2WcVVZHLrgm7mK41FFayIZbgojVfD/Jqoh0q
+	hkAhZ5SEpUYG+CvEf0zAq9oWIuzJjPAnxduVwSAXxsyLv76NriXEIE7+NxtmD5y3
+	pJQUoRM2umaupipkCsZ4jJpbIkhtkmrhgU62sCATylOjbIg/kCiP/ZkhIuA+1gby
+	+6YqzX5TvqM7yx3S0wJPszMIVo/nL88m78Sla7psGArtsjcvI+7BFA2fBXuIndQz
+	UGbaoA==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468q322cda-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 21:08:46 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-47ae9ed8511so9894311cf.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 14:08:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745874453; x=1746479253;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0HZyp8budJTYWJ9MOmTZnBjDzB8PV0g52ckHb+nyRQs=;
-        b=KjUmFXlyafj+An/jrtW98SAVBlW/BHiwZf4ViDEt0Z4RaFxYfd60gRv/VeoTtWQoBx
-         kHsszygBOH4jq7oP+xZHLihFJ2UTH3XvraIBNusoUGuNlIRAGlTWSHhWGtCm1gaWYm09
-         Zpdk/+djtMCYYnB47XmFjCuvqznu5W0iUEeWAAbQTntPSnZK5MH7KXJsukaxnKJpfVIs
-         E85L/rVHTH9Vo0quy+wVFHGfo0qLOY+0gQinvo0V7rafsWnU8pfQ4gWnAJmjfCLyCOcU
-         sX9XusEF/o7TjyazIu2Zi3NKaU0sGh+uej2tt5BnKw4hTjl9xjn0RgT+iQrXaMwSM/HA
-         THqw==
-X-Forwarded-Encrypted: i=1; AJvYcCVkn7q/k3+AljIrGK3FOnEM30Erz18Vn5fkSmU0tvpGsfjqLfU6w36Dtc0RwzNjiAi4nZUbussoM4qqbbN4@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQUhkZKBbVarSWErKpLvckE9Zmo1zQnl47xFDiNjNwyu8sF7nR
-	iB/OGimDJi/KjF3gZCZq5QPAWh9AqFISLhCwACP3xIa6xGKX4fqfxgbb39wicNh3wDbwD+MlcH8
-	=
-X-Gm-Gg: ASbGncs7Xvnby19EIdsuActcS8QGNYhPhUlVoYVRVjDYmd8mUv0G1nGG9XsoFvWrdvJ
-	eyUkkIg3etwnCtTmbHm0MB0hFqTG1I5eF+7tQpj3AMY2X0Xf2x9OReeUNYGhPDOSq3VzD1XwqTn
-	8OMSjAjkgad2N3bYp9kCG4U+1pzh9boAaVDsmO2Vj5DKL0uxu0TiNXhrGHVDKYu2xGB/z+Ig2kB
-	9WgpNwsMI4b37jTyodL7fusD6YwQBV21fGDAXngGwX4guMw2igZ4JRXIcFhvJnf+IDc3cj46x3q
-	Zr1I2Q2W4kO+YLK9UEQXLsnuYbk4miStT7j8csicVfqDsILBKs8v8ZqCY4azfqH1TlB7ZF05hEr
-	7qHp8q8kZ0AkAYmViSEg=
-X-Google-Smtp-Source: AGHT+IHsMTtI5lnv3ddq1ORavk+KasFyAdxEIxW8wrPjESq/dWc4kk+ZfC3+Q5n4ejk3OJN4vkh23A==
-X-Received: by 2002:a05:620a:1a22:b0:7c5:4f6f:3d13 with SMTP id af79cd13be357-7c9668bfd98mr1564675685a.42.1745874453199;
-        Mon, 28 Apr 2025 14:07:33 -0700 (PDT)
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com. [209.85.222.170])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c958e9f111sm661597885a.93.2025.04.28.14.07.32
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1745874526; x=1746479326;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YIIsicJwTNFSWBak9gbUD+9k9AX9vew+4qjNtRrWd3I=;
+        b=s/Bn6tinG5qqt1CwKm9+FKioVOadrbtbZ3Vpt7mvr22jHn7hkU9TldK9SHwv+VJYCF
+         vpUURDMRsQLB4TECt3t2pfSk552YAXYxmN1L2YE57SQRiRiv4JLL3yX5oqA6EkPl/pFB
+         HErkH1XJTl9H3BdUuj/CFS72RBMznnyAR6vmgZMq7luZ7PA1FBxoiIXUiym3WbuQtFpU
+         Av/Fkzq2BXpNL0MwIw6rEewQk9TatQTNTcZKeniELHzLps/n7NobsfSFhx1FU8FaXXuv
+         2jmtp0Jx9rA2BH2VDOL+XQqHDFpLNA1ztCp23my1u5Udj5WqQxzJ19RIGysXfD4amX7i
+         BMlw==
+X-Forwarded-Encrypted: i=1; AJvYcCXtXk0lZ7RL18xaVbUwU4UQ3VELLSwD5kRT9EtxlKaumk0egmQ1Ujeze7oST3phqTpSxqkXkYfUGZBMdjk5@vger.kernel.org
+X-Gm-Message-State: AOJu0YygQBpjwTtLnHi5gpe9WR+hdQqPtnGWvD5xNCiO2ZAUKhqkhNeL
+	dgEk/qffQ2TUaxIdGHpc0givymLEbZNJQ/PylnAwx3+BzLj/A7+JBbfGPpBnYlyfIG1hTyCUDT+
+	gjwbZzMjeBGMcWYSu74qxUfiuGOIMXPLfIm21xKvr0gHxQJBb3keOpfs7+oj8Q84f
+X-Gm-Gg: ASbGnctSJXfQvVeRcMaToWBWZV0mhu1vqtSZpDa4zCeFm0VS10MEOUc5r4aNE1pp/bh
+	zthp5BZ52jnJjQAuadSrslPCgi9/uPast+0OU/OYknzxfJBnTTegQMZ/sh0AgjV3+k7yL+GykfV
+	OPYWuUuHpWjzcVqq0Nfm/B0GqrsYvn61ThRhHrCdTblt2nB0cnzbpXgNS9gKgj2/TteRdQd00jo
+	u/wMHc2YeqSzssPt75VCDFuhav9N6grf8/8eT2jC7XZnmuz5DEr+VDXdysELphgwPbuGbRstV/h
+	Onf3Boe97qf4vtEVFMzPr7QBVEOgEW44FWavZqJho6jV50DCnI2zfH6SRjg1o1eQNQ==
+X-Received: by 2002:a05:622a:58d:b0:476:af54:503f with SMTP id d75a77b69052e-48864dbdcefmr3871481cf.2.1745874525647;
+        Mon, 28 Apr 2025 14:08:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGHJmQOmBncqndjrVeMWVQWQwsIs6y5yTdT4lkSfhS7I040Dt4ZL43tltFARnvyaMhT9jbc3A==
+X-Received: by 2002:a05:622a:58d:b0:476:af54:503f with SMTP id d75a77b69052e-48864dbdcefmr3871311cf.2.1745874525320;
+        Mon, 28 Apr 2025 14:08:45 -0700 (PDT)
+Received: from [192.168.65.47] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6e4e7ccbsm689895566b.59.2025.04.28.14.08.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Apr 2025 14:07:32 -0700 (PDT)
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c5aecec8f3so940582885a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 14:07:32 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXhmaAR7JglnGqdrnIWzqrj5KCeE8MlTNLoaJtsmWRYFAaL/xo6C24RuSfKaEcPa12TqnLywzob/zulN1GF@vger.kernel.org
-X-Received: by 2002:a17:90b:2e03:b0:2fa:1a23:c01d with SMTP id
- 98e67ed59e1d1-30a0132e771mr15291417a91.21.1745874002058; Mon, 28 Apr 2025
- 14:00:02 -0700 (PDT)
+        Mon, 28 Apr 2025 14:08:44 -0700 (PDT)
+Message-ID: <bce21a40-566d-4e21-becd-9c899c12a1b7@oss.qualcomm.com>
+Date: Mon, 28 Apr 2025 23:08:42 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
- <20250424-drm-bridge-convert-to-alloc-api-v2-1-8f91a404d86b@bootlin.com>
-In-Reply-To: <20250424-drm-bridge-convert-to-alloc-api-v2-1-8f91a404d86b@bootlin.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 28 Apr 2025 13:59:50 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VmV5yb0HWWGTiKyyC8+WNPJpM7vE9PQGh5_=KPk6+HCg@mail.gmail.com>
-X-Gm-Features: ATxdqUFp3e4vRAA9U9jS3-gUD9FhwChMaNCvlfej-PAqltrXksVDq12UxaUaXqM
-Message-ID: <CAD=FV=VmV5yb0HWWGTiKyyC8+WNPJpM7vE9PQGh5_=KPk6+HCg@mail.gmail.com>
-Subject: Re: [PATCH v2 01/34] drm: convert many bridge drivers from
- devm_kzalloc() to devm_drm_bridge_alloc() API
-To: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Jagan Teki <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Anusha Srivatsa <asrivats@redhat.com>, 
-	Paul Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, Hui Pu <Hui.Pu@gehealthcare.com>, 
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>, dri-devel@lists.freedesktop.org, 
-	asahi@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	chrome-platform@lists.linux.dev, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
-	linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	linux-stm32@st-md-mailman.stormreply.com, Adam Ford <aford173@gmail.com>, 
-	Adrien Grassein <adrien.grassein@gmail.com>, Aleksandr Mishin <amishin@t-argos.ru>, 
-	Andy Yan <andy.yan@rock-chips.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Benson Leung <bleung@chromium.org>, Biju Das <biju.das.jz@bp.renesas.com>, 
-	Christoph Fritz <chf.fritz@googlemail.com>, 
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>, 
-	Detlev Casanova <detlev.casanova@collabora.com>, 
-	Dharma Balasubiramani <dharma.b@microchip.com>, Guenter Roeck <groeck@chromium.org>, 
-	Heiko Stuebner <heiko@sntech.de>, Jani Nikula <jani.nikula@intel.com>, Janne Grunau <j@jannau.net>, 
-	Jerome Brunet <jbrunet@baylibre.com>, Jesse Van Gavere <jesseevg@gmail.com>, 
-	Kevin Hilman <khilman@baylibre.com>, 
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, Liu Ying <victor.liu@nxp.com>, 
-	Manikandan Muralidharan <manikandan.m@microchip.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Phong LE <ple@baylibre.com>, Sasha Finkelstein <fnkl.kernel@gmail.com>, 
-	Sugar Zhang <sugar.zhang@rock-chips.com>, Sui Jingfeng <sui.jingfeng@linux.dev>, 
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>, Vitalii Mordan <mordan@ispras.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: x1e80100: add bus topology for
+ PCIe domain 3
+To: Johan Hovold <johan@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Wenbin Yao <quic_wenbyao@quicinc.com>, catalin.marinas@arm.com,
+        will@kernel.org, linux-arm-kernel@lists.infradead.org,
+        andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        krishna.chundru@oss.qualcomm.com, quic_vbadigan@quicinc.com,
+        quic_mrana@quicinc.com, quic_cang@quicinc.com, quic_qianyu@quicinc.com
+References: <20250425092955.4099677-1-quic_wenbyao@quicinc.com>
+ <20250425092955.4099677-3-quic_wenbyao@quicinc.com>
+ <4bb58766-a080-4351-87f5-79a98219171c@oss.qualcomm.com>
+ <aAt4TBrekUqyTjfi@hovoldconsulting.com>
+ <306ce1fa-be83-4f13-bedd-97a20448d162@oss.qualcomm.com>
+ <aA9jjyBR5DZcSbyQ@hovoldconsulting.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <aA9jjyBR5DZcSbyQ@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=M7xNKzws c=1 sm=1 tr=0 ts=680fee5e cx=c_pps a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=gEfo2CItAAAA:8 a=COk6AnOGAAAA:8 a=jsbeokMXWjskDHubqLoA:9 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22 a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: Sae1J-BZqK24uvbmL_ulj9AczdD5pIW5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI4MDE3MCBTYWx0ZWRfX5vSF3p2zEyrO /kRk4sC3TnsyrbCnUub4tfe1usgfmliB2FAVDIqG2TCDF+1Ljs1yKiQ6cU//eW8gKtEA2QLtk+m sjceoOxbIOr+HFZ9Ur4x/U/QSC1hOm9Z+PU+MWRqep5t2CamvpkNSWbb3AzfO3KomipBoMGGy3T
+ 33WaiFR95weEqG0Up4uXfk/+RoZAcx7Lh6iS982DnFx3xIMgkfqXRZHLdCo4iPNJRGoYOzh5y0r D7MLX+IcAWJy0xxXsRJhzNCqTBrds2I0PcuJJV35EHbva9wZZQuPZnHJa5+nJU3+KqLa0JuE/Fs KbRIAE3jrf9UHr6ufrRfs+6dZ7N2E3POPXNtItMLXlSgaI1I1btb8iBGatQhb5Ka3FPA7yoyBbn
+ kVe7iGQxhbjThFfyFaFMUsKbDPz2lLciyjYcyIh1on4yYnWoUcRJVEwQij9bVMTkmtlnU/DE
+X-Proofpoint-ORIG-GUID: Sae1J-BZqK24uvbmL_ulj9AczdD5pIW5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-28_08,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 clxscore=1015 mlxlogscore=999 spamscore=0 phishscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504280170
 
-Hi,
+On 4/28/25 1:16 PM, Johan Hovold wrote:
+> On Sat, Apr 26, 2025 at 12:44:57PM +0200, Konrad Dybcio wrote:
+>> On 4/25/25 1:55 PM, Johan Hovold wrote:
+>>> On Fri, Apr 25, 2025 at 12:22:56PM +0200, Konrad Dybcio wrote:
+>>>> On 4/25/25 11:29 AM, Wenbin Yao wrote:
+>>>>> From: Qiang Yu <quic_qianyu@quicinc.com>
+>>>>>
+>>>>> Add pcie3port node to represent the PCIe bridge of PCIe3 so that PCI slot
+>>>>> voltage rails can be described under this node in the board's dts.
+>>>>>
+>>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>>>>> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
+>>>>> ---
+>>>>>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 11 +++++++++++
+>>>>>  1 file changed, 11 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>>>>> index 46b79fce9..430f9d567 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>>>>> @@ -3287,6 +3287,17 @@ opp-128000000 {
+>>>>>  					opp-peak-kBps = <15753000 1>;
+>>>>>  				};
+>>>>>  			};
+>>>>> +
+>>>>> +			pcie3port: pcie@0 {
+>>>>
+>>>> @0,0 for PCIe adressing (bus,device)
+>>>
+>>> No, the bus number is not included in the unit address, so just the
+>>> device number (0) is correct here (when the function is 0) IIUC.
+>>
+>> Some DTs definitely have that, but I couldn't find any documentation to
+>> back the syntax up or explain it properly
+> 
+> It's part of the spec:
+> 
+> 	http://www.devicetree.org/open-firmware/bindings/pci/pci2_1.pdf
+> 
+> The first number is the device number and the second is the function
+> which can be left out if zero.
 
-On Thu, Apr 24, 2025 at 11:59=E2=80=AFAM Luca Ceresoli
-<luca.ceresoli@bootlin.com> wrote:
->
-> devm_drm_bridge_alloc() is the new API to be used for allocating (and
-> partially initializing) a private driver struct embedding a struct
-> drm_bridge.
->
-> For many drivers having a simple code flow in the probe function, this
-> commit does a mass conversion automatically with the following semantic
-> patch. The changes have been reviewed manually for correctness as well as
-> to find any false positives.
->
->   @@
->   type T;
->   identifier C;
->   identifier BR;
->   expression DEV;
->   expression FUNCS;
->   @@
->   -T *C;
->   +T *C;
->    ...
->   (
->   -C =3D devm_kzalloc(DEV, ...);
->   -if (!C)
->   -    return -ENOMEM;
->   +C =3D devm_drm_bridge_alloc(DEV, T, BR, FUNCS);
->   +if (IS_ERR(C))
->   +     return PTR_ERR(C);
->   |
->   -C =3D devm_kzalloc(DEV, ...);
->   -if (!C)
->   -    return ERR_PTR(-ENOMEM);
->   +C =3D devm_drm_bridge_alloc(DEV, T, BR, FUNCS);
->   +if (IS_ERR(C))
->   +     return PTR_ERR(C);
->   )
->    ...
->   -C->BR.funcs =3D FUNCS;
->
-> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
->
-> ---
->
-> Cc: Adam Ford <aford173@gmail.com>
-> Cc: Adrien Grassein <adrien.grassein@gmail.com>
-> Cc: Aleksandr Mishin <amishin@t-argos.ru>
-> Cc: Andy Yan <andy.yan@rock-chips.com>
-> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Biju Das <biju.das.jz@bp.renesas.com>
-> Cc: Christoph Fritz <chf.fritz@googlemail.com>
-> Cc: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-> Cc: Detlev Casanova <detlev.casanova@collabora.com>
-> Cc: Dharma Balasubiramani <dharma.b@microchip.com>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: Heiko Stuebner <heiko@sntech.de>
-> Cc: Jani Nikula <jani.nikula@intel.com>
-> Cc: Janne Grunau <j@jannau.net>
-> Cc: Jerome Brunet <jbrunet@baylibre.com>
-> Cc: Jesse Van Gavere <jesseevg@gmail.com>
-> Cc: Kevin Hilman <khilman@baylibre.com>
-> Cc: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
-> Cc: Liu Ying <victor.liu@nxp.com>
-> Cc: Manikandan Muralidharan <manikandan.m@microchip.com>
-> Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-> Cc: Matthias Brugger <matthias.bgg@gmail.com>
-> Cc: Philipp Zabel <p.zabel@pengutronix.de>
-> Cc: Phong LE <ple@baylibre.com>
-> Cc: Sasha Finkelstein <fnkl.kernel@gmail.com>
-> Cc: Sugar Zhang <sugar.zhang@rock-chips.com>
-> Cc: Sui Jingfeng <sui.jingfeng@linux.dev>
-> Cc: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
-> Cc: Vitalii Mordan <mordan@ispras.ru>
->
-> Changed in v2:
-> - added missing PTR_ERR() in the second spatch alternative
-> ---
->  drivers/gpu/drm/adp/adp-mipi.c                      |  8 ++++----
->  drivers/gpu/drm/bridge/adv7511/adv7511_drv.c        |  9 ++++-----
->  drivers/gpu/drm/bridge/analogix/analogix-anx78xx.c  |  9 ++++-----
->  drivers/gpu/drm/bridge/aux-bridge.c                 |  9 ++++-----
->  drivers/gpu/drm/bridge/aux-hpd-bridge.c             |  9 +++++----
->  drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c |  8 ++++----
->  drivers/gpu/drm/bridge/chipone-icn6211.c            |  9 ++++-----
->  drivers/gpu/drm/bridge/chrontel-ch7033.c            |  8 ++++----
->  drivers/gpu/drm/bridge/cros-ec-anx7688.c            |  9 ++++-----
->  drivers/gpu/drm/bridge/fsl-ldb.c                    |  7 +++----
->  drivers/gpu/drm/bridge/imx/imx-legacy-bridge.c      |  9 ++++-----
->  drivers/gpu/drm/bridge/imx/imx8mp-hdmi-pvi.c        | 10 ++++------
->  drivers/gpu/drm/bridge/imx/imx8qxp-pixel-link.c     |  8 ++++----
->  drivers/gpu/drm/bridge/imx/imx8qxp-pxl2dpi.c        |  8 ++++----
->  drivers/gpu/drm/bridge/ite-it6263.c                 |  9 ++++-----
->  drivers/gpu/drm/bridge/ite-it6505.c                 |  9 ++++-----
->  drivers/gpu/drm/bridge/ite-it66121.c                |  9 ++++-----
->  drivers/gpu/drm/bridge/lontium-lt8912b.c            |  9 ++++-----
->  drivers/gpu/drm/bridge/lontium-lt9211.c             |  8 +++-----
->  drivers/gpu/drm/bridge/lontium-lt9611.c             |  9 ++++-----
->  drivers/gpu/drm/bridge/lvds-codec.c                 |  9 ++++-----
->  drivers/gpu/drm/bridge/microchip-lvds.c             |  8 ++++----
->  drivers/gpu/drm/bridge/nwl-dsi.c                    |  8 ++++----
->  drivers/gpu/drm/bridge/parade-ps8622.c              |  9 ++++-----
->  drivers/gpu/drm/bridge/parade-ps8640.c              |  9 ++++-----
->  drivers/gpu/drm/bridge/sii9234.c                    |  9 ++++-----
->  drivers/gpu/drm/bridge/sil-sii8620.c                |  9 ++++-----
->  drivers/gpu/drm/bridge/simple-bridge.c              | 10 ++++------
->  drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c        |  8 ++++----
->  drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c       |  8 ++++----
->  drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi2.c      |  8 ++++----
->  drivers/gpu/drm/bridge/tc358762.c                   |  9 ++++-----
->  drivers/gpu/drm/bridge/tc358764.c                   |  9 ++++-----
->  drivers/gpu/drm/bridge/tc358768.c                   |  9 ++++-----
->  drivers/gpu/drm/bridge/tc358775.c                   |  9 ++++-----
->  drivers/gpu/drm/bridge/thc63lvd1024.c               |  8 ++++----
->  drivers/gpu/drm/bridge/ti-dlpc3433.c                |  9 ++++-----
->  drivers/gpu/drm/bridge/ti-tdp158.c                  |  8 ++++----
->  drivers/gpu/drm/bridge/ti-tfp410.c                  |  9 ++++-----
->  drivers/gpu/drm/bridge/ti-tpd12s015.c               |  9 ++++-----
->  drivers/gpu/drm/mediatek/mtk_dp.c                   |  9 ++++-----
->  drivers/gpu/drm/mediatek/mtk_dpi.c                  |  9 ++++-----
->  drivers/gpu/drm/mediatek/mtk_dsi.c                  |  9 ++++-----
->  drivers/gpu/drm/mediatek/mtk_hdmi.c                 |  9 ++++-----
->  drivers/gpu/drm/meson/meson_encoder_cvbs.c          | 12 ++++++------
->  drivers/gpu/drm/meson/meson_encoder_dsi.c           | 12 ++++++------
->  drivers/gpu/drm/meson/meson_encoder_hdmi.c          | 12 ++++++------
->  drivers/gpu/drm/renesas/rcar-du/rcar_lvds.c         |  9 ++++-----
->  drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c      | 10 ++++------
->  49 files changed, 201 insertions(+), 237 deletions(-)
+OK thank you for clarifying
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org> # parade-ps8640
-Tested-by: Douglas Anderson <dianders@chromium.org> # parade-ps8640
+Konrad
 
