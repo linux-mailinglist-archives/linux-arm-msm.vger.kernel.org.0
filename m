@@ -1,146 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-55902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC687A9ED2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 11:50:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 299C3A9EDBA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 12:17:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D84323ABA5B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 09:46:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 700B71894AE7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 10:18:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55BA725FA29;
-	Mon, 28 Apr 2025 09:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C72B79F2;
+	Mon, 28 Apr 2025 10:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KfL2A6KF"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RpjNWBCQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB0525F780
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 09:40:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1DC1AF0C1
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 10:17:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745833220; cv=none; b=SU4/F9Nrb9wJLD51zvQn6WCsNmq26K7bN0HlUgjn+xb7h72ONHe0f8u9bDpFcmVabraTw5RoVz2an1X/uGuRWBV0WDKCyjjwPpoRfwacKXBaVaLiGAgt+uT/Ht7t13Gn/5VD8mFWibn2VZu8GSfdlDyGoY6/OV9bdiwBDn+2Qkc=
+	t=1745835469; cv=none; b=O0JdgIGYstNOIKrrqiEYmdBiihjXRWq0ZjLZh8PaiWqO65+rQ7QpmzMclCQY3V/S7nHBBvYKKNMG21zdGboYSDEAGiz2qo9LCAp4bywFlTOcnZ85QKREY5tNyLiqoH9fgPezCeKrOp1RESlNs2KGByYziSFr70QEkgKCEXfQSSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745833220; c=relaxed/simple;
-	bh=p4kNQdwzmDnZta4PbgZFZq/U7oDnPl8MzQlY6H2Scpg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T1aW2dhgI8j+tHuvJhzPv+Sn7zcOXhSQOgdvjML7QjnX423H3Az8mJSelWLmkeaApVAouPN/SLkcMUedNbT0efKX46hqbIOYHfyYAxCKsc2EavbGC3LvmMfhkdI7rLRjnPezVQ7ujh2wz5TVYmgkJqU4BB7hhRJIHCjiAMY7ftc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KfL2A6KF; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-39ee682e0ddso3050825f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 02:40:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745833216; x=1746438016; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/tZd4Ypk5BJk00OTo7JvTXUhxLykKpGhTfHWhdUsfHI=;
-        b=KfL2A6KFL3AMx8D59wiXmSEln9e363SZI7GhY2v0eq0EjdfZk2Ru6wFuUIFTmv6yFV
-         B3NXKlGnXjtPBtp/kaFtMVovlJ1xbqOY9V28wpsZh/+YSMgScR+4GkGkDtqSt29dqrSX
-         MK4eXdXV7s86RvywP+QLar1+/rOHHe52egXH/hcJZFl/E7mmoowGtBDmMe5imkx8shl6
-         rmN3kr8hLVJTSbMi1ajwQl1cPkjkRzE3T6ljayNsdJA0nwkGHjYhbV+pcPJqFazMB2Qa
-         BbzSZOnGcn8OFmDMQHvOHW6JCeA8dRXc5V9V/UMrXh0xxHq5XzsgngPJLXoTDXgTAqdp
-         pUZw==
+	s=arc-20240116; t=1745835469; c=relaxed/simple;
+	bh=y1hiKClkkEJlEYkzZmsa+w8bv94l15Lipgs60J8J1mc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mcEienaWUnemro7qfvGPkaPTlkcpG5JfEUxw82J+sEETR/n9As6NllIcbYn0+Wdv/qVkHLKsaFyAxVgpqJM9LGxvfQoOGqJiZxIZ/m1CgWgICjWaXPM1wExu+rlk6JTashW9TTSLY3teZCMITQmRqID8GPzS++G0Ui2mSq0RVp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RpjNWBCQ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53SA52Ts014536
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 10:17:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=2Pxtv8aSr8lPsn9szEAcL96+
+	tyHoCynhCC+imycmD8E=; b=RpjNWBCQghFnkVznLenbzGQ7FGNRi4epvrMeyjVF
+	nEr/tyfianNYxVaNMuotOAp/T8tX6J3Y94/rNtdLETf3cR4mU+2P3H4ZQG6x1KVc
+	eQS/tEFyEnZyj8NHPvptz274q7rNSLw6hkz+1reFFHCXEH+pFbf4/MCySR7kdaud
+	M8I+GUhLM7IJrSDyYT4gAykLYuYJZUV8gAjyNqku27Bv+YNQrFEdmCowpKE1YXQA
+	B3AtMGkLgPb4pdh02QvKM/sdDqStEkVr+4uwIFMum+E1b1+dDYXNBe6sI2l6GRVK
+	XLiFcNcOgnLd1D8RZ4ymS9nMS1Qdp+qdC9rF3h19Dainhg==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468qjwrrhc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 10:17:34 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3055f2e1486so6449959a91.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 03:17:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745833216; x=1746438016;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/tZd4Ypk5BJk00OTo7JvTXUhxLykKpGhTfHWhdUsfHI=;
-        b=KrLc08XhsakvzPEgXYOHpm89FTLXuEq4uGcTE8qP+lrh3DNBG7D0QJu8aRdWojEbxA
-         gB0PFmvvdn1VAOiDQjsWrqvv1aJhOMVCJONGiAzPZmCTkfh6KnsKi1mdeF9GPtMJGDZK
-         QBc0ovoTffUmKgUzby4egUMVdU9Nn/mDWzxbZrSSUVL3bMYagoBXyU8jEt9aUDJDjPOL
-         rkiVWOxzspYBw1CqkWi6pXm1HB7duVqyUCqIed+R2bK+03FKipS3kcjsvIts9O9paqRS
-         PWvPmN3ZzbNS3w3ATiKJgLDoTfWceYIKks759GCMqxHMy4m7H9NCs6kAOUsGTRYZ5u7i
-         FcIA==
-X-Forwarded-Encrypted: i=1; AJvYcCX5ebo62/EqZA2dtlAipGOR474YuCIOiZYTuH2RM7fiqXekvVL4/NWjJbmjMOt++kyWfX0hvvdaNNNRc1X1@vger.kernel.org
-X-Gm-Message-State: AOJu0YxKo5jgQgfCcH8VwYf2mx+o3MU0rHOcxzggA92iGOW66/sucNT0
-	+qf5dA3BZ1nXY5Bk2NB3DI4H9zm2iaIKakii+7jx1HiaoOtuIkGdTkTHFUfOloI=
-X-Gm-Gg: ASbGnct7GexlRE2GMTdqDdY8VzbAmnVHNXQFLAzR6YhiLNgOFTglYRin6cJ7HBd0lGZ
-	IcN+a5k8ekQ0b0LghnBAKmtCS//5BpI3ThnH6WTnti0CIXr461bm8wOAdYgAXctsne4x/yWyZrj
-	PHa1EsQULp88FnLsOt8cklxLd25T3irgzOW9x7SGp/BlpsWSmkZqV+A7QTXmK07wQC9jNvwa0yX
-	eTmmI760ZaEp7wxOSo124KOdKcea1G74L5O2o+Cmn7v1wtvOKlTyj3tXBltmfke1PvgwS/B/NTI
-	+3/v0CM/96swWMahHS3Bsi8fyPrZo1RuGLI0CGMfWGzTwg==
-X-Google-Smtp-Source: AGHT+IEmllBzyXjLLf+kiGyB+WclUcZwpuBSk7Lzu0+1JVWeTqkNy2mJ6U8hjuYfUNsLgR1qBxihEA==
-X-Received: by 2002:adf:ec87:0:b0:39c:1257:c96f with SMTP id ffacd0b85a97d-3a07adb1766mr4500559f8f.59.1745833216549;
-        Mon, 28 Apr 2025 02:40:16 -0700 (PDT)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3a073ca543bsm10716844f8f.34.2025.04.28.02.40.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Apr 2025 02:40:16 -0700 (PDT)
-Date: Mon, 28 Apr 2025 12:40:12 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Stefan Schmidt <stefan.schmidt@linaro.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	20250417-topic-sm8x50-iris-v10-v7-0-f020cb1d0e98@linaro.org,
-	20250424-qcs8300_iris-v5-0-f118f505c300@quicinc.com,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2 14/23] media: iris: Fix NULL pointer dereference
-Message-ID: <7f37ec27-0221-4bb2-91f9-182244014b5a@stanley.mountain>
-References: <20250428-qcom-iris-hevc-vp9-v2-0-3a6013ecb8a5@quicinc.com>
- <20250428-qcom-iris-hevc-vp9-v2-14-3a6013ecb8a5@quicinc.com>
+        d=1e100.net; s=20230601; t=1745835441; x=1746440241;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2Pxtv8aSr8lPsn9szEAcL96+tyHoCynhCC+imycmD8E=;
+        b=cf1O3CFMn4EeVbn2fk4e8wSl8u69lNB8pkJpVhqvcaEHbC/WvkdY6EL+uWMX22dwUY
+         9/GCvb2/wGX993ndYjAr4MQ6E7wWnONvuiMNjA4QuIPwAbjsaHz1Ltm5ydbGKnAjOrmv
+         v2ZIPxKMVeCgVoBR8qT+9CmXgjCzM4Ew9ylHrWznHTiBwwV72HDhZOhb+Pf3rYskh3zm
+         qeVQUYQkn/csLKkGw8AV/K9OFLjewGgAvWTBQWDTqTTWWkvmPpa1sjBl3ApDNPNjxGFr
+         iU4QEhzmEA/NKNulHIgCjr558AZC/jOXasYOh8Y9BmOEDX+0N4w18Dnk2LyGcG1Bx45n
+         KXmw==
+X-Forwarded-Encrypted: i=1; AJvYcCVnLr4ohZ9pbT78WtKKCeBr/9BSb6n1+4Fdgk6Qp/m5HVuqANzrMq11GxXdIF9WdK/0YHUgvr99TejCdPUb@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTVDFiFZ5mTGx7/dBsH5sHopaDPNJ2oQeYd5XweFJyP0YnXS3/
+	0/H7yZQfnhDzfsVL9ekIG61jxgLfKBbJ1IFvhsznpyFJbRAuAka7Ltw7JW0gf6cu8ypG7EhkFTI
+	lOICjtLU8EA623h51qg9JEQpCFt3Jq5BRslqkk13mDtOBp3wviz6BnRnfCfaCoM2Tmu0c/KkYI4
+	kk+9XAHrl/lFohU380jC8U2XQBI8J5j2Glfmxrk+o=
+X-Gm-Gg: ASbGncuMSZcRetzSdrEMBVgiOLFz5blmPQ+RCrSa9AdhEb5fFwGVzZKf1FdvrtX9ulG
+	efYODnVmTrq39/I15Cypip2UJLy5mEFiODNgcyzTD4VZqG25y51ckOCM2hu7eHm9QkMACVxsb0I
+	7t+7VbgLoK9nBXqZn+bC5376Uo
+X-Received: by 2002:a17:90b:2247:b0:2fe:baa3:b8bc with SMTP id 98e67ed59e1d1-30a013b0fe9mr10022799a91.23.1745835441423;
+        Mon, 28 Apr 2025 03:17:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEIaELZcY1AshO25NA0l+ttmZJfXNfsi/nEo/9o06JBJB434i2TbdXrkARPRYRTyvmK6A6cuZ9Wjsgk5Ys7NMc=
+X-Received: by 2002:a17:90b:2247:b0:2fe:baa3:b8bc with SMTP id
+ 98e67ed59e1d1-30a013b0fe9mr10022761a91.23.1745835441054; Mon, 28 Apr 2025
+ 03:17:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250428-qcom-iris-hevc-vp9-v2-14-3a6013ecb8a5@quicinc.com>
+References: <20250425-fix-nexus-4-v3-0-da4e39e86d41@oss.qualcomm.com>
+ <20250425-fix-nexus-4-v3-6-da4e39e86d41@oss.qualcomm.com> <3094b6e7-0de9-43a3-9678-4b1844aa600c@arm.com>
+In-Reply-To: <3094b6e7-0de9-43a3-9678-4b1844aa600c@arm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Mon, 28 Apr 2025 13:17:09 +0300
+X-Gm-Features: ATxdqUEUcpx2-hktcO21OhqmqQqXyNUMMYDgeGivjswWKla-vpUY9os7A0P_Tug
+Message-ID: <CAO9ioeXhFOn=YPt0+zA_C1WRcXQJheLo-nkVDUk0+87+0YM=NA@mail.gmail.com>
+Subject: Re: [PATCH v3 06/11] dt-bindings: arm: arm,coresight-static-replicator:
+ add optional clocks
+To: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+        Lee Jones <lee@kernel.org>, Mike Leach <mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Leo Yan <leo.yan@linux.dev>, David Heidelberg <david@ixit.cz>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-ORIG-GUID: _tMZV0RE0gFJdOR_H8OQNFI7U_yT-N_3
+X-Proofpoint-GUID: _tMZV0RE0gFJdOR_H8OQNFI7U_yT-N_3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI4MDA4NSBTYWx0ZWRfX9s0p3NwXuyXb Fp7luKmpBKkSzK7Y6vTxug62LcDeexotGH8Dwrb1U5l3SIdvh/obnRfrlLPvHQ6DOjk4KW2FuWA QPO7wfvo1EA+3qCYJrLQ1aPx2ZlrDgoQUlVZ8eyVBUlw+cJdta60YEu4cfjwR8+1kwEK/7LsaXF
+ YK0FwTcI6L77APQyTBofVmPp2vbtRUWBGu+xuw4cgxCixXkLlQ6R8+ZacvKe0OoGlNNlT3IEbeN OAjca+Jxty3PTrLk1/Z9b0QBBHZLPb0TVNsQXkneXdMLx+wYIxus0Q1r7kzjxFQfU609ldLp6+x HrXDMLV6x+N9JjAu4T63g8SoyYznrioLax2BD6eRd0prEsnXtk4y4z8O8DGXOVPqo+kZYIxQKSk
+ 8Od6r0G4gZTP/ObJoKZSH5ohqbmpVgJjFT9ogiKr2SfxDnuwpJ/x+OCu24E0XhMO2FLwsILk
+X-Authority-Analysis: v=2.4 cv=c/urQQ9l c=1 sm=1 tr=0 ts=680f55c7 cx=c_pps a=0uOsjrqzRL749jD1oC5vDA==:117 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=7CQSdrXTAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=m05Zng2Y9WU2dLnq8PUA:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22 a=a-qgeE7W1pNrGK8U0ZQC:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-28_04,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
+ phishscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0 malwarescore=0
+ clxscore=1015 spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504280085
 
-On Mon, Apr 28, 2025 at 02:59:02PM +0530, Dikshita Agarwal wrote:
-> A warning reported by smatch indicated a possible null pointer
-> dereference where one of the arguments to API
-> "iris_hfi_gen2_handle_system_error" could sometimes be null.
-> 
-> To fix this, add a check to validate that the argument passed is not
-> null before accessing its members.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: fb583a214337 ("media: iris: introduce host firmware interface with necessary hooks")
-> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-> Closes: https://lore.kernel.org/linux-media/634cc9b8-f099-4b54-8556-d879fb2b5169@stanley.mountain/
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
->  drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-> index 1ed798d31a3f..cba71b5db943 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-> @@ -267,7 +267,8 @@ static int iris_hfi_gen2_handle_system_error(struct iris_core *core,
->  {
->  	struct iris_inst *instance;
->  
-> -	dev_err(core->dev, "received system error of type %#x\n", pkt->type);
-> +	if (pkt)
-> +		dev_err(core->dev, "received system error of type %#x\n", pkt->type);
+On Mon, 28 Apr 2025 at 12:06, Suzuki K Poulose <suzuki.poulose@arm.com> wrote:
+>
+> Hi Dmitry
+>
+> On 25/04/2025 18:47, Dmitry Baryshkov wrote:
+> > As most other CoreSight devices the replicator can use either of the
+> > optional clocks. Document those optional clocks in the schema.
+> > Additionally document the one-off case of Zynq-7000 platforms which uses
+> > apb_pclk and two additional debug clocks.
+>
+> What is the plan for merging this series ? I am happy to pick this patch
+> via coresight tree.
 
-I feel like it would be better to do:
+Please pick up coresight-related patch. Each of the maintainers is
+expected to pick relevant parts.
 
-	dev_err(core->dev, "received system error of type %#x\n", pkt ? pkt->type: -1);
+>
+> >
+> > Fixes: 3c15fddf3121 ("dt-bindings: arm: Convert CoreSight bindings to DT schema")
+> > Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>
+> Otherwise,
+>
+>
+> Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+>
+> Suzuki
+>
+>
+>
+> > ---
+> >   .../bindings/arm/arm,coresight-static-replicator.yaml       | 13 +++++++++++++
+> >   1 file changed, 13 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
+> > index a6f793ea03b6c193fc0ff72a45e0249a63a2ba3c..0c1017affbad2f03892b250ad864d9a5dc8d02f1 100644
+> > --- a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
+> > +++ b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
+> > @@ -30,6 +30,19 @@ properties:
+> >     power-domains:
+> >       maxItems: 1
+> >
+> > +  clocks:
+> > +    minItems: 1
+> > +    maxItems: 3
+> > +
+> > +  clock-names:
+> > +    oneOf:
+> > +      - items:
+> > +          - enum: [apb_pclk, atclk]
+> > +      - items: # Zynq-700
+> > +          - const: apb_pclk
+> > +          - const: dbg_trc
+> > +          - const: dbg_apb
+> > +
+> >     in-ports:
+> >       $ref: /schemas/graph.yaml#/properties/ports
+> >       additionalProperties: false
+> >
+>
 
-regards,
-dan carpenter
 
+-- 
+With best wishes
+Dmitry
 
