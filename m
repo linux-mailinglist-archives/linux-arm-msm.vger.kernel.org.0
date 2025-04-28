@@ -1,218 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-55934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 572B8A9F5E9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 18:34:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BAFC9A9F656
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 18:58:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A1770189F20F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 16:34:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10A1F1896D0C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 16:58:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C25DA27A93B;
-	Mon, 28 Apr 2025 16:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34E342820DA;
+	Mon, 28 Apr 2025 16:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="A5vI5CPA"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IdOZ+oVs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C4827A911;
-	Mon, 28 Apr 2025 16:34:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2FC4CB5B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 16:58:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745858064; cv=none; b=Mms5IfFIfarjxhqpJPgwaM9KUWso023a04/qlaDKOzzGuR5xAjuBIoMbwBfSWywhYcKX91ul1l+vJr1FOJqszWCQZDtJhvZNBYI5cYhUdig8qzLu+PCq7vYw/WquK6Q91Hvy7XzWiNWU3Xm9gr4Z/kWd4CTOL9xFfE5Fc/Wy32U=
+	t=1745859491; cv=none; b=ACC1E6UJhxUGsr7/ZkA9zD/KiPncxMLHL6EWTo6+29eyeyaGCPiEPz4FRnotSggHDj/udCOwnMxeetlyKCKMAQbutimKc5dEQKbSaFouYqwQmdUyYSVFr4ZckqIjAHtxufAGPXB2dErfU7O7ZMcoXKeer4DKYAyYFj/tzUU3/SM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745858064; c=relaxed/simple;
-	bh=XWL8UolMeNZmPHHotkwGV8h0TGYlW+ze8mtg/kLlngg=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BN9+zEaAx4wJj9rvWGWrfCFvOt+uLygC6hjPTZvjfOP2sCD3mmKlyjBGFrKDWE5wYZy9vnDWLW7QvvHNR7yC9BBWWPjWLQ43H3mr0QcT7MiggKkGB6F0r+zndcedKRK8Bzl6B3ui+TddAtLOxQ4u8WMUXVTnOYy+D3mkbP5532M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=A5vI5CPA; arc=none smtp.client-ip=217.70.183.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id F39DA43962;
-	Mon, 28 Apr 2025 16:33:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1745858053;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0+W4uodyxoQUQ7gTcLqHUOqlDvIcEkj4yx+1gWHy3Mc=;
-	b=A5vI5CPAhG7Ec31vAslCrct99yDYQUT4yEVpjGag1L5A3ypdDOeM06X6a2NpNi4YWnE6mC
-	2NyQNklaS4GH5N+Y0O0KorENjPo6XmIKRUe43hr2bljZ9KcS30qPhwmXIPUFXXOTPm5XIu
-	n26mA6Au7+KoHn580KonEgnc/bZs1s5A97JkVcqC4ISpJzXNYjj+t+twS22sMPY2EzjhQZ
-	iio59hjvBN4KHAeTHadmXNHM9e/08/R+WKLujQCoy1O7rhd/OkZ8uYxTFLAP+7H0ewrqHT
-	6PMrAxpgk6up77rZyTiJAqPjC9S4tcckhsI1eEGu3LR+due+PAeNxJSMadl6Qw==
-Date: Mon, 28 Apr 2025 18:33:58 +0200
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-To: Maxime Ripard <mripard@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann
- <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter
- <simona@ffwll.ch>, Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong
- <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, Laurent
- Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman
- <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki
- <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
- <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Douglas Anderson
- <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, Krzysztof
- Kozlowski <krzk@kernel.org>, Anusha Srivatsa <asrivats@redhat.com>, Paul
- Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, Hui
- Pu <Hui.Pu@gehealthcare.com>, Thomas Petazzoni
- <thomas.petazzoni@bootlin.com>, dri-devel@lists.freedesktop.org,
- asahi@lists.linux.dev, linux-kernel@vger.kernel.org,
- chrome-platform@lists.linux.dev, imx@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- linux-stm32@st-md-mailman.stormreply.com, Adam Ford <aford173@gmail.com>,
- Adrien Grassein <adrien.grassein@gmail.com>, Aleksandr Mishin
- <amishin@t-argos.ru>, Andy Yan <andy.yan@rock-chips.com>, AngeloGioacchino
- Del Regno <angelogioacchino.delregno@collabora.com>, Benson Leung
- <bleung@chromium.org>, Biju Das <biju.das.jz@bp.renesas.com>, Christoph
- Fritz <chf.fritz@googlemail.com>, Cristian Ciocaltea
- <cristian.ciocaltea@collabora.com>, Detlev Casanova
- <detlev.casanova@collabora.com>, Dharma Balasubiramani
- <dharma.b@microchip.com>, Guenter Roeck <groeck@chromium.org>, Heiko
- Stuebner <heiko@sntech.de>, Jani Nikula <jani.nikula@intel.com>, Janne
- Grunau <j@jannau.net>, Jerome Brunet <jbrunet@baylibre.com>, Jesse Van
- Gavere <jesseevg@gmail.com>, Kevin Hilman <khilman@baylibre.com>, Kieran
- Bingham <kieran.bingham+renesas@ideasonboard.com>, Liu Ying
- <victor.liu@nxp.com>, Manikandan Muralidharan <manikandan.m@microchip.com>,
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Matthias Brugger
- <matthias.bgg@gmail.com>, Philipp Zabel <p.zabel@pengutronix.de>, Phong LE
- <ple@baylibre.com>, Sasha Finkelstein <fnkl.kernel@gmail.com>, Sugar Zhang
- <sugar.zhang@rock-chips.com>, Sui Jingfeng <sui.jingfeng@linux.dev>, Tomi
- Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>, Vitalii Mordan
- <mordan@ispras.ru>, Ilpo =?UTF-8?B?SsOkcnZpbmVu?=
- <ilpo.jarvinen@linux.intel.com>, Bryan O'Donoghue
- <bryan.odonoghue@linaro.org>, Hans de Goede <hdegoede@redhat.com>, Uwe
- =?UTF-8?B?S2xlaW5lLUvDtm5pZw==?= <u.kleine-koenig@baylibre.com>, Dmitry
- Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, "Rob Herring (Arm)"
- <robh@kernel.org>, Hsin-Te Yuan <yuanhsinte@chromium.org>, Pin-yen Lin
- <treapking@chromium.org>, Xin Ji <xji@analogixsemi.com>, Aradhya Bhatia
- <a-bhatia1@ti.com>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Ian
- Ray <ian.ray@ge.com>, Martyn Welch <martyn.welch@collabora.co.uk>, Peter
- Senna Tschudin <peter.senna@gmail.com>, Russell King
- <linux@armlinux.org.uk>, Herve Codina <herve.codina@bootlin.com>, Alim
- Akhtar <alim.akhtar@samsung.com>, Inki Dae <inki.dae@samsung.com>, Kyungmin
- Park <kyungmin.park@samsung.com>, Seung-Woo Kim <sw0312.kim@samsung.com>,
- Linus Walleij <linus.walleij@linaro.org>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Bjorn Andersson <quic_bjorande@quicinc.com>,
- Marijn Suijten <marijn.suijten@somainline.org>, Rob Clark
- <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Helge Deller
- <deller@gmx.de>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
- Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, Alexandre
- Torgue <alexandre.torgue@foss.st.com>, Maxime Coquelin
- <mcoquelin.stm32@gmail.com>, Philippe Cornu <philippe.cornu@foss.st.com>,
- Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>, Yannick Fertre
- <yannick.fertre@foss.st.com>, =?UTF-8?B?TWHDrXJh?= Canal
- <mcanal@igalia.com>, Dave Stevenson <dave.stevenson@raspberrypi.com>,
- Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, Alain Volmat
- <alain.volmat@foss.st.com>, Raphael Gallais-Pou <rgallaispou@gmail.com>,
- Michal Simek <michal.simek@amd.com>
-Subject: Re: [PATCH v2 00/34] drm: convert all bridges to
- devm_drm_bridge_alloc()
-Message-ID: <20250428183358.4d28ca6a@booty>
-In-Reply-To: <20250428-colossal-fiery-alpaca-8c5fee@houat>
-References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
-	<20250428172457.23e23df5@booty>
-	<20250428-colossal-fiery-alpaca-8c5fee@houat>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1745859491; c=relaxed/simple;
+	bh=YSeVqFWSmHRlY82kAc4UdpGrchvhVoaT0/8dOhC5OVA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sr/koV3ysHD9OJ65IFsNKLNqNR1LN/9fXqsyDfGhDKEgac4z6ZAn20v1xCjVGZJEoHpqKEtw93pbN3C0Bq7IWCJgTjUlFucrfX3lA09ULIYwtpBAf9VGQd3BITnkb02d0rPBkDidy97NGlMw+pTJkLB0lad5Ub0B6S0rX0d5MHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IdOZ+oVs; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53SAA2op015874
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 16:58:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	7KOxMBghG49ujEPEi5RVfYFnHI2kUQYWCNuShHnCHt0=; b=IdOZ+oVs0lC3myS9
+	Q+wyYiXJ1NOdOBa7GQCV6l1OYUz2b74IR/nf8eStr4rcOFCkQ42p5fT8NbpUZfB/
+	GVacD/X39+RbHfiiM+WoEhFsEvLyea/Q6dNGxbdEvxA57b+csH+Fy2wwRHVmczDi
+	lvK9PacmAt/erHVoMr7PTbaQs+lnZKgvqpjOCQs0SFfm1er6C58xnSnywj2h3SA1
+	eD+H9WgAdzwNmUklxeIXkO/dmIiB3eJHe9PrwvzlS2i0t8wZtcvU77B9GW0+zPZ6
+	HQOia46uxqe/Lr5yjiOW6toguxmCccxYbPxNN/BCtca8Uz+UZR1ZHYT0IkeEjw90
+	cJhQTg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468pg99v9a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 16:58:08 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c955be751aso853725685a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 09:58:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745859487; x=1746464287;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7KOxMBghG49ujEPEi5RVfYFnHI2kUQYWCNuShHnCHt0=;
+        b=dV2tXnB4/F2HrnqsG80clBgfxnDG+iTwBB7DVWNB4bHXR5x2u2rPMBb46y7bDVs1KK
+         +1r4CVtKc7LoEh9qmfqJHTYXUdBXwkkGsGXBu2SnujpTF0wrfRuGfWr0r6qnZ5jLLfBW
+         otVhltrGsbkGMr2giy8JCKi6mfPxHyS7En0CpZpjug7mnXe01IGT3kaQ80mNbt4HNPpB
+         +qSqk2nOzVsXhXlBV/6MA3xNFtd/4VL8/sfgmKJpuDBFCzOKAbypdCFIXBl28kCzURrw
+         A4YctnnajhdA+QLuRPJin/CbgXr+iWM/BBJ8ZpjOhnzgEwDdnPEdfM+JjQsQvPXRpBm1
+         FNhg==
+X-Forwarded-Encrypted: i=1; AJvYcCUfN8iE/mubhz0RP2P7+IHoE3oPhiiWSC2oqTZsO7TH9WbXXvbNEy1RpUqM34mLSr1t7XnJ+JxS0lCnhK5H@vger.kernel.org
+X-Gm-Message-State: AOJu0YyHhqCj7QK57rGiAUWk2v+8PDf6Wq9C6W14b7yk+0Cxr84pLq5n
+	m+WaEyKAlIaPLDgjsCmgaiMlW2otMTYaZSZwpg2/d4jREQI/w0kiAIw6f51ilsUCzMj9CgOgJR/
+	5sYQtrYTK8WdeZl5dlzNQAsxr2UEtoUu8RUlOV8J80m/igXyLRKLH5IZIUiVDd3IQ
+X-Gm-Gg: ASbGncs4f7mybMBtikRgHjeTN/Ujb0vmDK6vOGdYtGd9A2+CAS0fxfCsP0zZotPDG+8
+	cMKG+A/t/pRSyaZjjqln/6IP6n1bvZ9omDIMIPNiYPckV37qMbvbJyC1hPr9iSrj2vsqdSS/DJh
+	0yyBxfXeVsQ293QltuA0/klq5v9SbbsSOPn3RQXej+rKJIquU4R9iuIu+bg6qWqp2/Rfvuaxuax
+	5IQYch0Ar9/uFuE4gf7UsqJZIofjSDNr/kFeNXg0ckIBO6stUy+GWb9aBJK2yj1O09NrnoTDu+Y
+	50NBkEtWsohUdemunCv1GeNvU0y9AgWBAWMmhNOH37/6ntY47XHcBTbqMTK16vo53jKfYvgLhgk
+	=
+X-Received: by 2002:a05:620a:c4e:b0:7c5:5206:5823 with SMTP id af79cd13be357-7c9619a705emr1660615185a.29.1745859487291;
+        Mon, 28 Apr 2025 09:58:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEqSjKGgWl7wO2D1jUzkAaf6173SfIpCBSxDl8zqFf4Wh+1t30kDQ1gRmiZSs91e63VpqiPUQ==
+X-Received: by 2002:a05:620a:c4e:b0:7c5:5206:5823 with SMTP id af79cd13be357-7c9619a705emr1660610985a.29.1745859486767;
+        Mon, 28 Apr 2025 09:58:06 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7cca8d8esm1682584e87.176.2025.04.28.09.58.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Apr 2025 09:58:05 -0700 (PDT)
+Date: Mon, 28 Apr 2025 19:58:04 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Pengyu Luo <mitltlatltl@gmail.com>
+Cc: abel.vesa@linaro.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+        kishon@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        robh@kernel.org, sfr@canb.auug.org.au, vkoul@kernel.org
+Subject: Re: [PATCH v2 2/2] phy: qualcomm: phy-qcom-eusb2-repeater: rework
+ reg override handler
+Message-ID: <n5z5atbxkwqllni6cgygcw5nn7z4w3yjznhpkaajw6tggenxb3@kxpk2e6vmvlj>
+References: <q6zqfk3l2khp3tkodxd4pzhufiesyjcypl66zoqzslolwoveyo@ltrw2iulrkqs>
+ <20250426081424.422590-1-mitltlatltl@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedugeegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtqhertdertdejnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhephfetudeugfehheeliefhjeejuddvledtuddttdevledthfehgeeugfetheekgfffnecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepuddtkedprhgtphhtthhopehmrhhiphgrrhgusehkvghrnhgvlhdrohhrghdprhgtphhtthhopehmrggrrhhtvghnrdhlrghnkhhhohhrshhtsehlihhnuhigrdhinhhtvghlrdgtohhmpdhrtghpthhtohepthiiihhmmhgvrhhmr
- ghnnhesshhushgvrdguvgdprhgtphhtthhopegrihhrlhhivggusehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhimhhonhgrsehffhiflhhlrdgthhdprhgtphhtthhopegrnhgurhiivghjrdhhrghjuggrsehinhhtvghlrdgtohhmpdhrtghpthhtohepnhgvihhlrdgrrhhmshhtrhhonhhgsehlihhnrghrohdrohhrghdprhgtphhtthhopehrfhhoshhssehkvghrnhgvlhdrohhrgh
-X-GND-Sasl: luca.ceresoli@bootlin.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250426081424.422590-1-mitltlatltl@gmail.com>
+X-Authority-Analysis: v=2.4 cv=ZpvtK87G c=1 sm=1 tr=0 ts=680fb3a0 cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=P-IC7800AAAA:8 a=NEAV23lmAAAA:8 a=JfrnYn6hAAAA:8 a=EUspDBNiAAAA:8 a=hVKwd-R3O5YvdfgKfvwA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=d3PnA9EDa4IxuAV0gXij:22 a=1CNFftbPRP8L7MoqJWF3:22
+X-Proofpoint-ORIG-GUID: J57Cvl92YoUiVEubhKDADhdpVs_H2d-L
+X-Proofpoint-GUID: J57Cvl92YoUiVEubhKDADhdpVs_H2d-L
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI4MDEzNyBTYWx0ZWRfX7vRzZjdw/DEr rep1us17cVoS8jXgxhSxIBRGmA3I+NSSI3FzFFu/BpS8RATdbt1o01h8wUyjX0uqc7Md3ebyxJm KHYLfO4uTsvaJGmJ5s6H9mOWZPKRyJulS+AXpIoK8BOiMi5vFwT0VZUsH5lNXEH12Hzq1y828fu
+ +dc6cPhQzZKfVVQCrfJAspoHXrkfuz4jffDlRe+RnrhKmn1blezdoRzVkWmPnhk5Vqwaqu8JIPj rXZI09/rf7HM3Uab6/nQSwYBB0jnkDgzxXGVsKuSgvdnPBW/7a574G2+2FJKGuEe4Ex6l/c1wpe vGGpa/12hUhlt5iXDwGbzxZXCsQnofJ2qznI4H64E+5toH3PnGquXps3n0ukHBXN8fKnTID8MkT
+ vR8v0zTsx6zYDZKPmz0kiubcynUnQPfm/5oK/ppMhRxO8SCzUUPaON0wUXC/B6GdR744buVe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-28_06,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0 adultscore=0
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504280137
 
-Hi Maxime,
-
-On Mon, 28 Apr 2025 17:42:46 +0200
-Maxime Ripard <mripard@kernel.org> wrote:
-
-> On Mon, Apr 28, 2025 at 05:24:57PM +0200, Luca Ceresoli wrote:
-> > Hi Maxime, other DRM maintainers,
-> >=20
-> > On Thu, 24 Apr 2025 20:59:07 +0200
-> > Luca Ceresoli <luca.ceresoli@bootlin.com> wrote:
-> >  =20
-> > > devm_drm_bridge_alloc() [0] is the new API to allocate and initialize=
- a DRM
-> > > bridge, and the only one supported from now on. It is also necessary =
-for
-> > > implementing reference counting and thus needed to support removal of
-> > > bridges from a still existing DRM pipeline without use-after-free.
-> > >=20
-> > > This series converts all DRM bridges to the new API.
-> > >=20
-> > > Patch 1 uses a coccinelle semantic patch to mass-convert some of those
-> > > drivers -- thanks Maxime for having suggested the patch that served a=
-s a
-> > > starting point for me. I was unable to come up with a better patch
-> > > converting more drivers though, so I converted all others manually. M=
-ost of
-> > > them were trivial. I left the non-trivial ones at the end of the seri=
-es to
-> > > help reviewers know where to look at more carefully.
-> > >=20
-> > > Due to the large number of touched files, the list of recipients gene=
-rated
-> > > by get_maintainers (b4 actually) was huge, 60~70 people (not counting
-> > > mailing lists), so I took the liberty of trimming the list as reasona=
-bly as
-> > > I could to DRM maintainers and frequent contributors, and added all o=
-ther
-> > > recipients individually per-patch. I hope this is fine. Don't hesitat=
-e to
-> > > suggest more people which should be Cc-ed in a future series, or a be=
-tter
-> > > Cc policy.
-> > >=20
-> > > Current plan and status of the DRM bridge refcounting work:
-> > >=20
-> > >  A. =E2=9C=94 add new alloc API and refcounting -> (now in drm-misc-n=
-ext)
-> > >  B. =E2=9E=9C convert all bridge drivers to new API (this series)
-> > >  C. =E2=80=A6 documentation, kunit tests, debugfs improvements (v1 un=
-der discussion)
-> > >  D. after (B), add get/put to drm_bridge_add/remove() + attach/detech=
-()
-> > >  E. after (B), convert accessors; this is a large work and can be done
-> > >     in chunks =20
+On Sat, Apr 26, 2025 at 04:14:23PM +0800, Pengyu Luo wrote:
+> On Sat, Apr 26, 2025 at 3:41 AM Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > On Wed, Apr 16, 2025 at 08:02:01PM +0800, Pengyu Luo wrote:
+> > > In downstream tree, many registers need to be overridden, it varies
+> > > from devices and platforms, with these registers getting more, adding
+> > > a handler for this is helpful.
 > >
-> > Maintaining this long series is quite painful. Do you think at least
-> > patches with a R-by or T-by tag could be merged before I send v3, so
-> > we can relieve the maintenance effort, mail servers, and everybody's
-> > inboxes? =20
->=20
-> Yes?
->=20
-> What's stopping you though? You have at least a colleague that can apply
-> them, and you could just as well apply for commit rights yourself.
+> > It should be noted that previously all values were applied during _init
+> > phase, before checking the status etc. Now the overrides are programmed
+> > from the set_mode. Should you still program sane defaults at the init
+> > stage too?
+> >
+> 
+> I think programming in set_mode is ok. When we init(dwc3_core_init), we
+> set_mode(dwc3_core_init_mode) later, please check
+> https://elixir.bootlin.com/linux/v6.14.3/source/drivers/usb/dwc3/core.c#L2287
 
-OK, thanks. Will do.
+Yes, but that happens after reading status regs, etc.
 
-The reason I haven't done it is this policy in DRM still appears a bit
-unusual to me, but if it works for DRM I'm OK with it. Only, in case of
-doubt, I didn't want to risk abusing of the commit rights.
+> Actually, in the downstream, all the things are done in init, it
+> overrides first, then masked write the deaults, finally it set_mode,
+> you can check here
+> https://github.com/OnePlusOSS/android_kernel_oneplus_sm8650/blob/oneplus/sm8650_v_15.0.0_pad_pro/drivers/usb/repeater/repeater-qti-pmic-eusb2.c#L356
 
-Best regards,
-Luca
+I'd stick to this approach too. Program everything in init, then
+program mode-dependent regs in set_mode.
 
---=20
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+> 
+> > BTW, is there a real need to override those for the platform you are
+> > working on? Could you please provide some details, maybe in the cover
+> > letter.
+> 
+> I am not quite sure, recently, I expirenced mode switching failure,
+> when I `echo device > /sys/kernel/debug/usb/a600000.usb/mode`, Ethernet
+> Gadget wouldn't work again, my desktop can't connect to it.
+
+Do you have at least a list of the properties / registers that
+downstream programs on your platform? I mean, it's not infrequent that
+vendor kernel is more versatile than necessary, as it is being used
+during bringup / etc. I'd suggest to limit supported overrides to those
+necessary for your platform (and add a comment that there were other
+available).
+
+> 
+> BTW, as you can see in line 356, it is most likely that overrides
+> related to charging feature. I have not ported charging yet, but adding
+> more overrides seems harmless, and if overriding, distinguishing which
+> mode seems necessary, even if some devices use the same sequence. So I
+> sent the patch.
+> 
+> Best wishes,
+> Pengyu
+> 
+> -- 
+> linux-phy mailing list
+> linux-phy@lists.infradead.org
+> https://lists.infradead.org/mailman/listinfo/linux-phy
+
+-- 
+With best wishes
+Dmitry
 
