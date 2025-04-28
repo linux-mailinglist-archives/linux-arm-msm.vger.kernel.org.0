@@ -1,164 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-55860-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47CEDA9E95D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 09:32:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA723A9E968
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 09:34:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D82F1896FDF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 07:32:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C97F5169954
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 07:34:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68A6A1C84AA;
-	Mon, 28 Apr 2025 07:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7C0D1DDC23;
+	Mon, 28 Apr 2025 07:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jQ90LpaV"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="qlcAOjVY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68261C5D7D;
-	Mon, 28 Apr 2025 07:31:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2911DBB0C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 07:34:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745825512; cv=none; b=D21fiTt2yIuiDQig+jBUUwXm1dVmmD9MiYUaWWA8CRdsONZHKJpsnPRmPHMTXwgxkRJY63jIhPOzgVfuDkJF1q+fA9ZIQeDHhG7YpZTUAFlYre3n905eGIayQbQuIKagYropOKBw/QVC16HBJf43uSlsDsZo/E62P0SW59EABR0=
+	t=1745825670; cv=none; b=fMTLOb9Gg5xkws1j+JImdUXwW91dAmUdXwDXav32rUTsXGZZd+J8B6MUcV4a+kxOOSzCvwfPnwJm4oX5mh/VLb2XTKgXSeYnsxCM5TuFOCd1bulm0S0vviS9zJxtz/aQFPaNaY6AxF7gj2x+paE7idPmJtwHynPVRQtKYYm7jYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745825512; c=relaxed/simple;
-	bh=HdtFIhLx9KoMChjuIEeQQHmfPcXNBOQZMAQpJ6I7xWs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bqnH8eIGb+9dpeDIwr3e7PcrPvjmoTgOOAMFqjvj49ja/MuRNmZZx4NN5+lETIlhdKoxV8G7PLYDentlykuPlGgeHEaLx2Gu3+CWCdUo17ybvYy3TsuErEyH6B+V47t2HlRaOVOSyP3Q0u/ZpfpdoUga7xq8pgl781dVOPZU1rY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jQ90LpaV; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53S3rMns012306;
-	Mon, 28 Apr 2025 07:31:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	h5Tt7944qJjJ4KMmdRD5KDY8T/NskZ0ugtNihbgVNHI=; b=jQ90LpaVCaB9g8Mq
-	2Jjcjy6k0irS9zpbLckFjtq11TfrVIuRRMzK+JqjbkRYx5JBV0CKcE33Xk5AAADh
-	m9XBG904AXgYkKgHBlbI5sXUD6/lfYOLt1V5jcqcWc3rRf5kjdKmc9BXjdS2UY8Q
-	EvvpMfMqcCY+pU2d4c6HZOR9406GmEcQmf/pfE8sy2liC6d8DEJP+aoIckRp1Zva
-	4ZFIL+qVI+keg5TqlQFDPaBS7epzb+Qf4xanAE7eNgrNx8D/wKZJTfCf5Q6z1Qup
-	4Y5Do3yFu3EWX5Nt7gPjmaxSJrw5yUW6j8sR78m5Sdmhln9u/7kjm6LnJnAXiDyJ
-	O0X/Sw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468r8hpuvp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Apr 2025 07:31:37 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53S7Vb5J018597
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Apr 2025 07:31:37 GMT
-Received: from [10.239.133.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 28 Apr
- 2025 00:31:33 -0700
-Message-ID: <04d46109-d499-4e91-88aa-4187145b811d@quicinc.com>
-Date: Mon, 28 Apr 2025 15:31:17 +0800
+	s=arc-20240116; t=1745825670; c=relaxed/simple;
+	bh=eft2JoylGrB+ciB4KeCOT35p4mm0t9TkaDvaqE5nOyM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=JhmqT7apiHLVHiryCMfYj7ll5BDv83HYP56P2QcoaHgr5exUG7L6K8F4mwv8/UqjgbUA7VQSdrKmKMJBNiioKQyLpGjrNbVpQPSe7wTxNmFWUC7pv0gNdi4soEqV66tvSriqixTUJcaycjth20NWZC1PvkW4OzwrlRkfJ3uLcZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=qlcAOjVY; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-39d83782ef6so3761134f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 00:34:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1745825666; x=1746430466; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3by7P9uqNKQnnEqWzZ9SaEm5TrOyLTIcc/CCu2Gerdg=;
+        b=qlcAOjVYVuRyZOM5jF92lVIQdyZrbKBVmOu65ROJsMkImeA4sLwJQ6M9T6fUbKrUpn
+         nkJIsrdV5RhOdhca5PYnt2c+wCF2eqYrrH+9HZQlSjr5uP3bXxFr7iK9Af8z5RG9EETu
+         w6tS4YXGOl/+fV+5z7FUJhdQUNeTQkJPlgRnwYE1+0E+jMYbYH/Z2KM+LzhDqWXAx8Qz
+         4M66117P0vdig6qJUpGl2TKSrk4stX6V2hbLnLey3Gb9BK/tBr8jgq9qhm5HljTLreTa
+         ArnddgCiH+A+8drZVuAczugeCUiEa4h1Q32exmW44PEYbmuDE1sTH4szP9uRRPjT/mRs
+         MrbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745825666; x=1746430466;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3by7P9uqNKQnnEqWzZ9SaEm5TrOyLTIcc/CCu2Gerdg=;
+        b=w8QFSh53O6shfgR8y3nX4jtbY9fN1PTzCcRnHobv3DI3aIhfQrIFMDXc5SLMEuh75l
+         77wblKCLXs061X5vIcuFN2gQYbBE427kErGIqeRg3mwdarGtu16EO+CCGqiAB1YCdq9Z
+         z9zggH1Yk+tOwteKdZISCyQ5O1JCWmItB8qgKqGm9xqFsqZW+btj8GtvT3WHPttAe8ku
+         XY1xdaTrTNz9azsNq1R1IGpQ8TjoJGhXKCQCHj0x0gqthVRYwVsVNIDfkO8he8c0UzUY
+         n07qi5LzYaMvBha1wDlZymvuVKushFYpRy2o4IsCCxWPm6fyr6xxFnskuKQT2ULru1VS
+         R8mg==
+X-Forwarded-Encrypted: i=1; AJvYcCVSSL3nen2iMsOAjywqZOZjbYqbUmXMDyGKP8NwEXl6GHG38fttPwZtWzvJi2DX80HaBU0LgU6LKbhFvtE8@vger.kernel.org
+X-Gm-Message-State: AOJu0YwX9QbRyay7B8CSDZ2r1GnMpkk68iSOeyYCmM8PwgGwb+749TPT
+	cM5sqnOqs+YsGGAcEdjYuPExCz6ECxrm9vyGpFUrI6zdGl8K+znFOKgGIoPCce4=
+X-Gm-Gg: ASbGncuOLR5rfCr/cqu9LBEYB0UocIbE/FX+PU1GR7DTvNzp1jsUevUfkPjqm7AJhKv
+	XeaDcc98Gll/B4ENK1uw1Ggjrt/YW2Yl184INYrHsI8tgJDB78MnJoeYdZrLCD9763aQ+4J4xnY
+	c2sgdgz89rAkmbmkpEUbcETtrgTmjXQju+KO33PpeKGi0cH08G+kwm6XStIif72hObdyKdZRUXy
+	iyCSgrCm+mpfjJJJkGNF0pDcAicJ2PpAwsV95/57RpYWvDEcwrM9SA7znpqZhVyumwypDI6LJUF
+	nHNejVKMVOCegxWD7lFLVigzHS6htVYtcTlgeVQ=
+X-Google-Smtp-Source: AGHT+IG6mQ0mWvZUOVVdCR4TtZrofNh7QSmslDahUY667QO2MOymPlIMBngYJDdrDo3lzJhhVfpRTw==
+X-Received: by 2002:a05:6000:2505:b0:39c:30d8:32a4 with SMTP id ffacd0b85a97d-3a06d6dd524mr11640891f8f.26.1745825666481;
+        Mon, 28 Apr 2025 00:34:26 -0700 (PDT)
+Received: from localhost ([41.66.99.1])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e461casm10504935f8f.74.2025.04.28.00.34.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Apr 2025 00:34:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] dt-bindings: arm: Add Qualcomm extended CTI
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Suzuki K Poulose
-	<suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>, James Clark
-	<james.clark@arm.com>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn
- Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof
- Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20240903121847.6964-1-quic_jinlmao@quicinc.com>
- <20240903121847.6964-2-quic_jinlmao@quicinc.com>
- <8d203417-e3da-4969-87ea-f77cdb720756@kernel.org>
-Content-Language: en-US
-From: Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <8d203417-e3da-4969-87ea-f77cdb720756@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: aDsDaYIgclR7eS8pnA0nbiEW7aeN6APZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI4MDA2MiBTYWx0ZWRfX7EVVk9LNKvOj K0eTbT1JteIl+PlllryskKWOK8Jt+x2tQanwgSAcjyV2bqem670wEQhRF/vwWrof2G+PhU30bSk rPqSHsds4x9OFDalnlQCVRkYgWbNNV2Fd8Q923L8X86/7m6XJK11F7m+jDW9mmvNcvxaBcSX9wB
- qZPz7m4swNAwV3iMENhKSFNEvSQxYMnAbiJ/4CQUxPTWvlrx9C8COLmTeVf5WQf1NFnb5tQ7gm+ g2pp/Upsca3J1KAUuLwi1cMPwhqm9oyvLoovoHKkOkS7qjTXRmYu3ynbAi8jtqsLfYET4DQ6aaP JzHR9hENcQmv4WjQpI/3j3jcqMc0u4koQgH1C+VUvc5JKJhGKVwbYa26PiGQrAkIRWRbir1/D1m
- rb/VWxnXxVZ5jttiqT+CJdiCOzpJaXMT22JHqAXGhTk1JX6gGXndtatFG8iK8+B6ueRUg4v5
-X-Authority-Analysis: v=2.4 cv=cfzSrmDM c=1 sm=1 tr=0 ts=680f2ed9 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=WjK4Y3n_-wVlLzch4jIA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: aDsDaYIgclR7eS8pnA0nbiEW7aeN6APZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-28_02,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 spamscore=0 mlxscore=0 mlxlogscore=999 adultscore=0
- clxscore=1011 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504280062
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 28 Apr 2025 09:34:11 +0200
+Message-Id: <D9I3JK9RAP0C.NT3K81FYMLCR@fairphone.com>
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Wesley Cheng" <quic_wcheng@quicinc.com>, "Greg Kroah-Hartman"
+ <gregkh@linuxfoundation.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Felipe Balbi" <balbi@kernel.org>, "Srinivas Kandagatla"
+ <srini@kernel.org>, "Liam Girdwood" <lgirdwood@gmail.com>, "Mark Brown"
+ <broonie@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai"
+ <tiwai@suse.com>, "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, "Stephan Gerhold" <stephan.gerhold@linaro.org>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-sound@vger.kernel.org>
+Subject: Re: [PATCH 1/6] dt-bindings: usb: dwc3: Document usb-soc-be
+ property
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <20250425-fp4-usb-audio-offload-v1-0-f90f571636e4@fairphone.com>
+ <20250425-fp4-usb-audio-offload-v1-1-f90f571636e4@fairphone.com>
+ <bcca2d97-2092-42f0-951d-f09f144e515d@quicinc.com>
+In-Reply-To: <bcca2d97-2092-42f0-951d-f09f144e515d@quicinc.com>
 
+On Fri Apr 25, 2025 at 11:39 PM CEST, Wesley Cheng wrote:
+>
+>
+> On 4/25/2025 3:44 AM, Luca Weiss wrote:
+>> The property usb-soc-be is used by the new SoC USB layer which is used
+>> for USB audio offloading on Qualcomm SoCs.
+>
+> Hi Luca,
+>
+> This property can be dropped now, as in the latest revision I added
+> utilizing the auxiliary device/bus now between the Q6USB backend DAI and
+> the vendor USB offload driver.  Reduces the need to add more properties.
 
+Great, thanks for letting me know! Will remove it in v2.
 
-On 2024/9/3 20:42, Krzysztof Kozlowski wrote:
-> On 03/09/2024 14:18, Mao Jinlong wrote:
->> Add Qualcomm extended CTI support in CTI binding file. Qualcomm
->> extended CTI supports up to 128 triggers.
->>
->> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+I see the code in sound/soc/soc-usb.c is still parsing 'usb-soc-be', is
+that now kept for other use cases or should that be removed as well?
+
+Regards
+Luca
+
+>
+> Thanks
+> Wesley Cheng
+>
+>>=20
+>> Cc: Wesley Cheng <quic_wcheng@quicinc.com>
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 >> ---
->>   .../devicetree/bindings/arm/arm,coresight-cti.yaml | 14 ++++++++++++++
->>   1 file changed, 14 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
->> index 6a73eaa66a42..141efba7c697 100644
->> --- a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
->> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
->> @@ -87,6 +87,10 @@ properties:
->>             - const: arm,coresight-cti-v8-arch
->>             - const: arm,coresight-cti
->>             - const: arm,primecell
->> +      - items:
->> +          - const: qcom,coresight-cti-extended
-> 
-> That's just enum in previous entry/list.
-Sorry for the late response. This is a new CTI type. Need the three 
-items in compatible at the same time, just like other kind of CTIs.
-
-> 
->> +          - const: arm,coresight-cti
->> +          - const: arm,primecell
->>   
->>     reg:
->>       maxItems: 1
->> @@ -254,6 +258,16 @@ examples:
->>         clocks = <&soc_smc50mhz>;
->>         clock-names = "apb_pclk";
->>       };
->> +  # minimum extended CTI definition.
->> +  - |
-> 
-> No need for new example. No differences here.
-This is a new type CTI.
-
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+>>  Documentation/devicetree/bindings/usb/snps,dwc3-common.yaml | 4 ++++
+>>  1 file changed, 4 insertions(+)
+>>=20
+>> diff --git a/Documentation/devicetree/bindings/usb/snps,dwc3-common.yaml=
+ b/Documentation/devicetree/bindings/usb/snps,dwc3-common.yaml
+>> index 6c0b8b6538246adf746fe7ccd6df936131c61444..07549dec0f74234465fa9b6a=
+b21871762a2f5127 100644
+>> --- a/Documentation/devicetree/bindings/usb/snps,dwc3-common.yaml
+>> +++ b/Documentation/devicetree/bindings/usb/snps,dwc3-common.yaml
+>> @@ -38,6 +38,10 @@ properties:
+>>        - description: USB2/HS PHY
+>>        - description: USB3/SS PHY
+>> =20
+>> +  usb-soc-be:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle
+>> +    description: Link to the USB SoC sound backend
+>> +
+>>    phys:
+>>      minItems: 1
+>>      maxItems: 19
+>>=20
 
 
