@@ -1,193 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-55910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B612CA9EF04
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 13:26:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3A9CA9EF7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 13:41:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 075FA1889115
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 11:26:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1BE3C1A8100A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 11:40:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 368EB263F47;
-	Mon, 28 Apr 2025 11:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4CAE26739D;
+	Mon, 28 Apr 2025 11:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="1frXG2yA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kv5vEYW7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3773C25E800
-	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 11:26:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88B2265CC8;
+	Mon, 28 Apr 2025 11:39:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745839570; cv=none; b=JoHv6IHfs/4c6KCuwBsWHZjmNlhZpfGXodK889ycOl9sjalcArIekrzeCzVWJ+TgSh5K0Y1uYrWh6y3fL2n18/beaaBeUCtTC54vEgrg+SlLtBJIQgGA+OfgJteqWQx8ve3ZtZAQoWwPd07ZcNZDqn2fTk78OPFw0bRfXT6pIEg=
+	t=1745840366; cv=none; b=nO5hLtzilMOgNnWaA9HymfvPm0n20JRinfBovyl9/eDz36tbHOJIgSGXtQ5Un2YlOwrec/ysEquB+jKXWr9prys55WlArPQJFNYTOe6XYHYU4Q+9aiZLTEb6bdc7W5oNx5+6Hv9ctnG+WZSIHmmsxp0FgRSW2FB0P7ES5AlCuo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745839570; c=relaxed/simple;
-	bh=YuK7JoVFw4BkBRnm2Ypzhevv3vdRGeuSRVhD+23HyZI=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=lJxYFJvIHpnkRhnoA2Al4yLAGS/cHVuZNw7zif935KFrf4cXvUH2n4youJ1dRmL4qwICt/lCd36kC2ynRfyTFGEOkkc9oAfD3elTwtMWZwiund2rPm+7eLBe5BZzMsOz0YXy/bbZGa1bWAHRA+yOP0hye52IoPaJooWIGaqJy8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=1frXG2yA; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ac289147833so822344266b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 04:26:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1745839566; x=1746444366; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YuK7JoVFw4BkBRnm2Ypzhevv3vdRGeuSRVhD+23HyZI=;
-        b=1frXG2yA/J31+DxBgvJYyVLUi97KnZtGX9Zk/M3Bl2snVVNXDWQXuc6XG3V6WeUx7B
-         f1U5aDtJKWtiiQRdD4VvYbkD3B+SAt+npqBST1wiL0SNUEVcS1HY7NLDVR6Jzut24wxb
-         gCPESrGCf4WX1/zJLBf38tSIbZbM/8gN1khX0H0GqndfcvVvFqRO+iBKbo3UZit/FLJp
-         R+eFXaVLc4tapFpZXpJaAvS9edbIrVM0L3MCmRjZokCgHuQuvKwZU1jXQemUZ/g3SLNt
-         ylJFpLFLYCDqev6z9amfbQw+GN96I9FGfWSNRZtrGzH1wyv11oJVrqBJVrTF4F3WIdqk
-         YfEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745839566; x=1746444366;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=YuK7JoVFw4BkBRnm2Ypzhevv3vdRGeuSRVhD+23HyZI=;
-        b=rfjMur1Ng/IRi4Ucc1CMQlcfZZuAXqRsX4KO6vIAsiqYwfHsUDXIcjzKjI15pFro5D
-         RhCVxki7Gmvy5Ez+FjecFYfVHCjvC4bla+pistsu+W1SdzzlDJl/j5HRSH6E3w5zdo5V
-         AEjC/rSn2GhacD2t/5lApKyxY27NLSFTWlUffGo67YTzUQMpAEPHjOgw+pAvRYoVQkLb
-         Z2DfN7y0Bu/2EJZOVQobfmoFz8dZFTclDf5qWEdry6y4hQdRLvzYCGD486C0lijh8L33
-         s4B8m2U3h+K2JYXO2rnPV/i1+HLvzOcJQPRorTH57BzDRpEyklvYJh0+gWj/tNGBOgHk
-         hUdw==
-X-Gm-Message-State: AOJu0YyW96xIG75dKh7PUBZK/Xrmbvg/bhue7HdSAJI3c7NAtxcIVLkl
-	dfGqngHl2Xn10VK60yGYZRy2zcpbSFwLWa4X3MiPAH8sgklGFWOdiqBTGC668kk=
-X-Gm-Gg: ASbGncuG1CjwOpvqUBDz1rkHqaeucLcsvhI/iwERw/pnNa1qxI6cFq8LmhbKCxxSxUD
-	vzSufxPKqf6rgmd5oLy+P8+WBmPRYStEALVEwYlx2Q7wtUoCFGiWDQb0ymxryaku5z8iQfPgkXC
-	46dGdCoDciL1bUbfS3KHn9WXIZFoK2LTMU4YA4PVlnpMIganGRH4rz0HohN6aOBIUQ6IdG/Vcot
-	+OdCOAQd8pqZqJ/oEQaBw3cBqflnZdalUuP5GCu6mFDVf8dYQnVYrOIRkLKvieRhQ8IdrnLrq63
-	j/FMd3+7H8nzZLNv47BbMa6zKf9Gbvad8N2kzUE7EiQiB/nBYendP1JB5mLpeCHnPlDBX121cJ0
-	LJevfJmmRcg==
-X-Google-Smtp-Source: AGHT+IGT+8m3xK7xabSZ29IvBc7+P0gS4DksBTS1Czdm2SNSBAyYHQHsIegSOcFqAFzVvUJUQUDxDA==
-X-Received: by 2002:a17:907:7e84:b0:aca:d83b:611b with SMTP id a640c23a62f3a-ace84aad97bmr827114066b.43.1745839566451;
-        Mon, 28 Apr 2025 04:26:06 -0700 (PDT)
-Received: from localhost (31-151-138-250.dynamic.upc.nl. [31.151.138.250])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6ed6b009sm609885766b.138.2025.04.28.04.26.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Apr 2025 04:26:06 -0700 (PDT)
+	s=arc-20240116; t=1745840366; c=relaxed/simple;
+	bh=Ej44d3HYVlonJrSjsWIukJSaPhl3M6jkQ+SB3SSTJ0k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XHBVB0XD1xPnnsMAHWFacW9iOQ+huAgwahL3oTLIWEqtxO1VlwMMVH1nkfUsNmPoyyfIqK3GjsPsMjAQuQd5aV4me06O+/x+gvl/84t1dT4RZ5tSX7EmvpJDWSA3AjKvTl1pSLMUaZA+2VuMep3qJIauNDb++5/z4t7CYaEdFV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kv5vEYW7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08E5C4CEE4;
+	Mon, 28 Apr 2025 11:39:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745840366;
+	bh=Ej44d3HYVlonJrSjsWIukJSaPhl3M6jkQ+SB3SSTJ0k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Kv5vEYW72D5xWIDAHxidcS9oCPJI44A8/ATQTf4ndN6qOsRqnp47tGXt9HvXJ/fQX
+	 3iRGABjyVGdhzFevrJ/SKs1Tn/HzL+ntZXhZ5I1oZh84TTNujKuXIYiSDMBZKDmg+y
+	 AZfXDlw/mqs0mSwnN/keOFUJawtzrADt0D2HQYrOGgjrUXRSD84c7R7w7ycC/jTcSm
+	 x5DFNVaWHIOalypJx7V9K0lMtgehomF12uxSSBqBSLV7GPuCCodkBNURuekRYK6SrF
+	 nsCQ8roU5zy+dQ7EL1D9afZHfQm0EFsh/r0zRlmzrK5FfE/2zo1iP9Ttr0hP07NjcV
+	 75neqPgVXdgzA==
+Date: Mon, 28 Apr 2025 13:39:23 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki <jagan@amarulasolutions.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Douglas Anderson <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Anusha Srivatsa <asrivats@redhat.com>, 
+	Paul Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Hui Pu <Hui.Pu@gehealthcare.com>, Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
+	dri-devel@lists.freedesktop.org, asahi@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	chrome-platform@lists.linux.dev, imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org, 
+	linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+	linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH v2 34/34] drm/bridge: panel: convert to
+ devm_drm_bridge_alloc() API
+Message-ID: <20250428-wild-condor-of-defiance-cadf60@houat>
+References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
+ <20250424-drm-bridge-convert-to-alloc-api-v2-34-8f91a404d86b@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="xfc7ogpscqj7tsh5"
+Content-Disposition: inline
+In-Reply-To: <20250424-drm-bridge-convert-to-alloc-api-v2-34-8f91a404d86b@bootlin.com>
+
+
+--xfc7ogpscqj7tsh5
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 28 Apr 2025 13:26:05 +0200
-Message-Id: <D9I8H4AII5EG.3QKI8U79KC8SO@fairphone.com>
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Ziqi Chen" <quic_ziqichen@quicinc.com>, <quic_cang@quicinc.com>,
- <bvanassche@acm.org>, <mani@kernel.org>, <beanhuo@micron.com>,
- <avri.altman@wdc.com>, <junwoo80.lee@samsung.com>,
- <martin.petersen@oracle.com>, <quic_nguyenb@quicinc.com>,
- <quic_nitirawa@quicinc.com>, <peter.wang@mediatek.com>,
- <quic_rampraka@quicinc.com>
-Cc: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>, "Neil
- Armstrong" <neil.armstrong@linaro.org>, "Matthias Brugger"
- <matthias.bgg@gmail.com>, "AngeloGioacchino Del Regno"
- <angelogioacchino.delregno@collabora.com>, "open list:ARM/Mediatek SoC
- support:Keyword:mediatek" <linux-kernel@vger.kernel.org>, "moderated
- list:ARM/Mediatek SoC support:Keyword:mediatek"
- <linux-arm-kernel@lists.infradead.org>, "moderated list:ARM/Mediatek SoC
- support:Keyword:mediatek" <linux-mediatek@lists.infradead.org>
-Subject: Re: [PATCH v5 0/8] Support Multi-frequency scale for UFS
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a
-References: <20250213080008.2984807-1-quic_ziqichen@quicinc.com>
- <D9FZ9U3AEXW4.1I12FX3YQ3JPW@fairphone.com>
- <df287609-a095-4234-b23b-d335b474a130@quicinc.com>
- <29c3852c-3218-4b42-bc41-75721a95fccc@quicinc.com>
-In-Reply-To: <29c3852c-3218-4b42-bc41-75721a95fccc@quicinc.com>
+Subject: Re: [PATCH v2 34/34] drm/bridge: panel: convert to
+ devm_drm_bridge_alloc() API
+MIME-Version: 1.0
 
-Hi Ziqi,
+On Thu, Apr 24, 2025 at 10:05:49PM +0200, Luca Ceresoli wrote:
+> This is the new API for allocating DRM bridges.
+>=20
+> The devm lifetime management of this driver is peculiar. The underlying
+> device for the panel_bridge is the panel, and the devm lifetime is tied t=
+he
+> panel device (panel->dev). However the panel_bridge allocation is not
+> performed by the panel driver, but rather by a separate entity (typically
+> the previous bridge in the encoder chain).
+>=20
+> Thus when that separate entoty is destroyed, the panel_bridge is not
+> removed automatically by devm, so it is rather done explicitly by calling
+> drm_panel_bridge_remove(). This is the function that does devm_kfree() the
+> panel_bridge in current code, so update it as well to put the bridge
+> reference instead.
+>=20
+> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-On Mon Apr 28, 2025 at 10:06 AM CEST, Ziqi Chen wrote:
-> Hi Luca,
->
-> We made changes to fix this special platform issue and verified it can
-> fix this issue.
-> Could you help double check if attached 3 patched can fix it from you sid=
-e?
-> If it is OK from you side as well, we will submit the final patches to
-> upstream
+This looks fine, but we need a TODO entry to clean this up later on, and
+a comment on devm_drm_put_bridge that this is inherently unsafe and
+must not be used.
 
-With these 3 patches applied the errors are gone and I don't see any
-UFS-related warnings/errors in dmesg anymore.
+Maxime
 
-Let me know if I should check on anything else. Thanks for the quick
-fix!
+--xfc7ogpscqj7tsh5
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Regards
-Luca
+-----BEGIN PGP SIGNATURE-----
 
->
-> Thanks a lot~
->
-> BRs
-> Ziqi
->
-> On 4/27/2025 4:14 PM, Ziqi Chen wrote:
->> Hi Luca,
->>=20
->> Thanks for your report.
->> Really,=C2=A0 6350 is a special platform that the UFS_PHY_AXI_CLK doesn'=
-t
->> match to the UFS_PHY_UNIPRO_CORE_CLK. We already found out the root
->> cause and discussing the fix. We will submit change to fix this corner
->> case.
->>=20
->> BRs
->> Ziqi
->>=20
->> On 4/26/2025 3:48 AM, Luca Weiss wrote:
->>> Hi Ziqi,
->>>
->>> On Thu Feb 13, 2025 at 9:00 AM CET, Ziqi Chen wrote:
->>>> With OPP V2 enabled, devfreq can scale clocks amongst multiple frequen=
-cy
->>>> plans. However, the gear speed is only toggled between min and max=20
->>>> during
->>>> clock scaling. Enable multi-level gear scaling by mapping clock=20
->>>> frequencies
->>>> to gear speeds, so that when devfreq scales clock frequencies we can p=
-ut
->>>> the UFS link at the appropraite gear speeds accordingly.
->>>
->>> I believe this series is causing issues on SM6350:
->>>
->>> [=C2=A0=C2=A0=C2=A0 0.859449] ufshcd-qcom 1d84000.ufshc: ufs_qcom_freq_=
-to_gear_speed:=20
->>> Unsupported clock freq : 200000000
->>> [=C2=A0=C2=A0=C2=A0 0.886668] ufshcd-qcom 1d84000.ufshc: UNIPRO clk fre=
-q 200 MHz not=20
->>> supported
->>> [=C2=A0=C2=A0=C2=A0 0.903791] devfreq 1d84000.ufshc: dvfs failed with (=
--22) error
->>>
->>> That's with this patch, I actually haven't tried without on v6.15-rc3
->>> https://lore.kernel.org/all/20250314-sm6350-ufs-things-=20
->>> v1-2-3600362cc52c@fairphone.com/
->>>
->>> I believe the issue appears because core clk and unipro clk rates don't
->>> match on this platform, so this 200 MHz for GCC_UFS_PHY_AXI_CLK is not =
-a
->>> valid unipro clock rate, but for GCC_UFS_PHY_UNIPRO_CORE_CLK it's
->>> specified to 150 MHz in the opp table.
->>>
->>> Regards
->>> Luca
->>>
->>>>
->>>> This series has been tested on below platforms -
->>>> sm8550 mtp + UFS3.1
->>>> SM8650 MTP + UFS3.1
->>>> SM8750 MTP + UFS4.0
->>=20
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaA9o4wAKCRAnX84Zoj2+
+dte3AX9ZTgylvSMOA8QF8MhOvEEJnfPIVewZiCH2yJknukV+y7S53MU2E4s0YFaN
+fsm4AaQBgIRYfqhWPjcnqXHC20V8llKYAK0QvK8ijj3k2G8LjbRoIfmGL11UOfGM
+QmUfHGyQeA==
+=AGTY
+-----END PGP SIGNATURE-----
 
+--xfc7ogpscqj7tsh5--
 
