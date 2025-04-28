@@ -1,69 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-55871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CD5FA9EA5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 10:11:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06F12A9EA55
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 10:10:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C599B171788
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 08:11:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5443C172973
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 08:10:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2B9822D79D;
-	Mon, 28 Apr 2025 08:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 049DB22F17A;
+	Mon, 28 Apr 2025 08:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="QwoydfmJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GcIGvSa4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9223211476;
-	Mon, 28 Apr 2025 08:11:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.207.212.93
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5BD19F120;
+	Mon, 28 Apr 2025 08:10:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745827891; cv=none; b=FS+W2UMCEtE8wt7lGdnBgTBWSg2AzahvqTUW2mOdcGGyo+xhfCvvyW6HmSOOx08yK612wJETmQida65VsURVF3/4UAU8o33sE4DDvnMukDWbYoOEIWeeIMBbFfBZ1Q0h3Qhvvq3PyTqK9G9Sj+cpG14cWTtQTMvaHVglUU3Ogew=
+	t=1745827816; cv=none; b=nYrgIE8mrVcJR9HIuzMP1nzJA9z2FmAiwQT1XIp48tp3WhmLL1Ol10D0ToCLfZo+5pC7N7isJBEvxSx+oD46Q0f+7PqcYNp2pbky5YD8wu1TkqjWvGNl5qe3LkIIRZik9/XMRoZ93lVPbuoxLWT7dJpoxQbB75Q4UjRvSly53Ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745827891; c=relaxed/simple;
-	bh=RZNWauRBZ77xwItbGqA7HuXfhu0XZkIoQCM+78qY6HM=;
+	s=arc-20240116; t=1745827816; c=relaxed/simple;
+	bh=k6GjsnctA/4cl8SfLk5wLQiT76FgSiWOFePnHmkkqu0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=eoZ7ZWH1JqWp0JIvYU+0xZ5pO8v++c64NujBhC23DJK0JfPedMKhwFBriv1kFPz/zV9pjgI8mU9S+TAYrt5tmvVdRXAmivrpEB9epC6Brk7QUimpURYO8Dw8V0MwKktYpULTNnfHjKBh0ExYHG0IY9paEwHEfufKgG6t3k2thyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=QwoydfmJ; arc=none smtp.client-ip=91.207.212.93
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
-Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
-	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53S11XbV010761;
-	Mon, 28 Apr 2025 10:10:53 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
+	 In-Reply-To:Content-Type; b=Wu4yOP6Iag8ZjLUTtaSfvoyAMplQ3YcNMTXWtrZW0PnXjjdKq1iL1agMVyoYJfR2XmJaU8wSxo1tuv1asYrd7AK7lpvbyXsSMYycm5r/jJFlQn92bqTERJc33eTUIKAn3pZUWnIMRndUCC/mFS4fUPiGnqgd52ffdyYRkHeSUwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GcIGvSa4; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53S6juTK018506;
+	Mon, 28 Apr 2025 08:10:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=selector1; bh=
-	PQb6/JrtA/eLzoukWftU2fxvtoqJ28zJBaZAc0hVsHY=; b=QwoydfmJnqrIp1Bs
-	q/5op7P9yWgVMKAfoFEU1jyURgEx+qPUDq86ch/CQCNROm4Mxk9HC6YD7MH4Xtmi
-	3rQphDkC1+X5k47wruX25t+hfl48d3DGpsuF3Prb14wiAMj+EsbVHwphl0Fu3qJz
-	SmEK1tY8GUZaWs/i9ClheBgwg8NcYqTGZ+VSKcG1b0C7i2O4SBvWc3y/7E+zvtYc
-	NiEaxlGfyjdSwBnETaBtVc2kCpyyptb1Xq8l0qLOVuwN/IFbtdMo8w9pvWlHIbyO
-	23nxIBPn1Iz2uNbsjaTymfeLeJPQ8YA5tJnyzsDOlcOhxPHwotSdRgbyLDKFfAI7
-	tGWyzA==
-Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
-	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 468pcg5gx0-1
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ol6Xl6i68ZLMmEDC7rOpaP6hA8OHqTiZTmpHuGCG2KI=; b=GcIGvSa4eUsTamvs
+	T8oTe7GYtlArMy9xuCHLE6m498iyx/ucGtpzzaKIXVsRupPcPXlb05q/09d8hw9m
+	kTrWdq6LgFkDOSpez6svxmXG7Cc2rbyXQUccHvFu38tvtXADY+IpxYEzhSkvfHSK
+	xFseIGUYFC8E2LE+BP1OSF4oQM1zj1WDV+0RAdVbLYpkRCQswOrRoWG3l0sHQYMh
+	OHQRbWKYSMx7RTEVDRRbwb56vRLBWCwPu5YC7Gg1cZpjsNfEaAmOBDzvonmnJnq/
+	Ds8RnGuFwBF93Cp1BwKbb63MX8LLaJtvKybc/LVXuXexQSgaU9A3Czjab1tc/qgx
+	y6dyZA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468n6jfbdw-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Apr 2025 10:10:53 +0200 (MEST)
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id EF3BA4004F;
-	Mon, 28 Apr 2025 10:09:12 +0200 (CEST)
-Received: from Webmail-eu.st.com (eqndag1node6.st.com [10.75.129.135])
-	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id C8252A342DD;
-	Mon, 28 Apr 2025 10:07:54 +0200 (CEST)
-Received: from SAFDAG1NODE1.st.com (10.75.90.17) by EQNDAG1NODE6.st.com
- (10.75.129.135) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 28 Apr
- 2025 10:07:54 +0200
-Received: from [10.48.86.121] (10.48.86.121) by SAFDAG1NODE1.st.com
- (10.75.90.17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 28 Apr
- 2025 10:07:52 +0200
-Message-ID: <4e6840e5-34a7-4f15-a13a-1ff1ea5eff85@foss.st.com>
-Date: Mon, 28 Apr 2025 10:07:51 +0200
+	Mon, 28 Apr 2025 08:10:02 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53S8A2lT005357
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 28 Apr 2025 08:10:02 GMT
+Received: from [10.239.133.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 28 Apr
+ 2025 01:09:58 -0700
+Message-ID: <b313ab73-850e-4d75-ae19-797a8c6a16f2@quicinc.com>
+Date: Mon, 28 Apr 2025 16:09:56 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,219 +65,116 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] of: reserved_mem: Add functions to parse
- "memory-region"
-To: "Rob Herring (Arm)" <robh@kernel.org>,
-        Saravana Kannan
-	<saravanak@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer
-	<s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        Patrice Chotard
-	<patrice.chotard@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai
-	<wens@kernel.org>
-CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <imx@lists.linux.dev>,
+Subject: Re: [PATCH v1 1/2] dt-bindings: arm: Add Qualcomm extended CTI
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Suzuki K Poulose
+	<suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>, James Clark
+	<james.clark@arm.com>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof
+ Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <coresight@lists.linaro.org>,
         <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Daniel Baluta
-	<daniel.baluta@nxp.com>
-References: <20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org>
- <20250423-dt-memory-region-v2-v2-1-2fbd6ebd3c88@kernel.org>
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20240903121847.6964-1-quic_jinlmao@quicinc.com>
+ <20240903121847.6964-2-quic_jinlmao@quicinc.com>
+ <8d203417-e3da-4969-87ea-f77cdb720756@kernel.org>
+ <04d46109-d499-4e91-88aa-4187145b811d@quicinc.com>
+ <cbb1191d-4e90-4887-9227-e4e8761a9b46@kernel.org>
 Content-Language: en-US
-From: Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Organization: STMicroelectronics
-In-Reply-To: <20250423-dt-memory-region-v2-v2-1-2fbd6ebd3c88@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+From: Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <cbb1191d-4e90-4887-9227-e4e8761a9b46@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: EQNCAS1NODE4.st.com (10.75.129.82) To SAFDAG1NODE1.st.com
- (10.75.90.17)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI4MDA2NiBTYWx0ZWRfX9eHyGZaWihej jfrUeqzbopu3ZaXzKip2Xx6PCy0Kt84KlXPp3AhQKqJewb9HkpbyqT8W8L2RbnP35rBcJy4jTiR 9Z0UMitfi6fjm+A7E4qoj1KLxT4kSPR0FY16MRs4PAAdFF+wLt6QYPAxb1VmljAi+xSW96ogPCc
+ BtZOjD4v+zKib0vtdplC2aRmh4XtA51VnVQEgfH3iSBS1RSu+syQ/GqBtwLnq1uebjK7Yjti6L/ jakkRZ+4IADmGF1GrjwS/ivQd/YDVNhsNzJP7Grf1iCu6S1bG+VXJXcbkk7cg2R+3i8PP84PkxE FXi/NcpQzGZo1ya1y6CkH8T0fGbp5F5zPOWrrqOtrBes+Z52bnc/fgNNEcB3awXdcJt4NJhOR7b
+ ha35vtMUz0gHLd/f9DrfPAJE+zcWFZx/5NfkwsOCXQPvdE1j+opFF1vHmlmDJn960INkDJVE
+X-Proofpoint-GUID: dL9IIffQcO9w4mMrV81tiS6lhBQH1eiZ
+X-Proofpoint-ORIG-GUID: dL9IIffQcO9w4mMrV81tiS6lhBQH1eiZ
+X-Authority-Analysis: v=2.4 cv=C8fpyRP+ c=1 sm=1 tr=0 ts=680f37da cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=BB5YKCej9nSSSTOgEYYA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-28_03,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ mlxlogscore=999 priorityscore=1501 clxscore=1015 spamscore=0 adultscore=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 mlxscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504280066
 
-Hello Rob,
 
-On 4/23/25 21:42, Rob Herring (Arm) wrote:
-> Drivers with "memory-region" properties currently have to do their own
-> parsing of "memory-region" properties. The result is all the drivers
-> have similar patterns of a call to parse "memory-region" and then get
-> the region's address and size. As this is a standard property, it should
-> have common functions for drivers to use. Add new functions to count the
-> number of regions and retrieve the region's address as a resource.
+
+On 2025/4/28 15:39, Krzysztof Kozlowski wrote:
+> On 28/04/2025 09:31, Jinlong Mao wrote:
+>>
+>>
+>> On 2024/9/3 20:42, Krzysztof Kozlowski wrote:
+>>> On 03/09/2024 14:18, Mao Jinlong wrote:
+>>>> Add Qualcomm extended CTI support in CTI binding file. Qualcomm
+>>>> extended CTI supports up to 128 triggers.
+>>>>
+>>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>>>> ---
+>>>>    .../devicetree/bindings/arm/arm,coresight-cti.yaml | 14 ++++++++++++++
+>>>>    1 file changed, 14 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+>>>> index 6a73eaa66a42..141efba7c697 100644
+>>>> --- a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+>>>> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+>>>> @@ -87,6 +87,10 @@ properties:
+>>>>              - const: arm,coresight-cti-v8-arch
+>>>>              - const: arm,coresight-cti
+>>>>              - const: arm,primecell
+>>>> +      - items:
+>>>> +          - const: qcom,coresight-cti-extended
+>>>
+>>> That's just enum in previous entry/list.
+>> Sorry for the late response. This is a new CTI type. Need the three
+>> items in compatible at the same time, just like other kind of CTIs.
 > 
-> Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> ---
-> v2:
->  - Wrap function parameters
-> ---
->  drivers/of/of_reserved_mem.c    | 80 +++++++++++++++++++++++++++++++++++++++++
->  include/linux/of_reserved_mem.h | 26 ++++++++++++++
->  2 files changed, 106 insertions(+)
 > 
-> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
-> index ee2e31522d7e..f87915cce961 100644
-> --- a/drivers/of/of_reserved_mem.c
-> +++ b/drivers/of/of_reserved_mem.c
-> @@ -12,6 +12,7 @@
->  #define pr_fmt(fmt)	"OF: reserved mem: " fmt
->  
->  #include <linux/err.h>
-> +#include <linux/ioport.h>
->  #include <linux/libfdt.h>
->  #include <linux/of.h>
->  #include <linux/of_fdt.h>
-> @@ -740,3 +741,82 @@ struct reserved_mem *of_reserved_mem_lookup(struct device_node *np)
->  	return NULL;
->  }
->  EXPORT_SYMBOL_GPL(of_reserved_mem_lookup);
-> +
-> +/**
-> + * of_reserved_mem_region_to_resource() - Get a reserved memory region as a resource
-> + * @np:		node containing 'memory-region' property
-> + * @idx:	index of 'memory-region' property to lookup
-> + * @res:	Pointer to a struct resource to fill in with reserved region
-> + *
-> + * This function allows drivers to lookup a node's 'memory-region' property
-> + * entries by index and return a struct resource for the entry.
-> + *
-> + * Returns 0 on success with @res filled in. Returns -ENODEV if 'memory-region'
-> + * is missing or unavailable, -EINVAL for any other error.
-> + */
-> +int of_reserved_mem_region_to_resource(const struct device_node *np,
-> +				       unsigned int idx, struct resource *res)
-> +{
-> +	struct reserved_mem *rmem;
-> +
-> +	if (!np)
-> +		return -EINVAL;
-> +
-> +	struct device_node __free(device_node) *target = of_parse_phandle(np, "memory-region", idx);
-> +	if (!target || !of_device_is_available(target))
-> +		return -ENODEV;
-> +
-> +	rmem = of_reserved_mem_lookup(target);
-> +	if (!rmem)
-> +		return -EINVAL;
-> +
-> +	resource_set_range(res, rmem->base, rmem->size);
-> +	res->name = rmem->name;
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(of_reserved_mem_region_to_resource);
-> +
-> +/**
-> + * of_reserved_mem_region_to_resource_byname() - Get a reserved memory region as a resource
-> + * @np:		node containing 'memory-region' property
-> + * @name:	name of 'memory-region' property entry to lookup
-> + * @res:	Pointer to a struct resource to fill in with reserved region
-> + *
-> + * This function allows drivers to lookup a node's 'memory-region' property
-> + * entries by name and return a struct resource for the entry.
-> + *
-> + * Returns 0 on success with @res filled in. Returns -ENODEV if 'memory-region'
-> + * is missing or unavailable, -EINVAL for any other error.
+> Comment stays valid, you did not address it at all.
+Hi Krzysztof,
 
-of_property_match_string() can return some other error values.
+Do you mean we only need const: qcom,coresight-cti-extended here ?
+No need const: arm,coresight-cti and const: arm,primecell as they are
+in previous entry/list, right ?
 
-Thanks,
-Arnaud
-
-> + */
-> +int of_reserved_mem_region_to_resource_byname(const struct device_node *np,
-> +					      const char *name,
-> +					      struct resource *res)
-> +{
-> +	int idx;
-> +
-> +	if (!name)
-> +		return -EINVAL;
-> +
-> +	idx = of_property_match_string(np, "memory-region-names", name);
-> +	if (idx < 0)
-> +		return idx;
-> +
-> +	return of_reserved_mem_region_to_resource(np, idx, res);
-> +}
-> +EXPORT_SYMBOL_GPL(of_reserved_mem_region_to_resource_byname);
-> +
-> +/**
-> + * of_reserved_mem_region_count() - Return the number of 'memory-region' entries
-> + * @np:		node containing 'memory-region' property
-> + *
-> + * This function allows drivers to retrieve the number of entries for a node's
-> + * 'memory-region' property.
-> + *
-> + * Returns the number of entries on success, or negative error code on a
-> + * malformed property.
-> + */
-> +int of_reserved_mem_region_count(const struct device_node *np)
-> +{
-> +	return of_count_phandle_with_args(np, "memory-region", NULL);
-> +}
-> +EXPORT_SYMBOL_GPL(of_reserved_mem_region_count);
-> diff --git a/include/linux/of_reserved_mem.h b/include/linux/of_reserved_mem.h
-> index e338282da652..f573423359f4 100644
-> --- a/include/linux/of_reserved_mem.h
-> +++ b/include/linux/of_reserved_mem.h
-> @@ -7,6 +7,7 @@
->  
->  struct of_phandle_args;
->  struct reserved_mem_ops;
-> +struct resource;
->  
->  struct reserved_mem {
->  	const char			*name;
-> @@ -39,6 +40,12 @@ int of_reserved_mem_device_init_by_name(struct device *dev,
->  void of_reserved_mem_device_release(struct device *dev);
->  
->  struct reserved_mem *of_reserved_mem_lookup(struct device_node *np);
-> +int of_reserved_mem_region_to_resource(const struct device_node *np,
-> +				       unsigned int idx, struct resource *res);
-> +int of_reserved_mem_region_to_resource_byname(const struct device_node *np,
-> +					      const char *name, struct resource *res);
-> +int of_reserved_mem_region_count(const struct device_node *np);
-> +
->  #else
->  
->  #define RESERVEDMEM_OF_DECLARE(name, compat, init)			\
-> @@ -63,6 +70,25 @@ static inline struct reserved_mem *of_reserved_mem_lookup(struct device_node *np
->  {
->  	return NULL;
->  }
-> +
-> +static inline int of_reserved_mem_region_to_resource(const struct device_node *np,
-> +						     unsigned int idx,
-> +						     struct resource *res)
-> +{
-> +	return -ENOSYS;
-> +}
-> +
-> +static inline int of_reserved_mem_region_to_resource_byname(const struct device_node *np,
-> +							    const char *name,
-> +							    struct resource *res)
-> +{
-> +	return -ENOSYS;
-> +}
-> +
-> +static inline int of_reserved_mem_region_count(const struct device_node *np)
-> +{
-> +	return 0;
-> +}
->  #endif
->  
->  /**
 > 
+>>
+>>>
+>>>> +          - const: arm,coresight-cti
+>>>> +          - const: arm,primecell
+>>>>    
+>>>>      reg:
+>>>>        maxItems: 1
+>>>> @@ -254,6 +258,16 @@ examples:
+>>>>          clocks = <&soc_smc50mhz>;
+>>>>          clock-names = "apb_pclk";
+>>>>        };
+>>>> +  # minimum extended CTI definition.
+>>>> +  - |
+>>>
+>>> No need for new example. No differences here.
+>> This is a new type CTI.
+> 
+> 
+> Comment stays valid, you did not address it at all.
+> 
+> Best regards,
+> Krzysztof
+
 
