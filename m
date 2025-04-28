@@ -1,170 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-55863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9332CA9E994
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 09:40:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0C81A9E9B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 09:42:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2FD6C3B252A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 07:39:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E5E743BD514
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 07:41:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B68C1DF980;
-	Mon, 28 Apr 2025 07:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47A9C1E0B91;
+	Mon, 28 Apr 2025 07:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rannNwKV"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="lSnwrpxw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C50D1DDC2B;
-	Mon, 28 Apr 2025 07:39:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCDF1DDC2B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 07:41:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745825993; cv=none; b=AW/fYqvyuL6t8j65BkOT4+vfKQT8J4RXLRKCPhxccI6hTwFeLmHW22C1FedQ55djNE6gs08ydlBzK1EFIHlU5QL4j4DLpFP15cGMSpLTDEVFxsYIMJhurdk1KFRdMospWYMuPy5NBLG3asQcByc8tVYa7fTTzory5mqQLIxeblc=
+	t=1745826077; cv=none; b=rjsrfZWaJfeh9dhW6CB7+k/8D84z0ZbUD04Zvrnm8JAx9Y5gbK3RbfAgDlCytMVtIlfnUTKjTOQUXV2+gB23DF5gmgmlt0pJp0ef47drcSjvj8YgKbS6rG5yAFPCXgYPmuBUTSDu86+g+RnXjrxkTlgJaNG43NGrIfzvQXjrDnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745825993; c=relaxed/simple;
-	bh=uvDRTDmzAJFkwFIMyq3QBRdrFFf5o4dx8a2V4AKQDQw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DvH7vohmc4nBN2JZoMBHOk/bP2iHd6aIleN656g0MU3qzCbwkM8hqjDuZiuW9wQKiR0V63nO5aTuHB0tKseammbwX6fWuVtJxnDVnGa08x18314jnN4KUa3xHRVwIesmPozqcoG1oCc0ZACi7bmWBQ+My6Wofb6i+ypG0Dm/kek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rannNwKV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB8CC4CEE4;
-	Mon, 28 Apr 2025 07:39:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745825992;
-	bh=uvDRTDmzAJFkwFIMyq3QBRdrFFf5o4dx8a2V4AKQDQw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rannNwKVYae20js66onOCjgn+54klu6eudEgXoc2bbhps11xSNF8fUc84EiTtoagD
-	 +Zvj2+2v0R34LBuGGfTufDWHCBttgwO7k0Wn1GuvTLzqRyvZWoQF2zVjljGbvDXCwp
-	 lfNV22LvYE72Y/5zbBASHgve2WcbYkeq9cHf0DbatZOdQjeUBpZq6Q5bXR4aRs34MY
-	 +dKXuW9eEOCeR162Cl6MNtsOcHbHxpRQKqc1Jb9VQzJez2gNVJcijDsHOdVDyTsUxo
-	 lHHNpY0CeIfrQEbn8owSGdMRX2d3/Ut6UNswAmf94PB0/Tflh8DybG+NvDQMwbJnsW
-	 T3+rqR+eGjUFw==
-Message-ID: <cbb1191d-4e90-4887-9227-e4e8761a9b46@kernel.org>
-Date: Mon, 28 Apr 2025 09:39:47 +0200
+	s=arc-20240116; t=1745826077; c=relaxed/simple;
+	bh=2ur59+1ubAVC1jOBmnnt5jTjvdpj5sgc0TtVhaeTRJY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=gDWSVGOR5fVQy/X7rueB27TiYNynJxcYIqgCkZ6bgJ/ExBAH+DqwqcaTPOvsTb5C/nBGs6/XwMpALHCY3dkYyHAghV2W9nAFuSsDIWDkbINlDiTiC/j5/LOBIph+IvxIE+OBllc0nk5Z+eGlX9gBNMj3dXFrlNpZofKYKy9xYbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=lSnwrpxw; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4394a823036so42724755e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Apr 2025 00:41:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1745826073; x=1746430873; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Sn84KksoLA1XCM8eFqMm/ZJrcGihzBHVRs4q9bxH1gc=;
+        b=lSnwrpxwjy2NBzimuYQPFOZGww1ajOJ9WiCeGo1prTQzG5rqlWrCKN7YEHMc/PUPN5
+         9BoOyHoun4tWk6ipO+lc30w+j62Z9+rvUYtAZ0prpvDs111a1bRBvr98vKRvWY+egljL
+         Oqb5V29FbrVuLklL8YFQ5nfYXOhaa3v9lcX5mz+fC2/XBwDeqa5CfkjghFzqhe6rbNoU
+         dNisSD3Py9wiN1JVwFrUwpIF1F1iqZloJWMKtCJ7uy9SEZIF1Ocw9M4CfUc5Ux1TLKcO
+         7qHxfqaJ5G7egKvPRzsNBCrqiw1LQL4Qoj1Iy1hCDMzF/ZSesWupW/jMvmcDWySOa9KD
+         AWcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745826073; x=1746430873;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Sn84KksoLA1XCM8eFqMm/ZJrcGihzBHVRs4q9bxH1gc=;
+        b=aF3wjdL3j8rdUf0ryXQVey1J1R0hgVk2snoySI9XLQ6NEwureh8E+GrWtPVEvBlYDl
+         69kW7emYB/sh7xTkwSgIs5Sh/LWiqvIrWjTbquTmO0Uy4z8yJSU/tJAU/zaM9mQCAmH6
+         QHbmlBCQumH5WoN7a+880mZIJSafVvhCo9/TGed/kljd/2EUE8+7BULTKzJFI7z/0RBz
+         aVRCSE+dYA0zmLY6fQFzrGW3YUIUqTW8kYi3mWcEk6gEnfu9EytSdfI1CaG8lHn8rE9W
+         ssTnktD6D8Jdomnn4Dc9+lszH/9L5Iplvg3FdBTQym1SJ6T2jUqJT/a6B7X9UMzrt6Tn
+         ziFw==
+X-Forwarded-Encrypted: i=1; AJvYcCX1oTItg/Wv/N7dex/05uFFf3TEFY/4rvMQQxkia91RC0cg/6fAlWq/WUc9l6xubMVthrhyoARAFD+HMl/W@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzd7w9OW1AcOOKbp6AEeHRAaKE0dl+v+zGWtxKifl1XzrLrxRlX
+	fVNdoqb0ko0Xza5hyXUqZN6VopzXgR2a0eilNnrzcVkM9zvmJUBuvBPugTU21xo=
+X-Gm-Gg: ASbGncvAPq5AjREpzamy2GtNPcLDVk/fgEms2dyO8Nw716JYPZHCNcIYHNCy3JdOIUy
+	UQ5Ogb4PdNuSlSj3ENubMgYyP/lcNwum6a+P5S+pLv7btJyBw1e+nPX7/Dr+GQxx3XaWYzc32uU
+	o/R2zmQorFW2qb0mHtqIh2tIdOVoCofnDRTS3mY6un/V3w0sCW9AGx5WIda65b7hMzWOPKWHkcu
+	AuxhqTOgttuXEE9dFG1TvfL7XBNytzr/FoUZjjZQQPbIF/vkHFSexn77Kkl2oz38teDC+OIU6Br
+	prK0L6zx45x6tVGtzb27SO7E2s1MfV2N1jIZQMU=
+X-Google-Smtp-Source: AGHT+IGL44vW5/A++LXsZvrcU+Vla8hGWRBCR3n4mujmGHag6lTr8K8jbX9VXFTAyePxtqUQY98O/g==
+X-Received: by 2002:a05:600c:3b0d:b0:43c:f332:7038 with SMTP id 5b1f17b1804b1-440a669994dmr78600255e9.21.1745826073423;
+        Mon, 28 Apr 2025 00:41:13 -0700 (PDT)
+Received: from localhost ([41.66.99.1])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073c8d495sm10072538f8f.2.2025.04.28.00.41.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Apr 2025 00:41:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] dt-bindings: arm: Add Qualcomm extended CTI
-To: Jinlong Mao <quic_jinlmao@quicinc.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
- <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20240903121847.6964-1-quic_jinlmao@quicinc.com>
- <20240903121847.6964-2-quic_jinlmao@quicinc.com>
- <8d203417-e3da-4969-87ea-f77cdb720756@kernel.org>
- <04d46109-d499-4e91-88aa-4187145b811d@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <04d46109-d499-4e91-88aa-4187145b811d@quicinc.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Mon, 28 Apr 2025 09:41:10 +0200
+Message-Id: <D9I3OWQF8T3Y.1Q5U9E2RI5YZX@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-sound@vger.kernel.org>
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm7225-fairphone-fp4: Enable USB
+ audio offload support
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Greg Kroah-Hartman"
+ <gregkh@linuxfoundation.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Felipe Balbi" <balbi@kernel.org>, "Srinivas Kandagatla"
+ <srini@kernel.org>, "Liam Girdwood" <lgirdwood@gmail.com>, "Mark Brown"
+ <broonie@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai"
+ <tiwai@suse.com>, "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, "Wesley Cheng" <quic_wcheng@quicinc.com>,
+ "Stephan Gerhold" <stephan.gerhold@linaro.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <20250425-fp4-usb-audio-offload-v1-0-f90f571636e4@fairphone.com>
+ <20250425-fp4-usb-audio-offload-v1-6-f90f571636e4@fairphone.com>
+ <5c4ed073-45fe-4938-b25b-8979d96b456d@oss.qualcomm.com>
+In-Reply-To: <5c4ed073-45fe-4938-b25b-8979d96b456d@oss.qualcomm.com>
 
-On 28/04/2025 09:31, Jinlong Mao wrote:
-> 
-> 
-> On 2024/9/3 20:42, Krzysztof Kozlowski wrote:
->> On 03/09/2024 14:18, Mao Jinlong wrote:
->>> Add Qualcomm extended CTI support in CTI binding file. Qualcomm
->>> extended CTI supports up to 128 triggers.
->>>
->>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>> ---
->>>   .../devicetree/bindings/arm/arm,coresight-cti.yaml | 14 ++++++++++++++
->>>   1 file changed, 14 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
->>> index 6a73eaa66a42..141efba7c697 100644
->>> --- a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
->>> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
->>> @@ -87,6 +87,10 @@ properties:
->>>             - const: arm,coresight-cti-v8-arch
->>>             - const: arm,coresight-cti
->>>             - const: arm,primecell
->>> +      - items:
->>> +          - const: qcom,coresight-cti-extended
->>
->> That's just enum in previous entry/list.
-> Sorry for the late response. This is a new CTI type. Need the three 
-> items in compatible at the same time, just like other kind of CTIs.
+On Fri Apr 25, 2025 at 11:06 PM CEST, Konrad Dybcio wrote:
+> On 4/25/25 12:44 PM, Luca Weiss wrote:
+>> Enable USB audio offloading which allows to play audio via a USB-C
+>> headset with lower power consumption and enabling some other features.
+>>=20
+>> This can be used like the following:
+>>=20
+>>   $ amixer -c0 cset name=3D'USB_RX Audio Mixer MultiMedia1' On
+>>   $ aplay --device=3Dplughw:0,0 test.wav
+>>=20
+>> Compared to regular playback to the USB sound card no interrupts should
+>> appear on the xhci-hcd interrupts during playback, instead the ADSP will
+>> be handling the playback.
+>
+> "should" isn't very optimistic - I assume this works for you? >=20
 
+Yes it does!
 
-Comment stays valid, you did not address it at all.
+With 'should' I meant to describe the expected behavior from using this
+since most people are probably not familiar with how this works.
 
-> 
->>
->>> +          - const: arm,coresight-cti
->>> +          - const: arm,primecell
->>>   
->>>     reg:
->>>       maxItems: 1
->>> @@ -254,6 +258,16 @@ examples:
->>>         clocks = <&soc_smc50mhz>;
->>>         clock-names = "apb_pclk";
->>>       };
->>> +  # minimum extended CTI definition.
->>> +  - |
->>
->> No need for new example. No differences here.
-> This is a new type CTI.
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+> [...]
+>
+>> +&sound {
+>> +	compatible =3D "fairphone,fp4-sndcard";
+>> +	model =3D "Fairphone 4";
+>> +
+>> +	mm1-dai-link {
+>> +		link-name =3D "MultiMedia1";
+>> +
+>> +		cpu {
+>> +			sound-dai =3D <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
+>> +		};
+>> +	};
+>> +
+>> +	usb-dai-link {
+>> +		link-name =3D "USB Playback";
+>> +
+>> +		cpu {
+>> +			sound-dai =3D <&q6afedai USB_RX>;
+>> +		};
+>> +
+>> +		codec {
+>> +			sound-dai =3D <&q6usbdai USB_RX>;
+>> +		};
+>
+> 'co'dec < 'cp'u> +
 
+Aah, I thought I checked for that already. Will fix.
 
-Comment stays valid, you did not address it at all.
+>> +		platform {
+>> +			sound-dai =3D <&q6routing>;
+>> +		};
+>> +	};
+>> +};
+>> +
+>>  &tlmm {
+>>  	gpio-reserved-ranges =3D <13 4>, <56 2>;
+>> =20
+>> @@ -1178,6 +1214,7 @@ &usb_1 {
+>>  &usb_1_dwc3 {
+>>  	maximum-speed =3D "super-speed";
+>>  	dr_mode =3D "otg";
+>> +	num-hc-interrupters =3D /bits/ 16 <3>;
+> Where does this number come from?
 
-Best regards,
-Krzysztof
+I'm honestly not 100% sure. As far as I understand it, with
+'qcom,usb-audio-intr-idx =3D /bits/ 16 <2>;' in the qcom,q6usb node (which
+I've checked against downstream) we declare which "XHCI interrupter
+number to use". Without the num-hc-interrupters property we get an error
+that not enough interrupters are available (I assume only 1 is then), so
+this value practically needs to be higher than the <2> from earlier.
+
+Why it's this value and not a higher value e.g. 4 I'm not really sure.
+Downstream code looks somewhat different and "max_interrupters" in
+drivers/usb/ doesn't come from a dt property. I'd need to check more in
+details what this code does - or maybe Wesley can help.
+
+Regards
+Luca
+
+>
+> Konrad
+
 
