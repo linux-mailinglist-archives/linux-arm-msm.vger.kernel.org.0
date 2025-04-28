@@ -1,251 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-55914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-55915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ECFBA9F059
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 14:11:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FAF9A9F090
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 14:23:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 74DB1460691
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 12:11:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B47BF17FB02
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Apr 2025 12:23:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CA0D268C40;
-	Mon, 28 Apr 2025 12:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B9192690E7;
+	Mon, 28 Apr 2025 12:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BnbwcC8m"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KpyCaYsQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCDE268C6C;
-	Mon, 28 Apr 2025 12:11:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B087267B99;
+	Mon, 28 Apr 2025 12:23:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745842299; cv=none; b=ANpMGK/LEXyLZqNDp784FgtQoq7x9LajohU3EphmvhL2EqKsffmoNTXjzKM5rfbM3UoASUGnmzsmPqRv2IiYz34qWEEKCLfZWxiReyBNb5n2CBP/v/8VhIDYroz1Zymf3g2ZrJPQeC+RloHdC2TqaeP6cQS/XZ6UnE28aLzgG3k=
+	t=1745842994; cv=none; b=IVes3q7qEG3sUVuKBWInih48nO6cmh7Ph1UXAgGajojCNcBbXyzOz+vAmjFOukaQ3fuh80X0Rwv9JprfOMKqN7odrECkkkI/y+Yo/p6xHOTtgL6wtHWYkGm8MjRSCf16AisvtRYMjBrGJIWMe7nRbZbmuKK41/RukENXsDRJTgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745842299; c=relaxed/simple;
-	bh=Kdro8Nfkzc1zn/W0OH0Km6cpJ2OrmFc5U8Hjmq+sIlg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=VwwJ/9sl8mpclwj5YOLElLfZ1MYOt3BawtipanZmUvmT2pgfeHDaRfAu5MdzZ2/xR15nafAPyh1fwcnje1eGHZrDxRPN64quu1kBmyESkUeUuFZPqdLPbIo8ymnzaf+4BGUPoxUiy+QPa8Xi+XIhIsnvIQBk6c2DqrEt8Lu9Fhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BnbwcC8m; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53S89mRk009824;
-	Mon, 28 Apr 2025 12:11:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ee7jSkzY92GAOUo0Erqbc8naw575AjWcX8JO39e+vs8=; b=BnbwcC8mBI41Jeak
-	x6BU49gldQzOcxC4/yFaUhWw8ZpRZp0P2jQ2fWAPA3O3lyTpW0zeZeZsBZ+PQC01
-	1nEEkXwPnKgb24J28vcnPan7Zz93DE3mwt33D/ZD8YtSi/Ukb5yQOz5Sdey20KYj
-	fev2IovAeBn8+sSPSXZbCqf26ItdAUJrKrD7wPkBpQm+3RRFGNxPPG5T5TctcBUd
-	f8vhJjxgnilQJwbtlvY/Iol2ErodX3VzvxI5XxYYJNDPULQLHHimb7TPuTrZW07u
-	stoinywQUC6geJNj213NuIxO7Sef65dS01hVr3GVb+2Ch0Xaq9svd+m1jtrRf3jS
-	8WSWWQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468n6jgb7d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Apr 2025 12:11:33 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53SCBWdw024155
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Apr 2025 12:11:32 GMT
-Received: from [10.50.5.200] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 28 Apr
- 2025 05:11:24 -0700
-Message-ID: <b1a48f29-c0ef-2c9b-b8e7-0d3766fd9cc2@quicinc.com>
-Date: Mon, 28 Apr 2025 17:41:19 +0530
+	s=arc-20240116; t=1745842994; c=relaxed/simple;
+	bh=HCz8DLodaQbrm+46dctr2oR/E7+SUsbNqLwypXlR7Sg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TrvpckNASzfW0uB3klojiHosuRwu7qbHGaabYWpbuHJsm4BdqINnS2ate+uo1sJRhPuULYRADcVlNvM855wtwMReeV2CyKQ8SGpWUkMEZd1rxukjwC8XW5HWWDtO+CCVQ1GbWqct4mYmQajuRmNNjZ+GF4VQpbvWXpPsXUvOdzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KpyCaYsQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3272C4AF09;
+	Mon, 28 Apr 2025 12:23:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745842993;
+	bh=HCz8DLodaQbrm+46dctr2oR/E7+SUsbNqLwypXlR7Sg=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=KpyCaYsQGtAyJOuUAwAEyx7KH4FWEFstaN/zDK8iSr8LyiS43doSjlzBK/wI1iEYm
+	 tgltI8g4gMIx2MAeXNiOdykXknUzjTvpubM6ehz0yaVFKHzQXaQUOyFmCZx3k413BB
+	 tfnURaLUnxKiRIyvL8DGHbkLk+Kx1ohTaHsH8g58pOmgiRdruSwPjKACmsGsVyTiVW
+	 tZWZ/2y+8b0eCTHHogjd5Z0oblaXN4DIFernU+aFGPypp7eCO3ZmIM4EYpcEgN3I4s
+	 4RXQk8u5PJhPyW3gWtw0gAuwQ6m9wsFEWVlC5Ydc945pAAkOLb023byD5wZcww8qzW
+	 zsry93j2gntNw==
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5e6f4b3ebe5so8601938a12.0;
+        Mon, 28 Apr 2025 05:23:13 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUCA9d24UPXc/Jwt0LjwH0uJvlxndBqiyzdPC6XjsaZcE7i+RMPGVjB3QdLYiQBQnJI8EBpGh564tez@vger.kernel.org, AJvYcCUQG2ixjUZ0UcksnGdV0/wm5V45dJtFiw+AlkqX4AvgRJmH4lbgdjmTGrlAt7wC2XWm9DcDcG2qnqrhJa16Bw==@vger.kernel.org, AJvYcCVkkwx4a1UjYY6vRbaBQDuNwGIbeDhPLeS7g/+kF9ykeSfedQE7S/HJFz7vymPF4mCv6cot9/xhK4BKBlqgz6z+Ig==@vger.kernel.org, AJvYcCW18ta18AbuEm8eP6UFIiEqgn3p+72Peq3ivKNaGQCeQnOGZmt88RddMZWcasWgb0B8AZbpSXKyLPIs9Slr@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoXv+mdnen9fHUy6eszDetdQQ0YpSfShnmnoj2GGzs9OdFVAWY
+	wCNYyW7BErae+RjgaERt+GStDwJPBCU9kws/aiF/R9CVvpJn4zht/JJYvXt+5zJp4olHlG2wppL
+	fP5O0lOBgC8KfNKhZB3CONk/nnA==
+X-Google-Smtp-Source: AGHT+IG+CACbiiD2abOkp8tXfXmRr505UnyuCRTrkEYyr07DsjIb1ktiKdJ4ARe6OcGznQb9vjFUFmdjHww0FD53lpk=
+X-Received: by 2002:a05:6402:d08:b0:5f4:370d:96c4 with SMTP id
+ 4fb4d7f45d1cf-5f7394d37ccmr7705350a12.0.1745842992502; Mon, 28 Apr 2025
+ 05:23:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 00/23] Add support for HEVC and VP9 codecs in decoder
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        Hans Verkuil
-	<hverkuil@xs4all.nl>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <20250417-topic-sm8x50-iris-v10-v7-0-f020cb1d0e98@linaro.org>,
-        <20250424-qcs8300_iris-v5-0-f118f505c300@quicinc.com>,
-        <stable@vger.kernel.org>, Dan Carpenter <dan.carpenter@linaro.org>
-References: <20250428-qcom-iris-hevc-vp9-v2-0-3a6013ecb8a5@quicinc.com>
- <dwslruo5gzaiuag7utvrtysjfkisvudnxd6qvzezkpodw4xul6@55ei2zuuiggx>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <dwslruo5gzaiuag7utvrtysjfkisvudnxd6qvzezkpodw4xul6@55ei2zuuiggx>
+References: <20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org>
+ <CANLsYkxKHhCHYrbAGzQ48QGpL_DbuLnX3=ppmpyu0vjuuvvODg@mail.gmail.com> <322d366c-1564-4b06-9362-28fe451a35e7@nxp.com>
+In-Reply-To: <322d366c-1564-4b06-9362-28fe451a35e7@nxp.com>
+From: Rob Herring <robh@kernel.org>
+Date: Mon, 28 Apr 2025 07:23:01 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJemaAzx6v0kj52J=YFRGqLo5=xk8LXXk-8i=mAomTCWQ@mail.gmail.com>
+X-Gm-Features: ATxdqUFE1MZW4VzC8-fvJOOKPGQbbAo554PCqhNSEgkFv0dfgvJlVI74jm4fy4w
+Message-ID: <CAL_JsqJemaAzx6v0kj52J=YFRGqLo5=xk8LXXk-8i=mAomTCWQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] of: Common "memory-region" parsing
+To: Iuliana Prodan <iuliana.prodan@nxp.com>
+Cc: Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, Daniel Baluta <daniel.baluta@nxp.com>, 
+	"Andrew F. Davis" <afd@ti.com>, "Shah, Tanmay" <tanmay.shah@amd.com>, Saravana Kannan <saravanak@google.com>, 
+	Andrew Morton <akpm@linux-foundation.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Patrice Chotard <patrice.chotard@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Chen-Yu Tsai <wens@kernel.org>, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, imx@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI4MDEwMSBTYWx0ZWRfX6cTYFI7/nM1v 8AC8ChK1uQPzSK3xMxS3NDEXgBIJeCwnCcGwzn7+/f8W4aSSynFOg+nnXOs24LiOBp7hgmsIF2j 8hWaPK4Hl+VoAsERNjN09ht0Kj90wWinyLA6oNccxKjVGcSdLto0J8d6KOmZdccmNsu2w5a7zCN
- rhAuWXrDjXMIVzeslxJTzbXFuTdhw199xEyDcVU2ivBikhvjmiAoiqbrlGzoc2IJNau0iNT0IUz yUWMJ53p/epo/3sS0Nx796ekFLEKcmxQ1KpUyIw8QeghoDT7UGZTNSr99z62EFBEDxGRQBnAlWP uk1mbv1zUO5M+vJvd4yGoGPZ13pJg4ud62qUOYbB5oHWpErkKsQbQNr755dW//rP+iQB8LIX2eb
- f23wqfWKwelLKaFvhy0swwYtlYu8hullFN1vSiXX+2NAQdmfB7z5XB4n916gu2Q21rP10uEN
-X-Proofpoint-GUID: wp6jHqQyxocRuEbe2ysyNQkl5VHjxd5z
-X-Proofpoint-ORIG-GUID: wp6jHqQyxocRuEbe2ysyNQkl5VHjxd5z
-X-Authority-Analysis: v=2.4 cv=C8fpyRP+ c=1 sm=1 tr=0 ts=680f7075 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8
- a=U6Z9HZGeCIhQAKXtxSAA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-28_04,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- mlxlogscore=999 priorityscore=1501 clxscore=1015 spamscore=0 adultscore=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 mlxscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504280101
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Apr 25, 2025 at 6:34=E2=80=AFPM Iuliana Prodan <iuliana.prodan@nxp.=
+com> wrote:
+>
+> Hello Mathieu, Rob,
+>
+> I've tested imx_dsp_rproc and it fails with:
+>
+> [   39.743770] Unable to handle kernel paging request at virtual address
+> ffffffffffffffea
+> ...
+> [   39.805078] Hardware name: NXP i.MX8MPlus EVK board (DT)
+> [   39.810390] pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS
+> BTYPE=3D--)
+> [   39.817353] pc : __pi_memset_generic+0x50/0x188
+> [   39.821892] lr : imx_dsp_rproc_prepare+0x3a4/0xea4 [imx_dsp_rproc]
+> [   39.828079] sp : ffff8000853dbb10
+> [   39.831396] x29: ffff8000853dbb90 x28: 0000000092400000 x27:
+> ffff80007a36d3d8
+> [   39.838540] x26: ffff0000d0a5e410 x25: ffff80007a36d3f0 x24:
+> 0000000000000004
+> [   39.845685] x23: ffff0000d5414880 x22: ffff0000d5e1dce8 x21:
+> 0000000000000000
+> [   39.852827] x20: ffff0000d5e1db98 x19: ffff0000d5414b80 x18:
+> 00000000ffffffff
+> [   39.859970] x17: 202c656c69687720 x16: 3e2074756f657672 x15:
+> ffff800081f8d050
+> [   39.867114] x14: ffff0000db584680 x13: 0000000000000003 x12:
+> 00007fffa3330000
+> [   39.874257] x11: 0000000000000004 x10: 0000000000000ab0 x9 :
+> 0000000000000000
+> [   39.881400] x8 : ffffffffffffffea x7 : 0000000000000000 x6 :
+> 000000000000003f
+> [   39.888546] x5 : 0000000000000040 x4 : 0000000000000006 x3 :
+> 0000000000000004
+> [   39.895689] x2 : 0000000000008000 x1 : 0000000000000000 x0 :
+> ffffffffffffffea
+> [   39.902837] Call trace:
+> [   39.905284]  __pi_memset_generic+0x50/0x188 (P)
+> [   39.909821]  rproc_boot+0x2c0/0x524
+> [   39.913317]  state_store+0x40/0x100
+> [   39.916812]  dev_attr_store+0x18/0x2c
+> [   39.920478]  sysfs_kf_write+0x7c/0x94
+> [   39.924146]  kernfs_fop_write_iter+0x120/0x1e8
+> [   39.928598]  vfs_write+0x244/0x37c
+> [   39.932008]  ksys_write+0x70/0x110
+> [   39.935413]  __arm64_sys_write+0x1c/0x28
+> [   39.939342]  invoke_syscall+0x48/0x104
+> [   39.943094]  el0_svc_common.constprop.0+0xc0/0xe0
+> [   39.947805]  do_el0_svc+0x1c/0x28
+> [   39.951123]  el0_svc+0x30/0xcc
+> [   39.954188]  el0t_64_sync_handler+0x10c/0x138
+> [   39.958549]  el0t_64_sync+0x198/0x19c
+> [   39.962222] Code: d65f03c0 cb0803e4 f2400c84 54000080 (a9001d07)
+> [   39.968317] ---[ end trace 0000000000000000 ]---
+>
+> The problem seems to be when computing `cpu_addr =3D
+> devm_ioremap_resource_wc(dev, &res);`, in patch 4.
+> In `__devm_ioremap_resource` (see [1]), it's expecting the resource type
+> to be `IORESOURCE_MEM`, which is not the case here (at least the flags
+> are nowhere set for this).
 
+Thanks for testing and diagnosing. IORESOURCE_MEM needs to be set. Can
+you test with this change:
 
-On 4/28/2025 4:37 PM, Dmitry Baryshkov wrote:
-> On Mon, Apr 28, 2025 at 02:58:48PM +0530, Dikshita Agarwal wrote:
->> Hi All,
->>
->> This patch series adds initial support for the HEVC(H.265) and VP9
->> codecs in iris decoder. The objective of this work is to extend the 
->> decoder's capabilities to handle HEVC and VP9 codec streams,
->> including necessary format handling and buffer management.
->> In addition, the series also includes a set of fixes to address issues
->> identified during testing of these additional codecs.
->>
->> These patches also address the comments and feedback received from the 
->> RFC patches previously sent. I have made the necessary improvements 
->> based on the community's suggestions.
->>
->> Changes in v2:
->> - Added Changes to make sure all buffers are released in session close 
->> (bryna)
->> - Added tracking for flush responses to fix a timing issue.
->> - Added a handling to fix timing issue in reconfig
->> - Splitted patch 06/20 in two patches (Bryan)
->> - Added missing fixes tag (bryan)
->> - Updated fluster report (Nicolas)
->> - Link to v1: 
->> https://lore.kernel.org/r/20250408-iris-dec-hevc-vp9-v1-0-acd258778bd6@quicinc.com
->>
->> Changes sinces RFC:
->> - Added additional fixes to address issues identified during further 
->> testing.
->> - Moved typo fix to a seperate patch [Neil]
->> - Reordered the patches for better logical flow and clarity [Neil, 
->> Dmitry]
->> - Added fixes tag wherever applicable [Neil, Dmitry]
->> - Removed the default case in the switch statement for codecs [Bryan]
->> - Replaced if-else statements with switch-case [Bryan]
->> - Added comments for mbpf [Bryan]
->> - RFC: 
->> https://lore.kernel.org/linux-media/20250305104335.3629945-1-quic_dikshita@quicinc.com/
->>
->> This patch series depends on [1] & [2]
->> [1] https://lore.kernel.org/linux-media/20250417-topic-sm8x50-iris-v10-v7-0-f020cb1d0e98@linaro.org/
->> [2] https://lore.kernel.org/linux-media/20250424-qcs8300_iris-v5-0-f118f505c300@quicinc.com/
->>
-> 
-> [...]
-> 
->>
->> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->> ---
->> Dikshita Agarwal (23):
->>       media: iris: Skip destroying internal buffer if not dequeued
->>       media: iris: Update CAPTURE format info based on OUTPUT format
->>       media: iris: Add handling for corrupt and drop frames
->>       media: iris: Avoid updating frame size to firmware during reconfig
->>       media: iris: Send V4L2_BUF_FLAG_ERROR for buffers with 0 filled length
->>       media: iris: Drop port check for session property response
->>       media: iris: Add handling for no show frames
->>       media: iris: Improve last flag handling
->>       media: iris: Skip flush on first sequence change
->>       media: iris: Prevent HFI queue writes when core is in deinit state
->>       media: iris: Remove redundant buffer count check in stream off
-> 
-> Please move all fixes patches to the beginning of the series. This helps
-> maintainers to pick them up for the -fixes branches.
-> 
-Ack.
+index f87915cce961..00c93585758f 100644
+--- a/drivers/of/of_reserved_mem.c
++++ b/drivers/of/of_reserved_mem.c
+@@ -771,6 +771,7 @@ int of_reserved_mem_region_to_resource(const
+struct device_node *np,
+                return -EINVAL;
 
-Thanks,
-Dikshita
->>       media: iris: Remove deprecated property setting to firmware
->>       media: iris: Fix missing function pointer initialization
->>       media: iris: Fix NULL pointer dereference
->>       media: iris: Fix typo in depth variable
->>       media: iris: Add a comment to explain usage of MBPS
->>       media: iris: Track flush responses to prevent premature completion
->>       media: iris: Fix buffer preparation failure during resolution change
->>       media: iris: Add HEVC and VP9 formats for decoder
->>       media: iris: Add platform capabilities for HEVC and VP9 decoders
->>       media: iris: Set mandatory properties for HEVC and VP9 decoders.
->>       media: iris: Add internal buffer calculation for HEVC and VP9 decoders
->>       media: iris: Add codec specific check for VP9 decoder drain handling
->>
->>  drivers/media/platform/qcom/iris/iris_buffer.c     |  52 ++-
->>  drivers/media/platform/qcom/iris/iris_buffer.h     |   3 +-
->>  drivers/media/platform/qcom/iris/iris_ctrls.c      |  35 +-
->>  drivers/media/platform/qcom/iris/iris_hfi_common.h |   1 +
->>  .../platform/qcom/iris/iris_hfi_gen1_command.c     |  48 ++-
->>  .../platform/qcom/iris/iris_hfi_gen1_defines.h     |   5 +-
->>  .../platform/qcom/iris/iris_hfi_gen1_response.c    |  39 +-
->>  .../platform/qcom/iris/iris_hfi_gen2_command.c     | 143 +++++++-
->>  .../platform/qcom/iris/iris_hfi_gen2_defines.h     |   5 +
->>  .../platform/qcom/iris/iris_hfi_gen2_response.c    |  58 ++-
->>  drivers/media/platform/qcom/iris/iris_hfi_queue.c  |   2 +-
->>  drivers/media/platform/qcom/iris/iris_instance.h   |   8 +
->>  .../platform/qcom/iris/iris_platform_common.h      |  28 +-
->>  .../media/platform/qcom/iris/iris_platform_gen2.c  | 198 ++++++++--
->>  .../platform/qcom/iris/iris_platform_qcs8300.h     | 126 +++++--
->>  .../platform/qcom/iris/iris_platform_sm8250.c      |  15 +-
->>  drivers/media/platform/qcom/iris/iris_vb2.c        |  18 +-
->>  drivers/media/platform/qcom/iris/iris_vdec.c       | 117 +++---
->>  drivers/media/platform/qcom/iris/iris_vdec.h       |  11 +
->>  drivers/media/platform/qcom/iris/iris_vidc.c       |   9 +-
->>  drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 397 ++++++++++++++++++++-
->>  drivers/media/platform/qcom/iris/iris_vpu_buffer.h |  46 ++-
->>  22 files changed, 1154 insertions(+), 210 deletions(-)
->> ---
->> base-commit: 398a1b33f1479af35ca915c5efc9b00d6204f8fa
->> change-id: 20250428-qcom-iris-hevc-vp9-eb31f30c3390
->> prerequisite-message-id: <20250417-topic-sm8x50-iris-v10-v7-0-f020cb1d0e98@linaro.org>
->> prerequisite-patch-id: 35f8dae1416977e88c2db7c767800c01822e266e
->> prerequisite-patch-id: 2bba98151ca103aa62a513a0fbd0df7ae64d9868
->> prerequisite-patch-id: 0e43a6d758b5fa5ab921c6aa3c19859e312b47d0
->> prerequisite-patch-id: b7b50aa1657be59fd51c3e53d73382a1ee75a08e
->> prerequisite-patch-id: 30960743105a36f20b3ec4a9ff19e7bca04d6add
->> prerequisite-patch-id: b93c37dc7e09d1631b75387dc1ca90e3066dce17
->> prerequisite-patch-id: afffe7096c8e110a8da08c987983bc4441d39578
->> prerequisite-message-id: <20250424-qcs8300_iris-v5-0-f118f505c300@quicinc.com>
->> prerequisite-patch-id: 2e72fe4d11d264db3d42fa450427d30171303c6f
->> prerequisite-patch-id: 3398937a7fabb45934bb98a530eef73252231132
->> prerequisite-patch-id: feda620f147ca14a958c92afdc85a1dc507701ac
->> prerequisite-patch-id: 07ba0745c7d72796567e0a57f5c8e5355a8d2046
->> prerequisite-patch-id: e35b05c527217206ae871aef0d7b0261af0319ea
->>
->> Best regards,
->> -- 
->> Dikshita Agarwal <quic_dikshita@quicinc.com>
->>
-> 
+        resource_set_range(res, rmem->base, rmem->size);
++       res->flags =3D IORESOURCE_MEM;
+        res->name =3D rmem->name;
+        return 0;
+ }
 
