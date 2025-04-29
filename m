@@ -1,142 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-56137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90596AA0E17
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 16:05:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D5CFFAA0EDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 16:32:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E086317F56A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 14:05:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B64A4A0F78
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 14:32:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1A3B2857CF;
-	Tue, 29 Apr 2025 14:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2042212D8A;
+	Tue, 29 Apr 2025 14:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="hQ4waozv"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="J12JJMR9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F287721A457
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 14:05:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2968A18A93F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 14:32:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745935508; cv=none; b=uzhP3CE3UzwW1Z1S5pGrNxGpY9NnH+aR3vTCCdFIWbLRZApUrN725iLKJgW3mOOmskJZR6iH4Fct+zB4zjwkvXxdaCR7DTURR+GP+9WOAqsoelFrGbCWwGn4S5c47ErDu9M0iu4qGDBlomKhOCVDgDCljsd3omsws9hreUAuvLA=
+	t=1745937166; cv=none; b=cqTANrinaskEqMgHZgbIGZaso4mosnvHBl3/e6J68pKS1tJeg8I17uJxcMB7+wmrVvQD5Z6o1NkRGLnESbYVpixuAiwarhG2H4Xn34wqdMU3dWZeMhPZ1BaLEcInu+62KPIfX3Iyl1jOL/WBs2D7rE7JzDNtO3QxoQEugFKXYRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745935508; c=relaxed/simple;
-	bh=JUMj7m/qxM07+AHCqs/esGILKaVryMIC6qrAPwaDYSw=;
+	s=arc-20240116; t=1745937166; c=relaxed/simple;
+	bh=CAjD/KK2jdzq9tsIIkgeEOC7cVQjgSZn3t9Wd39MQXM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qtkz/yAYzl4XD9zarHCL/NFSyn5rZUyhsdkPW3g7BK3zt6/cQf+/PR9JWKTsCUQZobHHhRwklCC/EDmzLHC+JYHd3IusYNP4I5LHTOHe7k5ZXaG9a6rE4lfVo0z8Z0yQitA9wagb0n8Gf1t39ijDdkw2p+jurka4pg6ffYNiu+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca; spf=pass smtp.mailfrom=ziepe.ca; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=hQ4waozv; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6ed0cc5eca4so84491436d6.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 07:05:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1745935506; x=1746540306; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=67ZN/XRJXAlmBnQmnjPx+NwiyFFUpfzzQma2UEWB8yw=;
-        b=hQ4waozv0nBkLhrV2L8/4Xs9m24lmqmbcUsDMJPdsou4OzSJbB8gKpkOXGlYDI7Sf3
-         /7CvPI6yXjYREltstgFepu7rhij7czww6B1jatoXW7CcuxlPA/b+vgzkcj1ZpPiMfW2i
-         gEPGMWRCugDvgjo/XMQso3TMJrwH+MDI3IY4SVoIoxr0/p6qrdet9cQ9ynMY/Y31DmKM
-         1OE0Oac6wjtQD7OZSjFT/dR30baWLjmDbmILr3e1BfyCOnswr9FtaQD9Zgq0qzmDHvZW
-         BW+3yUxhJA7JILJb7EmOKzQAq5uwya8+1RtSa2IADiXW3SR1z91oj3lEVZb+iXPKUaV1
-         /Yzg==
+	 Content-Type:Content-Disposition:In-Reply-To; b=p4g++2vnBa+Fo0hvVtoR+HPbQZ7xP7CtPGLIc1pr7msSrs4AyhMZh6WI7YkONmyn337Tyakn7+fNriYESBZ4AVR9xbPd2XeIlV/RJiHnJL/RRsHmshdCDJ1UN/QgG5Zc9Pb+ftDRqmay4gl+rZwOqV9p6Q0Zp1jecLjLLa5Oya8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=J12JJMR9; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TA0npv001335
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 14:32:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=bPriHSZx3KQJP/KsDQOWzlOT
+	mChm8sjxQPQzHrr/5WY=; b=J12JJMR9Q7NMWgxDtjREBVcwp4RzpJ5+02SMlUX4
+	qVgDGXteJgupzg7oZ5a0Ewx2671aEd1SzhiO9/H8SGrnSsAstywaK+KnSTQCzMKm
+	OzVftgwcJoCv0VCRLjooCp+6O4EDafmLLWX51ffh7cYkAScLWyaM0ZePtOWz8/ya
+	Wj6QrtpRz0croBpfkTmRT63iScrCDoUAgHAan7vVwxILXq0AbfMLgLYiACH2GKKZ
+	G0eyAoprIyDtOryovl9CY5A80QgjWUwM2hdCS+PhY00qa6C9kcwh1dGR0ulSkhIj
+	lnAzHx9VnmbmM2ECcHfPNQIhrus7mEpk/56biYdFgdo06g==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468qv9mudn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 14:32:43 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c5f3b8b1a1so1006203785a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 07:32:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745935506; x=1746540306;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=67ZN/XRJXAlmBnQmnjPx+NwiyFFUpfzzQma2UEWB8yw=;
-        b=gIoM14fmsV0Qq5+X676ctbwitEtq/tIQe1XGY7SVbVDKKEOLG4rPYVVlUs67iRlpU3
-         0+adrWPew9Hq2eZ0MeRvlJJSS3nUpRgDp2bwP5WRuIO4c2Bo9hn6xqZ7FOa1LwHfFCnZ
-         HJROyAz//RWlXpBJuGVptmdpjk14f1afvo0lgrWrfBnQaKEf6zPFCgeJrTo4Mq7vuCQn
-         iYW9QXtLPG6shQirx1ngfL/5bb0tk81E6STJ6N1xEtXT/V3AueASuJXBg7uy93D8Vgew
-         ikDJvkmC6EOZqoV07iv4LVcECz5bGBcTMZNakg98KBOw1wo2cZXQorCqIR5UsfS0csVV
-         qQKw==
-X-Forwarded-Encrypted: i=1; AJvYcCVvFa1DxhcepvEmD2B0NpyaMfAD0B+j0GJSPXKN0nzxTFLfL2I58kVTKJNkn9A707Hs2r1Wy225Uv0sSZT8@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUNNss1sk7Sn6xD1U0rKXcm1vDmsC9vabnMx/Nb1gXP50wmNYZ
-	LLTO49MK4G0ekGcXBSqa3u2SCOH0jfc4/n0SqndAnYrORf6e7me6qtnjZmEF6uw=
-X-Gm-Gg: ASbGnctwpToIv2b88ejAThVO3gedtcdSsWRNmH2Ex0JnfN2zjw7p7p2iMGCPje4yNgx
-	nfAYooN9zTKu7h7MgSwcFMrS0g9QpmIsL46bcIj0buq7qckZSh28TC8VJgSeUMTOpNf3NdwJEBF
-	KvvgcPPUShrc3XQmHR/QGFxx0MZn0VITZ0Q89HBsnilAPcfK9Qg8dzTpXAk1/sSYZJR21bT7mOu
-	me+h3g6dbV7dWz3h5GeJjeK+s4wK5uW7kHHcncXPriDywW7/+MyYMoC26MR5QQ9rOBSmBJNP5je
-	TwZzGirHmTQtkio2A950XODi2/MJ72Xc4UOf6BKBZZ80oGDSR8EwVq0Qfzcu+sv6qGyXJKb/1Zz
-	G8ZdsTqwhBM6dIuB7NM0=
-X-Google-Smtp-Source: AGHT+IEGHHMBFCeWwt68ed4umDEC8R1Cxg2x3qg5I1VMmEylqtVgAx6JEUyqfbECn9olvSAU7wat3w==
-X-Received: by 2002:a05:6214:5005:b0:6f4:c939:a3f5 with SMTP id 6a1803df08f44-6f4f1bcfe99mr47285726d6.17.1745935505592;
-        Tue, 29 Apr 2025 07:05:05 -0700 (PDT)
-Received: from ziepe.ca (hlfxns017vw-142-167-219-86.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.167.219.86])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6f4e0d8495asm30959186d6.18.2025.04.29.07.05.04
+        d=1e100.net; s=20230601; t=1745937163; x=1746541963;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bPriHSZx3KQJP/KsDQOWzlOTmChm8sjxQPQzHrr/5WY=;
+        b=Dm8zZE1qg59UWS+aL68jMxbPFeDmCJ6ekLzttOhko/NQnhEsTgOtsMB5mnWlWzgVeY
+         MtSMTDacHlI/FOXkb0NTm7Zh/R8aYrV08iYxVFO5aBDxWd1OZemQL7PYaPGirivP9qqi
+         LuWontyu0IVzAIcNLp4kTMeFruTrIot0UF+GTBU0iOY71eciip/2pHqdsG6u8U+PNLLW
+         PAVW8CZJRCQLGusdpQczdKMyFZ0ts5LV4opCLlzO2uAcQjdfuFrlQXpAjl/pE4bTpTSJ
+         T/Gr59BiFQAwdydBxIJpAbaoS4m66FhAr24vZWkmAxNejLgUxvPz0lg7i6OKETuI/HnY
+         LIwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVYFMfq4Cis3O7ZtrLE7eCb0Ew9n/EWCvVwmR3TnBD/SqyXCrfHVHYphZM9dWUQmmXu4kPHiWNWQjBwVuy7@vger.kernel.org
+X-Gm-Message-State: AOJu0YzcKtEZeNLmz+XEWV5rT8TDpx3em6m2gh5PN4lqeA3nwnGVCZ9Y
+	CLyIjY9Ob9etl+/QhPwQop0WPS7jI+uu2WR0wGnIWl0OnFMTTrJf7suedid/dAHXiwLhEVEcQiM
+	XLEVufdy/9Scfsy0GOGHNEPQqkN90PqTL73iHtN8T1rbnsqTBZo5T4K9zFLHWD9Gd
+X-Gm-Gg: ASbGncuwhUKhi91Fu6X1SrUMXJlqeMfdgWZT6chCWOKECXal+LZHFiOV95fh0BC2cNU
+	CQmvC9ybFmM+OsP/Z++HRP2C2MrjyPNYgxjwgj1M13c+bfa4XEGvldQA/CJ2hDEfT8/mPNQns4p
+	4drHNL3GYoTuQ5++qEGnxkDvjHGo2JQr6ESEdyeamZOM+Uyebh7L4zbelKO+7WnSrTVrnLOelO3
+	TplbEYPt9fVup5241swTMlSvMZRo5Vg3lNisnAJzBLggmrLLL8WjmaWBBWmK6QiKavPnvk8NpMr
+	UGM294QJlPuTpO0/NmhRhJuglAXN8LpfgkYml046Dla5i+/8fqMinAuIjVEN6JVgKKvjUavlCM4
+	=
+X-Received: by 2002:a05:620a:3184:b0:7c5:5003:81b0 with SMTP id af79cd13be357-7cabdd823cdmr635638785a.23.1745937163133;
+        Tue, 29 Apr 2025 07:32:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGWF2xshAzyNqq5fdOAsbkOvEB3opt7kXShCLYeUNW9cmZ74LfQEMRBALbW7HQGg1CwIOtf9Q==
+X-Received: by 2002:a05:620a:3184:b0:7c5:5003:81b0 with SMTP id af79cd13be357-7cabdd823cdmr635632385a.23.1745937162672;
+        Tue, 29 Apr 2025 07:32:42 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7cc9eb8dsm1880507e87.135.2025.04.29.07.32.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 07:05:05 -0700 (PDT)
-Received: from jgg by wakko with local (Exim 4.97)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1u9la4-0000000AAyC-2M6z;
-	Tue, 29 Apr 2025 11:05:04 -0300
-Date: Tue, 29 Apr 2025 11:05:04 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Rob Clark <robdclark@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robdclark@chromium.org>, Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
-	"open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 03/33] iommu/io-pgtable-arm: Add quirk to quiet
- WARN_ON()
-Message-ID: <20250429140504.GD2260621@ziepe.ca>
-References: <20250428205619.227835-1-robdclark@gmail.com>
- <20250428205619.227835-4-robdclark@gmail.com>
- <20250429122834.GA2260621@ziepe.ca>
- <CAF6AEGt+5cg1CRb4ZSm9poWhq6LGh=N2axfRyKOvKP5PNpVucg@mail.gmail.com>
+        Tue, 29 Apr 2025 07:32:41 -0700 (PDT)
+Date: Tue, 29 Apr 2025 17:32:40 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Dmitry Baryshkov <lumag@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Clark <robdclark@chromium.org>
+Subject: Re: [PATCH v4 16/19] drm/msm/dpu: Implement 10-bit color alpha for
+ v12.0 DPU
+Message-ID: <oibskwq6gk234lu6bymqlrtgt2yd7o4qbpk46snhba66uqbupi@lwwcfmgp7bul>
+References: <20250311-b4-sm8750-display-v4-0-da6b3e959c76@linaro.org>
+ <20250311-b4-sm8750-display-v4-16-da6b3e959c76@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGt+5cg1CRb4ZSm9poWhq6LGh=N2axfRyKOvKP5PNpVucg@mail.gmail.com>
+In-Reply-To: <20250311-b4-sm8750-display-v4-16-da6b3e959c76@linaro.org>
+X-Authority-Analysis: v=2.4 cv=AO34vM+d c=1 sm=1 tr=0 ts=6810e30b cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=0cLWEtKbF7AIdJ2SciEA:9 a=CjuIK1q_8ugA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: 7-RUIylnLnkcSDnfcy2TOeUepegn6CMr
+X-Proofpoint-ORIG-GUID: 7-RUIylnLnkcSDnfcy2TOeUepegn6CMr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDEwOCBTYWx0ZWRfX1aSSanzAs90V ytAQDBYq5czo1E4zpat9JCJidCR0Vzx6CzpTWTalNqX8TSa+MwqOTy7j7myCXC4iEjWoruNqyjE ac29ZVoCDxnkTr1v1yTZYitAiTMLXUZ2iDZrbl/JhWhrTLaYFgyHqE2GC4e2Xsf8/fJQi2+/GzL
+ 7NGVV71m/1jCNVV9pQQXZ2OdT63U4KRwk8Isuk1ya+V1HZIMl1wH2AnxtSXzdudFjsIko6d1fTU tVEpT1mEL2Ih5ZMLD7h2kbpX9DZ492PmOKxYM3QvS1M+MOKe42VhEZIkTLegjry2xvparKAIhMF aAfH2t9xtjPxrY8OWkXDZ9cu/0XNAwXAV0+XrYLd+trL97pY2e3QIPiEWaz4UY/bWN1JIYxWp2k
+ ZaOrY6Ey8zqGin/IExt2dgUsIEjTAU/TBjLstwqM36kpAY3U9ki3NuDNQLQUPi8whr1HltJ9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-29_05,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 clxscore=1015 malwarescore=0 spamscore=0 suspectscore=0
+ mlxlogscore=829 mlxscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504290108
 
-On Tue, Apr 29, 2025 at 06:58:32AM -0700, Rob Clark wrote:
-> On Tue, Apr 29, 2025 at 5:28 AM Jason Gunthorpe <jgg@ziepe.ca> wrote:
-> >
-> > On Mon, Apr 28, 2025 at 01:54:10PM -0700, Rob Clark wrote:
-> > > From: Rob Clark <robdclark@chromium.org>
-> > >
-> > > In situations where mapping/unmapping squence can be controlled by
-> > > userspace, attempting to map over a region that has not yet been
-> > > unmapped is an error.  But not something that should spam dmesg.
-> >
-> > I think if you want to do something like that using the iommu API the
-> > expectation is for the caller to do a iova_to_phys to check what is
-> > mapped first? That seems kind of lame..
-> >
-> > Maybe page table driver should not not be doing these WARNs at all. If
-> > we want to check for that the core iommu code should have the WARN_ON?
-> >
-> > eg iommufd already has a WARN_ON around iommu_unmap failures so having
-> > one in the ARM page table is a double WARN.
-> >
-> > Don't really like using a quirk to change the API contract.
+On Tue, Mar 11, 2025 at 08:02:06PM +0100, Krzysztof Kozlowski wrote:
+> v12.0 DPU on SM8750 comes with 10-bit color alpha.  Add register
+> differences and new implementations of setup_alpha_out,
+> setup_border_color and so one for this.
 > 
-> I'd also be ok to have the WARN_ON instead in the iommu code.  In the
-> case where this quirk is needed, I'm using the io_pgtable helpers
-> directly, not going via the iommu layer.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Changes in v4:
+> 1. Lowercase hex, use spaces for define indentation
+> 2. _dpu_crtc_setup_blend_cfg(): pass mdss_ver instead of ctl
+> 
 
-Yes, that was my thought
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-Then all the iommu_map/unmap() calls behave consistently here..
-
-Jason
+-- 
+With best wishes
+Dmitry
 
