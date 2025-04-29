@@ -1,108 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-56101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CA54AA08D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 12:46:37 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D74C8AA08DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 12:47:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C8021885128
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 10:46:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EEA547B323F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 10:45:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77C2E2BE7C0;
-	Tue, 29 Apr 2025 10:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71E332BF3EA;
+	Tue, 29 Apr 2025 10:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="dmHTViOz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NulwpGXw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8343D1C4609
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 10:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3808176ADB;
+	Tue, 29 Apr 2025 10:46:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745923594; cv=none; b=SJYLI2Tckpn2CzN4dquOYHuuj0QZHk5jQiF26xNaQ8OiQ9/z7JiUhGWuPLd1oCek0SJUbSve+btNRZDrhqUf9u4rjjpTaQJg5zgZ9U/e4JCvKr1nIo/jSax5KQP0dQoAVGLCR13s1aFHW3qeJGGLLif4gy3lZcMl89R+TsIMHIM=
+	t=1745923621; cv=none; b=ENrz4KMpyunRO79LIIon8qneLXpsoWmLmtVVyXTdfh2QsUAfAcBVXENf6rD5fuV2ygZry4hmAgxehajlehXrVLkou8NxJboDnffUaY/dM50lh4mzkHhMNTqzh9DC9jTEaoIH8qUtFsgyUFj6upFJAs02PXprDH/LsCQjwvBN59U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745923594; c=relaxed/simple;
-	bh=QU9XKmlg3Q63oHMPSj27z50Nm0jwwOnBo8VBeuxoiy8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tVNp+8QfRPmvNRYLTNfBOR1XaKiG+fFaaYHBFckFX1U9xxcAjCr/4aHcddZlnqGcex1aya/7eaOLiGhINjbfn6YDnQcZlTuC0OP/mHr1cEBy+TCD3DJ8DGPEOJRltEJ7YxJbeeIvtRjX2O7xbWcNFlc+idlfGamg7TQ6pEK/VFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=dmHTViOz; arc=none smtp.client-ip=95.215.58.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1745923580;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=/S879XubW4aeIBAXUFWkv+U4RmQfwb/eak1SUwWdbBY=;
-	b=dmHTViOzDPlwIs/IR1E8Fwbrssuz8rG4WUbdqQHaGbISLRFdtBfFtj0q3yR5PzPZFzro+M
-	ptL6ldgPJciLyu6pWnaaSYTjiH5NuxHFjQW+2LODgOAc6HP428xdUZdz3XcItKus887m3k
-	WKdGMlECFXxbNyevSTannaBW6RFSRXQ=
-From: Thorsten Blum <thorsten.blum@linux.dev>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: Thorsten Blum <thorsten.blum@linux.dev>,
-	linux-arm-msm@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [RESEND PATCH] rpmsg: Use strscpy() instead of strscpy_pad()
-Date: Tue, 29 Apr 2025 12:45:43 +0200
-Message-ID: <20250429104543.66927-2-thorsten.blum@linux.dev>
+	s=arc-20240116; t=1745923621; c=relaxed/simple;
+	bh=Ip+p8O7916rV0wPGHwihsQzqN4X5FJnPhXUEjT016aI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LvGhwgdmDpyCY/WQTh5kRb4pHZpdVUwFFpL377zN5rYXqIkvTNbPUei3cY01o+UtHO1HyBP28tuRZHLxqcjtDDbri+2TOwEJ7/n2b6Ix/IXYXoeD4fLsg5KjPqyGyRWcdnnmQKfQS0b7CmOggTC1SzTaXGdFUU4hc25wzinh7sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NulwpGXw; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TAFtU0015798;
+	Tue, 29 Apr 2025 10:46:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	UeMi33mdR+WzE4oHOtk8LqBE6AfpDNDdTGFV/LIPOjo=; b=NulwpGXwL/skLQIx
+	Yf7Jof+YTndedpANcCrW7uFPsz872FY+xFebxWLo+j06gc+d/io3727of9FZ8CEp
+	XLwwVNwldLC3KkFaR8083VzUYpMYX5IrKz5e0eRAKbD2/iMep9Y/rXNdzlYjPdUL
+	FiDOcpXcNck/TO9jo7oE4tq5K5ScBz02+yrhE5UNrruxyPp+3DQFC7kfg3dBUq8O
+	5bOgFOQIZb4YfVKFH1MYcDOrTn/GRBwECek+Ihv773bNHtHxfCyFwWAXtDCJlA4h
+	6QSEfyRXP07WcCb0VqLufM4jnc7Ds+AU86p8qiVPI3kNjbqtOMEGVGK/+eoTSreg
+	Gy0ylQ==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468q3245wf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Apr 2025 10:46:54 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53TAkrR7027811
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Apr 2025 10:46:53 GMT
+Received: from [10.50.27.172] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 29 Apr
+ 2025 03:46:47 -0700
+Message-ID: <0f08867b-7724-cb76-d621-0bbe4d5fdc64@quicinc.com>
+Date: Tue, 29 Apr 2025 16:16:44 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v2 18/23] media: iris: Fix buffer preparation failure
+ during resolution change
+Content-Language: en-US
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stefan Schmidt <stefan.schmidt@linaro.org>,
+        Hans Verkuil
+	<hverkuil@xs4all.nl>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@oss.qualcomm.com>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Nicolas Dufresne
+	<nicolas.dufresne@collabora.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <20250417-topic-sm8x50-iris-v10-v7-0-f020cb1d0e98@linaro.org>,
+        <20250424-qcs8300_iris-v5-0-f118f505c300@quicinc.com>,
+        <stable@vger.kernel.org>
+References: <20250428-qcom-iris-hevc-vp9-v2-0-3a6013ecb8a5@quicinc.com>
+ <20250428-qcom-iris-hevc-vp9-v2-18-3a6013ecb8a5@quicinc.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <20250428-qcom-iris-hevc-vp9-v2-18-3a6013ecb8a5@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=M7xNKzws c=1 sm=1 tr=0 ts=6810ae1f cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=cjVhqke6_UvC8fBLecYA:9
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: ukDstp8FfCRwgCVmTJQUP-0Lmp4bnL_V
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDA3OSBTYWx0ZWRfX97dKtHj/FVNe XXxHH+LyljR55itq64rzzbGmA5mZ/B4+dBYnmvfPpeASQQOxzpGCcrassrkrzm1QmNu25v2ZOlR MUjFD+wizPiR6iAQwQFW54WqMKNohkibR9naI5AmWOUDwA+CZia7gBu3kkTLd0wjU+EPnwW8MwN
+ qgB8gHeP/r7LPbDbUApaP4NrISQldEDSW/CfMXCCEihH1as40+q+OFMcJIjl1x5gZrcneMq+z5h Vdrdf37TedNE5i6gjjgwkj287NvGj5urgTDOsaW7n/Ei9jRMhfW2przUv++BDJVI/4vpsHM4Bqz +H5cuZIuBc6xqscjAlizSE/HbzW1Cy3w+SiA/GCFwma3yJ1KuE5XrhGDf2faUFIDXpE5lWnW6AU
+ 6rPAzvqEFJveBjNla7CZO4Z8F4CbSv+vh8KHyNOrt7Pxm3YJOwcaSj+YnmoldmjAzbNRS5ia
+X-Proofpoint-ORIG-GUID: ukDstp8FfCRwgCVmTJQUP-0Lmp4bnL_V
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-29_03,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 clxscore=1015 mlxlogscore=999 spamscore=0 phishscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504290079
 
-kzalloc() already zero-initializes the destination buffer, making
-strscpy() sufficient for safely copying the name. The additional NUL-
-padding performed by strscpy_pad() is unnecessary.
 
-The size parameter is optional, and strscpy() automatically determines
-the size of the destination buffer using sizeof() when the argument is
-omitted. RPMSG_NAME_SIZE is equal to sizeof(rpdev->id.name) and can be
-removed - remove it.
+On 4/28/2025 2:59 PM, Dikshita Agarwal wrote:
+> When the resolution changes, the driver internally updates the width and
+> height, but the client continue to queue buffers with the older
+> resolution until the last flag is received. This results in a mismatch
+> when the buffers are prepared, causing failure due to outdated size.
+> 
+> Introduce a check to prevent size validation during buffer preparation
+> if a resolution reconfiguration is in progress, to handle this.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 17f2a485ca67 ("media: iris: implement vb2 ops for buf_queue and firmware response")
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> ---
+>  drivers/media/platform/qcom/iris/iris_vb2.c | 15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c b/drivers/media/platform/qcom/iris/iris_vb2.c
+> index 23473cbd0b2e..7671df0e1c69 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vb2.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vb2.c
+> @@ -259,13 +259,14 @@ int iris_vb2_buf_prepare(struct vb2_buffer *vb)
+>  			return -EINVAL;
+>  	}
+>  
+> -	if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
+> -	    vb2_plane_size(vb, 0) < iris_get_buffer_size(inst, BUF_OUTPUT))
+> -		return -EINVAL;
+> -	if (vb->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE &&
+> -	    vb2_plane_size(vb, 0) < iris_get_buffer_size(inst, BUF_INPUT))
+> -		return -EINVAL;
+> -
+> +	if (!inst->in_reconfig) {
+Remove the flag and replace with state check. With that
 
-No functional changes intended.
+Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
----
- drivers/rpmsg/qcom_glink_native.c | 2 +-
- drivers/rpmsg/qcom_smd.c          | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index a2f9d85c7156..820a6ca5b1d7 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1663,7 +1663,7 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
- 		}
- 
- 		rpdev->ept = &channel->ept;
--		strscpy_pad(rpdev->id.name, name, RPMSG_NAME_SIZE);
-+		strscpy(rpdev->id.name, name);
- 		rpdev->src = RPMSG_ADDR_ANY;
- 		rpdev->dst = RPMSG_ADDR_ANY;
- 		rpdev->ops = &glink_device_ops;
-diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-index 40d386809d6b..3c86c5553de6 100644
---- a/drivers/rpmsg/qcom_smd.c
-+++ b/drivers/rpmsg/qcom_smd.c
-@@ -1089,7 +1089,7 @@ static int qcom_smd_create_device(struct qcom_smd_channel *channel)
- 
- 	/* Assign public information to the rpmsg_device */
- 	rpdev = &qsdev->rpdev;
--	strscpy_pad(rpdev->id.name, channel->name, RPMSG_NAME_SIZE);
-+	strscpy(rpdev->id.name, channel->name);
- 	rpdev->src = RPMSG_ADDR_ANY;
- 	rpdev->dst = RPMSG_ADDR_ANY;
- 
--- 
-2.49.0
-
+> +		if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
+> +		    vb2_plane_size(vb, 0) < iris_get_buffer_size(inst, BUF_OUTPUT))
+> +			return -EINVAL;
+> +		if (vb->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE &&
+> +		    vb2_plane_size(vb, 0) < iris_get_buffer_size(inst, BUF_INPUT))
+> +			return -EINVAL;
+> +	}
+>  	return 0;
+>  }
+>  
+> 
 
