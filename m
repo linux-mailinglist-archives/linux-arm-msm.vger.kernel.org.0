@@ -1,154 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-56138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5CFFAA0EDC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 16:32:59 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4EAEAA0EE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 16:34:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B64A4A0F78
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 14:32:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 85E9C7A7D91
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 14:33:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2042212D8A;
-	Tue, 29 Apr 2025 14:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 320DD217F32;
+	Tue, 29 Apr 2025 14:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="J12JJMR9"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="cOfUjJJt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2074.outbound.protection.outlook.com [40.107.92.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2968A18A93F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 14:32:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745937166; cv=none; b=cqTANrinaskEqMgHZgbIGZaso4mosnvHBl3/e6J68pKS1tJeg8I17uJxcMB7+wmrVvQD5Z6o1NkRGLnESbYVpixuAiwarhG2H4Xn34wqdMU3dWZeMhPZ1BaLEcInu+62KPIfX3Iyl1jOL/WBs2D7rE7JzDNtO3QxoQEugFKXYRQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745937166; c=relaxed/simple;
-	bh=CAjD/KK2jdzq9tsIIkgeEOC7cVQjgSZn3t9Wd39MQXM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p4g++2vnBa+Fo0hvVtoR+HPbQZ7xP7CtPGLIc1pr7msSrs4AyhMZh6WI7YkONmyn337Tyakn7+fNriYESBZ4AVR9xbPd2XeIlV/RJiHnJL/RRsHmshdCDJ1UN/QgG5Zc9Pb+ftDRqmay4gl+rZwOqV9p6Q0Zp1jecLjLLa5Oya8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=J12JJMR9; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TA0npv001335
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 14:32:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=bPriHSZx3KQJP/KsDQOWzlOT
-	mChm8sjxQPQzHrr/5WY=; b=J12JJMR9Q7NMWgxDtjREBVcwp4RzpJ5+02SMlUX4
-	qVgDGXteJgupzg7oZ5a0Ewx2671aEd1SzhiO9/H8SGrnSsAstywaK+KnSTQCzMKm
-	OzVftgwcJoCv0VCRLjooCp+6O4EDafmLLWX51ffh7cYkAScLWyaM0ZePtOWz8/ya
-	Wj6QrtpRz0croBpfkTmRT63iScrCDoUAgHAan7vVwxILXq0AbfMLgLYiACH2GKKZ
-	G0eyAoprIyDtOryovl9CY5A80QgjWUwM2hdCS+PhY00qa6C9kcwh1dGR0ulSkhIj
-	lnAzHx9VnmbmM2ECcHfPNQIhrus7mEpk/56biYdFgdo06g==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468qv9mudn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 14:32:43 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c5f3b8b1a1so1006203785a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 07:32:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745937163; x=1746541963;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bPriHSZx3KQJP/KsDQOWzlOTmChm8sjxQPQzHrr/5WY=;
-        b=Dm8zZE1qg59UWS+aL68jMxbPFeDmCJ6ekLzttOhko/NQnhEsTgOtsMB5mnWlWzgVeY
-         MtSMTDacHlI/FOXkb0NTm7Zh/R8aYrV08iYxVFO5aBDxWd1OZemQL7PYaPGirivP9qqi
-         LuWontyu0IVzAIcNLp4kTMeFruTrIot0UF+GTBU0iOY71eciip/2pHqdsG6u8U+PNLLW
-         PAVW8CZJRCQLGusdpQczdKMyFZ0ts5LV4opCLlzO2uAcQjdfuFrlQXpAjl/pE4bTpTSJ
-         T/Gr59BiFQAwdydBxIJpAbaoS4m66FhAr24vZWkmAxNejLgUxvPz0lg7i6OKETuI/HnY
-         LIwQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVYFMfq4Cis3O7ZtrLE7eCb0Ew9n/EWCvVwmR3TnBD/SqyXCrfHVHYphZM9dWUQmmXu4kPHiWNWQjBwVuy7@vger.kernel.org
-X-Gm-Message-State: AOJu0YzcKtEZeNLmz+XEWV5rT8TDpx3em6m2gh5PN4lqeA3nwnGVCZ9Y
-	CLyIjY9Ob9etl+/QhPwQop0WPS7jI+uu2WR0wGnIWl0OnFMTTrJf7suedid/dAHXiwLhEVEcQiM
-	XLEVufdy/9Scfsy0GOGHNEPQqkN90PqTL73iHtN8T1rbnsqTBZo5T4K9zFLHWD9Gd
-X-Gm-Gg: ASbGncuwhUKhi91Fu6X1SrUMXJlqeMfdgWZT6chCWOKECXal+LZHFiOV95fh0BC2cNU
-	CQmvC9ybFmM+OsP/Z++HRP2C2MrjyPNYgxjwgj1M13c+bfa4XEGvldQA/CJ2hDEfT8/mPNQns4p
-	4drHNL3GYoTuQ5++qEGnxkDvjHGo2JQr6ESEdyeamZOM+Uyebh7L4zbelKO+7WnSrTVrnLOelO3
-	TplbEYPt9fVup5241swTMlSvMZRo5Vg3lNisnAJzBLggmrLLL8WjmaWBBWmK6QiKavPnvk8NpMr
-	UGM294QJlPuTpO0/NmhRhJuglAXN8LpfgkYml046Dla5i+/8fqMinAuIjVEN6JVgKKvjUavlCM4
-	=
-X-Received: by 2002:a05:620a:3184:b0:7c5:5003:81b0 with SMTP id af79cd13be357-7cabdd823cdmr635638785a.23.1745937163133;
-        Tue, 29 Apr 2025 07:32:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGWF2xshAzyNqq5fdOAsbkOvEB3opt7kXShCLYeUNW9cmZ74LfQEMRBALbW7HQGg1CwIOtf9Q==
-X-Received: by 2002:a05:620a:3184:b0:7c5:5003:81b0 with SMTP id af79cd13be357-7cabdd823cdmr635632385a.23.1745937162672;
-        Tue, 29 Apr 2025 07:32:42 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7cc9eb8dsm1880507e87.135.2025.04.29.07.32.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 07:32:41 -0700 (PDT)
-Date: Tue, 29 Apr 2025 17:32:40 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Dmitry Baryshkov <lumag@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Clark <robdclark@chromium.org>
-Subject: Re: [PATCH v4 16/19] drm/msm/dpu: Implement 10-bit color alpha for
- v12.0 DPU
-Message-ID: <oibskwq6gk234lu6bymqlrtgt2yd7o4qbpk46snhba66uqbupi@lwwcfmgp7bul>
-References: <20250311-b4-sm8750-display-v4-0-da6b3e959c76@linaro.org>
- <20250311-b4-sm8750-display-v4-16-da6b3e959c76@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6B8215F53;
+	Tue, 29 Apr 2025 14:34:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.74
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745937271; cv=fail; b=lclV0vshIWH4ssjhtCvSFFdOOY3SmMI/tszE5iyYWKbJDJp/9CG6z2U925GbayIq5p1nGFHhXGDMtjTL7elcYuI2kOAEX8xYcdN02jTrJ7tNSY+xX5Q9I8+V2wRh6pbQ8Ph2JaGKO2ZSfrAb18TZTI5wXHVH3VwARlYR8dD5TI0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745937271; c=relaxed/simple;
+	bh=EFPhtJpT7I7yuLmA1139L7lksVm7ZUEi/Hj1L0+Ts6A=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=ecyIHVb4SXAjQ+ztLHC5d0vBgC3f0hdGEt0OST1JjBFCJY9y8DqnOMGdItUz4vX+TdQIJ2oDneiWAlnxdDrpHn1BRNxeuirFwA5UvYugruarU3zABWp0jQaapS+4paGL0OEyJZs6b085zK2auuyLDV2lY2x0fW2bXJ7oZydQ27M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=cOfUjJJt; arc=fail smtp.client-ip=40.107.92.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cnj2abSOubokfDjT4ZlBGJ0C8o1HODvtlQ375cxQF2EKSiWck4CUcdRy2gDvRMTUbPuoRVhD+BnKcWn37chnFAe1VV/8LRthRrIQJOK7aVWEW0lEhx+Yu14SLsqJiuaSD8lbWX3YCTOpUp307dCM9f23ugDzotmJd++XpwxqCti32OKt07tSM1Ew4/PzkYORuR7asEnaOVf63ud4zJEywBrj5bAHMMlYX6Eh3IDoDWlfgup4DopEd4q/aMkeDo26eqtSm/2V68Y6ueRu+0vm2tfCGJoJ+jRw3ly3VXp/yIChYMQDpH5txTedYeYmDjpMq2/wL3MKLUFcV6sa1s+JEA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eVpA0mJfaj6xXV/iKj3TzJaHuabrUESIyqTbLVs1MFU=;
+ b=jPApXt9caFH6ICn5lSs6NLIpc5rOg0US6YWNTCP33o3IKdhazyQFvbARGfKf0r6uKCRtGf/346mejx2bQWmhZT1CZqruhzbdcfbOLkbbHkLtDTgTwoDpSPIYKcMbGSRRs1F+URxUG4mZbvqJYusuvIIGXtBVC5A6Rz1r1GVmgOKpUi3iqjjqbGX/SQiExGIcP7FnR+m0moZW7/1v4i4ZusRLD/kLJUcaItks05qyYUASepK4HGwGH/Gy4iox4XMNAVd3SBLPdo9vpVMD2IV4ZnAQR3/0Fs4YKrNbpX5CrmF+OLfyemgZOs3NVHWc+jATL+L7E0bWV39zXMbzXslGjQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eVpA0mJfaj6xXV/iKj3TzJaHuabrUESIyqTbLVs1MFU=;
+ b=cOfUjJJtNg3320rx44ThIX6fJgyBlgWFkoq1QxCzDoO2IMShsKXoJ/iAf/DYOjAKRboYKeUGUrHyRqWbMDiEm91bl5y6CKuz85DOelpsE9FGUl7xDouk7YSWRhpzkIEH6zTHIz0MMfxoi7ZX4wCss4IdK9DfmFzeQI+78lpb2aeqlENceaNeecZf9wSuwVFzIc9ONzoIStPsdpTv/biswlc2cZiKG2Eb5ak8pLuFeY/OL8K0fVHU22bzEjCKaiI1pJ1/ZyEYy3ZVLS8PQOtmsv1XzGrGKwDptWHRcs06Yvc9SZLnotz5eg3fAkDxggvI2YnGnOkDr2BEXWPRtGG1eA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by DS7PR12MB5982.namprd12.prod.outlook.com (2603:10b6:8:7d::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.31; Tue, 29 Apr
+ 2025 14:34:20 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8678.028; Tue, 29 Apr 2025
+ 14:34:19 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Alexandre Ghiti <alex@ghiti.fr>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	asahi@lists.linux.dev,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	iommu@lists.linux.dev,
+	Janne Grunau <j@jannau.net>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-riscv@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-s390@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Neal Gompa <neal@gompa.dev>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Sven Peter <sven@svenpeter.dev>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Tomasz Jeznach <tjeznach@rivosinc.com>,
+	Krishna Reddy <vdumpa@nvidia.com>,
+	virtualization@lists.linux.dev,
+	Chen-Yu Tsai <wens@csie.org>,
+	Will Deacon <will@kernel.org>,
+	Yong Wu <yong.wu@mediatek.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: patches@lists.linux.dev
+Subject: [PATCH 0/7] Remove ops.pgsize_bitmap
+Date: Tue, 29 Apr 2025 11:34:10 -0300
+Message-ID: <0-v1-7c5282b0c334+2db-iommu_rm_ops_pgsize_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MN2PR14CA0012.namprd14.prod.outlook.com
+ (2603:10b6:208:23e::17) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250311-b4-sm8750-display-v4-16-da6b3e959c76@linaro.org>
-X-Authority-Analysis: v=2.4 cv=AO34vM+d c=1 sm=1 tr=0 ts=6810e30b cx=c_pps a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=0cLWEtKbF7AIdJ2SciEA:9 a=CjuIK1q_8ugA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 7-RUIylnLnkcSDnfcy2TOeUepegn6CMr
-X-Proofpoint-ORIG-GUID: 7-RUIylnLnkcSDnfcy2TOeUepegn6CMr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDEwOCBTYWx0ZWRfX1aSSanzAs90V ytAQDBYq5czo1E4zpat9JCJidCR0Vzx6CzpTWTalNqX8TSa+MwqOTy7j7myCXC4iEjWoruNqyjE ac29ZVoCDxnkTr1v1yTZYitAiTMLXUZ2iDZrbl/JhWhrTLaYFgyHqE2GC4e2Xsf8/fJQi2+/GzL
- 7NGVV71m/1jCNVV9pQQXZ2OdT63U4KRwk8Isuk1ya+V1HZIMl1wH2AnxtSXzdudFjsIko6d1fTU tVEpT1mEL2Ih5ZMLD7h2kbpX9DZ492PmOKxYM3QvS1M+MOKe42VhEZIkTLegjry2xvparKAIhMF aAfH2t9xtjPxrY8OWkXDZ9cu/0XNAwXAV0+XrYLd+trL97pY2e3QIPiEWaz4UY/bWN1JIYxWp2k
- ZaOrY6Ey8zqGin/IExt2dgUsIEjTAU/TBjLstwqM36kpAY3U9ki3NuDNQLQUPi8whr1HltJ9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-29_05,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 clxscore=1015 malwarescore=0 spamscore=0 suspectscore=0
- mlxlogscore=829 mlxscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504290108
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|DS7PR12MB5982:EE_
+X-MS-Office365-Filtering-Correlation-Id: 006d84b0-224f-4af3-db0a-08dd872aec51
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|366016|1800799024|921020;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?CSMmiWcM3vmPonWzkS5OwoTNNOg+fFkLyG4+MgsAFVGrNOB3AkMxK4lZdYrN?=
+ =?us-ascii?Q?a60kTH2kjesdkUfhfvN4FDb60GtSVMDE5sh7yFQdJ5lB+zyFDF5RfJrObFi+?=
+ =?us-ascii?Q?s5Ewj0iBZcxanfWQlfJYD+gr7WbglpDjOSoXwW8oCODU9hU5k9UzmTf05wrs?=
+ =?us-ascii?Q?DpWeG2lDYX4/ieN+vbuKSMeJH66atgFwXx9W5yJ0bqS8QdJSTlIqpcXlEC+k?=
+ =?us-ascii?Q?g6U/W0XaRrI/qGbIJ+x+En6oE6Bboy6BaP/6EKfHiifIGOaRVaK+ozV1oCS1?=
+ =?us-ascii?Q?8h6+oKHPndBv6kFx/CpxzWfG1+IbmOnbqUnwkou9LC0Qkb1ah8nWCdNBBaFl?=
+ =?us-ascii?Q?Xa7zoKo3uBjP0TOE2CxtHKiQs5NXqJQHAi3k1hSRgNuQw5M9cP37E270j1Ci?=
+ =?us-ascii?Q?YOsp/uOtOLQvllbzTCcAOD9+i3AKS46FsMAJcXJ8bi45MWq6D5T94XyilNyn?=
+ =?us-ascii?Q?IXRRlN527OAn7dvYkKaQa/8e3Lgd/2XFhc6nyATarGHmzOYuU3R5jikhsK50?=
+ =?us-ascii?Q?p0noa98QxRd7C/CL/1TdW6IhSjhoaRT0MX9rMq8/ZVqrkJEynrIz7x84VZZb?=
+ =?us-ascii?Q?CUasXWPDJkMJt6zZGlbDy0cDR2O7ZqLBXwVRXPSexz8N2f7xx3/tmLImijBz?=
+ =?us-ascii?Q?ny53RRUiSfOOAw4S2CCVpsz5pSpqQnab8x7xWhY8/9jKM5gQGJ+KPUvifAS2?=
+ =?us-ascii?Q?mrjl+KOtYxTpStHfwuBeyIvuFwP61TkZJNXurJjYcDsr+NiS3cGw7BCxZQnK?=
+ =?us-ascii?Q?PsbXBAYz4Rk4Cr+uOOlJ4hITsqUli+gCxO517TUvnkNvwMjLQDxEAqSqFQGL?=
+ =?us-ascii?Q?a0L5KuHkGoAPmizACZYpgRXEwgWy4BzhnRAdJXx7n+hHyTAys03Nr88NisJl?=
+ =?us-ascii?Q?++Zg2kwAIdnLsOyEFUHwXKchMHz/0lQoU7GGkXHuqKCUwyLQe9oeW/5rQfpc?=
+ =?us-ascii?Q?R3Rvs3K07P8nE6FVMEFLAVSCPFFpeXe9XlduxXQGPrxoT82Fhj9jd2X4xHLF?=
+ =?us-ascii?Q?Q/T3QmimlO+XIrXhGjlPGLY5DGgQkxKWUum3KTx6eE1YW1zcRGMrBvTLG1vh?=
+ =?us-ascii?Q?VzntGCE6eFDjo1CfpeY3rsrIeJ2/Pje5bFIVzcXgARIYnpG87GyH3c4yKX4q?=
+ =?us-ascii?Q?zYUXr03XmlkYP7SWtEO/uXQPLoep+HaQhM7x+5V35GKUP44MYGsCzy1jF4O4?=
+ =?us-ascii?Q?XNVR80TyVr80otawK8X7VGp7HkBRbCPW6sFlV6Bj4fOTQYsRpLvWYAqdjIjQ?=
+ =?us-ascii?Q?wkuFvDfSy2FQvJMbWqYOeFJRWFNvGDkqfz6Y50W504gstdqxdZDmf8qSBSgo?=
+ =?us-ascii?Q?DOuqSECH0rWtWD5nB+VWXnWhd4TqqoAr80vWdJPkA/QOy2pUkfE1sozBXzZj?=
+ =?us-ascii?Q?KO4HafhgcmLwE2q1LsE9mOmaABiT+jGpJ0Eq6XIO9QJzuMuyE1qroBwrt2+5?=
+ =?us-ascii?Q?Qa7M5hvJwXUE3oWtLi6nTjEBSmxMI3vVdD0SrmCteMtzeAptzDVrCQ=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(921020);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?oBolikKzXGM2LiKcBBt/vAIVClpg3cQ0HlDH+RLpxu0YIQr7jndYWsjUW+0D?=
+ =?us-ascii?Q?raGfzkoZYWOcfenxgNSR8WLg75TDUvtioioMdBFwZ0T/UCaOJieJfsIF6+id?=
+ =?us-ascii?Q?41v1Hyse98n871pYimL6hMbdcH4yZ/eXKH3hDF2EcQDR/sULnOpleeWhLkqp?=
+ =?us-ascii?Q?swHw6x68UO824cb6XYqQ5yd2lQ/deT08mZPv+xkxmhOEsSI7TWO/iGLdhjp8?=
+ =?us-ascii?Q?51OEYDW24uZkX+N61hjvy/3dWoWEzUi9Pkv/pVmJE7MAgGj/ZG1Hn5gOhwns?=
+ =?us-ascii?Q?5H+e4TjC4Ot9ThYmPrQtybU8+guwtNyiO2gGqW4VNV18oD3EJ8qdJcU/m3XK?=
+ =?us-ascii?Q?jlFmjwzilh1p4oByLEHXu5ju0/be/zthQpVWhu9SvPPW6PeAvWvVLGGHElZQ?=
+ =?us-ascii?Q?dKB4DFS/VoO2mOP41jvTCbY5RG8o43vrc8opKrAvzplluR20GY6dJVUxN/4Q?=
+ =?us-ascii?Q?r8xfWxm0019fvdZXvZBKfb8qESI9UPBwj03QmbRL59c+VAbmEi/VXAeMwQ2e?=
+ =?us-ascii?Q?jlnuWoe6zdGncvyZ8X+3qBcr/0hdZDi2nDPstJP2Jk3BwdkKIrUWAsEllcxk?=
+ =?us-ascii?Q?MD1zNtaEegHanCPq0jy+bFRIYJOFdY6nZCOtk/LJFqdoDZW+sp374cl3Tfee?=
+ =?us-ascii?Q?4K+ER9+WG1nyF9Act3L+ys47KjvNTh09NHRrXK5smM1Y2z1Ytjcsp0YcDCjg?=
+ =?us-ascii?Q?UoRCfTp1VQTQEFYQbdGMXjLw69dJLCTw1C2Ov6r4GWxo01gMMkVyxw5QyyxG?=
+ =?us-ascii?Q?UJZXonENk59kOI/aXQhX3nNUOD4AuieJ4q6HFs+7jjucHtLKgjS5BSU6j1qB?=
+ =?us-ascii?Q?GWrEZWjaj99w5eXdk1ntuWfEQbcKjNLGTd6kyUNAycjHFTucqPc2fAZOqQVw?=
+ =?us-ascii?Q?Gv9UCi9z9P2oC3vand1/kY0nHXB8V7KzelaMcz376iccc/sfbmxEX+9OmbzR?=
+ =?us-ascii?Q?ZVI888Ljqlv//ZK8Hby/c3YRQS0ihuVQozmKoMjTSG7jr3suhgqu48Sy+EQ5?=
+ =?us-ascii?Q?xQuy/6LzgWHVnFPrg/fDBLw+t5f9L2tjP2KdeRqV5aVumZIHSeLCkoV7YM7j?=
+ =?us-ascii?Q?A+Np8Ddikr9C6uPVDOVaR8QoHOuh+RWi/co1B8zJcOJ4nnBFguGLidB8IG9t?=
+ =?us-ascii?Q?UAnyXT5mKA/zmodR7E9MphtHN7DpUo/PCrNtMrGZFsaf76K6IQ7m/f1cmVXc?=
+ =?us-ascii?Q?BIyG1QEaaaaJDw5imIXMEWQbOR0z09uPYZmQRVSwBW61L+YK+Lo9stEhlZMh?=
+ =?us-ascii?Q?U5+MK25+S5ddMRgQIZGuLgwlxULbswqf4dX9myogzJ0MSqUZ+Cyhi3RvH6XW?=
+ =?us-ascii?Q?VpgHt9L1NmqteODSG1x0nnpbZ0rtPbUxyAyVIUfS6c4q/cEUdlsrXhY8mHJj?=
+ =?us-ascii?Q?6s/vb1tzKQXPwIsKST5GU2AOO93SzyaAx7rjfehNI0A0lzVege4u7EdPEWpr?=
+ =?us-ascii?Q?EqE72hzmRZtpntWs4cuc/XDsj8Dru411ejLS8je4RTwLCM8wx6Cr0NzY/Di6?=
+ =?us-ascii?Q?4Q5KJ5CqXFIyk7o3bZfJ9e/mEM2uRmBdmJIKI1sSS7wXNhDX8Ke4uxScOJY9?=
+ =?us-ascii?Q?7RGTI+D8jjlmDSwBsvXmP9wwbCXsltOsFXIvbtZ5?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 006d84b0-224f-4af3-db0a-08dd872aec51
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Apr 2025 14:34:18.8419
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: QH2x8TGOFjPF43wB2EW7M+EwRGXaqzKZxLhSigJe4lErYw/ss2gfSKua04EraGDs
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5982
 
-On Tue, Mar 11, 2025 at 08:02:06PM +0100, Krzysztof Kozlowski wrote:
-> v12.0 DPU on SM8750 comes with 10-bit color alpha.  Add register
-> differences and new implementations of setup_alpha_out,
-> setup_border_color and so one for this.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Changes in v4:
-> 1. Lowercase hex, use spaces for define indentation
-> 2. _dpu_crtc_setup_blend_cfg(): pass mdss_ver instead of ctl
-> 
+Now that all drivers are using domain_alloc_paging() and dev is never
+NULL, we can have all drivers correctly set domain.pgsize_bitmap during
+their allocation function.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+There are a few oddities that have accumulated here over past changes:
 
+ - Some drivers always set domain.pgsize_bitmap during their
+   domain_alloc_paging() call but still provide a value in ops. This is dead
+   code, delete it.
+
+ - Some drivers calculate a system global pgsize_bitmap in the ops, but
+   it is now trivial to use the per-instance value instead. In several
+   cases this is dead code, delete it. This also allows
+   constifying the ops in these drivers as a hardening measure
+
+ - Some drivers have a fixed pgsize_bitmap, put it next to setting up the
+   geometry in their domain_alloc_paging() functions.
+
+ - Finally a few drivers still use ops because they have a delayed
+   finalize operation. Set the constant pgsize_bitmap in the
+   domain_alloc_paging().
+
+Then remove ops.pgsize_bitmap.
+
+This is based on iommu next, and must go after the virtio
+domain_alloc_paging() conversion.
+
+Jason Gunthorpe (7):
+  iommu/arm-smmu-v3: Remove iommu_ops pgsize_bitmap
+  iommu/arm-smmu: Remove iommu_ops pgsize_bitmap
+  iommu: Remove ops.pgsize_bitmap from drivers that don't use it
+  iommu: Remove iommu_ops pgsize_bitmap from simple drivers
+  iommu/mtk: Remove iommu_ops pgsize_bitmap
+  iommu/qcom: Remove iommu_ops pgsize_bitmap
+  iommu: Remove ops->pgsize_bitmap
+
+ drivers/iommu/apple-dart.c                  |  1 -
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 10 ++--------
+ drivers/iommu/arm/arm-smmu/arm-smmu.c       | 12 +++++-------
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c     |  6 ++----
+ drivers/iommu/exynos-iommu.c                |  3 ++-
+ drivers/iommu/intel/iommu.c                 |  1 -
+ drivers/iommu/iommu.c                       |  7 -------
+ drivers/iommu/iommufd/selftest.c            |  1 -
+ drivers/iommu/ipmmu-vmsa.c                  |  4 ++--
+ drivers/iommu/mtk_iommu.c                   |  9 +++------
+ drivers/iommu/mtk_iommu_v1.c                |  3 ++-
+ drivers/iommu/omap-iommu.c                  |  3 ++-
+ drivers/iommu/riscv/iommu.c                 |  1 -
+ drivers/iommu/rockchip-iommu.c              |  3 ++-
+ drivers/iommu/s390-iommu.c                  |  2 +-
+ drivers/iommu/sprd-iommu.c                  |  3 ++-
+ drivers/iommu/sun50i-iommu.c                |  3 ++-
+ drivers/iommu/tegra-smmu.c                  |  3 ++-
+ drivers/iommu/virtio-iommu.c                |  6 ++----
+ include/linux/iommu.h                       |  2 --
+ 20 files changed, 31 insertions(+), 52 deletions(-)
+
+
+base-commit: 44e9f08cac9f7cc49e14f141b556409c805912ec
 -- 
-With best wishes
-Dmitry
+2.43.0
+
 
