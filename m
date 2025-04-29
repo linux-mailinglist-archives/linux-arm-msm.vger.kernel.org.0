@@ -1,339 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-56150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EEE2AA0F59
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 16:44:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1F97AA0F98
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 16:52:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 517FD16EC6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 14:44:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18E204A4481
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 14:50:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91DE921A94D;
-	Tue, 29 Apr 2025 14:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B72E21ADDE;
+	Tue, 29 Apr 2025 14:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U3qkU+K7"
+	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="nvaNxoRw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6552E21A458;
-	Tue, 29 Apr 2025 14:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FBF21C162
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 14:50:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.123
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745937863; cv=none; b=PHWEfXPaWXA74dYKiP/jgxfxGL677rfpdSmoxJETj0s276byxvU2q0FPCcWRnrSxJ2IwRKHRJH51/iZk2X0SQ7gOe/JeSl6TbteMBGBeRtMPM/3sRJzd1iNp9kavrfuqfBNoYVJSqEh9h5D7ZMVZ/uPJjneHDZE1H3egDY/gmzI=
+	t=1745938222; cv=none; b=QO4ndOaVvYH681B6QqxQqLlCgyDgEaSZRckKB2rEOaJTjorqHtFsmFE9q0b8QSL7+MhttjdJqwVc+BN/YoUc9xlHIhm1B4LRzB1zD2/9iwT9526hDVOkN3xBHfaJJt1I3IRjJJLMLDmGHVrapc1kHv4aUoonRcgNLkLOEgNo3iY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745937863; c=relaxed/simple;
-	bh=R4vOR05JknVZs/NEdQonvDnMNWYntCOc6VcKMtVxqJw=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=GJBDBgYrufFKJQx13f+7UXO6JWH4DQpl/AaCllvmOPHkM7v580FANwGOzJdcvqgCoAwv1S3a7kgisKglYGstVDMu6PMQrc5iajgtUvIjnOChdNHCTKeXt4mGLBRLDSaWhoSLbU5au4Df6SIxq/SmyhviEr3tPZ7kFTvQqOqHT3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U3qkU+K7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C433C4CEED;
-	Tue, 29 Apr 2025 14:44:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745937862;
-	bh=R4vOR05JknVZs/NEdQonvDnMNWYntCOc6VcKMtVxqJw=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=U3qkU+K79naAJmFuz8MJ7r/8S9hiBRyd+TL5eht1RwfKDkdD23ArvXkdt+U6bwYrr
-	 ybALSM986SrUyaFvADhc89prDZDiGrgeeuC8Qg3NyxWu7dRtmEKmgy7Dn4mbGddzqq
-	 iQGIEAbrJNKD6bQilKdUBwBz9tqUrUHag8w6sXnnO/sDy/vyFm7dVR8bIMTqtQLOdz
-	 Gm2S8rzlM55t6jCuSDNgFgr5VRlUtjTyM0xNxei2uL8ijRXYL+Rx0VqqdQ17kCpxG2
-	 yZtz3VLfojWL5VLB+aFAn7dAOYMeS+wGXztSDin4FCE+D2Ljyq+AZiZrt1i/uvUJSW
-	 lMYl9UkMGeCsw==
-Date: Tue, 29 Apr 2025 09:44:21 -0500
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+	s=arc-20240116; t=1745938222; c=relaxed/simple;
+	bh=2PdqbEbagwoDuKzEj0IRmpbhZpPVeui/bIiI8irZQ4o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=b9RJ7VbDWdGFDbimV1s6XJn7wr0Q0tUoNfMl1GNdgXGqKsO4rhiGGZSplkOKeWl3q/GUc/AplttvAfKU/2OXP+LisrEW7YGMP0Knv0r0q62x5CuMMBSHDZlTVtK8kRpSntLG7eSLq6fEwg/XpowhviF9iegnw3yMiLJ5Q/YXr8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=nvaNxoRw; arc=none smtp.client-ip=185.125.188.123
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com [209.85.221.70])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id C0C103F2B6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 14:50:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1745938207;
+	bh=52MijEJOA2wvCQcL6Go5NIekwbrP8EYQEpSc/TVugz0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version;
+	b=nvaNxoRwoCDNsq7UpgzciIuMPv/EE9h65aYebGA0eWUnBNjASYieq2V9nDIPO7xYo
+	 UqQFcXPH5e8b49DRtLiSYbUnStQJXSJuq3lcX0IBx5K8xnZaX/2/7y+mLJtLBA5tKY
+	 qgHrLHLU4a6opQc6j3GNjCLUCwmSv7qAaG8kGuKCwDqm/K6JPAg1GlJUbJ/LoQr+N2
+	 DMYhAzg0MRLbQhVW7NII4pCBoGFHr1n6nxRodNChd9VD+NZgUlQWuNuExvxyJBhEWI
+	 SqA3uB9ZIFsLcMqU3sgbIUdi7SCrnB2T08eDXUXSNOrRsz4N+XiZoraKW8lRFak6bT
+	 ZGSdmZILvj0DQ==
+Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-39135d31ca4so2340878f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 07:50:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745938201; x=1746543001;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=52MijEJOA2wvCQcL6Go5NIekwbrP8EYQEpSc/TVugz0=;
+        b=DosUtvuoVqUEu6rR2EUPxSvHaCk/ivveBLG8jS+B4pB1DBtmBFIAZf1WT/JDqzH4+t
+         6UKIlOT9v0YGHeh/nQf0+mi57DDL3pYzQa2kadRQtc/2W5BD88guRyqsdhGSGBA5uvZX
+         Ejc+ubn/IXPQTsHEZxrZVkjagvhIlfOzvtK0u7xrkU+gwNqygM1E8sjTLyQ5QchBZXq/
+         6Nr7TiP1E5876rD20TmOxTrewMK5lo7lvzSAxguxs+PfpRhYgg3rYuImDAXZElaJsNqI
+         dtpGJ4yd0x8ygq65b+NxUVEOrPHEK3NaLeqdOn8I4OvC/1TykOxqfwMpARGWg6jPmihL
+         6T4A==
+X-Forwarded-Encrypted: i=1; AJvYcCWjE7gB1Eeuc/qgJrvffc+meFQjSbdVgQyyBPCo7Cp0lA1LnJYu/5bW0uzxHEuzFFg9obIe9urPuXmE+CDC@vger.kernel.org
+X-Gm-Message-State: AOJu0YxEO1nq+HeVEYJDzrkL2T7MkUdJL/S47d1/xSWvt3faN0kS3Qq/
+	3tnFLoXg/AaJGqeoCltUy3bSnI0+N70GztNbRMsUczLJZ/C+j7UzLWqVoUiWziLmstUgEbVjTDQ
+	H3LjE11mCO6R0AGHHfr0k6Jme435Zrr55/bMMnXNnede3V+PmJDQt1OuIsnwa3N5R9OGF+5TiIv
+	vEBjM=
+X-Gm-Gg: ASbGncvkh7yjw7ksj82MSuaL2O68C360GRQ8yy1QpyjCKRIrmWPw853jB4ADGbAcWw2
+	frrN+OiqcXsekqQTohlnbFciBsC9xPmHmQs7OMbtKXq0l8UsbbMYEQwttfx2uiN88Q/I5HmwrXa
+	CzrrRTKby6NkkORAxKOn43i370LYlaJpdbfPT7UwUHVjBnl9TJtMxIeDYIqXRNUAk6dYpT09YAc
+	Fb6qBiFsoQD/O3y8sHgZkPWDuG2OPrYCPGQRl4+CBMHY5OUKgIsqTu/bj+Qzm+HmEf3pYWMAz7F
+	Cpy/lkpoPdicsdp9Wc1X8kSz1BY3AHjQsX5R8di/XJADrWURLiVcsoHR
+X-Received: by 2002:a05:6000:18a5:b0:3a0:8c01:d463 with SMTP id ffacd0b85a97d-3a08c01d90bmr2630920f8f.9.1745938200825;
+        Tue, 29 Apr 2025 07:50:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHnKBHWKNLptuYZLJZBRUoe7eBhk55Kl8aqDH7g/w/SK5bZ6Awe0yTGofYm3mWix+gf5bziAw==
+X-Received: by 2002:a05:6000:18a5:b0:3a0:8c01:d463 with SMTP id ffacd0b85a97d-3a08c01d90bmr2630899f8f.9.1745938200468;
+        Tue, 29 Apr 2025 07:50:00 -0700 (PDT)
+Received: from localhost (151-243-191-194.pool.dsl-net.ch. [194.191.243.151])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073c8d1a5sm14498765f8f.13.2025.04.29.07.49.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Apr 2025 07:49:59 -0700 (PDT)
+From: Juerg Haefliger <juerg.haefliger@canonical.com>
+To: juerg.haefliger@canonical.com
+Cc: andersson@kernel.org,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	robh@kernel.org
+Subject: [PATCH v4 0/4] HP EliteBook Ultra G1q support
+Date: Tue, 29 Apr 2025 16:49:53 +0200
+Message-ID: <20250429144957.2088284-1-juerg.haefliger@canonical.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250416094236.312079-1-juerg.haefliger@canonical.com>
+References: <20250416094236.312079-1-juerg.haefliger@canonical.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
- linux-arm-msm@vger.kernel.org, kernel@oss.qualcomm.com, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org, 
- Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org
-To: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-In-Reply-To: <20250429092430.21477-1-quic_pkumpatl@quicinc.com>
-References: <20250429092430.21477-1-quic_pkumpatl@quicinc.com>
-Message-Id: <174593770466.4057779.8829493778157292892.robh@kernel.org>
-Subject: Re: [PATCH v2 0/7] Enable audio on qcs6490-RB3Gen2 and qcm6490-idp
- boards
+Content-Transfer-Encoding: 8bit
+
+Add support for the HP EliteBook Ultra G1q 14" AI laptop.
+
+Based on HWINFO64 and APCI tables, it seems to be the same HW as the
+HP OmniBook X 14.
+
+v3->v4:
+  - Bring the sound model back to the node
+  - Split the driver change into a separate commit
+v2->v3:
+  - Drop status properties from nodes in patch 3/3
+  - Add acked-by-krzk to patch 2/3
+v1->v2:
+  - Don't rename the X14 dts to dtsi and directly include the dts
+  - Add a label to the sound node and use that to override the model
+  - Reorder the dt doc patch before the dt usage
 
 
-On Tue, 29 Apr 2025 14:54:23 +0530, Prasad Kumpatla wrote:
-> Audio support is now enabled on the qcs6490-RB3Gen2 and qcm6490-idp boards.
-> The updates include adding the necessary audio device tree support and the required
-> dependencies.
-> 
-> Both the qcs6490-RB3Gen2 and qcm6490-idp boards are derived from the same SoC
-> platform. Therefore, the audio support changes are included in a single patch
-> set for consistency and ease of maintenance.
-> 
-> Changes in [v2]:
-> 	- Created dtsi file to handle common audio nodes to support Audioreach.
-> 	- Addressed the review comments.
-> 	- Link to V1 : https://lore.kernel.org/linux-arm-msm/20250317054151.6095-2-quic_pkumpatl@quicinc.com/
-> 
-> Mohammad Rafi Shaik (7):
->   arm64: dts: qcom: qcs6490-audioreach: Add gpr node
->   arm64: dts: qcom: sc7280: Add WSA SoundWire and LPASS support
->   arm64: dts: qcom: qcs6490-audioreach: Modify LPASS macros clock
->     settings for audioreach
->   arm64: dts: qcom: qcs6490-rb3gen2: Add WSA8830 speakers amplifier
->   arm64: dts: qcom: qcs6490-rb3gen2: Add sound card
->   arm64: dts: qcom: qcm6490-idp: Add WSA8830 speakers and WCD9370
->     headset codec
->   arm64: dts: qcom: qcm6490-idp: Add sound card
-> 
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts      | 250 ++++++++++++++++++
->  .../boot/dts/qcom/qcs6490-audioreach.dtsi     |  99 +++++++
->  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts  | 119 +++++++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi          |  70 ++++-
->  4 files changed, 537 insertions(+), 1 deletion(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi
-> 
-> 
-> base-commit: 33035b665157558254b3c21c3f049fd728e72368
-> --
-> 2.17.1
-> 
-> 
-> 
+Juerg Haefliger (4):
+  arm64: dts: qcom: x1e80100-hp-omnibook-x14: add sound label
+  dt-bindings: arm: qcom: Document HP EliteBook Ultra G1q
+  arm64: dts: qcom: x1e80100-hp-elitebook-ultra-g1q: DT for HP EliteBook
+    Ultra G1q
+  firmware: qcom: scm: Allow QSEECOM for HP EliteBook Ultra G1q
 
+ .../devicetree/bindings/arm/qcom.yaml         |  1 +
+ arch/arm64/boot/dts/qcom/Makefile             |  1 +
+ .../qcom/x1e80100-hp-elitebook-ultra-g1q.dts  | 30 +++++++++++++++++++
+ .../dts/qcom/x1e80100-hp-omnibook-x14.dts     |  2 +-
+ drivers/firmware/qcom/qcom_scm.c              |  1 +
+ 5 files changed, 34 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dts
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: using specified base-commit 33035b665157558254b3c21c3f049fd728e72368
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250429092430.21477-1-quic_pkumpatl@quicinc.com:
-
-arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[224, 8], [224, 7], [225]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[224, 8], [224, 7], [225]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: codec@3370000 (qcom,sc7280-lpass-va-macro): clock-names: ['mclk', 'macro', 'dcodec'] is too long
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-va-macro.yaml#
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: codec@3370000 (qcom,sc7280-lpass-va-macro): clocks: [[224, 56, 1], [224, 102, 1], [224, 103, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-va-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[232, 8], [232, 7], [233]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[232, 8], [232, 7], [233]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[232, 8], [232, 7], [233]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[232, 8], [232, 7], [233]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pinctrl@33c0000 (qcom,sc7280-lpass-lpi-pinctrl): Unevaluated properties are not allowed ('clock-names', 'clocks' were unexpected)
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: codec@3370000 (qcom,sc7280-lpass-va-macro): clock-names: ['mclk', 'macro', 'dcodec'] is too long
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-va-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: codec@3370000 (qcom,sc7280-lpass-va-macro): clocks: [[203, 56, 1], [203, 102, 1], [203, 103, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-va-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: pinctrl@33c0000 (qcom,sc7280-lpass-lpi-pinctrl): Unevaluated properties are not allowed ('clock-names', 'clocks' were unexpected)
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[232, 8], [232, 7], [233]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[232, 8], [232, 7], [233]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[236, 8], [236, 7], [237]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[236, 8], [236, 7], [237]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-idp2.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-idp2.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-idp2.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[221, 8], [221, 7], [222]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-idp2.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-idp2.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[221, 8], [221, 7], [222]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pmic@2 (qcom,pm8350c): pwm:nvmem: [[360, 361]] is too short
-	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pwm (qcom,pm8350c-pwm): nvmem: [[360, 361]] is too short
-	from schema $id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: sound (qcom,qcm6490-idp-sndcard): '#address-cells', '#size-cells' do not match any of the regexes: '.*-dai-link$', '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/sound/qcom,sm8250.yaml#
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: sound (qcom,qcs6490-rb3gen2-sndcard): '#address-cells', '#size-cells' do not match any of the regexes: '.*-dai-link$', '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/sound/qcom,sm8250.yaml#
-arch/arm64/boot/dts/qcom/sc7280-idp.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-idp.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-idp.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[216, 8], [216, 7], [217]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-idp.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-idp.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[216, 8], [216, 7], [217]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: audio-codec-0 (qcom,wcd9370-codec): 'qcom,micbias4-microvolt' is a required property
-	from schema $id: http://devicetree.org/schemas/sound/qcom,wcd937x.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: audio-codec-0 (qcom,wcd9370-codec): Unevaluated properties are not allowed ('qcom,micbias1-microvolt', 'qcom,micbias2-microvolt', 'qcom,micbias3-microvolt', 'qcom,rx-device', 'qcom,tx-device', 'reset-gpios', 'vdd-buck-supply', 'vdd-mic-bias-supply', 'vdd-rxtx-supply' were unexpected)
-	from schema $id: http://devicetree.org/schemas/sound/qcom,wcd937x.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[236, 8], [236, 7], [237]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[236, 8], [236, 7], [237]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[232, 8], [232, 7], [233]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[232, 8], [232, 7], [233]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[235, 8], [235, 7], [236]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[235, 8], [235, 7], [236]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[232, 8], [232, 7], [233]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[232, 8], [232, 7], [233]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[232, 8], [232, 7], [233]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[232, 8], [232, 7], [233]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[218, 8], [218, 7], [219]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[218, 8], [218, 7], [219]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[233, 8], [233, 7], [234]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[233, 8], [233, 7], [234]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[224, 8], [224, 7], [225]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[224, 8], [224, 7], [225]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[223, 8], [223, 7], [224]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[223, 8], [223, 7], [224]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[233, 8], [233, 7], [234]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[233, 8], [233, 7], [234]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names:2: 'macro' was expected
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[233, 8], [233, 7], [234]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clock-names: ['mclk', 'npl', 'fsgen'] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dtb: codec@3240000 (qcom,sc7280-lpass-wsa-macro): clocks: [[233, 8], [233, 7], [234]] is too short
-	from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-wsa-macro.yaml#
-
-
-
-
+-- 
+2.43.0
 
 
