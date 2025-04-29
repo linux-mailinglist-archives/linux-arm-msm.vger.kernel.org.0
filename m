@@ -1,160 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-56074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DA14AA0723
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 11:27:37 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2282AA070A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 11:25:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A79D48291C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 09:27:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 39FBC7A391A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 09:24:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7226B2BE118;
-	Tue, 29 Apr 2025 09:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FD752BE0FD;
+	Tue, 29 Apr 2025 09:24:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YZ4INpv2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Cc3wCaRM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3390E2BE0F6;
-	Tue, 29 Apr 2025 09:25:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9AF2BCF4E;
+	Tue, 29 Apr 2025 09:24:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745918756; cv=none; b=SM4AP4I9VVsRFplRgPfyPuKCHAL0XobjR/3RcVGZV5ICMITNhOOqlCDnPu9WAAbrO+e2iqCaGnseLCULWBoYjHsMax6UTI25lKUBs2xeh5GwsfcCtywBX/ZiOlGyG5yCmBED8bhGPt+7Oz1IY4qyJZTVPynBOw9B7mUbrkalT6g=
+	t=1745918697; cv=none; b=W4hJgl+LVm8th9RJJnqxWBzcvbi8cqirHruXEfzFkWWiWtFIQSxATXX52Wy+bNF2KHjrVbloveZe2IxF+EJ+RFsVsu80arlgnOqapFMybpX3n0xLxyeysD3xNGn7rhrUWKkpxEd9pa0JfgrqB3Z2pj/Q5WHRHlzm2XWaQNz0x78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745918756; c=relaxed/simple;
-	bh=aNHSzTuJO9qrwmXkoGFBppKTK0tfmRMsHjRBAWKQAcU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WM+J88ZPCAjLItAiLLq4emKCSw9NjC2DoF5eOji+HbBCs+KKw0gmuFAhugJIYtQZqfQ9XnoHJuUdg0KMpwUlq8+EYPuGJMOwkM0XJrvf9s9rsa4vaP8BW3zvCyCgtO2tzunHVExr12hk32F8LMqh1PM/OTKGFUHA2etXKuyttNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YZ4INpv2; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-224341bbc1dso61270965ad.3;
-        Tue, 29 Apr 2025 02:25:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745918752; x=1746523552; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aNHSzTuJO9qrwmXkoGFBppKTK0tfmRMsHjRBAWKQAcU=;
-        b=YZ4INpv2NkTQga5ysoZspYmc/o3CeU5nDg8wAMfHDM5xgx/YTClN66jKRMHDuZRj0j
-         S/BaVNiuH0CKWr9JJ+Iie1smcTVCL8B8z9KHuV06151wqDpB3Hd6iRJz/W2Y2qXZSyPw
-         TecZj6hDD6AJ0Ee5DlNUErVo2WeaaC1Cr7KCFAfwYK5aE+j7dAaTN5d153AEtA6EKfAv
-         p1BmCtttEu2qpoI65y6W2/zPowURFlwEOJw0L/1I/CLDhRcJcceGwBygpFSDWrnJgVmW
-         i2C4U08NuGAB5B61tC//T2DetD1mxRDJBZWtmvhSZ2E8cKtbEf4PhtzspGIpbtY8p62w
-         pp7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745918752; x=1746523552;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aNHSzTuJO9qrwmXkoGFBppKTK0tfmRMsHjRBAWKQAcU=;
-        b=mn7yL9Kx2TLQdlYXMuJ3myTH56HvH6x2VBvtjTPGlfAks9SqaIdKEp+o92OMBCaODY
-         H72rO9W8ms5gBAT8B/MZODS7zZxsX9iG94YrUNuJPHYmkOxmn7M8KZojSv7aRorXDaDz
-         dtpYbUaZac2DQLULQtmjmuvrK6nctGpYNXHtNL8dxtLqZA+xUDW4251zbERqFUjawfY/
-         W2yonEmLfcfHgZViTJ/Q7KK8rm19wv/9TGcDPp6W3QQMOMItTXzOf/d9+Ah05quHD7si
-         GNH1OGP5D7RySZ5RWXsR3Ar/ZsqrjNlXRxj7NaHWo9smYvwFxPFqER5KOn7yNeZkwU+m
-         tGFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU4QDeDBB7u09VAmD7EHD5xZTbnYuFklKna9r3vjo4jSECfxtzCp8BlxKrkB7Hg4kOKHPK4vdU5hq0n@vger.kernel.org, AJvYcCWOnHhtw++g2xeTJayGaFWYI8MzpE7Bm7svPoYi1Wc7jDnq0+GrqUyhR8Sm4aElTm++OyKzVA/D22iJklIn@vger.kernel.org, AJvYcCXW7w6Ww7Uh5k84wyR7DR9ZVyz0N/TrfhSwzGlzCSIIrJuo/pJC+VsDoBeqPZ38ohV5r9hNvfaJHigfiqojlw==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUJDnutrJpN9MR8J2+uHMUqYll/MpicPzzl9ycUMHnNS5wiVIB
-	PcjWJ0IrLZmI+M8Fu2hcfEWrWCkLrc0U/esTxW5/CaYKecX5Ikjh
-X-Gm-Gg: ASbGncvk4KU7KLFqtWfY4Y3JyhAw4KDLe1tmwwoILpjsumSMgxkTEvFpxX2AqZnmwcG
-	BuPS9CypWr2LWHLWqiuT4Z96qzL73uyQnHnec+EcNmhh085+I0B7U8IGB6U0L6dEEWGXf8pGKXu
-	i3RR117zE2riFpLslriQmyCwHpfZWfwdknp6rWKOum8mKeHN4MEVARxeYENy5vvf2GOoZJdEcm8
-	QLiJNgnIgtY0VIhnKYeRRQfngscOOCYj4hgeTpBN2wJbr5IDm2/snhD3ABGPIXsSgA0Xre8ZuG2
-	l2/hR+Dy097dpujWRQ9tKsrkAeciZcv8Qhv2bUg=
-X-Google-Smtp-Source: AGHT+IHb3XDR+CIyVLJfE/+/qfZBH7IaetKlrGWMj5W8hWYAtZ5uFrtXFPsJJcx6PAeNDXijkIAQxw==
-X-Received: by 2002:a17:903:28d:b0:223:f408:c3cf with SMTP id d9443c01a7336-22de70276d4mr36675615ad.21.1745918752192;
-        Tue, 29 Apr 2025 02:25:52 -0700 (PDT)
-Received: from nuvole.. ([144.202.86.13])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22db5221600sm97440105ad.213.2025.04.29.02.25.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 02:25:51 -0700 (PDT)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: dmitry.baryshkov@oss.qualcomm.com
-Cc: abel.vesa@linaro.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	kishon@kernel.org,
-	krzk+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	mitltlatltl@gmail.com,
-	robh@kernel.org,
-	sfr@canb.auug.org.au,
-	vkoul@kernel.org
-Subject: Re: [PATCH v2 2/2] phy: qualcomm: phy-qcom-eusb2-repeater: rework reg override handler
-Date: Tue, 29 Apr 2025 17:23:29 +0800
-Message-ID: <20250429092331.53054-1-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <n5z5atbxkwqllni6cgygcw5nn7z4w3yjznhpkaajw6tggenxb3@kxpk2e6vmvlj>
-References: <n5z5atbxkwqllni6cgygcw5nn7z4w3yjznhpkaajw6tggenxb3@kxpk2e6vmvlj>
+	s=arc-20240116; t=1745918697; c=relaxed/simple;
+	bh=rrQJ0Hka8wYnJPOAUeGyeZ841tHT6lm9xmZ1jfLxhO4=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=QWnpyaN0/nN0v6fCpbiUhC/Xqche/uevU26iUmjXpCHKVgPTq/r2T9F6eT5pL3/cSppeDO3EzKUgpkZo5nYDjR5ynVwAcKcpDuyZzXEG9eLPU1BYQ4srvsr3FOHufRFlf6Ao7C2d1mgxChjqQKI9QYtTe3zr8Sj9+7oz4WgfIO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Cc3wCaRM; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53SNq0ro019654;
+	Tue, 29 Apr 2025 09:24:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:date:from:message-id:subject:to; s=qcppdkim1; bh=3OBmZd+6pPWr
+	vEdWM9HFPVQRQwXfz7bxO/9XfRC7RCg=; b=Cc3wCaRM4Xvm0UepINxFsjs9wUOz
+	AVIB326DyfGKDy58RpX48ZLt7AnapoQs+86UuMXpdwm1r3HdstMXV5n8oGWwR/5k
+	PKBPnKYod1kEO+/Zyp5lNc2tX7EVDULOoAwqy5/tbxCpnES2SoVztTgKrJ8tC0XV
+	FNxOsd6iUw0xkBkVO80MD1XIgXa+1gXlIH8FvOtfGZMx7++qf/6yV13D07QosJP9
+	onuCt53FuIiJ0Q8aVD0yX0dlt0/txm9isTMmz9MMpJdPObSWyArVUFNPTJxpz93M
+	Z2IRa2gL3tpxg+Hjqgc6CJELe8rB2z+qi/tftAjdBmUbeX2ILWORmwTqcw==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468n6jk9g9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Apr 2025 09:24:52 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 53T9Ol3h031628;
+	Tue, 29 Apr 2025 09:24:48 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 468rjmhb32-1;
+	Tue, 29 Apr 2025 09:24:47 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53T9Ol8k031584;
+	Tue, 29 Apr 2025 09:24:47 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-pkumpatl-hyd.qualcomm.com [10.213.109.81])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 53T9OlOf031558;
+	Tue, 29 Apr 2025 09:24:47 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 3914174)
+	id 90402604541; Tue, 29 Apr 2025 14:54:46 +0530 (+0530)
+From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel@oss.qualcomm.com, Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+Subject: [PATCH v2 0/7] Enable audio on qcs6490-RB3Gen2 and qcm6490-idp boards
+Date: Tue, 29 Apr 2025 14:54:23 +0530
+Message-Id: <20250429092430.21477-1-quic_pkumpatl@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDA2OSBTYWx0ZWRfX5Ex5N65QAnNX ZgeFbFl2Dw40Xed1K+xBcoBB7mHKt9dub1GRuDp+xZWWPtT6C0qwc4nb2o+2GaRYF5M3NIF2FJ2 V1En28QDo6TT0lW8WeaxRRMEzR4qZtOIHy4Q79BEgfxwwjeuKPQYdN+URRY6AYoNTpNHWgoxCH2
+ KvxjGHmq0I5AzF4YoEIcgYEbGzU/d4uyA5KlfgvViVt8iTwoosvSu4ldC/bwz4cwj5gibiEik/T L4d+OuB7tX+q/+l11q6stmfL4Q4igmZbixwAIL/DxIMK1k17eDxVaJiMGtQc6V2CmiEYAi2ycM9 DZ/Ja0CPS3L3pVmSximdS580FzSqx/DayWTqixhsl0sWpb4PegTU/rI292/UgkpdDTnL4fh31z3
+ FmlRTn/9ifIZaWmgRFPytw1FD0EbeHb28PjxROyOHv2aQWOsiTXrSyh7ZEBaXNFlr3bjw+8x
+X-Proofpoint-GUID: lNvFDZlGCH5ebz3fh_4DBlpdJaUr1kQE
+X-Proofpoint-ORIG-GUID: lNvFDZlGCH5ebz3fh_4DBlpdJaUr1kQE
+X-Authority-Analysis: v=2.4 cv=C8fpyRP+ c=1 sm=1 tr=0 ts=68109ae4 cx=c_pps a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=qXBIds3u5FJ4LVJbLgwA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-29_03,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ mlxlogscore=651 priorityscore=1501 clxscore=1015 spamscore=0 adultscore=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 mlxscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504290069
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 29, 2025 at 12:58 AM Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> On Sat, Apr 26, 2025 at 04:14:23PM +0800, Pengyu Luo wrote:
-> > On Sat, Apr 26, 2025 at 3:41 AM Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> > > On Wed, Apr 16, 2025 at 08:02:01PM +0800, Pengyu Luo wrote:
-> > > > In downstream tree, many registers need to be overridden, it varies
-> > > > from devices and platforms, with these registers getting more, adding
-> > > > a handler for this is helpful.
-> > >
-> > > It should be noted that previously all values were applied during _init
-> > > phase, before checking the status etc. Now the overrides are programmed
-> > > from the set_mode. Should you still program sane defaults at the init
-> > > stage too?
-> > >
-> >
-> > I think programming in set_mode is ok. When we init(dwc3_core_init), we
-> > set_mode(dwc3_core_init_mode) later, please check
-> > https://elixir.bootlin.com/linux/v6.14.3/source/drivers/usb/dwc3/core.c#L2287
->
-> Yes, but that happens after reading status regs, etc.
->
-> > Actually, in the downstream, all the things are done in init, it
-> > overrides first, then masked write the deaults, finally it set_mode,
-> > you can check here
-> > https://github.com/OnePlusOSS/android_kernel_oneplus_sm8650/blob/oneplus/sm8650_v_15.0.0_pad_pro/drivers/usb/repeater/repeater-qti-pmic-eusb2.c#L356
->
-> I'd stick to this approach too. Program everything in init, then
-> program mode-dependent regs in set_mode.
->
+Audio support is now enabled on the qcs6490-RB3Gen2 and qcm6490-idp boards.
+The updates include adding the necessary audio device tree support and the required
+dependencies.
 
-If so, I don't mind programming the defaults in init, then programming
-overrides in set_mode.
+Both the qcs6490-RB3Gen2 and qcm6490-idp boards are derived from the same SoC 
+platform. Therefore, the audio support changes are included in a single patch 
+set for consistency and ease of maintenance.
 
-> >
-> > > BTW, is there a real need to override those for the platform you are
-> > > working on? Could you please provide some details, maybe in the cover
-> > > letter.
-> >
-> > I am not quite sure, recently, I expirenced mode switching failure,
-> > when I `echo device > /sys/kernel/debug/usb/a600000.usb/mode`, Ethernet
-> > Gadget wouldn't work again, my desktop can't connect to it.
->
-> Do you have at least a list of the properties / registers that
-> downstream programs on your platform? I mean, it's not infrequent that
-> vendor kernel is more versatile than necessary, as it is being used
-> during bringup / etc. I'd suggest to limit supported overrides to those
-> necessary for your platform (and add a comment that there were other
-> available).
->
+Changes in [v2]:
+	- Created dtsi file to handle common audio nodes to support Audioreach.
+	- Addressed the review comments.
+	- Link to V1 : https://lore.kernel.org/linux-arm-msm/20250317054151.6095-2-quic_pkumpatl@quicinc.com/
 
-Yes, I only added the necessary overrides(0x54, and mode handling).
-Please check
+Mohammad Rafi Shaik (7):
+  arm64: dts: qcom: qcs6490-audioreach: Add gpr node
+  arm64: dts: qcom: sc7280: Add WSA SoundWire and LPASS support
+  arm64: dts: qcom: qcs6490-audioreach: Modify LPASS macros clock
+    settings for audioreach
+  arm64: dts: qcom: qcs6490-rb3gen2: Add WSA8830 speakers amplifier
+  arm64: dts: qcom: qcs6490-rb3gen2: Add sound card
+  arm64: dts: qcom: qcm6490-idp: Add WSA8830 speakers and WCD9370
+    headset codec
+  arm64: dts: qcom: qcm6490-idp: Add sound card
 
-https://github.com/OnePlusOSS/android_kernel_modules_and_devicetree_oneplus_sm8650/blob/oneplus/sm8650_v_15.0.0_pad_pro/kernel_platform/qcom/proprietary/devicetree/oplus/oplus_misc/oplus-misc-23926.dtsi#L26
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts      | 250 ++++++++++++++++++
+ .../boot/dts/qcom/qcs6490-audioreach.dtsi     |  99 +++++++
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts  | 119 +++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |  70 ++++-
+ 4 files changed, 537 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi
 
-Best wishes,
-Pengyu
+
+base-commit: 33035b665157558254b3c21c3f049fd728e72368
+-- 
+2.17.1
+
 
