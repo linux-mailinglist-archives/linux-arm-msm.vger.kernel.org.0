@@ -1,155 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-56040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59FA5AA047D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 09:29:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1ED2AAA04C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 09:43:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F66A8401A5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 07:29:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 68C16483430
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 07:43:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCB96276029;
-	Tue, 29 Apr 2025 07:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 601B1279347;
+	Tue, 29 Apr 2025 07:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cjfb3z7H"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sEFom6vH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1433A8F49;
-	Tue, 29 Apr 2025 07:29:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03062777E4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 07:43:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745911763; cv=none; b=CoFqTUeSDdRYbQBd+NPVQXh70hTk06y0r0sI8OdKDGurZzTLOVTeNxtA57+pyLF5YMOCXgmDL9c/Pg8jLXxykgVXK7zh/vRweiKtN4Mqjm26lKeOgE8JKYEeYmyNEmer3Ae32OXpSkHrrHsmjCh1qlJM+KILC2z21tagOa20mcw=
+	t=1745912586; cv=none; b=fzxypIAr7dHlWaY7gUxMkZ28z0nftUmXLUvtwmE2RrsosTbfCw6AIuSfhMgkdIL2VQ9hVoaVSxNetp2zI4CtfyaAihhVFK3ChFvob6oI6wZyU5mH1S+Dzg6eoXcC/1y03alcyyFCJrErKmw6dJu3YPkWrKw9Z0L1+1XhnatGY8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745911763; c=relaxed/simple;
-	bh=nB16d46ObHB8u6nVtTntzLBupJconoj9kwzJ3jXfuGc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AnR7NjjStLtya25qdT48ARkkQo4p5Y9ts0W/nGRx1bX0WCPHhLTTHKyUqTSG6yaivyavf+H1kwW1ezDBH+VywUrNLpGFrJhJPnMJUPxg/2Gv69mJClFmMOs5hK2wS8tYA9NEPUpmhHkDgx+qsSKiFb1wJjmW9dCZ61k+yXA49EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cjfb3z7H; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a064a3e143so2844631f8f.3;
-        Tue, 29 Apr 2025 00:29:21 -0700 (PDT)
+	s=arc-20240116; t=1745912586; c=relaxed/simple;
+	bh=dYvB61tFWaA6yh8/duxHkHb9Z9xmEpElUy7jETtqYYQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DII0e5eF+5j+O9w4tP4/2Oq3/VXMm9RDtl58V37ahqBZ9XkhC349GrBlsiDtBnUIWNyRcENi5GIahWu2wsAlEWR7cn3N7lHzpTe2/Ct5YStocWQhzIXklrEfBUkh1cOwXifrDkepm0AUzgLuJ8XeXM9xPwEpQQNTS+pbVhYoO5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sEFom6vH; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ac29fd22163so824598266b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 00:43:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745911760; x=1746516560; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nB16d46ObHB8u6nVtTntzLBupJconoj9kwzJ3jXfuGc=;
-        b=cjfb3z7HgVlMwTSZR0xxtVAY8DtxyXxYQmZ/FDFrvM84bDjGXOo2IdSu4EV7cLv2/d
-         csOpQI6azrpIQJxl+MTfTTYU01aZR38Wcg7h8n7aZ5MUlqixidFDsBHuPWTguuY/oFUT
-         Zz5q7fh27/wHN0ZW929ZhyDlNZngBxVtRVGBPss4mKLikVqy6SnJy6OpdO0dhRV0ynaj
-         dYaDc/CSg8URRpDbva2arP8M04Q+wylDc9csQvMymCmwcLRYn0IlChhWHLIBGVGJtly/
-         CyWB4C1lwg129CySWVQ/Tm4gQewTnGMUD3vnl+MfGHLB845eAtfRQedCswaxtQUhKIRR
-         CEvw==
+        d=linaro.org; s=google; t=1745912581; x=1746517381; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=F+uTNBkxVqUzOlu1JM6vCecH5db95DiIuI060h8Clm0=;
+        b=sEFom6vHqF6TpBxqXZ2vDfjMZG3Dt93eaHkldtOe0kwFJOTo73UUwWH8tpPVCHKzlL
+         MI5KRUoyGiRdaa7R+PvjbVpY56WNFBDyL6zRd6vjxh+wJMFgRpi5RiHg5BCHENQiCevw
+         tFByb0IvG7M4o74NpLKdZlR5gR2ecylE7i5HMbTENxAud8Uor8hbjVNIeNwnSTJQ5arw
+         IJe9MHKXV1mpKkxFTFIa9OZ1F0KJBP8g6dxIaIYKeAzdJeuqC19umK4gM2/Ts1foQFy8
+         2V56wNPpODUXk7A/FJLKdzQD7YFYaxBxibPO7HaLz13rvSp6wvcWeSA/MbxfXWph4RUJ
+         E34w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745911760; x=1746516560;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1745912581; x=1746517381;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nB16d46ObHB8u6nVtTntzLBupJconoj9kwzJ3jXfuGc=;
-        b=Q+DZ1xGSLzkm0sHK/AhVTI6HOUgIQdfgHb5hYeyOZMm1tDIqvVHPRUPNk1TRia6xrK
-         On8LhNrq0HHQyqO8aXM7fDJKPyiSLk5DK/pj9X4BfhXkt92dxvCtmOQ3U8YSPlLhwGOZ
-         u6ybSle/r1BwFtgxeyg8cU6l09JWFZaH/hn6KDx9+17RpEPuPXFdNTe+M2WwlgKM2hgM
-         knBrzpKLzfloNqKPKeH9rpok+t4KfILlOYk8tDs7NdzxqU8bSbnsv5rj1LX2CYakHCDv
-         H5P9QlI8/3IpIutN3Z2dkHWXPva0/Fl8ItQCY0rzTRJlYslVV39Z5XuqLa9DacEIPe5y
-         anRA==
-X-Forwarded-Encrypted: i=1; AJvYcCVrjJFEQX+WZXnbr3VXiIaHolz+3xTnHWKuwOp2L7IX5GhVfb0F84bUQm1F3htZorufwRAHzCJEYjZgS60q@vger.kernel.org, AJvYcCWHkHZspCQMf6FzWhgrV9qI6cnO8CP8m8r1XdozXKjerHkVJzJVwj8/45pi5bd2UnO4bixsu4S/LiWNGVH+@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSVgHPrRnBuZLP/MezfGVUCc/MRGXRzt8vbuT/VylZ3bf55CmT
-	OR+MoNycHagJDTgYIdIfTprNAklQwTbWwSHEpDU9jZFX4K5Ohh0KQiQFREG2/wZlm5gwIpwp+Z5
-	4Byb+S/35aLTq47Pt5YR3UMkZ/Q==
-X-Gm-Gg: ASbGnct2OlNBCC6wbvz4Tz3MDLRGs5P+sLpkA+58eW2DeS74gQvtWS0nINFI4aMK4NP
-	vuV/yG59OvzVjjArlMbfckIA+xxPRRSUjTLLw18oNKCWO7OgljY9yLZTyY3CXajqzTN701dJSWQ
-	ieTTl6dzWJTSKHjC4S+6Lb/A==
-X-Google-Smtp-Source: AGHT+IGYH+/K1GZOU/QSl1r2kiF4KEFaj1inSbQnOFj14BW9qXm19tT4T3PO/rKmu2OgA58JjsRPNok7uGYGfI+sRlY=
-X-Received: by 2002:a05:6000:144b:b0:390:d6b0:b89 with SMTP id
- ffacd0b85a97d-3a0894a3cbdmr2251940f8f.50.1745911759877; Tue, 29 Apr 2025
- 00:29:19 -0700 (PDT)
+        bh=F+uTNBkxVqUzOlu1JM6vCecH5db95DiIuI060h8Clm0=;
+        b=uKlMKU3+F6Zx6/8rjFgwuWZf4sWYAdW/BelBQyhsATR5Ey7Pv7rc+w3+jReslIoh9C
+         AJfd24/IbrnQEWMwJage7KhH4lrHWdCoCcid/4XPxpkl/vXFoSLi/B5y1mVZQfUzg73X
+         xs1cW3dySkpt/4CqDYUsaobjs/3ww5drIunTWIZVqYjWGt1Onk+AZWzc0DF5m0ZieE4S
+         Dx8Wb14/UjxnrIm7Qn4mJlAQJrLN4v95kGG267sOC43lK55tbBEPqir6CWJk7yaj0mOJ
+         nvcVZ/knJ0QEGCuqldXNEmFY+UIIemksTW7ydWR1qPXrZfc3c21uIXnkUspNYsZvc93V
+         TvRg==
+X-Forwarded-Encrypted: i=1; AJvYcCUkadvOAPBUloiWmV4HKJYLRg4OY7t4xBIJDzNCTFaS2TS+IdIA7C/Kx2463aGtuIc8uWw1G6/JuYCnyWIx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy0arI/r8Dea/Isutpc0vd8V133L2HCj3KX7vFnBfjG7gHDv9lQ
+	DBVMgVJi/EeNyq4jIL1g/TVaJUBfNGRm8e6wDT5Ocl7SkHzJHqXGXgSJj6mh+bQ=
+X-Gm-Gg: ASbGncv2fO1D+9fdTxyYFbEO03+77780fZU/STXjwW9dZhpXLegHfiGTiYEiENYyvlg
+	4dQc2UotdcWCcgydkWtpNZLvRaBy/82IHUXk7UpzGDuNYC/g94el1pHm/4ZS80K+JNBwwUx0IWb
+	wZB98SxBKGAQE67IfdrlSlgbH2xs7MP8MWd13zNI/PUz8zDLFRWSruilb9w+fbgdHl6Uv7m0cbb
+	RcXRKs+77kNJdGjJ+p3PpEJtVWK/6m1E1kqwTdO+qLPVt41TiDWAYICXoZDZCNigd5AQnhkaEE5
+	7sT33vRDr9Vazfu5xWB/KlQeOwDxFbDJx0o+zcw=
+X-Google-Smtp-Source: AGHT+IGFbkcLdkOebqlvhktc4XxOR+kPFeyvv1NmZrdv/VsALlmOV+cvbZCLiOzMiV42WIgb7kMs1g==
+X-Received: by 2002:a17:907:7208:b0:ace:3c0b:1965 with SMTP id a640c23a62f3a-acec4eadb28mr219125866b.39.1745912580861;
+        Tue, 29 Apr 2025 00:43:00 -0700 (PDT)
+Received: from [127.0.1.1] ([62.231.96.41])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f7013ff4e7sm7048114a12.22.2025.04.29.00.42.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Apr 2025 00:43:00 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH 0/7] arm64: dts: qcom: x1e80100-*: Drop useless DP3
+ compatible override
+Date: Tue, 29 Apr 2025 10:42:28 +0300
+Message-Id: <20250429-x1e80100-dts-drop-useless-dp-compatible-override-v1-0-058847814d70@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250417021349.148911-1-alex.vinarskis@gmail.com>
- <aA8yFI2Bvm-lFJTl@hovoldconsulting.com> <CAMcHhXpmii=Rc9YVeKXaB17mYv0piSFs02K=0r8kWe5tQGk7eA@mail.gmail.com>
- <aA94yOjsayZHNDpx@hovoldconsulting.com> <aA+N8YHX0DZ6h9Uj@linaro.org>
- <CAMcHhXpG-1AP7qP6bAfFcdxtDxsC+_3TYFqwByp5pkFiRYvmJQ@mail.gmail.com> <aBB3ElgEoCF6yYNY@linaro.org>
-In-Reply-To: <aBB3ElgEoCF6yYNY@linaro.org>
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Date: Tue, 29 Apr 2025 09:29:08 +0200
-X-Gm-Features: ATxdqUG_WUVY9yNmdKHgJ7MZ0Rv5ZBxNNJhPW4Q15-XQGQ2pSpWhkKi8ojC-FfY
-Message-ID: <CAMcHhXpstN-g5idywuJbUxeKNqMUTTV=HQ6qvo0_Ann+-mEUbA@mail.gmail.com>
-Subject: Re: drm/msm/dp: Introduce link training per-segment for LTTPRs
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Johan Hovold <johan@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, laurentiu.tudor1@dell.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOSCEGgC/x3NwQqDMAyA4VeRnBdoizq3Vxk72CbbAs6WxIkgv
+ rtlx+/y/zsYq7DBvdlBeRWTPFf4SwPpM85vRqFqCC50rg033DwPzjuHtBiS5oI/44mtomDK3zI
+ uEifGvLKqECPFoetD6uM1EdRsUX7J9l8+nsdxAiAXmvmCAAAA
+X-Change-ID: 20250429-x1e80100-dts-drop-useless-dp-compatible-override-db8562c6b7cd
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>, 
+ Rajendra Nayak <quic_rjendra@quicinc.com>, Xilin Wu <wuxilin123@gmail.com>, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
+ Srinivas Kandagatla <srini@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Konrad Dybcio <quic_kdybcio@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1759; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=dYvB61tFWaA6yh8/duxHkHb9Z9xmEpElUy7jETtqYYQ=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBoEILuUvIun7C9opgeq7YaOnb/BTs/CChz/FbDv
+ 5NoEh5Nn/WJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaBCC7gAKCRAbX0TJAJUV
+ VqkcEACwAL7XbUoToWC2EYt1kXamDT3RaIr6kpc57YKTrNux1sQZhZCohb49PD5xlzXAZxPoqNH
+ vyBjG+hPkFq1qeJoTyZAZwu0+iDMzE5M+HInhHU/0ZzvlmcES1zZrGEMHRu+M+SUbS1wnHFgpUw
+ CfBmMbAycDh9gbCLqcmUhF8iy4Io78PTsJTqNq6sAXjf4leJz+HhqQDvTgFopeZIQaU+IUXKxTN
+ qV/zOjB5dWucAAQdaixnBZk1jV/gU9WkqD7s0CiApU4owqAwwow2h9AvnPUhD1wRJga5SzVM7K0
+ fe1DwDTGU8biiFo2163uIt25c5VktpG+L7isNPplazwZOkAscAuEckCCfudtHGncz9o09Pps792
+ 3rB2dqgBvbQFnLpKqDuI+PrW3//t6FeP1Rqk6JNFNx2gvckix2aWzn9Kd4uUCpZ2zivkIxftQP+
+ GyNrXWlGgrNhY1W/lUyWbGP6l4T3te3e/1mXKj2VGyZnsWeVOFQyImeNo2HXB3qMiyVxqtre1BG
+ lgP4sZkkLPn+QvBImpDYlLODAioYW0r0bwz2SQZH+iywl0pE3DQir9CEiwKmleWD3S+niX4wm7c
+ 0/zFaZ9ozD2OiQqUiktnnbV2Bd2bUcEqRDoNxbqXo6kaS0zJzB/gomu7ApHe8s5/J2BznkV9OxC
+ unDP2g1+IcZEFrQ==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On Tue, 29 Apr 2025 at 08:52, Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> On 25-04-28 20:23:45, Aleksandrs Vinarskis wrote:
-> > On Mon, 28 Apr 2025 at 16:17, Abel Vesa <abel.vesa@linaro.org> wrote:
-> > >
-> > > The change itself makes sense though and I think makes sense to be marked as a fix.
-> >
-> > Just to confirm, you mean to mark as fix only the 1st patch, correct?
-> > Since it's obvious now that the currently present partial LTTPR
-> > support did not break anything that used to work.
->
-> Well, the way I see it, the LTTPR support is broken on some specific
-> docks, even if it works in most cases. And since this fix improves
-> the already working cases and fixes broken ones, yes, add the Fixes tag
-> to the 1st patch only.
+It all started with the support for CRD back when we had different
+compatibles for eDP and DP. Meanwhile, that has been sorted out and it
+is now figured out at runtime while using only the DP compatible.
 
-That is not entirely correct. Current LTTPR initialization [1] does
-properly set LTTPR to transparent, and then non transparent [2]. In
-this case LTTPRs are expected to be trained per link, but are not. It
-is reasonable that LTTPR(s) may not work as expected, as they are not
-link trained as expected, and now they are not in transparent mode
-(anymore).
+It's almost funny how this got copied over from CRD and spread to all
+X Elite platforms.
 
-It does work with X1E onboard LTTPR and a simple external display, but
-that is about it. It does not work with _any_ dock that has LTTPR. Or
-basically anything that has yet another LTTPR in its way. Given that
-max length of DP cable at full bandwidth is 2m, and docks typically
-have 50-100cm built in cable for PC connection, not counting outgoing
-video connection, this basically means that any DP1.4 and onwards
-docking station (not an adapter/dongle) does not work.
-Additionally, it appears some fancy monitors with Thundebolt/DP alt
-mode ports instead of just DP alt mode also have a retimer onboard
-(might have to do with particular monitor support DP-Out for MST), and
-also do not work in current setup.
-Additionally, it was recently found out that without this series, rhs
-USB Type-C on Lenovo Yoga Slim7x does not work either, which likely
-implies that IO board on the flex cable for that connector features
-yet another retimer.
+TBH, the best reason to drop it ASAP is to make sure this doesn't spread
+beyond X Elite to newer platforms.
 
-I wouldn't say it's broken on some specific docks, rather the other
-way around, current LTTPR support is limited to 1x LTTPR onboard X1E
-devices and nothing else.
+Functionally nothing changes.
 
-Not disagrees wrt to Fixes tag, just wanted to clarify current state
-and the impact of this change as it is not limited to just 'specific
-docks'.
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Abel Vesa (7):
+      arm64: dts: qcom: x1e-crd: Drop useless DP3 compatible override
+      arm64: dts: acom: x1e80100-qcp: Drop useless DP3 compatible override
+      arm64: dts: qcom: x1e80100-t14s: Drop useless DP3 compatible override
+      arm64: dts: qcom: x1e80100-s15: Drop useless DP3 compatible override
+      arm64: dts: qcom: x1e80100-hp-x14: Drop useless DP3 compatible override
+      arm64: dts: qcom: x1e80100: Drop useless DP3 compatible override
+      arm64: dts: qcom: x1e80100-romulus: Drop useless DP3 compatible override
 
-[1] https://github.com/torvalds/linux/blob/v6.15-rc4/drivers/gpu/drm/msm/dp/dp_display.c#L378
-[2] https://github.com/torvalds/linux/blob/v6.15-rc4/drivers/gpu/drm/display/drm_dp_helper.c#L2926
+ arch/arm64/boot/dts/qcom/x1-crd.dtsi                        | 1 -
+ arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi | 1 -
+ arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts     | 1 -
+ arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts       | 1 -
+ arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts    | 1 -
+ arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi    | 1 -
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts                   | 1 -
+ 7 files changed, 7 deletions(-)
+---
+base-commit: 7e69ad9a1f7ba8554c4d3d1ccbffcccafcd45c2e
+change-id: 20250429-x1e80100-dts-drop-useless-dp-compatible-override-db8562c6b7cd
 
->
-> I'd even send that first patch separately to ease the merging, but that's
-> probably just me.
->
-> >
-> > Thanks,
-> > Alex
-> >
->
-> Abel
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
+
 
