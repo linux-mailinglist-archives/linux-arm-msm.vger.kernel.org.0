@@ -1,87 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-56165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C043BAA1B1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 21:03:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F3C5AA1B32
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 21:11:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B180F3A47AB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 19:03:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 807DB4A84F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 19:11:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CE86258CF3;
-	Tue, 29 Apr 2025 19:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 203741F4736;
+	Tue, 29 Apr 2025 19:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gjMpvrBN"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JYhB/F+I"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEADA2586EB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 19:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4712135DD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 19:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745953402; cv=none; b=e+j4EGJv8HctgG9EdUS/qFtuH4LpxPzkCvCAJNdcwyH1yJbi8eUj6Pxcy/2v4YoTD41nBBmPYhA9S0+JOCR6H8lW8BOn2qvtZZngSD2v3f67/OabYv9gZSDxWEiQRc6/xF9sXCJugGQwFbGORx7W3skMuRuyCxR6IBOV69/pOw8=
+	t=1745953913; cv=none; b=hevCt1ijocrq+AR1WS8uuBKKRtHcUJS4XSHaCE0vK/R2SnXK0cw9NTSZze7lXAcBCX1Bwx9eoNd3nr5gN0SzgzVgrtLSXcn64QsR3E+U0KZWIvgMMeJhINPoC0rtbU7NovTTtaUgbapbopyyXUWeAiyIsxVFMRtI5VK5ErA4tBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745953402; c=relaxed/simple;
-	bh=enZuKg0Yho7LCctoR7MuGNSzlG3syPAETBOCsWhHujw=;
+	s=arc-20240116; t=1745953913; c=relaxed/simple;
+	bh=OkK1nuaCR4f+liV3BJU9Hn/XfSqQ7ubqyxI2NRvoeoU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sTvL7KNuNlZOOAMbdDZjs4Bqii4LJiI3/otlPUZ5P7weL707mdUXFDw1Sksv5r+FKtHYaNiWFfSVNEQIy/33XFZBqIqZZXyEC3sZZUJmB5DFxL7KLjmaCPySp5ikWdrY7sDKAHZO45U/1/3x2VMo+JcuRB1C9zu9h0BiVEnozhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gjMpvrBN; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=Eco3meXuBLI40Tf95FXyw6PWv4cyv/IPWqxcn38UuwXnKXMNpp75KcXcpgXX8x6/ropFs+gi8XOeB8AfJkrEbm51Gjt8BmJdCTuFxBqq0IJM0bzUuI8ZWEbMizDmG6TrAlOzXdTHGhKNTh3T775YHgKEXpbUz8fpSPaQon94IfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JYhB/F+I; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53T9gEcm021614
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 19:03:19 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TA27ka005256
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 19:11:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SFUA+vmGXvWQaDUz0FTdKxJwrF/zWygzDZetk0yUquU=; b=gjMpvrBNaQpK7ZTM
-	/lZ+msm1SX3oCVf8quRBsXx5dh/hKVK9J5Szu9lfFVWpujNcNmX02GAfoAfnclFc
-	3tB8hFlbTlZ45zUcsrelRS0Puwvn0Cues542/mqCrtnE7kfBvMd0T55F5sjEqqbS
-	ghNtliBZCDlrG+Ar8JTr8tlQkw/v4Fi8TI0bzMMfDm5tp3POiQG+STBNb9q+AAF/
-	PTnsgIku9XFPdoV60bI3EbjWr3z+YxQxOD0pWZsU3LN/VJxg2Uma5kdsHdRyuIjY
-	iXapfUQDEQraQemqlAAbW+Yd7kzlw5kSr0N/hnplH7xI3zj56hfaJfMVo2r4vJHj
-	xgCNgA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468qq5mr20-1
+	eOuPzQ1u72JzG/hJiGVhd19vPe7xFI8iogxywpgJCzM=; b=JYhB/F+IWpwTlCJg
+	KnfJ9GlG7u9YoydPi8PMQ4Trv+safIXYDPIlpDS5gjU/sOv/vrup/F6PlwkEZnU3
+	CcJ/LOO61aJFvV57YZFg4oIbFf/ppg8UppuvlbnUciSnJGUdmQWyO+3+jm0i7XLb
+	66TXe/axtOCzJWWuCtQnDKXFVkWqKZO2ksYm1l+1rttxvWDEFNcsNrqurytgbVCp
+	G3DOrJob7G8CVcFiSSP4UrgUe6iotdW9wAsyvMPfviaLbp0t7zFj03khF6kPXjvK
+	J7Tv1alpmhzxlnyS+SsQFJo6tKKPuHwdia/jb2gOf6pV/YIK3iUXZR5aGwULlUPg
+	O4K5Sw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468rsbckvb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 19:03:18 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-47ae9ed8511so11962401cf.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 12:03:18 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 19:11:50 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c5466ca3e9so40350985a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 12:11:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745953397; x=1746558197;
+        d=1e100.net; s=20230601; t=1745953909; x=1746558709;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SFUA+vmGXvWQaDUz0FTdKxJwrF/zWygzDZetk0yUquU=;
-        b=l6/yZ9oVOj7/7SKUxQ1+nOKkCrPDccCOSc03WoQ0myjdskHI2o3QprabVp3Y2HTht7
-         xaZoTbhZTcnGdcMfW9xD3c+M9OSEeLhirHa47GiEgzJrIs3wR03WYUQ6anLi8X/VxGds
-         5+aou/UGSgcmBmbsY8BMxGlGCJtjbyOngL5/wW6jbvPPABtu06y9DiDrqJApEQrxN4F6
-         +iRciv3V3gmHGhJo/x7zqLIAZx7v9tU6NBmNcW+JP3TAWeAjs5IP4u1sN1IgJxa//yfP
-         U6E92r0uC6eA/XfHb/k+JnwoATS2reDNSz5HWbDVO7pcX/UGql3Q1+TlWUQJ0gMFHGKo
-         xcVg==
-X-Forwarded-Encrypted: i=1; AJvYcCUl/VTgnYdrSolGqINScxMxhtcI5HsfpuiMMd3q2aLVmKMHztNkNYCABkHcgEn6+BoBycJYQHfqt+n0j6+t@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0+Ytuwwc9qFK/C49nf04tNxd9XVI7XsVSB61lSFPIuiaV8ljt
-	WufNR8l13wCey+m+vxhbFQ/ueAjdgmLYm3P+lMkt5wSil/PnuLAbnpXH0UUaiLDbKr1KJsE/7kx
-	IRVgP0IE2eDRQrTrrzwEJuihLBM+v0JeuFPYelZljqDZi1aj1QHV55mfI2CpJfaeR
-X-Gm-Gg: ASbGncu7572nX62r3bYwq/OXprAphza6eiDQp3SN0GqEzyl2dnv8IBCkWMeHPi3ePBO
-	nIIJEZ32af15/BmTt2a7uzRCqEZP0nKniTq9UVKRoIOhUjlhydEFLhA+qpxe0ap//iP6ecTDevW
-	C1eS2TKydJBCv5uqBm31yh/2H5LUANLx9d1kQ4SUYi4wH6Hi21TCzROz7oJ9JmyombSLGUJttny
-	f1tNg13uG8Uq0Iq/y+SmE06BkW/8J5uih0Ou41nUWKzUxBzIO1puIpv+E1uOYAmFw87aaasmD9C
-	VPc+LSulaJivmDagovC6qHqyhr9/oiB9/scJVNfhHXNREOaYdIL/7nxvD7yq2PGumQ==
-X-Received: by 2002:ac8:7fc1:0:b0:476:66fb:4df4 with SMTP id d75a77b69052e-489c0ecd9b5mr1232931cf.0.1745953397402;
-        Tue, 29 Apr 2025 12:03:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG4oXGFJFE688jinn7yYFdRyAJwph4UBQHGatqnUkCpVJYykMoY8ucb0lhtaDPLXOThnrZHrQ==
-X-Received: by 2002:ac8:7fc1:0:b0:476:66fb:4df4 with SMTP id d75a77b69052e-489c0ecd9b5mr1232631cf.0.1745953396777;
-        Tue, 29 Apr 2025 12:03:16 -0700 (PDT)
+        bh=eOuPzQ1u72JzG/hJiGVhd19vPe7xFI8iogxywpgJCzM=;
+        b=wQoA3aiI6ygV+bXpQ2EIoriqZK2e/n7lv7J7lFsV38CN7kqW/6xp9xpf6UYdFwsCa/
+         Hd5WnWf3r0nO8LKHomJmUAlRZz81cE1rLkcYEZAlPsUmPDfui189Qo5XFp0tpp7554n7
+         kzm7OD5JpcPu4RdgOEnvebMgme/b80ePe/UrHHkJ7R+9lykN5mHX++p+bXrlX8S3ERvc
+         8ggi9GE69f4sV80N46PuOt3eyGsCu1YhLaNdJINKhMiMUi4neIhj/Qa5W0L0e+oQv3OO
+         StqQwyus8tplBpgyfI1ToFGuUXptMTeuMUYXheDpzruS6wF/2qbkFEJE414hfwPd9ODG
+         wR4A==
+X-Gm-Message-State: AOJu0YzbFMREnKeZW8cnDgg4ZkiHTrCgj/bqMa67qFgaiJ5Se9ZlCezU
+	vG6SsA8PdIFXUXLSlsG3Mg1r65sGYfKz21G5mQXUtS3+M+wb4bqxJAUYtar8cq73125VmTUuoT6
+	Y0QAbeUjCYtG5TW83cfzG/R3Fv9KZvYQSJb6KDqpx884iAZCAhphWr+HChvOX0/ET
+X-Gm-Gg: ASbGncuq4ZzYnLFpb8oc0/Q6DAoVAjhe2diep9Z7ZuzHIhgzEgHxmJI2uHIz/LoHmUw
+	eJe+x/FeHvw11OxSu3MHEQ/MHSQmJ10qXLLtjPRZEGTgnVpNtSmzxBo1M/w1gTimps/rZDBLnmX
+	amIrDEFKKsTFZbZ7cZA5SbI64AJA/gyot/jVqHodj0j29GJDqDEgyAelTTWwLmh6372jXVL4hB8
+	QjUfupm5IgS8P5ndI0SOF0XKWLYpI2baW8NyMfh/i01a5CvZ75fDYeS6MmdGRgte3viMCF2Hx2c
+	ZFABJZUR+jaOD3nzvUqJXSLF0t8Bk2OuxyltPjxP6Cv5lB84ORR8G3bdwwAZ/dGzbA==
+X-Received: by 2002:a05:620a:262a:b0:7c5:6fee:1634 with SMTP id af79cd13be357-7cac740676emr18903685a.3.1745953909283;
+        Tue, 29 Apr 2025 12:11:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECUOmkr/kU1YdONLI/cWvvS8Ar/800yEHeVe/K9arB9rF847RbVX558EdSx3WQcz0J6BfL6w==
+X-Received: by 2002:a05:620a:262a:b0:7c5:6fee:1634 with SMTP id af79cd13be357-7cac740676emr18901585a.3.1745953908944;
+        Tue, 29 Apr 2025 12:11:48 -0700 (PDT)
 Received: from [192.168.65.43] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6ed6aebasm813646966b.128.2025.04.29.12.03.14
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f703831dc3sm7752043a12.67.2025.04.29.12.11.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Apr 2025 12:03:16 -0700 (PDT)
-Message-ID: <1a49959a-9f76-40ee-b221-c049ebc2bb09@oss.qualcomm.com>
-Date: Tue, 29 Apr 2025 21:03:13 +0200
+        Tue, 29 Apr 2025 12:11:48 -0700 (PDT)
+Message-ID: <9b6c5f67-0bbc-490f-9982-4e28218aa6eb@oss.qualcomm.com>
+Date: Tue, 29 Apr 2025 21:11:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,118 +88,130 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: clock: Add Qualcomm SC8180X Camera clock
- controller
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8750-mtp: Add sound (speakers,
+ headset codec, dmics)
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20250422-sc8180x-camcc-support-v1-0-691614d13f06@quicinc.com>
- <20250422-sc8180x-camcc-support-v1-1-691614d13f06@quicinc.com>
- <a4149ac8-7e47-48a9-84ef-42aa367d014e@linaro.org>
+References: <20250424-sm8750-audio-part-2-v1-0-50133a0ec35f@linaro.org>
+ <20250424-sm8750-audio-part-2-v1-2-50133a0ec35f@linaro.org>
+ <dd271e8c-e430-4e6d-88ca-95eabe61ce94@oss.qualcomm.com>
+ <e61e17ca-fed7-4712-96fc-a9a2339de1fb@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <a4149ac8-7e47-48a9-84ef-42aa367d014e@linaro.org>
+In-Reply-To: <e61e17ca-fed7-4712-96fc-a9a2339de1fb@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: L8PVoYeFvod9g1bkoMYb9U7dsIZGt10M
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDE0MCBTYWx0ZWRfX071sH95XYrMu OO2ZED+iM2yTGcOrOPMy26ULT+/hso9F1djcQ0iRzZVTsjubfKfqA8xTBei4FPinR1vtO/GLdKv RnbQ4+3LQvIkPb2xCCZK47fuYE+clmqrj6uFQm5P4iH5xkxA+zktt+imssKWZMEMtLd1pHvGS7E
- 6v8PZqTUkBfq83yAL3UQnq7tMF4ozmjs2W0XJg4PvZsjNNmRAhKys1UMd8ZncYszRD7OHflktEl evB1buptTVsvi60Zz6KFSXukfdI8XJyTfpTw2stEcDQTn5GsL3sbeQDmNnURDwVnC9eDjjIoqmg kef71qTjXZHP47oOGcCVvhnv5NcKNHNwonFylgJqboIPtTiIAGoPfUIkfcK1VDyQFGBILYdxxy6
- ZjO2agUOq4gRAcNgPtBSJ+dilAGpgB++82Rdfm2YcE+xVQCVJgvlzQe6wDI18EGnljcoSN8h
-X-Authority-Analysis: v=2.4 cv=QP1oRhLL c=1 sm=1 tr=0 ts=68112276 cx=c_pps a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=gEfo2CItAAAA:8 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=CIINWzuxR8hvsKXtIHkA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: L8PVoYeFvod9g1bkoMYb9U7dsIZGt10M
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDE0MSBTYWx0ZWRfXyr3I6CKt0H9w FYrdfUT1V+WOkB1CPirl6iBubU4UYjtOjlXSRDVui5U76FnNcld1/aJVYc+J02iLVbh9XpFS9Ix kbCI6iiyEjfFVlEEhiDwe8XOVuIf2V0YC1IEiIvEGT0W3882ObF9sIZkgNT9ncNAa69zAmRpvNr
+ CaRgilcQDHH7L0ov4Ll0I/Z/W0pJ5L95LD3V8sGTQVqEaH/Z+zNP/9Dfgvv2RsJ/v7DU137mmC9 qyUQujbTHPpfNa2CtTvxXW7wwozOwd8rHUQ3sYrqJKGekVbrO4dvav39HwERpUw0d6nCSzQsiug FL50NMgqg7nT9xLCicgg0g/OU+4sJCx3nFyBQ2CFPbjY6gjs3TcVbM0M2hBHsznaCbvHzAK83Up
+ TTOnBtDah5SBGbewheOD6RV/mSZhLYsQqyOZvExYv+04loWXE4ZnceMsTAy/9Sa1RJfTsBDC
+X-Proofpoint-GUID: I0t8xMDeoI6O_se0TH2qZIv2L4ARK1J4
+X-Proofpoint-ORIG-GUID: I0t8xMDeoI6O_se0TH2qZIv2L4ARK1J4
+X-Authority-Analysis: v=2.4 cv=I8ZlRMgg c=1 sm=1 tr=0 ts=68112476 cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=8veyJhrg5W-E9c7t-7UA:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-29_07,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- clxscore=1015 mlxlogscore=999 lowpriorityscore=0 adultscore=0 mlxscore=0
- bulkscore=0 phishscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504290140
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ malwarescore=0 impostorscore=0 mlxscore=0 adultscore=0 spamscore=0
+ mlxlogscore=999 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504290141
 
-On 4/26/25 4:03 PM, Vladimir Zapolskiy wrote:
-> On 4/22/25 08:42, Satya Priya Kakitapalli wrote:
->> Add device tree bindings for the camera clock controller on
->> Qualcomm SC8180X platform.
+On 4/28/25 4:41 PM, Krzysztof Kozlowski wrote:
+> On 25/04/2025 11:30, Konrad Dybcio wrote:
+>> On 4/24/25 11:40 AM, Krzysztof Kozlowski wrote:
+>>> Add device nodes for most of the sound support - WSA883x smart speakers,
+>>> WCD9395 audio codec (headset) and sound card - which allows sound
+>>> playback via speakers and recording via DMIC microphones.  Changes bring
+>>> necessary foundation for headset playback/recording via USB, but that
+>>> part is not yet ready.
+>>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> ---
 >>
->> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
->> ---
->>   .../bindings/clock/qcom,sc8180x-camcc.yaml         |  65 ++++++++
->>   include/dt-bindings/clock/qcom,sc8180x-camcc.h     | 181 +++++++++++++++++++++
->>   2 files changed, 246 insertions(+)
+>> [...]
 >>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..b17f40ee53a3002b2942869d60773dbecd764134
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml
->> @@ -0,0 +1,65 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/clock/qcom,sc8180x-camcc.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Camera Clock & Reset Controller on SC8180X
->> +
->> +maintainers:
->> +  - Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
->> +
->> +description: |
->> +  Qualcomm camera clock control module provides the clocks, resets and
->> +  power domains on SC8180X.
->> +
->> +  See also: include/dt-bindings/clock/qcom,sc8180x-camcc.h
->> +
->> +properties:
->> +  compatible:
->> +    const: qcom,sc8180x-camcc
->> +
->> +  clocks:
->> +    items:
->> +      - description: Board XO source
+>>> +	sound {
+>>> +		compatible = "qcom,sm8750-sndcard", "qcom,sm8450-sndcard";
+>>> +		model = "SM8750-MTP";
+>>> +		audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
+>>> +				"SpkrRight IN", "WSA_SPK2 OUT",
+>>> +				"IN1_HPHL", "HPHL_OUT",
+>>> +				"IN2_HPHR", "HPHR_OUT",
+>>> +				"AMIC2", "MIC BIAS2",
+>>> +				"VA DMIC0", "MIC BIAS3", /* MIC4 on schematics */
+>>> +				"VA DMIC1", "MIC BIAS3", /* MIC1 on schematics */
+>>
+>> Is this a mistake in what the codec driver exposes, or just a fumble
+>> in numbering $somewhere?
 > 
-> From sc8180x_rpmh_clocks[] in clk/qcom/clk-rpmh.c I get that there is
-> RPMH_CXO_CLK_A clock also, shall it be added to this list then?
+> Which mistake? MIC4? Schematics call name things differently. They
+> always were, so to make it clear for people without schematics I wrote
+> which MIC it actually is.
 
-_AO only makes sense for CPU-XYZ clocks which (almost?) exclusively reside
-in gcc, and most of the time they aren't even necessary to describe in Linux
+I'm not sure how to parse your response
 
-I'm not sure there's anything in CAM_CC that would benefit from it
+are you saying that there are MIC[0..4] that are/may be connected
+to different codec ports, and that the MIC4/1 lines are plumbed to
+VA DMIC0/1 respectively?
 
-XO_A is in the end the same physical clock as XO (or at least used to be)
-except it places a vote in RPMh such that the harwdare takes care of gating
-it upon cpuss suspend entry
-
+I think I got confused about the MIC BIAS3 going to both and none
+matching the index, but perhaps that's just because it comes from
+the WCD (which is the third piece of hw involved beyond VA and the
+mic itself)
 
 > 
-> If yes, and taking into account Konrad's ask for GCC_CAMERA_AHB_CLK, it
-> implies that the new dt bindings can be omitted, instead please consider
-> to add the 'qcom,sc8180x-camcc' compatible into qcom,sa8775p-camcc.yaml.
+>>
+>>> +				"VA DMIC2", "MIC BIAS1",
+>>> +				"VA DMIC3", "MIC BIAS1",
+>>> +				"VA DMIC0", "VA MIC BIAS3",
+>>> +				"VA DMIC1", "VA MIC BIAS3",
+>>> +				"VA DMIC2", "VA MIC BIAS1",
+>>> +				"VA DMIC3", "VA MIC BIAS1",
+>>> +				"TX SWR_INPUT1", "ADC2_OUTPUT";
+>>> +
+>>> +		wcd-playback-dai-link {
+>>> +			link-name = "WCD Playback";
+>>> +
+>>> +			cpu {
+>>> +				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
+>>> +			};
+>>> +
+>>> +			codec {
+>>
+>> 'co'dec < 'cp'u
+>>
+>> [...]
 > 
-> However still there is a difference, qcom,sa8775p-camcc and qcom,qcs8300-camcc
-> does not contain 'required-opps' property, it might be an omission over
-> there though, please double check it. The ultimate goal would be to get
-> a shorter list of different camcc dt bindings.
+> That was the convention so far, but we can start a new one, sure. Just
+> ask the same all other patch contributors, because each of them will be
+> copying old code, which means cpu->codec->platform
 
+I've been doing just that for the past couple weeks indeed
 
-for required-opps see:
+>>> +		/*
+>>> +		 * WCD9395 RX Port 1 (HPH_L/R)      <=> SWR1 Port 1 (HPH_L/R)
+>>> +		 * WCD9395 RX Port 2 (CLSH)         <=> SWR1 Port 2 (CLSH)
+>>> +		 * WCD9395 RX Port 3 (COMP_L/R)     <=> SWR1 Port 3 (COMP_L/R)
+>>> +		 * WCD9395 RX Port 4 (LO)           <=> SWR1 Port 4 (LO)
+>>> +		 * WCD9395 RX Port 5 (DSD_L/R)      <=> SWR1 Port 5 (DSD_L/R)
+>>> +		 * WCD9395 RX Port 6 (HIFI_PCM_L/R) <=> SWR1 Port 9 (HIFI_PCM_L/R)
+>>> +		 */
+>>> +		qcom,rx-port-mapping = <1 2 3 4 5 9>;
+>>
+>> Does this deserve some dt-bindings constants?
+> 
+> No, because these are hardware details/constants. Drivers do not use them.
 
-https://lore.kernel.org/linux-arm-msm/44dad3b5-ea3d-47db-8aca-8f67294fced9@quicinc.com/
+I'd argue it makes sense here - it makes more sense to pass meaningfully
+named constants to the driver, rather than blobs with a comment
 
 Konrad
 
