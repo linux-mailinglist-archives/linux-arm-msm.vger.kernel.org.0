@@ -1,218 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-56011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C36FEAA01D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 07:29:27 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D9F3AA01EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 07:42:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2C2E3A6575
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 05:29:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5CC007AC696
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 05:41:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E151C26FA4E;
-	Tue, 29 Apr 2025 05:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 674062741D7;
+	Tue, 29 Apr 2025 05:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RUsKp4F7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iLsLiJRf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFBD33991;
-	Tue, 29 Apr 2025 05:29:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB672741C2;
+	Tue, 29 Apr 2025 05:42:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745904564; cv=none; b=ihcJIU7s4QqJSjAotJEC0TIBJloLhmMLXh/bx3lA5W+C29147bXUobR6kAf5LJ0t6vvhSp/4lJeJtrio1KzgxP29nBZ0xL9P+Ynxqt9tt4PO4k3/C2S614KhKQhOA77VycOixu76OXaN4VSwzvRTe/spHjhwZiJiucSyT+xuPgs=
+	t=1745905331; cv=none; b=fHM1e/lGg4C05iS3eBF0NJlK+rFPj7QSBH8PCnakajKVvKk025HVFxTtrarmEQiTNb+DYp0PQRssfcRjFffxUOmEgOnzh33MptBaMXYzYevWDj6gpjA+J+exi5QpDK5FLhIdIPtEIVsqytQrN4knj8LhgZWGSOOMBA8H9AyCEPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745904564; c=relaxed/simple;
-	bh=DWnooSZisXUGuTBqysXae7ajGZ4rfxElf22/6kndtf8=;
+	s=arc-20240116; t=1745905331; c=relaxed/simple;
+	bh=DLOitkgSZvQeteEV7vswzOSxYAHHO9ynIKrHuD7EL88=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=kMRO6JuspmY+asANx4LyVKQrgoEAoO8jeQG8VOPaQc9eZ2fvAlG5lodK8biYP/i1rRCcR0fUY7pIbgIMVk5MLKdvmqnNexnX892u4paP8tk746PaJ/4K8ol3Pyhio3A4q1z5md1gbCCP5SA2rX7HQ4//PS2+WfiCLvFjvVFO/DY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RUsKp4F7; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=WJVfDP47dj2TmWQRqNOHEnQQRNgYIPklx9sdfuh9zGogwvQ9wgBFgc0fPk3uv0iwa+/yxLG3xxTt5ZlFoLXkdpJjMmBQpmUh7S93QR9SZVWDSIEcYUpfuFCJwtI8vNu4a5cLWgCtN4bvNO6wQnlcgjy+J4kwjLnvHqUyFDGIq9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iLsLiJRf; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53SNq3oU011884;
-	Tue, 29 Apr 2025 05:29:18 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53SNq1oD003855;
+	Tue, 29 Apr 2025 05:41:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YD5zksmB7I1X+fW3UQmzEm1ZQxDOj3cvQhmL1m2hSJ8=; b=RUsKp4F76jZAesnG
-	Lmi8AmeWh+5AQ6wrQjeCcEF7uoik6gLjVwojPEkT4V+U7K7TGrKpeJb3ffmWD9EU
-	T2a8LZ4ImQi+p4ILxqe0A3bsRvN2hP5mVGb95/1rtYqKIFHLDWqUlNfMmuXLtga4
-	8PVmrxZcz6+PyGslhFQPOBQPzCLULEF07GrSj2fBEAbSVVKJ2jYja18tsWkmqtWO
-	qPqzTl3d+DH93k/JwGbItUna+4QpueRm74ARFT5gHonadYCCjlPEmQubueDLd9nd
-	M5AyngXQ09/FgacnRbTiWZY2umoDaUDRaXWVV1LfNd15kyUCrRvmV7OEHf647wVB
-	TILH7A==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468q323a6x-1
+	EGQVTctIEjaRvzIG4gnnPlx1SdC7Ce357BzPTTQxWAI=; b=iLsLiJRf96r9u7Yx
+	9dwtHjQuxB1SQe9heTM5XoUGvea7BgYfYgteH92yqVkO+0obe/s3L9MIXygD6wgI
+	aVmLZtpp07s0ilubzg+8oGODEF9kLJP4BEK1iHC8GrRWLxeJ65Vmkg/PilzurTfZ
+	1aNGQMuhTvH//fFHe7cY6quNlpQL6mVvMNW61xPSEW++QDVmuyGf1q2aA+H7j9Xs
+	dmRHDnVitZOJZel8v42RPU7Knxw32KxHTAPnLNaVU6Ern9UIUNw9Yn0sdQhKV5St
+	0P/rxUdqzNeBKUu41/prqp2OG3rGnEBlIh3RQE6gdWeXEugADVmhkeIu/tqZXrsa
+	jalTkw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468rsbabek-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Apr 2025 05:29:18 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53T5TH66004716
+	Tue, 29 Apr 2025 05:41:08 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53T5f66E009620
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Apr 2025 05:29:17 GMT
-Received: from [10.253.10.189] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 29 Apr 2025 05:41:07 GMT
+Received: from [10.151.36.30] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 28 Apr
- 2025 22:29:13 -0700
-Message-ID: <5eb5631f-8f58-44d8-a09f-4bdb4a804803@quicinc.com>
-Date: Tue, 29 Apr 2025 13:29:10 +0800
+ 2025 22:41:02 -0700
+Message-ID: <3fb46918-7ad2-a720-0cc9-6a63c925936c@quicinc.com>
+Date: Tue, 29 Apr 2025 11:10:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] clk: qcom: cmnpll: Add IPQ5424 SoC support
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
-        <quic_pavir@quicinc.com>, <quic_linchen@quicinc.com>,
-        <quic_leiwei@quicinc.com>
-References: <20250411-qcom_ipq5424_cmnpll-v2-0-7252c192e078@quicinc.com>
- <20250411-qcom_ipq5424_cmnpll-v2-2-7252c192e078@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v4 1/3] mtd: rawnand: qcom: Pass 18 bit offset from NANDc
+ base to BAM base
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
+        <broonie@kernel.org>, <absahu@codeaurora.org>, <bbrezillon@kernel.org>,
+        <architt@codeaurora.org>, <quic_srichara@quicinc.com>,
+        <linux-mtd@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>
+References: <20250410100019.2872271-1-quic_mdalam@quicinc.com>
+ <20250410100019.2872271-2-quic_mdalam@quicinc.com>
+ <bsj6kvqjo3pfbsakex5quamk5tkrtigxdcoyu5bj3nt37zsgc5@7h7zidzbcs7p>
 Content-Language: en-US
-From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <20250411-qcom_ipq5424_cmnpll-v2-2-7252c192e078@quicinc.com>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <bsj6kvqjo3pfbsakex5quamk5tkrtigxdcoyu5bj3nt37zsgc5@7h7zidzbcs7p>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=M7xNKzws c=1 sm=1 tr=0 ts=681063ae cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=EoNoD8iO1MgKQcc7a8EA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: Pl3nitARsFZhOdhnopxa6zb_61xV84zF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDAzOCBTYWx0ZWRfX/yc+e93SWxap y9vedPW2lPXjIf2TEsq3FtyfWPF7hnADF/U0kGKgouz796wbW1GN8u6SEhHJKrE6TONzPRFKRGy I0rWGclBZ3aMRHc/G7MZY5bO2TLXO7iotfTIBBj4F9c+EnLsCA3joflz7TKdSlKMHD1K2MnKoWz
- SjjW+aJYiw/x39K/JRUuCYsC9qmZDvHDjB5xufxxd8Qm0A/tSXSl27pi9fjwE7vSeyFFX7GWmOL e/bxFTogk+fN6cltY20N1Q7tRAmIyvjMYRmT1J4u2JO71xfj+K4qaaOrkzoICHn9lyh0kv47WwL OHKZVDRHUmS42Rmy2TJVrYXSjDWq/bWzaICTZVyDgMQRc67Ip6awabwJgxQMh+WZepwb8wv48lH
- o7JFO1+1esh7fp2U527Oii4KfjqDBxBto/9Ula/NecCP7OujcPgkjfM5sGjdvvEIvr8jOJ4l
-X-Proofpoint-ORIG-GUID: Pl3nitARsFZhOdhnopxa6zb_61xV84zF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDA0MSBTYWx0ZWRfX1X2DItrMteCT pPUOS1gV6rTwarn0O6JYA/LFWDTleubnOy5c7a0va4jVszyTS/jwnW0jt/AcLcPmf6c06Xaq/mI lpOqlD5R/t/d/b8FEfk5lmqZWj/4tnbX4T+CpwJ764JyGZedDr50sfvmsJqgJYFcZ9VQpd2Sn7j
+ mytZpC/R3VtE785Q+nZTYC47ZylFd8IhRbMfpPCSovNPcFqNT8yiIlfP3n5RhRJSLIDNHjQgdPQ uFWpbq75sVnAUJtW2dDy1pPQGzQELKLqBfb1ho3s0FxmENqeQLH2E/oTIjMdvzTOMSrEGspn76i Cs4mjLqIMuwZys/ce6ibBQA36kPZ351iUqnub/6uhNtp+IvvbTDz7tHL3WrBnu2OFjc4FtM6hS3
+ qW1SZ/vZjqzgDbOGKGEIVQS/+aQBOkJXIgU5MlylQEBPoDhyMDwf72dlgvPALg9xWzz49d2J
+X-Proofpoint-GUID: mqpHxRpb0nNJPwFk7TFWsvuItKPRGvNe
+X-Proofpoint-ORIG-GUID: mqpHxRpb0nNJPwFk7TFWsvuItKPRGvNe
+X-Authority-Analysis: v=2.4 cv=I8ZlRMgg c=1 sm=1 tr=0 ts=68106674 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8
+ a=mOH42xogWxsjzwT06YoA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-29_01,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 clxscore=1015 mlxlogscore=999 spamscore=0 phishscore=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504290038
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ malwarescore=0 impostorscore=0 mlxscore=0 adultscore=0 spamscore=0
+ mlxlogscore=999 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504290041
 
-Hello Stephen,
 
-Thanks for your review on the first version of this patch series.
-Gentle reminder, to re-review the updated patch for any further
-comments.
 
-Regards.
-
-On 4/11/2025 8:58 PM, Luo Jie wrote:
-> The CMN PLL in IPQ5424 SoC supplies the fixed clock to NSS at 300 MHZ
-> and to PPE at 375 MHZ. Other output clocks from CMN PLL on this SoC,
-> and their rates are same as IPQ9574.
+On 4/25/2025 1:17 PM, Manivannan Sadhasivam wrote:
+> On Thu, Apr 10, 2025 at 03:30:17PM +0530, Md Sadre Alam wrote:
+>> The BAM command descriptor provides only 18 bits to specify the NAND
+>> register offset.
 > 
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
-> ---
->   drivers/clk/qcom/ipq-cmn-pll.c | 35 ++++++++++++++++++++++++++++++-----
->   1 file changed, 30 insertions(+), 5 deletions(-)
+> s/NAND register offset/BAM register offset
+Ok
 > 
-> diff --git a/drivers/clk/qcom/ipq-cmn-pll.c b/drivers/clk/qcom/ipq-cmn-pll.c
-> index 432d4c4b7aa6..b34d6faf67b8 100644
-> --- a/drivers/clk/qcom/ipq-cmn-pll.c
-> +++ b/drivers/clk/qcom/ipq-cmn-pll.c
-> @@ -1,6 +1,6 @@
->   // SPDX-License-Identifier: GPL-2.0-only
->   /*
-> - * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
->    */
->   
->   /*
-> @@ -16,6 +16,10 @@
->    * are supplied to GCC (24 MHZ as XO and 32 KHZ as sleep clock), and to PCS
->    * with 31.25 MHZ.
->    *
-> + * On the IPQ5424 SoC, there is an output clock from CMN PLL to PPE at 375 MHZ,
-> + * and an output clock to NSS (network subsystem) at 300 MHZ. The other output
-> + * clocks from CMN PLL on IPQ5424 are the same as IPQ9574.
-> + *
->    *               +---------+
->    *               |   GCC   |
->    *               +--+---+--+
-> @@ -46,6 +50,7 @@
->   #include <linux/regmap.h>
->   
->   #include <dt-bindings/clock/qcom,ipq-cmn-pll.h>
-> +#include <dt-bindings/clock/qcom,ipq5424-cmn-pll.h>
->   
->   #define CMN_PLL_REFCLK_SRC_SELECTION		0x28
->   #define CMN_PLL_REFCLK_SRC_DIV			GENMASK(9, 8)
-> @@ -115,6 +120,20 @@ static const struct cmn_pll_fixed_output_clk ipq9574_output_clks[] = {
->   	CLK_PLL_OUTPUT(ETH1_50MHZ_CLK, "eth1-50mhz", 50000000UL),
->   	CLK_PLL_OUTPUT(ETH2_50MHZ_CLK, "eth2-50mhz", 50000000UL),
->   	CLK_PLL_OUTPUT(ETH_25MHZ_CLK, "eth-25mhz", 25000000UL),
-> +	{ /* Sentinel */ }
-> +};
-> +
-> +static const struct cmn_pll_fixed_output_clk ipq5424_output_clks[] = {
-> +	CLK_PLL_OUTPUT(IPQ5424_XO_24MHZ_CLK, "xo-24mhz", 24000000UL),
-> +	CLK_PLL_OUTPUT(IPQ5424_SLEEP_32KHZ_CLK, "sleep-32khz", 32000UL),
-> +	CLK_PLL_OUTPUT(IPQ5424_PCS_31P25MHZ_CLK, "pcs-31p25mhz", 31250000UL),
-> +	CLK_PLL_OUTPUT(IPQ5424_NSS_300MHZ_CLK, "nss-300mhz", 300000000UL),
-> +	CLK_PLL_OUTPUT(IPQ5424_PPE_375MHZ_CLK, "ppe-375mhz", 375000000UL),
-> +	CLK_PLL_OUTPUT(IPQ5424_ETH0_50MHZ_CLK, "eth0-50mhz", 50000000UL),
-> +	CLK_PLL_OUTPUT(IPQ5424_ETH1_50MHZ_CLK, "eth1-50mhz", 50000000UL),
-> +	CLK_PLL_OUTPUT(IPQ5424_ETH2_50MHZ_CLK, "eth2-50mhz", 50000000UL),
-> +	CLK_PLL_OUTPUT(IPQ5424_ETH_25MHZ_CLK, "eth-25mhz", 25000000UL),
-> +	{ /* Sentinel */ }
->   };
->   
->   /*
-> @@ -297,7 +316,7 @@ static struct clk_hw *ipq_cmn_pll_clk_hw_register(struct platform_device *pdev)
->   
->   static int ipq_cmn_pll_register_clks(struct platform_device *pdev)
->   {
-> -	const struct cmn_pll_fixed_output_clk *fixed_clk;
-> +	const struct cmn_pll_fixed_output_clk *p, *fixed_clk;
->   	struct clk_hw_onecell_data *hw_data;
->   	struct device *dev = &pdev->dev;
->   	struct clk_hw *cmn_pll_hw;
-> @@ -305,8 +324,13 @@ static int ipq_cmn_pll_register_clks(struct platform_device *pdev)
->   	struct clk_hw *hw;
->   	int ret, i;
->   
-> -	fixed_clk = ipq9574_output_clks;
-> -	num_clks = ARRAY_SIZE(ipq9574_output_clks);
-> +	fixed_clk = device_get_match_data(dev);
-> +	if (!fixed_clk)
-> +		return -EINVAL;
-> +
-> +	num_clks = 0;
-> +	for (p = fixed_clk; p->name; p++)
-> +		num_clks++;
->   
->   	hw_data = devm_kzalloc(dev, struct_size(hw_data, hws, num_clks + 1),
->   			       GFP_KERNEL);
-> @@ -415,7 +439,8 @@ static const struct dev_pm_ops ipq_cmn_pll_pm_ops = {
->   };
->   
->   static const struct of_device_id ipq_cmn_pll_clk_ids[] = {
-> -	{ .compatible = "qcom,ipq9574-cmn-pll", },
-> +	{ .compatible = "qcom,ipq9574-cmn-pll", .data = &ipq9574_output_clks },
-> +	{ .compatible = "qcom,ipq5424-cmn-pll", .data = &ipq5424_output_clks },
->   	{ }
->   };
->   MODULE_DEVICE_TABLE(of, ipq_cmn_pll_clk_ids);
+>> Additionally, in the BAM command descriptor, the NAND
+>> register offset is supposed to be specified as "(NANDc base - BAM base)
 > 
-
+> Same here.
+Ok
+> 
+>> + reg_off". Since, the BAM controller expecting the value in the form of
+>> "NANDc base - BAM base", so that added a new field 'bam_offset' in the NAND
+>> properties structure and use it while preparing the command descriptor.
+>>
+>> Previously, the driver was specifying the NANDc base address in the BAM
+>> command descriptor.
+>>
+>> Cc: stable@vger.kernel.org
+>> Fixes: 8d6b6d7e135e ("mtd: nand: qcom: support for command descriptor formation")
+>> Tested-by: Lakshmi Sowjanya D <quic_laksd@quicinc.com>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> 
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> - Mani
+> 
+>> ---
+>>   drivers/mtd/nand/qpic_common.c       | 8 ++++----
+>>   drivers/mtd/nand/raw/qcom_nandc.c    | 4 ++++
+>>   drivers/spi/spi-qpic-snand.c         | 1 +
+>>   include/linux/mtd/nand-qpic-common.h | 4 +---
+>>   4 files changed, 10 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
+>> index e0ed25b5afea..4dc4d65e7d32 100644
+>> --- a/drivers/mtd/nand/qpic_common.c
+>> +++ b/drivers/mtd/nand/qpic_common.c
+>> @@ -236,21 +236,21 @@ int qcom_prep_bam_dma_desc_cmd(struct qcom_nand_controller *nandc, bool read,
+>>   	int i, ret;
+>>   	struct bam_cmd_element *bam_ce_buffer;
+>>   	struct bam_transaction *bam_txn = nandc->bam_txn;
+>> +	u32 offset;
+>>   
+>>   	bam_ce_buffer = &bam_txn->bam_ce[bam_txn->bam_ce_pos];
+>>   
+>>   	/* fill the command desc */
+>>   	for (i = 0; i < size; i++) {
+>> +		offset = nandc->props->bam_offset + reg_off + 4 * i;
+>>   		if (read)
+>>   			bam_prep_ce(&bam_ce_buffer[i],
+>> -				    nandc_reg_phys(nandc, reg_off + 4 * i),
+>> -				    BAM_READ_COMMAND,
+>> +				    offset, BAM_READ_COMMAND,
+>>   				    reg_buf_dma_addr(nandc,
+>>   						     (__le32 *)vaddr + i));
+>>   		else
+>>   			bam_prep_ce_le32(&bam_ce_buffer[i],
+>> -					 nandc_reg_phys(nandc, reg_off + 4 * i),
+>> -					 BAM_WRITE_COMMAND,
+>> +					 offset, BAM_WRITE_COMMAND,
+>>   					 *((__le32 *)vaddr + i));
+>>   	}
+>>   
+>> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+>> index 5eaa0be367cd..ef2dd158ca34 100644
+>> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+>> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+>> @@ -2360,6 +2360,7 @@ static const struct qcom_nandc_props ipq806x_nandc_props = {
+>>   	.supports_bam = false,
+>>   	.use_codeword_fixup = true,
+>>   	.dev_cmd_reg_start = 0x0,
+>> +	.bam_offset = 0x30000,
+>>   };
+>>   
+>>   static const struct qcom_nandc_props ipq4019_nandc_props = {
+>> @@ -2367,6 +2368,7 @@ static const struct qcom_nandc_props ipq4019_nandc_props = {
+>>   	.supports_bam = true,
+>>   	.nandc_part_of_qpic = true,
+>>   	.dev_cmd_reg_start = 0x0,
+>> +	.bam_offset = 0x30000,
+>>   };
+>>   
+>>   static const struct qcom_nandc_props ipq8074_nandc_props = {
+>> @@ -2374,6 +2376,7 @@ static const struct qcom_nandc_props ipq8074_nandc_props = {
+>>   	.supports_bam = true,
+>>   	.nandc_part_of_qpic = true,
+>>   	.dev_cmd_reg_start = 0x7000,
+>> +	.bam_offset = 0x30000,
+>>   };
+>>   
+>>   static const struct qcom_nandc_props sdx55_nandc_props = {
+>> @@ -2382,6 +2385,7 @@ static const struct qcom_nandc_props sdx55_nandc_props = {
+>>   	.nandc_part_of_qpic = true,
+>>   	.qpic_version2 = true,
+>>   	.dev_cmd_reg_start = 0x7000,
+>> +	.bam_offset = 0x30000,
+>>   };
+>>   
+>>   /*
+>> diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+>> index a2af731049d4..89c774bf85a6 100644
+>> --- a/drivers/spi/spi-qpic-snand.c
+>> +++ b/drivers/spi/spi-qpic-snand.c
+>> @@ -1605,6 +1605,7 @@ static void qcom_spi_remove(struct platform_device *pdev)
+>>   
+>>   static const struct qcom_nandc_props ipq9574_snandc_props = {
+>>   	.dev_cmd_reg_start = 0x7000,
+>> +	.bam_offset = 0x30000,
+>>   	.supports_bam = true,
+>>   };
+>>   
+>> diff --git a/include/linux/mtd/nand-qpic-common.h b/include/linux/mtd/nand-qpic-common.h
+>> index cd7172e6c1bb..e8462deda6db 100644
+>> --- a/include/linux/mtd/nand-qpic-common.h
+>> +++ b/include/linux/mtd/nand-qpic-common.h
+>> @@ -199,9 +199,6 @@
+>>    */
+>>   #define dev_cmd_reg_addr(nandc, reg) ((nandc)->props->dev_cmd_reg_start + (reg))
+>>   
+>> -/* Returns the NAND register physical address */
+>> -#define nandc_reg_phys(chip, offset) ((chip)->base_phys + (offset))
+>> -
+>>   /* Returns the dma address for reg read buffer */
+>>   #define reg_buf_dma_addr(chip, vaddr) \
+>>   	((chip)->reg_read_dma + \
+>> @@ -454,6 +451,7 @@ struct qcom_nand_controller {
+>>   struct qcom_nandc_props {
+>>   	u32 ecc_modes;
+>>   	u32 dev_cmd_reg_start;
+>> +	u32 bam_offset;
+>>   	bool supports_bam;
+>>   	bool nandc_part_of_qpic;
+>>   	bool qpic_version2;
+>> -- 
+>> 2.34.1
+>>
+> 
 
