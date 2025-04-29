@@ -1,173 +1,292 @@
-Return-Path: <linux-arm-msm+bounces-56118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82F34AA0B5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 14:18:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58DB9AA0B76
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 14:22:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D7720467840
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 12:18:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD601465B77
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 12:22:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AF242C2AB3;
-	Tue, 29 Apr 2025 12:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B683A2C17A7;
+	Tue, 29 Apr 2025 12:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aanI6jYB"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="LnLAgr+Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B253A2C258C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 12:18:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745929090; cv=none; b=OSuar08XXbzJogFjszLgL2FC34ZIMymC7QLXi7RijiMPS7NeiG+adIoQ5AJr3IzXLwF//RVltm9okrxapjwgKx+ETU2WWUlp55n0pcXKRSkue7/BT4WobRPzlzRpurmIcriLMmBbQk82sAw9B0fvdu2wJ9BOycCnlMIGVG87DyY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745929090; c=relaxed/simple;
-	bh=rEgtSqyYGjLOGamhHSrB0660Ic+9Hk1A+1wd/gOqKu0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OwbVUoeAoHgQg9qZb2d/III8p/okGppEeE8WMhglO1tleoiAZfslTXaXHhf5bGok9+JDsGzKHMg12ElVsFxApM7gFTJ3ltaSUgT3TvOB8Aev00yaUJ8RZatEBF5C99CFNIKDSB2YdeoPa1L/ttV3obKLoPo00b6+BlIa0EgwkJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aanI6jYB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TASchs012447
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 12:18:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=e34M8RUkxHX3ws0JPzoX/H5U
-	B4Agn3FBLku0jSx4igY=; b=aanI6jYBt8EC9S2b9Rmv4trvbYfnQ8IKgLNvo4ss
-	VTNzVOm3WsusRPVDLai/TsjZUbJPZSIAc0lF/d9DRQ6U0pfUWjkWpXw7eyc+lQOs
-	A5qg91RLSrvVw77sVsDLMnJjtRDoYMHFPWT2CrsCE5/13hA0o92PhkULEuz9zCs0
-	O7TNforikqZe7ogjdpnqzXodDrU6Sbp9NeestSmyOm3FpaJiTUNR/cr5v3CJ5/Fd
-	rj0Xup6IgHNSj3b2z3rhbUSo9vF4zeYF/dUtmkgLCRmx5YTN+VXTQp073CDdXHzy
-	GdUJFVc+wlop4zVdMu3wVssBKCa7eX3W32i0SYGMiWDqFg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468rnn3bqq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 12:18:07 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c791987cf6so1221985785a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 05:18:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745929082; x=1746533882;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e34M8RUkxHX3ws0JPzoX/H5UB4Agn3FBLku0jSx4igY=;
-        b=X8QTPJzP/cLIrH/y4HdA4O8Hzl7CkB9HJthWEqVwtcNdT/X4jxxLd5UenL6psrxBd+
-         J5WwG0qrqnH9lmdLXTwMUWVTY5ZdkDtx2HUS4G2p6iFd0Vx7xKKWBWkN7lUaF9v97IyD
-         saqVUVhk8Us+pfykzigyeAzACwgsyNwP2aJPHSJ6wOhUq6LW6YOO1yPZ5iqSAGii+6uw
-         9CTvwIFzJWlkSVXKgnZxc5flJcELG2axXTCetfChhemtwd6i6aGB4lZ3VnUvvch8Qwu8
-         WpVknkHVLx1NvhC1n+lAeyj4XcAayTStYGvBQHFgGe1Vh56KOMDxXI6zO+dKF5e26ny8
-         Hzug==
-X-Forwarded-Encrypted: i=1; AJvYcCUyTD+MdGeuSrqpdF7dbAYcKo2CkoxuRaF8BV1cu51eZGRR8W5uKdlItLdksDWOmKSjZ7Yt4BUvqJqEVoOd@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyj82D8xXuB0kFllAMSgm3UeV5nnktRvzzEgXcKelANxUK0RTIs
-	L9jZL35iYfvb0WAGniuVtkiF6CHtp9qTXrUdhJnX5RlwvnL1f+tF8N44Qdyw+I9e0fo/20OEbCv
-	ICxtaybHmVlJQDMd0IiiZ7nhFSXYSIvDsoVFKNfAxYlB8DbnQPVwv3AVqWL5bSO9H
-X-Gm-Gg: ASbGncv7Xj8FqwBh4DPE1zWaFM8TlQR4Lr0dIKe0ouDE93HeDgyohaXoWleleF4aDW0
-	Yd6S+nLYHdMs6L0whiispAa4IqkUZBo5sFobfoOra8bapjuIpJ19xtSn6AilEmc6HsacIdulLe1
-	/mqBK8WRf8ldDnweqY1AUEtHCMYV/fwUy0Bq35IZVQ3AMeY4dmuCMdKifIXQsh/NhZwh/3PZ5eb
-	Tro+3j4ihf/c8Wr59PxXMRGGpVCrTA/WQgV61h9vUyjfCUeeq138uDdAU7WnG53qWN0hgF5nbRe
-	YH0h1HDg1qHW80BsoH6gWXiaFoIl07ORxOjLhoCANTvvPrKb53aYOB6P3czmMEsJv8nahiUnQKs
-	=
-X-Received: by 2002:a05:620a:439f:b0:7c5:42c8:ac82 with SMTP id af79cd13be357-7cabdd88f8dmr580838885a.23.1745929082259;
-        Tue, 29 Apr 2025 05:18:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHuKRgwJxnGPEi9AE9oxOgdj1eQEXEoG3oreJuhRujKZK92EugDebdPi02MSh4UZF+o36uxLQ==
-X-Received: by 2002:a05:620a:439f:b0:7c5:42c8:ac82 with SMTP id af79cd13be357-7cabdd88f8dmr580835285a.23.1745929081954;
-        Tue, 29 Apr 2025 05:18:01 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-31a0127be7dsm15268801fa.106.2025.04.29.05.18.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 05:18:01 -0700 (PDT)
-Date: Tue, 29 Apr 2025 15:17:59 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Jie Zhang <quic_jiezh@quicinc.com>
-Subject: Re: [PATCH v2 5/6] arm64: dts: qcom: qcs8300: Add gpu and gmu nodes
-Message-ID: <hpfqpvkex3dtj6ieosce4phukodnoidh55vxpujyekoehhotqn@l434nae5gzdi>
-References: <20250228-a623-gpu-support-v2-0-aea654ecc1d3@quicinc.com>
- <20250228-a623-gpu-support-v2-5-aea654ecc1d3@quicinc.com>
- <e22daaae-57fc-4523-b594-87d202d255f3@oss.qualcomm.com>
- <aa8ebd50-683b-4043-9494-5675a2d9a01e@quicinc.com>
- <41df5398-79f6-484a-8ad3-f3488eb1b71c@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5CA524F;
+	Tue, 29 Apr 2025 12:22:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745929367; cv=pass; b=IunVoCGS2ianbP5Q0Axyso+I1mvVMkQDtGr59+qIEHJZFVzMVLahzpJpYrjX8i1WtUA0C0Zb388v6lPaIZIAmbt13Uc8BGtsWpTbO4TW+OxGatiLsKGr5YkqkBwzo91oEL6k2LRTXCDCtyb8zmClGA+biuzN85DJXuZxlQ/OuCM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745929367; c=relaxed/simple;
+	bh=Pl/8ZRqKjTYpfRjmRIC8F9O1eyoMR8WT/0aot7GmIc4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EHaOqh7II9OmRhxSSK0bj3lWUd7FXKj/Is0rNFOwEDyezFusitPh9DtApj1dLHOFgUzsxuS0Y1NhPMNojLl1/Q0g0oxl81Vk1YP0oDJIuPnyg2z5QBxx/bOq9hqN7ZyOBprm4RMAIIbATIrhpiErp6ecXNmxkp2RTXSPdeB1130=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=LnLAgr+Q; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1745929328; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Fac9jr2q+2FFJjwbysdw4ZN5Ctn7rfRpfIx+1lcAnA/nAwvP5nMuS/RO/OYB9QBONGUpSFuRiXN00tpzQkJw6znj2RtH1Sre5JU2DgSBGHtOGwFfG7cKGdG9Hb8s5fA8e/rQ8OgOkco0/YFkdEFX3COBh4+gWTWMUUsTiTj56Dg=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1745929328; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=sKJ1pTVCX4dEVX1vrqZiREtxmyVR9vDTmkBb2JrH30s=; 
+	b=Vzj1rAukVMGMgQhFaGv8ckhYTMk4642OMD55TcoAymjsOlmRmJyXa2GpAbtqshGVqK+2NCeSpVqTMb7SySG+7HLa8VUFVrwV2XZEumqgghkkMevhu2TPvWLKsoawDOtyE1OgZM3nES+tIYjfLT9bsPsGU7hcJab8oBD6F/HuSZI=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
+	dmarc=pass header.from=<usama.anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1745929327;
+	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=sKJ1pTVCX4dEVX1vrqZiREtxmyVR9vDTmkBb2JrH30s=;
+	b=LnLAgr+QE8jLvEyADCjhfPHj9SCXQgULDYrsuSGMracCavNIFuNBpDPBgzgM0Bqf
+	8Yb/7XjOHjfoJwkQPsnHeM/hCKt4vH8Va5cfL5OVHN+4EV5tA0u0Q/7uKPVHOYpfHaG
+	WQCftFf8+zqk7CsSYrt2HbFKdT5oLowhz7EJ+SQ0=
+Received: by mx.zohomail.com with SMTPS id 1745929325816339.67490448540536;
+	Tue, 29 Apr 2025 05:22:05 -0700 (PDT)
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Youssef Samir <quic_yabdulra@quicinc.com>,
+	Matthew Leung <quic_mattleun@quicinc.com>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Yan Zhen <yanzhen@vivo.com>,
+	Alex Elder <elder@kernel.org>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Troy Hanson <quic_thanson@quicinc.com>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>
+Cc: kernel@collabora.com,
+	mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
+	ath11k@lists.infradead.org,
+	ath12k@lists.infradead.org
+Subject: [PATCH v3] bus: mhi: host: don't free bhie tables during suspend/hibernation
+Date: Tue, 29 Apr 2025 17:20:56 +0500
+Message-ID: <20250429122112.104472-1-usama.anjum@collabora.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <41df5398-79f6-484a-8ad3-f3488eb1b71c@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: Hhw0dF19CFSh-2klKLvxkc4OmvnIuJE8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDA5MSBTYWx0ZWRfXxjBq9fTtk+yV LGfIZmF/L3iFCMBHi+9EGaKnExdyXEe56s14g10wdHOkPEFRKJNtxhKXTPi+ioLAlo03G1cS0Tp 4k0lvAF1lcUfzx3nWbweDADRnkS4jrY7aIT5shQvyQvY4KoGj3CE5LKn6plRcuhuPkdLt3tlnph
- bjOBb/czx+O5MElhg9sx81S81L72L+jJgGNiz8ZVWbkbje0o8VruuJnm1AR1PPjaOD05bzcMwLs hVpbH9la6/PxcysUq9LdikdeLWxE9pCsio9CQ4ls7jQ4vATPd2GLRXSV5Jc3YcaGk9vFavFo8Cz uz13mYjR83pSkI3+1uaymf7bcixRvHoYcPzWQcTgyV2BVOYdn3hHrSQi/IN3OGjhn3E9j+mMMkU
- v3IG0gcsaO+aU5yWErrGVZA/e2+v+ggG8USbpYr8E/MgVE+qC3BR7nZo5FqT3gmbnPw6r0h/
-X-Proofpoint-GUID: Hhw0dF19CFSh-2klKLvxkc4OmvnIuJE8
-X-Authority-Analysis: v=2.4 cv=V9990fni c=1 sm=1 tr=0 ts=6810c37f cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=AUxwy3R0h1HAuY9YvekA:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-29_04,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- adultscore=0 mlxlogscore=619 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 clxscore=1015 phishscore=0 mlxscore=0
- spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504290091
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On Mon, Apr 28, 2025 at 11:19:32PM +0200, Konrad Dybcio wrote:
-> On 4/28/25 12:44 PM, Akhil P Oommen wrote:
-> > On 4/14/2025 4:31 PM, Konrad Dybcio wrote:
-> >> On 2/27/25 9:07 PM, Akhil P Oommen wrote:
-> >>> From: Jie Zhang <quic_jiezh@quicinc.com>
-> >>>
-> >>> Add gpu and gmu nodes for qcs8300 chipset.
-> >>>
-> >>> Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
-> >>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> >>> ---
-> >>
-> >> [...]
-> >>
-> >>> +		gmu: gmu@3d6a000 {
-> >>> +			compatible = "qcom,adreno-gmu-623.0", "qcom,adreno-gmu";
-> >>> +			reg = <0x0 0x03d6a000 0x0 0x34000>,
-> >>
-> >> size = 0x26000 so that it doesn't leak into GPU_CC
-> > 
-> > We dump GPUCC regs into snapshot!
-> 
-> Right, that's bad.. the dt heuristics are such that each region
-> is mapped by a single device that it belongs to, with some rare
-> exceptions..
+Fix dma_direct_alloc() failure at resume time during bhie_table
+allocation. There is a crash report where at resume time, the memory
+from the dma doesn't get allocated and MHI fails to re-initialize.
+There is fragmentation/memory pressure.
 
-It has been like this for most (all?) GMU / GPUCC generations.
+To fix it, don't free the memory at power down during suspend /
+hibernation. Instead, use the same allocated memory again after every
+resume / hibernation. This patch has been tested with resume and
+hibernation both.
 
-> 
-> Instead, the moderately dirty way would be to expose gpucc as
-> syscon & pass it to the GPU device, or the clean way would be
-> to implement an API within the clock framework that would dump
-> the relevant registers
-> 
-> Konrad
+The rddm is of constant size for a given hardware. While the fbc_image
+size depends on the firmware. If the firmware changes, we'll free and
+allocate new memory for it.
 
+Here are the crash logs:
+
+[ 3029.338587] mhi mhi0: Requested to power ON
+[ 3029.338621] mhi mhi0: Power on setup success
+[ 3029.668654] kworker/u33:8: page allocation failure: order:7, mode:0xc04(GFP_NOIO|GFP_DMA32), nodemask=(null),cpuset=/,mems_allowed=0
+[ 3029.668682] CPU: 4 UID: 0 PID: 2744 Comm: kworker/u33:8 Not tainted 6.11.11-valve10-1-neptune-611-gb69e902b4338 #1ed779c892334112fb968aaa3facf9686b5ff0bd7
+[ 3029.668690] Hardware name: Valve Galileo/Galileo, BIOS F7G0112 08/01/2024
+[ 3029.668694] Workqueue: mhi_hiprio_wq mhi_pm_st_worker [mhi]
+[ 3029.668717] Call Trace:
+[ 3029.668722]  <TASK>
+[ 3029.668728]  dump_stack_lvl+0x4e/0x70
+[ 3029.668738]  warn_alloc+0x164/0x190
+[ 3029.668747]  ? srso_return_thunk+0x5/0x5f
+[ 3029.668754]  ? __alloc_pages_direct_compact+0xaf/0x360
+[ 3029.668761]  __alloc_pages_slowpath.constprop.0+0xc75/0xd70
+[ 3029.668774]  __alloc_pages_noprof+0x321/0x350
+[ 3029.668782]  __dma_direct_alloc_pages.isra.0+0x14a/0x290
+[ 3029.668790]  dma_direct_alloc+0x70/0x270
+[ 3029.668796]  mhi_alloc_bhie_table+0xe8/0x190 [mhi faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
+[ 3029.668814]  mhi_fw_load_handler+0x1bc/0x310 [mhi faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
+[ 3029.668830]  mhi_pm_st_worker+0x5c8/0xaa0 [mhi faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
+[ 3029.668844]  ? srso_return_thunk+0x5/0x5f
+[ 3029.668853]  process_one_work+0x17e/0x330
+[ 3029.668861]  worker_thread+0x2ce/0x3f0
+[ 3029.668868]  ? __pfx_worker_thread+0x10/0x10
+[ 3029.668873]  kthread+0xd2/0x100
+[ 3029.668879]  ? __pfx_kthread+0x10/0x10
+[ 3029.668885]  ret_from_fork+0x34/0x50
+[ 3029.668892]  ? __pfx_kthread+0x10/0x10
+[ 3029.668898]  ret_from_fork_asm+0x1a/0x30
+[ 3029.668910]  </TASK>
+
+Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+---
+Changes since v1:
+- Don't free bhie tables during suspend/hibernation only
+- Handle fbc_image changed size correctly
+- Remove fbc_image getting set to NULL in *free_bhie_table()
+
+Changes since v2:
+- Remove the new mhi_partial_unprepare_after_power_down() and instead
+  update mhi_power_down_keep_dev() to use
+  mhi_power_down_unprepare_keep_dev() as suggested by Mani
+- Update all users of this API such as ath12k (previously only ath11k
+  was updated)
+- Define prev_fw_sz in docs
+- Do better alignment of comments
+
+Tested on ath11k.
+---
+ drivers/bus/mhi/host/boot.c           | 15 +++++++++++----
+ drivers/bus/mhi/host/init.c           |  5 +++--
+ drivers/bus/mhi/host/pm.c             |  9 +++++++++
+ drivers/net/wireless/ath/ath11k/mhi.c |  8 ++++----
+ drivers/net/wireless/ath/ath12k/mhi.c |  8 ++++----
+ include/linux/mhi.h                   |  2 ++
+ 6 files changed, 33 insertions(+), 14 deletions(-)
+
+diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+index efa3b6dddf4d2..bc8459798bbee 100644
+--- a/drivers/bus/mhi/host/boot.c
++++ b/drivers/bus/mhi/host/boot.c
+@@ -584,10 +584,17 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+ 	 * device transitioning into MHI READY state
+ 	 */
+ 	if (fw_load_type == MHI_FW_LOAD_FBC) {
+-		ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
+-		if (ret) {
+-			release_firmware(firmware);
+-			goto error_fw_load;
++		if (mhi_cntrl->fbc_image && fw_sz != mhi_cntrl->prev_fw_sz) {
++			mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
++			mhi_cntrl->fbc_image = NULL;
++		}
++		if (!mhi_cntrl->fbc_image) {
++			ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
++			if (ret) {
++				release_firmware(firmware);
++				goto error_fw_load;
++			}
++			mhi_cntrl->prev_fw_sz = fw_sz;
+ 		}
+ 
+ 		/* Load the firmware into BHIE vec table */
+diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+index 13e7a55f54ff4..a7663ad16bfc6 100644
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -1173,8 +1173,9 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
+ 		/*
+ 		 * Allocate RDDM table for debugging purpose if specified
+ 		 */
+-		mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
+-				     mhi_cntrl->rddm_size);
++		if (!mhi_cntrl->rddm_image)
++			mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
++					     mhi_cntrl->rddm_size);
+ 		if (mhi_cntrl->rddm_image) {
+ 			ret = mhi_rddm_prepare(mhi_cntrl,
+ 					       mhi_cntrl->rddm_image);
+diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+index e6c3ff62bab1d..b726b000d8a5d 100644
+--- a/drivers/bus/mhi/host/pm.c
++++ b/drivers/bus/mhi/host/pm.c
+@@ -1259,10 +1259,19 @@ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
+ }
+ EXPORT_SYMBOL_GPL(mhi_power_down);
+ 
++void mhi_power_down_unprepare_keep_dev(struct mhi_controller *mhi_cntrl)
++{
++	mhi_cntrl->bhi = NULL;
++	mhi_cntrl->bhie = NULL;
++
++	mhi_deinit_dev_ctxt(mhi_cntrl);
++}
++
+ void mhi_power_down_keep_dev(struct mhi_controller *mhi_cntrl,
+ 			       bool graceful)
+ {
+ 	__mhi_power_down(mhi_cntrl, graceful, false);
++	mhi_power_down_unprepare_keep_dev(mhi_cntrl);
+ }
+ EXPORT_SYMBOL_GPL(mhi_power_down_keep_dev);
+ 
+diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
+index acd76e9392d31..c5dc776b23643 100644
+--- a/drivers/net/wireless/ath/ath11k/mhi.c
++++ b/drivers/net/wireless/ath/ath11k/mhi.c
+@@ -460,12 +460,12 @@ void ath11k_mhi_stop(struct ath11k_pci *ab_pci, bool is_suspend)
+ 	 * workaround, otherwise ath11k_core_resume() will timeout
+ 	 * during resume.
+ 	 */
+-	if (is_suspend)
++	if (is_suspend) {
+ 		mhi_power_down_keep_dev(ab_pci->mhi_ctrl, true);
+-	else
++	} else {
+ 		mhi_power_down(ab_pci->mhi_ctrl, true);
+-
+-	mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
++		mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
++	}
+ }
+ 
+ int ath11k_mhi_suspend(struct ath11k_pci *ab_pci)
+diff --git a/drivers/net/wireless/ath/ath12k/mhi.c b/drivers/net/wireless/ath/ath12k/mhi.c
+index 08f44baf182a5..cb7f789d873f2 100644
+--- a/drivers/net/wireless/ath/ath12k/mhi.c
++++ b/drivers/net/wireless/ath/ath12k/mhi.c
+@@ -635,12 +635,12 @@ void ath12k_mhi_stop(struct ath12k_pci *ab_pci, bool is_suspend)
+ 	 * workaround, otherwise ath12k_core_resume() will timeout
+ 	 * during resume.
+ 	 */
+-	if (is_suspend)
++	if (is_suspend) {
+ 		ath12k_mhi_set_state(ab_pci, ATH12K_MHI_POWER_OFF_KEEP_DEV);
+-	else
++	} else {
+ 		ath12k_mhi_set_state(ab_pci, ATH12K_MHI_POWER_OFF);
+-
+-	ath12k_mhi_set_state(ab_pci, ATH12K_MHI_DEINIT);
++		ath12k_mhi_set_state(ab_pci, ATH12K_MHI_DEINIT);
++	}
+ }
+ 
+ void ath12k_mhi_suspend(struct ath12k_pci *ab_pci)
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index dd372b0123a6d..6fd218a877855 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -306,6 +306,7 @@ struct mhi_controller_config {
+  *           if fw_image is NULL and fbc_download is true (optional)
+  * @fw_sz: Firmware image data size for normal booting, used only if fw_image
+  *         is NULL and fbc_download is true (optional)
++ * @prev_fw_sz: Previous firmware image data size, when fbc_download is true
+  * @edl_image: Firmware image name for emergency download mode (optional)
+  * @rddm_size: RAM dump size that host should allocate for debugging purpose
+  * @sbl_size: SBL image size downloaded through BHIe (optional)
+@@ -382,6 +383,7 @@ struct mhi_controller {
+ 	const char *fw_image;
+ 	const u8 *fw_data;
+ 	size_t fw_sz;
++	size_t prev_fw_sz;
+ 	const char *edl_image;
+ 	size_t rddm_size;
+ 	size_t sbl_size;
 -- 
-With best wishes
-Dmitry
+2.43.0
+
 
