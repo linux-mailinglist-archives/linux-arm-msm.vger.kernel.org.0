@@ -1,261 +1,287 @@
-Return-Path: <linux-arm-msm+bounces-56159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5A0AAA1890
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 20:01:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42EA5AA1956
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 20:10:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 33A179C1BE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 17:56:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 344851BC7B52
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 18:10:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B12324EAB2;
-	Tue, 29 Apr 2025 17:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36DDD25332D;
+	Tue, 29 Apr 2025 18:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="L5V4SqfO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KAh+uwPi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAC824DFF3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 17:56:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001D22512E8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 18:09:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949368; cv=none; b=HpGdpzQ07d+NkZiWXTbkWiK0An+cWe6PWKfWe3BT8Yu23GRfQS50DsEdpoXqirDPgMyPWMOnlJdZ/I6HGnaH9Tnw9syYFuHAxGmHwnskRbVkfmNgcPBogt+Uz/fJVgHoyHtYxr2z3lDcaer1O7CwAurA9SN7uB1aaYj8mA6OfZo=
+	t=1745950192; cv=none; b=CH4WSj+1zwJnwQAV6n/4JnYe/dC0lpIMsaMb5MYki5WvvwDDIRdSaUMUifVSDLBCUhhEXGoYFjpqaHj6KSFMLPDUrYqfqiI+sIoi2unbIcUhp8spxj1Vtgu5DUTr0jZ/BS9eCOhvxzcqo/ivblIPejEL0/+X/GCHb5b1YIS/1O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949368; c=relaxed/simple;
-	bh=YxF426ki5r01JQo3a4BoiGerwrXUKzdq62aGjvZ3ZkE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lt314whZA9908r2ZB5gLkX1Q02gdI0IMentpcFkd+00jEX1NpdTqDbV3SPsvrzTCpm0xrAiajwxfNz8nJqi071WjQEjPrLXnYhInqTksebFe9l+33arxlStTGGQ96BjZeP8tDrfZgv7AFOU3I38Lqme8H6Wo3iCLsMKD2M0p48w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=L5V4SqfO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TA0nBM001335
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 17:56:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=rS5vG6Ykrsa1zW3Ud275kbku
-	3FMpDAYZKUwwcOX3+Qs=; b=L5V4SqfOxfRjSoAvXu9F1fb31nUL+7WBBsoqfm4M
-	kgMQEPVuITFrCsaw2zQr7bHSp9yDuYHcomGlM8QnvflKiaMDHByIcosrIPf3z3m0
-	ebdc3GhH4IeGPQrYBWLYcyHUAu6OXNlCx1a2RYF7/k3qHKAxXviOoCUgQyhjggno
-	CJzXKHZzjKCS2O4Gc/Fn0SkE2CnfMn3PWOafOZAGNm+YPwGxKY6T7Uv+w3dCQVpm
-	IFLGJeQBDQEio4voMOuUPJEz0qafkQ6uw7ypTXJ5I6fzkog9NagaPJnMz61dA7cO
-	BzZ+o6XudIN7hJgKbz5G6ExpnN0UI3B6uLOkeAJ8Xk3a5A==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468qv9neq4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 17:56:04 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c5c9abdbd3so585040485a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 10:56:04 -0700 (PDT)
+	s=arc-20240116; t=1745950192; c=relaxed/simple;
+	bh=NRmEFA1cMtNTKkdV4Kz76ZxAsSzC6Ex/40jCfiCBdlA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Z5mNQV4UFQAColEM2g/iASdrEPaRjKkSvrUefeYayJP+RGy+3sips35x3qmYjoI2o2uSOusScr+tTgoEdoZXG23U5gy1icXhnKut5jwsoKOJLz2xpLWvWPW+hPw95vGB4nc1CkH7JDkJhGSntwNoj/5lBp6Kybn3glnzB5r9pGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KAh+uwPi; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-440668acbf3so8536245e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 11:09:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1745950188; x=1746554988; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=w/rG6AWXGoekxcd3LHIxXcRgVm+0IkNESPaRkmBuBd8=;
+        b=KAh+uwPip5xvNkGr24FODNbDLIbya8rebcJAlZte5lZJYz+zdFJoUJcZIrtMF0F+bU
+         wey5YgHsPQiBn0j2aBSELFHviC/Hwz6RbyFXhKr/xUwMr8NWY9X48qjrDxB/tffnVrIh
+         rCi296Tl3L1DCorFwDf/sLcicnxGwmQHVZpiFaiYBXtu6rGWodRDKYDp4rhPwIWV2hEm
+         d1O80BjHRg1wV9Sxd9jCixTXWc8S884qNQpEiA5M5B+EPslZOF9JrUw6kEE66wF/CxmJ
+         BDyyNG8U0dGRIvGqp0SB0G+kZHQHSFcK9V4NexlA9lREfNf5ZmDAZ94qZXK5mc4Vk5IE
+         0/mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745949362; x=1746554162;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rS5vG6Ykrsa1zW3Ud275kbku3FMpDAYZKUwwcOX3+Qs=;
-        b=CEXaq4RTZ5cVKnmHFrsSwepSsOw0u3FUfH++bjm4GuyhrM8iQlS50O2N0FLut3t/rv
-         VPMb5M5b33gFTakC8MWQdkwWnNuktV4ysdgwk7qQYKOgBQ1o/He8UzSAxUVisHgQDPvB
-         kYrEx2lPJuvAhamsJMx4xCjsoB/9ctN3MMzMVCQTi5yrHEqvEkjVJ8bvboQAT5M0MkWE
-         GNObJ3IBT+GPcElEHOJzGiryTCTfVSDN3ojKYmcyr6ehOnnUlhIDlUB7RHKhHbzjbNFZ
-         Kr7BKt5FrUkMw8J37STDYpqhz0lnq8iMq4dHSJYF6YdihPBCAg0CNngqiRaTWAA+Q4dL
-         UUjw==
-X-Forwarded-Encrypted: i=1; AJvYcCWTW/AKnMuZnMjE1ySSNGVFit9MgNkOlWzVcgRlF0cveVsu5/lghMXS0hCLIZlZHqilTRhO0HgVLqgnrwI0@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWhsq4ofXhSWQGL+LHea9sbeFEd+8774K+9sNPgfscdEsmHX/z
-	bQB2q6R9/gLHoBEzEfW+Kq5X6tYmSfTFFnH8LjMxnKWG+N7585kyLxkz+ahafzl8aP7Xag0tnJA
-	pw19GETFuQZelG4XZ+Ri2/mshOaI2Wcv01RykqohB0hWRqgTGpbD11MuT/wTBijSG
-X-Gm-Gg: ASbGncuF6dyMMZY+4tVk/EoMVoJSEpc4W2Gs2S9+RuDg8XEQy2W8LA14+5yLL8UHWTf
-	CZAOERePNYSh7H6CwL0kn5jY7ZeXU1oAuIGK3ObHN4GEtE3ul6skPtWCF+9KOjfaT8cdmJ7xLc0
-	q8naTJSAVRKwtBM9ZKcnMuHpPmMdNouonchKYsoU4H1a3dDX+RxHD7GcjpLM46hn7XlGYOpiExK
-	dpyCMBKOte0dgbc9XKUYQiZj3cYTzmBgCJBNWN+eFiu6TUWPs6D73RkR2VITYK18aUf42DQQbSN
-	+25dkw7CN3SzCte1NkcBbeSmHMVc5pya/u6mJ+34/xR10ZypzB2Pqk0U6pKo5aR9a3fsySH9RIE
-	=
-X-Received: by 2002:a05:620a:17a2:b0:7c5:54d8:3d43 with SMTP id af79cd13be357-7cabddd8535mr597329885a.58.1745949362480;
-        Tue, 29 Apr 2025 10:56:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRha005ciPmWQvQ7hrDFPUg9VvCfnjF+1wobmE3CtP2HMJ9VopYx0EY6VOvVx1uhZKTX5kvQ==
-X-Received: by 2002:a05:620a:17a2:b0:7c5:54d8:3d43 with SMTP id af79cd13be357-7cabddd8535mr597325085a.58.1745949362083;
-        Tue, 29 Apr 2025 10:56:02 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7ccab19bsm1948330e87.207.2025.04.29.10.56.00
+        d=1e100.net; s=20230601; t=1745950188; x=1746554988;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=w/rG6AWXGoekxcd3LHIxXcRgVm+0IkNESPaRkmBuBd8=;
+        b=bFqOU36IMQQsc4H4w/m5up71BSN0W5XeVaIsEYRfgklIosB5oFLRDujKxiEPWdzvo+
+         vgpQKwDXCYR3I9oNRUMt0JNkX37yM8gxmkZYHQIKw8Fvh9uqkAkNGvzqGbLt36XVcfji
+         Le6cDuPhJNQwNvUNMYhH2S8JJ07qzkSG+VfYmVT/h6Wm7ycGKFo2YmafvyPT5ggENFdN
+         s4vuPw1fSanVtV9EwabxEayA4z9bea5/Vx1ddi2gGvpGvE2Id/2UxCnNNYC87D63TJW+
+         zIRRHWJG4Nft/2iIFKgasRdvIiIdVcc3bH8z5oiH/5nmmaIz6WkxACNt/z6Zex1Lr6oo
+         zMgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWFNR0RPPe/R0TVwhBkQQCW90fovTu9TDHzC2HNXN9sa6X+r9CpXRoCFGIgdJKLgCPpkkkSllhF8BylDOXq@vger.kernel.org
+X-Gm-Message-State: AOJu0YyYwQAkoLpzkPmIowBIdR5nISQy5YFo5/zj07nlc7OaKQ98ilE8
+	svS9hTBhWMB6xao0pCYF7siiEtjyOnIh3kOKFbuyB9+inmBQnX48OkjmXEj1X5A=
+X-Gm-Gg: ASbGnct+YAw8TjPIHBtX4p95wRm50MxF0ZD3XELZRbo8388/mNQS1ZjJO6PR0b6Hl7U
+	qebetl1CNUD0AxgvTmX6ym492A57jkLRQnFJsiEAXn/E4JiP8vcsc4lUYJAR++NMozbmiLfQE4U
+	ICHW/smhhkDttP0qWR7Rw53NrgnZwnC3kyaj23/ki/zf5pxwPht6ZKB/zxVaPbhSXauB29hR6yW
+	s4w+DGzdSgkjJ0eQoqvQumdOX5i2iNm1+Lz6eL63lub2GQcdwfzg2uxnGcJK8KqWb38EqPvtWA1
+	O/fJcIMtv18rHZtdoeKudr6V4IcSoJ3fZg7dV0CgXG7do7/z/w==
+X-Google-Smtp-Source: AGHT+IGEAvfTMVbPsHmLNZ+IkEuAjoyB8jaVAoucK/+s16SnbjUKJ7712NKpLTFsRw8wJ6RbZnh36Q==
+X-Received: by 2002:a05:6000:420e:b0:391:3110:dff5 with SMTP id ffacd0b85a97d-3a08f79e75emr121818f8f.5.1745950188236;
+        Tue, 29 Apr 2025 11:09:48 -0700 (PDT)
+Received: from kuoka.. ([178.197.207.88])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e5d52bsm15028818f8f.90.2025.04.29.11.09.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 10:56:01 -0700 (PDT)
-Date: Tue, 29 Apr 2025 20:55:59 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dpu: Filter modes based on adjusted mode clock
-Message-ID: <k4le6lz2bwdxqc3jw4ctndybkongynexr6j7p7afc2h5mzktxm@ov26hfmi3puj>
-References: <20241212-filter-mode-clock-v1-1-f4441988d6aa@quicinc.com>
+        Tue, 29 Apr 2025 11:09:47 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Robert Foss <rfoss@kernel.org>,
+	Todor Tomov <todor.too@gmail.com>,
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/3] media: qcom: camss: vfe: Stop spamming logs with version
+Date: Tue, 29 Apr 2025 20:08:29 +0200
+Message-ID: <20250429180828.950219-4-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241212-filter-mode-clock-v1-1-f4441988d6aa@quicinc.com>
-X-Authority-Analysis: v=2.4 cv=AO34vM+d c=1 sm=1 tr=0 ts=681112b4 cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=P-IC7800AAAA:8 a=COk6AnOGAAAA:8 a=p-WgCerdHsfys2ORyzkA:9 a=CjuIK1q_8ugA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=d3PnA9EDa4IxuAV0gXij:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: gLwDjlSPfiAipql1cVyvn26SkV-Yqyzg
-X-Proofpoint-ORIG-GUID: gLwDjlSPfiAipql1cVyvn26SkV-Yqyzg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDEzMSBTYWx0ZWRfXzGEJYz0Ze44X eiqe2MydhCMSNY4IxbTncKx0oRjg76q8CJOhl5y60De8anfHWGRFSUdr3lW/ehErFNw59nQz4kJ YzbmudXQlcfVyUJAiUcZMWrlABKqZtr7dN6nCJ/kAWvXVp+APliQ8ChgFBZyIAaBDTrPXU8ZpBS
- 9fQ7Sloer8+8hi4klipMCHfkilNiC+EIGbznvfEcOPKqhVuE6398dM2DhDHMxZfssJdEv+FJZ1G ujqMRhbxQVzqm19oPcXIXjnqbMHWtMh2sPUkMJdFVDLG83qAGNK5HgpYHarTHyTmrV6H1m1xNXK d4t+aIfOSruwbPJqzCrpq33HWyzdBDxoKKrM/y106R91DPgMyhx1PVxYDDix4QEIrA5jbcS8WPV
- N1TijRhWKL3pw8UBKllMydOTV5jg7krpkQNHFLO0Vu/EONJ3BrvHNQ+AtDiRyfiHw+CXsd0p
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-29_06,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 clxscore=1015 malwarescore=0 spamscore=0 suspectscore=0
- mlxlogscore=999 mlxscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504290131
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7342; i=krzysztof.kozlowski@linaro.org;
+ h=from:subject; bh=NRmEFA1cMtNTKkdV4Kz76ZxAsSzC6Ex/40jCfiCBdlA=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoERWcIyDAxAv9TbP2GAMiw/QCHluBg1AQUDsz4
+ TNetsccTP2JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaBEVnAAKCRDBN2bmhouD
+ 139PD/9UaFPoTNGrGk3Kxu3/I1Xj66yiTsYIU0lLxXCKXqQ6e02DHsVQdoGqUJ1kSElO9ycyRrZ
+ V9CC/NCXFRd4nWNHfIzp3akwKAiPIlt4OoAkzuhGyRoWHIuORF5kDC90Vj/7+UDDUTksSxP7rwE
+ JcNHpi71hbxfyrgPYhWGYxgLXqh/hDTA1hzZoTM4dcp/kYOARoF/xpYlZQTXoNrf0TZmmI3oU2Y
+ kgzzGAMC2hDB92Kf8rheFfQDgpI0DvrwLU8BV2Ue0iiqRW0VVHkvREf3ZVHCuLa1hP31KGvGGhS
+ QLHQh0rrkDp59k8qrU0DT6aovnM1WX4OWXz3zUpZeQN3MdUY5kQAx524Zfmflk3KldG3drLyKC9
+ sQYpx/ShKlbqgG+bSM7EWzsmyT194pSlQZSPRljtu//3t8FsCsV3MgLr9sqbdluD4Ah62t8DmH2
+ 1WB0oFH2OmRU/vepKdp18ZCDtA19HJKdVm5icnu+N+/30meTorALrisI26cqJh4CpZiWJq7v8Tu
+ GW7DGP8Jx73SOpKu6ECJEInMf+Cq4lzd1UWgNj0v6IaMHb/AAByAUIeU1Qf0UhXsp6c2t/kRJd8
+ 3kFLQYFLwdkQ5xVa+GqUi+x8Yx6hXpM8qWchpbjmy7sMmrdb/3Q0CwI0EqRAQ5ra6JyRXBO4x+C 3PAh9BQL1KrHDsQ==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 12, 2024 at 11:11:54AM -0800, Jessica Zhang wrote:
-> Filter out modes that have a clock rate greater than the max core clock
-> rate when adjusted for the perf clock factor
-> 
-> This is especially important for chipsets such as QCS615 that have lower
-> limits for the MDP max core clock.
-> 
-> Since the core CRTC clock is at least the mode clock (adjusted for the
-> perf clock factor) [1], the modes supported by the driver should be less
-> than the max core clock rate.
-> 
-> [1] https://elixir.bootlin.com/linux/v6.12.4/source/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c#L83
-> 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 29 +++++++++++++++++++--------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  3 +++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 12 +++++++++++
->  3 files changed, 36 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> index 6f0a37f954fe8797a4e3a34e7876a93d5e477642..0afd7c81981c722a1a9176062250c418255fe6d0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> @@ -31,6 +31,26 @@ enum dpu_perf_mode {
->  	DPU_PERF_MODE_MAX
->  };
->  
-> +/**
-> + * dpu_core_perf_adjusted_crtc_clk - Adjust given crtc clock rate according to
-> + *   the perf clock factor.
-> + * @crtc_clk_rate - Unadjusted crtc clock rate
-> + * @perf_cfg: performance configuration
-> + */
-> +u64 dpu_core_perf_adjusted_crtc_clk(u64 crtc_clk_rate,
-> +				    const struct dpu_perf_cfg *perf_cfg)
-> +{
-> +	u32 clk_factor;
-> +
-> +	clk_factor = perf_cfg->clk_inefficiency_factor;
-> +	if (clk_factor) {
-> +		crtc_clk_rate *= clk_factor;
-> +		do_div(crtc_clk_rate, 100);
-> +	}
-> +
-> +	return crtc_clk_rate;
-> +}
-> +
->  /**
->   * _dpu_core_perf_calc_bw() - to calculate BW per crtc
->   * @perf_cfg: performance configuration
-> @@ -76,7 +96,6 @@ static u64 _dpu_core_perf_calc_clk(const struct dpu_perf_cfg *perf_cfg,
->  	struct dpu_plane_state *pstate;
->  	struct drm_display_mode *mode;
->  	u64 crtc_clk;
-> -	u32 clk_factor;
->  
->  	mode = &state->adjusted_mode;
->  
-> @@ -90,13 +109,7 @@ static u64 _dpu_core_perf_calc_clk(const struct dpu_perf_cfg *perf_cfg,
->  		crtc_clk = max(pstate->plane_clk, crtc_clk);
->  	}
->  
-> -	clk_factor = perf_cfg->clk_inefficiency_factor;
-> -	if (clk_factor) {
-> -		crtc_clk *= clk_factor;
-> -		do_div(crtc_clk, 100);
-> -	}
-> -
-> -	return crtc_clk;
-> +	return dpu_core_perf_adjusted_crtc_clk(crtc_clk, perf_cfg);
->  }
->  
->  static struct dpu_kms *_dpu_crtc_get_kms(struct drm_crtc *crtc)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> index 451bf8021114d9d4a2dfdbb81ed4150fc559c681..c3bcd567cdfb66647c83682d1feedd69e33f0680 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> @@ -54,6 +54,9 @@ struct dpu_core_perf {
->  	u64 fix_core_ab_vote;
->  };
->  
-> +u64 dpu_core_perf_adjusted_crtc_clk(u64 clk_rate,
-> +				    const struct dpu_perf_cfg *perf_cfg);
-> +
->  int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
->  		struct drm_crtc_state *state);
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index ad3462476a143ec01a3b8817a2c85b0f50435a9e..cd7b84ab57a7526948c2beb7c5cefdddcbe4f6d9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -1257,6 +1257,7 @@ static enum drm_mode_status dpu_crtc_mode_valid(struct drm_crtc *crtc,
->  						const struct drm_display_mode *mode)
->  {
->  	struct dpu_kms *dpu_kms = _dpu_crtc_get_kms(crtc);
-> +	u64 adjusted_mode_clk;
->  
->  	/* if there is no 3d_mux block we cannot merge LMs so we cannot
->  	 * split the large layer into 2 LMs, filter out such modes
-> @@ -1264,6 +1265,17 @@ static enum drm_mode_status dpu_crtc_mode_valid(struct drm_crtc *crtc,
->  	if (!dpu_kms->catalog->caps->has_3d_merge &&
->  	    mode->hdisplay > dpu_kms->catalog->caps->max_mixer_width)
->  		return MODE_BAD_HVALUE;
-> +
-> +	adjusted_mode_clk = dpu_core_perf_adjusted_crtc_clk(mode->clock,
-> +							    dpu_kms->perf.perf_cfg);
-> +
-> +	/*
-> +	 * The given mode, adjusted for the perf clock factor, should not exceed
-> +	 * the max core clock rate
-> +	 */
-> +	if (adjusted_mode_clk > dpu_kms->perf.max_core_clk_rate / 1000)
-> +		return MODE_CLOCK_HIGH;
+Camss drivers spam kernel dmesg with 64 useless messages during boot:
 
-This breaks arm32 builds:
+  qcom-camss acb7000.isp: VFE:1 HW Version = 3.0.2
+  qcom-camss acb7000.isp: VFE:2 HW Version = 2.4.0
 
-ERROR: modpost: "__aeabi_uldivmod" [drivers/gpu/drm/msm/msm.ko] undefined!
+All of these messages are the same, so it makes no sense to print same
+information 32 times.
 
-Please replace division with multiplication.
+The driver does not use read version at all, so if it was needed for any
+real debugging purpose it would be provided via debugfs interface.
+However even then printing this is pointless, because version of
+hardware block is deducible from the compatible.
 
-> +
->  	/*
->  	 * max crtc width is equal to the max mixer width * 2 and max height is 4K
->  	 */
-> 
-> ---
-> base-commit: 423c1c96d6b2d3bb35072e33a5fdd8db6d2c0a74
-> change-id: 20241212-filter-mode-clock-8cb2e769f05b
-> 
-> Best regards,
-> -- 
-> Jessica Zhang <quic_jesszhan@quicinc.com>
-> 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../media/platform/qcom/camss/camss-vfe-17x.c |  1 -
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |  1 -
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |  1 -
+ .../media/platform/qcom/camss/camss-vfe-4-8.c |  1 -
+ .../media/platform/qcom/camss/camss-vfe-480.c |  1 -
+ .../media/platform/qcom/camss/camss-vfe-680.c |  1 -
+ .../media/platform/qcom/camss/camss-vfe-780.c |  1 -
+ drivers/media/platform/qcom/camss/camss-vfe.c | 22 -------------------
+ drivers/media/platform/qcom/camss/camss-vfe.h |  8 -------
+ 9 files changed, 37 deletions(-)
 
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-17x.c b/drivers/media/platform/qcom/camss/camss-vfe-17x.c
+index e5ee7e717b3b..e0d12c3f6015 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-17x.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-17x.c
+@@ -577,7 +577,6 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+ 
+ const struct vfe_hw_ops vfe_ops_170 = {
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr_read = vfe_isr_read,
+ 	.isr = vfe_isr,
+ 	.pm_domain_off = vfe_pm_domain_off,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+index 901677293d97..7620ce42b49b 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+@@ -993,7 +993,6 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+ 
+ const struct vfe_hw_ops vfe_ops_4_1 = {
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr_read = vfe_isr_read,
+ 	.isr = vfe_isr,
+ 	.pm_domain_off = vfe_4_1_pm_domain_off,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+index 76729607db02..b3b6ccb4748e 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+@@ -1145,7 +1145,6 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+ 
+ const struct vfe_hw_ops vfe_ops_4_7 = {
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr_read = vfe_isr_read,
+ 	.isr = vfe_isr,
+ 	.pm_domain_off = vfe_pm_domain_off,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+index b2f7d855d8dd..5a4b4f486aca 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+@@ -1135,7 +1135,6 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+ 
+ const struct vfe_hw_ops vfe_ops_4_8 = {
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr_read = vfe_isr_read,
+ 	.isr = vfe_isr,
+ 	.pm_domain_off = vfe_pm_domain_off,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+index 4feea590a47b..edd92308af62 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+@@ -278,7 +278,6 @@ static void vfe_buf_done_480(struct vfe_device *vfe, int port_id)
+ const struct vfe_hw_ops vfe_ops_480 = {
+ 	.enable_irq = vfe_enable_irq,
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr = vfe_isr,
+ 	.isr_read = vfe_isr_read,
+ 	.reg_update = vfe_reg_update,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-680.c b/drivers/media/platform/qcom/camss/camss-vfe-680.c
+index 99036e7c1e76..96a927acc6bb 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-680.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-680.c
+@@ -227,7 +227,6 @@ static inline void vfe_reg_update_clear(struct vfe_device *vfe,
+ 
+ const struct vfe_hw_ops vfe_ops_680 = {
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr = vfe_isr,
+ 	.pm_domain_off = vfe_pm_domain_off,
+ 	.pm_domain_on = vfe_pm_domain_on,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-780.c b/drivers/media/platform/qcom/camss/camss-vfe-780.c
+index b9812d70f91b..e5023eb7ad60 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-780.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-780.c
+@@ -142,7 +142,6 @@ static int vfe_halt(struct vfe_device *vfe)
+ 
+ const struct vfe_hw_ops vfe_ops_780 = {
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr = vfe_isr,
+ 	.pm_domain_off = vfe_pm_domain_off,
+ 	.pm_domain_on = vfe_pm_domain_on,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 4bca6c3abaff..1ae523219525 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -415,26 +415,6 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
+ 	return 0;
+ }
+ 
+-/*
+- * vfe_hw_version - Process write master done interrupt
+- * @vfe: VFE Device
+- *
+- * Return vfe hw version
+- */
+-u32 vfe_hw_version(struct vfe_device *vfe)
+-{
+-	u32 hw_version = readl_relaxed(vfe->base + VFE_HW_VERSION);
+-
+-	u32 gen = (hw_version >> HW_VERSION_GENERATION) & 0xF;
+-	u32 rev = (hw_version >> HW_VERSION_REVISION) & 0xFFF;
+-	u32 step = (hw_version >> HW_VERSION_STEPPING) & 0xFFFF;
+-
+-	dev_dbg(vfe->camss->dev, "VFE:%d HW Version = %u.%u.%u\n",
+-		vfe->id, gen, rev, step);
+-
+-	return hw_version;
+-}
+-
+ /*
+  * vfe_buf_done - Process write master done interrupt
+  * @vfe: VFE Device
+@@ -1088,8 +1068,6 @@ int vfe_get(struct vfe_device *vfe)
+ 		vfe_reset_output_maps(vfe);
+ 
+ 		vfe_init_outputs(vfe);
+-
+-		vfe->res->hw_ops->hw_version(vfe);
+ 	} else {
+ 		ret = vfe_check_clock_rates(vfe);
+ 		if (ret < 0)
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
+index a23f666be753..1553ca89bd86 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.h
++++ b/drivers/media/platform/qcom/camss/camss-vfe.h
+@@ -101,7 +101,6 @@ struct vfe_device;
+ struct vfe_hw_ops {
+ 	void (*enable_irq)(struct vfe_device *vfe);
+ 	void (*global_reset)(struct vfe_device *vfe);
+-	u32 (*hw_version)(struct vfe_device *vfe);
+ 	irqreturn_t (*isr)(int irq, void *dev);
+ 	void (*isr_read)(struct vfe_device *vfe, u32 *value0, u32 *value1);
+ 	void (*pm_domain_off)(struct vfe_device *vfe);
+@@ -259,13 +258,6 @@ void vfe_put(struct vfe_device *vfe);
+  */
+ bool vfe_is_lite(struct vfe_device *vfe);
+ 
+-/*
+- * vfe_hw_version - Process write master done interrupt
+- * @vfe: VFE Device
+- *
+- * Return vfe hw version
+- */
+-u32 vfe_hw_version(struct vfe_device *vfe);
+ /*
+  * vfe_enable - Enable streaming on VFE line
+  * @line: VFE line
 -- 
-With best wishes
-Dmitry
+2.45.2
+
 
