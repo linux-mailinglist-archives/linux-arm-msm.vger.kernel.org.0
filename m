@@ -1,249 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-56012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D9F3AA01EA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 07:42:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4B1CAA0209
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 07:50:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5CC007AC696
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 05:41:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1931E3AB4F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 05:49:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 674062741D7;
-	Tue, 29 Apr 2025 05:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBFAF2749EE;
+	Tue, 29 Apr 2025 05:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iLsLiJRf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UhO3Gqvy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB672741C2;
-	Tue, 29 Apr 2025 05:42:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BB7224AF9;
+	Tue, 29 Apr 2025 05:49:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745905331; cv=none; b=fHM1e/lGg4C05iS3eBF0NJlK+rFPj7QSBH8PCnakajKVvKk025HVFxTtrarmEQiTNb+DYp0PQRssfcRjFffxUOmEgOnzh33MptBaMXYzYevWDj6gpjA+J+exi5QpDK5FLhIdIPtEIVsqytQrN4knj8LhgZWGSOOMBA8H9AyCEPo=
+	t=1745905762; cv=none; b=Oi96cSO6MLKtqyNLLAE1N3yIpPBMLstk+RU7S51WTOmPSK5EoZYJl+irLdIouaODGlqcG/0GGZWlA7z29KbVFZ15W3/gtZpdGlGw62ShbCXwiV/l4im5s/G8AwiWEMg0cZNaL9yoKJMiABGtXysGkyXqtKIR9T6EhueOmqs3Zbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745905331; c=relaxed/simple;
-	bh=DLOitkgSZvQeteEV7vswzOSxYAHHO9ynIKrHuD7EL88=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WJVfDP47dj2TmWQRqNOHEnQQRNgYIPklx9sdfuh9zGogwvQ9wgBFgc0fPk3uv0iwa+/yxLG3xxTt5ZlFoLXkdpJjMmBQpmUh7S93QR9SZVWDSIEcYUpfuFCJwtI8vNu4a5cLWgCtN4bvNO6wQnlcgjy+J4kwjLnvHqUyFDGIq9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iLsLiJRf; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1745905762; c=relaxed/simple;
+	bh=odt4BvtRQCAZwHMR4seRzeiLOow/lp91qKjPibzrn1Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mMkHjcgjZNfHH3J52aTbZbHybWZZiXSZZYiLdrTeKiph1+B3RM6sYKO1DNqdeGDZHiObXI0fIByJlxDyi1XUxP8S1swYfYZqRwOISDQyFS0p6kjBRFhqjFrrFNQ6djXcuHdsOZHeYcnVus7YmqEwe/LFbS+p+ICfrgBAml0TMsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UhO3Gqvy; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53SNq1oD003855;
-	Tue, 29 Apr 2025 05:41:09 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53SNqKsm012626;
+	Tue, 29 Apr 2025 05:49:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	EGQVTctIEjaRvzIG4gnnPlx1SdC7Ce357BzPTTQxWAI=; b=iLsLiJRf96r9u7Yx
-	9dwtHjQuxB1SQe9heTM5XoUGvea7BgYfYgteH92yqVkO+0obe/s3L9MIXygD6wgI
-	aVmLZtpp07s0ilubzg+8oGODEF9kLJP4BEK1iHC8GrRWLxeJ65Vmkg/PilzurTfZ
-	1aNGQMuhTvH//fFHe7cY6quNlpQL6mVvMNW61xPSEW++QDVmuyGf1q2aA+H7j9Xs
-	dmRHDnVitZOJZel8v42RPU7Knxw32KxHTAPnLNaVU6Ern9UIUNw9Yn0sdQhKV5St
-	0P/rxUdqzNeBKUu41/prqp2OG3rGnEBlIh3RQE6gdWeXEugADVmhkeIu/tqZXrsa
-	jalTkw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468rsbabek-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=iW1XVZ8l6CJyFrlX5XcyWr
+	a0zw0oiwZNvz4GD/HpHkc=; b=UhO3GqvytDaYfCLz9Lb+hGV13QJ7eEDPAd8VQv
+	yYPXxZGaltYYuCTt9hNvDboSMoUtmnoNL+c426zpFK9SgU87AABH1haD54ig3Jh+
+	ioTQ4pMQ8MAvumQ1E6vQ8BZkF0BGb+2zoyP0LV9LlxIKYeSG+qGBPoF2Ji4xwmeP
+	WzZsu9bjPhA7V2cn/ishCRQcNd7RyCtvctBrMnHJ6DPk8dODuDSTA4FkwH7HNTar
+	RBZ5IVGr1Dt7BMnBchsm1j2nEopfJsJPXqDVDPSHOTmUSTUPttPbSAbco67hSX0o
+	ks3wQbOgGuqSS6ufxCkiBBBS5MVgGmFO+NF2mhtyqTvOoT+w==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468q323bfh-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Apr 2025 05:41:08 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53T5f66E009620
+	Tue, 29 Apr 2025 05:49:15 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 53T5mmS5029225;
+	Tue, 29 Apr 2025 05:49:12 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 468rjmfqus-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Apr 2025 05:41:07 GMT
-Received: from [10.151.36.30] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 28 Apr
- 2025 22:41:02 -0700
-Message-ID: <3fb46918-7ad2-a720-0cc9-6a63c925936c@quicinc.com>
-Date: Tue, 29 Apr 2025 11:10:51 +0530
+	Tue, 29 Apr 2025 05:49:12 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53T5nBUc030237;
+	Tue, 29 Apr 2025 05:49:11 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-wasimn-hyd.qualcomm.com [10.147.246.180])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 53T5nBju030223
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Apr 2025 05:49:11 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 3944840)
+	id 9C6C45A7; Tue, 29 Apr 2025 11:19:10 +0530 (+0530)
+From: Wasim Nazir <quic_wasimn@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@quicinc.com,
+        kernel@oss.qualcomm.com, Wasim Nazir <quic_wasimn@quicinc.com>
+Subject: [PATCH v6 0/4] qcom: Add support for IQ-9075-evk board
+Date: Tue, 29 Apr 2025 11:19:00 +0530
+Message-ID: <20250429054906.113317-1-quic_wasimn@quicinc.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v4 1/3] mtd: rawnand: qcom: Pass 18 bit offset from NANDc
- base to BAM base
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-        <broonie@kernel.org>, <absahu@codeaurora.org>, <bbrezillon@kernel.org>,
-        <architt@codeaurora.org>, <quic_srichara@quicinc.com>,
-        <linux-mtd@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>
-References: <20250410100019.2872271-1-quic_mdalam@quicinc.com>
- <20250410100019.2872271-2-quic_mdalam@quicinc.com>
- <bsj6kvqjo3pfbsakex5quamk5tkrtigxdcoyu5bj3nt37zsgc5@7h7zidzbcs7p>
-Content-Language: en-US
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <bsj6kvqjo3pfbsakex5quamk5tkrtigxdcoyu5bj3nt37zsgc5@7h7zidzbcs7p>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDA0MSBTYWx0ZWRfX1X2DItrMteCT pPUOS1gV6rTwarn0O6JYA/LFWDTleubnOy5c7a0va4jVszyTS/jwnW0jt/AcLcPmf6c06Xaq/mI lpOqlD5R/t/d/b8FEfk5lmqZWj/4tnbX4T+CpwJ764JyGZedDr50sfvmsJqgJYFcZ9VQpd2Sn7j
- mytZpC/R3VtE785Q+nZTYC47ZylFd8IhRbMfpPCSovNPcFqNT8yiIlfP3n5RhRJSLIDNHjQgdPQ uFWpbq75sVnAUJtW2dDy1pPQGzQELKLqBfb1ho3s0FxmENqeQLH2E/oTIjMdvzTOMSrEGspn76i Cs4mjLqIMuwZys/ce6ibBQA36kPZ351iUqnub/6uhNtp+IvvbTDz7tHL3WrBnu2OFjc4FtM6hS3
- qW1SZ/vZjqzgDbOGKGEIVQS/+aQBOkJXIgU5MlylQEBPoDhyMDwf72dlgvPALg9xWzz49d2J
-X-Proofpoint-GUID: mqpHxRpb0nNJPwFk7TFWsvuItKPRGvNe
-X-Proofpoint-ORIG-GUID: mqpHxRpb0nNJPwFk7TFWsvuItKPRGvNe
-X-Authority-Analysis: v=2.4 cv=I8ZlRMgg c=1 sm=1 tr=0 ts=68106674 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8
- a=mOH42xogWxsjzwT06YoA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=M7xNKzws c=1 sm=1 tr=0 ts=6810685b cx=c_pps a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=BkoitdVaJjL6tbVqwpAA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: B8EggLNMhnza9TaW0NLEYT_YrEBzCy6v
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDA0MiBTYWx0ZWRfX1BBu3NMDwRAq dZPwPcZmbd9pb54DGLN3RVDwFg9NBaNKLSKjcIPXWH8DU6baJa4lYonOUNEISjTCfuhhWRKIZpC /boz37QyA43zsFNXQUD/vNuFBbcN+l+UtsOkajX6noCQ2uNk55HySql7Y7c6di+zsQRBJYvFhJn
+ y1h7Sk67woC2LSvU3L2RKLioK/3vTw1Pd2Tkd908nQDHepGt8zGizjrZFDbuYyxJJ3kqG9D24UH /Vr6jNhCuMdCT30NttCJ/m9Eu1wViUOhoAi2vfOHYg+MlFs8zoyBDLw9buNr7GWUceDnst+W9I3 zdXjdsnLNTcgNFc+oLx2JULUXLMz8lInO5+eo0p5j6ixiXIphooTMw1l2PUOkc/nZxYBJ663piv
+ IYIzVwLqzLYzK5KL3tsRT+/prXwFpmz4mRz1w9IkAM0sD+cOSGRRxDbw9oqCu3cw2QQdmTdH
+X-Proofpoint-ORIG-GUID: B8EggLNMhnza9TaW0NLEYT_YrEBzCy6v
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-29_01,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
- malwarescore=0 impostorscore=0 mlxscore=0 adultscore=0 spamscore=0
- mlxlogscore=999 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504290041
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 clxscore=1015 mlxlogscore=999 spamscore=0 phishscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504290042
+
+This series:
+
+Add support for Qualcomm's iq9-evk board using QCS9075 SoC.
+
+QCS9075 is compatible IoT-industrial grade variant of SA8775p SoC.
+Unlike QCS9100, it doesn't have safety monitoring feature of
+Safety-Island(SAIL) subsystem, which affects thermal management.
+
+In QCS9100 SoC, the safety subsystem monitors all thermal sensors and
+does corrective action for each subsystem based on sensor violation
+to comply safety standards. But as QCS9075 is non-safe SoC it requires
+conventional thermal mitigation for thermal management.
+In this series thermal mitigation changes are not included as it needs
+more discussion whether to include the change in DT or in drivers.
+
+Below are detailed informations on IQ-9075-evk HW:
+------------------------------------------------------
+QCS9075M SoM is stacked on top of IQ-9075-evk board.
+On top of IQ-9075-evk board additional mezzanine boards can be stacked
+in future.
+IQ-9075-evk is single board supporting these peripherals:
+  - Storage: 2 × 128 GB UFS, micro-SD card, EEPROMs for MACs,
+    eMMC on mezzanine card
+  - Audio/Video, Camera & Display ports
+  - Connectivity: RJ45 2.5GbE, WLAN/Bluetooth, CAN/CAN-FD
+  - Sensors: IMU
+  - PCIe ports
+  - USB & UART ports
+
+Currently basic features are enabled to support 'boot to shell'.
+
+---
+Changelog:
+
+v6:
+  - Splitting v5 and bringing only rb8/IQ-9075-evk changes.
+  - IQ-9075-evk is the new marketing/product name for RB8 and files are
+    renamed accordingly.
+  - Introduce SoM for qcs9075 SoC.
+  - Introduce Memory map changes for IQ9 boards, currently enabled
+    for qcs9075 based boards only.
+  - Remove l4c regulator as it needs more validation with UFS for
+    over-current check.
+  - Remove thermal mitigation change, needs more discussion for final
+    change.
+  - v5:
+    https://lore.kernel.org/all/20241229152332.3068172-1-quic_wasimn@quicinc.com/
+
+Pratyush Brahma (1):
+  arm64: dts: qcom: iq9: Introduce new memory map for qcs9100/qcs9075
+
+Wasim Nazir (3):
+  dt-bindings: arm: qcom: Add bindings for QCS9075 SOC based board
+  arm64: dts: qcom: qcs9075: Introduce QCS9075M SOM
+  arm64: dts: qcom: Add support for qcs9075 IQ-9075-EVK
+
+ .../devicetree/bindings/arm/qcom.yaml         |   8 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/iq9-reserved-memory.dtsi    | 108 +++++++
+ .../boot/dts/qcom/qcs9075-iq-9075-evk.dts     | 268 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs9075-som.dtsi     |  10 +
+ 5 files changed, 395 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/iq9-reserved-memory.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-som.dtsi
 
 
+base-commit: 33035b665157558254b3c21c3f049fd728e72368
+--
+2.49.0
 
-On 4/25/2025 1:17 PM, Manivannan Sadhasivam wrote:
-> On Thu, Apr 10, 2025 at 03:30:17PM +0530, Md Sadre Alam wrote:
->> The BAM command descriptor provides only 18 bits to specify the NAND
->> register offset.
-> 
-> s/NAND register offset/BAM register offset
-Ok
-> 
->> Additionally, in the BAM command descriptor, the NAND
->> register offset is supposed to be specified as "(NANDc base - BAM base)
-> 
-> Same here.
-Ok
-> 
->> + reg_off". Since, the BAM controller expecting the value in the form of
->> "NANDc base - BAM base", so that added a new field 'bam_offset' in the NAND
->> properties structure and use it while preparing the command descriptor.
->>
->> Previously, the driver was specifying the NANDc base address in the BAM
->> command descriptor.
->>
->> Cc: stable@vger.kernel.org
->> Fixes: 8d6b6d7e135e ("mtd: nand: qcom: support for command descriptor formation")
->> Tested-by: Lakshmi Sowjanya D <quic_laksd@quicinc.com>
->> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> 
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> - Mani
-> 
->> ---
->>   drivers/mtd/nand/qpic_common.c       | 8 ++++----
->>   drivers/mtd/nand/raw/qcom_nandc.c    | 4 ++++
->>   drivers/spi/spi-qpic-snand.c         | 1 +
->>   include/linux/mtd/nand-qpic-common.h | 4 +---
->>   4 files changed, 10 insertions(+), 7 deletions(-)
->>
->> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
->> index e0ed25b5afea..4dc4d65e7d32 100644
->> --- a/drivers/mtd/nand/qpic_common.c
->> +++ b/drivers/mtd/nand/qpic_common.c
->> @@ -236,21 +236,21 @@ int qcom_prep_bam_dma_desc_cmd(struct qcom_nand_controller *nandc, bool read,
->>   	int i, ret;
->>   	struct bam_cmd_element *bam_ce_buffer;
->>   	struct bam_transaction *bam_txn = nandc->bam_txn;
->> +	u32 offset;
->>   
->>   	bam_ce_buffer = &bam_txn->bam_ce[bam_txn->bam_ce_pos];
->>   
->>   	/* fill the command desc */
->>   	for (i = 0; i < size; i++) {
->> +		offset = nandc->props->bam_offset + reg_off + 4 * i;
->>   		if (read)
->>   			bam_prep_ce(&bam_ce_buffer[i],
->> -				    nandc_reg_phys(nandc, reg_off + 4 * i),
->> -				    BAM_READ_COMMAND,
->> +				    offset, BAM_READ_COMMAND,
->>   				    reg_buf_dma_addr(nandc,
->>   						     (__le32 *)vaddr + i));
->>   		else
->>   			bam_prep_ce_le32(&bam_ce_buffer[i],
->> -					 nandc_reg_phys(nandc, reg_off + 4 * i),
->> -					 BAM_WRITE_COMMAND,
->> +					 offset, BAM_WRITE_COMMAND,
->>   					 *((__le32 *)vaddr + i));
->>   	}
->>   
->> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
->> index 5eaa0be367cd..ef2dd158ca34 100644
->> --- a/drivers/mtd/nand/raw/qcom_nandc.c
->> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
->> @@ -2360,6 +2360,7 @@ static const struct qcom_nandc_props ipq806x_nandc_props = {
->>   	.supports_bam = false,
->>   	.use_codeword_fixup = true,
->>   	.dev_cmd_reg_start = 0x0,
->> +	.bam_offset = 0x30000,
->>   };
->>   
->>   static const struct qcom_nandc_props ipq4019_nandc_props = {
->> @@ -2367,6 +2368,7 @@ static const struct qcom_nandc_props ipq4019_nandc_props = {
->>   	.supports_bam = true,
->>   	.nandc_part_of_qpic = true,
->>   	.dev_cmd_reg_start = 0x0,
->> +	.bam_offset = 0x30000,
->>   };
->>   
->>   static const struct qcom_nandc_props ipq8074_nandc_props = {
->> @@ -2374,6 +2376,7 @@ static const struct qcom_nandc_props ipq8074_nandc_props = {
->>   	.supports_bam = true,
->>   	.nandc_part_of_qpic = true,
->>   	.dev_cmd_reg_start = 0x7000,
->> +	.bam_offset = 0x30000,
->>   };
->>   
->>   static const struct qcom_nandc_props sdx55_nandc_props = {
->> @@ -2382,6 +2385,7 @@ static const struct qcom_nandc_props sdx55_nandc_props = {
->>   	.nandc_part_of_qpic = true,
->>   	.qpic_version2 = true,
->>   	.dev_cmd_reg_start = 0x7000,
->> +	.bam_offset = 0x30000,
->>   };
->>   
->>   /*
->> diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
->> index a2af731049d4..89c774bf85a6 100644
->> --- a/drivers/spi/spi-qpic-snand.c
->> +++ b/drivers/spi/spi-qpic-snand.c
->> @@ -1605,6 +1605,7 @@ static void qcom_spi_remove(struct platform_device *pdev)
->>   
->>   static const struct qcom_nandc_props ipq9574_snandc_props = {
->>   	.dev_cmd_reg_start = 0x7000,
->> +	.bam_offset = 0x30000,
->>   	.supports_bam = true,
->>   };
->>   
->> diff --git a/include/linux/mtd/nand-qpic-common.h b/include/linux/mtd/nand-qpic-common.h
->> index cd7172e6c1bb..e8462deda6db 100644
->> --- a/include/linux/mtd/nand-qpic-common.h
->> +++ b/include/linux/mtd/nand-qpic-common.h
->> @@ -199,9 +199,6 @@
->>    */
->>   #define dev_cmd_reg_addr(nandc, reg) ((nandc)->props->dev_cmd_reg_start + (reg))
->>   
->> -/* Returns the NAND register physical address */
->> -#define nandc_reg_phys(chip, offset) ((chip)->base_phys + (offset))
->> -
->>   /* Returns the dma address for reg read buffer */
->>   #define reg_buf_dma_addr(chip, vaddr) \
->>   	((chip)->reg_read_dma + \
->> @@ -454,6 +451,7 @@ struct qcom_nand_controller {
->>   struct qcom_nandc_props {
->>   	u32 ecc_modes;
->>   	u32 dev_cmd_reg_start;
->> +	u32 bam_offset;
->>   	bool supports_bam;
->>   	bool nandc_part_of_qpic;
->>   	bool qpic_version2;
->> -- 
->> 2.34.1
->>
-> 
 
