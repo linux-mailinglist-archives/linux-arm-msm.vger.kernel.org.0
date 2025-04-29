@@ -1,110 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-56054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8A07AA05C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 10:28:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD726AA05D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 10:34:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3DDE01B6288A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 08:28:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1BBD746721B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 08:34:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9ADE29AB11;
-	Tue, 29 Apr 2025 08:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AB71274673;
+	Tue, 29 Apr 2025 08:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fk24WV+J"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ni/wmpFK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E3D27B505
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 08:28:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890F9175D53
+	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 08:34:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745915297; cv=none; b=i6/ulp86ozkRHyEmkGhGGmtNcT9ok4dDsLVbR+/oA3PsLTMWudGWmk+J9fvvHW2pDUwmvRaXubm6rsAqLj9e2XWSHQGJ4pdIjxgVF99Fg+2h0YFAxOOXHkpD0DgEdbFVgX+OGfc8tHu/V2E+szUj/Mt54x8wpXrTjlm0oqyRVcU=
+	t=1745915660; cv=none; b=qPJt6bWXPn74MZC0zHYfe75KVlNkB0vk5RARrbFYajS6NighTv+lZXMKzs4cG7jZSHanCVLAXSCIgZroMAPhSbhetut1nBg8oObmLs4XfeqfhIXKfyrMl5do3bZIC/mqunzdiruh07JtfyspE0OTykWeLz3pqGX/88g1aavZF3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745915297; c=relaxed/simple;
-	bh=MU91rq6x6AMWRP8hSHtEK8HMpJbScePsSH9FDG38Qdo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aunNAgE3I8QiU/jGYAUJCDGoXLBeRU+NMVjnYNA0yqiZAa3t7VpIFDxg6OFsynWeUB1pAFZWPHCsgWV5oTBPcIy+d4QYyDb4aK/K+vjXjwRvD/5a56k/22LSV6dNje5HwdB6RoqHyGqLwUJVqkluNnZCuSMw6DeCrjQ+9TAXw34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fk24WV+J; arc=none smtp.client-ip=209.85.208.176
+	s=arc-20240116; t=1745915660; c=relaxed/simple;
+	bh=tpUZldhhx68mPtneCbwiKIZGOi+g9xKmfcLubVxZP5U=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=sI8qJ1J/SlBfmJZytLE4p12hsbX+SSzn0+FKWz2k69cL7A3zec/c+/a977daPiCTnx5hwaoZzK5mQjPm/1ATbBRTOp/BgcyDrG0nNziGizNVX5nDkR/iU3cJ4iAbtlFPWNtxBJYMgCqrwBdXELSgk0VjZfnWNjoerAjRBWMwLBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ni/wmpFK; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30effbfaf61so65446581fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 01:28:14 -0700 (PDT)
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-39ee5a5bb66so3634878f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 01:34:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745915293; x=1746520093; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MU91rq6x6AMWRP8hSHtEK8HMpJbScePsSH9FDG38Qdo=;
-        b=fk24WV+J6KW10tWbbqU2BsRFu5BGpNaxjtT2QXApK39EK5FBDTijtCTmVG7hB/qgqY
-         BX3g3bZc8DMJyrZjnE17T/gKusSSV39cIs/GDhS0rDmtL26hEihhQymCrC3VmwZUGHuI
-         eww7HHTRPf7d6VFB599wkPndRZBUr+3zWjRcv5oRSITZqt5oe0GrxgoDmULu3tP6mbVY
-         hh/UQjNR1FNmAT3hUltrjI/ONXuMqE6/Opyy59bYMbV5hs1FiI0t1D0yjrqeKEoCeQSK
-         c1Fl1EoQ5ET00+enQycOTs0TCCVLCGo2cPJfGkqeZcL8o7Mmyp6hQ5rfPFxW8EUMhveG
-         p+MQ==
+        d=linaro.org; s=google; t=1745915657; x=1746520457; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iNXiDOKt5wVqJ89pAp1nvo84uzdzWuqVd3C2tenlIjY=;
+        b=Ni/wmpFKOcpF38hECi/cGGUnE70GBM6Rjje7Y3q2xcJ3NPPO6l5WUjhFJRTyvSQIES
+         WQinKAE+QmFEo39EBhcxoPtpbJf9FQ+2OO2a49SqjCG9tM0MRftuZoA/1fHBik7Bc27l
+         58x/ckqLUJgiZXNbNU28VM1PwjRjc6q7pMFQ0zoKtVLsn8ZeCnHMNxAnBwrkoWGmIgOa
+         NlKaA2BzW6HD3wYgM1TGMfpjDtwgbHk4rzakvyaI9r35RVYfIAPUegMpqvYYJtrr2DVa
+         WEb1VG23VOkFotoGJKw0DnQT5hWnmvddRkS621CvNqSNDVTptna6C3GfTu5pm80qkfBx
+         hEOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745915293; x=1746520093;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MU91rq6x6AMWRP8hSHtEK8HMpJbScePsSH9FDG38Qdo=;
-        b=e34WD0YJJZB3Pwsp73y8RfPBM1ojcnRKlWhrl9GxeiCi50pvOjPmzll1HdZMSaPf7u
-         sCgLKmRf1o+QLWUpUqcbyETRE7cnS3iKxGDcabltAsRNQkPT3/jZNsParnu6u4e/Iwrv
-         q4b0Ceq6VijWHM9iKiKx/f58IPwtJxszkImTJzNGZk3xNYLF5kyaYt8a3ecGoUjOgJeN
-         kqRnFMc7vEcAeBqrGM9xYhYHIokZ4KsM5YgxlPuhX3q0zxbbFvSO+n+f6/aG9Dmg198C
-         Pzb/1ZcFDFKSc5vJ9T0NvSKHHlDCe2jb6V9B4dYtABOrbIYThJkJCzOQ8rFJvppOHs1E
-         37Ng==
-X-Forwarded-Encrypted: i=1; AJvYcCUykBuLvMygJ++4oy6Mw/UBRlFsSXVjR+TgdL85oYSMsjnfnB6IoYF6Ny/d7CyvaaNoBYg2Re1hVrVKH5S9@vger.kernel.org
-X-Gm-Message-State: AOJu0YxE9FwD+OTBq0Mf9MUaq2Sl0Uhv03yG52ctbbU4itDdFY6e17AQ
-	ppF6pFT9vw+oHihGmZwyd12Kx9BOg/LDHOm1ps9RX249yvC7TN/2gUFq2Dp0G+spFN5fgKHIJVp
-	SmjFnLGYA539n143VN3/YWjNn6aqcoJ2oORJdQA==
-X-Gm-Gg: ASbGncvPvrqByfciaoYWh8IAjywcsaU4LFi9lipNhoyHzz81AFimh+dcHsng3DtyOsM
-	inFj6NV4XUDxsbgKH38Ralol9zryd6eRcapXj9qNtSbYQlR/keFeyH4kb1c7bxsG8h2tL2Zd2D3
-	EkE3IlwscJU55GndB1Z10KKA==
-X-Google-Smtp-Source: AGHT+IH5LFe76433BEhCOsz93hsXmpw541f+gjc8j0FntokriJNT3ta3i7KCJ9pJ4v6e9KkWJAHiRLsRkg2/T2I0yMs=
-X-Received: by 2002:a2e:a915:0:b0:30b:fc3a:5c49 with SMTP id
- 38308e7fff4ca-31d45e2fefdmr6111831fa.9.1745915293027; Tue, 29 Apr 2025
- 01:28:13 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1745915657; x=1746520457;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iNXiDOKt5wVqJ89pAp1nvo84uzdzWuqVd3C2tenlIjY=;
+        b=i/yoO+QP1nI/PtFQICnBflMNVHmw3vPfM0Ks4w/CO19Cw6cjmgieTiO5TGS3nGkQPa
+         c+zvsJTNZMFuAh3Sg2LUM3nOlyYPlD9JFf3j61twYdxIx5+mEhw2auJ0Y83veW+JtXvC
+         xDbDtHnjDyKRuOSgjih8LCoEDY7XEksA3+oWm2199sxcD/J9KoI2iRDItANidKuvoqJB
+         B/WD1dybxMjFd5wDFgQ+d4EU3QKUuNEQqIPGRc/RE8lKG/ONVHld/YDtbaaR5/zXJv2F
+         0iU/1Bb2HXQY/K9DHqVI3TqSiRzWQyO6Y3W9h/pZM5t+ibLoUmiiT8vO2096nXiKEV/s
+         +00g==
+X-Forwarded-Encrypted: i=1; AJvYcCXww2+lgNM0fXSgvmCsl+fR2TBtyyr+7CVErZKzyMf/YdRlXPzMVnCfqV8DQnvSWGwnOOKEXLe6BUdB/QNy@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpyNtVIDewhPh+LeAliHN38nshnDdzuVdKVXsqrS/XYmwv/TAx
+	iRz91iixq+HxJxWY23Y30x8CRm/r/2Zx1enSXZWBAl29YLP3pZKhK8yn/EghrIY=
+X-Gm-Gg: ASbGncsFLw0rm+o8oZtlc984PDmnTmzk3uDMV4I3fDOsNIKuhK0TsPI7R8NMxAZWFtE
+	QUg3fjS5FikDf89tulj1MrBYA1TbrLJpqXFcR50pzifvAOnGikzSnMmQvhd2KV4gSAvqcTOsKzR
+	Vm6L2zV93jnoBorXZ250YJ86NirK4Vc8r0vGpQLTWpIIjwH5+q+nmy+raSgilpakvtjXiU9RNFw
+	JYeXJhY3Q73RQvs2ENWqcb+oZcxwdv8SA+eITwG9CR2xnznPhFkfMzbJa+cDvDTOjlULpCtmbL4
+	DsMTbx2Jeu47/oJKjVNsRTKbSwgzbUSbnfbN172THY9TkEts4dGOHKVogBJRN2jw
+X-Google-Smtp-Source: AGHT+IGm++8YhzXKzd/TlXniHWTMKoC7/6DztZvja5ARxvPDFybJgSY++E3QiFogsvSRHpnptLZgXQ==
+X-Received: by 2002:a5d:5f4a:0:b0:3a0:7139:d176 with SMTP id ffacd0b85a97d-3a08ad33226mr1224276f8f.19.1745915656791;
+        Tue, 29 Apr 2025 01:34:16 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:3891:fa3e:aac:d0b8])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e46517sm13315292f8f.71.2025.04.29.01.34.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Apr 2025 01:34:16 -0700 (PDT)
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+Date: Tue, 29 Apr 2025 10:33:56 +0200
+Subject: [PATCH] drm/msm/gpu: Fix crash when throttling GPU immediately
+ during boot
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250429-pinctrl_sm8750-v2-1-87d45dd3bd82@oss.qualcomm.com>
-In-Reply-To: <20250429-pinctrl_sm8750-v2-1-87d45dd3bd82@oss.qualcomm.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 29 Apr 2025 10:28:01 +0200
-X-Gm-Features: ATxdqUFs24UJ9rCBZu0rld2DCgQQfVXx4UwFsW9Kaw9n5MBKTnSUAjPVfLDjQgc
-Message-ID: <CACRpkdbyZjfU3dh+3Cn+hDr6Pisf9iOQYuN=mAjrE=+OE0fs8A@mail.gmail.com>
-Subject: Re: [PATCH v2] pinctrl: qcom: Fix PINGROUP definition for sm8750
-To: Maulik Shah <maulik.shah@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Melody Olvera <melody.olvera@oss.qualcomm.com>, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250429-drm-msm-gpu-hot-devfreq-boot-v1-1-8aa9c5f266b4@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAPOOEGgC/x3MSw5AMBAA0KvIrE1S9Y2riAU6mEWVKY1E3F1j+
+ TbvAU/C5KFNHhAK7NltEVmawLQO20LIJhq00qUqdINGLFpvcdkvXN2JhsIsdODoIvIqawozTrW
+ qS4jFLjTz/fdd/74fHWB/G24AAAA=
+X-Change-ID: 20250428-drm-msm-gpu-hot-devfreq-boot-36184dbc7075
+To: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Douglas Anderson <dianders@chromium.org>, linux-arm-msm@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+ linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>
+X-Mailer: b4 0.14.2
 
-On Tue, Apr 29, 2025 at 6:02=E2=80=AFAM Maulik Shah
-<maulik.shah@oss.qualcomm.com> wrote:
+There is a small chance that the GPU is already hot during boot. In that
+case, the call to of_devfreq_cooling_register() will immediately try to
+apply devfreq cooling, as seen in the following crash:
 
-> On newer SoCs intr_target_bit position is at 8 instead of 5. Fix it.
->
-> Also add missing intr_wakeup_present_bit and intr_wakeup_enable_bit which
-> enables forwarding of GPIO interrupts to parent PDC interrupt controller.
->
-> Fixes: afe9803e3b82 ("pinctrl: qcom: Add sm8750 pinctrl driver")
-> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
-> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Reviewed-by: Melody Olvera <melody.olvera@oss.qualcomm.com>
+  Unable to handle kernel paging request at virtual address 0000000000014110
+  pc : a6xx_gpu_busy+0x1c/0x58 [msm]
+  lr : msm_devfreq_get_dev_status+0xbc/0x140 [msm]
+  Call trace:
+   a6xx_gpu_busy+0x1c/0x58 [msm] (P)
+   devfreq_simple_ondemand_func+0x3c/0x150
+   devfreq_update_target+0x44/0xd8
+   qos_max_notifier_call+0x30/0x84
+   blocking_notifier_call_chain+0x6c/0xa0
+   pm_qos_update_target+0xd0/0x110
+   freq_qos_apply+0x3c/0x74
+   apply_constraint+0x88/0x148
+   __dev_pm_qos_update_request+0x7c/0xcc
+   dev_pm_qos_update_request+0x38/0x5c
+   devfreq_cooling_set_cur_state+0x98/0xf0
+   __thermal_cdev_update+0x64/0xb4
+   thermal_cdev_update+0x4c/0x58
+   step_wise_manage+0x1f0/0x318
+   __thermal_zone_device_update+0x278/0x424
+   __thermal_cooling_device_register+0x2bc/0x308
+   thermal_of_cooling_device_register+0x10/0x1c
+   of_devfreq_cooling_register_power+0x240/0x2bc
+   of_devfreq_cooling_register+0x14/0x20
+   msm_devfreq_init+0xc4/0x1a0 [msm]
+   msm_gpu_init+0x304/0x574 [msm]
+   adreno_gpu_init+0x1c4/0x2e0 [msm]
+   a6xx_gpu_init+0x5c8/0x9c8 [msm]
+   adreno_bind+0x2a8/0x33c [msm]
+   ...
 
-Patch applied for fixes.
+At this point we haven't initialized the GMU at all yet, so we cannot read
+the GMU registers inside a6xx_gpu_busy(). A similar issue was fixed before
+in commit 6694482a70e9 ("drm/msm: Avoid unclocked GMU register access in
+6xx gpu_busy"): msm_devfreq_init() does call devfreq_suspend_device(), but
+unlike msm_devfreq_suspend(), it doesn't set the df->suspended flag
+accordingly. This means the df->suspended flag does not match the actual
+devfreq state after initialization and msm_devfreq_get_dev_status() will
+end up accessing GMU registers, causing the crash.
 
-Yours,
-Linus Walleij
+Fix this by setting df->suspended correctly during initialization.
+
+Cc: stable@vger.kernel.org
+Fixes: 6694482a70e9 ("drm/msm: Avoid unclocked GMU register access in 6xx gpu_busy")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+---
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+index 6970b0f7f457c8535ecfeaa705db871594ae5fc4..2e1d5c3432728cde15d91f69da22bb915588fe86 100644
+--- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
++++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+@@ -156,6 +156,7 @@ void msm_devfreq_init(struct msm_gpu *gpu)
+ 	priv->gpu_devfreq_config.downdifferential = 10;
+ 
+ 	mutex_init(&df->lock);
++	df->suspended = true;
+ 
+ 	ret = dev_pm_qos_add_request(&gpu->pdev->dev, &df->boost_freq,
+ 				     DEV_PM_QOS_MIN_FREQUENCY, 0);
+
+---
+base-commit: 33035b665157558254b3c21c3f049fd728e72368
+change-id: 20250428-drm-msm-gpu-hot-devfreq-boot-36184dbc7075
+
+Best regards,
+-- 
+Stephan Gerhold <stephan.gerhold@linaro.org>
+
 
