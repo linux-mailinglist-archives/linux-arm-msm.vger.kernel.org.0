@@ -1,122 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-56168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D886AAA1B73
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 21:46:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE3C6AA1B8B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 21:51:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B0454C562C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 19:46:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D3DD1BC2183
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 19:51:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41DC424729E;
-	Tue, 29 Apr 2025 19:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEF0925E474;
+	Tue, 29 Apr 2025 19:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLhuIhjh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VqoXRHI0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C5222A7ED;
-	Tue, 29 Apr 2025 19:46:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0495253B71;
+	Tue, 29 Apr 2025 19:51:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745955986; cv=none; b=TLx9zwvbmfHNgNSzLeielwzWNU88XbmGiX8Q7736T2hAkoFwpYvccy815+G2MDp6xmPWuj3WKmOdZoRYLTHeG2rKZhN7nUArSDDosaoygi1Bm4xi4+vjjk1/iuW2zBBFdfYycS8hRLpDBa06XiYBkSdBYTIfquGc3e0zZERvC/E=
+	t=1745956276; cv=none; b=AU2SdAGfrXnEIB8Wv5HtFW/IlggxP8AAeQ/LODOWckVouKT0sLXjV/orEpIkCGR3nE9FfFIYyZ5I5uz286W3LdouYxvPkSzeJdTMwRIsqiPENipM9yyKrFiPkBXKKwkT2wCblfZxEriBi5ageHIHy3q9cMZJNmAFXts8EyBEKmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745955986; c=relaxed/simple;
-	bh=epwUWG3hUTSdO39fbHMOAdOJmTT4D+QE67Z81g1XRzA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=G7Ht2zWiYUZ/GWpoDc6TwNox4ZYkLwBLPpHTTk1BwoGDQvIWxHkHtAiJkgxQasy8q9zy6LIAJmWpESaLiKNgAWJM0sdGL4TM82Fw/yV/JXQHLHPk1Rk71MnKh25uDw2FM7cWM/FVIgA0nHTTVxDs0tF9Ra7wvjNF+K6FktDhWVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLhuIhjh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4782C4CEE3;
-	Tue, 29 Apr 2025 19:46:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745955985;
-	bh=epwUWG3hUTSdO39fbHMOAdOJmTT4D+QE67Z81g1XRzA=;
-	h=From:Date:Subject:To:Cc:From;
-	b=RLhuIhjhsNYtQUZH7ZC68MgTZsII2Ei0e56QdIglDIQo/Txl2x3INFMXaWtuW9XFT
-	 32d2cYyLYoz3aVJaoETtlBTJuAkUfWfZBH1XpMmGMgXMAKnPyrGnsjhVHRcY5eYMBs
-	 moF9nBHfyHGe7+/vw0AYjVaoMAisUqkijXCYcWIr1grWKjgDXLbjK8fRK6dBxX+HM0
-	 X+WiMAeps0i7PiYGN13ND07E8o3S00E2ysNOB8WooTKHSJUkXw30Ldj2ZfxHZMOur1
-	 t30Q+GRP+Aem47mpVsRoE43fWJWnL+NjubxDZUy2jcFyUi2FMX2TFhrMf2CQenN/ml
-	 HyXxucQtvsF9w==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Tue, 29 Apr 2025 21:46:07 +0200
-Subject: [PATCH] scsi: ufs: ufs-qcom: Add more rates to
- ufs_qcom_freq_to_gear_speed()
+	s=arc-20240116; t=1745956276; c=relaxed/simple;
+	bh=DpuU/QbbCsDjn7g/5fZL7Kv0FMaEuMia8xRIYO6BRcY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=RQ3GACest8vCgqpXUfC+qKhosNw5qfHvOlAPJMuvpRjK6bvM1EIVp/rxtUkZEy57opeRKjWH5zRaVGhMy0iM/HtZoxXaSCRUYscmUDdpa4kKXMqILPjkJHbDDioFz/2+wXncuiXOQ+CVfUWJHKOo2coEpduls3IONO0Vk6M4aOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VqoXRHI0; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-39c1ee0fd43so5889222f8f.0;
+        Tue, 29 Apr 2025 12:51:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745956273; x=1746561073; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:from:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DpuU/QbbCsDjn7g/5fZL7Kv0FMaEuMia8xRIYO6BRcY=;
+        b=VqoXRHI0Idp9t5Z/hwoYNE/qfiP712gltugKamwo9NF10pbOoa3SIRMKXa1lk8GY3r
+         +6q5v+dCPd7cn9aP254vveCZ43o7d2EbJf1EXZ7RFsFElegh3PC1xTPz+YEXzS2065kP
+         p40LHYSaMpxGefaw26hVW2L2xDfUZJtYsa0GVL95y2NlR21JTZ16g6wiHPj84CPXjIYL
+         /z7b5cxffcKKCz5Q0EIOwji3Ia9kpPdl3Nzvzq3uXiqYieqdm5mi5v7DN1tJs0I5ytNp
+         MlpZSUmtItK2p2JTr0tIPWb/wILKn+3opQs+xUzJEJz3dHJCS+em1WIULlaucSHERk6V
+         rIOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745956273; x=1746561073;
+        h=content-transfer-encoding:cc:to:subject:from:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=DpuU/QbbCsDjn7g/5fZL7Kv0FMaEuMia8xRIYO6BRcY=;
+        b=SSJAOvjEr848XA/XhO7UUcHWtRfWzrCkiC/rR1eILIPK7K93cKTiDlkmL5JYrFtBIN
+         TCThCeaZuiUR8DF4aaREAzuAfxrhVdTuZPEEK/D5qsqX0OuEi89WCAUO7FHL0G7NjbN+
+         AvtmlzA+qEpwBdlZ3tlRbKYb8GOF24IftiAnr7HLRhR304GxIeRXp5Dr1FXkbVPMqW0j
+         YP3bfHGdEU30yDbtuZtnv16macwUWoFXt4nOZj9QFv/N0cUzDlsnHTzioOMyZ29D590F
+         sszhtbkKb8jG6Hco5Wqp5ykhZwcWdaZUlxgak4AGcIk0o1EgbA1753aZ24Otclx2b5ca
+         GN8g==
+X-Forwarded-Encrypted: i=1; AJvYcCW4Y+6PMOrp2mq3B2o/gOZK9cJoKlLM36YgKX2BmYCPIKQ3bjnXJju8mOLH1YvQiaZjyjwqYpbiOFB8LhT7@vger.kernel.org, AJvYcCXygh/EN+//5vHwzITBoASwK0/FRR/eon81rzGc0HijPI7BIwKx3S7L8gxugwkgUFqBFjlfUSYkL4rX3IXM@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhR+KFNl6GQK+hs1M7qfSFlnwn40wLy96PbhCFRqp93x51+uX+
+	XVes3OCNzXb87+87LYhbN807fy1EPP20kycKCIwtf/PGM/1Xe0O/
+X-Gm-Gg: ASbGnctyN3eM6pwxUuePA4VpBXQVgIkZ23y71FYkHbJMXNVonbkhDmmm/8lAtryHthX
+	31mNCzu7saAjbi6B61U0XYBWnhicIWxHJ8WhBtnRHxBvXa88DNGia5nnjONGs1qaMyFtRERaTcz
+	olvD14X/opsnxLhOt/C2+RyrTAeOltk4twr/I1SdwGK9ZU/Odt4HSM/vRFiVzejtQ0VRkstu0mg
+	B12zai0/4kuGWpH8g88aEvlK9H2M2Fqvp8MMiQzXl8WZD5VPA8hqMjtEc/Sh9Kcwo3fW/nMsCuN
+	IM/aG9imMD5dGn/3+rOEDcQRtm1ZFH4mH4C0MMfzCrrFupPnaNhf
+X-Google-Smtp-Source: AGHT+IEjgsJPfac2XxBU5WYmuZlZ/uRKQBSizR1fl3RJO5bgEc0OUCbXE2MDpOf6drk91+Ec3iF26w==
+X-Received: by 2002:a05:6000:420e:b0:39e:dd1e:f325 with SMTP id ffacd0b85a97d-3a08f77c26fmr606792f8f.31.1745956273149;
+        Tue, 29 Apr 2025 12:51:13 -0700 (PDT)
+Received: from [192.168.1.121] ([176.206.99.211])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e46869sm14883373f8f.72.2025.04.29.12.51.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Apr 2025 12:51:12 -0700 (PDT)
+Message-ID: <c84e8246-8104-4409-8d95-389d61bc07af@gmail.com>
+Date: Tue, 29 Apr 2025 21:51:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, it-IT, en-US-large
+From: Denis Benato <benato.denis96@gmail.com>
+Subject: Cannot boot imx8mm symphony board
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250429-topic-ufs_sdm845-v1-1-faabce28a63b@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAH4sEWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDEyNL3ZL8gsxk3dK04vjilFwLE1NdQzMLSyMjI4s0k5QkJaC2gqLUtMw
- KsJHRsbW1AC6fc21iAAAA
-X-Change-ID: 20250429-topic-ufs_sdm845-16892228f4db
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
- "Martin K. Petersen" <martin.petersen@oracle.com>, 
- Peter Wang <peter.wang@mediatek.com>, Bean Huo <beanhuo@micron.com>, 
- Can Guo <quic_cang@quicinc.com>, Ziqi Chen <quic_ziqichen@quicinc.com>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1745955981; l=1372;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=8Feni5EwMfFqOoooXK+CNvIvFMxdmG8iK8fnUw6OZvQ=;
- b=rDdly1E3tSM3R5EKiw6RugBrT40pTf5ENu3/uhgcjJBM7C9MRvT8QvBZdWt+vNz+ZJcpwwTN6
- pEfO8whpaE5DMEExlMuFVgWCqfHUwJQPqfv9xPHYje3HFfoS01OzR4Z
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Hello,
 
-Booting up -next on SDM845 results in a number of warnings like:
+I write this to ask for help in booting linux on a slight variation of the development board imx8mm-var-symphony.
 
-ufshc: ufs_qcom_freq_to_gear_speed: Unsupported clock freq : 50000000
-ufshc: ufs_qcom_freq_to_gear_speed: Unsupported clock freq : 200000000
+At the moment I am using an u-boot version that can boot a linux 6.6 kernel and a 5.15.60 that I have
+adapted to my custom board: https://github.com/NeroReflex/linux-imx/tree/old
 
-Add the rates to the switch statement to make the check happy.
+I can boot that without any problem: the gpu works as well as networking, backlight, RTC and every other device on the board; however I want to use either 6.14.4 or linux-next.
 
-Fixes: c02fe9e222d1 ("scsi: ufs: qcom: Implement the freq_to_gear_speed() vop")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- drivers/ufs/host/ufs-qcom.c | 2 ++
- 1 file changed, 2 insertions(+)
+On that version I can see a device tree arch/arm64/boot/dts/freescale/imx8mm-var-som-symphony.dts
+that, from my understanding, is supposed to at least arrive at the point of printing something from the debug serial, where I can actually pick up and start figuring out what's missing/wrong.
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 37887ec684127925e92e01d40f5ea6b8cdb7fc3c..6ddae865b35851b3b9d5bc5fd3720d06be0b2972 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -2104,6 +2104,7 @@ static u32 ufs_qcom_freq_to_gear_speed(struct ufs_hba *hba, unsigned long freq)
- 		gear = UFS_HS_G4;
- 		break;
- 	case 201500000:
-+	case 200000000:
- 		gear = UFS_HS_G3;
- 		break;
- 	case 150000000:
-@@ -2111,6 +2112,7 @@ static u32 ufs_qcom_freq_to_gear_speed(struct ufs_hba *hba, unsigned long freq)
- 		gear = UFS_HS_G2;
- 		break;
- 	case 75000000:
-+	case 50000000:
- 	case 37500000:
- 		gear = UFS_HS_G1;
- 		break;
+My problem is that u-boot (the same u-boot version that can boot v6.6 just fine) works flawlessly, the fdt is
+loaded into memory as well as the kernel, but then I have no output on the debug serial, no backlight is turned on (I tried adding my screen to the device tree) and the ethernet controller on my board does not reset as
+it usually does when a working kernel is booted: this lead me into thinking there is a problem somewhere in
+the early boot sequence.
 
----
-base-commit: 9d9096722447b77662d4237a09909bde7774f22e
-change-id: 20250429-topic-ufs_sdm845-16892228f4db
+Therefore I attempted to use the previously working device tree, the one from 5.15, but to no avail.
 
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+At this time I think my problem can only be either one of these:
+- u-boot I am using is not suitable to boot kernels past 6.6
+
+- I have a problem in my config
+
+I also tried using the following patch as it appears to be relevant for this hardware:
+
+https://lore.kernel.org/all/20250311-wip-obbardc-qcom-defconfig-interconnects-builtin-v1-1-675b6bc57176@linaro.org
+
+but again to no avail.
+
+Can someone please point me in the right direction? What config am I supposed to be using to boot that board?
+What version of u-boot (and configuration) should I be using?
+
+Thanks in advice,
+Denis
 
 
