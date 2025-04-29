@@ -1,119 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-56056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4147EAA05F4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 10:40:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10A55AA0616
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 10:47:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44C2B3B93F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 08:40:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2898C3B62FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 08:47:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 173F5293B58;
-	Tue, 29 Apr 2025 08:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFC6D28FFD4;
+	Tue, 29 Apr 2025 08:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ansbdwJx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwu95V8J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119F32741CC
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 08:40:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8632C28C5DC;
+	Tue, 29 Apr 2025 08:47:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745916056; cv=none; b=A30XlsVxEeNcbbYcXkgLaVr11O3BEq71LN7ql/QDhC2HXDHFFnrYMiVzYBXWSotp7lRRg5M6JzhRlCs7A574EITPhoRPSw/3wDNpJr7iFeYvKCg6XwhGz1EN05G/X6YA79owSabBYH1L1LwAyeNkhG3q9UQixTZuSAcpHO4ZBNQ=
+	t=1745916465; cv=none; b=X6KguyPeitNh5UOxojy3RC4WdmrZX2zYlucz9iixr3I+H3upZUTPJXJpVg2DFh3mjDbjjBT25HcomKS6Co9JjOs7aQEYxRqgcfXaHPm66V03is8odaLjay32uIpLXtUF7AHb6lJwAeL5gTud5CPspwSC+PhKQzNof61i5DPQ3pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745916056; c=relaxed/simple;
-	bh=KyAtXWPUARsz+iDauIm3noZwAgvzeeeL/6Xih7T8GDE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UWScKWq6B2t6wY55tt0ITTvA0nHVq5hWtIvtS+ZIwFVj7/7Pn6EIj9JKM2hvaO7bkp6GQQSOn4UF7vgGAn2q6lDwvRZyXXy0wWZ5stspU5QoYoADtf3caJUBwjffQZiHzgy4EOvd97P+fJ2xMeks6NOHES50N84UFvd8OX2pNnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ansbdwJx; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-30f30200b51so64896231fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 01:40:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745916052; x=1746520852; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KyAtXWPUARsz+iDauIm3noZwAgvzeeeL/6Xih7T8GDE=;
-        b=ansbdwJxsueyefFM/ctUcCC6V8SAelIg4fyKH0DNmeisPkebKtqXUHrNQVqfENhfvo
-         /+xit3qJOdMQNIxjRfKCjBsxY2jgxaKdC9yYi5qsMAbJn/zV1cYNMbu/w4+loB87L643
-         DH0iVgtbCj6WQeJ0sbJ7sNEfSrSsGMP1adYk92DE/R/9ycX53FcJURUwQsxFhMD6m4Ai
-         T+HRIAFJccEWJbCk8+vatZJzmsTisFrWvgBUure1gbQ0+JaJ9Of4s58IKYvHqEa8LScR
-         UCmvWxEUobYTFF9R4MH7dqF8MXy9MWi4sSVnogYjOCJV9F0dCattldNwJT0oODZa8Tnd
-         BmBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745916052; x=1746520852;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KyAtXWPUARsz+iDauIm3noZwAgvzeeeL/6Xih7T8GDE=;
-        b=JWq/a7TM0EpsCBRrqJ+xMoePnsVEe1utRleF1VqtthjrUq2CT8EdFXrL4KfEcBR+6o
-         Mg2z3wxFCXCjEE+0vaQX1HGPDYyK1FymIWmIEJwOxxcii7cKAuVHVFKS0nYESVdSxX7M
-         Hy9Tkvu4UgdX25leX6g8kmENZeEc49jGpiSWnZr5bUX2RFdGkVSdr+Lhxh040eVuyTOU
-         gl/qc8sjT/vePl5Jh1DN0+N+t3biDFGkUpRcvX8wNdUoxmhrIzNFEsbL4ju+CNbHsGB1
-         m19Bsjzsf/lJUs/Q0r+UfHpYghZ9j4y2BJ6cXMU2ZhMQbOK2CJTuk0zADYtf8u85JeVv
-         thrw==
-X-Forwarded-Encrypted: i=1; AJvYcCUTXU5Lbxxz9bLeAlUPZ7qqx+NhAJjlpZKqtdNvn7E3D/Dy4nqsA54ikzZIFSRS9J8ciIiQeORNAqhELgq+@vger.kernel.org
-X-Gm-Message-State: AOJu0YxVynwOWNzdzNDkfvsDwlSqbIAhHiqUf6httYHdXu+7rZOIaY5d
-	jwln4f0PuyS4byl2sJPY1Ag/ulFI5cFtE8+/+JiWpL8Kp5hkBJd4nLjrXPfuLD249hlsxZHDHUz
-	17MJGJIk85FQaU3lBpYahfbn56jDgXrV63HmUZA==
-X-Gm-Gg: ASbGncvVtPNaOnBiUpF7+DGrwRsayMrxSB9kGkWxy8sRpaeFT8MxrhmUuEfPoU7PQXn
-	7UkTTfKqAvYTM0O3pdTyWjnQ9/oaz0PMC1egeZ0wkCZdIR6Lu+ArblQF1AywqZEu7CJ7my9EwKK
-	18YF47gsNMoTF9MCbi3+NxoQ==
-X-Google-Smtp-Source: AGHT+IEUiqYB296CVrwZ+xxBw7BC+pTcJa/x+6Bu5GNB2EvNhnBwa7BLSUJNRUMp+Ehtf1mLBoE9JSmzpMhMYJBukms=
-X-Received: by 2002:a2e:bc0b:0:b0:30d:894a:a538 with SMTP id
- 38308e7fff4ca-31d34b6c243mr8766341fa.21.1745916052135; Tue, 29 Apr 2025
- 01:40:52 -0700 (PDT)
+	s=arc-20240116; t=1745916465; c=relaxed/simple;
+	bh=0JH0Z7oTPN0PihVowtifv52lUTa+jlkr/MLQBRnPoFc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ihMJazCkAk4HvBtATBN/l30S8j6tfI4HJlef1Tbxj7UMgraQ2kWh8ePoyOppJOQOFFzbnX2JS34GU8YrZ9JWlQxVHdVnHYhZbwLROwFX/J9sQ+NLJkyJna4TETzGuSaemv+XNMEn7C2Xgn+G4OgjDs9teC0oh0FIR4ESG+zec4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwu95V8J; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEFE5C4CEED;
+	Tue, 29 Apr 2025 08:47:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745916464;
+	bh=0JH0Z7oTPN0PihVowtifv52lUTa+jlkr/MLQBRnPoFc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bwu95V8Jxq0ApZ/A8MUaQ76OxAAD8CpamSIc8KQkl61x+99eL7RVBgCEw4bqJUphg
+	 t6QF65fNipJ00S0Kf3VhVkEUWnUpK8riojOzxwlo6jeJCpahPvyOC3GA0Jc5cDJBJr
+	 vF1ZNdDh5oVjXNtCab0Y/1P+bgZ3d7US27chWydRXBVDwIgm5scEWGtqZqgZpPZFPj
+	 ncWFnLKXoYlGO16/XznYJMYEKZzGHUQVVyzG87F04CF/4g8I4eT464a3Sh3cd6dprp
+	 Ofgw43I7VZid7Ly6zlTSiloN04N368hqq3KMzmNgSBHBrlUbCzabz3iz2Rs6GpTc/p
+	 rY3r8f4MJ+SuA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1u9gcz-000000008FN-10kp;
+	Tue, 29 Apr 2025 10:47:45 +0200
+Date: Tue, 29 Apr 2025 10:47:45 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: Johan Hovold <johan+linaro@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] phy: qcom: qmp-pcie: drop bogus x1e80100 qref supply
+Message-ID: <aBCSMaZ7_tl-dEkB@hovoldconsulting.com>
+References: <20250429075440.19901-1-johan+linaro@kernel.org>
+ <f44722a5-25b5-409c-baec-13d19af61d43@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
- <20250424-drm-bridge-convert-to-alloc-api-v2-15-8f91a404d86b@bootlin.com>
-In-Reply-To: <20250424-drm-bridge-convert-to-alloc-api-v2-15-8f91a404d86b@bootlin.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 29 Apr 2025 10:40:41 +0200
-X-Gm-Features: ATxdqUEhPh2HxY_cKMawBJnfuogL8n7jPhFvg8U9jTR5km8hYrNkb1VPdIYXtGQ
-Message-ID: <CACRpkdZt8zem0hFUiq3-Z1feNZHRh3R=Y0cEtK=pVt=bJ9Qf1g@mail.gmail.com>
-Subject: Re: [PATCH v2 15/34] drm/mcde: convert to devm_drm_bridge_alloc() API
-To: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Jagan Teki <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Douglas Anderson <dianders@chromium.org>, 
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Anusha Srivatsa <asrivats@redhat.com>, Paul Kocialkowski <paulk@sys-base.io>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Hui Pu <Hui.Pu@gehealthcare.com>, 
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>, dri-devel@lists.freedesktop.org, 
-	asahi@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	chrome-platform@lists.linux.dev, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
-	linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	linux-stm32@st-md-mailman.stormreply.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f44722a5-25b5-409c-baec-13d19af61d43@quicinc.com>
 
-On Thu, Apr 24, 2025 at 9:00=E2=80=AFPM Luca Ceresoli <luca.ceresoli@bootli=
-n.com> wrote:
+On Tue, Apr 29, 2025 at 04:24:19PM +0800, Qiang Yu wrote:
+> 
+> On 4/29/2025 3:54 PM, Johan Hovold wrote:
+> > The PCIe PHYs on x1e80100 do not a have a qref supply so stop requesting
+> > one. This also avoids the follow warning at boot:
+> >
+> > 	qcom-qmp-pcie-phy 1be0000.phy: supply vdda-qref not found, using dummy regulator
+> >
+> > Fixes: e961ec81a39b ("phy: qcom: qmp: Add phy register and clk setting for x1e80100 PCIe3")
+> > Cc: Qiang Yu <quic_qianyu@quicinc.com>
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
 
-> This is the new API for allocating DRM bridges.
->
-> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+> We have QREF for each PCIe port on the X1E80100, all of which consume 
+> the regulator L3J. Although the PCIe PHY uses QREF indirectly, this 
+> creates a dependency, right? 
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+The PHY binding should describe the direct dependencies for the PHY, so
+the addition of qref for sm8550/sm8650 was probably also a mistake.
 
-Yours,
-Linus Walleij
+From what I could tell there is not even a one-to-one mapping of qref
+supplies to PCIe ports, but perhaps you can provide more details on how
+this fits together here?
+
+> If PCIe doesn't vote for it, how can the 
+> PMIC driver decide when to disable L3J during system suspend or runtime 
+> suspend? Is there a chance that L3J could be disabled while PCIe still 
+> requires it?
+
+If the QREF supplies can be turned off, you may need to mark them as
+always-on until things are described properly. But whether that's needed
+is not even clear at this point:
+
+	https://lore.kernel.org/lkml/17a1a4d9-fdc5-477a-bf4e-91cae5a62479@oss.qualcomm.com/
+
+Johan
 
