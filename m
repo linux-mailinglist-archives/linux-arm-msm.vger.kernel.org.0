@@ -1,151 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-56107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34456AA0900
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 12:58:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80704AA0905
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 12:58:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0B47D1B658AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 10:58:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 237A3468259
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 10:58:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E58D2C10A2;
-	Tue, 29 Apr 2025 10:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C75A32C1094;
+	Tue, 29 Apr 2025 10:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L37KPNWE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AKZDmVp7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4860C2C1098;
-	Tue, 29 Apr 2025 10:57:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0C62BD59D;
+	Tue, 29 Apr 2025 10:58:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745924251; cv=none; b=FsHGo1t6tXRTuLfA6rKmDGEyBd/sCclt6/SAf9P3LWrMRHoPtGWYL4t8cmF2dJJDdUyiyojJUvXZegJnjWexRR+ADYe4pm/xWS5S/xyCj9mnrHuSTVsm3Vbt1RIsyk9kOqUNeUDUtIFuH443dCsT+lasD+5zOzvihU+5Lqe0K5g=
+	t=1745924301; cv=none; b=cVdorjeOL4jSZ6EEG3j67fzt+t2imEJimXD8OeuX3FVIWAzZ1HOAmKXGr/GSQ/4M9iQ78uhnTMxY6wAHtJXwfQ5MCNThj2fTzUeZ9bQi2L2GwZ30Q1ZP0f7L2zC0HWKfUuI4mIgolTevO51UmgBRnnQqKP2RVtbJeAric14D5jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745924251; c=relaxed/simple;
-	bh=Uvtd6fy4RCGG//kBsfKgM+4FFLLpycksKJkZw5rqC0Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=vFuQ8rLschOfo8DNg0pdOvV/T2J5oVWpIZrvpEmYrffB6xRfK6B0zwzHnxtPFzhmPiZqbpsPK0QbeNCbWq87cg4qwlMw12auYSOcThuBKi/BIkkoJHPkgG+lTSLX320+7uO6nbNBq2VzVvaF21cNeYCJ9hsrX2jNq5Dk+aMJSRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L37KPNWE; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43d2d952eb1so38625475e9.1;
-        Tue, 29 Apr 2025 03:57:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745924247; x=1746529047; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Uvtd6fy4RCGG//kBsfKgM+4FFLLpycksKJkZw5rqC0Q=;
-        b=L37KPNWEJek24kTksiYtJqmdvDbimj0ZH9vRAdgfOhYojc7aTcWKmOHJGDEZbyTkO7
-         MamAJILCTtp0JmquVgp2q+dmqkBGUnlSLuvMN4szGBkwyHhWqFg9yxZ8Q7xYLaKsMLmA
-         lrDK4WMaX1+vl03X1SEscsoGtVbkFf/KNkBPfNaY31hbYkaX+mow8PCXdSQ0R5VnX1zh
-         1viito69Rx5dcH4DLcLPQWnqa0LzjGYzrn9mqaEefF7ju0154FHwUnJ/1GapbZpV1oLD
-         ZYBr7bjuWcKY/QQFOoO4hM7NRe60N1XOHvpEwgSkm7ntyvFGn/vPZ41ckTj4jjPZuowI
-         f5MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745924247; x=1746529047;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Uvtd6fy4RCGG//kBsfKgM+4FFLLpycksKJkZw5rqC0Q=;
-        b=PPyhLz2r9nhdpKPu8Mb0BonZZuAYPyC32uxUkMB4yUF4yO1hfgEyi7NannkY7cVmIc
-         dMfAxagsqqfXscqMJVd8twxtybnUPHGMC4hiATUEuwXmXXuWl3vyAcdYwjkPeIDg4YJu
-         8zf+NIiPBO6S0+MFCWUZOSrhzckdFeHRzSsrU04AD/0I0ZKaZwFILbBPwFTEmwt5o0u1
-         X1kmYjPeLkrBQDGyhtwUwaCRCvyayTukfg36LhU8IE5OW2mQKFu3vMJBOXg/RNZdmmMj
-         BaEty1u4U0vYYOGWUghVk9U8PrkS68I6wYflNuZQ+th+kMjhkZ9Yy/EYDHhmUlAYDyCm
-         uR2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVKHw6vuYZUIyWBhiCX9qdwU2LoMZcHSP+l6zPlZoPRHMVlgwufv5BmkiFIwz6ebKyptCVqKuW8zh9fvosK@vger.kernel.org, AJvYcCXdFN7xeIajSW6esb1N5ohbqLkbaq5O3brg+ztraEP7wgp/b5PEQM6skSQIafVbVfLyEInTTUHXlD+03ykB@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7bx3IyYRjjCZqvrHr9yo1ZaAEHYeyhfY9ZsUmzXSqcDtEO9mF
-	LhE/4ELjlFFgUudG+vzCr8hBZ+ezZwc8+TqrP08n84bmh3riGPavkfRVLwDEemxUBRaxrj1X2jT
-	shCZ695Z+zxoa2XDIeFKvBOZjLWmBzHEWgA==
-X-Gm-Gg: ASbGncvoGDsEJ+kg6wwj6UyCUlOJ1l/P9OFXnRg2qfsqJLqRNxsmLyDF/i6FCl7RJQ1
-	6k6mB9CE1YTn4nS2GMMA+aemUMLGHYbJzluMZpzFja54xzS0ZjCWBeVjjUA2y46yQljlrLhcpce
-	D2TuR0ngZnAEF3u1jQVQqg7g==
-X-Google-Smtp-Source: AGHT+IHirYlnb/J0Rw491chdfeUL8F8I4KZrN9hJ04U8tCSV4ragmKxqYNjWe5UdaZyFQMvJteyrgFv9C6magoKSZoE=
-X-Received: by 2002:a05:600c:1550:b0:43d:79:ae1b with SMTP id
- 5b1f17b1804b1-441ad3b5ea9mr23239755e9.14.1745924247107; Tue, 29 Apr 2025
- 03:57:27 -0700 (PDT)
+	s=arc-20240116; t=1745924301; c=relaxed/simple;
+	bh=7yqJb04/du8szosVpYU+M0nMBFv0R1rnOJ67ux1vJns=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=VIgaOV3uB2mUga39dZs16o+IDBNF1ssmqWwXrzzCFwWJy3JG2i8Go9UDhdH55+10FMBCfLoSfzeA//n24IjiOnNmZKGatqdO7UK8QWH2YZYdM+Va2mVIPHX2GfZxXHvYJgn3zR6OMXBq3g3Fju18vcTfax0z0REkzuzo9jDtEfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AKZDmVp7; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TA4ter012691;
+	Tue, 29 Apr 2025 10:58:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	8jC6F1Z4b6kdxNWjS7UuoEd+SQubhF9nB4iMARJJSX4=; b=AKZDmVp7fI/umvl9
+	J7PWkKiGZW/IPcVI/Nci0mvsZ6QrNcU9pZ472S2w6rkcrDbDD1pdCr3WGWjPSPOu
+	itn8V8TYtsPBDtGbZtQWEVcTrsA2FUBNQz3Z/jq6czrf65jNkHvtWYPZ7eUcciUj
+	1v1l8dmLRlFMTdx9Yfoe3ou349Yuyiw9lP46Fu5yM5YIFyE/B6XxpEWsOimm1G63
+	8351lt3bQY8hq0aVxsZq6KZ4LFBMURirrppIyuhFPIGA4VF4cLE4wuq+7akuiipJ
+	m0qN03QyTAcFsDn/88SnDHp9aMurcwwd8Bv1AhG4icu5Kd4yEeK/VkXXzqVaQ4Tk
+	oLch0w==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468pg9cab1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Apr 2025 10:58:14 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53TAwCtT032229
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Apr 2025 10:58:13 GMT
+Received: from [10.50.5.200] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 29 Apr
+ 2025 03:58:04 -0700
+Message-ID: <2c431232-e0d6-1e6c-cd22-a912b5f08f7a@quicinc.com>
+Date: Tue, 29 Apr 2025 16:28:00 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250417021349.148911-1-alex.vinarskis@gmail.com>
- <aA8yFI2Bvm-lFJTl@hovoldconsulting.com> <CAMcHhXpmii=Rc9YVeKXaB17mYv0piSFs02K=0r8kWe5tQGk7eA@mail.gmail.com>
- <aA94yOjsayZHNDpx@hovoldconsulting.com> <aA+N8YHX0DZ6h9Uj@linaro.org>
- <aBB-gl150GVaZPn5@hovoldconsulting.com> <aBCE3wSG2g5pp7jg@linaro.org> <aBCH4oo7dbG8ajvP@hovoldconsulting.com>
-In-Reply-To: <aBCH4oo7dbG8ajvP@hovoldconsulting.com>
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Date: Tue, 29 Apr 2025 12:57:16 +0200
-X-Gm-Features: ATxdqUFvmRK5viywa4f0WLPi0f48GWdtHCGAXUyP3eWhlaokJqLCQWixu2VChH0
-Message-ID: <CAMcHhXrDEVrM4fEyMwZ9TDgqgY=s_mTcKZMacCoUuZ2fa8FhWg@mail.gmail.com>
-Subject: Re: drm/msm/dp: Introduce link training per-segment for LTTPRs
-To: Johan Hovold <johan@kernel.org>
-Cc: Abel Vesa <abel.vesa@linaro.org>, Dmitry Baryshkov <lumag@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	dmitry.baryshkov@oss.qualcomm.com, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, laurentiu.tudor1@dell.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 01/23] media: iris: Skip destroying internal buffer if
+ not dequeued
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        Stefan Schmidt
+	<stefan.schmidt@linaro.org>,
+        Hans Verkuil <hverkuil@xs4all.nl>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Rob Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor Dooley" <conor+dt@kernel.org>
+CC: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Nicolas Dufresne
+	<nicolas.dufresne@collabora.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <20250417-topic-sm8x50-iris-v10-v7-0-f020cb1d0e98@linaro.org>,
+        <20250424-qcs8300_iris-v5-0-f118f505c300@quicinc.com>,
+        <stable@vger.kernel.org>
+References: <20250428-qcom-iris-hevc-vp9-v2-0-3a6013ecb8a5@quicinc.com>
+ <20250428-qcom-iris-hevc-vp9-v2-1-3a6013ecb8a5@quicinc.com>
+ <a056266e-612d-4abf-916f-3db49b00dbde@linaro.org>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <a056266e-612d-4abf-916f-3db49b00dbde@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=ZpvtK87G c=1 sm=1 tr=0 ts=6810b0c6 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=t8wUSylDH0XA4G90k0EA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: LGhnwJroeOAOuawBJfSqEC2j_DCAMqFf
+X-Proofpoint-GUID: LGhnwJroeOAOuawBJfSqEC2j_DCAMqFf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDA4MSBTYWx0ZWRfXxG60tWbI/WqM j3jmEmFMfTHugufKqfLbKGs9H46Zh0R0vyvvX/dmf63RDETMi+paKUu6fJpieUsWvHjauhR/moO rpLByUSfKrDH+FEcO2JGns8syhOEQfLtqOs2lRLQUCsq+/NlOZ5b4WUYi5Mfxn2p6o/hLflH19W
+ pFRUYksBhtLTaXV2E2PRvc8L54MthP38qttX981M7GvkousOUufWRrRfRUBJ1aCyCsdFZxf0i02 OdYvvbIn3n4acsXj0bjVtPGhw9YbZeHsA0buPBz4udheyLVwjuJ0K7xa9llEozf958XWo393bsj cyYLh7sk4c6puCebr/HxXg3KJyzCzJB9MTmjcRIO1NCZhsix8VItQ8ZI+mn0OQnhqAk5g1/s9kU
+ BSYKh8ArnCVC8aQ4L86PuCRqJJt0ovvLooBoq1Fz3mGlB3TdXfYy4Krban7dBTWReVLwi5wg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-29_04,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=936 malwarescore=0 adultscore=0
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504290081
 
-On Tue, 29 Apr 2025 at 10:03, Johan Hovold <johan@kernel.org> wrote:
->
-> On Tue, Apr 29, 2025 at 10:50:55AM +0300, Abel Vesa wrote:
-> > On 25-04-29 09:23:46, Johan Hovold wrote:
-> > > On Mon, Apr 28, 2025 at 05:17:21PM +0300, Abel Vesa wrote:
-> > > > On 25-04-28 14:47:04, Johan Hovold wrote:
-> > > > > On Mon, Apr 28, 2025 at 11:06:39AM +0200, Aleksandrs Vinarskis wrote:
-> > > > > > On Mon, 28 Apr 2025 at 09:45, Johan Hovold <johan@kernel.org> wrote:
->
-> > > > > > > Does this mean that the incomplete LTTPR support in 6.15-rc1 broke
-> > > > > > > adapters or docks with retimers in transparent mode?
->
-> > > Ok, but my concern is if they may have worked in a default transparent
-> > > mode.
-> >
-> > But if they are by default in transparent mode, doing the setup to
-> > transparent mode will not break it in any way.
->
-> It looks like it will, see below.
->
-> > > > X13s doesn't have LTTPRs on-board so when reading the caps, LTTPRs count
-> > > > would return 0 and none of the of the transparent/non-transparent setup
-> > > > would happen.
-> > >
-> > > But this is the crux; does any off-board LTTPRs in transparent mode add
-> > > to the count or not? If they don't, how would you ever learn that there
-> > > are any LTTPRs? If they do, it seems we may have a problem here.
-> >
-> > Count gets increased either way. It doesn't matter if they are in
-> > transparent mode or not.
->
-> Thanks for confirming. So then it seems we do have a problem as since
-> 6.15-rc1 drm_dp_lttpr_init() will switch all LTTPRs to non-transparent
-> mode.
 
-In this case, let me add Fixes to the entire series. Do you think we
-could land it in 6.15-rcX then? The second option proposed to roll
-back current LTTPR support and wait until 6.16 will completely break
-DP output on all X1E, so it's very undesirable.
 
-This series was tested quite a bit on at least the X1E/X1P devices,
-both with and without docking stations, as it is also (v2 iirc) part
-of Ubuntu's concept tree since little over a month ago. You have
-confirmed that x13s also works with this change but without a docking
-station. If someone could confirm that x13s with this change does work
-with a docking station as well, it would be safe to merge the entire
-series as fix to 6.15, correct? I could reach out on #aarch64-laptops,
-perhaps someone has both x13s (or another qcom-based non X1(E) device)
-and a docking station.
+On 4/29/2025 3:13 PM, Bryan O'Donoghue wrote:
+> On 28/04/2025 10:28, Dikshita Agarwal wrote:
+>> +            /*
+>> +             * during stream on, skip destroying internal(DPB) buffer
+>> +             * if firmware did not return it.
+>> +             * during close, destroy all buffers irrespectively.
+>> +             */
+>> +            if (!force && buf->attr & BUF_ATTR_QUEUED)
+>> +                continue;
+>> +
+> 
+> What's the effect of the firmware not having dequeued the buffer though ?
+> 
+> My main concern here is APSS and firmware have a different view of DMA memory.
+> 
+> We release on the APSS side but firmware has not.
+> 
+> Surely failure to release buffers by the time we get to Linux::close() is a
+> failure of the software contract sufficient to require resetting the
+> firmware ?
+> 
+> i.e. we release memory on the APSS side but firmware writes into it anyway ...
+> 
+As I mentioned earlier as well, during STOP issued before close, firmware
+is expected to release all these internal buffers and the check I added now
+in this patch will also ensures that.
+Firmware also has a check to make sure all buffers queued are released as
+part of STOP and then only firmware sends the STOP_DONE response to driver.
+STOP is a synchronous call and driver doesn't proceed without receiving the
+response for the same from firmware.
+So we will never run into this issue where driver release buffers which are
+still being accessed by firmware.
+Please note, these are internal buffers which are allocated and managed by
+driver only.
 
 Thanks,
-Alex
-
->
-> Johan
+Dikshita
+> ?
+> 
+> ---
+> bod
 
