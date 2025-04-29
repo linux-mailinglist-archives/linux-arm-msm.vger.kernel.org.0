@@ -1,192 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-56173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0775EAA3AA9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 23:57:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B657AA3BEB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 01:07:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0EE519C10F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 21:57:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE4E91B65FF0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Apr 2025 23:07:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB41926D4D4;
-	Tue, 29 Apr 2025 21:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9A062777FC;
+	Tue, 29 Apr 2025 23:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="H3ZM0fX6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SQ7xDq8l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF3C22A7ED
-	for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 21:57:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0645F13A3F7;
+	Tue, 29 Apr 2025 23:07:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745963852; cv=none; b=c/FJaa/ZZj1ODRgbptzjQYxS5C1U6KomjIU3mdhqdujzIIeGcgx2LTeyV7LGdoh0TOEWbReLzpYVaG61kY42v14Kwa0XkCStwIii2aN8U+3WvW9VchtKXGIpCk0//n35Qga9MUXv/KTE3c7Ys9YadIKPBkbu5LHwThSp39WGdeQ=
+	t=1745968054; cv=none; b=HdMhTa/giI9bOaofnfVKSuNAbB6Zz+cWkaDh3XOtvPWg6yv3J8kc7b2YPQZkr0VvTZuEqmbYMTV0j0vKeuOuQmoo9G+MCVrWdT9AzjEegCzDH1c39JZE8IqStwoo7ST5t+0YeOmvKxGSFO33NrNSTU3iVQIItpt2CeM9NJX0lvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745963852; c=relaxed/simple;
-	bh=1P+KqJCl+BT8ecP/xdKBgPfjI1+DmDlsxbMLuEAGIAo=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=e3GNrkjLn0ZBVfNbOlaqBwm9mBWaKZn2jV9TzVqI4WBq4TJRvZhQMKdB6b6zt7rlhAMmrfti65Z9LAyvjoZzJ9btAKtQtNznTpPwdF7t3trQwDZ0XJ7v1amNC5tw+RlqoH/z+cJR4ftpSnRqC8Y0FXbqmsaIpK0r9OmUrPwOHOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=H3ZM0fX6; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6e8fce04655so70081186d6.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 14:57:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1745963848; x=1746568648; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gq+kwZN/MyVZc1uW7z6nPFptfAEWXYUqK/icC7+T8p0=;
-        b=H3ZM0fX6BmGMH8HxSWv7t/Wlxi6HwN5zXR1ZntTqdyAQWd0TIjTM+IVN65+Xc9YBP0
-         YUXLt8QR9SSLGzAZ9sNKN5FGZ/ppOUDalZTe60/P4mpJpqLUIaaNpIlmSTu04kJvumN0
-         OTHaK+b2s9U1eu6e7o0PvP1WsDFO7veeWskoA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745963848; x=1746568648;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gq+kwZN/MyVZc1uW7z6nPFptfAEWXYUqK/icC7+T8p0=;
-        b=PNj7y3draRx2o8qAiz73daEYZHSkUNACRSqKpV99AlFOBhRzZyJN0wSCAWtV9vAMoj
-         fcbTGqlZCVTHDmTIOqnq5dcU/OgKl22Ep3vbTJJmgdLxr2bp9iixI2OztnjS13UOfDZK
-         Ig7KiWnvmOZpjLJ/fHGBm0VSPNjszYeEXueFOsnIX8VovaWZBWEANCFf+2MSEdLZWgzr
-         lF5jGnON0aj3Q/U0OKH/1MhCsNEzMT2LdvZy2zSOmky0XDICJ1rPQigJzLlsn6JleOta
-         QwoFotXLaWGHQ5aeqSIR5+OUNiaIAHauHgMQyYiUYhtyBHkFgXAPnDQ4UTlWNwsp3BJc
-         2Drw==
-X-Forwarded-Encrypted: i=1; AJvYcCUziEy+FWhQFYKS8Ibuyp+OA6eoSjJtvonRCtW468qI4scV6E+bsmQ+/lVmP2+ZSPOekhigUBdi5SEJCbL3@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJXoikocJ753fA16b7w8Rm2J/goK6AgASjGvP1dPXMb21lIcXK
-	r7YI5A/+qN3DK2iCur6AINgFAtWrbKP+itDw/VVLUQLH+J47WNwK0w/VGY9qdGdSo4KBC1plhKj
-	3RG0oikV8uhYul0hUmG/LvnRrXW+6Bp+HtTij
-X-Gm-Gg: ASbGncuKZMi0M71bGa8z04H97uUngwrlOWgNlJAajIDFV1TMNfhHDhEN3y/7Pja/Gda
-	B7AOkTB3p5WUC3UdK+yMLZ9M9LJzbbMEte01u2DA+bPDwki93+234mNZLyGuGiPl1DbXEHneD80
-	Sw677Y+WUsKzGWKvMC5QiGwuWtAt9jWDAAIYbk0GG907R59pouRg==
-X-Google-Smtp-Source: AGHT+IGFRFcmj203HgxtSiaafsTGGAnI40IQFnCG9K6ptPppPzLUX6brI2DPTkwS2p0VSLmxrTrYIiPhDp6xRk6AwAw=
-X-Received: by 2002:a05:6214:e8e:b0:6f2:d25e:8d17 with SMTP id
- 6a1803df08f44-6f4fced985cmr17148876d6.21.1745963848451; Tue, 29 Apr 2025
- 14:57:28 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 29 Apr 2025 14:57:27 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 29 Apr 2025 14:57:27 -0700
+	s=arc-20240116; t=1745968054; c=relaxed/simple;
+	bh=sQyQcn/NJDF0PMJuRn0HWiah8ew+Af20fUs0fgdqzX4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BlnuFlnE4X6eQXLH/4FeTLLjGcMDgi5p2d7YFwTtGzPa9oS4bfhSYTj9AZB2APBxbop+vHDqio5lZDUevUcAfoUxYQV2Ie/D5cqMBzL6ohLxNCZuUwx9KOR9B2oTVvls25M7/J5DLfb4L/Hx3bCEm7nGKdaHRrEtrtRrXIlvUAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SQ7xDq8l; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TLaR2B012228;
+	Tue, 29 Apr 2025 23:07:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	jaV5N0qvUnZDuYjp+FnsHmSl9vOLniX82vpDUzJOuwg=; b=SQ7xDq8lBCSmkhnJ
+	yoAbUB8+VWn9ubzIbLGhJSZe12NttIZ6+uD938zydWrVcbHn9BrhzxsxbxG++eh9
+	G27+8p5Hf0idbKSexEoS6x/zmDMlCzl7tQtPr2kLWcnrvIJVZnrruTC5uX1SEgEs
+	Vq2IwboEYg9N3Sy/I7LH7YvjeHVQaN2qHpjMaq62Ey5DrZlL0uoao80ea8XMlpXB
+	RGRhxEp0qhdNdPP7CbSA3VAwDIYepY+O98MXevAF7XC7MtimmEsDRKCHt+4nibM5
+	LvliQV5c8C+B8uiiNQDhnMDhFI1pVsElX2n1x82/pM0/u1DRKvJsEPquW0bTD6Kr
+	DJz/2g==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u3r5bc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Apr 2025 23:07:27 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53TN7QBj031444
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Apr 2025 23:07:26 GMT
+Received: from [10.110.114.218] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 29 Apr
+ 2025 16:07:25 -0700
+Message-ID: <97ae84c6-0807-4b19-a474-ba76cc049da9@quicinc.com>
+Date: Tue, 29 Apr 2025 16:07:24 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <npnpujjfonvzhf5c4upgajhx6hu5uqmerewmbqprvl7a3xrqgm@datubwgyucby>
-References: <20250416000208.3568635-1-swboyd@chromium.org> <20250416000208.3568635-7-swboyd@chromium.org>
- <npnpujjfonvzhf5c4upgajhx6hu5uqmerewmbqprvl7a3xrqgm@datubwgyucby>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.12.dev8+g17a99a841c4b
-Date: Tue, 29 Apr 2025 14:57:27 -0700
-X-Gm-Features: ATxdqUHSfTHDCNbiMAyib_Rr1yPvdu5LV1ChItCTDCW7J5DkmOrjGVP9y9dJHm0
-Message-ID: <CAE-0n51eQns8ifUzc36FNSSQJ7WFd_8hZ3JnNcFvgrTrvqRhow@mail.gmail.com>
-Subject: Re: [PATCH 6/7] platform/chrome: cros_ec_typec: Add support for DP
- altmode via drm_bridge
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Tzung-Bi Shih <tzungbi@kernel.org>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, Conor Dooley <conor+dt@kernel.org>, 
-	Benson Leung <bleung@chromium.org>, chrome-platform@lists.linux.dev, 
-	Pin-yen Lin <treapking@chromium.org>, 
-	Abhishek Pandit-Subedi <abhishekpandit@chromium.org>, =?UTF-8?Q?=C5=81ukasz_Bartosik?= <ukaszb@chromium.org>, 
-	Jameson Thies <jthies@google.com>, Andrei Kuchynski <akuchynski@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC/WIP 1/4] arm64: dts: qcom: sm8750: Add display (MDSS)
+ with Display CC
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: Jessica Zhang <jesszhan@quicinc.com>,
+        Abhinav Kumar
+	<abhinavk@quicinc.com>,
+        Abel Vesa <abel.vesa@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250424-sm8750-display-dts-v1-0-6fb22ca95f38@linaro.org>
+ <20250424-sm8750-display-dts-v1-1-6fb22ca95f38@linaro.org>
+ <81205948-ae43-44ee-aa07-e490ea3bba23@oss.qualcomm.com>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <81205948-ae43-44ee-aa07-e490ea3bba23@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=Bv6dwZX5 c=1 sm=1 tr=0 ts=68115baf cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=aYvukNd2sAEyGAm9ZjkA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: 2VlkCAuuU0yLdCc2gPV0we-DqBowCEBd
+X-Proofpoint-ORIG-GUID: 2VlkCAuuU0yLdCc2gPV0we-DqBowCEBd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDE3MSBTYWx0ZWRfXz25DB8MGcPw6 gadCEwiVhQKt2VrWI+WhSHF69+XkqswHIz3O1Xcn3MKVWn006slBll8NSqEN9LlgIV+g/SPbyGU 3Nr0efmC3pRbuuoQODOk7R6oMIg09/0EJPFXCzrDzYISS7wLvHgLPD/I3F4eIQlmT4ku5jnSbLz
+ LPObPTHakgzmkynJIvPHFa/fTvjlQPM0ZSCF0ZYtDT8ULdUl0RHodKn4SjTU84vRgVkgwWQgKyX KtT73ny/qzTsLlRQaewkPFlQoOOcRRNERCACvFErLyq+xfhIw7IS1inmKSTXxzMb9kTX5q5rW3R HRiulJth3ESdTwJgUDkIneV+sKx2xXS5i+aVeISDImy1Lprk3ZgvL/kYds/jRfVGs13M7lqVV0C
+ +qHhbmeDsQehKNS163Mk+EDvqA8TxCFLTZqpeZqWa7OQZ67zHekrW/pkWe5wGl0p2Hol7dPp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-29_08,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ mlxlogscore=702 phishscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
+ bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504290171
 
-Quoting Dmitry Baryshkov (2025-04-24 03:51:17)
-> > diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-> > index 2cbe29f08064..27324cf0c0c6 100644
-> > --- a/drivers/platform/chrome/cros_ec_typec.c
-> > +++ b/drivers/platform/chrome/cros_ec_typec.c
-> > @@ -337,6 +340,9 @@ static int cros_typec_init_ports(struct cros_typec_data *typec)
-> >       u32 port_num = 0;
-> >
-> >       nports = device_get_child_node_count(dev);
-> > +     /* Don't count any 'ports' child node */
-> > +     if (of_graph_is_present(dev->of_node))
-> > +             nports--;
->
-> Should this be a separate commit?
->
-> >       if (nports == 0) {
-> >               dev_err(dev, "No port entries found.\n");
-> >               return -ENODEV;
-> > @@ -350,6 +356,10 @@ static int cros_typec_init_ports(struct cros_typec_data *typec)
-> >       /* DT uses "reg" to specify port number. */
-> >       port_prop = dev->of_node ? "reg" : "port-number";
-> >       device_for_each_child_node(dev, fwnode) {
-> > +             /* An OF graph isn't a connector */
-> > +             if (fwnode_name_eq(fwnode, "ports"))
-> > +                     continue;
-> > +
->
-> ... together with this chunk.
 
-I check for the of_graph being present below. It's all sorta related.
 
->
-> >               if (fwnode_property_read_u32(fwnode, port_prop, &port_num)) {
-> >                       ret = -EINVAL;
-> >                       dev_err(dev, "No port-number for port, aborting.\n");
-> > @@ -417,6 +427,42 @@ static int cros_typec_init_ports(struct cros_typec_data *typec)
-> >       return ret;
-> >  }
-> >
-> > +static int cros_typec_dp_bridge_attach(struct drm_bridge *bridge,
-> > +                                    enum drm_bridge_attach_flags flags)
-> > +{
-> > +     return flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR ? 0 : -EINVAL;
-> > +}
-> > +
-> > +static const struct drm_bridge_funcs cros_typec_dp_bridge_funcs = {
-> > +     .attach = cros_typec_dp_bridge_attach,
-> > +};
-> > +
-> > +static int cros_typec_init_dp_bridge(struct cros_typec_data *typec)
-> > +{
-> > +     struct device *dev = typec->dev;
-> > +     struct cros_typec_dp_bridge *dp_bridge;
-> > +     struct drm_bridge *bridge;
-> > +     struct device_node *np = dev->of_node;
-> > +
-> > +     /* Not capable of DP altmode switching. Ignore. */
-> > +     if (!of_graph_is_present(np))
-> > +             return 0;
-> > +
-> > +     dp_bridge = devm_kzalloc(dev, sizeof(*dp_bridge), GFP_KERNEL);
-> > +     if (!dp_bridge)
-> > +             return -ENOMEM;
-> > +     typec->dp_bridge = dp_bridge;
-> > +
-> > +     bridge = &dp_bridge->bridge;
-> > +     bridge->funcs = &cros_typec_dp_bridge_funcs;
-> > +     bridge->of_node = np;
-> > +     bridge->type = DRM_MODE_CONNECTOR_DisplayPort;
-> > +     if (!device_property_read_bool(dev, "no-hpd"))
-> > +             bridge->ops |= DRM_BRIDGE_OP_HPD;
-> > +
-> > +     return devm_drm_bridge_add(dev, bridge);
->
-> Could you please use aux-hpd-bridge instead?
+On 4/28/2025 2:31 PM, Konrad Dybcio wrote:
+> On 4/24/25 3:04 PM, Krzysztof Kozlowski wrote:
+>> Add device nodes for entire display: MDSS, DPU, DSI, DSI PHYs,
+>> DisplayPort and Display Clock Controller.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
+> 
+> [...]
+> 
+>> +				mdp_opp_table: opp-table {
+>> +					compatible = "operating-points-v2";
+>> +
+> 
+> The computer tells me there's also a 156 MHz rate @ SVS_D1
+> 
+> Maybe Abhinav could chime in whether we should add it or not
+> 
 
-I can extend that to call some function when hpd changes. If I make a
-device node for the mux and the TCPCs then it may be possible to push
-everything into aux-hpd-bridge and use it for all three of them.
+Yes I also see a 156Mhz for LOW_SVS_D1 but we had a similar entry even 
+for sm8650 and did not publish it in the dt.
 
->
-> BTW: what is the usecase for the no-hpd handling here?
->
+It was present till sm8450.dtsi but dropped in sm8550/sm8650 even though 
+LOW_SVS_D1 is present even on those.
 
-Looks like you figured it out. I want to capture the HPD state so I can
-then go read the EC mux to figure out which way the mux is pointing. On
-trogdor the EC doesn't tell us which typec port has HPD asserted so we
-snoop the HPD state from the drm_bridge, read the mux when HPD changes,
-and pick the right typec port while also injecting HPD into the state of
-the port. The no-hpd property is used on Trogdor to indicate that the
-bridge in the EC doesn't signal HPD properly, ensuring the previous
-bridge handles the HPD detection.
+I think the reason could be that the displays being used on the 
+reference boards will need a pixel clock of atleast >= low_svs and the 
+MDP clock usually depends on the value of the DSI pixel clock (which has 
+a fixed relationship to the byte clock) to maintain the data rate. So as 
+a result perhaps even if we add it, for most displays this level will be 
+unused.
+
+If we end up using displays which are so small that the pixel clock 
+requirement will be even lower than low_svs, we can add those.
+
+OR as an alternative, we can leave this patch as it is and add the 
+low_svs_d1 for all chipsets which support it together in another series 
+that way it will have the full context of why we are adding it otherwise 
+it will look odd again of why sm8550/sm8650 was left out but added in 
+sm8750.
+
+> [...]
+> 
+>> +				mdss_dsi_opp_table: opp-table {
+>> +					compatible = "operating-points-v2";
+>> +
+> 
+> Similarly there's a 140.63 MHz rate at SVS_D1, but it seems odd
+> with the decimals
+
+For this one, yes its true that LOW_SVS_D1 is 140.63Mhz for sm8750 but 
+this voltage corner was somehow never used for DSI byte clock again I am 
+thinking this is because for the display resolutions we use, we will 
+always be >= low_svs so the low_svs_d1 will never hit even if we add it.
+
+
+> 
+> Konrad
+> 
+
 
