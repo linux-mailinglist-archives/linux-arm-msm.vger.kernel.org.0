@@ -1,146 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-56257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D799AA4AF3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 14:19:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F37FAA4B0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 14:25:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08712465B4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 12:19:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E7841BC33C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 12:25:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 609D325D8FD;
-	Wed, 30 Apr 2025 12:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC68D25B1EC;
+	Wed, 30 Apr 2025 12:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oSSlrpeO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hEYXF3HH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8DE25D551;
-	Wed, 30 Apr 2025 12:17:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADB325B1EB;
+	Wed, 30 Apr 2025 12:25:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746015473; cv=none; b=rVlAzTbBmsa02EhQHPBFl8ULLkEdAdr+qayjnV5NLYAJ0cpmP5RpJ90Pp+9UjQ3vQtXPxi/rK3/s4EMNPof2V3PO5uppIkbwzQMV6cM0GhDDquA2ZF7gIN19QrKdoAKM6SyKtjaHn1wXDwEESK9PBGciwdWs7NRRLssEG78YRds=
+	t=1746015903; cv=none; b=OxwlZxI44ofdLgv32Z72FnRE6fciLw5EPyLbbnH85WLwN9OveUkuH1PWyyIPdaPn8XEDoAMLqetwYxpNs1A7pzudGMfXGfQsTg7ISSVABtzivqSgJC2UxPOS+pNfSbuauBPdiV9EqjPaj8k40RjnKZPeROaZ3edtFvTk90hjNqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746015473; c=relaxed/simple;
-	bh=U0w1x+8Qh4hnZgZPeV+lNb1LUY4ehW5wushCpVQ3K+I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=K2SYu3OE/wCELGAEWA0gJCX/j9Q7iPBrtNeg9iAooS6AmI2ALI7FGNUxfJyMlBXbg1eZOtv2AWQ722dCZuwDnZKJ+e2zN/x1+9ZcD9L9A2ULhQAh4x4iT/KzA8yuGApaVQrUW6xoaQIRXWlBujVNovGrmIQF01FWv22DldIo+xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oSSlrpeO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53U9Gud9020937;
-	Wed, 30 Apr 2025 12:17:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rSy+SgCL5lGpQjeRIMvTtjJ3CYYax4gjcpMJGDuJbbw=; b=oSSlrpeO/SCqLUgp
-	NvzM9+CcZoT7YPSx4RkoFpeEFnfllW5BZHBncltIwikFP9MTbUefmSKRsNpg9xTv
-	wfDOtPuYyWnVWA6/h58OK0UlnQ8RNMmz8wCUVC9db6Zvl+fJ+knumdprQpPsEpVS
-	VPKzSm7tCWzkxgT1DZgZbx5/oSiE9a47cIZlBOkeObM85nB8lXRGEGx8woktQed5
-	zbrL91ZqNAbS28OiKu8pylGkI/yram7CC8/Du+/QWYRyVnQ9oexML4slidS0lREI
-	JtE0QfSS50t2fqRZuEMet5lfSImABkpKPAD/D2CA7fXn6DZPcNEhmYdxgpNVdslz
-	n8sgLQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u1t49s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Apr 2025 12:17:47 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53UCHknP025009
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Apr 2025 12:17:46 GMT
-Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 30 Apr 2025 05:17:42 -0700
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-Date: Wed, 30 Apr 2025 17:47:11 +0530
-Subject: [PATCH v6 5/5] arm64: dts: qcom: qcs8300-ride: enable video
+	s=arc-20240116; t=1746015903; c=relaxed/simple;
+	bh=zYcXsPEfolrkTF/EjgW5Q6PjxiTC+RAO6eFXhCXjLJ8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kGj6tXnC7+nWZvl33gEIytnJplfkpqOLd0uJhw20Vz6U0uI9Mg5yjpEbfUO2I0Fl1NKWK2jMr/2BbL2vCNikwvAMd9KbeiPy61oNZ2lOryCyWOKSQQvTy7l02cfNiXm9M2LFRrUIygFegXo8lfB1jy1GeIxYzJ0trdAx6f/AeDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hEYXF3HH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F518C4CEE9;
+	Wed, 30 Apr 2025 12:25:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746015903;
+	bh=zYcXsPEfolrkTF/EjgW5Q6PjxiTC+RAO6eFXhCXjLJ8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hEYXF3HHx4Jjp5gmOoqEvysofVXezNK88qkWvDIFPH6iGtr78U+uwk3PDqTWsMvqV
+	 HJ4wWYgoc0umg94St/LeVHjIvwcvAbkLpi36JkeCwJyrt0qysgNaTRyzZ9T5qt+qT2
+	 UAQngA49z+Y1a6FqojpCVKVODIQaYLCzKC0MQa0UEPYmm+0Rkvivk1iriyyyRIFnsM
+	 l74kdRZc5ZCMyR7/ousHEQyGImR5tlZPkS574e7wRWMe2YPoNBix81j0YeZ1SxZXk4
+	 l9jp2LgdM3ZVLMhh9hehViB3OHHX9wGbuavDA+AIzUQbWFJRtajCTgWusWThcMo2ET
+	 Ck+qcj7MPpgeQ==
+Date: Wed, 30 Apr 2025 14:25:00 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Daniel Thompson <danielt@kernel.org>
+Cc: Sebastian Reichel <sre@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
+	Lee Jones <lee@kernel.org>, Jingoo Han <jingoohan1@gmail.com>, Helge Deller <deller@gmx.de>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Johan Hovold <johan@kernel.org>, linux-pwm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC] backlight: pwm_bl: Read back PWM period from provider
+Message-ID: <eexaex3ped44yszqaiedh23hjsivddmpjtij2pjciayt2z2o3l@bd4jlol6nvuq>
+References: <20250226-pwm-bl-read-back-period-from-hw-v1-1-ccd1df656b23@linaro.org>
+ <xltamao27utfrsax2pc6mh5tthanmrqszz4k7gyw3knqkm24xp@4tydmhfh6g4j>
+ <cmjyaveolhjtfhqbjpc6ghh7g2f5jmeyavoms5lqup6dyidngl@ljvxgoyw57md>
+ <Z9lFg98srzYivGoI@aspen.lan>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20250430-qcs8300_iris-v6-5-a2fa43688722@quicinc.com>
-References: <20250430-qcs8300_iris-v6-0-a2fa43688722@quicinc.com>
-In-Reply-To: <20250430-qcs8300_iris-v6-0-a2fa43688722@quicinc.com>
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@oss.qualcomm.com>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1746015441; l=696;
- i=quic_vgarodia@quicinc.com; s=20241104; h=from:subject:message-id;
- bh=U0w1x+8Qh4hnZgZPeV+lNb1LUY4ehW5wushCpVQ3K+I=;
- b=HswQuPcZcVLOkDlLa5CS4MXv8HofsKoc70mV3bLmTGTqDYG+CAPmRhjsNofPWTYJlXMZ28kgX
- ypkTXmaWO9dDwkuTX5VOt4sm5MBQUr3ih0UE8MsQN/iki3Sm4RsE4YP
-X-Developer-Key: i=quic_vgarodia@quicinc.com; a=ed25519;
- pk=LY9Eqp4KiHWxzGNKGHbwRFEJOfRCSzG/rxQNmvZvaKE=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=G5AcE8k5 c=1 sm=1 tr=0 ts=681214eb cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=HJafQcN7i5IhSkUYFLQA:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDA4NyBTYWx0ZWRfX6Bb0Ho0RtYCc 8uWKVTJZbLx6H44alY6kZC1nKhWEHpWuwk5yk3fdiujy8B9d+nFHyZQzYDWB/aSD7JHeZ0lPtm3 +zSuN+soFrBx6UBFSNLG9zMXpXwlt+PFexO24F2unD2lO0mimG/rKpsURke9/AWMB+dNwQ4i3sA
- uPUoq2hrLIyISmpoR/jojlszN28OeeGUGEMOy7SAIQdYdglZ+5IDLv8KWAec0l9vUomOfacsH8z HV7zzJ4VnpIB+QJuC+Vj1CbAK2jxU4bS8+a00FioRXrQbKEW24GfhXIIw2lislMVMOOM5GszCJj TsiG0hW0r7HRtzqLHytXoD27ZsQYMJsLvErOrUr6ihuzTor3ZdmXmbHHYQ0bi8WY+/j9Z1j8Y8r
- 1Nag6OtELpFhL7NjNjao5AK4mpesoadjgBIEuWMjYastPjyZBrZM6SUd60/2oSalG987/O53
-X-Proofpoint-GUID: D_kAtyXhAQk7f2ck2nBGe9Bb0Ss7RNK6
-X-Proofpoint-ORIG-GUID: D_kAtyXhAQk7f2ck2nBGe9Bb0Ss7RNK6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-30_04,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 impostorscore=0 phishscore=0 mlxlogscore=844
- lowpriorityscore=0 adultscore=0 mlxscore=0 malwarescore=0 suspectscore=0
- clxscore=1015 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504300087
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="354souy6or7rgjzd"
+Content-Disposition: inline
+In-Reply-To: <Z9lFg98srzYivGoI@aspen.lan>
 
-Enable video nodes on the qcs8300-ride board.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+--354souy6or7rgjzd
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH RFC] backlight: pwm_bl: Read back PWM period from provider
+MIME-Version: 1.0
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-index b5c9f89b34356bbf8387643e8702a2a5f50b332f..87114a349fedd80296abaf3d2f5f284b5adbbdfe 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-@@ -285,6 +285,10 @@ queue3 {
- 	};
- };
- 
-+&iris {
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+Hello Daniel,
 
--- 
-2.34.1
+On Tue, Mar 18, 2025 at 10:05:55AM +0000, Daniel Thompson wrote:
+> On Thu, Feb 27, 2025 at 04:06:47AM +0100, Sebastian Reichel wrote:
+> > On Wed, Feb 26, 2025 at 05:34:50PM +0100, Uwe Kleine-K=F6nig wrote:
+> > > On Wed, Feb 26, 2025 at 05:31:08PM +0200, Abel Vesa wrote:
+> > > > The current implementation assumes that the PWM provider will be ab=
+le to
+> > > > meet the requested period, but that is not always the case. Some PWM
+> > > > providers have limited HW configuration capabilities and can only
+> > > > provide a period that is somewhat close to the requested one. This
+> > > > simply means that the duty cycle requested might either be above the
+> > > > PWM's maximum value or the 100% duty cycle is never reached.
+> > >
+> > > If you request a state with 100% relative duty cycle you should get 1=
+00%
+> > > unless the hardware cannot do that. Which PWM hardware are you using?
+> > > Which requests are you actually doing that don't match your expectati=
+on?
+> >
+> > drivers/leds/rgb/leds-qcom-lpg.c (which probably should at least get
+> > a MAINTAINERS entry to have you CC'd considering all the PWM bits in
+> > it). See the following discussion (I point you to my message in the
+> > middle of a thread, which has a summary and probably is a good
+> > starting point):
+> >
+> > https://lore.kernel.org/all/vc7irlp7nuy5yvkxwb5m7wy7j7jzgpg73zmajbmq2zj=
+cd67pd2@cz2dcracta6w/
+>=20
+> I had a quick glance at this thread.
+>=20
+> It sounded to me like the PWM driver was scaling the requested period
+> to match h/ware capability but then neglected to scale the requested
+> duty cycle accordingly.
 
+Well, I'd not call the period adaption "scaling", it just gets fitted to
+the hardware capabilities. The same happens for duty_cycle, it's just
+that the absolute duty_cycle value is reduced to the next value that is
+possible to implement. Obviously that modifies the ratio between
+duty_cycle and period (requested vs. implemented), but you cannot
+prevent that anyhow and it makes handling easier for the lowlevel driver
+with less corner cases. And whatever policy is chosen to be the right
+one, it becomes ridiculous in the corner cases, so picking the simplest
+to implement is the sane option in my eyes.
+
+> That means the qcomm PWM driver programming a
+> fractional value into the hardware that was not being anywhere close
+> to duty_cycle / period.
+>=20
+> So the recommendation was to fix the PWM driver rather than have
+> pwm_bl.c work around it?
+
+No, the lowlevel driver is fine.
+
+With the new-style driver callbacks it becomes possible to query the
+hardware capabilities enough to implement a helper that determines the
+actually implementable waveform that is best for your use-case, whatever
+"best" means here.
+
+Best regards
+Uwe
+
+--354souy6or7rgjzd
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmgSFpkACgkQj4D7WH0S
+/k5w4wgArhgbgew7qw0lAMKfRIaQrUs3HhB6o4qTL/cx0/JHMbYlixpsFiFJohJv
+ThcgFesVLDRe5gbSnkc2yopRKeyq5uyFPdZOJmmmteBRL4LDB+ZSc2QlnVV/QoBA
+O3BQxlH+wpiq00lEo4riwa4qraK87cZgBtkyf+w6GfNDhfCv8qNlDkqoXs66b83Y
+iAvGmxYEFn1Rj9U9EDbPLpc5BqVVunxkoYi7h51FrUnw3p1LtbGSgSJhPIeZTdT8
+MSzV9xQj8Kht9JW2LMuVbwduJpexoRjnx9kImFxw7NqBc6Nv5MRcKRkZJsrLVrO6
+9OSpwGNx0aWGrwQX4V8Abfkm1D3tbQ==
+=Laha
+-----END PGP SIGNATURE-----
+
+--354souy6or7rgjzd--
 
