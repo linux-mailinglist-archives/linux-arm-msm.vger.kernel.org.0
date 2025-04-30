@@ -1,187 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-56214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAFA2AA45F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 10:52:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62687AA4666
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 11:07:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8A2D9A6CC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 08:52:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 11DCB1B63C52
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 09:08:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0A1E20C038;
-	Wed, 30 Apr 2025 08:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D570F219302;
+	Wed, 30 Apr 2025 09:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m1lJ8wzZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AjjGTNbE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5032AEE1;
-	Wed, 30 Apr 2025 08:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982C920C488;
+	Wed, 30 Apr 2025 09:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746003148; cv=none; b=aM5Bu52PLJj8ixrKM4zOzeeiGeAD9hD3Zk4pVzDrwLojlCJP66XqSrZRcyUoBlQiEHEAoQ/O1yIe5LeNiRwN3XIAzdMmQD3E6VxlGX8/ksLpyJYC8ZmfOXDJOGESiEpGyy5GJxury6C7nzN9Swg2Vhm92ZOFm7+eA7lHOAo1+hI=
+	t=1746004067; cv=none; b=u8tSJKq14rir14I7Owgz+5JdAdvER49kPger/Wip/x/Hz6XZXQG9prcvC1lNF8DcexdQyDQ3MOMSIUvnoMnwx/NBXjCnrnQCrc3GuQD6KgKbnW/8NuG/7iWEJoe+XgHgyYJ9r9RND4jZIRJdhDuiIsbyYniN8iz7/yicQk/JrxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746003148; c=relaxed/simple;
-	bh=7Cul/zndrL+/IVYzqfi6IU1dEFCIVPUdV6j259m69G4=;
+	s=arc-20240116; t=1746004067; c=relaxed/simple;
+	bh=JTFm4bna49JCkHZqj/tyafzK8uqLqlQp4ByNOAyKIx0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a4oZTvmYj4muIx0aZdlG6ovra7vXrM5qVXHWnealPI+18Sg07Fj/5XeJv/YR59LkXHH3wS/OwhcJl0Aq2x9Y5D6u6kIL5thYm3k0OSM16c0cHzu7wb7XbT/AUt1cfFvStCEW+Leo/FmY9ASkTcNdj2gUbLvDhi7+onYA/4fr8aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m1lJ8wzZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941A3C4CEE9;
-	Wed, 30 Apr 2025 08:52:22 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=hJC/W+g7AhApMMDW6NE+xuWX0jOrWf+nSzARxWGcK1N+EWXNh79MYvRLDoJrFnvl1qz9YcvBaJk/dw7BqfB+An1GcoslXWVdlhJdY3D/CFvmMR4UKUTFkPQ9+P9GJQykUDra0edm+D4Pdh18QJsdRX444veNP/lPRt5vBKFM/iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AjjGTNbE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E02C4CEE9;
+	Wed, 30 Apr 2025 09:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746003148;
-	bh=7Cul/zndrL+/IVYzqfi6IU1dEFCIVPUdV6j259m69G4=;
+	s=k20201202; t=1746004065;
+	bh=JTFm4bna49JCkHZqj/tyafzK8uqLqlQp4ByNOAyKIx0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=m1lJ8wzZTPM8DhfyWr4/2HegX1ltD3jb9oyGwEsxQnggTzFu4BmhN+FDUo2zeu1RN
-	 giDLlf5a2a05M1NTM0TyNM+3EdxGFIjko0NcwuH8tmM4waxKh+taOw9pETLP/OGysx
-	 y6q41rNWMiXvecfuO5utnba6X+/RrlRRRG0Zyp779JD4OXsp8BT5vKLho9xhVLhP01
-	 L3pek8e8yF1Kz3U+jqQ8zO6NCEaQ1htsGbDQh30QnW28U8lUEpb18UeDTpFssre9i9
-	 UMhCihDPn7fYp+FgDTScyGj9IhAcqbLQNWIY9xOmFsozHxD0z0V8xLXR1vNNBZ07+D
-	 pBH9xsh9vL2PA==
-Date: Wed, 30 Apr 2025 09:52:20 +0100
-From: Simon Horman <horms@kernel.org>
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
-	Russell King <linux@armlinux.org.uk>,
-	linux-arm-kernel@lists.infradead.org,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?utf-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>,
-	Marek =?utf-8?B?QmVow7pu?= <kabel@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	=?utf-8?Q?Nicol=C3=B2?= Veronese <nicveronese@gmail.com>,
-	mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
-	devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	b=AjjGTNbErxWGCzhEbbOuEOlUu5zqXJuNMw/05gI1660HBi1a31QLPK7BIJ8hxUO8o
+	 ploriJYljhQqnr2B+QsvmcXgWlFEneGl4+NfEdHev/LWoNMVayw5YiQOAqKTAoY3dN
+	 XteJ9zb30s8qSRBuaUbXHU54xyez0vni90ByktrS+Tm3ZLw4CGxe4yijNpP9IiZMF6
+	 NAW62V1NU8VJ4a+Rii0DWNVcJisTp30uleC71K9kb0keYDEOthBLc+SztpC8Q/7kkm
+	 wQQqQJv+l3UGh9GhjHxEFY/ITALVAayIM6STJUCyErKOK0qAV8iw6wUNVlEUmY4bqL
+	 vEWHKXtmnF1xg==
+Date: Wed, 30 Apr 2025 10:07:38 +0100
+From: Lee Jones <lee@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: Re: [PATCH net-next v5 04/14] net: phy: dp83822: Add support for
- phy_port representation
-Message-ID: <20250430085220.GS3339421@horms.kernel.org>
-References: <20250425141511.182537-1-maxime.chevallier@bootlin.com>
- <20250425141511.182537-5-maxime.chevallier@bootlin.com>
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Leo Yan <leo.yan@linux.dev>, David Heidelberg <david@ixit.cz>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v3 01/11] Revert "dt-bindings: mfd: syscon: Add
+ qcom,apq8064-mmss-sfpb"
+Message-ID: <20250430090738.GE1567507@google.com>
+References: <20250425-fix-nexus-4-v3-0-da4e39e86d41@oss.qualcomm.com>
+ <20250425-fix-nexus-4-v3-1-da4e39e86d41@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250425141511.182537-5-maxime.chevallier@bootlin.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250425-fix-nexus-4-v3-1-da4e39e86d41@oss.qualcomm.com>
 
-On Fri, Apr 25, 2025 at 04:14:57PM +0200, Maxime Chevallier wrote:
-> With the phy_port representation intrduced, we can use .attach_port to
-> populate the port information based on either the straps or the
-> ti,fiber-mode property. This allows simplifying the probe function and
-> allow users to override the strapping configuration.
-> 
-> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+On Fri, 25 Apr 2025, Dmitry Baryshkov wrote:
+
+> For some reason Lee has mis-squashed two commits, picking up one chunk
+> from the first patch and one chunk from the second one. Rather than
+> trying to fix it, revert commit 2c8de7df7418 ("dt-bindings: mfd: syscon:
+> Add qcom,apq8064-mmss-sfpb").
+
+Ah yes.  Looks like I took patch 5 before patch 4, then fudged the
+conflict resolution.  No need to submit a revert, I have removed the
+patch.
+
+> Fixes: 2c8de7df7418 ("dt-bindings: mfd: syscon: Add qcom,apq8064-mmss-sfpb")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > ---
->  drivers/net/phy/dp83822.c | 70 ++++++++++++++++++++++++---------------
->  1 file changed, 44 insertions(+), 26 deletions(-)
+>  Documentation/devicetree/bindings/mfd/syscon.yaml | 2 --
+>  1 file changed, 2 deletions(-)
 > 
-> diff --git a/drivers/net/phy/dp83822.c b/drivers/net/phy/dp83822.c
-> index 490c9f4e5d4e..bbbe509f3bd9 100644
-> --- a/drivers/net/phy/dp83822.c
-> +++ b/drivers/net/phy/dp83822.c
-> @@ -11,6 +11,7 @@
->  #include <linux/module.h>
->  #include <linux/of.h>
->  #include <linux/phy.h>
-> +#include <linux/phy_port.h>
->  #include <linux/netdevice.h>
->  #include <linux/bitfield.h>
->  
-> @@ -814,17 +815,6 @@ static int dp83822_of_init(struct phy_device *phydev)
->  	int i, ret;
->  	u32 val;
->  
-> -	/* Signal detection for the PHY is only enabled if the FX_EN and the
-> -	 * SD_EN pins are strapped. Signal detection can only enabled if FX_EN
-> -	 * is strapped otherwise signal detection is disabled for the PHY.
-> -	 */
-> -	if (dp83822->fx_enabled && dp83822->fx_sd_enable)
-> -		dp83822->fx_signal_det_low = device_property_present(dev,
-> -								     "ti,link-loss-low");
-> -	if (!dp83822->fx_enabled)
-> -		dp83822->fx_enabled = device_property_present(dev,
-> -							      "ti,fiber-mode");
-> -
->  	if (!device_property_read_string(dev, "ti,gpio2-clk-out", &of_val)) {
->  		if (strcmp(of_val, "mac-if") == 0) {
->  			dp83822->gpio2_clk_out = DP83822_CLK_SRC_MAC_IF;
-> @@ -953,6 +943,47 @@ static int dp83822_read_straps(struct phy_device *phydev)
->  	return 0;
->  }
->  
-> +static int dp83822_attach_port(struct phy_device *phydev, struct phy_port *port)
-> +{
-> +	struct dp83822_private *dp83822 = phydev->priv;
-> +	struct device *dev = &phydev->mdio.dev;
+> diff --git a/Documentation/devicetree/bindings/mfd/syscon.yaml b/Documentation/devicetree/bindings/mfd/syscon.yaml
+> index 71741f06d2fddd2d4fb6b69c1cfd2d449ce73f64..c6bbb19c3e3e2245b4a823df06e7f361da311000 100644
+> --- a/Documentation/devicetree/bindings/mfd/syscon.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/syscon.yaml
+> @@ -98,7 +98,6 @@ select:
+>            - mstar,msc313-pmsleep
+>            - nuvoton,ma35d1-sys
+>            - nuvoton,wpcm450-shm
+> -          - qcom,apq8064-mmss-sfpb
+>            - rockchip,px30-qos
+>            - rockchip,rk3036-qos
+>            - rockchip,rk3066-qos
+> @@ -202,7 +201,6 @@ properties:
+>            - mstar,msc313-pmsleep
+>            - nuvoton,ma35d1-sys
+>            - nuvoton,wpcm450-shm
+> -          - qcom,apq8064-sps-sic
+>            - rockchip,px30-qos
+>            - rockchip,rk3036-qos
+>            - rockchip,rk3066-qos
+> 
+> -- 
+> 2.39.5
+> 
 
-Hi Maxime,
-
-A nit from my side:
-
-dev is unused if CONFIG_OF_MDIO is not defined.
-
-Perhaps it's scope can be reduced somehow.
-Or &phydev->mdio.dev can be used directly?
-Or the code guarded by CONFIG_OF_MDIO could be moved into a separate
-function that makes use if IS_ENABLED to return early if there is nothing
-to do (maybe the best option if possible, as it would increase compile
-coverage).
-Or ...
-
-> +	int ret;
-> +
-> +	if (port->mediums) {
-> +		if (phy_port_is_fiber(port))
-> +			dp83822->fx_enabled = true;
-> +	} else {
-> +		ret = dp83822_read_straps(phydev);
-> +		if (ret)
-> +			return ret;
-> +
-> +#ifdef CONFIG_OF_MDIO
-> +		if (dp83822->fx_enabled && dp83822->fx_sd_enable)
-> +			dp83822->fx_signal_det_low =
-> +				device_property_present(dev, "ti,link-loss-low");
-> +
-> +		/* ti,fiber-mode is still used for backwards compatibility, but
-> +		 * has been replaced with the mdi node definition, see
-> +		 * ethernet-port.yaml
-> +		 */
-> +		if (!dp83822->fx_enabled)
-> +			dp83822->fx_enabled =
-> +				device_property_present(dev, "ti,fiber-mode");
-> +#endif
-> +
-> +		if (dp83822->fx_enabled) {
-> +			port->lanes = 1;
-> +			port->mediums = BIT(ETHTOOL_LINK_MEDIUM_BASEF);
-> +		} else {
-> +			/* This PHY can only to 100BaseTX max, so on 2 lanes */
-> +			port->lanes = 2;
-> +			port->mediums = BIT(ETHTOOL_LINK_MEDIUM_BASET);
-> +		}
-> +	}
-> +
-> +	return 0;
-> +}
-
-...
+-- 
+Lee Jones [李琼斯]
 
