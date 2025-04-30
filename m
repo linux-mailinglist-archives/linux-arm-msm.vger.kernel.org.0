@@ -1,79 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-56197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFC70AA42FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 08:15:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F748AA4308
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 08:19:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC62F9A6AEE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 06:15:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0CE771BC5CDA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 06:19:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0179B1E885A;
-	Wed, 30 Apr 2025 06:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20AD71E104E;
+	Wed, 30 Apr 2025 06:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IXTCtJVO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y5ReXdpY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003851E883A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 06:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197F9B672
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 06:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745993732; cv=none; b=KYTYIs74GT366PcDszRJWKvdiALYk6Hrrmxqq29spFPEcFu2KHoNFLFVHrsMQyrDM/L4CTJEZtpVohkQoEddiKDgruYm3jPIaK1FadspoC14lMnZnKwM15H3pl7+mxAeEUpXk6SeBJrwZpfP60YkyAvXSEW4qN33NUewggdQfM4=
+	t=1745993951; cv=none; b=Wdq8N36ldX44GlnuQKP/XSYvDTqPuaGMUmX28DhLOHYGbJZenkLDkYIOUWpDgDtzxXhH4ppVr0eBGvANNqKxIASuyAYwqAjQ9y0YlY6TGUbGUsPbGHx6fo7AN+pwWfzHT0kqHLM/kVNvKfTB/Tc4JWpkSC7n0C/tYVWtxws3Pfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745993732; c=relaxed/simple;
-	bh=h/Dm1V3IY7c+A7v/oWkqv8G4jkeeLzXn+J22wkUSrrQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=kamepWTGH1Rhes+KU2JIb44VW79gBOz0WkwjEALhEU6iUoy9F3cT81cwn+t4BCZhk8ebTtavsqbhDTwp4F+XW/j+hCLGPEv7OocWQ2l2zaxz2ndxShSqLo3Vh46At3AneTPNx9hR3xBj+lCUh3E8h4HGddVBMiGL3KRhFQmsGxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IXTCtJVO; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1745993951; c=relaxed/simple;
+	bh=jL8xvh7MmkitMTTRNILqXKDjV0N1bxWKo2Q8EiScK1Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=czT5KovyMrOPFZ2mADf0ogiWXVxHTralYLuwkS21HdZH8tx5FSnaTo01Ky509RkalKg+0aTe0yBJ0qx8gr6xtynUTO+iNByu2GHeyxGHp4Y1Q1y2y/ESoLTGHSqKCta4PFmi6YRL/LTWWjqGXeW4vM78prRN29Gk0zJnqlGP7Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y5ReXdpY; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-440668acbf3so9306435e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 23:15:30 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43cf825f46bso4843115e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Apr 2025 23:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1745993729; x=1746598529; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1745993947; x=1746598747; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CQ8+byTHBbZULcISnPo+4EWHJovs157yAJJR0xdIOvU=;
-        b=IXTCtJVOXnM+O3wOfmLln/1AjdjPV8CTWAzKlbPAkXUxNnQp84EbL+U7HCcK4xbbyo
-         smLa0YTfYUa8lbHADY00KXklW2zRK/ZhiI+y576kU++Ee79Om8pEDmx9apFcKFRKe0rm
-         xdmM+lVtohQfXTH04KLWQ90nMPjXVM8K946I61zZCBunYzY3jyQ4/lqCEJrPyZMl4DN0
-         kC7MCg5npb+WNl3vEgA7LW8eCbjWpEk+Am8y2mwPPMR1vMO3pH9hwaEwQdOOQucgKJwB
-         Y+MsA6nj8AtTf5ZqyAzWxdFx8UAtCCqNZFUWZCgIIJqlOHIc8JZZOSTCdwnaLT3x4GFc
-         qVuw==
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=F/IL0XFmHPKxoC9j8t7metTTcJtVydc7qbX+iUPXrhg=;
+        b=y5ReXdpYq/EtyCImuzDwATPZXNHJDr6ntVi7ljKUuzEa73l7Ds7nyLyGTw7R2rLRBD
+         hc/ssxdR4GXtgk5xXMLmZxkS4dEV+gSG+q7CP/i4G72TRcqgMMT+Xt7VrWDlr13FLw09
+         q/WalHJ2Cbm5KQnW8XJkeJB9p3BNchlRO9okEAuzCW5xPyfqOfBv+c7Rw3ns/BaVTyp9
+         YkMoySomRrWhTXtheZjP5aCMdXMcLT+hcOD3zZ1gIGtDSX82ji5BzNiGvPuC8CcvUWQx
+         0z1j88F/bHjmlBYrsVEYmSXbkwo/rAtFG0pn2nb/OTyKYezHWfxpj8CLyZmf1iFyp0Np
+         5llw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745993729; x=1746598529;
+        d=1e100.net; s=20230601; t=1745993947; x=1746598747;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CQ8+byTHBbZULcISnPo+4EWHJovs157yAJJR0xdIOvU=;
-        b=rkeV1gLN+muS4n2l1+N0EjkP8mL0Mo+hu3nDayjSK0Mj3XzMnHGKUmXJfOjdo49C1m
-         sT6l2RT+TCAP79m2phBE3obL1TT+rwoFQVDLkWZmcaBOFNxehKWmA08F1kKj1Ij/bHcy
-         NgergTR/OAKhVPqLe3yebPxyXLaRxWX8DstOW1/b7/r0ZlxbIHptLpuE6MkbPmY0oiHO
-         +810G3lsOFkqW2VgDZCEVxUkaK/YLt4YVrq4TPjBdcDT3VHooqV58P308TfcYF0pX+4H
-         gQ5FIwb+k1EEvsZCNjLZ5bobreoMRO+0dLBDt5uJwuyl2ikLAnFdV2rcUx7N77y67vxv
-         mu1g==
-X-Forwarded-Encrypted: i=1; AJvYcCWPRFqtb+SPJ0YA8V3KtDxxNUgS6uue3kBKoMmegskAGEC2sIDnBVIoaEw33NZRnSUvUTMRB6Y5ybzLhwcl@vger.kernel.org
-X-Gm-Message-State: AOJu0YwlfvMy1BFdG+QCaBAyIZFYIRDW7gOHDLh8i8HUOrS3n0ZtvcwY
-	8yJ1E7vM+Fy6rsROtj5gelAmptnv/xL2i/FEZY4wN9dn17t2dbucc7wr87WXE74=
-X-Gm-Gg: ASbGncua2ccg/a6iPD6/Ca21DaAlGb19GIC90kLB9Q3N338kpqJqkcAmcjAbAXhZkAB
-	kwc3G6O8FNHzrhKgXqaRhVKR+khFXZ/nVXI7sftg/vSsqFKZo9Z5W3/E5VCU1t7eNE1Ssvx+0a3
-	UGE4NQk9Gymx2N5Xc3i1LNyZXq7OXr1WX0hXvzdD4KK7CKx4OrcLTFeRciWl3JiSuyPeyHx7Wii
-	pQQxWsfGKgA5D/grKJKTSiNOi2th5F5LGYY29dsBwIAULIJ39rhNQGPolK7lNFXObl7eCdv8tCH
-	4EGtTRqFqBGC63RXQSXdXTrPpHRhCKUqNJYOPqYtIB/8ovZU4VBpXp9v72M=
-X-Google-Smtp-Source: AGHT+IFQZNbrXkVIS3uNOK0FA6fZlLhkJ0C67COIWvsSffD85H8GkDXmfIwEvlABZICaa2nLWYoJLQ==
-X-Received: by 2002:a05:6000:18a4:b0:390:dba1:9589 with SMTP id ffacd0b85a97d-3a08ff80793mr289211f8f.8.1745993729322;
-        Tue, 29 Apr 2025 23:15:29 -0700 (PDT)
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F/IL0XFmHPKxoC9j8t7metTTcJtVydc7qbX+iUPXrhg=;
+        b=NT3txw5JUlBLT+/P8h6bJPHQfeJ6JQSpAPLfxLdAJRqQpdr51URIjmZuqMmNXLEeyc
+         NHonyDVdD8fHcbrdiMRSicv4te5UyUw3/Y7rQ8HdsvR8tO+WJAudo9FxAiUC4C04CehW
+         kFUFDq0tOdi/zcd+FjCKf/4THzPS7sR/aqtQ4aaR9OIJuBNIehfVkc82WjIXthuQ4RmX
+         AWFXnveNmEwDWqut1Fy4ggpJtw2AQ0ncvqrkw8gYmKx06YnTBT3CTSUNXsDuYE9nQ6p1
+         8pteuUq7+r8mMcM3AeIOO2LuMcXfCfUrg77HnYYje8X2IqSpu/kRLUIP7EjcFWycOtK5
+         v9Kg==
+X-Gm-Message-State: AOJu0YxoG9sJA0DNv3naZRYOiHTWleiQcIEsR/EjCn7L7A6wbqgxF4RX
+	Aj/KxbpRu2O3uUA8VETNW/+h2whnDlWHNFLNhsnpyjiwC9VOJtLekpuoMkJxHbF1v/QIuwQ09Fx
+	i
+X-Gm-Gg: ASbGncvtfLKDLbJvNcP3og9NxYLatDQFu3CPSv+pJqSyS6bkICWVP8Q5ob7HVDbq1Id
+	Ynxs+2yJkryyrhsblxel/6QUIBuFAH9HRDex9NJiW+MsYmQUWbKLhmnKS62RgiRlHY6RmKAd98+
+	iEzMcZp8n74ygEh5vfm8kyESuto7AtboKUVjIVYM9CQ6wKdAOsGS4gTQXKQhYNixnqk6rRV/UIU
+	/iwqVJRK9SmkrFCyielEUDY34wVBHQA5TmxJe4QNUShU/glkH9M/zjLn4yncqpuwk7kFnUIfSV5
+	oHsZvqtKF+xsMIZzLNTbDEXNL+Os6exEp4r1citGDT+Oqn9vIVDAVlzKo/o=
+X-Google-Smtp-Source: AGHT+IGwlSSk/V975d/cid6eJ9/Q9UkNNxcjOHYawcjiK6gUy1kVrfYZq/K4ZlmgsJ8PDkUnk3LTDQ==
+X-Received: by 2002:a5d:5f81:0:b0:3a0:6868:8b13 with SMTP id ffacd0b85a97d-3a08ff57663mr348272f8f.1.1745993947391;
+        Tue, 29 Apr 2025 23:19:07 -0700 (PDT)
 Received: from [192.168.1.28] ([178.197.207.88])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e46976sm16103498f8f.63.2025.04.29.23.15.28
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e46976sm16110911f8f.63.2025.04.29.23.19.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Apr 2025 23:15:28 -0700 (PDT)
-Message-ID: <c611add2-bb79-4cdb-a612-0f47d427c905@linaro.org>
-Date: Wed, 30 Apr 2025 08:15:27 +0200
+        Tue, 29 Apr 2025 23:19:06 -0700 (PDT)
+Message-ID: <0e007f7f-d9ff-4b2d-914d-ad62b9983bba@linaro.org>
+Date: Wed, 30 Apr 2025 08:19:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,14 +82,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] media: qcom: camss: vfe: Stop spamming logs with
- version
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250429180828.950219-4-krzysztof.kozlowski@linaro.org>
- <000934a5-4934-4d21-8859-897fe48474dc@linaro.org>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8750-mtp: Add sound (speakers,
+ headset codec, dmics)
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250424-sm8750-audio-part-2-v1-0-50133a0ec35f@linaro.org>
+ <20250424-sm8750-audio-part-2-v1-2-50133a0ec35f@linaro.org>
+ <dd271e8c-e430-4e6d-88ca-95eabe61ce94@oss.qualcomm.com>
+ <e61e17ca-fed7-4712-96fc-a9a2339de1fb@linaro.org>
+ <9b6c5f67-0bbc-490f-9982-4e28218aa6eb@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -135,27 +141,113 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <000934a5-4934-4d21-8859-897fe48474dc@linaro.org>
+In-Reply-To: <9b6c5f67-0bbc-490f-9982-4e28218aa6eb@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/04/2025 21:40, Bryan O'Donoghue wrote:
-> On 29/04/2025 19:08, Krzysztof Kozlowski wrote:
->> -	dev_dbg(vfe->camss->dev, "VFE:%d HW Version = %u.%u.%u\n",
->> -		vfe->id, gen, rev, step);
+On 29/04/2025 21:11, Konrad Dybcio wrote:
+> On 4/28/25 4:41 PM, Krzysztof Kozlowski wrote:
+>> On 25/04/2025 11:30, Konrad Dybcio wrote:
+>>> On 4/24/25 11:40 AM, Krzysztof Kozlowski wrote:
+>>>> Add device nodes for most of the sound support - WSA883x smart speakers,
+>>>> WCD9395 audio codec (headset) and sound card - which allows sound
+>>>> playback via speakers and recording via DMIC microphones.  Changes bring
+>>>> necessary foundation for headset playback/recording via USB, but that
+>>>> part is not yet ready.
+>>>>
+>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>> ---
+>>>
+>>> [...]
+>>>
+>>>> +	sound {
+>>>> +		compatible = "qcom,sm8750-sndcard", "qcom,sm8450-sndcard";
+>>>> +		model = "SM8750-MTP";
+>>>> +		audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
+>>>> +				"SpkrRight IN", "WSA_SPK2 OUT",
+>>>> +				"IN1_HPHL", "HPHL_OUT",
+>>>> +				"IN2_HPHR", "HPHR_OUT",
+>>>> +				"AMIC2", "MIC BIAS2",
+>>>> +				"VA DMIC0", "MIC BIAS3", /* MIC4 on schematics */
+>>>> +				"VA DMIC1", "MIC BIAS3", /* MIC1 on schematics */
+>>>
+>>> Is this a mistake in what the codec driver exposes, or just a fumble
+>>> in numbering $somewhere?
+>>
+>> Which mistake? MIC4? Schematics call name things differently. They
+>> always were, so to make it clear for people without schematics I wrote
+>> which MIC it actually is.
 > 
-> Please just change to dev_dbg_once() instead of entirely removing.
+> I'm not sure how to parse your response
+> 
+> are you saying that there are MIC[0..4] that are/may be connected
+> to different codec ports, and that the MIC4/1 lines are plumbed to
+> VA DMIC0/1 respectively?
 
-Why?
-
-This is entirely useless message, isn't it? Version is deducible from
-the compatible.
+Yes, as always. Nothing weird here.
 
 > 
-> Same comment with the other patches.
+> I think I got confused about the MIC BIAS3 going to both and none
+
+What is both and none?
+
+> matching the index, but perhaps that's just because it comes from
+> the WCD (which is the third piece of hw involved beyond VA and the
+> mic itself)
+
+Again, what is the mistake you are pointing here?
+
 > 
-> ---
-> bod
+>>
+>>>
+>>>> +				"VA DMIC2", "MIC BIAS1",
+>>>> +				"VA DMIC3", "MIC BIAS1",
+>>>> +				"VA DMIC0", "VA MIC BIAS3",
+>>>> +				"VA DMIC1", "VA MIC BIAS3",
+>>>> +				"VA DMIC2", "VA MIC BIAS1",
+>>>> +				"VA DMIC3", "VA MIC BIAS1",
+>>>> +				"TX SWR_INPUT1", "ADC2_OUTPUT";
+>>>> +
+>>>> +		wcd-playback-dai-link {
+>>>> +			link-name = "WCD Playback";
+>>>> +
+>>>> +			cpu {
+>>>> +				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
+>>>> +			};
+>>>> +
+>>>> +			codec {
+>>>
+>>> 'co'dec < 'cp'u
+>>>
+>>> [...]
+>>
+>> That was the convention so far, but we can start a new one, sure. Just
+>> ask the same all other patch contributors, because each of them will be
+>> copying old code, which means cpu->codec->platform
+> 
+> I've been doing just that for the past couple weeks indeed
+> 
+>>>> +		/*
+>>>> +		 * WCD9395 RX Port 1 (HPH_L/R)      <=> SWR1 Port 1 (HPH_L/R)
+>>>> +		 * WCD9395 RX Port 2 (CLSH)         <=> SWR1 Port 2 (CLSH)
+>>>> +		 * WCD9395 RX Port 3 (COMP_L/R)     <=> SWR1 Port 3 (COMP_L/R)
+>>>> +		 * WCD9395 RX Port 4 (LO)           <=> SWR1 Port 4 (LO)
+>>>> +		 * WCD9395 RX Port 5 (DSD_L/R)      <=> SWR1 Port 5 (DSD_L/R)
+>>>> +		 * WCD9395 RX Port 6 (HIFI_PCM_L/R) <=> SWR1 Port 9 (HIFI_PCM_L/R)
+>>>> +		 */
+>>>> +		qcom,rx-port-mapping = <1 2 3 4 5 9>;
+>>>
+>>> Does this deserve some dt-bindings constants?
+>>
+>> No, because these are hardware details/constants. Drivers do not use them.
+> 
+> I'd argue it makes sense here - it makes more sense to pass meaningfully
+> named constants to the driver, rather than blobs with a comment
+
+Sense of what? You want to make it a binding then answer what does it
+bind, what part of ABI for driver is here a binding (answer none:
+because driver does not use it)?
+
 
 
 Best regards,
