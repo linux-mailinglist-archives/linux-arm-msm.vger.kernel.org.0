@@ -1,80 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-56281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C71B7AA4CC9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 15:10:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 859BEAA4CD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 15:10:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 881511881263
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 13:05:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 876171C231E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 13:06:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 516752741BE;
-	Wed, 30 Apr 2025 13:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73A33278E6B;
+	Wed, 30 Apr 2025 13:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZEE+FVc2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g2rRyFtf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92002274FE8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 13:01:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880EC276025
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 13:01:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746018101; cv=none; b=K5cFqXvVrj9MV0fbO5KE2U/oBjZwUgtPmducE5J2M8hRJyQs9mXmtqpKG2jHWj1A8ixbAyvTc2amJusoIhMLCCq8CxDT+mf1o97AdQ19BlUjT1TLBiwNx6edyByOEpLs+y469wqSnu2NTANw15qeEE32s6RIDq94iuhGM4MPAkc=
+	t=1746018104; cv=none; b=CDH2yGQ8YHQQcmwgbUUqeciIQX0fWgEExqOzE3S/2kkEGz38P6cDdIAz4Q6CQjBY2307rJWRJNvJS/KeK9JadTGgNa408GPTZb0aHpLpHEY7zAMYCaGhd7I2p6utQyj6KrXNPsEVrkVZnm2FWOSiqETDeWOMwy9MIlIBXOdNqH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746018101; c=relaxed/simple;
-	bh=ie++luqCCOkUIqplEYfGoj3PyvDBiGZnnE2vPE0q2fs=;
+	s=arc-20240116; t=1746018104; c=relaxed/simple;
+	bh=L86VjcIlUPTyl97TCOA761t4ZCfvvfnN425URVF10Z8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XxQuZC8euaJoQ1FPFDnVnrpeLizFduMh+Hue6Eb1rIQFO6+l/ekciNcQv+hv4SZHG2ZOf6oAPcKBOuxBVRHGu24SN/dDaXbqjP8JvGCqUREP0HffXDbPfUMXtvk0Io32LEU2rdupbHAM3FYWSRSd0eaxODTjnxY9g46rrSqC27M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZEE+FVc2; arc=none smtp.client-ip=209.85.221.53
+	 In-Reply-To:To:Cc; b=benFzOfKOOB1rWASHBwRr39hYIcdcm1AWw7ZYnCWdXehXOsgP7EzJ3EwCeUSeUKWcnj83ouc6t4h6mWJmXtT+R0SVg1vCjuXNVo9W0MAYW9/KLs1meV6Wzbxxj/OKnc4bVYSQTT3venKwtiUpUjdZLW0U+yxUUQ6cR413JDzRyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g2rRyFtf; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-39ab85402c9so244431f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 06:01:39 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3912622c9c0so678903f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 06:01:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746018098; x=1746622898; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1746018100; x=1746622900; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UlgW31bMSvJHQr/+7FLD6mAl+2mcjre5T4tLb0NZhIc=;
-        b=ZEE+FVc26Hwn3/do/ggdV6DnpTay1/WsZPGygW+rNHtdo8iTC1egjhz2g/LlSb7rmT
-         kXKkMQS1IDhGnkVAZSX4O1I1ol5ncnfi1TbrKTowLjEWU8wYS9f4iwa5bB6WQOwqtpHB
-         +ZtEXssHGsezXWNNY5DEdBCcJGdXsIdnbAR+BxsIfTNroo+ePQT7WHAnP8lsj8y5UdFI
-         QeI9AIfGB1OKgLj80L9EQ+S5nvNYBP1AcgQvPry+84P8YORSPQD4TDp4tCnBmknOQQSF
-         LoOaPahmDiPdnP3orHpAskPWQbfEbIOH0tx3qB7bL+uoSJpyittiAL2ZwktfinBWtMIQ
-         tLjQ==
+        bh=LM24bDa7iOIUWC8t6uWvtQysa6eAdU5lGmeO6NndF6E=;
+        b=g2rRyFtfRKLJbS7QStU3j2KJgj5ONyaqjU4mFD1Zk33M+zEHnLFUgsFTnpYH3In1ml
+         MniqFLqE79NwU/7Bhw3Fj8CPQdONltFB6Y4e3mqblUwrXaNzzi5DwcEVPCy01twInQyk
+         ScUsoE/o7TsHDjQu5MlJClwuu9fFDSfTYHMEjuq6w7mfr9vRyJHoItCCPPTLECxOjerE
+         XerUnIlNmq1ZwRWyRllogIrX4D9QrZUesTtE/RbvhMflT9S3AtqyAc+KdSPHGL2RhImN
+         6j0Rj4+t2ygRGfJM8nsmcnozlVD0DGrbUS3zhQFN0EJrfi6AyqtatPSnVehZBOB4as8r
+         VWKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746018098; x=1746622898;
+        d=1e100.net; s=20230601; t=1746018100; x=1746622900;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UlgW31bMSvJHQr/+7FLD6mAl+2mcjre5T4tLb0NZhIc=;
-        b=LTrQv4Zv27J+CxTXgjQ+Xx557U/mCxLQZ8th6cvnIePL22/855+VCvk9xdPjGDCpAf
-         /pT2ZidO3AmhAh9TWswDOTcCZHSH0vBeE2ZtKt+eZfrfcGdo8wxE/melVpaVfNuMEamY
-         wJqYceVYwtPRDnZErbDoyNfJDLGR/hhMnjqDa6FtE0srJYOb2JPOEUM/fyW9IojB31Ct
-         Qoijfmj83/4nzN2cXw84S1k7s0zUfV/GR7kQp1caGQyeINBdIq1OlA8IiLocFgiI6w06
-         MmGpzj9xV24Sef/KbIhuukZzlFLKGcrOd7rajkfmUkZL6ivOCbJnSPoPRSXDVPDdFeR3
-         alFA==
-X-Gm-Message-State: AOJu0YwSIDBbdjAUbFXzuW3RMWwCZz6c3NtYl/+KrOG7cdu84WCyRFfa
-	9VWmALLOJ0n3q3SPu2Q8OVsngFSf4DmVwbCqFmu92k5VJiosX8QwIb45BWjj5rg=
-X-Gm-Gg: ASbGncvGcO0xe/z8391lZC6ENHPsGFsxBQ2ras6RiUVzq2o+YI/5R1YzxQGCjCxXvO5
-	pns47l39Wwyyi+tliLaeQmwl9d4/t4tQwEWwI1PBYV+PY9dRq/vINwpmGFeZQ29yBTpxP3hQmFj
-	63CrOYgt6pbD3GjivZElVRme0qeiaMGF8Yc0G6G1ACtGB200K26MpoDRgkn5DSc1OUMCD0olM5u
-	jrs1ZDIyuIWPCFX/YsMrKo1Ca3Ys8EZBkMcRh30p5MLulFw40r0b0uB6WTZHsFTf0nFApq+QR1F
-	xZHaS+W7zA46inMNmk9xb0o7ZJgIQQVpfVSW46tjygDgNNhN50/el13cqNk=
-X-Google-Smtp-Source: AGHT+IHmxoUPURdmmgQHz7Jfj8+u8t0c/VIE/4vq98Yg1gd3UGcNqtyKVvz0Ufit6P2ua3jO7/u+tg==
-X-Received: by 2002:a05:6000:2dc3:b0:3a0:7a00:61e9 with SMTP id ffacd0b85a97d-3a08ff35f51mr816557f8f.0.1746018097648;
-        Wed, 30 Apr 2025 06:01:37 -0700 (PDT)
+        bh=LM24bDa7iOIUWC8t6uWvtQysa6eAdU5lGmeO6NndF6E=;
+        b=V/7OwFlauQMQYNkspXnPbHNoBT5qdDqOPjugzomr5gB9gro9uA71Fukb979rfYGAnb
+         XrwKYnq9qLRSm31qm1u+fx3fgCyN/Lw3VYwTch82cWOTRBeq/yMI2udgqwg/kA+RGJYp
+         zBX+IG1UNLOaS2wBjAawGBXRtIti7BqzmS1ZNZoZxQ+YcUYtxCxswQgyc0mQgPq3uoAu
+         xBQZJgTDMPNNkovhO1SRorczGh8fcxN0au4eqJijFX6w2d2ZZD8TKoXKpJhoolxbkT52
+         3TM5x5YqrUHTXRE106SG3lzDF+VqA5Ibb0sY+zNX+Y2VTMkS0nvZbZ15rzeu6K3QKdUg
+         1cng==
+X-Gm-Message-State: AOJu0YwYEANKhVhFa5TKuwGnooiR2UyXNQax78N4KSnUcLR7vhtrP957
+	cHlUs0reb60TnEbD+dfbIGdSsallgDhtIwpt+lqlEpO4zYM3UIoY7CrTAZH2RUM=
+X-Gm-Gg: ASbGncs7eRpvY+r09dgH2/oFSAGbe1vKFcPdXQBT3f8HYhfO8IkN5IbEVVV+ieFEuoI
+	1pFIrpHuaAdd0/PSKlFPJ/eMyH8i5Z1d6Z9890pz1SUnsZLy5S3pZVBGVCgh8o6jLZ9N/0SQP9V
+	qXECtENu94UNf7KL/I90O9SwG382hDMrIu0IUHgiN83RMwRmmW+NdDSsLo1LNiz1nlHAPcXqQwm
+	p1IjxKt47Gw8XAe2PxOlzgYSpJ/fdCpbftVn0m/EhAAmGjCS2x0aDWEkSxZxK4yGBze/Bg2sUK8
+	S5osTwLnCB3v9jkXScKj2jow0TzmBpYNLfcrDKEcjDqxS2ZKQ6nteyrJJvg=
+X-Google-Smtp-Source: AGHT+IH2rx1fg5ZTesnYB4q5L+He7XJ7RQcIFWsPkQJFXNtvB4sLm4M+PRGEinPbyqmKhH7WkFGF+w==
+X-Received: by 2002:a05:6000:1866:b0:3a0:86f3:451f with SMTP id ffacd0b85a97d-3a09007e244mr807662f8f.12.1746018099714;
+        Wed, 30 Apr 2025 06:01:39 -0700 (PDT)
 Received: from [192.168.1.28] ([178.197.207.88])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e46c23sm16884043f8f.75.2025.04.30.06.01.35
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e46c23sm16884043f8f.75.2025.04.30.06.01.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Apr 2025 06:01:37 -0700 (PDT)
+        Wed, 30 Apr 2025 06:01:39 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 30 Apr 2025 15:00:44 +0200
-Subject: [PATCH v5 14/24] drm/msm/dsi/phy: Toggle back buffer resync after
- preparing PLL
+Date: Wed, 30 Apr 2025 15:00:45 +0200
+Subject: [PATCH v5 15/24] drm/msm/dsi/phy: Define PHY_CMN_CTRL_0 bitfields
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +82,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250430-b4-sm8750-display-v5-14-8cab30c3e4df@linaro.org>
+Message-Id: <20250430-b4-sm8750-display-v5-15-8cab30c3e4df@linaro.org>
 References: <20250430-b4-sm8750-display-v5-0-8cab30c3e4df@linaro.org>
 In-Reply-To: <20250430-b4-sm8750-display-v5-0-8cab30c3e4df@linaro.org>
 To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
@@ -107,30 +106,26 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  Rob Clark <robdclark@chromium.org>, linux-clk@vger.kernel.org, 
  Srinivas Kandagatla <srini@kernel.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1164;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3289;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=ie++luqCCOkUIqplEYfGoj3PyvDBiGZnnE2vPE0q2fs=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoEh8DPK+FwfYxZwhAaHV3AlW+BD3qudeCMCqz3
- OYe9MuARDeJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaBIfAwAKCRDBN2bmhouD
- 1+V6D/48DkbGSx3PoiTDnUJsqlJggDdfcZuoUZnjxl4PJSz/rktRaRaay/hiT4JNAAsLHB+dC0S
- KJ7ZpYI4zG52UiNG7o7KJoPFFlH1SLeRgs0PuHfx58n+ZKbogI2WWIiQ++0CfuMm484s0F0E48a
- QU5wjbF0TuVEZ4gG3ud+8p7xPetF1YduSekNRPw2MRkOUV3+0857Z9eFfbVgaHPSEJNEA1rNO3K
- TmRs2D3EoX9qi+ZIvvDJ5BxYa9MjCAb39D/7XuVj3X20DYvTTyv3a46kEI08haCjxbkXFJj3axF
- MP6cXSL1fdt7Bo2TPFV0OBzPMI+AOmnwPdizhelzDbjd9vfwaUCqgeLYAWKKEjpDrrxUcGM3Gnx
- rvQ6lhr3SQjkbr6vdPkJ3VgBO2wdRLfkhvMn6UMY3j9znH0a9CX9AGKocVMq6YjqmG6ILiY/7jR
- QozLeOjqymN7TJzz1UCaCyHiPUHih5BxcO78BDTFScr40NLnLcl9zD4w/gJ6bCUi8ZGpBlB8ipk
- hx9yPNd//qGfUMCjhOrPakJ56GJOInTiey2NcrqoBCdEfROozCncSpMRDL8jADOn7U5ATEDtzmz
- PNfhEvYfXWo6F1cjAcoxwMYfZ7xPm34odoidWGhs6JERWO2+G0IdQQNy6RFaNNKflFC6SHjaROi
- zIojsRSRHDWoh0g==
+ bh=L86VjcIlUPTyl97TCOA761t4ZCfvvfnN425URVF10Z8=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoEh8Eee70M6ToABe2+KYQGOXv5I4i/QOKutTAF
+ yXMi2zVij6JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaBIfBAAKCRDBN2bmhouD
+ 18ftD/9GVp0+K2BUhEAuJSjzH08czgrFiefIuIU9QfHPr0uuOIXnmo1kDKgRguApHvgda6Y/TzO
+ Jn7PCWEIi85lWH7E9ds8xcPZIPazI7gt/PbL6ABOWGuCIzQT59kVXptV/T3FR9sxEUR1rmk4HUJ
+ mSJZySn+JMaNTYdning2aZOzbXWiRyax2lI/JluLLnIJBHjbQ1CNJcMLJPTQp2YCRSL3QRcJVfI
+ NdMLtKFQa9WrgiKQPp9hG8Kp77G5l9p+0XqzHIb9GD5W6qqRkIcpcK+en3+7i0aQj+8YS7IBWdV
+ gWgnE1QR8aAaYGK/WNwHpoHPxCg919ZFCqnONVefIyZHg8ej/mtPq2MH6XCO9FjY0HWz/QCIRa7
+ v1FFgurhyJr8D6GQOJaPV6cntq9mysnZ9Zb8uOhoCL4HHHArsC9bSHM6rsvASQNDlR6CYzcm73P
+ PHtm6DNs0Zxlco+ZrjlcaNNkkITKMkrX7FSZvgveNbZbnRopyGJ1bKGyWN3w0SaTkyojaEDGrPN
+ PSVhfQxSUQ0KSkBULD5WFoBGqb9aTyQNmrwjhuMpOyh9eKSJTKWoXtW8gPhRLg3XWxytV+uRZRB
+ X3JjoRw5w4wJJaNkxFKRfs4zxDGa6ItIhiLG4eN9/93r68mz9gEdktL86sn5U1C2MBoZyvm2W7r
+ KveHdE0KJGAkwzA==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-According to Hardware Programming Guide for DSI PHY, the retime buffer
-resync should be done after PLL clock users (byte_clk and intf_byte_clk)
-are enabled.  Downstream also does it as part of configuring the PLL.
-
-Driver was only turning of the resync FIFO buffer, but never bringing it
-on again.
+Add bitfields for PHY_CMN_CTRL_0 registers to avoid hard-coding bit
+masks and shifts and make the code a bit more readable.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
@@ -139,24 +134,68 @@ Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Changes in v5:
 1. New patch
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c             |  9 ++++++---
+ drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml | 11 ++++++++++-
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index a92decbee5b5433853ed973747f7705d9079068d..ca1a120f630a3650bf6d9f9d426cccea88c22e7f 100644
+index ca1a120f630a3650bf6d9f9d426cccea88c22e7f..7ef0aa7ff41b7d10d2630405c3d2f541957f19ea 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -467,6 +467,10 @@ static int dsi_pll_7nm_vco_prepare(struct clk_hw *hw)
- 	if (pll_7nm->slave)
- 		dsi_pll_enable_global_clk(pll_7nm->slave);
+@@ -362,17 +362,19 @@ static int dsi_pll_7nm_lock_status(struct dsi_pll_7nm *pll)
+ static void dsi_pll_disable_pll_bias(struct dsi_pll_7nm *pll)
+ {
+ 	u32 data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
++	data &= ~DSI_7nm_PHY_CMN_CTRL_0_PLL_SHUTDOWNB;
  
-+	writel(0x1, pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL);
-+	if (pll_7nm->slave)
-+		writel(0x1, pll_7nm->slave->phy->base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL);
-+
- error:
- 	return rc;
+ 	writel(0, pll->phy->pll_base + REG_DSI_7nm_PHY_PLL_SYSTEM_MUXES);
+-	writel(data & ~BIT(5), pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
++	writel(data, pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
+ 	ndelay(250);
  }
+ 
+ static void dsi_pll_enable_pll_bias(struct dsi_pll_7nm *pll)
+ {
+ 	u32 data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
++	data |= DSI_7nm_PHY_CMN_CTRL_0_PLL_SHUTDOWNB;
++	writel(data, pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
+ 
+-	writel(data | BIT(5), pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
+ 	writel(0xc0, pll->phy->pll_base + REG_DSI_7nm_PHY_PLL_SYSTEM_MUXES);
+ 	ndelay(250);
+ }
+@@ -996,7 +998,8 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+ 	}
+ 
+ 	/* de-assert digital and pll power down */
+-	data = BIT(6) | BIT(5);
++	data = DSI_7nm_PHY_CMN_CTRL_0_DIGTOP_PWRDN_B |
++	       DSI_7nm_PHY_CMN_CTRL_0_PLL_SHUTDOWNB;
+ 	writel(data, base + REG_DSI_7nm_PHY_CMN_CTRL_0);
+ 
+ 	/* Assert PLL core reset */
+diff --git a/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml b/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
+index d2c8c46bb04159da6e539bfe80a4b5dc9ffdf367..d49122b88d14896ef3e87b783a1691f85b61aa9c 100644
+--- a/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
++++ b/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
+@@ -22,7 +22,16 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
+ 	<reg32 offset="0x00018" name="GLBL_CTRL"/>
+ 	<reg32 offset="0x0001c" name="RBUF_CTRL"/>
+ 	<reg32 offset="0x00020" name="VREG_CTRL_0"/>
+-	<reg32 offset="0x00024" name="CTRL_0"/>
++	<reg32 offset="0x00024" name="CTRL_0">
++		<bitfield name="CLKSL_SHUTDOWNB" pos="7" type="boolean"/>
++		<bitfield name="DIGTOP_PWRDN_B" pos="6" type="boolean"/>
++		<bitfield name="PLL_SHUTDOWNB" pos="5" type="boolean"/>
++		<bitfield name="DLN3_SHUTDOWNB" pos="4" type="boolean"/>
++		<bitfield name="DLN2_SHUTDOWNB" pos="3" type="boolean"/>
++		<bitfield name="CLK_SHUTDOWNB" pos="2" type="boolean"/>
++		<bitfield name="DLN1_SHUTDOWNB" pos="1" type="boolean"/>
++		<bitfield name="DLN0_SHUTDOWNB" pos="0" type="boolean"/>
++	</reg32>
+ 	<reg32 offset="0x00028" name="CTRL_1"/>
+ 	<reg32 offset="0x0002c" name="CTRL_2"/>
+ 	<reg32 offset="0x00030" name="CTRL_3"/>
 
 -- 
 2.45.2
