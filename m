@@ -1,227 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-56213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87F79AA45C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 10:45:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAFA2AA45F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 10:52:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF6B69C4786
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 08:44:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8A2D9A6CC4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 08:52:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BB8A2185B1;
-	Wed, 30 Apr 2025 08:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0A1E20C038;
+	Wed, 30 Apr 2025 08:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BH1Dqouy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m1lJ8wzZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD8C20D505;
-	Wed, 30 Apr 2025 08:44:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5032AEE1;
+	Wed, 30 Apr 2025 08:52:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746002642; cv=none; b=BTaBQWO8NJvsrQSEUMxY/OkNvrfdJ31s3JhNG/YOm3AgE+RT324oxeki69RykpFQULFQkGXuT6QAZdKOhFnkKvdpiQjbG+djwmZp+RpFYacgbHZjkK/XKxcra6Jk1wGu96VvWeneP2s8KB1uBn+Y5JpeNzjf7R012xDnuE26p44=
+	t=1746003148; cv=none; b=aM5Bu52PLJj8ixrKM4zOzeeiGeAD9hD3Zk4pVzDrwLojlCJP66XqSrZRcyUoBlQiEHEAoQ/O1yIe5LeNiRwN3XIAzdMmQD3E6VxlGX8/ksLpyJYC8ZmfOXDJOGESiEpGyy5GJxury6C7nzN9Swg2Vhm92ZOFm7+eA7lHOAo1+hI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746002642; c=relaxed/simple;
-	bh=7Co8V1RtFjmvkaayS3lqMKD0JIT+ElCnjx8TinEXKSM=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=G9WvH33vd77yf6/EXRw+DIF4FWt0PdgrSzImMcLYISlGVnnHlQlQF6S5TLOVvUFKiPqaaYpqjA3oa+esi8rVQowFz6I/e8O/HGn+h7vu/QJYXxnJAbLoBC2viF5XuznjOFVtrrk0gBRzFL7EbCX0bsDfQ79KzOchKf1y0qmIHao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BH1Dqouy; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TLauPr001485;
-	Wed, 30 Apr 2025 08:43:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	x7SCYQVXeDsdR1GUukXJP3PLvXOUonXD4QOh6Fbe46s=; b=BH1DqouyC9AbTFnh
-	OzTHYl4xRsMgNDhOptBGX5sKmJhTGRC/0gFLyEhQcGyjlu+1/7KnbO9q+s/ua7X4
-	KWmBmElxo29dBASfMNcx+HE4a+up+WmgTejn2Arb5dZX7c4OnqTrZ3MPpmVUNKI2
-	KayDE4jPPRYopRlcKYA/xjrgU6Dpoua5E5DyIKjcPJQb6dpxvhsvZtpvKrqC7aCH
-	R7QZnq3mc07uoe2/Zq9218Yy1QYlgLinmebRwt/Zj+nn2x0WM4ns2nKM3k3oDZ0Q
-	Ws7GLjFgmzJVRXrWJ0/Pmx1/y1948fhGhwbR3n8x6Lun60+tNVfefhNKZfogBJzF
-	q4wIVw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u9sd2h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Apr 2025 08:43:55 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53U8hs0j030071
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Apr 2025 08:43:54 GMT
-Received: from [10.218.23.250] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 30 Apr
- 2025 01:43:49 -0700
-Message-ID: <bda4e8ad-0d72-4a07-90ef-9fa4245fd205@quicinc.com>
-Date: Wed, 30 Apr 2025 14:13:47 +0530
+	s=arc-20240116; t=1746003148; c=relaxed/simple;
+	bh=7Cul/zndrL+/IVYzqfi6IU1dEFCIVPUdV6j259m69G4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=a4oZTvmYj4muIx0aZdlG6ovra7vXrM5qVXHWnealPI+18Sg07Fj/5XeJv/YR59LkXHH3wS/OwhcJl0Aq2x9Y5D6u6kIL5thYm3k0OSM16c0cHzu7wb7XbT/AUt1cfFvStCEW+Leo/FmY9ASkTcNdj2gUbLvDhi7+onYA/4fr8aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m1lJ8wzZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941A3C4CEE9;
+	Wed, 30 Apr 2025 08:52:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746003148;
+	bh=7Cul/zndrL+/IVYzqfi6IU1dEFCIVPUdV6j259m69G4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=m1lJ8wzZTPM8DhfyWr4/2HegX1ltD3jb9oyGwEsxQnggTzFu4BmhN+FDUo2zeu1RN
+	 giDLlf5a2a05M1NTM0TyNM+3EdxGFIjko0NcwuH8tmM4waxKh+taOw9pETLP/OGysx
+	 y6q41rNWMiXvecfuO5utnba6X+/RrlRRRG0Zyp779JD4OXsp8BT5vKLho9xhVLhP01
+	 L3pek8e8yF1Kz3U+jqQ8zO6NCEaQ1htsGbDQh30QnW28U8lUEpb18UeDTpFssre9i9
+	 UMhCihDPn7fYp+FgDTScyGj9IhAcqbLQNWIY9xOmFsozHxD0z0V8xLXR1vNNBZ07+D
+	 pBH9xsh9vL2PA==
+Date: Wed, 30 Apr 2025 09:52:20 +0100
+From: Simon Horman <horms@kernel.org>
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Cc: davem@davemloft.net, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	Russell King <linux@armlinux.org.uk>,
+	linux-arm-kernel@lists.infradead.org,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?utf-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>,
+	Marek =?utf-8?B?QmVow7pu?= <kabel@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	=?utf-8?Q?Nicol=C3=B2?= Veronese <nicveronese@gmail.com>,
+	mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
+	devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Subject: Re: [PATCH net-next v5 04/14] net: phy: dp83822: Add support for
+ phy_port representation
+Message-ID: <20250430085220.GS3339421@horms.kernel.org>
+References: <20250425141511.182537-1-maxime.chevallier@bootlin.com>
+ <20250425141511.182537-5-maxime.chevallier@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: clock: Add Qualcomm SC8180X Camera clock
- controller
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Jagadeesh
- Kona" <quic_jkona@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250422-sc8180x-camcc-support-v1-0-691614d13f06@quicinc.com>
- <H56Iba_grof22uzTtGCI-APhiDAGSejNod6jsSVIykm9ijaaj7PWqyszShCEGjIpM2wCLOn4a3Vfb8Hjziqklg==@protonmail.internalid>
- <20250422-sc8180x-camcc-support-v1-1-691614d13f06@quicinc.com>
- <621d8556-f95b-4cbe-809b-864417f0d48a@linaro.org>
- <b96f8432-132b-4c16-951e-718e91ec52a5@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <b96f8432-132b-4c16-951e-718e91ec52a5@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QCrNemx7V893oaF_4LBMTq-th3DzkxP4
-X-Proofpoint-ORIG-GUID: QCrNemx7V893oaF_4LBMTq-th3DzkxP4
-X-Authority-Analysis: v=2.4 cv=UZZRSLSN c=1 sm=1 tr=0 ts=6811e2cb cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=gEfo2CItAAAA:8 a=COk6AnOGAAAA:8 a=0wTyN5AiIvhKT9tr5UwA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDA2MCBTYWx0ZWRfX2wu2tMQMbbmw xVDT0VgxEm6dERnm9TwdAu9YRQjCE0hgErAATkGOhamUlJTN5N36sJGyjf55+715A15YPzseKKT QjA96vCY+ZvejOhR0ZSDRspWuONYV+vGWuXfZpO/KwPkR+M8Fl1ARwfZWXg9Y8PdXOPe0qHV4Dr
- wzRCfYmujpo+hHkZ/EBXJNSV6XQytDKT9RuOakmx9p7INGt6zwQmbDLd/jkfmZoRDAzbpho9ew+ t0MH74P45PxY3fJ+XYq/p8asoLh2M8ewNZzspC16xci6En/65xhzm4QiguN5E8RvfYrtRUSF6FG JWkOUwEIrzGpzzIwjiHix76aPOwhUc+ex2iyu2ti7G5STPvO0PVZrXeofOiRN0PCQMKdyEnamoe
- jbRoe4OfuXJSzgjjq4SxK3BYFmXxjJ2acEjJ6jgpL/4zb7ipTxJegfwR4rhdYQDs3U3AMRKY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-30_02,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- mlxlogscore=999 spamscore=0 priorityscore=1501 impostorscore=0 mlxscore=0
- malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504300060
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250425141511.182537-5-maxime.chevallier@bootlin.com>
 
+On Fri, Apr 25, 2025 at 04:14:57PM +0200, Maxime Chevallier wrote:
+> With the phy_port representation intrduced, we can use .attach_port to
+> populate the port information based on either the straps or the
+> ti,fiber-mode property. This allows simplifying the probe function and
+> allow users to override the strapping configuration.
+> 
+> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+> ---
+>  drivers/net/phy/dp83822.c | 70 ++++++++++++++++++++++++---------------
+>  1 file changed, 44 insertions(+), 26 deletions(-)
+> 
+> diff --git a/drivers/net/phy/dp83822.c b/drivers/net/phy/dp83822.c
+> index 490c9f4e5d4e..bbbe509f3bd9 100644
+> --- a/drivers/net/phy/dp83822.c
+> +++ b/drivers/net/phy/dp83822.c
+> @@ -11,6 +11,7 @@
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+>  #include <linux/phy.h>
+> +#include <linux/phy_port.h>
+>  #include <linux/netdevice.h>
+>  #include <linux/bitfield.h>
+>  
+> @@ -814,17 +815,6 @@ static int dp83822_of_init(struct phy_device *phydev)
+>  	int i, ret;
+>  	u32 val;
+>  
+> -	/* Signal detection for the PHY is only enabled if the FX_EN and the
+> -	 * SD_EN pins are strapped. Signal detection can only enabled if FX_EN
+> -	 * is strapped otherwise signal detection is disabled for the PHY.
+> -	 */
+> -	if (dp83822->fx_enabled && dp83822->fx_sd_enable)
+> -		dp83822->fx_signal_det_low = device_property_present(dev,
+> -								     "ti,link-loss-low");
+> -	if (!dp83822->fx_enabled)
+> -		dp83822->fx_enabled = device_property_present(dev,
+> -							      "ti,fiber-mode");
+> -
+>  	if (!device_property_read_string(dev, "ti,gpio2-clk-out", &of_val)) {
+>  		if (strcmp(of_val, "mac-if") == 0) {
+>  			dp83822->gpio2_clk_out = DP83822_CLK_SRC_MAC_IF;
+> @@ -953,6 +943,47 @@ static int dp83822_read_straps(struct phy_device *phydev)
+>  	return 0;
+>  }
+>  
+> +static int dp83822_attach_port(struct phy_device *phydev, struct phy_port *port)
+> +{
+> +	struct dp83822_private *dp83822 = phydev->priv;
+> +	struct device *dev = &phydev->mdio.dev;
 
-On 4/24/2025 4:08 PM, Satya Priya Kakitapalli wrote:
->
-> On 4/22/2025 5:11 PM, Bryan O'Donoghue wrote:
->> On 22/04/2025 06:42, Satya Priya Kakitapalli wrote:
->>> Add device tree bindings for the camera clock controller on
->>> Qualcomm SC8180X platform.
->>>
->>> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
->>> ---
->>>   .../bindings/clock/qcom,sc8180x-camcc.yaml         |  65 ++++++++
->>>   include/dt-bindings/clock/qcom,sc8180x-camcc.h     | 181 
->>> +++++++++++++++++++++
->>>   2 files changed, 246 insertions(+)
->>>
->>> diff --git 
->>> a/Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml 
->>> b/Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml
->>> new file mode 100644
->>> index 
->>> 0000000000000000000000000000000000000000..b17f40ee53a3002b2942869d60773dbecd764134
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml
->>> @@ -0,0 +1,65 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/clock/qcom,sc8180x-camcc.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm Camera Clock & Reset Controller on SC8180X
->>> +
->>> +maintainers:
->>> +  - Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
->>> +
->>> +description: |
->>
->> You can drop the "|"
->>
->
-> okay.
->
->
+Hi Maxime,
 
-I tried removing this, but it is throwing below error, in the line "See 
-also: include/dt-bindings/clock/qcom,sc8180x-camcc.h" because of usage 
-of a colon there.
+A nit from my side:
 
-Error: 
-Documentation/devicetree/bindings/clock/qcom,sc8180x-camcc.yaml:16:12: 
-mapping values are not allowed in this context
+dev is unused if CONFIG_OF_MDIO is not defined.
 
-As we are following the same format in all other Qualcomm bindings, I'll 
-keep the "|" and "See also:" section as is.
+Perhaps it's scope can be reduced somehow.
+Or &phydev->mdio.dev can be used directly?
+Or the code guarded by CONFIG_OF_MDIO could be moved into a separate
+function that makes use if IS_ENABLED to return early if there is nothing
+to do (maybe the best option if possible, as it would increase compile
+coverage).
+Or ...
 
+> +	int ret;
+> +
+> +	if (port->mediums) {
+> +		if (phy_port_is_fiber(port))
+> +			dp83822->fx_enabled = true;
+> +	} else {
+> +		ret = dp83822_read_straps(phydev);
+> +		if (ret)
+> +			return ret;
+> +
+> +#ifdef CONFIG_OF_MDIO
+> +		if (dp83822->fx_enabled && dp83822->fx_sd_enable)
+> +			dp83822->fx_signal_det_low =
+> +				device_property_present(dev, "ti,link-loss-low");
+> +
+> +		/* ti,fiber-mode is still used for backwards compatibility, but
+> +		 * has been replaced with the mdi node definition, see
+> +		 * ethernet-port.yaml
+> +		 */
+> +		if (!dp83822->fx_enabled)
+> +			dp83822->fx_enabled =
+> +				device_property_present(dev, "ti,fiber-mode");
+> +#endif
+> +
+> +		if (dp83822->fx_enabled) {
+> +			port->lanes = 1;
+> +			port->mediums = BIT(ETHTOOL_LINK_MEDIUM_BASEF);
+> +		} else {
+> +			/* This PHY can only to 100BaseTX max, so on 2 lanes */
+> +			port->lanes = 2;
+> +			port->mediums = BIT(ETHTOOL_LINK_MEDIUM_BASET);
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
 
->>> +  Qualcomm camera clock control module provides the clocks, resets and
->>> +  power domains on SC8180X.
->>> +
->>> +  See also: include/dt-bindings/clock/qcom,sc8180x-camcc.h
->>> +
->>> +properties:
->>> +  compatible:
->>> +    const: qcom,sc8180x-camcc
->>> +
->>> +  clocks:
->>> +    items:
->>> +      - description: Board XO source
->>> +      - description: Sleep clock source
->>
->> Missing clock-names
->>
->
-> Since we are using DT based indexing method, clock names are not 
-> required.
->
->
->> A suspicious lack of clock depends here. No AHB clock ?> +
->>> +  power-domains:
->>> +    maxItems: 1
->>> +    description:
->>> +      A phandle and PM domain specifier for the MMCX power domain.
->>> +
->>> +  required-opps:
->>> +    maxItems: 1
->>> +    description:
->>> +      A phandle to an OPP node describing required MMCX performance 
->>> point.
->>> +
->>> +allOf:
->>> +  - $ref: qcom,gcc.yaml#
->>
->> A suspicious lack of clock depends here. No AHB clock ? No dependency 
->> on gcc ?
->>
->> You call out the gcc above.
->>
->> Could you please recheck your list of clock dependencies.
->
-> The dependent GCC clocks are marked always on from gcc probe, hence 
-> did not mention the dependency here.
->
->
->>
->> ---
->> bod
->
+...
 
