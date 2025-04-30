@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-56241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3E51AA498B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 13:11:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0955AA49A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 13:17:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 70BE21BC5645
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 11:11:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0256F4C44C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 11:17:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADEBF20E323;
-	Wed, 30 Apr 2025 11:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6355422370F;
+	Wed, 30 Apr 2025 11:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FUkr3fEw"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MdEesT+n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287EC548EE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 11:11:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF538615A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 11:17:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746011485; cv=none; b=cj225YrgedRMT4zK8s2DNVvtAzni5x6FEembifnXlam53ltRhoJSz7Qmh1rGdtxEqkeev/LUamNywt/LnitukZwlpY4MIsO+OZrssUFXJUL+oh1+vF5NAol/LQ1lLtrU6EBYTdPQqqRwUF0bsDAgmdeC+ZRX4AT1ey92to+b0yo=
+	t=1746011834; cv=none; b=uFEmqRihyh19IDT0WklwlxrZCb307sgPdoLbToYocrqAp81WNVQw/VTnuMnFR0/D41TrPhSmQP3CDrTx7OEVeLQ3q4bTn9YWpANDONnfayHYTLaLzg4FybrZhKnAJpANzbYaCYewXrOtqgSq2pkYi4Vo8XQcByL+3eUAJmpYce8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746011485; c=relaxed/simple;
-	bh=Co3wQ6N1OGEyYO7cg7Pdin1FexCjKbqo0xDkE/Hr9XY=;
+	s=arc-20240116; t=1746011834; c=relaxed/simple;
+	bh=2tfN7xrBBFWbaWiIjGyIFoCUMEcAvo34WN5Q+ckQ5/4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gqLhreI2noSFKDuJ6owI/Ic6+btO8+GULTIuK8VtuD5/L9ZAzP6Gi2wd0qv9dhNGBBAtnIwWVlUTyk5zWU/SUMrHYKEv5YQOboB/ZqB6zKXgMxRI1ClADLEwCXJahIRT5dNd0AHFu+8fD6QoEp0XvUP8RmVMGE488Cjw1n5ezyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FUkr3fEw; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=HRBAvTsjKMHvulxSjxYjjfJdt/d82D/hhzeZ7rGr2fg6XqddxFWjvHuuKBccdplW8RKC7wg1mjFbcPyJDapvqdrOLqnXtTt1tkHDogJgj19p7/qPlwCXkaB4sHNrJJWt+rk9VTkJ6vZU93Ryjz2Q+A6Sn7SZ5T/NkbjGl2BMK7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MdEesT+n; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53U9GlY5004206
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 11:11:23 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53U98frY021035
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 11:17:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/7tDspfKtEjUZpJrHIm5EpiK1dQnHwyPWBBeLxDqhOg=; b=FUkr3fEwMKPSFRVA
-	1v0RWzSmGD3epbk5Qs0nkmg66jbXeIXVOT9i4jOz6dUfi1Lx5SjYzrOubdU60sFA
-	NQ5lAbUih8uyH/hzBBPOuGsF5QKOe4xPtv7Rpj1hcKtZt8lzcBANSJzFOMZUG3pJ
-	z10OPaOFxjgLCICeCksyMfD860BQ0lbkO+VkmixeWm46UgdkwF8CD0VlYcNhtAuE
-	NkyVzb6z189YEEZpzI/RoPFp5i6pvnhApP5vKZHRJe4ZVxr5voTVNS00LqWq6RWa
-	u/ktzaR+KCfl5PO1oPxpv8fz259bHilqkKTE6uozC7i9YXTFk/7u4D23u+lMqysm
-	gP+kSA==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u49wdk-1
+	cmjRQoG6t9rBHBhWEPTfA2RNSRtJM0kj2uAxPB0eOY8=; b=MdEesT+nbyQbXcOl
+	u9mCCa8KBjsWZVT5o9zaiHFExDxSBDE8kQn4hroLt40hxkC27beT/sIf+EglTN9S
+	vQ1Do3uKBS3M2Z56BjzP3ZTJJglKZUXS0kPyCIZftPBKvW7FgOh6JD/XSOkavcYQ
+	SilEs8zBOJyQU+b8H/Q9WHLgmKOuUFP0xzGkQb4OiVi9AdQcH4h9U70hk1w1Q43W
+	UivH0nH7xCTa8s0FbnDiYeI7lKeQVNS4B/5q/PA2E0eWcY/rDpV4o3MQpNkFknJd
+	Z3IAfx8nEaFUw/JorKWRX0+YjjCnQotAl0S/dxLySxNATUhvV1DpmJAyElmMipKr
+	W+BRfQ==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u1sxbq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 11:11:23 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6eeeaf707b0so11169476d6.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 04:11:23 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 11:17:11 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4775bdbcdc3so16447831cf.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 04:17:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746011482; x=1746616282;
+        d=1e100.net; s=20230601; t=1746011831; x=1746616631;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/7tDspfKtEjUZpJrHIm5EpiK1dQnHwyPWBBeLxDqhOg=;
-        b=ZKSHJfJN6orMJ83ZjlP4E/Vo9rsjfrtuKTFF+SsHgBiuHY2h7weVCNOkDwJJDjU7n6
-         Qz3x2s4PaPJz9R40z0XN6WTGMMIe7+jZ4YYSKQfvsv8crEYsV5NJn2gX7PHrVRBTizY6
-         QV/9/t2A0AXOICCGlG4mbhwI6322TVtgNZBLumD+OjXkwP9iwH+C/4aN6p6o9ClJQmcQ
-         My0LbJpZoNF7sJeGDdcNswVa1UgMhy0Gfo2ODEWbwG1WjcvynJelktHU/LnAgwEV8meR
-         f5F1snFX93Or6UhsWYYGMYdG6RtdMg5U+l4lBpPb3n+XZpvdJJiABhc/M1fYY9MI9KI5
-         5btg==
-X-Gm-Message-State: AOJu0YzUlWNsl2zFgYHxiBxqDKHX16sXNotuWeMB2evPcKpRDWci+0CD
-	QYxUmpx11HMo/m60wmi8+3uip12uB5dcPEF17eA5ooW1KKKAJyNGlspJgoqvMf1JXqKVYtP+18F
-	1r/YoHyvNq9p12xSMjCEu3dDroNxZBX+yZ89G2Wr/e2/UzNVT4jm866sy5f6JwjXi
-X-Gm-Gg: ASbGnctq/pfmMbXlKdUDYbbb/BjhrDHBZpHvo8YR9giQfWmYZ5MPaAuoKUMLuXnM06l
-	okwAO8VS4GdjZDInCsvCiAzu1W2dGrZjkVpbFYWcRCk8d4Ynm7GU0tCbk4lb1cTWMm4KVg6o8Rj
-	FRRF980K769NrfzyfZZG88l+EpMWR2QVyZzPXkkFZ+7oTdM7sdsIAFhH7I6m3Q52PTf/MowEGOq
-	a80Hdd5OBYaAJ08+oR8xHPz5yrC+f8GHCi2OzEKsUJ7RtAFbdENmWXKcmXG5GmMssEduRBabhTi
-	mQasrqwBA1/6z/tjLz+w2GyxX4EzBccQoSRUkIw7aI9T5rC/n1DlalQmOi9lKsADDD4=
-X-Received: by 2002:ad4:5f0e:0:b0:6d8:a091:4f52 with SMTP id 6a1803df08f44-6f4ff5f2443mr9116386d6.7.1746011481993;
-        Wed, 30 Apr 2025 04:11:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFi1yeyX85KSZunTB8r5b0uUMfRxR7ky+CnBeOgP2y9Bt9IyJgsKRKk7JfZgLjRwgz3LDHZsw==
-X-Received: by 2002:ad4:5f0e:0:b0:6d8:a091:4f52 with SMTP id 6a1803df08f44-6f4ff5f2443mr9116216d6.7.1746011481601;
-        Wed, 30 Apr 2025 04:11:21 -0700 (PDT)
+        bh=cmjRQoG6t9rBHBhWEPTfA2RNSRtJM0kj2uAxPB0eOY8=;
+        b=iJ22Sdd+A5bKOYi8qXRdnvLQYXEeoU0yJ+Yxq3/M0Q7V+3ey53Tj9h8xR5x+s17isf
+         3Y/6bq+XKUpfeonb3vEqCRVxkIgPvcJ4sEM4hG0CA9nIyWmVFWUE/seRDRRoPj4dBupk
+         cywINvfbYxrmpwGIP+W4KtHE8LeazTUYXr2XcIt1cVyWC0UDJCMoxx+bVVTWKLHILRza
+         CeWAegQyVGCHJ25tjQvpzOaZ19+M9Bo1+ARka9kBEtJcygky4txz0pREpfpcXiMkPzQF
+         Qo9rDPz1EYwvokxexuO6LlfczoZy90I5DTxXO8OLNTw6hjjinXTyvI5ZnG6piA0/dbVU
+         a6iw==
+X-Gm-Message-State: AOJu0YxvreMcFGP0fncW/7S+AcfG62FvMupcHwDDLjS8f20MEBekKFf1
+	eEOpOZ1HSWdFm05zHEu0weQWMUAUPHVw1tFtleuHmzTuSP/yQ59rSb+LUS1se3qo/+/1L+HzRM2
+	vGiZpVZCKH28RaPKPMSj2ntLfoE4ctgeSBB2suSMIlW9n/te2ObustbJFWncyR47d
+X-Gm-Gg: ASbGncu2sOzbuXDdXQ1SRQhcDxuF1Shu7GplNemK7M7Qu5IxU78x6JBOF1e5fEI0N8e
+	iym0VgZ5PHon+eT3+FaRoYAtVMROXHQyUoeu+whQc+q9uJqX52g5CMhE1vZLFdHRjvIcCHcboCM
+	YpnmtEGjlrS/9JZgS8KKPbo8eHpYTVRTjS9+1mCHmAeSPYfLHHvrdLJGOfsopxbcD9y0RqbYPVO
+	uM9WZuvHgqtPWty8+T5QZKnQ78CeCoHnj0gaUtysiSyUYE7rLO6SZeue6LEdbqGVWgjpLNtew0t
+	PqRg2zzTpfFvLCgrB9XNbNQWTlRc9zRGNZIZuIACSEwHzE7TDwtLLuzecrMCscWGTPE=
+X-Received: by 2002:a05:622a:553:b0:475:1395:e169 with SMTP id d75a77b69052e-489e4892ed6mr12998151cf.4.1746011830570;
+        Wed, 30 Apr 2025 04:17:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXnCVEIjjfmTvap3RtCAJrcImjf5ni4sJ4bNp3yTPKVviZbLdg9/Hfnf5vIuuponRgeYxq5A==
+X-Received: by 2002:a05:622a:553:b0:475:1395:e169 with SMTP id d75a77b69052e-489e4892ed6mr12998021cf.4.1746011830181;
+        Wed, 30 Apr 2025 04:17:10 -0700 (PDT)
 Received: from [192.168.65.132] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6e41c40bsm912620266b.20.2025.04.30.04.11.19
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6ecf8f6fsm917948366b.106.2025.04.30.04.17.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Apr 2025 04:11:20 -0700 (PDT)
-Message-ID: <1ee8587b-2bf6-418a-9834-8f8cbf1e94d8@oss.qualcomm.com>
-Date: Wed, 30 Apr 2025 13:11:18 +0200
+        Wed, 30 Apr 2025 04:17:09 -0700 (PDT)
+Message-ID: <b1ea3baf-7a7e-4db0-9a1b-ebc98fbb8db2@oss.qualcomm.com>
+Date: Wed, 30 Apr 2025 13:17:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,66 +88,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8550: Add support for camss
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>,
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8750-mtp: Add sound (speakers,
+ headset codec, dmics)
+To: neil.armstrong@linaro.org, Konrad Dybcio
+ <konrad.dybcio@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+        Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Depeng Shao <quic_depengs@quicinc.com>
-References: <20250415-sm8550_camss-v1-1-d4b7daa168ac@quicinc.com>
+        linux-kernel@vger.kernel.org
+References: <20250424-sm8750-audio-part-2-v1-0-50133a0ec35f@linaro.org>
+ <20250424-sm8750-audio-part-2-v1-2-50133a0ec35f@linaro.org>
+ <dd271e8c-e430-4e6d-88ca-95eabe61ce94@oss.qualcomm.com>
+ <e61e17ca-fed7-4712-96fc-a9a2339de1fb@linaro.org>
+ <9b6c5f67-0bbc-490f-9982-4e28218aa6eb@oss.qualcomm.com>
+ <0e007f7f-d9ff-4b2d-914d-ad62b9983bba@linaro.org>
+ <3a29e34c-d286-4673-adac-1fd8627c3eff@oss.qualcomm.com>
+ <877daf2a-9aaa-4501-a630-77643d2393bb@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250415-sm8550_camss-v1-1-d4b7daa168ac@quicinc.com>
+In-Reply-To: <877daf2a-9aaa-4501-a630-77643d2393bb@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: HuOmkyRB8T9h4Fou4i9z-pLk8jmRoltO
-X-Authority-Analysis: v=2.4 cv=Yaq95xRf c=1 sm=1 tr=0 ts=6812055b cx=c_pps a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=BQawBwbjN2gzKBjTXzwA:9 a=QEXdDO2ut3YA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDA3OSBTYWx0ZWRfXzYNsv1aqv/8g tlu2tqB17ftj/SdmknsZzMuGlJEKF9vXbWZLRHgeUVeSvzDsJPTQRZulgi9eXsJ9/zSzn9z/vgG kQSrE+jM7ZxxkzbyJEc4O9JIUGPIwGWw9SL1ThC7cSaJeqKeoxOc9Y4brCLjxbNHHdLHseKpk1E
- FzD77WO0+2nxvExHnwmyr+IZ0V6E5RjPug049qpxdgAiC4SMvlnzQjwMT7mJ4/EoRuj9Rb/XYcB vpDvJPUTXEikKbxQhswKHinel/wJC7sYo8K1ztPd3h8bmUycaqyFJx/FhuD/eLYvjTCffuPGYpM ZoYW93EnJjS+4Q92YNZ/NUGpoxAGKVxCizknwIV22KTFnsNe55R16ap7ReT+IjNGNZ5b5ErcUGY
- WprIJ6VQz1xEb6mzwbPEOXRGnbDhhbpyR5i+UVwgfreOizZWnDMr15ps/qTTfqJ23NBSIQgP
-X-Proofpoint-GUID: HuOmkyRB8T9h4Fou4i9z-pLk8jmRoltO
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=G5AcE8k5 c=1 sm=1 tr=0 ts=681206b7 cx=c_pps a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=KFtwY0GX08G7pjJXddAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDA4MCBTYWx0ZWRfX4nslyWjuR+NH A3M8c1nD92gwhGPwu9EteCgmFskknF/IUgc6O5MMqnL9M3QR7K303Tzevs3Fs3ifpYtcqRVGR6e +BUwGk+qaFP868ooXj3jYphqQeO25WFuyzNtYj1Yb+ld2z8AJFPC+hnPItfoJOLihrvqBtm3E7C
+ dgjzJO3rpphWKPow/o6NIVQCeth0xPB6T5GPsZXtBx4lwXt3OGNfY3oHAVQyBq+y3NnqCZnYhAP kXD29amqjf+9o/gcGoNr2H+DMHLu1nydVJpWtyso6hVliDdJwtovdAezB5m79QDfSjqiXlQ+4Q2 7Fkp+LoG+cvZvet39wQnkmkg5SOr/tYy1+/2KRvtAtkuDoxiW+u2DC4hAeG+VCE36EIg3+990cH
+ KxrmO6CDP+4Rp+tDUOJNDMkGawHi0M+/y9x0efAddbb2yK5PLshH8gncwy7D2Q9HpJ94EVkG
+X-Proofpoint-GUID: nXLyHHNnMLBRVF7VnlgqFCAl-NKVFmKn
+X-Proofpoint-ORIG-GUID: nXLyHHNnMLBRVF7VnlgqFCAl-NKVFmKn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-30_03,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- clxscore=1015 suspectscore=0 bulkscore=0 mlxlogscore=837 malwarescore=0
- mlxscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0 adultscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504300079
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 impostorscore=0 phishscore=0 mlxlogscore=965
+ lowpriorityscore=0 adultscore=0 mlxscore=0 malwarescore=0 suspectscore=0
+ clxscore=1015 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504300080
 
-On 4/15/25 9:38 AM, Wenmeng Liu wrote:
-> Add support for the camera subsystem on the SM8550 Qualcomm SoC. This
-> includes bringing up the CSIPHY, CSID, VFE/RDI interfaces.
-> 
-> SM8550 provides
-> - 3 x VFE, 3 RDI per VFE
-> - 2 x VFE Lite, 4 RDI per VFE
-> - 3 x CSID
-> - 2 x CSID Lite
-> - 8 x CSI PHY
-> 
-> Co-developed-by: Depeng Shao <quic_depengs@quicinc.com>
-> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
-> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
-> ---
+On 4/30/25 1:07 PM, neil.armstrong@linaro.org wrote:
+> On 30/04/2025 12:48, Konrad Dybcio wrote:
+>> On 4/30/25 8:19 AM, Krzysztof Kozlowski wrote:
+>>> On 29/04/2025 21:11, Konrad Dybcio wrote:
+>>>> On 4/28/25 4:41 PM, Krzysztof Kozlowski wrote:
+>>>>> On 25/04/2025 11:30, Konrad Dybcio wrote:
+>>>>>> On 4/24/25 11:40 AM, Krzysztof Kozlowski wrote:
+>>>>>>> Add device nodes for most of the sound support - WSA883x smart speakers,
+>>>>>>> WCD9395 audio codec (headset) and sound card - which allows sound
+>>>>>>> playback via speakers and recording via DMIC microphones.  Changes bring
+>>>>>>> necessary foundation for headset playback/recording via USB, but that
+>>>>>>> part is not yet ready.
+>>>>>>>
+>>>>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>>>> ---
 
 [...]
 
-> +				     <GIC_SPI 604 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 688 IRQ_TYPE_EDGE_RISING>,
+>>>>>>> +        /*
+>>>>>>> +         * WCD9395 RX Port 1 (HPH_L/R)      <=> SWR1 Port 1 (HPH_L/R)
+>>>>>>> +         * WCD9395 RX Port 2 (CLSH)         <=> SWR1 Port 2 (CLSH)
+>>>>>>> +         * WCD9395 RX Port 3 (COMP_L/R)     <=> SWR1 Port 3 (COMP_L/R)
+>>>>>>> +         * WCD9395 RX Port 4 (LO)           <=> SWR1 Port 4 (LO)
+>>>>>>> +         * WCD9395 RX Port 5 (DSD_L/R)      <=> SWR1 Port 5 (DSD_L/R)
+>>>>>>> +         * WCD9395 RX Port 6 (HIFI_PCM_L/R) <=> SWR1 Port 9 (HIFI_PCM_L/R)
+>>>>>>> +         */
+>>>>>>> +        qcom,rx-port-mapping = <1 2 3 4 5 9>;
+>>>>>>
+>>>>>> Does this deserve some dt-bindings constants?
+>>>>>
+>>>>> No, because these are hardware details/constants. Drivers do not use them.
+>>>>
+>>>> I'd argue it makes sense here - it makes more sense to pass meaningfully
+>>>> named constants to the driver, rather than blobs with a comment
+>>>
+>>> Sense of what? You want to make it a binding then answer what does it
+>>> bind, what part of ABI for driver is here a binding (answer none:
+>>> because driver does not use it)?
+>>
+>> Sense of the magic numbers that otherwise require a comment.
+> 
+> There's no magic numbers, index of qcom,rx-port-mapping is the RX port,
+> value is the SWR1 port index. As the property name says, it maps RX ports.
+> 
+> The comment is here to understand why we map as-is, and what the ports are
+> used for, but for the soundwire perspective only the numbers matters.
 
-It *may* be 689 instead but I'm not 100% sure
+OK so it's the indices on the WCD side that are hardwired, IIUC.
 
-Otherwise the numbers look good
-
-Bryan, Vlad, please also take a look
+So perhaps that comment could be included in qcom,wcd939x-sdw.yaml
+under items: for qcom,rx-port-mapping
 
 Konrad
 
