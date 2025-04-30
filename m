@@ -1,183 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-56206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A557FAA4447
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 09:46:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 81190AA44DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 10:08:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 029EC16A8D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 07:46:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CCD82169965
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 08:08:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 722301EDA0E;
-	Wed, 30 Apr 2025 07:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B57082139A2;
+	Wed, 30 Apr 2025 08:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EPnBdTbt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PEhvhvQH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43BF1E2823
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 07:46:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737AD1C8632;
+	Wed, 30 Apr 2025 08:08:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745999191; cv=none; b=Ruw5YiEl50ELKRGD6xyNPGf8tHi5QxlyeMncyTflwJn7NVDEHXeq7WcKA2/MpgPlVaYLHXaGIbX6K/yrcnR9aDn2UVC3B6MeDiwwxhPcVf3ncriZMzQS1dUQxHE1odWnw+ubk/mYR+oxcQOoafcA+z4v65KlDxubqlkpcQQNXME=
+	t=1746000498; cv=none; b=fu5+cx3s34/hvTcGKz3aT4DezLHVkfb4j5aoxFKaD+7JPtycVFWM8ABEEU2yKo+FvU1eHfWUch6Eyro271PKv2Hpy9s5Dub9nE3KoTG73p6sPnErzYwDBZSMTy98deHt6m5UfVQ5GZmfPHYy4oZ8o7HZWU+vScE9DWazv2wRQqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745999191; c=relaxed/simple;
-	bh=CTEjPujSZAqf3P+j1NI3hRXUfVHwxDengmLbAq8TEXg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kOTEyMxBvuVV24bn/CysWtnVqWZ6i9tmRkV0PE7uGRbVz6615nZ31J8inz1r5KV/OnmfRbPa8o26LaBFmZRoTZNUHqrUMVZKWxlaOgF/nx9KieuGro8Jf4ZvnR/osXVAkXcsLTN9dwt66duCaeAeqirsKT0OOuJEbBd0bU1Ur5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EPnBdTbt; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TLaCFJ032326
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 07:46:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XcCLzzMlB7ZxM/ezJ4VGPTAmUkXjhMccCtENn84um/A=; b=EPnBdTbt9S8eSEoU
-	1mt/l+svodQUGTAy7ITtLDuvP7/1rRy/i1nBHU5AhHgtkqN2kLfCKzPj00AQKv40
-	ZM3FjwGOOsb9IrnzETKnLLrOIFjW+y12Uq2liUme9nl1Y8isI7r1Y6m2lJNnlh+I
-	iKSLfShghwg4zSG1ks6oeP/mgH9GyG4tLSRsmTJyvmApfWksQS/urUk6gIqQIwUE
-	IUbABca6OocyBGPh0AEesl5vwm4lfTpcQ5nnId42e+YmrNt6n9WXRf+mB/AQeV5V
-	BcqRTQvcw3Y3njk7Dr6VbbY4V4He0nP7JNQpVIlUOtY65yw2x99pgWivxbZ8LzID
-	26NLjw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u298fy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 07:46:28 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-47aeab7b918so14541251cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 00:46:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745999188; x=1746603988;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XcCLzzMlB7ZxM/ezJ4VGPTAmUkXjhMccCtENn84um/A=;
-        b=YW5TNq5P8ymdQEBiQaTQlQuWTyeb5cB9kmBNEY1dkhMIWITLmHgNTBHLyjWvOHVufM
-         38Leo3PZ629ybEqcFQHsxPuyKujvIOiKBWHIR196cbxfIyYqn+7HgAjt/mHYIu7MlJq3
-         2uriAKdnJ0sQdvRDZs3K4eAVeJd1tERRXGXSTMJIpzmx2OH8rmqlgFyZtnBcprEEbm2I
-         31qghfnpFRoA8BFMpi79VOoMvsUqDddEfjDPMkampGrLccQd9RhqcIpinVSqePgPHn4j
-         BkZt0z1Gmi31ehu5AIHrSxeTuEbDobs4HgxTHrDTwhsbKiqDt1llOfVvjdCxB6ZeQD1c
-         +BOA==
-X-Forwarded-Encrypted: i=1; AJvYcCW/mG3sqpEkeygaJ7NxwgwG+MyzF6QIYEWWAo0dWSSd5IUN1/4orHMQDf95dkAIXP4YlhtxP1HxxJxLjtsy@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9Ms/vOa+mi21yW4E3T03qzUsOtlqBF9ZD3QvmBQzvGHi4CeFu
-	QlHUf6IhaQfoRKTbijdhmryDwN+9Nv/ww1t/ANcV/Q52L0Ac2FzA9BAIS95+l0HRf5sFbRoz4Y3
-	LkPvHr35RFJRdBl1aR92+8mvj+rIRAxDmOJMBWlpmUOAw1ohuOx7d2DmUQr01btaZ
-X-Gm-Gg: ASbGncvXMRNHq6HduHKiySRNX+ACFj+QpQ1C9dzEvdr/FE74vWz/92/mhZJ2rxAz0n5
-	JvfF3MfSOYc8w7HY6rUFvuKtYwTQW0+Oq5vZwbh3AhfQ0pX0aVOH+atL9agxQuwQe/brnvw949z
-	a7OEnZkBm1i98fUk/WPVTmC/jLgwmoY6VfUdkupnuAi+IP7YQR+AfwwIkhlqYK+EISg84CQ7Ft+
-	Tt3zFQ4LP65dv6njOBD2v3zpBLa6Q39WVKddgF/5WBqB3a4hnBlGkqKTc12WAoq/HQ1rFr4QVGx
-	WjxD8lCFDPkboU37VfvJU7b2T8HaVR0r6gyysObU+aK88bOfOWrKYjmNO8IQ3iAE4Z4=
-X-Received: by 2002:ac8:7e89:0:b0:474:e213:7480 with SMTP id d75a77b69052e-489e64ceed0mr9350741cf.15.1745999188032;
-        Wed, 30 Apr 2025 00:46:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGmeOMwpptckVk+jetsDOiR+1e4jS5dFJwxeM7DhbyeRAzyOqqNSOpz4xjt7gtRJg3L8eOXmQ==
-X-Received: by 2002:ac8:7e89:0:b0:474:e213:7480 with SMTP id d75a77b69052e-489e64ceed0mr9350621cf.15.1745999187615;
-        Wed, 30 Apr 2025 00:46:27 -0700 (PDT)
-Received: from [192.168.65.132] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6ecf8ca6sm881270266b.118.2025.04.30.00.46.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Apr 2025 00:46:27 -0700 (PDT)
-Message-ID: <59e3e34d-83b6-4f83-be4c-eeaaba9a353e@oss.qualcomm.com>
-Date: Wed, 30 Apr 2025 09:46:24 +0200
+	s=arc-20240116; t=1746000498; c=relaxed/simple;
+	bh=pCUgXguQq1vRA4bGkjweAQOtL40q6Ryp+ab88vmfA3g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QvIWHujZr0v8dVsJDJUybpMrEchawOQDA6pHYoNPYQuTbVBL5zwf4Dx0TqcjO7s3kN0u/L9MAGWFn424NfL+fb01RSRNKYygXFMMYbcsdvsD03HlqH+ia4te/Isf6C5eLJhnQoJCk59U2SNS7T854ex8jxFPx8b30kZ7U/Euz34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PEhvhvQH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C6EC4CEE9;
+	Wed, 30 Apr 2025 08:08:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746000498;
+	bh=pCUgXguQq1vRA4bGkjweAQOtL40q6Ryp+ab88vmfA3g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PEhvhvQHG4rVvDgSY5YEAlvFdlFIjPoEwklqHK2oVDFFscI9oOnH22AFxtXXETEug
+	 iHnVYvMe+t+mjmLvvnbJk0leb+R0US2frAqv3Vo0Rnx1IyUcFzc8Xz+JP/Vc4AgrWv
+	 c48oqzjYkbO2MbC5RCNzUEKgl16x3n093ezpE/HgkfVb2/a5ZQ/gaNtVmMRl6YrsgT
+	 Ek//OIPQJU/El1by4jlyMox7RQIViSupPPfGsNTCUePuh0N0KYiCkq3fsOplC3fn9+
+	 O9mkEGg517iIKGWX+UDcBJI+SdNy3IDIcjLt6YoA/frBd8zWVSzwqyzDqDrFOqkQvK
+	 BJdFA6k3dyQZw==
+Date: Wed, 30 Apr 2025 10:08:14 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Louis Chauvet <louis.chauvet@bootlin.com>, 
+	Inki Dae <inki.dae@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>, 
+	Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki <jagan@amarulasolutions.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Douglas Anderson <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Luca Ceresoli <luca.ceresoli@bootlin.com>, 
+	Anusha Srivatsa <asrivats@redhat.com>, Paul Kocialkowski <paulk@sys-base.io>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Hui Pu <Hui.Pu@gehealthcare.com>, 
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>, dri-devel@lists.freedesktop.org, asahi@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev, imx@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
+	linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org, 
+	platform-driver-x86@vger.kernel.org, linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com, 
+	Adam Ford <aford173@gmail.com>, Adrien Grassein <adrien.grassein@gmail.com>, 
+	Aleksandr Mishin <amishin@t-argos.ru>, Andy Yan <andy.yan@rock-chips.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Benson Leung <bleung@chromium.org>, 
+	Biju Das <biju.das.jz@bp.renesas.com>, Christoph Fritz <chf.fritz@googlemail.com>, 
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>, Detlev Casanova <detlev.casanova@collabora.com>, 
+	Dharma Balasubiramani <dharma.b@microchip.com>, Guenter Roeck <groeck@chromium.org>, 
+	Heiko Stuebner <heiko@sntech.de>, Jani Nikula <jani.nikula@intel.com>, Janne Grunau <j@jannau.net>, 
+	Jerome Brunet <jbrunet@baylibre.com>, Jesse Van Gavere <jesseevg@gmail.com>, 
+	Kevin Hilman <khilman@baylibre.com>, Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, 
+	Liu Ying <victor.liu@nxp.com>, Manikandan Muralidharan <manikandan.m@microchip.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Phong LE <ple@baylibre.com>, 
+	Sasha Finkelstein <fnkl.kernel@gmail.com>, Sugar Zhang <sugar.zhang@rock-chips.com>, 
+	Sui Jingfeng <sui.jingfeng@linux.dev>, Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>, 
+	Vitalii Mordan <mordan@ispras.ru>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Hans de Goede <hdegoede@redhat.com>, 
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	"Rob Herring (Arm)" <robh@kernel.org>, Hsin-Te Yuan <yuanhsinte@chromium.org>, 
+	Pin-yen Lin <treapking@chromium.org>, Xin Ji <xji@analogixsemi.com>, Aradhya Bhatia <a-bhatia1@ti.com>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Ian Ray <ian.ray@ge.com>, 
+	Martyn Welch <martyn.welch@collabora.co.uk>, Peter Senna Tschudin <peter.senna@gmail.com>, 
+	Russell King <linux@armlinux.org.uk>, Herve Codina <herve.codina@bootlin.com>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Linus Walleij <linus.walleij@linaro.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Bjorn Andersson <quic_bjorande@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Helge Deller <deller@gmx.de>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, 
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Philippe Cornu <philippe.cornu@foss.st.com>, 
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>, Yannick Fertre <yannick.fertre@foss.st.com>, 
+	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, Alain Volmat <alain.volmat@foss.st.com>, 
+	Raphael Gallais-Pou <rgallaispou@gmail.com>, Michal Simek <michal.simek@amd.com>
+Subject: Re: (subset) [PATCH v2 00/34] drm: convert all bridges to
+ devm_drm_bridge_alloc()
+Message-ID: <20250430-arrogant-marmoset-of-justice-92ced3@houat>
+References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
+ <174591887152.961603.7706063017853945511.b4-ty@bootlin.com>
+ <832a9db0-cf8a-4d35-8a98-08053fbd6723@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC/WIP 1/4] arm64: dts: qcom: sm8750: Add display (MDSS)
- with Display CC
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: Jessica Zhang <jesszhan@quicinc.com>,
-        Abhinav Kumar
- <abhinavk@quicinc.com>,
-        Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250424-sm8750-display-dts-v1-0-6fb22ca95f38@linaro.org>
- <20250424-sm8750-display-dts-v1-1-6fb22ca95f38@linaro.org>
- <81205948-ae43-44ee-aa07-e490ea3bba23@oss.qualcomm.com>
- <97ae84c6-0807-4b19-a474-ba76cc049da9@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <97ae84c6-0807-4b19-a474-ba76cc049da9@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: jygZqeLcpIeqre68VKjMPYAR_uYusf7n
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDA1MyBTYWx0ZWRfXy2cyxuVgAyxK /7R6V12uKsGb7xqUzDQQTlZo8vzs9ck2wNjF7B+Rzbmj8Dx5Rsr/EZmGnZnEK0QzofcGVx3k3vh eaEKkhhcVdQMbGQgZaRNtZmQE/02r21OWoi5ECsvypFO1pi47QKqzpW/eIu8VR3xEqjMrD2kwyz
- p4lJnFaX3GYiNw0YGr+xMHha5dcwzgbt0GSkZxi3JIabPjARegMnzJ8mXtlYnjx4P4zYl3q9v3Q meU/plxXvKXO3xh/BR+oG4qP6ryYn9aFZmCl7lGg9YZr6kvXSIhHCALTFRje+MceTacru9op4du Cjd/pPjCzfDpvp84ADGeAyc+7M5giuvfu0m2D57lygtNxBTfjpfhdQtOrg6emnenMKz8kVK31EV
- wqoaglGRCJU1aR518U5sZT/Jptb3HronLVPhPjCTDBFguCJIT07SXfmvuqgtopCFGlqymyhb
-X-Authority-Analysis: v=2.4 cv=b5qy4sGx c=1 sm=1 tr=0 ts=6811d554 cx=c_pps a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=bmsyZSe9DYnGDotP4YEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: jygZqeLcpIeqre68VKjMPYAR_uYusf7n
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-30_02,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 phishscore=0
- mlxscore=0 impostorscore=0 malwarescore=0 spamscore=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
- clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504300053
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="o2svn3fbdbsdr4ij"
+Content-Disposition: inline
+In-Reply-To: <832a9db0-cf8a-4d35-8a98-08053fbd6723@bootlin.com>
 
-On 4/30/25 1:07 AM, Abhinav Kumar wrote:
-> 
-> 
-> On 4/28/2025 2:31 PM, Konrad Dybcio wrote:
->> On 4/24/25 3:04 PM, Krzysztof Kozlowski wrote:
->>> Add device nodes for entire display: MDSS, DPU, DSI, DSI PHYs,
->>> DisplayPort and Display Clock Controller.
->>>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>
->>> ---
->>
->> [...]
->>
->>> +                mdp_opp_table: opp-table {
->>> +                    compatible = "operating-points-v2";
->>> +
->>
->> The computer tells me there's also a 156 MHz rate @ SVS_D1
->>
->> Maybe Abhinav could chime in whether we should add it or not
->>
-> 
-> Yes I also see a 156Mhz for LOW_SVS_D1 but we had a similar entry even for sm8650 and did not publish it in the dt.
-> 
-> It was present till sm8450.dtsi but dropped in sm8550/sm8650 even though LOW_SVS_D1 is present even on those.
-> 
-> I think the reason could be that the displays being used on the reference boards will need a pixel clock of atleast >= low_svs and the MDP clock usually depends on the value of the DSI pixel clock (which has a fixed relationship to the byte clock) to maintain the data rate. So as a result perhaps even if we add it, for most displays this level will be unused.
-> 
-> If we end up using displays which are so small that the pixel clock requirement will be even lower than low_svs, we can add those.
-> 
-> OR as an alternative, we can leave this patch as it is and add the low_svs_d1 for all chipsets which support it together in another series that way it will have the full context of why we are adding it otherwise it will look odd again of why sm8550/sm8650 was left out but added in sm8750.
 
-I would assume that with VRR even fancy panels at low refresh rate (in
-the 1-5 Hz range) may make use of this, so I would be happy to go with
-option 2
+--o2svn3fbdbsdr4ij
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: (subset) [PATCH v2 00/34] drm: convert all bridges to
+ devm_drm_bridge_alloc()
+MIME-Version: 1.0
 
-> 
->> [...]
->>
->>> +                mdss_dsi_opp_table: opp-table {
->>> +                    compatible = "operating-points-v2";
->>> +
->>
->> Similarly there's a 140.63 MHz rate at SVS_D1, but it seems odd
->> with the decimals
-> 
-> For this one, yes its true that LOW_SVS_D1 is 140.63Mhz for sm8750 but this voltage corner was somehow never used for DSI byte clock again I am thinking this is because for the display resolutions we use, we will always be >= low_svs so the low_svs_d1 will never hit even if we add it.
+On Tue, Apr 29, 2025 at 02:41:42PM +0200, Louis Chauvet wrote:
+> Le 29/04/2025 =E0 11:27, Louis Chauvet a =E9crit=A0:
+> >=20
+> > On Thu, 24 Apr 2025 20:59:07 +0200, Luca Ceresoli wrote:
+> > > devm_drm_bridge_alloc() [0] is the new API to allocate and initialize=
+ a DRM
+> > > bridge, and the only one supported from now on. It is also necessary =
+for
+> > > implementing reference counting and thus needed to support removal of
+> > > bridges from a still existing DRM pipeline without use-after-free.
+> > >=20
+> > > This series converts all DRM bridges to the new API.
+> > >=20
+> > > [...]
+> >=20
+> > Applied, thanks!
+> >=20
+> > [02/34] platform: arm64: acer-aspire1-ec: convert to devm_drm_bridge_al=
+loc() API
+> >          commit: 411465d35bc56877c33e2498ac697acfcf484e6b
+> > [03/34] drm/bridge: analogix-anx6345: convert to devm_drm_bridge_alloc(=
+) API
+> >          commit: 53ddeb25159781b029fda404226af600e76f975f
+> > [06/34] drm/bridge: display-connector: convert to devm_drm_bridge_alloc=
+() API
+> >          commit: 4e90a3d96a6185e143041273f9867a1092dd4a71
+> > [07/34] drm/bridge: lt9611uxc: convert to devm_drm_bridge_alloc() API
+> >          commit: 6287ffd9eff6eea65865e64b9d4c45e115fa5ecf
+> > [11/34] drm/bridge: dw-hdmi: convert to devm_drm_bridge_alloc() API
+> >          commit: ed6987b674185873ebed7a619a646da6dd1a78fa
+> > [12/34] drm/bridge: tda998x: convert to devm_drm_bridge_alloc() API
+> >          commit: 7fe58bf1a9a24b533875c262a3222581a3f759e4
+> > [13/34] drm/bridge: ti-sn65dsi86: convert to devm_drm_bridge_alloc() API
+> >          commit: a4754ae9cfa76fbce79f023c268a5bac56f36321
+> > [14/34] drm/exynos: mic: convert to devm_drm_bridge_alloc() API
+> >          commit: 91c5c7b5bb2dd09b43b025bce6d790d3c79f4518
+>=20
+> Hello all,
+>=20
+> I made a mistake while applying those patches. Instead of taking
+> 2-3,11-13,15-18,27,31, I took 2-3,11-18,27,31, which includes the patch 1=
+4.
+>=20
+> This patch is not R-by/A-by/SoB by non-Bootlin people. For me, the patch =
+is
+> correct, it does not break the build nor generate warnings.
+>=20
+> What should I do? Is my SoB sufficient, or should I revert the patch and
+> wait for R/A-by before taking it again?
 
-Alright
+It's worse: just like msm, it was never supposed to be applied in
+drm-misc, exynos has its own git tree.
 
-Konrad
+Inki, Kyungmin, Seung-Woo, sorry for the mishap. Do you agree with the
+following patch, and it going through drm-misc?
+
+https://lore.kernel.org/dri-devel/20250424-drm-bridge-convert-to-alloc-api-=
+v2-14-8f91a404d86b@bootlin.com/
+
+If not, we'll revert.
+
+Maxime
+
+--o2svn3fbdbsdr4ij
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaBHaaAAKCRAnX84Zoj2+
+dnenAYDBZr6cr88AokBU5IxJIO545Bob3jJW0+AX0AYDOu8icKftnZn/muxH1K/2
+mlgois4Bf2nfOosRvUT+FqHEb3CHJCluDubGG9J2EVzCRjRyMKIJ+yKyJ5VGB4cE
+N6ZGUBWZvg==
+=3YXQ
+-----END PGP SIGNATURE-----
+
+--o2svn3fbdbsdr4ij--
 
