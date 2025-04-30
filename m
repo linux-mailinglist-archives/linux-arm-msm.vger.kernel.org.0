@@ -1,216 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-56217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31961AA4740
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 11:33:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B082FAA476C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 11:40:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4BDAF1C05993
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 09:33:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7DC2E4E5A14
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 09:40:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91477238174;
-	Wed, 30 Apr 2025 09:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84F9F235059;
+	Wed, 30 Apr 2025 09:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="KDDKM6cW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uO3SaQvM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A01823770D;
-	Wed, 30 Apr 2025 09:29:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AC51E51FF
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 09:39:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746005403; cv=none; b=m2oIR9nM9esmBhaLxp6rFaSBDexADxiLpe5L1Fb9kJmPVY2yrBKAUNOS1TZV8Jn17dZsO/3F94I7NdHUIRYhmjwsR5E1vRR2XQe1vhwqKAbo8GFRLCow65plXUssvA8djUUp5clbTX0qN10onjWN/hadcE7ypHRg5lLLlLgFSQQ=
+	t=1746005960; cv=none; b=GV/M3K9/wu+5x+RzsMBgv9ltTgXU8Rn0TAJZNgDteOy7yzJApxGBXtsSGb5gSmv4obf01DuqAiHnjLFSzX5VOYzGnPSiZd32zpCDYQe5qU2rXq2k/4O12pDbooBamZ52pIHWa+McwdsTHFdxYlLUfWigDJvrdcoaz9/d6Qs0dVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746005403; c=relaxed/simple;
-	bh=OuQHQAOMHQtxRXlMxvBk71v1iUH3QsjtJkQtpI1hgvE=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TZb1WhSr4Two1TD7WKijWDRoUuMpxlA1XQWcUGjfWdoomZUnvWEm7XLmwThGRoE7sX3ocsjzWM/fS5c/GQBecThlYI1AD+575ViZBhLyJucTD8jRgFklkM23UswQ8g4Ohv/OJiaFuC0ktOZhNoFWJzZwOvg4cIrIGEnEk3h3Bnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=KDDKM6cW; arc=none smtp.client-ip=217.70.183.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 960FF43181;
-	Wed, 30 Apr 2025 09:29:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1746005390;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2OzPyycrHdBOFNYlaedmLd2bDrUmkg8qhEXCLfUTANg=;
-	b=KDDKM6cWxY7JZnVAYB2Fe3yny9Ai6C/bj2+8pZ79gBRIscyJX9q9/yxRPRMz7jDbDiCK19
-	LBw4sl41yaYp4vJvsFJLkqBBLb4Wvgr4pWnnuVi3NP1NI1muVlKtaI7KGn5DvsJ9wHfxCG
-	JOe6Io0gNCwYu/IgfJrsBcVWExhWe2WEiYnd9XVp/9nC1fVunvLSleF51EWyO5GhF6Miom
-	FkzHk/vmdWl8AsmX9ofhuCEM5VQswUKDevi6PScwlD4A2RoCCYkQ6xrbpkobZ39eyxfLbH
-	rKLfZff+JNJkiILxnoR0IF6QCQsvwFbUr9SKw1dIjdPIJI/6hrPhPWoXC2y1TQ==
-Date: Wed, 30 Apr 2025 11:29:44 +0200
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-To: Liu Ying <victor.liu@nxp.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
- <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie
- <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Andrzej Hajda
- <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Laurent Pinchart
- <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>,
- Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki
- <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
- <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Douglas Anderson
- <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, Krzysztof
- Kozlowski <krzk@kernel.org>, Anusha Srivatsa <asrivats@redhat.com>, Paul
- Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, Hui
- Pu <Hui.Pu@gehealthcare.com>, Thomas Petazzoni
- <thomas.petazzoni@bootlin.com>, dri-devel@lists.freedesktop.org,
- asahi@lists.linux.dev, linux-kernel@vger.kernel.org,
- chrome-platform@lists.linux.dev, imx@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH v2 30/34] drm/bridge: imx8qxp-pixel-combiner: convert to
- devm_drm_bridge_alloc() API
-Message-ID: <20250430112944.1b39caab@booty>
-In-Reply-To: <553d62ed-976a-4e17-9678-cdc3d40ce4a7@nxp.com>
-References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
-	<20250424-drm-bridge-convert-to-alloc-api-v2-30-8f91a404d86b@bootlin.com>
-	<553d62ed-976a-4e17-9678-cdc3d40ce4a7@nxp.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1746005960; c=relaxed/simple;
+	bh=AUDJd4dz5XyC/N6fEGt5cYH/J0DmYOyJCqcdAnsYAcw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ig8fUtcYt4brm6WB928TuiBC56KQdOEVMyZH4WoFCBXKs46RkwfXBfxDu0skfZRwzE/k3Tg0pSaZ3CjUFRNvtDcUc2u6GlMEVL2/YYmKfnUA6TFRePkl4zOdbhToJSZKWkPKok7Fc7zPyrnuc+tNhXfS3rVUa905MJMjbAWMlOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uO3SaQvM; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ace3b03c043so1116251266b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 02:39:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1746005956; x=1746610756; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=6OGMbcMEkhBmGqs5Z3YtgBQ6Hwa1jUmstb0M0+KK0Nc=;
+        b=uO3SaQvMg2uYB5lOtoFBdyDcAipupleaSdHMd14tWmPxYRsMP0RVbfRhnuW7lMa+Jq
+         oAmLd2va15V7SUtqz90aKf3EWd/xWqEd0xWoeQsBCy9saIyy44cxEBOe4uhg9rAKzvwV
+         qNIXo7Swfnf9PS6tWrptvpRJjL6RizDJw3AR1RlpDPwgB897bn4f8peMWw1963xnxUAr
+         HhyrJG+qR/xoMsJ2Hq050qymPzMiuq6ETz1smE+Iwgixdb2vIMSIrlEQza6SnriZQBtz
+         IN7dl7qdMbAYFq7MSxSuydv5PgSwjN/w7djsXMs8axi4tOaUajgvJaiZTHgiNP2tAt8R
+         nMGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746005956; x=1746610756;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6OGMbcMEkhBmGqs5Z3YtgBQ6Hwa1jUmstb0M0+KK0Nc=;
+        b=jcIHLLpj1GEyZ3z94Q2vIBNEB2Q6JzsYFKjlmgnDXFUhP15M8VIH6VSK8Yvrvbdynh
+         uTo7FoVyC8sutUB4Z225fjJs7kArUvvzlF66F/0wkGwtzlWkayt9WPbN7hbAdHQZK5h2
+         0pCFov+s4bAR1S99+VP3VD+1DEWr45JV6JCAdK3usP1JSDy0ggXUiU9eNn7UqcrdiMNN
+         uolORHtoTg/UCRrBBoldf3YxwmaSxAQJHaXTRk5SaTPPpDAfw1iuA0qIakDTm5tCpJrk
+         PyrvlC8rZzee+vs381TXGgW+xOD+sf95fjbFDlBwWyTBk98YNd1X1go9L4daGItnz11Z
+         Gwcw==
+X-Forwarded-Encrypted: i=1; AJvYcCVqx1vzHlwP+od28Q8EPEz2zRQG9WxMrV3D8ZTWhN0ilgijLueObFEKWsR0wp4+NazqseaBNLTFVtcxOBG5@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrEuJk05GHbeVKdp9oLgbn0eX8cBkZFAnFcmoY4f5hJABSIJlw
+	4YEsJohvWfQe+BPIhdXBpnZucEbaGhpG6s2eRd7zILmgZaZNY3T15CSYGo96NZQ=
+X-Gm-Gg: ASbGncuNTQS1xStIcwOYJYnIn7ltaor0qSfmI4rJoSll3TbMr6K0VBLlb7SRBGVSepe
+	PEeVJBg/9nAMhhQ9fLVJ+57vcyT/+RjYg8RH+UC1kre77WpEudjif41XJ9mkIcMhm4L414JGTQD
+	k3C8c+JO1mGG4uWNpnyrZCymH7kMQF6rXQOMuRxqA7wrvkdPhEHEop5OI7MyjR+Y80AqhWeJaJK
+	LTwaD9gBAXBvPqtUCqUYDBOm7deRIR7ZtsDqEy2E8bKJk4eWaj9dPsSbScYvbpsEfWCd6r0czHN
+	zSMW2hwl3pksuYTMKRK0+oSyyDbWhxOJutaVVw==
+X-Google-Smtp-Source: AGHT+IFdTIvskANcQfZgyrnhvSLOX/uhDZK8XOpbGmgtU0SafrRwMbwRPtiX/Z0dHI+9ZICQQQNkbA==
+X-Received: by 2002:a17:907:d17:b0:aca:a347:c050 with SMTP id a640c23a62f3a-acedc029a40mr272914266b.0.1746005955819;
+        Wed, 30 Apr 2025 02:39:15 -0700 (PDT)
+Received: from linaro.org ([62.231.96.41])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6e4f841fsm902286966b.72.2025.04.30.02.39.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Apr 2025 02:39:15 -0700 (PDT)
+Date: Wed, 30 Apr 2025 12:39:13 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Sebastian Reichel <sre@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Xilin Wu <wuxilin123@gmail.com>,
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Konrad Dybcio <quic_kdybcio@quicinc.com>
+Subject: Re: [PATCH 0/7] arm64: dts: qcom: x1e80100-*: Drop useless DP3
+ compatible override
+Message-ID: <aBHvwUAISo2JhYSz@linaro.org>
+References: <20250429-x1e80100-dts-drop-useless-dp-compatible-override-v1-0-058847814d70@linaro.org>
+ <wsdhqocld54ygjrnn6etydorcg6j6uko4ner2dawoomflvu3bp@tq5jbqcahip4>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieeifeegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeertdertddvnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeelffefgfehhfdtvdefueefieevkefggfelkeeiudetkeektedvhedukefgvddvnecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfeelpdhrtghpthhtohepvhhitghtohhrrdhlihhusehngihprdgtohhmpdhrtghpthhtohepmhgrrghrthgvnhdrlhgrnhhkhhhorhhstheslhhinhhugidrihhnthgvlhdrtghomhdprhgtphhtthhopehmrhhiphgrrhgusehkv
- ghrnhgvlhdrohhrghdprhgtphhtthhopehtiihimhhmvghrmhgrnhhnsehsuhhsvgdruggvpdhrtghpthhtoheprghirhhlihgvugesghhmrghilhdrtghomhdprhgtphhtthhopehsihhmohhnrgesfhhffihllhdrtghhpdhrtghpthhtoheprghnughriigvjhdrhhgrjhgurgesihhnthgvlhdrtghomhdprhgtphhtthhopehnvghilhdrrghrmhhsthhrohhngheslhhinhgrrhhordhorhhg
-X-GND-Sasl: luca.ceresoli@bootlin.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <wsdhqocld54ygjrnn6etydorcg6j6uko4ner2dawoomflvu3bp@tq5jbqcahip4>
 
-Hello Liu,
-
-On Tue, 29 Apr 2025 10:10:55 +0800
-Liu Ying <victor.liu@nxp.com> wrote:
-
+On 25-04-30 01:26:13, Sebastian Reichel wrote:
 > Hi,
 > 
-> On 04/25/2025, Luca Ceresoli wrote:
-> > This is the new API for allocating DRM bridges.
+> On Tue, Apr 29, 2025 at 10:42:28AM +0300, Abel Vesa wrote:
+> > It all started with the support for CRD back when we had different
+> > compatibles for eDP and DP. Meanwhile, that has been sorted out and it
+> > is now figured out at runtime while using only the DP compatible.
 > > 
-> > This driver embeds an array of channels in the main struct, and each
-> > channel embeds a drm_bridge. This prevents dynamic, refcount-based
-> > deallocation of the bridges.
+> > It's almost funny how this got copied over from CRD and spread to all
+> > X Elite platforms.
 > > 
-> > To make the new, dynamic bridge allocation possible:
+> > TBH, the best reason to drop it ASAP is to make sure this doesn't spread
+> > beyond X Elite to newer platforms.
 > > 
-> >  * change the array of channels into an array of channel pointers
-> >  * allocate each channel using devm_drm_bridge_alloc()
-> >  * adapt the code wherever using the channels
-> > 
-> > Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-
-[...]
-
-> > @@ -345,8 +351,8 @@ static int imx8qxp_pc_bridge_probe(struct platform_device *pdev)
-> >  free_child:
-> >  	of_node_put(child);
-> >  
-> > -	if (i == 1 && pc->ch[0].next_bridge)
-> > -		drm_bridge_remove(&pc->ch[0].bridge);
-> > +	if (i == 1 && pc->ch[0]->next_bridge)  
+> > Functionally nothing changes.
 > 
-> Since this patch makes pc->ch[0] and pc->ch[1] be allocated separately,
-> pc->ch[0] could be NULL if channel0 is not available, hence a NULL pointer
-> dereference here...
-
-See below for this.
-
-> > +		drm_bridge_remove(&pc->ch[0]->bridge);
-> >  
-> >  	pm_runtime_disable(dev);
-> >  	return ret;
-> > @@ -359,7 +365,7 @@ static void imx8qxp_pc_bridge_remove(struct platform_device *pdev)
-> >  	int i;
-> >  
-> >  	for (i = 0; i < 2; i++) {
-> > -		ch = &pc->ch[i];
-> > +		ch = pc->ch[i];
-> >  
-> >  		if (!ch->is_available)  
+> Looking at the diff I wonder if this part should also be simplified:
 > 
-> ...and here too.
+> /delete-property/ #sound-dai-cells;
+> 
+> This is done by all upstream X1E boards, so maybe just drop the
+> #sound-dai-cells directly in x1e80100.dtsi?
 
-This is indeed a bug, I should have checked the pointer for being
-non-NULL.
+Yeah, I'm not sure about that.
 
-Looking at that more closely, I think the is_available flag can be
-entirely removed now. The allocation itself (ch != NULL) now is
-equivalent. Do you think my reasoning is correct?
+Though the DP3 PHY is currently used as eDP, I think it could be used
+as DP. So I think it makes more sense to keep the DP3 controller as is
+in the SoC dtsi and delete the #sound-dai-cells property in each board
+specific dts. Don't know if it will ever be the case with this SoC, but
+maybe someone will use DP3 with the PHY configured as DP rather than
+eDP.
 
-Ouch! After writing the previous paragraph I realized you proposed this
-a few lines below! OK, removing is_available. :)
+Not sure if I'm 100% right about this though.
 
-[...]
+Dmitry, Bjorn, do you think that is accurate enough?
 
-> On top of this patch series, this issue doesn't happen if I apply the below
-> change:
+> 
+> Greetings,
+> 
+> -- Sebastian
 
-[...]
 
-> @@ -351,7 +349,7 @@ static int imx8qxp_pc_bridge_probe(struct platform_device *pdev)
->  free_child:
->         of_node_put(child);
->  
-> -       if (i == 1 && pc->ch[0]->next_bridge)
-> +       if (i == 1 && pc->ch[0])
->                 drm_bridge_remove(&pc->ch[0]->bridge);
-
-Unrelated to this patch, but as I looked at it more in depth now, I'm
-not sure this whole logic is robust, even in the original code.
-
-The 'i == 1' check here seems to mean "if some error happened when
-handling channel@1, that means channel@0 was successfully initialized,
-so let's clean up channel 0".
-
-However my understanding of the bindings is that device tree is allowed
-to have the channel@1 node before the channel@0 node (or even channel@1
-without channel@0, but that's less problematic here).
-
-In such case (channel@1 before channel@0), this would happen:
-
- 1. alloc and init ch[1], all OK
- 2. alloc and init ch[0], an error happens
-    (e.g. of_graph_get_remote_node() fails)
-
-So we'd reach the free_child: label, and we should call
-drm_bridge_remove() for ch[1]->bridge, but there's no code to do that.
-
-To be robust in such a case, I think both channels need to be checked
-independently, as the status of one does not imply the status of the
-other. E.g.:
-
-  for (i = 0; i < 2; i++)
-      if (pc->ch[i] && pc->ch[i]->next_bridge)
-          drm_bridge_remove(&pc->ch[i]->bridge);
-
-(which is similar to what .remove() does after the changes discussed in
-this thread, and which I have queued for v3)
-
-What's your opinion? Do you think I missed anything?
-
-Thanks for taking the time to dig into this!
-
-Best regards,
-Luca
-
--- 
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
 
