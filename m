@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-56331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C637AA54CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 21:41:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEF78AA551D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 21:55:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1BB2B7AA70E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 19:40:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9145B1BC78F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 19:56:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FF9A1E9B1F;
-	Wed, 30 Apr 2025 19:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82A8027A466;
+	Wed, 30 Apr 2025 19:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Glo7zhLm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NECfirtn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE9119F11B;
-	Wed, 30 Apr 2025 19:41:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1FF27A131;
+	Wed, 30 Apr 2025 19:54:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746042091; cv=none; b=pQVLBdE2Gz5Y5XY4m63aHkRmQ81MxUe/mx0VDxMh31mKDW3/C5pED18ZMlR4ADoju6BOoFOFAzU/zNNDE0jXeOiz9qVYJbw5HGAFFnwwXe4guwxf/XrIDtcoChw81umMwrVLBHgkEh6tp3W6kHeCGVcn897QAvzuPB4mxP0Tx4U=
+	t=1746042897; cv=none; b=ERrEvSKDiOWtTqDncPLllILZ9UlbhXqiygDhugC1Fi9pFU1QEhJ240qaYHVJgPuRl4JUzom29KtqoiLWbCbAOfqebbxTmUmAmZqLaYbyrXDmrTRH1TIYO43pWe9wB8VY7nCk7rxP8FtGXNSt7aOGwuIU2IBCsTPVZU5yLsCMt7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746042091; c=relaxed/simple;
-	bh=L00nMiYXt6U1pqfjE4ugf/WVdHCISUv2EAMn4Uzqa2c=;
+	s=arc-20240116; t=1746042897; c=relaxed/simple;
+	bh=dSPEmE/EXlHRBsIlmlj6nwc9hD/nTdrLc2q6YZiHfkw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=CCi5DA4R4UHCJEoEou/v/K/qsjmOMZkAWU7I7w8pp51eRaspbYhfQ5q0MAh3UZhzU1vvBiVW33jLhZgl7OeHwzvN2fSKLVTgtDad+cWD7Ls2wiZnYaXW/3V7DqjSREVQEi5MI0o+vc+V8FoCKjuUxMpg6on2NwJmisWUym6tvdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Glo7zhLm; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=YPYUOFl38fDPgZ6C3IwdosU3J/wEMASYzf8y0ukUrYcn+mCnj5QKikY9v2IzQqIvgEugW5SvVvVQAJwhryCY8VOTBaaC0vwPDmUoxtP5sGAM8soBX/++VTCqaGORsaD3zJfsOTBrnk52UUTvwlObQvTZdkKxjrRBCW/xKA/W/20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NECfirtn; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53UGgxBS029556;
-	Wed, 30 Apr 2025 19:41:17 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53UHTVLk013348;
+	Wed, 30 Apr 2025 19:54:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JPJj2ypVxLM6FirxIox1Ym4HrMcpwqg5uqyspzcdVqA=; b=Glo7zhLmOH1FFffG
-	+GPcusVVc4fHmf5fOD6JZ1418X0nASD0XaFSgjY0lOmpNm6YKtjJlfQypGeSA1MF
-	WHKIveIsxAnjic4Xu7X+3m+hKhmBfFgQ1cG9WrFtQ0YBEe4XqRqo7EeNJEXvZ9UL
-	WWdfr6VRYTZpS8TfsK7goFd2SSq9zxByaJoS7/dIzMTzfLBtiVNGA5EeztEiQpen
-	ftLV/3b8xEYkWmBcL0RoBjR/P53S3pCJPlo0WCzdp/t2/YGHmYjLQTMjj+K2DEhA
-	lNX/Ez+T36Zl4OD8RQJQhH3ga8PtUg91FbLTTziXAbblwqrylxZT37cwW2CvJPL/
-	dhZxIQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u7ug0e-1
+	A4pvLorfFGud5T+ZsYa/fT8VDlMtMC0szet+PN9pNdI=; b=NECfirtnFYnasGD2
+	y+tRTmkOrf8cM7ULfUWufSZbIQVvV5ruZD+GLExh4z2H27lS9VigpntXk/c1Xisu
+	A032GWWal4RypD1PDY4L4D6L/I26oDkFuupCOR0qHNY4vDhy3xlrJv9Oi9pWz45p
+	SqEqUNngcv0qd707wfJriEpbOFTeVXC0himVNODmqfuBFY8oZOYBaOEgURDiTeCM
+	uCuoTc+yn5d1bc/ctTQVstHSrYN7l5kuuGVxn8hUnFvCqDZmsU8+3+70/9dkTwo0
+	H4PV+hXPjTISuE+fy3jhYb1cnKnLY2+YNKEimWmlUEkJRL+gEDasPwej7Owswrvn
+	op0dyQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6uauejy-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Apr 2025 19:41:16 +0000 (GMT)
+	Wed, 30 Apr 2025 19:54:44 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53UJfG1i030862
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53UJshkG017424
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Apr 2025 19:41:16 GMT
+	Wed, 30 Apr 2025 19:54:43 GMT
 Received: from [10.71.110.123] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 30 Apr
- 2025 12:41:15 -0700
-Message-ID: <0e07f35d-0eeb-4380-84e2-97a45841bf15@quicinc.com>
-Date: Wed, 30 Apr 2025 12:41:14 -0700
+ 2025 12:54:42 -0700
+Message-ID: <264cf3ac-af5f-42d3-bfb4-8ca7dd69d976@quicinc.com>
+Date: Wed, 30 Apr 2025 12:54:41 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,204 +65,60 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] drm/msm: move wq handling to KMS code
+Subject: Re: [PATCH 2/7] drm/msm: move helper calls to msm_kms.c
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
         Rob Clark
-	<robdclark@gmail.com>
-CC: Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        "Marijn
- Suijten" <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+	<robdclark@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
+        Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David
+ Airlie" <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
         <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
 References: <20250413-msm-gpu-split-v1-0-1132f4b616c7@oss.qualcomm.com>
- <20250413-msm-gpu-split-v1-1-1132f4b616c7@oss.qualcomm.com>
- <CAF6AEGtG2K79zAd9tyNAG7JSVhS2sPdC-VjqubpmhD9AvoVoAA@mail.gmail.com>
- <9f64ea5e-1b59-4522-b55a-d9b11e412ee5@oss.qualcomm.com>
+ <20250413-msm-gpu-split-v1-2-1132f4b616c7@oss.qualcomm.com>
 Content-Language: en-US
 From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <9f64ea5e-1b59-4522-b55a-d9b11e412ee5@oss.qualcomm.com>
+In-Reply-To: <20250413-msm-gpu-split-v1-2-1132f4b616c7@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=Ldc86ifi c=1 sm=1 tr=0 ts=68127cdc cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=ZvaOMdlihffMFPaspHcA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: OYPJ16N5teY2OzZPBYTTALRqidUUVMO8
-X-Proofpoint-ORIG-GUID: OYPJ16N5teY2OzZPBYTTALRqidUUVMO8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDE0NCBTYWx0ZWRfXxKy1z67eH/WT CK8Zndnp8kdp6x1GIlg7c6gy0EJbrfw5sCdALay+F7rEyXdGodUZvWwakPuLMiCZN9UZ1P+/ILr pBoApuK8J+0Ck9YEE+rlUE9yWZdqcNjXLNOhtZ6Afz4eMO0iG85zfSIPSwJ/qQgzUbUZmCejxM7
- TlgEWHPiWvgBP0b8uX3U4JYHoFvGobpIXJh6R+ErMM70yChfnGFQGoEBRzyY72Kajr73adZJOpl +7oTSLBV+8mJc+6Ulp91ywumnIWKVMNprz3qeJXkTqf9pgL+vhARKTcaAlb7swxdNB0PRAvRpKt HJdUZTFJe3brbj0jYHCgr+HLvjyBnmQ+vKClGe2JUHrKzOcdcLy02Q4SG5Hfcx0tSS50I+1VS+B
- uqe6ZxSs1pr3QD1EJro+KDT3mqLFwmcxQYEdNjd9YgORksJsiKo+zDBtEs1rcYyPyUo+4oBb
+X-Proofpoint-GUID: -Rmao_ZFbYDH_rLYbAiIN8f_HHHpYcvF
+X-Authority-Analysis: v=2.4 cv=KtlN2XWN c=1 sm=1 tr=0 ts=68128004 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=sM5MQWsAIeL3UqYyphAA:9
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: -Rmao_ZFbYDH_rLYbAiIN8f_HHHpYcvF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDE0NCBTYWx0ZWRfX5Cb5oeC3QQXl KSd7nc89KZPDJvM4TogwiCqtNWykEW5/eV2+upBc8XvinbeolwHLyE+L4luMegKO6RuDUubdida 93IxRa7Uq3WsNrRlv5qJITEaH79ELEAfn03n8YL90J+rk8E9nzZbCqvVGMOshFpHmH2Kfh+6Rhp
+ DV7HEznvcIDX2LTv75Ez1nXzuOAfmEy43m7i0Kyu9/4UOo4vWGLqvFaZp7WVcPDG/5+GvEjz3+3 YNkJnFg/KJ2JMSg/KdP/aKg8P/rsryGkYyAZnPlKgx+5MRTIiFFbMF0+L9/rMs3TQYqGFc7dfLj isbIAIeAt/vfdWR0KzJwOANnB6myAPHYEs93NiXhegcwCfGw2nVShh3GXd4K3fAACW4FEDG1R/2
+ sjKdACAMpVVNWn/inUkwxun88kqXNdj+Hee9eEFGYlCLaB6pZcrIIdfylfMjmpE7LFx+XJ8c
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-30_06,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 clxscore=1015 spamscore=0
- bulkscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0 suspectscore=0
- adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ lowpriorityscore=0 phishscore=0 adultscore=0 priorityscore=1501
+ malwarescore=0 mlxscore=0 bulkscore=0 mlxlogscore=754 spamscore=0
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
  definitions=main-2504300144
 
 
 
-On 4/15/2025 1:59 AM, Dmitry Baryshkov wrote:
-> On 14/04/2025 18:58, Rob Clark wrote:
->> On Sun, Apr 13, 2025 at 9:33 AM Dmitry Baryshkov
->> <dmitry.baryshkov@oss.qualcomm.com> wrote:
->>>
->>> The global workqueue is only used for vblanks inside KMS code. Move
->>> allocation / flushing / deallcation of it to msm_kms.c
->>
->> Maybe we should also just move the wq into struct msm_kms?
+On 4/13/2025 9:32 AM, Dmitry Baryshkov wrote:
+> Extract two more KMS-related codepieces to msm_kms.c, removing last
+> pieces of KMS code from msm_drv.c.
 > 
-> ... together with several other KMS-only fields. I will take a look.
-> 
-
-Yeah the usages seem to be only within kms, so we can move this to msm_kms.
-
->>
->> BR,
->> -R
->>
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>> ---
->>>   drivers/gpu/drm/msm/msm_drv.c | 21 ++-------------------
->>>   drivers/gpu/drm/msm/msm_kms.c | 16 +++++++++++++++-
->>>   2 files changed, 17 insertions(+), 20 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/ 
->>> msm_drv.c
->>> index 
->>> c3588dc9e53764a27efda1901b094724cec8928a..02beb40eb9146941aa43862d07a6d82ae21c965e 100644
->>> --- a/drivers/gpu/drm/msm/msm_drv.c
->>> +++ b/drivers/gpu/drm/msm/msm_drv.c
->>> @@ -82,13 +82,6 @@ static int msm_drm_uninit(struct device *dev)
->>>                          drm_atomic_helper_shutdown(ddev);
->>>          }
->>>
->>> -       /* We must cancel and cleanup any pending vblank enable/disable
->>> -        * work before msm_irq_uninstall() to avoid work re-enabling an
->>> -        * irq after uninstall has disabled it.
->>> -        */
->>> -
->>> -       flush_workqueue(priv->wq);
->>> -
->>>          msm_gem_shrinker_cleanup(ddev);
->>>
->>>          msm_perf_debugfs_cleanup(priv);
->>> @@ -104,8 +97,6 @@ static int msm_drm_uninit(struct device *dev)
->>>          ddev->dev_private = NULL;
->>>          drm_dev_put(ddev);
->>>
->>> -       destroy_workqueue(priv->wq);
->>> -
->>>          return 0;
->>>   }
->>>
->>> @@ -227,12 +218,6 @@ static int msm_drm_init(struct device *dev, 
->>> const struct drm_driver *drv)
->>>          ddev->dev_private = priv;
->>>          priv->dev = ddev;
->>>
->>> -       priv->wq = alloc_ordered_workqueue("msm", 0);
->>> -       if (!priv->wq) {
->>> -               ret = -ENOMEM;
->>> -               goto err_put_dev;
->>> -       }
->>> -
->>>          INIT_LIST_HEAD(&priv->objects);
->>>          mutex_init(&priv->obj_lock);
->>>
->>> @@ -253,12 +238,12 @@ static int msm_drm_init(struct device *dev, 
->>> const struct drm_driver *drv)
->>>          if (priv->kms_init) {
->>>                  ret = drmm_mode_config_init(ddev);
->>>                  if (ret)
->>> -                       goto err_destroy_wq;
->>> +                       goto err_put_dev;
->>>          }
->>>
->>>          ret = msm_init_vram(ddev);
->>>          if (ret)
->>> -               goto err_destroy_wq;
->>> +               goto err_put_dev;
->>>
->>>          dma_set_max_seg_size(dev, UINT_MAX);
->>>
->>> @@ -304,8 +289,6 @@ static int msm_drm_init(struct device *dev, const 
->>> struct drm_driver *drv)
->>>
->>>   err_deinit_vram:
->>>          msm_deinit_vram(ddev);
->>> -err_destroy_wq:
->>> -       destroy_workqueue(priv->wq);
->>>   err_put_dev:
->>>          drm_dev_put(ddev);
->>>
->>> diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/ 
->>> msm_kms.c
->>> index 
->>> 35d5397e73b4c5cb90b1770e8570277e782be7ec..821f0b9f968fc3d448e612bfae04639ceb770353 100644
->>> --- a/drivers/gpu/drm/msm/msm_kms.c
->>> +++ b/drivers/gpu/drm/msm/msm_kms.c
->>> @@ -227,6 +227,13 @@ void msm_drm_kms_uninit(struct device *dev)
->>>
->>>          BUG_ON(!kms);
->>>
->>> +       /* We must cancel and cleanup any pending vblank enable/disable
->>> +        * work before msm_irq_uninstall() to avoid work re-enabling an
->>> +        * irq after uninstall has disabled it.
->>> +        */
->>> +
->>> +       flush_workqueue(priv->wq);
->>> +
->>>          /* clean up event worker threads */
->>>          for (i = 0; i < priv->num_crtcs; i++) {
->>>                  if (priv->event_thread[i].worker)
->>> @@ -243,6 +250,8 @@ void msm_drm_kms_uninit(struct device *dev)
->>>
->>>          if (kms && kms->funcs)
->>>                  kms->funcs->destroy(kms);
->>> +
->>> +       destroy_workqueue(priv->wq);
->>>   }
->>>
->>>   int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
->>> @@ -258,10 +267,14 @@ int msm_drm_kms_init(struct device *dev, const 
->>> struct drm_driver *drv)
->>>          if (ret)
->>>                  return ret;
->>>
->>> +       priv->wq = alloc_ordered_workqueue("msm", 0);
->>> +       if (!priv->wq)
->>> +               return -ENOMEM;
->>> +
->>>          ret = priv->kms_init(ddev);
->>>          if (ret) {
->>>                  DRM_DEV_ERROR(dev, "failed to load kms\n");
->>> -               return ret;
->>> +               goto err_msm_uninit;
->>>          }
->>>
->>>          /* Enable normalization of plane zpos */
->>> @@ -319,6 +332,7 @@ int msm_drm_kms_init(struct device *dev, const 
->>> struct drm_driver *drv)
->>>          return 0;
->>>
->>>   err_msm_uninit:
->>> +       destroy_workqueue(priv->wq);
->>>          return ret;
->>>   }
->>>
->>>
->>> -- 
->>> 2.39.5
->>>
-> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>   drivers/gpu/drm/msm/msm_drv.c |  9 +++------
+>   drivers/gpu/drm/msm/msm_kms.c | 20 ++++++++++++++++++++
+>   drivers/gpu/drm/msm/msm_kms.h |  2 ++
+>   3 files changed, 25 insertions(+), 6 deletions(-)
 > 
 
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
