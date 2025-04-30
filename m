@@ -1,188 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-56343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29CF6AA577E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 23:35:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B06BFAA584C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 00:54:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A518179F3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 21:35:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1E2FE1C22957
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 22:54:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E8132DC79C;
-	Wed, 30 Apr 2025 21:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9860622FF22;
+	Wed, 30 Apr 2025 22:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="VVAQycOJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lTJO18YA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4F91DB92C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 21:35:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B906229B35;
+	Wed, 30 Apr 2025 22:52:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746048911; cv=none; b=DOmGljPvq7hlwyjtS7i2/DzNLuSs/lPqzKoly1dntxYw3TXNhwpLtd3ngP05WagisDl1JbmB9PPI3O2gLqvoGwycwDXTP5hRTT+p1/b48VTajkDUctgCG0u8P4nTZoIYf+LYB+9Y/2fLVz6W2rp/V1mo5dilqFoZlVK2VZ8ezI4=
+	t=1746053531; cv=none; b=ZGMrNKO3nelJYxK2Va6Pv7RhOUXyDMDSCYF71uF9753pXJ1l32SMg9DAuoCAUbtk7ySmOXkZuDyhavlagODfmAId7NvS4VsHv5NMuU+SQeuKZ/1V3JTLxE/HfE50C5oko94fzYGW3eb8xRifZNixVQUGrMdbwVsABtgMnf+lxzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746048911; c=relaxed/simple;
-	bh=yy0E+SoIiXnehp4eylEGNHHbJRxulBS4jxG/q0p5JJM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HeRN2r9HvIZjRmcjAGyREFmktwbxuOwpM4j+lssMCNK96Snlz2eRpMRPhWB6AG3DAdeM6HsDtAqUfqv7IM7z+bow4VOP34YcCmCFAQsGJisoRMaPVD8nO16ESoPPLDu8JJpkoNuR3mohDK5UnO9LHIU0PANQZVLSwMX6LfmRi1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=VVAQycOJ; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1746048908;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=ZEvd/2WbHpfpk4D+SrPk6a3wGOjXXdb1q/zENL2a9PM=;
-	b=VVAQycOJhEzZwRli6nIdXS/oo3Qa9FNZFDmjDCQmheV8ySUYsNX+I7uXaefiTepOABqKI1
-	r7DalwKhPfn1usp7miV7mMQhp9bq8qo3hgM/USGqPBj0Goh0iuuS3y5xuErdo6T+tycLEm
-	LTwbWRTNSrljq/M+tJAMvyEHNBZkdj0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-478-QL_Bt9AMPimSk9IJTBGh-w-1; Wed, 30 Apr 2025 17:35:07 -0400
-X-MC-Unique: QL_Bt9AMPimSk9IJTBGh-w-1
-X-Mimecast-MFC-AGG-ID: QL_Bt9AMPimSk9IJTBGh-w_1746048906
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-39c1b1c0969so150202f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 14:35:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746048906; x=1746653706;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ZEvd/2WbHpfpk4D+SrPk6a3wGOjXXdb1q/zENL2a9PM=;
-        b=T10nysvsiuIFMXY9fVpsNYr4JtII8HyynvoRVbMErD63z3kddpR5jCehsuvmujRZZv
-         nSFhjIQyBBuyHoDZZ1pzKhrPph72bX2SQJ8MMqX4wRZrevQ642M1Mf+2YTJ8/34hqDvE
-         2xTlgt79uBqSTJRQcUCZNEepj5NHPMdmZ3mTJ22Yh69AajH8tO7BZCWsTvU6asEY3+f1
-         VEElfTj6Seh0vG5mLjxLp/aXAivOUasSzM9+CEf1nyTOKCup4ENBddIcLaGNqRlMzYHE
-         TDeQxh0CezivFpcUVPjRlGyQ9G16QXAc3Nd+tq6j+K7kGJacGYiM0v4kwmNxa1gLGU9b
-         QuqQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVCHBBKvG1En+YLIYX3tXr2kw1kTYrv6aWLR6xvgKd+NB7rnPasSDPdkOMwyA/3d1r4E9205j1R/c+1XykH@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHKfTf8sV5mbCwQA603XOYwjxaBwoudmFttgIq2xx84hFoFGJ/
-	OizAOsJOF/+ReH1IGCU1wNStg1mAV+IYedBzxMcsYVWkuV6J0NeVXmIwKMwYJqFPQX4nsE85OM+
-	KexjhnMdHIYSkEnZzAwNwQBJbPVJToOkDjFKgvR4wwRp0etrpCLvjY2lP+bjEQ6w=
-X-Gm-Gg: ASbGncuF3TDHwC6pNM11NcoXm69TK9+Lm9xjQ8ED/8fdUbU75oA6h1JssFIBv4VbGWA
-	lFvt1WhHnf0/n3CiKuxxgAoCZ06I5sA16KFBY6nDbVNHk5z9NuNOIgopHMtcxMt6lG1oCMNiWe7
-	antdjPxGFfdh4gdsiRuWEFwVqcLLM/braADV3oKeKRh6ppjndK3L7oZYChOEFmw3XT0ZwfHGrN4
-	/3LiJOjUIp54zRhFgmpxaknJBOXaBdLYO3fBXHqU04noaPKBmOe9xb64PWFvEeajs7UxqXeRChb
-	YJwLSHo7PZ7zYQU1yAeni2Z8rX7fVVG1uy+yhwlAYfe19TJSBEogd0ihqtktvXILa0B5jqR7XCT
-	UQ47m7dwXsqAWPSlP/vX0C6P4AHfdsRa6tHz97t0=
-X-Received: by 2002:a5d:59a8:0:b0:391:3915:cffb with SMTP id ffacd0b85a97d-3a08ff465b4mr4159483f8f.43.1746048906014;
-        Wed, 30 Apr 2025 14:35:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFDsnJ7UsOJ4zyi2oQX3stOqawfO+nPr01iLeKcMN7k8b72nohGXmMc+/D7Bfp0WGCM46RMBA==
-X-Received: by 2002:a5d:59a8:0:b0:391:3915:cffb with SMTP id ffacd0b85a97d-3a08ff465b4mr4159469f8f.43.1746048905648;
-        Wed, 30 Apr 2025 14:35:05 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c745:a500:7f54:d66b:cf40:8ee9? (p200300cbc745a5007f54d66bcf408ee9.dip0.t-ipconnect.de. [2003:cb:c745:a500:7f54:d66b:cf40:8ee9])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073cc4025sm18265545f8f.56.2025.04.30.14.35.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Apr 2025 14:35:04 -0700 (PDT)
-Message-ID: <e8cd5f4e-d803-4d8c-b7b1-648e25138dbf@redhat.com>
-Date: Wed, 30 Apr 2025 23:35:01 +0200
+	s=arc-20240116; t=1746053531; c=relaxed/simple;
+	bh=VTTdecSWqZkIwO84VU3RpF9g0JpkxMMekW8Vy/pnaEo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=dBR0Nob+kHbiaHMm6iEW3OK5Nw2n9xIVk75e2UQDCEZ0/Ioi+TnvJZ6efWJ5IX5fhu6u/TLJ3/q79iOCncwbCERcry5nztbuhQ08mxvSwUmrLQQ7h0gdJGxhHZNpTi2/an/5CnlnkxQ9uEgYM8VdxkHZjzwFgLbDkUslHut50dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lTJO18YA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DC9C4CEE9;
+	Wed, 30 Apr 2025 22:52:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746053530;
+	bh=VTTdecSWqZkIwO84VU3RpF9g0JpkxMMekW8Vy/pnaEo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=lTJO18YAIi3d0IroYi+EBORuVl7CoLb7ElhpSraEB6Wkwqt4Qd2VQsBZdEbkBT5Hk
+	 gVxx0mVwUzHTYKgYJCma3P1qB6POfhPEGY4aZQaZINUxl5G8K0O8QlZpmA88nzC4Ph
+	 wOnXsjHPeoCsJ8ZJ0FuDfRRZu+k7t81ddBMdNPHASY4WKo66GrOukFYfCeVXIBcWM+
+	 gN/R3G9WWayuAowhazXT8lhihsmb65nxqTOBMZMWpq0rCsecOfGTc8BeL6GyTW5gCd
+	 TnXxU6UZTLlH9F4gBGxLubX9tMxj8tIWLwSIOKVOpcJxceItntCivN8x8BQ3CmRTw7
+	 YsYSLTC5Ext7Q==
+From: Mark Brown <broonie@kernel.org>
+To: Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Md Sadre Alam <quic_mdalam@quicinc.com>, Gabor Juhos <j4g8y7@gmail.com>
+Cc: linux-spi@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20250428-qpic-snand-readloc2-fix-v1-1-50ce0877ff72@gmail.com>
+References: <20250428-qpic-snand-readloc2-fix-v1-1-50ce0877ff72@gmail.com>
+Subject: Re: [PATCH] spi: spi-qpic-snand: fix NAND_READ_LOCATION_2 register
+ handling
+Message-Id: <174605352845.3987999.9189042209512194365.b4-ty@kernel.org>
+Date: Thu, 01 May 2025 07:52:08 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 09/13] KVM: arm64: Refactor user_mem_abort()
- calculation of force_pte
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
- vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com
-References: <20250430165655.605595-1-tabba@google.com>
- <20250430165655.605595-10-tabba@google.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250430165655.605595-10-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-c25d1
 
-On 30.04.25 18:56, Fuad Tabba wrote:
-> To simplify the code and to make the assumptions clearer,
-> refactor user_mem_abort() by immediately setting force_pte to
-> true if the conditions are met. Also, remove the comment about
-> logging_active being guaranteed to never be true for VM_PFNMAP
-> memslots, since it's not actually correct.
+On Mon, 28 Apr 2025 09:30:55 +0200, Gabor Juhos wrote:
+> The precomputed value for the NAND_READ_LOCATION_2 register should be
+> stored in 'snandc->regs->read_location2'.
 > 
-> No functional change intended.
+> Fix the qcom_spi_set_read_loc_first() function accordingly.
 > 
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
+> 
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
+Applied to
 
--- 
-Cheers,
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
-David / dhildenb
+Thanks!
+
+[1/1] spi: spi-qpic-snand: fix NAND_READ_LOCATION_2 register handling
+      commit: 36fd6275818e93d5bc44140d546bf2a45e88feee
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
 
