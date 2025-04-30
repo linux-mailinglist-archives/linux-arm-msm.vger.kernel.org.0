@@ -1,143 +1,266 @@
-Return-Path: <linux-arm-msm+bounces-56302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45EBFAA4F74
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 17:03:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B25EAA5041
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 17:30:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 24C104C3851
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 15:02:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 49EB1982A08
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 15:30:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 880B9266EEA;
-	Wed, 30 Apr 2025 15:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEC9B248F75;
+	Wed, 30 Apr 2025 15:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OtFp+EoT"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Uir+I69Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B86B2609FE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 15:00:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E30BE5E;
+	Wed, 30 Apr 2025 15:30:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746025203; cv=none; b=PARbiY4bshzj/orahsQ9p3SkJOEAc/MDa8uEJoS6Yjw++sKGarbdpP09AJSic6uIJRy6OK8Hw6v5ms7CKRgVBGiTGmoSTT5P+tFp/Z/AptAFkiwRoUET0+k3bfd/e4Kh9mfA2c04+lzz2H/EDgdMQQCZDKzn3i9znvXDS7lFRJU=
+	t=1746027023; cv=none; b=g7kYlkEF52N8Ezty4RocuptxUlJ+AHW77eVasiwcGYQV87NtJbQhKvayUjhu2Zmd//bi8eWHDpbCHaqOlYMc5y2VCRsKxUdbzPTWR1Cf6QVhaOtkrEkDVsyUhZeEUICFsHZUhKnQ7vVuMs+Frvc3eR+Ko2tTFEVtNsS8Ot8CDsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746025203; c=relaxed/simple;
-	bh=rcWl+QmYf007ChLfgmF/lkXGahRIqtD3l2zvf4hd2JU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IubFs1ugerOtSEehtvXK5L7f/3Ehu5gwQWavGDAgLHHUqWb9CmOTAonySjUzBbgmTiCb6yQi9GVCh62HQoHQ5PhuZ58bJ8nEhaPcKoPjY714arZ8xH4dJcQkwlbyC7m3VDiflFMI8YiLNVo6tlzcxhd9stBJU4g9jgM/XH3S8iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OtFp+EoT; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-acacb8743a7so186888066b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 08:00:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746025199; x=1746629999; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=s/GOiooi2lf2dyrYlf9XubY7rFtvSk864Rz3PS2UrNA=;
-        b=OtFp+EoTW0CCcauVbYQV/EHRhph2Z7RWjC6gbB8hjYTphL6xy3Mg2tonCGUj9Anj1W
-         pt4HGju1ntUichM7CWD08IbPAw/K0VkW5nC3pKNB5sRo9mQwMTJ0eGj/icIpG86TQq1e
-         P+g0DAgM3qakkfHyJjbOeNuXQWjIlu+QVH/N0MTDzsmh2ojhgRdylbk/Mk2NKVOGO3Eb
-         y4RMQilc4kppSuaMrYYGADu65XIlwVRkFp89h92eTN9uMMcJt2UvF55mJIEyfV+HyhbH
-         gmlF+3raqr7bm0kTfn334kj+f8D7d05wOI7Pd5768Uf2Gpu852tymQCne9GdUYpRKi6+
-         Yvfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746025199; x=1746629999;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=s/GOiooi2lf2dyrYlf9XubY7rFtvSk864Rz3PS2UrNA=;
-        b=VvNZRtMVd5RhdROEKbGkkHQgl+wrEIYtp/v0E8IHwnXBqfk+wJLwGYr4g/K6fEt5S0
-         fh71HbytDnIDbWonoS7GrTNhF24ThBM+oi3nF+7grVwvj7GD/4kQmEjqDNKK7z76SHC6
-         4Q51qsa/tAGF8Irtey5JMtwv8VDVJdZYY/G2fcNTeZGorUaZLYgcM3jFgx1xAA5RTnlo
-         k6j65UPv3LjBEAG1r1WAuq/DpNFgekmOwR7FVmwD+hV909mL1zTBuQejzfMUlJfL2Jcp
-         BZbk4UpaeqFWPI45y7CqhY/IN6TGBs6Jr0thw3Xu8oyTSm8BPINEh0qCh2WPx9IgoI6s
-         Hgbw==
-X-Forwarded-Encrypted: i=1; AJvYcCXdTDPlqXEG61zB8ecY1Ue2HQ3cnzOQU9fbYt7mD1LOelpxy6AMymVauXJWC2injlP8r+BiZve8Fe8bLSOg@vger.kernel.org
-X-Gm-Message-State: AOJu0YzcD49W7gKiKdAiMhBak3v6Nz5DCQyNlDdreZf0rnu1zjOpeelC
-	ix1uWPlqk6GFBCP0a0Qcd0tn+MWFbIKe9LKQ1w6/n7qBgrgQwuchTA32PhbCkigM8BynURlO8aq
-	O9wf8W9dLK24C2rp0YBLuh49EExzFHwA8ih71iA==
-X-Gm-Gg: ASbGncvQxh3nNWlvztQFpOff/MbZKy2keKkZ1xUOjYu4z6umAr8xKFON87uQkEevcRP
-	RC836SToAJWs8CxhAlrd7JJWeuwsQTxkIA1cZd7XSQdVgIncxm857P6Vw9Yw4zfDQ9kuBG1L85V
-	kWH+RpdV4qEhwUBG0TT8YhmFKQUk6KDJqZX34K1m243USBLFz7SpJcYAcJ
-X-Google-Smtp-Source: AGHT+IEuPe3FvOa41k60hnkwtbcvwue35KXfaVRFILnxHi2Xr6Nw0g2Wl1TPRvOhPCaTVHuhJu3g6QUGmtnCWiSixUk=
-X-Received: by 2002:a17:906:6a07:b0:ace:bee8:ae0f with SMTP id
- a640c23a62f3a-acedf65b2f8mr255011966b.1.1746025198691; Wed, 30 Apr 2025
- 07:59:58 -0700 (PDT)
+	s=arc-20240116; t=1746027023; c=relaxed/simple;
+	bh=9SV4DX19yoCfEzYYIGO1BCfqztvYjLvOFhRKhsU6oAk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pKkGgSFdmk+5aJYI6ygULw75Lu7wt15QxBRHy0OunF0/64SedQBVEgVF6Si5AraL33lJdRUb6Bsl0JfK4GV5fvKluu44nJv6LG2Uo0KAqM0e1Gh7R9rBKE11pTjSJtyR8YCsFAx6iVpi34O2eQ+zog+l9KZdxJ4XXD65ecjvBow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Uir+I69Q; arc=none smtp.client-ip=217.70.183.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 755091FCE8;
+	Wed, 30 Apr 2025 15:30:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1746027019;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=MWTikn/fQ2RO7hkcmPhgG/ZXL82CYY7laDHZMAqZbk4=;
+	b=Uir+I69QY6ooynZyuoSsowjneB2XH3l3Jk31xfvPk7NfkeG0T4UNGi5tZv+hSgbjL48SIT
+	9a/pXrag0U0RuVm9Y+XN1GZ5Ka+8SLhalf7X5Lp3hvzRqzhczzNO2E5VpaxWuLITE/ZUBu
+	f4bSIVCD3keI9rqPgY0L8j76IhX1bQsYC1pUyone7YHiu4mB/uk93Z5Xy8StTQtsjvNNXt
+	SVrVpp3+N8Fbq+6rC5hT95fFKdIUe2vOip5g5CiLSuDbzMUGQJ6OOpBxLVqT56Lyz/sqxM
+	KcEaKhuNA1cWG2UBLpWqeFrSV9D2KwzRaYA3mEAqSXFsbNlDzr8QJvYjPNsKwA==
+Message-ID: <207e2908-62ce-470f-9077-c5709d3e1a6a@bootlin.com>
+Date: Wed, 30 Apr 2025 17:30:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250429104543.66927-2-thorsten.blum@linux.dev>
-In-Reply-To: <20250429104543.66927-2-thorsten.blum@linux.dev>
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-Date: Wed, 30 Apr 2025 08:59:46 -0600
-X-Gm-Features: ATxdqUHj7Y9iIyVfGpSZ6xZiHXxko6yaKFvQ3VxEGVgKRHWDbymrU0RIpwfEGLI
-Message-ID: <CANLsYkxBxt-fE-kV3yS7WDQuF4o7OSL045fMmXrTvfx3P=A+1A@mail.gmail.com>
-Subject: Re: [RESEND PATCH] rpmsg: Use strscpy() instead of strscpy_pad()
-To: Thorsten Blum <thorsten.blum@linux.dev>
-Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: (subset) [PATCH v2 00/34] drm: convert all bridges to
+ devm_drm_bridge_alloc()
+To: Maxime Ripard <mripard@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Jagan Teki <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Douglas Anderson
+ <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Luca Ceresoli <luca.ceresoli@bootlin.com>,
+ Anusha Srivatsa <asrivats@redhat.com>, Paul Kocialkowski
+ <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>,
+ Hui Pu <Hui.Pu@gehealthcare.com>,
+ Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+ dri-devel@lists.freedesktop.org, asahi@lists.linux.dev,
+ linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev,
+ imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com,
+ Adam Ford <aford173@gmail.com>, Adrien Grassein <adrien.grassein@gmail.com>,
+ Aleksandr Mishin <amishin@t-argos.ru>, Andy Yan <andy.yan@rock-chips.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Benson Leung <bleung@chromium.org>, Biju Das <biju.das.jz@bp.renesas.com>,
+ Christoph Fritz <chf.fritz@googlemail.com>,
+ Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+ Detlev Casanova <detlev.casanova@collabora.com>,
+ Dharma Balasubiramani <dharma.b@microchip.com>,
+ Guenter Roeck <groeck@chromium.org>, Heiko Stuebner <heiko@sntech.de>,
+ Jani Nikula <jani.nikula@intel.com>, Janne Grunau <j@jannau.net>,
+ Jerome Brunet <jbrunet@baylibre.com>, Jesse Van Gavere <jesseevg@gmail.com>,
+ Kevin Hilman <khilman@baylibre.com>,
+ Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+ Liu Ying <victor.liu@nxp.com>,
+ Manikandan Muralidharan <manikandan.m@microchip.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Phong LE <ple@baylibre.com>,
+ Sasha Finkelstein <fnkl.kernel@gmail.com>,
+ Sugar Zhang <sugar.zhang@rock-chips.com>,
+ Sui Jingfeng <sui.jingfeng@linux.dev>,
+ Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+ Vitalii Mordan <mordan@ispras.ru>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Hans de Goede <hdegoede@redhat.com>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+ "Rob Herring (Arm)" <robh@kernel.org>, Hsin-Te Yuan
+ <yuanhsinte@chromium.org>, Pin-yen Lin <treapking@chromium.org>,
+ Xin Ji <xji@analogixsemi.com>, Aradhya Bhatia <a-bhatia1@ti.com>,
+ Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Ian Ray <ian.ray@ge.com>,
+ Martyn Welch <martyn.welch@collabora.co.uk>,
+ Peter Senna Tschudin <peter.senna@gmail.com>,
+ Russell King <linux@armlinux.org.uk>, Herve Codina
+ <herve.codina@bootlin.com>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Inki Dae <inki.dae@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>,
+ Seung-Woo Kim <sw0312.kim@samsung.com>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Helge Deller <deller@gmx.de>,
+ Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+ Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
+ <174591887152.961603.7706063017853945511.b4-ty@bootlin.com>
+ <sdiwpe7nnhud3fvkgijjbfyenlwpchbxgehyxmsy7c5loo257h@hkfcawkjrlhd>
+ <efcf3798-9ac1-42a7-8a12-24d931cbf771@bootlin.com>
+ <20250430-scorpion-of-majestic-argument-7f59b4@houat>
+Content-Language: en-US
+From: Louis Chauvet <louis.chauvet@bootlin.com>
+Autocrypt: addr=louis.chauvet@bootlin.com; keydata=
+ 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
+In-Reply-To: <20250430-scorpion-of-majestic-argument-7f59b4@houat>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieejtdeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfesthekredttddvjeenucfhrhhomhepnfhouhhishcuvehhrghuvhgvthcuoehlohhuihhsrdgthhgruhhvvghtsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpefftdduueetheejledvkeetjeekudfhffduvdeugfevfeeifeehieffjeetfefgveenucffohhmrghinhepfhhrvggvuggvshhkthhophdrohhrghdpsghoohhtlhhinhdrtghomhenucfkphepledtrdekledrudeifedruddvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeeltddrkeelrdduieefrdduvdejpdhhvghloheplgduledvrdduieekrddtrddvtdgnpdhmrghilhhfrhhomheplhhouhhishdrtghhrghuvhgvthessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepleekpdhrtghpthhtohepmhhrihhprghrugeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepughmihhtrhihrdgsrghrhihshhhkohhvsehoshhsrdhquhgrlhgtohhmmhdrtghomhdprhgtphhtthhopehmrggrrhhtvghnrdhlrghnkhhhohhrshhtsehlihhnuhigrdhinhhtvghlrdgtohhmp
+ dhrtghpthhtohepthiiihhmmhgvrhhmrghnnhesshhushgvrdguvgdprhgtphhtthhopegrihhrlhhivggusehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhimhhonhgrsehffhiflhhlrdgthhdprhgtphhtthhopegrnhgurhiivghjrdhhrghjuggrsehinhhtvghlrdgtohhmpdhrtghpthhtohepnhgvihhlrdgrrhhmshhtrhhonhhgsehlihhnrghrohdrohhrgh
+X-GND-Sasl: louis.chauvet@bootlin.com
 
-On Tue, 29 Apr 2025 at 04:46, Thorsten Blum <thorsten.blum@linux.dev> wrote:
->
-> kzalloc() already zero-initializes the destination buffer, making
-> strscpy() sufficient for safely copying the name. The additional NUL-
-> padding performed by strscpy_pad() is unnecessary.
->
-> The size parameter is optional, and strscpy() automatically determines
-> the size of the destination buffer using sizeof() when the argument is
-> omitted. RPMSG_NAME_SIZE is equal to sizeof(rpdev->id.name) and can be
-> removed - remove it.
->
-> No functional changes intended.
->
-> Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-> ---
->  drivers/rpmsg/qcom_glink_native.c | 2 +-
->  drivers/rpmsg/qcom_smd.c          | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
 
 
-I will let Bjorn take care of this one.
+Le 30/04/2025 à 12:39, Maxime Ripard a écrit :
+> On Wed, Apr 30, 2025 at 10:21:48AM +0200, Louis Chauvet wrote:
+>>
+>>
+>> Le 29/04/2025 à 16:42, Dmitry Baryshkov a écrit :
+>>> On Tue, Apr 29, 2025 at 11:27:51AM +0200, Louis Chauvet wrote:
+>>>>
+>>>> On Thu, 24 Apr 2025 20:59:07 +0200, Luca Ceresoli wrote:
+>>>>> devm_drm_bridge_alloc() [0] is the new API to allocate and initialize a DRM
+>>>>> bridge, and the only one supported from now on. It is also necessary for
+>>>>> implementing reference counting and thus needed to support removal of
+>>>>> bridges from a still existing DRM pipeline without use-after-free.
+>>>>>
+>>>>> This series converts all DRM bridges to the new API.
+>>>>>
+>>>>> [...]
+>>>>
+>>>> Applied, thanks!
+>>>>
+>>>
+>>> [...]
+>>>
+>>>> [16/34] drm/msm/dp: convert to devm_drm_bridge_alloc() API
+>>>>           commit: b2aabe5c6b65516d88214aba4b12ce2ca78bac6c
+>>>> [17/34] drm/msm/dsi: convert to devm_drm_bridge_alloc() API
+>>>>           commit: fffc8847743e45604c4478f554d628481b985556
+>>>> [18/34] drm/msm/hdmi: convert to devm_drm_bridge_alloc() API
+>>>>           commit: e11532be87e437648521a8ed5358c56df11933b4
+>>>
+>>> Why? These drivers are explicitly handled outside of drm-misc. Please be
+>>> more careful next time.
+>>>
+>>
+>> Sorry, I was not aware that msm also have his own repository.
+>>
+>> TBH, I was not aware that other repositories existed for drm (I should have
+>> looked at MAINTAINERS, it is totally my fault). DIM and doc[1] only list
+>> drm, drm-misc, drm-xe, drm-intel, so I just tough "intel is special", not
+>> "drm is divided in many repositories".
+> 
+> It's mentioned in the drm-misc section:
+> 
+> https://drm.pages.freedesktop.org/maintainer-tools/repositories/drm-misc.html
+> 
+>> This repository consists mostly of the core drm code as well as DRM
+>> drivers that do not have a dedicated repository.
+ >
+> Feel free to send a patch to improve the doc. If you missed it, someone
+> else will.
 
-Thanks,
-Mathieu
+Done : 
+https://gitlab.freedesktop.org/drm/maintainer-tools/-/merge_requests/77#c304368de02d740ca751f5812ddcd0cfac40d162
 
->
-> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-> index a2f9d85c7156..820a6ca5b1d7 100644
-> --- a/drivers/rpmsg/qcom_glink_native.c
-> +++ b/drivers/rpmsg/qcom_glink_native.c
-> @@ -1663,7 +1663,7 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
->                 }
->
->                 rpdev->ept = &channel->ept;
-> -               strscpy_pad(rpdev->id.name, name, RPMSG_NAME_SIZE);
-> +               strscpy(rpdev->id.name, name);
->                 rpdev->src = RPMSG_ADDR_ANY;
->                 rpdev->dst = RPMSG_ADDR_ANY;
->                 rpdev->ops = &glink_device_ops;
-> diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-> index 40d386809d6b..3c86c5553de6 100644
-> --- a/drivers/rpmsg/qcom_smd.c
-> +++ b/drivers/rpmsg/qcom_smd.c
-> @@ -1089,7 +1089,7 @@ static int qcom_smd_create_device(struct qcom_smd_channel *channel)
->
->         /* Assign public information to the rpmsg_device */
->         rpdev = &qsdev->rpdev;
-> -       strscpy_pad(rpdev->id.name, channel->name, RPMSG_NAME_SIZE);
-> +       strscpy(rpdev->id.name, channel->name);
->         rpdev->src = RPMSG_ADDR_ANY;
->         rpdev->dst = RPMSG_ADDR_ANY;
->
-> --
-> 2.49.0
->
+I added more details for the push process, clarified the existing drm 
+repositories and added a small check in dim to warn user if the pushed 
+commits does not belong to the targeted brach.
+
+> Maxime
+
+-- 
+Louis Chauvet, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
+
 
