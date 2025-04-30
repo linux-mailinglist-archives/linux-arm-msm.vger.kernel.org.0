@@ -1,241 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-56237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5CCBAA4915
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 12:46:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 03C4AAA4932
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 12:50:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EDB56189035D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 10:43:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1DE3B1882B68
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 10:48:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04D6221A43D;
-	Wed, 30 Apr 2025 10:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A9231E9B03;
+	Wed, 30 Apr 2025 10:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XRtVLT6d"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cQemy+9b"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3783AFC0B;
-	Wed, 30 Apr 2025 10:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5940E1DE2A4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 10:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746009668; cv=none; b=kxq5sM4BnxKtiACn0HjDldckt7SxWrvrLS/LINpqK/YcC+XF8Iv3mlYjqSTtm8qLT8AAJ33GmyqAAKYigeGie1C5v0Brmt9T/5IPL5YBfPK17H2dwWFy4Dh966vSLcTf4gDjKDO3oPfI+tPBlBMIquidoK0Qj1Xvy2XIZV+YR2E=
+	t=1746010110; cv=none; b=pqAqfbGxpDR0APU6Kko6S0eXTj5QKr40QROzo6ZFrmRftUK2gaX/jfHJcGKTD3ZuWyKYPes516C4sw5im4K9d6Ah0NsLafge3u5ZgCfcI9Rl3KbOlsGESwzv6I7SIbVLPoKzlU06JY0TZn+hlGFDIEA/cnP+O2Mxzt4KBTOYC0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746009668; c=relaxed/simple;
-	bh=nlGX2ykn0eKxmQ0bTQgV+/kd8YY3fCyWOOmHd5IlM+o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qVWUkD5DTk+frRyhcz8p6RLsBZGKmz53b4WxcoyLGcPEk1dQeEaDysmKTvm8GWF7b2MH67X6sBEruGxJWVnu250B3Ak0ee3sP1ZSW22jmCZjXkF5PGnpFXMGuSL4Oku6X0GFsghVptzU4voJ+k0lHoOo0A0cULMlzXtVY2OOxKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XRtVLT6d; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53U9nhG0013348;
-	Wed, 30 Apr 2025 10:41:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1746010110; c=relaxed/simple;
+	bh=HUZJ0kiFIfagM5qDzDfVS6B9VE42Qo4QIQCtcjqvCQo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=o8wsTMZad8AM+05fp8wKV5nv30L38Gwgbe8mrrwOzE88BK0EZPgI2Tz3otohcxl6dB6tBCitE51Ag26CPTLwXWGD/RVNyP3JSTOJgRtOi6I4Qr3zSUdrTmyK6ScbuuwNUIB3YCMIFIC2xUMhie2jThIhkeMetpyzGdtVfMITOvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cQemy+9b; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53U96CIN012203
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 10:48:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qbaWXYkTIQQ02yEA0qb7R3EZontGifQ3CEMmYbAgnwg=; b=XRtVLT6dLZAR6w1k
-	YmXDMHB6WqG3uATb9dSwpDmegsj7+PJq5UbSAP1yna6i4J9rggKsNNELZP3w/tEO
-	mpbHtDA8px3FdtpIxNAplnVaT2YOOD5pEWVe/F8ergoYdGGJ+M4K6kRWOxooao9J
-	N4yy2nMa0iQmUWbR10LJW50kfI3EMTddGoJ3Ygyd5Hw1+hjLloKR9HmI5hKmUF+j
-	L9EWB4ab6tpf9qLARIJ8iBQbEJSeqadtUmykD2Mo3df0Adpfcu/Q/7J/WUH2NJhU
-	Io6oaCgbl/osBG0druz6mYT51ssQgTJYtEMQ7sl4fQSCTZhxjhU2GKpRAIZrJlf/
-	//hJfA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6uassa2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Apr 2025 10:41:02 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 53UAf18V013285
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Apr 2025 10:41:01 GMT
-Received: from [10.50.41.127] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 30 Apr
- 2025 03:40:50 -0700
-Message-ID: <578305fc-fe93-2ef4-908a-d728a5ae6485@quicinc.com>
-Date: Wed, 30 Apr 2025 16:10:44 +0530
+	thrFPzGty7F/8SDuyjBcH9oFtizk5EGXXAc/JqBK8HA=; b=cQemy+9bvktrI3gC
+	tQhBbrFENlkHcG3qFzhT9CtudON35yG4XDKbi935qETvyNnB+at+itrw1FWLtLtW
+	8zN0amwlwFezyQHCCzMUkRjrcnD/iVRAlqVjseyDLiQ5G3EioKQNGmS9UJfOJxi4
+	D40m+XIOpICUXoreRtPUn4HII2k1VL0atUCzwud9aBowSO8QM9XW5ctwUfpa7eYt
+	8Hr8o1uhKaNB5iEfUmUSaWwIIkskds3oicNx2djilVlBIXsKJJPYhjW8fnIUl3Ri
+	OdoHAiS9rI8OCWFlRmhgZF9OHWYCKKOqemubIfREvc88lpScxr6sWttEviOjkODQ
+	rnXEOg==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u3stf9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 10:48:27 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6e8ff8c9dcfso18880226d6.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 03:48:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746010107; x=1746614907;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=thrFPzGty7F/8SDuyjBcH9oFtizk5EGXXAc/JqBK8HA=;
+        b=rUbZ2J1Lf2xJo8KjUbiYmzwbv7dqZfAjiid1ZzHt2rjyRo8jl2Hn7wJJYDpAdksnYp
+         9qMF3xcXwMFBx98AouOpJP4XVUkoeUvAPGOWP5Ro8GiGsNCPi7SfnlMHbK4CwH2ug6Ov
+         sFZMfE/Bqem/mGFpFZ28k2UpoJ04uPzQwCNgtpP2s+XdNo3QNXE9QUh2tnN/oMGmp+31
+         pGILc5T7o8Vwomp+0m/8+Bl5HZ7QhgmVH1l6wYu+7QqyLWKz3SZbEItsz3gYx62x2Loz
+         OGDD925zTt42hjJ6Wzs2ntTKyqk5V/g7WFzqFiOHp+HF5GeMnGd8QkvVTXYxB0dQgWI7
+         DD8w==
+X-Gm-Message-State: AOJu0YzuTCjvLDXgPWs7I/sBOtlJz9j8VSr3BVhgjrvgAz9acsJNoOHa
+	tkqUVN5GQpP2loG+FYAoty4LZo4tDioQmVcCbOVbJ9witXK0RyTtt3uhoqzKsuaiOmvML2czhvU
+	RWwvTHyIi/jNHcrbFkONRXf2IbHSFXKrX+DiLR3du1fLdCZ+bpbQQixL1nC68Q5BWhGxy5t1K
+X-Gm-Gg: ASbGncsWtcn81CwTP0jIm37dX2KEiaG9pgYK4fQCOzxIpehneGaG5Bo9QiUPvWZP1Zu
+	v1bBgh5+XahU+DzX09FWSK5AFY+JKPhl5pbVvyWu3BBqPKrsbV1rLJwvBEnVS1Vyj9NRPmqPjhJ
+	5C2SWiFbtyz7ldA7VaAYXP029o2eK07RuODhEnT0C9BfZeOCxixOIQ65oqZnJBASe3vjHxTTaGr
+	/mO7TKaSeJKVC6rbpNZ86/liMEFRaSnSZ78L6F3kVNm0ELKU5ndKhDW+Cs0y9IVO1m3yN+FPK7i
+	39NrOukSNDMBxi98mAKc/jPEVb3aXdMPqqe4G4ANTI+sp2legGinY1FgA+P295uIAAE=
+X-Received: by 2002:a05:6214:2502:b0:6ed:122c:7daa with SMTP id 6a1803df08f44-6f4ff31a17fmr9575446d6.4.1746010106765;
+        Wed, 30 Apr 2025 03:48:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG0I+MWpI/DLGgE0VvQaUagtp3xqrWqaxp0RpsDMxiLjCBXksVORh5F9UEO/SFtS0sPtiEPZg==
+X-Received: by 2002:a05:6214:2502:b0:6ed:122c:7daa with SMTP id 6a1803df08f44-6f4ff31a17fmr9575326d6.4.1746010106413;
+        Wed, 30 Apr 2025 03:48:26 -0700 (PDT)
+Received: from [192.168.65.132] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f701400078sm8682132a12.27.2025.04.30.03.48.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Apr 2025 03:48:25 -0700 (PDT)
+Message-ID: <3a29e34c-d286-4673-adac-1fd8627c3eff@oss.qualcomm.com>
+Date: Wed, 30 Apr 2025 12:48:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 17/23] media: iris: Track flush responses to prevent
- premature completion
-Content-Language: en-US
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        Hans Verkuil
-	<hverkuil@xs4all.nl>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8750-mtp: Add sound (speakers,
+ headset codec, dmics)
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>
-CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@oss.qualcomm.com>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        Nicolas Dufresne
-	<nicolas.dufresne@collabora.com>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <20250417-topic-sm8x50-iris-v10-v7-0-f020cb1d0e98@linaro.org>,
-        <20250424-qcs8300_iris-v5-0-f118f505c300@quicinc.com>,
-        <stable@vger.kernel.org>
-References: <20250428-qcom-iris-hevc-vp9-v2-0-3a6013ecb8a5@quicinc.com>
- <20250428-qcom-iris-hevc-vp9-v2-17-3a6013ecb8a5@quicinc.com>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20250428-qcom-iris-hevc-vp9-v2-17-3a6013ecb8a5@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250424-sm8750-audio-part-2-v1-0-50133a0ec35f@linaro.org>
+ <20250424-sm8750-audio-part-2-v1-2-50133a0ec35f@linaro.org>
+ <dd271e8c-e430-4e6d-88ca-95eabe61ce94@oss.qualcomm.com>
+ <e61e17ca-fed7-4712-96fc-a9a2339de1fb@linaro.org>
+ <9b6c5f67-0bbc-490f-9982-4e28218aa6eb@oss.qualcomm.com>
+ <0e007f7f-d9ff-4b2d-914d-ad62b9983bba@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <0e007f7f-d9ff-4b2d-914d-ad62b9983bba@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: n3Swu7R2cbwe86lIlnI-9_6_6WglRggl
-X-Authority-Analysis: v=2.4 cv=KtlN2XWN c=1 sm=1 tr=0 ts=6811fe3e cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=Gbu0beokyuX9P4B2CwkA:9
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: n3Swu7R2cbwe86lIlnI-9_6_6WglRggl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDA3NSBTYWx0ZWRfXyDRSTNQhYFsv kfuTl93sO9flPEownFjk3kIK3i038K7hgBBXAKlGFuK617Jdtb2f0txlFN3ul7VE7JgLo5uhaKH QSAa1JI6pAmAQht5PbllmSgJOYIDW+OmvitQO8ulvoYBYawS4wRKFxmoUliTLstJ+MyGni6IPnt
- SFqag1ODxavTSBYPJjwru10YJFrNP4ps/VVI+v09BqEeDOjf1FnRNqaJ4/n7tlJTCrhLk0jOVvX htdPdTJRywcKgFpXiegKnxknXbMJTLKdg1WhVnkGpXJIEo3+v8ATantmdoWuqdAGB/jhK6pn3nt /lKPso4VV2SzGCjoNHVSd4B9PtQ22U+jPxqfilS5kbxtKCazdYgQGWKKPLanIFISSvZ2LhzqoSd
- WXrd5a9JWI+mEsHLNvR5R6axc2KyD9D2FNWcuRkA0zp0mMYaQtcILJt/DTs2/ll4EPXayRBz
+X-Authority-Analysis: v=2.4 cv=Bv6dwZX5 c=1 sm=1 tr=0 ts=6811fffb cx=c_pps a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=sEqJwgzUYoqTtiq2YHoA:9 a=QEXdDO2ut3YA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: x3nL-SoC4Q3G6zejPKKSTkr5DJvPwBpP
+X-Proofpoint-ORIG-GUID: x3nL-SoC4Q3G6zejPKKSTkr5DJvPwBpP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDA3NiBTYWx0ZWRfXy4Hr/Lihrj0Z 2czg34P4kiIcgagbkmH+13GGp5bp9QjHy+EbOmMsETFfFDN20lDFsNQqxIx6RWGeWVzjUk45R7M XfoCA0zqAy6RdEl/KQzRhRAU96qLRK3dJqDMRUSalvrSHAKMNM/hgJXEFKMjHIIJZSPUHNsIccH
+ Lu/WEDo2Yg1rYc2GBBYz3mC83g+ojrZ9+7EF4y3cyj36athLufk4vIaC9rCeb5o3ZMwwVfvudmo 5y6qVqDcj+DL4HDwEwukioAMOgSFlvK75pIYFT1utAWw421jlJHDbD570fU8797nHeqDdXnQbD1 5LAa9mpEwbwAcBsha/phvY/w266dR3vXPc7X5dgx21ubNIYGVv8nYgomg3vWuVv5V62R6ekHmYE
+ mrWiDz0TB5/Q9p7aJvYeFnMboklaH6Z3EVL4lxOgvR8UNQfDYtjUy10VpAuWqjDlNM5yuR/P
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-30_03,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- lowpriorityscore=0 phishscore=0 adultscore=0 priorityscore=1501
- malwarescore=0 mlxscore=0 bulkscore=0 mlxlogscore=999 spamscore=0
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504300075
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ mlxlogscore=999 phishscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
+ bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504300076
 
+On 4/30/25 8:19 AM, Krzysztof Kozlowski wrote:
+> On 29/04/2025 21:11, Konrad Dybcio wrote:
+>> On 4/28/25 4:41 PM, Krzysztof Kozlowski wrote:
+>>> On 25/04/2025 11:30, Konrad Dybcio wrote:
+>>>> On 4/24/25 11:40 AM, Krzysztof Kozlowski wrote:
+>>>>> Add device nodes for most of the sound support - WSA883x smart speakers,
+>>>>> WCD9395 audio codec (headset) and sound card - which allows sound
+>>>>> playback via speakers and recording via DMIC microphones.  Changes bring
+>>>>> necessary foundation for headset playback/recording via USB, but that
+>>>>> part is not yet ready.
+>>>>>
+>>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>> ---
+>>>>
+>>>> [...]
+>>>>
+>>>>> +	sound {
+>>>>> +		compatible = "qcom,sm8750-sndcard", "qcom,sm8450-sndcard";
+>>>>> +		model = "SM8750-MTP";
+>>>>> +		audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
+>>>>> +				"SpkrRight IN", "WSA_SPK2 OUT",
+>>>>> +				"IN1_HPHL", "HPHL_OUT",
+>>>>> +				"IN2_HPHR", "HPHR_OUT",
+>>>>> +				"AMIC2", "MIC BIAS2",
+>>>>> +				"VA DMIC0", "MIC BIAS3", /* MIC4 on schematics */
+>>>>> +				"VA DMIC1", "MIC BIAS3", /* MIC1 on schematics */
+>>>>
+>>>> Is this a mistake in what the codec driver exposes, or just a fumble
+>>>> in numbering $somewhere?
+>>>
+>>> Which mistake? MIC4? Schematics call name things differently. They
+>>> always were, so to make it clear for people without schematics I wrote
+>>> which MIC it actually is.
+>>
+>> I'm not sure how to parse your response
+>>
+>> are you saying that there are MIC[0..4] that are/may be connected
+>> to different codec ports, and that the MIC4/1 lines are plumbed to
+>> VA DMIC0/1 respectively?
+> 
+> Yes, as always. Nothing weird here.
+> 
+>>
+>> I think I got confused about the MIC BIAS3 going to both and none
+> 
+> What is both and none?
 
+missing Oxford comma I suppose.. MIC BIAS3 goes to both MIC4 and MIC1
+and neither of them has a '3' in the name. I was wondering whether
+that's intentional.
 
-On 4/28/2025 2:59 PM, Dikshita Agarwal wrote:
-> Currently, two types of flush commands are queued to the firmware,
-> the first flush queued as part of sequence change, does not wait for a
-> response, while the second flush queued as part of stop, expects a
-> completion response before proceeding further.
 > 
-> Due to timing issue, the flush response corresponding to the first
-> command could arrive after the second flush is issued. This casuses the
-> driver to incorrectly assume that the second flush has completed,
-> leading to the premature signaling of flush_completion.
+>> matching the index, but perhaps that's just because it comes from
+>> the WCD (which is the third piece of hw involved beyond VA and the
+>> mic itself)
 > 
-> To address this, introduce a counter to track the number of pending
-> flush responses and signal flush completion only when all expected
-> responses are received.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 11712ce70f8e ("media: iris: implement vb2 streaming ops")
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
->  .../media/platform/qcom/iris/iris_hfi_gen1_command.c    |  4 +++-
->  .../media/platform/qcom/iris/iris_hfi_gen1_response.c   | 17 +++++++++++------
->  drivers/media/platform/qcom/iris/iris_instance.h        |  2 ++
->  3 files changed, 16 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-> index f9f3e2d2ce29..ef3ca676d2ea 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-> @@ -208,8 +208,10 @@ static int iris_hfi_gen1_session_stop(struct iris_inst *inst, u32 plane)
->  		flush_pkt.flush_type = flush_type;
->  
->  		ret = iris_hfi_queue_cmd_write(core, &flush_pkt, flush_pkt.shdr.hdr.size);
-> -		if (!ret)
-> +		if (!ret) {
-> +			inst->flush_responses_pending++;
->  			ret = iris_wait_for_session_response(inst, true);
-> +		}
->  	}
->  
->  	return ret;
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-> index dfca45d85759..01338baf3788 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-> @@ -207,7 +207,8 @@ static void iris_hfi_gen1_event_seq_changed(struct iris_inst *inst,
->  		flush_pkt.shdr.hdr.pkt_type = HFI_CMD_SESSION_FLUSH;
->  		flush_pkt.shdr.session_id = inst->session_id;
->  		flush_pkt.flush_type = HFI_FLUSH_OUTPUT;
-> -		iris_hfi_queue_cmd_write(inst->core, &flush_pkt, flush_pkt.shdr.hdr.size);
-> +		if (!iris_hfi_queue_cmd_write(inst->core, &flush_pkt, flush_pkt.shdr.hdr.size))
-> +			inst->flush_responses_pending++;
->  	}
->  
->  	iris_vdec_src_change(inst);
-> @@ -408,7 +409,9 @@ static void iris_hfi_gen1_session_ftb_done(struct iris_inst *inst, void *packet)
->  		flush_pkt.shdr.hdr.pkt_type = HFI_CMD_SESSION_FLUSH;
->  		flush_pkt.shdr.session_id = inst->session_id;
->  		flush_pkt.flush_type = HFI_FLUSH_OUTPUT;
-> -		iris_hfi_queue_cmd_write(core, &flush_pkt, flush_pkt.shdr.hdr.size);
-> +		if (!iris_hfi_queue_cmd_write(core, &flush_pkt, flush_pkt.shdr.hdr.size))
-> +			inst->flush_responses_pending++;
-> +
->  		iris_inst_sub_state_change_drain_last(inst);
->  
->  		return;
-> @@ -570,7 +573,6 @@ static void iris_hfi_gen1_handle_response(struct iris_core *core, void *response
->  	const struct iris_hfi_gen1_response_pkt_info *pkt_info;
->  	struct device *dev = core->dev;
->  	struct hfi_session_pkt *pkt;
-> -	struct completion *done;
->  	struct iris_inst *inst;
->  	bool found = false;
->  	u32 i;
-> @@ -631,9 +633,12 @@ static void iris_hfi_gen1_handle_response(struct iris_core *core, void *response
->  			if (shdr->error_type != HFI_ERR_NONE)
->  				iris_inst_change_state(inst, IRIS_INST_ERROR);
->  
-> -			done = pkt_info->pkt == HFI_MSG_SESSION_FLUSH ?
-> -				&inst->flush_completion : &inst->completion;
-> -			complete(done);
-> +			if (pkt_info->pkt == HFI_MSG_SESSION_FLUSH) {
-> +				if (--inst->flush_responses_pending <= 0)
-No need to check for < 0 condition as its an unsigned int. Signal when equals 0.
+> Again, what is the mistake you are pointing here?
 
-With above change, mark
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+I'm not necessarily saying this is a mistake, just thinking out loud
+how I understand the non-obvious plumbing
 
-> +					complete(&inst->flush_completion);
-> +			} else {
-> +				complete(&inst->completion);
-> +			}
->  		}
->  		mutex_unlock(&inst->lock);
->  
-> diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
-> index 5150237f0020..9ed197799ee7 100644
-> --- a/drivers/media/platform/qcom/iris/iris_instance.h
-> +++ b/drivers/media/platform/qcom/iris/iris_instance.h
-> @@ -27,6 +27,7 @@
->   * @crop: structure of crop info
->   * @completion: structure of signal completions
->   * @flush_completion: structure of signal completions for flush cmd
-> + * @flush_responses_pending: counter to track number of pending flush responses
->   * @fw_caps: array of supported instance firmware capabilities
->   * @buffers: array of different iris buffers
->   * @fw_min_count: minimnum count of buffers needed by fw
-> @@ -59,6 +60,7 @@ struct iris_inst {
->  	struct iris_hfi_rect_desc	crop;
->  	struct completion		completion;
->  	struct completion		flush_completion;
-> +	u32				flush_responses_pending;
->  	struct platform_inst_fw_cap	fw_caps[INST_FW_CAP_MAX];
->  	struct iris_buffers		buffers[BUF_TYPE_MAX];
->  	u32				fw_min_count;
+[...]
+
+>>>>> +		/*
+>>>>> +		 * WCD9395 RX Port 1 (HPH_L/R)      <=> SWR1 Port 1 (HPH_L/R)
+>>>>> +		 * WCD9395 RX Port 2 (CLSH)         <=> SWR1 Port 2 (CLSH)
+>>>>> +		 * WCD9395 RX Port 3 (COMP_L/R)     <=> SWR1 Port 3 (COMP_L/R)
+>>>>> +		 * WCD9395 RX Port 4 (LO)           <=> SWR1 Port 4 (LO)
+>>>>> +		 * WCD9395 RX Port 5 (DSD_L/R)      <=> SWR1 Port 5 (DSD_L/R)
+>>>>> +		 * WCD9395 RX Port 6 (HIFI_PCM_L/R) <=> SWR1 Port 9 (HIFI_PCM_L/R)
+>>>>> +		 */
+>>>>> +		qcom,rx-port-mapping = <1 2 3 4 5 9>;
+>>>>
+>>>> Does this deserve some dt-bindings constants?
+>>>
+>>> No, because these are hardware details/constants. Drivers do not use them.
+>>
+>> I'd argue it makes sense here - it makes more sense to pass meaningfully
+>> named constants to the driver, rather than blobs with a comment
 > 
+> Sense of what? You want to make it a binding then answer what does it
+> bind, what part of ABI for driver is here a binding (answer none:
+> because driver does not use it)?
+
+Sense of the magic numbers that otherwise require a comment.
+
+dt-bindings don't exclusively contain enums-turned-defines that are
+indices of C arrays - some contain various forms of hardware ABI, be
+it register addresses, or names for magic values
+
+Konrad
 
