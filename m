@@ -1,217 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-56291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B93FBAA4CF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 15:11:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4923CAA4D16
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 15:15:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C5B134C4FFD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 13:08:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 67FB21BA17B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Apr 2025 13:11:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54E99280313;
-	Wed, 30 Apr 2025 13:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10CB625D1FF;
+	Wed, 30 Apr 2025 13:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B59NTOEZ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TdPTRbew"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5B127E7F5
-	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 13:02:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2F125A2B0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 13:09:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746018124; cv=none; b=PKbecnwVhSwGMT6GD7C006qEwQ8vRGcI+sPy8uuG2DjGsxC0UpqAjIyJlyybA0SP4M9d8LTrWNvwZUzI6Uunmv0e5slJxNoNciULxvyUxA7rlatLdw+DXYSpll0uhgvyw90lo6sMC4kovrOlV060l3YFrff2zUbQhRyy2K7+fnk=
+	t=1746018589; cv=none; b=UeKftT6tAb801P2Xjb1kp2MdKXTMm3QPuBL2bXje5G4LaV9LbgVXDwdobhtNpkLmzbxQdZBAUv3FpdbHlZFxr+co4eVsXWn8kTAyzFVR9PtaztkdIkGpcfov/ztxDCfeLwWwD3vbjCEMTLUTHE7YnYBmlhj4KbWYqxyWxnnF8L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746018124; c=relaxed/simple;
-	bh=be21JxufejHw2rq84sJ/VfYaP1y6cCq/ZMTy8SJRrHY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fT1jEn+8bgudrSYPM4vttqKX0QFWeBQZU2///TVNTTb+/Hsv5BxOB6IB/T42DxNSOPpdLlKehLUhS1SpvPMoF/bZ5ooxLXtLLx7KwfMsA6zhh0GrUy/QljXZ1I+uLRWwhYH9W/FgMpZh7nsvveHqROOljWdci1/a262+kwBba1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B59NTOEZ; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3912ebb8e88so475133f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 06:02:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746018121; x=1746622921; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tndmMRLasPafzGI8us3kiKmdtf1aIReqkNl96kpfR9I=;
-        b=B59NTOEZSkmDsh6tERtXuQW0MRWmBlA4Fwb9J/vtgmXIQfUL5x8sqzhOZkJXyrJGaU
-         AGQDhbb9c76c6QR+AI63PTCV/+YNHUv5UTwCQASAqaR0oqE5AJM0lVid3NALAOLfI3UD
-         V2suoFyXu3G6g+evYJLhWNwxjDR2fEBcGRGoUL4uUdjgs5WSonbwQMwdVPGBUPiZmszB
-         VKauNZNZWXEv0Gq+RrUIfvZ1yMrK0sN89wAMQirKOmCdVAG9Oa6TNI87fq3XI0Alewm9
-         ss1bJ8QBPAAhMRlw2BUoqICBH80J0cp28XNoz9wQ4oF1x9PIYSncUTlgR7eZihf54OmX
-         icQw==
+	s=arc-20240116; t=1746018589; c=relaxed/simple;
+	bh=nV185XwheoKL1ckDAuc6YrAB/FExadH5PepDm4c2j8U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=poZlphTFDuskTziNB8qz9r7KTCya1mTZZ/MGbI9jZipu6lVPRwrfjBxRFeaS4hOAvGRfrUTcW1rWAktIPe6Zyo8zDzZMmpEQJw3Whg00RIDcwADwYCD4D4IV0h6qqV/ioPLQER6oZ8E2flR9lQOl3tRonVwiASeU7EAafBQ4/bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TdPTRbew; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53U9RV8P001219
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 13:09:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vRMOzQ1+a8EQloSooTZ1VPQWAuenrRDcnTPBGwn0XDk=; b=TdPTRbewAN+TNHGe
+	NxnkUu8cl0q+5/I3KAw4TNDDFaIwyp6ja6iYQjo/dcbF7M2ZgapbqAw/H5dyN3iI
+	VQex1vfjt+ogLMbv9q7yyFrTPbRhIOvSiDB5kQP1kE4mWkIIp/geLeT7Ifbc7VG0
+	wLIgT07RMsu9I/+9m/bO76jk3zYPrSC3ONZd9EmtdmiKvogGZpDMvG+UORF+sxQw
+	XnZM+IoXtcz+vduJPvPN5ckLfWNxX1k78wy28emvabbeMxJ7mNxmJrjrGRaaLiwV
+	0l4xRDGklngle0GNSdXfGPJie1Q5hIImVQN7cry34YwqVA8D5SJysTQ3QFH/Ro/V
+	iE0zhA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u9t7pf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 13:09:45 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c5af539464so126847885a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 06:09:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746018121; x=1746622921;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tndmMRLasPafzGI8us3kiKmdtf1aIReqkNl96kpfR9I=;
-        b=gYXJ3f1T982PDLhDVxo5fzu5X+NdUfzid6gSmBOtLTzC54yZSRnV5FnHKrUhAqdHtt
-         N/zxRU1BUcZWrRPgj0zetEedL+eCrQxrMiLKordtK/hdHcM/CfuVhkTieGOIx/lfLdEa
-         FZpBWIqb/TH1Ag6wp3YhD+N1PI7/pVcbCrakzZ8zA79iRUv9WFS9ci473hXEmOy2gTnt
-         1JuLB97dazDJ3HxSqVPLEZJt1vFBRfW2j0aoK0uckihswnnkfsVbi6J80yDIrBQQgCpH
-         7oNKiCSlFc46qM5XXrDVCKJq7UGKxiBnOkPv5ip7H/khmAVOLIQjq0ahi5rERoVZ6in1
-         EFBQ==
-X-Gm-Message-State: AOJu0YwLOfeQPfDA26zAEEDRKLAozv4IHE5xe93IyU/d5TtBANFfziHj
-	2Ttlc+MljrAC/Sy5a0KAbDHwUhJRMfFW+0Y1tzPRy0R34rC/pi29Jdy04pjhuC4=
-X-Gm-Gg: ASbGncuNKPdftiQ8mpoMj/s1ndsBjk62+pkJQBaFThJg5huL915TPDGEkjVvqAF0xgp
-	qsiMwhRz0UgBFWEjqaFRI/uBsc2sXrzQ5GqPFWHJWw3uBouWnuQT2ux+yYJekQpUvsY/HKOhXAm
-	KC9F1EZPQukG/PEEakoGNXNKaIKHbBVdiAahQguxzIDT93XhHZva5Frsii0uDgSekEs2jCqlOdd
-	qGNY8lfVYQDGHCp2Yo6km/frsAM4OuElR/IAoBztdHwlp5g9j1UR6nQTxOvcpTmZI7TwFuM5dbi
-	GiPiaaouKuX8CDKZF+Rs5TAWlXeFAO1RwazgskVKOHZF3Z4WgcDpQCL3dUFSqGmMkwTjXA==
-X-Google-Smtp-Source: AGHT+IFi7AgExT+UHxJr37nV09KKAM1KH3QuKRe5WJLZQda5LnvxXNiP5Xe86NeUpMJvDYVJnyIoGw==
-X-Received: by 2002:a05:6000:2404:b0:3a0:9188:ef58 with SMTP id ffacd0b85a97d-3a091d667cdmr96227f8f.14.1746018120453;
-        Wed, 30 Apr 2025 06:02:00 -0700 (PDT)
-Received: from [192.168.1.28] ([178.197.207.88])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e46c23sm16884043f8f.75.2025.04.30.06.01.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Apr 2025 06:01:59 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 30 Apr 2025 15:00:54 +0200
-Subject: [PATCH v5 24/24] drm/msm/mdss: Add support for SM8750
+        d=1e100.net; s=20230601; t=1746018585; x=1746623385;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vRMOzQ1+a8EQloSooTZ1VPQWAuenrRDcnTPBGwn0XDk=;
+        b=HcH6cebYQmEJeRgRlIVsvdI8cc5Yu4+Xlz0nvMWLOsbA/U/d8FKkNBrj7SHr/2O12J
+         ojzSL7so3ZkU8oOZ7xp/ax0nwt/0mkT43KnVqUrCHdPGwxOjugNmCwehOm2v+sTa/aO8
+         vZ6JAOV5iUp5wbNiC0lETpq5iW9yXNFwwdX+Pwalfmf5SiucFSEg3FOyEawXC52rs48q
+         br1r9UNZog2fuSmPg4ReaSC+3AeQj+jREfurtyZ67Z8Ga8Ceflc0PzH9dQ+S31sEjy8v
+         fidqApkUr/gkF8fanofrDp5rR3+QPhsXqkkx4S5ypHcn4h5hdRB4vY+QSjUuty/GEJmu
+         yEVw==
+X-Forwarded-Encrypted: i=1; AJvYcCV4I97ji1lYPTks8FTGWJua60pqC2Gaxb+VXT0fO00SRcYQ1Q3WQvUgiCSni97WbCVdNZbbMyHHARgAzV0J@vger.kernel.org
+X-Gm-Message-State: AOJu0YyTAh7ja9i+LHdspceKyocNTL/0mI84tcWO1dL80pKVZc2j3UeH
+	51neUxVztZxypPbZWAEoNY40753Tmwel2UMSkcwg0kTOJz3oOE3TtaYNKmIp7BclvmzqyJ8GKmh
+	OnMjnJC/6141IQfxdxKEvLgYfwJ/hpJqcHUeePH94b09IlNyARNOlj9RpT8d7YEvK
+X-Gm-Gg: ASbGncva1hp9H6PKX+QJHW/w28L0jQl2AdftkxA//EbB9Tdh4cfMYuod1VC3yRZKs1e
+	UQ6xKvbpScBjREj9j9RalcWXUjyV1zDiPNHJlB0pFolzRDh+r1fDkILJF3A81rKbZ+/5RrhrHZj
+	DY8Rgp0mf4gSztBK2aVVCeuJFq4Tnl34f+yXDpNjKBxyJC1kH1+GeB9qqXDSApnmEwUrr8rsJ0P
+	3R2oT/PWN/N/BFE05b/r+tHcvT9vTnLPsg8q/uP6T509ha4ktRp31N3lai3Mx+O+/1IMbPtPljN
+	tG7ZXbWEeO7kv/0e9+Vj4syHNeCckcI6zuQKtS3qYwILmO0+9/T0h/qfvdffgTksYxY=
+X-Received: by 2002:a05:620a:4494:b0:7c0:af16:b4a8 with SMTP id af79cd13be357-7cacc172af5mr26594085a.3.1746018584840;
+        Wed, 30 Apr 2025 06:09:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEO097WTrfuIxU7CNWA83CThbCdCAbQ6J4gL7u3jo8Kby/5gjdIscRtpOeE3Q1bQkyisdevfw==
+X-Received: by 2002:a05:620a:4494:b0:7c0:af16:b4a8 with SMTP id af79cd13be357-7cacc172af5mr26591185a.3.1746018584214;
+        Wed, 30 Apr 2025 06:09:44 -0700 (PDT)
+Received: from [192.168.65.132] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6e4cd79dsm920573466b.38.2025.04.30.06.09.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Apr 2025 06:09:43 -0700 (PDT)
+Message-ID: <98a4ad20-c141-4280-801e-015dafd1fb39@oss.qualcomm.com>
+Date: Wed, 30 Apr 2025 15:09:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250430-b4-sm8750-display-v5-24-8cab30c3e4df@linaro.org>
-References: <20250430-b4-sm8750-display-v5-0-8cab30c3e4df@linaro.org>
-In-Reply-To: <20250430-b4-sm8750-display-v5-0-8cab30c3e4df@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Krishna Manikandan <quic_mkrishn@quicinc.com>, 
- Jonathan Marek <jonathan@marek.ca>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Dmitry Baryshkov <lumag@kernel.org>, Rob Clark <robdclark@gmail.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Rob Clark <robdclark@chromium.org>, linux-clk@vger.kernel.org, 
- Srinivas Kandagatla <srini@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3191;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=be21JxufejHw2rq84sJ/VfYaP1y6cCq/ZMTy8SJRrHY=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoEh8PByvnI0Trv3zsZhzQ6VfXKE9citqdjgGC3
- PsTmPZCN/WJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaBIfDwAKCRDBN2bmhouD
- 1wrrD/4u2PuQ2ouXBCx8tly07ATHb1/Zj1EzEBIaw19Oi3HJew675YV4BPClQF9J7CrOB2m/ywR
- hbw/dqZXqTP4kUCrmDAqP8pwBvmJGIPQcCuznZGjaUFbdLyBqJeVV95jMfLE31jOOkDhWSZEYwV
- 5jc29JXj/nPLvDAjfUv/yylQnfHKEpLeliBjwI9j6hFpDUHUEIWYsFrD7XC5gRowjCIrVWYArhu
- mg57pYWMhuBdbvtzbhsZ5Tu84iPLXB98/DznQXv97jj0t81MD1NB6vz1NN6c3s1uOrA4shA+N6L
- fpAXoNrr2+b/F6pw5r/BomV7TrYL3CX0nN4cxW11IA74vPAIV8Jgu2t0mOui5caqBaPR0rvT36m
- Kw1qNZIVTme4Ql8nZmmon1XlHcDKyjXljdJQyS0zNuyPOR4h9bFO5Fd4ZQi/vMYZIyNgL4xIVVn
- eFobglFBZ/q6CZkQ1vAotPvPkkIfBmigkKk7Q5ZdddttpPEA/Nq6UN77mcgpg+KyOVSMIToABqe
- FFzMztgK+MUi2pBiL4pp5TvizsJL5qolZqdIT6SSwni8B/WhYEl/YOH7cqaAccf7vh7IpLLW1tK
- DlnN4VVi0lbl86fzVBqvpNpfIbVkSE2PxXaOdvdUFFFEYmDm5zo0ifolEz4rzBiPZlD1TBHug82
- ZgJejiSvYezahmg==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFT v6 2/5] drm/msm/adreno: Add speedbin data for SM8550 /
+ A740
+To: neil.armstrong@linaro.org, Konrad Dybcio
+ <konrad.dybcio@oss.qualcomm.com>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>,
+        Simona Vetter <simona@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+References: <20250430-topic-smem_speedbin_respin-v6-0-954ff66061cf@oss.qualcomm.com>
+ <20250430-topic-smem_speedbin_respin-v6-2-954ff66061cf@oss.qualcomm.com>
+ <13cd20c6-f758-45ff-82d1-4fd663d1698c@linaro.org>
+ <886d979d-c513-4ab8-829e-4a885953079a@oss.qualcomm.com>
+ <b838f9bd-0537-4f8d-b24b-d96700d566c8@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <b838f9bd-0537-4f8d-b24b-d96700d566c8@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: UPeSwWKPKITviM9FhNLXGoyYixpZLXTG
+X-Proofpoint-ORIG-GUID: UPeSwWKPKITviM9FhNLXGoyYixpZLXTG
+X-Authority-Analysis: v=2.4 cv=UZZRSLSN c=1 sm=1 tr=0 ts=68122119 cx=c_pps a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=KKAkSRfTAAAA:8 a=aak9J4RPMLM6hOP-xocA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDA5NCBTYWx0ZWRfX6Xq7mn+bcTOw iKG+rC9D9wbBqL4n0ZAE/9tNlw8wOknFoXHBhnAACTsskHkrzJKCSRFKJ405wD/FcaOy/J4XL68 pdZRlWQC6aejWnLN1p34PyLsRsWKBOeMNjeNQVW7xPQAxngqHDPfAFCu/F3Q+vgOjxDFMKvSs+p
+ TwIzZfjHDYtpDa3nZ59RK5h5Tll6TRWEyMnfDN2BhJfRc30aWVvZGJgtQeORar+0MxmV3YPcqlA GBRx4G8x+AyJaYde+BJIh6OnGVM5RDInqMB9vgEpMueTn2LUX5dbGQ4WHImfNBVj+KcfTkTrssO nXklVdcpyAXpaucrup2KzkVntDQ7IBFuAhtMsxLyOn2zM4qfDXCq5wKsMJ53rmvrnyQ6bFFvmaG
+ +SmIEwfWw/zdae8OKcRL1OPcNICDwUrgFQRHoE/HriCVu9BvQmrud+ceaQ2YmmaofJMzzKfv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-30_04,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ mlxlogscore=999 spamscore=0 priorityscore=1501 impostorscore=0 mlxscore=0
+ malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504300094
 
-Add support for the Qualcomm SM8750 platform.
+On 4/30/25 2:49 PM, neil.armstrong@linaro.org wrote:
+> On 30/04/2025 14:35, Konrad Dybcio wrote:
+>> On 4/30/25 2:26 PM, neil.armstrong@linaro.org wrote:
+>>> Hi,
+>>>
+>>> On 30/04/2025 13:34, Konrad Dybcio wrote:
+>>>> From: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>>
+>>>> Add speebin data for A740, as found on SM8550 and derivative SoCs.
+>>>>
+>>>> For non-development SoCs it seems that "everything except FC_AC, FC_AF
+>>>> should be speedbin 1", but what the values are for said "everything" are
+>>>> not known, so that's an exercise left to the user..
+>>>>
+>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>> ---
+>>>>    drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 8 ++++++++
+>>>>    1 file changed, 8 insertions(+)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+>>>> index 53e2ff4406d8f0afe474aaafbf0e459ef8f4577d..61daa331567925e529deae5e25d6fb63a8ba8375 100644
+>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+>>>> @@ -11,6 +11,9 @@
+>>>>    #include "a6xx.xml.h"
+>>>>    #include "a6xx_gmu.xml.h"
+>>>>    +#include <linux/soc/qcom/smem.h>
+>>>> +#include <linux/soc/qcom/socinfo.h>
+>>>> +
+>>>>    static const struct adreno_reglist a612_hwcg[] = {
+>>>>        {REG_A6XX_RBBM_CLOCK_CNTL_SP0, 0x22222222},
+>>>>        {REG_A6XX_RBBM_CLOCK_CNTL2_SP0, 0x02222220},
+>>>> @@ -1431,6 +1434,11 @@ static const struct adreno_info a7xx_gpus[] = {
+>>>>            },
+>>>>            .address_space_size = SZ_16G,
+>>>>            .preempt_record_size = 4192 * SZ_1K,
+>>>> +        .speedbins = ADRENO_SPEEDBINS(
+>>>> +            { ADRENO_SKU_ID(SOCINFO_FC_AC), 0 },
+>>>> +            { ADRENO_SKU_ID(SOCINFO_FC_AF), 0 },
+>>>> +            /* Other feature codes (on prod SoCs) should match to speedbin 1 */
+>>>
+>>> I'm trying to understand this sentence. because reading patch 4, when there's no match
+>>> devm_pm_opp_set_supported_hw() is simply never called so how can it match speedbin 1 ?
+>>
+>> What I'm saying is that all other entries that happen to be possibly
+>> added down the line are expected to be speedbin 1 (i.e. BIT(1))
+>>
+>>> Before this change the fallback was speedbin = BIT(0), but this disappeared.
+>>
+>> No, the default was to allow speedbin mask ~(0U)
+> 
+> Hmm no:
+> 
+>     supp_hw = fuse_to_supp_hw(info, speedbin);
+> 
+>     if (supp_hw == UINT_MAX) {
+>         DRM_DEV_ERROR(dev,
+>             "missing support for speed-bin: %u. Some OPPs may not be supported by hardware\n",
+>             speedbin);
+>         supp_hw = BIT(0); /* Default */
+>     }
+> 
+>     ret = devm_pm_opp_set_supported_hw(dev, &supp_hw, 1);
+>     if (ret)
+>         return ret;
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/gpu/drm/msm/msm_mdss.c | 33 +++++++++++++++++++++++++++++++++
- drivers/gpu/drm/msm/msm_mdss.h |  1 +
- 2 files changed, 34 insertions(+)
+Right, that's my own code even..
 
-diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index dcb49fd30402b80edd2cb5971f95a78eaad6081f..3f00eb6de3a9d2bee7637c6f516efff78b7d872b 100644
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -222,6 +222,24 @@ static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss)
- 	}
- }
- 
-+static void msm_mdss_setup_ubwc_dec_50(struct msm_mdss *msm_mdss)
-+{
-+	const struct msm_mdss_data *data = msm_mdss->mdss_data;
-+	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
-+		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit);
-+
-+	if (data->ubwc_bank_spread)
-+		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
-+
-+	if (data->macrotile_mode)
-+		value |= MDSS_UBWC_STATIC_MACROTILE_MODE;
-+
-+	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
-+
-+	writel_relaxed(4, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
-+	writel_relaxed(1, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
-+}
-+
- #define MDSS_HW_MAJ_MIN		\
- 	(MDSS_HW_VERSION_MAJOR__MASK | MDSS_HW_VERSION_MINOR__MASK)
- 
-@@ -339,6 +357,9 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
- 	case UBWC_4_3:
- 		msm_mdss_setup_ubwc_dec_40(msm_mdss);
- 		break;
-+	case UBWC_5_0:
-+		msm_mdss_setup_ubwc_dec_50(msm_mdss);
-+		break;
- 	default:
- 		dev_err(msm_mdss->dev, "Unsupported UBWC decoder version %x\n",
- 			msm_mdss->mdss_data->ubwc_dec_version);
-@@ -722,6 +743,17 @@ static const struct msm_mdss_data sm8550_data = {
- 	.reg_bus_bw = 57000,
- };
- 
-+static const struct msm_mdss_data sm8750_data = {
-+	.ubwc_enc_version = UBWC_5_0,
-+	.ubwc_dec_version = UBWC_5_0,
-+	.ubwc_swizzle = 6,
-+	.ubwc_bank_spread = true,
-+	/* TODO: highest_bank_bit = 2 for LP_DDR4 */
-+	.highest_bank_bit = 3,
-+	.macrotile_mode = true,
-+	.reg_bus_bw = 57000,
-+};
-+
- static const struct msm_mdss_data x1e80100_data = {
- 	.ubwc_enc_version = UBWC_4_0,
- 	.ubwc_dec_version = UBWC_4_3,
-@@ -756,6 +788,7 @@ static const struct of_device_id mdss_dt_match[] = {
- 	{ .compatible = "qcom,sm8450-mdss", .data = &sm8350_data },
- 	{ .compatible = "qcom,sm8550-mdss", .data = &sm8550_data },
- 	{ .compatible = "qcom,sm8650-mdss", .data = &sm8550_data},
-+	{ .compatible = "qcom,sm8750-mdss", .data = &sm8750_data},
- 	{ .compatible = "qcom,x1e80100-mdss", .data = &x1e80100_data},
- 	{}
- };
-diff --git a/drivers/gpu/drm/msm/msm_mdss.h b/drivers/gpu/drm/msm/msm_mdss.h
-index 14dc53704314558841ee1fe08d93309fd2233812..dd0160c6ba1a297cea5b87cd8b03895b2aa08213 100644
---- a/drivers/gpu/drm/msm/msm_mdss.h
-+++ b/drivers/gpu/drm/msm/msm_mdss.h
-@@ -22,6 +22,7 @@ struct msm_mdss_data {
- #define UBWC_3_0 0x30000000
- #define UBWC_4_0 0x40000000
- #define UBWC_4_3 0x40030000
-+#define UBWC_5_0 0x50000000
- 
- const struct msm_mdss_data *msm_mdss_get_mdss_data(struct device *dev);
- 
+in any case, the kernel can't know about the speed bins that aren't
+defined and here we only define bin0, which doesn't break things
 
--- 
-2.45.2
+the kernel isn't aware about hw with bin1 with or without this change
+so it effectively doesn't matter
 
+Konrad
 
