@@ -1,483 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-56352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A785AA5993
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 04:11:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF5C5AA5B30
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 08:49:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 061111B649E0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 02:11:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A083F9C6033
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 06:49:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81CE322D7BF;
-	Thu,  1 May 2025 02:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86D9126B2D1;
+	Thu,  1 May 2025 06:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Vc5sHvH4"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="HFDcAJtV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0EA2DC782;
-	Thu,  1 May 2025 02:11:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB0033C9
+	for <linux-arm-msm@vger.kernel.org>; Thu,  1 May 2025 06:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746065484; cv=none; b=kPhTe+o1mqpQKB1CFg5DQGpWLjb5MGvKoqNaO8D59+3dyuu1b42nGnBjJdWPO+pV8p10SN1j4lqlncfAKjHlFXzGpmqD3IzvMh0QjHBKhg87RfI2WEqFGeU16pDlgM3H14ggoE1wJxR8jJoUXKKHtC7klHCsMQWEx/lIly4BLnU=
+	t=1746082157; cv=none; b=kUcNvsRSDTQie5Xnk4uk0xLDWWutB9bNOU80+R3jJwR0k1W+Xup7mQuZnI/bCnIshjSW+Z2pZln+VJWcUD8aB3nCrzT/VVLL33P9oHzqYPjHxsEPK5mTDjLyq9bUzRz/DLWuVoox2tej92GsxnvaXvERuP+B0cNVqC4zupGIuqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746065484; c=relaxed/simple;
-	bh=QCU84C1+jt6S7w8R68yQBOo4pwhZQQBeq0mikj2sVkA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=atRKgGKuVkmiUbWEGvYk1DWEdsUHb786xmhGaJYjIOVo++zAi0GZeZi1I7C9hu+NSE/ivT9HEVgJVyEMaVpJOF1LIo9szU4V/dWMCLnQOHRdODRBw3+Z/IQ9/78JW0Eb1oGdO0eWFImVQlQnwxetm/gtfUYE5dNczrlmfTFHkxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Vc5sHvH4; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53UH8Z8i032428;
-	Thu, 1 May 2025 02:10:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JiZQUqeanaN5clXQ+wER3ee28qDCHJOcqmU6LGoCEkU=; b=Vc5sHvH4LmvV92m+
-	W7WSYJnHy0k8bPKs7u2jGrlnUeohbMKn6BP66rpGLArBmdXo9YPCmqUu8jPzhH2y
-	EasKwHaghZZCPaTdr5iF7AO7Ig7V+sOc5MOX5pXN1Oinb/J3fL4RlgOJHeby5rGO
-	Udlk/jdcFkLmI2STa+dqSIYyE/+KoTv3pkdcWw/J1lPRI3VDMLxuiDAAVo8YYS4T
-	IgrQAV3jY2ZvOxl8zg23t31nsh7pSLjuTokfHP8IK8PjB3AKK7Xew15ladBn61hs
-	ccq/3XEcA2qwddtS0TvNUzNAFIwH5tneP2LWi8SdRLqYRqCM53X8CbZZTzjACYLF
-	pILWLA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u2c536-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 01 May 2025 02:10:57 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5412AuNr009978
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 1 May 2025 02:10:56 GMT
-Received: from [10.71.110.123] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 30 Apr
- 2025 19:10:55 -0700
-Message-ID: <6495e342-512f-469f-9d66-bb9f47fb551d@quicinc.com>
-Date: Wed, 30 Apr 2025 19:10:53 -0700
+	s=arc-20240116; t=1746082157; c=relaxed/simple;
+	bh=116cbfgSezwsafks+V57dwlIk5wKMliQXk8+AlFgvVQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=AgiNUyoXZKDzAzDGd83g016o8yXPjRpdXXIq4UalBXvjkPE2TVseHvjNxdPSth7+eOVYPxaGbs0EnDHnnUWyQg+CLP4n9jQKCJIr2RDcCKXSXSU3EZHchMhuevw1jIywiScwswQ3r/25xLKK+IEw6w85Hk+cB9bfM5qw8RjB1eE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=HFDcAJtV; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ac25d2b2354so97603066b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 23:49:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1746082154; x=1746686954; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ICmVPwMjmOyli7RFKP/N7pH8Fgah0F5XlIiAvT0GKe8=;
+        b=HFDcAJtVf82bLkYnIFrvVYU1G3hK7DVDMD91FZOijkiHBSMYr/idJFBOCU18Rgpaqx
+         uBnMJnFSM1XOa7/jcBoi3ukZXvfYOPssGVWgqjutnBIn/UvNcx4SZaGx1d/JREzGDB0j
+         egtT//RENKPa+MHqq8LAa2nGl8ETbel45D/t3UNIqYr2Ty1I3eiSEYIJZY+XYNySgCdl
+         hYnP5cBbCeELCX7jdEWcaMplq2Dli84AIeXrFCrlVznIQ8SJV8Ter9Kb8mNGhR7jzYuy
+         q3bkoVwJEobCL795ouZFPVi0FejRfLUWPweyFIbOrq4+vMc85RvUd9jYcn+d592SS96G
+         ZtAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746082154; x=1746686954;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ICmVPwMjmOyli7RFKP/N7pH8Fgah0F5XlIiAvT0GKe8=;
+        b=CQ0zNxcSr+/1Cjaw9hktZhL/WNtk2dWkAN7Hruk0M9u0pVwVhE1oA3xweaN0GQaOM0
+         9VHgwBo5+6MwwyuQF/xAaR5AIWthyeFiuxC+PHCvsodjvdTIEuJPfpKvYyquR/qQBFWZ
+         iHO+rKNurZdAI4RyK9mjUZhFcemNpXCiKORK92l8VYllQSKhGS9KlGkHGZ/MpbkoXljD
+         ADv53/9KiZCcSgZBuhME8JozLZqYOj+ORjIk14g7nc1RDKOYuDGnFMYrTIFIkMthKCOV
+         uHoKdCjDO+EIijsjIDB1KJfUNXKQa0jYFtyRs2w33QUxEmE9af3NX8YtjXcA3JCKm2MP
+         bJnA==
+X-Forwarded-Encrypted: i=1; AJvYcCXRkSZQ/It/x+JuaQacAFSsy5luqBcseOdlzdISlKYZqLaZ7gRjr78aubIOBy9dX1qjkhdVDzZNN5zbH8I7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy68ELYvB9FUpZP8zrbH3T1VBuEyjWg9HpIUpbq2fzd3l066xDV
+	u7TmjkxaWPycDIAjxZgFisHqDCKToeUj+WVrfnhD0fPqmMdcL5bviw1lS4LFEx0=
+X-Gm-Gg: ASbGncsTfanM6UY3rhuxadJ26tbqzyyawIZvvYV/AC4kxpspj4WLkhyDoAsn52RzQpm
+	wPaXBQyckVRkXC2p0QvhpG0gAAbZAemtOmfOremXAvT9IdDlrZTNtFgt1BGaM74p2Xoqos7olf8
+	vXT+4Fz3WxNxvfQbm6rIh6y0ancHsyI5KoiwLHBhhsLoMAHJGTFn3Lu0/ac6pVrjlRRHO5+ssPr
+	dw0gvzkMTFtJkmw/SrJiY50Ma5HPImjq0TCR3qVPIi0hTTMIN0n4vWhjxOldHOqtUCrkHROZ9tG
+	smRtrTTiMbsvXOPRTfLKDfbNZWngoXDeUzsk4gR+zd5PZ6HgsYlrqcSuj+547brG7/hYy2xe0c9
+	whAo=
+X-Google-Smtp-Source: AGHT+IFecEcz1pbl0bNby1akbXk/OS9BB4XW+tEKuivEZ9a3ze3eHfwybQTHoaKz7WPzovMAVqwFdA==
+X-Received: by 2002:a17:907:7daa:b0:aca:cda4:9aae with SMTP id a640c23a62f3a-acefbfe36a4mr110480866b.37.1746082153725;
+        Wed, 30 Apr 2025 23:49:13 -0700 (PDT)
+Received: from [100.64.0.4] (31-151-138-250.dynamic.upc.nl. [31.151.138.250])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6ecf8cc1sm1005486066b.89.2025.04.30.23.49.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Apr 2025 23:49:13 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v2 0/5] Enable USB audio offloading on Fairphone 4
+ smartphone
+Date: Thu, 01 May 2025 08:48:46 +0200
+Message-Id: <20250501-fp4-usb-audio-offload-v2-0-30f4596281cd@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/4] drm/msm/dp: Introduce link training per-segment
- for LTTPRs
-To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
-        Dmitry Baryshkov
-	<lumag@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <dmitry.baryshkov@oss.qualcomm.com>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Marijn
- Suijten" <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        <laurentiu.tudor1@dell.com>, <abel.vesa@linaro.org>,
-        <johan@kernel.org>, Johan Hovold
-	<johan+linaro@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>
-References: <20250430001330.265970-1-alex.vinarskis@gmail.com>
- <20250430001330.265970-5-alex.vinarskis@gmail.com>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20250430001330.265970-5-alex.vinarskis@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: XtVw7kzpMyYCKLrA4hjIdtZ-rvW-Bgjx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAxMDAxNiBTYWx0ZWRfX1YCOGXV0e5iu PMhz7Z7D0qFrubN4m+pB6p9xkK8QpDXXf/dkTiGeEkfFe64yi1hCes2qvuhdC1R9iPPn8wU6b8y /wQzP49RhGKXnSlEf07NWAxXGJe/rsQUq5WhF+h3v2etq8lNLkvQyXVcW3T9vW5J33LKi/ksb39
- qlY6LqcNLTmERDnaXcicyoE3ihqAo9GDfkXfUnlkU1w3qaqv+wyxHz/ErBOXhzYoZWD5ugljn+Y zzDWPVEHe2QN3Q5TtXD9C6pRDrEwh9Oq7t+LFM3N+R4jo1oxXs+SfTbWxq51k/9AzhGCLUhq4yI uNGM0Ts2Ezor/74/gM5Osfc4teJJqt5nJmOnfJf6wvbhG1jHwuC6eKTLIU0sy7go10NkXPLuxCV
- n3IERY0QrL07WbR+ftRTjJfQEtT63TDsk7lTJE6gOvhjuh5C0+xN0fOlEeiD5NC+591DZhD6
-X-Authority-Analysis: v=2.4 cv=b5qy4sGx c=1 sm=1 tr=0 ts=6812d831 cx=c_pps a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=DQ8eSEry4n17BMDTzUUA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: XtVw7kzpMyYCKLrA4hjIdtZ-rvW-Bgjx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-01_01,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 phishscore=0
- mlxscore=0 impostorscore=0 malwarescore=0 spamscore=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
- clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505010016
+X-B4-Tracking: v=1; b=H4sIAE4ZE2gC/4WQvW7EIBCEX8WizkbAgv+qvEd0BYYlRoqND2wr0
+ cnvHuwrki7ljDQzn+bBMqVAmfXVgyXaQw5xLkK+VMyOZv4gCK5oJrnUXEkNflGw5QHM5kKE6P1
+ nNA5Iu8YPWjvZIivZJZEPX1fv++2pE923Ur8+zd/2MnZ2oxSQpxo1B7MkENojNaRIW9Pvgv3lu
+ RKKt7wrNBrcAjlus4MBm7r1yEU3uH6/OAaTCWycprD2FXbouNXKGkKBonFkTMcVoiyud53Sqli
+ DZSfxGPIa0/d1TNk/kf/5YBfAwXfc60bUWJN68yakZYwzvRYEdjuO4wfPcLnJcAEAAA==
+X-Change-ID: 20250425-fp4-usb-audio-offload-e5d7fb55d283
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>, 
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Wesley Cheng <quic_wcheng@quicinc.com>, 
+ Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
+ Luca Weiss <luca.weiss@fairphone.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
 
+Since the series for the USB sound offloading driver was finally merged,
+we can add the sm6350 dts and enable it on Fairphone 4.
 
+A few devicetree binding bits have also been missing in that series, so
+there's some extra patches for the basics in this series.
 
-On 4/29/2025 5:09 PM, Aleksandrs Vinarskis wrote:
-> DisplayPort requires per-segment link training when LTTPR are switched
-> to non-transparent mode, starting with LTTPR closest to the source.
-> Only when each segment is trained individually, source can link train
-> to sink.
-> 
-> Implement per-segment link traning when LTTPR(s) are detected, to
-> support external docking stations. On higher level, changes are:
-> 
-> * Pass phy being trained down to all required helpers
-> * Run CR, EQ link training per phy
-> * Set voltage swing, pre-emphasis levels per phy
-> 
-> This ensures successful link training both when connected directly to
-> the monitor (single LTTPR onboard most X1E laptops) and via the docking
-> station (at least two LTTPRs).
-> 
-> Fixes: 72d0af4accd9 ("drm/msm/dp: Add support for LTTPR handling")
-> 
+Depends on:
+- For qcom,sm8250.yaml & sm8250.c:
+  https://lore.kernel.org/linux-arm-msm/20250425-fp5-dp-sound-v3-0-7cb45180091b@fairphone.com/T/
+- For dts:
+  https://lore.kernel.org/linux-arm-msm/20250321-sm6350-apr-v1-1-7805ce7b4dcf@fairphone.com/
 
-Thanks for the patch to improve and add support for link training in 
-non-transparent mode.
+Devicetree patches go through qcom
 
-Some questions below as the DP 2.1a spec documentation is not very clear 
-about segmented link training as you noted in the cover letter, so I am 
-also only reviewing i915 as reference here.
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v2:
+- Move num-hc-interrupters prop to sm6350.dtsi (Konrad)
+- Sort cpu & codec nodes correctly (Konrad)
+- Remove usb-soc-be prop as it's no longer needed (Wesley)
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20250425-fp4-usb-audio-offload-v1-0-f90f571636e4@fairphone.com
 
+---
+Luca Weiss (5):
+      ASoC: dt-bindings: qcom,q6afe: Document q6usb subnode
+      ASoC: dt-bindings: qcom,sm8250: Add Fairphone 4 sound card
+      ASoC: qcom: sm8250: Add Fairphone 4 soundcard compatible
+      arm64: dts: qcom: sm6350: Add q6usbdai node
+      arm64: dts: qcom: sm7225-fairphone-fp4: Enable USB audio offload support
 
-> Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> Tested-by: Rob Clark <robdclark@gmail.com>
-> Tested-by: Stefan Schmidt <stefan.schmidt@linaro.org>
-> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->   drivers/gpu/drm/msm/dp/dp_ctrl.c | 126 ++++++++++++++++++++++---------
->   1 file changed, 89 insertions(+), 37 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index d8633a596f8d..35b28c2fcd64 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1034,10 +1034,12 @@ static int msm_dp_ctrl_set_vx_px(struct msm_dp_ctrl_private *ctrl,
->   	return 0;
->   }
->   
-> -static int msm_dp_ctrl_update_vx_px(struct msm_dp_ctrl_private *ctrl)
-> +static int msm_dp_ctrl_update_phy_vx_px(struct msm_dp_ctrl_private *ctrl,
-> +					enum drm_dp_phy dp_phy)
->   {
->   	struct msm_dp_link *link = ctrl->link;
-> -	int ret = 0, lane, lane_cnt;
-> +	int lane, lane_cnt, reg;
-> +	int ret = 0;
->   	u8 buf[4];
->   	u32 max_level_reached = 0;
->   	u32 voltage_swing_level = link->phy_params.v_level;
-> @@ -1075,8 +1077,13 @@ static int msm_dp_ctrl_update_vx_px(struct msm_dp_ctrl_private *ctrl)
->   
->   	drm_dbg_dp(ctrl->drm_dev, "sink: p|v=0x%x\n",
->   			voltage_swing_level | pre_emphasis_level);
-> -	ret = drm_dp_dpcd_write(ctrl->aux, DP_TRAINING_LANE0_SET,
-> -					buf, lane_cnt);
-> +
-> +	if (dp_phy == DP_PHY_DPRX)
-> +		reg = DP_TRAINING_LANE0_SET;
-> +	else
-> +		reg = DP_TRAINING_LANE0_SET_PHY_REPEATER(dp_phy);
-> +
-> +	ret = drm_dp_dpcd_write(ctrl->aux, reg, buf, lane_cnt);
+ .../devicetree/bindings/sound/qcom,q6afe.yaml      | 13 ++++++++
+ .../devicetree/bindings/sound/qcom,sm8250.yaml     |  1 +
+ arch/arm64/boot/dts/qcom/sm6350.dtsi               | 11 +++++++
+ arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  | 36 ++++++++++++++++++++++
+ sound/soc/qcom/sm8250.c                            |  1 +
+ 5 files changed, 62 insertions(+)
+---
+base-commit: 393d0c54cae31317deaa9043320c5fd9454deabc
+change-id: 20250425-fp4-usb-audio-offload-e5d7fb55d283
+prerequisite-change-id: 20250321-sm6350-apr-15f3e7e4e5ca:v1
+prerequisite-patch-id: 69859554c94de52068406dab0d2869ca26072c78
+prerequisite-change-id: 20240809-fp5-dp-sound-b3768f3019bd:v3
+prerequisite-patch-id: 2d8997a2be02cfddf3a054c79e7eb308a6d06710
+prerequisite-patch-id: 1b7c8f00ab50ae71c0221868578b9c1dfe939e4d
+prerequisite-patch-id: 4fd0673c4d35c1fefce63ec5785ff5ea67cc3d3a
+prerequisite-patch-id: f5ec3a893de19900f62dc691d83986f1104914b0
+prerequisite-patch-id: fce7573c39e768f7a09c002064b6159b8e91161a
 
-For the max voltage and swing levels, it seems like we need to use the 
-source (DPTX) or the DPRX immediately upstream of the RX we are trying 
-to train. i915 achieves it with below:
-
-         /*
-          * Get voltage_max from the DPTX_PHY (source or LTTPR) upstream 
-from
-          * the DPRX_PHY we train.
-          */
-         if (intel_dp_phy_is_downstream_of_source(intel_dp, dp_phy))
-                 voltage_max = intel_dp->voltage_max(intel_dp, crtc_state);
-         else
-                 voltage_max = intel_dp_lttpr_voltage_max(intel_dp, 
-dp_phy + 1);
-
-
-But I do not see (unless I missed) how this patch takes care of this 
-requirement.
-
-Same holds true for preemph too
-
-         if (intel_dp_phy_is_downstream_of_source(intel_dp, dp_phy))
-                 preemph_max = intel_dp->preemph_max(intel_dp);
-         else
-                 preemph_max = intel_dp_lttpr_preemph_max(intel_dp, 
-dp_phy + 1);
-
-         drm_WARN_ON_ONCE(display->drm,
-                          preemph_max != DP_TRAIN_PRE_EMPH_LEVEL_2 &&
-                          preemph_max != DP_TRAIN_PRE_EMPH_LEVEL_3);
-
-
->   	if (ret == lane_cnt)
->   		ret = 0;
->   
-> @@ -1084,9 +1091,10 @@ static int msm_dp_ctrl_update_vx_px(struct msm_dp_ctrl_private *ctrl)
->   }
->   
->   static bool msm_dp_ctrl_train_pattern_set(struct msm_dp_ctrl_private *ctrl,
-> -		u8 pattern)
-> +		u8 pattern, enum drm_dp_phy dp_phy)
->   {
->   	u8 buf;
-> +	int reg;
->   	int ret = 0;
->   
->   	drm_dbg_dp(ctrl->drm_dev, "sink: pattern=%x\n", pattern);
-> @@ -1096,7 +1104,12 @@ static bool msm_dp_ctrl_train_pattern_set(struct msm_dp_ctrl_private *ctrl,
->   	if (pattern && pattern != DP_TRAINING_PATTERN_4)
->   		buf |= DP_LINK_SCRAMBLING_DISABLE;
->   
-> -	ret = drm_dp_dpcd_writeb(ctrl->aux, DP_TRAINING_PATTERN_SET, buf);
-> +	if (dp_phy == DP_PHY_DPRX)
-> +		reg = DP_TRAINING_PATTERN_SET;
-> +	else
-> +		reg = DP_TRAINING_PATTERN_SET_PHY_REPEATER(dp_phy);
-> +
-> +	ret = drm_dp_dpcd_writeb(ctrl->aux, reg, buf);
->   	return ret == 1;
->   }
->   
-> @@ -1115,12 +1128,16 @@ static int msm_dp_ctrl_read_link_status(struct msm_dp_ctrl_private *ctrl,
->   }
->   
->   static int msm_dp_ctrl_link_train_1(struct msm_dp_ctrl_private *ctrl,
-> -			int *training_step)
-> +			int *training_step, enum drm_dp_phy dp_phy)
->   {
-> +	int delay_us;
->   	int tries, old_v_level, ret = 0;
->   	u8 link_status[DP_LINK_STATUS_SIZE];
->   	int const maximum_retries = 4;
->   
-> +	delay_us = drm_dp_read_clock_recovery_delay(ctrl->aux,
-> +						    ctrl->panel->dpcd, dp_phy, false);
-> +
->   	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
->   
->   	*training_step = DP_TRAINING_1;
-> @@ -1129,18 +1146,19 @@ static int msm_dp_ctrl_link_train_1(struct msm_dp_ctrl_private *ctrl,
->   	if (ret)
->   		return ret;
->   	msm_dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_1 |
-> -		DP_LINK_SCRAMBLING_DISABLE);
-> +		DP_LINK_SCRAMBLING_DISABLE, dp_phy);
->   
-> -	ret = msm_dp_ctrl_update_vx_px(ctrl);
-> +	msm_dp_link_reset_phy_params_vx_px(ctrl->link);
-> +	ret = msm_dp_ctrl_update_phy_vx_px(ctrl, dp_phy);
->   	if (ret)
->   		return ret;
->   
->   	tries = 0;
->   	old_v_level = ctrl->link->phy_params.v_level;
->   	for (tries = 0; tries < maximum_retries; tries++) {
-> -		drm_dp_link_train_clock_recovery_delay(ctrl->aux, ctrl->panel->dpcd);
-> +		fsleep(delay_us);
->   
-> -		ret = msm_dp_ctrl_read_link_status(ctrl, link_status);
-> +		ret = drm_dp_dpcd_read_phy_link_status(ctrl->aux, dp_phy, link_status);
->   		if (ret)
->   			return ret;
->   
-> @@ -1161,7 +1179,7 @@ static int msm_dp_ctrl_link_train_1(struct msm_dp_ctrl_private *ctrl,
->   		}
->   
->   		msm_dp_link_adjust_levels(ctrl->link, link_status);
-> -		ret = msm_dp_ctrl_update_vx_px(ctrl);
-> +		ret = msm_dp_ctrl_update_phy_vx_px(ctrl, dp_phy);
->   		if (ret)
->   			return ret;
->   	}
-> @@ -1213,21 +1231,31 @@ static int msm_dp_ctrl_link_lane_down_shift(struct msm_dp_ctrl_private *ctrl)
->   	return 0;
->   }
->   
-> -static void msm_dp_ctrl_clear_training_pattern(struct msm_dp_ctrl_private *ctrl)
-> +static void msm_dp_ctrl_clear_training_pattern(struct msm_dp_ctrl_private *ctrl,
-> +					       enum drm_dp_phy dp_phy)
->   {
-> -	msm_dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_DISABLE);
-> -	drm_dp_link_train_channel_eq_delay(ctrl->aux, ctrl->panel->dpcd);
-> +	int delay_us;
-> +
-> +	msm_dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_DISABLE, dp_phy);
-> +
-> +	delay_us = drm_dp_read_channel_eq_delay(ctrl->aux,
-> +						ctrl->panel->dpcd, dp_phy, false);
-> +	fsleep(delay_us);
->   }
->   
->   static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
-> -			int *training_step)
-> +			int *training_step, enum drm_dp_phy dp_phy)
->   {
-> +	int delay_us;
->   	int tries = 0, ret = 0;
->   	u8 pattern;
->   	u32 state_ctrl_bit;
->   	int const maximum_retries = 5;
->   	u8 link_status[DP_LINK_STATUS_SIZE];
->   
-> +	delay_us = drm_dp_read_channel_eq_delay(ctrl->aux,
-> +						ctrl->panel->dpcd, dp_phy, false);
-> +
->   	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
->   
->   	*training_step = DP_TRAINING_2;
-> @@ -1247,12 +1275,12 @@ static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
->   	if (ret)
->   		return ret;
->   
-> -	msm_dp_ctrl_train_pattern_set(ctrl, pattern);
-> +	msm_dp_ctrl_train_pattern_set(ctrl, pattern, dp_phy);
->   
->   	for (tries = 0; tries <= maximum_retries; tries++) {
-> -		drm_dp_link_train_channel_eq_delay(ctrl->aux, ctrl->panel->dpcd);
-> +		fsleep(delay_us);
->   
-> -		ret = msm_dp_ctrl_read_link_status(ctrl, link_status);
-> +		ret = drm_dp_dpcd_read_phy_link_status(ctrl->aux, dp_phy, link_status);
->   		if (ret)
->   			return ret;
->   
-> @@ -1262,7 +1290,7 @@ static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
->   		}
->   
->   		msm_dp_link_adjust_levels(ctrl->link, link_status);
-> -		ret = msm_dp_ctrl_update_vx_px(ctrl);
-> +		ret = msm_dp_ctrl_update_phy_vx_px(ctrl, dp_phy);
->   		if (ret)
->   			return ret;
->   
-> @@ -1271,9 +1299,32 @@ static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
->   	return -ETIMEDOUT;
->   }
->   
-> +static int msm_dp_ctrl_link_train_1_2(struct msm_dp_ctrl_private *ctrl,
-> +				      int *training_step, enum drm_dp_phy dp_phy)
-> +{
-> +	int ret;
-> +
-> +	ret = msm_dp_ctrl_link_train_1(ctrl, training_step, dp_phy);
-> +	if (ret) {
-> +		DRM_ERROR("link training #1 on phy %d failed. ret=%d\n", dp_phy, ret);
-> +		return ret;
-> +	}
-> +	drm_dbg_dp(ctrl->drm_dev, "link training #1 on phy %d successful\n", dp_phy);
-> +
-> +	ret = msm_dp_ctrl_link_train_2(ctrl, training_step, dp_phy);
-> +	if (ret) {
-> +		DRM_ERROR("link training #2 on phy %d failed. ret=%d\n", dp_phy, ret);
-> +		return ret;
-> +	}
-> +	drm_dbg_dp(ctrl->drm_dev, "link training #2 on phy %d successful\n", dp_phy);
-> +
-> +	return 0;
-> +}
-> +
->   static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
->   			int *training_step)
->   {
-> +	int i;
->   	int ret = 0;
->   	const u8 *dpcd = ctrl->panel->dpcd;
->   	u8 encoding[] = { 0, DP_SET_ANSI_8B10B };
-> @@ -1286,8 +1337,6 @@ static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
->   	link_info.rate = ctrl->link->link_params.rate;
->   	link_info.capabilities = DP_LINK_CAP_ENHANCED_FRAMING;
->   
-> -	msm_dp_link_reset_phy_params_vx_px(ctrl->link);
-> -
->   	msm_dp_aux_link_configure(ctrl->aux, &link_info);
->   
->   	if (drm_dp_max_downspread(dpcd))
-> @@ -1302,24 +1351,27 @@ static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
->   				&assr, 1);
->   	}
->   
-> -	ret = msm_dp_ctrl_link_train_1(ctrl, training_step);
-> +	for (i = ctrl->link->lttpr_count - 1; i >= 0; i--) {
-> +		enum drm_dp_phy dp_phy = DP_PHY_LTTPR(i);
-> +
-> +		ret = msm_dp_ctrl_link_train_1_2(ctrl, training_step, dp_phy);
-> +		msm_dp_ctrl_clear_training_pattern(ctrl, dp_phy);
-> +
-> +		if (ret)
-> +			break;
-> +	}
-> +
->   	if (ret) {
-> -		DRM_ERROR("link training #1 failed. ret=%d\n", ret);
-> +		DRM_ERROR("link training of LTTPR(s) failed. ret=%d\n", ret);
->   		goto end;
->   	}
->   
-> -	/* print success info as this is a result of user initiated action */
-> -	drm_dbg_dp(ctrl->drm_dev, "link training #1 successful\n");
-> -
-> -	ret = msm_dp_ctrl_link_train_2(ctrl, training_step);
-> +	ret = msm_dp_ctrl_link_train_1_2(ctrl, training_step, DP_PHY_DPRX);
->   	if (ret) {
-> -		DRM_ERROR("link training #2 failed. ret=%d\n", ret);
-> +		DRM_ERROR("link training on sink failed. ret=%d\n", ret);
->   		goto end;
->   	}
->   
-> -	/* print success info as this is a result of user initiated action */
-> -	drm_dbg_dp(ctrl->drm_dev, "link training #2 successful\n");
-> -
->   end:
->   	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
->   
-> @@ -1636,7 +1688,7 @@ static int msm_dp_ctrl_link_maintenance(struct msm_dp_ctrl_private *ctrl)
->   	if (ret)
->   		goto end;
->   
-> -	msm_dp_ctrl_clear_training_pattern(ctrl);
-> +	msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
->   
->   	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_SEND_VIDEO);
->   
-> @@ -1660,7 +1712,7 @@ static bool msm_dp_ctrl_send_phy_test_pattern(struct msm_dp_ctrl_private *ctrl)
->   		return false;
->   	}
->   	msm_dp_catalog_ctrl_send_phy_pattern(ctrl->catalog, pattern_requested);
-> -	msm_dp_ctrl_update_vx_px(ctrl);
-> +	msm_dp_ctrl_update_phy_vx_px(ctrl, DP_PHY_DPRX);
->   	msm_dp_link_send_test_response(ctrl->link);
->   
->   	pattern_sent = msm_dp_catalog_ctrl_read_phy_pattern(ctrl->catalog);
-> @@ -1902,7 +1954,7 @@ int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl)
->   			}
->   
->   			/* stop link training before start re training  */
-> -			msm_dp_ctrl_clear_training_pattern(ctrl);
-> +			msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
->   		}
->   
->   		rc = msm_dp_ctrl_reinitialize_mainlink(ctrl);
-> @@ -1926,7 +1978,7 @@ int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl)
->   		 * link training failed
->   		 * end txing train pattern here
->   		 */
-> -		msm_dp_ctrl_clear_training_pattern(ctrl);
-> +		msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
->   
->   		msm_dp_ctrl_deinitialize_mainlink(ctrl);
->   		rc = -ECONNRESET;
-> @@ -1997,7 +2049,7 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train
->   		msm_dp_ctrl_link_retrain(ctrl);
->   
->   	/* stop txing train pattern to end link training */
-> -	msm_dp_ctrl_clear_training_pattern(ctrl);
-> +	msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
->   
->   	/*
->   	 * Set up transfer unit values and set controller state to send
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
 
