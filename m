@@ -1,79 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-56383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 667C4AA6148
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 18:20:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77F6CAA6227
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 19:13:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0049D1BA74C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 16:20:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F6EF3A8812
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 17:12:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 428EF202F9F;
-	Thu,  1 May 2025 16:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4A6621B9C8;
+	Thu,  1 May 2025 17:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gf8pRYB9"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="FAomvwPx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from box.trvn.ru (box.trvn.ru [45.141.101.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3E81EA7C6;
-	Thu,  1 May 2025 16:20:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F68920297D;
+	Thu,  1 May 2025 17:12:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.141.101.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746116422; cv=none; b=nHKWFNxAjaoGeecy0OZOoWmfvR6lTsSCtGNF61Krer6v7hTJC8BSAXc1wwpYu0kEYTUQhSQKmSBJZwoG6iNjbv5httN752sTfSeYUNx8S2yWiH1Z7U2c8fgGmHJW/FEiJ7+GCVr5T4cEHvoYK1Ls63KC5fTv+HwEWx91bcY1iX0=
+	t=1746119566; cv=none; b=hbryQu5MD3lo+LSFPWQV385O9NiZAmjih4PkS29QJ/ObG3/nH9oPs0/TgFGkBfkrRvvhTBSPAtWNA+E/cPRgWCmccbxlc2m8yd4kfnUIkFvSTGYHh8GTGWn0WTNWwmgu08HkeDtdxs+Vot+lOedCWDDd2y62MCCKWlAJZ4Q4vP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746116422; c=relaxed/simple;
-	bh=0WdEZAHYRN7xKQ7Usp85cXY+ysmZrzFqY+HZd+niGkg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=sTTL/8/B22SlJbRq8xKgKo0HBREWrBA3zqmIxksbGg39xzVsNFXj+oCV9ymRxJMQVWV3pOnI5Add1OT7mqsmJFUnicr/UvfKjXGCQrzvkCSSiuv1ZmOY4yUQeTw1IUc6pKltx4RcygjaZ2skNqTBffaR2qIb8D6jykRycwH8b2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gf8pRYB9; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-acbb85ce788so237266966b.3;
-        Thu, 01 May 2025 09:20:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746116419; x=1746721219; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uOmy2E0oN5vjJ0You/8n6Z0Pmepb4FK1Hw7LfqptwBg=;
-        b=gf8pRYB9FqIeCOtlPLUnFKMJvGhJ6IZ/K3uv8EiYU55vLL962UnryZ/ejUZ0SXBNtm
-         rTE6zzlAueQI//R+QwSAUKfZjltGsnlyChfS1/WzO//S9u2wfEQYlAJ8mMa1QS961NdP
-         6NeDASfU5MG9LLQd67tW49BwTyaNU8zJUKwrBoc2BBP6kXRHF1ES/UjzQG+HlHy5U+y/
-         V4DIliMjF72hzx8+I4aj3W4yORE9pzdeR7pAQXvZ3lfibbJWwS4yok2cxtFjYlR65qTJ
-         SHoBXRFP6By4ZVeJ5y2ym8pFbiZy+DedLBrg3u6xnkUeb9TjmE0+8yARaEd1hKP8IDdH
-         rknA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746116419; x=1746721219;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uOmy2E0oN5vjJ0You/8n6Z0Pmepb4FK1Hw7LfqptwBg=;
-        b=Wh/0Lf9y0PrD8ZYUHLmjJjLSXtIGsgVDcHjA1/toUbEMrmPEWlojzcVJdutCvps4x/
-         4ulVV5ve37VjGY83eIXr0GIqdhtHKIrat/oobjT2sQRklD7nU4+PASdtnCo2f2+1cYAh
-         NUjrSuQGfM5lfx2d+oiHI+1sjeUF1jKe+2mYVBuma7euTuGbkby6KHsQMD0ZBcsOu6Ru
-         bHk+G9zkC7NzRhBUSRWc2eFnjj/yqIYRnRI+bw9H1ffa9wV+n7malRoz5Ve8ptl28lOw
-         R7bLEgLIVBRBaZTicJ+8T/FNCYGJBqRjI/Yc88mIrM0JnMVwIODqpJP0ngGowebHKlxY
-         QIYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVUX+BlsVQS1OrZAveFLFFMS/m8yHXFMnpvNE0/p4bu0SIR54oavLBIC5iDjV/jUOZNlVrK5V/ZdLCLHRGr@vger.kernel.org, AJvYcCWBrJ9qZgRtub/BjVLsU6xUAZU6xcJCsk0V73sdVJGxtdASWHPp7q8Q2lFn0bLhVPXn5/Q49zvyQzriA6pg@vger.kernel.org
-X-Gm-Message-State: AOJu0YxoZ1Coga+TG6YjQeeYK1sTPcQ6osoKg6CZiBexe/nV2I3Lfu96
-	XrakIB5AFYwBd9tQdO+f0W9BAx07ZGi2/vzSp6KL/TGdxCEUnW7W
-X-Gm-Gg: ASbGncsQHfnhcWcU6DdME+U189fkBnGIpxhziMGEQCw50gwQejtLZQPjpTLeJPZlIX6
-	MWJa7wHtV0bHL2fTPvltzj6ydZyAsWj26+QbdzaXoN2j5NImIZoLSBQn3+DbnClcG+SDzhrszNV
-	32IBZ6YS/n5a3YiKkUZCHQGE4V7A2fa7EVeXmDlYRCNgr0Yhbw3nDUq8577LP5a+rGKZid+63Eh
-	zSTzWSmW9BIg64Zv2rI7iQgh2fhIagSdkIZUXek8ViiNwfzbYEuVrCpqZaz+1sY5IByiUrzHpYO
-	9GTBqV3YHiwFCsbd3zkidz7tBONWcOww5Purpjf6r0kx85s4sutdnTle/eKMc8MHlNK2pw==
-X-Google-Smtp-Source: AGHT+IHzfi4VSpxpv+pztKx4Lp0PesbOchWTJcGKA3qJLKG6pRrja2Nh+1nKve5gcaP5v06HJrjpXg==
-X-Received: by 2002:a17:907:6d28:b0:abf:7453:1f1a with SMTP id a640c23a62f3a-acef450d143mr416290066b.36.1746116418313;
-        Thu, 01 May 2025 09:20:18 -0700 (PDT)
-Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ad0c70d3a7bsm60970066b.25.2025.05.01.09.20.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 May 2025 09:20:17 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Thu, 01 May 2025 18:19:16 +0200
-Subject: [PATCH next] spi: spi-qpic-snand: validate user/chip specific ECC
- properties
+	s=arc-20240116; t=1746119566; c=relaxed/simple;
+	bh=ieE5qaTc9keiFt3Q+KpxfpARZITd2pBFeqqbYdAjccE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=fxkHP2A07xh0XEH1UkgX2dEV7EPqS2JcwfX/S21COFy6i52/7uokxCcTJ8tpauxbet7mLXloJKvAiUGtw3A7DVfE/qy3D6uouIdXQBlVzAflfF5Y3tkw0r1aRRTJ4Nnq94NIB3NxWNVEFRHftLny6wXd2gk4K9TMJ3qm24mDhtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=FAomvwPx; arc=none smtp.client-ip=45.141.101.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1746119045; bh=ieE5qaTc9keiFt3Q+KpxfpARZITd2pBFeqqbYdAjccE=;
+	h=From:Subject:Date:To:Cc:From;
+	b=FAomvwPx6jOcwQfzG2bbSpwVFNmIvMdEZ8Bdyy7eGG6O6p86tqBRkpkU+Zw33jXda
+	 d55Q1tRw6jVXZCNNhc4rK/OZjIMIdp7B51wS/jbqEbEAKUWigSr0w0LQKFErXHV4mt
+	 kBCKKcQeCDbm7zt9Gnbq9FYl3PrjTQWjs12lYOrDIwST/1WCSpPz21JWoFFWMSi3YG
+	 5n9JgBaMZWHUr5zWJTGOsIhjtiAoYP46JNn+faOwHZZVRNV/uzH4sD2MFyjtfTCyIg
+	 /Js0JmiN9P4d701/7PYw6nOJWuk/EnWy0cfsD0Z+oAifjkLYp/qVBLVYADScLJoZ9O
+	 CTav4BC8szlJA==
+Received: from authenticated-user (box.trvn.ru [45.141.101.25])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id BB9681E36;
+	Thu,  1 May 2025 22:04:04 +0500 (+05)
+From: Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH 0/5] arm64: dts: qcom: Add EL2 overlays for WoA devices
+Date: Thu, 01 May 2025 22:03:40 +0500
+Message-Id: <20250501-sc-el2-overlays-v1-0-9202e59e3348@trvn.ru>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,191 +57,91 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250501-qpic-snand-validate-ecc-v1-1-532776581a66@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAOfE2gC/x3MQQqDMBBG4avIrDsQMwjiVaSLNPmrAzLaREQQ7
- 27o8lu8d1FBVhQamosyDi26WkX7aijOwSawpmryzneucy3/No1cLFjiIyyawg5GjCy9fAQi8NJ
- TrbeMr57/80iGc6f3fT9cPBVCbwAAAA==
-X-Change-ID: 20250501-qpic-snand-validate-ecc-383b3e33e238
-To: Mark Brown <broonie@kernel.org>, 
- Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Cc: linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+X-B4-Tracking: v=1; b=H4sIAGypE2gC/x3MSwqAMAwA0auUrA20kVL0KuLCT6oBUWlAlOLdL
+ S7fYiaDchJWaE2GxJeoHHuBqwxM67AvjDIXA1ny1luHOiFvhMfFaRsexZGaUJOPdaAGSnUmjnL
+ /x65/3w9rfLc5YQAAAA==
+X-Change-ID: 20250501-sc-el2-overlays-b297325f3729
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
+Cc: Marc Zyngier <maz@kernel.org>, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2755; i=nikita@trvn.ru;
+ h=from:subject:message-id; bh=ieE5qaTc9keiFt3Q+KpxfpARZITd2pBFeqqbYdAjccE=;
+ b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBoE6mARyVw0wPR3BN5m4JSHf+gtq08Cgj3V++6m
+ WCKSQ9/svSJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCaBOpgAAKCRBDHOzuKBm/
+ dc8bD/9dX1nbcPwKqnvsZymGfVU+zaIQKZcKNRF+l1v9UVGVS98YMSlWnIKgCvPGpFhnBAwCd1A
+ gTucteL2UClV8HHLgRl5BSO1LuURaZMd9i2cEf7JqAeXBCiWedyGOhgRoPvAqf+DSVFOMchTYDB
+ q5TZdiJBL9jjg7tj4QHe2tQmRlISdRydugvq+0+V4ldRYRW6l6gN4SoOLmloRsS5nZ9aAkHEZgl
+ t1TjnvbiVhp3fmhYT5w0KE/gn92JpsE5UNk7hmKqOV+oKb162as3Mzv+KTEt6TUCfq8gGrc6Owg
+ KWRnLkwf0s+54mDvWgeIN2rs6sfY1fHd1GT9aTvgQG+LwDKHELeBuZqgSRuDNFFkcQN9ZjuAzfU
+ TvWFNkJU9Qej0tLIZDFM7ux5bt+0Iu3v7xzHlHDA4B+0amWd2xlwRf/X9CLxg4+EtKPV1UEj+tS
+ tBUIkgy5O1970SYk4Z4eQ/s0Y4fsiR8BiEN43iQuNfdgcPXuuyn+LTQzD1HAVQiQYucCSJqC18Q
+ fCQ2bLcIMBD4KhQ7KowOSHLqHW6qdkeZRo33XcRbmfQAWJpgrkPiKDz8Nz/9LaFOqDQ+K7ui1LS
+ +gH0KzFbtyexxP8hRMark6Fbfea3Op0cCv9fcqHp8bhPd/aXv7zVzhkLHyhmqt0SxebIteJMlSP
+ 0UW/mJBTW70SYrQ==
+X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
+ fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
 
-The driver only supports 512 bytes ECC step size and 4 bit ECC strength
-at the moment, however it does not reject unsupported step/strength
-configurations. Due to this, whenever the driver is used with a flash
-chip which needs stronger ECC protection, the following warning is shown
-in the kernel log:
+WoA devices use firmware very similar to android, which means that Linux
+has to run in EL1 due to the presence of Qualcomm's hypervisor (QHEE or
+Gunyah). However Windows can replace that hypervisor using Secure-Launch
+flow.
 
-  [    0.574648] spi-nand spi0.0: GigaDevice SPI NAND was found.
-  [    0.635748] spi-nand spi0.0: 256 MiB, block size: 128 KiB, page size: 2048, OOB size: 128
-  [    0.649079] nand: WARNING: (null): the ECC used on your system is too weak compared to the one required by the NAND chip
+More recently the same approach became possible to be used to boot Linux
+in EL2 on those devices, thanks to a tool called slbounce[1].
 
-Although the message indicates that something is wrong, but it often gets
-unnoticed, which can cause serious problems. For example when the user
-writes something into the flash chip despite the warning, the written data
-may won't be readable by the bootloader or by the boot ROM. In the worst
-case, when the attached SPI NAND chip is the boot device, the board may not
-be able to boot anymore.
+As of now, booting in EL2 comes with some downsides, most notably that
+DSP remoteprocs (importantly, ADSP) can't be booted as Linux relied on
+hyp's service to authenticate and launch the firmware. The lack of ADSP
+results in missing battery/charging and type-c services (alongside with
+missing sound of course). On the other hand it becomes more clear that
+running under QHEE/Gunyah /also/ has downsides apart from lacking
+virtualization support. For example, x1e devices can't use more than
+32GiB of ram when running under Gunyah.
 
-Also, it is not even possible to create a backup of the flash, because
-reading its content results in bogus data. For example, dumping the first
-page of the flash gives this:
+As booting in EL2 depreves us of QHEE/Gunyah services, some changes to
+the DT are needed to boot in EL2 correctly:
 
-  # hexdump -C -n 2048 /dev/mtd0
-  00000000  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  *
-  00000040  0f 0f 0f 0f 0f 0f 0f 0d  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  00000050  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  *
-  000001c0  0f 0f 0f 0f ff 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  000001d0  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  *
-  00000200  0f 0f 0f 0f f5 5b ff ff  0f 0f 0f 0f 0f 0f 0f 0f  |.....[..........|
-  00000210  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  *
-  000002f0  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f 0f 1f 0f 0f  |................|
-  00000300  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  *
-  000003c0  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f ff 0f 0f 0f  |................|
-  000003d0  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  *
-  00000400  0f 0f 0f 0f 0f 0f 0f 0f  e9 74 c9 06 f5 5b ff ff  |.........t...[..|
-  00000410  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  *
-  000005d0  0f 0f 0f 0f ff 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  000005e0  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  *
-  00000600  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f c6 be 0f c3  |................|
-  00000610  e9 74 c9 06 f5 5b ff ff  0f 0f 0f 0f 0f 0f 0f 0f  |.t...[..........|
-  00000620  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  *
-  00000770  0f 0f 0f 0f 8f 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  00000780  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  *
-  00000800
-  #
+- GPU ZAP shader must be disabled. Linux will zap the gpu itself;
+- If PCIe is present, SMMUv3 must be enabled and controlled properly;
+- On x1 devices, hyp-emulated watchdog must be disabled.
 
-Doing the same by using the downstream kernel results in different output:
+To make it easier to run WoA devices in EL2, this series introduces
+per-SoC EL2 overlays and -el2.dtb variants of WoA device DTBs. Ready
+presence of -el2.dtb-s will allow people to more easily use those
+devices in EL2, especially as some recent work on fixing ADSP-related
+limitations (at least on x1e) is already being done and can benefit EL2
+case as well. [2]
 
-  # hexdump -C -n 2048 /dev/mtd0
-  00000000  0f 0f 0f 0f 0f 0f 0f 0f  0f 0f 0f 0f 0f 0f 0f 0f  |................|
-  *
-  00000800
-  #
+[1] https://github.com/TravMurav/slbounce
+[2] https://git.codelinaro.org/stephan.gerhold/linux/-/commit/7c2a82017d32a4a0007443680fd0847e7c92d5bb
 
-This patch adds some sanity checks to the code to prevent using the driver
-with unsupported ECC step/strength configurations. After the change, probing
-of the driver fails in such cases:
-
-  [    0.655038] spi-nand spi0.0: GigaDevice SPI NAND was found.
-  [    0.659159] spi-nand spi0.0: 256 MiB, block size: 128 KiB, page size: 2048, OOB size: 128
-  [    0.669138] qcom_snand 79b0000.spi: only 4 bits ECC strength is supported
-  [    0.677476] nand: No suitable ECC configuration
-  [    0.689909] spi-nand spi0.0: probe with driver spi-nand failed with error -95
-
-This helps to avoid the aforementioned hassles until support for 8 bit ECC
-strength gets implemented.
-
-Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 ---
-Marked for next because it depends on commit f48d80503504 ("spi: spi-qpic-snand:
-use kmalloc() for OOB buffer allocation").
----
- drivers/spi/spi-qpic-snand.c | 42 +++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 37 insertions(+), 5 deletions(-)
+Nikita Travkin (5):
+      arm64: dts: qcom: sc7180: Add EL2 overlay for WoA devices
+      arm64: dts: qcom: sc8280xp: Add PCIe IOMMU
+      arm64: dts: qcom: sc8280xp: Add EL2 overlay for WoA devices
+      arm64: dts: qcom: x1e80100: Add PCIe IOMMU
+      arm64: dts: qcom: x1e/x1p: Add EL2 overlay for WoA devices
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index d0e4f49cd89b977a64fc529aebbae36409efed0f..88f8fa98687fa292861d46648872135aa7fad80f 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -249,9 +249,11 @@ static const struct mtd_ooblayout_ops qcom_spi_ooblayout = {
- static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
- {
- 	struct qcom_nand_controller *snandc = nand_to_qcom_snand(nand);
-+	struct nand_ecc_props *reqs = &nand->ecc.requirements;
-+	struct nand_ecc_props *user = &nand->ecc.user_conf;
- 	struct nand_ecc_props *conf = &nand->ecc.ctx.conf;
- 	struct mtd_info *mtd = nanddev_to_mtd(nand);
--	int cwperpage, bad_block_byte;
-+	int cwperpage, bad_block_byte, ret;
- 	struct qpic_ecc *ecc_cfg;
- 
- 	cwperpage = mtd->writesize / NANDC_STEP_SIZE;
-@@ -260,11 +262,39 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
- 	ecc_cfg = kzalloc(sizeof(*ecc_cfg), GFP_KERNEL);
- 	if (!ecc_cfg)
- 		return -ENOMEM;
-+
-+	if (user->step_size && user->strength) {
-+		ecc_cfg->step_size = user->step_size;
-+		ecc_cfg->strength = user->strength;
-+	} else if (reqs->step_size && reqs->strength) {
-+		ecc_cfg->step_size = reqs->step_size;
-+		ecc_cfg->strength = reqs->strength;
-+	} else {
-+		/* use defaults */
-+		ecc_cfg->step_size = NANDC_STEP_SIZE;
-+		ecc_cfg->strength = 4;
-+	}
-+
-+	if (ecc_cfg->step_size != NANDC_STEP_SIZE) {
-+		dev_err(snandc->dev,
-+			"only %u bytes ECC step size is supported\n",
-+			NANDC_STEP_SIZE);
-+		ret = -EOPNOTSUPP;
-+		goto err_free_ecc_cfg;
-+	}
-+
-+	if (ecc_cfg->strength != 4) {
-+		dev_err(snandc->dev,
-+			"only 4 bits ECC strength is supported\n");
-+		ret = -EOPNOTSUPP;
-+		goto err_free_ecc_cfg;
-+	}
-+
- 	snandc->qspi->oob_buf = kmalloc(mtd->writesize + mtd->oobsize,
- 					GFP_KERNEL);
- 	if (!snandc->qspi->oob_buf) {
--		kfree(ecc_cfg);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto err_free_ecc_cfg;
- 	}
- 
- 	memset(snandc->qspi->oob_buf, 0xff, mtd->writesize + mtd->oobsize);
-@@ -279,8 +309,6 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
- 	ecc_cfg->bytes = ecc_cfg->ecc_bytes_hw + ecc_cfg->spare_bytes + ecc_cfg->bbm_size;
- 
- 	ecc_cfg->steps = 4;
--	ecc_cfg->strength = 4;
--	ecc_cfg->step_size = 512;
- 	ecc_cfg->cw_data = 516;
- 	ecc_cfg->cw_size = ecc_cfg->cw_data + ecc_cfg->bytes;
- 	bad_block_byte = mtd->writesize - ecc_cfg->cw_size * (cwperpage - 1) + 1;
-@@ -338,6 +366,10 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
- 		ecc_cfg->strength, ecc_cfg->step_size);
- 
- 	return 0;
-+
-+err_free_ecc_cfg:
-+	kfree(ecc_cfg);
-+	return ret;
- }
- 
- static void qcom_spi_ecc_cleanup_ctx_pipelined(struct nand_device *nand)
-
+ arch/arm64/boot/dts/qcom/Makefile          | 54 ++++++++++++++++++++----------
+ arch/arm64/boot/dts/qcom/sc7180-el2.dtso   | 22 ++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp-el2.dtso | 44 ++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi     | 14 ++++++++
+ arch/arm64/boot/dts/qcom/x1-el2.dtso       | 46 +++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi     | 16 ++++++++-
+ 6 files changed, 177 insertions(+), 19 deletions(-)
 ---
-base-commit: a7f035c2c72496cf7ac34bfaa8c289e0d4c45836
-change-id: 20250501-qpic-snand-validate-ecc-383b3e33e238
+base-commit: 8a2d53ce3c5f82683ad3df9a9a55822816fe64e7
+change-id: 20250501-sc-el2-overlays-b297325f3729
 
 Best regards,
 -- 
-Gabor Juhos <j4g8y7@gmail.com>
+Nikita Travkin <nikita@trvn.ru>
 
 
