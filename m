@@ -1,141 +1,265 @@
-Return-Path: <linux-arm-msm+bounces-56378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E25BAA6018
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 16:34:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 002CFAA60DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 17:44:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 947953A4C20
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 14:34:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AEDCA3BB6CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 15:44:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 872C9202F8F;
-	Thu,  1 May 2025 14:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC2BB2045AD;
+	Thu,  1 May 2025 15:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wuJk7iO0"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="HmRMe8WE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2061.outbound.protection.outlook.com [40.107.220.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21F0201033
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 May 2025 14:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746110021; cv=none; b=YyqZgD+KJsugf+OH6afULuDYdrXMTGYjtT3WOxujMf1bH5wDPvY3H4yZ00DPtNhP+TuMRWCAAMhH3TsPJSz0KgSyYBaC0XeSf3yZxgd+jq8c69qTsgDsCO2YOs3w1eeOQYAZQ1++eov4fRPzQmuIalC+M355wb6PgAY5Z9yCuQQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746110021; c=relaxed/simple;
-	bh=2aoVFkAjElaHENHtg8TjDWPYjXCiMNrGnaFnDbM6YaE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sg29px5VnshT0SPAshvrC0hAKHEARIdtA2iOT5cc7jeEML0d6pvS14OY136vS24G59Lvgj9w/pPg7QL+B2IA13jdHHbhtheZc6dwyWu5InPSNXtKwPLIp9dIsSoJQAWXxU74ju/+9u0NUXHsAeaYIB1kNWjsQph9In7OgZrWzaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wuJk7iO0; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43f106a3591so1316855e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 May 2025 07:33:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746110018; x=1746714818; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9+H5gIa6d4pyLO8MdBlU6oFyFMziUKLEhRLhfdswqn4=;
-        b=wuJk7iO09rELbz3quIVEMJeq3Qhaw2EJlviOetFTUAOJEIb9aeEB2l15m9Gs/f8MyJ
-         Y6TSflkBHr6Yt39WwyrTxcWjRUl3cmDspOZI1V/HV61sSI0+KZd3Jyi5loW1k7KI86zr
-         8UjO9hIJG27iCNI9j70hVeFySmYx4N6E2RNxVWa5vSuMBbjcHU+uxg+ck1abD2xf52t1
-         VrCHmabXLbE6LS7NUqP1y5xnuTmu5GRKbyg+zw7yKSq0aqd7L+krjKoeoWqY7SDP3v4n
-         gFvd6Vx+HCv0PEoaRM8PMKYQ+ukPK2QV1OZ3awDAfx4p+Q9DvWiLPYlscxD3ski65kA9
-         zkZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746110018; x=1746714818;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9+H5gIa6d4pyLO8MdBlU6oFyFMziUKLEhRLhfdswqn4=;
-        b=k8z3Asd/1Lj6cfsxmYzQsY+9m6IqiBvqZONtBpL9yPKMkKeKceinCsu4mGYfdXxxaI
-         gGeJAim1NJd++mmqWjyJXN3fP1Fd8UUpmfMalUJ5oqcuYcxezPpFYM/JTHTsUct7eFap
-         3d8A8lAPSZd4Ben9PDuEdxbUzIvWkVqw4MVclwhOlXZHuveC1vVawh5cIDQnD8PgnJ5d
-         dXlMLARrQn3hiTUXuABpVhVGww8/ZOm1XuPMi2txZxHjuxllSARpEmqFT5HIXyxr+t5l
-         R45OoK6hh9IyBtW9GgRtiNMbNonYuKuyfTbuoVOUOAMwbOgFCqLs1C/m3qZNO4aILpY7
-         v1RQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXfPPG6pwNeBN82VD+Hp/bYrqRHrqiJ0VxalNgy/K+c3upWVJYFK14twBmuqvcdlixp9GnJmbjh3KjVKHSX@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+osgrO6yX18aN1rjWNFVv61qV73pA2Du2dKjNUx4CKdnvhxfP
-	M0xibeCm7a5jfAONWuMCE2Cl78QBv2Tq6our7eUbJbngqqPVp/3aMJuPXSlslk8=
-X-Gm-Gg: ASbGncurh1ZYT2KOr/ClxxBH1bmzyDaE0innmlSxirsH1xnZRwsqJXRgkX5aqU/SPqb
-	mSDXUfI99q7Z2kEPhWyky4rPJtG9t/P++CwKc2/YXiQND7vx0Dc2znKRu4DoUeUnxssBOg2J1g0
-	9LShG6bwj7mEWCb2Cbbvc7n7F/oqYT92StH3OE8SPIU4RkwKN0M+4tNpMN7dPk4JeLvoEttYfMB
-	u9YbL3hcENSsZ6k2FYIiMp2BXX7UEjI/ElO63Q2ETgP2gkB2hNOooLKKJHRwfOonlA+V7gkZRvk
-	oQDTERab0rEcj+mXsUvTypXLTWN80BBvWKayNbP5yB2vNUU3MJa3iEKpU5w=
-X-Google-Smtp-Source: AGHT+IEZATzbg/rgmI6bhSczj0axA9hwqI+q39PcQPM8+MaFD8mRfMUqEaGtuwQ93o0OYfWDkXaF/Q==
-X-Received: by 2002:a5d:6b0f:0:b0:3a0:9570:7233 with SMTP id ffacd0b85a97d-3a095707240mr350578f8f.11.1746110018004;
-        Thu, 01 May 2025 07:33:38 -0700 (PDT)
-Received: from [192.168.1.28] ([178.197.207.88])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a095a8ef66sm957636f8f.88.2025.05.01.07.33.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 May 2025 07:33:37 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Thu, 01 May 2025 16:33:24 +0200
-Subject: [PATCH v2 4/4] extcon: qcom-spmi-misc: Fix wakeup source leaks on
- device unbind
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDF933C9;
+	Thu,  1 May 2025 15:44:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.61
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746114284; cv=fail; b=nTfJ03SdWiyn3FsUJnuHw13NYNilcAdeuADVJy3o6lYZXOMHtEmgXocotS4H2wEuWaz2Zjc9q+qS0w39w3bVX6XEarm2mWJQYAFbOZ1wYwwilx6ZhU3Q93BX2Q2DlFew9BvRIzxgSvqpz+on4W3+Uplp5bV3tQfLDgzKNhxmL4I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746114284; c=relaxed/simple;
+	bh=GZC8+KlSafPxVMCXqOB6/hdDwgXNSOlMvnZVDcYptS8=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=o7UyBzITwEAS7nNEBvRjFEyo4+qMAJ7KqMmpS8xOsvXifW7Jnyfg3qTQqcARaa5d4/O3fDGmKSpO5CDRrEksli2c4MliAkIOs3jGe/hc7Gkqn5jp4348yMewfPZ5X4TLNVSdlZHmhy4EoMNGOvWZcCVuirmDosWz1Ex5qhyPiEU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=HmRMe8WE; arc=fail smtp.client-ip=40.107.220.61
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=k9Z82Xgjo17xPY8pWEm6AA3noAaOBaZk01dahg004te6GdtQ9mtRKb41mMEJ4hxcpJNt7a/8vLl7l2Gt6jHMip1sBdgu0XimyooGo8lkYX/bUD2dMRmSi1P3C5jOu+QpRc8mp+vRQeS/bFC4qbIGCjwywoE//ksFp2FiRYpCXzUQSzu8CWU7dYCiBZR4Q5RzHFjnuBU+2HS5JlYj+Jrzo2yNG6lE512va4zEQ1FC1ckKnQPNWn7lk13nfTO1IH0zhoXEUyoWmIrZvPR4FxMfgtLVms180InypC4GeEBtbE0mSywGg6XtxY/GVBrCE3VxHRToLepPL2ON4iOvWi/o7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aYEZLPKdUZISuZOI/rBHyqx5Uifx8MI0CIo/2MfshN4=;
+ b=Dl7tFZpa9vFsBx9AYMGO/ePh5IkVMIyOV/cwEjP+YgCCS3OnDS+fslVJ2s2CelCW0mPHx91NKSbAFBuXNyiR/M/YFndXTRjDALHOyP7FUD+P932HXQE+3YQ8Vo7gryAEmdzVjYTjCR2ph00SsJn/IVi1J8ZDqUllKW4KkyWW5jFxV0vmjri4NCB6EcNNf9FYNXEvQVlph4Y0wSX2SjGl0k0juRLVUdkbId9eD1eO3CD0Ntx4IPZavbZ6rqPsjceqR7so+u0LxnZvGx83ia1qBjfL1dQKu+zDJwKRs+ds/j8N9in0zPuGvKGmY05gYQGPXArYEtRns43XNDDENiIDqg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aYEZLPKdUZISuZOI/rBHyqx5Uifx8MI0CIo/2MfshN4=;
+ b=HmRMe8WEzS2YBKLkWBiWLhhuBv2mELtCKZ2MRmgAw2pDhhMALWnfjM6FYu+rzMuDyhWIopxMEveRRQ6KzHUeHKGfoeD3PH/9BEco5tbn4kXQK0ifdPqcYKcfLmHqnyxlTa7DhpQYtEOtnp1VtZtcWzrJLNScIRFKajI0ru0qKdA=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CH2PR12MB4956.namprd12.prod.outlook.com (2603:10b6:610:69::11)
+ by CH3PR12MB7596.namprd12.prod.outlook.com (2603:10b6:610:14b::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.20; Thu, 1 May
+ 2025 15:44:39 +0000
+Received: from CH2PR12MB4956.namprd12.prod.outlook.com
+ ([fe80::fa2c:c4d3:e069:248d]) by CH2PR12MB4956.namprd12.prod.outlook.com
+ ([fe80::fa2c:c4d3:e069:248d%3]) with mapi id 15.20.8699.019; Thu, 1 May 2025
+ 15:44:39 +0000
+Message-ID: <8c8e9362-c116-4a80-bcb7-a44df68e0bfc@amd.com>
+Date: Thu, 1 May 2025 10:44:36 -0500
+User-Agent: Mozilla Thunderbird
+Reply-To: tanmay.shah@amd.com
+Subject: Re: [PATCH v2 0/4] of: Common "memory-region" parsing
+To: Mathieu Poirier <mathieu.poirier@linaro.org>,
+ "Rob Herring (Arm)" <robh@kernel.org>,
+ Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+ Daniel Baluta <daniel.baluta@nxp.com>,
+ Iuliana Prodan <iuliana.prodan@nxp.com>, "Andrew F. Davis" <afd@ti.com>
+Cc: Saravana Kannan <saravanak@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Bjorn Andersson <andersson@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>,
+ Patrice Chotard <patrice.chotard@foss.st.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Chen-Yu Tsai <wens@kernel.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com
+References: <20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org>
+ <CANLsYkxKHhCHYrbAGzQ48QGpL_DbuLnX3=ppmpyu0vjuuvvODg@mail.gmail.com>
+Content-Language: en-US
+From: Tanmay Shah <tanmay.shah@amd.com>
+In-Reply-To: <CANLsYkxKHhCHYrbAGzQ48QGpL_DbuLnX3=ppmpyu0vjuuvvODg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SA0PR12CA0010.namprd12.prod.outlook.com
+ (2603:10b6:806:6f::15) To CH2PR12MB4956.namprd12.prod.outlook.com
+ (2603:10b6:610:69::11)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250501-device-wakeup-leak-extcon-v2-4-7af77802cbea@linaro.org>
-References: <20250501-device-wakeup-leak-extcon-v2-0-7af77802cbea@linaro.org>
-In-Reply-To: <20250501-device-wakeup-leak-extcon-v2-0-7af77802cbea@linaro.org>
-To: MyungJoo Ham <myungjoo.ham@samsung.com>, 
- Chanwoo Choi <cw00.choi@samsung.com>, Hans de Goede <hdegoede@redhat.com>, 
- Chen-Yu Tsai <wens@csie.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=911;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=2aoVFkAjElaHENHtg8TjDWPYjXCiMNrGnaFnDbM6YaE=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoE4Y6EdqQvi7iSbCPndmZkC+pXDb36V2KHvHE+
- 0sRg5QFcouJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaBOGOgAKCRDBN2bmhouD
- 1yjAD/0XskD2vQXiEUBv5CQhPcKLav8KeOqqIn/LsWowRspN8Udl/FO1N5AtS632Irr4FM3A06N
- 0HvKqEi8uZ46yvCmr3lny3gjfH3dmUN+TuLsZulBilCBI4lyX3KMzfrvVntKcdM+HJa/HCMJzhz
- NOGmtILGMD4yfnH+CgFXf4zN8d1de8GgP5+YRUKUBJrjx50J30JoBMad4nGZwGA/XHW9D3DLIth
- RgMPveHYoVRRa9smq7xPQC8DuHKqF2hR9TaKvXm7THj4C3NSZtHKUDhSmD6url2RE5Z5j0dS5cm
- l+Z3kJ6WixTkR0x4qUsa+BGeuPlTMOpTvOBWc7bGsFRTv9V1aXgCL7cHO2MKWBI+vyjCDB3lD0q
- p3hI1YQflx0ExfD+HDxq3eBC/6zB5hRTg6X7fHZCyPNkN6PbH/Ty1yFmzkSH1bsjq8qWmeaYttq
- L4KXcbaOBC5DdhsBovHRsrOLvQeXV8aUgJLvKn1VlLXjX5m+yiVN1XzXAUXgs1TMcCXkKddnKHe
- GMIWRmbkyM7l9kFgz3bCk+1EiUboAYqPkl2o1uQsVlRo0Kt901qUoFOmH6/ZJR5vIwxwotVHpYm
- MyIwXMwK8bgcSQp9umrZf73h2QYaubFTAbhfaqLYAF9Serlp4NRrAJNChtPDST6pHfQgj4uuoBE
- FLcoTRp8853hTHA==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR12MB4956:EE_|CH3PR12MB7596:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6f6fa84f-2fd8-4267-5704-08dd88c71555
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?MDVHdEczQkVzZG56bmVpbmdSdTdJRkh6UUd4ZzdGTnZRcjFCV3hvZDNYSUwz?=
+ =?utf-8?B?UXBPMHJYUkc2ZEdqTmtVOE9lSGRRZlpwQUJEd2J1czNYS0ZVZElCWnluK0hC?=
+ =?utf-8?B?bGpMR0xncENNZi9mRkFibk9xTU5CTG53S2pnejNIVEpnRlBMMWFEL05FUWRI?=
+ =?utf-8?B?a1VDSkJuRWRDR21JSXJpQ1BwbGRkcjkvUk5zczZIWDVuWFdRczN0V0VZNTJ5?=
+ =?utf-8?B?MW15b2ZRTktLTHBnSldzOXVjdEFuS2t6RVZCa0lKYklaYXVuRkp6eTlJNytk?=
+ =?utf-8?B?S0F6bHBCeEZ0UXlReVR3OG1NMklwdXdQRFpwVDFVcm1aRXl6YTR2SFlLSEhL?=
+ =?utf-8?B?SFhNYnN5QWN4WXBBWXhpSDAxQkI0TS9iYkJHRFYyNUdQeHh3ZTI3bkdnaU5u?=
+ =?utf-8?B?eEwrcFpweVJ1T1NoMUlzL3RjUnhjRERkSUlDZHJxN0xyQzkyaU1aOWxYVElR?=
+ =?utf-8?B?MHFhcndubzNtZW8wY2YwdU9tY1F5dzJSRGs3NmJMUEpKN0JUL1RkOXAyNE9T?=
+ =?utf-8?B?dytwSG1sTS82cldwcXVaa1VtMllGQjVvL2s5aENCSnN2c0JpRHVwbFcvUWtM?=
+ =?utf-8?B?N3AwajNtY0F4ZFRPcU11cjhEQXNUYjl0dFhjMWxnVkh0YWZ4b0xKSmZSeGFk?=
+ =?utf-8?B?bitKbXdiUzE0UU1EcGh4QURiWkhWZi9kUHZDWWdiOW05Mk1jQ015VFJIK0x5?=
+ =?utf-8?B?a1B6amE1YXdReVNwK3BMbEVqb0xocXRzdnIyRXRLSEg1RkNUMGZwdDQ4cnNW?=
+ =?utf-8?B?TWIyUUQxdXBzL0kyQ3dyOWcvY0l0RkN5VEIrOE54azhKMzd4cklyUmcvMTB6?=
+ =?utf-8?B?WnpJY0t5ZkVjakpaZ3lWVlIvcVFMNXA2RVNibzlYMnV2NXR5Ly84SFRtMmV6?=
+ =?utf-8?B?NzhuY1lJOVU2WmZQMkxKSGh4ZVJBUFk2dytlWHU5RkZWWDVQaERxekVaNU1B?=
+ =?utf-8?B?dTAybldvRWp3ZTZIdHljTHZ5NjhMeWt0WU9pS0hRYldXZDh3dThaRjF3bi9K?=
+ =?utf-8?B?Yzl5dVVXMVlpVHlYaG9oTjI4M1d5NDF1VHRLNEdieFAya1M4N2cvTUxZYVBt?=
+ =?utf-8?B?WDBtcHF3U1BibXlMZjZYQ0F2VEZJZVNXTmFGN0JkV0dCTUs2MnNsaHdvQ2RT?=
+ =?utf-8?B?dTdzOHVGMEFqaVpnWGJmNDd1eW1MNnJEdTRUYS9wa3k5a2JLTGpRays5UE5U?=
+ =?utf-8?B?ekw4TDhLVm5RKzVLQnJyajc1THVKQjBPTUJOVFRaeDQvVlpZWXh5R0lDdDZs?=
+ =?utf-8?B?cGZ2MEduRjM4b2c3RWJ1T1pCaWg4WW9ReWpGNG9rTTYzNWNBeTFKb1hGclVF?=
+ =?utf-8?B?V3VGU0hFV3J4OUZvY0Uyb2o3TnBOVjJac1FiZHBzSFlSRnJlNFpCYlE1RHBj?=
+ =?utf-8?B?SDZnTWlsZlczb2lvSWxablh0RHVOSEkvb2QrVFM5c1UrL1lUUHhyOXVEbjdx?=
+ =?utf-8?B?Ti9aS1dIeFZjbVVOTjNLaFMrZnBxQlBBdVVtVjJjMnRCUnF0bWE3TzdydHFH?=
+ =?utf-8?B?b2tlZTl0UTVXNFQwaWE5NmxheDJNME1EbXRLVEZrV3kwK0J3QTNUK0NJU29M?=
+ =?utf-8?B?S2RLTFRlbUMxNXB5VFJaQmhqbzVkYk1SSnRlVWQ3SFM4cGs5NUdkV0Vaemll?=
+ =?utf-8?B?RmtUNEp4UUQwYnlFejBURHZFTGhYajZsR2pCK2c0RUNCVzJ3L0R4alNBaUp3?=
+ =?utf-8?B?cWlVYVZUbllnUnI4am52cWNVWVhPS0NTRHE0ckZGYlExeXlJSjlQNGtqS25i?=
+ =?utf-8?B?dkIzMU91TkpKTGhtZWR5eENJdEJLS2lBdnJpZEx5bzBEQWJMbWRMZ3hJMGlG?=
+ =?utf-8?B?K1dnaFdsK1NBTGtYcGpGWk1UcHNoVytGRnQrRlF2bDVjbTVSemhoN245QzB5?=
+ =?utf-8?B?ZkhSMFpaZ2Q2MG12UzN2d0NOK3ZBNWIwWU4vdWlIUDZpWjNwMkxPVnlmbWUr?=
+ =?utf-8?Q?7JYS4F3lhPw=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH2PR12MB4956.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?VlJ6VWlIN25mUGxpUWljRmFlUzUvU3Iydm5kVERnWDd6L1BuV004VVNSYlpF?=
+ =?utf-8?B?V3dXOUo5Z1JLWFVPc3oxWmFoN3MrUm5nY1VTSU50QkJYZkI3cmZzY2c5V3Bw?=
+ =?utf-8?B?UHZoYm0wWmdTK0hsS3Q4RTVMam5pVmlEQ3poMm9xa3FybEVXcm5hWU45bHp0?=
+ =?utf-8?B?MUFkQ0VpQWpsbm5senlQQVc5cFFxaVBwTjRvTkJMN3NLck11cEVqTU11Z0I0?=
+ =?utf-8?B?V2VSdzR6SGJiRVZZQ0RPSDh2amJDajZJc29JbUZLdW5NL2xOZXdqRE9PenJz?=
+ =?utf-8?B?TUVnc2lqZTB3bTlqc2lWT21zRUhndFBrb1d4VmVETUhVVHB6cU1ZL21TYTE1?=
+ =?utf-8?B?bXRuV0JFblBYK2hEa2xzU1VXbTAwS3J2RXRPUW5DUXFVTXpSUEpYUEhhaHNl?=
+ =?utf-8?B?Vmp3OWptQ0x0Z0RmRDYwdDBFcVdsS2dIb3lwY29wckllYUpuSTYwcFJvRDl5?=
+ =?utf-8?B?a0tNOTk2Q01iT2xncGZyN0dxbGEvRnRZeS9hMHdQcCtSZXgzZkFWeGhKSDRP?=
+ =?utf-8?B?ZUlEQnZwSVZNVmMrSk5ESnR4d3RmUzJDQW1LSFBLVkFoU3M1ajZJVUI1NzRx?=
+ =?utf-8?B?aTZFS01tTHZxUHp0RStxU2ZvYlFSeW9nNDNqVVg3TXM0RXNidFR1QVJDbEZW?=
+ =?utf-8?B?N3BYSERMeVZQa0NndlZ5Y2ptV0c4LytqekU1TitmMGhOaVhpUU12U2REdHZO?=
+ =?utf-8?B?R1U4dnVNMnR5ZDZ3Ri8zTnBycERqNVE0OXQvZlZXeVFJUGRlbFJLeHpFVEVx?=
+ =?utf-8?B?WWpRblZiYXd3d1JOa2Vma3g2YXpDMEtqUUlZYnJ3RktzbENPcDdYNGVVaW9o?=
+ =?utf-8?B?N3owdEpuSTQ2djZGcGJ3TklXSk1PUVZ6eThvSkhYTDFxUUVCZVVFUUlUM2xO?=
+ =?utf-8?B?TWtmbXlhNWY2MHY5NDd3T0UvaVdPK3h5SHByTE9reFJ3K3hGUUk2M2hvZXVL?=
+ =?utf-8?B?bGNvdWhsdm9YZm9IT0kydThMalU4Y1VSRFFzd1lWeHJhaU9XWW1qRjZIOTZ3?=
+ =?utf-8?B?YmxsemVHanRxOGFLVGR0N29Kd3lpZXFVYWFGTFBndjNUUmRtNnJtdUxoN2NM?=
+ =?utf-8?B?QWJrTGFEVjNsNGZSK1AwMm1UY2NGREhxWS9JZGxVYStsZ1puV3JGMTgyTzFC?=
+ =?utf-8?B?UHpIdkJkdVdBMjF5VmRJVURJaFpqQmRDdVlNYzhGNUJVMlVlVTgwbmRQNXd6?=
+ =?utf-8?B?bEVOM2dDYmM1R0lhcTdWRm5sVmNsRkFhbkpYZXhlK0hKNHNoN3EzLzlPZHhJ?=
+ =?utf-8?B?Z1h1RVlkZkJ4bzMycXdUM091VHpCNXEzSGhBcC9kK3ZFYkJKK2VBaVpOM0oy?=
+ =?utf-8?B?TzhadlQ5WnBGZEREYzVQMkxIOEZnOVVTRnlpZkhGcGhCcXhOVk93bSt0VGMv?=
+ =?utf-8?B?NUI0OWZyRDhmUUdLUU0vOEJsRXRzUkRJaC9JWHVsWW5MN0ZVblA4QW5XV3Ar?=
+ =?utf-8?B?ekZFMkpzUU5McEhibjFDVHkxZk1zRkp3OUFlY3dRUVI3VUJmSXl1aGVXNk5V?=
+ =?utf-8?B?Rit0YzhIT2hscUI5bU9wRkQ3RXd4L0xlRk84T1BtV2I1QXlhemhsRStOU3Jw?=
+ =?utf-8?B?N20wT0JhQ0lLdW5rREluUXQzYTVENDRJa3Nacjc3TGd6M0J3dmhKZFVzZ0Rm?=
+ =?utf-8?B?bG1VN2FsZW5UWW81V2hlS1ZCRmtRcU81bXJOMFJaK0VQTU1ES1RhSUhsMUFs?=
+ =?utf-8?B?N0h5NndnSFowUUs4ZVBkMGFUQjZyOUs4SFB2elR4M0hBQWtmWXlOZ0VWUGpr?=
+ =?utf-8?B?cGt0YllTREpmay9wWjdLaVl6ZmZtRmJkRFI5YU4wMitZbDVxRjVUdkRIWjBG?=
+ =?utf-8?B?Rm5vTDZLR3IzMlBjQUZhUUg5amxsK3hoZFVMTXdaZloyd3ZGTTdUbXVpQllG?=
+ =?utf-8?B?QnR5czR5ajA0bG9adW04QmVaM01GZHlLTEpSSWpTMUhQaU5rcWdZbWF3U0p3?=
+ =?utf-8?B?eFRwVnBDMTRrNnlYTmtKa0x5ZmJXTVNnckI4V2UvK3FxekUzRnpGTGJvS1lR?=
+ =?utf-8?B?dldBRXFkRUkzVTA1cDRGOXQ1aHQ4OENSRXY5YlhLd1RYUk9GM29TQ3hRdlEw?=
+ =?utf-8?B?T2hqTGc3MHBFaWg0MG85K0V6Z0F1Z1BVSE1HMTRpVDMzSHltbSt4dm4rR01t?=
+ =?utf-8?Q?imdbMNUSUGzvb6Z+jr7PipF6C?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6f6fa84f-2fd8-4267-5704-08dd88c71555
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4956.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 May 2025 15:44:39.5925
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hjsSOWHwy1y2PCYOkd244Qjhr8fU1y43pZQMdiHvop9L3d2Ckcbv0r+CGGCBrJet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7596
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.
+Hi Mathieu,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/extcon/extcon-qcom-spmi-misc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I tested this patchset on top of recent for-next branch. I don't see 
+issue on AMD-xlnx ZynqMP platform. With this:
 
-diff --git a/drivers/extcon/extcon-qcom-spmi-misc.c b/drivers/extcon/extcon-qcom-spmi-misc.c
-index 53de581a393a35bb48f637ea73e910b4c8340ace..afaba5685c3dcdbdc750c1835ec4c696bcc64fc4 100644
---- a/drivers/extcon/extcon-qcom-spmi-misc.c
-+++ b/drivers/extcon/extcon-qcom-spmi-misc.c
-@@ -155,7 +155,7 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
- 	}
- 
- 	platform_set_drvdata(pdev, info);
--	device_init_wakeup(dev, 1);
-+	devm_device_init_wakeup(dev);
- 
- 	/* Perform initial detection */
- 	qcom_usb_extcon_detect_cable(&info->wq_detcable.work);
+Tested-by: Tanmay Shah <tanmay.shah@amd.com>
 
--- 
-2.45.2
+On 4/24/25 9:14 AM, Mathieu Poirier wrote:
+> Arnaud, Daniel, Iuliana, Andrew and Tanmay - please test this patchset
+> on the platforms you are working on.
+> 
+> Thanks,
+> Mathieu
+> 
+> On Wed, 23 Apr 2025 at 13:42, Rob Herring (Arm) <robh@kernel.org> wrote:
+>>
+>> While there's a common function to parse "memory-region" properties for
+>> DMA pool regions, there's not anything for driver private regions. As a
+>> result, drivers have resorted to parsing "memory-region" properties
+>> themselves repeating the same pattern over and over. To fix this, this
+>> series adds 2 functions to handle those cases:
+>> of_reserved_mem_region_to_resource() and of_reserved_mem_region_count().
+>>
+>> I've converted the whole tree, but just including remoteproc here as
+>> it has the most cases. I intend to apply the first 3 patches for 6.16
+>> so the driver conversions can be applied for 6.17.
+>>
+>> A git tree with all the drivers converted is here[1].
+>>
+>> v2:
+>> - Fix of_dma_set_restricted_buffer() to maintain behavior on warning msg
+>> - Export devm_ioremap_resource_wc()
+>> - Rework handling of resource name to drop unit-address from name as it
+>>    was before.
+>> - Link to v1:
+>>    https://lore.kernel.org/all/20250317232426.952188-1-robh@kernel.org
+>>
+>> [1] git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git dt/memory-region
+>>
+>> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+>> ---
+>> Rob Herring (Arm) (4):
+>>        of: reserved_mem: Add functions to parse "memory-region"
+>>        of: Simplify of_dma_set_restricted_buffer() to use of_for_each_phandle()
+>>        devres: Export devm_ioremap_resource_wc()
+>>        remoteproc: Use of_reserved_mem_region_* functions for "memory-region"
+>>
+>>   drivers/of/device.c                       | 31 +++++-------
+>>   drivers/of/of_reserved_mem.c              | 80 +++++++++++++++++++++++++++++++
+>>   drivers/remoteproc/imx_dsp_rproc.c        | 45 +++++++----------
+>>   drivers/remoteproc/imx_rproc.c            | 68 +++++++++++---------------
+>>   drivers/remoteproc/qcom_q6v5_adsp.c       | 24 ++++------
+>>   drivers/remoteproc/qcom_q6v5_mss.c        | 60 ++++++++---------------
+>>   drivers/remoteproc/qcom_q6v5_pas.c        | 69 ++++++++++----------------
+>>   drivers/remoteproc/qcom_q6v5_wcss.c       | 25 ++++------
+>>   drivers/remoteproc/qcom_wcnss.c           | 23 ++++-----
+>>   drivers/remoteproc/rcar_rproc.c           | 36 ++++++--------
+>>   drivers/remoteproc/st_remoteproc.c        | 41 ++++++++--------
+>>   drivers/remoteproc/stm32_rproc.c          | 44 ++++++++---------
+>>   drivers/remoteproc/ti_k3_dsp_remoteproc.c | 28 +++++------
+>>   drivers/remoteproc/ti_k3_m4_remoteproc.c  | 28 +++++------
+>>   drivers/remoteproc/ti_k3_r5_remoteproc.c  | 28 +++++------
+>>   drivers/remoteproc/xlnx_r5_remoteproc.c   | 51 ++++++++------------
+>>   include/linux/of_reserved_mem.h           | 26 ++++++++++
+>>   lib/devres.c                              |  1 +
+>>   18 files changed, 339 insertions(+), 369 deletions(-)
+>> ---
+>> base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
+>> change-id: 20250423-dt-memory-region-v2-a2b15caacc63
+>>
+>> Best regards,
+>> --
+>> Rob Herring (Arm) <robh@kernel.org>
+>>
 
 
