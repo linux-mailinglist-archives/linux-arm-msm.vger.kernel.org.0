@@ -1,79 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-56349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5270FAA5943
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 03:15:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4ADC0AA5947
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 03:15:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D77053BD9D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 01:14:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C19391C06AFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 01:16:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 469011EEA3B;
-	Thu,  1 May 2025 01:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A63CF33987;
+	Thu,  1 May 2025 01:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U06sw7QC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kSpWVJG+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7480B12E7E
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 May 2025 01:15:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7CDC2ED;
+	Thu,  1 May 2025 01:15:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746062108; cv=none; b=b8OJc0NBG3z1P3Py/zu/reO3DDKPbBc11Nof67iVPwBz/1L5H1n/D6wTNdmUKqtpzOxCyp6rxrcdmpXrUD5bmU/bXOrt3IuDwJYsGbyAnVWq7b7v7ygQRBiF4ir7f0pAIx1N78NjYrBWtj6QsMaP0qDc0r2UUbH1UpCr3KaJ4aE=
+	t=1746062148; cv=none; b=o4fhCOOrQfB2N39rxf0ldNgvY7xCzRQ4HsRZsFC3DZqjdarSQXi6BvrM2LTqohXjnFB6s8lhLUrewqP8Jg8FtK8eArhj0DXqUsZ+t1GrLXa9pZ7dEgKflLrODsjwAOFm+IRDGlEHDvdzcJcz+PWk7bT6jtwGZ30RgIVy9zz2OSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746062108; c=relaxed/simple;
-	bh=ywSIwL4X4PiO46fJeYKVtqD1FlF4P6XlRIo807NL+LU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kZRAEF7f22B8bY9b1TpgJFCTH9xikPkVQS/MR7wYt3n0JUwKNruOO6N0lXWgBCsJP6awIHPTkmPMqStOFPOqzy1HWNkPeJtAGEmknWZNFqtp0wkTOehFTTeDpq8I2c8tBl83fuB92qmagtVdDBgPNndlrrI69f2WlIqVgpJ0F4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U06sw7QC; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-39c266c1389so323632f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Apr 2025 18:15:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746062104; x=1746666904; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=p565K2Tscj5dN7OaQ3H/wX4KTJvoaNhcwUqyXzV+hJo=;
-        b=U06sw7QCq4BuHGXotQldc3KzZk60XA49qndNNF9h5TYwG00/yh6803Nt/kqfGO0cp+
-         xxYTmpmVkSdMt1zRCWGCYCSKCcGIuZEUb38AOrNZUxqASip1CHOfpfd1PPatxxT8pj07
-         8ffesOmbryUp8CXt3tMTyzxPxkXAXDjKAvrw04DNut1Ud5gBs+RkJdRYx6a2oooWMKHQ
-         tTeBxaEAJHOCUcTIO3TMcsKkQ1CZ4zbgEsYQQt2tWpp4Wqx2n0ZtO4TC6JgQE4tHfkMd
-         G3OW4pXHmSk/UtSInzjpVo5ClmJqiV+zsO5PibvQWvjmGLF5osAaQJ5LC+Ak04NV+KYV
-         udBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746062104; x=1746666904;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p565K2Tscj5dN7OaQ3H/wX4KTJvoaNhcwUqyXzV+hJo=;
-        b=qaDng5t+M8eKFZiPldDlOEgr+ZzyPiSzUUQchmRsl5mzmq5O2PtBmw5VKoW/esaKhi
-         rB6HFh5FOWQhDDvdJV+7NZTM3ujh2+ySMdsUzghTWtPAsLVIZJwkm0uzy91i+fzO1Olx
-         lRJPVPpn3ATZfNOHKV92UDy9h/xPXRma76tQG0GD2/lZ4+ltEY9V+atEgSTGt3gjqBta
-         ZdBipz1ICTrGUR0xAVGdrlpQrimH5lHmyIKnrqtUatRXtUSnugXtdSB6gPgVcNE0IG6R
-         rWgrqgAKU5JermI3RaRbQh9aQCV8g/pN9Bp66MRqziAHCZY60h5C0JPFWnISU5MPXmU4
-         tq+g==
-X-Gm-Message-State: AOJu0YxgPUrZ5RIfl8s1KFEcSduNrVK4A3lH/BMEQl/UdGzwtoPBhT5U
-	CsNkqBF3aljKbHYmAcPgIouXh+5cbD1IkX+lbJPvxQaK9Lf4mxmoT0MvkyR+J4s=
-X-Gm-Gg: ASbGncu8wvq9g4dBc5mMvEGBLD9ZhE86KpwzKl3FztNx3HReM08CUkKw2Y3rYG6toHz
-	jzWSuOscQ7eVTcInca7EbCL3whW2J/NSFBBa3h0QYFAzerTmG0twxBqLqDNx+lPZEdv7EJxkSf5
-	t0PcJL7qvJ2BtxiA38RX5JSvaAnto5dt1pFXj9ObVMIhjahsC/ApSwp5aqjdZDQks+Yih8OxBiG
-	9xpvpkNxzAfIJRKXAQp/mKAjOX/2zWpW+vB1f/wl5Vmizp1PldTLHOt84eleRjJaLdVhuRAMBGf
-	aoQSGxgmCWFl4MwO/EC56SQLgbWempdk61kteyqndPiGVYipt0tDrdw5SvaRGexqlWg1vmnPjg9
-	80/H8IA==
-X-Google-Smtp-Source: AGHT+IGw0DQYAnAOxEpiixNvXozVZ/EZXnSgb2BFqQ2gm4zWs385rrcA0j76FBVCrJDetKCzw7puaw==
-X-Received: by 2002:a05:6000:1ac6:b0:390:f738:246b with SMTP id ffacd0b85a97d-3a09404c7ddmr351517f8f.15.1746062103842;
-        Wed, 30 Apr 2025 18:15:03 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073ccb8e1sm18588910f8f.59.2025.04.30.18.15.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Apr 2025 18:15:02 -0700 (PDT)
-Message-ID: <4e81a1fe-3ee5-4f5f-b958-13e6cf9138f7@linaro.org>
-Date: Thu, 1 May 2025 02:15:00 +0100
+	s=arc-20240116; t=1746062148; c=relaxed/simple;
+	bh=Ok4vU94d1XxDWWHt42q8ybBt9TQVvQaQ+RROQvVHq8w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=sv72iwzldC7T+3zi+vnKPf1izBcoPTL/sprC9IPDNEOeTOHDU/iyjkhvwNWQn6DDoafiU+avRV4xr7+1Vj+EXtAjdTreiyi0J5jBhbw049fw06FI86ki14vPvK0wbwuNoW8CeRBSMaSldIaFzbeJ6hJJ+mbDURDZ/jxaIUTsn0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kSpWVJG+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53UGpQkR021321;
+	Thu, 1 May 2025 01:15:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	GhVDqE0B9Bpr5apMvnfQKRAQ/2j088Db9RmH6AOhqbs=; b=kSpWVJG+m3Ny/tw4
+	fTll299ucraaVmD3nq85b3tH88V0frziR+EB8rgJ1wnQtuJRLJIxJZx5Q2bfwp/5
+	Xbn6WmltriWD3sRBFvCW4aHTf7hHqH73dLMMSb+TZ0xQDCb506fgt9KhitUXpUpC
+	anQ3gTPRfL5jhLB5/Vvjf+SWOgDYVwqJ2BsrcVKuHNkjwE48aUQMgmfCHOZTZCfe
+	5wmsBIuoQ+RG+07dYTBBKo7MOWusembHHaiLtmzkfBlPysrzq2JmSQdoZ4PyZD7l
+	8Hr08fJUjwwvTnr0eLkR1wN/RURvgrEBztEJcK88JZpW2URME/JKFh4qSBrbAAMv
+	55AXng==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u743r6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 01 May 2025 01:15:19 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5411FIWJ030790
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 1 May 2025 01:15:18 GMT
+Received: from [10.110.26.79] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 30 Apr
+ 2025 18:15:16 -0700
+Message-ID: <94da79ca-5c32-4744-bc57-3a03a3c8379d@quicinc.com>
+Date: Wed, 30 Apr 2025 18:15:14 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,59 +65,148 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8550: Add support for camss
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Wenmeng Liu <quic_wenmliu@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Depeng Shao <quic_depengs@quicinc.com>
-References: <20250415-sm8550_camss-v1-1-d4b7daa168ac@quicinc.com>
- <wOxjiEBKO2XU-PikPlT8IMpSGOrP4ocgZEIj_zNhLzzBjySkhGQzupjmJAFhUHcnknLKSASwk33LjBI6WrZ9vg==@protonmail.internalid>
- <1ee8587b-2bf6-418a-9834-8f8cbf1e94d8@oss.qualcomm.com>
+Subject: Re: [PATCH v5 07/10] drm/msm/dsi/phy: add configuration for SAR2130P
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry
+ Baryshkov" <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Krishna Manikandan
+	<quic_mkrishn@quicinc.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Will Deacon <will@kernel.org>, Robin Murphy
+	<robin.murphy@arm.com>,
+        "Joerg Roedel" <joro@8bytes.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+References: <20250418-sar2130p-display-v5-0-442c905cb3a4@oss.qualcomm.com>
+ <20250418-sar2130p-display-v5-7-442c905cb3a4@oss.qualcomm.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <1ee8587b-2bf6-418a-9834-8f8cbf1e94d8@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20250418-sar2130p-display-v5-7-442c905cb3a4@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAxMDAwOCBTYWx0ZWRfX2DJr6WLc0edV I4UAvc3yot50l6XraxRL/48fmG1pohIk6ZF0BNE0PsZkOLa57/myXFJhvutcIjA96mFLUrToUUl 3r5gG4oanNcY2kX9+m/IruaZ3m+5BFTtNyNYz+bqO/qgH1DuHkEs/9okS+xanaAyDcyPpamubTZ
+ 3C71obBj5nsrxGDN/DT0J6bLoge6dB5WmhPFHEzq0pE28Tk/kYy3iPoZ7bmZJgnOvtiC2esFM1M uzrn4JV/+5A5NAWiAhzG8LcCTnemf7JTGAnPCelcCep5nfJ3Cki9VmnTw59SYUHooIqw56c+BFT Jzc4i1wyIROkoHHygQbneBPs05q0/da6sk+YI4HjIyqqligfYsL1XyoYze5hbkS1KmGHPIOVEkL
+ VLzjkZJ7o879cxpuF13/jJM2Yh/PLEb+nOLnIE8Wbs0y5XzDWObJy49RwodzhmksSD4GLdXu
+X-Proofpoint-GUID: i4KL4M6P_4CsjhTj2vgnrh6O15uMeXR1
+X-Proofpoint-ORIG-GUID: i4KL4M6P_4CsjhTj2vgnrh6O15uMeXR1
+X-Authority-Analysis: v=2.4 cv=b6Wy4sGx c=1 sm=1 tr=0 ts=6812cb27 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=WWvJJprN3eueWNfT7O0A:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-01_01,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 impostorscore=0 bulkscore=0 phishscore=0 spamscore=0
+ priorityscore=1501 clxscore=1015 adultscore=0 suspectscore=0 mlxscore=0
+ malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505010008
 
-On 30/04/2025 12:11, Konrad Dybcio wrote:
-> On 4/15/25 9:38 AM, Wenmeng Liu wrote:
->> Add support for the camera subsystem on the SM8550 Qualcomm SoC. This
->> includes bringing up the CSIPHY, CSID, VFE/RDI interfaces.
->>
->> SM8550 provides
->> - 3 x VFE, 3 RDI per VFE
->> - 2 x VFE Lite, 4 RDI per VFE
->> - 3 x CSID
->> - 2 x CSID Lite
->> - 8 x CSI PHY
->>
->> Co-developed-by: Depeng Shao <quic_depengs@quicinc.com>
->> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
->> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
->> ---
+
+
+On 4/18/2025 12:50 AM, Dmitry Baryshkov wrote:
+> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> [...]
+> Qualcomm SAR2130P requires slightly different setup for the DSI PHY. It
+> is a 5nm PHY (like SM8450), so supplies are the same, but the rest of
+> the configuration is the same as SM8550 DSI PHY.
 > 
->> +				     <GIC_SPI 604 IRQ_TYPE_EDGE_RISING>,
->> +				     <GIC_SPI 688 IRQ_TYPE_EDGE_RISING>,
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+
+> ---
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |  2 ++
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |  1 +
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 23 +++++++++++++++++++++++
+>   3 files changed, 26 insertions(+)
 > 
-> It *may* be 689 instead but I'm not 100% sure
-> 
-> Otherwise the numbers look good
-> 
-> Bryan, Vlad, please also take a look
-> 
-> Konrad
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> index c0bcc68289633fd7506ce4f1f963655d862e8f08..a58bafe9fe8635730cb82e8c82ec1ded394988cd 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> @@ -581,6 +581,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
+>   	  .data = &dsi_phy_7nm_cfgs },
+>   	{ .compatible = "qcom,dsi-phy-7nm-8150",
+>   	  .data = &dsi_phy_7nm_8150_cfgs },
+> +	{ .compatible = "qcom,sar2130p-dsi-phy-5nm",
+> +	  .data = &dsi_phy_5nm_sar2130p_cfgs },
+>   	{ .compatible = "qcom,sc7280-dsi-phy-7nm",
+>   	  .data = &dsi_phy_7nm_7280_cfgs },
+>   	{ .compatible = "qcom,sm6375-dsi-phy-7nm",
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> index 1925418d9999a24263d6621299cae78f1fb9455c..1ed08b56e056094bc0096d07d4470b89d9824060 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> @@ -59,6 +59,7 @@ extern const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs;
+>   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs;
+>   extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs;
+>   extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs;
+> +extern const struct msm_dsi_phy_cfg dsi_phy_5nm_sar2130p_cfgs;
+>   extern const struct msm_dsi_phy_cfg dsi_phy_4nm_8550_cfgs;
+>   extern const struct msm_dsi_phy_cfg dsi_phy_4nm_8650_cfgs;
+>   
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> index a92decbee5b5433853ed973747f7705d9079068d..cad55702746b8d35949d22090796cca60f03b9e1 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> @@ -1289,6 +1289,29 @@ const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs = {
+>   	.quirks = DSI_PHY_7NM_QUIRK_V4_3,
+>   };
+>   
+> +const struct msm_dsi_phy_cfg dsi_phy_5nm_sar2130p_cfgs = {
+> +	.has_phy_lane = true,
+> +	.regulator_data = dsi_phy_7nm_97800uA_regulators,
+> +	.num_regulators = ARRAY_SIZE(dsi_phy_7nm_97800uA_regulators),
+> +	.ops = {
+> +		.enable = dsi_7nm_phy_enable,
+> +		.disable = dsi_7nm_phy_disable,
+> +		.pll_init = dsi_pll_7nm_init,
+> +		.save_pll_state = dsi_7nm_pll_save_state,
+> +		.restore_pll_state = dsi_7nm_pll_restore_state,
+> +		.set_continuous_clock = dsi_7nm_set_continuous_clock,
+> +	},
+> +	.min_pll_rate = 600000000UL,
+> +#ifdef CONFIG_64BIT
+> +	.max_pll_rate = 5000000000UL,
+> +#else
+> +	.max_pll_rate = ULONG_MAX,
+> +#endif
+> +	.io_start = { 0xae95000, 0xae97000 },
+> +	.num_dsi_phy = 2,
+> +	.quirks = DSI_PHY_7NM_QUIRK_V5_2,
+> +};
+> +
+>   const struct msm_dsi_phy_cfg dsi_phy_4nm_8550_cfgs = {
+>   	.has_phy_lane = true,
+>   	.regulator_data = dsi_phy_7nm_98400uA_regulators,
 > 
 
-+				     <GIC_SPI 688 IRQ_TYPE_EDGE_RISING>,
-This should be 689 yes
-
----
-bod
 
