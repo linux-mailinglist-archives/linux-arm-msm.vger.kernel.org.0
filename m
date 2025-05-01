@@ -1,133 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-56371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FC64AA5DDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 13:38:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 593F3AA5F1D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 15:17:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C424A9C56B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 11:37:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 09A311BA7077
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 May 2025 13:17:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55DFF2236F8;
-	Thu,  1 May 2025 11:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D58E817B505;
+	Thu,  1 May 2025 13:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hOgv58Vt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wl4GnDnw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C83A19A;
-	Thu,  1 May 2025 11:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94252DC76A;
+	Thu,  1 May 2025 13:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746099473; cv=none; b=ZxYB/B/7oz3uRFPaLTeGp7vf0zQpc9v0YzMig4OYtqCJnWxtOFMPScrJ0olY712E7UirxHrwnhRsRDs9cwsNFqZ0wyp6IqXqQ04EwQGn+AzUzpKpNkr0mbwrCsJzkP9S5aG8L2feivmg+fqpNcGW/ujiIomNrjNblredUznxEzk=
+	t=1746105463; cv=none; b=RablW0KMhjyM4RFXM37wCgPRdke1OLmwdRULCDvEt1mcfSYHVnl6L2tx/3OLDvL1I3+57RooqXnXoJRQMbPjLU9XU9tBhnWkta2v/ZNVjWN61TOAmv4prYTAKG6dV1K9au10tWSHj1fzGq+vdCeghDTU4dIAIIcaNQz+PjyL07c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746099473; c=relaxed/simple;
-	bh=Z0rZwDlBOJabeCJzT7S1mnNOxGO4aa2X5GAQxXZqSbY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OKFb6jXnk24fjNs2txF9EA7GTWCGKGvbhgSRLyHEokFSqHk5fWZcdp7AxzTg7drnhhWo9/kCv7178yUsYW24bwq0VQO2Fe+EOroWhvDL4nlAWPwVTEqBnKqKsMxQzLNkUhX0p2cHK+w+FscPpqZYtPeV1tiwlPSMquRpiK5nEqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hOgv58Vt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FFDC4CEE3;
-	Thu,  1 May 2025 11:37:47 +0000 (UTC)
+	s=arc-20240116; t=1746105463; c=relaxed/simple;
+	bh=QtW8V05Ll5TgPFoRHUE1CblqZBs5rBw/y7zDbeCz2Ew=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=nenzTS3W1uIRkzf3GVlL8oKB44Dz5AacIgWP56Fl/ILJKPWuRlPlNAuIcmr7UuGLi2JUd20H4h2GOkD/ZMlOYh8UbIvTqAxVLaPEtGL/a3L1gEbhuRn/aEKP15xBsxzSg2LNvfhxBfWnIG5uoneCJ9mWi21ATFqt2lakO2DgFIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wl4GnDnw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72118C4CEE3;
+	Thu,  1 May 2025 13:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746099472;
-	bh=Z0rZwDlBOJabeCJzT7S1mnNOxGO4aa2X5GAQxXZqSbY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hOgv58Vt/VSQjDFB92Q/LRDpc4G1Yavt115Kq0ToiYwJy6WJ6xScbJ1EfxZFgSlZx
-	 KtB4W8rCTrJSfLsS1YoIPz1kbSx7vyxDQQBoT5U9NJB6gChwE1tVSeJQKwN8oxJceE
-	 JSMW7s9kX9MEdZOHPoENAEpL0HuzQo61OYswK5/HGtfIkMNQZ4jag5IxfIu/HwGh6F
-	 VwSNf6A2QYRi2DXpd7vfLvDSpENJqYVq/pICn4/Pf056VheKGkaJgl+EXAeUCe0OjF
-	 1iLIAeyOtuNHNqUAFV5npNmecMDbZomfN+fL5iEojACPmefmQQy2FGoHJgAXYG4zhe
-	 D4XsQmopVy3ug==
-Date: Thu, 1 May 2025 12:37:45 +0100
-From: Srinivas Kandagatla <srini@kernel.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Banajit Goswami <bgoswami@quicinc.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v3 2/5] ASoC: qcom: sm8250: set card driver name from
- match data
-Message-ID: <aBNdCRk_fP2q1vxQ@srini-hackbase>
-References: <20250425-fp5-dp-sound-v3-0-7cb45180091b@fairphone.com>
- <20250425-fp5-dp-sound-v3-2-7cb45180091b@fairphone.com>
+	s=k20201202; t=1746105463;
+	bh=QtW8V05Ll5TgPFoRHUE1CblqZBs5rBw/y7zDbeCz2Ew=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=Wl4GnDnwJXGlIGZ8fC5LMt1nsQT92up9CfvAsDJqGX0AZ/pSez6UWnMczBPvGuoU+
+	 vJpRBXQawz0eZXmKgXOu2Tq/YZxgDuPeZmow79KAcR1JahN5qDmv/LuLKQbhMMfCS+
+	 LJTiuotSAnjKbzRYkrU25861E6pJu8d28cqTYFUlAC66b1uEeJYG/iN0+0Mq3kCgQZ
+	 2aapo/88irzFShq9xenYlP/GmqiMWYtnbkgsJb7ld6eWxYtIO694EfRe3zw2DtORNr
+	 XIpfeePuaPPGbdQwnrz+ALQLLNDqCaEQ0T3b3ko8/jMdCY1QV9ggBZ6xX1YEDlSQaA
+	 QBx3Syq6+lh4A==
+From: Lee Jones <lee@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Georgi Djakov <djakov@kernel.org>, 
+ Lee Jones <lee@kernel.org>, Suzuki K Poulose <suzuki.poulose@arm.com>, 
+ Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Leo Yan <leo.yan@linux.dev>, 
+ David Heidelberg <david@ixit.cz>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, coresight@lists.linaro.org, 
+ linux-arm-kernel@lists.infradead.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250425-fix-nexus-4-v3-0-da4e39e86d41@oss.qualcomm.com>
+References: <20250425-fix-nexus-4-v3-0-da4e39e86d41@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v3 00/11] ARM: qcom: fix APQ8064 schema
+ warnings
+Message-Id: <174610545917.3855354.6995417813544260690.b4-ty@kernel.org>
+Date: Thu, 01 May 2025 14:17:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250425-fp5-dp-sound-v3-2-7cb45180091b@fairphone.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.15-dev-39345
 
-On Fri, Apr 25, 2025 at 10:07:26AM +0200, Luca Weiss wrote:
-> Sound machine drivers for Qualcomm SoCs can be reused across multiple
-> SoCs. But user space ALSA UCM files depend on the card driver name which
-> should be set per board/SoC.
+On Fri, 25 Apr 2025 20:47:00 +0300, Dmitry Baryshkov wrote:
+> Rob's bot has reported [1] several warnings for Nexus 4 submisson,
+> however none of those warnings are specific to that device. Fix all
+> those warnings for all APQ8064 platforms by extending existing schemas,
+> adding missing schemas and making APQ8064 DT follow all the schema
+> files.
 > 
-> Allow such customization by using driver match data as sound card driver
-> name.
+> [1]: https://lore.kernel.org/linux-arm-msm/174221818190.3957236.3364090534153729086.robh@kernel.org/
 > 
-> Also while we're already touching these lines, sort the compatibles
-> alphabetically.
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  sound/soc/qcom/sm8250.c | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
-> 
-> diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
-> index b70b2a5031dfbf69024666f8a1049c263efcde0a..e920b413b762c803cfcc4049f35deba828275478 100644
-> --- a/sound/soc/qcom/sm8250.c
-> +++ b/sound/soc/qcom/sm8250.c
-> @@ -16,7 +16,6 @@
->  #include "usb_offload_utils.h"
->  #include "sdw.h"
->  
-> -#define DRIVER_NAME		"sm8250"
->  #define MI2S_BCLK_RATE		1536000
->  
->  struct sm8250_snd_data {
-> @@ -200,15 +199,15 @@ static int sm8250_platform_probe(struct platform_device *pdev)
->  	if (ret)
->  		return ret;
->  
-> -	card->driver_name = DRIVER_NAME;
-> +	card->driver_name = of_device_get_match_data(dev);
->  	sm8250_add_be_ops(card);
->  	return devm_snd_soc_register_card(dev, card);
->  }
->  
->  static const struct of_device_id snd_sm8250_dt_match[] = {
-> -	{.compatible = "qcom,sm8250-sndcard"},
-> -	{.compatible = "qcom,qrb4210-rb2-sndcard"},
-> -	{.compatible = "qcom,qrb5165-rb5-sndcard"},
-> +	{ .compatible = "qcom,qrb4210-rb2-sndcard", .data = "sm8250" },
+> [...]
 
-sm4250 for rb2?
+Applied, thanks!
 
-> +	{ .compatible = "qcom,qrb5165-rb5-sndcard", .data = "sm8250" },
-> +	{ .compatible = "qcom,sm8250-sndcard", .data = "sm8250" },
->  	{}
->  };
->  
-> 
-> -- 
-> 2.49.0
-> 
+[02/11] dt-bindings: mfd: syscon: add qcom,apq8064-mmss-sfpb
+        commit: 137d4ebdf6bd86ca6aa26ec4f9a1c5b579905c6c
+[03/11] dt-bindings: mfd: syscon: add qcom,apq8064-sps-sic
+        commit: 9f8af721495e04b6c3a3a5293fd8afa7e38bee1f
+
+--
+Lee Jones [李琼斯]
+
 
