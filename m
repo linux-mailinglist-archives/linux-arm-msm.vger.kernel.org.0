@@ -1,144 +1,292 @@
-Return-Path: <linux-arm-msm+bounces-56583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2503FAA7B08
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 22:42:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C20D6AA7B71
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 23:41:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CBC351C0309C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 20:42:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6715218934DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 21:41:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00C95202963;
-	Fri,  2 May 2025 20:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 848C229408;
+	Fri,  2 May 2025 21:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bYoZQyrT"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DI7d8KDG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3133A207DEF
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 May 2025 20:41:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F99920296A
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 May 2025 21:41:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746218519; cv=none; b=SPr8yAvbAmXvMam6CmXwUi7z5FfSO/a/Kx3TapyGseoxJuAwEBjEvIrkS/LtZGd/7G73xCTauw0mdFbrFELylIz5YOwakg/jg9d+V5EXzX3P8K4A8TCG5ZqvRM3C/kSbIbS5dj9kT4Izp/Db0ulk/jhh4v/6+NylzBUfNn/u87k=
+	t=1746222098; cv=none; b=ZpxVVOD7VYsYo/Ho++vUB87mRwJugfseMjgOmaDavTAPCgA9MuYKvVg77HRDWxhkbRdy5kelQetZpj2ioAnoq0hjXfdaimF0M/kmAJgGIf/iuy0K4WpD5zqNh1WZgdArkB2qAnOA53GI7tI8sWkby8kMrO1WxYGqIwCLmlQSKck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746218519; c=relaxed/simple;
-	bh=Gor5eZeOe95pbDOvaRNjo/pq9TyKVg+UU7vzl4dpmTg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=shR5/vP4rT73ndWE3LUCvBBNWyz8l3j18vLckos6MzY0BYpM3iZSQRrd0pE5ASzofrHUehHpQWodC4aWJkvjXQ4R7mDUq5FAfMGSuDm8ltl+CYHG26V6JO2CiYTSbXNFuoEt9KEnvK5Vpn+tR1bg8Xp75vzmO63jYhg8RUzkAUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bYoZQyrT; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5498cd09cbfso325517e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 13:41:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746218516; x=1746823316; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Vh/HB4YndctfR9aIAkHgSZCg6hCNtQ3fblG9H0OCQvc=;
-        b=bYoZQyrTCvS0D/jHFsU22HGwlfzc5QrwHl8a7Nh8c1c0mEEzJMbztDxxKPofSlbw1o
-         WemgjDhlDBEMjFID/VyAvpdZ33sh+OOvg5sTMrO5dvaDrzQYYe/3O5BSMUxnvQbDpldD
-         wX+W6j68Q1eJHrfMdIvgMVw12xABsfPGDRzRj4scJjh82QX0wzJHpERtHxeN29+mjZMq
-         Sa4GLBXb/hBLrhF0AfsLBAwob5ACFEJLch+jqD6NsRyB/g2IPftJotoM8Sh5Rd/o8/Oq
-         fcjGoE5tlDjykGdKXzHzYUXeCok1FCafvAiPnby1NCRrIXeGwNLCeVsXzsWzzLxLtiRQ
-         HmWw==
+	s=arc-20240116; t=1746222098; c=relaxed/simple;
+	bh=WfnrA1p6UnOwRSCwn9I8xNbmK2iTuPFXqFSGc2dMMwg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=G6XmC6omIfvBdOtKqg5otTqGu8EUVY1qjbh7XU/GGH69p7ymbK8AH2YPWUVfTouLjXYNsAwG4k0ZqUluWegfgh25n110QUbIngHC+w3nCLXobzTlxA8pn4ZuvYKlFolzdBnfmmz/xdl0WPcfFKrjgMp0flqVsHGK8YHziFH2s9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DI7d8KDG; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 542KAvdi014249
+	for <linux-arm-msm@vger.kernel.org>; Fri, 2 May 2025 21:41:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Ui/Dd0dEB5SSlIr1fPAKd4W0TlzRZ0WZuFplX74RGEM=; b=DI7d8KDGBQDmlCwe
+	KCJ9tU2P9Eb7KsOdZgPBIlnkd3oZBSvGdzSzt+QEAH/hLnTjuVX/9BVaSA9leYU3
+	teahwl0K/kEKDAiKWk5TWClAw43/xXNM904BXP7p9TSZWbG3KhKOQXOvUrpJMSN+
+	05bLHnBoI75v9TkcAmdrKOS9SSWjgwZ8+unKfrVeoDLVwRc4xkrUmKvDUNm7ZOQ/
+	DH8g1V+o8C31VeZ8ASJHP1aq/lf+o2YKK57bLQPt0SE2LiP4dVnjQ2Bu3pBsAb1m
+	b5TpjaNo6EOPXqNddM91p9SIqXiSuc5q7GnmE5fpZGi6F3sa/oPvSKF9BoKTohc6
+	rbczrA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u41d2d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 21:41:35 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-47689dc0f6dso45749101cf.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 14:41:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746218516; x=1746823316;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vh/HB4YndctfR9aIAkHgSZCg6hCNtQ3fblG9H0OCQvc=;
-        b=ULgVgrBFPB+kPoTC2B4O9cENmBCHEMO/uAOEt8StPpVkLXXgHh+jIjmH4BVgqhCZWK
-         ohLAEggL3K+ewRx62ns1r6wrxIP5DAyvjrZOU3KG7sF7QFEtY4yLxi5ErxLW4fnnJI6c
-         9iITBOzTb0bvkzmdSs7dDxrQizkbd8EEvFyYvNJebvppVH6/Cn2RhEbjOMo3ZaN47PcS
-         p3oISN83ra2MfhgjNyrhDLMgvTvwWetTOxGdOYcjNv4vIaDH6WwkCm1cFfve82upD7I2
-         ohHQOpBUCVYpLstX1SDbOtbGVTc5ysdGez3Mn24+w3Gdh/DPW+Jr+3Rjig6LQK0wUZzu
-         2fhg==
-X-Gm-Message-State: AOJu0YwNywSEEu3bbDrLGOj5qY8BL81Ef0821U9pKtoNDIUp1BGvia5N
-	csTRLmhCFiwVVYfmoW7Bpmn4CQKtoRAgXA5GC4476yWYljsga8KE3LEKmZ3H/E4=
-X-Gm-Gg: ASbGncvWeS/LLjPvAyu5B9C+0R2bp4O7P/Fhar1Nw/4s3ZrtZx5x+nOukMHT11eQ2bA
-	Smsmc9Ua5rMIvegC/Kcjuvo9G1AV+r7bljfaE6taGGh5ao64SvzSrAVhA2yIj1Is3AGlRCrIaYz
-	KJRJAOTeTXhbK531eIYc/jKq4ZJBH0qS5YLpAsoz514FqYK74eyNLbMn/4w+LnnSlTK6OHnFJTq
-	7YHgoegeBlxlE51VnltOH34hTKlN8Cf9A1SH8943nmVqx76rIjNVrc7J+EWKWsYrIGHn0FolRsY
-	vR2/lpFZ51Xil9NJMuzNpS4VRetPST9A9HOikR7EeTPpxurBUB/8R1rHeNizbLdp6Tf/hianaZL
-	aLQ5uYgzDMInBc5dvvWabD0xuJ/M9zw==
-X-Google-Smtp-Source: AGHT+IEvl+Xcmxwi3YlwZ0zrf65PyUadsBHWXJ9yXMntXt5u3cTRlzR9GC1W0M0Y15MOFSmh90ma5w==
-X-Received: by 2002:a05:651c:146d:b0:308:e803:119b with SMTP id 38308e7fff4ca-320c3afdda4mr4623881fa.1.1746218516348;
-        Fri, 02 May 2025 13:41:56 -0700 (PDT)
-Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32029017825sm4675301fa.40.2025.05.02.13.41.55
+        d=1e100.net; s=20230601; t=1746222093; x=1746826893;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ui/Dd0dEB5SSlIr1fPAKd4W0TlzRZ0WZuFplX74RGEM=;
+        b=NEXGyULLKkRDkEv2xXNYlQoZViyqUc7WlSrOde+xZoF09DgUBUYAsKpeg87KCaj+UK
+         9y4mZe6PeasxUx0vGqy125HayyBOmNyZp9LkuWJBeXukMp/2RYrZt9tny+h2GYanYsxM
+         hBgGY/xRN1gyaEwynTA5v9cTD3vSFYh5BkyGHn2XEIas9ZTVsy7PdDm/JjXdGE+VcHPX
+         kPHF3jCyT4wWdQI9PQCb8JQT6MDS/G4++2ugnXMA4qFgi2KtSey055iVTyp1jIPoJviq
+         YIq/KajWfmXMrTLV8qvpq2ndXvjY4wG/gUOZ33niOLTf99w6oEfnhYPESo+gCdJ7i+w0
+         QJiQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVwQxjI5N5687AiqbdVN0W2DZ5D4hSyrmVi+fTIrLGyWDNQ4zEGrZWCGLfIoOQdIGg++pbxu2+Ny6CY2Zfu@vger.kernel.org
+X-Gm-Message-State: AOJu0YwCU5u/L5EkjqPyMcWp9HDU040uv1cOS/lEEXuUA0jlr1AXuszV
+	95hoI6caJrfFjXVSF6KgzlYwS0V4LUfsvrGL/EDa55bCWP4AV+D7MW82JOLB+WyFBboOGpiLEiP
+	4pM52uuXvE6oYPWebwHwAkx2I6RaSxsMUBiA/+jolkXwIXwsKkpwg9KxMd6M/co615LHAy3rPrq
+	I=
+X-Gm-Gg: ASbGncukA16d5wfjwG304+uaM7hHlxMqqGFh2eYMRA1jLdjdndr1/Bu1ds/G6vitvqF
+	1V0EVawuIdTPBi9syFfxuOXOIeN7Z7o8yN6/6Cx2sQzskuKVjUDvR3wmx4PEGRue3HL2Zh67rQy
+	DVR3IYj7393hN2JJyWzYiB9WOZDQ4pKz06sWBfOC7RTKpsowpEuY1/qhNgi0GPdsjQXp3r3lon0
+	6vvKdMrL7xLMv7zv6kp57jGXjJCcbECv/jgqUA0Su0lGM3CnumtKtsryPto+S7nYBa8tUz8LBB5
+	+vISzcQODFSHpMgmP2f/dWUoOwX9v72NdXuGWqS8EUUHCRZuO16rIUDFh/MZmEh576TDhOoxzo0
+	=
+X-Received: by 2002:a05:622a:1dc5:b0:476:9847:7c6e with SMTP id d75a77b69052e-48c3164093bmr76384361cf.19.1746222093628;
+        Fri, 02 May 2025 14:41:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGN4MItxhGJJTIJenI1KN9iK0AJaDd3wPAutq4tLjWHPCXPBWfuEPGy1JIdC/RwoLgB5fElLA==
+X-Received: by 2002:a05:622a:1dc5:b0:476:9847:7c6e with SMTP id d75a77b69052e-48c3164093bmr76383921cf.19.1746222093161;
+        Fri, 02 May 2025 14:41:33 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94ee00fsm501038e87.120.2025.05.02.14.41.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 May 2025 13:41:56 -0700 (PDT)
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Todor Tomov <todor.too@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH 3/3] dt-bindings: media: qcom,x1e80100-camss: Remove clock-lanes port property
-Date: Fri,  2 May 2025 23:41:42 +0300
-Message-ID: <20250502204142.2064496-4-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250502204142.2064496-1-vladimir.zapolskiy@linaro.org>
-References: <20250502204142.2064496-1-vladimir.zapolskiy@linaro.org>
+        Fri, 02 May 2025 14:41:32 -0700 (PDT)
+Date: Sat, 3 May 2025 00:41:30 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Matti Vaittinen <mazziesaccount@gmail.com>
+Cc: Doug Anderson <dianders@chromium.org>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Biju Das <biju.das.jz@bp.renesas.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH v3 4/4] gpio: Hide valid_mask from direct assignments
+Message-ID: <cupvce3ptuidmjpiwbzddv3err5m5antfwtdgvxlmamypdadnl@ii6occccx72h>
+References: <cover.1741180097.git.mazziesaccount@gmail.com>
+ <4547ca90d910d60cab3d56d864d59ddde47a5e93.1741180097.git.mazziesaccount@gmail.com>
+ <CAD=FV=Vg8_ZOLgLoC4WhFPzhVsxXFC19NrF38W6cW_W_3nFjbw@mail.gmail.com>
+ <944dab74-f431-41e1-b4d7-fddf25ffa147@gmail.com>
+ <5add8ddd-fcc8-445d-9699-42c27df0e1c7@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <5add8ddd-fcc8-445d-9699-42c27df0e1c7@gmail.com>
+X-Authority-Analysis: v=2.4 cv=Bv6dwZX5 c=1 sm=1 tr=0 ts=68153c0f cx=c_pps a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=AmpY3L4ahEK_DQabhFQA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: KCJ8XVKcYTxg9CyZ5jcuba2KuZD5LK5B
+X-Proofpoint-ORIG-GUID: KCJ8XVKcYTxg9CyZ5jcuba2KuZD5LK5B
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAyMDE3NiBTYWx0ZWRfX79gIM13a44yV 1AOhPbEOsbgIetXMvt2h6YKFnNCMAiGGaEGRXJVySMjTKO9NAkrbaxsQ43fLjoFk2JIybOAwaVr 7ELYuAZy5cb14hfJ23CMKhQwzv3FZWcKl8Sg4DPsa7VmZB1wG1aGoOQMccq0mIsuKAjklkn1Ml0
+ +R3PkXJIH3oWW7sq/t/CLwAIm0Molho43jsgcmfxqJt5Ou8dG3AZQMPM474WxbnVwK00VjIwUch mLqb5qgJC7jJrf3wHJP4vhLbVPgyNqF5D2OUH6fEaiMLi2J5N5Ds+fFW7tKYMKqTNAo88QZdWEv mswzxtTpNIKtG/dN/QkDM8hHlbmZjmC3SGRpKueODIc500G0DLwHCrgP7r4DKOg7pdixenCs49H
+ kgSYJ8MFmRPWAJGLlJhEKCY9etwhpzMT4wGJkr/xVUPAfd36bmij34/WTuhenZAUxTVtNRx/
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-02_04,2025-04-30_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ mlxlogscore=999 phishscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
+ bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505020176
 
-Since clock lanes under CSIPHY are hard-wired and non-selectable,
-it makes sense to remove this port property.
+On Sun, Apr 13, 2025 at 11:51:29AM +0300, Matti Vaittinen wrote:
+> On 13/04/2025 11:08, Matti Vaittinen wrote:
+> > Hi Doug,
+> > 
+> > On 13/04/2025 02:00, Doug Anderson wrote:
+> > > Hi,
+> > > 
+> > > On Wed, Mar 5, 2025 at 5:23 AM Matti Vaittinen
+> > > <mazziesaccount@gmail.com> wrote:
+> > > > 
+> > > > The valid_mask member of the struct gpio_chip is unconditionally written
+> > > > by the GPIO core at driver registration. Current documentation does not
+> > > > mention this but just says the valid_mask is used if it's not NULL. This
+> > > > lured me to try populating it directly in the GPIO driver probe instead
+> > > > of using the init_valid_mask() callback. It took some retries with
+> > > > different bitmaps and eventually a bit of code-reading to understand why
+> > > > the valid_mask was not obeyed. I could've avoided this trial and
+> > > > error if
+> > > > the valid_mask was hidden in the struct gpio_device instead of being a
+> > > > visible member of the struct gpio_chip.
+> > > > 
+> > > > Help the next developer who decides to directly populate the valid_mask
+> > > > in struct gpio_chip by hiding the valid_mask in struct gpio_device and
+> > > > keep it internal to the GPIO core.
+> > > > 
+> > > > Suggested-by: Linus Walleij <linus.walleij@linaro.org>
+> > > > Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+> > > > Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+> > > > ---
+> > > > Revision history:
+> > > > v2 => v3:
+> > > >   - Rebase to gpio/for-next
+> > > > v1 => v2:
+> > > >   - Hide the valid_mask instead of documenting it as internal to GPIO
+> > > >     core as suggested by Linus W.
+> > > > https://lore.kernel.org/all/Z71qphikHPGB0Yuv@mva-rohm/
+> > > > ---
+> > > >   drivers/gpio/gpiolib.c      | 16 ++++++++--------
+> > > >   drivers/gpio/gpiolib.h      |  3 +++
+> > > >   include/linux/gpio/driver.h |  8 --------
+> > > >   3 files changed, 11 insertions(+), 16 deletions(-)
+> > > 
+> > > FWIW, I've found that this patch is crashing me at bootup on my
+> > > sc7180-trogdor board. The problem is pretty obvious in gdb.
+> > > "gc->gpiodev" is NULL in gpiochip_line_is_valid().
+> > 
+> > Thanks for debugging this! I find this odd. It seems to me the pinctrl-
+> > msm.c is calling the gpiochip_add_data() for the chip, in the
+> > msm_gpio_init() - which is called from the msm_pinctrl_probe().
+> > 
+> > The gpiochip_add_data() should go to the gpiochip_add_data_with_key() -
+> > where the gpiodev should be allocated and set.
+> > 
+> > I don't spot any successful code path where the gpiodev was not allocated.
+> > 
+> > > 
+> > > 0xffff80008066c760 in gpiochip_line_is_valid (gc=0xffff000083223890,
+> > > offset=offset@entry=66) at drivers/gpio/gpiolib.c:746
+> > > 746             if (likely(!gc->gpiodev->valid_mask))
+> > > (gdb) bt
+> > > #0  0xffff80008066c760 in gpiochip_line_is_valid
+> > > (gc=0xffff000083223890, offset=offset@entry=66) at
+> > > drivers/gpio/gpiolib.c:746
+> > > #1  0xffff800080666338 in msm_pinmux_request (pctldev=<optimized out>,
+> > 
+> > Ah, but now I see the call comes from the pinmux. Looking at the
+> > msm_pinctrl_probe() - the pincontroller is registered before the gpio.
+> > Maybe, with unlucky timing, the request happens right after registering
+> > the pinctrl - but before registering the gpios.
+> > 
+> > This, I think, can be a bug even before this change (because the
+> > valid_mask is not initialized prior the gpio registration) - but this
+> > change now made it obvious.
+> > 
+> > I see the probe is actually an exported function, and there are mentions
+> > about ACPI support etc. I don't really know if there are valid cases
+> > where the pincontroller should be usable without the gpiochip. If this
+> > is the case, the unconditional call to the gpiochip_line_is_valid() from
+> > the msm_pinmux_request() smells wrong.
+> > 
+> > I am not sure about the right fix. One could try:
+> > 
+> > @@ -1568,6 +1568,10 @@ int msm_pinctrl_probe(struct platform_device *pdev,
+> >          if (pctrl->irq < 0)
+> >                  return pctrl->irq;
+> > 
+> > +       ret = msm_gpio_init(pctrl);
+> > +       if (ret)
+> > +               return ret;
+> > +
+> >          pctrl->desc.owner = THIS_MODULE;
+> >          pctrl->desc.pctlops = &msm_pinctrl_ops;
+> >          pctrl->desc.pmxops = &msm_pinmux_ops;
+> > @@ -1582,10 +1586,6 @@ int msm_pinctrl_probe(struct platform_device *pdev,
+> >                  return PTR_ERR(pctrl->pctrl);
+> >          }
+> > 
+> > -       ret = msm_gpio_init(pctrl);
+> > -       if (ret)
+> > -               return ret;
+> > -
+> >          platform_set_drvdata(pdev, pctrl);
+> > 
+> >          dev_dbg(&pdev->dev, "Probed Qualcomm pinctrl driver\n")
+> > 
+> > but I am not at all this is the fix we're looking after. I wonder if
+> > Krzysztof has any suggestions? (Seeing he has been authoring some
+> > changes here :] )
 
-The change follows the same logic as found in commit 336136e197e2
-("media: dt-bindings: media: camss: Remove clock-lane property").
+I think a correct fix for the pinctrl-msm driver would to use
+devm_pinctrl_register_and_init() and then pinctrl_enable() after
+registering GPIO chip, I'm going to submit a relevant patch. However I
+can't stop but notice that pinctrl-msm is not unique in the pattern of
+simply calling [devm_]pinctrl_register() and then registering a GPIO
+chip. This patch makes this pattern much more fragile.
 
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- .../devicetree/bindings/media/qcom,x1e80100-camss.yaml       | 5 -----
- 1 file changed, 5 deletions(-)
+> 
+> +Björn
+> 
+> > Yours,
+> >      -- Matti
+> > 
+> > 
+> > > offset=66) at drivers/pinctrl/qcom/pinctrl-msm.c:152
+> > > #2  0xffff800080662314 in pin_request (pctldev=0xffff000082686ac0,
+> > > pin=66, owner=0xffff000082c02790 "3500000.pinctrl", gpio_range=0x0)
+> > >      at drivers/pinctrl/pinmux.c:176
+> > > #3  0xffff800080662900 in pinmux_enable_setting
+> > > (setting=0xffff000082684b40) at drivers/pinctrl/pinmux.c:445
+> > > #4  0xffff80008065fd54 in pinctrl_commit_state (p=0xffff000083a07520,
+> > > state=0xffff000082684a40) at drivers/pinctrl/core.c:1300
+> > > #5  0xffff8000806605bc in pinctrl_select_state (p=0xffff000083223890,
+> > > p@entry=0xffff000082686ac0, state=0x42) at drivers/pinctrl/core.c:1381
+> > > #6  pinctrl_claim_hogs (pctldev=0xffff000082686ac0) at
+> > > drivers/pinctrl/core.c:2136
+> > > #7  pinctrl_enable (pctldev=0xffff000082686ac0) at drivers/pinctrl/
+> > > core.c:2156
+> > > #8  0xffff800080660814 in pinctrl_register
+> > > (pctldesc=0xffff000083223a90, dev=0xffff000081406410,
+> > > driver_data=0xffff000083223880) at drivers/pinctrl/core.c:2193
+> > > #9  0xffff800080660df4 in devm_pinctrl_register
+> > > (dev=0xffff000081406410, pctldesc=0xffff000083223a90,
+> > > driver_data=0xffff000083223880) at drivers/pinctrl/core.c:2313
+> > > #10 0xffff8000806657b4 in msm_pinctrl_probe (pdev=0xffff000081406400,
+> > > soc_data=<optimized out>) at drivers/pinctrl/qcom/pinctrl-msm.c:1579
+> > > #11 0xffff80008066afcc in sc7180_pinctrl_probe
+> > > (pdev=0xffff000083223890) at
+> > > drivers/pinctrl/qcom/pinctrl-sc7180.c:1147
+> > > #12 0xffff80008089583c in platform_probe (_dev=0xffff000081406410) at
+> > > drivers/base/platform.c:1404
+> > > 
+> > > (gdb) print gc->gpiodev
+> > > $1 = (struct gpio_device *) 0x0
+> > > 
+> > > -Doug
+> > 
+> 
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-index 2e7455bd75ec..c101e42f22ac 100644
---- a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-@@ -146,9 +146,6 @@ properties:
-             unevaluatedProperties: false
- 
-             properties:
--              clock-lanes:
--                maxItems: 1
--
-               data-lanes:
-                 minItems: 1
-                 maxItems: 4
-@@ -159,7 +156,6 @@ properties:
-                   - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
- 
-             required:
--              - clock-lanes
-               - data-lanes
- 
- required:
-@@ -362,7 +358,6 @@ examples:
-                 port@0 {
-                     reg = <0>;
-                     csiphy_ep0: endpoint {
--                        clock-lanes = <7>;
-                         data-lanes = <0 1>;
-                         remote-endpoint = <&sensor_ep>;
-                     };
 -- 
-2.45.2
-
+With best wishes
+Dmitry
 
