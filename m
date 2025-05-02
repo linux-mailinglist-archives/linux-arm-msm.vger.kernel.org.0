@@ -1,63 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-56450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FF2BAA6AD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 08:38:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B900AA6AD7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 08:43:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2898B1BA4F8E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 06:38:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 02746981660
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 06:43:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E243265623;
-	Fri,  2 May 2025 06:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2126265624;
+	Fri,  2 May 2025 06:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lwKFv1TH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o+vtIvnA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A7D264FB4;
-	Fri,  2 May 2025 06:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933171E260D;
+	Fri,  2 May 2025 06:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746167882; cv=none; b=tuxr57MQiQL8w5qY/N6zfwJMhjB/jYbTjzNRuWjeGbbpeBNG8B3aOX+IB9mqr4GKGm1ztwmbFXakrGHeKvJV9Q3OGIG+Ae4vCSD9SCP8IZjkaHxSsgeEfHKswFq7t6OJGjsgy6r3a3w+5XRjktg3gns6U5RslO/n2+fUzVU/Mmg=
+	t=1746168228; cv=none; b=KWRH2DxmwCz+clBTH0j6GUL8BfSjzLQt8LNDyQfwqPoufRlLhE9cqFMrX7pJ00X+e206nOCLbptv/kNq0lFob3Y6kYqbMLgScySxrYkJvPZWEFsjq3x1PLDR8YsAIs1Q5ziDCY7C4eLFcA7pVcvlChddhht0X9IcbE/Zje1bnW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746167882; c=relaxed/simple;
-	bh=IMqFIlZ6SAyyAE5sTtWzqeu643LBdgSXKpb5tiqgPak=;
+	s=arc-20240116; t=1746168228; c=relaxed/simple;
+	bh=BNeIriVD+Uk78B5K73mGwjQJ3XL7k7AuZMqD6Ps9t6E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JZOaMk+RIO48cKXHb2yqKffpWPMgxFDyzOlPYhxUWGpjgqwT19Lj5S2+3PhgEKO+ErOTC6pLKKCTPOzcVMKoXNqBFXcTHzv3Jk9IQ3B6agHGd6DEfGqfmubf4/WuWUyPTFsTEAwDcZQSTGdAyc4dylCnemUvBk/Sn3FMV9pXGvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lwKFv1TH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D9EC4CEE4;
-	Fri,  2 May 2025 06:38:00 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=nXh7x4agZs+y1bNX1iymS/wj049mGdMOm78WEqSq9Knj3dNnGT3wotQvId84vkBBCRBDHfnPlh/4vZXO73tnRAXv4enfggdoBMarc0aPNo+YOve26/mgYGxIXxF39CI3n9j9SsEOLdZqB3ZAGzZXKtYH/v3896DlbL1MSEqtnDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o+vtIvnA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B57C4CEE4;
+	Fri,  2 May 2025 06:43:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746167881;
-	bh=IMqFIlZ6SAyyAE5sTtWzqeu643LBdgSXKpb5tiqgPak=;
+	s=k20201202; t=1746168228;
+	bh=BNeIriVD+Uk78B5K73mGwjQJ3XL7k7AuZMqD6Ps9t6E=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lwKFv1THI/nBuyaWPwpPU4y6LJq+343nZrfIc1kJhnn6QLZvxPp0p6uxXkRYcwjG8
-	 xPYb8Cbz+nfBKIHzwFnwxHDisW/+xlps540FPV7ioTx+L8CY/Jbgrv4ChR2dx3WNzj
-	 KX8+iw1BLHuxyJ26Ul/rXrRdSlMWvF4Zh1w6gWaKJfGNIELUa9FQPhQ7bLhyE/M9S9
-	 b8BfVikBG4MwiPImuQQLt8y8uoboygT1tJWsMOGsYQYSGy3/70G0okeDYkbde/Oavk
-	 yEHO/Iuf+Fv2S2bwNY1R8GYwi/BTwyDMnw22WsXY1cO9GqcpOrsCz4T7dzumXgyuy3
-	 rX3u13yg6U4RA==
-Date: Fri, 2 May 2025 08:37:58 +0200
+	b=o+vtIvnAfYip84JAymD4Mblyrfer/CJjrWWSEtCM38NzLGkdsCsXWoTLXtYwt9vlx
+	 FfdZoVHxtUDjrXMvm6etjr0pMbqoiHnK6iW+RBfZP9Om0aB2zny/n1hu1U9xFUKcVG
+	 3taFqslrWueauTtmSNlqPEQOENTlIokoPiTtb23TXQ/peM2oi2lOgDeP26RSlIDJEG
+	 nFP1mqrGgEyoxpLqF1rlSB4lvVcWGJYtTWnycfawUv8fi9U5Bvr+rWICxCa9cPhbEN
+	 HWRL29bb/UuXooS+EN9PplCVfagwIZmoiYhIlxTQd0mguZdnzoyRWqiksW0H0Q7Hus
+	 R1GhC/EEbNSOw==
+Date: Fri, 2 May 2025 08:43:45 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Praveen Talari <quic_ptalari@quicinc.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-serial@vger.kernel.org, devicetree@vger.kernel.org, linux-pm@vger.kernel.org, 
-	psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com, 
-	quic_vtanuku@quicinc.com, quic_arandive@quicinc.com, quic_mnaresh@quicinc.com, 
-	quic_shazhuss@quicinc.com, Nikunj Kela <quic_nkela@quicinc.com>
-Subject: Re: [PATCH v3 3/9] dt-bindings: qcom: geni-se: describe SA8255p
-Message-ID: <20250502-quirky-prudent-beaver-dcebd0@kuoka>
-References: <20250502031018.1292-1-quic_ptalari@quicinc.com>
- <20250502031018.1292-4-quic_ptalari@quicinc.com>
+To: Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, 
+	Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: arm: Add Qualcomm extended CTI
+Message-ID: <20250502-notorious-granite-gibbon-1abf15@kuoka>
+References: <20250429071841.1158315-1-quic_jinlmao@quicinc.com>
+ <20250429071841.1158315-2-quic_jinlmao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,35 +62,31 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250502031018.1292-4-quic_ptalari@quicinc.com>
+In-Reply-To: <20250429071841.1158315-2-quic_jinlmao@quicinc.com>
 
-On Fri, May 02, 2025 at 08:40:12AM GMT, Praveen Talari wrote:
-> From: Nikunj Kela <quic_nkela@quicinc.com>
+On Tue, Apr 29, 2025 at 12:18:40AM GMT, Mao Jinlong wrote:
+> Add Qualcomm extended CTI support in CTI binding file. Qualcomm
+> extended CTI supports up to 128 triggers.
 > 
-> SA8255p platform abstracts resources such as clocks, interconnect
-> configuration in Firmware.
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> Add DT bindings for the QUP Wrapper on sa8255p platform.
-> 
-> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
-> Co-developed-by: Praveen Talari <quic_ptalari@quicinc.com>
-> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
-> 
-> v2 -> v3
-> - reordered required option
+> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+> index 2d5545a2b49c..1aa27461f5bc 100644
+> --- a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+> @@ -84,7 +84,9 @@ properties:
+>            - const: arm,coresight-cti
+>            - const: arm,primecell
+>        - items:
+> -          - const: arm,coresight-cti-v8-arch
+> +          - enum:
+> +              - arm,coresight-cti-v8-arch
+> +              - qcom,coresight-cti-extended
 
-
-...
-
-
-> +additionalProperties: false
-> +
-> +required:
-
-Which part of "required: block goes after properties and
-patternproperties." is unclear?
-
-Look at example schema.
+cpu phandle is not required? Or not even valid?
 
 Best regards,
 Krzysztof
