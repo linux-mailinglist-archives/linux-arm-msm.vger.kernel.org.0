@@ -1,151 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-56439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF92AAA69B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 06:16:16 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E757AAA69C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 06:25:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 11F4D4A321F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 04:16:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A6D411BC46AE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 04:26:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A9A4199FAF;
-	Fri,  2 May 2025 04:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4583619E97B;
+	Fri,  2 May 2025 04:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="XzYiNSWd"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="M0AeC1SZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9472A18CBFC;
-	Fri,  2 May 2025 04:16:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746159372; cv=pass; b=dKQTZz5IvIcwSRgMIGGsZQo3ggAGwEdUgoch6AtVMfnFRrK8mwgRvddRkA7+Pp2grF4Tn9A/clEiStqvSWRNZnccuCsN6C/SEpaqGBOByafnIzKrcAkaNo/x+NUStEbnE4669HYDDGUx5pyhoTQW3xvOTKlD8y0ImeLBJqMeB6A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746159372; c=relaxed/simple;
-	bh=zxU9482IXgMGBnaOsdctpat0CqazridftFpM0BE5b3k=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=UmtXv3ml4wBAxbvs3fnher81myoRCr97Qp0EnUlkHD+78sCrwe5C3Mb7Am5vQnAWvtgPo7DHI9XxA64u0pF+gPV8BOuVUHsX21LzVGHS9ch5rgBIfWyQKCyLskP08x6xOslahK0MB06L47eOBzoKu2/ciFY6mPq98nFJOLaJpeA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=XzYiNSWd; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1746159322; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=ER8AlXySUpnr6vDpzDd0slMHfE70fKr81s3q7pnsRWa0brvMAxQuaS9k+5BWNCcbMdAnQH5tAq2lkQ13KP1/qaml2Xv++uEi8ZS72ox2BTcPtnHfG2TVpweC8DFWF1RvK8UDkbBdZVQr7TRGhomgqlGHco9zXjnN0z5ktOfc0Ok=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1746159322; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=slniCBieFi8ALosAy7gsKHxe+RnIiRTt/8ka8YLXg+A=; 
-	b=ljCD8+Wnk+dpM+d+npXOlXrlrMDobFO3t6g0D1kf/cXlt7ymu7/7yXn7UpQ/L6kqZuwV8E2fy9eUUsz2Y189q4NC0rCkDzvfqHPXQ0ZFeZwl7Iwrnz/xTG/c62hvlCdcctBGqNfD8tXK9G7q1dP2bJOPqILYwONOqT5aqRHJp30=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
-	dmarc=pass header.from=<usama.anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1746159322;
-	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=slniCBieFi8ALosAy7gsKHxe+RnIiRTt/8ka8YLXg+A=;
-	b=XzYiNSWdT5bolXnmG2GHdgaUr4k8ZzrDE0DpyIxeBOWZt6At8w0q8Ji18NHbwE6s
-	ehqOIryEakQ9dwxn8ciyZJnCu7BzoUebWnks1IUJviPdm0j37bta8O+UrqyCUIcozCa
-	DKxFkvNQMkWXQMaCMukOPtuvJZN8j0q3nxcE0dZ0=
-Received: by mx.zohomail.com with SMTPS id 1746159320663980.4307609300157;
-	Thu, 1 May 2025 21:15:20 -0700 (PDT)
-Message-ID: <bdc89d09-ce50-43a4-9043-3ca6a9245eb4@collabora.com>
-Date: Fri, 2 May 2025 09:15:10 +0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0BF19B5B4;
+	Fri,  2 May 2025 04:25:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746159952; cv=none; b=Ro3VzlAIXHnsgPOny7jneBZW6Co6khimAXWLxErcELakNEchPWIJ+IJntDouCw/AYk/fG8OSdU20AJl1zL1MLzdY1JFP8q75oEdkM0cdjcUYq9hGlopvIUE73HNl2n5UWS8mIoQepQBrGvTSYIRnq809IRXwnKRSqXvstmHCXIY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746159952; c=relaxed/simple;
+	bh=giJGEefJByRfIEslDgogwcZ3Xn2nicGt4CVA1PGb+cU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CDsBVNr3ZG/VDL1hGrkJBszYJ8Zqs0aMAgu3/GtS9kEedkttxJQA7xUUfsrOXFJ057HpepijJO1WbY2x2ZRJdoAbtCWk59WnykW5V74cwsSIz3S9POEHOHf6eLp24zQUd7fL/4G00PoXn7pkDQQsl6OC2Mkd3NicVhk1HbNBwUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=M0AeC1SZ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5421NBmb002480;
+	Fri, 2 May 2025 04:25:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=6Kq05V55xQvosExyfqoILoNPtJmJQbyD7RX
+	SIMucAjQ=; b=M0AeC1SZ8+vgS7qOwEUH79kJ8KpPqmLiuWSTrNp7REVizwk7k8x
+	ovZk6KhinuQcAmvk705h27T6TNeJx8O1fq8kTgpDTGyQL6XEDNfVcywuyiKQSLZH
+	vKzRCrF9kpKbLeAYqQoTKJtXjvCtrDdUVX8+c7jGhJWMxJCILwSo92NaAAqEgeJ5
+	egaWLCU8cw3RBQxZjPWu6gKcFK0zoPBtq/B4WytnSfrvOqTQ0EviJoZXHIWo5sr5
+	a/Spn9xy2JxHSrz1bBpGAlVqNkatLHMeCDqE/RCZr8IhAswF1SbkBJeucmO7TSqb
+	LitolKlt4fl3YkdgoFOt4eOfxYE9XfzdDyw==
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u778pu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 02 May 2025 04:25:26 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5424PO0G017775;
+	Fri, 2 May 2025 04:25:24 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 468rjmp371-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 02 May 2025 04:25:24 +0000
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5424PN8v017767;
+	Fri, 2 May 2025 04:25:23 GMT
+Received: from cbsp-sh-gv.ap.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 5424PN4P017764
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 02 May 2025 04:25:23 +0000
+Received: by cbsp-sh-gv.ap.qualcomm.com (Postfix, from userid 393357)
+	id 260B740C11; Fri,  2 May 2025 12:25:22 +0800 (CST)
+From: Ziqi Chen <quic_ziqichen@quicinc.com>
+To: quic_cang@quicinc.com, bvanassche@acm.org, mani@kernel.org,
+        beanhuo@micron.com, avri.altman@wdc.com, junwoo80.lee@samsung.com,
+        martin.petersen@oracle.com, quic_ziqichen@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+        quic_rampraka@quicinc.com, neil.armstrong@linaro.org,
+        luca.weiss@fairphone.com, konrad.dybcio@oss.qualcomm.com
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org
+Subject: [PATCH 0/3] Bug fixes for UFS multi-frequency scaling on Qcom platform
+Date: Fri,  2 May 2025 12:24:29 +0800
+Message-Id: <20250502042432.88434-1-quic_ziqichen@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: usama.anjum@collabora.com,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Jeff Johnson <jjohnson@kernel.org>, Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
- Youssef Samir <quic_yabdulra@quicinc.com>,
- Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
- Alex Elder <elder@kernel.org>,
- Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
- Kunwu Chan <chentao@kylinos.cn>, Troy Hanson <quic_thanson@quicinc.com>,
- "Dr. David Alan Gilbert" <linux@treblig.org>, kernel@collabora.com,
- mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
- ath11k@lists.infradead.org, ath12k@lists.infradead.org
-Subject: Re: [PATCH v3] bus: mhi: host: don't free bhie tables during
- suspend/hibernation
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-References: <20250429122112.104472-1-usama.anjum@collabora.com>
- <2025050110-unpeeled-spur-e4af@gregkh>
-Content-Language: en-US
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-In-Reply-To: <2025050110-unpeeled-spur-e4af@gregkh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAyMDAzMSBTYWx0ZWRfXwpseNXm2NT47 yBrRkvF84nNiKMR2nKQjoy9hEyp2Nsn9oKDpf2BdiSNQqCqTl1vpDuFRWrP92EfVZwoUb2z9Par c9v5VYo2AmpxOu7q8Hy6oLsrsZmC7sn8Tv29Izlh8IADHiCNhxZBzCohCR4IiK3bExkK0ec+mo3
+ ng98NBCext4NtgX5f6tVHpSkrP7RjlAK0U8Fhq4bbcnzAME+yaaWIIoQPYrKh4tuqohT27/NBl0 NTyTuVDVSFQJbIaNNcaAH3RwpP0DDIawGrGOptR58vy1eMLRoAeBCt7/f51F6nGgEyYHJn+kope k2IM3beOmfdm1cxaHoE1ur4MlN6bYqODlM2tAY5VIixR0/Et9Tch9Qc64zXPUb3t/WjsnWp6NSt
+ Xuyj4S5BPs24dlB8GLpo4zRgvf6qI1ZhxDTzOBEHy9wWCBQkEF2aKt3kYyv5IOWJA83Df9c7
+X-Proofpoint-GUID: 45af7yNWlcZYP_b9zdsAF28Mizl84ynk
+X-Authority-Analysis: v=2.4 cv=W404VQWk c=1 sm=1 tr=0 ts=68144936 cx=c_pps a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17 a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=6H0WHjuAAAAA:8 a=L2RKipt3gwe40Om7ndYA:9 a=cvBusfyB2V15izCimMoJ:22
+ a=Soq9LBFxuPC4vsCAQt-j:22
+X-Proofpoint-ORIG-GUID: 45af7yNWlcZYP_b9zdsAF28Mizl84ynk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-01_06,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 priorityscore=1501 mlxscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 phishscore=0 impostorscore=0 mlxlogscore=999 malwarescore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505020031
 
-Hi Greg,
+This series fixes a few corner cases introduced by multi-frequency scaling feature
+on some old Qcom platforms design.
 
-On 5/1/25 9:00 PM, Greg Kroah-Hartman wrote:
-> On Tue, Apr 29, 2025 at 05:20:56PM +0500, Muhammad Usama Anjum wrote:
->> Fix dma_direct_alloc() failure at resume time during bhie_table
->> allocation. There is a crash report where at resume time, the memory
->> from the dma doesn't get allocated and MHI fails to re-initialize.
->> There is fragmentation/memory pressure.
->>
->> To fix it, don't free the memory at power down during suspend /
->> hibernation. Instead, use the same allocated memory again after every
->> resume / hibernation. This patch has been tested with resume and
->> hibernation both.
->>
->> The rddm is of constant size for a given hardware. While the fbc_image
->> size depends on the firmware. If the firmware changes, we'll free and
->> allocate new memory for it.
->>
->> Here are the crash logs:
->>
->> [ 3029.338587] mhi mhi0: Requested to power ON
->> [ 3029.338621] mhi mhi0: Power on setup success
->> [ 3029.668654] kworker/u33:8: page allocation failure: order:7, mode:0xc04(GFP_NOIO|GFP_DMA32), nodemask=(null),cpuset=/,mems_allowed=0
->> [ 3029.668682] CPU: 4 UID: 0 PID: 2744 Comm: kworker/u33:8 Not tainted 6.11.11-valve10-1-neptune-611-gb69e902b4338 #1ed779c892334112fb968aaa3facf9686b5ff0bd7
->> [ 3029.668690] Hardware name: Valve Galileo/Galileo, BIOS F7G0112 08/01/2024
->> [ 3029.668694] Workqueue: mhi_hiprio_wq mhi_pm_st_worker [mhi]
->> [ 3029.668717] Call Trace:
->> [ 3029.668722]  <TASK>
->> [ 3029.668728]  dump_stack_lvl+0x4e/0x70
->> [ 3029.668738]  warn_alloc+0x164/0x190
->> [ 3029.668747]  ? srso_return_thunk+0x5/0x5f
->> [ 3029.668754]  ? __alloc_pages_direct_compact+0xaf/0x360
->> [ 3029.668761]  __alloc_pages_slowpath.constprop.0+0xc75/0xd70
->> [ 3029.668774]  __alloc_pages_noprof+0x321/0x350
->> [ 3029.668782]  __dma_direct_alloc_pages.isra.0+0x14a/0x290
->> [ 3029.668790]  dma_direct_alloc+0x70/0x270
->> [ 3029.668796]  mhi_alloc_bhie_table+0xe8/0x190 [mhi faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
->> [ 3029.668814]  mhi_fw_load_handler+0x1bc/0x310 [mhi faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
->> [ 3029.668830]  mhi_pm_st_worker+0x5c8/0xaa0 [mhi faa917c5aa23a5f5b12d6a2c597067e16d2fedc0]
->> [ 3029.668844]  ? srso_return_thunk+0x5/0x5f
->> [ 3029.668853]  process_one_work+0x17e/0x330
->> [ 3029.668861]  worker_thread+0x2ce/0x3f0
->> [ 3029.668868]  ? __pfx_worker_thread+0x10/0x10
->> [ 3029.668873]  kthread+0xd2/0x100
->> [ 3029.668879]  ? __pfx_kthread+0x10/0x10
->> [ 3029.668885]  ret_from_fork+0x34/0x50
->> [ 3029.668892]  ? __pfx_kthread+0x10/0x10
->> [ 3029.668898]  ret_from_fork_asm+0x1a/0x30
->> [ 3029.668910]  </TASK>
->>
->> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
->>
->> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-> 
-> What commit id does this fix?  Should it go to stable kernel(s)?  If so,
-> how far back?
-This patch is fixing the dma_coherent_alloc() failure when there is
-memory pressure and its unable to allocate memory. Its not a bug in
-allocation API or the driver. I think it should be considered an
-improvement instead of the fix. Please correct me if I'm wrong.
+1. On some platforms, the frequency tables for unipro clock and the core clock are different,
+   which has led to errors when handling the unipro clock.
+
+2. On some platforms, the maximum gear supported by the host may exceed the maximum gear
+   supported by connected UFS device. Therefore, this should be taken into account when
+   find mapped gear for frequency.
+
+This series has been tested on below platforms -
+sm8550 mtp + UFS3.1
+SM8650 MTP + UFS3.1
+QCS6490 BR3GEN2 + UFS2.2
+
+For change "scsi: ufs: qcom: Check gear against max gear in vop freq_to_gear()"
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on RB3GEN2
+
+For change "scsi: ufs: qcom: Map devfreq OPP freq to UniPro Core Clock freq"
+           "scsi: ufs: qcom: Call ufs_qcom_cfg_timers() in clock scaling path"
+The original pathes of these two changes are tested by: Luca Weiss <luca.weiss@fairphone.com> on
+SM6350, but we have reworked the code logic later.
+
+
+Can Guo (2):
+  scsi: ufs: qcom: Map devfreq OPP freq to UniPro Core Clock freq
+  scsi: ufs: qcom: Call ufs_qcom_cfg_timers() in clock scaling path
+
+Ziqi Chen (1):
+  scsi: ufs: qcom: Check gear against max gear in vop freq_to_gear()
+
+ drivers/ufs/host/ufs-qcom.c | 134 +++++++++++++++++++++++++++---------
+ 1 file changed, 103 insertions(+), 31 deletions(-)
 
 -- 
-Regards,
-Usama
+2.34.1
+
 
