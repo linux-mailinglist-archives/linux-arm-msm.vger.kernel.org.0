@@ -1,150 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-56500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05B9BAA7292
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 14:51:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85939AA72A1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 14:55:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 985BC1899D6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 12:51:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC8D44A783B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 12:55:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFBB624677A;
-	Fri,  2 May 2025 12:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AC5C246794;
+	Fri,  2 May 2025 12:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cHKi5deO"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="avXQrZa1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from box.trvn.ru (box.trvn.ru [45.141.101.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E8223C516
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 May 2025 12:50:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6664F23C516;
+	Fri,  2 May 2025 12:55:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.141.101.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746190255; cv=none; b=fSEuA3HNUgq352f5d8SGni5FRtKll2qw/NvmSEgTVKDDDxLf2BtDsOPmgxmk4Zn5SoZFQ1xZyRaYLdbN9wF+RIon4eOZCtNnqnVUtHWukrfXtn1oJZSTsgt7XtHEJq3tYUeLEOul1RAESv3DnNhznPLuukJTy7mz9sYIR8MgBnI=
+	t=1746190505; cv=none; b=qVk1R8FnA+GPY6TbV/DSUsPtxNXg6TlBswluCVJxMxVGYOqFzVqZ8u8P2t9p8/d6vxm6/cbeW9yjklvmJ5I8qufs6YeJUVkedC5sCuFt90sWMyTkeCN/LmJAUbDilRen7OYAsg+AX6rly1fzjve4xOK3EICQfW4a48lUu5HhRs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746190255; c=relaxed/simple;
-	bh=I6QAVRToiFrvXi4WBLFZ0QTX2zbLl6IKDM8t8exjEX8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uFOlk4kDWkeRnHmlKcY3ReUhoxx+M/SEBMOqZfVGJxUYFH5Au9WacLUWZoufXYfkLcaVIar8/GVLPN7tmFx9mhwm2dKWfEhVNn2Cm5CIJKo72q7KBD4ul6akkyaZ30QSIu1cA58daWth/wv1S/MzvuXFkKJGNyh7A+veimTol+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cHKi5deO; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-39c1efbefc6so1395165f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 05:50:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746190252; x=1746795052; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OVMDO5iVYdVsAgbbPuYJnfbdpZGyS2sQg1xq2ZTg1LA=;
-        b=cHKi5deOJ293bf3CRIphFNNfccXuVpGeTQkweNbYsuGDGPRmyAAqXcSf5TKyhYbBxM
-         B6uqGFVseCZrUIpOcXA6AV5eqC/TPGFipFGqvTsnIhQLbiOdj7CBFbETeiQQ2mSLXotS
-         M+46dYNWyhaOiiV9Htsi/iJNJWUVK4XLrHuEr9mUrslroilTvHcIe5Rmd/SARHlCKZQg
-         T7AvoB5qPsb3scm1XUwFntqLFeBFknb2WhhfhT9liYd9nrknsSIPF6NcxWgOOFwrrifk
-         eI2M5D4cP40H9elbFCMdMXJ3J1cp3WMdeEljoW5SX20hKkz6EOafP8sbBiDw8m/04POJ
-         Ukxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746190252; x=1746795052;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OVMDO5iVYdVsAgbbPuYJnfbdpZGyS2sQg1xq2ZTg1LA=;
-        b=SP0QcpIMbN/oSq0j46et1wBu1GVfbVycNiRP8MRlbeigLGvb5djB2BRJFg71A4K0qe
-         woE8nKsZvDzQYRgj4Jqp6XWCWY7jyFrJXK7GpzYOrA7Dt/S4FK7T5gXSSMz2rb1ef+C+
-         1TpWqr8J0Rmyr0OiNS9/W325E4gwBx/Ku8/G+hrXJCmRH1HIw1tPaZMiW4WZSGCVtTfb
-         7I0ujmrgRhb5SJaQU2kvv2SI+zegHq03n5XlNJmKRabG+psrLx0Q9eWVV0O/fzejqCRF
-         EjYhEPvM7QzZ5lClm1w1LoFf7HkBfqjetcx0qjTESEgEIfmwNQKaAY9QiMExTDF0VVO/
-         48XA==
-X-Forwarded-Encrypted: i=1; AJvYcCX2TaM8ntPFXVgFlzISZ1/hnTO32IuUJDC56t87SaUEfRvNPjCgzTz92ij9c8c3X0N04Ay/Erv2iQ9TQe/E@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyq8ZvzJxHDtDY4AceGQLyHOh/xH4vQ3pPSrumGvpLGhV+ONfB0
-	rspnElr0bJXZv3p4AltSByLO7h/77ZO6j/sX9mdedsoluuN7/0eyTXGeEGkvv10=
-X-Gm-Gg: ASbGncuCeLfTgoZ7I9tsbBFpVH3ZrgnhcuaKePRl7/+xuguQafvZ7er+cdAH5Fla+ST
-	TaEGyY3UhJ2+1T8SGffQYzwezlVN+zUhytYiHtET5h2cftr2ToT9EGzUtD2LeJbJtM9Uvh1gDdq
-	rhdO701K+MA7dMHXz44hhruhfAllqxG/HZuwduUD1rYmkGs1pNffQc/aeBxuKkhVAEH0rh2XRJk
-	G0spMy1ysDoRiGsOnjIVyrokhZXhcgFSAYK6iNqFANkGAxQbBc/QOpJszwdqup782MVb3vwPtZ0
-	f1caUlBdpGont0HG1sWrfgNPoSg/pVrkWs1UGfsaLgxLvTJeLfaAprWkdEfcc2SrItpAwFZjUws
-	JcGJf3lHeSwK528le
-X-Google-Smtp-Source: AGHT+IEpWxj8o8pcRmbEsdS/lBTeH4fuOpeC4FeLOdr9sgL5/27OXW/XpA743y7zHGnyxTK8bCoWtA==
-X-Received: by 2002:a05:6000:186b:b0:3a0:90bf:b9b with SMTP id ffacd0b85a97d-3a099ad40dcmr1861666f8f.8.1746190252191;
-        Fri, 02 May 2025 05:50:52 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441b2aecb54sm88637035e9.10.2025.05.02.05.50.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 May 2025 05:50:51 -0700 (PDT)
-Message-ID: <6bd73ae8-28eb-42da-b916-fadc114e2fd4@linaro.org>
-Date: Fri, 2 May 2025 13:50:50 +0100
+	s=arc-20240116; t=1746190505; c=relaxed/simple;
+	bh=Vr7F6UmAx3IrmOszyFQx5ludxkteP8QYXfmMfxEeDQ4=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=DmSCWh7xEXybRd/XGVl5zWiSvdOE7QZmbPQugOyTYGHywwebTCMry4ecYzPcNxIB0zU4cSDMKH6CXu6hw1qeq4Ofy/4+lNLxuLsiM4eeA8nK6gOrFinLmQ/kyd0bwFCU8oWTiayeqZaCTFlHAsiD3K0FEJs6FxMVayzIWyJV0wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=avXQrZa1; arc=none smtp.client-ip=45.141.101.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1746190500; bh=Vr7F6UmAx3IrmOszyFQx5ludxkteP8QYXfmMfxEeDQ4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=avXQrZa1QLEIvROFUfO5+gq6TjwJm6/q7QA2HynNN9KbB+2JL0TVOLMQU2vAYBAyg
+	 cARo8EQi0jAndXbzNV4cbyEETOy/+PJfDtE2iI26BYCU0o3h+7wLDTJq+3vEls2ILW
+	 3ONoq6WamobddozvDzX/qF6LgDbVLDjss8nUGyZLZRL36MaDDGY4Dec1sIIzrZCXOA
+	 evBBxXfqDB7BDIc01SSigzJm7ao4JCsTRelu8Ca7iDEe0EE2ZwY/mQ1EWeffwMg2uF
+	 jNcLKCXzcHdKTOOJaVGfbXZZt1GlBT6s8c2Dq/8SNCxlNR271do2Jk4u85BGSFHrgK
+	 jZv8Hn7r//z7w==
+Received: from authenticated-user (box.trvn.ru [45.141.101.25])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id 2A42FD348;
+	Fri,  2 May 2025 17:55:00 +0500 (+05)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 14/23] media: iris: Add handling for no show frames
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Stefan Schmidt <stefan.schmidt@linaro.org>, Hans Verkuil
- <hverkuil@xs4all.nl>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Nicolas Dufresne <nicolas.dufresne@collabora.com>,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- 20250417-topic-sm8x50-iris-v10-v7-0-f020cb1d0e98@linaro.org,
- 20250424-qcs8300_iris-v5-0-f118f505c300@quicinc.com
-References: <20250502-qcom-iris-hevc-vp9-v3-0-552158a10a7d@quicinc.com>
- <20250502-qcom-iris-hevc-vp9-v3-14-552158a10a7d@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250502-qcom-iris-hevc-vp9-v3-14-552158a10a7d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Fri, 02 May 2025 17:55:00 +0500
+From: Nikita Travkin <nikita@trvn.ru>
+To: Marc Zyngier <maz@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
+ <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ cros-qcom-dts-watchers@chromium.org, Jens Glathe
+ <jens.glathe@oldschoolsolutions.biz>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: x1e/x1p: Add EL2 overlay for WoA
+ devices
+In-Reply-To: <86o6wbguv1.wl-maz@kernel.org>
+References: <20250501-sc-el2-overlays-v1-0-9202e59e3348@trvn.ru>
+ <20250501-sc-el2-overlays-v1-5-9202e59e3348@trvn.ru>
+ <86o6wbguv1.wl-maz@kernel.org>
+Message-ID: <9e5c2e9b6685e7a621cca926530bd271@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 01/05/2025 20:13, Dikshita Agarwal wrote:
-> Firmware sends the picture type as NO_SHOW for frames which are not
-> supposed to be displayed, add handling for the same in driver to drop
-> them.
+Marc Zyngier писал(а) 02.05.2025 15:38:
+> On Thu, 01 May 2025 18:03:45 +0100,
+> Nikita Travkin <nikita@trvn.ru> wrote:
+>> 
+>> WoA devices using x1e/x1p use android firmware to boot, which notably
+>> includes Gunyah hypervisor. This means that, so far, Linux-based OS
+>> could only boot in EL1 on those devices.
+>> 
+>> However Windows can replace Gunyah upon boot with it's own hypervisor,
+>> and with the use of tools such as "slbounce", it's possible to do the
+>> same for Linux-based OS, in which case some modifications to the DT are
+>> necessary to facilitate the absence of Gunyah services.
+>> 
+>> Add a EL2-specific DT overlay and apply it to x1e/x1p WoA devices to
+>> create -el2.dtb for each of them alongside "normal" dtb.
+>> 
+>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+>> ---
+>>  arch/arm64/boot/dts/qcom/Makefile      | 36 +++++++++++++++++---------
+>>  arch/arm64/boot/dts/qcom/x1-el2.dtso   | 46 ++++++++++++++++++++++++++++++++++
+>>  arch/arm64/boot/dts/qcom/x1e80100.dtsi |  2 +-
+>>  3 files changed, 71 insertions(+), 13 deletions(-)
+>>
 > 
-> Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
->   drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h  | 1 +
->   drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c | 4 +++-
->   2 files changed, 4 insertions(+), 1 deletion(-)
+> [...]
 > 
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-> index 806f8bb7f505..666061a612c3 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-> @@ -113,6 +113,7 @@ enum hfi_picture_type {
->   	HFI_PICTURE_I				= 0x00000008,
->   	HFI_PICTURE_CRA				= 0x00000010,
->   	HFI_PICTURE_BLA				= 0x00000020,
-> +	HFI_PICTURE_NOSHOW			= 0x00000040,
->   };
->   
->   enum hfi_buffer_type {
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-> index 3bb326843a7b..2267e220c9ea 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-> @@ -91,7 +91,9 @@ static int iris_hfi_gen2_get_driver_buffer_flags(struct iris_inst *inst, u32 hfi
->   	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
->   	u32 driver_flags = 0;
->   
-> -	if (inst_hfi_gen2->hfi_frame_info.picture_type & keyframe)
-> +	if (inst_hfi_gen2->hfi_frame_info.picture_type & HFI_PICTURE_NOSHOW)
-> +		driver_flags |= V4L2_BUF_FLAG_ERROR;
-> +	else if (inst_hfi_gen2->hfi_frame_info.picture_type & keyframe)
->   		driver_flags |= V4L2_BUF_FLAG_KEYFRAME;
->   	else if (inst_hfi_gen2->hfi_frame_info.picture_type & HFI_PICTURE_P)
->   		driver_flags |= V4L2_BUF_FLAG_PFRAME;
+>> diff --git a/arch/arm64/boot/dts/qcom/x1-el2.dtso b/arch/arm64/boot/dts/qcom/x1-el2.dtso
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..7a818045ef098b44632df45253d32e31c5c7aeed
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/x1-el2.dtso
+>> @@ -0,0 +1,46 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +
+>> +/*
+>> + * x1 specific modifications required to boot in EL2.
+>> + */
+>> +
+>> +/dts-v1/;
+>> +/plugin/;
+>> +
+>> +/* We can't and don't need to use zap shader in EL2 as linux can zap the gpu on it's own. */
+>> +&gpu_zap_shader {
+>> +	status = "disabled";
+>> +};
+>> +
+>> +/*
+>> + * When running under Gunyah, this IOMMU is controlled by the firmware,
+>> + * however when we take ownership of it in EL2, we need to configure
+>> + * it properly to use PCIe.
+>> + */
+>> +&pcie3 {
+>> +	iommu-map = <0 &pcie_smmu 0x30000 0x10000>;
+>> +};
+>> +
+>> +&pcie4 {
+>> +	iommu-map = <0 &pcie_smmu 0x40000 0x10000>;
+>> +};
+>> +
+>> +&pcie5 {
+>> +	iommu-map = <0 &pcie_smmu 0x50000 0x10000>;
+>> +};
+>> +
+>> +&pcie6a {
+>> +	iommu-map = <0 &pcie_smmu 0x60000 0x10000>;
+>> +};
+>> +
+>> +&pcie_smmu {
+>> +	status = "okay";
+>> +};
+>> +
+>> +/*
+>> + * The "SBSA watchdog" is implemented in software in Gunyah
+>> + * and can't be used when running in EL2.
+>> + */
+>> +&sbsa_watchdog {
+>> +	status = "disabled";
+>> +};
 > 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> I also carry this [1] patch to correctly route MSIs from pcie5 to the
+> ITS. There is no reason not to. The same treatment could be applied to
+> pcie3, but I never tried it.
+> 
+
+Oh, interesting... I will add 
+
+    &pcie3 { msi-map = <0 &gic_its 0xb0000 0x10000>; };
+    &pcie5 { msi-map = <0 &gic_its 0xd0000 0x10000>; };
+
+to the overlay then. (At least I hope the base value falls in line with
+the rule so far, while I know how to confirm iommu-map via acpi tables,
+not sure where this one is described, if at all)
+
+Will send a v2 shortly, thanks!
+
+Nikita
+
+> Thanks,
+> 
+> 	M.
+> 
+> [1] https://lore.kernel.org/linux-arm-kernel/20241024161814.1827514-1-maz@kernel.org/
 
