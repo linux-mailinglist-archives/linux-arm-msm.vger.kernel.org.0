@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-56470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDBE6AA6F30
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 12:15:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ED60CAA6F3A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 12:16:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 277374C17CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 10:15:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5730A4C17FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 10:16:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A620723A9A3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A825A23C4EA;
 	Fri,  2 May 2025 10:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tqU32Qe0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rSJpHzBq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AF922D7B3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BE4231849;
 	Fri,  2 May 2025 10:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746180949; cv=none; b=gGrpPu/JhLfFSykYlQ6JOXROVzZvGb02HLgtgNXN+FvZOeirg20dw1V4KPc0yHWSL2Oc5q6u4iU53AsYELxL0ApmzRHdBvyB4hOPIvaWxdiLiwS77iH6aAEMYvO/4gOyQjuAxLtaeVoSD/biiDAp14Y6o9RhgH1Ox8PoikK8uT4=
+	t=1746180949; cv=none; b=qYRf2CzyB5uuU0Qqgx1+V0VpZsmGIYt5InWEznYPGPDEpLwZUotaEhlHwVC5pb5l4zdR+aUj7obm/cA6eos6zbH1+AG2miLa40BZr7hdDpwTusRaTlUTnKyOnUrgCsGyqus9yrVYFunVrpbUvWaqUquiIazvg89LZn6pVgcv7Ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1746180949; c=relaxed/simple;
-	bh=smZOlucHTe4OI4xYBb7HfFDa46XLQr4UomZnpDM3IlU=;
+	bh=+i6U5gzgaJQuykdrlR9696g2Ug/pI295l1VkB4dqmU8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NMsCznP1OKlMYMYIFdW9WFl20XbhnV9Wv1WVsmpKmaWRKJfTdSiYz29wqf68zhQiyHekDV1v0OV03K0fbnJqoTeV18aoHySw6eCJPV2TaxXJhAVd+SSfXpB+8JMScaW4lLmX7iCQcO75kdmUr7Y7SLv/obFPVs6zYMHRIwShdIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tqU32Qe0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0625AC4CEEE;
+	 In-Reply-To:To:Cc; b=PsS5CJXFXb/fQzMl59qzeYcN0FaO6vDiEM6QEUkR6hkK3euFHv2m9hwoogyFo+momfC8VSuqqd8ekWuizxjsjGU4U4goXJaVo2lB1l/wD59906SzVNBsIVv6pZBrmqCS8+kt/Jnw0kdz4AzzhcXgrp+4xrU4s8dZH5/Ahy3TNu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rSJpHzBq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 13006C4CEEF;
 	Fri,  2 May 2025 10:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1746180949;
-	bh=smZOlucHTe4OI4xYBb7HfFDa46XLQr4UomZnpDM3IlU=;
+	bh=+i6U5gzgaJQuykdrlR9696g2Ug/pI295l1VkB4dqmU8=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=tqU32Qe0McoejwFfIATTHJDTQ1qml+Xh+F7SjlUhwxRJCRPUP4izwMLQ6gx8oLHeQ
-	 Bg0Rl5WQGkVgkyV/YkDuz5UyPGXPd5jE6OmDnio9I3FMMY/yop9LL2M6lSsSsFBgKb
-	 eqF8SZXgnOHQBOvdF5yjRKM769BLMn1N168ZEB0AlMhd4RxRzTMSNvCMiLt0AEzFRp
-	 8/EjeL0xUsPtNUDVEqLcmmXqUqgLA7RJ2H5hNE9vPdGqhDxlsWSYJ3dGdcjg75M2Cv
-	 ss35Rq7kHv48MRIaJgjA20LfQvamPvg2rXwlbHFjMj2owW++00JMzPrJ+wbS35YibM
-	 8AxiE/dQ/Dz8g==
+	b=rSJpHzBqVAGBEJkKavDLNgcVgbYPj4P/aY82vHe+99Rx+X8lY24bRVY5uvkORXUfd
+	 zpwS4+5AbBhBFQKkIE0ZyaqDPJ/ieqqIMhp62e24z2fwDXXFzymsQGQ6T6vJjnbOU/
+	 TQXlaaEF9AsqcVAaNY1o3UGVhMEQX7JbN3HWGpCZPP7ig9zzWZxjGdFR+A4eRlCVtt
+	 WQAcN04F6S28V2a3MYUS7Yp4HgVTTkdT4GVSplWVk62QP78DbkxXCvqEB0IazcXMqx
+	 eJGETVQU0bIyL3VPBix4BNKk40N3VmJKvDF+O1ka/j+W8KBRMSjLPw39XN4LiBP0qW
+	 wAmeJYImcNXjA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA268C3ABAD;
-	Fri,  2 May 2025 10:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 031ECC3ABAC;
+	Fri,  2 May 2025 10:15:49 +0000 (UTC)
 From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Date: Fri, 02 May 2025 14:15:44 +0400
-Subject: [PATCH 2/6] clk: qcom: ipq5018: mark XO clock as critical
+Date: Fri, 02 May 2025 14:15:45 +0400
+Subject: [PATCH 3/6] clk: qcom: ipq-cmn-pll: Add IPQ5018 SoC support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,7 +55,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250502-ipq5018-cmn-pll-v1-2-27902c1c4071@outlook.com>
+Message-Id: <20250502-ipq5018-cmn-pll-v1-3-27902c1c4071@outlook.com>
 References: <20250502-ipq5018-cmn-pll-v1-0-27902c1c4071@outlook.com>
 In-Reply-To: <20250502-ipq5018-cmn-pll-v1-0-27902c1c4071@outlook.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -68,11 +68,11 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  George Moussalem <george.moussalem@outlook.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1746180945; l=3162;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1746180945; l=5376;
  i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=+jh6lJyc6zNRZTZYzkpza07Sun/HT5/b9BNAnQimwiU=;
- b=pRaVkwsUBUL+Vijxsb0gQsC6GaOjOndCEKITU4vaW+wD1FdmnUVcS9A0SZidi/WY/LbgYjtIy
- Jw0hTxWTureDEK3ax3abe+U4AoXKWYDYbCc1iayuQUJw6Apl+lnZHVV
+ bh=PEmE2g2mhIp+5KgVZEFjuRFR4mN6d1vKPr3n1ioKGP8=;
+ b=xk+zmNRHrItlJ/CpcHVMMaOP1kSYV0bYRvjVOWbUkf+M1rcau8nVETBYhlAkWKdsURB2xLwH0
+ GTEWGj0s7myDrxdUB5zfDMoVjV1hG7b6KMfgWqs67TkWWb8FpAoKKDZ
 X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
  pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
 X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
@@ -82,69 +82,153 @@ Reply-To: george.moussalem@outlook.com
 
 From: George Moussalem <george.moussalem@outlook.com>
 
-The XO clock must not be disabled, so let's add the CLK_IS_CRITICAL
-flag to avoid the kernel trying to disable the XO clock (when parenting
-it under the CMN PLL reference clock), else the kernel will panic and
-the following message will appear in the kernel logs:
-
-[    0.916515] ------------[ cut here ]------------
-[    0.918890] gcc_xo_clk_src status stuck at 'on'
-[    0.918944] WARNING: CPU: 0 PID: 8 at drivers/clk/qcom/clk-branch.c:86 clk_branch_wait+0x114/0x124
-[    0.927926] Modules linked in:
-[    0.936945] CPU: 0 PID: 8 Comm: kworker/0:0 Not tainted 6.6.74 #0
-[    0.939982] Hardware name: Linksys MX2000 (DT)
-[    0.946151] Workqueue: pm pm_runtime_work
-[    0.950489] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    0.954566] pc : clk_branch_wait+0x114/0x124
-[    0.961335] lr : clk_branch_wait+0x114/0x124
-[    0.965849] sp : ffffffc08181bb50
-[    0.970101] x29: ffffffc08181bb50 x28: 0000000000000000 x27: 61c8864680b583eb
-[    0.973317] x26: ffffff801fec2168 x25: ffffff800000abc0 x24: 0000000000000002
-[    0.980437] x23: ffffffc0809f6fd8 x22: 0000000000000000 x21: ffffffc08044193c
-[    0.985276] loop: module loaded
-[    0.987554] x20: 0000000000000000 x19: ffffffc081749278 x18: 000000000000007c
-[    0.987573] x17: 0000000091706274 x16: 000000001985c4f7 x15: ffffffc0816bbdf0
-[    0.987587] x14: 0000000000000174 x13: 000000000000007c x12: 00000000ffffffea
-[    0.987601] x11: 00000000ffffefff x10: ffffffc081713df0 x9 : ffffffc0816bbd98
-[    0.987615] x8 : 0000000000017fe8 x7 : c0000000ffffefff x6 : 0000000000057fa8
-[    1.026268] x5 : 0000000000000fff x4 : 0000000000000000 x3 : ffffffc08181b950
-[    1.033385] x2 : ffffffc0816bbd30 x1 : ffffffc0816bbd30 x0 : 0000000000000023
-[    1.040507] Call trace:
-[    1.047618]  clk_branch_wait+0x114/0x124
-[    1.049875]  clk_branch2_disable+0x2c/0x3c
-[    1.054043]  clk_core_disable+0x60/0xac
-[    1.057948]  clk_core_disable+0x68/0xac
-[    1.061681]  clk_disable+0x30/0x4c
-[    1.065499]  pm_clk_suspend+0xd4/0xfc
-[    1.068971]  pm_generic_runtime_suspend+0x2c/0x44
-[    1.072705]  __rpm_callback+0x40/0x1bc
-[    1.077392]  rpm_callback+0x6c/0x78
-[    1.081038]  rpm_suspend+0xf0/0x5c0
-[    1.084423]  pm_runtime_work+0xf0/0xfc
-[    1.087895]  process_one_work+0x17c/0x2f8
-[    1.091716]  worker_thread+0x2e8/0x4d4
-[    1.095795]  kthread+0xdc/0xe0
-[    1.099440]  ret_from_fork+0x10/0x20
-[    1.102480] ---[ end trace 0000000000000000 ]---
+The CMN PLL in IPQ5018 SoC supplies fixed clocks to XO, sleep, and the
+ethernet block. The CMN PLL to the ethernet block must be enabled first
+by setting a specific register in the TCSR area set in the device tree.
 
 Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
- drivers/clk/qcom/gcc-ipq5018.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/ipq-cmn-pll.c | 72 +++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 61 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
-index 70f5dcb96700f55da1fb19fc893d22350a7e63bf..24eb4c40da63462077ee2e5714e838aa30ced2e3 100644
---- a/drivers/clk/qcom/gcc-ipq5018.c
-+++ b/drivers/clk/qcom/gcc-ipq5018.c
-@@ -1371,7 +1371,7 @@ static struct clk_branch gcc_xo_clk = {
- 				&gcc_xo_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
-+			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
+diff --git a/drivers/clk/qcom/ipq-cmn-pll.c b/drivers/clk/qcom/ipq-cmn-pll.c
+index b34d6faf67b8dd74402fabdb8dfe5ea52edd52f4..8e1faea1f980fd53f62b340aa31b6cf1b14f7923 100644
+--- a/drivers/clk/qcom/ipq-cmn-pll.c
++++ b/drivers/clk/qcom/ipq-cmn-pll.c
+@@ -42,6 +42,7 @@
+ #include <linux/clk-provider.h>
+ #include <linux/delay.h>
+ #include <linux/err.h>
++#include <linux/mfd/syscon.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+@@ -50,6 +51,7 @@
+ #include <linux/regmap.h>
+ 
+ #include <dt-bindings/clock/qcom,ipq-cmn-pll.h>
++#include <dt-bindings/clock/qcom,ipq5018-cmn-pll.h>
+ #include <dt-bindings/clock/qcom,ipq5424-cmn-pll.h>
+ 
+ #define CMN_PLL_REFCLK_SRC_SELECTION		0x28
+@@ -72,6 +74,9 @@
+ #define CMN_PLL_DIVIDER_CTRL			0x794
+ #define CMN_PLL_DIVIDER_CTRL_FACTOR		GENMASK(9, 0)
+ 
++#define TCSR_CMN_PLL_ETH			0x4
++#define TCSR_CMN_PLL_ETH_ENABLE			BIT(0)
++
+ /**
+  * struct cmn_pll_fixed_output_clk - CMN PLL output clocks information
+  * @id:	Clock specifier to be supplied
+@@ -92,6 +97,7 @@ struct cmn_pll_fixed_output_clk {
+ struct clk_cmn_pll {
+ 	struct regmap *regmap;
+ 	struct clk_hw hw;
++	struct regmap *tcsr;
+ };
+ 
+ #define CLK_PLL_OUTPUT(_id, _name, _rate) {		\
+@@ -110,16 +116,10 @@ static const struct regmap_config ipq_cmn_pll_regmap_config = {
+ 	.fast_io = true,
+ };
+ 
+-static const struct cmn_pll_fixed_output_clk ipq9574_output_clks[] = {
+-	CLK_PLL_OUTPUT(XO_24MHZ_CLK, "xo-24mhz", 24000000UL),
+-	CLK_PLL_OUTPUT(SLEEP_32KHZ_CLK, "sleep-32khz", 32000UL),
+-	CLK_PLL_OUTPUT(PCS_31P25MHZ_CLK, "pcs-31p25mhz", 31250000UL),
+-	CLK_PLL_OUTPUT(NSS_1200MHZ_CLK, "nss-1200mhz", 1200000000UL),
+-	CLK_PLL_OUTPUT(PPE_353MHZ_CLK, "ppe-353mhz", 353000000UL),
+-	CLK_PLL_OUTPUT(ETH0_50MHZ_CLK, "eth0-50mhz", 50000000UL),
+-	CLK_PLL_OUTPUT(ETH1_50MHZ_CLK, "eth1-50mhz", 50000000UL),
+-	CLK_PLL_OUTPUT(ETH2_50MHZ_CLK, "eth2-50mhz", 50000000UL),
+-	CLK_PLL_OUTPUT(ETH_25MHZ_CLK, "eth-25mhz", 25000000UL),
++static const struct cmn_pll_fixed_output_clk ipq5018_output_clks[] = {
++	CLK_PLL_OUTPUT(IPQ5018_XO_24MHZ_CLK, "xo-24mhz", 24000000UL),
++	CLK_PLL_OUTPUT(IPQ5018_SLEEP_32KHZ_CLK, "sleep-32khz", 32000UL),
++	CLK_PLL_OUTPUT(IPQ5018_ETH_50MHZ_CLK, "eth-50mhz", 50000000UL),
+ 	{ /* Sentinel */ }
+ };
+ 
+@@ -136,6 +136,19 @@ static const struct cmn_pll_fixed_output_clk ipq5424_output_clks[] = {
+ 	{ /* Sentinel */ }
+ };
+ 
++static const struct cmn_pll_fixed_output_clk ipq9574_output_clks[] = {
++	CLK_PLL_OUTPUT(XO_24MHZ_CLK, "xo-24mhz", 24000000UL),
++	CLK_PLL_OUTPUT(SLEEP_32KHZ_CLK, "sleep-32khz", 32000UL),
++	CLK_PLL_OUTPUT(PCS_31P25MHZ_CLK, "pcs-31p25mhz", 31250000UL),
++	CLK_PLL_OUTPUT(NSS_1200MHZ_CLK, "nss-1200mhz", 1200000000UL),
++	CLK_PLL_OUTPUT(PPE_353MHZ_CLK, "ppe-353mhz", 353000000UL),
++	CLK_PLL_OUTPUT(ETH0_50MHZ_CLK, "eth0-50mhz", 50000000UL),
++	CLK_PLL_OUTPUT(ETH1_50MHZ_CLK, "eth1-50mhz", 50000000UL),
++	CLK_PLL_OUTPUT(ETH2_50MHZ_CLK, "eth2-50mhz", 50000000UL),
++	CLK_PLL_OUTPUT(ETH_25MHZ_CLK, "eth-25mhz", 25000000UL),
++	{ /* Sentinel */ }
++};
++
+ /*
+  * CMN PLL has the single parent clock, which supports the several
+  * possible parent clock rates, each parent clock rate is reflected
+@@ -380,11 +393,47 @@ static int ipq_cmn_pll_register_clks(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
++static inline int ipq_cmn_pll_eth_enable(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	unsigned int cmn_pll_offset;
++	struct regmap *tcsr;
++	int ret;
++
++	tcsr = syscon_regmap_lookup_by_phandle_args(dev->of_node, "qcom,cmn-pll-eth-enable",
++						    1, &cmn_pll_offset);
++	if (IS_ERR(tcsr)) {
++		ret = PTR_ERR(tcsr);
++		/*
++		 * continue if -ENODEV is returned as not all IPQ SoCs
++		 * need to enable CMN PLL. If it's another error, return it.
++		 */
++		if (ret == -ENODEV)
++			tcsr = NULL;
++		else
++			return ret;
++	}
++
++	if (tcsr) {
++		ret = regmap_update_bits(tcsr, cmn_pll_offset + TCSR_CMN_PLL_ETH,
++					 TCSR_CMN_PLL_ETH_ENABLE, TCSR_CMN_PLL_ETH_ENABLE);
++		if (ret)
++			return ret;
++	}
++
++	return 0;
++}
++
+ static int ipq_cmn_pll_clk_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	int ret;
+ 
++	ret = ipq_cmn_pll_eth_enable(pdev);
++	if (ret)
++		return dev_err_probe(dev, ret,
++				     "Fail to enable CMN PLL to ethernet");
++
+ 	ret = devm_pm_runtime_enable(dev);
+ 	if (ret)
+ 		return ret;
+@@ -439,8 +488,9 @@ static const struct dev_pm_ops ipq_cmn_pll_pm_ops = {
+ };
+ 
+ static const struct of_device_id ipq_cmn_pll_clk_ids[] = {
+-	{ .compatible = "qcom,ipq9574-cmn-pll", .data = &ipq9574_output_clks },
++	{ .compatible = "qcom,ipq5018-cmn-pll", .data = &ipq5018_output_clks },
+ 	{ .compatible = "qcom,ipq5424-cmn-pll", .data = &ipq5424_output_clks },
++	{ .compatible = "qcom,ipq9574-cmn-pll", .data = &ipq9574_output_clks },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, ipq_cmn_pll_clk_ids);
 
 -- 
 2.49.0
