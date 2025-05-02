@@ -1,101 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-56488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E945CAA70BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 13:40:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01736AA713E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 14:08:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B7EDB1BA6F72
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 11:40:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 183E43A7210
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 12:08:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D48AB23FC41;
-	Fri,  2 May 2025 11:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29A5D230BD2;
+	Fri,  2 May 2025 12:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mScyZaNQ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GSnBGksC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D251BEF77;
-	Fri,  2 May 2025 11:39:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCCF22A7E2
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 May 2025 12:08:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746185997; cv=none; b=AMWm2QiyVHA4TrtycLx2orIOhxb+S9rug/0c/ovf28Jxf8aBNEJFQifxtMo0Xhjs5k/70kLIJUD3TUfRDIyn20yP9YZekF2JoLbWQdP+i9HBYyKhxwGQ0YV0gALHWkTTGS8zkZan/3yUz0VB3qFoOJ4uvaD6qgAzRDco0pO4oag=
+	t=1746187713; cv=none; b=GRkET3DLumk7xzrNPvjc6EIpvhtjbjM1WSWEAYQDC8AdYZc8oN4VCxvGiS/uqSuZxlPf+6GxOf7zPKkMdvpnylNUTslyXuVS8FmkZrBQ3xr7Q9lzhMNyXs5cJN8WqcqzQhfZ/kmMhlaSmlPt5y12XMczl4hZACs1kAdR19fCXiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746185997; c=relaxed/simple;
-	bh=gkrh52IbmYbFCbQFLYixSyK3E2Vd7dNScAr7oJkTbvM=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=SkDsYOImkKJcPFi0aisrpU49I3p0Rug0Y0ROVvoXNU6XNDKQtmLklRaRJ/0R4VUEUfSRrLB27HWtAv7jnkkif+Hav5vPWw7lkABanmDCKE0MdohqbyZEeHjeOu0GE60Q7YHzXtIAEAg2WRBq9TNapGbuIRbopIjbJP6XPZhIt4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mScyZaNQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8400C4CEE4;
-	Fri,  2 May 2025 11:39:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746185997;
-	bh=gkrh52IbmYbFCbQFLYixSyK3E2Vd7dNScAr7oJkTbvM=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=mScyZaNQwEWk+HGA5dYW32BLpcQKuHBAHw8BQW22FUzez9Hj/PUcGPagsj6VtSyNB
-	 S0zv0hujMfmnsTVpJq4y/NePfbFWZgnn7qylc9Aghp18g4yQTXuzlOB/iJBa8hQ1IO
-	 BVPpF9as/7+CdHekai++oxkWmN7sZnmE0OiNl8LJGM3KxRxYnJ+6XlYKOvHw+zd42v
-	 mXxFrRDcWwPc6PBs+nggmG8hUNc2celrESSyKClo8hq2fuw1VaAebG7DGMuy+sA/Bk
-	 keT4EPAIgES5bOoMYjn4GeymhTfW9JYzhwI2xu2m66dyrBI3NkrludB7+kylCTgH91
-	 pzCdryIyxVAlA==
-From: Mark Brown <broonie@kernel.org>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, sadre Alam <quic_mdalam@quicinc.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- George Moussalem <george.moussalem@outlook.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250501-ipq5018-spi-qpic-snand-v1-0-31e01fbb606f@outlook.com>
-References: <20250501-ipq5018-spi-qpic-snand-v1-0-31e01fbb606f@outlook.com>
-Subject: Re: (subset) [PATCH 0/2] Add QPIC SPI NAND support for IPQ5018
-Message-Id: <174618599396.4075974.7322251763578575960.b4-ty@kernel.org>
-Date: Fri, 02 May 2025 20:39:53 +0900
+	s=arc-20240116; t=1746187713; c=relaxed/simple;
+	bh=QOYAWpKobYqIjKphpV8Z/XKHUtk5wosLnvilAePfXLE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Kqbujf5HWjoDAzMjh1tdJggn8gRfAQ8Q73mADnSQXtU6k8UuldzmYwYkfoJXKLXuIRdflSIYLXd/xSgbbNOOItvo9poawhY1EmCGCtzE2NVevIwCHlD4jPhaPzrZiyLqr8CbjPU/fuFvhIrOYKO4yMaOHEoVNz4v8JqzIRSOB8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GSnBGksC; arc=none smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-47666573242so276531cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 05:08:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1746187710; x=1746792510; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QOYAWpKobYqIjKphpV8Z/XKHUtk5wosLnvilAePfXLE=;
+        b=GSnBGksChFEouPySf6ys9/HEZS7t/eR4bbS/j9IbvKkvC8IWykxDrys5sA4Sf8B1ww
+         ShklWetyejpVkyGTBYNvFDtudKarmbPfEvu7vQkldjtN3Ar+V83Zp+62s//E6Uzm2xe2
+         G0pTH7fV8ZNgh1Y40D8oS8I3fUexAOlG1XXVkHwbO/GER4Gmq+d7NoQUhn+FIJqcH+nM
+         7DLZ5cKzt/0t9qO7ObFdbi4t3LXKEeZmDVq12tutmqzTn6ld5KBvIcrxpFIMtjpRRcGK
+         FglYljHIIHdIUL2PTuES8watsGzHnNdaiCgsXEf8NioNlWBNMp09TlnnUTEhEicfi+nE
+         fI0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746187710; x=1746792510;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QOYAWpKobYqIjKphpV8Z/XKHUtk5wosLnvilAePfXLE=;
+        b=cfUq0e7Oehj5r1DQtzmm3Tfd9DwXjAzuK4DyptLN713jVM961fsxAnPPOIWjjYokOr
+         fDw2xAZIRkppX1LGRUg+D1mGXP/94vlUWlYC+CT+Uxx6DWT15v3imdqo8V5yUfS4YU38
+         JjSNF26yl2I7PfpPuhIIVe2mktiHdKLChK0djsTqI28sT2fqMecrPXbLROovFYUwYFPF
+         NTCLiwyN0pD86RUVsNZkkhgWx5lfYw144qoG3bMIUVcghXeuF4HCF3FOVyQMj45ByzOf
+         TYURE4bYjUy1t7Xwzcgx3mj2xc2InIFMDaDz03rc0nk4Ps9d7r6SkZlnYSSG1d++CUP/
+         R2AQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUt7cB7sDzDrvuNCK4HIKOs574SKRBRD6WIzra38qNH+Dkbn+S3VPyHzqugp+Dd13MIqGeTujsnoHuAqv93@vger.kernel.org
+X-Gm-Message-State: AOJu0YzCjUTfICruhZ0AVvU9eoZIiYfy3OJsLTNYjDgnPGAX7JRbGcCF
+	2N9DIwEE3XGTjzQvUhRHN4gD/kQf+hnUc0w8+E21jk0MpeAVzawkFASkwf+KDTVF8auaae/qGJF
+	tnQISuSnu/1ElbA8NNy6Fth/jSVtPKxYxVeuK
+X-Gm-Gg: ASbGncsMOUiSavE/wnugIZ3GquaO8mg2cyCYOJ6pxljrHYKo5KBch7T/L4fq7BKvZnz
+	x7MCR6WbPHVFQcboBkwXVJUR3pnSZ0LKzTTy2yU6pyr17GuQ1+XqFzaIgH+DgjIHGoZA1Ou2ufQ
+	1qaXK1QTrvYH9+yX1yYq91Yz8=
+X-Google-Smtp-Source: AGHT+IFD/MsTgc6vAXhalHp3lSHY/zI6yBsMV+4pwk8VJYi3tcrdAsdF1VYpeQlCegmMmQLptp5frPe2rF3QY8nkeMQ=
+X-Received: by 2002:ac8:5f50:0:b0:466:8887:6751 with SMTP id
+ d75a77b69052e-48b0dfdf479mr7304751cf.23.1746187710146; Fri, 02 May 2025
+ 05:08:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-c25d1
+References: <20250430165655.605595-1-tabba@google.com> <20250430165655.605595-8-tabba@google.com>
+ <6813eb1d4a3c7_2751462949f@iweiny-mobl.notmuch>
+In-Reply-To: <6813eb1d4a3c7_2751462949f@iweiny-mobl.notmuch>
+From: Fuad Tabba <tabba@google.com>
+Date: Fri, 2 May 2025 13:07:53 +0100
+X-Gm-Features: ATxdqUEyPJsH6qCjTcFpIIVKvFZgDnFG5sJ_CyENlF3D_EvMdzHrMzHO_DPv0oc
+Message-ID: <CA+EHjTwmC=+tzKHvkH5t_mgg0irOwwZyD0N8BiCSYkyre+=JCw@mail.gmail.com>
+Subject: Re: [PATCH v8 07/13] KVM: Fix comments that refer to slots_lock
+To: Ira Weiny <ira.weiny@intel.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 01 May 2025 13:20:50 +0400, George Moussalem wrote:
-> Add support for the QPIC SPI NAND controller found in IPQ5018 which is
-> the same as the one found in IPQ5018.
-> 
-> 
+On Thu, 1 May 2025 at 22:43, Ira Weiny <ira.weiny@intel.com> wrote:
+>
+> Fuad Tabba wrote:
+> > Fix comments so that they refer to slots_lock instead of slots_locks
+> > (remove trailing s).
+> >
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
+>
+> Reviewed-by: Ira Weiny <ira.weiny@intel.com>
 
-Applied to
+Thank you for the reviews!
+/fuad
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
-
-Thanks!
-
-[1/2] dt-bindings: spi: spi-qpic-snand: Add IPQ5018 compatible
-      commit: 2dbe74c63cb73829be0aab0d0e7e68b87071b5fa
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+> [snip]
 
