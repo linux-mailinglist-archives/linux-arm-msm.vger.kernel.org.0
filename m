@@ -1,290 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-56584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C20D6AA7B71
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 23:41:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 908FDAA7BB1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 23:55:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6715218934DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 21:41:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 377F8189EAEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 21:55:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 848C229408;
-	Fri,  2 May 2025 21:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99F4B20E33F;
+	Fri,  2 May 2025 21:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DI7d8KDG"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Eg4EGt4k"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F99920296A
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 May 2025 21:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095721E5B62
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 May 2025 21:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746222098; cv=none; b=ZpxVVOD7VYsYo/Ho++vUB87mRwJugfseMjgOmaDavTAPCgA9MuYKvVg77HRDWxhkbRdy5kelQetZpj2ioAnoq0hjXfdaimF0M/kmAJgGIf/iuy0K4WpD5zqNh1WZgdArkB2qAnOA53GI7tI8sWkby8kMrO1WxYGqIwCLmlQSKck=
+	t=1746222877; cv=none; b=c2ZrSJHCcvkmeGNKpPkh0TVs/5e4pkvVV0yTnM3KrE2iJMP6ewGedvuMEbDZWrlDcSdYQojCbOPY8/kDjNQuXwpZ+XjubsCwQ1ublAuCSZmcxgnewKWiPAcW+vn912zi3BCYrVuh6h0tUp5ywAkQUM0EvVLtKf3YdcKGnLQ9dgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746222098; c=relaxed/simple;
-	bh=WfnrA1p6UnOwRSCwn9I8xNbmK2iTuPFXqFSGc2dMMwg=;
+	s=arc-20240116; t=1746222877; c=relaxed/simple;
+	bh=oI4I5d86txGEHxjAucxL/FgAlbfH0MXGR4BoOjHGxWQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G6XmC6omIfvBdOtKqg5otTqGu8EUVY1qjbh7XU/GGH69p7ymbK8AH2YPWUVfTouLjXYNsAwG4k0ZqUluWegfgh25n110QUbIngHC+w3nCLXobzTlxA8pn4ZuvYKlFolzdBnfmmz/xdl0WPcfFKrjgMp0flqVsHGK8YHziFH2s9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DI7d8KDG; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=OPQWIRa5ZRfCwChzzJT8SA8547FIM/0fGWOf01PNxEHV419W7q1EreRzXEuPhzH3qjYVZycpAOmtdS11xGN4yBds/VipbSkzmxqAsdX33G4b22gEfbNXYr6/0iBy+zcb+IwUKGC+cu4No0PozhS6J3D7urXlE2fhHZ4/15fADqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Eg4EGt4k; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 542KAvdi014249
-	for <linux-arm-msm@vger.kernel.org>; Fri, 2 May 2025 21:41:35 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 542KB0rd002502
+	for <linux-arm-msm@vger.kernel.org>; Fri, 2 May 2025 21:54:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ui/Dd0dEB5SSlIr1fPAKd4W0TlzRZ0WZuFplX74RGEM=; b=DI7d8KDGBQDmlCwe
-	KCJ9tU2P9Eb7KsOdZgPBIlnkd3oZBSvGdzSzt+QEAH/hLnTjuVX/9BVaSA9leYU3
-	teahwl0K/kEKDAiKWk5TWClAw43/xXNM904BXP7p9TSZWbG3KhKOQXOvUrpJMSN+
-	05bLHnBoI75v9TkcAmdrKOS9SSWjgwZ8+unKfrVeoDLVwRc4xkrUmKvDUNm7ZOQ/
-	DH8g1V+o8C31VeZ8ASJHP1aq/lf+o2YKK57bLQPt0SE2LiP4dVnjQ2Bu3pBsAb1m
-	b5TpjaNo6EOPXqNddM91p9SIqXiSuc5q7GnmE5fpZGi6F3sa/oPvSKF9BoKTohc6
-	rbczrA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u41d2d-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=ZvmUzQIOGUeAfMrPOeRpQnnw
+	QcRiuGrm59juc7Vfi40=; b=Eg4EGt4kWmq/sSzh+ivYS2g7zy0H+y6Eu7n+/YwW
+	gjOpWPeoF5bsEi1BVvb8/R41phFmNbOEvPO9l2GwXtfJzCYqwDx9RMJisk/+QYPX
+	j0f49tBT/JNTYPBOJ8BT+E1F/nryzMMmCxEu/QGyrOzlmqdYrgpk+Mhz4VGK+f3u
+	Trp8+kxg+tpGKayKtk9uIkuzqKRS4JiH6Fon0Lhjj+GikjNYy5QlgAx4AS9jZoqT
+	ZIzktF1PyUXW8zqN9NEgCACo+bRKo9o4xLU78T3j/wkGwkgoeZDUgtOXoGyGSKgw
+	2NEJqxHeDVMW1IVpKfMlKLbpY6H7tk1dLWQf6lP91mM9ZQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6ua1c59-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 21:41:35 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-47689dc0f6dso45749101cf.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 14:41:35 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 21:54:34 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-47693206d3bso63765271cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 14:54:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746222093; x=1746826893;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ui/Dd0dEB5SSlIr1fPAKd4W0TlzRZ0WZuFplX74RGEM=;
-        b=NEXGyULLKkRDkEv2xXNYlQoZViyqUc7WlSrOde+xZoF09DgUBUYAsKpeg87KCaj+UK
-         9y4mZe6PeasxUx0vGqy125HayyBOmNyZp9LkuWJBeXukMp/2RYrZt9tny+h2GYanYsxM
-         hBgGY/xRN1gyaEwynTA5v9cTD3vSFYh5BkyGHn2XEIas9ZTVsy7PdDm/JjXdGE+VcHPX
-         kPHF3jCyT4wWdQI9PQCb8JQT6MDS/G4++2ugnXMA4qFgi2KtSey055iVTyp1jIPoJviq
-         YIq/KajWfmXMrTLV8qvpq2ndXvjY4wG/gUOZ33niOLTf99w6oEfnhYPESo+gCdJ7i+w0
-         QJiQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVwQxjI5N5687AiqbdVN0W2DZ5D4hSyrmVi+fTIrLGyWDNQ4zEGrZWCGLfIoOQdIGg++pbxu2+Ny6CY2Zfu@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCU5u/L5EkjqPyMcWp9HDU040uv1cOS/lEEXuUA0jlr1AXuszV
-	95hoI6caJrfFjXVSF6KgzlYwS0V4LUfsvrGL/EDa55bCWP4AV+D7MW82JOLB+WyFBboOGpiLEiP
-	4pM52uuXvE6oYPWebwHwAkx2I6RaSxsMUBiA/+jolkXwIXwsKkpwg9KxMd6M/co615LHAy3rPrq
-	I=
-X-Gm-Gg: ASbGncukA16d5wfjwG304+uaM7hHlxMqqGFh2eYMRA1jLdjdndr1/Bu1ds/G6vitvqF
-	1V0EVawuIdTPBi9syFfxuOXOIeN7Z7o8yN6/6Cx2sQzskuKVjUDvR3wmx4PEGRue3HL2Zh67rQy
-	DVR3IYj7393hN2JJyWzYiB9WOZDQ4pKz06sWBfOC7RTKpsowpEuY1/qhNgi0GPdsjQXp3r3lon0
-	6vvKdMrL7xLMv7zv6kp57jGXjJCcbECv/jgqUA0Su0lGM3CnumtKtsryPto+S7nYBa8tUz8LBB5
-	+vISzcQODFSHpMgmP2f/dWUoOwX9v72NdXuGWqS8EUUHCRZuO16rIUDFh/MZmEh576TDhOoxzo0
+        d=1e100.net; s=20230601; t=1746222874; x=1746827674;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZvmUzQIOGUeAfMrPOeRpQnnwQcRiuGrm59juc7Vfi40=;
+        b=AUqAq75Dos6YGKTNimL9ccxKdiqq6JJyCJYbUBhGVRhurVBh/kFAcZkCH4CYeX2d6y
+         dtlpRgSzIeqBXQ6PGHFxOKP2WqDS2ps/1CKDPW9/k2BvIEa7NS2TKnjOrDlNjkkkUXId
+         seKoDmHJWFzOUNLTGCvFMIxHMt9JrKr298pvXtWG3mnUYHRJOwz79RhgZ+OVc0QjqPrK
+         B9p02PGjA2eAD5HjPSB1suPoeQAbsIXVCZQDbpMf4yKtYWDCJ+Zv00b8wSlWmlwk03OY
+         J9enD3VKilhgHkTrZWRoNlq/3fSp2MudU/p85J7/QWf46gm527AC6/MjBUvAdUuzG1J8
+         OM6w==
+X-Forwarded-Encrypted: i=1; AJvYcCUdveX7iHjF/hWkkWjY725RpdDMIAKXEcNq3WVNeQXuTOHo4aWd/qhxNjLymBinYgeZB2OsPR1zUalSmIR2@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywp2wYKEHjtqh7JfCyoVVqL1OoOeL3qIZFrwYqIyt0a3ViQLQSK
+	iXQvja+NwAMIsYcUqxD7GWl5mJy0nYKlJF5YAcwnUqbi0rPE4eyrPTyNZA6x7Eu8PuzapWL/EwH
+	OAd1VUz3gvW8wFlR7MItlDrJN5jpQBiviKt52Mh9z9MsbhDprS4c1H7bKk8rLygAk
+X-Gm-Gg: ASbGnctdYwwgW831ragP7ge9vexHlZACMBaIbZ0Bi5rA5qM/iSjRf+chWplrzqI0O87
+	qKt+CZ0+MPMYtj/iLuEz6ATypRIIWs7Lq0LSWLikkVbPmp7Nrfz9XsYkjYW/vvWrjhOxAgDlyTj
+	3ftRQNXNBK4Hu30tNPDRq4QR4qtPEgIr297w9Bjzebm1KzoP4OpfKtSx7hN2m4G4S5vkNFYBw4L
+	P6HDYKLDLERJe3gmRCo3pHnJalOJ+S7ziks4fwi9VWEGhwuGevYxEA36zIFhERhqILK/RTgMSl2
+	pyKL0JMOJ39HawUZRYy95kyhiqZ2ZmbHkC/FHpKY1VlAy7ZpbDIu313Kv1y9QSxXbjN2jQoztAQ
 	=
-X-Received: by 2002:a05:622a:1dc5:b0:476:9847:7c6e with SMTP id d75a77b69052e-48c3164093bmr76384361cf.19.1746222093628;
-        Fri, 02 May 2025 14:41:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGN4MItxhGJJTIJenI1KN9iK0AJaDd3wPAutq4tLjWHPCXPBWfuEPGy1JIdC/RwoLgB5fElLA==
-X-Received: by 2002:a05:622a:1dc5:b0:476:9847:7c6e with SMTP id d75a77b69052e-48c3164093bmr76383921cf.19.1746222093161;
-        Fri, 02 May 2025 14:41:33 -0700 (PDT)
+X-Received: by 2002:a05:622a:420e:b0:476:95dd:521c with SMTP id d75a77b69052e-48c32ec38d4mr68552111cf.45.1746222873833;
+        Fri, 02 May 2025 14:54:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IED/TtnQQiE5a9O3NSnNygm7M9WTJF7VaWZyyflCze2xLDga0nyVzzBO+XVlYwZOulERcJxtQ==
+X-Received: by 2002:a05:622a:420e:b0:476:95dd:521c with SMTP id d75a77b69052e-48c32ec38d4mr68551741cf.45.1746222873418;
+        Fri, 02 May 2025 14:54:33 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94ee00fsm501038e87.120.2025.05.02.14.41.31
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94bf00dsm503653e87.65.2025.05.02.14.54.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 May 2025 14:41:32 -0700 (PDT)
-Date: Sat, 3 May 2025 00:41:30 +0300
+        Fri, 02 May 2025 14:54:32 -0700 (PDT)
+Date: Sat, 3 May 2025 00:54:30 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Matti Vaittinen <mazziesaccount@gmail.com>
-Cc: Doug Anderson <dianders@chromium.org>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Biju Das <biju.das.jz@bp.renesas.com>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Subject: Re: [PATCH v3 4/4] gpio: Hide valid_mask from direct assignments
-Message-ID: <cupvce3ptuidmjpiwbzddv3err5m5antfwtdgvxlmamypdadnl@ii6occccx72h>
-References: <cover.1741180097.git.mazziesaccount@gmail.com>
- <4547ca90d910d60cab3d56d864d59ddde47a5e93.1741180097.git.mazziesaccount@gmail.com>
- <CAD=FV=Vg8_ZOLgLoC4WhFPzhVsxXFC19NrF38W6cW_W_3nFjbw@mail.gmail.com>
- <944dab74-f431-41e1-b4d7-fddf25ffa147@gmail.com>
- <5add8ddd-fcc8-445d-9699-42c27df0e1c7@gmail.com>
+To: Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        laurentiu.tudor1@dell.com, abel.vesa@linaro.org, johan@kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH v4 1/4] drm/msm/dp: Fix support of LTTPR initialization
+Message-ID: <bax6ropbymr2jqwlqvvmetgvsh35s7veevtj4sdwoh5jqghdwb@yrikyb5z3dkn>
+References: <20250430001330.265970-1-alex.vinarskis@gmail.com>
+ <20250430001330.265970-2-alex.vinarskis@gmail.com>
+ <de448e66-01c7-498c-b5ea-d3592ac4b40f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5add8ddd-fcc8-445d-9699-42c27df0e1c7@gmail.com>
-X-Authority-Analysis: v=2.4 cv=Bv6dwZX5 c=1 sm=1 tr=0 ts=68153c0f cx=c_pps a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=AmpY3L4ahEK_DQabhFQA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: KCJ8XVKcYTxg9CyZ5jcuba2KuZD5LK5B
-X-Proofpoint-ORIG-GUID: KCJ8XVKcYTxg9CyZ5jcuba2KuZD5LK5B
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAyMDE3NiBTYWx0ZWRfX79gIM13a44yV 1AOhPbEOsbgIetXMvt2h6YKFnNCMAiGGaEGRXJVySMjTKO9NAkrbaxsQ43fLjoFk2JIybOAwaVr 7ELYuAZy5cb14hfJ23CMKhQwzv3FZWcKl8Sg4DPsa7VmZB1wG1aGoOQMccq0mIsuKAjklkn1Ml0
- +R3PkXJIH3oWW7sq/t/CLwAIm0Molho43jsgcmfxqJt5Ou8dG3AZQMPM474WxbnVwK00VjIwUch mLqb5qgJC7jJrf3wHJP4vhLbVPgyNqF5D2OUH6fEaiMLi2J5N5Ds+fFW7tKYMKqTNAo88QZdWEv mswzxtTpNIKtG/dN/QkDM8hHlbmZjmC3SGRpKueODIc500G0DLwHCrgP7r4DKOg7pdixenCs49H
- kgSYJ8MFmRPWAJGLlJhEKCY9etwhpzMT4wGJkr/xVUPAfd36bmij34/WTuhenZAUxTVtNRx/
+In-Reply-To: <de448e66-01c7-498c-b5ea-d3592ac4b40f@quicinc.com>
+X-Proofpoint-GUID: cJeJyTZZFxjhBbM-dkKCpR8yOSIMFLko
+X-Proofpoint-ORIG-GUID: cJeJyTZZFxjhBbM-dkKCpR8yOSIMFLko
+X-Authority-Analysis: v=2.4 cv=UZZRSLSN c=1 sm=1 tr=0 ts=68153f1a cx=c_pps a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=KlA0SorxOHKmT8hRjgwA:9
+ a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAyMDE3OCBTYWx0ZWRfX3C7xmMqm/C8l 7vbCrMTHne+OTRnN27OhZH5uoxtpiPst8LescK6tb9FA9rZdkrlayoPr0GJcX3ixomrWoaaCM4w DD/RNvwMXQY7E0Hj9NOhyXdO/pk4CwDDSBenvdOHAA7kweAu2Qf55vRi6duS2g/a1bqe/4kYvc1
+ xDYrn85jE/Se8PPONh3fN8JK+qfBCLwCM0SYPm29BLnKxQaXWQoIsNcQ18Ulzx/Uc7ecRzYf3qZ l/YAx+83vEgB0Uw1zw25cHfVprCfMFSEApcjfLVcXsx3KjU1GazgcdoKGYg7VF8NQbLgCC6A0Gi zOHaMkNLkYgesxsaFzEda2SqWbZhgt0/CTQbqvsSrj+SzlsZokjfh+YhZAo3acEwOLGW3DanKL6
+ Q9Y9ab5ASd2usDOixPrC3Qd/JvqpTZj75RYY/fF72t0P6+JAqx0HhcJLoTy0OuOQ+eYwHhcB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-02_04,2025-04-30_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- mlxlogscore=999 phishscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- impostorscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
- bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505020176
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ mlxlogscore=993 spamscore=0 priorityscore=1501 impostorscore=0 mlxscore=0
+ malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505020178
 
-On Sun, Apr 13, 2025 at 11:51:29AM +0300, Matti Vaittinen wrote:
-> On 13/04/2025 11:08, Matti Vaittinen wrote:
-> > Hi Doug,
+On Fri, May 02, 2025 at 10:41:41AM -0700, Jessica Zhang wrote:
+> 
+> 
+> On 4/29/2025 5:09 PM, Aleksandrs Vinarskis wrote:
+> > Initialize LTTPR before msm_dp_panel_read_sink_caps, as DPTX shall
+> > (re)read DPRX caps after LTTPR detection, as required by DP 2.1,
+> > Section 3.6.7.6.1.
 > > 
-> > On 13/04/2025 02:00, Doug Anderson wrote:
-> > > Hi,
-> > > 
-> > > On Wed, Mar 5, 2025 at 5:23 AM Matti Vaittinen
-> > > <mazziesaccount@gmail.com> wrote:
-> > > > 
-> > > > The valid_mask member of the struct gpio_chip is unconditionally written
-> > > > by the GPIO core at driver registration. Current documentation does not
-> > > > mention this but just says the valid_mask is used if it's not NULL. This
-> > > > lured me to try populating it directly in the GPIO driver probe instead
-> > > > of using the init_valid_mask() callback. It took some retries with
-> > > > different bitmaps and eventually a bit of code-reading to understand why
-> > > > the valid_mask was not obeyed. I could've avoided this trial and
-> > > > error if
-> > > > the valid_mask was hidden in the struct gpio_device instead of being a
-> > > > visible member of the struct gpio_chip.
-> > > > 
-> > > > Help the next developer who decides to directly populate the valid_mask
-> > > > in struct gpio_chip by hiding the valid_mask in struct gpio_device and
-> > > > keep it internal to the GPIO core.
-> > > > 
-> > > > Suggested-by: Linus Walleij <linus.walleij@linaro.org>
-> > > > Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-> > > > Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-> > > > ---
-> > > > Revision history:
-> > > > v2 => v3:
-> > > >   - Rebase to gpio/for-next
-> > > > v1 => v2:
-> > > >   - Hide the valid_mask instead of documenting it as internal to GPIO
-> > > >     core as suggested by Linus W.
-> > > > https://lore.kernel.org/all/Z71qphikHPGB0Yuv@mva-rohm/
-> > > > ---
-> > > >   drivers/gpio/gpiolib.c      | 16 ++++++++--------
-> > > >   drivers/gpio/gpiolib.h      |  3 +++
-> > > >   include/linux/gpio/driver.h |  8 --------
-> > > >   3 files changed, 11 insertions(+), 16 deletions(-)
-> > > 
-> > > FWIW, I've found that this patch is crashing me at bootup on my
-> > > sc7180-trogdor board. The problem is pretty obvious in gdb.
-> > > "gc->gpiodev" is NULL in gpiochip_line_is_valid().
+> > Fixes: 72d0af4accd9 ("drm/msm/dp: Add support for LTTPR handling")
 > > 
-> > Thanks for debugging this! I find this odd. It seems to me the pinctrl-
-> > msm.c is calling the gpiochip_add_data() for the chip, in the
-> > msm_gpio_init() - which is called from the msm_pinctrl_probe().
-> > 
-> > The gpiochip_add_data() should go to the gpiochip_add_data_with_key() -
-> > where the gpiodev should be allocated and set.
-> > 
-> > I don't spot any successful code path where the gpiodev was not allocated.
-> > 
-> > > 
-> > > 0xffff80008066c760 in gpiochip_line_is_valid (gc=0xffff000083223890,
-> > > offset=offset@entry=66) at drivers/gpio/gpiolib.c:746
-> > > 746             if (likely(!gc->gpiodev->valid_mask))
-> > > (gdb) bt
-> > > #0  0xffff80008066c760 in gpiochip_line_is_valid
-> > > (gc=0xffff000083223890, offset=offset@entry=66) at
-> > > drivers/gpio/gpiolib.c:746
-> > > #1  0xffff800080666338 in msm_pinmux_request (pctldev=<optimized out>,
-> > 
-> > Ah, but now I see the call comes from the pinmux. Looking at the
-> > msm_pinctrl_probe() - the pincontroller is registered before the gpio.
-> > Maybe, with unlucky timing, the request happens right after registering
-> > the pinctrl - but before registering the gpios.
-> > 
-> > This, I think, can be a bug even before this change (because the
-> > valid_mask is not initialized prior the gpio registration) - but this
-> > change now made it obvious.
-> > 
-> > I see the probe is actually an exported function, and there are mentions
-> > about ACPI support etc. I don't really know if there are valid cases
-> > where the pincontroller should be usable without the gpiochip. If this
-> > is the case, the unconditional call to the gpiochip_line_is_valid() from
-> > the msm_pinmux_request() smells wrong.
-> > 
-> > I am not sure about the right fix. One could try:
-> > 
-> > @@ -1568,6 +1568,10 @@ int msm_pinctrl_probe(struct platform_device *pdev,
-> >          if (pctrl->irq < 0)
-> >                  return pctrl->irq;
-> > 
-> > +       ret = msm_gpio_init(pctrl);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> >          pctrl->desc.owner = THIS_MODULE;
-> >          pctrl->desc.pctlops = &msm_pinctrl_ops;
-> >          pctrl->desc.pmxops = &msm_pinmux_ops;
-> > @@ -1582,10 +1586,6 @@ int msm_pinctrl_probe(struct platform_device *pdev,
-> >                  return PTR_ERR(pctrl->pctrl);
-> >          }
-> > 
-> > -       ret = msm_gpio_init(pctrl);
-> > -       if (ret)
-> > -               return ret;
-> > -
-> >          platform_set_drvdata(pdev, pctrl);
-> > 
-> >          dev_dbg(&pdev->dev, "Probed Qualcomm pinctrl driver\n")
-> > 
-> > but I am not at all this is the fix we're looking after. I wonder if
-> > Krzysztof has any suggestions? (Seeing he has been authoring some
-> > changes here :] )
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+> > Tested-by: Johan Hovold <johan+linaro@kernel.org>
+> > Tested-by: Rob Clark <robdclark@gmail.com>
+> 
+> Hi Aleksandrs,
+> 
+> For this patch and the rest of the series:
+> 
+> Tested-by: Jessica Zhang <quic_jesszhan@quicinc.com> # SA8775P
 
-I think a correct fix for the pinctrl-msm driver would to use
-devm_pinctrl_register_and_init() and then pinctrl_enable() after
-registering GPIO chip, I'm going to submit a relevant patch. However I
-can't stop but notice that pinctrl-msm is not unique in the pattern of
-simply calling [devm_]pinctrl_register() and then registering a GPIO
-chip. This patch makes this pattern much more fragile.
-
-> 
-> +Björn
-> 
-> > Yours,
-> >      -- Matti
-> > 
-> > 
-> > > offset=66) at drivers/pinctrl/qcom/pinctrl-msm.c:152
-> > > #2  0xffff800080662314 in pin_request (pctldev=0xffff000082686ac0,
-> > > pin=66, owner=0xffff000082c02790 "3500000.pinctrl", gpio_range=0x0)
-> > >      at drivers/pinctrl/pinmux.c:176
-> > > #3  0xffff800080662900 in pinmux_enable_setting
-> > > (setting=0xffff000082684b40) at drivers/pinctrl/pinmux.c:445
-> > > #4  0xffff80008065fd54 in pinctrl_commit_state (p=0xffff000083a07520,
-> > > state=0xffff000082684a40) at drivers/pinctrl/core.c:1300
-> > > #5  0xffff8000806605bc in pinctrl_select_state (p=0xffff000083223890,
-> > > p@entry=0xffff000082686ac0, state=0x42) at drivers/pinctrl/core.c:1381
-> > > #6  pinctrl_claim_hogs (pctldev=0xffff000082686ac0) at
-> > > drivers/pinctrl/core.c:2136
-> > > #7  pinctrl_enable (pctldev=0xffff000082686ac0) at drivers/pinctrl/
-> > > core.c:2156
-> > > #8  0xffff800080660814 in pinctrl_register
-> > > (pctldesc=0xffff000083223a90, dev=0xffff000081406410,
-> > > driver_data=0xffff000083223880) at drivers/pinctrl/core.c:2193
-> > > #9  0xffff800080660df4 in devm_pinctrl_register
-> > > (dev=0xffff000081406410, pctldesc=0xffff000083223a90,
-> > > driver_data=0xffff000083223880) at drivers/pinctrl/core.c:2313
-> > > #10 0xffff8000806657b4 in msm_pinctrl_probe (pdev=0xffff000081406400,
-> > > soc_data=<optimized out>) at drivers/pinctrl/qcom/pinctrl-msm.c:1579
-> > > #11 0xffff80008066afcc in sc7180_pinctrl_probe
-> > > (pdev=0xffff000083223890) at
-> > > drivers/pinctrl/qcom/pinctrl-sc7180.c:1147
-> > > #12 0xffff80008089583c in platform_probe (_dev=0xffff000081406410) at
-> > > drivers/base/platform.c:1404
-> > > 
-> > > (gdb) print gc->gpiodev
-> > > $1 = (struct gpio_device *) 0x0
-> > > 
-> > > -Doug
-> > 
-> 
+Were you testing in a setup with LTTPRs?
 
 -- 
 With best wishes
