@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-56492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAEEAAA71A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 14:22:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D56DEAA71B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 14:27:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5D9EB175420
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 12:22:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B0501BA4A79
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 12:27:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B93332528E4;
-	Fri,  2 May 2025 12:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67BEB24E4A8;
+	Fri,  2 May 2025 12:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZYvtdJzm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Qu+snUZf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D883D248F55
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 May 2025 12:22:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99922248F55
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 May 2025 12:27:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746188557; cv=none; b=WEI0qNf8wbmoO/3I3ONBL7Q32SAxnwlPqEJYAIx4An/V4SuOFAdfor/pDn+5Mo8riLRIggxVJupsjLBqpfy3BgZYJJB9rrONKe0J6aB20Da/pYhCOMu5KZ3CFpwu/t2poOCd1FPvGEiAN1pGS9jwOJf5Jq4tQpA5edGyAhKEFoo=
+	t=1746188835; cv=none; b=nTa5UPNynM7PnJc4YZzb28xUyzJk4CCg0An2n8+LJ9KtJmsq1pNGYmYz4YxaquDChoQtR/Qz9pxBrsVBlFScAfs3ZbFJEGg3Y032gLWnqXCuBbl7pyekmzUwE9zHIdq68IhY/42eWi5GH13SweesIpJkbHFUSV44S56FniK1v1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746188557; c=relaxed/simple;
-	bh=GKN/zeU/yMVetfdzvS9ozuLJj3zYNqyKb2B/40dRc0k=;
+	s=arc-20240116; t=1746188835; c=relaxed/simple;
+	bh=4j0ke6M74LzeHhABdWPG4BsNF7G/ublzVqyQ3s3Ax4Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FBshHbDbj8eB0V30h5e6dp4sAEwKVMrkehWF7mrhJVVa+9au1t1kzzkJ8/ezNKiV+siuLW0YFy7F0Vcv4DojG5PiY5AvsHeXXR6RFMDY6daJiXuuhrmTlsIz4kbpwZROPc/Ogf1DYM1C0MGfQbCqrf61AEuQNcXY+iMZGBTEqF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZYvtdJzm; arc=none smtp.client-ip=209.85.128.52
+	 In-Reply-To:Content-Type; b=Af/AV9i6b2q6vP+obVYROr/tqqJxeUeXWYsk9EhIO18FabHRJupAY4cuzSIjbTb7CzfAewlhKLkOzqZxFcNiPRDg4c87nxO+ZSyxPQCwpEbk2oOQJbsEeNmFWCMxNpSsgjr7IatIqY3AVmOjyZppB+QJN1NSfAq8UB7cKRnxLAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Qu+snUZf; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43d04dc73b7so14371345e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 05:22:35 -0700 (PDT)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43d0359b1fcso12405365e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 05:27:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746188554; x=1746793354; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1746188832; x=1746793632; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=AGAl7iJZhzrMd/4At9r/NfBVUJdFKiTG2vzkbY4stpw=;
-        b=ZYvtdJzmbGavJoWIl8GcdrkE7MzoQoyYflFbCUpnPBoAwR96tZlBipxnOcbMduh6sN
-         XEWe19C79yIVGr9uskUSyvhEmW3keesVD1YRXJsRx2FopQ96c1XijWeEig/h1uM8lcy6
-         1rNWvL99zJHUYRYDelqfjl4Vxj5GEMW0tws7hVfDyNjfVaAPBTHXpcUebceRFrU2exG6
-         B82es7vxpWeWuxSQWogaCCRhwhAsS8wQU8QtzwZXAYDAViD20oK9F07wguV+F6tYoiAT
-         nt+efd9rGjwP8w8WnJNcN0rbkXI0BzGpSfxrIM5Q5BgnSnLWSPBeNip19V4tx1Dc+BRX
-         tkmg==
+        bh=iiq8j9Pd47tWgmGC+T98j/M88SapfZV3x181EBl9QGk=;
+        b=Qu+snUZfbjtoVHbcYIQkh66FZYcCBl7m5EF3ECu929XCegVlhLstjeSVuXsnOSmYPu
+         uK3OrOwh9X1eM9ft7gxS+vycMgMzSh/yRCFtydnKZNhlCYg9GjpU+W0fJtmadP6ri8lY
+         TX+XpboqoObN+oLy9oMPr/E0kjSbSh1l3ILCcVUCS0BBP1q3/2Ftsk042J6+LvdC/Stw
+         jRUEbok951xF3NkH1LZ1vPc53qli4lt5pHLGAI9cKK/thS2W7PE4d7bBG6CL1HOE8uKt
+         41bb76B8KJXkL03ezEXzv+/BxblbOxKjXTlTc/8J/qK5Rmw8JAoSGzrrpUCaX9BVgrDW
+         13/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746188554; x=1746793354;
+        d=1e100.net; s=20230601; t=1746188832; x=1746793632;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AGAl7iJZhzrMd/4At9r/NfBVUJdFKiTG2vzkbY4stpw=;
-        b=XfNNI2VNrUy7TrFRBAk/8oOFwJKOrI63ua8i5IdpqyjA6Vi0YeewM3RuglW0AjeanK
-         0p1spr/ZZNnW1VUoJDZH1dqJo6ai2mZylCjs/g94mbSdFMtiAtwZ4+IJ72/y5L0Kc1m/
-         rpNqDE6o3XfIQjeY93+z73WcQpIsQMekhyKNNRG2y94e/jubzPdkJB1IqXFfj5JlE1Jp
-         DrkyTdn5nAyVM3vqbS+1J2BXEcRryMnicp4vp6P+BM4Co8qEr8/EnYn7YUGnEyFUlYwQ
-         z7fv5YHPP/WTI3bRrjBDoOIUEQ0pbJ2VuaOf+HqMe6zqYyWLJtFOIUe78Bh+FcVNpu07
-         VVNA==
-X-Forwarded-Encrypted: i=1; AJvYcCVDi74+mYQ9THQXZ9Y9TBeuJrvU9Abb3Lyllu4ftZX6pAgHz6VX/mdDHmgtkC8vcDtVGe/MTRL0pujxnC6e@vger.kernel.org
-X-Gm-Message-State: AOJu0YyUxlEq6KUzvLo6ksRtf+E9CvKnbqQt1i+7s20tzz/4oItv1+JZ
-	1hN8rZNDth2FXmnuZo7bNi96xXwPBO0ExVPXkJWhuiLBbko4g0UPTrGcs7Mc2S0=
-X-Gm-Gg: ASbGncs8Z8zTdL5AvCbUrbB8fhaEmfiArBUgXfpudDHVh+dDtFIzPJY7GZwguBGhruR
-	/ag0RVINhBvD9MU/cfFA07BIDf9ZfLMyLb27Ri+TU2d3yIpsZ+uf7FmMSM0ydfh/HnMvpc3rzAg
-	pol3f6SFodD/zB7q6dOPPsjp1kz+G5GCrz9ulz1TvhtRFQBP9xYSJVT3aAlur/i2hWE8A+YqAYN
-	3BTfY5f0amoq9ntAfMPz9mKQhLv6LvzBO2u7db21gBoW/UADE2ny1KH8Lrx29eVg2n4LhMS4DGe
-	0uWswnPPtPbDa4ppjnbUKZGLg/Out/psMTe6bJvr39hPV0ewzUbsPzfTjN1cNxtW93cqCLqspyW
-	NEj/ijR1E6sdXBymX
-X-Google-Smtp-Source: AGHT+IGAup8pZea6zJCXydbst81V1n8k/rAt9qOxSfiYhbAH8b2I5VdLjLvIPf6UJhHnoRz5UGJn7Q==
-X-Received: by 2002:a05:600c:820a:b0:43d:7588:6688 with SMTP id 5b1f17b1804b1-441bbeb30aemr25881475e9.12.1746188554115;
-        Fri, 02 May 2025 05:22:34 -0700 (PDT)
+        bh=iiq8j9Pd47tWgmGC+T98j/M88SapfZV3x181EBl9QGk=;
+        b=GhDFb4Wf81GMLlV9O5Iy2oV2lzm6g3Coe2d2whQZsYj7Xk2B7vncR7xAjxgAanyt/7
+         74G+Xy1VfWyrS9RyBT+1JTU9pPjJB9w/f+9Kyd0vhZ+dxKHo8R3guwRuH0ZD1nJJIhaC
+         tzsVDRo3iQx7hi1+U0Zhscom38H74yfFzKy9Q6yDlrFK/alSIRj1pDJEvd2a7a+vgLi4
+         GlagGBGHg+s0r40zT+9WRXApD6ntT1PjTDhqs8mDDWT9oANepChZ+QkWM0mVqvGCvaJD
+         JOeeVpR8A3B5yU1a767SQVzGy4RJZxMOKC001Kmq3/MGW5Dda8aCPp/D28QZWfTOTy3p
+         cdMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVGbebXElFvWpmZ3k0hQ+O1VbNjh5SmL9Su3kz3puz2x3125uuHwWl6G0OqcwsKdmThg3LjRzcXgqSEp45Q@vger.kernel.org
+X-Gm-Message-State: AOJu0YxsK0qV8k7EhiLiBOGUBsUFPLVQ6BYEWpBhDZZH0/XmcnsdEsdC
+	ClaIrFmC+7wJF3dNHBW0DUphY1maH70/gPp04xD32DPeiuYgKbTeOy+4LK6URGk=
+X-Gm-Gg: ASbGncv7mcIc+CTrKHEzrDivPMrHEeAMsVho5zS2ynfNyRvwFMH6+ynJOH5/BdgA4Wv
+	2IREk3WjoGznfgcxUjXueH7HyE0BYagKziJSU4RjP+ihHKfdKIB2SMyOPxmmV29VVxH52tA6jpd
+	Kps53REacCcKlgtpJlqDM7sXwv8JwaXaeZKB09pAfrPkAjPzG0/MXfkyNGcjSr1c9p+K0+l550g
+	D4EZfZhTEcKflBx6kKeqpWbG1ekAh+1ZBnEQXbkAVCDTHqIhbLEREASkq5IKuA5/vFk2xSNWTt0
+	YIKbsLRIr6YK3pMI4DXODwD6RBCbXj7VpUoZPMOWWVmvitsntRySyK++nRc95JnGqRaO7a1FusS
+	JhzO13Q==
+X-Google-Smtp-Source: AGHT+IGffAlOpctwFrMNNY2tP4nZNI3nScrTpOCK1t0L/nEK+69qoAbndAyafnHVDnbgh0OsuB9ujA==
+X-Received: by 2002:a05:600c:15d3:b0:43c:f3e1:a729 with SMTP id 5b1f17b1804b1-441b72dc612mr34423725e9.12.1746188831814;
+        Fri, 02 May 2025 05:27:11 -0700 (PDT)
 Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441b2af4546sm90036325e9.22.2025.05.02.05.22.32
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a099b17017sm2052074f8f.92.2025.05.02.05.27.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 May 2025 05:22:33 -0700 (PDT)
-Message-ID: <250cdec3-1437-4c45-aab1-0428218b9437@linaro.org>
-Date: Fri, 2 May 2025 13:22:32 +0100
+        Fri, 02 May 2025 05:27:11 -0700 (PDT)
+Message-ID: <f9aacef3-eed2-4a0b-a543-b26342c4d3f1@linaro.org>
+Date: Fri, 2 May 2025 13:27:09 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,8 +82,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/23] media: iris: Prevent HFI queue writes when core
- is in deinit state
+Subject: Re: [PATCH v3 06/23] media: iris: Remove deprecated property setting
+ to firmware
 To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
  Vikash Garodia <quic_vgarodia@quicinc.com>,
  Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -100,33 +100,29 @@ Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
  20250417-topic-sm8x50-iris-v10-v7-0-f020cb1d0e98@linaro.org,
  20250424-qcs8300_iris-v5-0-f118f505c300@quicinc.com, stable@vger.kernel.org
 References: <20250502-qcom-iris-hevc-vp9-v3-0-552158a10a7d@quicinc.com>
- <20250502-qcom-iris-hevc-vp9-v3-5-552158a10a7d@quicinc.com>
+ <20250502-qcom-iris-hevc-vp9-v3-6-552158a10a7d@quicinc.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250502-qcom-iris-hevc-vp9-v3-5-552158a10a7d@quicinc.com>
+In-Reply-To: <20250502-qcom-iris-hevc-vp9-v3-6-552158a10a7d@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 01/05/2025 20:13, Dikshita Agarwal wrote:
-> -	if (core->state == IRIS_CORE_ERROR)
-> +	if (core->state == IRIS_CORE_ERROR || core->state == IRIS_CORE_DEINIT)
->   		return -EINVAL;
+> HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER is deprecated and no longer
+> supported on current firmware, remove setting the same to firmware.
 
-Instead of checking for 2/3 of the states why not just check for the 1/3 ?
+What about older firmware - what's the effect there ?
 
-enum iris_core_state {
-         IRIS_CORE_DEINIT,
-         IRIS_CORE_INIT,
-         IRIS_CORE_ERROR,
-};
+> At the same time, remove the check for non-zero number of v4l2 controls
+> as some SOC might not expose any capability which requires v4l2 control.
 
-if (core->state != IRIS_CORE_INIT)
-	return -EINVAL;
+Please break up patches like this one patch removing your legacy 
+functionality - assuming that makes sense another patch amending your 
+non-zero number of v4l2 controls.
 
-Cleaner and more explicit - declaring the state you must be in, as 
-opposed to a list of states you should not be in.
+Generally any commit log or patch title that requires "do this and do 
+that" should be broken up @ the and.
 
-Assuming you accept that suggested change:
-
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+bod
 
