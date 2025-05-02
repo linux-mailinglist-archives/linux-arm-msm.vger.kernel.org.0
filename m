@@ -1,177 +1,261 @@
-Return-Path: <linux-arm-msm+bounces-56501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85939AA72A1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 14:55:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4C9FAA72D1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 15:05:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC8D44A783B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 12:55:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E8A13B2FEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 13:05:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AC5C246794;
-	Fri,  2 May 2025 12:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FE92252905;
+	Fri,  2 May 2025 13:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="avXQrZa1"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="Cc7DKhCs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from box.trvn.ru (box.trvn.ru [45.141.101.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12olkn2095.outbound.protection.outlook.com [40.92.23.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6664F23C516;
-	Fri,  2 May 2025 12:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.141.101.25
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746190505; cv=none; b=qVk1R8FnA+GPY6TbV/DSUsPtxNXg6TlBswluCVJxMxVGYOqFzVqZ8u8P2t9p8/d6vxm6/cbeW9yjklvmJ5I8qufs6YeJUVkedC5sCuFt90sWMyTkeCN/LmJAUbDilRen7OYAsg+AX6rly1fzjve4xOK3EICQfW4a48lUu5HhRs0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746190505; c=relaxed/simple;
-	bh=Vr7F6UmAx3IrmOszyFQx5ludxkteP8QYXfmMfxEeDQ4=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=DmSCWh7xEXybRd/XGVl5zWiSvdOE7QZmbPQugOyTYGHywwebTCMry4ecYzPcNxIB0zU4cSDMKH6CXu6hw1qeq4Ofy/4+lNLxuLsiM4eeA8nK6gOrFinLmQ/kyd0bwFCU8oWTiayeqZaCTFlHAsiD3K0FEJs6FxMVayzIWyJV0wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=avXQrZa1; arc=none smtp.client-ip=45.141.101.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1746190500; bh=Vr7F6UmAx3IrmOszyFQx5ludxkteP8QYXfmMfxEeDQ4=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=avXQrZa1QLEIvROFUfO5+gq6TjwJm6/q7QA2HynNN9KbB+2JL0TVOLMQU2vAYBAyg
-	 cARo8EQi0jAndXbzNV4cbyEETOy/+PJfDtE2iI26BYCU0o3h+7wLDTJq+3vEls2ILW
-	 3ONoq6WamobddozvDzX/qF6LgDbVLDjss8nUGyZLZRL36MaDDGY4Dec1sIIzrZCXOA
-	 evBBxXfqDB7BDIc01SSigzJm7ao4JCsTRelu8Ca7iDEe0EE2ZwY/mQ1EWeffwMg2uF
-	 jNcLKCXzcHdKTOOJaVGfbXZZt1GlBT6s8c2Dq/8SNCxlNR271do2Jk4u85BGSFHrgK
-	 jZv8Hn7r//z7w==
-Received: from authenticated-user (box.trvn.ru [45.141.101.25])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id 2A42FD348;
-	Fri,  2 May 2025 17:55:00 +0500 (+05)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D59742049;
+	Fri,  2 May 2025 13:05:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.23.95
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746191116; cv=fail; b=DgQbdsYOoc0VnSKsyBCxZF4dgyg9j2FzYWDMgCGVBATeffrz9Ym77dOC4mqCNOS7zbdo9JokiKexK66hevzEVInuB+R8e5pdRbWTQgWfF962SouSW4pPD1eLBwWbYG2WVo76jglOqmHAV207PFm8ZSQ6+Uz1gxSbXINeTsJ2qUw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746191116; c=relaxed/simple;
+	bh=+VsFbsFEyhyCF8wP6OvBwiRG2kG0hrPbs4SCSkG1JuQ=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=YiL+Ax22CSTIq+ZBF9E/l2UGf7hqRvQLKadbtgmF40982popVO19on68K+3b76ohlX5XqAGf57WNyQeel8DIVJZrW0Pc1VlhtuS6TP9wU2CpwjHjTufDEaqqlNaUotjDr6V1RoKYqHxaz2rjdMNQQYuUiBoIbopxR2GlN7jPVeU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=Cc7DKhCs; arc=fail smtp.client-ip=40.92.23.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=d32KZTVNyL5j6mD8rndiwAd8j55JpDJJDzhsErLjT/JGuFAvX/RmPAv8NF9uxpvGdQL7gehAv7tApG4xLEAk0im4B1by7jBJVn3gE4RImau35AeiwZMFKqnU9HTJAxJ49wtmmQmbJN+4Nin3nsF33VGXEPfBWQQYxXVljPWMVILtq6U8znWN2Zp2wdmvu0sICqAzc+MI9SxGGuBq/4UcSjWxhqCWc8S/YSug6rBZK6LCTV+LONt0ucj7JszP4XSNOCmcakIGw9RuWhkCu0oZENqjdj31I/ZV7c5SQtDDafDJW7BzKjM6uVT1/d5+TjdPHqx+6S5Lu8YFGTKrYbz7kQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2b0VgahZo5gNqlT2AaGOuQMjNynJjvdfCbSlgfFfOgY=;
+ b=A55r65U5fWwiJgYWJRLtHSwPTH2aPmClUrYgg4VkhjteKQdXR6EvkTkwNqpSk468lfX5t5t24i0+IvYoqItOGDaauvCc0zgdIRParCW9EUAjghT2HmjPyht99RUwYNnB/bcPMp8/4aYkJoyDdtc46u9Bq9KDM51aY/HsMm1pw/vy9dL2LRBDtwTxqWWhILiSGLf8KjLv1o2esSTHs1jQxi2VCOFwpQO2obtjVGo/Ri7Z0EFhkO1rx71Mc6x7IUe0fhsuV0iw9V093JU9jMqP++zzRFz+86IglMqsxTYXmHlaphlLLnIk55CRQjmqUQv4ED3aCrRlnAge5nvy1UDxLQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2b0VgahZo5gNqlT2AaGOuQMjNynJjvdfCbSlgfFfOgY=;
+ b=Cc7DKhCsOM54t/iakfhUEGHNL1jtkrjCLbkKLV+Fmk7ZZk8WfKiOCQHf9zer3xZWtHplY3DeorTnBG+/AfDZJw1ffg6uz6uPtF9XVyGmrdRaQkoG8tu9ZBYLRUHFdGm/A2Zlby8yErR1CjVvZ/nNbTeuF3fqB5gf5QpxtEXl1Oms5aduxifDJvX40DiBAV666Zw8h0TgbCQiVsRNx3XGjxrIxPIqeBilyEU7egVyUW/0vkUWXgb0nS2tMBtvQAZi/vlZUFh+zvBVh4rdWzvPkVQWci7vFtpcsw2SziJeszaH3tpYp39elwYfcrwe4KguBI9I7I0tgx74veneLMj+Vg==
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
+ by BL1PR19MB5770.namprd19.prod.outlook.com (2603:10b6:208:392::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.24; Fri, 2 May
+ 2025 13:05:11 +0000
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305]) by DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305%4]) with mapi id 15.20.8699.021; Fri, 2 May 2025
+ 13:05:11 +0000
+Message-ID:
+ <DS7PR19MB88831E73F6787E04E0C43AB49D8D2@DS7PR19MB8883.namprd19.prod.outlook.com>
+Date: Fri, 2 May 2025 17:04:59 +0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] clk: qcom: ipq-cmn-pll: Add IPQ5018 SoC support
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Luo Jie <quic_luoj@quicinc.com>,
+ Lee Jones <lee@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250502-ipq5018-cmn-pll-v1-0-27902c1c4071@outlook.com>
+ <20250502-ipq5018-cmn-pll-v1-3-27902c1c4071@outlook.com>
+ <bd1ce180-1282-45f1-a893-5cc097eb6613@oss.qualcomm.com>
+Content-Language: en-US
+From: George Moussalem <george.moussalem@outlook.com>
+In-Reply-To: <bd1ce180-1282-45f1-a893-5cc097eb6613@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: DX1P273CA0003.AREP273.PROD.OUTLOOK.COM
+ (2603:1086:300:21::8) To DS7PR19MB8883.namprd19.prod.outlook.com
+ (2603:10b6:8:253::16)
+X-Microsoft-Original-Message-ID:
+ <c46873c7-0c3e-4760-b4c2-863bc1665023@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 02 May 2025 17:55:00 +0500
-From: Nikita Travkin <nikita@trvn.ru>
-To: Marc Zyngier <maz@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
- <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- cros-qcom-dts-watchers@chromium.org, Jens Glathe
- <jens.glathe@oldschoolsolutions.biz>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: x1e/x1p: Add EL2 overlay for WoA
- devices
-In-Reply-To: <86o6wbguv1.wl-maz@kernel.org>
-References: <20250501-sc-el2-overlays-v1-0-9202e59e3348@trvn.ru>
- <20250501-sc-el2-overlays-v1-5-9202e59e3348@trvn.ru>
- <86o6wbguv1.wl-maz@kernel.org>
-Message-ID: <9e5c2e9b6685e7a621cca926530bd271@trvn.ru>
-X-Sender: nikita@trvn.ru
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|BL1PR19MB5770:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2923797d-777a-41e0-b1fb-08dd8979f805
+X-MS-Exchange-SLBlob-MailProps:
+	qdrM8TqeFBu6m38okHpoNWln7NSyvc1V4RV7IStopBCO0JxMIgByn8zCEN28paTNt8VLsI1npach7rlId+fRyxH5O6sh8Jz8YVVajFlF32qiOucV6PwUQ1H0BwGOfewpJwswPbhFCQ59HA8a0g6Kd6+JxDmzyo2gGsA492FQiS5zfnQPBb3uGXpYOLvmIudFdPgzqS79NwesOWlyAK00HSV+udhTbDvhs0q3gUcmKx5LeIiHHb4kt+1ujNqNh9GSH/lX7x+Im1qpsbsRQ9mDlPdSfqYI42GQ5hiUW0fC3OaXEe/W2f0Vg3HOSClXj5MSoHFYiuYNa1ibafIraNEAKv9J20lVyXA213fUu9TPMu4fz/j3VSjbKGcVyvuPCal8rxoFS8daqJNyzQAcYi1cJiSM3ORxgN0E9+y263bX5Q7UEymONJgV7OCVo8KHvbWrdOam358gzQirjq6WVtW12naovybBk83LMi0/1cWwPp0aPDkOqfk+EQi9mP/OP96bMDvzw4pTEUOyholG4x+b5/wELFxRbkPcrqdpfGrakPQ7SszqJ9dFzGarn1fFwKJn8qk7v2xLUA0TeCcIW+o3vunMrjnwURxV3XVmGQFEGvsyCOvA2J2dxa98Ddotpdt6oEhhEKLGImyT4BNNM57vgVC2nE+ltleyEA2KDl5fJ6wpw/5/WrzipmKpziUuxWDVPae/T53UZljK8nhwlIr6cBLkccxywv7kvoVIcoaJEWSwLNxkhnrh4gPZVJjopVVQKiy1UAayJpOX+oe05Yptmg1GmzMnU+V8
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|5072599009|7092599003|15080799006|8060799006|19110799003|6090799003|461199028|440099028|3412199025|41001999003;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?U29vazNubVlnYUdPbmp5THNUYUc3dEF4MkFpMGJFVWsxK0FGenFzSjdjMmZI?=
+ =?utf-8?B?Yk1IU2N2dWQxa2hRNEg3RVZPUUZNMzdtNUlTYUVZKzZBbVpBMFNPZWg4RC82?=
+ =?utf-8?B?M0NZYWFudEtpamtsVXJMT3pIOUR1RW5uOHp1QVQ2eVkwL1ZsYnE0Q3VjR3hF?=
+ =?utf-8?B?YlRRY0xHL25qOHllbHExUzM5WTZWNmNCNTBSOUpOcFpIOTdxR1ZyUFdiQlZ4?=
+ =?utf-8?B?ZHVpL2dHZFhEajFkQnZNcTFVUWI0TzVMSU5ldkpDRnRhMWRseElSUGJpL0tI?=
+ =?utf-8?B?NjhEc2VRM2hZV1grMXVkZmU5a0QvMEpQODFLc0xaaXEvUDZyUk4wOFJ0ZXhn?=
+ =?utf-8?B?ZFZGaFpSank0NVVPSTU2dlN4RWNIZ3lvYUZyWU5zTWdwWWwyb0htSC93QUVo?=
+ =?utf-8?B?T0FCN3d5bVlJSHlFQ1ZaK1Axcnd3NXc3SmlQUW9YR2xPajZjdEl6RmNIVEJQ?=
+ =?utf-8?B?T0Zoai9uRkt3RTJQbytQSzgyU3dHSnNiUTI0cHl1WkRUeEZ1RnMybHlYMDRH?=
+ =?utf-8?B?VzZOZnlseU8yN0hJYW00WDJaN2x0L0RDV3hBbXNvVmF4OThKZy9pMjIyWmFH?=
+ =?utf-8?B?QWpYdFBKKzZDMlMrbjk0TURTZlN0Q2QvZHZTQVBsOVNJTUpGNEt6bDUzNWQr?=
+ =?utf-8?B?cXNTUmZqYlBXU3ArU045YzlZVHB1MlpUSjdKQ05kejNCSDltR2pMNkozbkNn?=
+ =?utf-8?B?OUxZNDdQYjZxbGRUcmVGK1ZBWFQwZE1hYno0SFExRWJZLzZwWCt6aFFDdng2?=
+ =?utf-8?B?U293aytveGpKdWVzWXNRNHFPUFNUMXZoSkJSQUFxeC9Fc0xNaGJsWCs1bnFh?=
+ =?utf-8?B?bjUzVnM1Tm1rcVRKL3h4LzlrU0hCa3pNczdWTHZpNDQ0MzA5Vm5HWUMvTU1V?=
+ =?utf-8?B?ZGNSUlVlTVdMKzhvN0FiTGJUR2tiTXBMQ05CNmIzeENSNXdXYmIxUUZBdGNU?=
+ =?utf-8?B?bkpLNE5lYXJteW1jU2tDdTkrOGRRVndxdzBSbmF3TjVMWDZxOFdpZncxVkpx?=
+ =?utf-8?B?OEZIYmVsUkRGNHkwYm10Szkybms3TnRvbmFxOGZwSFRhM242ekxjWGJXUHN0?=
+ =?utf-8?B?SWZkeE5IenFjMXJiQ2hxbk9xb2FyYldqeThLNzJyVUYvSUdNZGlxSll6aXpa?=
+ =?utf-8?B?WnRtRzd2UzlJR3ZHcEJYM2I2Y0NWcWhiaCtmQS81SUNkV1dTZGFCcUxySXRC?=
+ =?utf-8?B?S0UrQVlzdmJLbDRMaXdCRytLT2p0QUo5YkRLR0RSL2dhZnJTd1V5dWNYVDNU?=
+ =?utf-8?B?VDA5akhsN2ltU0pOQ085RDVmSnFIVFNNeG5lRlhLU0Rib1diZG8xbFJzVTVn?=
+ =?utf-8?B?ZWI2R0l6TkpiTEJuZ05obTcwSkRTeXVzSTNobjJ0VENBbitSaFZ3Zlg3Y3VN?=
+ =?utf-8?B?aXlHZG5uOFdiVFBhL2xzTDdOR3cvaGFhdGNxTitiVnF2SEozMzRTOWpjUnJH?=
+ =?utf-8?B?QXBiZ0YyK095RmZzN2Q5UlJKQ1BmdHdyUVppb1hmWkZCMFVubHRKNnIrSFNC?=
+ =?utf-8?B?Ui9zQ1ZZUG5mMm1OOWlsRzNZUWJHZCtaaXJmTWlSb3hvZjBTQWpsK25hV2J5?=
+ =?utf-8?Q?19P2VR0Ze/O2xRYoKDBJbh+Ek=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?cVJNamZNR29iMSswUVVBMzFlNXZBT3FWQ3REZFY2QzFqM1o5cXdzRmhraVBo?=
+ =?utf-8?B?VzBadi9GTVpKYjJ2bnIwa2hjWDZndnQwek5qeHNVcE9tUkZadHcvZW9UOGs0?=
+ =?utf-8?B?ejVZWTBPRGJFM3djaUhzdDliaWpoYjJjUnN0eXo0VGhxc05KTTFUSnU0YlRD?=
+ =?utf-8?B?VzB3OCsyS2FzMGJ0eTE5T3oyVDFZSUVDbE5DaXdoZnZRczdUeWVuOUlLNG5s?=
+ =?utf-8?B?UTh6RTFXZmZQanpPZFcrNW82N0M5bis1aktTajlKZUc0OUlzTkdJSU84N2J4?=
+ =?utf-8?B?dTN4TGZDNW5IMC9ZbkFtUm5ZMithZllobjVGYy9XQ2R4Q2JMaTRqMnpTTER3?=
+ =?utf-8?B?SlJjNlJKeHk1ekFkeW1lNmJPWmdTeE44RU9jRStUTVhQeHlCY0duZzJPajR3?=
+ =?utf-8?B?eTBCakc2WHdCTE5jZi9sYlFRUDdDOGdJMFUxWkdFa0NQQXRnZWhidUhOMUpa?=
+ =?utf-8?B?ZkZnZlhZWDVYKzJxUUlNWlphNVdQWDQrZ1pnbXlQRGlFeUM4WDFQOFBvanAx?=
+ =?utf-8?B?ZklvUXhSWHRyMWI5ZjRveklIczVGeTFvZmtVWTBkbmF4UVYxM3BtV253Y3Q5?=
+ =?utf-8?B?ZkNkVlpuSXFGaExXMGZIUDVZaks4MzlHNmtEc1c0Y20yUlAzTmVEWDhBRVlX?=
+ =?utf-8?B?NWc1dU5Mb0JoMXB0ekJVOGRyeFFwb3RHYzZIMFVEbWErZ2lZc3c1V2NJZEpL?=
+ =?utf-8?B?VWU0eVFacGJBajlQRTE5N2Z6WEdCclZ2bDRoWXJaVTJGdlZvNWhGcDNPellF?=
+ =?utf-8?B?bDJNb1FLTWxCamxOOXVCLzE4N0MrNmJJRDliWGdzczkydy9DVi95dGdFTThk?=
+ =?utf-8?B?YzlmWVBlRTl6NVZuQi9qU1lGczBsZlVwZDJCQk5vSGpVUUYybzlMNVlseHVz?=
+ =?utf-8?B?YitSQVZXVnRtSFpXVitXTUQ5UGczektPZVk4QjM1ckVoMUNyb2pMQWRlZVBm?=
+ =?utf-8?B?NGUrblE5SmR5eEliZFBlYll5cmJGSEJldlJxVXd3RlRnT3huckt4YzJDaklp?=
+ =?utf-8?B?L3NmVjIwWFdaOFpkZDhjT3poRUNUcTFrQVJydVpWMEErV2hNU0JKeVNJbnBB?=
+ =?utf-8?B?cmcyemdqcDRFcjhmNSt5RUFvaGduYktPa05CbUVaU1hkM2tUbW5UWG9Uankv?=
+ =?utf-8?B?OGF3eEFadFk1a3hoTTc1bkFFU1Z5TFMyUTQ5MENWbnpoZ1lJWlAxVFAyanV2?=
+ =?utf-8?B?UkhpNWRDQnkwRHZJY3U0dWkyN25ueVZpN3R2a1paOExscCtVWlFORlRkY3Vy?=
+ =?utf-8?B?d0JvVG5lWU01dWxUamNsWElTRk1uZnVQQjU1Nlc1UlBydC9WcS9MYXhzZzA3?=
+ =?utf-8?B?dG5MTHBWTzI3UHYzeEJMSEtWK0tiNEFKNXM0clVkNUl4UGRyUzEzS2pwRXF5?=
+ =?utf-8?B?M0ZzVDNQaDZET1F5aUxRdnE3U0ROZnlMWVdPaG1GVjJmRHFIQ2ZRS2dNdjRE?=
+ =?utf-8?B?UU1qaGZFS2psMEEycjlkSGs0NERPV3pCcUEzaWlXMFdSZnMvU3FvR1MvbWwz?=
+ =?utf-8?B?Uis3QjZkMzBhWDRSNW9Ya3ZGTTZ0ckVNc0Q4c0pKT3JxUDh1Tkh5MUwrR1g5?=
+ =?utf-8?B?Z2lDdHdqaXljcm1QemlIcUQxWit4OHlvZkdQdjZ2aVdQcFhERkVBTWdpY2c5?=
+ =?utf-8?B?VFR0MGhlU3NCaU9NVVo0ejFYd2tzMGhuQnlZSllnOGdKcTh2eURGWExQUm9z?=
+ =?utf-8?Q?gRkju/jscslpUKOfieIv?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2923797d-777a-41e0-b1fb-08dd8979f805
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR19MB8883.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 May 2025 13:05:11.0199
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR19MB5770
 
-Marc Zyngier писал(а) 02.05.2025 15:38:
-> On Thu, 01 May 2025 18:03:45 +0100,
-> Nikita Travkin <nikita@trvn.ru> wrote:
->> 
->> WoA devices using x1e/x1p use android firmware to boot, which notably
->> includes Gunyah hypervisor. This means that, so far, Linux-based OS
->> could only boot in EL1 on those devices.
->> 
->> However Windows can replace Gunyah upon boot with it's own hypervisor,
->> and with the use of tools such as "slbounce", it's possible to do the
->> same for Linux-based OS, in which case some modifications to the DT are
->> necessary to facilitate the absence of Gunyah services.
->> 
->> Add a EL2-specific DT overlay and apply it to x1e/x1p WoA devices to
->> create -el2.dtb for each of them alongside "normal" dtb.
->> 
->> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
->> ---
->>  arch/arm64/boot/dts/qcom/Makefile      | 36 +++++++++++++++++---------
->>  arch/arm64/boot/dts/qcom/x1-el2.dtso   | 46 ++++++++++++++++++++++++++++++++++
->>  arch/arm64/boot/dts/qcom/x1e80100.dtsi |  2 +-
->>  3 files changed, 71 insertions(+), 13 deletions(-)
+
+
+On 5/2/25 14:38, Konrad Dybcio wrote:
+> On 5/2/25 12:15 PM, George Moussalem via B4 Relay wrote:
+>> From: George Moussalem <george.moussalem@outlook.com>
 >>
+>> The CMN PLL in IPQ5018 SoC supplies fixed clocks to XO, sleep, and the
+>> ethernet block. The CMN PLL to the ethernet block must be enabled first
+>> by setting a specific register in the TCSR area set in the device tree.
+>>
+>> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+>> ---
 > 
 > [...]
 > 
->> diff --git a/arch/arm64/boot/dts/qcom/x1-el2.dtso b/arch/arm64/boot/dts/qcom/x1-el2.dtso
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..7a818045ef098b44632df45253d32e31c5c7aeed
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/x1-el2.dtso
->> @@ -0,0 +1,46 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
+>> +static inline int ipq_cmn_pll_eth_enable(struct platform_device *pdev)
+>> +{
+>> +	struct device *dev = &pdev->dev;
+>> +	unsigned int cmn_pll_offset;
+>> +	struct regmap *tcsr;
+>> +	int ret;
 >> +
->> +/*
->> + * x1 specific modifications required to boot in EL2.
->> + */
->> +
->> +/dts-v1/;
->> +/plugin/;
->> +
->> +/* We can't and don't need to use zap shader in EL2 as linux can zap the gpu on it's own. */
->> +&gpu_zap_shader {
->> +	status = "disabled";
->> +};
->> +
->> +/*
->> + * When running under Gunyah, this IOMMU is controlled by the firmware,
->> + * however when we take ownership of it in EL2, we need to configure
->> + * it properly to use PCIe.
->> + */
->> +&pcie3 {
->> +	iommu-map = <0 &pcie_smmu 0x30000 0x10000>;
->> +};
->> +
->> +&pcie4 {
->> +	iommu-map = <0 &pcie_smmu 0x40000 0x10000>;
->> +};
->> +
->> +&pcie5 {
->> +	iommu-map = <0 &pcie_smmu 0x50000 0x10000>;
->> +};
->> +
->> +&pcie6a {
->> +	iommu-map = <0 &pcie_smmu 0x60000 0x10000>;
->> +};
->> +
->> +&pcie_smmu {
->> +	status = "okay";
->> +};
->> +
->> +/*
->> + * The "SBSA watchdog" is implemented in software in Gunyah
->> + * and can't be used when running in EL2.
->> + */
->> +&sbsa_watchdog {
->> +	status = "disabled";
->> +};
+>> +	tcsr = syscon_regmap_lookup_by_phandle_args(dev->of_node, "qcom,cmn-pll-eth-enable",
+>> +						    1, &cmn_pll_offset);
 > 
-> I also carry this [1] patch to correctly route MSIs from pcie5 to the
-> ITS. There is no reason not to. The same treatment could be applied to
-> pcie3, but I never tried it.
+> So we have syscon_regmap_lookup_by_phandle_args() and
+> syscon_regmap_lookup_by_phandle_optional(), but we could also
+> use a syscon_regmap_lookup_by_phandle_args_optional() - could
+> you add that in drivers/mfd/syscon.c?
+
+Yeah, sounds like a good plan. This was basically doing the same but it 
+would be better to add it to the syscon driver.
+
 > 
-
-Oh, interesting... I will add 
-
-    &pcie3 { msi-map = <0 &gic_its 0xb0000 0x10000>; };
-    &pcie5 { msi-map = <0 &gic_its 0xd0000 0x10000>; };
-
-to the overlay then. (At least I hope the base value falls in line with
-the rule so far, while I know how to confirm iommu-map via acpi tables,
-not sure where this one is described, if at all)
-
-Will send a v2 shortly, thanks!
-
-Nikita
-
-> Thanks,
+>> +	if (IS_ERR(tcsr)) {
+>> +		ret = PTR_ERR(tcsr);
+>> +		/*
+>> +		 * continue if -ENODEV is returned as not all IPQ SoCs
+>> +		 * need to enable CMN PLL. If it's another error, return it.
+>> +		 */
+>> +		if (ret == -ENODEV)
+>> +			tcsr = NULL;
+>> +		else
+>> +			return ret;
+>> +	}
+>> +
+>> +	if (tcsr) {
+>> +		ret = regmap_update_bits(tcsr, cmn_pll_offset + TCSR_CMN_PLL_ETH,
 > 
-> 	M.
+> I think it's better to just pass the exact register that we need,
+> instead of some loosely defined subregion - especially given the
+> structure likely will change across platforms
+
+Will do.
+
 > 
-> [1] https://lore.kernel.org/linux-arm-kernel/20241024161814.1827514-1-maz@kernel.org/
+>> +					 TCSR_CMN_PLL_ETH_ENABLE, TCSR_CMN_PLL_ETH_ENABLE);
+> 
+> regmap_set_bits()
+
+Will do.
+
+> 
+>> +		if (ret)
+>> +			return ret;
+> 
+> You can initialize ret to 0 and return ret below, unconditionally
+> 
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>>   static int ipq_cmn_pll_clk_probe(struct platform_device *pdev)
+>>   {
+>>   	struct device *dev = &pdev->dev;
+>>   	int ret;
+>>   
+>> +	ret = ipq_cmn_pll_eth_enable(pdev);
+>> +	if (ret)
+>> +		return dev_err_probe(dev, ret,
+>> +				     "Fail to enable CMN PLL to ethernet");
+> 
+> Fail*ed*
+
+Will fix the spelling.
+
+> 
+> Konrad
+
+Thanks,
+George
 
