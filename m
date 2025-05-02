@@ -1,127 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-56484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8662AA7066
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 13:08:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CDCDAA708D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 13:22:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 48FFC3A4F89
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 11:08:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C8E8F9815FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 11:22:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD2B9241690;
-	Fri,  2 May 2025 11:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BB0822FF2B;
+	Fri,  2 May 2025 11:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gtOQkSj6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bme3YeOH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22270221F09;
-	Fri,  2 May 2025 11:08:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279DF1E5B62
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 May 2025 11:22:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746184101; cv=none; b=IUx/dRSWfWcZf6am+wdxtfGkSbzx43MoUypPaRvkTksJDddEJSE6uiEfO/z+3HDDONDT9zEThIsiy3zLFk9dtbmEMV7FUKpgaIdwhKR5v7f63FszRqc1fHXi8EXmaHkGtBv0kjMXR8B5yKCY0mw0RXVJFY3Ffha54Udsly5Fgs0=
+	t=1746184968; cv=none; b=YuqFiQzDI51J7/mDvZavJYUHjFX6I2sM34MhFSWA1Tq1FuahYaQ/SeC/vidVpeOvbO1ez6oaQXwtQXrAGmua052PcrhFZwSxzcafkBTsI3e2dpifw1Torqw25+5zbWROqPMCkxwOTo8MZcs34EpzK8LiEUubI3/ZyqV4z53+F0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746184101; c=relaxed/simple;
-	bh=G/alf/CyFPtEf9EitW4X8ppe6uI9sk3QZwlrS6sR55I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TcpvM3/YRDZg+P5HwGbrc4mzWYkk6VvFCAN0ezW4uSlhdkB8pZRpksC7utMb3SSliqogje2Gg11G4g9Qth/KQYhlP5lO2j+clfnlOb8v4cDr9fUBMZAkbAoRlMOcGZ7jLN7Vi33DayO5Ud4ewqGisvnVptUBBoLXo9cEf0S22xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gtOQkSj6; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5421N16d021089;
-	Fri, 2 May 2025 11:08:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bcdQRBt4OgqBQrMDcSI6actSvnwROz3wtM01sRycdFs=; b=gtOQkSj6X3vbngat
-	jf3xRGZjoCWr/gcX3iR3aZgu8MR1Owi0Bn/AKMZkHqY+GpqYMpOE9ZXfrVd/icAL
-	E0sood1qe/CtyEHLvhZbvd4D+YA4k76Rtj+TwcMcDeBTaraXR0LyD+cG3MphFnSJ
-	uyX2thh/kvBN0QBEPIuM9HD/cBfMt2XeVnTMX6sclzPnKRpX7wyoyK8ekNy1mC+i
-	W8oPZ6lpD9nYXYCzKZv77ob3nceT8q6xwEFMsuQwsSWqNm2fDFTxkMnYqIKPZFBZ
-	1PU7FVLh/eFKpuhgrFfmq3rugLWbAenbBvUojqJ+m7SsCzCa7kuKRg75haJpHI1J
-	jS3WZQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u8fy14-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 02 May 2025 11:08:15 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 542B8FGX025196
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 2 May 2025 11:08:15 GMT
-Received: from [10.216.12.65] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 2 May 2025
- 04:08:12 -0700
-Message-ID: <7075d026-9be0-491b-af1a-e7d0565e976d@quicinc.com>
-Date: Fri, 2 May 2025 16:38:09 +0530
+	s=arc-20240116; t=1746184968; c=relaxed/simple;
+	bh=3TIzpFAkAwmJ5Ai0fCUIFb6sFww9WxO8C3aUIXLL09Q=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=oZORr+F1R521wLfqPyUxhGXD2/yIfa3LI3a1duA/vzwBbd7hD94x79PEpeZxgYuWRT/UDH5cxvuelZRsJZBOa1TeaZ+FHJKAKwInLH8quIfmDW4g40tb5J98BOOna4riTvCot4PHpgOJPKqWv4E0CcwFecoOUNtoj+QDhREChRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bme3YeOH; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5edc07c777eso2767325a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 04:22:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1746184964; x=1746789764; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NqfMYbE/OTW0Ee2/eXWBsydPJFNpOPTDdKFpdPQUKCU=;
+        b=bme3YeOH4T0dKwoFVPaW3wQmL/VfgooS8sXnpgXTyv9/ToHEKcDLOCV5ARQVLHNEve
+         6VKK2yRN8rtfkDUQs+v69zLC+5ZTzessxATcekMH0gQ2WcrfYHpCeWKi7jIo8iaqY7UE
+         lEsxtg1niy4HOo3sL3HL188gvz00Ez5kTKm2qQm3xAZOJr65GWm3cB4gCyU+q8ADMe3f
+         f2KbkUBdsHsSQEhkbXux0fqcWRzk8Xc5/zLdGicsoV0nGFwzIasXVGDLTml8npblT8SY
+         mVMlIL+kkhaZ0xWGBHzU8P2oGjuubM3CiybW0Pb2txJ+7zu8n5r9ZQJqcnXflyRztBBi
+         h1oQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746184964; x=1746789764;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NqfMYbE/OTW0Ee2/eXWBsydPJFNpOPTDdKFpdPQUKCU=;
+        b=YRmIIm8Xh5I0nqYILvQIsdzOsAWV5e/uelQrICKAPj+Yi4oH1nFGE7E3pmyfzYEpO0
+         gx+5j4XLYhdoPEHkMvN1Ge+dsi8XJhZ9CN20kp51G63WEgcdg1X2zo9vRbWxqd/CW4d2
+         2HHIhs8Vsaafch2j4xHU1oWRx8SLQ9Uzq38N45vx3jN9b3EVZGvOpnwKIisUOrMGAMTJ
+         qzhpUXL039fYqwCualbVPo69LkI0bigXOmGqcktfqGjf/VfKy7q5UVv5GZtCSR5bnsze
+         BZqKXcynIilYVqHnFM8234+3qpjh4gq/0dmYp8i/6AmuLXCuCeNfNYawY9u0QU178puf
+         6GhA==
+X-Forwarded-Encrypted: i=1; AJvYcCUWUxcQ5h5NC9fEXVokCnZuk0wtC5RpG427WFhzxbqaqR68ri+0sMMo0mdg47WLZQRYCISmpWjcBa23Q7uI@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRc9Af7NIo5bZrZJPI85/PXDQarL1UaA0UnWlXABX3bMSjcuB0
+	hp5kPsYYfm1PwYsAYqGKfues+fFfX8knKH2/FEetKj/t31R9W+Wz4vKIoyyzHdw=
+X-Gm-Gg: ASbGncsU1yfPOdiCU35Es7ENgp6v/9+KDPMYdXgrmuyfx90eN8C4JO5tX6l5D9KcAEq
+	b7khZ51QnA7ooR7ZFlHS1JqQUEbTfmI6TmwszwNpG5rXP5aBX7c1+Wys46wfgM8FTOFjkRHta4D
+	r8UCnCTLpJs3YzaiSFSJD42wY3OfHYMdKbSkuOpmv/XOJcCY7bJj9E/Fgwkh6AplG0fBgKDZUdW
+	7to5kLCAH9M0XptA0GqeESO0941CjFUcIZVg4reLBvY2W0O01ipc4KFD6a5gH55QRtWlhPm7uKZ
+	VjHQrbKUxuxLAnZoZONGAEdFnlQ4WSyDQ9ur3BH/WvRCR00NxmXrqD0=
+X-Google-Smtp-Source: AGHT+IGhvBVIBFVtHBjng4vUf55rIcK1Nc7ggU/9+PFpPWuDtRvXkmQ3OGrZUveVFEdPd39HlFp12Q==
+X-Received: by 2002:a17:907:6d14:b0:ac6:fec7:34dd with SMTP id a640c23a62f3a-ad17afbe974mr219003766b.52.1746184964389;
+        Fri, 02 May 2025 04:22:44 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:3f2f:46a0:5bf3:f8f2])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad1891a2b6esm36062166b.42.2025.05.02.04.22.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 May 2025 04:22:44 -0700 (PDT)
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+Date: Fri, 02 May 2025 13:22:28 +0200
+Subject: [PATCH] irqchip/qcom-mpm: Fix crash when trying to handle non-wake
+ GPIOs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] clk: qcom: gcc-x1e80100: Set FORCE MEM CORE for UFS
- clocks
-To: Taniya Das <quic_tdas@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>
-CC: Ajit Pandey <quic_ajipan@quicinc.com>,
-        Jagadeesh Kona
-	<quic_jkona@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250414-gcc_ufs_mem_core-v1-0-67b5529b9b5d@quicinc.com>
- <20250414-gcc_ufs_mem_core-v1-2-67b5529b9b5d@quicinc.com>
-Content-Language: en-US
-From: Imran Shaik <quic_imrashai@quicinc.com>
-In-Reply-To: <20250414-gcc_ufs_mem_core-v1-2-67b5529b9b5d@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=B7i50PtM c=1 sm=1 tr=0 ts=6814a79f cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=yWR8sHoMQUO8avVd8zcA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: i4NY0zC9ykyYkAU5HTPzakDBuv436fXd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAyMDA4NyBTYWx0ZWRfX++mvlUEetJwL IZjfxELf+sXRt8bU5TjstZMpKDaWkT6S89T+cfy2hhX+IO7z4/1VcsAegVCihLYvIo6ghIFExOD jp1gGes+HvXs9TjY0uBO40RadZAD1vP0K5jP4GW6E4S0YwUEzzRDyj+zwCURUFqhbkN6WMvAtPy
- MESqomGALhAbjQ6gZGwIH076of3nbZvQ9512Rv48v9+oM4MAjN1pw5Focei4x/B1zfwFYIDeHFK 8OXIOtcq5MJoXtWoA95FJRdHOsyqg3zD9aOwFb33yVudrE1e4fI/hFQoqlJdOqILGBsxnOFtWKQ PkGpg2PhyB4zKLjWSl2JAS1E3bn468ei3+GyI/qFYfqYn2eJ+iQbCuvXL+qTJJgWQ2pM+ys+HlP
- dqY3U/opvWbHIhUkuCxi+z2QgbVgzpzioFcEKxWubicl+FwQ9LybaYDDLVwSbusphv+NTE90
-X-Proofpoint-ORIG-GUID: i4NY0zC9ykyYkAU5HTPzakDBuv436fXd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-02_01,2025-04-30_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 spamscore=0 clxscore=1015
- mlxscore=0 impostorscore=0 mlxlogscore=999 lowpriorityscore=0
- malwarescore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505020087
+Message-Id: <20250502-irq-qcom-mpm-fix-no-wake-v1-1-8a1eafcd28d4@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAPOqFGgC/x2MQQqAIBAAvxJ7bsE2guwr0SF0qyXUUqgg/HvSc
+ RhmXkgchRMM1QuRL0kSfIGmrsBss18ZxRYGUtSpThFKPPE0waE7HC7yoA94zzuj7XXLjdbUWgU
+ lPyIX/a/HKecP+M52P2oAAAA=
+X-Change-ID: 20250502-irq-qcom-mpm-fix-no-wake-d893e19923d0
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: Shawn Guo <shawn.guo@linaro.org>, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bartosz Golaszewski <brgl@bgdev.pl>, 
+ Alexey Klimov <alexey.klimov@linaro.org>
+X-Mailer: b4 0.14.2
 
+On Qualcomm chipsets not all GPIOs are wakeup capable. Those GPIOs do not
+have a corresponding MPM pin and should not be handled inside the MPM
+driver. The IRQ domain hierarchy is always applied, so we need to
+explicitly disconnect the hierarchy for those. The pinctrl-msm driver marks
+these with GPIO_NO_WAKE_IRQ. qcom-pdc has a check for this, but
+irq-qcom-mpm is currently missing the check. This is causing crashes when
+setting up interrupts for non-wake GPIOs, e.g.
 
+ root@rb1:~# gpiomon -c gpiochip1 10
+   irq: IRQ159: trimming hierarchy from :soc@0:interrupt-controller@f200000-1
+   Unable to handle kernel paging request at virtual address ffff8000a1dc3820
+   Hardware name: Qualcomm Technologies, Inc. Robotics RB1 (DT)
+   pc : mpm_set_type+0x80/0xcc
+   lr : mpm_set_type+0x5c/0xcc
+   Call trace:
+    mpm_set_type+0x80/0xcc (P)
+    qcom_mpm_set_type+0x64/0x158
+    irq_chip_set_type_parent+0x20/0x38
+    msm_gpio_irq_set_type+0x50/0x530
+    __irq_set_trigger+0x60/0x184
+    __setup_irq+0x304/0x6bc
+    request_threaded_irq+0xc8/0x19c
+    edge_detector_setup+0x260/0x364
+    linereq_create+0x420/0x5a8
+    gpio_ioctl+0x2d4/0x6c0
 
-On 4/14/2025 2:30 PM, Taniya Das wrote:
-> Update the force mem core bit for UFS ICE clock and UFS PHY AXI clock to
-> force the core on signal to remain active during halt state of the clk.
-> If force mem core bit of the clock is not set, the memories of the
-> subsystem will not retain the logic across power states. This is
-> required for the MCQ feature of UFS.
-> 
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> ---
->  drivers/clk/qcom/gcc-x1e80100.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-Reviewed-by: Imran Shaik <quic_imrashai@quicinc.com>
+Fix this by copying the check for GPIO_NO_WAKE_IRQ from qcom-pdc.c, so that
+MPM is removed entirely from the hierarchy for non-wake GPIOs.
 
-Thanks,
-Imran
+Cc: stable@vger.kernel.org
+Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+Tested-by: Alexey Klimov <alexey.klimov@linaro.org>
+Fixes: a6199bb514d8 ("irqchip: Add Qualcomm MPM controller driver")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+---
+ drivers/irqchip/irq-qcom-mpm.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/irqchip/irq-qcom-mpm.c b/drivers/irqchip/irq-qcom-mpm.c
+index 7942d8eb3d00eae5fa7e5718a05ef889bb8a82f0..f772deb9cba574b9f70649e1646f16a993eba58a 100644
+--- a/drivers/irqchip/irq-qcom-mpm.c
++++ b/drivers/irqchip/irq-qcom-mpm.c
+@@ -227,6 +227,9 @@ static int qcom_mpm_alloc(struct irq_domain *domain, unsigned int virq,
+ 	if (ret)
+ 		return ret;
+ 
++	if (pin == GPIO_NO_WAKE_IRQ)
++		return irq_domain_disconnect_hierarchy(domain, virq);
++
+ 	ret = irq_domain_set_hwirq_and_chip(domain, virq, pin,
+ 					    &qcom_mpm_chip, priv);
+ 	if (ret)
+
+---
+base-commit: e6a3fc4f10b872d02e25f83227e725c79b25d893
+change-id: 20250502-irq-qcom-mpm-fix-no-wake-d893e19923d0
+
+Best regards,
+-- 
+Stephan Gerhold <stephan.gerhold@linaro.org>
+
 
