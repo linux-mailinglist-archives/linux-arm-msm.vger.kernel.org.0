@@ -1,112 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-56487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 390E4AA70AF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 13:36:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E945CAA70BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 13:40:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A51BE17607E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 11:36:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B7EDB1BA6F72
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 11:40:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E07222D4C8;
-	Fri,  2 May 2025 11:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D48AB23FC41;
+	Fri,  2 May 2025 11:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="puzm0WPU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mScyZaNQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5BD1BEF77;
-	Fri,  2 May 2025 11:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D251BEF77;
+	Fri,  2 May 2025 11:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746185762; cv=none; b=IHjqMqB+Q40FtFNIjnnSnzFanS4A24FG+NrwCHv/rz0GDJa7NeJg2zjHhC/tsMdzI5YvwGTRya81yNdeRhyAlsF0TDYxqbP9//m/CSDA4v7kRRHL+DJ4AI+llMzeMACdeC6lYrV9yB7CnBNJxPC8TT4i7M/lXBYVpOa3NJugUTA=
+	t=1746185997; cv=none; b=AMWm2QiyVHA4TrtycLx2orIOhxb+S9rug/0c/ovf28Jxf8aBNEJFQifxtMo0Xhjs5k/70kLIJUD3TUfRDIyn20yP9YZekF2JoLbWQdP+i9HBYyKhxwGQ0YV0gALHWkTTGS8zkZan/3yUz0VB3qFoOJ4uvaD6qgAzRDco0pO4oag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746185762; c=relaxed/simple;
-	bh=IC+tFmMgGc8gy+XWT7MuumYI16SywRq+USGzBe2YkhM=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=UjgXgAPI47W8SBALaZlqZmsMoJHMJpK4uWMPPm+GbjIpts6tZTtbgsRw7B48JZTdCGi8jwAMLSDK8jBxImIvVqd8GXcNmRN1HL0RYKd6EzU5I4ykGql3AYhzKGnUj+A/UKP0L+S5PzAz0OODtvkPbV5QAOkptvxqqgZBwU318FU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=puzm0WPU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0716EC4CEEB;
-	Fri,  2 May 2025 11:36:00 +0000 (UTC)
+	s=arc-20240116; t=1746185997; c=relaxed/simple;
+	bh=gkrh52IbmYbFCbQFLYixSyK3E2Vd7dNScAr7oJkTbvM=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=SkDsYOImkKJcPFi0aisrpU49I3p0Rug0Y0ROVvoXNU6XNDKQtmLklRaRJ/0R4VUEUfSRrLB27HWtAv7jnkkif+Hav5vPWw7lkABanmDCKE0MdohqbyZEeHjeOu0GE60Q7YHzXtIAEAg2WRBq9TNapGbuIRbopIjbJP6XPZhIt4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mScyZaNQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8400C4CEE4;
+	Fri,  2 May 2025 11:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746185761;
-	bh=IC+tFmMgGc8gy+XWT7MuumYI16SywRq+USGzBe2YkhM=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=puzm0WPUFl9KxGEZ1hy/8EHzZGrBQnl7zP3MluGp7vWlEzgGjHjRRCji2j1GWnfkh
-	 R549rpDu2xN/MlxXHxKTemfaBYIKQi9IeEpRfwq8B9kXEG1L7l5eHMiK5CLF0q9WcO
-	 v9+usY+wk8Fo7Mz6JRzsnSUZfoiwiPTXKFOsuFQSeHpCZ5tfExInO+ABBc064vgA7L
-	 9+ZvnLJ8SOcjOijeqTDD0lbzy5vyYThlnA6ktDzc8tWovDVkWf0F4xTxZANnLF7/CB
-	 P1G8at6YADbYBZxPrlYBaPgJ4ia44RGMEMmzQ62lUL0MaEk7kmL9938qph/IKfZDWV
-	 xgnBrTlXCQJsQ==
-Date: Fri, 02 May 2025 06:35:59 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1746185997;
+	bh=gkrh52IbmYbFCbQFLYixSyK3E2Vd7dNScAr7oJkTbvM=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=mScyZaNQwEWk+HGA5dYW32BLpcQKuHBAHw8BQW22FUzez9Hj/PUcGPagsj6VtSyNB
+	 S0zv0hujMfmnsTVpJq4y/NePfbFWZgnn7qylc9Aghp18g4yQTXuzlOB/iJBa8hQ1IO
+	 BVPpF9as/7+CdHekai++oxkWmN7sZnmE0OiNl8LJGM3KxRxYnJ+6XlYKOvHw+zd42v
+	 mXxFrRDcWwPc6PBs+nggmG8hUNc2celrESSyKClo8hq2fuw1VaAebG7DGMuy+sA/Bk
+	 keT4EPAIgES5bOoMYjn4GeymhTfW9JYzhwI2xu2m66dyrBI3NkrludB7+kylCTgH91
+	 pzCdryIyxVAlA==
+From: Mark Brown <broonie@kernel.org>
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, sadre Alam <quic_mdalam@quicinc.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ George Moussalem <george.moussalem@outlook.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20250501-ipq5018-spi-qpic-snand-v1-0-31e01fbb606f@outlook.com>
+References: <20250501-ipq5018-spi-qpic-snand-v1-0-31e01fbb606f@outlook.com>
+Subject: Re: (subset) [PATCH 0/2] Add QPIC SPI NAND support for IPQ5018
+Message-Id: <174618599396.4075974.7322251763578575960.b4-ty@kernel.org>
+Date: Fri, 02 May 2025 20:39:53 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Stephen Boyd <sboyd@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org, 
- Konrad Dybcio <konradybcio@kernel.org>, Luo Jie <quic_luoj@quicinc.com>, 
- devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>
-To: George Moussalem <george.moussalem@outlook.com>
-In-Reply-To: <20250502-ipq5018-cmn-pll-v1-1-27902c1c4071@outlook.com>
-References: <20250502-ipq5018-cmn-pll-v1-0-27902c1c4071@outlook.com>
- <20250502-ipq5018-cmn-pll-v1-1-27902c1c4071@outlook.com>
-Message-Id: <174618575948.666955.12764440519077221270.robh@kernel.org>
-Subject: Re: [PATCH 1/6] dt-bindings: clock: qcom: Add CMN PLL support for
- IPQ5018 SoC
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-c25d1
 
-
-On Fri, 02 May 2025 14:15:43 +0400, George Moussalem wrote:
-> The CMN PLL block in the IPQ5018 SoC takes 96 MHZ as the reference
-> input clock. Its output clocks are the XO (24Mhz), sleep (32Khz), and
-> ethernet (50Mhz) clocks.
+On Thu, 01 May 2025 13:20:50 +0400, George Moussalem wrote:
+> Add support for the QPIC SPI NAND controller found in IPQ5018 which is
+> the same as the one found in IPQ5018.
 > 
-> Unlike IPQ9574, the CMN PLL to the ethernet block needs to be enabled
-> first in IPQ5018. Hence, add optional phandle to TCSR register space
-> and offset to do so.
-> 
-> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-> ---
->  .../devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml  | 11 ++++++++---
->  include/dt-bindings/clock/qcom,ipq5018-cmn-pll.h         | 16 ++++++++++++++++
->  2 files changed, 24 insertions(+), 3 deletions(-)
 > 
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Applied to
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml:55:9: [warning] wrong indentation: expected 6 but found 8 (indentation)
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.example.dtb: clock-controller@9b000 (qcom,ipq9574-cmn-pll): 'reg' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/clock/qcom,ipq9574-cmn-pll.yaml#
+Thanks!
 
-doc reference errors (make refcheckdocs):
+[1/2] dt-bindings: spi: spi-qpic-snand: Add IPQ5018 compatible
+      commit: 2dbe74c63cb73829be0aab0d0e7e68b87071b5fa
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250502-ipq5018-cmn-pll-v1-1-27902c1c4071@outlook.com
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-pip3 install dtschema --upgrade
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Thanks,
+Mark
 
 
