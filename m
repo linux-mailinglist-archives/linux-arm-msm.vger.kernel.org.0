@@ -1,109 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-56589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE8ADAA7C19
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 May 2025 00:21:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87A80AA7C21
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 May 2025 00:24:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4DF997B6F2F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 22:20:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DCA0B16D7F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 22:24:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79964215F56;
-	Fri,  2 May 2025 22:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2317920D50B;
+	Fri,  2 May 2025 22:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a+AE/QWq"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="E5ypLJeY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C921E32D5;
-	Fri,  2 May 2025 22:21:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71656215F5D
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 May 2025 22:24:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746224494; cv=none; b=ENsJvfuGfx47nrvkGzl1yMbq90Y18WSqQ73GHU+Zi3JGdzVf0j565JEYKI27a4l+7ia1mnKB7RMn/v4FF6rzHxlVkYLZUFqk31fOok8AZ5O6mPiC6zwZgSXyMwhGOry63IejXq7n2r6rQUQJaHlXfMNurp3G4A7ed2TsSMOzlR4=
+	t=1746224644; cv=none; b=K3aaeARbq4yKJoZwvtxgpSKRwhkbXU55C97xHHb+iBPsfHRuc/gxTwIr2+gf6MSqNFM6xNOyYplXp4Gd/IY4RWQD+v2b/a0qaODiVqMRJ9xNfn0cGUwyiZ1oQhRsa3TQ5l4LHWJ1PgIg3+fpZEYBD84HwgkQqRb7mRzSXkF97XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746224494; c=relaxed/simple;
-	bh=fG3d8Fg02oXt1YvEIlNOJZJDDmmHsyAC/nldx3bMtys=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Gkxj8GPVaqzbZoruzWbmtLZvssTOVYbrrdGo815gRS70UprpWVu6GuW5xUD0Clcv4RxW+oHzbhyR2OKepwPGGmW3j6CK3hc1pdZsxdQb1tY1Z5Uih/9dSWQncEyi/DFuQ3VzRr6j2PwnI7fZMrM3p5ELAa+0u7hjrX3yu2e093g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a+AE/QWq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB8EC4CEED;
-	Fri,  2 May 2025 22:21:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746224493;
-	bh=fG3d8Fg02oXt1YvEIlNOJZJDDmmHsyAC/nldx3bMtys=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=a+AE/QWqp48WrIEZhiOtaMhrcmSKcsN4ugRZFeXcq+pSqDawvHs5UjmckxRI+8JC0
-	 ONAOJ7u8NjwogtHjdHgwtye/gQgITGDJZTiszeXjoe6vrYDTmI/K0G599D9UfYDTDY
-	 GE0HpB601Z1xIpLd+izhLBxS6n30NYnjzs6M3mxBRUGqlKiR9PdyZD7+WOv9hOWEuy
-	 chlf3xA7zlLQuaU5EP5pQ7bCbSV5o0HPnfR8dqRlr4W3Wcxlsw9lFteFNRRFP1xapB
-	 OOR4w2BEXw+bMdiylcQih1v5Vbr2tbgNij6POYtkwmMyn6J73nuX3ogJZvb0SqJQ+u
-	 Nqmb+nNUFfEPw==
-From: Mark Brown <broonie@kernel.org>
-To: Shenghao Ding <shenghao-ding@ti.com>, Kevin Lu <kevin-lu@ti.com>, 
- Baojun Xu <baojun.xu@ti.com>, Liam Girdwood <lgirdwood@gmail.com>, 
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
- Srinivas Kandagatla <srini@kernel.org>, 
- Nathan Chancellor <nathan@kernel.org>, 
- Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
- Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
- linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, llvm@lists.linux.dev, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: kernel test robot <lkp@intel.com>, Dmitry Baryshkov <lumag@kernel.org>
-In-Reply-To: <20250427105105.18164-3-krzysztof.kozlowski@linaro.org>
-References: <20250427105105.18164-3-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 1/2] ASoC: codecs: wsa88xx/wcd938x: Drop kerneldoc
- marker from inner comment
-Message-Id: <174622448885.4079618.3910091697301287558.b4-ty@kernel.org>
-Date: Sat, 03 May 2025 07:21:28 +0900
+	s=arc-20240116; t=1746224644; c=relaxed/simple;
+	bh=9oGtb8LG/zJ9IV5aGAUTJtLHWlo3X+qYmkiwfn7P33Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=exQ5kuO42etXT1WeDvJEIiAErX6OnDTu0n7xN+a6kV6/5n0jkPUHFXdEgcDtKW5rnecrgJsFuqox6+EYPb/0RxUlsnOLfWjSU/4XGwrwuZfYVrPcv4rdQ1wmWLeZXtiwKDvw/RZbavLIAR2+qGM9+iSGMc8NqmL0btWEu83yXvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=E5ypLJeY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 542KArSv031515
+	for <linux-arm-msm@vger.kernel.org>; Fri, 2 May 2025 22:24:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	afxPROt7hH4766j71KaFflbvebcQVU71m/JE3EEC4iQ=; b=E5ypLJeY0KPHUK3l
+	wNzEQM0UMh4H6y4Qfno8fU0TNHA1kq3hSa4LRRsoBgTNouorGCngKo2n2hM9IdD/
+	6TXGi7udHG64q63vMAi5g5uaiWF1OX+imOervaN1SKgtWpQmZax4rJ+HJcy/jQhp
+	Z8n9KmABCoPucq/uPSNiXemIqKxF8F5dl+Lh7IHCZ6rFzyUeXBrvMSMrdpqV7nxd
+	ij/Rq5bAGeunYEO8ZOuv9beA0Zi+c8HJCpsM3TuR4qlbSkOf261qlAC7mXGSAAEK
+	gx36j65LARWuovp7Wbh1XEfEP1+2cWf0zFakXnZtQzFNXNhAZ6BU8hbpMOh61wJT
+	xDZTng==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6u2hjux-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 22:24:01 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-476783cbdb8so7384161cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 15:24:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746224640; x=1746829440;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=afxPROt7hH4766j71KaFflbvebcQVU71m/JE3EEC4iQ=;
+        b=Q0BRMSsb2STIMsnKKoWUAb2hi3kzDFnWZA4k8llDPuxNVrovbEp5Od8ZXBzPqvr0g6
+         AQsBTSI1umDVHAnyD639LU6sFM6uHpjPLAMeHAPbTSf79DrLoUVEwg1R50ZztOUm91BC
+         YSnV7xcvFZ2BnXYaKFXVRtzzFYJp217ZuR+BgtHVPFqVCJ9mRcZ27zABmkixEe853W5F
+         lLYcM7o7QAVvTSxkFfmKoE7DY1/ctE5PJBCGp420Mzam8hJ2yn1acxfwusWguBuG3bML
+         h2/1/dLc7zgHhYqooqNoH53uWwWxLo/dS+RPhWhnfE68T7hAGC0J7c+eOiA+FRbi4IRB
+         TqGw==
+X-Gm-Message-State: AOJu0Ywp1nZskfvPrwNF7LuILGNtPwczUPpgKcuZ32p2uTgyXabV7JWe
+	w8YRos0AZrZvcnxRp+e12l4SjoEzPcMVNYB7Efo3FQqscUaw2RzqPyTkj1YIf7XXjK9U2avTnN9
+	KFPWMVWzNPZUpT+XsTAYVWxI+3qkzNfZK3LZJVkwILTMYUNRTnmBZF45auZ8hLeRa
+X-Gm-Gg: ASbGncuFhHy1BzzW0NCjjwHCT6bSSvr0mZIqIl7TRlIlwOe0T9Aby3jDTCtOecj3KiF
+	rMtBvJM5L1cArn0BaW5pYkTrNL9JnnyTtH/ciDX6Ikdf/k2dJL+R3Gw8HwQHAdtCCjl42gEd4+E
+	ZoTqSexTpvyg+7nzShVqoPAKXUUGkhjlml0pkifM8xLIVeJuhK8waBrARgI8VWxe4J28c/q4TKZ
+	mc79yyUBmSAxDlKfPaDuGZU3Kkd5tv8WI/Y33EDw5T6C/RdUlTm/vrgFWBn1Thvnu2oBoTJQzyU
+	B2Vo32BfVnGSElg+5KZY+gnNTMAbm2pnIr1bAwL+GHswI/0T+lY/yIQL+jliwLWCJu0=
+X-Received: by 2002:ac8:5810:0:b0:471:f437:2973 with SMTP id d75a77b69052e-48c32ebe60amr25411811cf.14.1746224640358;
+        Fri, 02 May 2025 15:24:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHXPCWKDkOFuSWQ3PbjHn9q2h9mjOhaANWaWDVj+vNMTlyz3oHQMt9ul4xUB3d6PJd+9q7Mzg==
+X-Received: by 2002:ac8:5810:0:b0:471:f437:2973 with SMTP id d75a77b69052e-48c32ebe60amr25411631cf.14.1746224639955;
+        Fri, 02 May 2025 15:23:59 -0700 (PDT)
+Received: from [192.168.65.170] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad1891a3c53sm108782766b.56.2025.05.02.15.23.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 May 2025 15:23:59 -0700 (PDT)
+Message-ID: <8a763c70-adcf-4a14-bb68-72ddc61fa045@oss.qualcomm.com>
+Date: Sat, 3 May 2025 00:23:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] watchdog: qcom: add support to read the restart
+ reason from IMEM
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Rob Herring
+ <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck
+ <linux@roeck-us.net>, bod.linux@nxsw.ie,
+        Srinivas Kandagatla <srini@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
+References: <20250502-wdt_reset_reason-v3-0-b2dc7ace38ca@oss.qualcomm.com>
+ <20250502-wdt_reset_reason-v3-4-b2dc7ace38ca@oss.qualcomm.com>
+ <2036ef2f-c7ef-4f42-858d-8d95c430c21a@oss.qualcomm.com>
+ <68d280db-f7df-48c8-821d-f7d408c302ad@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <68d280db-f7df-48c8-821d-f7d408c302ad@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-c25d1
+X-Proofpoint-GUID: eKH_p885JGQfSPbsZ4_wQJkqjgvMrujt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAyMDE4MyBTYWx0ZWRfX7cbffVSTmV6m /l2lEPYeVJTLDCPKS5U1txHsrnvmwm2NmZ0Z2MXqm7duA04hbnrKoI6QU4RAtFNV3Vf5L+3GSsE q9a6/pkQor1+1VpCsJZAVjyoNivOwWJmC0nStRA39iZDS07m53rgQijPOrZgYzFmvbHojRiFz4o
+ +gFnP56oif+PacwqK/BGXOP1crCGPv3Rmo4ONMdQYnE8AoU4p/8xoeH5SqOQu2mW4IlAattYiin xL0crxqpXB0P/hMoj9yxGrFKIsEbQsr77mI4znA0o8zXDds3lSzggZuXygEx9V8a3A62fbQRp4J /TdBg9eXV5xxoiEEucj3O8bq9nkpBbfLPBFRmkVeQ2NlAqlZkNmIJ3jG9Fwls/FzQycvd62710I
+ O4w5KbcNWOXFxqOd06sLlJcq79mM5h8SBjwQx2O6zlHmfMJx8+tKP/rJqelm+v1uuMMk7d6q
+X-Authority-Analysis: v=2.4 cv=b5qy4sGx c=1 sm=1 tr=0 ts=68154601 cx=c_pps a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=n-kv2Co_dslhl88RD3IA:9 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-ORIG-GUID: eKH_p885JGQfSPbsZ4_wQJkqjgvMrujt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-02_05,2025-04-30_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 phishscore=0
+ mlxscore=0 impostorscore=0 malwarescore=0 spamscore=0 adultscore=0
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
+ clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505020183
 
-On Sun, 27 Apr 2025 12:51:06 +0200, Krzysztof Kozlowski wrote:
-> Drop the kerneldoc marker from a comment within a function:
+On 5/2/25 6:28 PM, Kathiravan Thirumoorthy wrote:
 > 
->   wsa883x.c:1402: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
+> On 5/2/2025 7:33 PM, Konrad Dybcio wrote:
+>>> +static int  qcom_wdt_get_restart_reason(struct qcom_wdt *wdt,
+>>> +                    const struct qcom_wdt_match_data *data)
+>>> +{
+>>> +    struct regmap *imem;
+>>> +    unsigned int val;
+>>> +    int ret;
+>>> +
+>>> +    imem = syscon_regmap_lookup_by_compatible(data->imem_compatible);
+>> Try syscon_regmap_lookup_by_phandle_args() and pass a phandle, see e.g.
+>> drivers/phy/qualcomm/phy-qcom-qmp-pcie.c & phy@1bfc000 in x1e80100.dtsi
+>>
+>> That way all platform specifics will live in the DT, requiring no
+>> hardcode-y driver changes on similar platforms
 > 
 > 
+> Thanks. I thought about this API but it didn't strike that I can use the args to fetch and match the value.
+> 
+> I need a suggestion here. There is a plan to extend this feature to other IPQ targets and also support WDIOF_POWERUNDER and WDIOF_OVERHEAT cause as well. For IPQ5424, all 3 cause will support and for other IPQ platforms, we are exploring how to integrate WDIOF_OVERHEAT. In any case, can I define the DT entry like below
+> 
+>         imem,phandle = <&imem 0x7b0 <Non secure WDT value> <Power Under value> <Overheat value>>;
+> 
+> and store these in values args[1], args[2] and args[3] respectively and use it for manipulation? If any of the platform doesn't support all 3, I can update the bindings and define the number of args as required.
+Let's call the property qcom,restart-reason and only pass the register value
 
-Applied to
+Because we may have any number of crazy combinations of various restart
+reasons, we can go two paths:
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+1. promise really really really hard we won't be too crazy with the number
+   of possible values and put them in the driver
+2. go all out on DT properties (such as `bootstatus-overheat`,
+`bootstatus-fanfault` etc.
 
-Thanks!
+I'd much prefer to go with 1 really.. If we used nvmem, we could have a map
+of cell names to restart reasons, but we've already established IMEM is
+volatile and we shouldn't mess up the convention just because that
+subsystem has nicer APIs..
 
-[1/2] ASoC: codecs: wsa88xx/wcd938x: Drop kerneldoc marker from inner comment
-      commit: 9cd54a6bf119891711b281fb45789f66255c892d
-[2/2] ASoC: codecs: tas2764: Fix Wvoid-pointer-to-enum-cast warning
-      commit: c23c7c60711e34963c78f18fc3b9aaa313b6c8ce
+Unless we rename the subsystem to `fuses`, `magic-values` or something..
++Srini? :P
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Konrad
 
