@@ -1,179 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-56572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2CFDAA78C5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 19:42:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1A0CAA79FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 21:04:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C55B27AEF31
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 17:40:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7A6E3B836B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 19:04:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0A992609EC;
-	Fri,  2 May 2025 17:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98CE71EFFB9;
+	Fri,  2 May 2025 19:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bus+bVfa"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="p4qqZM6h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2E32609D1;
-	Fri,  2 May 2025 17:41:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7B01EB5E6;
+	Fri,  2 May 2025 19:04:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746207719; cv=none; b=D85kBFMo0B3f4m+dk8b4cqH0Cah9j1LzuhtfIrqvfEyVSpTWKxKF49ErQL9kUtRsKiZUN/KJcnO8tq4KgpR3LolDjA7jZ/7937TpT2nC/4d6G0VXffVd3ddKS+Q9cya9BovkIO+WQwXYjy2/OiP0OLoh+J0zfRnDWq4WiNg1Dpg=
+	t=1746212694; cv=none; b=ETn/vh4T20dnHZ+dm+M7xWR/j65YzQMdLw9TRJLh7uckIJMLDv60h6x4TIOI43yMRYWowtLDDePBGL4Y4bQkesS3LorkDSIIT5duiGPCSQ3ePq7y3Cc3u2uh+vPfDs+ylmH4aEoF2VA5s28JePZrqoQ8auOB1fFDtabaEGGxjk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746207719; c=relaxed/simple;
-	bh=gjLAU0k1Inps/DJel7LWteso31CNi1KBinnEA4wC8H8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=pD6krlBujfDpvijuJekcX1RZAzrcP9xQSaiVoLHOaqKNjqe41pcJ70Xpz4Q67QQuZx3JZM8YLNnyxggSBieaOo31yAPfbmNBEqA4WKJV6acx6kgI8SZXOViBu7yoYD3I9F+TA5rX4oihhK5c83N/w7LfOTunAA1cxC8BGIr2KPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bus+bVfa; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 542E4VOa015015;
-	Fri, 2 May 2025 17:41:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+kUeZbROEI2gs9FNvLUbc43lNYpiMPTgqx6irTa9LjE=; b=bus+bVfaorQL3mQ/
-	K+P1NCk8C74Tkh8lqub94HB2uIdZgqLSx2hKiI644B3uF7qXxazoW2s2GaWEsE29
-	UMX234vwBNShqfUrtBOG5AFfcIQoOz0VhDYFBSw+zeG16QhCXbHA9IubsttLMjX/
-	5auHEmOWRTiflRkmLPnGJ05sIK9Ls4nE/BtKBfAHobNXiiIaVBgbxO7jv87nzQnu
-	QEam9k8fUNN5ENZNXpYwqhjmc/4wAfHoxOI6kRDP3/IL35MXz7Pm2wCs0l0ArmQx
-	fgSFNL9avuIPJ0zck838wsYOZjHOIUf86E2uCGdkadk8V2SOv4MohvcS+y2B9Xew
-	aXVHOQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6ub0xrp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 02 May 2025 17:41:43 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 542Hfg9r021502
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 2 May 2025 17:41:42 GMT
-Received: from [10.134.71.99] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 2 May 2025
- 10:41:41 -0700
-Message-ID: <de448e66-01c7-498c-b5ea-d3592ac4b40f@quicinc.com>
-Date: Fri, 2 May 2025 10:41:41 -0700
+	s=arc-20240116; t=1746212694; c=relaxed/simple;
+	bh=p7XIGW72I/91fLazyIlExCv1uQr/qO433Ug1xE3MvsU=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=C8PQEPUk7xvW2zcKJXpvEC9TymtQg1kcizbU0eAi84WE+zorQTO1MEdP22BUSYZ0p9BOSIKITbSTvBqBomX5dW3iBwFVQtERcxK0cx+vNVF5pCtLvv0wFcpTc7AwFPh1VIfq5yPVKBdOOKniJNBPe+hMU9XTktRJeo8DdgL3TsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=p4qqZM6h; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from localhost (web.docker-mailserver_default [172.18.0.2])
+	by mail.mainlining.org (Postfix) with ESMTPSA id 71034BBAC4;
+	Fri,  2 May 2025 19:04:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1746212684;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qM7bXBHe1bXroHuK8JaLfF5A62uJE4FV4UFgd1YY7Z4=;
+	b=p4qqZM6hk7CsMYNc6A9L8oCFEPGgrrln3MTHLjBn5mo9Gn59CYx++5icdw48Q0QaIFEBOq
+	PmTfTckQgiXuEWVWwLo99fCwoVmRNDeIx0TqYfT9zyvxGX16hiZXip562t8NQkXAHCA0O3
+	03CWY4qHkYXKWd4x10AY+TpFjqHG0VsG9hdaPPXMGSb7scb0Ee4rJ/Ak3K7bEI8T6lF00Q
+	JJvqN9tl6F71Y5bP0EDfK7VFuYiu1b3pewx94S9+gPV4wARKwvMyGT1QQbmZLDijA3D9+s
+	i4GEwXZMRHF/3sdmaQIGlB9Dd9tw5/gKjIFeCYZc3M8gpnhMQObe7f3HJOyzOQ==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] drm/msm/dp: Fix support of LTTPR initialization
-To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
-        Dmitry Baryshkov
-	<lumag@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <dmitry.baryshkov@oss.qualcomm.com>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Marijn
- Suijten" <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        <laurentiu.tudor1@dell.com>, <abel.vesa@linaro.org>,
-        <johan@kernel.org>, Johan Hovold
-	<johan+linaro@kernel.org>
-References: <20250430001330.265970-1-alex.vinarskis@gmail.com>
- <20250430001330.265970-2-alex.vinarskis@gmail.com>
-Content-Language: en-US
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20250430001330.265970-2-alex.vinarskis@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zfyk4oyKA29xzv6RSz7gZ9mIKO_264-f
-X-Authority-Analysis: v=2.4 cv=KtlN2XWN c=1 sm=1 tr=0 ts=681503d7 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=uKgnwDtAFRA4Sjybt-sA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: zfyk4oyKA29xzv6RSz7gZ9mIKO_264-f
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAyMDE0MSBTYWx0ZWRfX8wAJlAWBanzp FZUe5dLRwVglXu+CJbyIMTH718drMl5XJoaFRkMqezQBzytT/QbHePgPGgD4Ch2Vyf3XTy5QSyS spdC8tLo0aVOPEnpvu7tKCpvzRBH/ugyyVjDMw1OtWv1Ju3GC6upRFkBgHSOUTtbM4cIAW/vunv
- oV/jF0aHa/ec//3lyjxHMKMlFLVmkua5NSXELX6blI/wPOhP3T97oa/XHTJlRvo3YSx9hgv5jRa KH2VrALVakWKYZIis49rt5+DWgXDdICqR1WEKZmwdXay8QZjRFh+u7QuzRQQTva9aRwTKaQy1e0 NjUMSkvvixHfhU4HRTr/wv6MCqu792EXsZIJ5U+U8e2zh0jJqHQoOiejp9pQDJnfQdhjynz1Jp9
- +Hcp1bjngyL2FVH1Un6OGlYKsJRhKxtm4aRmz/f9pNlsc3GTEqFiwUGuiX80vE3q8ej43eNP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-02_03,2025-04-30_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
- lowpriorityscore=0 phishscore=0 adultscore=0 priorityscore=1501
- malwarescore=0 mlxscore=0 bulkscore=0 mlxlogscore=999 spamscore=0
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505020141
+Date: Fri, 02 May 2025 21:04:44 +0200
+From: barnabas.czeman@mainlining.org
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette
+ <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>,
+ =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, Linus Walleij
+ <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>, Joerg Roedel
+ <joro@8bytes.org>, Will Deacon <will@kernel.org>, Robin Murphy
+ <robin.murphy@arm.com>, Konrad Dybcio <konradybcio@kernel.org>, Rob Clark
+ <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten
+ Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
+ <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Dmitry
+ Baryshkov <lumag@kernel.org>, Adam Skladowski <a_skl39@protonmail.com>,
+ Sireesh Kodali <sireeshkodali@protonmail.com>, Srinivas Kandagatla
+ <srini@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+ iommu@lists.linux.dev, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, phone-devel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org, Dang Huynh
+ <danct12@riseup.net>
+Subject: Re: [PATCH v5 3/5] arm64: dts: qcom: Add initial support for MSM8937
+In-Reply-To: <656da4e9-b609-43f4-9afd-006698a2c7d6@oss.qualcomm.com>
+References: <20250421-msm8937-v5-0-bf9879ef14d9@mainlining.org>
+ <20250421-msm8937-v5-3-bf9879ef14d9@mainlining.org>
+ <2e3d94a4-d9e1-429e-9f65-d004c80180e5@oss.qualcomm.com>
+ <790a0b7537e0b82b70bc4b32612ecee6@mainlining.org>
+ <70635d75-03f9-49ea-8098-57cb144fda94@oss.qualcomm.com>
+ <5ccb39f9393b44761127717096a38a46@mainlining.org>
+ <68e2c0ee-d5e2-40fd-9ca0-262ed3270628@oss.qualcomm.com>
+ <31559417a92d1e1ff17d0f3add9a1ba0@mainlining.org>
+ <656da4e9-b609-43f4-9afd-006698a2c7d6@oss.qualcomm.com>
+Message-ID: <c7d9f42017f10bac303b483127859c18@mainlining.org>
+X-Sender: barnabas.czeman@mainlining.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-
-On 4/29/2025 5:09 PM, Aleksandrs Vinarskis wrote:
-> Initialize LTTPR before msm_dp_panel_read_sink_caps, as DPTX shall
-> (re)read DPRX caps after LTTPR detection, as required by DP 2.1,
-> Section 3.6.7.6.1.
+On 2025-04-25 23:02, Konrad Dybcio wrote:
+> On 4/25/25 10:22 PM, barnabas.czeman@mainlining.org wrote:
+>> On 2025-04-25 21:26, Konrad Dybcio wrote:
+>>> On 4/25/25 5:13 PM, barnabas.czeman@mainlining.org wrote:
+>>>> On 2025-04-25 11:57, Konrad Dybcio wrote:
+>>>>> On 4/23/25 4:46 PM, barnabas.czeman@mainlining.org wrote:
+>>>>>> On 2025-04-23 16:03, Konrad Dybcio wrote:
+>>>>>>> On 4/21/25 10:18 PM, Barnabás Czémán wrote:
+>>>>>>>> From: Dang Huynh <danct12@riseup.net>
+>>>>>>>> 
+>>>>>>>> Add initial support for MSM8937 SoC.
+>>>>>>>> 
+>>>>>>>> Signed-off-by: Dang Huynh <danct12@riseup.net>
+>>>>>>>> Co-developed-by: Barnabás Czémán 
+>>>>>>>> <barnabas.czeman@mainlining.org>
+>>>>>>>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+>>>>>>>> ---
+>>>>> 
+>>>>> [...]
+>>>>> 
+>>>>>>>> +            gpu_opp_table: opp-table {
+>>>>>>>> +                compatible = "operating-points-v2";
+>>>>>>>> +
+>>>>>>>> +                opp-19200000 {
+>>>>>>>> +                    opp-hz = /bits/ 64 <19200000>;
+>>>>>>>> +                    opp-supported-hw = <0xff>;
+>>>>>>> 
+>>>>>>> The comment from the previous revision still stands
+>>>>>> If i remove opp-supported-hw i will got -22 EINVAL messages and 
+>>>>>> the opp will be not fine.
+>>>>> 
+>>>>> Right, I have a series pending to improve this situation a bit..
+>>>>> 
+>>>>> In the meantime, you should be able to define the nvmem cell and
+>>>>> fill in meaningful values for this platform
+>>>> As I wrote in the previous revision there is no nvmem for GPU on 
+>>>> msm8937 only on msm8940.
+>>> 
+>>> This seems not to be the case
+>>> 
+>>> https://github.com/penglezos/android_kernel_xiaomi_msm8953/blob/pie/arch/arm/boot/dts/qcom/msm8937.dtsi#L2046-L2191
+>>> 
+>> These are on msm-4.9 was moved to msm8940.dtsi
+>> https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.10.6.2.c26-01500-89xx.0/arch/arm64/boot/dts/qcom/msm8937-gpu.dtsi#L162
+>> https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.10.6.2.c26-01500-89xx.0/arch/arm64/boot/dts/qcom/msm8940.dtsi#L600
+>> 475 MHz and 500 MHz is for msm8940 at least based on 4.9
 > 
-> Fixes: 72d0af4accd9 ("drm/msm/dp: Add support for LTTPR handling")
+> I'll try to get a more conclusive answer internally
+Any information? I am thinking about define nvmem cells based on 3.18
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-> Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> Tested-by: Rob Clark <robdclark@gmail.com>
-
-Hi Aleksandrs,
-
-For this patch and the rest of the series:
-
-Tested-by: Jessica Zhang <quic_jesszhan@quicinc.com> # SA8775P
-
-Thanks,
-
-Jessica Zhang
-
-> ---
->   drivers/gpu/drm/msm/dp/dp_display.c | 13 +++++++++----
->   1 file changed, 9 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index bbc47d86ae9e..fc07cce68382 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -367,12 +367,12 @@ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *d
->   	return 0;
->   }
->   
-> -static void msm_dp_display_lttpr_init(struct msm_dp_display_private *dp)
-> +static void msm_dp_display_lttpr_init(struct msm_dp_display_private *dp, u8 *dpcd)
->   {
->   	u8 lttpr_caps[DP_LTTPR_COMMON_CAP_SIZE];
->   	int rc;
->   
-> -	if (drm_dp_read_lttpr_common_caps(dp->aux, dp->panel->dpcd, lttpr_caps))
-> +	if (drm_dp_read_lttpr_common_caps(dp->aux, dpcd, lttpr_caps))
->   		return;
->   
->   	rc = drm_dp_lttpr_init(dp->aux, drm_dp_lttpr_count(lttpr_caps));
-> @@ -385,12 +385,17 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
->   	struct drm_connector *connector = dp->msm_dp_display.connector;
->   	const struct drm_display_info *info = &connector->display_info;
->   	int rc = 0;
-> +	u8 dpcd[DP_RECEIVER_CAP_SIZE];
->   
-> -	rc = msm_dp_panel_read_sink_caps(dp->panel, connector);
-> +	rc = drm_dp_read_dpcd_caps(dp->aux, dpcd);
->   	if (rc)
->   		goto end;
->   
-> -	msm_dp_display_lttpr_init(dp);
-> +	msm_dp_display_lttpr_init(dp, dpcd);
-> +
-> +	rc = msm_dp_panel_read_sink_caps(dp->panel, connector);
-> +	if (rc)
-> +		goto end;
->   
->   	msm_dp_link_process_request(dp->link);
->   
-
+> Konrad
 
