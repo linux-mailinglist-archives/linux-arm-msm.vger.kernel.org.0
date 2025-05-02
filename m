@@ -1,492 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-56578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32D15AA7A45
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 21:32:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46069AA7A3C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 21:31:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8BBEA4C7BF2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 19:32:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E94C51BC7CD4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 19:31:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 777611F75A6;
-	Fri,  2 May 2025 19:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CDD21DB125;
+	Fri,  2 May 2025 19:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CT3KEjC3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kOkfOJei"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7AD1F4C8B;
-	Fri,  2 May 2025 19:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2837D2DC78C;
+	Fri,  2 May 2025 19:31:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746214301; cv=none; b=dBMORXocwH5UnjSfSYl2mpHDLUIJzWzwtwOkx1VA+2hFdFkXfZrPSuu8lus18ei67o7kNgxpjvsvyLLpSZsqF4BWd1+UyaH9OHZEzFJE/NsY4kHDdZkEDEAOFJp6tr7D2os3p6IV6PGaOHeJxv5Kjg9sa4V0D/Tgm8+Er/dnMj4=
+	t=1746214291; cv=none; b=cx+vKxJEqJI1EXonnrDbkXxjAlMQR7A1HNUozPt3rVaGQLVlfsWYgTMhNYOwGgMYLfUTklv3AhMnwGM77ZKLrIRMsWDJqs5Ol/MYiktZl8OkjbqZmwe+CZ/Ow58/Ds8qvwx/D7Q48+nElorY3ztVsb0sJr2+i+TjcxHqyfUlPB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746214301; c=relaxed/simple;
-	bh=TTDZCrZB3DgfBU3wRn6mUNHv1aqV3frHKpUYnznDBzY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LHOo97RvVHGeQSFKv2RPY7BqpM1gIhIlL6mdXONnUZxSVszEM7Q8Sb75yCADL0ILwcZn7EfBcvkgIbTCtB3IXur1QDUeRLlhoy9LJnuw62/00uVQdPVriUNoqjCORA//uCNWcdMwu1tudRNG97BeH+g4Zdla+YsWkENJFW5XCJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CT3KEjC3; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ac2902f7c2aso369937666b.1;
-        Fri, 02 May 2025 12:31:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746214297; x=1746819097; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=othoxVOsSVwEVajjeie3q6xtuMloxRMpbCT5kDCo34A=;
-        b=CT3KEjC39iIyFxGHrH5tKemw2uRwiVYtjQ8NDPKNuDvdTP0zq5cT0wzS+keGrSdRL3
-         pNJb7qg+lVWEAzBn7EGARFKg0NbHYzVdi8YLxax5NvDk7QPHbSg35e7ceBJohb3QiZjX
-         k3IPsykO8YFGYL/Ss7fyiwJMnJyloZcwWoHgqHSaVXjlnGzHmNlbt03BM6gXGoZiXjhA
-         mUo5+SrO0sZ4VFBs+ylep6N0J98NSj94Wipa1p3Eib08cdnUrAcxJfPkcyZZ7+loaK4h
-         rqbkQnTMK+XhDp9n2JI/zY6VGFR1VG8ThmyAnmrGr9aS0JPnyFlPklCjlseGN7eUN1pP
-         F19Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746214297; x=1746819097;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=othoxVOsSVwEVajjeie3q6xtuMloxRMpbCT5kDCo34A=;
-        b=bQbU7g8Pr8rdofuDVOR88pzDKVomeCCCUxk+mAsxeGK7139o4phmxtJB0vC6XFLNT0
-         3W4eg+lHbIJNJidVo1iuPy9BLvU3dgRX64vwG4WeoqiCa76CfHJnOBravB7PJHg6xzsh
-         LlzAhHbhcr4YcFCmredHadfROv8/ahEXDpfGIvoMvBFzZ/dLetLNLhYOEJxkQSKmQhmw
-         c0Zq3jE3/pKA4Et3azqaVbQSUqwIiafmh1o7i9Fb5PZTBDl9CyNXx0mzybz/96iK2/yt
-         07erjzzxcI/POy9oFFMqM9trAO3LVPjPXT2ahWUOO/PV301jeV4Z/RtTVC0C64bLVVTn
-         blmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU/dDVPPjylRFmzc31a6hoINbmkpWutnA4GcM0Xd6bcAoOJ/byzFa63/f/0THrlPYi5jpgBp8MlwjD1@vger.kernel.org, AJvYcCVzpaaWNbSXAGSMeQpjb80IhlJ4x7Yod0qdMPCbHT70GR8CuM2BlrBW4q8b88rcwgxVu9iO8JrIr0hB8fi7@vger.kernel.org, AJvYcCXNoKti9kImF77Nxn0RYSBUMmJjYjtol2bNhLGESHsSyBMeMdXY0e/OjD62LQqiMP5pJYzywG1Z+KKy7OP1@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFK5gV6eX+mD0CD2uko6yu077ZC2t/idVx8sY/Ozvg923WFieU
-	RTO0p4eiREFA3EhY0/vMUemQP/BgK8V6+cLeA5XHxQDdR0m05MiXO6IJvA==
-X-Gm-Gg: ASbGncsLIVZ546QExuY1BiDp/GN6oS7hhcaR945hA07lazIiNVrmi7/oGDlCynbJhcs
-	JqSz8IK/S6L7YuDGr+APSQHWXWDKm5ZbmqcSI3z0Jc55TZxAwxYQe45/PLpyequoLV4MFA+eOny
-	6MBrSv1pBsHsO+ndMSo1BAM1YAUzDValhvaZmysqvwVx1di0mfuaG9SZIM7CNoSPFxzdeEcHJd6
-	Uj7YjJVF6pt53CjzEtZOLOmHXGUwG3ddTq9aATmy41jPHICjifldO1yJIC589Z9Fk871HaCWbcb
-	NrpCK0EvM8OE6xDBr4jzQebIWyuCcK6WQXboNNI4yM1inR+A9YFtEP3Dt4EAUIVFlSH6n3w7acF
-	4nDfN
-X-Google-Smtp-Source: AGHT+IGJFUM2AZ0WPT/s8AA07yrwc0K4Or7jTYNZuQwSxRC/fQBw+UJZfx6c1b39eCN76E3hQi4ugA==
-X-Received: by 2002:a17:907:86a5:b0:ad1:79e0:12ed with SMTP id a640c23a62f3a-ad17afb8a38mr436128666b.50.1746214296889;
-        Fri, 02 May 2025 12:31:36 -0700 (PDT)
-Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ad1894c025esm87824266b.114.2025.05.02.12.31.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 May 2025 12:31:36 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Fri, 02 May 2025 21:31:17 +0200
-Subject: [PATCH next 2/2] spi: spi-qpic-snand: add support for 8 bits ECC
- strength
+	s=arc-20240116; t=1746214291; c=relaxed/simple;
+	bh=M5hI8igvUh0TJ227AgSlnOH2SgqlqQg9EBsxC0vnAG0=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=GJS6qg44zw9Fn7ltCiBSC9ZmBS96bZ6IsuKDfuJEPKTaqC1Z4oirkvcCFuowrTSO2nnBkdxPwal6u7Keb+zQlt258bLVvVGg4h0AqQ4aYbqEtcolZOAl65Rw95lNVVfZkYYCPAN0vCB766xsnrAqVpQ8r7av1btYJS/LqXMNscU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kOkfOJei; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5853DC4CEE4;
+	Fri,  2 May 2025 19:31:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746214290;
+	bh=M5hI8igvUh0TJ227AgSlnOH2SgqlqQg9EBsxC0vnAG0=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=kOkfOJeiVHTOyVqOJ+strKRh1AI1dqd8XRTs68spQ6Z5fyslISqXUm6tB13300tJt
+	 uNbqQwrKftoWK01j40VkWbcDo667egy2Qv8URS3YzanZKLV06UjvEjvBItt35w+rLD
+	 pYQWr0nAgA4GLypZxtY6h0tGaD5an2ZqIE7JtBprxwmMsxjlIMp/VY0HIC1luyvsBj
+	 8vLYKpxIX5BzBMlBQ6/e9It7LQ0BzH5PflQztEnTNX+ZxsqoI3d/FQHl4eY3wu4Szp
+	 82nF3IaeGsUVFGPqv4PpLBUi1+JOlTCz0TpY1Z6rQNRo4DS0K5D7udAD921qp8a4vz
+	 0MQ/ff9ranQ9Q==
+Date: Fri, 02 May 2025 14:31:28 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250502-qpic-snand-8bit-ecc-v1-2-95f3cd08bbc5@gmail.com>
-References: <20250502-qpic-snand-8bit-ecc-v1-0-95f3cd08bbc5@gmail.com>
-In-Reply-To: <20250502-qpic-snand-8bit-ecc-v1-0-95f3cd08bbc5@gmail.com>
-To: Mark Brown <broonie@kernel.org>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- Miquel Raynal <miquel.raynal@bootlin.com>, 
- Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>
-Cc: Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>, linux-clk@vger.kernel.org, 
+ Konrad Dybcio <konradybcio@kernel.org>, Lee Jones <lee@kernel.org>, 
+ linux-kernel@vger.kernel.org, Michael Turquette <mturquette@baylibre.com>, 
+ Luo Jie <quic_luoj@quicinc.com>
+To: George Moussalem <george.moussalem@outlook.com>
+In-Reply-To: <20250502-ipq5018-cmn-pll-v1-0-27902c1c4071@outlook.com>
+References: <20250502-ipq5018-cmn-pll-v1-0-27902c1c4071@outlook.com>
+Message-Id: <174621422446.2300145.5789096612500039953.robh@kernel.org>
+Subject: Re: [PATCH 0/6] Add CMN PLL clock controller support for IPQ5018
 
-Even though the hardware supports 8 bits ECC strength, but that is not
-handled in the driver yet. This change adds the missing bits in order
-to allow using the driver with chips which require 8 bits ECC strength.
 
-No functional changes intended with regard to the existing 4 bits ECC
-strength support.
+On Fri, 02 May 2025 14:15:42 +0400, George Moussalem wrote:
+> The CMN PLL block of IPQ5018 supplies output clocks for XO at 24 MHZ,
+> sleep at 32KHZ, and the ethernet block at 50MHZ.
+> 
+> This patch series extends the CMN PLL driver to support IPQ5018.
+> It also adds the SoC specific header file to export the CMN PLL
+> output clock specifiers for IPQ5018. The new table of output
+> clocks is added for the CMN PLL of IPQ5018, which is acquired
+> from the device according to the compatible.
+> 
+> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+> ---
+> George Moussalem (6):
+>       dt-bindings: clock: qcom: Add CMN PLL support for IPQ5018 SoC
+>       clk: qcom: ipq5018: mark XO clock as critical
+>       clk: qcom: ipq-cmn-pll: Add IPQ5018 SoC support
+>       dt-bindings: mfd: qcom,tcsr: Add compatible for IPQ5018
+>       arm64: dts: ipq5018: Add CMN PLL node
+>       arm64: dts: qcom: Update IPQ5018 xo_board_clk to use fixed factor clock
+> 
+>  .../bindings/clock/qcom,ipq9574-cmn-pll.yaml       | 11 +++-
+>  .../devicetree/bindings/mfd/qcom,tcsr.yaml         |  1 +
+>  arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts     |  3 +-
+>  .../dts/qcom/ipq5018-tplink-archer-ax55-v1.dts     |  3 +-
+>  arch/arm64/boot/dts/qcom/ipq5018.dtsi              | 40 +++++++++++-
+>  drivers/clk/qcom/gcc-ipq5018.c                     |  2 +-
+>  drivers/clk/qcom/ipq-cmn-pll.c                     | 72 ++++++++++++++++++----
+>  include/dt-bindings/clock/qcom,ipq5018-cmn-pll.h   | 16 +++++
+>  8 files changed, 129 insertions(+), 19 deletions(-)
+> ---
+> base-commit: 8a2d53ce3c5f82683ad3df9a9a55822816fe64e7
+> change-id: 20250501-ipq5018-cmn-pll-8e517de873f8
+> prerequisite-change-id: 20250411-qcom_ipq5424_cmnpll-960a8f597033:v2
+> prerequisite-patch-id: dc3949e10baf58f8c28d24bb3ffd347a78a1a2ee
+> prerequisite-patch-id: da645619780de3186a3cccf25beedd4fefab36df
+> prerequisite-patch-id: 4b5d81954f1f43d450a775bcabc1a18429933aaa
+> prerequisite-patch-id: 541f835fb279f83e6eb2405c531bd7da9aacf4bd
+> 
+> Best regards,
+> --
+> George Moussalem <george.moussalem@outlook.com>
+> 
+> 
+> 
 
-Tested on an IPQ9574 platform using a GigaDevice GD5F2GM7REYIG chip.
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
-mtdtest results:
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
-  # dmesg | grep nand
-  [    0.678143] spi-nand spi0.0: GigaDevice SPI NAND was found.
-  [    0.687393] spi-nand spi0.0: 256 MiB, block size: 128 KiB, page size: 2048, OOB size: 128
-  # cat /proc/mtd
-  dev:    size   erasesize  name
-  mtd0: 10000000 00020000 "spi0.0"
-  # insmod mtd_test
-  # insmod mtd_speedtest dev=0
-  [   63.128425]
-  [   63.128452] =================================================
-  [   63.128979] mtd_speedtest: MTD device: 0
-  [   63.134622] mtd_speedtest: MTD device size 268435456, eraseblock size 131072, page size 2048, count of eraseblocks 2048, pages per eraseblock 64, OOB size 128
-  [   63.139561] mtd_test: scanning for bad eraseblocks
-  [   63.756447] mtd_test: scanned 2048 eraseblocks, 0 are bad
-  [   71.085514] mtd_speedtest: testing eraseblock write speed
-  [  202.745977] mtd_speedtest: eraseblock write speed is 1991 KiB/s
-  [  202.746022] mtd_speedtest: testing eraseblock read speed
-  [  284.104591] mtd_speedtest: eraseblock read speed is 3222 KiB/s
-  [  291.405533] mtd_speedtest: testing page write speed
-  [  422.516341] mtd_speedtest: page write speed is 1999 KiB/s
-  [  422.516384] mtd_speedtest: testing page read speed
-  [  504.144630] mtd_speedtest: page read speed is 3211 KiB/s
-  [  511.476726] mtd_speedtest: testing 2 page write speed
-  [  643.114443] mtd_speedtest: 2 page write speed is 1991 KiB/s
-  [  643.114485] mtd_speedtest: testing 2 page read speed
-  [  724.434752] mtd_speedtest: 2 page read speed is 3223 KiB/s
-  [  724.434796] mtd_speedtest: Testing erase speed
-  [  731.792729] mtd_speedtest: erase speed is 35648 KiB/s
-  [  731.792772] mtd_speedtest: Testing 2x multi-block erase speed
-  [  739.162513] mtd_speedtest: 2x multi-block erase speed is 35589 KiB/s
-  [  739.162558] mtd_speedtest: Testing 4x multi-block erase speed
-  [  746.486241] mtd_speedtest: 4x multi-block erase speed is 35820 KiB/s
-  [  746.486287] mtd_speedtest: Testing 8x multi-block erase speed
-  [  753.789683] mtd_speedtest: 8x multi-block erase speed is 35919 KiB/s
-  [  753.789728] mtd_speedtest: Testing 16x multi-block erase speed
-  [  761.093075] mtd_speedtest: 16x multi-block erase speed is 35920 KiB/s
-  [  761.093120] mtd_speedtest: Testing 32x multi-block erase speed
-  [  768.396145] mtd_speedtest: 32x multi-block erase speed is 35922 KiB/s
-  [  768.396222] mtd_speedtest: Testing 64x multi-block erase speed
-  [  775.699819] mtd_speedtest: 64x multi-block erase speed is 35918 KiB/s
-  [  775.699863] mtd_speedtest: finished
-  [  775.705259] =================================================
-  # insmod mtd_readtest dev=0
-  [  919.060671]
-  [  919.060699] =================================================
-  [  919.061226] mtd_readtest: MTD device: 0
-  [  919.066957] mtd_readtest: MTD device size 268435456, eraseblock size 131072, page size 2048, count of eraseblocks 2048, pages per eraseblock 64, OOB size 128
-  [  919.070556] mtd_test: scanning for bad eraseblocks
-  [  919.086016] mtd_test: scanned 2048 eraseblocks, 0 are bad
-  [  919.089465] mtd_readtest: testing page read
-  [ 1090.778227] mtd_readtest: finished
-  [ 1090.778286] =================================================
-  # insmod mtd_pagetest dev=0
-  [ 1216.297313]
-  [ 1216.297341] =================================================
-  [ 1216.297867] mtd_pagetest: MTD device: 0
-  [ 1216.303509] mtd_pagetest: MTD device size 268435456, eraseblock size 131072, page size 2048, count of eraseblocks 2048, pages per eraseblock 64, OOB size 128
-  [ 1216.307213] mtd_test: scanning for bad eraseblocks
-  [ 1216.322680] mtd_test: scanned 2048 eraseblocks, 0 are bad
-  [ 1216.326077] mtd_pagetest: erasing whole device
-  [ 1223.694968] mtd_pagetest: erased 2048 eraseblocks
-  [ 1223.695009] mtd_pagetest: writing whole device
-  [ 1223.763930] mtd_pagetest: written up to eraseblock 0
-  [ 1240.268942] mtd_pagetest: written up to eraseblock 256
-  [ 1256.641498] mtd_pagetest: written up to eraseblock 512
-  [ 1273.139048] mtd_pagetest: written up to eraseblock 768
-  [ 1289.718929] mtd_pagetest: written up to eraseblock 1024
-  [ 1306.244553] mtd_pagetest: written up to eraseblock 1280
-  [ 1322.939723] mtd_pagetest: written up to eraseblock 1536
-  [ 1339.246937] mtd_pagetest: written up to eraseblock 1792
-  [ 1355.613729] mtd_pagetest: written 2048 eraseblocks
-  [ 1355.613770] mtd_pagetest: verifying all eraseblocks
-  [ 1355.854290] mtd_pagetest: verified up to eraseblock 0
-  [ 1416.657733] mtd_pagetest: verified up to eraseblock 256
-  [ 1477.384593] mtd_pagetest: verified up to eraseblock 512
-  [ 1538.008142] mtd_pagetest: verified up to eraseblock 768
-  [ 1599.080797] mtd_pagetest: verified up to eraseblock 1024
-  [ 1660.775431] mtd_pagetest: verified up to eraseblock 1280
-  [ 1722.177149] mtd_pagetest: verified up to eraseblock 1536
-  [ 1783.090166] mtd_pagetest: verified up to eraseblock 1792
-  [ 1844.450757] mtd_pagetest: verified 2048 eraseblocks
-  [ 1844.450798] mtd_pagetest: crosstest
-  [ 1844.455676] mtd_pagetest: reading page at 0x0
-  [ 1844.458603] mtd_pagetest: reading page at 0xffff800
-  [ 1844.463047] mtd_pagetest: reading page at 0x0
-  [ 1844.467790] mtd_pagetest: verifying pages read at 0x0 match
-  [ 1844.471636] mtd_pagetest: crosstest ok
-  [ 1844.477062] mtd_pagetest: erasecrosstest
-  [ 1844.480833] mtd_pagetest: erasing block 0
-  [ 1844.488498] mtd_pagetest: writing 1st page of block 0
-  [ 1844.489821] mtd_pagetest: reading 1st page of block 0
-  [ 1844.494475] mtd_pagetest: verifying 1st page of block 0
-  [ 1844.498942] mtd_pagetest: erasing block 0
-  [ 1844.507505] mtd_pagetest: writing 1st page of block 0
-  [ 1844.509042] mtd_pagetest: erasing block 2047
-  [ 1844.516725] mtd_pagetest: reading 1st page of block 0
-  [ 1844.518087] mtd_pagetest: verifying 1st page of block 0
-  [ 1844.522415] mtd_pagetest: erasecrosstest ok
-  [ 1844.527495] mtd_pagetest: erasetest
-  [ 1844.531613] mtd_pagetest: erasing block 0
-  [ 1844.538671] mtd_pagetest: writing 1st page of block 0
-  [ 1844.540249] mtd_pagetest: erasing block 0
-  [ 1844.547869] mtd_pagetest: reading 1st page of block 0
-  [ 1844.548927] mtd_pagetest: verifying 1st page of block 0 is all 0xff
-  [ 1844.553326] mtd_pagetest: erasetest ok
-  [ 1844.559440] mtd_pagetest: finished with 0 errors
-  [ 1844.563233] =================================================
-  # insmod mtd_subpagetest dev=0
-  [ 1942.429708]
-  [ 1942.429736] =================================================
-  [ 1942.430262] mtd_subpagetest: MTD device: 0
-  [ 1942.435905] mtd_subpagetest: MTD device size 268435456, eraseblock size 131072, page size 2048, subpage size 2048, count of eraseblocks 2048, pages per eraseblock 64, OOB size 128
-  [ 1942.439994] mtd_test: scanning for bad eraseblocks
-  [ 1942.457111] mtd_test: scanned 2048 eraseblocks, 0 are bad
-  [ 1949.824564] mtd_subpagetest: writing whole device
-  [ 1949.826670] mtd_subpagetest: written up to eraseblock 0
-  [ 1950.351816] mtd_subpagetest: written up to eraseblock 256
-  [ 1950.875797] mtd_subpagetest: written up to eraseblock 512
-  [ 1951.399912] mtd_subpagetest: written up to eraseblock 768
-  [ 1951.923618] mtd_subpagetest: written up to eraseblock 1024
-  [ 1952.447361] mtd_subpagetest: written up to eraseblock 1280
-  [ 1952.970834] mtd_subpagetest: written up to eraseblock 1536
-  [ 1953.494635] mtd_subpagetest: written up to eraseblock 1792
-  [ 1954.016265] mtd_subpagetest: written 2048 eraseblocks
-  [ 1954.016294] mtd_subpagetest: verifying all eraseblocks
-  [ 1954.021617] mtd_subpagetest: verified up to eraseblock 0
-  [ 1954.347458] mtd_subpagetest: verified up to eraseblock 256
-  [ 1954.667446] mtd_subpagetest: verified up to eraseblock 512
-  [ 1954.987343] mtd_subpagetest: verified up to eraseblock 768
-  [ 1955.307385] mtd_subpagetest: verified up to eraseblock 1024
-  [ 1955.627462] mtd_subpagetest: verified up to eraseblock 1280
-  [ 1955.947277] mtd_subpagetest: verified up to eraseblock 1536
-  [ 1956.266834] mtd_subpagetest: verified up to eraseblock 1792
-  [ 1956.585581] mtd_subpagetest: verified 2048 eraseblocks
-  [ 1963.889308] mtd_subpagetest: verifying all eraseblocks for 0xff
-  [ 1963.930487] mtd_subpagetest: verified up to eraseblock 0
-  [ 1974.592567] mtd_subpagetest: verified up to eraseblock 256
-  [ 1985.180953] mtd_subpagetest: verified up to eraseblock 512
-  [ 1995.805397] mtd_subpagetest: verified up to eraseblock 768
-  [ 2006.348859] mtd_subpagetest: verified up to eraseblock 1024
-  [ 2016.900530] mtd_subpagetest: verified up to eraseblock 1280
-  [ 2027.447587] mtd_subpagetest: verified up to eraseblock 1536
-  [ 2037.962383] mtd_subpagetest: verified up to eraseblock 1792
-  [ 2048.587863] mtd_subpagetest: verified 2048 eraseblocks
-  [ 2048.587906] mtd_subpagetest: writing whole device
-  [ 2048.648174] mtd_subpagetest: written up to eraseblock 0
-  [ 2062.643145] mtd_subpagetest: written up to eraseblock 256
-  [ 2076.699015] mtd_subpagetest: written up to eraseblock 512
-  [ 2091.004910] mtd_subpagetest: written up to eraseblock 768
-  [ 2105.149879] mtd_subpagetest: written up to eraseblock 1024
-  [ 2119.470691] mtd_subpagetest: written up to eraseblock 1280
-  [ 2133.746861] mtd_subpagetest: written up to eraseblock 1536
-  [ 2147.776477] mtd_subpagetest: written up to eraseblock 1792
-  [ 2161.947734] mtd_subpagetest: written 2048 eraseblocks
-  [ 2161.947776] mtd_subpagetest: verifying all eraseblocks
-  [ 2161.986109] mtd_subpagetest: verified up to eraseblock 0
-  [ 2170.818316] mtd_subpagetest: verified up to eraseblock 256
-  [ 2179.596875] mtd_subpagetest: verified up to eraseblock 512
-  [ 2188.405116] mtd_subpagetest: verified up to eraseblock 768
-  [ 2197.188588] mtd_subpagetest: verified up to eraseblock 1024
-  [ 2206.002204] mtd_subpagetest: verified up to eraseblock 1280
-  [ 2214.784815] mtd_subpagetest: verified up to eraseblock 1536
-  [ 2223.557141] mtd_subpagetest: verified up to eraseblock 1792
-  [ 2232.472832] mtd_subpagetest: verified 2048 eraseblocks
-  [ 2239.818213] mtd_subpagetest: verifying all eraseblocks for 0xff
-  [ 2239.861404] mtd_subpagetest: verified up to eraseblock 0
-  [ 2250.439035] mtd_subpagetest: verified up to eraseblock 256
-  [ 2261.176485] mtd_subpagetest: verified up to eraseblock 512
-  [ 2271.713183] mtd_subpagetest: verified up to eraseblock 768
-  [ 2282.356892] mtd_subpagetest: verified up to eraseblock 1024
-  [ 2292.891424] mtd_subpagetest: verified up to eraseblock 1280
-  [ 2303.543110] mtd_subpagetest: verified up to eraseblock 1536
-  [ 2314.116690] mtd_subpagetest: verified up to eraseblock 1792
-  [ 2324.607804] mtd_subpagetest: verified 2048 eraseblocks
-  [ 2324.607846] mtd_subpagetest: finished with 0 errors
-  [ 2324.611859] =================================================
-  # insmod mtd_oobtest dev=0
-  [ 2336.159109]
-  [ 2336.159138] =================================================
-  [ 2336.159664] mtd_oobtest: MTD device: 0
-  [ 2336.165308] mtd_oobtest: MTD device size 268435456, eraseblock size 131072, page size 2048, count of eraseblocks 2048, pages per eraseblock 64, OOB size 128
-  [ 2336.169043] mtd_test: scanning for bad eraseblocks
-  [ 2336.184354] mtd_test: scanned 2048 eraseblocks, 0 are bad
-  [ 2336.187716] mtd_oobtest: test 1 of 5
-  [ 2343.495966] mtd_oobtest: writing OOBs of whole device
-  [ 2343.496073] mtd_oobtest: written up to eraseblock 0
-  [ 2343.516803] mtd_oobtest: written up to eraseblock 256
-  [ 2343.533527] mtd_oobtest: written up to eraseblock 512
-  [ 2343.549945] mtd_oobtest: written up to eraseblock 768
-  [ 2343.563666] mtd_oobtest: written up to eraseblock 1024
-  [ 2343.575186] mtd_oobtest: written up to eraseblock 1280
-  [ 2343.584310] mtd_oobtest: written up to eraseblock 1536
-  [ 2343.593011] mtd_oobtest: written up to eraseblock 1792
-  [ 2343.600847] mtd_oobtest: written 2048 eraseblocks
-  [ 2343.600861] mtd_oobtest: verifying all eraseblocks
-  [ 2343.604542] mtd_oobtest: verified up to eraseblock 0
-  [ 2343.616606] mtd_oobtest: verified up to eraseblock 256
-  [ 2343.623992] mtd_oobtest: verified up to eraseblock 512
-  [ 2343.631390] mtd_oobtest: verified up to eraseblock 768
-  [ 2343.638788] mtd_oobtest: verified up to eraseblock 1024
-  [ 2343.646184] mtd_oobtest: verified up to eraseblock 1280
-  [ 2343.653570] mtd_oobtest: verified up to eraseblock 1536
-  [ 2343.660970] mtd_oobtest: verified up to eraseblock 1792
-  [ 2343.668356] mtd_oobtest: verified 2048 eraseblocks
-  [ 2343.668369] mtd_oobtest: test 2 of 5
-  [ 2350.985635] mtd_oobtest: writing OOBs of whole device
-  [ 2350.985743] mtd_oobtest: written up to eraseblock 0
-  [ 2351.006445] mtd_oobtest: written up to eraseblock 256
-  [ 2351.023170] mtd_oobtest: written up to eraseblock 512
-  [ 2351.039645] mtd_oobtest: written up to eraseblock 768
-  [ 2351.053395] mtd_oobtest: written up to eraseblock 1024
-  [ 2351.064954] mtd_oobtest: written up to eraseblock 1280
-  [ 2351.074144] mtd_oobtest: written up to eraseblock 1536
-  [ 2351.082848] mtd_oobtest: written up to eraseblock 1792
-  [ 2351.090707] mtd_oobtest: written 2048 eraseblocks
-  [ 2351.090721] mtd_oobtest: verifying all eraseblocks
-  [ 2351.094373] mtd_oobtest: verified up to eraseblock 0
-  [ 2351.099353] mtd_oobtest: verified up to eraseblock 256
-  [ 2351.104460] mtd_oobtest: verified up to eraseblock 512
-  [ 2351.109437] mtd_oobtest: verified up to eraseblock 768
-  [ 2351.114528] mtd_oobtest: verified up to eraseblock 1024
-  [ 2351.119683] mtd_oobtest: verified up to eraseblock 1280
-  [ 2351.124772] mtd_oobtest: verified up to eraseblock 1536
-  [ 2351.129996] mtd_oobtest: verified up to eraseblock 1792
-  [ 2351.135187] mtd_oobtest: verified 2048 eraseblocks
-  [ 2351.140130] mtd_oobtest: test 3 of 5
-  [ 2358.448438] mtd_oobtest: writing OOBs of whole device
-  [ 2358.448546] mtd_oobtest: written up to eraseblock 0
-  [ 2358.469297] mtd_oobtest: written up to eraseblock 256
-  [ 2358.486095] mtd_oobtest: written up to eraseblock 512
-  [ 2358.501993] mtd_oobtest: written up to eraseblock 768
-  [ 2358.515473] mtd_oobtest: written up to eraseblock 1024
-  [ 2358.526708] mtd_oobtest: written up to eraseblock 1280
-  [ 2358.535426] mtd_oobtest: written up to eraseblock 1536
-  [ 2358.544152] mtd_oobtest: written up to eraseblock 1792
-  [ 2358.551732] mtd_oobtest: written 2048 eraseblocks
-  [ 2358.551744] mtd_oobtest: verifying all eraseblocks
-  [ 2358.555424] mtd_oobtest: verified up to eraseblock 0
-  [ 2358.567572] mtd_oobtest: verified up to eraseblock 256
-  [ 2358.575045] mtd_oobtest: verified up to eraseblock 512
-  [ 2358.582537] mtd_oobtest: verified up to eraseblock 768
-  [ 2358.590024] mtd_oobtest: verified up to eraseblock 1024
-  [ 2358.597511] mtd_oobtest: verified up to eraseblock 1280
-  [ 2358.604984] mtd_oobtest: verified up to eraseblock 1536
-  [ 2358.612468] mtd_oobtest: verified up to eraseblock 1792
-  [ 2358.619923] mtd_oobtest: verified 2048 eraseblocks
-  [ 2358.619936] mtd_oobtest: test 4 of 5
-  [ 2365.924669] mtd_oobtest: attempting to start write past end of OOB
-  [ 2365.924711] mtd_oobtest: an error is expected...
-  [ 2365.929795] mtd_oobtest: error occurred as expected
-  [ 2365.934520] mtd_oobtest: attempting to start read past end of OOB
-  [ 2365.939150] mtd_oobtest: an error is expected...
-  [ 2365.945371] mtd_oobtest: error occurred as expected
-  [ 2365.950087] mtd_oobtest: attempting to write past end of device
-  [ 2365.954660] mtd_oobtest: an error is expected...
-  [ 2365.960623] mtd_oobtest: error occurred as expected
-  [ 2365.965422] mtd_oobtest: attempting to read past end of device
-  [ 2365.970064] mtd_oobtest: an error is expected...
-  [ 2365.975925] mtd_oobtest: error occurred as expected
-  [ 2365.984256] mtd_oobtest: attempting to write past end of device
-  [ 2365.985300] mtd_oobtest: an error is expected...
-  [ 2365.991242] mtd_oobtest: error: wrote past end of device
-  [ 2365.996064] mtd_oobtest: attempting to read past end of device
-  [ 2366.001389] mtd_oobtest: an error is expected...
-  [ 2366.007028] mtd_oobtest: error: read past end of device
-  [ 2366.011776] mtd_oobtest: test 5 of 5
-  [ 2373.317991] mtd_oobtest: writing OOBs of whole device
-  [ 2373.318034] mtd_oobtest: written up to eraseblock 0
-  [ 2373.322028] mtd_oobtest: written up to eraseblock 0
-  [ 2373.327465] mtd_oobtest: written up to eraseblock 256
-  [ 2373.331576] mtd_oobtest: written up to eraseblock 256
-  [ 2373.337501] mtd_oobtest: written up to eraseblock 512
-  [ 2373.341820] mtd_oobtest: written up to eraseblock 512
-  [ 2373.347566] mtd_oobtest: written up to eraseblock 768
-  [ 2373.351888] mtd_oobtest: written up to eraseblock 768
-  [ 2373.357634] mtd_oobtest: written up to eraseblock 1024
-  [ 2373.361957] mtd_oobtest: written up to eraseblock 1024
-  [ 2373.367710] mtd_oobtest: written up to eraseblock 1280
-  [ 2373.372113] mtd_oobtest: written up to eraseblock 1280
-  [ 2373.377841] mtd_oobtest: written up to eraseblock 1536
-  [ 2373.382355] mtd_oobtest: written up to eraseblock 1536
-  [ 2373.387962] mtd_oobtest: written up to eraseblock 1792
-  [ 2373.392597] mtd_oobtest: written up to eraseblock 1792
-  [ 2373.398190] mtd_oobtest: written 2047 eraseblocks
-  [ 2373.402838] mtd_oobtest: verifying all eraseblocks
-  [ 2373.407629] mtd_oobtest: verified up to eraseblock 0
-  [ 2373.412483] mtd_oobtest: verified up to eraseblock 256
-  [ 2373.417625] mtd_oobtest: verified up to eraseblock 512
-  [ 2373.422518] mtd_oobtest: verified up to eraseblock 768
-  [ 2373.427650] mtd_oobtest: verified up to eraseblock 1024
-  [ 2373.432760] mtd_oobtest: verified up to eraseblock 1280
-  [ 2373.437912] mtd_oobtest: verified up to eraseblock 1536
-  [ 2373.443091] mtd_oobtest: verified up to eraseblock 1792
-  [ 2373.448337] mtd_oobtest: verified 2047 eraseblocks
-  [ 2373.453358] mtd_oobtest: finished with 2 errors
-  [ 2373.458250] =================================================
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
 
-Note: the two errors are present even even without this patch when testing
-the driver with a flash chip requiring 4 bits ECC strength.
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
 
-  # insmod mtd_stresstest dev=0
-  [ 2383.256453]
-  [ 2383.256482] =================================================
-  [ 2383.257008] mtd_stresstest: MTD device: 0
-  [ 2383.262650] mtd_stresstest: MTD device size 268435456, eraseblock size 131072, page size 2048, count of eraseblocks 2048, pages per eraseblock 64, OOB size 128
-  [ 2383.268254] mtd_test: scanning for bad eraseblocks
-  [ 2383.281992] mtd_test: scanned 2048 eraseblocks, 0 are bad
-  [ 2383.285565] mtd_stresstest: doing operations
-  [ 2383.291047] mtd_stresstest: 0 operations done
-  [ 2427.841267] mtd_stresstest: 1024 operations done
-  [ 2471.142229] mtd_stresstest: 2048 operations done
-  [ 2514.405277] mtd_stresstest: 3072 operations done
-  [ 2555.451926] mtd_stresstest: 4096 operations done
-  [ 2598.107133] mtd_stresstest: 5120 operations done
-  [ 2639.936952] mtd_stresstest: 6144 operations done
-  [ 2680.724751] mtd_stresstest: 7168 operations done
-  [ 2720.344163] mtd_stresstest: 8192 operations done
-  [ 2761.645640] mtd_stresstest: 9216 operations done
-  [ 2791.760534] mtd_stresstest: finished, 10000 operations done
-  [ 2791.760817] =================================================
-  #
----
- drivers/spi/spi-qpic-snand.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+  pip3 install dtschema --upgrade
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index dfc8cc5d97624fe741121228b97d2b3562cc5cc4..5e2eacb83b08016ab85a4b676a06f5dfb8cf5808 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -283,9 +283,22 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
- 		goto err_free_ecc_cfg;
- 	}
- 
--	if (ecc_cfg->strength != 4) {
-+	switch (ecc_cfg->strength) {
-+	case 4:
-+		ecc_cfg->ecc_mode = ECC_MODE_4BIT;
-+		ecc_cfg->ecc_bytes_hw = 7;
-+		ecc_cfg->spare_bytes = 4;
-+		break;
-+
-+	case 8:
-+		ecc_cfg->ecc_mode = ECC_MODE_8BIT;
-+		ecc_cfg->ecc_bytes_hw = 13;
-+		ecc_cfg->spare_bytes = 2;
-+		break;
-+
-+	default:
- 		dev_err(snandc->dev,
--			"only 4 bits ECC strength is supported\n");
-+			"only 4 or 8 bits ECC strength is supported\n");
- 		ret = -EOPNOTSUPP;
- 		goto err_free_ecc_cfg;
- 	}
-@@ -302,8 +315,6 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
- 	nand->ecc.ctx.priv = ecc_cfg;
- 	snandc->qspi->mtd = mtd;
- 
--	ecc_cfg->ecc_bytes_hw = 7;
--	ecc_cfg->spare_bytes = 4;
- 	ecc_cfg->bbm_size = 1;
- 	ecc_cfg->bch_enabled = true;
- 	ecc_cfg->bytes = ecc_cfg->ecc_bytes_hw + ecc_cfg->spare_bytes + ecc_cfg->bbm_size;
-@@ -349,7 +360,7 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
- 			       FIELD_PREP(ECC_SW_RESET, 0) |
- 			       FIELD_PREP(ECC_NUM_DATA_BYTES_MASK, ecc_cfg->cw_data) |
- 			       FIELD_PREP(ECC_FORCE_CLK_OPEN, 1) |
--			       FIELD_PREP(ECC_MODE_MASK, ECC_MODE_4BIT) |
-+			       FIELD_PREP(ECC_MODE_MASK, ecc_cfg->ecc_mode) |
- 			       FIELD_PREP(ECC_PARITY_SIZE_BYTES_BCH_MASK, ecc_cfg->ecc_bytes_hw);
- 
- 	ecc_cfg->ecc_buf_cfg = 0x203 << NUM_STEPS;
 
--- 
-2.49.0
+This patch series was applied (using b4) to base:
+ Base: using specified base-commit 8a2d53ce3c5f82683ad3df9a9a55822816fe64e7
+ Deps: looking for dependencies matching 4 patch-ids
+ Deps: Applying prerequisite patch: [PATCH v2 1/4] dt-bindings: clock: qcom: Add CMN PLL support for IPQ5424 SoC
+ Deps: Applying prerequisite patch: [PATCH v2 2/4] clk: qcom: cmnpll: Add IPQ5424 SoC support
+ Deps: Applying prerequisite patch: [PATCH v2 3/4] arm64: dts: ipq5424: Add CMN PLL node
+ Deps: Applying prerequisite patch: [PATCH v2 4/4] arm64: dts: qcom: Update IPQ5424 xo_board to use fixed factor clock
+
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250502-ipq5018-cmn-pll-v1-0-27902c1c4071@outlook.com:
+
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: clock-controller@9b000 (qcom,ipq9574-cmn-pll): 'reg' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/clock/qcom,ipq9574-cmn-pll.yaml#
+arch/arm64/boot/dts/qcom/ipq5424-rdp466.dtb: clock-controller@9b000 (qcom,ipq5424-cmn-pll): 'reg' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/clock/qcom,ipq9574-cmn-pll.yaml#
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: clock-controller@9b000 (qcom,ipq9574-cmn-pll): 'reg' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/clock/qcom,ipq9574-cmn-pll.yaml#
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: clock-controller@9b000 (qcom,ipq9574-cmn-pll): 'reg' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/clock/qcom,ipq9574-cmn-pll.yaml#
+arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dtb: clock-controller@9b000 (qcom,ipq5018-cmn-pll): 'reg' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/clock/qcom,ipq9574-cmn-pll.yaml#
+arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: clock-controller@9b000 (qcom,ipq5018-cmn-pll): 'reg' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/clock/qcom,ipq9574-cmn-pll.yaml#
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: clock-controller@9b000 (qcom,ipq9574-cmn-pll): 'reg' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/clock/qcom,ipq9574-cmn-pll.yaml#
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: clock-controller@9b000 (qcom,ipq9574-cmn-pll): 'reg' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/clock/qcom,ipq9574-cmn-pll.yaml#
+
+
+
+
 
 
