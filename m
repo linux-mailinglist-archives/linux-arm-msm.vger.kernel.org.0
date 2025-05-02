@@ -1,82 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-56467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E502AA6E1C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 11:29:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17A39AA6E4A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 11:38:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CFB6B1892471
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 09:29:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B13419A8142
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 09:38:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29EBF22F152;
-	Fri,  2 May 2025 09:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B3B622F75D;
+	Fri,  2 May 2025 09:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PIL1LPM3"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Uc7bBJNO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474A5225775
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 May 2025 09:28:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C8F22DF91
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 May 2025 09:38:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746178139; cv=none; b=eX2UWJfa4hxJ3bA6I/GiTKIF5u19127kbalQDE8ghNka6nQMFYcBCdFpPXXioBNwiq+9F6inBW3/+NxIgwV2YOKxlEIIHjpl5YeJKr1jvMVWBX/a1BW9Dm/+kJtNBhvpK/gJLp+iWNyQhoQ46gkf6+nUYNBXlc5bIDVjExBQ5Rs=
+	t=1746178713; cv=none; b=DG+oKmh/Z5M1Rdw8I0P0BNxvZuITezkdPThS1f9e+WxY2RvIaSYZsGd2AxcWPLleI4keRdC1rlzwzkIF6kTKML1ydlyQpn28G6Ti3/2qo0xLMnw8/U/GcPUD9+wVCQJjmartUC84KVC5RtneWUc9juZVZ73VUuT8FIohxJWdemk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746178139; c=relaxed/simple;
-	bh=MU5VnR8gfGuokKSR1cu55mBiw3QOCSy7dOGMpt+nFvU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=DJXVDRemL/4RM+EIHQ/40GDYQy/nt/tdJUiaPZXYKYwQcu8ugFhYMS1AgJqcE55gptyB7h+UDrbhnkOr2pYf/IchQYbu+H+jIuoAiKkl+vHrJl/qvMrS17tCGjeCOjll2CmOYfpW48NqgxNneizj4AzIB6gCeW4Cln3TUtnjhIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PIL1LPM3; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so10684755e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 02:28:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746178134; x=1746782934; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ViRvzjaLcZLigmLks7GcF1ISnVvCf8CLyjzMf6xzHz8=;
-        b=PIL1LPM3CMCjd1O4DpA9B/NAZRAJ+LYuHwbXGejBp1WzL3ZB/lxOIiRP94SjHbnAoA
-         I5v10LVQQUmnKQUV/mdVco01MbwN7xDT4x0FeGlA6N9v/nYvf+RjrJhxLEkvpXnBU8sj
-         g2KHOTR0GngDTCk1xU8jb1jAZHVxvlmQ4cO0qabdXW5Zlr8oMZ1X2lmlRS6JnrqicOUt
-         1FmJG2FaPZgrzgTQQKV4WK8Xp+7vcgEosL4wUCiZrj+6FXLekyXKBxTZ9KjKlLRr9Yek
-         ayjND4cQDd3PoHW8BSiWJ0xyXJXyjf3KmEVcmwWK694KLeck/Ku2/u+UVuAlTwvx8bRB
-         ZdLg==
+	s=arc-20240116; t=1746178713; c=relaxed/simple;
+	bh=NLLvyIIHNwAtuEV0aozIKj+fc9Qr8j0sIrTyMsGIABQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pAvp9ITcsCHsOGVO500BAGV9Wa7536toG0vGjBiNkp+Cd5dS9sYJnfrbUS/logztpEGlRseu80dadMnheQoCPfoNqeIfaWQJFOFPIViaQbka4uUAdp+YPfie77ddXJnYJomF0KGsVfb+DnTeYeRp8cTfA3cgixjJOIB5BIlOI64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Uc7bBJNO; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5421MwRE009257
+	for <linux-arm-msm@vger.kernel.org>; Fri, 2 May 2025 09:38:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	b4WiodssTyTUeYCWBBLu8Exg0/NivSkSrrcMmrg5JIs=; b=Uc7bBJNOUyIWqKJZ
+	rIgngeVBkRqeHblOE9MEJXJlTP9CrLg9Bqkzd1O7aO8O9C+RZLYRzHN11w8zs72c
+	69p9e3EqSgRmRjbcoda8L+pgpJX5xHUr6DaaYW0kdlXq0+Mn8fhk9I8c4Tt0q1N0
+	Xbn9jCBaOgz+XEq5qvnaPggK39c6AjJS3SxByxGyHx8kdXPXBpv/sLJxVP+rXvcn
+	GpMJHRrEks7wjB6VRXUgPidUE+LXbFYRrDexTcZAr3WKICR9QwcYLw8f1ntYDryL
+	DUHdUGfc0ggnu4fBRBKgLVMWkjNgem2qH1O7Po7whg8G/+xZFgn1TEXYzcnPVbAd
+	i6bbVg==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46b6ubquwx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 09:38:25 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-476786e50d9so5449651cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 02:38:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746178134; x=1746782934;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ViRvzjaLcZLigmLks7GcF1ISnVvCf8CLyjzMf6xzHz8=;
-        b=jEZp7MMHe2vJ+xmpLfRNHStU3Oh5vbavnDEq3qzAE4C5JeAZ20ioRFErAWmcIBq1lm
-         Y/yfbY1fPaCBJfOJaDT8JFxaQsYwufYYy+dW+nQH8t0B5Pl3daJbqBJn7uAb97+Wc4hI
-         1lRPtKfoHU2L/22zxUlNaghCIxSmzHJugMbh6yA0u/qAQw4xcPPzf8IsxFiClBogvaGx
-         YFUdTixOVJPPDD76E33h1Bi4l1HUWMcOtKw9YiEVRESpwmQoJu+jnHIeQsJnbtZ/seAy
-         sfqO8+KH2IxDD0Qwk8bHS26i2nZ3BCqx2qcvcPP6j3IQ8P2NLs9y6IcheJTp+d6NLlzA
-         cacw==
-X-Forwarded-Encrypted: i=1; AJvYcCXkNqxNmU4aS/9xuHn/8DdckyxW479eHWwz52vKuFvTyUcPnK5+kppaHOuG4hplm328q7UcDHxhtN/khi6b@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz6MSWoVn3qffjET6PDdYpeJp3b99UGDRNsJjwFf79vGd+LP7Lq
-	ezpyz+CNUFPRUfbeyVinbbvMIfmeWOYKbqYJNWs8fkhembIh/rS4DnO+DSEVkYE=
-X-Gm-Gg: ASbGncuT8ALZGCDGMKLir7ssCdDNm52rV8fC/VAQdi40k/gffRD6Xqm0FEAxZ5dv99m
-	a9Ym7wlIYiPbmG5cupPpPia35oAOAnfSIZvkuNw9IOkmsaJt5uciQMJz6xGwWl0nty9hafNsORy
-	NkgErGjhzh1s2S7UcyIV0luDR8xz9gEFtkiHKfro1IWdbV1IuNDtQipOzJvbKiegEbFwwrrLBga
-	emyNQNMkEBVh0/7ftUHsS+c+GOFrFE903WgurJsiUTVgEeqjHaZLdr8Zjvy9hESdRNCLfXN5Xeo
-	Yak1LtsUkmXtMInKCyAn53ek5+VJ1lz2UxLNHrHbcy8x0jiTs81HDGPNueZunAjTB6aAIvDvzwI
-	tmaTLc/w9Wm7zu0gCTg==
-X-Google-Smtp-Source: AGHT+IFdzpFCq/AKM2M60tLarPzfNzRS71t1Qx6ljZBZ9X1pkBARCiAgk24b8LF0h/i54NmkF0IPyQ==
-X-Received: by 2002:a05:600c:1d27:b0:43d:77c5:9c1a with SMTP id 5b1f17b1804b1-441bbea0d54mr15155615e9.4.1746178134562;
-        Fri, 02 May 2025 02:28:54 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:161e:57b7:439b:f09f? ([2a01:e0a:3d9:2080:161e:57b7:439b:f09f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441b89d150fsm38137425e9.15.2025.05.02.02.28.53
+        d=1e100.net; s=20230601; t=1746178704; x=1746783504;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=b4WiodssTyTUeYCWBBLu8Exg0/NivSkSrrcMmrg5JIs=;
+        b=twBCTCEWEZCT8SReqcUv6rYJeOBGeBggPvZuqqPwbVWvctUo+2GKBMiXliJVtj8B1v
+         kIhFK4bqIx10aoqK8eeRtsg0tRTyZqkhYBHwl2lVNLjMg8QeOeEIJAUUF2xGSVYh/LLk
+         OOAGBvRzXSeS48p0Wj9abF63pyJ/0/Wz+5dhd5eCRi95DNv3E5ffh6R5Do7XtbicTZZV
+         Z4ca0X0HQPlJJdRIZ1eczY9F+kW1o/w6QIGNQtejXleI/GBt5A/5jhLkC2EYdyMPqTQr
+         9UWc3Bn0kLeTgSBpaWkn2b6eTjQz9IAfCCTog/BL/TzT2+1Ir6HOuDIPKM0ii3grzbab
+         WroA==
+X-Forwarded-Encrypted: i=1; AJvYcCWMbuAEXcOqV7B0rdS+/LjHnTUoARa6mq/xmRYYFAcZza116dKwoOQeIPA2mhd42vYgy25mvkNolUK3xEXP@vger.kernel.org
+X-Gm-Message-State: AOJu0YwbupTbhb5nJVLWDArSDvo0+y84f85nJwIWwKGFQ0SyszC4iQJJ
+	WqGyEko9405GUyH6kMXTsVkTVPHUoTXq2Jhsurs4hRjLHD+RKxAI/qm0hGzli8j2NzZcOHKMQwJ
+	xBcYOoG/aMJMwUeBW8oHQmc6+SIdCAmfZ7ayL7zdUwBWq/ziPIrzTVsqnNjvvAYrC
+X-Gm-Gg: ASbGncuw7dIkTcXqVVskvjh9zW38qUq6j0JSaSRJMLimPD2Xrazc09uSfVUWEJizPc+
+	c8goRafZJ/dOn2hbelZ7AsBq3xcuzyWTxbP3b7qXHGyjFPpkXDFM9gf65/FvDEj38o8pybK8f3F
+	q3nc09WROjs3ZQJnU7m1Af47ujp6yMsm6EZFulfX26xC7z0X71uUZ49hYUMXqsiWVn+XWlUU98z
+	x3kDvUkwqHZSLzoRipjXpasO9jCXfbr8roHtqRFMWb8NMI8oyJeoQz5qkiaZchB7hhikM86GdOl
+	i1SlyuOzD2Gcfs4A7bHG9Fw/JS6gvHeznZ/Z+0gjKDDWqdTBMiiLp0EueUa6Hep+3k0=
+X-Received: by 2002:a05:622a:107:b0:475:1c59:1748 with SMTP id d75a77b69052e-48c32ac7ee4mr9762031cf.11.1746178704308;
+        Fri, 02 May 2025 02:38:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGplNT6UL2AH5Q6cD4nnSucsQ4tbT2oyVU6ywNClcUBdOxGbjYILgTlk7z1kZTgo/jqQ6unpg==
+X-Received: by 2002:a05:622a:107:b0:475:1c59:1748 with SMTP id d75a77b69052e-48c32ac7ee4mr9761891cf.11.1746178703973;
+        Fri, 02 May 2025 02:38:23 -0700 (PDT)
+Received: from [192.168.65.113] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad1894c01b2sm22103166b.109.2025.05.02.02.38.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 May 2025 02:28:54 -0700 (PDT)
-Message-ID: <9bf9b71f-e7d6-40ac-9fe8-a8396db0870e@linaro.org>
-Date: Fri, 2 May 2025 11:28:53 +0200
+        Fri, 02 May 2025 02:38:23 -0700 (PDT)
+Message-ID: <10f69da3-6f94-4249-a8f3-459dc48fa5e1@oss.qualcomm.com>
+Date: Fri, 2 May 2025 11:38:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,218 +89,88 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 4/9] soc: qcom: geni-se: Enable QUPs on SA8255p
- Qualcomm platforms
-To: Praveen Talari <quic_ptalari@quicinc.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
- Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- devicetree@vger.kernel.org, linux-pm@vger.kernel.org
-Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
- quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
- quic_mnaresh@quicinc.com, quic_shazhuss@quicinc.com
-References: <20250502031018.1292-1-quic_ptalari@quicinc.com>
- <20250502031018.1292-5-quic_ptalari@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250502031018.1292-5-quic_ptalari@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH] arm64: dts: qcom: sm8750: Add adsp fastrpc support
+To: Alexey Klimov <alexey.klimov@linaro.org>, andersson@kernel.org,
+        konradybcio@kernel.org, linux-arm-msm@vger.kernel.org
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        srini@kernel.org, quic_ekangupt@quicinc.com,
+        krzysztof.kozlowski@linaro.org
+References: <20250502011539.739937-1-alexey.klimov@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250502011539.739937-1-alexey.klimov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: QdHNPTcxOza8Kf7zRv5vv3vBczH_DuQL
+X-Authority-Analysis: v=2.4 cv=bsxMBFai c=1 sm=1 tr=0 ts=68149291 cx=c_pps a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=i5LmXQDNGShexaeZTkYA:9
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAyMDA3NSBTYWx0ZWRfXwFP6TtvJHDh/ HCJlloxoF0umRmUr4JCru3mAk4Rpr6nnaF/ApBfgYd682uAMO1ZG01ckwiQZFgfuGiTGmbViBGo JsZeuTSaTobGQ+n58q4j4J8r9grBZYKSQnRAX/peYCb61BOWaIR0YGUWUW9UffvrM5axg4mwi48
+ hJXJ2FLdh4oGD5rZgiywoXOk/4mS/TphJ27HBwS2Z6B2a8Pn1/D+sPhpgaKqssnvy29ycxtvPpH nDlyOpP/xc68r8Q5kqF0b5yUok4rLjnNF4VJgtGuUjCkwyHXwqWD2+s2ULcDmt2+X9YSIUQ+VmQ f6A96IcdyW7luvjwk60+vLkB1J4uOAgR8+GMxmqSqG9ub1xxlz7O5a1h+ncfRROK6sJ2Tmf42Pp
+ cNmnIJswUWlVAHjcnRYKOrS365Ujs/Px0c1YpRKznZQhinmdxZIgB0EwduEAvktsXL26mjTW
+X-Proofpoint-ORIG-GUID: QdHNPTcxOza8Kf7zRv5vv3vBczH_DuQL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-01_06,2025-04-30_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ clxscore=1015 mlxscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
+ adultscore=0 malwarescore=0 bulkscore=0 suspectscore=0 mlxlogscore=999
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505020075
 
-On 02/05/2025 05:10, Praveen Talari wrote:
-> On the sa8255p platform, resources such as clocks,interconnects
-> and TLMM (GPIO) configurations are managed by firmware.
+On 5/2/25 3:15 AM, Alexey Klimov wrote:
+> While at this, also add required memory region for fastrpc.
 > 
-> Introduce a platform data function callback to distinguish whether
-> resource control is performed by firmware or directly by the driver
-> in linux.
+> Tested on sm8750-mtp device with adsprpdcd.
 > 
-> The refactor ensures clear differentiation of resource
-> management mechanisms, improving maintainability and flexibility
-> in handling platform-specific configurations.
-> 
-> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
-> 
-> v1 -> v2
-> - changed datatype of i from int to unsigned int as per comment.
+> Cc: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> Cc: Srinivas Kandagatla <srini@kernel.org>
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
 > ---
->   drivers/soc/qcom/qcom-geni-se.c | 77 +++++++++++++++++++++------------
->   1 file changed, 49 insertions(+), 28 deletions(-)
+>  arch/arm64/boot/dts/qcom/sm8750.dtsi | 70 ++++++++++++++++++++++++++++
+>  1 file changed, 70 insertions(+)
 > 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index 4cb959106efa..0e3658b09603 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -105,6 +105,8 @@ struct geni_wrapper {
->   struct geni_se_desc {
->   	unsigned int num_clks;
->   	const char * const *clks;
-> +	int (*geni_se_rsc_init)(struct geni_wrapper *wrapper,
-> +				const struct geni_se_desc *desc);
->   };
->   
->   static const char * const icc_path_names[] = {"qup-core", "qup-config",
-> @@ -891,10 +893,44 @@ int geni_icc_disable(struct geni_se *se)
->   }
->   EXPORT_SYMBOL_GPL(geni_icc_disable);
->   
-> +static int geni_se_resource_init(struct geni_wrapper *wrapper,
-> +				 const struct geni_se_desc *desc)
-> +{
-> +	struct device *dev = wrapper->dev;
-> +	int ret;
-> +	unsigned int i;
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> index 149d2ed17641..48ee66125a89 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> @@ -7,6 +7,7 @@
+>  #include <dt-bindings/clock/qcom,sm8750-gcc.h>
+>  #include <dt-bindings/clock/qcom,sm8750-tcsr.h>
+>  #include <dt-bindings/dma/qcom-gpi.h>
+> +#include <dt-bindings/firmware/qcom,scm.h>
+>  #include <dt-bindings/interconnect/qcom,icc.h>
+>  #include <dt-bindings/interconnect/qcom,sm8750-rpmh.h>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> @@ -523,6 +524,14 @@ llcc_lpi_mem: llcc-lpi@ff800000 {
+>  			reg = <0x0 0xff800000 0x0 0x800000>;
+>  			no-map;
+>  		};
 > +
-> +	wrapper->num_clks = min_t(unsigned int, desc->num_clks, MAX_CLKS);
+> +		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap {
+> +			compatible = "shared-dma-pool";
+> +			alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
+> +			alignment = <0x0 0x400000>;
+> +			size = <0x0 0xc00000>;
+> +			reusable;
+> +		};
+>  	};
+>  
+>  	smp2p-adsp {
+> @@ -2237,6 +2246,67 @@ q6prmcc: clock-controller {
+>  						};
+>  					};
+>  				};
 > +
-> +	for (i = 0; i < wrapper->num_clks; ++i)
-> +		wrapper->clks[i].id = desc->clks[i];
-> +
-> +	ret = of_count_phandle_with_args(dev->of_node, "clocks", "#clock-cells");
-> +	if (ret < 0) {
-> +		dev_err(dev, "invalid clocks property at %pOF\n", dev->of_node);
-> +		return ret;
-> +	}
-> +
-> +	if (ret < wrapper->num_clks) {
-> +		dev_err(dev, "invalid clocks count at %pOF, expected %d entries\n",
-> +			dev->of_node, wrapper->num_clks);
-> +		return -EINVAL;
-> +	}
-> +
-> +	ret = devm_clk_bulk_get(dev, wrapper->num_clks, wrapper->clks);
-> +	if (ret) {
-> +		dev_err(dev, "Err getting clks %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
->   static int geni_se_probe(struct platform_device *pdev)
->   {
->   	struct device *dev = &pdev->dev;
->   	struct geni_wrapper *wrapper;
-> +	const struct geni_se_desc *desc;
->   	int ret;
->   
->   	wrapper = devm_kzalloc(dev, sizeof(*wrapper), GFP_KERNEL);
-> @@ -906,36 +942,12 @@ static int geni_se_probe(struct platform_device *pdev)
->   	if (IS_ERR(wrapper->base))
->   		return PTR_ERR(wrapper->base);
->   
-> -	if (!has_acpi_companion(&pdev->dev)) {
-> -		const struct geni_se_desc *desc;
-> -		int i;
-> -
-> -		desc = device_get_match_data(&pdev->dev);
-> -		if (!desc)
-> -			return -EINVAL;
-> -
-> -		wrapper->num_clks = min_t(unsigned int, desc->num_clks, MAX_CLKS);
-> -
-> -		for (i = 0; i < wrapper->num_clks; ++i)
-> -			wrapper->clks[i].id = desc->clks[i];
-> -
-> -		ret = of_count_phandle_with_args(dev->of_node, "clocks", "#clock-cells");
-> -		if (ret < 0) {
-> -			dev_err(dev, "invalid clocks property at %pOF\n", dev->of_node);
-> -			return ret;
-> -		}
-> +	desc = device_get_match_data(&pdev->dev);
->   
-> -		if (ret < wrapper->num_clks) {
-> -			dev_err(dev, "invalid clocks count at %pOF, expected %d entries\n",
-> -				dev->of_node, wrapper->num_clks);
-> +	if (!has_acpi_companion(&pdev->dev) && desc->geni_se_rsc_init) {
-> +		ret = desc->geni_se_rsc_init(wrapper, desc);
-> +		if (ret)
->   			return -EINVAL;
-> -		}
-> -
-> -		ret = devm_clk_bulk_get(dev, wrapper->num_clks, wrapper->clks);
-> -		if (ret) {
-> -			dev_err(dev, "Err getting clks %d\n", ret);
-> -			return ret;
-> -		}
->   	}
->   
->   	dev_set_drvdata(dev, wrapper);
-> @@ -951,6 +963,13 @@ static const char * const qup_clks[] = {
->   static const struct geni_se_desc qup_desc = {
->   	.clks = qup_clks,
->   	.num_clks = ARRAY_SIZE(qup_clks),
-> +	.geni_se_rsc_init = geni_se_resource_init,
-> +};
-> +
-> +static const struct geni_se_desc sa8255p_qup_desc = {
-> +	.clks = NULL,
-> +	.num_clks = 0,
-> +	.geni_se_rsc_init = NULL,
+> +				fastrpc {
+> +					compatible = "qcom,fastrpc";
+> +					qcom,glink-channels = "fastrpcglink-apps-dsp";
+> +					label = "adsp";
+> +					memory-region = <&adsp_rpc_remote_heap_mem>;
 
-Just don't specify it, it will be NULL by default, same for the other fields aswell.
+IIUC the driver only considers this on the sensor DSP
 
-Just declare an empty struct instead, maybe add a comment if you want the reader
-to understand there's no clocks for this instance type.
-
-Another much simpler way to implement this would be to just check for num_clks
-along !has_acpi_companion(&pdev->dev) like:
-
-if (!has_acpi_companion(&pdev->dev) && desc->num_clks) {
-
-}
-
-And you're done.
-
-Neil
-
->   };
->   
->   static const char * const i2c_master_hub_clks[] = {
-> @@ -960,11 +979,13 @@ static const char * const i2c_master_hub_clks[] = {
->   static const struct geni_se_desc i2c_master_hub_desc = {
->   	.clks = i2c_master_hub_clks,
->   	.num_clks = ARRAY_SIZE(i2c_master_hub_clks),
-> +	.geni_se_rsc_init = geni_se_resource_init,
->   };
->   
->   static const struct of_device_id geni_se_dt_match[] = {
->   	{ .compatible = "qcom,geni-se-qup", .data = &qup_desc },
->   	{ .compatible = "qcom,geni-se-i2c-master-hub", .data = &i2c_master_hub_desc },
-> +	{ .compatible = "qcom,sa8255p-geni-se-qup", .data = &sa8255p_qup_desc },
->   	{}
->   };
->   MODULE_DEVICE_TABLE(of, geni_se_dt_match);
-
+Konrad
 
