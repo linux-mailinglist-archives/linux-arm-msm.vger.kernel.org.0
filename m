@@ -1,343 +1,246 @@
-Return-Path: <linux-arm-msm+bounces-56529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7401CAA7642
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 17:40:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00971AA767C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 17:54:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A28D31C04D84
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 15:41:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 90657980EFB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 May 2025 15:53:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4EFC2580C0;
-	Fri,  2 May 2025 15:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42FF5258CC3;
+	Fri,  2 May 2025 15:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="2fvPQ8dl"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="Svj+AQPD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2053.outbound.protection.outlook.com [40.107.236.53])
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02olkn2060.outbound.protection.outlook.com [40.92.44.60])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD3A257427;
-	Fri,  2 May 2025 15:40:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD472586C3;
+	Fri,  2 May 2025 15:54:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.44.60
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746200447; cv=fail; b=PoxjuR2as4qWBsZ2SJ/O1nMQiw63frbMTSMwO0frBqir4NW3ewan3Gub+9xjKuwpTiuXydYL/yn4DSqZWyga8W3OeUlQg7ig3ZKaO942cYFbg/ST9oUV5QPuJd9xaqv3meB6FXR0XXcyUxFoxmsFqInCRDqW6drxI6dcK5jJn/w=
+	t=1746201252; cv=fail; b=iDWJJh7WtVbTd0fqoyj0jP9DYuTz1trIkt9NJY+J+vYgqgudYy1gbR+A+zpDCZ50vblC9Tl+O6ZlC5JPdKTLz4us0EshK2N7ouQknN6vMmCABiHZxS+4E18qR8z3t7vVLleDJUI/Qnj8YhSp6QmO1yrI+4NItpzFRFwTaP/v6FA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746200447; c=relaxed/simple;
-	bh=7kq4r68vEvJxvILb4F4P0zjamfHbCSVYvmBCOZyjA90=;
+	s=arc-20240116; t=1746201252; c=relaxed/simple;
+	bh=5RQ7GLD4htKBdsA+8XfWeAGETDoTYEvxFdtClhqt6PE=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=R11O+xDvATnk7BBkzOlomx8N4AY0DgwCfNuqIaeI9cpQM44VpfIduyvkMhVaRyF1T7GfWiC5IaMsanrvDZXbR9QZassTgddVNo34mcwOKtVqOj76wN4J2LVnJvSBWzmRWmfEvRbobuT032T41OgB8mnwK323ZFFMhESmf4TGaEE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=2fvPQ8dl; arc=fail smtp.client-ip=40.107.236.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	 Content-Type:MIME-Version; b=uFa3jK19dne887QVwULphZm/fV6sirrPQoidNWB8Nek8W3PuInfeqB6o41RMYM4EV/K8/N73fuRkGG163V3Cymy0gQduSxD+o8TKABTBjf2rL7DincWoQp5xVrxR7flguzYa5eCH8WR6LGVQC2JhFc+PV1SYRm/nq3xeVKefEhc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=Svj+AQPD; arc=fail smtp.client-ip=40.92.44.60
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ltBfzVDWzveRH4q84PDlUMM3vmrK5gF0h2/W/Rg2EPMGuWlWoi2Ci8v62Tkw/kWW4x5pkct8qpb8/djGCWUDeGU0vAvpSUlavMb/07WOFcIYNgnWLoFZ0H+FqqpEPTExFz7QDQxFgmx/3iparff2NIPcpl3xQZWKtvLjtHbSpgezAvhflCvF/Y+mX676PJ+XkcVJzP9WVQUEmUOWfNyIEQ1pRgHV5+vjQzwFzBbOuN+eZLEug+SIgzbKBXkzoU7YwPF9nMk27h9ALwpj8nwYHOCsU1baYoe6WLt6WLCXoOcgCM/4xn4UPXAAEyL10yBc+VjHvtzRKMLDsu/Wt7vMyg==
+ b=x986NI9cxZrcYvZueHdN7FCoDOm4hU82imNycOEjevbW/3f9Fj6grW9GaJKUDqQ5M0UtsGSK5M0ri1PYp7XatiUbNxu/O6Hr/TpGYEisiTc3UFycEX78OzvBrDSOiUHrwd7ri+ahbXZ+M7cr4csQMjRFgPGFtZxGbEGGd6nv9ZRoaYQRc59ORLrOwG/Bce8cba7OgorOiN6sJFgRmFIc7ypHfMyysLBHbu8KmnmPj8QmKwJ8vwdjv6ldhd2xOx525WMnIy0c7BPDMtvQkwKjMKx9UYNbG/3ZmWSzpEMwPnCWJogUBqsj46OU6GtrJC9BPcDmNgGp5HZtZr3aRjle1w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fDfrqby/neydW5A7T6X4aSdWoITFfK4UaM5gpdalzAg=;
- b=REX2KHefhF4B7SjF00fkdPBFAiJ2VtmpegLUvCGAtEZ4oL/G498nzw+t07xqDGZU6S4p35QJL//ouTTehB6MP9tYnv299vHVVgBj/gCB/jvrYwFbl5iD4W/F32HECC1KBM7Z4aONne5qtKwqtcVuqVKZswwfrfHuA5Hu1c1MLZvu0e5oqBLJNIBCz81WSFwPD7VwJLWCNYoVWlPJToouHZs3P7fZBYProWEdcIG64ZTBv1Ierh5rDUipEXnKh8Xt9DzLsnX1T5OI027lqGn/p3SOGbfAZ/v83zLfYNvDsqhNqZX9o0lQ49Hom/6zRhXO5qltpf4hgFxqrtPOsDQtBg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ bh=QDxxyUfMAqdreDfdBp6b02kCn6ZonN8yVz8bStsQjI0=;
+ b=kJrsLYtjskk6neJGu49xwIj+gKanF8qQTrz4lAKxhYTUWOdXUEX7KzyknpAC3aWrM7n76GQRonH02HddyFUBgOxNAwaqF6Q/bb9bx8scb6vK0v4daeAcFLdQh6nqcI8LooOXEK5pzxTbK8rSU9u1QrbR+yKKovEX3OsAV7oaWdVgkvLUCrIEFVWAT61IeK4nlbqdjJLyeGRC335g9R04Uc//RC9r7nyiqe5fnicDNlkKggWPoNRW2CAWztK9SkU/BlhyhGMwhUUo9WgDtv/1O/pPtbkFJnNe7qcn4HO1KGvVKmgiRnQZ9L7+Q7GMCRxJMSOQwhMDLgvXIhk7DQXA1w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fDfrqby/neydW5A7T6X4aSdWoITFfK4UaM5gpdalzAg=;
- b=2fvPQ8dlb7FKYlY3F5YybUfN1Mxlq1GVdJXZ5KxmSuWqSJ9biQ7w1VFPZux6h9eD0aToYNJ+NZQ4N+GhW6NNLHijAIPc3nTfQx/cK5pWcFQaMHs6TsCVwDzLRybXj6qv/2Ke+lORrfl00ap3OfDfR4Y0ObZzM9mIAp5ct3+6aDI=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CH2PR12MB4956.namprd12.prod.outlook.com (2603:10b6:610:69::11)
- by BN3PR12MB9594.namprd12.prod.outlook.com (2603:10b6:408:2cb::14) with
+ bh=QDxxyUfMAqdreDfdBp6b02kCn6ZonN8yVz8bStsQjI0=;
+ b=Svj+AQPDAV/ib64XfBw1YBXVViZOp2keGWm7yvucFr5fd9W78oC7tRVnbnc2JFod4Dh8PPBSa12IWO9UJ61AvRcN7htt1FSZUbuvYJ+psgljqijw7LgP6Lzpfdoe7oqboR/r33n6u5mA6oho12OtcZZyKh7lLuaSmRlka8guo4+dWYqtyE4h/UDXmpvXQ5clMaDncqwlVqshkdCL3Tax/bL3bvslmZtwAxJCsZxzjO+oPgnyZg+bkz/T2dad1o8Lww5ofrx0DcLlInQaXeE35KhLp0nvZXu/WMU5bWbXc5I2jN045ZsKNqZkDyCWOtvcFDUDQa4Sg8FwOlh7J3ULKQ==
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
+ by BL1PPFB259EA841.namprd19.prod.outlook.com (2603:10b6:20f:fc04::ecd) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.19; Fri, 2 May
- 2025 15:40:40 +0000
-Received: from CH2PR12MB4956.namprd12.prod.outlook.com
- ([fe80::fa2c:c4d3:e069:248d]) by CH2PR12MB4956.namprd12.prod.outlook.com
- ([fe80::fa2c:c4d3:e069:248d%3]) with mapi id 15.20.8699.022; Fri, 2 May 2025
- 15:40:40 +0000
-Message-ID: <938c4876-d284-4f11-a4ac-9f3831d3c14d@amd.com>
-Date: Fri, 2 May 2025 10:40:36 -0500
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.21; Fri, 2 May
+ 2025 15:54:06 +0000
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305]) by DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305%4]) with mapi id 15.20.8699.021; Fri, 2 May 2025
+ 15:54:06 +0000
+Message-ID:
+ <DS7PR19MB888312EBE14582523C3B95209D8D2@DS7PR19MB8883.namprd19.prod.outlook.com>
+Date: Fri, 2 May 2025 19:53:57 +0400
 User-Agent: Mozilla Thunderbird
-Reply-To: tanmay.shah@amd.com
-Subject: Re: [PATCH v2 4/4] remoteproc: Use of_reserved_mem_region_* functions
- for "memory-region"
-To: "Rob Herring (Arm)" <robh@kernel.org>,
- Saravana Kannan <saravanak@google.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Shawn Guo
- <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>,
- Patrice Chotard <patrice.chotard@foss.st.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>,
- Chen-Yu Tsai <wens@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-remoteproc@vger.kernel.org, imx@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com
-References: <20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org>
- <20250423-dt-memory-region-v2-v2-4-2fbd6ebd3c88@kernel.org>
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: Update IPQ5018 xo_board_clk to use
+ fixed factor clock
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Luo Jie <quic_luoj@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250502-ipq5018-cmn-pll-v1-0-27902c1c4071@outlook.com>
+ <20250502-ipq5018-cmn-pll-v1-6-27902c1c4071@outlook.com>
+ <frlw5n2fxu5wxrlaahiuwlgaeg4rsqk7ushpcgvc2q4mzorrzf@e4axknhir4el>
 Content-Language: en-US
-From: Tanmay Shah <tanmay.shah@amd.com>
-In-Reply-To: <20250423-dt-memory-region-v2-v2-4-2fbd6ebd3c88@kernel.org>
+From: George Moussalem <george.moussalem@outlook.com>
+In-Reply-To: <frlw5n2fxu5wxrlaahiuwlgaeg4rsqk7ushpcgvc2q4mzorrzf@e4axknhir4el>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SA1P222CA0186.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:806:3c4::18) To CH2PR12MB4956.namprd12.prod.outlook.com
- (2603:10b6:610:69::11)
+X-ClientProxiedBy: DX0P273CA0033.AREP273.PROD.OUTLOOK.COM
+ (2603:1086:300:58::8) To DS7PR19MB8883.namprd19.prod.outlook.com
+ (2603:10b6:8:253::16)
+X-Microsoft-Original-Message-ID:
+ <a14be748-de11-422e-980a-43263c50cdbb@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR12MB4956:EE_|BN3PR12MB9594:EE_
-X-MS-Office365-Filtering-Correlation-Id: ad3e229c-882d-4b31-e6f5-08dd898fb0e5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
+X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|BL1PPFB259EA841:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8fe695bd-605c-45e1-e46e-08dd89919156
+X-MS-Exchange-SLBlob-MailProps:
+	znQPCv1HvwVu6ov8hlKZu5ytU8AWxKlxUafNq//T3FANklRKe3Br9kjVDLIv2IhK5LSmEBbtjbDByZhR1dWy+OtTggHzDWHhTGvjxTswdtZ2f8AHy8YliJRjNSroVq+4Xm5fXrMsoz7a2J1L9Z0a7r9jPRbcvtKFL1zATmGeEEaJoID/nOu3pFe5fol7stTlJvRaO9aYFNWS70Kj86j5VuCp/A95zKAAoKgoLktjtyH4z4GEHOKrf5IvEnCFEyTmQ3ZqgBV1H4aOxuRicudtJ1XbAZHTjvcKvt5+XTQIVgVp9L8oVUTJdVvWsH6F+vEpLHOBwPb7mygSb2A8TF0p8wzvsp+MypEnRtKs8yNSCEoPcJV0vImQ4CslSpqkWAF6EeLIkJoTtzEDbTlFZJ04OF7BCb+Uz3JNKO6/34BPFKgFMmmmN16ZrLqldgBT3YZqn5nha440mxHABF/zIQlxF4Lv8UtFL4X3D4ni3vwsaJmmVQgF7zTupyFYu4wVm7AUtwCspkrgz1YDluhCl/x8ByaGQz24CTSMPsVc4mCaNh1SN85gbvGsSmzyYb0G2YRz9ae+oESUE8xLzFAgMuefCsGadbGc1QvaSv/ULWBOZSQGL+YXc1u19CCjHwk90/hFJHt1V6gb64cIn+/edsYaRsmZIRxAB95GIguXFkD58gXzz1fKJgHYjWa3OPUA87LBqQsvz9vyw+8rii1K9hg8HtON2cZcR7b3cYN1kitMrvU2FNSowT+CAqEU+5+2ogE0VitlCAjtOeU=
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|7416014|921020|7053199007;
+	BCL:0;ARA:14566002|8060799006|19110799003|15080799006|461199028|6090799003|5072599009|7092599003|440099028|3412199025|21061999003|12071999003;
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?V0ZqRVhUZm5iTzZOa2lidHJVTUlRUTRMbHBpMXJ2WUE2NUczZ0RFeDdBVTNG?=
- =?utf-8?B?TkI3SEVjazF6NUFIRTQvcmV3Q0o4RDFnZldaaWlVYkYxUjBMaG5Wam43L1Zj?=
- =?utf-8?B?ZlZpeGt4WkN4RGlUV2tVbk12NXpERCs0aDc4QjEvVEtsRTNPL1piaExUdzl5?=
- =?utf-8?B?ckFwamt5V25COUo2ai9CcTY3TkFSR0dNK3FadlE2eXFCcmQxWVZkbDJkMTZn?=
- =?utf-8?B?WmZqZEtqekRrekl0czRZMGUvNzFabE1aV0lOenRzTEZnRmhEWXdMZmVHaWZX?=
- =?utf-8?B?SE1RT0RCeTdPS1BoazBTbHJPcUFlL1I0S3U3QnVlcUZ1Y2ZlT1FORnI4L3Fw?=
- =?utf-8?B?ZlVSc2FVMjIyRytnczY3ZHlzYjBTVklvLzFUU3VmaHJHMGNaU0g1Sk9DL01s?=
- =?utf-8?B?V2VwUkxIU3pibnhXTjRKendXU2U1U0pOSXFMNHBaRm85STRXYU5KVDViemdS?=
- =?utf-8?B?NHVjRGV0aVhIM1FidG94bktHTnlYWjQwVVZQYjZCV1FZbGZ3bDhCcS9aRjJy?=
- =?utf-8?B?U0d2R1Y3MXJ1WjlPSTlLMVp3UG1lM2VobTNxZ1g0TnFQUzhZY0VRcUQvNmVj?=
- =?utf-8?B?eDFrbE5QRHNjcHFzQThpd1dKc1g2Y2dQN1F4Q203RkVPR2oxT1ZEbWJSNmV3?=
- =?utf-8?B?VlpRaTJNVjBIcWFtUUFiQldBQWNCNFZzS0ZMVURaYnJkZGNWbm5iWHRkVG52?=
- =?utf-8?B?aDFINVVPN1NSSWJaYkVwdCtYQlo0TnY2TGRUM0QxR1JBRUVuS00xZVV0MUpC?=
- =?utf-8?B?eHloN01wNDVQTHdTZlI4bmlFM3hEbkNJNVVwNzg1VHU4dWlwc242VUhpZWFL?=
- =?utf-8?B?MEM3QWx1V2Q3NFRTVVk2SGlGbWZoMEZTTVhzVy9ab0Z1VnNiemxkK2o5ZC9X?=
- =?utf-8?B?RCtPQ3NheGZrL3l6OFAzTmJzVjVvaEpNbUJVd2NLUThQc0lMbTdyeC9Oc1pK?=
- =?utf-8?B?NldZWC80eTF4c0VxemVDYUlUdnRxdm9hTndHWmI3aGNIZmQ0L05BMG9XQ21S?=
- =?utf-8?B?TDZhd1BiejFCbEY4b2EwbXdFdUhnbHZ2NVpza2cxK01WcWZyaE5JQ1hLWjJW?=
- =?utf-8?B?MklFOW1odjIydHlIeHFmRTYzZ3NxY1FTbW1ncXJFT1ZFRWFaUmNmajZVeWJx?=
- =?utf-8?B?Nk9aZXdGNzRqaDk1NXQrSDZjVU1mZy9xRlFJVUNXSzBaSzBXdlpXR1NsdDBN?=
- =?utf-8?B?SG1YRmRvYldQZE9uNWFVSEx4Q2Z2RFR6TTJhZ2tGQnRTc3BnRXJtSWZ5MGZU?=
- =?utf-8?B?UzkwOWl5Slp0Z0UvMDZwVTBTcFkxdzRZV21LZlZEZ3c4QkZZUW5OVEpIYXM4?=
- =?utf-8?B?aWxHRlFjZWxxbHd5YmIwYXRmekhCY0o4M2Fab3ZxclJxZTRmbmpNa09ERkFY?=
- =?utf-8?B?VGl3d1hvTFV6dWhUY1hnU293NGl4ZEV6eVhrd1d2K0JRdE9zQlR1SCsvT3Nw?=
- =?utf-8?B?OVBTc0VVMVBnTG1zeWs4TkF4d2s1V2puUVdkandtbFR3VERzdnBLQXRqendM?=
- =?utf-8?B?UXozZzdGWnA1MmhwWWtUazBmamZFaVA0QW1lcmFKbUQzcWcraXZoYUhSVGh3?=
- =?utf-8?B?a1hxS0JPRTd4MXRoMENya0Q3eVlIQ0Z3cG1rQ2VtZUV1UVRhaldvT2Q4T09T?=
- =?utf-8?B?R3ZLNTRqcjFHSHpCVmlWb3hyNmdrZGpSZnkxUE5aMjVHVW5aUGdBc2l6Y2F1?=
- =?utf-8?B?dkx6bnBzNFZaVTVHbDEvb1Fhb3hSa2w1N0pKdTJZWCtRVE1rWDllMDV0RkIw?=
- =?utf-8?B?dDFtekZYR1I5V25UTURBRjJyeFR1UG9QU0lPanFFbVlOMi9VcEtjVldkMFI1?=
- =?utf-8?B?U2QzL3ZpUnl0QkhEY1MvcHNvVjhlTjZyTEcxUkFuZm1GcnJkczl2c0JiNG9F?=
- =?utf-8?B?ZzhqZXpXV215TkFrY0pUTTUxYjBlUno1SzdNWmYxYU5MQkxsakdWOWErQzFu?=
- =?utf-8?B?dllLcFRTY3lWRHMwSnZMOTJFYlczOHhYMzNmWGFCcWdpSC9RS0pRWEgzYzBs?=
- =?utf-8?B?VWJuU1ozSnN3PT0=?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH2PR12MB4956.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(921020)(7053199007);DIR:OUT;SFP:1101;
+	=?utf-8?B?cWFQYlE3YWM2VThvVHQvanoyTVB6cU8wVk9Hb3RtNXVWcjkzTndNNEZjWGNG?=
+ =?utf-8?B?RWpjVmRaeXorWkt0dmVaZEgxMFk4L1g4SDZiS2R5Nml3MkNYdW9RTDVWeldG?=
+ =?utf-8?B?RTNDcW1zaVNTeFhZZHhhOGloYWlHZy90cmtMK254azI3eU1lclVPeGEwb3Q5?=
+ =?utf-8?B?SHpycTVraTR1NTVZbFI3cXU4ekhEZkJmQ2JvbGRLODEvak12UjhhZEx3OHZN?=
+ =?utf-8?B?YWU5eXFQYTBHTndDYi9HMWZKeTFpWWExZkFobmtsTlpGWHlxWFhGMDJiU1Yy?=
+ =?utf-8?B?TllCbndRUExGb0s5K2cwcFgyUVBVRFhSNTk5d3lrUDI1TFY0UE15WTZQbGZY?=
+ =?utf-8?B?cHAxdHB2R0FGdVYwSllXaWlnSmxLcjVmZ2plOHFsOUNub0xvdDNGS1FWZkFq?=
+ =?utf-8?B?NjB1ekFJSFRsTG5VSk1EL3lPNmtNZ2ZjSzdjY0V4b3lmYllDa1F0L3lxRTVL?=
+ =?utf-8?B?YU8xTktOaWkwWjdZb05vd0Q5dmROMS9sK1lmZE5UcjJYZUNwY2ltQkx0ZUFS?=
+ =?utf-8?B?OFZ3cU1YWmV6WVlTNWFtMUpLTDZSOXRhZm5NYjgyR3lxWEdJaHpPK3ExTldh?=
+ =?utf-8?B?TENKNzEzVjk5UXp6OS9yY3ZiUXZvdTgwTnV5aStMZlNwVWd4OSsrQUtDUnBv?=
+ =?utf-8?B?TU9NeVZrS09Pb0FwMnc4NkV1TTFJRFdTUUtSYXQzZE9lM2Jqc256T1V1dzds?=
+ =?utf-8?B?QzZYMnBxR0FUQU4ycENlTnBSREFOWFQ4RXRuWkdWUWFBQlBhQ3lRYWp6ZmFr?=
+ =?utf-8?B?aHc4Z0pwOGJjNXZodTZGQlh1S1FRK3dSb2t6cGVwclkwTndkUE9KSUNZcFdn?=
+ =?utf-8?B?V3JsK2dYY1Bmb2NGZStPbklJR2diNmVMaGsvZ1BwZlZpTXpULzh6Q2dac2cz?=
+ =?utf-8?B?Tm0wRWUrQng4SzhnNDl4eE1OYVpBVXNQNDgyUnc0cXhnck1aUmQ3d3UzcmJL?=
+ =?utf-8?B?QmwwbTkvQUVjS3BacWwzUFFpLzFqaVVZV1c2QXYrak9YaTJxOVIxUFE2bmQ4?=
+ =?utf-8?B?N2JyV0ZxY0dDZVg0Mmg4bzhrcGx6dEZPdExnSWtkYVNQcE9oOHZZQVZnVjJ6?=
+ =?utf-8?B?Z2gyemdEQVBBYVlpZjRmVWxQQ2VEbzZEaDVLTjJoQTVmbHVlYVZMT1ZpbGFx?=
+ =?utf-8?B?dUJxQVdZQktNWE1nN1k2TDBTM3k3LzQ4aFpmZTNxRURjeUwrUlJwRzVuMTF1?=
+ =?utf-8?B?NmM2Yno5SHNLdGhlSUpkb2xTYk4xMWxES0RzT1NKZWFVbkFKa0pkaDllNUMz?=
+ =?utf-8?B?cEdULzRoeE13Qlc1REI5VU5sbDhJdVhuSitKYitPZGhyb3YwZ2U2K21KRCtD?=
+ =?utf-8?B?a3F6WjZvMUJHVWI2NTVYSjRFOXYybzBPNlMrNXJweVBmR1ZLWUZKZEJJQ25t?=
+ =?utf-8?B?cDRxQURCL2xOc0M3SmRPN2UzcXRLd1Jibk5BaEJiallyUDRUeXpKRmZvdGQy?=
+ =?utf-8?B?eXNqWGk0UzFPSDhZTGZ4elMyTGF3bVpjeHl2VThCa1NxVjlrN3lQYkFEK3d1?=
+ =?utf-8?B?ZTJxNkRaQmRvU1JpTTRYTmJSZDRMbkJ5YTIwNjkrK0dqR01OSVg3MFY5Z21k?=
+ =?utf-8?B?TjI3VzIvNHdKQk9GYVhJTU4va2hkalZNS3lzMUhIV0wzWVExbzRUSDVSZnly?=
+ =?utf-8?B?QmJUMm5nNEwzUFo5RWQ0TldHcXhyQ3c9PQ==?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?SWxuOUV2bTcveGo0amFMRjVqNEpDbFlxSXY5N3lDcjZWMTRaRGhoU1dHdW5U?=
- =?utf-8?B?b3BkaU80UHFlNDRCNlJjWHNwUlVDMTdvVEQxakh5ejE5eGhYOFVacUh6TnZ5?=
- =?utf-8?B?K0ZTZWlKREw5eDZ3R3V1SlhwZlVRNE5GVGdOWUhOLzFzdkgxUGJvcnVoRVB4?=
- =?utf-8?B?S0laTVl2RW9ZVDZMKzlSMllabVdQS1c4ZzZtZ0RJaERSbS9ocDY5Q2dOWXg4?=
- =?utf-8?B?T3ZIUWJQbjh5elFSbjlaajVjc216SjlvYTRtZWIwcmZoZVhxVTUrcHI4Rmx6?=
- =?utf-8?B?aVc2clhmQk5Bbmc5RUM3VmJ1c3c5SnVLaTVMY1pieUdCbmYzRGZLTGRKQlZj?=
- =?utf-8?B?TWlLbTFYNGYvOHhTMGxUZnFDcVZLRVFtMkVxeGJzazF2SjJxNWZ1WUVxMVNL?=
- =?utf-8?B?V0NyeHFmYVZHeVIrWHZBVERZQ0FZWWJXQmFqMzlSZ0t5WkVSdm15bWVFS1Fx?=
- =?utf-8?B?UGF3MFpaSkgwZ1MxY0RBdm9sb296Uk9RZE9hcnhIUlpQaUxWcEpkNUFRT3pN?=
- =?utf-8?B?bnNub3UrNG5rMTlXa2UzWldvYXVtOVAwdktKNVIzZHArZnB0dHh5UFR4MUp2?=
- =?utf-8?B?S3NGS1p1SkZETXorM0RlU1QvUm42K3gzVkphSzhVblBHdUdtYnRWSm84aU15?=
- =?utf-8?B?MENlbVk3eWpESktyS0ROSHpwc2d0Z01HMStyM1JXUzFIQklIN1FvMFU5VWw3?=
- =?utf-8?B?WnVIeXk4WlVzUGh6ZytKeVY2bXk4UU5xR0N4MDZaWHFJTktXaDlGUi9UQWVr?=
- =?utf-8?B?ZUkzYU9TdmZSOGE4NFZYNFRnSisxRm1pRU9UbnFFellmbjB6MUpuNXU4YlpZ?=
- =?utf-8?B?RXZTV01KcjE0WUJRYndRQUJVczZNTHM4SjlDRFhack0zNTg0bkcvWDJleXJw?=
- =?utf-8?B?dmtNaEIvOVVmN2FyTURjY2hsWllKb3RGY2ZYWTQvUjFIY1hQTVN4OGJqYnMy?=
- =?utf-8?B?SHZtL2ZjMTlCWUVZaEZtQzZUVTJzdW1QN0xiRFR3dGZCRkxyMExJcm9WRUVC?=
- =?utf-8?B?cFJVeGV3TTdFZzdXV0ROLzZEZEpXOWg5RjJBcHpRVWdpR3NZL2ZhL2xEMXFX?=
- =?utf-8?B?b2wyYTljNjFYR1R3L1UyZFY4VElXaFlmNnVwT0wzTDJHYW42bHBLOXpCRyt4?=
- =?utf-8?B?UzBZUHliK3FOYit5aUlvTE0wZS9IZG1BUDd6bUE3Q0lSVGF3TjdJb29HNjhH?=
- =?utf-8?B?L1I5V1hRMkczc1hXcjhrTHloMWI2MVgwdlVKV1RiTVVJWGhVR21ldkRFYzdm?=
- =?utf-8?B?MWpXMHBQSjNBOStZSHRReUZrMWwyZzZxYkgza2VQdWdDRCtxb2doaEdybVFx?=
- =?utf-8?B?YjdZRVZvNGdpNVFKZmRvRE5FQi9JU0t2T1kxbGRHYTdiVis4YzgxRzQrTklt?=
- =?utf-8?B?Z1lITU16U1BCYVpWS082TXJPNTBaMmxycHdUU01kYitkM0RDVGprYmh2ai9x?=
- =?utf-8?B?TlJ3dWlNRXZpQUM0V1hxVlpROGU1THhsUDhFcDUzNUl3L1ZSZDRva0kyVTVq?=
- =?utf-8?B?TzJKUGVRYlVhYU8xRjd6cjNVczl3MlhsSUZsdjFiam9mcGxDcXA2US9EMVBB?=
- =?utf-8?B?bVZ3RWlzTGN4QVMrV05aWDk2MUd5RXZqTFp6ZzdpWmtsK2huTlR0UldOa3du?=
- =?utf-8?B?NFFxNkVPZEkzbEN6WXh5NjFTK1BmUGVaTXZNK1BFc1RHdG1mU2hmTUR3UjZR?=
- =?utf-8?B?YlRhQ0hwQzZPMTJpaC83L1lnMlFlcTcvejhzQVgvdUtwRy9VclZ2emlSNmVv?=
- =?utf-8?B?N3B5Q01ueUdnYnBmMHVNUEdreS9tNVg3K054aCtXWUpFYlB0MEp4dzZ3SVBC?=
- =?utf-8?B?Vkt0TXk5WnQ4YWNyOVQ3L1VFOG5nc0ZCR0JwSzZ3UlFuZ2dBSHEyTTk5QzNB?=
- =?utf-8?B?cExET3VDZkl0UmpnS0RpSGdmYy94aitMb3FwUWtEMGtuV3E5L3pqVzVsWjV6?=
- =?utf-8?B?Rm9xejZEbUhVcXFKZzlxMkFNeHF5b1BZSis2SnE1UUd5aUcyb0REVnBLVitF?=
- =?utf-8?B?bGZ1VG9uajRuazVoQTZtMGpjZFN5ZjY2UXkwaEozbExkS3VJQ1hBWFhVN2hy?=
- =?utf-8?B?R2x6S2lJcHZtaGRYQmFzSmg1WHQvVm82b3haWlE3YmwzN1YyV3pmNHFNWGw1?=
- =?utf-8?Q?6KbnnDZxzFJZSkLRt1/s73CT0?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ad3e229c-882d-4b31-e6f5-08dd898fb0e5
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4956.namprd12.prod.outlook.com
+	=?utf-8?B?WlI2OXRMYVc4KzNsOWw1eVFCckd3WVpxZ2hrdndYYjR2OTgyb2ZiVm5icFor?=
+ =?utf-8?B?Q01QdDQ1ZFA3NTBFZ0E4QWpHTmd0a1EwQkdSdHRWQ3F3YjZjOThkQ2tWbm0x?=
+ =?utf-8?B?a2E3YTBkcEFBbFhpb3pkOFljWXJxODlITEtrWm00bVE1a01UQ3YwZDZldGI3?=
+ =?utf-8?B?anlVTUhBZmdMWThZdXBQbXpEcmZpYkxiVFVpN285N0o4OVgxTnJyYzZINUFq?=
+ =?utf-8?B?Rk1tc0tDKytJZ3l2NzAxaVBiQm5IcWp0cWl4eHdvZWZsK3d2Zk9YUm84bzV1?=
+ =?utf-8?B?S1pBSG84dE5KZGlrZkdUWEFSelJ2UkJQQU1OK0dxYWFzcmZyM1JmU1g5RmVt?=
+ =?utf-8?B?aDdRYjZ1Z2UvZTNDYVg1SXlGMEdlMkZCSlRscThLYmU1YmViRVl4ekxXak90?=
+ =?utf-8?B?TmZJYnE1S0ZjeEM0UkdBSFdDYmdUa2gwMmx5dkp0NDN5T2wrRS9FTUtaYXE4?=
+ =?utf-8?B?cnUvTGVxT0ZYN2tUamc4TW90M1hNdkQrYUlHcDgxeHNXaklmdHI0aHJBQXVk?=
+ =?utf-8?B?WTRNYnFiL1hERUJiNWtydFVXWWZnc2xkeE1UV0pla0NVUktma3FOU1ZIYk16?=
+ =?utf-8?B?eURKSWtWd21Pallwak81SXh4VjBHMXZKVCs1Y3U3SkJyQWFJUFVZbTVqMXZp?=
+ =?utf-8?B?cHZzZUR0RFFlSWRvU2lmTDg2d0tmSEFkd3E1Wjdmd3p1eVhBa1gyaFAzSEhX?=
+ =?utf-8?B?NnBUMHUrb1BYSHNQWkRRNkUxbE10cmcrcFJkR3MzMlJyaksvdXZaYng5UExU?=
+ =?utf-8?B?c1dkZDhyaUIrVkxscnpPQTQzc012dFZBL1poVHhkZThlQnBsNURVSGFmcFcv?=
+ =?utf-8?B?UHRlem5vWTl2b3NYaFlneGRkQmJ0UUNla2JpRlM5MUc0WEhWZTJTbjhleEpD?=
+ =?utf-8?B?ZVNhYUNieXdMZk9wcHRZbnM2ai9wdWErQTlNY2t1TW44V0RPTFpCOEl3aG15?=
+ =?utf-8?B?cFBTYlVka3lvNlU3SVFZazVXN3RrNmt5cVc4MGxlR1dqeEc5NVM3UnErdmd6?=
+ =?utf-8?B?VklOUWZnQ0dldVdja3o3K2Jrb2pEaXhZWnd1TTViREQ1MEtGN2xkMGdNNXpy?=
+ =?utf-8?B?MDZ2TWd6a3FHWm94bHEyUGlrM2dKTHNyTUV2UkJwc3kzYit1SFdEQ3lxU2pm?=
+ =?utf-8?B?ODRCVkxqZVlDZFRydnNQNS9zVW5pUzZHRUE1bjZsR2hmS2hOUlBzbjQ2M3Qr?=
+ =?utf-8?B?TUs1d25ueUlianRha2FvdVVldmlLYnJDclBlZ01XdVZYWkJXUE9XUERyWS9M?=
+ =?utf-8?B?R3o5UUNSYjNMVXFjRE80Sk41SExuT25OQkpDdEp4RE1HQmhJN3l6QXlEbmpH?=
+ =?utf-8?B?ZEZNU3lMR2RtTFphSWRFU0FuSnZqeWJkemQyckdGK3M0YUNVMjEwK2c1eno0?=
+ =?utf-8?B?UlA1QTBXNG94THd5VkMyM0JyRHd3WS9KS1k0SmV1cXcvZUZndm9SaERDdVBj?=
+ =?utf-8?B?MTFYa3RYeTd2OTRYbDhCVER5cEFBdTFuYURERlZmSEZYSWxvcU84b0ZaUjY0?=
+ =?utf-8?B?ZXZ4cG1MS0ZUcndYU0JJdkNFeVA2amkwMVpYb2c5dUc3dkZ0NXNLNGVJSW42?=
+ =?utf-8?B?UHUzaXc2by9ycDZoYi8vWFpQTDNoSlNTbVU1NkxLbzZTOFlYOHc2Rm1xbkx4?=
+ =?utf-8?B?ZTZiS2l2d1dTVVJZWWlzNDR4TUlTM0kxQlQycFpvU1EzaEg4MVNnSlJMV21p?=
+ =?utf-8?Q?RjhgzJsaUbvBY3hh0pW+?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8fe695bd-605c-45e1-e46e-08dd89919156
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR19MB8883.namprd19.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 May 2025 15:40:39.9300
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 May 2025 15:54:06.6333
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OLTR5MxRCXed33rS/Xj6r01jzmm7I9mdN5BI7r2dixoD05j/amlsQNWjRBnYKc8T
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN3PR12MB9594
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PPFB259EA841
 
 
-Hello Rob,
 
-Thanks for the patch. Please find my comments below.
-
-
-On 4/23/25 2:42 PM, Rob Herring (Arm) wrote:
-> Use the newly added of_reserved_mem_region_to_resource() and
-> of_reserved_mem_region_count() functions to handle "memory-region"
-> properties.
+On 5/2/25 18:45, Dmitry Baryshkov wrote:
+> On Fri, May 02, 2025 at 02:15:48PM +0400, George Moussalem via B4 Relay wrote:
+>> From: George Moussalem <george.moussalem@outlook.com>
+>>
+>> The xo_board_clk is fixed to 24 MHZ, which is routed from WiFi output
+>> clock 96 MHZ (also being the reference clock of CMN PLL) divided by 4
+>> to the analog block routing channel.
+>>
+>> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts             | 3 ++-
+>>   arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dts | 3 ++-
+>>   arch/arm64/boot/dts/qcom/ipq5018.dtsi                      | 3 ++-
+>>   3 files changed, 6 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+>> index 8460b538eb6a3e2d6b971bd9637309809e0c0f0c..abb629678c023a2eb387ebf229f6dd1c30133b19 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+>> +++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+>> @@ -80,5 +80,6 @@ &usbphy0 {
+>>   };
+>>   
+>>   &xo_board_clk {
+>> -	clock-frequency = <24000000>;
+>> +	clock-div = <4>;
+>> +	clock-mult = <1>;
+>>   };
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dts b/arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dts
+>> index 5bb021cb29cd39cb95035bfac1bdbc976439838b..7a25af57749c8e8c9a6a185437886b04b0d99e8e 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dts
+>> +++ b/arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dts
+>> @@ -124,5 +124,6 @@ uart_pins: uart-pins-state {
+>>   };
+>>   
+>>   &xo_board_clk {
+>> -	clock-frequency = <24000000>;
+>> +	clock-div = <4>;
+>> +	clock-mult = <1>;
+>>   };
 > 
-> The error handling is a bit different in some cases. Often
-> "memory-region" is optional, so failed lookup is not an error. But then
-> an error in of_reserved_mem_lookup() is treated as an error. However,
-> that distinction is not really important. Either the region is available
-> and usable or it is not. So now, it is just
-> of_reserved_mem_region_to_resource() which is checked for an error.
+> Is the divider a part of the SoC? If so, please move these values to the SoC dtsi file.
+
+my 'best guess' is that the ref clk for ipq5018 is always 96MHZ and the 
+XO board clk is 24MHZ, so it should be safe to move it to the dtsi, but 
+this is purely based on the 5 different board types I have.
+
+@Luo Jie: can you confirm the above?
+
 > 
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> ---
-> v2:
->   - Use strstarts instead of strcmp for resource names as they include
->     the unit-address.
->   - Drop the unit-address from resource name for imx and st drivers
-> ---
->   drivers/remoteproc/imx_dsp_rproc.c        | 45 ++++++++------------
->   drivers/remoteproc/imx_rproc.c            | 68 ++++++++++++------------------
->   drivers/remoteproc/qcom_q6v5_adsp.c       | 24 ++++-------
->   drivers/remoteproc/qcom_q6v5_mss.c        | 60 +++++++++------------------
->   drivers/remoteproc/qcom_q6v5_pas.c        | 69 +++++++++++--------------------
->   drivers/remoteproc/qcom_q6v5_wcss.c       | 25 +++++------
->   drivers/remoteproc/qcom_wcnss.c           | 23 ++++-------
->   drivers/remoteproc/rcar_rproc.c           | 36 +++++++---------
->   drivers/remoteproc/st_remoteproc.c        | 41 +++++++++---------
->   drivers/remoteproc/stm32_rproc.c          | 44 +++++++++-----------
->   drivers/remoteproc/ti_k3_dsp_remoteproc.c | 28 +++++--------
->   drivers/remoteproc/ti_k3_m4_remoteproc.c  | 28 +++++--------
->   drivers/remoteproc/ti_k3_r5_remoteproc.c  | 28 +++++--------
->   drivers/remoteproc/xlnx_r5_remoteproc.c   | 51 +++++++++--------------
->   14 files changed, 221 insertions(+), 349 deletions(-)
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>> index 78368600ba44825b38f737a6d7837a80dc32efb6..7e40f80e4795de25d55b5a19c1beb98e5abcdef3 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>> @@ -31,7 +31,8 @@ sleep_clk: sleep-clk {
+>>   		};
+>>   
+>>   		xo_board_clk: xo-board-clk {
+>> -			compatible = "fixed-clock";
+>> +			compatible = "fixed-factor-clock";
+>> +			clocks = <&ref_96mhz_clk>;
+>>   			#clock-cells = <0>;
+>>   		};
+>>   
+>>
+>> -- 
+>> 2.49.0
+>>
+>>
 > 
-> diff --git a/drivers/remoteproc/imx_dsp_rproc.c b/drivers/remoteproc/imx_dsp_rproc.c
-> index 90cb1fc13e71..fffae6ff4a5c 100644
-
-[ ... ]
-
-> diff --git a/drivers/remoteproc/xlnx_r5_remoteproc.c b/drivers/remoteproc/xlnx_r5_remoteproc.c
-> index 5aeedeaf3c41..b73e97074c01 100644
-> --- a/drivers/remoteproc/xlnx_r5_remoteproc.c
-> +++ b/drivers/remoteproc/xlnx_r5_remoteproc.c
-> @@ -460,49 +460,44 @@ static int add_mem_regions_carveout(struct rproc *rproc)
->   {
->   	struct rproc_mem_entry *rproc_mem;
->   	struct zynqmp_r5_core *r5_core;
-> -	struct of_phandle_iterator it;
-> -	struct reserved_mem *rmem;
->   	int i = 0;
->   
->   	r5_core = rproc->priv;
->   
->   	/* Register associated reserved memory regions */
-> -	of_phandle_iterator_init(&it, r5_core->np, "memory-region", NULL, 0);
-> +	while (1) {
-> +		int err;
-> +		struct resource res;
->   
-> -	while (of_phandle_iterator_next(&it) == 0) {
-> -		rmem = of_reserved_mem_lookup(it.node);
-> -		if (!rmem) {
-> -			of_node_put(it.node);
-> -			dev_err(&rproc->dev, "unable to acquire memory-region\n");
-> -			return -EINVAL;
-> -		}
-> +		err = of_reserved_mem_region_to_resource(r5_core->np, i++, &res);
-
-Here i++ is not needed as it's done at the end of the loop.
-This bug breaks RPMsg communication on zynqmp platform.
 
 Thanks,
-Tanmay
-
-> +		if (err)
-> +			return 0;
->   
-> -		if (!strcmp(it.node->name, "vdev0buffer")) {
-> +		if (strstarts(res.name, "vdev0buffer")) {
->   			/* Init reserved memory for vdev buffer */
->   			rproc_mem = rproc_of_resm_mem_entry_init(&rproc->dev, i,
-> -								 rmem->size,
-> -								 rmem->base,
-> -								 it.node->name);
-> +								 resource_size(&res),
-> +								 res.start,
-> +								 "vdev0buffer");
->   		} else {
->   			/* Register associated reserved memory regions */
->   			rproc_mem = rproc_mem_entry_init(&rproc->dev, NULL,
-> -							 (dma_addr_t)rmem->base,
-> -							 rmem->size, rmem->base,
-> +							 (dma_addr_t)res.start,
-> +							 resource_size(&res), res.start,
->   							 zynqmp_r5_mem_region_map,
->   							 zynqmp_r5_mem_region_unmap,
-> -							 it.node->name);
-> +							 "%.*s",
-> +							 strchrnul(res.name, '@') - res.name,
-> +							 res.name);
->   		}
->   
-> -		if (!rproc_mem) {
-> -			of_node_put(it.node);
-> +		if (!rproc_mem)
->   			return -ENOMEM;
-> -		}
->   
->   		rproc_add_carveout(rproc, rproc_mem);
-> -		rproc_coredump_add_segment(rproc, rmem->base, rmem->size);
-> +		rproc_coredump_add_segment(rproc, res.start, resource_size(&res));
->   
-> -		dev_dbg(&rproc->dev, "reserved mem carveout %s addr=%llx, size=0x%llx",
-> -			it.node->name, rmem->base, rmem->size);
-> +		dev_dbg(&rproc->dev, "reserved mem carveout %pR\n", &res);
->   		i++;
->   	}
->   
-> @@ -776,7 +771,6 @@ static int zynqmp_r5_get_rsc_table_va(struct zynqmp_r5_core *r5_core)
->   	struct device *dev = r5_core->dev;
->   	struct rsc_tbl_data *rsc_data_va;
->   	struct resource res_mem;
-> -	struct device_node *np;
->   	int ret;
->   
->   	/*
-> @@ -786,14 +780,7 @@ static int zynqmp_r5_get_rsc_table_va(struct zynqmp_r5_core *r5_core)
->   	 * contains that data structure which holds resource table address, size
->   	 * and some magic number to validate correct resource table entry.
->   	 */
-> -	np = of_parse_phandle(r5_core->np, "memory-region", 0);
-> -	if (!np) {
-> -		dev_err(dev, "failed to get memory region dev node\n");
-> -		return -EINVAL;
-> -	}
-> -
-> -	ret = of_address_to_resource(np, 0, &res_mem);
-> -	of_node_put(np);
-> +	ret = of_reserved_mem_region_to_resource(r5_core->np, 0, &res_mem);
->   	if (ret) {
->   		dev_err(dev, "failed to get memory-region resource addr\n");
->   		return -EINVAL;
-> 
-
+George
 
