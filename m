@@ -1,88 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-56611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE7D1AA7E93
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 May 2025 07:32:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85983AA7E91
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 May 2025 07:32:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C1271BA12B1
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 May 2025 05:32:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E9071BA0BD6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 May 2025 05:32:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C5441A2C06;
-	Sat,  3 May 2025 05:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E27BD1624E9;
+	Sat,  3 May 2025 05:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="p1vDQ/Mz"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LRtarRr9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FE31A0712
-	for <linux-arm-msm@vger.kernel.org>; Sat,  3 May 2025 05:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460401A08AB
+	for <linux-arm-msm@vger.kernel.org>; Sat,  3 May 2025 05:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746250339; cv=none; b=iFcZG3yObLv8RoZIYACDSLBr/VqnmWKtDZx0IpWOUETboC8RNoSjrjhWpmQb9b/O40AuShrQJ0wt555rVYUZe/Jzh8m0RzEN16uEv74p5WWFsR4gdgXEJ0Zkjex1qsMqKYYpdmz9HZuU4oJGs4uaiFMWNkeXs6dgEyZ0gs9T/Yo=
+	t=1746250338; cv=none; b=tFyI81JZBgdo8mQTk6OOWXvvzMZspMwuB0tMDOg4DKF3n2kVRToc/OJNx4JK3pDj75GwSHuPodsf+XnY+q9vrFNuXAUPmEv9WYfdDyctre2n2MjorZ/DOiGz3Z5HM+uDrINdO6DJ+pWcXLlUMvyZ6vmpnSDcX27Ef+tQ1xF4N5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746250339; c=relaxed/simple;
-	bh=hhqwCX+CfMbW8a8LTyK1HCQvR2viDSbpyfZaXTz9FJc=;
+	s=arc-20240116; t=1746250338; c=relaxed/simple;
+	bh=8sMD+0BVdsqhR32JkSGai+DhVKURkFAaa3llxtrnZ+o=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Mw1NGHGSraj4qJFNmJY1XhBo+TPAI2iBg8F/vI5e/qsRFDxPgbRJSVoXDG03sfrxKCPAPbHkPJXVo41Dp76Iv6+97fuZgWnNKXcDzX4MD4jZ//6YTo+1x7dru6Cx6pCknriDQxcfopMLz3GulglWJiNwseVFpPVEmq9Y5PkuJ0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=p1vDQ/Mz; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=jM5HYSk5md/kdcKm/1G+7tUCt9c93E7SIK0G4gmEKeioLdj3ZRnvBLDF19G9oofJm3VBp+opqnXYf2J4jCU0ncepMOJYlZAOke0o3U8ZtUikS8u4mVXvJ7yGql5tJkLkFQPlnnF8spCg7ki6LUqUB1/+q0OsNm/uILDUzNXHGOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LRtarRr9; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5434lstr006487
-	for <linux-arm-msm@vger.kernel.org>; Sat, 3 May 2025 05:32:15 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5434e2MS004536
+	for <linux-arm-msm@vger.kernel.org>; Sat, 3 May 2025 05:32:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	8rkPsKVUOAdzLtjw7eKW3hTPB+u82BaHGf8QxHqusYQ=; b=p1vDQ/MzSjshaKDu
-	PAfTB4gEjG5TjZvowwkA/zBQcu0JutLeqKkyYCIakx+vrLLWTLqKw6EnPpr+Deau
-	/uyrI44GoG2uhNOj9T1ov0azxfHoHx5ZVZfVz9r5kmlUKxdNlisyn0YIi/B7Y49V
-	T8OkEVEAV47NqMrtWWUR5tA1DG8Fn81NK9+ZGRgh9U1z0FQEllO8IDm+0GOeK7VX
-	ZiY773f4TZYwaqEddTqQN5xdN54nMNaLzpxhQVHtMmxxv62O3KsYCOqgVxZJDEPZ
-	XrEPQ67i++2zyCOk8f/Gts3bU6Uj4aRVldAUqku7p1z0qyPkfM9DfzG3W6SA4Xyd
-	lr+5+A==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46dce981h9-1
+	d+g1lzezxgX4iuf48n6TvpSmGyCyTlu+pITz96aE0xc=; b=LRtarRr9v6i+ZL8+
+	Ee4SkRqeW02oikeWCbS8l5ixzjAnQ9CA04baaKqRNOs6M+Ovc6TOoT1qfdXzfZYA
+	eXeGAgXuvjb0Iv45hg/001BaRArZm5ImwbYGgZ1PzfrVZlr62mnXhON4I9illlrF
+	D+q8BQqJn/1a3IuCtN/Ts9HUsubF4ie4fTU/KPl9QlNEvlNeNSUKLt+DQIYsheM5
+	mepCKYJYc8JK85CXBVwQNzZTGO3fVxmxmqf9Z4M3bhjx5dtwTg+BB+m4GGQLaxKV
+	ZX0LK7Q+sg9xEuAEty0xNZoq/LMveVPp8jgeH88KcIzlxpXzdmHTsnVyNl0Vrw7/
+	s7xY1w==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46dcakg1u2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 03 May 2025 05:32:14 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-47693206f16so55458491cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 22:32:14 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 03 May 2025 05:32:16 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4767e6b4596so49703241cf.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 May 2025 22:32:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746250333; x=1746855133;
+        d=1e100.net; s=20230601; t=1746250335; x=1746855135;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8rkPsKVUOAdzLtjw7eKW3hTPB+u82BaHGf8QxHqusYQ=;
-        b=H2BWqVCh24TLNtI2MEXBAlJpbiNbWDdMeczsptNUrSgOGzQ6iyFnva5om+IlCxDYKK
-         0xwMWpxLmxwVnndGSTwb5TnU2rGFfRyagApgmWiBVA/X/j9yXKRNP1Q7zquoIk3SrjK/
-         NGtMgApzA+/TOTnlcQYA8O4W7L2QgzGyYXYaXlqtOvKV+n6tL5apH2fT2YimZvHbTfWr
-         qOvp6ocUD7RQU2vu2ro4uGWzlWbBpYtA9DvhzzZvd5PVufgfvax4ZEWamOg2aUSnkk4K
-         Vt9Ca3xy8opvRGSHAYioEaQ4Z1KVL1nYkylqnJ5pMGSoWL7vVzPnVIrd4Z7KTvu/yHrc
-         rROg==
-X-Gm-Message-State: AOJu0Yzb28WHFMzZ4zflaldEQXcpQJ7U8PiLCg9X+m16GXFNihW0MxZ+
-	UL6z54dwCpf6LesPjuAzttul3aosumtsNJxrppQzCEDILW7yB5suE/PYNrnpjd7+q2aWvz2nH7E
-	144zezMBgOYmCs7vGCdrOQA7G1zhO4F8cWX8A1BDSxdQmLwdx2fM4BABvGZwzNDXL
-X-Gm-Gg: ASbGncsObDEjnIDS6hacn9LAlnRMqtK0/AaPYcugrfPDa6ps7ffibPQAlxDGnr03JXK
-	MGrZuotaN6HTyqeUVnK5pq83AS3V4jd46HrO+NQOhcpamkoNrbQEVvtYkg+tqv6QRDR/TtwdZLB
-	Sc7jFjrdVKLM1D85CASCl8VdMbrQUsJQwz+4I7Pj04Iv89WzyKxU1zmZSQTvNJN/ppn2VH5WMm3
-	qatIkuTPjG2jaYd43th6nmBe6nEYxwtPb7cO+BU55jK6fBz1zGZK0CR2ICvvP6srsAn+EXfbqjI
-	YZq2fD9fblWL59Nb5k4CDDpe45HUYe4pakRcRJ6piyDqLRxPNx7i0uOZb/+U/j/GmOjl2BWJdiZ
-	4zFX15WDgF3d+cPPhX//2OL3y
-X-Received: by 2002:a05:622a:406:b0:489:6869:5e54 with SMTP id d75a77b69052e-48d5dd6a2e4mr24660631cf.44.1746250333254;
-        Fri, 02 May 2025 22:32:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGnyIobiBcsKCXEIsgtb9OEiGQsSvvsQAtZOu7djNaXxrToq7E3Ypb6qrxXb4kavSHUd2bxSg==
-X-Received: by 2002:a05:622a:406:b0:489:6869:5e54 with SMTP id d75a77b69052e-48d5dd6a2e4mr24660391cf.44.1746250332919;
-        Fri, 02 May 2025 22:32:12 -0700 (PDT)
+        bh=d+g1lzezxgX4iuf48n6TvpSmGyCyTlu+pITz96aE0xc=;
+        b=Jg43YVFTv4ScJptoRUJruQThEu4d+5fXtxMvYgEFZFEQwHaL5he+wZa6lx6GgcMYYu
+         kMbSB5q5CepBQmPJ2f/Lp0FAm5DCs2EeYMpgNJz1g0VLXmW0afF7LKS9hYCrjjk+jAgo
+         0FfDfRKzUff5+lyGCiFm5FG6g/+OYhgCdaRONuUZevdwFdFfN0rh++yo2ok1BDXp+ZAQ
+         h8GOxgtE9I++Rq8mZyR8Nvf8IwINhhIjYw0hK404Fefq6FcOMjwShmlXcONEBpyo7eoM
+         gj7pY7ebPCS6cxWwnRWKG9SR+vcuJsedap9cv/sucMQToyQAOdlNrnfEkGux7nEot5lQ
+         naTw==
+X-Gm-Message-State: AOJu0YxvoOGklXf+luYEdlbdTJELK1gXGWCW1c3CT2Sn5vzUXSW+HPH2
+	DVkkopgces/9mQXrVTANTYH6rnXK0mnrIlPQvX21cdYIXox2VapfJBNFyh4Qxj3JAMg3EwFBPth
+	LDWC69R9QRZwYR/kmahU220hJcKyW8E2a/H6WuyfC27C9M5/mr9ZoeJh2Kf2zyXag
+X-Gm-Gg: ASbGncsr8rW08X0XOnYrW/839WHKB0SKUIAL6fIC6o0uvI4CEDA0qde7beS/C/3hnrI
+	ggUOuQfG+Y1lxNK57eTKWbcrOetchoWukhNbrGSMCLTSP26bLjVzJM14cfaQkCjTxy1vsYldU9/
+	kppFFvBoK301+SqxET7AzhMyv33e8bnnCpLdXvXN/HVC62oknqBHhvNuM39KK5heAx3ingSTxlS
+	8LxvYfgLxGQ9fm8RW81W5pK///en1OE0YhiTZ6AKMG2EnsjGFJu4PfVYIOGvty5+Kg0Z2408a7k
+	AlCt9Y697jTgw0BM42VSg5s/oyujYKLInNsBBAIyee6HZYTUNJNFT9Hvj3QqWb1Z9bZCDZMm1F/
+	HKFj5WrolwmpffHxBhHU/91LA
+X-Received: by 2002:ac8:690f:0:b0:476:95dd:520e with SMTP id d75a77b69052e-48c31354610mr87128571cf.16.1746250335061;
+        Fri, 02 May 2025 22:32:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFcU2f7JBnJ76SoDjfiVAvyoGalGlzmKSZO2Wv94frd/Ay5rnbqepQqBsqyL9pDoI0HlTxCWw==
+X-Received: by 2002:ac8:690f:0:b0:476:95dd:520e with SMTP id d75a77b69052e-48c31354610mr87128281cf.16.1746250334641;
+        Fri, 02 May 2025 22:32:14 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32029017cc0sm6165841fa.39.2025.05.02.22.32.10
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32029017cc0sm6165841fa.39.2025.05.02.22.32.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 May 2025 22:32:10 -0700 (PDT)
+        Fri, 02 May 2025 22:32:13 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Sat, 03 May 2025 08:32:06 +0300
-Subject: [PATCH 1/4] pinctrl: qcom: don't crash on enabling GPIO HOG pins
+Date: Sat, 03 May 2025 08:32:07 +0300
+Subject: [PATCH 2/4] pinctrl: qcom: switch to
+ devm_register_sys_off_handler()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,7 +92,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250503-pinctrl-msm-fix-v1-1-da9b7f6408f4@oss.qualcomm.com>
+Message-Id: <20250503-pinctrl-msm-fix-v1-2-da9b7f6408f4@oss.qualcomm.com>
 References: <20250503-pinctrl-msm-fix-v1-0-da9b7f6408f4@oss.qualcomm.com>
 In-Reply-To: <20250503-pinctrl-msm-fix-v1-0-da9b7f6408f4@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -104,120 +105,121 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3418;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3068;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=hhqwCX+CfMbW8a8LTyK1HCQvR2viDSbpyfZaXTz9FJc=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoFapXsLBlrBwW87bgV39H64nz7f2YaR5Kcl/wy
- dPKRA+DYSCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaBWqVwAKCRCLPIo+Aiko
- 1QWTB/9HNZ8pyztcrM0SZVqWDoPJtc50Rb9jCcAKuqMXypKMYcbosAkdL5vG8FhM1nQ4ddPAnzS
- oXr7yZWkTfRNTBpSR8z5gXAbit/DlEdknLe074bwqXpTB+wl7s33YELwUYxLFNE3W/NYUOH98++
- kuzpgdtpge7xiXa6aljBmlYIa4IuAc2OpoKcVJhA9PVoc77Xm8wKiX5DYTlUDVaHhO2bhZNEWGy
- Q7BI/PIrsXAVl0MZnI44Rn503p78LM3OKPYPN5cTpV7j67KsrrvOgQXFNuPt2qxKNNv338Yx9z0
- gURIizPJEhZH0jWY3g0H9aJ2SqST92gvzb+jGFLU/sWsBTx7
+ bh=8sMD+0BVdsqhR32JkSGai+DhVKURkFAaa3llxtrnZ+o=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoFapXfvCnOffRs0fkj4X03+IWWD0MsP3qve7Kw
+ pBDkgq5RZqJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaBWqVwAKCRCLPIo+Aiko
+ 1cmkB/wJDYZIgtJ8LSNVqmYkO3j5uVA6JDmzP3kf6UDwNTbAetQqjNhmN1YQDP0VLa6aVGY275R
+ NRlTUoXo59z3b+onaCFVPt49d6D4jeADyF297xPheS+pzobyELSmBRsX9QDoWwjLg/XT7nTQsjB
+ fG+/Wq+aq95Uvi/XMPDkuHTmNeIFuyC/nk5XvltGzwb7xUTiY9aatQuQPNn+n0T5QrBwP25AEOA
+ 539/qeT6zDh41xUKFrA7ZzHB1i0lWecY7nptLPBdjboAm7MQBe1NFpjphP+N3iCzQWN/puHZsol
+ 9ArXkrU6jEXR3SuNXElo8/GJSKYrpTuJBrLh17yJkzu20V+t
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAzMDA0NCBTYWx0ZWRfX6OwTRupqWh0K
- 2ktet/D4XbEyu8rw57yBJZdgtCPIGaGHaZw9CBvvmRodSvRfX4oUwIfiq9HM+gAZLfUZ3zJUMwu
- jZ7y6dOceFgMtWbK9KK1LcQWw22EgBwL5VqP2FyPP6RbTEc4pYxNovHiuRdqzhkY6yLh9hUypsh
- wAbg4UxrfyJ+Iuv15i30OwDdPdTleJBXWKulPriLLLDnKfVNOUr45IWTR6SMP83/VmIc5Yup2ZE
- czAAuDb/QalXgaziWLz0CzMKvvoqkg9TPysxpbWcuryChtP+NsiqpSDBnMQmI23kTk/N98VsGii
- ChroB/m8rDf1ZmWmNOSd1YFQdNBLato1Ens0ivvalSrC1j/gLzucD23cfh5WOkukP4C1UPArjZJ
- oMqRJDahOFiSJ+8+YyM4h+JA7irMo/vNOLs+f6AEWRiKDn69wwIP6P1zyBbwroFywxz+kXxm
-X-Proofpoint-ORIG-GUID: JJ7fcfpvp4gfl-x9yqEUtXpum_kK85ue
-X-Authority-Analysis: v=2.4 cv=Qope3Uyd c=1 sm=1 tr=0 ts=6815aa5e cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=cm27Pg_UAAAA:8
- a=EUspDBNiAAAA:8 a=F7q04jUIKJRoJ265B_sA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-GUID: JJ7fcfpvp4gfl-x9yqEUtXpum_kK85ue
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAzMDA0NCBTYWx0ZWRfX9qltiw5jdn4Z
+ r15Jl1LvKY5tAlaDahWpu8orpVdGAhkLqv9H33HnrZnxrVUEsae/N0CNvXJJ8XR6ir0JnFG5q3B
+ kukxiwp93z2vvP5UIT/BcFs8qKvzix3iX2u49aFmw1YsAYTIyh2dOgDNfg4yNpdk45SvUlYIk+S
+ 55iaDOCSFisxjvLqnG0ac5OxLT7SLMtKye4jjKf3Y04CytZYJfpEUsELDWORsn/sWrEnuObaELe
+ CzSOqyAVNjlkrdIvluRYNqXcbH493pZE96ZkQdi9f0vz+eQCwdsNDkPQzJUeMOjOmqU8X5WFPj+
+ oYK/Jv6M0b1oW1BHyq/3sk4UFyq12I5P5TCB59Rb6IeYZYsKZaKoEDTEl+Sc2Qdi1PB6MLUnm0Q
+ RWuYRyzguDxRvNaQq2wBFgPQnRkHHGkBDemwhodcuBDVkJXPjd0aZWOMiVTJlky2ThIJmNld
+X-Proofpoint-ORIG-GUID: 2K9i6PEIl7oumxQl4rSLyh351jxSS3C5
+X-Authority-Analysis: v=2.4 cv=JtvxrN4C c=1 sm=1 tr=0 ts=6815aa60 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=AQMnIOBPTmT00GrUaA0A:9 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-GUID: 2K9i6PEIl7oumxQl4rSLyh351jxSS3C5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-03_03,2025-04-30_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 mlxscore=0 adultscore=0 clxscore=1015
- malwarescore=0 bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0
- mlxlogscore=999 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505030044
+ adultscore=0 impostorscore=0 bulkscore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 mlxscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015
+ malwarescore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505030044
 
-On Qualcomm platforms if the board uses GPIO hogs msm_pinmux_request()
-calls gpiochip_line_is_valid(). After commit 8015443e24e7 ("gpio: Hide
-valid_mask from direct assignments") gpiochip_line_is_valid() uses
-gc->gpiodev, which is NULL when GPIO hog pins are being processed.
-Thus after this commit using GPIO hogs causes the following crash. In
-order to fix this, verify that gpiochip->gpiodev is not NULL.
+Error-handling paths in msm_pinctrl_probe() don't call
+a function required to unroll restart handler registration,
+unregister_restart_handler(). Instead of adding calls to this function,
+switch the msm pinctrl code into using devm_register_sys_off_handler().
 
-Note: it is not possible to reorder calls (e.g. by calling
-msm_gpio_init() before pinctrl registration or by splitting
-pinctrl_register() into _and_init() and pinctrl_enable() and calling the
-latter function after msm_gpio_init()) because GPIO chip registration
-would fail with EPROBE_DEFER if pinctrl is not enabled at the time of
-registration.
-
-pc : gpiochip_line_is_valid+0x4/0x28
-lr : msm_pinmux_request+0x24/0x40
-sp : ffff8000808eb870
-x29: ffff8000808eb870 x28: 0000000000000000 x27: 0000000000000000
-x26: 0000000000000000 x25: ffff726240f9d040 x24: 0000000000000000
-x23: ffff7262438c0510 x22: 0000000000000080 x21: ffff726243ea7000
-x20: ffffab13f2c4e698 x19: 0000000000000080 x18: 00000000ffffffff
-x17: ffff726242ba6000 x16: 0000000000000100 x15: 0000000000000028
-x14: 0000000000000000 x13: 0000000000002948 x12: 0000000000000003
-x11: 0000000000000078 x10: 0000000000002948 x9 : ffffab13f50eb5e8
-x8 : 0000000003ecb21b x7 : 000000000000002d x6 : 0000000000000b68
-x5 : 0000007fffffffff x4 : ffffab13f52f84a8 x3 : ffff8000808eb804
-x2 : ffffab13f1de8190 x1 : 0000000000000080 x0 : 0000000000000000
-Call trace:
- gpiochip_line_is_valid+0x4/0x28 (P)
- pin_request+0x208/0x2c0
- pinmux_enable_setting+0xa0/0x2e0
- pinctrl_commit_state+0x150/0x26c
- pinctrl_enable+0x6c/0x2a4
- pinctrl_register+0x3c/0xb0
- devm_pinctrl_register+0x58/0xa0
- msm_pinctrl_probe+0x2a8/0x584
- sdm845_pinctrl_probe+0x20/0x88
- platform_probe+0x68/0xc0
- really_probe+0xbc/0x298
- __driver_probe_device+0x78/0x12c
- driver_probe_device+0x3c/0x160
- __device_attach_driver+0xb8/0x138
- bus_for_each_drv+0x84/0xe0
- __device_attach+0x9c/0x188
- device_initial_probe+0x14/0x20
- bus_probe_device+0xac/0xb0
- deferred_probe_work_func+0x8c/0xc8
- process_one_work+0x208/0x5e8
- worker_thread+0x1b4/0x35c
- kthread+0x144/0x220
- ret_from_fork+0x10/0x20
-Code: b5fffba0 17fffff2 9432ec27 f9400400 (f9428800)
-
-Fixes: 8015443e24e7 ("gpio: Hide valid_mask from direct assignments")
-Reported-by: Doug Anderson <dianders@chromium.org>
-Closes: https://lore.kernel.org/r/CAD=FV=Vg8_ZOLgLoC4WhFPzhVsxXFC19NrF38W6cW_W_3nFjbw@mail.gmail.com
+Fixes: cf1fc1876289 ("pinctrl: qcom: use restart_notifier mechanism for ps_hold")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/pinctrl/qcom/pinctrl-msm.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-msm.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 9ec15ae4a104cbeb9a7d819b964d341f3bba58ea..a99275f3c4a66a39f4d9318fe918101127ef4487 100644
+index a99275f3c4a66a39f4d9318fe918101127ef4487..88dd462516c76d58b43d49accbddeea38af8f1ec 100644
 --- a/drivers/pinctrl/qcom/pinctrl-msm.c
 +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -149,6 +149,13 @@ static int msm_pinmux_request(struct pinctrl_dev *pctldev, unsigned offset)
- 	struct msm_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
- 	struct gpio_chip *chip = &pctrl->chip;
+@@ -44,7 +44,6 @@
+  * @pctrl:          pinctrl handle.
+  * @chip:           gpiochip handle.
+  * @desc:           pin controller descriptor
+- * @restart_nb:     restart notifier block.
+  * @irq:            parent irq for the TLMM irq_chip.
+  * @intr_target_use_scm: route irq to application cpu using scm calls
+  * @lock:           Spinlock to protect register resources as well
+@@ -64,7 +63,6 @@ struct msm_pinctrl {
+ 	struct pinctrl_dev *pctrl;
+ 	struct gpio_chip chip;
+ 	struct pinctrl_desc desc;
+-	struct notifier_block restart_nb;
  
-+	/*
-+	 * hog pins are requested before registering GPIO chip, don't crash in
-+	 * gpiochip_line_is_valid().
-+	 */
-+	if (!chip->gpiodev)
-+		return 0;
-+
- 	return gpiochip_line_is_valid(chip, offset) ? 0 : -EINVAL;
+ 	int irq;
+ 
+@@ -1480,10 +1478,9 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+ 	return 0;
  }
+ 
+-static int msm_ps_hold_restart(struct notifier_block *nb, unsigned long action,
+-			       void *data)
++static int msm_ps_hold_restart(struct sys_off_data *data)
+ {
+-	struct msm_pinctrl *pctrl = container_of(nb, struct msm_pinctrl, restart_nb);
++	struct msm_pinctrl *pctrl = data->cb_data;
+ 
+ 	writel(0, pctrl->regs[0] + PS_HOLD_OFFSET);
+ 	mdelay(1000);
+@@ -1494,7 +1491,11 @@ static struct msm_pinctrl *poweroff_pctrl;
+ 
+ static void msm_ps_hold_poweroff(void)
+ {
+-	msm_ps_hold_restart(&poweroff_pctrl->restart_nb, 0, NULL);
++	struct sys_off_data data = {
++		.cb_data = poweroff_pctrl,
++	};
++
++	msm_ps_hold_restart(&data);
+ }
+ 
+ static void msm_pinctrl_setup_pm_reset(struct msm_pinctrl *pctrl)
+@@ -1504,9 +1505,11 @@ static void msm_pinctrl_setup_pm_reset(struct msm_pinctrl *pctrl)
+ 
+ 	for (i = 0; i < pctrl->soc->nfunctions; i++)
+ 		if (!strcmp(func[i].name, "ps_hold")) {
+-			pctrl->restart_nb.notifier_call = msm_ps_hold_restart;
+-			pctrl->restart_nb.priority = 128;
+-			if (register_restart_handler(&pctrl->restart_nb))
++			if (devm_register_sys_off_handler(pctrl->dev,
++							  SYS_OFF_MODE_RESTART,
++							  128,
++							  msm_ps_hold_restart,
++							  pctrl))
+ 				dev_err(pctrl->dev,
+ 					"failed to setup restart handler.\n");
+ 			poweroff_pctrl = pctrl;
+@@ -1608,8 +1611,6 @@ void msm_pinctrl_remove(struct platform_device *pdev)
+ 	struct msm_pinctrl *pctrl = platform_get_drvdata(pdev);
+ 
+ 	gpiochip_remove(&pctrl->chip);
+-
+-	unregister_restart_handler(&pctrl->restart_nb);
+ }
+ EXPORT_SYMBOL(msm_pinctrl_remove);
  
 
 -- 
