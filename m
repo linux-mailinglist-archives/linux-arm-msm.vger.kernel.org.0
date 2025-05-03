@@ -1,227 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-56643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 180DAAA8029
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 May 2025 12:41:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45F05AA8043
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 May 2025 13:11:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4383C9A0169
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 May 2025 10:40:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED8EA1BA1665
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 May 2025 11:11:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8311C1F30AD;
-	Sat,  3 May 2025 10:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA8831F130B;
+	Sat,  3 May 2025 11:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="x40qW9sc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WNj19pRW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from box.trvn.ru (box.trvn.ru [45.141.101.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EB61F09A8;
-	Sat,  3 May 2025 10:40:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.141.101.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6ECB1DDC18;
+	Sat,  3 May 2025 11:10:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746268812; cv=none; b=hHUt5zUDU+enE42xMy58OvprdNWlIYR1dTcYuiOJGkFgD+16/Na8Y8TRNlWyQuSysufVLrKAJvQJDQDfLOhP0i5tj8OPTMqP2RCqVx/3+AcDl3YI/qt46CDXkCn7vJILjm/L264TkeKrBdpcLtmstpQuyVEKnNxk3IEPHRJRiB8=
+	t=1746270650; cv=none; b=Hyc5bIbTV+q+XmO216cdxsFj5bSYhn+JLrfwFmNVlQWtL6TrET6dviyeyCws58yQrH/0JGhHKoyBno9KhgKHd2Szd/psJ6dXttruNsy2TUxVcAUtAgoW0CgPBKhlWdLbsK+Z+4JzBwO1WS1lTNGyNq2SDcT+fhGb2zS5kyKeCGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746268812; c=relaxed/simple;
-	bh=MPBTfFU0Xf6+ddYrvZbmg422nM4nFrs0KVb2QdwKdPM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OL9+HegKloffy2aXzZtwdig5AoPT3cn9udEAcG6RReWIogPhuT87t+x7Dviyz7L5mzdf/Do+lmF6wU/N/EpnGgDaOyT191jH+RRDZCC+w4Ch4EUVK3OTE23RrrMWiAOQR5d8mxGCdtOS6+YQPjlQYRwPJ/N6fnKh/Tig7v2EEeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=x40qW9sc; arc=none smtp.client-ip=45.141.101.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1746268805; bh=MPBTfFU0Xf6+ddYrvZbmg422nM4nFrs0KVb2QdwKdPM=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=x40qW9scyazgae0RD1QfOkJ+hKsXZCv15vnFLCyext5SBtSearcvQNf0l8umX8Jlj
-	 euZb70jcgTNkJHpE+Gj5eacs/phinBFLFLW+kIDaEDRGn9mWLa4SCJ+pWIciuJLSXn
-	 vader/vvpsztV9VhGU/fUVlleQMGOQzYiKzJOT48UZxoF1ON/HCAau/rPqpMphuYAE
-	 Ll8QE6VSFR76FdYOygWeD75T0u/Iuo/izUvNQh2uzwskPDGesJh/tbbJUzGBBH9z1C
-	 GCcus8jvP2+J1cFZizpHtCW9//kZ9JX7pBLjetncy29udp6GnfolFEfKk0cH4KL1Un
-	 J0eCNTrOTX/WA==
-Received: from authenticated-user (box.trvn.ru [45.141.101.25])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id DC6EBC99E;
-	Sat,  3 May 2025 15:40:03 +0500 (+05)
-From: Nikita Travkin <nikita@trvn.ru>
-Date: Sat, 03 May 2025 15:39:32 +0500
-Subject: [PATCH v2 5/5] arm64: dts: qcom: x1e/x1p: Add EL2 overlay for WoA
- devices
+	s=arc-20240116; t=1746270650; c=relaxed/simple;
+	bh=h9binRCV4NB8nah9n9aG8iePH1O0uere7IhiKUeGsIA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=VbFgcKxbPIt0FRCTeQWpmxr5iYJ9rR7PCGJFifrb8ZjKI2unKpq2/pB/3XRQSgvJkbguj3AzV5XyQmq03mNYq/SiwFJMoHNag1Y3PvwPoEyplV0qbWYctPL8sx8p0Sw1DK9oAX2pAK1KLxmLzaIOnhx7tRIX5L3IgWN2usmR264=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WNj19pRW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5438KWWO006811;
+	Sat, 3 May 2025 11:10:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=sxfl6jicfUVNIjl0CO6KayVEBISbFBHBIgZ
+	MpHuzdvc=; b=WNj19pRWLwnujAq/S6o8PWZ+wbGAfcb6m6itX/EwsmnoDejmxMR
+	dhccyXjD74Uqol2d4Z+WNn9ZzCVQ+iyqNBvqI7V6D4H7G8B5hziIp8niGepA0Y3q
+	z1S1X3rX53DAF5OAL2XR6RSCVSWmm2sL/sWJXkK36+lUiez/WkJEhFaJCi4NP0ex
+	JO7UMxLGxpheqDdeGxqujpE698KYEd3mlKrZwqljBt9sCA6zgxBtq6P5Z5J+JRZ3
+	8RWRm8MGlXELT1bPR7jL1l1I3EIxsGQz7fe9iXG6eb7aVpMgixcYn/V7G26QYqf1
+	YhJXyIxKqlQoTLUkBGVZnXYwg6koBXCq58w==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46da55rjqa-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 03 May 2025 11:10:35 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 543BAWhS023571;
+	Sat, 3 May 2025 11:10:32 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 46dc7kjmru-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 03 May 2025 11:10:32 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 543BAWcv023565;
+	Sat, 3 May 2025 11:10:32 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com ([10.213.97.252])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 543BAV1E023562
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 03 May 2025 11:10:32 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4047106)
+	id 1E63D53B; Sat,  3 May 2025 16:40:31 +0530 (+0530)
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+To: andi.shyti@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, gregkh@linuxfoundation.org, jirislaby@kernel.org,
+        broonie@kernel.or, andersson@kernel.org, konradybcio@kernel.org,
+        johan+linaro@kernel.org, dianders@chromium.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-spi@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Subject: [PATCH v4 0/5] Add support to load QUP SE firmware from
+Date: Sat,  3 May 2025 16:40:24 +0530
+Message-Id: <20250503111029.3583807-1-quic_vdadhani@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250503-sc-el2-overlays-v2-5-24e9b4572e15@trvn.ru>
-References: <20250503-sc-el2-overlays-v2-0-24e9b4572e15@trvn.ru>
-In-Reply-To: <20250503-sc-el2-overlays-v2-0-24e9b4572e15@trvn.ru>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
-Cc: Marc Zyngier <maz@kernel.org>, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6029; i=nikita@trvn.ru;
- h=from:subject:message-id; bh=MPBTfFU0Xf6+ddYrvZbmg422nM4nFrs0KVb2QdwKdPM=;
- b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBoFfJ7R9fCT2kh6+Q5ZE7r/8m/VnbY7MVlM3NbL
- qkXlvMvvkqJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCaBXyewAKCRBDHOzuKBm/
- dbAHEACMiCFQWxv8glvEerRJrCWcSd87E9TDVPcY47/ED936iN2924VGIVnHHWf5fdYidw1s8fb
- YDN7LEIDWltCFMlva1Pk0H96cg9XFovfLjcmbwljTLCtQKXPa8IURzDJoOGrBHU5ublOANhw55B
- Ma6RAY9PZwL1TvohADrZOw6wa1zCaCHcEdWfzlubEL3LOmr/8xcvb9zR7f1uQSfPbHKXs4kfsDm
- YhHA3VEACeen16dv1+9XFaRKOcZtZDtKBfO3xjzcdFoLQp4AvRP23VVfmdyecciiCHVFaL6i+Zh
- 20JaPfFAeBS0/UUI981PG6olu4lFTv4Z4HDIl9OxBbNKGE87bVFdVPQ3Pt+9S9KH2JhRJIb+afj
- VCxmlpNWOOyFGLP8QNh92PIsx/qwpuNT6xWwfvyVB1upOmHT36aCbWknIP/5FEtsLoUX1A5U3Pj
- 93Mz9F4YIXAXDjzidjspsCJUIITlkAj6ONtFk8hk50IeLFVzVvMoNcOFUUpRRZqFWQfsfDpkyLS
- Axu05/9Oe5Kh1mgbc4zsYJnfWerXphFSYa5AfnQ97ZPGJw7i25EjeNjF0T7Np7DlxcWjjgl9GP1
- j/lpciJpaSk86NSZRVnCL1oH7ryNFRZOLZ+JOmDGuHnPBfA1KXBbM7p0gypNlyaRcSFUHpx08dS
- ox64w9apbIsYKlQ==
-X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
- fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAzMDA5OSBTYWx0ZWRfX9RvoG/GDbxmI
+ ghpzk0uDt63GYnSUX2n6lmNp9bb4EoWRLFpjz63m2xXnjqaY+f11hDEPwefnDpFXt757nzvHAde
+ VaTA/JkdfQ7MBrnQkO4HeXxO0/T0oye2yyt/wxRMHGJCWjzD+Stq/Y9SBA96TGta0qc1vfRIa95
+ i6ca449O14CARlpY/L4YpWV9WZdT/w1WyTV0NMvvRspKLyxcGeunuDtLghAFTV6m66vRgoT5Hv8
+ nDITHvPsPd5+z3cqgVn/dPvDm0CbyEvnINGDXgJMz3148b/v0iOImTEIaRHXEJ5CC5Ek7Wh1CR5
+ 35SRHcCdn+yUHz+aAV/ilPAY/oJWsqqyXpu5QwepTWuslLWEEQ68CBM8mXmwIZB0OmrTOUKrj0h
+ ChjSKMWEiw3Ft8cNbvhdwYBb8fHA9jWmZ3W2YWoX/Rq9Oeg6un3J6mvoMXarYOgZ/t0Bi3P5
+X-Authority-Analysis: v=2.4 cv=M9RNKzws c=1 sm=1 tr=0 ts=6815f9ac cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=XnsvMKsTPeFZVxA5G_AA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: k9WKmxgHiSQ83SJGtlRsrFmBLoWsyCI3
+X-Proofpoint-ORIG-GUID: k9WKmxgHiSQ83SJGtlRsrFmBLoWsyCI3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-03_05,2025-04-30_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 mlxlogscore=999 priorityscore=1501 malwarescore=0
+ mlxscore=0 bulkscore=0 adultscore=0 suspectscore=0 clxscore=1011
+ lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505030099
 
-WoA devices using x1e/x1p use android firmware to boot, which notably
-includes Gunyah hypervisor. This means that, so far, Linux-based OS
-could only boot in EL1 on those devices.
-
-However Windows can replace Gunyah upon boot with it's own hypervisor,
-and with the use of tools such as "slbounce", it's possible to do the
-same for Linux-based OS, in which case some modifications to the DT are
-necessary to facilitate the absence of Gunyah services.
-
-Add a EL2-specific DT overlay and apply it to x1e/x1p WoA devices to
-create -el2.dtb for each of them alongside "normal" dtb.
-
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
----
- arch/arm64/boot/dts/qcom/Makefile      | 36 +++++++++++++++--------
- arch/arm64/boot/dts/qcom/x1-el2.dtso   | 52 ++++++++++++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/x1e80100.dtsi |  2 +-
- 3 files changed, 77 insertions(+), 13 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 12d9ed1129b4e83146e561910aca9fc3718b0820..4300b29397c6a0087e5c5909d756d733f308d373 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -299,15 +299,27 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-qrd.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= x1e001de-devkit.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= x1e78100-lenovo-thinkpad-t14s.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= x1e78100-lenovo-thinkpad-t14s-oled.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-asus-vivobook-s15.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-crd.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-dell-xps13-9345.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-hp-omnibook-x14.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-lenovo-yoga-slim7x.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-microsoft-romulus13.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-microsoft-romulus15.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-qcp.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-crd.dtb
-+x1e001de-devkit-el2-dtbs	:= x1e001de-devkit.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e001de-devkit.dtb x1e001de-devkit-el2.dtb
-+x1e78100-lenovo-thinkpad-t14s-el2-dtbs	:= x1e78100-lenovo-thinkpad-t14s.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e78100-lenovo-thinkpad-t14s.dtb x1e78100-lenovo-thinkpad-t14s-el2.dtb
-+x1e78100-lenovo-thinkpad-t14s-oled-el2-dtbs	:= x1e78100-lenovo-thinkpad-t14s-oled.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e78100-lenovo-thinkpad-t14s-oled.dtb x1e78100-lenovo-thinkpad-t14s-oled-el2.dtb
-+x1e80100-asus-vivobook-s15-el2-dtbs	:= x1e80100-asus-vivobook-s15.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-asus-vivobook-s15.dtb x1e80100-asus-vivobook-s15-el2.dtb
-+x1e80100-crd-el2-dtbs	:= x1e80100-crd.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-crd.dtb x1e80100-crd-el2.dtb
-+x1e80100-dell-xps13-9345-el2-dtbs	:= x1e80100-dell-xps13-9345.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-dell-xps13-9345.dtb x1e80100-dell-xps13-9345-el2.dtb
-+x1e80100-hp-omnibook-x14-el2-dtbs	:= x1e80100-hp-omnibook-x14.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-hp-omnibook-x14.dtb x1e80100-hp-omnibook-x14-el2.dtb
-+x1e80100-lenovo-yoga-slim7x-el2-dtbs	:= x1e80100-lenovo-yoga-slim7x.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-lenovo-yoga-slim7x.dtb x1e80100-lenovo-yoga-slim7x-el2.dtb
-+x1e80100-microsoft-romulus13-el2-dtbs	:= x1e80100-microsoft-romulus13.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-microsoft-romulus13.dtb x1e80100-microsoft-romulus13-el2.dtb
-+x1e80100-microsoft-romulus15-el2-dtbs	:= x1e80100-microsoft-romulus15.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-microsoft-romulus15.dtb x1e80100-microsoft-romulus15-el2.dtb
-+x1e80100-qcp-el2-dtbs	:= x1e80100-qcp.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-qcp.dtb x1e80100-qcp-el2.dtb
-+x1p42100-crd-el2-dtbs	:= x1p42100-crd.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-crd.dtb x1p42100-crd-el2.dtb
-diff --git a/arch/arm64/boot/dts/qcom/x1-el2.dtso b/arch/arm64/boot/dts/qcom/x1-el2.dtso
-new file mode 100644
-index 0000000000000000000000000000000000000000..380441deca65d1b443962fbe6151f4aadd918383
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/x1-el2.dtso
-@@ -0,0 +1,52 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+
-+/*
-+ * x1 specific modifications required to boot in EL2.
-+ */
-+
-+/dts-v1/;
-+/plugin/;
-+
-+/* We can't and don't need to use zap shader in EL2 as linux can zap the gpu on it's own. */
-+&gpu_zap_shader {
-+	status = "disabled";
-+};
-+
-+/*
-+ * When running under Gunyah, this IOMMU is controlled by the firmware,
-+ * however when we take ownership of it in EL2, we need to configure
-+ * it properly to use PCIe.
-+ *
-+ * Additionally, it seems like ITS emulation in Gunyah is broken so we
-+ * can't use MSI on some PCIe controllers in EL1. But we can add them
-+ * here for EL2.
-+ */
-+&pcie3 {
-+	iommu-map = <0 &pcie_smmu 0x30000 0x10000>;
-+	msi-map = <0 &gic_its 0xb0000 0x10000>;
-+};
-+
-+&pcie4 {
-+	iommu-map = <0 &pcie_smmu 0x40000 0x10000>;
-+};
-+
-+&pcie5 {
-+	iommu-map = <0 &pcie_smmu 0x50000 0x10000>;
-+	msi-map = <0 &gic_its 0xd0000 0x10000>;
-+};
-+
-+&pcie6a {
-+	iommu-map = <0 &pcie_smmu 0x60000 0x10000>;
-+};
-+
-+&pcie_smmu {
-+	status = "okay";
-+};
-+
-+/*
-+ * The "SBSA watchdog" is implemented in software in Gunyah
-+ * and can't be used when running in EL2.
-+ */
-+&sbsa_watchdog {
-+	status = "disabled";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 7a3e75294be545a719f3543a8b874900f7c78f99..c04a2615ca77629b27fbd6fd98f1a25a3b6697db 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -8163,7 +8163,7 @@ frame@1780d000 {
- 			};
- 		};
+In Qualcomm SoCs, firmware loading for Serial Engines (SE) in the QUP
+hardware has traditionally been managed by TrustZone (TZ). This setup
+handled Serial Engines(SE) assignments and access control permissions,
+ensuring a high level of security but limiting flexibility and
+accessibility.
  
--		watchdog@1c840000 {
-+		sbsa_watchdog: watchdog@1c840000 {
- 			compatible = "arm,sbsa-gwdt";
- 			reg = <0 0x1c840000 0 0x1000>,
- 			      <0 0x1c850000 0 0x1000>;
+This limitation poses a significant challenge for developers who need more
+flexibility to enable any protocol on any of the SEs within the QUP
+hardware.
+ 
+To address this, we are introducing a change that opens the firmware
+loading mechanism to the Linux environment. This enhancement increases
+flexibility and allows for more streamlined and efficient management. We
+can now handle SE assignments and access control permissions directly
+within Linux, eliminating the dependency on TZ.
+ 
+We propose an alternative method for firmware loading and SE
+ownership/transfer mode configuration based on device tree configuration.
+This method does not rely on other execution environments, making it
+accessible to all developers.
+ 
+For SEs used prior to the kernel, their firmware will be loaded by the
+respective image drivers (e.g., Debug UART, Secure or trusted SE).
+Additionally, the GSI firmware, which is common to all SEs per QUPV3 core,
+will not be loaded by Linux driver but TZ only. At the kernel level, only
+the SE protocol driver should load the respective protocol firmware.
+---
+v3 -> v4: 
+
+- Drop patch 1 of the v3 series as it has been reviewed and merged.
+- Update the qcom,gsi-dma-allowed property name to qcom,enable-gsi-dma.
+- Remove the full stop from the title.
+- Add a reference to the common schema YAML in the I2C, SPI, and SERIAL
+  YAML files in a single patch and drop the individual patches for protocol YAML.
+- Update the commit message.
+- Resolve kernel test robot warnings.
+- Add a multiline comment in the Copyright section.
+- Remove valid_seg_size and geni_config_common_control functions and add the code inline.
+- Rename read_elf function to geni_read_elf.
+- Add a firmware size check.
+- Assign *pelfseg after finding a match.
+- Break one large condition check into multiple checks to improve code readability.
+- Remove return type documentation for void functions.
+- Update error messages to be more descriptive.
+- Correct indentation.
+- Rename geni_flash_fw_revision function to geni_write_fw_revision.
+- Remove __func__ from all print statements.
+- Move resource_on to the appropriate section after parsing the firmware file.
+- Update variable names and function arguments as suggested.
+- Use FIELD_GET, FIELD_PREP, and GENMASK.
+- Use memcpy_toio() instead of memcpy.
+- Remove duplicate registers and bitmask macros.
+- Remove rsc struct and add required variables in geni_se struct.
+- Add a patch dependency note.
+
+v3 Link: https://lore.kernel.org/linux-arm-msm/20250303124349.3474185-1-quic_vdadhani@quicinc.com/ 
+
+v2 -> v3:
+
+- Add a new YAML file for QUP peripheral-specific properties for I2C, SPI, and SERIAL buses.
+- Drop the 'qcom,xfer-mode' property and add the 'qcom,gsi-dma-allowed' property in protocol-specific YAML.
+- Add a reference for the QUP peripheral shared YAML to protocol-specific YAML.
+- Enhance error handling and remove redundant if conditions in the qcom-geni-se.c driver.
+- Remove the ternary operator in the qup_fw_load function.
+- Update function descriptions and use imperative mood in qcom-geni-se.c
+- Load firmware during probe only if the protocol is invalid.
+
+v2 Link: https://lore.kernel.org/linux-kernel/20250124105309.295769-1-quic_vdadhani@quicinc.com/ 
+ 
+v1 -> v2:
+
+- Drop the qcom,load-firmware property.
+- Remove the fixed firmware path.
+- Add the 'firmware-name' property in the QUP common driver.
+- Add logic to read the firmware path from the device tree.
+- Resolve kernel test robot warnings.
+- Update the 'qcom,xfer-mode' property description.
+
+v1 Link: https://lore.kernel.org/linux-kernel/20241204150326.1470749-1-quic_vdadhani@quicinc.com/ 
+---
+Viken Dadhaniya (5):
+  dt-bindings: qcom: se-common: Add QUP Peripheral-specific properties
+    for I2C, SPI, and SERIAL bus
+  soc: qcom: geni-se: Add support to load QUP SE Firmware via Linux
+    subsystem
+  i2c: qcom-geni: Load i2c qup Firmware from linux side
+  spi: geni-qcom: Load spi qup Firmware from linux side
+  serial: qcom-geni: Load UART qup Firmware from linux side
+
+ .../bindings/i2c/qcom,i2c-geni-qcom.yaml      |   1 +
+ .../serial/qcom,serial-geni-qcom.yaml         |   1 +
+ .../soc/qcom/qcom,se-common-props.yaml        |  26 ++
+ .../bindings/spi/qcom,spi-geni-qcom.yaml      |   1 +
+ drivers/i2c/busses/i2c-qcom-geni.c            |   8 +-
+ drivers/soc/qcom/qcom-geni-se.c               | 404 +++++++++++++++++-
+ drivers/spi/spi-geni-qcom.c                   |   6 +
+ drivers/tty/serial/qcom_geni_serial.c         |   8 +-
+ include/linux/soc/qcom/geni-se.h              |  31 +-
+ include/linux/soc/qcom/qup-fw-load.h          |  89 ++++
+ 10 files changed, 551 insertions(+), 24 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,se-common-props.yaml
+ create mode 100644 include/linux/soc/qcom/qup-fw-load.h
 
 -- 
-2.49.0
+2.34.1
 
 
