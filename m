@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-56682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08A19AA8647
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 May 2025 13:52:37 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A53C3AA8645
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 May 2025 13:52:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05E1B1894AE5
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 May 2025 11:52:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 87EFA7AAE04
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 May 2025 11:51:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC3691B4242;
-	Sun,  4 May 2025 11:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFE911ADC7B;
+	Sun,  4 May 2025 11:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="YYK0qPwg"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="bRs2JqMc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5331B3955
-	for <linux-arm-msm@vger.kernel.org>; Sun,  4 May 2025 11:51:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6B12F22
+	for <linux-arm-msm@vger.kernel.org>; Sun,  4 May 2025 11:52:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746359521; cv=none; b=LvvUhlOrv/IVJqBlsW8+l+Y3NGUshCh2+3/JcMozQZyRyHxgLLQEVbJ7gX3nj0sGrjKzYhLJtly+qyyZP0MjU6rXSOe7xzDaUcx7DPmcYpOxnw7pKllAH21UryssyJH6oQKL24ksvfpQC+3q6QfkHtoVLs3Gph+1B3xS2S2Bz6g=
+	t=1746359527; cv=none; b=FrCfnnm/AiW/6A34GXzZyxhP60nj/JN+9rZRVKoNI9zcze664YZ6+tRZsUfNqTnQZvy241G2GrybzG5Y8OWXHfXO5sj+5AO5Or+9AgsLLp0c3jlgTwFSRIA6GEHLibyiMoxTJGeXoVlNWuG84xYWHNldvtRkoEoA+c7us9uxKRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746359521; c=relaxed/simple;
-	bh=bOvRiIygzE0+Fg2nNN0/XwHOfMzhoSwoLpxUJMB84O0=;
+	s=arc-20240116; t=1746359527; c=relaxed/simple;
+	bh=96P1rrM5+jZou0xAjm0eLJaNz1qcRnedMxoeTatPzSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9K86Kk62aspdrqu83Waxvfl2WloJWOwaxcPnRxxqtErYAWXeglRB+YrBX8IcydF8MVddCoZ95X/p9Gx8IYpH1+N3ALAetwbJ0VUuQg0Jn8pWVesyZ7Pc4EvOB0zvWbJI29CPp5w45VP5FWjX/5u+NilGfCIBU6kv20O+PyipiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=YYK0qPwg; arc=none smtp.client-ip=91.218.175.171
+	 MIME-Version; b=elGl1g9UCFCU3bLQcthBCgE/YHRZKlB+C24x1WbcXNzJJu8P7CIahSbprDkAjBJM9+o0vvI/E0NamhvI6UTDeOsN+g6z+pEuFOLU9kjyc55l1ZFTyAfy4TnZWUncuFuU60OEbipPr5UFZwhOeu+/MiaA1zqAPge3ugVOlYvZDE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=bRs2JqMc; arc=none smtp.client-ip=91.218.175.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=postmarketos.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1746359518;
+	s=key1; t=1746359523;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=oUtG6/HQyiWXydDfn2ZhXjq3VKEFyoNl3hSf5snvTgQ=;
-	b=YYK0qPwgJOJStOhtWOoYbsxGrVw8V/BAaoqNViHzdqODJV/Y7j+p+1iu2NIelao0r5AD40
-	7OBNaY6cSdJBR0v8N6Jtz3HLPu0yJtVHYRfdkWsAMjvqQit6flPKwzjbH6nJ6UoNZst2Kw
-	MKxzYzNYPmfzUlpjDa3l3QDNPu3Aitr9DX+xCVDa0xwyMa9WO2bw4Bykt7kBhPifgXMEL7
-	ir+Dyk9qItOEGvlbRpv6jvFjm5oGtnHw5kXzChMWjxCYUBSsAj+cexPHTb3uj8fTEl4ITE
-	MAuRNuFfQL8CG31FU2FBf46/+Z2IwMaY0Q63brDal2lH309VBb9ulWVF+12XmQ==
+	bh=NyDgShD5L9byu08pC7acRvCQ/bNI7rSNU5omOW+7/l4=;
+	b=bRs2JqMcNsoTLP9J18s/1NXieC/DyQAB7h7pCFcNF6KaRWM5NPynNDrQZpm6UUDUOtU30U
+	CuIS82Ea38+B/qm7d+KXn/fgHBXpQhJmfQUiohkSaF2liG4meb/Srh08K2uMs8MMLsw1YE
+	Lhmt8+uqNH5m2JYPNyMPAHPz55wx0k6cSoUfuqisgLcuUrg7rQCAMeoF7tXfUd+MZj6IFK
+	jGumCcTgv2ehrdacsgtxBWxm7W5UdfQkk1rNuOhb3lozkz33wSHnpSUmCw6h3XtE+c+NIW
+	gQRh/OLBL5Lu9bybwKUOMizr2Am/xIgaNbcWJRzH1A1GNfE19bOVE0J9z1pK1g==
 From: Alexey Minnekhanov <alexeymin@postmarketos.org>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
@@ -59,9 +59,9 @@ Cc: Dang Huynh <danct12@riseup.net>,
 	linux-kernel@vger.kernel.org,
 	~postmarketos/upstreaming@lists.sr.ht,
 	Alexey Minnekhanov <alexeymin@postmarketos.org>
-Subject: [PATCH 2/3] arm64: dts: qcom: sdm660-lavender: Add missing USB phy supply
-Date: Sun,  4 May 2025 14:51:19 +0300
-Message-ID: <20250504115120.1432282-3-alexeymin@postmarketos.org>
+Subject: [PATCH 3/3] arm64: dts: qcom: sda660-ifc6560: Fix dt-validate warning
+Date: Sun,  4 May 2025 14:51:20 +0300
+Message-ID: <20250504115120.1432282-4-alexeymin@postmarketos.org>
 In-Reply-To: <20250504115120.1432282-1-alexeymin@postmarketos.org>
 References: <20250504115120.1432282-1-alexeymin@postmarketos.org>
 Precedence: bulk
@@ -73,28 +73,37 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-Fixes the following dtbs check error:
+If you remove clocks property, you should remove clock-names, too.
+Fixes warning with dtbs check:
 
- phy@c012000: 'vdda-pll-supply' is a required property
+ 'clocks' is a dependency of 'clock-names'
 
-Fixes: e5d3e752b050e ("arm64: dts: qcom: sdm660-xiaomi-lavender: Add USB")
+Fixes: 34279d6e3f32c ("arm64: dts: qcom: sdm660: Add initial Inforce IFC6560 board support")
 Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
 ---
- arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-index 0b4d71c14a772..a9926ad6c6f9f 100644
---- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-@@ -107,6 +107,7 @@ &qusb2phy0 {
- 	status = "okay";
- 
- 	vdd-supply = <&vreg_l1b_0p925>;
-+	vdda-pll-supply = <&vreg_l10a_1p8>;
- 	vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
+diff --git a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+index 4a51076890694..74cb29cb7f1a6 100644
+--- a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
++++ b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+@@ -175,6 +175,7 @@ &blsp1_dma {
+ 	 * BAM DMA interconnects support is in place.
+ 	 */
+ 	/delete-property/ clocks;
++	/delete-property/ clock-names;
  };
  
+ &blsp1_uart2 {
+@@ -187,6 +188,7 @@ &blsp2_dma {
+ 	 * BAM DMA interconnects support is in place.
+ 	 */
+ 	/delete-property/ clocks;
++	/delete-property/ clock-names;
+ };
+ 
+ &blsp2_uart1 {
 -- 
 2.49.0
 
