@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-56691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50789AA86E3
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 May 2025 16:47:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D9DBAA86E9
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 May 2025 16:47:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE8F63BA84F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 May 2025 14:46:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1B15D3B66B7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 May 2025 14:47:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BA9C1EB18E;
-	Sun,  4 May 2025 14:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E62D1EFFB5;
+	Sun,  4 May 2025 14:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HgwSYyTE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GMG+Epy2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09631E5215;
-	Sun,  4 May 2025 14:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1587B1E7C11;
+	Sun,  4 May 2025 14:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746369951; cv=none; b=LkDDp+GMXkH9zQnxcW6OU3bAJ+oi2gOybcqGjawRdxJFVmwOJKAAhdPm11P1ZcpTg8lZgPZ6EUEC7r1fLRyz7EyYv7D2RlPoNU5uhPk4UHN9+E3EDWBO6RK/2zL4V0zDsozFBlazMFAyLWU7C+oxBm+H0xtltQOuQUHI4ZDIcuc=
+	t=1746369952; cv=none; b=r91JqF8FjbDfDd0iIQ7QchULX/rCb2DJYOoiBVVKl7bSFxSfTDNYBWo6N3Mh5OGeCCmxSYc85IBpGpDNK/mi3RNxGEn5JzTxutlahzmzNQZvh0cclxB3qT7l9LkltwPkTEPfcSR4QmhcNcZ5nl3oE03r6HWau3sbHBRS3h9yG/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746369951; c=relaxed/simple;
-	bh=9jGBgw7X4dT0+5FklcYtTpf6XdRbcwhpMrfLuBnypSE=;
+	s=arc-20240116; t=1746369952; c=relaxed/simple;
+	bh=AkBmi3smSWITHl2bmr29dOmbgvhXHgDHeSc21unzXPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzLtgtoLXXNVMCHLzO1oOHyYnZ1wk3oQ1z3IfNwGyGCO43Phqhj98m3uBnN/8q67WZr1/JlEUiJ6CIIdcj9uQzxKOHx+Vp5Jv9ISVXmY3T1kvUM1cRdvnSMHI38TgL6kE24sR+gsPo9a8jVEzRVbZhUUPTJfywkrltNhnK5ygNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HgwSYyTE; arc=none smtp.client-ip=209.85.208.54
+	 MIME-Version; b=TjDtcU3WTwp4Tb0YYBaONucKBLPJe5w9iUhrlJLHRbzTDhKz0P9Fsw0CNDvBh4IdlKeaQ7YY6TLPjAW6lZKFFdC38Zv34SBUyfiTOjFNvhN0Mhl16ipOA2elfjjeDz6n9IkdVeAeF+XzdGarywlNOSzFimS4Y4mCD3z9rrdFF5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GMG+Epy2; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5f6222c6c4cso5095937a12.1;
-        Sun, 04 May 2025 07:45:49 -0700 (PDT)
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5fab81d6677so1710949a12.1;
+        Sun, 04 May 2025 07:45:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746369948; x=1746974748; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746369949; x=1746974749; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RbJk9bz6EFQthks8Ev5pNh2F644o6dRNVZmRCAlT3D8=;
-        b=HgwSYyTEUY1CmQzmkz46r+rbvd3+zFZm/3fX48L7G87K8i1hiKDq8ENOiuX4W7vC1T
-         hG4U51xbqofIN9QFIqqjt7CrH63WE6CHvdY4m18FER5xrgfB1+SZNKMnDsubJf5wxme6
-         o1PPV6KReghIPKX9vHGAPdg91RP9RPTVZC2RifMrf6GDWSHficNqmUP2A7rQ+KlG2H0j
-         0UeIDs8BSYNd072TJwcJnO5BnqShAAf1qQNTCGCvO1qHMbX//lyeRLXXzJL1WM6Pq4Iy
-         ExJj00yyBP9srDLEOdVQKkUBltFJc9L9Ah5GMKbEQO2tBMCQNNtzIPRlYwZtBVk+YkVo
-         fTWg==
+        bh=H8Z64jhMWr4f68K+GRZRK+Jca5FzqJ7OziWBl/OdXKA=;
+        b=GMG+Epy2OidA6r7ZszXaaj0iMjcHITwKoU9N6pivnC6P+yT7h+dVIRLcuvG2WOOtjP
+         qMEDmIUfOvhBVZKziZCnQ0jqtplHpKpLuRw2i6BvHEFBAY0ySy8/Z9qAB8YeybAE6uDF
+         vFoBBEAnYVPUaPTCV6ZKLe//Z9O0rSzThaGVwrm9NAGPHOSW40iJw57zb5aETzpWmoos
+         VZAZpjMnJdC3QqqCAXODNWQm7PfTUjIBgnBDCXCCnjorgpaTX0bihoTW3Yu1leF5aItC
+         G+sz/fkbO0QGypyIc/uq6oHYDjPvudHUhWPnYYeq6PYjSzIdXQICJKCg03mfBGtN20ez
+         hmtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746369948; x=1746974748;
+        d=1e100.net; s=20230601; t=1746369949; x=1746974749;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RbJk9bz6EFQthks8Ev5pNh2F644o6dRNVZmRCAlT3D8=;
-        b=EWTnHKWSbEeuzB+rydXj0W6dsy/RRulH5J1OeLAmMxb6GpiklGo93kq5e7lGHz3V0D
-         M75ZsBHtrJAMuR5rURKzI/ddmr6x28LmeXILZS7TrcCbJj642uDXMroHoxUD8Rq4zG3J
-         dWwtPpSxzLpR1YtH2+t8cg9RYhc0Jk2X48CxNfL+yaiZCWxQ5PeAZNtCF/2NWAAioUJV
-         Kng0q/xWeFBntzDcFXhyid3h55RXJfsG6g3RGPJXjXL9VKp36sVlScQMdx56/b2NgdUq
-         xFMVd/If2JKawl2wovdumuOdM0fPoI0jzqk1F7Mgvc/G0PSUPro9qm8yBOqP+Fx/C58F
-         NCCA==
-X-Forwarded-Encrypted: i=1; AJvYcCVXQRXtlWtFrrOwItynewl/LFMs478rQTpY7jh6LiMrnoS/Bgelir3FRZSE2K0xQVw1eYbWSwAVt+Gw@vger.kernel.org, AJvYcCVx54LnzNuX1YLRNCNuAcQAvIbVk2rsabT0wdKGKtmJ5ehBsuczZTJLUyNsPz0rhpRGQzuOjb5P6MrHHGSRuA==@vger.kernel.org, AJvYcCXD7gtVr9dC4H9qZ5udYNYxmvq5TgBrB3ybZtvkeJ2LCoi7uMOEkTGNb9SHS2EhR/ZyCP9tZmw2NXhNEcDU@vger.kernel.org, AJvYcCXM6ilhd0EUo+sTTjVI1d9SbritDNknIaLea+nkvs0bkRa8Mj04/I2t3uUH1b9HeGEX43yAspRETtw3WkSMW/jU4xE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw72X2222zwA3AKjfyu03Uqpl+QMSHGUN39XpM4qFILkKWurQQW
-	bVJbi5StgGtwYj9IFnhG/08NhI02OTRt4Flc1MpJ8LD791y4hi03
-X-Gm-Gg: ASbGncvb0e05jb8TLS+LJifpL4Wi+vkM9su/p0pXs2DD0uhlqm+txCh8dQvY8jW4FKy
-	GdpOyWARRWZ/nSUragyuSoKpAfMcr8Pi+DTm+tvVXW4nc7F+013DikiWMBmMp58RR7eK5kCtY8n
-	ZEN+5i24JKlNz8cIxn3csZ5IMdqoQPEIbwin+dn0n88MNVKCZzyUQr4qE3uB78YQk48plTcaeIO
-	2LNXJr+VplDdWGnMn+hLSsKl5ODzyx6AcEOPhwy13f5A5X3HcpTa87MNXisjWNo7u4u61863rZE
-	79h8O9LECWIRaYWNESIJGaVjr/o2FyleeMJEggn2PE4EqIhXppjQObKy3j44HIOS3nVOahZhsoO
-	lBZx2ef1EBJ1pM2hn
-X-Google-Smtp-Source: AGHT+IE7vTq91Ziy5tdSjRautreu12/lKKGXLd23gtOnTMb42Z27SvBFllDzeWoPOC2edcZgczXudQ==
-X-Received: by 2002:a05:6402:5250:b0:5fa:afe9:848 with SMTP id 4fb4d7f45d1cf-5fab0576388mr3103899a12.9.1746369947837;
-        Sun, 04 May 2025 07:45:47 -0700 (PDT)
+        bh=H8Z64jhMWr4f68K+GRZRK+Jca5FzqJ7OziWBl/OdXKA=;
+        b=fpKwicw/YcM6XqF4TRG0PBtUmj7VX8LlOjTKrUQLcc4uC7lzNloLviBGAV4MBK1x86
+         qNKSbCp2yFFs5J4t1wSzoQTYzk0Bd0Bdlg8wwMDXhNSnjNendO6FMGlo0LJFGs49s7jL
+         BaGCFqxDDCBfRIOXhjMzdHXoZvitM2pVWW/E8xkB4MUF3pNaC/sSacghTbRfwvyyUjsV
+         XZAWyk0RUex+9nfNycWuirZWdbP8vmaHvBPPrVs8Z2BqYULsfIg0y1QTI9dL8o4/eSll
+         Qu2To8m73v4t0sIBVqjT2JquQKRerl+U2MkkeXyQd82vM+ykyDuGo1vCRdGo9E6a3Iyo
+         yKxw==
+X-Forwarded-Encrypted: i=1; AJvYcCU7vpcm3alyjgYX5Bt0bKQBYSw6CtuVygR3S6wOEFuTCb+H0t5ZuJmn0tfjIKDxZKDaWZKfTUBeQ95VYc8afA==@vger.kernel.org, AJvYcCUVL68z9XqWno4SsQn0xuXEHh/zmeyBK8Jsfq45t/20jlyRxKFcM13+AIZB06RwZqy0s6qL1vxOmU91Bnzv@vger.kernel.org, AJvYcCW50F8zPYRCqsiqC36H5Mweynf1QOSyONwB3D+8JuZfKwm5zwD8mnhxHONFtT6vRhz2aAX8YtaFL7w2yDw/sOdpsQA=@vger.kernel.org, AJvYcCXYxPZFi7As79vAglVFswV637usGCfzEVSoXeBr2PPV/46UIFsTbReCL0vtPsqkcst9XoJHkq80HZvh@vger.kernel.org
+X-Gm-Message-State: AOJu0YwnExyVlnAYDigNW8f3kaX0t8MlibRT4jQgJiL/J+aFdD02xpRh
+	vQ2sy3CcnA3tNYeA0dPblRbw/MnlCsczoqnpdizzEk8XA8ExWnAN
+X-Gm-Gg: ASbGncusZfNm0Kz7TLltt0a1Iasc+YOCirwDSxmcRdFyKrMsTghm5siiCANHpANZoiW
+	ROpwaG8r33E0zK2DK+lZDY8RxZtKbb98aSi9N24lLmkdyGigKD4JJcPbWcAY4wJbyjPNLYAWE4l
+	zDCCpuWBl/SFaOpKkNt7qRqydgkCHGP33YzkJZvEgQ6di6XBUXbkyLqktPOJlPhXgcCE3PJ85FO
+	ORzUXxQIOqDLv9yanWejrQ42JhYXd3MT4yRjeI6Jp9hazBx5iu54wz1W1pnSLvftIGyiImfgQCx
+	n7Hsgb0pxzyLymvsLlquXHSnCuHmJvVzMaSy2uk0qwhiEYfR3jRt8B2+8xDngIJ9H0FvgCvfBAu
+	cALA7SaeYRHGX4p5ehez9jABOqWA=
+X-Google-Smtp-Source: AGHT+IHLAPcmE4D8uUqNIDaDTGoj/0IoKeVQe1JZfKk7Q4vsF1Q3KnS4KP0HYO6oATvrVjuDaOVFJA==
+X-Received: by 2002:a05:6402:5cb:b0:5f6:20c4:3b0d with SMTP id 4fb4d7f45d1cf-5fab0576293mr3229682a12.8.1746369949176;
+        Sun, 04 May 2025 07:45:49 -0700 (PDT)
 Received: from ivaylo-T580.. (91-139-201-119.stz.ddns.bulsat.com. [91.139.201.119])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5faecf59d31sm1147258a12.77.2025.05.04.07.45.46
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5faecf59d31sm1147258a12.77.2025.05.04.07.45.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 May 2025 07:45:47 -0700 (PDT)
+        Sun, 04 May 2025 07:45:48 -0700 (PDT)
 From: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Kishon Vijay Abraham I <kishon@kernel.org>,
@@ -89,9 +89,9 @@ Cc: linux-phy@lists.infradead.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v5 07/10] phy: phy-snps-eusb2: make reset control optional
-Date: Sun,  4 May 2025 17:45:24 +0300
-Message-ID: <20250504144527.1723980-8-ivo.ivanov.ivanov1@gmail.com>
+Subject: [PATCH v5 08/10] phy: phy-snps-eusb2: refactor reference clock init
+Date: Sun,  4 May 2025 17:45:25 +0300
+Message-ID: <20250504144527.1723980-9-ivo.ivanov.ivanov1@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250504144527.1723980-1-ivo.ivanov.ivanov1@gmail.com>
 References: <20250504144527.1723980-1-ivo.ivanov.ivanov1@gmail.com>
@@ -103,27 +103,97 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Not all SoCs expose the reset line controls to the kernel, so make them
-optional.
+Instead of matching frequencies with a switch and case, introduce
+a table-based lookup. This improves readability, reduces redundancy,
+and makes it easier to extend support for additional frequencies in
+the future.
 
 Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/phy/phy-snps-eusb2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/phy-snps-eusb2.c | 61 +++++++++++++++++++-----------------
+ 1 file changed, 32 insertions(+), 29 deletions(-)
 
 diff --git a/drivers/phy/phy-snps-eusb2.c b/drivers/phy/phy-snps-eusb2.c
-index 4094786d2..f05333901 100644
+index f05333901..8caa62c0b 100644
 --- a/drivers/phy/phy-snps-eusb2.c
 +++ b/drivers/phy/phy-snps-eusb2.c
-@@ -408,7 +408,7 @@ static int snps_eusb2_hsphy_probe(struct platform_device *pdev)
- 	if (IS_ERR(phy->base))
- 		return PTR_ERR(phy->base);
+@@ -192,44 +192,47 @@ static void qcom_eusb2_default_parameters(struct snps_eusb2_hsphy *phy)
+ 				    FIELD_PREP(PHY_CFG_TX_HS_XV_TUNE_MASK, 0x0));
+ }
  
--	phy->phy_reset = devm_reset_control_get_exclusive(dev, NULL);
-+	phy->phy_reset = devm_reset_control_get_optional_exclusive(dev, NULL);
- 	if (IS_ERR(phy->phy_reset))
- 		return PTR_ERR(phy->phy_reset);
++struct snps_eusb2_ref_clk {
++	unsigned long freq;
++	u32 fsel_val;
++	u32 div_7_0_val;
++	u32 div_11_8_val;
++};
++
++static const struct snps_eusb2_ref_clk qcom_eusb2_ref_clk[] = {
++	{ 19200000, FSEL_19_2_MHZ_VAL, DIV_7_0_19_2_MHZ_VAL, DIV_11_8_19_2_MHZ_VAL },
++	{ 38400000, FSEL_38_4_MHZ_VAL, DIV_7_0_38_4_MHZ_VAL, DIV_11_8_38_4_MHZ_VAL },
++};
++
+ static int qcom_eusb2_ref_clk_init(struct snps_eusb2_hsphy *phy)
+ {
++	const struct snps_eusb2_ref_clk *config = NULL;
+ 	unsigned long ref_clk_freq = clk_get_rate(phy->ref_clk);
+ 
+-	switch (ref_clk_freq) {
+-	case 19200000:
+-		snps_eusb2_hsphy_write_mask(phy->base, QCOM_USB_PHY_HS_PHY_CTRL_COMMON0,
+-					    FSEL_MASK,
+-					    FIELD_PREP(FSEL_MASK, FSEL_19_2_MHZ_VAL));
+-
+-		snps_eusb2_hsphy_write_mask(phy->base, QCOM_USB_PHY_CFG_CTRL_2,
+-					    PHY_CFG_PLL_FB_DIV_7_0_MASK,
+-					    DIV_7_0_19_2_MHZ_VAL);
+-
+-		snps_eusb2_hsphy_write_mask(phy->base, QCOM_USB_PHY_CFG_CTRL_3,
+-					    PHY_CFG_PLL_FB_DIV_11_8_MASK,
+-					    DIV_11_8_19_2_MHZ_VAL);
+-		break;
+-
+-	case 38400000:
+-		snps_eusb2_hsphy_write_mask(phy->base, QCOM_USB_PHY_HS_PHY_CTRL_COMMON0,
+-					    FSEL_MASK,
+-					    FIELD_PREP(FSEL_MASK, FSEL_38_4_MHZ_VAL));
+-
+-		snps_eusb2_hsphy_write_mask(phy->base, QCOM_USB_PHY_CFG_CTRL_2,
+-					    PHY_CFG_PLL_FB_DIV_7_0_MASK,
+-					    DIV_7_0_38_4_MHZ_VAL);
+-
+-		snps_eusb2_hsphy_write_mask(phy->base, QCOM_USB_PHY_CFG_CTRL_3,
+-					    PHY_CFG_PLL_FB_DIV_11_8_MASK,
+-					    DIV_11_8_38_4_MHZ_VAL);
+-		break;
++	for (int i = 0; i < ARRAY_SIZE(qcom_eusb2_ref_clk); i++) {
++		if (qcom_eusb2_ref_clk[i].freq == ref_clk_freq) {
++			config = &qcom_eusb2_ref_clk[i];
++			break;
++		}
++	}
+ 
+-	default:
++	if (!config) {
+ 		dev_err(&phy->phy->dev, "unsupported ref_clk_freq:%lu\n", ref_clk_freq);
+ 		return -EINVAL;
+ 	}
+ 
++	snps_eusb2_hsphy_write_mask(phy->base, QCOM_USB_PHY_HS_PHY_CTRL_COMMON0,
++				    FSEL_MASK,
++				    FIELD_PREP(FSEL_MASK, config->fsel_val));
++
++	snps_eusb2_hsphy_write_mask(phy->base, QCOM_USB_PHY_CFG_CTRL_2,
++				    PHY_CFG_PLL_FB_DIV_7_0_MASK,
++				    config->div_7_0_val);
++
++	snps_eusb2_hsphy_write_mask(phy->base, QCOM_USB_PHY_CFG_CTRL_3,
++				    PHY_CFG_PLL_FB_DIV_11_8_MASK,
++				    config->div_11_8_val);
++
+ 	snps_eusb2_hsphy_write_mask(phy->base, QCOM_USB_PHY_CFG_CTRL_3,
+ 				    PHY_CFG_PLL_REF_DIV, PLL_REF_DIV_VAL);
  
 -- 
 2.43.0
