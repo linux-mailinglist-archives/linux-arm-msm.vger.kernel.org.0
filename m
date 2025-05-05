@@ -1,206 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-56878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38743AAB553
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 07:26:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9865AAB565
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 07:28:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 80CBF4A0542
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 05:22:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5069A1BA196C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 05:24:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F79F347341;
-	Tue,  6 May 2025 00:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B12749C668;
+	Tue,  6 May 2025 00:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CmfqJu9e"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nSbfkM6J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400412F5FAA;
-	Mon,  5 May 2025 23:17:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC9F2F663F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 23:17:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746487066; cv=none; b=oo96fhoByEye32jlJHwibmcYSZZyA3Q1Duc/07MQA3srWit0XDEP7RthjB372vWhcpXVw4H/SM/lfcuD29mU9o0SY+JZ9gpKnRFNLBW2peAR8UZwgW0EdZyuNhCupSGRaJiawf55dmjkg4c8dFZwo2ZQQv8qCtGxJWCqgsOwsKU=
+	t=1746487082; cv=none; b=tpXbkCLFtubaHGqvQSG7CXx6/wI4FKw9QmOaI71VUsd9rwH47CL9hpjwwoJOH9491h7ry9l++YklcYsTdRG2aVT2wB5dXQW2WnMczTrrB3xdGB8K/Dt6EV4sztc46xxoFsh4bb4gVSDGxmMJGcI0mUnUEOqX8rT+5lziCgTFTsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746487066; c=relaxed/simple;
-	bh=HC6wwtEz/GY2edEJloKQarEvilDGx1/QZ8XacGT7Pbo=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=P2RnZvRaQA6xzx5nJj2O340CYzWriy7w0mky+GWtmim6BdisMEqdxizHdzMHF4t+VdNvgBLqO9J/o5xQtRJZvtWAozZpt3bb0KrIR+7t17Ehr8cRdFnmw5bPI5VsdLIk5wlXUeOI2rmQY0q8ujLOBq52y8S/3E9JIFAzBdLtVd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CmfqJu9e; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC30C4CEE4;
-	Mon,  5 May 2025 23:17:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746487064;
-	bh=HC6wwtEz/GY2edEJloKQarEvilDGx1/QZ8XacGT7Pbo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CmfqJu9eF7TStx936VTKXZuvL5ehNi0pS9ItwZe0KlRsUmMfFyV40Lxm8YoYj+QEL
-	 crnVtfJjJX2JcnORfLd7bsgIba5gS9KtnOuy98f+QwQN3PhPwBveKULjubhJLT1oTF
-	 Hhz7c9k+IaScfKC/hKh0NJh1lOj9sW9w2xmSQ6dsV0PuChzYa+n49Ngnb4bFtIWM6I
-	 eGGSmdMYJH+jmjCjrYFvguyoTleDKGtmqpfubTHtWO4LVnXssZXZb/Rtsuj6UFKSEh
-	 qDd6f/NXgJxmbrnmkkBgjPTm2miYR2RD4EtbMpDTkLU6R0MMymCIWMEeGfTp5Q+F79
-	 wrOEkHejpElzA==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Depeng Shao <quic_depengs@quicinc.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>,
-	rfoss@kernel.org,
-	todor.too@gmail.com,
-	bryan.odonoghue@linaro.org,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 135/153] media: qcom: camss: csid: Only add TPG v4l2 ctrl if TPG hardware is available
-Date: Mon,  5 May 2025 19:13:02 -0400
-Message-Id: <20250505231320.2695319-135-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250505231320.2695319-1-sashal@kernel.org>
-References: <20250505231320.2695319-1-sashal@kernel.org>
+	s=arc-20240116; t=1746487082; c=relaxed/simple;
+	bh=8ZrLOI3/k1STjvSE8FjnfiooIAW0suwqXfzGYLc3uAw=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=jK5eiD8LPdDPGefAxtucieJqaQN4POd2WMCH7NZ8qPEmsvL6x/1bGDVA51WNf2MYO6jveX6thKcM20RwhyyG7ciNEBpS23r4wnp6It7g8YD9FPvip8d0eQNmTbWYzYQr58x7X5x4SwXRr2dnHu2VzRXviyUs5TWmcoHgQQdteTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nSbfkM6J; arc=none smtp.client-ip=209.85.214.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-2241e7e3addso45206745ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 16:17:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1746487079; x=1747091879; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tp3hEaccs5KLjus+u7lZyGvplQzD1hJyVDYNNOcIobc=;
+        b=nSbfkM6JLSISQKjDshCg9pN8pIzihq0mRaYyGffl36JcLy8OXR/MdPoCxr9yUQUVFG
+         wppT7mBxe5o6cetBcYxvQ8S7XkXQ1qsHNwbWAi0M5WZK210SVqMdpa75IK58bbCMDJ9B
+         50UkSHCmt1k3HrGxWzgdozyMwZGxDwnbfhwihvpE5ylzicGebvK0PBmrFit+HUzTLU/8
+         UwwGhIqtNTDXaxkpVbKQTImpRO1B0CdwA0fYB1hTRLkGXgUFSsKzMdLVL3dXAVibp4qH
+         rtGZmJ5s1qBk2ryGo6/K58np5H+gQD7rUvVq4YD76gPru4FZvfpnq63gvn0P+iaKOmkw
+         xUvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746487079; x=1747091879;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tp3hEaccs5KLjus+u7lZyGvplQzD1hJyVDYNNOcIobc=;
+        b=tPYXsXShzLdt2AtOqd/zHrnu1SkmnVpPsEWx948bL8BopYnG4/8klHAoGx5OI+97aX
+         lsMgjxd1FaOsToaeuuCD/ArSUM9f25P0uR59f6penFhPSI3McLWZEQytouLP8yYrttsf
+         r98p08z6OG1NtHlKdh7AbSZ39RgQ947j5NJE8edf90BSgxqzvNXKr7AbE89MKk0u+siA
+         9jxbHeGQfgWjObLFUzs+FrxtEAFRN84Vbu/dKzVeiOOSXqnqfommCiEi48GqNAmfePx5
+         uqvsywjLAxdxWjWs45R2Zc1+qrIOq3Zx0uDNW/OwsAYzUQ1d2nNMX6vnnExoK7H9oeo7
+         1SmA==
+X-Forwarded-Encrypted: i=1; AJvYcCUVMXoyF781ehbunATRQOgyjKF6TmjW1tshvaJBz0ObaTPX0WUvuw50LPXMY+TXe4HyUwrUT6ZYRIHq4vYC@vger.kernel.org
+X-Gm-Message-State: AOJu0YzO6t2r+jA1VHgxs1671bZVGHsgnL5GNsvHF2TU5w/TW6TyW3ZS
+	j/LRSdGvlCTAUwJ5Kpr2Wh41TcNNSQ4Mn2SuyzhTEgIDjRGkdICxkkUvy9Xon3YNIuVyclzjzkf
+	/lQ==
+X-Google-Smtp-Source: AGHT+IGhrX1MtCaIusgQgNQRAcx+0E6rNYmRwUcmQ9PrQBY1+RE7Ktib/G6MWTeo5oHjCygbMWb2/Z516S8=
+X-Received: from plv19.prod.google.com ([2002:a17:903:bd3:b0:220:cd24:457])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:e18b:b0:22e:39f8:61fa
+ with SMTP id d9443c01a7336-22e39f864c8mr6120915ad.34.1746487079377; Mon, 05
+ May 2025 16:17:59 -0700 (PDT)
+Date: Mon, 5 May 2025 16:17:58 -0700
+In-Reply-To: <diqzfrhik62h.fsf@ackerleytng-ctop.c.googlers.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.15.181
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <diqz7c31xyqs.fsf@ackerleytng-ctop.c.googlers.com>
+ <386c1169-8292-43d1-846b-c50cbdc1bc65@redhat.com> <aBTxJvew1GvSczKY@google.com>
+ <diqzjz6ypt9y.fsf@ackerleytng-ctop.c.googlers.com> <7e32aabe-c170-4cfc-99aa-f257d2a69364@redhat.com>
+ <diqzfrhik62h.fsf@ackerleytng-ctop.c.googlers.com>
+Message-ID: <aBlHJvfnV1VPKQzW@google.com>
+Subject: Re: [PATCH v8 06/13] KVM: x86: Generalize private fault lookups to
+ guest_memfd fault lookups
+From: Sean Christopherson <seanjc@google.com>
+To: Ackerley Tng <ackerleytng@google.com>
+Cc: David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, pbonzini@redhat.com, 
+	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
+	pankaj.gupta@amd.com
+Content-Type: text/plain; charset="us-ascii"
 
-From: Depeng Shao <quic_depengs@quicinc.com>
+On Mon, May 05, 2025, Ackerley Tng wrote:
+> > On 03.05.25 00:00, Ackerley Tng wrote:
+> > We want to disable large pages if (using 2M region as example)
+> >
+> > (a) Mixed memory attributes. If a PFN falls into a 2M region, and parts
+> >      of that region are shared vs. private (mixed memory attributes ->
+> >      KVM_LPAGE_MIXED_FLAG)
+> >
+> >   -> With gmem-shared we could have mixed memory attributes, not a PFN
+> >      fracturing. (PFNs don't depend on memory attributes)
+> >
+> > (b) page track: intercepting (mostly write) access to GFNs
+> >
+> 
+> Could you explain more about page track case? 
 
-[ Upstream commit 2f1361f862a68063f37362f1beb400e78e289581 ]
-
-There is no CSID TPG on some SoCs, so the v4l2 ctrl in CSID driver
-shouldn't be registered. Checking the supported TPG modes to indicate
-if the TPG hardware exists or not and only registering v4l2 ctrl for
-CSID only when the TPG hardware is present.
-
-Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- .../media/platform/qcom/camss/camss-csid.c    | 60 +++++++++++--------
- 1 file changed, 35 insertions(+), 25 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index 2a294587ec9d9..5583cbea12f3f 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -219,11 +219,13 @@ static int csid_set_stream(struct v4l2_subdev *sd, int enable)
- 	int ret;
- 
- 	if (enable) {
--		ret = v4l2_ctrl_handler_setup(&csid->ctrls);
--		if (ret < 0) {
--			dev_err(csid->camss->dev,
--				"could not sync v4l2 controls: %d\n", ret);
--			return ret;
-+		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
-+			ret = v4l2_ctrl_handler_setup(&csid->ctrls);
-+			if (ret < 0) {
-+				dev_err(csid->camss->dev,
-+					"could not sync v4l2 controls: %d\n", ret);
-+				return ret;
-+			}
- 		}
- 
- 		if (!csid->testgen.enabled &&
-@@ -298,7 +300,8 @@ static void csid_try_format(struct csid_device *csid,
- 		break;
- 
- 	case MSM_CSID_PAD_SRC:
--		if (csid->testgen_mode->cur.val == 0) {
-+		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
-+		    csid->testgen_mode->cur.val == 0) {
- 			/* Test generator is disabled, */
- 			/* keep pad formats in sync */
- 			u32 code = fmt->code;
-@@ -348,7 +351,8 @@ static int csid_enum_mbus_code(struct v4l2_subdev *sd,
- 
- 		code->code = csid->formats[code->index].code;
- 	} else {
--		if (csid->testgen_mode->cur.val == 0) {
-+		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
-+		    csid->testgen_mode->cur.val == 0) {
- 			struct v4l2_mbus_framefmt *sink_fmt;
- 
- 			sink_fmt = __csid_get_format(csid, sd_state,
-@@ -707,7 +711,8 @@ static int csid_link_setup(struct media_entity *entity,
- 
- 		/* If test generator is enabled */
- 		/* do not allow a link from CSIPHY to CSID */
--		if (csid->testgen_mode->cur.val != 0)
-+		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED &&
-+		    csid->testgen_mode->cur.val != 0)
- 			return -EBUSY;
- 
- 		sd = media_entity_to_v4l2_subdev(remote->entity);
-@@ -800,24 +805,27 @@ int msm_csid_register_entity(struct csid_device *csid,
- 		 MSM_CSID_NAME, csid->id);
- 	v4l2_set_subdevdata(sd, csid);
- 
--	ret = v4l2_ctrl_handler_init(&csid->ctrls, 1);
--	if (ret < 0) {
--		dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
--		return ret;
--	}
-+	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
-+		ret = v4l2_ctrl_handler_init(&csid->ctrls, 1);
-+		if (ret < 0) {
-+			dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
-+			return ret;
-+		}
- 
--	csid->testgen_mode = v4l2_ctrl_new_std_menu_items(&csid->ctrls,
--				&csid_ctrl_ops, V4L2_CID_TEST_PATTERN,
--				csid->testgen.nmodes, 0, 0,
--				csid->testgen.modes);
-+		csid->testgen_mode =
-+			v4l2_ctrl_new_std_menu_items(&csid->ctrls,
-+						     &csid_ctrl_ops, V4L2_CID_TEST_PATTERN,
-+						     csid->testgen.nmodes, 0, 0,
-+						     csid->testgen.modes);
- 
--	if (csid->ctrls.error) {
--		dev_err(dev, "Failed to init ctrl: %d\n", csid->ctrls.error);
--		ret = csid->ctrls.error;
--		goto free_ctrl;
--	}
-+		if (csid->ctrls.error) {
-+			dev_err(dev, "Failed to init ctrl: %d\n", csid->ctrls.error);
-+			ret = csid->ctrls.error;
-+			goto free_ctrl;
-+		}
- 
--	csid->subdev.ctrl_handler = &csid->ctrls;
-+		csid->subdev.ctrl_handler = &csid->ctrls;
-+	}
- 
- 	ret = csid_init_formats(sd, NULL);
- 	if (ret < 0) {
-@@ -848,7 +856,8 @@ int msm_csid_register_entity(struct csid_device *csid,
- media_cleanup:
- 	media_entity_cleanup(&sd->entity);
- free_ctrl:
--	v4l2_ctrl_handler_free(&csid->ctrls);
-+	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED)
-+		v4l2_ctrl_handler_free(&csid->ctrls);
- 
- 	return ret;
- }
-@@ -861,5 +870,6 @@ void msm_csid_unregister_entity(struct csid_device *csid)
- {
- 	v4l2_device_unregister_subdev(&csid->subdev);
- 	media_entity_cleanup(&csid->subdev.entity);
--	v4l2_ctrl_handler_free(&csid->ctrls);
-+	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED)
-+		v4l2_ctrl_handler_free(&csid->ctrls);
- }
--- 
-2.39.5
-
+KVM disallows hugepages when shadowing a gfn, because write-protecting a 2MiB
+(let alone a 1GiB) page would be insanely expensive, as KVM would need to intercept
+and emulate an absurd number of instructions that have nothing to do with the
+guest's page tables.
 
