@@ -1,175 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-56782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF39DAA930C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 14:27:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8EBBAA9326
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 14:30:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D9E4E7A6861
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 12:25:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A316A189A046
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 12:31:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A98624A066;
-	Mon,  5 May 2025 12:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 394C41D90AD;
+	Mon,  5 May 2025 12:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Snwu1JF6"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DnnPOVfG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3DE229B07
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 12:27:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4BE2F24
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 12:30:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746448022; cv=none; b=jsd9cBIlEOhgbKxPfQ6VOPh8hf/MkjxlfUthKPcAY8YkUXfwRblkwArX8QjIZBh8Gn+Xjw9QidF/0KOh93BuiKcY4fosICn1cIndxuQuLDPUZ2D4y/AwJm2l5L+GpXyafCWj+tQn+0A3hw+r+4Z0xlpG4A/gkxEs12bjwp5FMbQ=
+	t=1746448243; cv=none; b=BDckBXHIcX5MH5EqglUBn3P83arHwRreUGBROZaq4jnNEibHPdWxguFfxnBF3kKImtypfsKJ++RTTS/uajeIGg0Q5t/KzAoeXzJiIOL6QGhcmOVdhMyzULl+BlGfGj1kSjksyVcFIhS4O9lKCPMq5qGhrhj4A6PkbvcWV6X/DAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746448022; c=relaxed/simple;
-	bh=/p70rkRqnMYx3U9ktfseD6NXbe/+GaD6xbDbp6Jd+bQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QpMpa745GvOZUQov1W3UlbCs2jU/SWroGU3zpa6iEfdg933OTEsd7TqnZW34wWCcewjyCk9k2Ll+d9wjcAtr6CoxyGhUlfyX89BZEQ6yqL0yaLvFa+2ttMwcRtAEI0I33byuLwlqyo7vgfR5EvfnF55zaUBdC6wxu7AB6IYHsTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Snwu1JF6; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1746448243; c=relaxed/simple;
+	bh=KUndq4hJdVEJD5ngNJGBRZeJyb0wTFdvOJGt1kRqK6k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bXTBx50WmbW3IGpdTmvjqAjuh8VH6QyKxgu5Btj6LtTYjF/rF6+433Ou5g/8N7B6ZX5N1BGVKZF5C4dDzX5vVb36QVKgj7z2roe+p3S74MTMS9l3X5E5J+w8xkR2dyw0frL5OGyANnIIemSpZnNPoRkPnwen8VtdHgpopxALhbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DnnPOVfG; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 545CQB3W001905
-	for <linux-arm-msm@vger.kernel.org>; Mon, 5 May 2025 12:27:00 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 545BZidC009522
+	for <linux-arm-msm@vger.kernel.org>; Mon, 5 May 2025 12:30:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=1mZ5cx/TFXOUdnYEfCMZ+itC
-	mBzAFu0OJ39D1ob48qs=; b=Snwu1JF6jiDnY3FnTue7MIWf3tpumP8RkSw4+rAX
-	67EtRve8C3jCOXwHxrZMnE5UsZ42i/fBuvqOM8g5j/VbQkqK3I+b6GHct9/tvlkk
-	j3Qms1NM4WIORBQTCvXfBMf0wx7PWUHjhXhfjpuaWdS0gx7fJwa4h3A85GGdaTt5
-	Y38zaS+8VwCrG2zORN1ZMka5guvz4/k/EZgYjqVgHIGrUlZreEYegpQEYC2QKF3P
-	XAg+P5hIuheUREnqHtJkExAWD7wDigOAH1pXgF6IBJNNh/BpcsBYVmlrarDXi2ND
-	AMTlKBEDDoqpxABuxKaXeTdTtX+ex/YhnVmyl9L5ILZY3g==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46dbc5c2c6-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	y3G6J7mrlp65EzgO5VLytgkQO3fSgok1k/X2CkcanNg=; b=DnnPOVfGaj3nPpIf
+	PitqrK0HiLJjajI2U8/bck6JhKAqtp5hVEi6zBmiOqVy8L+c9coT5HKFHEbHyBH9
+	oLkKHiLCOTA9w5UqhXdhAzz+IIX+fv5kCDGEG0DBnGtMWGxsoSluXLc6D+SOBo4O
+	ErAl0rpaER1PLt6/cqCb1/8o5JLfX8DLm7Kx2ydLn7yObwuKtJeymMMz/NqoiRzG
+	OFMf5RdMKzDf5bxF0fFE25RjIHdwFowwURPH9FxTP4i/5MW40oVsiFoi/Zl6kesc
+	NYSzqSh9BCifrPaczyrigO0MpTq6jO8VNcn+o4pmsYUJf82CXER6LVMkkqIZw6EN
+	yyQOmA==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46dbh7c1k8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 12:26:59 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c543ab40d3so104726285a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 05:26:59 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 12:30:40 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-2ff64898e2aso3955518a91.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 05:30:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746448018; x=1747052818;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1mZ5cx/TFXOUdnYEfCMZ+itCmBzAFu0OJ39D1ob48qs=;
-        b=YkltDCAAtm+ibclDLsK+y14p/9bEflVhU0TFw+yYX9+1zwMbqcRn9Ey758CwpzeXNE
-         jSRPPNpEDyA/Bx3tIWsvceqsgdq083sAs8pRATxPfQcKi1tjq2T+Z4JJ9St2Ytw2R2eb
-         v8WUGofB748wxyIguXkPedy/fCHruNZs8jmadM8RYhxj+I7lfK5XD7IAo9BLxK4PVO+Z
-         lfKwOWLh6T5uNB6y3G/i6UfOb6ITV2pVrNF/rCHjwh8dMl+r78ER7FCAVEfSRZjucpkX
-         Dz0dcKcopW3O8pCe1CnFN4iIl5oKb8bHVzNPrFwj1JWWbP93/f06zSnvS019jUeIoiwn
-         RNAw==
-X-Forwarded-Encrypted: i=1; AJvYcCUfVEbnCW9Y7zw3ZDOnJ8cSfytp7SR7OXMgrvpF6l52HD5fnsQG6hKiMjezIdw1Fyo/ZkBCld8o6F6ebS2N@vger.kernel.org
-X-Gm-Message-State: AOJu0YyIFUHkEeV+dbSddEZMbyg1i71YWMV2aLT/mR/jVVT1VD2BqQhr
-	Kzq3m+PF4oKYjmD++DsFfj1sJrJvmV2HX0esARocNvKvLI3vU6bYCI8WxISM3i9cWS2odXr0W7T
-	r/vum5OpzX/9EbwMASoHzWfZ9zPZe2EBO7gMfCrMAHnIF1u7Dg2HXj77UAwcUNvlo
-X-Gm-Gg: ASbGncvABFTKStILNheTeIaOsrUENMuGra6WtMnmjEuHyDBthvnjqK+cPr4zEdVk/OR
-	kEsxrnAze9/itv9KbqvHAWoj3fXeMBXChus4+eKqtwzFcY+SRI0EYHFcNe7p7dirm3twTM8C9IQ
-	hnqxKbyfCpJV2D5n8TKUAwP/JvvFv7tJ8rCSFXlHaSn6q0YPeK10/b1RIfEkvVTY9MG9eBEjsGR
-	InXCz26CngLVPtgvlP9HxEQwHH/Yw0wTHCgBb9jyBlp84bUvh2wrZ+BAiW9Cq+Ii8AKm7jFerUT
-	k6gBiJaZ7vSWKpP8kD9qZSuGAqsWS99MxC9mAlHBOcXNPwd0FICkO7ykgNmKdJTJvYDS6uZkzdg
-	=
-X-Received: by 2002:a05:620a:44ca:b0:7c5:f696:f8e5 with SMTP id af79cd13be357-7cadfdd1fb3mr1066501385a.14.1746448018573;
-        Mon, 05 May 2025 05:26:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFbP4vMWfoDCZb1OxRZYoOdMiV7yVyeGR4Et3hvHSFh8b7ad1aFuUaJ40fNUggHnRpeog6jYw==
-X-Received: by 2002:a05:620a:44ca:b0:7c5:f696:f8e5 with SMTP id af79cd13be357-7cadfdd1fb3mr1066497885a.14.1746448018233;
-        Mon, 05 May 2025 05:26:58 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32029017379sm16984351fa.31.2025.05.05.05.26.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 May 2025 05:26:57 -0700 (PDT)
-Date: Mon, 5 May 2025 15:26:55 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>, linux-clk@vger.kernel.org,
-        Srinivas Kandagatla <srini@kernel.org>
-Subject: Re: [PATCH v5 19/24] drm/msm/dsi: Add support for SM8750
-Message-ID: <d2dh7lolcc4h4jr4zytc25tjcj4wyuoo55wk2vs4eaqensynme@txkk56x3zm4s>
-References: <20250430-b4-sm8750-display-v5-0-8cab30c3e4df@linaro.org>
- <20250430-b4-sm8750-display-v5-19-8cab30c3e4df@linaro.org>
- <ahx623ttvzd62u4fri6iqguj7mirlf22tvwbu6k2ngxw6hwbcp@oh7mmex5fjmz>
- <5c307e88-a3fc-430b-8ccc-af59e2097da3@linaro.org>
+        d=1e100.net; s=20230601; t=1746448239; x=1747053039;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=y3G6J7mrlp65EzgO5VLytgkQO3fSgok1k/X2CkcanNg=;
+        b=an/IFOGgk4RkSmE2aHTNhjxyQ4ufIOsB4dmK+lLFdIjxPHrBOekArKbQLZt8pZav59
+         qqbK1DOqShu95RW0Ew1pn7saXl8nzJzmAGIZ5U0gW8D3hN7TUhtJuQ0JSs7hOoKm197+
+         YSrmcMmrcWUQOQGoHGVGrvX/LIEWvR+kejFI1UMelP6WtgKRnoCabKMp9+YDAc5l25zj
+         DGg1vUPO8JXwx0GXgHC7Q4cmViX3HfYL5JX7x3ngZGSBpRtWVhADObR19Cu1Bt9W9cqV
+         QAmRij1/1vD6+IXewcCw/VNtHPLpqYIlis6ThOtrvZNOS1aLBe5m72lcS2gDD3A3oEMi
+         IifQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUp4aGJIgdUk5tmp0EWxuHxWegiMABKOm1ydB6GTl4plcJwRDT96mGbFP1ocZ+DseEkQw9HsAA+qQaXE3Z/@vger.kernel.org
+X-Gm-Message-State: AOJu0YzDiAtwK8EkIKpk01hO2f6FqZTtCa/B8fI5PWWp69ix/iNKJh9d
+	AXZ0lfA5Pqx0TEBia6P5Ds6NYlBcmLLyjx0pmF0Nfz1Q8ZKN/UlhzYswmux1+miUDLnyOFJO9Fd
+	It/bluXqp1biLRImxilt491kvGGdJoNMX1+O8AZe0B6ClNz0hU7DtgYP8o0qHxLlr
+X-Gm-Gg: ASbGncvwcaxvI05jXbUfIXpSJP0fwae/pSMnITLl1HjAcRBPVeu2YkSpnm6CnC0S4ea
+	zVpOKbttyqAPjvFrAzkiATtb5R6ZpaCQlo8vdbElqaStAdOztub80nRJHICXDcTClcm6T52gbp4
+	z2096hQRODZTjxLFz5rGvRTBWVJGh3owtCjD4CHrYsr1+laj86HyIQd/ty8dhMuW2SYDdW2obde
+	owAf8KpOrAH+MqH4kOSt5v7BUNlhlwHfuMAunYLkqOty8bUq9jHB25Ec7ugh6SLt5w3+Z+c06++
+	EUi1e7HIjTeTfeHqFa2Ea+gV2puX5ur/AhkR0njt
+X-Received: by 2002:a17:90b:35c2:b0:2fa:603e:905c with SMTP id 98e67ed59e1d1-30a42e4ec2bmr24078910a91.2.1746448238753;
+        Mon, 05 May 2025 05:30:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEiYHZNbAPD2hX6uotPQt4rYNK5LSmkNVeXzY+HRrfyvbKuerZll0vE/BGL+crksM4WYtDukQ==
+X-Received: by 2002:a17:90b:35c2:b0:2fa:603e:905c with SMTP id 98e67ed59e1d1-30a42e4ec2bmr24078856a91.2.1746448238319;
+        Mon, 05 May 2025 05:30:38 -0700 (PDT)
+Received: from [10.152.201.37] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30a3471f005sm11506606a91.5.2025.05.05.05.30.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 May 2025 05:30:38 -0700 (PDT)
+Message-ID: <538b32d1-c7b7-41b5-aa93-d285604d1f05@oss.qualcomm.com>
+Date: Mon, 5 May 2025 18:00:32 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5c307e88-a3fc-430b-8ccc-af59e2097da3@linaro.org>
-X-Proofpoint-GUID: 0umX9ZNxfJ5FhDzjIHrbQX6UHvhyflz7
-X-Authority-Analysis: v=2.4 cv=O7Y5vA9W c=1 sm=1 tr=0 ts=6818ae93 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=dt9VzEwgFbYA:10 a=GiW35wlXn3FmTEwGCggA:9 a=CjuIK1q_8ugA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-ORIG-GUID: 0umX9ZNxfJ5FhDzjIHrbQX6UHvhyflz7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDExOSBTYWx0ZWRfXx2cMchqzXXal
- 6B5RkYaFYIZVbSqOtLptJ6OcM+VKpJVm0ovvDd/Q8oGQVHQYj2k3+o6uBLPnA6gHSPBfxsIovbd
- ysmk0B4O/x5YFgbR7U/c/owRHSBw1DBNWXqdQMLruQJnLZNb7VfMMvftN4+U9jEkoDnqL/VCvfc
- GoM/hHH2GLWNRzmJxM/eP8NxmG7BVlm0wKJ2dyMSaTL49zTPpCw5lY/3chk7p1rQmwxpxlMBp4P
- P4d4gBEbqXMfak/kx/z3/A7xWx1io3msOo161dVd8AupbstrknXJ89g0snSxTLgIONPUB1exdmW
- Uq7X69uK0ORtrKkiHkmqjsJnyDfINsxI9vgwhqlIegDKLSa138y0OwRPXiJOjHlf3i46uqywILT
- H81rWFpFoNO1EhN5+pWSQAh/MCuui/hiill13m1XI66K3a2GelkjxlP2jvWAbZc5RLKN14Vt
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V5 3/6] remoteproc: qcom: add hexagon based WCSS secure
+ PIL driver
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
+        mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, konradybcio@kernel.org, quic_mmanikan@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc: quic_srichara@quicinc.com, vignesh.viswanathan@oss.qualcomm.com
+References: <20250417061245.497803-1-gokul.sriram.p@oss.qualcomm.com>
+ <20250417061245.497803-4-gokul.sriram.p@oss.qualcomm.com>
+ <72f0d4f7-8d8a-4fc5-bac2-8094e971a0e3@oss.qualcomm.com>
+Content-Language: en-US
+From: Gokul Sriram P <gokul.sriram.p@oss.qualcomm.com>
+In-Reply-To: <72f0d4f7-8d8a-4fc5-bac2-8094e971a0e3@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=fMY53Yae c=1 sm=1 tr=0 ts=6818af70 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=iPeUMZ46Q7pfEY4_gPoA:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: wOomQJtaLEzS54OmKVmJxXGyLKq2v_Wk
+X-Proofpoint-ORIG-GUID: wOomQJtaLEzS54OmKVmJxXGyLKq2v_Wk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDExOCBTYWx0ZWRfX68CK39gBspjl
+ c6/oZ+E8tBDQ0/wCRc1aZFfjw8s0vm96dAWm4LRGnCSWdcqQL83oM102hHV1r2Z+Ux54+VPB7gu
+ I0up5Lk4OEtrGWdqsgrkywGBbXbCHUo/j/1lVGdTs9ZXak4MAi/LQhFdRkWthFbxDmFEOwKl0zc
+ L7m8hX03a0WPw94cXYX5NuzGtQVGrDetV74b475yOomekvSqMrrlJ8OLvCCLyv2kW7R6HazQAro
+ maC4a19TuYbA7L7gbBnefAIfyKT+XOhhYnKbX29mmutDK42tNPTNmeLSb0UOwIPCD93VA5hkO15
+ SSHwfzQa9xCumfRKtGEigEDW1ANGOhGdu73hGTl5Tm03mPKDn88XdXX80QVjpku+HtNcOImyX4G
+ tcmAI+SjbrRqsCVHot1w/bxF2TV7Fb5gvvM9Z+/1dWUFHBesfw1ku/GaTc+L6UU7afpF1z+i
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-05_05,2025-05-05_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 malwarescore=0 mlxlogscore=711 mlxscore=0
- clxscore=1015 priorityscore=1501 adultscore=0 phishscore=0 bulkscore=0
- impostorscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505050119
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 phishscore=0
+ suspectscore=0 mlxlogscore=709 malwarescore=0 spamscore=0 mlxscore=0
+ adultscore=0 bulkscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505050118
 
-On Mon, May 05, 2025 at 08:45:01AM +0200, Krzysztof Kozlowski wrote:
-> On 03/05/2025 00:52, Dmitry Baryshkov wrote:
-> > On Wed, Apr 30, 2025 at 03:00:49PM +0200, Krzysztof Kozlowski wrote:
-> >> Add support for DSI on Qualcomm SM8750 SoC with notable difference:
-> >>
-> >> DSI PHY PLLs, the parents of pixel and byte clocks, cannot be used as
-> >> parents before DSI PHY is configured, the PLLs are prepared and their
-> >> initial rate is set.  Therefore assigned-clock-parents are not working
-> >> here and driver is responsible for reparenting clocks with proper
-> >> procedure: see dsi_clk_init_6g_v2_9().
-> > 
-> > Is it still the case? I thought you've said that with the proper flags
-> 
-> Yes, as we discussed many times - this is still needed even with the
-> proper flags.
-> 
-> > there would be no need to perform this in the driver.
-> 
-> assigned-clock-xxx are not respecting that flag and anyway, even if that
 
-This is really strange as the flag should be handled by the framework
-itself.
+On 4/25/2025 5:17 PM, Konrad Dybcio wrote:
+> On 4/17/25 8:12 AM, Gokul Sriram Palanisamy wrote:
+>> From: Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
+>>
+>> Add support to bring up hexagon based WCSS using secure PIL. All IPQxxxx
+>> SoCs support secure Peripheral Image Loading (PIL).
+>>
+>> Secure PIL image is signed firmware image which only trusted software such
+>> as TrustZone (TZ) can authenticate and load. Linux kernel will send a
+>> Peripheral Authentication Service (PAS) request to TZ to authenticate and
+>> load the PIL images. This change also introduces secure firmware
+>> authentication using Trusted Management Engine-Lite (TME-L) which is
+>> supported on IPQ5424 SoC. This driver uses mailbox based PAS request to
+>> TME-L for image authentication if supported, else it will fallback to use
+>> SCM call based PAS request to TZ.
+>>
+>> In order to avoid overloading the existing WCSS driver or PAS driver, we
+>> came up with this new PAS based IPQ WCSS driver.
+>>
+>> Signed-off-by: Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
+>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>> Signed-off-by: Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>
+>> ---
+> [...]
+>
+>> +static int wcss_sec_start(struct rproc *rproc)
+>> +{
+>> +	struct wcss_sec *wcss = rproc->priv;
+>> +	struct device *dev = wcss->dev;
+>> +	int ret;
+>> +
+>> +	ret = qcom_q6v5_prepare(&wcss->q6);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	if (!IS_ERR_OR_NULL(wcss->mbox_chan)) {
+> You abort probe if wcss->mbox_chan returns an errno, please rework
+> this to use if (use_tmelcom) or something
 
-> was solved, they are executed too early - before PHY is initialized. You
-> cannot prepare PHY PLL before PHY is initialized and enabled.
+Hi Konrad,
 
-Ack
+do you mean to use 'use_tmelcom' variable from driver descriptor? If
+yes, what if mbox_request_channel( ) failed?
 
--- 
-With best wishes
-Dmitry
+or based on wcss->mbox_chan, should I set 'use_tmeeiihcckgddglcom' to
+true or false and use it?
+
+
+> [...]
+>
+>> +static void wcss_sec_copy_segment(struct rproc *rproc,
+>> +				  struct rproc_dump_segment *segment,
+>> +				  void *dest, size_t offset, size_t size)
+>> +{
+>> +	struct wcss_sec *wcss = rproc->priv;
+>> +	struct device *dev = wcss->dev;
+>> +
+>> +	if (!segment->io_ptr)
+>> +		segment->io_ptr = ioremap_wc(segment->da, segment->size);
+>> +
+>> +	if (!segment->io_ptr) {
+>> +		dev_err(dev, "Failed to ioremap segment %pad size 0x%zx\n",
+>> +			&segment->da, segment->size);
+>> +		return;
+>> +	}
+>> +
+>> +	if (offset + size <= segment->size) {
+> I believe this allows an off-by-one (remove '=')
+ok, will check and update.
+> [...]
+>
+>> +		memcpy(dest, segment->io_ptr + offset, size);
+>> +	} else {
+>> +		iounmap(segment->io_ptr);
+>> +		segment->io_ptr = NULL;
+>> +	}
+>> +}
+>> +
+>> +static int wcss_sec_dump_segments(struct rproc *rproc,
+>> +				  const struct firmware *fw)
+>> +{
+>> +	struct device *dev = rproc->dev.parent;
+>> +	struct reserved_mem *rmem = NULL;
+>> +	struct device_node *node;
+>> +	int num_segs, index;
+>> +	int ret;
+>> +
+>> +	/*
+>> +	 * Parse thcitejlvhvdriihtheuvhn
+
+>> hrough additional reserved memory regions for the rproc
+>> +	 * and add them to the coredump segments
+>> +	 */
+>> +	num_segs = of_count_phandle_with_args(dev->of_node,
+>> +					      "memory-region", NULL);
+>> +	for (index = 0; index < num_segs; index++) {
+>> +		node = of_parse_phandle(dev->of_node,
+>> +					"memory-region", index);
+> https://lore.kernel.org/linux-arm-msm/20250423-dt-memory-region-v2-v2-0-2fbd6ebd3c88@kernel.org/
+
+ok, will implement of_reserved_mem_region_to_resource() and
+of_reserved_mem_region_count().
+
+>
+> [...]
+>
+>> +static const struct wcss_data wcss_sec_ipq5424_res_init = {
+>> +	.pasid = MPD_WCSS_PAS_ID,
+>> +	.ss_name = "q6wcss",
+>> +	.tmelcom = true,
+> "bool tmelcom" is very non-descriptive.. call it something like
+> use_tmelcom, or maybe flip the condition and call it e.g.
+> tz_managed
+
+oeiihcckgddgcjnfeeuhjfdfbcfcdenvfnjnuceuntbir
+
+eiihcckgddgcgltegldivttfeldnhugbnjvtllkkrujt
+
+eiihcckgddgchbegrjtgfnk, will call it 'use_tmelcom'.
+
 
