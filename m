@@ -1,81 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-56807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75F55AA95C5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 16:26:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E30FAA95CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 16:27:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BEE6D189C49F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 14:26:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5059D17A526
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 14:27:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67ED425E810;
-	Mon,  5 May 2025 14:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B5D725CC42;
+	Mon,  5 May 2025 14:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lqOJlwZF"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UR96SL6e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B607825E458
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 14:25:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB4D25A646
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 14:26:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746455105; cv=none; b=XTPQ0Ea0dmra9OgSEd7MiZ1HXOEaHMHXK72rbhcM2HrOHuXKFOnn9sci8wbufr5UF54Xb803quZ12NsOvUatqHAYuFYqhzT3iIN+lbM9+poJ0m8F0WAqBU31HjS6U9kFnuxRTvQa5LjDmAPCKQbIC5VuuC8u64sDPXqYNkgqmqY=
+	t=1746455189; cv=none; b=L/HX6iPq0e4f8DHl6j2KtAhMhYhWq+ehugwwTzfnfu2WMJcf8PheG3lAgu9sV7luNamjfTggEdrsur2BJhD7IQJeRWYSz32okvTx0tT12mlugXIrv99tmHxp1ie1GnbE9DtwKL/f5po+I19yVyuA8hWVtvTscJ7xt+3TymRvX2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746455105; c=relaxed/simple;
-	bh=t1yw/3IQY04ascExMYNkywVMbYb9sD04RFjXDUub5p0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sB+Svqzls7MRXphHRQMU1iJMhzn9yFSnjIY9DZp8k+H9I21j2ifBhiIyP71d6u/shiyo8W8GZRbPsntyKGYs6fi7dxkKsXJNws2uLDPTaLn7TajRM0CEFszuleSPhWAghPQWWRnjZqHIq3ck5zlAZp7i9YRD4ykCE8I3NfgN1Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lqOJlwZF; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2295d78b45cso58366725ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 07:25:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746455103; x=1747059903; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KJu9k3uxYD0x67A2WlM7JrSR4XKb1B7H+/wMYgcPKG4=;
-        b=lqOJlwZFB4pyJdaENDCtdFBlPFUBhccAA5O3mEykyE+6exnXMm9nsy8zGhjsZeksDX
-         mYZwk2zMLwSydKEM2koeXulFFpwW7Dp88UmfB9cqU8fruhDtURG5ayLBvtWN6FK/H+s5
-         mvZBuwkADtTJEtgLrsMfrDP/3dUleV6SzAQsy3br9mL8Fr++AZMqrFvVTm4Wfk4Pcd8X
-         Qv2oTVsdxEjj1odzrqZ8Oqov9M4mC8VoyVjh7IdI/4g3FXo9e4MDgRrHYZjDUHPsF5FT
-         YtB5KMO9WKgv0YoIWf2AA26ppXHB3qXL14/S+o/mauBPvD+g4tj5eRfJuWp6labvP0M0
-         MREw==
+	s=arc-20240116; t=1746455189; c=relaxed/simple;
+	bh=QJs5+k/qrBs5cgN7eO/MR/BelasA36UFUZz1dEKH+bU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=g/Bq4qpCD+aUVvzF+u5fxB5QwORkBbiaMGm5CVf24J7LpxOL71u+H9YAvzn1y2g+qQe4Q9k/e9xRMvZeI4GgpzjeLOgzURUURAg/pFz2AUq3gRX9WYcrpybUQKSFMPv7vJx/+1+BXwNnxZ02GePLuelKVBYUQKzw9l4DZTy+CkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UR96SL6e; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 545Bqlin019329
+	for <linux-arm-msm@vger.kernel.org>; Mon, 5 May 2025 14:26:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	hUuUX8bIcyPlPuoPDbT04z3jokr92aiRh0rQ0I5EFxU=; b=UR96SL6e5gPFzkXA
+	odKlmcPqeKK41JVxUf82jk//dsmtkYSa5HknVSNgzHAOjwsMkfXcZLC87mqYYI7b
+	fKFwJhpAWdHtpEWLgBXi+6uSOYndtTRgIvYSR/MNzvDmUYhC6EZkhWjchi4GXnul
+	azXI2GoGYe8SpUEE3e1T8tuCeZahsR/vzglHnO+TcoJxQpax8BPjaQUkCO07zZsQ
+	OQ3cdGKI1orl3EqwA+Mw9+a4nR+ZQhZ0vpspTeWdR5+CGl444OKWsaZQQS7LVpNS
+	FRGFUJft8cqpRT2YQrGA1iDA9E2hGvBVjhPxJ3yJ4F+wp9kICXpUQJ1tsKyT3OuX
+	0XSOIw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46dbc5cafn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 14:26:26 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c5cd0f8961so996023485a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 07:26:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746455103; x=1747059903;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1746455185; x=1747059985;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KJu9k3uxYD0x67A2WlM7JrSR4XKb1B7H+/wMYgcPKG4=;
-        b=CbNwjBXo9uLokHh4FBYJA4WcPUKuBFhTJ1d6hSg0ub6yuXZwIyAP5u5zzkqi4/UqsQ
-         TTtPcqH+MCUvdsSjtQkOp3WE4+/8cNg/0x8i/+C/HLVKY0P0VAwBdkO5BXKQku4WT9ub
-         LGzebhU0FfYAoLoxCseEdzNsb3B3pf11vxqemNmUdHDZmVAVSX+CQe4KjvqumPwqQgYh
-         nEGq+aA+hD4Ztvoyc9R/qkJOjP6GGzseydEbgydAqP5ir7IybnunlHhgwGFjGTSM/9Ul
-         tatatTa+LfBiP9pGNERzCPX7+XBnXz0NH5neF8kZcvbdeQ9w4k0E06MyIIPfH7xprclc
-         KlqA==
-X-Forwarded-Encrypted: i=1; AJvYcCWUz9eM8Nqd2T8Mlrp/ZCTesu5MRzdK5QFgVn4QmyvODXNJKzac8tfhzpHUkZOvxbq6cMgyng+A+7LQ+RiN@vger.kernel.org
-X-Gm-Message-State: AOJu0YyINfcSxgB+BZuUIYv6dn6BvWdL9w0lPTw34KhZx7vsdWKHgYSE
-	Owqft+ibDjYCyJQUtEZd0DbvAPU0F5WMVIOxlurcX/EKHuF0aq+7awbLgXYrfiCDgosV4vdqPFo
-	=
-X-Gm-Gg: ASbGncvtfrkwKDdpLOkACRERxgBIzeJrXpJLYewL9VBvpmVZnB6ZTAbZi9DcWg5qFbf
-	uRgX4G+wkqgYhGqdhwpTF2gKAAQB0xQsfPZ2nIHtagE3yXcHc2+D+UXmSvSUaneqqokl15gphvq
-	sAZeo1f4kGl0ZkxVXkFJIJjCgEbSJuD+aOAa2uuLaG0DCLzrNScF0OzCNYzIb5M8KLKjBkU+ONs
-	+8f77JRDf8ICPBe8YPT91doB7WGQ4P1TKTnMTCUUTrFEjucb3CAXNrBxNXI1eQkfIiB9u0y243x
-	rPR9PyXHNT8u8OHgPayUNl4zDjdWg9BUXGFKi8ym7a5aZltJZMoqKDo9omiMR1Dz1A==
-X-Google-Smtp-Source: AGHT+IHi6sUziup5Imivht3p4tfdKqc+3GPIBmuTJE3Jz7QA5nq01wCiYdj4NgLJULo/fXuYkwcppA==
-X-Received: by 2002:a17:903:1107:b0:223:f928:4553 with SMTP id d9443c01a7336-22e1eaa6e3cmr115148915ad.44.1746455102947;
-        Mon, 05 May 2025 07:25:02 -0700 (PDT)
-Received: from [127.0.1.1] ([120.60.48.235])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22e1522ef9bsm55387685ad.217.2025.05.05.07.25.00
+        bh=hUuUX8bIcyPlPuoPDbT04z3jokr92aiRh0rQ0I5EFxU=;
+        b=n8/iO35lVmKZpUuInP1hHlYNRVXmlas6341NQQMsUmbb7um06Zq48SUB65K2uN5Iw/
+         OQQYcUPhQabIIC/DIb4EeE1k7M/dgzmthsEFj7MwAx0I7YtpTYgnSewovevuoEMm8zS8
+         u3Q3Wk7cAXLIvNI/xoW8kr3e0qyLubfRq4yzUVDKXVJDfWITQ/JlqawY3RM26CerFJ3Z
+         46c2zIGCOrtR75T/DEJZSmkEwP3FoGVASx37BH07ocl+ZDRzNOTgYp3J2UdcMAaSnjH2
+         qMnxj+vlJo03LEqqtTSed3WWMQ/D6tIMqnDRRZ4W3i4ZwVNB6QTSZzp6ruG0ED8J0iVU
+         6agw==
+X-Gm-Message-State: AOJu0YxLfuzWTYNEHcQ/N1QtRaf8T8hMclZgVqr6iq13hKiEjWrDmX0j
+	fW6J2Dk+nzcOd/+2wKEDmu01V3fn4xD6OtmbQm8XIfRhPEhyim3skjjUsTy2LvDFJdWn52MJ0fy
+	pdKz3X4D30QX3Kcm3EMpIp8/jObN0NQ1fAA6jELGSivlh+uFmVoeaebA6pogfYJ9JtaIG4w6N8Y
+	w=
+X-Gm-Gg: ASbGncui5fgUqH8qctp/g4Zp4i2oRAGkxUBxqxswxRaEVIgXbx1Q+bSqqvbhUBHrIMw
+	xzFDBQXI3fFUicbrw3ka1gfMO3o07fkJztp8t+2DElaFZ2NhGhoI+dZ6w3bSdelFYptX7aZgkI5
+	kwVHpZDFgAKHiWGs6x28ly0YIpyKSfFDuUt1WwVjz/6JHtKVdgk3rUV3DgLMDhyViT3r8Oop3Yh
+	X0EaOGvCDo2fmHxPKuyhOqqleUm/uJhM5GKXrncCgTahrSXfpsAxAODoyE6VPHg0JZmoGV5PXQJ
+	Mj0AaUCUjeQ0OmMIRBkC1eGE4VasNp0SoqUrbo/45TxhbBEefcCN0oW+4TESKdFoN1Vb5SEDlCO
+	K1+k6qthqHUguBWE97wVNo54B
+X-Received: by 2002:a05:620a:4711:b0:7c5:5768:40b9 with SMTP id af79cd13be357-7cae3af02b7mr1068082985a.43.1746455185092;
+        Mon, 05 May 2025 07:26:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH96RuYp8rf3yGAy4C3TKAyGKugvGUg3+4xADJwkHYt/kyUMmED6s/qSvsMF10QY2xjxR0J+g==
+X-Received: by 2002:a05:620a:4711:b0:7c5:5768:40b9 with SMTP id af79cd13be357-7cae3af02b7mr1068079385a.43.1746455184728;
+        Mon, 05 May 2025 07:26:24 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94f17fbsm1726765e87.170.2025.05.05.07.26.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 May 2025 07:25:02 -0700 (PDT)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Date: Mon, 05 May 2025 19:54:42 +0530
-Subject: [PATCH v4 4/4] PCI: qcom-ep: Mask PTM_UPDATING interrupt
+        Mon, 05 May 2025 07:26:24 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Ayushi Makhija <quic_amakhija@quicinc.com>
+Cc: robdclark@gmail.com, sean@poorly.run, marijn.suijten@somainline.org,
+        andersson@kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        krzk+dt@kernel.org, konradybcio@kernel.org, conor+dt@kernel.org,
+        andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org,
+        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+        jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com,
+        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
+        quic_jesszhan@quicinc.com
+Subject: Re: (subset) [PATCH v6 00/11] Add DSI display support for SA8775P target
+Date: Mon,  5 May 2025 17:26:23 +0300
+Message-Id: <174645517266.1455227.14417676448478997955.b4-ty@oss.qualcomm.com>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250505094245.2660750-1-quic_amakhija@quicinc.com>
+References: <20250505094245.2660750-1-quic_amakhija@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,76 +107,51 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250505-pcie-ptm-v4-4-02d26d51400b@linaro.org>
-References: <20250505-pcie-ptm-v4-0-02d26d51400b@linaro.org>
-In-Reply-To: <20250505-pcie-ptm-v4-0-02d26d51400b@linaro.org>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
- Jingoo Han <jingoohan1@gmail.com>
-Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1764;
- i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=t1yw/3IQY04ascExMYNkywVMbYb9sD04RFjXDUub5p0=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBoGMov0gqEE7Kdc466OsqO1FiN0DTGyfPvqdn2m
- eVdjnTOicSJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaBjKLwAKCRBVnxHm/pHO
- 9dpkB/wKb8ndaeMSQkmTCkcOVpoz3jJsGF8LuXs4yeyrPnDlww16eE499nmvu+4SiBNyL4SHr3j
- VMfK69x/QiEpne1DT1W9KjiPfN8Deb5gYYv9LFwhvrNwjkAr1nyv8HHHfTxsjfZ/7te0ernpcJb
- EuVh+5I/BreM1zaKazDTyLOPanx6E7qmZsdPgwoPiS/QBz5MunEzHhXP/N6NWhnI6V4lf5nsXHY
- ouqr6m+5m3JG9DPu54V2T/YwA5TP2c+X+dhd3xK7JNoqACJD5fwjFsFmT2wAiPwHJQfKiun2+7K
- mgldjpP1un+ujJTjpZjs0Pcj93z/jG6UaHvsNberfdccks45
-X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: K_qZ830IEmF5KuYNatHIDXn5on2xiASa
+X-Authority-Analysis: v=2.4 cv=O7Y5vA9W c=1 sm=1 tr=0 ts=6818ca92 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=-3-qUcdfqlWSZcId2SUA:9 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-ORIG-GUID: K_qZ830IEmF5KuYNatHIDXn5on2xiASa
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDEzOCBTYWx0ZWRfXxdQLAHuSTe4h
+ s3fR60/YcexbOgWzcY9Mo6ALfH74CQJe2m4TAMBbh4II/THf5/JaGWO/kMq9B0qK6zFOb2kY9NJ
+ 2txTytF03KojDlJHr05i43pl0cxWJ6LZLZUgggupil6okMaxnzNc4yPCLMcZbwHVonhDsKWYbpp
+ k7puWWjkc11/26j3WSWfR51d/nEKaBR7acpsSrxOdsQLpxLBHFlsn/nOfOtUxHimTauTUetlJA+
+ 4Iu15mBTdHIND09dxUnYwd8J6HNtgQrqrKTIOdyLUJWJp2gQ57m+Gv6RrDPYTu0TFoY9nf1Wklx
+ hvufHNH+7pAMlCEGzM7bDoDtF7+KroEJoLnix9zOiC0PctvgkYH7PVOHRwEUgaY06ksE+OLuBV7
+ HFqpKjQ3pdg2k+5yTiVWQtg3lmg/NcukeQR8xC1hBTv8RjJVHeX+iiNe5DzxMgXQUmdjZaTB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-05_06,2025-05-05_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
+ clxscore=1015 priorityscore=1501 adultscore=0 phishscore=0 bulkscore=0
+ impostorscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505050138
 
-When PTM is enabled, PTM_UPDATING interrupt will be fired for each PTM
-context update, which will be once every 10ms in the case of auto context
-update. Since the interrupt is not strictly needed for making use of PTM,
-mask it to avoid the overhead of processing it.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom-ep.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+On Mon, 05 May 2025 15:12:39 +0530, Ayushi Makhija wrote:
+> This series enables the support for DSI to DP bridge ports
+> (labled as DSI0 and DSI1) of the Qualcomm's SA8775P Ride platform.
+> 
+> SA8775P SoC has DSI controller v2.5.1 and DSI PHY v4.2.
+> The Ride platform is having ANX7625 DSI to DP bridge chip from Analogix.
+> 
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index 46b1c6d19974a5161c8567ece85750c7b0a270b4..9270429501ae1fbff7ece155af7c735216b61e1d 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -60,6 +60,7 @@
- #define PARF_DEVICE_TYPE			0x1000
- #define PARF_BDF_TO_SID_CFG			0x2c00
- #define PARF_INT_ALL_5_MASK			0x2dcc
-+#define PARF_INT_ALL_3_MASK			0x2e18
- 
- /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
- #define PARF_INT_ALL_LINK_DOWN			BIT(1)
-@@ -132,6 +133,9 @@
- /* PARF_INT_ALL_5_MASK fields */
- #define PARF_INT_ALL_5_MHI_RAM_DATA_PARITY_ERR	BIT(0)
- 
-+/* PARF_INT_ALL_3_MASK fields */
-+#define PARF_INT_ALL_3_PTM_UPDATING		BIT(4)
-+
- /* ELBI registers */
- #define ELBI_SYS_STTS				0x08
- #define ELBI_CS2_ENABLE				0xa4
-@@ -497,6 +501,10 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
- 		writel_relaxed(val, pcie_ep->parf + PARF_INT_ALL_5_MASK);
- 	}
- 
-+	val = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_3_MASK);
-+	val &= ~PARF_INT_ALL_3_PTM_UPDATING;
-+	writel_relaxed(val, pcie_ep->parf + PARF_INT_ALL_3_MASK);
-+
- 	ret = dw_pcie_ep_init_registers(&pcie_ep->pci.ep);
- 	if (ret) {
- 		dev_err(dev, "Failed to complete initialization: %d\n", ret);
+Applied, thanks!
 
+[08/11] drm/bridge: anx7625: enable HPD interrupts
+        commit: ca8a78cdceb48ad3b753f836068611265840ef22
+[09/11] drm/bridge: anx7625: fix drm_bridge ops flags to support hot-plugging
+        commit: 71867e8d88fc7f94c2e47b3cfd676710c120cbe3
+[10/11] drm/bridge: anx7625: fix anx7625_sink_detect() to return correct hpd status
+        commit: 366ca0bcc953a4a8a9c9ce2133e6843730210049
+[11/11] drm/bridge: anx7625: change the gpiod_set_value API
+        commit: 50935044e58e563cdcfd556d62f27bc8744dd64e
+
+Best regards,
 -- 
-2.43.0
-
+Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
