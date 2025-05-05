@@ -1,170 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-56743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B9C8AA8C3E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 08:23:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6351BAA8C50
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 08:31:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 86256172864
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 06:23:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 73A1C7A70AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 06:30:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BA5C1B85CC;
-	Mon,  5 May 2025 06:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D6DA1C3BE2;
+	Mon,  5 May 2025 06:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="koamshTJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FzlRqPgq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F251B3F3D;
-	Mon,  5 May 2025 06:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69950208CA;
+	Mon,  5 May 2025 06:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746426210; cv=none; b=j+8XNFp0Z+vFmOxQf+VXF9yJth1pSH5lzAdcIjm6xDFABa0e92QcysmbQ05Fufd4ysRnedSegK6bb1y3T4gdXADFsw+T/G+QF4k3nOUS5+bDIz43g/kdY5FrHzi4lUcUazt3pNp1Ls0WFkT0ileetQu18kapoF/sJ1Fjw+TLc+k=
+	t=1746426693; cv=none; b=LvY9bUuIB/dXuAUMxGWf1OUYVqOFQEie5/2sUaVUd6kLojw+YKWJGRpAkyATGv7v/M0eVT7TjpGQUN3tR+YYsVW6NYM/8fhgQOVmIPdeDBXSUO0xySD+P5S6dvPhPJ/9cOEZVY9Fp6+a/NUuERT+cU673WieT5Pov+SrQG2+LBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746426210; c=relaxed/simple;
-	bh=blz46dfKcTkqUU1mdHuxtQzWM8gPcsEOF9yJwSPZQjo=;
+	s=arc-20240116; t=1746426693; c=relaxed/simple;
+	bh=TPq3wA5AUJQSq3qJ8lHKPyiKkhZdMGK5y84c2O0b42I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WL6b36FCJTB8qWp9zY0SMsz9ioQJ3xEqxrfvskUQDBDbeLnV/qLcfFxVP4IN88WglI23yE3WLmsrgpkoEWGnGKBseA3NHBKmhDIfBodXOilxFQZZoEgK6//UDbfd8mnYsd3kH4B+ApIahIob46N+SW0VGSH83xhQ33uGRNzCZVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=koamshTJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076EFC4CEE4;
-	Mon,  5 May 2025 06:23:29 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=O/qK3joRSiOxzkqr+DrIsL2/2LZDCTktg3ZB1XQJSVGfgPj7+Nfk+kxWNNXGFvSCl3RzGW99RN5gz8kJ4vAXGgpEALrZWdz32AET/udTgu8NaIwYAWlR78dtKuPRCPYyAre8uJjM2Czas/efQ0hAViuLOB2qkMfVIlryMTJR/80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FzlRqPgq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442D5C4CEE4;
+	Mon,  5 May 2025 06:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746426209;
-	bh=blz46dfKcTkqUU1mdHuxtQzWM8gPcsEOF9yJwSPZQjo=;
+	s=k20201202; t=1746426691;
+	bh=TPq3wA5AUJQSq3qJ8lHKPyiKkhZdMGK5y84c2O0b42I=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=koamshTJSZ1WF/eCcwZGiyDpkwsaCADLfvS3QwjV5PotkB/YOwWC8XyuJVSsdLCIk
-	 /4Jtd7bMz2vmYsMNWmf/X4Sis4kqCPIcH2Wo9nzKbUDCdEWEjPm99kDdRKffgOIfVC
-	 GO8aK9v8GOt73LRnb9Tey6JAPxRlvzcCyhCmmdVLeIQZNUJGxNU4jtNLGVqIHj+dbm
-	 MEpwGnq7vCW5rHYuMgB1xOP/tAAjfa3OIH4mb6zlf/o2UpzxgLckv3VDuOX+zXChXs
-	 TEqMARo/LYFzdXeUg1+VrFmrPwI3ZjNDFpR2bMvYWKsJuqvZsxTYKkHx5l6dtCp9Kp
-	 s2eAL5PrUzyBg==
-Date: Mon, 5 May 2025 08:23:26 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Andrzej Hajda <andrzej.hajda@intel.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki <jagan@amarulasolutions.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Douglas Anderson <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Anusha Srivatsa <asrivats@redhat.com>, 
-	Paul Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Hui Pu <Hui.Pu@gehealthcare.com>, Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
-	dri-devel@lists.freedesktop.org, asahi@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	chrome-platform@lists.linux.dev, imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org, 
-	linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
-	linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH v2 34/34] drm/bridge: panel: convert to
- devm_drm_bridge_alloc() API
-Message-ID: <20250505-beneficial-fossa-of-weather-67c676@houat>
-References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
- <20250424-drm-bridge-convert-to-alloc-api-v2-34-8f91a404d86b@bootlin.com>
- <20250428-wild-condor-of-defiance-cadf60@houat>
- <20250428172516.79058e22@booty>
+	b=FzlRqPgqY0uhKs/g+qRRJYf5cr96PV6o5dw2lVtQpchnXH2b+56uMsVHgkjeQaUtj
+	 r0qVT2BioOx3ffGmWvQoBbdPDaiPhuQ1/tv94iDHkDGg8eVnxqVD7NTl0WkyDjQk7e
+	 cyt6JLH0XbWA9ULmgn2DKbfO+KOBk0jrMkXky3kw+3VZmvkLFUiGohcekYJYZuuiP1
+	 pPmwWD44xWgI/oknx4N+Uv1Wb4KdIP4kny7wxMICA4BaAnv+1ubo3yTuahuMkYxRFs
+	 dGYKS0B7pSoC8p2y5pRbPJwIFXnYGTKQPesWkeNfNt6+0cNuBSvAlPlzyLW4la0AQr
+	 Utz0PEeSuAjSA==
+Date: Mon, 5 May 2025 08:31:29 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Praveen Talari <quic_ptalari@quicinc.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org, 
+	devicetree@vger.kernel.org, psodagud@quicinc.com, djaggi@quicinc.com, 
+	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com, quic_arandive@quicinc.com, 
+	quic_mnaresh@quicinc.com, quic_shazhuss@quicinc.com, Nikunj Kela <quic_nkela@quicinc.com>
+Subject: Re: [PATCH v4 1/8] dt-bindings: serial: describe SA8255p
+Message-ID: <20250505-ostrich-of-impossible-conversion-a0f8ac@kuoka>
+References: <20250502171417.28856-1-quic_ptalari@quicinc.com>
+ <20250502171417.28856-2-quic_ptalari@quicinc.com>
+ <20250504-hilarious-ultra-grebe-d67e7d@kuoka>
+ <6f97510c-eb6c-4f3b-b219-aa8d895b060b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="fxb23j2izsboyssh"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250428172516.79058e22@booty>
+In-Reply-To: <6f97510c-eb6c-4f3b-b219-aa8d895b060b@quicinc.com>
 
+On Mon, May 05, 2025 at 08:00:32AM GMT, Praveen Talari wrote:
+> Hi Krzysztof
+> 
+> On 5/4/2025 10:39 PM, Krzysztof Kozlowski wrote:
+> > On Fri, May 02, 2025 at 10:44:10PM GMT, Praveen Talari wrote:
+> > > +required:
+> > > +  - compatible
+> > > +  - reg
+> > > +  - interrupts
+> > > +  - power-domains
+> > > +  - power-domain-names
+> > > +
+> > > +unevaluatedProperties: false
+> > > +
+> > > +examples:
+> > > +  - |
+> > > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> > > +
+> > > +    serial@990000 {
+> > > +        compatible = "qcom,sa8255p-geni-uart";
+> > > +        reg = <0x990000 0x4000>;
+> > > +        interrupts = <GIC_SPI 531 IRQ_TYPE_LEVEL_HIGH>;
+> > Why isn't here wakeup interrupt? Commit msg also does not help me to
+> > understand why number of interrupts varies.
+> 
+> Currently we are not using wake-irq because it is optional for our current
+> implementation.
 
---fxb23j2izsboyssh
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2 34/34] drm/bridge: panel: convert to
- devm_drm_bridge_alloc() API
-MIME-Version: 1.0
+Great explanation. I asked why is it optional, answer because it is
+optional.
 
-On Mon, Apr 28, 2025 at 05:25:16PM +0200, Luca Ceresoli wrote:
-> Hi Maxime,
->=20
-> On Mon, 28 Apr 2025 13:39:23 +0200
-> Maxime Ripard <mripard@kernel.org> wrote:
->=20
-> > On Thu, Apr 24, 2025 at 10:05:49PM +0200, Luca Ceresoli wrote:
-> > > This is the new API for allocating DRM bridges.
-> > >=20
-> > > The devm lifetime management of this driver is peculiar. The underlyi=
-ng
-> > > device for the panel_bridge is the panel, and the devm lifetime is ti=
-ed the
-> > > panel device (panel->dev). However the panel_bridge allocation is not
-> > > performed by the panel driver, but rather by a separate entity (typic=
-ally
-> > > the previous bridge in the encoder chain).
-> > >=20
-> > > Thus when that separate entoty is destroyed, the panel_bridge is not
-> > > removed automatically by devm, so it is rather done explicitly by cal=
-ling
-> > > drm_panel_bridge_remove(). This is the function that does devm_kfree(=
-) the
-> > > panel_bridge in current code, so update it as well to put the bridge
-> > > reference instead.
-> > >=20
-> > > Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com> =20
-> >=20
-> > This looks fine, but we need a TODO entry to clean this up later on, and
-> > a comment on devm_drm_put_bridge that this is inherently unsafe and
-> > must not be used.
->=20
-> Ah, I see, OK.
->=20
-> Quick draft:
->=20
->  /**
->   * devm_drm_put_bridge - Release a bridge reference obtained via devm
->   * @dev: device that got the bridge via devm
->   * @bridge: pointer to a struct drm_bridge obtained via devm
->   *
->   * Same as drm_bridge_put() for bridge pointers obtained via devm functi=
-ons
->   * such as devm_drm_bridge_alloc().
-> + *
-> + * This function is a temporary workaround and MUST NOT be used. Manual
-> + * handling of bridge lifetime is inherently unsafe.
->   */
+What does it mean optional? This is part of the SoC, so how given one,
+fixed SoC can have it routed or not routed in the same time?
 
-That part looks good to me
+Best regards,
+Krzysztof
 
-> and:
->=20
-> -	devm_kfree(panel_bridge->panel->dev, bridge);
-> +       /* TODO remove this after reworking panel_bridge lifetime */
-> +	devm_drm_put_bridge(panel_bridge->panel->dev, bridge);
->  }
->=20
-> Does it look good enough?
-
-That too, but I was talking about an entry in
-https://www.kernel.org/doc/html/latest/gpu/todo.html
-
-Maxime
-
---fxb23j2izsboyssh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaBhZWgAKCRAnX84Zoj2+
-dmbVAX4gMY0F9VXdFsIIKKBjn5Ev2tMwW+uv6doEaqoNJIEat9dVa/bvOYl9n6tm
-ZNZ29HABeQEtltAKrypsuFB4FFzNPiZADC9MB5moran2psvsF2a1chXqCjrK2xyp
-FQXpVqx4qw==
-=pRS+
------END PGP SIGNATURE-----
-
---fxb23j2izsboyssh--
 
