@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-56862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1510AAB21E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 06:13:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CD96AAB1FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 06:10:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A3FD43ABF61
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 04:08:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 10EFA462745
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 04:10:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F17641DA17;
-	Tue,  6 May 2025 00:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BB4E336EEA;
+	Tue,  6 May 2025 00:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="askWdw91"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S1IM59ec"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F20C2D4B47;
-	Mon,  5 May 2025 22:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3B82D5CE3;
+	Mon,  5 May 2025 22:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746485656; cv=none; b=DrGsnspl6ce9/86Ma5RYP1cRnBRhBdiKOeg6hHskFtUI1m5PC2Ras7XH2qBUp0888raqHCBTP3cRMXokuSPqwmVFZ4e+BrKbaFiWun1wrHfDal0kandJ61rdRhq9/vY+xZxO5o8IJz7JpaU9mkpvjCrSOwP0BeIEZYuYiTBpKAw=
+	t=1746485667; cv=none; b=AQvRG6z/FTOb9EeMdnYsmDGBr/8MKed9f4F0OfmCpDgMV3jlkVj7+Isf/jsG3pRTTQFO+cP6zQxTieUb4wADBRFRPVj7X4WmhBxhbvzYXQWoXhSInQqsG6POWZ/tPsrfmznxGM+Z3d6OjDVUczT0hzypPH4C44eFHvGw3ReUf0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746485656; c=relaxed/simple;
-	bh=r4bPjLhG9mo/teWcD6gGtcIeJW3C/ykeywdfhWCI4QU=;
+	s=arc-20240116; t=1746485667; c=relaxed/simple;
+	bh=hOVXQ8hrVPIa6fSbCTeDHxx+YNdQgAt3z5l5k0HhAAE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YRcaCwGMeYTP1U2ytITBvGsFUNxdeo7i7rv7pXaeV5uYQw4RwVddfL1mE/Ou04SpfTPUI+4tcesAUy+fgDfxOUE4jJT4wVjxKSI0VAtB8eMmnscfp7U+K/W9kvQJ4PQll2OYe+Qu3LNFSwy5YMWs8d0Zsod4An2HLBjHDG3iJo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=askWdw91; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040BAC4CEEE;
-	Mon,  5 May 2025 22:54:14 +0000 (UTC)
+	 MIME-Version; b=Tr36rUaEMtVN8hYV52x0i6TOgPZy5gWkITylVXpHoIX9gVILzJ3VcXh+gBvsC3VaOdrn+hq5UAEhPVqAIrfvvyyWPW9X79ri+C6IgwwV5CugbvRnnJPSkSMwLH2suj+y4aqDZ54oB7MoyAurftnP5kZ1WWsv3nRNqJ8hhLVZCVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S1IM59ec; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FDEC4CEED;
+	Mon,  5 May 2025 22:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746485656;
-	bh=r4bPjLhG9mo/teWcD6gGtcIeJW3C/ykeywdfhWCI4QU=;
+	s=k20201202; t=1746485666;
+	bh=hOVXQ8hrVPIa6fSbCTeDHxx+YNdQgAt3z5l5k0HhAAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=askWdw91kd1cP6AnVmnuGeTk3zDxLn+c3/CWDwq/iac56KTL6K3ide3Ff+gMfFUAD
-	 aVwFAWiTRfuDQfCwu4PZ6sw6lYGwD3vyWFhXUqayvs3QXXD8hUWz76hVR6izDE2K/n
-	 zTg2bhzJhgEBG8dDJvq0/RLxOubKM4U/726MEZFVQHAb1seD/zzl+AxWcA4FyXZRY8
-	 RF9dWPsIn7fKSRk+brQRTBiaGH9bfbNl823SKGN3VV74YVIrWqF5djM+0aL5vGM3Gr
-	 Wq7qbCPl4C2IBkyI9HcZ84pEZsuCJ/k5+776wBVLoP/pMh0/w2dQDbGXgVOhy2gBEE
-	 vmkgjQcQZAw1w==
+	b=S1IM59ecSrMdMppxGzNcIDf2AUBk7ygKGPXlTRnq8+3Yys3y+zBtttI5spYeA0sXk
+	 eDYtRoZy5Cyv7RRtR//upvCihxPunCcudF1eL2fG9z7WYDDS4p9J/xkBG1GpF1kyZB
+	 QC11VDRK53bqfxIfwdWnacxNMeNC/LN8tcWHhdCsETNetaxg0aZk6kR3O7lzM0CfJo
+	 0re6N8DSnaFIFHmB06De2bNHPEKYwWDROVbvuxQ/g4J4x2zu43qZ3kK/KB72ZVDHzJ
+	 DoQh0Zru4DlA0K1gz5nq7Ye8wI21H8+FI++O+t4TFrYqqtE60OAvWnDyRxNxjx+Wnx
+	 GCLgyoOS5Zr7A==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Cc: Jordan Crouse <jorcrous@amazon.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Depeng Shao <quic_depengs@quicinc.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 411/486] clk: qcom: camcc-sm8250: Use clk_rcg2_shared_ops for some RCGs
-Date: Mon,  5 May 2025 18:38:07 -0400
-Message-Id: <20250505223922.2682012-411-sashal@kernel.org>
+	rfoss@kernel.org,
+	todor.too@gmail.com,
+	bryan.odonoghue@linaro.org,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 417/486] media: qcom: camss: csid: Only add TPG v4l2 ctrl if TPG hardware is available
+Date: Mon,  5 May 2025 18:38:13 -0400
+Message-Id: <20250505223922.2682012-417-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250505223922.2682012-1-sashal@kernel.org>
 References: <20250505223922.2682012-1-sashal@kernel.org>
@@ -70,283 +70,138 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.26
 Content-Transfer-Encoding: 8bit
 
-From: Jordan Crouse <jorcrous@amazon.com>
+From: Depeng Shao <quic_depengs@quicinc.com>
 
-[ Upstream commit 52b10b591f83dc6d9a1d6c2dc89433470a787ecd ]
+[ Upstream commit 2f1361f862a68063f37362f1beb400e78e289581 ]
 
-Update some RCGs on the sm8250 camera clock controller to use
-clk_rcg2_shared_ops. The shared_ops ensure the RCGs get parked
-to the XO during clock disable to prevent the clocks from locking up
-when the GDSC is enabled. These mirror similar fixes for other controllers
-such as commit e5c359f70e4b ("clk: qcom: camcc: Update the clock ops for
-the SC7180").
+There is no CSID TPG on some SoCs, so the v4l2 ctrl in CSID driver
+shouldn't be registered. Checking the supported TPG modes to indicate
+if the TPG hardware exists or not and only registering v4l2 ctrl for
+CSID only when the TPG hardware is present.
 
-Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20250122222612.32351-1-jorcrous@amazon.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-sm8250.c | 56 ++++++++++++++++-----------------
- 1 file changed, 28 insertions(+), 28 deletions(-)
+ .../media/platform/qcom/camss/camss-csid.c    | 60 +++++++++++--------
+ 1 file changed, 35 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/clk/qcom/camcc-sm8250.c b/drivers/clk/qcom/camcc-sm8250.c
-index 34d2f17520dcc..450ddbebd35f2 100644
---- a/drivers/clk/qcom/camcc-sm8250.c
-+++ b/drivers/clk/qcom/camcc-sm8250.c
-@@ -411,7 +411,7 @@ static struct clk_rcg2 cam_cc_bps_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+index 858db5d4ca75c..e51f2ed3f0315 100644
+--- a/drivers/media/platform/qcom/camss/camss-csid.c
++++ b/drivers/media/platform/qcom/camss/camss-csid.c
+@@ -683,11 +683,13 @@ static int csid_set_stream(struct v4l2_subdev *sd, int enable)
+ 	int ret;
  
-@@ -433,7 +433,7 @@ static struct clk_rcg2 cam_cc_camnoc_axi_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+ 	if (enable) {
+-		ret = v4l2_ctrl_handler_setup(&csid->ctrls);
+-		if (ret < 0) {
+-			dev_err(csid->camss->dev,
+-				"could not sync v4l2 controls: %d\n", ret);
+-			return ret;
++		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
++			ret = v4l2_ctrl_handler_setup(&csid->ctrls);
++			if (ret < 0) {
++				dev_err(csid->camss->dev,
++					"could not sync v4l2 controls: %d\n", ret);
++				return ret;
++			}
+ 		}
  
-@@ -454,7 +454,7 @@ static struct clk_rcg2 cam_cc_cci_0_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+ 		if (!csid->testgen.enabled &&
+@@ -761,7 +763,8 @@ static void csid_try_format(struct csid_device *csid,
+ 		break;
  
-@@ -469,7 +469,7 @@ static struct clk_rcg2 cam_cc_cci_1_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+ 	case MSM_CSID_PAD_SRC:
+-		if (csid->testgen_mode->cur.val == 0) {
++		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
++		    csid->testgen_mode->cur.val == 0) {
+ 			/* Test generator is disabled, */
+ 			/* keep pad formats in sync */
+ 			u32 code = fmt->code;
+@@ -811,7 +814,8 @@ static int csid_enum_mbus_code(struct v4l2_subdev *sd,
  
-@@ -490,7 +490,7 @@ static struct clk_rcg2 cam_cc_cphy_rx_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+ 		code->code = csid->res->formats->formats[code->index].code;
+ 	} else {
+-		if (csid->testgen_mode->cur.val == 0) {
++		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
++		    csid->testgen_mode->cur.val == 0) {
+ 			struct v4l2_mbus_framefmt *sink_fmt;
  
-@@ -511,7 +511,7 @@ static struct clk_rcg2 cam_cc_csi0phytimer_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+ 			sink_fmt = __csid_get_format(csid, sd_state,
+@@ -1190,7 +1194,8 @@ static int csid_link_setup(struct media_entity *entity,
  
-@@ -526,7 +526,7 @@ static struct clk_rcg2 cam_cc_csi1phytimer_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+ 		/* If test generator is enabled */
+ 		/* do not allow a link from CSIPHY to CSID */
+-		if (csid->testgen_mode->cur.val != 0)
++		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED &&
++		    csid->testgen_mode->cur.val != 0)
+ 			return -EBUSY;
  
-@@ -556,7 +556,7 @@ static struct clk_rcg2 cam_cc_csi3phytimer_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+ 		sd = media_entity_to_v4l2_subdev(remote->entity);
+@@ -1283,24 +1288,27 @@ int msm_csid_register_entity(struct csid_device *csid,
+ 		 MSM_CSID_NAME, csid->id);
+ 	v4l2_set_subdevdata(sd, csid);
  
-@@ -571,7 +571,7 @@ static struct clk_rcg2 cam_cc_csi4phytimer_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+-	ret = v4l2_ctrl_handler_init(&csid->ctrls, 1);
+-	if (ret < 0) {
+-		dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
+-		return ret;
+-	}
++	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
++		ret = v4l2_ctrl_handler_init(&csid->ctrls, 1);
++		if (ret < 0) {
++			dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
++			return ret;
++		}
  
-@@ -586,7 +586,7 @@ static struct clk_rcg2 cam_cc_csi5phytimer_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+-	csid->testgen_mode = v4l2_ctrl_new_std_menu_items(&csid->ctrls,
+-				&csid_ctrl_ops, V4L2_CID_TEST_PATTERN,
+-				csid->testgen.nmodes, 0, 0,
+-				csid->testgen.modes);
++		csid->testgen_mode =
++			v4l2_ctrl_new_std_menu_items(&csid->ctrls,
++						     &csid_ctrl_ops, V4L2_CID_TEST_PATTERN,
++						     csid->testgen.nmodes, 0, 0,
++						     csid->testgen.modes);
  
-@@ -611,7 +611,7 @@ static struct clk_rcg2 cam_cc_fast_ahb_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+-	if (csid->ctrls.error) {
+-		dev_err(dev, "Failed to init ctrl: %d\n", csid->ctrls.error);
+-		ret = csid->ctrls.error;
+-		goto free_ctrl;
+-	}
++		if (csid->ctrls.error) {
++			dev_err(dev, "Failed to init ctrl: %d\n", csid->ctrls.error);
++			ret = csid->ctrls.error;
++			goto free_ctrl;
++		}
  
-@@ -634,7 +634,7 @@ static struct clk_rcg2 cam_cc_fd_core_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+-	csid->subdev.ctrl_handler = &csid->ctrls;
++		csid->subdev.ctrl_handler = &csid->ctrls;
++	}
  
-@@ -649,7 +649,7 @@ static struct clk_rcg2 cam_cc_icp_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+ 	ret = csid_init_formats(sd, NULL);
+ 	if (ret < 0) {
+@@ -1331,7 +1339,8 @@ int msm_csid_register_entity(struct csid_device *csid,
+ media_cleanup:
+ 	media_entity_cleanup(&sd->entity);
+ free_ctrl:
+-	v4l2_ctrl_handler_free(&csid->ctrls);
++	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED)
++		v4l2_ctrl_handler_free(&csid->ctrls);
  
-@@ -673,7 +673,7 @@ static struct clk_rcg2 cam_cc_ife_0_clk_src = {
- 		.parent_data = cam_cc_parent_data_2,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_2),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+ 	return ret;
+ }
+@@ -1344,7 +1353,8 @@ void msm_csid_unregister_entity(struct csid_device *csid)
+ {
+ 	v4l2_device_unregister_subdev(&csid->subdev);
+ 	media_entity_cleanup(&csid->subdev.entity);
+-	v4l2_ctrl_handler_free(&csid->ctrls);
++	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED)
++		v4l2_ctrl_handler_free(&csid->ctrls);
+ }
  
-@@ -710,7 +710,7 @@ static struct clk_rcg2 cam_cc_ife_0_csid_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -734,7 +734,7 @@ static struct clk_rcg2 cam_cc_ife_1_clk_src = {
- 		.parent_data = cam_cc_parent_data_3,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_3),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -749,7 +749,7 @@ static struct clk_rcg2 cam_cc_ife_1_csid_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -771,7 +771,7 @@ static struct clk_rcg2 cam_cc_ife_lite_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -786,7 +786,7 @@ static struct clk_rcg2 cam_cc_ife_lite_csid_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -810,7 +810,7 @@ static struct clk_rcg2 cam_cc_ipe_0_clk_src = {
- 		.parent_data = cam_cc_parent_data_4,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_4),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -825,7 +825,7 @@ static struct clk_rcg2 cam_cc_jpeg_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -847,7 +847,7 @@ static struct clk_rcg2 cam_cc_mclk0_clk_src = {
- 		.parent_data = cam_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -862,7 +862,7 @@ static struct clk_rcg2 cam_cc_mclk1_clk_src = {
- 		.parent_data = cam_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -877,7 +877,7 @@ static struct clk_rcg2 cam_cc_mclk2_clk_src = {
- 		.parent_data = cam_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -892,7 +892,7 @@ static struct clk_rcg2 cam_cc_mclk3_clk_src = {
- 		.parent_data = cam_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -907,7 +907,7 @@ static struct clk_rcg2 cam_cc_mclk4_clk_src = {
- 		.parent_data = cam_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -922,7 +922,7 @@ static struct clk_rcg2 cam_cc_mclk5_clk_src = {
- 		.parent_data = cam_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -993,7 +993,7 @@ static struct clk_rcg2 cam_cc_slow_ahb_clk_src = {
- 		.parent_data = cam_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
+ inline bool csid_is_lite(struct csid_device *csid)
 -- 
 2.39.5
 
