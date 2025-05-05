@@ -1,105 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-56753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63558AA8F84
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 11:27:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2982AA8F86
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 11:27:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93CBA3AAF07
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 09:26:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 45D42175694
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 09:27:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 030651FCFEE;
-	Mon,  5 May 2025 09:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 433F1201000;
+	Mon,  5 May 2025 09:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VvX+ZyN0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B/TxDQOq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9491FC7F5;
-	Mon,  5 May 2025 09:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19092200132;
+	Mon,  5 May 2025 09:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746437180; cv=none; b=hdbj0fnku8iE4bUBfrGQhsetbYI5h6VC4f/v6oaTp3BtnKlNknuG9C9ofaaqln7MttaOfoCoSYJl/cDZacPxA3fPDmna08Nyz9zsZ1DmrJj5usGD+yC1pFOK/lcMtHE3QOT2TwjR5t0qtTuf0WYsUyB6cmNaIpZOLTHSfotGxE8=
+	t=1746437188; cv=none; b=VBpsL1AI/uLeTzGh5J7y9lyobMnoKHCVccdr1iaXmvwxE894t5fyWgGpF+cNVqq4zNcpl9ZqthX9VVswCnWy+dlvWCZDTyBG2LSvIclvlOgCOHbCUtdxS42aS5c+5UPr7AvTsDokcA1edVdlP48FL4GLMQLlddK9XWJFibEm6DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746437180; c=relaxed/simple;
-	bh=DN3ERg8zsCk+ghA8/wCrbbGaeNolgYO/AVElrgswuPE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mWG3v/b9pfyIG2Q4dqrJ1OPInBqfLOtvGllkEH8OsSju2MnqA4q2+wH9bE0+rly/xbXRL+sgETV4Q/s3mPEx1PEcGWoNP14WfF+IMxQsKFGoICQ0q7ZfP0oJWE9rtMU/4bd/cRzGf3WmThgI7q3NLDlrKAJbY8VE81EW2uPOy0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VvX+ZyN0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB01C4CEE4;
-	Mon,  5 May 2025 09:26:16 +0000 (UTC)
+	s=arc-20240116; t=1746437188; c=relaxed/simple;
+	bh=pCXgUjLWANgCjPVU4iwtz5hk0Bd35lQGLhmptLCW2vc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ELQz2KLoC2DJJgZWhW5SHkN55y/ytn3y0Jy5XePr00aK/ctjZot1ACLG7IG5uRu0Ygh1mnFWEEB1uLLj3u6neyFX1Y1cudWUDri2OEQslg/4QNjfXDIfBUC35W65OfP9RMsUFiOkv5q/i8Bnjd+MKqv5wbGN+cEfXOw//DTAhh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B/TxDQOq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC47BC4CEE9;
+	Mon,  5 May 2025 09:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746437180;
-	bh=DN3ERg8zsCk+ghA8/wCrbbGaeNolgYO/AVElrgswuPE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=VvX+ZyN0o0c8Rt/vlhx+eqQs7PTPAfcpzfaOC5POHtDY5EQLrSbqNxsM0ISNy/5kt
-	 UpcZCXGg/+SZ1i2OBxDec47MDXsty/6EdmSMt75EskDWSH+T5i0VbDGDlq3Q6bSrgc
-	 c8sH3aMWiO1AVrrZa4dxRHwvYPYWxvpigmh01BRmxtuLPeEqKc/lD4HYpZvjIskyMO
-	 SZu8rXFUgqlVFP8Crq7oG3ykIwWM6VHFnk7NZxa/YjfHRbyx6XNMgtjU8bbwjDYPxw
-	 z/tD+u/m/GdGsmJGz3E201GdNx2IXcBk4BynOmJhCzScLW76LOp+hSt2p0i1tWSB7W
-	 QYbtsITDux3Nw==
+	s=k20201202; t=1746437187;
+	bh=pCXgUjLWANgCjPVU4iwtz5hk0Bd35lQGLhmptLCW2vc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=B/TxDQOqcM5WLt83A1MO5glFnrZSWi5hOCGwfN/7oAANzpIZ+bM6SsLrkJTQ6/oMV
+	 yiNPt4o6tmpBu9Rndq4hq+DBBJ6y/t/09QhwhKHtDrrB3vpe3hjhWP9vhF0BgPZZxL
+	 rpA1WndSrrJy6MQXHe516mJlU8mA8ETjK4CfkGP7pLQi7KyQXFMt5kLe+JNxExtviQ
+	 ViCg9PjKB7HF8JJGyeDt35HIsjQQThjE4GCG93snS8shPauISB0aH9TndtcDOGJIV2
+	 QtSjaXR6HOddGGASNnCzl7/Ngl+mJs3GlOGt2IvN99ofBhZaxr/yqeKShMXYUY85V0
+	 +xww2ajv/Rlnw==
 From: Niklas Cassel <cassel@kernel.org>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Rob Herring <robh@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Niklas Cassel <cassel@kernel.org>,
-	Krishna chaitanya chundru <quic_krichai@quicinc.com>
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Niklas Cassel <cassel@kernel.org>
 Cc: Wilfred Mallawa <wilfred.mallawa@wdc.com>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Hans Zhang <18255117159@163.com>,
 	Laszlo Fiat <laszlo.fiat@proton.me>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH 0/4] PCI: dwc: Link Up IRQ fixes
-Date: Mon,  5 May 2025 11:26:04 +0200
-Message-ID: <20250505092603.286623-6-cassel@kernel.org>
+Subject: [PATCH 2/4] PCI: qcom: Do not enumerate bus before endpoint devices are ready
+Date: Mon,  5 May 2025 11:26:06 +0200
+Message-ID: <20250505092603.286623-8-cassel@kernel.org>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250505092603.286623-6-cassel@kernel.org>
+References: <20250505092603.286623-6-cassel@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1002; i=cassel@kernel.org; h=from:subject; bh=DN3ERg8zsCk+ghA8/wCrbbGaeNolgYO/AVElrgswuPE=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGDIkWrRZjAVWLDy3O2UL1886j6ZLzj/Z04VClRySY/yqN 8U0BJp0lLIwiHExyIopsvj+cNlf3O0+5bjiHRuYOaxMIEMYuDgFYCJO0gz/Y74oSLR29a45kpQ/ re58xCPP95lhS2esK4vZcspS/mFEF8P/qqaA0p92906vXHWUzbF4y//g6bPfhlmsnHbY8fO9Fau mMQMA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2089; i=cassel@kernel.org; h=from:subject; bh=pCXgUjLWANgCjPVU4iwtz5hk0Bd35lQGLhmptLCW2vc=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGDIkWnRYZ8U1ZhTsTDmfkph0Y8HZa6dWSP1ZqZTvKe1n/ WtFRNjmjlIWBjEuBlkxRRbfHy77i7vdpxxXvGMDM4eVCWQIAxenAExk/Q2Gv2L3fZ7fMT8ssJ7r tPKkQ80cLpJzZuUV5J567lr9NWL/8n6G/6Ubedb5Rz+bf3gtR/ZnDvlrE3gVugXKDPpq5HqEq9l TuAE=
 X-Developer-Key: i=cassel@kernel.org; a=openpgp; fpr=5ADE635C0E631CBBD5BE065A352FE6582ED9B5DA
 Content-Transfer-Encoding: 8bit
 
-Hello there,
+Commit 36971d6c5a9a ("PCI: qcom: Don't wait for link if we can detect Link
+Up") changed so that we no longer call dw_pcie_wait_for_link(), and instead
+enumerate the bus when receiving a Link Up IRQ.
 
-Commit 8d3bf19f1b58 ("PCI: dwc: Don't wait for link up if driver can detect
-Link Up event") added support for DWC to not wait for link up before
-enumerating the bus. However, we cannot simply enumerate the bus after
-receiving a Link Up IRQ, we still need to wait PCIE_T_RRS_READY_MS time
-to allow a device to become ready after deasserting PERST. To avoid
-bringing back an conditional delay during probe, perform the wait in the
-threaded IRQ handler instead.
+Before 36971d6c5a9a, we called dw_pcie_wait_for_link(), and in the first
+iteration of the loop, the link will never be up (because the link was just
+started), dw_pcie_wait_for_link() will then sleep for LINK_WAIT_SLEEP_MS
+(90 ms), before trying again.
 
-Please review.
+This means that even if a driver was missing a msleep(PCIE_T_RRS_READY_MS)
+(100 ms), because of the call to dw_pcie_wait_for_link(), enumerating the
+bus would essentially be delayed by that time anyway (because of the sleep
+LINK_WAIT_SLEEP_MS (90 ms)).
 
+While we could add the msleep(PCIE_T_RRS_READY_MS) after deasserting PERST
+(qcom already has an unconditional 1 ms sleep after deasserting PERST),
+that would essentially bring back an unconditional delay during probe (the
+whole reason to use a Link Up IRQ was to avoid an unconditional delay
+during probe).
 
-Kind regards,
-Niklas
+Thus, add the msleep(PCIE_T_RRS_READY_MS) before enumerating the bus in the
+IRQ handler. This way, for qcom SoCs that has a link up IRQ, we will not
+have a 100 ms unconditional delay during boot for unpopulated PCIe slots.
 
+Fixes: 36971d6c5a9a ("PCI: qcom: Don't wait for link if we can detect Link Up")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+---
+ drivers/pci/controller/dwc/pcie-qcom.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Niklas Cassel (4):
-  PCI: dw-rockchip: Do not enumerate bus before endpoint devices are
-    ready
-  PCI: qcom: Do not enumerate bus before endpoint devices are ready
-  PCI: dw-rockchip: Replace PERST sleep time with proper macro
-  PCI: qcom: Replace PERST sleep time with proper macro
-
- drivers/pci/controller/dwc/pcie-dw-rockchip.c | 3 ++-
- drivers/pci/controller/dwc/pcie-qcom.c        | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
-
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 6b18a2775e7f..5cef5e92b173 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1646,6 +1646,7 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
+ 
+ 	if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
+ 		dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
++		msleep(PCIE_T_RRS_READY_MS);
+ 		/* Rescan the bus to enumerate endpoint devices */
+ 		pci_lock_rescan_remove();
+ 		pci_rescan_bus(pp->bridge->bus);
 -- 
 2.49.0
 
