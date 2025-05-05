@@ -1,188 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-56802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F4ECAA9558
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 16:19:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05B86AA95AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 16:25:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC6CE3BB93D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 14:18:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CA3E4189C0D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 14:25:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA65825A349;
-	Mon,  5 May 2025 14:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1E0525C701;
+	Mon,  5 May 2025 14:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="b4PAbizK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dKpu4uHv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1158125A338
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 14:18:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF2225A340
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 14:24:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746454737; cv=none; b=qC8otAlfMdxDP8+I3e1jBQ94etsdrjZgO2aAtoN3aWa7YZds4+Z3qNRoYr4AnxEZhF+yDVRQ7guXrMWYL3O6iPIsyeFbkUPctqmDQzdYIrC8sfOOZAkCY8TnQuytWo1wEZVnjj0AMUoLBTd0s74lWM2m1mlTi8TXKrG7714ZmD0=
+	t=1746455092; cv=none; b=LKLqpKDoNdaA36bBmMF3h4+tlfmYhgJKYmLLEdYD00toJyV+jngp0Mwh5Hle0/FTpAAy/PXD/wAsDxFT88/MUQ8+FkRyJfRtxJ9KLpfSB8slQ1ejZjgkL3nAkex25FFcdZ2eKwzCAKzBg1sE0rvS765sv2oxKZ+39F7+TnaX1Ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746454737; c=relaxed/simple;
-	bh=3Vf+AaQhANAKR4iErxV8pfkN6oisAXDi42nAcHc040E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hnk8OPmCcJoVHNpHw0T/W2pEuStIjb24s0rhiGuJpwKFzHMh0uDOFkGoq82ebqnsP9uradyBu7YcTN91OYzO1WufJCMrUagMqwhVtBf0UFM5bqP+FuaQICqsRYpREEhvNIT/53O/8jjPvNBCYCQXK7sFiU0apTzFBKULb4OBWm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b4PAbizK; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 545Aawrr014122
-	for <linux-arm-msm@vger.kernel.org>; Mon, 5 May 2025 14:18:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4OMp8lVlfqOS6nQjtVYiy+vsTT7GaERnrIvMt0I4OI8=; b=b4PAbizKQdgKo4Sz
-	hAnB7gq3XzspJ7yxkI0rAfW/7gt8MI6H80NV0PqEJqNV3uxySOCpIdYv4a0kcI2M
-	g1H+XyC3/zZ8nd+XzuT6p7yv5WQH3G5GZtwy8+MHRWRMP7nTsg1OhRLVB8Ao2Q2x
-	LkOtxTrcjQC+ePkmFGRmr3CN7it78qUDiXOhLLNJydEezJTaB/wbSUgoAEn3EOEG
-	rKFYA+c7uVYVYrRyokY177Tx7LL2A80L42El0vWjD1xeGlYr1oHgT2qD08MrheoD
-	BeqGEQ6MFyy3CrqaZ4pB2puT0olee4bxczYriQ4HokKGlV5XmOK/jOHNeDjjVuKv
-	NniVyQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46d9nkvdua-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 14:18:55 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c5f876bfe0so765800285a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 07:18:54 -0700 (PDT)
+	s=arc-20240116; t=1746455092; c=relaxed/simple;
+	bh=xt8wTl7f/wywoxHl8MRfq+ZGmNxRNYEOFuCUDSuwLic=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=HTwSbQyvnNJ96IqLUM99/oCw+5fBV6pkiJZM+1yt+lwrdrSgJGXX1pcB0ep479uReKzRWQjW+1zHzIL53EIt6qxJLL+h2UG04Wj/5MqHo4S4J4HTOCtjmT91ju4BBL+mRzm7p5R/y0vheuMvT9iXQhCH72VX+q5xTnbCXfnPdwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dKpu4uHv; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b1f7f239b31so4624495a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 07:24:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1746455090; x=1747059890; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ckZi0UvIHQqdmNSpnk+GIMPTtp6lAso+Q4qx4Ve2kag=;
+        b=dKpu4uHvS3nVpBJV11TOQfpKDno9gVsaHVMU6E1zfYDJkypRcrPPefSTfzplA2DkTn
+         SkTf56X8htxuAg/ukXOWdmw2k9vNsJ2PaHsI+zKaq3A6ZB1iVHMwfIGcbUZisa8Wufec
+         X8+SSqaPlPTUv0uHTFcQlbRMNt/31K3lXaTa6FhLMUt9fOiuejD0HSj+52UfYTfn70ep
+         6s/jxmVUb0HWS8yKBH4aTP9YyOZEqISFiRdMKjjJBZYriKiB0DNVjTQLp7WBdFa4TL37
+         lxuu0xJajVlzgW0/kuLAmn+O/luaQX6NoHWfNiCdi+GLTLuOnMzG63O8lQadfDNB+sSZ
+         us5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746454734; x=1747059534;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4OMp8lVlfqOS6nQjtVYiy+vsTT7GaERnrIvMt0I4OI8=;
-        b=or7t9XLfASVBPMgOeMl48lMarR/5esWcWOupYSeUPn2UDc0PEcajyLAf/P5+Z8/yR7
-         HE81XyHExM45lq1ciFULwa8sV5V7GED8UAJRkcV1PNPxHE7TQuNjw9Rn9cNqg6tpR3Hk
-         RjQUmJKm8phFzDq4Mk6rmv5/TaOEYLraKlVz75sT9ygNgMtQz07km98U8HcHP2TD87MH
-         A+ydGUrfyvEYO5Z/1zNXYCw4hV8yljTzovliFflTGgEC3WyiRlL3GxJso1LpTtK061ZE
-         SmDH9VMzEdRfGP0AQ5kDSiYHB3Lldd9kXY/ntTu95z7LKd0csHt2FPg7HNDxyHEMl4GU
-         ayJg==
-X-Forwarded-Encrypted: i=1; AJvYcCVjmJ9yd80HRNK5wDT8qH0LIYEyTiEi/c47jn21KES/7NNySP/g20/gvvPI1MJmvorCXtrmMFNVXk6HEqQn@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3K0V//hy2aLf96IhmfsnVCF80EA76e1bDcDlozfjzKSDL3fk9
-	YqIxoylyFRTtj4M4VLmmb1RGsv5BFInEG5TF/gJP1VHeAeiGSPkIaKrhPDr8n9G6Txo0cf4Ns+6
-	21AU3+jollvzA+ifUSVivNYm01xH1rHrlXZnfXTwIm9s7XUsoLo+H0iuaRWn/Tiiv
-X-Gm-Gg: ASbGncsN+y+OSdSc0Z3cFSfkgRJ0oLShXRed+Nl9UXqKtYl2LzcLD8sFm/2aqAkQ7VQ
-	CCptb7zeDYOcau1DW4KXc7c404rsb0JHG0M5Ghn7CoTuvXMlp0V6+eZ5fFSC/yohHahpXOPFN1N
-	aOhvZdM2/nykHQG+s5gzp4gKk3bkAAcg1wdT1a50vXRgiyLFRLn+BTNirJjMv1WEi4D8WNzG1Aw
-	eLYFNmBOhM9j5+R/sPXo2gdRGwSoJ078GMxDfUUNyLIw39NvGWwI++IHMgWO6vbCcT5KeUsQkYH
-	0/ThUzSdJIWMYNocGF0qt1/58hMB+aO8Gtp7ddjlgopo8RGKPjoNkYwDJWIwnus4Ysz/A53UN4K
-	gws3rVSGZnvUaXHoPE+4hRMXcsDpkVn67N1CxsVD3HqOvM7lf52r+ftsWjdhTm7aYRQG1
-X-Received: by 2002:a05:620a:1a0e:b0:7c5:e283:7d0a with SMTP id af79cd13be357-7cadfe15ab6mr1528031185a.30.1746454733846;
-        Mon, 05 May 2025 07:18:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHxLIuDmlMk0BDjjG/jcKroZx3ooAtnxfCFD86oCFhHuF1R3mpWcw+w7OoB3Ift4T6LrXoRzw==
-X-Received: by 2002:a05:620a:1a0e:b0:7c5:e283:7d0a with SMTP id af79cd13be357-7cadfe15ab6mr1528024685a.30.1746454733441;
-        Mon, 05 May 2025 07:18:53 -0700 (PDT)
-Received: from ?IPV6:2001:14bb:671:42db:147e:6740:cd7c:7688? (2001-14bb-671-42db-147e-6740-cd7c-7688.rev.dnainternet.fi. [2001:14bb:671:42db:147e:6740:cd7c:7688])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94f2043sm1707308e87.179.2025.05.05.07.18.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 May 2025 07:18:52 -0700 (PDT)
-Message-ID: <4a186d4f-9966-4569-bee2-77e237cf0c54@oss.qualcomm.com>
-Date: Mon, 5 May 2025 17:18:49 +0300
+        d=1e100.net; s=20230601; t=1746455090; x=1747059890;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ckZi0UvIHQqdmNSpnk+GIMPTtp6lAso+Q4qx4Ve2kag=;
+        b=KbTGeTXA+naGQW4Wi2HeYgR682kAUZ+cSp7EdMZzxHdvtcYl4FY9HubTTHgThagCct
+         H5VefuDR10j0rXQp59eD6Su1LnCEMnx/Hm5rI7AJMGpOi0EcKLfsys3CfxXNXd9eUNHJ
+         /3uFpy3pLcTRXc8JyP6JXhRDmP+G4yY/QImvKwyGC/cYuIY1V0tsptFVDrVfqd1MDtNO
+         b1Nf9XrQ8L6AIOMQ8sEwNreh0D+lPxKYhnosZ4g8TFoYB87KU6tfgeCGZDLlluRKabya
+         lIu1g86PCH+xE0qBrjtqRwNUl4vi1d5sP6diEv4zCgKpYAl0Kkje3cQ50PpXmhrtJDrO
+         aSEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXF1C4vx5pnSAO5YMOp4/XrTOWcH/+T4DgsjJuQD8rwQHE9g4TTjphhxadrhW78y27kZRccEjcnGlOVgF/4@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx8Z6U0emDrgZmo5uYAn4PsZR2A5gCfcJvnVmkys6H+Kjsu6uR8
+	3S6hgZuGgkZ8zJM6Cutf4l/WWrJSAEAySSvh3wwtkGWkcKodNIOrbZaVKGybyg==
+X-Gm-Gg: ASbGncuwoVFRGBk18hNZ8aJaVriDR+JqXgv3JrHwGOM/rVNhggyIhrngm2vUgLbp5k8
+	ex1OS/XUEwEUX4/lARf0nWBMG8Kk/HJPmLghxDJBdTaKQBbBN4KbMyflym5lT7cdV7l66LSkIRm
+	ZLaKIEWsp95BP8W5+3yafjuJpQAsbE+J0va7PcHgsA2eCD1zkkEbF4DlPnG724upqDpSffSSE9P
+	lpfYM0zjAajCrb83k73syVwcKiBYkXjfQ0m+OQHdp+WRgIa5SXHQfgLoBs+TSHiviWHP7NZ90nh
+	dLhKoeZffG5AuXY4tCIc0idKlJmYQJBexuSXL7MieuYjV3JgNn1UnCI=
+X-Google-Smtp-Source: AGHT+IHmtJOA/Mih95X48YJhJskbDqtDEyBEjblBYNNdinJLrWabyyXWhhEiuwx6ZMRQ8FBgASDl4Q==
+X-Received: by 2002:a17:90b:498c:b0:309:f46e:a67c with SMTP id 98e67ed59e1d1-30a4e228371mr21130087a91.11.1746455090375;
+        Mon, 05 May 2025 07:24:50 -0700 (PDT)
+Received: from [127.0.1.1] ([120.60.48.235])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22e1522ef9bsm55387685ad.217.2025.05.05.07.24.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 May 2025 07:24:49 -0700 (PDT)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v4 0/4] PCI: Add PTM debugfs support
+Date: Mon, 05 May 2025 19:54:38 +0530
+Message-Id: <20250505-pcie-ptm-v4-0-02d26d51400b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/11] Various dt-bindings fixes
-To: Rob Herring <robh@kernel.org>
-Cc: Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Krzysztof Kozlowski
- <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Robert Foss <rfoss@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>,
-        Kyle Deng <quic_chunkaid@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-usb@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250306-topic-dt_bindings_fixups-v1-0-0c84aceb0ef9@oss.qualcomm.com>
- <174637445759.1385605.15383087742490646226.b4-ty@oss.qualcomm.com>
- <CAL_JsqKr8Xd8uxFzE0YJTyD+V6N++VV8SX-GB5Xt0_BKkeoGUQ@mail.gmail.com>
-Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <CAL_JsqKr8Xd8uxFzE0YJTyD+V6N++VV8SX-GB5Xt0_BKkeoGUQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDEzNyBTYWx0ZWRfXzcky5O0EvzPl
- R/c188CR2oZVSo0P+Ss6yNB0CuHaIq6rMONdQclyEjks/iVMdpTHeLa8Ni3WMvBXfkVwI4fuwjT
- FrI6rhMw5hDYjOnw7jkz7/PZFluIul5vsFqA46i50x3BAt7L4dZXn48ewdhUdttisLI0x1XOXhl
- f2tV04c8Ux6KGoM88PMlfBk9FIAF3s/vyj9XXK3f14AoRJpkxfU30kbquYmO7IBP3j9VhOsW/TV
- t8Xq9un52kVzs4sbu/29WLvhVk5iAFVrnWE92UklTCDqDW4TBhpkGSyr5Hmj2lIfQ7of1crekLK
- o5zgvf8NWPQGlSWaEy1va/3xCSprGsk1uOme9lw8ZFJuQBl41Kx173EKnhb5TBF9B3YxYEPxkJ0
- HODs4rLpjGTTSJHgnHyNqlE1PT28UvxuxPpkAPv/5ZZfrYR/NQOGubiEui20TbfwUKK+vMzw
-X-Proofpoint-GUID: -Nr_ZFb97D2M9edCXmODGrwbR81oh6GN
-X-Authority-Analysis: v=2.4 cv=LpeSymdc c=1 sm=1 tr=0 ts=6818c8cf cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=dt9VzEwgFbYA:10 a=e5mUnYsNAAAA:8 a=gEfo2CItAAAA:8 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=Y8Lu5Vov3j2QtJBI0v0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=Vxmtnl_E_bksehYqCbjh:22 a=sptkURWiP4Gy88Gu7hUp:22
-X-Proofpoint-ORIG-GUID: -Nr_ZFb97D2M9edCXmODGrwbR81oh6GN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-05_06,2025-05-05_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 adultscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
- spamscore=0 malwarescore=0 priorityscore=1501 clxscore=1015 phishscore=0
- bulkscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505050137
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACbKGGgC/22Myw6CMBBFf4XM2hqcFnms/A/jgpYpTKKUtKTRE
+ P7dwsaQuDw395wFAnmmAE22gKfIgd2YQJ0yMEM79iS4SwyYY5FLVGIyTGKaX4LKQtcarTVWQ7p
+ Pniy/99T9kXjgMDv/2csRt/VPJKLIhSm7ysirUlq1tyePrXdn53vYKlH+THUw5WbWWJPusMKLO
+ Zjrun4Bq14U/9sAAAA=
+X-Change-ID: 20250324-pcie-ptm-e75b9b2ffcfb
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Jingoo Han <jingoohan1@gmail.com>
+Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3960;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=xt8wTl7f/wywoxHl8MRfq+ZGmNxRNYEOFuCUDSuwLic=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBoGMouComxCctxITkxCPVc+0xvFvpnyyuvGa4hs
+ XZffzaHlwiJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaBjKLgAKCRBVnxHm/pHO
+ 9bh4B/0XHNltihdf1htdE2fqWZY9OLFD7zMg2fWNd9QTdnwojDNoUCgHWRtNPmM4N9nhQQTdT+I
+ SfTjX+BstESHj+BLe4FEy2BwtMpR6OPBTsfRRfhLg7LT2UHoYbhue1RzStZFI1fcjITx9GsBLbY
+ eq1MpWs8L73cGa7SoGx4uig6gJjgh7uODMcrKSRz1K63Jg5v7DP7xDAsKEGVqb/xC0Jc2NVpNbI
+ pO0FDjQmoTtkcfHEt47TzIvxCSxXTWmo9xRWIs1i7PA8F8sgKKxRvBQFLM+7zx5cx4BpYu7d9CB
+ yYKbRwlMb5whIpll3Hb3lLqLFSNLxNMNltk4D/EL8nttrAEO
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-On 05/05/2025 14:56, Rob Herring wrote:
-> On Sun, May 4, 2025 at 11:13 AM Dmitry Baryshkov
-> <dmitry.baryshkov@oss.qualcomm.com> wrote:
->>
->>
->> On Thu, 06 Mar 2025 19:11:12 +0100, Konrad Dybcio wrote:
->>> A set of not quite related bindings warnings fixes.
->>>
->>>
->>
->> Applied, thanks!
->>
->> [02/11] dt-bindings: display: msm: sm8350-mdss: Describe the CPU-CFG icc path
->>          https://gitlab.freedesktop.org/lumag/msm/-/commit/60b8d3a2365a
-> 
-> And now there's a warning in linux-next:
-> 
-> /builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.example.dtb:
-> display-subsystem@ae00000 (qcom,sm8350-mdss): interconnect-names:
-> ['mdp0-mem', 'mdp1-mem'] is too short
->          from schema $id:
-> http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
-> /builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.example.dtb:
-> display-subsystem@ae00000 (qcom,sm8350-mdss): interconnects:
-> [[4294967295, 7, 0, 4294967295, 1, 0], [4294967295, 8, 0, 4294967295,
-> 1, 0]] is too short
->          from schema $id:
-> http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
+Hi,
 
-I've sent a patch fixing the issue, 
-https://lore.kernel.org/linux-arm-msm/20250505-sm8350-fix-example-v1-1-36d5d9ccba66@oss.qualcomm.com/
+This series adds debugfs support to expose the PTM context available in the
+capable PCIe controllers. Support for enabling PTM in the requester/responder is
+already available in drivers/pci/pcie.c and this series expands that file to
+add debugfs support for the PTM context info.
 
+The controller drivers are expected to call pcie_ptm_create_debugfs() with
+'pcie_ptm_ops' callbacks populated to create the debugfs entries and call
+pcie_ptm_destroy_debugfs() to destroy them.
+
+Patch 1 adds the necessary code in the drivers/pci/pcie.c to expose PTM
+context over debugfs and patch 2 adds PTM support in the DWC drivers (host and
+endpoint). Finally, patch 3 masks the PTM_UPDATING interrupt in the pcie-qcom-ep
+driver to avoid processing the interrupt for each PTM context update.
+
+Testing
+=======
+
+This series is tested on Qcom SA8775p Ride Mx platform where one SA8775p acts as
+RC and another as EP with following instructions:
+
+RC
+--
+
+$ echo 1 > /sys/kernel/debug/pcie_ptm_1c10000.pcie/context_valid
+
+EP
+--
+
+$ echo auto > /sys/kernel/debug/pcie_ptm_1c10000.pcie-ep/context_update
+
+$ cat /sys/kernel/debug/pcie_ptm_1c10000.pcie-ep/local_clock
+159612570424
+
+$ cat /sys/kernel/debug/pcie_ptm_1c10000.pcie-ep/master_clock
+159609466232
+
+$ cat /sys/kernel/debug/pcie_ptm_1c10000.pcie-ep/t1
+159609466112
+
+$ cat /sys/kernel/debug/pcie_ptm_1c10000.pcie-ep/t4
+159609466518
+
+NOTE: To make use of the PTM feature, the host PCIe client driver has to call
+'pci_enable_ptm()' API during probe. This series was tested with enabling PTM in
+the MHI host driver with a local change (which will be upstreamed later).
+Technically, PTM could also be enabled in the pci_endpoint_test driver, but I
+didn't add the change as I'm not sure we'd want to add random PCIe features in
+the test driver without corresponding code in pci-epf-test driver.
+
+Changes in v4:
+- Fixed the build warning in patch 1/4
+- Moved the dwc_pcie_ptm_vsec_ids defintion to pcie_designware.c to avoid
+  -Wunused-const-variable warning. It also makes sense to keep it in the driver
+  for now since there are no more users.
+- Link to v3: https://lore.kernel.org/r/20250424-pcie-ptm-v3-0-c929ebd2821c@linaro.org
+
+Changes in v3:
+- Switched to debugfs interface based on comments from Bjorn
+- Added locking for context read/writes
+- Rebased on top of v6.15-rc1
+- Link to v2: https://lore.kernel.org/r/20250324-pcie-ptm-v2-0-c7d8c3644b4a@linaro.org
+
+Changes in v2:
+
+* Dropped the VSEC changes that got merged
+* Moved the PTM sysfs code from drivers/pci/controller/dwc to
+  drivers/pci/pcie/ptm.c to make it generic so that other controller drivers could
+  also benefit from it.
+* Rebased on top of pci/controller/dwc
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Manivannan Sadhasivam (4):
+      PCI: Add debugfs support for exposing PTM context
+      PCI: dwc: Pass DWC PCIe mode to dwc_pcie_debugfs_init()
+      PCI: dwc: Add debugfs support for PTM context
+      PCI: qcom-ep: Mask PTM_UPDATING interrupt
+
+ Documentation/ABI/testing/debugfs-pcie-ptm         |  70 +++++
+ MAINTAINERS                                        |   1 +
+ .../pci/controller/dwc/pcie-designware-debugfs.c   | 252 ++++++++++++++++-
+ drivers/pci/controller/dwc/pcie-designware-ep.c    |   2 +-
+ drivers/pci/controller/dwc/pcie-designware-host.c  |   2 +-
+ drivers/pci/controller/dwc/pcie-designware.c       |  14 +
+ drivers/pci/controller/dwc/pcie-designware.h       |  24 +-
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          |   8 +
+ drivers/pci/pcie/ptm.c                             | 300 +++++++++++++++++++++
+ include/linux/pci.h                                |  45 ++++
+ 10 files changed, 713 insertions(+), 5 deletions(-)
+---
+base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
+change-id: 20250324-pcie-ptm-e75b9b2ffcfb
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
 
