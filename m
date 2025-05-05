@@ -1,245 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-56779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 206A8AA929D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 13:59:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41C46AA92D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 14:17:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 09EFC3B000F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 11:59:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A4DF1772F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 12:17:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 528B120B1E8;
-	Mon,  5 May 2025 11:59:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 618B1250C11;
+	Mon,  5 May 2025 12:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IzwHVUWj"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NwwMaSql"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792D120ADE6
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 11:59:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D862512C4
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 12:17:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746446349; cv=none; b=rOycKf72McOE7umSpseFDVX4QNPwYlAeSR0+USe1bIMKNTtycURZs0TXkJgxVaWcjCGl3RGdp9s5PD8DgnN2NK7iP7cEzjPQH4bgrS880yEiu/vpsmoQaevT8z0KMWxZnsjuUARnytnv8XYHnYR48X/S+A6j1MY697BFavAtxgI=
+	t=1746447427; cv=none; b=efWPDk5fNL/L+ZeD+020aFMT8KU0fN0GkbXtIa6Wj6fvzHODXrzJggO24V62ncPWPMA0VdgoNEpw0WX9iovtY6GEjWaea3kZxwDgfYTEaf7ates4Am1m8sAWdZljLO9FsO84qXauHx9R+/woyLIEmFNJoyHaaprv60PXhRmKFvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746446349; c=relaxed/simple;
-	bh=FGuR2WBMXMvdjCd1ovjlhudh3LWd/ZGssire864V+jY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VDMeYNRszVR7TaJLhmhomXCZ+v35ACJVGcoJRhHQ+uT4VB67ODH7uDzNZho+UHXwchM2zM2Kk2ZN6vwI5vmGaJfp4hJNTOSxdQ/SqQEqKHdZtzMPIFhtLwQTVwBImDwtxEXdd36VqdZRuZnBbDpzT3J4kd99aKBqrSW2fF3JOtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IzwHVUWj; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1746447427; c=relaxed/simple;
+	bh=NlALIoe0iC3WSYUHgCo9Umj2JugDI/3o+WdAPXUGUuU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m02v5rbmLyV61zrQcz1QpRHLCXnzx/N/+o4T2ylZgFQvbchr/7cwBl0ne4j4+GjHpoYouzqNggGh2WW6RFki3RG0kEzPRXt/hYud2ubE50/BvomAxVS/lINp21UlSlFNXT8ovbAQ6HJi0EtvZ7tDHw3sjeK0xO+C+ZNoHAcEebI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NwwMaSql; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 544MpcDF023086
-	for <linux-arm-msm@vger.kernel.org>; Mon, 5 May 2025 11:59:06 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 545BG4oM015271
+	for <linux-arm-msm@vger.kernel.org>; Mon, 5 May 2025 12:17:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Fc5osDce5Ixp5n1NZs7mSFVdO0qDnEBm9TZBSOSJaog=; b=IzwHVUWjTSN2aTmN
-	0IPLo//J+Zxdxh8FtBA8UKJ7kvNC6g+mk1Nyx6JgENgjB7iSAWdxaJe0sbw/06Yx
-	rI0moqbfIK7VFeEzrfag5tOCxAtPLGtRISnnrU3EugHQbuhuTQ1mLn3Qo9ujWUvy
-	fLWLGqdXGl1rq9M9oukIM0trKrsS9nx9J8rSek+aOFY11cmZ7bwh/xlxKMwI8ME0
-	XZwDaJgrzDkUw3ksftk4vxB6U2C162O2dy0nV66qHrYinprt9IRxBdaiAyl1MUWx
-	BJ6yPf5iJzQmpNkxalDBL/TejWUfJFCxnAFOX2Jvul5ILCohX2ayaf4tIxsw5iUu
-	QL/3Aw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46da3rv1es-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=cBmlj28SvCZ4M7S1nnJEd0Nu
+	gRbJw27zy6tWxbAN08U=; b=NwwMaSqlGyqRvyKGNJ4+C1B+9YKaFTYBTkNhornd
+	2AOd2MXeKxG06zHKKNR3jr0sGT7YdDLBl0UiI17t9lhK1rK7ZHil4PlrTxPqONyt
+	L+ikGsVhbN44SDGelGLeWz6jMuEw9vUu3zWMkhXx1y3eznr4EzjzExJpDi/FepjS
+	p4/V9e3Y2d1AnhcLVjzH0u3h5bo3lAtoYoQWXXoCZp+8m/qZbmKcsSny5GONbOR1
+	SKBmedWBK17f/h0Y5GDKY9Ta0H7bUiUBJTvmw4AUw8FrToMn6m7WfQAClFmzFin7
+	6maa2wsCbtJBguMt74RI30b/CH9YNhBPniGkZe4F1Ssgag==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46dd3n3wyv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 11:59:06 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7caef20a527so421585a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 04:59:06 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 12:17:04 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6ed0cc28f7dso127584396d6.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 05:17:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746446345; x=1747051145;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fc5osDce5Ixp5n1NZs7mSFVdO0qDnEBm9TZBSOSJaog=;
-        b=RW4jrmZPnbaVDNA6rer9XP5w+08wM8ELBnRdAr6/FgPyOpT+Zsa4kcvGZenOk50tBs
-         F339nrtTZRCQcG5sdj7zTVj+s7u8SR3KfxO7qxyMg/a8NDnr29+iZx47NvhVGJKDc8j2
-         GAXrDOrJXxInCv7bua8vQF8VhPuULLLuxthRyXhQqn8ZF8CsGswRh5kcgtjMGlLf7D/M
-         vLkou1Iy86vEwciYrpLBsIeT+hdmERQnD5pb4USJACTIzlR1+YZg63hA0lqVomQO6JcN
-         d8wKtOAebpGdxesOe454DVUN6tA5P5s0UOKtXnJNulX8PWPjT0HSVQyuD0uI5pFJw2hI
-         /ADw==
-X-Forwarded-Encrypted: i=1; AJvYcCVLjXEep+QAX/Q4jgWgoHMXKrzGxIbfU2jZRJM3+pgEJkTGwwiIGt9KUijdzVUOYSsd8PK5lJy6AG3cZL8V@vger.kernel.org
-X-Gm-Message-State: AOJu0YztvaA7uYNRT185wVFsCtIRhbxEGFJkhQFramVkAWrtG73snlu5
-	aw8R0hprL7KTJWLByOOG5EubktQ5QBUbxtV3oukVA1bBzdHODpXxH92Jc0GYek2qIX9s+dg24LM
-	VI2YYOjd7aF7MqnT62HCDHsmC84HBEGO8ddEKv3mugFuCSX0rmACivwe1LXQJiXWa
-X-Gm-Gg: ASbGncurmJEHLN/8uv47IJta8FoGKbW/cqn7FqUDk9rO8nyB4csVa2wj38qHCHT8RRK
-	CQsf+J0ZSHwrayXKy7GHa8wJQ52mUmehtlKXvKThp17kPc9/1TQv/aI4YRVMrlYhVeBvltqa8S/
-	PvZgeLCe3lRyamm54WVe55uoSzdRzmVgJm7xKntp/2aqjWprUGNA7d7p29crgzB3fS/xUPViesX
-	RveRaq/s4XrK5ZMehCMYomUERWG+J6Lvtlk6NVtrnBk/j80W/gOULVO0UVWJH+S2dKMgPTsh5J/
-	yDUiNZihetq0Ux/2hhwa4ofdUHJoeV9OyWz56xQzSpO0F5kolf7hsGqB5/Kem6JKlsp1Y7APXno
-	bTdTYlsKktLZH2ua1G2phcfBI59SUU86ceLqgWo2KMWIO/v7Pfyrzq15dyDFMaZt0sLEj
-X-Received: by 2002:a05:620a:4001:b0:7c5:9a37:c418 with SMTP id af79cd13be357-7cae3b1604amr1093371085a.51.1746446344935;
-        Mon, 05 May 2025 04:59:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHxsMcGBcuXzdzsMZLmfG4jCCth/aIBhqNnJlAxtHNCdoHctJUXgi2+jH+zw6iGwmYPEzBLZg==
-X-Received: by 2002:a05:620a:4001:b0:7c5:9a37:c418 with SMTP id af79cd13be357-7cae3b1604amr1093364085a.51.1746446344392;
-        Mon, 05 May 2025 04:59:04 -0700 (PDT)
-Received: from ?IPV6:2001:14bb:671:42db:aca9:2ffd:84bc:ddc5? (2001-14bb-671-42db-aca9-2ffd-84bc-ddc5.rev.dnainternet.fi. [2001:14bb:671:42db:aca9:2ffd:84bc:ddc5])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94c8d40sm1695574e87.98.2025.05.05.04.58.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 May 2025 04:59:03 -0700 (PDT)
-Message-ID: <9afd098c-edd3-44fa-8efe-99f2e9c9a525@oss.qualcomm.com>
-Date: Mon, 5 May 2025 14:58:58 +0300
+        d=1e100.net; s=20230601; t=1746447423; x=1747052223;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cBmlj28SvCZ4M7S1nnJEd0NugRbJw27zy6tWxbAN08U=;
+        b=kWU3IH1XiQQMuUBa3r68VQhQqBSy6qTTv7KQ343hnLF8c0+qAHiKPrAo+uV19lCrOZ
+         RzYX6/pvyN9CHsjaLqUNxehYkQDqJdLTP09byjfgMDN4wGycme8ekIQ+1mYnnQWldFJ9
+         7cjVNl0604kbVMGkkrGAsWuqeueTvs80LilDkh7fGQTv5foaCePk323j11CZ4cd+X5L+
+         +9eRBIMYPBiqS+oW8CFuQFmX/LVqA55BhkUo+WWGO0cybBcNgTxcsCmJWJIEtPOlKrwq
+         MtYCrybLuPG+wGeru8YErJzCGU7EYTawDFdvQELODwlpLLVzJ3GMuK147wsfjAW49ZqE
+         8BhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUFJgUgBSv7YFv2ppbXHEy1fyMp/BzYtXvu4bjoAOpekrjRray8Jo++fQ9iTRMm3XtG2lzk24e1/o5Cxzl6@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSgmsyJnuW63EGFFrij2ZzcO3ywnyceyeV5/QSPoswtpmmL/5k
+	WI/1GPvR4Bx0o4xCh873R02/G9dpzT9FWILXTH8ONLkt0olRWw5a5L6OnnPf52Q4YgHOoooWkbc
+	ayeuuxuzhdeqNgOIiXOV7g9mybISDSqXVgczMxNLV3YWJmZFlYKMa5o45b/q3AAcy
+X-Gm-Gg: ASbGncsbrcCoQbrE0iRd3BWFFkywZekYVDcF0yqQx+3KFS+OhgIhO6CSyvfPP+NMlua
+	P/mt7Gx+bA6tGrX4fdvJ18DZi6B9Q7fI8lmzj3nGw5Erf6sACGqbDHoufApnv7YZB751w7NZEGP
+	EWu9ATJrDRZH9dkTHzaeago2mCcuo+pF7sBUqHKsGsZyz4klw0x+iZ9XyCdpq9Kl0t92RXLeK3x
+	OPIWhFhI/9ah1qlCLBZYQPd+aNExLC7Nf2cJ0nGCWZ5bHNrWuENTrd4ewjUjNDITkZZt4X26N7k
+	Oc/z0/wo3W1ozC+2JrVk0P3ctGURZtK5OxdC92wWRpReTVZvHKuNPwDbSYSZh27OvZaXUR7DfMU
+	=
+X-Received: by 2002:ad4:5e89:0:b0:6e8:fa72:be4c with SMTP id 6a1803df08f44-6f528c36377mr90487046d6.1.1746447423068;
+        Mon, 05 May 2025 05:17:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHI2miDMGBi18VyNdPKWOTeIPliK5ntOZYPJ0fwhi2n4q9Zd33W6e8RHT8wR9jc3kvFT4tTjg==
+X-Received: by 2002:ad4:5e89:0:b0:6e8:fa72:be4c with SMTP id 6a1803df08f44-6f528c36377mr90486786d6.1.1746447422724;
+        Mon, 05 May 2025 05:17:02 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94b176dsm1684252e87.14.2025.05.05.05.17.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 May 2025 05:17:01 -0700 (PDT)
+Date: Mon, 5 May 2025 15:17:00 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-serial@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: keep remotely controlled units
+ on during boot
+Message-ID: <aw6tjh5q6t75bif4jyusrdvroq53lbwlljo5cdgzrofn3a4loz@ixuu3yw4ucil>
+References: <20250503-bam-dma-reset-v1-1-266b6cecb844@oss.qualcomm.com>
+ <aBh9WL2OMjTqBJch@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: (subset) [PATCH v2 00/34] drm: convert all bridges to
- devm_drm_bridge_alloc()
-To: Luca Ceresoli <luca.ceresoli@bootlin.com>,
-        Inki Dae
- <inki.dae@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>
-Cc: Maxime Ripard <mripard@kernel.org>,
-        Louis Chauvet <louis.chauvet@bootlin.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        Douglas Anderson
- <dianders@chromium.org>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Anusha Srivatsa
- <asrivats@redhat.com>,
-        Paul Kocialkowski <paulk@sys-base.io>,
-        Dmitry Baryshkov <lumag@kernel.org>, Hui Pu <Hui.Pu@gehealthcare.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        dri-devel@lists.freedesktop.org, asahi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev,
-        imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Adam Ford <aford173@gmail.com>,
-        Adrien Grassein <adrien.grassein@gmail.com>,
-        Aleksandr Mishin <amishin@t-argos.ru>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-        Benson Leung <bleung@chromium.org>,
-        Biju Das <biju.das.jz@bp.renesas.com>,
-        Christoph Fritz <chf.fritz@googlemail.com>,
-        Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-        Detlev Casanova <detlev.casanova@collabora.com>,
-        Dharma Balasubiramani <dharma.b@microchip.com>,
-        Guenter Roeck <groeck@chromium.org>, Heiko Stuebner <heiko@sntech.de>,
-        Jani Nikula <jani.nikula@intel.com>, Janne Grunau <j@jannau.net>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Jesse Van Gavere <jesseevg@gmail.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Liu Ying <victor.liu@nxp.com>,
-        Manikandan Muralidharan <manikandan.m@microchip.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>, Phong LE <ple@baylibre.com>,
-        Sasha Finkelstein <fnkl.kernel@gmail.com>,
-        Sugar Zhang <sugar.zhang@rock-chips.com>,
-        Sui Jingfeng <sui.jingfeng@linux.dev>,
-        Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-        Vitalii Mordan <mordan@ispras.ru>,
-        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-        "Rob Herring (Arm)" <robh@kernel.org>,
-        Hsin-Te Yuan
- <yuanhsinte@chromium.org>,
-        Pin-yen Lin <treapking@chromium.org>, Xin Ji <xji@analogixsemi.com>,
-        Aradhya Bhatia <a-bhatia1@ti.com>,
-        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-        Ian Ray <ian.ray@ge.com>, Martyn Welch <martyn.welch@collabora.co.uk>,
-        Peter Senna Tschudin <peter.senna@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Herve Codina
- <herve.codina@bootlin.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@gmail.com>
-References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
- <174591887152.961603.7706063017853945511.b4-ty@bootlin.com>
- <832a9db0-cf8a-4d35-8a98-08053fbd6723@bootlin.com>
- <20250430-arrogant-marmoset-of-justice-92ced3@houat>
- <20250505130648.22ec8716@booty>
-Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <20250505130648.22ec8716@booty>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 5YEDwV8ve89JxQIdNFPe8kwX9-aI-msY
-X-Authority-Analysis: v=2.4 cv=cpWbk04i c=1 sm=1 tr=0 ts=6818a80a cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=P-IC7800AAAA:8 a=H8qqLt0gxxJlsNWwv3EA:9
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=d3PnA9EDa4IxuAV0gXij:22
-X-Proofpoint-GUID: 5YEDwV8ve89JxQIdNFPe8kwX9-aI-msY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDExNCBTYWx0ZWRfX14N72OyizgWz
- 6BfabmLYcYwbuQGuJbPmw1QkUJxkublxSHpP8ZfJhwOx/5w2fZU9q9WtyJjyT/xjoLurEFDPcaY
- NMpd28s8A4ckCrPM0PW8xfQjqixGVxDKE8Y53QoFbFUMO29Yt8sqOT6aFocUxy2I6eE1P22ZJtE
- H39JhCpELGID1aQqQ5cg9VR9z68TCxGPrLwo1DmL3Bt4kNhlTBZ2zT0fcx4FgehQFuiKzxAh9aY
- /yucuJdGepveke4B3DFtBlTc0io4kjqo6PZHFt2qnfmiX8edxsT6sCVUajSa6T5jkRNJ+8XHZAD
- r9/Y5rn4/PnC1E8pHkJOe1cjHmaWEGZBcLvdQ8/fvvaTlY4gqAi7WFuuilPKMas4kwmdvdm0WUN
- yqiPum2xEv4b3hq+6KIlrYZWwgIcrdcHzUPnLhAI0OBOaI0PA/sjoThIdT7Abm44mcxAU61+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aBh9WL2OMjTqBJch@linaro.org>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDExNyBTYWx0ZWRfX5fgaOqTzmmXs
+ cvKVEEp9O9+OAlSJXIrXYY2rXXJLunjJN99q0F3868ILb97CwcTnGg71zGFNHTY0PnWsUN9Sjqp
+ DFLKPz3F7J3bi8E+H1PCRQWqX4B23OseF1ICPHP9TCha2/hFEhnp8/LvKEgy8KILyno/uHhG9Qe
+ NN1uf8J3ufX5SPFAWWo50Mi1mJOuu3kkmQxc3AwXL4mCN02bwBn+t5GTCQa5iXwZ/aT6XKotBr8
+ whZPO5d1/3lCs+FPr2IlPg0xt6ioFZcE8ggijV+4fdGhQkysJAGurpduXs2UPqqWLPm/fgX2HE9
+ OrELGCQQBtKE7jby+SsZcHJORu+ZdoJwwT/MOF2V1CrT9B/cQMd6yuSgyMOs/6202LwA9xt4/Sy
+ Uci5Pbkw1rblLT7xP/Lxw9j9tpMrQZw7ATXE7M/Wq/JLl9urd5qesu5Qx0L0wJ3YEQgMwoLN
+X-Proofpoint-GUID: sr_JwVsR6RSKvKKopnxOz3HGF4xOy3h-
+X-Proofpoint-ORIG-GUID: sr_JwVsR6RSKvKKopnxOz3HGF4xOy3h-
+X-Authority-Analysis: v=2.4 cv=UNDdHDfy c=1 sm=1 tr=0 ts=6818ac40 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=-oSGpTHasqKTVeQyqFYA:9 a=CjuIK1q_8ugA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-05_05,2025-04-30_01,2025-02-21_01
+ definitions=2025-05-05_05,2025-05-05_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
- malwarescore=0 suspectscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999
- clxscore=1015 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ mlxlogscore=999 adultscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ mlxscore=0 phishscore=0 priorityscore=1501 spamscore=0 bulkscore=0
+ malwarescore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505050114
+ definitions=main-2505050117
 
-On 05/05/2025 14:06, Luca Ceresoli wrote:
-> Inki, Kyungmin, Seung-Woo, Alim,
+On Mon, May 05, 2025 at 10:56:56AM +0200, Stephan Gerhold wrote:
+> On Sat, May 03, 2025 at 03:41:43AM +0300, Dmitry Baryshkov wrote:
+> > The commit 0ac9c3dd0d6f ("dmaengine: qcom: bam_dma: fix runtime PM
+> > underflow") made sure the BAM DMA device gets suspended, disabling the
+> > bam_clk. However for remotely controlled BAM DMA devices the clock might
+> > be disabled prematurely (e.g. in case of the earlycon this frequently
+> > happens before UART driver is able to probe), which causes device reset.
+> > 
+> > Use sync_state callback to ensure that bam_clk stays on until all users
+> > are probed (and are able to vote upon corresponding clocks).
+> > 
+> > Fixes: 0ac9c3dd0d6f ("dmaengine: qcom: bam_dma: fix runtime PM underflow")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > 
-> On Wed, 30 Apr 2025 10:08:14 +0200
-> Maxime Ripard <mripard@kernel.org> wrote:
+> Thanks for the patch! I actually created almost the same patch on
+> Friday, after struggling with this issue on DB410c when trying to add
+> the MPM as wakeup-parent for GPIOs. :-)
 > 
->> Inki, Kyungmin, Seung-Woo, sorry for the mishap. Do you agree with the
->> following patch, and it going through drm-misc?
->>
->> https://lore.kernel.org/dri-devel/20250424-drm-bridge-convert-to-alloc-api-v2-14-8f91a404d86b@bootlin.com/
->>
->> If not, we'll revert.
-> 
-> Did you have a chance to have a look at the patch mentioned by Maxime?
-> 
-> It was applied to drm-misc-next by mistake. Not your mistake of course,
-> but now it's there so if you don't reply anything it will have to be
-> reverted, and then sent again to go through all the review process to
-> be hopefully re-applied in the future.
-> 
-> If you agree with keeping it in drm-misc-next, that would be less noise
-> for everybody.
-> 
-> I'm going to send v3 very soon, so it would be good to decide what to
-> do before that.
+> How is this issue related to _remotely-controlled_ BAMs?
 
-For the record: even though I'm not happy with msm-related patches going 
-through drm-misc without additional ack from our side, I think reverting 
-those and reapplying them later will create a bigger mess. So, I'm fine 
-with keeping drm/msm/* bridged patches in.
+My understanding is that for locally controlled BAMs we can disable the
+clock at the probe time as all the users of the BAM will be probed
+before accessing the BAM. In case of a remotely controlled BAM there can
+be a user (e.g. UART) which is running, but didn't request DMA channel
+yet.
+
+Please correct me if I'm wrong here.
+
+> The BAM clock will get disabled for all types of BAM control, so I don't
+> think the type of BAM control plays any role here. The BLSP DMA instance
+> that would most likely interfere with UART earlycon is
+> controlled-remotely on some SoCs (e.g. MSM8916), but currently not all
+> of them (e.g. MSM8974, IPQ8074, IPQ9574, ...).
+
+This probably means that the definition of the flag needs to be
+clarified and maybe some of those platforms should use it.
+
+> The fixes tag also doesn't look correct to me, since commit 0ac9c3dd0d6f
+> ("dmaengine: qcom: bam_dma: fix runtime PM underflow") only changed the
+> behavior for BAMs with "if (!bdev->bamclk)". This applies to some/most
+> remotely-controlled BAMs, but the issue we have here occurs only because
+> we do have a clock and cause it to get disabled prematurely.
+
+Well... It is a commit which broke earlycon on on db410c.
+
+I started to describe here the usecase of the remotely-controlled DMA
+controller being used by the BLSP and then I understood, that I myself
+don't completely understand if the issue is because DMA block is
+controlled remotely (and we should not be disabling it because the BLSP
+still attempts to use it) or if it's a simple case of the clock being
+shared between several consumers and one of the consumers shutting it
+down before other running consumers had a chance to vote on it.
+
+> Checking for if (bdev->bamclk) would probably make more sense. In my
+> patch I did it just unconditionally, because runtime PM is currently
+> a no-op for BAMs without clock anyway.
+
+Please share your patch.
+
+> 
+> I think it's also worth noting in the commit message that this is sort
+> of a stop-gap solution. The root problem is that the earlycon code
+> doesn't claim the clock while active. Any of the drivers that consume
+> this shared clock could trigger the issue, I had to fix a similar issue
+> in the spi-qup driver before in commit 0c331fd1dccf ("spi: qup: Request
+> DMA before enabling clocks"). On some SoCs (e.g. MSM8974), we have
+> "dmas" currently only on &blsp2_i2c5, so the UART controller wouldn't
+> even be considered as consumer to wait for before calling the bam_dma
+> .sync_state.
+> 
+> It may be more reliable to implement something like in
+> drivers/clk/imx/clk.c imx_register_uart_clocks(), which tries to claim
+> only the actually used UART clocks until late_initcall_sync(). That
+> would at least make it independent from individual drivers, but assumes
+> the UART driver can actually probe before late_initcall_sync() ...
+> Most of this code is generic though, so perhaps releasing the clocks
+> could be hooked up somewhere generic, when earlycon exits ...?
+
+The spi-qup commit looks like another stop-gap workaround. Let's add CCF
+and serial maintainers to the discussion with the hope of finding some
+generic solution.
+
+Most likely the easiest solution for Qualcomm platforms is to add
+additional vote on earlycon clocks and then to try to generalise that.
+
+> 
+> Thanks,
+> Stephan
 
 -- 
 With best wishes
