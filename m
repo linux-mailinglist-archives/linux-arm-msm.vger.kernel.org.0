@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-56741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3155AA8C24
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 08:15:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01D25AA8C2D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 08:17:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2BB46170F44
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 06:15:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CC01E189212E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 06:18:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F4811AC42B;
-	Mon,  5 May 2025 06:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CA8F1A315E;
+	Mon,  5 May 2025 06:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sje229x7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yPghz9Rw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807B016EB7C
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 06:15:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B09B192D70
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 06:17:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746425725; cv=none; b=i38rpbT2B+ljMxNg6NPewybpeALoPqArY8XSjz4EQPjRLyPyNgbtydGkqniZ1QOHH+lYs239noob8fDvKK1weFUYU3AOxDJQlpn9mtuTWVnof3yDdEz/dgVLFpUkUxo0IOcXmUEFwwvS6f4BxtXq3iXYA0vd4XiV28aMmTThVPQ=
+	t=1746425867; cv=none; b=tCp/orKaXAOqOJy+qTkqEFtrrGgcnuFQFXbWqtaC3nRegGvneXNy92LD+LPJgCrl9kOp7zJZNdI2s5KCSDMaWnOZBpPlqL4C0HT1Q/ZLw7JeAH32pdCRhsQ75Fh0vfBO2A3lxQYpNaehkhF1vjBtUVrxXIiVgUmsOETIUEGv2gY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746425725; c=relaxed/simple;
-	bh=2Ypy5/mrMqj2QpsVf3jU3yiGqAAuyQ/KJ2bHJb5EEO0=;
+	s=arc-20240116; t=1746425867; c=relaxed/simple;
+	bh=WTqruFHJPbXUvJ+Abad466vMBFstOzi4YaAP4ufNfuo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LVw9pwT85Uwc7ObZQcu/asi/myrWBjwUa1HtuIcMSdPjYz+2sgGfl8fWrbvKodW70HiV1MTwhuRHsvyhOFgSsKdunNsTy09Nm80sDWnKPzV7rV8hcksnaTAcW4KIFjIluvM8EEWUF47erATx3eF2+WjZVFiRGLC+8UzIGZ794Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sje229x7; arc=none smtp.client-ip=209.85.221.54
+	 In-Reply-To:Content-Type; b=B9P4D9ql472sNFu73WWVYHLZXNBwzVaFppCq/65eJokUwVS1xLEiejN2FfFt6czgL01uSAN2i68loql9PXHb01hEfCjoWoIEihEjaQpc30I9ulf68rQYhODGAIUvFbKI4apXT4aEz00cW0j0zTpbIP0Zrcgjhc7NgnVKNEexzO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yPghz9Rw; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-39127effa72so215265f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 May 2025 23:15:22 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43d4ff56136so4746675e9.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 May 2025 23:17:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746425721; x=1747030521; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1746425863; x=1747030663; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=TxK/pctKF6C6aazKg6OENbtkCxPaC3gyVkFcwKqIeNI=;
-        b=sje229x7pyRByIT9+jkfKqy36eCKzZXJwZU01dD/8OLE6NkPVPFeFyT/BF+DsMCCb7
-         rdShwM+HUzUKmSeOIirPhYuzTNZPrwovxVKrSu5CSGGUw7o/NOIpHQZzY+5utxkN0Pr9
-         XDyqRaC5fNuF9zch1zMovUQfVVzd9KAJP63NZEbqZWeA9K6lQN95sD+aSXMvLfAaNis+
-         70yIpZNm0ZdDAWN/or0OP/nILhP3ShCF+0tjNrn9BPrT9k5mLPcHhreO/+zVPbXpFQFR
-         6c45et8Qg7wFJB/mY+5jNuhJiQ8/pzplxH04S4Sp1raeyzMWbb+7y7Sqv3uzn6o5cqGc
-         YtIA==
+        bh=NX4Rz1dfaupNMAP0jhgw9F7SGjjiJLMayEUKk5YTb2Q=;
+        b=yPghz9Rw9nMf/UJWworAQvkUFhEb6HLfN+I33mEVt0PDtCP0hwIhL74zmUNOu87a4n
+         NyWryfdpytukqRSeRTrS725DdcU+Ijddt9jboAWm5+y7euVxR7c3sbEU2RFzjzY5sIBu
+         c42mQwOuR02yyzAl+W0mGskx+fFGtQX7vUBpmMTb3a15dQHIYy5G3TObs81whuqiZAua
+         K4ZeGdi4mFckSw4M47GM9iwg0GydqCyFLM0rFfO2hmNBIxJ7t14IzoRLEYUB/9S9IMVQ
+         yhjvOJ0nPbByWViGtW/16L0UK/INHCkIp62Bm72bDATSOnqeUJIOqXnxT8S8qrLWgEFd
+         EfPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746425721; x=1747030521;
+        d=1e100.net; s=20230601; t=1746425863; x=1747030663;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TxK/pctKF6C6aazKg6OENbtkCxPaC3gyVkFcwKqIeNI=;
-        b=JIcSiUajSEDletgCZwBtD5w12ZVfUmp94R+pt3mHuI3GFLLJg/yS8eTH26CMiAQiTt
-         dsf2ugzcQ5NinHF7d1vUg24REnlkpaZqtZdoXDcqkKM7JgoupTi4mgeCR879ydzjVF8a
-         jRbpHPkCQ7beCTvPKMPBmZc4cXvO6GZQcU1elMUCTBAo1UH1kkDlhWf9dFbK3uaaH0J8
-         y09hlmQOV7sVC8+whKwKvp1jDHIxGz5P2Zqn/yxaaaqbTfR94vxidH++VmG34hOiEoFN
-         nsdoyUKxaGuUfFe4IeOHkq3zUMA/wToPfzbFUH1KoBauuU1Jvy4/kGCJfhpxVOhq2XYF
-         XmMg==
-X-Forwarded-Encrypted: i=1; AJvYcCWMTRZrX4wc4+2BKLnFTlqpyNAu3wdnE3Zpz+VEwt3lqJhZC272zg3CRNzKrMDmGVyL6JzuWGWC2F8egmfT@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfIdwc91U80gQjx6vgA53KjlV+jv1Ha8wGmXyJRBUDpzLFpDHE
-	2WkZm+IHDeMNsiortROxD3eLZS1QRzAa2OMe9hdM+ECRtCDg4NwdzX077ShEepI=
-X-Gm-Gg: ASbGncvCGHhRNaomKbY1rzBLcPPy/z2y4+Y0tDJjMO9blggh0FC2rfZvgwxNdbT69tB
-	cmse1ujoGGkbbQLgt3IY70Qt8lzO7KSWntJ6GXPIh+AR9I9QQaobdKoSTz44oJ6ucnFzYWNiiXy
-	/Z/AuXGs7i89NBWPS+N4H81XkY7Qek0sd16crV2LHi56MzV2PzWclr70RtU1qGacNmrwLjcgos9
-	ZJhBpF+Pv6mT/lXLTRWV9Ra/kzgKJdYLS9Vcs3PVRiwCtg6wa8bWcJdYgm3Ku+XS834kj9eKvXa
-	H9ghQ1EdYW5tZrI01QHMCPH2lfUJnq6vIpwygKyCTlOGDpplTSLgodnZWWo=
-X-Google-Smtp-Source: AGHT+IGYzpcLXDJt3YPMJwjoLaKIbfaCgKHzEcaTw+3Vcv1jOY7XPCX3Z7TVWylT+uhkc9trXq4HgA==
-X-Received: by 2002:a05:6000:310b:b0:3a0:6868:8b13 with SMTP id ffacd0b85a97d-3a099ad5a51mr3279808f8f.1.1746425720738;
-        Sun, 04 May 2025 23:15:20 -0700 (PDT)
+        bh=NX4Rz1dfaupNMAP0jhgw9F7SGjjiJLMayEUKk5YTb2Q=;
+        b=C2BO+h9gOj/w30eSt+0IImjtdDNgzsReQGQeGSBkprFq+2VPcyf/drFQ8759hE6JBb
+         /3DKaEZWA+pkh2F/PCqtJeKV6NQ9hPBkdi7Wnb8yXLUd9rnlCvAw1lk1//Re8INx8mn5
+         DMWrtxK4nhcMblYFmTHLseNmb5DXpatueB5fJEihdf+khkk5/ZdpS1F5jSc+2cdlxge+
+         xLgK/Efeyu48i7dKj+t7zoQNKIswLi2rMQ7YUJe8dvdSMlAPNYno9tdM8HgJwcWRjQeo
+         2J7uSpvw/M/KYeTH7K/0RH2fMo2dlXwUv7b3lcpElTjP0/2FvVnIVA+xH6iARbPqcd8S
+         bCyA==
+X-Forwarded-Encrypted: i=1; AJvYcCV42vsh2QZv/ekN6hXfC5LfLlrGdXve4w2q46V7gY8PIR/eZBq2nY3LkHJp0oe282Z8FPo8kKcJht2dF2dB@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz0iRIJ+l7PTYRLOfSExDMlJ3XP+IG2nuJjaEvCoznNkUIiXkpA
+	3WJVVocJRoIhXUU0i8L+Y+AeFgb07+KmYVz3FVbtOuo0068OplJTbc7mp7kTJmM=
+X-Gm-Gg: ASbGncvCOkAiIUkrtKUu3tmU8eWipPHgKnmrqH40uCQlsbkzrEvfVZdtUvEcC0Ka9ZK
+	+Sz1TAjwlvxQ8VATSZRMuWepK0SDAFlgWbYXeq0KEihx7AE23oMR6R2ewiuBEBWo7EJ0qtLcKBR
+	qlj1ef8Db2rbb59JBW0ub7KbIokP35hFLHutPutzgM6sHN/QTxVjYxaMMRF5nrHG88nnWEihvA1
+	2tbDakgnUu1mvayY6xdc+7T/97LTHMljmNsINaOQzLSTrD0DrVJFfD4WCTtFLAae3r3t3i8DJHs
+	KPgANkrT2O8o0/DTZJcuzUdMa82sXs/Mype1ExUrI3zPT6TbGQqj2L6tImG51Qa5OonyUQ==
+X-Google-Smtp-Source: AGHT+IH0LOrDkps/9Rr0/olfktl+QlWmLaEC4ldMHPBjCaA9Xv+NxHcZaPiI2hpb6qHiQmJJWKSUhQ==
+X-Received: by 2002:a05:6000:1ac9:b0:3a0:75ff:261f with SMTP id ffacd0b85a97d-3a099aee755mr2986209f8f.11.1746425862733;
+        Sun, 04 May 2025 23:17:42 -0700 (PDT)
 Received: from [192.168.1.29] ([178.197.207.88])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a099ae79d8sm9148905f8f.42.2025.05.04.23.15.18
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a099b17748sm9225083f8f.100.2025.05.04.23.17.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 May 2025 23:15:19 -0700 (PDT)
-Message-ID: <0e7c76ad-ebc6-4dbb-9c3d-07071443b759@linaro.org>
-Date: Mon, 5 May 2025 08:15:17 +0200
+        Sun, 04 May 2025 23:17:42 -0700 (PDT)
+Message-ID: <97e49dc5-9cca-4c85-b0b0-18c472d0ec0d@linaro.org>
+Date: Mon, 5 May 2025 08:17:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,8 +82,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 06/24] clk: qcom: dispcc-sm8750: Fix setting rate byte
- and pixel clocks
+Subject: Re: [PATCH v5 15/24] drm/msm/dsi/phy: Define PHY_CMN_CTRL_0 bitfields
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
  Marijn Suijten <marijn.suijten@somainline.org>,
@@ -104,8 +103,8 @@ Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
  Rob Clark <robdclark@chromium.org>, linux-clk@vger.kernel.org,
  Srinivas Kandagatla <srini@kernel.org>
 References: <20250430-b4-sm8750-display-v5-0-8cab30c3e4df@linaro.org>
- <20250430-b4-sm8750-display-v5-6-8cab30c3e4df@linaro.org>
- <l6hwojjbk4e7eahoqcjprzululibhgrlpsv5zi7odicwx2wuvr@6difydf2mbz4>
+ <20250430-b4-sm8750-display-v5-15-8cab30c3e4df@linaro.org>
+ <j47udhqq3ldsza3cr6a6rd5dq7uxjgpolbmdhmpzvzt7glpuva@v5tgkydlywag>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -152,60 +151,42 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  h0At/TN/618e/QVlZPbMeNSp3S3ieMP9Q6y4gw5CfgiDRJ2K9g99m6Rvlx1qwom6QbU06ltb
  vJE2K9oKd9nPp1NrBfBdEhX8oOwdCLJXEq83vdtOEqE42RxfYta4P3by0BHpcwzYbmi/Et7T
  2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <l6hwojjbk4e7eahoqcjprzululibhgrlpsv5zi7odicwx2wuvr@6difydf2mbz4>
+In-Reply-To: <j47udhqq3ldsza3cr6a6rd5dq7uxjgpolbmdhmpzvzt7glpuva@v5tgkydlywag>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 03/05/2025 00:42, Dmitry Baryshkov wrote:
-> On Wed, Apr 30, 2025 at 03:00:36PM +0200, Krzysztof Kozlowski wrote:
->> On SM8750 the setting rate of pixel and byte clocks, while the parent
->> DSI PHY PLL, fails with:
->>
->>   disp_cc_mdss_byte0_clk_src: rcg didn't update its configuration.
->>
->> DSI PHY PLL has to be unprepared and its "PLL Power Down" bits in
->> CMN_CTRL_0 asserted.
->>
->> Mark these clocks with CLK_OPS_PARENT_ENABLE to ensure the parent is
->> enabled during rate changes.
+On 03/05/2025 00:44, Dmitry Baryshkov wrote:
+> On Wed, Apr 30, 2025 at 03:00:45PM +0200, Krzysztof Kozlowski wrote:
+>> Add bitfields for PHY_CMN_CTRL_0 registers to avoid hard-coding bit
+>> masks and shifts and make the code a bit more readable.
 >>
 >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >>
 >> ---
 >>
->> Patch is independent and can go via separate tree. Including here for
->> complete picture of clock debugging issues.
->>
 >> Changes in v5:
 >> 1. New patch
 >> ---
->>  drivers/clk/qcom/dispcc-sm8750.c | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c             |  9 ++++++---
+>>  drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml | 11 ++++++++++-
+>>  2 files changed, 16 insertions(+), 4 deletions(-)
 >>
->> diff --git a/drivers/clk/qcom/dispcc-sm8750.c b/drivers/clk/qcom/dispcc-sm8750.c
->> index 877b40d50e6ff5501df16edcffb6cf3322c65977..d86f3def6dd06b6f6f7a25018a856dcc86fc48eb 100644
->> --- a/drivers/clk/qcom/dispcc-sm8750.c
->> +++ b/drivers/clk/qcom/dispcc-sm8750.c
->> @@ -393,7 +393,7 @@ static struct clk_rcg2 disp_cc_mdss_byte0_clk_src = {
->>  		.name = "disp_cc_mdss_byte0_clk_src",
->>  		.parent_data = disp_cc_parent_data_1,
->>  		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
->> -		.flags = CLK_SET_RATE_PARENT,
->> +		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
->>  		.ops = &clk_byte2_ops,
->>  	},
->>  };
->> @@ -712,7 +712,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk0_clk_src = {
->>  		.name = "disp_cc_mdss_pclk0_clk_src",
->>  		.parent_data = disp_cc_parent_data_1,
->>  		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
->> -		.flags = CLK_SET_RATE_PARENT,
->> +		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>> index ca1a120f630a3650bf6d9f9d426cccea88c22e7f..7ef0aa7ff41b7d10d2630405c3d2f541957f19ea 100644
+>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>> @@ -362,17 +362,19 @@ static int dsi_pll_7nm_lock_status(struct dsi_pll_7nm *pll)
+>>  static void dsi_pll_disable_pll_bias(struct dsi_pll_7nm *pll)
+>>  {
+>>  	u32 data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
 > 
-> I assume that these flags should be set for DSI1 clocks too.
+> This (and several following functions) should be triggering a warning
+> regarding empty line after variable declaration block.
 
-
-Indeed.
+You mean --strict or what? It is common to have the &= immediately after
+assignment, so that's why I chosen that syntax. It is just more
+readable, but I understand your comment that you want --strict
+compliancen even if it hurts readability, so I'll change it.
 
 
 
