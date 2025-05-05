@@ -1,89 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-56728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C157AAA8A45
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 02:16:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70425AA8A48
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 02:16:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9DEC21893AF8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 00:16:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA1C4171DEF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 00:16:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1FE916F8E5;
-	Mon,  5 May 2025 00:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA171A7249;
+	Mon,  5 May 2025 00:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kZ1oK6V8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nAiW8nE/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE45196C7C
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 00:15:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D391A23A0
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 00:15:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746404117; cv=none; b=KTBRHq4bbgl90Lc90ORErj5KqJ2CvQPGwZctfxtgxkYVBLNvVVV9qoHtGDnB45Civnf2aFhGQfb4kbdSS8fixyMhNukOliLtImDVesbOgRCrpU1bySoMCpmX90KT89+uFJKyB4fY+XsKkSrVCYgUiFrTf6uIFTjOJigof1GFsao=
+	t=1746404119; cv=none; b=e1nnwp2RCX4OS6rI0kQ0KTF6NOJ0TLqidNnuPFTAw9rYrxQiJawEmPcqzm2/YCZCrYf9M+19m2VMxFpwhND4oOKKBzkivKOaX6umzaHBcF8HtV3DEAdMFYixJt59zrl2kw59wIQ+LlD5luFysW2pSwTiM07ubzxBPQIBELSTRec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746404117; c=relaxed/simple;
-	bh=Q7+hSmVUziCvTJlqk5umA7RkOLupvCyy8blJqiPzehA=;
+	s=arc-20240116; t=1746404119; c=relaxed/simple;
+	bh=yxhAip+pU59d1DqmlgSeZ4LDkSEHXaDc7qVKspiiNHs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kzce66VnAOQjs6bHId989NinFkuqZPd+ONFO0G3cGPYSBpa4mJvC3f+MxAmSxL2MhXfnOG1frl6r7YhM4Z8JWSN2g7VJqGLn6fTHg4DoyQALzu51FFn8krvtNT2N9aDpFGhoLwHoZyRop+W/aE7sGj7UdOls0ZMPEZxX0R6dXVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kZ1oK6V8; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=cQVhIDAek9QSjhYHiyvojzO225SG8UcYaXlaQW/9K9HrhFASFbqX9801Bt9Opw+EzOV6bM+tpS021IZK/BHQ5joVkHaNfCXM0grxWmheeNw5+4eDSjQOBUm1Atg5YCpopWsAwzCZ9nkvwZYKEviwWjRc1CzK+RK1qIS5CoarKsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nAiW8nE/; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 544Npi2C006487
-	for <linux-arm-msm@vger.kernel.org>; Mon, 5 May 2025 00:15:14 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 544MSS9s011474
+	for <linux-arm-msm@vger.kernel.org>; Mon, 5 May 2025 00:15:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rzjD6W4PVhu5bnBRA6TwITh0IKW78wTDC6QACU3Fu6Y=; b=kZ1oK6V84mEwN0v+
-	3Y6GE+RRy3ttADEs4G9dkCBiySKIBJddQpSz+L+IK82Bzrn8JDHUy5QMvX1Brchc
-	v32VgXZLmP4mcLsoxbPrs/f1oMZ/montVVwKviY9FXnxZLPOD0QQI67wZFNOh6nz
-	uu2jyZc7kryMHf8XUj8fllk7+S+1KDY+Tslqsz9Al0jelRnYKKMmwJLiQWFifRUI
-	dMnS4kCRoZtT9DJtpDkRl+F4Jn/AaKEk3GAeKYB3DJ5IFhcvOM4Ets9ybb7GYdIm
-	YAvfpJofWFtcdxHWdYIlq2C7kfI9VSoovL7g1uBXYyIcXhMZuwWDf42cDL9aG2O6
-	XibAjw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46da55tnv0-1
+	v2F7Z22Vqvpmj5OI5DLRf+E6nF4Jvc5Wh4oto467bgM=; b=nAiW8nE/itp0xVjY
+	YUPQ9BUa9ZyG0iW0m9aLQGvyqzAIpH/uRS0kbvofPJHcAEEeeGwErdmbMjuzO+z0
+	e4XtcpvUWGBmS1w5BTgnrep4Wlde9EufgKYLUx3RKytC1W6jOoC+vbMc6EyLwssW
+	hMycCqHm6KmsjpJi6vxmBT9hX8GMo5IrFj3kCntI2HEnff583obp8i5f9qJf4v8p
+	2l/CXNexgEM0vsgtYOhVNkINSWDjDKR6D0RZtzswS67SEx6T13gwm0gjosMDAiu2
+	nft9fbUZAj2FGU1IWbU9SaNUPs31i/KnFfkl88PnIpQYY08ue2zgV3EVZidtyy1F
+	E2SSXg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46dbwfjj4u-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 00:15:14 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-47685de2945so67429101cf.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 May 2025 17:15:14 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 00:15:17 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c9305d29abso759170585a.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 May 2025 17:15:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746404114; x=1747008914;
+        d=1e100.net; s=20230601; t=1746404116; x=1747008916;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rzjD6W4PVhu5bnBRA6TwITh0IKW78wTDC6QACU3Fu6Y=;
-        b=iacR+dOm+5pDljcNXvQ5v13gkHQIdblXJ2T9JrfOSRVVMkYrUFycPEwcmnbwjP7PAV
-         JtsR5tDdI3UeAh0orbZsxdyQgA/UZwI1lWsCO8qaRtHwdST4fb3Wch7aybIpiEtNP5tD
-         xdC2lDMyXNDXot+QiiGNfO5JQiTzcvqU3E1yNDQeY0aLBZZHSNzV5+scLNao451j9TTc
-         yKeFc5lXZa0D5gBcW9HNudvHjaEfZS72HuSNVdc/FZhT4Cd/yDXbOB8DMuHciOFe8me8
-         cBmiccdZYpA8zpdywobNuO74a8KzeA6zeDmTmWjBN3Ch3use0l9MvVIR3y931wgjFHeA
-         2x/w==
-X-Gm-Message-State: AOJu0YxY3g26roPVh33r7i1WKQJW6M+1KvzzrXwtzglrERtn/52hZM3X
-	p0G7Sytfn3E3WobhPAzK2mEipSteTPLKB07XutZs1kWrfzFCmo/WrQ/yYjZR+Zt2A7d6t0lNoOF
-	L4QlEXfCs4K63Gp7cAyc+WndMY2D0WlpHq2UH/Nm85se3gx3+QHxj7EqDw272JOGR
-X-Gm-Gg: ASbGncsy/Z2MsPA1mfZxJZdy+/EDp8z2utunG9UezmHNCngyRAoiE9rtlBqP3iX4zXY
-	r8xs7YAzHVJlpAdFSG37su6cUNZTzgNSBILDNovaFK7R9srFu+DAQo309wMI83wP9AcKjklb3un
-	BxDa9QTfAN+P6Qz3JHOm1/Kb73gB76Nx1HfexN2v5AvQ9i7zAb3L6oViO+je+hCZQ7NBwL1inio
-	jsGWnQ4I7f8G2qu0qR+XjXUSpimvvcESuwdI2IR9bxmX21kV0Id9nzz1vCU2SWvWXsb+GnLuunt
-	qhJkeqW/M4jC/2a+j1uX4CGaTvh53iQC2Akg7Y6HfoqR3Fv4xEjCtH4K/OiqvXUX+/VFgvoAj0Q
-	a4yme3PPnVpkgk9SHWB7t99TE
-X-Received: by 2002:a05:622a:490:b0:476:a895:7e87 with SMTP id d75a77b69052e-48e01552e3dmr83378891cf.48.1746404113757;
-        Sun, 04 May 2025 17:15:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGjy4BDq/ngBUylfvyk62dWRjQlZU6LHc8tgPXKTj0ZxRujx94ZtnGHTZ4N/Ax9Z0ejvKtJ3w==
-X-Received: by 2002:a05:622a:490:b0:476:a895:7e87 with SMTP id d75a77b69052e-48e01552e3dmr83378621cf.48.1746404113439;
-        Sun, 04 May 2025 17:15:13 -0700 (PDT)
+        bh=v2F7Z22Vqvpmj5OI5DLRf+E6nF4Jvc5Wh4oto467bgM=;
+        b=IBbtpJpvJShUUMuei8BifUiOngL+RmmF3VgPzUGhg2ykcbHuCr37UbyTG3H99uAfhd
+         huc9k++ETaOItZxsf82/sKyfiPg1w+sDAZGp/Q8Co0P4HDjzd111p38kyczjSSNU/UC3
+         kfgovX00V78kQKz2fuxUTYyxQry8nLvVtabGBQKDT7D8+bQAFqV7nGHNed+TH6d9ZjdD
+         F4c9FScf4BAsw7P1md0YtUY9Gik2SdP6OEPKbzMinw8EUY8LpKyRl8SDSyzCWQjJK+uS
+         W50dRFVTf3AhYFaJgFZz0qkV7eO0iKlaKGSffrTaFoY222K8pgzSwUfiWUHQro3b42hN
+         rgjA==
+X-Gm-Message-State: AOJu0YwDiAbwghG90wU/5vNt863nez7pZvgw+G69vLFNQwX2MsU9/rkV
+	1RtgogsPzxokqRivsajvcZHOwhH8cC0wtEROQ/wgdPn17iyH/0YJvN/GqnSc9mMx2Ydebbu6MwH
+	ThHPxp7JRA834arHLLY3VaZVXWSUniwwmmOVQ+aW/RLk7a5i8H/zrnsyLjgPC3oKX
+X-Gm-Gg: ASbGncur4BMnaDBK8H9KnU9J8rQm8Hj1DTRhahz54lJjqdiGZUvrBUWJLCSPI5RnRi+
+	q/tZKkVT/ywjqhrYso606f6ck/vNKW0PgXV37nJhKcblRwoiCtx9OZiweqcO5BSyHxaDZzqpldh
+	nVWnXZ/fhjxsCElCHdyq81HNCP4LQKfQOj/tjdkff4+AzE0Y/BbIbfetoSVutTnA9P5ygrSrOUd
+	d2UW6phHHUMD15zLqJDUbA7SDAmnZShFAsiKaHeF+9XuvTX+qEnV/w17bwDWeo3bjym2HbRyDSZ
+	uJyVq870xN+zWeaHmxPrYYUbzvkf9/F3gM/ufV3ypKeBOd+EGxRNzo3XqsWhFU7mjzUx0NnqAdI
+	qR/SJfCiTM0Nzyhr3kr11+Ikn
+X-Received: by 2002:a05:620a:2685:b0:7c7:a537:7ce2 with SMTP id af79cd13be357-7cadfe17315mr802246685a.32.1746404116386;
+        Sun, 04 May 2025 17:15:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IExYazgDRjTexqikZJLs+e8cHSkJCMMfDgM9LGiX5mnr/yYzp0a87xL7ICzXIpxbm+W8Aa1RQ==
+X-Received: by 2002:a05:620a:2685:b0:7c7:a537:7ce2 with SMTP id af79cd13be357-7cadfe17315mr802244685a.32.1746404115996;
+        Sun, 04 May 2025 17:15:15 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94ce656sm1454066e87.105.2025.05.04.17.15.12
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94ce656sm1454066e87.105.2025.05.04.17.15.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 May 2025 17:15:12 -0700 (PDT)
+        Sun, 04 May 2025 17:15:15 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Mon, 05 May 2025 03:14:51 +0300
-Subject: [PATCH v5 07/13] drm/msm/hdmi: switch to
- pm_runtime_resume_and_get()
+Date: Mon, 05 May 2025 03:14:52 +0300
+Subject: [PATCH v5 08/13] drm/msm/hdmi: add runtime PM calls to DDC
+ transfer function
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,7 +92,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250505-fd-hdmi-hpd-v5-7-48541f76318c@oss.qualcomm.com>
+Message-Id: <20250505-fd-hdmi-hpd-v5-8-48541f76318c@oss.qualcomm.com>
 References: <20250505-fd-hdmi-hpd-v5-0-48541f76318c@oss.qualcomm.com>
 In-Reply-To: <20250505-fd-hdmi-hpd-v5-0-48541f76318c@oss.qualcomm.com>
 To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -112,116 +112,98 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, Jessica Zhang <quic_jesszhan@quicinc.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2832;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1630;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=+KLC0hKahtw/rbBVi8TNRT2LZxqudcybFb57eB3iUWw=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoGAL8TRmPzNRqLG+vuhB2OEaPuUfxiYybPe2DY
- iYf3qhPCjqJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaBgC/AAKCRCLPIo+Aiko
- 1XvzB/9S+1ACKUPSypEkRCWGDaqh9SspuUlnqat6JuNHZy0JmdmQyysnZprtX8J5FnlMWKfkSFg
- vkTXQbQ56FkcctwjfGdlhRDd3FnrRMd7S0xJGxu8ayZhKKz42fOr5eanjXTpu2hHoAQQyCv93tL
- 2AD9FDzMWrYekF6U+KrooN1wXnjeaixp/nE4xl3Nsvn5l2IIGr1HlFClIkMbgcuUisOkODon2OB
- 82+rZQDq4qkSb4dSHILyWcPOx8ThWXkk0d1u5ylyJSzB/Zx8nYn+hjj5CGcwUr16gM1YnruIi4E
- Et9ns3K0HrLR30SEUYGkS7S6+Np/5LAV25eMUCniYw5NYryT
+ bh=iRrggYdOsfyNRF7mD9CF5dLKTnVLk9gbl2tlKLOnDn8=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoGAL81jAwp87jlj7ePL8czNId/7xi5vSBolYDO
+ u7aLLeOGLqJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaBgC/AAKCRCLPIo+Aiko
+ 1ZIrB/9urrL2y3ZvkQ2p9CqGK09lcSPj2IysMUziduCLEJKZVJY1Unqn29EtfW09+necJx1FnMu
+ Oh1wVjrwn93y14OfZUCkCZj/VuGWmZrHQ2IiCbxAViknRVwNZwHh+SwCKKFz5PmFVRLpqF7UrIx
+ lbfr084Ct04AbBoBdVZD2RpfCWmOmm4vfSowLzvpL2RYSix3bg30smbVtDZ0MKDy19qbyEbfmnY
+ 8BuWNgbVPoGwVrWOWeoynq6TJE3KY5c19DId31Pr0TzKQMEaKnSONTJGKFr50R8fC9Fry/1BX8q
+ PX2DyLakLBKEigIRXub1o69z0JHanZVTsxpo2CVxkT2d5eOo
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDAwMCBTYWx0ZWRfX/55lrfMLjrDS
- zGit2qLyp3MFtEDBvB0EHf+Q4CSr2wqyFOk3zwMryMfk3rpl7zmhKIaYVAkBzhlhGRY7qw8h26w
- A45JVQNNAANB7nzmcvXaY+fe5JpnNotnkxjMTVfhqhlOY4JHTopTAbSEMZkNU9p6Sf2pwrDoaNd
- OjUOugPBlNCX9wq7HBD0sDF2bDg/4fG6GTQcy2WExo6cXUsSJ8X1hro2eEW+UDM2G+gVSuaNwqh
- VhD3BHGBS3bfuwCCRbam+d3I6NsmkTWqXfEcevjlkqlY5TzNf94nGQ8zu44oi9Ac9Jlg/hAHEL2
- UOO/ahFwH2YZ7PBIEjJ6WauMHCTJm9MIP0U/W76Nf8rriEQG1rOg1KQxj8d4Cf0gSBBuucAiGPW
- RDYvhzG6I1fQKzGqCMTif0/Yy98YzYWF8OmL2a6cR0MesCIfHbYlhjWTd4/MedCdmlhJWUBE
-X-Authority-Analysis: v=2.4 cv=M9RNKzws c=1 sm=1 tr=0 ts=68180312 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=-J1M-BTCRiek0Q83fKAA:9
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: lzKZpD0jay11VY6b9sVp5o1fOXwJlhR2
+X-Proofpoint-GUID: lzKZpD0jay11VY6b9sVp5o1fOXwJlhR2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDAwMCBTYWx0ZWRfX0qnd2eqRDj3k
+ EQIxWKAO4XLiEzlGAGtOO1BzPXyFHF173Hxz5vbr2kc07Ib+m0WxaqNRQqeE4MpJLICax1pPWk+
+ RaDSC3gLvUz9Cxwzj/uR8liMCEqbS/9pID7kNgiOulpqNpx05bP7idcGDBSIsZ7pGz6scJQeFDN
+ TrYRBOQTYyK69X50j+1ovjvEkiZMQfJs7+jpgTqHOUgYxXG7N3a7Jery7bWKdKUE27rYlCvOdxH
+ 3igiBoHWU6deIVyd/F89JE902YAdUncEHXoq/tLJC+yjNuT2Hlybcn+OstwTLleDv9K+cbQJVzd
+ ARX61fb+qdGEL7wQTjy9HRaHmezQu1yyLD8NtsHiUcW5zJnOSM6tqJ/ENa3oJrQrYk/r6x/HuIN
+ rtMXxnT1E696D3b8+QLDJ8vKNPAJm5mPLBgsjbk7utdEUo+VppWOEbFkzo+rWSSI6NT+Sxwi
+X-Authority-Analysis: v=2.4 cv=AfqxH2XG c=1 sm=1 tr=0 ts=68180315 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=bgq6psdzRVsaJitvC04A:9
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
  a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: qitL4wxZ6j_JwKm7G318NQvT0WzZadLu
-X-Proofpoint-ORIG-GUID: qitL4wxZ6j_JwKm7G318NQvT0WzZadLu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-04_09,2025-04-30_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 mlxlogscore=999 priorityscore=1501 malwarescore=0
- mlxscore=0 bulkscore=0 adultscore=0 suspectscore=0 clxscore=1015
- lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2504070000 definitions=main-2505050000
+ malwarescore=0 clxscore=1015 priorityscore=1501 phishscore=0 impostorscore=0
+ mlxscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
+ spamscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505050000
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-The pm_runtime_get_sync() function is a bad choise for runtime power
-management. Switch HDMI driver to pm_runtime_resume_and_get() and add
-proper error handling, while we are at it.
+We must be sure that the HDMI controller is powered on, while performing
+the DDC transfer. Add corresponding runtime PM calls to
+msm_hdmi_i2c_xfer().
 
 Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c |  2 +-
- drivers/gpu/drm/msm/hdmi/hdmi_hpd.c    | 12 ++++++++++--
- drivers/gpu/drm/msm/hdmi/hdmi_phy.c    |  6 +++++-
- 3 files changed, 16 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi_i2c.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index e7997e4a741c3b27c9086651efe6b79dbba6bf88..3ae305e868a5931a8982e261f518cd8134d559cc 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -21,7 +21,7 @@ static void msm_hdmi_power_on(struct drm_bridge *bridge)
- 	const struct hdmi_platform_config *config = hdmi->config;
- 	int ret;
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
+index 7aa500d24240ff3ed6694c469eafc4388c982346..ebefea4fb40855745001ed97367d571bde28f413 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
+@@ -107,11 +107,15 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
+ 	if (num == 0)
+ 		return num;
  
--	pm_runtime_get_sync(&hdmi->pdev->dev);
-+	pm_runtime_resume_and_get(&hdmi->pdev->dev);
- 
- 	ret = regulator_bulk_enable(config->pwr_reg_cnt, hdmi->pwr_regs);
- 	if (ret)
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c b/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
-index e253c1408dd1c6dcd7e94506f0b8edcfd4a9a159..d77c68914c5f525cf12971c1058b1abc33792b24 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
-@@ -85,7 +85,12 @@ int msm_hdmi_hpd_enable(struct drm_bridge *bridge)
- 	if (hdmi->hpd_gpiod)
- 		gpiod_set_value_cansleep(hdmi->hpd_gpiod, 1);
- 
--	pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "runtime resume failed: %d\n", ret);
-+		goto fail;
-+	}
-+
- 	ret = clk_bulk_prepare_enable(config->hpd_clk_cnt, hdmi->hpd_clks);
- 	if (ret)
- 		goto fail;
-@@ -178,7 +183,10 @@ static enum drm_connector_status detect_reg(struct hdmi *hdmi)
- 	u32 hpd_int_status = 0;
- 	int ret;
- 
--	pm_runtime_get_sync(&hdmi->pdev->dev);
 +	ret = pm_runtime_resume_and_get(&hdmi->pdev->dev);
 +	if (ret)
-+		goto out;
-+
- 	ret = clk_bulk_prepare_enable(config->hpd_clk_cnt, hdmi->hpd_clks);
- 	if (ret)
- 		goto out;
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-index 03120c54ced686dcd2ddfe809dd9c9011f608235..667573f1db7c6bfef6c75828b5c581c147a86d0d 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-@@ -58,7 +58,11 @@ int msm_hdmi_phy_resource_enable(struct hdmi_phy *phy)
- 	struct device *dev = &phy->pdev->dev;
- 	int i, ret = 0;
- 
--	pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "runtime resume failed: %d\n", ret);
 +		return ret;
-+	}
++
+ 	init_ddc(hdmi_i2c);
  
- 	ret = regulator_bulk_enable(cfg->num_regs, phy->regs);
- 	if (ret) {
+ 	ret = ddc_clear_irq(hdmi_i2c);
+ 	if (ret)
+-		return ret;
++		goto fail;
+ 
+ 	for (i = 0; i < num; i++) {
+ 		struct i2c_msg *p = &msgs[i];
+@@ -169,7 +173,7 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
+ 				hdmi_read(hdmi, REG_HDMI_DDC_SW_STATUS),
+ 				hdmi_read(hdmi, REG_HDMI_DDC_HW_STATUS),
+ 				hdmi_read(hdmi, REG_HDMI_DDC_INT_CTRL));
+-		return ret;
++		goto fail;
+ 	}
+ 
+ 	ddc_status = hdmi_read(hdmi, REG_HDMI_DDC_SW_STATUS);
+@@ -202,7 +206,13 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
+ 		}
+ 	}
+ 
++	pm_runtime_put(&hdmi->pdev->dev);
++
+ 	return i;
++
++fail:
++	pm_runtime_put(&hdmi->pdev->dev);
++	return ret;
+ }
+ 
+ static u32 msm_hdmi_i2c_func(struct i2c_adapter *adapter)
 
 -- 
 2.39.5
