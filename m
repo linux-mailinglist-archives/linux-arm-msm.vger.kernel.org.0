@@ -1,208 +1,264 @@
-Return-Path: <linux-arm-msm+bounces-56789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6DD8AA93D9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 15:00:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2040DAA93F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 15:06:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1544189AAF0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 13:01:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 985963B5560
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 13:06:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5664F2AEF1;
-	Mon,  5 May 2025 13:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B96602561DC;
+	Mon,  5 May 2025 13:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j/xzmTv/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dRPhLn05"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D69681724;
-	Mon,  5 May 2025 13:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51292561D9
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 13:06:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746450045; cv=none; b=Thb8mT4KjHcj7omtfZOtuBpbz5E8Rt5T7L0F9cEJlN2iZMb3fXiQZHn15/oBqPr7E14ZuCQGiiD0+MxsTI1Ghg7FQTzmwl59KYuRlkCZY9V/Etck343OGKw4wSryP9Ke/Wh6+ilZdV9M787HiZj/A+qO1PyrIFZBzATrCkWzeiM=
+	t=1746450388; cv=none; b=KtvjxIPmDhsG19c8DAwD8PKyMzxjqJtCvBfcJwlFgXM+QivRpP7qvHYaLRmm6nbTaBnvU4IeGZoQY8aT3nfUg0M1/Z/Hn2k3Pn4oPyg6Y+HCWOmnKr90GTeKDV9Glyn8e5kJRSol//SaJAF1HmJDrRsp3POBlOuDM5lWdFTqTtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746450045; c=relaxed/simple;
-	bh=3EHiqhycvBax/tqC3yJfvS39+SNdoGy1LgMMMybSTsk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=eDNgs5oOkeEm/oICbGuAbVAFZJP1WlYT3SeRldSWBL6I18PWWfTWDgtAGi4XJ3agYOQshBFhrEzgIfc387upjL9Osucqa2i0166qFwibuyaPh54wNcFsGsHcA0po4d6dxDoXWz+GcA4EJWv83q/yhiwXJoxEyw5bB7Z5HRhXWI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j/xzmTv/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 545BG8OC002489;
-	Mon, 5 May 2025 13:00:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Wl4lIRVgeB3HpFIbRw6yRJPD1yim/TzEJ99/qDoZ6vE=; b=j/xzmTv/MPLJSNnx
-	nFhYetUWy/Sy1p3WB2Qi4BmR9Lx105C0iZLu9z3O9ECseAvdlitRd0csxumprNhd
-	5jWjhHVYi3ndUrhxFCid+sNrzEj+IPPjgwoun4eIfKa4LqYWYhB4E4bFBgccahRd
-	wapupcX8k56M2vjMgLCrCM/fp6uFPmDkZ44l6dmW8odMX6Qmxp6uJlSc+ysSY6iv
-	u9a5Mh47c+tD3Rk7+EMJ+DDSPM3Mxog/4uWyAcE9ae0AvmfRgmCwtfViW0H+Dsmz
-	KF/ngWvHNV/vm4s+8FjZByW6oOF0Lh74NSZOJANJU/H4+8H0SEcdTH2vwvGCnyzS
-	ogVy1w==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46d9ep48hw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 May 2025 13:00:36 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 545D0Z2W030171
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 5 May 2025 13:00:35 GMT
-Received: from [10.151.37.100] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 5 May 2025
- 06:00:32 -0700
-Message-ID: <043da348-e120-4fac-b051-a7c196d5c685@quicinc.com>
-Date: Mon, 5 May 2025 18:30:29 +0530
+	s=arc-20240116; t=1746450388; c=relaxed/simple;
+	bh=cwiOX6cmqTQzmk3WggAwoK4SaoNLnnEpCnVxHf6Qxmg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c0cWwfcx8Bac56eUEVyv9lLJuayKHLlXlHKfEPW45KnmklEjdG1Ra6PqV8lth95Gmo9sy2vyXrAvLPqewE0WdciiCp0TxnAmi/bjQhtIGgo6orJzYn+dRZQsJTSKv4c0vAhGO/zDelZexsQVbfIVIPqKHH/nViMhajNH4YyuE9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dRPhLn05; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ace3b03c043so660956666b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 06:06:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1746450384; x=1747055184; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7djaZKuQTg8ZH962YLQL/FSVR3ehnU/TnBc6a+PC3fk=;
+        b=dRPhLn05MBGi95i67XENDGk2MH4G/uDxTr7KnnnoSg3X0PFhjRFwc+16E1oYjPdKLn
+         NSpFpaQeCDBGArug/m9CV+GJl+aM4kagEKakmfp0UttzmOE1hADfKck5ZY4zzPlzB5iN
+         VyzVETnoFlG4j6bUB0oIyTMpEowmjLLwojxS10vgco0MNlk78eUjtg8wB+M8+r4oqndp
+         SSmrZtjVuHhnGdIMLAk7u0vyHLjX/FybqVg8XF1oUYu3sZspVP9e27rLjhvf9Y3Dz+Rs
+         M8ZZcewWRv5f0nJdHPTDA1B4vZmeiXFKRE0Ca8XSOlofzNWdTv/Nc7VWHgWbmXmOmFPn
+         Ylzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746450384; x=1747055184;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7djaZKuQTg8ZH962YLQL/FSVR3ehnU/TnBc6a+PC3fk=;
+        b=VTTOiqEnsE/9uKyIbO3Ff6xaCTcW9rF07lVR4wxmcZlcm2DlACrzNiLn9gm5CiBQZC
+         ou0bgulKKcS94EOcwxgLY3NVkzLrAYSdHAQhtN3WJTww/Roys7brSXerKCf+IxwHkE8Y
+         3sXVGgTPAy60+V2JJgv+cgkTp64vqk+H1LXDlQwKWgGbxcbTkGjFvHItv+pjsWO0GPcA
+         K3Og5v0s3J0ohKSBZpvuccCQUU4bSYEu0zzpik4KtjHEjvOWYEOcBff6/xSE2wOOiuwC
+         pzz+HdsTpg0toQF3C9ckzbraxDvfZFVv3RNbi/CASfqUvM8LPQlmHYoZ6lVyNZPeVJxX
+         mE0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXjBbb+vh5ZE/h9B3AO6Eajm70BhDvIvhI6xsLhzV3ZBMluIkEjbJH5+U5Wq9edPjlHiUoUqDqMmPLNc6dU@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBue1em+RUzd/EdFqoZb516yBzVj+80jxLIC2GmfQmrWgY+EDy
+	Qhy7bUOgndlA2BH0We0IbXsEPT391preehKZtKPUA3lVcGCR+ZaGiBDcFG2KiuM=
+X-Gm-Gg: ASbGncvpz/4rwwS6OPm07a3CC94QxQRh5UtBeliFC0jfERQjKlwqFAXs/f3ewfRPeSe
+	VcIwvrHznU6Wl2gObpyaxQZHcBmPwdrEwVwx5D+kuI4kV2ibCoXEGq5E1qAY9AUm0RovCzeEflt
+	WrtFYnTa43axAUoODpi9KaxdZHPcD9utc37f8RY2IFAA2/f+RNhWvwQA2/hXiKMVkBDyz0H1ajs
+	6yRiyjCI+DSHvm0H8h5VrCTXHPOlkO5GK/h7yQb+n41dOXOY9Xh/IBzbDr0p8ZeR1LcLBC3mviV
+	cO+3YgcNUgKPVBHyHX6pCwFfYHFX0dr9ORDUny/CrbG3OSqT+srB
+X-Google-Smtp-Source: AGHT+IHfBz0qV3tN9vwCFJbP2NAyCooPjwrUmB9tNTrYi+DjMO5kp0iNYUW/DW+NaeO6h2If04tIVw==
+X-Received: by 2002:a17:906:6a12:b0:ace:caff:675a with SMTP id a640c23a62f3a-ad1905d7cdemr906825766b.10.1746450383927;
+        Mon, 05 May 2025 06:06:23 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:ef30:c917:a6e9:5bff:a8c2])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad18914d067sm491199666b.3.2025.05.05.06.06.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 May 2025 06:06:23 -0700 (PDT)
+Date: Mon, 5 May 2025 15:06:18 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+	linux-serial@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: keep remotely controlled units
+ on during boot
+Message-ID: <aBi3ykEK5HG2WDD6@linaro.org>
+References: <20250503-bam-dma-reset-v1-1-266b6cecb844@oss.qualcomm.com>
+ <aBh9WL2OMjTqBJch@linaro.org>
+ <aw6tjh5q6t75bif4jyusrdvroq53lbwlljo5cdgzrofn3a4loz@ixuu3yw4ucil>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 2/2] mailbox: tmelite-qmp: Introduce TMEL QMP mailbox
- driver
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <jassisinghbrar@gmail.com>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <manivannan.sadhasivam@linaro.org>,
-        <dmitry.baryshkov@linaro.org>
-References: <20250327181750.3733881-1-quic_srichara@quicinc.com>
- <20250327181750.3733881-3-quic_srichara@quicinc.com>
- <6b6a163b-be75-4003-a618-f0e928a6d114@oss.qualcomm.com>
-Content-Language: en-US
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <6b6a163b-be75-4003-a618-f0e928a6d114@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=EOUG00ZC c=1 sm=1 tr=0 ts=6818b674 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
- a=uL57qzDeI7d6P-pwTO4A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: tZ_9FFrs0GhbsUxHIFZ3LnmyLU20MYYb
-X-Proofpoint-GUID: tZ_9FFrs0GhbsUxHIFZ3LnmyLU20MYYb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDEyNCBTYWx0ZWRfX3qE7vRKX/la1
- t+GpbLifv22TL+SxPF7vHjLkM3YdpcwIyUpUUp1WOtx7J5PtO1isGDzu2p5ww5xTE4AasgBqo4E
- cd5pxwMz8vXsQ5fBil1/B7WGPQ7v3k2JgSgTUdB0BBGx7Nf16XRO4EXJLRcvF4CIXjOnC0pe2wL
- S1ivCfaNhL4xFmbTlbUOxwCwPAVc6B/lY10wDk0VpyY78e1XklGpvGHQGWPObkzU3arLR4iNLnm
- M/R/8F2c0nlpshqA35xvroXwbCy8zBfRPnmHzoQwG6fFTgclAwujg+byjQDqKIotUWgk05tghYI
- sbFLjghjeAPeXA8GSBVmpLhGIQWSmhlqTWPZFiWjzNzSoxqP1i1QlYYtBXZq6ocPhy+PJvrxaQ7
- INWsp8mQvzTw285RJAEkITVNb10/9UzTdOumVUaHp5OslA2XWDVxvTGCRa0jDQZuTG1ichdm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-05_05,2025-05-05_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 impostorscore=0 spamscore=0 lowpriorityscore=0
- bulkscore=0 phishscore=0 suspectscore=0 mlxlogscore=999 mlxscore=0
- priorityscore=1501 malwarescore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2504070000 definitions=main-2505050124
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aw6tjh5q6t75bif4jyusrdvroq53lbwlljo5cdgzrofn3a4loz@ixuu3yw4ucil>
 
-
-
-On 4/26/2025 3:19 PM, Konrad Dybcio wrote:
-> On 3/27/25 7:17 PM, Sricharan R wrote:
->> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>
->> This mailbox facilitates the communication between the TMEL server
->> subsystem (Trust Management Engine Lite) and the TMEL client
->> (APPSS/BTSS/AUDIOSS), used for secure services like secure image
->> authentication, enable/disable efuses, crypto services etc. Each client in
->> the SoC has its own block of message RAM and IRQ for communication with the
->> TMEL SS. The protocol used to communicate in the message RAM is known as
->> Qualcomm Messaging Protocol (QMP).
->>
->> Remote proc driver subscribes to this mailbox and uses the
->> mbox_send_message to use TMEL to securely authenticate/teardown the images.
->>
->> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->> ---
+On Mon, May 05, 2025 at 03:17:00PM +0300, Dmitry Baryshkov wrote:
+> On Mon, May 05, 2025 at 10:56:56AM +0200, Stephan Gerhold wrote:
+> > On Sat, May 03, 2025 at 03:41:43AM +0300, Dmitry Baryshkov wrote:
+> > > The commit 0ac9c3dd0d6f ("dmaengine: qcom: bam_dma: fix runtime PM
+> > > underflow") made sure the BAM DMA device gets suspended, disabling the
+> > > bam_clk. However for remotely controlled BAM DMA devices the clock might
+> > > be disabled prematurely (e.g. in case of the earlycon this frequently
+> > > happens before UART driver is able to probe), which causes device reset.
+> > > 
+> > > Use sync_state callback to ensure that bam_clk stays on until all users
+> > > are probed (and are able to vote upon corresponding clocks).
+> > > 
+> > > Fixes: 0ac9c3dd0d6f ("dmaengine: qcom: bam_dma: fix runtime PM underflow")
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > 
+> > Thanks for the patch! I actually created almost the same patch on
+> > Friday, after struggling with this issue on DB410c when trying to add
+> > the MPM as wakeup-parent for GPIOs. :-)
+> > 
+> > How is this issue related to _remotely-controlled_ BAMs?
 > 
-> [...]
+> My understanding is that for locally controlled BAMs we can disable the
+> clock at the probe time as all the users of the BAM will be probed
+> before accessing the BAM. In case of a remotely controlled BAM there can
+> be a user (e.g. UART) which is running, but didn't request DMA channel
+> yet.
 > 
->> +
->> +#define QMP_NUM_CHANS		0x1
-> 
-> Quantities make more sense in decimal, but since this is effectively
-> a single-use value, you can put in the '1' literal in num_chans and use
-> devm_kzalloc instead of devm_kcalloc in the other use
-> 
-ok
-
->> +#define QMP_TOUT_MS		1000
-> 
-> "TIMEOUT"
-> 
-ok
-
->> +#define QMP_CTRL_DATA_SIZE	4
->> +#define QMP_MAX_PKT_SIZE	0x18
-> 
-> This is very handwavy, please structurize all data that comes in and
-> out of the mailbox.
-> 
-ok
-
->> +#define QMP_UCORE_DESC_OFFSET	0x1000
->> +#define QMP_SEND_TIMEOUT	30000
-> 
-> Please include the unit in the macro name - although 30s is quite a
-> timeout for a couple bytes..
-> 
-ok
-
-> [...]
-> 
->> +#define QMP_HW_MBOX_SIZE		32
->> +#define QMP_MBOX_RSV_SIZE		4
->> +#define QMP_MBOX_IPC_PACKET_SIZE	(QMP_HW_MBOX_SIZE - QMP_CTRL_DATA_SIZE - QMP_MBOX_RSV_SIZE)
->> +#define QMP_MBOX_IPC_MAX_PARAMS		5
->> +
->> +#define QMP_MAX_PARAM_IN_PARAM_ID	14
->> +#define QMP_PARAM_CNT_FOR_OUTBUF	3
->> +#define QMP_SRAM_IPC_MAX_PARAMS		(QMP_MAX_PARAM_IN_PARAM_ID * QMP_PARAM_CNT_FOR_OUTBUF)
->> +#define QMP_SRAM_IPC_MAX_BUF_SIZE	(QMP_SRAM_IPC_MAX_PARAMS * sizeof(u32))
-> 
-> These should be expressed in terms of structures and sizeof() instead,
-> as well
-> 
-ok
-
->> +
->> +#define TMEL_ERROR_GENERIC		(0x1u)
->> +#define TMEL_ERROR_NOT_SUPPORTED	(0x2u)
->> +#define TMEL_ERROR_BAD_PARAMETER	(0x3u)
->> +#define TMEL_ERROR_BAD_MESSAGE		(0x4u)
->> +#define TMEL_ERROR_BAD_ADDRESS		(0x5u)
->> +#define TMEL_ERROR_TMELCOM_FAILURE	(0x6u)
->> +#define TMEL_ERROR_TMEL_BUSY		(0x7u)
-> 
-> Oh I didn't notice this during the first review.. I assume these are
-> returned by the mbox. Please create a dictionary such as:
-> 
-> u32 tmel_error_dict[] = {
-> 	[TMEL_ERROR_GENERIC] = EINVAL,
-> 	[TMEL_ERROR_NOT_SUPPORTED] = EOPNOTSUPP
-> 	...
-> };
-> 
-> that we can then plug into the function down below that currently does
-> error ? -EINVAL : 0
+> Please correct me if I'm wrong here.
 > 
 
-Hmm ok, will try this mapping.
+Yes, I think there is a misunderstanding:
 
-Regards,
-  Sricharan
+ - UART doesn't use DMA for earlycon (and I'm not aware of any boot
+   firmware using DMA for UART either). The bam_dma driver really works
+   as intended here, it votes for the clock during probe to perform the
+   register access, then it drops the vote when going to runtime
+   suspend. We don't really need .sync_state() for the BAM, because
+   there are no active DMA consumers during boot.
 
+ - All of the BLSP peripherals (BAM DMA, UART, I2C, SPI) need the
+   shared GCC_BLSP1_AHB_CLK for register access. What happens is:
+
+   1. GCC_BLSP1_AHB_CLK is left running by the bootloader.
+   2. earlycon makes use the UART registers (without DMA), but doesn't
+      vote for the clock (also: the clock driver isn't probed yet).
+   3. GCC driver probes, leaves GCC_BLSP1_AHB_CLK running since unused
+      clock cleanup happens later.
+   4. bam_dma probes, requests GCC_BLSP1_AHB_CLK, votes for enable to
+      access registers during probe.
+   5. bam_dma goes to runtime suspend. The last (known) consumer of
+      GCC_BLSP1_AHB_CLK is gone, so the clock is disabled.
+   6. earlycon continues accessing the UART registers.
+   [Device reset]
+   7. The full UART driver probes and votes for GCC_BLSP1_AHB_CLK.
+
+Conceptionally, we don't need .sync_state for the BAM, we need some kind
+of .sync_state for the GCC_BLSP1_AHB_CLK. Or we need earlycon to vote
+for the UART clocks as soon as the clock driver probes. Which is roughly
+what drivers/clk/imx/clk.c imx_register_uart_clocks() does, except that
+releasing the vote on late_initcall_sync() could still be too early.
+(It's a stupid configuration, but what if UART needs some modules to
+ probe successfully?)
+
+> > The BAM clock will get disabled for all types of BAM control, so I don't
+> > think the type of BAM control plays any role here. The BLSP DMA instance
+> > that would most likely interfere with UART earlycon is
+> > controlled-remotely on some SoCs (e.g. MSM8916), but currently not all
+> > of them (e.g. MSM8974, IPQ8074, IPQ9574, ...).
+> 
+> This probably means that the definition of the flag needs to be
+> clarified and maybe some of those platforms should use it.
+> 
+
+Yeah, probably. It would require testing and/or checking downstream
+sources though. Here is a slightly clearer definition for the flags:
+
+ - Controlled-remotely = reset+initialized outside of Linux, skip reset
+   and initialization of global BAM registers.
+ - Powered-remotely = powered on outside of Linux, but global BAM
+   registers must be reset and initialized inside Linux.
+
+And for the clock:
+
+ - Clock specified: We can vote for the BAM to power on by turning on
+   the clock. After that, we can access registers during probe.
+ - Clock missing: BAM power management is integrated into the consumer
+   interface (e.g. SLIMbus, BAM DMUX). We cannot access registers until
+   the consumer requests the DMA channel.
+
+I think the BLSP DMA (for UART/I2C/SPI) is often "controlled-remotely",
+because there is the option to use some of the instances inside one of
+the remoteprocs (RPM/Modem/WCNSS/ADSP/etc). It's not our job to keep the
+BAM on though, the GCC_BLSP1_AHB_CLK is a clock that every remoteproc
+can vote for independently.
+
+> > The fixes tag also doesn't look correct to me, since commit 0ac9c3dd0d6f
+> > ("dmaengine: qcom: bam_dma: fix runtime PM underflow") only changed the
+> > behavior for BAMs with "if (!bdev->bamclk)". This applies to some/most
+> > remotely-controlled BAMs, but the issue we have here occurs only because
+> > we do have a clock and cause it to get disabled prematurely.
+> 
+> Well... It is a commit which broke earlycon on on db410c.
+> 
+
+FWIW, earlycon works for me on 6.15-rc4 on DB410c, I've only run into
+this issue after adding the MPM definition, which changes probe order
+enough to trigger this issue. I'm not sure how that commit changes
+anything, will try reverting it for my setup later to see what happens.
+
+> I started to describe here the usecase of the remotely-controlled DMA
+> controller being used by the BLSP and then I understood, that I myself
+> don't completely understand if the issue is because DMA block is
+> controlled remotely (and we should not be disabling it because the BLSP
+> still attempts to use it) or if it's a simple case of the clock being
+> shared between several consumers and one of the consumers shutting it
+> down before other running consumers had a chance to vote on it.
+> 
+
+The latter, as explained above. The DMA block doesn't play any role
+here, it's not used during boot.
+
+> > Checking for if (bdev->bamclk) would probably make more sense. In my
+> > patch I did it just unconditionally, because runtime PM is currently
+> > a no-op for BAMs without clock anyway.
+> 
+> Please share your patch.
+> 
+
+It's more or less equivalent to yours with some if checks removed.
+I would be in favor of leaving the bam_dma driver as-is and solving this
+on the clock/earlycon level.
+
+> > 
+> > I think it's also worth noting in the commit message that this is sort
+> > of a stop-gap solution. The root problem is that the earlycon code
+> > doesn't claim the clock while active. Any of the drivers that consume
+> > this shared clock could trigger the issue, I had to fix a similar issue
+> > in the spi-qup driver before in commit 0c331fd1dccf ("spi: qup: Request
+> > DMA before enabling clocks"). On some SoCs (e.g. MSM8974), we have
+> > "dmas" currently only on &blsp2_i2c5, so the UART controller wouldn't
+> > even be considered as consumer to wait for before calling the bam_dma
+> > .sync_state.
+> > 
+> > It may be more reliable to implement something like in
+> > drivers/clk/imx/clk.c imx_register_uart_clocks(), which tries to claim
+> > only the actually used UART clocks until late_initcall_sync(). That
+> > would at least make it independent from individual drivers, but assumes
+> > the UART driver can actually probe before late_initcall_sync() ...
+> > Most of this code is generic though, so perhaps releasing the clocks
+> > could be hooked up somewhere generic, when earlycon exits ...?
+> 
+> The spi-qup commit looks like another stop-gap workaround. Let's add CCF
+> and serial maintainers to the discussion with the hope of finding some
+> generic solution.
+> 
+> Most likely the easiest solution for Qualcomm platforms is to add
+> additional vote on earlycon clocks and then to try to generalise that.
+> 
+
+Yeah, that would be the best option I think.
+
+Thanks,
+Stephan
 
