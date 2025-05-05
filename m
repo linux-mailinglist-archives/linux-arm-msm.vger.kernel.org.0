@@ -1,57 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-56845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1927AAAA914
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 03:07:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4BBCAAA996
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 03:17:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5F9167A2F46
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 01:05:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 917F23A070E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 01:12:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22788359648;
-	Mon,  5 May 2025 22:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B188C25B67E;
+	Mon,  5 May 2025 22:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N+JRsKIO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uA9Ukabo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39A62BDC24;
-	Mon,  5 May 2025 22:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64D5299AB0;
+	Mon,  5 May 2025 22:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746484911; cv=none; b=sHl5uTNlzmmFMQ6oEXQ1Gx/gY1XTKc7//eKgYUHJ8AHeEolKqeVVCL8MoTHeKPxCTsgYgBDsTWDK1hNOedeKcnYbR0/qw9mhEhGgeifg/pjw2iYSDpRmDiPV5xdkLHNRiJGsz/Bo3gn/F18y1nfwMiUSGv3GN8VAX7BhfbvghPs=
+	t=1746485017; cv=none; b=ugF4NATu8CmMiwlZvSfIzKU0GPkDTK8G47tMxroHxOanam2N2yLxyUhUq0x/hy09qYrStHuudh9VtPT5jr2mzuye3Z5DFj7oyX8HGmP66hZ7cdrg+oszxo0pBFW4NkhdBp9BFBALp10ZFW326h+BhfhfLd+1N4P3970D/s6BjcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746484911; c=relaxed/simple;
-	bh=R9QoGzbror0d2lTpHbFjVCDDcApkFgzMM43e3pjbHJQ=;
+	s=arc-20240116; t=1746485017; c=relaxed/simple;
+	bh=2pyPJPnx1Gcn8XcH7QJPQ3Fh+4609/JM60WbXtoVZnQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EiftWVv0/2XPWD2gqvcSB1tKTe8MtwSSHp3tSER2aMEYPXFoPQtOZLgLHct3neqU3Rfel6AGtT+KLSSUKPwmAHD1YgU6ngTe1i+eUnKXlObDaF2qWnt/0qj7V4aUiEl1qoqrqJhSG34AB6y9d2CzGtQYsIxusFEcUgfTBgA4QDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N+JRsKIO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2109C4CEE4;
-	Mon,  5 May 2025 22:41:49 +0000 (UTC)
+	 MIME-Version; b=PM88t+e2DAcr9ZLv+UIKHz0b4KyVLjNrM7e7fSVzODD8AHqdAituJ9qr+IpdQ3ccVxZyW8lTkgYW3NB7tU+xjNgsQbugtCBnrIFE40cELC//8SOeExMbU1qALkyDgqjvQ94X/mtKWJo4hBJvpKzCj0cd0aH9AbIvr8qW30HYoiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uA9Ukabo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7008AC4CEEF;
+	Mon,  5 May 2025 22:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746484910;
-	bh=R9QoGzbror0d2lTpHbFjVCDDcApkFgzMM43e3pjbHJQ=;
+	s=k20201202; t=1746485016;
+	bh=2pyPJPnx1Gcn8XcH7QJPQ3Fh+4609/JM60WbXtoVZnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+JRsKIOwq50LvRqbZaJlm/4ze9CICnOse/XutPyRBIPMlp5RzFVAzBPT1WW3Osjd
-	 5AZg+c/vY5fl7o3Z1R/z9k0QaxV5FXIgX+pBA+yF0iU0Q1SzNRxN/qSkGhEdcrPhkb
-	 +O6nwd+jHu4XjyoKlnP5zvXHDbeQlN+hAjCrqio1idlZT3l1iBhDaM9Sj9SFHHayRr
-	 jc8vOjlDeNy/4SE62iCemXYxGTgKRw3GWDB5fVaINIwaeSwGQJujm7MJwjc7St7LYR
-	 4OYpT7fTMfUHOdL9dcWhPhMyltCi+gqUWdiLPPUhINOYtJpbcrmIgfmkwFguueFXbW
-	 +EZaBmBzoMKqA==
+	b=uA9Ukabo+ZofWzAAGFlGWbqBqyHwOoMHgAf2MEvNRnBImUOR9vxmtVMmQa0XjeeVY
+	 bbx3pPZk1v01D8WtsrrM9/iHFJsAO3F0UXwWQlzGEFGTwn826Dpe654idiEHJyrogc
+	 W2nX7AEinuP7eocICJjX4mRgYgyTlrSJVo5qGMuQOhIwADwajTpTRK4H42DL+L7zBT
+	 NKe8iNZ3yFrw5wmId1+20Hy33gT6tqerJu4wVBP0mrnbxPFStjZs49EmWh+FxBOwIZ
+	 9QDaO25b3qEaxZNGSliAOwFpBOiU1wCOBbWdELXdGroVou6ouqxQd16+qjehhnek/2
+	 DC7gZOmhmpbTw==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Cc: Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+Cc: Taniya Das <quic_tdas@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
+	mturquette@baylibre.com,
+	sboyd@kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	linux-i2c@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 070/486] i2c: qup: Vote for interconnect bandwidth to DRAM
-Date: Mon,  5 May 2025 18:32:26 -0400
-Message-Id: <20250505223922.2682012-70-sashal@kernel.org>
+	linux-clk@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 124/486] clk: qcom: lpassaudiocc-sc7280: Add support for LPASS resets for QCM6490
+Date: Mon,  5 May 2025 18:33:20 -0400
+Message-Id: <20250505223922.2682012-124-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250505223922.2682012-1-sashal@kernel.org>
 References: <20250505223922.2682012-1-sashal@kernel.org>
@@ -66,137 +69,92 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.26
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+From: Taniya Das <quic_tdas@quicinc.com>
 
-[ Upstream commit d4f35233a6345f62637463ef6e0708f44ffaa583 ]
+[ Upstream commit cdbbc480f4146cb659af97f4020601fde5fb65a7 ]
 
-When the I2C QUP controller is used together with a DMA engine it needs
-to vote for the interconnect path to the DRAM. Otherwise it may be
-unable to access the memory quickly enough.
+On the QCM6490 boards, the LPASS firmware controls the complete clock
+controller functionalities and associated power domains. However, only
+the LPASS resets required to be controlled by the high level OS. Thus,
+add support for the resets in the clock driver to enable the Audio SW
+driver to assert/deassert the audio resets as needed.
 
-The requested peak bandwidth is dependent on the I2C core clock.
-
-To avoid sending votes too often the bandwidth is always requested when
-a DMA transfer starts, but dropped only on runtime suspend. Runtime
-suspend should only happen if no transfer is active. After resumption we
-can defer the next vote until the first DMA transfer actually happens.
-
-The implementation is largely identical to the one introduced for
-spi-qup in commit ecdaa9473019 ("spi: qup: Vote for interconnect
-bandwidth to DRAM") since both drivers represent the same hardware
-block.
-
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20231128-i2c-qup-dvfs-v1-3-59a0e3039111@kernkonzept.com
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Link: https://lore.kernel.org/r/20250221-lpass_qcm6490_resets-v5-2-6be0c0949a83@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qup.c | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ drivers/clk/qcom/lpassaudiocc-sc7280.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-index d480162a4d394..eb97abcb4cd33 100644
---- a/drivers/i2c/busses/i2c-qup.c
-+++ b/drivers/i2c/busses/i2c-qup.c
-@@ -14,6 +14,7 @@
- #include <linux/dma-mapping.h>
- #include <linux/err.h>
- #include <linux/i2c.h>
-+#include <linux/interconnect.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/module.h>
-@@ -150,6 +151,8 @@
- /* TAG length for DATA READ in RX FIFO  */
- #define READ_RX_TAGS_LEN		2
+diff --git a/drivers/clk/qcom/lpassaudiocc-sc7280.c b/drivers/clk/qcom/lpassaudiocc-sc7280.c
+index 45e7264770866..22169da08a51a 100644
+--- a/drivers/clk/qcom/lpassaudiocc-sc7280.c
++++ b/drivers/clk/qcom/lpassaudiocc-sc7280.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+  * Copyright (c) 2021, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
+  */
  
-+#define QUP_BUS_WIDTH			8
+ #include <linux/clk-provider.h>
+@@ -713,14 +714,24 @@ static const struct qcom_reset_map lpass_audio_cc_sc7280_resets[] = {
+ 	[LPASS_AUDIO_SWR_WSA_CGCR] = { 0xb0, 1 },
+ };
+ 
++static const struct regmap_config lpass_audio_cc_sc7280_reset_regmap_config = {
++	.name = "lpassaudio_cc_reset",
++	.reg_bits = 32,
++	.reg_stride = 4,
++	.val_bits = 32,
++	.fast_io = true,
++	.max_register = 0xc8,
++};
 +
- static unsigned int scl_freq;
- module_param_named(scl_freq, scl_freq, uint, 0444);
- MODULE_PARM_DESC(scl_freq, "SCL frequency override");
-@@ -227,6 +230,7 @@ struct qup_i2c_dev {
- 	int			irq;
- 	struct clk		*clk;
- 	struct clk		*pclk;
-+	struct icc_path		*icc_path;
- 	struct i2c_adapter	adap;
+ static const struct qcom_cc_desc lpass_audio_cc_reset_sc7280_desc = {
+-	.config = &lpass_audio_cc_sc7280_regmap_config,
++	.config = &lpass_audio_cc_sc7280_reset_regmap_config,
+ 	.resets = lpass_audio_cc_sc7280_resets,
+ 	.num_resets = ARRAY_SIZE(lpass_audio_cc_sc7280_resets),
+ };
  
- 	int			clk_ctl;
-@@ -255,6 +259,10 @@ struct qup_i2c_dev {
- 	/* To configure when bus is in run state */
- 	u32			config_run;
+ static const struct of_device_id lpass_audio_cc_sc7280_match_table[] = {
+-	{ .compatible = "qcom,sc7280-lpassaudiocc" },
++	{ .compatible = "qcom,qcm6490-lpassaudiocc", .data = &lpass_audio_cc_reset_sc7280_desc },
++	{ .compatible = "qcom,sc7280-lpassaudiocc", .data = &lpass_audio_cc_sc7280_desc },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, lpass_audio_cc_sc7280_match_table);
+@@ -752,13 +763,17 @@ static int lpass_audio_cc_sc7280_probe(struct platform_device *pdev)
+ 	struct regmap *regmap;
+ 	int ret;
  
-+	/* bandwidth votes */
-+	u32			src_clk_freq;
-+	u32			cur_bw_clk_freq;
++	desc = device_get_match_data(&pdev->dev);
 +
- 	/* dma parameters */
- 	bool			is_dma;
- 	/* To check if the current transfer is using DMA */
-@@ -453,6 +461,23 @@ static int qup_i2c_bus_active(struct qup_i2c_dev *qup, int len)
- 	return ret;
- }
- 
-+static int qup_i2c_vote_bw(struct qup_i2c_dev *qup, u32 clk_freq)
-+{
-+	u32 needed_peak_bw;
-+	int ret;
++	if (of_device_is_compatible(pdev->dev.of_node, "qcom,qcm6490-lpassaudiocc"))
++		return qcom_cc_probe_by_index(pdev, 1, desc);
 +
-+	if (qup->cur_bw_clk_freq == clk_freq)
-+		return 0;
-+
-+	needed_peak_bw = Bps_to_icc(clk_freq * QUP_BUS_WIDTH);
-+	ret = icc_set_bw(qup->icc_path, 0, needed_peak_bw);
-+	if (ret)
-+		return ret;
-+
-+	qup->cur_bw_clk_freq = clk_freq;
-+	return 0;
-+}
-+
- static void qup_i2c_write_tx_fifo_v1(struct qup_i2c_dev *qup)
- {
- 	struct qup_i2c_block *blk = &qup->blk;
-@@ -838,6 +863,10 @@ static int qup_i2c_bam_xfer(struct i2c_adapter *adap, struct i2c_msg *msg,
- 	int ret = 0;
- 	int idx = 0;
+ 	ret = lpass_audio_setup_runtime_pm(pdev);
+ 	if (ret)
+ 		return ret;
  
-+	ret = qup_i2c_vote_bw(qup, qup->src_clk_freq);
-+	if (ret)
-+		return ret;
-+
- 	enable_irq(qup->irq);
- 	ret = qup_i2c_req_dma(qup);
+ 	lpass_audio_cc_sc7280_regmap_config.name = "lpassaudio_cc";
+ 	lpass_audio_cc_sc7280_regmap_config.max_register = 0x2f000;
+-	desc = &lpass_audio_cc_sc7280_desc;
  
-@@ -1643,6 +1672,7 @@ static void qup_i2c_disable_clocks(struct qup_i2c_dev *qup)
- 	config = readl(qup->base + QUP_CONFIG);
- 	config |= QUP_CLOCK_AUTO_GATE;
- 	writel(config, qup->base + QUP_CONFIG);
-+	qup_i2c_vote_bw(qup, 0);
- 	clk_disable_unprepare(qup->pclk);
- }
+ 	regmap = qcom_cc_map(pdev, desc);
+ 	if (IS_ERR(regmap)) {
+@@ -772,7 +787,7 @@ static int lpass_audio_cc_sc7280_probe(struct platform_device *pdev)
+ 	regmap_write(regmap, 0x4, 0x3b);
+ 	regmap_write(regmap, 0x8, 0xff05);
  
-@@ -1743,6 +1773,11 @@ static int qup_i2c_probe(struct platform_device *pdev)
- 			goto fail_dma;
- 		}
- 		qup->is_dma = true;
-+
-+		qup->icc_path = devm_of_icc_get(&pdev->dev, NULL);
-+		if (IS_ERR(qup->icc_path))
-+			return dev_err_probe(&pdev->dev, PTR_ERR(qup->icc_path),
-+					     "failed to get interconnect path\n");
- 	}
- 
- nodma:
-@@ -1791,6 +1826,7 @@ static int qup_i2c_probe(struct platform_device *pdev)
- 		qup_i2c_enable_clocks(qup);
- 		src_clk_freq = clk_get_rate(qup->clk);
- 	}
-+	qup->src_clk_freq = src_clk_freq;
- 
- 	/*
- 	 * Bootloaders might leave a pending interrupt on certain QUP's,
+-	ret = qcom_cc_really_probe(&pdev->dev, &lpass_audio_cc_sc7280_desc, regmap);
++	ret = qcom_cc_really_probe(&pdev->dev, desc, regmap);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Failed to register LPASS AUDIO CC clocks\n");
+ 		goto exit;
 -- 
 2.39.5
 
