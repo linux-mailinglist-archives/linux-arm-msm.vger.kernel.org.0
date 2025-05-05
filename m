@@ -1,176 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-56851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DF59AAAAEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 03:47:40 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37638AAAA61
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 03:35:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 028255A1804
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 01:42:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6999D7B7433
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 01:34:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 009A22EDB1F;
-	Mon,  5 May 2025 23:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A6772E5DD6;
+	Mon,  5 May 2025 23:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZMkdAe0Q"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UKoPz4Ma"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62ABB381EB9;
-	Mon,  5 May 2025 23:00:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1A82D8DD0
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 22:57:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746486026; cv=none; b=r0a6OV6Wr1uYeyLPjoUlLMOs5XW+IsyW7wZh1brQm0gY7KpkFIOARX3F9Z2Wg8jPRI+CHGE1gFTlljmSR9xBSIf1sXCl4NgDoFzBwYu0XGvfEAKR2wYtDfTm5M64JcWnMvdjlIlqFTK8TpX2zUep5iCtnqGaMaYvOPD07xdBBTI=
+	t=1746485836; cv=none; b=eZn9rFQ/LS9N/cLnHqg4wB5pdoF2igYUr24LhVlqIFYc4xey2uAhCRtR0VNJ9+yc4XIRHDqFrytcrnl1bYMWavgecjN2lHbvaEUpxvwrqrxXfHJZjM1xk+7g6Ka7znKXzsEURcW/74sjpewAxZd1Yx3Zyd3yUukTGrgCQN7QiCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746486026; c=relaxed/simple;
-	bh=iVcHR6MNU2Ms51/2agHFm39aFyCxn2z/dB4SZocitH4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HIHDLY78EgcF4bsRIK9ALCe9IOdRt3K9RCNqYbNel6Xhq5iTB6wdL4I+6Ys9V2XFJoC1g2XnUC384Jj2ezQCEtfAE75YpuYqtlEw/K55TRGq9oCy08K/lmgiREU/hb2c/JzS/EeRdRPnIRNOdOcGFiXXoFI4RhMn3XIjG9jmAL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZMkdAe0Q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3BEC4CEED;
-	Mon,  5 May 2025 23:00:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746486025;
-	bh=iVcHR6MNU2Ms51/2agHFm39aFyCxn2z/dB4SZocitH4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZMkdAe0QyhLA+NadSVdrVr6Gl9FTRi/TQTuQb8/ZGP5lrNS85ahAWCBE3IyoTjidR
-	 cwRRMhPnRG2/mqRbcAPjCcBQargrzJTULHQLwUmZtB4KOzXznrc7EzFTvSsfZ9FaUF
-	 YeVVh01cgtDczSuxqmypzx+4NRjfRWiKXYNvOmZ8ZPu9zuqy0dCdcJ2kvr544OZMis
-	 NHjSWAa+9yU/Qgx8rf5SHHI5F9N6WQDEHqG1sYV6FpfjsJ7uiru70vEg6r+lOuPBeJ
-	 /DmIVL52Q1C/dVgwGrzIwzt913CqE6m3M6V9Py+bNAUjfV7H+AX5VrjWNnwGmyZFdX
-	 c7KCXh+qA+wqA==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-	Luca Weiss <luca@lucaweiss.eu>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	mathieu.poirier@linaro.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 117/294] remoteproc: qcom_wcnss: Handle platforms with only single power domain
-Date: Mon,  5 May 2025 18:53:37 -0400
-Message-Id: <20250505225634.2688578-117-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250505225634.2688578-1-sashal@kernel.org>
-References: <20250505225634.2688578-1-sashal@kernel.org>
+	s=arc-20240116; t=1746485836; c=relaxed/simple;
+	bh=5FAB2DrVgNkneWnFduFOBeIupq6k+CYl8Di4tn7ESHg=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=DhJwM2Y5CHNp/fURULqAfMrUOBgdlvEe548zc2Rd6b945bdh0JX7gijaV5Cl15R1gvF/YGzKwpdTLSU8FB1J4BFjrHpjbqR6VkP9Ab4mK+bUgUFnZNpfyhRZ00Vi50UH53UrsNGC61qwVX5PPrv6RTY5QpwzmfKpLN5orP8BFH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UKoPz4Ma; arc=none smtp.client-ip=209.85.214.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-22e3b59e46eso1412785ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 15:57:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1746485833; x=1747090633; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0BvGs6Zljio1m1AEARRCFv5fDztVSWreYYxAG+gby+0=;
+        b=UKoPz4MaZg5VT5nMtftN23nsYvaMAAOnyKfFgPpgockUvGVUNLS74I2F4IhHt5oQND
+         t2GvhfPI18ID33+HzsPEf5h1SgRcZu3pCU5ToLr9DuD/VjWDClG8u/hzqqeylv2rm6f5
+         SNT2+Rc38ceJyh2WI2UbPiWpUF4PA8xUd8hTrsVxseEMlJYtjPDyZ6dNLoOp6D8N5yXJ
+         GVni4bGZzhxvMnjZcBfp69v3sTQsHH4SDvrzw4Q8lbrI+Rtq2fyyJZ1MjRA8/KnBNvl8
+         r9F/RPmOpUT2KFFuOQvr7lcGoN7OxmcdJYyhBjRKvxiddMSj8onWSGfti6TJZoZkCKnR
+         Udtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746485833; x=1747090633;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0BvGs6Zljio1m1AEARRCFv5fDztVSWreYYxAG+gby+0=;
+        b=kbvj1KrbGLQcEgEPVXvXxziWnKG1wtl/0IphEdoUnv1c2QNy9a51LaF/BYPF/KSDgx
+         Mf/zboHDxAAZJglUOMOd1fbtlpGEjK4Hgo1TfJVIrbINx+SgP59zFVJ8tePevq8zz2UI
+         8ZcqlDXNOkzBHi/lmCgDZhfA4ibNj9bShpiRZHZ1kK2ifYp7QWn+ZNh2OJCF5mtITiTw
+         uM+S8GnYxncGfOTqJEgxeizqemPmIIIZzu9cAD2fvn4xuJDMGwBjUU5LVrt2dGgjo90a
+         j4lcdycnr6EaEFiRWbotBp+de0T2ZscFChWJr/Q2jIySwpn67AY7HYD6vm6TCZ9GIvZA
+         rpKA==
+X-Forwarded-Encrypted: i=1; AJvYcCUunjvg66jBQbJnlnbhBOaRIwDowwa7nfA2YXLeBZy/dXXWn0i3eJPBVw3qTkkjDeP4mSG3q+3qgOu46yN+@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywq7O4YAqs3ypjSw755v78nsyHT9TDUlzTj6T9A5uAAtScmfUyY
+	XD/SXmC1pJUv2jUfqr8A1x9KOpboN0oXbib2n6/aoGiamW1zaWxhKgH+trrOLk9+6/0Lv0M5bje
+	84g==
+X-Google-Smtp-Source: AGHT+IGr7ZwivQiQOxhRvxPnJjHbjFHUYcVKGtfq9EuMJ1XumzNpx+xuBru0RIy3XMb3f8Vooa9e9l/QbF0=
+X-Received: from plbz12.prod.google.com ([2002:a17:902:ee0c:b0:22e:345d:be56])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:2408:b0:223:37ec:63d5
+ with SMTP id d9443c01a7336-22e32ba8292mr19044325ad.28.1746485833625; Mon, 05
+ May 2025 15:57:13 -0700 (PDT)
+Date: Mon, 5 May 2025 15:57:12 -0700
+In-Reply-To: <7e32aabe-c170-4cfc-99aa-f257d2a69364@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.6.89
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <diqz7c31xyqs.fsf@ackerleytng-ctop.c.googlers.com>
+ <386c1169-8292-43d1-846b-c50cbdc1bc65@redhat.com> <aBTxJvew1GvSczKY@google.com>
+ <diqzjz6ypt9y.fsf@ackerleytng-ctop.c.googlers.com> <7e32aabe-c170-4cfc-99aa-f257d2a69364@redhat.com>
+Message-ID: <aBlCSGB86cp3B3zn@google.com>
+Subject: Re: [PATCH v8 06/13] KVM: x86: Generalize private fault lookups to
+ guest_memfd fault lookups
+From: Sean Christopherson <seanjc@google.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Ackerley Tng <ackerleytng@google.com>, Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, pbonzini@redhat.com, 
+	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
+	pankaj.gupta@amd.com
+Content-Type: text/plain; charset="us-ascii"
 
-From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+On Mon, May 05, 2025, David Hildenbrand wrote:
+> On 03.05.25 00:00, Ackerley Tng wrote:
+> > Sean Christopherson <seanjc@google.com> writes:
+> > 
+> > > On Fri, May 02, 2025, David Hildenbrand wrote:
+> > > > On 30.04.25 20:58, Ackerley Tng wrote:
+> > > > > > -	if (is_private)
+> > > > > > +	if (is_gmem)
+> > > > > >    		return max_level;
+> > > > > 
+> > > > > I think this renaming isn't quite accurate.
+> > > > 
+> > > > After our discussion yesterday, does that still hold true?
+> > > 
+> > > No.
+> > > 
+> > > > > IIUC in __kvm_mmu_max_mapping_level(), we skip considering
+> > > > > host_pfn_mapping_level() if the gfn is private because private memory
+> > > > > will not be mapped to userspace, so there's no need to query userspace
+> > > > > page tables in host_pfn_mapping_level().
+> > > > 
+> > > > I think the reason was that: for private we won't be walking the user space
+> > > > pages tables.
+> > > > 
+> > > > Once guest_memfd is also responsible for the shared part, why should this
+> > > > here still be private-only, and why should we consider querying a user space
+> > > > mapping that might not even exist?
+> > > 
+> > > +1, one of the big selling points for guest_memfd beyond CoCo is that it provides
+> > > guest-first memory.  It is very explicitly an intended feature that the guest
+> > > mappings KVM creates can be a superset of the host userspace mappings.  E.g. the
+> > > guest can use larger page sizes, have RW while the host has RO, etc.
+> > 
+> > Do you mean that __kvm_mmu_max_mapping_level() should, in addition to
+> > the parameter renaming from is_private to is_gmem, do something like
+> > 
+> > if (is_gmem)
+> > 	return kvm_gmem_get_max_mapping_level(slot, gfn);
 
-[ Upstream commit 65991ea8a6d1e68effdc01d95ebe39f1653f7b71 ]
+No, kvm_gmem_get_pfn() already provides the maximum allowed order, we "just" need
+to update that to constrain the max order based on shared vs. private.  E.g. from
+the original guest_memfd hugepage support[*] (which never landed), to take care
+of the pgoff not being properly aligned to the memslot.
 
-Both MSM8974 and MSM8226 have only CX as power domain with MX & PX being
-handled as regulators. Handle this case by reodering pd_names to have CX
-first, and handling that the driver core will already attach a single
-power domain internally.
++	/*
++	 * The folio can be mapped with a hugepage if and only if the folio is
++	 * fully contained by the range the memslot is bound to.  Note, the
++	 * caller is responsible for handling gfn alignment, this only deals
++	 * with the file binding.
++	 */
++	huge_index = ALIGN(index, 1ull << *max_order);
++	if (huge_index < ALIGN(slot->gmem.pgoff, 1ull << *max_order) ||
++	    huge_index + (1ull << *max_order) > slot->gmem.pgoff + slot->npages)
+ 		*max_order = 0;
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-[luca: minor changes]
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-Link: https://lore.kernel.org/r/20250206-wcnss-singlepd-v2-2-9a53ee953dee@lucaweiss.eu
-[bjorn: Added missing braces to else after multi-statement if]
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/remoteproc/qcom_wcnss.c | 33 ++++++++++++++++++++++++++-------
- 1 file changed, 26 insertions(+), 7 deletions(-)
+[*] https://lore.kernel.org/all/20231027182217.3615211-18-seanjc@google.com
 
-diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-index 90de22c81da97..153260b4e2eb4 100644
---- a/drivers/remoteproc/qcom_wcnss.c
-+++ b/drivers/remoteproc/qcom_wcnss.c
-@@ -117,10 +117,10 @@ static const struct wcnss_data pronto_v1_data = {
- 	.pmu_offset = 0x1004,
- 	.spare_offset = 0x1088,
- 
--	.pd_names = { "mx", "cx" },
-+	.pd_names = { "cx", "mx" },
- 	.vregs = (struct wcnss_vreg_info[]) {
--		{ "vddmx", 950000, 1150000, 0 },
- 		{ "vddcx", .super_turbo = true},
-+		{ "vddmx", 950000, 1150000, 0 },
- 		{ "vddpx", 1800000, 1800000, 0 },
- 	},
- 	.num_pd_vregs = 2,
-@@ -131,10 +131,10 @@ static const struct wcnss_data pronto_v2_data = {
- 	.pmu_offset = 0x1004,
- 	.spare_offset = 0x1088,
- 
--	.pd_names = { "mx", "cx" },
-+	.pd_names = { "cx", "mx" },
- 	.vregs = (struct wcnss_vreg_info[]) {
--		{ "vddmx", 1287500, 1287500, 0 },
- 		{ "vddcx", .super_turbo = true },
-+		{ "vddmx", 1287500, 1287500, 0 },
- 		{ "vddpx", 1800000, 1800000, 0 },
- 	},
- 	.num_pd_vregs = 2,
-@@ -397,8 +397,17 @@ static irqreturn_t wcnss_stop_ack_interrupt(int irq, void *dev)
- static int wcnss_init_pds(struct qcom_wcnss *wcnss,
- 			  const char * const pd_names[WCNSS_MAX_PDS])
- {
-+	struct device *dev = wcnss->dev;
- 	int i, ret;
- 
-+	/* Handle single power domain */
-+	if (dev->pm_domain) {
-+		wcnss->pds[0] = dev;
-+		wcnss->num_pds = 1;
-+		pm_runtime_enable(dev);
-+		return 0;
-+	}
-+
- 	for (i = 0; i < WCNSS_MAX_PDS; i++) {
- 		if (!pd_names[i])
- 			break;
-@@ -418,8 +427,15 @@ static int wcnss_init_pds(struct qcom_wcnss *wcnss,
- 
- static void wcnss_release_pds(struct qcom_wcnss *wcnss)
- {
-+	struct device *dev = wcnss->dev;
- 	int i;
- 
-+	/* Handle single power domain */
-+	if (wcnss->num_pds == 1 && dev->pm_domain) {
-+		pm_runtime_disable(dev);
-+		return;
-+	}
-+
- 	for (i = 0; i < wcnss->num_pds; i++)
- 		dev_pm_domain_detach(wcnss->pds[i], false);
- }
-@@ -437,10 +453,13 @@ static int wcnss_init_regulators(struct qcom_wcnss *wcnss,
- 	 * the regulators for the power domains. For old device trees we need to
- 	 * reserve extra space to manage them through the regulator interface.
- 	 */
--	if (wcnss->num_pds)
--		info += num_pd_vregs;
--	else
-+	if (wcnss->num_pds) {
-+		info += wcnss->num_pds;
-+		/* Handle single power domain case */
-+		num_vregs += num_pd_vregs - wcnss->num_pds;
-+	} else {
- 		num_vregs += num_pd_vregs;
-+	}
- 
- 	bulk = devm_kcalloc(wcnss->dev,
- 			    num_vregs, sizeof(struct regulator_bulk_data),
--- 
-2.39.5
+> I assume you mean, not looking at lpage_info at all?
+> 
+> I have limited understanding what lpage_info is or what it does. I believe
+> all it adds is a mechanism to *disable* large page mappings.
 
+Correct.  It's a bit of a catch-all that's used by a variety of KVM x86 features
+to disable hugepages.
+
+> We want to disable large pages if (using 2M region as example)
+> 
+> (a) Mixed memory attributes. If a PFN falls into a 2M region, and parts
+>     of that region are shared vs. private (mixed memory attributes ->
+>     KVM_LPAGE_MIXED_FLAG)
+> 
+>  -> With gmem-shared we could have mixed memory attributes, not a PFN
+>     fracturing. (PFNs don't depend on memory attributes)
+> 
+> (b) page track: intercepting (mostly write) access to GFNs
+
+It's also used to handle misaligned memslots (or sizes), e.g. if a 1GiB memory
+region spanse 1GiB+4KiB => 2GiB+4KiB, KVM will disallow 1GiB hugepages, and 2MiB
+hugepages for the head and tails.  Or if the host virtual address isn't aligned
+with the guest physical address (see above for guest_memfd's role when there is
+no hva).
+
+> So, I wonder if we still have to take care of lpage_info, at least for
+> handling (b) correctly [I assume so].
+
+Ya, we do.
+
+> Regarding (a) I am not sure: once memory attributes are handled by gmem in
+> the gmem-shared case. IIRC, with AMD SEV we might still have to honor it? But
+> gmem itself could handle that.
+> 
+> What we could definitely do here for now is:
+> 
+> if (is_gmem)
+> 	/* gmem only supports 4k pages for now. */
+> 	return PG_LEVEL_4K;
+> 
+> And not worry about lpage_infor for the time being, until we actually do
+> support larger pages.
+
+I don't want to completely punt on this, because if it gets messy, then I want
+to know now and have a solution in hand, not find out N months from now.
+
+That said, I don't expect it to be difficult.  What we could punt on is
+performance of the lookups, which is the real reason KVM maintains the rather
+expensive disallow_lpage array.
+
+And that said, memslots can only bind to one guest_memfd instance, so I don't
+immediately see any reason why the guest_memfd ioctl() couldn't process the
+slots that are bound to it.  I.e. why not update KVM_LPAGE_MIXED_FLAG from the
+guest_memfd ioctl() instead of from KVM_SET_MEMORY_ATTRIBUTES?
 
