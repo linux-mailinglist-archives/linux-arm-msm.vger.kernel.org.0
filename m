@@ -1,298 +1,365 @@
-Return-Path: <linux-arm-msm+bounces-56825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B6DAAA9DC5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 23:05:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8EFCAA9E26
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 23:29:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 770721A813EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 21:06:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB3F9189F336
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 21:29:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 452781EFF93;
-	Mon,  5 May 2025 21:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A948F270EDF;
+	Mon,  5 May 2025 21:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mDoI/s56"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YBXsDe1r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F300C450F2;
-	Mon,  5 May 2025 21:05:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746479147; cv=fail; b=T1Qvj5Ggaa1UVrQzuVF1pkUP+HveNSXsnL4uaRyV0Jq/aCGS996IFXzwO8fC0SzHdgkzBu98eFMcqt/uv/3lYA6SlzyzjKTax76OV5UDGf2Rv+2DViQq88RtLfaR7PI5PSsDE115Eh1jKObnrgLSYyvYSdjzXaa1XxeKEA0zxfY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746479147; c=relaxed/simple;
-	bh=grjHBYDPwUXvcn7n3flvisYPhelV5xlsMRFbFajWI68=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=dp4INL/4XMIYdybUhelj73fgFzIqNQBZNlAKVX7pR5p+9AT+3tIUZcZvFrK6Kv9pBNHWFWnO8cwLMbSzhXkD9OCCMj46rLIzFlIaWafOiJcP2rBUgKZU97xMC23XLN0DlbasG1RgFTIgVKqo/c1q738QeIKpjMrfdsyJ//PDg3g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mDoI/s56; arc=fail smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1746479145; x=1778015145;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=grjHBYDPwUXvcn7n3flvisYPhelV5xlsMRFbFajWI68=;
-  b=mDoI/s56edMvvB5m/7jMiM64/Au0GUIBffhDD05DJgQKKLBEYpHiXm0M
-   Cnc67idBibj1XS+N9KjkI902gHrbGXMKAijkp83SKiS6E43zBiXKpCz6+
-   UPeP7DRRc9l0+3L9yvs8lmV/bq74LS2LlocQCnlI4B7wYD3g8KPHOg9HL
-   4dda/PcEzrXTMvv9ggREIpAZANVknG6tGZyLEgPa+TZu3ZR6H7SD81kf4
-   K7mQDA0gnyXu93SYVit3filxDzAoLN3k33w+BA3DXeYwK8sWL1AIjM+li
-   Ryk9GaVNLOpdEAFQ2oYbkYkxal38ANqljr0GtW8oHs+7KnL3Y+0hxgKGV
-   A==;
-X-CSE-ConnectionGUID: 5hNUH9sGQL2HYEKDQUQliA==
-X-CSE-MsgGUID: Yyt5qnX7Q9ah/79+TSt61A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11424"; a="50760500"
-X-IronPort-AV: E=Sophos;i="6.15,264,1739865600"; 
-   d="scan'208";a="50760500"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2025 14:05:43 -0700
-X-CSE-ConnectionGUID: SzoxT1YyQ3SVa4a9zWP1CA==
-X-CSE-MsgGUID: Z9nS512GSIi43a3vobF1EA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,264,1739865600"; 
-   d="scan'208";a="158604958"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2025 14:05:40 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Mon, 5 May 2025 14:05:37 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14 via Frontend Transport; Mon, 5 May 2025 14:05:37 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.169)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Mon, 5 May 2025 14:05:36 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FS1H2lG/DVzng/0dK8Q5+1qnqHW5aPXJuFu5EUL+ZFz0XumUegaJcff4ZwvLInoxN12MZt+beI2phI4m17d6EUER25Vbl6LtV85eTjnDkxIRPFIvxzRdQKVUsOV7UD/ezFws3BGwJQuH1ScAnybdRxtb8+k95hnDPcgYFX4fTAvfHSQJFAYGLOs6yz1xXy3eNXy3I9r0eioGzlQ5sFBemxZ7BPO13tnOybjlEBG+IWZJti1a0BezKXw7yYlDo4ESbcfjm82cWHTDvI7gx6HzlLwISmJdzy+5+WeGcBm+aAqj6m4WO//InhQ+gPt8ggOHE8pa68/NIfkVWc56hfX6Og==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=C4XcwwsBLdyvmO6/Y9ON5vfCPH6jFg1tdLZN3fWpFTs=;
- b=fKsn6Vp+QRIbAy47xQGnikyUlUyb6D9a4iOpAcpfGgsKj6gkG43UNGUza1PZ4hynj/v4kvBf50rT2EtR3tmw9VaSV9WqZx22kFDVyLlf4uHCdVkt6eADHdAs2PeM/iQ3ZrvryA+KAg5odth3KKUDwG2IhYbaNYZmXdi44P8xUACb92hL+Pd50mDpWq2IvhOpk7vkpTuOOk0uG6GVlfb5HMnKEyaCG6wyQ6yOpg9nIGBSXnT6jTc0vqHMOKaY1tfjfhAFQGHqyBWovK96pAoqBXyfLSOJxOeDvNWZJTQXb254uMlCpWnce9huUL/1VfDQ9A18Y+GEnJHEyzrGJc5gYw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SA1PR11MB6733.namprd11.prod.outlook.com (2603:10b6:806:25c::17)
- by DS0PR11MB8763.namprd11.prod.outlook.com (2603:10b6:8:1bb::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.24; Mon, 5 May
- 2025 21:05:31 +0000
-Received: from SA1PR11MB6733.namprd11.prod.outlook.com
- ([fe80::cf7d:9363:38f4:8c57]) by SA1PR11MB6733.namprd11.prod.outlook.com
- ([fe80::cf7d:9363:38f4:8c57%5]) with mapi id 15.20.8699.026; Mon, 5 May 2025
- 21:05:31 +0000
-Date: Mon, 5 May 2025 16:06:04 -0500
-From: Ira Weiny <ira.weiny@intel.com>
-To: Fuad Tabba <tabba@google.com>, <kvm@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-mm@kvack.org>
-CC: <pbonzini@redhat.com>, <chenhuacai@kernel.org>, <mpe@ellerman.id.au>,
-	<anup@brainfault.org>, <paul.walmsley@sifive.com>, <palmer@dabbelt.com>,
-	<aou@eecs.berkeley.edu>, <seanjc@google.com>, <viro@zeniv.linux.org.uk>,
-	<brauner@kernel.org>, <willy@infradead.org>, <akpm@linux-foundation.org>,
-	<xiaoyao.li@intel.com>, <yilun.xu@intel.com>, <chao.p.peng@linux.intel.com>,
-	<jarkko@kernel.org>, <amoorthy@google.com>, <dmatlack@google.com>,
-	<isaku.yamahata@intel.com>, <mic@digikod.net>, <vbabka@suse.cz>,
-	<vannapurve@google.com>, <ackerleytng@google.com>,
-	<mail@maciej.szmigiero.name>, <david@redhat.com>, <michael.roth@amd.com>,
-	<wei.w.wang@intel.com>, <liam.merwick@oracle.com>,
-	<isaku.yamahata@gmail.com>, <kirill.shutemov@linux.intel.com>,
-	<suzuki.poulose@arm.com>, <steven.price@arm.com>, <quic_eberman@quicinc.com>,
-	<quic_mnalajal@quicinc.com>, <quic_tsoni@quicinc.com>,
-	<quic_svaddagi@quicinc.com>, <quic_cvanscha@quicinc.com>,
-	<quic_pderrin@quicinc.com>, <quic_pheragu@quicinc.com>,
-	<catalin.marinas@arm.com>, <james.morse@arm.com>, <yuzenghui@huawei.com>,
-	<oliver.upton@linux.dev>, <maz@kernel.org>, <will@kernel.org>,
-	<qperret@google.com>, <keirf@google.com>, <roypat@amazon.co.uk>,
-	<shuah@kernel.org>, <hch@infradead.org>, <jgg@nvidia.com>,
-	<rientjes@google.com>, <jhubbard@nvidia.com>, <fvdl@google.com>,
-	<hughd@google.com>, <jthoughton@google.com>, <peterx@redhat.com>,
-	<pankaj.gupta@amd.com>, <tabba@google.com>
-Subject: Re: [PATCH v8 08/13] KVM: guest_memfd: Allow host to map
- guest_memfd() pages
-Message-ID: <6819283cc31f0_28880f2944f@iweiny-mobl.notmuch>
-References: <20250430165655.605595-1-tabba@google.com>
- <20250430165655.605595-9-tabba@google.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250430165655.605595-9-tabba@google.com>
-X-ClientProxiedBy: MW4PR04CA0386.namprd04.prod.outlook.com
- (2603:10b6:303:81::31) To SA1PR11MB6733.namprd11.prod.outlook.com
- (2603:10b6:806:25c::17)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA85F2701C2;
+	Mon,  5 May 2025 21:29:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746480544; cv=none; b=nkCjDvdBXnuAHHU8RueBfeHMc9Am9LpAY0Ja9ZnBMF7ww0C86HOJt39qCQ4HCtMYUgtwSijd2IBcWQIkXu0s2T/mNtbzbB7vxTdzGXEE5V1nu2eVJhlLgAR0x1pJPAT4niRapI6vbxbmxGu4DgTtfp243nDf3viLlIVe054T2Io=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746480544; c=relaxed/simple;
+	bh=3XxMAXO9+79PpEmoKLZJHTtej1xBZeb1LwNhROTNRxY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NJBJhFiI1jbzAoyUc6aGMgey40WwpVMM8j952SeL61CTC22Q2hIqlfF2Y2osyk+37CLgUCFwT56zczbWfMdc1TcE9gJagJsacuRs/Ndn+rClU8hg4hcqpo5+x1CD2SEt+M7ZG0f5hIPW5wnnj2fhxtd6WSxy2BcfbbbkUnt+6j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YBXsDe1r; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 545KTvD1016273;
+	Mon, 5 May 2025 21:28:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	6fbWtZrFp1kkYuOkSQk8CYkFh3yOINoeD9GEadRdKg0=; b=YBXsDe1r2MEnuvCk
+	stuxZvV8nWs02iyRxILkdh/87YBMt7mL8X7YRPdhR6IoZO7U44uLLDov5bhXv9DI
+	tLVvBUkBe4W9jfqJFDykgHaTLRA97DsmQoV1WZhUA/QWIAS1rGmmZsvErlQbQRCe
+	Xhu8kPQ/DushQUl0Rw1dUrBGodXIo0gdSHpZ4jKziH5jI4TpMyMktniAMuSLfzt+
+	eIQbTrpXkGMvTCns28JxZRmnEPD9OZubz0rfWgFuJigdfdl/RatF5aYZEzhQbum5
+	7pZ0ZyydRemGEmQm2QVgY8B9rkF2IJ8qfN+tRd5gzc19DeTqjEzNW3hEg96+JW8C
+	9cW7Gw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46dbc5da9x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 05 May 2025 21:28:43 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 545LSgNw007225
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 5 May 2025 21:28:42 GMT
+Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 5 May 2025
+ 14:28:41 -0700
+Message-ID: <65710c50-9bfc-42e8-afad-ac01c7f96a9e@quicinc.com>
+Date: Mon, 5 May 2025 14:28:39 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA1PR11MB6733:EE_|DS0PR11MB8763:EE_
-X-MS-Office365-Filtering-Correlation-Id: f02482db-12d6-4d68-758e-08dd8c1891c4
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?cU9ocWQ5TFFtWkE3WS9iNm1XTklYQ1duS1YzZEtLN1dCcXM1UEt0b0VpQ1RP?=
- =?utf-8?B?WlpFUEZ2MzVqa0xHVjBGbFZOMXIwdGEwVGovdHdBbTRFSk9MeTFwS3REckt1?=
- =?utf-8?B?djNZNFNJMGpKM2xZQm0rUUN6YTNqU1JTVEdsT0tabEZUT1l3cnJsMXR4V3pC?=
- =?utf-8?B?a2NteE1DQkp1ZWpqS1lIOFNvckRMNlBVTGlSUUliN0VIa1hBdXRhQS9tWVlU?=
- =?utf-8?B?d2hIMHFoK2dsS0JLRUxZUHYvY1NwSlRYSGxCTUVxR1hLZlJGMG0zdHg4dVpL?=
- =?utf-8?B?MnRBUk9TSUVjdGI4SzNGQnliZEFRdGpCbDJja1NRR2RJZXVXMVJvaDdja3p0?=
- =?utf-8?B?NTFmS0ZHWGxoKzdBOG5OY1FrL3dCVFlEMTFPTnorSXVmblhxQnRYcWgwY3pK?=
- =?utf-8?B?c3dqWndFZ2lyT2RxcGRpNldjTFVZZVljdHJQakxmSHA5dUJIOUFXK0FTMStH?=
- =?utf-8?B?SGFCQWdiVkY5aTM2Znh6OHJqUGtRbzkwTUd2ZlNOY1JRSlZVZDl3UVhhcmZC?=
- =?utf-8?B?dDZyb2VLQWl3THFKV1RlVzIrTVE1Z1I3OVVDOGYxbklyd1AzdzlIZzkwWVNF?=
- =?utf-8?B?WlpaRFNnUmo1MDRKNnNBa1hUMHVrbkhHUEhCa0lpTFJIdExMYjlvR3RucVVG?=
- =?utf-8?B?ZEtMR1dQbHNwTDRmZ3lLOURxU1dVY1RHNHBwYVNVV2lKOVJ4TGtSMStLMll4?=
- =?utf-8?B?L3hidk9XSFM4cUdmU0pTWWU5Vnc5ck5UbEFWVHlQd2JuSUVhK0dLNWpKak9S?=
- =?utf-8?B?aFNFOVpGZnd3ektyek1ELzB6aFpoME5lQUtvVDhPSDNoRS92UVQ2Rk1VcW8z?=
- =?utf-8?B?NngzRTh0T2dZckZZUkxIRUxkSkZrcWZnOTkrT2dCMEdVbWVUVGVSNTBNTWZ4?=
- =?utf-8?B?aE5qV3Bla1d1SVM4QjhFT1pRQ3hIL1J5ODRIWjVwVnkxQ0pBZE81MERWUkhV?=
- =?utf-8?B?dXBPZU5leEZSYVFpYldmL3BCUDIveUR0NDNYTXNvTm0xUWdIVXk3UVRiWlhR?=
- =?utf-8?B?a0wvWGRVWnhKT3BGQ0pDdW9KSUlXeDBOeW1BTkdZOS9Md3dPNEU0NTQ3V1Mr?=
- =?utf-8?B?QTZ5UlVJOVNlQndiZXhlODZab3BTZTZxbkx0OGRnZTFhVWkzVEJ2UEhHbkF2?=
- =?utf-8?B?YlZTckVTYm5ONC9mTWVzV20rSUhCWllOQjVBeUczVzJpSHlUWisraHZIdlhq?=
- =?utf-8?B?ZEc4S0RNclFjYlVqRnh2SWI0SFFxSzJtWVl6aUI1bFNGNzdrekdnTmZBTWl1?=
- =?utf-8?B?TXZ5RDlqL1dtVzFPd0JVcVpWT1VENHBDdVBYNDRXNHR0S2FGVnFTMFczWmJE?=
- =?utf-8?B?ZVNLM3hJaURQYjdnZEpWSmozTnFDT0tjREVwVURlMjI2QTBRYlpLbEFlOVZa?=
- =?utf-8?B?dzdSenp6ZExlRWx6QWlqUkg3L1JFVE9UcFJHSnQ5R3Z1WEZOTGR6bWVXZUJ0?=
- =?utf-8?B?dHZBY3E2cld2V0plODYxT3Fjbis5WDNSRXV2UFI0RnpZd1pKVEJjdnp2UUJU?=
- =?utf-8?B?VkZpekJpUk1leTdGWWlOdk94Um1UbVJJMFJ0K1REa1NBOWxqd214akZRdksz?=
- =?utf-8?B?S1VWMm54VEFwZm9KWlY4djFxdHl1enF6MUxhR3MybjNtRW5Bdi9VcVBSNWJ2?=
- =?utf-8?B?TkRoSkR4V1RlOS94bmY2SXNpMXp3TnVJZjRFVnI0bWovN0xuaVUrNnZISW4z?=
- =?utf-8?B?OVYvU2hmbmFMb25YK2wxMHhVUUcyT0pibnlpdVNyTXJBb3ovYkJXRFBRY1U4?=
- =?utf-8?B?Ky9rL3pXYVlwbjA4OXZmcG5RYzdIN3JCajJEbWFxNEY5ak1aZzJMdEZCSVVu?=
- =?utf-8?B?MnNqNThzeStCNjJ1S3JzcjBQd0FKeTNUWnl0citJYldUbnc1djJrZXRCMHZY?=
- =?utf-8?B?c1VDQTUrbTBqYWdWdHc0ZW1yK0RSYXhQUmlIOFZ1UklLZlQ1dDNWZ3FFZ1NP?=
- =?utf-8?Q?ft3kW2XFKfA=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR11MB6733.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(7053199007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UXRRbmJKbkxFWnZKWURoZ25lT3BYYzhRWUk0MFlCNXpmcGUzR0JIVVRvUVFu?=
- =?utf-8?B?YmJwWFY2aEU4cStnN0JEWkgreHhJYmoyS1JsTTQ0RE5oN1ZsU1YvaEluV0RQ?=
- =?utf-8?B?ZXIrYmhkcDY2Y1dWR0NGTCs2ZUpkQ21Ydjd4cENNcWZKU08yY094ZFNDOUdB?=
- =?utf-8?B?KzBrWjJudVpSWHNJTTg1cW5odG5CUEFLV3JBcTJMV3F4WE9mSUxoZHZkWnEr?=
- =?utf-8?B?UkdySldOQmp5SklPNExhNWh4SVdETWF5akVSZDFVVDhMZks5THRRVFluOGtQ?=
- =?utf-8?B?ZlFvMFgwbEJuaDFySk9Gak9MWWlIeFZWZ3I4V2prVkJ6UVBmVTdhcXRhN25j?=
- =?utf-8?B?NHN6aGNuVUxZMFZqM2xNQWdFUnlaRHp2OW5KZFpIZGJrZ29PcncyLzJDbXRP?=
- =?utf-8?B?ZitMdWRZbFA1UHlYby8wWFRzVE9wakdpdE5tRkppZUxIOHJzQUhkR2JyeXlu?=
- =?utf-8?B?OGxkcnVlbkdlQ2p5bGpsbWlmSVN5enlzdkJNVUxYdGs4Z2RTZjV1VUlHb3dz?=
- =?utf-8?B?YW51bUQ4VzhKckExckpQaXBBeEZaa0doSlBXS25OQTRQSjR2S1hBTWpnRGN2?=
- =?utf-8?B?ck85dVlERUJFUUZTRHR0Rm9xMWRDNUdOMno5VloyMkFRMFpPeng3YjdUN3ho?=
- =?utf-8?B?R3NUditaUkkzWmoyeVFHWjhHY1E4Q3ZaajV4akFOeG04UFUzd3JuU3VtZHJS?=
- =?utf-8?B?WjZqeDJiVXlDVVVHRGl1djBsUEo0K0oxbE5YcGMvOFNRYTNsS1p0MVNGYmFz?=
- =?utf-8?B?V284aVNqMlpOY3dyVW5YUkM0T3cwRG5WYmFLaDZiZk1CZXU0TytLSjJoa2Uw?=
- =?utf-8?B?bFI4OXNhMHVtdXdLOXNMVzk3MVlaOXRwOENibWl4S2pNYVhld0tIaUFydHVn?=
- =?utf-8?B?dUhwZVlVb2pNQ29NZnVvUUJTZUVSNzRXaUxlUE5HWXJpUXhTRW51eGdhOEUy?=
- =?utf-8?B?VGh4dnBxZ3NUVmIrK01ycnFTU2haR21MWllKanRydDB0MFg3UngycDdmK1Z1?=
- =?utf-8?B?QldWUDhVTkljblVORmNVZ1h5a3I1WG9oNDY2QjBKL2VEN3hVUkJnTlRtTDBL?=
- =?utf-8?B?QmcrRy9WNmNKcldOY2RxYldLRWxCM2ovRXdQWlUwWVdaQnMzSnR5M0RiVTAy?=
- =?utf-8?B?WVE5UVVvS0tNQTM3ZlljV0FKRHFycU5wb0JrN0QzK2lWMVZ6bVVzL25MN0Nz?=
- =?utf-8?B?UmlGeitpWU9XM1pHaUpOeE15UVRKcDJXMk9td2J2eWVxSGo3SGMzZmZVbDNR?=
- =?utf-8?B?eHVKMmg4bmNXSVkxYW5XOGUvc0l5OE1BczJHaHlOOHBRUlc5UktSaW5YbXhZ?=
- =?utf-8?B?c3lJcEw2ZmVFbHA3bVVLVW8vRHM3U2VIb0xaREhqNGlrK05vUnhKVko5QjJ6?=
- =?utf-8?B?SSsveDNHbnBxRElwWmxiSG5KSWIrME1JWVJiN0dZUDZlb3dtanQ1dldRRVFT?=
- =?utf-8?B?dTJDeUh2SVZYOE43eWVVMXVmTDNZWWw5ZXdjakl0Y29kRURpbXgrTGRaZUd1?=
- =?utf-8?B?cndITVhicEFFbm5sREV3RnBtRCtDcTIyOHMwZGFxMjZ2N3ZyQXpkYThGWmsz?=
- =?utf-8?B?amtaU3dEMkZtOHZUVjlPcE1DR2hFKzBNVVk2MCtMaFIxN2pEaVVocWlSUGVS?=
- =?utf-8?B?ekJyNk5sb0h4YUowckFKbnMzakNsTko1Y0JmMTVHd2h2LzdYMGlYVHFwQllG?=
- =?utf-8?B?Z3JaUWFPd2xtYWM5elJFRFkwdUdYNjE0ZklFbEUycW9maHp0akpuWkVDRTl3?=
- =?utf-8?B?UVdhei9IaHhReHdwV3V6amlKOGVIWlNDcC9aaDlseFRQdXpYNGdhQjhyM2Zh?=
- =?utf-8?B?SDM1N0tkakJEb0U2b204Z1paUWtoVHQ5cHRHTWRnQVJ1cDJtelFWVVpkN2gx?=
- =?utf-8?B?SUcxeUZVcG9CbGU1S0ZmbEUvanBTZjBmdnBWUk8zWHpkSTN1ZGREL3R6ZDNK?=
- =?utf-8?B?UUNIQXR5L3JjeVZGSmI4WDl6SG1ubkVYOWVMeWIrODR5WkRpN213MjZWRWlP?=
- =?utf-8?B?NjJDRTM4WmVkV1ZIRW4rcHhrQkp2eFNEZXA5QUtGVGp2Q2pJSVU1SjlWYUR1?=
- =?utf-8?B?YTBsUEJiWGMzN2ljeUo2OFlkaUdUdTh6LzFJSk01SFdCYXlpbVpqZmMzUlNo?=
- =?utf-8?Q?9LQFE8rVdEH2p2KumdZ4eBBO5?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: f02482db-12d6-4d68-758e-08dd8c1891c4
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR11MB6733.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2025 21:05:31.1029
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: AWNy8F1/vOUoxyijVx6vc/ltogjeB3K+LiS2TcIylH7HRoo0STrON4MLgZHq4+oFwlFXw7xWTUoossHBTkr6uw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB8763
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 19/24] drm/msm/dsi: Add support for SM8750
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>
+CC: Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Jonathan Marek
+	<jonathan@marek.ca>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Rob Clark
+	<robdclark@chromium.org>, <linux-clk@vger.kernel.org>,
+        Srinivas Kandagatla
+	<srini@kernel.org>
+References: <20250430-b4-sm8750-display-v5-0-8cab30c3e4df@linaro.org>
+ <20250430-b4-sm8750-display-v5-19-8cab30c3e4df@linaro.org>
+ <hobn3fq647z54q6uqrooapokipr4zoxfb3tztg46lwzcsof3jd@5bwn34r2v7ks>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <hobn3fq647z54q6uqrooapokipr4zoxfb3tztg46lwzcsof3jd@5bwn34r2v7ks>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ATCruRLFzklvcy0jp1Cm81-oXR_9k4HK
+X-Authority-Analysis: v=2.4 cv=O7Y5vA9W c=1 sm=1 tr=0 ts=68192d8b cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=e5mUnYsNAAAA:8
+ a=KKAkSRfTAAAA:8 a=jzqiswS_J5jijFRD548A:9 a=QEXdDO2ut3YA:10
+ a=Vxmtnl_E_bksehYqCbjh:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: ATCruRLFzklvcy0jp1Cm81-oXR_9k4HK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDIwMyBTYWx0ZWRfX6kTy4LFAd+Yg
+ d5Uujajwhbhy3AlW1fYpyK2ioT63kN5cHDF0lMfLVeacnF7GSva7mVUH5Trjdiy58hMdUn9kIM1
+ EjLtdSfSR+aR4Iw6cUalLYvTFffGzmBHGdXk1yN1ynQilzfE9otl9brVOjrjglpK70x+pi+YMSg
+ /mjGjdREra1Afih99QNk0ApPukCfP2I1B4Igb3mbLtMMAYA55openn8u7tS7F0PRmOFmlf4dY/T
+ 3KzB3Pl/H+OGpxrmy4SJoxEkbxuYFk+A3TRXvYWJrrtV4g21vScPMGu1vdkUnR6vWy3Zno9hgXN
+ MHzbDWwse5ZLM63rHYhaiMILOHhsd0GD/Ze26N15cMcguiOUq+EBYZ+VPDQUWT+0aogBmL/CxVN
+ qoU2OpAaQYCm21FVZylUPbXWqrrpLYtLtHJ7euQnynaC1/i3VeQ/2jluffHqv2fGDercUezH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-05_09,2025-05-05_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
+ clxscore=1011 priorityscore=1501 adultscore=0 phishscore=0 bulkscore=0
+ impostorscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505050203
 
-Fuad Tabba wrote:
-> Add support for mmap() and fault() for guest_memfd backed memory
-> in the host for VMs that support in-place conversion between
-> shared and private. To that end, this patch adds the ability to
-> check whether the VM type supports in-place conversion, and only
-> allows mapping its memory if that's the case.
+
+
+On 5/5/2025 5:35 AM, Dmitry Baryshkov wrote:
+> On Wed, Apr 30, 2025 at 03:00:49PM +0200, Krzysztof Kozlowski wrote:
+>> Add support for DSI on Qualcomm SM8750 SoC with notable difference:
+>>
+>> DSI PHY PLLs, the parents of pixel and byte clocks, cannot be used as
+>> parents before DSI PHY is configured, the PLLs are prepared and their
+>> initial rate is set.  Therefore assigned-clock-parents are not working
+>> here and driver is responsible for reparenting clocks with proper
+>> procedure: see dsi_clk_init_6g_v2_9().
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
+>>
+>> Changes in v5:
+>> 1. Only reparent byte and pixel clocks while PLLs is prepared. Setting
+>>     rate works fine with earlier DISP CC patch for enabling their parents
+>>     during rate change.
+>>
+>> Changes in v3:
+>> 1. Drop 'struct msm_dsi_config sm8750_dsi_cfg' and use sm8650 one.
+>>
+>> SM8750 DSI PHY also needs Dmitry's patch:
+>> https://patchwork.freedesktop.org/patch/542000/?series=119177&rev=1
+>> (or some other way of correct early setting of the DSI PHY PLL rate)
+>> ---
+>>   drivers/gpu/drm/msm/dsi/dsi.h      |  2 +
+>>   drivers/gpu/drm/msm/dsi/dsi_cfg.c  | 14 +++++++
+>>   drivers/gpu/drm/msm/dsi/dsi_cfg.h  |  1 +
+>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 81 ++++++++++++++++++++++++++++++++++++++
+>>   4 files changed, 98 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+>> index 87496db203d6c7582eadcb74e94eb56a219df292..93c028a122f3a59b1632da76472e0a3e781c6ae8 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi.h
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+>> @@ -98,6 +98,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi);
+>>   int msm_dsi_runtime_suspend(struct device *dev);
+>>   int msm_dsi_runtime_resume(struct device *dev);
+>>   int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host);
+>> +int dsi_link_clk_set_rate_6g_v2_9(struct msm_dsi_host *msm_host);
+>>   int dsi_link_clk_set_rate_v2(struct msm_dsi_host *msm_host);
+>>   int dsi_link_clk_enable_6g(struct msm_dsi_host *msm_host);
+>>   int dsi_link_clk_enable_v2(struct msm_dsi_host *msm_host);
+>> @@ -115,6 +116,7 @@ int dsi_dma_base_get_6g(struct msm_dsi_host *msm_host, uint64_t *iova);
+>>   int dsi_dma_base_get_v2(struct msm_dsi_host *msm_host, uint64_t *iova);
+>>   int dsi_clk_init_v2(struct msm_dsi_host *msm_host);
+>>   int dsi_clk_init_6g_v2(struct msm_dsi_host *msm_host);
+>> +int dsi_clk_init_6g_v2_9(struct msm_dsi_host *msm_host);
+>>   int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
+>>   int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
+>>   void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct mipi_dsi_host *host);
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+>> index 7754dcec33d06e3d6eb8a9d55e53f24af073adb9..7f8a8de0897a579a525b466fd01bbcd95454c614 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+>> @@ -257,6 +257,18 @@ static const struct msm_dsi_host_cfg_ops msm_dsi_6g_v2_host_ops = {
+>>   	.calc_clk_rate = dsi_calc_clk_rate_6g,
+>>   };
+>>   
+>> +static const struct msm_dsi_host_cfg_ops msm_dsi_6g_v2_9_host_ops = {
+>> +	.link_clk_set_rate = dsi_link_clk_set_rate_6g_v2_9,
+>> +	.link_clk_enable = dsi_link_clk_enable_6g,
+>> +	.link_clk_disable = dsi_link_clk_disable_6g,
+>> +	.clk_init_ver = dsi_clk_init_6g_v2_9,
+>> +	.tx_buf_alloc = dsi_tx_buf_alloc_6g,
+>> +	.tx_buf_get = dsi_tx_buf_get_6g,
+>> +	.tx_buf_put = dsi_tx_buf_put_6g,
+>> +	.dma_base_get = dsi_dma_base_get_6g,
+>> +	.calc_clk_rate = dsi_calc_clk_rate_6g,
+>> +};
+>> +
+>>   static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
+>>   	{MSM_DSI_VER_MAJOR_V2, MSM_DSI_V2_VER_MINOR_8064,
+>>   		&apq8064_dsi_cfg, &msm_dsi_v2_host_ops},
+>> @@ -300,6 +312,8 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
+>>   		&sm8550_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+>>   	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_8_0,
+>>   		&sm8650_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+>> +	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_9_0,
+>> +		&sm8650_dsi_cfg, &msm_dsi_6g_v2_9_host_ops},
+>>   };
+>>   
+>>   const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+>> index 120cb65164c1ba1deb9acb513e5f073bd560c496..859c279afbb0377d16f8406f3e6b083640aff5a1 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+>> @@ -30,6 +30,7 @@
+>>   #define MSM_DSI_6G_VER_MINOR_V2_6_0	0x20060000
+>>   #define MSM_DSI_6G_VER_MINOR_V2_7_0	0x20070000
+>>   #define MSM_DSI_6G_VER_MINOR_V2_8_0	0x20080000
+>> +#define MSM_DSI_6G_VER_MINOR_V2_9_0	0x20090000
+>>   
+>>   #define MSM_DSI_V2_VER_MINOR_8064	0x0
+>>   
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> index 4d75529c0e858160761f5eb55db65e5d7565c27b..694ed95897d49c477726a2b0bec1099e75a3ce21 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> @@ -119,6 +119,15 @@ struct msm_dsi_host {
+>>   	struct clk *pixel_clk;
+>>   	struct clk *byte_intf_clk;
+>>   
+>> +	/*
+>> +	 * Clocks which needs to be properly parented between DISPCC and DSI PHY
+>> +	 * PLL:
+>> +	 */
+>> +	struct clk *byte_src_clk;
+>> +	struct clk *pixel_src_clk;
+>> +	struct clk *dsi_pll_byte_clk;
+>> +	struct clk *dsi_pll_pixel_clk;
+>> +
+>>   	unsigned long byte_clk_rate;
+>>   	unsigned long byte_intf_clk_rate;
+>>   	unsigned long pixel_clk_rate;
+>> @@ -269,6 +278,38 @@ int dsi_clk_init_6g_v2(struct msm_dsi_host *msm_host)
+>>   	return ret;
+>>   }
+>>   
+>> +int dsi_clk_init_6g_v2_9(struct msm_dsi_host *msm_host)
+>> +{
+>> +	struct device *dev = &msm_host->pdev->dev;
+>> +	int ret;
+>> +
+>> +	ret = dsi_clk_init_6g_v2(msm_host);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	msm_host->byte_src_clk = devm_clk_get(dev, "byte_src");
+>> +	if (IS_ERR(msm_host->byte_src_clk))
+>> +		return dev_err_probe(dev, PTR_ERR(msm_host->byte_src_clk),
+>> +				     "can't get byte_src clock\n");
+>> +
+>> +	msm_host->dsi_pll_byte_clk = devm_clk_get(dev, "dsi_pll_byte");
+>> +	if (IS_ERR(msm_host->dsi_pll_byte_clk))
+>> +		return dev_err_probe(dev, PTR_ERR(msm_host->dsi_pll_byte_clk),
+>> +				     "can't get dsi_pll_byte clock\n");
+>> +
+>> +	msm_host->pixel_src_clk = devm_clk_get(dev, "pixel_src");
+>> +	if (IS_ERR(msm_host->pixel_src_clk))
+>> +		return dev_err_probe(dev, PTR_ERR(msm_host->pixel_src_clk),
+>> +				     "can't get pixel_src clock\n");
+>> +
+>> +	msm_host->dsi_pll_pixel_clk = devm_clk_get(dev, "dsi_pll_pixel");
+>> +	if (IS_ERR(msm_host->dsi_pll_pixel_clk))
+>> +		return dev_err_probe(dev, PTR_ERR(msm_host->dsi_pll_pixel_clk),
+>> +				     "can't get dsi_pll_pixel clock\n");
+>> +
+>> +	return 0;
+>> +}
+>> +
+>>   static int dsi_clk_init(struct msm_dsi_host *msm_host)
+>>   {
+>>   	struct platform_device *pdev = msm_host->pdev;
+>> @@ -370,6 +411,46 @@ int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
+>>   	return 0;
+>>   }
+>>   
+>> +int dsi_link_clk_set_rate_6g_v2_9(struct msm_dsi_host *msm_host)
+>> +{
+>> +	struct device *dev = &msm_host->pdev->dev;
+>> +	int ret;
+>> +
+>> +	/*
+>> +	 * DSI PHY PLLs have to be enabled to allow reparenting to them and
+>> +	 * setting the rates of pixel/byte clocks.
+>> +	 */
 > 
-> This patch introduces the configuration option KVM_GMEM_SHARED_MEM,
-> which enables support for in-place shared memory.
+> According to the docs this should be handled by the
+> CLK_OPS_PARENT_ENABLE flag. Please correct me if I'm wrong.
 > 
-> It also introduces the KVM capability KVM_CAP_GMEM_SHARED_MEM, which
-> indicates that the host can create VMs that support shared memory.
-> Supporting shared memory implies that memory can be mapped when shared
-> with the host.
+
+I am also interested to know that if we are indeed setting 
+CLK_OPS_PARENT_ENABLE flag, do we need this logic in the dsi driver.
+
+If CLK_OPS_PARENT_ENABLE flag is not working as expected, shouldnt this 
+be something fixed on the clk fwk side?
+
+Thanks
+
+Abhinav
+
+>> +	ret = clk_prepare_enable(msm_host->dsi_pll_byte_clk);
+>> +	if (ret) {
+>> +		dev_err(dev, "Failed to enable dsi_pll_byte: %d\n", ret);
+>> +		return ret;
+>> +	}
+>> +
+>> +	ret = clk_prepare_enable(msm_host->dsi_pll_pixel_clk);
 > 
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
->  include/linux/kvm_host.h | 15 ++++++-
->  include/uapi/linux/kvm.h |  1 +
->  virt/kvm/Kconfig         |  5 +++
->  virt/kvm/guest_memfd.c   | 92 ++++++++++++++++++++++++++++++++++++++++
->  virt/kvm/kvm_main.c      |  4 ++
->  5 files changed, 116 insertions(+), 1 deletion(-)
+> And this.
 > 
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index 9419fb99f7c2..f3af6bff3232 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -729,6 +729,17 @@ static inline bool kvm_arch_supports_gmem(struct kvm *kvm)
->  }
->  #endif
->  
-> +/*
-> + * Arch code must define kvm_arch_gmem_supports_shared_mem if support for
-> + * private memory is enabled and it supports in-place shared/private conversion.
-> + */
-> +#if !defined(kvm_arch_gmem_supports_shared_mem) && !IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM)
+>> +	if (ret) {
+>> +		dev_err(dev, "Failed to enable dsi_pll_byte: %d\n", ret);
+>> +		goto out_disable_byte_clk;
+>> +	}
+>> +
+>> +	ret = clk_set_parent(msm_host->byte_src_clk, msm_host->dsi_pll_byte_clk);
+>> +	if (ret)
+>> +		dev_err(dev, "Failed to parent byte_src -> dsi_pll_byte: %d\n", ret);
+>> +
+>> +	ret = clk_set_parent(msm_host->pixel_src_clk, msm_host->dsi_pll_pixel_clk);
+>> +	if (ret)
+>> +		dev_err(dev, "Failed to parent pixel_src -> dsi_pll_pixel: %d\n", ret);
+>> +
+>> +	clk_disable_unprepare(msm_host->dsi_pll_pixel_clk);
+>> +	clk_disable_unprepare(msm_host->dsi_pll_byte_clk);
+>> +
+>> +	return dsi_link_clk_set_rate_6g(msm_host);
+>> +
+>> +out_disable_byte_clk:
+>> +	clk_disable_unprepare(msm_host->dsi_pll_byte_clk);
+>> +
+>> +	return ret;
+>> +}
+>> +
+>>   int dsi_link_clk_enable_6g(struct msm_dsi_host *msm_host)
+>>   {
+>>   	int ret;
+>>
+>> -- 
+>> 2.45.2
+>>
+> 
 
-Perhaps the bots already caught this?
-
-I just tried enabling KVM_GMEM_SHARED_MEM on x86 with this patch and it fails with:
-
-|| In file included from arch/x86/kvm/../../../virt/kvm/binary_stats.c:8:
-|| ./include/linux/kvm_host.h: In function ‘kvm_mem_from_gmem’:
-include/linux/kvm_host.h|2530 col 13| error: implicit declaration of function ‘kvm_arch_gmem_supports_shared_mem’ [-Wimplicit-function-declaration]
-||  2530 |         if (kvm_arch_gmem_supports_shared_mem(kvm))
-||       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-|| make[4]: *** Waiting for unfinished jobs....
-
-
-I think the predicate on !CONFIG_KVM_GMEM_SHARED_MEM is wrong.
-
-Shouldn't this always default off?  I __think__ this then gets enabled in
-11/13?
-
-IOW
-
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index f3af6bff3232..577674e95c09 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -733,7 +733,7 @@ static inline bool kvm_arch_supports_gmem(struct kvm *kvm)
-  * Arch code must define kvm_arch_gmem_supports_shared_mem if support for
-  * private memory is enabled and it supports in-place shared/private conversion.
-  */
--#if !defined(kvm_arch_gmem_supports_shared_mem) && !IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM)
-+#if !defined(kvm_arch_gmem_supports_shared_mem)
- static inline bool kvm_arch_gmem_supports_shared_mem(struct kvm *kvm)
- {
-        return false;
 
