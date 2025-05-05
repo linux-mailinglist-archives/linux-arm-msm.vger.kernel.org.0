@@ -1,120 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-56778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05877AA9282
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 13:57:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 206A8AA929D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 13:59:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB56B3B6BF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 11:56:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 09EFC3B000F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 11:59:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64578207E03;
-	Mon,  5 May 2025 11:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 528B120B1E8;
+	Mon,  5 May 2025 11:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OBaK1A2A"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IzwHVUWj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5F8207A22;
-	Mon,  5 May 2025 11:56:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792D120ADE6
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 11:59:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746446201; cv=none; b=ARl/qwrINjgeqHpAPcBANifFlhHILrt0YJTwKbcM9pc2WLx+LF7UDQnwl/692src7vx2BIUxa4AjWjDr2+dkm4QJ1QUVCBHRqx8W8ADgR+OkQ11Xoc4t5wy6rmRQc3CldBjm3ix2HydX93T4J3+2aaA6rshoFYu9k0BYxZCOcqg=
+	t=1746446349; cv=none; b=rOycKf72McOE7umSpseFDVX4QNPwYlAeSR0+USe1bIMKNTtycURZs0TXkJgxVaWcjCGl3RGdp9s5PD8DgnN2NK7iP7cEzjPQH4bgrS880yEiu/vpsmoQaevT8z0KMWxZnsjuUARnytnv8XYHnYR48X/S+A6j1MY697BFavAtxgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746446201; c=relaxed/simple;
-	bh=bhylBd3wO/oU3H4pz2cS+C+DeqobvL/gAITFSoI+DlI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Vc2qFLekhMKrlCJIYvbLK/HoeKFquS9NfgSNyE7ux1ckSEGAAvOq0M3Dd7zJ77enxwxX8Q1IykFcR/9g1DXgKVYtl7MwHlVY6fp1zZWtCcGgTo+MBoIPzpgViRbZyHJoR3qdQyNwoaYinXudsrzkUFLEZQbxrwLc660udWRMCz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OBaK1A2A; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2700C4CEF8;
-	Mon,  5 May 2025 11:56:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746446200;
-	bh=bhylBd3wO/oU3H4pz2cS+C+DeqobvL/gAITFSoI+DlI=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=OBaK1A2ACY5mLHZc1RwNmwdp3qGVhRPpfBpIBc11MpDdTgvZjzJh9c2HqD1j/xbtF
-	 IE3axwUzyoBNXJJ9wLAZrwk/C5ae9vmLf+t52fKUMymHOy8rLX7A/TqYZDsgIjmxJO
-	 uqRWlNO0+YLXrPDFvUm39DtT/cGgYkARn3xxiCBrZ2IsI7xVrutO9LTBggxr7tyo3O
-	 Ew0kuk3bVIOPSA41viB1pvME5VT2HftocjkLZGxd/CD0ih9duJtfPjYxm7uyH2I3Y+
-	 LWBUIscuFZsWPeiYe6cTPw8irWThpkd0fbUAw29CUnAaOBvzQ70iM6xL28Uvz7HSBp
-	 JM6Z0txoM6w3w==
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ac3fcf5ab0dso707186766b.3;
-        Mon, 05 May 2025 04:56:40 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUTFcjz+64Ufa9ld+mJWPz4ZP23wwQhQRSuMVJBrJEFBJsidUVhK2GPyTA/cvwpuAxfS1PczngsEB5I@vger.kernel.org, AJvYcCV2ZJARJ4G8qfHHI9OGqX5+NU5HSVUiWy1Mpuyc9Sqk22QJ7Pqztm1W73m8udeUaeBDAVSGcpVk4NH1AdH51w==@vger.kernel.org, AJvYcCVZMGS8qzdTOz/Ztuvhmmn70/O1oDdJGiWXBFYE8F3kC0PuF1XNFmqorSa3lt0bJgNU6bPZMIzm0+CpAD+I@vger.kernel.org, AJvYcCWhGxdjcXl5JOzOinZfjBe2XupEx1MB4j7M9zEPmuBpErjY/Z3DAQzs2X3AD+kbfgEJKx/Zq0AVrdVQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywymy223P+fB/MSfBZ9EKdFWR6M0JmRYkROn7QO7eHrevoOEATD
-	PKfZuN7erSSBBdGwTeycubyWBwdt2hdZSKd4D3nnnRmk1ehUv1+yMWc30zQf/alRGQrrZT9SmgS
-	MuK+6xl8bcFy29XYXFfXqW0WYPg==
-X-Google-Smtp-Source: AGHT+IFS+UYRYhqu0qLApsmsVcQPU5PxbnUTRMgU4A8cLFv9VbzJgVSFzBJ4TlrMHVGbrQpwwBTff7ATCPn82nTV/yU=
-X-Received: by 2002:a17:907:97c7:b0:aca:d52d:b59b with SMTP id
- a640c23a62f3a-ad19084ec5fmr805337566b.47.1746446199152; Mon, 05 May 2025
- 04:56:39 -0700 (PDT)
+	s=arc-20240116; t=1746446349; c=relaxed/simple;
+	bh=FGuR2WBMXMvdjCd1ovjlhudh3LWd/ZGssire864V+jY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VDMeYNRszVR7TaJLhmhomXCZ+v35ACJVGcoJRhHQ+uT4VB67ODH7uDzNZho+UHXwchM2zM2Kk2ZN6vwI5vmGaJfp4hJNTOSxdQ/SqQEqKHdZtzMPIFhtLwQTVwBImDwtxEXdd36VqdZRuZnBbDpzT3J4kd99aKBqrSW2fF3JOtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IzwHVUWj; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 544MpcDF023086
+	for <linux-arm-msm@vger.kernel.org>; Mon, 5 May 2025 11:59:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Fc5osDce5Ixp5n1NZs7mSFVdO0qDnEBm9TZBSOSJaog=; b=IzwHVUWjTSN2aTmN
+	0IPLo//J+Zxdxh8FtBA8UKJ7kvNC6g+mk1Nyx6JgENgjB7iSAWdxaJe0sbw/06Yx
+	rI0moqbfIK7VFeEzrfag5tOCxAtPLGtRISnnrU3EugHQbuhuTQ1mLn3Qo9ujWUvy
+	fLWLGqdXGl1rq9M9oukIM0trKrsS9nx9J8rSek+aOFY11cmZ7bwh/xlxKMwI8ME0
+	XZwDaJgrzDkUw3ksftk4vxB6U2C162O2dy0nV66qHrYinprt9IRxBdaiAyl1MUWx
+	BJ6yPf5iJzQmpNkxalDBL/TejWUfJFCxnAFOX2Jvul5ILCohX2ayaf4tIxsw5iUu
+	QL/3Aw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46da3rv1es-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 11:59:06 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7caef20a527so421585a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 04:59:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746446345; x=1747051145;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Fc5osDce5Ixp5n1NZs7mSFVdO0qDnEBm9TZBSOSJaog=;
+        b=RW4jrmZPnbaVDNA6rer9XP5w+08wM8ELBnRdAr6/FgPyOpT+Zsa4kcvGZenOk50tBs
+         F339nrtTZRCQcG5sdj7zTVj+s7u8SR3KfxO7qxyMg/a8NDnr29+iZx47NvhVGJKDc8j2
+         GAXrDOrJXxInCv7bua8vQF8VhPuULLLuxthRyXhQqn8ZF8CsGswRh5kcgtjMGlLf7D/M
+         vLkou1Iy86vEwciYrpLBsIeT+hdmERQnD5pb4USJACTIzlR1+YZg63hA0lqVomQO6JcN
+         d8wKtOAebpGdxesOe454DVUN6tA5P5s0UOKtXnJNulX8PWPjT0HSVQyuD0uI5pFJw2hI
+         /ADw==
+X-Forwarded-Encrypted: i=1; AJvYcCVLjXEep+QAX/Q4jgWgoHMXKrzGxIbfU2jZRJM3+pgEJkTGwwiIGt9KUijdzVUOYSsd8PK5lJy6AG3cZL8V@vger.kernel.org
+X-Gm-Message-State: AOJu0YztvaA7uYNRT185wVFsCtIRhbxEGFJkhQFramVkAWrtG73snlu5
+	aw8R0hprL7KTJWLByOOG5EubktQ5QBUbxtV3oukVA1bBzdHODpXxH92Jc0GYek2qIX9s+dg24LM
+	VI2YYOjd7aF7MqnT62HCDHsmC84HBEGO8ddEKv3mugFuCSX0rmACivwe1LXQJiXWa
+X-Gm-Gg: ASbGncurmJEHLN/8uv47IJta8FoGKbW/cqn7FqUDk9rO8nyB4csVa2wj38qHCHT8RRK
+	CQsf+J0ZSHwrayXKy7GHa8wJQ52mUmehtlKXvKThp17kPc9/1TQv/aI4YRVMrlYhVeBvltqa8S/
+	PvZgeLCe3lRyamm54WVe55uoSzdRzmVgJm7xKntp/2aqjWprUGNA7d7p29crgzB3fS/xUPViesX
+	RveRaq/s4XrK5ZMehCMYomUERWG+J6Lvtlk6NVtrnBk/j80W/gOULVO0UVWJH+S2dKMgPTsh5J/
+	yDUiNZihetq0Ux/2hhwa4ofdUHJoeV9OyWz56xQzSpO0F5kolf7hsGqB5/Kem6JKlsp1Y7APXno
+	bTdTYlsKktLZH2ua1G2phcfBI59SUU86ceLqgWo2KMWIO/v7Pfyrzq15dyDFMaZt0sLEj
+X-Received: by 2002:a05:620a:4001:b0:7c5:9a37:c418 with SMTP id af79cd13be357-7cae3b1604amr1093371085a.51.1746446344935;
+        Mon, 05 May 2025 04:59:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHxsMcGBcuXzdzsMZLmfG4jCCth/aIBhqNnJlAxtHNCdoHctJUXgi2+jH+zw6iGwmYPEzBLZg==
+X-Received: by 2002:a05:620a:4001:b0:7c5:9a37:c418 with SMTP id af79cd13be357-7cae3b1604amr1093364085a.51.1746446344392;
+        Mon, 05 May 2025 04:59:04 -0700 (PDT)
+Received: from ?IPV6:2001:14bb:671:42db:aca9:2ffd:84bc:ddc5? (2001-14bb-671-42db-aca9-2ffd-84bc-ddc5.rev.dnainternet.fi. [2001:14bb:671:42db:aca9:2ffd:84bc:ddc5])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94c8d40sm1695574e87.98.2025.05.05.04.58.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 May 2025 04:59:03 -0700 (PDT)
+Message-ID: <9afd098c-edd3-44fa-8efe-99f2e9c9a525@oss.qualcomm.com>
+Date: Mon, 5 May 2025 14:58:58 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250306-topic-dt_bindings_fixups-v1-0-0c84aceb0ef9@oss.qualcomm.com>
- <174637445759.1385605.15383087742490646226.b4-ty@oss.qualcomm.com>
-In-Reply-To: <174637445759.1385605.15383087742490646226.b4-ty@oss.qualcomm.com>
-From: Rob Herring <robh@kernel.org>
-Date: Mon, 5 May 2025 06:56:27 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKr8Xd8uxFzE0YJTyD+V6N++VV8SX-GB5Xt0_BKkeoGUQ@mail.gmail.com>
-X-Gm-Features: ATxdqUFnhjeEjXeL57DSByQBGcanFON-MWfWdUb7FuuvpsF2gYXLeAeEkshoH0k
-Message-ID: <CAL_JsqKr8Xd8uxFzE0YJTyD+V6N++VV8SX-GB5Xt0_BKkeoGUQ@mail.gmail.com>
-Subject: Re: [PATCH 00/11] Various dt-bindings fixes
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Robert Foss <rfoss@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
-	Christian Marangi <ansuelsmth@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Rohit Agarwal <quic_rohiagar@quicinc.com>, Kyle Deng <quic_chunkaid@quicinc.com>, 
-	Vinod Koul <vkoul@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-usb@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: (subset) [PATCH v2 00/34] drm: convert all bridges to
+ devm_drm_bridge_alloc()
+To: Luca Ceresoli <luca.ceresoli@bootlin.com>,
+        Inki Dae
+ <inki.dae@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Maxime Ripard <mripard@kernel.org>,
+        Louis Chauvet <louis.chauvet@bootlin.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Douglas Anderson
+ <dianders@chromium.org>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Anusha Srivatsa
+ <asrivats@redhat.com>,
+        Paul Kocialkowski <paulk@sys-base.io>,
+        Dmitry Baryshkov <lumag@kernel.org>, Hui Pu <Hui.Pu@gehealthcare.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        dri-devel@lists.freedesktop.org, asahi@lists.linux.dev,
+        linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev,
+        imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Adam Ford <aford173@gmail.com>,
+        Adrien Grassein <adrien.grassein@gmail.com>,
+        Aleksandr Mishin <amishin@t-argos.ru>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+        Benson Leung <bleung@chromium.org>,
+        Biju Das <biju.das.jz@bp.renesas.com>,
+        Christoph Fritz <chf.fritz@googlemail.com>,
+        Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+        Detlev Casanova <detlev.casanova@collabora.com>,
+        Dharma Balasubiramani <dharma.b@microchip.com>,
+        Guenter Roeck <groeck@chromium.org>, Heiko Stuebner <heiko@sntech.de>,
+        Jani Nikula <jani.nikula@intel.com>, Janne Grunau <j@jannau.net>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesse Van Gavere <jesseevg@gmail.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Liu Ying <victor.liu@nxp.com>,
+        Manikandan Muralidharan <manikandan.m@microchip.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>, Phong LE <ple@baylibre.com>,
+        Sasha Finkelstein <fnkl.kernel@gmail.com>,
+        Sugar Zhang <sugar.zhang@rock-chips.com>,
+        Sui Jingfeng <sui.jingfeng@linux.dev>,
+        Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+        Vitalii Mordan <mordan@ispras.ru>,
+        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+        "Rob Herring (Arm)" <robh@kernel.org>,
+        Hsin-Te Yuan
+ <yuanhsinte@chromium.org>,
+        Pin-yen Lin <treapking@chromium.org>, Xin Ji <xji@analogixsemi.com>,
+        Aradhya Bhatia <a-bhatia1@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+        Ian Ray <ian.ray@ge.com>, Martyn Welch <martyn.welch@collabora.co.uk>,
+        Peter Senna Tschudin <peter.senna@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Herve Codina
+ <herve.codina@bootlin.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark <robdclark@gmail.com>
+References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
+ <174591887152.961603.7706063017853945511.b4-ty@bootlin.com>
+ <832a9db0-cf8a-4d35-8a98-08053fbd6723@bootlin.com>
+ <20250430-arrogant-marmoset-of-justice-92ced3@houat>
+ <20250505130648.22ec8716@booty>
+Content-Language: en-US
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+In-Reply-To: <20250505130648.22ec8716@booty>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: 5YEDwV8ve89JxQIdNFPe8kwX9-aI-msY
+X-Authority-Analysis: v=2.4 cv=cpWbk04i c=1 sm=1 tr=0 ts=6818a80a cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=P-IC7800AAAA:8 a=H8qqLt0gxxJlsNWwv3EA:9
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-GUID: 5YEDwV8ve89JxQIdNFPe8kwX9-aI-msY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDExNCBTYWx0ZWRfX14N72OyizgWz
+ 6BfabmLYcYwbuQGuJbPmw1QkUJxkublxSHpP8ZfJhwOx/5w2fZU9q9WtyJjyT/xjoLurEFDPcaY
+ NMpd28s8A4ckCrPM0PW8xfQjqixGVxDKE8Y53QoFbFUMO29Yt8sqOT6aFocUxy2I6eE1P22ZJtE
+ H39JhCpELGID1aQqQ5cg9VR9z68TCxGPrLwo1DmL3Bt4kNhlTBZ2zT0fcx4FgehQFuiKzxAh9aY
+ /yucuJdGepveke4B3DFtBlTc0io4kjqo6PZHFt2qnfmiX8edxsT6sCVUajSa6T5jkRNJ+8XHZAD
+ r9/Y5rn4/PnC1E8pHkJOe1cjHmaWEGZBcLvdQ8/fvvaTlY4gqAi7WFuuilPKMas4kwmdvdm0WUN
+ yqiPum2xEv4b3hq+6KIlrYZWwgIcrdcHzUPnLhAI0OBOaI0PA/sjoThIdT7Abm44mcxAU61+
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-05_05,2025-04-30_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
+ malwarescore=0 suspectscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999
+ clxscore=1015 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505050114
 
-On Sun, May 4, 2025 at 11:13=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
->
-> On Thu, 06 Mar 2025 19:11:12 +0100, Konrad Dybcio wrote:
-> > A set of not quite related bindings warnings fixes.
-> >
-> >
->
-> Applied, thanks!
->
-> [02/11] dt-bindings: display: msm: sm8350-mdss: Describe the CPU-CFG icc =
-path
->         https://gitlab.freedesktop.org/lumag/msm/-/commit/60b8d3a2365a
+On 05/05/2025 14:06, Luca Ceresoli wrote:
+> Inki, Kyungmin, Seung-Woo, Alim,
+> 
+> On Wed, 30 Apr 2025 10:08:14 +0200
+> Maxime Ripard <mripard@kernel.org> wrote:
+> 
+>> Inki, Kyungmin, Seung-Woo, sorry for the mishap. Do you agree with the
+>> following patch, and it going through drm-misc?
+>>
+>> https://lore.kernel.org/dri-devel/20250424-drm-bridge-convert-to-alloc-api-v2-14-8f91a404d86b@bootlin.com/
+>>
+>> If not, we'll revert.
+> 
+> Did you have a chance to have a look at the patch mentioned by Maxime?
+> 
+> It was applied to drm-misc-next by mistake. Not your mistake of course,
+> but now it's there so if you don't reply anything it will have to be
+> reverted, and then sent again to go through all the review process to
+> be hopefully re-applied in the future.
+> 
+> If you agree with keeping it in drm-misc-next, that would be less noise
+> for everybody.
+> 
+> I'm going to send v3 very soon, so it would be good to decide what to
+> do before that.
 
-And now there's a warning in linux-next:
+For the record: even though I'm not happy with msm-related patches going 
+through drm-misc without additional ack from our side, I think reverting 
+those and reapplying them later will create a bigger mess. So, I'm fine 
+with keeping drm/msm/* bridged patches in.
 
-/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/q=
-com,sm8350-mdss.example.dtb:
-display-subsystem@ae00000 (qcom,sm8350-mdss): interconnect-names:
-['mdp0-mem', 'mdp1-mem'] is too short
-        from schema $id:
-http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
-/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/q=
-com,sm8350-mdss.example.dtb:
-display-subsystem@ae00000 (qcom,sm8350-mdss): interconnects:
-[[4294967295, 7, 0, 4294967295, 1, 0], [4294967295, 8, 0, 4294967295,
-1, 0]] is too short
-        from schema $id:
-http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
+-- 
+With best wishes
+Dmitry
 
