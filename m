@@ -1,61 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-56870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F472AAB6F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 08:01:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CB7DAAB3A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 06:50:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C9ACA50092B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 05:58:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 843191C061D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 04:46:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB55923909C;
-	Tue,  6 May 2025 00:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 745BA33A35B;
+	Tue,  6 May 2025 00:38:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vd7EM44v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KsGDBRcX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C1328853E;
-	Mon,  5 May 2025 23:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CBE239E9E;
+	Mon,  5 May 2025 23:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746486312; cv=none; b=tp9hcMP03oz7d7gJQCtvxGvOvbmD4+LimKMfWV0/gvawb77yswkzt44OWzl+tzoNzjs19786L60da5rka43biAIdwodC0ZtbovFhYHuNihT84KXzrh4xfJ5XKEWtV07zcd+oSX6AdUSsARlTnK/AsEpntxAgNdlQ5G35RpFg+xc=
+	t=1746486370; cv=none; b=nAqn2iz/F5Fsl0p8d86v31PE/b0IoV81N6u6Co/IXHH5kWOOBI6+8Bqk0XzsCRnBR6qqx6OY2lUrOLeiuku00TogZeUEA5kMOH2fPEgSWl5ksVTxKDoMOGjd5obOK8bFL70tcM8O4zDPEsFPAXekqtRqJEYzRqudzR/kCT8z48Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746486312; c=relaxed/simple;
-	bh=fnPv1ivXF5Wy4niLq+LVRNLF7KRwPeRJVCaZmA7WfCw=;
+	s=arc-20240116; t=1746486370; c=relaxed/simple;
+	bh=ZzlkLV6bGsWUlKi8pMT/sDQcez3HbCFLJUcDhrtzXvU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=l8XegGYLuG1rvUeoQOwlrKmT6/1OcVhzt7z4Nhi+hUHHr0Rdw4XPizhNpVuYqos1Rn6nGu4SrJCfrfxesG6NWejkdOI9aXvtguu1L2V0ce71cUXLyVnZYcvcoHjqhkIkRkb9Ar+aKsSuzuNMPsWN3yA8diCwLZN4FJznWiI1C7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vd7EM44v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F149C4CEF1;
-	Mon,  5 May 2025 23:05:11 +0000 (UTC)
+	 MIME-Version; b=jUr+Xrfcxdyh30mv86kfAxFrvj5lufBQE1xeOzS2LgLOnKVZ5jCH2dN6HPGgkArHa2Vkw+1CbcCt7PcsN2oaCNXWleV1wBfTi+5s2WUqHzk8qoREUkKWLjMgNFcw6ipemcDR1MBgol4x6viw9gX7d2w9AnRnebUQpz9MjzB/IFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KsGDBRcX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD12C4CEEF;
+	Mon,  5 May 2025 23:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746486312;
-	bh=fnPv1ivXF5Wy4niLq+LVRNLF7KRwPeRJVCaZmA7WfCw=;
+	s=k20201202; t=1746486369;
+	bh=ZzlkLV6bGsWUlKi8pMT/sDQcez3HbCFLJUcDhrtzXvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vd7EM44vHxisd6tpwlBC4DX2UbyX/NrKHGB2DlmTS4JNlK1Ue/LKdh6VMZNCPAUax
-	 aapoUMpSNtPP+VmdmkjBUMeRwfGQKmvYRZDqrte+pePo1+D7DOYQhGW/RjM68yDHEI
-	 MCBqyexofmR29Bw6mfllU2JNhzt/CvSZ1nSjN0CNDILW+WrwDCVBaxoIB5QZLeBsY2
-	 mpVsnA+cORZj/jDGdvl28hwSnA+SURDrho1//rOu/Ah+maqDmCMoSj/zC2CuqpE7oS
-	 dWViHvccIL6ktPkDsS7gwoXsRWNCacXcYRd1CJ29IpTruWdBihni55g+WmT9q0HhaX
-	 xV5HgAUr7+cbA==
+	b=KsGDBRcXaGbNgEnOtHUM+Hnsq5SuO18jCC8JKRpGOpgMc15yIh7A5IA1dnPm+nsJD
+	 glHysEvWHhSxRJ+eUGbtNQAGEUs6M3tNFYDE77gY9pMiOyt4aL1e9ykJ1u7G5vaynJ
+	 0Ig/LNyi2i6W2N0nSHMK7V9XaVy/ihTvYkU+2mKFksRaDPfhK7awfXD+NQYId/2ixn
+	 B4EoDYI5SRk0i57AVXao1Knhi5pxOzXR081I3HMmPXyIJKh2NZu9pCWUVTlEAr7Rn3
+	 n3OmaXohrc8RW1OChob5qwUddSvHTAPq0uWANuuev2zTKY8tWQEhTOF1BSiR7LZ0HF
+	 GO3xTeDukUmQg==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Cc: Depeng Shao <quic_depengs@quicinc.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Youssef Samir <quic_yabdulra@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rfoss@kernel.org,
-	todor.too@gmail.com,
-	bryan.odonoghue@linaro.org,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 254/294] media: qcom: camss: csid: Only add TPG v4l2 ctrl if TPG hardware is available
-Date: Mon,  5 May 2025 18:55:54 -0400
-Message-Id: <20250505225634.2688578-254-sashal@kernel.org>
+	jeff.hugo@oss.qualcomm.com,
+	ogabbay@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.6 287/294] accel/qaic: Mask out SR-IOV PCI resources
+Date: Mon,  5 May 2025 18:56:27 -0400
+Message-Id: <20250505225634.2688578-287-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250505225634.2688578-1-sashal@kernel.org>
 References: <20250505225634.2688578-1-sashal@kernel.org>
@@ -70,136 +69,40 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.89
 Content-Transfer-Encoding: 8bit
 
-From: Depeng Shao <quic_depengs@quicinc.com>
+From: Youssef Samir <quic_yabdulra@quicinc.com>
 
-[ Upstream commit 2f1361f862a68063f37362f1beb400e78e289581 ]
+[ Upstream commit 8685520474bfc0fe4be83c3cbfe3fb3e1ca1514a ]
 
-There is no CSID TPG on some SoCs, so the v4l2 ctrl in CSID driver
-shouldn't be registered. Checking the supported TPG modes to indicate
-if the TPG hardware exists or not and only registering v4l2 ctrl for
-CSID only when the TPG hardware is present.
+During the initialization of the qaic device, pci_select_bars() is
+used to fetch a bitmask of the BARs exposed by the device. On devices
+that have Virtual Functions capabilities, the bitmask includes SR-IOV
+BARs.
 
-Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Use a mask to filter out SR-IOV BARs if they exist.
+
+Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250117170943.2643280-6-quic_jhugo@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/qcom/camss/camss-csid.c    | 60 +++++++++++--------
- 1 file changed, 35 insertions(+), 25 deletions(-)
+ drivers/accel/qaic/qaic_drv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index 6360314f04a63..b90e2e690f3aa 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -239,11 +239,13 @@ static int csid_set_stream(struct v4l2_subdev *sd, int enable)
+diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
+index b5de82e6eb4d5..e69bfb30b44e0 100644
+--- a/drivers/accel/qaic/qaic_drv.c
++++ b/drivers/accel/qaic/qaic_drv.c
+@@ -400,7 +400,7 @@ static int init_pci(struct qaic_device *qdev, struct pci_dev *pdev)
+ 	int bars;
  	int ret;
  
- 	if (enable) {
--		ret = v4l2_ctrl_handler_setup(&csid->ctrls);
--		if (ret < 0) {
--			dev_err(csid->camss->dev,
--				"could not sync v4l2 controls: %d\n", ret);
--			return ret;
-+		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
-+			ret = v4l2_ctrl_handler_setup(&csid->ctrls);
-+			if (ret < 0) {
-+				dev_err(csid->camss->dev,
-+					"could not sync v4l2 controls: %d\n", ret);
-+				return ret;
-+			}
- 		}
+-	bars = pci_select_bars(pdev, IORESOURCE_MEM);
++	bars = pci_select_bars(pdev, IORESOURCE_MEM) & 0x3f;
  
- 		if (!csid->testgen.enabled &&
-@@ -318,7 +320,8 @@ static void csid_try_format(struct csid_device *csid,
- 		break;
- 
- 	case MSM_CSID_PAD_SRC:
--		if (csid->testgen_mode->cur.val == 0) {
-+		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
-+		    csid->testgen_mode->cur.val == 0) {
- 			/* Test generator is disabled, */
- 			/* keep pad formats in sync */
- 			u32 code = fmt->code;
-@@ -368,7 +371,8 @@ static int csid_enum_mbus_code(struct v4l2_subdev *sd,
- 
- 		code->code = csid->formats[code->index].code;
- 	} else {
--		if (csid->testgen_mode->cur.val == 0) {
-+		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
-+		    csid->testgen_mode->cur.val == 0) {
- 			struct v4l2_mbus_framefmt *sink_fmt;
- 
- 			sink_fmt = __csid_get_format(csid, sd_state,
-@@ -750,7 +754,8 @@ static int csid_link_setup(struct media_entity *entity,
- 
- 		/* If test generator is enabled */
- 		/* do not allow a link from CSIPHY to CSID */
--		if (csid->testgen_mode->cur.val != 0)
-+		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED &&
-+		    csid->testgen_mode->cur.val != 0)
- 			return -EBUSY;
- 
- 		sd = media_entity_to_v4l2_subdev(remote->entity);
-@@ -843,24 +848,27 @@ int msm_csid_register_entity(struct csid_device *csid,
- 		 MSM_CSID_NAME, csid->id);
- 	v4l2_set_subdevdata(sd, csid);
- 
--	ret = v4l2_ctrl_handler_init(&csid->ctrls, 1);
--	if (ret < 0) {
--		dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
--		return ret;
--	}
-+	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
-+		ret = v4l2_ctrl_handler_init(&csid->ctrls, 1);
-+		if (ret < 0) {
-+			dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
-+			return ret;
-+		}
- 
--	csid->testgen_mode = v4l2_ctrl_new_std_menu_items(&csid->ctrls,
--				&csid_ctrl_ops, V4L2_CID_TEST_PATTERN,
--				csid->testgen.nmodes, 0, 0,
--				csid->testgen.modes);
-+		csid->testgen_mode =
-+			v4l2_ctrl_new_std_menu_items(&csid->ctrls,
-+						     &csid_ctrl_ops, V4L2_CID_TEST_PATTERN,
-+						     csid->testgen.nmodes, 0, 0,
-+						     csid->testgen.modes);
- 
--	if (csid->ctrls.error) {
--		dev_err(dev, "Failed to init ctrl: %d\n", csid->ctrls.error);
--		ret = csid->ctrls.error;
--		goto free_ctrl;
--	}
-+		if (csid->ctrls.error) {
-+			dev_err(dev, "Failed to init ctrl: %d\n", csid->ctrls.error);
-+			ret = csid->ctrls.error;
-+			goto free_ctrl;
-+		}
- 
--	csid->subdev.ctrl_handler = &csid->ctrls;
-+		csid->subdev.ctrl_handler = &csid->ctrls;
-+	}
- 
- 	ret = csid_init_formats(sd, NULL);
- 	if (ret < 0) {
-@@ -891,7 +899,8 @@ int msm_csid_register_entity(struct csid_device *csid,
- media_cleanup:
- 	media_entity_cleanup(&sd->entity);
- free_ctrl:
--	v4l2_ctrl_handler_free(&csid->ctrls);
-+	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED)
-+		v4l2_ctrl_handler_free(&csid->ctrls);
- 
- 	return ret;
- }
-@@ -904,5 +913,6 @@ void msm_csid_unregister_entity(struct csid_device *csid)
- {
- 	v4l2_device_unregister_subdev(&csid->subdev);
- 	media_entity_cleanup(&csid->subdev.entity);
--	v4l2_ctrl_handler_free(&csid->ctrls);
-+	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED)
-+		v4l2_ctrl_handler_free(&csid->ctrls);
- }
+ 	/* make sure the device has the expected BARs */
+ 	if (bars != (BIT(0) | BIT(2) | BIT(4))) {
 -- 
 2.39.5
 
