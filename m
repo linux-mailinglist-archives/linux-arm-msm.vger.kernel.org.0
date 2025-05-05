@@ -1,269 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-56750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C9DCAA8DC1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 10:01:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DCA0FAA8EA7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 10:57:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CBFC9174065
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 08:01:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4FEEB168D11
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 May 2025 08:57:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23C2F1E3DCF;
-	Mon,  5 May 2025 08:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9C211F460E;
+	Mon,  5 May 2025 08:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="WwLAp2P/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rbt+1+ru"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6112D1E1A3D
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 08:01:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAEE3188A0C
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 May 2025 08:57:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746432098; cv=none; b=VnGamHBHcHx0Ofz+UFPDvtUP4Du4kp8M/kBe1ZS7qWiP8LBXl5LXrHPsBdCnMlMotR9t+oNUCLXZs/pgNjuCgqf1D0rLFHVkbr00YoqYrhNRmzxl1dSj1Dj7ooBLQzb5evBZEuNy/ZIDCkNMmM0G2TiQd39rgayH5bn1QmbRoKQ=
+	t=1746435427; cv=none; b=jDbdQuCORvbwg0QvMRPV43D4lONgOdfOc7JKHIt4oRLGPfIw8340UYPo2bhcidrDx2N1UdUXkSz8P9fkS2ckEXuzBozdMfENhR2QBDDQSfM4Df6SKfHlPquMhsJX9d4ixgO+nJqP//S0leEb1QrBz4zZZrWDZ4Co27qNlzmETOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746432098; c=relaxed/simple;
-	bh=DpgvxxYgMkvXP6/s07LegsAZJwnvoBbUL3jpj6aucNQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A4oiiietK2IkNfPsmkeHaTi8mwhZeWrYOSZ6RJeTucAC/bHkXUMVdu0PCO913Q3OlHPQbxJVLCSkb9qP2S1Ao0yA6dJpeSaeBgKkjUraojhV0qbATHJYH5cphp4p6fHhaZ7e/G7w5QOEhYhEvnBdLc0FBvavYugaOqhqFh872DM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=WwLAp2P/; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1746432094;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=CWbnoIe+tgcFaU70z1xwtQPYOMdu/wZEtJxbhfme9Uc=;
-	b=WwLAp2P/nwye5G4y/adLMcaXSO4Qr93jUZaxQqQmNYyGJxShd8oUiXwIeToNpm/P8zoaet
-	7iJdXVqEKnBWXxirNCcWXAx66gTsbo6RaOwfpaj7PS3jLXIEHcTO9g9gRr9lmpgvqg65zn
-	7cgBWBgvSGRjcXzTjQ5+Hz2U599apsc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-159-vfogWmzIPvqIxg059hQf3A-1; Mon, 05 May 2025 04:01:32 -0400
-X-MC-Unique: vfogWmzIPvqIxg059hQf3A-1
-X-Mimecast-MFC-AGG-ID: vfogWmzIPvqIxg059hQf3A_1746432091
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-43d01024089so26794175e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 01:01:31 -0700 (PDT)
+	s=arc-20240116; t=1746435427; c=relaxed/simple;
+	bh=zwQ2WGMJRkig3reMsZHumtlh3zNCndRtN4zYIDuHLec=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Dcbb6wVuNyZsjvKIpieZLnroBqP5PlYObblF42T0YV70+3mDCjDN1M7z3THil+tiJrV2UfJB51mxgcltpBfrFMYhZ76q0BG+YBc4RxzOY1Jf7zi3eGOhWvBmiAEvi48FK33LOtTNjNjRKKQVMemVsx9CyEBW8L+/S/WeHOeYL2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rbt+1+ru; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5f6c3f7b0b0so8205184a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 01:57:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1746435424; x=1747040224; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=twFRaaGQAif63hrg13kb5IFUKfR33Ambpgl1WwN0LnE=;
+        b=rbt+1+rulLi1Ty+KpoH8MhEjxhaIO6NTjneMqGWjgGXAsqOfgiWSCUChaEcjc0gDxt
+         WvNwF5sYCfF1Z0eksKBatcf39px3IEfgeitePSz0LtJ9v7IQ+HoEHeIu/J1/gLiUEdkM
+         2vHg2Ps5XW6ZdsW4eBGkI/of3OSaspGiZBe2bCOAfIXfRRZAWb9/dTyo4C3kx2dFC3K0
+         NjIe6vX4ZpTvrBzss9qw/lxeR+/rkR2lwxA6mxJSjztSoHv1nlkz9o09hcAnn1zrN1+K
+         P3UyC4RVjE3+upL8Fpb1SxZkvjT75KQTF9azti42ccPCAgtczPsAkpYaL84JZhvmGZhR
+         dZFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746432091; x=1747036891;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=CWbnoIe+tgcFaU70z1xwtQPYOMdu/wZEtJxbhfme9Uc=;
-        b=s6ZFGJ+Wt+TDrR+7EaA1VKUp/jCoQWRluWCu2r/12kC/Vy4Yu9b+eZfPLaAq2p/a6S
-         OeV67KlnhkqYHofFr/wElX0E/Kk2vNTBwex6X098p/PE7o38t8PF1/o2Fak9xCt1xcxK
-         DIybHNRhvzu+/mV3Yss5CNSzis311IpnvGgbCzzctbFbFW4AYpLNZz9tpfAqb/YEI8h3
-         7PF7rbRF62VMHlCHiRNmKhzeYETFWziiWD1ACCod4zrnO9qlZ9HD2VPdt5TjjJmXqGYD
-         ZgpiCsly+FVu4kGj9tbT27M+QiJmtL3uyIuZzr7X09ElvOxKYWZfv+5GklLIGgwq7pO8
-         abEw==
-X-Forwarded-Encrypted: i=1; AJvYcCUPDqAGMgQbUdW0qbCswcZWlWeFSDyyqhLZSJB7StpcqmqoKcWBAuDx+1P9suojrcO13jMokheV7hRqqbeV@vger.kernel.org
-X-Gm-Message-State: AOJu0YyandzOywRhDbdIBjHATRn9u/TfMASgG4pBWujNYCUcLFbTqM7d
-	jDNaoU/IzvBIOcmr9WLhrYyT2gWnHzw/l8InZJo5s2BvF45S5uqi/aLYuZOTpjYP9/mZpi6PibB
-	+3FfaR5I6OTlOsXYz8eGx1E+G+0OYIC443o3Npl/AM5KB1rncJSnS3zJ4EBvhMgs=
-X-Gm-Gg: ASbGnctkNptLcu6ODiu+tuFFdZGi484Z8tceYgUsO1CmygznyGnu0YSkAvFUZqtb5aK
-	GZvkgH1Dfw9ZWl02t8/8gN0abkL/toSpkc2Krc5GBG9q/+n4Ly7eMCACvtjxkHE1d7DesQnRJ2f
-	mMEcJkll03hgmPqcoSwXkeJ+7lY+FPZBalhaEFMv8WUWoJtAF6nf4MB3gJhYwKaq6jLnInjs82U
-	XTgB/5dkmJ52bq2rgkejx3LT9ws4rHH3rz0Bxkmy18oY2lS1h8ihYh4BUKEO+rsM3HpZlGj9gih
-	wijdKMhWcUonfc4SlepV7FfX5QAsMOEFLfUbE5jdAGvfgMTc3RpOU32MSHW0bZA3GXxxDL82Mmb
-	Mo+xodZ7yCXx0Ml1UxV5JRgDJSERsiGbMeVlSUpA=
-X-Received: by 2002:a05:6000:2284:b0:3a0:80b2:eedc with SMTP id ffacd0b85a97d-3a09fddfc9dmr4934347f8f.52.1746432090593;
-        Mon, 05 May 2025 01:01:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHDLtmJBm9CJ+hx878zFH0HBBrOoSc1/yq87wVhx1fLkCpsqKzv9yZNreiwdVe8o/Q5a7CMrQ==
-X-Received: by 2002:a05:6000:2284:b0:3a0:80b2:eedc with SMTP id ffacd0b85a97d-3a09fddfc9dmr4934259f8f.52.1746432089919;
-        Mon, 05 May 2025 01:01:29 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c73d:2400:3be1:a856:724c:fd29? (p200300cbc73d24003be1a856724cfd29.dip0.t-ipconnect.de. [2003:cb:c73d:2400:3be1:a856:724c:fd29])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a099ae7a46sm9423271f8f.44.2025.05.05.01.01.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 May 2025 01:01:29 -0700 (PDT)
-Message-ID: <7e32aabe-c170-4cfc-99aa-f257d2a69364@redhat.com>
-Date: Mon, 5 May 2025 10:01:26 +0200
+        d=1e100.net; s=20230601; t=1746435424; x=1747040224;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=twFRaaGQAif63hrg13kb5IFUKfR33Ambpgl1WwN0LnE=;
+        b=gok/WfGuD/uocR48nPf5+ErKo9R8LatQ5Vosa2ua32xY5TPKqv168JTzjSuo+FZDLm
+         R9IwpAvFubjfSDpemiQk7qh0r9VumSAne/HuwF2i5UWG3GYgAo3QRZjxH4jTJ5wzQPRw
+         FSqfoaKAL/s7XDskkKKoAEajpLT2C4DdzHQDdUu8wigbeQB1jUn+m9yn07ETeEtDVRF7
+         pNBKCN0m9yLU5XgQL68LOzf/RIkoSluSmcJg58XQsvBp9CEkHytRppsRQFJ2CNc4ENBI
+         Om/pvSPtHfrMx5ySJKQsCsZf3pP2/vfmBBAlfRiRMPD0NioJ8mV0cda13RY1PgCpgrQg
+         9JHg==
+X-Forwarded-Encrypted: i=1; AJvYcCUP98SWtUDx5CQ3NRmxZzk62dxxVCM73rnCgbf5SY/Q028oCrodqXF9JZ6NXTH695MZlidZZt+TN4Ffdfvd@vger.kernel.org
+X-Gm-Message-State: AOJu0YykqAYG0MTnfnSoO73WabIxqF6TtMZset00WMiJH3oxK069WE5g
+	jsVZ+dekwrNyk/IHiQbyQmJAhaG3nvalWSsX3/gL89ZqRzRCb1G3o3VDz5TbM9vvUDi2esJi3ga
+	U
+X-Gm-Gg: ASbGncvnvvJl+XbSaqjthupf96TJH0aENSPrG1RQTtN8ggwbxtAp3+nlA7R3Y4QrzOJ
+	qCnZYLg4pAJg6VPJSrtzAUfvMa2RdpxEdgBGrO1G97nZooxmpguMHsyi3cxMfE1W8FbV/li8Bgo
+	zOz53ibrXbLiP8eCFirMuj1M05P2/6ESin+JzAN9Eeil8yD6J16Ly11k8I1kJx8Z3dVRtmMV2Nz
+	1DWg6MP3IdhF1UOZcSAaeOmRmMnv9m22XRps0pSb4ctot2rrrifAMtnDAaci9e3lfKyiMvUv9jn
+	TzBMtjAIvm3zfmEk+4nvsIGbSVf+uhPJ997als3eDs3sAa9jLA==
+X-Google-Smtp-Source: AGHT+IE7wNqWzTYqeQUTRoeCnQGzyN3VhgiWSTOZ9M/mvZ4hW4jHw55Y7DRHPzUaVluMv512tH+2nw==
+X-Received: by 2002:a17:906:dc8a:b0:ac3:afb1:dee7 with SMTP id a640c23a62f3a-ad17b5dbc98mr1130736866b.28.1746435424095;
+        Mon, 05 May 2025 01:57:04 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:ef30:d6d0:d270:a4d:dbd])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad189508d03sm458777866b.133.2025.05.05.01.57.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 May 2025 01:57:03 -0700 (PDT)
+Date: Mon, 5 May 2025 10:56:56 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: keep remotely controlled units
+ on during boot
+Message-ID: <aBh9WL2OMjTqBJch@linaro.org>
+References: <20250503-bam-dma-reset-v1-1-266b6cecb844@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 06/13] KVM: x86: Generalize private fault lookups to
- guest_memfd fault lookups
-To: Ackerley Tng <ackerleytng@google.com>,
- Sean Christopherson <seanjc@google.com>
-Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, pbonzini@redhat.com,
- chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org,
- paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org,
- akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com,
- chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com,
- dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net,
- vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com
-References: <diqz7c31xyqs.fsf@ackerleytng-ctop.c.googlers.com>
- <386c1169-8292-43d1-846b-c50cbdc1bc65@redhat.com>
- <aBTxJvew1GvSczKY@google.com>
- <diqzjz6ypt9y.fsf@ackerleytng-ctop.c.googlers.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <diqzjz6ypt9y.fsf@ackerleytng-ctop.c.googlers.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250503-bam-dma-reset-v1-1-266b6cecb844@oss.qualcomm.com>
 
-On 03.05.25 00:00, Ackerley Tng wrote:
-> Sean Christopherson <seanjc@google.com> writes:
+On Sat, May 03, 2025 at 03:41:43AM +0300, Dmitry Baryshkov wrote:
+> The commit 0ac9c3dd0d6f ("dmaengine: qcom: bam_dma: fix runtime PM
+> underflow") made sure the BAM DMA device gets suspended, disabling the
+> bam_clk. However for remotely controlled BAM DMA devices the clock might
+> be disabled prematurely (e.g. in case of the earlycon this frequently
+> happens before UART driver is able to probe), which causes device reset.
 > 
->> On Fri, May 02, 2025, David Hildenbrand wrote:
->>> On 30.04.25 20:58, Ackerley Tng wrote:
->>>>> -	if (is_private)
->>>>> +	if (is_gmem)
->>>>>    		return max_level;
->>>>
->>>> I think this renaming isn't quite accurate.
->>>
->>> After our discussion yesterday, does that still hold true?
->>
->> No.
->>
->>>> IIUC in __kvm_mmu_max_mapping_level(), we skip considering
->>>> host_pfn_mapping_level() if the gfn is private because private memory
->>>> will not be mapped to userspace, so there's no need to query userspace
->>>> page tables in host_pfn_mapping_level().
->>>
->>> I think the reason was that: for private we won't be walking the user space
->>> pages tables.
->>>
->>> Once guest_memfd is also responsible for the shared part, why should this
->>> here still be private-only, and why should we consider querying a user space
->>> mapping that might not even exist?
->>
->> +1, one of the big selling points for guest_memfd beyond CoCo is that it provides
->> guest-first memory.  It is very explicitly an intended feature that the guest
->> mappings KVM creates can be a superset of the host userspace mappings.  E.g. the
->> guest can use larger page sizes, have RW while the host has RO, etc.
+> Use sync_state callback to ensure that bam_clk stays on until all users
+> are probed (and are able to vote upon corresponding clocks).
 > 
-> Do you mean that __kvm_mmu_max_mapping_level() should, in addition to
-> the parameter renaming from is_private to is_gmem, do something like
-> 
-> if (is_gmem)
-> 	return kvm_gmem_get_max_mapping_level(slot, gfn);
+> Fixes: 0ac9c3dd0d6f ("dmaengine: qcom: bam_dma: fix runtime PM underflow")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-I assume you mean, not looking at lpage_info at all?
+Thanks for the patch! I actually created almost the same patch on
+Friday, after struggling with this issue on DB410c when trying to add
+the MPM as wakeup-parent for GPIOs. :-)
 
-I have limited understanding what lpage_info is or what it does. I 
-believe all it adds is a mechanism to *disable* large page mappings.
+How is this issue related to _remotely-controlled_ BAMs?
 
-We want to disable large pages if (using 2M region as example)
+The BAM clock will get disabled for all types of BAM control, so I don't
+think the type of BAM control plays any role here. The BLSP DMA instance
+that would most likely interfere with UART earlycon is
+controlled-remotely on some SoCs (e.g. MSM8916), but currently not all
+of them (e.g. MSM8974, IPQ8074, IPQ9574, ...).
 
-(a) Mixed memory attributes. If a PFN falls into a 2M region, and parts
-     of that region are shared vs. private (mixed memory attributes ->
-     KVM_LPAGE_MIXED_FLAG)
+The fixes tag also doesn't look correct to me, since commit 0ac9c3dd0d6f
+("dmaengine: qcom: bam_dma: fix runtime PM underflow") only changed the
+behavior for BAMs with "if (!bdev->bamclk)". This applies to some/most
+remotely-controlled BAMs, but the issue we have here occurs only because
+we do have a clock and cause it to get disabled prematurely.
 
-  -> With gmem-shared we could have mixed memory attributes, not a PFN
-     fracturing. (PFNs don't depend on memory attributes)
+Checking for if (bdev->bamclk) would probably make more sense. In my
+patch I did it just unconditionally, because runtime PM is currently
+a no-op for BAMs without clock anyway.
 
-(b) page track: intercepting (mostly write) access to GFNs
+I think it's also worth noting in the commit message that this is sort
+of a stop-gap solution. The root problem is that the earlycon code
+doesn't claim the clock while active. Any of the drivers that consume
+this shared clock could trigger the issue, I had to fix a similar issue
+in the spi-qup driver before in commit 0c331fd1dccf ("spi: qup: Request
+DMA before enabling clocks"). On some SoCs (e.g. MSM8974), we have
+"dmas" currently only on &blsp2_i2c5, so the UART controller wouldn't
+even be considered as consumer to wait for before calling the bam_dma
+.sync_state.
 
+It may be more reliable to implement something like in
+drivers/clk/imx/clk.c imx_register_uart_clocks(), which tries to claim
+only the actually used UART clocks until late_initcall_sync(). That
+would at least make it independent from individual drivers, but assumes
+the UART driver can actually probe before late_initcall_sync() ...
+Most of this code is generic though, so perhaps releasing the clocks
+could be hooked up somewhere generic, when earlycon exits ...?
 
-So, I wonder if we still have to take care of lpage_info, at least for
-handling (b) correctly [I assume so]. Regarding (a) I am not sure: once 
-memory attributes are handled by gmem in the gmem-shared case. IIRC, 
-with AMD SEV we might still have to honor it? But gmem itself could 
-handle that.
-
-
-What we could definitely do here for now is:
-
-if (is_gmem)
-	/* gmem only supports 4k pages for now. */
-	return PG_LEVEL_4K;
-
-And not worry about lpage_infor for the time being, until we actually do 
-support larger pages.
-
-
-> 
-> and basically defer to gmem as long as gmem should be used for this gfn?
-> 
-> There is another call to __kvm_mmu_max_mapping_level() via
-> kvm_mmu_max_mapping_level() beginning from recover_huge_pages_range(),
-> and IIUC that doesn't go through guest_memfd.
-> 
-> Hence, unlike the call to __kvm_mmu_max_mapping_level() from the KVM x86
-> MMU fault path, guest_memfd didn't get a chance to provide its input in
-> the form of returning max_order from kvm_gmem_get_pfn().
-
-Right, we essentially say that "this is a private fault", likely 
-assuming that we already verified earlier that the memory is also private.
-
-[I can see that happening when the function is called through 
-direct_page_fault()]
-
-We could simply call kvm_mmu_max_mapping_level() from 
-kvm_mmu_hugepage_adjust() I guess. (could possibly be optimized later)
-
--- 
-Cheers,
-
-David / dhildenb
-
+Thanks,
+Stephan
 
