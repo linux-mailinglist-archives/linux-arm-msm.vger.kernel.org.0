@@ -1,198 +1,273 @@
-Return-Path: <linux-arm-msm+bounces-57014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 299D9AACEC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 22:23:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6C0BAACEDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 22:47:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17B5A1BC07A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:23:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2C4F9819DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:46:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D2A625761;
-	Tue,  6 May 2025 20:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1B647262B;
+	Tue,  6 May 2025 20:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a8v7+Z63"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4FJeR4WO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C00D372;
-	Tue,  6 May 2025 20:23:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215474B1E66
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 20:47:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746563004; cv=none; b=Jxqp8ZTK79txLXxeHC0RYSRTJGzLad/g8gRws9l/3cQ+WR34RyYKqjxbXcA/zIuY91YiYHSCgelKpx8ErUCysTSyqx5r8Z0vVXecMRNVupY3oZEuncyV8ToYzlPaT2gPlAJ+wLKb7pBDhiZEJj/pYCNeEy8ocvlJLXnRenyuDTU=
+	t=1746564422; cv=none; b=ncfkOPOZQ/2UM+sNevTcNzo5zLmtGrB2B8ht9oJDd7DeKKcNB+tUuT4xxKtqWlDo8z5GuGc41+6q12QM9Gfh20m74EyL7mMUkJuSd7YxCdKc1nwqnYYqylE/SYRWQIsSpaoRFlRlE33tXFhJwLid5WencLvwar7tC0W1tNByqCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746563004; c=relaxed/simple;
-	bh=JZoS77bwlb3qo0vjs7rkqCS4ofr7Fru3B+rU59+jDAQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SEuvrVDm5G+dKrHYyT2dEaG9f2JISYQI2WMoR3sWFK5pTG0f3TWtOud0042edNbdpKA28zUHyOvd5k3Pc5kLtQ7NwkEaA9i6yRV0FOvn7w7OZdtWHJM6Hu80QZFzAVIKmfOhjiIIjknFO8Z3ai8UwexKvy7936JAMvN7FRi+XHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a8v7+Z63; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1EFC4CEE4;
-	Tue,  6 May 2025 20:23:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746563003;
-	bh=JZoS77bwlb3qo0vjs7rkqCS4ofr7Fru3B+rU59+jDAQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=a8v7+Z63AUZmTM6mHNpAl6ots9EDK1X4LCKQZVEdhnbgzLPe0A5TKE0HwPQXdyyNZ
-	 kTRkriSKyQpB344LDzQKbzCXjZcyq2t5vLVNVvraJriFQA4KF1FaA2qZ0dlwHqojHb
-	 cQEVYtTguGIzCjkM+93OzT4a46AYW9pVsyjuKiCyfmWzMxuSOSwaFx4Ak9Q9Nux/vK
-	 zS18CyoDrdHMtCHCkITnbks4LJcHLQIfLK82aNLZEPpN/+g2esQYo+4f18nMRuHEqO
-	 VpXxjBmybGBjvZzvCIgVkd6sROWjVDPPMSvqPq53sgbkD3A6pO8zPh4maFX7oXhnRP
-	 HfHRfZmzA9elQ==
-Date: Tue, 6 May 2025 13:23:21 -0700
-From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	neil.armstrong@linaro.org, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8650: add iris DT node
-Message-ID: <4lmt5cgg2tanrughooxw73h2brwyyc6ifqgo3ju6iz4enkvkic@umeijjk4ijxg>
-References: <20250424-topic-sm8x50-upstream-iris-8650-dt-v2-1-dd9108bf587f@linaro.org>
- <3498cfda-a738-449d-9d9f-754bbc8125c2@oss.qualcomm.com>
- <db91a526-e2f8-48f8-a071-f3fcc75235be@linaro.org>
- <CAO9ioeWaPKXHgNGPx5q34+RP59PMLD+EVK5fQsN89KC9A1ca-Q@mail.gmail.com>
- <d79790e5-52c9-4135-8f3c-af797145fa2d@oss.qualcomm.com>
+	s=arc-20240116; t=1746564422; c=relaxed/simple;
+	bh=u/O8q2sevigdN4ig818/u3tAXLuUQrGCknUWeKdBp7o=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=VbeSYzRBDoRe9XlBFQof3vL6DN/broNX7k7KxegmQKbBMTRmJIXv1PG+ud1CeFxyrcM80B19ohUX7QdStPwtivlpGNH5CIQIxYiyDk4fNY/5VTmheHxn/uoIYdWd5ouOJutFrqT11hVozYMhlLni07l/etmtOLs93REv2ivs1l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4FJeR4WO; arc=none smtp.client-ip=209.85.215.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-af972dd0cd6so3258152a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 13:47:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1746564420; x=1747169220; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DCzobWbLqzYgZ0RtPdZiSF2En8bMULz9xtc7ptlaLyg=;
+        b=4FJeR4WOcZKqndYho3fTJX+z6jqdlmBMMF9qFhV/5uv8Yh5fcqWdCE8zqWEzkr8bcm
+         vL58yUAgm1iS9KgMryINxP3wOny36OG29Msnb/WZzCMhZaoKDxRBqMpglPqNGuA1LOiC
+         EWcCYCdBv76BWZBi8VFAQ5P7sM6FwZZhG2w2XDAWJi946AR5AIlRze2HOe7eCsZmiYgb
+         yyoOTIOzLdbdmUIZ71RZ9EmUYdCd+6b/I30kfINxvST1oNAd0tGCynwXwa99mvMlqUqk
+         Csklj8taFtmP0f83+1/RoMk1Xe0ZsXBy05XL9UQLXOvun3BU5j7EmixGgXsvdT6O4e4c
+         sdNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746564420; x=1747169220;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=DCzobWbLqzYgZ0RtPdZiSF2En8bMULz9xtc7ptlaLyg=;
+        b=Csb0HWNGM0hxs0v7Xtg4NQYpQhkV3uBuHYgxbc5xPKlkRpZc22CcX7OI+6xkX9Ny0v
+         gewEWmkdWSLq+RA2D7EqZOLQh35UoOR8x8jukPWEH4m5ITMTlnkGllNxat7JBo5BVGfj
+         cdNLVwWS+VnzDNQRFwN0dmPpUdBSbd/EKjE+L0rYV6I18ztWLeGex/rKB4x5GVYHsLkx
+         bv83KqCFS1sMkp++bbTvsVsvsnj5pNUH9IlQTRYn5hU35Akox3gw/+Ciz1k7d0BJbF6w
+         wNBl26VitXMDlc0ckH0BfPQ/g9gl65o7xA62sTFxYiP7gOM27LXPGA7J5375ns5OPAfn
+         OUpw==
+X-Forwarded-Encrypted: i=1; AJvYcCVmwZ3FPR9UytrMT4WB+IB7/prCrfyCadfRza9bIW7GrJkMjpfrjQFjH0cfVlkoOtgnehK/oyUHcrdO460w@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyqf2RnEDmSskjmjR8y5c1bCW5R4GfGuxW4IfIzxL4C/YW1aQFv
+	MGvR447krtLvD7YpKNVcO4xfYpajq+gqCJ3wUikA0ceWOmOpnAO+UMlrY9/A9F58Pfs1lvQPRGl
+	uUDLqYp93BmxPxAfjt7yLSA==
+X-Google-Smtp-Source: AGHT+IHuf4HiiM5l7QrOtvUrpzBKa8NR8v2a6GaWbIwD5Bf0Sh8JWbcl8IXLPMkv3T1UFmq2oEYM6jTxGiIuLrPMRg==
+X-Received: from pfjg15.prod.google.com ([2002:a05:6a00:b8f:b0:740:6f6:7346])
+ (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a20:3d8f:b0:1f5:902e:1e97 with SMTP id adf61e73a8af0-2148d53bad9mr825091637.41.1746564420272;
+ Tue, 06 May 2025 13:47:00 -0700 (PDT)
+Date: Tue, 06 May 2025 13:46:58 -0700
+In-Reply-To: <39ea3946-6683-462e-af5d-fe7d28ab7d00@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d79790e5-52c9-4135-8f3c-af797145fa2d@oss.qualcomm.com>
+Mime-Version: 1.0
+References: <diqz7c31xyqs.fsf@ackerleytng-ctop.c.googlers.com>
+ <386c1169-8292-43d1-846b-c50cbdc1bc65@redhat.com> <aBTxJvew1GvSczKY@google.com>
+ <diqzjz6ypt9y.fsf@ackerleytng-ctop.c.googlers.com> <7e32aabe-c170-4cfc-99aa-f257d2a69364@redhat.com>
+ <aBlCSGB86cp3B3zn@google.com> <CAGtprH8DW-hqxbFdyo+Mg7MddsOAnN+rpLZUOHT-msD+OwCv=Q@mail.gmail.com>
+ <CAGtprH9AVUiFsSELhmt4p24fssN2x7sXnUqn39r31GbA0h39Sw@mail.gmail.com>
+ <aBoVbJZEcQ2OeXhG@google.com> <39ea3946-6683-462e-af5d-fe7d28ab7d00@redhat.com>
+Message-ID: <diqzh61xqxfh.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [PATCH v8 06/13] KVM: x86: Generalize private fault lookups to
+ guest_memfd fault lookups
+From: Ackerley Tng <ackerleytng@google.com>
+To: David Hildenbrand <david@redhat.com>, Sean Christopherson <seanjc@google.com>, 
+	Vishal Annapurve <vannapurve@google.com>
+Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-mm@kvack.org, pbonzini@redhat.com, chenhuacai@kernel.org, 
+	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 28, 2025 at 11:14:18PM +0200, Konrad Dybcio wrote:
-> On 4/28/25 12:48 PM, Dmitry Baryshkov wrote:
-> > On Mon, 28 Apr 2025 at 11:18, Neil Armstrong <neil.armstrong@linaro.org> wrote:
-> >>
-> >> Hi,
-> >>
-> >> On 25/04/2025 23:49, Konrad Dybcio wrote:
-> >>> On 4/24/25 6:32 PM, Neil Armstrong wrote:
-> >>>> Add DT entries for the sm8650 iris decoder.
-> >>>>
-> >>>> Since the firmware is required to be signed, only enable
-> >>>> on Qualcomm development boards where the firmware is
-> >>>> available.
-> >>>>
-> >>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> >>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> >>>> ---
-> >>>> Changes in v2:
-> >>>> - removed useless firmware-name
-> >>>> - Link to v1: https://lore.kernel.org/r/20250418-topic-sm8x50-upstream-iris-8650-dt-v1-1-80a6ae50bf10@linaro.org
-> >>>> ---
-> >>>
-> >>> [...]
-> >>>
-> >>>> +            iris: video-codec@aa00000 {
-> >>>> +                    compatible = "qcom,sm8650-iris";
-> >>>> +                    reg = <0 0x0aa00000 0 0xf0000>;
-> >>>> +
-> >>>> +                    interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH 0>;
-> >>>> +
-> >>>> +                    power-domains = <&videocc VIDEO_CC_MVS0C_GDSC>,
-> >>>> +                                    <&videocc VIDEO_CC_MVS0_GDSC>,
-> >>>> +                                    <&rpmhpd RPMHPD_MXC>,
-> >>>> +                                    <&rpmhpd RPMHPD_MMCX>;
-> >>>> +                    power-domain-names = "venus",
-> >>>> +                                         "vcodec0",
-> >>>> +                                         "mxc",
-> >>>> +                                         "mmcx";
-> >>>> +
-> >>>> +                    operating-points-v2 = <&iris_opp_table>;
-> >>>> +
-> >>>> +                    clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
-> >>>> +                             <&videocc VIDEO_CC_MVS0C_CLK>,
-> >>>> +                             <&videocc VIDEO_CC_MVS0_CLK>;
-> >>>> +                    clock-names = "iface",
-> >>>> +                                  "core",
-> >>>> +                                  "vcodec0_core";
-> >>>> +
-> >>>> +                    interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> >>>> +                                     &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
-> >>>> +                                    <&mmss_noc MASTER_VIDEO QCOM_ICC_TAG_ALWAYS
-> >>>> +                                     &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-> >>>> +                    interconnect-names = "cpu-cfg",
-> >>>> +                                         "video-mem";
-> >>>> +
-> >>>> +                    /* FW load region */
-> >>>
-> >>> I don't think this comment brings value
-> >>
-> >> Right
-> >>
-> >>>
-> >>>> +                    memory-region = <&video_mem>;
-> >>>> +
-> >>>> +                    resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>,
-> >>>> +                             <&videocc VIDEO_CC_XO_CLK_ARES>,
-> >>>> +                             <&videocc VIDEO_CC_MVS0C_CLK_ARES>;
-> >>>> +                    reset-names = "bus",
-> >>>> +                                  "xo",
-> >>>> +                                  "core";
-> >>>> +
-> >>>> +                    iommus = <&apps_smmu 0x1940 0>,
-> >>>> +                             <&apps_smmu 0x1947 0>;
-> >>>
-> >>> I think you may also need 0x1942 0x0 (please also make the second value / SMR
-> >>> mask hex)> +
-> >>
-> >> I don't see 0x1942 in the downstream DT, and which mask should I set ? 0x1 ?
-> 
-> I saw it in docs only, maybe Vikash or Dikshita can chime in whether it's
-> necessary. It would have mask 0x0 if so.
-> 
-> >>
-> >>>> +                    dma-coherent;
-> >>>> +
-> >>>> +                    /*
-> >>>> +                     * IRIS firmware is signed by vendors, only
-> >>>> +                     * enable in boards where the proper signed firmware
-> >>>> +                     * is available.
-> >>>> +                     */
-> >>>
-> >>> Here's to another angry media article :(
-> >>>
-> >>> Please keep Iris enabled.. Vikash reassured me this is not an
-> >>> issue until the user attempts to use the decoder [1], and reading
-> >>> the code myself I come to the same conclusion (though I haven't given
-> >>> it a smoke test - please do that yourself, as you seem to have a better
-> >>> set up with these platforms).
-> >>>
-> >>> If the userland is sane, it should throw an error and defer to CPU
-> >>> decoding.
-> >>>
-> >>> This is >>unlike venus<< which if lacking firmware at probe (i.e. boot)
-> >>> would prevent .sync_state
-> >>
-> >> Well sync with Bjorn who asked me to only enable on board with available firmware ;-)
-> > 
-> > I'd second him here: if there is no firmware, don't enable the device.
-> > It's better than the users having cryptic messages in the dmesg,
-> > trying to understand why the driver errors out.
-> 
-> I don't agree.. the firmware may appear later at boot (e.g. user installs a
-> small rootfs and manually pulls in linux-firmware). Plus without the firmware,
-> we can still power on and off the IP block, particularly achieve sync_state
-> regardless of it
-> 
+David Hildenbrand <david@redhat.com> writes:
 
-Not "available during boot", but rather "available for a particular
-board".
+> On 06.05.25 15:58, Sean Christopherson wrote:
+>> On Mon, May 05, 2025, Vishal Annapurve wrote:
+>>> On Mon, May 5, 2025 at 10:17=E2=80=AFPM Vishal Annapurve <vannapurve@go=
+ogle.com> wrote:
+>>>>
+>>>> On Mon, May 5, 2025 at 3:57=E2=80=AFPM Sean Christopherson <seanjc@goo=
+gle.com> wrote:
+>>>>>> ...
+>>>>>> And not worry about lpage_infor for the time being, until we actuall=
+y do
+>>>>>> support larger pages.
+>>>>>
+>>>>> I don't want to completely punt on this, because if it gets messy, th=
+en I want
+>>>>> to know now and have a solution in hand, not find out N months from n=
+ow.
+>>>>>
+>>>>> That said, I don't expect it to be difficult.  What we could punt on =
+is
+>>>>> performance of the lookups, which is the real reason KVM maintains th=
+e rather
+>>>>> expensive disallow_lpage array.
+>>>>>
+>>>>> And that said, memslots can only bind to one guest_memfd instance, so=
+ I don't
+>>>>> immediately see any reason why the guest_memfd ioctl() couldn't proce=
+ss the
+>>>>> slots that are bound to it.  I.e. why not update KVM_LPAGE_MIXED_FLAG=
+ from the
+>>>>> guest_memfd ioctl() instead of from KVM_SET_MEMORY_ATTRIBUTES?
+>>>>
+>>>> I am missing the point here to update KVM_LPAGE_MIXED_FLAG for the
+>>>> scenarios where in-place memory conversion will be supported with
+>>>> guest_memfd. As guest_memfd support for hugepages comes with the
+>>>> design that hugepages can't have mixed attributes. i.e. max_order
+>>>> returned by get_pfn will always have the same attributes for the folio
+>>>> range.
+>>=20
+>> Oh, if this will naturally be handled by guest_memfd, then do that.  I w=
+as purely
+>> reacting to David's suggestion to "not worry about lpage_infor for the t=
+ime being,
+>> until we actually do support larger pages".
+>>=20
+>>>> Is your suggestion around using guest_memfd ioctl() to also toggle
+>>>> memory attributes for the scenarios where guest_memfd instance doesn't
+>>>> have in-place memory conversion feature enabled?
+>>>
+>>> Reading more into your response, I guess your suggestion is about
+>>> covering different usecases present today and new usecases which may
+>>> land in future, that rely on kvm_lpage_info for faster lookup. If so,
+>>> then it should be easy to modify guest_memfd ioctl to update
+>>> kvm_lpage_info as you suggested.
+>>=20
+>> Nah, I just missed/forgot that using a single guest_memfd for private an=
+d shared
+>> would naturally need to split the folio and thus this would Just Work.
 
-We generally avoid enabling device_nodes that depend on vendor-signed
-firmware until someone has tested the device on such board and specified
-the proper path to the vendor-specific firmware.
+Sean, David, I'm circling back to make sure I'm following the discussion
+correctly before Fuad sends out the next revision of this series.
 
-Are you suggesting that we should leave this enabled on all boards for
-some reason (perhaps to ensure that resources are adequately managed)?
+>
+> Yeah, I ignored that fact as well. So essentially, this patch should be=
+=20
+> mostly good for now.
+>
 
-Regards,
-Bjorn
+From here [1], these changes will make it to v9
+
++ kvm_max_private_mapping_level renaming to kvm_max_gmem_mapping_level
++ kvm_mmu_faultin_pfn_private renaming to kvm_mmu_faultin_pfn_gmem
+
+> Only kvm_mmu_hugepage_adjust() must be taught to not rely on=20
+> fault->is_private.
+>
+
+I think fault->is_private should contribute to determining the max
+mapping level.
+
+By the time kvm_mmu_hugepage_adjust() is called,
+
+* For Coco VMs using guest_memfd only for private memory,
+  * fault->is_private would have been checked to align with
+    kvm->mem_attr_array, so=20
+* For Coco VMs using guest_memfd for both private/shared memory,
+  * fault->is_private would have been checked to align with
+    guest_memfd's shareability
+* For non-Coco VMs using guest_memfd
+  * fault->is_private would be false
+
+Hence fault->is_private can be relied on when calling
+kvm_mmu_hugepage_adjust().
+
+If fault->is_private, there will be no host userspace mapping to check,
+hence in __kvm_mmu_max_mapping_level(), we should skip querying host
+page tables.
+
+If !fault->is_private, for shared memory ranges, if the VM uses
+guest_memfd only for shared memory, we should query host page tables.
+
+If !fault->is_private, for shared memory ranges, if the VM uses
+guest_memfd for both shared/private memory, we should not query host
+page tables.
+
+If !fault->is_private, for non-Coco VMs, we should not query host page
+tables.
+
+I propose to rename the parameter is_private to skip_host_page_tables,
+so
+
+- if (is_private)
++ if (skip_host_page_tables)
+	return max_level;
+
+and pass
+
+skip_host_page_tables =3D fault->is_private ||
+			kvm_gmem_memslot_supports_shared(fault->slot);
+
+where kvm_gmem_memslot_supports_shared() checks the inode in the memslot
+for GUEST_MEMFD_FLAG_SUPPORT_SHARED.
+
+For recover_huge_pages_range(), the other user of
+__kvm_mmu_max_mapping_level(), currently there's no prior call to
+kvm_gmem_get_pfn() to get max_order or max_level, so I propose to call
+__kvm_mmu_max_mapping_level() with
+
+if (kvm_gmem_memslot_supports_shared(slot)) {
+	max_level =3D kvm_gmem_max_mapping_level(slot, gfn);
+	skip_host_page_tables =3D true;
+} else {
+	max_level =3D PG_LEVEL_NUM;
+        skip_host_page_tables =3D kvm_slot_has_gmem(slot) &&
+				kvm_mem_is_private(kvm, gfn);
+}
+
+Without 1G support, kvm_gmem_max_mapping_level(slot, gfn) would always
+return 4K.
+
+With 1G support, kvm_gmem_max_mapping_level(slot, gfn) would return the
+level for the page's order, at the offset corresponding to the gfn.
+
+> Once we support large folios in guest_memfd, only the "alignment"=20
+> consideration might have to be taken into account.
+>
+
+I'll be handling this alignment as part of the 1G page support series
+(won't be part of Fuad's first stage series) [2]
+
+> Anything else?
+>
+> --=20
+> Cheers,
+>
+> David / dhildenb
+
+
+[1] https://lore.kernel.org/all/20250430165655.605595-7-tabba@google.com/
+[2] https://lore.kernel.org/all/diqz1pt1sfw8.fsf@ackerleytng-ctop.c.googler=
+s.com/
 
