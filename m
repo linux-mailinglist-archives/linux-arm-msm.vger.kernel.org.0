@@ -1,48 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-56919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB98CAABE39
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 11:05:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A144AABEDB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 11:16:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D238A3B4FD1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 09:04:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2EA73BA5F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 09:14:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65892267712;
-	Tue,  6 May 2025 09:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 295902797BE;
+	Tue,  6 May 2025 09:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mxJWX01H"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="H8vvkX2G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D34264A7A;
-	Tue,  6 May 2025 09:03:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F799264A73;
+	Tue,  6 May 2025 09:08:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746522185; cv=none; b=G+gUl5BohO0F8Hvhz9WAiCAVTY1KEczDFr8p1poIOT5FQLMwGCchNtTrE4x+hvZjWClk8xr4MWlSaB5lcZhu7GH2OaF0HwaDnDImWjGgctcrIxyFBtcdP6wKEpn0DSKYu4XIsLf59qmpwhO+lDLBUd4oSDk7Za6Ac9tW4/tJ2kE=
+	t=1746522505; cv=none; b=enhsLX+Nkej7BL0QMR1GQWErUXowsoLemtgrMcWiKQmjB90FgnLMP0AiAg/Di+wb6Cu7gE8j06Iynh7TRyXbZVALFleDgccyOPgeG6CbJdFKPknzzDDdTaxSQjufeSO/Uip0GlgpEmspa9BD0UOcJKpkPWcCFXnaBZtts2QnpYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746522185; c=relaxed/simple;
-	bh=KzjpAkZSQHMJ4XB3bjrKeORHNcNIBfFqKt9m+bqJINk=;
+	s=arc-20240116; t=1746522505; c=relaxed/simple;
+	bh=S1K4Z5883u+owLpW7MmSrX1qkgnjja7k3b+3zeq+uPg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BVzagTKksyJ1K2n9DSOOSZZw38g/m3YBISaM9IWf+L4Bw5PUDkdbL67xn5xVep5krKfekhS7+8WE3X4rFYMtBXoLGbs/zlDNzZFv7GvTJIn1m8AJGbjJeEtO851L1MdsG/W76PYPWdh3+FrLz5DInQ1Y2KyyqThUlkLngOfb8X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mxJWX01H; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE79AC4CEE4;
-	Tue,  6 May 2025 09:03:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746522184;
-	bh=KzjpAkZSQHMJ4XB3bjrKeORHNcNIBfFqKt9m+bqJINk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=mxJWX01HMsrW9zvLPgqQSTSvpIv2wLJUuKV99kxNz/EYbu0jST6dlJLm7YPkMmnqw
-	 f6zWPipUvF/Is/Nnw83xWKiv9x2YHTJ/ul5VaVN0Hi664djWR62/3kEtmF5ZszFoCA
-	 ltQiXyU6dAOjRPbMgF9ZbGKoNYwJbXpNHRn22dRiU2t4ElGcC4zGWEPgscOxM2bwS7
-	 fkPLULd3Y2degn/eXcJ7Z/cV6ee8Cak34yEvwD1JQArq+lG54HY82shZyf8GvT8cX0
-	 UQnVoWttEnzdaC4+C9kk7dqcWrympjQphkLMh5Q0BLM+Y/aKVrxAKV+DqdA+N82lKa
-	 6dUOTWgCGPmnQ==
-Message-ID: <9268048b-9868-4e41-b0f6-dc2e73b019cc@kernel.org>
-Date: Tue, 6 May 2025 11:03:00 +0200
+	 In-Reply-To:Content-Type; b=BYeb1rXy0izMjeTl7PJQ/7n8EWyN6C9hWZb0DuM56SDyB4y5ZDRP9fQ8K8TLBa/YZ2AP0iURGB3uWi97boe35y8euPnyAz5TIRHSjYNOSaUZDd570J9n5G7rRbHKSrwBdgNdJ3VtzyVwXigUA0Bf0O/JWIPXxDJ/mH/9lI4dTpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=H8vvkX2G; arc=none smtp.client-ip=220.197.31.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Message-ID:Date:MIME-Version:Subject:From:
+	Content-Type; bh=ZN2hIZjStH5WIJVQEoZIXJHxRyKeJAZXECGdhzrLzMw=;
+	b=H8vvkX2Gg33L3BwiGqWigsO24QiUA6cs5eD/HdifQz/2AzjCp38QvogdPsJDYz
+	vbQGAjwVoLx+g88uWgzxrATGQc9eQkc0tXrYXHS2XW46M8yD9EigiIhf2PWMSBjD
+	+IxzCqGWNEJ4aJiIJOl30KTbW0msZV89LMHwSSB1JqQDk=
+Received: from [192.168.142.52] (unknown [])
+	by gzga-smtp-mtada-g1-1 (Coremail) with SMTP id _____wDnPyVN0RloeqVnEw--.51589S2;
+	Tue, 06 May 2025 17:07:30 +0800 (CST)
+Message-ID: <08073fba-b46f-45f1-9859-04c5ffa65994@163.com>
+Date: Tue, 6 May 2025 17:07:25 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,78 +49,59 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] dt-bindings: media: qcom,x1e80100-camss: Remove
- clock-lanes port property
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Robert Foss
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250502204142.2064496-1-vladimir.zapolskiy@linaro.org>
- <20250502204142.2064496-4-vladimir.zapolskiy@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 4/4] PCI: qcom: Replace PERST sleep time with proper
+ macro
+To: Niklas Cassel <cassel@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>
+Cc: Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+ Damien Le Moal <dlemoal@kernel.org>, Laszlo Fiat <laszlo.fiat@proton.me>,
+ linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20250506073934.433176-6-cassel@kernel.org>
+ <20250506073934.433176-10-cassel@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250502204142.2064496-4-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From: Hans Zhang <18255117159@163.com>
+In-Reply-To: <20250506073934.433176-10-cassel@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:_____wDnPyVN0RloeqVnEw--.51589S2
+X-Coremail-Antispam: 1Uf129KBjvdXoWrKF1rWw4kAw45XrW8Gw4Durg_yoWDWFbE9r
+	Z5WrWxurs8GryS9r12ka1fZr9aya47Xrn7CayFvF17AasxJr1UXrykZrZ8Xa98WF43JFZ5
+	t3s0vF4rCFyxGjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUjldgtUUUUU==
+X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbBDw9Fo2gZz-g0TAAAsY
 
-On 02/05/2025 22:41, Vladimir Zapolskiy wrote:
-> Since clock lanes under CSIPHY are hard-wired and non-selectable,
-> it makes sense to remove this port property.
+
+
+On 2025/5/6 15:39, Niklas Cassel wrote:
+> Replace the PERST sleep time with the proper macro (PCIE_T_PVPERL_MS).
+> No functional change.
 > 
-> The change follows the same logic as found in commit 336136e197e2
-> ("media: dt-bindings: media: camss: Remove clock-lane property").
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Signed-off-by: Niklas Cassel <cassel@kernel.org>
 > ---
+>   drivers/pci/controller/dwc/pcie-qcom.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 01a60d1f372a..fa689e29145f 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -289,7 +289,7 @@ static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
+>   static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
+>   {
+>   	/* Ensure that PERST has been asserted for at least 100 ms */
+> -	msleep(100);
+> +	msleep(PCIE_T_PVPERL_MS);
+>   	gpiod_set_value_cansleep(pcie->reset, 0);
+>   	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
+>   }
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Reviewed-by: Hans Zhang <18255117159@163.com>
 
 Best regards,
-Krzysztof
+Hans
+
 
