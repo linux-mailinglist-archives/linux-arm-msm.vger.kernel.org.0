@@ -1,153 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-56985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C896AACB32
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 18:39:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCC9EAACC17
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 19:18:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D420983562
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 16:37:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4EEAC17A10A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 17:18:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B71F42857C2;
-	Tue,  6 May 2025 16:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A533E27CB31;
+	Tue,  6 May 2025 17:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Kx3UI59W"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OCLDHUw+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A4B285406;
-	Tue,  6 May 2025 16:37:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D1D153BD9
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 17:18:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746549468; cv=none; b=TcylBfL5rpkiH163MDNaJEqS+1D+x1xhvqlpX0TYHzKIvbRhZGs0BDe3SiIbFpZK6lYhA9aLGD8lcXj1Eny2PPxH0R1Xj7slVh/se7Mqj+cv/uqh/1OtZlVGf2RKzY3cgvk5gxiTtbCJpSU+mbSBOnbjueWZek35W8YoE5nwn/E=
+	t=1746551909; cv=none; b=npH3pUkJRyDp2pfT8anc08xchyiXem/t9kXBCthvDxJot+sNG6eiDu8aefTh/EVHiFyMPqFmQSOVZ6d+EIK244cxNtSyc361VDiBqJJ0tlveDwCNd2h4VoPGfZYqHC7o6elPISOHXD4aIXihcHybQgJFar0EHmE6TZcH60jVejw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746549468; c=relaxed/simple;
-	bh=rl+VdJnM8U54MEl4WHmsvqizGTzkQ+fz3Py8qHb+n/A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7SRN/KduzwKMo644RwvoCCINovtd/MzeutXGX1ZJT+k2SkVxhWbm90fHUZrZXk6/ZLm+J20e03fjd7Pn6qq4Ip38ZAhLwCsyFOoK/w096rf/M+hWpRY0rG8bz+5dLFfOJCB7lxZc5AHpCON2bEJY5lLMpRCGxMbqat0z7NhNsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Kx3UI59W; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5468FFKQ013247;
-	Tue, 6 May 2025 16:37:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=AnZXfvO2F4n
-	jdN9SKiMeC1UFuBcsq368N5AF4Tbnc1M=; b=Kx3UI59W/cplb8j2ebmjukIrh6j
-	zBKZc3N/9oIDp9SEGX2jKmaEo2WfbzBIEB0iJOiiACXlfPEzyCCa3yo/CA+b9DA4
-	hXh9RN8HOhi8TcLEq4hS3SBBxLqcz3Zb0vBY2W++arYFU4QegRaiBJyp7DaQ0QIO
-	OtLE8kj6aceZEOSjUZuSB3wkulble9J180nyipr9Ud3Nd6wH/ZZyT9I3iysKffT5
-	C1DFpHuGix/vXhCf5eMw1oX2+ePKzAyGCfu4BL2S6As+FoSX5qiAjSUEp0+tZwY2
-	FNhUMPIpv1TjkcIIwqa+qIjWRs+xieU97R5/S2Ig6hd3foBbWCkSj18U2KA==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46f5u42yn3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 May 2025 16:37:15 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 546GbCIE003142;
-	Tue, 6 May 2025 16:37:12 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 46dc7kx4mh-1;
-	Tue, 06 May 2025 16:37:12 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 546GbBdK003137;
-	Tue, 6 May 2025 16:37:12 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 546GbB9D003135;
-	Tue, 06 May 2025 16:37:11 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-	id 185885015A9; Tue,  6 May 2025 22:07:11 +0530 (+0530)
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-To: alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
-        krzk+dt@kernel.org, robh@kernel.org, mani@kernel.org,
-        conor+dt@kernel.org, James.Bottomley@HansenPartnership.com,
-        martin.petersen@oracle.com, beanhuo@micron.com,
-        peter.wang@mediatek.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: [PATCH V2 3/3] scsi: ufs: qcom: Add support to disable UFS LPM Feature
-Date: Tue,  6 May 2025 22:07:05 +0530
-Message-ID: <20250506163705.31518-4-quic_nitirawa@quicinc.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250506163705.31518-1-quic_nitirawa@quicinc.com>
-References: <20250506163705.31518-1-quic_nitirawa@quicinc.com>
+	s=arc-20240116; t=1746551909; c=relaxed/simple;
+	bh=OQYAgODVpINZnz+yw7v2ECzJe/sFXzngEsMGegGS4oE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lXdRlYs0drQsOAUwc9425yQ61ev4q4skXvSJRqZamsh+JpzA0cmasVITqrzmdjHBKDbeGCoFFqSqGUDY7rMdDiTG9A+gMOluzFAeUEdJ2yJhcA3XgvwvUVo78UIu0L1acl8MveMtyfJQhc6wZPl7kwpfA3QcOjDj2lzB2N47ShM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OCLDHUw+; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ac2bdea5a38so848568866b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 10:18:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1746551906; x=1747156706; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hLpQQKNN/MIjkhEPtNp036EW9veXKKXnE5G67+atsR4=;
+        b=OCLDHUw+8L40u0CJlZbpAxVl9DYET0jNIGuxSJm0gUCsB9Vjg1ThdwLxDMVsD6M8/W
+         /AwUGW1od2bj5aFws+tzzLlOf+HFEt4bHger8BRDEscjD/3CGRE3TrR2a4wrzOKuQgQ2
+         xPFrO3vChHWVmAhy+IXhZQkw8SBUcBIEXd9P1ubs5zFFR84tR3TXUOUYN2KFiWalOJdS
+         Zf/SlpbAWXQtSVOWHS9pDGOHvxlZcNVqPRLPXSjZuZFbBQYPtvyd9F5ivMNo6jUoaIVM
+         4si5HyJxSeDQySlZkANVQHtS3tNCaXlyU+nt6/AhhE44BWesu3FgOYl4ijKBMwPDW+SX
+         6A3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746551906; x=1747156706;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hLpQQKNN/MIjkhEPtNp036EW9veXKKXnE5G67+atsR4=;
+        b=eQAKiRhm9ztzNfsM07orUlTetFoosKVxkLwdsRX79miO7GPA3bQcCC6rJ3tXLCzJa2
+         FMRCnvtE/TJDg7dnD5kIdcHR03jvfjzhG/4pWeHHpPSE8hdrgnzPlbeALPPy4BMFiaa4
+         n4095OaLwZcs1h6Ka8y/WAWzqlZkMP3e2hRe0xuAq7ZBQWWc70kmF+6tVntbGriEyaSn
+         R7u3aRiQEj+9PEzQ/grx/m+gnVLb5pzB3RrXYYkFbY9DrKkdRg0WKzaKg9xGf9/59Htt
+         uwOlgzYw/P9gaBpnKID1Wmusg8foQrRn8DAwlNjWgq38pGPOnaacQfbFHloHF1xI4GIV
+         2q6g==
+X-Forwarded-Encrypted: i=1; AJvYcCXw2g28oWojLVv1sY9j2OVrhZkJIL6jaPZbfewlPV6s3x1gb0aSae8deEj4XVEbAoKag+31KTNwG6eh831a@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQrMBTF6rDF1jPtKjBr7j2sqFupXXcMzyMm+HLaY64k9/n3JZx
+	SOa1JhFIgVISeMoUAgz7llZYMd12fUDvposi9wqXLPQPNjcifF+uA9LgKhXwMNLjY4FcZJLkNHM
+	++/6hXVZnmJYmfIseGTL69LM+OacBMDfBE7iMpw==
+X-Gm-Gg: ASbGnct0PzyVNDRWtLgg82jrCsY8mr43HnBNadppw0KfY8VaU+i+016DEdVAtgTkF4E
+	CkNoea5vg8ElX4vzqWkq2Dy2bT4XAHRZJ8lfEcNXuK2RPZmmgx9Uc2/tz9ZqjP/S8Z++WMY78IA
+	TYGoYUHQNCLVysiwEPg2Tfyt+mceNtUk1OKyB2Pe5stArRjfWs3R1fjg==
+X-Google-Smtp-Source: AGHT+IHE66Vgpa971cMKK+duyPRa6SkPlWJvDTybSqVOU3NLmgHpf+zEI6gVYKmySXbRn89yPrqAvZDICOtPIeFmSJE=
+X-Received: by 2002:a17:907:720a:b0:acb:b900:2bca with SMTP id
+ a640c23a62f3a-ad1e8a03c6dmr34414766b.0.1746551905998; Tue, 06 May 2025
+ 10:18:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=KcfSsRYD c=1 sm=1 tr=0 ts=681a3abb cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=xQxKfdDwmO31qOoK2vYA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: Q1ylV7Bx-Ra_HMbSphY1rWezIYfnpAMv
-X-Proofpoint-ORIG-GUID: Q1ylV7Bx-Ra_HMbSphY1rWezIYfnpAMv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDE1NyBTYWx0ZWRfXzZPgNsenZhX2
- 1w/6oZRFvytp8t7yL4dYm1xEPKyk6iFlYUOvXvNV0GpiClmgy8JS0JOy6R66WvD3rm6979YK+td
- htFa1lPb6YjdNkEtVlF8zn+6pCHVIBCCJLvFHX2DynYZ+VHJOpo77DDWQJEOdULslxn6m04Pzb4
- ZGHMm63a2EGjLLDE3thGrvQBQNbzpcBcLLgs3ZJpDvDGkdAzl3kPdAreWwOmohnAaYxgBXOfA3Z
- luWtshlKcViIhAai1FNgUEpvy35NSiXHJcdMcGQ12Oapl8A68XAdkJo0/b4WYIkalDOcxDN7b3+
- i9ErGktb77pAYzsr+8kVZLgKJGX0zrS1B7mnsSrazSVMswZjtNDO75N6AEMnGa1TgBnqTR5M4UI
- wGqfZXVanODrekzsHRKpCwclS1lOyqfwkttZLL7KnTZmw/MFfdUyXVbKZUxTWuSfjWpYqf8p
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-06_07,2025-05-05_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 suspectscore=0 bulkscore=0 mlxlogscore=999
- phishscore=0 impostorscore=0 priorityscore=1501 malwarescore=0 adultscore=0
- clxscore=1015 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505060157
+References: <20250503-pinctrl-msm-fix-v1-0-da9b7f6408f4@oss.qualcomm.com> <20250503-pinctrl-msm-fix-v1-3-da9b7f6408f4@oss.qualcomm.com>
+In-Reply-To: <20250503-pinctrl-msm-fix-v1-3-da9b7f6408f4@oss.qualcomm.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Tue, 6 May 2025 19:18:15 +0200
+X-Gm-Features: ATxdqUGWZrl5YOiP7Og6r3-nl2H9A1mVWnPA1IqXnDAC-_8SNMX6_toeynsOt7M
+Message-ID: <CACMJSesbNz1Q5S4EDDk_O+oUfw8c6MQdovUAA_q2EZzuG2+i4Q@mail.gmail.com>
+Subject: Re: [PATCH 3/4] pinctrl: qcom: switch to devm_gpiochip_add_data()
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
+	Guenter Roeck <linux@roeck-us.net>, Josh Cartwright <joshc@codeaurora.org>, 
+	Matti Vaittinen <mazziesaccount@gmail.com>, Doug Anderson <dianders@chromium.org>, 
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-There are emulation FPGA platforms or other platforms where UFS low
-power mode is either unsupported or power efficiency is not a critical
-requirement.
+On Sat, 3 May 2025 at 07:32, Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> In order to simplify cleanup actions, use devres-enabled version of
+> gpiochip_add_data().
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 6 +-----
+>  1 file changed, 1 insertion(+), 5 deletions(-)
+>
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index 88dd462516c76d58b43d49accbddeea38af8f1ec..b2e8f7b3f3e3d5d232b2bd60e5cace62b21ffb03 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -1449,7 +1449,7 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+>         girq->handler = handle_bad_irq;
+>         girq->parents[0] = pctrl->irq;
+>
+> -       ret = gpiochip_add_data(&pctrl->chip, pctrl);
+> +       ret = devm_gpiochip_add_data(pctrl->dev, &pctrl->chip, pctrl);
+>         if (ret) {
+>                 dev_err(pctrl->dev, "Failed register gpiochip\n");
+>                 return ret;
+> @@ -1470,7 +1470,6 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+>                         dev_name(pctrl->dev), 0, 0, chip->ngpio);
+>                 if (ret) {
+>                         dev_err(pctrl->dev, "Failed to add pin range\n");
+> -                       gpiochip_remove(&pctrl->chip);
+>                         return ret;
+>                 }
+>         }
+> @@ -1608,9 +1607,6 @@ EXPORT_SYMBOL(msm_pinctrl_probe);
+>
+>  void msm_pinctrl_remove(struct platform_device *pdev)
+>  {
+> -       struct msm_pinctrl *pctrl = platform_get_drvdata(pdev);
+> -
+> -       gpiochip_remove(&pctrl->chip);
+>  }
+>  EXPORT_SYMBOL(msm_pinctrl_remove);
+>
+>
+> --
+> 2.39.5
+>
 
-Disable all low power mode UFS feature based on the "disable-lpm" device
-tree property parsed in platform driver.
+If you're at it then why not remove this function here and the
+callback assignment throughout the pinctrl/qcom/ directory?
 
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index c0761ccc1381..ad4974c6d08e 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1057,12 +1057,15 @@ static void ufs_qcom_set_host_caps(struct ufs_hba *hba)
-
- static void ufs_qcom_set_caps(struct ufs_hba *hba)
- {
--	hba->caps |= UFSHCD_CAP_CLK_GATING | UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
--	hba->caps |= UFSHCD_CAP_CLK_SCALING | UFSHCD_CAP_WB_WITH_CLK_SCALING;
--	hba->caps |= UFSHCD_CAP_AUTO_BKOPS_SUSPEND;
-+	if (!hba->disable_lpm) {
-+		hba->caps |= UFSHCD_CAP_CLK_GATING | UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
-+		hba->caps |= UFSHCD_CAP_CLK_SCALING | UFSHCD_CAP_WB_WITH_CLK_SCALING;
-+		hba->caps |= UFSHCD_CAP_AUTO_BKOPS_SUSPEND;
-+		hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
-+		hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
-+	}
-+
- 	hba->caps |= UFSHCD_CAP_WB_EN;
--	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
--	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
-
- 	ufs_qcom_set_host_caps(hba);
- }
---
-2.48.1
-
+Bart
 
