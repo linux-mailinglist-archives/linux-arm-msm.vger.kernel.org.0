@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-56899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E675EAABB80
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 09:42:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB361AABBB2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 09:46:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A4F2D1C42EF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 07:37:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B88B95A1EA9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 07:38:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20607227E99;
-	Tue,  6 May 2025 06:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A9BA2367BC;
+	Tue,  6 May 2025 06:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KwdI0Jnh"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ms5kAG6l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF38022332E;
-	Tue,  6 May 2025 06:15:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F1F2367AD;
+	Tue,  6 May 2025 06:20:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746512118; cv=none; b=LwcRTn2IkDuiTunSkCEse2p8F+EKuXPO2z0bSC9sz+sf/onM3WaW2G8Lgi6bfMM0cj243MM1Yr080d1SN9m3IyL1sJwVBhQiA/xQdgVbYC2DviEMNHm78ez2Suq2nTqR+YCI/dTuOblQY8yz1oOhtgXwK0KJ0CTMY/9qlgZo+jk=
+	t=1746512436; cv=none; b=lktv/w4vAvRYnR/+iGdddm5wBswoNxFfEXljRvSeAutQDG06VUqgVwQgZJMOAxSMQzcBgFVRDK/8mO7Vm1CzWzvWBLd1ZxpWoYMmlhcN3Iih4Om5TuwZwZ+fhwrE1Tb4NEDKbMue7486OR7NJkLVcXsLkbqwNOcMQZSDG7q9IDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746512118; c=relaxed/simple;
-	bh=v7iR4obbmk4+FE8A5coJmFH0oyUV/G5dOfWdweAl7NA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X/BZ3xncRf8KVhFUh1SWu2f0vRPHCzkHjp8K5IlYyWZvSOAi8dLDRw/zi+MHy70HqCJF3ph+PDoBmHSUUWqAkg5qorOl5Hsr4HQ9+bxncQeXUQY54rNaIgha8j/phEI4hUn8W5Jqlumd8yUT7BijpZLus67mLrke7YcGtGz4ANQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KwdI0Jnh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D875EC4CEE4;
-	Tue,  6 May 2025 06:15:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746512117;
-	bh=v7iR4obbmk4+FE8A5coJmFH0oyUV/G5dOfWdweAl7NA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=KwdI0JnhAPGxydaFAejapUGN712V5izTz9driNk7vTuJPJyAX6ln7i9HuOiPyHlsC
-	 Dor/2nfr4Zyv6VFRNZIYwbFzb9uGrQz5UbQNeL7pV2LvB1IT7UBFDmncHxtGyBqS0g
-	 T+tkQVFKWBIjfZkcX42zwhdV8lMutcpzU1d/TV6DNI1fy9vtWPRaSNKMfOZCicxgiA
-	 86HkIfPhLkV9kj4YwjojqzYYjOwHGbzVJloRc2jJ43EJx0AhXGX1VgZY8wwOWaTJx4
-	 VkpQLwSp108u162coQzlkx++ArpLL+vTNS/bvdQ8Ied9ezhNWnIhf6Gzb6C4mKanUk
-	 0f80kzmGN1ONg==
-Message-ID: <8ed44a58-eed3-4be6-9c63-7c6c172a6b7f@kernel.org>
-Date: Tue, 6 May 2025 08:15:10 +0200
+	s=arc-20240116; t=1746512436; c=relaxed/simple;
+	bh=T1ht4zXHKNki2NJVaLxx/aL5knTllFTyrOPxPlIM7eE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=pJ+mxUNoISYfXZyUoNthlTjVX/L+I8h/utD0w3zEi92jZ7pX9RXDgif7HtJZXI3jPZvp0MHaqjXwyQru7uZ6dKvPGbptOofwiQu7oCQGfnrOhFAcvT4IPKedN5rD0Lo0EPgZNa0KWm6dbZZh/r45y/VobRGGTiOGZ5nwxiRTeUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ms5kAG6l; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 545M4uTu011184;
+	Tue, 6 May 2025 06:20:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	pm/hq5RxWKA3oBhwX5M3pYnjNEf8WRhoOjebq9Z0RwE=; b=ms5kAG6lvKTMV+ki
+	v51pu7lSKLT3bXYKaLvDqyvaHm4rdsDAZxSrJjzqeDUzLoDsy1tiZ67pGkKSks5Q
+	CjW3zfN2ZkuR5hmRDnWH6yexpeZztPDEQMYiVyCau1M/SQqiJ5lgn+s4NGbXGxXC
+	7oIbSl5FgR8k6dL2Cl2Jjg4Z1uAjb0rderRgbYkILVUghZvCC3cd4gpXu0tn5V+P
+	OoIh8UThfov83tvuMAl4xbI8YdE9L7CwXmPbXq4xgm8g8NrCxW3s7l17mOXUWXis
+	ZsqYZh27WeX+YGJ7OISNL1UoOioPItBe0kjxN1EaaPcFssgep5PYkfSqV6DOPAyK
+	XXILBw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46f5tb95cq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 06 May 2025 06:20:23 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5466KMBZ016526
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 6 May 2025 06:20:22 GMT
+Received: from [10.239.133.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 5 May 2025
+ 23:20:19 -0700
+Message-ID: <fe714aaf-8e0b-432e-b238-240b46be64e2@quicinc.com>
+Date: Tue, 6 May 2025 14:20:16 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,117 +65,88 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/8] dt-bindings: serial: describe SA8255p
-To: Praveen Talari <quic_ptalari@quicinc.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- devicetree@vger.kernel.org, psodagud@quicinc.com, djaggi@quicinc.com,
- quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
- quic_arandive@quicinc.com, quic_mnaresh@quicinc.com,
- quic_shazhuss@quicinc.com, Nikunj Kela <quic_nkela@quicinc.com>
-References: <20250502171417.28856-1-quic_ptalari@quicinc.com>
- <20250502171417.28856-2-quic_ptalari@quicinc.com>
- <20250504-hilarious-ultra-grebe-d67e7d@kuoka>
- <6f97510c-eb6c-4f3b-b219-aa8d895b060b@quicinc.com>
- <20250505-ostrich-of-impossible-conversion-a0f8ac@kuoka>
- <4ebe065e-9686-4e35-bb00-a9e816fb8926@quicinc.com>
- <1de5c0b7-7761-4d0c-bced-7e26150e995f@kernel.org>
- <d96eb6b7-5b48-446c-8b33-ba282d896e85@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: arm: Add Qualcomm extended CTI
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20250429071841.1158315-1-quic_jinlmao@quicinc.com>
+ <20250429071841.1158315-2-quic_jinlmao@quicinc.com>
+ <20250502-notorious-granite-gibbon-1abf15@kuoka>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <d96eb6b7-5b48-446c-8b33-ba282d896e85@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From: Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <20250502-notorious-granite-gibbon-1abf15@kuoka>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: JRacaERoASwWh4zXVuCOBYUfKxQt4QbP
+X-Proofpoint-GUID: JRacaERoASwWh4zXVuCOBYUfKxQt4QbP
+X-Authority-Analysis: v=2.4 cv=doXbC0g4 c=1 sm=1 tr=0 ts=6819aa27 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
+ a=zLDVIwd1xLDUi3fjDS0A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDA1OCBTYWx0ZWRfX6lc+DLL4SLlR
+ ioV7f11FpdY6/SIiiMDTFDm0pdIS8hpGaPLKwHKP4JcHThtcjPj8o8yyz992Bxbj7QrvWfIPtpR
+ /oskDtQ7BStJGpUVZpR4UoGBJKEkKesiaqlUjoldzCCxCpSl7liXlLGzl2VgyeemuJjHP3pEjhQ
+ qoPp2M6pzJ7/K+gmm6D5S/zIBEM4IvajwjMQ2xlBdiaIZZG443jKG+1sd6GwRhUAng281xPbIIj
+ A+eWLYHw+Oc/k4ua8wAKX7BH9Pe62miFmUbjpruHlrvEF+moc6FTBWTXVC4tRXbqbdZbSecxarZ
+ YldBXV15JkXSHMf47Hqvu0j5N+eQdbOAAisLucySBueKbIHYk/VpHryRqCxcl2FPXO5bA+oUg71
+ yBAXO3znLWo2k2JE+q+BUrSzgmJzpadVq7YhwNapBvtzZOwP7nun3ZDftvMpG5TlsvKeXaeB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-06_03,2025-05-05_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 adultscore=0 malwarescore=0 phishscore=0
+ mlxlogscore=826 impostorscore=0 clxscore=1015 mlxscore=0 priorityscore=1501
+ spamscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505060058
 
-On 05/05/2025 15:42, Praveen Talari wrote:
-> Hi Krzysztof
-> 
-> On 5/5/2025 3:29 PM, Krzysztof Kozlowski wrote:
->> On 05/05/2025 08:51, Praveen Talari wrote:
->>>>>>> +    serial@990000 {
->>>>>>> +        compatible = "qcom,sa8255p-geni-uart";
->>>>>>> +        reg = <0x990000 0x4000>;
->>>>>>> +        interrupts = <GIC_SPI 531 IRQ_TYPE_LEVEL_HIGH>;
->>>>>> Why isn't here wakeup interrupt? Commit msg also does not help me to
->>>>>> understand why number of interrupts varies.
->>>>> Currently we are not using wake-irq because it is optional for our current
->>>>> implementation.
->>>> Great explanation. I asked why is it optional, answer because it is
->>>> optional.
->>> sorry.
->>>> What does it mean optional? This is part of the SoC, so how given one,
->>>> fixed SoC can have it routed or not routed in the same time?
->>> the serial driver doesn't enter runtime suspend mode until the port is
->>> closed.
->>>
->>> therefore, there is no need for a wake IRQ when the driver is in an
->>> active state
->> You described current Linux driver, so if we change Linux driver or we
->> try for example FreeBSD, then bindings are different?
-> 
-> Currently, the driver includes code to register the device's wakeup 
-> capability
-> 
-> but it lacks the necessary handler code for wakeup IRQ. According to the 
-> serial driver,
-> 
-> the wake IRQ is meant to wake up the device but the device remains 
-> active because
-> 
-> the serial driver does not enter runtime suspend mode until the port 
-> closed.
-> 
-> So it is better to exclude the wake IRQ until the appropriate code is added.
-But my driver on FreeBSD handles the wake IRQ, why you cannot add the
-IRQ for it?
 
-Best regards,
-Krzysztof
+
+On 2025/5/2 14:43, Krzysztof Kozlowski wrote:
+> On Tue, Apr 29, 2025 at 12:18:40AM GMT, Mao Jinlong wrote:
+>> Add Qualcomm extended CTI support in CTI binding file. Qualcomm
+>> extended CTI supports up to 128 triggers.
+>>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml | 4 +++-
+>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+>> index 2d5545a2b49c..1aa27461f5bc 100644
+>> --- a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+>> @@ -84,7 +84,9 @@ properties:
+>>             - const: arm,coresight-cti
+>>             - const: arm,primecell
+>>         - items:
+>> -          - const: arm,coresight-cti-v8-arch
+>> +          - enum:
+>> +              - arm,coresight-cti-v8-arch
+>> +              - qcom,coresight-cti-extended
+> 
+> cpu phandle is not required? Or not even valid?
+
+cpu phandle is not required for exteneded CTI.
+
+> 
+> Best regards,
+> Krzysztof
+> 
+
 
