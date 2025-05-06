@@ -1,103 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-56933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B391AAC2C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 13:33:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B94A9AAC2C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 13:33:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26C531C40289
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 11:33:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CCA461C4080E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 11:33:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CE4B27B4E2;
-	Tue,  6 May 2025 11:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6906C27B4E3;
+	Tue,  6 May 2025 11:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KTvKmk9K"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q+FElNUN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BB2233D9C
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 11:32:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECEB27AC55;
+	Tue,  6 May 2025 11:32:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746531163; cv=none; b=EBawzt6KT/Lt5VjRlvdT+E8J5v7tcNkYpHR5TdHQFDFtMT12BaVKgNCoSn5ncdwukVeQ4yARfOGaC3JOMRpIwuZhAFX2e0Cwd1p8Hmqbu1cwHQtHaXI3xpY9QEmewXPJbJVPxDzEaAqdMlJcuuh4hrVflh1WbuP+59ie1zsYyWk=
+	t=1746531175; cv=none; b=q0jxga7ucw+DdcoFOgGXuRux6oye9Pf9heQx6TEiA6KMhIY2k0Bew3/IHXoO/ztSKYcCjYpjU4ea5NvnQdA+pshDCUhj0t8mlVhqG5Z/lLFVjfkWuHCYbjm/BJ81UTW8lho1IB2ks6dlz/cQCqDBzlnTyHsfD6ivcDzwpE4GuQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746531163; c=relaxed/simple;
-	bh=wgdAEoTSiOxWP+EKRKfL5Lx5Umr33FPeJxeC6izneu8=;
+	s=arc-20240116; t=1746531175; c=relaxed/simple;
+	bh=mE1e1B9m9uhzxTNZaDZ3TY+lY86rVvjhSEag8/l7vDc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iwIjenklU+T3m3XMcmA4SVkZOEEo5xWBYMPA6QP+L7Jrg4fY/L06IJfj6ESMEOWcqfLeXv+bha5DSJ5bEP5pyuR6hGVTSatoMtOycG9vt4bLC0g0BffY5RxS81hutr8zY1iRXjn66RhT0JTxlVByeWvSTLj+lCly/pmhfYoWv/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KTvKmk9K; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 546ABgl9016498
-	for <linux-arm-msm@vger.kernel.org>; Tue, 6 May 2025 11:32:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=fwl7sL+33/f+eH9L4tdGLHOE
-	I3/YzHIvUjaSA4mATTQ=; b=KTvKmk9K+OE0l3LiE+I2xJI5LLXAXDQORpHxQXel
-	CDhBIsjrUo7truGbI7eoVJ9L5pKyt/BsNcA5ye6UKiUe5vfdT0ybVmrjQE/9rYrg
-	7+PMrAJ5Ar/zsZGyNAmkkDiU9eJnuuPleQ+PTMcRvI+F8VWBkDLdkGp879GxVJzg
-	Bf0/ChKVzesdbW+zHFjKL8Kx2cT3JVfCRpre2aGhDNN1U0BZZYBBCIlJcBBChpx3
-	D4MQ5dN6D5UJViMSwg2PMa44dBNc9UoDQRyJydVJ8ouLc4IuO5QvkiJzWIC7z3Tl
-	c1cWLYeW019GLMkF7fugxOLzFAy/bnn9ROWNO9Xb9L6lyA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46f8gv1qky-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 11:32:40 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c5cd0f8961so1204630185a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 04:32:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746531152; x=1747135952;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fwl7sL+33/f+eH9L4tdGLHOEI3/YzHIvUjaSA4mATTQ=;
-        b=vH+kJwgOwbwa5WUUFyHxZwguxeA+rkxU9+jSzlBJkdwJbx2QswujP2IBQ/uF+7Y27H
-         3NF5ktkbUwPeuOy37du8ZYuf9vVrzXNR9kPYOX6E4ePHG+qKVaLi9QlGW0583TKAOiJk
-         k3IHuPJLkg4TTUHFSxrEJteC1QbKvatQ6W+EgVsIrPyEx4TaeLM9x8LJAIXzFqcwVs+I
-         ciDzfpPZiV0H3Fx3hPKK3OHds2MiP1bEWy8mEtnO0K6bUawjrCAVoBIAYSJvFuy2VXm/
-         6/XbA3w+0V/4FyxeujulVkqHACQpj3FS7oEaQy38xZKlJlDqK0uX1PfhGEBqk/Mp8KXL
-         FUxg==
-X-Forwarded-Encrypted: i=1; AJvYcCUasE7rSdoLxUu5dUu9/5NxJR7CZW7p3cRY5ulUxjVdH6Qt+U8LmzGUdEF2TRJg2JfV3b+OH/JYqzOkVVwy@vger.kernel.org
-X-Gm-Message-State: AOJu0YxIPn6+geZJVLTSTYDcpc75svNFQq4VlElbyp/7hhd/+x2Tv3zH
-	1DF1Z1VbXwD95rH/wFQkRZ1pYkOhRfLt7WbVzy/pVN0KP8U56t7eyW0otXVHdWiowW5SZB2HzDb
-	Wjrepu4onwLPN9F4ObZT7bZF5VF1tokMoTIwZaI9M9GJrj7lvWRiiBao6T7G8Wju9
-X-Gm-Gg: ASbGncuPUmxCaMJg/xsNV0uQuf4Y/5VGrPP/1axMOKtjAu6maNRktsGpTcrLEDbWCfJ
-	BWyKYnLliXaWbEjiBM9Ha+pWnlX9LO/zKXSBxk9OdCOfMDXuRhokTR7H3alYu1s37AEnntQokpP
-	wgTPr698pdWroVQ/ZFC3okLXRLzw6Mwwov1xA6XYhy3UVZqlLxStG+1Kw+ClgtAfhKkFOQnsShJ
-	Usm2oijN22vwL/Lyw77jfGDPvFerBsI5cfeXl3qXFp4zQJY7VA11zUnhJ20SNv9g87c3wHh90re
-	6mMRaa3fOPNiIkW0vYkQxFQGLEMhGnWcZiYtgt1baiQalO0y1xh50Qnh29N9FwR3/RT1xMPJejY
-	=
-X-Received: by 2002:a05:620a:170a:b0:7c5:4d2e:4d2d with SMTP id af79cd13be357-7cae3b0ca45mr1565852985a.50.1746531152622;
-        Tue, 06 May 2025 04:32:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGh5sYkZSzYvTbugryEFcZleW6v/iZDEThUuz+Ah7LtSsuWl3cmvTZ0zKAiaQcydSJfq0ywvQ==
-X-Received: by 2002:a05:620a:170a:b0:7c5:4d2e:4d2d with SMTP id af79cd13be357-7cae3b0ca45mr1565849285a.50.1746531152291;
-        Tue, 06 May 2025 04:32:32 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94c0897sm2039490e87.83.2025.05.06.04.32.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 May 2025 04:32:31 -0700 (PDT)
-Date: Tue, 6 May 2025 14:32:29 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-        Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linaro-mm-sig@lists.linaro.org, quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v6 1/2] dmaengine: qcom: gpi: Add GPI Block event
- interrupt support
-Message-ID: <ze5y6llgo2qx4nvilaqcmkam5ywqa76d6uetn34iblz4nefpeu@ozbgzwbyd54u>
-References: <20250506111844.1726-1-quic_jseerapu@quicinc.com>
- <20250506111844.1726-2-quic_jseerapu@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=XT55k11kLacpLBYPHBN9Ico8KELY+3YNlhw/qm1Yv4dx0X3cgbsyoj52hNCN2DrxGqkyPHh+9OjEBA2Zqamu0VF2+6nS/30H/BseQ5tzxkSJLdo7rAdagy7zb+Dbgp3oZ2PO6/DLNgEsXsQH3txLUSgHgXitz+5GTrhlLU/BKu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q+FElNUN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4D4C4CEE4;
+	Tue,  6 May 2025 11:32:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746531172;
+	bh=mE1e1B9m9uhzxTNZaDZ3TY+lY86rVvjhSEag8/l7vDc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Q+FElNUNhdG5CYgnApQsUFYFp+lb9D4evnzqSTmmE3FJtKAA5aDKSQq9jDoh1b+uq
+	 Qmvb5zCPGb51aJ8iAHF1LRTFA4EdtPTaS7yN3EahbaJHl4AVY3Z3yy2TN5HoAfgZmW
+	 WfWzf+kPc5cHicOck1lE7ZB+j+UfmUzzpkximKT9KQmSyixoPaVzM3FlbXzht8aJQC
+	 LA3yNCAtSJX1w0hDiUB9QQ1iEhCG9qgFME2SviolTzXq+lEEjA9KRip8/v6JMUlftA
+	 anKqkQ+2LIoi1JtBxda8j9cG7AO5KGzAtZP5qML5SV0Es1CK7n/tlFEphi5y07Dewh
+	 yAxG4yeV/iD2A==
+Date: Tue, 6 May 2025 12:32:46 +0100
+From: Will Deacon <will@kernel.org>
+To: Connor Abbott <cwabbott0@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v5 1/5] iommu/arm-smmu: Save additional information on
+ context fault
+Message-ID: <20250506113246.GA723@willie-the-truck>
+References: <20250319-msm-gpu-fault-fixes-next-v5-0-97561209dd8c@gmail.com>
+ <20250319-msm-gpu-fault-fixes-next-v5-1-97561209dd8c@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,122 +66,55 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250506111844.1726-2-quic_jseerapu@quicinc.com>
-X-Authority-Analysis: v=2.4 cv=dYmA3WXe c=1 sm=1 tr=0 ts=6819f358 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=QOsQMPsNCkuRs1RMv08A:9 a=CjuIK1q_8ugA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: gXPED-ChgvmK_3XzFTn1CMA0-OasY5gK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDExMSBTYWx0ZWRfX2ADyk1M1lRJ+
- V6H4hItIWRih8fmvAU5nOcJ+DytnUkHdtmYWaYDi9WkKqdV46KXCfbP65seJktBgOPXvizmVw8c
- PAE0RkyKehgzyMwZxqILRPpRvjTW/n+3ykNTuBwPy57B7GC5vBe3hY8gctz1TFMeEdDz/E2hkYV
- +yrRhzaE6fPhWea3KbKMSSAIoaoN3ndKm7XhT53Ae5xS4JlM4DRgh6brfTLaMrZYGOtaiucTXuu
- vczpR1f9TJONbezCG1Uq9RGzAlt1qTi4i/Ykn4yDtlk6Y3N8R9ICy4meumV1CcFFJUmHSFGXZQa
- BJh5jK3xgeOIgWWCq32Hjw+6ecCrtz3EQ6R0ccC98mQ7SXc0hQTWLqg5fekNjDDN+RGxGu3lOpv
- SVF1KwliXoAD1eiwc0XRnw55jFfVuD0YGyuLTRz912BrbhuwRz+hWvqx4DFQExRe66XPyVpF
-X-Proofpoint-GUID: gXPED-ChgvmK_3XzFTn1CMA0-OasY5gK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-06_05,2025-05-05_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 priorityscore=1501 clxscore=1015 adultscore=0
- mlxlogscore=999 impostorscore=0 malwarescore=0 mlxscore=0 phishscore=0
- lowpriorityscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505060111
+In-Reply-To: <20250319-msm-gpu-fault-fixes-next-v5-1-97561209dd8c@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Tue, May 06, 2025 at 04:48:43PM +0530, Jyothi Kumar Seerapu wrote:
-> GSI hardware generates an interrupt for each transfer completion.
-> For multiple messages within a single transfer, this results in
-> N interrupts for N messages, leading to significant software
-> interrupt latency.
+On Wed, Mar 19, 2025 at 10:44:00AM -0400, Connor Abbott wrote:
+> This will be used by drm/msm for GPU page faults, replacing the manual
+> register reading it does.
 > 
-> To mitigate this latency, utilize Block Event Interrupt (BEI) mechanism.
-> Enabling BEI instructs the GSI hardware to prevent interrupt generation
-> and BEI is disabled when an interrupt is necessary.
-> 
-> When using BEI, consider splitting a single multi-message transfer into
-> chunks of 8 messages internally and so interrupts are not expected for
-> the first 7 message completions, only the last message triggers
-> an interrupt, indicating the completion of 8 messages.
-> 
-> This BEI mechanism enhances overall transfer efficiency.
-> 
-> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+> Reviewed-by: Rob Clark <robdclark@gmail.com>
 > ---
-> v5 ->v6:
->   - For updating the block event interrupt bit, instead of relying on
->     bei_flag, decision check is moved with DMA_PREP_INTERRUPT flag.
->  
-> v4 -> v5:
->   - BEI flag naming changed from flags to bei_flag.
->   - QCOM_GPI_BLOCK_EVENT_IRQ macro is removed from qcom-gpi-dma.h
->     file, and Block event interrupt support is checked with bei_flag.
-> 
-> v3 -> v4:
->   - API's added for Block event interrupt with multi descriptor support for
->     I2C is moved from qcom-gpi-dma.h file to I2C geni qcom driver file.
->   - gpi_multi_xfer_timeout_handler function is moved from GPI driver to
->     I2C driver.
-> 
-> v2-> v3:
->    - Renamed gpi_multi_desc_process to gpi_multi_xfer_timeout_handler
->    - MIN_NUM_OF_MSGS_MULTI_DESC changed from 4 to 2
->    - Added documentation for newly added changes in "qcom-gpi-dma.h" file
->    - Updated commit description.
-> 
-> v1 -> v2:
->    - Changed dma_addr type from array of pointers to array.
->    - To support BEI functionality with the TRE size of 64 defined in GPI driver,
->      updated QCOM_GPI_MAX_NUM_MSGS to 16 and NUM_MSGS_PER_IRQ to 4.
-> 
->  drivers/dma/qcom/gpi.c           | 3 +++
->  include/linux/dma/qcom-gpi-dma.h | 2 ++
->  2 files changed, 5 insertions(+)
-> 
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index b1f0001cc99c..7e511f54166a 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-> @@ -1695,6 +1695,9 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
->  
->  		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
->  		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
-> +
-> +		if (!(i2c->dma_flags & DMA_PREP_INTERRUPT))
-> +			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_BEI);
->  	}
->  
->  	for (i = 0; i < tre_idx; i++)
-> diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
-> index 6680dd1a43c6..ebac0d3edff2 100644
-> --- a/include/linux/dma/qcom-gpi-dma.h
-> +++ b/include/linux/dma/qcom-gpi-dma.h
-> @@ -65,6 +65,7 @@ enum i2c_op {
->   * @rx_len: receive length for buffer
->   * @op: i2c cmd
->   * @muli-msg: is part of multi i2c r-w msgs
-> + * @dma_flags: Flags indicating DMA capabilities
->   */
->  struct gpi_i2c_config {
->  	u8 set_config;
-> @@ -78,6 +79,7 @@ struct gpi_i2c_config {
->  	u32 rx_len;
->  	enum i2c_op op;
->  	bool multi_msg;
-> +	unsigned int dma_flags;
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c |  6 ++--
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c            | 35 ++++++++++++++----------
+>  drivers/iommu/arm/arm-smmu/arm-smmu.h            |  7 +++--
+>  3 files changed, 29 insertions(+), 19 deletions(-)
 
-Why do you need extra field instead of using
-dma_async_tx_descriptor.flags?
+[...]
 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index ade4684c14c9b2724a71e2457288dbfaf7562c83..a02078eb968b81a35c1c086ed7007ea2a453ef94 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -405,13 +405,20 @@ static const struct iommu_flush_ops arm_smmu_s2_tlb_ops_v1 = {
 >  };
 >  
->  #endif /* QCOM_GPI_DMA_H */
-> -- 
-> 2.17.1
-> 
+>  
+> -void arm_smmu_read_context_fault_info(struct arm_smmu_device *smmu, int idx,
+> +void arm_smmu_read_context_fault_info(struct arm_smmu_domain *smmu_domain,
+>  				      struct arm_smmu_context_fault_info *cfi)
+>  {
+> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
+> +	int idx = smmu_domain->cfg.cbndx;
+> +
+>  	cfi->iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
+> +	cfi->ttbr0 = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_TTBR0);
+>  	cfi->fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
+> -	cfi->fsynr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
+> +	cfi->fsynr0 = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
+> +	cfi->fsynr1 = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR1);
+>  	cfi->cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
+> +	if (smmu_domain->stage == ARM_SMMU_DOMAIN_S1)
+> +		cfi->contextidr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_CONTEXTIDR);
 
--- 
-With best wishes
-Dmitry
+I think this leaves 'cfi->contextidr' uninitialised for stage-2 domains.
+We should probably either zero it here or just zero-initialise the whole
+'cfi' struct in arm_smmu_context_fault() with a:
+
+	struct arm_smmu_context_fault_info cfi = {};
+
+line.
+
+Will
 
