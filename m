@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-56997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8A3CAACCBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:04:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58380AACCC3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:05:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A20C83BFF3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 18:03:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F65F4E5C1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 18:04:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBC4A28642B;
-	Tue,  6 May 2025 18:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E13F286437;
+	Tue,  6 May 2025 18:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UAmW4YoF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JHTvH7ag"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608972857FA;
-	Tue,  6 May 2025 18:03:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6EE2857F4;
+	Tue,  6 May 2025 18:03:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746554616; cv=none; b=lqE/YP9JXTAEnocZanRwx6jTBvS27ebuUAxVTGHGcTwLARdhuCeMzEHtvjH5wOL9Ijq9hwNLxuaDa3fmmnSYxEVAQ3NTAfUH0Ssmrj7//eX2ojjDF7zUVBvQ9Db3sLhnGBxePyb1Kyb8fbjH+hUCvGNRjPcaL2S3GqgPJrcbu0g=
+	t=1746554625; cv=none; b=DnTfdfUjkyi/z0atWTCPZeJ18+zdbIPvZRwbjmatWC1OYYUfjRHYDOC7eNEEItZebtbsx1Mw3OnWDxEaeOT8fjIrYUnFoXZCsoMqKeQJITwjwhNfXtR3U4tnBCS8nzSxnzzwMo2EBNXV5z4fp723xM/cauyDr7sy8eDRUP+8Plg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746554616; c=relaxed/simple;
-	bh=tesk9LM8WSCAa0vJzlAyjmFHODD+5WQuGakYiHBm5CI=;
+	s=arc-20240116; t=1746554625; c=relaxed/simple;
+	bh=ms/gJxk8Auq+wRsLNCrcVGsbPLzYxnynt9BuUHJ8IJs=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=twF2zn7K41EWeM44beKsy+mX0hJJkhpIVcK3DIyTMfdHnLoWAujgqLm5V4wiFMfb8RIuQFD3Xy008bRocs9BibsV1JdNWFPUsfRG4E6hCInyqsDvK9DeBlcRK90U6tYHhVb/Ay1mGPkvByiQILS9ASjTdmzDNt6bxlSVNX2p05E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UAmW4YoF; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=DUeeb7u3i6ni7K3OVsN2alFIB8taCXDQjApjBfTjKBjzyH2Eq4T4LO8gZa+NQPGO9ktDJLr8VEb4HPkjQoREUtT4DYbPLOyGxPP6ZiyPwnwvMdanLN1DglArV+rJsrdlhmbRWF+4EflSPAeumBaulkZ1iHzN5XFf6bt9PQRLInA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JHTvH7ag; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 546FZXFT013818;
-	Tue, 6 May 2025 18:03:32 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 546HDWi6007903;
+	Tue, 6 May 2025 18:03:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=/44Z+sAk1IIP4oEdS78SzSOU
-	76R4fKdmH5OWfEc/F1A=; b=UAmW4YoFA6yZT71Ec8BZw4bgar2bqyozaRcGLE4k
-	RGliGvW9y4rbrCzYUCe455jzoe36aIPBkNCekFv2Lx/cJiR/blfKKH5xNTPV4fj6
-	WYko89iyGeodgjVx2GOwyqSXoBK30xkSsmIWVM8fs65y1o+6KKmp0kO2k3dd3ZwX
-	pdxwlLspd+L6p7lhfqyFdjDAntgmGwhlodWJS6mkLKHO7WUXX1pG8NY0JlHKJmQl
-	HSSLFSaWSEn9oD6e4rAN+IwNXIH5BD0JA+7XAkKZ3w2yOmstc0F0kgS32XT3qnBr
-	GgHUjNK/iekU/cwBEYfdDHSLINUd3cJUP7qmLmgije1dJA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46fdwtsxab-1
+	:references:subject:to; s=qcppdkim1; bh=augvxecJ1PoDqwayRrZUDkvT
+	BFPT6oBrv2YVJe1PJDg=; b=JHTvH7ago4nZErjPSIASKc0mC66Pdbqe98rgLFcD
+	aWoAuL841NM1CjhlW0VuDLW2pkFRUdC4Qryr8RcXKDUS2fFbzZZxxcZXV5Am165L
+	AREwciUFq3BbUOdcWHXDU62MtJwpU376ipyM+bQhmfhG2z/3SpsOZQu7LlwlNuWV
+	PikNjyXCetmmbbEL1CiAIC6HtyFPdrMMKT2akeHMpugNd3yuQlzrrgx84DOnYbLG
+	36vKll9lH88NWP4wBUNKX0/xfiTezBwZ2L2SVpdabKnq1odITSO3o2d/C4E1gs/N
+	UGO1a+1Uhkq6noaEKDcdXLhAsA3JoZSwgmSA/TxLLzAcdg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46d9ep8nwy-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 May 2025 18:03:32 +0000 (GMT)
+	Tue, 06 May 2025 18:03:39 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 546I3Vja013141
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 546I3c4O023201
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 6 May 2025 18:03:31 GMT
+	Tue, 6 May 2025 18:03:38 GMT
 Received: from hu-ptalari-hyd.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 6 May 2025 11:03:26 -0700
+ 15.2.1544.9; Tue, 6 May 2025 11:03:32 -0700
 From: Praveen Talari <quic_ptalari@quicinc.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Jiri Slaby
@@ -72,9 +72,9 @@ To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 CC: <psodagud@quicinc.com>, <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
         <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
         <quic_mnaresh@quicinc.com>, <quic_shazhuss@quicinc.com>
-Subject: [PATCH v5 5/8] serial: qcom-geni: move resource control logic to separate functions
-Date: Tue, 6 May 2025 23:32:29 +0530
-Message-ID: <20250506180232.1299-6-quic_ptalari@quicinc.com>
+Subject: [PATCH v5 6/8] serial: qcom-geni: move clock-rate logic to separate function
+Date: Tue, 6 May 2025 23:32:30 +0530
+Message-ID: <20250506180232.1299-7-quic_ptalari@quicinc.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20250506180232.1299-1-quic_ptalari@quicinc.com>
 References: <20250506180232.1299-1-quic_ptalari@quicinc.com>
@@ -89,37 +89,35 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=VPPdn8PX c=1 sm=1 tr=0 ts=681a4ef4 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=EOUG00ZC c=1 sm=1 tr=0 ts=681a4efb cx=c_pps
  a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=HYIVWE9JnHk2aDURxZAA:9
+ a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=X08zvMDfRsL5Z2rP0xYA:9
  a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: aqGOmRruLQNiOYXMX8WaJh0iGhCUCFTv
-X-Proofpoint-ORIG-GUID: aqGOmRruLQNiOYXMX8WaJh0iGhCUCFTv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDE3MCBTYWx0ZWRfX+jYkzxUcWVby
- mHbnSV1ZrDYIXR3kbeYrWJlaisP4atOqNYqeKUcflBiP7hP0EZr2i6cByUyFVri9HCuxDVazka9
- UQJPCMGHvRw5TfSTWSnU69zToLJZX1F0NnNpeCe4nwB6SKNW0ZckHmOgQPt1BOrEF+07a64Wrbe
- wrrltLPSnoCzaHCsHO67qFK1D0NzqgYM7TsMlX6IgtQNwFM3fFD2grm71akcgbK+GAHIIPvm8tn
- GRWVb3UnrC8deL1zku+nDyWbjNZw6Kou6k8yE5/h5XIIjf65CHF1AHfGfvNuWXwQKbzvpIvVrKE
- IaI4wKEVuYQBskotqRfzhx9X5a+WPHFObFbOKAUXtQF5XpexqLwf73M0zd6mNrZGMNPIwJhjTek
- nRcaBXzjg/y70PpURU+2eoHwuNv3BZ0et3VvrgB5gr7LIPUATStdNbBcEMJebbbrlSba9Ew9
+X-Proofpoint-ORIG-GUID: QJqMOQRGLgM25VIy1GfTkBCNrysUUGvi
+X-Proofpoint-GUID: QJqMOQRGLgM25VIy1GfTkBCNrysUUGvi
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDE3MCBTYWx0ZWRfXxNYQJW9SBTyk
+ eco73NTPcFsr2ZR2K3p9vjtrPX+u4rINXs4u0KzStaSUiriTYaiU3HUPRCHnwNOQORQfdA22zs0
+ 9zBFMT+OjFtyISLv5FCQDySfOX512wYEPJuj83yJBUOIR94PNKM2FsQ2leVGJC1AvSKNpPsT6OM
+ I4cQW+yHorg1XNWWJbzLXPTIYS95TLDchM8PYzaqYhobNu3+AZJG7xkMmXpq5ApqF1YXjvFjggj
+ PlJkpAo0gVxEKIc90Hdt4xFFlFfN/1A0dMQyJg4YXFzJhHxQBY0nvG2NCkYYiDYbwKgLVfszE8D
+ Y4yyzjFF/ZsugeDqz7mewxEPgl106BKw8m23yrF4qea8kJYvjZ4mPtuZiuMhnOv4Tdfr+mxtcJJ
+ yWwWFgfmnQ5j3b8LNwnvi0E4vrABOL8Ud+jhHCmVQjDn+ehAs7/6GAdcIrgIzHxapesshmFY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-06_08,2025-05-05_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 suspectscore=0 adultscore=0 mlxscore=0
- bulkscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 malwarescore=0
- mlxlogscore=999 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505060170
+ adultscore=0 clxscore=1015 impostorscore=0 spamscore=0 lowpriorityscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 mlxlogscore=999 mlxscore=0
+ priorityscore=1501 malwarescore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505060170
 
-Supports use in PM system/runtime frameworks, helping to
-distinguish new resource control mechanisms and facilitate
-future modifications within the new API.
+Facilitates future modifications within the new function,
+leading to better readability and maintainability of the code.
 
-The code that handles the actual enable or disable of resources
-like clock and ICC paths to a separate function
-(geni_serial_resources_on() and geni_serial_resources_off()) which
-enhances code readability.
+Move the code that handles the actual logic of clock-rate
+calculations to a separate function geni_serial_set_rate()
+which enhances code readability.
 
 Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
 ---
@@ -127,88 +125,113 @@ v3 -> v4
 - added version log after ---
 
 v1 -> v2
-- returned 0 instead of ret variable
+- resolved build warnings for datatype format specifiers
+- removed double spaces in log
 ---
- drivers/tty/serial/qcom_geni_serial.c | 54 +++++++++++++++++++++------
- 1 file changed, 42 insertions(+), 12 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 62 +++++++++++++++++----------
+ 1 file changed, 39 insertions(+), 23 deletions(-)
 
 diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 6ad759146f71..2cd2085473f3 100644
+index 2cd2085473f3..60afee3884a6 100644
 --- a/drivers/tty/serial/qcom_geni_serial.c
 +++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1588,6 +1588,42 @@ static struct uart_driver qcom_geni_uart_driver = {
- 	.nr =  GENI_UART_PORTS,
- };
- 
-+static int geni_serial_resources_off(struct uart_port *uport)
-+{
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
-+	int ret;
-+
-+	dev_pm_opp_set_rate(uport->dev, 0);
-+	ret = geni_se_resources_off(&port->se);
-+	if (ret)
-+		return ret;
-+
-+	geni_icc_disable(&port->se);
-+
-+	return 0;
-+}
-+
-+static int geni_serial_resources_on(struct uart_port *uport)
-+{
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
-+	int ret;
-+
-+	ret = geni_icc_enable(&port->se);
-+	if (ret)
-+		return ret;
-+
-+	ret = geni_se_resources_on(&port->se);
-+	if (ret) {
-+		geni_icc_disable(&port->se);
-+		return ret;
-+	}
-+
-+	if (port->clk_rate)
-+		dev_pm_opp_set_rate(uport->dev, port->clk_rate);
-+
-+	return 0;
-+}
-+
- static int geni_serial_resource_init(struct qcom_geni_serial_port *port)
- {
- 	int ret;
-@@ -1628,23 +1664,17 @@ static int geni_serial_resource_init(struct qcom_geni_serial_port *port)
- static void qcom_geni_serial_pm(struct uart_port *uport,
- 		unsigned int new_state, unsigned int old_state)
- {
--	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 
- 	/* If we've never been called, treat it as off */
- 	if (old_state == UART_PM_STATE_UNDEFINED)
- 		old_state = UART_PM_STATE_OFF;
- 
--	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF) {
--		geni_icc_enable(&port->se);
--		if (port->clk_rate)
--			dev_pm_opp_set_rate(uport->dev, port->clk_rate);
--		geni_se_resources_on(&port->se);
--	} else if (new_state == UART_PM_STATE_OFF &&
--			old_state == UART_PM_STATE_ON) {
--		geni_se_resources_off(&port->se);
--		dev_pm_opp_set_rate(uport->dev, 0);
--		geni_icc_disable(&port->se);
--	}
-+	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF)
-+		geni_serial_resources_on(uport);
-+	else if (new_state == UART_PM_STATE_OFF &&
-+			old_state == UART_PM_STATE_ON)
-+		geni_serial_resources_off(uport);
-+
+@@ -1283,27 +1283,14 @@ static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+ 	return ser_clk;
  }
  
- static const struct uart_ops qcom_geni_console_pops = {
+-static void qcom_geni_serial_set_termios(struct uart_port *uport,
+-					 struct ktermios *termios,
+-					 const struct ktermios *old)
++static int geni_serial_set_rate(struct uart_port *uport, unsigned long baud)
+ {
+-	unsigned int baud;
+-	u32 bits_per_char;
+-	u32 tx_trans_cfg;
+-	u32 tx_parity_cfg;
+-	u32 rx_trans_cfg;
+-	u32 rx_parity_cfg;
+-	u32 stop_bit_len;
+-	unsigned int clk_div;
+-	u32 ser_clk_cfg;
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
+ 	unsigned long clk_rate;
+-	u32 ver, sampling_rate;
+ 	unsigned int avg_bw_core;
+-	unsigned long timeout;
+-
+-	/* baud rate */
+-	baud = uart_get_baud_rate(uport, termios, old, 300, 4000000);
++	unsigned int clk_div;
++	u32 ver, sampling_rate;
++	u32 ser_clk_cfg;
+ 
+ 	sampling_rate = UART_OVERSAMPLING;
+ 	/* Sampling rate is halved for IP versions >= 2.5 */
+@@ -1315,13 +1302,13 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+ 		sampling_rate, &clk_div);
+ 	if (!clk_rate) {
+ 		dev_err(port->se.dev,
+-			"Couldn't find suitable clock rate for %u\n",
++			"Couldn't find suitable clock rate for %lu\n",
+ 			baud * sampling_rate);
+-		return;
++		return -EINVAL;
+ 	}
+ 
+-	dev_dbg(port->se.dev, "desired_rate = %u, clk_rate = %lu, clk_div = %u\n",
+-			baud * sampling_rate, clk_rate, clk_div);
++	dev_dbg(port->se.dev, "desired_rate = %lu, clk_rate = %lu, clk_div = %u\n",
++		baud * sampling_rate, clk_rate, clk_div);
+ 
+ 	uport->uartclk = clk_rate;
+ 	port->clk_rate = clk_rate;
+@@ -1339,6 +1326,37 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+ 	port->se.icc_paths[CPU_TO_GENI].avg_bw = Bps_to_icc(baud);
+ 	geni_icc_set_bw(&port->se);
+ 
++	writel(ser_clk_cfg, uport->membase + GENI_SER_M_CLK_CFG);
++	writel(ser_clk_cfg, uport->membase + GENI_SER_S_CLK_CFG);
++	return 0;
++}
++
++static void qcom_geni_serial_set_termios(struct uart_port *uport,
++					 struct ktermios *termios,
++					 const struct ktermios *old)
++{
++	struct qcom_geni_serial_port *port = to_dev_port(uport);
++	unsigned int baud;
++	unsigned long timeout;
++	u32 bits_per_char;
++	u32 tx_trans_cfg;
++	u32 tx_parity_cfg;
++	u32 rx_trans_cfg;
++	u32 rx_parity_cfg;
++	u32 stop_bit_len;
++	int ret = 0;
++
++	/* baud rate */
++	baud = uart_get_baud_rate(uport, termios, old, 300, 4000000);
++
++	ret = geni_serial_set_rate(uport, baud);
++	if (ret) {
++		dev_err(port->se.dev,
++			"%s: Failed to set baud:%u ret:%d\n",
++			__func__, baud, ret);
++		return;
++	}
++
+ 	/* parity */
+ 	tx_trans_cfg = readl(uport->membase + SE_UART_TX_TRANS_CFG);
+ 	tx_parity_cfg = readl(uport->membase + SE_UART_TX_PARITY_CFG);
+@@ -1406,8 +1424,6 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+ 	writel(bits_per_char, uport->membase + SE_UART_TX_WORD_LEN);
+ 	writel(bits_per_char, uport->membase + SE_UART_RX_WORD_LEN);
+ 	writel(stop_bit_len, uport->membase + SE_UART_TX_STOP_BIT_LEN);
+-	writel(ser_clk_cfg, uport->membase + GENI_SER_M_CLK_CFG);
+-	writel(ser_clk_cfg, uport->membase + GENI_SER_S_CLK_CFG);
+ }
+ 
+ #ifdef CONFIG_SERIAL_QCOM_GENI_CONSOLE
 -- 
 2.17.1
 
