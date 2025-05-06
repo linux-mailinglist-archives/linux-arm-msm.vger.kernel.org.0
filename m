@@ -1,275 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-57016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65524AACEE4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 22:47:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB5C9AAD0B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 00:03:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E6F5B7B658D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:46:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D04911C4118F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 22:03:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FDA31487F4;
-	Tue,  6 May 2025 20:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88DA1215F72;
+	Tue,  6 May 2025 22:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="I68mv2SZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="etknP7v8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668264B1E7A;
-	Tue,  6 May 2025 20:47:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D250E217642;
+	Tue,  6 May 2025 22:02:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746564459; cv=none; b=LZHg5zGWdZ/GOKIgCIbiigxyOAmr8kw++U/UdVbzOWUOhHXtmhp2Wtz1Hu4FPW1ytxxYTjaVV8iasDp+5pfgC9a7Y0b8XonSbd90Lq9VVnb+2NiCwcx8uhAe7ABprMDHtDalnvrCe6LtyHB9tN3+V9mZCD8UHVh+7rfv2k0ifYE=
+	t=1746568957; cv=none; b=Pa0IkHlx62n3bT+InhtrTwnQAdiV8mQGC4qX+kGxgXkOdQIGoDJkiFyaJNYCVRTK3+HCkWto4YkXJm3DUvN2uO4+sUoPRPXFy6LZiFaTmRHt4VCwK1RLdK5rNCa2mPKXQ4HtgSTu/U3SBdlgUY5ZHY9PXSGR0U4uCwP/iByj3PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746564459; c=relaxed/simple;
-	bh=a6MsCRIUCeUj744FbiHdP5+JJu9CUko6eqpiqgbQ4ds=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WTZBkZmEZh+K5ZMWPmjkIFFzMxIAChten6Wcd3und2BuVDG8efrmEX5+FlW+yOfGW06epVet1hYOyFtATod6mLM6GRpC5xbdyS3PK3mpcxn5dFwyR6zp4UvrOn3dyHfA+lQmYDe0xXxiRRK8MX6t4JHegRQNQE9Yre6Xm2siWWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=I68mv2SZ; arc=none smtp.client-ip=217.70.183.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id DA1D1439D4;
-	Tue,  6 May 2025 20:47:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1746564447;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=RriJ3sQZL+/jAERO13sfWtP2FOfOc3okEQg5B7FnAeQ=;
-	b=I68mv2SZI/aGxHCIIcxXbjxxCbHWE9FzDtUtW4PEabsIrho1orzLQHyqR3AJklkXW4/0dS
-	sHotiUtnhB37DGcdh4NYEpar2pikiAW6HTYv6TIrN84SPWuBG8+xkiYWGDI06C2IrQ6ogR
-	QEZfsdyh/gBXzyxBU6I46Qn7ke+tHyGu4UC1rv5tEOBv61wdugOUnlQfQ6wAbRndu7RuwR
-	e6tObBPlpuwkypnH5/quJLTO/9FUmfvGMJGlxu/nMapt7Mz08+7BIwiLIchjrKyUveptAn
-	jJ7yDtYArwX8GIIYPRKbfbYPujq44+9hObwSCtfPOkZ15Ae8r3K9ETKKDMJTLA==
-Date: Tue, 6 May 2025 22:47:20 +0200
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-To: Liu Ying <victor.liu@nxp.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
- <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie
- <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Andrzej Hajda
- <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Laurent Pinchart
- <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>,
- Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki
- <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
- <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Douglas Anderson
- <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, Krzysztof
- Kozlowski <krzk@kernel.org>, Anusha Srivatsa <asrivats@redhat.com>, Paul
- Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, Hui
- Pu <Hui.Pu@gehealthcare.com>, Thomas Petazzoni
- <thomas.petazzoni@bootlin.com>, dri-devel@lists.freedesktop.org,
- asahi@lists.linux.dev, linux-kernel@vger.kernel.org,
- chrome-platform@lists.linux.dev, imx@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH v2 30/34] drm/bridge: imx8qxp-pixel-combiner: convert to
- devm_drm_bridge_alloc() API
-Message-ID: <20250506224720.5cbcf3e1@booty>
-In-Reply-To: <f71d18d2-4271-4bb9-b54f-0e5a585778f3@nxp.com>
-References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
-	<20250424-drm-bridge-convert-to-alloc-api-v2-30-8f91a404d86b@bootlin.com>
-	<553d62ed-976a-4e17-9678-cdc3d40ce4a7@nxp.com>
-	<20250430112944.1b39caab@booty>
-	<f71d18d2-4271-4bb9-b54f-0e5a585778f3@nxp.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1746568957; c=relaxed/simple;
+	bh=6f2XaoEPQjuDD6adSGksKK7wmca+6Fxd/tpXeq5wd1I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=CrFQRATCcJSR3RBgTwq/uEAXNnx+IxVTq6GlY1Va9KoOiLCRQAgmTz8qf9FXbecC9luYPyU0sq/ImTajMyQ8+gJ68rzDhztDrZIH4BrMwWC9C4Hcf6z6BTaA2f9NU0IwG2oaougxSnjRj6GiwRJ5picSsj/Onm/57wlOBQe88Ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=etknP7v8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 546AdQMM015737;
+	Tue, 6 May 2025 22:02:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	S4OvY+jEnTpuGhaZupsI0euhEx/0eYlZ2z4uuDEHxpE=; b=etknP7v850ieAviU
+	1orsEWvTfzYqCkII4pGWAXlu9QvxMdUqvCxM8Pq0Sx0jeyoaXPnU8s7FlZcA258B
+	ktLInRGxqysfxfKbfgCPC6CB2BD0LbTqxOIQ3Zevz19ejhnCZXu7snANznHrFert
+	JMTYVloULg7BUkQJDuSnp+BpmLzY9EmLsPUbcATokTOSy3jDDNqD4FQEJkbY1Ca1
+	5tx5YU8F1Zr4n18Mufnnj+lh/NLylt6cQTpA5cKe8JbzUHGecJ+qT2eNt2vkuoJX
+	1E/+ZQcj/uam4Lgqy+oAz5MLAm7QQ3BZW6987LnibIqkKLt8r2VHKY0DPWtLv6Cl
+	w3yosw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46fguuht8g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 06 May 2025 22:02:25 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 546M2ORm018435
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 6 May 2025 22:02:24 GMT
+Received: from [10.134.71.99] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 6 May 2025
+ 15:02:24 -0700
+Message-ID: <3122e357-6d27-4b5e-97d3-365dccd91367@quicinc.com>
+Date: Tue, 6 May 2025 15:02:23 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm/dpu: remove DPU_CTL_SPLIT_DISPLAY from SAR2130P
+ CTL blocks
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry
+ Baryshkov" <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20250506-dpu-sar2130p-no-split-display-v1-1-b619c0fddea5@oss.qualcomm.com>
+Content-Language: en-US
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20250506-dpu-sar2130p-no-split-display-v1-1-b619c0fddea5@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegleejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeertdertddvnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeelffefgfehhfdtvdefueefieevkefggfelkeeiudetkeektedvhedukefgvddvnecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfeelpdhrtghpthhtohepvhhitghtohhrrdhlihhusehngihprdgtohhmpdhrtghpthhtohepmhgrrghrthgvnhdrlhgrnhhkhhhorhhstheslhhinhhugidrihhnthgvlhdrtghomhdprhgtphhtthhopehmrhhiphgrrhgusehkv
- ghrnhgvlhdrohhrghdprhgtphhtthhopehtiihimhhmvghrmhgrnhhnsehsuhhsvgdruggvpdhrtghpthhtoheprghirhhlihgvugesghhmrghilhdrtghomhdprhgtphhtthhopehsihhmohhnrgesfhhffihllhdrtghhpdhrtghpthhtoheprghnughriigvjhdrhhgrjhgurgesihhnthgvlhdrtghomhdprhgtphhtthhopehnvghilhdrrghrmhhsthhrohhngheslhhinhgrrhhordhorhhg
-X-GND-Sasl: luca.ceresoli@bootlin.com
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=UJPdHDfy c=1 sm=1 tr=0 ts=681a86f1 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=3CHTtLT0FruqgAMyr9AA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: l5Shj5WPXuseW8ES2pZ9aIEklZvZvgUZ
+X-Proofpoint-GUID: l5Shj5WPXuseW8ES2pZ9aIEklZvZvgUZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDIwOCBTYWx0ZWRfXygGfxX4djkF2
+ QZ8zCIhwEugDmSOT5mMszhvaPahR+i7Fi6EQ1LRC+qYw0BH5Lr21N1tOLhE01MZlKSOBGU7m0g5
+ 3ED4CWMCbbKZODkcNL6A2X/JIRyWFumOzdrJBo2kSO5Zs8Y1ViO6vCvnti8sPy5neKAqfbc+onX
+ bioXyNmXqiK0/VKuUPhHlAEiKOV8JL/QdQFBuueaRk3DDicIo1Y1V43YgwZS+jli70BaseYRZ9u
+ z47aWp57Yf2jVzbNHkwYJUc57lqiwoS4UXBJeYdtSIA1mYYOxU4yaLor/bHGKw+s/MAwvJwUlJ3
+ zdH+/CtA2r7jD1uwvcy4hlTTQUS4z7IxlI1YTCaBF1JKk3b2947/Pqcby6OyKWsw2L86bPW+zF7
+ r0EYdxAcwo5NvrmBDUPaQjbqu0aSBa4/6Gf9eIAXTRqVDFAZcFrghJ1sXG6gBu73LT0AGHMq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-06_08,2025-05-06_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 clxscore=1015 phishscore=0 spamscore=0
+ impostorscore=0 mlxlogscore=999 mlxscore=0 lowpriorityscore=0 bulkscore=0
+ malwarescore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505060208
 
-Hello Liu,
 
-thanks for your further feedback.
 
-On Tue, 6 May 2025 10:24:18 +0800
-Liu Ying <victor.liu@nxp.com> wrote:
-
-> On 04/30/2025, Luca Ceresoli wrote:
-> > Hello Liu,  
+On 5/6/2025 5:53 AM, Dmitry Baryshkov wrote:
+> From: Dmitry Baryshkov <lumag@kernel.org>
 > 
-> Hi Luca,
+> Follow the changes in the commit a2649952f66e ("drm/msm/dpu: remove
+> DPU_CTL_SPLIT_DISPLAY from CTL blocks on DPU >= 5.0") and remove
+> DPU_CTL_SPLIT_DISPLAY from the CTL blocks on the SAR2130P platform.
+> Single CTL is used for all interfaces used by a single path
 > 
-> > 
-> > On Tue, 29 Apr 2025 10:10:55 +0800
-> > Liu Ying <victor.liu@nxp.com> wrote:
-> >   
-> >> Hi,
-> >>
-> >> On 04/25/2025, Luca Ceresoli wrote:  
-> >>> This is the new API for allocating DRM bridges.
-> >>>
-> >>> This driver embeds an array of channels in the main struct, and each
-> >>> channel embeds a drm_bridge. This prevents dynamic, refcount-based
-> >>> deallocation of the bridges.
-> >>>
-> >>> To make the new, dynamic bridge allocation possible:
-> >>>
-> >>>  * change the array of channels into an array of channel pointers
-> >>>  * allocate each channel using devm_drm_bridge_alloc()
-> >>>  * adapt the code wherever using the channels
-> >>>
-> >>> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>  
-> > 
-> > [...]
-> >   
-> >>> @@ -345,8 +351,8 @@ static int imx8qxp_pc_bridge_probe(struct platform_device *pdev)
-> >>>  free_child:
-> >>>  	of_node_put(child);
-> >>>  
-> >>> -	if (i == 1 && pc->ch[0].next_bridge)
-> >>> -		drm_bridge_remove(&pc->ch[0].bridge);
-> >>> +	if (i == 1 && pc->ch[0]->next_bridge)    
-> >>
-> >> Since this patch makes pc->ch[0] and pc->ch[1] be allocated separately,
-> >> pc->ch[0] could be NULL if channel0 is not available, hence a NULL pointer
-> >> dereference here...  
-> > 
-> > See below for this.
-> >   
-> >>> +		drm_bridge_remove(&pc->ch[0]->bridge);
-> >>>  
-> >>>  	pm_runtime_disable(dev);
-> >>>  	return ret;
-> >>> @@ -359,7 +365,7 @@ static void imx8qxp_pc_bridge_remove(struct platform_device *pdev)
-> >>>  	int i;
-> >>>  
-> >>>  	for (i = 0; i < 2; i++) {
-> >>> -		ch = &pc->ch[i];
-> >>> +		ch = pc->ch[i];
-> >>>  
-> >>>  		if (!ch->is_available)    
-> >>
-> >> ...and here too.  
-> > 
-> > This is indeed a bug, I should have checked the pointer for being
-> > non-NULL.
-> > 
-> > Looking at that more closely, I think the is_available flag can be
-> > entirely removed now. The allocation itself (ch != NULL) now is
-> > equivalent. Do you think my reasoning is correct?
-> > 
-> > Ouch! After writing the previous paragraph I realized you proposed this
-> > a few lines below! OK, removing is_available. :)
-> > 
-> > [...]
-> >   
-> >> On top of this patch series, this issue doesn't happen if I apply the below
-> >> change:  
-> > 
-> > [...]
-> >   
-> >> @@ -351,7 +349,7 @@ static int imx8qxp_pc_bridge_probe(struct platform_device *pdev)
-> >>  free_child:
-> >>         of_node_put(child);
-> >>  
-> >> -       if (i == 1 && pc->ch[0]->next_bridge)
-> >> +       if (i == 1 && pc->ch[0])
-> >>                 drm_bridge_remove(&pc->ch[0]->bridge);  
-> > 
-> > Unrelated to this patch, but as I looked at it more in depth now, I'm
-> > not sure this whole logic is robust, even in the original code.
-> > 
-> > The 'i == 1' check here seems to mean "if some error happened when
-> > handling channel@1, that means channel@0 was successfully initialized,
-> > so let's clean up channel 0".
-> > 
-> > However my understanding of the bindings is that device tree is allowed
-> > to have the channel@1 node before the channel@0 node (or even channel@1
-> > without channel@0, but that's less problematic here).
-> > 
-> > In such case (channel@1 before channel@0), this would happen:
-> > 
-> >  1. alloc and init ch[1], all OK
-> >  2. alloc and init ch[0], an error happens
-> >     (e.g. of_graph_get_remote_node() fails)
-> > 
-> > So we'd reach the free_child: label, and we should call
-> > drm_bridge_remove() for ch[1]->bridge, but there's no code to do that.
-> > 
-> > To be robust in such a case, I think both channels need to be checked
-> > independently, as the status of one does not imply the status of the
-> > other. E.g.:
-> > 
-> >   for (i = 0; i < 2; i++)
-> >       if (pc->ch[i] && pc->ch[i]->next_bridge)
-> >           drm_bridge_remove(&pc->ch[i]->bridge);
-> > 
-> > (which is similar to what .remove() does after the changes discussed in
-> > this thread, and which I have queued for v3)
-> > 
-> > What's your opinion? Do you think I missed anything?  
+> Fixes: 178575173472 ("drm/msm/dpu: add catalog entry for SAR2130P")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
 > 
-> The pixel combiner DT node would be added in imx8-ss-dc{0,1}.dtsi, please
-> see the case for imx8-ss-dc0.dtsi introduced by an in-flight patch[1].  As
-> channel@{0,1} child nodes always exist(DT overlay cannot effectively delete
-> any of them) and channel@0 always comes first, there is no problematic case.
-
-I'm not questioning what existing and future dts files (will) contain,
-and surely I don't see a good reason someone would write channel@1
-before channel@0.
-
-My point is:
-
- - the bindings _allow_ channel1 before channel@0
- - the error management code after the free_child label won't work
-   correctly if channel1 is before channel@0 in the device tree
-
-IOW the driver is not robust against all legal device tree descriptions,
-and it could be easily made robust using the example code in my
-previous e-mail (quoted a few lines above).
-
-If you agree about this I'll be happy to send a patch doing that change.
-If you think I'm wrong, I won't fight a battle. This topic is
-orthogonal to the change I'm introducing in this patch, and I can
-continue the conversion independently from this discussion.
-
-> > Thanks for taking the time to dig into this!  
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h
+> index 22dd16c6e210e9520ecb7a851bee402032fa1ee2..5667d055fbd1d8125c3231302daa3e05de5944c9 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h
+> @@ -27,17 +27,16 @@ static const struct dpu_mdp_cfg sar2130p_mdp = {
+>   	},
+>   };
+>   
+> -/* FIXME: get rid of DPU_CTL_SPLIT_DISPLAY in favour of proper ACTIVE_CTL support */
+>   static const struct dpu_ctl_cfg sar2130p_ctl[] = {
+>   	{
+>   		.name = "ctl_0", .id = CTL_0,
+>   		.base = 0x15000, .len = 0x290,
+> -		.features = CTL_SM8550_MASK | BIT(DPU_CTL_SPLIT_DISPLAY),
+> +		.features = CTL_SM8550_MASK,
+>   		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
+>   	}, {
+>   		.name = "ctl_1", .id = CTL_1,
+>   		.base = 0x16000, .len = 0x290,
+> -		.features = CTL_SM8550_MASK | BIT(DPU_CTL_SPLIT_DISPLAY),
+> +		.features = CTL_SM8550_MASK,
+>   		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
+>   	}, {
+>   		.name = "ctl_2", .id = CTL_2,
 > 
-> After looking into this patch and patch 31(though I've already provided my A-b)
-> more closely, I think the imx8qxp_pc and imx8{qm,qxp}_ldb main structures
-> should have the same life time with the embedded DRM bridges, because for
-> example the clk_apb clock in struct imx8qxp_pc would be accessed by the
-> imx8qxp_pc_bridge_mode_set DRM bridge callback.  But, IIUC, your patches extend
-> the life time for the embedded channel/bridge structures only, but not for the
-> main structures.  What do you think ?
+> ---
+> base-commit: 0a00723f4c2d0b273edd0737f236f103164a08eb
+> change-id: 20250506-dpu-sar2130p-no-split-display-442eb0b85165
+> 
+> Best regards,
 
-I see you concern, but I'm sure the change I'm introducing is not
-creating the problem you are concerned about.
-
-The key aspect is that my patch is merely changing the lifetime of the
-_allocation_ of the drm_bridge, not its usage. On drm_bridge_remove()
-the bridge is removed from its encoder chain and it is completely not
-reachable, both before and after my patch. With my patch it is not
-freed immediately, but it's just a piece of "wasted" memory that is
-still allocated until elsewhere in the kernel there are pointers to it,
-to avoid use-after-free.
-
-With this explanation, do you think my patch is correct (after fixing
-the bug we already discussed of course)?
-
-Best regards,
-Luca
-
--- 
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
 
