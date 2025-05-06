@@ -1,188 +1,483 @@
-Return-Path: <linux-arm-msm+bounces-56990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA12DAACC33
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 19:28:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED286AACC55
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 19:38:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F21C505609
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 17:28:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 57AE67B0481
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 17:37:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B9122836A6;
-	Tue,  6 May 2025 17:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 437D9280004;
+	Tue,  6 May 2025 17:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VbOdnteZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pz+dpGEm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7159E220F43
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 17:28:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D006926FA5F;
+	Tue,  6 May 2025 17:38:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746552495; cv=none; b=hTLIHWVUQGf/ANpZetuhXV5CYdt44w40C1zD85JRRmJGAQ5jcSw375WsQGo9oPa6ogl8NhMH5no30bvHJEdg7M58hI6sB14W6rt2ewvP1nt0TvAGLq2fG88HYJHICH6R0d4W6L0c4V1y+InudSUkDdsqLbZBZdwK0YT5ezhECOI=
+	t=1746553116; cv=none; b=EGN5GHEY9gDc2mnAgsv4sqwN75aJbQ/QlmVQh1R8DNiNAnRgMrHflt4/meXyM9ZQAWepLTlfDac8wNW6ypkcVwJNbifwbNG/rLKC030lTSe0dsWu6CXt7YH30A8HcWf1rYYCnDdifQ1ASb4VoPKDfct8sTg1J1lqpv5jHPHA5AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746552495; c=relaxed/simple;
-	bh=jnnYN3kbrZDz/R+9FtFmAiIQLTBC/H1JHKyfCk46ZWQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RtiMflGByFLeYg7ZrHQ7O7yihoXvTz8xmZOnCQpM95xiI6I7min2/jLVwXlkwv9j25bYhjx/M9UDjxZE5GagCeU4dwzQrN4KYQD0PpYtD88mPKqDzw+wGeUWk74VM7QjtuYV+7I3XN6tbsyaTOnwIXQ2f6feeFZX/SDpG4UCaX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VbOdnteZ; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-acb2faa9f55so792902866b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 10:28:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746552492; x=1747157292; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=grXy49nE1iJUPXKhEEBd+iUH9oxUUGc1jM22YoCJ94M=;
-        b=VbOdnteZzTGFiiJyf7EJqBUqk/pDrimIS7Htjm0qmRcZg+ioxb1uqumEqzdC0qli8S
-         hAG20boCT0mQknLw4RkWzBnGwn7M19I6mmdZcI5DTv8Amvp0BiqBfIUmANqf8wwc6Wpc
-         DraGQG4TQilnZXsRXjwYwkw4KaRKhqkZW+vrm/SvDSLGJPa+Bk7HIxKT0FY8eOUv7zfv
-         rgBCRbQfNCDXf0sVgXzH1Or0gfiufcXplTkftXLE/eLkNlxQ/s3NPv7aBYtJwzTAdbOU
-         wYjCDUCdK/jyiTswPiwxutaVPVnugakmJQotEUVMilNX3E5AQlTGNJJ0X+i68a4B7Q7X
-         TQJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746552492; x=1747157292;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=grXy49nE1iJUPXKhEEBd+iUH9oxUUGc1jM22YoCJ94M=;
-        b=W4pfgFHv6IHzm9hq3QsT1Clyrd/AHmEjpez/tby0Be66L/qOX6fc/VYjluOv9KUsAo
-         +oa+HC6NndXhEli4Ew5RNjlZFHuXZf8ovOQ817Jt7i8X1otxF1VySccjAempteCHjEvo
-         gqMfOTxLmiQLWjL2JmkZZ6cwt5WcbMzHggl8O/I23+aveDiddAEKdw5NdQXd9cuzxmlw
-         I2VkV+26x7E3RBBeDTozsVlOKD5E7J+LtdJJ3QAHtl0kMTSO1zdB1eQlDfEJ8dpJl9Uv
-         T/F5Mz68TSIar1LmFowGVrWlKvuoeKBzlhn3hBwClY7ha8xjHbSQnlUS+IYDL0h+RWP/
-         no+A==
-X-Forwarded-Encrypted: i=1; AJvYcCUy7Seu4gZlyIsCbznXGqJ2gfHLFXGhNtiPR56hL1023wt4M8GFvV9FNBqXIoKSSBiZpw1eXOzmniIuaiqv@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZnG3lxY41zmWINWz2lqvtdQzEU1zfI5CrwFwnVmUT0EedTxCG
-	sn6KTSl3I2JsGTZKIH5cgR/0b43cYVzg9+wy2pCKdrPlJojZRpuU8/atgMjf/UTSDHGRUK3NmtD
-	yuD+jXVgcGUHMegwjTkJhIOWLUgddbb1xVZvvHQ==
-X-Gm-Gg: ASbGncs9EkTPvISdcjmTXnSJCXS3tKibRzBuRuALI5fuou670uRJK8sAqihzlIsQNRt
-	eBbB3LdwL1OZi67577VjZC+vf2k3Y61ar5E1jmV3E1lbo5BpFGshBOfCd1dimolo4KG/hCcaUJP
-	bRINhxVQ/iJcy51fR/TXFzjps7Wir/cgvPfWCDTjsLWLlYWRnYgJgkBg==
-X-Google-Smtp-Source: AGHT+IH61rER+jFaiIMyOhqOEUN8cALas+FRcUonmSs8Vu5Kdp86RSl4BnRw/SiVr0jad8d0Ju9qzSTzny2sUIMnvOs=
-X-Received: by 2002:a17:907:7207:b0:abf:4da0:28e3 with SMTP id
- a640c23a62f3a-ad1e8c50735mr32187466b.18.1746552491747; Tue, 06 May 2025
- 10:28:11 -0700 (PDT)
+	s=arc-20240116; t=1746553116; c=relaxed/simple;
+	bh=byeK1d0uo/N97nHrvOcOvR0/RJeurXNd2pagNJg/+go=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=kKsJMXGar8UgfFs9H+oRNm/nSersCbQnkoYTjTH70fz+3nBN+s+7z5uiTRh4Z1GxUZX/EGgs7o4o6gi/FyG4e6EKdZMMyEjmPrAgu7gJ3f6umzrPwQoLLsh/AmqKnva24r79oT/jhhj5Oeb0CD7dwSIZzE+Lxej1F1zpEXJzutQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pz+dpGEm; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5468jwEi011188;
+	Tue, 6 May 2025 17:34:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	I6Y/vfJlehCQRPN4Du5y7bwaGIgYnkqhwFRRVVr17ss=; b=pz+dpGEm1VKQxOjN
+	xAbSAHCALBw1U55jaQtoJOhL64syiyOaGPAu5I7lnqv3dLVrg2YOVI7E/cAvkI0r
+	WPue5rGZDZKLGSNV/qyXOKAxy2covv7zCvZM6ORwh/lRYl/QF9fEpqGR5vGfC4iM
+	X4Opwbw4L1Kq3BxF+gPC1QPN8HfQro65CwLjjUvvpvzsc1SQvqlfV0ExbSdzGfpb
+	woQSqqZf1n/VZGijBL1qdHARhVSTV0sMp0a9l+RXJkoyPM6SerdKnx1nEFbHr/s1
+	RV0S2j6jx4zvu9TqBnbVfIrSijw8swOO9WdsltxfTXE6jkPGExhFTWF1CV9MgB98
+	ZoHGMg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46f5tbb3pd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 06 May 2025 17:34:11 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 546HYAGN024016
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 6 May 2025 17:34:10 GMT
+Received: from [10.216.45.193] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 6 May 2025
+ 10:33:59 -0700
+Message-ID: <e96e315c-69fb-bc7e-5d07-06909344ff65@quicinc.com>
+Date: Tue, 6 May 2025 23:03:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250503-pinctrl-msm-fix-v1-0-da9b7f6408f4@oss.qualcomm.com> <20250503-pinctrl-msm-fix-v1-1-da9b7f6408f4@oss.qualcomm.com>
-In-Reply-To: <20250503-pinctrl-msm-fix-v1-1-da9b7f6408f4@oss.qualcomm.com>
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Date: Tue, 6 May 2025 19:28:00 +0200
-X-Gm-Features: ATxdqUEJCS-layHQflUTslWJjo7dTQpNOzT3ZmPo75mYuoogCm-sg4h65dFuYco
-Message-ID: <CACMJSesqtkorg1akuXjMa9U1fe60aDhfGOSB_T6mX5CtCYDwtg@mail.gmail.com>
-Subject: Re: [PATCH 1/4] pinctrl: qcom: don't crash on enabling GPIO HOG pins
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
-	Guenter Roeck <linux@roeck-us.net>, Josh Cartwright <joshc@codeaurora.org>, 
-	Matti Vaittinen <mazziesaccount@gmail.com>, Doug Anderson <dianders@chromium.org>, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+From: Shivendra Pratap <quic_spratap@quicinc.com>
+Subject: Re: [PATCH v9 2/5] firmware: psci: Read and use vendor reset types
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>
+CC: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+        Elliot Berman
+	<quic_eberman@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Sebastian Reichel" <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+        Conor
+ Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Andy Yan
+	<andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Bartosz
+ Golaszewski" <bartosz.golaszewski@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, <cros-qcom-dts-watchers@chromium.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>,
+        Satya Durga Srinivasu Prabhala
+	<quic_satyap@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        Florian Fainelli
+	<florian.fainelli@broadcom.com>,
+        Stephen Boyd <swboyd@chromium.org>, <linux-pm@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, Elliot Berman
+	<elliotb317@gmail.com>,
+        <quic_spratap@qucinc.com>,
+        Elliot Berman
+	<elliot.berman@oss.qualcomm.com>,
+        <quic_kaushalk@qucinc.com>
+References: <20250303-arm-psci-system_reset2-vendor-reboots-v9-0-b2cf4a20feda@oss.qualcomm.com>
+ <20250303-arm-psci-system_reset2-vendor-reboots-v9-2-b2cf4a20feda@oss.qualcomm.com>
+ <Z9QQw6BcE7IXzu+r@lpieralisi> <Z+K3uNjTNbq3pUis@hu-mojha-hyd.qualcomm.com>
+ <Z/U95G+2GsoLD6Mi@lpieralisi>
+ <973eaca7-0632-53d8-f892-fe4d859ebbac@quicinc.com>
+ <Z/+dGLAGXpf9bX7G@lpieralisi>
+Content-Language: en-US
+In-Reply-To: <Z/+dGLAGXpf9bX7G@lpieralisi>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 3X2rXxofR5i5DK2CWS3oLfocwReLqRAT
+X-Proofpoint-GUID: 3X2rXxofR5i5DK2CWS3oLfocwReLqRAT
+X-Authority-Analysis: v=2.4 cv=doXbC0g4 c=1 sm=1 tr=0 ts=681a4813 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=GcyzOjIWAAAA:8
+ a=EUspDBNiAAAA:8 a=m9VVyzwkmEijLSngOOgA:9 a=QEXdDO2ut3YA:10 a=dtxw0mqMjrQA:10
+ a=hQL3dl6oAZ8NdCsdz28n:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDE2NiBTYWx0ZWRfXy4Im6XbzqtjW
+ 94DOIOiVrvndX0dBoWwk0cos3ykVHKv2aYb82N1Xq5pXHs9zbFXmePGvehOGqLI8F4o3viMYtCW
+ 3E82q9SkK1xWUbnvxz1cd4QR5KBnrqkvlk/r1PYoY7Pua7lGNYPPqqUAhioWftCe94VR59Qjz7n
+ TY0LDnrChQQih2W75T5vG7NUQjURgRRpQsYPZEzKy6CEZ3zqpB5Zrbk4/TJT8G/9zN66Vwq7jS/
+ PmSFUXh2B6pSlD8iVwb1uyx25LcDJqBeDT9JEPpzIn+InTId9xo4LZg/NkZJB1fJUaYdcuyi9lg
+ QMc4jbfkZQbDOzAu3vxcVmG1RBOBerfz/ugRkQHk9Qi0xUvfWn70J9DE+cRglf9RJe7+7w/4X9S
+ AOj0tyOILuXWWenny5AXcAVXoxQ/qHDTER5ysZ8cjN2A+EGnN67hUCydAcwb/2BNo0BDns6g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-06_07,2025-05-05_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 adultscore=0 malwarescore=0 phishscore=0
+ mlxlogscore=999 impostorscore=0 clxscore=1011 mlxscore=0 priorityscore=1501
+ spamscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505060166
 
-On Sat, 3 May 2025 at 07:32, Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On Qualcomm platforms if the board uses GPIO hogs msm_pinmux_request()
-> calls gpiochip_line_is_valid(). After commit 8015443e24e7 ("gpio: Hide
-> valid_mask from direct assignments") gpiochip_line_is_valid() uses
-> gc->gpiodev, which is NULL when GPIO hog pins are being processed.
-> Thus after this commit using GPIO hogs causes the following crash. In
-> order to fix this, verify that gpiochip->gpiodev is not NULL.
->
-> Note: it is not possible to reorder calls (e.g. by calling
-> msm_gpio_init() before pinctrl registration or by splitting
-> pinctrl_register() into _and_init() and pinctrl_enable() and calling the
-> latter function after msm_gpio_init()) because GPIO chip registration
-> would fail with EPROBE_DEFER if pinctrl is not enabled at the time of
-> registration.
->
-> pc : gpiochip_line_is_valid+0x4/0x28
-> lr : msm_pinmux_request+0x24/0x40
-> sp : ffff8000808eb870
-> x29: ffff8000808eb870 x28: 0000000000000000 x27: 0000000000000000
-> x26: 0000000000000000 x25: ffff726240f9d040 x24: 0000000000000000
-> x23: ffff7262438c0510 x22: 0000000000000080 x21: ffff726243ea7000
-> x20: ffffab13f2c4e698 x19: 0000000000000080 x18: 00000000ffffffff
-> x17: ffff726242ba6000 x16: 0000000000000100 x15: 0000000000000028
-> x14: 0000000000000000 x13: 0000000000002948 x12: 0000000000000003
-> x11: 0000000000000078 x10: 0000000000002948 x9 : ffffab13f50eb5e8
-> x8 : 0000000003ecb21b x7 : 000000000000002d x6 : 0000000000000b68
-> x5 : 0000007fffffffff x4 : ffffab13f52f84a8 x3 : ffff8000808eb804
-> x2 : ffffab13f1de8190 x1 : 0000000000000080 x0 : 0000000000000000
-> Call trace:
->  gpiochip_line_is_valid+0x4/0x28 (P)
->  pin_request+0x208/0x2c0
->  pinmux_enable_setting+0xa0/0x2e0
->  pinctrl_commit_state+0x150/0x26c
->  pinctrl_enable+0x6c/0x2a4
->  pinctrl_register+0x3c/0xb0
->  devm_pinctrl_register+0x58/0xa0
->  msm_pinctrl_probe+0x2a8/0x584
->  sdm845_pinctrl_probe+0x20/0x88
->  platform_probe+0x68/0xc0
->  really_probe+0xbc/0x298
->  __driver_probe_device+0x78/0x12c
->  driver_probe_device+0x3c/0x160
->  __device_attach_driver+0xb8/0x138
->  bus_for_each_drv+0x84/0xe0
->  __device_attach+0x9c/0x188
->  device_initial_probe+0x14/0x20
->  bus_probe_device+0xac/0xb0
->  deferred_probe_work_func+0x8c/0xc8
->  process_one_work+0x208/0x5e8
->  worker_thread+0x1b4/0x35c
->  kthread+0x144/0x220
->  ret_from_fork+0x10/0x20
-> Code: b5fffba0 17fffff2 9432ec27 f9400400 (f9428800)
->
-> Fixes: 8015443e24e7 ("gpio: Hide valid_mask from direct assignments")
-> Reported-by: Doug Anderson <dianders@chromium.org>
-> Closes: https://lore.kernel.org/r/CAD=FV=Vg8_ZOLgLoC4WhFPzhVsxXFC19NrF38W6cW_W_3nFjbw@mail.gmail.com
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->  drivers/pinctrl/qcom/pinctrl-msm.c | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> index 9ec15ae4a104cbeb9a7d819b964d341f3bba58ea..a99275f3c4a66a39f4d9318fe918101127ef4487 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -149,6 +149,13 @@ static int msm_pinmux_request(struct pinctrl_dev *pctldev, unsigned offset)
->         struct msm_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
->         struct gpio_chip *chip = &pctrl->chip;
->
-> +       /*
-> +        * hog pins are requested before registering GPIO chip, don't crash in
-> +        * gpiochip_line_is_valid().
-> +        */
-> +       if (!chip->gpiodev)
-> +               return 0;
-> +
 
-I really dislike you dereferencing gpiodev here which is (implicitly,
-I know...) very much a private structure for GPIOLIB. Can we move this
-into gpiochip_line_is_valid() itself?
 
-Treewide there's only one driver (under drivers/pinctrl/) that
-accesses gc->gpiodev and I would love to fix that as well and have
-nobody dereference this.
+On 4/16/2025 5:35 PM, Lorenzo Pieralisi wrote:
+> On Wed, Apr 09, 2025 at 11:48:24PM +0530, Shivendra Pratap wrote:
+>>
+>>
+>> On 4/8/2025 8:46 PM, Lorenzo Pieralisi wrote:
+>>> On Tue, Mar 25, 2025 at 07:33:36PM +0530, Mukesh Ojha wrote:
+>>>> On Fri, Mar 14, 2025 at 12:19:31PM +0100, Lorenzo Pieralisi wrote:
+>>>>> On Mon, Mar 03, 2025 at 01:08:31PM -0800, Elliot Berman wrote:
+>>>>>> From: Elliot Berman <elliot.berman@oss.qualcomm.com>
+>>>>>>
+>>>>>> SoC vendors have different types of resets and are controlled through
+>>>>>> various registers. For instance, Qualcomm chipsets can reboot to a
+>>>>>> "download mode" that allows a RAM dump to be collected. Another example
+>>>>>> is they also support writing a cookie that can be read by bootloader
+>>>>>> during next boot. PSCI offers a mechanism, SYSTEM_RESET2, for these
+>>>>>> vendor reset types to be implemented without requiring drivers for every
+>>>>>> register/cookie.
+>>>>>>
+>>>>>> Add support in PSCI to statically map reboot mode commands from
+>>>>>> userspace to a vendor reset and cookie value using the device tree.
+>>>>>
+>>>>> I have managed to discuss a little bit this patchset over the last
+>>>>> few days and I think we have defined a plan going forward.
+>>>>>
+>>>>> A point that was raised is:
+>>>>>
+>>>>> https://man7.org/linux/man-pages/man2/reboot.2.html
+>>>>>
+>>>>> LINUX_REBOOT_CMD_RESTART2 *arg command, what is it supposed to
+>>>>> represent ?
+>>>>>
+>>>>> Is it the mode the system should reboot into OR it is the
+>>>>> actual command to be issued (which is what this patchset
+>>>>> implements) ?
+>>>>>
+>>>>> LINUX_REBOOT_CMD_RESTART "..a default restart..."
+>>>>>
+>>>>> It is unclear what "default" means. We wonder whether the
+>>>>> reboot_mode variable was introduced to _define_ that "default".
+>>>>>
+>>>>> So, in short, my aim is trying to decouple reboot_mode from the
+>>>>> LINUX_REBOOT_CMD_RESTART2 *arg command.
+>>>>>
+>>>>> I believe that adding a sysfs interface to reboot-mode driver
+>>>>> infrastructure would be useful, so that the commands would
+>>>>> be exposed to userspace and userspace can set the *arg command
+>>>>> specifically to issue a given reset/mode.
+>>>>>
+>>>>> I wonder why this is not already in place for eg syscon-reboot-mode
+>>>>> resets, how does user space issue a command in those systems if the
+>>>>> available commands aren't exposed to userspace ?
+>>>>>
+>>>>> Is there a kernel entity exposing those "modes" to userspace, somehow ?
+>>>>>
+>>>>>> A separate initcall is needed to parse the devicetree, instead of using
+>>>>>> psci_dt_init because mm isn't sufficiently set up to allocate memory.
+>>>>>>
+>>>>>> Reboot mode framework is close but doesn't quite fit with the
+>>>>>> design and requirements for PSCI SYSTEM_RESET2. Some of these issues can
+>>>>>> be solved but doesn't seem reasonable in sum:
+>>>>>>  1. reboot mode registers against the reboot_notifier_list, which is too
+>>>>>>     early to call SYSTEM_RESET2. PSCI would need to remember the reset
+>>>>>>     type from the reboot-mode framework callback and use it
+>>>>>>     psci_sys_reset.
+>>>>>>  2. reboot mode assumes only one cookie/parameter is described in the
+>>>>>>     device tree. SYSTEM_RESET2 uses 2: one for the type and one for
+>>>>>>     cookie.
+>>>>>
+>>>>> This can be changed and I think it should, so that the reboot modes
+>>>>> are exposed to user space and PSCI can use that.
+>>>>>
+>>>> In the case of a regular reboot or panic, the reboot/panic notifiers run
+>>>> first, followed by the restart notifiers. The PSCI reset/reset2 should
+>>>> be the last call from Linux, and ideally, this call should not fail.
+>>>>
+>>>> Reboot mode notifiers => restart notifiers or Panic notifiers => restart
+>>>> notifiers
+>>>>
+>>>> So, if I understand correctly, you mean that we can change the reboot
+>>>> mode framework to expose the arguments available to user space. We can
+>>>> extend it to accept magic and cookies, save them in the reboot
+>>>> framework, and retrieve them via a call from PSCI during a regular
+>>>> reboot or panic based on the current arguments. Is this leading towards
+>>>> writing an ARM-specific PSCI-reboot-mode driver, which in its reboot
+>>>> notifier callback saves the magic and cookies, and these magic and
+>>>> cookies will be used during psci_sys_reset2()? Or is there something
+>>>> wrong with my understanding?
+>>>
+>>> No, you got it right (apologies for the delay in replying) - if the
+>>> case for making reboot mode available to user space is accepted.
+>>>
+While moving this into reboot-mode framework, one more query came up.
+The "ARM-specific PSCI-reboot-mode driver" that we are going to write needs
+to be a Platform device driver for using reboot-mode framework.
+As psci is not a platform device driver, a subdevice under it may not probe as a
+platform driver. Is it ok to implement the "PSCI-reboot-mode driver" as a
+early_initcall("psci_xyz") and then create a platform device something as
+below or any other suggestions for this?
 
-Bart
+power:reset:<psci-vendor-reset-driver>:
+-----
+static int __init psci_vendor_reset_init(void) {
+..
+..
+	np = of_find_node_by_name(NULL, "psci-vendor-reset");
+	if(!np)
+		return -ENODEV;
+	pdev = of_platform_device_create(np, "psci-vendor-reset", NULL);
+..
+..
+}
+-------
 
->         return gpiochip_line_is_valid(chip, offset) ? 0 : -EINVAL;
->  }
->
->
-> --
-> 2.39.5
->
+the sysfs we will expose from reboot-mode may show like below in above 
+implementation:
+
+###### 
+/ # cat ./sys/devices/platform/psci-vendor-reset/available_modes
+bootloader edl 
+###### 
+
+thanks,
+Shivendra
+
+>>
+>> Agree that the available modes should be exposed to usespace via sysfs interface
+>> and we should implement it. Also #1 and #2 can be handled via some
+>> changes in the design as mentioned in above discussion.
+>>
+>> I have one doubt though when we implement this via reboot-mode framework.
+>> The current patch implements PSCI ARM PSCI SYSTEM RESET2 vendor reset types.
+>> psci driver is initialized very early at boot but potential ARM psci reboot-mode
+>> driver will not probe at that stage and the ARM PSCI SYSTEM RESET2 vendor reset
+>> types functionality will not be available in psci reset path until the reboot-mode
+>> driver probes. Will this cause any limitation on usage of ARM's PSCI vendor-reset
+>> types for early device resets?
+>>
+>> One use-case may be an early device crash or a early reset where a vendor 
+>> wants to use PSCI SYSTEM RESET2 vendor reset type to a reset the device to a 
+>> specific state but may not be able to use this driver.
+>> (eg: a kernel panic at early boot where a vendor wants to reset device 
+>> to a specific state using vendor reset. Currently panic passes a NULL
+>> (*arg command) while device reset but it may be explored for vendor specific
+>> reset).
+> 
+> As you said, that would not be a PSCI only issue - *if* we wanted to
+> plug in this use case we should find a way to do it at reboot mode
+> driver level.
+> 
+> As a matter of fact, this is not a mainline issue AFAICS.
+> 
+> Even if we did not design this as a reboot mode driver there would be a
+> time window where you would not be able to use vendor resets on panic.
+> 
+> I don't see it as a major roadblock at the moment.
+Got it.
+> 
+> Thanks,
+> Lorenzo
+> 
+>>
+>> - Shivendra
+>>
+>>>> P.S. We appreciate Elliot for his work and follow-up on this while being
+>>>> employed at Qualcomm.
+>>>
+>>> Yes I sincerely do for his patience, thank you.
+>>>
+>>> Lorenzo
+>>>
+>>>>>>  3. psci cpuidle driver already registers a driver against the
+>>>>>>     arm,psci-1.0 compatible. Refactoring would be needed to have both a
+>>>>>>     cpuidle and reboot-mode driver.
+>>>>>>
+>>>>>> Signed-off-by: Elliot Berman <elliot.berman@oss.qualcomm.com>
+>>>>>> ---
+>>>>>>  drivers/firmware/psci/psci.c | 105 +++++++++++++++++++++++++++++++++++++++++++
+>>>>>>  1 file changed, 105 insertions(+)
+>>>>>>
+>>>>>> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+>>>>>> index a1ebbe9b73b136218e9d9f9b8daa7756b3ab2fbe..6f8c47deaec0225f26704e1f3bcad52603127a85 100644
+>>>>>> --- a/drivers/firmware/psci/psci.c
+>>>>>> +++ b/drivers/firmware/psci/psci.c
+>>>>>> @@ -80,6 +80,14 @@ static u32 psci_cpu_suspend_feature;
+>>>>>>  static bool psci_system_reset2_supported;
+>>>>>>  static bool psci_system_off2_hibernate_supported;
+>>>>>>  
+>>>>>> +struct psci_reset_param {
+>>>>>> +	const char *mode;
+>>>>>> +	u32 reset_type;
+>>>>>> +	u32 cookie;
+>>>>>> +};
+>>>>>> +static struct psci_reset_param *psci_reset_params __ro_after_init;
+>>>>>> +static size_t num_psci_reset_params __ro_after_init;
+>>>>>> +
+>>>>>>  static inline bool psci_has_ext_power_state(void)
+>>>>>>  {
+>>>>>>  	return psci_cpu_suspend_feature &
+>>>>>> @@ -306,9 +314,39 @@ static int get_set_conduit_method(const struct device_node *np)
+>>>>>>  	return 0;
+>>>>>>  }
+>>>>>>  
+>>>>>> +static int psci_vendor_system_reset2(const char *cmd)
+>>>>>> +{
+>>>>>> +	unsigned long ret;
+>>>>>> +	size_t i;
+>>>>>> +
+>>>>>> +	for (i = 0; i < num_psci_reset_params; i++) {
+>>>>>> +		if (!strcmp(psci_reset_params[i].mode, cmd)) {
+>>>>>> +			ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
+>>>>>> +					     psci_reset_params[i].reset_type,
+>>>>>> +					     psci_reset_params[i].cookie, 0);
+>>>>>> +			/*
+>>>>>> +			 * if vendor reset fails, log it and fall back to
+>>>>>> +			 * architecture reset types
+>>>>>
+>>>>> That's not what the code does.
+>>>>>
+>>>> Ack.
+>>>>
+>>>> -Mukesh
+>>>>
+>>>>>> +			 */
+>>>>>> +			pr_err("failed to perform reset \"%s\": %ld\n", cmd,
+>>>>>> +			       (long)ret);
+>>>>>> +			return 0;
+>>>>>> +		}
+>>>>>> +	}
+>>>>>> +
+>>>>>> +	return -ENOENT;
+>>>>>> +}
+>>>>>> +
+>>>>>>  static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
+>>>>>>  			  void *data)
+>>>>>>  {
+>>>>>> +	/*
+>>>>>> +	 * try to do the vendor system_reset2
+>>>>>> +	 * If there wasn't a matching command, fall back to architectural resets
+>>>>>> +	 */
+>>>>>> +	if (data && !psci_vendor_system_reset2(data))
+>>>>>> +		return NOTIFY_DONE;
+>>>>>> +
+>>>>>>  	if ((reboot_mode == REBOOT_WARM || reboot_mode == REBOOT_SOFT) &&
+>>>>>>  	    psci_system_reset2_supported) {
+>>>>>>  		/*
+>>>>>> @@ -795,6 +833,73 @@ static const struct of_device_id psci_of_match[] __initconst = {
+>>>>>>  	{},
+>>>>>>  };
+>>>>>>  
+>>>>>> +#define REBOOT_PREFIX "mode-"
+>>>>>> +
+>>>>>> +static int __init psci_init_system_reset2_modes(void)
+>>>>>> +{
+>>>>>> +	const size_t len = strlen(REBOOT_PREFIX);
+>>>>>> +	struct psci_reset_param *param;
+>>>>>> +	struct device_node *psci_np __free(device_node) = NULL;
+>>>>>> +	struct device_node *np __free(device_node) = NULL;
+>>>>>> +	struct property *prop;
+>>>>>> +	size_t count = 0;
+>>>>>> +	u32 magic[2];
+>>>>>> +	int num;
+>>>>>> +
+>>>>>> +	if (!psci_system_reset2_supported)
+>>>>>> +		return 0;
+>>>>>> +
+>>>>>> +	psci_np = of_find_matching_node(NULL, psci_of_match);
+>>>>>> +	if (!psci_np)
+>>>>>> +		return 0;
+>>>>>> +
+>>>>>> +	np = of_find_node_by_name(psci_np, "reset-types");
+>>>>>> +	if (!np)
+>>>>>> +		return 0;
+>>>>>
+>>>>> Related to my initial question above. If LINUX_REBOOT_CMD_RESTART2 *arg command,
+>>>>> is the actual reset to be issued, should we add a default mode "cold"
+>>>>> and, if SYSTEM_RESET2 is supported, a "warm" reset mode too ?
+>>>>>
+>>>>> It all boils down to what *arg represents - adding "cold" and "warm"
+>>>>> modes would remove the dependency on reboot_mode for resets issued
+>>>>> through LINUX_REBOOT_CMD_RESTART2, the question is whether this
+>>>>> is the correct thing to do.
+>>>>>
+>>>>> Comments very welcome.
+>>>>>
+>>>>> Thanks,
+>>>>> Lorenzo
+>>>>>
+>>>>>> +
+>>>>>> +	for_each_property_of_node(np, prop) {
+>>>>>> +		if (strncmp(prop->name, REBOOT_PREFIX, len))
+>>>>>> +			continue;
+>>>>>> +		num = of_property_count_u32_elems(np, prop->name);
+>>>>>> +		if (num != 1 && num != 2)
+>>>>>> +			continue;
+>>>>>> +
+>>>>>> +		count++;
+>>>>>> +	}
+>>>>>> +
+>>>>>> +	param = psci_reset_params =
+>>>>>> +		kcalloc(count, sizeof(*psci_reset_params), GFP_KERNEL);
+>>>>>> +	if (!psci_reset_params)
+>>>>>> +		return -ENOMEM;
+>>>>>> +
+>>>>>> +	for_each_property_of_node(np, prop) {
+>>>>>> +		if (strncmp(prop->name, REBOOT_PREFIX, len))
+>>>>>> +			continue;
+>>>>>> +
+>>>>>> +		num = of_property_read_variable_u32_array(np, prop->name, magic,
+>>>>>> +							  1, ARRAY_SIZE(magic));
+>>>>>> +		if (num < 0) {
+>>>>>> +			pr_warn("Failed to parse vendor reboot mode %s\n",
+>>>>>> +				param->mode);
+>>>>>> +			kfree_const(param->mode);
+>>>>>> +			continue;
+>>>>>> +		}
+>>>>>> +
+>>>>>> +		param->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
+>>>>>> +		if (!param->mode)
+>>>>>> +			continue;
+>>>>>> +
+>>>>>> +		/* Force reset type to be in vendor space */
+>>>>>> +		param->reset_type = PSCI_1_1_RESET_TYPE_VENDOR_START | magic[0];
+>>>>>> +		param->cookie = num > 1 ? magic[1] : 0;
+>>>>>> +		param++;
+>>>>>> +		num_psci_reset_params++;
+>>>>>> +	}
+>>>>>> +
+>>>>>> +	return 0;
+>>>>>> +}
+>>>>>> +arch_initcall(psci_init_system_reset2_modes);
+>>>>>> +
+>>>>>>  int __init psci_dt_init(void)
+>>>>>>  {
+>>>>>>  	struct device_node *np;
+>>>>>>
+>>>>>> -- 
+>>>>>> 2.34.1
+>>>>>>
 
