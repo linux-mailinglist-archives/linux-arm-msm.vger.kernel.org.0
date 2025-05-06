@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-56892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DF39AABAF9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 09:32:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A315DAABB94
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 09:44:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 49E3716F65F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 07:29:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82F3B3B60C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 07:29:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 327A5294A19;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4133729550C;
 	Tue,  6 May 2025 05:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oQZRTtCY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WtFl+xv8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A8F283134;
-	Tue,  6 May 2025 05:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DB127F175;
+	Tue,  6 May 2025 05:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746510261; cv=none; b=IuxYNnakI8V+9rv61O/MsCyJ5iSO9ThaUIhDLJmtq/tkqXuHsnUMFzZj1PXVPGQAcPvl/b3JpxK4too42ZDhLOXoQX5pHu9FwYQunbYHvcY/FZbbx+IuXOJQxv3UFRAh0TEZZfQNS4xwsRi+y+5olNZPVxIHuRkDdMwAQuAL9Ic=
+	t=1746510261; cv=none; b=gi4ZvARcUQ11nZCC2uizhX5WdjOJeN3nvPoTy1VVbS96JB2lYsOm8c/WXjrdrat3woNzZ529uW37AJx8cJHVn2jDl3H24c880cbOA1/OlTygXieCIzpcPZgSo3npCScaHus++HAYNPAtFrgCavV14+urfjriwHR0bM1JhalBDb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1746510261; c=relaxed/simple;
-	bh=VlGlm2rpX2IQG/rie/jcb5KY6Mr2yf/y9ylfqMeqpo8=;
+	bh=z45Mhrm50G2NpvDPKyb5BFCNwuMnJv7rrdU8ii7BY4w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bJF+LF1p+iAjt2jz66aNgjCtva+bSJR25r9LVHgWRcINKT9+/pvw6s785Idv5iUKocSvzA1J6jrhUPnCOupLIt3vR1XYevV4YxFavVrYOiBOkDaVC0KRp4QQjQjHy7hXJ/Hj/W9VRtkBNoUQsxljNfB4G+GXHJzanATPqKN/iJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oQZRTtCY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CB5D7C4CEEB;
+	 In-Reply-To:To:Cc; b=LEmGhQUEmzVkPnGzDu0knZgHAD2VdJbFYheNtPdLweC6VAIzpuycOy7gQLvHSJ5TFWKJHopsj3AQ8Y3rPvSE5veNSOFmaRw/qtfbapMp8fRQb788W4JM/C1JNIF4yOqKLGtV5LSd24GUfjgJetGS6VPUVH2iHWu+mM3UtZk8ue8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WtFl+xv8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D5CABC4CEF0;
 	Tue,  6 May 2025 05:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1746510260;
-	bh=VlGlm2rpX2IQG/rie/jcb5KY6Mr2yf/y9ylfqMeqpo8=;
+	bh=z45Mhrm50G2NpvDPKyb5BFCNwuMnJv7rrdU8ii7BY4w=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=oQZRTtCYi4tw7YQZ8NXTvn+49Z+EJga0q2LAJi7B5Mkvc97bkgNUBwJROUUfL4Lq6
-	 TqSsSyVI4uqSx2C50MEpec+3ULMTn9ZUSuhbR9rhKcVz70hkpPTbGI5dQoWU4PfPFM
-	 uerNcZS/q5XiXnh1uE0P1RZLLzwoHUGIGsT6KbsaFwvaEARcYqyFH7JkFm6zOld/Cf
-	 HCgLFvi8ar2qCMmKv9INrIqf7kLzkryHqSWRTopPB7669ZW+Ltw5Zr9jn7kBKQq5jy
-	 +zndvPRhKPHKpabKNphQqe4HrEIzP1ciJGtPpoMkz0hrmlt1FCKnM+mPHcEcjVxn7/
-	 bStuyy2jy2/Ng==
+	b=WtFl+xv8z/6VRVbe5b/1/wp6FZJEoChJR3qgcSDwQdrrINejPHsIKmnHleJfklTaL
+	 uOu1CCe1Jehv1vOekdIgJ4T4dZJh5iMUrfwI/2E1UW+aGUaQ0hWP3g7nhH1MsREOEI
+	 vuxuL52wzCb2F6HT6zbS9LmrHeDOah5+fD8nTidAQ4q2QHeDIvFOfj/yIfrT+NZo/U
+	 vu49txDiAPRtJa2qORbyx25K5/E3OzEIQmLH6sTvkCb+6oH+1f0t3h8TSJtMvxTbt4
+	 AW6ej7hNKYitCGDHfxfo4MDxWk/nJSd87CxbL86eoUUsKR2jrjwo2Xplox6ZkJdYWa
+	 gMFWlUsIEtqUg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF6B4C3ABAC;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB17CC3ABC3;
 	Tue,  6 May 2025 05:44:20 +0000 (UTC)
 From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Date: Tue, 06 May 2025 09:43:34 +0400
-Subject: [PATCH v2 2/6] dt-bindings: clock: qcom: ipq5018: remove bindings
- for XO clock
+Date: Tue, 06 May 2025 09:43:35 +0400
+Subject: [PATCH v2 3/6] dt-bindings: clock: qcom: Add CMN PLL support for
+ IPQ5018 SoC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,7 +56,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250506-ipq5018-cmn-pll-v2-2-c0a9fcced114@outlook.com>
+Message-Id: <20250506-ipq5018-cmn-pll-v2-3-c0a9fcced114@outlook.com>
 References: <20250506-ipq5018-cmn-pll-v2-0-c0a9fcced114@outlook.com>
 In-Reply-To: <20250506-ipq5018-cmn-pll-v2-0-c0a9fcced114@outlook.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -70,11 +70,11 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  George Moussalem <george.moussalem@outlook.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1746510258; l=916;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1746510258; l=1805;
  i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=JupKX6iwdtJMe4ecLVTA0mWjAGvKoKV28P3vMGpTlG0=;
- b=7p+yVQvKj5aQQRuj+czk6aiSi45ggNA8QFh8VJwga282xblu/OE1PGOvTXbw3Bj8u5hJmcLBj
- J5Cy+BBjW7MDWf5qvb38Bg7e8V4cI2apve30eAPFN79ZcDPH1FwxgBJ
+ bh=8ErFwBb8LXa01ct7/Tl+4mrJDAJ15D3Sw41xcCkSs/4=;
+ b=oA5CQA6Mwh7Ty3WViEfqrAci7NX4dm4nnvnWOgQ/jUopT4a5cT/Du/swtu91VgSnuRJAV7xOm
+ 8Y7tDi4LDaqA/+NtXOqeseDGBlUVwvFAmgF05EuJGV8xpxz7p9c/7SE
 X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
  pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
 X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
@@ -84,27 +84,50 @@ Reply-To: george.moussalem@outlook.com
 
 From: George Moussalem <george.moussalem@outlook.com>
 
-The XO and its source clock must be always-on and is enabled in the GCC
-during probe. As such, remove the bindings for them.
+The CMN PLL block in the IPQ5018 SoC takes 96 MHZ as the reference
+input clock. Its output clocks are the XO (24Mhz), sleep (32Khz), and
+ethernet (50Mhz) clocks.
 
 Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
- include/dt-bindings/clock/qcom,gcc-ipq5018.h | 2 --
- 1 file changed, 2 deletions(-)
+ .../devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml  |  1 +
+ include/dt-bindings/clock/qcom,ipq5018-cmn-pll.h         | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/include/dt-bindings/clock/qcom,gcc-ipq5018.h b/include/dt-bindings/clock/qcom,gcc-ipq5018.h
-index f3de2fdfeea11f4b8832b75a05e424ca347b3634..d4de5eaffee7b4cb81e0ff2dcbf9e6669c3da8f8 100644
---- a/include/dt-bindings/clock/qcom,gcc-ipq5018.h
-+++ b/include/dt-bindings/clock/qcom,gcc-ipq5018.h
-@@ -140,8 +140,6 @@
- #define GCC_WCSS_DBG_IFC_NTS_BDG_CLK			131
- #define GCC_WCSS_DBG_IFC_NTS_CLK			132
- #define GCC_WCSS_ECAHB_CLK				133
--#define GCC_XO_CLK					134
--#define GCC_XO_CLK_SRC					135
- #define GMAC0_RX_CLK_SRC				136
- #define GMAC0_TX_CLK_SRC				137
- #define GMAC1_RX_CLK_SRC				138
+diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml
+index cb6e09f4247f4b25105b25f4ae746c0b3ef47616..817d51135fbfdf0f518af1007ec7d6b120a91818 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml
+@@ -24,6 +24,7 @@ description:
+ properties:
+   compatible:
+     enum:
++      - qcom,ipq5018-cmn-pll
+       - qcom,ipq5424-cmn-pll
+       - qcom,ipq9574-cmn-pll
+ 
+diff --git a/include/dt-bindings/clock/qcom,ipq5018-cmn-pll.h b/include/dt-bindings/clock/qcom,ipq5018-cmn-pll.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..586d1c9b33b374331bef413f543c526212c18494
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,ipq5018-cmn-pll.h
+@@ -0,0 +1,16 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_IPQ5018_CMN_PLL_H
++#define _DT_BINDINGS_CLK_QCOM_IPQ5018_CMN_PLL_H
++
++/* CMN PLL core clock. */
++#define IPQ5018_CMN_PLL_CLK			0
++
++/* The output clocks from CMN PLL of IPQ5018. */
++#define IPQ5018_XO_24MHZ_CLK			1
++#define IPQ5018_SLEEP_32KHZ_CLK			2
++#define IPQ5018_ETH_50MHZ_CLK			3
++#endif
 
 -- 
 2.49.0
