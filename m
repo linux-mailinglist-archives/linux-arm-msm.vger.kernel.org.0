@@ -1,128 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-56932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E61F4AAC2A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 13:31:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B391AAC2C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 13:33:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 105461C28584
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 11:31:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26C531C40289
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 11:33:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F21027C166;
-	Tue,  6 May 2025 11:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CE4B27B4E2;
+	Tue,  6 May 2025 11:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=proton.me header.i=@proton.me header.b="HO0DF0TS"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KTvKmk9K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E68278742;
-	Tue,  6 May 2025 11:29:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BB2233D9C
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 11:32:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746530975; cv=none; b=NZKQVeo7iaP9+EWemRhpvoxwstcSRKO3YhC/b6h7vyAzPv5IG30fsTlmCxVFO7oqTY1jbgQTkhKzY7ZjZIbieYa1LOkfS/0YNoGpdo7e80HhyAmV575FXdY1p8ENCpbih/zzuaEta+45bGlQnxPD/xWqd91sIe+4BgNX1R+wBk8=
+	t=1746531163; cv=none; b=EBawzt6KT/Lt5VjRlvdT+E8J5v7tcNkYpHR5TdHQFDFtMT12BaVKgNCoSn5ncdwukVeQ4yARfOGaC3JOMRpIwuZhAFX2e0Cwd1p8Hmqbu1cwHQtHaXI3xpY9QEmewXPJbJVPxDzEaAqdMlJcuuh4hrVflh1WbuP+59ie1zsYyWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746530975; c=relaxed/simple;
-	bh=J2XT4AUKONpaTXWQDPzjZYfmF/odE31sTcUZ9Rj62HU=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mlpF/ckKVCAQLEoyuyJqyohZQDtOjEmE3wca9aiZ4vBKYG5UIy3AelxnXb+dj6kYiIIsWgFnYe6V2dGunvQSDity5RJkXDn8Yy66aZkSxR/IQAmL7wLafdo+opMpS6OldsGLtViQfvQVaFFlphxYjmzWj5VJ84kQRLIJF3sz+2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=HO0DF0TS; arc=none smtp.client-ip=188.165.51.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1746530957; x=1746790157;
-	bh=J2XT4AUKONpaTXWQDPzjZYfmF/odE31sTcUZ9Rj62HU=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=HO0DF0TSGjKYgVq+u1Y+M6W14ultpXfkvDmlxQFKVYiMD5v+HTSs3TCP6fnik3/p0
-	 tjL82DqE2XAwu3wa7Kb/9ggXFr57EhXKyNqFVvXjtQ3lUnAKu2HmEMFs2AMp4p5BT9
-	 j3wkssJExd6IGnC8S8PxcHALQHXilbGMfBx15cXk1XJi+cAjeKxyWBJztw1PSJbb/3
-	 4hAQ5g1o8GZKnriSpYY1bGrFOsQALAPQwCj+cY4q9G9i3oT9HMoXdv/3md28jrnJSV
-	 gNHNou5ZOMhqPMXtHiJk6JLSgjvZw+HTAo7FfObX1bCC2g0rdWYl9jyZouDb8vXAwO
-	 7OTA+fFf+t72A==
-Date: Tue, 06 May 2025 11:29:14 +0000
-To: Niklas Cassel <cassel@kernel.org>
-From: Laszlo Fiat <laszlo.fiat@proton.me>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, =?utf-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, Krishna chaitanya chundru <quic_krichai@quicinc.com>, Wilfred Mallawa <wilfred.mallawa@wdc.com>, Damien Le Moal <dlemoal@kernel.org>, Hans Zhang <18255117159@163.com>, =?utf-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] PCI: qcom: Do not enumerate bus before endpoint devices are ready
-Message-ID: <4r2xPb3Ic9SP9d4CU7Ru6X1mMXGXJIvC1NYBDwmEqGpMpul-Hgx1tG5ERjyHncqvZ42Ys_x16ut7PGPmtPQCJKbQRyYbNAY7tEpUY-_8Dks=@proton.me>
-In-Reply-To: <20250506073934.433176-8-cassel@kernel.org>
-References: <20250506073934.433176-6-cassel@kernel.org> <20250506073934.433176-8-cassel@kernel.org>
-Feedback-ID: 130963441:user:proton
-X-Pm-Message-ID: 6916607993085f1c4cfc8ca8f11722f473805ac8
+	s=arc-20240116; t=1746531163; c=relaxed/simple;
+	bh=wgdAEoTSiOxWP+EKRKfL5Lx5Umr33FPeJxeC6izneu8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iwIjenklU+T3m3XMcmA4SVkZOEEo5xWBYMPA6QP+L7Jrg4fY/L06IJfj6ESMEOWcqfLeXv+bha5DSJ5bEP5pyuR6hGVTSatoMtOycG9vt4bLC0g0BffY5RxS81hutr8zY1iRXjn66RhT0JTxlVByeWvSTLj+lCly/pmhfYoWv/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KTvKmk9K; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 546ABgl9016498
+	for <linux-arm-msm@vger.kernel.org>; Tue, 6 May 2025 11:32:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=fwl7sL+33/f+eH9L4tdGLHOE
+	I3/YzHIvUjaSA4mATTQ=; b=KTvKmk9K+OE0l3LiE+I2xJI5LLXAXDQORpHxQXel
+	CDhBIsjrUo7truGbI7eoVJ9L5pKyt/BsNcA5ye6UKiUe5vfdT0ybVmrjQE/9rYrg
+	7+PMrAJ5Ar/zsZGyNAmkkDiU9eJnuuPleQ+PTMcRvI+F8VWBkDLdkGp879GxVJzg
+	Bf0/ChKVzesdbW+zHFjKL8Kx2cT3JVfCRpre2aGhDNN1U0BZZYBBCIlJcBBChpx3
+	D4MQ5dN6D5UJViMSwg2PMa44dBNc9UoDQRyJydVJ8ouLc4IuO5QvkiJzWIC7z3Tl
+	c1cWLYeW019GLMkF7fugxOLzFAy/bnn9ROWNO9Xb9L6lyA==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46f8gv1qky-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 11:32:40 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c5cd0f8961so1204630185a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 04:32:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746531152; x=1747135952;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fwl7sL+33/f+eH9L4tdGLHOEI3/YzHIvUjaSA4mATTQ=;
+        b=vH+kJwgOwbwa5WUUFyHxZwguxeA+rkxU9+jSzlBJkdwJbx2QswujP2IBQ/uF+7Y27H
+         3NF5ktkbUwPeuOy37du8ZYuf9vVrzXNR9kPYOX6E4ePHG+qKVaLi9QlGW0583TKAOiJk
+         k3IHuPJLkg4TTUHFSxrEJteC1QbKvatQ6W+EgVsIrPyEx4TaeLM9x8LJAIXzFqcwVs+I
+         ciDzfpPZiV0H3Fx3hPKK3OHds2MiP1bEWy8mEtnO0K6bUawjrCAVoBIAYSJvFuy2VXm/
+         6/XbA3w+0V/4FyxeujulVkqHACQpj3FS7oEaQy38xZKlJlDqK0uX1PfhGEBqk/Mp8KXL
+         FUxg==
+X-Forwarded-Encrypted: i=1; AJvYcCUasE7rSdoLxUu5dUu9/5NxJR7CZW7p3cRY5ulUxjVdH6Qt+U8LmzGUdEF2TRJg2JfV3b+OH/JYqzOkVVwy@vger.kernel.org
+X-Gm-Message-State: AOJu0YxIPn6+geZJVLTSTYDcpc75svNFQq4VlElbyp/7hhd/+x2Tv3zH
+	1DF1Z1VbXwD95rH/wFQkRZ1pYkOhRfLt7WbVzy/pVN0KP8U56t7eyW0otXVHdWiowW5SZB2HzDb
+	Wjrepu4onwLPN9F4ObZT7bZF5VF1tokMoTIwZaI9M9GJrj7lvWRiiBao6T7G8Wju9
+X-Gm-Gg: ASbGncuPUmxCaMJg/xsNV0uQuf4Y/5VGrPP/1axMOKtjAu6maNRktsGpTcrLEDbWCfJ
+	BWyKYnLliXaWbEjiBM9Ha+pWnlX9LO/zKXSBxk9OdCOfMDXuRhokTR7H3alYu1s37AEnntQokpP
+	wgTPr698pdWroVQ/ZFC3okLXRLzw6Mwwov1xA6XYhy3UVZqlLxStG+1Kw+ClgtAfhKkFOQnsShJ
+	Usm2oijN22vwL/Lyw77jfGDPvFerBsI5cfeXl3qXFp4zQJY7VA11zUnhJ20SNv9g87c3wHh90re
+	6mMRaa3fOPNiIkW0vYkQxFQGLEMhGnWcZiYtgt1baiQalO0y1xh50Qnh29N9FwR3/RT1xMPJejY
+	=
+X-Received: by 2002:a05:620a:170a:b0:7c5:4d2e:4d2d with SMTP id af79cd13be357-7cae3b0ca45mr1565852985a.50.1746531152622;
+        Tue, 06 May 2025 04:32:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGh5sYkZSzYvTbugryEFcZleW6v/iZDEThUuz+Ah7LtSsuWl3cmvTZ0zKAiaQcydSJfq0ywvQ==
+X-Received: by 2002:a05:620a:170a:b0:7c5:4d2e:4d2d with SMTP id af79cd13be357-7cae3b0ca45mr1565849285a.50.1746531152291;
+        Tue, 06 May 2025 04:32:32 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94c0897sm2039490e87.83.2025.05.06.04.32.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 May 2025 04:32:31 -0700 (PDT)
+Date: Tue, 6 May 2025 14:32:29 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>,
+        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linaro-mm-sig@lists.linaro.org, quic_vtanuku@quicinc.com
+Subject: Re: [PATCH v6 1/2] dmaengine: qcom: gpi: Add GPI Block event
+ interrupt support
+Message-ID: <ze5y6llgo2qx4nvilaqcmkam5ywqa76d6uetn34iblz4nefpeu@ozbgzwbyd54u>
+References: <20250506111844.1726-1-quic_jseerapu@quicinc.com>
+ <20250506111844.1726-2-quic_jseerapu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250506111844.1726-2-quic_jseerapu@quicinc.com>
+X-Authority-Analysis: v=2.4 cv=dYmA3WXe c=1 sm=1 tr=0 ts=6819f358 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=QOsQMPsNCkuRs1RMv08A:9 a=CjuIK1q_8ugA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: gXPED-ChgvmK_3XzFTn1CMA0-OasY5gK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDExMSBTYWx0ZWRfX2ADyk1M1lRJ+
+ V6H4hItIWRih8fmvAU5nOcJ+DytnUkHdtmYWaYDi9WkKqdV46KXCfbP65seJktBgOPXvizmVw8c
+ PAE0RkyKehgzyMwZxqILRPpRvjTW/n+3ykNTuBwPy57B7GC5vBe3hY8gctz1TFMeEdDz/E2hkYV
+ +yrRhzaE6fPhWea3KbKMSSAIoaoN3ndKm7XhT53Ae5xS4JlM4DRgh6brfTLaMrZYGOtaiucTXuu
+ vczpR1f9TJONbezCG1Uq9RGzAlt1qTi4i/Ykn4yDtlk6Y3N8R9ICy4meumV1CcFFJUmHSFGXZQa
+ BJh5jK3xgeOIgWWCq32Hjw+6ecCrtz3EQ6R0ccC98mQ7SXc0hQTWLqg5fekNjDDN+RGxGu3lOpv
+ SVF1KwliXoAD1eiwc0XRnw55jFfVuD0YGyuLTRz912BrbhuwRz+hWvqx4DFQExRe66XPyVpF
+X-Proofpoint-GUID: gXPED-ChgvmK_3XzFTn1CMA0-OasY5gK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-06_05,2025-05-05_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 clxscore=1015 adultscore=0
+ mlxlogscore=999 impostorscore=0 malwarescore=0 mlxscore=0 phishscore=0
+ lowpriorityscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505060111
 
-
-On Tuesday, May 6th, 2025 at 9:39 AM, Niklas Cassel <cassel@kernel.org> wro=
-te:
-
-> Commit 36971d6c5a9a ("PCI: qcom: Don't wait for link if we can detect Lin=
-k
-> Up") changed so that we no longer call dw_pcie_wait_for_link(), and inste=
-ad
-> enumerate the bus when receiving a Link Up IRQ.
->=20
-> Before 36971d6c5a9a, we called dw_pcie_wait_for_link(), and in the first
-> iteration of the loop, the link will never be up (because the link was ju=
-st
-> started), dw_pcie_wait_for_link() will then sleep for LINK_WAIT_SLEEP_MS
-> (90 ms), before trying again.
->=20
-> This means that even if a driver was missing a msleep(PCIE_T_RRS_READY_MS=
-)
-> (100 ms), because of the call to dw_pcie_wait_for_link(), enumerating the
-> bus would essentially be delayed by that time anyway (because of the slee=
-p
-> LINK_WAIT_SLEEP_MS (90 ms)).
->=20
-> While we could add the msleep(PCIE_T_RRS_READY_MS) after deasserting PERS=
-T
-> (qcom already has an unconditional 1 ms sleep after deasserting PERST),
-> that would essentially bring back an unconditional delay during probe (th=
-e
-> whole reason to use a Link Up IRQ was to avoid an unconditional delay
-> during probe).
->=20
-> Thus, add the msleep(PCIE_T_RRS_READY_MS) before enumerating the bus in t=
-he
-> IRQ handler. This way, for qcom SoCs that has a link up IRQ, we will not
-> have a 100 ms unconditional delay during boot for unpopulated PCIe slots.
->=20
-> Fixes: 36971d6c5a9a ("PCI: qcom: Don't wait for link if we can detect Lin=
-k Up")
-> Signed-off-by: Niklas Cassel cassel@kernel.org
->=20
+On Tue, May 06, 2025 at 04:48:43PM +0530, Jyothi Kumar Seerapu wrote:
+> GSI hardware generates an interrupt for each transfer completion.
+> For multiple messages within a single transfer, this results in
+> N interrupts for N messages, leading to significant software
+> interrupt latency.
+> 
+> To mitigate this latency, utilize Block Event Interrupt (BEI) mechanism.
+> Enabling BEI instructs the GSI hardware to prevent interrupt generation
+> and BEI is disabled when an interrupt is necessary.
+> 
+> When using BEI, consider splitting a single multi-message transfer into
+> chunks of 8 messages internally and so interrupts are not expected for
+> the first 7 message completions, only the last message triggers
+> an interrupt, indicating the completion of 8 messages.
+> 
+> This BEI mechanism enhances overall transfer efficiency.
+> 
+> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
 > ---
-> drivers/pci/controller/dwc/pcie-qcom.c | 1 +
-> 1 file changed, 1 insertion(+)
->=20
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/control=
-ler/dwc/pcie-qcom.c
-> index dc98ae63362d..01a60d1f372a 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1565,6 +1565,7 @@ static irqreturn_t qcom_pcie_global_irq_thread(int =
-irq, void data)
->=20
-> if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
-> dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
-> + msleep(PCIE_T_RRS_READY_MS);
-> / Rescan the bus to enumerate endpoint devices */
-> pci_lock_rescan_remove();
-> pci_rescan_bus(pp->bridge->bus);
->=20
-> --
-> 2.49.0
+> v5 ->v6:
+>   - For updating the block event interrupt bit, instead of relying on
+>     bei_flag, decision check is moved with DMA_PREP_INTERRUPT flag.
+>  
+> v4 -> v5:
+>   - BEI flag naming changed from flags to bei_flag.
+>   - QCOM_GPI_BLOCK_EVENT_IRQ macro is removed from qcom-gpi-dma.h
+>     file, and Block event interrupt support is checked with bei_flag.
+> 
+> v3 -> v4:
+>   - API's added for Block event interrupt with multi descriptor support for
+>     I2C is moved from qcom-gpi-dma.h file to I2C geni qcom driver file.
+>   - gpi_multi_xfer_timeout_handler function is moved from GPI driver to
+>     I2C driver.
+> 
+> v2-> v3:
+>    - Renamed gpi_multi_desc_process to gpi_multi_xfer_timeout_handler
+>    - MIN_NUM_OF_MSGS_MULTI_DESC changed from 4 to 2
+>    - Added documentation for newly added changes in "qcom-gpi-dma.h" file
+>    - Updated commit description.
+> 
+> v1 -> v2:
+>    - Changed dma_addr type from array of pointers to array.
+>    - To support BEI functionality with the TRE size of 64 defined in GPI driver,
+>      updated QCOM_GPI_MAX_NUM_MSGS to 16 and NUM_MSGS_PER_IRQ to 4.
+> 
+>  drivers/dma/qcom/gpi.c           | 3 +++
+>  include/linux/dma/qcom-gpi-dma.h | 2 ++
+>  2 files changed, 5 insertions(+)
+> 
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index b1f0001cc99c..7e511f54166a 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -1695,6 +1695,9 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
+>  
+>  		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+>  		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
+> +
+> +		if (!(i2c->dma_flags & DMA_PREP_INTERRUPT))
+> +			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_BEI);
+>  	}
+>  
+>  	for (i = 0; i < tre_idx; i++)
+> diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
+> index 6680dd1a43c6..ebac0d3edff2 100644
+> --- a/include/linux/dma/qcom-gpi-dma.h
+> +++ b/include/linux/dma/qcom-gpi-dma.h
+> @@ -65,6 +65,7 @@ enum i2c_op {
+>   * @rx_len: receive length for buffer
+>   * @op: i2c cmd
+>   * @muli-msg: is part of multi i2c r-w msgs
+> + * @dma_flags: Flags indicating DMA capabilities
+>   */
+>  struct gpi_i2c_config {
+>  	u8 set_config;
+> @@ -78,6 +79,7 @@ struct gpi_i2c_config {
+>  	u32 rx_len;
+>  	enum i2c_op op;
+>  	bool multi_msg;
+> +	unsigned int dma_flags;
 
-Tested-by: Laszlo Fiat <laszlo.fiat@proton.me>
+Why do you need extra field instead of using
+dma_async_tx_descriptor.flags?
+
+>  };
+>  
+>  #endif /* QCOM_GPI_DMA_H */
+> -- 
+> 2.17.1
+> 
+
+-- 
+With best wishes
+Dmitry
 
