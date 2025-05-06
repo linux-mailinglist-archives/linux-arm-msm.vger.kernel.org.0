@@ -1,64 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-56909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85801AABC2F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 09:57:37 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB7A5AABC48
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 10:00:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EDAA3505625
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 07:57:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A88E8B20C38
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 07:56:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5215207DFE;
-	Tue,  6 May 2025 07:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED8037260A;
+	Tue,  6 May 2025 07:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nvOj3xPQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ORtYcfgG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E99205E2F;
-	Tue,  6 May 2025 07:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C1272637;
+	Tue,  6 May 2025 07:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746517194; cv=none; b=IRR3JhhPMj4MT2Va5TRxyChhJUg627EcK+2KgeGHwIGoBNtv1ek9e60QmGmJnM9n2V9nY+ybLGd0TLcZspjmW3g7mEUDqeK3gd8jYLgN6R+v7GDOX6DCCMkW4AJDGtZCxX/kuUa4r4CXBrJTJFB/MH34wQI5DCkUzKIAMUNDSCs=
+	t=1746517200; cv=none; b=EK9d48H+f98uXwuK2znl7q8qzL7bD6FR/PJioi4Qqf9BGh7fBX+QItawOXfEM5ym/EQFgE+atpR5fVRLLxQRxY2EYXe9hty5k2AZ9GhPi/5FkXRT76S6yXKmZwYIIM+A6npctG1IDZR3PgrQMh5OYDqp4yxJi8ri5UrWwDkRBwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746517194; c=relaxed/simple;
-	bh=gdkx6I9xAd8ChXompWb96uSWQh1bxe/w+FMbYjeo0OI=;
+	s=arc-20240116; t=1746517200; c=relaxed/simple;
+	bh=aDBAcDbQGOt5Xv5cthyXK3A/bSsdny7PtcfYNAzg71I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tScN/StF+DNkHzS8SIZXZJ12WwjoCcOBYBmPaPRLmQYLDch+Mulf3I1OH9i93qmnWEfdVcqasIdfBatG6+2ZJYwnF+/IWIW4JSwahbZ4DpUKR8y82tnDEtOWdge/6MlThpL2Rvkw1DBIvOiu1FdnB1OvMoYATsLDbpO0qmfH6bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nvOj3xPQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736FAC4CEE4;
-	Tue,  6 May 2025 07:39:51 +0000 (UTC)
+	 MIME-Version; b=oXBDhwdOpk8pJZZUOJKWbfO8jtSFl8kHuInWmrQbid7rmiiwofJmAgsWWHQL60TrxZo9PvqguNIkPvQtlLWEp5IDCRAYT7+Cjkapdt+21cv5KuUCRLCF1xHEPzfZP2godqwFXf4tf5Z+h6LEMmoy8SuBlIIPmpbdoK8+L9vzhL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ORtYcfgG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EB4C4CEE4;
+	Tue,  6 May 2025 07:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746517194;
-	bh=gdkx6I9xAd8ChXompWb96uSWQh1bxe/w+FMbYjeo0OI=;
+	s=k20201202; t=1746517200;
+	bh=aDBAcDbQGOt5Xv5cthyXK3A/bSsdny7PtcfYNAzg71I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nvOj3xPQjrwvoboH8TxqKe5QgbnHRYzQe2xmaoi2Y3Np0izv3Tci4b+8DWuQLey3Z
-	 U9wY4Z6T0bKl4Me4lOMfuUlAilRYuZR0t1bT3haFELlxwZiYA0J0QTVwmvxxU563cc
-	 cwyN4ywkrkUYysOoJLoycMCqwnypkPUnOXTppj06qfpVx2NWnMz7bB2orzRYVuuOOv
-	 DiY0gaOBFYdkKh4cxTlK50emSw/BlTnmpUoh5WSxFofQVkQOOehENFykP/bj+VhKkD
-	 BMsAXhuzJqf8zVYHj7KnVt9M+bmrPmXRB2i2dXmtkke8pYlnGPRJXSeImfIUcYLlzh
-	 mE8pwYWBN+g4g==
+	b=ORtYcfgGYTZGn6p83DHwBgXNrpNQk4f8CgPSNJYfF2fAkWhD4MSzEVlRSyPEoxO8y
+	 evdaYl1MvivN+dcfLkrvDe5iD8elHpUaRYWa0eOP+Psu0aFXOXfSxCnU6DODhxlMQd
+	 4laVsr4+WfY2PnytmfjsCrSq236Kg4ByWNLHPx9KLmC7eARuavfaQ6icStkuI2N/w4
+	 eU1f4XQvBOZ7omzpPZchAnTNP6iKGo1FEQBaEahAZDnpI31bazRfc/ws41nNPP8okw
+	 nZXBJjCpK87+3PxSbPOwSifp4mOABYv36tanhmHQlWW3cPeOoMkBocKcDNtrw+vYCT
+	 rpY4H7JJfWEnw==
 From: Niklas Cassel <cassel@kernel.org>
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
 	Rob Herring <robh@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-	Niklas Cassel <cassel@kernel.org>
+	Bjorn Helgaas <bhelgaas@google.com>
 Cc: Wilfred Mallawa <wilfred.mallawa@wdc.com>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Hans Zhang <18255117159@163.com>,
 	Laszlo Fiat <laszlo.fiat@proton.me>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	linux-pci@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 2/4] PCI: qcom: Do not enumerate bus before endpoint devices are ready
-Date: Tue,  6 May 2025 09:39:37 +0200
-Message-ID: <20250506073934.433176-8-cassel@kernel.org>
+Subject: [PATCH v2 4/4] PCI: qcom: Replace PERST sleep time with proper macro
+Date: Tue,  6 May 2025 09:39:39 +0200
+Message-ID: <20250506073934.433176-10-cassel@kernel.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250506073934.433176-6-cassel@kernel.org>
 References: <20250506073934.433176-6-cassel@kernel.org>
@@ -68,52 +66,31 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2089; i=cassel@kernel.org; h=from:subject; bh=gdkx6I9xAd8ChXompWb96uSWQh1bxe/w+FMbYjeo0OI=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGDIk9+yu0FjDEmsrzfpYUuCanvkuh5rbO2rm5zW6+iVqT BC9y3Guo5SFQYyLQVZMkcX3h8v+4m73KccV79jAzGFlAhnCwMUpADc5m5Fhr8Gio/+NdXf4zT3x 4t+0LS9C/RL+qlUl3da4bhzwofHMBYb/iRVNj+fu1Zs4kS3WnOnB9MRTj83DKxPEDmUFOHfz33v IAQA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=847; i=cassel@kernel.org; h=from:subject; bh=aDBAcDbQGOt5Xv5cthyXK3A/bSsdny7PtcfYNAzg71I=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGDIk9+wxX3jdfJpAn9gxhSVlt8/ccHoWfWrDObkss9ssW 9fqtGnN6ihlYRDjYpAVU2Tx/eGyv7jbfcpxxTs2MHNYmUCGMHBxCsBE2v4zMnyyXhm4cFGixL1f ZdbW006ErG+7uc9vVfq7TQrfqhcp/9vMyDD309udgjKftA9JP5Q1bF6sc5UpozPxdcwSRcHXy70 97vABAA==
 X-Developer-Key: i=cassel@kernel.org; a=openpgp; fpr=5ADE635C0E631CBBD5BE065A352FE6582ED9B5DA
 Content-Transfer-Encoding: 8bit
 
-Commit 36971d6c5a9a ("PCI: qcom: Don't wait for link if we can detect Link
-Up") changed so that we no longer call dw_pcie_wait_for_link(), and instead
-enumerate the bus when receiving a Link Up IRQ.
+Replace the PERST sleep time with the proper macro (PCIE_T_PVPERL_MS).
+No functional change.
 
-Before 36971d6c5a9a, we called dw_pcie_wait_for_link(), and in the first
-iteration of the loop, the link will never be up (because the link was just
-started), dw_pcie_wait_for_link() will then sleep for LINK_WAIT_SLEEP_MS
-(90 ms), before trying again.
-
-This means that even if a driver was missing a msleep(PCIE_T_RRS_READY_MS)
-(100 ms), because of the call to dw_pcie_wait_for_link(), enumerating the
-bus would essentially be delayed by that time anyway (because of the sleep
-LINK_WAIT_SLEEP_MS (90 ms)).
-
-While we could add the msleep(PCIE_T_RRS_READY_MS) after deasserting PERST
-(qcom already has an unconditional 1 ms sleep after deasserting PERST),
-that would essentially bring back an unconditional delay during probe (the
-whole reason to use a Link Up IRQ was to avoid an unconditional delay
-during probe).
-
-Thus, add the msleep(PCIE_T_RRS_READY_MS) before enumerating the bus in the
-IRQ handler. This way, for qcom SoCs that has a link up IRQ, we will not
-have a 100 ms unconditional delay during boot for unpopulated PCIe slots.
-
-Fixes: 36971d6c5a9a ("PCI: qcom: Don't wait for link if we can detect Link Up")
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/controller/dwc/pcie-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index dc98ae63362d..01a60d1f372a 100644
+index 01a60d1f372a..fa689e29145f 100644
 --- a/drivers/pci/controller/dwc/pcie-qcom.c
 +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1565,6 +1565,7 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
- 
- 	if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
- 		dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
-+		msleep(PCIE_T_RRS_READY_MS);
- 		/* Rescan the bus to enumerate endpoint devices */
- 		pci_lock_rescan_remove();
- 		pci_rescan_bus(pp->bridge->bus);
+@@ -289,7 +289,7 @@ static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
+ static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
+ {
+ 	/* Ensure that PERST has been asserted for at least 100 ms */
+-	msleep(100);
++	msleep(PCIE_T_PVPERL_MS);
+ 	gpiod_set_value_cansleep(pcie->reset, 0);
+ 	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
+ }
 -- 
 2.49.0
 
