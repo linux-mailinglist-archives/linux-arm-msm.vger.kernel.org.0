@@ -1,59 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-56992-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0EDDDAACCA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:03:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0998AAACCAC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:03:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 668D41744A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 18:03:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E9AF61C05E5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 18:03:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 444742820AA;
-	Tue,  6 May 2025 18:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9839A284B46;
+	Tue,  6 May 2025 18:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kyKSasU9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Md6972CK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A7A1AAA1F;
-	Tue,  6 May 2025 18:03:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CFA1AAA1F;
+	Tue,  6 May 2025 18:03:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746554584; cv=none; b=qZAfz3qIHdrXLV4xfJuVwjoFOv/+wBCkBN0aqub3OUCTWrfLH5+/bvu1KXcTQfwoy9/UVFi4f8skZzHE0H9xcka0lsQsFBTY/yjE4Wj+j3qIEJPQHLTsse9OyAmpr9RGouHCGKDe6DMnas6Bx0M1g6FV2Wi1xGpRosVAQ8aVyZk=
+	t=1746554591; cv=none; b=qyDZAqoAyD9aWdoHEfsyjI4PAWIO63Fv3EeGVbUyU/JvZ1P7yIIX8ZfPBBJm7OYvkd+G9uNX4qgYR7y6RhpQW8a0e/+ReB9cbmE5Bk3ewFon+7KHJbVHTIF/9lvDEdsHStumR2+SqjU3Nl9PYr74HG+3pQ05b7NpFtuFpCAgVwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746554584; c=relaxed/simple;
-	bh=I6ZJf1ewxQVUGMccsiKD0bYREX3+2yWx/jb9aQwbA4o=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=l2SgFz3rfKtwDvS7dd8Ph8qre6Xn8qK21g2+VmijmC5gHYGqN98xqGgVPn/vpaYHiTtHENcnepHoi62LzvnoGjTACOniJAehhQEjwIdlHSW4TCfCEyKlIEw2jCQEyxNT1F3o8xcd3i9NE+WIk4m6ObfkZwU3vIUTMB3ShTMzvvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kyKSasU9; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1746554591; c=relaxed/simple;
+	bh=KF+PIXvjYR8NRjW0lfwgS1a9Isu2yni/x774xQvxk2A=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CdyrhXrqBC1Iws6eEEYwwsrgKkzX4VJjSWu3yZcssAjNLwOuFrKTVzHOElLNq6362ZtlZtx1pzk9l+KO1SbayGvpI4E3VgXUXf4fcmLVSVB9DDihfVJvIlUu9726iN6f3cLg6xTGBcr9E37skmpWyaFbB1GgfFz3sm2DpI/BV9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Md6972CK; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 546HfLrK017515;
-	Tue, 6 May 2025 18:02:58 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 546AdBDQ015425;
+	Tue, 6 May 2025 18:03:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:message-id:mime-version:subject:to; s=
-	qcppdkim1; bh=C4NefBXU1mIg6NtdQJ5DyHLItC3++Kb51ZY9LzbsbEU=; b=ky
-	KSasU9WXVZMeHQPeKX2mgvChtRnkYXVTzjHKVENNiQYX2BMkPBLes2xFKoJpMaxj
-	DYcOM6sJsSmN87ubT7SYrvSwYglZbvsOIZwrn7RP63uZS3OF4abacjRxGeMP30Dh
-	HrqBajjHeTy0Tfhcq/TWzABto3dHhPss0VaB238AXzOmR+pLW27ehTwe7K5Qra4E
-	IhiehqatQnrG/03Ez7fSCTU7/0YeoEuAM3xFfPxF/9vRjCHnuoF8NTZgV7B7Mi/F
-	D9G29iCGc+6pMPjWv1ItE02RGarqUDAdaBoLbFjMdwx7GdjbMuPx25rz07ahDHX9
-	vagsZtobNdy+q5+Vzwgg==
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=cskM/Nfz7qs+eKdo+ZzQr9p7
+	XKs9BZyGAAX9bpARVnQ=; b=Md6972CKnfHFZlvXlgsMTnZ48Px9tTa8vquw5YVu
+	YRF32vnegeajyoX+Gd5lHr/B27WJbrB4kY4gqnKMuwhugIE7mIOCnI1Qbfr5bDnf
+	Rus7AeboKmfawxF/i/ztNI8VO0IEDt5H39jo3DRMHDWjSB80dUQCorjhPh/TfEqS
+	rU8LneLYHucc3raeCTGEKu6NynHlPsuMIEZHDZRLSkVZpt16ZKiBe0XuYS11Don/
+	+bNlkPJYq2ASWOZafPWIh3TGpz+D4mrjKGxz6h8YdcQmdUBC9OJ2qrmQ3nU7P+QX
+	af6+9sj3S1Nca5aEQCFgHQalu+e2/2mel9Yip9NQO/AvsQ==
 Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46e0xsy0nv-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46fguuh9th-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 May 2025 18:02:58 +0000 (GMT)
+	Tue, 06 May 2025 18:03:06 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 546I2vLZ022167
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 546I35rK022319
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 6 May 2025 18:02:57 GMT
+	Tue, 6 May 2025 18:03:05 GMT
 Received: from hu-ptalari-hyd.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 6 May 2025 11:02:51 -0700
+ 15.2.1544.9; Tue, 6 May 2025 11:02:59 -0700
 From: Praveen Talari <quic_ptalari@quicinc.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Jiri Slaby
@@ -70,11 +71,15 @@ To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         <linux-serial@vger.kernel.org>, <devicetree@vger.kernel.org>
 CC: <psodagud@quicinc.com>, <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
         <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
-        <quic_mnaresh@quicinc.com>, <quic_shazhuss@quicinc.com>
-Subject: [PATCH v5 0/8] Enable QUPs and Serial on SA8255p Qualcomm platforms
-Date: Tue, 6 May 2025 23:32:24 +0530
-Message-ID: <20250506180232.1299-1-quic_ptalari@quicinc.com>
+        <quic_mnaresh@quicinc.com>, <quic_shazhuss@quicinc.com>,
+        Nikunj Kela
+	<quic_nkela@quicinc.com>
+Subject: [PATCH v5 1/8] dt-bindings: serial: describe SA8255p
+Date: Tue, 6 May 2025 23:32:25 +0530
+Message-ID: <20250506180232.1299-2-quic_ptalari@quicinc.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20250506180232.1299-1-quic_ptalari@quicinc.com>
+References: <20250506180232.1299-1-quic_ptalari@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,76 +91,132 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JfGfiCwIjBAI4LnAuCJsK7yP6NqbtM5i
-X-Proofpoint-ORIG-GUID: JfGfiCwIjBAI4LnAuCJsK7yP6NqbtM5i
-X-Authority-Analysis: v=2.4 cv=bdprUPPB c=1 sm=1 tr=0 ts=681a4ed2 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=UJPdHDfy c=1 sm=1 tr=0 ts=681a4eda cx=c_pps
  a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=wPpz0gULE6-aHRqVbM0A:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDE3MCBTYWx0ZWRfX3rbHOC+Ql4Ht
- berbE6tg/93GbbQEeWNlz2kvhUkAoKQ+CFAak4fO222pxcQ/5oV+qeEAf5BtHS3DSP79RUP0JYn
- gzKfyw7dszUOLpjeWUmXeRJKAb53KuLcvOBRPYwQ4kucEt8lcpYs9pnwubTH46HdK2vrltvFw9+
- JFY1bdsCN8PvGttVWBqKxExRXn0OqTaw/i0EqESqWb7sumE1iKnt7eIiDXaGNmzKfc6TnEmkvl/
- VoXCoy9L6LaQbTKPGvJtxUsp0mTAmxlvq1c0y2p7xz42TTpuwVwUBIUq6SYrVitVa4Y5HwdJ3hS
- Iz5oUmEvPyssAOC1kOpy5Qn3uNAZLu87myROY0I8aaIYOmmQeAp3BzzogDii5IFTe/7c2zjaWch
- yLjMdGFJLh3OhF2HQxHeaPfj6naj5hEh22QoDqXG8wT/XvcayXEYMBZkbaWo9L6aLWppoaxL
+ a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=gEfo2CItAAAA:8 a=COk6AnOGAAAA:8
+ a=rjx3OjMNV77wTL7fGyAA:9 a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: ExDhvwjBAjEagnKSnTwZrD7WYgQUckHP
+X-Proofpoint-GUID: ExDhvwjBAjEagnKSnTwZrD7WYgQUckHP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDE3MCBTYWx0ZWRfX/hEyAEpr9/Hy
+ kyuyy0XQxU3/tuuquf8nK6QqwcCTBQeoRc3+cQos4KWTnV2QeMRDNLOFqX+nPaeF6XKxMyUzVKe
+ 1MszZZ0oA+RJVXlyVqS4u+o5osPFXQbCb1hPxJ53PfdGiiWy878ap0jlAaP9GZFZE4IV6EXduHs
+ BuQwncHrjntou8JdEX6TrCR7DLc+LIiwD0y68XIk0vSmW8CmqgAa8H2rgOt6FezqC+bGiWAEm+r
+ OOTN9Nd39kAAOM7QiRkOJomBHjLOBhZCbE73JNHGm7/iQ3BBczoHB9CNedSOR7PVzYf/xWLRsjR
+ ev50MY+0PoKY8mtkbC1xZLEOoqqrhityKSveOnyM8W87LE04Qtpg+Z5O4KqAOJLzQDhWjNUwjS1
+ 6tdHd80uoM23QoCXmWZtIW48BVT37SJMNKdFotLuWiQei/OhesZNS1G+FVMkFXru0o3/4hMR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-06_08,2025-05-05_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 malwarescore=0
- clxscore=1015 phishscore=0 adultscore=0 spamscore=0 impostorscore=0
- mlxlogscore=760 mlxscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
+ suspectscore=0 adultscore=0 clxscore=1015 phishscore=0 spamscore=0
+ impostorscore=0 mlxlogscore=999 mlxscore=0 lowpriorityscore=0 bulkscore=0
+ malwarescore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2504070000 definitions=main-2505060170
 
-The Qualcomm automotive SA8255p SoC relies on firmware to configure
-platform resources, including clocks, interconnects and TLMM. The device
-drivers request resources operations over SCMI using power and
-performance protocols.
+From: Nikunj Kela <quic_nkela@quicinc.com>
 
-The SCMI power protocol enables or disables resources like clocks,
-interconnect paths, and TLMM (GPIOs) using runtime PM framework APIs,
-such as resume/suspend, to control power states(on/off).
+SA8255p platform abstracts resources such as clocks, interconnect and
+GPIO pins configuration in Firmware. SCMI power and perf protocols are
+used to send request for resource configurations.
 
-The SCMI performance protocol manages UART baud rates, with each baud
-rate represented by a performance level. Drivers use the
-dev_pm_opp_set_level() API to request the desired baud rate by
-specifying the performance level.
+Add DT bindings for the QUP GENI UART controller on sa8255p platform.
 
-The QUP drivers are SCMI clients, with clocks, interconnects, pinctrl
-and power-domains abstracted by a SCMI server.
-
-The serial driver has a dependency on the dev_pm_opp_set_level() function,
-which is applied in the OPP tree's linux-next branch.
-
-Nikunj Kela (2):
-  dt-bindings: serial: describe SA8255p
-  dt-bindings: qcom: geni-se: describe SA8255p
-
-Praveen Talari (6):
-  soc: qcom: geni-se: Enable QUPs on SA8255p Qualcomm platforms
-  serial: qcom-geni: move resource initialization to separate function
-  serial: qcom-geni: move resource control logic to separate functions
-  serial: qcom-geni: move clock-rate logic to separate function
-  serial: qcom-geni: Enable PM runtime for serial driver
-  serial: qcom-geni: Enable Serial on SA8255p Qualcomm platforms
+Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+Co-developed-by: Praveen Talari <quic_ptalari@quicinc.com>
+Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
 ---
+v4 -> v5
+- added wake irq in example node
+
 v3 -> v4
-- removed patch "[PATCH v3 1/9] opp: add new helper API dev_pm_opp_set_level()"
-  from series and serial driver has dependency of this API which is
-  applied in the OPP tree's linux-next branch.
+- added version log after ---
+
+v2 -> v3
+- dropped description for interrupt-names
+- rebased reg property order in required option
+
+v1 -> v2
+- reorder sequence of tags in commit text
+- moved reg property after compatible field
+- added interrupt-names property
 ---
-
- .../serial/qcom,sa8255p-geni-uart.yaml        |  66 ++++
- .../soc/qcom/qcom,sa8255p-geni-se-qup.yaml    | 107 ++++++
- drivers/soc/qcom/qcom-geni-se.c               |  73 ++--
- drivers/tty/serial/qcom_geni_serial.c         | 351 ++++++++++++++----
- 4 files changed, 496 insertions(+), 101 deletions(-)
+ .../serial/qcom,sa8255p-geni-uart.yaml        | 66 +++++++++++++++++++
+ 1 file changed, 66 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/serial/qcom,sa8255p-geni-uart.yaml
- create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,sa8255p-geni-se-qup.yaml
 
-
-base-commit: 37ff6e9a2ce321b7932d3987701757fb4d87b0e6
+diff --git a/Documentation/devicetree/bindings/serial/qcom,sa8255p-geni-uart.yaml b/Documentation/devicetree/bindings/serial/qcom,sa8255p-geni-uart.yaml
+new file mode 100644
+index 000000000000..c939ddb4d253
+--- /dev/null
++++ b/Documentation/devicetree/bindings/serial/qcom,sa8255p-geni-uart.yaml
+@@ -0,0 +1,66 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/serial/qcom,sa8255p-geni-uart.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Geni based QUP UART interface
++
++maintainers:
++  - Praveen Talari <quic_ptalari@quicinc.com>
++
++allOf:
++  - $ref: /schemas/serial/serial.yaml#
++
++properties:
++  compatible:
++    enum:
++      - qcom,sa8255p-geni-uart
++      - qcom,sa8255p-geni-debug-uart
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    minItems: 1
++    items:
++      - description: UART core irq
++      - description: Wakeup irq (RX GPIO)
++
++  interrupt-names:
++    items:
++      - const: uart
++      - const: wakeup
++
++  power-domains:
++    minItems: 2
++    maxItems: 2
++
++  power-domain-names:
++    items:
++      - const: power
++      - const: perf
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - power-domains
++  - power-domain-names
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++
++    serial@990000 {
++        compatible = "qcom,sa8255p-geni-uart";
++        reg = <0x990000 0x4000>;
++        interrupts = <GIC_SPI 531 IRQ_TYPE_LEVEL_HIGH>,
++                     <&tlmm 35 IRQ_TYPE_LEVEL_HIGH>;
++        interrupt-names = "uart", "wakeup";
++        power-domains = <&scmi0_pd 0>, <&scmi0_dvfs 0>;
++        power-domain-names = "power", "perf";
++    };
++...
 -- 
 2.17.1
 
