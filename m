@@ -1,119 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-57011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8477DAACDFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 21:24:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F15B2AACDFF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 21:27:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A01541C221BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 19:24:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16CF6980D01
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 19:27:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 424B81EA7DD;
-	Tue,  6 May 2025 19:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B319E1F3FC3;
+	Tue,  6 May 2025 19:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iNjsrup5"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NckfbhH+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE60179A7;
-	Tue,  6 May 2025 19:24:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420861C5D72
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 19:27:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746559454; cv=none; b=lptB64+M3+HwbxKX3+bDn8rPbaU9cV/rgjmCIP/K3AC31Zncc2lkqGhhZa6cQ2Nd44I004B6bPTb8tU76bpBpoDmQqOAMcDj5/qFC/451jK/F2OiNWB3TDrdUE27t/JMT6XgBQkX3FqTa1ZbyG0/Hab4Nf15IX3cl6KqDnYQu7Y=
+	t=1746559666; cv=none; b=pE+s1PZod+pAQ0qBraH8UTQRNdDK6+gb0LM3vL8pzQ7FxZtgUj2Qt0JAIEICiDDWv+0ujF0FX7z7g/KXlw74UMhxeDhrL3RBJlBcXmagx94WKxuZSEkbeTbWzJ+gCtYzdqERRathTW7SzA7wD0gH20x7wXVbPuN4FfBKWSl8Uh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746559454; c=relaxed/simple;
-	bh=AndJLm0BDD0IfptSbil7BFqhM2UjQDjqZwbHyRm8MvA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Oq6FqtptDnRTH1zNPkzOWB9WQpFT2p1LRpXaNaJ2/LoWgz8WNVPNztUf1OVanAFFTVZMdX6LrHoyAz6dEXToOrQ4Y06pnX6cXUfOCTmTecEPFpbUHC8uWWs9W+Z8Iob8Wh0O4DEg6kXtBppQFDChaPRbF6mTxRvYlEFhqTu6jQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iNjsrup5; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-736bfa487c3so5545801b3a.1;
-        Tue, 06 May 2025 12:24:12 -0700 (PDT)
+	s=arc-20240116; t=1746559666; c=relaxed/simple;
+	bh=WnmemFGsum/NSWAD4/LRqz6X1+7V15M0U8ZSkc+Jfqs=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=VZGYhGJigNccZEVMzi1wAzXTJLX91AKBWpT6ojFTvJ3+BYFNIjcZCIEjonErFsPVm0Y2+OvBdzSX8XEyulHSm6xg4vWCD+0CwLYnz6JXgRh2f7KI/Jdj3DsliX4IP5sPmEVszoxUq1hSLJmQxvJchosotbNSFhlvADHiMkhjTx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NckfbhH+; arc=none smtp.client-ip=209.85.215.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-af8d8e0689eso6075154a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 12:27:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746559452; x=1747164252; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RXGS9ycUwMhqdmfGF9SYZQkCupKrx+ufRNtD+4zd0Ko=;
-        b=iNjsrup5/TE2JTJhjgJXWm/hub+9qoQrrJkreUr0dFZHyK9oPGklrTUwClXgpaMXSW
-         wYjGcEJrjMSpBHmhCcD62Uj7kJeN51nk2OtySy+6i8SkUkH5YuSxAEVo7oT3HsXMHOSl
-         eUz0dP1kHclhQPG9D/bXJbxn3lO4Ga3VVbpXZFamejb41fZbKyB2AutqYlniTV/Ok44D
-         UVGWkbRvOLy5725Q6/nhLHl6INlSBwx2gDyL+kadfzvK7cc8eYtC1JcZ32jhLLrmo9Pr
-         Q/FQ1s7jrgis9aSGtOwZFWtAT1+ZjPiZnrOwfsFPI4DgAj+39w+o+sGJerFMY9tm6s2I
-         n+9A==
+        d=google.com; s=20230601; t=1746559664; x=1747164464; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=FSSDBoDG6KZDkLxr1Y/KOSWZ+T98/cIvH+Cf5kfE58k=;
+        b=NckfbhH+9ZvhNanz2xuh7iiSqPsA4IFJ57cZcFsEQjBxskp/EUgXSDZc55FwwnmYhO
+         e8UH3cEfCkIJN4K6eWPcwWPQGawr9MlgW1x4Sh7uHqvuSkbwc4BGsuQ5mkJI7GsqXr7E
+         VrJF9DVZpVsZySW5F4kuILX3x6aNMlMMt6TyvsI57fEvDm4N8OpcqTQVh9/pnvOIk9tz
+         gNmEtJtxG+VcOlU1DvpiG9L89gVdoJ0xYApiZVOVdQ2vzN2RKHCpyIjQmR1wh1K0scfc
+         smmFG0dy7E1yeJJLno4+5jIUkLt2rQGWPZwYRVMzxYv6A4a2vaOCqzLW1s1D8CKtcApR
+         upBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746559452; x=1747164252;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RXGS9ycUwMhqdmfGF9SYZQkCupKrx+ufRNtD+4zd0Ko=;
-        b=CHYWK9gDphO+J2UThuYFvUgHzF2uhwpPLnz92GquAjIWf0yIXLWaSSnN6excmdS25d
-         a+NZGymghwMTEtko59ksd45aJgSfB6Iq5QikUUYK9kEg1Fo/p6QDNI8034FBlmBf73ET
-         o5DOokRNdHlrhZdCl5udVGGazpdGHsyZu/ngZipBiaStPbUJWVlWA4+Cp8rNABSq2Es3
-         HDeMVdQ7qUMFD9b2MrQle4Vy3lW2KKD9uioDgXCSYyAJDwPEnGWMJGXxQyqDLopF11oP
-         bvnPYlem2qZJmPPs3Suq2TN/L0vUT9hGttud/bkPrCWN3e2MRk+s1nwySMnrXWe3xLug
-         ofbA==
-X-Forwarded-Encrypted: i=1; AJvYcCWT3uKXTxNYH7cYkdQOwsqW2aXxdq9s9BrUgg14flpE4P+jZg2uSFbKWhjvN5nMzYF2AuhDVm+iadRDUs382g==@vger.kernel.org, AJvYcCWliL7Uwq2TwEinnrVSatWFvQ+y0ptU1Zm1qHG0kHCZLelWIkHZMD9JxamxLBFS/+NUoPkxM11g8tVsz/A=@vger.kernel.org, AJvYcCWz3csC/wPWAfoUVQbb97dJQDFZbWT8cT3a2yaoU/Ap0XnNljGZ4gd3d/o7BAcSy+rIDzXuFlyG4OL+@vger.kernel.org, AJvYcCX65Qp3Ct3a3YGsl3Y5E8a1PkW8uXEpcnLIRjWCa3/e3OkJl1bhChO5cd8NAVpPjA3f2BX3iTC6MFqV/IAU@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/t6tHZfLyac7RnIF5XObN+UwUYwSeE+V+ICKHimHV4Nv39X4q
-	OsYWckibiTTHO86Hz1BYYpGUwJunVmE3kOpvWAFC9L3WkYqLgqljESUbhA==
-X-Gm-Gg: ASbGncsux38b7RdlKO0YuCd1CTyroHS5F32jESNhjjHf7H8G04ORnc1dwc3VNL8U1/r
-	T1LBqhg6072HdVcRTBpbvFmDuZyp1WnplJkqhyqDIgQa915F/hEOCfxI3Zy+itcuINl7RPWLhwn
-	WLwsOrkTguC5/GHTIQbyzKMmOprDcbX6r6LRsM74ZAU0tr7tXkKOOtVsozgdFeOVM/HoD9qiczG
-	Dj1PHdc5L+SR7dDE6zEqee5YGKwxs+3o+Rwkh7pVnWB4bHnyViQqR8YysuRs6BvNBWSIpZUO8Lk
-	7OgoLgKdrBnk0YnJfppXpkFAC7tikZR0bwOigekuwQ==
-X-Google-Smtp-Source: AGHT+IFlq4UY7F1gkaWWhCakxJ0TpKlGbHimjUiWSulKddxJUkc41O+kznmibaQuAaEZy7JzBqlG/A==
-X-Received: by 2002:a62:ea0f:0:b0:736:b402:533a with SMTP id d2e1a72fcca58-7409cf1e85cmr294041b3a.1.1746559451825;
-        Tue, 06 May 2025 12:24:11 -0700 (PDT)
-Received: from google.com ([2620:15c:9d:2:17ab:9e47:29ba:57e6])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74058d7a497sm9368253b3a.33.2025.05.06.12.24.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 May 2025 12:24:11 -0700 (PDT)
-Date: Tue, 6 May 2025 12:24:08 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: foss@joelselvaraj.com
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-input@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH RESEND v4 1/4] dt-bindings: input: touchscreen:
- edt-ft5x06: use unevaluatedProperties
-Message-ID: <p7pyyb6orbqpdk46rs55simotv44i563j6urvrlj4sb7yzqei6@6ezdhwcwpklx>
-References: <20250506-pocof1-touchscreen-support-v4-0-bfb53da52945@joelselvaraj.com>
- <20250506-pocof1-touchscreen-support-v4-1-bfb53da52945@joelselvaraj.com>
+        d=1e100.net; s=20230601; t=1746559664; x=1747164464;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FSSDBoDG6KZDkLxr1Y/KOSWZ+T98/cIvH+Cf5kfE58k=;
+        b=UHT8L1lBs3USiph7gVDD8Sf2wMlVJbvfWJnTbdZZ+B3x1xlPlcKPNbTJxz9joXCGg1
+         xl2BQmS5NZeQCmrr9DpqDaSo4JrBMJvGndmneEdFtM7S6g9uYQgBaMV/pR9sUR0wUBvM
+         bw9tY3rAv+3s/rYNsouNImdbqjI9cfDPqrqhsSGLFgkG4z14dqXDStrGVK0TmBC6Tuo/
+         cTYi+6fdh8eTuK3xaJfk9doFTaPebAdGinBln+/CSFslQioeTZNXoqfTIjUdYucFUKhA
+         iS9hVgZO+BV6FG1A330MorjLM4jZoPYxMM2jmq7UIXQi0qyqPNDdloRT40bekHKPVm8z
+         Gmqg==
+X-Forwarded-Encrypted: i=1; AJvYcCVbK9Ff9t0BAYicctVWr+Vvs+ZwgI8yCKQ1a1shrY0W4pTklGhzuTMcOhP0epAfGz7VPUlcJDmpLnHT7nsL@vger.kernel.org
+X-Gm-Message-State: AOJu0YyjZU+UdOLbX8APHu/aCkZZfl3cUA4QOuRDjVBAcnKx87RgRAaw
+	CGmN63WZFSv+lIk8lMoP3tyloSKDMUye66mgB+MpdmIb1t+mCNRhlX42jwrW7XQ0fY/g2vOy5h8
+	27+5v5mtIvTsC09aVi67N3Q==
+X-Google-Smtp-Source: AGHT+IHArh9vt/cOWUAk2BFZyJIck93JKgvf09vbk4gMKZOvp44TSm7FcsTMOmd4xkf8h1T+MfwSLuQ2sBM59d9oqA==
+X-Received: from pfbgs18.prod.google.com ([2002:a05:6a00:4d92:b0:739:45ba:a49a])
+ (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a21:339e:b0:1f5:8a1d:3905 with SMTP id adf61e73a8af0-2148b426364mr633825637.7.1746559664315;
+ Tue, 06 May 2025 12:27:44 -0700 (PDT)
+Date: Tue, 06 May 2025 12:27:42 -0700
+In-Reply-To: <aBlCSGB86cp3B3zn@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250506-pocof1-touchscreen-support-v4-1-bfb53da52945@joelselvaraj.com>
+Mime-Version: 1.0
+References: <diqz7c31xyqs.fsf@ackerleytng-ctop.c.googlers.com>
+ <386c1169-8292-43d1-846b-c50cbdc1bc65@redhat.com> <aBTxJvew1GvSczKY@google.com>
+ <diqzjz6ypt9y.fsf@ackerleytng-ctop.c.googlers.com> <7e32aabe-c170-4cfc-99aa-f257d2a69364@redhat.com>
+ <aBlCSGB86cp3B3zn@google.com>
+Message-ID: <diqzv7qdr13l.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [PATCH v8 06/13] KVM: x86: Generalize private fault lookups to
+ guest_memfd fault lookups
+From: Ackerley Tng <ackerleytng@google.com>
+To: Sean Christopherson <seanjc@google.com>, David Hildenbrand <david@redhat.com>
+Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-mm@kvack.org, pbonzini@redhat.com, chenhuacai@kernel.org, 
+	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	Yan Zhao <yan.y.zhao@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, May 06, 2025 at 01:18:38PM -0500, Joel Selvaraj via B4 Relay wrote:
-> From: Joel Selvaraj <foss@joelselvaraj.com>
-> 
-> In Xiaomi Poco F1 (qcom/sdm845-xiaomi-beryllium-ebbg.dts), the FocalTech
-> FT8719 touchscreen is integrally connected to the display panel
-> (EBBG FT8719) and thus should be power sequenced together with display
-> panel using the panel property. Since the edt-ft5x06 touchscreen binding
-> uses almost all the properties present in touchscreen.yaml, let's remove
-> additionalProperties: false and use unevaluatedProperties to include all
-> the properties, including the needed panel property.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> Signed-off-by: Joel Selvaraj <foss@joelselvaraj.com>
-> ---
+Sean Christopherson <seanjc@google.com> writes:
 
-Applied to the input tree now, sorry about the delay.
+> <snip>
+>
+> ... we "just" need
+> to update that to constrain the max order based on shared vs. private.  E.g. from
+> the original guest_memfd hugepage support[*] (which never landed), to take care
+> of the pgoff not being properly aligned to the memslot.
+>
+> +	/*
+> +	 * The folio can be mapped with a hugepage if and only if the folio is
+> +	 * fully contained by the range the memslot is bound to.  Note, the
+> +	 * caller is responsible for handling gfn alignment, this only deals
+> +	 * with the file binding.
+> +	 */
+> +	huge_index = ALIGN(index, 1ull << *max_order);
+> +	if (huge_index < ALIGN(slot->gmem.pgoff, 1ull << *max_order) ||
+> +	    huge_index + (1ull << *max_order) > slot->gmem.pgoff + slot->npages)
+>  		*max_order = 0;
+>
+> [*] https://lore.kernel.org/all/20231027182217.3615211-18-seanjc@google.com
+>
 
-Thanks.
+Regarding this alignment check, did you also consider checking at
+memslot binding time? Would this [1] work/be better?
 
--- 
-Dmitry
+[1] https://lore.kernel.org/all/diqz1pt1sfw8.fsf@ackerleytng-ctop.c.googlers.com/
+
+
+
+
 
