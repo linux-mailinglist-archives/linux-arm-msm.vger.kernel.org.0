@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-57008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8595CAACD26
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:24:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 79184AACD33
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:25:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92BC61B68A9B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 18:24:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9CC1A1B68A0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 18:25:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F9582868BB;
-	Tue,  6 May 2025 18:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0185284B59;
+	Tue,  6 May 2025 18:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qhdsbXRk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B8J/URRK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED672868B4;
-	Tue,  6 May 2025 18:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF61A278146;
+	Tue,  6 May 2025 18:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746555813; cv=none; b=MkspMzGgUgGg/9QnS008jgLiZnUv6qKKu+6adzk3Z8JHjp9gbgP79s/8w8nWHIOxFMpGSIc0K7owkqo+1n53KLVZQMdPaLlzsWcUFd1xtomkfqmEjM4Cy1QCJylkjlFCeIfA3hJncoqCBw/zB1l4HQsiqC8Ckm3a86XcgKGwrNs=
+	t=1746555941; cv=none; b=aBtMbq2E6G3M6yfFkOtcpDQl0bbjBEn2W40K8/5SXu93B1Zc8upMVw8g+7jHPgRQOV6DFS7pT6kH3gUFTt0k5MlojtF0EaAazdR1z5YyPyWh3OBKSXoXPwLNUmUgUYjqxyfXvif/ngxSzodIHfmubk76FR59anK6fFGJnadlg38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746555813; c=relaxed/simple;
-	bh=gAnTRgSl+TTAJ2DLdk5KArSrOja+kf7A6khfSfZpt/E=;
+	s=arc-20240116; t=1746555941; c=relaxed/simple;
+	bh=eZMtMRX+XEqjPAGK33crRcL0vjbLxp3ZTlEuyfjqAoA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FSkFnPwan7WbwJYJyVh3YwBmrSGe9QURvY3BOl7vTHHNVOxpxXiU/FYbtHoYCE9IA8IOPf4/kp08TZJG9jXBnILK1cHQK6CgU2Id8AZimDbW/wBCTduC4m0K+X6JUvXvbYsBmSKl1A1rzjmaNeS/wenrtCTi1qf8c2rDrMxS41U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qhdsbXRk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ACEFC4CEE4;
-	Tue,  6 May 2025 18:23:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=kXd1JpAMa2DFCUdDRey1HTFrCtEGf5ovrZDBw2P66cPPo49gYznnnwc/AVhcubiiOZstaaN+SaNyGuyG6k4mAWmRlLYP4OHOt8+YmtQF3WH3hZgRf7LPqBeZ9vbsuPdmedAmsQfrnsjmMw/sGlvdBqXSPbd+iS9hzrGLij7SGjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B8J/URRK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D482EC4CEE4;
+	Tue,  6 May 2025 18:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746555812;
-	bh=gAnTRgSl+TTAJ2DLdk5KArSrOja+kf7A6khfSfZpt/E=;
+	s=k20201202; t=1746555941;
+	bh=eZMtMRX+XEqjPAGK33crRcL0vjbLxp3ZTlEuyfjqAoA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=qhdsbXRkecz9qFHcHVpXsnhaQqE6xt4R5r1bTxiIAPPbJ6leL3QMip7b7iYdfj4oh
-	 wZjhaluiwaI4zJE8KK8DnDHWdIeGiJlv2JxERWpC/gbiF90aV5uYBCOsdmZDhylo24
-	 By+JBviYwmu4WGAUzwviNjjC1Gjq3tjq3obZLxT17pb/+0ROrAlQXvAusKPlDR2smC
-	 6iJkantXGdqRYV39jakbsUGnC/u2xQbzhqD0i2ikodyQB9sXeos6kyPa6Wu+8c8OC/
-	 XNMqGjvmtXtILIZgynFTVD0ndG+l6vwObmFT44HEkmLCB6Xc/CXApTgOumxPP7BSPu
-	 czARJE9O146ZQ==
-Message-ID: <35659475-862a-4678-a2a5-173c2254ae60@kernel.org>
-Date: Tue, 6 May 2025 20:23:26 +0200
+	b=B8J/URRKLWpKRIOJp6qYCTRL6ZN1QKrIV9paC9NNi8EdKHQZpKoIBQ9m3afopNyqd
+	 YbzyWaEn7PDtAHFXsWfBW4ZPA1QLlCthkDlbU8nZ7xpi4jJmMSJbZnmmOUw5aNsAdX
+	 JxUivRnkKDShsZmgAa1My5LD9hwXlnSouCBFiGXRsSGl2DuEB8Fvvxc2RjW0Ryoqvx
+	 +sOtNiBXPZClJ46F98XVTBaIU/8y7Z4zudU561QH9N9EDSWP6Ydb89H2MIYz5co5uC
+	 TM8o7qmo3KeIqNV5rmaK8yNohGkkJe1SZ9CaXwHuThYNlA+aVA5E6Xt1gkjhKz623V
+	 XqHU3ii65D2Cg==
+Message-ID: <8def8f5d-3bc6-4ca3-85bf-f55dc7dc7d9c@kernel.org>
+Date: Tue, 6 May 2025 20:25:35 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/8] dt-bindings: serial: describe SA8255p
+Subject: Re: [PATCH v5 2/8] dt-bindings: qcom: geni-se: describe SA8255p
 To: Praveen Talari <quic_ptalari@quicinc.com>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -64,7 +64,7 @@ Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
  quic_mnaresh@quicinc.com, quic_shazhuss@quicinc.com,
  Nikunj Kela <quic_nkela@quicinc.com>
 References: <20250506180232.1299-1-quic_ptalari@quicinc.com>
- <20250506180232.1299-2-quic_ptalari@quicinc.com>
+ <20250506180232.1299-3-quic_ptalari@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,31 +110,44 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250506180232.1299-2-quic_ptalari@quicinc.com>
+In-Reply-To: <20250506180232.1299-3-quic_ptalari@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 06/05/2025 20:02, Praveen Talari wrote:
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sa8255p-geni-uart
-> +      - qcom,sa8255p-geni-debug-uart
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    minItems: 1
+> From: Nikunj Kela <quic_nkela@quicinc.com>
+> 
+> SA8255p platform abstracts resources such as clocks, interconnect
+> configuration in Firmware.
+> 
+> Add DT bindings for the QUP Wrapper on sa8255p platform.
+> 
+> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+> Co-developed-by: Praveen Talari <quic_ptalari@quicinc.com>
+> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+You are wasting people's time, srsly, replying without giving any chance
+to comment and then totally ignoring review.
 
-Nothing changed here, this should be dropped based on previous discussion.
+Reach to your colleagues before sending next version to be sure you
+understand the process.
 
-You sent this v5 on 8:02 PM of my time. *THEN* you responded to my
-comment at v4 at 8:05 PM. That's the way to waste everyone's time.
+<form letter>
+It looks like you received a tag and forgot to add it.
 
-I do not understand why interrupt is optional for a new, complete device
-description.
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new versions
+of patchset, under or above your Signed-off-by tag, unless patch changed
+significantly (e.g. new properties added to the DT bindings). Tag is
+"received", when provided in a message replied to you on the mailing
+list. Tools like b4 can help here. However, there's no need to repost
+patches *only* to add the tags. The upstream maintainer will do that for
+tags received on the version they apply.
+
+Please read:
+https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+If a tag was not added on purpose, please state why and what changed.
+</form letter>
 
 Best regards,
 Krzysztof
