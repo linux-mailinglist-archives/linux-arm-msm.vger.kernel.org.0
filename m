@@ -1,209 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-56907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80135AABB4D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 09:38:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E230AABC2D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 09:57:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CDC631BA594B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 07:33:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7AF185055D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 07:57:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD30B221FB7;
-	Tue,  6 May 2025 07:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D38C41A8F98;
+	Tue,  6 May 2025 07:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="CqcIWhZG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JhP+SbQS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60DA215062
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 07:24:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC4972617;
+	Tue,  6 May 2025 07:39:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746516295; cv=none; b=ezMM7gS0AZVvz+37cnCcMQIXWYk0eERcjFZdxDTBwh8c5Ve0Mk2TtyfUsWAQoKYaSYSaQ3iKNMKMkxu04MSX35bGkFUS6DQtfLlcoL34sWoAhfkVAltcYmJ0apeURfsBTpUCu4sC2oraDOSlRm5LnOoT13XirWqnQ++wpEGYurk=
+	t=1746517187; cv=none; b=buAn44phSgBnDiNdX5K+UNVzgrJD7qjO+vXX6tWhD2k0MQhmTCeUxAeszpd0IY9t7hFuqibAdAaF75IPZUu+XmywgpqA9QWCNyDS9fY6OxZCSVAw8nTcwUB1mrXC6Gc1xKO86igAOmehBCo7m4nwxc9gkxdFoj0oqN8UWhqpmM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746516295; c=relaxed/simple;
-	bh=3cUhB1F+n4VKTB36vmd3FJ61u8+HpFZ6ImTCvjnr/F4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XMgaSmFP2sz8hJ561M7IJQ8F1dFgvLOfxi5yJigSW3fprKalp9NaSdsryzi++RzvGkv8J5MYTHxvprZbt/g1MEB2UHxoFU9ZGqWqKlUIt4OmeePDB/l9dSEFsrO+/qmQTOUtmDcg2Tb6rVIc6F8fZZOAtxzrcxnMGTFz5egO+Fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=CqcIWhZG; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ac2bdea5a38so736759066b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 00:24:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1746516291; x=1747121091; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XbL28/Q5fCjpT3qjIse0voCquluax0ysjbv1wgZ9OdE=;
-        b=CqcIWhZGki8pArT5ZKDiAL7vrsk4j8yrd8yYle8MgvJvSTutokaP/Sp93/duR0raIu
-         MiplNBzH7fBdP7KGrYCrYx7s8b5gMO6yaN18shbzjh65NNsLsYaUyNX82QYZwrUE1q5j
-         B7LQZKnL+SOaPyinQJ9yx6KVUccCSzCz2GWnWJovbNj+RV6ongderoW5f+Ft/DW6Qs4J
-         mXFyXHZb7ZVp5z5s+dvkgUPiOgyDamHkSHexgE5u3wBJ58cRzvMtItCL3IHK8wPehECP
-         BhhRh6fcWr9HPV+AFQ19GlryzYVoLA41YFTOMmFcDKWsrtsCS+PkmH8IzZnC8yRTCR6T
-         VcTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746516291; x=1747121091;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XbL28/Q5fCjpT3qjIse0voCquluax0ysjbv1wgZ9OdE=;
-        b=tkarjnfFhBAbDObV6RFeMwjgtWBnb5Quk9ehgC9oQdrnfgcxRRTWj2NvJkulE9Xgy7
-         IhWaRSw0lYvw1VuOlj9z1SAyrcE094XtEa1iJC3Q5q+F8RjFFajk5weueHzQ8AYlWT2N
-         J+09cFhEfBdsqXlqBjrp6a98KtKI9lkH22bJkYgqNWPVHke6EEAePefIXatsOJS81F4b
-         sjetYsQoAFOxENpizNUSY+ZVuZKs+JoftnzXcSrlKBxb5uc1l6qH1QlDuc8Gu/fHisGD
-         lCbzrhS6ONeEraUH6EgXKm4aSHg6dyAa3VCmfwaXqHSKMw7FYEcfh6lCtDFT+SP97/WU
-         vlMw==
-X-Forwarded-Encrypted: i=1; AJvYcCUALqLXgvcHvzq/dXc3wKsmgVHAJPe4ojQyxdZKQBVbNetg1wkftK+XL5UFHdMqHiDZ+DwIn//Fz7sQ4xtA@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDF9HteFbhzdfyaEwt0GSQYxP8W1q0+Ox6vbWjKOu6vy5D1TWB
-	c4Y0RdAywSSjc6w8K/oSDj4Lra5Q5mzRdSG16mXvtuvoCCgtyvjqns19kYM+5ho=
-X-Gm-Gg: ASbGncsR/XejWwc/CzLkg5vkcLfiEhX3Zx0H1RwcibXnZcT+/V+FhrzsFAtTawGtlz5
-	83LjeNK2aGb3u9L9KbjQleDzB/kyDXXRsJyBqvIX6akJNVlBfveMCGWbIF9nOSh6zP+rgbKN3RO
-	WEOHml2PxyNMm7w0G0ZoS0Zig81Qezvx3uZImRukEQSVrWMADZuYjdHDTHl3T8SCSmNTFP+u+8T
-	IEIb7ajrhgiEabD0SOp0VPViMWHPTHjpnGJBZm+rK+Y+luAdOA72lA/FW3g36fSDxMNEV30mOOQ
-	fgDHyD4ofcfxrprDDOm+cGYb2pSh/aj5jdk8wT4PXeTvqy5Nrug=
-X-Google-Smtp-Source: AGHT+IHCFEnbJ0GDLTWa83tTmfCGMhh5WwORYTYmcU3ggC2S+IScDWzxdZRGqMZ8tE3BuqiylW508g==
-X-Received: by 2002:a17:907:2cc4:b0:ac1:ea29:4e63 with SMTP id a640c23a62f3a-ad1a495ad79mr1006272766b.26.1746516290877;
-        Tue, 06 May 2025 00:24:50 -0700 (PDT)
-Received: from localhost.localdomain ([176.114.240.130])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad1894c01e5sm644433166b.87.2025.05.06.00.24.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 May 2025 00:24:50 -0700 (PDT)
-Date: Tue, 6 May 2025 09:24:48 +0200
-From: Petr Mladek <pmladek@suse.com>
-To: Eugen Hristev <eugen.hristev@linaro.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	andersson@kernel.org, linux-doc@vger.kernel.org, corbet@lwn.net,
-	tglx@linutronix.de, mingo@redhat.com, rostedt@goodmis.org,
-	john.ogness@linutronix.de, senozhatsky@chromium.org,
-	peterz@infradead.org, mojha@qti.qualcomm.com,
-	linux-arm-kernel@lists.infradead.org, vincent.guittot@linaro.org,
-	konradybcio@kernel.org, dietmar.eggemann@arm.com,
-	juri.lelli@redhat.com
-Subject: Re: [RFC][PATCH 07/14] printk: add kmsg_kmemdump_register
-Message-ID: <aBm5QH2p6p9Wxe_M@localhost.localdomain>
-References: <20250422113156.575971-1-eugen.hristev@linaro.org>
- <20250422113156.575971-8-eugen.hristev@linaro.org>
- <aBjYbXJL-GJe4Mh8@localhost.localdomain>
- <6ce50077-2c64-40b2-82b3-c63c16fa1898@linaro.org>
+	s=arc-20240116; t=1746517187; c=relaxed/simple;
+	bh=6TO1Noew8Rmq68imwQlh7EbC0TUncfmpyl6I2bKeN58=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FKbNiwussYw/sJuNKm+PRdyYSCjABueFNyg20UVBTPhZK8DwSn1c4GPTJSzikr+GiiC3Cthqal2utC4GZQLTkS6rARpATDWlSrkEKXB+uT2tDZnR09glKREbsqTFpBll6ya5r9JG/mpbd76LWAS1oCfLbsFay4IyANL3sMkb43k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JhP+SbQS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC72FC4CEE4;
+	Tue,  6 May 2025 07:39:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746517187;
+	bh=6TO1Noew8Rmq68imwQlh7EbC0TUncfmpyl6I2bKeN58=;
+	h=From:To:Cc:Subject:Date:From;
+	b=JhP+SbQS09oMuqBK/ge4+Dtfkcli4nE+FZi/DJzIVogt1qmZkjF48k/6ArdpNBpF7
+	 fFpvn2BM8nxjsNuRjWn/Oy4ES9XfnzeRFmso7qlS6CuJ+wGDm7JcMBKQ+EFTj8nJ8Y
+	 frQmn8JaoxioWRf0W4akI4K2ZfF18ktCkJClGOxDjmAa0isSVr3cddW+2WMRvnVTNm
+	 MoJckLJLERjy1VU8e8RRb4bJekKkX/5kY/ZEjIrHuo3A08eeqpmT+42310hMt657GZ
+	 ssitxgJA98PnbT92FxWQWdB9cq9QMUcl8i6mUWYCMrc62BkPbmHR2mYQ5kSYO8QTdG
+	 BEq/LbIifYFQw==
+From: Niklas Cassel <cassel@kernel.org>
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Niklas Cassel <cassel@kernel.org>,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hans Zhang <18255117159@163.com>,
+	Laszlo Fiat <laszlo.fiat@proton.me>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 0/4] PCI: dwc: Link Up IRQ fixes
+Date: Tue,  6 May 2025 09:39:35 +0200
+Message-ID: <20250506073934.433176-6-cassel@kernel.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6ce50077-2c64-40b2-82b3-c63c16fa1898@linaro.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1085; i=cassel@kernel.org; h=from:subject; bh=6TO1Noew8Rmq68imwQlh7EbC0TUncfmpyl6I2bKeN58=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGDIk92wLWrd5lVmczqKAgpU7yzdY7pzss2OB3T/mIBs2t ajntpskO0pZGMS4GGTFFFl8f7jsL+52n3Jc8Y4NzBxWJpAhDFycAjCRp6aMDLvfL2tZ6iK56ULL O7UPdmfNE3btEPNWlTzPel9f0u1N6gGGv9KrbBesdFxjtkX1+JnUjDN/rkreCJjvVMrdING/cyF bDisA
+X-Developer-Key: i=cassel@kernel.org; a=openpgp; fpr=5ADE635C0E631CBBD5BE065A352FE6582ED9B5DA
+Content-Transfer-Encoding: 8bit
 
-On Mon 2025-05-05 18:51:19, Eugen Hristev wrote:
-> Hello Petr,
-> 
-> Thank you for your review.
-> 
-> On 5/5/25 18:25, Petr Mladek wrote:
-> > On Tue 2025-04-22 14:31:49, Eugen Hristev wrote:
-> >> Add kmsg_kmemdump_register, which registers prb, log_buf and infos/descs
-> >> to kmemdump.
-> >> This will allow kmemdump to be able to dump specific log buffer areas on
-> >> demand.
-> >>
-> >> --- a/kernel/printk/printk.c
-> >> +++ b/kernel/printk/printk.c
-> >> @@ -4650,6 +4651,18 @@ int kmsg_dump_register(struct kmsg_dumper *dumper)
-> >>  }
-> >>  EXPORT_SYMBOL_GPL(kmsg_dump_register);
-> >>  
-> >> +void kmsg_kmemdump_register(void)
-> >> +{
-> >> +	kmemdump_register("log_buf", (void *)log_buf_addr_get(), log_buf_len_get());
-> >> +	kmemdump_register("prb", (void *)&prb, sizeof(prb));
-> >> +	kmemdump_register("prb", (void *)prb, sizeof(*prb));
-> > 
-> > This looks strange. "prb" is a pointer to "struct printk_ringbuffer".
-> > It should be enough to register the memory with the structure.
->
-> Yes, from my perspective this should be also enough. However, when
-> loading the generated core dump into crash tool , the tool first looks
-> for the prb pointer itself, and then stops if the pointer is not readable.
-> After the prb pointer is being found, the crash tool dereferences it ,
-> and looks at the indicated address for the actual memory.
-> That is why the pointer is also saved as a kmemdump region in my proof
-> of concept.
+Hello there,
 
-I see. It makes perfect sense to store the pointer as well after all.
+Commit 8d3bf19f1b58 ("PCI: dwc: Don't wait for link up if driver can detect
+Link Up event") added support for DWC to not wait for link up before
+enumerating the bus. However, we cannot simply enumerate the bus after
+receiving a Link Up IRQ, we still need to wait PCIE_T_RRS_READY_MS time
+to allow a device to become ready after deasserting PERST. To avoid
+bringing back an conditional delay during probe, perform the wait in the
+threaded IRQ handler instead.
 
-> >> +	kmemdump_register("prb_descs", (void *)_printk_rb_static_descs,
-> >> +			  sizeof(_printk_rb_static_descs));
-> >> +	kmemdump_register("prb_infos", (void *)_printk_rb_static_infos,
-> >> +			  sizeof(_printk_rb_static_infos));
-> > 
-> > Also this looks wrong. These are static buffers which are used during
-> > early boot. They might later be replaced by dynamically allocated
-> > buffers when a bigger buffer is requested by "log_buf_len" command
-> > line parameter.
-> > 
-> 
-> I will double check whether the crash tool looks for these symbols or
-> only the memory, and come back with an answer
-> 
-> > I think that we need to register the memory of the structure
-> > and 3 more buffers. See how the bigger buffer is allocated in
-> > setup_log_buf().
-> > 
-> > I would expect something like:
-> > 
-> > 	unsigned int descs_count;
-> > 	unsigned long data_size;
-> > 
-> > 	descs_count = 2 << prb->desc_ring.count_bits;
-> > 	data_size = 2 << prb->data_ring.size_bits;
-> > 
-> > 	kmemdump_register("prb", (void *)prb, sizeof(*prb));
-> > 	kmemdump_register("prb_descs", (void *)prb->desc_ring->descs,
-> > 			  descs_count * sizeof(struct prb_desc));
-> > 	kmemdump_register("prb_infos", (void *)prb->desc_ring->infos,
-> > 			  descs_count * sizeof(struct printk_info));
-> > 	kmemdump_register("prb_data", (void *)prb->data_ring->data, data_size);
-> > 
-> > 
-> Thank you. It may be that in my test case, the buffer was not
-> extended/reallocated with a bigger one.
+Please review.
 
-I guess so. A bigger buffer is allocated either when explicitly
-requested by "log_buf_len=" command line option. Or when the kernel
-is running on a huge system with many CPUs and log_buf_add_cpu()
-decides that the default buffer is not big enough for backtraces from
-all CPUs.
 
-> > But I wonder if this is enough. The current crash dump code also needs
-> > to export the format of the used structures, see
-> > log_buf_vmcoreinfo_setup().
-> 
-> It appears that crash tool looks for the structures into vmlinux
-> symbols. It can be that this information is not available to some tools,
-> or vmlinux not available, in which case all the used structures format
-> and sizes need to be exported. But right now, the crash tool does not
-> work without vmlinux.
-> > 
-> > Is the CONFIG_VMCORE_INFO code shared with the kmemdump, please?
-> 
-> I believe CONFIG_KMEMDUMP_COREIMAGE should select CONFIG_VMCORE_INFO
-> indeed, which is not done in my patches. Or I have not fully understood
-> your question ?
+Kind regards,
+Niklas
 
-I do not see CONFIG_VMCORE_INFO selected in drivers/debug/Kconfig.
-But maybe the dependency is defined another way.
 
-Honestly, I did not study all these details. I focused primary on
-the printk-related interface and commented what came to my mind.
+Changes since v1:
+-Added missing include pci.h that was lost during rebase.
 
-Also I was not sure how the dumped memory can be analyzed. I expected
-that it should be readable by the "crash" tool. But I did not see it explained
-in Documentation/debug/kmemdump.rst.
 
-Best Regards,
-Petr
+Niklas Cassel (4):
+  PCI: dw-rockchip: Do not enumerate bus before endpoint devices are
+    ready
+  PCI: qcom: Do not enumerate bus before endpoint devices are ready
+  PCI: dw-rockchip: Replace PERST sleep time with proper macro
+  PCI: qcom: Replace PERST sleep time with proper macro
+
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c | 4 +++-
+ drivers/pci/controller/dwc/pcie-qcom.c        | 3 ++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+-- 
+2.49.0
+
 
