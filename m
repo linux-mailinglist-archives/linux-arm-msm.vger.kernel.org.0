@@ -1,203 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-56939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 733C9AAC364
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 14:07:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5757AAC365
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 14:08:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 33F3E7AA32A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 12:06:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 40880502D02
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 12:08:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C511927EC67;
-	Tue,  6 May 2025 12:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEC8527EC9D;
+	Tue,  6 May 2025 12:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="cusdtxba"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="E3J1lOd7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8462A27E7FF
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 12:07:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529B627C16B
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 12:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746533256; cv=none; b=tBK6ApFxsB97sADpjMK29gvdDYqDuhjgMIKyluTOwL7QmsqiV26BjJDPLiUo2eBM5uD5WJ2fuIqmjH+LBNm9aWj/wi+H1i3imQ6ubAJEZW/yJoWWeGv+IxntPDh5PYssGs/Ph2amRzYmvOnXabtiKaWbXV+fp9w2+WnXBHWtXy8=
+	t=1746533303; cv=none; b=Q+zj19KN1cH86VHKY1EOaulRbwCYVQO7J0pRWRg4fF/bg7Lp+E4bhpKh2ByXdtGaXi4XzMhuGejw2RX1vW9U7zwlB95F+Fwg6xGUAwkL4IiMxhYOvw7nCQOf2vwlOxgGfPJNw5wK7r6LvVVoAIU5k8RFoPKTSE+pZkGWuBwD3yE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746533256; c=relaxed/simple;
-	bh=SeRmzyMcT6JX37/ImDnhvHk8HNSqfqzsFYexZDstrTc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=JX0nCZVMruG1PtXtP++kG+esORT2ln9utoCyaWXqw3NizNCH3RPE1Jrds+QDFjvcWxJyiH/Kner6BhHCEKy41dQ99iiw/SPTNXuUiwl+DT5i4TVik3+ATzjZ04YK2vllSekJqnwNZ5PbPSopaV6vYZA+VYxNES5sBIg3Msk+CgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=cusdtxba; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5efe8d9ebdfso2296019a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 05:07:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1746533252; x=1747138052; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M7v7vpdvOuhIP8be0gZZCUIgIPmqxbVGMYXTijnoryU=;
-        b=cusdtxbaM55uSkeGT6mg39KJxRPo+aL8KfVGdhhHfRpJhL8wfwON1RPyv7yi1LPyqL
-         nmnLp/IHdUnnG7l6n3DW1CyN2n649CiPCxGhxTcWCEgklVcvTor0muHnbd+a9KcKy6Gd
-         P+JPojGHdB982humWyFyvtzX4UFEWlIwKOVmRam9QdaZKCtDyuQLRCaRmkaun4fsyK5J
-         NuVVHnFAEjQuZA7y+qnmJRIkB8tm11aflTU7BRrkOVRLrveyqOYmonzoNKUQtLYkQuLN
-         r1b8IwWSSJv1jvwHfwPHvH98CqwlAxcQKYsO6SxzZCkYpZS9e6w4zqvHdWUYLgPZG14s
-         h0rA==
+	s=arc-20240116; t=1746533303; c=relaxed/simple;
+	bh=DdbmmhonCetUBZsFTlekD4aubGPPFIJ9ItkmtXG5bpg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d9EyWwC54lUwvRISgnJS6071X7S/3cPqHZ+O6SwvHlxRzUDBhhEpSu/nus014/yrhWGEQoQ3a+4oNtGwM1nCa3H30b9PATGFQJgvyMUWkV/JHuCGrZxcaMz+tbRCssQFbQtnvFMoI+IBvJSIemQk8eS8dBtfiEu4wSetU+HaIfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=E3J1lOd7; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5468JKZA007904
+	for <linux-arm-msm@vger.kernel.org>; Tue, 6 May 2025 12:08:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=GD4lMZs5a3pKzd5cggQ3wq6Y
+	VdqPYIs1t4O/gynZcKE=; b=E3J1lOd7/umRoIoyHPXx+HWv+BhAjFG2wgSGRs3h
+	4REjvf6kVGrZ4z/9aFucBCebJg+hkZWhWeKtJ/pvf+eXKNYW8Mz+Hn3TVzzCPHVr
+	GpAiYsTReVbH0TfZbMWJ79HPUWDamy+npijq06Fp5wgSIAVsSq6mriISUQUf0wxh
+	FAbhD38u1N9kQRyH1+3iWKXX8pau6ucut1uB5RlTSn4ARqo4fSLlpfn7HFPpdpzz
+	LGTFLLo+ghwWRLGOLbyHoktz6neYZZJ4G3o/ZGxEy5OYD8PShvIehuJJkEBe/smm
+	Qeg54HJborZn1OskGXcRmpjNSxsuhHjqpLVx+sXsCKbWiA==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46d9ep7pts-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 12:08:21 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7caee990721so286497185a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 05:08:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746533252; x=1747138052;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=M7v7vpdvOuhIP8be0gZZCUIgIPmqxbVGMYXTijnoryU=;
-        b=JoU89F7ggbKHX+U9uYQo61xxAKSop7WvaytPwcP4vHH1kUoVtbxnO5HjFoOZ7Rtdp0
-         J1Afv4w3lXIHg6KseGRLjXnt13/8ouCFsdV1qw5yu2wFw8otdAK0a6CiQe0wLq7VrNnA
-         a23ghrau8s6pwlD+OM7LGTIch6qPHYkpLd2RbFOv+iBPXmpYUTzozjsWxm9vUFYGIvFc
-         qkPwFr4mNFH9vvapTFxLV2QQ0WhfGPFsBeqtIbRgG5dL6D9KBGC8twUMIqVH4dD7t5Wa
-         OvJCkoavkAbRxepAdIf+98JN+YMh9ym/nAN0CCltXBBumr++cD4yIR/U8MH34fbjoNoi
-         0FrA==
-X-Forwarded-Encrypted: i=1; AJvYcCVkADTozOQVadtkXclPlksrWIwdDjy+9h36vcNKowIb+N1RjiPc0VSIFZJ4TzFYthM2qLYpPSVqb+d07Kqx@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEEpfXC+wPxGAnOxX+6TR9+CiWNWdfvR2lBBQQN/7ZeEBYtC8I
-	+72TwnkqNmhFGngLoNzIAtLJqsKY01DblmfQbZR5SR8J5Bi/kNOMGybiT4mhns8=
-X-Gm-Gg: ASbGncvzqeMEv5eNkuB4gvGdil47cmSj3WLuGi8ywhnzYRobsQ2f0S0lgFK+IIK3c8k
-	KyAKzzEmwje2Aft9SrjIG6Z/V9okWCiWZNCz3XA0nbQoxHbCwI+n+IZ3k9Y0c3q8KZnMIa4Gf35
-	SqMNGKE69VHc0g4CtJayWBrpKdZu/E36E057/jLM6foBgsB7aBKuW20YWMEwKF5Zrfp1KP0AgdQ
-	+GHIs2Z75Jb1iOZi9JIq/CHykPfLnoasrbfXVGeXYnoDhA3qOB+nEAIRyVZWXsg1oVkUS1WikWu
-	dqibXzWtg68M1ZEPj3f6dpsYyJM3XRYORnzDQhTEjxfN0z4AwX3UUdZwPuMeDefgoJuXwzRF3n7
-	RC+HC0OtN8hh34ZG6YmvNF6OhXrjEETJV7CgwqEudfZhqlbiD0w==
-X-Google-Smtp-Source: AGHT+IFBdvqmi68ta2wRWiT+FRzasDJ5pBCULv7R/+BuR+Ax+JNv4/CaLyds47/kxsM107rKwn7PFw==
-X-Received: by 2002:a17:907:868e:b0:ac2:49b1:166f with SMTP id a640c23a62f3a-ad1a4b36f20mr1047373266b.52.1746533251536;
-        Tue, 06 May 2025 05:07:31 -0700 (PDT)
-Received: from localhost (2001-1c00-3b8a-ea00-c4de-d39d-05f4-c77a.cable.dynamic.v6.ziggo.nl. [2001:1c00:3b8a:ea00:c4de:d39d:5f4:c77a])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad1891a5e1dsm704170466b.55.2025.05.06.05.07.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 May 2025 05:07:31 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1746533300; x=1747138100;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GD4lMZs5a3pKzd5cggQ3wq6YVdqPYIs1t4O/gynZcKE=;
+        b=cjQRBg7EkA1RP+MhScAOUIe6LXgc2mN9pjhbKGg1SV719RsHd7u1HP0/fqNSyR1brM
+         0usuvfQlSQK4RbgfpWpBlFjr1x/yDdq45z7iOTeXz5b0msdZK7uCTw/D5VSjaUhFltpN
+         E2HRJkOTx7vnIA5A+6n2n3DaIsW6UNL5DUs20wW5haqsdElcPOf28La4BRUK51+dewHp
+         CGIlW55/kriBj28iUcDYbKjamZZ5VMJxrFoWNW/t/RuzntKmdZV+Zh36UUu4hNvWNGY3
+         vX1Bwj9gTvE/r4Ai1frusoB4qNyOlar/bwfHN/2jRcQZl7FHs2qOQI58VBkXDAVqQtnz
+         65DQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX3L23PPocK5Vfm/Hpi/GRoEqRH3fXtMEDnGdg33CVnhFRRv22M+vmTCGg9LOa3FALZa84ctNmzC99rBT74@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWBh3KDmiugha+wDVxlyy56ZF1Qmxz5EANuRY9FGfddQmUqwTw
+	7md9EhOZ5AxASbfp8/s7E2HQvC7FJbZHk2Xpb12b0Zbz5TnKttVF+EW1r45CuhAwLhotaRKETU7
+	hhMx2iz3+aoTsy9o/XCfOuxg9wfz9Xlc0i2Q45bYitgk8aBlb2OgBe4qS1cunDaqdpCt2OWKA
+X-Gm-Gg: ASbGncuvmtcmhuhG6wIy9GbN/Z4nZ3QF1JQTEtPAfL4GEIoHDv8QpvhCT/iuHq/OVY8
+	IgIIWV6XwoIT0F84AOS6cgN9+9sbTRf7mz47wG4dOgAw3Ogp+Fcusd1ID1FEyk61N83C3hWoZag
+	HkTL7Z+QYmIrDYnWR+AZuyiSY4S/1un5M7FiALyOXyO77zInu7M4HfFDc6zkFh4eUb5m4xl0lHZ
+	YzkhUiSVrlj8DAJwpfAr/NdR++/hYFh+llPImFFkMvi/y8pMHQv1rt67ewNpbp94Du1rQyt0N8i
+	aT+7b0vP2dUCI2pDeLxv5+wmJjD8EZo3EAA/hMi+6js53tcP/hzLcEvRV8D9Ybe46dSB4zMvFy8
+	=
+X-Received: by 2002:a05:620a:4629:b0:7ca:df98:2f6 with SMTP id af79cd13be357-7caf09bf07emr524576785a.43.1746533300195;
+        Tue, 06 May 2025 05:08:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGz6fgxkf8GCZyugOKLOyYO6nxMMiDaVer/gkboErci2Inurno93UgLLdfrFIxkKoZ4FWDdkg==
+X-Received: by 2002:a05:620a:4629:b0:7ca:df98:2f6 with SMTP id af79cd13be357-7caf09bf07emr524572085a.43.1746533299797;
+        Tue, 06 May 2025 05:08:19 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32028b38e2csm19391601fa.13.2025.05.06.05.08.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 May 2025 05:08:18 -0700 (PDT)
+Date: Tue, 6 May 2025 15:08:17 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Wasim Nazir <quic_wasimn@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel@quicinc.com, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v5 4/6] arm64: dts: qcom: Add support for QCS9075 RB8
+Message-ID: <vr3q2c47ht5iebf7nvy3qywoxlquwma3p2tffswrefpmxqy24h@wrfecu6mcqcn>
+References: <20241229152332.3068172-1-quic_wasimn@quicinc.com>
+ <20241229152332.3068172-5-quic_wasimn@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 06 May 2025 14:07:30 +0200
-Message-Id: <D9P2D6PG7420.N4T2UBGAOFMR@fairphone.com>
-Cc: "Banajit Goswami" <bgoswami@quicinc.com>, "Liam Girdwood"
- <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi
- Iwai" <tiwai@suse.com>, "Bjorn Andersson" <andersson@kernel.org>, "Konrad
- Dybcio" <konradybcio@kernel.org>, <phone-devel@vger.kernel.org>,
- <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, "Dmitry Baryshkov"
- <dmitry.baryshkov@oss.qualcomm.com>, "Neil Armstrong"
- <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v3 2/5] ASoC: qcom: sm8250: set card driver name from
- match data
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Srinivas Kandagatla" <srinivas.kandagatla@oss.qualcomm.com>, "Luca
- Weiss" <luca@lucaweiss.eu>, <~postmarketos/upstreaming@lists.sr.ht>,
- "Srinivas Kandagatla" <srini@kernel.org>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a
-References: <20250425-fp5-dp-sound-v3-0-7cb45180091b@fairphone.com>
- <20250425-fp5-dp-sound-v3-2-7cb45180091b@fairphone.com>
- <aBNdCRk_fP2q1vxQ@srini-hackbase>
- <91110CA9-6E83-4811-AA04-C0312B99B95E@lucaweiss.eu>
- <0d094cec-0a2e-4e21-845f-977f3a77993d@oss.qualcomm.com>
-In-Reply-To: <0d094cec-0a2e-4e21-845f-977f3a77993d@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241229152332.3068172-5-quic_wasimn@quicinc.com>
+X-Authority-Analysis: v=2.4 cv=EOUG00ZC c=1 sm=1 tr=0 ts=6819fbb5 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=q-whWVftEaYGax-JpAIA:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+ a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 5P9y0POq9IGNS_Ur2984nHb4i8yx0mV_
+X-Proofpoint-GUID: 5P9y0POq9IGNS_Ur2984nHb4i8yx0mV_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDExNyBTYWx0ZWRfX0MklaHr0MwWE
+ l7Kvl8KzKStQiMW3WgVqCBaTiHpwR9uV28UCxBmPQXaaho+G9NLCTjrJ0uRcqZM80WiQgvi8G4Z
+ cfwUZ+lqNU9u/h/aKbAV/r+nyV7O8tuerOJne7J7lUF5Nu5eX8KAjcVGAn8l4rbkKm6hGfvGQwN
+ rH7inW8sFeufEiqPXji6DDuSvyUpViTfdjDJ/t3W9PZYYu3EOhb3//WhNorlMZxzgiVSWDKsxOF
+ ArWtKInEionbI5S3gcxny6YmMZi3QbBx3nvMMva4Dli7Rvw4k/Jmna50/iXe1N3EUHnJ9+GTU31
+ owR+ykuxPc1Gnv5NFpheUQstyEZEFbE5AMgynAWN8V2ixtwRKnTvM6vWyYyIsuy2kplo5FmWlUN
+ m8pJfyoJy6G4hgL0yvHlozE1iIh74zEkEWj2SViCsMRImkMWPI9N2BKpJwx7i0Ry1V2PAsYm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-06_05,2025-05-05_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015 impostorscore=0 spamscore=0 lowpriorityscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 mlxlogscore=798 mlxscore=0
+ priorityscore=1501 malwarescore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505060117
 
-Hi Srini,
+On Sun, Dec 29, 2024 at 08:53:30PM +0530, Wasim Nazir wrote:
+> Add initial device tree support for the RB8 board
+> based on Qualcomm's QCS9075 SoC.
+> 
+> Basic changes are supported for boot to shell.
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile        |   1 +
+>  arch/arm64/boot/dts/qcom/qcs9075-rb8.dts | 281 +++++++++++++++++++++++
+>  2 files changed, 282 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-rb8.dts
+> 
 
-On Fri May 2, 2025 at 1:06 PM CEST, Srinivas Kandagatla wrote:
-> On 5/1/25 15:13, Luca Weiss wrote:
->> Hi Srini,
->>=20
->> Srinivas Kandagatla <srini@kernel.org> schreef op 1 mei 2025 13:37:45 CE=
-ST:
->>> On Fri, Apr 25, 2025 at 10:07:26AM +0200, Luca Weiss wrote:
->>>> Sound machine drivers for Qualcomm SoCs can be reused across multiple
->>>> SoCs. But user space ALSA UCM files depend on the card driver name whi=
-ch
->>>> should be set per board/SoC.
->>>>
->>>> Allow such customization by using driver match data as sound card driv=
-er
->>>> name.
->>>>
->>>> Also while we're already touching these lines, sort the compatibles
->>>> alphabetically.
->>>>
->>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>>> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
->>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>>> ---
->>>>  sound/soc/qcom/sm8250.c | 9 ++++-----
->>>>  1 file changed, 4 insertions(+), 5 deletions(-)
->>>>
->>>> diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
->>>> index b70b2a5031dfbf69024666f8a1049c263efcde0a..e920b413b762c803cfcc40=
-49f35deba828275478 100644
->>>> --- a/sound/soc/qcom/sm8250.c
->>>> +++ b/sound/soc/qcom/sm8250.c
->>>> @@ -16,7 +16,6 @@
->>>>  #include "usb_offload_utils.h"
->>>>  #include "sdw.h"
->>>> =20
->>>> -#define DRIVER_NAME		"sm8250"
->>>>  #define MI2S_BCLK_RATE		1536000
->>>> =20
->>>>  struct sm8250_snd_data {
->>>> @@ -200,15 +199,15 @@ static int sm8250_platform_probe(struct platform=
-_device *pdev)
->>>>  	if (ret)
->>>>  		return ret;
->>>> =20
->>>> -	card->driver_name =3D DRIVER_NAME;
->>>> +	card->driver_name =3D of_device_get_match_data(dev);
->>>>  	sm8250_add_be_ops(card);
->>>>  	return devm_snd_soc_register_card(dev, card);
->>>>  }
->>>> =20
->>>>  static const struct of_device_id snd_sm8250_dt_match[] =3D {
->>>> -	{.compatible =3D "qcom,sm8250-sndcard"},
->>>> -	{.compatible =3D "qcom,qrb4210-rb2-sndcard"},
->>>> -	{.compatible =3D "qcom,qrb5165-rb5-sndcard"},
->>>> +	{ .compatible =3D "qcom,qrb4210-rb2-sndcard", .data =3D "sm8250" },
->>>
->>> sm4250 for rb2?
->>=20
->> Since this name is visible to user space and used for picking the UCM co=
-nfig, I don't think it's a good idea to change it.
->>=20
-> It is not correct to pretend that rb2 is sm8250 for ucm cases, I agree pr=
-evious code was
-> already doing this, Good thing is that we do not have a ucm written yet f=
-or RB2.
->
-> Lets fix this as you are already doing this for other compatibles.
+For the next submission please include at least the UFS support. The
+board is pretty useless without the actual storage support.
 
-Okay, will change this in v4.
-
-Regards
-Luca
-
->
-> --srini
->
->> Regards
->> Luca
->>=20
->>>
->>>> +	{ .compatible =3D "qcom,qrb5165-rb5-sndcard", .data =3D "sm8250" },
->>>> +	{ .compatible =3D "qcom,sm8250-sndcard", .data =3D "sm8250" },
->>>>  	{}
->>>>  };
->>>> =20
->>>>
->>>> --=20
->>>> 2.49.0
->>>>
-
+-- 
+With best wishes
+Dmitry
 
