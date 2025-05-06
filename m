@@ -1,202 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-56942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F27D3AAC3A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 14:16:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41CD4AAC3E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 14:27:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A587C7B93E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 12:15:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4150A5056C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 12:26:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D76327F755;
-	Tue,  6 May 2025 12:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3D6228153D;
+	Tue,  6 May 2025 12:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dVCNL36G"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j+35fbHB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8184627F748
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 12:16:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3A7280025;
+	Tue,  6 May 2025 12:24:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746533774; cv=none; b=dCgWlRJ6QPIriuqALFVVfibNLixklchE6zbVsxU1ZtC9/dqrerwzcZFU+9cno4P5lhyfxmI2xvSr1f5C+oJFxfxghjsAofKVxA5yVrkUxdPLMz1DfKmvdv9qkhDp9/zgEEx4opbtaYboALom6CfD/11BBHzO6Lzvpmr7XfdENY4=
+	t=1746534297; cv=none; b=kD48wYpTz7JRfpsP+J/ijS/Ukk84gDJ/UizPWfIpR4afNf4MKH6ZjcOEOV+rLS38N7P+9HpqZSdXBz3TSlYlCS8+B6wIgWsfeK3kxTtehTLIYq5fNuaedhDPBOwQmRR7q6JOrv3rytbQ9ulnERe49K+6X0ecvD21iBLQ9be3lBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746533774; c=relaxed/simple;
-	bh=0gj5it6bFF5wR47279deVjSN0PKeKmqzO18KDL2SWGs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LVP+S53NnRdBAS3ZUtxa06G3MopIyoZ/V/M03KBHus/Dc6nude6BHIa8esEnrqaYnH6X9KIvbTXT7D6bkpyM6XHBXTfdl2zHVwWD2zFKqoOJvddXX1JVxdISDf7cTVbu9/L3mOk1DE82BN63v5JeC+dHcAUP21j/k1dGd6wC6Ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dVCNL36G; arc=none smtp.client-ip=209.85.160.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-4774611d40bso305421cf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 05:16:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1746533771; x=1747138571; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6f8Pkog9VRKxqJVqX7zIYOBYdtx7uWBL1I7B160ljq4=;
-        b=dVCNL36GR4sJ0NSR9uL4ZukWs7MxVv7tAAgV3q4ltGOstNFbqYfaPZEXdVm2UL7iue
-         RX6JSDFmaXXVLQBPJCDjbTKKXQ+x7T+R1rZe6zj7L17kr/GspN7nWtqNNwQGV/VH7ws+
-         ZP8HjwuvnReC00NEh2K9IJwsNn5UKaHFEyfyih8dEiaA5FtgfbX17BRirPbS1tQkVB+U
-         JWiow/UmE8hcBucWzRI7r+7I4QPGc9ACnQIHfV9i87BEDjR266iU3c/c/F/8JnJvBxXe
-         3Qu87uYsfLIckR2CHp36rB3S+gJC5zvWIxOJt/Ke1FNvZR4QGErRy+bKfU/kvoa/WtIU
-         TqgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746533771; x=1747138571;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6f8Pkog9VRKxqJVqX7zIYOBYdtx7uWBL1I7B160ljq4=;
-        b=lV/BNbyavjER9ULMlqF8ge7jIhtCh9uZrHCbaCqy7R2kEWDtaSrUBxEEc2vjcVFEY2
-         Z8TJz3R2nz71/VkEFdtpszBrmYolnTOozsit9UocK8LcLSWrdXvkjmz2h12DxTSt0sS7
-         KcH95xu5BLbl/NhHdWpIWv5RCvrGB5vsjKA0HP8Ht+oFCn8ysqTdIH8eHTwifa8Sdi1A
-         GJ/pcpxcCcDh0G030BskECopGxczWIYRAjCqlOQ7J/dFrfpqbEYLcf+nhZXsOO3RIXNk
-         yPZHGlnnB1akKUCnEv0EsF7kzgI4KPbeJi6x6KgBDVEyh18HeaaL79nz0XzSwntOg4Pl
-         /7ww==
-X-Forwarded-Encrypted: i=1; AJvYcCXVxRPTkqKTWtrEmwS4ikPaMSHUJPCF8ohI4U4bUrteEIJaNJsxhDU31ZD3uUYhhTeYHF5b7Joyz6lPR55u@vger.kernel.org
-X-Gm-Message-State: AOJu0YxgO4MtJcQeyKhJakjshjmyNew4DWWP0DySz5c1zKFCta0EHiyq
-	35l3GL2ev1HAvmzF/f9UIaanbbY3quflrNs5cosaJ4iiMExCYCeG1SnpUnHTPNO9Qmdj17qILV1
-	83FQh9dERso0YaERQV6gpy05Pz1+oCACZG/V9
-X-Gm-Gg: ASbGncvxTyrt9jMVzjnQfLGQpcdC8AoMS1yCVoyYBwD4DDJrIaG6fHTWzsGE1dw1cLt
-	GNNVG2u00FCqfD+2o6vGglQAHm3uED2VosmSq3chKLNGqu2DYEqh4vtNkjxKYqqns/Y6wNjJ1tT
-	LO6oVg7R5/ApwARLEPDU+2JrDp58cql8bmrfWaktSmQATCQW3d+Z0=
-X-Google-Smtp-Source: AGHT+IEe8eF4GziUIN/tZf4C7cxJ7AWiVvXbtx1ZH0D0GFwoa/koUU4cjSVlt3/dzy7oD7pGBcV8s+6Nzx0ShmO/HV8=
-X-Received: by 2002:a05:622a:553:b0:486:8d63:2dfc with SMTP id
- d75a77b69052e-490f4729ab9mr4853121cf.2.1746533770768; Tue, 06 May 2025
- 05:16:10 -0700 (PDT)
+	s=arc-20240116; t=1746534297; c=relaxed/simple;
+	bh=uHFytVThoQE6dUumluQFq3LQiUBoMdRX4mX8c3oM/4M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gJQSxrZWNmX/tKc12Bl8hTidkEh0ajh664NOEaHHDfAFVLZOrrHCvpXvRpcTqWnP2lE9+NbrOPVpBVeicBkF5nLOofg06Y4e1hYleWNCSUuZR3xAc7vsnt3S1xNL1gYUpAsMwYoJzdSrkaxaMKMVNyeuIZ2bw+6s2KYB8iiLsRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j+35fbHB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCEEC4CEEE;
+	Tue,  6 May 2025 12:24:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746534296;
+	bh=uHFytVThoQE6dUumluQFq3LQiUBoMdRX4mX8c3oM/4M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=j+35fbHBzNKxob6ajbve9++4e8fpbs6JR0eRq111tR5VN13esZUIzNzg1FBgVP3T+
+	 hNdgE+3iiK07JzUljoCZV5tmOCow4qUFHS9KS1bmi4dBTTGgLqa3/N4iMhLVuo2B+2
+	 L+gsWTLL5cdUlGMCzPqMYMVJsOJROiqSDURspw2woMSmGFFWGgGNmou9TKzXboevc0
+	 qfByVdUPxhAbUYi9KV5fM/cCk0USbLf5qTtt8OHNF4YSkwB8X0+zK8l12RQAkTWcF7
+	 awpCxLTZy5t27xW3csBWhG2TSaPtZ2XoybDzTqDNxL5euuaJjSjqs89oRVEXv2X2pz
+	 8OoPKtjwDf8WQ==
+Date: Tue, 6 May 2025 13:24:50 +0100
+From: Will Deacon <will@kernel.org>
+To: Connor Abbott <cwabbott0@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v5 3/5] iommu/arm-smmu: Fix spurious interrupts with
+ stall-on-fault
+Message-ID: <20250506122449.GB723@willie-the-truck>
+References: <20250319-msm-gpu-fault-fixes-next-v5-0-97561209dd8c@gmail.com>
+ <20250319-msm-gpu-fault-fixes-next-v5-3-97561209dd8c@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250430165655.605595-1-tabba@google.com> <20250430165655.605595-9-tabba@google.com>
- <6819283cc31f0_28880f2944f@iweiny-mobl.notmuch>
-In-Reply-To: <6819283cc31f0_28880f2944f@iweiny-mobl.notmuch>
-From: Fuad Tabba <tabba@google.com>
-Date: Tue, 6 May 2025 13:15:33 +0100
-X-Gm-Features: ATxdqUH8kDs1bsapOMm1wv2xmE__aC-8T_lWieo1BBZsq2lh3T9YXMXc-QxkqaQ
-Message-ID: <CA+EHjTzwfnvYBPNyDFDOkSeKGSu6U2sajfQsYuhW-n_C35KXmQ@mail.gmail.com>
-Subject: Re: [PATCH v8 08/13] KVM: guest_memfd: Allow host to map
- guest_memfd() pages
-To: Ira Weiny <ira.weiny@intel.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250319-msm-gpu-fault-fixes-next-v5-3-97561209dd8c@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hi Ira,
+On Wed, Mar 19, 2025 at 10:44:02AM -0400, Connor Abbott wrote:
+> On some SMMUv2 implementations, including MMU-500, SMMU_CBn_FSR.SS
+> asserts an interrupt. The only way to clear that bit is to resume the
+> transaction by writing SMMU_CBn_RESUME, but typically resuming the
+> transaction requires complex operations (copying in pages, etc.) that
+> can't be done in IRQ context. drm/msm already has a problem, because
+> its fault handler sometimes schedules a job to dump the GPU state and
+> doesn't resume translation until this is complete.
+> 
+> Work around this by disabling context fault interrupts until after the
+> transaction is resumed. Because other context banks can share an IRQ
+> line, we may still get an interrupt intended for another context bank,
+> but in this case only SMMU_CBn_FSR.SS will be asserted and we can skip
+> it assuming that interrupts are disabled which is accomplished by
+> removing the bit from ARM_SMMU_CB_FSR_FAULT. SMMU_CBn_FSR.SS won't be
+> asserted unless an external user enabled stall-on-fault, and they are
+> expected to resume the translation and re-enable interrupts.
+> 
+> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+> Reviewed-by Robin Murphy <robin.murphy@arm.com>
+> Reviewed-by: Rob Clark <robdclark@gmail.com>
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 15 ++++++++++-
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c      | 41 +++++++++++++++++++++++++++++-
+>  drivers/iommu/arm/arm-smmu/arm-smmu.h      |  1 -
+>  3 files changed, 54 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 186d6ad4fd1c990398df4dec53f4d58ada9e658c..a428e53add08d451fb2152e3ab80e0fba936e214 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -90,12 +90,25 @@ static void qcom_adreno_smmu_resume_translation(const void *cookie, bool termina
+>  	struct arm_smmu_domain *smmu_domain = (void *)cookie;
+>  	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+>  	struct arm_smmu_device *smmu = smmu_domain->smmu;
+> -	u32 reg = 0;
+> +	u32 reg = 0, sctlr;
+> +	unsigned long flags;
+>  
+>  	if (terminate)
+>  		reg |= ARM_SMMU_RESUME_TERMINATE;
+>  
+> +	spin_lock_irqsave(&smmu_domain->cb_lock, flags);
+> +
+>  	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
+> +
+> +	/*
+> +	 * Re-enable interrupts after they were disabled by
+> +	 * arm_smmu_context_fault().
+> +	 */
+> +	sctlr = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR);
+> +	sctlr |= ARM_SMMU_SCTLR_CFIE;
+> +	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR, sctlr);
+> +
+> +	spin_unlock_irqrestore(&smmu_domain->cb_lock, flags);
+>  }
+>  
+>  #define QCOM_ADRENO_SMMU_GPU_SID 0
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index c7b5d7c093e71050d29a834c8d33125e96b04d81..9927f3431a2eab913750e6079edc6393d1938c98 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -470,13 +470,52 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+>  	if (!(cfi->fsr & ARM_SMMU_CB_FSR_FAULT))
+>  		return IRQ_NONE;
+>  
+> +	/*
+> +	 * On some implementations FSR.SS asserts a context fault
+> +	 * interrupt. We do not want this behavior, because resolving the
+> +	 * original context fault typically requires operations that cannot be
+> +	 * performed in IRQ context but leaving the stall unacknowledged will
+> +	 * immediately lead to another spurious interrupt as FSR.SS is still
+> +	 * set. Work around this by disabling interrupts for this context bank.
+> +	 * It's expected that interrupts are re-enabled after resuming the
+> +	 * translation.
 
-On Mon, 5 May 2025 at 22:05, Ira Weiny <ira.weiny@intel.com> wrote:
->
-> Fuad Tabba wrote:
-> > Add support for mmap() and fault() for guest_memfd backed memory
-> > in the host for VMs that support in-place conversion between
-> > shared and private. To that end, this patch adds the ability to
-> > check whether the VM type supports in-place conversion, and only
-> > allows mapping its memory if that's the case.
-> >
-> > This patch introduces the configuration option KVM_GMEM_SHARED_MEM,
-> > which enables support for in-place shared memory.
-> >
-> > It also introduces the KVM capability KVM_CAP_GMEM_SHARED_MEM, which
-> > indicates that the host can create VMs that support shared memory.
-> > Supporting shared memory implies that memory can be mapped when shared
-> > with the host.
-> >
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >  include/linux/kvm_host.h | 15 ++++++-
-> >  include/uapi/linux/kvm.h |  1 +
-> >  virt/kvm/Kconfig         |  5 +++
-> >  virt/kvm/guest_memfd.c   | 92 ++++++++++++++++++++++++++++++++++++++++
-> >  virt/kvm/kvm_main.c      |  4 ++
-> >  5 files changed, 116 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> > index 9419fb99f7c2..f3af6bff3232 100644
-> > --- a/include/linux/kvm_host.h
-> > +++ b/include/linux/kvm_host.h
-> > @@ -729,6 +729,17 @@ static inline bool kvm_arch_supports_gmem(struct k=
-vm *kvm)
-> >  }
-> >  #endif
-> >
-> > +/*
-> > + * Arch code must define kvm_arch_gmem_supports_shared_mem if support =
-for
-> > + * private memory is enabled and it supports in-place shared/private c=
-onversion.
-> > + */
-> > +#if !defined(kvm_arch_gmem_supports_shared_mem) && !IS_ENABLED(CONFIG_=
-KVM_GMEM_SHARED_MEM)
->
-> Perhaps the bots already caught this?
->
-> I just tried enabling KVM_GMEM_SHARED_MEM on x86 with this patch and it f=
-ails with:
->
-> || In file included from arch/x86/kvm/../../../virt/kvm/binary_stats.c:8:
-> || ./include/linux/kvm_host.h: In function =E2=80=98kvm_mem_from_gmem=E2=
-=80=99:
-> include/linux/kvm_host.h|2530 col 13| error: implicit declaration of func=
-tion =E2=80=98kvm_arch_gmem_supports_shared_mem=E2=80=99 [-Wimplicit-functi=
-on-declaration]
-> ||  2530 |         if (kvm_arch_gmem_supports_shared_mem(kvm))
-> ||       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> || make[4]: *** Waiting for unfinished jobs....
->
->
-> I think the predicate on !CONFIG_KVM_GMEM_SHARED_MEM is wrong.
->
-> Shouldn't this always default off?  I __think__ this then gets enabled in
-> 11/13?
+s/translation/transaction/
 
-You're right. With the other comments from David and Ackerley, this
-functions is gone, replaced by checking a per-vm flag.
+> +	 *
+> +	 * We have to do this before report_iommu_fault() so that we don't
+> +	 * leave interrupts disabled in case the downstream user decides the
+> +	 * fault can be resolved inside its fault handler.
+> +	 *
+> +	 * There is a possible race if there are multiple context banks sharing
+> +	 * the same interrupt and both signal an interrupt in between writing
+> +	 * RESUME and SCTLR. We could disable interrupts here before we
+> +	 * re-enable them in the resume handler, leaving interrupts enabled.
+> +	 * Lock the write to serialize it with the resume handler.
+> +	 */
 
-Thanks,
-/fuad
+I'm struggling to understand this last part. If the resume handler runs
+synchronously from report_iommu_fault(), then there's no need for
+locking because we're in interrupt context. If the resume handler can
+run asynchronously from report_iommu_fault(), then the locking doesn't
+help because the code below could clear CFIE right after the resume
+handler has set it.
 
-> IOW
->
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index f3af6bff3232..577674e95c09 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -733,7 +733,7 @@ static inline bool kvm_arch_supports_gmem(struct kvm =
-*kvm)
->   * Arch code must define kvm_arch_gmem_supports_shared_mem if support fo=
-r
->   * private memory is enabled and it supports in-place shared/private con=
-version.
->   */
-> -#if !defined(kvm_arch_gmem_supports_shared_mem) && !IS_ENABLED(CONFIG_KV=
-M_GMEM_SHARED_MEM)
-> +#if !defined(kvm_arch_gmem_supports_shared_mem)
->  static inline bool kvm_arch_gmem_supports_shared_mem(struct kvm *kvm)
->  {
->         return false;
+I think the broader problem is that we can end up reporting a spurious
+fault when the irq is shared between context banks. However, your change
+to ARM_SMMU_CB_FSR_FAULT fixes that afaict:
+
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> index ff84ce3b8d8567d3402e945e8277ca2a87df9a4e..5fe8e482457f905529a08aea14ea5656d3e31328 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> @@ -214,7 +214,6 @@ enum arm_smmu_cbar_type {
+>  					 ARM_SMMU_CB_FSR_TLBLKF)
+>  
+>  #define ARM_SMMU_CB_FSR_FAULT		(ARM_SMMU_CB_FSR_MULTI |	\
+> -					 ARM_SMMU_CB_FSR_SS |		\
+>  					 ARM_SMMU_CB_FSR_UUT |		\
+>  					 ARM_SMMU_CB_FSR_EF |		\
+>  					 ARM_SMMU_CB_FSR_PF |		\
+
+because now any subsequent spurious IRQs will return IRQ_NONE. So I
+don't see why we need the locking at all. What am I missing?
+
+Also, I think your change probably exposes a benign bug in the qcom
+debug code as qcom_tbu_halt() has the following:
+
+if ((fsr & ARM_SMMU_CB_FSR_FAULT) && (fsr & ARM_SMMU_CB_FSR_SS))
+	...
+
+Will
 
