@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-56996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8539FAACCB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:04:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8A3CAACCBB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:04:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A068C7B1CCF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 18:02:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A20C83BFF3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 18:03:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9341A286423;
-	Tue,  6 May 2025 18:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBC4A28642B;
+	Tue,  6 May 2025 18:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="W4He7Ror"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UAmW4YoF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071EB283FE2;
-	Tue,  6 May 2025 18:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608972857FA;
+	Tue,  6 May 2025 18:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746554610; cv=none; b=Rw/dftUzrewrPUieUneKZbJYE4+zOpP0ID+1yk+7IFXLWz7izNIFTzeSyz9nbHF8doeVPvnAE7+OQS9kp6HYULh4BNfFmqU4ffzGE+Jx5AQscXUnVzPtD9U9vwboBw7mtoJjL80ivTt58Pg6VIKCjt0LnvAcq+ZNCS3AOAepy08=
+	t=1746554616; cv=none; b=lqE/YP9JXTAEnocZanRwx6jTBvS27ebuUAxVTGHGcTwLARdhuCeMzEHtvjH5wOL9Ijq9hwNLxuaDa3fmmnSYxEVAQ3NTAfUH0Ssmrj7//eX2ojjDF7zUVBvQ9Db3sLhnGBxePyb1Kyb8fbjH+hUCvGNRjPcaL2S3GqgPJrcbu0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746554610; c=relaxed/simple;
-	bh=Oc1wZzIdvlRZC4vtY8n1/2AKh9fkjAjte++Sgvf+uow=;
+	s=arc-20240116; t=1746554616; c=relaxed/simple;
+	bh=tesk9LM8WSCAa0vJzlAyjmFHODD+5WQuGakYiHBm5CI=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oQSrU35HHOLaw3/9WY9HrR0tW1i4o592zmFCwKfgditx46L978bwBNm8ZnCYaMs/iy4JVVdFn9Y2IBjLcdmHR2OhDhjIdQ9VqMvY5qD70huJi5d8va9zq+hSrzy455Ggw/T9i+c+e4o/cYZH1Un1ZyAAilV5Nr70l8PVRLq+qls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=W4He7Ror; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=twF2zn7K41EWeM44beKsy+mX0hJJkhpIVcK3DIyTMfdHnLoWAujgqLm5V4wiFMfb8RIuQFD3Xy008bRocs9BibsV1JdNWFPUsfRG4E6hCInyqsDvK9DeBlcRK90U6tYHhVb/Ay1mGPkvByiQILS9ASjTdmzDNt6bxlSVNX2p05E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UAmW4YoF; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 546B6cbR024744;
-	Tue, 6 May 2025 18:03:26 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 546FZXFT013818;
+	Tue, 6 May 2025 18:03:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=A0i7hZR0xV3rGKXf9cDhtSeJ
-	0MaBoOx1NQRt7QYQfs8=; b=W4He7Ror1F9E3XsmHFAfjC68AaLQAlO4RwXDJE5j
-	jV39iYCG/IwUTvAq0AhYWHxUw6fXd+CqLg8Hgr/DFKB0WaJhzn3oI5l0YjLKtlSF
-	04gM3BWFBLjymxO5zgwhYVUTblgcii0vHf2sy3r6t6YXn2WTkGRjf/fXNuRbO/AF
-	i3wDwKVXO5gHaM4Q+3eaQtRGdfKCQPGZg2zA/k9hgwIJegItUctHhdedW1mMiz5A
-	Aq8ofqjJSbV8JzfY4DSDpbC9RCufyYUlxWUkEKUURqRAFnHSiZWwIDO1dlFyAHJ1
-	Vd4jN/AYwrkiBXnJqpyTW8qUeYah2lXbNaJ+StPJyLYpOQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46fdwtsx9s-1
+	:references:subject:to; s=qcppdkim1; bh=/44Z+sAk1IIP4oEdS78SzSOU
+	76R4fKdmH5OWfEc/F1A=; b=UAmW4YoFA6yZT71Ec8BZw4bgar2bqyozaRcGLE4k
+	RGliGvW9y4rbrCzYUCe455jzoe36aIPBkNCekFv2Lx/cJiR/blfKKH5xNTPV4fj6
+	WYko89iyGeodgjVx2GOwyqSXoBK30xkSsmIWVM8fs65y1o+6KKmp0kO2k3dd3ZwX
+	pdxwlLspd+L6p7lhfqyFdjDAntgmGwhlodWJS6mkLKHO7WUXX1pG8NY0JlHKJmQl
+	HSSLFSaWSEn9oD6e4rAN+IwNXIH5BD0JA+7XAkKZ3w2yOmstc0F0kgS32XT3qnBr
+	GgHUjNK/iekU/cwBEYfdDHSLINUd3cJUP7qmLmgije1dJA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46fdwtsxab-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 May 2025 18:03:25 +0000 (GMT)
+	Tue, 06 May 2025 18:03:32 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 546I3P1A026516
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 546I3Vja013141
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 6 May 2025 18:03:25 GMT
+	Tue, 6 May 2025 18:03:31 GMT
 Received: from hu-ptalari-hyd.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 6 May 2025 11:03:19 -0700
+ 15.2.1544.9; Tue, 6 May 2025 11:03:26 -0700
 From: Praveen Talari <quic_ptalari@quicinc.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Jiri Slaby
@@ -72,9 +72,9 @@ To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 CC: <psodagud@quicinc.com>, <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
         <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
         <quic_mnaresh@quicinc.com>, <quic_shazhuss@quicinc.com>
-Subject: [PATCH v5 4/8] serial: qcom-geni: move resource initialization to separate function
-Date: Tue, 6 May 2025 23:32:28 +0530
-Message-ID: <20250506180232.1299-5-quic_ptalari@quicinc.com>
+Subject: [PATCH v5 5/8] serial: qcom-geni: move resource control logic to separate functions
+Date: Tue, 6 May 2025 23:32:29 +0530
+Message-ID: <20250506180232.1299-6-quic_ptalari@quicinc.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20250506180232.1299-1-quic_ptalari@quicinc.com>
 References: <20250506180232.1299-1-quic_ptalari@quicinc.com>
@@ -89,19 +89,19 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=VPPdn8PX c=1 sm=1 tr=0 ts=681a4eed cx=c_pps
+X-Authority-Analysis: v=2.4 cv=VPPdn8PX c=1 sm=1 tr=0 ts=681a4ef4 cx=c_pps
  a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=0DDkC8yEFXPSaA7UoRYA:9
+ a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=HYIVWE9JnHk2aDURxZAA:9
  a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: vWB4_1PYvFOrPpMQegHWQ-8a9DjQfIE_
-X-Proofpoint-ORIG-GUID: vWB4_1PYvFOrPpMQegHWQ-8a9DjQfIE_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDE3MCBTYWx0ZWRfXyvqbAqQ9IciE
- AIiWJgq6G1zZicEtubLQP2TufGKWwCZ1iaFYTCAsw09ROfL0lOqFpa2XQ16S3Dy7r8N0r/4EzUq
- D+HbsQHLzDmiNLvgXWITA3kHa4gcumUpdhxTAywO0NNymoLM/C82tLii0pYAF6fz4MtFt5upqjn
- qVkeLzN6iuhVHjxCrf3yoJx0TQjt/tLzHNA3SYkDesYqkZQDckC9TOJ0VsHOwmqBoaAWJKRl8SQ
- uIlp3poIgxMd74o8WgLvrbP0ZMSs0EZehCf1pc0HQ5hjoR3klbXzVWBoqv59HShxGfXtWFSHu1b
- RjZaeHwBO/c8S9DHLLQsRjD8F6hri8aDtjrirX/DPrW7BeBNVmQAYW+mmRfvSiERtXzQLapQJy+
- ruYAYf4TcEZ/ysVysFEugH5KhmzchAycd6sBqS2IjliJFYRNgurXUrw0UP20J3hrlro6ntxV
+X-Proofpoint-GUID: aqGOmRruLQNiOYXMX8WaJh0iGhCUCFTv
+X-Proofpoint-ORIG-GUID: aqGOmRruLQNiOYXMX8WaJh0iGhCUCFTv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDE3MCBTYWx0ZWRfX+jYkzxUcWVby
+ mHbnSV1ZrDYIXR3kbeYrWJlaisP4atOqNYqeKUcflBiP7hP0EZr2i6cByUyFVri9HCuxDVazka9
+ UQJPCMGHvRw5TfSTWSnU69zToLJZX1F0NnNpeCe4nwB6SKNW0ZckHmOgQPt1BOrEF+07a64Wrbe
+ wrrltLPSnoCzaHCsHO67qFK1D0NzqgYM7TsMlX6IgtQNwFM3fFD2grm71akcgbK+GAHIIPvm8tn
+ GRWVb3UnrC8deL1zku+nDyWbjNZw6Kou6k8yE5/h5XIIjf65CHF1AHfGfvNuWXwQKbzvpIvVrKE
+ IaI4wKEVuYQBskotqRfzhx9X5a+WPHFObFbOKAUXtQF5XpexqLwf73M0zd6mNrZGMNPIwJhjTek
+ nRcaBXzjg/y70PpURU+2eoHwuNv3BZ0et3VvrgB5gr7LIPUATStdNbBcEMJebbbrlSba9Ew9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-06_08,2025-05-05_01,2025-02-21_01
@@ -112,11 +112,14 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
  definitions=main-2505060170
 
-Enhances code readability and future modifications within the new API.
+Supports use in PM system/runtime frameworks, helping to
+distinguish new resource control mechanisms and facilitate
+future modifications within the new API.
 
-Move the code that handles the actual initialization of resources
-like clock and ICC paths to a separate function, making the
-probe function cleaner.
+The code that handles the actual enable or disable of resources
+like clock and ICC paths to a separate function
+(geni_serial_resources_on() and geni_serial_resources_off()) which
+enhances code readability.
 
 Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
 ---
@@ -124,111 +127,88 @@ v3 -> v4
 - added version log after ---
 
 v1 -> v2
-- updated subject description.
-- added a new line after function end
+- returned 0 instead of ret variable
 ---
- drivers/tty/serial/qcom_geni_serial.c | 66 ++++++++++++++++-----------
- 1 file changed, 40 insertions(+), 26 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 54 +++++++++++++++++++++------
+ 1 file changed, 42 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 0293b6210aa6..6ad759146f71 100644
+index 6ad759146f71..2cd2085473f3 100644
 --- a/drivers/tty/serial/qcom_geni_serial.c
 +++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1588,6 +1588,43 @@ static struct uart_driver qcom_geni_uart_driver = {
+@@ -1588,6 +1588,42 @@ static struct uart_driver qcom_geni_uart_driver = {
  	.nr =  GENI_UART_PORTS,
  };
  
-+static int geni_serial_resource_init(struct qcom_geni_serial_port *port)
++static int geni_serial_resources_off(struct uart_port *uport)
 +{
++	struct qcom_geni_serial_port *port = to_dev_port(uport);
 +	int ret;
 +
-+	port->se.clk = devm_clk_get(port->se.dev, "se");
-+	if (IS_ERR(port->se.clk)) {
-+		ret = PTR_ERR(port->se.clk);
-+		dev_err(port->se.dev, "Err getting SE Core clk %d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = geni_icc_get(&port->se, NULL);
++	dev_pm_opp_set_rate(uport->dev, 0);
++	ret = geni_se_resources_off(&port->se);
 +	if (ret)
 +		return ret;
 +
-+	port->se.icc_paths[GENI_TO_CORE].avg_bw = GENI_DEFAULT_BW;
-+	port->se.icc_paths[CPU_TO_GENI].avg_bw = GENI_DEFAULT_BW;
-+
-+	/* Set BW for register access */
-+	ret = geni_icc_set_bw(&port->se);
-+	if (ret)
-+		return ret;
-+
-+	ret = devm_pm_opp_set_clkname(port->se.dev, "se");
-+	if (ret)
-+		return ret;
-+
-+	/* OPP table is optional */
-+	ret = devm_pm_opp_of_add_table(port->se.dev);
-+	if (ret && ret != -ENODEV) {
-+		dev_err(port->se.dev, "invalid OPP table in device tree\n");
-+		return ret;
-+	}
++	geni_icc_disable(&port->se);
 +
 +	return 0;
 +}
 +
++static int geni_serial_resources_on(struct uart_port *uport)
++{
++	struct qcom_geni_serial_port *port = to_dev_port(uport);
++	int ret;
++
++	ret = geni_icc_enable(&port->se);
++	if (ret)
++		return ret;
++
++	ret = geni_se_resources_on(&port->se);
++	if (ret) {
++		geni_icc_disable(&port->se);
++		return ret;
++	}
++
++	if (port->clk_rate)
++		dev_pm_opp_set_rate(uport->dev, port->clk_rate);
++
++	return 0;
++}
++
+ static int geni_serial_resource_init(struct qcom_geni_serial_port *port)
+ {
+ 	int ret;
+@@ -1628,23 +1664,17 @@ static int geni_serial_resource_init(struct qcom_geni_serial_port *port)
  static void qcom_geni_serial_pm(struct uart_port *uport,
  		unsigned int new_state, unsigned int old_state)
  {
-@@ -1690,12 +1727,10 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 	port->dev_data = data;
- 	port->se.dev = &pdev->dev;
- 	port->se.wrapper = dev_get_drvdata(pdev->dev.parent);
--	port->se.clk = devm_clk_get(&pdev->dev, "se");
--	if (IS_ERR(port->se.clk)) {
--		ret = PTR_ERR(port->se.clk);
--		dev_err(&pdev->dev, "Err getting SE Core clk %d\n", ret);
+-	struct qcom_geni_serial_port *port = to_dev_port(uport);
+ 
+ 	/* If we've never been called, treat it as off */
+ 	if (old_state == UART_PM_STATE_UNDEFINED)
+ 		old_state = UART_PM_STATE_OFF;
+ 
+-	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF) {
+-		geni_icc_enable(&port->se);
+-		if (port->clk_rate)
+-			dev_pm_opp_set_rate(uport->dev, port->clk_rate);
+-		geni_se_resources_on(&port->se);
+-	} else if (new_state == UART_PM_STATE_OFF &&
+-			old_state == UART_PM_STATE_ON) {
+-		geni_se_resources_off(&port->se);
+-		dev_pm_opp_set_rate(uport->dev, 0);
+-		geni_icc_disable(&port->se);
+-	}
++	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF)
++		geni_serial_resources_on(uport);
++	else if (new_state == UART_PM_STATE_OFF &&
++			old_state == UART_PM_STATE_ON)
++		geni_serial_resources_off(uport);
 +
-+	ret = geni_serial_resource_init(port);
-+	if (ret)
- 		return ret;
--	}
+ }
  
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	if (!res)
-@@ -1713,17 +1748,6 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 			return -ENOMEM;
- 	}
- 
--	ret = geni_icc_get(&port->se, NULL);
--	if (ret)
--		return ret;
--	port->se.icc_paths[GENI_TO_CORE].avg_bw = GENI_DEFAULT_BW;
--	port->se.icc_paths[CPU_TO_GENI].avg_bw = GENI_DEFAULT_BW;
--
--	/* Set BW for register access */
--	ret = geni_icc_set_bw(&port->se);
--	if (ret)
--		return ret;
--
- 	port->name = devm_kasprintf(uport->dev, GFP_KERNEL,
- 			"qcom_geni_serial_%s%d",
- 			uart_console(uport) ? "console" : "uart", uport->line);
-@@ -1745,16 +1769,6 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 	if (of_property_read_bool(pdev->dev.of_node, "cts-rts-swap"))
- 		port->cts_rts_swap = true;
- 
--	ret = devm_pm_opp_set_clkname(&pdev->dev, "se");
--	if (ret)
--		return ret;
--	/* OPP table is optional */
--	ret = devm_pm_opp_of_add_table(&pdev->dev);
--	if (ret && ret != -ENODEV) {
--		dev_err(&pdev->dev, "invalid OPP table in device tree\n");
--		return ret;
--	}
--
- 	port->private_data.drv = drv;
- 	uport->private_data = &port->private_data;
- 	platform_set_drvdata(pdev, port);
+ static const struct uart_ops qcom_geni_console_pops = {
 -- 
 2.17.1
 
