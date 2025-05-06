@@ -1,127 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-56913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDF83AABD97
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 10:44:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72E41AABE37
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 11:05:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E29743A5F91
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 08:44:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1B323B49DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 09:04:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9A99257AF6;
-	Tue,  6 May 2025 08:44:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xJMjmiJh"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3857265623;
+	Tue,  6 May 2025 09:02:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB6C25742A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 08:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09453264615
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 09:02:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746521060; cv=none; b=p3n28mHxe2aZuxCCJb+Y7f+kw7Yh/0fKUNQkdGv0JyOrmGBv/6q3W03uCewOa9/dzpkKRPLDS6UfeniXPGOA4FjUUs0XUJlSTrsYm2vWP9bBNAgPtWbZsqraU2xRz4/dhL8yYKNj+GoW70iT8XHwwOgCfOCqdr1ddEuCjZNVQV4=
+	t=1746522175; cv=none; b=AW88r6GuJXHlt/SFt/lgaoH0Bom/AHfNoRrgJatwNl8oeQUdwKcoxgZtsWCvBWnUvcVx+fQjfIsJZpxOlgV3TqqCuiB+NjVKxfefX5XZK5FIJ1Ev7qPUSt7ew4FzbA1MOug/zkjZUbI+DKdMtvj9/DKPJ4Z1TQXTnWcQ42MdSDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746521060; c=relaxed/simple;
-	bh=+2GVlVD2L0RLoxh4xotkcQLOqvnaqQnQU41zbcKNvIg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JJrASOTSHF4HVF1JaSWn4dxTTtnsJj7Z6n+hyhBVN3WsZ9b7k2mV6zUyHViz9Us6PtiXccLIzvuktQaJD7panSYjH7MOlzHqkEnHypayaFUrlQcMjzvRuQJrTa7qXdQu5vE7d7raObVnK0i5ZPyvP9tqHr8T+sCtL7f8nij585Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xJMjmiJh; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43d0618746bso36517575e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 01:44:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746521057; x=1747125857; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=L5gGsosY8ut1Bx/SwqzzJglKhQtcNAYIW9Tsdra1ZGQ=;
-        b=xJMjmiJhomgLvacAFfnNxk3stbxyhDm9gQV3KFtLWeL6rHSO4udDKtgxPtAEOBllgA
-         KQi/z1NhVatnSi1gh+V+Dl2vka/GJDpwN0mcazhhWUmp1DDzQxnO6ozKMi9tyxkBOWTp
-         efH/uQmS9wrI63EGtaUfUN3SexHufpjLJ6SGshhM6DfBQ3i3gIesnGhTkNmcBpI6nM5t
-         PkmjJKEuiPpc9dAzsE95AqWmXaLopxbyQQ5XZ79LEnUrYnFcZp1eRzGCpVz4G6x4StkR
-         E1/0P5toMObyLji1eW9Jfp99oHeXhWNGcbSA0JngRq1LizXGQdquUQ3DX59hr8/tHnWc
-         yKMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746521057; x=1747125857;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L5gGsosY8ut1Bx/SwqzzJglKhQtcNAYIW9Tsdra1ZGQ=;
-        b=UH880QAUSUNH9lpRAHOebpjliVesi39Slct88IZy1R1qeCoE28Fe4MHe15q8iScfen
-         hYJtrxWtO4zPglVoSs4EJXBfd+ZshXIolobo5kmqwThR9OuVnTXD7SpHbEOzkOOKXamX
-         l92O1dRZPtriq8aDrz1dOkhT2bx0N7/FkHeuS0aTDI0dGcYMheS2mALPvEZZRs9zEhFx
-         RF2bsEZ/85EYb4LdcwmEmG8G8wMwvIL3xmAkYqFnWmGfsxTNeEqYYOcjzqThz+1CLGOy
-         G5D+og7HZJYAO5oSqRsc5Hr+rEl6iFMmxtTsmY2ZwCLgaHEPQNhzwH1LuvjSuPI4hSip
-         VAjg==
-X-Gm-Message-State: AOJu0Yx/6JCb73DbEuPRxBg01xPb4ubrONlz38+JTiqjRUDEkAOh5tpc
-	OFVNrkwnXd47c0qB/OCNAMoGV04+RFKMSKtWj1Yn7NNVME3DGG4qe+LWIulf6Z8=
-X-Gm-Gg: ASbGnctNmEOYBp2pbQnMhtCCooIMKJsZlR/S3sOr6fboPNAtp4oacptIS3tPX3tIYC7
-	wNlpQa3UIt9SSOMX13+iCCbk1wwU9sGivOVMXvZSnKMRWDp5yLHeRis8qYx4l+GcpZyhWR+az2l
-	zvMxeMt0rN5AsVmdLJLeYUPRzZUNLqwmdxroPnmQU0ZYwJSJk4wvs7UGkFyjJE1jDAimKzKZ4pG
-	GAFuEOeSW8yI6sHaopgpqNJiJ0Pyg/zqUOlF4kt0pxGWRdziBPL5Kg+QrVZ8pJ+N+s5b0kDzI6l
-	QcjWlkU48J4lsL0qrMnAGkSv/yLpKxX9MuwHrYFjC7r6OfNn9jqWyCyUnPkmN2eDiJOMp/Cvify
-	sD74cDw==
-X-Google-Smtp-Source: AGHT+IHHZuJf/esu3cKTxXqW0HI6bwS3OQqxETST9uSfS/LugLOy6+dy1AlDM1w7IH882lGtmgu9pg==
-X-Received: by 2002:a05:600c:3b90:b0:43c:efed:732c with SMTP id 5b1f17b1804b1-441c4938eddmr64629905e9.28.1746521056721;
-        Tue, 06 May 2025 01:44:16 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441b2af2a0csm205627795e9.18.2025.05.06.01.44.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 May 2025 01:44:16 -0700 (PDT)
-Message-ID: <9b678d19-ce4e-477d-81fa-bb3eb0a6dd57@linaro.org>
-Date: Tue, 6 May 2025 09:44:15 +0100
+	s=arc-20240116; t=1746522175; c=relaxed/simple;
+	bh=12vh6IK8I0AkdMWsFqMov1eE4gd1N/LKfwlbPkUGbk0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fq08Tn+R7p6UZ5dg7k3FL9h7DaytS8CnXWgpS9SRO1gQTMBd8fF1Zr4sxIb6SEe+WYUAzV05n+ctm6pSHGIVoZZMiFef22+wIBD+o4rXUR+vBnelK5WNvu4Hogus+VAcy2v7SHgRegCcxZPByCBpeVmLUmrIvpKv11zmbM5Xo3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B25F4404A1;
+	Tue,  6 May 2025 10:47:14 +0200 (CEST)
+Date: Tue, 6 May 2025 10:47:13 +0200
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Dmitry Baryshkov <lumag@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v3 1/8] drm/msm/dpu: don't overwrite CTL_MERGE_3D_ACTIVE
+ register
+Message-ID: <wykubtbdukui3lmqraq2yklu3obeutcczuw24idhslyaunyb2e@iandx2xswmu6>
+References: <20250307-dpu-active-ctl-v3-0-5d20655f10ca@linaro.org>
+ <20250307-dpu-active-ctl-v3-1-5d20655f10ca@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] dt-bindings: media: qcom,x1e80100-camss: Add optional
- bus-type property
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250502204142.2064496-1-vladimir.zapolskiy@linaro.org>
- <20250502204142.2064496-3-vladimir.zapolskiy@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250502204142.2064496-3-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250307-dpu-active-ctl-v3-1-5d20655f10ca@linaro.org>
 
-On 02/05/2025 21:41, Vladimir Zapolskiy wrote:
-> Since CSIPHY IP on modern Qualcomm SoCs supports D-PHY and C-PHY
-> interfaces, it might be necessary to specify it explicitly for some
-> particular devices.
+On 2025-03-07 08:24:49, Dmitry Baryshkov wrote:
+> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> In case of complex pipelines (e.g. the forthcoming quad-pipe) the DPU
+> might use more that one MERGE_3D block for a single output.  Follow the
+> pattern and extend the CTL_MERGE_3D_ACTIVE active register instead of
+> simply writing new value there. Currently at most one MERGE_3D block is
+> being used, so this has no impact on existing targets.
+
+Too late now that this patch has already been merged, but good to
+track for posterity: it'd be nice if the commit message mentions that
+dpu_hw_ctl_reset_intf_cfg_v1() already takes this approach, and only unsets the
+merge_3d bit provided in dpu_hw_intf_cfg, and doesn't clear the whole register
+to zero :)
+
+- Marijn
+
+> 
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   .../devicetree/bindings/media/qcom,x1e80100-camss.yaml       | 5 +++++
->   1 file changed, 5 insertions(+)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-> index 680f3f514132..2e7455bd75ec 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-> @@ -153,6 +153,11 @@ properties:
->                   minItems: 1
->                   maxItems: 4
->   
-> +              bus-type:
-> +                enum:
-> +                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
-> +                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> index 411a7cf088eb72f856940c09b0af9e108ccade4b..cef3bfaa4af82ebc55fb8cf76adef3075c7d73e3 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> @@ -563,6 +563,7 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+>  	u32 wb_active = 0;
+>  	u32 cwb_active = 0;
+>  	u32 mode_sel = 0;
+> +	u32 merge_3d_active = 0;
+>  
+>  	/* CTL_TOP[31:28] carries group_id to collate CTL paths
+>  	 * per VM. Explicitly disable it until VM support is
+> @@ -578,6 +579,7 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+>  	wb_active = DPU_REG_READ(c, CTL_WB_ACTIVE);
+>  	cwb_active = DPU_REG_READ(c, CTL_CWB_ACTIVE);
+>  	dsc_active = DPU_REG_READ(c, CTL_DSC_ACTIVE);
+> +	merge_3d_active = DPU_REG_READ(c, CTL_MERGE_3D_ACTIVE);
+>  
+>  	if (cfg->intf)
+>  		intf_active |= BIT(cfg->intf - INTF_0);
+> @@ -591,15 +593,15 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+>  	if (cfg->dsc)
+>  		dsc_active |= cfg->dsc;
+>  
+> +	if (cfg->merge_3d)
+> +		merge_3d_active |= BIT(cfg->merge_3d - MERGE_3D_0);
 > +
->               required:
->                 - clock-lanes
->                 - data-lanes
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>  	DPU_REG_WRITE(c, CTL_TOP, mode_sel);
+>  	DPU_REG_WRITE(c, CTL_INTF_ACTIVE, intf_active);
+>  	DPU_REG_WRITE(c, CTL_WB_ACTIVE, wb_active);
+>  	DPU_REG_WRITE(c, CTL_CWB_ACTIVE, cwb_active);
+>  	DPU_REG_WRITE(c, CTL_DSC_ACTIVE, dsc_active);
+> -
+> -	if (cfg->merge_3d)
+> -		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
+> -			      BIT(cfg->merge_3d - MERGE_3D_0));
+> +	DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE, merge_3d_active);
+>  
+>  	if (cfg->cdm)
+>  		DPU_REG_WRITE(c, CTL_CDM_ACTIVE, cfg->cdm);
+> 
+> -- 
+> 2.39.5
+> 
 
