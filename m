@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-56890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D7CBAABAB4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 09:26:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C92F0AABAE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 09:29:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 78193165421
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 07:23:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C88E11C41577
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 07:24:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE9D0283FF0;
-	Tue,  6 May 2025 05:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F55128D84C;
+	Tue,  6 May 2025 05:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="EIYpJuK9"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pvn31hhw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBE623A9A0
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 05:17:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A729B28C869
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 05:29:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746508647; cv=none; b=fmusDV/dEqfhgMN352wN+QKUdWZGAiTZKKBZjD3EK8mqGIE4GIP+uotIO4BtHxqU0jZTVtMjRcLP7B5CA963qZbwSfH9y7Yqo7p6uKRJuc7tqiHZ5tfoeYHJqrjrWtqfUkEykrCbMQg5AtDtqZ8Lcd8n5F/2eISggftTUpVhokU=
+	t=1746509346; cv=none; b=VxRu0gDUqWl7Bt3RnKdraxLiG3qxG6UspHk6q/S9PRgNrwLfoMPrHljL0GgvokQZiYsv9NO6fLqS/IzRJwxqcNqMxbDPGNg75LQL68f+UrIRu1b36Lcjo40uJ7IXS1CBhHMmkUCfAzrKDF/kJcRaMsk2BqrJb+Flur4bgeOy/OU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746508647; c=relaxed/simple;
-	bh=FQeYSRTyGaLyx8mJE3z/WnWqQ1oIIA9h3QkTkL5Bqlo=;
+	s=arc-20240116; t=1746509346; c=relaxed/simple;
+	bh=wjuZP8JElURxyEXLHtfSNCq4yuHrsaOCzYwpYIxLc3I=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dCqSJ28iTviwGy7dtGvc1lgpYjMAa3zND/2e7i/PjPVG9qE51ix+R3GVUQ7iSzBMDoI9SNEQXesVpzS6pCS7PDC6UzVz5n9SjAOn+88hTGg969U07m/2f856+0571N8IXDP9RG2Fa7Gvfrw9xFdFX1FPveuAagGfcZUYiHSbV0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=EIYpJuK9; arc=none smtp.client-ip=209.85.214.180
+	 To:Cc:Content-Type; b=CN/syxVSUTkeYI55fpFMJgD7a9v1cL0JFcobc0hnZi6qpiKhE0eiPBgTYJA4DrVsn0cJkkOUkYESsnUgqwwI1jCYFx+zvmf8ZvcdOOo+KMD/ZnoclYQLZw3HK4zOpBnOjGcpCpVxO0TF6WIRsnz+IDenu7FLhpGn2u9wrqkpQog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pvn31hhw; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-22e1eafa891so101945ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 22:17:26 -0700 (PDT)
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-22e39fbad5fso66815ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 May 2025 22:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1746508645; x=1747113445; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1746509344; x=1747114144; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2/oyNXL8JmitesFhXvr9WQW93SUMwRydjKM6cb06+Bg=;
-        b=EIYpJuK9loB5PVZigkGXD1YlTlI0XqkhgaGdNRhdkfTly7uzLDu1OWQYbGaOfpz5qA
-         IJ7N4whfflwJSMGqES5690LzebWk9pkuqn1yA1NWfIiC+QERirLhLRJj3Bu5u1eHiVJF
-         oSshSwAMs7XvPdfvqYIfm/Mv63fVb4b9vqHhWEveJQm/835iSNsggU3N52TvBR0ChXW6
-         sn70S2/CC3Q8Gfi7/fFHH06UwY9Oj+kB6tOU7E1lOi8hlIMhAe6vANGCgkydqWPAsQB8
-         h/dbl2tRXFtrgDNEgV6X3XqRJ679U4IHCbOuECXA2C+/KCnIYb4vAzfrbElypzJhHFZq
-         AQ3w==
+        bh=8lKEB5k3HxIIDe0cms88dba//bFVC0zSsTglMVdhTdQ=;
+        b=pvn31hhw4ka3CtzugjKjTe23AOJqIwpmBKQJqO97U7WdTxM1wM2AttJI7Mhi7p76MP
+         tOsa+A4wVR7fd50atfW8MzLRawL81dpputh7ON0eFWL720p5PLlllbot2eGuMbGC3SMF
+         kBpsnl2N4mAwVu8vEBE3DoxHhBdyxfS4M/dci+kMHwtfrRhKZllVL2naaqxJGqfWRZ/r
+         LpsxajimEXm6H+mTgY4Cybgpo9CmHlKTO3Vd9w2RctiybSZcCGJexV6dzc38kCZa9E4J
+         G5NbGerDMWU3ue9H9YBZLOsvC7FAxzAaUo+S5jUcdmT5iLOTmNjyBQkV0xYLxUF2cBQn
+         Xv7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746508645; x=1747113445;
+        d=1e100.net; s=20230601; t=1746509344; x=1747114144;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2/oyNXL8JmitesFhXvr9WQW93SUMwRydjKM6cb06+Bg=;
-        b=ANx6S5vOZgx9Lv1TO3lp8XGhflQAsqEJf82AZItG2o8869zV+G3WQMRnm95fHGoATD
-         WBG4ZS+ucfHkaHPQ0+ga0HmzY9Au1kPdB1jvOZzPrJPb9NssYCpR2rRMUsisTtoHpGYc
-         3LNEZgH1Cm3782o4KsWmsuMqV1puGbeQdhxkdoE79K7ZJvyqqWI+nsYBPHPhDMZ4alxK
-         2HNViPLwl/VU7Gxf1vgUDzZ95FjDDmr5ZHEHNotVMIUvEjEw8b1CHeXKsZDKNKt4IlMw
-         9b/YwFhOPj0PtK1e1VoXZtLa9az5nW9kferZeA7W15DAireTOJyIgKEKltXwGzsR4nnO
-         Lt2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUgdSQCusC7+p7Hh+S9t1elQBLtlNdSTQwot4H7XrXFMg0ygunmr1gpgK7z8saILDbzSf/XoK8noyLplPdx@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx6YhsHV+11KUSbZgGD/lkRJjFXX7N9W1VyieK5a5sUIPUJ+D77
-	VWRtCntz2FpSaNmgREup0PKBJJJf+t9mL8sR29ZUK+lzrhJKX3lJfIOJ5di5F9TNmyPt4R0ci78
-	p8vtwVkT+cTQ2lTcLyderiO63lRGPodAkHUPG
-X-Gm-Gg: ASbGnctIkyeesfD76kNQWgGAR6bxnTKvtHary+OqtwZFd86DG45YMjQk/kMTI42+8Cv
-	7ousl6sDdg0oWfoNatyhCOLvLJPYB2SVYvjOo3CUc5kL1vazEQTaBglpG7hvP59nYyuWKGMevZg
-	VPadGICDWUNvL6psUw7S6bylCRe0cVGXwDLt7DRTJKf3tR23TpphIDpHI=
-X-Google-Smtp-Source: AGHT+IGihzOzWy8x+6Ja+LalRDd0k3+jQXGYbU3MHt0hkecArEO8Kjrf7J4KdbKoNVLOX2f2VTCUMWQSCZqQ6vCwIH4=
-X-Received: by 2002:a17:902:ce10:b0:216:2839:145 with SMTP id
- d9443c01a7336-22e3b071eb8mr1281395ad.1.1746508645256; Mon, 05 May 2025
- 22:17:25 -0700 (PDT)
+        bh=8lKEB5k3HxIIDe0cms88dba//bFVC0zSsTglMVdhTdQ=;
+        b=Xt3+080pemaspbtxViOKWaN4cI75j53vm/gdPOvDAz8P0Jyr0M80x7WxITRg65UqYn
+         YFsxh3NkRpOm/AOdNxcJZXfxxKsG2O1GAvz2OzCrj9YBPwuNXm5Om0stQefhM7jr6FEF
+         vpfyQN4uZSS9RzvMClLM+u3LnuO69Qr9VsqYfQXl0KAjzf2fEXxeU2bn/F9vODf7xroN
+         6M3Dto9kPLadjt4OaL+Tp88lu8GgCZi1cWOVPzyUdKbt245Vy8R35NdScNQSJibeXFfi
+         qghmjpnxIomYdWCaf9D1ePTnab15OQfDv5pglBDt2WGwgmNPQSzcyHvy5Dm13K2fiB+J
+         haBg==
+X-Forwarded-Encrypted: i=1; AJvYcCUnxEghj3nuvg1remFZ/NL2mbn4rilkqvc0Y9/XcSQHq3fr5n3hYayXPbvNq4fnxn+PWpRgB8mY3MUirIdr@vger.kernel.org
+X-Gm-Message-State: AOJu0YyYjKC4ELD6weiAp2RenYwvZHMwMjOPAx5VK50ZZGk6ej1kAVb8
+	ppDaffYNG0oZIvcnEkU6tXvfneOXR7VWwKUsvIFpVvgdqYfuhfQjGvrW3qxJlgfdUILyWlcjTFG
+	QlaVavlkb3ysB57p/z7G8BLXjEgID4iXcKc9Y
+X-Gm-Gg: ASbGncv3/FS+rc9aqDvY+G5GBPws/PVTO68dixDGH3/hJw2WIF9faqEnLNImWyYwXco
+	otu+zFWNstYzgZfZYOjmrOVn6hBnG1WPBPcAaIsBZ9qKg/rrdMtsvQUdeevecNWAb6arI3AY1aO
+	MrgBU0meDG9XBpVTHO+grwMv0YAkQ3z8oj4XU+gdZmdAg6zbfv1gcH7x0=
+X-Google-Smtp-Source: AGHT+IGwP1SKPwt/vtIJlYZ900Cxz2LT+AxXPcnHmyrXr5wchbo2E0xH9OpvxlPkZnYK2crcfarvY3+ODrHWYOxROP0=
+X-Received: by 2002:a17:903:4410:b0:215:aca2:dc04 with SMTP id
+ d9443c01a7336-22e3508dfb7mr1649445ad.26.1746509343525; Mon, 05 May 2025
+ 22:29:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,12 +77,12 @@ MIME-Version: 1.0
 References: <diqz7c31xyqs.fsf@ackerleytng-ctop.c.googlers.com>
  <386c1169-8292-43d1-846b-c50cbdc1bc65@redhat.com> <aBTxJvew1GvSczKY@google.com>
  <diqzjz6ypt9y.fsf@ackerleytng-ctop.c.googlers.com> <7e32aabe-c170-4cfc-99aa-f257d2a69364@redhat.com>
- <aBlCSGB86cp3B3zn@google.com>
-In-Reply-To: <aBlCSGB86cp3B3zn@google.com>
+ <aBlCSGB86cp3B3zn@google.com> <CAGtprH8DW-hqxbFdyo+Mg7MddsOAnN+rpLZUOHT-msD+OwCv=Q@mail.gmail.com>
+In-Reply-To: <CAGtprH8DW-hqxbFdyo+Mg7MddsOAnN+rpLZUOHT-msD+OwCv=Q@mail.gmail.com>
 From: Vishal Annapurve <vannapurve@google.com>
-Date: Mon, 5 May 2025 22:17:12 -0700
-X-Gm-Features: ATxdqUEzeS31T2q-e4VkgtgiiNIU1vS-masT4eZQygwiHzAZfHdNnbMPeJW7-MU
-Message-ID: <CAGtprH8DW-hqxbFdyo+Mg7MddsOAnN+rpLZUOHT-msD+OwCv=Q@mail.gmail.com>
+Date: Mon, 5 May 2025 22:28:50 -0700
+X-Gm-Features: ATxdqUGXwDZ11ffKoeTta9OzQcx_M0fYA3TqS1Q4kf5Xbu-qRP3DA_ZY9TBWlyw
+Message-ID: <CAGtprH9AVUiFsSELhmt4p24fssN2x7sXnUqn39r31GbA0h39Sw@mail.gmail.com>
 Subject: Re: [PATCH v8 06/13] KVM: x86: Generalize private fault lookups to
  guest_memfd fault lookups
 To: Sean Christopherson <seanjc@google.com>
@@ -109,38 +109,48 @@ Cc: David Hildenbrand <david@redhat.com>, Ackerley Tng <ackerleytng@google.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 5, 2025 at 3:57=E2=80=AFPM Sean Christopherson <seanjc@google.c=
-om> wrote:
-> > ...
-> > And not worry about lpage_infor for the time being, until we actually d=
-o
-> > support larger pages.
+On Mon, May 5, 2025 at 10:17=E2=80=AFPM Vishal Annapurve <vannapurve@google=
+.com> wrote:
 >
-> I don't want to completely punt on this, because if it gets messy, then I=
- want
-> to know now and have a solution in hand, not find out N months from now.
+> On Mon, May 5, 2025 at 3:57=E2=80=AFPM Sean Christopherson <seanjc@google=
+.com> wrote:
+> > > ...
+> > > And not worry about lpage_infor for the time being, until we actually=
+ do
+> > > support larger pages.
+> >
+> > I don't want to completely punt on this, because if it gets messy, then=
+ I want
+> > to know now and have a solution in hand, not find out N months from now=
+.
+> >
+> > That said, I don't expect it to be difficult.  What we could punt on is
+> > performance of the lookups, which is the real reason KVM maintains the =
+rather
+> > expensive disallow_lpage array.
+> >
+> > And that said, memslots can only bind to one guest_memfd instance, so I=
+ don't
+> > immediately see any reason why the guest_memfd ioctl() couldn't process=
+ the
+> > slots that are bound to it.  I.e. why not update KVM_LPAGE_MIXED_FLAG f=
+rom the
+> > guest_memfd ioctl() instead of from KVM_SET_MEMORY_ATTRIBUTES?
 >
-> That said, I don't expect it to be difficult.  What we could punt on is
-> performance of the lookups, which is the real reason KVM maintains the ra=
-ther
-> expensive disallow_lpage array.
+> I am missing the point here to update KVM_LPAGE_MIXED_FLAG for the
+> scenarios where in-place memory conversion will be supported with
+> guest_memfd. As guest_memfd support for hugepages comes with the
+> design that hugepages can't have mixed attributes. i.e. max_order
+> returned by get_pfn will always have the same attributes for the folio
+> range.
 >
-> And that said, memslots can only bind to one guest_memfd instance, so I d=
-on't
-> immediately see any reason why the guest_memfd ioctl() couldn't process t=
-he
-> slots that are bound to it.  I.e. why not update KVM_LPAGE_MIXED_FLAG fro=
-m the
-> guest_memfd ioctl() instead of from KVM_SET_MEMORY_ATTRIBUTES?
+> Is your suggestion around using guest_memfd ioctl() to also toggle
+> memory attributes for the scenarios where guest_memfd instance doesn't
+> have in-place memory conversion feature enabled?
 
-I am missing the point here to update KVM_LPAGE_MIXED_FLAG for the
-scenarios where in-place memory conversion will be supported with
-guest_memfd. As guest_memfd support for hugepages comes with the
-design that hugepages can't have mixed attributes. i.e. max_order
-returned by get_pfn will always have the same attributes for the folio
-range.
-
-Is your suggestion around using guest_memfd ioctl() to also toggle
-memory attributes for the scenarios where guest_memfd instance doesn't
-have in-place memory conversion feature enabled?
+Reading more into your response, I guess your suggestion is about
+covering different usecases present today and new usecases which may
+land in future, that rely on kvm_lpage_info for faster lookup. If so,
+then it should be easy to modify guest_memfd ioctl to update
+kvm_lpage_info as you suggested.
 
