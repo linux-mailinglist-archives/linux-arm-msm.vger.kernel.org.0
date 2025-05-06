@@ -1,273 +1,275 @@
-Return-Path: <linux-arm-msm+bounces-57015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6C0BAACEDC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 22:47:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65524AACEE4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 22:47:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2C4F9819DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:46:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E6F5B7B658D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 20:46:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1B647262B;
-	Tue,  6 May 2025 20:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FDA31487F4;
+	Tue,  6 May 2025 20:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4FJeR4WO"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="I68mv2SZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215474B1E66
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 20:47:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668264B1E7A;
+	Tue,  6 May 2025 20:47:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746564422; cv=none; b=ncfkOPOZQ/2UM+sNevTcNzo5zLmtGrB2B8ht9oJDd7DeKKcNB+tUuT4xxKtqWlDo8z5GuGc41+6q12QM9Gfh20m74EyL7mMUkJuSd7YxCdKc1nwqnYYqylE/SYRWQIsSpaoRFlRlE33tXFhJwLid5WencLvwar7tC0W1tNByqCI=
+	t=1746564459; cv=none; b=LZHg5zGWdZ/GOKIgCIbiigxyOAmr8kw++U/UdVbzOWUOhHXtmhp2Wtz1Hu4FPW1ytxxYTjaVV8iasDp+5pfgC9a7Y0b8XonSbd90Lq9VVnb+2NiCwcx8uhAe7ABprMDHtDalnvrCe6LtyHB9tN3+V9mZCD8UHVh+7rfv2k0ifYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746564422; c=relaxed/simple;
-	bh=u/O8q2sevigdN4ig818/u3tAXLuUQrGCknUWeKdBp7o=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=VbeSYzRBDoRe9XlBFQof3vL6DN/broNX7k7KxegmQKbBMTRmJIXv1PG+ud1CeFxyrcM80B19ohUX7QdStPwtivlpGNH5CIQIxYiyDk4fNY/5VTmheHxn/uoIYdWd5ouOJutFrqT11hVozYMhlLni07l/etmtOLs93REv2ivs1l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4FJeR4WO; arc=none smtp.client-ip=209.85.215.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-af972dd0cd6so3258152a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 13:47:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1746564420; x=1747169220; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DCzobWbLqzYgZ0RtPdZiSF2En8bMULz9xtc7ptlaLyg=;
-        b=4FJeR4WOcZKqndYho3fTJX+z6jqdlmBMMF9qFhV/5uv8Yh5fcqWdCE8zqWEzkr8bcm
-         vL58yUAgm1iS9KgMryINxP3wOny36OG29Msnb/WZzCMhZaoKDxRBqMpglPqNGuA1LOiC
-         EWcCYCdBv76BWZBi8VFAQ5P7sM6FwZZhG2w2XDAWJi946AR5AIlRze2HOe7eCsZmiYgb
-         yyoOTIOzLdbdmUIZ71RZ9EmUYdCd+6b/I30kfINxvST1oNAd0tGCynwXwa99mvMlqUqk
-         Csklj8taFtmP0f83+1/RoMk1Xe0ZsXBy05XL9UQLXOvun3BU5j7EmixGgXsvdT6O4e4c
-         sdNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746564420; x=1747169220;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=DCzobWbLqzYgZ0RtPdZiSF2En8bMULz9xtc7ptlaLyg=;
-        b=Csb0HWNGM0hxs0v7Xtg4NQYpQhkV3uBuHYgxbc5xPKlkRpZc22CcX7OI+6xkX9Ny0v
-         gewEWmkdWSLq+RA2D7EqZOLQh35UoOR8x8jukPWEH4m5ITMTlnkGllNxat7JBo5BVGfj
-         cdNLVwWS+VnzDNQRFwN0dmPpUdBSbd/EKjE+L0rYV6I18ztWLeGex/rKB4x5GVYHsLkx
-         bv83KqCFS1sMkp++bbTvsVsvsnj5pNUH9IlQTRYn5hU35Akox3gw/+Ciz1k7d0BJbF6w
-         wNBl26VitXMDlc0ckH0BfPQ/g9gl65o7xA62sTFxYiP7gOM27LXPGA7J5375ns5OPAfn
-         OUpw==
-X-Forwarded-Encrypted: i=1; AJvYcCVmwZ3FPR9UytrMT4WB+IB7/prCrfyCadfRza9bIW7GrJkMjpfrjQFjH0cfVlkoOtgnehK/oyUHcrdO460w@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyqf2RnEDmSskjmjR8y5c1bCW5R4GfGuxW4IfIzxL4C/YW1aQFv
-	MGvR447krtLvD7YpKNVcO4xfYpajq+gqCJ3wUikA0ceWOmOpnAO+UMlrY9/A9F58Pfs1lvQPRGl
-	uUDLqYp93BmxPxAfjt7yLSA==
-X-Google-Smtp-Source: AGHT+IHuf4HiiM5l7QrOtvUrpzBKa8NR8v2a6GaWbIwD5Bf0Sh8JWbcl8IXLPMkv3T1UFmq2oEYM6jTxGiIuLrPMRg==
-X-Received: from pfjg15.prod.google.com ([2002:a05:6a00:b8f:b0:740:6f6:7346])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a20:3d8f:b0:1f5:902e:1e97 with SMTP id adf61e73a8af0-2148d53bad9mr825091637.41.1746564420272;
- Tue, 06 May 2025 13:47:00 -0700 (PDT)
-Date: Tue, 06 May 2025 13:46:58 -0700
-In-Reply-To: <39ea3946-6683-462e-af5d-fe7d28ab7d00@redhat.com>
+	s=arc-20240116; t=1746564459; c=relaxed/simple;
+	bh=a6MsCRIUCeUj744FbiHdP5+JJu9CUko6eqpiqgbQ4ds=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WTZBkZmEZh+K5ZMWPmjkIFFzMxIAChten6Wcd3und2BuVDG8efrmEX5+FlW+yOfGW06epVet1hYOyFtATod6mLM6GRpC5xbdyS3PK3mpcxn5dFwyR6zp4UvrOn3dyHfA+lQmYDe0xXxiRRK8MX6t4JHegRQNQE9Yre6Xm2siWWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=I68mv2SZ; arc=none smtp.client-ip=217.70.183.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id DA1D1439D4;
+	Tue,  6 May 2025 20:47:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1746564447;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RriJ3sQZL+/jAERO13sfWtP2FOfOc3okEQg5B7FnAeQ=;
+	b=I68mv2SZI/aGxHCIIcxXbjxxCbHWE9FzDtUtW4PEabsIrho1orzLQHyqR3AJklkXW4/0dS
+	sHotiUtnhB37DGcdh4NYEpar2pikiAW6HTYv6TIrN84SPWuBG8+xkiYWGDI06C2IrQ6ogR
+	QEZfsdyh/gBXzyxBU6I46Qn7ke+tHyGu4UC1rv5tEOBv61wdugOUnlQfQ6wAbRndu7RuwR
+	e6tObBPlpuwkypnH5/quJLTO/9FUmfvGMJGlxu/nMapt7Mz08+7BIwiLIchjrKyUveptAn
+	jJ7yDtYArwX8GIIYPRKbfbYPujq44+9hObwSCtfPOkZ15Ae8r3K9ETKKDMJTLA==
+Date: Tue, 6 May 2025 22:47:20 +0200
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+To: Liu Ying <victor.liu@nxp.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
+ <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie
+ <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Andrzej Hajda
+ <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Laurent Pinchart
+ <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki
+ <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
+ <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Douglas Anderson
+ <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, Krzysztof
+ Kozlowski <krzk@kernel.org>, Anusha Srivatsa <asrivats@redhat.com>, Paul
+ Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, Hui
+ Pu <Hui.Pu@gehealthcare.com>, Thomas Petazzoni
+ <thomas.petazzoni@bootlin.com>, dri-devel@lists.freedesktop.org,
+ asahi@lists.linux.dev, linux-kernel@vger.kernel.org,
+ chrome-platform@lists.linux.dev, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH v2 30/34] drm/bridge: imx8qxp-pixel-combiner: convert to
+ devm_drm_bridge_alloc() API
+Message-ID: <20250506224720.5cbcf3e1@booty>
+In-Reply-To: <f71d18d2-4271-4bb9-b54f-0e5a585778f3@nxp.com>
+References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
+	<20250424-drm-bridge-convert-to-alloc-api-v2-30-8f91a404d86b@bootlin.com>
+	<553d62ed-976a-4e17-9678-cdc3d40ce4a7@nxp.com>
+	<20250430112944.1b39caab@booty>
+	<f71d18d2-4271-4bb9-b54f-0e5a585778f3@nxp.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <diqz7c31xyqs.fsf@ackerleytng-ctop.c.googlers.com>
- <386c1169-8292-43d1-846b-c50cbdc1bc65@redhat.com> <aBTxJvew1GvSczKY@google.com>
- <diqzjz6ypt9y.fsf@ackerleytng-ctop.c.googlers.com> <7e32aabe-c170-4cfc-99aa-f257d2a69364@redhat.com>
- <aBlCSGB86cp3B3zn@google.com> <CAGtprH8DW-hqxbFdyo+Mg7MddsOAnN+rpLZUOHT-msD+OwCv=Q@mail.gmail.com>
- <CAGtprH9AVUiFsSELhmt4p24fssN2x7sXnUqn39r31GbA0h39Sw@mail.gmail.com>
- <aBoVbJZEcQ2OeXhG@google.com> <39ea3946-6683-462e-af5d-fe7d28ab7d00@redhat.com>
-Message-ID: <diqzh61xqxfh.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [PATCH v8 06/13] KVM: x86: Generalize private fault lookups to
- guest_memfd fault lookups
-From: Ackerley Tng <ackerleytng@google.com>
-To: David Hildenbrand <david@redhat.com>, Sean Christopherson <seanjc@google.com>, 
-	Vishal Annapurve <vannapurve@google.com>
-Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegleejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeertdertddvnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeelffefgfehhfdtvdefueefieevkefggfelkeeiudetkeektedvhedukefgvddvnecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfeelpdhrtghpthhtohepvhhitghtohhrrdhlihhusehngihprdgtohhmpdhrtghpthhtohepmhgrrghrthgvnhdrlhgrnhhkhhhorhhstheslhhinhhugidrihhnthgvlhdrtghomhdprhgtphhtthhopehmrhhiphgrrhgusehkv
+ ghrnhgvlhdrohhrghdprhgtphhtthhopehtiihimhhmvghrmhgrnhhnsehsuhhsvgdruggvpdhrtghpthhtoheprghirhhlihgvugesghhmrghilhdrtghomhdprhgtphhtthhopehsihhmohhnrgesfhhffihllhdrtghhpdhrtghpthhtoheprghnughriigvjhdrhhgrjhgurgesihhnthgvlhdrtghomhdprhgtphhtthhopehnvghilhdrrghrmhhsthhrohhngheslhhinhgrrhhordhorhhg
+X-GND-Sasl: luca.ceresoli@bootlin.com
 
-David Hildenbrand <david@redhat.com> writes:
+Hello Liu,
 
-> On 06.05.25 15:58, Sean Christopherson wrote:
->> On Mon, May 05, 2025, Vishal Annapurve wrote:
->>> On Mon, May 5, 2025 at 10:17=E2=80=AFPM Vishal Annapurve <vannapurve@go=
-ogle.com> wrote:
->>>>
->>>> On Mon, May 5, 2025 at 3:57=E2=80=AFPM Sean Christopherson <seanjc@goo=
-gle.com> wrote:
->>>>>> ...
->>>>>> And not worry about lpage_infor for the time being, until we actuall=
-y do
->>>>>> support larger pages.
->>>>>
->>>>> I don't want to completely punt on this, because if it gets messy, th=
-en I want
->>>>> to know now and have a solution in hand, not find out N months from n=
-ow.
->>>>>
->>>>> That said, I don't expect it to be difficult.  What we could punt on =
-is
->>>>> performance of the lookups, which is the real reason KVM maintains th=
-e rather
->>>>> expensive disallow_lpage array.
->>>>>
->>>>> And that said, memslots can only bind to one guest_memfd instance, so=
- I don't
->>>>> immediately see any reason why the guest_memfd ioctl() couldn't proce=
-ss the
->>>>> slots that are bound to it.  I.e. why not update KVM_LPAGE_MIXED_FLAG=
- from the
->>>>> guest_memfd ioctl() instead of from KVM_SET_MEMORY_ATTRIBUTES?
->>>>
->>>> I am missing the point here to update KVM_LPAGE_MIXED_FLAG for the
->>>> scenarios where in-place memory conversion will be supported with
->>>> guest_memfd. As guest_memfd support for hugepages comes with the
->>>> design that hugepages can't have mixed attributes. i.e. max_order
->>>> returned by get_pfn will always have the same attributes for the folio
->>>> range.
->>=20
->> Oh, if this will naturally be handled by guest_memfd, then do that.  I w=
-as purely
->> reacting to David's suggestion to "not worry about lpage_infor for the t=
-ime being,
->> until we actually do support larger pages".
->>=20
->>>> Is your suggestion around using guest_memfd ioctl() to also toggle
->>>> memory attributes for the scenarios where guest_memfd instance doesn't
->>>> have in-place memory conversion feature enabled?
->>>
->>> Reading more into your response, I guess your suggestion is about
->>> covering different usecases present today and new usecases which may
->>> land in future, that rely on kvm_lpage_info for faster lookup. If so,
->>> then it should be easy to modify guest_memfd ioctl to update
->>> kvm_lpage_info as you suggested.
->>=20
->> Nah, I just missed/forgot that using a single guest_memfd for private an=
-d shared
->> would naturally need to split the folio and thus this would Just Work.
+thanks for your further feedback.
 
-Sean, David, I'm circling back to make sure I'm following the discussion
-correctly before Fuad sends out the next revision of this series.
+On Tue, 6 May 2025 10:24:18 +0800
+Liu Ying <victor.liu@nxp.com> wrote:
 
->
-> Yeah, I ignored that fact as well. So essentially, this patch should be=
-=20
-> mostly good for now.
->
+> On 04/30/2025, Luca Ceresoli wrote:
+> > Hello Liu,  
+> 
+> Hi Luca,
+> 
+> > 
+> > On Tue, 29 Apr 2025 10:10:55 +0800
+> > Liu Ying <victor.liu@nxp.com> wrote:
+> >   
+> >> Hi,
+> >>
+> >> On 04/25/2025, Luca Ceresoli wrote:  
+> >>> This is the new API for allocating DRM bridges.
+> >>>
+> >>> This driver embeds an array of channels in the main struct, and each
+> >>> channel embeds a drm_bridge. This prevents dynamic, refcount-based
+> >>> deallocation of the bridges.
+> >>>
+> >>> To make the new, dynamic bridge allocation possible:
+> >>>
+> >>>  * change the array of channels into an array of channel pointers
+> >>>  * allocate each channel using devm_drm_bridge_alloc()
+> >>>  * adapt the code wherever using the channels
+> >>>
+> >>> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>  
+> > 
+> > [...]
+> >   
+> >>> @@ -345,8 +351,8 @@ static int imx8qxp_pc_bridge_probe(struct platform_device *pdev)
+> >>>  free_child:
+> >>>  	of_node_put(child);
+> >>>  
+> >>> -	if (i == 1 && pc->ch[0].next_bridge)
+> >>> -		drm_bridge_remove(&pc->ch[0].bridge);
+> >>> +	if (i == 1 && pc->ch[0]->next_bridge)    
+> >>
+> >> Since this patch makes pc->ch[0] and pc->ch[1] be allocated separately,
+> >> pc->ch[0] could be NULL if channel0 is not available, hence a NULL pointer
+> >> dereference here...  
+> > 
+> > See below for this.
+> >   
+> >>> +		drm_bridge_remove(&pc->ch[0]->bridge);
+> >>>  
+> >>>  	pm_runtime_disable(dev);
+> >>>  	return ret;
+> >>> @@ -359,7 +365,7 @@ static void imx8qxp_pc_bridge_remove(struct platform_device *pdev)
+> >>>  	int i;
+> >>>  
+> >>>  	for (i = 0; i < 2; i++) {
+> >>> -		ch = &pc->ch[i];
+> >>> +		ch = pc->ch[i];
+> >>>  
+> >>>  		if (!ch->is_available)    
+> >>
+> >> ...and here too.  
+> > 
+> > This is indeed a bug, I should have checked the pointer for being
+> > non-NULL.
+> > 
+> > Looking at that more closely, I think the is_available flag can be
+> > entirely removed now. The allocation itself (ch != NULL) now is
+> > equivalent. Do you think my reasoning is correct?
+> > 
+> > Ouch! After writing the previous paragraph I realized you proposed this
+> > a few lines below! OK, removing is_available. :)
+> > 
+> > [...]
+> >   
+> >> On top of this patch series, this issue doesn't happen if I apply the below
+> >> change:  
+> > 
+> > [...]
+> >   
+> >> @@ -351,7 +349,7 @@ static int imx8qxp_pc_bridge_probe(struct platform_device *pdev)
+> >>  free_child:
+> >>         of_node_put(child);
+> >>  
+> >> -       if (i == 1 && pc->ch[0]->next_bridge)
+> >> +       if (i == 1 && pc->ch[0])
+> >>                 drm_bridge_remove(&pc->ch[0]->bridge);  
+> > 
+> > Unrelated to this patch, but as I looked at it more in depth now, I'm
+> > not sure this whole logic is robust, even in the original code.
+> > 
+> > The 'i == 1' check here seems to mean "if some error happened when
+> > handling channel@1, that means channel@0 was successfully initialized,
+> > so let's clean up channel 0".
+> > 
+> > However my understanding of the bindings is that device tree is allowed
+> > to have the channel@1 node before the channel@0 node (or even channel@1
+> > without channel@0, but that's less problematic here).
+> > 
+> > In such case (channel@1 before channel@0), this would happen:
+> > 
+> >  1. alloc and init ch[1], all OK
+> >  2. alloc and init ch[0], an error happens
+> >     (e.g. of_graph_get_remote_node() fails)
+> > 
+> > So we'd reach the free_child: label, and we should call
+> > drm_bridge_remove() for ch[1]->bridge, but there's no code to do that.
+> > 
+> > To be robust in such a case, I think both channels need to be checked
+> > independently, as the status of one does not imply the status of the
+> > other. E.g.:
+> > 
+> >   for (i = 0; i < 2; i++)
+> >       if (pc->ch[i] && pc->ch[i]->next_bridge)
+> >           drm_bridge_remove(&pc->ch[i]->bridge);
+> > 
+> > (which is similar to what .remove() does after the changes discussed in
+> > this thread, and which I have queued for v3)
+> > 
+> > What's your opinion? Do you think I missed anything?  
+> 
+> The pixel combiner DT node would be added in imx8-ss-dc{0,1}.dtsi, please
+> see the case for imx8-ss-dc0.dtsi introduced by an in-flight patch[1].  As
+> channel@{0,1} child nodes always exist(DT overlay cannot effectively delete
+> any of them) and channel@0 always comes first, there is no problematic case.
 
-From here [1], these changes will make it to v9
+I'm not questioning what existing and future dts files (will) contain,
+and surely I don't see a good reason someone would write channel@1
+before channel@0.
 
-+ kvm_max_private_mapping_level renaming to kvm_max_gmem_mapping_level
-+ kvm_mmu_faultin_pfn_private renaming to kvm_mmu_faultin_pfn_gmem
+My point is:
 
-> Only kvm_mmu_hugepage_adjust() must be taught to not rely on=20
-> fault->is_private.
->
+ - the bindings _allow_ channel1 before channel@0
+ - the error management code after the free_child label won't work
+   correctly if channel1 is before channel@0 in the device tree
 
-I think fault->is_private should contribute to determining the max
-mapping level.
+IOW the driver is not robust against all legal device tree descriptions,
+and it could be easily made robust using the example code in my
+previous e-mail (quoted a few lines above).
 
-By the time kvm_mmu_hugepage_adjust() is called,
+If you agree about this I'll be happy to send a patch doing that change.
+If you think I'm wrong, I won't fight a battle. This topic is
+orthogonal to the change I'm introducing in this patch, and I can
+continue the conversion independently from this discussion.
 
-* For Coco VMs using guest_memfd only for private memory,
-  * fault->is_private would have been checked to align with
-    kvm->mem_attr_array, so=20
-* For Coco VMs using guest_memfd for both private/shared memory,
-  * fault->is_private would have been checked to align with
-    guest_memfd's shareability
-* For non-Coco VMs using guest_memfd
-  * fault->is_private would be false
+> > Thanks for taking the time to dig into this!  
+> 
+> After looking into this patch and patch 31(though I've already provided my A-b)
+> more closely, I think the imx8qxp_pc and imx8{qm,qxp}_ldb main structures
+> should have the same life time with the embedded DRM bridges, because for
+> example the clk_apb clock in struct imx8qxp_pc would be accessed by the
+> imx8qxp_pc_bridge_mode_set DRM bridge callback.  But, IIUC, your patches extend
+> the life time for the embedded channel/bridge structures only, but not for the
+> main structures.  What do you think ?
 
-Hence fault->is_private can be relied on when calling
-kvm_mmu_hugepage_adjust().
+I see you concern, but I'm sure the change I'm introducing is not
+creating the problem you are concerned about.
 
-If fault->is_private, there will be no host userspace mapping to check,
-hence in __kvm_mmu_max_mapping_level(), we should skip querying host
-page tables.
+The key aspect is that my patch is merely changing the lifetime of the
+_allocation_ of the drm_bridge, not its usage. On drm_bridge_remove()
+the bridge is removed from its encoder chain and it is completely not
+reachable, both before and after my patch. With my patch it is not
+freed immediately, but it's just a piece of "wasted" memory that is
+still allocated until elsewhere in the kernel there are pointers to it,
+to avoid use-after-free.
 
-If !fault->is_private, for shared memory ranges, if the VM uses
-guest_memfd only for shared memory, we should query host page tables.
+With this explanation, do you think my patch is correct (after fixing
+the bug we already discussed of course)?
 
-If !fault->is_private, for shared memory ranges, if the VM uses
-guest_memfd for both shared/private memory, we should not query host
-page tables.
+Best regards,
+Luca
 
-If !fault->is_private, for non-Coco VMs, we should not query host page
-tables.
-
-I propose to rename the parameter is_private to skip_host_page_tables,
-so
-
-- if (is_private)
-+ if (skip_host_page_tables)
-	return max_level;
-
-and pass
-
-skip_host_page_tables =3D fault->is_private ||
-			kvm_gmem_memslot_supports_shared(fault->slot);
-
-where kvm_gmem_memslot_supports_shared() checks the inode in the memslot
-for GUEST_MEMFD_FLAG_SUPPORT_SHARED.
-
-For recover_huge_pages_range(), the other user of
-__kvm_mmu_max_mapping_level(), currently there's no prior call to
-kvm_gmem_get_pfn() to get max_order or max_level, so I propose to call
-__kvm_mmu_max_mapping_level() with
-
-if (kvm_gmem_memslot_supports_shared(slot)) {
-	max_level =3D kvm_gmem_max_mapping_level(slot, gfn);
-	skip_host_page_tables =3D true;
-} else {
-	max_level =3D PG_LEVEL_NUM;
-        skip_host_page_tables =3D kvm_slot_has_gmem(slot) &&
-				kvm_mem_is_private(kvm, gfn);
-}
-
-Without 1G support, kvm_gmem_max_mapping_level(slot, gfn) would always
-return 4K.
-
-With 1G support, kvm_gmem_max_mapping_level(slot, gfn) would return the
-level for the page's order, at the offset corresponding to the gfn.
-
-> Once we support large folios in guest_memfd, only the "alignment"=20
-> consideration might have to be taken into account.
->
-
-I'll be handling this alignment as part of the 1G page support series
-(won't be part of Fuad's first stage series) [2]
-
-> Anything else?
->
-> --=20
-> Cheers,
->
-> David / dhildenb
-
-
-[1] https://lore.kernel.org/all/20250430165655.605595-7-tabba@google.com/
-[2] https://lore.kernel.org/all/diqz1pt1sfw8.fsf@ackerleytng-ctop.c.googler=
-s.com/
+-- 
+Luca Ceresoli, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
