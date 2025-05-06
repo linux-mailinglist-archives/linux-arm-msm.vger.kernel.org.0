@@ -1,63 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-56943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-56944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41CD4AAC3E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 14:27:32 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97698AAC446
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 14:33:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4150A5056C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 12:26:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 00D37B20D64
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 May 2025 12:30:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3D6228153D;
-	Tue,  6 May 2025 12:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44EBC280016;
+	Tue,  6 May 2025 12:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j+35fbHB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="h9GjvRVV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3A7280025;
-	Tue,  6 May 2025 12:24:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E1D27FB16
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 May 2025 12:28:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746534297; cv=none; b=kD48wYpTz7JRfpsP+J/ijS/Ukk84gDJ/UizPWfIpR4afNf4MKH6ZjcOEOV+rLS38N7P+9HpqZSdXBz3TSlYlCS8+B6wIgWsfeK3kxTtehTLIYq5fNuaedhDPBOwQmRR7q6JOrv3rytbQ9ulnERe49K+6X0ecvD21iBLQ9be3lBQ=
+	t=1746534504; cv=none; b=pCjDsAtQyYpDI1BZi5Z+c3ff/CQ1wnqb1eGEeWM2u/89CDtiVAqn9bh9xW6lpkp82fs+B74qGMdc+S1lQUnhMX5Y1grALTfmPmgkIwvg6w6EN8GYCVxJvI2GRy8cLuaTc4uWxJFCFh7l3q35ZVqcyWruEEmmKMO1x66QptNhrnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746534297; c=relaxed/simple;
-	bh=uHFytVThoQE6dUumluQFq3LQiUBoMdRX4mX8c3oM/4M=;
+	s=arc-20240116; t=1746534504; c=relaxed/simple;
+	bh=GwHJfPYBAa02n8mtCLeKpWVcI6hgBB3uCvSSN9RyeAw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gJQSxrZWNmX/tKc12Bl8hTidkEh0ajh664NOEaHHDfAFVLZOrrHCvpXvRpcTqWnP2lE9+NbrOPVpBVeicBkF5nLOofg06Y4e1hYleWNCSUuZR3xAc7vsnt3S1xNL1gYUpAsMwYoJzdSrkaxaMKMVNyeuIZ2bw+6s2KYB8iiLsRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j+35fbHB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCEEC4CEEE;
-	Tue,  6 May 2025 12:24:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746534296;
-	bh=uHFytVThoQE6dUumluQFq3LQiUBoMdRX4mX8c3oM/4M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=j+35fbHBzNKxob6ajbve9++4e8fpbs6JR0eRq111tR5VN13esZUIzNzg1FBgVP3T+
-	 hNdgE+3iiK07JzUljoCZV5tmOCow4qUFHS9KS1bmi4dBTTGgLqa3/N4iMhLVuo2B+2
-	 L+gsWTLL5cdUlGMCzPqMYMVJsOJROiqSDURspw2woMSmGFFWGgGNmou9TKzXboevc0
-	 qfByVdUPxhAbUYi9KV5fM/cCk0USbLf5qTtt8OHNF4YSkwB8X0+zK8l12RQAkTWcF7
-	 awpCxLTZy5t27xW3csBWhG2TSaPtZ2XoybDzTqDNxL5euuaJjSjqs89oRVEXv2X2pz
-	 8OoPKtjwDf8WQ==
-Date: Tue, 6 May 2025 13:24:50 +0100
-From: Will Deacon <will@kernel.org>
-To: Connor Abbott <cwabbott0@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v5 3/5] iommu/arm-smmu: Fix spurious interrupts with
- stall-on-fault
-Message-ID: <20250506122449.GB723@willie-the-truck>
-References: <20250319-msm-gpu-fault-fixes-next-v5-0-97561209dd8c@gmail.com>
- <20250319-msm-gpu-fault-fixes-next-v5-3-97561209dd8c@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=BpFXfzrgo/a0XnYO8hgNPcw7u1pZTqbsekkTCqfI3LM4ImWcce8wblcw9V0iLb8w7JPubT8vMgB3fGzlh00lWAWjJKPr0W9f5SLyPxx9opkk9NmujAHx5Mbd3d1kCiUzK4zp6hYIdXGLPD4AofbtcOm6w2ltMpKoev/Z/P17sCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=h9GjvRVV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5467If6h015837
+	for <linux-arm-msm@vger.kernel.org>; Tue, 6 May 2025 12:28:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=pMr0pQfkZDzwyRYDfelKCIMW
+	JikVyJ1ChOSk0SMsQ3g=; b=h9GjvRVVU3uo5NAzoCkH1M4/efx7Le5pKqoBAWlk
+	KHjiHTu62y0vboD821I/hC6aTrCPPvBR53r38EklDXJxsYmfH6k7WI97CXM2Uk4n
+	tNPKARH6t5lRAR6WR4LBMMfe37auRuXRMbzDL0xq3l+W0fWW1/h+FLfWIVs8c9kg
+	hmuegPyawh6/XZQ2VG6tWpMByv8cjzRevFOkCkfTQdhIq6FeGmZOyMvFbuPS6krR
+	eq8wdEoyJQ9F0xf70/HBpQ3qezI6DNksuxvP07GJXUXKCweCD5AKpM8SEhVW6f9q
+	MlA+fn2Z0NiJHl1tBwqrghWal8q9ilBgFOoifs+Zu3uhSA==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46fdwtrxk5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 12:28:21 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-47b36edcdb1so112029461cf.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 05:28:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746534500; x=1747139300;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pMr0pQfkZDzwyRYDfelKCIMWJikVyJ1ChOSk0SMsQ3g=;
+        b=FYaUxfEv6ajuK5g93wlrDmnLCX/W25xfed7zaC3DR0EpQejbrgxHE1tK3UyjNjB3QO
+         iHjoX1ikTKpHEefipuhFeUbYnLekhkSkAyylbV7k1lqMg4U/oYr/m1dJZGG1ahuLPzKa
+         tBbeZBtePims4FDV7QfHjoW6iSiJSX5DXygsFFSo90kgxP3jDdU+VF+TTLKCbEIA2P6x
+         w3lUe75oyVe8l5eo5rG7nWadG6KOBFr2Ya+oS+mQi2ydPwiNn31XsVTDkIBVPDT4c4FT
+         hl+Sy7T/KdjJd55JvbXzpEnEWy/2SiQqRYfqLbFAwOPW9lE3/qCSj7NAO7V4q9A+6mDt
+         5GTQ==
+X-Gm-Message-State: AOJu0Ywjn/qSd3FwNDgaBKnkiTaQ0qDMAV2ptvCqX55zD+Cet+aSotm+
+	9hvYbqU5Xz1tZ3KlqieZ+4sEmUqiDG3KTurJWbi0FDxfCxzZWa3QTu7jIsBp7UudeQtUxZBx5nC
+	m14NhyWNKNR5GqtGx6kKP5WNmYi0S3wI0svxH+gZfm1jh4Xo00eQNxXGf/CoYU5Te
+X-Gm-Gg: ASbGncte3C3Vp5FUfdXlU1FZfjSq1ypXQa5X5kd1AMgeahxtPQa2S5ilbXYiBP4XVRK
+	xpn7SWozr8cFro1A4oIeEVRlC4HmxFCxkqxxlGQTkcppvySeMkiQUB4+XXGH/zy13/PsNJC/Ivu
+	4KDOSxa1ngcAvXdt6EVNg7WQ/NVZYbOJUMcutPrdJVNnppYA8IqG9rsYEL62wtH0+QPpuqpGNtC
+	DDowXyGROoSGVqifQdY0J0z5A7i0fHW7iMwcPQmqI1G0LNJ1PG3LMSwvDHleTKHFU0IpEJ7N5HL
+	c2OvXMCBxQDADilLgjOQ9qHofJC6utzXvskh3Vw+GqaZqNNStux1tNA9l2XgnBV1Z6t7HwRlG3o
+	=
+X-Received: by 2002:a05:622a:2d5:b0:48c:51f9:5dff with SMTP id d75a77b69052e-48dfeff471fmr207623731cf.4.1746534500246;
+        Tue, 06 May 2025 05:28:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGVRzpe5kZ/C7fSbCX4k6D/yogiK3rg+EtVHsuYgNUWoJdLKfUJJzjORpHHDyQ+IzfzB/DYpg==
+X-Received: by 2002:a05:622a:2d5:b0:48c:51f9:5dff with SMTP id d75a77b69052e-48dfeff471fmr207623051cf.4.1746534499730;
+        Tue, 06 May 2025 05:28:19 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94edff7sm2006256e87.137.2025.05.06.05.28.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 May 2025 05:28:18 -0700 (PDT)
+Date: Tue, 6 May 2025 15:28:17 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Ayushi Makhija <quic_amakhija@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com, sean@poorly.run,
+        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
+        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
+        conor+dt@kernel.org, andrzej.hajda@intel.com,
+        neil.armstrong@linaro.org, rfoss@kernel.org,
+        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+        jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com,
+        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
+        quic_jesszhan@quicinc.com,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v6 07/11] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
+ to DP bridge nodes
+Message-ID: <ip2phi56u4yof376t5a5mqhvo3x4oo4blcnirwc6w7eancpm7i@ofcgyfcxdmre>
+References: <20250505094245.2660750-1-quic_amakhija@quicinc.com>
+ <20250505094245.2660750-3-quic_amakhija@quicinc.com>
+ <grwlmrgi5cfv3jtuki57ug7gsqykpwdf2to2l7di6glfxtb7vz@6id6cpfkrbuh>
+ <88b139c4-0a35-4c9e-9993-573fede29b71@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,131 +109,118 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250319-msm-gpu-fault-fixes-next-v5-3-97561209dd8c@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <88b139c4-0a35-4c9e-9993-573fede29b71@quicinc.com>
+X-Authority-Analysis: v=2.4 cv=VPPdn8PX c=1 sm=1 tr=0 ts=681a0065 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=mgRI5fNFQDWczPtYMtsA:9
+ a=CjuIK1q_8ugA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: RiuM8HM30LuSUT9-eyaciQp6rkCxfXmP
+X-Proofpoint-ORIG-GUID: RiuM8HM30LuSUT9-eyaciQp6rkCxfXmP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDEyMCBTYWx0ZWRfX5qvx3RJkw9yJ
+ wmpUlB3Mxe1ewvwrCTNSDiRao5YUlcNHcv9PdsEneptKPyT+hgPrDlRaaAiLujAxxYrPN3q7se5
+ KQD+opsXV4dnSRw6x0zRUB9u6ab76NjzYnmIXjLwEAlMioc7k4pTihUgOlMGoqW20fu7jR52Kif
+ 5IjG3vixeCzBYP74sYzy8k9k59tgWDJAJRB1xGh0PbkXAR/tbZYHGwEJeHd2W718owcEEuLeMRp
+ 27x9FAHP3xnXJZu0XdSLypRCOJ10ZDOI2am+dfqNfQLkRiQXos4OjUGa9OtR5x95ZUMDCwXy14I
+ ndR/z1bMuO4dJyAosbFGtATG1uuZFT4otB5gO3JSVHAowmt0qsvLa8JWu1QsdBSJJ0bLP8esw5N
+ Mnq+oxu+Z6eo6vkWJClBncGj73uDbCejWuSP3xLHek8TQxQ57BL4vU8Ebw5l2sw+ruViGMEY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-06_05,2025-05-05_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 suspectscore=0 adultscore=0 mlxscore=0
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 malwarescore=0
+ mlxlogscore=999 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505060120
 
-On Wed, Mar 19, 2025 at 10:44:02AM -0400, Connor Abbott wrote:
-> On some SMMUv2 implementations, including MMU-500, SMMU_CBn_FSR.SS
-> asserts an interrupt. The only way to clear that bit is to resume the
-> transaction by writing SMMU_CBn_RESUME, but typically resuming the
-> transaction requires complex operations (copying in pages, etc.) that
-> can't be done in IRQ context. drm/msm already has a problem, because
-> its fault handler sometimes schedules a job to dump the GPU state and
-> doesn't resume translation until this is complete.
+On Tue, May 06, 2025 at 05:42:50PM +0530, Ayushi Makhija wrote:
+> Hi Dmitry,
 > 
-> Work around this by disabling context fault interrupts until after the
-> transaction is resumed. Because other context banks can share an IRQ
-> line, we may still get an interrupt intended for another context bank,
-> but in this case only SMMU_CBn_FSR.SS will be asserted and we can skip
-> it assuming that interrupts are disabled which is accomplished by
-> removing the bit from ARM_SMMU_CB_FSR_FAULT. SMMU_CBn_FSR.SS won't be
-> asserted unless an external user enabled stall-on-fault, and they are
-> expected to resume the translation and re-enable interrupts.
+> On 5/5/2025 3:32 PM, Dmitry Baryshkov wrote:
+> > On Mon, May 05, 2025 at 03:12:41PM +0530, Ayushi Makhija wrote:
+> >> Add anx7625 DSI to DP bridge device nodes.
+> >>
+> >> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+> >> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> >> ---
+> >>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 183 +++++++++++++++++++++
+> >>  1 file changed, 183 insertions(+)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> >> index 175f8b1e3b2d..de14f3ea8835 100644
+> >> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> >> @@ -28,6 +28,15 @@ chosen {
+> >>  		stdout-path = "serial0:115200n8";
+> >>  	};
+> >>  
+> >> +	vph_pwr: vph-pwr-regulator {
+> >> +		compatible = "regulator-fixed";
+> >> +		regulator-name = "vph_pwr";
+> >> +		regulator-min-microvolt = <12000000>;
+> >> +		regulator-max-microvolt = <12000000>;
+> > 
+> > 12 V, if my eyes don't deceive me.
 > 
-> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
-> Reviewed-by Robin Murphy <robin.murphy@arm.com>
-> Reviewed-by: Rob Clark <robdclark@gmail.com>
-> ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 15 ++++++++++-
->  drivers/iommu/arm/arm-smmu/arm-smmu.c      | 41 +++++++++++++++++++++++++++++-
->  drivers/iommu/arm/arm-smmu/arm-smmu.h      |  1 -
->  3 files changed, 54 insertions(+), 3 deletions(-)
+> Yes, it's 12V. According to the chipset's power grid, the VPH rail is rated at 12 volts.
+> That's significantly higher than what we typically see on mobile platforms. I guess,
+> this is due to the SA8775P Ride SX being designed for automotive applications, where higher voltage levels are required.
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 186d6ad4fd1c990398df4dec53f4d58ada9e658c..a428e53add08d451fb2152e3ab80e0fba936e214 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -90,12 +90,25 @@ static void qcom_adreno_smmu_resume_translation(const void *cookie, bool termina
->  	struct arm_smmu_domain *smmu_domain = (void *)cookie;
->  	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
->  	struct arm_smmu_device *smmu = smmu_domain->smmu;
-> -	u32 reg = 0;
-> +	u32 reg = 0, sctlr;
-> +	unsigned long flags;
+> > 
+> >> +		regulator-always-on;
+> >> +		regulator-boot-on;
+> >> +	};
+> >> +
+> > 
+> > [...]
+> > 
+> >> +
+> >> +			bridge@58 {
+> >> +				compatible = "analogix,anx7625";
+> >> +				reg = <0x58>;
+> >> +				interrupts-extended = <&io_expander 2 IRQ_TYPE_EDGE_FALLING>;
+> >> +				enable-gpios = <&io_expander 1 GPIO_ACTIVE_HIGH>;
+> >> +				reset-gpios = <&io_expander 0 GPIO_ACTIVE_HIGH>;
+> >> +				vdd10-supply = <&vph_pwr>;
+> >> +				vdd18-supply = <&vph_pwr>;
+> >> +				vdd33-supply = <&vph_pwr>;
+> > 
+> > Here you are saying that 1.0V, 1.8V and 3.3V pins are powered on by 12V
+> > supply. I wonder how the board doesn't trigger all fire alarms in the
+> > building.
+> > 
+> 
+> Let me try to explain the connections from the schematics.
+> 
+> In the SA8775P RIDE SX platform, the ANX bridge supplies are connected from the below sources:
+> 
+> 1) AVDD1P8 is sourced from the `VREG_1P8` of the backplane card.
+> 2) AVDD3P0 is sourced from the `VREG_3P0` of the backplane card.
+> 3) AVDD1P0 is sourced from the TPS74801 LDO voltage regulator that has `VREG_1P8` connected to
+>    VIN & EN lines, and `VREG_3P0` connected to BIAS line.
 >  
->  	if (terminate)
->  		reg |= ARM_SMMU_RESUME_TERMINATE;
+> The `VREG_1P8` is sourced from a buck converter TPS54618CQRTERQ1 that is using 
+> `VREG_5P0` as VIN and EN_VR1P8_M3P3 as EN signal. 
+> Where the `EN_VR1P8_M3P3` is an output signal from SAK-TC397XX-256F300S BD micro-controller.
 >  
-> +	spin_lock_irqsave(&smmu_domain->cb_lock, flags);
-> +
->  	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
-> +
-> +	/*
-> +	 * Re-enable interrupts after they were disabled by
-> +	 * arm_smmu_context_fault().
-> +	 */
-> +	sctlr = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR);
-> +	sctlr |= ARM_SMMU_SCTLR_CFIE;
-> +	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR, sctlr);
-> +
-> +	spin_unlock_irqrestore(&smmu_domain->cb_lock, flags);
->  }
+> Similarly, the `VREG_1P3` and `VREG_5P0` are sourced from another buck converter LM5143QRWGRQ1
+> that is using `VREG_12P0` as VIN and `EN_VR5P0_M3P3` as EN signal.
+> Where the EN_VR5P0_M3P3 is an output from the same micro-controller.
 >  
->  #define QCOM_ADRENO_SMMU_GPU_SID 0
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> index c7b5d7c093e71050d29a834c8d33125e96b04d81..9927f3431a2eab913750e6079edc6393d1938c98 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> @@ -470,13 +470,52 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
->  	if (!(cfi->fsr & ARM_SMMU_CB_FSR_FAULT))
->  		return IRQ_NONE;
+> Combining above details, all three ANX bridge supplies are getting enabled by `VREG_12P0` supply,
+> `EN_VR1P8_M3P3` and `EN_VR5P0_M3P3` signals once the SOC is out of reset.
 >  
-> +	/*
-> +	 * On some implementations FSR.SS asserts a context fault
-> +	 * interrupt. We do not want this behavior, because resolving the
-> +	 * original context fault typically requires operations that cannot be
-> +	 * performed in IRQ context but leaving the stall unacknowledged will
-> +	 * immediately lead to another spurious interrupt as FSR.SS is still
-> +	 * set. Work around this by disabling interrupts for this context bank.
-> +	 * It's expected that interrupts are re-enabled after resuming the
-> +	 * translation.
-
-s/translation/transaction/
-
-> +	 *
-> +	 * We have to do this before report_iommu_fault() so that we don't
-> +	 * leave interrupts disabled in case the downstream user decides the
-> +	 * fault can be resolved inside its fault handler.
-> +	 *
-> +	 * There is a possible race if there are multiple context banks sharing
-> +	 * the same interrupt and both signal an interrupt in between writing
-> +	 * RESUME and SCTLR. We could disable interrupts here before we
-> +	 * re-enable them in the resume handler, leaving interrupts enabled.
-> +	 * Lock the write to serialize it with the resume handler.
-> +	 */
-
-I'm struggling to understand this last part. If the resume handler runs
-synchronously from report_iommu_fault(), then there's no need for
-locking because we're in interrupt context. If the resume handler can
-run asynchronously from report_iommu_fault(), then the locking doesn't
-help because the code below could clear CFIE right after the resume
-handler has set it.
-
-I think the broader problem is that we can end up reporting a spurious
-fault when the irq is shared between context banks. However, your change
-to ARM_SMMU_CB_FSR_FAULT fixes that afaict:
-
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> index ff84ce3b8d8567d3402e945e8277ca2a87df9a4e..5fe8e482457f905529a08aea14ea5656d3e31328 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> @@ -214,7 +214,6 @@ enum arm_smmu_cbar_type {
->  					 ARM_SMMU_CB_FSR_TLBLKF)
+> The `VREG_12P0` is directly sourced from `VBATT_IN`.
 >  
->  #define ARM_SMMU_CB_FSR_FAULT		(ARM_SMMU_CB_FSR_MULTI |	\
-> -					 ARM_SMMU_CB_FSR_SS |		\
->  					 ARM_SMMU_CB_FSR_UUT |		\
->  					 ARM_SMMU_CB_FSR_EF |		\
->  					 ARM_SMMU_CB_FSR_PF |		\
+> Since, there is no SW control for ANX bridge supplies and they are getting enabled
+> once the SOC is out of reset, I have used vph-pwr-regulator dummy regulator.
+> I am not sure if it's the right way to handle above scenario. Please let me know if there is other way to do the same.
 
-because now any subsequent spurious IRQs will return IRQ_NONE. So I
-don't see why we need the locking at all. What am I missing?
+Add these regulators as fixed ones, describing the power grid. Consult
+other board files if you are unsure. RB3, RB5, HDKs - all these boards
+have fixed-regulators for the grid.
 
-Also, I think your change probably exposes a benign bug in the qcom
-debug code as qcom_tbu_halt() has the following:
-
-if ((fsr & ARM_SMMU_CB_FSR_FAULT) && (fsr & ARM_SMMU_CB_FSR_SS))
-	...
-
-Will
+-- 
+With best wishes
+Dmitry
 
