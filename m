@@ -1,97 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-57055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D62FFAAD526
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 07:20:36 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19716AAD548
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 07:33:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6067F7B483E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 05:19:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CBD0F7B6A61
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 05:31:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CD8C1DF748;
-	Wed,  7 May 2025 05:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6E531DF25D;
+	Wed,  7 May 2025 05:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="px+PTsjA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q0m7sAq/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283E01DF269;
-	Wed,  7 May 2025 05:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5931D618E;
+	Wed,  7 May 2025 05:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746595116; cv=none; b=HV9EV329KskzHuyrj+bQSr3YrCZuNkgUnzBQ9dfD+qEUfNnajyG9ZlkJEoL6K+zGcrIl3uVOIGp3be+2C+mu1ACTAOg5tECiAjaoDIrlDR/p/Oe7whwAg3FoFWYt1oOzxHKwKOaMIl0bXO7TGCZGFkem0d8m/1Clzb71SDEDoEI=
+	t=1746595975; cv=none; b=WKmaHpWyOCKFMhnGKBA/oUpsiwznHm7X2WPm054dLXKicSPBsDINbdPganIzZHSFWXzz4t1p5DLpdY6nz1bDkLW9c3O6V4rmdO5QnV0/72oI0YKLa34401mqyeT5ZLL85r6AmiR5fftVCFWuSeM3OFUzIb4P7hYLUSRdIerGB8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746595116; c=relaxed/simple;
-	bh=z17b354Y/3F4nMLFkj3Aypodoceoi0WNTpzaRaaXSiU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t6SFr3RWJU/38exj/FR93o4eKihx7LwJz1v32xO4XCe8Qg+GZlQgrMdiKP8/a1nXp2ro7kAdJ8giwDvmVSXv7MiidA/EqyK/FTVfIXbsXIruJCRTyFqBPsSl/DOlNRA2E2Epqr1r9ftjd6uuT8baER1E3hWT0aDm1in0WZck+0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=px+PTsjA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC25C4CEE7;
-	Wed,  7 May 2025 05:18:35 +0000 (UTC)
+	s=arc-20240116; t=1746595975; c=relaxed/simple;
+	bh=bjgQjoGWDlMiHE9WoqyOdnPxls//ZasLUweveRIFQUU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=apYsVuxHlZi+L2OmPSJVvbI+jumT63u7xuK8Hj+p5BHAduaBaxilXFt32E0uGUBQqEFp5rlkTTzoFf3rjGcHFQOXpB7hKPV6qYY6Sl2rkllKE4DR8SEo+RCUiJkHhxmF1PrukUgpK2B6da7J8GN4y2LI3EshMG5XUfaKhkBJ3Hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q0m7sAq/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457F2C4CEE7;
+	Wed,  7 May 2025 05:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746595115;
-	bh=z17b354Y/3F4nMLFkj3Aypodoceoi0WNTpzaRaaXSiU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=px+PTsjA+ze8bEa8qE6u5Sbm0pz9Z+soy5jTqa15f5DdUk++Kt7wUPQtNehn/zPug
-	 aIoVDwDvPpKNY6VKpfZhAgr1I8Zx0t3ZTMFOkRillBtzXBdZ6Q2A2UQ52PxX4QQDEv
-	 aDUDPlAk2AXQU1qGaEbQebbXnfOu6eyyHBT6OYqg8M0w6N1ezOqZcq3Vr77JgC1VhY
-	 lPODFYI5Ro/e25Ht2GXfq9BGIepA8Ibruvjvg+FbUS+511OKBcNGmOYy6G6IXwn004
-	 hzsd5U/GRMsHDF5qv8NPAYIZ9v1wXMURC4gAWw95W6IH1hLjR36eYl6bNHvMeEzxgU
-	 QqCIDVEqgbWfw==
-Date: Wed, 7 May 2025 07:18:33 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, dmitry.baryshkov@linaro.org, 
-	neil.armstrong@linaro.org, abel.vesa@linaro.org, manivannan.sadhasivam@linaro.org, 
-	lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com, andersson@kernel.org, 
-	konradybcio@kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	quic_qianyu@quicinc.com, quic_krichai@quicinc.com, quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v4 5/5] PCI: qcom: Add support for QCS615 SoC
-Message-ID: <20250507-competent-meek-prawn-72badf@kuoka>
-References: <20250507031559.4085159-1-quic_ziyuzhan@quicinc.com>
- <20250507031559.4085159-6-quic_ziyuzhan@quicinc.com>
+	s=k20201202; t=1746595975;
+	bh=bjgQjoGWDlMiHE9WoqyOdnPxls//ZasLUweveRIFQUU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Q0m7sAq/goUZtQoavLIPgeAmAbZuI84z+TwTrR1JgyiybFg+EBxEhU32nrnT0D20w
+	 GbNXnTejNiV5W28uFTmGh9cTTFFJ5mxoLkn/LOGy6jkDZGOtVLwGdHEQxSPDZyv4ih
+	 CCxqxn8IjgaB8AnT1BWKIX5NA7CJNjNci5wBAWFeSq2U24IqrywJY8nF/q8t1ZC/En
+	 psVaDHZ+YC3atgoB9CHVg2A6wmAs06yIGVoSFpZs8qJyG1ynvcBa+8LZTborLjFHq/
+	 6vYQ9SAXStZuDsuxtZFoLNWOzbAq3UHVgSAIEuGBBOFfYP9BSmYU7b7+Eg6Ktt+cwZ
+	 OyCNc41n3cQGw==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Nikita Travkin <nikita@trvn.ru>
+Cc: Marc Zyngier <maz@kernel.org>,
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/5] arm64: dts: qcom: Add EL2 overlays for WoA devices
+Date: Tue,  6 May 2025 22:32:52 -0700
+Message-ID: <174659597008.7675.2301017495937908497.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250503-sc-el2-overlays-v2-0-24e9b4572e15@trvn.ru>
+References: <20250503-sc-el2-overlays-v2-0-24e9b4572e15@trvn.ru>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250507031559.4085159-6-quic_ziyuzhan@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 07, 2025 at 11:15:59AM GMT, Ziyue Zhang wrote:
-> Add the compatible and the driver data for QCS615 PCIe controller.
-> There is only one controller instance found on this platform, which
-> is capable of up to 8.0GT/s.
-> The version of the controller is 1.38.0 which is compatible with 1.9.0
-> config.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index dc98ae63362d..0ed934b0d1be 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1862,6 +1862,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &cfg_1_9_0 },
->  	{ .compatible = "qcom,pcie-sm8550", .data = &cfg_1_9_0 },
->  	{ .compatible = "qcom,pcie-x1e80100", .data = &cfg_sc8280xp },
-> +	{ .compatible = "qcom,qcs615-pcie", .data = &cfg_1_9_0 },
 
-Why? It's compatible with other entries, so why adding redundant entry
-here?
+On Sat, 03 May 2025 15:39:27 +0500, Nikita Travkin wrote:
+> WoA devices use firmware very similar to android, which means that Linux
+> has to run in EL1 due to the presence of Qualcomm's hypervisor (QHEE or
+> Gunyah). However Windows can replace that hypervisor using Secure-Launch
+> flow.
+> 
+> More recently the same approach became possible to be used to boot Linux
+> in EL2 on those devices, thanks to a tool called slbounce[1].
+> 
+> [...]
+
+Applied, thanks!
+
+[1/5] arm64: dts: qcom: sc7180: Add EL2 overlay for WoA devices
+      commit: 0d95f64be4176fc98bcc2b4558239800ee93bf32
+[2/5] arm64: dts: qcom: sc8280xp: Add PCIe IOMMU
+      commit: 8a401135001c65203f3fd210d482bc7eae1bfc56
+[3/5] arm64: dts: qcom: sc8280xp: Add EL2 overlay for WoA devices
+      commit: 263780f3189730f2efa511181c3970384e54afde
+[4/5] arm64: dts: qcom: x1e80100: Add PCIe IOMMU
+      commit: 428f95f41f3024a8378bb4c4803fe269fcacaa85
+[5/5] arm64: dts: qcom: x1e/x1p: Add EL2 overlay for WoA devices
+      commit: e01acd8f3cc1364b9147d3eb8913fdb935851ecd
 
 Best regards,
-Krzysztof
-
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
