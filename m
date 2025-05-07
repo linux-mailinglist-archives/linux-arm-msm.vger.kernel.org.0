@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-57072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C5E1AAD6AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 09:01:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A146BAAD6B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 09:02:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 413487B8B72
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 06:59:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1BEDE7BA084
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 07:00:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3EE8212B3D;
-	Wed,  7 May 2025 07:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 925862010F6;
+	Wed,  7 May 2025 07:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oKNr52NI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s4SMV6W2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D2C54279;
-	Wed,  7 May 2025 07:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DE4566A;
+	Wed,  7 May 2025 07:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746601223; cv=none; b=lMU9Mfz9GnGlEUK1DD3vcynBNnGcaWzvSm8CPBTwIvw94HqgmPth6GRUmL6YNXIE2hEDLEsWowvVZr99vi2PS+7VP9qGLG8a2wLR3712nLhG9mVlOuUATTLlmJ5RIe0nbhajfKG1GR9N7vIpLnC3KCv1tsdx3RY//X+ma8OOWrE=
+	t=1746601293; cv=none; b=qauVGP8OiRLND4GmUHhSLC3HFdBAwG9lUwya9EOAf/SMsbYzqoG3Y8xqbYhCe9x3ZjZqK9c046Fb4y+hgFUaG87B+n5JG60PSf2IjrxjPoMStOFLAqjRKGYr9rOHOUEbJ8ZMRB1hsh9b3v/jc/481E6/5sgv7OyBknvEJldNxk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746601223; c=relaxed/simple;
-	bh=YKMqL2TUXW1wT7MmzSe7FtwlZrCzWchrA5mtEJSZzDY=;
+	s=arc-20240116; t=1746601293; c=relaxed/simple;
+	bh=d7YfVxTvJHHMifP1pRZTogO637dSfX81Oj8B0lwR7HM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ReWT1P+5ZrzqpeGO9H2/l1xLURMn7Zp3Bz5zMdsMX3zRgnQ/RwGRhKAasto2bqJ8APtT4cB7i/faeA74gTC997q5XVmKyzsPP+qzLi36ete3MAWlNaY+tCkJwtvo9Hii4EFgi45AKG/fv0hHIU3CDdS9cuKk+j4CMswSQhqcGfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oKNr52NI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A64C4CEE9;
-	Wed,  7 May 2025 07:00:19 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=CYiFLDkSKOsVKfw5S08as1q3ANrPF6ZiwqiUAaXv2JOG9zh9hmSyN66L1MP40NrYtosSbWUbkYR7Pdd1/eNiZWXV8fwTzrKhlCnOz+x1w33EC7CS0u7HLDafznRbL01AxzGEuMrt4uFTc9HHhT70+FdKme5bXk21sQlOYjUXwVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s4SMV6W2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AD5C4CEE7;
+	Wed,  7 May 2025 07:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746601223;
-	bh=YKMqL2TUXW1wT7MmzSe7FtwlZrCzWchrA5mtEJSZzDY=;
+	s=k20201202; t=1746601293;
+	bh=d7YfVxTvJHHMifP1pRZTogO637dSfX81Oj8B0lwR7HM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=oKNr52NIpyFOADE7jQTPCHg4hEiOL40ou6iwOPsDJ8hndZDO40Qo7ce/RGeOj6Ice
-	 /fiFUxYl1UJqIlQjSt7J1GQD93hEv0Poq6uDUKectb8rOI6fF921vaxOqEZX+z0oEb
-	 NIQNZALzaMzRBdpV5lGwFhBUdFsehIUK0sQZrJA3h2Ikz3bZ0ZugMVBxxJ+bjcTmGL
-	 qYKvQLUh6UDOm/P77PATUsTQxAL5h++sdzOAqljV3Ng312EkkAMCOV88NOZUDA0vGh
-	 DBj8vH8sQ+DNb0HhbJGlDNofbxPah9KHnqp3HIbNjp80gpO9pXatLryKNTxaZ/Efhy
-	 6oZsqLuvl4UNQ==
-Message-ID: <55d11250-75b1-4606-a110-84cdc0592c33@kernel.org>
-Date: Wed, 7 May 2025 09:00:18 +0200
+	b=s4SMV6W2Rbo68sMDio4v5C/M8NXyG/65cE6xNUDBDLa/aw7qZ8NyavVv2ZMtTaAg1
+	 mVxuw4P/sZ6v9VVbH89bXppncb6IZTBRg37hYZAoBtqnHMHzzg5I7dmz3N5ZLV5ZRK
+	 4COJF1vNkphFMeLYA0rwwTQnp/AnUUf8SF/nTfVvkrr7eqF+6RM1jtDZiXxDPO0KWi
+	 qvMoP720Y+RDc8eMe9X1y4QPOsU/KK3ur0xaOIt5o7ZzRtMvHxcL91AXvjWWj/+SDZ
+	 MhMOSeNypRQOOgtXz2SRKeg396sfDVSVNXVXTjwCx5aRg6n/W+Pk+bBoFBveqsos7y
+	 vIDhkpefCqgbA==
+Message-ID: <d880d771-5635-4270-9378-1e54b4c1a7bc@kernel.org>
+Date: Wed, 7 May 2025 09:01:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/8] dt-bindings: arm: qcom: Add bindings for qam8775p SOM
+Subject: Re: [PATCH 6/8] arm64: dts: qcom: sa8775p: Introduce QAM8775p SOM
 To: Wasim Nazir <quic_wasimn@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -60,7 +60,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, netdev@vger.kernel.org, kernel@quicinc.com,
  kernel@oss.qualcomm.com
 References: <20250507065116.353114-1-quic_wasimn@quicinc.com>
- <20250507065116.353114-6-quic_wasimn@quicinc.com>
+ <20250507065116.353114-7-quic_wasimn@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,16 +106,40 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250507065116.353114-6-quic_wasimn@quicinc.com>
+In-Reply-To: <20250507065116.353114-7-quic_wasimn@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 07/05/2025 08:51, Wasim Nazir wrote:
-> Add devicetree bindings for QAM8775p SOM which is based on sa8775p SOC.
+> qam8775p-som.dtsi specifies SA8775p based SOM having SOC, PMICs & DDR.
+> sa8775p-ride & sa8775p-ride-r3 boards are based on QAM8775p SOM.
+> 
+> Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qam8775p-som.dtsi   | 9 +++++++++
+>  arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts | 5 ++---
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dts    | 5 ++---
+>  3 files changed, 13 insertions(+), 6 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qam8775p-som.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qam8775p-som.dtsi b/arch/arm64/boot/dts/qcom/qam8775p-som.dtsi
+> new file mode 100644
+> index 000000000000..92adebb2e18f
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qam8775p-som.dtsi
+> @@ -0,0 +1,9 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sa8775p.dtsi"
+> +#include "sa8775p-pmics.dtsi"
 
-You do not add new bindings. You instead change existing ones without
-explanation why making that change.
-
+That's an empty file. What is the point of it except making everything
+more complicated?
 
 
 Best regards,
