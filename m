@@ -1,64 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-57134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F257DAADC71
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 12:27:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9459AADC6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 12:27:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 32C1A1C04247
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 10:27:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 341824A8164
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 10:27:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC7372139B0;
-	Wed,  7 May 2025 10:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E4D6215168;
+	Wed,  7 May 2025 10:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ftx4P80e"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CYKQjybR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A4A748D;
-	Wed,  7 May 2025 10:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946072147F5;
+	Wed,  7 May 2025 10:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746613618; cv=none; b=cUN7po5RBr+Q4DGCqg8tKzFDh8t97kgVeSOhfg0hgwvHJsKEfUNp2tvVPproJeGqQmMb0HUQ+tzit1S6RthRC6Q49/SEvAa8vyUAcS3y3LppoA/W/0UOnEV7U0/h5ETTLuwMt0mrnk9gfGWmLEpA2lSqUnZ35jW4HGZpRBimBrY=
+	t=1746613622; cv=none; b=b6TYGBODcXafAC2yB/CxwFnPAkdF78+MxZ6jESIxEtTMwPk+D7uxlOVphnyE8P+POSSyDUcPm3Az68jACveBKYeo9QcDzRxJCe2+pDe8zrw3gXgW/ZG9z2mYpDYhl8iXxG1JKmqItGLAvTCFFAPWvD2Rcbcuel4XdK1zNJxd4KE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746613618; c=relaxed/simple;
-	bh=hTf2JFbmwImuDMJsmrnZ6KPM6n8CTgRK0R+nYi85jUs=;
-	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=ldvo22PpSdT/Gk4Kr5PbS9R/PbVbputZz4VCl9EhqbJkqzMon/wIxcwLB2Mcusdm6G5aYF6app6rDrAn4v083CYJrwoDt92cNZgHt0CjQpmVx3OQA7Y6mi6yfKeXDgjz7egzSwEaeeTaegpOgP2olIcMATuXNhplLWRKU3Bny/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ftx4P80e; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1746613622; c=relaxed/simple;
+	bh=mRHd/bi0F4pAEILgJ+Mdf3okfj488JQ4oMxBwTt4PcI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=k9oG8lnJ6GthR1t1zk+Sw36PQp8elAeilxTR7/DVh2k5ik955qN2jbxdY8KPqABZgnlTy5RhWYuhPspF4tZ5n1qmloPXR9Gqyquovh2owFWuexXyRspAXHlY4OSQFSUmgLSV8PRQGWaTkBBxcR1qoxOvV8p9RU3UT8H2N4JDgoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CYKQjybR; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5479wbIh002585;
-	Wed, 7 May 2025 10:26:53 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54758iUx009775;
+	Wed, 7 May 2025 10:26:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=O5RXwrkPNB3nTDXkrCliLR
-	zUkuPHUxKfsm6kiIgTxZc=; b=ftx4P80e7xciE0g+DBH6y5YVCG/nrjbgtmJJhd
-	DnbRF0ba2gmg+gCeFqo0BI9VZFElGWSvnOKP9ifK5/Wi0Y4uMizUyVAaBbwOtbFG
-	FBg+pzFpKJ1mRiljb12RlXeqb+K5ACVqMorudAyIJV0XLBUJHsHQbsVdYBhy3lwl
-	zOkU6/yYnYBpuzj/gwSLMvcJ0OR6k5tyvvfQbSU4vVY+vJr/tFKevhs6L/nmwwx9
-	/2ySKoRXQonC/dwXzvV9+/1xNKM4OnKui/eKQgxxQxYfEScfCnS3niMbqDEl10Ht
-	U0jiqj3IQTKWkL1MsyqDe50hYgBKeefKNEpHuBASxd+P17gg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46fsmt1vw3-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZlYW6HAi7Wv3N0kWZGA9Wk/r1UfJW1G0KpByvwo7mFk=; b=CYKQjybR/H1f1FCB
+	qepXPS7SoSc7xw3GrJGpXiyFGAnQpj76gcBNAzsudmUK/nZRjyOBUaE08oI3T0ZY
+	47GzqJEaxWMJxMSdQ7ZFwFOKtwKKz3iRdyO690XjNyceC10cIyHENN99r2tVyDHn
+	Q0yGHQGTQuzLRdjeFX2T/J809okX0pafbOCaHv624aaJx9psv3e1BMFwzZl6i5kW
+	vJLVfzuBZZ/uGP+ERYCBslEVuYGcKZHUtEUW5Qw8cQrhN8Dze8CgwNC28Y0Ff7Cq
+	H0p6jgoIJoLxEnKRJ6gBvIcZZQJkVTGj2EpLw8SfqZji9IQBhTD0RAiOqRlTvPKm
+	YdN9Gg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46g13vrwxw-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 May 2025 10:26:53 +0000 (GMT)
+	Wed, 07 May 2025 10:26:57 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 547AQqDv024069
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 547AQucV032753
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 May 2025 10:26:52 GMT
+	Wed, 7 May 2025 10:26:56 GMT
 Received: from lijuang2-gv.ap.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 7 May 2025 03:26:45 -0700
+ 15.2.1544.9; Wed, 7 May 2025 03:26:49 -0700
 From: Lijuan Gao <quic_lijuang@quicinc.com>
-Subject: [PATCH v2 0/6] arm64: dts: qcom: qcs615: enable remoteprocs - ADSP
- and CDSP
-Date: Wed, 7 May 2025 18:26:10 +0800
-Message-ID: <20250507-add_qcs615_remoteproc_support-v2-0-52ac6cb43a39@quicinc.com>
+Date: Wed, 7 May 2025 18:26:11 +0800
+Subject: [PATCH v2 1/6] dt-bindings: remoteproc: qcom,sm8150-pas: Document
+ QCS615 remoteproc
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,10 +68,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEM1G2gC/4XNSw6CMBSF4a2Qjq3pC6GM3IchhLS3cgfQ0gLRE
- PZuxQU4/M/gOztJEBESaYqdRNgwoZ9yiEtBzNBPT6BocxPBRMlKVtHe2m426cbLLsLoFwjRmy6
- tIfi4UFMLK5nTSkpLshEiOHyd/qPNPWBafHyfdxv/rj9ZCflH3jhltNfKQV1p7bi6zysanMzV+
- JG0x3F8AEHTFRbMAAAA
+Message-ID: <20250507-add_qcs615_remoteproc_support-v2-1-52ac6cb43a39@quicinc.com>
+References: <20250507-add_qcs615_remoteproc_support-v2-0-52ac6cb43a39@quicinc.com>
+In-Reply-To: <20250507-add_qcs615_remoteproc_support-v2-0-52ac6cb43a39@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Mathieu Poirier
 	<mathieu.poirier@linaro.org>,
@@ -84,87 +84,139 @@ To: Bjorn Andersson <andersson@kernel.org>,
 CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
         <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, Lijuan Gao <quic_lijuang@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Kyle Deng
-	<quic_chunkaid@quicinc.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.15-dev-99b12
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1746613604; l=1916;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1746613605; l=3100;
  i=quic_lijuang@quicinc.com; s=20240827; h=from:subject:message-id;
- bh=hTf2JFbmwImuDMJsmrnZ6KPM6n8CTgRK0R+nYi85jUs=;
- b=jXm531vnKgoiXCj3/fhpq6Ja40GQjwH9fr1MffMergNzsNszXTraiLSDIcy4jR00uvJ9yiZgS
- iZMDoGhcptQBhK7kAmFsMut7wKusfqpegfbkavqFPzz1leAru5eF9wM
+ bh=mRHd/bi0F4pAEILgJ+Mdf3okfj488JQ4oMxBwTt4PcI=;
+ b=+A0ZgWBCv5FjnZan1ShLSiKLqBZvO3SrVOpRG25mTZzqJF3KseHRaYsv5HEzxyLH91kHdXvyI
+ a2r7usGpkdVC2I4co3PNElr4w191hwlV+2VlHDa0Fvq6qXw2EtccBKb
 X-Developer-Key: i=quic_lijuang@quicinc.com; a=ed25519;
  pk=1zeM8FpQK/J1jSFHn8iXHeb3xt7F/3GvHv7ET2RNJxE=
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=U9KSDfru c=1 sm=1 tr=0 ts=681b356d cx=c_pps
+X-Proofpoint-GUID: yHFLFN4k6CPTqu0HC2OcppGCT8IxwK8r
+X-Proofpoint-ORIG-GUID: yHFLFN4k6CPTqu0HC2OcppGCT8IxwK8r
+X-Authority-Analysis: v=2.4 cv=JNc7s9Kb c=1 sm=1 tr=0 ts=681b3571 cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=QfQTvixX5dd1oHoNGvgA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: TqZ6Y8a9RejXGxvMt2wXt6OW8AmwBMbW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDA5NyBTYWx0ZWRfX79WrfpSp/X0g
- tP9Az9HepTdRrxTEboI7nFlt9V1+18Pfgh8ZfVsvD6KBhU90jrh7Om7w9aWkpzQpSxpK9lkqVzn
- zv9IMdePDml1jXWaSyNI4vszU5rNgTO5iUQAi4eMqy7m+2iTrBppzomBbaRNuSRVh0pBm1oOwfa
- i4zRcP5pWb90kA8UlM6ju3R29S3UuEwV2qYxuvXAp3W0DCdh3PyM8bOgDvoWr3mNO5MfHSJnNac
- 7WiHjiePJBNyVnYOuToW6L6MqKBRebHd7i6O1WopS9FN9UxQHAaHUizc8dkSq2W0GvE/n9iF7vk
- 8w+hmAzIyY2iUyEw/PFqGtnnGp56uPc1shhmi2OmegUrquLsMifnlF+TljNlj77Jg7W0i0wEbwm
- loTAB3nvooB6fTUvyboaXhVj8W/NPoDGnlk4l0+AS+8x6Ggpfbab3o55lP9F2sq9RvrgE1BC
-X-Proofpoint-ORIG-GUID: TqZ6Y8a9RejXGxvMt2wXt6OW8AmwBMbW
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8
+ a=COk6AnOGAAAA:8 a=5YRdyxvPSVI2_D5q7JMA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDA5NiBTYWx0ZWRfX42gZ5A5y4TzA
+ GP5lBZ62KuVeHVIMd/ozAqDF5wrJSNUB+ASlCzFgETAPu7DOP0X3BQg7MXzOOI6BibOfWcUfdk7
+ g/U6qR5qSo7BkU2uvYtW2wHHBTbuV1TfuFVMM5bv8VWyCq8+LhXFP3AbCQWKNN41rOSc88lfobF
+ 3JvqbHY0kxdPNJk843qw0+Ea14OO9R9uR0+ZSnJQCfrSKgJFKjuPV6XVFDHhwbRT13lXXREaeHt
+ Parbb/duR5qFBMRZKpgmKCOi28z81SYSeOHSU7QD4TMHpb02yuXugoPflWoJDh+IB7TmeQsle2O
+ r8vrNJq1Cg7TFapMoejxv/UzFWyZZUOtk1gWRmhzxQkVNEESO5m2pCE1eI5JftheLvagf86znW5
+ /TueryrsNx2Ca9sZVQoQAGGsztDejJw8GPAkbK0AjAf/RHwznCnBVihiLZDw1UXhyy4hHO+5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-07_03,2025-05-06_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0 adultscore=0 bulkscore=0 spamscore=0
- impostorscore=0 priorityscore=1501 mlxlogscore=812 phishscore=0 clxscore=1015
- lowpriorityscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2504070000 definitions=main-2505070097
+ priorityscore=1501 bulkscore=0 mlxlogscore=967 phishscore=0 spamscore=0
+ clxscore=1015 adultscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505070096
 
-Enable the remote processor PAS loader for QCS615 ADSP and CDSP
-processors. This allows different platforms/architectures to control
-(power on, load firmware, power off) those remote processors while
-abstracting the hardware differences. Additionally, and add a PIL region
-in IMEM so that post mortem debug tools can collect ramdumps.
+Document the components used to boot the ADSP and CDSP on the Qualcomm
+QCS615 SoC. Use fallback to indicate the compatibility of the remoteproc
+on the QCS615 with that on the SM8150.
 
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
 ---
-Changes in v2:
-- Remove the qcom prefix from smp2p node name.
-- Remove the unnecessary property qcom,ipc from smp2p node.
-- Remove the unused node apcs: syscon.
-- Remove the unused nodes from smp2p node, such as
-  sleepstate_smp2p_out/in, smp2p_rdbg2_out/in, smp2p_rdbg5_out/in.
-- Update the commit message for IMEM PIL info region.
-- Update the remoteproc node names.
-- Correct the size of register for remoteproc nodes.
-- Add empty line before status properties.
-- Link to v1: https://lore.kernel.org/r/20250423-add_qcs615_remoteproc_support-v1-0-a94fe8799f14@quicinc.com
+ .../bindings/remoteproc/qcom,sm8150-pas.yaml       | 59 +++++++++++++---------
+ 1 file changed, 35 insertions(+), 24 deletions(-)
 
----
-Kyle Deng (1):
-      arm64: dts: qcom: qcs615: Add mproc node for SEMP2P
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml
+index 56ff6386534d..caee47b52d5a 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml
+@@ -15,14 +15,23 @@ description:
+ 
+ properties:
+   compatible:
+-    enum:
+-      - qcom,sm8150-adsp-pas
+-      - qcom,sm8150-cdsp-pas
+-      - qcom,sm8150-mpss-pas
+-      - qcom,sm8150-slpi-pas
+-      - qcom,sm8250-adsp-pas
+-      - qcom,sm8250-cdsp-pas
+-      - qcom,sm8250-slpi-pas
++    oneOf:
++      - items:
++          - enum:
++              - qcom,qcs615-adsp-pas
++          - const: qcom,sm8150-adsp-pas
++      - items:
++          - enum:
++              - qcom,qcs615-cdsp-pas
++          - const: qcom,sm8150-cdsp-pas
++      - enum:
++          - qcom,sm8150-adsp-pas
++          - qcom,sm8150-cdsp-pas
++          - qcom,sm8150-mpss-pas
++          - qcom,sm8150-slpi-pas
++          - qcom,sm8250-adsp-pas
++          - qcom,sm8250-cdsp-pas
++          - qcom,sm8250-slpi-pas
+ 
+   reg:
+     maxItems: 1
+@@ -59,16 +68,17 @@ allOf:
+   - if:
+       properties:
+         compatible:
+-          enum:
+-            - qcom,sc8180x-adsp-pas
+-            - qcom,sc8180x-cdsp-pas
+-            - qcom,sc8180x-slpi-pas
+-            - qcom,sm8150-adsp-pas
+-            - qcom,sm8150-cdsp-pas
+-            - qcom,sm8150-slpi-pas
+-            - qcom,sm8250-adsp-pas
+-            - qcom,sm8250-cdsp-pas
+-            - qcom,sm8250-slpi-pas
++          contains:
++            enum:
++              - qcom,sc8180x-adsp-pas
++              - qcom,sc8180x-cdsp-pas
++              - qcom,sc8180x-slpi-pas
++              - qcom,sm8150-adsp-pas
++              - qcom,sm8150-cdsp-pas
++              - qcom,sm8150-slpi-pas
++              - qcom,sm8250-adsp-pas
++              - qcom,sm8250-cdsp-pas
++              - qcom,sm8250-slpi-pas
+     then:
+       properties:
+         interrupts:
+@@ -85,12 +95,13 @@ allOf:
+   - if:
+       properties:
+         compatible:
+-          enum:
+-            - qcom,sc8180x-adsp-pas
+-            - qcom,sc8180x-cdsp-pas
+-            - qcom,sm8150-adsp-pas
+-            - qcom,sm8150-cdsp-pas
+-            - qcom,sm8250-cdsp-pas
++          contains:
++            enum:
++              - qcom,sc8180x-adsp-pas
++              - qcom,sc8180x-cdsp-pas
++              - qcom,sm8150-adsp-pas
++              - qcom,sm8150-cdsp-pas
++              - qcom,sm8250-cdsp-pas
+     then:
+       properties:
+         power-domains:
 
-Lijuan Gao (5):
-      dt-bindings: remoteproc: qcom,sm8150-pas: Document QCS615 remoteproc
-      dt-bindings: soc: qcom: add qcom,qcs615-imem compatible
-      arm64: dts: qcom: qcs615: Add IMEM and PIL info region
-      arm64: dts: qcom: qcs615: add ADSP and CDSP nodes
-      arm64: dts: qcom: qcs615-ride: enable remoteprocs
-
- .../bindings/remoteproc/qcom,sm8150-pas.yaml       |  59 +++++----
- .../devicetree/bindings/sram/qcom,imem.yaml        |   1 +
- arch/arm64/boot/dts/qcom/qcs615-ride.dts           |  12 ++
- arch/arm64/boot/dts/qcom/qcs615.dtsi               | 143 +++++++++++++++++++++
- 4 files changed, 191 insertions(+), 24 deletions(-)
----
-base-commit: 08710e696081d58163c8078e0e096be6d35c5fad
-change-id: 20250507-add_qcs615_remoteproc_support-c82d30f9433d
-
-Best regards,
 -- 
-Lijuan Gao <quic_lijuang@quicinc.com>
+2.46.0
 
 
