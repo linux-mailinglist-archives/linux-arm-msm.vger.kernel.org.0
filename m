@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-57074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C6CAAAD6B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 09:03:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72D75AAD6C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 09:03:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 95B521C00C57
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 07:03:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97B4A1C0114E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 07:04:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D6EF1DF25C;
-	Wed,  7 May 2025 07:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5B0821322F;
+	Wed,  7 May 2025 07:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cnNYjL27"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mzXqMD96"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4E4566A;
-	Wed,  7 May 2025 07:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E1817BA5;
+	Wed,  7 May 2025 07:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746601393; cv=none; b=VXBiGxTcB9J9RHVRRyG3KuiMSCLUTKAUvsWC6qlX03NDZoe30BautlJFK26EVivHi79AP7CP2zO91xwRX72j+g7m4Fi6PftkucKQTgl8oKujGpI215xo9yB3fQjs6q03qVQKiaOVdkRA8LqSV+XgYiLjcam0S34E2zJ5MC2VBWQ=
+	t=1746601430; cv=none; b=awh8qDZcpeWNmvIIDaE/M4GUp4uIqBPGrL3WK1cpjcgNk8Q/OSH5+EhpTeDKA3zOh/w6Y0pWBEcRfHq0EORnLOXZFG/CuiemKPFBS4mRjawugSD8BYgzDuf9k+4TFa6vjLOqlMvnTwhFZfZsdCjUVu2i/AcZH6jw8UgxjdHUZHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746601393; c=relaxed/simple;
-	bh=N+vMEuRMxv/b1+nTUhT8YXTg/12n/D8VcvUEo6sJs7w=;
+	s=arc-20240116; t=1746601430; c=relaxed/simple;
+	bh=AeNRisZTNHmmw2+qsqDcJLTuH5q4CFaIPqR6fRmN+Lo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NQCRG7JgFnLfN4uqtvoCZKzXstuMQvwUnvU3S5iKkt42ft2dtSGNcmUIuoGlszHjMt+IFscGZqdl+U+m4gfHPvWhCyZcIquYFhcTYcD6CbPR8//xl+mX6tx2WwS3RsOXBS8O81Aay5qpL3GE4Q/IziAQRTnL1VdgimCKh/WEnEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cnNYjL27; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FBAC4CEE7;
-	Wed,  7 May 2025 07:03:09 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=hqF9y2dzzP20bfDEO9jb5k8AXLF2nKOeKrn1+JgrbnuL1iR00sjpefFu/M4l0kMl3evfj+zebUt7bRQVHugbg2AhFlX+KjhsenV7ZkGYDEy0WCblmRJfbuGQlQ6d9CoO+AovzXo9nv4rhyhDgDl8xyMU8RZj0ooI3fqe94eh5AQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mzXqMD96; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC452C4CEE7;
+	Wed,  7 May 2025 07:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746601392;
-	bh=N+vMEuRMxv/b1+nTUhT8YXTg/12n/D8VcvUEo6sJs7w=;
+	s=k20201202; t=1746601429;
+	bh=AeNRisZTNHmmw2+qsqDcJLTuH5q4CFaIPqR6fRmN+Lo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=cnNYjL27Ftl2k8zj96NdlTWodZMi/DX0LhkIGHUP3tmFVXrJ+JHaLYUmeZOYcrUYQ
-	 ukZu99/ck+brCbtXLqDzhiBy/EjOtUytluJzOEyQfHO3SfSTZTq4cR3TClbwYZLPFl
-	 F8YPiBEAcEijmdZWXLVlesxUFMXk0SQg0alRt0fZkJi1xnQ12Yz9Q7zxfl4fRweZCy
-	 j2Oya54lFNGvGLRvps8Waz3kORcLAy/5N3v57nQIYiFh+nLE3G3vKyw0P9o3rS3/pP
-	 sJtLGJYFrVyXzW4XD/9P4yrQiZBEKjHG3x1XcY/6cXMFaRwHF81uBRBLB5l6jKax7m
-	 GmQzovmKQNB5w==
-Message-ID: <8ba0a5d5-ffaf-4523-8bd8-93f1ff8d2c5a@kernel.org>
-Date: Wed, 7 May 2025 09:03:07 +0200
+	b=mzXqMD96LP82qOo5jXF0xoWk9wzOJzJKrdkPiFAOwp/omrGXW9w26oK37hHHjkEy1
+	 9cZm0M5XnBa2sLRdVHlaNTUfsldkQwUG/SmTH85xnB6f+bsvthv42MaTdTbWw+/S2B
+	 ohSS38KGAwtWeogD7ooLZEOCF3nDeAYrXPBbtI58KifEQVp5XPskXbWdoj3c3RR5UU
+	 V9s11nf1KDcz4L+Fw6t+FDW30JxlMrv3atd7vbAr8I47IB+MtfcwjwPW/0R4sfle5I
+	 y0QkWtxfa3x0i/bsAE+sInGIL/YH/Aw6YN8QGIRNv6xsFBGb3TXF+dTvnaBbuJm1VK
+	 Hr/lWIxRQ+1Ig==
+Message-ID: <2657aaa5-9a7e-4592-b044-b4f0d2c4659b@kernel.org>
+Date: Wed, 7 May 2025 09:03:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] dt-bindings: arm: qcom: Add bindings for QCS9100M SOM
+Subject: Re: [PATCH 8/8] arm64: dts: qcom: qcs9100: Introduce QCS9100M SOM
 To: Wasim Nazir <quic_wasimn@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -60,7 +60,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, netdev@vger.kernel.org, kernel@quicinc.com,
  kernel@oss.qualcomm.com
 References: <20250507065116.353114-1-quic_wasimn@quicinc.com>
- <20250507065116.353114-8-quic_wasimn@quicinc.com>
+ <20250507065116.353114-9-quic_wasimn@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,23 +106,29 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250507065116.353114-8-quic_wasimn@quicinc.com>
+In-Reply-To: <20250507065116.353114-9-quic_wasimn@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 07/05/2025 08:51, Wasim Nazir wrote:
-> QCS9100 SOC is compatible Industrial-IOT grade variant of SA8775p SOC.
-> 
-> Add devicetree bindings for QCS9100M SOM which is based on qcs9100 SOC.
+> diff --git a/arch/arm64/boot/dts/qcom/qcs9100-som.dtsi b/arch/arm64/boot/dts/qcom/qcs9100-som.dtsi
+> new file mode 100644
+> index 000000000000..92adebb2e18f
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qcs9100-som.dtsi
+> @@ -0,0 +1,9 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sa8775p.dtsi"
+> +#include "sa8775p-pmics.dtsi"
 
-Compatible says QCS9100, not QCS9100M.
-
-> QCS9100M SOM have qcs9100 SOC, PMICs and DDR along with memory-map
-> updates and it is stacked on ride-r3 board.
-
-I do not see any point of this patch. You just change existing bindings
-based on what? New product? But this was already released, so how can
-the hardware change?
+Again pointless file - it brings no benefits, no contents, just making
+everything more complicated to follow, more includes and indirections.
 
 Best regards,
 Krzysztof
