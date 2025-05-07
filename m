@@ -1,206 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-57162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FED9AAE28B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 16:21:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A6A5AAE2B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 16:25:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1504218968D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 14:19:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EBF3B17A777
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 14:20:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07CA928A70D;
-	Wed,  7 May 2025 14:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BE0626D4FC;
+	Wed,  7 May 2025 14:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="adYesO7D"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PxLuGw4i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8162628A3E4;
-	Wed,  7 May 2025 14:13:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9571519B4
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 May 2025 14:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746627207; cv=none; b=nROzYsvtxVTGYRvrKaPjKC3xeuHgcrNtEkrecUXV5ndw6d2bjvLJZI7/BFckBxPyoGlmSFFSKpghe1T05BNmxrhNzozQPc0nG2fTciIyA3X/5ORREMPutVCUctM87jTGqMHMSdRWBtRQLYXnOjZ0rnO9V3COrXebmi5tHBRKg1A=
+	t=1746627254; cv=none; b=FndXs8fALzYtzBDBzqcQ77slXmg7uoziWowE2eyy6QzIY+jW/+mBSBtLJAwL5QdygwAaBzJ1CLvCkB4TD3YgeRf4SHNs4vAaVUpE7KuUxh8qCfhz7rT477VFDrTgf1royD8cZ9bsZEWeSNBUiPWYfVDDF/wGKeqQa0iakOXbic0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746627207; c=relaxed/simple;
-	bh=wRvDEyGE8SyLT4eXm8S/vOTb1xNAByubplY2t+C38K8=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kLbr/8CNpTmpgE7XJGmfeedCJyH6E/En/6Gb7bgFl6PBJMC+UAasFlJ6vBSlWa1LG9dAQ6fN0TD0gcZJbSQBGA1jvvH6PNaygFZfCspTOISmZEJVHJCVNOJc0uPyxogvvZTgOvW1T6YxoHgNmllE9SrtigE6skOVb4/dhne5rRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=adYesO7D; arc=none smtp.client-ip=217.70.183.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id A7A8943A17;
-	Wed,  7 May 2025 14:13:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1746627197;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZUkZFmqLpaya2SvixZMFXiK5vMoC/WgZVFpr9qlTBnY=;
-	b=adYesO7D1P7ynosW29lwbsjTgJFaCmVyHEon+flnFOa0BvpYbgiRnF+Xmpud0uAtagWCKR
-	3oskQarIGt0LOBcEzJnasoloDFldQLXTPGfiIhzFPFxQ44Bv9OhNB8OfgtRyxM7+9P43cR
-	EkU5M3wIV4eMfygkH8Z49lCMg02BGC3HtUgDaN8q7xI8pIpFMVELZovDj9NLGU/agK2QHw
-	g3CUt2Har990IGmx7V543phmv8Wv4XvzKKsAS8THOhfgcNBUADs19379Lxd8e7/I43vGMD
-	r3WqKePwg6IikvuHOAtVe8FiAWFIlf69nPFcMS8m4pDVEx1m0DuHF1UEztkH0g==
-Date: Wed, 7 May 2025 16:13:11 +0200
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-To: Liu Ying <victor.liu@nxp.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
- <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie
- <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Andrzej Hajda
- <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Laurent Pinchart
- <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>,
- Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki
- <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
- <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Douglas Anderson
- <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, Krzysztof
- Kozlowski <krzk@kernel.org>, Anusha Srivatsa <asrivats@redhat.com>, Paul
- Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, Hui
- Pu <Hui.Pu@gehealthcare.com>, Thomas Petazzoni
- <thomas.petazzoni@bootlin.com>, dri-devel@lists.freedesktop.org,
- asahi@lists.linux.dev, linux-kernel@vger.kernel.org,
- chrome-platform@lists.linux.dev, imx@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH v2 30/34] drm/bridge: imx8qxp-pixel-combiner: convert to
- devm_drm_bridge_alloc() API
-Message-ID: <20250507161311.6e434f2f@booty>
-In-Reply-To: <430d497d-45a1-436d-91fd-635854f80c9f@nxp.com>
-References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
-	<20250424-drm-bridge-convert-to-alloc-api-v2-30-8f91a404d86b@bootlin.com>
-	<553d62ed-976a-4e17-9678-cdc3d40ce4a7@nxp.com>
-	<20250430112944.1b39caab@booty>
-	<f71d18d2-4271-4bb9-b54f-0e5a585778f3@nxp.com>
-	<20250506224720.5cbcf3e1@booty>
-	<a1abf31a-7a4a-4f8d-bf48-6b826aa01197@nxp.com>
-	<20250507091244.32865a71@booty>
-	<430d497d-45a1-436d-91fd-635854f80c9f@nxp.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1746627254; c=relaxed/simple;
+	bh=zjA31ECKWrYkvp6T7RqaV1DJ7jIFc604unho5HpCUh8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TW8mJAYGRyglG8SCRJkjaCfd287DSXlUiPYkBU0Qjrp3HdOyiMk/kEOqaXmlkA71qy+jlfvGXKIIivWfGBo9WresWZccHkOMy6tLSX09GgAXC03Cwwqs8PrEtX5eDCUw8aRbmpIYuIDncgWvLG0KOLPeT1hAp9j9KtLUqH0VV28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PxLuGw4i; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 547BeF2x015210
+	for <linux-arm-msm@vger.kernel.org>; Wed, 7 May 2025 14:14:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	IGluIw6NWJNNfPUxDeMzbPFoQEkugMbs6IrEIEEdFwI=; b=PxLuGw4id89E1aml
+	6gV5ozGPCswlL9yuIGLr2dBSTp8mzQLJuaK670bAK7VHXfylNPmHlz/kmJkNEW8d
+	VoXugREKv37J+sWjuir7/XdG7+eICBODoQfkBXVjC6Q3Rq2OFr8htq9nSaFJRq/L
+	DL4WHqEb4ZqE5DqRG6PbXAue7XNJuHwOngGQ8jTd6PiXqvBgfebIWRXYJR7G9uFJ
+	Oy+XvCGeY5DO2zLFBQqbwpAWh/TJh6A1Dow5MtaM2RcuBRznoUqwrYNiO/dq1KTg
+	LeMoLAATRbcp5S7ynDqzPQ56aL9fZ/OBAY3iif2IAsfj+MUlUNouBhxODjnJ1RZD
+	L5pEig==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46f5u462qw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 07 May 2025 14:14:11 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-30ab5d34fdbso802803a91.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 May 2025 07:14:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746627250; x=1747232050;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IGluIw6NWJNNfPUxDeMzbPFoQEkugMbs6IrEIEEdFwI=;
+        b=mgtRess7hkE/aOakImexJ6w9TZny8wtPlCuTFSXFttjf0GFw4GnW3h1zXiiGK9yCYA
+         Ns2tE00Y86GWw7cEqf7HQ304mfeKVL2XmtSeRZvR378Bgp3WWEzIdfzo4SdcpeFSLLAd
+         ZsOTBfE3NJfk4mQ4AZDjyoGtlJ6ZPgJvaoZc4UGH8Gw+Ex5POkraerA2PUdzkWDBVRDW
+         dwPOPUk915lEWj75RJDGKN2ziDupEcazqCtGg9zAqGopO86v+Oh6qRjWvhYp4fxRwHcX
+         ITx6QdXrCKpiQhyvy9iMQWCRSR0vuiBWtzkXFW1n2Rg19qYyvPX+ydQsQKRgPb7Pkc7Z
+         ZKCA==
+X-Forwarded-Encrypted: i=1; AJvYcCWlZML7iglHhpEfb2aOR9t0M8Z2E4hdfnQYKjFvr5GcUZeKkwtghQeACA/yBornETUhQYTFSJX5TMuOU36C@vger.kernel.org
+X-Gm-Message-State: AOJu0YwqjuY9SlRVGpBhia1i5UJCPO/ghBINl6g2o4xiiO22Ongf28u2
+	wmyr9xYkGi1CCcIY4WGW/d9CMP3OCWIUqbsyU7nwXmhQqhXBoLbhECnMD/6tO+Bk5dALJQiCN4i
+	XqltbS72/vMLmGRHn0E9T4PSnlxLNQGZgXdLqpTxpbtvY9/KNq9fyd9zU6JalOlTp
+X-Gm-Gg: ASbGnctql8FhhOgvKKHKJjBX4Lbcr/ar0GcuTn6a84eGMDWyn9vvzTAucpdiefuYA23
+	jrD603+aYh5n3zWChAGxmg0BHzgBFcxn2z3x8+oPll7gyiqqUidDbIc+fnSqQmk7fxmVoXyu3Ma
+	4kE9jj+ClLsqCqELdbvHlqYR6GePi0afrFgg7z56TsRT0be16VSw62D8bcLYhxyps0o+TKAK6JH
+	Oeg9leZ00sU4Y1/4EsE2mR/LbIJTGcNFt1kMfDGunQKfc295Nji87sUO2tF3JsGzceSe+pvdo5P
+	LYzoF2DDN1pulZic/rWcHKZi/8OhCooDgSld+bjkncBWKFMSuJXEny5F9Yfl2Qwo80k=
+X-Received: by 2002:a17:90b:3848:b0:2fc:a3b7:108e with SMTP id 98e67ed59e1d1-30aac1857c5mr5519668a91.4.1746627249718;
+        Wed, 07 May 2025 07:14:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG1V1DpH2j5TQAnKSXjEhB0Z9ZTZtIJQ3RIw8lPQXZTbkyLn3CbGTR63lRfuDo8fl3HrCpE0A==
+X-Received: by 2002:a17:90b:3848:b0:2fc:a3b7:108e with SMTP id 98e67ed59e1d1-30aac1857c5mr5519620a91.4.1746627249268;
+        Wed, 07 May 2025 07:14:09 -0700 (PDT)
+Received: from [10.227.110.203] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30ad4fe2248sm156879a91.35.2025.05.07.07.14.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 May 2025 07:14:08 -0700 (PDT)
+Message-ID: <608a5b08-a5c7-46a4-adf0-7106e4d82250@oss.qualcomm.com>
+Date: Wed, 7 May 2025 07:14:06 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] bus: mhi: host: don't free bhie tables during
+ suspend/hibernation
+To: Muhammad Usama Anjum <usama.anjum@collabora.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+        Youssef Samir <quic_yabdulra@quicinc.com>,
+        Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+        Kunwu Chan <chentao@kylinos.cn>,
+        Troy Hanson <quic_thanson@quicinc.com>,
+        "Dr. David Alan Gilbert" <linux@treblig.org>
+Cc: kernel@collabora.com, sebastian.reichel@collabora.com,
+        Carl Vanderlip <quic_carlv@quicinc.com>, Alex Elder <elder@kernel.org>,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
+        ath11k@lists.infradead.org, ath12k@lists.infradead.org
+References: <20250506144941.2715345-1-usama.anjum@collabora.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20250506144941.2715345-1-usama.anjum@collabora.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejtdejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeertdertddvnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnheptdeljeejuddvudetffdtudelfedugfduledtueffuedufefgudegkeegtdeihedunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpsghoohhtlhhinhdrtghomhenucfkphepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvpdhhvghlohepsghoohhthidpmhgrihhlfhhrohhmpehluhgtrgdrtggvrhgvshholhhisegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeefledprhgtphhtthhopehvihgtthhorhdrlhhiuhesnhigphdrtghomhdprhgtphhtthhopehmrggrrhhtvghnrdhlrghnkhhhohhrshhtsehlihhnuhigrdhinhhtvghlrdgtohhmpdhrtghpthhto
- hepmhhrihhprghrugeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthiiihhmmhgvrhhmrghnnhesshhushgvrdguvgdprhgtphhtthhopegrihhrlhhivggusehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhimhhonhgrsehffhiflhhlrdgthhdprhgtphhtthhopegrnhgurhiivghjrdhhrghjuggrsehinhhtvghlrdgtohhmpdhrtghpthhtohepnhgvihhlrdgrrhhmshhtrhhonhhgsehlihhnrghrohdrohhrgh
-X-GND-Sasl: luca.ceresoli@bootlin.com
+X-Authority-Analysis: v=2.4 cv=KcfSsRYD c=1 sm=1 tr=0 ts=681b6ab3 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=QX4gbG5DAAAA:8 a=EUspDBNiAAAA:8
+ a=4n9vdfglUG3wgorB42cA:9 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+ a=AbAUZ8qAyYyZVLSsDulk:22
+X-Proofpoint-GUID: M3fbUlv5aFSisr8IJSFo2xVsQYE4kiQA
+X-Proofpoint-ORIG-GUID: M3fbUlv5aFSisr8IJSFo2xVsQYE4kiQA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDEzNCBTYWx0ZWRfX6A2Hq8vVXX1/
+ RbTVNLrOU7hKSvXGzfoWut1KS2F7QRQ8W2ZPaoWhbTK7heIjmPtqxNojDA4uKKLCdiDtEmekIEt
+ YiW4W29VtzFNuuyd4o+id3QPM4x7fH8A/nnj1EGfuLmUG4KWk2VwD17FIoOE24p3UUTlio8EHfK
+ vJ/xNv5mrHg5UOaEZqOTrtvRFTq4ugJ/RRCvPspMuK1O/b8ItdH1Gr+RpaUVl8G/a4EBU4YHsdH
+ m3koL3GoweWIvJf15MEtc2SOFw1AkPcZnaqdNrCam8kH9eK4HP7Cc4MK/MwLOpCd2sqryz1us8R
+ 79njHb/QYSTPlgTv8IEdSxKS8ioCGmpiMGSbFV1dBuVu2pZQpXTP0wfo2B2aEiakPxsNnP+YAZP
+ ydnTMdh4xjdVJ55hwY1ZRREYvWk5ouljhUMjYJKaYvOcEmEHXRZrYS9SUN7yCxiIjLglXwrH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-07_04,2025-05-06_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 suspectscore=0 bulkscore=0 mlxlogscore=999
+ phishscore=0 impostorscore=0 priorityscore=1501 malwarescore=0 adultscore=0
+ clxscore=1015 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505070134
 
-Hello Liu,
-
-On Wed, 7 May 2025 18:16:28 +0800
-Liu Ying <victor.liu@nxp.com> wrote:
-
-[...]
-
-> >>>> After looking into this patch and patch 31(though I've already provided my A-b)
-> >>>> more closely, I think the imx8qxp_pc and imx8{qm,qxp}_ldb main structures
-> >>>> should have the same life time with the embedded DRM bridges, because for
-> >>>> example the clk_apb clock in struct imx8qxp_pc would be accessed by the
-> >>>> imx8qxp_pc_bridge_mode_set DRM bridge callback.  But, IIUC, your patches extend
-> >>>> the life time for the embedded channel/bridge structures only, but not for the
-> >>>> main structures.  What do you think ?    
-> >>>
-> >>> I see you concern, but I'm sure the change I'm introducing is not
-> >>> creating the problem you are concerned about.
-> >>>
-> >>> The key aspect is that my patch is merely changing the lifetime of the
-> >>> _allocation_ of the drm_bridge, not its usage. On drm_bridge_remove()
-> >>> the bridge is removed from its encoder chain and it is completely not
-> >>> reachable, both before and after my patch. With my patch it is not
-> >>> freed immediately, but it's just a piece of "wasted" memory that is
-> >>> still allocated until elsewhere in the kernel there are pointers to it,
-> >>> to avoid use-after-free.
-> >>>
-> >>> With this explanation, do you think my patch is correct (after fixing
-> >>> the bug we already discussed of course)?    
-> >>
-> >> I tend to say your patch is not correct because we'll eventually make sure
-> >> that removing a bridge module is safe when doing atomic commit,  
-> > 
-> > I think your sentence can be rephrased as "your patch is correct with
-> > the current code base where bridges are not (yet) removable, but there
-> > will be a problem when they start to actually be removable".
-> > 
-> > Is my understanding correct? If it is, I agree on that sentence.  
+On 5/6/2025 7:49 AM, Muhammad Usama Anjum wrote:
+> Fix dma_direct_alloc() failure at resume time during bhie_table
+> allocation because of memory pressure. There is a report where at
+> resume time, the memory from the dma doesn't get allocated and MHI
+> fails to re-initialize.
 > 
-> Nope, I meant your patch should align the life times of the main structures
-> and the DRM bridges, for the sake of the kinda long term goal - remove bridge
-> driver module safely when doing atomic commit.
-
-Again, I don't think there is any bug introduced by this patch (once
-the NULL ptr deref bug we already discussed is fixed). No bridge can be
-removed as of now, with or without this patch.
-
-You concern that this patch would make things more complex in the
-future, when bridges will actually become removable and they could be
-during atomic updates. But about this...
-
-> > The work to have removable bridges is massive and non-trivial, so it
-> > will need to be tackled in steps. The grand plan [0] is:
-> > 
-> >  1. add refcounting to DRM bridges (struct drm_bridge)
-> >  2. handle gracefully atomic updates during bridge removal
-> >  3. avoid DSI host drivers to have dangling pointers to DSI devices 
-> >  4. finish the hotplug bridge work, removing the "always-disconnected"
-> >     connector, moving code to the core and potentially removing the
-> >     hotplug-bridge itself (this needs to be clarified as points 1-3 are
-> >     developed)  
+> To fix it, don't free the memory at power down during suspend /
+> hibernation. Instead, use the same allocated memory again after every
+> resume / hibernation. This patch has been tested with resume and
+> hibernation both.
 > 
-> I'm busy with internal things these days and cannot look into the grand
-> plan and steps closely, sorry about that.
-
-...I'll wait until you have time to look into that more closely. There
-is just no way to understand this whole topic without some dedicated
-attention, which takes time unavoidably.
-
-In the meanwhile I am going to send v3 soon with the known bug fixed,
-so the best version is available to continue this discussion.
-
-> > I am at step 1 right now. Removal during atomic updates is step 2,
-> > ideas about how to implement that are already being discussed [1],
-> > there's a practical plan proposed by Maxime with the goal of reaching
-> > removable bridges without breaking things along the path.
-> > 
-> > [0] https://lore.kernel.org/lkml/20250206-hotplug-drm-bridge-v6-0-9d6f2c9c3058@bootlin.com/
-> > [1] https://lore.kernel.org/all/20250106-vigorous-talented-viper-fa49d9@houat/
-> >   
-> >> which means
-> >> the main structures should have the same life time with the DRM bridges.  
-> > 
-> > The word "lifetime" mean two things for bridges:
-> > 
-> >  * the time span during which memory is allocated for a struct
-> >    drm_bridge (along with the embedding struct)  
+> The rddm is of constant size for a given hardware. While the fbc_image
+> size depends on the firmware. If the firmware changes, we'll free and
+> allocate new memory for it.
 > 
-> Note that with your patch set the imx8*-ldb drivers and this bridge driver
-> won't allocate the DRM bridge along with the embedding struct.
+> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+> 
+> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-By "embedding struct" I mean the struct imx8qxp_pc_channel that embeds
-the struct drm_bridge. Sorry, I realize my wording was ambiguous.
+Mani, if this looks ok to you I assume you'll take this through your MHI tree.
 
-> This makes
-> me worry, because maybe these drivers are the only "special" ones in this
-> patch set and I don't want them to be "special" after your patch set is
-> applied.
+Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-Luca
-
--- 
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
 
