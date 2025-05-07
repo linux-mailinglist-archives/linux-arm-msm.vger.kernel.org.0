@@ -1,107 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-57046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B2C9AAD504
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 07:17:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1969AAD510
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 07:18:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98CC3189D46B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 05:17:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7B39F468B0E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 05:18:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3DD927726;
-	Wed,  7 May 2025 05:17:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 833EA1E0B91;
+	Wed,  7 May 2025 05:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="seliaUvN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I9T1sA47"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723843398A;
-	Wed,  7 May 2025 05:17:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CA91D5CFB;
+	Wed,  7 May 2025 05:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746595031; cv=none; b=ZfJVPuQ70hFp1KhutpeuHpYFNieX22OdczHBZ3U8/UATRao5/ZfhU/VNOzcMFii+1EvSxGaLOfLb2CFtC/+f8muKXeaLNtnHZrbTZRy7iUrB5bwnW6ZEkiQt24gp5VBffAdYkrUk2OKlYtxjanfoSyvBOmPAlrDSbnsKZSbdVCM=
+	t=1746595094; cv=none; b=jl3LykS7gP1LnEvgzMV8OJ/my4WzMolzTQ9yEuDyPu54A1BQNKx8CSOVkTZzfwJHDhyIP9g66yuhowCcuMlJmUGRBCUT3qGqYfRBQYjUF2GzVFKmcD0HOwi/kj/JTxRmiWh8dBKxuDN75DUBBBrHiMXaqHezABvegTKlaaxvFhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746595031; c=relaxed/simple;
-	bh=JG4V4RAp0WdhDOtz+o//0q+asbkWJORcl/Rb+VWLtiA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DpojVPSHlkElxb0+LQw9U+SjcRab/rVz2aiHVTP5Yd5NRPn1TJ1kV5inOK/3jNJ094Bka1RlaBCCbYfVK286h39Z6a4DT5HBkl6vlIm8US0DR4tRqrKrKCTPaDJRWWxn/GjfBnOGqTb7qstvTmS/p4KrWEzW/m1KS53gOK8ISC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=seliaUvN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF4DC4CEE7;
-	Wed,  7 May 2025 05:17:10 +0000 (UTC)
+	s=arc-20240116; t=1746595094; c=relaxed/simple;
+	bh=VqLzePtK1zk4IDdSyMT4jeybzDjh3hrth6xldiD545s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=igflM85TT4wEWbUPVoE2i550ha/QdNReaU65Hjq1DojeEA4l054DVFbeTUyLb+CbxlWxCYDjB0cFrSos9MarGIkmFuVj1iv3VOuCTc7rFywMZYXjK0Ab3a1RTLOJQuMpPVGKtX5qDJZQXW9T/GfInI6AW/1NtnDEau7SBLHfwmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I9T1sA47; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C1FC4CEE9;
+	Wed,  7 May 2025 05:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746595030;
-	bh=JG4V4RAp0WdhDOtz+o//0q+asbkWJORcl/Rb+VWLtiA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=seliaUvN9Z007kdddm7xTLEOgyINOOv5PHzeJ1A04mDMv9KcSGhL9W1j4CJfaVyuk
-	 yIgCpXyI+jdJMIS7xS/h27FTPrwnUNtLEMxQQ7VLP7M/roZaBmzHE/MAlQKtlzAQta
-	 FVuOPA11Ryf8FI2QigV31gIN9DSd4gzMD3erXFmyylYdnu76n0Ol6WwqL62FQIBqhm
-	 FEh9wyGD2SEqmXPZqx2dXeBKGmlraqMWjx4aPVPeL8sThmOGR+R4xbt0M4PkCUFtCi
-	 VieIIfBB6A4Yjq65pj1qXPumjar8aE84zLC8EWJ6vkBvEATFpaZisHq5AfGKuUmtE8
-	 ZhD2davJROOzg==
-Date: Wed, 7 May 2025 07:17:08 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, dmitry.baryshkov@linaro.org, 
-	neil.armstrong@linaro.org, abel.vesa@linaro.org, manivannan.sadhasivam@linaro.org, 
-	lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com, andersson@kernel.org, 
-	konradybcio@kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	quic_qianyu@quicinc.com, quic_krichai@quicinc.com, quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v4 2/5] dt-bindings: PCI: qcom: Document the QCS615 PCIe
- Controller
-Message-ID: <20250507-astute-realistic-ferret-bcdfce@kuoka>
-References: <20250507031559.4085159-1-quic_ziyuzhan@quicinc.com>
- <20250507031559.4085159-3-quic_ziyuzhan@quicinc.com>
+	s=k20201202; t=1746595094;
+	bh=VqLzePtK1zk4IDdSyMT4jeybzDjh3hrth6xldiD545s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=I9T1sA47NLqQp0xriRNa5TTyUnyd5wTkULdRLnZCsPAyljyuyBEf9miQBaGy7XaHp
+	 QYrrxYFl0bg46dYoT6yQbUkHnA0Seb9FCPAfsaZL1aZmpY8fpL0qi2+69xWRwCVM4S
+	 3XyMXguxkycbxWjIkHDCVHkEMTtDz3mIIwT+a0TFqaH/ag/xKF7lK+TKRhxxRos2jt
+	 QUl1IBIc6LG09aOIBgYknjTqZZRPMOUyOiEOejQMLHISjPxuLB9b2eiNRbFJdYmpuE
+	 Hq2w9Ag529uFJTDld1JjgybLdkOnep9hlyOmsuE3Ue5bvDMhTd59eIaa9OIyt6xa+9
+	 jR4OIWFn1nuWg==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Abel Vesa <abel.vesa@linaro.org>
+Cc: Johan Hovold <johan@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/2] arm64: dts: x1e001de-devkit: USB retimers related fixes
+Date: Tue,  6 May 2025 22:18:04 -0700
+Message-ID: <174659505820.5380.18331626591249839304.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250422-x1e001de-devkit-dts-fix-retimer-gpios-v2-0-0129c4f2b6d7@linaro.org>
+References: <20250422-x1e001de-devkit-dts-fix-retimer-gpios-v2-0-0129c4f2b6d7@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250507031559.4085159-3-quic_ziyuzhan@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 07, 2025 at 11:15:56AM GMT, Ziyue Zhang wrote:
-> From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+
+On Tue, 22 Apr 2025 14:25:21 +0300, Abel Vesa wrote:
+> These fixes align all the USB retimer related nodes on the Devkit with the
+> CRD and T14s.
 > 
-> Add dedicated schema for the PCIe controllers found on QCS615.
-> Due to qcs615's clock-names do not match any of the existing
-> dt-bindings, a new compatible for qcs615 is needed.
+> This patchset is based on Johan's:
+> https://lore.kernel.org/all/20250318074907.13903-1-johan+linaro@kernel.org/
+> 
+> 
+> [...]
 
-Other bindings for QCS615 were not finished, so I have doubts this is
-done as well. Send your bindings once you finish them.
+Applied, thanks!
 
-...
-
-> +properties:
-> +  compatible:
-> +    const: qcom,qcs615-pcie
-> +
-> +  reg:
-> +    minItems: 6
-> +    maxItems: 6
-> +
-> +  reg-names:
-> +    items:
-> +      - const: parf # Qualcomm specific registers
-> +      - const: dbi # DesignWare PCIe registers
-> +      - const: elbi # External local bus interface registers
-> +      - const: atu # ATU address space
-> +      - const: config # PCIe configuration space
-> +      - const: mhi # MHI registers
-> +
-> +  clocks:
-> +    minItems: 5
-
-Drop or use correct value - 6. I don't understand why this changed and
-nothing in changelog explains this.
+[1/2] arm64: dts: qcom: x1e001de-devkit: Describe USB retimers resets pin configs
+      commit: f76fdcd2550991c854a698a9f881b1579455fc0a
+[2/2] arm64: dts: qcom: x1e001de-devkit: Fix pin config for USB0 retimer vregs
+      commit: 635d0c8edf26994dc1dcbc09add9423aa61869b0
 
 Best regards,
-Krzysztof
-
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
