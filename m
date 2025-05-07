@@ -1,174 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-57121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E1D7AADA18
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 10:26:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB1DDAADA20
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 10:27:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 878454E8529
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 08:26:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E2F3D981629
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 08:27:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 848E5221D90;
-	Wed,  7 May 2025 08:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 116F0221713;
+	Wed,  7 May 2025 08:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sLQCKWOE"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="JAIGVEbo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E74221714;
-	Wed,  7 May 2025 08:25:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8DC221708
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 May 2025 08:27:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746606360; cv=none; b=GI2/CaLm0HwTPQYObv5QDJD+F1hlQtTaj+YARiG/Uube3RY2fPM8cPTMVcMU8BzrALpeBJ5GO1aJfa6mlg0xrwJi3zzqqDMH4w86WKHezXYpXqnTJFrwKkenQciDXk6j3EgLPe3Tw4k3rkiB92mVEBjGYOp68xdzkPUE8y+JFz4=
+	t=1746606468; cv=none; b=gkOQTO42PNnm8aH89n/qt4lbb8nXMS52tydbHzttAE86AMMk1A2pvj0F6TJuztz2PRt+/UVX/h8QiCM6iN4SeyxKRIHIkUZLes3Sf82d/lQ6sxSo2ZQvsV0YQyekJmPGHffqqwhaDtROpVZlWtQ0VFQmn2JzXPpKAOnVDsP+F28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746606360; c=relaxed/simple;
-	bh=NNekwt0jL97gDY8/IkIMxdxKqceQcOvhTDJ6jjqvosg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y1dSFGYy9Qpy82WamysIHjZphXuenS5Z3yRn09sTB7kVs/XjYt+Nw/DQ4UOKQFj84Ovxr0zac3I+DnpsC/LHNopfCohKCC32d3IT4pPCeQhX75tV3PrsNlPh1UbnbEv/Ikawsgc2axIWD8S8y1YT+yXzLY5ekSr3elrLFGwh4gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sLQCKWOE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B76BC4CEEE;
-	Wed,  7 May 2025 08:25:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746606359;
-	bh=NNekwt0jL97gDY8/IkIMxdxKqceQcOvhTDJ6jjqvosg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=sLQCKWOEo0ZeQ4hHPMlBuyHB0tQKY47E4cbgbUPw8UARjsJjNrHY+9bb/tx5NT2E7
-	 2gb4x/v1fTTh+b5o3aPmmaO/OAsOmdgDE7SbN4uxcoLgvgu+5GAZVF7uqsJWE97Ml6
-	 hZx0mPX0IVzTRlXRLJIiMVG6KsyDJbg/rb39A5h5LefUpgazYNCUIb9jlNCIYeQTH4
-	 52InMMguMXKb1pm6/kokONhZdYIb3382X87AZfKDP1UAOK0OLygJRvwwjU/EHsgyyk
-	 BDpUr/e08MhAJsbp43oVzC48eZMcQrZEFb4IVn/Lcgh1Zj+i4uplSWxAPPolb+SnJF
-	 BHCi58C0XLtfA==
-Message-ID: <01b06e36-823c-4f28-8db5-dc0ee0b4c063@kernel.org>
-Date: Wed, 7 May 2025 10:25:52 +0200
+	s=arc-20240116; t=1746606468; c=relaxed/simple;
+	bh=ZQ6pPahqX49L4FoIRBhZ0n9rPl6wHTixR5GsHVSUubk=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=EK5kE2feOWyZIDBA/zv89iCDgb+gadDdDLSrc88Ok/JnTYHRovxYtwefDpFmPSX9NNlc881+ciXYpUx30bHowvClXyP9OnSMKIcdbAgdAXSudkhfIMnS17M/4eOWWyDhyTHUbW2pUhMU4cJYrID0Ag1VOcP2RR9PJiaUq9RiBzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=JAIGVEbo; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-ac2a81e41e3so1225605766b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 May 2025 01:27:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1746606464; x=1747211264; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tCYViyp5kWLfzXdJOLLht1vSVoT9lkOIaKumywG/AIc=;
+        b=JAIGVEbob9+FV/NFODJBl3mxVj1WGC05bu20pUQl30dx5mtlyc3cOvB6GE+zTy+1KO
+         aTUwPpOEtQi7Hw9fz7dIAd6wVDy29K9JK1NuzSPBMJItTVdW1R5VhnGAONOW81L86glK
+         HlblZS4CjHFEHNMv6mqj74x6Ln6AHMCY4pkNm3wwSc75siMoW20zUIhFGF6noP4jRGj3
+         Am67JbbSU0x8vQYflOn2XC7pzVBtiMWwh7hlJlP3aaF+AnvLD8ewB2532k2x/kRYjb8d
+         OweG6QL5pm1e/SdqjEGGpbSga6gJdycD6LAM8fXyZ/qcmQpqcWWw5YqH7iO6l8BcoU9+
+         9IcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746606464; x=1747211264;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=tCYViyp5kWLfzXdJOLLht1vSVoT9lkOIaKumywG/AIc=;
+        b=CHAODFNsCiQvGelXy5yZFGHAXLb8A1hzZItvA2DM9qMpkEWMKqlUYP7m7hckSBP42E
+         D5IryTgaZxO7BXQCKUlyNbvSdhzAbRTlMlzgSqaZLPtEc4mt0RTyHwSh7YMOj2Ge/J9f
+         EwFBx2KPrvAX4JOurWDFccmH8QyS/jBLve1MvPm94/t7oYM3HZgD78C5iCgHuG3ZTC36
+         /apI/YAKwSlKYWGwl9tQ+eiOWPPbsgtFJbG+B7Seax1Q+wR4y8PpgoIt5be1AywSvJ94
+         4lOsbc/GZNtKdpyNTIamVy5oOJkaUVqpzQ673OCwia8hXZw2pmSo+fr3+tJVXrlJZwbG
+         Sypw==
+X-Gm-Message-State: AOJu0YxzlfqR6MYJ6xUoC2/XOWY/+knXIuejp89rZRKcX7s2Pj+JYl1X
+	sPFyU1Ls3gXqtqVa2L6GUR4GLtDDzxUGGLG+8+6CPre3WhWNMC2GreYSWj4FFpE=
+X-Gm-Gg: ASbGncv6Re8Q0zBYNKjwPzBiRmImeyG1NxFFw3UMpcGQ9Cp50QX2hTFyMWuG+jf3un+
+	ouILTsN/5F3f/yTYUpGDsWYDevRwNR9ZxCpBQyPoELIm5GPSKYGvH+arX0xB7YjzAC06RZV4dvQ
+	DaCa7/rKIY6V3tafvJMKxS3Iu3EhtI3FzO4/jTTLb5X/ZthLkR2R5CxA5DlsFyhQrUPWQqhiOUP
+	mWv4LhZqCCFJhKfJRX1kcAd+n76FLZKOljWi+j/rGd+oGl7pd9rZhoRxPIaZpx3ANtpqLMpMEb8
+	cw876dZ83SUoCmyrzhcndFmesHwIvknDr0NC9HSuf9nD1h7WnQjVNnR2XcTPquOewp5MGMbYNWA
+	L/roev004jA3jdne0+4dV
+X-Google-Smtp-Source: AGHT+IFWVHMkGbVmG1uAPmLK3vq0y13EMcQN92l07tgAXfsVhbprvVYbhymi8zGzYG2gLtYTRHhcDg==
+X-Received: by 2002:a17:907:7d91:b0:acb:1078:9f79 with SMTP id a640c23a62f3a-ad1e8befd21mr271452466b.18.1746606464495;
+        Wed, 07 May 2025 01:27:44 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad1894c033asm873440066b.91.2025.05.07.01.27.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 May 2025 01:27:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/6] dt-bindings: PCI: qcom,pcie-sa8775p: document
- qcs8300
-To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org,
- abel.vesa@linaro.org, manivannan.sadhasivam@linaro.org,
- lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
- andersson@kernel.org, konradybcio@kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- quic_qianyu@quicinc.com, quic_krichai@quicinc.com, quic_vbadigan@quicinc.com
-References: <20250507031019.4080541-1-quic_ziyuzhan@quicinc.com>
- <20250507031019.4080541-3-quic_ziyuzhan@quicinc.com>
- <20250507-quixotic-handsome-wallaby-4560e3@kuoka>
- <8fef4573-0527-44d8-a481-f3271d9ffa33@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <8fef4573-0527-44d8-a481-f3271d9ffa33@quicinc.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Wed, 07 May 2025 10:27:43 +0200
+Message-Id: <D9PSBGJ3COBM.2ZFBUDFGL4AJC@fairphone.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>
+Subject: Re: [PATCH v2 0/3] Bug fixes for UFS multi-frequency scaling on
+ Qcom platform
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Ziqi Chen" <quic_ziqichen@quicinc.com>, <quic_cang@quicinc.com>,
+ <bvanassche@acm.org>, <mani@kernel.org>, <beanhuo@micron.com>,
+ <avri.altman@wdc.com>, <junwoo80.lee@samsung.com>,
+ <martin.petersen@oracle.com>, <quic_nguyenb@quicinc.com>,
+ <quic_nitirawa@quicinc.com>, <quic_rampraka@quicinc.com>,
+ <neil.armstrong@linaro.org>, <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <20250507074415.2451940-1-quic_ziqichen@quicinc.com>
+In-Reply-To: <20250507074415.2451940-1-quic_ziqichen@quicinc.com>
 
-On 07/05/2025 10:19, Ziyue Zhang wrote:
-> 
-> On 5/7/2025 1:10 PM, Krzysztof Kozlowski wrote:
->> On Wed, May 07, 2025 at 11:10:15AM GMT, Ziyue Zhang wrote:
->>> Add compatible for qcs8300 platform, with sa8775p as the fallback.
->>>
->>> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
->>> ---
->>>   .../bindings/pci/qcom,pcie-sa8775p.yaml       | 26 ++++++++++++++-----
->>>   1 file changed, 19 insertions(+), 7 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml
->>> index efde49d1bef8..154bb60be402 100644
->>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml
->>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml
->>> @@ -16,7 +16,12 @@ description:
->>>   
->>>   properties:
->>>     compatible:
->>> -    const: qcom,pcie-sa8775p
->>> +    oneOf:
->>> +      - const: qcom,pcie-sa8775p
->>> +      - items:
->>> +          - enum:
->>> +              - qcom,pcie-qcs8300
->>> +          - const: qcom,pcie-sa8775p
->>>   
->>>     reg:
->>>       minItems: 6
->>> @@ -45,7 +50,7 @@ properties:
->>>   
->>>     interrupts:
->>>       minItems: 8
->>> -    maxItems: 8
->>> +    maxItems: 9
->> I don't understand why this is flexible for sa8775p. I assume this
->> wasn't tested or finished, just like your previous patch suggested.
->>
->> Please send complete bindings once you finish them or explain what
->> exactly changed in the meantime.
->>
->> Best regards,
->> Krzysztof
-> 
-> Hi Krzysztof
-> Global interrupt is optional in the PCIe driver. It is not present in 
-> the SA8775p PCIe device tree node, but it is required for the QCS8300
+Hi Ziqi,
 
-And hardware?
+On Wed May 7, 2025 at 9:44 AM CEST, Ziqi Chen wrote:
+> This series fixes a few corner cases introduced by multi-frequency scalin=
+g feature
+> on some old Qcom platforms design.
+>
+> 1. On some platforms, the frequency tables for unipro clock and the core =
+clock are different,
+>    which has led to errors when handling the unipro clock.
+>
+> 2. On some platforms, the maximum gear supported by the host may exceed t=
+he maximum gear
+>    supported by connected UFS device. Therefore, this should be taken int=
+o account when
+>    find mapped gear for frequency.
+>
+> This series has been tested on below platforms -
+> sm8550 mtp + UFS3.1
+> SM8650 MTP + UFS3.1
+> QCS6490 BR3GEN2 + UFS2.2
+>
+> For change "scsi: ufs: qcom: Check gear against max gear in vop freq_to_g=
+ear()"
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on RB3GEN2
+>
+> For change "scsi: ufs: qcom: Map devfreq OPP freq to UniPro Core Clock fr=
+eq"
+>            "scsi: ufs: qcom: Call ufs_qcom_cfg_timers() in clock scaling =
+path"
+> The original pathes of these two changes are tested by: Luca Weiss <luca.=
+weiss@fairphone.com> on
+> SM6350, but we have reworked the code logic later.
 
-> I did the DTBs and yaml checks before pushing this patch. This is how
-> I became aware that `maxItem` needed to be changed to 9.
-If it is required for QCS8300, then you are supposed to make it required
-in the binding for this device. Look at other bindings.
+How about adding these tags to the patches?
 
-Best regards,
-Krzysztof
+Reported-by: Luca Weiss <luca.weiss@fairphone.com>
+Closes: https://lore.kernel.org/linux-arm-msm/D9FZ9U3AEXW4.1I12FX3YQ3JPW@fa=
+irphone.com/
+
+And despite the print in patch 2 where I've replied separately:
+
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sm7225-fairphone-fp4
+
+You should probably also add some "Fixes:" metadata to your patches.
+
+Regards
+Luca
+
+>
+> v1 - > v2:
+> For change "scsi: ufs: qcom: Check gear against max gear in vop freq_to_g=
+ear()":
+> 1. Instead of return 'gear', return '0' directly if didn't find mapped
+>    gear
+> 2. Derectly return min_t(gear,max_gear) instead assign to 'gear' then
+>    return it.
+>
+> Can Guo (2):
+>   scsi: ufs: qcom: Map devfreq OPP freq to UniPro Core Clock freq
+>   scsi: ufs: qcom: Call ufs_qcom_cfg_timers() in clock scaling path
+>
+> Ziqi Chen (1):
+>   scsi: ufs: qcom: Check gear against max gear in vop freq_to_gear()
+>
+>  drivers/ufs/host/ufs-qcom.c | 134 +++++++++++++++++++++++++++---------
+>  1 file changed, 102 insertions(+), 32 deletions(-)
+
 
