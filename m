@@ -1,81 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-57145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6084CAADDEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 14:00:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97454AADFE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 14:58:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02A317B1DEB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 11:58:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C0489A2AA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 12:58:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 015DB2580E7;
-	Wed,  7 May 2025 11:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1279525EF87;
+	Wed,  7 May 2025 12:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j6f+0JzF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fM4HhE3r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB782580CE
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 May 2025 11:59:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2238428151E;
+	Wed,  7 May 2025 12:58:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746619198; cv=none; b=dyKFHvZNCkWgGnbVlL85/dzCsn5Yns3ijnUFQPmEpMEmI4QXXgeuMlsqk9hB6d2ncusACCD+hyIdX4IQsrTTEsCM71m2q3cYDXHrNYw1K0RSNdwLlSgIdIdFkEKtFw0PEIXBZEYdiFF7JITMXM5OJ/C+foYuwQ1D10K5tBSCs74=
+	t=1746622707; cv=none; b=XY7a2JlNMjjikIu7buDySp2UXQUiA4fCbNUf0LMtjDO9NvlR+6tqba2DeSEVX6OkvcEgbdE/xiOBe5GLmOCIWow9Zms4uNeHjhYJD8YZxkCMa9CQ6Arfu73J0yCuKxEERhvTPKjxUjAoAEjCYC0NwCPqUj1lK4RA9qc69D4zqjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746619198; c=relaxed/simple;
-	bh=qbnCw7dOQkq3nFndIdhgatR4r8qCPfL3w4RscWXHG3c=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=HXYmcV83e/ZIGVksrrTV+uf+aYvVDJ0jx8E6cAupvkZhsqXxGi1fRDVaMfaiWnsi2AfUyeycfNjcvVoJPio4My7yI5vOmGy0FpO4J3pibEJWjqHfS+0J0g7giQphZOFKbXzxb1opiDnKikaRXIo8ETi7bIqBmVWtb9CSuj7t+r0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j6f+0JzF; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43cf06eabdaso56531885e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 May 2025 04:59:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746619195; x=1747223995; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CqPJI4HdquVpCx3k4hEKfR3V8+wlA5emf3OFZSQ9jYg=;
-        b=j6f+0JzFQYl3GPNHcnI6Ch7j/dtyjYiKszBG2AbKIgQlBLvH/okBpQqj+O2tgFkIvA
-         EBd2u5dNU7V9VDxa2mUqWvvg9x+2o98uVyWs8LM3vuOJTwvmUNHQNQnZoOT8pmdtmfPc
-         lXpIUW9P0SoWMl3eTHP7p74PPs51rInyU7eUoNNVjrr543ChEFzOFTSOtVqoaYc9GGmo
-         oVBjz5Nzhrm6BeckPNxEVJ8wGYiQ2/34FMSJRsWljB1H/XmQF4g6zMSwz7yJEA5R4Clb
-         umeU/cPJkEaHy44QUWHoj9EGSmG8/frWcYO2vmqsxRl1Z0bMtoerKhewNVTPueiuzNDt
-         AjFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746619195; x=1747223995;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=CqPJI4HdquVpCx3k4hEKfR3V8+wlA5emf3OFZSQ9jYg=;
-        b=np6irD9s6BRLYdLp8zyeq1AzhDYwXPTBS1+bEHVV4BK2AGqFsO7fVMBarTsQCNd+jk
-         4lRn0IBxyqymhsbMjNdZ87O7ZW2p0/ooPYxKfkbeqfdNPT1MqJqpsa0704GMx8xyhZ8F
-         1r+83d7ivBfZFdv+hdPBpQ3r4V4PqAD3QciBBkQ0pOg6zkG5tZYKtA6iBmJ49SJHe6td
-         OhQ91tJavcgYPM4LMeU43pWp4rGG9ry4Oy/qDC3/u5uB/QqK0thcUc8D9cyGw2XT0mls
-         pl/BhT9lX1wjT460Xg3KMRq+d3Rpwr+4JK+cnU9Wm01OAy5uNnWbFd4PVof+5TfzQ7G1
-         ltZQ==
-X-Gm-Message-State: AOJu0YxGpEtz0Uy1Qbdsw4Q8RQEkJ87YvRjs48WF9x2ynB8ZuVvpmuiH
-	sSKJIRRgAYsbOnIcl/z3F1Z3u92kgt8EVrRTZ3S5PB77USY2ycEomuLDOzY0g88=
-X-Gm-Gg: ASbGnctu/K+YzgjN55E7EZVK2M5BSkL2yXUNyomKLltmyfwleXUCGczI78XTVA16HZ9
-	lIAfFLBepghMvmcvxs7gpfKUnZUTNS+xNX25SRNxxzz5Rra0u4cGyxvTld3R0GwMSEuIt97ss2/
-	9EvztZOHHMoy4O7XIZW68l4wOioFU4LbsmgPl61vq3VUmFsBdAuwpjh6/Jxp2xHXdcyo3yJkuTV
-	xA7UfpP35RmtYUSWMO3b9ekvn45KNhKulJ75Git1nsh7144Xe/90zPDOrXG4lbsQfi7hlsm6VW/
-	mOsygMXOfJ1BvRBZ+TSu6TBXayzoGXhlpNmyoZIRL/VGQ/xo0EKhC7pO2WRt99SJISorx2dc+JP
-	7MSN5P2giaiGwIxT2kg==
-X-Google-Smtp-Source: AGHT+IFIxLzUQYS8WbSe7gjUBBLP5moevd2VzC6lwoikd3JqtPlVaRPaA2s8NpuN78U3XjMiFPwpFw==
-X-Received: by 2002:a05:600c:1c8c:b0:43d:683:8cb2 with SMTP id 5b1f17b1804b1-441d4eeb512mr15437105e9.14.1746619195054;
-        Wed, 07 May 2025 04:59:55 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:784f:3312:6406:12a9? ([2a01:e0a:3d9:2080:784f:3312:6406:12a9])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a099b17096sm17206685f8f.96.2025.05.07.04.59.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 May 2025 04:59:54 -0700 (PDT)
-Message-ID: <7ccbd722-c99a-43b3-9ceb-4c207521822d@linaro.org>
-Date: Wed, 7 May 2025 13:59:53 +0200
+	s=arc-20240116; t=1746622707; c=relaxed/simple;
+	bh=GkbVILExG2T5wsV1f6v2xMtM7UySyBe2HqRtVz6yeBA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=aAbcfme/syLGZj7XBTYmFK+3cIjoNVBpIlL4HkFU4tvaP4tSvpTgAVho4vs3BK6JCJZwmYms3KwsKYOn93/PUf9azlZTLm9dencLw2fZpPwmkAbjtsmUaPyCShsb0OIonkGoF06/O+h8mf8XzYYSuoevIVhAW0rwevme2VpvZ/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fM4HhE3r; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 547A8W4M009112;
+	Wed, 7 May 2025 12:58:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xF+cHM9YchG/d6uxqOT4xkfIqHaWygeEpG9xNO/SoYg=; b=fM4HhE3rjTI6vgKq
+	RovSRDh2S6OdesGL6BVSkoQzvAzfIxFEi5uqEOqLbbpHAVW5H90b3NM3etVw6tNs
+	cutU5HeqKZI4ARfz7vNoH8E8yB91X6d+m7eHmIGIsA+jTaXaXUWa1vprkBd2dgiN
+	MCT1MDJaUPm0W2ESc/AXek8n4FfV/D6aJSsCBCpT3L2bFAm/h1I0j7iPfg/XtQDA
+	M57dV3O9eBlpHPx4TpqnGNKQEZTEs/JTOUm5upVjYvgxU3c1bF0QCzmfHpHpetoQ
+	eM10kDr7GHnLjSO2zTdUHappNb8sJp6Fcx0ki4X23OnM0N7Z+2fvbbU9sZc1cwrS
+	jCmjpw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46g5gh8esu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 07 May 2025 12:58:07 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 547Cw6b7009442
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 7 May 2025 12:58:06 GMT
+Received: from [10.206.97.61] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 7 May 2025
+ 05:57:58 -0700
+Message-ID: <bd136800-8ef5-4597-b918-41b9f97db14f@quicinc.com>
+Date: Wed, 7 May 2025 18:27:54 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,121 +65,241 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 2/3] scsi: ufs: qcom: Map devfreq OPP freq to UniPro
- Core Clock freq
-To: Ziqi Chen <quic_ziqichen@quicinc.com>,
- Luca Weiss <luca.weiss@fairphone.com>, quic_cang@quicinc.com,
- bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
- avri.altman@wdc.com, junwoo80.lee@samsung.com, martin.petersen@oracle.com,
- quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
- quic_rampraka@quicinc.com, konrad.dybcio@oss.qualcomm.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
- open list <linux-kernel@vger.kernel.org>
-References: <20250507074415.2451940-1-quic_ziqichen@quicinc.com>
- <20250507074415.2451940-3-quic_ziqichen@quicinc.com>
- <D9PS51XVRKLP.1AHMCRH9CZFWU@fairphone.com>
- <7c74a395-a8b8-4a12-9ddb-691f28c90885@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <7c74a395-a8b8-4a12-9ddb-691f28c90885@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v6 07/11] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI
+ to DP bridge nodes
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <marijn.suijten@somainline.org>,
+        <andersson@kernel.org>, <robh@kernel.org>, <robh+dt@kernel.org>,
+        <krzk+dt@kernel.org>, <konradybcio@kernel.org>, <conor+dt@kernel.org>,
+        <andrzej.hajda@intel.com>, <neil.armstrong@linaro.org>,
+        <rfoss@kernel.org>, <Laurent.pinchart@ideasonboard.com>,
+        <jonas@kwiboo.se>, <jernej.skrabec@gmail.com>,
+        <quic_abhinavk@quicinc.com>, <quic_rajeevny@quicinc.com>,
+        <quic_vproddut@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250505094245.2660750-1-quic_amakhija@quicinc.com>
+ <20250505094245.2660750-3-quic_amakhija@quicinc.com>
+ <grwlmrgi5cfv3jtuki57ug7gsqykpwdf2to2l7di6glfxtb7vz@6id6cpfkrbuh>
+ <88b139c4-0a35-4c9e-9993-573fede29b71@quicinc.com>
+ <ip2phi56u4yof376t5a5mqhvo3x4oo4blcnirwc6w7eancpm7i@ofcgyfcxdmre>
+Content-Language: en-US
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
+In-Reply-To: <ip2phi56u4yof376t5a5mqhvo3x4oo4blcnirwc6w7eancpm7i@ofcgyfcxdmre>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: OPbtRutEhhwqmylcl9sGmNFyMmVkwavI
+X-Authority-Analysis: v=2.4 cv=TqPmhCXh c=1 sm=1 tr=0 ts=681b58df cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=NEAV23lmAAAA:8
+ a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=G6BfOUuto9JBWjMmyeYA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDEyMiBTYWx0ZWRfX/V6kIFbeakdJ
+ aDRFF9zCSxC1ASGhT+a8JlCqcMoDMvkPxNNmITI5KPisfu6lx02d936s78YEeA+VEfJaM8VBZwf
+ jSavOARuAqzQ3MNltqfYDBrA0GI8zLFfWhK8rwOfIuik0rP1nIBLj7OxYkDy2cO53VRS8kDIGTS
+ MEB69tgPOxsnkbIE4WcaQi0MOwYPoaAxWcJF8k0VwQisLKcPdpbnG64L12bfG1n7Y2FLyR9W8f4
+ 9M7N1h2HO7x9DYR5NoCGO60lkYdJqSB02ZASyU4cTwctMd02gq+W1ilfz+nD4BVoN73GKt2ovDy
+ 8LKcnl3Aqdj4lVajnV5rMxaVeUye/Aq0FKke4DKmbDKiAvAthOVKaN/XN68C3vU7viF4XL1BPyO
+ KJ9thIrF3oKwak0zo/e1rfrFKViYnWNxQLv7lw3lXqtN3xBFizLL73NSAQ923jlOblYgJYVU
+X-Proofpoint-ORIG-GUID: OPbtRutEhhwqmylcl9sGmNFyMmVkwavI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-07_04,2025-05-06_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 mlxscore=0 mlxlogscore=999 spamscore=0
+ priorityscore=1501 phishscore=0 suspectscore=0 impostorscore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505070122
 
-On 07/05/2025 11:09, Ziqi Chen wrote:
-> Hi Luca,
-> 
-> On 5/7/2025 4:19 PM, Luca Weiss wrote:
->> Hi Ziqi,
+On 5/6/2025 5:58 PM, Dmitry Baryshkov wrote:
+> On Tue, May 06, 2025 at 05:42:50PM +0530, Ayushi Makhija wrote:
+>> Hi Dmitry,
 >>
->> On Wed May 7, 2025 at 9:44 AM CEST, Ziqi Chen wrote:
->>> From: Can Guo <quic_cang@quicinc.com>
+>> On 5/5/2025 3:32 PM, Dmitry Baryshkov wrote:
+>>> On Mon, May 05, 2025 at 03:12:41PM +0530, Ayushi Makhija wrote:
+>>>> Add anx7625 DSI to DP bridge device nodes.
+>>>>
+>>>> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 183 +++++++++++++++++++++
+>>>>  1 file changed, 183 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>>>> index 175f8b1e3b2d..de14f3ea8835 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+>>>> @@ -28,6 +28,15 @@ chosen {
+>>>>  		stdout-path = "serial0:115200n8";
+>>>>  	};
+>>>>  
+>>>> +	vph_pwr: vph-pwr-regulator {
+>>>> +		compatible = "regulator-fixed";
+>>>> +		regulator-name = "vph_pwr";
+>>>> +		regulator-min-microvolt = <12000000>;
+>>>> +		regulator-max-microvolt = <12000000>;
 >>>
->>> On some platforms, the devfreq OPP freq may be different than the unipro
->>> core clock freq. Implement ufs_qcom_opp_freq_to_clk_freq() and use it to
->>> find the unipro core clk freq.
+>>> 12 V, if my eyes don't deceive me.
+>>
+>> Yes, it's 12V. According to the chipset's power grid, the VPH rail is rated at 12 volts.
+>> That's significantly higher than what we typically see on mobile platforms. I guess,
+>> this is due to the SA8775P Ride SX being designed for automotive applications, where higher voltage levels are required.
+>>
 >>>
->>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
->>> Co-developed-by: Ziqi Chen <quic_ziqichen@quicinc.com>
->>> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
->>> ---
->>>   drivers/ufs/host/ufs-qcom.c | 81 ++++++++++++++++++++++++++++++++-----
->>>   1 file changed, 71 insertions(+), 10 deletions(-)
+>>>> +		regulator-always-on;
+>>>> +		regulator-boot-on;
+>>>> +	};
+>>>> +
 >>>
->>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
->>> index 7f10926100a5..804c8ccd8d03 100644
->>> --- a/drivers/ufs/host/ufs-qcom.c
->>> +++ b/drivers/ufs/host/ufs-qcom.c
->>> +static unsigned long ufs_qcom_opp_freq_to_clk_freq(struct ufs_hba *hba,
->>> +                                                   unsigned long freq, char *name)
->>> +{
->>> +    struct ufs_clk_info *clki;
->>> +    struct dev_pm_opp *opp;
->>> +    unsigned long clk_freq;
->>> +    int idx = 0;
->>> +    bool found = false;
->>> +
->>> +    opp = dev_pm_opp_find_freq_exact_indexed(hba->dev, freq, 0, true);
->>> +    if (IS_ERR(opp)) {
->>> +        dev_err(hba->dev, "Failed to find OPP for exact frequency %lu\n", freq);
+>>> [...]
+>>>
+>>>> +
+>>>> +			bridge@58 {
+>>>> +				compatible = "analogix,anx7625";
+>>>> +				reg = <0x58>;
+>>>> +				interrupts-extended = <&io_expander 2 IRQ_TYPE_EDGE_FALLING>;
+>>>> +				enable-gpios = <&io_expander 1 GPIO_ACTIVE_HIGH>;
+>>>> +				reset-gpios = <&io_expander 0 GPIO_ACTIVE_HIGH>;
+>>>> +				vdd10-supply = <&vph_pwr>;
+>>>> +				vdd18-supply = <&vph_pwr>;
+>>>> +				vdd33-supply = <&vph_pwr>;
+>>>
+>>> Here you are saying that 1.0V, 1.8V and 3.3V pins are powered on by 12V
+>>> supply. I wonder how the board doesn't trigger all fire alarms in the
+>>> building.
+>>>
 >>
->> I'm hitting this print on bootup:
+>> Let me try to explain the connections from the schematics.
 >>
->> [    0.512515] ufshcd-qcom 1d84000.ufshc: Failed to find OPP for exact frequency 18446744073709551615
->> [    0.512571] ufshcd-qcom 1d84000.ufshc: Failed to find OPP for exact frequency 18446744073709551615
+>> In the SA8775P RIDE SX platform, the ANX bridge supplies are connected from the below sources:
 >>
->> Doesn't look like it's intended? The number is (2^64 - 1)
->>
-> Yes, this is expected. During link startup, the frequency
-> ULONG_MAX will be passed to ufs_qcom_set_core_clk_ctrl() and
-> ufs_qcom_cfg_timer(). This frequency cannot be found through the API
-> dev_pm_opp_find_freq_exact_indexed(). Therefore, we handle the
-> frequency ULONG_MAX separately within Ufs_qcom_set_core_clk_ctrl()
-> and ufs_qcom_cfg_timer().
+>> 1) AVDD1P8 is sourced from the `VREG_1P8` of the backplane card.
+>> 2) AVDD3P0 is sourced from the `VREG_3P0` of the backplane card.
+>> 3) AVDD1P0 is sourced from the TPS74801 LDO voltage regulator that has `VREG_1P8` connected to
+>>    VIN & EN lines, and `VREG_3P0` connected to BIAS line.
+>>  
+>> The `VREG_1P8` is sourced from a buck converter TPS54618CQRTERQ1 that is using 
+>> `VREG_5P0` as VIN and EN_VR1P8_M3P3 as EN signal. 
+>> Where the `EN_VR1P8_M3P3` is an output signal from SAK-TC397XX-256F300S BD micro-controller.
+>>  
+>> Similarly, the `VREG_1P3` and `VREG_5P0` are sourced from another buck converter LM5143QRWGRQ1
+>> that is using `VREG_12P0` as VIN and `EN_VR5P0_M3P3` as EN signal.
+>> Where the EN_VR5P0_M3P3 is an output from the same micro-controller.
+>>  
+>> Combining above details, all three ANX bridge supplies are getting enabled by `VREG_12P0` supply,
+>> `EN_VR1P8_M3P3` and `EN_VR5P0_M3P3` signals once the SOC is out of reset.
+>>  
+>> The `VREG_12P0` is directly sourced from `VBATT_IN`.
+>>  
+>> Since, there is no SW control for ANX bridge supplies and they are getting enabled
+>> once the SOC is out of reset, I have used vph-pwr-regulator dummy regulator.
+>> I am not sure if it's the right way to handle above scenario. Please let me know if there is other way to do the same.
 > 
-> This print only be print twice during link startup. If you think print
-> such print during bootup is not make sense, I can improve the code and
-> update a new vwesion.
+> Add these regulators as fixed ones, describing the power grid. Consult
+> other board files if you are unsure. RB3, RB5, HDKs - all these boards
+> have fixed-regulators for the grid.
+> 
 
-I think just don't call ufs_qcom_opp_freq_to_clk_freq() if freq==ULONG_MAX
+Hi Dmirty,
 
-Neil
+After referring the RB3, RB5, HDKs boards example for fixed regulator.
 
-> 
-> BRs.
-> Ziqi
-> 
->> Regards
->> Luca
->>
-> 
-> 
+1) Reference 1 (qrb5165-rb5.dts file) (https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts)
 
+In qrb5165-rb5.dts file, If we refer the fixed regulator of lt9611_1v2
+
+lt9611_1v2: lt9611-vdd12-regulator {
+                compatible = "regulator-fixed";
+                regulator-name = "LT9611_1V2";
+                vin-supply = <&vdc_3v3>;
+                regulator-min-microvolt = <1200000>;
+                regulator-max-microvolt = <1200000>;
+        };
+
+Here we can see the vin-supply is vdc_3v3, which is itself is a fixed-regulator.
+
+vdc_3v3: vdc-3v3-regulator {
+                compatible = "regulator-fixed";
+                regulator-name = "VDC_3V3";
+                vin-supply = <&vreg_l11c_3p3>;
+                regulator-min-microvolt = <3300000>;
+                regulator-max-microvolt = <3300000>;
+                regulator-always-on;
+        };
+
+Then vin-supply for vdc_3v3 is vreg_l11c_3p3, Which is a RPMH regulator.
+
+ vreg_l11c_3p3: ldo11 {
+                        regulator-name = "vreg_l11c_3p3";
+                        regulator-min-microvolt = <3296000>;
+                        regulator-max-microvolt = <3296000>;
+                        regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+                        regulator-always-on;
+                };
+
+Do we need to do the same for our vdd10-supply , vdd18-supply and vdd33-supply of anx7625 bridge supplies ?
+
+Example for vdd18-supply (AVDD1P8) (Anx7625 vdd18-supply)
+
+vreg_1p8 : vreg-vdd18-regulator {
+	 compatible = "regulator-fixed";
+	 regulator-name = "vreg_1p8";
+	 vin-supply = <&vreg_5p0>;
+	 regulator-min-microvolt = <1800000>;
+	 regulator-max-microvolt = <1800000>;
+};
+
+Here vreg_1p8 is using vreg_5p0 as vin-supply.
+
+vreg_5p0 : vreg-5p0-regulator {
+	 compatible = "regulator-fixed";
+	 regulator-name = "vreg_5p0";
+	 vin-supply = <&vreg_12p0>;
+	 regulator-min-microvolt = <5000000>;
+	 regulator-max-microvolt = <5000000>;
+};
+
+Here vreg_5p0 is using vreg_12p0 as vin-supply.
+
+vreg_12p0: vreg-12p0-regulator {
+	 compatible = "regulator-fixed";
+	 regulator-name = "vreg_12p0";
+	 regulator-min-microvolt = <12000000>;
+	 regulator-max-microvolt = <12000000>;
+};
+
+2) Reference 2 (qcs6490-rb3gen2.dts) (https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts)
+
+Or In qcs6490-rb3gen2.dts file, If we refer the fixed regulator of lt9611_1v2
+
+lt9611_1v2: lt9611-vdd12-regulator {
+                compatible = "regulator-fixed";
+                regulator-name = "LT9611_1V2";
+
+                regulator-min-microvolt = <1200000>;
+                regulator-max-microvolt = <1200000>;
+ };
+
+There is not any vin-supply here.
+
+Example for vdd18-supply (AVDD1P8) (Anx7625 vdd18-supply)
+
+vreg_1p8 : vreg-vdd18-regulator {
+	 compatible = "regulator-fixed";
+	 regulator-name = "vreg_1p8";
+	 regulator-min-microvolt = <1800000>;
+	 regulator-max-microvolt = <1800000>;
+};
+
+Let me know, Which way we need to define the our anx7625 bridge supplies.
+
+Thanks,
+Ayushi
 
