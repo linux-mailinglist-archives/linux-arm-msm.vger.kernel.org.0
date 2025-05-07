@@ -1,124 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-57057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 791C6AAD57E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 07:50:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AC72AAD5B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 08:11:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 88F083B4D80
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 05:49:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 46D5A1C06FDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 06:11:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A14A2010F6;
-	Wed,  7 May 2025 05:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F8E21D61BC;
+	Wed,  7 May 2025 06:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jXwqnIC0"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="IGXm52W9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AB11FDE3D;
-	Wed,  7 May 2025 05:49:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214771D63C0;
+	Wed,  7 May 2025 06:10:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746596996; cv=none; b=W0/Hd8Z5fN8xMOZOnSG6drYaWa3SGXZ0ns/rKMyiAWv3mOX80c0ezEnlBWUKbmDy11/9SbmicATmjiwYzcgoTFni24p+qwWS5TmOo2ibFolzMoEqR5lUI0g0XXvsjpsShXLMP1u4RsE+01UIpduK61ijMCknTdkYv22P0pXKJ1U=
+	t=1746598261; cv=none; b=PRVMNv4CqqQv/BfkG+RhoI/0WE22PXAuQdHGto22rbUsgT8qLDOCDS3SM1D/4Rmfp5LQULz+6T3kzWnmZMWHI7kT84sIcgNcbVY6GiwBwD5tOhC1N/qlRreZhWjNnyzlYzyiS5I4nhLN2e4bYorOBDbNMzG7q0phLRoCdzuc794=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746596996; c=relaxed/simple;
-	bh=gMWKuqiccB/vdz3+zeg5KDOgnOnUHr7QCke6tYWkzNo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TqwUSADVvC4x9jFHoB5okG118ghZvHrmrg0l3l3VdZAu7dOTSnXmkD8xdzyGS0CbwRlU2Tler3qDO38GeABEW+v9/eLij+VaTgaTRbjXXCf9ev07XSuC0IWMGMCwhw8A/cAF5dYEXhloVpVEB82+Y/WJFNgN/OvvKTsQn4ixd8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jXwqnIC0; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1746596995; x=1778132995;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=gMWKuqiccB/vdz3+zeg5KDOgnOnUHr7QCke6tYWkzNo=;
-  b=jXwqnIC0wApU3zanhUvbLY4fTgQ0TDXwaqh/Eyw1NZELALRY0IDSkLBe
-   hUGYvY2skOvCQx7JJb6cbXxix7//BJhnRqDnILMhWUYvMUJmx1vD4G0+r
-   6TtFm8FlOCyJtQ/kULkSz9F4pF7i49wpmZRjs0iMsaXbcvbmWfXPL67Vs
-   tf1CLpuY1y/6y9rMXcAuUOudOb/pg9tlx2zvZx5FIaim7H+veNaKaxOUM
-   hvT6WAJxcmaWBa2dMZNvLU7Ri5Lju4wr7ZHJRucXGGjkKo/3dRPOCmV5C
-   WUu0raPBw6Ug/THsffUzckGWHXQBAraLjXl8i4FAn7kePgRbpkvpRT0QU
-   g==;
-X-CSE-ConnectionGUID: kNBOOjn7T+msxKcJRZe8kw==
-X-CSE-MsgGUID: mWI2RPv+QGO0XTlA4REeQg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="52120539"
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; 
-   d="scan'208";a="52120539"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2025 22:49:54 -0700
-X-CSE-ConnectionGUID: Dng6zhbARaqwORnXV3pdkg==
-X-CSE-MsgGUID: o/PsYAEDSKS8dWxiGvu4sw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; 
-   d="scan'208";a="140580415"
-Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
-  by orviesa003.jf.intel.com with ESMTP; 06 May 2025 22:49:49 -0700
-Received: from kbuild by 1992f890471c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uCXf8-00077Q-1d;
-	Wed, 07 May 2025 05:49:46 +0000
-Date: Wed, 7 May 2025 13:49:03 +0800
-From: kernel test robot <lkp@intel.com>
-To: Praveen Talari <quic_ptalari@quicinc.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-pm@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, psodagud@quicinc.com, djaggi@quicinc.com,
-	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
-	quic_arandive@quicinc.com, quic_mnaresh@quicinc.com,
-	quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v3 4/9] soc: qcom: geni-se: Enable QUPs on SA8255p
- Qualcomm platforms
-Message-ID: <202505071326.jjvv4tTv-lkp@intel.com>
-References: <20250502031018.1292-5-quic_ptalari@quicinc.com>
+	s=arc-20240116; t=1746598261; c=relaxed/simple;
+	bh=IxXYbJZD48dI0SPVv07NCmFRsZxS5O4mEiYyeuloddY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=KfeH4I5/bE034CQ++XjI2pVg2vtiV/YJlydGbxSBxliaIShLOhNopDlKWbbxo81jUhvU5g1VUpmuvv2XmCbID8YLfzaeQ2V76YueTjolKpUBEsEwhqVKpca9BsJB7hgDTt/79pY2MJCfcxFJUhBnb4hXjRg6/vVK27z8AnK9ByM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=IGXm52W9 reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=PcVJcsU188XGP4XUJP8u7N7/UYZL6lmQlc06xU1P3b4=; b=I
+	GXm52W9An7b66EY+bwlClR2kb61UfayXY4DJB9K8JuFRbRLOZ2TBmIn0Mq5I228Q
+	hXMoTGkSq5j9dLHnAg/e/g0taBwjPkHiyVrcprvsL4N4MIIlcJ5+TYGDLoznP+oP
+	NEadLyop4merzsaX1tC+JTu5O/vbf43G1vxLfbV0xM=
+Received: from andyshrk$163.com ( [58.22.7.114] ) by
+ ajax-webmail-wmsvr-40-104 (Coremail) ; Wed, 7 May 2025 14:09:13 +0800 (CST)
+Date: Wed, 7 May 2025 14:09:13 +0800 (CST)
+From: "Andy Yan" <andyshrk@163.com>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>,
+	"Maxime Ripard" <mripard@kernel.org>
+Cc: lumag@kernel.org, neil.armstrong@linaro.org,
+	dri-devel@lists.freedesktop.org, dianders@chromium.org,
+	jani.nikula@intel.com, lyude@redhat.com, jonathanh@nvidia.com,
+	p.zabel@pengutronix.de, simona@ffwll.ch, victor.liu@nxp.com,
+	rfoss@kernel.org, chunkuang.hu@kernel.org,
+	cristian.ciocaltea@collabora.com, Laurent.pinchart@ideasonboard.com,
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+	linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
+	"Andy Yan" <andy.yan@rock-chips.com>
+Subject: Re:Re:Re: [PATCH 1/1] drm/bridge: Pass down connector to drm bridge
+ detect hook
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
+ Copyright (c) 2002-2025 www.mailtech.cn 163com
+In-Reply-To: <1bb549f4.746e.1965c8256e4.Coremail.andyshrk@163.com>
+References: <20250321085345.136380-1-andyshrk@163.com>
+ <20250321085345.136380-2-andyshrk@163.com>
+ <20250321-optimistic-prompt-civet-bdcdba@houat>
+ <1bb549f4.746e.1965c8256e4.Coremail.andyshrk@163.com>
+X-NTES-SC: AL_Qu2fBPmSt0ku5SebbOkfmkcVgOw9UcO5v/Qk3oZXOJF8jC7pxyUYZFlTGWvs7PCDJim1nQiHezZt88JTXIVAZqUNHPapzRP0H9he/eEM1/JOWw==
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250502031018.1292-5-quic_ptalari@quicinc.com>
+Message-ID: <20cd09da.5462.196a95cce13.Coremail.andyshrk@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:aCgvCgCnD4oJ+RpoUXimAA--.12567W
+X-CM-SenderInfo: 5dqg52xkunqiywtou0bp/1tbiqA1GXmga9Zpt5QABsp
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-Hi Praveen,
-
-kernel test robot noticed the following build warnings:
-
-[auto build test WARNING on 3e039dcc9c1320c0d33ddd51c372dcc91d3ea3c7]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Praveen-Talari/opp-add-new-helper-API-dev_pm_opp_set_level/20250502-111540
-base:   3e039dcc9c1320c0d33ddd51c372dcc91d3ea3c7
-patch link:    https://lore.kernel.org/r/20250502031018.1292-5-quic_ptalari%40quicinc.com
-patch subject: [PATCH v3 4/9] soc: qcom: geni-se: Enable QUPs on SA8255p Qualcomm platforms
-config: arc-randconfig-002-20250502 (https://download.01.org/0day-ci/archive/20250507/202505071326.jjvv4tTv-lkp@intel.com/config)
-compiler: arc-linux-gcc (GCC) 12.4.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250507/202505071326.jjvv4tTv-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202505071326.jjvv4tTv-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> Warning: drivers/soc/qcom/qcom-geni-se.c:109 struct member 'geni_se_rsc_init' not described in 'geni_se_desc'
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+CgpQaW5nLi4uLi4uCgpBdCAyMDI1LTA0LTIyIDE1OjU5OjI3LCAiQW5keSBZYW4iIDxhbmR5c2hy
+a0AxNjMuY29tPiB3cm90ZToKPgo+SGkgYWxsLAo+Cj5BdCAyMDI1LTAzLTIxIDE3OjQ4OjA0LCAi
+TWF4aW1lIFJpcGFyZCIgPG1yaXBhcmRAa2VybmVsLm9yZz4gd3JvdGU6Cj4+T24gRnJpLCBNYXIg
+MjEsIDIwMjUgYXQgMDQ6NTM6MzhQTSArMDgwMCwgQW5keSBZYW4gd3JvdGU6Cj4+PiBGcm9tOiBB
+bmR5IFlhbiA8YW5keS55YW5Acm9jay1jaGlwcy5jb20+Cj4+PiAKPj4+IEluIHNvbWUgYXBwbGlj
+YXRpb24gc2NlbmFyaW9zLCB3ZSBob3BlIHRvIGdldCB0aGUgY29ycmVzcG9uZGluZwo+Pj4gY29u
+bmVjdG9yIHdoZW4gdGhlIGJyaWRnZSdzIGRldGVjdCBob29rIGlzIGludm9rZWQuCj4+PiAKPj4+
+IEluIG1vc3QgY2FzZXMsIHdlIGNhbiBnZXQgdGhlIGNvbm5lY3RvciBieSBkcm1fYXRvbWljX2dl
+dF9jb25uZWN0b3JfZm9yX2VuY29kZXIKPj4+IGlmIHRoZSBlbmNvZGVyIGF0dGFjaGVkIHRvIHRo
+ZSBicmlkZ2UgaXMgZW5hYmxlZCwgaG93ZXZlciB0aGVyZSB3aWxsCj4+PiBzdGlsbCBiZSBzb21l
+IHNjZW5hcmlvcyB3aGVyZSB0aGUgZGV0ZWN0IGhvb2sgb2YgdGhlIGJyaWRnZSBpcyBjYWxsZWQK
+Pj4+IGJ1dCB0aGUgY29ycmVzcG9uZGluZyBlbmNvZGVyIGhhcyBub3QgYmVlbiBlbmFibGVkIHll
+dC4gRm9yIGluc3RhbmNlLAo+Pj4gdGhpcyBvY2N1cnMgd2hlbiB0aGUgZGV2aWNlIGlzIGhvdCBw
+bHVnIGluIGZvciB0aGUgZmlyc3QgdGltZS4KPj4+IAo+Pj4gU2luY2UgdGhlIGNhbGwgdG8gYnJp
+ZGdlJ3MgZGV0ZWN0IGlzIGluaXRpYXRlZCBieSB0aGUgY29ubmVjdG9yLCBwYXNzaW5nCj4+PiBk
+b3duIHRoZSBjb3JyZXNwb25kaW5nIGNvbm5lY3RvciBkaXJlY3RseSB3aWxsIG1ha2UgdGhpbmdz
+IHNpbXBsZXIuCj4+PiAKPj4+IFNpZ25lZC1vZmYtYnk6IEFuZHkgWWFuIDxhbmR5LnlhbkByb2Nr
+LWNoaXBzLmNvbT4KPj4KPj5GVFIsIEknbSBhZ2FpbnN0IGl0IGFuZCB3b3VsZCBoYXZlIGFwcHJl
+Y2lhdGVkIHRoYXQgeW91IHdhaXQgZm9yIGEKPj5tZWFuaW5nZnVsIGNsb3N1cmUgdG8gdGhlIGRp
+c2N1c3Npb24gd2UndmUgaGFkIG9uIHRoaXMuCj4KPkNhbiB3ZSBzdGFydCB0byByZXZpZXcgdGhp
+cyBwYXRjaD8gU2luY2UgaXQncyBiZWVuIGFsbW9zdCBhIG1vbnRoIG5vdyBhbmQKPm5vIG9uZSBo
+YXMgcmFpc2VkIGFueSBvYmplY3Rpb24gdG8gRG1pdHJ5J3Mgc3VnZ2VzdGlvblsxXS4KPgo+Cj5b
+MV1odHRwczovL2xvcmUua2VybmVsLm9yZy9kcmktZGV2ZWwvdncybmNkb214M3J3bHRiMnhsbzZu
+ZjNyYXBnY2R0Y2pjb2RvZmdtZWNyenphYmY3amlAcHlic2Z2Mjdqa3EyLwo+Cj4KPj4KPj5NYXhp
+bWUK
 
