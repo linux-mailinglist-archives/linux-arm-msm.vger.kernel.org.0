@@ -1,102 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-57022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 577CAAAD248
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 02:28:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 933A3AAD24D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 02:30:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A44D24C577C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 00:28:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8A33C1B68758
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 00:30:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F61B11CA9;
-	Wed,  7 May 2025 00:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7198718E25;
+	Wed,  7 May 2025 00:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ffgn15Mz"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="I6mJUPiS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665B28C1E
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 May 2025 00:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC0CA945
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 May 2025 00:30:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746577681; cv=none; b=GerJe+BcqHyUN/HnkElPs8B6f/i6BNXn3mtDfpTbP3QipiFw7PW/BNFT3CVkW8XoY0RR3fuPjblq6wzSMYWat78Excj+NCoND1pK2MtiICKHur/lamtKOb2DzGVu9PUe58E4D5obczq0qPK12vZ59jgnRGs8VvxBXdAij3BLNF4=
+	t=1746577825; cv=none; b=M1Tc9alotY5uqFlS/8sr8mxUwQXn/IN2KSGu7/7XRc6sxiOEPPPW/0E52o98JbmFhjS0s6fQmbhA/0zldibtFtL9n254HMQECnMwTdT3CFD/h32oBwnR30ep6u5BXJTvAiuUJvQ7t9d6WHotvXojeu8VSka/mThZZop41XWoZF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746577681; c=relaxed/simple;
-	bh=rj865xdjUMX7Oh9l0dClpP2tYP9jObD2CLFFXFRiUKM=;
+	s=arc-20240116; t=1746577825; c=relaxed/simple;
+	bh=ZBge7jMBgNPb3mHQNiyPpffxlphyMxP+LJ+R76AC2U0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NiZDwsXvLmx00BK2m5ToC+Ph3qOBu0BODE1YBJmiMxLHHYYYnrQRGLf3VLRaZnj1+Khb+njrCgSfnRzB6CHm/004EtwcKKCegUZlbFzKOiz2FZvPRDIOGW+8+LGFsF7TWaTYmPE8lStlo3YiwaazLRMog6aejLSN3KhIBEsuTrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ffgn15Mz; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=imoy0Bew/P9uHEOrMwveNN2ZZK67B0itEXdKx2tD8R6sWc08HgRKv6sAfMMxcIRib4wf3gOX/+1YXkZ0DU8nZ+rdfG3MkI8DALQre6RLLKKkrkMJVBzTtOf0EOeFm6t1FhvG5CcZ2hj/MHwkm/fVnfM632RbFy2oax0o5uZ19gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=I6mJUPiS; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 546HVlrQ026840
-	for <linux-arm-msm@vger.kernel.org>; Wed, 7 May 2025 00:27:58 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 546NUNPr015412
+	for <linux-arm-msm@vger.kernel.org>; Wed, 7 May 2025 00:30:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=KU+/kQQFaGW5BRBV/U1cUh90
-	Qk/YbplfaNVELF2XFnE=; b=ffgn15MzuiIcMahzmndri2EexNsnmtVX80Pplzk7
-	363WyTB6btQospff83XAtAkXPmCWslg0h90nzuFfr5DJh/DzWyy0MKP95mxjDsX9
-	rRXBRCsMjWyQ4pG3yDv5Ft6AcoUiUEVAJdwhCgUuxxWEKzERRF0yRSXOj/64QlQq
-	cnKlwSpOH0d+UURY3urSah55GIxb8v22rmEJKIiO2eJdJlwskRzMvWU+ajLvmMEV
-	xo38J9S6bJt7FLlto6OvhflGWXAqXpVeB2JFCY4pCUV8YyHVy+mpfG2M5/WJQKGb
-	os8PXHCzpuCo7HGFcWla4BzSh7xJ87C4kI0xS5sO29usug==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46f5sv40qh-1
+	:references:subject:to; s=qcppdkim1; bh=U6czlrWo7n/eCpa71Z14BBOF
+	9eOHw4aaoez+mTmbCkU=; b=I6mJUPiSD9yGGzA5QoKTy/CIvOfDbFnY0fr753Ac
+	vvcvMhAoG4ViJ/OzKXKyqWugovwu7mQvjjsWoT+62+tC5DBbDJllecM1PBXYbO2n
+	FAmz3DqkKaBplnCs+jFWwiO3LCbam3y4D4GglqBymEwaOiO9vMucAlPGOsOk3xXT
+	waoaNLLjMNIZILQzkrc1Y22Hv1ZOsYpemquhlNLrd/bRwHNyb2nDH0uv8yfaOL0v
+	MasDLZMaVIbBImfD4GTawp/yOxA2+NI/ZYL8aGMwqiYLAlVTu+IKn/M/46+4DFdu
+	pgJrK4yVpZ5RUiBgiY0UaEvWW4sbKnAJBsUf05FcA8pJzw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46fguuj2sc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 07 May 2025 00:27:58 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6e905e89798so111698056d6.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 17:27:58 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 07 May 2025 00:30:22 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-47693206d3bso157156351cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 May 2025 17:30:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746577676; x=1747182476;
+        d=1e100.net; s=20230601; t=1746577820; x=1747182620;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KU+/kQQFaGW5BRBV/U1cUh90Qk/YbplfaNVELF2XFnE=;
-        b=UqssGQ0xzw01CP6U8lFclzQppgVNJos83FkmeEWimk/Nz+K6LkvdauYpSvpJG1O4Kb
-         Bb+np655CNkd4tbmdQ3xzMDoxm389D5y2sZfa/4fZv3Z17xpXIYz+NdPLNSsQkI8+tb9
-         pMMUBBWN+3VLgMAkrTWekIc7l8aiPWmRfrGnqkfEMsqNQm3WXpWghpJ/leSmaeEkrq0P
-         APfaYRqwQubb4Y5mAN8TgppPvS5a4OQ1fchJXPWIzT6Yg2EhRYrZs1mIh2qGbIjUUECK
-         4yvuV2lin3fywnOHNaFAQZ28Ou7bbSmH276Hm+MbnwTse6ePvZ3wNwuVVq7ZiBKJDagv
-         UiXA==
-X-Forwarded-Encrypted: i=1; AJvYcCUnLNbZ8QaSGgKbhVU1C36GZNvJq6olw+n5p/XQDPVHzkDfHl873l9kZNnu7VGAyM5z0e8XFm6ixu/dqL7v@vger.kernel.org
-X-Gm-Message-State: AOJu0YySc5SrN0aLFULDwKUKHBNCYNhDKiaeilWUK1k6H4SLM6wQJShc
-	nz5vFeIIyq+b/YxpL/XaiX/HvqezWQlzbHHqgTTcLGoEtUdz/isfqaPJrLw/mLs91y25LPcgdmR
-	gAFfPoMrSnkbaEZiQCryJOtmdhOPQpmAycE1bPOr9252y7KfM+gvycD2jcuUApwWe7uXM9AFF
-X-Gm-Gg: ASbGnctd3mOuMvtTcM7Av319PKHR1PLwaOK4XX+ruwwxaWpNdvzIgEY6/dymGe0v5D2
-	r9W6pGD8EfPFn1ujVc9F0yGRfnomA+TKult0Ux1kRKh0at+0FMPmUIh3BM7A22PpzaY+jB7Lo1T
-	HHuXUZhUtAhKYdyiHluPhH8vbs6TxzXA3F/tO4JEfHZcMu2T5P2YPArI5awS2ldMmxLACsdIH51
-	sO325p3cYq5U+x7AhxkcuRvkvJgSn3g9V/b8x36a8UDFjPB+rOsOLm4exv5pxLZcTGjwfv54Siv
-	Wj+HW+CfRlGjuxKFJckrV6zcTMDX+vp4LUwqB3ctLGZliQH4H7Lt13byon+o2qOShSuh9KmTJWs
+        bh=U6czlrWo7n/eCpa71Z14BBOF9eOHw4aaoez+mTmbCkU=;
+        b=qA80WeHaLvqzIAO+CoakFiqfKoCiB5uc/Ea2IloqOcp/Zr1wosL6WiAP4oHbkxu9co
+         cMY5IpZ6knkEowQN6gGv99qv5pIVcH07EfJEr5i3X3FpOzoi0pSqhdA0beWP2hJVlm4x
+         WwG0OpBrwOSM6jiHYom0irhvkuRW1LotZSI+XDBCSa9+N2R9poZPLENyB2FXlhPYJN5x
+         dcc58bWE0wsmX8zC2ovbmFhorzWDkZHkCfMUpnJIYkyy16cM31hh47Cr2LQ/0Nmouxjk
+         74iVLOsBB/ag1LpFcDQmdXGXn+hrYnzsZhDaUA09fk/1FT3Bjo/dh39yvc0942ATI4c0
+         V4xw==
+X-Forwarded-Encrypted: i=1; AJvYcCUpJf5ARL+u5KHLNxof+HEmcxv/T7biCy24u1OY+OhYWVyIGsunljMhndY/IbJEyR4Ujv4P9PH64+3eMs+x@vger.kernel.org
+X-Gm-Message-State: AOJu0YxjfQ4kMZfQHwJ60yWNRVLyrg10NIzYfYrQ0kHl4x5j6xQQLaUg
+	6qev078SdHU7m0/Jw8MpV9WuWycVfSsL//RArrRB2L8wJ6z2CPx6Ur9nOxD95IVK3u6ZQGRG2up
+	hnzRYPZIk7NjJONEJ5KjUW6qV9/P92ncvsSKvUqPCf/+BOCRw/3vslZCNFpI9tZh/0Poo26O3
+X-Gm-Gg: ASbGncu7yJC+Vi/Hnn+veU6YZn1IM6YDJGtOA6itek3eNWVUdesxcBkZlC5UIWjAHf0
+	AnqLp70NHVbCIm+/kA+A6gXTT8KdzRnqiSfoTNFlDUCNoUP1PV1m0xABJjk9Wqhr5z08aI9Xtv5
+	D8lc1YPB4k3ciX0HVogVJp6hPrw+kWBbCu0Iz7FacpopSEpl4yoTC2ECPs4ldemeQh8y/27jtMM
+	/aODl58b9MIXXAS9jYjem5MdXz8/fL/ofmKvA/uHuIYuBVDBCnCVeDSJRnyp0C6bVmLOqv31Vs9
+	9ivS1Y/hoehzUNXtjMwbY2cXguRUu5z9swMEhw6GNGOtr5ebUNXMmOepu+QSkBASryvQ4L59fAA
 	=
-X-Received: by 2002:ad4:5c85:0:b0:6f5:3b8b:9115 with SMTP id 6a1803df08f44-6f542a80ba6mr18417196d6.33.1746577676281;
-        Tue, 06 May 2025 17:27:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEFRVO19PQwPJMjT3C2BBmJBEkobHD6Z2BgCRcVhb87kuizrxRlLuQ6jxGhdOD5AD8XTBthGg==
-X-Received: by 2002:ad4:5c85:0:b0:6f5:3b8b:9115 with SMTP id 6a1803df08f44-6f542a80ba6mr18416866d6.33.1746577675901;
-        Tue, 06 May 2025 17:27:55 -0700 (PDT)
+X-Received: by 2002:ad4:5768:0:b0:6ef:cc6:953a with SMTP id 6a1803df08f44-6f542a06093mr16546706d6.12.1746577820353;
+        Tue, 06 May 2025 17:30:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHWm5XgjPTDMCnhvnoYdEiVxjS3Tf90qt6dPg5mitG5DK13+TYZY++IA7Ni8CuMYo239uk+0g==
+X-Received: by 2002:ad4:5768:0:b0:6ef:cc6:953a with SMTP id 6a1803df08f44-6f542a06093mr16546406d6.12.1746577820007;
+        Tue, 06 May 2025 17:30:20 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3202930cc7fsm20654241fa.61.2025.05.06.17.27.54
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94f6915sm2175431e87.231.2025.05.06.17.30.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 May 2025 17:27:54 -0700 (PDT)
-Date: Wed, 7 May 2025 03:27:53 +0300
+        Tue, 06 May 2025 17:30:19 -0700 (PDT)
+Date: Wed, 7 May 2025 03:30:17 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, neil.armstrong@linaro.org,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8650: add iris DT node
-Message-ID: <32ktmnjhrfrvpi5glipex7qfrcxa5hyl26em3f6xos5l3n2zl4@b7rmzx6wpsj2>
-References: <20250424-topic-sm8x50-upstream-iris-8650-dt-v2-1-dd9108bf587f@linaro.org>
- <3498cfda-a738-449d-9d9f-754bbc8125c2@oss.qualcomm.com>
- <db91a526-e2f8-48f8-a071-f3fcc75235be@linaro.org>
- <CAO9ioeWaPKXHgNGPx5q34+RP59PMLD+EVK5fQsN89KC9A1ca-Q@mail.gmail.com>
- <d79790e5-52c9-4135-8f3c-af797145fa2d@oss.qualcomm.com>
- <4lmt5cgg2tanrughooxw73h2brwyyc6ifqgo3ju6iz4enkvkic@umeijjk4ijxg>
- <651f1421-b471-485a-aea0-1b1ef92f8331@oss.qualcomm.com>
+To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Josh Cartwright <joshc@codeaurora.org>,
+        Matti Vaittinen <mazziesaccount@gmail.com>,
+        Doug Anderson <dianders@chromium.org>, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/4] pinctrl: qcom: switch to devm_gpiochip_add_data()
+Message-ID: <mz6kajh7jkn5ly77rah2yxefgferlbpn2zngzeifgaoh5h4k57@iqojnv73sp4b>
+References: <20250503-pinctrl-msm-fix-v1-0-da9b7f6408f4@oss.qualcomm.com>
+ <20250503-pinctrl-msm-fix-v1-3-da9b7f6408f4@oss.qualcomm.com>
+ <CACMJSesbNz1Q5S4EDDk_O+oUfw8c6MQdovUAA_q2EZzuG2+i4Q@mail.gmail.com>
+ <CACMJSeuRDNo6Si+U-ACCgGnmW5H=D7Bcf32hqxxaLObt+_geew@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,186 +104,96 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <651f1421-b471-485a-aea0-1b1ef92f8331@oss.qualcomm.com>
-X-Proofpoint-GUID: Eeu3g_LgISpUSwuyiqrtkw6eO6w1GC0K
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDAwMyBTYWx0ZWRfXxNpY5/hp3QDe
- z7Qpi9CPSfuy+1CL5UY5OX5XeRKJkCMQn8JnrlSCz9xRxNJWCb8JB+pxqVxhI0TUDXKfou/bZXU
- tRVQZP7xpRsHDHhejvXRfhcw8qGhWJf7PRXDi79HHzGpRullXT12Q10qSvRiGNvQyQFIV1W5a/D
- PmjXq3SBOkS9TcVh2sUMJWOVwp0iIYsFPXlMpq9Nk8bUzDDb2agUYFmzV5aFecdfEkoJ5+3ypaz
- 15DiifXz/TCGsqahIQTO1WqXXpaXae2CEL7+5R6z0LIyPSbmKYjkI589iPz5lH0GF0PQXXc5sUu
- Ka80FRXj20xlBRQvSJMrQrXngYypzBh5AT7Louhtc3O2Qb19MSmKxeLbdh7HtCKuCRLNXVii38M
- ZZZScEcUSrVmglQTythX1DugnAJwy7/FtV94S+kKuWtETi9ZsV6D6H9jLRKnfi88qYUYE70a
-X-Authority-Analysis: v=2.4 cv=cOXgskeN c=1 sm=1 tr=0 ts=681aa90e cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=tN5ki1dz_6qGOFmg9BkA:9 a=CjuIK1q_8ugA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: Eeu3g_LgISpUSwuyiqrtkw6eO6w1GC0K
+In-Reply-To: <CACMJSeuRDNo6Si+U-ACCgGnmW5H=D7Bcf32hqxxaLObt+_geew@mail.gmail.com>
+X-Authority-Analysis: v=2.4 cv=UJPdHDfy c=1 sm=1 tr=0 ts=681aa99e cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=m-dU8d_lu5hDCtaHrWIA:9
+ a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: lglgam0lX3mc0c4aLlK7lin4OCn6Hrpw
+X-Proofpoint-GUID: lglgam0lX3mc0c4aLlK7lin4OCn6Hrpw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDAwMyBTYWx0ZWRfX0VSrijC2w0ei
+ SR54klDwEe5tVr4nD5XHKOwslRk4XQdcdmiDsTr/BUB9zJjivAP49gnVhiKxIxdJL2WV4uIKn3Y
+ TpoVwg7FeDeZZLKkYK6mvQaBQ5kSgW85gM/bu0gK7u0VAK+OE+8mSIJxHqmVq11RRfWKNPZtO53
+ gDYttRUhjisFO468DHqK++JllYfSRfWHD+4PYIXf0ytMOUBZ+Y1mke4EXWoqmQaWABOcIRoItHI
+ HnTVCoPsh1ig4ehza5v4fr6JFCwjtMRCKnBwXw9jzBG5UTScm6VlMmr6glWm7aOf8NRel+oGmuI
+ FvfzO2xntZf+SpgfYqZXZ7xWylBAPNv1yBKyCOGUBY79az0EF0E70tagFUGG3Fpr0MT+SFZnVx+
+ W7X/hlZJDDo/1CtpPJB2uMD8dunfwRGm217fiZg8+00bT5VDifU3lzpBZUPH9WiAGO8IQX5O
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-06_09,2025-05-06_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015 suspectscore=0 priorityscore=1501 bulkscore=0
- mlxlogscore=999 adultscore=0 impostorscore=0 malwarescore=0 spamscore=0
- phishscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ suspectscore=0 adultscore=0 clxscore=1015 phishscore=0 spamscore=0
+ impostorscore=0 mlxlogscore=999 mlxscore=0 lowpriorityscore=0 bulkscore=0
+ malwarescore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2504070000 definitions=main-2505070003
 
-On Wed, May 07, 2025 at 12:53:27AM +0200, Konrad Dybcio wrote:
-> On 5/6/25 10:23 PM, Bjorn Andersson wrote:
-> > On Mon, Apr 28, 2025 at 11:14:18PM +0200, Konrad Dybcio wrote:
-> >> On 4/28/25 12:48 PM, Dmitry Baryshkov wrote:
-> >>> On Mon, 28 Apr 2025 at 11:18, Neil Armstrong <neil.armstrong@linaro.org> wrote:
-> >>>>
-> >>>> Hi,
-> >>>>
-> >>>> On 25/04/2025 23:49, Konrad Dybcio wrote:
-> >>>>> On 4/24/25 6:32 PM, Neil Armstrong wrote:
-> >>>>>> Add DT entries for the sm8650 iris decoder.
-> >>>>>>
-> >>>>>> Since the firmware is required to be signed, only enable
-> >>>>>> on Qualcomm development boards where the firmware is
-> >>>>>> available.
-> >>>>>>
-> >>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> >>>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> >>>>>> ---
-> >>>>>> Changes in v2:
-> >>>>>> - removed useless firmware-name
-> >>>>>> - Link to v1: https://lore.kernel.org/r/20250418-topic-sm8x50-upstream-iris-8650-dt-v1-1-80a6ae50bf10@linaro.org
-> >>>>>> ---
-> >>>>>
-> >>>>> [...]
-> >>>>>
-> >>>>>> +            iris: video-codec@aa00000 {
-> >>>>>> +                    compatible = "qcom,sm8650-iris";
-> >>>>>> +                    reg = <0 0x0aa00000 0 0xf0000>;
-> >>>>>> +
-> >>>>>> +                    interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH 0>;
-> >>>>>> +
-> >>>>>> +                    power-domains = <&videocc VIDEO_CC_MVS0C_GDSC>,
-> >>>>>> +                                    <&videocc VIDEO_CC_MVS0_GDSC>,
-> >>>>>> +                                    <&rpmhpd RPMHPD_MXC>,
-> >>>>>> +                                    <&rpmhpd RPMHPD_MMCX>;
-> >>>>>> +                    power-domain-names = "venus",
-> >>>>>> +                                         "vcodec0",
-> >>>>>> +                                         "mxc",
-> >>>>>> +                                         "mmcx";
-> >>>>>> +
-> >>>>>> +                    operating-points-v2 = <&iris_opp_table>;
-> >>>>>> +
-> >>>>>> +                    clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
-> >>>>>> +                             <&videocc VIDEO_CC_MVS0C_CLK>,
-> >>>>>> +                             <&videocc VIDEO_CC_MVS0_CLK>;
-> >>>>>> +                    clock-names = "iface",
-> >>>>>> +                                  "core",
-> >>>>>> +                                  "vcodec0_core";
-> >>>>>> +
-> >>>>>> +                    interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> >>>>>> +                                     &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
-> >>>>>> +                                    <&mmss_noc MASTER_VIDEO QCOM_ICC_TAG_ALWAYS
-> >>>>>> +                                     &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-> >>>>>> +                    interconnect-names = "cpu-cfg",
-> >>>>>> +                                         "video-mem";
-> >>>>>> +
-> >>>>>> +                    /* FW load region */
-> >>>>>
-> >>>>> I don't think this comment brings value
-> >>>>
-> >>>> Right
-> >>>>
-> >>>>>
-> >>>>>> +                    memory-region = <&video_mem>;
-> >>>>>> +
-> >>>>>> +                    resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>,
-> >>>>>> +                             <&videocc VIDEO_CC_XO_CLK_ARES>,
-> >>>>>> +                             <&videocc VIDEO_CC_MVS0C_CLK_ARES>;
-> >>>>>> +                    reset-names = "bus",
-> >>>>>> +                                  "xo",
-> >>>>>> +                                  "core";
-> >>>>>> +
-> >>>>>> +                    iommus = <&apps_smmu 0x1940 0>,
-> >>>>>> +                             <&apps_smmu 0x1947 0>;
-> >>>>>
-> >>>>> I think you may also need 0x1942 0x0 (please also make the second value / SMR
-> >>>>> mask hex)> +
-> >>>>
-> >>>> I don't see 0x1942 in the downstream DT, and which mask should I set ? 0x1 ?
-> >>
-> >> I saw it in docs only, maybe Vikash or Dikshita can chime in whether it's
-> >> necessary. It would have mask 0x0 if so.
-> >>
-> >>>>
-> >>>>>> +                    dma-coherent;
-> >>>>>> +
-> >>>>>> +                    /*
-> >>>>>> +                     * IRIS firmware is signed by vendors, only
-> >>>>>> +                     * enable in boards where the proper signed firmware
-> >>>>>> +                     * is available.
-> >>>>>> +                     */
-> >>>>>
-> >>>>> Here's to another angry media article :(
-> >>>>>
-> >>>>> Please keep Iris enabled.. Vikash reassured me this is not an
-> >>>>> issue until the user attempts to use the decoder [1], and reading
-> >>>>> the code myself I come to the same conclusion (though I haven't given
-> >>>>> it a smoke test - please do that yourself, as you seem to have a better
-> >>>>> set up with these platforms).
-> >>>>>
-> >>>>> If the userland is sane, it should throw an error and defer to CPU
-> >>>>> decoding.
-> >>>>>
-> >>>>> This is >>unlike venus<< which if lacking firmware at probe (i.e. boot)
-> >>>>> would prevent .sync_state
-> >>>>
-> >>>> Well sync with Bjorn who asked me to only enable on board with available firmware ;-)
-> >>>
-> >>> I'd second him here: if there is no firmware, don't enable the device.
-> >>> It's better than the users having cryptic messages in the dmesg,
-> >>> trying to understand why the driver errors out.
-> >>
-> >> I don't agree.. the firmware may appear later at boot (e.g. user installs a
-> >> small rootfs and manually pulls in linux-firmware). Plus without the firmware,
-> >> we can still power on and off the IP block, particularly achieve sync_state
-> >> regardless of it
-> >>
-> > 
-> > Not "available during boot", but rather "available for a particular
-> > board".
+On Tue, May 06, 2025 at 07:23:10PM +0200, Bartosz Golaszewski wrote:
+> On Tue, 6 May 2025 at 19:18, Bartosz Golaszewski
+> <bartosz.golaszewski@linaro.org> wrote:
+> >
+> > On Sat, 3 May 2025 at 07:32, Dmitry Baryshkov
+> > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > >
+> > > In order to simplify cleanup actions, use devres-enabled version of
+> > > gpiochip_add_data().
+> > >
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > > ---
+> > >  drivers/pinctrl/qcom/pinctrl-msm.c | 6 +-----
+> > >  1 file changed, 1 insertion(+), 5 deletions(-)
+> > >
+> > > diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> > > index 88dd462516c76d58b43d49accbddeea38af8f1ec..b2e8f7b3f3e3d5d232b2bd60e5cace62b21ffb03 100644
+> > > --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> > > +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> > > @@ -1449,7 +1449,7 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+> > >         girq->handler = handle_bad_irq;
+> > >         girq->parents[0] = pctrl->irq;
+> > >
+> > > -       ret = gpiochip_add_data(&pctrl->chip, pctrl);
+> > > +       ret = devm_gpiochip_add_data(pctrl->dev, &pctrl->chip, pctrl);
+> > >         if (ret) {
+> > >                 dev_err(pctrl->dev, "Failed register gpiochip\n");
+> > >                 return ret;
+> > > @@ -1470,7 +1470,6 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+> > >                         dev_name(pctrl->dev), 0, 0, chip->ngpio);
+> > >                 if (ret) {
+> > >                         dev_err(pctrl->dev, "Failed to add pin range\n");
+> > > -                       gpiochip_remove(&pctrl->chip);
+> > >                         return ret;
+> > >                 }
+> > >         }
+> > > @@ -1608,9 +1607,6 @@ EXPORT_SYMBOL(msm_pinctrl_probe);
+> > >
+> > >  void msm_pinctrl_remove(struct platform_device *pdev)
+> > >  {
+> > > -       struct msm_pinctrl *pctrl = platform_get_drvdata(pdev);
+> > > -
+> > > -       gpiochip_remove(&pctrl->chip);
+> > >  }
+> > >  EXPORT_SYMBOL(msm_pinctrl_remove);
+> > >
+> > >
+> > > --
+> > > 2.39.5
+> > >
+> >
+> > If you're at it then why not remove this function here and the
+> > callback assignment throughout the pinctrl/qcom/ directory?
+> >
+> > Bart
 > 
-> I'd argue that if a device is in the hands of users, there already exists
-> some acceptable set of fw binaries.. but most developers aren't in the
-> position to upload them into l-f.. And quite frankly I'm not the biggest
-> fan of having a gigabyte of 99%-the-same files with a dozen lines changed
-> and a different signature prepended to them either..
-> 
-> > We generally avoid enabling device_nodes that depend on vendor-signed
-> > firmware until someone has tested the device on such board and specified
-> > the proper path to the vendor-specific firmware.
-> > 
-> > Are you suggesting that we should leave this enabled on all boards for
-> > some reason (perhaps to ensure that resources are adequately managed)?
-> 
-> Yes, for that reason indeed.
-> 
-> We don't generally need to load firmware to turn something *off*. And
-> most IP blocks don't **actually** need to be presented with firmware at
-> probe time (I can only think of external ICs like no-storage touch
-> controllers that need the fw uploaded on each powerup). 
-> 
-> Telling the user "hey, this is supported but the firmware file can't
-> be loaded on your device" may also be better sounding than "won't work
-> on your machine" (with the quiet part being: "because someone hasn't
-> copied 5 lines of DTS")
+> Ah, it's in the next patch. I'd make it one commit though, no reason
+> to split it IMO.
 
-Then we need to make sure _not_ to make a default path useable, so that
-the users know that there is no proper firmware rather than facing the
-cryptic error of "firmware something -error".
+Up to you, but from my POV it's cleaner this way: first patch removes
+the contents, second one removes the function. Otherwise it's too easy
+to loose the functional changes (of gpiochip_remove() removal) in the
+noise of updating all the platform files.
 
-But... I'd rather prefer to keep firmware-backed nodes disabled exactly
-for the reason of "making someone copy 5 lines of DTS", which usually
-means that somebody has thought about how to get and where to put the
-binary.
+If you wish, I can add a note to the commit message telling that the
+actual function will be dropped in the next commit.
 
 -- 
 With best wishes
