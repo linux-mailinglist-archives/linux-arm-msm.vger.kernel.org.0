@@ -1,99 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-57056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19716AAD548
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 07:33:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 791C6AAD57E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 07:50:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CBD0F7B6A61
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 05:31:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 88F083B4D80
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 05:49:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6E531DF25D;
-	Wed,  7 May 2025 05:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A14A2010F6;
+	Wed,  7 May 2025 05:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q0m7sAq/"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jXwqnIC0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5931D618E;
-	Wed,  7 May 2025 05:32:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AB11FDE3D;
+	Wed,  7 May 2025 05:49:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746595975; cv=none; b=WKmaHpWyOCKFMhnGKBA/oUpsiwznHm7X2WPm054dLXKicSPBsDINbdPganIzZHSFWXzz4t1p5DLpdY6nz1bDkLW9c3O6V4rmdO5QnV0/72oI0YKLa34401mqyeT5ZLL85r6AmiR5fftVCFWuSeM3OFUzIb4P7hYLUSRdIerGB8I=
+	t=1746596996; cv=none; b=W0/Hd8Z5fN8xMOZOnSG6drYaWa3SGXZ0ns/rKMyiAWv3mOX80c0ezEnlBWUKbmDy11/9SbmicATmjiwYzcgoTFni24p+qwWS5TmOo2ibFolzMoEqR5lUI0g0XXvsjpsShXLMP1u4RsE+01UIpduK61ijMCknTdkYv22P0pXKJ1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746595975; c=relaxed/simple;
-	bh=bjgQjoGWDlMiHE9WoqyOdnPxls//ZasLUweveRIFQUU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=apYsVuxHlZi+L2OmPSJVvbI+jumT63u7xuK8Hj+p5BHAduaBaxilXFt32E0uGUBQqEFp5rlkTTzoFf3rjGcHFQOXpB7hKPV6qYY6Sl2rkllKE4DR8SEo+RCUiJkHhxmF1PrukUgpK2B6da7J8GN4y2LI3EshMG5XUfaKhkBJ3Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q0m7sAq/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457F2C4CEE7;
-	Wed,  7 May 2025 05:32:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746595975;
-	bh=bjgQjoGWDlMiHE9WoqyOdnPxls//ZasLUweveRIFQUU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0m7sAq/goUZtQoavLIPgeAmAbZuI84z+TwTrR1JgyiybFg+EBxEhU32nrnT0D20w
-	 GbNXnTejNiV5W28uFTmGh9cTTFFJ5mxoLkn/LOGy6jkDZGOtVLwGdHEQxSPDZyv4ih
-	 CCxqxn8IjgaB8AnT1BWKIX5NA7CJNjNci5wBAWFeSq2U24IqrywJY8nF/q8t1ZC/En
-	 psVaDHZ+YC3atgoB9CHVg2A6wmAs06yIGVoSFpZs8qJyG1ynvcBa+8LZTborLjFHq/
-	 6vYQ9SAXStZuDsuxtZFoLNWOzbAq3UHVgSAIEuGBBOFfYP9BSmYU7b7+Eg6Ktt+cwZ
-	 OyCNc41n3cQGw==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	s=arc-20240116; t=1746596996; c=relaxed/simple;
+	bh=gMWKuqiccB/vdz3+zeg5KDOgnOnUHr7QCke6tYWkzNo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TqwUSADVvC4x9jFHoB5okG118ghZvHrmrg0l3l3VdZAu7dOTSnXmkD8xdzyGS0CbwRlU2Tler3qDO38GeABEW+v9/eLij+VaTgaTRbjXXCf9ev07XSuC0IWMGMCwhw8A/cAF5dYEXhloVpVEB82+Y/WJFNgN/OvvKTsQn4ixd8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jXwqnIC0; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1746596995; x=1778132995;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=gMWKuqiccB/vdz3+zeg5KDOgnOnUHr7QCke6tYWkzNo=;
+  b=jXwqnIC0wApU3zanhUvbLY4fTgQ0TDXwaqh/Eyw1NZELALRY0IDSkLBe
+   hUGYvY2skOvCQx7JJb6cbXxix7//BJhnRqDnILMhWUYvMUJmx1vD4G0+r
+   6TtFm8FlOCyJtQ/kULkSz9F4pF7i49wpmZRjs0iMsaXbcvbmWfXPL67Vs
+   tf1CLpuY1y/6y9rMXcAuUOudOb/pg9tlx2zvZx5FIaim7H+veNaKaxOUM
+   hvT6WAJxcmaWBa2dMZNvLU7Ri5Lju4wr7ZHJRucXGGjkKo/3dRPOCmV5C
+   WUu0raPBw6Ug/THsffUzckGWHXQBAraLjXl8i4FAn7kePgRbpkvpRT0QU
+   g==;
+X-CSE-ConnectionGUID: kNBOOjn7T+msxKcJRZe8kw==
+X-CSE-MsgGUID: mWI2RPv+QGO0XTlA4REeQg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="52120539"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; 
+   d="scan'208";a="52120539"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2025 22:49:54 -0700
+X-CSE-ConnectionGUID: Dng6zhbARaqwORnXV3pdkg==
+X-CSE-MsgGUID: o/PsYAEDSKS8dWxiGvu4sw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; 
+   d="scan'208";a="140580415"
+Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
+  by orviesa003.jf.intel.com with ESMTP; 06 May 2025 22:49:49 -0700
+Received: from kbuild by 1992f890471c with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uCXf8-00077Q-1d;
+	Wed, 07 May 2025 05:49:46 +0000
+Date: Wed, 7 May 2025 13:49:03 +0800
+From: kernel test robot <lkp@intel.com>
+To: Praveen Talari <quic_ptalari@quicinc.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Nikita Travkin <nikita@trvn.ru>
-Cc: Marc Zyngier <maz@kernel.org>,
-	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/5] arm64: dts: qcom: Add EL2 overlays for WoA devices
-Date: Tue,  6 May 2025 22:32:52 -0700
-Message-ID: <174659597008.7675.2301017495937908497.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250503-sc-el2-overlays-v2-0-24e9b4572e15@trvn.ru>
-References: <20250503-sc-el2-overlays-v2-0-24e9b4572e15@trvn.ru>
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-pm@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, psodagud@quicinc.com, djaggi@quicinc.com,
+	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+	quic_arandive@quicinc.com, quic_mnaresh@quicinc.com,
+	quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v3 4/9] soc: qcom: geni-se: Enable QUPs on SA8255p
+ Qualcomm platforms
+Message-ID: <202505071326.jjvv4tTv-lkp@intel.com>
+References: <20250502031018.1292-5-quic_ptalari@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250502031018.1292-5-quic_ptalari@quicinc.com>
 
+Hi Praveen,
 
-On Sat, 03 May 2025 15:39:27 +0500, Nikita Travkin wrote:
-> WoA devices use firmware very similar to android, which means that Linux
-> has to run in EL1 due to the presence of Qualcomm's hypervisor (QHEE or
-> Gunyah). However Windows can replace that hypervisor using Secure-Launch
-> flow.
-> 
-> More recently the same approach became possible to be used to boot Linux
-> in EL2 on those devices, thanks to a tool called slbounce[1].
-> 
-> [...]
+kernel test robot noticed the following build warnings:
 
-Applied, thanks!
+[auto build test WARNING on 3e039dcc9c1320c0d33ddd51c372dcc91d3ea3c7]
 
-[1/5] arm64: dts: qcom: sc7180: Add EL2 overlay for WoA devices
-      commit: 0d95f64be4176fc98bcc2b4558239800ee93bf32
-[2/5] arm64: dts: qcom: sc8280xp: Add PCIe IOMMU
-      commit: 8a401135001c65203f3fd210d482bc7eae1bfc56
-[3/5] arm64: dts: qcom: sc8280xp: Add EL2 overlay for WoA devices
-      commit: 263780f3189730f2efa511181c3970384e54afde
-[4/5] arm64: dts: qcom: x1e80100: Add PCIe IOMMU
-      commit: 428f95f41f3024a8378bb4c4803fe269fcacaa85
-[5/5] arm64: dts: qcom: x1e/x1p: Add EL2 overlay for WoA devices
-      commit: e01acd8f3cc1364b9147d3eb8913fdb935851ecd
+url:    https://github.com/intel-lab-lkp/linux/commits/Praveen-Talari/opp-add-new-helper-API-dev_pm_opp_set_level/20250502-111540
+base:   3e039dcc9c1320c0d33ddd51c372dcc91d3ea3c7
+patch link:    https://lore.kernel.org/r/20250502031018.1292-5-quic_ptalari%40quicinc.com
+patch subject: [PATCH v3 4/9] soc: qcom: geni-se: Enable QUPs on SA8255p Qualcomm platforms
+config: arc-randconfig-002-20250502 (https://download.01.org/0day-ci/archive/20250507/202505071326.jjvv4tTv-lkp@intel.com/config)
+compiler: arc-linux-gcc (GCC) 12.4.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250507/202505071326.jjvv4tTv-lkp@intel.com/reproduce)
 
-Best regards,
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202505071326.jjvv4tTv-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> Warning: drivers/soc/qcom/qcom-geni-se.c:109 struct member 'geni_se_rsc_init' not described in 'geni_se_desc'
+
 -- 
-Bjorn Andersson <andersson@kernel.org>
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
