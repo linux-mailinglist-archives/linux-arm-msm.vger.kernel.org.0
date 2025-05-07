@@ -1,124 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-57167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55F72AAE34E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 16:42:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13BE8AAE3D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 17:05:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 60F4318848CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 14:40:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F06099A03BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 15:05:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54AC5289809;
-	Wed,  7 May 2025 14:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEC30289E1B;
+	Wed,  7 May 2025 15:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="SxbO0evW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d02d3X7i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FC3289377
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 May 2025 14:40:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2DA145B16;
+	Wed,  7 May 2025 15:05:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746628843; cv=none; b=BNqi4mPgYt3ALOueomHp8PkglAX76NF2J7FJgrAVzqPGZcT7XXZNH2BNNcC6Rsg4NfDdYpFG67mzp4o9xhYaUXUhbP1A8a0ZmkNQCMIRRBoQsFfA97V8dxTYjuemXffkpTG/YN8BRtXhJQjZa4E7zrc9yIDFqTC3RV87PL68N+E=
+	t=1746630328; cv=none; b=qaAcnRE/bRIy7RJI+Dj2RnQL/4uu7S9aPIuJsq0la0CVpr3xuu9I6ImlObyHfV6DzJrBxCqppkxfkKTZKx4HX3mgShA6p0hNLzTdNhzqB0ZhfelMZz65A1dhA+PZII4oYfCYA1aQHdeO5hsEfVsnU091LWhwIczNdpZw1VHzlyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746628843; c=relaxed/simple;
-	bh=cUb158x33akkosvBbXGRgoNYLmW5StrRgcPT7blbiXM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l4Mng3juHJuER+VNw5Hf/bQ/q7dg+0epmME67PXj6OIu10IkcaLcPzaqXHIP2ToLqxtvTw17VIyqbk71DvIQXNp75aTv1CuX2ZK76PglZoyusnyZ26qvQ35hsTD9yhMjLnK6LMJSW2/ZzI36QjKo1nI0PJeChqHz/7TLSsfoZqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca; spf=pass smtp.mailfrom=ziepe.ca; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=SxbO0evW; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7c54f67db99so113387185a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 May 2025 07:40:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1746628840; x=1747233640; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hE5pqIIiTRP3xPbQUA3RBdQkSkJonXNdeQ/5U/JPsWw=;
-        b=SxbO0evW5Z0FwMJ9ZNJxYXb89n//48gvBEGuxfB54XEALJ7sVAH77gUs6I/QJrU2O3
-         QB+TQ4TvTWxDPH7807sdv9yCzFTFbNRTjll5bb/rp/fRkIQbq5sP7/H2ycLRGSdCN0DV
-         kwWwBYs2VdVQQRm2bws7YS8aiJl6MRYbSZtJFZPkE7Hb1fKfULXQWcnsbCDESfTwv8bq
-         bBfBWbmNyq4hcJpeE1vm9XrAdUguO4fcv2s77Wz4Mz9y7VfhSLdXEoBC3/iN3reyYvMX
-         gPxkrX9fKw0riCgckECCQkGfku+UbF4mVw2/sxYIAn2L5Q/02zBXE5vYtdFq7tM0wU0N
-         lDCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746628840; x=1747233640;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hE5pqIIiTRP3xPbQUA3RBdQkSkJonXNdeQ/5U/JPsWw=;
-        b=LEx01DC1zT3e5T3fin9kFv0vKZ4CKPACrzhbhkFSl0fbnatB41Fp3+xErpMYqLsIf8
-         YRptaqcS+E4vY4pLTIvBn2ofALpE3bggCGqEXf9qWx5Mp3mQ3ohLxZD3TAd0vKkhmGqm
-         sUR2sbkABqK9+mILSoFqrtnCKQfGcmgfk+KuvJ3tioRF2KzTWQQW573W7eK6KmbYKl2p
-         JX9DU6pi6AL7GSgmiBL8UQqAWUAkTTAH3TgoHY05fumKTYpLU5xZNY7UKgxdMGKCmzsg
-         Cgg0hONxQsSp0+kGCi6GeKc8XgY74enLif2krRLoHh27cktAS+7lRzf4j/YUajcX8WGM
-         NbnA==
-X-Forwarded-Encrypted: i=1; AJvYcCUsrSpH7/zDAO2bCNBIX80QV2MANAG1zi/3fnDwXyPu90nkJ/55YMYp+Rs/OVQbuuRnymnSxwO7W+jolW17@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+30/nfaxgHpMDk29hvbyf5ieJjqSOfOOMaQj2GAhqnBdy3BI+
-	v8EFse2u9KJ24pFnFda9TEQGBd2HylgxYEdqewejeK9TrZCxUE4npW188ouMLvY=
-X-Gm-Gg: ASbGnctcVI3xo6/z8i5VpL364ZlUe+bY3sn2k1jLK8cgjDYmMtdZaMdvcveC4pJiGnh
-	vwXN55sz97GOBjU0E0K5PiOQUf+XEHtFT94x/xRsEFMyCCCiSpwlgp2gyLZbWLQGUsiXN/LziqX
-	9fTuk+gS/UGMyxrc9c4/5dAtVUNHE5D/prmFVvsGAyxLLdUsglnMGTDyt0W1S+B3F1CYTfJxm3P
-	8thUSavtsOIheK2n+TxokuPMOh7ZlmQDvJ0Ij3ewXt29gzgWaAD2YPVfPDswZqt6coi+eT5ME/a
-	XFKYnl+S/3prfhjdiW3W5HET5VZQ3xheQ9nq6afoNjgD23KLUnklz0qqCxjQikYt5WhtvuyUyuR
-	wt/PdtDHl3eE5OMjpb1qY/sz6XgYPFw==
-X-Google-Smtp-Source: AGHT+IFBJ2lDgmMwPn9NZnZ8/xbfRhIS1u/h+c1wZoIdheyW8lXaMbj8dqq9Df2szLQOMYCQifNTEg==
-X-Received: by 2002:a05:620a:370d:b0:7c7:c1f8:34eb with SMTP id af79cd13be357-7caf6d53f0cmr559703785a.23.1746628839912;
-        Wed, 07 May 2025 07:40:39 -0700 (PDT)
-Received: from ziepe.ca (hlfxns017vw-142-167-219-86.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.167.219.86])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7caf752a60fsm159257985a.42.2025.05.07.07.40.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 May 2025 07:40:39 -0700 (PDT)
-Received: from jgg by wakko with local (Exim 4.97)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1uCfws-000000011tV-36y7;
-	Wed, 07 May 2025 11:40:38 -0300
-Date: Wed, 7 May 2025 11:40:38 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Rob Clark <robdclark@gmail.com>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2] iommu/io-pgtable-arm: Add quirk to quiet WARN_ON()
-Message-ID: <20250507144038.GC33739@ziepe.ca>
-References: <20250507142953.269300-1-robdclark@gmail.com>
+	s=arc-20240116; t=1746630328; c=relaxed/simple;
+	bh=JyV8xkCMJ/2t26KujPnEhLvHfnrJWNgCXzBZHePh3xY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=VDWBnuPA2lD734uD4mj29xf8uxQW+HOkkYiVgwQShKYjbzgGhawJjJqRKGRM47sFUocKNRnfS5I25u3IG0HECHs8Jm5lsETwm7z/YO0r0/qalT0i0m5AhejBoAFzJPtsDXqJdsgUTjfLow3g401Cej4I9JUpOG0cCTBeMlcMVGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d02d3X7i; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 547AKt8J005104;
+	Wed, 7 May 2025 15:04:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	cFLfz+n3dUXli7hBsRzY0wxWQxf03ZGrvo/57nmAkAU=; b=d02d3X7imkstiFin
+	HSbLBfMEEilFbDvkEqpxopSB89rGhNAuEWladcMgqTSkyoPrleyhATyqUszBqsDY
+	xPMDiiNF6vvEYWEM6yZasKy+a5EVo/syJjLUzHCF9u0Nk4Lk2Xkug8uLs6TpHLmD
+	NJ0XrnywB7db2GE3V+2khUV6P8yzpNeXZgL/kMXryLr3n2ArnOJTn6HsG5ng/j3n
+	rLu8YQUvyRJCd9+GDhdnkZP76HbWZv6D4d5yhIwda91s6utJjrH70G0BtP7u3ryd
+	X9L/5cYFeHqIxVy7AxasN9/TioE+2OutWfmNylFJVDYcqQdyUimpL9i+f/MrkM4J
+	UIMDvA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46f5sv69uh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 07 May 2025 15:04:57 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 547F4ub4023886
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 7 May 2025 15:04:56 GMT
+Received: from [10.216.23.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 7 May 2025
+ 08:04:51 -0700
+Message-ID: <9974cf1d-6929-4c7f-8472-fd19c7a40b12@quicinc.com>
+Date: Wed, 7 May 2025 20:34:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250507142953.269300-1-robdclark@gmail.com>
+User-Agent: Mozilla Thunderbird
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+Subject: Re: [PATCH V2 1/3] scsi: ufs: dt-bindings: Document UFS Disable LPM
+ property
+To: Krzysztof Kozlowski <krzk@kernel.org>, <alim.akhtar@samsung.com>,
+        <avri.altman@wdc.com>, <bvanassche@acm.org>, <krzk+dt@kernel.org>,
+        <robh@kernel.org>, <mani@kernel.org>, <conor+dt@kernel.org>,
+        <James.Bottomley@HansenPartnership.com>, <martin.petersen@oracle.com>,
+        <beanhuo@micron.com>, <peter.wang@mediatek.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20250506163705.31518-1-quic_nitirawa@quicinc.com>
+ <20250506163705.31518-2-quic_nitirawa@quicinc.com>
+ <667e43a7-a33c-491b-83ca-fe06a2a5d9c3@kernel.org>
+Content-Language: en-US
+In-Reply-To: <667e43a7-a33c-491b-83ca-fe06a2a5d9c3@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: TYTFDam9UZu2-D5HKDMvEKHVDWXLxeQi
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDE0MCBTYWx0ZWRfX9MA3jKqXIrTN
+ 3YaW9kKuwWD8utor78J4Y+SqhagKFXkmhvnazIqW/u5zSjHc2L0xUD0sfSFT5XOrjbRffftXFkA
+ 7AlDdYULYrZ46INmLEpXcapBOLuOm2EDe2X2Su/Aq1thodKzJl7nCGEoIXaJ/qwmmh+mOi0DWKx
+ e6ipFhR6e5FsTtvLw46OZOihv/h/OB0oQ9efhDjq7l1SCkRD3500QvaAolGslHYKpI88DFhzh5M
+ c99zKpNg7odFR2k6T1XN5QN+IDhMxCXksZKtkpclmagwJioJwL4QrJb6sU13MRR88SFYtGtu4hZ
+ 4FHNPe/AV1EYmR7gWBBGV5Y7el4iVTWOdvwY3MfcC/5eMAkmmQgYd05whymA53MUEVR09j4k8UQ
+ x3OVqle0vWYYwqN+EaUQ3A+LGLBUhYUryCI5fpmqIlHXxG8Ox+pgJRhaEL+cP/+oGAUuvkJH
+X-Authority-Analysis: v=2.4 cv=cOXgskeN c=1 sm=1 tr=0 ts=681b7699 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
+ a=NJ1Z62h-ssRt74_nPL4A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: TYTFDam9UZu2-D5HKDMvEKHVDWXLxeQi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-07_04,2025-05-06_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 clxscore=1011 suspectscore=0 priorityscore=1501 bulkscore=0
+ mlxlogscore=977 adultscore=0 impostorscore=0 malwarescore=0 spamscore=0
+ phishscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505070140
 
-On Wed, May 07, 2025 at 07:29:51AM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> In situations where mapping/unmapping sequence can be controlled by
-> userspace, attempting to map over a region that has not yet been
-> unmapped is an error.  But not something that should spam dmesg.
-> 
-> Now that there is a quirk, we can also drop the selftest_running
-> flag, and use the quirk instead for selftests.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
-> Sending v2 stand-alone, since I'm not quite ready to send a new
-> iteration of the full VM_BIND series.  And with selftest_running
-> removed, I think this patch stands on it's own.  (And maybe there
-> is still time to sneak this in for v6.16, removing an iommu dep
-> for the VM_BIND series in v6.17?)
 
-You should just remove the warn on completely, no other driver does this.
 
-Jason
+On 5/6/2025 11:46 PM, Krzysztof Kozlowski wrote:
+> On 06/05/2025 18:37, Nitin Rawat wrote:
+>> Disable UFS low power mode on emulation FPGA platforms or other platforms
+> 
+> Why wouldn't you like to test LPM also on FPGA designs? I do not see
+> here correlation.
+
+Hi Krzysztof,
+
+Since the FPGA platform doesn't support UFS Low Power Modes (such as the 
+AutoHibern8 feature specified in the UFS specification), I have included 
+this information in the hardware description (i.e dts).
+
+Thanks,
+Nitin
+
+> 
+>> where it is either unsupported or power efficiency is not a critical
+>> requirement.
+> 
+> That's a policy, not hardware, thus not suitable for DT.
+> 
+> Best regards,
+> Krzysztof
+
 
