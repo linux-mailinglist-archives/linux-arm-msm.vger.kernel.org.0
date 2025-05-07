@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-57200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09C60AAEEEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 01:01:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 014B3AAEEF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 01:02:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 65755169928
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 23:01:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F48516AEA9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 23:02:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14EF5291899;
-	Wed,  7 May 2025 23:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA3682918D5;
+	Wed,  7 May 2025 23:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HVwUwUJy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IC5EE9kS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C673291873;
-	Wed,  7 May 2025 23:01:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8768291893;
+	Wed,  7 May 2025 23:01:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746658887; cv=none; b=TyvWTT3uQeo7UvT/5xLXe9n/FKY0n7fxrlkUFfh0/juljFIxRC7WlytwCh1aM+nzh/2ZgBteQlh8ty/pL2A7vB5Ir4+lQ/mmIz9lmIh/u4k/DkighyD7SghwNHe8mJrzvp6MUEHz/rexj4hpFR8a5xIbUgPQkku+SEaxAN1nF7E=
+	t=1746658889; cv=none; b=VOJwdGjcpifmEDbmvu+i04TnBd/0Go1yMaUNylFNDJBUY+5UYRhQQowYifS7VGptKhhxBzYwz1w0Gge3OewtryyNlJjFVnmO1JVzgvZXiVRlOr8K/ukjA/h59CLY9ulXCU0RQIcqujpIjL9OS9Y6BevMLQCJqfG3tboGN7cuFyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746658887; c=relaxed/simple;
-	bh=5LWZAlBlmyrjEYNRJR31J7AejGgUYHx9K8u3TxXYFrE=;
+	s=arc-20240116; t=1746658889; c=relaxed/simple;
+	bh=BC/pT7+dNFQTyFJU7rdevnzP3IxD2GIkgQiwuZgznF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BlK7R6TqjaJqSnUPydzHPjtkQ002YNDFYtGkSUveNQCK25RP+lNZxjeU4cbD694m+gRJn4tKp0O4UQajm8fElviVf9Bqqa8FKDLzAnpBRgowWygXLCIIm0zUoPAvCav5Yjz9yfZdnVrIi1vLk1+raQhUBOWnn7WvKJqephSA0Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HVwUwUJy; arc=none smtp.client-ip=209.85.208.45
+	 MIME-Version:Content-Type; b=MrYOv/YClfrIsHmUQdqyeMEaY43bPoIlSvOqE1/yj08iYHkY48d1I1oJmBfzlmdJ5V18KGutbMsQcgmi9QdbJUGW4dPkrQ5h3LzJ8IxmpXrFtq29EdGM7v/syGgG8L5YBg7bQTioUZAayNNwdKEVfZZqtO28anJSQQOnLqYat1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IC5EE9kS; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5f4d0da2d2cso600160a12.3;
-        Wed, 07 May 2025 16:01:25 -0700 (PDT)
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5fc5bc05f99so355749a12.3;
+        Wed, 07 May 2025 16:01:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746658884; x=1747263684; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746658886; x=1747263686; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dxQS7tOaIlzd4BMqHG01qmudk8XV5+9z00a0W+A4Kng=;
-        b=HVwUwUJyJXMMOVhpi8KnxdZgOTkkmyoiDTrrWe44mnQhN2Pk0HWuJ2BBgumcnGfEYa
-         WtGh8xNr6ZCdzkwsXgiVjcdSllZnaNCAy0lYYA193A6gJD7AN2svF4aJ5LLpqhytdnOA
-         BgPgZP5EIYfQw1Is5Uj1wGDeES223AnFuxqnPxUSVQ6W/TV4uL/wqQfsf//9vxaKY41f
-         5f4yg6U9IvkYTygkaVWEfKt/QdACZ0PwoNwj2WD90KfQcN7OQIxIfse6Fcyp2T5i1bhs
-         +FgUZ5fxpxxExSFsDPGaX7tQ62mD47QEX3mQaa+lP1RCm+Pz7xMJUAATU4Hs24f41Qp6
-         92yg==
+        bh=PVpb7+CUL0xlsyVNYrdBfV2De+Kf2gFS5RjhAJ27WRo=;
+        b=IC5EE9kSVbJ4gVLVAZ8sbbCFtLY8V1ywYfcb/3vm3O6N6t8iVy80RFkC0vIs+G4hlR
+         apgW3IN8pDL9C3Nb3kP6I2U3QUISb9gmYQiNSaf3X9xv8a6h4B1XMTDlCUw1xNEpPhGq
+         G0NSoIGT4t7XaI9WJH5G9pDZQ1CiibDIm+T7wXuCn/F85HQ5X2UZES7k9XCoJa2lRswb
+         xbLZTj3fCq7tC1x0sGMAmhjnkxkiCzBfFBLP2OOBOl9ETopO5XEJKE89h7xFFS+ftWF2
+         0nSbzgUIF03ObmpusTXLFB31/sLK3nUsHTx7xY2XKXCNnMVfW33icvmJhAulhLUa7NeG
+         llXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746658884; x=1747263684;
+        d=1e100.net; s=20230601; t=1746658886; x=1747263686;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dxQS7tOaIlzd4BMqHG01qmudk8XV5+9z00a0W+A4Kng=;
-        b=CcmuJchqU8ssC8NRoPRWm36bmZ5Y0ro1/cJdg6DIj853YF27bHIfD33D9BQkrJujqO
-         CDR6iBzh5ezo1gR2i0lfHlWLopsBiBKlge62pveEW5zqYbtU9gsTA9qoniIsPPCEaseu
-         u42GAhYZ1oOUmeRb/Wq7DfcLPkSlqUAmlfowKnmhpefmeF5yxjO8cKPtsT/pAv2qxGSo
-         4YFoNzSWTxj8hsgeCDdzyuraBmgP/kL3GV36Z9QmMCPj6aeMhiRqUb3qYUX6lJ53SuA4
-         kgfakKTyf1O95OzCa7NJ0yICiTlhXJZsm9m9nIHiiEiIgx61cKlMp02MLus6gIyBox8X
-         esew==
-X-Forwarded-Encrypted: i=1; AJvYcCUbeROicxdbGKu3Kf6jTPKl/tH1QMDG5zLz68q1CqUGD5PWN5jB63jsLHrNdzxQin3qwhXs0PY+fZ94FE6r@vger.kernel.org, AJvYcCVF9GW4Bxuol1KRmFHGzq2lk5nXp9A7Ehsmt71X3vNaX8PxJh0pTBlhnDqW0EO6Gj88o7olnywfl+DzHYAs@vger.kernel.org
-X-Gm-Message-State: AOJu0YypW0ifn/mcXj0NQvD77ExYx8KeRj/TGr3FSbJ7uNWBdndQANwu
-	v3lBb9NMn9QJ+Xs1MzbIX8gU8lyXdSn6E3dF1ZU6IE1mQoXTQus=
-X-Gm-Gg: ASbGncuFcORDeVJ3sxm4722NFHphki2m39n/uVvgYuWswSEw+6+jW4UBgLhz4Q/4Wpu
-	MTcoRTr04uvE8A6U34LyO4rbbSMKI4etlevfyI3Uvr/7v0gEcIM/dGZC7SgtDhThVkJH/XiOVR2
-	VsK0vIW0OqbvdzGplhE75KTrS8aAweMGKcM+vmuESQgTlwgY9L42v7yIWz9QxqxMtjp0ja4TY8l
-	+ct0Jv06d5zsrKT7CbQREmtZ2eexBkUvgcJ1/tc8w9MzpehRAEdkvemkZa+LehrIxZWoA3oPFdh
-	3zOcLXPECWNOHQuazJZ2xBxPmD87UA4cLV6jcuaZVhiESA==
-X-Google-Smtp-Source: AGHT+IEyX/wcOP+2S5z9Ne55o2Yz4W9nj5lYP3VfA39BdFejfpDFFTAzXqQjqXit0YuAUi1TM0lHtw==
-X-Received: by 2002:a05:6402:1e90:b0:5f8:357c:d58c with SMTP id 4fb4d7f45d1cf-5fbe9fde8d8mr4538375a12.34.1746658883762;
-        Wed, 07 May 2025 16:01:23 -0700 (PDT)
+        bh=PVpb7+CUL0xlsyVNYrdBfV2De+Kf2gFS5RjhAJ27WRo=;
+        b=vEjo1ZZPMmBsyeFCeNCCob7dFo0LlmSE4YdXdHjaRMpEznLImCvOAGT8iVB11v9Y27
+         yp1vc3A1vT0ihhi0+UtMVGzWaWef7ULabM16XG1gg37xnFrJeElN8tCVhKJZWFYr5EP1
+         SKnXza5XsM7DJpGLX65PygJphtY6BPge73/MDrNtDOW+oTj/GjTpZBbsZLyvkT9OWdZ4
+         f1iTmp1kJ8+XQzmo4H/YHwYxwrqzLeH0AAun1X02EbP4y1GM5dI5ltIOWhoxM5mqy9G8
+         wxPtDybAlj/kMReZBKECKtu5ES3iGSiIS0Jf818x5FtcIsK5ncQAW+WmbYJgOEJlnB4E
+         GVUw==
+X-Forwarded-Encrypted: i=1; AJvYcCUoly+DgBTwRr73hn+qYtQP0qDeSCz8fI/+A0IaXMbO7JZoIGGA7tAfFocBEzH0J/Sasdpcw9M6hF8N7+Px@vger.kernel.org, AJvYcCVksSj8b1NIywwIhxtWNzM4KlPIMubpjVfk8yinK6gT3i1FK+BMJOYQb5E+lr+7mB62wI3Z/sjyvJtliiqK@vger.kernel.org
+X-Gm-Message-State: AOJu0YzCIQydJvHn2Y1T3tG7sjw8sbGr/FZcLvCMz++TjDzv+MH/yXnh
+	8eWKhjWogfxAEAmyOmNMqKkgZ9uUaK0ALLytSYXHy6ok7RzPXfy7vdv/ZILzFw==
+X-Gm-Gg: ASbGncsLK4UNFU4J+bQ88OATF6VJi5eqyVZzT0Sfqs97rmAAR+ofCdAhD3fJYh8PEYK
+	MeNL0NVc7lPg5+gmtHyyt0PR7aP7S1/SVsU3AW8+0PR/7/S1SgLyJRNV875FoGP874r3T+xCj+J
+	vDl9tQqTQANyOImoqXSdY0rnoVhW22ewnrE27cItuWCCfuYmPynwqS0ffxi3CmEJTTO3Y0FahBE
+	jYt9kbKrrwxP3zZv1J9ZfOeFICqQ+ZzVmkW3QGt7tsSatuRiTJbc3Mi0xf+7nTqIgeobulw8K83
+	FmD83NBJ1Aq+bkXzQ+55qIINOXfK0BfHpytXUlPXZIw80g==
+X-Google-Smtp-Source: AGHT+IEjwSurPUUJmicmXJh9IZH04pLXCjBbDPL14W8ZKg0fSQTlEKOgSEwPGjyuHAyHPng+4en8rA==
+X-Received: by 2002:a05:6402:2689:b0:5f8:afab:9e14 with SMTP id 4fb4d7f45d1cf-5fbe9fa810amr4628252a12.28.1746658885593;
+        Wed, 07 May 2025 16:01:25 -0700 (PDT)
 Received: from alex-x1.lan ([84.226.118.249])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5fa777c8b12sm10507906a12.24.2025.05.07.16.01.22
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5fa777c8b12sm10507906a12.24.2025.05.07.16.01.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 May 2025 16:01:23 -0700 (PDT)
+        Wed, 07 May 2025 16:01:24 -0700 (PDT)
 From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Dmitry Baryshkov <lumag@kernel.org>,
@@ -88,12 +88,13 @@ Cc: Rob Clark <robdclark@gmail.com>,
 	abel.vesa@linaro.org,
 	johan@kernel.org,
 	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v5 3/4] drm/msm/dp: Prepare for link training per-segment for LTTPRs
-Date: Thu,  8 May 2025 00:59:01 +0200
-Message-ID: <20250507230113.14270-4-alex.vinarskis@gmail.com>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Stefan Schmidt <stefan.schmidt@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH v5 4/4] drm/msm/dp: Introduce link training per-segment for LTTPRs
+Date: Thu,  8 May 2025 00:59:02 +0200
+Message-ID: <20250507230113.14270-5-alex.vinarskis@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20250507230113.14270-1-alex.vinarskis@gmail.com>
 References: <20250507230113.14270-1-alex.vinarskis@gmail.com>
@@ -103,77 +104,345 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Per-segment link training requires knowing the number of LTTPRs
-(if any) present. Store the count during LTTPRs' initialization.
+DisplayPort requires per-segment link training when LTTPR are switched
+to non-transparent mode, starting with LTTPR closest to the source.
+Only when each segment is trained individually, source can link train
+to sink.
+
+Implement per-segment link traning when LTTPR(s) are detected, to
+support external docking stations. On higher level, changes are:
+
+* Pass phy being trained down to all required helpers
+* Run CR, EQ link training per phy
+* Set voltage swing, pre-emphasis levels per phy
+
+Since at least some LTTPRs (eg. Parade PS8830) do not correctly report
+voltage-swing, pre-emphasis level 3 support, always assume level 3 is
+supported. This is permitted under DP 2.1(a) section 3.6.7.2 stating
+that LTTPR shall set its transmitter levels as close as possible to
+those requested by the DPTX, if the DPTX sets the voltage swing or
+pre-emphasis to a level that the LTTPR does not support. It shall be
+noted that LTTPR’s level choosing is implementation-specific.
+
+This ensures successful link training both when connected directly to
+the monitor (single LTTPR onboard most X1E laptops) and via the docking
+station (at least two LTTPRs).
 
 Fixes: 72d0af4accd9 ("drm/msm/dp: Add support for LTTPR handling")
 
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 Tested-by: Jessica Zhang <quic_jesszhan@quicinc.com> # SA8775P
 Tested-by: Johan Hovold <johan+linaro@kernel.org>
 Tested-by: Rob Clark <robdclark@gmail.com>
+Tested-by: Stefan Schmidt <stefan.schmidt@linaro.org>
+Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 17 +++++++++++------
- drivers/gpu/drm/msm/dp/dp_link.h    |  1 +
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 126 ++++++++++++++++++++++---------
+ 1 file changed, 89 insertions(+), 37 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 5c57c1d7ac60..ab8c1f19dcb4 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -367,16 +367,21 @@ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *d
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index d8633a596f8d..35b28c2fcd64 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1034,10 +1034,12 @@ static int msm_dp_ctrl_set_vx_px(struct msm_dp_ctrl_private *ctrl,
  	return 0;
  }
  
--static void msm_dp_display_lttpr_init(struct msm_dp_display_private *dp, u8 *dpcd)
-+static int msm_dp_display_lttpr_init(struct msm_dp_display_private *dp, u8 *dpcd)
+-static int msm_dp_ctrl_update_vx_px(struct msm_dp_ctrl_private *ctrl)
++static int msm_dp_ctrl_update_phy_vx_px(struct msm_dp_ctrl_private *ctrl,
++					enum drm_dp_phy dp_phy)
  {
--	int rc;
-+	int rc, lttpr_count;
+ 	struct msm_dp_link *link = ctrl->link;
+-	int ret = 0, lane, lane_cnt;
++	int lane, lane_cnt, reg;
++	int ret = 0;
+ 	u8 buf[4];
+ 	u32 max_level_reached = 0;
+ 	u32 voltage_swing_level = link->phy_params.v_level;
+@@ -1075,8 +1077,13 @@ static int msm_dp_ctrl_update_vx_px(struct msm_dp_ctrl_private *ctrl)
  
- 	if (drm_dp_read_lttpr_common_caps(dp->aux, dpcd, dp->link->lttpr_common_caps))
--		return;
-+		return 0;
- 
--	rc = drm_dp_lttpr_init(dp->aux, drm_dp_lttpr_count(dp->link->lttpr_common_caps));
--	if (rc)
-+	lttpr_count = drm_dp_lttpr_count(dp->link->lttpr_common_caps);
-+	rc = drm_dp_lttpr_init(dp->aux, lttpr_count);
-+	if (rc) {
- 		DRM_ERROR("failed to set LTTPRs transparency mode, rc=%d\n", rc);
-+		return 0;
-+	}
+ 	drm_dbg_dp(ctrl->drm_dev, "sink: p|v=0x%x\n",
+ 			voltage_swing_level | pre_emphasis_level);
+-	ret = drm_dp_dpcd_write(ctrl->aux, DP_TRAINING_LANE0_SET,
+-					buf, lane_cnt);
 +
-+	return lttpr_count;
++	if (dp_phy == DP_PHY_DPRX)
++		reg = DP_TRAINING_LANE0_SET;
++	else
++		reg = DP_TRAINING_LANE0_SET_PHY_REPEATER(dp_phy);
++
++	ret = drm_dp_dpcd_write(ctrl->aux, reg, buf, lane_cnt);
+ 	if (ret == lane_cnt)
+ 		ret = 0;
+ 
+@@ -1084,9 +1091,10 @@ static int msm_dp_ctrl_update_vx_px(struct msm_dp_ctrl_private *ctrl)
  }
  
- static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
-@@ -390,7 +395,7 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
- 	if (rc)
+ static bool msm_dp_ctrl_train_pattern_set(struct msm_dp_ctrl_private *ctrl,
+-		u8 pattern)
++		u8 pattern, enum drm_dp_phy dp_phy)
+ {
+ 	u8 buf;
++	int reg;
+ 	int ret = 0;
+ 
+ 	drm_dbg_dp(ctrl->drm_dev, "sink: pattern=%x\n", pattern);
+@@ -1096,7 +1104,12 @@ static bool msm_dp_ctrl_train_pattern_set(struct msm_dp_ctrl_private *ctrl,
+ 	if (pattern && pattern != DP_TRAINING_PATTERN_4)
+ 		buf |= DP_LINK_SCRAMBLING_DISABLE;
+ 
+-	ret = drm_dp_dpcd_writeb(ctrl->aux, DP_TRAINING_PATTERN_SET, buf);
++	if (dp_phy == DP_PHY_DPRX)
++		reg = DP_TRAINING_PATTERN_SET;
++	else
++		reg = DP_TRAINING_PATTERN_SET_PHY_REPEATER(dp_phy);
++
++	ret = drm_dp_dpcd_writeb(ctrl->aux, reg, buf);
+ 	return ret == 1;
+ }
+ 
+@@ -1115,12 +1128,16 @@ static int msm_dp_ctrl_read_link_status(struct msm_dp_ctrl_private *ctrl,
+ }
+ 
+ static int msm_dp_ctrl_link_train_1(struct msm_dp_ctrl_private *ctrl,
+-			int *training_step)
++			int *training_step, enum drm_dp_phy dp_phy)
+ {
++	int delay_us;
+ 	int tries, old_v_level, ret = 0;
+ 	u8 link_status[DP_LINK_STATUS_SIZE];
+ 	int const maximum_retries = 4;
+ 
++	delay_us = drm_dp_read_clock_recovery_delay(ctrl->aux,
++						    ctrl->panel->dpcd, dp_phy, false);
++
+ 	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
+ 
+ 	*training_step = DP_TRAINING_1;
+@@ -1129,18 +1146,19 @@ static int msm_dp_ctrl_link_train_1(struct msm_dp_ctrl_private *ctrl,
+ 	if (ret)
+ 		return ret;
+ 	msm_dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_1 |
+-		DP_LINK_SCRAMBLING_DISABLE);
++		DP_LINK_SCRAMBLING_DISABLE, dp_phy);
+ 
+-	ret = msm_dp_ctrl_update_vx_px(ctrl);
++	msm_dp_link_reset_phy_params_vx_px(ctrl->link);
++	ret = msm_dp_ctrl_update_phy_vx_px(ctrl, dp_phy);
+ 	if (ret)
+ 		return ret;
+ 
+ 	tries = 0;
+ 	old_v_level = ctrl->link->phy_params.v_level;
+ 	for (tries = 0; tries < maximum_retries; tries++) {
+-		drm_dp_link_train_clock_recovery_delay(ctrl->aux, ctrl->panel->dpcd);
++		fsleep(delay_us);
+ 
+-		ret = msm_dp_ctrl_read_link_status(ctrl, link_status);
++		ret = drm_dp_dpcd_read_phy_link_status(ctrl->aux, dp_phy, link_status);
+ 		if (ret)
+ 			return ret;
+ 
+@@ -1161,7 +1179,7 @@ static int msm_dp_ctrl_link_train_1(struct msm_dp_ctrl_private *ctrl,
+ 		}
+ 
+ 		msm_dp_link_adjust_levels(ctrl->link, link_status);
+-		ret = msm_dp_ctrl_update_vx_px(ctrl);
++		ret = msm_dp_ctrl_update_phy_vx_px(ctrl, dp_phy);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -1213,21 +1231,31 @@ static int msm_dp_ctrl_link_lane_down_shift(struct msm_dp_ctrl_private *ctrl)
+ 	return 0;
+ }
+ 
+-static void msm_dp_ctrl_clear_training_pattern(struct msm_dp_ctrl_private *ctrl)
++static void msm_dp_ctrl_clear_training_pattern(struct msm_dp_ctrl_private *ctrl,
++					       enum drm_dp_phy dp_phy)
+ {
+-	msm_dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_DISABLE);
+-	drm_dp_link_train_channel_eq_delay(ctrl->aux, ctrl->panel->dpcd);
++	int delay_us;
++
++	msm_dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_DISABLE, dp_phy);
++
++	delay_us = drm_dp_read_channel_eq_delay(ctrl->aux,
++						ctrl->panel->dpcd, dp_phy, false);
++	fsleep(delay_us);
+ }
+ 
+ static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
+-			int *training_step)
++			int *training_step, enum drm_dp_phy dp_phy)
+ {
++	int delay_us;
+ 	int tries = 0, ret = 0;
+ 	u8 pattern;
+ 	u32 state_ctrl_bit;
+ 	int const maximum_retries = 5;
+ 	u8 link_status[DP_LINK_STATUS_SIZE];
+ 
++	delay_us = drm_dp_read_channel_eq_delay(ctrl->aux,
++						ctrl->panel->dpcd, dp_phy, false);
++
+ 	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
+ 
+ 	*training_step = DP_TRAINING_2;
+@@ -1247,12 +1275,12 @@ static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
+ 	if (ret)
+ 		return ret;
+ 
+-	msm_dp_ctrl_train_pattern_set(ctrl, pattern);
++	msm_dp_ctrl_train_pattern_set(ctrl, pattern, dp_phy);
+ 
+ 	for (tries = 0; tries <= maximum_retries; tries++) {
+-		drm_dp_link_train_channel_eq_delay(ctrl->aux, ctrl->panel->dpcd);
++		fsleep(delay_us);
+ 
+-		ret = msm_dp_ctrl_read_link_status(ctrl, link_status);
++		ret = drm_dp_dpcd_read_phy_link_status(ctrl->aux, dp_phy, link_status);
+ 		if (ret)
+ 			return ret;
+ 
+@@ -1262,7 +1290,7 @@ static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
+ 		}
+ 
+ 		msm_dp_link_adjust_levels(ctrl->link, link_status);
+-		ret = msm_dp_ctrl_update_vx_px(ctrl);
++		ret = msm_dp_ctrl_update_phy_vx_px(ctrl, dp_phy);
+ 		if (ret)
+ 			return ret;
+ 
+@@ -1271,9 +1299,32 @@ static int msm_dp_ctrl_link_train_2(struct msm_dp_ctrl_private *ctrl,
+ 	return -ETIMEDOUT;
+ }
+ 
++static int msm_dp_ctrl_link_train_1_2(struct msm_dp_ctrl_private *ctrl,
++				      int *training_step, enum drm_dp_phy dp_phy)
++{
++	int ret;
++
++	ret = msm_dp_ctrl_link_train_1(ctrl, training_step, dp_phy);
++	if (ret) {
++		DRM_ERROR("link training #1 on phy %d failed. ret=%d\n", dp_phy, ret);
++		return ret;
++	}
++	drm_dbg_dp(ctrl->drm_dev, "link training #1 on phy %d successful\n", dp_phy);
++
++	ret = msm_dp_ctrl_link_train_2(ctrl, training_step, dp_phy);
++	if (ret) {
++		DRM_ERROR("link training #2 on phy %d failed. ret=%d\n", dp_phy, ret);
++		return ret;
++	}
++	drm_dbg_dp(ctrl->drm_dev, "link training #2 on phy %d successful\n", dp_phy);
++
++	return 0;
++}
++
+ static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
+ 			int *training_step)
+ {
++	int i;
+ 	int ret = 0;
+ 	const u8 *dpcd = ctrl->panel->dpcd;
+ 	u8 encoding[] = { 0, DP_SET_ANSI_8B10B };
+@@ -1286,8 +1337,6 @@ static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
+ 	link_info.rate = ctrl->link->link_params.rate;
+ 	link_info.capabilities = DP_LINK_CAP_ENHANCED_FRAMING;
+ 
+-	msm_dp_link_reset_phy_params_vx_px(ctrl->link);
+-
+ 	msm_dp_aux_link_configure(ctrl->aux, &link_info);
+ 
+ 	if (drm_dp_max_downspread(dpcd))
+@@ -1302,24 +1351,27 @@ static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
+ 				&assr, 1);
+ 	}
+ 
+-	ret = msm_dp_ctrl_link_train_1(ctrl, training_step);
++	for (i = ctrl->link->lttpr_count - 1; i >= 0; i--) {
++		enum drm_dp_phy dp_phy = DP_PHY_LTTPR(i);
++
++		ret = msm_dp_ctrl_link_train_1_2(ctrl, training_step, dp_phy);
++		msm_dp_ctrl_clear_training_pattern(ctrl, dp_phy);
++
++		if (ret)
++			break;
++	}
++
+ 	if (ret) {
+-		DRM_ERROR("link training #1 failed. ret=%d\n", ret);
++		DRM_ERROR("link training of LTTPR(s) failed. ret=%d\n", ret);
+ 		goto end;
+ 	}
+ 
+-	/* print success info as this is a result of user initiated action */
+-	drm_dbg_dp(ctrl->drm_dev, "link training #1 successful\n");
+-
+-	ret = msm_dp_ctrl_link_train_2(ctrl, training_step);
++	ret = msm_dp_ctrl_link_train_1_2(ctrl, training_step, DP_PHY_DPRX);
+ 	if (ret) {
+-		DRM_ERROR("link training #2 failed. ret=%d\n", ret);
++		DRM_ERROR("link training on sink failed. ret=%d\n", ret);
+ 		goto end;
+ 	}
+ 
+-	/* print success info as this is a result of user initiated action */
+-	drm_dbg_dp(ctrl->drm_dev, "link training #2 successful\n");
+-
+ end:
+ 	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
+ 
+@@ -1636,7 +1688,7 @@ static int msm_dp_ctrl_link_maintenance(struct msm_dp_ctrl_private *ctrl)
+ 	if (ret)
  		goto end;
  
--	msm_dp_display_lttpr_init(dp, dpcd);
-+	dp->link->lttpr_count = msm_dp_display_lttpr_init(dp, dpcd);
+-	msm_dp_ctrl_clear_training_pattern(ctrl);
++	msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
  
- 	rc = msm_dp_panel_read_sink_caps(dp->panel, connector);
- 	if (rc)
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.h b/drivers/gpu/drm/msm/dp/dp_link.h
-index c47d75cfc720..ba47c6d19fbf 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.h
-+++ b/drivers/gpu/drm/msm/dp/dp_link.h
-@@ -62,6 +62,7 @@ struct msm_dp_link_phy_params {
+ 	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_SEND_VIDEO);
  
- struct msm_dp_link {
- 	u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE];
-+	int lttpr_count;
+@@ -1660,7 +1712,7 @@ static bool msm_dp_ctrl_send_phy_test_pattern(struct msm_dp_ctrl_private *ctrl)
+ 		return false;
+ 	}
+ 	msm_dp_catalog_ctrl_send_phy_pattern(ctrl->catalog, pattern_requested);
+-	msm_dp_ctrl_update_vx_px(ctrl);
++	msm_dp_ctrl_update_phy_vx_px(ctrl, DP_PHY_DPRX);
+ 	msm_dp_link_send_test_response(ctrl->link);
  
- 	u32 sink_request;
- 	u32 test_response;
+ 	pattern_sent = msm_dp_catalog_ctrl_read_phy_pattern(ctrl->catalog);
+@@ -1902,7 +1954,7 @@ int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl)
+ 			}
+ 
+ 			/* stop link training before start re training  */
+-			msm_dp_ctrl_clear_training_pattern(ctrl);
++			msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
+ 		}
+ 
+ 		rc = msm_dp_ctrl_reinitialize_mainlink(ctrl);
+@@ -1926,7 +1978,7 @@ int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl)
+ 		 * link training failed
+ 		 * end txing train pattern here
+ 		 */
+-		msm_dp_ctrl_clear_training_pattern(ctrl);
++		msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
+ 
+ 		msm_dp_ctrl_deinitialize_mainlink(ctrl);
+ 		rc = -ECONNRESET;
+@@ -1997,7 +2049,7 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train
+ 		msm_dp_ctrl_link_retrain(ctrl);
+ 
+ 	/* stop txing train pattern to end link training */
+-	msm_dp_ctrl_clear_training_pattern(ctrl);
++	msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
+ 
+ 	/*
+ 	 * Set up transfer unit values and set controller state to send
 -- 
 2.45.2
 
