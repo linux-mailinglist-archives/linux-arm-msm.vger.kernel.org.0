@@ -1,190 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-57128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AD00AADBF3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 11:56:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F87AAADC07
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 12:00:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9C03177DA7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 09:56:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 450379A2A0E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 09:59:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A399A204090;
-	Wed,  7 May 2025 09:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3239920E005;
+	Wed,  7 May 2025 09:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JMe13eXE"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="nMYfWa+6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E39202C31;
-	Wed,  7 May 2025 09:56:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB52D20C46F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 May 2025 09:59:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746611808; cv=none; b=ggYPCcH897+ovF/2skZ5MhXC0NeX0jGNDceKljv2OnCP/nBEz+8uihiHyNEW7qzzBalcDmYvd7V9uAY4SXC03N3ozr9A9yP6kR/mWFaObbIkJedgt0wRvkD8msvp6mHP7pZmBQv3GWcU+ZTsngAm1JyGmMcbvrMfHWO3CZZqLcc=
+	t=1746611965; cv=none; b=oi5AwhhUXcbEPBiimWLE6+MFzPM/8RJuNJD6Jw1pYwvAvvh3fJbLlGWpUMVzHGCAOLU7gFd9mUx4c4t0J4nKeznF5YR/mH//j+0rXbVMGR9Z4HsNzppuiu/s2UPoX3A5DI8ki84ZT5BQaO/9vIFXYlKPHYYgq2L3DdqCOny/uMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746611808; c=relaxed/simple;
-	bh=0MgyHT40Kzwm56PZc1QIu5bnfmCzRdNV6JD2WgXp0VQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=niD5QTA8DpVfortyR1fLMm40VsHgTgBwO8NxgIExXqmQP+T4lEUhed61Qj16SBOZN5y6a/b5HmxtJOAOT13qLeGY7rocW+Xl28X7odGy9va6WlPIuoDUgX/upxDOWkYCQL3Z76ckSOU8icqiaxuFSTRCUCpbulptLV4giWUnf2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JMe13eXE; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5471H8o6021660;
-	Wed, 7 May 2025 09:56:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	i3WjVEP76mf0rqTTBuk0vFXV+/2ZlGwZiVlYgOnFqxA=; b=JMe13eXEg2+Y46NC
-	KoMLRzOMY8Ja4LHmwpF2M/9yWvze3sx1kTIaGboAoKB+QUS93YOL1fvXIBZrWVI/
-	hDr5ywtIBXI5TomzdiUzpMhZaaezHt23mDWqB0DqvPBSylGfN6xYZBU/tl1N7QWb
-	bwectKQ2O0Ddkqq2KWp57vS4Obtf1svihx5MZ8ASd7ituMK3y2UXI8E3cSMnc4fK
-	tFBEIC8j9fuuLd2xj7w323+jZv2fmwBl0EgNvrN/mQ+c3v1zAGypQ52reGUOEbbM
-	nhMXeYsM6vgsUI6T0eFQ3LZ+jC7xWND845oYcP7sQH/TlNiOoQLy089UfJCRompF
-	uB3PKg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46fdwtv2k4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 May 2025 09:56:36 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5479uaAP018854
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 May 2025 09:56:36 GMT
-Received: from [10.239.29.178] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 7 May 2025
- 02:56:28 -0700
-Message-ID: <c91c5357-464b-4ecc-96a5-c617048f73e5@quicinc.com>
-Date: Wed, 7 May 2025 17:56:12 +0800
+	s=arc-20240116; t=1746611965; c=relaxed/simple;
+	bh=CVOjiks63kN4nyx81zcnv5yZgTHTFsD0uSpOBIumpbQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=E7CeP/gZK3h70vQ4IohcIdxEZqaIpsipXl/7a/5/Reht6xPQyec0gTmWE88bvsA24jUXfCvYb7l2qsq6SP036JnOulTi0xP4ohRI5rUqgI8sluFrOooxw7v8YCYEU8vpK30QQqxeQK8wuV34nkhL3+YGJ8T0ECIIRfah+YWbmmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=nMYfWa+6; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ace98258d4dso990462166b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 May 2025 02:59:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1746611961; x=1747216761; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gRBnlzG3csY3q59CrD+HieNRPhlOZlDO/35hP9x7Gow=;
+        b=nMYfWa+6GVUJ2BdwZE1phw3EIG0XJ+Q9ZKMBbk9RA6BptuZZhd8r7gPWbRJzFqZ1j0
+         ahRnaAH+Uc/dVroauVBs2nJnIYFCDGrM2YU85os6stQB8ieKGKmXTvUJJug1iMX724dp
+         WcgzjWHs4NxO58j+ffCnfuWQHEGX+rkEIcO54FE0s6tiXD+gIjNU1mzMlbzsIpKKl49i
+         GoW+ljFiwkK558SmCGrs9r3ZNz694BWHIWCbaX5mNCWbYWe5rJQmSO+HsRoNVjfLBE8x
+         YYka+lDq8VXpG5QuNdZTLZ2TYQ2qMPQD2CpLPg+dbkJ096T9naQAO+Z19YWDRb89psBj
+         QTLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746611961; x=1747216761;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=gRBnlzG3csY3q59CrD+HieNRPhlOZlDO/35hP9x7Gow=;
+        b=BOIA/jrdlPhK0L22lqBWFTQW9GG++j06qqhFyA5tZYPnjlk6rpi6P8+q7XmI07ETnw
+         LUebWiJrvxzvw1ORNb0ETe/u4UU4bS3ZZz8AIect5GfWh9LXwcMFJUaPt0Nd42XWbe80
+         RWgtqp0MkRbaDmsxSKsyt4uz+2VLDfaysRuqMrn3WdqJW2DNZreEe2y+3e+h2LI77ivi
+         U98y0iWcfG7rA7Psp6DZSvFQkTmgQYXd03eZivVclhhWJNByOybL0S27lYiFXxC0vmeQ
+         +W/rJ15niqAO8oxkOCIoHPZiaFReP9CM+HcMxJ8a3VbhjNwTVrSnKpppFDn70Ea9ysfB
+         mbAQ==
+X-Gm-Message-State: AOJu0Yw7LWFsGCH0J0lmg5bZP8+hA5CiSJ1/mXn0QEOqPP2QvGMBAEWB
+	NRPsGFJShbAQeYfbvqRv973cODJbVtZ6Jk6jUQkYDbMyTxgZr0GQkyXlQqXfEiI=
+X-Gm-Gg: ASbGncurOs31l1NsEwDF9GE5WfcPx57q5mzEX5cZlDmY+PcUiS/U9z/5ichNPaxrR7s
+	Fr9m/JLs3f9W9ihAjDPNYG41HuDt2gjVtQaXF0/FO2ZoQNqwckbYGW4ylyea/CEGR2VMp92aqrX
+	sxTvcu2MpmginWRGbrpqh4iLyvO3LOm/OJ18WjAS395WhgszGBwP0MzKP+3y5LAAcugoP5Uqk7x
+	8DaLRJuAJ0PTlRMmVT+ZfynnaHZmctTY530xhtpDIbyg+SJnjO6LcJWtCXOphqKWAO6Q9W7W1K5
+	Wwrj8ECEpiAOcRN1hRWYaLmJSbiAVQVhOcTgojBLzuJnlsGdmo/8dq6Xlgb7VNDGxFEFnHVq7aU
+	R7T8MGsOrXw==
+X-Google-Smtp-Source: AGHT+IETi13rF9ppf4Lq9nZexKfgosA14aFfsxFA6IPZoLnGnfZ4smw0IgYrqh4falCvDOZVHa7FtA==
+X-Received: by 2002:a17:907:9814:b0:ad1:8dde:5b7a with SMTP id a640c23a62f3a-ad1e8d055a7mr240311766b.43.1746611961036;
+        Wed, 07 May 2025 02:59:21 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad1891490afsm874478866b.23.2025.05.07.02.59.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 May 2025 02:59:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/6] dt-bindings: PCI: qcom,pcie-sa8775p: document
- qcs8300
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Ziyue Zhang
-	<quic_ziyuzhan@quicinc.com>
-CC: <vkoul@kernel.org>, <kishon@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <neil.armstrong@linaro.org>,
-        <abel.vesa@linaro.org>, <manivannan.sadhasivam@linaro.org>,
-        <lpieralisi@kernel.org>, <kw@linux.com>, <bhelgaas@google.com>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <quic_krichai@quicinc.com>,
-        <quic_vbadigan@quicinc.com>
-References: <20250507031019.4080541-1-quic_ziyuzhan@quicinc.com>
- <20250507031019.4080541-3-quic_ziyuzhan@quicinc.com>
- <20250507-quixotic-handsome-wallaby-4560e3@kuoka>
- <8fef4573-0527-44d8-a481-f3271d9ffa33@quicinc.com>
- <01b06e36-823c-4f28-8db5-dc0ee0b4c063@kernel.org>
-Content-Language: en-US
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <01b06e36-823c-4f28-8db5-dc0ee0b4c063@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=VPPdn8PX c=1 sm=1 tr=0 ts=681b2e54 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
- a=dLDUmFIFFNY9evZcgTYA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: SVOMAAcLwkbfVUfj6PlgHnCuWn07ExSi
-X-Proofpoint-ORIG-GUID: SVOMAAcLwkbfVUfj6PlgHnCuWn07ExSi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDA5MiBTYWx0ZWRfX6c1iUg6TOczc
- fkYFtN9r5Ec7tWrDVYsgmT4sPG/QUC3BaDEK0u3D3KRy7QjzXZQHFSwaJ4Ht6ozHiEGCUOkGhNG
- uwNyO9kgdzZNivNepBNY14MZn8qV4zq0RS7+4USXV2HIYREtAgfrLAbZbQUgbjVUNVR3bJFi1t4
- 3IF449tvQURByGxxeVGrU+Be8umFC+jIUHf6QMAFgaSeKl9avP2PmQLrAI3rhemvSb3YWPPxbDh
- GwyOxL2pzTLy036OsDOykgJPzLXKdhJSQUuyslSuHmDntuWb2WwLgvka8/PfKzBCusP9FCssKa0
- noY9EUuiKprTdpB2Cy1n0wPWnl0zK8nE5ZeVOe3jmp+8Fi/TjT2NtH7wUFJCQtKTSTbjIlAqzIs
- pm9fhNMAXpmT2eWbSkmgDxKTNKo0qlCcdqF7MtwJkB0zVjkH8XySFQCYkkPwUufrUjNCFLIN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-07_03,2025-05-06_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 suspectscore=0 adultscore=0 mlxscore=0
- bulkscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 malwarescore=0
- mlxlogscore=995 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505070092
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 07 May 2025 11:59:19 +0200
+Message-Id: <D9PU9LEA7CLT.37IBLZRP90E9S@fairphone.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+ "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>, "James E.J.
+ Bottomley" <James.Bottomley@hansenpartnership.com>, "open list"
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 2/3] scsi: ufs: qcom: Map devfreq OPP freq to UniPro
+ Core Clock freq
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Ziqi Chen" <quic_ziqichen@quicinc.com>, <quic_cang@quicinc.com>,
+ <bvanassche@acm.org>, <mani@kernel.org>, <beanhuo@micron.com>,
+ <avri.altman@wdc.com>, <junwoo80.lee@samsung.com>,
+ <martin.petersen@oracle.com>, <quic_nguyenb@quicinc.com>,
+ <quic_nitirawa@quicinc.com>, <quic_rampraka@quicinc.com>,
+ <neil.armstrong@linaro.org>, <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <20250507074415.2451940-1-quic_ziqichen@quicinc.com>
+ <20250507074415.2451940-3-quic_ziqichen@quicinc.com>
+ <D9PS51XVRKLP.1AHMCRH9CZFWU@fairphone.com>
+ <7c74a395-a8b8-4a12-9ddb-691f28c90885@quicinc.com>
+In-Reply-To: <7c74a395-a8b8-4a12-9ddb-691f28c90885@quicinc.com>
 
-
-On 5/7/2025 4:25 PM, Krzysztof Kozlowski wrote:
-> On 07/05/2025 10:19, Ziyue Zhang wrote:
->> On 5/7/2025 1:10 PM, Krzysztof Kozlowski wrote:
->>> On Wed, May 07, 2025 at 11:10:15AM GMT, Ziyue Zhang wrote:
->>>> Add compatible for qcs8300 platform, with sa8775p as the fallback.
->>>>
->>>> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
->>>> ---
->>>>    .../bindings/pci/qcom,pcie-sa8775p.yaml       | 26 ++++++++++++++-----
->>>>    1 file changed, 19 insertions(+), 7 deletions(-)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml
->>>> index efde49d1bef8..154bb60be402 100644
->>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml
->>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml
->>>> @@ -16,7 +16,12 @@ description:
->>>>    
->>>>    properties:
->>>>      compatible:
->>>> -    const: qcom,pcie-sa8775p
->>>> +    oneOf:
->>>> +      - const: qcom,pcie-sa8775p
->>>> +      - items:
->>>> +          - enum:
->>>> +              - qcom,pcie-qcs8300
->>>> +          - const: qcom,pcie-sa8775p
->>>>    
->>>>      reg:
->>>>        minItems: 6
->>>> @@ -45,7 +50,7 @@ properties:
->>>>    
->>>>      interrupts:
->>>>        minItems: 8
->>>> -    maxItems: 8
->>>> +    maxItems: 9
->>> I don't understand why this is flexible for sa8775p. I assume this
->>> wasn't tested or finished, just like your previous patch suggested.
->>>
->>> Please send complete bindings once you finish them or explain what
->>> exactly changed in the meantime.
->>>
->>> Best regards,
->>> Krzysztof
->> Hi Krzysztof
->> Global interrupt is optional in the PCIe driver. It is not present in
->> the SA8775p PCIe device tree node, but it is required for the QCS8300
-> And hardware?
-
-The PCIe controller on the SA8775p is also capable of generating a global
-interrupt.
->> I did the DTBs and yaml checks before pushing this patch. This is how
->> I became aware that `maxItem` needed to be changed to 9.
-> If it is required for QCS8300, then you are supposed to make it required
-> in the binding for this device. Look at other bindings.
-
-The global interrupt is not mandatory. The PCIe driver can still function
-without this interrupt, but it will offer a better user experience when
-the device is plugged in or removed. On other platforms, the global
-interrupt is also optional, and `minItems` and `maxItems` are set to 8 and
-9 respectively. Please refer to `qcom,pcie - sm8550.yaml`,
-`qcom,pcie - sm8450.yaml`, and `qcom,pcie - x1e80100.yaml`.
+On Wed May 7, 2025 at 11:09 AM CEST, Ziqi Chen wrote:
+> Hi Luca,
 >
-> Best regards,
-> Krzysztof
+> On 5/7/2025 4:19 PM, Luca Weiss wrote:
+>> Hi Ziqi,
+>>=20
+>> On Wed May 7, 2025 at 9:44 AM CEST, Ziqi Chen wrote:
+>>> From: Can Guo <quic_cang@quicinc.com>
+>>>
+>>> On some platforms, the devfreq OPP freq may be different than the unipr=
+o
+>>> core clock freq. Implement ufs_qcom_opp_freq_to_clk_freq() and use it t=
+o
+>>> find the unipro core clk freq.
+>>>
+>>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+>>> Co-developed-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+>>> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+>>> ---
+>>>   drivers/ufs/host/ufs-qcom.c | 81 ++++++++++++++++++++++++++++++++----=
+-
+>>>   1 file changed, 71 insertions(+), 10 deletions(-)
+>>>
+>>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>>> index 7f10926100a5..804c8ccd8d03 100644
+>>> --- a/drivers/ufs/host/ufs-qcom.c
+>>> +++ b/drivers/ufs/host/ufs-qcom.c
+>>>  =20
+>>> +static unsigned long ufs_qcom_opp_freq_to_clk_freq(struct ufs_hba *hba=
+,
+>>> +												   unsigned long freq, char *name)
+>>> +{
+>>> +	struct ufs_clk_info *clki;
+>>> +	struct dev_pm_opp *opp;
+>>> +	unsigned long clk_freq;
+>>> +	int idx =3D 0;
+>>> +	bool found =3D false;
+>>> +
+>>> +	opp =3D dev_pm_opp_find_freq_exact_indexed(hba->dev, freq, 0, true);
+>>> +	if (IS_ERR(opp)) {
+>>> +		dev_err(hba->dev, "Failed to find OPP for exact frequency %lu\n", fr=
+eq);
+>>=20
+>> I'm hitting this print on bootup:
+>>=20
+>> [    0.512515] ufshcd-qcom 1d84000.ufshc: Failed to find OPP for exact f=
+requency 18446744073709551615
+>> [    0.512571] ufshcd-qcom 1d84000.ufshc: Failed to find OPP for exact f=
+requency 18446744073709551615
+>>=20
+>> Doesn't look like it's intended? The number is (2^64 - 1)
+>>=20
+> Yes, this is expected. During link startup, the frequency
+> ULONG_MAX will be passed to ufs_qcom_set_core_clk_ctrl() and
+> ufs_qcom_cfg_timer(). This frequency cannot be found through the API
+> dev_pm_opp_find_freq_exact_indexed(). Therefore, we handle the
+> frequency ULONG_MAX separately within Ufs_qcom_set_core_clk_ctrl()
+> and ufs_qcom_cfg_timer().
+>
+> This print only be print twice during link startup. If you think print
+> such print during bootup is not make sense, I can improve the code and
+> update a new vwesion.
 
--- 
-With best wishes
-Qiang Yu
+I'll let others comment on what should happen but certainly this large
+number looks more like a mistake, like an integer overflow, if you don't
+dig into what this number is supposed to represent.
+
+Perhaps an idea could be to just skip the print (or even more code) for
+ULONG_MAX since an opp for that is not supposed to exist anyways?
+
+I didn't check the code now but for other frequencies this would be an
+actual error I imagine where it should be visible.
+
+Regards
+Luca
+
+>
+> BRs.
+> Ziqi
+>
+>> Regards
+>> Luca
+>>=20
 
 
