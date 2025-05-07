@@ -1,148 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-57061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7E40AAD636
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 08:37:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FFC6AAD63D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 08:38:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D977B1B6861B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 06:38:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5A9913B5B58
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 06:38:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA3652101B7;
-	Wed,  7 May 2025 06:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7A50210F65;
+	Wed,  7 May 2025 06:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="je1iH+Ar"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UwoD3P+7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D87413AA3E;
-	Wed,  7 May 2025 06:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF082139579;
+	Wed,  7 May 2025 06:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746599870; cv=none; b=dj81rUdR6Bgjny0/g/NTXwV26taPnXgjt6Ka14DDVZixm9luCYYkPwY/6YVnbVmRI+kDoP4SW74Ii20gNpNdyaSv4fXcpI6VPk/N/N6uYGuH/60K/fWZQuffNSBwgspF5LfQatS/veT09+/HUbEZS2r/xOWi/uiZNFMn7niPlyc=
+	t=1746599921; cv=none; b=G1vRAKyzYoRLPvt6eKKIoxkcj874B3bOwVRyMUsv9JnnyuUNPg6DhJteQvx5cFEDw0pdCNoQKGbXjqOHtyZMvr9MHVdAWNOyZD41mVsQ9NZGUxa/aaPowIXeSg2QcDiGs0W0SRtlYjbA1TjewKgh6OvjZ24pBIfA6hDXqkdhZFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746599870; c=relaxed/simple;
-	bh=iAJ7LV3fUkX+l59adPf/ghUY2G26V+OK5mBCqKZooqU=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Lgwo4bwzEBWi5ZF9/VKxuhOst79t7prpnvZFvXem1wnx0f7NsX+mZsHERCxQP3tCU8IyoSxmjqETuqUeOVdHsuyS2sQKvkpuSiu+S7mSrjWHgpTSY/Rr/TsFAJhqRcDH5iuQkZtJUf4idNOiUPVYyB3mhQrCi37tm3/81xipv98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=je1iH+Ar; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1746599921; c=relaxed/simple;
+	bh=zoPVNfQfngSR07iIP+gMGPRpdmcR+TKOkCqpe3dtipE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=QDJX1TqK1pTX5ckti/3NOgVAVYlo4KXqD+wcyz2W9VOMl/LGR0+AuBtpC9KaL+i9wdI5VTlSYmPrTD5laREOkl0GrmSOXeVd0UOkFJFsbd5nmtAl+IwsJQATBxFIZc4tb4n5fbJ2cHCxWIHH1kmOUzcBEU8FVjeh+a3R+TcIP5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UwoD3P+7; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5471Gm5R020191;
-	Wed, 7 May 2025 06:37:29 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5471HmAb017086;
+	Wed, 7 May 2025 06:38:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=8s6zgpzMhqDnLBMGCbmZv3
-	IRmVux3wLiekXXgV1bFKM=; b=je1iH+ArY6sJiJgcb9Hn93xIzNjmCxhYDjYm7b
-	bp47KNd5uttodcddrcci9c4Nxi4w/yaszfg9zhvjbYE4p/ORPDiLCkMh2Qn/EUfi
-	4uyjT5zBparnaUF+2E4LV3H9Q3Nft/r3BFRyeEB5a7U1s3sVAR/l86V3/Yomvu5f
-	kPBjCh3y+QyQFFKgX/+CEZKHKKwI8kksn+s58XlWykIpKnCsIUTQTB1tbu5mj2qk
-	wetY31IGVnQS6anrc8vpPFtXDsp5jdxJv27q2fA6LKMtts7u0HCMYoflbt8KL2fs
-	w/rT7y7U56K1qTKH04sPDLzd1STK+6bxy2p7WwpceUT7alJA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46d9epa5ja-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	dYgH+XlFKDus3frugKdFHUJb0KxUeDoyMriUEOT3RUo=; b=UwoD3P+7OVQH/63H
+	29Bx8LKdbrsaCjW6cOwF15eNoy8O+TekI6gWRZvgMx/1LyZD2XFWbsmbxqDJcJ9X
+	u48jDiNzmn/DzFy2qL3jHwKW6NZ6S9wfopXl+/sit/OozLiaKADnxwe843i0z45g
+	kLHjHi1dvnLR4iLIQedMrYgdxnQy9kC8KkO8vZwCfgSV0UJnxf/lE9/grTb/UnGI
+	8bT/VkIEaH2aeO4VH9TTs83IIl59Ao6UY0FvWBtkQU3DZjRSkUtLwrwo1bvsvbM0
+	l7C8UTzFUM1VcR6alqXkFsYhz9IFamKHMQHxxyRtK5aSdV4R+p/LbXwL4RoRZmvo
+	h1eHXQ==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46f5u44r3w-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 May 2025 06:37:29 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5476bSAa005099
+	Wed, 07 May 2025 06:38:36 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5476cZIE017059
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 May 2025 06:37:28 GMT
-Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 6 May 2025 23:37:28 -0700
-From: Mao Jinlong <quic_jinlmao@quicinc.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        "Alexander
- Shishkin" <alexander.shishkin@linux.intel.com>,
-        Yabin Cui <yabinc@google.com>
-CC: Mao Jinlong <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>
-Subject: [PATCH v2] coresight: tmc: fix failure to disable/enable ETF after reading
-Date: Tue, 6 May 2025 23:37:16 -0700
-Message-ID: <20250507063716.1945213-1-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	Wed, 7 May 2025 06:38:35 GMT
+Received: from [10.216.63.157] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 6 May 2025
+ 23:38:31 -0700
+Message-ID: <b7e630de-07f9-4b21-9055-e9b387627564@quicinc.com>
+Date: Wed, 7 May 2025 12:08:21 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6] clk: qcom: Add support for Camera Clock Controller on
+ QCS8300
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Dmitry Baryshkov
+	<lumag@kernel.org>
+References: <20250327-qcs8300-mm-patches-v6-1-b3fbde2820a6@quicinc.com>
+Content-Language: en-US
+From: Imran Shaik <quic_imrashai@quicinc.com>
+In-Reply-To: <20250327-qcs8300-mm-patches-v6-1-b3fbde2820a6@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=EOUG00ZC c=1 sm=1 tr=0 ts=681affa9 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=3H110R4YSZwA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=oqbhczGDPXGwOEN-XdEA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: X2iSuHKEDtop_EhCju52Q-1Khqya7BNA
-X-Proofpoint-GUID: X2iSuHKEDtop_EhCju52Q-1Khqya7BNA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDA1OSBTYWx0ZWRfXx7qWBQxuYO3X
- 4Xk8E+kEoQRdDwHTFaD8sW+rI9XZUiAgCM+EfdSds/02GBuW1guREOeGIxNnBb+a8ZGODFV+qJX
- OG5f2gk57djmSSXlhD6LkKgXh31qP05uce952dZbH8VhDq2XxBNA6s9wBEwH9ZgqVEf1ycmhLvC
- ir46h1hR0NEo/Rf7yZ22u6svvRZm0fNk9YpbvQ530kE4nJuoWPNsKjzMu3lnVZKCZDPVctmj6WB
- ivYFuoXQYBLtXHWQWMT8w6+TGf/w/+evV8mmHh/MYEbb1vuCJmjeNW2pxORaYkkdsZFgnb760qI
- I7x7+rmNYchWTvdRz48OoCFyhGS9BaZTVA75rOYAPLKIkxYtrXvE927lyydauwlK3FhuTb7D9uu
- MluBh/bVDr9puB31jPoWakrODdEuMSHIc4W4cPsxBpY8HWOkHzx5+c7EVbJS+7TgZV6WLByp
+X-Authority-Analysis: v=2.4 cv=KcfSsRYD c=1 sm=1 tr=0 ts=681affec cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=k8wuuItXO5eEtyapRm4A:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: zCIemlL0gdt5rO_L-xoqI0QSGiRmL84D
+X-Proofpoint-ORIG-GUID: zCIemlL0gdt5rO_L-xoqI0QSGiRmL84D
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDA2MCBTYWx0ZWRfXyHPKY1U6nePd
+ 96lypzFwuVwtJbLkUwHq3syxzrgfGiEJmDsbOtRbxSmF5UPLhcMAlvO1WDJHBV+u+w56zc5o9+f
+ 2+IkYa/u9OhwHxULEyABeRjJ9hfhkqQ3JTonayq/tNCB5GnHDicEb529dp1N4E2bR3rF5PlMgat
+ FqE0y6a9jMfg3bIAH5ZPzcSS4ERxi7oKJjr1sYbZZ+KvP/8wi4bwSHUgSKO9rp4+6lxWEpTQ0D9
+ tawU7uKRMqV6pwbmLrGvQM/UkxHBAyTJeNAB8ksdTXk4DqZdz2C4deuZ4dq5OFBWwQ6KOm3uu8S
+ 4ud3vi1kIpZUWAwHS7USyj0Ndp9850+AYOoYLoqLj2lWrcU5svnLj5qnninR7aaThGtWmLmE2G1
+ FiEtfJwgi75bHFMRszIOKaqP5pbLEA5FWlZ+ynQLrpLkMzDPbEcgO1pTdtJ/wYhLqn6XGrUy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-07_02,2025-05-06_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1011 impostorscore=0 spamscore=0 lowpriorityscore=0
- bulkscore=0 phishscore=0 suspectscore=0 mlxlogscore=534 mlxscore=0
- priorityscore=1501 malwarescore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2504070000 definitions=main-2505070059
+ lowpriorityscore=0 spamscore=0 suspectscore=0 bulkscore=0 mlxlogscore=999
+ phishscore=0 impostorscore=0 priorityscore=1501 malwarescore=0 adultscore=0
+ clxscore=1015 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505070060
 
-ETF may fail to re-enable after reading, and driver->reading will
-not be set to false, this will cause failure to enable/disable to ETF.
-This change set driver->reading to false even if re-enabling fail.
 
-Fixes: 669c4614236a ("coresight: tmc: Don't enable TMC when it's not ready.")
-Co-developed-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
----
- drivers/hwtracing/coresight/coresight-tmc-etf.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c b/drivers/hwtracing/coresight/coresight-tmc-etf.c
-index d858740001c2..c9e2d95ae295 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
-@@ -747,7 +747,6 @@ int tmc_read_unprepare_etb(struct tmc_drvdata *drvdata)
- 	char *buf = NULL;
- 	enum tmc_mode mode;
- 	unsigned long flags;
--	int rc = 0;
- 
- 	/* config types are set a boot time and never change */
- 	if (WARN_ON_ONCE(drvdata->config_type != TMC_CONFIG_TYPE_ETB &&
-@@ -773,11 +772,7 @@ int tmc_read_unprepare_etb(struct tmc_drvdata *drvdata)
- 		 * can't be NULL.
- 		 */
- 		memset(drvdata->buf, 0, drvdata->size);
--		rc = __tmc_etb_enable_hw(drvdata);
--		if (rc) {
--			raw_spin_unlock_irqrestore(&drvdata->spinlock, flags);
--			return rc;
--		}
-+		__tmc_etb_enable_hw(drvdata);
- 	} else {
- 		/*
- 		 * The ETB/ETF is not tracing and the buffer was just read.
--- 
-2.25.1
+On 3/27/2025 3:32 PM, Imran Shaik wrote:
+> The QCS8300 Camera clock controller is a derivative of SA8775P, but has
+> few additional clocks and offset differences. Hence, add support for
+> QCS8300 Camera clock controller by extending the SA8775P CamCC.
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+> ---
+> This patch series add support for GPUCC, CAMCC and VIDEOCC on Qualcomm
+> QCS8300 platform.
+> 
+> Changes in v6:
+> - Use device_is_compatible() as per Stephen's review comment.
+> - Link to v5: https://lore.kernel.org/r/20250321-qcs8300-mm-patches-v5-1-9d751d7e49ef@quicinc.com
+> 
+> Changes in v5:
+> - Subset of this patch series is alreday applied, but CamCC driver patch
+> is not picked yet. Hence resend the CamCC driver patch.
+> - Link to v4: https://lore.kernel.org/all/20250109-qcs8300-mm-patches-new-v4-0-63e8ac268b02@quicinc.com/
+> 
+> Changes in v4:
+> - Updated the commit text as per the comment from Bjorn.
+> - Fixed the CamCC QDSS clock offset.
+> - Link to v3: https://lore.kernel.org/all/20241106-qcs8300-mm-patches-v3-0-f611a8f87f15@quicinc.com/
+> 
+> Changes in v3:
+> - Added new GPUCC and CAMCC binding headers for QCS8300 as per the review comments
+> - Updated the new bindings header files for GPUCC and CAMCC drivers.
+> - Added the R-By tags received in v2.
+> - Link to v2: https://lore.kernel.org/r/20241024-qcs8300-mm-patches-v2-0-76c905060d0a@quicinc.com
+> 
+> Changes in v2:
+> - Updated commit text details in bindings patches as per the review comments.
+> - Sorted the compatible order and updated comment in VideoCC driver patch as per the review comments.
+> - Added the R-By tags received in V1.
+> - Link to v1: https://lore.kernel.org/r/20241018-qcs8300-mm-patches-v1-0-859095e0776c@quicinc.com
+> ---
+>  drivers/clk/qcom/camcc-sa8775p.c | 103 +++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 98 insertions(+), 5 deletions(-)
+> 
 
+Hi Bjorn,
+
+Could you please help pick this CamCC driver patch? The DT and bindings patches are picked already from this series, expect for this one.
+
+Please let me know if anything is required from my end.
+
+Thanks,
+Imran
 
