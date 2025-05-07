@@ -1,107 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-57183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25E37AAE6E1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 18:39:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63598AAE6E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 18:39:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 35F3D9C2AFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 16:38:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6EB89521A50
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 16:39:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA93C28C5A0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCD5428C2D8;
 	Wed,  7 May 2025 16:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AyIymc2W"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MXFwwOQZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3E028C2D1;
-	Wed,  7 May 2025 16:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D36428BAAE;
+	Wed,  7 May 2025 16:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746635922; cv=none; b=HyTjQ4zGbIDhPFVppHAVKtQam4T+fzUWsTSatTxwme6FDkaOD5FOALg3EwK+mZBLcxuOt45+V/xBdcd5DrzaTtIRLeJQKyPm9Cg4mLdWfDwEI7M17/uxC+htpOi0pP/JHjC11smS/VvM7VL6JdYAy279XqF8JSNhT0+vNfnDdRw=
+	t=1746635922; cv=none; b=a9YR+yYNaUdCS8Iqd5OdCOTSfuKh74Kz31flpfvCMALH3Y/jWVKM0zv+CCWT3mwKk7dnThExSoGpPyHHwkqpsXtvenpaxt+KxGigmA7WVXnzN4TSRQIXRkez1K5/kDObC/JYxybC+q2Ot+JW0w0dr3KEXgjZqeptfU8JCR3pHQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1746635922; c=relaxed/simple;
-	bh=TqTyxNTUeXIXIbgbWfv1PyWf194MsWra/G7EgnvKn1E=;
+	bh=Lmt22MGqAPCS7bhzg3zG3Ritk6kyYkEIF/BqVY1P5Sk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YHlb5qsdiDYzDK4gUvfY4QV0gf5/Dbq5x7i6GXQ5V0Qr9sZyDgPHz7d9cgw5/C83eTIR3wTAs2EpaVb+nLHZBz1NaEFzA/FBnp6SaiaQ2ZkGPhkSVwYZktI2dHJc+P5zelSIpYcxzZDvGngvCg0BtEfRk3aBz94jVJ9OsVN1U9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AyIymc2W; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F04D7C4CEEE;
-	Wed,  7 May 2025 16:38:37 +0000 (UTC)
+	 MIME-Version:Content-Type; b=ufZNUzFBQRJRQrBWATtWjFYXJv+SODVpAL1kK1CehRmDTF80JblOITMOfpQIgU4CElnESP8kE4cEE6y30oU10aUP/4J07FwmQTNwGaPE47xe2W57OE2IZFrRg1BhRertNbTcR/zX4COkvwdZxLJamx8hWGPLwcx/jyCPm+1PIYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MXFwwOQZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9589DC4CEF1;
+	Wed,  7 May 2025 16:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746635920;
-	bh=TqTyxNTUeXIXIbgbWfv1PyWf194MsWra/G7EgnvKn1E=;
+	s=k20201202; t=1746635921;
+	bh=Lmt22MGqAPCS7bhzg3zG3Ritk6kyYkEIF/BqVY1P5Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AyIymc2WUwyOA8d+yIafhO3j7UN9ALcm+hJ4nXmJ5aU79oNpfstTIMGLCVRACV2ax
-	 JIEL4T+cYujaPi/vwiJjQPC4CBIueS0dZzALrwNExDGGSWSKFn6qgHn2T76DlSbjQ3
-	 YYukBbrippdZmajPTYXivGbBd+1EJCowJ68J2AOuR+NPZQOBFzORc8QXTv7jvjxdCo
-	 zXkrngaysM8SKMppt6W/7J3mjFcHm61ktJqnwuI1oVgXCG8CPlgpinUZr1TYzdsm/P
-	 +bCJSfEOkxWJvo5tKzdr27ATGxkeHQdH7e93YRxYX4YVB8zau06Vnv6oIxo+rJF1Nf
-	 dc/dJAXbgPo7A==
+	b=MXFwwOQZYuCFxsyyQMkCbl6bJQXdsNZibHMPxw60IaKPh15jQmoZ3134mJXd38YC1
+	 Zy8XSPESOaK4ZpijSwLDM7HMEhilhFv9nEaFcae75r/TYFCqWX0pg88Mwe+KyyErJf
+	 F5D1A1EteA9cr7fub95ORyrdhxKzAQgsyQUBY+mjuvaozxHS5b/mpQzO3IB44/FijS
+	 tF25phCrHw9TGkCNmRAjSvDVAP58KMjstiDdqB7j59v38/i3kwUy3KsudWkzx9TDTP
+	 2EKSWvPdh7lFBhT9thCA7uDWCYTTr0uqHuJqEJo34Vy6gmNZKU/4YuHAwcaWMoiNC0
+	 TrjD14KaxMUQA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Conor Dooley <conor@kernel.org>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Steen Hegelund <Steen.Hegelund@microchip.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	UNGLinuxDriver@microchip.com,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Viresh Kumar <vireshk@kernel.org>,
-	Nishanth Menon <nm@ti.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	zhouyanjie@wanyeetech.com,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Cc: devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-sunxi@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-rockchip@lists.infradead.org,
-	linux-amlogic@lists.infradead.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-mips@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	Andre Przywara <andre.przywara@arm.com>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: Re: (subset) [PATCH v2 00/17] Arm cpu schema clean-ups
-Date: Wed,  7 May 2025 09:38:33 -0700
-Message-ID: <174663591275.3531.6906045623469489227.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Sam Day <me@samcday.com>,
+	Casey Connolly <casey.connolly@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/6] arm64: dts: qcom: msm8916/39: Cleanup/fix UART console pinctrl
+Date: Wed,  7 May 2025 09:38:34 -0700
+Message-ID: <174663591263.3531.885721976162259110.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250410-dt-cpu-schema-v2-0-63d7dc9ddd0a@kernel.org>
-References: <20250410-dt-cpu-schema-v2-0-63d7dc9ddd0a@kernel.org>
+In-Reply-To: <20250422-msm8916-console-pinctrl-v2-0-f345b7a53c91@linaro.org>
+References: <20250422-msm8916-console-pinctrl-v2-0-f345b7a53c91@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -112,21 +69,31 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 10 Apr 2025 10:47:21 -0500, Rob Herring (Arm) wrote:
-> The Arm cpu.yaml schema fails to restrict allowed properties in 'cpu'
-> nodes. The result, not surprisely, is a number of additional properties
-> and errors in .dts files. This series resolves those issues.
+On Tue, 22 Apr 2025 13:03:47 +0200, Stephan Gerhold wrote:
+> At the moment, msm8916/39.dtsi have two inconsistent UART pinctrl templates
+> that are used by all the boards:
 > 
-> There's still more properties in arm32 DTS files which I have not
-> documented. Mostly yet more supply names and "fsl,soc-operating-points".
-> What's a few more warnings on the 10000s of warnings...
+>  - &blsp_uart1_default configures all 4 pins (TX, RX, CTS, RTS), some
+>    boards then limit this to just TX and RX
+>  - &blsp_uart2_default only configures 2 pins (TX, RX), even though UART2
+>    also supports CTS/RTS
 > 
 > [...]
 
 Applied, thanks!
 
-[09/17] arm: dts: qcom: ipq4019: Drop redundant CPU "clock-latency"
-        commit: 3ea267124573f24e67f0fe47c4a865f0f283f8fc
+[1/6] arm64: dts: qcom: msm8916/39: Move UART pinctrl to board files
+      commit: 8d88f6c9c5e774420673a37510b22015b1edd569
+[2/6] arm64: dts: qcom: msm8916/39: Introduce new UART console pinctrl
+      commit: 5c0c8b7a315ff63e01e9a608f78dea16daa57aed
+[3/6] arm64: dts: qcom: msm8919/39: Use UART2 console pinctrl where appropriate
+      commit: 2b8d22ef1687768e4b572d01cd2432eb86340dd1
+[4/6] arm64: dts: qcom: msm8916-motorola: Use UART1 console pinctrl
+      commit: fe848d64cc6516cd56f38d23cfb544a68231a6e8
+[5/6] arm64: dts: qcom: msm8916: Drop generic UART pinctrl templates
+      commit: 979b65d8f416353c6b44ec5c0ddc837b2d20ab47
+[6/6] arm64: dts: qcom: msm8939: Drop generic UART pinctrl templates
+      commit: f7f65536124db6a5666992f0d6fd9595fbbf067a
 
 Best regards,
 -- 
