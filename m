@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-57160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80C8EAAE212
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 16:10:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69059AAE227
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 16:13:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6073217F2FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 14:05:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 765909C4A38
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 14:05:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A5F628FFC0;
-	Wed,  7 May 2025 13:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43491290095;
+	Wed,  7 May 2025 13:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Fekx+S32"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="UcpV+v9Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18DC28FAAA;
-	Wed,  7 May 2025 13:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9566A28FFD2;
+	Wed,  7 May 2025 13:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746626061; cv=none; b=IhXhOWVRfMXh6Hy0RV0t5JzULhIYfB/I/bfUUuh27rtTG2gxsIp02BkMjJr5eVB3juOB0q4hLQ2xZARl4au9H83LJswbP2ejckU1FfjvvIHHkUHljkNvLMeYk1MKTeRKFV5Y+tnHQUQ7ztCyAHvGqcpxc73ORitQ2tdO7eJG2h0=
+	t=1746626064; cv=none; b=sfhwgGwL8SB5ZWJVzq87BYHZZfxcODhNToyOg301QEz70LUzo3hZ4X+9yHBOLLQsaktDRFgNQaeSQwmHCq9HPlUsu2SjuDEa25wIUp1J4E/R7srlW8ep802Qg4NI8LvtvH6Tk+3UX2K7Pkbj7ISw5400pKkZ6kOPW0lVu0MSML8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746626061; c=relaxed/simple;
-	bh=O5z/BQY1q1d5BGcnK4t8C3VeUk339DGeSWJDfh+cNwk=;
+	s=arc-20240116; t=1746626064; c=relaxed/simple;
+	bh=6VwOYHrrtcuotOKfEozxcEWvB6l+4kLuBMP/N61gCz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=exyugdLeO0wsjgnih6xv1ZOtWvGm+1zBpxVzfhjqwZiMvETRY3iw+/gNuc2Edc89PelrBI0IVTy5+MhJ0LEUKiykI+yvvwJNJqKsoD/zbFKl3fZ10BiBXda+Yau/37TP0Wyd7gYBw1LYY6CNWmWYenw4UC92Ci6FDkunvI3dH1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Fekx+S32; arc=none smtp.client-ip=217.70.183.196
+	 MIME-Version; b=uBYyIa4RLKrwmPeJob1snXo7UQi8PEVqPtirWDH7t1EHOQlkAqytoxPoMqYqiTXTHI8SuQkjXQvfmkqdanZbRxcAi3jBpHSbtb+dEOelOeWiuMlfUuQeO7JTVeb6A6wJegNuUksw497X/bY8aBrQlPTliOunHN69efzpZV/gxaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=UcpV+v9Y; arc=none smtp.client-ip=217.70.183.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 57D5543B3A;
-	Wed,  7 May 2025 13:54:14 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 3853843B6C;
+	Wed,  7 May 2025 13:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1746626057;
+	t=1746626059;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=FSutRnMqUMIEXyOwAwOUviPfYiWGrZpRNWmDiwUL5nI=;
-	b=Fekx+S32dfTTViEYWwJ7hUKNLkkB7ewwhXKxjEhNO1w9gTQGWcrd3xAlkpEiQnlGzLth8Z
-	eJi4mu08QHvIw3YBjOST+dIS2mJ9qJCCOfXd0uFfMQXucuq3Hmr6a2UqCAwMUBbmHw76Vi
-	6KK8K+yGiXU34dolLqMhJonL1s/WIm9kG0e86JwuFt6qbdabvxm2EqZR0hpCTKlsWBH2xt
-	P3BEA+FoUqfcBVpFz83U7XIRgzuDN9KJJKWOYBbaG0e7Uv2vxnP2glJX9JeObVK3WMcQMd
-	GEIz0tWmmSKE4OUVn3926NAgLbGsLofkjMjt2HlAATN5r1FWubS1PNwwJ8flyQ==
+	bh=LdnFK0FsJj4B2Vj6KZEYUKA+NibzaycAR1+plWAQTUw=;
+	b=UcpV+v9YZnA9dfamfoV7B2X2ZAIR97XIM9umOw03xUsz4n1ZUnmSCky19IJQToDXIddwrp
+	BO9wTG9CNs+3rWjR+3WoaWzoohijrWkiCMF3T2bOfEIezqGN9AghmuWn8VesKNE6GARlqE
+	TmA29cG3s/t/Wn1vTs393Mz1e0OR4GdOV5BOGQgY3RG6c2JPAWjln3XVzASyCKsDLoNOBM
+	o3ko6qkwNN98T4NYtQ/qBIC52ceVHBeyMPnYLYyfGSFoVvSqh+BfZR6h5LgAZfgxgZ2YhX
+	Q8lhfZiBDyLbQntSvJ0Yh0V/VCZA1mZabN9ImTgLpfHgdMjbf1umPvR6n12uuw==
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 To: davem@davemloft.net
 Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
@@ -77,9 +77,9 @@ Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Romain Gantois <romain.gantois@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: [PATCH net-next v6 13/14] net: phy: dp83822: Add SFP support through the phy_port interface
-Date: Wed,  7 May 2025 15:53:29 +0200
-Message-ID: <20250507135331.76021-14-maxime.chevallier@bootlin.com>
+Subject: [PATCH net-next v6 14/14] Documentation: networking: Document the phy_port infrastructure
+Date: Wed,  7 May 2025 15:53:30 +0200
+Message-ID: <20250507135331.76021-15-maxime.chevallier@bootlin.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507135331.76021-1-maxime.chevallier@bootlin.com>
 References: <20250507135331.76021-1-maxime.chevallier@bootlin.com>
@@ -92,39 +92,162 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-State: clean
 X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejtdefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeforgigihhmvgcuvehhvghvrghllhhivghruceomhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepveegtdffleffleevueellefgjeefvedvjefhheegfefgffdvfeetgeevudetffdtnecukfhppedvrgdtvdemkeeggedtmehfhedtsgemfedvheemrgeigeefmedufheiugemfhgvrgegmeegsgduieenucevlhhushhtvghrufhiiigvpedutdenucfrrghrrghmpehinhgvthepvdgrtddvmeekgeegtdemfhehtdgsmeefvdehmegrieegfeemudhfiegumehfvggrgeemgegsudeipdhhvghlohepvdgrtddvqdekgeegtddqfhehtdgsqddtfedvhedqrgeigeefqddufheiugdqfhgvrgegqdegsgduiedrrhgvvhdrshhfrhdrnhgvthdpmhgrihhlfhhrohhmpehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeefuddprhgtphhtthhopegurghvvghmsegurghvvghmlhhofhhtrdhnvghtpdhrtghpthhtohepmhgrgihimhgvrdgthhgvv
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejtdefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeforgigihhmvgcuvehhvghvrghllhhivghruceomhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepveegtdffleffleevueellefgjeefvedvjefhheegfefgffdvfeetgeevudetffdtnecukfhppedvrgdtvdemkeeggedtmehfhedtsgemfedvheemrgeigeefmedufheiugemfhgvrgegmeegsgduieenucevlhhushhtvghrufhiiigvpeduvdenucfrrghrrghmpehinhgvthepvdgrtddvmeekgeegtdemfhehtdgsmeefvdehmegrieegfeemudhfiegumehfvggrgeemgegsudeipdhhvghlohepvdgrtddvqdekgeegtddqfhehtdgsqddtfedvhedqrgeigeefqddufheiugdqfhgvrgegqdegsgduiedrrhgvvhdrshhfrhdrnhgvthdpmhgrihhlfhhrohhmpehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeefuddprhgtphhtthhopegurghvvghmsegurghvvghmlhhofhhtrdhnvghtpdhrtghpthhtohepmhgrgihimhgvrdgthhgvv
  hgrlhhlihgvrhessghoohhtlhhinhdrtghomhdprhgtphhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
 X-GND-Sasl: maxime.chevallier@bootlin.com
 
-The DP83822 can support 100BaseFX. This mode was only accessible through
-custom DT properties, but there also exist SFP modules that support
-these modes. As this only requires setting the relevant supported
-interface in the driver, expose the port capability with the new
-phy_port API, allowing SFP support.
+This documentation aims at describing the main goal of the phy_port
+infrastructure.
 
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 ---
- drivers/net/phy/dp83822.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/networking/index.rst    |   1 +
+ Documentation/networking/phy-port.rst | 111 ++++++++++++++++++++++++++
+ MAINTAINERS                           |   1 +
+ 3 files changed, 113 insertions(+)
+ create mode 100644 Documentation/networking/phy-port.rst
 
-diff --git a/drivers/net/phy/dp83822.c b/drivers/net/phy/dp83822.c
-index a0b4ebddd484..194de35bd064 100644
---- a/drivers/net/phy/dp83822.c
-+++ b/drivers/net/phy/dp83822.c
-@@ -982,6 +982,13 @@ static int dp83822_attach_port(struct phy_device *phydev, struct phy_port *port)
- 		}
- 	}
- 
-+	/* If attached from SFP, is_serdes is set, but not the mediums. */
-+	if (port->is_serdes)
-+		dp83822->fx_enabled = true;
+diff --git a/Documentation/networking/index.rst b/Documentation/networking/index.rst
+index ac90b82f3ce9..f60acc06e3f7 100644
+--- a/Documentation/networking/index.rst
++++ b/Documentation/networking/index.rst
+@@ -96,6 +96,7 @@ Contents:
+    packet_mmap
+    phonet
+    phy-link-topology
++   phy-port
+    pktgen
+    plip
+    ppp_generic
+diff --git a/Documentation/networking/phy-port.rst b/Documentation/networking/phy-port.rst
+new file mode 100644
+index 000000000000..6d9d46ebe438
+--- /dev/null
++++ b/Documentation/networking/phy-port.rst
+@@ -0,0 +1,111 @@
++.. SPDX-License-Identifier: GPL-2.0
++.. _phy_port:
 +
-+	if (dp83822->fx_enabled)
-+		__set_bit(PHY_INTERFACE_MODE_100BASEX, port->interfaces);
++=================
++Ethernet ports
++=================
 +
- 	return 0;
- }
- 
++This document is a basic description of the phy_port infrastructure,
++introduced to represent physical interfaces of Ethernet devices.
++
++Without phy_port, we already have quite a lot of information about what the
++media-facing interface of a NIC can do and looks like, through the
++:c:type:`struct ethtool_link_ksettings <ethtool_link_ksettings>` attributes,
++which includes :
++
++ - What the NIC can do through the :c:member:`supported` field
++ - What the Link Partner advertises through :c:member:`lp_advertising`
++ - Which features we're advertising through :c:member:`advertising`
++
++We also have info about the number of lanes and the PORT type. These settings
++are built by aggregating together information reported by various devices that
++are sitting on the link :
++
++  - The NIC itself, through the :c:member:`get_link_ksettings` callback
++  - Precise information from the MAC and PCS by using phylink in the MAC driver
++  - Information reported by the PHY device
++  - Information reported by an SFP module (which can itself include a PHY)
++
++This model however starts showing its limitations when we consider devices that
++have more than one media interface. In such a case, only information about the
++actively used interface is reported, and it's not possible to know what the
++other interfaces can do. In fact, we have very few information about whether or
++not there are any other media interfaces.
++
++The goal of the phy_port representation is to provide a way of representing a
++physical interface of a NIC, regardless of what is driving the port (NIC through
++a firmware, SFP module, Ethernet PHY).
++
++Multi-port interfaces examples
++==============================
++
++Several cases of multi-interface NICs have been observed so far :
++
++Internal MII Mux::
++
++  +------------------+
++  | SoC              |
++  |          +-----+ |           +-----+
++  | +-----+  |     |-------------| PHY |
++  | | MAC |--| Mux | |   +-----+ +-----+
++  | +-----+  |     |-----| SFP |
++  |          +-----+ |   +-----+
++  +------------------+
++
++Internal Mux with internal PHY::
++
++  +------------------------+
++  | SoC                    |
++  |          +-----+ +-----+
++  | +-----+  |     |-| PHY |
++  | | MAC |--| Mux | +-----+   +-----+
++  | +-----+  |     |-----------| SFP |
++  |          +-----+       |   +-----+
++  +------------------------+
++
++External Mux::
++
++  +---------+
++  | SoC     |  +-----+  +-----+
++  |         |  |     |--| PHY |
++  | +-----+ |  |     |  +-----+
++  | | MAC |----| Mux |  +-----+
++  | +-----+ |  |     |--| PHY |
++  |         |  +-----+  +-----+
++  |         |     |
++  |    GPIO-------+
++  +---------+
++
++Double-port PHY::
++
++  +---------+
++  | SoC     | +-----+
++  |         | |     |--- RJ45
++  | +-----+ | |     |
++  | | MAC |---| PHY |   +-----+
++  | +-----+ | |     |---| SFP |
++  +---------+ +-----+   +-----+
++
++phy_port aims at providing a path to support all the above topologies, by
++representing the media interfaces in a way that's agnostic to what's driving
++the interface. the struct phy_port object has its own set of callback ops, and
++will eventually be able to report its own ksettings::
++
++             _____      +------+
++            (     )-----| Port |
++ +-----+   (       )    +------+
++ | MAC |--(   ???   )
++ +-----+   (       )    +------+
++            (_____)-----| Port |
++                        +------+
++
++Next steps
++==========
++
++As of writing this documentation, only ports controlled by PHY devices are
++supported. The next steps will be to add the Netlink API to expose these
++to userspace and add support for raw ports (controlled by some firmware, and directly
++managed by the NIC driver).
++
++Another parallel task is the introduction of a MII muxing framework to allow the
++control of non-PHY driver multi-port setups.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b155eec69552..211a6ba50166 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -8781,6 +8781,7 @@ F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
+ F:	Documentation/devicetree/bindings/net/ethernet-phy.yaml
+ F:	Documentation/devicetree/bindings/net/mdio*
+ F:	Documentation/devicetree/bindings/net/qca,ar803x.yaml
++F:	Documentation/networking/phy-port.rst
+ F:	Documentation/networking/phy.rst
+ F:	drivers/net/mdio/
+ F:	drivers/net/mdio/acpi_mdio.c
 -- 
 2.49.0
 
