@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-57164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44FD0AAE2CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 16:27:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62A67AAE2F5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 16:31:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 53278188B7E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 14:24:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D9C7718847C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 14:27:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8688B289E0A;
-	Wed,  7 May 2025 14:17:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DC2A21D5A7;
+	Wed,  7 May 2025 14:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="lkIbSxKq"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="rKlEdAv9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E869289839;
-	Wed,  7 May 2025 14:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C6B623;
+	Wed,  7 May 2025 14:23:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746627464; cv=none; b=azjWyjwGrGEUfF9VTZiKBteoR2SsY197zuQfe0TSdZ3KarDgGlzVYnX0d1lSPcxeJkr2VFO3eY8Gq9VuDkayPIskJubaeuEdCuRiqWz8403mI7W51xeDY+AJfEFCrqvtcwG1P39RLzmhSy/j3jO+pLnwJYWtSxD8N7mSnlJL42A=
+	t=1746627839; cv=none; b=KF/nwreA+r0ZLUAYx4O/VMgMZBSxNvuERbQ83yMYcI/9oUGq3cIKpFOCtPIcVVqo/wHZC4k8DoRKLsYM2u3JLbU4Bibu9t+0nT33duVPhUhu581riVmTRYs6l/aAhjc8mJf2qJCKRu/OWUQmOWnJW7sHtr9ogKbz7yINydWW3pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746627464; c=relaxed/simple;
-	bh=PtB5Usi8xLaJmNGDACycIzyHJbkLqaznxmbCpeinUIk=;
+	s=arc-20240116; t=1746627839; c=relaxed/simple;
+	bh=Uv0EcW7glq4I2xOqbyY8pJU9J0d/EtIXL20dRyfGk7M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O+c4ulPne4CBL5wCTCLKKrux7cetiJXtSkYMnSKBCEObU0Pd/3OXVo8isVMwrwQwco47LHbsIA3DG1+ZEcbJluN5vo5eJQkf7RHC5ap4xfgGnURGXSRKCiJwZM4/9tDLl72FuyYt4IZQWtvlHlE+Ykf5Jr51KneifxzILAyUNqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=lkIbSxKq; arc=none smtp.client-ip=156.67.10.101
+	 Content-Type:Content-Disposition:In-Reply-To; b=J3CoCxRMpmcIow7mfm/WIT+ZynN7pXmonn/LPN/tBfELk1+TGYtUxvYBo7BhCbGbcFEXZAwRJkXo2ew8+80ZZyYtVVNLQ3QzJuTclZvdCCje6XyrD3DYWy0DOQLyM9kZSQH3td1GR6EMJfb3wd21STFNu7YGBW9CqStdwPrsksQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=rKlEdAv9; arc=none smtp.client-ip=156.67.10.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -36,13 +36,13 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=riPhI6Eapns1oW9Gn4OqspYK1Wq/yqbnDVBWZAn6+N8=; b=lkIbSxKqLABQ9AeH01kNU+Ma68
-	D2Qc2irMyCeY79HtU6uyKbwy9YC2uBNN6XuJkfxzXiF7IXvaz7ddDFy4VlqK9JaYSN7o/mA9LEiM0
-	JO6jfOniUqp8quI+9Z7OjGhmrJgow+qL/essHLdqatkcyaSOh/DLqaGSqaMfs1waDT08=;
+	bh=ZYAy8h3huPEqHikgnxaieN04K7WhSCqt1OYSqSWNRlE=; b=rKlEdAv9rte4tbESf+4ajtYyGO
+	pATDuP6V8vr/V+uSDUo/e0JB1BezeHdUqzDGYjZn1q/NtDJNp9LnqErexEXf1sLKWbQvMx5SwhK91
+	NrnF1ryuC8HUGCACQbdP7jEQ9Q33dVADukzJM3nsrsCZ5C42JHvCCoxLNzBB5Pg5li1c=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1uCfac-00BtMw-8e; Wed, 07 May 2025 16:17:38 +0200
-Date: Wed, 7 May 2025 16:17:38 +0200
+	id 1uCfge-00BtPO-Nq; Wed, 07 May 2025 16:23:52 +0200
+Date: Wed, 7 May 2025 16:23:52 +0200
 From: Andrew Lunn <andrew@lunn.ch>
 To: Wasim Nazir <quic_wasimn@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
@@ -54,9 +54,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
 	kernel@quicinc.com, kernel@oss.qualcomm.com
-Subject: Re: [PATCH 0/8] qcom: Refactor sa8775p/qcs9100 based ride boards
-Message-ID: <d87d203c-cd81-43c6-8731-00ff564bbf2f@lunn.ch>
+Subject: Re: [PATCH 3/8] arm64: dts: qcom: sa8775p: Add ethernet card for
+ ride & ride-r3
+Message-ID: <c445043d-2289-455d-af62-b18704bab749@lunn.ch>
 References: <20250507065116.353114-1-quic_wasimn@quicinc.com>
+ <20250507065116.353114-4-quic_wasimn@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,25 +67,33 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250507065116.353114-1-quic_wasimn@quicinc.com>
+In-Reply-To: <20250507065116.353114-4-quic_wasimn@quicinc.com>
 
-> Ethernet card:
->   - There are two variants of ethernet card each with different capabilities:
->     - [Ethernet-v1] card contains:
->       - 2x 1G RGMII phy, 2x 1G SGMII phy(enabled currently)
->       - Total 4 phy supported, only 2 phy are enabled and it is used in ride.
->     - [Ethernet-v2] card contains:
->       - 2x 1G RGMII phy, 2x 2.5G HSGMII(enabled currently) & 10G PCIe
->         based MAC+PHY controller
->       - Total 5 phy supported, only 2 phy are enabled and it is used
->         in ride-r3.
->   - Either [Ethernet-v1] or [Ethernet-v2] is connected to backplain
->     board via B2B connector.
+> +&ethernet0 {
+> +	phy-handle = <&sgmii_phy0>;
+> +	phy-mode = "sgmii";
+> +
+> +	pinctrl-0 = <&ethernet0_default>;
+> +	pinctrl-names = "default";
+> +
+> +	snps,mtl-rx-config = <&mtl_rx_setup>;
+> +	snps,mtl-tx-config = <&mtl_tx_setup>;
+> +	snps,ps-speed = <1000>;
 
-Is it possible to identify the card, e.g. does it have an I2C EEPROM,
-or some strapping resistors on the B2B bus?
+SGMII can only go up to 1000, so why is this property needed?
 
-I'm just wondering if DT overlays would be a better solution.
+> +&ethernet0 {
+> +	phy-handle = <&hsgmii_phy0>;
+> +	phy-mode = "2500base-x";
+> +
+> +	pinctrl-0 = <&ethernet0_default>;
+> +	pinctrl-names = "default";
+> +
+> +	snps,mtl-rx-config = <&mtl_rx_setup>;
+> +	snps,mtl-tx-config = <&mtl_tx_setup>;
+> +	snps,ps-speed = <1000>;
+
+This looks odd. 2500Base-X, yet 1000?
 
 	Andrew
 
