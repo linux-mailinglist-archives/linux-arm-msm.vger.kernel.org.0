@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-57135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9459AADC6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 12:27:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9F74AADC75
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 12:27:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 341824A8164
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 10:27:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0AF201C226F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 10:27:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E4D6215168;
-	Wed,  7 May 2025 10:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0219217709;
+	Wed,  7 May 2025 10:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CYKQjybR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pabszj20"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946072147F5;
-	Wed,  7 May 2025 10:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59115215F52;
+	Wed,  7 May 2025 10:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746613622; cv=none; b=b6TYGBODcXafAC2yB/CxwFnPAkdF78+MxZ6jESIxEtTMwPk+D7uxlOVphnyE8P+POSSyDUcPm3Az68jACveBKYeo9QcDzRxJCe2+pDe8zrw3gXgW/ZG9z2mYpDYhl8iXxG1JKmqItGLAvTCFFAPWvD2Rcbcuel4XdK1zNJxd4KE=
+	t=1746613625; cv=none; b=aOmA7z3UKvFOzPBs/xlk0EiUtEvxfnheNGMnSqc99/4oyRAEKks98oQhhCXXumiMUbftMaA+B2hWsMTgmoU3Zu9G+JDWig7sYemOM401a6j4rAhdr4mLlFVdDxU6yKZImMVVGhsry2pBRZ3IwWByY++3q7lXFGJu0/AkR/dyJnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746613622; c=relaxed/simple;
-	bh=mRHd/bi0F4pAEILgJ+Mdf3okfj488JQ4oMxBwTt4PcI=;
+	s=arc-20240116; t=1746613625; c=relaxed/simple;
+	bh=RvLKNaPJEVYP6Ev/MDZOLS3jpKKlTut2RwMuln30MGg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=k9oG8lnJ6GthR1t1zk+Sw36PQp8elAeilxTR7/DVh2k5ik955qN2jbxdY8KPqABZgnlTy5RhWYuhPspF4tZ5n1qmloPXR9Gqyquovh2owFWuexXyRspAXHlY4OSQFSUmgLSV8PRQGWaTkBBxcR1qoxOvV8p9RU3UT8H2N4JDgoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CYKQjybR; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:CC; b=dfZngP3Yp9w3U3V/l07Hjjx60R7GdAQVHYONvnVDD1eKxlxQ/iFz3Hgd72qBycnJ2injt0n/ZVVwvINQn4KknW8GB/33LDJlgZCsTutZQ2XV1QElSDmphsefgFcgscMjoMmWQrUqL+5sP8w3IxPBcwcL52zohS7Tkn2t/S937wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pabszj20; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54758iUx009775;
-	Wed, 7 May 2025 10:26:57 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 547A8ZDW009125;
+	Wed, 7 May 2025 10:27:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZlYW6HAi7Wv3N0kWZGA9Wk/r1UfJW1G0KpByvwo7mFk=; b=CYKQjybR/H1f1FCB
-	qepXPS7SoSc7xw3GrJGpXiyFGAnQpj76gcBNAzsudmUK/nZRjyOBUaE08oI3T0ZY
-	47GzqJEaxWMJxMSdQ7ZFwFOKtwKKz3iRdyO690XjNyceC10cIyHENN99r2tVyDHn
-	Q0yGHQGTQuzLRdjeFX2T/J809okX0pafbOCaHv624aaJx9psv3e1BMFwzZl6i5kW
-	vJLVfzuBZZ/uGP+ERYCBslEVuYGcKZHUtEUW5Qw8cQrhN8Dze8CgwNC28Y0Ff7Cq
-	H0p6jgoIJoLxEnKRJ6gBvIcZZQJkVTGj2EpLw8SfqZji9IQBhTD0RAiOqRlTvPKm
-	YdN9Gg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46g13vrwxw-1
+	rYJA968e5FAGnSEC0jpvnZdyQ7cPc/QBI3D+iCq7oyE=; b=pabszj20byrfAQCC
+	SXBLgKBeBEkJUQ6J6gABY+mu8BDH7CvphFGTJ3WNP2Xzy9dSwmeFo0GJXqjuhFS2
+	PwDISo+JaADXJLIaiSgqGuUSJwf2fzVfVxPGTZrvTFlmRqUmkbO3MZLLr6LmpWxb
+	A6U29L7r1r2WxmvMLn5YQYHDu0U6ed2eU3zUTYq0trTmy4LHA/4KbRHzAPDqvtW4
+	e15dYDchYgpB+PJBeFnVEi1FkrUz6wwa8CahxgciTIqtdfwbGlnKgze+BNOyc9Ra
+	nbi9Rf5lRgJcYZvlCeVvVKchYaYLsz8uX78lYtFNg1aUrM2Ag2yWPNZIjt3j0oML
+	PQqOHA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46g5gh81hx-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 May 2025 10:26:57 +0000 (GMT)
+	Wed, 07 May 2025 10:27:00 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 547AQucV032753
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 547AR0sF021181
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 May 2025 10:26:56 GMT
+	Wed, 7 May 2025 10:27:00 GMT
 Received: from lijuang2-gv.ap.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 7 May 2025 03:26:49 -0700
+ 15.2.1544.9; Wed, 7 May 2025 03:26:53 -0700
 From: Lijuan Gao <quic_lijuang@quicinc.com>
-Date: Wed, 7 May 2025 18:26:11 +0800
-Subject: [PATCH v2 1/6] dt-bindings: remoteproc: qcom,sm8150-pas: Document
- QCS615 remoteproc
+Date: Wed, 7 May 2025 18:26:12 +0800
+Subject: [PATCH v2 2/6] dt-bindings: soc: qcom: add qcom,qcs615-imem
+ compatible
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250507-add_qcs615_remoteproc_support-v2-1-52ac6cb43a39@quicinc.com>
+Message-ID: <20250507-add_qcs615_remoteproc_support-v2-2-52ac6cb43a39@quicinc.com>
 References: <20250507-add_qcs615_remoteproc_support-v2-0-52ac6cb43a39@quicinc.com>
 In-Reply-To: <20250507-add_qcs615_remoteproc_support-v2-0-52ac6cb43a39@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -86,135 +86,62 @@ CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, Lijuan Gao <quic_lijuang@quicinc.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.15-dev-99b12
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1746613605; l=3100;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1746613605; l=861;
  i=quic_lijuang@quicinc.com; s=20240827; h=from:subject:message-id;
- bh=mRHd/bi0F4pAEILgJ+Mdf3okfj488JQ4oMxBwTt4PcI=;
- b=+A0ZgWBCv5FjnZan1ShLSiKLqBZvO3SrVOpRG25mTZzqJF3KseHRaYsv5HEzxyLH91kHdXvyI
- a2r7usGpkdVC2I4co3PNElr4w191hwlV+2VlHDa0Fvq6qXw2EtccBKb
+ bh=RvLKNaPJEVYP6Ev/MDZOLS3jpKKlTut2RwMuln30MGg=;
+ b=VWsOZzy4br8W/mjW5Otw2EYu/H9KQYHYf4NWMCk1lG6btq4g3H9Q1zgogETpECrTU8cgg0DZv
+ 4Fexw8f8d/OCR6BKCQ43HaoXSZlPHKP0s8HjN0wke2Q1OqaiVJrPUq7
 X-Developer-Key: i=quic_lijuang@quicinc.com; a=ed25519;
  pk=1zeM8FpQK/J1jSFHn8iXHeb3xt7F/3GvHv7ET2RNJxE=
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yHFLFN4k6CPTqu0HC2OcppGCT8IxwK8r
-X-Proofpoint-ORIG-GUID: yHFLFN4k6CPTqu0HC2OcppGCT8IxwK8r
-X-Authority-Analysis: v=2.4 cv=JNc7s9Kb c=1 sm=1 tr=0 ts=681b3571 cx=c_pps
+X-Proofpoint-GUID: UEOhfNH73Y47Hc0kn5OgNDzoIYbC8Z28
+X-Authority-Analysis: v=2.4 cv=TqPmhCXh c=1 sm=1 tr=0 ts=681b3574 cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8
- a=COk6AnOGAAAA:8 a=5YRdyxvPSVI2_D5q7JMA:9 a=QEXdDO2ut3YA:10
+ a=COk6AnOGAAAA:8 a=t81gwU7txs9n4WTBcGUA:9 a=QEXdDO2ut3YA:10
  a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDA5NiBTYWx0ZWRfX42gZ5A5y4TzA
- GP5lBZ62KuVeHVIMd/ozAqDF5wrJSNUB+ASlCzFgETAPu7DOP0X3BQg7MXzOOI6BibOfWcUfdk7
- g/U6qR5qSo7BkU2uvYtW2wHHBTbuV1TfuFVMM5bv8VWyCq8+LhXFP3AbCQWKNN41rOSc88lfobF
- 3JvqbHY0kxdPNJk843qw0+Ea14OO9R9uR0+ZSnJQCfrSKgJFKjuPV6XVFDHhwbRT13lXXREaeHt
- Parbb/duR5qFBMRZKpgmKCOi28z81SYSeOHSU7QD4TMHpb02yuXugoPflWoJDh+IB7TmeQsle2O
- r8vrNJq1Cg7TFapMoejxv/UzFWyZZUOtk1gWRmhzxQkVNEESO5m2pCE1eI5JftheLvagf86znW5
- /TueryrsNx2Ca9sZVQoQAGGsztDejJw8GPAkbK0AjAf/RHwznCnBVihiLZDw1UXhyy4hHO+5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDA5NyBTYWx0ZWRfX8D/R1ZP8tmlD
+ 2/hFXqUXowsI/fBBj6q0qj0Y/fNCsyUQ3r+TEl4OhmbNzEdiLemeTcFsu9cyuv+NSjpoGDL53WZ
+ XGrp+Kh7q/aF1e43kt7XBkFV8EMQr0wYHhoERdQefh2+EXz+y2LDXRpDMuwz+HuTObXBzion1am
+ x4+5y53zK1KChgT6HQwwD/cZtGEUNMf9Ig0Qpz/isvVfpx2qenizi6FPCWJ2cvzpNVsMU5ruJdB
+ AvIJtL3iNLASd3KfPcjz0syBVjyWsBHzZLRxQB77/VwwUNHFLfasYc8QtBLE6wpwY4uaOw6c7P3
+ TEJfcklW/IaF2bEdxKjyHB9PII0JkM7ErydFBqgeUJOWxl9qcNrovNdfn9RzvkzSjUixsdKU0Lo
+ GvrNqyy8aIENcegd5u9qJmwq4gQWcH4UmLFTgSCUCvdeLugFQfRUkXfYmtsHWeDtUxDMprK+
+X-Proofpoint-ORIG-GUID: UEOhfNH73Y47Hc0kn5OgNDzoIYbC8Z28
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-07_03,2025-05-06_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 mlxlogscore=967 phishscore=0 spamscore=0
- clxscore=1015 adultscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
- impostorscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ malwarescore=0 adultscore=0 mlxscore=0 mlxlogscore=734 spamscore=0
+ priorityscore=1501 phishscore=0 suspectscore=0 impostorscore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505070096
+ definitions=main-2505070097
 
-Document the components used to boot the ADSP and CDSP on the Qualcomm
-QCS615 SoC. Use fallback to indicate the compatibility of the remoteproc
-on the QCS615 with that on the SM8150.
+Document qcom,qcs615-imem compatible. It has a child node for debugging
+purposes.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
 ---
- .../bindings/remoteproc/qcom,sm8150-pas.yaml       | 59 +++++++++++++---------
- 1 file changed, 35 insertions(+), 24 deletions(-)
+ Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml
-index 56ff6386534d..caee47b52d5a 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml
-@@ -15,14 +15,23 @@ description:
- 
- properties:
-   compatible:
--    enum:
--      - qcom,sm8150-adsp-pas
--      - qcom,sm8150-cdsp-pas
--      - qcom,sm8150-mpss-pas
--      - qcom,sm8150-slpi-pas
--      - qcom,sm8250-adsp-pas
--      - qcom,sm8250-cdsp-pas
--      - qcom,sm8250-slpi-pas
-+    oneOf:
-+      - items:
-+          - enum:
-+              - qcom,qcs615-adsp-pas
-+          - const: qcom,sm8150-adsp-pas
-+      - items:
-+          - enum:
-+              - qcom,qcs615-cdsp-pas
-+          - const: qcom,sm8150-cdsp-pas
-+      - enum:
-+          - qcom,sm8150-adsp-pas
-+          - qcom,sm8150-cdsp-pas
-+          - qcom,sm8150-mpss-pas
-+          - qcom,sm8150-slpi-pas
-+          - qcom,sm8250-adsp-pas
-+          - qcom,sm8250-cdsp-pas
-+          - qcom,sm8250-slpi-pas
- 
-   reg:
-     maxItems: 1
-@@ -59,16 +68,17 @@ allOf:
-   - if:
-       properties:
-         compatible:
--          enum:
--            - qcom,sc8180x-adsp-pas
--            - qcom,sc8180x-cdsp-pas
--            - qcom,sc8180x-slpi-pas
--            - qcom,sm8150-adsp-pas
--            - qcom,sm8150-cdsp-pas
--            - qcom,sm8150-slpi-pas
--            - qcom,sm8250-adsp-pas
--            - qcom,sm8250-cdsp-pas
--            - qcom,sm8250-slpi-pas
-+          contains:
-+            enum:
-+              - qcom,sc8180x-adsp-pas
-+              - qcom,sc8180x-cdsp-pas
-+              - qcom,sc8180x-slpi-pas
-+              - qcom,sm8150-adsp-pas
-+              - qcom,sm8150-cdsp-pas
-+              - qcom,sm8150-slpi-pas
-+              - qcom,sm8250-adsp-pas
-+              - qcom,sm8250-cdsp-pas
-+              - qcom,sm8250-slpi-pas
-     then:
-       properties:
-         interrupts:
-@@ -85,12 +95,13 @@ allOf:
-   - if:
-       properties:
-         compatible:
--          enum:
--            - qcom,sc8180x-adsp-pas
--            - qcom,sc8180x-cdsp-pas
--            - qcom,sm8150-adsp-pas
--            - qcom,sm8150-cdsp-pas
--            - qcom,sm8250-cdsp-pas
-+          contains:
-+            enum:
-+              - qcom,sc8180x-adsp-pas
-+              - qcom,sc8180x-cdsp-pas
-+              - qcom,sm8150-adsp-pas
-+              - qcom,sm8150-cdsp-pas
-+              - qcom,sm8250-cdsp-pas
-     then:
-       properties:
-         power-domains:
+diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+index 2711f90d9664..dc3b5a69b925 100644
+--- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
++++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+@@ -22,6 +22,7 @@ properties:
+           - qcom,msm8974-imem
+           - qcom,msm8976-imem
+           - qcom,qcs404-imem
++          - qcom,qcs615-imem
+           - qcom,qcs8300-imem
+           - qcom,qdu1000-imem
+           - qcom,sa8775p-imem
 
 -- 
 2.46.0
