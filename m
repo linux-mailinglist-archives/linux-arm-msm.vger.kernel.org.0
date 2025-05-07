@@ -1,62 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-57110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 498D0AAD92D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 09:56:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DE69AAD99D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 10:08:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6C1F416E2A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 07:56:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0763A4E64C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 08:08:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83DDB221FB7;
-	Wed,  7 May 2025 07:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E944223DC0;
+	Wed,  7 May 2025 07:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YYPP9URb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FHNBUs5m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556BB2153E2;
-	Wed,  7 May 2025 07:54:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53455222568;
+	Wed,  7 May 2025 07:59:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746604491; cv=none; b=K6YjMxA02J33TdBA2eoAyWGQbgfrg+g3HWf1qFuovOzeY9QhUnc9hs6NrlZVFrKcaQtvA//6ljbKLB3s9N0ePob1J+bUZXMkDReQnS9vXvaWYhljV2SZvEpYL3sPY3Yb2ZoMkL4iqahsWmsQixRuCxLfHqiS3scn7sn/SgClaY4=
+	t=1746604744; cv=none; b=TYatBW7tNDsltKNtc23pU1w3/WFYrDkYgT8VCP0xJ9rZDZ7NeBNHIKxTx3lVdMYtpAkOTyNFrFgmBUEbW0h1ZgpddBsWvWSKTNjxhzmSzTBCB3xQIKv7beEGxfHwEV+bUoD0Lctb5/dFg/iHBeEGPvlSk2QTKoKpYKysE65X908=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746604491; c=relaxed/simple;
-	bh=RvNzjk0M4mARQxnDPb6DusUcGQ12+LWoRjehzoQ9+0k=;
+	s=arc-20240116; t=1746604744; c=relaxed/simple;
+	bh=cJVc8vDwwV6eG3WvH6uiIoTnL+2Yb4/F1G4OnVH37bo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JTt0wQZxRvNNyKdy1UniHEVVsO6O3zn+uevFoUM0ekRSczZexXdi/3PmaKrS1fJKeQiYiFJn0xy0aDHs94gKkt8wP1erT+t0Z0uq15HAm6sA0f8ABAVPnlrFhsk8oVLEbbizH2x/onFQPvTdBvXxPmUZxDg7BSyAu+oGFZGa4NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YYPP9URb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4CCC4CEEE;
-	Wed,  7 May 2025 07:54:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746604490;
-	bh=RvNzjk0M4mARQxnDPb6DusUcGQ12+LWoRjehzoQ9+0k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YYPP9URbYPC+uecaNokMl21TG6IAS8eM6KFsa+k+ziuulMc/0YPMlkBc/6xBJ7oVX
-	 2sQc4TQbzH7QDarjCEITyBG5jt1yqyaImSlsaKopA5Ul9y6gl7ntQDYkdF/OMJq/eZ
-	 kcjgqeqTVApPxZQCQY1RKJMpbKdbifLFwlJZCq7HdvKw5Ci8B7CgwwuaY8OShZ6qQO
-	 t2K2mNgsjVtjpg6IDPp96LiaJzpC77DdRBjlOT/r/u90RgstR6oTLYKWQ9E2sRro0P
-	 J6jgmSDJLGUEw063QNzeMCOyg7S82M48kvrZ+TUB/UGNhgUYDZqH9IJh2WreR5lg9c
-	 V4m6pM62CzCIg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1uCZc5-000000005me-3rfW;
-	Wed, 07 May 2025 09:54:46 +0200
-Date: Wed, 7 May 2025 09:54:45 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=G0TsRwNIhWoZG5gMWL6UpD+FPQ56K2lovAG+HygHLlankl5y/VzPWmSEY1e8qiEZbg3MhektabdcBJG92YZu2ZZJMxHcUu1cVbVyeqfT4MxPxVXrURVPPvWtz1Dv5P9H2GcN93k0GhW2e9iRNl0ODMsmj1xEjzf58khI+cqX5r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FHNBUs5m; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1746604743; x=1778140743;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=cJVc8vDwwV6eG3WvH6uiIoTnL+2Yb4/F1G4OnVH37bo=;
+  b=FHNBUs5mDrvEsxe9oKHXAckoUDjW+E+nwv9OduaOoLleq4nr+NivnNRU
+   axX8QACXSFiReYugRQaqILIQNVM/2WTB+6ovi+vcyO7kK8ZB19G+2GntJ
+   Vc/sgfR9J3TOPA1qa9xon9Ftpc6PNAlRbErEvswo5MwtGdhEbhGNk7OsH
+   t6zVBYkkf4BtiKm1PTHShoIUi82o1hIE9xZY9YJmfYWnpW6PkoYqjukJQ
+   c9I6QOgZLmm+A4RnwxH8oh2ctGR29pVKzxMObWUeCpJcG2ZpC671lTYIX
+   l6nSiJxqVViXh5LoBCczU9CRvlDFrqVBDJESmpRrsYWtZm8/1Zt4pXBwc
+   Q==;
+X-CSE-ConnectionGUID: 6quq6gNZQQ6YUoBqs1saBg==
+X-CSE-MsgGUID: S1scbWBCTpOo7xheNtEUtA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="51969535"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; 
+   d="scan'208";a="51969535"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2025 00:59:02 -0700
+X-CSE-ConnectionGUID: i3OY1f7dSP6kowPaS9EQDw==
+X-CSE-MsgGUID: XJ5A9IlWRxamSWSXFFzBUw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; 
+   d="scan'208";a="159175153"
+Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
+  by fmviesa002.fm.intel.com with ESMTP; 07 May 2025 00:58:57 -0700
+Received: from kbuild by 1992f890471c with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uCZg6-0007Mx-21;
+	Wed, 07 May 2025 07:58:54 +0000
+Date: Wed, 7 May 2025 15:58:14 +0800
+From: kernel test robot <lkp@intel.com>
+To: Praveen Talari <quic_ptalari@quicinc.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/4] rtc: pm8xxx: fix uefi offset lookup
-Message-ID: <aBsRxbBb91e_sQn3@hovoldconsulting.com>
-References: <20250423075143.11157-1-johan+linaro@kernel.org>
+	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-pm@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, psodagud@quicinc.com, djaggi@quicinc.com,
+	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+	quic_arandive@quicinc.com, quic_mnaresh@quicinc.com,
+	quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v3 8/9] serial: qcom-geni: Enable PM runtime for serial
+ driver
+Message-ID: <202505071523.FhPMXslL-lkp@intel.com>
+References: <20250502031018.1292-9-quic_ptalari@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,54 +93,58 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250423075143.11157-1-johan+linaro@kernel.org>
+In-Reply-To: <20250502031018.1292-9-quic_ptalari@quicinc.com>
 
-Hi Alexandre and Bjorn,
+Hi Praveen,
 
-On Wed, Apr 23, 2025 at 09:51:39AM +0200, Johan Hovold wrote:
-> On many Qualcomm platforms the PMIC RTC control and time registers are
-> read-only so that the RTC time can not be updated. Instead an offset
-> needs be stored in some machine-specific non-volatile memory, which a
-> driver can take into account.
-> 
-> On platforms where the offset is stored in a Qualcomm specific UEFI
-> variable the variables are also accessed in a non-standard way, which
-> means that the OS cannot assume that the variable service is available
-> by the time the driver probes.
-> 
-> This series adds a 'qcom,uefi-rtc-info' boolean DT property to indicate
-> that the RTC offset is stored in a Qualcomm specific UEFI variable so
-> that the OS can determine whether to wait for it to become available.
-> 
-> I used such a property in v1 of the series adding support for the UEFI
-> offset [1], but mistakenly convinced myself that it was not needed given
-> that the efivars driver would need to remain built in. As Rob Clark
-> noticed, this is however not sufficient and the driver can currently
-> fail to look up the offset if the RTC driver is built in or if a
-> dependency of the efivars driver is built as a module. [2]
-> 
-> As with the rest of this driver, hopefully all of this goes away (for
-> future platforms) once Qualcomm fix their UEFI implementation so that
-> the time service can be used directly.
-> 
-> Preferably the binding and driver fix can be merged for 6.15-rc by
-> Alexandre, while Bjorn takes the DT changes through the branch which has
-> the DT patches from v2 (which unfortunately missed 6.15 but may possibly
-> be sent as hw enablement fixups). [3]
+kernel test robot noticed the following build warnings:
 
-It seems we won't have RTC support in 6.15, but could you please pick
-these up for 6.16 to make sure that the RTC works also when the driver
-is built in?
+[auto build test WARNING on 3e039dcc9c1320c0d33ddd51c372dcc91d3ea3c7]
 
-> [1] https://lore.kernel.org/all/20250120144152.11949-1-johan+linaro@kernel.org/
-> [2] https://lore.kernel.org/all/aAecIkgmTTlThKEZ@hovoldconsulting.com/
-> [3] https://lore.kernel.org/lkml/20250219134118.31017-1-johan+linaro@kernel.org/
-> 
-> Johan Hovold (4):
->   dt-bindings: rtc: qcom-pm8xxx: add uefi-variable offset
->   rtc: pm8xxx: fix uefi offset lookup
->   arm64: dts: qcom: sc8280xp-x13s: describe uefi rtc offset
->   arm64: dts: qcom: x1e80100: describe uefi rtc offset
+url:    https://github.com/intel-lab-lkp/linux/commits/Praveen-Talari/opp-add-new-helper-API-dev_pm_opp_set_level/20250502-111540
+base:   3e039dcc9c1320c0d33ddd51c372dcc91d3ea3c7
+patch link:    https://lore.kernel.org/r/20250502031018.1292-9-quic_ptalari%40quicinc.com
+patch subject: [PATCH v3 8/9] serial: qcom-geni: Enable PM runtime for serial driver
+config: alpha-allyesconfig (https://download.01.org/0day-ci/archive/20250507/202505071523.FhPMXslL-lkp@intel.com/config)
+compiler: alpha-linux-gcc (GCC) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250507/202505071523.FhPMXslL-lkp@intel.com/reproduce)
 
-Johan
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202505071523.FhPMXslL-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/tty/serial/qcom_geni_serial.c:1876:12: warning: 'qcom_geni_serial_runtime_resume' defined but not used [-Wunused-function]
+    1876 | static int qcom_geni_serial_runtime_resume(struct device *dev)
+         |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> drivers/tty/serial/qcom_geni_serial.c:1868:12: warning: 'qcom_geni_serial_runtime_suspend' defined but not used [-Wunused-function]
+    1868 | static int qcom_geni_serial_runtime_suspend(struct device *dev)
+         |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+vim +/qcom_geni_serial_runtime_resume +1876 drivers/tty/serial/qcom_geni_serial.c
+
+  1867	
+> 1868	static int qcom_geni_serial_runtime_suspend(struct device *dev)
+  1869	{
+  1870		struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+  1871		struct uart_port *uport = &port->uport;
+  1872	
+  1873		return geni_serial_resources_off(uport);
+  1874	};
+  1875	
+> 1876	static int qcom_geni_serial_runtime_resume(struct device *dev)
+  1877	{
+  1878		struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+  1879		struct uart_port *uport = &port->uport;
+  1880	
+  1881		return geni_serial_resources_on(uport);
+  1882	};
+  1883	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
