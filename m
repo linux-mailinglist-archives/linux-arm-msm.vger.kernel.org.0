@@ -1,776 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-57195-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0AB4AAEEB0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 00:23:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37A10AAEED9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 00:53:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 382D34C4E0A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 22:23:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 745FF1895759
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 22:53:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AEDA290DAD;
-	Wed,  7 May 2025 22:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C736B2153C8;
+	Wed,  7 May 2025 22:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="enJCQmo7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Nmayjh2X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B1224469B;
-	Wed,  7 May 2025 22:22:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFE15D477
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 May 2025 22:53:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746656581; cv=none; b=A6pkXG+C5Hu0+JWBUr/jgT+tbNI/9WyyBYmsNDsVP2RaJMf5raHia2cDYNHJ0Oir4wM6S0qs7N3Pv2OVUN39d2qXZy8r1jyXKw4ftaF5hIhJ7Wa2B8ueIdG0UP6P/+YgxGd0qdYSlUxrMTXnuNho3ec6E9N7hPfMaqXpZJuvw94=
+	t=1746658407; cv=none; b=k4bFOpFAv7wc+Kq2NTPjKR3PNVBYwuvCXm/kNa+OQjYJQ8HKl0+Ma+yJRbeJnxItkxEork3SF0dR9e3f1pDpJAo4rE7BJLm02jxuHgLoEDO6BYjG1pc+IIBM13Fp1XiZjPuLkbx+R06ICCOfsiQ55j3YclVvK15H/2y3UabXKmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746656581; c=relaxed/simple;
-	bh=yBKdkhLyqQOgBQbXlBslcA/YKjUNTeu1dahHdAOeUIM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hWoY9+hm8ZYAHGTPUsXdt/dnO8aTV0YwZUJolJT7+1XUsGf6jZ3xGCeph3X6N1lGR5dJlhdUcp+FZcMkmmGr4B45gOkIIutW1tZ6wsWgRSouHSr1kLRO1pBJXEHycAzAzK3KFVTrF5gYlLix1+kTUaOqLXeCiJLlEfHo1rFa+IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=enJCQmo7; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3a0adcc3e54so220520f8f.1;
-        Wed, 07 May 2025 15:22:58 -0700 (PDT)
+	s=arc-20240116; t=1746658407; c=relaxed/simple;
+	bh=JbzYhrgPmz/o7h2zZyoQ2HeZyaNllO07GDdTYgtL8QE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=f6yJnb1abooZpf8lmUwNLc4ht6reIc9lN1ZgsslBMBeHNRpDDGHVzIpEmyjHEAIXv9I6SKr3VMoaxpCHwiKk+4GJk8RFHiJFeN+hh0U7TRhKsqnSPzKsAReqLAvc31yUtLZzj3nnPiItEgpfEdWbDnjZyMQ3IvNPr7RKAHTCUf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Nmayjh2X; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-54eac09aa50so56878e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 May 2025 15:53:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746656577; x=1747261377; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WRu/Yof8QZv2Lj3pzJFj/LygjD3I2HxFOlp/Xfi5BgY=;
-        b=enJCQmo7t7n1uXc9xfKLOTNR1k5W9RsNKY7TOqC7CfbBxp975SIAYNqcu/N/b4MaeS
-         /96mUOxikTxRaNKam0L9vDEiJqa/4H8aMFh/hYyPp7MHzTheGXAT+ZR0Zzk16cfQ01U2
-         fe3Ahc6t1ZDHrShUjytve+Ldvaj1eD2vrLBo40aIVu2MYJd92MdoBA4xEhGp2REzlD8+
-         UsPEikwmnlX/Y+gjSaHshAnvAb0VZKSy8zpN6CC5kwMOLCAPCbf5VToCf/6UmraWga9w
-         KVPzo+MQKE+eWnnj6qCqwz7F6XvMRunlxFcQHplgCmrC436ycpz53HXWP8p+J4mtl+FA
-         BDyA==
+        d=linaro.org; s=google; t=1746658404; x=1747263204; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TlVficwMHW5bnQrJgqz9lUT+ZGh6/8t1mCdFoRRa5Eo=;
+        b=Nmayjh2XSSuV/SM20Nxw2PtR+ws00PMCtMdnYGffFMNy834o+nZmHvCJrFW45CEUZl
+         soPuHTxp82WJISHNdmyxiovI3IoIN066D1UgJJVNJo0w5CKqFVb3EfXxdBjFejuFpcgG
+         mu3u6ZA8WkNZSVhHRxii0JBA3Ks+dlLDM+OoQmdvztxJ62Yp6XGCEarc+GIvfegvYR78
+         NRSgOxF7K9L+/frU1/jtwqsIQhcY4VHXZJs7VTyaH1dy2xwe024pslkxxTK4eLAQuWvC
+         kFY6qHbHKDp+NBRbvLVevLgBhHtB/yzQ0A5MiuRsQkiP03Y6b5vl9oDT5mwGzj5lQIzs
+         9TnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746656577; x=1747261377;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WRu/Yof8QZv2Lj3pzJFj/LygjD3I2HxFOlp/Xfi5BgY=;
-        b=eby9hBSEql/tWcAZthJv1uKhgaiq108q6BSKdXlJ5rJr9XrnPM1pXAX61VlBQaemM3
-         HdY76UGoJRNxsQkSn09YnffyjwCdUNN+8ueriRF41/v/B1h6V3NXL76sA5YSahVjwnsF
-         mppXxKGxZXAHbUgkR1RlaYAqVXe6UN4CfHu0A5hjzCsJo91yYQHtlegrzBozk0GfL/nd
-         c1FGSFgi/URO7khkjguo8aJlTMTs/bpTKb7HeOEDqdjPfWwgqy8L2vcM2f/JdOEZOQNf
-         6hkd5r2AMQga/X3c3pOIGvoL7dHLXir9mPMkjPhlFHqdqcrgG+0mCwNaAU2mnVFKR41t
-         I4JQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV/2jo3Ovfa/lkqubSIsVHkjNn2rZMuMw4oOhuM6iIPMX86FR1dxR4JYGxoRFONP6nM4EAcwfazF04ccljh@vger.kernel.org, AJvYcCWgsY7OVJIAdi2Rf6crSiya/JYArdFNeIlR6tqXRjiOrYriWchPpK9+RA2K62fmy9R8Rv/dLolaTegBjfuj@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxjff0fB5JkGHrESKs/ApFohKXrpqrg6O+MpnX1nXBZe25dl+lu
-	Fs7EvPGV+ptwx3/RmdLb180XwGUhl1SfcO3/5Fgv82if8s/PiBiAo9P8THfHct5Z0Yp9fnDnijR
-	BLAqggssD3q9NvdhkfSk6v6f5hA==
-X-Gm-Gg: ASbGncsbgoJEJLD4W4/LZz0wEQSmQMrmSvOj+73lL8dmGrZt0VfWzmzhdOXfUCzkyj9
-	xw0snyLl7zXdLMbSB+L+tM2vbxg4uYskSj7wU2jmcuS+uQo4Egj/P/S2VhNulFGcZPco0K0hY1K
-	TqbGCAtVMCDo7G6tP9xwMujQ++5481t8Ix
-X-Google-Smtp-Source: AGHT+IETwTnYnhO8Czke0ujsx6MrXz1u8hg2A9eI0d4LOry/Nef30Lt/PNWn192Lon8bCFkVSYgGzDof4o8SkdbdY5s=
-X-Received: by 2002:a05:6000:1ac8:b0:3a0:b930:b375 with SMTP id
- ffacd0b85a97d-3a0b930b459mr1361344f8f.15.1746656576535; Wed, 07 May 2025
- 15:22:56 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1746658404; x=1747263204;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TlVficwMHW5bnQrJgqz9lUT+ZGh6/8t1mCdFoRRa5Eo=;
+        b=ZBj9+0ejtL55ZMLzWULYVz+YTZsUqWrVxnkVNezUeGkvoOLytN1Tfn0CgNiEyO32Q8
+         L4PTKa6NstoLEsCOGE3zJ/CYHh8zyaPi2Mmck5w121PSARVDr2zZ+TgpiVblLiwb40zC
+         AnF2JZG6/lAVNq4UF6OhU7va2rVPRwa3ZViQ3H3hiCx6PZEUOKEbw7Opgj3VkZ+/LBLD
+         NUbEtLwosnTDFJvZN3PkLd2Lq9UVFKjZcY7NqnCXH2dFoZ7/tas7mGd+I3mjUEQGgkAo
+         2J7Oyg2GsZqoc28lAhvwN+OEA9y72t1KGGUI5tki4bdHTJHvlUZ+A055qWiTYQbfbEVr
+         Ro5A==
+X-Forwarded-Encrypted: i=1; AJvYcCVBYXUr8DS61mVpc2YQQ1Af1RHWlHBlMQvDWmTTmFiQIYjJIEXkmwkA9dX8MDTRoItxR1+mfLAY/nLOJBTF@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw27RLQphYOpesHuYOtRI+x4Mbq4PcAIbkXFffVgLiM1ScYjfsB
+	w9dPRTukO7T6hgrgMQY0qwK3+OKf1HUV7KMxd9t+TD9RlTgiLVR411JeU3wXB2k=
+X-Gm-Gg: ASbGncs4EIOQBQddhF+RABZ4d0nYv9Hb12C90GDabvtVdrr76gEnc30UAXu/pdrYaRi
+	d1wpY6d1xR1PuS7ZCuW0Cb5XImUvQf/9EPNKyFHOEUVhBT+Cwwc0sfVm9qDxEUzJeEZYF6jCT2v
+	yfRkOJrUi0gSECjvL/DnZ3OrO14yDDUXfYPGsQBLa3FHo3p9eLefv+PzP1pm+V1PEsg4jZh+Iyy
+	YaokcCHkb9v8x+bmpzYxMAe4smBLE1H8t6kFEqvzVUBJguSOaQF1EyW9Oo7UbLbpEOuIRv+4iFH
+	ArjkUprVSqfpqn9R7brRf0Mew9b2pd7kHQGcXyIkhib20JP7mrjr9rvFxjhJUCpQj390ReRxBfr
+	ehZdpcM70ABKRqNqiI8k=
+X-Google-Smtp-Source: AGHT+IGSPC0AEPj05+D6d3Mzs6vri+sTBq2zyky+s0YWr7AbwJ8/5Bp1988wfG7UTipNEAgT6KZp8Q==
+X-Received: by 2002:a05:6512:ea6:b0:549:8faf:e21b with SMTP id 2adb3069b0e04-54fb95fff5bmr638518e87.5.1746658403798;
+        Wed, 07 May 2025 15:53:23 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ea94b1914sm2470283e87.38.2025.05.07.15.53.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 May 2025 15:53:23 -0700 (PDT)
+Message-ID: <765b0d28-7295-42ae-9ecc-58899dc2ea53@linaro.org>
+Date: Thu, 8 May 2025 01:53:16 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250430001330.265970-1-alex.vinarskis@gmail.com>
- <20250430001330.265970-5-alex.vinarskis@gmail.com> <6495e342-512f-469f-9d66-bb9f47fb551d@quicinc.com>
- <CAMcHhXqFE6-tnT0m9=3N1wSaTyEPMFA0zTfVqwJmgqz60tBAoQ@mail.gmail.com>
- <d1eb55ae-92e5-4a34-af46-5d076512a06b@quicinc.com> <CAMcHhXrJuADN=kN7p-YMy8vEqCk+JVfQ38S=gEW+JtDTe7mivQ@mail.gmail.com>
- <6d03ada4-fa2a-4ccc-9290-e2726cae1f28@quicinc.com> <CAMcHhXoS0NADUmM7MuDSCbkjrpnbyv53dNj3NiJr-tvzhVKsGw@mail.gmail.com>
- <b74a85f2-742c-4978-9865-8a9dea86e211@quicinc.com>
-In-Reply-To: <b74a85f2-742c-4978-9865-8a9dea86e211@quicinc.com>
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Date: Thu, 8 May 2025 00:22:45 +0200
-X-Gm-Features: ATxdqUE4-9uoH-VhG2YfnSkNO8Fbc-vKjaaJhUsPz9RK2Uop1vmF0IgeOo07XX4
-Message-ID: <CAMcHhXos9oQ+aQgMdZLMeSXYQh6obNTW8WfEcuBJ4s6Nc-T9+Q@mail.gmail.com>
-Subject: Re: [PATCH v4 4/4] drm/msm/dp: Introduce link training per-segment
- for LTTPRs
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com, 
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, laurentiu.tudor1@dell.com, abel.vesa@linaro.org, 
-	johan@kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
-	Stefan Schmidt <stefan.schmidt@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm: mdss: use devres version of interface to
+ populate children devices
+Content-Language: ru-RU
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org
+References: <20250507193538.2140862-1-vladimir.zapolskiy@linaro.org>
+ <xmpb6zrbnx2jcfjthkafj6viptkugowo7qdfxlg7vdfh3mqlua@2tcbsd4f3dtv>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <xmpb6zrbnx2jcfjthkafj6viptkugowo7qdfxlg7vdfh3mqlua@2tcbsd4f3dtv>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, 8 May 2025 at 00:08, Abhinav Kumar <quic_abhinavk@quicinc.com> wrot=
-e:
->
-> Hi Alex
->
->
-> On 5/7/2025 3:01 PM, Aleksandrs Vinarskis wrote:
-> > On Tue, 6 May 2025 at 01:41, Abhinav Kumar <quic_abhinavk@quicinc.com> =
-wrote:
-> >>
-> >> Hi Alex
-> >>
-> >> On 5/4/2025 3:06 PM, Aleksandrs Vinarskis wrote:
-> >>> On Sun, 4 May 2025 at 05:02, Abhinav Kumar <quic_abhinavk@quicinc.com=
-> wrote:
-> >>>>
-> >>>> Hi Alex
-> >>>>
-> >>>> Thanks for the response.
-> >>>>
-> >>>> My updates below. I also had one question for Abel below.
-> >>>>
-> >>>> Thanks
-> >>>>
-> >>>> Abhinav
-> >>>>
-> >>>> On 5/1/2025 8:56 AM, Aleksandrs Vinarskis wrote:
-> >>>>> On Thu, 1 May 2025 at 04:11, Abhinav Kumar <quic_abhinavk@quicinc.c=
-om> wrote:
-> >>>>>>
-> >>>>>>
-> >>>>>>
-> >>>>>> On 4/29/2025 5:09 PM, Aleksandrs Vinarskis wrote:
-> >>>>>>> DisplayPort requires per-segment link training when LTTPR are swi=
-tched
-> >>>>>>> to non-transparent mode, starting with LTTPR closest to the sourc=
-e.
-> >>>>>>> Only when each segment is trained individually, source can link t=
-rain
-> >>>>>>> to sink.
-> >>>>>>>
-> >>>>>>> Implement per-segment link traning when LTTPR(s) are detected, to
-> >>>>>>> support external docking stations. On higher level, changes are:
-> >>>>>>>
-> >>>>>>> * Pass phy being trained down to all required helpers
-> >>>>>>> * Run CR, EQ link training per phy
-> >>>>>>> * Set voltage swing, pre-emphasis levels per phy
-> >>>>>>>
-> >>>>>>> This ensures successful link training both when connected directl=
-y to
-> >>>>>>> the monitor (single LTTPR onboard most X1E laptops) and via the d=
-ocking
-> >>>>>>> station (at least two LTTPRs).
-> >>>>>>>
-> >>>>>>> Fixes: 72d0af4accd9 ("drm/msm/dp: Add support for LTTPR handling"=
-)
-> >>>>>>>
-> >>>>>>
-> >>>>>> Thanks for the patch to improve and add support for link training =
-in
-> >>>>>> non-transparent mode.
-> >>>>>>
-> >>>>>> Some questions below as the DP 2.1a spec documentation is not very=
- clear
-> >>>>>> about segmented link training as you noted in the cover letter, so=
- I am
-> >>>>>> also only reviewing i915 as reference here.
-> >>>>>>
-> >>>>>>
-> >>>>>>> Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> >>>>>>> Tested-by: Rob Clark <robdclark@gmail.com>
-> >>>>>>> Tested-by: Stefan Schmidt <stefan.schmidt@linaro.org>
-> >>>>>>> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-> >>>>>>> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-> >>>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> >>>>>>> ---
-> >>>>>>>      drivers/gpu/drm/msm/dp/dp_ctrl.c | 126 +++++++++++++++++++++=
-+---------
-> >>>>>>>      1 file changed, 89 insertions(+), 37 deletions(-)
-> >>>>>>>
-> >>>>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/m=
-sm/dp/dp_ctrl.c
-> >>>>>>> index d8633a596f8d..35b28c2fcd64 100644
-> >>>>>>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> >>>>>>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> >>>>>>> @@ -1034,10 +1034,12 @@ static int msm_dp_ctrl_set_vx_px(struct m=
-sm_dp_ctrl_private *ctrl,
-> >>>>>>>          return 0;
-> >>>>>>>      }
-> >>>>>>>
-> >>>>>>> -static int msm_dp_ctrl_update_vx_px(struct msm_dp_ctrl_private *=
-ctrl)
-> >>>>>>> +static int msm_dp_ctrl_update_phy_vx_px(struct msm_dp_ctrl_priva=
-te *ctrl,
-> >>>>>>> +                                     enum drm_dp_phy dp_phy)
-> >>>>>>>      {
-> >>>>>>>          struct msm_dp_link *link =3D ctrl->link;
-> >>>>>>> -     int ret =3D 0, lane, lane_cnt;
-> >>>>>>> +     int lane, lane_cnt, reg;
-> >>>>>>> +     int ret =3D 0;
-> >>>>>>>          u8 buf[4];
-> >>>>>>>          u32 max_level_reached =3D 0;
-> >>>>>>>          u32 voltage_swing_level =3D link->phy_params.v_level;
-> >>>>>>> @@ -1075,8 +1077,13 @@ static int msm_dp_ctrl_update_vx_px(struct=
- msm_dp_ctrl_private *ctrl)
-> >>>>>>>
-> >>>>>>>          drm_dbg_dp(ctrl->drm_dev, "sink: p|v=3D0x%x\n",
-> >>>>>>>                          voltage_swing_level | pre_emphasis_level=
-);
-> >>>>>>> -     ret =3D drm_dp_dpcd_write(ctrl->aux, DP_TRAINING_LANE0_SET,
-> >>>>>>> -                                     buf, lane_cnt);
-> >>>>>>> +
-> >>>>>>> +     if (dp_phy =3D=3D DP_PHY_DPRX)
-> >>>>>>> +             reg =3D DP_TRAINING_LANE0_SET;
-> >>>>>>> +     else
-> >>>>>>> +             reg =3D DP_TRAINING_LANE0_SET_PHY_REPEATER(dp_phy);
-> >>>>>>> +
-> >>>>>>> +     ret =3D drm_dp_dpcd_write(ctrl->aux, reg, buf, lane_cnt);
-> >>>>>>
-> >>>>>> For the max voltage and swing levels, it seems like we need to use=
- the
-> >>>>>> source (DPTX) or the DPRX immediately upstream of the RX we are tr=
-ying
-> >>>>>> to train. i915 achieves it with below:
-> >>>>>>
-> >>>>>>             /*
-> >>>>>>              * Get voltage_max from the DPTX_PHY (source or LTTPR)=
- upstream
-> >>>>>> from
-> >>>>>>              * the DPRX_PHY we train.
-> >>>>>>              */
-> >>>>>>             if (intel_dp_phy_is_downstream_of_source(intel_dp, dp_=
-phy))
-> >>>>>>                     voltage_max =3D intel_dp->voltage_max(intel_dp=
-, crtc_state);
-> >>>>>>             else
-> >>>>>>                     voltage_max =3D intel_dp_lttpr_voltage_max(int=
-el_dp,
-> >>>>>> dp_phy + 1);
-> >>>>>>
-> >>>>
-> >>>> Before I update on the below set of questions from Alex, let me clar=
-ify
-> >>>> one point from Abel.
-> >>>>
-> >>>> Hi Abel
-> >>>>
-> >>>> Apologies to ask this late, but as per the earlier discussions we ha=
-d
-> >>>> internally, I thought we wanted to set the LTTPR to transparent mode=
- to
-> >>>> avoid the issues. The per-segment link training becomes a requiremen=
-t if
-> >>>> we use non-transparent mode iiuc.
-> >>>>
-> >>>> In the description of the PHY_REPEATER_MODE DPCD register, it states
-> >>>> like below:
-> >>>>
-> >>>> "A DPTX operating with 8b/10b Link Layer (MAIN_LINK_CHANNEL_CODING_S=
-ET
-> >>>> register (DPCD Address 00108h) is programmed to 01h) may configure L=
-TTPRs
-> >>>> to either Transparent (default) or Non-transparent mode.
-> >>>> A DPTX that establishes the DP link with 128b/132b channel coding sh=
-all
-> >>>> write
-> >>>> 02h to the MAIN_LINK_CHANNEL_CODING_SET register and configure LTTPR=
-s
-> >>>> to Non-transparent mode."
-> >>>>
-> >>>> As per the msm dp code, we are using 8b/10b encoding, like below
-> >>>>
-> >>>> static int msm_dp_ctrl_link_train(struct msm_dp_ctrl_private *ctrl,
-> >>>>                            int *training_step)
-> >>>> {
-> >>>>            int ret =3D 0;
-> >>>>            const u8 *dpcd =3D ctrl->panel->dpcd;
-> >>>>            u8 encoding[] =3D { 0, DP_SET_ANSI_8B10B };
-> >>>>
-> >>>> So can you pls elaborate why we set the PHY_REPEATER_MODE to
-> >>>> non-transparent mode because drm_dp_lttpr_init() will set the LTTPR =
-to
-> >>>> non-transparent mode.
-> >>>>
-> >>>> The second part of the section is what was described in the commit t=
-ext
-> >>>> of the 72d0af4accd9 ("drm/msm/dp: Add support for LTTPR handling") b=
-ut
-> >>>>
-> >>>> "Before performing link training with LTTPR(s), the DPTX may place t=
-he
-> >>>> LTTPR(s) in
-> >>>> Non-transparent mode by first writing 55h to the PHY_REPEATER_MODE
-> >>>> register, and then
-> >>>> writing AAh. This operation does not need to be performed on subsequ=
-ent
-> >>>> link training actions
-> >>>> unless a downstream device unplug event is detected."
-> >>>>
-> >>>> So just wanted to understand this better that was there any requirem=
-ent
-> >>>> to put it to non-transparent mode other than the section of the spec
-> >>>> highlighted above? Because above lines are only suggesting that if w=
-e
-> >>>> want to put the LTTPR to non-transparent mode, how to do it but not =
-to
-> >>>> always do it. Please let me know your comments.
-> >>>>
-> >>>> I shall also check internally on this to close this.
-> >>>>
-> >>>>
-> >>>> Hi Alex
-> >>>>
-> >>>>>>
-> >>>>>> But I do not see (unless I missed) how this patch takes care of th=
-is
-> >>>>>> requirement.
-> >>>>>>
-> >>>>>> Same holds true for preemph too
-> >>>>>
-> >>>>> Thanks for you review,
-> >>>>>
-> >>>>> This is a very good point. You are right, in the present state it d=
-oes
-> >>>>> not. Intel's driver is verifying whether LTTPRs supports
-> >>>>> DP_TRAIN_LEVEL_3 or only DP_TRAIN_LEVEL_2, while my current change
-> >>>>> follows msm-dp's default which was recently set to DP_TRAIN_LEVEL_3
-> >>>>> [1]. I came to conclusion that in particular case it was not requir=
-ed
-> >>>>> to verify that LTTPR indeed supports training level 3, but do not
-> >>>>> remember the details as its been a few months... should've document=
- it
-> >>>>> :)
-> >>>>>
-> >>>>
-> >>>>> As I recall, from one of the DP specs onward (has to be 1.4a then,
-> >>>>> since LTTPR was initially introduced in DP 1.3, but register for ph=
-y
-> >>>>> capabilities only added in 1.4a [2]) it mandates training level 3
-> >>>>> support for LTTPRs, so the assumption would've be correct in that
-> >>>>> case. Is this something you could verify from the official
-> >>>>> documentation? Unfortunately I do not have sources to back this
-> >>>>> statement, so it may be incorrect...
-> >>>>>
-> >>>>
-> >>>> I went through DP spec 1.4(a), DP 2.0 and DP 2.1(a). This is what is
-> >>>> mentioned below:
-> >>>>
-> >>>>
-> >>>> "LTTPR shall support all required voltage swing and pre-emphasis
-> >>>> combinations defined
-> >>>> in Table 3-2. The LTTPR shall reflect its support of optional Voltag=
-e
-> >>>> Swing Level 3
-> >>>> and Pre-emphasis Level 3 in the VOLTAGE_SWING_LEVEL_3_SUPPORTED and
-> >>>> VOLTAGE_SWING_LEVEL_3_SUPPORTED bits, respectively, in the
-> >>>> TRANSMITTER_CAPABILITY_PHY_REPEATERx register(s) (e.g., DPCD
-> >>>> Address F0021h for LTTPR1, bits 0 and 1, respectively)."
-> >>>>
-> >>>>    From this paragraph, it means that LTTPR support for levels 0/1/2=
- can
-> >>>> be assumed and level 3 is optional. Whether or not level 3 is suppor=
-ted
-> >>>> comes from the TRANSMITTER_CAPABILITY_PHY_REPEATERx register(s).
-> >>>>
-> >>>> This aligns with i915 implementation.
-> >>>>
-> >>>>
-> >>>> Now, right after this, there is another paragraph in the spec:
-> >>>>
-> >>>> "If the DPTX sets the voltage swing or pre-emphasis to a level that =
-the
-> >>>> LTTPR does not support,
-> >>>> the LTTPR shall set its transmitter levels as close as possible to t=
-hose
-> >>>> requested by the DPTX.
-> >>>> Although the LTTPR=E2=80=99s level choosing is implementation-specif=
-ic, the
-> >>>> levels chosen shall
-> >>>> comply with Section 3.5.4."
-> >>>
-> >>> Hi Abhinav,
-> >>>
-> >>> Could you please provide the exact section number and DP spec version
-> >>> for this paragraph? For reference in the commit message, see below.
-> >>>
-> >>
-> >> This is in the section "3.6.7.2 8b/10b DP Link Layer LTTPR Link Traini=
-ng
-> >> Mandates" of DP spec 2.1(a)"
-> >
-> > Perfect, thanks.
-> >
-> >>
-> >>>>
-> >>>> This tells us that even if we try to do a level3 and the LTTPR does =
-not
-> >>>> support it, it will use the one closest to this.
-> >>>>
-> >>>> So overall, even though i915's implementation is the accurate one, t=
-he
-> >>>> DP spec does mention that the LTTPR can adjust. I just hope all LTTP=
-Rs
-> >>>> can adjust to this. Hopefully this clarifies the requirements spec-w=
-ise.
-> >>>
-> >>> Thanks for this clarification, this is extremely useful. A bit sad
-> >>> that DP spec is only available to VESA members.
-> >>> So my assumption was indeed incorrect. This also explains why eg.
-> >>> AMD's driver works, nice.
-> >>>
-> >>
-> >> Yes. This was good to know.
-> >>
-> >>>>
-> >>>> Hence I am okay with this change as such as multiple folks including=
- us
-> >>>> have given a Tested-by but I would like this to be documented in the
-> >>>> commit text so that full context is preserved. The only concern I ha=
-ve
-> >>>> is I hope that the level to which the LTTPR adjusts will be correct =
-as
-> >>>> that again is "implementation specific".
-> >>>
-> >>> I started implementing i915's approach meanwhile, to see the
-> >>> difference in behaviour. POC fixup for patch 3,4 of this series can b=
-e
-> >>> found in [1]. Discovered something interesting:
-> >>> * Dell WD19TB docking station's LTTPR reports support of training lev=
-el 3
-> >>> * PS8833 retimer in Asus Zenbook A14 reports support of training leve=
-l 3
-> >>> * PS8830 retimer in Dell XPS 9345 claims to _not_ report support
-> >>> training level 3. This is the case on two different machines with BIO=
-S
-> >>> 1.9.0 (PS8830 payload version 5.3.0.14) and BIOS 2.5.0 (PS8830 payloa=
-d
-> >>> version 9.3.0.01).
-> >>>
-> >>> This leads to interesting test results:
-> >>> * Asus Zenbook A14 (PS8833, supports train level 3) with direct
-> >>> monitor connection via Type-C works, both in current version of msm-d=
-p
-> >>> (aka AMD's approach) and with additional patches I linked above (aka
-> >>> i915's approach)
-> >>> * Dell XPS 9345 (PS8830, claims to not support train level 3) with
-> >>> Dell WD19TB (supports train level 3) works, both in current version o=
-f
-> >>> msm-dp and with additional patches I linked above. In this
-> >>> combination, PS8830->WD19TB segment training succeeds with vs=3D2, pe=
-=3D0
-> >>> already.
-> >>> * Dell XPS 9345 (PS8830, claims to not support train level 3) with
-> >>> direct monitor connection via Type-C works with current version of
-> >>> msm-dp, but does _not_ work with additional patches I linked above.
-> >>> For PS8830->Monitor segment training, after reaching vs=3D2,pe=3D0 an=
-d
-> >>> being stopped from going higher (due to PS8830 claiming it cannot do
-> >>> train level 3), link training fails. With current msm-dp state
-> >>> however, the same PS8830->Monitor segment training succeeds with
-> >>> vs=3D2,pe=3D1. This is contrary to retimer reporting it does not supp=
-ort
-> >>> train level 3 - it in fact does, and in case with 1m long Type-C to D=
-P
-> >>> cable it only works with train level 3. Bug in P8830's LTTPR
-> >>> implementation? :)
-> >>>
-> >>
-> >> Wow, thats a very good finding!
-> >>
-> >>> Combining both patches linked above as well as debug patch to force
-> >>> max train level to 3 like it was before [2], here are detailed logs:
-> >>> Asus Zenbook A14, BIOS version "UX3407QA.305":
-> >>> ```
-> >>> phy #1: params reset                                                 =
-#
-> >>> training DPRX (phy1/PS8833)
-> >>> phy #1: max_v_level=3D3, max_p_level=3D3                    # DPTX so=
-urce
-> >>> (X1E) supports train level 3
-> >>> phy #1: forcing max_v_level=3D3, max_p_level=3D3
-> >>> phy #1: v_level=3D0, p_level=3D0                                     =
- #
-> >>> passes with vs=3D0,ps=3D0
-> >>> phy #1: max_v_level=3D3, max_p_level=3D3
-> >>> phy #0: params reset
-> >>> # training DPRX (phy0/Monitor)
-> >>> phy #0: max_v_level=3D3, max_p_level=3D3                     # DPTX s=
-ource
-> >>> (phy1/PS8833) supports train level 3
-> >>> phy #0: forcing max_v_level=3D3, max_p_level=3D3
-> >>> phy #0: v_level=3D0, p_level=3D0
-> >>> phy #0: max_v_level=3D3, max_p_level=3D3
-> >>> phy #X: v_level=3D2, p_level=3D0
-> >>> phy #0: v_level=3D2, p_level=3D0
-> >>> phy #0: max_v_level=3D3, max_p_level=3D3
-> >>> phy #X: v_level=3D2, p_level=3D1
-> >>> phy #0: v_level=3D2, p_level=3D1                                     =
-  #
-> >>> training passes with vs=3D2,ps=3D1
-> >>> phy #0: max_v_level=3D3, max_p_level=3D3
-> >>> ```
-> >>>
-> >>> Dell XPS 9345, BIOS version "2.5.0", PS8830 payload version "9.3.0.01=
-":
-> >>> ```
-> >>> phy #1: params reset                                                 =
-#
-> >>> training DPRX (phy1/PS8830)
-> >>> phy #1: max_v_level=3D3, max_p_level=3D3                    # DPTX so=
-urce
-> >>> (X1E) supports train level 3
-> >>> phy #1: forcing max_v_level=3D3, max_p_level=3D3
-> >>> phy #1: v_level=3D0, p_level=3D0                                     =
-#
-> >>> passes with vs=3D0,ps=3D0
-> >>> phy #1: max_v_level=3D3, max_p_level=3D3
-> >>> phy #0: params reset                                                 =
-#
-> >>> training DPRX (phy0/Monitor)
-> >>> phy #0: max_v_level=3D2, max_p_level=3D2                    # DPTX so=
-urce
-> >>> (phy1/PS8830) claims to not support train level 3
-> >>> phy #0: forcing max_v_level=3D3, max_p_level=3D3        # Ignore
-> >>> advertised levels, force to max=3D3, otherwise training fails
-> >>> phy #0: v_level=3D0, p_level=3D0
-> >>> phy #0: max_v_level=3D3, max_p_level=3D3
-> >>> phy #X: v_level=3D2, p_level=3D0
-> >>> phy #0: v_level=3D2, p_level=3D0
-> >>> phy #0: max_v_level=3D3, max_p_level=3D3
-> >>> phy #X: v_level=3D2, p_level=3D1
-> >>> phy #0: v_level=3D2, p_level=3D1                                     =
-#
-> >>> training passes with vs=3D2,ps=3D1 (aka train level 3)
-> >>> phy #0: max_v_level=3D3, max_p_level=3D3
-> >>> ```
-> >>>
-> >>> While, as you correctly mentioned, i915's implementation would be a
-> >>> more accurate one, and I can respin to v5 with [1] applied to patches
-> >>> 3,4 of this series respectively, it appears that at least on some X1E
-> >>> based devices with PS8830 that would break DP output support at least
-> >>> in some cases. The fact that the same device with the same monitor
-> >>> works on Windows suggests that Windows driver also uses AMD's approac=
-h
-> >>> of just assuming LTTPR can do train level 3, without verifying it, an=
-d
-> >>> letting LTTPR figure the rest. I have asked other community members t=
-o
-> >>> cross-check these findings on another X1E platform with PS8830
-> >>> retimers. With this in mind, I am very glad to hear that you are okay
-> >>> with this change as such, as it now appears that a more accurate
-> >>> implementation would've caused additional issues.
-> >>>
-> >>
-> >> Yes seems like it but certainly looks like a bug in PS8830.
-> >>
-> >>>>
-> >>>> I would still like to hear from Abel though about whether setting to
-> >>>> non-transparent mode was needed in the first place.
-> >>>
-> >>> Fwiw, without Abel's initial change DP output didn't work on X1E
-> >>> platform at all, neither direct monitor connection nor docking
-> >>> station. Not sure if that is because PS883x found in most X1E/X1P
-> >>> laptops do not work in transparent mode at all (even though they
-> >>> should've), or laptop's firmware would leave it in some weird state,
-> >>> and perhaps re-enabling transparent mode would've also fixed it.
-> >>>
-> >>> Lets wait for Abel's answer and the rest of this conversation to be
-> >>> resolved, and as I see it the next step would be for me to respin to
-> >>> v5 current change as is, in order to update the commit message of 4th
-> >>> patch to reflect the new findings and reference DP spec and section,
-> >>> as per the first comment of this reply.
-> >>>
-> >>
-> >> Yes correct, nothing else pending from your side.
-> >>
-> >> Thanks for your deep analysis and interest in this topic.
-> >>
-> >>> Thanks for your help,
-> >>> Alex
-> >>>
-> >>
-> >> By waiting for Abel, I am mostly trying to make sure :
-> >>
-> >> Was enabling non-transparent mode more of a requirement of the parade
-> >> retimer chip in Xelite? Because from our earlier discussion, I thought
-> >> we wanted to enable transparent mode. Then these issues would perhaps
-> >> have not happened as per-segment link training is a requirement of
-> >> non-transparent mode. So I am surprised how Xelite worked without this=
-.
-> >>
-> >> It seems like to me we enabled non-transparent mode to match AMD/i915
-> >> behavior and not as a requirement of the retimer chip of Xelite.
-> >>
-> >> The commit text of
-> >> https://patchwork.freedesktop.org/patch/msgid/20250203-drm-dp-msm-add-=
-lttpr-transparent-mode-set-v5-4-c865d0e56d6e@linaro.org
-> >> mentions
-> >>
-> >> "The section 3.6.6.1 from the DisplayPort v2.0 specification mandates
-> >> that before link training with the LTTPR is started, the DPTX may plac=
-e
-> >> the LTTPR in non-transparent mode by first switching to transparent mo=
-de
-> >> and then to non-transparent mode. This operation seems to be needed on=
-ly
-> >> on first link training and doesn't need to be done again until device =
-is
-> >> unplugged."
-> >>
-> >> This talks about how to enable non-transparent mode and not why.
-> >>
-> >> But this part "It has been observed on a few X Elite-based platforms
-> >> which have such LTTPRs in their board design that the DPTX needs to
-> >> follow the procedure described above in order for the link training to
-> >> be successful" is really my doubt. Because from my earlier
-> >> understanding, I thought enabling transparent mode was enough.
-> >
-> > To speed up the process a little as the 6.15-rcX window shrinks (and
-> > it appears Abel may be OOO?), I run a series of tests to attempt to
-> > answer your questions. In short - PS8830 is a very quirky device, and
-> > you were right that the current implementation could've simply set
-> > transparent mode.
-> >
-> > To clarify the test matrix: PS8830 was tested with Dell XPS 9345.
-> > PS8833 was tested with Asus Zenbook A14. Unfortunately, my dock (Dell
-> > WD19TB) is a universal Thunderbolt/DP-Alt mode dock, and only works if
-> > it's forced to DP alt mode, since PCIE tunneling is not yet supported
-> > on qcom. Dell allows to disable thunderbolt/PCIE tunneling support in
-> > BIOS, hence forcing the dock to be Type-C/DP-alt mode (and show up
-> > with LTTPR onboard). No such feature exists on Asus, so I could not
-> > test PS8833 with the docking station at all.
-> >
-> > Complete test matrix;
-> >
-> > 1. Do nothing/pre Abel's series (LTTPRs assumed to be in transparent
-> > mode unless firmware pre-configured them):
-> > PS8833:
-> > - Type-C to HDMI: works almost always
-> > - Type-C to DP: never works, EDID read fails
-> >
-> > PS8830:
-> > - Type-C to HDMI: never works, CR LT fails (-22)
-> > - Type-C to DP: never works, EDID read fails
-> > - Type-C to dock: never works, EQ LT fails (-110)
-> >
-> > 2. Explicitly set LTTPRs to transparent mode (early exit LTTPR helper
-> > introduced by Abel, after setting transparent mode, but before setting
-> > non-transparent mode):
-> > PS8833:
-> > - Type-C to HDMI: works. Occasionally fails to get DP sink modes (may
-> > be unrelated)
-> > - Type-C to DP: works**
-> >
-> > PS8830:
-> > - Type-C to HDMI: works
-> > - Type-C to DP: works**
-> > - Type-C to dock: Sometimes all works. Sometimes video works, but USB
-> > (2.0 nor 3.0) is not working. Sometimes EQ LT fails (-110) and nothing
-> > works. Overall extremely unstable.
-> >
-> > 3. Explicitly set LTTPRs to non-transparent mode (aka Abel's series):
-> > PS8833:
-> > - Type-C to HDMI: never works, CR LT fails, max v_level reached (-11)
-> > - Type-C to DP: never works, CR LT fails, max v_level reached (-11)
-> >
-> > PS8830:
-> > - Type-C to HDMI: works
-> > - Type-C to DP: works**
-> > - Type-C to dock: never works, CR LT fails (-110)
-> >
-> > 4. Explicitly set LTTPRs to non-transparent mode, support per-segment
-> > training (aka Abel's initial LTTPR support series + this series):
-> > PS8833:
-> > - Type-C to HDMI: works
-> > - Type-C to DP: works
-> >
-> > PS8830:
-> > - Type-C to HDMI: works
-> > - Type-C to DP: works
-> > - Type-C to dock: works
-> >
-> >
->
-> Thanks for testing these combinations.
->
-> > ** At first, Type-C to DP was frequently/always depending on the use
-> > case failing to read panel EDID, just like in the 1st test case. As I
-> > am 100% certain it worked in the past, did a few more tests. It
-> > appears that in an earlier version of Abel's patch (<=3Dv4), DPRX caps
-> > were read _after_ LTTPR init, just like DP standard mandates (don't
-> > have exact quote, something along the lines 'source shall re-read sink
-> > caps after LTTPR init'). In v4 there was a suggestion [1] (from you
-> > actually :)) to first try to read DPRX caps, then init LTTPRs in order
-> > to fail early if caps readout fails. Reverting this change fixes EDID
-> > read error. Since I was running Abel's series long before it landed, I
-> > never used the broken v5. With the order of functions reverted, Type-C
-> > to DP started working/failing in the same way Type-C to HDMI dongle
-> > did, just as expected. Wrt to the issue itself, the first patch of
-> > this very series actually both fixes this issue by conforming to DP
-> > spec, and also takes into account your suggestion in Abel's v4 series
-> > to be able to fail early in case of DPRX caps readout failure.
-> >
-> > To summarize the findings:
-> > - PS8830 is a very quirky device. It does not work in
-> > default/transparent mode unless explicitly set. It does work in
-> > non-transparent mode without per-segment training, even though it
-> > should've not. As per last email, it is lying about not supporting
-> > training level 3.
-> > - PS8833 seems to be a fixed version of PS8830. It does work in
-> > default/transparent mode oob. It does not work in non-transparent mode
-> > without per-segment training, just as expected. As per last email, it
-> > correctly reports training level 3 capability.
-> >
-> > To answer some of your questions (from a 3rd party view, cannot speak
-> > for the authors):
-> > - "So I am surprised how Xelite worked without this." - From tests
-> > above: PS8830 worked when it should've not, seems because it's quirky.
-> > PS8833 did not work, which makes sense.
-> > - Doubts about non-transparent mode requirement for X1E/X1P systems -
-> >  From tests above: seems you are right. I don't know why it was forced
-> > to be non-transparent without per-segment training, instead of simply
-> > transparent. Though, seeing how weird the PS8830 is, I wouldn't be
-> > surprised if it behaves differently in other laptops... just
-> > speculating though.
-> >   - "Was enabling non-transparent mode more of a requirement of the
-> > parade retimer chip in Xelite?" - cannot fully answer. Initializing
-> > LTTPRs as such appears to be a requirement of the Parade PS8830 (not
-> > PS8833, which wasn't around back then afaik), as it just wouldn't work
-> > oob. Choice of non-transparent instead of transparent mode is not very
-> > clear to me.
-> >
-> > Even though it appears initial LTTPR support could've been done
-> > slightly differently, combination of those initial patches + this
-> > series seem to provide both the best practical results, as well as
-> > most (well, almost, excluding LTTPR's train level verification)
-> > accurate LTTPR implementation, while also making msm-dp similar/up to
-> > date with Intel/AMD's LTTPR implementation. Also learned something new
-> > today myself, don't buy PS8830 :)
-> >
-> > Looking forward to hearing from you,
-> > Alex
-> >
->
-> I did sync up with Abel internally and we could not conclude on why we
-> did not enable transparent mode from beginning and went with
-> non-transparent mode. But, I did sync up with Imre (author of i915's
-> LTTPR changes) on IRC dri-devel and Imre mentioned that there is
-> actually an SCR which changed the lines of the spec I was referring to th=
-at
+On 5/8/25 00:24, Dmitry Baryshkov wrote:
+> On Wed, May 07, 2025 at 10:35:38PM +0300, Vladimir Zapolskiy wrote:
+>> Trivial change, there is a managed device resource version of
+>> of_platform_populate(), and its usage simplifies the code a bit.
+>>
+>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/msm_mdss.c | 4 +---
+>>   1 file changed, 1 insertion(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+>> index dcb49fd30402..116e8f93f8c8 100644
+>> --- a/drivers/gpu/drm/msm/msm_mdss.c
+>> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+>> @@ -550,7 +550,7 @@ static int mdss_probe(struct platform_device *pdev)
+>>   	 * Populate the children devices, find the MDP5/DPU node, and then add
+>>   	 * the interfaces to our components list.
+>>   	 */
+>> -	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
+>> +	ret = devm_of_platform_populate(dev);
+>>   	if (ret) {
+>>   		DRM_DEV_ERROR(dev, "failed to populate children devices\n");
+>>   		msm_mdss_destroy(mdss);
+>> @@ -564,8 +564,6 @@ static void mdss_remove(struct platform_device *pdev)
+>>   {
+>>   	struct msm_mdss *mdss = platform_get_drvdata(pdev);
+>>   
+>> -	of_platform_depopulate(&pdev->dev);
+>> -
+>>   	msm_mdss_destroy(mdss);
+> 
+> Unfortunately this means that the child devices will still exist after
+> destroying the MDSS (IRQ domain, etc). So, it seems it can not land as
+> is.
 
-Ah, got it. That aligns with my today's findings then, nice.
+Due to the essense of the change this sounds odd, anyway thanks for review.
+I'll perform a test, if it's a regression or not.
 
->
-> "A DPTX operating with 8b/10b Link Layer (MAIN_LINK_CHANNEL_CODING_SET
-> register (DPCD Address 00108h) is programmed to 01h) may configure
-> LTTPRs to either Transparent (default) or Non-transparent mode."
->
->
-> Although I cannot locate this SCR (working out that), I am convinced
-> with the results, so feel free to re-spin this with
->
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>   }
+>>
 
-Great to hear, coming shortly!
-
->
-> Excellent work on your side with such deep testing and analysis!
-
-Thanks, really want to have it working :)
-
-Alex
-
->
+--
+Best wishes,
+Vladimir
 
