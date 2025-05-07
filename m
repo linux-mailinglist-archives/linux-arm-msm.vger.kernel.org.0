@@ -1,189 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-57129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F87AAADC07
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 12:00:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DF88AADC1A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 12:03:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 450379A2A0E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 09:59:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EDF44189171D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 10:03:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3239920E005;
-	Wed,  7 May 2025 09:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00701202981;
+	Wed,  7 May 2025 10:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="nMYfWa+6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qiYVkYgs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB52D20C46F
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 May 2025 09:59:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C431A72607;
+	Wed,  7 May 2025 10:03:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746611965; cv=none; b=oi5AwhhUXcbEPBiimWLE6+MFzPM/8RJuNJD6Jw1pYwvAvvh3fJbLlGWpUMVzHGCAOLU7gFd9mUx4c4t0J4nKeznF5YR/mH//j+0rXbVMGR9Z4HsNzppuiu/s2UPoX3A5DI8ki84ZT5BQaO/9vIFXYlKPHYYgq2L3DdqCOny/uMY=
+	t=1746612201; cv=none; b=Cr5XopGov7cQPg/iiUs3EyvL5FVnJnT9f2gL0fSh81HaW5X3eyZkzLR/MlT1IcgxT3waZzVfy3zSSqBXl7TyZuDq8vPo1JyIAGoTt+HIbXLBr4wrkG9f0yXto+6ohjFnM2jVukHKDSbfl72D+brMfrnrAnuEj3K/JE6+P6ADAkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746611965; c=relaxed/simple;
-	bh=CVOjiks63kN4nyx81zcnv5yZgTHTFsD0uSpOBIumpbQ=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=E7CeP/gZK3h70vQ4IohcIdxEZqaIpsipXl/7a/5/Reht6xPQyec0gTmWE88bvsA24jUXfCvYb7l2qsq6SP036JnOulTi0xP4ohRI5rUqgI8sluFrOooxw7v8YCYEU8vpK30QQqxeQK8wuV34nkhL3+YGJ8T0ECIIRfah+YWbmmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=nMYfWa+6; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ace98258d4dso990462166b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 May 2025 02:59:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1746611961; x=1747216761; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gRBnlzG3csY3q59CrD+HieNRPhlOZlDO/35hP9x7Gow=;
-        b=nMYfWa+6GVUJ2BdwZE1phw3EIG0XJ+Q9ZKMBbk9RA6BptuZZhd8r7gPWbRJzFqZ1j0
-         ahRnaAH+Uc/dVroauVBs2nJnIYFCDGrM2YU85os6stQB8ieKGKmXTvUJJug1iMX724dp
-         WcgzjWHs4NxO58j+ffCnfuWQHEGX+rkEIcO54FE0s6tiXD+gIjNU1mzMlbzsIpKKl49i
-         GoW+ljFiwkK558SmCGrs9r3ZNz694BWHIWCbaX5mNCWbYWe5rJQmSO+HsRoNVjfLBE8x
-         YYka+lDq8VXpG5QuNdZTLZ2TYQ2qMPQD2CpLPg+dbkJ096T9naQAO+Z19YWDRb89psBj
-         QTLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746611961; x=1747216761;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=gRBnlzG3csY3q59CrD+HieNRPhlOZlDO/35hP9x7Gow=;
-        b=BOIA/jrdlPhK0L22lqBWFTQW9GG++j06qqhFyA5tZYPnjlk6rpi6P8+q7XmI07ETnw
-         LUebWiJrvxzvw1ORNb0ETe/u4UU4bS3ZZz8AIect5GfWh9LXwcMFJUaPt0Nd42XWbe80
-         RWgtqp0MkRbaDmsxSKsyt4uz+2VLDfaysRuqMrn3WdqJW2DNZreEe2y+3e+h2LI77ivi
-         U98y0iWcfG7rA7Psp6DZSvFQkTmgQYXd03eZivVclhhWJNByOybL0S27lYiFXxC0vmeQ
-         +W/rJ15niqAO8oxkOCIoHPZiaFReP9CM+HcMxJ8a3VbhjNwTVrSnKpppFDn70Ea9ysfB
-         mbAQ==
-X-Gm-Message-State: AOJu0Yw7LWFsGCH0J0lmg5bZP8+hA5CiSJ1/mXn0QEOqPP2QvGMBAEWB
-	NRPsGFJShbAQeYfbvqRv973cODJbVtZ6Jk6jUQkYDbMyTxgZr0GQkyXlQqXfEiI=
-X-Gm-Gg: ASbGncurOs31l1NsEwDF9GE5WfcPx57q5mzEX5cZlDmY+PcUiS/U9z/5ichNPaxrR7s
-	Fr9m/JLs3f9W9ihAjDPNYG41HuDt2gjVtQaXF0/FO2ZoQNqwckbYGW4ylyea/CEGR2VMp92aqrX
-	sxTvcu2MpmginWRGbrpqh4iLyvO3LOm/OJ18WjAS395WhgszGBwP0MzKP+3y5LAAcugoP5Uqk7x
-	8DaLRJuAJ0PTlRMmVT+ZfynnaHZmctTY530xhtpDIbyg+SJnjO6LcJWtCXOphqKWAO6Q9W7W1K5
-	Wwrj8ECEpiAOcRN1hRWYaLmJSbiAVQVhOcTgojBLzuJnlsGdmo/8dq6Xlgb7VNDGxFEFnHVq7aU
-	R7T8MGsOrXw==
-X-Google-Smtp-Source: AGHT+IETi13rF9ppf4Lq9nZexKfgosA14aFfsxFA6IPZoLnGnfZ4smw0IgYrqh4falCvDOZVHa7FtA==
-X-Received: by 2002:a17:907:9814:b0:ad1:8dde:5b7a with SMTP id a640c23a62f3a-ad1e8d055a7mr240311766b.43.1746611961036;
-        Wed, 07 May 2025 02:59:21 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad1891490afsm874478866b.23.2025.05.07.02.59.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 May 2025 02:59:20 -0700 (PDT)
+	s=arc-20240116; t=1746612201; c=relaxed/simple;
+	bh=Vja99RwKaWd86Bne8CVxoLF7hXa1qZ2hU2qWEbh3rTM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DKQjl73VUtcdy/gDxY97kEQXJoTVQJppdcPqWx0lcH9sGa4bobIXds+8ds+7z+RxbM2blH37UJOe+10iPbQJpTHKfu/OzbilomBo9LyDjI1IyrkQYuAa8/GAElcvTs+YZajS5OmsuXmefuGPEMYmqu++fLxseAE8fv9SvrkEAm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qiYVkYgs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44473C4CEEB;
+	Wed,  7 May 2025 10:03:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746612201;
+	bh=Vja99RwKaWd86Bne8CVxoLF7hXa1qZ2hU2qWEbh3rTM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=qiYVkYgsZJk1ojH2gUT0LuMkPaET6AsYf/tKwE/0NkUB43kU6qBoxjNwN00fGIvxT
+	 BDsNWC76g4TZw8L/HgeNyguw1F5vnOrFHOquk+1x5scGvDlx+PLRojlR8fOFLRl9uj
+	 ITq1FNep+ghls2iq7ojFYqD2EXPqBsM7FRADhnmYjdVhDUGkAZYamO1q9qXk+caIdL
+	 ZiCampwGUpIpbncLJsUrNJxgSQSIfFspt+5Goztwy8f6tbF65j8EMsSWXsanfyzP6Z
+	 iSN47YE511HkrBnFBRnmyccIxXsrYVO8w6j67aBFIRdmkxxATlvW8NjoIpF3+4d5ry
+	 6IP5gkty3xcIA==
+Message-ID: <574a67b7-bd57-4cf4-9ecb-cdcefafeb791@kernel.org>
+Date: Wed, 7 May 2025 12:03:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/6] dt-bindings: PCI: qcom,pcie-sa8775p: document
+ qcs8300
+To: Qiang Yu <quic_qianyu@quicinc.com>,
+ Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org,
+ abel.vesa@linaro.org, manivannan.sadhasivam@linaro.org,
+ lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
+ andersson@kernel.org, konradybcio@kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ quic_krichai@quicinc.com, quic_vbadigan@quicinc.com
+References: <20250507031019.4080541-1-quic_ziyuzhan@quicinc.com>
+ <20250507031019.4080541-3-quic_ziyuzhan@quicinc.com>
+ <20250507-quixotic-handsome-wallaby-4560e3@kuoka>
+ <8fef4573-0527-44d8-a481-f3271d9ffa33@quicinc.com>
+ <01b06e36-823c-4f28-8db5-dc0ee0b4c063@kernel.org>
+ <c91c5357-464b-4ecc-96a5-c617048f73e5@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <c91c5357-464b-4ecc-96a5-c617048f73e5@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 07 May 2025 11:59:19 +0200
-Message-Id: <D9PU9LEA7CLT.37IBLZRP90E9S@fairphone.com>
-Cc: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
- "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>, "James E.J.
- Bottomley" <James.Bottomley@hansenpartnership.com>, "open list"
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 2/3] scsi: ufs: qcom: Map devfreq OPP freq to UniPro
- Core Clock freq
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Ziqi Chen" <quic_ziqichen@quicinc.com>, <quic_cang@quicinc.com>,
- <bvanassche@acm.org>, <mani@kernel.org>, <beanhuo@micron.com>,
- <avri.altman@wdc.com>, <junwoo80.lee@samsung.com>,
- <martin.petersen@oracle.com>, <quic_nguyenb@quicinc.com>,
- <quic_nitirawa@quicinc.com>, <quic_rampraka@quicinc.com>,
- <neil.armstrong@linaro.org>, <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a
-References: <20250507074415.2451940-1-quic_ziqichen@quicinc.com>
- <20250507074415.2451940-3-quic_ziqichen@quicinc.com>
- <D9PS51XVRKLP.1AHMCRH9CZFWU@fairphone.com>
- <7c74a395-a8b8-4a12-9ddb-691f28c90885@quicinc.com>
-In-Reply-To: <7c74a395-a8b8-4a12-9ddb-691f28c90885@quicinc.com>
+Content-Transfer-Encoding: 7bit
 
-On Wed May 7, 2025 at 11:09 AM CEST, Ziqi Chen wrote:
-> Hi Luca,
->
-> On 5/7/2025 4:19 PM, Luca Weiss wrote:
->> Hi Ziqi,
->>=20
->> On Wed May 7, 2025 at 9:44 AM CEST, Ziqi Chen wrote:
->>> From: Can Guo <quic_cang@quicinc.com>
->>>
->>> On some platforms, the devfreq OPP freq may be different than the unipr=
-o
->>> core clock freq. Implement ufs_qcom_opp_freq_to_clk_freq() and use it t=
-o
->>> find the unipro core clk freq.
->>>
->>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
->>> Co-developed-by: Ziqi Chen <quic_ziqichen@quicinc.com>
->>> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
->>> ---
->>>   drivers/ufs/host/ufs-qcom.c | 81 ++++++++++++++++++++++++++++++++----=
--
->>>   1 file changed, 71 insertions(+), 10 deletions(-)
->>>
->>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
->>> index 7f10926100a5..804c8ccd8d03 100644
->>> --- a/drivers/ufs/host/ufs-qcom.c
->>> +++ b/drivers/ufs/host/ufs-qcom.c
->>>  =20
->>> +static unsigned long ufs_qcom_opp_freq_to_clk_freq(struct ufs_hba *hba=
-,
->>> +												   unsigned long freq, char *name)
->>> +{
->>> +	struct ufs_clk_info *clki;
->>> +	struct dev_pm_opp *opp;
->>> +	unsigned long clk_freq;
->>> +	int idx =3D 0;
->>> +	bool found =3D false;
->>> +
->>> +	opp =3D dev_pm_opp_find_freq_exact_indexed(hba->dev, freq, 0, true);
->>> +	if (IS_ERR(opp)) {
->>> +		dev_err(hba->dev, "Failed to find OPP for exact frequency %lu\n", fr=
-eq);
->>=20
->> I'm hitting this print on bootup:
->>=20
->> [    0.512515] ufshcd-qcom 1d84000.ufshc: Failed to find OPP for exact f=
-requency 18446744073709551615
->> [    0.512571] ufshcd-qcom 1d84000.ufshc: Failed to find OPP for exact f=
-requency 18446744073709551615
->>=20
->> Doesn't look like it's intended? The number is (2^64 - 1)
->>=20
-> Yes, this is expected. During link startup, the frequency
-> ULONG_MAX will be passed to ufs_qcom_set_core_clk_ctrl() and
-> ufs_qcom_cfg_timer(). This frequency cannot be found through the API
-> dev_pm_opp_find_freq_exact_indexed(). Therefore, we handle the
-> frequency ULONG_MAX separately within Ufs_qcom_set_core_clk_ctrl()
-> and ufs_qcom_cfg_timer().
->
-> This print only be print twice during link startup. If you think print
-> such print during bootup is not make sense, I can improve the code and
-> update a new vwesion.
+On 07/05/2025 11:56, Qiang Yu wrote:
+> 
+> On 5/7/2025 4:25 PM, Krzysztof Kozlowski wrote:
+>> On 07/05/2025 10:19, Ziyue Zhang wrote:
+>>> On 5/7/2025 1:10 PM, Krzysztof Kozlowski wrote:
+>>>> On Wed, May 07, 2025 at 11:10:15AM GMT, Ziyue Zhang wrote:
+>>>>> Add compatible for qcs8300 platform, with sa8775p as the fallback.
+>>>>>
+>>>>> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+>>>>> ---
+>>>>>    .../bindings/pci/qcom,pcie-sa8775p.yaml       | 26 ++++++++++++++-----
+>>>>>    1 file changed, 19 insertions(+), 7 deletions(-)
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml
+>>>>> index efde49d1bef8..154bb60be402 100644
+>>>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml
+>>>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml
+>>>>> @@ -16,7 +16,12 @@ description:
+>>>>>    
+>>>>>    properties:
+>>>>>      compatible:
+>>>>> -    const: qcom,pcie-sa8775p
+>>>>> +    oneOf:
+>>>>> +      - const: qcom,pcie-sa8775p
+>>>>> +      - items:
+>>>>> +          - enum:
+>>>>> +              - qcom,pcie-qcs8300
+>>>>> +          - const: qcom,pcie-sa8775p
+>>>>>    
+>>>>>      reg:
+>>>>>        minItems: 6
+>>>>> @@ -45,7 +50,7 @@ properties:
+>>>>>    
+>>>>>      interrupts:
+>>>>>        minItems: 8
+>>>>> -    maxItems: 8
+>>>>> +    maxItems: 9
+>>>> I don't understand why this is flexible for sa8775p. I assume this
+>>>> wasn't tested or finished, just like your previous patch suggested.
+>>>>
+>>>> Please send complete bindings once you finish them or explain what
+>>>> exactly changed in the meantime.
+>>>>
+>>>> Best regards,
+>>>> Krzysztof
+>>> Hi Krzysztof
+>>> Global interrupt is optional in the PCIe driver. It is not present in
+>>> the SA8775p PCIe device tree node, but it is required for the QCS8300
+>> And hardware?
+> 
+> The PCIe controller on the SA8775p is also capable of generating a global
+> interrupt.
+>>> I did the DTBs and yaml checks before pushing this patch. This is how
+>>> I became aware that `maxItem` needed to be changed to 9.
+>> If it is required for QCS8300, then you are supposed to make it required
+>> in the binding for this device. Look at other bindings.
+> 
+> The global interrupt is not mandatory. The PCIe driver can still function
+> without this interrupt, but it will offer a better user experience when
+> the device is plugged in or removed. On other platforms, the global
+> interrupt is also optional, and `minItems` and `maxItems` are set to 8 and
+> 9 respectively. Please refer to `qcom,pcie - sm8550.yaml`,
+> `qcom,pcie - sm8450.yaml`, and `qcom,pcie - x1e80100.yaml`.
+I don't know what does it prove. You cannot add requirement of global
+interrupt to existing devices because it would be an ABI break.
 
-I'll let others comment on what should happen but certainly this large
-number looks more like a mistake, like an integer overflow, if you don't
-dig into what this number is supposed to represent.
-
-Perhaps an idea could be to just skip the print (or even more code) for
-ULONG_MAX since an opp for that is not supposed to exist anyways?
-
-I didn't check the code now but for other frequencies this would be an
-actual error I imagine where it should be visible.
-
-Regards
-Luca
-
->
-> BRs.
-> Ziqi
->
->> Regards
->> Luca
->>=20
-
+Best regards,
+Krzysztof
 
