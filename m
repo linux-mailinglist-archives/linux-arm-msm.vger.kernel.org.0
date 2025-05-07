@@ -1,105 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-57058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AC72AAD5B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 08:11:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 417B5AAD605
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 08:26:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 46D5A1C06FDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 06:11:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 096FD7A5579
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 May 2025 06:24:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F8E21D61BC;
-	Wed,  7 May 2025 06:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D01F20F08C;
+	Wed,  7 May 2025 06:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="IGXm52W9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EZ8QvTp6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214771D63C0;
-	Wed,  7 May 2025 06:10:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C98420F081;
+	Wed,  7 May 2025 06:24:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746598261; cv=none; b=PRVMNv4CqqQv/BfkG+RhoI/0WE22PXAuQdHGto22rbUsgT8qLDOCDS3SM1D/4Rmfp5LQULz+6T3kzWnmZMWHI7kT84sIcgNcbVY6GiwBwD5tOhC1N/qlRreZhWjNnyzlYzyiS5I4nhLN2e4bYorOBDbNMzG7q0phLRoCdzuc794=
+	t=1746599099; cv=none; b=mU7GZqqapR9RIi0zkvAp4EyazSHgoeHt3vHa4dbOOymHYzSQeXUReTVrp2K1j5wB14iGV87x7yegvucxztePEz5tuQw0YrOp6KRSqs2GIps5OdN131OpShhZdI14RwrUVNScd8jUVCs2Ppr+Arl1oBswy3Fc+XtrjmIuBmJzRSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746598261; c=relaxed/simple;
-	bh=IxXYbJZD48dI0SPVv07NCmFRsZxS5O4mEiYyeuloddY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=KfeH4I5/bE034CQ++XjI2pVg2vtiV/YJlydGbxSBxliaIShLOhNopDlKWbbxo81jUhvU5g1VUpmuvv2XmCbID8YLfzaeQ2V76YueTjolKpUBEsEwhqVKpca9BsJB7hgDTt/79pY2MJCfcxFJUhBnb4hXjRg6/vVK27z8AnK9ByM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=IGXm52W9 reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=PcVJcsU188XGP4XUJP8u7N7/UYZL6lmQlc06xU1P3b4=; b=I
-	GXm52W9An7b66EY+bwlClR2kb61UfayXY4DJB9K8JuFRbRLOZ2TBmIn0Mq5I228Q
-	hXMoTGkSq5j9dLHnAg/e/g0taBwjPkHiyVrcprvsL4N4MIIlcJ5+TYGDLoznP+oP
-	NEadLyop4merzsaX1tC+JTu5O/vbf43G1vxLfbV0xM=
-Received: from andyshrk$163.com ( [58.22.7.114] ) by
- ajax-webmail-wmsvr-40-104 (Coremail) ; Wed, 7 May 2025 14:09:13 +0800 (CST)
-Date: Wed, 7 May 2025 14:09:13 +0800 (CST)
-From: "Andy Yan" <andyshrk@163.com>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>,
-	"Maxime Ripard" <mripard@kernel.org>
-Cc: lumag@kernel.org, neil.armstrong@linaro.org,
-	dri-devel@lists.freedesktop.org, dianders@chromium.org,
-	jani.nikula@intel.com, lyude@redhat.com, jonathanh@nvidia.com,
-	p.zabel@pengutronix.de, simona@ffwll.ch, victor.liu@nxp.com,
-	rfoss@kernel.org, chunkuang.hu@kernel.org,
-	cristian.ciocaltea@collabora.com, Laurent.pinchart@ideasonboard.com,
-	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-	linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
-	"Andy Yan" <andy.yan@rock-chips.com>
-Subject: Re:Re:Re: [PATCH 1/1] drm/bridge: Pass down connector to drm bridge
- detect hook
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
- Copyright (c) 2002-2025 www.mailtech.cn 163com
-In-Reply-To: <1bb549f4.746e.1965c8256e4.Coremail.andyshrk@163.com>
-References: <20250321085345.136380-1-andyshrk@163.com>
- <20250321085345.136380-2-andyshrk@163.com>
- <20250321-optimistic-prompt-civet-bdcdba@houat>
- <1bb549f4.746e.1965c8256e4.Coremail.andyshrk@163.com>
-X-NTES-SC: AL_Qu2fBPmSt0ku5SebbOkfmkcVgOw9UcO5v/Qk3oZXOJF8jC7pxyUYZFlTGWvs7PCDJim1nQiHezZt88JTXIVAZqUNHPapzRP0H9he/eEM1/JOWw==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1746599099; c=relaxed/simple;
+	bh=BFQAilsQfkkW5TKAYbuvAsi9ETojm1QM8aafoWYFGsM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=MM0WxJyiFy7yrqZLTuoTDOInAhgPDsTlMgrQR/sgfJA77zldSKcYDnqBMIlAd1B4EyZ22dXlnOTWbJwZ/y0/DzhWzdUpybJljf3SI63kCbLVrWeyLCBQj0zseHfACmkqTYkqXAMgxAk7NfeI46jlFa/W+fISq01UTmJjcNcv6/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EZ8QvTp6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5471GuGB018182;
+	Wed, 7 May 2025 06:24:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	8R/GT/bOHvk4uAN3n3vAvKXvU2kOcAalS8QYNNaCx4E=; b=EZ8QvTp6Z++SqYfM
+	lInNhfcELV/jhqGA+2errvSmksyv3qPEv2v67FXkWDuKDOa28tbCTpLzUGABp6xE
+	96+e/dfWPaRmvdwVBJa8qN7tvY3HEfwZl7fvLpbPIjCrkfCniq1yrj4LvMFRlvon
+	gR5xbzOVO1YTPyXJelPEkzcoy7xF0tONwYWI3FDVpW8vGnffdx3eUhI4ovlCAtJV
+	6GBQyOsXaf49xk1IVlvnTyCt7MAXy+QaT5rNCRIPUG+9KpORFvUS6L+QvPk4CDEb
+	mNc1gawNBed9Wlu31x/fWhCcLSsV5yibrBSzxxTOYzkpMG2KpXpr/KGKKZYh4YgR
+	lHI1Tw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46f5tbcmrc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 07 May 2025 06:24:51 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5476OorZ018055
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 7 May 2025 06:24:50 GMT
+Received: from [10.239.132.205] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 6 May 2025
+ 23:24:43 -0700
+Message-ID: <58ea4571-da8e-4c95-9f3b-2fb620b93955@quicinc.com>
+Date: Wed, 7 May 2025 14:24:41 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <20cd09da.5462.196a95cce13.Coremail.andyshrk@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:aCgvCgCnD4oJ+RpoUXimAA--.12567W
-X-CM-SenderInfo: 5dqg52xkunqiywtou0bp/1tbiqA1GXmga9Zpt5QABsp
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: qcs615: Add mproc node for SEMP2P
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Kyle Deng <quic_chunkaid@quicinc.com>
+References: <20250423-add_qcs615_remoteproc_support-v1-0-a94fe8799f14@quicinc.com>
+ <20250423-add_qcs615_remoteproc_support-v1-3-a94fe8799f14@quicinc.com>
+ <c8e36d23-3325-4ad8-91da-94f9f31c3c15@oss.qualcomm.com>
+From: Lijuan Gao <quic_lijuang@quicinc.com>
+In-Reply-To: <c8e36d23-3325-4ad8-91da-94f9f31c3c15@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -VwfRwuHfcXCVGyyfmNbWVQmbt8L5q-m
+X-Proofpoint-GUID: -VwfRwuHfcXCVGyyfmNbWVQmbt8L5q-m
+X-Authority-Analysis: v=2.4 cv=doXbC0g4 c=1 sm=1 tr=0 ts=681afcb3 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
+ a=rdDY_BgHlA3xo_wucG0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDA1OCBTYWx0ZWRfX2IhwYQmajtU5
+ tov5KmrXXU/4dMHudxKUwmjkDLjAfHonC2OcuRRwEMNczB77kLajckel1Dg42aQakCx5aP0Uerd
+ h+TBCMSBvX3Tmg20dYpXxctBZEoGH1wY8voTyeaOvVXlULszYfpXKalLAAW3pYwNWS+fCBgJfMu
+ 0rzqPooI8/V3Ia7pPuWD4vnACEa5/UzRRNwp/SqCdcoRhk4ILr6M7aI+YSShJzzxa5j/YpI0mq5
+ oDONz39jaNeBZD1EYqGClRyxwENG4t6NTKLg0a7ciozGjXM1U7Wofe63wIezqQsDdo5FrIwAxeN
+ ZqVvFwXDdr2epkYhtLy2fvLF7DVV2dkUsplNRt+YjCTivKrcREjWrNnMQI9aQKum0MGI7PZZZwX
+ PbgaKT9GhyxMQrFhx4yAi14gnLC2qX2lx/dmuVAOxzqbfr8rE/o0mWrTj/jhJa0xAq5L4BOG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-07_02,2025-05-06_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 adultscore=0 malwarescore=0 phishscore=0
+ mlxlogscore=862 impostorscore=0 clxscore=1015 mlxscore=0 priorityscore=1501
+ spamscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505070058
 
-CgpQaW5nLi4uLi4uCgpBdCAyMDI1LTA0LTIyIDE1OjU5OjI3LCAiQW5keSBZYW4iIDxhbmR5c2hy
-a0AxNjMuY29tPiB3cm90ZToKPgo+SGkgYWxsLAo+Cj5BdCAyMDI1LTAzLTIxIDE3OjQ4OjA0LCAi
-TWF4aW1lIFJpcGFyZCIgPG1yaXBhcmRAa2VybmVsLm9yZz4gd3JvdGU6Cj4+T24gRnJpLCBNYXIg
-MjEsIDIwMjUgYXQgMDQ6NTM6MzhQTSArMDgwMCwgQW5keSBZYW4gd3JvdGU6Cj4+PiBGcm9tOiBB
-bmR5IFlhbiA8YW5keS55YW5Acm9jay1jaGlwcy5jb20+Cj4+PiAKPj4+IEluIHNvbWUgYXBwbGlj
-YXRpb24gc2NlbmFyaW9zLCB3ZSBob3BlIHRvIGdldCB0aGUgY29ycmVzcG9uZGluZwo+Pj4gY29u
-bmVjdG9yIHdoZW4gdGhlIGJyaWRnZSdzIGRldGVjdCBob29rIGlzIGludm9rZWQuCj4+PiAKPj4+
-IEluIG1vc3QgY2FzZXMsIHdlIGNhbiBnZXQgdGhlIGNvbm5lY3RvciBieSBkcm1fYXRvbWljX2dl
-dF9jb25uZWN0b3JfZm9yX2VuY29kZXIKPj4+IGlmIHRoZSBlbmNvZGVyIGF0dGFjaGVkIHRvIHRo
-ZSBicmlkZ2UgaXMgZW5hYmxlZCwgaG93ZXZlciB0aGVyZSB3aWxsCj4+PiBzdGlsbCBiZSBzb21l
-IHNjZW5hcmlvcyB3aGVyZSB0aGUgZGV0ZWN0IGhvb2sgb2YgdGhlIGJyaWRnZSBpcyBjYWxsZWQK
-Pj4+IGJ1dCB0aGUgY29ycmVzcG9uZGluZyBlbmNvZGVyIGhhcyBub3QgYmVlbiBlbmFibGVkIHll
-dC4gRm9yIGluc3RhbmNlLAo+Pj4gdGhpcyBvY2N1cnMgd2hlbiB0aGUgZGV2aWNlIGlzIGhvdCBw
-bHVnIGluIGZvciB0aGUgZmlyc3QgdGltZS4KPj4+IAo+Pj4gU2luY2UgdGhlIGNhbGwgdG8gYnJp
-ZGdlJ3MgZGV0ZWN0IGlzIGluaXRpYXRlZCBieSB0aGUgY29ubmVjdG9yLCBwYXNzaW5nCj4+PiBk
-b3duIHRoZSBjb3JyZXNwb25kaW5nIGNvbm5lY3RvciBkaXJlY3RseSB3aWxsIG1ha2UgdGhpbmdz
-IHNpbXBsZXIuCj4+PiAKPj4+IFNpZ25lZC1vZmYtYnk6IEFuZHkgWWFuIDxhbmR5LnlhbkByb2Nr
-LWNoaXBzLmNvbT4KPj4KPj5GVFIsIEknbSBhZ2FpbnN0IGl0IGFuZCB3b3VsZCBoYXZlIGFwcHJl
-Y2lhdGVkIHRoYXQgeW91IHdhaXQgZm9yIGEKPj5tZWFuaW5nZnVsIGNsb3N1cmUgdG8gdGhlIGRp
-c2N1c3Npb24gd2UndmUgaGFkIG9uIHRoaXMuCj4KPkNhbiB3ZSBzdGFydCB0byByZXZpZXcgdGhp
-cyBwYXRjaD8gU2luY2UgaXQncyBiZWVuIGFsbW9zdCBhIG1vbnRoIG5vdyBhbmQKPm5vIG9uZSBo
-YXMgcmFpc2VkIGFueSBvYmplY3Rpb24gdG8gRG1pdHJ5J3Mgc3VnZ2VzdGlvblsxXS4KPgo+Cj5b
-MV1odHRwczovL2xvcmUua2VybmVsLm9yZy9kcmktZGV2ZWwvdncybmNkb214M3J3bHRiMnhsbzZu
-ZjNyYXBnY2R0Y2pjb2RvZmdtZWNyenphYmY3amlAcHlic2Z2Mjdqa3EyLwo+Cj4KPj4KPj5NYXhp
-bWUK
+
+
+在 4/23/2025 5:29 PM, Konrad Dybcio 写道:
+> On 4/23/25 11:17 AM, Lijuan Gao wrote:
+>> From: Kyle Deng <quic_chunkaid@quicinc.com>
+>>
+>> The Shared Memory Point to Point (SMP2P) protocol facilitates
+>> communication of a single 32-bit value between two processors.
+>> Add these two nodes for remoteproc enablement on QCS615 SoC.
+>>
+>> Signed-off-by: Kyle Deng <quic_chunkaid@quicinc.com>
+>> Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcs615.dtsi | 79 ++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 79 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> index edfb796d8dd3..ab3c6ba5842b 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> @@ -332,6 +332,80 @@ mc_virt: interconnect-2 {
+>>   		qcom,bcm-voters = <&apps_bcm_voter>;
+>>   	};
+>>   
+>> +	qcom,smp2p-adsp {
+> 
+> Remove the qcom prefix
+
+Understood, it will be updated in the next patch.
+> 
+>> +		compatible = "qcom,smp2p";
+>> +		qcom,smem = <443>, <429>;
+>> +		interrupts = <GIC_SPI 172 IRQ_TYPE_EDGE_RISING>;
+>> +		mboxes = <&apss_shared 26>;
+>> +		qcom,ipc = <&apcs 0 26>;
+>> +		qcom,local-pid = <0>;
+>> +		qcom,remote-pid = <2>;
+>> +
+>> +		adsp_smp2p_out: master-kernel {
+>> +			qcom,entry-name = "master-kernel";
+>> +			#qcom,smem-state-cells = <1>;
+>> +		};
+>> +
+>> +		adsp_smp2p_in: slave-kernel {
+>> +			qcom,entry-name = "slave-kernel";
+>> +			interrupt-controller;
+>> +			#interrupt-cells = <2>;
+>> +		};
+>> +
+>> +		sleepstate_smp2p_out: sleepstate-out {
+>> +			qcom,entry-name = "sleepstate";
+>> +			#qcom,smem-state-cells = <1>;
+>> +		};
+>> +
+>> +		sleepstate_smp2p_in: qcom,sleepstate-in {
+>> +			qcom,entry-name = "sleepstate_see";
+>> +			interrupt-controller;
+>> +			#interrupt-cells = <2>;
+>> +		};
+>> +		smp2p_rdbg2_out: qcom,smp2p-rdbg2-out {
+>> +			qcom,entry-name = "rdbg";
+>> +			#qcom,smem-state-cells = <1>;
+>> +		};
+>> +
+>> +		smp2p_rdbg2_in: qcom,smp2p-rdbg2-in {
+>> +			qcom,entry-name = "rdbg";
+>> +			interrupt-controller;
+>> +			#interrupt-cells = <2>;
+>> +		};
+>> +	};
+>> +
+>> +	qcom,smp2p-cdsp {
+>> +		compatible = "qcom,smp2p";
+>> +		qcom,smem = <94>, <432>;
+>> +		interrupts = <GIC_SPI 576 IRQ_TYPE_EDGE_RISING>;
+>> +		mboxes = <&apss_shared 6>;
+>> +		qcom,ipc = <&apcs 0 6>;
+>> +		qcom,local-pid = <0>;
+>> +		qcom,remote-pid = <5>;
+>> +
+>> +		cdsp_smp2p_out: master-kernel {
+>> +			qcom,entry-name = "master-kernel";
+>> +			#qcom,smem-state-cells = <1>;
+>> +		};
+>> +
+>> +		cdsp_smp2p_in: slave-kernel {
+>> +			qcom,entry-name = "slave-kernel";
+>> +			interrupt-controller;
+>> +			#interrupt-cells = <2>;
+>> +		};
+>> +
+>> +		smp2p_rdbg5_out: qcom,smp2p-rdbg5-out {
+>> +			qcom,entry-name = "rdbg";
+>> +			#qcom,smem-state-cells = <1>;
+>> +		};
+>> +
+>> +		smp2p_rdbg5_in: qcom,smp2p-rdbg5-in {
+>> +			qcom,entry-name = "rdbg";
+>> +			interrupt-controller;
+>> +			#interrupt-cells = <2>;
+>> +		};
+>> +	};
+>> +
+>>   	qup_opp_table: opp-table-qup {
+>>   		compatible = "operating-points-v2";
+>>   		opp-shared;
+>> @@ -3337,6 +3411,11 @@ apss_shared: mailbox@17c00000 {
+>>   			#mbox-cells = <1>;
+>>   		};
+>>   
+>> +		apcs: syscon@17c0000c {
+>> +			compatible = "syscon";
+> 
+> There is already a description for this block above what you added
+> 
+> qcom,ipc under smp2p is mutually exclusive with `mboxes`, so adding
+> the above isn't necessary at all
+> 
+> Konrad
+
+Understood, I will remove the qcom,ipc in next patch.
+
+-- 
+Thx and BRs
+Lijuan Gao
+
 
