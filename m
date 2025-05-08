@@ -1,192 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-57206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 371BDAAF00B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 02:46:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 768BCAAF1EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 06:03:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A37B33BDC16
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 00:46:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D0EB14C6A64
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 04:03:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AC7413C695;
-	Thu,  8 May 2025 00:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BD44202C30;
+	Thu,  8 May 2025 04:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b="cJ8qvMHj"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lIr0Em04"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from TYVP286CU001.outbound.protection.outlook.com (mail-japaneastazon11011002.outbound.protection.outlook.com [52.101.125.2])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377EC1C695;
-	Thu,  8 May 2025 00:46:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.125.2
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746665182; cv=fail; b=AOvzLgrFVGnG4J1NmwQJBCnuYe6AMrF4IGkysLggUibJ+YzVwQHgY8CT42hnfF8KMHqCFNZWKYdMaPXTp90C0mRExtl3WVuz2TUBehPHccz9H+2XjEmpvWObLlVJ13TN+I7Wac02pfPWL9LgqiH94hKTN27OkZchh6m/2CPm9vQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746665182; c=relaxed/simple;
-	bh=veeCoEQFfSokyMumxPgsYs+82nlvQ+pG0hejpKbDdhU=;
-	h=Message-ID:To:From:Subject:In-Reply-To:References:Content-Type:
-	 Date:MIME-Version; b=VSzA+duzjaPwwNpV5VgtPbIkIs82gNqXBkehWqZH7GtRRtFP/QFme37r0HECWWK2V2+9PuMD7zyHLtsTv1Csn0hUtEl5V6q+8f+eRW2IYHkUgTAjmFtmYD6ofVPfrG5pVB+ba9AnpDi8vnFCEf12ryP4FTqe1wTi8NlzeMPhl00=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com; spf=pass smtp.mailfrom=renesas.com; dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b=cJ8qvMHj; arc=fail smtp.client-ip=52.101.125.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JwTRkqibbAoyXjjaRRx68FjDxP8Pyswlm53bEShkiPPDtYlmLxYyFjZcML8aJz5S4L/HfcdRgCct1aYta6w0GYEKusp+9m/uQ6rFM/QKv3Ogi714sDCNQPKYsccEnJgwueJTx2EPVq9KeUqtaoPfHKHnfLEe4PgHJ40MJA6I56ggGRjoTVK2npY139hX6oR5hX4ktURpvcJDv0p7v84DPyFWYKhzrz/4YZnfw/wZlxcuhq0YvdSkioyjmgE/9e3VH6RrxyojEclv9Ktg6pnkbCs7uGniJqEsk+t7HuqiLnbw4iDt+bUPBpVMoXC6snKURSKd0jp/oZckpQ5HtFyhkA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TrqxRQOlWmlKWz/hS2KESntjZJxW8gEnaOKKgLO1DfU=;
- b=U60aUwLxW17RjvNOlcwIX1S5SYc9OZvehUWnmDbDeVkT/V6iBaPehL3hoR4kmumb9AbwMIURlNZjgx5VTe6eu1B+Ke/QOifStLG70bLcCGHgGqQQcw5KeJWG4qi2mpnOXJxDMj+hxHMBcZUQtIjRi3PpwcfouMQeP/zx3E1Mh9kcsS5EOWrfH/5qMt82wayTth60H9wtJJmZ0g33Sq/JpdHtoyvE6Im+faHC4auVQHAPSxShdQEfTQdR60hyatXad7bdSrWk1eN1EBl+0AKNdcpjU97GC369n1XpyWOt7hEMp3BqwZe57+t54KGamXL2tMrYcsltvutbapQktl+cHQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TrqxRQOlWmlKWz/hS2KESntjZJxW8gEnaOKKgLO1DfU=;
- b=cJ8qvMHjII0zbcrIafJ5Hc5m3wXdJRsd2MdEf9h5dOr0RMsboqmDlAmNlWECMHv5r4GwhXGrLSBQ5lJF1heV+gpRFE43o1q+r3G/LOHTvC+nJuNRnoM0mFlzevPsSqXBsp1K/zP0MmgOJy60HF1GuF+zyMu705kRIQXPzbvqOXU=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-Received: from TYCPR01MB10914.jpnprd01.prod.outlook.com
- (2603:1096:400:3a9::11) by TYCPR01MB8616.jpnprd01.prod.outlook.com
- (2603:1096:400:139::7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.20; Thu, 8 May
- 2025 00:46:16 +0000
-Received: from TYCPR01MB10914.jpnprd01.prod.outlook.com
- ([fe80::c568:1028:2fd1:6e11]) by TYCPR01MB10914.jpnprd01.prod.outlook.com
- ([fe80::c568:1028:2fd1:6e11%7]) with mapi id 15.20.8722.020; Thu, 8 May 2025
- 00:46:16 +0000
-Message-ID: <875xic2alk.wl-kuninori.morimoto.gx@renesas.com>
-To: Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Srinivas Kandagatla <srini@kernel.org>, Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Subject: [PATCH 3/3] ASoC: remove component->id
-In-Reply-To: <87a57o2amc.wl-kuninori.morimoto.gx@renesas.com>
-References: <87a57o2amc.wl-kuninori.morimoto.gx@renesas.com>
-Content-Type: text/plain; charset=US-ASCII
-Date: Thu, 8 May 2025 00:46:15 +0000
-X-ClientProxiedBy: TYCP301CA0034.JPNP301.PROD.OUTLOOK.COM
- (2603:1096:400:380::14) To TYCPR01MB10914.jpnprd01.prod.outlook.com
- (2603:1096:400:3a9::11)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE911386DA
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 May 2025 04:03:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746677006; cv=none; b=btocECe5SCtqD0opQ9F9rWmw/uXvL5vlPt59RqJjg6sX2LZqRfa/GeAf8w2XQkwMuCdIse77d4k4y5NoaVk7XTbn6alsVA3sA1WfREvTyo3KFExxoN4gnX/O+zectViDJVfC+gl3UlNIf8ah85A7doncGdmpCNGIhDaao58EwxM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746677006; c=relaxed/simple;
+	bh=FdXcjbEbad1MvTLMck9BvVGpVGwxPcY9ao+oUboDcco=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N4HfCANaQM1kqciUneQp8QpKOUcGaMdD+3x9LIx38hPNpToXsX5DfPOSrg223L2aLhPLqz6+dmLG03OYlTOO2hE5l34D4gks8OgGjor0LM2mWh6C4jkwaR3PHALRtvMhJELLmtMlJeX5kmZw5JzGpyeXrlyEvXgZLY6RP89h9cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lIr0Em04; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5481CKUp005190
+	for <linux-arm-msm@vger.kernel.org>; Thu, 8 May 2025 04:03:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=WFGwx5PZ+G/9BxcVBebd00iL
+	tXeXpkwlaZ/P+6/sls8=; b=lIr0Em04WtZl73eIUNkTUGI0JaqxYlvgs/JLqJlF
+	OJhiYw3N9NXkePvJM+V/qosXsoViXifU83bw3AIlcsfYzv5h/XR6V+aA7ckOnLPJ
+	qjcHtdVMCZsAsHltv5hCpRvjIxk1Yv1gzW9ILZQFAEAKq1QsnZjzrkt7xEIaLDOR
+	5tGH9wJ7jz+Dpb/dKf4PhG1HRWcaQJDlCdxvWZLaHEb17IEB8I294Ub8XbDcJ61t
+	6Cp/7TkAlYnHUxjg30Rnv3OCFnKGgHKHrQLSbZEagbeooCm3GylYAawzhQmMH0rv
+	Iikx67Uy8lFxRjAJf1kWRMw9YvzAD95kbXTTKfGs53omiw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46f5sv7xer-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 08 May 2025 04:03:23 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c92425a8b1so98172885a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 May 2025 21:03:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746677001; x=1747281801;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WFGwx5PZ+G/9BxcVBebd00iLtXeXpkwlaZ/P+6/sls8=;
+        b=SqFbZx7xq3A7zi1jSDIVIBj/nZML7HuDC2PIkbXH1Pypo2qSSgUdcwW00bblk3hYBb
+         /Lo7dGaQjGQRFCPtc85E3uJko6bkUSAk8kgy4IJs1l4dLu9FzuJDrMJyvX2YL9JOI5vS
+         wKv3i5TN0jWoVROFYanAHv4Jin9zwuIU98pmNryelpfNpuPq6pt5MzmbJxBfsDbEV01p
+         xBnuWKLM6cuncYpiL48kkqiwNNjTvG24PGtkRSIMbMYdYo3r4PgZkz7usWknoWd+KUnY
+         6pNEGtjOsZpT9oj0JgA+qDrz4CgZc7qgztZT/6I1PaKAuJ78xSSvbgUxwXc64md/Qm8g
+         wwiw==
+X-Forwarded-Encrypted: i=1; AJvYcCVlMl8qdaR6p1ucHuv1Rh6TlMY55u+W5Zps/tot68XVzGgaxNwbio3obpgKWPJDRMaTQKRN+oZXh9PDJXDS@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw44EkLKCoqUF97nL5LVCjpcV0xDgBrpdtuEKBmcVc8VDYidDoR
+	8PvPq/8ScvME3e7B2NsECfw0duOJPoXY46iWrCYN8sHlyuHlVpz+cxatlDnLhI/rpWR/L7IbxMU
+	XvsWhhO46bHQcHfAH8qHa26yxzjOd99t4vHl824OUXMbMcQBS2bIhuko6Ct1+Dpda
+X-Gm-Gg: ASbGncvYINF9sIVBjOrZ321CZAdzjceG1Y/qwCx38NdaiXM7V6IsBWpnjbuwktqVAWL
+	pSiMOWeFbUkdyc7Qpm3Or+ROqUf+RmRGV9QfF6q0VjpiQFeyhZMr4b6S/sPCjbyllelcwOSxEh/
+	tXzVAQFvT5FcCTkQsbm7rB3dZtT2Y32wRXzWGntc4yANvF9DM38jqy1uXOTvHTYGI7P7/MglCOb
+	YuGxRUzITeNC2lijwKGonuIcaSFPw1tlNK0Vv72StgX9NyMmTJUxBUDHfzgp3+3Ol22M8jsjtyM
+	+rj1NWm7RGIt+CecN150XGMr1cU8Ikk2+KZTrHVsIFOinLWuefSLu3EUOrTJwjqYMDXZZDhoeNw
+	=
+X-Received: by 2002:a05:620a:8002:b0:7c7:b570:e2b1 with SMTP id af79cd13be357-7ccf995e1a1mr366749585a.7.1746677001625;
+        Wed, 07 May 2025 21:03:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFCvb8VK0sMuvhaF34y+RLN/zFk90fkQ04v2q+mJ14cJV9oLuze4zWQomR2mbFMyLbVM3zhmg==
+X-Received: by 2002:a05:620a:8002:b0:7c7:b570:e2b1 with SMTP id af79cd13be357-7ccf995e1a1mr366745985a.7.1746677001155;
+        Wed, 07 May 2025 21:03:21 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32028b38ef2sm23996481fa.23.2025.05.07.21.03.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 May 2025 21:03:20 -0700 (PDT)
+Date: Thu, 8 May 2025 07:03:17 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: display/msm: hdmi: Fix constraints on
+ additional 'port' properties
+Message-ID: <fvrvrcqilnhma774kkojytlgwglsvgaxgukm2fc3gennaii4jz@dufjv3obqc7b>
+References: <20250507215912.2748964-1-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYCPR01MB10914:EE_|TYCPR01MB8616:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3207a641-2f14-431c-f062-08dd8dc9bd3a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|52116014|376014|366016|38350700014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?oc0wtLKVo32nnlK8B3MSQVODTMA2DKN9FzlTtjapijx253CciE65wUfqXLGh?=
- =?us-ascii?Q?mi3bRGMwW+s8I9KjaNC7DTpsYkNK1QTkmsG9R7k+gGGC5G5fLa+Ud50lOXeO?=
- =?us-ascii?Q?mAishwwsOKUklJ4ZzvXGcBll4DtJEK/DiSrOFgnkP6Lq86YxCWrsGAOXDWxQ?=
- =?us-ascii?Q?G3uZXDygwCmM35we/rgIbzhr/vi+oIzTO9j+lKf+Qx45Vc8/m7xSYpnhWk1r?=
- =?us-ascii?Q?N49rADQzBdu0IuzN3LQQBxBhO/8oR0vPv1DR+Q+L9X6yP2rr+GY8ako7NNwm?=
- =?us-ascii?Q?0oTX+yVud7Rk1tz3LzQwsVuZjHA6dk+X55uvn+1aeEhhfKOnNBFHAtiHwgR8?=
- =?us-ascii?Q?/SqzGmqS4ADf7AfJ55rdp0lOu6/wIHO86bWkZBjCPqBeM5ch19tcaToa+c0Y?=
- =?us-ascii?Q?nszGx/icIJMHUVJpsfzgfcvidmboT057Cq0B1c6DtRn+BF9DoVXYUjxYQ8ys?=
- =?us-ascii?Q?TmVGKbs6hK1Atr+c7WMcXbn+IAP6c5f0eCuqPcUdN+xyHR+g8YGBKsjVF8Fk?=
- =?us-ascii?Q?UGgwpl00ZvBn/aBkrUEOOwvRCS5wg2UJrwb2vSC4YCADtAuXI6c4wVdNkucv?=
- =?us-ascii?Q?xHuYK0E91ySGDtdfiGFA+ottW8Drh4vkGrvHCil+4nHCl/rrcT2nURLz+oQ7?=
- =?us-ascii?Q?JTpyeFj7yi5pLUnQXT3TxHOyRZrsmlkuEeMwmGTHQj6+mHXPr9xE3E64JOFG?=
- =?us-ascii?Q?Gz5heU0139dqVLBgPfC4INsYMvWddKRQaOEMhrpnUES/16asZtmyAyNqMtjK?=
- =?us-ascii?Q?UHxLNoiqOohyTjtSW6Ca+ledMxdgMfygIsh8RfRXESQUUK2dtmtckQSlUYp/?=
- =?us-ascii?Q?HZR6v6HZoAmTeV9IR2i7XfazS76ceAyrN733GXRqgz5+fplkCI66VE77SPHQ?=
- =?us-ascii?Q?enlZ7hOE9YhYH8zLR+4MYM4JqLJM62Vvzmfy9mKUuSwZR0Ha4FpBK1/N6YMv?=
- =?us-ascii?Q?2teTV37mbKjKZYCWMaF/3vJgpDfAGsfnxjmX66+ZKA5ZoQyMGOigDqL7xk/O?=
- =?us-ascii?Q?+gsNWRBvu0H+dNr9zMmEDh+aGfzGT6sbeobSXniUi8PGt97QpWG1yo5lQ5Hb?=
- =?us-ascii?Q?fW9idqbhnM6TVPPpWfkfdntBGTc8o+VoS9OD/s4Y9FV7LlydrBecmZgvHgNK?=
- =?us-ascii?Q?74vXY12kt6STXVIWOvYxBoXBqAGa/kmkOc7+sKlOJOCerGqhy7bIqaW7Cm/L?=
- =?us-ascii?Q?7n63+sgnAz6n4vXEw9wyKM0aEMOjSrV+GGfej21F7KLwHots8QG/NUqZ489p?=
- =?us-ascii?Q?+zHnee/GGz8mPg0xNtJRf7VqB+wLhbaIWxvOnB7aLSagMHJbBtstz5rlP4H4?=
- =?us-ascii?Q?oHQlsj0vQuBY3esmrMc8zJ5MQcF0b46ghtBwJC42xrKwNHymO946CUHr3XC1?=
- =?us-ascii?Q?151A9c42L/r83zRSR0ObstQd1iA/ACWXsR3/pF+hiF/5PTAwQyni4lwfJFRO?=
- =?us-ascii?Q?zIa9MvqSRIE+QkN/Z62l5cvFrFL+5Sv3TsNNsYIHkKan5B5ojMqiew=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCPR01MB10914.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(52116014)(376014)(366016)(38350700014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?0JKYC9UhS6cmGO36qeCR2c/JMmYdOptiIkdjD/Ogg1Ww3K4fwPxhoOuQm154?=
- =?us-ascii?Q?UN6rHGmecjkvffpjoty8MJQUoXiov7jWMgbs3MW7mpH/92K8JDL3XkPTZC5P?=
- =?us-ascii?Q?dBvGNoec5mX8gnGeHL6BW21vN1o7R9l+QXCYW5rCpgJnJMRVVKp7HAvYfWL4?=
- =?us-ascii?Q?5Mr2xKns3ML/V2yvvSN8wZo0X/zUO4HTo8ZDeU0aGkkT+38UnRa4DNvaXqC/?=
- =?us-ascii?Q?4XRO+cKo7u+98roq32eEUHjsVInZJ8K4WRRWGybQ6h2yHsgGakZl8LDYouzN?=
- =?us-ascii?Q?J3u3iKipGW1vkJhHaq9n60cd4FhdrhjIACrtR5N3g9y/QKQyF6VNKRnIhwn+?=
- =?us-ascii?Q?35FprjKoJ2KgLIWDohCJTFDEVRJvtqf6Nf7Hbmmid2U1lCwisW0N6TxsFUds?=
- =?us-ascii?Q?c8SIY2ut7SusPFT81ZQZ817ypEuslvlwkjgGhAmuA85oU5qX1EgTcH6HwoUB?=
- =?us-ascii?Q?5ZXV9dve73AZ+i5nCDiVc60UWn+Odq3ITI2vk3ZQgK5C8tn9so7LPvp9GKtE?=
- =?us-ascii?Q?0O6yrIOnD8I2dqYyqWKiHrsAq8vXW/hwZgrBnSVO7VmoAc+m5LD5xW0DwuED?=
- =?us-ascii?Q?HwEL7fElUC0m3cEnKHH/NgkyiqagigTKYKr4q4jv14brB+Vgl4x3nbvmO8nn?=
- =?us-ascii?Q?hy4z2RW4DePMX1eoczSCAZNU3ce/UshwpsXQWwPMiwPRHzxgxjMHx/gQioOs?=
- =?us-ascii?Q?pBQwva2oErYwn3eceybIknBdKVZFXnJt6UJM0uHWFIm85Ih4C6fhqFdKCd6g?=
- =?us-ascii?Q?wD94drS/tQY9z5yhw1b6w/tCppBuBr2F+0IQDU/1z0D7eGSdL8hOzUf/Tlfv?=
- =?us-ascii?Q?RX7KQ2O4Ht9cbwS4tBSauLker+i76EEgB3n9MHF3vuZay0GgkqmRDUq1QAYM?=
- =?us-ascii?Q?tVH0SePapDXkiu7pvkaOoVmOGmsJVmJEe4y64ISJtndryViyXBtEF/sxg7H0?=
- =?us-ascii?Q?+C61+aF0cs/V2ubOlg1Yn6IxdrbBrEyP5YEzyuLIT94OjKza/NueN4qOlL39?=
- =?us-ascii?Q?HNV2A55eR2D4ZizILzqXjYomdUX6/2OTWrcAWaDQWDM7TWA4hghv7++AllZU?=
- =?us-ascii?Q?EIOckeqANq+5QGQRAjrVbP/KjtdfbItjvmMYMlG1kkVh0GmRNh3pvolfXU1p?=
- =?us-ascii?Q?A2kXxtlIh83TkNHgMVXIvHbBs+OoWzL8oJzc2+UP9pq3G7B9i+RGChlc/REE?=
- =?us-ascii?Q?++D7pl4Ez2uPpifsc98t4BGdi9yFpQe/NyodclyU21dMoD1nfO9oogPoQn7m?=
- =?us-ascii?Q?OLhoTD1bw0bbOagC/K6cvzIyzDC2bUYGdcVsIajjO9aOpJue63ie8zcdxaA2?=
- =?us-ascii?Q?5Ltzzxkkzm3kbkpufyVrCzvx8gBoiK1qenm5+EpFgEqMtz93C63B0ArplIJU?=
- =?us-ascii?Q?5YzFGZ9RyXDDBr8V9UMWH64UilTLd0uGZlYujSbqCFEoQH01W5o2zbSpjL06?=
- =?us-ascii?Q?Gz37qUQZYS4dTHRZ5gSRQWpBtsTXAvhaIa9JVCVN/io7YJtNYNWN9Rq2I/41?=
- =?us-ascii?Q?1pclI3R0AU3y7Guei5pSJSmpFSL3igOfjqpx+SN/8hJel/AWK+HnC8bWIPBx?=
- =?us-ascii?Q?TELEUK3B8E9K3Hg3YCnYltsL3NKpQKS0NXrluW1K7tsuWLq8vnFJfvTd/tLP?=
- =?us-ascii?Q?f5mDtyXiRjkp20JKAWMT9UY=3D?=
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3207a641-2f14-431c-f062-08dd8dc9bd3a
-X-MS-Exchange-CrossTenant-AuthSource: TYCPR01MB10914.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2025 00:46:16.0310
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nspYRlnvuHeP/6PQNb212wDFgedelNGZuIC+0sykFM7l/W+tF3lNxtJRp21Ouno7bOBPJ0k8Vy8Cin98KyfBY6JH37Bz9RVXsStoC+uYrAqzLWFadJSR/L7BkcmYweVg
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCPR01MB8616
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250507215912.2748964-1-robh@kernel.org>
+X-Proofpoint-GUID: nVEOdVLOEMR6lSmV6tWF-4CG9_eGWIO8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA4MDAzMiBTYWx0ZWRfX9SSZeGSJ0K7x
+ 2E6jyzcGP36IVCsXtZGHNXgzacPSyx4YWRj3Mhl6YKAKVBcbMQRDlatGQ/U0x7pk9GBsh9TUxdi
+ GylYsPnyCgTHn5yjzwO5YBqazdz+WUbNuwXOpDvN06Nlzlk7f8zkBEfGnamy5rh3FUo8KkJNXjx
+ mHUEwg9MYNWFxxPwlYtszpazozz8JU3UOHtYeSdg+YzQnRquPFVkrD+MwXnxszrILRNKW4jlB6A
+ uB8oge9ZG6Bj3nIadgW7+o5UOyZI0gu2RciT9tgdRWyJWd76waVrKs2G4biv1yGJFaGIdbYDYIK
+ V68YuUtY5s/SRsuevUHlTVbmwgelBNgxTG9arrsDibL/3j/22S9tmHXs4ewo7Cr3SpdyqZfj5y2
+ 6ptbrtRXHkQAwvAbc0grDbyZ04nPlPsl4suBej7KRXUU2Aco5ACzK7fYidj4NwK28jJwWObi
+X-Authority-Analysis: v=2.4 cv=cOXgskeN c=1 sm=1 tr=0 ts=681c2d0b cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=LCLtBpLZ_J7SsqHOqrgA:9
+ a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: nVEOdVLOEMR6lSmV6tWF-4CG9_eGWIO8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-08_01,2025-05-07_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 clxscore=1015 suspectscore=0 priorityscore=1501 bulkscore=0
+ mlxlogscore=999 adultscore=0 impostorscore=0 malwarescore=0 spamscore=0
+ phishscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505080032
 
-No one is using component->id.
-One idea is we can re-use it as serial number for component.
-But we have no usage, so far. Let's just remove it for now.
+On Wed, May 07, 2025 at 04:59:12PM -0500, Rob Herring (Arm) wrote:
+> The MSM HDMI port nodes are missing any restrictions on additional
+> properties. The $ref should be to "/properties/port" rather than
+> "/$defs/port-base" as there are not additional properties in the nodes
+> to define.
+> 
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/display/msm/hdmi.yaml | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
----
- include/sound/soc-component.h | 1 -
- sound/soc/soc-core.c          | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/sound/soc-component.h b/include/sound/soc-component.h
-index 61534ac0edd1..2caa807c6249 100644
---- a/include/sound/soc-component.h
-+++ b/include/sound/soc-component.h
-@@ -206,7 +206,6 @@ struct snd_soc_component_driver {
- 
- struct snd_soc_component {
- 	const char *name;
--	int id;
- 	const char *name_prefix;
- 	struct device *dev;
- 	struct snd_soc_card *card;
-diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index 80569209ce05..39ecf0123a44 100644
---- a/sound/soc/soc-core.c
-+++ b/sound/soc/soc-core.c
-@@ -2835,7 +2835,7 @@ int snd_soc_component_initialize(struct snd_soc_component *component,
- 	mutex_init(&component->io_mutex);
- 
- 	if (!component->name) {
--		component->name = fmt_single_name(dev, &component->id);
-+		component->name = fmt_single_name(dev, NULL);
- 		if (!component->name) {
- 			dev_err(dev, "ASoC: Failed to allocate name\n");
- 			return -ENOMEM;
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
+I've verified, it applies on top of msm-next and produces no errors. I
+don't see a meaningful error in the bot's message (Rob, is there a
+chance to fix the bot?).
+
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/hdmi.yaml b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+> index d4a2033afea8..099274d35680 100644
+> --- a/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+> @@ -89,12 +89,12 @@ properties:
+>      $ref: /schemas/graph.yaml#/properties/ports
+>      properties:
+>        port@0:
+> -        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        $ref: /schemas/graph.yaml#/properties/port
+>          description: |
+>            Input endpoints of the controller.
+>  
+>        port@1:
+> -        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        $ref: /schemas/graph.yaml#/properties/port
+>          description: |
+>            Output endpoints of the controller.
+>  
+> -- 
+> 2.47.2
+> 
+
 -- 
-2.43.0
-
+With best wishes
+Dmitry
 
