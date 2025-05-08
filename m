@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-57317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2316CAB02A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 20:25:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D29ABAB02E5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 20:33:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0BA123A9116
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 18:25:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4F8DB189AC4B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 18:33:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC5831F8744;
-	Thu,  8 May 2025 18:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78405207DEE;
+	Thu,  8 May 2025 18:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DRIBSlNf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mlsycKxc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697C71D618E;
-	Thu,  8 May 2025 18:25:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1B94B1E7D;
+	Thu,  8 May 2025 18:33:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746728731; cv=none; b=min20reKjLE4/XofpcdtWZDYfexaBObbx05F2Lc1TYkwiN040Dm62y17fVeAl3XvH729riZaRdaN5+pLLvgNToi/vohXLYb9nT4fxw91JEidJszZ7Jw0xih+6cdIxUL2rJU0Vs7zettH9n9eCGkNNAulZ1DhvXXzxwfCtOrek4Y=
+	t=1746729202; cv=none; b=W94+jBIU4BThsKWq0ZBgCLkHnoZ0vZuh3KABBcMXD9wGlCaHILeh4/WShP9xWc38hcIpUdCRyKJT6l84/2puBJ8YwALKoQSeP5sXlbT+vqSIqimcV8pnfthCeEqBSqZUB9HoANjL1F1vHPuZK493sJ4CNDgyfVdRtZDyFQxRFKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746728731; c=relaxed/simple;
-	bh=yJM8+i0iPYMYmNqm1ryjBX4Or6+cWmb3ISw9re/R/1Y=;
+	s=arc-20240116; t=1746729202; c=relaxed/simple;
+	bh=JOcc+M9rOvZ1c35pE9SCvCiacPbTkjMI6AluzJW0xeA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jB43x0BS62k64QsaJZilCxa9qiq01XVbMYHPlXV3zzSPqYgmdNQZIsJNmvAvUYRM6mUQ7a2OFvQsS85D0E/IuiRjfMpcEK/NOotUdzaFBlDCiWmjIV1xYsR+FnjE5B/p0/GsxskGiMDcrSMkRAe/Pg0y3cvTX+5YUJFn6sBrMH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DRIBSlNf; arc=none smtp.client-ip=209.85.216.54
+	 To:Cc:Content-Type; b=CASH50w7AjBxlLRAPYRUr9o1gO75ZxbhupMKRPO3jUsRuhVZKKacP9icyUCH524cRV3lPDWdRodji7uvXjZ+P8SE/WELZa4hB1+3MsjyTypXSEGq87OQzkIUia9ZeqsjLfkQSHEGYaea8P23E32TPeB+59PjGn0SLpVWyhLMnJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mlsycKxc; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-30c1fe19b07so122817a91.2;
-        Thu, 08 May 2025 11:25:30 -0700 (PDT)
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-30a892f8124so157983a91.3;
+        Thu, 08 May 2025 11:33:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746728729; x=1747333529; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746729199; x=1747333999; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=waEbCrslf02j0euz1Hyel1xKxpuwwD71wy+gaLfyWXA=;
-        b=DRIBSlNfN/qK05XsG3N5zmJ4Z3k9rV3LJ3Tbj0RGss8ijWCeLAKXeOjCK2s+ndajKY
-         +5VWHUxejER2thakONoyI4dE1b2RH5D+xHf4CvCVTrOYNrLI8bu/HE8kv+IcukiXRKYK
-         jl/zrgQZ+Il1gtjQXEWNkyBP+NgDjhe017XRqc7PZAQGCrH0Q8AI3jerrOphw+XOsXMF
-         GtTHE82ZmkVy9Ectknp6A+bXRIkEI8rtHHL4voDzvTq9VM5VvzhsJDkRuCbJ6sxFCPLW
-         W7faHShBEn7MENCU0jKV4Re44ttgLmcL3rvYZPgwl7zHhVRIeWy3l8X0GG/6QtTaGzZZ
-         TIbQ==
+        bh=8FQJhUt0Xs5KmiFJABZgU0fKzpM3sDlbu/it07qeVBQ=;
+        b=mlsycKxcF8Pg2BcgDOnKZQqQaS/u6EZP+9530Gx9qvWlO1TFL63NAOtOxTELlRw07B
+         BoCT3kRNSgn1QmuaUyCNDhBu8mo5tVGvZqldxeFnbpSR98hR2IG6bIQEXyYg77XkbxVu
+         1m3urNIMCkyJS72fD1YFw3UAp8IA9GSItQ9D/WBnUWNLSf5N4pGxVNUDXYaAo8GZg/1E
+         cNv8Ym5Rm2bmt4LVA16ZhKX5bDHDWiUf/EhK4ah7Gqz9vQ3jbisESk0hjpMuoYXWYOfG
+         FKVLc6rYgkNjIUiszH2JvDymvfY9HZeS2fiBwRIUCnWATX4ORTq1p8R3hdWwBwKfkjE2
+         Huow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746728729; x=1747333529;
+        d=1e100.net; s=20230601; t=1746729199; x=1747333999;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=waEbCrslf02j0euz1Hyel1xKxpuwwD71wy+gaLfyWXA=;
-        b=stPTD4hhaSJN83pXmz9sjznYu2hAFzlVC2qdHepEIue0tpzL7QacQGTUj1R5E349ne
-         kblBmhtzp7cg8nz9/raz2Xu+9X4QGP+0deOwPNKYlw5NpgksRwDooFEA9hrhczK5ce6z
-         OX3bKRTihocy7koz9MPRjBsgmcQc76MCxprUAglSxoNLFUJJLFh/+N3R2cUWcpYL0V2x
-         oC5EObeFcEjRn7LO8IQG4yQ1TU+mbq19ckw9mOVZgVHiWtRNwaOdDUpK49Ngk/xiUdW9
-         8S2a5kgfFx5kkEBfhYYvDUgz3v97Y+4BM5wuCcont1IZCEf3zM/whnLv2wnW3VmvmFz/
-         xapQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXQ4irUpddXGw6mIbUsHGqLZRaIs9OSncW8lGDhRN2NzkNzNDaFMfqlx3CGip1JBsgE7o/ePlnDxTYzmnH3@vger.kernel.org, AJvYcCXaInNZ48HOTdrphWvkSP1KS0W4uxn08foZ4jpHx84u5HaqbuMcoQdGjumyoYPXaUIZrGh/2x3YBORXBeUm@vger.kernel.org
-X-Gm-Message-State: AOJu0YzNsnZ5d1yGtaZznasx/+zTpKJrb88f45eiRQttt6woy5V9pGII
-	BGn5ZqxHCVQY7gfjmpkkwpz94xCTAp8lkVREjti+0yons0ivNoNDLOs9JZxb4zXNaHluIXww1Z/
-	yrzE62pJKsQ76qTLgpwq6G9Y2ARI=
-X-Gm-Gg: ASbGncv+0xX1rIaVqcryzBC0ToJ8MHhr1UGl5a5auuKFgNwWsZmi9TNAi6psA1ywCFD
-	oCiniT/z2BBt0KEqbMHJIuUzlVGplrJcR1KhZZyuGb0GAgva1u3BIdoPx810uZGP3Kw0hAE0WdN
-	XAk61zcBeSpo6ZPFg3YalAXw==
-X-Google-Smtp-Source: AGHT+IHm+1k+jR7TnUT8ZSpFd7U5tcrz5KJivMD+5bDfj/leop0E5igVUwVXpDEwEgoS20vzCAfVm+cD5wr/rcq2wGs=
-X-Received: by 2002:a17:90b:3812:b0:2ff:4be6:c5e2 with SMTP id
- 98e67ed59e1d1-30c3d669070mr276315a91.7.1746728729571; Thu, 08 May 2025
- 11:25:29 -0700 (PDT)
+        bh=8FQJhUt0Xs5KmiFJABZgU0fKzpM3sDlbu/it07qeVBQ=;
+        b=Wt9wSfPcApjmC2YL9w/UKRu2TAISd+uQqOu3yCUROXgi4zTu+tTF6gKvWRpTMCoUxv
+         b+4eyQvCvxqYSOW3QC40rQSZetiGWJjU9C6X6D2vO75FkVhWPIaNo8nDMQTZyiFMeIG6
+         RDPgN9SjbAdIF38ccgnZTTn2SlC6jK6Np+FDTi7Nb3LwOzI4gjNv9ri41KFWPXBiKh1H
+         wINysYc2JgUy+EwtRTFRokH1m/VulDYlN3N556+NMjyR8yp7KA4MUcx814LayfyL9zM3
+         BNeOxKpaUtc6rLL41J7zxOykDO1PVVN0nnQBxecC/Uk9C0j1tsNVoITGdVb0Njel2xz6
+         ORUA==
+X-Forwarded-Encrypted: i=1; AJvYcCUXqiDv1KfEmXZqs1yQiMpYai2QXK2RpOO6XOWb4hdkPiCn4s0HJXm1p1bAnv4bDDnC2qK4yFVkUkjZNACW@vger.kernel.org, AJvYcCXBSyy7K0DNtYQ9MKCggg+5YgZ0Q8yzbBSAVrqfiekpTRghS4HKJqmOCdMAosn5Oda49yMnQwJqAydZpinY@vger.kernel.org
+X-Gm-Message-State: AOJu0YzEjfInwtwQz3XR7EXugmqlKWQk4vJj7rdRjBkSrLayFovrYbIY
+	lgkkvILQ6/qfXElVQJT2EkqMT3luutW1qYwb1qh66AqhEze9jXXxU1mkV6hgP6OcXu19CcjSGbr
+	dZXlblhD/giBcQ6iFrFlNr3bLKPs=
+X-Gm-Gg: ASbGncvyQn/LlN2nat4x81cM0g0Iw6asdMIefLB+uWD5MoUH5WYsZw4GBGYLp74K+2c
+	YnHPuy4zqBNsR8zq7Wu7kxGUBPeYc0K7igRS5Gd83XrA1RHWRpsTjunQbe26gfr66oYpwabtVI3
+	2kw8XuxX3uAE5jBRrNSvUjtg==
+X-Google-Smtp-Source: AGHT+IHpUe5YqkWw0UFJtqeULReAr+4JR57SpZTyi/DJlRlRiBws1wPRXwVJgzIDpy8odTqgv5arRpEHmEIb9VOXibA=
+X-Received: by 2002:a17:90a:e7d2:b0:2fe:b972:a2c3 with SMTP id
+ 98e67ed59e1d1-30c3b909b29mr304390a91.0.1746729199120; Thu, 08 May 2025
+ 11:33:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250508-topic-ubwc_central-v1-0-035c4c5cbe50@oss.qualcomm.com> <20250508-topic-ubwc_central-v1-7-035c4c5cbe50@oss.qualcomm.com>
-In-Reply-To: <20250508-topic-ubwc_central-v1-7-035c4c5cbe50@oss.qualcomm.com>
+References: <20250508-topic-ubwc_central-v1-0-035c4c5cbe50@oss.qualcomm.com> <20250508-topic-ubwc_central-v1-10-035c4c5cbe50@oss.qualcomm.com>
+In-Reply-To: <20250508-topic-ubwc_central-v1-10-035c4c5cbe50@oss.qualcomm.com>
 From: Connor Abbott <cwabbott0@gmail.com>
-Date: Thu, 8 May 2025 14:25:18 -0400
-X-Gm-Features: ATxdqUGGKzILlDDNdGb-69ow4qakqzEaJcVTZgzzDN8Bbo3FXuGdXfNDVeMIZAU
-Message-ID: <CACu1E7H9_EkGFkjL1MRU9M-_YFHnPb5v9SxDg6fXm0m-imzC2Q@mail.gmail.com>
-Subject: Re: [PATCH RFT 07/14] drm/msm/a6xx: Resolve the meaning of UBWC_MODE
+Date: Thu, 8 May 2025 14:33:08 -0400
+X-Gm-Features: ATxdqUE2vLeH_1fBevqnXZeORD_v0wWgDms-Rnd2Lz_3k2tRIEmXBn1VABvu08w
+Message-ID: <CACu1E7EFK7dzR=hm-J58jz77pMxn2SoJVrfQvV0RHiESi1mkzA@mail.gmail.com>
+Subject: Re: [PATCH RFT 10/14] drm/msm/a6xx: Stop tracking macrotile_mode (again)
 To: Konrad Dybcio <konradybcio@kernel.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>, 
 	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>, 
@@ -98,44 +98,103 @@ g> wrote:
 >
 > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 >
-> This bit is set iff the UBWC version is 1.0. That notably does not
-> include QCM2290's "no UBWC".
+> SC8180X (A680) and SA8775P (A663) require a write to that register,
+> while other SKUs are fine with the default value. Don't overwrite it
+> needlessly, requiring the developer to read the value back from
+> hardware just to put it in the driver again, introducing much more room
+> for error.
 
-While this is technically true, AFAIK the only difference between UBWC
-1.0 and 2.0 is that newer UBWC disables level 1 bank swizzling, which
-is why I originally wrote it this way. There's a bit of redundancy
-between the UBWC version and ubwc_swizzle bit 0.
+I'm not sure I understand that last sentence. The original reason I
+always wrote it was that for host image copy we need to know the value
+of macrotile_mode, so again the value exposed to userspace must match
+what's set in the HW. We can't read the value from the HW and send it
+to userspace, because userspace queries this when creating the
+physical device during device enumeration and we really don't want to
+spuriously turn on the device then. That means the safest thing is to
+always program it, guaranteeing that it always matches. Otherwise we
+just have to hope that the default value matches what we expect it to
+be.
+
+I know you're copying this from kgsl, but kgsl doesn't expose the
+macrotile_mode to userspace. I expect that HIC was added afterwards
+and only works via hacks there (if it's even supported at all on the
+relevant SoCs).
 
 Connor
 
 >
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 19 +++++--------------
+>  1 file changed, 5 insertions(+), 14 deletions(-)
 >
 > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/=
 adreno/a6xx_gpu.c
-> index e1eab0906b6c460528da82a94a285ef181e0b479..d47726ea8818a9660eadd52d9=
-7dde1489a884684 100644
+> index 60f89a2d851a5c383fc14cce4c483f630132a9a6..bee7e9685aa3ea282fb20ef47=
+9e4d243d28418f7 100644
 > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
 > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -663,10 +663,10 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gp=
-u)
->         u8 uavflagprd_inv =3D adreno_is_a650_family(adreno_gpu) || adreno=
-_is_a7xx(adreno_gpu) ? 2 : 0;
->         const struct qcom_ubwc_cfg_data *cfg =3D adreno_gpu->common_ubwc_=
-cfg;
->         u32 hbb =3D adreno_gpu->ubwc_config.highest_bank_bit;
-> +       bool ubwc_mode =3D cfg->ubwc_enc_version =3D=3D UBWC_1_0;
->         bool amsbc =3D cfg->ubwc_enc_version >=3D UBWC_3_0;
->         u32 hbb_hi =3D hbb >> 2;
->         u32 hbb_lo =3D hbb & 3;
-> -       u32 ubwc_mode =3D adreno_gpu->ubwc_config.ubwc_swizzle & 1;
->         u32 level2_swizzling_dis =3D !(adreno_gpu->ubwc_config.ubwc_swizz=
-le & 2);
+> @@ -594,7 +594,6 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu *g=
+pu)
 >
->         gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL,
+>         gpu->ubwc_config.min_acc_len =3D 0;
+>         gpu->ubwc_config.ubwc_swizzle =3D 0x6;
+> -       gpu->ubwc_config.macrotile_mode =3D 0;
+>         gpu->ubwc_config.highest_bank_bit =3D 2;
+>
+>         if (adreno_is_a610(gpu)) {
+> @@ -616,13 +615,8 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu *=
+gpu)
+>         if (adreno_is_a621(gpu))
+>                 gpu->ubwc_config.highest_bank_bit =3D 0;
+>
+> -       if (adreno_is_a623(gpu)) {
+> +       if (adreno_is_a623(gpu))
+>                 gpu->ubwc_config.highest_bank_bit =3D 3;
+> -               gpu->ubwc_config.macrotile_mode =3D 1;
+> -       }
+> -
+> -       if (adreno_is_a680(gpu))
+> -               gpu->ubwc_config.macrotile_mode =3D 1;
+>
+>         if (adreno_is_a650(gpu) ||
+>             adreno_is_a660(gpu) ||
+> @@ -631,19 +625,15 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu =
+*gpu)
+>             adreno_is_a740_family(gpu)) {
+>                 /* TODO: get ddr type from bootloader and use 2 for LPDDR=
+4 */
+>                 gpu->ubwc_config.highest_bank_bit =3D 3;
+> -               gpu->ubwc_config.macrotile_mode =3D 1;
+>         }
+>
+>         if (adreno_is_a663(gpu)) {
+>                 gpu->ubwc_config.highest_bank_bit =3D 0;
+> -               gpu->ubwc_config.macrotile_mode =3D 1;
+>                 gpu->ubwc_config.ubwc_swizzle =3D 0x4;
+>         }
+>
+> -       if (adreno_is_7c3(gpu)) {
+> +       if (adreno_is_7c3(gpu))
+>                 gpu->ubwc_config.highest_bank_bit =3D 1;
+> -               gpu->ubwc_config.macrotile_mode =3D 1;
+> -       }
+>
+>         if (adreno_is_a702(gpu)) {
+>                 gpu->ubwc_config.highest_bank_bit =3D 1;
+> @@ -691,8 +681,9 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+>         gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL,
+>                   adreno_gpu->ubwc_config.min_acc_len << 23 | hbb_lo << 2=
+1);
+>
+> -       gpu_write(gpu, REG_A6XX_RBBM_NC_MODE_CNTL,
+> -                 adreno_gpu->ubwc_config.macrotile_mode);
+> +       /* The reset value only needs altering in some cases */
+> +       if (adreno_is_a680(adreno_gpu) || adreno_is_a663(adreno_gpu))
+> +               gpu_write(gpu, REG_A6XX_RBBM_NC_MODE_CNTL, BIT(0));
+>  }
+>
+>  static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
 >
 > --
 > 2.49.0
