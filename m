@@ -1,122 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-57250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1554BAAFAB9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 14:58:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 682B1AAFAEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 15:10:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 470B516E3CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 12:58:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0736188E844
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 13:10:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA9F122332B;
-	Thu,  8 May 2025 12:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40B1622A805;
+	Thu,  8 May 2025 13:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="P5q6afpg"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FZbZC116"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01341229B32
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 May 2025 12:57:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EC9EEAA
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 May 2025 13:10:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746709078; cv=none; b=Rbcx6qtgtUUEIogRhc2fulzqj65ZYMD4uTOlr810mk+iXPSmki0HvHd11etDXQDluGogj/QJFooahE1nOhvpiEAn7ufMFDKToV0xeN3CoOrhbLWZZ4z5CzdsoAPiO0ohd+xZzIdheHeCB6A+b3PTjTiVXSgbSIm5VxFm2SGGP5M=
+	t=1746709812; cv=none; b=hBHbTLvpnCqGQoKsFtTeAzVbuses135eOvzj3bG5udzYNpeqKpPjlQTxB9TSpLjrk/y6g1LF2Ge6wuofiUbPZocN2tqopReReFmxl5bythLtyPiIOYl/Y1/76vjV4ycNewqeFLZ+2hHOPvZ5YcaDqNSHdu6Es7waEiDZGNgwh1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746709078; c=relaxed/simple;
-	bh=fie8ocClExZ/oy9M+sB0ZEiqCjjIW+Pu/7pCGbHETXU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Igu9+/oicya7X08MkPvZ1AkPaKdC23Pq+OSlisdlnU/boEO5OQJRZkvZS859tu1l/KyTprCYk4MJBbIixHN0ycrsQpqlBcGgr5J1FZXnmOwiTORlZqVlhn37lZWN4qnLNTX3jQW5fyFAUeKeoVIgb6uTiMsYf1XTBw5J8RBqk6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=P5q6afpg; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43cfe99f2a7so1278715e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 May 2025 05:57:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1746709075; x=1747313875; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GyfX9coirJq8Cdaxq/W+11Z0EprDF7VsHit7r1SH4b0=;
-        b=P5q6afpgQqcbcquSjaWapD6Jfnidy/bHerAnQhp92Rv9w5QHyvw1EQdhcOAnMGTbTN
-         lxTZFH8kziCGqLdotsuSX9ifMnrGDffbZ9OTlj8xgEOPUb9gRIuU1ncho8jpiOCCyKSk
-         4ozCaUzTflpGYASma6JWjUhcWsSg5c9RoelcbG49bovnIUdFOHwKd2S4aryeY21jljlw
-         b2DCouK28BOXg5w5rD5SUJDl5YmlesDpUJ/H9w2ie35jILfYO26em366xpJC0EQbvKfh
-         hg43P+9uksSbKNUR7H/cvlT1FS4T0OT9S59A4gWkqh61YshKh6MRfj9CaaYAy1L1E3zw
-         fzkw==
+	s=arc-20240116; t=1746709812; c=relaxed/simple;
+	bh=NSnmCCrbTjfcVOSvFX0kD9i/VfDeG5tt4nFeEBWNPD4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VL3dnWTyGL3lNFsLjc22g75brjZJAq7AmMJtFPyCe/uleNJWCAJSxX/xLnavf668Kn/LbLVekOmqO80Fq3r0XxxWzE+4r0sjgJU0j1e+uMAsvXvPchR//z7LMyWs+fVBrAiFh/r6KcX/0ukMJeu2PCzU4pbKfkt3Shz1N8ysqTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FZbZC116; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 548Cs3Gx010313
+	for <linux-arm-msm@vger.kernel.org>; Thu, 8 May 2025 13:10:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=w/O4EtEjKK+qxbkmtbfvbyAd
+	Ep6/N7mvPIzRsQHghBE=; b=FZbZC116dEhg/lCpeG0WMcIP6bTCI1H1YrNIJ19s
+	uFrkXgxtEeo/HjdKpWVycc7EuAyNoyML70FQLGC/kjpRpIIthFxRuASfJmIphsqd
+	1PXzzmv24l5s505c6AL5teBZm3xJS5Zmk6XgdOAiHojt6VPskIG8i7E8ZVTjU5VH
+	P0AxxDhV4D5b0gdbDDP40FWoJEEVGlwDfxYyDzpPthuKVOIKL4kalgQEgkN8Qaxm
+	IUn6tbgybzb2bpl7gfK8vrFbElTSAmAxDbywD/Q1boLS5Vhg3vcNc6u/HRs1S6HQ
+	vrLxa5pbwYaNSR/xoHN2427k+iTryH0hsKona/Ts8UiYsw==
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com [209.85.166.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46gnp79dsm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 08 May 2025 13:10:08 +0000 (GMT)
+Received: by mail-il1-f198.google.com with SMTP id e9e14a558f8ab-3d81b9bb1b3so7266155ab.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 May 2025 06:10:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746709075; x=1747313875;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GyfX9coirJq8Cdaxq/W+11Z0EprDF7VsHit7r1SH4b0=;
-        b=ML+ysFRu9xhGxdnHzMTSNmve5gOo/YEVkaTFcf7Ds9qjZiXQHkIRdioiW6LHB8ysnk
-         vxKbU+NpWyBcd19CxDqkQbQz/L886kDh0OeSRO7lqtcvs+UANJI2NNhncqXxhp6jVmhO
-         o5cIhXyBHARs8s+tfoHZqlcVZp/ZigOGOvxextqypybfiBNfGOIPlanRLdsvRPrgRxbx
-         XgnH9WT0FQRnL4jDlSh+1DlWsdX4Z7OZDA4QR12Jp8WsatQDqSx10qPgjwTadg61bR9U
-         DUZubLRBzuWHPXo4i5+dUci06G6ENNjDM7Z5uoLk/8bkK9a4CVRwsNFhav/w5n0xi2fH
-         VYJw==
-X-Forwarded-Encrypted: i=1; AJvYcCVC29rPDVm9OypLZZnE8ft+D+0ZzLFIhq9RGg7nnCzFWgspGvCT0L5CdvXTOZSdfNwIIIS+/tdqCtkSNVZ+@vger.kernel.org
-X-Gm-Message-State: AOJu0YyeC7SO3wqaSF4JXtQa4e8OvuUIbIfbxRTJQEjzrW7v0IqNcu53
-	xA1Smm0VBAHiNsOGI9+y3sBCKMd3yqBS4yG/I+dtzZIlj2//ZbdTs3RQYmsSOuc=
-X-Gm-Gg: ASbGnct3JoQ5Bs4lcj+Byh7WlJdrVsjOyJ8Obc+NYOoAUZyQKh6wBgvFbb6JEwR/6jB
-	5og842+2bbtD9d0NH0bymzPsCH7G3TP8scA54qOa9wUN/UF1qAdTj7VexJjOrT4Bi/3T5lWX/uE
-	M+mh3GZNXiRmf1yVUqJ9/uGxKmpupBCcUudG4zBMVoudqXoiY74rVR8jV7svJGEWY61kq9ely4t
-	mw8H6pVM0xulfLohf82DDpatnTn43EadfLVfYXsVqwQV0ejBlwAcb6fux8jJpmWDHA02tBdAXb9
-	soAg8EwQHQXxu/gzTVaOVNiTIZFAcLeH+IXo4KVqiw1wBLzKjl9YIUB4sSo=
-X-Google-Smtp-Source: AGHT+IEUVIi3T7YfyMxv2zjt1ItTGIIG2vX6ZluzfArIlt1K86WUAmIJcFc2kVGlurTkPNqOfZ9GHA==
-X-Received: by 2002:a05:600c:1da8:b0:439:a1c7:7b3a with SMTP id 5b1f17b1804b1-441d44bbf97mr24647605e9.1.1746709074954;
-        Thu, 08 May 2025 05:57:54 -0700 (PDT)
-Received: from [192.168.1.29] ([178.197.207.88])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442cd331221sm36183705e9.11.2025.05.08.05.57.53
+        d=1e100.net; s=20230601; t=1746709808; x=1747314608;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w/O4EtEjKK+qxbkmtbfvbyAdEp6/N7mvPIzRsQHghBE=;
+        b=Mq4V6y9fGltfrANeN/GmWv34nTpcNkmd/UWY4S8yrVQY4bXLMKSS/fAPhy/d5+Lyos
+         fVmzz7EeHlePAOigxG4ifiGsnTSGRyv6cKv1jUNY6XARDPi6ughmiTQbfhXTHTixl6n/
+         0JQhvVM3Ks2pUnRzPIEQMP0uWVlNZbXXq3IhhuqzZm5XwVdQEdoWIl21EV8bwpd4oJVc
+         XD7lP8BDe7xvY7UTSYOxMftDlOgt2PD6CLSgB7nEoYo1UnTkeaH173ncyBjRWBOwU4tP
+         0aQhWO7ZAQymG2+hfRCUN2ZjeyINWSxUnFlicp5qhkFcatO/mZ8cuoYu3hY9Mk3f1nkg
+         tTWA==
+X-Forwarded-Encrypted: i=1; AJvYcCX5ByVm0TOLQvhwLyDTWwjVxeywJd5dxdXlzZHFb3eBHVYEW9C96BVIF1FYFSNbHMnjPKjTuVhgKLHKUH74@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxd61EA1x0KzCdaR51jUXNyiXKXYq5WhpnUtJprL5YBT0D14eyx
+	BMyWNIJv/azo3njJfHRXKyzRF7FBRNWdRMGLfQsBq7n4I+WkPeQeY3V+MNQhraq0iDqk0DhZIqM
+	QrBrRGY29tMJiK6nJhIaEkN3FE+bY9bqVhXtv0t5ZeMRx4eE7h0oXY2kRX6Lpy2M5
+X-Gm-Gg: ASbGncs6OfDw0rbx4BfHVqv95kAgANla9rfCXzY1poBwG0iWvZSjyrpdVuh/lKBELJR
+	2oNvr8GRuirHePtc0u8n4mnX6erlyfV1zE0CO8yDmMoSymC459pjlUIO4QvBMP8bFSVi3teiCYZ
+	up3DJajA0zE8+hXZUuq/70HpqHWyEPPAlIKV6NOz+tkMzDPFwmrG6M3AekPiAidNVuXA749eX/B
+	A0t4+ww6om16eKL3KiTUWSjcGMqwKdsfIpqTtxIUETmTpqGxa3D1duoz0CwWf3ywZ63s8jCxKKr
+	AG9ChXnzdWpf4teguSfVGdVff3kV4KDgMCyt2Mr0iMPaUinWKDXlhgU+0xLxGfnB+96t5jiFtEA
+	=
+X-Received: by 2002:a05:6e02:194e:b0:3d9:39ae:b23c with SMTP id e9e14a558f8ab-3da73930025mr87333585ab.20.1746709808047;
+        Thu, 08 May 2025 06:10:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGB314junkzcSWTlXKpliaMGOOcVxB2b9W3HBxoMLJhqRFuk3kZ19/VfaMA3FAuObQqYvaDaw==
+X-Received: by 2002:a05:6e02:194e:b0:3d9:39ae:b23c with SMTP id e9e14a558f8ab-3da73930025mr87333165ab.20.1746709807695;
+        Thu, 08 May 2025 06:10:07 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-326c2d937b1sm71441fa.55.2025.05.08.06.10.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 May 2025 05:57:54 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: peda@axentia.se, broonie@kernel.org, andersson@kernel.org, 
- krzk+dt@kernel.org, srinivas.kandagatla@linaro.org
-Cc: ivprusov@salutedevices.com, luca.ceresoli@bootlin.com, 
- zhoubinbin@loongson.cn, paulha@opensource.cirrus.com, lgirdwood@gmail.com, 
- robh@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org, 
- perex@perex.cz, tiwai@suse.com, dmitry.baryshkov@oss.qualcomm.com, 
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- johan+linaro@kernel.org, Christopher Obbard <christopher.obbard@linaro.org>
-In-Reply-To: <20250327100633.11530-3-srinivas.kandagatla@linaro.org>
-References: <20250327100633.11530-1-srinivas.kandagatla@linaro.org>
- <20250327100633.11530-3-srinivas.kandagatla@linaro.org>
-Subject: Re: (subset) [PATCH v6 2/6] mux: gpio: add optional regulator
- support
-Message-Id: <174670907339.90037.743394782268502286.b4-ty@linaro.org>
-Date: Thu, 08 May 2025 14:57:53 +0200
+        Thu, 08 May 2025 06:10:05 -0700 (PDT)
+Date: Thu, 8 May 2025 16:10:04 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v9 10/14] drm/msm/dpu: Use dedicated WB number definition
+Message-ID: <b4e6kiaxlsth6ix6gxlfgfzracx6sogv6fnm6yu42rbvrbprp4@ih2cgxtyuwpd>
+References: <20250506-quad-pipe-upstream-v9-0-f7b273a8cc80@linaro.org>
+ <20250506-quad-pipe-upstream-v9-10-f7b273a8cc80@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250506-quad-pipe-upstream-v9-10-f7b273a8cc80@linaro.org>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA4MDExMCBTYWx0ZWRfXwIDi9uHzn+BE
+ o/DALbR1uzi/rWu+8UR4aGx90PwTSvaHScueLC6f7SMYhlrxhdGsvSj2tYwi6XjQdVjPOBhtR6m
+ EtD/unTyTs0y4QZyQm/0uGPuvolFHNqmf8l9aw82joDV3hIDgGAdC72GxUnRK1cljRRmGjfct8P
+ U6tBu5y+OhkEmIZawkb7DtI7KtXSRFSbTR1yL+JLJ9VT6Wrr2aXlYC0jhdSeS0kDlc8MwlvyZNT
+ p03jMc9BB+P9MFo8cqUV39FyermBIhpLo7ioGrgHznzY0r6hKzbaNol5Vl4G/3AKyzKAzaYa29G
+ LhKlfIFdEdgmhcUXjtIy3MUuMW6hAE4Ex3EEAKCh+4R0jB4yRE43G6pltwLvCkpFhTmKlQLGaXE
+ x8CGEfdm/EN3F3HNYjGw0B9rUini9mvdsWr79hDK+93+7cYNxs2nxESmE9OhTl9dZ8k7rfKb
+X-Proofpoint-GUID: 5mgGo7SK7PhbphCWz7Ctv4S9baYf1eXq
+X-Authority-Analysis: v=2.4 cv=B/G50PtM c=1 sm=1 tr=0 ts=681cad31 cx=c_pps
+ a=knIvlqb+BQeIC/0qDTJ88A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=bMUmxHA0tSjQgQxMAzsA:9
+ a=CjuIK1q_8ugA:10 a=zZCYzV9kfG8A:10 a=8vIIu0IPYQVSORyX1RVL:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: 5mgGo7SK7PhbphCWz7Ctv4S9baYf1eXq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-08_04,2025-05-07_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0 spamscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0 adultscore=0
+ mlxlogscore=740 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505080110
 
-
-On Thu, 27 Mar 2025 10:06:29 +0000, srinivas.kandagatla@linaro.org wrote:
-> Some of the external muxes needs powering up using a regulator.
-> This is the case with Lenovo T14s laptop which has a external audio mux
-> to handle US/EURO headsets.
+On Tue, May 06, 2025 at 11:47:40PM +0800, Jun Nie wrote:
+> Currently MAX_CHANNELS_PER_ENC is defined as 2, because 2 channels are
+> supported at most in one encoder. The case of 4 channels per encoder is
+> to be added. To avoid breaking current WB usage case, use dedicated WB
+> definition before 4 WB usage case is supported in future.
 > 
-> Add support to the driver to handle this optional regulator.
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
-> 
-> [...]
 
-Applied, thanks!
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[2/6] mux: gpio: add optional regulator support
-      https://git.kernel.org/krzk/linux/c/12d3c69ba2734b5908e0ac8ac2dcbd0cc28fef3a
-
-Best regards,
 -- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
+With best wishes
+Dmitry
 
