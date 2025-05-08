@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-57209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80ACBAAF314
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 07:46:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FE39AAF393
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 08:18:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 583943A879B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 05:46:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E5E3466711
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 06:18:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABC891DB356;
-	Thu,  8 May 2025 05:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1248220D4E3;
+	Thu,  8 May 2025 06:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cnROXt0h"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UiFEZStG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4FC136A;
-	Thu,  8 May 2025 05:46:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EC81D8A0A;
+	Thu,  8 May 2025 06:18:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746683179; cv=none; b=BovgIsznuRGEt95Afk+nzaOq8qsfjy8mSQ5rgUq1+v20oEyz3zmfDwKY/BjhdppB5uEL2e5/GQ5idtryZE7rN4G3atKC/AKkaaN3X1vNMqfjlx6kLr5VDZxpugfxGSlJDMPswp5EdHWM8xH2pDteNHsWTuqSXdq7uOYlVmIRTkg=
+	t=1746685117; cv=none; b=ZUDc6FPTjz+Wc8R595NSGk/PhHaoV/rKc9L2QDiT6lsJ3rMP9SBrK7AAYDehxCNdvkV0mGlDUZCm3mHjpbPusp69ecZCaFgapk+0fvCw4kTgPCww/BGpSpLHdcBNnClQB9mRLxBDEJZlezFrPc51U7hJWgXPLa+S2SvDi60OTB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746683179; c=relaxed/simple;
-	bh=ss/4RK5BjT/swp02jG+5lJstfWo3krG0HFi/UmsxU/E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TPpM5p1Wp6rsaTV/sNjcfZprXFp5E1urCflV+VmuSX+WSxpItguWuh21hsI1TEII5/7KqEqveuioyKJoBeyfYLpZ7ETKW1sl9KyWovKGYDSNvZZxEW+1VFV3CDVxV0QdfaIHNZOkSwMYr7fy1Yoeed9HEBjH69CRUAXQvcirgZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cnROXt0h; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5484WkIk016749;
-	Thu, 8 May 2025 05:46:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZlmY9+RE5tVTvzudHgirH8bQj5eAneibbTLM15Rcq+8=; b=cnROXt0hZByAcw74
-	LaeUiMakRYDoKLH0Yrt3pGOxp/rSxHXrORiI+OBsDsmfnX7Nq1xfDh8m/Y4ZZKqs
-	qf6MOjPufxI34ph4QMLZRGSwV7L08cGZ6+BptaWlP7Bx+lk+K0wUdXOZ6xERsWPu
-	yw5jV5IUPCRxV4z/BLDETXocRP5DFJDJaOFQr+HjavInPAtyDaXIjj/BHxfAkFK2
-	dk7p1OpbEt0X76CpTmrkNre/qQqE8T3Hya0h+eqz+yfOoxvmLXswy4+LIEalqq6j
-	it77Ulx7bnRbJfijlOCp4dt5JZ000bPezwNimvjNFgF4rypjcS7D4sdKhRBRKZxD
-	jip9tg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46gnp684s2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 08 May 2025 05:46:01 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5485k1TN026146
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 8 May 2025 05:46:01 GMT
-Received: from [10.218.11.38] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 7 May 2025
- 22:45:55 -0700
-Message-ID: <2f3e608b-5536-4c6d-b7ca-c8cf4c9d0b1b@quicinc.com>
-Date: Thu, 8 May 2025 11:15:53 +0530
+	s=arc-20240116; t=1746685117; c=relaxed/simple;
+	bh=4qi/P67+uIyVReLfU5vjCz6ajupbpcjoxwPILqTAti4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IkVQf7upDtMvxQ7lNByWAcs9LZ2TTmOt8lg9DsDjxcOYOO3LLfgoqPry5UzmD7c/u28nnOUfRXszXtW54hPixjHF9e7L7JfYibKNxKNuQuIk45yyq+eWlDBeSp1RsbzeGYMU/9oj1iQ7J1j7EEiso/4ye3s0z1Yy3/GSGsOWpKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UiFEZStG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A936C4CEEE;
+	Thu,  8 May 2025 06:18:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746685116;
+	bh=4qi/P67+uIyVReLfU5vjCz6ajupbpcjoxwPILqTAti4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=UiFEZStGiIcWzwH57Q4Z5xVbDrbOdjIpEJB0bMIQyEOzawyELYmi7tHEErn0dPQv2
+	 dlxony58CRNFXVyO5ZIFM4SQZjbPjynGDXkkbEXNE3XtBUKHuXHWWL/Tt05g480fUf
+	 g5DBy8B89p+nZbYj/mYy5tgePS2f5xhK9mwgrjDwtVu0gZpMNdwJJ5BQKMr4Kn/lyN
+	 JDABKLlcdp/UFIAwuB0oSy988GOu0AH7tc5LKP/kwT8dTHQS2G0lGorZfvAU3Ipg6p
+	 edQZrzz5WVop/J/j+yeQwHU00KKuMpLZO0LktdaEMV+4iZn7uEcA5QId3hxEUmusDM
+	 UyVtnT8ZBmw0A==
+Message-ID: <f7941d74-3856-4bd9-95db-0b7f09eb07fd@kernel.org>
+Date: Thu, 8 May 2025 08:18:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,94 +50,212 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/8] dt-bindings: serial: describe SA8255p
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <devicetree@vger.kernel.org>
-CC: <psodagud@quicinc.com>, <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
-        <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
-        <quic_mnaresh@quicinc.com>, <quic_shazhuss@quicinc.com>,
-        Nikunj Kela
-	<quic_nkela@quicinc.com>
-References: <20250506180232.1299-1-quic_ptalari@quicinc.com>
- <20250506180232.1299-2-quic_ptalari@quicinc.com>
- <35659475-862a-4678-a2a5-173c2254ae60@kernel.org>
+Subject: Re: [PATCH 3/4] dt-bindings: display/msm: add stream 1 pixel clock
+ binding
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark
+ <robdclark@gmail.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Mahadevan <quic_mahap@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241202-dp_mst_bindings-v1-0-9a9a43b0624a@quicinc.com>
+ <20241202-dp_mst_bindings-v1-3-9a9a43b0624a@quicinc.com>
+ <39f8e20a-e8c3-4625-abb1-9f35f416705d@kernel.org>
+ <50820e7b-b302-4f7f-baf9-778f3db6cfff@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Praveen Talari <quic_ptalari@quicinc.com>
-In-Reply-To: <35659475-862a-4678-a2a5-173c2254ae60@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA4MDA0NiBTYWx0ZWRfXwof7nuWtGvQz
- aYcHN86XHWH8ZvQrpqHN60WXkTvU5kxjbs4Kq8dZW03Vgl+eGhJGvcCzc0vEJg1hOnWLUINCcfe
- 0/sUtrUbGOwrMMsZeHZkSQscN9gdkaA6+yIFPgFQn+yaABUr3ZsDd3zMajDnXYQ5Uz5TYp8DDd6
- g5EQXTsdot7zx/9nLkrp4LNThNq9U8sMf1CKAF6IH89kKrmcJrbF53fIagrVwje7+EpTgBdOTE9
- WylO1o53ARFCtIlj6cs7rmGN1NX8y94AGgLtjOdEpUstYj4ELwofPHFTjY/WjZxaemVhKRa7Wtp
- CBvBaFsHAvcJhu7gmpD1iALFU522o6Y+GU2gEtV/i76DNACZjfpp/933V14NO1ZfsY54Is8By21
- 5MgjWCzuJh/7f4F9wr2xDQmYJCQtcac0ru+J1DgqyZQOmcUDHF9Az6wAyUA124p9EwwoMIq7
-X-Proofpoint-GUID: jgEl_RRUtbRNM5Xfh74gibIyVuhAC7vM
-X-Proofpoint-ORIG-GUID: jgEl_RRUtbRNM5Xfh74gibIyVuhAC7vM
-X-Authority-Analysis: v=2.4 cv=BvGdwZX5 c=1 sm=1 tr=0 ts=681c4519 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
- a=zwwrgv8Ryh7oewfrMAYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-08_01,2025-05-07_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 phishscore=0 impostorscore=0 mlxscore=0
- spamscore=0 mlxlogscore=950 malwarescore=0 bulkscore=0 suspectscore=0
- lowpriorityscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2504070000 definitions=main-2505080046
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <50820e7b-b302-4f7f-baf9-778f3db6cfff@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Krzysztof
+On 23/04/2025 04:46, Abhinav Kumar wrote:
+> Hi Krzysztof
+> 
+> On 12/3/2024 12:04 AM, Krzysztof Kozlowski wrote:
+>> On 03/12/2024 04:31, Abhinav Kumar wrote:
+>>> On some chipsets the display port controller can support more
+>>
+>> Which chipsets?
+>>
+> 
+>  From the current list of chipsets which support DP, the following can 
+> support more than one stream.
+> 
+> qcom,sa8775p-dp
+> qcom,sc7280-dp
+> qcom,sc8180x-dp
+> qcom,sc8280xp-dp
+> qcom,sm8350-dp
+> qcom,sm8650-dp
+> qcom,sm8550-dp
+> qcom,sm8450-dp
+> qcom,sm8250-dp
+> qcom,sm8150-dp
+> 
+> So do you also want all of these to be added in the same if block as
+> qcom,sa8775p-dp?
 
-Thank you for your patience. I consider your inputs as valuable learning.
+That was talk in 2024. Entire context is gone if you reply after three
+months. I do not have even that emails in my inbox anymore.
 
-On 5/6/2025 11:53 PM, Krzysztof Kozlowski wrote:
-> On 06/05/2025 20:02, Praveen Talari wrote:
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,sa8255p-geni-uart
->> +      - qcom,sa8255p-geni-debug-uart
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  interrupts:
->> +    minItems: 1
-> Nothing changed here, this should be dropped based on previous discussion.
->
-> You sent this v5 on 8:02 PM of my time. *THEN* you responded to my
-> comment at v4 at 8:05 PM. That's the way to waste everyone's time.
->
-> I do not understand why interrupt is optional for a new, complete device
-> description.
+Probably I expected commit msg to mention at least some, so everyone
+knows which chipsets are affected here and one can verify the statements
+from commit msg.
 
-On this platform, there is no use case of waking up UART, so we consider 
-the  wake up IRQ as optional.
+> 
+>>> than one pixel stream (multi-stream transport). To support MST
+>>> on such chipsets, add the binding for stream 1 pixel clock for
+>>> display port controller. Since this mode is not supported on all
+>>> chipsets, add exception rules and min/max items to clearly mark
+>>> which chipsets support only SST mode (single stream) and which ones
+>>> support MST.
+>>>
+>>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>> ---
+>>>   .../bindings/display/msm/dp-controller.yaml        | 32 ++++++++++++++++++++++
+>>>   .../bindings/display/msm/qcom,sa8775p-mdss.yaml    |  9 ++++--
+>>>   2 files changed, 38 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+>>> index 9fe2bf0484d8..650d19e58277 100644
+>>> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+>>> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+>>> @@ -50,30 +50,38 @@ properties:
+>>>       maxItems: 1
+>>>   
+>>>     clocks:
+>>> +    minItems: 5
+>>>       items:
+>>>         - description: AHB clock to enable register access
+>>>         - description: Display Port AUX clock
+>>>         - description: Display Port Link clock
+>>>         - description: Link interface clock between DP and PHY
+>>>         - description: Display Port stream 0 Pixel clock
+>>> +      - description: Display Port stream 1 Pixel clock
+>>>   
+>>>     clock-names:
+>>> +    minItems: 5
+>>>       items:
+>>>         - const: core_iface
+>>>         - const: core_aux
+>>>         - const: ctrl_link
+>>>         - const: ctrl_link_iface
+>>>         - const: stream_pixel
+>>> +      - const: stream_1_pixel
+>>>   
+>>>     assigned-clocks:
+>>> +    minItems: 2
+>>>       items:
+>>>         - description: link clock source
+>>>         - description: stream 0 pixel clock source
+>>> +      - description: stream 1 pixel clock source
+>>>   
+>>>     assigned-clock-parents:
+>>> +    minItems: 2
+>>>       items:
+>>>         - description: Link clock PLL output provided by PHY block
+>>>         - description: Stream 0 pixel clock PLL output provided by PHY block
+>>> +      - description: Stream 1 pixel clock PLL output provided by PHY block
+>>>   
+>>>     phys:
+>>>       maxItems: 1
+>>> @@ -175,6 +183,30 @@ allOf:
+>>>         required:
+>>>           - "#sound-dai-cells"
+>>>   
+>>
+>> Missing if: narrowing this to 5 items for other devices.
+>>
+> 
+> OR would an else be better?
 
-Thanks,
+Usually not, although depends how this binding is written.
 
-Praveen
 
->
-> Best regards,
-> Krzysztof
+> 
+> +    else:
+> +      properties:
+> +        clocks:
+> +          maxItems: 5
+> +        clock-names:
+> +          items:
+> +            - const: core_iface
+> +            - const: core_aux
+> +            - const: ctrl_link
+> +            - const: ctrl_link_iface
+> +            - const: stream_pixel
+> 
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            enum:
+>>> +              - qcom,sa8775p-dp
+>>> +
+>>> +    then:
+>>> +      properties:
+>>> +        clocks:
+>>
+>> Missing minItems, otherwise it is pointless.
+>>
+> 
+> I thought that since I have already specified the minItems as 5
+> in the clocks in the section above, I need to specify only the maxItems 
+> here?
+
+No, you need explicit constraints here.
+
+
+
+Best regards,
+Krzysztof
 
