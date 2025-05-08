@@ -1,202 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-57318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D29ABAB02E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 20:33:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD756AB0302
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 20:39:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4F8DB189AC4B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 18:33:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A085B3BB4E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 May 2025 18:39:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78405207DEE;
-	Thu,  8 May 2025 18:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A4D22874E0;
+	Thu,  8 May 2025 18:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mlsycKxc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XgoNchby"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1B94B1E7D;
-	Thu,  8 May 2025 18:33:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5747F286D58;
+	Thu,  8 May 2025 18:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746729202; cv=none; b=W94+jBIU4BThsKWq0ZBgCLkHnoZ0vZuh3KABBcMXD9wGlCaHILeh4/WShP9xWc38hcIpUdCRyKJT6l84/2puBJ8YwALKoQSeP5sXlbT+vqSIqimcV8pnfthCeEqBSqZUB9HoANjL1F1vHPuZK493sJ4CNDgyfVdRtZDyFQxRFKA=
+	t=1746729562; cv=none; b=PqhoA1L29vTe4eTykCbBRJYRUf/99DPKYoOC+duxnRiLyN/y+ZNqPF68KYWot630XS3NCjwhs3TZA/P45GYWLEegJ4oCMWZqlaiCP40y7Dr7qs8dUX3nJsD5jbrD83SK9KikHz8nT38Wb4dIiGsXbVxwbqBpM2EmRvz6z2+cRqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746729202; c=relaxed/simple;
-	bh=JOcc+M9rOvZ1c35pE9SCvCiacPbTkjMI6AluzJW0xeA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CASH50w7AjBxlLRAPYRUr9o1gO75ZxbhupMKRPO3jUsRuhVZKKacP9icyUCH524cRV3lPDWdRodji7uvXjZ+P8SE/WELZa4hB1+3MsjyTypXSEGq87OQzkIUia9ZeqsjLfkQSHEGYaea8P23E32TPeB+59PjGn0SLpVWyhLMnJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mlsycKxc; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-30a892f8124so157983a91.3;
-        Thu, 08 May 2025 11:33:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746729199; x=1747333999; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8FQJhUt0Xs5KmiFJABZgU0fKzpM3sDlbu/it07qeVBQ=;
-        b=mlsycKxcF8Pg2BcgDOnKZQqQaS/u6EZP+9530Gx9qvWlO1TFL63NAOtOxTELlRw07B
-         BoCT3kRNSgn1QmuaUyCNDhBu8mo5tVGvZqldxeFnbpSR98hR2IG6bIQEXyYg77XkbxVu
-         1m3urNIMCkyJS72fD1YFw3UAp8IA9GSItQ9D/WBnUWNLSf5N4pGxVNUDXYaAo8GZg/1E
-         cNv8Ym5Rm2bmt4LVA16ZhKX5bDHDWiUf/EhK4ah7Gqz9vQ3jbisESk0hjpMuoYXWYOfG
-         FKVLc6rYgkNjIUiszH2JvDymvfY9HZeS2fiBwRIUCnWATX4ORTq1p8R3hdWwBwKfkjE2
-         Huow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746729199; x=1747333999;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8FQJhUt0Xs5KmiFJABZgU0fKzpM3sDlbu/it07qeVBQ=;
-        b=Wt9wSfPcApjmC2YL9w/UKRu2TAISd+uQqOu3yCUROXgi4zTu+tTF6gKvWRpTMCoUxv
-         b+4eyQvCvxqYSOW3QC40rQSZetiGWJjU9C6X6D2vO75FkVhWPIaNo8nDMQTZyiFMeIG6
-         RDPgN9SjbAdIF38ccgnZTTn2SlC6jK6Np+FDTi7Nb3LwOzI4gjNv9ri41KFWPXBiKh1H
-         wINysYc2JgUy+EwtRTFRokH1m/VulDYlN3N556+NMjyR8yp7KA4MUcx814LayfyL9zM3
-         BNeOxKpaUtc6rLL41J7zxOykDO1PVVN0nnQBxecC/Uk9C0j1tsNVoITGdVb0Njel2xz6
-         ORUA==
-X-Forwarded-Encrypted: i=1; AJvYcCUXqiDv1KfEmXZqs1yQiMpYai2QXK2RpOO6XOWb4hdkPiCn4s0HJXm1p1bAnv4bDDnC2qK4yFVkUkjZNACW@vger.kernel.org, AJvYcCXBSyy7K0DNtYQ9MKCggg+5YgZ0Q8yzbBSAVrqfiekpTRghS4HKJqmOCdMAosn5Oda49yMnQwJqAydZpinY@vger.kernel.org
-X-Gm-Message-State: AOJu0YzEjfInwtwQz3XR7EXugmqlKWQk4vJj7rdRjBkSrLayFovrYbIY
-	lgkkvILQ6/qfXElVQJT2EkqMT3luutW1qYwb1qh66AqhEze9jXXxU1mkV6hgP6OcXu19CcjSGbr
-	dZXlblhD/giBcQ6iFrFlNr3bLKPs=
-X-Gm-Gg: ASbGncvyQn/LlN2nat4x81cM0g0Iw6asdMIefLB+uWD5MoUH5WYsZw4GBGYLp74K+2c
-	YnHPuy4zqBNsR8zq7Wu7kxGUBPeYc0K7igRS5Gd83XrA1RHWRpsTjunQbe26gfr66oYpwabtVI3
-	2kw8XuxX3uAE5jBRrNSvUjtg==
-X-Google-Smtp-Source: AGHT+IHpUe5YqkWw0UFJtqeULReAr+4JR57SpZTyi/DJlRlRiBws1wPRXwVJgzIDpy8odTqgv5arRpEHmEIb9VOXibA=
-X-Received: by 2002:a17:90a:e7d2:b0:2fe:b972:a2c3 with SMTP id
- 98e67ed59e1d1-30c3b909b29mr304390a91.0.1746729199120; Thu, 08 May 2025
- 11:33:19 -0700 (PDT)
+	s=arc-20240116; t=1746729562; c=relaxed/simple;
+	bh=NtfzCSVoxBPD6hOglK2MUDBs2BWCgCQ1ntB1FyJzDjg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Ag//Zedpc8SvePP9J6m3/gXPcHFr8iAMfP1lwa+IHjm6nTNH7yjtL05OSvseVnsUUqDvAsroqRq1VZRBwVsiJdNwdBTB+w8JzguuaWSOHo2GNRMcdotR8afJcgsz9gU2GbIkha2tLCIyVMQ/Kq0qwb2PhxVp0dCJn+zfbUFwonk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XgoNchby; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 548D0OuE008438;
+	Thu, 8 May 2025 18:38:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	AwvyEPsD5Q0PCcCumP8CpW1fZpHC8RgQXGb7Ms2yZ00=; b=XgoNchbyi5Evdc4q
+	odrtUiQV+AKOc7zAKngo7G37I5cs3bFT3HNLK6W6G140Nz2m5oatBcIrWDcCGq1n
+	QvzzINxTPKJ0a5sf8vxa0MPXvSmlNePBdio3JK0XPz/bCAaD/PpjxaKy+spGNhw/
+	FoxxqHk2olW8gGI0sCzWd9Pb7LQlg8A36U11KhvfoUwfHdjeUvtL5pRzDC5nSI73
+	OQWwxulR5ExGWV/RXLD9bXaRaIYfyUW6mgfTT+8V76UtJgR5w4qCJAqCsOd2v05A
+	MbPwBOn4x9MFepqrsuMR7FOf0tL/m58ApnwdiTSXtyRSQVy5oFuAowu4A5WTjDww
+	axzzcA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46gnp5a9a3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 08 May 2025 18:38:25 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 548IcOXG024960
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 8 May 2025 18:38:24 GMT
+Received: from [10.134.71.99] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 8 May 2025
+ 11:38:23 -0700
+Message-ID: <d86495d1-4d18-4809-a0a2-53ff26406e9f@quicinc.com>
+Date: Thu, 8 May 2025 11:38:23 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250508-topic-ubwc_central-v1-0-035c4c5cbe50@oss.qualcomm.com> <20250508-topic-ubwc_central-v1-10-035c4c5cbe50@oss.qualcomm.com>
-In-Reply-To: <20250508-topic-ubwc_central-v1-10-035c4c5cbe50@oss.qualcomm.com>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Thu, 8 May 2025 14:33:08 -0400
-X-Gm-Features: ATxdqUE2vLeH_1fBevqnXZeORD_v0wWgDms-Rnd2Lz_3k2tRIEmXBn1VABvu08w
-Message-ID: <CACu1E7EFK7dzR=hm-J58jz77pMxn2SoJVrfQvV0RHiESi1mkzA@mail.gmail.com>
-Subject: Re: [PATCH RFT 10/14] drm/msm/a6xx: Stop tracking macrotile_mode (again)
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Akhil P Oommen <quic_akhilpo@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 02/14] drm/msm/dpu: check every pipe per capability
+To: Jun Nie <jun.nie@linaro.org>, Rob Clark <robdclark@gmail.com>,
+        "Abhinav
+ Kumar" <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        "Marijn
+ Suijten" <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Dmitry Baryshkov <lumag@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20250506-quad-pipe-upstream-v9-0-f7b273a8cc80@linaro.org>
+ <20250506-quad-pipe-upstream-v9-2-f7b273a8cc80@linaro.org>
+Content-Language: en-US
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20250506-quad-pipe-upstream-v9-2-f7b273a8cc80@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=Lu2Symdc c=1 sm=1 tr=0 ts=681cfa21 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=e5mUnYsNAAAA:8
+ a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=Gd4LdviHRNl5hc7774IA:9 a=QEXdDO2ut3YA:10
+ a=Vxmtnl_E_bksehYqCbjh:22 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: GUkCkDEPsFlc9iNOPzm2O3vMhu7P9XP_
+X-Proofpoint-ORIG-GUID: GUkCkDEPsFlc9iNOPzm2O3vMhu7P9XP_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA4MDE2NiBTYWx0ZWRfXykdximAyVKat
+ 3rp/jXymrcpRgLbqU86z0dz4eIddFT1BuebWpGILWeUzxksREyalPHhqESkxz0XQtTFRX83pCkq
+ HgcQfQjRwDHC7IC93OKlxDVuH2EqRDhycUXwcpTcSyMq/kQStzBEkgyYfp4Hkkpy67seiPoOBW5
+ HAllb5mAUQqhGpplfCOG2zS76xagNKw0AQMJt6dBlBKXN54FtAsoxF7us0+2ezhdU7EPM0d83Ii
+ +DmL2Z8H5fZlv+7PDDYAFw8jvNVB/RpeOTl1nvuIYOPl4RI2CztfRqF2jj2/0GKDANJkG0skwhR
+ tno9gXHf6dcHOXyKm4mShrbglN9SVJf9I7R91LZV6BOlu4Aj009MTRXkxvYsPBeNzNDruDexc1t
+ WPAKb6aXsUo825+Apv7/pWSSPiXDUsluzynC65/djV7B0t2dRhc8bf8aJPjN29USs8mgTIGj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-08_05,2025-05-08_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 mlxlogscore=999
+ priorityscore=1501 suspectscore=0 clxscore=1015 adultscore=0 malwarescore=0
+ spamscore=0 impostorscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505080166
 
-On Thu, May 8, 2025 at 2:14=E2=80=AFPM Konrad Dybcio <konradybcio@kernel.or=
-g> wrote:
->
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->
-> SC8180X (A680) and SA8775P (A663) require a write to that register,
-> while other SKUs are fine with the default value. Don't overwrite it
-> needlessly, requiring the developer to read the value back from
-> hardware just to put it in the driver again, introducing much more room
-> for error.
 
-I'm not sure I understand that last sentence. The original reason I
-always wrote it was that for host image copy we need to know the value
-of macrotile_mode, so again the value exposed to userspace must match
-what's set in the HW. We can't read the value from the HW and send it
-to userspace, because userspace queries this when creating the
-physical device during device enumeration and we really don't want to
-spuriously turn on the device then. That means the safest thing is to
-always program it, guaranteeing that it always matches. Otherwise we
-just have to hope that the default value matches what we expect it to
-be.
 
-I know you're copying this from kgsl, but kgsl doesn't expose the
-macrotile_mode to userspace. I expect that HIC was added afterwards
-and only works via hacks there (if it's even supported at all on the
-relevant SoCs).
+On 5/6/2025 8:47 AM, Jun Nie wrote:
+> The capability stored in sblk and pipe_hw_caps is checked only for
+> SSPP of the first pipe in the pair with current implementation. That
+> of the 2nd pipe, r_pipe, is not checked and may violate hardware
+> capability. Move requirement check to dpu_plane_atomic_check_pipe()
+> for the check of every pipe.
+> 
+> Fixes: ("dbbf57dfd04e6 drm/msm/dpu: split dpu_plane_atomic_check()")
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Connor
+Hi Jun,
 
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Just wanted to note that this has already been merged in msm-next [1] so 
+I think you can drop this in the next revision.
+
+But, FWIW
+
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+
+Thanks,
+
+Jessica Zhang
+
+[1] 
+https://gitlab.freedesktop.org/drm/msm/-/commit/bcaa391e177c06a58c5f3cd18484a317d40239aa
+
 > ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 19 +++++--------------
->  1 file changed, 5 insertions(+), 14 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/=
-adreno/a6xx_gpu.c
-> index 60f89a2d851a5c383fc14cce4c483f630132a9a6..bee7e9685aa3ea282fb20ef47=
-9e4d243d28418f7 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -594,7 +594,6 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu *g=
-pu)
->
->         gpu->ubwc_config.min_acc_len =3D 0;
->         gpu->ubwc_config.ubwc_swizzle =3D 0x6;
-> -       gpu->ubwc_config.macrotile_mode =3D 0;
->         gpu->ubwc_config.highest_bank_bit =3D 2;
->
->         if (adreno_is_a610(gpu)) {
-> @@ -616,13 +615,8 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu *=
-gpu)
->         if (adreno_is_a621(gpu))
->                 gpu->ubwc_config.highest_bank_bit =3D 0;
->
-> -       if (adreno_is_a623(gpu)) {
-> +       if (adreno_is_a623(gpu))
->                 gpu->ubwc_config.highest_bank_bit =3D 3;
-> -               gpu->ubwc_config.macrotile_mode =3D 1;
-> -       }
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 71 ++++++++++++++++---------------
+>   1 file changed, 36 insertions(+), 35 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index af3e541f60c303eb5212524e877129359b5ca98c..aeb90c287245d6aaa18b9f280d1e628ee6ed74f5 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -729,12 +729,40 @@ static int dpu_plane_check_inline_rotation(struct dpu_plane *pdpu,
+>   static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+>   		struct dpu_sw_pipe *pipe,
+>   		struct dpu_sw_pipe_cfg *pipe_cfg,
+> -		const struct msm_format *fmt,
+> -		const struct drm_display_mode *mode)
+> +		const struct drm_display_mode *mode,
+> +		struct drm_plane_state *new_plane_state)
+>   {
+>   	uint32_t min_src_size;
+>   	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>   	int ret;
+> +	const struct msm_format *fmt;
+> +	uint32_t supported_rotations;
+> +	const struct dpu_sspp_cfg *pipe_hw_caps;
+> +	const struct dpu_sspp_sub_blks *sblk;
+> +
+> +	pipe_hw_caps = pipe->sspp->cap;
+> +	sblk = pipe->sspp->cap->sblk;
+> +
+> +	/*
+> +	 * We already have verified scaling against platform limitations.
+> +	 * Now check if the SSPP supports scaling at all.
+> +	 */
+> +	if (!sblk->scaler_blk.len &&
+> +	    ((drm_rect_width(&new_plane_state->src) >> 16 !=
+> +	      drm_rect_width(&new_plane_state->dst)) ||
+> +	     (drm_rect_height(&new_plane_state->src) >> 16 !=
+> +	      drm_rect_height(&new_plane_state->dst))))
+> +		return -ERANGE;
+> +
+> +	fmt = msm_framebuffer_format(new_plane_state->fb);
+> +
+> +	supported_rotations = DRM_MODE_REFLECT_MASK | DRM_MODE_ROTATE_0;
+> +
+> +	if (pipe_hw_caps->features & BIT(DPU_SSPP_INLINE_ROTATION))
+> +		supported_rotations |= DRM_MODE_ROTATE_90;
+> +
+> +	pipe_cfg->rotation = drm_rotation_simplify(new_plane_state->rotation,
+> +						   supported_rotations);
+>   
+>   	min_src_size = MSM_FORMAT_IS_YUV(fmt) ? 2 : 1;
+>   
+> @@ -923,47 +951,20 @@ static int dpu_plane_atomic_check_sspp(struct drm_plane *plane,
+>   	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+>   	struct dpu_sw_pipe *pipe = &pstate->pipe;
+>   	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> -	const struct msm_format *fmt;
+>   	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+>   	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+> -	uint32_t supported_rotations;
+> -	const struct dpu_sspp_cfg *pipe_hw_caps;
+> -	const struct dpu_sspp_sub_blks *sblk;
+>   	int ret = 0;
+>   
+> -	pipe_hw_caps = pipe->sspp->cap;
+> -	sblk = pipe->sspp->cap->sblk;
 > -
-> -       if (adreno_is_a680(gpu))
-> -               gpu->ubwc_config.macrotile_mode =3D 1;
->
->         if (adreno_is_a650(gpu) ||
->             adreno_is_a660(gpu) ||
-> @@ -631,19 +625,15 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu =
-*gpu)
->             adreno_is_a740_family(gpu)) {
->                 /* TODO: get ddr type from bootloader and use 2 for LPDDR=
-4 */
->                 gpu->ubwc_config.highest_bank_bit =3D 3;
-> -               gpu->ubwc_config.macrotile_mode =3D 1;
->         }
->
->         if (adreno_is_a663(gpu)) {
->                 gpu->ubwc_config.highest_bank_bit =3D 0;
-> -               gpu->ubwc_config.macrotile_mode =3D 1;
->                 gpu->ubwc_config.ubwc_swizzle =3D 0x4;
->         }
->
-> -       if (adreno_is_7c3(gpu)) {
-> +       if (adreno_is_7c3(gpu))
->                 gpu->ubwc_config.highest_bank_bit =3D 1;
-> -               gpu->ubwc_config.macrotile_mode =3D 1;
-> -       }
->
->         if (adreno_is_a702(gpu)) {
->                 gpu->ubwc_config.highest_bank_bit =3D 1;
-> @@ -691,8 +681,9 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
->         gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL,
->                   adreno_gpu->ubwc_config.min_acc_len << 23 | hbb_lo << 2=
-1);
->
-> -       gpu_write(gpu, REG_A6XX_RBBM_NC_MODE_CNTL,
-> -                 adreno_gpu->ubwc_config.macrotile_mode);
-> +       /* The reset value only needs altering in some cases */
-> +       if (adreno_is_a680(adreno_gpu) || adreno_is_a663(adreno_gpu))
-> +               gpu_write(gpu, REG_A6XX_RBBM_NC_MODE_CNTL, BIT(0));
->  }
->
->  static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
->
-> --
-> 2.49.0
->
+> -	/*
+> -	 * We already have verified scaling against platform limitations.
+> -	 * Now check if the SSPP supports scaling at all.
+> -	 */
+> -	if (!sblk->scaler_blk.len &&
+> -	    ((drm_rect_width(&new_plane_state->src) >> 16 !=
+> -	      drm_rect_width(&new_plane_state->dst)) ||
+> -	     (drm_rect_height(&new_plane_state->src) >> 16 !=
+> -	      drm_rect_height(&new_plane_state->dst))))
+> -		return -ERANGE;
+> -
+> -	fmt = msm_framebuffer_format(new_plane_state->fb);
+> -
+> -	supported_rotations = DRM_MODE_REFLECT_MASK | DRM_MODE_ROTATE_0;
+> -
+> -	if (pipe_hw_caps->features & BIT(DPU_SSPP_INLINE_ROTATION))
+> -		supported_rotations |= DRM_MODE_ROTATE_90;
+> -
+> -	pipe_cfg->rotation = drm_rotation_simplify(new_plane_state->rotation,
+> -						   supported_rotations);
+> -	r_pipe_cfg->rotation = pipe_cfg->rotation;
+> -
+> -	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt,
+> -					  &crtc_state->adjusted_mode);
+> +	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg,
+> +					  &crtc_state->adjusted_mode,
+> +					  new_plane_state);
+>   	if (ret)
+>   		return ret;
+>   
+>   	if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
+> -		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
+> -						  &crtc_state->adjusted_mode);
+> +		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg,
+> +						  &crtc_state->adjusted_mode,
+> +						  new_plane_state);
+>   		if (ret)
+>   			return ret;
+>   	}
+> 
+
 
