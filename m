@@ -1,180 +1,708 @@
-Return-Path: <linux-arm-msm+bounces-57509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6CBDAB201F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 May 2025 00:56:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44A9FAB2030
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 May 2025 01:22:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 427624C79B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 22:56:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E3EB73BB871
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 23:21:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A22422638BF;
-	Fri,  9 May 2025 22:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 666A7263F44;
+	Fri,  9 May 2025 23:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SGTKlO/f"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwG5VKun"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B9B262FFE
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 May 2025 22:56:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2A221507C;
+	Fri,  9 May 2025 23:22:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746831377; cv=none; b=tWu/AqfR4IVTQCEuFQBJ9DfzFhUIrzeNUygfG3Xp9vpwIlCVgAEmN1lfJ6M/h7hZLkncVyNOd6JhXPr6mBjlUsgli0+5q4qI6BZs7zCEQIIEQlB20lYGADMFDsRlvC12Mes294VeaL5r8rKUgJJtvgevrTQRFET6InIEljf5JGQ=
+	t=1746832922; cv=none; b=qIVIP/kGbK7NYbNOX6yCJnGbRw1FO4cWUbwFvohoQNUakoyQdM890ziz7ma7Usu7Hx/Hm7O2vzwk4BDuZuT1vr9eqVle2qqe/fgopaKBi5HFcuQzuuFAPcE0x8QImbFf68cqVeUfOCjkHdVSikt5eN1rZQW9YM6UiC+LBNd+omk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746831377; c=relaxed/simple;
-	bh=M8ykDxNF0SaPPEMj71mFhnCi5xlu6Dp46bmYjYU3kNo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YnZfL7TrUhBTBVizDThiV/rYxocpArhS5nz141aFEZX6g0bQxTLNJSgM1Rk0yWtMMOvy9c/2X8b7egr4KVRgyEBzAw9WKmKiaRXtTjl+hiH/nXRyvHlFK3XENdMUa+myMeSmMdaWNMK8eT2RZT6DS5DPiaYfAZw9aEDqTdZ7QqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SGTKlO/f; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 549C6jrw002323
-	for <linux-arm-msm@vger.kernel.org>; Fri, 9 May 2025 22:56:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4Qp1+5iTdYJmiqFoTnH+iBbZITewEjue+EqmZ+z2Viw=; b=SGTKlO/f3dTEr42C
-	84dFkiZ0juK20gdHJPLkLMSir0t9j+staPftSLVJWZiVVpcyB7i72E+9ShH/SxMl
-	UzUnlWWRl7ZBcRwF+eOnCTg4YD7uIWE2+tLdw273IzvxWd+gPxxfXOjQBjmsKGJY
-	Va9vi6j6nuy3IrUFSyH8bpd/gJ/9PITaU2TSRqlDiUUj5SR3dkkJaJISsul12MoH
-	fqXhm9j3dPY12Ajrw+j+f8aHgXWJ7uJfZQ5YsalO4zupJLKxHZiC2+Zg4WaaTo75
-	hkdJIVpGspolJkIpe9TPP5Z6YtJsdQbeKVtgvTnjz9NKgMmrfC5dQoPKfW/EPs5f
-	5yPn2Q==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46gnp5dyfu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 09 May 2025 22:56:13 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4768b27fef3so6009431cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 May 2025 15:56:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746831373; x=1747436173;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4Qp1+5iTdYJmiqFoTnH+iBbZITewEjue+EqmZ+z2Viw=;
-        b=loeg0a9NWjkCVPYg0qNROzhd5TAGcGC7HiR3fPNzToTn6rJeMne5QjzU/bIp1ItDR1
-         KIBxspfTm7YeWw2ksYRPieID0ugdRgmTVmS1pMDMXmAY0BOG4pyqQ54sYRJUGYeiCvGH
-         fiBiXZ98d6ChSToALkTGJQ0Ve3QLiSEujZNH2PicJjYL3HJbMWs/BU9IfTiPzf3RLppI
-         p8BvAl6a+3d96uxfvF+Gbinni21oRhLu9y3hjqR+ZgNRrRN0hVAsKC8UGngPJgY/ANze
-         6b6zRjHfWFB3XpS/76PfeUwxX8qoA60K85A35ork+vGxU9gyd8+bmCwUPW3bKOe9sz7g
-         76+g==
-X-Forwarded-Encrypted: i=1; AJvYcCVmYscodZNc9AkHdQCcQPQ0Z23dmfhfGAGXwJK24lcM0SV9nHIBMtZ6zVnEDPTiCsdSCue7pUFz9MZnrNYc@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0fpbVLda+fT6wFPgAuCurlV6Z5ENn8KFhSvkCPQZCsDQYq/fp
-	gVvIM+n5FqBRmzHEI18Wf/KSCThdUvXn67Jby+IoVU4QOejW3nBJUByig8/j7Y3VLgX97YVX72y
-	NziJ8JfIyMgKefrtbBPMzFY0l7hPs5kGcnwFGFnFzK8SdhldrxL54CRn02U6lNidU
-X-Gm-Gg: ASbGnctZVgL4g8hqF2LRtvRJI8EGKfu5gZnaDT7ggUe7EzCcTzsx08LF4RUixeCIZb7
-	6hMAEnMDFLqXuuK0+DjyPWopV6xe0hELywx3a+wLAfQ7BHoETbXhm+g+0oCo+Xt2rZpSpegXHVg
-	FVuECdji6F/YxMxYt3bno9A2SQuf25clgDhFaBRuWgngvBIPpTWunf4ARDx4opdTwcioDE1HHCk
-	Qt/hgj/g+/Ww/jsI2eu+l/BFouQxo184fSqAeNI5l6UYHfSe4+kB/XCt2cSIXY7ggZ96PDtdXnM
-	YZ0wDoSn6QtOHWHjevROcmUkgj9cyCmQUicE9Jht7Ee9R0vkUR4JzfywjrHsXgBGNw4=
-X-Received: by 2002:a05:622a:14e:b0:477:5f29:dbc9 with SMTP id d75a77b69052e-4945280128emr26695201cf.13.1746831373247;
-        Fri, 09 May 2025 15:56:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFXVP/tivEEn1s6heCPquBwNxnD3dc35bG8Iyd1lz/IHTbO9GahzmvLPBbvd+/AL7RzsvleGA==
-X-Received: by 2002:a05:622a:14e:b0:477:5f29:dbc9 with SMTP id d75a77b69052e-4945280128emr26695071cf.13.1746831372832;
-        Fri, 09 May 2025 15:56:12 -0700 (PDT)
-Received: from [192.168.65.158] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad2192cc449sm215873266b.20.2025.05.09.15.56.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 May 2025 15:56:12 -0700 (PDT)
-Message-ID: <5eb8fb45-eec9-4078-85ee-0cfd563e67eb@oss.qualcomm.com>
-Date: Sat, 10 May 2025 00:56:10 +0200
+	s=arc-20240116; t=1746832922; c=relaxed/simple;
+	bh=G3JgEdh9oBmC1aTQFHkLf2oWr0qJ3xdkDLPoUL6ZoMg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rz/yFZx2aSFfGzJm6PfUBti1D90F909VaZ3MPcfpPrWcy6XGbl6qizzt3hs6qEe0xR51enbO+fIn87GbwzzFjV5pysw/CpgsTv/JQN/Mu6siIxL3BbfoRJMgKl7J7pXHjmZjbZ5sST5g9aQQeNJfkBT7zOUvwDOduKrShguRs5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwG5VKun; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BE1C4CEE4;
+	Fri,  9 May 2025 23:22:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746832921;
+	bh=G3JgEdh9oBmC1aTQFHkLf2oWr0qJ3xdkDLPoUL6ZoMg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bwG5VKunnOa7XvNGX126Cp3hZAJ191JAbx45IL3FAQDlOOtOLG3KR2uTmhOn57YuL
+	 UvqmZuSIJ5ac+X6LQYzhrohIYG9ULeD+l56xIkGKiM35Q5hDUnHrJ0mK9fC5gag0AQ
+	 mduRvTo5DR80MZGx8dw7PZCyHm7N6+7Dq11aoG4LAGEJHEKGlYN4aNtfTiuDGxH96c
+	 B3O8JEBIto+zxqD1Jbd9YQszspbBqThYItHR1V1slNJveya99iO/WDrxVPYz6xdf51
+	 mbzECKGZTlR3JOJhaH2oqry2ToP1+jO5BT8XX8WIs1cfOcpKYKZAmMRN5Y1qV6bMRH
+	 Yn+rvWqEqbreg==
+Date: Fri, 9 May 2025 16:21:58 -0700
+From: Bjorn Andersson <andersson@kernel.org>
+To: Eugen Hristev <eugen.hristev@linaro.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-doc@vger.kernel.org, corbet@lwn.net, tglx@linutronix.de, mingo@redhat.com, 
+	rostedt@goodmis.org, john.ogness@linutronix.de, senozhatsky@chromium.org, 
+	pmladek@suse.com, peterz@infradead.org, mojha@qti.qualcomm.com, 
+	linux-arm-kernel@lists.infradead.org, vincent.guittot@linaro.org, konradybcio@kernel.org, 
+	dietmar.eggemann@arm.com, juri.lelli@redhat.com, Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: Re: [RFC][PATCH 03/14] kmemdump: introduce qcom-md backend driver
+Message-ID: <xem7ug7xemmtx3jfr3tsq4quhfqtd3twcrszn6kfjpwwmjbbk4@rkmeeqny4nsg>
+References: <20250422113156.575971-1-eugen.hristev@linaro.org>
+ <20250422113156.575971-4-eugen.hristev@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/6] arm64: dts: qcom: Add support for QCS9075 RB8
-To: Wasim Nazir <quic_wasimn@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel@quicinc.com, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20241229152332.3068172-1-quic_wasimn@quicinc.com>
- <20241229152332.3068172-5-quic_wasimn@quicinc.com>
- <vr3q2c47ht5iebf7nvy3qywoxlquwma3p2tffswrefpmxqy24h@wrfecu6mcqcn>
- <aBoAjaI6nDvSyM/v@hu-wasimn-hyd.qualcomm.com>
- <a100a875-4951-40e7-a516-59040649f218@oss.qualcomm.com>
- <aBoLIFCAjWM2QqpX@hu-wasimn-hyd.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <aBoLIFCAjWM2QqpX@hu-wasimn-hyd.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=XL0wSRhE c=1 sm=1 tr=0 ts=681e880d cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=i6E4GqrmrfKDrJ3Qr9QA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: vJPyUrOBRkMjIvM26GOpKNLH2UZkBzlm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA5MDIzMSBTYWx0ZWRfX4CJQHlNDKd/M
- yB38va/KJ7zzGMOJUqjrelahCW4x8bIeFlhafJQFONnlb1JX/hU9z77zRLDhbVHC2TkJSBeada+
- 96+3jket4gb3HVHMGFaOJVpi54qyWKjUlHMhuDXxGkmTtnU0JkLLb6jjVvi08U7VDV2p7fpxh6/
- GBQGqwzONfdJhNeELzbCeuQGoDNSEHnv7E1ocEpVbghRhmUiCRoJX21JOl0oLsKy6E3PQWmjpme
- S1tyQAD135oVaR5zIfGzAH8UsIOBPyDm2ajtxLQPt51vjeBKp6pIRpkTd2NTZJwaphCEMjoQssZ
- pMbSjQzzP3iVB+yl2wERFn9YSgO5TkjCtqtO/abB3B7/pdOrXHyuXrvf663+sVCUG76H+YxK+Aa
- JPdBa6i81NNC0yYwsa5ORs24EGsaIvHBV7FSGfOt7h/d2TF9tMRdRAuOhi+OYjIrticMRMXq
-X-Proofpoint-ORIG-GUID: vJPyUrOBRkMjIvM26GOpKNLH2UZkBzlm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-09_09,2025-05-09_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
- mlxlogscore=782 malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0
- spamscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505090231
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250422113156.575971-4-eugen.hristev@linaro.org>
 
-On 5/6/25 3:14 PM, Wasim Nazir wrote:
-> On Tue, May 06, 2025 at 03:30:43PM +0300, Dmitry Baryshkov wrote:
->> On 06/05/2025 15:29, Wasim Nazir wrote:
->>> On Tue, May 06, 2025 at 03:08:17PM +0300, Dmitry Baryshkov wrote:
->>>> On Sun, Dec 29, 2024 at 08:53:30PM +0530, Wasim Nazir wrote:
->>>>> Add initial device tree support for the RB8 board
->>>>> based on Qualcomm's QCS9075 SoC.
->>>>>
->>>>> Basic changes are supported for boot to shell.
->>>>>
->>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>>>> Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
->>>>> ---
->>>>>   arch/arm64/boot/dts/qcom/Makefile        |   1 +
->>>>>   arch/arm64/boot/dts/qcom/qcs9075-rb8.dts | 281 +++++++++++++++++++++++
->>>>>   2 files changed, 282 insertions(+)
->>>>>   create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-rb8.dts
->>>>>
->>>>
->>>> For the next submission please include at least the UFS support. The
->>>> board is pretty useless without the actual storage support.
->>>
->>> We will be adding UFS change once the basic boot-to-shell changes are in
->>> place.
->>> I have already pushed the next submission (v6) here [1].
->>>
->>> [1] https://lore.kernel.org/all/20250429054906.113317-1-quic_wasimn@quicinc.com/
->>
->> Sorry, I missed it because of the rename.
->>
->> If v6 gets resent for whatever reason, please include UFS into v7.
+On Tue, Apr 22, 2025 at 02:31:45PM +0300, Eugen Hristev wrote:
+> Qualcomm Minidump is a backend driver for kmemdump.
+> Regions are being registered into the shared memory on Qualcomm platforms
+> and into the table of contents.
+> Further, the firmware can read the table of contents and dump the memory
+> accordingly.
 > 
-> v6 is just split from v5 to separate out evk & ride changes.
-> Currently it only supports boot to shell so UFS change is not added.
-> UFS change will be added in incremental patch after boot to shell is
-> approved.
+> Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
+> Co-developed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> ---
+>  drivers/debug/Kconfig   |  13 ++
+>  drivers/debug/Makefile  |   1 +
+>  drivers/debug/qcom_md.c | 467 ++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 481 insertions(+)
+>  create mode 100644 drivers/debug/qcom_md.c
+> 
+> diff --git a/drivers/debug/Kconfig b/drivers/debug/Kconfig
+> index 22348608d187..72a906487e02 100644
+> --- a/drivers/debug/Kconfig
+> +++ b/drivers/debug/Kconfig
+> @@ -13,4 +13,17 @@ config DRIVER_KMEMDUMP
+>  
+>  	  Note that modules using this feature must be rebuilt if option
+>  	  changes.
+> +
+> +config QCOM_MD_KMEMDUMP_BACKEND
 
-Please take this as a general heuristic for the future - if a justified
-change takes less time to perform than typing 3 emails to argue against
-making it, it's not worth typing the emails
+s/md/minidump/ throughout the patch.
 
-Konrad
+> +	tristate "Qualcomm Minidump kmemdump backend driver"
+> +	depends on ARCH_QCOM || COMPILE_TEST
+> +	depends on DRIVER_KMEMDUMP
+> +	help
+> +	  Say y here to enable the Qualcomm Minidump kmemdump backend
+> +	  driver.
+> +	  With this backend, the registered regions are being linked
+> +	  into the minidump table of contents. Further on, the firmware
+> +	  will be able to read the table of contents and extract the
+> +	  memory regions on case-by-case basis.
+> +
+>  endmenu
+> diff --git a/drivers/debug/Makefile b/drivers/debug/Makefile
+> index cc14dea250e3..d8a9db29cd15 100644
+> --- a/drivers/debug/Makefile
+> +++ b/drivers/debug/Makefile
+> @@ -1,3 +1,4 @@
+>  # SPDX-License-Identifier: GPL-2.0
+>  
+>  obj-$(CONFIG_DRIVER_KMEMDUMP) += kmemdump.o
+> +obj-$(CONFIG_QCOM_MD_KMEMDUMP_BACKEND) += qcom_md.o
+> diff --git a/drivers/debug/qcom_md.c b/drivers/debug/qcom_md.c
+> new file mode 100644
+> index 000000000000..1aff28e18230
+> --- /dev/null
+> +++ b/drivers/debug/qcom_md.c
+> @@ -0,0 +1,467 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+
+I think you should inherit some copyrights from
+drivers/remoteproc/qcom_common.c here...
+
+> +
+> +#include <linux/io.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_address.h>
+> +#include <linux/of_reserved_mem.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/sizes.h>
+> +#include <linux/slab.h>
+> +#include <linux/soc/qcom/smem.h>
+> +#include <linux/soc/qcom/socinfo.h>
+
+What do you need socinfo.h for? What about of*.h?
+
+> +#include <linux/kmemdump.h>
+> +
+> +/*
+> + * In some of the Old Qualcomm devices, boot firmware statically allocates 300
+> + * as total number of supported region (including all co-processors) in
+> + * minidump table out of which linux was using 201. In future, this limitation
+> + * from boot firmware might get removed by allocating the region dynamically.
+> + * So, keep it compatible with older devices, we can keep the current limit for
+> + * Linux to 201.
+> + */
+> +#define MAX_NUM_ENTRIES	  201
+
+MAX_NUM_REGIONS
+
+> +
+> +#define MAX_NUM_OF_SS           10
+
+Drop the "OF" and expand "subsystem".
+
+> +#define MAX_REGION_NAME_LENGTH  16
+> +#define SBL_MINIDUMP_SMEM_ID	602
+> +#define MINIDUMP_REGION_VALID	   ('V' << 24 | 'A' << 16 | 'L' << 8 | 'I' << 0)
+> +#define MINIDUMP_SS_ENCR_DONE	   ('D' << 24 | 'O' << 16 | 'N' << 8 | 'E' << 0)
+> +#define MINIDUMP_SS_ENABLED	   ('E' << 24 | 'N' << 16 | 'B' << 8 | 'L' << 0)
+> +
+> +#define MINIDUMP_SS_ENCR_NOTREQ	   (0 << 24 | 0 << 16 | 'N' << 8 | 'R' << 0)
+> +
+> +#define MINIDUMP_APSS_DESC	   0
+
+MINIDUMP_SUBSYSTEM_APSS
+
+> +
+> +/**
+> + * struct minidump - Minidump driver data information
+> + * @apss_data: APSS driver data
+> + * @md_lock: Lock to protect access to APSS minidump table
+> + */
+> +struct minidump {
+
+The ordering of structures and functions in this file is haphazard.
+You're mixing structures that relates to memory layout with driver
+context and related functions are intermixed with unrelated functions.
+
+Effectively the flow through this driver is:
+ register
+ find_region
+ unregister
+ register,
+ valid_region,
+ register
+ unregister, 
+ init,
+ register,
+ unregister,
+ probe,
+
+Or I guess "flow" is the wrong word here...
+
+> +	struct device		*dev;
+> +	struct minidump_ss_data	*apss_data;
+> +	struct mutex		md_lock;
+> +};
+> +
+> +/**
+> + * struct minidump_region - Minidump region
+> + * @name		: Name of the region to be dumped
+> + * @seq_num:		: Use to differentiate regions with same name.
+> + * @valid		: This entry to be dumped (if set to 1)
+> + * @address		: Physical address of region to be dumped
+> + * @size		: Size of the region
+> + */
+> +struct minidump_region {
+> +	char	name[MAX_REGION_NAME_LENGTH];
+> +	__le32	seq_num;
+> +	__le32	valid;
+> +	__le64	address;
+> +	__le64	size;
+> +};
+> +
+> +/**
+> + * struct minidump_subsystem - Subsystem's SMEM Table of content
+> + * @status : Subsystem toc init status
+> + * @enabled : if set to 1, this region would be copied during coredump
+> + * @encryption_status: Encryption status for this subsystem
+> + * @encryption_required : Decides to encrypt the subsystem regions or not
+> + * @region_count : Number of regions added in this subsystem toc
+> + * @regions_baseptr : regions base pointer of the subsystem
+> + */
+> +struct minidump_subsystem {
+> +	__le32	status;
+> +	__le32	enabled;
+> +	__le32	encryption_status;
+> +	__le32	encryption_required;
+> +	__le32	region_count;
+> +	__le64	regions_baseptr;
+> +};
+> +
+> +/**
+> + * struct minidump_global_toc - Global Table of Content
+> + * @status : Global Minidump init status
+> + * @md_revision : Minidump revision
+> + * @enabled : Minidump enable status
+> + * @subsystems : Array of subsystems toc
+> + */
+> +struct minidump_global_toc {
+> +	__le32				status;
+> +	__le32				md_revision;
+
+Why is this member prefixed with md_ when the others aren't?
+
+> +	__le32				enabled;
+> +	struct minidump_subsystem	subsystems[MAX_NUM_OF_SS];
+> +};
+> +
+> +/**
+> + * struct minidump_ss_data - Minidump subsystem private data
+> + * @md_ss_toc: Application Subsystem TOC pointer
+> + * @md_regions: Application Subsystem region base pointer
+> + */
+> +struct minidump_ss_data {
+> +	struct minidump_subsystem *md_ss_toc;
+> +	struct minidump_region	  *md_regions;
+
+Please clean these member names up.
+
+> +};
+> +
+> +#define MINIDUMP_MAX_NAME_LENGTH	12
+
+Why is this 12 here, 16 above, and 8 in kmemdump.c?
+
+> +/**
+> + * struct qcom_minidump_region - Minidump region information
+> + *
+> + * @name:	Minidump region name
+> + * @virt_addr:  Virtual address of the entry.
+> + * @phys_addr:	Physical address of the entry to dump.
+> + * @size:	Number of bytes to dump from @address location,
+> + *		and it should be 4 byte aligned.
+> + */
+> +struct qcom_minidump_region {
+> +	char		name[MINIDUMP_MAX_NAME_LENGTH];
+> +	void		*virt_addr;
+> +	phys_addr_t	phys_addr;
+> +	size_t		size;
+> +	unsigned int	id;
+> +};
+> +
+> +static LIST_HEAD(apss_md_rlist);
+
+Took me a while to understand that this is the "application subsystem
+minidump regions list". Perhaps this could be named
+"minidump_regions_list" or something like that? 
+
+> +
+> +/**
+> + * struct md_region_list - Minidump region list struct
+> + *
+> + * @md_region:	associated minidump region
+> + * @list:  list head entry
+> + */
+> +struct md_region_list {
+> +	struct qcom_minidump_region md_region;
+> +	struct list_head list;
+> +};
+> +
+> +static struct minidump *md;
+> +
+> +/**
+> + * qcom_md_add_region() - Register region in APSS Minidump table.
+> + * @region: minidump region.
+> + *
+> + * Return: None
+> + */
+> +static void qcom_md_add_region(const struct qcom_minidump_region *region)
+> +{
+> +	struct minidump_subsystem *mdss_toc = md->apss_data->md_ss_toc;
+> +	struct minidump_region *mdr;
+> +	unsigned int region_cnt;
+> +
+> +	region_cnt = le32_to_cpu(mdss_toc->region_count);
+> +	mdr = &md->apss_data->md_regions[region_cnt];
+> +	strscpy(mdr->name, region->name, sizeof(mdr->name));
+> +	mdr->address = cpu_to_le64(region->phys_addr);
+> +	mdr->size = cpu_to_le64(region->size);
+> +	mdr->valid = cpu_to_le32(MINIDUMP_REGION_VALID);
+> +	region_cnt++;
+> +	mdss_toc->region_count = cpu_to_le32(region_cnt);
+> +}
+> +
+> +/**
+> + * qcom_md_get_region_index() - Lookup minidump region by name
+> + * @mdss_data: minidump subsystem data
+> + * @region: minidump region.
+> + *
+> + * Return: On success, it returns the region index, on failure, returns
+> + *	negative error value
+> + */
+> +static int qcom_md_get_region_index(struct minidump_ss_data *mdss_data,
+> +				    const struct qcom_minidump_region *region)
+> +{
+> +	struct minidump_subsystem *mdss_toc = mdss_data->md_ss_toc;
+> +	struct minidump_region *mdr;
+> +	unsigned int i;
+> +	unsigned int count;
+> +
+> +	count = le32_to_cpu(mdss_toc->region_count);
+> +	for (i = 0; i < count; i++) {
+> +		mdr = &mdss_data->md_regions[i];
+> +		if (!strcmp(mdr->name, region->name))
+> +			return i;
+> +	}
+> +
+> +	return -ENOENT;
+> +}
+> +
+> +/**
+> + * qcom_md_region_unregister() - Unregister region from APSS Minidump table.
+> + * @region: minidump region.
+> + *
+> + * Return: On success, it returns 0 and negative error value on failure.
+> + */
+> +static int qcom_md_region_unregister(const struct qcom_minidump_region *region)
+
+Could you please make this API pass the backend pointer, so that backend
+drivers doesn't all need to rely on a global pointer to their context.
+
+> +{
+> +	struct minidump_ss_data *mdss_data = md->apss_data;
+> +	struct minidump_subsystem *mdss_toc = mdss_data->md_ss_toc;
+> +	struct minidump_region *mdr;
+> +	unsigned int region_cnt;
+> +	unsigned int idx;
+> +	int ret;
+> +
+> +	ret = qcom_md_get_region_index(mdss_data, region);
+> +	if (ret < 0) {
+> +		dev_err(md->dev, "%s region is not present\n", region->name);
+> +		return ret;
+> +	}
+> +
+> +	idx = ret;
+> +	mdr = &mdss_data->md_regions[0];
+> +	region_cnt = le32_to_cpu(mdss_toc->region_count);
+> +	/*
+> +	 * Left shift all the regions exist after this removed region
+> +	 * index by 1 to fill the gap and zero out the last region
+> +	 * present at the end.
+> +	 */
+> +	memmove(&mdr[idx], &mdr[idx + 1], (region_cnt - idx - 1) * sizeof(*mdr));
+> +	memset(&mdr[region_cnt - 1], 0, sizeof(*mdr));
+> +	region_cnt--;
+> +	mdss_toc->region_count = cpu_to_le32(region_cnt);
+> +
+> +	return 0;
+> +}
+> +
+> +/**
+> + * qcom_md_region_register() - Register region in APSS Minidump table.
+> + * @region: minidump region.
+> + *
+> + * Return: On success, it returns 0 and negative error value on failure.
+> + */
+> +static int qcom_md_region_register(const struct qcom_minidump_region *region)
+> +{
+> +	struct minidump_ss_data *mdss_data = md->apss_data;
+> +	struct minidump_subsystem *mdss_toc = mdss_data->md_ss_toc;
+> +	unsigned int num_region;
+> +	int ret;
+> +
+> +	ret = qcom_md_get_region_index(mdss_data, region);
+> +	if (ret >= 0) {
+> +		dev_info(md->dev, "%s region is already registered\n", region->name);
+
+struct minidump_region->seq_num tells us that you can have multiple
+entries with the same name; so why are you prohibiting this here?
+
+If I understand the code two stack frames up correctly, you have a
+cyclic id already - can't you use that as the index?
+
+> +		return -EEXIST;
+> +	}
+> +
+> +	/* Check if there is a room for a new entry */
+> +	num_region = le32_to_cpu(mdss_toc->region_count);
+> +	if (num_region >= MAX_NUM_ENTRIES) {
+> +		dev_err(md->dev, "maximum region limit %u reached\n", num_region);
+> +		return -ENOSPC;
+> +	}
+> +
+> +	qcom_md_add_region(region);
+
+Wouldn't it be better to inline qcom_md_add_region() here, to avoid
+checking region_count in one place and then "blindly" appending items to
+the array in another place.
+
+> +
+> +	return 0;
+> +}
+> +
+> +/**
+> + * qcom_minidump_valid_region() - Checks if region is valid
+> + * @region: minidump region.
+> + *
+> + * Return: true if region is valid, false otherwise.
+> + */
+> +static bool qcom_minidump_valid_region(const struct qcom_minidump_region *region)
+> +{
+> +	return region &&
+> +		strnlen(region->name, MINIDUMP_MAX_NAME_LENGTH) < MINIDUMP_MAX_NAME_LENGTH &&
+> +			region->virt_addr &&
+
+This indentation makes it look like region->virt_addr is an argument to
+the function call on the line above.
+
+> +			region->size &&
+> +			IS_ALIGNED(region->size, 4);
+> +}
+> +
+> +/**
+> + * qcom_minidump_region_register() - Register region in APSS Minidump table.
+> + * @region: minidump region.
+> + *
+> + * Return: On success, it returns 0 and negative error value on failure.
+> + */
+> +static int qcom_minidump_region_register(const struct qcom_minidump_region *region)
+> +{
+> +	int ret;
+> +
+> +	if (!qcom_minidump_valid_region(region))
+
+How could that be, you created "region" from scratch in the calling
+stack frame?
+
+> +		return -EINVAL;
+> +
+> +	mutex_lock(&md->md_lock);
+> +	ret = qcom_md_region_register(region);
+> +
+> +	mutex_unlock(&md->md_lock);
+> +	return ret;
+> +}
+> +
+> +/**
+> + * qcom_minidump_region_unregister() - Unregister region from APSS Minidump table.
+> + * @region: minidump region.
+> + *
+> + * Return: On success, it returns 0 and negative error value on failure.
+> + */
+> +static int qcom_minidump_region_unregister(const struct qcom_minidump_region *region)
+> +{
+> +	int ret;
+> +
+> +	if (!qcom_minidump_valid_region(region))
+> +		return -EINVAL;
+> +
+> +	mutex_lock(&md->md_lock);
+> +	ret = qcom_md_region_unregister(region);
+> +
+> +	mutex_unlock(&md->md_lock);
+> +	return ret;
+> +}
+> +
+> +/**
+> + * qcom_apss_md_table_init() - Initialize the minidump table
+> + * @mdss_toc: minidump subsystem table of contents
+> + *
+> + * Return: On success, it returns 0 and negative error value on failure.
+> + */
+> +static int qcom_apss_md_table_init(struct minidump_subsystem *mdss_toc)
+> +{
+> +	struct minidump_ss_data *mdss_data;
+> +
+> +	mdss_data = devm_kzalloc(md->dev, sizeof(*mdss_data), GFP_KERNEL);
+
+Why is minidump_ss_data a separate object from struct minidump?
+
+> +	if (!mdss_data)
+> +		return -ENOMEM;
+> +
+> +	mdss_data->md_ss_toc = mdss_toc;
+> +	mdss_data->md_regions = devm_kcalloc(md->dev, MAX_NUM_ENTRIES,
+> +					     sizeof(*mdss_data->md_regions),
+> +					     GFP_KERNEL);
+> +	if (!mdss_data->md_regions)
+> +		return -ENOMEM;
+> +
+> +	mdss_toc = mdss_data->md_ss_toc;
+> +	mdss_toc->regions_baseptr = cpu_to_le64(virt_to_phys(mdss_data->md_regions));
+> +	mdss_toc->enabled = cpu_to_le32(MINIDUMP_SS_ENABLED);
+> +	mdss_toc->status = cpu_to_le32(1);
+> +	mdss_toc->region_count = cpu_to_le32(0);
+> +
+> +	/* Tell bootloader not to encrypt the regions of this subsystem */
+> +	mdss_toc->encryption_status = cpu_to_le32(MINIDUMP_SS_ENCR_DONE);
+> +	mdss_toc->encryption_required = cpu_to_le32(MINIDUMP_SS_ENCR_NOTREQ);
+> +
+> +	md->apss_data = mdss_data;
+> +
+> +	return 0;
+> +}
+> +
+> +/**
+> + * register_md_region() - Register a new minidump region
+> + * @id: unique id to identify the region
+> + * @name: name of the region
+> + * @vaddr: virtual memory address of the region start
+> + * @size: size of the region
+> + *
+> + * Return: On success, it returns 0 and negative error value on failure.
+> + */
+> +static int register_md_region(unsigned int id, char *name, void *vaddr,
+> +			      size_t size)
+> +{
+> +	struct qcom_minidump_region *md_region;
+> +	int ret;
+> +
+> +	struct md_region_list *mdr_list =
+> +		kzalloc(sizeof(*mdr_list), GFP_KERNEL);
+
+Weird line wrapping. Use up to 100 characters if you need to... Here
+you'll hit 81 though...
+
+> +	if (!mdr_list)
+> +		return -ENOMEM;
+> +	md_region = &mdr_list->md_region;
+> +
+> +	scnprintf(md_region->name, sizeof(md_region->name), "K%d%.8s", id, name);
+> +	md_region->virt_addr = vaddr;
+> +	md_region->phys_addr = virt_to_phys(vaddr);
+> +	md_region->size = ALIGN(size, 4);
+> +	md_region->id = id;
+> +
+> +	ret = qcom_minidump_region_register(md_region);
+> +	if (ret < 0) {
+> +		pr_err("failed to register region in minidump %d %s: err: %d\n",
+> +		       id, name, ret);
+
+You already printed when you get back here with an error.
+
+And you're leaking the mdr_list allocation.
+
+> +		return ret;
+> +	}
+> +
+> +	list_add(&mdr_list->list, &apss_md_rlist);
+> +	return 0;
+> +}
+> +
+> +/**
+> + * unregister_md_region() - Unregister a previously registered minidump region
+> + * @id: unique id to identify the region
+> + *
+> + * Return: On success, it returns 0 and negative error value on failure.
+> + */
+> +static int unregister_md_region(unsigned int id)
+> +{
+> +	int ret = -ENOENT;
+> +	struct md_region_list *mdr_list;
+> +	struct md_region_list *tmp;
+> +
+> +	list_for_each_entry_safe(mdr_list, tmp, &apss_md_rlist, list) {
+> +		struct qcom_minidump_region *region;
+> +
+> +		region = &mdr_list->md_region;
+> +		if (region->id == id) {
+> +			ret = qcom_minidump_region_unregister(region);
+
+What does it mean that "ret" is non-zero here? Does it make sense to
+return a value from this function? Who's going to do what with that
+information?
+
+> +			list_del(&mdr_list->list);
+> +			return ret;
+> +		}
+> +	}
+> +
+> +	pr_err("failed to unregister region from minidump %d\n", ret);
+
+You can be more specific here...
+> +
+> +	return ret;
+
+That would be -ENOENT...
+
+> +}
+> +
+> +static struct kmemdump_backend qcom_md_backend = {
+> +	.name = "qcom_md",
+> +	.register_region = register_md_region,
+> +	.unregister_region = unregister_md_region,
+> +};
+> +
+> +static int qcom_md_probe(struct platform_device *pdev)
+> +{
+> +	struct minidump_global_toc *mdgtoc;
+> +	size_t size;
+> +	int ret;
+> +
+> +	md = devm_kzalloc(&pdev->dev, sizeof(*md), GFP_KERNEL);
+
+Don't devres allocate resources and store the result in a global
+pointer. Also, you forgot to check if it failed.
+
+> +
+> +	md->dev = &pdev->dev;
+> +
+> +	mdgtoc = qcom_smem_get(QCOM_SMEM_HOST_ANY, SBL_MINIDUMP_SMEM_ID, &size);
+> +	if (IS_ERR(mdgtoc)) {
+> +		ret = PTR_ERR(mdgtoc);
+> +		dev_err(md->dev, "Couldn't find minidump smem item %d\n", ret);
+
+return?
+
+> +	}
+> +
+> +	if (size < sizeof(*mdgtoc) || !mdgtoc->status) {
+> +		dev_err(md->dev, "minidump table is not initialized %d\n", ret);
+> +		return -ENAVAIL;
+> +	}
+> +
+> +	mutex_init(&md->md_lock);
+> +
+> +	ret = qcom_apss_md_table_init(&mdgtoc->subsystems[MINIDUMP_APSS_DESC]);
+> +	if (ret) {
+> +		dev_err(md->dev, "apss minidump initialization failed %d\n", ret);
+
+The only way qcom_apss_md_table_init() can fails is malloc(), in which
+case you already got a more specific error message. So you can drop this
+one.
+
+> +		return ret;
+
+When you return here "md" is a dangling pointer.
+
+Regards,
+Bjorn
+
+> +	}
+> +
+> +	return kmemdump_register_backend(&qcom_md_backend);
+> +}
+> +
+> +static void qcom_md_remove(struct platform_device *pdev)
+> +{
+> +	kmemdump_unregister_backend(&qcom_md_backend);
+> +}
+> +
+> +static struct platform_driver qcom_md_driver = {
+> +	.probe = qcom_md_probe,
+> +	.remove = qcom_md_remove,
+> +	.driver  = {
+> +		.name = "qcom-md",
+> +	},
+> +};
+> +
+> +module_platform_driver(qcom_md_driver);
+> +
+> +MODULE_AUTHOR("Eugen Hristev <eugen.hristev@linaro.org>");
+> +MODULE_AUTHOR("Mukesh Ojha <quic_mojha@quicinc.com>");
+> +MODULE_DESCRIPTION("Qualcomm kmemdump minidump backend driver");
+> +MODULE_LICENSE("GPL");
+> -- 
+> 2.43.0
+> 
 
