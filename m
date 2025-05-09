@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-57465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A05FDAB17AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 16:48:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDEA2AB17CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 16:53:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 240A11766E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 14:48:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A38C189996A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 14:53:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F80E225792;
-	Fri,  9 May 2025 14:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 445D3231853;
+	Fri,  9 May 2025 14:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hO0gSqyF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mktN58gS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93F41E502;
-	Fri,  9 May 2025 14:48:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8001225405;
+	Fri,  9 May 2025 14:53:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746802096; cv=none; b=mZZcPuY4drLNH0hKvK2lMp1dJJ4/DK7lg6iYGdhQLxIRLciB/1SwyVJ08/M6z6bKGofHdwRtacm2LQvVbyuRjx0y656+5Hn4QY25LPs3c5U6LA9m9/H9UFfVI7bRbg6fu/OBR6GteCSd6l8topJBOkmsfymqYxYP/Pw+rdqOXc8=
+	t=1746802383; cv=none; b=RoMX+V8Fr6kNB+DLJDmoznLONsWvP0U3vb/latelLWyUxfVZppfgcDjaXnKobvWL9Alliwfq3I2hJfWYqAdZpnI08PIzfIEH/XH+Mw+cjN0pUWkx4fdgcP5wmWed5/+Fb3yI5lgcw/C2wb0HA4MyNSX5SDhEePh55w9Cww+jSio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746802096; c=relaxed/simple;
-	bh=mARamw7lUsmL/I3Kzqf41NTjnfcBpH049UKr+MaBAho=;
+	s=arc-20240116; t=1746802383; c=relaxed/simple;
+	bh=+rxbByUDk8aWnHNgzHLW6dECRjoJFMK9UM6OVD8v+Xw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jynOZmLhMOSm0K2s7H/ID3EV4A48RlM4C1kNOa/2Z3bT8uu/4WLAyeJNqk6F0gkbuALo6ISw8NRvpqQq9o5rSbbW+2ReGp+O2BHqNDBfvKLIRKxAS9Rbp8aXOxjd9BgOGUNDHAFzRCxt7hnR+qK6FtBORQrqADhQf19k9Zi1z4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hO0gSqyF; arc=none smtp.client-ip=209.85.216.48
+	 To:Cc:Content-Type; b=qw3sSP/aLMzWqE8nun2tWbPxxfgXjw03W/XGEtg6iIwP3lDycU7NV96W/vIkCpkDOO5uik331R24t/70DMwKbn02JgRa/O7/CGF1wrv6VqEt6g6iP4+7AUmTg1HDTQ8SNcHB4U48ia79RFHrxY6EX14xC7DKv4+EvZxkoS73VsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mktN58gS; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-30c1fe19b07so297481a91.2;
-        Fri, 09 May 2025 07:48:14 -0700 (PDT)
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-b07698318ebso264503a12.2;
+        Fri, 09 May 2025 07:53:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746802094; x=1747406894; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746802381; x=1747407181; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mARamw7lUsmL/I3Kzqf41NTjnfcBpH049UKr+MaBAho=;
-        b=hO0gSqyF8LF0moXQTBwickFMCTZF7EtU+giKMmBpGkdyI4acy2vME3aZHKdj9V0toe
-         N3GcyVvDxVa36BOP/VEsc4wx8+UZutYCpDPeew2AH0iixjyh2kGI6ygX3ZBxUh1zE7vP
-         11eCW3Kx888fCTKZofReiaplkFcGHpL+lJVzbu8tuT3BAzlcfca1NukGAMsvdeHhC9qm
-         tvvKOeliq+AbJ0qpWwaU/ByMSxwApA0JBbCWFXDg5QoD18V5QJtQ8sVrtxBvQx7FtxPH
-         xvFC/t6wUubb0ak4sMuPAJmXq2Sw3L4Dw3qnkL2GfEmUCv5mIVWYxbwPmTSNxGVUe8eu
-         GvMw==
+        bh=+rxbByUDk8aWnHNgzHLW6dECRjoJFMK9UM6OVD8v+Xw=;
+        b=mktN58gSVcFvttX+9xlp07/EEQJDRfC++I5+AVK8zDWE3TITy6TAonnOgIDY5M+JtA
+         qzJ6eoFYcUdDxhOgPLFH3+Py9JFewjXFm8jvXmxVFwzWpSQSphyMMMpGr7lhL88mB8hq
+         HLAoXGDmmx5IEVFz3qqibuvDEaRQ9cKN5qRZ1cu38cngDevgIlWDmLf3VPUdmR4mQh7v
+         tQXqBbK9q73Zni4kp4857ckZYGlxMw6s02klaFWqm5cDeJJzXUd1Yby4PP5HOK0Xaasi
+         WHPwe0w1Xu9nePamqxD/0vp46M7B4EIAySY+0kq0BucJYo9kInNak8C7WFxea1+8OnYC
+         MLdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746802094; x=1747406894;
+        d=1e100.net; s=20230601; t=1746802381; x=1747407181;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mARamw7lUsmL/I3Kzqf41NTjnfcBpH049UKr+MaBAho=;
-        b=DfNLGqCoMFyhhgsVCnQ3rFMvFtG83buCu9iCVBVtEWY+QP4/H6rFLY4GmH1hZPf8sN
-         QCExM5kH76qNcVTavD4SH64snOZvTtmtihKiT+x3t4vtKxDTm/g5e1/Uw8rg8P240pTQ
-         4SUt2znPVARF5M5ievqoj+6eeNzXkiKd+maeFhmGsdVeQ/nUGccrlpmCHj/Dt1oY2oRD
-         DiX0aHYyit2WKWQEHUk4nsXWaHfDTgKww/jU7loFSC3LrjWuayjhNA/wtrSGGl6gc1ux
-         pMkEOmuYtQqfZMAIUJ0Yl55gW2QbRZZVmJH8SFvyOaQ2TxwwrKWrig1LHb1k/oPKKmfl
-         KBAw==
-X-Forwarded-Encrypted: i=1; AJvYcCVTq5LLyapKJWABM0TISaT7i3KZMJb6axicq5CHqbvTre+fhUduTfZ7k3fYXllajYQsor5+a2GcIO4TT6rZ@vger.kernel.org, AJvYcCWWOkgiPbv/2BmRYKbTd6J4VJwUI1/MCs3mzDN/Xv+vdmiiSg3OBh/d9lB0NIboTsplsaX0QBxuz64gqYOb@vger.kernel.org
-X-Gm-Message-State: AOJu0YzjYh0zmXR/77swsWLDsnRied8U858hXj9iH8neRiCw8xOtOJTf
-	OO3jaRoHVO4Me9zrEoeorP26sP08jqQC/DH6kqher4/5NTJaJxJe4NMJ0TzwGgCo2+p/dZdz8EU
-	YyDL7qvV6y/2xByIVBSu8h32Vd66avw==
-X-Gm-Gg: ASbGnctuZOrcFiNhUeWcQtnXYSs+X5g6qdhmQ7vQNPUFs2Sd/eD6uqtXOR5hHmT6dkb
-	FnRsFYDalSp1WQwCgxqiy0YBWU33jck3AdtfWoXExMUWonj9dugTX6Suj0wWVGsjMpz2OMVOQan
-	zu8g9YMC4jQ6viRnVK1qPJkQ==
-X-Google-Smtp-Source: AGHT+IFa+1K23FbGssXhKRVsJgrzYJ5or5/KFBu3auQ6eL8QQ6Og83ldhpGgIYC/Xa1BzTwzbCW/k+eY4LIKoaFiBEM=
-X-Received: by 2002:a17:90b:1a81:b0:30a:80bc:ad5 with SMTP id
- 98e67ed59e1d1-30c3d62eb56mr2270414a91.3.1746802093903; Fri, 09 May 2025
- 07:48:13 -0700 (PDT)
+        bh=+rxbByUDk8aWnHNgzHLW6dECRjoJFMK9UM6OVD8v+Xw=;
+        b=DRMVXQj3qksCn0u/fmCb3Y+ps/6wDTxve2SfpzQHbDQAY8G96Toq3VF1dGeX+5ZFZr
+         llV2ISPddonevHj/XdSdxXnBfTkB/YkU9kSeqItkazmRtx5/Ia+Thd1/PY0qXveqRCSw
+         2tVWeBpPhWWyVVpvc2rOdYonae8GYALA9Dxsseu3esk91EWxE4U370tDgyo4uY+QIZ4m
+         GyRpus3Yp06wvHnjo0DXEbaKKFgtnzO2UEajErzzQ2PJN5c31CoeXzEnVZ/skELRTRBZ
+         ttJKKzmmizxMYU3fPc6ZOb6bKr+ZEhxEqMF5v5r2MKHGYt/ZUela0kt2K/kCGA8g2/g7
+         rRZg==
+X-Forwarded-Encrypted: i=1; AJvYcCUavEPa0FdcJ56iil9Mf19vlqkseFTUzNC51GmZIhWaB3GLsD1zudrMVC7Par61xJihNMHBkXKYjXs8vr5X@vger.kernel.org, AJvYcCV0UvNgVD61BnUC7JXlQ+PQ59vDX1pvxAWRvZ02xx3xXA05sQUc9xFu44V4SICiyKhe0hDcayni76Pef583@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzvqe31ZQpn4JQP0gcsinL2vCno2v4nM4NfRsiyH/54w0bnrBq+
+	hPv4UQsdvPOzMB0n8fBjNEGtRFiVrY9odt1BHM3SxGctkJMEfnSsQ6Cy5+J8sQFzjpbcH5rX46x
+	MoAeQ2Gro1tKGbFZiDYwscaNH1eQ=
+X-Gm-Gg: ASbGncsugoFmGQK/wCW09GYyrOSlGxQUGCXD942STlpiE4uUcrDLqNjOYgB5amwoRf6
+	bzwwFTtwvlVUdiYlANrHOi3KDzLZhzyp56zTnrvzYuLS22033na54ESjzBLpigj6oAs09Jqykue
+	IjR4OuHBDQEKLO4E9Lt4v9jwVGOVoJMLxO
+X-Google-Smtp-Source: AGHT+IGid2gLml23kAy5JozTRzpOaIiTgbiZSQS9UGrMDQLCun2YHqZxUOx848O/tx+F/rBCo9iZAuD/WYolOsp7HdA=
+X-Received: by 2002:a17:902:e94d:b0:22e:6ea8:8a07 with SMTP id
+ d9443c01a7336-22fc9087803mr20059425ad.9.1746802380873; Fri, 09 May 2025
+ 07:53:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,15 +75,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250508-topic-ubwc_central-v1-0-035c4c5cbe50@oss.qualcomm.com>
- <20250508-topic-ubwc_central-v1-13-035c4c5cbe50@oss.qualcomm.com>
- <CACu1E7E9yU-cygZxBqVypP7aFkXJCNTfXA2uqdvU84mi9T51Xg@mail.gmail.com>
- <5f5e512c-ae0e-43aa-856f-06820ac4b147@oss.qualcomm.com> <dedbfb2f-012a-404f-87d1-2f3cd04b0e74@oss.qualcomm.com>
-In-Reply-To: <dedbfb2f-012a-404f-87d1-2f3cd04b0e74@oss.qualcomm.com>
+ <20250508-topic-ubwc_central-v1-10-035c4c5cbe50@oss.qualcomm.com>
+ <CACu1E7EFK7dzR=hm-J58jz77pMxn2SoJVrfQvV0RHiESi1mkzA@mail.gmail.com> <c4921bf8-5eb5-458e-8afa-eeb86d5b5f34@oss.qualcomm.com>
+In-Reply-To: <c4921bf8-5eb5-458e-8afa-eeb86d5b5f34@oss.qualcomm.com>
 From: Connor Abbott <cwabbott0@gmail.com>
-Date: Fri, 9 May 2025 10:48:02 -0400
-X-Gm-Features: ATxdqUH7m-SRD5rFdt3OSCvmnhthEka5DCwMJApoXPZk7CfFgdIwZBmJF-0jfvI
-Message-ID: <CACu1E7EfgPFcSgGA5TkAVqpO=K2G1AjNVbRij60TknCx5PcoqA@mail.gmail.com>
-Subject: Re: [PATCH RFT 13/14] drm/msm/a6xx: Drop cfg->ubwc_swizzle override
+Date: Fri, 9 May 2025 10:52:49 -0400
+X-Gm-Features: ATxdqUE5coNf8D2sY3OL3JNiiVLl1uKE6rRwgQNy_gcoY6h_rxUnCjyB9CqZysk
+Message-ID: <CACu1E7HYdq2a3phPoXHwDYXGQX6G36hCiyu1LMpyY6G+M4HuWg@mail.gmail.com>
+Subject: Re: [PATCH RFT 10/14] drm/msm/a6xx: Stop tracking macrotile_mode (again)
 To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Cc: Konrad Dybcio <konradybcio@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
 	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
@@ -95,39 +94,53 @@ Cc: Konrad Dybcio <konradybcio@kernel.org>, Bjorn Andersson <andersson@kernel.or
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 9, 2025 at 9:37=E2=80=AFAM Konrad Dybcio
+On Fri, May 9, 2025 at 8:45=E2=80=AFAM Konrad Dybcio
 <konrad.dybcio@oss.qualcomm.com> wrote:
 >
-> On 5/9/25 3:17 PM, Konrad Dybcio wrote:
-> > On 5/8/25 9:26 PM, Connor Abbott wrote:
-> >> On Thu, May 8, 2025 at 2:14=E2=80=AFPM Konrad Dybcio <konradybcio@kern=
-el.org> wrote:
-> >>>
-> >>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> >>>
-> >>> On A663 (SA8775P) the value matches exactly.
-> >>>
-> >>> On A610, the value matches on SM6115, but is different on SM6125. Tha=
-t
-> >>> turns out not to be a problem, as the bits that differ aren't even
-> >>> interpreted.
+> On 5/8/25 8:33 PM, Connor Abbott wrote:
+> > On Thu, May 8, 2025 at 2:14=E2=80=AFPM Konrad Dybcio <konradybcio@kerne=
+l.org> wrote:
 > >>
-> >> This is definitely going to break userspace, because the kernel
-> >> doesn't expose the UBWC version, instead exposing just the swizzle and
-> >> userspace expects that it sets the right value for older UBWC versions
-> >> before it became configurable (0x7 for UBWC 1.0 and 0x6 for 2.0-3.0).
-> >> It looks like the data for SM6125 is just wrong.
+> >> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> >>
+> >> SC8180X (A680) and SA8775P (A663) require a write to that register,
+> >> while other SKUs are fine with the default value. Don't overwrite it
+> >> needlessly, requiring the developer to read the value back from
+> >> hardware just to put it in the driver again, introducing much more roo=
+m
+> >> for error.
 > >
-> > Oh that's sad.. I'll drop this commit
+> > I'm not sure I understand that last sentence. The original reason I
+> > always wrote it was that for host image copy we need to know the value
+> > of macrotile_mode, so again the value exposed to userspace must match
+> > what's set in the HW. We can't read the value from the HW and send it
+> > to userspace, because userspace queries this when creating the
+> > physical device during device enumeration and we really don't want to
+> > spuriously turn on the device then. That means the safest thing is to
+> > always program it, guaranteeing that it always matches. Otherwise we
+> > just have to hope that the default value matches what we expect it to
+> > be.
+> >
+> > I know you're copying this from kgsl, but kgsl doesn't expose the
+> > macrotile_mode to userspace. I expect that HIC was added afterwards
+> > and only works via hacks there (if it's even supported at all on the
+> > relevant SoCs).
 >
-> Wait uh, we have this data in the common config.. why would it break
-> userspace?
+> Alright, I think I'll include it in the common UBWC config (even though
+> it only concerns the GPU), as IIUC it may differ between platforms
+> implementing the same GPU SKU
 >
 > Konrad
 
-As you said in the commit message SM6125 has ubwc_swizzle =3D 1 which
-seems wrong to me (it should be 7), it just didn't matter before that
-it was wrong. You should probably just fix that.
+It most definitely does not concern just the GPU. It determines the
+way tiles are swizzled within a macrotile so it also has to be in sync
+between blocks.
+
+Also, as said in the comments it's introduced with UBWC 3.1, so you
+could turn this into another getter based on the version if you
+introduce UBWC_3_1. In a future where we have proper modifiers derived
+from this config struct instead of the current lie that everything is
+the same, it would save us a bit.
 
 Connor
 
