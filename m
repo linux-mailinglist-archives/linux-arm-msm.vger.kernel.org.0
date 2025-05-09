@@ -1,63 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-57354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9FF1AB0A76
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 08:19:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BAF1AB0A81
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 08:21:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A17E73B56A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 06:18:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 125553BB057
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 06:21:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46B8A26A1D5;
-	Fri,  9 May 2025 06:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5310F26983B;
+	Fri,  9 May 2025 06:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Aw0XaPdU"
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="OZgC/Hn3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.smtpout.orange.fr (smtp-73.smtpout.orange.fr [80.12.242.73])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC6126A0BD;
-	Fri,  9 May 2025 06:18:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7B422D9F2;
+	Fri,  9 May 2025 06:21:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746771541; cv=none; b=amDKNPcVzrRz9IUeUnQIQP28Vyvd73Jg1JrmwlKgGaW+WJNc34WPNlobhYR2SyKihM8Ia8fVU40G4DSepUCvMDsh5qyIbyFEriA9YV/VtB1TGtWXF43z59A3YLMZzgZTBPmlixM2y5Zu70nfJI84psnxDwWZyMi9pzdqlJa9USo=
+	t=1746771713; cv=none; b=XmqcoWInYZLBolIohQszGz8JAWMvXG+MZIGv30Ffsl3dhzskTh13p1IBwVyp+3SWjL5wRoli4K7zfFxuQuRP0tgYYXcFD5ucA9psSmNW8uYRLSSe2Z6iKmbx5rT577bOoK0XqeZTwHKqpLKEyAlxvk2Lry0fTb0fz2uilgu5alI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746771541; c=relaxed/simple;
-	bh=TzvMSg7brzux3DxsfIv1UoDIW9mFEw5HuFBoRuNgPX0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TDrpEKcor7uHwUwfClhJ/4/utKn8uhTdhAIfvv9954hyntBTVETZrCnbEzZDkt0sTnomqrvzGNhqrOwL+OLOTZByJqbd1NTMYnQvklMZKAwV1CJLN3mvCBtBycpnBRT937+K45U1S1A8Ms53AkMcejz/p7wlKNudRp+TTQQo2Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Aw0XaPdU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5491Ajlw025220;
-	Fri, 9 May 2025 06:18:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZPQfVlhiUylm7IDtEFF3G36/Le2Gs/5G0a1jysqB0a4=; b=Aw0XaPdUS/5+aAWc
-	gx0gt/GpGqRSdORxiVr2odpvfroQmqhPpCPqWJMUi0aTlHhv9GJZuraalsTmPLFy
-	2uHiJXU/Gg2Ce+VLnQJQ942JFgGx/4gSqvFiJtXiRy+Hwci5P78Nr53bd/EmcDgG
-	ig5v5KLMQnrKsgoIFZBkPhsZjn+FBORqchLQQKHkPR/xKEXpWEKrsQOCCsGmZ8vw
-	ScKTK6l8qAd6r8hkgFgD/Bs6ZXB7GOgCVYlrB7hHvyLOdiVzvr7lKciKomINMx3Y
-	9WSmxtygVgBm4l/xU3Y5hjOT/zuTi67cIQOJFjVOA9MDR4IGncYlFzXGy7HBYknY
-	zKbSmQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46gnp13nan-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 09 May 2025 06:18:51 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5496IpIo012673
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 9 May 2025 06:18:51 GMT
-Received: from [10.217.219.62] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 8 May 2025
- 23:18:47 -0700
-Message-ID: <4456d0e2-3451-4749-acda-3b75ae99e89b@quicinc.com>
-Date: Fri, 9 May 2025 11:48:44 +0530
+	s=arc-20240116; t=1746771713; c=relaxed/simple;
+	bh=eMIbIZO2LNu1ba9vmPFWelJExTJoxfAefdLcbQm2tMo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eYHieh6S85onfy6MSIIn8m8/xZ5YKg3c3G2j13k/Z5+7FwDxtQVI5KPpXUZ4/+NqLqrOW9/ppcphzj70pW2LpKheYi9vsafquwC7kQGpMfaK80Oc7MGRbEPm8knS2L4efMfCl37aTSswP6aM2kYuBEm4Mft9Nqv3eEbvaC3JdGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=OZgC/Hn3; arc=none smtp.client-ip=80.12.242.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Received: from [192.168.1.37] ([90.11.132.44])
+	by smtp.orange.fr with ESMTPA
+	id DH65uEvkuKbq8DH65ukVB8; Fri, 09 May 2025 08:20:40 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1746771640;
+	bh=5JKgoLO4kNRuFom4Pfd5tvVV/+IdX7PZ3xj8Bm8rDJY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=OZgC/Hn39/X/p3DbTI7Cq+n2Y/vEEOgufGvGfZqQElJWXBfGse5SlpmHRJPJobTAJ
+	 37GBaRuT2m+7oaNc2wd5dti3Ns9WxmDBa2oHYrpkFU5Bi11qmn7pFFp0LMk5SO7y2q
+	 urSQggVgZZa/N/JnuyouFN422hV6vQJzEk6Hue9Q8Eur0xiIPbfcOkMfdI8nrn/qOQ
+	 QOBrNwaptoHxFvPEYYigXJrz5Pi0LS86S9RA1xR2WxZRaTaNkg6ySP0tCRar9ZtAL0
+	 wRW02YKUKUrJ2U3Xy5Mod18zXDsLHHvNbeeH6CQirxea0GP50MbULn6IzY/4i4Hp4m
+	 GKb/CikKi5CVQ==
+X-ME-Helo: [192.168.1.37]
+X-ME-Auth: bWFyaW9uLmphaWxsZXRAd2FuYWRvby5mcg==
+X-ME-Date: Fri, 09 May 2025 08:20:40 +0200
+X-ME-IP: 90.11.132.44
+Message-ID: <22aaebb7-553b-4571-8a43-58a523241082@wanadoo.fr>
+Date: Fri, 9 May 2025 08:20:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,154 +57,56 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/2] dmaengine: qcom: gpi: Add GPI Block event
- interrupt support
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Vinod Koul <vkoul@kernel.org>,
-        Mukesh Kumar Savaliya
-	<quic_msavaliy@quicinc.com>,
-        Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <linux-media@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <linaro-mm-sig@lists.linaro.org>, <quic_vtanuku@quicinc.com>
-References: <20250506111844.1726-1-quic_jseerapu@quicinc.com>
- <20250506111844.1726-2-quic_jseerapu@quicinc.com>
- <ze5y6llgo2qx4nvilaqcmkam5ywqa76d6uetn34iblz4nefpeu@ozbgzwbyd54u>
-Content-Language: en-US
-From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-In-Reply-To: <ze5y6llgo2qx4nvilaqcmkam5ywqa76d6uetn34iblz4nefpeu@ozbgzwbyd54u>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA5MDA1OCBTYWx0ZWRfX5ZLaSSa2tt2l
- 1U87h9OMbb+3c0+xh3XvzKsM2UeE7+c/txG9UFgeptIv1STPD0dUqtVgWNeNYOlrfrYVOeI22uU
- hU1BL/9BQol5pzZWLhYyVLmUwYIxPyD1BapV08VirptW+zsHeUv5gTFmDNsBiZpX9x2gsxZJv6w
- xuj1Ds+xVtiqh19t3ctQj68gOld823RU8JujEV8LCrB0iuok91VF1q6YEazG/YhqdOcN+ddx0yx
- /q8+hWhdmHFg9/igKYWx3czfS0UjPdF01z3ID2ywqhWDONIojVOZigBpvdFjxboqhBFEessktA2
- xKiFvaL56TYfxfG7T4LBmoaVhimrr+4Ok9RXM0LndZAJ+d7xzGseEICzQDkYxqrfSw9woc0ZxIv
- kWAy8K09cZ0yfkiO583BZIzb9SCW2YxL3K0Y3mqlZ5Q1FeBNpNKrYdbkGrdRcQz1IPIPKKiS
-X-Proofpoint-GUID: 1YhT_MNkxTN24HATnjDlZLayQakUpgyz
-X-Proofpoint-ORIG-GUID: 1YhT_MNkxTN24HATnjDlZLayQakUpgyz
-X-Authority-Analysis: v=2.4 cv=W4o4VQWk c=1 sm=1 tr=0 ts=681d9e4b cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
- a=_mbsQNs53rQDILcNud0A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-09_02,2025-05-08_04,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 suspectscore=0 lowpriorityscore=0 phishscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 mlxscore=0 adultscore=0
- clxscore=1015 malwarescore=0 impostorscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2504070000 definitions=main-2505090058
+Subject: Re: [PATCH v2 1/4] extcon: adc-jack: Fix wakeup source leaks on
+ device unbind
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ MyungJoo Ham <myungjoo.ham@samsung.com>, Chanwoo Choi
+ <cw00.choi@samsung.com>, Hans de Goede <hdegoede@redhat.com>,
+ Chen-Yu Tsai <wens@csie.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20250501-device-wakeup-leak-extcon-v2-0-7af77802cbea@linaro.org>
+ <20250501-device-wakeup-leak-extcon-v2-1-7af77802cbea@linaro.org>
+Content-Language: en-US, fr-FR
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+In-Reply-To: <20250501-device-wakeup-leak-extcon-v2-1-7af77802cbea@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-
-On 5/6/2025 5:02 PM, Dmitry Baryshkov wrote:
-> On Tue, May 06, 2025 at 04:48:43PM +0530, Jyothi Kumar Seerapu wrote:
->> GSI hardware generates an interrupt for each transfer completion.
->> For multiple messages within a single transfer, this results in
->> N interrupts for N messages, leading to significant software
->> interrupt latency.
->>
->> To mitigate this latency, utilize Block Event Interrupt (BEI) mechanism.
->> Enabling BEI instructs the GSI hardware to prevent interrupt generation
->> and BEI is disabled when an interrupt is necessary.
->>
->> When using BEI, consider splitting a single multi-message transfer into
->> chunks of 8 messages internally and so interrupts are not expected for
->> the first 7 message completions, only the last message triggers
->> an interrupt, indicating the completion of 8 messages.
->>
->> This BEI mechanism enhances overall transfer efficiency.
->>
->> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
->> ---
->> v5 ->v6:
->>    - For updating the block event interrupt bit, instead of relying on
->>      bei_flag, decision check is moved with DMA_PREP_INTERRUPT flag.
->>   
->> v4 -> v5:
->>    - BEI flag naming changed from flags to bei_flag.
->>    - QCOM_GPI_BLOCK_EVENT_IRQ macro is removed from qcom-gpi-dma.h
->>      file, and Block event interrupt support is checked with bei_flag.
->>
->> v3 -> v4:
->>    - API's added for Block event interrupt with multi descriptor support for
->>      I2C is moved from qcom-gpi-dma.h file to I2C geni qcom driver file.
->>    - gpi_multi_xfer_timeout_handler function is moved from GPI driver to
->>      I2C driver.
->>
->> v2-> v3:
->>     - Renamed gpi_multi_desc_process to gpi_multi_xfer_timeout_handler
->>     - MIN_NUM_OF_MSGS_MULTI_DESC changed from 4 to 2
->>     - Added documentation for newly added changes in "qcom-gpi-dma.h" file
->>     - Updated commit description.
->>
->> v1 -> v2:
->>     - Changed dma_addr type from array of pointers to array.
->>     - To support BEI functionality with the TRE size of 64 defined in GPI driver,
->>       updated QCOM_GPI_MAX_NUM_MSGS to 16 and NUM_MSGS_PER_IRQ to 4.
->>
->>   drivers/dma/qcom/gpi.c           | 3 +++
->>   include/linux/dma/qcom-gpi-dma.h | 2 ++
->>   2 files changed, 5 insertions(+)
->>
->> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
->> index b1f0001cc99c..7e511f54166a 100644
->> --- a/drivers/dma/qcom/gpi.c
->> +++ b/drivers/dma/qcom/gpi.c
->> @@ -1695,6 +1695,9 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
->>   
->>   		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
->>   		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
->> +
->> +		if (!(i2c->dma_flags & DMA_PREP_INTERRUPT))
->> +			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_BEI);
->>   	}
->>   
->>   	for (i = 0; i < tre_idx; i++)
->> diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
->> index 6680dd1a43c6..ebac0d3edff2 100644
->> --- a/include/linux/dma/qcom-gpi-dma.h
->> +++ b/include/linux/dma/qcom-gpi-dma.h
->> @@ -65,6 +65,7 @@ enum i2c_op {
->>    * @rx_len: receive length for buffer
->>    * @op: i2c cmd
->>    * @muli-msg: is part of multi i2c r-w msgs
->> + * @dma_flags: Flags indicating DMA capabilities
->>    */
->>   struct gpi_i2c_config {
->>   	u8 set_config;
->> @@ -78,6 +79,7 @@ struct gpi_i2c_config {
->>   	u32 rx_len;
->>   	enum i2c_op op;
->>   	bool multi_msg;
->> +	unsigned int dma_flags;
+Le 01/05/2025 à 16:33, Krzysztof Kozlowski a écrit :
+> Device can be unbound, so driver must also release memory for the wakeup
+> source.  Do not use devm interface, because it would change the order of
+> cleanup.
 > 
-> Why do you need extra field instead of using
-> dma_async_tx_descriptor.flags?
-
-In the original I2C QCOM GENI driver, using the local variable (unsigned 
-in flags) and updating the "DMA_PREP_INTERRUPT" flag.
-
-Sure, i will review if "dma_async_tx_descriptor.flags" can be retrieved 
-in GPI driver for DMA_PREP_INTERRUPT flag status.
+> Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>   drivers/extcon/extcon-adc-jack.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
->>   };
->>   
->>   #endif /* QCOM_GPI_DMA_H */
->> -- 
->> 2.17.1
->>
+> diff --git a/drivers/extcon/extcon-adc-jack.c b/drivers/extcon/extcon-adc-jack.c
+> index 46c40d85c2ac89599ffbe7b6d11b161b295d5564..557930394abd25771799733a22121d1f8e254918 100644
+> --- a/drivers/extcon/extcon-adc-jack.c
+> +++ b/drivers/extcon/extcon-adc-jack.c
+> @@ -164,6 +164,7 @@ static void adc_jack_remove(struct platform_device *pdev)
+>   {
+>   	struct adc_jack_data *data = platform_get_drvdata(pdev);
+>   
+> +	device_init_wakeup(&pdev->dev, false);
+
+Hi,
+
+Shouldn't this be:
+
+	if (data->wakeup_source)
+		device_init_wakeup(&pdev->dev, false);
+
+to match how things are done in the probe?
+
+CJ
+
+>   	free_irq(data->irq, data);
+>   	cancel_work_sync(&data->handler.work);
+>   }
 > 
 
 
