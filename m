@@ -1,168 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-57349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3291FAB0A26
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 07:58:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDD8AAB0A4B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 08:11:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 581F41BC218B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 05:58:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4E7704C2B66
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 06:11:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5209526A096;
-	Fri,  9 May 2025 05:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 319ED269AE7;
+	Fri,  9 May 2025 06:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oYwmTfq/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gsLS+Tml"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f66.google.com (mail-ed1-f66.google.com [209.85.208.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98AC266592;
-	Fri,  9 May 2025 05:57:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B75266599;
+	Fri,  9 May 2025 06:11:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746770275; cv=none; b=rb9fSbW2LiLu1fB7Ea2RF6iQLFPt2U4pKUUBRKtO26M5KU1/PTa+s4bXIFVT5Zhc3QGE55yTWv3/WYkSldwFzLBNkW0b3E0pYcc1sgWa5FopykkCkaqof2UH9FJ8azNN/bhmW3nUHdMsAgU/3UbQQEEBqwrX8V+ADZ2e8w3Ii20=
+	t=1746771069; cv=none; b=cFRjYRWJyxx2ZmiLWDG6Ws4AXwC9sdQfrKqDdp/WPsDaHfOjPF7ngGzp1/9opF6swINnUYfpyXYi/38/wZsjakh+G8L18bSoaIJYdVsCO++JU40kO+5l3O9f27+yzFyU++LezZ68/Ckwm5EikT4VmOhp0o4/UGgI0zLg8xCVthg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746770275; c=relaxed/simple;
-	bh=zbvnlFVWj0XKZR0nvcVIWzHP+vCohCj3wb6obVt2udg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=n5vQtqqfuqqnLrrIpnp4SQbgciHOZh+XMBAqAWgmqaNlLunPfU5Pz74HRQyN6gVOP0Q0k5BuLaV7Jybr7+JO7w+mvzv2O3LZBIJry+cRAwDbUv6v/iAUo4PoVy4zMW2Vic4U5yaPIqsFsK5mpiEU0vyjbf0VB5UA3JRQe9Pts14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oYwmTfq/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5492E458010135;
-	Fri, 9 May 2025 05:57:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0i+DaVo6pdGgXdnezJYZ73V9TZmxM2s3l3IAPHGSMRI=; b=oYwmTfq/BSj1pD/u
-	CKkScnySY71YqaghhtUofNfy75A6L2PvJd70/KpSHC+CnZexTZTuRG91MHTnmWo4
-	Yk1aN/0lqW2vqNPbFf/Wx0KgcnMi6wcLR7rUE08hCj9y3eHQA8lQQv9K89MqoZvB
-	YL81Q5wBYWIoaDeScdjdNyrl8yMxB4k/3OR3x5YV+QPvWuUpmvfsLMrGh9BQC+xA
-	FcP5svSJg9NcUwwwkm1c2E5B/C9UjyYkBSwqmHK/EkTt3ngSYxuerDFOxjQQBbQo
-	Jqm2PUuoWIbY6E6MvFxdLIQuChwhyk4MGrvTWMlMnSPBh68Yv1+N9JqfgbYwjumw
-	psryXg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46gnp7bm10-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 09 May 2025 05:57:50 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5495vnw6002137
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 9 May 2025 05:57:49 GMT
-Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 8 May 2025 22:57:45 -0700
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Date: Fri, 9 May 2025 11:26:50 +0530
-Subject: [PATCH v3 4/4] arm64: dts: qcom: Add camera clock controller for
- sc8180x
+	s=arc-20240116; t=1746771069; c=relaxed/simple;
+	bh=9jqZE21+WSs8HvXVZ2Nk/t/5qvfZGOiRoifSYIH6bYI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OiI8KEpQiXTWbXdAW1QN8mKa9RZKKNsVPF12Bz1APbHukByIu31f6KPWQl3NcdliOjzS0XKOwhWSJHIBaJhH+lBDWsCqn+TWTaRS6uy093sb2+wEnpqgB1Vb1g+7fdCB/LA52gHwZoO9qKsqqi55SdK/AL5XDWh6G+NEkyc6Eeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gsLS+Tml; arc=none smtp.client-ip=209.85.208.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f66.google.com with SMTP id 4fb4d7f45d1cf-5fbf52aad74so4391108a12.1;
+        Thu, 08 May 2025 23:11:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746771065; x=1747375865; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tT4nmiF3B+9Zf02ngFo5qPxLiB0Cnk6TGo7gdbEV7tc=;
+        b=gsLS+Tml+tSuCMvLdmXt0QcYU9GuCMEmHjxHsBSvwRjhOAUwxAejbdvk0LvnXtw8RC
+         PWv/M1YgAcUR8yl29y5WXTaXltx/T0DIjfIXErU5gjpsJ8aF5rB+obuLAAodTmaVQaRK
+         V9kyc+jr4ap8rCkEDxMnugW+TXWtbf7ZKnbUW73ixNB9MDwf0doBkghhaKMjxBDkbGK+
+         9gA+qj4/DWf0aR90rmPUUnvEsw84sysG7IsyvUKx44WWPfrSegUCmnzxSoF+mH6kv8Ek
+         Ju+Kbr70AF0iW1oJZBR+ABFrA8uSYTapHc5ZmQJa8f17PQlT52YzjoMZFrtOybASKFeS
+         x1tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746771065; x=1747375865;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tT4nmiF3B+9Zf02ngFo5qPxLiB0Cnk6TGo7gdbEV7tc=;
+        b=swc64QgzvWYglM3EcabZt2gwCuHdptThIreMH63izVATzNVR939i54sJ1NYIgo2Jxn
+         Nf4Slg5j+hKaDegURl3GlCdpKQazz5T1bZJdIACdaUcmB43j4muT9SXCLPGZLpDvB7qJ
+         QcrTL0+H7o2onFSn4nSRjzh66DSqZ7gEg0CHPtSThc5RnRZptNP/ZL8vQQkVBIOSOheF
+         mfdAGSr0gwxheWgAWUMkE1ghXmdFowOfulOjHo1n7zCJK01Z87FRqSCQpr5v79H/i+6+
+         9UvU2T5apJQ10YsHy9lG87renU0Dn8OoMev7uUBpHD7pmYY8lKdm/YOtQWz0t5iHBqMl
+         eY+w==
+X-Forwarded-Encrypted: i=1; AJvYcCUagtM27LaJOwJHh+ho9xptMSVmU7V3z0KcV4WkcUSzfBJHl6XmQbFt+1OTq4m8tEE62hbyP8mVH/cBYhFU@vger.kernel.org, AJvYcCVB0rdGr32B1bv3HDzc1yqVo24RdHLHtei+sTst1W1eYdAmrw+cj8tHxL8JlnVQQEBrwX2dG4D98dUd@vger.kernel.org, AJvYcCVLG5rPAeR4aiW/jhVrDikqxCT7WvD+WoIjpRKWgIt62KkEMI19Nf/zwJRhuLN79Qo0IdZnWrOJPBT8KpPp@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzwt5nwlhhGJNeNHTv8HA3f09BvCKLU1kMvHq8F3Y7i5exmR+B7
+	Is27MYYUoxsX2IojC3RFCaLocDUob7lAyotm9900U8YPBP0hcZwd
+X-Gm-Gg: ASbGncsUQCxePfU+mqhGBxApW5SCJdE8rTPyojlhp1YfJJa+XgF4HhAJNkxwM794678
+	PhK0jz3+mK5N2D5PBLHdKuq3MIgJ1TYDPm5Sov479dLQgch0MEcB+saLbrEBBXGPcBbnrMdxGdr
+	RaiH4OiUEtiSKkJxebpkL2Ng6717iH0PfLkieqtI+AYXBIzTXdtyoOasPiqn1JcaYksgkMJLVu0
+	zoKNqCKEaFggnDRJ0zWD2OHsZme4KGid44ARbIYRVmMuLM/+SNvHbhs6yIQ6SJ6a026IVoHXfwl
+	wdmqQ8cwv3gz7xGP7864az3SAuBm+cg5um4bPR8qX6JRAu8Sib3xzS0zIMzyyjgT4hMa+uHauRt
+	Cryc28WRLmqD1hW/xe/YBEFuoK65cd9kb17aNUwbz2B4GMIeH/I4=
+X-Google-Smtp-Source: AGHT+IHV7Lb+Jz2vAFwguRkPg3xEv8RK1gYxrdSEajyR1uZCyO5I90pymBqse+1L9ASZRUyJgq24dg==
+X-Received: by 2002:a17:906:6a22:b0:ad2:cce:8d5e with SMTP id a640c23a62f3a-ad21b16d4d8mr201457766b.7.1746771065029;
+        Thu, 08 May 2025 23:11:05 -0700 (PDT)
+Received: from [26.26.26.1] (ec2-3-69-236-239.eu-central-1.compute.amazonaws.com. [3.69.236.239])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad219343c81sm101663266b.58.2025.05.08.23.11.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 May 2025 23:11:04 -0700 (PDT)
+Message-ID: <ec5bd8d1-c865-40ac-b03d-9e07875d931c@gmail.com>
+Date: Fri, 9 May 2025 14:11:00 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/5] PCI/ERR: Remove misleading TODO regarding kernel
+ panic
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Oliver O'Halloran <oohall@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Zhou Wang <wangzhou1@hisilicon.com>,
+ Will Deacon <will@kernel.org>, Robert Richter <rric@kernel.org>,
+ Alyssa Rosenzweig <alyssa@rosenzweig.io>, Marc Zyngier <maz@kernel.org>,
+ Conor Dooley <conor.dooley@microchip.com>,
+ Daire McNamara <daire.mcnamara@microchip.com>
+Cc: dingwei@marvell.com, cassel@kernel.org, Lukas Wunner <lukas@wunner.de>,
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+ linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-riscv@lists.infradead.org
+References: <20250508-pcie-reset-slot-v4-0-7050093e2b50@linaro.org>
+ <20250508-pcie-reset-slot-v4-1-7050093e2b50@linaro.org>
+Content-Language: en-US
+From: Ethan Zhao <etzhao1900@gmail.com>
+In-Reply-To: <20250508-pcie-reset-slot-v4-1-7050093e2b50@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250509-sc8180x-camcc-support-v3-4-409ca8bfd6b8@quicinc.com>
-References: <20250509-sc8180x-camcc-support-v3-0-409ca8bfd6b8@quicinc.com>
-In-Reply-To: <20250509-sc8180x-camcc-support-v3-0-409ca8bfd6b8@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Jagadeesh
- Kona" <quic_jkona@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA5MDA1NSBTYWx0ZWRfX2OW9RINUe3Nf
- TUBvpSXIwlAecTwTDVNpRret8AcF5/a/FqbBoBdXk99+tA5HvQdMNno75gNewTq4ItpJTiIcy62
- drJE4EIMHXEAlhn49ZSnmAkw2lGK9Z6W0rEbWGxQfECy4FrpHhhcd/t3AVkGDFi+jQZ5H+suGIY
- AJOqx9+tiNlAdyLhJEpcEMeDMvxvAdhw78O5IeNRjDT7SaxF1dvSNbfuJ2uIbWtD/kgQBpH4rm9
- 2f4lAndzP5j8emtqT2XI7GjCFAypUPfaCmdiKyfCSs7AVQ08DH8FZDEHG3Fu0BUOF0TUHfVskuZ
- YkAnfsjoGc35uRjXFRyRS7qtlHZHVT9T4PVz8ygO9fYEAPDC1zT23kcjtPB60seO0o9J4LOH8eJ
- 88MRGHV6O8d1tNabNfj16qXx8xjI4h9B502jJFppo17C9BhxmOcyQ+LxOM0h3f6RNK2vgFiR
-X-Proofpoint-GUID: nFGm7j77eKGO5sjlc-Iql6RrJJgi3c82
-X-Authority-Analysis: v=2.4 cv=B/G50PtM c=1 sm=1 tr=0 ts=681d995e cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=fv2zVKLHILqpzYTyU3AA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: nFGm7j77eKGO5sjlc-Iql6RrJJgi3c82
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-09_02,2025-05-08_04,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0 spamscore=0
- suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0 adultscore=0
- mlxlogscore=852 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505090055
 
-Add device node for camera clock controller on Qualcomm
-SC8180X platform.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index b84e47a461a014871ef11e08d18af70bec8e2d63..e53c242fda12b2b53a27e549e2e2e2ead9e88cf1 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -9,6 +9,7 @@
- #include <dt-bindings/clock/qcom,gcc-sc8180x.h>
- #include <dt-bindings/clock/qcom,gpucc-sm8150.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/clock/qcom,sc8180x-camcc.h>
- #include <dt-bindings/interconnect/qcom,icc.h>
- #include <dt-bindings/interconnect/qcom,osm-l3.h>
- #include <dt-bindings/interconnect/qcom,sc8180x.h>
-@@ -2934,6 +2935,19 @@ usb_sec_dwc3_ss: endpoint {
- 			};
- 		};
- 
-+		camcc: clock-controller@ad00000 {
-+			compatible = "qcom,sc8180x-camcc";
-+			reg = <0 0x0ad00000 0 0x20000>;
-+			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&sleep_clk>;
-+			power-domains = <&rpmhpd SC8180X_MMCX>;
-+			required-opps = <&rpmhpd_opp_low_svs>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		mdss: mdss@ae00000 {
- 			compatible = "qcom,sc8180x-mdss";
- 			reg = <0 0x0ae00000 0 0x1000>;
+On 5/8/2025 3:10 PM, Manivannan Sadhasivam wrote:
+> A PCI device is just another peripheral in a system. So failure to
+> recover it, must not result in a kernel panic. So remove the TODO which
+> is quite misleading.
+> 
+Could you explain what the result would be if A PCI device failed to
+recovery from FATAL/NON_FATAL aer error or DPC event ? what else
+better choice we have as next step ? or just saying "failed" then
+go ahead ?
 
--- 
-2.25.1
+Thanks,
+Ethan
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>   drivers/pci/pcie/err.c | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/drivers/pci/pcie/err.c b/drivers/pci/pcie/err.c
+> index 31090770fffcc94e15ba6e89f649c6f84bfdf0d5..de6381c690f5c21f00021cdc7bde8d93a5c7db52 100644
+> --- a/drivers/pci/pcie/err.c
+> +++ b/drivers/pci/pcie/err.c
+> @@ -271,7 +271,6 @@ pci_ers_result_t pcie_do_recovery(struct pci_dev *dev,
+>   
+>   	pci_uevent_ers(bridge, PCI_ERS_RESULT_DISCONNECT);
+>   
+> -	/* TODO: Should kernel panic here? */
+>   	pci_info(bridge, "device recovery failed\n");
+>   
+>   	return status;
+> 
 
 
