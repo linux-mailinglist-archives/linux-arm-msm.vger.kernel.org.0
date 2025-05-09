@@ -1,275 +1,287 @@
-Return-Path: <linux-arm-msm+bounces-57413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C470AB115E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 13:00:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 374F7AB11B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 13:10:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6569D1BA642D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 11:00:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 59BC51C05C55
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 11:10:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FDAF28ECEE;
-	Fri,  9 May 2025 11:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8673728F94E;
+	Fri,  9 May 2025 11:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yol464HE"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DEQadB0W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E1022D4DF;
-	Fri,  9 May 2025 11:00:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2386528F93F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 May 2025 11:10:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746788423; cv=none; b=j4NwX12CeEBAYUILuksM6267r8XZmUiIsa0kznJ9oB7+icKDtRzodzvQJ3dEvWe+qE6rGNo0iEOS0S+3zMGH0iMib3A+6tTWR7d39/Bk7fX/hti428Ik01kx1rDR+gLs7Y3z/T2TiHgFr8yn3zsF8s+myIZ7NUqPFTT3pxrx65Y=
+	t=1746789026; cv=none; b=NcyCZ2cx0hiuzwSvyyAxjnzZzr5wgdCDRhNi8rz2eF/U+i+YpB6xg4jiGyb3C985mtEn0hm7Lu3IhoAdXes62Cd0jj/YOHPhkK9pdkarElLmikHHdyzcVwh3XlSrqkFGxcPVrkvz1WepycFOL6vXcxKWQr2lHUCgEI4e1ZKhTW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746788423; c=relaxed/simple;
-	bh=2Tdk/ggnV2o8yYP333sAqJkvwS68DEaai1lsBGWcxD8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=n3+dCizq49wF4iK3dhOBB2FoNwb673UvdavNr/J1iiinJEMkqWrtGF0l7rFBOzyh3FftuHsZQNLj7lLmt47noWJXB6nVrI/xXt2WhWj8qLiypJb6ASmjK349BOzJPKDt88HKEn5uTwPPUtGpuzDtlIkXOgUvYYmuoFyi77uj6XA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yol464HE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0036BC4CEE4;
-	Fri,  9 May 2025 11:00:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746788419;
-	bh=2Tdk/ggnV2o8yYP333sAqJkvwS68DEaai1lsBGWcxD8=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=Yol464HEg9vqDFyUQwRQdKN1UWEhk9KYXiCXOeDP9VA9AHis3MlaysFFHGzKZx+Xj
-	 ta32azC/YHYsNNUqJCMxCFf24taYkWZY2u0ma6FjzV48ySRS2vIRIeBKG8eNxHd9L5
-	 h9Cp1J5bqPLrX4bjTQoNDsTSbIaHWeTdglyJglnmeZDc4yw3pzL/YEeK63Jhi2G+c2
-	 lqZQuuVqjsiJj0VGruvTexguP6vBUJr23uoclvwLiMK0HS9ZqNZKpo7wOHDv8sBtu2
-	 9a0t2UnHlSPZ0ucGYNUeLMrinF5/7ZB9pNlb4WkdYlRqJKSlybS5ezPLnTdpZFediB
-	 dRJigYvY+eHXw==
-Message-ID: <c797e8b2-9d9b-4fc2-a8bd-f88cadcc94b6@kernel.org>
-Date: Fri, 9 May 2025 12:00:16 +0100
+	s=arc-20240116; t=1746789026; c=relaxed/simple;
+	bh=7dfdnysPwBMKS+82Clp896n3dU2RRsYEI+dYVYgZi0I=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=M398xC4Jm62rOz3ujmpZlA/TXYaJwTNDksbCJqF53JIrVTewM9vssNmILoO/aQoeGntPNVLx0mqI0/bef3/0uZrzo7hEnvX25jkvDMyzt7lRi3n9w6A+wS5GKsCUCXgNERNP7QChfP9q6PnkFJK1WGfEyx70H/K4NSfbxD25Jt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DEQadB0W; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5492MVwu025435
+	for <linux-arm-msm@vger.kernel.org>; Fri, 9 May 2025 11:10:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=WChW6NT2y3bT2Dd/AmO3BGrFqcOhrO0ctaK
+	cTuAnPQ0=; b=DEQadB0Wx4paKl+O0rMDd+e5PkqMSktpxSPzcNt/mHl3boUJZ53
+	X8MpcQFpM3kI4Amx2zppnN2ALw6wj2tDhHmf9t0kSE/NrxEsJ1RnFguC8fX+a8/e
+	TaTCrkQjYe3KoZ+Vb59sOW96igq9eFMQXoQaXKhhMnxP2rpZmZ7EraDnpAcT1s7N
+	KSy3CBtMHZfptPf3tvU1uOeKcvA+W6E2gQB2NGJnCPXLdhq//Cpq+DrJPl+MXdvX
+	5yY8LajqNzU+F4IptUys9BWvEvIRUpGBnzL9xkTA+O47D1zppNDMp8ztAXW2sIep
+	7Grcd0Xn66ldTlLaPKAfK3ctVKDbJgOTmPg==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46gnp14gek-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 09 May 2025 11:10:22 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-7410079c4a6so1187068b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 May 2025 04:10:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746789021; x=1747393821;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WChW6NT2y3bT2Dd/AmO3BGrFqcOhrO0ctaKcTuAnPQ0=;
+        b=h/rxJREQmPO0aY1Y5jqT1XY+DKAJrgWFgucjw12wPmqmqXsmduE3Sxz+z5KV8Rr9IZ
+         IwTwuYEoZRB5RbIgskEwNOdtQuwOnu/VyV1eujIWJGQUcwiUIDTd2sIjA4wFbM81swOW
+         GO2tCjkdI0gB5X0Thvrv5OCqxiJcALPGM2vN6Da1T0gJ29wSmEO7JifWvtefaOC9KJn8
+         9mPo1pqnPI0z6T9Z3E2+0p/rK+UFYNlrg7TJN1WgTJoF3vWlKKqLTaJ6nSFtPC2BGdfW
+         bm0rHBapjQqzrg2pPBecqPqzoeblDgRi40w5wftlRKpRDGQSia37O2fRebCePdNyOg5Y
+         ZGWw==
+X-Forwarded-Encrypted: i=1; AJvYcCVGeXwy2vpvFg+LX38uYiNqgWt/0S4heu0uEvl6Hwloqli9HFia0Zk3HiEtpJSJoIyln9OJeWgwiDLSAimR@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmfZd2LtWf64aVih08BsR/u6NqWkQdABGyhZrapUPyyMOTv7nc
+	uD7JatojWu+FOXEJvQJLbMv1hHlylKysWS6fZf7KkkrrvI4u4QLTSBlvzInfvdJdY3oIa3QC+E+
+	vWtmC/kyx4vbNm7GGfy4VH4EQHjIBllOFhdiHAAxf5M4phHdGqYX+xumIchZiok/4
+X-Gm-Gg: ASbGncuY0bEI+2SLHo7ehmPHHvdmva/O8/PPFN/LcVk4sHofdgBZjYSQirb3nrTqlQ0
+	ZM/WUbjGHPIXtse8cMyZLTv5ESHI3NCf7HxYVUs+705qmwB/XM+LD8kI89eHkNOv+Rbzb9XYsHQ
+	a7NX+sauEmLZf+40r7vMTjSaYTJoq2NS6oC5ekGd0JkL0xYhVijbcsPWGBKfT+Hvjx0cG8E9wZ+
+	ohtw4OXiFo80mZovGhoCOvE7D4IrHBNq+4Ak06fCuq0KLa6Lc/YrvAxj9ik/iJMdq9+Fio37x2h
+	Z7Sxgx3m1wk/eGf8PY1zL+UtgOCwugwkqJUzgBIAHqgj3Ms=
+X-Received: by 2002:a05:6a00:1488:b0:736:5438:ccc with SMTP id d2e1a72fcca58-7423be886d6mr3590872b3a.9.1746789021337;
+        Fri, 09 May 2025 04:10:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF6B4hUPZkyN0EguRbayUTn9kR7wQ+X/PQBVDr7XZ2boU57acIR/MEr3SR0hxpbREh4Zp5GUg==
+X-Received: by 2002:a05:6a00:1488:b0:736:5438:ccc with SMTP id d2e1a72fcca58-7423be886d6mr3590816b3a.9.1746789020855;
+        Fri, 09 May 2025 04:10:20 -0700 (PDT)
+Received: from hu-jprakash-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74237734c4asm1556223b3a.57.2025.05.09.04.10.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 May 2025 04:10:20 -0700 (PDT)
+From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+To: jic23@kernel.org, robh@kernel.org, krzysztof.kozlowski@linaro.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, agross@kernel.org,
+        andersson@kernel.org, lumag@kernel.org,
+        dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org,
+        daniel.lezcano@linaro.org, sboyd@kernel.org, amitk@kernel.org,
+        thara.gopinath@gmail.com, lee@kernel.org, rafael@kernel.org,
+        subbaraman.narayanamurthy@oss.qualcomm.com,
+        david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com,
+        quic_kamalw@quicinc.com
+Cc: rui.zhang@intel.com, lukasz.luba@arm.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        cros-qcom-dts-watchers@chromium.org, jishnu.prakash@oss.qualcomm.com,
+        quic_skakitap@quicinc.com, neil.armstrong@linaro.org,
+        stephan.gerhold@linaro.org
+Subject: [PATCH V6 0/5] Add support for QCOM SPMI PMIC5 Gen3 ADC
+Date: Fri,  9 May 2025 16:39:54 +0530
+Message-Id: <20250509110959.3384306-1-jishnu.prakash@oss.qualcomm.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] ASoC: qcom: use drvdata instead of component to keep
- id
-To: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
- Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Srinivas Kandagatla <srini@kernel.org>,
- Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org
-References: <87a57o2amc.wl-kuninori.morimoto.gx@renesas.com>
- <878qn82alv.wl-kuninori.morimoto.gx@renesas.com>
-Content-Language: en-US
-From: Srinivas Kandagatla <srini@kernel.org>
-In-Reply-To: <878qn82alv.wl-kuninori.morimoto.gx@renesas.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA5MDEwNyBTYWx0ZWRfX1ivSw5UnV5NS
+ /JdavHhpssCX044zlnnv8MJTXDZkBvstuphVcnzuxuYZ8X4QfBmMcdPHaQWMKcZaa7Rden5HB+e
+ dR3sthCmeZyN2ngbz8LUnoWaZODPwHq/xf50auWS0UxoYVs8GbZtsWEypj0LpplK2kJkiX9W2V/
+ YE7o5N7nBEeQcaxzMmhA6wCiw4EeqlL8cAbs9L6ixeErOw0OXEhI5/ppgCXRU+4Ho/Nt9leCMwd
+ z3BAfG++zi4ax4uv1EVnPF7CC4anr5OgrkA4c0sK78lvQFVNzM13pKcyHQHW9QcSdC2ePThOI7E
+ AFbrdIy1hvMNXJguO2wLhulezHpCT+O2BMm7rueRIxJ+MrMShEyHnF6K2nQxJsUaAzet7altU5n
+ frgRUJ0Cev/2pVPVDHyi+DH5+fHpWAb0rLAoQRK20LQghTfZ92PFP0m7aqcxhDx38HiEZKeH
+X-Proofpoint-GUID: 57Iw-58bZTAhaA9SsF4Gf4oW-r5_oXU7
+X-Proofpoint-ORIG-GUID: 57Iw-58bZTAhaA9SsF4Gf4oW-r5_oXU7
+X-Authority-Analysis: v=2.4 cv=W4o4VQWk c=1 sm=1 tr=0 ts=681de29e cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=N0aDCOoQtnTZPCUHnXIA:9 a=OpyuDcXvxspvyRM73sMx:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-09_04,2025-05-08_04,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 suspectscore=0 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 bulkscore=0 spamscore=0 mlxscore=0 adultscore=0
+ clxscore=1015 malwarescore=0 impostorscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505090107
 
-Thanks for the patch,
+PMIC5 Gen3 has a similar ADC architecture to that on PMIC5 Gen2,
+with all SW communication to ADC going through PMK8550 which
+communicates with other PMICs through PBS. The major difference is
+that the register interface used here is that of an SDAM present on
+PMK8550, rather than a dedicated ADC peripheral. There may be more than one
+SDAM used for ADC5 Gen3. Each ADC SDAM has eight channels, each of which may
+be used for either immediate reads (same functionality as previous PMIC5 and
+PMIC5 Gen2 ADC peripherals) or recurring measurements (same as PMIC5 and PMIC5
+Gen2 ADC_TM functionality). In this case, we have VADC and ADC_TM functionality
+combined into the same driver.
 
-On 5/8/25 01:46, Kuninori Morimoto wrote:
-> qcom lpass is using component->id to keep DAI ID (A).
-> 
-> (S)	static int lpass_platform_pcmops_open(
-> 				sruct snd_soc_component *component,
-> 				struct snd_pcm_substream *substream)
-> 	{			                          ^^^^^^^^^(B0)
-> 		...
-> (B1)		struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
-> (B2)		struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
-> 		...
-> (B3)		unsigned int dai_id = cpu_dai->driver->id;
-> 
-> (A)		component->id = dai_id;
-> 		...
-> 	}
-> 
-> This driver can get dai_id from substream (B0 - B3).
-> In this driver, below functions get dai_id from component->id (A).
-> 
-> (X)	lpass_platform_pcmops_suspend()
-> (Y)	lpass_platform_pcmops_resume()
-> (Z)	lpass_platform_copy()
-> 
-> Here, (Z) can get it from substream (B0 - B3), don't need to use
-> component->id (A). On suspend/resume (X)(Y), dai_id can only be obtained
-> from component->id (A), because there is no substream (B0) in function
-> parameter.
-> 
-> But, component->id (A) itself should not be used for such purpose.
-> It is intilialized at snd_soc_component_initialize(), and parsed its ID
-> (= component->id) from device name (a).
-> 
-> 	int snd_soc_component_initialize(...)
-> 	{
-> 		...
-> 		if (!component->name) {
-> (a)			component->name = fmt_single_name(dev, &component->id);
-> 			...                                     ^^^^^^^^^^^^^
-> 		}
-> 		...
-> 	}
-> 
-> On this driver, drvdata : component = 1 : 1 relatationship (b)
-> 
-> (b)	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
-> 
-> drvdata can be used on lpass_platform_pcmops_open() (S),
-> lpass_platform_pcmops_suspend()/lpass_platform_pcmops_resume() (X)(Y).
-> 
-> We can keep dai_id on drvdata->id instead of component->id (A). Let's do it.
-> 
-Current code seems to be broken to start with.
-May be we can fix that and also get rid of usage of component->id together.
+Patch 1 is a cleanup, to move the QCOM ADC dt-bindings files from
+dt-bindings/iio to dt-bindings/iio/adc folder, as they are
+specifically for ADC devices. It also fixes all compilation errors
+with this change in driver and devicetree files and similar errors
+in documentation for dtbinding check.
 
-From what I see that there are many regmaps that the driver cares about
-however its only managing one(either dp or i2s) in component suspend
-resume-path.
+Patch 2 splits out the common ADC channel properties used on older
+VADC devices, which would also be reused on ADC5 Gen3.
 
-i2s regmap is mandatory however other regmaps are setup based on flags
-like hdmi_port_enable and codec_dma_enable.
+Patch 3 adds bindings for ADC5 Gen3 peripheral.
 
-correct thing for suspend resume path to handle is by checking these
-flags, instead of using component->id.
+Patch 4 adds the main driver for ADC5 Gen3.
 
------------------->cut<----------------------------------
-diff --git a/sound/soc/qcom/lpass-platform.c
-b/sound/soc/qcom/lpass-platform.c
-index 9946f12254b3..d8b0a637b1c6 100644
---- a/sound/soc/qcom/lpass-platform.c
-+++ b/sound/soc/qcom/lpass-platform.c
-@@ -202,7 +202,6 @@ static int lpass_platform_pcmops_open(struct
-snd_soc_component *component,
-        struct regmap *map;
-        unsigned int dai_id = cpu_dai->driver->id;
+Patch 5 adds the auxiliary thermal driver which supports the ADC_TM
+functionality of ADC5 Gen3.
 
--       component->id = dai_id;
-        data = kzalloc(sizeof(*data), GFP_KERNEL);
-        if (!data)
-                return -ENOMEM;
-@@ -1190,13 +1189,14 @@ static int lpass_platform_pcmops_suspend(struct
-snd_soc_component *component)
- {
-        struct lpass_data *drvdata =
-snd_soc_component_get_drvdata(component);
-        struct regmap *map;
--       unsigned int dai_id = component->id;
+Changes since v5:
+- Addressed some reviewer comments in documentation and driver patches.
+- Link to v5: https://lore.kernel.org/all/20250131183242.3653595-1-jishnu.prakash@oss.qualcomm.com/
 
--       if (dai_id == LPASS_DP_RX)
-+       if (drvdata->hdmi_port_enable) {
-                map = drvdata->hdmiif_map;
--       else
--               map = drvdata->lpaif_map;
-+               regcache_cache_only(map, true);
-+               regcache_mark_dirty(map);
-+       }
+Changes since v4:
+- Split common ADC channel properties out into a separate file to use as 
+  ref for ADC5 Gen3 and moved ADC5 Gen3 documentation into a separate
+  file as suggested by reviewers.
+- Addressed few reviewer comments in driver patches.
+- Link to v4: https://lore.kernel.org/all/20241030185854.4015348-1-quic_jprakash@quicinc.com/
 
-+       map = drvdata->lpaif_map;
-        regcache_cache_only(map, true);
-        regcache_mark_dirty(map);
+Changes since v3:
+- Updated files affected by adc file path change in /arch/arm folder,
+  which were missed earlier.
+- Added ADC5 Gen3 documentation changes in existing qcom,spmi-vadc.yaml file
+  instead of adding separate file and addressed reviewer comments for all bindings.
+- Addressed review comments in driver patch. Split out TM functionality into
+  auxiliary driver in separate patch and added required changes in main driver.
+- Link to v3: https://lore.kernel.org/all/20231231171237.3322376-1-quic_jprakash@quicinc.com/
 
-@@ -1207,15 +1207,21 @@ static int lpass_platform_pcmops_resume(struct
-snd_soc_component *component)
- {
-        struct lpass_data *drvdata =
-snd_soc_component_get_drvdata(component);
-        struct regmap *map;
--       unsigned int dai_id = component->id;
-+       int ret;
+Changes since v2:
+- Reordered patches to keep cleanup change for ADC files first.
+- Moved ADC5 Gen3 documentation into a separate file
 
--       if (dai_id == LPASS_DP_RX)
-+       if (drvdata->hdmi_port_enable) {
-                map = drvdata->hdmiif_map;
--       else
--               map = drvdata->lpaif_map;
-+               regcache_cache_only(map, false);
-+               ret = regcache_sync(map);
-+               if (ret)
-+                       return ret;
-+       }
+Changes since v1:
+- Dropped patches 1-5 for changing 'ADC7' peripheral name to 'ADC5 Gen2'.
+- Addressed reviewer comments for binding and driver patches for ADC5 Gen3.
+- Combined patches 8-11 into a single patch as requested by reviewers to make
+  the change clearer and made all fixes required in same patch.
 
-+       map = drvdata->lpaif_map;
-        regcache_cache_only(map, false);
-+
-        return regcache_sync(map);
- }
+Jishnu Prakash (5):
+  dt-bindings: iio/adc: Move QCOM ADC bindings to iio/adc folder
+  dt-bindings: iio: adc: Split out QCOM VADC channel properties
+  dt-bindings: iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+  iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+  thermal: qcom: add support for PMIC5 Gen3 ADC thermal monitoring
 
- static int lpass_platform_copy(struct snd_soc_component *component,
-@@ -1224,7 +1230,9 @@ static int lpass_platform_copy(struct
-snd_soc_component *component,
-                               unsigned long bytes)
- {
-        struct snd_pcm_runtime *rt = substream->runtime;
--       unsigned int dai_id = component->id;
-+       struct snd_soc_pcm_runtime *soc_runtime =
-snd_soc_substream_to_rtd(substream);
-+       struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
-+       unsigned int dai_id = cpu_dai->driver->id;
-        int ret = 0;
+ .../bindings/iio/adc/qcom,spmi-adc5-gen3.yaml | 155 ++++
+ .../iio/adc/qcom,spmi-vadc-common.yaml        |  87 ++
+ .../bindings/iio/adc/qcom,spmi-vadc.yaml      |  81 +-
+ .../bindings/mfd/qcom,spmi-pmic.yaml          |   2 +-
+ .../bindings/thermal/qcom-spmi-adc-tm-hc.yaml |   2 +-
+ .../bindings/thermal/qcom-spmi-adc-tm5.yaml   |   6 +-
+ arch/arm/boot/dts/qcom/pm8226.dtsi            |   2 +-
+ arch/arm/boot/dts/qcom/pm8941.dtsi            |   2 +-
+ arch/arm/boot/dts/qcom/pma8084.dtsi           |   2 +-
+ arch/arm/boot/dts/qcom/pmx55.dtsi             |   2 +-
+ arch/arm64/boot/dts/qcom/pm4125.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm6125.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm6150.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm6150l.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/pm660.dtsi           |   2 +-
+ arch/arm64/boot/dts/qcom/pm660l.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm7250b.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/pm8150.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/pm8150l.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/pm8916.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm8937.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm8950.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm8953.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm8994.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pm8998.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pmi632.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/pmi8950.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi     |   2 +-
+ arch/arm64/boot/dts/qcom/pmp8074.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/pms405.dtsi          |   2 +-
+ .../boot/dts/qcom/qcm6490-fairphone-fp5.dts   |   4 +-
+ .../boot/dts/qcom/qcm6490-shift-otter.dts     |   4 +-
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts  |   4 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts       |   2 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |   2 +-
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi    |   4 +-
+ arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi   |   2 +-
+ .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts |   2 +-
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |   2 +-
+ .../dts/qcom/sc8280xp-microsoft-blackrock.dts |   2 +-
+ arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi  |   6 +-
+ .../boot/dts/qcom/sm7225-fairphone-fp4.dts    |   2 +-
+ .../boot/dts/qcom/sm7325-nothing-spacewar.dts |   6 +-
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts       |   8 +-
+ drivers/iio/adc/Kconfig                       |  30 +
+ drivers/iio/adc/Makefile                      |   2 +
+ drivers/iio/adc/qcom-adc5-gen3-common.c       | 104 +++
+ drivers/iio/adc/qcom-spmi-adc5-gen3.c         | 763 ++++++++++++++++++
+ drivers/iio/adc/qcom-spmi-adc5.c              |   2 +-
+ drivers/iio/adc/qcom-spmi-vadc.c              |   2 +-
+ drivers/thermal/qcom/Kconfig                  |   9 +
+ drivers/thermal/qcom/Makefile                 |   1 +
+ drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c | 531 ++++++++++++
+ .../iio/adc/qcom,pm8550-adc5-gen3.h           |  46 ++
+ .../iio/adc/qcom,pm8550b-adc5-gen3.h          |  85 ++
+ .../iio/adc/qcom,pm8550vx-adc5-gen3.h         |  22 +
+ .../iio/adc/qcom,pmk8550-adc5-gen3.h          |  52 ++
+ .../iio/{ => adc}/qcom,spmi-adc7-pm7325.h     |   2 +-
+ .../iio/{ => adc}/qcom,spmi-adc7-pm8350.h     |   2 +-
+ .../iio/{ => adc}/qcom,spmi-adc7-pm8350b.h    |   2 +-
+ .../iio/{ => adc}/qcom,spmi-adc7-pmk8350.h    |   2 +-
+ .../iio/{ => adc}/qcom,spmi-adc7-pmr735a.h    |   2 +-
+ .../iio/{ => adc}/qcom,spmi-adc7-pmr735b.h    |   2 +-
+ .../iio/{ => adc}/qcom,spmi-adc7-smb139x.h    |   2 +-
+ .../iio/{ => adc}/qcom,spmi-vadc.h            |  81 ++
+ include/linux/iio/adc/qcom-adc5-gen3-common.h | 193 +++++
+ 67 files changed, 2231 insertions(+), 139 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-adc5-gen3.yaml
+ create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc-common.yaml
+ create mode 100644 drivers/iio/adc/qcom-adc5-gen3-common.c
+ create mode 100644 drivers/iio/adc/qcom-spmi-adc5-gen3.c
+ create mode 100644 drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
+ create mode 100644 include/dt-bindings/iio/adc/qcom,pm8550-adc5-gen3.h
+ create mode 100644 include/dt-bindings/iio/adc/qcom,pm8550b-adc5-gen3.h
+ create mode 100644 include/dt-bindings/iio/adc/qcom,pm8550vx-adc5-gen3.h
+ create mode 100644 include/dt-bindings/iio/adc/qcom,pmk8550-adc5-gen3.h
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm7325.h (98%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350.h (98%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350b.h (99%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmk8350.h (97%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735a.h (95%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735b.h (95%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-smb139x.h (93%)
+ rename include/dt-bindings/iio/{ => adc}/qcom,spmi-vadc.h (77%)
+ create mode 100644 include/linux/iio/adc/qcom-adc5-gen3-common.h
 
-        void __iomem *dma_buf = (void __iomem *) (rt->dma_area + pos +
--------------------->cut<-----------------------
 
---srini	
-> Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-> ---
->  sound/soc/qcom/lpass-platform.c | 10 ++++++----
->  sound/soc/qcom/lpass.h          |  1 +
->  2 files changed, 7 insertions(+), 4 deletions(-)
-> 
-> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-> index 9946f12254b3..676018b8134a 100644
-> --- a/sound/soc/qcom/lpass-platform.c
-> +++ b/sound/soc/qcom/lpass-platform.c
-> @@ -202,7 +202,7 @@ static int lpass_platform_pcmops_open(struct snd_soc_component *component,
->  	struct regmap *map;
->  	unsigned int dai_id = cpu_dai->driver->id;
->  
-> -	component->id = dai_id;
-> +	drvdata->id = dai_id;
->  	data = kzalloc(sizeof(*data), GFP_KERNEL);
->  	if (!data)
->  		return -ENOMEM;
-> @@ -1190,7 +1190,7 @@ static int lpass_platform_pcmops_suspend(struct snd_soc_component *component)
->  {
->  	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
->  	struct regmap *map;
-> -	unsigned int dai_id = component->id;
-> +	unsigned int dai_id = drvdata->id;
->  
->  	if (dai_id == LPASS_DP_RX)
->  		map = drvdata->hdmiif_map;
-> @@ -1207,7 +1207,7 @@ static int lpass_platform_pcmops_resume(struct snd_soc_component *component)
->  {
->  	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
->  	struct regmap *map;
-> -	unsigned int dai_id = component->id;
-> +	unsigned int dai_id = drvdata->id;
->  
->  	if (dai_id == LPASS_DP_RX)
->  		map = drvdata->hdmiif_map;
-> @@ -1224,7 +1224,9 @@ static int lpass_platform_copy(struct snd_soc_component *component,
->  			       unsigned long bytes)
->  {
->  	struct snd_pcm_runtime *rt = substream->runtime;
-> -	unsigned int dai_id = component->id;
-> +	struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
-> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
-> +	unsigned int dai_id = cpu_dai->driver->id;
->  	int ret = 0;
->  
->  	void __iomem *dma_buf = (void __iomem *) (rt->dma_area + pos +
-> diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
-> index de3ec6f594c1..7663dafef18a 100644
-> --- a/sound/soc/qcom/lpass.h
-> +++ b/sound/soc/qcom/lpass.h
-> @@ -93,6 +93,7 @@ struct lpaif_dmactl {
->  
->  /* Both the CPU DAI and platform drivers will access this data */
->  struct lpass_data {
-> +	int id;
->  
->  	/* AHB-I/X bus clocks inside the low-power audio subsystem (LPASS) */
->  	struct clk *ahbix_clk;
+base-commit: 393d0c54cae31317deaa9043320c5fd9454deabc
+-- 
+2.25.1
 
 
