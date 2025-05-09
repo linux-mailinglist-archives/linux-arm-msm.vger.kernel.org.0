@@ -1,76 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-57498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89B25AB1FB2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 May 2025 00:12:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FB4EAB1FB8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 May 2025 00:13:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6BDD99E2A6A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 22:12:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C6FE91C2345B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 22:13:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B530026159E;
-	Fri,  9 May 2025 22:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EDC626156A;
+	Fri,  9 May 2025 22:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="meYThyWq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LyCb549X"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80AFE26156A;
-	Fri,  9 May 2025 22:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A7D261574;
+	Fri,  9 May 2025 22:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746828740; cv=none; b=Soxz+UDw1FuefpC1Fju3SvrjAmkakHXFyyeJeCYEaRMvnxibSszF5oUyoGrP+gObVUByIO1u0miN3r22anlLhRIqZyEF/79EZBMnL0Y0OT3hV0+bnc4hcZwkDvz7hpOfb96fR9kqhryfQUC5EC01mb+u236zBQH3GeU0Y5V76FI=
+	t=1746828811; cv=none; b=ICVt8Td/ZsNv3yZBPklDpWORuIsoZ54PZsxYhNv5MIJ3Ark4OvTkUHYxtaQbkIrZnmARUvTpumc7Zh9eLM8tbMwfQLlHsPKGCACNtlOrRLXvkiIaZMy+hgsDSAYztwbJz8oLmFeMlq7c8/eNFVM4i7kiQY+HatdVzHWEoF+2Xxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746828740; c=relaxed/simple;
-	bh=ZZ25JgcrA3CQi6q3MuZwVNyCrz8R+uAApr2nUDdvFv4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i2gvr45zVRBwg+F9p/Ep3/lqlenbP+scqspzlIRSSzMMtxlXOjNsIItRAth2xWDe3jsWBXa9irKdNGZLeXAg1pEQ/FxeqHGMm8wSLAYR1GdFTlGI0EnWXoIX/N9iyHzVOM44kgAEmoCGD/ELz2gA/QrOxq8B9Fr6A9I7C7834aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=meYThyWq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148BFC4CEE4;
-	Fri,  9 May 2025 22:12:18 +0000 (UTC)
+	s=arc-20240116; t=1746828811; c=relaxed/simple;
+	bh=YV+KRG/TjnglbjkMeXDUBX/N8s8EIPboNkrM8Rt9aeQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=RyGFUs5Ug+gtgGiihriZfq2deOUQJ99rN67VXjoMZUVT7nxiaOmpOp5LcIT6OXQrtoLV6/chgl7z3PC7hfd+rMpp/EorZyLpq7mBn7nIOZJEZ4kg2HU6X+y9Q99dFBKj/eK31tTuxo+vt/v5yu8Ju9r92m5J/IyDgd0sDaNjdqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LyCb549X; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83981C4CEE4;
+	Fri,  9 May 2025 22:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746828738;
-	bh=ZZ25JgcrA3CQi6q3MuZwVNyCrz8R+uAApr2nUDdvFv4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=meYThyWq16D2RKwR67+RZZErriyTQ8nr6U5QjQRY7ExamF5O7DMi0Xvv+K/DfqlxU
-	 Hl+wQdoHM+VAt+F09kxTdvYReRMc6mDDjMmffY78fwT0XmNvnzl+co7Q3ixLCCYzxQ
-	 JGjAJrjPh7EgZz9ukFqDTP5xKeT+x1pBodzYCt6ROlNRFijRr2p2h/aF0u1G9jJLPd
-	 DxYoYbqHqXjIVHhaWacinSxAGTG/l+NJcRXUtt/dOAp4Q48aPzRSw/JTT5Htd3F7oi
-	 IL+8UCSp4lwV9WrVG3gfZaC3oQhGKPs3PpGf7eXuw0iS48KUsy4ebqW1C3+tzQazO1
-	 d7rumTinve3xA==
-Date: Fri, 9 May 2025 15:12:16 -0700
+	s=k20201202; t=1746828810;
+	bh=YV+KRG/TjnglbjkMeXDUBX/N8s8EIPboNkrM8Rt9aeQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=LyCb549XovEhF6yFxgtE9C0DZaXSKqMPceBUkE5mF56FzFXFevO5Y424ccJh+ZYZv
+	 lVjRi/1x3NtefhOYw1R9AcuQ2cYfBxbFniooE9AdKanzarKPyvpPcXXfPl1tSfNZ4Z
+	 eizXXIPPNmZZVr6ImioDbAAaG3o8CNWmF4HFda1z5JCpDPojM1gFpjRgZBwTFAMi4s
+	 icc6t3pO359aAblk3jFGzAbB7n6wazXfieTuuCFSsvbioulN7SV3X35hHYixLBfWVP
+	 L+ouavZt0Yaxb312MmPZUflevaMhE+hsBonfG7YklOLjLXf6RiZ7c5blhq4EX74ba/
+	 /gOrN8V7GgdSA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Melody Olvera <melody.olvera@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, 
-	Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/4] soc: qcom: llcc-qcom: Add support for LLCC V6
-Message-ID: <cnlu4yhfax3ggtkig46bwimr7acpoxl6x74dpu3kdwq2wcjwmd@d6spkmdywrja>
-References: <20250414-sm8750_llcc_master-v4-0-e007f035380c@oss.qualcomm.com>
- <20250414-sm8750_llcc_master-v4-2-e007f035380c@oss.qualcomm.com>
+To: Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Luca Weiss <luca@lucaweiss.eu>
+Subject: Re: (subset) [PATCH 0/2] Fix fallback qcom,ipc parse
+Date: Fri,  9 May 2025 17:13:22 -0500
+Message-ID: <174682880459.49052.12382717694935503808.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250421-fix-qcom-smd-v1-0-574d071d3f27@mainlining.org>
+References: <20250421-fix-qcom-smd-v1-0-574d071d3f27@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250414-sm8750_llcc_master-v4-2-e007f035380c@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Mon, Apr 14, 2025 at 04:21:51PM -0700, Melody Olvera wrote:
-> Add support for LLCC V6. V6 adds several additional usecase IDs,
-> rearrages several registers and offsets, and supports slice IDs
-> over 31, so add a new function for programming LLCC V6.
+
+On Mon, 21 Apr 2025 04:04:15 +0200, Barnabás Czémán wrote:
+> mbox_request_channel() returning value was changed in case of error.
+> It uses returning value of of_parse_phandle_with_args().
+> It is returning with -ENOENT instead of -ENODEV when no mboxes property
+> exists.
 > 
+> ENODEV was checked before fallback to parse qcom,ipc property.
+> 
+> [...]
 
-Can you please fix up the checkpatch warnings in this patch?
+Applied, thanks!
 
-Thanks,
-Bjorn
+[2/2] soc: qcom: smp2p: Fix fallback to qcom,ipc parse
+      commit: 421777a02bbd9cdabe0ae05a69ee06253150589d
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
