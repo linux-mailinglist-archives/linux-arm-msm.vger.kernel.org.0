@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-57357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41CD2AB0AC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 08:41:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BE53AB0AC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 08:43:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B8E1C170A7A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 06:41:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 50FAC1C02B8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 06:43:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE77826B09F;
-	Fri,  9 May 2025 06:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A792E26B972;
+	Fri,  9 May 2025 06:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AqwqfZNd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i9paSXHF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D41D53C;
-	Fri,  9 May 2025 06:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D5826B2B1;
+	Fri,  9 May 2025 06:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746772913; cv=none; b=S1XvE0zPnsSB4cs3hlzpZqup37lsyx7Hw8DfGc7ruXsLp9BWv3GQWVZYgaGyssZ468zhzva2Y4h3+6krGUGvfTPYPXxVjhcHcg5f+9Iuvy9eA/1k48s0kCEEeJnFLwaINfjpyc1cS2ynslH8bmy3jfwKYAuObx16gJPYIJpWLB8=
+	t=1746772996; cv=none; b=r1V/E2AnAVQJY3+BuJfi7CddeQxV+51Idymyj63KwpkjfDVbIzVMLtvnLkzTDLjX6+CjW98CxXloHsS6ndJ+hKTMBQClhGGJbvoV3lZjWNi7VMWwVPgTdGuhs23un//55F/zdi4EkRahG2CDSsodPMmZPwmsBSKthTHn/fZk8Go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746772913; c=relaxed/simple;
-	bh=Kh4wGH228iQlxlwW6s2BagqamPOuOLBEuhUiNjv0IJw=;
+	s=arc-20240116; t=1746772996; c=relaxed/simple;
+	bh=fpgJVev+nMbt9BNw/EUpab1Il7bwFui389tYSyKSpgI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=s+7HETTZavZxAiyxonh2spew/HT3Moua6h7ESsVXEkhs9l3yZV4lZRn2wKKZ62Cc8fPzAciFvGOca2qM4P5800iAsUGsFnrHM9TGixtfgIY2nGqy+p36jSQ7PZJY1u61zntOCFqKk9fHBop5U9qZ3QFCMWQaOF9TEl3sbLNlYyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AqwqfZNd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC77C4CEE4;
-	Fri,  9 May 2025 06:41:49 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=raXchxY0ngSSHbDfSGma4hVQiWaO9/UIp1A+GqOD0dvouqVdfoBFU1ZaXm1NS6BouXebVyk8sYXo9YsDgiPaoHHi3Tjuh9KDp+cX2FAYat6oUzN4EgEjzFkG20Qo/co1jUASFQXQ8vWITjI6N1C//8XZB+gIUdLW3yOShHtCPXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i9paSXHF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB989C4CEE4;
+	Fri,  9 May 2025 06:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746772913;
-	bh=Kh4wGH228iQlxlwW6s2BagqamPOuOLBEuhUiNjv0IJw=;
+	s=k20201202; t=1746772996;
+	bh=fpgJVev+nMbt9BNw/EUpab1Il7bwFui389tYSyKSpgI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AqwqfZNdamR2GYB4GLNHfX7UU6YXIxxC3QF6aJ1rfeupgYKD6fCy/Z8xIJy38j24t
-	 eah1cWWOy5JYV4agJX8rM0SuMTHQYVUzDh2VglMsie1zyiiSRDBO9uKNxvBYLx2Q4e
-	 HE4WgSGCNvWuLkCs5Pb7xbR7HjqBcN3iHOlJ+oGKTKAx+uD1l/nRMPucMTPfOHFgti
-	 DoECptxew+UkUaivcndGFrgtmnqZl3rpoizDUVPsOABlDzVeiOWrS7plLWLS5zbs3R
-	 RRwrxpJGXnhsD7DJMiIJ0dKoWmaITZRmKV1ktCn3ZvFvCHKZyBCNkQ1LP7WYSVrxcA
-	 a0aDqWCEdLpjA==
-Message-ID: <b0eada5f-3901-46f5-bca9-87744091448b@kernel.org>
-Date: Fri, 9 May 2025 08:41:47 +0200
+	b=i9paSXHFQ6Te86C0u64cuwlgumgJ8Y8qWAAYtCN2QFZaEbB+aLcOJ1uSdV9Qq1iCz
+	 DsnAnvHizchL39TDRf6TcGN2iyJ1DQvB/CQ0pZtWie9jgYZFVpxEZrF5euIW7F2F8O
+	 LhnSD8F8tlGk1W4O0OH4Y1cOaZyO8wIVsoO+vTmVCVA8KlepfoHW79euWMOvPXzAra
+	 VQlaE5oC5ZvCsyUYrCQ/+bkgQ+UKQ+fbHr62HeDy3zIvfcZICdwJehegOPXdAL2PFQ
+	 oLD19YOn4tK5Xbu1vENMZGKBH4e6Xxz4R8AV4AUbOKVqfYHBTCZWFPlZHS3U0wEPp1
+	 EXZTmQu9tWoHg==
+Message-ID: <37d526f0-fe95-4b56-9288-c3388e575e7d@kernel.org>
+Date: Fri, 9 May 2025 08:43:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] dt-bindings: clock: qcom: Add missing bindings on
- gcc-sc8180x
+Subject: Re: [PATCH v3 2/4] dt-bindings: clock: Add Qualcomm SC8180X Camera
+ clock controller
 To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -62,9 +62,9 @@ Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
  Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
  Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
  linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
+ linux-kernel@vger.kernel.org
 References: <20250509-sc8180x-camcc-support-v3-0-409ca8bfd6b8@quicinc.com>
- <20250509-sc8180x-camcc-support-v3-1-409ca8bfd6b8@quicinc.com>
+ <20250509-sc8180x-camcc-support-v3-2-409ca8bfd6b8@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,21 +110,42 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250509-sc8180x-camcc-support-v3-1-409ca8bfd6b8@quicinc.com>
+In-Reply-To: <20250509-sc8180x-camcc-support-v3-2-409ca8bfd6b8@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 09/05/2025 07:56, Satya Priya Kakitapalli wrote:
-> The multi-media AHB clocks are needed to create HW dependency in
-> the multimedia CC dt blocks and avoid any issues. They were not
-> defined in the initial bindings. Add all the missing clock bindings
-> for gcc-sc8180x.
+> Add device tree bindings for the camera clock controller on
+> Qualcomm SC8180X platform.
 > 
-> Cc: stable@vger.kernel.org
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,sc8180x-camcc.yaml         |  67 ++++++++
+>  include/dt-bindings/clock/qcom,sc8180x-camcc.h     | 181 +++++++++++++++++++++
+>  2 files changed, 248 insertions(+)
 
-Drop, we already asked for this: you are not fixing any bug.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Read carefully stable kernel rules.
+
+---
+
+<form letter>
+This is an automated instruction, just in case, because many review tags
+are being ignored. If you know the process, you can skip it (please do
+not feel offended by me posting it here - no bad intentions intended).
+If you do not know the process, here is a short explanation:
+
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new versions
+of patchset, under or above your Signed-off-by tag, unless patch changed
+significantly (e.g. new properties added to the DT bindings). Tag is
+"received", when provided in a message replied to you on the mailing
+list. Tools like b4 can help here. However, there's no need to repost
+patches *only* to add the tags. The upstream maintainer will do that for
+tags received on the version they apply.
+
+Full context and explanation:
+https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
+</form letter>
 
 Best regards,
 Krzysztof
