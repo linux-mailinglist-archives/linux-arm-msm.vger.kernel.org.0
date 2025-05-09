@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-57462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51B1CAB16C7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 16:05:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 299D2AB16CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 16:06:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A26213AE5C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 14:01:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 180A33A7FC2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 14:01:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C583B296FC2;
-	Fri,  9 May 2025 13:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9839297107;
+	Fri,  9 May 2025 13:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="HIX7ccN6"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="oC4jIVad"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B110296FA1;
-	Fri,  9 May 2025 13:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC08296FD2;
+	Fri,  9 May 2025 13:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746799043; cv=none; b=kdL7OPBoiiyhCj3CkPE4bMJLlMfRf/BAWVrDTCzI0Ln+BodHbugWOyehLQhwdNt5rnxrE6zg8q+kBS33FzNsEias2n+keBofTj9JjQHG3uqgDkxU5W4eStmJ2biI5RPNu5zRoaSkn4AT+56lRb1icgSto7w2jb6EPubwZHRERng=
+	t=1746799046; cv=none; b=V9GVIxJWZJqQnEOVkkvvb3XImNMMUYTd2ntfMy6h27kglXBNC4LHLZ/8E82giqmBr56VLOWL+gZZ7uAmMhYLXhLzBwhDCDw9cBUxOr43GwwsvnOL/AU2dxzF3Qq12qwkXilGd0Wqc/HRX2aUxpBnL2diSjHn5n3F9vsLZy73ndM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746799043; c=relaxed/simple;
-	bh=f2BC6TwWrfdAc1A6k20wnEkrPxCA/FxTpE9AxjI8Gfs=;
+	s=arc-20240116; t=1746799046; c=relaxed/simple;
+	bh=LozClABcXufkShD9dMW2j2p46c8bfoPymagdHW8vpKE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=e3zPT7FJTiyaVKQ0GRvEJn1K1rVyebuntcyS9mflM7P+juqRJNM/UAPKkcCvMm7LwqLyNCMdBWeoDa6tGUwPiEG65l+b9ovfnGfcJXgCyX3l25/LTX3iEHuI5v6G7cBZRy2as4CK3/YYZynVa05hR22PDjLYYvticsYJf0CjRl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=HIX7ccN6; arc=none smtp.client-ip=217.70.183.196
+	 In-Reply-To:To:Cc; b=CaGZU7cPiOqyaR3NkX352r7cPJZRGRDtpGw7H0eGP+zvs8+2nrX3GkdiJYK9TS1x3DyUFay/aiGDue+knBDzNY+o50ErS/QvZyEUon69/+OJsLuvEzTCw5+AQQSR22UUIjlhJ8Fz6hxnM+4GKtLt8zy7RBf9q12his8d26cYdWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=oC4jIVad; arc=none smtp.client-ip=217.70.183.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id BC3A143B63;
-	Fri,  9 May 2025 13:57:16 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id C5D1B43B67;
+	Fri,  9 May 2025 13:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1746799039;
+	t=1746799042;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=XhvtZmJk3FGMo9ahqqYGoAgMdnFeX8Qd7K/4Q/1VF9k=;
-	b=HIX7ccN6AuzSpJ+g2r6A3sYW/Qs3oMH5mJ+W60lmHWW70o/5q2L/bIZRLqjsn2T2nPXwu4
-	6gcowP8K35ifpxOfhdzx8GcNWZspKd9+fB5/d8YS8BkJXT4vjEKbjfjZmrxrLm37VnWCNL
-	EgnzB9UQK9g5v1X1efA8279+ZoklLE7nJzUsn8ubc1NK5zcF4yNrpiPytpa6mdpLNrFq9d
-	VuZMMorNfxlf+bnxzXt/iJ0RQ5N4G+8+vIf8DkfqGRhPmaq9PHMidycaroG20nnHDbST4c
-	8mb0NXMbpXXlS2EhA20AY8JlbDpQ2wrOVq3JhLpSP6X8KjzmPRRePO77wVifDg==
+	bh=d90bdozVEDl17jgP/30NkcxJUSIJ4T84xVCf6HbGeUs=;
+	b=oC4jIVadhL3OVUuZQHMzblGENFNnp2JxECtht7zSQrYJ4U/3R6u9zOmCvzfwW9snQQ1lFe
+	a6Zm7dfqnpH0AmpUxEpTLuh7hBe8tTIv7itfJlbzjrW2KAUZIMmELfY9t+ANbn5FsU9xT1
+	6fJKT68jMunkzO0x5aObyt2WHsMqNn/8TGbWxs1Py0LlTnlqoVzbxJ8iOXpDeTDwoB8742
+	UL96robWxijxmxcsKbHT0d6GIpgqZ24R+8m2xUlMhf1KNIGGRN2Z8dkn8DKC/Mx/7VF91M
+	wBUVhXjFzpki4cu1UFVgHt6E9voiQDvB7B8+xmPWeJ2dzKssT4PfW1f1ITvsbQ==
 From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Date: Fri, 09 May 2025 15:53:47 +0200
-Subject: [PATCH v3 21/22] drm/bridge: panel: convert to
- devm_drm_bridge_alloc() API
+Date: Fri, 09 May 2025 15:53:48 +0200
+Subject: [PATCH v3 22/22] drm/todo: add entry to remove
+ devm_drm_put_bridge()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,7 +57,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250509-drm-bridge-convert-to-alloc-api-v3-21-b8bc1f16d7aa@bootlin.com>
+Message-Id: <20250509-drm-bridge-convert-to-alloc-api-v3-22-b8bc1f16d7aa@bootlin.com>
 References: <20250509-drm-bridge-convert-to-alloc-api-v3-0-b8bc1f16d7aa@bootlin.com>
 In-Reply-To: <20250509-drm-bridge-convert-to-alloc-api-v3-0-b8bc1f16d7aa@bootlin.com>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
@@ -85,78 +85,58 @@ Cc: Anusha Srivatsa <asrivats@redhat.com>,
  linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
  linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com, 
- Luca Ceresoli <luca.ceresoli@bootlin.com>
+ Luca Ceresoli <luca.ceresoli@bootlin.com>, Jonathan Corbet <corbet@lwn.net>, 
+ linux-doc@vger.kernel.org
 X-Mailer: b4 0.14.2
 X-GND-State: clean
 X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvjeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomhepnfhutggrucevvghrvghsohhlihcuoehluhgtrgdrtggvrhgvshholhhisegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeeiieeuvdfftefgueduleehueetgffgjeeitedtteetkeeuueeuueekveevvdeuveenucfkphepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgenucevlhhushhtvghrufhiiigvpedvtdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegludelvddrudeikedrudejkedruddukegnpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfeelpdhrtghpthhtohepjhhonhgrsheskhifihgsohhordhsvgdprhgtphhtthhopegrnhgurhiivghjrdhhrghjuggrsehinhhtvghlrdgtohhmpdhrtghpthhtohepihhmgieslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnu
- higqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthiiihhmmhgvrhhmrghnnhesshhushgvrdguvgdprhgtphhtthhopehkvghrnhgvlhesphgvnhhguhhtrhhonhhigidruggvpdhrtghpthhtoheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdprhgtphhtthhopegrshhrihhvrghtshesrhgvughhrghtrdgtohhm
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvjeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomhepnfhutggrucevvghrvghsohhlihcuoehluhgtrgdrtggvrhgvshholhhisegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeeiieeuvdfftefgueduleehueetgffgjeeitedtteetkeeuueeuueekveevvdeuveenucfkphepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgenucevlhhushhtvghrufhiiigvpedvtdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegludelvddrudeikedrudejkedruddukegnpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepgedupdhrtghpthhtohepjhhonhgrsheskhifihgsohhordhsvgdprhgtphhtthhopegrnhgurhiivghjrdhhrghjuggrsehinhhtvghlrdgtohhmpdhrtghpthhtohepihhmgieslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnu
+ higqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthiiihhmmhgvrhhmrghnnhesshhushgvrdguvgdprhgtphhtthhopehkvghrnhgvlhesphgvnhhguhhtrhhonhhigidruggvpdhrtghpthhtoheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdprhgtphhtthhopegtohhrsggvtheslhifnhdrnhgvth
 X-GND-Sasl: luca.ceresoli@bootlin.com
 
-This is the new API for allocating DRM bridges.
+devm_drm_put_bridge() is a temporary workaround waiting for the panel
+bridge lifetime rework. Add a TODO entry to not forget it must be removed
+after such rework.
 
-The devm lifetime management of this driver is peculiar. The underlying
-device for the panel_bridge is the panel, and the devm lifetime is tied the
-panel device (panel->dev). However the panel_bridge allocation is not
-performed by the panel driver, but rather by a separate entity (typically
-the previous bridge in the encoder chain).
-
-Thus when that separate entity is destroyed, the panel_bridge is not
-removed automatically by devm, so it is rather done explicitly by calling
-drm_panel_bridge_remove(). This is the function that does devm_kfree() the
-panel_bridge in current code, so update it as well to put the bridge
-reference instead.
-
-This is a temporary solution until the panel lifetime is reworked, which
-should make this workaround unnecessary, so add a comment to clarify that.
-
+Suggested-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
 ---
 
-Changes in v3:
-- add TODO to remove devm_drm_put_bridge(), update commit message
-- fix typo in commit message
+To: Jonathan Corbet <corbet@lwn.net>
+Cc: linux-doc@vger.kernel.org
 
-Changes in v2: none
+This patch was added in v3
 ---
- drivers/gpu/drm/bridge/panel.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ Documentation/gpu/todo.rst | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/panel.c b/drivers/gpu/drm/bridge/panel.c
-index 79b009ab9396048eac57ad47631a902e949d77c6..6cbbfb1381a4a75fbc3acf6e6c5361202627e740 100644
---- a/drivers/gpu/drm/bridge/panel.c
-+++ b/drivers/gpu/drm/bridge/panel.c
-@@ -287,15 +287,14 @@ struct drm_bridge *drm_panel_bridge_add_typed(struct drm_panel *panel,
- 	if (!panel)
- 		return ERR_PTR(-EINVAL);
+diff --git a/Documentation/gpu/todo.rst b/Documentation/gpu/todo.rst
+index c57777a24e03d91b1ffe04365f7356f2d938befd..be8637da3fe950ddcb65cdcf626bc4b4e6b0fa26 100644
+--- a/Documentation/gpu/todo.rst
++++ b/Documentation/gpu/todo.rst
+@@ -515,6 +515,21 @@ Contact: Douglas Anderson <dianders@chromium.org>
  
--	panel_bridge = devm_kzalloc(panel->dev, sizeof(*panel_bridge),
--				    GFP_KERNEL);
--	if (!panel_bridge)
--		return ERR_PTR(-ENOMEM);
-+	panel_bridge = devm_drm_bridge_alloc(panel->dev, struct panel_bridge, bridge,
-+					     &panel_bridge_bridge_funcs);
-+	if (IS_ERR(panel_bridge))
-+		return (void *)panel_bridge;
+ Level: Starter
  
- 	panel_bridge->connector_type = connector_type;
- 	panel_bridge->panel = panel;
++Remove devm_drm_put_bridge()
++----------------------------
++
++Due to how the panel bridge handles the drm_bridge object lifetime, special
++care must be taken to dispose of the drm_bridge object when the
++panel_bridge is removed. This is currently managed using
++devm_drm_put_bridge(), but that is an unsafe, temporary workaround. To fix
++that, the DRM panel lifetime needs to be reworked. After the rework is
++done, remove devm_drm_put_bridge() and the TODO in
++drm_panel_bridge_remove().
++
++Contact: Maxime Ripard <mripard@kernel.org>,
++         Luca Ceresoli <luca.ceresoli@bootlin.com>
++
++Level: Intermediate
  
--	panel_bridge->bridge.funcs = &panel_bridge_bridge_funcs;
- 	panel_bridge->bridge.of_node = panel->dev->of_node;
- 	panel_bridge->bridge.ops = DRM_BRIDGE_OP_MODES;
- 	panel_bridge->bridge.type = connector_type;
-@@ -327,7 +326,8 @@ void drm_panel_bridge_remove(struct drm_bridge *bridge)
- 	panel_bridge = drm_bridge_to_panel_bridge(bridge);
- 
- 	drm_bridge_remove(bridge);
--	devm_kfree(panel_bridge->panel->dev, bridge);
-+	/* TODO remove this after reworking panel_bridge lifetime */
-+	devm_drm_put_bridge(panel_bridge->panel->dev, bridge);
- }
- EXPORT_SYMBOL(drm_panel_bridge_remove);
- 
+ Core refactorings
+ =================
 
 -- 
 2.49.0
