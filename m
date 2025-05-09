@@ -1,55 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-57364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1744AB0B6F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 09:18:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 373D5AB0B73
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 09:19:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2DE6F17EFA9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 07:18:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 060E23BE07F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 07:18:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60B9326E142;
-	Fri,  9 May 2025 07:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF996255F59;
+	Fri,  9 May 2025 07:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="ia5Z+O0z"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DNEvEQuq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.smtpout.orange.fr (smtp-29.smtpout.orange.fr [80.12.242.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152DF26C3A7;
-	Fri,  9 May 2025 07:18:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.29
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164F88F64;
+	Fri,  9 May 2025 07:18:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746775093; cv=none; b=cBVNG6uN+bns0qfQcxbTwSqCW7JXgd/ZG8U6TkNM0csk0FofroC1fmCfoWSam3m3gex9cQohSET4NvTvvgzSp97uyXKzWR17lFIN8VBa88tT07EzYIZ9oaN4/xfSbgM+SEGkgKZkk0wW/ez/FLmVpS+GRPttb8T8OsZcsgQBA7o=
+	t=1746775120; cv=none; b=VRbAnaJx7/akXPkLl/+oNuQ8jDYBn5zQttjNIblR56GnwzCksU0NN3Yc50GhQxJqOCmGvJK8RncJ5rTbfnU8xB/MwSZlebon0f1zGycWCKgWhTvHQpGUjbOR7isAcYNo7wc7nMw8VEGRcApLRT+H37HHIMmOLOvJFFjyAG0Kcfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746775093; c=relaxed/simple;
-	bh=qLypNSLhJNhGq9cRVVEVDiHNu2AmBy9fvzi2tBbPElw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pzCLZ7I4q3JA1N7y6Y10l2wRxMCbJH/JwYqkd527+mLIOZ0sLq8H+QRq3SyQUErMUoK7yLHdO169l7nBGDNNBQKgMpg2E1UoO0PDO0cYFBuRDGwWUswp/QxmhpRc6dftt27S7ca1Zjc4HsZb/Gym9BraoKYXIUfMBRCuoFbmWAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=ia5Z+O0z; arc=none smtp.client-ip=80.12.242.29
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Received: from [192.168.1.37] ([90.11.132.44])
-	by smtp.orange.fr with ESMTPA
-	id DHziu7HGDmoFgDHziuKapL; Fri, 09 May 2025 09:18:09 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1746775089;
-	bh=SuEH7GvxkDRk49jKXAc44ciDslMSh7QDgm6oWhdU6fU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=ia5Z+O0z7yTEIWAfQHuaEXxabkZurCcpM7AVnzI5nFmRtdmT+SwJn09+dVoR+5P/9
-	 mJukfbve/L0RnoRj+FQgQ5TWlmCR+7G+/RVSkQyVbydwvNUk1H0/WSSWEznqjtjAx4
-	 NBzm72yjYdnpdBFIoIZwmd/9H7AkuNSYDpGix5X1MWwf/9KYVCdUAaKV80P3Xhjj9q
-	 Akum2BCiqJ1hnKLzPyHHU1aJoAoaJhsxY+WPiLVZA/D7nS0prpqfT/f0HVCfKfKNLd
-	 1zXEmDM6fpJKbcD1sI0mQWzjG2WRn2IEYr3kbmIZ9wUSH9gEdMfSw1MCoVD4PonJCH
-	 94rTxgc04kPqw==
-X-ME-Helo: [192.168.1.37]
-X-ME-Auth: bWFyaW9uLmphaWxsZXRAd2FuYWRvby5mcg==
-X-ME-Date: Fri, 09 May 2025 09:18:09 +0200
-X-ME-IP: 90.11.132.44
-Message-ID: <03dc87ba-95ae-4d7f-b4df-2138844525df@wanadoo.fr>
-Date: Fri, 9 May 2025 09:18:06 +0200
+	s=arc-20240116; t=1746775120; c=relaxed/simple;
+	bh=WdgrOy2RPo0nCk/bcC2ywsBSNqyV335TPHHX0q4PyYQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=CLr3y741uJcaNe0JDiDqwxnstbm85zBrJk72G+6Kf99lQMnEyOnApvHQG/lvPksWFB6h+GrpcVtjHCH4NTEcUzjQjaXi+OkVTHnX5YKhathoSXgXd0X2W1mVl0biFY1Odw2DnRunlY4llNwlLKDidV00nYx0+78m5s5AGdGv78M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DNEvEQuq; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5492cSE5009191;
+	Fri, 9 May 2025 07:18:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3C07s+uImPI8s4GiBFJp/oMOL7Al0jdDsxGtkQVfuls=; b=DNEvEQuq2pKOTfoq
+	5tnhPaz5QHUHz67+WtBDjrmZ5vbhniM5u/umXjnjrZZ2CG5PWCBuNyfAnHJV57Zx
+	TIzoaEWv6Inu2SMSInme3vdOuAWLc2azLwatBdHwVK8DzMEiAzPz1uft2Js4tflv
+	uaZcay4ljPeY5cUzcHnwqjypGCgYT5xiD/daeJwIdBv/Qb6741gQkYeYwgEG4Whh
+	51aKsZEcQhlutUWptDo9eex/iprI+OJqZYt9e5vhNufroSe/ZYYF2EdIi54tYsoj
+	6J0BPOkiS85YBmsNbgnxOj3JdhR6P4ufG12GvUEi/amUG64GcXThpNA//QAxP0jN
+	nuRDWQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46gnpeupbp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 09 May 2025 07:18:28 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5497IRnc028657
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 9 May 2025 07:18:27 GMT
+Received: from [10.216.57.57] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 9 May 2025
+ 00:18:20 -0700
+Message-ID: <9245741a-a4e4-4be9-a630-adbb5c07a0b5@quicinc.com>
+Date: Fri, 9 May 2025 12:48:17 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,55 +65,83 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] extcon: adc-jack: Fix wakeup source leaks on
- device unbind
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- MyungJoo Ham <myungjoo.ham@samsung.com>, Chanwoo Choi
- <cw00.choi@samsung.com>, Hans de Goede <hdegoede@redhat.com>,
- Chen-Yu Tsai <wens@csie.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20250501-device-wakeup-leak-extcon-v2-0-7af77802cbea@linaro.org>
- <20250501-device-wakeup-leak-extcon-v2-1-7af77802cbea@linaro.org>
- <22aaebb7-553b-4571-8a43-58a523241082@wanadoo.fr>
- <1cd209e0-bdfa-49f0-8430-fec7e6108f35@linaro.org>
-Content-Language: en-US, fr-FR
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-In-Reply-To: <1cd209e0-bdfa-49f0-8430-fec7e6108f35@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: qcs8300-ride: Enable Adreno 623
+ GPU
+To: Krzysztof Kozlowski <krzk@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        "Abhinav
+ Kumar" <quic_abhinavk@quicinc.com>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Jie Zhang <quic_jiezh@quicinc.com>
+References: <20250508-a623-gpu-support-v3-0-3cb31799d44e@quicinc.com>
+ <20250508-a623-gpu-support-v3-3-3cb31799d44e@quicinc.com>
+ <954547f9-3bdf-4d26-a7bc-54c8a288d542@kernel.org>
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <954547f9-3bdf-4d26-a7bc-54c8a288d542@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA5MDA2OSBTYWx0ZWRfX1uw/gMpw9rru
+ G10Ki5WLjGwS6c2DwGS79s1IXbDKfbVcHgd0aE5V06jI3pTw3quztESA8Rteqb6hB4XwYH7llR8
+ WNWsaDu8DvMKpY9FGUcWkhERNAP8gVMtfYmPqu+sYYQ3YRxRr5JRUUsYdAKHkBY1vSKcJFZKbrG
+ WwEho7HBtTXkuusCGooev4cKusbLbkAiFaQqBtkMSVn9c1XzFhL4U57JzxpOO/0zqZ1lREM/DOE
+ e4jrlcZIHzxzQ0uZJvXBMdyoyPDjC1CXCAC45FvDneYi3tN7UGzWsHPFyiQIbFdT0vLxz80uSkn
+ hJeSYJ4C0FMhf0dAbGoaSrPP5ZwrCq6kbEhB8kTh4RVkQ7GcFX2aZaURZClvAzcaWibn3K0VLLb
+ hoJz5PBVk2wTlwehVwTVzpwx4DPa0Yb08wXHazcWiI+mkDTGTMLl/hWWjZDV/ELhDqJ3kFPU
+X-Proofpoint-ORIG-GUID: f9XKnAjWlHp5fLqYmrHnjDycq9jTMTOx
+X-Proofpoint-GUID: f9XKnAjWlHp5fLqYmrHnjDycq9jTMTOx
+X-Authority-Analysis: v=2.4 cv=Yt4PR5YX c=1 sm=1 tr=0 ts=681dac44 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
+ a=KKAkSRfTAAAA:8 a=OqMYrAO4_3c4-Z3rUcIA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-09_02,2025-05-08_04,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 mlxscore=0 adultscore=0 spamscore=0 impostorscore=0
+ phishscore=0 lowpriorityscore=0 mlxlogscore=737 suspectscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505090069
 
-Le 09/05/2025 à 09:12, Krzysztof Kozlowski a écrit :
-> On 09/05/2025 08:20, Christophe JAILLET wrote:
->>>    drivers/extcon/extcon-adc-jack.c | 1 +
->>>    1 file changed, 1 insertion(+)
->>>
->>> diff --git a/drivers/extcon/extcon-adc-jack.c b/drivers/extcon/extcon-adc-jack.c
->>> index 46c40d85c2ac89599ffbe7b6d11b161b295d5564..557930394abd25771799733a22121d1f8e254918 100644
->>> --- a/drivers/extcon/extcon-adc-jack.c
->>> +++ b/drivers/extcon/extcon-adc-jack.c
->>> @@ -164,6 +164,7 @@ static void adc_jack_remove(struct platform_device *pdev)
->>>    {
->>>    	struct adc_jack_data *data = platform_get_drvdata(pdev);
->>>    
->>> +	device_init_wakeup(&pdev->dev, false);
+On 5/9/2025 11:14 AM, Krzysztof Kozlowski wrote:
+> On 08/05/2025 18:19, Akhil P Oommen wrote:
+>> From: Jie Zhang <quic_jiezh@quicinc.com>
 >>
->> Hi,
+>> Enable GPU for qcs8300-ride platform and provide path for zap
+>> shader.
 >>
->> Shouldn't this be:
->>
->> 	if (data->wakeup_source)
->> 		device_init_wakeup(&pdev->dev, false);
->>
->> to match how things are done in the probe?
+>> Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
+>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> Yes, it should. I'll fix it.
+> Is this also real review or you took it from entirely different patch?
+
+Why? There was no change to this patch.
+
+-Akhil
+
+> 
 > 
 > Best regards,
 > Krzysztof
-> 
-> 
 
-While at it, maybe also s/1/true/ in device_init_wakeup() in the probe?
-
-CJ
 
