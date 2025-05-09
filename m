@@ -1,88 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-57468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD231AB1837
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 17:18:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEF41AB1843
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 17:20:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F03AD1891D16
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 15:19:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 877FA3AE1C7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 15:19:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E904F215F5D;
-	Fri,  9 May 2025 15:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1128F22F173;
+	Fri,  9 May 2025 15:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AGFysvlf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dNiRD6Ga"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AE5212B3E
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 May 2025 15:18:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D3121D3F3
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 May 2025 15:19:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746803927; cv=none; b=t+TJSkFQHOMlr0Faw2h1Z7F4qBM4VMr1d/alYA5rS0CyLfJaf51DxNM+djD0jlhVxJJ5IHjMvrNvCIYcN5bhA+sgmHxb3AavOZNuFgYoYzZqDOFFxlt050Qa6W8+hP4SYfAizkoY9kncvUYj2t8KNVMCtq9gaeMSKCw0EfW64qg=
+	t=1746803985; cv=none; b=NCejaf0WzAFts14LyTJhgh8jHLhnp/Wu+O0JlzH3gZCgIwsb7S0rwqLW6/wBgGen/IH24iqCj7DntCgiqNPIYC4VlUkkjJTuIwv5vxkhbfR7ckWxyLRRRovKmqKpYkz5FjtbLkFBphcz/oaLNfktADZWBVKKlPqbxKnHBfThal4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746803927; c=relaxed/simple;
-	bh=GRCt4KgGr07bRlbGOwSFzMstJmndK7uc3yhrnHTMJ7E=;
+	s=arc-20240116; t=1746803985; c=relaxed/simple;
+	bh=m8aROJFjpKUVyoRqALJjh1WRQTPMz0f/huyI4HbWrnE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FwDja5nefnHrbohniKbFysCSmzg7uXXJEA2yNoGPkusB00RDv8hLD5ZDiQ4QfQRV0mgm/3/34+qskCShveEqhWvpg0LUW9IlDdMaImHQlj6sAJ+NPAtYsoUF4zzvJW7k508qrE5JfJb36mWUE3Xp8x/XIsRGoMoW0Hua4zKA6S0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AGFysvlf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5497ZujG019254
-	for <linux-arm-msm@vger.kernel.org>; Fri, 9 May 2025 15:18:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	utDfRm9yEnEcuSD5wRoweKl442QKaEa5GIg5IOHfbG4=; b=AGFysvlfYlojTWJr
-	fuPItSLQ7FohYoLGYuEZncqk5x81gXE0Tzxp4y9lR9GM3tEXuQGJIHGgC6h8taEm
-	bU0IdJiS6F4O3VZe7p8njwElnL+D1+Y3uoimv11jNF6gUnZgi7I96DVpmOsOH0yo
-	8s/Qfr4PqZ9vXcR+odwcZMJP5AcNXBglX2UU0I+v0VM1qccG73vfXuEggd7bxqhb
-	WJGq252vq0daz2yxxHj0x1lw0koqHHGuOm3YAxk+UT7DN+MKpWPGhMg4mz0x/k5D
-	k+6vp+3g3v2KyKPq10tMEVnxwThGeeaRLaRlEg3QWU5Lh3v62dJB49KlZw7atjCG
-	ttNxhQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46gsdj4hbu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 09 May 2025 15:18:44 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7cabd21579eso40305285a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 May 2025 08:18:43 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=NLrX81sdTUh96u9OsIS+FS8pHhjzjrOSYPj8W8CdlX0VONP5fmoF0kBqUmuuuvPx1YUKcyVh6f54NTu92Sxic7JnQvDymhPldA0msqvuZyXHnmY9ZmD1wAelLdGCuTE+dpjrZTGNROzI+9VtblyJCVZX4dpegRDvUc8sHQiJqfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dNiRD6Ga; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5fbda5a8561so3248084a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 May 2025 08:19:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1746803982; x=1747408782; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=piveaIt51APJH/cy/5pKer1njMs8SNMZ9Efypy4VJ1I=;
+        b=dNiRD6GaI77D5dW6OOZQ4/6JdA7T9ukKMjthTX0yONwvPcRqTCnkz9DgmE8funeHNk
+         elFJBjzITJsuXnqUddYp3esGhRKDDiJfTlVLiswUR1oz4KYO0imArHdy69twLlYJSuae
+         P8x/dSVTNjFObmRURW0sknerC7BK2cb+USvos4DHX49RWex5wfwpjaRuCLnYH9tt1nxY
+         fpnYwYvMUpfs2QjKamYzbfDqDs7k4bZZR8JW4iWyuqmrMXUPh+0WWrAJNfw0FfICGDBY
+         ARrEUpLNbeZuyoFok1YOSq4jvwYnJeMK6nacKci/IAoI96EcSw/b4G38SJQMcMYBV81y
+         uA5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746803923; x=1747408723;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=1e100.net; s=20230601; t=1746803982; x=1747408782;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=utDfRm9yEnEcuSD5wRoweKl442QKaEa5GIg5IOHfbG4=;
-        b=QBHGxExSWbBfxLgqxIq5KvZsShcxcOt3wCWZ2fKnNybN/fEztQ4VkbGfNC1qpLQDqp
-         /QKNzV8e/KROSUrxk/bRZI4/vInngWffpGh5YU9kdEvAO+lPQWm2AcFDro1fi9qNxMTA
-         8Msw2PdK6kRWCcaxRfK9YqEHehS8aIx8xCt32Ibe+V1wHBJSgi8dE6948iaF8uyg9pB5
-         uxIcE/zcfnsSA6p/e3SSWpTYEL5bGofzkmRnLmAM5uByUTO6RktToGojQ4tlEwKGfs96
-         cKpkCkhlKiQfBgpathAA3vzdiPASUv3j7fJJTgmAjL57vXVYpurVIcdi4MVsNcGv00nK
-         kkDw==
-X-Forwarded-Encrypted: i=1; AJvYcCVo3MC8w7zZdXFgu67mGkG7t/MQM/1ypr9sMa4tPipvHkvYJYQn5Og0bmAlhkUvBq0xWnj0Z2RqbJVvX4AN@vger.kernel.org
-X-Gm-Message-State: AOJu0YwoPZHqkPwTtNPYUaasAwrhRiTHsaxdbh7ak7Eo71JmAwxlBm7g
-	qCbLea+9w8XijCrfGjeVUrrlH+P8PG/vAjaEZvveMww/QlrsF8x/d5LQEr9pDQs+jRL4OdE4VPj
-	L/14Wal59MMObgmyipaoL9cmNLCyMWS89DHFz4tghWc+Rn9a6WYevtInPoyuoaZxO
-X-Gm-Gg: ASbGnctL5YkF2IAbWdNffWT1AwGJ7yhxj4tmC9M61EekYhtsMxTeonqpT8riZJ6rjw8
-	tV54NCrjRJcKn7uCL846RHNKwutYlOMFuEzIdZ6mn8J/Ng8fBuLanMzVoMi41kFKLruF26G5PBG
-	jfyi2+xlkjg4XDe09ULogn9V6tH/grijXUW+chUsBHF2Ekqlw8iESpqGmnwOmHD8SSbq5LGIaVp
-	WOqIC8exMc6ppodZ6JL2BTZ8rUwJbAf0YgpI3YFXZIUPWkV1rfQS/B7WFg0DTdOMkeXzckqCxuz
-	QSr7z0grkQUqZx0Gpe9WeegzzcGsTfs35xqdxvoTW+eBPk8vPq1dNVxAf+FXZ1OxA9uQOB43AXF
-	QZJNcT62NwI+FXtIDBnnUddqKC/4R2WvkCpnLCOytgsfBLA1kfyqalBdc+5xRaaOU
-X-Received: by 2002:a05:620a:4727:b0:7c9:2383:afef with SMTP id af79cd13be357-7cd0115034cmr674764185a.37.1746803922685;
-        Fri, 09 May 2025 08:18:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEPsqI2DXHYl8igD/hABxSIitYc1LfAKRC3bEPVNydkg0fxuqduKG1kw9aY/mt1U3TUllVG3g==
-X-Received: by 2002:a05:620a:4727:b0:7c9:2383:afef with SMTP id af79cd13be357-7cd0115034cmr674759385a.37.1746803922301;
-        Fri, 09 May 2025 08:18:42 -0700 (PDT)
-Received: from ?IPV6:2001:14bb:a6:738a:e519:cad2:e720:53eb? (2001-14bb-a6-738a-e519-cad2-e720-53eb.rev.dnainternet.fi. [2001:14bb:a6:738a:e519:cad2:e720:53eb])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54fc645cee9sm305198e87.75.2025.05.09.08.18.41
+        bh=piveaIt51APJH/cy/5pKer1njMs8SNMZ9Efypy4VJ1I=;
+        b=wcf2s6DguVOYtlpv/kqacfEnYD2WgIqW5191XRUv4UJe9OfnlJn9Dm7HmivzVVRajI
+         JGyk6W0k2yMyR0qfvbhvnpXOPJru95Q9AO3indbbtNTF/lW12lynbR82qkbo3YMCz4dJ
+         ZIWjAU7kuvWm2Zyrwt1W/ZPSf0/dqqQHjTDvPVEP/y9pSZE+pS79x4hUv1HSabWNADVm
+         tdl2On2UCzwGYRH8BZadqmfE+2uvfrdbkAfffcH1umBVyHn+3C2SV4Phf2tfL2XYb0AI
+         0z93PA+YRqgTEMImzc56W6BtTrpEVEUo2fvnuQX0GK0ObCWqlyGunF+BzB45eGF+iI0j
+         7bxA==
+X-Forwarded-Encrypted: i=1; AJvYcCWBc6f/vKJm4S/x/7og8iS5NRdO9TxP8VFDaBehJdwBzpemFc2fl0yx5O/LchArZoH+z175+G3Afk6EZbn2@vger.kernel.org
+X-Gm-Message-State: AOJu0YybDzBUBkq0z5qESoUOpT92lceOdpPhhe6xc0f+WK4oGrPgE34c
+	ngwM7LDM6ilVc7gClgdYE8SzR9aVH4Fx9jgL5CCHyJ/pW13z+pBZNYYu1e0llf8=
+X-Gm-Gg: ASbGnctUAVpWB+jex2peUmR9pr9yMlyYYMfflpVjFw6AT42Odkh/FoSCckA6Fxeir2S
+	BUhGWNwhT49v64DCPWI22jsfYHpdOkWMk1ZqzNPB7rCmyf0RCKG34nLc5O3Dab7RuDxerMij929
+	AsHUZCUnC+SM2j9hOuUDXkZhLFH5JDQBWqjIy8AadU1K5WhmFtDpd9r7HAA2wnZ+6EC5/Vz398x
+	D3F2ANUwtqd9Z2pzdSt4FxfAsAsGnEVcFoTvo0ESy4cX40NTx8r9XySzdfQ0BKK9EEUy0bXIwBy
+	fU+bFjWeTzuoIxq0HvIugms77dtn1CrYtFLdHDIvfYQ1tJq5
+X-Google-Smtp-Source: AGHT+IHT7wYtfS2u3TlvINr8fJyTrH7JNqE175qLt+rBrEgAFEQwhYwKbs1ehus30wxqNmhfrYAvHA==
+X-Received: by 2002:a17:907:a2cd:b0:ace:caff:675a with SMTP id a640c23a62f3a-ad218e47c9bmr314645166b.10.1746803981845;
+        Fri, 09 May 2025 08:19:41 -0700 (PDT)
+Received: from [192.168.0.32] ([82.76.24.202])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad2197bd4d3sm164125066b.132.2025.05.09.08.19.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 May 2025 08:18:41 -0700 (PDT)
-Message-ID: <6cfc706f-4909-4121-9849-a37e4769ab2f@oss.qualcomm.com>
-Date: Fri, 9 May 2025 18:18:40 +0300
+        Fri, 09 May 2025 08:19:41 -0700 (PDT)
+Message-ID: <26cc3478-8f65-44bb-8ebe-24a28a858dab@linaro.org>
+Date: Fri, 9 May 2025 18:19:40 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,150 +81,153 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 01/14] drm/atomic-helper: Add crtc check before
- checking plane
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar
- <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20250506-quad-pipe-upstream-v9-0-f7b273a8cc80@linaro.org>
- <20250506-quad-pipe-upstream-v9-1-f7b273a8cc80@linaro.org>
- <b5kl5whmagpxn4saimkj4qloowh73xggehdh5rnl6lmjvqf65j@esycoi7w2nmp>
- <CABymUCMuiKQwtuYW-HX4bwyTR4awm4scwXTWNzVCEmyQsQ29aA@mail.gmail.com>
+Subject: Re: [RFC][PATCH 00/14] introduce kmemdump
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-doc@vger.kernel.org, corbet@lwn.net, tglx@linutronix.de,
+ mingo@redhat.com, rostedt@goodmis.org, john.ogness@linutronix.de,
+ senozhatsky@chromium.org, pmladek@suse.com, peterz@infradead.org,
+ mojha@qti.qualcomm.com, linux-arm-kernel@lists.infradead.org,
+ vincent.guittot@linaro.org, konradybcio@kernel.org,
+ dietmar.eggemann@arm.com, juri.lelli@redhat.com
+References: <20250422113156.575971-1-eugen.hristev@linaro.org>
+ <mtetvagzj2xltczutahqj7ijgpr3fy7ppbp5w6rmn2w2zmukux@tawhrkyoqjli>
+From: Eugen Hristev <eugen.hristev@linaro.org>
 Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <CABymUCMuiKQwtuYW-HX4bwyTR4awm4scwXTWNzVCEmyQsQ29aA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=PMAP+eqC c=1 sm=1 tr=0 ts=681e1cd4 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=sWdYkf8P3oHYA_MdvdkA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA5MDE1MSBTYWx0ZWRfX590HEjzBj3KA
- 7mrio41m6IEme+u6HbVddTvHRgfT6oy6ZfYsGfO+Sf1/3b0WtbfMJR1aPScG3nUbFglMAjU4N81
- ZkH4F8VrEnfm4rC/vvWLWT6K4LOaIPoP0SMktGCa6L1iWlC5PpyDUpfWZCed2tPhDT/yepwuy2Y
- EV2LWK8hq9B+tD+LLPOJyYJraO5xKNOqjfHqmeTLJ8JrCR2gxVw5SQL1cldtfRbLG221nDrJ4he
- TsSAoTmtb17uCyrFU8VO2Hp+9ywkKcKJ1XiNOl87zlisOJ+BYQbaAp8Wp0oqYHympKHXedpOS2E
- fm9des04BOd4UkFZHdsmCeRex30E7XTUySYOgr8CGfZlOzREPAyFE35obaWN4iGV0mtjzlnDjE/
- FYKtbay2r/oZI8WRQ8G6bY6rwNhisWHVAQYPG0a6Shhs/C8IQAoL9b2ZvHWsM4POqFBo4k5b
-X-Proofpoint-GUID: Ycvk86pwapW0l1m_LGbHGWEakU_15PIz
-X-Proofpoint-ORIG-GUID: Ycvk86pwapW0l1m_LGbHGWEakU_15PIz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-09_06,2025-05-09_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 mlxscore=0 suspectscore=0 spamscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 lowpriorityscore=0
- mlxlogscore=999 adultscore=0 malwarescore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2504070000 definitions=main-2505090151
+In-Reply-To: <mtetvagzj2xltczutahqj7ijgpr3fy7ppbp5w6rmn2w2zmukux@tawhrkyoqjli>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 09/05/2025 06:08, Jun Nie wrote:
-> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> 于2025年5月8日周四 18:47写道：
+Hello Bjorn,
+
+On 5/7/25 19:54, Bjorn Andersson wrote:
+> On Tue, Apr 22, 2025 at 02:31:42PM +0300, Eugen Hristev wrote:
+>> kmemdump is a mechanism which allows the kernel to mark specific memory
+>> areas for dumping or specific backend usage.
+>> Once regions are marked, kmemdump keeps an internal list with the regions
+>> and registers them in the backend.
+>> Further, depending on the backend driver, these regions can be dumped using
+>> firmware or different hardware block.
+>> Regions being marked beforehand, when the system is up and running, there
+>> is no need nor dependency on a panic handler, or a working kernel that can
+>> dump the debug information.
+>> The kmemdump approach works when pstore, kdump, or another mechanism do not.
+>> Pstore relies on persistent storage, a dedicated RAM area or flash, which
+>> has the disadvantage of having the memory reserved all the time, or another
+>> specific non volatile memory. Some devices cannot keep the RAM contents on
+>> reboot so ramoops does not work. Some devices do not allow kexec to run
+>> another kernel to debug the crashed one.
+>> For such devices, that have another mechanism to help debugging, like
+>> firmware, kmemdump is a viable solution.
 >>
->> On Tue, May 06, 2025 at 11:47:31PM +0800, Jun Nie wrote:
->>> Some display controller support flexible CRTC and DMA, such as the display
->>> controllers in snapdragon SoCs. CRTC can be implemented with several mixers
->>> in parallel, and plane fetching can be implemented with several DMA under
->>> umberala of a virtual drm plane.
->>>
->>> The mixer number is decided per panel resolution and clock rate constrain
->>> first, which happens in CRTC side. Then plane is split per mixer number
->>> and configure DMA accordingly.
+>> kmemdump can create a core image, similar with /proc/vmcore, with only
+>> the registered regions included. This can be loaded into crash tool/gdb and
+>> analyzed.
+>> To have this working, specific information from the kernel is registered,
+>> and this is done at kmemdump init time, no need for the kmemdump user to
+>> do anything.
 >>
->> Here you are describing a behaviour of one particular driver as a reason
->> to change the framework.
+>> The implementation is based on the initial Pstore/directly mapped zones
+>> published as an RFC here:
+>> https://lore.kernel.org/all/20250217101706.2104498-1-eugen.hristev@linaro.org/
+>>
+>> The back-end implementation for qcom_smem is based on the minidump
+>> patch series and driver written by Mukesh Ojha, thanks:
+>> https://lore.kernel.org/lkml/20240131110837.14218-1-quic_mojha@quicinc.com/
+>>
+>> I appreciate the feedback on this series, I know it is a longshot, and there
+>> is a lot to improve, but I hope I am on the right track.
+>>
+>> Thanks,
+>> Eugen
+>>
+>> PS. Here is how crash tool reports the dump:
+>>
+>>      KERNEL: /home/eugen/linux-minidump/vmlinux  [TAINTED]
+>>     DUMPFILE: /home/eugen/eee
 > 
-> Yeah, the specific driver requires a change in framework. Maybe the
-> comment is not
-> proper?
-
-Yes. Explain how does that benefit the framework / other drivers. 
-Otherwise the answer would be as simple as 'replace 
-drm_atomic_helper_check_planes() in your driver'.
-
->>
->>>
->>> To support such forthcoming usage case, CRTC checking shall happen before
->>> checking plane. Add the checking in the drm_atomic_helper_check_modeset().
->>
->> So, now drivers will get two calls to atomic_check(), one coming in
->> circumstances which were not expected by the drivers before. Are you
->> sure that this won't break anything?
+> Can you please describe the steps taken to get acquire/generate this
+> file and how to invoke crash?
 > 
-> Yes, it is a concern. Is there any way to limit the change in
-> framework to specific
-> driver with a flag, such as DRM_FLAG_CHECK_CRTC_BEFORE_PLANE?
 
-Definitely not with a flag. You can try adding a new helper callback, 
-but I don't know how DRM core maintainers would react to it.
+Thank you for looking into this.
 
->>
->>>
->>> Signed-off-by: Jun Nie <jun.nie@linaro.org>
->>> ---
->>>   drivers/gpu/drm/drm_atomic_helper.c | 19 +++++++++++++++++++
->>>   1 file changed, 19 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
->>> index 5302ab3248985d3e0a47e40fd3deb7ad0d9f775b..5bca4c9683838c38574c8cb7c0bc9d57960314fe 100644
->>> --- a/drivers/gpu/drm/drm_atomic_helper.c
->>> +++ b/drivers/gpu/drm/drm_atomic_helper.c
->>> @@ -816,6 +816,25 @@ drm_atomic_helper_check_modeset(struct drm_device *dev,
->>>                        return ret;
->>>        }
->>>
->>> +     for_each_new_crtc_in_state(state, crtc, new_crtc_state, i) {
->>> +             const struct drm_crtc_helper_funcs *funcs;
->>> +
->>> +             funcs = crtc->helper_private;
->>> +
->>> +             if (!funcs || !funcs->atomic_check)
->>> +                     continue;
->>> +
->>> +             ret = funcs->atomic_check(crtc, state);
->>> +             if (ret) {
->>> +                     drm_dbg_atomic(crtc->dev,
->>> +                                    "[CRTC:%d:%s] atomic driver check failed\n",
->>> +                                    crtc->base.id, crtc->name);
->>> +                     return ret;
->>> +             }
->>> +     }
->>> +
->>> +
->>> +
->>
->> Too many empty lines. But the main quesiton is: why are you calling it
->> before mode_valid()? According to your description a better place would
->> be in drm_atomic_helper_check_planes().
->>
-> Agree, that's the proper function. Will remove the empty line in next version.
+Next week, on 16th of May, on Friday, there will be a talk related to
+this patch series at Linaro Connect in Lisbon. In that talk I will also
+show a demo in which all the process of acquiring the core dump and
+crash will be covered.
+I will be traveling the following days, if I get the time I will submit
+the steps as a reply to this email, if not, then for sure I will submit
+them after the talk in Lisbon.
+
+Eugen
+
+> Regards,
+> Bjorn
 > 
->>>        ret = mode_valid(state);
->>>        if (ret)
->>>                return ret;
->>>
->>> --
->>> 2.34.1
->>>
+>>         CPUS: 8 [OFFLINE: 7]
+>>         DATE: Thu Jan  1 02:00:00 EET 1970
+>>       UPTIME: 00:00:28
+>>     NODENAME: qemuarm64
+>>      RELEASE: 6.14.0-rc5-next-20250303-00014-g011eb2aaf7b6-dirty
+>>      VERSION: #169 SMP PREEMPT Thu Apr 17 14:12:21 EEST 2025
+>>      MACHINE: aarch64  (unknown Mhz)
+>>       MEMORY: 0
+>>        PANIC: ""
 >>
->> --
->> With best wishes
->> Dmitry
+>> crash> log
+>> [    0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd4b2]
+>> [    0.000000] Linux version 6.14.0-rc5-next-20250303-00014-g011eb2aaf7b6-dirty (eugen@eugen-station) (aarch64-none-linux-gnu-gcc (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 13.3.1 20240614, GNU ld (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 2.42.0.20240614) #169 SMP PREEMPT Thu Apr 17 14:12:21 EEST 2025
+>> [    0.000000] KASLR enabled
+>> [...]
+>>
+>> Eugen Hristev (14):
+>>   Documentation: add kmemdump
+>>   kmemdump: introduce kmemdump
+>>   kmemdump: introduce qcom-md backend driver
+>>   soc: qcom: smem: add minidump device
+>>   Documentation: kmemdump: add section for coreimage ELF
+>>   kmemdump: add coreimage ELF layer
+>>   printk: add kmsg_kmemdump_register
+>>   kmemdump: coreimage: add kmsg registration
+>>   genirq: add irq_kmemdump_register
+>>   kmemdump: coreimage: add irq registration
+>>   panic: add panic_kmemdump_register
+>>   kmemdump: coreimage: add panic registration
+>>   sched: add sched_kmemdump_register
+>>   kmemdump: coreimage: add sched registration
+>>
+>>  Documentation/debug/index.rst      |  17 ++
+>>  Documentation/debug/kmemdump.rst   |  83 +++++
+>>  drivers/Kconfig                    |   2 +
+>>  drivers/Makefile                   |   2 +
+>>  drivers/debug/Kconfig              |  39 +++
+>>  drivers/debug/Makefile             |   5 +
+>>  drivers/debug/kmemdump.c           | 197 ++++++++++++
+>>  drivers/debug/kmemdump_coreimage.c | 293 ++++++++++++++++++
+>>  drivers/debug/qcom_md.c            | 467 +++++++++++++++++++++++++++++
+>>  drivers/soc/qcom/smem.c            |  10 +
+>>  include/linux/irqnr.h              |   1 +
+>>  include/linux/kmemdump.h           |  77 +++++
+>>  include/linux/kmsg_dump.h          |   6 +
+>>  include/linux/panic.h              |   1 +
+>>  include/linux/sched.h              |   1 +
+>>  kernel/irq/irqdesc.c               |   7 +
+>>  kernel/panic.c                     |   8 +
+>>  kernel/printk/printk.c             |  13 +
+>>  kernel/sched/core.c                |   7 +
+>>  19 files changed, 1236 insertions(+)
+>>  create mode 100644 Documentation/debug/index.rst
+>>  create mode 100644 Documentation/debug/kmemdump.rst
+>>  create mode 100644 drivers/debug/Kconfig
+>>  create mode 100644 drivers/debug/Makefile
+>>  create mode 100644 drivers/debug/kmemdump.c
+>>  create mode 100644 drivers/debug/kmemdump_coreimage.c
+>>  create mode 100644 drivers/debug/qcom_md.c
+>>  create mode 100644 include/linux/kmemdump.h
+>>
+>> -- 
+>> 2.43.0
 >>
 
-
--- 
-With best wishes
-Dmitry
 
