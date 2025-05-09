@@ -1,490 +1,275 @@
-Return-Path: <linux-arm-msm+bounces-57412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0046AAB1062
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 12:19:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C470AB115E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 13:00:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9DD2AA05BC4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 10:17:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6569D1BA642D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 May 2025 11:00:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84BD428F94A;
-	Fri,  9 May 2025 10:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FDAF28ECEE;
+	Fri,  9 May 2025 11:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cmLqk4FQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yol464HE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1563E27466F;
-	Fri,  9 May 2025 10:15:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E1022D4DF;
+	Fri,  9 May 2025 11:00:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746785704; cv=none; b=auC4uOFB9u4A7NR0AjZudOYFMmmamtQj4bNwqmAq+vwMxZ6mwK9e/m67H/WHq30WfVdDwthdhIYw7O0PqN0t++6s1stxP5SxN7oYaNF11cfbjJl5k91Pk7KSae5m5VYq6+nEKlwAtHl0i/ZdgfQTaku1jLRS4M3ecvoxbLtVs5c=
+	t=1746788423; cv=none; b=j4NwX12CeEBAYUILuksM6267r8XZmUiIsa0kznJ9oB7+icKDtRzodzvQJ3dEvWe+qE6rGNo0iEOS0S+3zMGH0iMib3A+6tTWR7d39/Bk7fX/hti428Ik01kx1rDR+gLs7Y3z/T2TiHgFr8yn3zsF8s+myIZ7NUqPFTT3pxrx65Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746785704; c=relaxed/simple;
-	bh=zxQu48Kq/hRF1zS28G5QiRU7GwVnqoghBnpivOxcoM0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Joo4R4zKYuaigIhv9rt+TTGzOfJjZftior/s/AAYDeX2XlTrplfq/pfGC4HPZ/O/OXkDmbQ9w2EYAu7/oFV3ANOhuZhhdwoATzVQ72zEIjcVF1kfsZk8535ZQl15uH0Q7h6KVPrr4YlhFed8i3DLzqcib4ZzcHWiTLqpHz+PfgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cmLqk4FQ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5492i3O1016663;
-	Fri, 9 May 2025 10:14:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WA5bvh1QmRWT1B//T7K/FlcwxuQd06j2MHRfAfFUhNk=; b=cmLqk4FQnVEV4DEf
-	mfF9HejoqKlLpA0Kvfksa+jRmVlBsNBCzXaTy3XFeU4LYN56WNmScS7RgvMIsoC2
-	sMdm0at4g8+Xl6pkmhxdyaS4eIMaMQOuqbAmQCiuAzb0kfU4wFxXpa4ZzkTE5Kao
-	WEKDmUi3j5oqn+DTxTsqq3h1421jZJycI6CJ2n/OfmCx5166XuT5zzvsPuD0ahud
-	B7sMX53hyopneX0iCjfdGBiCvDKMoNx89NOpBUU+M8fR9sbIXYCmNYE2J3gi7RDj
-	O0p32u9KWobJjD1v8g8akiqJUUfG8vUlGzCPnQkqNVcqBPJcV2JLK4o4t414i6Fa
-	AdnLkg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46gnp8v8a2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 09 May 2025 10:14:55 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 549AEsln008167
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 9 May 2025 10:14:54 GMT
-Received: from [10.50.48.67] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 9 May 2025
- 03:14:49 -0700
-Message-ID: <13f63e39-9716-86a4-cba3-d287fb8b5928@quicinc.com>
-Date: Fri, 9 May 2025 15:44:46 +0530
+	s=arc-20240116; t=1746788423; c=relaxed/simple;
+	bh=2Tdk/ggnV2o8yYP333sAqJkvwS68DEaai1lsBGWcxD8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=n3+dCizq49wF4iK3dhOBB2FoNwb673UvdavNr/J1iiinJEMkqWrtGF0l7rFBOzyh3FftuHsZQNLj7lLmt47noWJXB6nVrI/xXt2WhWj8qLiypJb6ASmjK349BOzJPKDt88HKEn5uTwPPUtGpuzDtlIkXOgUvYYmuoFyi77uj6XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yol464HE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0036BC4CEE4;
+	Fri,  9 May 2025 11:00:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746788419;
+	bh=2Tdk/ggnV2o8yYP333sAqJkvwS68DEaai1lsBGWcxD8=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=Yol464HEg9vqDFyUQwRQdKN1UWEhk9KYXiCXOeDP9VA9AHis3MlaysFFHGzKZx+Xj
+	 ta32azC/YHYsNNUqJCMxCFf24taYkWZY2u0ma6FjzV48ySRS2vIRIeBKG8eNxHd9L5
+	 h9Cp1J5bqPLrX4bjTQoNDsTSbIaHWeTdglyJglnmeZDc4yw3pzL/YEeK63Jhi2G+c2
+	 lqZQuuVqjsiJj0VGruvTexguP6vBUJr23uoclvwLiMK0HS9ZqNZKpo7wOHDv8sBtu2
+	 9a0t2UnHlSPZ0ucGYNUeLMrinF5/7ZB9pNlb4WkdYlRqJKSlybS5ezPLnTdpZFediB
+	 dRJigYvY+eHXw==
+Message-ID: <c797e8b2-9d9b-4fc2-a8bd-f88cadcc94b6@kernel.org>
+Date: Fri, 9 May 2025 12:00:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v5 00/26] Add support for HEVC and VP9 codecs in decoder
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] ASoC: qcom: use drvdata instead of component to keep
+ id
+To: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+ Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Srinivas Kandagatla <srini@kernel.org>,
+ Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org
+References: <87a57o2amc.wl-kuninori.morimoto.gx@renesas.com>
+ <878qn82alv.wl-kuninori.morimoto.gx@renesas.com>
 Content-Language: en-US
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stefan Schmidt
-	<stefan.schmidt@linaro.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@oss.qualcomm.com>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        Nicolas Dufresne
-	<nicolas.dufresne@collabora.com>,
-        Dan Carpenter <dan.carpenter@linaro.org>, <stable@vger.kernel.org>
-References: <20250509-video-iris-hevc-vp9-v5-0-59b4ff7d331c@quicinc.com>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20250509-video-iris-hevc-vp9-v5-0-59b4ff7d331c@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+From: Srinivas Kandagatla <srini@kernel.org>
+In-Reply-To: <878qn82alv.wl-kuninori.morimoto.gx@renesas.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -gCCBiatCcoxsw4El-XzhrHqs2b5bXY7
-X-Proofpoint-ORIG-GUID: -gCCBiatCcoxsw4El-XzhrHqs2b5bXY7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA5MDA5OCBTYWx0ZWRfX9KDX64wCQk4A
- 5XoNuAsrcaEmGlkPF2ZrG9iLQhDhOspgKbh1AfOStWeBuXQ4wp4bf5Wx0V5tDqbfUpbspfccgzV
- FjDB1W5TtmoKGV6Hrbac1FrJb7i+NRumdEOJDvQSLPP8jaY7ez7zTDcBMNKm7LrsyBjhiSKcTY9
- voxRgnjTl5HCx+qicbjXV6QZNSFHwm2SLhKdrVsrSPIeJd+ROletgl9oE4K4y4yjpvGmibuX4zQ
- snz/ijsv2Fi62CgDwoYz2JAptnSk4Oem/ackgDLc+Zlr145uBW5xKkxoWVI/FNkbYhTCHSnTVfE
- GsWOleG1JXCZxEOAggMeujGxrPUImtbJvL3xkkRivJp2fYTmWh3rmaDUpy9/U+AdYobkGJg6Ep5
- EaiBcCFq9Hq201RPlL3iVOuPb+DvyWOgSgR0jCvY1bGtCK5pdpIMdy78rl8xV/M2DFxlaacJ
-X-Authority-Analysis: v=2.4 cv=e/4GSbp/ c=1 sm=1 tr=0 ts=681dd59f cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=e5mUnYsNAAAA:8 a=KKAkSRfTAAAA:8 a=xOd6jRPJAAAA:8
- a=EUspDBNiAAAA:8 a=QX4gbG5DAAAA:8 a=2t6H7hArUkWbbcs1qwUA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22 a=Vxmtnl_E_bksehYqCbjh:22 a=cvBusfyB2V15izCimMoJ:22
- a=AbAUZ8qAyYyZVLSsDulk:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-09_04,2025-05-08_04,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 adultscore=0 phishscore=0 clxscore=1015
- mlxlogscore=999 spamscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- mlxscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505090098
 
+Thanks for the patch,
 
-On 5/9/2025 2:08 PM, Dikshita Agarwal wrote:
-> Hi All,
+On 5/8/25 01:46, Kuninori Morimoto wrote:
+> qcom lpass is using component->id to keep DAI ID (A).
 > 
-> This patch series adds initial support for the HEVC(H.265) and VP9
-> codecs in iris decoder. The objective of this work is to extend the 
-> decoder's capabilities to handle HEVC and VP9 codec streams,
-> including necessary format handling and buffer management.
-> In addition, the series also includes a set of fixes to address issues
-> identified during testing of these additional codecs.
+> (S)	static int lpass_platform_pcmops_open(
+> 				sruct snd_soc_component *component,
+> 				struct snd_pcm_substream *substream)
+> 	{			                          ^^^^^^^^^(B0)
+> 		...
+> (B1)		struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
+> (B2)		struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
+> 		...
+> (B3)		unsigned int dai_id = cpu_dai->driver->id;
 > 
-> These patches also address the comments and feedback received from the 
-> RFC patches previously sent. I have made the necessary improvements 
-> based on the community's suggestions.
+> (A)		component->id = dai_id;
+> 		...
+> 	}
 > 
-> Changes in v5:
-> - Splitted patch 01/25 in two patches (Bryan)
-> - Link to v4: https://lore.kernel.org/r/20250507-video-iris-hevc-vp9-v4-0-58db3660ac61@quicinc.com
+> This driver can get dai_id from substream (B0 - B3).
+> In this driver, below functions get dai_id from component->id (A).
 > 
-> Changes in v4:
-> - Splitted patch patch 06/23 in two patches (Bryan)
-> - Simplified the conditional logic in patch 13/23 (Bryan)
-> - Improved commit description for patch patch 13/23 (Nicolas)
-> - Fix the value of H265_NUM_TILE_ROW macro (Neil)
-> - Link to v3: https://lore.kernel.org/r/20250502-qcom-iris-hevc-vp9-v3-0-552158a10a7d@quicinc.com
+> (X)	lpass_platform_pcmops_suspend()
+> (Y)	lpass_platform_pcmops_resume()
+> (Z)	lpass_platform_copy()
 > 
-> Changes in v3:
-> - Introduced two wrappers with explicit names to handle destroy internal 
-> buffers (Nicolas)
-> - Used sub state check instead of introducing new boolean (Vikash)
-> - Addressed other comments (Vikash)
-> - Reorderd patches to have all fixes patches first (Dmitry)
-> - Link to v2: 
-> https://lore.kernel.org/r/20250428-qcom-iris-hevc-vp9-v2-0-3a6013ecb8a5@quicinc.com
+> Here, (Z) can get it from substream (B0 - B3), don't need to use
+> component->id (A). On suspend/resume (X)(Y), dai_id can only be obtained
+> from component->id (A), because there is no substream (B0) in function
+> parameter.
 > 
-> Changes in v2:
-> - Added Changes to make sure all buffers are released in session close 
-> (bryna)
-> - Added tracking for flush responses to fix a timing issue.
-> - Added a handling to fix timing issue in reconfig
-> - Splitted patch 06/20 in two patches (Bryan)
-> - Added missing fixes tag (bryan)
-> - Updated fluster report (Nicolas)
-> - Link to v1: 
-> https://lore.kernel.org/r/20250408-iris-dec-hevc-vp9-v1-0-acd258778bd6@quicinc.com
+> But, component->id (A) itself should not be used for such purpose.
+> It is intilialized at snd_soc_component_initialize(), and parsed its ID
+> (= component->id) from device name (a).
 > 
-> Changes sinces RFC:
-> - Added additional fixes to address issues identified during further 
-> testing.
-> - Moved typo fix to a seperate patch [Neil]
-> - Reordered the patches for better logical flow and clarity [Neil, 
-> Dmitry]
-> - Added fixes tag wherever applicable [Neil, Dmitry]
-> - Removed the default case in the switch statement for codecs [Bryan]
-> - Replaced if-else statements with switch-case [Bryan]
-> - Added comments for mbpf [Bryan]
-> - RFC: 
-> https://lore.kernel.org/linux-media/20250305104335.3629945-1-quic_dikshita@quicinc.com/
+> 	int snd_soc_component_initialize(...)
+> 	{
+> 		...
+> 		if (!component->name) {
+> (a)			component->name = fmt_single_name(dev, &component->id);
+> 			...                                     ^^^^^^^^^^^^^
+> 		}
+> 		...
+> 	}
 > 
-> These patches are tested on SM8250 and SM8550 with v4l2-ctl and 
-> Gstreamer for HEVC and VP9 decoders, at the same time ensured that 
-> the existing H264 decoder functionality remains uneffected.
+> On this driver, drvdata : component = 1 : 1 relatationship (b)
 > 
-> Note: 1 of the fluster compliance test is fixed with firmware [3]
-> [3]: 
-> https://lore.kernel.org/linux-firmware/1a511921-446d-cdc4-0203-084c88a5dc1e@quicinc.com/T/#u 
+> (b)	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
 > 
-> The result of fluster test on SM8550:
->  131/147 testcases passed while testing JCT-VC-HEVC_V1 with 
->  GStreamer-H.265-V4L2-Gst1.0.
->  The failing test case:
->  - 10 testcases failed due to unsupported 10 bit format.
->    - DBLK_A_MAIN10_VIXS_4
->    - INITQP_B_Main10_Sony_1
->    - TSUNEQBD_A_MAIN10_Technicolor_2
->    - WP_A_MAIN10_Toshiba_3
->    - WP_MAIN10_B_Toshiba_3
->    - WPP_A_ericsson_MAIN10_2
->    - WPP_B_ericsson_MAIN10_2
->    - WPP_C_ericsson_MAIN10_2
->    - WPP_E_ericsson_MAIN10_2
->    - WPP_F_ericsson_MAIN10_2
->  - 4 testcase failed due to unsupported resolution
->    - PICSIZE_A_Bossen_1
->    - PICSIZE_B_Bossen_1
->    - WPP_D_ericsson_MAIN10_2
->    - WPP_D_ericsson_MAIN_2 
->  - 2 testcase failed due to CRC mismatch
->    - RAP_A_docomo_6
->    - RAP_B_Bossen_2
->    - BUG reported: 
-> https://gitlab.freedesktop.org/gstreamer/gstreamer/-/issues/4392
->      Analysis - First few frames in this discarded by firmware and are 
->      sent to driver with 0 filled length. Driver send such buffers to 
->      client with timestamp 0 and payload set to 0 and 
->      make buf state to VB2_BUF_STATE_ERROR. Such buffers should be 
->      dropped by GST. But instead, the first frame displayed as green 
->      frame and when a valid buffer is sent to client later with same 0 
->      timestamp, its dropped, leading to CRC mismatch for first frame.
+> drvdata can be used on lpass_platform_pcmops_open() (S),
+> lpass_platform_pcmops_suspend()/lpass_platform_pcmops_resume() (X)(Y).
 > 
->  235/305 testcases passed while testing VP9-TEST-VECTORS with 
->  GStreamer-VP9-V4L2-Gst1.0.
->  The failing test case:
->  - 64 testcases failed due to unsupported resolution
->    - vp90-2-02-size-08x08.webm
->    - vp90-2-02-size-08x10.webm
->    - vp90-2-02-size-08x16.webm
->    - vp90-2-02-size-08x18.webm
->    - vp90-2-02-size-08x32.webm
->    - vp90-2-02-size-08x34.webm
->    - vp90-2-02-size-08x64.webm
->    - vp90-2-02-size-08x66.webm
->    - vp90-2-02-size-10x08.webm
->    - vp90-2-02-size-10x10.webm
->    - vp90-2-02-size-10x16.webm
->    - vp90-2-02-size-10x18.webm
->    - vp90-2-02-size-10x32.webm
->    - vp90-2-02-size-10x34.webm
->    - vp90-2-02-size-10x64.webm
->    - vp90-2-02-size-10x66.webm
->    - vp90-2-02-size-16x08.webm
->    - vp90-2-02-size-16x10.webm
->    - vp90-2-02-size-16x16.webm
->    - vp90-2-02-size-16x18.webm
->    - vp90-2-02-size-16x32.webm
->    - vp90-2-02-size-16x34.webm
->    - vp90-2-02-size-16x64.webm
->    - vp90-2-02-size-16x66.webm
->    - vp90-2-02-size-18x08.webm
->    - vp90-2-02-size-18x10.webm
->    - vp90-2-02-size-18x16.webm
->    - vp90-2-02-size-18x18.webm
->    - vp90-2-02-size-18x32.webm
->    - vp90-2-02-size-18x34.webm
->    - vp90-2-02-size-18x64.webm
->    - vp90-2-02-size-18x66.webm
->    - vp90-2-02-size-32x08.webm
->    - vp90-2-02-size-32x10.webm
->    - vp90-2-02-size-32x16.webm
->    - vp90-2-02-size-32x18.webm
->    - vp90-2-02-size-32x32.webm
->    - vp90-2-02-size-32x34.webm
->    - vp90-2-02-size-32x64.webm
->    - vp90-2-02-size-32x66.webm
->    - vp90-2-02-size-34x08.webm
->    - vp90-2-02-size-34x10.webm
->    - vp90-2-02-size-34x16.webm
->    - vp90-2-02-size-34x18.webm
->    - vp90-2-02-size-34x32.webm
->    - vp90-2-02-size-34x34.webm
->    - vp90-2-02-size-34x64.webm
->    - vp90-2-02-size-34x66.webm
->    - vp90-2-02-size-64x08.webm
->    - vp90-2-02-size-64x10.webm
->    - vp90-2-02-size-64x16.webm
->    - vp90-2-02-size-64x18.webm
->    - vp90-2-02-size-64x32.webm
->    - vp90-2-02-size-64x34.webm
->    - vp90-2-02-size-64x64.webm
->    - vp90-2-02-size-64x66.webm
->    - vp90-2-02-size-66x08.webm
->    - vp90-2-02-size-66x10.webm
->    - vp90-2-02-size-66x16.webm
->    - vp90-2-02-size-66x18.webm
->    - vp90-2-02-size-66x32.webm
->    - vp90-2-02-size-66x34.webm
->    - vp90-2-02-size-66x64.webm
->    - vp90-2-02-size-66x66.webm
->  - 2 testcases failed due to unsupported format
->    - vp91-2-04-yuv422.webm
->    - vp91-2-04-yuv444.webm
->  - 1 testcase failed with CRC mismatch
->    - vp90-2-22-svc_1280x720_3.ivf
->    - Bug reported: 
-> https://gitlab.freedesktop.org/gstreamer/gstreamer/-/issues/4371
->  - 2 testcase failed due to unsupported resolution after sequence change
->    - vp90-2-21-resize_inter_320x180_5_1-2.webm
->    - vp90-2-21-resize_inter_320x180_7_1-2.webm
->  - 1 testcase failed due to unsupported stream
->    - vp90-2-16-intra-only.webm
+> We can keep dai_id on drvdata->id instead of component->id (A). Let's do it.
 > 
-> The result of fluster test on SM8250:
->  133/147 testcases passed while testing JCT-VC-HEVC_V1 with
->  GStreamer-H.265-V4L2-Gst1.0.
->  The failing test case:
->  - 10 testcases failed due to unsupported 10 bit format.
->    - DBLK_A_MAIN10_VIXS_4
->    - INITQP_B_Main10_Sony_1
->    - TSUNEQBD_A_MAIN10_Technicolor_2
->    - WP_A_MAIN10_Toshiba_3
->    - WP_MAIN10_B_Toshiba_3
->    - WPP_A_ericsson_MAIN10_2
->    - WPP_B_ericsson_MAIN10_2
->    - WPP_C_ericsson_MAIN10_2
->    - WPP_E_ericsson_MAIN10_2
->    - WPP_F_ericsson_MAIN10_2
->  - 4 testcase failed due to unsupported resolution
->    - PICSIZE_A_Bossen_1
->    - PICSIZE_B_Bossen_1
->    - WPP_D_ericsson_MAIN10_2
->    - WPP_D_ericsson_MAIN_2
-> 
->  232/305 testcases passed while testing VP9-TEST-VECTORS with
->  GStreamer-VP9-V4L2-Gst1.0.
->  The failing test case:
->  - 64 testcases failed due to unsupported resolution
->    - vp90-2-02-size-08x08.webm
->    - vp90-2-02-size-08x10.webm
->    - vp90-2-02-size-08x16.webm
->    - vp90-2-02-size-08x18.webm
->    - vp90-2-02-size-08x32.webm
->    - vp90-2-02-size-08x34.webm
->    - vp90-2-02-size-08x64.webm
->    - vp90-2-02-size-08x66.webm
->    - vp90-2-02-size-10x08.webm
->    - vp90-2-02-size-10x10.webm
->    - vp90-2-02-size-10x16.webm
->    - vp90-2-02-size-10x18.webm
->    - vp90-2-02-size-10x32.webm
->    - vp90-2-02-size-10x34.webm
->    - vp90-2-02-size-10x64.webm
->    - vp90-2-02-size-10x66.webm
->    - vp90-2-02-size-16x08.webm
->    - vp90-2-02-size-16x10.webm
->    - vp90-2-02-size-16x16.webm
->    - vp90-2-02-size-16x18.webm
->    - vp90-2-02-size-16x32.webm
->    - vp90-2-02-size-16x34.webm
->    - vp90-2-02-size-16x64.webm
->    - vp90-2-02-size-16x66.webm
->    - vp90-2-02-size-18x08.webm
->    - vp90-2-02-size-18x10.webm
->    - vp90-2-02-size-18x16.webm
->    - vp90-2-02-size-18x18.webm
->    - vp90-2-02-size-18x32.webm
->    - vp90-2-02-size-18x34.webm
->    - vp90-2-02-size-18x64.webm
->    - vp90-2-02-size-18x66.webm
->    - vp90-2-02-size-32x08.webm
->    - vp90-2-02-size-32x10.webm
->    - vp90-2-02-size-32x16.webm
->    - vp90-2-02-size-32x18.webm
->    - vp90-2-02-size-32x32.webm
->    - vp90-2-02-size-32x34.webm
->    - vp90-2-02-size-32x64.webm
->    - vp90-2-02-size-32x66.webm
->    - vp90-2-02-size-34x08.webm
->    - vp90-2-02-size-34x10.webm
->    - vp90-2-02-size-34x16.webm
->    - vp90-2-02-size-34x18.webm
->    - vp90-2-02-size-34x32.webm
->    - vp90-2-02-size-34x34.webm
->    - vp90-2-02-size-34x64.webm
->    - vp90-2-02-size-34x66.webm
->    - vp90-2-02-size-64x08.webm
->    - vp90-2-02-size-64x10.webm
->    - vp90-2-02-size-64x16.webm
->    - vp90-2-02-size-64x18.webm
->    - vp90-2-02-size-64x32.webm
->    - vp90-2-02-size-64x34.webm
->    - vp90-2-02-size-64x64.webm
->    - vp90-2-02-size-64x66.webm
->    - vp90-2-02-size-66x08.webm
->    - vp90-2-02-size-66x10.webm
->    - vp90-2-02-size-66x16.webm
->    - vp90-2-02-size-66x18.webm
->    - vp90-2-02-size-66x32.webm
->    - vp90-2-02-size-66x34.webm
->    - vp90-2-02-size-66x64.webm
->    - vp90-2-02-size-66x66.webm
->  - 2 testcases failed due to unsupported format
->    - vp91-2-04-yuv422.webm
->    - vp91-2-04-yuv444.webm
->  - 1 testcase failed with CRC mismatch
->    - vp90-2-22-svc_1280x720_3.ivf
->    - Bug raised: 
-> https://gitlab.freedesktop.org/gstreamer/gstreamer/-/issues/4371
->  - 5 testcase failed due to unsupported resolution after sequence change
->    - vp90-2-21-resize_inter_320x180_5_1-2.webm
->    - vp90-2-21-resize_inter_320x180_7_1-2.webm
->    - vp90-2-21-resize_inter_320x240_5_1-2.webm
->    - vp90-2-21-resize_inter_320x240_7_1-2.webm
->    - vp90-2-18-resize.ivf
->  - 1 testcase failed with CRC mismatch
->    - vp90-2-16-intra-only.webm
->    Analysis: First few frames are marked by firmware as NO_SHOW frame.
->    Driver make buf state to VB2_BUF_STATE_ERROR for such frames.
->    Such buffers should be dropped by GST. But instead, the first frame 
->    is being displayed and when a valid buffer is sent to client later
->    with same timestamp, its dropped, leading to CRC mismatch for first 
->    frame.
-> 
-> To: Vikash Garodia <quic_vgarodia@quicinc.com>
-> To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> To: Mauro Carvalho Chehab <mchehab@kernel.org>
-> To: Stefan Schmidt <stefan.schmidt@linaro.org>
-> To: Hans Verkuil <hverkuil@xs4all.nl>
-> Cc: linux-media@vger.kernel.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Cc: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-> Cc: Dan Carpenter <dan.carpenter@linaro.org>
-> 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Current code seems to be broken to start with.
+May be we can fix that and also get rid of usage of component->id together.
+
+From what I see that there are many regmaps that the driver cares about
+however its only managing one(either dp or i2s) in component suspend
+resume-path.
+
+i2s regmap is mandatory however other regmaps are setup based on flags
+like hdmi_port_enable and codec_dma_enable.
+
+correct thing for suspend resume path to handle is by checking these
+flags, instead of using component->id.
+
+------------------>cut<----------------------------------
+diff --git a/sound/soc/qcom/lpass-platform.c
+b/sound/soc/qcom/lpass-platform.c
+index 9946f12254b3..d8b0a637b1c6 100644
+--- a/sound/soc/qcom/lpass-platform.c
++++ b/sound/soc/qcom/lpass-platform.c
+@@ -202,7 +202,6 @@ static int lpass_platform_pcmops_open(struct
+snd_soc_component *component,
+        struct regmap *map;
+        unsigned int dai_id = cpu_dai->driver->id;
+
+-       component->id = dai_id;
+        data = kzalloc(sizeof(*data), GFP_KERNEL);
+        if (!data)
+                return -ENOMEM;
+@@ -1190,13 +1189,14 @@ static int lpass_platform_pcmops_suspend(struct
+snd_soc_component *component)
+ {
+        struct lpass_data *drvdata =
+snd_soc_component_get_drvdata(component);
+        struct regmap *map;
+-       unsigned int dai_id = component->id;
+
+-       if (dai_id == LPASS_DP_RX)
++       if (drvdata->hdmi_port_enable) {
+                map = drvdata->hdmiif_map;
+-       else
+-               map = drvdata->lpaif_map;
++               regcache_cache_only(map, true);
++               regcache_mark_dirty(map);
++       }
+
++       map = drvdata->lpaif_map;
+        regcache_cache_only(map, true);
+        regcache_mark_dirty(map);
+
+@@ -1207,15 +1207,21 @@ static int lpass_platform_pcmops_resume(struct
+snd_soc_component *component)
+ {
+        struct lpass_data *drvdata =
+snd_soc_component_get_drvdata(component);
+        struct regmap *map;
+-       unsigned int dai_id = component->id;
++       int ret;
+
+-       if (dai_id == LPASS_DP_RX)
++       if (drvdata->hdmi_port_enable) {
+                map = drvdata->hdmiif_map;
+-       else
+-               map = drvdata->lpaif_map;
++               regcache_cache_only(map, false);
++               ret = regcache_sync(map);
++               if (ret)
++                       return ret;
++       }
+
++       map = drvdata->lpaif_map;
+        regcache_cache_only(map, false);
++
+        return regcache_sync(map);
+ }
+
+ static int lpass_platform_copy(struct snd_soc_component *component,
+@@ -1224,7 +1230,9 @@ static int lpass_platform_copy(struct
+snd_soc_component *component,
+                               unsigned long bytes)
+ {
+        struct snd_pcm_runtime *rt = substream->runtime;
+-       unsigned int dai_id = component->id;
++       struct snd_soc_pcm_runtime *soc_runtime =
+snd_soc_substream_to_rtd(substream);
++       struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
++       unsigned int dai_id = cpu_dai->driver->id;
+        int ret = 0;
+
+        void __iomem *dma_buf = (void __iomem *) (rt->dma_area + pos +
+-------------------->cut<-----------------------
+
+--srini	
+> Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 > ---
-> Dikshita Agarwal (26):
->       media: iris: Skip destroying internal buffer if not dequeued
->       media: iris: Verify internal buffer release on close
->       media: iris: Update CAPTURE format info based on OUTPUT format
->       media: iris: Avoid updating frame size to firmware during reconfig
->       media: iris: Drop port check for session property response
->       media: iris: Prevent HFI queue writes when core is in deinit state
->       media: iris: Remove error check for non-zero v4l2 controls
->       media: iris: Remove deprecated property setting to firmware
->       media: iris: Fix missing function pointer initialization
->       media: iris: Fix NULL pointer dereference
->       media: iris: Fix typo in depth variable
->       media: iris: Track flush responses to prevent premature completion
->       media: iris: Fix buffer preparation failure during resolution change
->       media: iris: Send V4L2_BUF_FLAG_ERROR for capture buffers with 0 filled length
->       media: iris: Skip flush on first sequence change
->       media: iris: Remove unnecessary re-initialization of flush completion
->       media: iris: Add handling for corrupt and drop frames
->       media: iris: Add handling for no show frames
->       media: iris: Improve last flag handling
->       media: iris: Remove redundant buffer count check in stream off
->       media: iris: Add a comment to explain usage of MBPS
->       media: iris: Add HEVC and VP9 formats for decoder
->       media: iris: Add platform capabilities for HEVC and VP9 decoders
->       media: iris: Set mandatory properties for HEVC and VP9 decoders.
->       media: iris: Add internal buffer calculation for HEVC and VP9 decoders
->       media: iris: Add codec specific check for VP9 decoder drain handling
+>  sound/soc/qcom/lpass-platform.c | 10 ++++++----
+>  sound/soc/qcom/lpass.h          |  1 +
+>  2 files changed, 7 insertions(+), 4 deletions(-)
 > 
->  drivers/media/platform/qcom/iris/iris_buffer.c     |  35 +-
->  drivers/media/platform/qcom/iris/iris_buffer.h     |   3 +-
->  drivers/media/platform/qcom/iris/iris_ctrls.c      |  35 +-
->  drivers/media/platform/qcom/iris/iris_hfi_common.h |   1 +
->  .../platform/qcom/iris/iris_hfi_gen1_command.c     |  48 ++-
->  .../platform/qcom/iris/iris_hfi_gen1_defines.h     |   5 +-
->  .../platform/qcom/iris/iris_hfi_gen1_response.c    |  37 +-
->  .../platform/qcom/iris/iris_hfi_gen2_command.c     | 143 +++++++-
->  .../platform/qcom/iris/iris_hfi_gen2_defines.h     |   5 +
->  .../platform/qcom/iris/iris_hfi_gen2_response.c    |  56 ++-
->  drivers/media/platform/qcom/iris/iris_hfi_queue.c  |   2 +-
->  drivers/media/platform/qcom/iris/iris_instance.h   |   6 +
->  .../platform/qcom/iris/iris_platform_common.h      |  28 +-
->  .../media/platform/qcom/iris/iris_platform_gen2.c  | 198 ++++++++--
->  .../platform/qcom/iris/iris_platform_qcs8300.h     | 126 +++++--
->  .../platform/qcom/iris/iris_platform_sm8250.c      |  15 +-
->  drivers/media/platform/qcom/iris/iris_state.c      |   2 +-
->  drivers/media/platform/qcom/iris/iris_state.h      |   1 +
->  drivers/media/platform/qcom/iris/iris_vb2.c        |  18 +-
->  drivers/media/platform/qcom/iris/iris_vdec.c       | 116 +++---
->  drivers/media/platform/qcom/iris/iris_vdec.h       |  11 +
->  drivers/media/platform/qcom/iris/iris_vidc.c       |  36 +-
->  drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 397 ++++++++++++++++++++-
->  drivers/media/platform/qcom/iris/iris_vpu_buffer.h |  46 ++-
->  24 files changed, 1159 insertions(+), 211 deletions(-)
-> ---
-> base-commit: b64b134942c8cf4801ea288b3fd38b509aedec21
-> change-id: 20250508-video-iris-hevc-vp9-bd35d588500f
+> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+> index 9946f12254b3..676018b8134a 100644
+> --- a/sound/soc/qcom/lpass-platform.c
+> +++ b/sound/soc/qcom/lpass-platform.c
+> @@ -202,7 +202,7 @@ static int lpass_platform_pcmops_open(struct snd_soc_component *component,
+>  	struct regmap *map;
+>  	unsigned int dai_id = cpu_dai->driver->id;
+>  
+> -	component->id = dai_id;
+> +	drvdata->id = dai_id;
+>  	data = kzalloc(sizeof(*data), GFP_KERNEL);
+>  	if (!data)
+>  		return -ENOMEM;
+> @@ -1190,7 +1190,7 @@ static int lpass_platform_pcmops_suspend(struct snd_soc_component *component)
+>  {
+>  	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
+>  	struct regmap *map;
+> -	unsigned int dai_id = component->id;
+> +	unsigned int dai_id = drvdata->id;
+>  
+>  	if (dai_id == LPASS_DP_RX)
+>  		map = drvdata->hdmiif_map;
+> @@ -1207,7 +1207,7 @@ static int lpass_platform_pcmops_resume(struct snd_soc_component *component)
+>  {
+>  	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
+>  	struct regmap *map;
+> -	unsigned int dai_id = component->id;
+> +	unsigned int dai_id = drvdata->id;
+>  
+>  	if (dai_id == LPASS_DP_RX)
+>  		map = drvdata->hdmiif_map;
+> @@ -1224,7 +1224,9 @@ static int lpass_platform_copy(struct snd_soc_component *component,
+>  			       unsigned long bytes)
+>  {
+>  	struct snd_pcm_runtime *rt = substream->runtime;
+> -	unsigned int dai_id = component->id;
+> +	struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
+> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
+> +	unsigned int dai_id = cpu_dai->driver->id;
+>  	int ret = 0;
+>  
+>  	void __iomem *dma_buf = (void __iomem *) (rt->dma_area + pos +
+> diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
+> index de3ec6f594c1..7663dafef18a 100644
+> --- a/sound/soc/qcom/lpass.h
+> +++ b/sound/soc/qcom/lpass.h
+> @@ -93,6 +93,7 @@ struct lpaif_dmactl {
+>  
+>  /* Both the CPU DAI and platform drivers will access this data */
+>  struct lpass_data {
+> +	int id;
+>  
+>  	/* AHB-I/X bus clocks inside the low-power audio subsystem (LPASS) */
+>  	struct clk *ahbix_clk;
 
-Tested-by: Vikash Garodia <quic_vgarodia@quicinc.com> # on sa8775p-ride
-Tested-by: Vikash Garodia <quic_vgarodia@quicinc.com> # on qcs8300-ride
 
