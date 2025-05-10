@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-57526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF313AB2282
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 May 2025 10:55:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 03CEDAB228C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 May 2025 10:56:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D9A161B6614E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 May 2025 08:55:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 712E61B661A5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 May 2025 08:56:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A0F61F1319;
-	Sat, 10 May 2025 08:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 667781F1319;
+	Sat, 10 May 2025 08:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WVOW4a8J"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aumuG/P6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0711E9B08;
-	Sat, 10 May 2025 08:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283441A38F9;
+	Sat, 10 May 2025 08:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746867299; cv=none; b=g4QjRugELU+Y61MroqBGBxCy0cJT3noS98SesPOVSISwe4Ka1PRkDmkFY6jbIpa7h6fmTLLrX9mwl+2fJkzSrgnLQyDUhHqhFvBHH28UnK0h8zJxjVciAFyExiCxzSYfYCbJq1JfyAj1MCe5VSyuNodcDgUWMGCqS5TwPPIdx9w=
+	t=1746867361; cv=none; b=eFUUUFTUnauqcyCuRF0GsPOMPu6+dUlXRBdTlXcuom6uXpGNc2mc+Ksv+vSHZ55Sx2A4nziTV4on/1eVUZ0IQNlnW3T+PoQRCB3Szdrb6ZrD7wzmwy07HUsmOiJ1l+GXfGCqZasw1kkBtWPIY6IUZqXYZ2bmfozt7ztMmUnKnPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746867299; c=relaxed/simple;
-	bh=4vkGWeWrB5qJeRA05ngKUQ3a9wYaykQKSQsySoPOVy8=;
-	h=Message-ID:Date:From:To:Subject:In-Reply-To:References:Cc; b=Wj/NcVblyOLMJW0WpL2Mp59timpiQ4YndBclqcNmuNg/SVSDGbKZsBUiS/e8FQTGptSZIDqBFw3EuJ1cmrUZ8iue98QjvVPpnBa9OAIXZGU1CIeEebLas7Yg/dtn6qceOA1Ik3qnFddCLECHBkO0EedSFK8rTCgIozULjma+JJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WVOW4a8J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1116BC4CEE2;
-	Sat, 10 May 2025 08:54:58 +0000 (UTC)
+	s=arc-20240116; t=1746867361; c=relaxed/simple;
+	bh=OC/+BtZ0ooFhUNjPocwxrg82VS4PrJY80Y8QYYi5gdw=;
+	h=Message-ID:Date:From:To:Subject:In-Reply-To:References:Cc; b=DSW+9mqjjKiITIGqzWAGBWzBhx8BTqaT3Q5YIb0sO/Tu7Ynk30/3j61qu+tujI5TR/I8zdy8tPVlVYHztdNLqK3YgRiCoS0aWv1F+MpDEO19N0ka/ySQW9jCoC9MxMMnAqk6O8pTxS1Aakd/UBwP+t98MRH7ZvAklXuM+unLW2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aumuG/P6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426E3C4CEE2;
+	Sat, 10 May 2025 08:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746867298;
-	bh=4vkGWeWrB5qJeRA05ngKUQ3a9wYaykQKSQsySoPOVy8=;
+	s=k20201202; t=1746867361;
+	bh=OC/+BtZ0ooFhUNjPocwxrg82VS4PrJY80Y8QYYi5gdw=;
 	h=Date:From:To:Subject:In-Reply-To:References:Cc:From;
-	b=WVOW4a8JqlO3E+y5fXdF0Wt7TpzA/IeZHZg3CSK2aFr3Jp140Rn9r9KUB1iVCFsrh
-	 4xsSJHXLVhzy8GUfyUmcubvrtu6f66ltZh3esxqd2Dix/KKASa4P7qvwmx7WhRf8Dk
-	 TisNsRSCZql41EszZCX8HO6m/eWbLWfK9XGqne/hK60KolGFA+NuOlDsJA4Xg+TCvU
-	 RpO8VGfsIRHhbF3jpS0P494+bYpVyG9B1BWbRqUW5wMn4w6G27pzBfFb+BNKMg6c82
-	 o/6E+7Lgd7rVXHwoKdIiAo0tbNcalI0YnXugo+M11E8Y5wYUCrog9oFgejVnu+MS5I
-	 mK7NpD4mytzxA==
-Message-ID: <eee8c1382b8fa3034621a4d3bc251c48@kernel.org>
-Date: Sat, 10 May 2025 08:54:55 +0000
+	b=aumuG/P6IVcesDDt65dxp40V8hP9Tnxtpt0xmNrxoDzj7r9O1C4gz6H4AHvFgXZFC
+	 6XZEqqhKPiIvhGIi7A6Dixz3IBB2VaRit/pr9MwOXMlN6xYSnB/SOh3g/xUJXjQ2M7
+	 RzZbLikKPmSFqkTGsRbiFFkpAE8klv9bRIGM1jV4RAB2Knke47OviQ5poM5WQvWHWV
+	 kH3tCQ4S+goSpYoJvsVhDq8brb42KI/VnsPjmgEHWeO/p86dQZaEZ/VCjwls98Vrse
+	 WmgUAS2K9WMdRN3gV0fDfdd2JQnxD+MNM2HB5EevXrGA5yjzNDgeT1yXebDA4CmTpc
+	 wxBpo6SGj64Gw==
+Message-ID: <923990fc00f1d421c7db3ccd74aa516b@kernel.org>
+Date: Sat, 10 May 2025 08:55:57 +0000
 From: "Maxime Ripard" <mripard@kernel.org>
 To: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
-Subject: Re: [PATCH v3 11/22] drm/omap: dss: hdmi5: convert to
+Subject: Re: [PATCH v3 13/22] drm/omap: dss: venc: convert to
  devm_drm_bridge_alloc() API
-In-Reply-To: <20250509-drm-bridge-convert-to-alloc-api-v3-11-b8bc1f16d7aa@bootlin.com>
-References: <20250509-drm-bridge-convert-to-alloc-api-v3-11-b8bc1f16d7aa@bootlin.com>
+In-Reply-To: <20250509-drm-bridge-convert-to-alloc-api-v3-13-b8bc1f16d7aa@bootlin.com>
+References: <20250509-drm-bridge-convert-to-alloc-api-v3-13-b8bc1f16d7aa@bootlin.com>
 Cc: asahi@lists.linux.dev, chrome-platform@lists.linux.dev, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, imx@lists.linux.dev, linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org, linux-renesas-soc@vger.kernel.org, linux-samsung-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, platform-driver-x86@vger.kernel.org, "Andrzej
  Hajda" <andrzej.hajda@intel.com>, "Anusha Srivatsa" <asrivats@redhat.com>, "Chun-Kuang
  Hu" <chunkuang.hu@kernel.org>, "David Airlie" <airlied@gmail.com>, "Dmitry
@@ -69,7 +69,7 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 
-On Fri, 9 May 2025 15:53:37 +0200, Luca Ceresoli wrote:
+On Fri, 9 May 2025 15:53:39 +0200, Luca Ceresoli wrote:
 > This is the new API for allocating DRM bridges.
 >=20
 > Switching from a non-devm to a devm allocation allows removing the kfree()
