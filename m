@@ -1,63 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-57541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61BF0AB2784
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 May 2025 11:52:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE92DAB278A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 May 2025 11:54:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD4143B9459
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 May 2025 09:52:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 30036188D1EE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 May 2025 09:54:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47CAF1A3154;
-	Sun, 11 May 2025 09:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FBA71CD1E1;
+	Sun, 11 May 2025 09:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="elvRyCML"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FnGTEvYB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945E3EED8;
-	Sun, 11 May 2025 09:52:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B442EED8
+	for <linux-arm-msm@vger.kernel.org>; Sun, 11 May 2025 09:53:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746957155; cv=none; b=Xp5Trd1GffLcfkPSE+BbAEirNWPQStcMnu4nm48l2Fe4Yftx8YFANU4mb3/ZuWTwaxz91ngd0kzhHKMlnJj0BmAtU8fUijCnhs9Og/pJ8xKCguvgNE+n1YAtHNXspDH9zbTwCbtbb6xK6ElvC6GQV33z6gbpaZTJk3U94DeZiiw=
+	t=1746957231; cv=none; b=uLs5ze6l+PANulUuH1b6IZnLms/whemyOr4MNGfpNypu7NvPNg4b7bK0qcECIVV0nwb9dqIKYqycC1iJdE4fnTjWM7TyBt6zEOELQoeCUSO/o/ZHbJcxeex3x0PbaoblDp3Eve/bhFS+IHJa4LB/9Amaflu+zbVALRvs5EOj11w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746957155; c=relaxed/simple;
-	bh=3a0jezamU9RZJR7MiVsc4q4TJxMsQ8euYjLHW9OjbVU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LOiKwcycJpzqMpRgXaB8/2XRpxQWuH1ukyI2Oqhgq6P+ek8bsQ1DYq4fijxdQbUUUbHv+pK+7+WvnS07oZ5lEGbrm90jCe2owXJ83O84bLXlsExN8fvn9+kYzUNcSB9QQCTECBJyt3pIrccH44flbzBL+m/hNdlewwpfjvn99Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=elvRyCML; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54B5DBRF022791;
-	Sun, 11 May 2025 09:52:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Q2BsqUJ5qs8sClJC0RBmiR2OPzrS2wHqFWx0KothqIg=; b=elvRyCML7Yv1MhEA
-	2WaJOPLHdMD1PTT20TF1SQE+ZQiuswtcTDERA10Xrq5p+8BUB6Bkbk3Cipues0G/
-	4eetcXb2K6NkE/0hJC58BkBvXAeHO+Ouoes1f7jsjOg4kyKOdf3RCdOPkP+5YHDn
-	hHZvs7blT5HYCJ+9llCV87g1vV24ldYc2Pqiachq3buETJCsQ5TzLJerMenyGXwS
-	N1/uzgNXeN5h9Kazg0+5VM3PnqoBpdfRWM/YF5uNW2vOg+Kqc1PaZ0woafOVhjof
-	V84/TZsLZxY4tZzppb4s9mM8QF3tRprH1GWrORhLFeiMIXXjiXIadNBSGpPONx8J
-	v9k/ag==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46hyjjhrb8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 11 May 2025 09:52:07 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54B9q65k028030
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 11 May 2025 09:52:06 GMT
-Received: from [10.216.59.153] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 11 May
- 2025 02:52:01 -0700
-Message-ID: <1903ee8a-f819-4a4d-baee-90f35e0da290@quicinc.com>
-Date: Sun, 11 May 2025 15:21:57 +0530
+	s=arc-20240116; t=1746957231; c=relaxed/simple;
+	bh=LZUKTqSRIzcTe3Oi+qurbGORduHQ3aDEWoEgQumaS/E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=N6dmskpfqm1Np7lhajreUgFgsBotVE72Qc1jDWHrJJngF5vhvhXWtIN+ERzK/H74g7sC1Br91qEjd+oTkadpNyGlZ3LZgxRghIzOlg05Ph8AGNNpnK9GghUTsk87U1xhS97BoV0SKPZLVnulh0z2DpLsRSY0cTWmIs9RbhO/CUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FnGTEvYB; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43d04ea9d9aso18319245e9.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 May 2025 02:53:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1746957226; x=1747562026; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=svOIBgOqEfJz5rl1KUebw1DSPQLmx16oiBp9+Pj6aYI=;
+        b=FnGTEvYBuQPrh6lZoo+7yjOEfmZXAOnlTG6rsaoRM4P5pLlpA5ojiAd8CCJeBQPGcU
+         HmIBdOyBijm8yXQyE6vQGRL1eK/rK36zM7QvA2mmplueo62QbKex1OAtnE6sCTmKDmic
+         Vb+k8Bi5MMYVpdWJJQTZlPg1N6KpwWTbFE1yKkTTDb5ooM0RkIJGbQGT2jbO0Pvgk+GW
+         RyMflzzzzJ6WOLNwp/SWWyI7OcWVLmDxElYAO087eE18aUjJSc//ERu4sjndnwlY7Tc5
+         cHVjAKcjyLovstlcFgJYU9ElhEkZ3sGXRjtYWsiYoMd5WB7YT5nEAUqm05HUrp/k+Oh6
+         IS7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746957226; x=1747562026;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=svOIBgOqEfJz5rl1KUebw1DSPQLmx16oiBp9+Pj6aYI=;
+        b=FwxWvjcJUce0lFTRUcCj+4A5Xwcwg9jh9rjVTsxkk082/d+H/4rqEqBuiVYZj6/qEB
+         cYIFCx9vCCOfTvr9UQoVyUifa5FkF/POPA0WljrefH7VQIQNYzKkGuQzy9rFUY+m8OCN
+         Pjxvrjwi4go2qMXHvbqJQAA8r+zW9Zit0fOVmzgR6XKp4rY0iLN1uJfPpqPXyt8sVchJ
+         lwLIqq1BHacvPsAzR8C+T+oSBq42ZPc7GHNyZkEZjej18An4eqNcYrxoTHShiYdsvMvS
+         zXNNSEpWpMDVzT/Q0xoqEp0jzGVtC2fWq0OYaksZenVeIjmvxkxaPTzpLud+Acd9Rw5l
+         y8Hw==
+X-Forwarded-Encrypted: i=1; AJvYcCV1GGudMGIvXVE5smJlxYthOMByazIUCzYKoK36lsfNHykWliyGfcRMKKFrha5NN3uCYEQDhy0aPYZAxZqZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YweOfK0284hvotLZ8kR6GqkUB0GnZgBRjpqHzzhEFfvnz6D+vYO
+	0PaGLQRi4YglYQZKGkO6pNae/X5KjVlIlmx8AROO7sKj8W6O6YUZ8yREN2A7X8o=
+X-Gm-Gg: ASbGnct9dHZFw0EScoScKI1xco07XKq2ljES8s4gUDhe9c8phZt5Y0hl/MUC0GPM1CD
+	LDl1e+82xljt8RM4N7Bt7DQfBt/1Jly+87nAOCHvbH+KWdsOWUyn5hK0l2UqSLvfbXOBY/TRTUN
+	pBkgxGEH4eEq47XKpaZPF9YIo0oVwxe5osnBsWz3hizzakANieyVV34D+PzkuBX8u2LH/n/gmdu
+	eyHVkrs4TWlTWRdSgiyhCUJdSdGdEHdIlmIOwJgVd/C5LTC/00lPfkQIdo9SmZCJ/RjZ3M4l0mz
+	/OGD6estlhzpn6K3QE54nf0aq8RsA+A31n8TEZLrbVzla1kSjYiZym0YGLLtxWx0wiK9Ptdk+ul
+	Umj1WHLQxCYXt5MhW
+X-Google-Smtp-Source: AGHT+IEaXwLtr3ulVMHDoKRGiNLV/K4UKtErrKqyimNqORo5mIpZHz11BKqYDHNoxO5NUXC77uulTA==
+X-Received: by 2002:a05:600c:4e45:b0:43d:46de:b0eb with SMTP id 5b1f17b1804b1-442d6d44814mr82270705e9.12.1746957225872;
+        Sun, 11 May 2025 02:53:45 -0700 (PDT)
+Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442d687ae10sm87083295e9.37.2025.05.11.02.53.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 11 May 2025 02:53:44 -0700 (PDT)
+Message-ID: <cfe66826-fe23-47c6-8292-74066f021330@linaro.org>
+Date: Sun, 11 May 2025 10:53:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,109 +82,159 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFT v6 2/5] drm/msm/adreno: Add speedbin data for SM8550 /
- A740
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        <neil.armstrong@linaro.org>
-CC: Konrad Dybcio <konradybcio@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>,
-        "Simona Vetter" <simona@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>
-References: <20250430-topic-smem_speedbin_respin-v6-0-954ff66061cf@oss.qualcomm.com>
- <20250430-topic-smem_speedbin_respin-v6-2-954ff66061cf@oss.qualcomm.com>
- <13cd20c6-f758-45ff-82d1-4fd663d1698c@linaro.org>
- <886d979d-c513-4ab8-829e-4a885953079a@oss.qualcomm.com>
- <b838f9bd-0537-4f8d-b24b-d96700d566c8@linaro.org>
- <98a4ad20-c141-4280-801e-015dafd1fb39@oss.qualcomm.com>
- <a26213ec-808f-4edf-bb0d-ab469ee0a884@linaro.org>
- <281ab1b6-498e-4b29-9e15-19b5aae25342@oss.qualcomm.com>
- <63105bce-6b8e-4b99-bca1-3741f27ea25a@linaro.org>
- <892fc1eb-efd3-4fb6-9110-2df3349960a6@oss.qualcomm.com>
- <b989522d-bd41-4d76-91a9-3cf680214003@linaro.org>
- <f5734944-1ed2-4acc-a015-0c638c331bbe@quicinc.com>
- <d73c6151-91bb-4c96-ad2a-972ad392624b@oss.qualcomm.com>
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Subject: Re: [PATCH RFC/WIP v2 4/9] arm64: dts: qcom: sa8775p: Add support for
+ camss
+To: Suresh Vankadara <quic_svankada@quicinc.com>,
+ Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
+ cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250427070135.884623-1-quic_vikramsa@quicinc.com>
+ <20250427070135.884623-5-quic_vikramsa@quicinc.com>
+ <cfc85bc0-1808-42ac-b0b0-41e4935ec74d@quicinc.com>
 Content-Language: en-US
-In-Reply-To: <d73c6151-91bb-4c96-ad2a-972ad392624b@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTExMDA5OSBTYWx0ZWRfXy0iWnmVfZ948
- W8G3FTxfcJhMR1S4OQgzgXn02ZhoFwpZnM6bzzSyQZKzaj2D/xjfaof8jxY20M37m/dna7vF53D
- QVhIYrD+cF4cwCFlhO/ag9hb7iKbEuCr11re/g6MGXYUG2yLxhCM9pVSoRS3AE6zQTUn74/08ae
- JdV5244rcnHWef0OTdQcQhOVxfzLYithB0I6FEu0CYA64bqlMlyXERuIJo3sWdeL/0uxmkxxXtw
- bBscXeLtZBcBQW5MfwrlX9/LWpPdIaassjkWWoOJ9/WArOtTJQ9WHj1nr95bJfSXYikRVty23PJ
- 6ywHLBBdE4Y+ivmSG3u2DEBUIxpndEZFab09DNlSYMAB7b2C7fEK4UXo6OWHknGDHwO1qUQrBu1
- aLwcYyqK/nMC//U4PUJLYDzXeI0RbJ4egFJK++PqQ4cHBjhu7N18fXQm/anVm7wuAX8J7KpG
-X-Proofpoint-GUID: Pxr5qnV33ichnL7CgcdknTCUznFW9JTU
-X-Authority-Analysis: v=2.4 cv=QuVe3Uyd c=1 sm=1 tr=0 ts=68207347 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8
- a=90UGo0xaWWtCiJOOztUA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: Pxr5qnV33ichnL7CgcdknTCUznFW9JTU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-11_03,2025-05-09_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 clxscore=1015 spamscore=0 phishscore=0
- mlxlogscore=833 impostorscore=0 adultscore=0 priorityscore=1501
- lowpriorityscore=0 mlxscore=0 bulkscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2504070000 definitions=main-2505110099
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <cfc85bc0-1808-42ac-b0b0-41e4935ec74d@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 5/1/2025 9:23 PM, Konrad Dybcio wrote:
-> On 5/1/25 11:29 AM, Akhil P Oommen wrote:
->> On 4/30/2025 10:26 PM, neil.armstrong@linaro.org wrote:
->>> On 30/04/2025 18:39, Konrad Dybcio wrote:
->>>> On 4/30/25 6:19 PM, neil.armstrong@linaro.org wrote:
->>>>> On 30/04/2025 17:36, Konrad Dybcio wrote:
->>>>>> On 4/30/25 4:49 PM, neil.armstrong@linaro.org wrote:
->>>>>>> On 30/04/2025 15:09, Konrad Dybcio wrote:
->>>>>>>> On 4/30/25 2:49 PM, neil.armstrong@linaro.org wrote:
->>>>>>>>> On 30/04/2025 14:35, Konrad Dybcio wrote:
->>>>>>>>>> On 4/30/25 2:26 PM, neil.armstrong@linaro.org wrote:
+On 10/05/2025 08:14, Suresh Vankadara wrote:
 > 
-> [...]
 > 
->>> This behaves exactly as I said, so please fix it.
-> 
-> Eh, I was so sure I tested things correctly..
-> 
+> On 4/27/2025 12:31 PM, Vikram Sharma wrote:
+>> Add changes to support the camera subsystem on the SA8775P.
 >>
->> Konrad,
+>> Co-developed-by: Suresh Vankadara <quic_svankada@quicinc.com>
+>> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
+>> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sa8775p.dtsi | 187 ++++++++++++++++++++++++++
+>>   1 file changed, 187 insertions(+)
 >>
->> iirc, we discussed this in one of the earlier revision. There is a
->> circular dependency between the driver change for SKU support and the dt
->> change that adds supported_hw bitmask in opp-table. Only scenario it
->> works is when you add these to the initial patches series of a new GPU.
->>
->> It will be very useful if we can break this circular dependency.
+>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/ 
+>> dts/qcom/sa8775p.dtsi
+>> index 5bd0c03476b1..81eadb2bb663 100644
+>> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>> @@ -7,6 +7,7 @@
+>>   #include <dt-bindings/interconnect/qcom,icc.h>
+>>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>   #include <dt-bindings/clock/qcom,rpmh.h>
+>> +#include <dt-bindings/clock/qcom,sa8775p-camcc.h>
+>>   #include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
+>>   #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
+>>   #include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
+>> @@ -3940,6 +3941,192 @@ videocc: clock-controller@abf0000 {
+>>               #power-domain-cells = <1>;
+>>           };
+>> +        camss: isp@ac7a000 {
+>> +            compatible = "qcom,sa8775p-camss";
+> If more number of nodes are added for CAMSS, adding isp in compatible 
+> string helps to differentiate.
+
+We need to keep a consistent upstream schema.
+
+If we were adding other hardware blocks - say the BPS it would just be 
+appended to the end here, declared as another v4l2 device and then 
+wired-together from user-space via likely a qcom specific libcamera 
+pipeline.
+
 > 
-> Right. Let's start with getting that in order
+>> +            reg-names = "csid0",
+>> +                    "csid1",
+>> +                    "csid_lite0",
+>> +                    "csid_lite1",
+>> +                    "csid_lite2",
+>> +                    "csid_lite3",
+>> +                    "csid_lite4",
+>> +                    "csid_wrapper",
+> csid wrapper is top register set, which is applicable for both csid 0 
+> and csid 1. It is logical to keep along with csid0 and csid1, instead of 
+> alpha numerical order.
 
-Another complication with the socinfo is that the value is unique for a
-chipset, not for a GPU. So, it won't work if we keep this data in GPU
-list in the driver.
-
-Downstream solved this problem by keeping the PCODE/FCODE mappings in
-the devicetree.
-
--Akhil.
+We've had it feels like an eternity of debates about this and 
+compromised on alphanum sort of of node-names as the most consistent 
+with prior art.
 
 > 
-> Konrad
-
+>> +
+>> +            clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
+>> +                 <&camcc CAM_CC_CORE_AHB_CLK>,
+>> +                 <&camcc CAM_CC_CPAS_AHB_CLK>,
+>> +                 <&camcc CAM_CC_CPAS_FAST_AHB_CLK>,
+>> +                 <&camcc CAM_CC_CPAS_IFE_LITE_CLK>,
+>> +                 <&camcc CAM_CC_CPAS_IFE_0_CLK>,
+>> +                 <&camcc CAM_CC_CPAS_IFE_1_CLK>,
+>> +                 <&camcc CAM_CC_CSID_CLK>,
+>> +                 <&camcc CAM_CC_CSIPHY0_CLK>,
+>> +                 <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
+>> +                 <&camcc CAM_CC_CSIPHY1_CLK>,
+>> +                 <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
+>> +                 <&camcc CAM_CC_CSIPHY2_CLK>,
+>> +                 <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
+>> +                 <&camcc CAM_CC_CSIPHY3_CLK>,
+>> +                 <&camcc CAM_CC_CSI3PHYTIMER_CLK>,
+>> +                 <&camcc CAM_CC_CSID_CSIPHY_RX_CLK>,
+>> +                 <&gcc GCC_CAMERA_HF_AXI_CLK>,
+>> +                 <&gcc GCC_CAMERA_SF_AXI_CLK>,
+>> +                 <&camcc CAM_CC_ICP_AHB_CLK>,
+>> +                 <&camcc CAM_CC_IFE_0_CLK>,
+>> +                 <&camcc CAM_CC_IFE_0_FAST_AHB_CLK>,
+>> +                 <&camcc CAM_CC_IFE_1_CLK>,
+>> +                 <&camcc CAM_CC_IFE_1_FAST_AHB_CLK>,
+>> +                 <&camcc CAM_CC_IFE_LITE_CLK>,
+>> +                 <&camcc CAM_CC_IFE_LITE_AHB_CLK>,
+>> +                 <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
+>> +                 <&camcc CAM_CC_IFE_LITE_CSID_CLK>;
+>> +            clock-names = "camnoc_axi",
+>> +                      "core_ahb",
+>> +                      "cpas_ahb",
+>> +                      "cpas_fast_ahb_clk",
+>> +                      "cpas_ife_lite",
+>> +                      "cpas_vfe0",
+>> +                      "cpas_vfe1",
+> Maintain consistency on vfe/ife in complete camss node. In reg section, 
+> vfe is used for full and lite version. in clock-names section ife lite 
+> and vfe are used. As clock IDs upstream and ife is used for full and 
+> lite, this convention will be followed in camss node as well.
+> 
+>> +                      "csid",
+>> +                      "csiphy0",
+>> +                      "csiphy0_timer",
+>> +                      "csiphy1",
+>> +                      "csiphy1_timer",
+>> +                      "csiphy2",
+>> +                      "csiphy2_timer",
+>> +                      "csiphy3",
+>> +                      "csiphy3_timer",
+>> +                      "csiphy_rx",
+>> +                      "gcc_axi_hf",
+>> +                      "gcc_axi_sf",
+>> +                      "icp_ahb",
+> sf and icp_ahb clocks needed?
+> 
+>> +
+>> +            interconnects = <&gem_noc MASTER_APPSS_PROC 
+>> QCOM_ICC_TAG_ACTIVE_ONLY
+>> +                     &config_noc SLAVE_CAMERA_CFG 
+>> QCOM_ICC_TAG_ACTIVE_ONLY>,
+>> +                    <&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAYS
+>> +                     &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>> +                    <&mmss_noc MASTER_CAMNOC_SF QCOM_ICC_TAG_ACTIVE_ONLY
+>> +                     &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
+>> +            interconnect-names = "ahb",
+>> +                         "hf_0",
+>> +                         "sf_0";
+> sf_0 needed?
+> 
+>> +
+>> +            iommus = <&apps_smmu 0x3400 0x20>;
+> 
+> 
+> Regards,
+> Suresh Vankadara.
 
