@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-57645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFA1AAB46A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 23:49:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 192EFAB46A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 23:49:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7E69F19E4242
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 21:49:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 143DA19E40F9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 21:49:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 312BF299AAC;
-	Mon, 12 May 2025 21:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21309299A80;
+	Mon, 12 May 2025 21:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bOrhHd/0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KnDLm9yY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F9022338;
-	Mon, 12 May 2025 21:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FC622338;
+	Mon, 12 May 2025 21:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747086548; cv=none; b=TPL0oYRzYvP+krczudubahZqPBtGZuSUcTuzWIa/fj25NW0XYAgtzCSA3yty0jPn4PuLPGeqDy4J6OpcE69Ovd68e3uwibtkGM5dsbgqloKphqT/RxHNbptqHdHRcack4pg+QYF10iipvB76u+dvCxUCUlB0Yz8Teb+Des6Y44o=
+	t=1747086553; cv=none; b=feXeTB6Hqejo8MGYYS1h0TeI90vjE9GT3iRHSBFCPaZir6nNzAkOGQ0qK4CL1P4TzOFeIMU4bP2AVJNxg0xnbF+a6rzIfpdw6/231t7QjsbqAN6Rxj73wiqtBCIM68Ekk3Z5Z7RMfFPg391VQ4ISF0I45GEibr//DhbypFpc+90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747086548; c=relaxed/simple;
-	bh=/v2hKJDOeaSwgpA4hWsoM6Kte/4uX3qwWNorWOZh068=;
+	s=arc-20240116; t=1747086553; c=relaxed/simple;
+	bh=SSHE2Q9h3ca4wmvKYP6qG9vFPFuZtu+s8qCmar2P2UM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Kto8PcQ90ksPip6WUfoxnLofbtf7XBeTdfdmTS6Z2PZ9NxKBJJ9yqRbtdEUqORPjE9uzHFBYBZBCEZOHKnESeDxumwDq7vBuPRvE/OqrUIMyfwW5U9ZCBQvVhYw2O9Ly+qoENq+PV9tOpVy43YGVWlLn5LQzZHmRhaOAyJcp7TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bOrhHd/0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD898C4CEEF;
-	Mon, 12 May 2025 21:49:02 +0000 (UTC)
+	 MIME-Version:Content-Type; b=cGBLfgKGLpgROe5c2J7Cayd8e4oG5AO5waFD+hUwKkld1QwgIsZpxwCD77Clb/OEoQ1Oa8kIu5xSwkVi6LFOsS1IG4DY0UefmXCgdM55/pzFIbQaaWMUEKXFjBQkAOZb2WwcLcoWJvLh2ZBH2mWIJW9fTtxuw9UKKmZ+90SCU9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KnDLm9yY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21127C4CEE7;
+	Mon, 12 May 2025 21:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747086547;
-	bh=/v2hKJDOeaSwgpA4hWsoM6Kte/4uX3qwWNorWOZh068=;
+	s=k20201202; t=1747086552;
+	bh=SSHE2Q9h3ca4wmvKYP6qG9vFPFuZtu+s8qCmar2P2UM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bOrhHd/0BqyVx7AqfogzJ+unOJ+ES6mzqbvpj081oAIy8ERU65DpQ5ewm2HH9d0/i
-	 JvPU7qwaibonWmR3/t6ZHZJtxzXJ6outmhn98is71qRrnTr//rFh6Oyi+6gLEmdtWj
-	 fHXFZYO4i1wO6OSgzcvGiqW/UjbvmgNcMmTgPk/QMjdvc5uo48cay1lypdQTzbN8aG
-	 DAfS2wrV+9ga/IATnEjMsbWx/vuG8KL6vSnWK848WMJggp4F0qITKqkPFOp+sOM+eI
-	 J3gKa2YtHeLGK4oJGXl8e9506NnCyO19WKfnMSxGIaM82RCJHYWMpHKYgFVXbsCUsA
-	 I+0n434kL6GAQ==
+	b=KnDLm9yYjGpnYILSzzaMI4opkTuagD/jMZ33GNSSWMZd4tfflGXTjloYICvenJH4j
+	 yZFtaEPvlx3UVnWcgcMifsEAZSgGnlpztWyJclU0h2QlfjiJIxyX8V+sgutakEJKkj
+	 lx1mrAu+o+v7gPGz/WWmiVvdPzD0jGnxWTYWQLNVWn+8ZepMdvjRVvOMsxjdeknix2
+	 2CTYVkbX0Ktt6Z0/UaU8XUZalGCKbM9pDZovIGgEGc1R76uAe6bgf0FSl6oZ7Ea3lP
+	 J7Ysrf2ZG8LQgDc5sWnT71NrNhSTUjQRzFj/RO45Ul7SeCUjD8YM6ZV2dizPpxv+na
+	 cmfMCdtqltqPA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Conor Dooley <conor@kernel.org>,
@@ -55,12 +55,12 @@ Cc: linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Conor Dooley <conor.dooley@microchip.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v4 0/4] Introduce LLCC v6 used on the SM8750 SoCs
-Date: Mon, 12 May 2025 22:48:50 +0100
-Message-ID: <174708642731.3671.5500625017836369026.b4-ty@kernel.org>
+Subject: Re: (subset) [PATCH v5 0/4] Introduce LLCC v6 used on the SM8750 SoCs
+Date: Mon, 12 May 2025 22:48:51 +0100
+Message-ID: <174708642737.3671.6493388672703045310.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250414-sm8750_llcc_master-v4-0-e007f035380c@oss.qualcomm.com>
-References: <20250414-sm8750_llcc_master-v4-0-e007f035380c@oss.qualcomm.com>
+In-Reply-To: <20250512-sm8750_llcc_master-v5-0-d78dca6282a5@oss.qualcomm.com>
+References: <20250512-sm8750_llcc_master-v5-0-d78dca6282a5@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,7 +71,7 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 14 Apr 2025 16:21:49 -0700, Melody Olvera wrote:
+On Mon, 12 May 2025 13:54:40 -0700, Melody Olvera wrote:
 > Add documentation and functionality for LLCC v6 used on
 > the SM8750 SoCs. LLCC v6 rearranges several registers and offsets
 > and supports slice IDs over 31, so new functionality is necessary
