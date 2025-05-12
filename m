@@ -1,81 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-57622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AA03AB3E6F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 18:57:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4111FAB3E88
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 18:59:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B03E87A2BE0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 16:56:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B61993B3FD6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 16:58:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21CC92951A8;
-	Mon, 12 May 2025 16:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E41D2951BA;
+	Mon, 12 May 2025 16:55:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tFUd65pA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79B0293B7A;
-	Mon, 12 May 2025 16:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46A225D1F8;
+	Mon, 12 May 2025 16:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747068947; cv=none; b=lrpB5p9IeBgMscT1bhsQGh2x04cnyiYv1OiFq0u/wJXRtE+7qq+uU6qJp2J43Mh/96zK+ewIKUef97B1aUeYB6Puxkls/U22IekcndENwPvNoby6QkqOoKF9KZOzv3I7Zqs/eN8SOBbG3eVwjY0lOA1yXhsKXDu1LtKZPnROScA=
+	t=1747068952; cv=none; b=WS/Qtz2uGcj3rW62tEY6IgH0Zvde3+9bUy9aU8kD97oMDIcQ/R4UMIU1jumbbhzCHWfsfhY1y2TRHiVM6WkGLAFmQQEvgl9VSCkGKTtHZ1T8b5zpB0DjR0K2VkF/orwhdSXAXJAwTk4EwU70sour2jxDr8t9dwOTfN5L3MYbNOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747068947; c=relaxed/simple;
-	bh=soCwqHddFHtyrm0TZ3nZg7h2P3JMNdQAGnyjVg5inHQ=;
+	s=arc-20240116; t=1747068952; c=relaxed/simple;
+	bh=9ukROqIAcSp6SGFl1zPfpFs7IwcWq7BQhrYCV/TWWaE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Te9DdncF27PS5xXAtdqOwAifFFhY6goAdVlA5qNwCYxkOjvIH8kET2clGl32ras8AZtyEIsN8pNtDFt4+BY1lIb1xvYPDMRFh2uW3mDwohrmvlU/jqd02PMxDaiqPrBCQS6oQ1Vy3uHOvqwbBBdh4iIWLVVMRdmSzwMhwnB7GeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD135C4CEE7;
-	Mon, 12 May 2025 16:55:46 +0000 (UTC)
-Date: Mon, 12 May 2025 18:55:44 +0200
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Danila Tikhonov <danila@jiaxyga.com>
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, "Rafael J . Wysocki" <rafael@kernel.org>, 
-	Viresh Kumar <viresh.kumar@linaro.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck <linux@roeck-us.net>, 
-	Rajendra Nayak <quic_rjendra@quicinc.com>, Jassi Brar <jassisinghbrar@gmail.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
-	Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
-	Lukasz Luba <lukasz.luba@arm.com>, Thomas Gleixner <tglx@linutronix.de>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
-	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
-	Ulf Hansson <ulf.hansson@linaro.org>, Souradeep Chowdhury <quic_schowdhu@quicinc.com>, 
-	Lee Jones <lee@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Alex Elder <elder@kernel.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
-	Bart Van Assche <bvanassche@acm.org>, Andy Gross <agross@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	Georgi Djakov <djakov@kernel.org>, Loic Poulain <loic.poulain@oss.qualcomm.com>, 
-	Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, Sibi Sankar <quic_sibis@quicinc.com>, 
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
-	Joerg Roedel <joro@8bytes.org>, Imran Shaik <quic_imrashai@quicinc.com>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, 
-	"Guilherme G . Piccoli" <gpiccoli@igalia.com>, David Wronek <david@mainlining.org>, 
-	Jens Reidel <adrian@mainlining.org>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org, 
-	linux-usb@vger.kernel.org, linux-phy@lists.infradead.org, linux-mmc@vger.kernel.org, 
-	netdev@vger.kernel.org, linux-scsi@vger.kernel.org, dmaengine@vger.kernel.org, 
-	linux-crypto@vger.kernel.org, linux-i2c@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, linux-remoteproc@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, linux-hardening@vger.kernel.org, linux@mainlining.org, 
-	~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 25/33] dt-bindings: remoteproc: qcom: sc7180-pas: Add the
- SM7150 compatible
-Message-ID: <20250512-furry-provocative-wasp-da0d8a@kuoka>
-References: <20250422213137.80366-1-danila@jiaxyga.com>
- <20250422213137.80366-9-danila@jiaxyga.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=r0mfE/CtVvMpPtd854y2cZ5oW/7FJSeAhd40fTJJw75h1kyg9AXbDkndHsBn2z8lICY43I3NIb6kNuy7TojZA1jqH7qtpEIRTKPBzAAWl1y+TwwK7lomTBf0Yx94mvyzXfg5nT1fOQqqHGA14I9Go5qyN4AJUdXytEC2bF8Cdss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tFUd65pA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 262B4C4CEE7;
+	Mon, 12 May 2025 16:55:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747068952;
+	bh=9ukROqIAcSp6SGFl1zPfpFs7IwcWq7BQhrYCV/TWWaE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tFUd65pAwGgdDgiskglFWRC19O7TZgunG+m587xb2744vL1wpB8H6WZsRB5NtIHGH
+	 DG9IuIXkKqBwBCTlNrod9hmtZz4mLviVjRbEAkD35+2F7k1zbovgc9PhDglyUrXuNv
+	 fHET4Xw8VvwzvfOAlm752J7uJOd5Rnk5R4vKqXpCm4wK1EYxsES9vVMqDoNr5qCA+V
+	 ehAM35Ox8ndPenlG5FGYv2bbZaLotgViz/X/BzGFVP2zPWytfrjhs1mcpA4+s/uZ8t
+	 LWn2Ns2iAR3JWtH29jMyA4WD8w0qmtOlz0hGPn7jpmLlJwsZs59K+xe/p+KZQhuJLZ
+	 TRR753BPmJJaw==
+Date: Mon, 12 May 2025 18:55:50 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc: alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org, 
+	krzk+dt@kernel.org, robh@kernel.org, mani@kernel.org, conor+dt@kernel.org, 
+	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, beanhuo@micron.com, 
+	peter.wang@mediatek.com, linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH V2 1/3] scsi: ufs: dt-bindings: Document UFS Disable LPM
+ property
+Message-ID: <20250512-dynamic-wisteria-manatee-def67b@kuoka>
+References: <20250506163705.31518-1-quic_nitirawa@quicinc.com>
+ <20250506163705.31518-2-quic_nitirawa@quicinc.com>
+ <667e43a7-a33c-491b-83ca-fe06a2a5d9c3@kernel.org>
+ <9974cf1d-6929-4c7f-8472-fd19c7a40b12@quicinc.com>
+ <8ebe4439-eab8-456a-ac91-b53956eab633@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,27 +65,36 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250422213137.80366-9-danila@jiaxyga.com>
+In-Reply-To: <8ebe4439-eab8-456a-ac91-b53956eab633@quicinc.com>
 
-On Wed, Apr 23, 2025 at 12:31:29AM GMT, Danila Tikhonov wrote:
->  description:
-> -  Qualcomm SC7180/SC7280 SoC Peripheral Authentication Service loads and boots
-> -  firmware on the Qualcomm DSP Hexagon cores.
-> +  Qualcomm SC7180/SC7280/SM7150 SoC Peripheral Authentication Service loads and
-> +  boots firmware on the Qualcomm DSP Hexagon cores.
->  
->  properties:
->    compatible:
-> @@ -22,6 +22,9 @@ properties:
->        - qcom,sc7280-cdsp-pas
->        - qcom,sc7280-mpss-pas
->        - qcom,sc7280-wpss-pas
-> +      - qcom,sm7150-adsp-pas
-> +      - qcom,sm7150-cdsp-pas
-> +      - qcom,sm7150-mpss-pas
+On Mon, May 12, 2025 at 09:45:49AM GMT, Nitin Rawat wrote:
+> 
+> 
+> On 5/7/2025 8:34 PM, Nitin Rawat wrote:
+> > 
+> > 
+> > On 5/6/2025 11:46 PM, Krzysztof Kozlowski wrote:
+> > > On 06/05/2025 18:37, Nitin Rawat wrote:
+> > > > Disable UFS low power mode on emulation FPGA platforms or other
+> > > > platforms
+> > > 
+> > > Why wouldn't you like to test LPM also on FPGA designs? I do not see
+> > > here correlation.
+> > 
+> > Hi Krzysztof,
+> > 
+> > Since the FPGA platform doesn't support UFS Low Power Modes (such as the
+> > AutoHibern8 feature specified in the UFS specification), I have included
+> > this information in the hardware description (i.e dts).
+> 
+> 
+> Hi Krzysztof,
+> 
+> Could you please share your thoughts on my above comment? If you still see
+> concerns, I may need to consider other options like modparam.
 
-Shouldn't you just use fallbacks with sc7180? The if:then: clauses below
-look like matching, driver change almost matches if not minidump region.
+It still looks like policy here. If this is soc specific, then I don't
+get why SoC compatible would not be enough?
 
 Best regards,
 Krzysztof
