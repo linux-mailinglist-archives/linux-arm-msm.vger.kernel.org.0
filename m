@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-57570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6C1FAB2DEB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 05:17:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F9D8AB2E04
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 05:20:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 324E83B2CAF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 03:17:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CDBCF3B2ED2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 03:20:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 690FC2A1B2;
-	Mon, 12 May 2025 03:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4401C24DFFD;
+	Mon, 12 May 2025 03:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RS+eBUsa"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hv8/ezSm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FFDE4C9F;
-	Mon, 12 May 2025 03:17:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9369D3FE7;
+	Mon, 12 May 2025 03:20:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747019852; cv=none; b=YMB85wuAdX8E+0aaw44+zwD0Q7ReJEGCcG3jrAHRdvSQvC6qJvir8O+0V9sm3Q5w2K/ToMVyVe32/Y5rN2/dMJ4SgUXZBxQyvTlEEx9S7lIToxkm9UqYnZESK7u2Qa68rlHsvO/72Dc1Ey/2/kg+SgCBQGllzUWPXWp1HMj6NbE=
+	t=1747020025; cv=none; b=jiNi80Kg9II8zXQVCz14DfAvbmRivGx7gwPiK/P4Joa1hrPppHDWDWAyek1pMJlT4qWkV6nHnsYny3BNYnhv8aSBHsnt3HzDicGfB5tkHi622EEfqRoO5RD+hHODGrRSnZeB2I3GlWYfHIN2AbRDi9NEj+Gqs45P4oEnMOoOqn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747019852; c=relaxed/simple;
-	bh=OZfWAnobhqdNFKhB9BPrKOzfKONXZNBxo3gQaRzOoZM=;
+	s=arc-20240116; t=1747020025; c=relaxed/simple;
+	bh=e9bP4xfqeLEEmpYx1vZoRZfU8ik7kEpH/Xu4ESP9NBc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=IJzvrI9oCptI/MtGtuMmzpzIysMmMN9kfv9HvJ3Y/7LgzfCbUFJI8dYSG+R4GmGuCvtkPGm0QLB34Mk30M36Uv/257SQwCnzAxbE8I/i8R46HUiAH/NJukTQf0CgDb4JSJz0PvCwW4VUPUt4sENbqeCB7r15txkpcZISuvXl7iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RS+eBUsa; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=RUyrTfrWxBQgXq7TTiXo2oZ+vG2KxMwkWJuF/sZEJXSUnXcVKf6V9WEGFcSA6/7FeY9hMVtLLWj97+/ztaOYTbTto8Yiz3E9VjupdNdXk9evlJTmQ6u8hSIwBwQZjqxnPSXXrM91vH9uIbMYRh0i4a6lNc4xqBIjRf3lX7fwtiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hv8/ezSm; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54BMVidD027707;
-	Mon, 12 May 2025 03:17:26 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54BMwDuX013379;
+	Mon, 12 May 2025 03:20:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ei71nJhFIXa2GPr33EmRirerjA+BagoTAuqVGerbAsc=; b=RS+eBUsaYPaZmbSx
-	7jN9wxoDA5EI4kNgn0sBaBvEDlncitHht1Z2Ztu31JKdAYxz/ijdhtM0sBST76Ww
-	/4AV69pa3+DYG8U/U3fmZ8J7qR0Azqbe/86YXSgsdB7yunyxIYJscIEHzf8ofSlX
-	5jChBzrRLtACanjlSC8sAy6EtRwYfG11ta+yPE2rh7sENwEUNoRQvE98FADMxedp
-	cuUaxrblFEmRmriDyrbpDyqeDN1w4qlCM/NBYVo8tHn0P2ko7T1sLCuoL7wq1CKx
-	C06XC/UVNMLC3G3lCpq8+J2m/N5M6CE2Z/ierD1reh1TBSfdDKUheOLBmr/1Pp+L
-	0yH+TA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46hvghb4ug-1
+	Qj3n6D7VwKoLjijtDVsMaEMCksWmx8FugJrnliRn3lY=; b=hv8/ezSmbt7qcvQU
+	xOFkOgweqbU9iWnJRszKg+5pegpLPHjek7y4rL6IRT90q57BRwsgxNjvfI8mh1lc
+	HkrnpZNchGg7VtlHIDeSd7Sry5g542R0EwByPS5Zt9NrWuoa+sec6HIZhCXMBhNK
+	yrhQE68ADHZ/zJ+FUpLb+dYU5QgVNYi3XxNAsrPmtEq7bOOJSc+tPU20ziVEuUN0
+	XD+SYl8bmwixbVMoliM2DJGGDW8f5jtRm9j5h5S701G74eNXVt51AnTYkPqeNsWG
+	TnDoijBDYeZbn+NvhcN/IBPNFFKNj7heDaHNhRH44H7C3KH7A7uC/P4me+9glpnS
+	CLnKTQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46hv5qb4nh-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 12 May 2025 03:17:26 +0000 (GMT)
+	Mon, 12 May 2025 03:20:19 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54C3HPQZ007225
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54C3KHGl014444
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 12 May 2025 03:17:25 GMT
+	Mon, 12 May 2025 03:20:18 GMT
 Received: from [10.239.132.205] (10.80.80.8) by nalasex01b.na.qualcomm.com
  (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 11 May
- 2025 20:17:18 -0700
-Message-ID: <f70013d1-6273-4ec9-b860-0d88cfe6f181@quicinc.com>
-Date: Mon, 12 May 2025 11:17:16 +0800
+ 2025 20:20:12 -0700
+Message-ID: <2eb4606c-16f8-4e34-8084-039c9e57bbdd@quicinc.com>
+Date: Mon, 12 May 2025 11:20:09 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,8 +65,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/6] arm64: dts: qcom: qcs615: Add mproc node for
- SEMP2P
+Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: qcs615: Add IMEM and PIL info
+ region
 To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
         Bjorn Andersson
 	<andersson@kernel.org>,
@@ -81,91 +81,84 @@ To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
         Konrad Dybcio <konradybcio@kernel.org>
 CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
         <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Kyle Deng <quic_chunkaid@quicinc.com>
+        <linux-kernel@vger.kernel.org>
 References: <20250507-add_qcs615_remoteproc_support-v2-0-52ac6cb43a39@quicinc.com>
- <20250507-add_qcs615_remoteproc_support-v2-3-52ac6cb43a39@quicinc.com>
- <a8a1aa0e-f53d-4a77-9199-958878563b9f@oss.qualcomm.com>
- <53dd6e80-b0d1-4b1e-9354-851fa2473191@quicinc.com>
- <18993254-5fa2-44bf-845f-3b0bef29508d@oss.qualcomm.com>
+ <20250507-add_qcs615_remoteproc_support-v2-4-52ac6cb43a39@quicinc.com>
+ <64893588-544f-4cb0-8c0b-7eef588468d5@oss.qualcomm.com>
+ <c0ab504c-2b27-45cd-be8f-1176230b8bfd@quicinc.com>
+ <f81b3f81-b14d-41c1-9968-2d473e1f0947@oss.qualcomm.com>
 From: Lijuan Gao <quic_lijuang@quicinc.com>
-In-Reply-To: <18993254-5fa2-44bf-845f-3b0bef29508d@oss.qualcomm.com>
+In-Reply-To: <f81b3f81-b14d-41c1-9968-2d473e1f0947@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: A-iLo1AcPI8ZS1AvQR1UqkfGtqqPG5vZ
-X-Proofpoint-ORIG-GUID: A-iLo1AcPI8ZS1AvQR1UqkfGtqqPG5vZ
-X-Authority-Analysis: v=2.4 cv=AMDybF65 c=1 sm=1 tr=0 ts=68216846 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=DqtW+H/+ c=1 sm=1 tr=0 ts=682168f3 cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
- a=ElEvMR_8cTJwMRenlScA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=yCyZkDE8jGOGnjQE1oIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
  a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDAzMyBTYWx0ZWRfXxpPAssAqjm3Z
- T7qcZuJMWvrwluyFxU6GAil50Q6m9ycFAJHNENj5Rjqjgn/LE8bxeXWIBI7rewmkd/Nw34toPoX
- F4T2DviEmXrvgl9XaB7GrLheHDd0wooXthxZbnavXhFj3nGCWEouuwgu/59ExAwPGL/hpYYhFhX
- cn0DMSAtPjVKhiqacLpGDi8vd+Hkwa7+eZvM2A4ET7cDchLN8cUr2hG8qLwjLhMGiWbMSjZ39I3
- IwjKnbr4bxCTOT/Rrb09SXx/4ayCVN3q40OZZY26SQ3AcEpTJfbkYfShlRNpCAtFiqAZ0dNhaF3
- 6bD8vzFlEReXr3cijIKreaKqPSFreNuR1/VrIhOi7xsrsa/86n4l+Xz0Wi4WfnHGkpne7NEnD6r
- 4CN4aF8sg1t6HtwAkfj1Neuv57uMu1jw3KGmZUXjiCIID7ffIUHQo5YD++2Tl5muKXdvCEQS
+X-Proofpoint-ORIG-GUID: uQFq18D9Q7sVwOmnQOg1p6ybi2STf3GN
+X-Proofpoint-GUID: uQFq18D9Q7sVwOmnQOg1p6ybi2STf3GN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDAzMiBTYWx0ZWRfX9yUa+QWithC7
+ tKpSQ8HaSc8X72BHj4mK8TPMnbW1fnB3K71zhtaLTe2kDwfcxDlol2LL8hRfeuk9IxSdK3VIR+z
+ xnBXTPZvu1dN0nWtHG/R++MXvsAhNVuX0QyZmhRkPjt+GZOAncNqSst5cuKOqckrdvwKk6H5GAK
+ uuSd8Ul6RQShXDa2mxQbH8gkJzN+aUDrY5JHnTBXNXEKM3wLhvN31wImjKu4tUyGTx/5lR36NM9
+ /TSCaZqBPVMmVnoQhY81v/9Y+TKt00zLZKkFklZtxD9QqMNyVsfhb1lJP6DxLLeixWAQRpatpS1
+ /KV0X3r7lBuKSfR0C+Yl9XfoIYShbGzj4Sim1e8h9YEGn3wQb7KttI0NlKbYda2nhl5Fx8TBO8m
+ 1MigP/GZ6aByfdVdrGEN4ZuwhIdf869cgyKj2YQfSCj1obtlXiZJF+8y/AhhHYZjx1gFIDKP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-12_01,2025-05-09_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 priorityscore=1501 adultscore=0 impostorscore=0
- phishscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 mlxscore=0
- mlxlogscore=975 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505120033
+ mlxscore=0 bulkscore=0 phishscore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 impostorscore=0 spamscore=0 mlxlogscore=931 malwarescore=0
+ suspectscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505120032
 
 
 
-在 5/9/2025 4:53 PM, Konrad Dybcio 写道:
-> On 5/9/25 10:22 AM, Lijuan Gao wrote:
+在 5/9/2025 4:54 PM, Konrad Dybcio 写道:
+> On 5/9/25 9:37 AM, Lijuan Gao wrote:
 >>
 >>
->> 在 5/8/2025 10:40 PM, Konrad Dybcio 写道:
+>> 在 5/8/2025 10:41 PM, Konrad Dybcio 写道:
 >>> On 5/7/25 12:26 PM, Lijuan Gao wrote:
->>>> From: Kyle Deng <quic_chunkaid@quicinc.com>
+>>>> Add a simple-mfd representing IMEM on QCS615 and define the PIL
+>>>> relocation info region as its child. The PIL region in IMEM is used to
+>>>> communicate load addresses of remoteproc to post mortem debug tools, so
+>>>> that these tools can collect ramdumps.
 >>>>
->>>> The Shared Memory Point to Point (SMP2P) protocol facilitates
->>>> communication of a single 32-bit value between two processors.
->>>> Add these two nodes for remoteproc enablement on QCS615 SoC.
->>>>
->>>> Signed-off-by: Kyle Deng <quic_chunkaid@quicinc.com>
 >>>> Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
 >>>> ---
->>>>    arch/arm64/boot/dts/qcom/qcs615.dtsi | 43 ++++++++++++++++++++++++++++++++++++
->>>>    1 file changed, 43 insertions(+)
+>>>>    arch/arm64/boot/dts/qcom/qcs615.dtsi | 14 ++++++++++++++
+>>>>    1 file changed, 14 insertions(+)
 >>>>
 >>>> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
->>>> index 7c377f3402c1..53661e3a852e 100644
+>>>> index 53661e3a852e..fefdb0fd66f7 100644
 >>>> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
 >>>> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
->>>> @@ -332,6 +332,49 @@ mc_virt: interconnect-2 {
->>>>            qcom,bcm-voters = <&apps_bcm_voter>;
->>>>        };
->>>>    +    smp2p-adsp {
->>>> +        compatible = "qcom,smp2p";
->>>> +        qcom,smem = <443>, <429>;
->>>> +        interrupts = <GIC_SPI 172 IRQ_TYPE_EDGE_RISING>;
->>>> +        mboxes = <&apss_shared 26>;
+>>>> @@ -3266,6 +3266,20 @@ sram@c3f0000 {
+>>>>                reg = <0x0 0x0c3f0000 0x0 0x400>;
+>>>>            };
+>>>>    +        sram@146aa000 {
+>>>> +            compatible = "qcom,qcs615-imem", "syscon", "simple-mfd";
+>>>> +            reg = <0x0 0x146aa000 0x0 0x1000>;
 >>>
->>> 26 will poke at the SLPI instead
+>>> 0x14680000 0x2c000
 >>
->> SLPI has not been enabled in QCS615, so the sensor will be in ADSP.  And 26 is being used dowstream, so it should be correct.
+>> I checked the latest datasheet, the Shared IMEM address is 0x146aa000 and its size is 0x1000, 0x14680000 is the start address of IMEM layout. The shared IMEM is used for debugging purposes, while the others parts are dedicated.
 > 
-> Please check in with the relevant folks and leave a comment such as
-> 
-> /* On this platform, bit 26 (normally SLPI) is repurposed for ADSP */
-> 
-> if it's indeed correct
+> Even if we don't use the entirety of it, it's good to describe
+> the whole block
 > 
 > Konrad
 
-Yes, I have already confirmed the above information with the relevant 
-folks. I will add this comment in the next patch.
+According to the definitions on all existing upstream platforms, this 
+imem points to the shared imem. Should we stay consistent?
 
 -- 
 Thx and BRs
