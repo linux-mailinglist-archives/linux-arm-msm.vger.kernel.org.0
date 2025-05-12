@@ -1,52 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-57609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82181AB3AC8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 16:37:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 064E8AB3ACB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 16:37:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0C7C87ADEE4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 14:35:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 080AF19E2BE8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 14:37:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C62B0227B87;
-	Mon, 12 May 2025 14:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C0AD22A1CD;
+	Mon, 12 May 2025 14:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mP0dEBs6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="svwjgVzr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99AE978F43;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEF7229B28;
 	Mon, 12 May 2025 14:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747060626; cv=none; b=LP35k1/QncIHnEM3A7KZOyTWcZgEMAj3KTc73gJSeyn9pFZbNEdtrDg8g7YGYyaaMTp0H0nMszAtf6PkSo8UK9Bq29D0084+daRf2yGp35tcj35FAw33kRCu9IZNaznrFKcaVM4DrnSkYGc1Jb2jnTZyGzeHi2pbC6oPE4P3bNc=
+	t=1747060627; cv=none; b=U+hUoWqLSwD/OaLEXMTDOwZCUKXDOr6N57HBPXg/HrQwagyREmnmFUNqdzz8xnhKMybmrRm5k6cAXQN7FLUkNJtzVOApCZUsMqaS2ATT33QviZv+ofEjODzm5fsQbt/KYAfEBKET6xX5UQTxHzJ9s9e7tkD7ssXxHIxt7S8XWic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747060626; c=relaxed/simple;
-	bh=FRmP3zLT6FTZhFpt8JSH7YRQTJkpK8mvEacJW0127co=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=rffPrb95RdyMygTYsr0L6WNvWG1hwgZ107nI9sJ2uIo7Rxrq2in9Q7DvncJ+XjboE3/LihCeQIY9I+273u8CrJhcDGZJh6F3TXvOCi73yLatj3CwZchO7ndz5OBCuzoxRXfgCzIWwfo8JD+8qjipR/Z+XIEfV3X6lAZoFK3R1tI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mP0dEBs6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 75CB4C4CEE7;
+	s=arc-20240116; t=1747060627; c=relaxed/simple;
+	bh=9c73iXDXvgnARot8nAst3Y4sWhj8Zc0sgUgQkOUXnus=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=lR7PPEN4W148I4/iiWGMObn1oJqAozKKFuH2oVB9dJJqPEsrL1ywE1IYjfW2DIEplrA/kBi1o1hQWG0Y38SekYujvEsQbSsJJ4ZCSaWZ8e3f4qLhOoV7IeLY3IT2aDjuZxG4ToRdrS5SJR/bq5zl1lWB5Q1X80hg+NF0hD8D60A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=svwjgVzr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 884C3C4CEED;
 	Mon, 12 May 2025 14:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1747060626;
-	bh=FRmP3zLT6FTZhFpt8JSH7YRQTJkpK8mvEacJW0127co=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=mP0dEBs6qFA9a+KZSBxENAaimfFs3+9hVL3Oe9WB8/cdPrwNEFAPzh75OT/hwtraG
-	 kZ6YZO964rxPpVBOx3sH03ZW1eDcB5ZFQHr9mzOC50G0igfkJCQPcScaoRUt+yShjP
-	 PPH1k5tn+KhTePpmKrYr6IPjkfQ0dDEKfGEpIq5WuX0ywmS4Cfcs4gblLVx0CVXC18
-	 7xcAk9Mkp17aP6m9gbxJR4LAKlC6sa6YWXuDcrubLj/xDGWMUcCw2ubdNMP6gR5qYr
-	 Ijzym7gl1l9Al0b85PrFO3aM45qZlLhWaBea3/JFZAwb71ssKghG74ZM9NK3V5AC5Q
-	 xTFsjlMCDxEuA==
+	bh=9c73iXDXvgnARot8nAst3Y4sWhj8Zc0sgUgQkOUXnus=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=svwjgVzrcRFlGzuwSkn7LXEcGAgdarmp8Z2M0KR3z/5NrxHDg7M2Dp9+tVEXUaGkd
+	 R4XyhfdO5KjpHwMpso/HoL5emPQ/lEW65i+GGnkxpLH9XQzBEiWEePDy1JhCht92fc
+	 DQDFKNHWSa6DLgqn2oHk7bRg/aqtuwIa+uaqTwYYL0ix4ysT7ygjFi0v7D4QSjCrWW
+	 jtvMcnZuT1d2yZuO7wm2aj3OCF+ukT9G2oXRK4y60ZBTpRXR39L33FIwCmafL5KOV4
+	 LItTt2KhfuOe9F3hAxP7XjLTpacPRDZRhO6GZ8ogIcSRFRxigfm2v2f2/Q4x4qkYoz
+	 l8curXkP1W5Aw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61418C3ABCB;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74076C3ABD4;
 	Mon, 12 May 2025 14:37:06 +0000 (UTC)
 From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Subject: [PATCH 0/2] Add the download mode support for IPQ5018
-Date: Mon, 12 May 2025 18:36:45 +0400
-Message-Id: <20250512-ipq5018-syscon-v1-0-eb1ad2414c3c@outlook.com>
+Date: Mon, 12 May 2025 18:36:46 +0400
+Subject: [PATCH 1/2] dt-bindings: mfd: qcom,tcsr: Add compatible for
+ ipq5018
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,10 +56,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAH0HImgC/x3MQQqAIBBA0avIrBN0UqiuEi3KppqNlQNRSHdPW
- r7F/xmEEpNApzIkulh4jwW2UhC2Ma6keS4GNOiNt6j5OL2xjZZHwh61pdq1ZCZEt0CJjkQL3/+
- wH973A+Wa8HtgAAAA
-X-Change-ID: 20250512-ipq5018-syscon-1e349e0b224f
+Message-Id: <20250512-ipq5018-syscon-v1-1-eb1ad2414c3c@outlook.com>
+References: <20250512-ipq5018-syscon-v1-0-eb1ad2414c3c@outlook.com>
+In-Reply-To: <20250512-ipq5018-syscon-v1-0-eb1ad2414c3c@outlook.com>
 To: Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
@@ -67,11 +67,11 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, 
  George Moussalem <george.moussalem@outlook.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1747060624; l=688;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747060624; l=819;
  i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=FRmP3zLT6FTZhFpt8JSH7YRQTJkpK8mvEacJW0127co=;
- b=7mdpqeObKkJaAt9nkPLr/duLkUQjbUXO55r4rKC7MnLxbjeWHV1sQU4E9i12e1UULN0MHRg0i
- Ht4fIDzdmiIBy3ryICDE+BXcqBh5cdreqpysu2HP3zaJBgXU1l5bAhR
+ bh=rWOkA/E/Z9CidEDzLfL6fySdOSwBg0HFYVj2bD8wwdw=;
+ b=LSN1rRYrwfvEn4O7StFZU1xBujSdtqhZxWawpLyOp9hgyF3qqVNvORk4/ukQx7HAnRPJe5GZT
+ ezqM3qrCST2COMQfNk/JlEt+NO+seQruVnmAuXvci/CqL+rcGnVo3hO
 X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
  pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
 X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
@@ -79,25 +79,30 @@ X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
 X-Original-From: George Moussalem <george.moussalem@outlook.com>
 Reply-To: george.moussalem@outlook.com
 
-Enable support for download mode to collect the RAM dumps in case of
-system crashes, to perform post mortem analysis.
+From: George Moussalem <george.moussalem@outlook.com>
+
+Document the qcom,tcsr-ipq5018 compatible.
 
 Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
-George Moussalem (2):
-      dt-bindings: mfd: qcom,tcsr: Add compatible for ipq5018
-      arm64: dts: qcom: ipq5018: enable the download mode support
-
  Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
- arch/arm64/boot/dts/qcom/ipq5018.dtsi                | 6 ++++++
- 2 files changed, 7 insertions(+)
----
-base-commit: edef457004774e598fc4c1b7d1d4f0bcd9d0bb30
-change-id: 20250512-ipq5018-syscon-1e349e0b224f
+ 1 file changed, 1 insertion(+)
 
-Best regards,
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+index 7e7225aadae3285f59ec303294cf1515772a629b..14ae3f00ef7e00e607bba93f49f03bb244253b0e 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+@@ -41,6 +41,7 @@ properties:
+           - qcom,sm8450-tcsr
+           - qcom,tcsr-apq8064
+           - qcom,tcsr-apq8084
++          - qcom,tcsr-ipq5018
+           - qcom,tcsr-ipq5332
+           - qcom,tcsr-ipq5424
+           - qcom,tcsr-ipq6018
+
 -- 
-George Moussalem <george.moussalem@outlook.com>
+2.49.0
 
 
 
