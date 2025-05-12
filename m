@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-57594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 888EEAB328E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 11:01:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E5A4AB329B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 11:03:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 00CA3189C8E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 09:01:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C28981887A7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 09:02:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DFDE266B55;
-	Mon, 12 May 2025 08:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60ADF25A623;
+	Mon, 12 May 2025 08:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WyhxcAIb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="msGuLrHp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEF1265CA3;
-	Mon, 12 May 2025 08:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9253725A63D;
+	Mon, 12 May 2025 08:58:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747040270; cv=none; b=K9LUe784lE1JUi/1MxajK36p4/onoQFHVHmkuL+RUSVUH6lOhItMY3DRvpsNEH829azO2zEc6FbJN4PruIkBpmBEDlYHY1QUOBZU9d4ldVNQngfnFh7L9GIQukgXehSp32gmSlxYsYppFPEOZsdCnK+scVSxBGo5ko9Xce1hgmM=
+	t=1747040319; cv=none; b=tlKKEvxVrKfKu8vzRSQni85Gn5RPJWAoqNDkALfb1azcmvbVRy0yi+Xi3+LSd8OxivfqKPP9ua55ijHpyGxbecSo7BaZ3DBMNw8BmODadRg1ZbtdQJtQuddD42Uv0h3ZiqWYaLCBptV5h0GtBMeAUJV8NCSjHqBoylwhtdFUCeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747040270; c=relaxed/simple;
-	bh=qCiOc2lGEPA6wS0ywTwxLfWN66tfkPb8n12/TLdqL3k=;
+	s=arc-20240116; t=1747040319; c=relaxed/simple;
+	bh=A7P8XUPXv6zRLcCTZFqD9dlTu6yVWVAX4HC3mjQThoU=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=BNoHkeeL0Qxp5H4SAS67EabXJN6Dl3TNbLUUo/vlUh5oGazrBjN5B7y0YrMrdUtyg5u2rJxAdWlYjCpJ63T3I/PPFgrZsoQijVIBK+WST41q4ORKDiGajaCi/YD+KWQaSYhN2YU2nyqemSwlOawBPEENXndviZ3lb8s3iP7lsoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WyhxcAIb; arc=none smtp.client-ip=209.85.218.50
+	 Content-Type:MIME-Version; b=gsKjr9a6ujLnBjVGxHl2p5phxLQHVy67rX2BbD/yfOfc/tgnxwM4NYmtgeC4BKNFEuc8HqJJ3VVe1YzkoV80zk+rCm+fxLpRISX6kIEQJgslj48wOaNUk5JA4+EFEd8MsdmXP1AyOCuUCV7R/neRwEIayjxyqlUrBpyRlnP9Zx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=msGuLrHp; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-acb5ec407b1so732796566b.1;
-        Mon, 12 May 2025 01:57:48 -0700 (PDT)
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-ace94273f0dso806655666b.3;
+        Mon, 12 May 2025 01:58:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747040267; x=1747645067; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747040316; x=1747645116; darn=vger.kernel.org;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=qCiOc2lGEPA6wS0ywTwxLfWN66tfkPb8n12/TLdqL3k=;
-        b=WyhxcAIblIrbetgEpJN72aIIzpnHeRVv5HHk/lpMAzxuSuOkZYpVktK6CMfjbil8Qk
-         w1uW9SXgGLXSmDTLtb7PhFvyxwxHf7Kxs5RyILqG75IT+fpcKjKqrpCuNqryPX/P5I7R
-         ZGfe6veZ9Zc1Itabxjc0sClh8iMnDK0CV5nn4RUHps7uJWF2EL1SZzYISctAV5WwjOB/
-         bM+/vVc7s2FUJIKfx9e6ryBOyQQtIupFseamrqHqGDF1tDBjVhJK+rUgk4EVrwf6/GRw
-         UijC1M9ZQFmBtDtpChPW2AMapDv3nXOQEplneO7Cv6OaeZjGjavTJqmVrDJ3olFMSQQU
-         Reiw==
+        bh=A7P8XUPXv6zRLcCTZFqD9dlTu6yVWVAX4HC3mjQThoU=;
+        b=msGuLrHpi06fJXS4DEn6xwwPl3KbLOBlCVy4meK+POOkU26oLfs9YUpyrhTSBcTYC5
+         jG2Hq1Xn72oVvuSjXY/n19xHH1wLcsRYQNOp9/NmQPePlG3yXHnWOKmqACqIomv0zOrV
+         whqnO+Zqv5P5VcOIjtcvi9PF594K1mpd6Bh02x4ybk8jprQESBOlXtyotu9naR8xf5sS
+         bEGBRhxQzSKARuvsInvbFXJik2wd7XsvRCQYSXqlcpFiBx/khTi0OTQ7hL2Iir5g6bJu
+         VWrmv45IclDN7kmW7+8AChZT00qEGx2tmB5p/jTWbGWFoq0BU8dwP9tmdHTYwtgMThEA
+         JdfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747040267; x=1747645067;
+        d=1e100.net; s=20230601; t=1747040316; x=1747645116;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qCiOc2lGEPA6wS0ywTwxLfWN66tfkPb8n12/TLdqL3k=;
-        b=JjF7hmcczQ8CNl2trHEUKKTdiMZiYtngtfomm6nLq8P6YICQ+6FIPUVCu5Kwau6fAI
-         jMc+k8KaRtoyx7VwlXkQlMmdzGdj5B2xdfZZBjPPWPwvb59DMeOK8gN/7VFoC885SPE+
-         AZA5i9n6/L5t3Orecjt+PjJsJ5DD0/6TvCufJE3yDFGG+cHjqaVFi/zxCDGDBzfq6lxM
-         fowNMzKLpoD7CD0TzHcl2CyFSf2Glyl7TIRX8PErhbIIoLKHu4AFAdIaprWTAcDK8RJM
-         Hx/h4SC/3BNXOa88G/jqgHVGWE2mKb5nMYrxzTPte7rn3DCb2Qx2oIHJLJtuhG8BG9YI
-         nfJw==
-X-Forwarded-Encrypted: i=1; AJvYcCW9qZCyQnuVMMql2bGBrW7fCNsUwONhfEoZiiCgtiOT1XreVm1dbk1oKbLdPccNMw/GIAD6t7WFa44ENCQ=@vger.kernel.org, AJvYcCXYxANixajhKEi6X3lvoTR3GmonElk0dXuQQe0vfWxx1X0behTFTl+cMY2sAxKJUMeaaDuQWVHWU356sQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyB3IfBKAdmVjM1e8YiQaiGzFW1qX4mzGUZX3WnVNKqoOi6ZOak
-	D3waaBSaFeNI7F8JCIiSPFIj9AIOVS9XEHgdhO8ccMidBCFUqSPM
-X-Gm-Gg: ASbGncvMaB5uO3/YajpnHWOwovtT4yQnKQyYHdhmRvKD+mu4Fs/tR4c/dOce7AxVIaE
-	VLI7IAU8Ocw/WUhGdtsQphkWqeJpr4fole8LbCjVvbG1Jy1qz5+L5/XNVSU5jkZzcQ8pXl64a/c
-	z/4DUp5tOKs/nWFB9/VxVaN2hp1mJO0wjzRZNXhGhoZwJWJ9UR3lvY9uThzoGeQdncsLpRBKUum
-	qwtXhr34+XsfFVatnuAFcqJLiRgkM2nZZwk1xstq1Ajhs47UbQaqGH645qBs2Taq0A5q6ppobos
-	wW5tjFj7a61Ombba6k0o/oK6zoGn5KCIpnipxIsUjggA22XRlklqCg==
-X-Google-Smtp-Source: AGHT+IGJBdps9c8bdW4GuYaz6tfF93ydrZ6lD3tOaY3CcqSNDXObZagPFTfmNPLmYXrOY46TTm5x3g==
-X-Received: by 2002:a17:907:a810:b0:ad2:5499:75a1 with SMTP id a640c23a62f3a-ad254997932mr280618466b.32.1747040266634;
-        Mon, 12 May 2025 01:57:46 -0700 (PDT)
+        bh=A7P8XUPXv6zRLcCTZFqD9dlTu6yVWVAX4HC3mjQThoU=;
+        b=qEvI03bfQPRL2gpETQevfy22m+UBch/ZH4t9+eIkHx2tktZ8RZW0KSQkj1X8JFfnHN
+         aGErN5BPv4K9dglsd6NvySzYGV5Go3EtXFFhMH8gUwIAZiwSUq0tnVb6n/f27JC25PIT
+         D4X+IfAkjkLbPmO+dgveDBdGtWt+xrmxR06mBXPywG0ejOCEscVCxIgyM1esm+qec7zV
+         BHIJZablEYr00VjCHmYgPPMeo7jNaQUQV+vzyVAUEpmQbBeDHgOK7JO+Dfb9O/7l5wxh
+         lWxnY7D6jCyvmU7GvtKTPcpxqEI2cWFoSebo0lsoSsA2JOyD2foO5Cm9dIf67zDdnXiU
+         i6pw==
+X-Forwarded-Encrypted: i=1; AJvYcCWo8yBVZkT6tg4lcKL59wgvOw9V2xK3RiurShNm8y5VsNspocu8wddirQ6wg4NbHUwAHR6uOzBlnw6oIg==@vger.kernel.org, AJvYcCX15gV7azWWdv6N/vL4YRP5yQeag00K3QMhweH5Jut4Ct/pa4z7P60VzmsTx09aOuYnA60YOIIP/YAIooU=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywz7LsNhUaXoDKXiK2m4MJPuN573vowo3CuD5n4pjQY9XklkmBy
+	+DdjMdA/FocH1BHtIXDxMRadkwHr+SF2pB3HLxCfN06K7CEv1KwC
+X-Gm-Gg: ASbGncsfWPhd0Ur0OnjQnufqsVbTws/dBp+D49XnutVsOUVmt8nKlJXpFW4v8Jkepa3
+	5o/iDiKJ7j0oq3WP0W/I5jH4IaBxrT/k3glNO02ujqrnZuyFlwbshKh3jIpmqgT3yO+t95kefVR
+	HayjrWFx1Tl+1npOmurIeE8JBE2KvWxdS9Zwyhq8OXYPG4G3yLu/Yifcab7b6/HTtdhCWIZERM2
+	wQTiWTGnvFcd1U+3KfYVAH9eU9IZHIPRKFf6CdmIsDWYJ6v+kJwmM1HkW7mpf1kNMyQ1elWlj90
+	udIfgma6TtrlY3db0mN7M8TXqyyLWlsEiTvgTCKlSHSYc9944Xm6Tg==
+X-Google-Smtp-Source: AGHT+IGeqWIQDxmfP89wFb+3ktXSBHf1gFxheovUtgKj4Mon4MoBshJI9dMIu/Mj07TgMoIJaG8i+A==
+X-Received: by 2002:a17:907:6a13:b0:ace:8004:2a87 with SMTP id a640c23a62f3a-ad218f1e3d7mr1226887666b.16.1747040315688;
+        Mon, 12 May 2025 01:58:35 -0700 (PDT)
 Received: from [10.176.234.34] ([137.201.254.41])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad21985b026sm588720366b.177.2025.05.12.01.57.44
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad2198b6ebcsm582162766b.185.2025.05.12.01.58.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 May 2025 01:57:46 -0700 (PDT)
-Message-ID: <9df429e159b3933566c386a4464536ec2982f5f5.camel@gmail.com>
-Subject: Re: [PATCH v3 2/3] scsi: ufs: qcom: Map devfreq OPP freq to UniPro
- Core Clock freq
+        Mon, 12 May 2025 01:58:35 -0700 (PDT)
+Message-ID: <93ff21984da1fcc67a5d99e4f68fff00572cf59a.camel@gmail.com>
+Subject: Re: [PATCH v3 3/3] scsi: ufs: qcom: Call ufs_qcom_cfg_timers() in
+ clock scaling path
 From: Bean Huo <huobean@gmail.com>
 To: Ziqi Chen <quic_ziqichen@quicinc.com>, quic_cang@quicinc.com, 
  bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
@@ -87,10 +87,10 @@ Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, Manivannan
 	Sadhasivam <manivannan.sadhasivam@linaro.org>, "James E.J. Bottomley"
 	 <James.Bottomley@HansenPartnership.com>, open list
 	 <linux-kernel@vger.kernel.org>
-Date: Mon, 12 May 2025 10:57:44 +0200
-In-Reply-To: <20250509075029.3776419-3-quic_ziqichen@quicinc.com>
+Date: Mon, 12 May 2025 10:58:33 +0200
+In-Reply-To: <20250509075029.3776419-4-quic_ziqichen@quicinc.com>
 References: <20250509075029.3776419-1-quic_ziqichen@quicinc.com>
-	 <20250509075029.3776419-3-quic_ziqichen@quicinc.com>
+	 <20250509075029.3776419-4-quic_ziqichen@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.44.4-0ubuntu2 
@@ -104,19 +104,16 @@ MIME-Version: 1.0
 On Fri, 2025-05-09 at 15:50 +0800, Ziqi Chen wrote:
 > From: Can Guo <quic_cang@quicinc.com>
 >=20
-> On some platforms, the devfreq OPP freq may be different than the unipro
-> core clock freq. Implement ufs_qcom_opp_freq_to_clk_freq() and use it to
-> find the unipro core clk freq.
+> ufs_qcom_cfg_timers() is clock freq dependent like ufs_qcom_set_core_clk_
+> ctrl(), hence move ufs_qcom_cfg_timers() call to clock scaling path. In
+> addition, do not assume the devfreq OPP freq is always the 'core_clock'
+> freq although 'core_clock' is the first clock phandle in device tree, use
+> ufs_qcom_opp_freq_to_clk_freq() to find the core clk freq.
 >=20
-> Fixes: c02fe9e222d1 ("scsi: ufs: qcom: Implement the freq_to_gear_speed()=
- vop")
 > Signed-off-by: Can Guo <quic_cang@quicinc.com>
 > Co-developed-by: Ziqi Chen <quic_ziqichen@quicinc.com>
 > Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
 > Tested-by: Luca Weiss <luca.weiss@fairphone.com>
-
-
-Looks good to me:
 
 Reviewed-by: Bean Huo <beanhuo@micron.com>
 
