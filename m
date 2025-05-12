@@ -1,119 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-57595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E5A4AB329B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 11:03:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BC14AB32A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 11:03:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C28981887A7B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 09:02:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EDD0C17B211
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 09:03:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60ADF25A623;
-	Mon, 12 May 2025 08:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A42324E4CE;
+	Mon, 12 May 2025 09:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="msGuLrHp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SZN6k0q9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9253725A63D;
-	Mon, 12 May 2025 08:58:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14E51EB3D;
+	Mon, 12 May 2025 09:03:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747040319; cv=none; b=tlKKEvxVrKfKu8vzRSQni85Gn5RPJWAoqNDkALfb1azcmvbVRy0yi+Xi3+LSd8OxivfqKPP9ua55ijHpyGxbecSo7BaZ3DBMNw8BmODadRg1ZbtdQJtQuddD42Uv0h3ZiqWYaLCBptV5h0GtBMeAUJV8NCSjHqBoylwhtdFUCeE=
+	t=1747040613; cv=none; b=rB0j0WbL9QAODFul7rXsp+4xUuO18J1+9ZUhHbEVG0OyeeOY/YcaKop335YcHjyinLaMTM2LTgMprfIosGS2eqU5dihROvWS2XyWB/Lj/5r1fwAoHW1omL9JuIHA7rNfWUYSLiNL+Lho7hy2uA1G3M3WTZEH+28/edqPPxrm7nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747040319; c=relaxed/simple;
-	bh=A7P8XUPXv6zRLcCTZFqD9dlTu6yVWVAX4HC3mjQThoU=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=gsKjr9a6ujLnBjVGxHl2p5phxLQHVy67rX2BbD/yfOfc/tgnxwM4NYmtgeC4BKNFEuc8HqJJ3VVe1YzkoV80zk+rCm+fxLpRISX6kIEQJgslj48wOaNUk5JA4+EFEd8MsdmXP1AyOCuUCV7R/neRwEIayjxyqlUrBpyRlnP9Zx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=msGuLrHp; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-ace94273f0dso806655666b.3;
-        Mon, 12 May 2025 01:58:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747040316; x=1747645116; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=A7P8XUPXv6zRLcCTZFqD9dlTu6yVWVAX4HC3mjQThoU=;
-        b=msGuLrHpi06fJXS4DEn6xwwPl3KbLOBlCVy4meK+POOkU26oLfs9YUpyrhTSBcTYC5
-         jG2Hq1Xn72oVvuSjXY/n19xHH1wLcsRYQNOp9/NmQPePlG3yXHnWOKmqACqIomv0zOrV
-         whqnO+Zqv5P5VcOIjtcvi9PF594K1mpd6Bh02x4ybk8jprQESBOlXtyotu9naR8xf5sS
-         bEGBRhxQzSKARuvsInvbFXJik2wd7XsvRCQYSXqlcpFiBx/khTi0OTQ7hL2Iir5g6bJu
-         VWrmv45IclDN7kmW7+8AChZT00qEGx2tmB5p/jTWbGWFoq0BU8dwP9tmdHTYwtgMThEA
-         JdfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747040316; x=1747645116;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=A7P8XUPXv6zRLcCTZFqD9dlTu6yVWVAX4HC3mjQThoU=;
-        b=qEvI03bfQPRL2gpETQevfy22m+UBch/ZH4t9+eIkHx2tktZ8RZW0KSQkj1X8JFfnHN
-         aGErN5BPv4K9dglsd6NvySzYGV5Go3EtXFFhMH8gUwIAZiwSUq0tnVb6n/f27JC25PIT
-         D4X+IfAkjkLbPmO+dgveDBdGtWt+xrmxR06mBXPywG0ejOCEscVCxIgyM1esm+qec7zV
-         BHIJZablEYr00VjCHmYgPPMeo7jNaQUQV+vzyVAUEpmQbBeDHgOK7JO+Dfb9O/7l5wxh
-         lWxnY7D6jCyvmU7GvtKTPcpxqEI2cWFoSebo0lsoSsA2JOyD2foO5Cm9dIf67zDdnXiU
-         i6pw==
-X-Forwarded-Encrypted: i=1; AJvYcCWo8yBVZkT6tg4lcKL59wgvOw9V2xK3RiurShNm8y5VsNspocu8wddirQ6wg4NbHUwAHR6uOzBlnw6oIg==@vger.kernel.org, AJvYcCX15gV7azWWdv6N/vL4YRP5yQeag00K3QMhweH5Jut4Ct/pa4z7P60VzmsTx09aOuYnA60YOIIP/YAIooU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywz7LsNhUaXoDKXiK2m4MJPuN573vowo3CuD5n4pjQY9XklkmBy
-	+DdjMdA/FocH1BHtIXDxMRadkwHr+SF2pB3HLxCfN06K7CEv1KwC
-X-Gm-Gg: ASbGncsfWPhd0Ur0OnjQnufqsVbTws/dBp+D49XnutVsOUVmt8nKlJXpFW4v8Jkepa3
-	5o/iDiKJ7j0oq3WP0W/I5jH4IaBxrT/k3glNO02ujqrnZuyFlwbshKh3jIpmqgT3yO+t95kefVR
-	HayjrWFx1Tl+1npOmurIeE8JBE2KvWxdS9Zwyhq8OXYPG4G3yLu/Yifcab7b6/HTtdhCWIZERM2
-	wQTiWTGnvFcd1U+3KfYVAH9eU9IZHIPRKFf6CdmIsDWYJ6v+kJwmM1HkW7mpf1kNMyQ1elWlj90
-	udIfgma6TtrlY3db0mN7M8TXqyyLWlsEiTvgTCKlSHSYc9944Xm6Tg==
-X-Google-Smtp-Source: AGHT+IGeqWIQDxmfP89wFb+3ktXSBHf1gFxheovUtgKj4Mon4MoBshJI9dMIu/Mj07TgMoIJaG8i+A==
-X-Received: by 2002:a17:907:6a13:b0:ace:8004:2a87 with SMTP id a640c23a62f3a-ad218f1e3d7mr1226887666b.16.1747040315688;
-        Mon, 12 May 2025 01:58:35 -0700 (PDT)
-Received: from [10.176.234.34] ([137.201.254.41])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad2198b6ebcsm582162766b.185.2025.05.12.01.58.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 May 2025 01:58:35 -0700 (PDT)
-Message-ID: <93ff21984da1fcc67a5d99e4f68fff00572cf59a.camel@gmail.com>
-Subject: Re: [PATCH v3 3/3] scsi: ufs: qcom: Call ufs_qcom_cfg_timers() in
- clock scaling path
-From: Bean Huo <huobean@gmail.com>
-To: Ziqi Chen <quic_ziqichen@quicinc.com>, quic_cang@quicinc.com, 
- bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
- avri.altman@wdc.com,  junwoo80.lee@samsung.com, martin.petersen@oracle.com,
- quic_nguyenb@quicinc.com,  quic_nitirawa@quicinc.com,
- quic_rampraka@quicinc.com, neil.armstrong@linaro.org, 
- luca.weiss@fairphone.com, konrad.dybcio@oss.qualcomm.com, 
- peter.wang@mediatek.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, Manivannan
-	Sadhasivam <manivannan.sadhasivam@linaro.org>, "James E.J. Bottomley"
-	 <James.Bottomley@HansenPartnership.com>, open list
-	 <linux-kernel@vger.kernel.org>
-Date: Mon, 12 May 2025 10:58:33 +0200
-In-Reply-To: <20250509075029.3776419-4-quic_ziqichen@quicinc.com>
-References: <20250509075029.3776419-1-quic_ziqichen@quicinc.com>
-	 <20250509075029.3776419-4-quic_ziqichen@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2 
+	s=arc-20240116; t=1747040613; c=relaxed/simple;
+	bh=rsshUYA/LRWlmxUYnBypRPS7L2QMCx+Gv5FRHPTOtA4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=PdQmhvIXE4Eg2uyCtuWcei3whcoqa4akT1/C7FM9wYz6dIE3wmsLnwyp5/CucWD1UcEevw+patM36S+plns7jq3gk2GZ+Btob2OkkRCjMeeYKM4ZAaPzFeaHScCC1e15QniXQrlARYUs9ynDpPs37xoPLI15UWB2QmLCXoag4nI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SZN6k0q9; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54BM1to9010230;
+	Mon, 12 May 2025 09:03:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	V/SjLHQBRX2ja8oprIqQBFz8Ft8CAPXfkAoMHk7fFCI=; b=SZN6k0q9EzYwlqGW
+	nY11ZtMAtGfoWR5c/fK7lNqenesB45uOL/kK+hrG/+g2/akgustWRrLU+6LJ0/DZ
+	GiEXuocpNDT1y7/axs5vegt10V6l8N3lZxHUo8U8fnYPcgvZwbJwTzN41cXu/20A
+	PwAay/60aeB15JCuIuVPTkUrg4LX7NONow1NXq4fFhgAHnFAAfSl6t//+fcx82CI
+	9fPqOO3wBUIOjMVJITjcdcvILmTCFYCWJjfH/mBa8K8GZpDrhylrFzSRR2i3V+fV
+	iFQ5WPN68n+5WgzAfUkGn1zUR+OPqqVomXkVoqPlE1K2wCeVKDT29b5MWkAFTVoZ
+	jwvC3Q==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46hv5qc1d3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 May 2025 09:03:20 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54C93JDu026417
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 May 2025 09:03:19 GMT
+Received: from [10.253.34.155] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 12 May
+ 2025 02:03:13 -0700
+Message-ID: <37b5681b-ebf5-4956-8111-b53383dce755@quicinc.com>
+Date: Mon, 12 May 2025 17:03:10 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/5] PCI: qcom: Add support for QCS615 SoC
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <vkoul@kernel.org>, <kishon@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <neil.armstrong@linaro.org>,
+        <abel.vesa@linaro.org>, <manivannan.sadhasivam@linaro.org>,
+        <lpieralisi@kernel.org>, <kw@linux.com>, <bhelgaas@google.com>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <quic_qianyu@quicinc.com>,
+        <quic_krichai@quicinc.com>, <quic_vbadigan@quicinc.com>
+References: <20250507031559.4085159-1-quic_ziyuzhan@quicinc.com>
+ <20250507031559.4085159-6-quic_ziyuzhan@quicinc.com>
+ <20250507-competent-meek-prawn-72badf@kuoka>
+From: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+In-Reply-To: <20250507-competent-meek-prawn-72badf@kuoka>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=DqtW+H/+ c=1 sm=1 tr=0 ts=6821b958 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
+ a=xwpoersD-4fSveQz36wA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: UlH3xmLVWF4q9bbSi8q9-QGJjGEG42fe
+X-Proofpoint-GUID: UlH3xmLVWF4q9bbSi8q9-QGJjGEG42fe
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDA5NSBTYWx0ZWRfX2DTo/7znvrll
+ w6MDuiEIrnfHXP4By3vbxklMKXgEB5MmWkMlUBilg+iPSo9JM9hMFvIa+8zRsShbwxMfjC0vPHv
+ Y555rcRIZcTTMzWKTjNkxUm0NAbo0uwROM57U8OeFjdKCyPLZlBvNxHVNumWysknYA86JPhqfPW
+ 9VbWrD7d1x/a839tYyYbVL0E16YYSgKY3aQqGum9Fhhqw58SqorlJpCX71bDBsD419bLLoBU1WM
+ WHnsLL45JZ4CINoxwTBohDPZG9EeYBobX8ovEBsmAeou2rLGrG49Fn6C88KA4KTdseAK9on7Wj8
+ Ilj3qTrSqoDAepOQ8OK2sCinGPWHs2Fn/vmxdFGvVMJV0fCspBi56hjQ80o56XWraziV7pI0GFR
+ v4TKYMibAMClTes8N9TpLjIWaKwwnPfMYDqah8moN5/CnpvRWI880oAflHXWP3rKXDBmZzve
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-12_03,2025-05-09_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 bulkscore=0 phishscore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 impostorscore=0 spamscore=0 mlxlogscore=999 malwarescore=0
+ suspectscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2505120095
 
-On Fri, 2025-05-09 at 15:50 +0800, Ziqi Chen wrote:
-> From: Can Guo <quic_cang@quicinc.com>
->=20
-> ufs_qcom_cfg_timers() is clock freq dependent like ufs_qcom_set_core_clk_
-> ctrl(), hence move ufs_qcom_cfg_timers() call to clock scaling path. In
-> addition, do not assume the devfreq OPP freq is always the 'core_clock'
-> freq although 'core_clock' is the first clock phandle in device tree, use
-> ufs_qcom_opp_freq_to_clk_freq() to find the core clk freq.
->=20
-> Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> Co-developed-by: Ziqi Chen <quic_ziqichen@quicinc.com>
-> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
-> Tested-by: Luca Weiss <luca.weiss@fairphone.com>
 
-Reviewed-by: Bean Huo <beanhuo@micron.com>
+On 5/7/2025 1:18 PM, Krzysztof Kozlowski wrote:
+> On Wed, May 07, 2025 at 11:15:59AM GMT, Ziyue Zhang wrote:
+>> Add the compatible and the driver data for QCS615 PCIe controller.
+>> There is only one controller instance found on this platform, which
+>> is capable of up to 8.0GT/s.
+>> The version of the controller is 1.38.0 which is compatible with 1.9.0
+>> config.
+>>
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+>> ---
+>>   drivers/pci/controller/dwc/pcie-qcom.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index dc98ae63362d..0ed934b0d1be 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -1862,6 +1862,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>>   	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &cfg_1_9_0 },
+>>   	{ .compatible = "qcom,pcie-sm8550", .data = &cfg_1_9_0 },
+>>   	{ .compatible = "qcom,pcie-x1e80100", .data = &cfg_sc8280xp },
+>> +	{ .compatible = "qcom,qcs615-pcie", .data = &cfg_1_9_0 },
+> Why? It's compatible with other entries, so why adding redundant entry
+> here?
+>
+> Best regards,
+> Krzysztof
+
+Hi Krzysztof
+
+If I use the compatible entry for qcs615 in the driver, do I need to
+add qcom,qcs615-pcie to qcom,pcie-sm8550.yaml, or should I create a new
+YAML file specifically for qcs615-pcie? Given that the PCIe cores on
+qcs615 and sm8550 require different clocks, is it acceptable to combine
+them in qcom,pcie-sm8550.yaml?
+
+BRs
+Ziyue
+
 
