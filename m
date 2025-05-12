@@ -1,893 +1,469 @@
-Return-Path: <linux-arm-msm+bounces-57635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 095CBAB452E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 21:49:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD62EAB4562
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 22:19:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 49E551B4210A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 19:50:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1D6A3169DB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 20:19:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1511E2522BA;
-	Mon, 12 May 2025 19:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 333E22550A0;
+	Mon, 12 May 2025 20:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kBNLDmdW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MSGvZeRL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF23299921
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 May 2025 19:49:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E02B242D6E;
+	Mon, 12 May 2025 20:19:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747079391; cv=none; b=LT40q2U5XCS/BLc4txCVBxXRIWnT8i/UGKIiDQcftEAdGIgWc2yx4lUB7J1R3QMP5DQLjoWbLVfZHI9QUVtx80khxkwmAq25Cuq2eAfbYGnePDL4mnZpxSK778dIp/f6YmSshQcsRGjlvnMzJZxhBLcYUB5r0xVieL4IvEb/yEk=
+	t=1747081151; cv=none; b=JCRV6903xQcw1dCk2+ZgiXgPiGmW3L0xv89ILOxtJGMU9yMbpWkGT8Mzce7IXvyzegy7KanqoAPZq4i4rvM30x1IzknxzVlve6Ep45FhAmYm09/5tmUuIlkwcc4qruh3392pIvk1x1s4a/CfR2gDJ2Mcf7wICcvGU4Ba/6VJLes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747079391; c=relaxed/simple;
-	bh=vldFHesgJbu5E0zE3oyJCOQoqWIjIbE/WLstSrajhdU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=X+GgxvV0q1pg69vu9ab3PoD9R5Lp5XkJTB2Yc2KQgic9P1rc5spE7Md4rb5ZLNqsSF3sxDs6SSFYOgDzbs9PmoYYpg7e/InSY+kuZhlG3KNc2WqyDrLp1gatkbgG0o+oFQIh87z+3JbaVCMFOtAZgEfuj1yqd3NNf8WJwqr/FG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kBNLDmdW; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54CDtRx6012364
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 May 2025 19:49:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=AVtid8XmaircRDu8psIAvKiVKosmaZwIN+T
-	GX8pFG0E=; b=kBNLDmdW/8bDjiom3njw1KcVquLjIBWu4oMTA4i66yoU9cduq1O
-	62JOOzu86kXe8IFnikxXTswaK3NstlgY82Wza2YQ4z3FO/g/EwZhxniUXoPoiPY6
-	Z1+TvzJN9AMt14jDBpayt2f6d2jqUaYmEpvEIGEyjcBsUNxKcyQGlBo7Q3VM38ic
-	otpU/Jh6NxZ6BAH+l2pgkV0qQAZGgneStjitTtOi5+b0JPBPqGq3ZVeHs77R8EN0
-	e82JHZy2CKsGC2hNNknE+EdBJrmRMfnkwlZSUQ1oSVpiKIhygdoqqTkl/vw3Piq8
-	B17g//VYIbjnnIYkVVNu6gCTbjV82QpnGRQ==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46kc3mt8rb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 May 2025 19:49:44 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-742360cec7eso3301408b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 May 2025 12:49:44 -0700 (PDT)
+	s=arc-20240116; t=1747081151; c=relaxed/simple;
+	bh=w4eLwKb9QryIkuwP6kyQLGalPTyQ/jVoK2Tlo+8db74=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=SzsOrWxL0nu0O/LXJnWm3emXtPkc5YKyop5AUc0LqrK1JG+y6vWPcvk5RMKe+X+AeFwv6kJhPKedKF40ztOb6qhhOP42fkG4M1qUmhTglYrzwmK9rjRF4HyLfCOOMG8INmLi4X8rENCn5W12Q23Y3a56yo8Ew5p/1/wfSrqOXaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MSGvZeRL; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ad243cdbe98so369219666b.0;
+        Mon, 12 May 2025 13:19:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747081147; x=1747685947; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=C8FAVJr0o8XNrHXrMvp/p04Y4NbnfovofF+b0K2NKsU=;
+        b=MSGvZeRLme5xL1AZ5D4Ut0ZaN+WOaMQ2NnU9OXRKCkUpWRaUrTJffYRVQy325y3E0H
+         2PEHMXeavTkYSRF79X1WQrydG0X3W0UUXOJXrJMI5SLN5Geibg5HMsPidEucyCziATyx
+         MQpZ6jPuGheeyqhXo5nbXgDsOOT11uL4Om435S7CYlAxLInEL4Ddx/pAUrdx59UNbaSR
+         /BX1D4cVFnJQl2d+uIflM2j9I73MUj8uWU0lrTbez7NAYZchG5Dwpfe3tR2g+57+Bult
+         4JHPq5shdhdI2X7CF7FwEE7sEzMePv6d4PaLMTD9wPBW6qaYWLuYSdbf54ZrFR9LDJIn
+         XZIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747079384; x=1747684184;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AVtid8XmaircRDu8psIAvKiVKosmaZwIN+TGX8pFG0E=;
-        b=dOLMG8l9z/j2K2V594ccWsGfsmKgeeofmuJpu45qsf47u5RwF2+VngV3fanb+UeBa+
-         a/kQgva4bJUkvFxpXhGpgxEKBFSDR1C8ozw0LiiQUQrculJKxU/EFkoxu8WlRQMAoKs/
-         iqnsjesqg3lOWjYdFxBW7BOg1sdfZa1/404rzYQ/zbjbBznWgn6K7Db3oweBojlQm+i2
-         wxjgH9HhLe5jBxG648dSY94l3uIJ4m+Q9LLqiGMI4EK0gVSkjHzIezTO9xitCaLQQBGG
-         W/IOqbC5eQfGUHu7AyraDSl18Ke1e4R79JsuHdJRxszzdl7/s7aRhqpJkTwL2FZUuFJ0
-         /VCw==
-X-Gm-Message-State: AOJu0YzTXP6aoCDg3t8Ahn8UHPziicMfPwwQ6s3prpmnUBehyTh7dRGh
-	WCm4LtLYLsiBhgi4H5tkke24y8FL4OUycjTND01yQDpLD5Z2hcJmDT7ocOX2VQhxWNP9gjqujFK
-	vKu9NZSsF2mwODw3KtMbePTQAt2UdjGJ03SMkPbxICRrEseO/k78Rdlur5nF3I9EuMlEYYPY3
-X-Gm-Gg: ASbGncvXhrE623YaJ6lU9dV40oXAc+4BNDdtOIJUCNJj1dkQQ+7VZ45Q7dTNfz1tnOn
-	E9lnAxcxbhK4TTk6Q/zPBYHZADItii+WT7zq/R8hqPsrAjqubFpC3aFdARcOl3qWSnrlloOB/dF
-	jVW3I2GvHo5XildX/MPR2vSaPyWjAPWbtztyHBnShNJ+H7oMYbzJVtmrdhVcq81gOa93imu+5Ic
-	Eia6r/O2m9MCVFdaWq9pJALiiVDkR1B7e1oHIqXDYhpir+aBtbuq/49UEi7qN1oexkGucZv89fh
-	yINesTxtd+fuEg6CpxMVWw1tBvZ1Znr1Z+/RC+nPdjMa6Tf5LEdqBUdJqZPD
-X-Received: by 2002:a05:6a21:3292:b0:1f3:418c:6281 with SMTP id adf61e73a8af0-215abb4f8f6mr20093361637.4.1747079383550;
-        Mon, 12 May 2025 12:49:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFYUfqFyAUqZSXxXm+VB9O/v87XjKLUoJutpc+9iQbZCTSd4mUo8011g8rhYBa1bQzrYGlyvQ==
-X-Received: by 2002:a05:6a21:3292:b0:1f3:418c:6281 with SMTP id adf61e73a8af0-215abb4f8f6mr20093317637.4.1747079382852;
-        Mon, 12 May 2025 12:49:42 -0700 (PDT)
-Received: from jhugo-lnx.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74237a3d1cfsm6284952b3a.127.2025.05.12.12.49.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 May 2025 12:49:42 -0700 (PDT)
-From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-To: quic_carlv@quicinc.com, quic_thanson@quicinc.com, lizhi.hou@amd.com,
-        jacek.lawrynowicz@linux.intel.com, quic_yabdulra@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Subject: [PATCH] accel/qaic: Add Reliability, Accessibility, Serviceability (RAS)
-Date: Mon, 12 May 2025 13:49:37 -0600
-Message-Id: <20250512194937.3530774-1-jeff.hugo@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1747081147; x=1747685947;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C8FAVJr0o8XNrHXrMvp/p04Y4NbnfovofF+b0K2NKsU=;
+        b=a+yhS2h5CRsEOyOWNHdMRui1AaRKtZmThXN2ce2OeXvVE/IYc+JOLW4ZQiCDBAm1AY
+         pwbbFmQmvyxvDWxUZSQMiAoBjO5/8V7/bN/th8nRRzzwjWFLpFXU5MTBkWkdkh4OrE4k
+         DpFlzTHJITwTod6cPNLPYtSSbTmKF0AvBnDg2iqTM7p/yFbf/PVMnEqReXx11jBSw2DD
+         +0bmI0J/CJp0aFVmBGilqavgmaNDv4OY1JmE6OY5PM42QP+kBg53X1aiiTQjzFBn9RRB
+         xx3P0ppToRfxp2ARcFVu5dmTrNL/4/mdqI9xpp+pzK/IpACDhch2kMlfo9jZPGtoMZlW
+         unsg==
+X-Forwarded-Encrypted: i=1; AJvYcCUbi4TrBfgsb6k55x/WssCVtEw45hixD7wjMm2iEMaE34vzG+6CsDKH7MNijvgdRMq/KO73iz3GtzyQkV/a@vger.kernel.org, AJvYcCV6vLrD5Jn56BdHH1cjwRUrwz8+uO5d3swqIFdAkwxZXM4OSWtDeeTgKvOUNRe86QliPbK86qGzhNp0AvFv@vger.kernel.org, AJvYcCVq9apD1zDOyoxLOzRo7X1q2u4v2IjMNVioFzVutd5zOuweL6eKPIZ2IyYKe4kJDbYG4SCkYEpxU2/Q@vger.kernel.org
+X-Gm-Message-State: AOJu0YwRGEBSP2TRf5SrmiC5GHeO2Zhjo9TqIXBiMrbD+ylBC8ofaXtH
+	uchJuSLQ+KRmeiS563i6KXQuVrCGivYOsgj6XRMQSu/N133fD6nV
+X-Gm-Gg: ASbGncvnxs4ElsW5wXZNfHifTJdCdNTPVprI8fenVfuivmYEuvPjXSuY04wnjLf7wtS
+	Z71zpCyJBeYzkTW3SNbpVSeD04j7M4PdvFtXKDb2Y8R20zjsxYmZpubjPsJJwWZyHhfROzfOnal
+	ORbkD401Gevc+g0cAcJ2qePcuJ1Y4ZKIQI6xjBPMWUt6JSnXmPec9WE2tIfCFEn/SqtSMFbEXd9
+	r90eJBDqUX1qbhKuM1jNiO9ipBnyLBlQEnZxLPgwaQaLxyS10Eao5uuI3lAPfTkwFRuWvqaL4dN
+	5lWu6YD3mctRsBCdF41Hq6THb1svm2+NF8s0sdCpHXhulsad21QPY/TRUI+fHQihehvkrfSJcoF
+	724G+rLnJi3Xm8PnQ
+X-Google-Smtp-Source: AGHT+IExGQP+nxOYo8zMTkffifhTHXQnLbGVL/FVwKnNvWu4Fbp1SbYneT3NIy50ZzT/FwDunJsb2w==
+X-Received: by 2002:a17:907:9453:b0:ace:f53b:ff4a with SMTP id a640c23a62f3a-ad21917f5d3mr1480781766b.50.1747081146541;
+        Mon, 12 May 2025 13:19:06 -0700 (PDT)
+Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad22ba81523sm545279366b.65.2025.05.12.13.19.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 May 2025 13:19:06 -0700 (PDT)
+Message-ID: <16195524-1f31-4968-a3fd-f3d24f1c4223@gmail.com>
+Date: Mon, 12 May 2025 22:19:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Gabor Juhos <j4g8y7@gmail.com>
+Subject: Re: [PATCH next 2/2] spi: spi-qpic-snand: add support for 8 bits ECC
+ strength
+To: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, Mark Brown <broonie@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>,
+ Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+ linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250502-qpic-snand-8bit-ecc-v1-0-95f3cd08bbc5@gmail.com>
+ <20250502-qpic-snand-8bit-ecc-v1-2-95f3cd08bbc5@gmail.com>
+ <8aa3d4da-da3e-2af4-e0f9-cd56d6259d8f@quicinc.com>
+ <c1729d39-9f7f-4c6d-b8a4-72dfee4bfca5@gmail.com> <878qn2nsa0.fsf@bootlin.com>
+Content-Language: hu
+In-Reply-To: <878qn2nsa0.fsf@bootlin.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: lq9t3HRgR0f2_K5WTfRUAqObKufyBjDl
-X-Proofpoint-GUID: lq9t3HRgR0f2_K5WTfRUAqObKufyBjDl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDIwNCBTYWx0ZWRfX2X5nhgYx4X+X
- L05pSJ+KEEtx09FncMsGeVwdEo/Z/zubvSHVU2sfUCK9DKXJHsLv23duhAQb+v8s8FWDVt5+2AS
- +4YLTvST6Jlxg5lP09X7BLYmt0J8LmpiwM0UwoMcKcLhf7TNrs7zrxSi8fJpuVP/peNODFqaS2/
- CdrnmJT76CZu53XhijGsVrO65FdT4lqINOkxHrSxbjeRE57la3R/CGt6ZtZfv3MCn6gI0KI03/L
- jXu/3ABzmxepEtl7ieUMZuYPL1DguhN0nE1lgZCTTXRyLhPr2BZJaoDbQBH1+7JCwM5pazG9pN+
- e+VOBH90SpRjdwyQ14nTpPxMXsEhuWb9CM/Q85V5zPxjGp8PAFKazwpnlueMafzYS2d7N5EUB59
- 6APeiMPonWQM1yM/idmtl36TA9NF2skGGkOjP7PVK+9zZZoqA046KSv+9Xgf/O3NohpurNYP
-X-Authority-Analysis: v=2.4 cv=afhhnQot c=1 sm=1 tr=0 ts=682250d9 cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=dt9VzEwgFbYA:10 a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
- a=QmHHIsGFvcH2m9EzYqkA:9 a=IoOABgeZipijB_acs4fv:22 a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-12_07,2025-05-09_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999 priorityscore=1501
- impostorscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
- spamscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505120204
 
-AIC100 devices generates Reliability, Availability, Serviceability events
-via MHI QAIC_STATUS channel. Support such events and print a structured
-log with details of the events, and if the event describes an uncorrected
-error, reset the device to put it back into service. As these events may
-not all be reported via other mechanisms like AER, maintain counts of
-the number of errors observed for each type.
+2025. 05. 12. 10:32 keltezéssel, Miquel Raynal írta:
+> On 05/05/2025 at 15:21:52 +02, Gabor Juhos <j4g8y7@gmail.com> wrote:
+> 
+>> 2025. 05. 05. 13:17 keltezéssel, Md Sadre Alam írta:
+>>>
+>>>
+>>
 
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
----
- Documentation/ABI/testing/sysfs-driver-qaic |  18 +
- MAINTAINERS                                 |   1 +
- drivers/accel/qaic/Makefile                 |   1 +
- drivers/accel/qaic/qaic.h                   |   8 +
- drivers/accel/qaic/qaic_drv.c               |   6 +
- drivers/accel/qaic/qaic_ras.c               | 629 ++++++++++++++++++++
- drivers/accel/qaic/qaic_ras.h               |  11 +
- 7 files changed, 674 insertions(+)
- create mode 100644 Documentation/ABI/testing/sysfs-driver-qaic
- create mode 100644 drivers/accel/qaic/qaic_ras.c
- create mode 100644 drivers/accel/qaic/qaic_ras.h
+[...]
 
-diff --git a/Documentation/ABI/testing/sysfs-driver-qaic b/Documentation/ABI/testing/sysfs-driver-qaic
-new file mode 100644
-index 000000000000..f794fd734163
---- /dev/null
-+++ b/Documentation/ABI/testing/sysfs-driver-qaic
-@@ -0,0 +1,18 @@
-+What:		/sys/bus/pci/drivers/qaic/XXXX:XX:XX.X/ce_count
-+Date:		May 2025
-+KernelVersion:	6.17
-+Contact:	dri-devel@lists.freedesktop.org
-+Description:	Number of correctable errors received from device since driver is loaded.
-+
-+What:		/sys/bus/pci/drivers/qaic/XXXX:XX:XX.X/ue_count
-+Date:		May 2025
-+KernelVersion:	6.17
-+Contact:	dri-devel@lists.freedesktop.org
-+Description:	Number of uncorrectable errors received from device since driver is loaded.
-+
-+What:		/sys/bus/pci/drivers/qaic/XXXX:XX:XX.X/ue_nonfatal_count
-+Date:		May 2025
-+KernelVersion:	6.17
-+Contact:	dri-devel@lists.freedesktop.org
-+Description:	Number of uncorrectable non-fatal errors received from device since driver
-+		is loaded.
-diff --git a/MAINTAINERS b/MAINTAINERS
-index fe9773af465a..5801adfe4927 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -19916,6 +19916,7 @@ L:	linux-arm-msm@vger.kernel.org
- L:	dri-devel@lists.freedesktop.org
- S:	Supported
- T:	git https://gitlab.freedesktop.org/drm/misc/kernel.git
-+F:	Documentation/ABI/testing/sysfs-driver-qaic
- F:	Documentation/accel/qaic/
- F:	drivers/accel/qaic/
- F:	include/uapi/drm/qaic_accel.h
-diff --git a/drivers/accel/qaic/Makefile b/drivers/accel/qaic/Makefile
-index 35e883515629..1106b876f737 100644
---- a/drivers/accel/qaic/Makefile
-+++ b/drivers/accel/qaic/Makefile
-@@ -10,6 +10,7 @@ qaic-y := \
- 	qaic_control.o \
- 	qaic_data.o \
- 	qaic_drv.o \
-+	qaic_ras.o \
- 	qaic_timesync.o \
- 	sahara.o
- 
-diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
-index 0dbb8e32e4b9..3fa47385aae4 100644
---- a/drivers/accel/qaic/qaic.h
-+++ b/drivers/accel/qaic/qaic.h
-@@ -167,6 +167,14 @@ struct qaic_device {
- 	struct workqueue_struct *bootlog_wq;
- 	/* Synchronizes access of pages in MHI bootlog device */
- 	struct mutex            bootlog_mutex;
-+	/* MHI RAS channel device */
-+	struct mhi_device	*ras_ch;
-+	/* Correctable error count */
-+	unsigned int		ce_count;
-+	/* Un-correctable error count */
-+	unsigned int		ue_count;
-+	/* Un-correctable non-fatal error count */
-+	unsigned int		ue_nf_count;
- };
- 
- struct qaic_drm_device {
-diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-index 3b415e2c9431..e31bcb0ecfc9 100644
---- a/drivers/accel/qaic/qaic_drv.c
-+++ b/drivers/accel/qaic/qaic_drv.c
-@@ -29,6 +29,7 @@
- #include "mhi_controller.h"
- #include "qaic.h"
- #include "qaic_debugfs.h"
-+#include "qaic_ras.h"
- #include "qaic_timesync.h"
- #include "sahara.h"
- 
-@@ -695,6 +696,10 @@ static int __init qaic_init(void)
- 	if (ret)
- 		pr_debug("qaic: qaic_bootlog_register failed %d\n", ret);
- 
-+	ret = qaic_ras_register();
-+	if (ret)
-+		pr_debug("qaic: qaic_ras_register failed %d\n", ret);
-+
- 	return 0;
- 
- free_mhi:
-@@ -722,6 +727,7 @@ static void __exit qaic_exit(void)
- 	 * reinitializing the link_up state after the cleanup is done.
- 	 */
- 	link_up = true;
-+	qaic_ras_unregister();
- 	qaic_bootlog_unregister();
- 	qaic_timesync_deinit();
- 	sahara_unregister();
-diff --git a/drivers/accel/qaic/qaic_ras.c b/drivers/accel/qaic/qaic_ras.c
-new file mode 100644
-index 000000000000..2f8c1f08dbc0
---- /dev/null
-+++ b/drivers/accel/qaic/qaic_ras.c
-@@ -0,0 +1,629 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/* Copyright (c) 2020-2021, The Linux Foundation. All rights reserved. */
-+/* Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved. */
-+
-+#include <asm/byteorder.h>
-+#include <linux/device.h>
-+#include <linux/kernel.h>
-+#include <linux/mhi.h>
-+
-+#include "qaic.h"
-+#include "qaic_ras.h"
-+
-+#define MAGIC		0x55AA
-+#define VERSION		0x2
-+#define HDR_SZ		12
-+#define NUM_TEMP_LVL	3
-+#define POWER_BREAK	BIT(0)
-+
-+enum msg_type {
-+	MSG_PUSH, /* async push from device */
-+	MSG_REQ,  /* sync request to device */
-+	MSG_RESP, /* sync response from device */
-+};
-+
-+enum err_type {
-+	CE,	/* correctable error */
-+	UE,	/* uncorrectable error */
-+	UE_NF,	/* uncorrectable error that is non-fatal, expect a disruption */
-+	ERR_TYPE_MAX,
-+};
-+
-+static const char * const err_type_str[] = {
-+	[CE]    = "Correctable",
-+	[UE]    = "Uncorrectable",
-+	[UE_NF] = "Uncorrectable Non-Fatal",
-+};
-+
-+static const char * const err_class_str[] = {
-+	[CE]    = "Warning",
-+	[UE]    = "Fatal",
-+	[UE_NF] = "Warning",
-+};
-+
-+enum err_source {
-+	SOC_MEM,
-+	PCIE,
-+	DDR,
-+	SYS_BUS1,
-+	SYS_BUS2,
-+	NSP_MEM,
-+	TSENS,
-+};
-+
-+static const char * const err_src_str[TSENS + 1] = {
-+	[SOC_MEM]	= "SoC Memory",
-+	[PCIE]		= "PCIE",
-+	[DDR]		= "DDR",
-+	[SYS_BUS1]	= "System Bus source 1",
-+	[SYS_BUS2]	= "System Bus source 2",
-+	[NSP_MEM]	= "NSP Memory",
-+	[TSENS]		= "Temperature Sensors",
-+};
-+
-+struct ras_data {
-+	/* header start */
-+	/* Magic number to validate the message */
-+	u16 magic;
-+	/* RAS version number */
-+	u16 ver;
-+	u32 seq_num;
-+	/* RAS message type */
-+	u8  type;
-+	u8  id;
-+	/* Size of RAS message without the header in byte */
-+	u16 len;
-+	/* header end */
-+	s32 result;
-+	/*
-+	 * Error source
-+	 * 0 : SoC Memory
-+	 * 1 : PCIE
-+	 * 2 : DDR
-+	 * 3 : System Bus source 1
-+	 * 4 : System Bus source 2
-+	 * 5 : NSP Memory
-+	 * 6 : Temperature Sensors
-+	 */
-+	u32 source;
-+	/*
-+	 * Stores the error type, there are three types of error in RAS
-+	 * 0 : correctable error (CE)
-+	 * 1 : uncorrectable error (UE)
-+	 * 2 : uncorrectable error that is non-fatal (UE_NF)
-+	 */
-+	u32 err_type;
-+	u32 err_threshold;
-+	u32 ce_count;
-+	u32 ue_count;
-+	u32 intr_num;
-+	/* Data specific to error source */
-+	u8  syndrome[64];
-+} __packed;
-+
-+struct soc_mem_syndrome {
-+	u64 error_address[8];
-+} __packed;
-+
-+struct nsp_mem_syndrome {
-+	u32 error_address[8];
-+	u8 nsp_id;
-+} __packed;
-+
-+struct ddr_syndrome {
-+	u32 count;
-+	u32 irq_status;
-+	u32 data_31_0[2];
-+	u32 data_63_32[2];
-+	u32 data_95_64[2];
-+	u32 data_127_96[2];
-+	u32 addr_lsb;
-+	u16 addr_msb;
-+	u16 parity_bits;
-+	u16 instance;
-+	u16 err_type;
-+} __packed;
-+
-+struct tsens_syndrome {
-+	u32 threshold_type;
-+	s32 temp;
-+} __packed;
-+
-+struct sysbus1_syndrome {
-+	u32 slave;
-+	u32 err_type;
-+	u16 addr[8];
-+	u8  instance;
-+} __packed;
-+
-+struct sysbus2_syndrome {
-+	u32 lsb3;
-+	u32 msb3;
-+	u32 lsb2;
-+	u32 msb2;
-+	u32 ext_id;
-+	u16 path;
-+	u16 op_type;
-+	u16 len;
-+	u16 redirect;
-+	u8  valid;
-+	u8  word_error;
-+	u8  non_secure;
-+	u8  opc;
-+	u8  error_code;
-+	u8  trans_type;
-+	u8  addr_space;
-+	u8  instance;
-+} __packed;
-+
-+struct pcie_syndrome {
-+	/* CE info */
-+	u32 bad_tlp;
-+	u32 bad_dllp;
-+	u32 replay_rollover;
-+	u32 replay_timeout;
-+	u32 rx_err;
-+	u32 internal_ce_count;
-+	/* UE_NF info */
-+	u32 fc_timeout;
-+	u32 poison_tlp;
-+	u32 ecrc_err;
-+	u32 unsupported_req;
-+	u32 completer_abort;
-+	u32 completion_timeout;
-+	/* UE info */
-+	u32 addr;
-+	u8  index;
-+	/*
-+	 * Flag to indicate specific event of PCIe
-+	 * BIT(0): Power break (low power)
-+	 * BIT(1) to BIT(7): Reserved
-+	 */
-+	u8 flag;
-+} __packed;
-+
-+static const char * const threshold_type_str[NUM_TEMP_LVL] = {
-+	[0] = "lower",
-+	[1] = "upper",
-+	[2] = "critical",
-+};
-+
-+static void ras_msg_to_cpu(struct ras_data *msg)
-+{
-+	struct sysbus1_syndrome *sysbus1_syndrome = (struct sysbus1_syndrome *)&msg->syndrome[0];
-+	struct sysbus2_syndrome *sysbus2_syndrome = (struct sysbus2_syndrome *)&msg->syndrome[0];
-+	struct soc_mem_syndrome *soc_syndrome = (struct soc_mem_syndrome *)&msg->syndrome[0];
-+	struct nsp_mem_syndrome *nsp_syndrome = (struct nsp_mem_syndrome *)&msg->syndrome[0];
-+	struct tsens_syndrome *tsens_syndrome = (struct tsens_syndrome *)&msg->syndrome[0];
-+	struct pcie_syndrome *pcie_syndrome = (struct pcie_syndrome *)&msg->syndrome[0];
-+	struct ddr_syndrome *ddr_syndrome = (struct ddr_syndrome *)&msg->syndrome[0];
-+	int i;
-+
-+	le16_to_cpus(&msg->magic);
-+	le16_to_cpus(&msg->ver);
-+	le32_to_cpus(&msg->seq_num);
-+	le16_to_cpus(&msg->len);
-+	le32_to_cpus(&msg->result);
-+	le32_to_cpus(&msg->source);
-+	le32_to_cpus(&msg->err_type);
-+	le32_to_cpus(&msg->err_threshold);
-+	le32_to_cpus(&msg->ce_count);
-+	le32_to_cpus(&msg->ue_count);
-+	le32_to_cpus(&msg->intr_num);
-+
-+	switch (msg->source) {
-+	case SOC_MEM:
-+		for (i = 0; i < 8; i++)
-+			le64_to_cpus(&soc_syndrome->error_address[i]);
-+		break;
-+	case PCIE:
-+		le32_to_cpus(&pcie_syndrome->bad_tlp);
-+		le32_to_cpus(&pcie_syndrome->bad_dllp);
-+		le32_to_cpus(&pcie_syndrome->replay_rollover);
-+		le32_to_cpus(&pcie_syndrome->replay_timeout);
-+		le32_to_cpus(&pcie_syndrome->rx_err);
-+		le32_to_cpus(&pcie_syndrome->internal_ce_count);
-+		le32_to_cpus(&pcie_syndrome->fc_timeout);
-+		le32_to_cpus(&pcie_syndrome->poison_tlp);
-+		le32_to_cpus(&pcie_syndrome->ecrc_err);
-+		le32_to_cpus(&pcie_syndrome->unsupported_req);
-+		le32_to_cpus(&pcie_syndrome->completer_abort);
-+		le32_to_cpus(&pcie_syndrome->completion_timeout);
-+		le32_to_cpus(&pcie_syndrome->addr);
-+		break;
-+	case DDR:
-+		le16_to_cpus(&ddr_syndrome->instance);
-+		le16_to_cpus(&ddr_syndrome->err_type);
-+		le32_to_cpus(&ddr_syndrome->count);
-+		le32_to_cpus(&ddr_syndrome->irq_status);
-+		le32_to_cpus(&ddr_syndrome->data_31_0[0]);
-+		le32_to_cpus(&ddr_syndrome->data_31_0[1]);
-+		le32_to_cpus(&ddr_syndrome->data_63_32[0]);
-+		le32_to_cpus(&ddr_syndrome->data_63_32[1]);
-+		le32_to_cpus(&ddr_syndrome->data_95_64[0]);
-+		le32_to_cpus(&ddr_syndrome->data_95_64[1]);
-+		le32_to_cpus(&ddr_syndrome->data_127_96[0]);
-+		le32_to_cpus(&ddr_syndrome->data_127_96[1]);
-+		le16_to_cpus(&ddr_syndrome->parity_bits);
-+		le16_to_cpus(&ddr_syndrome->addr_msb);
-+		le32_to_cpus(&ddr_syndrome->addr_lsb);
-+		break;
-+	case SYS_BUS1:
-+		le32_to_cpus(&sysbus1_syndrome->slave);
-+		le32_to_cpus(&sysbus1_syndrome->err_type);
-+		for (i = 0; i < 8; i++)
-+			le16_to_cpus(&sysbus1_syndrome->addr[i]);
-+		break;
-+	case SYS_BUS2:
-+		le16_to_cpus(&sysbus2_syndrome->op_type);
-+		le16_to_cpus(&sysbus2_syndrome->len);
-+		le16_to_cpus(&sysbus2_syndrome->redirect);
-+		le16_to_cpus(&sysbus2_syndrome->path);
-+		le32_to_cpus(&sysbus2_syndrome->ext_id);
-+		le32_to_cpus(&sysbus2_syndrome->lsb2);
-+		le32_to_cpus(&sysbus2_syndrome->msb2);
-+		le32_to_cpus(&sysbus2_syndrome->lsb3);
-+		le32_to_cpus(&sysbus2_syndrome->msb3);
-+		break;
-+	case NSP_MEM:
-+		for (i = 0; i < 8; i++)
-+			le32_to_cpus(&nsp_syndrome->error_address[i]);
-+		break;
-+	case TSENS:
-+		le32_to_cpus(&tsens_syndrome->threshold_type);
-+		le32_to_cpus(&tsens_syndrome->temp);
-+		break;
-+	}
-+}
-+
-+static void decode_ras_msg(struct qaic_device *qdev, struct ras_data *msg)
-+{
-+	struct sysbus1_syndrome *sysbus1_syndrome = (struct sysbus1_syndrome *)&msg->syndrome[0];
-+	struct sysbus2_syndrome *sysbus2_syndrome = (struct sysbus2_syndrome *)&msg->syndrome[0];
-+	struct soc_mem_syndrome *soc_syndrome = (struct soc_mem_syndrome *)&msg->syndrome[0];
-+	struct nsp_mem_syndrome *nsp_syndrome = (struct nsp_mem_syndrome *)&msg->syndrome[0];
-+	struct tsens_syndrome *tsens_syndrome = (struct tsens_syndrome *)&msg->syndrome[0];
-+	struct pcie_syndrome *pcie_syndrome = (struct pcie_syndrome *)&msg->syndrome[0];
-+	struct ddr_syndrome *ddr_syndrome = (struct ddr_syndrome *)&msg->syndrome[0];
-+	char *class;
-+	char *level;
-+
-+	if (msg->magic != MAGIC) {
-+		pci_warn(qdev->pdev, "Dropping RAS message with invalid magic %x\n", msg->magic);
-+		return;
-+	}
-+
-+	if (!msg->ver || msg->ver > VERSION) {
-+		pci_warn(qdev->pdev, "Dropping RAS message with invalid version %d\n", msg->ver);
-+		return;
-+	}
-+
-+	if (msg->type != MSG_PUSH) {
-+		pci_warn(qdev->pdev, "Dropping non-PUSH RAS message\n");
-+		return;
-+	}
-+
-+	if (msg->len != sizeof(*msg) - HDR_SZ) {
-+		pci_warn(qdev->pdev, "Dropping RAS message with invalid len %d\n", msg->len);
-+		return;
-+	}
-+
-+	if (msg->err_type >= ERR_TYPE_MAX) {
-+		pci_warn(qdev->pdev, "Dropping RAS message with err type %d\n", msg->err_type);
-+		return;
-+	}
-+
-+	if (msg->err_type == UE)
-+		level = KERN_ERR;
-+	else
-+		level = KERN_WARNING;
-+
-+	switch (msg->source) {
-+	case SOC_MEM:
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nSyndrome:\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n",
-+			   err_class_str[msg->err_type],
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   soc_syndrome->error_address[0],
-+			   soc_syndrome->error_address[1],
-+			   soc_syndrome->error_address[2],
-+			   soc_syndrome->error_address[3],
-+			   soc_syndrome->error_address[4],
-+			   soc_syndrome->error_address[5],
-+			   soc_syndrome->error_address[6],
-+			   soc_syndrome->error_address[7]);
-+		break;
-+	case PCIE:
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\n",
-+			   err_class_str[msg->err_type],
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source]);
-+
-+		switch (msg->err_type) {
-+		case CE:
-+			printk(KERN_WARNING pr_fmt("Syndrome:\n    Bad TLP count %d\n    Bad DLLP count %d\n    Replay Rollover count %d\n    Replay Timeout count %d\n    Recv Error count %d\n    Internal CE count %d\n"),
-+			       pcie_syndrome->bad_tlp,
-+			       pcie_syndrome->bad_dllp,
-+			       pcie_syndrome->replay_rollover,
-+			       pcie_syndrome->replay_timeout,
-+			       pcie_syndrome->rx_err,
-+			       pcie_syndrome->internal_ce_count);
-+			if (msg->ver > 0x1)
-+				pr_warn("    Power break %s\n",
-+					pcie_syndrome->flag & POWER_BREAK ? "ON" : "OFF");
-+			break;
-+		case UE:
-+			printk(KERN_ERR pr_fmt("Syndrome:\n    Index %d\n    Address 0x%x\n"),
-+			       pcie_syndrome->index, pcie_syndrome->addr);
-+			break;
-+		case UE_NF:
-+			printk(KERN_WARNING pr_fmt("Syndrome:\n    FC timeout count %d\n    Poisoned TLP count %d\n    ECRC error count %d\n    Unsupported request count %d\n    Completer abort count %d\n    Completion timeout count %d\n"),
-+			       pcie_syndrome->fc_timeout,
-+			       pcie_syndrome->poison_tlp,
-+			       pcie_syndrome->ecrc_err,
-+			       pcie_syndrome->unsupported_req,
-+			       pcie_syndrome->completer_abort,
-+			       pcie_syndrome->completion_timeout);
-+			break;
-+		default:
-+			break;
-+		}
-+		break;
-+	case DDR:
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nSyndrome:\n    Instance %d\n    Count %d\n    Data 31_0 0x%x 0x%x\n    Data 63_32 0x%x 0x%x\n    Data 95_64 0x%x 0x%x\n    Data 127_96 0x%x 0x%x\n    Parity bits 0x%x\n    Address msb 0x%x\n    Address lsb 0x%x\n",
-+			   err_class_str[msg->err_type],
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   ddr_syndrome->instance,
-+			   ddr_syndrome->count,
-+			   ddr_syndrome->data_31_0[1],
-+			   ddr_syndrome->data_31_0[0],
-+			   ddr_syndrome->data_63_32[1],
-+			   ddr_syndrome->data_63_32[0],
-+			   ddr_syndrome->data_95_64[1],
-+			   ddr_syndrome->data_95_64[0],
-+			   ddr_syndrome->data_127_96[1],
-+			   ddr_syndrome->data_127_96[0],
-+			   ddr_syndrome->parity_bits,
-+			   ddr_syndrome->addr_msb,
-+			   ddr_syndrome->addr_lsb);
-+		break;
-+	case SYS_BUS1:
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nSyndrome:\n    instance %d\n    %s\n    err_type %d\n    address0 0x%x\n    address1 0x%x\n    address2 0x%x\n    address3 0x%x\n    address4 0x%x\n    address5 0x%x\n    address6 0x%x\n    address7 0x%x\n",
-+			   err_class_str[msg->err_type],
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   sysbus1_syndrome->instance,
-+			   sysbus1_syndrome->slave ? "Slave" : "Master",
-+			   sysbus1_syndrome->err_type,
-+			   sysbus1_syndrome->addr[0],
-+			   sysbus1_syndrome->addr[1],
-+			   sysbus1_syndrome->addr[2],
-+			   sysbus1_syndrome->addr[3],
-+			   sysbus1_syndrome->addr[4],
-+			   sysbus1_syndrome->addr[5],
-+			   sysbus1_syndrome->addr[6],
-+			   sysbus1_syndrome->addr[7]);
-+		break;
-+	case SYS_BUS2:
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nSyndrome:\n    instance %d\n    valid %d\n    word error %d\n    non-secure %d\n    opc %d\n    error code %d\n    transaction type %d\n    address space %d\n    operation type %d\n    len %d\n    redirect %d\n    path %d\n    ext_id %d\n    lsb2 %d\n    msb2 %d\n    lsb3 %d\n    msb3 %d\n",
-+			   err_class_str[msg->err_type],
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   sysbus2_syndrome->instance,
-+			   sysbus2_syndrome->valid,
-+			   sysbus2_syndrome->word_error,
-+			   sysbus2_syndrome->non_secure,
-+			   sysbus2_syndrome->opc,
-+			   sysbus2_syndrome->error_code,
-+			   sysbus2_syndrome->trans_type,
-+			   sysbus2_syndrome->addr_space,
-+			   sysbus2_syndrome->op_type,
-+			   sysbus2_syndrome->len,
-+			   sysbus2_syndrome->redirect,
-+			   sysbus2_syndrome->path,
-+			   sysbus2_syndrome->ext_id,
-+			   sysbus2_syndrome->lsb2,
-+			   sysbus2_syndrome->msb2,
-+			   sysbus2_syndrome->lsb3,
-+			   sysbus2_syndrome->msb3);
-+		break;
-+	case NSP_MEM:
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nSyndrome:\n    NSP ID %d\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n",
-+			   err_class_str[msg->err_type],
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   nsp_syndrome->nsp_id,
-+			   nsp_syndrome->error_address[0],
-+			   nsp_syndrome->error_address[1],
-+			   nsp_syndrome->error_address[2],
-+			   nsp_syndrome->error_address[3],
-+			   nsp_syndrome->error_address[4],
-+			   nsp_syndrome->error_address[5],
-+			   nsp_syndrome->error_address[6],
-+			   nsp_syndrome->error_address[7]);
-+		break;
-+	case TSENS:
-+		if (tsens_syndrome->threshold_type >= NUM_TEMP_LVL) {
-+			pci_warn(qdev->pdev, "Dropping RAS message with invalid temp threshold %d\n",
-+				 tsens_syndrome->threshold_type);
-+			break;
-+		}
-+
-+		if (msg->err_type)
-+			class = "Fatal";
-+		else if (tsens_syndrome->threshold_type)
-+			class = "Critical";
-+		else
-+			class = "Warning";
-+
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nSyndrome:\n    %s threshold\n    %d deg C\n",
-+			   class,
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   threshold_type_str[tsens_syndrome->threshold_type],
-+			   tsens_syndrome->temp);
-+		break;
-+	}
-+
-+	/* Uncorrectable errors are fatal */
-+	if (msg->err_type == UE)
-+		mhi_soc_reset(qdev->mhi_cntrl);
-+
-+	switch (msg->err_type) {
-+	case CE:
-+		if (qdev->ce_count != UINT_MAX)
-+			qdev->ce_count++;
-+		break;
-+	case UE:
-+		if (qdev->ce_count != UINT_MAX)
-+			qdev->ue_count++;
-+		break;
-+	case UE_NF:
-+		if (qdev->ce_count != UINT_MAX)
-+			qdev->ue_nf_count++;
-+		break;
-+	default:
-+		/* not possible */
-+		break;
-+	}
-+}
-+
-+static ssize_t ce_count_show(struct device *dev, struct device_attribute *attr, char *buf)
-+{
-+	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
-+
-+	return snprintf(buf, PAGE_SIZE, "%d\n", qdev->ce_count);
-+}
-+
-+static ssize_t ue_count_show(struct device *dev, struct device_attribute *attr, char *buf)
-+{
-+	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
-+
-+	return snprintf(buf, PAGE_SIZE, "%d\n", qdev->ue_count);
-+}
-+
-+static ssize_t ue_nonfatal_count_show(struct device *dev, struct device_attribute *attr, char *buf)
-+{
-+	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
-+
-+	return snprintf(buf, PAGE_SIZE, "%d\n", qdev->ue_nf_count);
-+}
-+
-+static DEVICE_ATTR_RO(ce_count);
-+static DEVICE_ATTR_RO(ue_count);
-+static DEVICE_ATTR_RO(ue_nonfatal_count);
-+
-+static struct attribute *ras_attrs[] = {
-+	&dev_attr_ce_count.attr,
-+	&dev_attr_ue_count.attr,
-+	&dev_attr_ue_nonfatal_count.attr,
-+	NULL,
-+};
-+
-+static struct attribute_group ras_group = {
-+	.attrs = ras_attrs,
-+};
-+
-+static int qaic_ras_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_id *id)
-+{
-+	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(mhi_dev->mhi_cntrl->cntrl_dev));
-+	struct ras_data *resp;
-+	int ret;
-+
-+	ret = mhi_prepare_for_transfer(mhi_dev);
-+	if (ret)
-+		return ret;
-+
-+	resp = kzalloc(sizeof(*resp), GFP_KERNEL);
-+	if (!resp) {
-+		mhi_unprepare_from_transfer(mhi_dev);
-+		return -ENOMEM;
-+	}
-+
-+	ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, resp, sizeof(*resp), MHI_EOT);
-+	if (ret) {
-+		kfree(resp);
-+		mhi_unprepare_from_transfer(mhi_dev);
-+		return ret;
-+	}
-+
-+	ret = device_add_group(&qdev->pdev->dev, &ras_group);
-+	if (ret) {
-+		mhi_unprepare_from_transfer(mhi_dev);
-+		pci_dbg(qdev->pdev, "ras add sysfs failed %d\n", ret);
-+		return ret;
-+	}
-+
-+	dev_set_drvdata(&mhi_dev->dev, qdev);
-+	qdev->ras_ch = mhi_dev;
-+
-+	return ret;
-+}
-+
-+static void qaic_ras_mhi_remove(struct mhi_device *mhi_dev)
-+{
-+	struct qaic_device *qdev;
-+
-+	qdev = dev_get_drvdata(&mhi_dev->dev);
-+	qdev->ras_ch = NULL;
-+	device_remove_group(&qdev->pdev->dev, &ras_group);
-+	mhi_unprepare_from_transfer(mhi_dev);
-+}
-+
-+static void qaic_ras_mhi_ul_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result) {}
-+
-+static void qaic_ras_mhi_dl_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
-+{
-+	struct qaic_device *qdev = dev_get_drvdata(&mhi_dev->dev);
-+	struct ras_data *msg = mhi_result->buf_addr;
-+	int ret;
-+
-+	if (mhi_result->transaction_status) {
-+		kfree(msg);
-+		return;
-+	}
-+
-+	ras_msg_to_cpu(msg);
-+	decode_ras_msg(qdev, msg);
-+
-+	ret = mhi_queue_buf(qdev->ras_ch, DMA_FROM_DEVICE, msg, sizeof(*msg), MHI_EOT);
-+	if (ret) {
-+		dev_err(&mhi_dev->dev, "Cannot requeue RAS recv buf %d\n", ret);
-+		kfree(msg);
-+	}
-+}
-+
-+static const struct mhi_device_id qaic_ras_mhi_match_table[] = {
-+	{ .chan = "QAIC_STATUS", },
-+	{},
-+};
-+
-+static struct mhi_driver qaic_ras_mhi_driver = {
-+	.id_table = qaic_ras_mhi_match_table,
-+	.remove = qaic_ras_mhi_remove,
-+	.probe = qaic_ras_mhi_probe,
-+	.ul_xfer_cb = qaic_ras_mhi_ul_xfer_cb,
-+	.dl_xfer_cb = qaic_ras_mhi_dl_xfer_cb,
-+	.driver = {
-+		.name = "qaic_ras",
-+	},
-+};
-+
-+int qaic_ras_register(void)
-+{
-+	return mhi_driver_register(&qaic_ras_mhi_driver);
-+}
-+
-+void qaic_ras_unregister(void)
-+{
-+	mhi_driver_unregister(&qaic_ras_mhi_driver);
-+}
-diff --git a/drivers/accel/qaic/qaic_ras.h b/drivers/accel/qaic/qaic_ras.h
-new file mode 100644
-index 000000000000..5df6cb9dae80
---- /dev/null
-+++ b/drivers/accel/qaic/qaic_ras.h
-@@ -0,0 +1,11 @@
-+/* SPDX-License-Identifier: GPL-2.0-only
-+ *
-+ * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-+ */
-+
-+#ifndef __QAIC_RAS_H__
-+#define __QAIC_RAS_H__
-+
-+int qaic_ras_register(void);
-+void qaic_ras_unregister(void);
-+#endif /* __QAIC_RAS_H__ */
--- 
-2.34.1
+>> [   48.940586] ==================================================
+>> [   48.941112] mtd_nandbiterrs: MTD device: 0
+>> [   48.946811] mtd_nandbiterrs: MTD device size 268435456, eraseblock=131072,
+>> page=2048, oob=128
+>> [   48.950837] mtd_nandbiterrs: Device uses 1 subpages of 2048 bytes
+>> [   48.959448] mtd_nandbiterrs: Using page=0, offset=0, eraseblock=0
+>> [   48.969014] mtd_nandbiterrs: incremental biterrors test
+>> [   48.971596] mtd_nandbiterrs: write_page
+>> [   48.977594] mtd_nandbiterrs: rewrite page
+>> [   48.981277] mtd_nandbiterrs: read_page
+>> [   48.985247] mtd_nandbiterrs: verify_page
+>> [   48.988269] mtd_nandbiterrs: Successfully corrected 0 bit errors per subpage
+>> [   48.992327] mtd_nandbiterrs: Inserted biterror @ 0/5
+>> [   48.999428] mtd_nandbiterrs: rewrite page
+>> [   49.005508] mtd_nandbiterrs: read_page
+>> [   49.008836] mtd_nandbiterrs: Read reported 1 corrected bit errors
+>> [   49.011858] mtd_nandbiterrs: verify_page
+>> [   49.018061] mtd_nandbiterrs: Successfully corrected 1 bit errors per subpage
+>> [   49.022015] mtd_nandbiterrs: Inserted biterror @ 0/2
+>> [   49.029058] mtd_nandbiterrs: rewrite page
+>> [   49.034848] mtd_nandbiterrs: read_page
+>> [   49.038516] mtd_nandbiterrs: Read reported 1 corrected bit errors
+>> [   49.041545] mtd_nandbiterrs: verify_page
+>> [   49.047755] mtd_nandbiterrs: Successfully corrected 2 bit errors per subpage
+>> [   49.051702] mtd_nandbiterrs: Inserted biterror @ 0/0
+>> [   49.058760] mtd_nandbiterrs: rewrite page
+>> [   49.064565] mtd_nandbiterrs: read_page
+>> [   49.068203] mtd_nandbiterrs: Read reported 1 corrected bit errors
+>> [   49.071232] mtd_nandbiterrs: verify_page
+>> [   49.077432] mtd_nandbiterrs: Successfully corrected 3 bit errors per subpage
+>> [   49.081389] mtd_nandbiterrs: Inserted biterror @ 1/7
+>> [   49.088432] mtd_nandbiterrs: rewrite page
+>> [   49.094197] mtd_nandbiterrs: read_page
+>> [   49.097889] mtd_nandbiterrs: Read reported 2 corrected bit errors
+>> [   49.100919] mtd_nandbiterrs: verify_page
+>> [   49.107121] mtd_nandbiterrs: Successfully corrected 4 bit errors per subpage
+>> [   49.111077] mtd_nandbiterrs: Inserted biterror @ 1/5
+>> [   49.118137] mtd_nandbiterrs: rewrite page
+>> [   49.123892] mtd_nandbiterrs: read_page
+>> [   49.127576] mtd_nandbiterrs: Read reported 2 corrected bit errors
+>> [   49.130608] mtd_nandbiterrs: verify_page
+>> [   49.136808] mtd_nandbiterrs: Successfully corrected 5 bit errors per subpage
+>> [   49.140764] mtd_nandbiterrs: Inserted biterror @ 1/2
+>> [   49.147807] mtd_nandbiterrs: rewrite page
+>> [   49.153607] mtd_nandbiterrs: read_page
+>> [   49.157268] mtd_nandbiterrs: Read reported 2 corrected bit errors
+>> [   49.160294] mtd_nandbiterrs: verify_page
+>> [   49.166496] mtd_nandbiterrs: Successfully corrected 6 bit errors per subpage
+>> [   49.170452] mtd_nandbiterrs: Inserted biterror @ 1/0
+>> [   49.177498] mtd_nandbiterrs: rewrite page
+>> [   49.183253] mtd_nandbiterrs: read_page
+>> [   49.186974] mtd_nandbiterrs: Read reported 2 corrected bit errors
+>> [   49.189983] mtd_nandbiterrs: verify_page
+>> [   49.196194] mtd_nandbiterrs: Successfully corrected 7 bit errors per subpage
+>> [   49.200140] mtd_nandbiterrs: Inserted biterror @ 2/6
+>> [   49.207182] mtd_nandbiterrs: rewrite page
+>> [   49.212895] mtd_nandbiterrs: read_page
+>> [   49.216671] mtd_nandbiterrs: Read reported 3 corrected bit errors
+>> [   49.219670] mtd_nandbiterrs: verify_page
+>> [   49.225872] mtd_nandbiterrs: Successfully corrected 8 bit errors per subpage
+>> [   49.229827] mtd_nandbiterrs: Inserted biterror @ 2/5
+>> [   49.236871] mtd_nandbiterrs: rewrite page
+>> [   49.242629] mtd_nandbiterrs: read_page
+>> [   49.246348] mtd_nandbiterrs: error: read failed at 0x0
+>> [   49.249356] mtd_nandbiterrs: After 9 biterrors per subpage, read reported
+>> error -74
+>> [   49.257958] mtd_nandbiterrs: finished successfully.
+>> [   49.262029] ==================================================
+>> #
+> 
+> This is not the intended behavior. The reporting is wrong and should
+> report an increasing number of bitflips instead of 1, 1, 1, 2, 2, 2, 2,
+> 3.
+> 
+> With this behavior, wear levelling will not work correctly.
+> 
+> This is not related to Gabor's changes, but I believe this should be
+> updated otherwise it does not make much sense to increase the strength.
 
+It still makes some sense. For example, the bootloader on my board uses 8 bits
+strength when it handles the NAND flash. Without supporting that, the kernel
+can't read the data written by the bootloader and vice versa.
+
+> Gabor, can you look into it? Both patches look fine otherwise, thanks a
+> lot!
+
+I have checked it. According to the code, the driver reads the reported values
+from a hardware register.
+
+Here is the result of another test but i have added some debug code to the
+driver so the output contains the hardware register values:
+
+  # insmod mtd_nandbiterrs dev=0
+  [   64.791395] 
+  [   64.791423] ==================================================
+  [   64.791950] mtd_nandbiterrs: MTD device: 0
+  [   64.797592] mtd_nandbiterrs: MTD device size 268435456, eraseblock=131072, page=2048, oob=128
+  [   64.801779] mtd_nandbiterrs: Device uses 1 subpages of 2048 bytes
+  [   64.810313] mtd_nandbiterrs: Using page=0, offset=0, eraseblock=0
+  [   64.820832] mtd_nandbiterrs: incremental biterrors test
+  [   64.822452] mtd_nandbiterrs: write_page
+  [   64.828511] mtd_nandbiterrs: rewrite page
+  [   64.832270] mtd_nandbiterrs: read_page
+  [   64.836184] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0200 erased_cw:00000002
+  [   64.839091] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   64.847364] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   64.855694] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   64.864020] qcom_snand 79b0000.spi: corrected:0 failed:0 bitflips:0
+  [   64.872349] mtd_nandbiterrs: verify_page
+  [   64.878598] mtd_nandbiterrs: Successfully corrected 0 bit errors per subpage
+  [   64.882760] mtd_nandbiterrs: Inserted biterror @ 0/5
+  [   64.889793] mtd_nandbiterrs: rewrite page
+  [   64.895541] mtd_nandbiterrs: read_page
+  [   64.899228] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0201 erased_cw:00000002
+  [   64.902282] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   64.910549] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   64.918860] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   64.927206] qcom_snand 79b0000.spi: corrected:1 failed:0 bitflips:1
+  [   64.935552] mtd_nandbiterrs: Read reported 1 corrected bit errors
+  [   64.941789] mtd_nandbiterrs: verify_page
+  [   64.948043] mtd_nandbiterrs: Successfully corrected 1 bit errors per subpage
+  [   64.952042] mtd_nandbiterrs: Inserted biterror @ 0/2
+  [   64.959048] mtd_nandbiterrs: rewrite page
+  [   64.964815] mtd_nandbiterrs: read_page
+  [   64.968490] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0201 erased_cw:00000002
+  [   64.971586] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   64.979814] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   64.988131] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   64.996481] qcom_snand 79b0000.spi: corrected:1 failed:0 bitflips:1
+  [   65.004810] mtd_nandbiterrs: Read reported 1 corrected bit errors
+  [   65.011059] mtd_nandbiterrs: verify_page
+  [   65.017313] mtd_nandbiterrs: Successfully corrected 2 bit errors per subpage
+  [   65.021307] mtd_nandbiterrs: Inserted biterror @ 0/0
+  [   65.028319] mtd_nandbiterrs: rewrite page
+  [   65.034131] mtd_nandbiterrs: read_page
+  [   65.037862] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0201 erased_cw:00000002
+  [   65.040844] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   65.049069] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   65.057418] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   65.065763] qcom_snand 79b0000.spi: corrected:1 failed:0 bitflips:1
+  [   65.074082] mtd_nandbiterrs: Read reported 1 corrected bit errors
+  [   65.080341] mtd_nandbiterrs: verify_page
+  [   65.086584] mtd_nandbiterrs: Successfully corrected 3 bit errors per subpage
+  [   65.090574] mtd_nandbiterrs: Inserted biterror @ 1/7
+  [   65.097589] mtd_nandbiterrs: rewrite page
+  [   65.103374] mtd_nandbiterrs: read_page
+  [   65.107030] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0202 erased_cw:00000002
+  [   65.110120] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   65.118340] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   65.126689] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   65.135032] qcom_snand 79b0000.spi: corrected:2 failed:0 bitflips:2
+  [   65.143357] mtd_nandbiterrs: Read reported 2 corrected bit errors
+  [   65.149611] mtd_nandbiterrs: verify_page
+  [   65.155855] mtd_nandbiterrs: Successfully corrected 4 bit errors per subpage
+  [   65.159844] mtd_nandbiterrs: Inserted biterror @ 1/5
+  [   65.166860] mtd_nandbiterrs: rewrite page
+  [   65.172645] mtd_nandbiterrs: read_page
+  [   65.176301] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0202 erased_cw:00000002
+  [   65.179389] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   65.187611] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   65.195961] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   65.204289] qcom_snand 79b0000.spi: corrected:2 failed:0 bitflips:2
+  [   65.212623] mtd_nandbiterrs: Read reported 2 corrected bit errors
+  [   65.218858] mtd_nandbiterrs: verify_page
+  [   65.225139] mtd_nandbiterrs: Successfully corrected 5 bit errors per subpage
+  [   65.229102] mtd_nandbiterrs: Inserted biterror @ 1/2
+  [   65.236147] mtd_nandbiterrs: rewrite page
+  [   65.241899] mtd_nandbiterrs: read_page
+  [   65.245572] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0202 erased_cw:00000002
+  [   65.248635] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   65.256902] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   65.265234] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   65.273561] qcom_snand 79b0000.spi: corrected:2 failed:0 bitflips:2
+  [   65.281895] mtd_nandbiterrs: Read reported 2 corrected bit errors
+  [   65.288129] mtd_nandbiterrs: verify_page
+  [   65.294408] mtd_nandbiterrs: Successfully corrected 6 bit errors per subpage
+  [   65.298373] mtd_nandbiterrs: Inserted biterror @ 1/0
+  [   65.305413] mtd_nandbiterrs: rewrite page
+  [   65.311170] mtd_nandbiterrs: read_page
+  [   65.314843] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0202 erased_cw:00000002
+  [   65.317906] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   65.326170] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   65.334501] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   65.342833] qcom_snand 79b0000.spi: corrected:2 failed:0 bitflips:2
+  [   65.351164] mtd_nandbiterrs: Read reported 2 corrected bit errors
+  [   65.357399] mtd_nandbiterrs: verify_page
+  [   65.363680] mtd_nandbiterrs: Successfully corrected 7 bit errors per subpage
+  [   65.367643] mtd_nandbiterrs: Inserted biterror @ 2/6
+  [   65.374684] mtd_nandbiterrs: rewrite page
+  [   65.380445] mtd_nandbiterrs: read_page
+  [   65.384112] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0203 erased_cw:00000002
+  [   65.387177] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   65.395445] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   65.403769] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   65.412103] qcom_snand 79b0000.spi: corrected:3 failed:0 bitflips:3
+  [   65.420436] mtd_nandbiterrs: Read reported 3 corrected bit errors
+  [   65.426671] mtd_nandbiterrs: verify_page
+  [   65.432950] mtd_nandbiterrs: Successfully corrected 8 bit errors per subpage
+  [   65.436915] mtd_nandbiterrs: Inserted biterror @ 2/5
+  [   65.443958] mtd_nandbiterrs: rewrite page
+  [   65.449719] mtd_nandbiterrs: read_page
+  [   65.453386] qcom_snand 79b0000.spi: cw[0] flash:00003030 buffer:00ff0301 erased_cw:00000002
+  [   65.456448] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   65.464715] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   65.473041] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   65.481374] qcom_snand 79b0000.spi: corrected:0 failed:1 bitflips:3
+  [   65.489706] mtd_nandbiterrs: error: read failed at 0x0
+  [   65.495941] mtd_nandbiterrs: After 9 biterrors per subpage, read reported error -74
+  [   65.504609] mtd_nandbiterrs: finished successfully.
+  [   65.508700] ==================================================
+
+
+Basically, the driver reads the page as 4 codewords along with reading the
+register values after each. The reported values are coming from the low 
+5 bits of the 'buffer' values printed above. The layout of the register is
+barely documented in the driver, so the exact meaning of the bits is unknown.
+
+Despite that, I had an idea, so I have changed the code in the nandbiterrs
+module to insert only single bit error into a given byte. By doing the test
+with the modified module results in the following:
+
+  # insmod mtd_nandbiterrs dev=0
+  [   37.125416] 
+  [   37.125444] ==================================================
+  [   37.125970] mtd_nandbiterrs: MTD device: 0
+  [   37.131764] mtd_nandbiterrs: MTD device size 268435456, eraseblock=131072, page=2048, oob=128
+  [   37.135695] mtd_nandbiterrs: Device uses 1 subpages of 2048 bytes
+  [   37.144314] mtd_nandbiterrs: Using page=0, offset=0, eraseblock=0
+  [   37.155047] mtd_nandbiterrs: incremental biterrors test
+  [   37.156481] mtd_nandbiterrs: write_page
+  [   37.162518] mtd_nandbiterrs: rewrite page
+  [   37.166298] mtd_nandbiterrs: read_page
+  [   37.170193] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0200 erased_cw:00000002
+  [   37.173111] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   37.181383] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   37.189708] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   37.198020] qcom_snand 79b0000.spi: corrected:0 failed:0 bitflips:0
+  [   37.206367] mtd_nandbiterrs: verify_page
+  [   37.212631] mtd_nandbiterrs: Successfully corrected 0 bit errors per subpage
+  [   37.216768] mtd_nandbiterrs: Inserted biterror @ 1/7
+  [   37.223809] mtd_nandbiterrs: rewrite page
+  [   37.229569] mtd_nandbiterrs: read_page
+  [   37.233244] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0201 erased_cw:00000002
+  [   37.236301] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   37.244571] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   37.252896] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   37.261227] qcom_snand 79b0000.spi: corrected:1 failed:0 bitflips:1
+  [   37.269560] mtd_nandbiterrs: Read reported 1 corrected bit errors
+  [   37.275795] mtd_nandbiterrs: verify_page
+  [   37.282075] mtd_nandbiterrs: Successfully corrected 1 bit errors per subpage
+  [   37.286039] mtd_nandbiterrs: Inserted biterror @ 3/7
+  [   37.293080] mtd_nandbiterrs: rewrite page
+  [   37.298877] mtd_nandbiterrs: read_page
+  [   37.302531] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0202 erased_cw:00000002
+  [   37.305572] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   37.313839] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   37.322169] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   37.330498] qcom_snand 79b0000.spi: corrected:2 failed:0 bitflips:2
+  [   37.338818] mtd_nandbiterrs: Read reported 2 corrected bit errors
+  [   37.345078] mtd_nandbiterrs: verify_page
+  [   37.351352] mtd_nandbiterrs: Successfully corrected 2 bit errors per subpage
+  [   37.355310] mtd_nandbiterrs: Inserted biterror @ 5/7
+  [   37.362352] mtd_nandbiterrs: rewrite page
+  [   37.368094] mtd_nandbiterrs: read_page
+  [   37.371814] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0203 erased_cw:00000002
+  [   37.374843] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   37.383111] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   37.391437] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   37.399769] qcom_snand 79b0000.spi: corrected:3 failed:0 bitflips:3
+  [   37.408089] mtd_nandbiterrs: Read reported 3 corrected bit errors
+  [   37.414351] mtd_nandbiterrs: verify_page
+  [   37.420616] mtd_nandbiterrs: Successfully corrected 3 bit errors per subpage
+  [   37.424581] mtd_nandbiterrs: Inserted biterror @ 7/7
+  [   37.431622] mtd_nandbiterrs: rewrite page
+  [   37.437419] mtd_nandbiterrs: read_page
+  [   37.441072] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0204 erased_cw:00000002
+  [   37.444114] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   37.452380] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   37.460708] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   37.469047] qcom_snand 79b0000.spi: corrected:4 failed:0 bitflips:4
+  [   37.477360] mtd_nandbiterrs: Read reported 4 corrected bit errors
+  [   37.483621] mtd_nandbiterrs: verify_page
+  [   37.489888] mtd_nandbiterrs: Successfully corrected 4 bit errors per subpage
+  [   37.493852] mtd_nandbiterrs: Inserted biterror @ 8/7
+  [   37.500893] mtd_nandbiterrs: rewrite page
+  [   37.506636] mtd_nandbiterrs: read_page
+  [   37.510342] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0205 erased_cw:00000002
+  [   37.513385] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   37.521652] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   37.529978] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   37.538297] qcom_snand 79b0000.spi: corrected:5 failed:0 bitflips:5
+  [   37.546643] mtd_nandbiterrs: Read reported 5 corrected bit errors
+  [   37.552896] mtd_nandbiterrs: verify_page
+  [   37.559161] mtd_nandbiterrs: Successfully corrected 5 bit errors per subpage
+  [   37.563123] mtd_nandbiterrs: Inserted biterror @ 10/7
+  [   37.570168] mtd_nandbiterrs: rewrite page
+  [   37.575956] mtd_nandbiterrs: read_page
+  [   37.579702] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0206 erased_cw:00000002
+  [   37.582743] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   37.591010] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   37.599354] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   37.607655] qcom_snand 79b0000.spi: corrected:6 failed:0 bitflips:6
+  [   37.616004] mtd_nandbiterrs: Read reported 6 corrected bit errors
+  [   37.622249] mtd_nandbiterrs: verify_page
+  [   37.628504] mtd_nandbiterrs: Successfully corrected 6 bit errors per subpage
+  [   37.632497] mtd_nandbiterrs: Inserted biterror @ 12/7
+  [   37.639524] mtd_nandbiterrs: rewrite page
+  [   37.645353] mtd_nandbiterrs: read_page
+  [   37.649047] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0207 erased_cw:00000002
+  [   37.652100] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   37.660367] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   37.668679] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   37.677029] qcom_snand 79b0000.spi: corrected:7 failed:0 bitflips:7
+  [   37.685358] mtd_nandbiterrs: Read reported 7 corrected bit errors
+  [   37.691607] mtd_nandbiterrs: verify_page
+  [   37.697861] mtd_nandbiterrs: Successfully corrected 7 bit errors per subpage
+  [   37.701852] mtd_nandbiterrs: Inserted biterror @ 14/7
+  [   37.708867] mtd_nandbiterrs: rewrite page
+  [   37.714683] mtd_nandbiterrs: read_page
+  [   37.718397] qcom_snand 79b0000.spi: cw[0] flash:00003020 buffer:00ff0208 erased_cw:00000002
+  [   37.721478] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   37.729718] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   37.738037] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   37.746433] qcom_snand 79b0000.spi: corrected:8 failed:0 bitflips:8
+  [   37.754719] mtd_nandbiterrs: Read reported 8 corrected bit errors
+  [   37.760972] mtd_nandbiterrs: verify_page
+  [   37.767218] mtd_nandbiterrs: Successfully corrected 8 bit errors per subpage
+  [   37.771214] mtd_nandbiterrs: Inserted biterror @ 17/7
+  [   37.778225] mtd_nandbiterrs: rewrite page
+  [   37.784054] mtd_nandbiterrs: read_page
+  [   37.787754] qcom_snand 79b0000.spi: cw[0] flash:00003030 buffer:00ff0301 erased_cw:00000002
+  [   37.790836] qcom_snand 79b0000.spi: cw[1] flash:00002020 buffer:00ff0200 erased_cw:00000002
+  [   37.799076] qcom_snand 79b0000.spi: cw[2] flash:00001020 buffer:00ff0200 erased_cw:00000002
+  [   37.807395] qcom_snand 79b0000.spi: cw[3] flash:00000020 buffer:00ff0200 erased_cw:00000002
+  [   37.815743] qcom_snand 79b0000.spi: corrected:0 failed:1 bitflips:8
+  [   37.824073] mtd_nandbiterrs: error: read failed at 0x0
+  [   37.830321] mtd_nandbiterrs: After 9 biterrors per subpage, read reported error -74
+  [   37.838993] mtd_nandbiterrs: finished successfully.
+  [   37.843068] ==================================================
+
+Interestingly enough, it reports the correct number of bit errors now.
+For me it seems, that the hardware reports the number of the corrected
+*bytes* instead of the corrected *bits*.
+
+I can't figure out whether this is a configuration problem only, or it
+is a hardware limitation.
+
+Nevertheless, it is possible that I'm entirely wrong about this, since
+I have no documentation for the hardware.
+
+Maybe Alam has some ideas about what could be wrong.
+
+Regards,
+Gabor
 
