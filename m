@@ -1,304 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-57597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08ED6AB3317
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 11:23:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DD0AAB338A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 11:30:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 12F6D17BE0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 09:22:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 88310189E6A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 May 2025 09:30:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A929025B664;
-	Mon, 12 May 2025 09:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F91B264F8C;
+	Mon, 12 May 2025 09:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="myroYSTo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BMDBxr90"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21E625A32C;
-	Mon, 12 May 2025 09:22:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002FD25D542;
+	Mon, 12 May 2025 09:26:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747041735; cv=none; b=WIELxG+Wfq4A9l2I6Qk/QtqxYl1i89+My9LCyftgK/d1hgHIS5ZvT7VECKCQ56P8g/JzgSZcB0+kUyHcDh+kdep3Vys6/ivfN8bcCnraE5sOnseisjqP3Ux+KZMlx1FMsZJOpStzpV4mkvMn0MV5PlX/hYm2JgnWCnRAlZcu7UA=
+	t=1747041979; cv=none; b=M4o7C+PZlOzJsQ+i39Xq/5PRuYxFg8aXBUQogpBVat8CKRXg7zjYBVVKeAl0avDGj1TJzz+3ATdgMjxaAXcVk6xLiW+quYt3ieUmwAGLor2phwV7N8tc1+bY4I+yabcFMWOUp8fTTlpn4T4n2PAitrpf0zT0He5KwULym+p73Lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747041735; c=relaxed/simple;
-	bh=63Xla2q+6hr/2d84/UOsWS1nUsyEbKKfUrI6v0LXHNE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nsgNeB2WAqBToY7aRekFSwAgJRbOqjV7YI3fPzv3bGo16vL24VcLoiyC8SOTNz4RMM3AhJtHSLeFHPHkT5cic9iHn7A7PpSsXThTZZzD9hTKhu3pgFhL7KPn7aZbplIOShIQNfX2HshZIAgTNJ5tQ6p5cjWzDL6bEZiDcyB7kG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=myroYSTo; arc=none smtp.client-ip=217.70.183.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id B96A642E7E;
-	Mon, 12 May 2025 09:22:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1747041731;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kaiEC+PufeTUFVHYk/7+WnDcWgVB2rCo/IXTSdg1Hds=;
-	b=myroYSToz66ns5AWaEKJJvPJUQ2gNhiviSmOpp/J2y/Y8GROMCYAYuwQj8YyoGQq0ioQrw
-	I0vja15KBTuai/J5zuSpLfuqRQvQiR3kb2j3hHKZ3BcBsRXrmg2YnmRQwaBSuy+vx6s/pB
-	1D83Xhz/+9fcJksBAxbL9E0q4tvY8TteyaYaLEtxufK51sq7VmWbCEC0WvYDFGFBsGYCfS
-	36kYPxE4KFGfMPeCaWLFJrogT8glen7n3s2DRBE3lNQkyNFvGFTXHHfKS3QK691LwDekZV
-	tRzViTTgIV7ihzkV75uqQhgc0VRSa4JY6wdpJoo/hOJVrOvqkI9jfVbYQFE5RA==
-From: Romain Gantois <romain.gantois@bootlin.com>
-To: davem@davemloft.net, Maxime Chevallier <maxime.chevallier@bootlin.com>
-Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
- Jakub Kicinski <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Russell King <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>,
- Heiner Kallweit <hkallweit1@gmail.com>,
- Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>,
- Marek =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>,
- =?UTF-8?B?Tmljb2zDsg==?= Veronese <nicveronese@gmail.com>,
- Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
- Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Rob Herring <robh@kernel.org>, Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject:
- Re: [PATCH net-next v6 14/14] Documentation: networking: Document the
- phy_port infrastructure
-Date: Mon, 12 May 2025 11:22:04 +0200
-Message-ID: <873525603.0ifERbkFSE@fw-rgant>
-In-Reply-To: <20250507135331.76021-15-maxime.chevallier@bootlin.com>
-References:
- <20250507135331.76021-1-maxime.chevallier@bootlin.com>
- <20250507135331.76021-15-maxime.chevallier@bootlin.com>
+	s=arc-20240116; t=1747041979; c=relaxed/simple;
+	bh=xOkKbE+DsW+L89h0Pi4g1kYeYPXXrHFk6//bhcapeQM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rN/dB7fTROpedisuI1CIC8ILJ5odVImfzSUYRZl9dBE9vHGpPXSMUrvGynB8dZsi3dAsof1IrUrQMfIsE+gpEV6v7cevDQavYcxkcaFMm8qStVX8YPeBCE8fQorz8laNKWhMujYY6Kj7FUcakctQqNeCJRPN5xRMb1wYNGP0eYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BMDBxr90; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E809C4CEE7;
+	Mon, 12 May 2025 09:26:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747041977;
+	bh=xOkKbE+DsW+L89h0Pi4g1kYeYPXXrHFk6//bhcapeQM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=BMDBxr90LR2I6dKBmSa6KaR17pidWwo/XO4zlB5ScPUZzqUSSYnj6UswuaMUXcAet
+	 fmz5mEYPkBqcifq2Zo9Pm3nLC2K+bBgmXxYAnTb1peaKtxdlgSG1DU8+ifKN2fNYz2
+	 AV42N9yrPXKq4zuTAmODHLaycZvCMhuf9x+p4WDhlYezEFfepS7rYCL9e+pabFU+aT
+	 Yy/tGZ67tqGm7D9Kjqcj2iBdpOJ6as3lSNjMY+J5J+LzKa5euVgM8htwwCFwpcrp+B
+	 sf1jwRSQhPUdB/skFAG+2iJiMVFPjbD5FJBTSScJvMbF+8CPD3xIBMLpOSkyFegKPU
+	 jnA72axq2/QXA==
+Message-ID: <02819d6c-a030-4987-bfcf-1d1a60ec3f00@kernel.org>
+Date: Mon, 12 May 2025 11:26:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart5568568.Sb9uPGUboI";
- micalg="pgp-sha256"; protocol="application/pgp-signature"
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddtkeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkfgjfhggtgesghdtreertddtjeenucfhrhhomheptfhomhgrihhnucfirghnthhoihhsuceorhhomhgrihhnrdhgrghnthhoihhssegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpefhvdelkeevgfeijedtudeiheefffejhfelgeduuefhleetudeiudektdeiheelgfenucffohhmrghinhepsghoohhtlhhinhdrtghomhenucfkphepledtrdekledrudeifedruddvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeeltddrkeelrdduieefrdduvdejpdhhvghlohepfhifqdhrghgrnhhtrdhlohgtrghlnhgvthdpmhgrihhlfhhrohhmpehrohhmrghinhdrghgrnhhtohhishessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfedtpdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhrtghpthhtohepnhgvthguvghvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrk
- hgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehthhhomhgrshdrphgvthgriiiiohhnihessghoohhtlhhinhdrtghomhdprhgtphhtthhopegrnhgurhgvfieslhhunhhnrdgthhdprhgtphhtthhopehkuhgsrgeskhgvrhhnvghlrdhorhhg
-X-GND-Sasl: romain.gantois@bootlin.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/5] dt-bindings: PCI: qcom: Document the QCS615 PCIe
+ Controller
+To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org,
+ abel.vesa@linaro.org, manivannan.sadhasivam@linaro.org,
+ lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
+ andersson@kernel.org, konradybcio@kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ quic_qianyu@quicinc.com, quic_krichai@quicinc.com, quic_vbadigan@quicinc.com
+References: <20250507031559.4085159-1-quic_ziyuzhan@quicinc.com>
+ <20250507031559.4085159-3-quic_ziyuzhan@quicinc.com>
+ <20250507-astute-realistic-ferret-bcdfce@kuoka>
+ <e434124b-6975-4027-bb0d-3840fbd25a15@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <e434124b-6975-4027-bb0d-3840fbd25a15@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
---nextPart5568568.Sb9uPGUboI
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Romain Gantois <romain.gantois@bootlin.com>
-Date: Mon, 12 May 2025 11:22:04 +0200
-Message-ID: <873525603.0ifERbkFSE@fw-rgant>
-In-Reply-To: <20250507135331.76021-15-maxime.chevallier@bootlin.com>
-MIME-Version: 1.0
-
-Hi Maxime,
-
-On Wednesday, 7 May 2025 15:53:30 CEST Maxime Chevallier wrote:
-> This documentation aims at describing the main goal of the phy_port
-> infrastructure.
+On 12/05/2025 10:16, Ziyue Zhang wrote:
 > 
-> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-> ---
->  Documentation/networking/index.rst    |   1 +
->  Documentation/networking/phy-port.rst | 111 ++++++++++++++++++++++++++
->  MAINTAINERS                           |   1 +
->  3 files changed, 113 insertions(+)
->  create mode 100644 Documentation/networking/phy-port.rst
+> On 5/7/2025 1:17 PM, Krzysztof Kozlowski wrote:
+>> On Wed, May 07, 2025 at 11:15:56AM GMT, Ziyue Zhang wrote:
+>>> From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>>
+>>> Add dedicated schema for the PCIe controllers found on QCS615.
+>>> Due to qcs615's clock-names do not match any of the existing
+>>> dt-bindings, a new compatible for qcs615 is needed.
+>> Other bindings for QCS615 were not finished, so I have doubts this is
+>> done as well. Send your bindings once you finish them.
+>>
+>> ...
+>>
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,qcs615-pcie
+>>> +
+>>> +  reg:
+>>> +    minItems: 6
+>>> +    maxItems: 6
+>>> +
+>>> +  reg-names:
+>>> +    items:
+>>> +      - const: parf # Qualcomm specific registers
+>>> +      - const: dbi # DesignWare PCIe registers
+>>> +      - const: elbi # External local bus interface registers
+>>> +      - const: atu # ATU address space
+>>> +      - const: config # PCIe configuration space
+>>> +      - const: mhi # MHI registers
+>>> +
+>>> +  clocks:
+>>> +    minItems: 5
+>> Drop or use correct value - 6. I don't understand why this changed and
+>> nothing in changelog explains this.
+>>
+>> Best regards,
+>> Krzysztof
 > 
-> diff --git a/Documentation/networking/index.rst
-> b/Documentation/networking/index.rst index ac90b82f3ce9..f60acc06e3f7
-> 100644
-> --- a/Documentation/networking/index.rst
-> +++ b/Documentation/networking/index.rst
-> @@ -96,6 +96,7 @@ Contents:
->     packet_mmap
->     phonet
->     phy-link-topology
-> +   phy-port
->     pktgen
->     plip
->     ppp_generic
-> diff --git a/Documentation/networking/phy-port.rst
-> b/Documentation/networking/phy-port.rst new file mode 100644
-> index 000000000000..6d9d46ebe438
-> --- /dev/null
-> +++ b/Documentation/networking/phy-port.rst
-> @@ -0,0 +1,111 @@
-> +.. SPDX-License-Identifier: GPL-2.0
-> +.. _phy_port:
-> +
-> +=================
-> +Ethernet ports
-> +=================
-> +
-> +This document is a basic description of the phy_port infrastructure,
-> +introduced to represent physical interfaces of Ethernet devices.
-> +
-> +Without phy_port, we already have quite a lot of information about what the
-> +media-facing interface of a NIC can do and looks like, through the
+> Hi Krzysztof
+> 
+> As discussed in qcs8300, gcc_aux_clk is recommended to be removed from PCIe PHY
+> device tree node, so I need to update the bindings.
 
-I'd replace "and looks like" by "and what it looks like".
+I don't see how this is relevant to the code you posted and to my
+comment, so comment stays valid.
 
-> +:c:type:`struct ethtool_link_ksettings <ethtool_link_ksettings>`
-> attributes, +which includes :
-> +
-> + - What the NIC can do through the :c:member:`supported` field
-> + - What the Link Partner advertises through :c:member:`lp_advertising`
-> + - Which features we're advertising through :c:member:`advertising`
-> +
-> +We also have info about the number of lanes and the PORT type. These
-> settings +are built by aggregating together information reported by various
-> devices that +are sitting on the link :
-> +
-> +  - The NIC itself, through the :c:member:`get_link_ksettings` callback
-> +  - Precise information from the MAC and PCS by using phylink in the MAC
-> driver +  - Information reported by the PHY device
-> +  - Information reported by an SFP module (which can itself include a PHY)
-> +
-> +This model however starts showing its limitations when we consider devices
-> that +have more than one media interface. In such a case, only information
-> about the +actively used interface is reported, and it's not possible to
-> know what the +other interfaces can do. In fact, we have very few
-> information about whether or +not there are any other media interfaces.
-
-maybe "hints" instead of "information"?
-
-> +
-> +The goal of the phy_port representation is to provide a way of representing
-> a +physical interface of a NIC, regardless of what is driving the port (NIC
-> through +a firmware, SFP module, Ethernet PHY).
-> +
-> +Multi-port interfaces examples
-> +==============================
-> +
-> +Several cases of multi-interface NICs have been observed so far :
-> +
-> +Internal MII Mux::
-> +
-> +  +------------------+
-> +  | SoC              |
-> +  |          +-----+ |           +-----+
-> +  | +-----+  |     |-------------| PHY |
-> +  | | MAC |--| Mux | |   +-----+ +-----+
-> +  | +-----+  |     |-----| SFP |
-> +  |          +-----+ |   +-----+
-> +  +------------------+
-> +
-> +Internal Mux with internal PHY::
-> +
-> +  +------------------------+
-> +  | SoC                    |
-> +  |          +-----+ +-----+
-> +  | +-----+  |     |-| PHY |
-> +  | | MAC |--| Mux | +-----+   +-----+
-> +  | +-----+  |     |-----------| SFP |
-> +  |          +-----+       |   +-----+
-> +  +------------------------+
-> +
-> +External Mux::
-> +
-> +  +---------+
-> +  | SoC     |  +-----+  +-----+
-> +  |         |  |     |--| PHY |
-> +  | +-----+ |  |     |  +-----+
-> +  | | MAC |----| Mux |  +-----+
-> +  | +-----+ |  |     |--| PHY |
-> +  |         |  +-----+  +-----+
-> +  |         |     |
-> +  |    GPIO-------+
-> +  +---------+
-> +
-> +Double-port PHY::
-> +
-> +  +---------+
-> +  | SoC     | +-----+
-> +  |         | |     |--- RJ45
-> +  | +-----+ | |     |
-> +  | | MAC |---| PHY |   +-----+
-> +  | +-----+ | |     |---| SFP |
-> +  +---------+ +-----+   +-----+
-> +
-> +phy_port aims at providing a path to support all the above topologies, by
-> +representing the media interfaces in a way that's agnostic to what's
-> driving +the interface. the struct phy_port object has its own set of
-
-s/the/The
-
-> callback ops, and +will eventually be able to report its own ksettings::
-> +
-> +             _____      +------+
-> +            (     )-----| Port |
-> + +-----+   (       )    +------+
-> + | MAC |--(   ???   )
-> + +-----+   (       )    +------+
-> +            (_____)-----| Port |
-> +                        +------+
-> +
-> +Next steps
-> +==========
-> +
-> +As of writing this documentation, only ports controlled by PHY devices are
-> +supported. The next steps will be to add the Netlink API to expose these
-> +to userspace and add support for raw ports (controlled by some firmware,
-> and directly +managed by the NIC driver).
-> +
-> +Another parallel task is the introduction of a MII muxing framework to
-
-I'd suggest "related" instead of "parallel".
-
-> allow the +control of non-PHY driver multi-port setups.
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index b155eec69552..211a6ba50166 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -8781,6 +8781,7 @@
-> F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
-> F:	Documentation/devicetree/bindings/net/ethernet-phy.yaml
->  F:	Documentation/devicetree/bindings/net/mdio*
->  F:	Documentation/devicetree/bindings/net/qca,ar803x.yaml
-> +F:	Documentation/networking/phy-port.rst
->  F:	Documentation/networking/phy.rst
->  F:	drivers/net/mdio/
->  F:	drivers/net/mdio/acpi_mdio.c
-
-Thanks!
-
--- 
-Romain Gantois, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
-
---nextPart5568568.Sb9uPGUboI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEYFZBShRwOvLlRRy+3R9U/FLj284FAmghvbwACgkQ3R9U/FLj
-2871DxAAn7+aUBy4seGGJo1GygKlbkXBHGDeR8bvU6xiVEX4iQCpM5/8/fSk413V
-VaVRwapjz/rEK7gx0fKzUw2EmEUSBkSSW4SPocPH7bEYREdo5y0f1xgTp7PXD1Yj
-osDFFsXo9S3rsDCvCBMDb73s60/EZsDp/gcw+xAdhZPBjDine0wArdRPTmWmJDsc
-OJTM9eMwHYxj03b0j+3ZytXWTQ8ku2I3zeT+RD1M/XWTguJ/h0QYJnn9O1OU6kLh
-uxgtP8lSrFAz/hPvIRa7u4TG73e4Dfm0/cP4liGgDFJEofnxVSU7BKuFT5K/PDW/
-+H3aRHQAPfuNNrzE/j6Ek7KMYfFa3vGbM3kD0lnhMGoKD9s9vhLmOxG/b3+8fiQl
-KQX7UMQfKHEfmMz8HyTG3dX5vplbpR4MlQYDoub9Icu3AYJO/uRKw5X6NaJT89yT
-aIEeMjzxKTxrTryx7aQ8T8IWzQF58mj9IPao4qHXSm+nP0KWMbZMrNP3KkFvTNSI
-RPjPzPlBYD1DT5o7Nt4izr8c+b9GCJQDdFxkAfjmisjvxljVSL1yTaFVvpgcClSe
-6FGRHENouJJrH+nadqpZKNmzkLDDoQoi1dfzq4Dx7KAxul3gqwh+lZ6QOBCwH/o0
-Hax/Lqkzq0+JXynFI3fTL2/czWHZUzzkoZdkQbxQsS2CSXgHcC4=
-=G59j
------END PGP SIGNATURE-----
-
---nextPart5568568.Sb9uPGUboI--
-
-
-
+Best regards,
+Krzysztof
 
