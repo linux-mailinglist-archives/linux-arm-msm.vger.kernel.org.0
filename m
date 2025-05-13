@@ -1,406 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-57690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6845EAB52E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 12:40:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20D53AB533C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 12:53:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9080B18933C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 10:36:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9349B179A72
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 10:53:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69EA9270ED0;
-	Tue, 13 May 2025 10:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AE0D284B5E;
+	Tue, 13 May 2025 10:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="f/m88U2X"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KIaZlVGy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687C1253F2B;
-	Tue, 13 May 2025 10:26:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F22F25A625
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 10:53:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747132003; cv=none; b=a1wbUBXf2WlpzXQgePkOEziG7nVO3fU04RBg72vFh3aNf4Un7uN8JIeSoQrENBDQA2IWEusThL5TviWFzQ1Mybk3hodoPVFGu/ukJxI35PSjKFSMJ6bJKaXDGLt3+a0bmfBVae5fgXF9n91kbXRA9QCaVMJdxD2g9202mfLqKWw=
+	t=1747133616; cv=none; b=foWZz3yByChJL10QRrxyOKzSBxVIyJLLKxpUHpCG2QDr2FRkeR1vF2hoIh3mJ9RLzrLMHlW+4kMdbCsiJkQY+EQmKoLmLX3xChIhi85W0PsWwvFO7ZXQn1cTGFfv3svmhnhYdBSnxLndPZkCMQFWOXXxLhGnPDvJc5wY83NI+KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747132003; c=relaxed/simple;
-	bh=zdfs/X2SmwTXKyp4GuS+Vne9P1acg4oBMDirl6h0LgM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=RebN2ElG7C4RSjZ5tvMMRMLeKAi12QkJHcuA2wfhoBYI7OLgy2Hvqjga/ecphRhjYzKcAnGBfJZqcXlJmqfcN+bFuC6VR85estY9XZ9UAe1gJDqHzVmUF+D7mIfpBc3F7ohh3hiLYnBZ2S0xU0zhCVSjcM9mCPLpZx4/HPxRcKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qti.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=f/m88U2X; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qti.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54D99Fvp028970;
-	Tue, 13 May 2025 10:26:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=TeXFYgxAPUE
-	msdgU0AAzQD+Cw0Jmak4JVhj17XHe7PE=; b=f/m88U2XaghAaT0hrOpSTo2EOiP
-	oiXknGOuVKdsv+PKW+KENLS13yA6cQHdea8P+lVSK5pUdiAb0SCwjNKSvfrBAFuZ
-	cAk1aByYiYqhz2b70z3+Tijan60rQZhqScLxcdSAcIklJFQ4ekYScrM2Xu6SFViv
-	GxjGzEotNqj4GUQOpf2g0W7dO3s160T/193y77AE2BmNshpxUfD9sjho1eMkUs0m
-	67UfNwkAZNEPhEvOMUCiGqqkfCYmZWsgUFUGd3WeOJwYrFe8H4HZ2kUuvikobWXQ
-	FPdaTxcDnnWejkI5buvLL63I9MoH3zViJpGGEa3x5FaGxmAF230KsMg9CAA==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46hxvxfbx6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 May 2025 10:26:22 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 54DAQJGk032058;
-	Tue, 13 May 2025 10:26:19 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 46hyvm6vx5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 May 2025 10:26:19 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54DAQJud032037;
-	Tue, 13 May 2025 10:26:19 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-amakhija-hyd.qualcomm.com [10.213.99.91])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 54DAQIAB032034
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 May 2025 10:26:18 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4090850)
-	id CEC62590; Tue, 13 May 2025 15:56:17 +0530 (+0530)
-From: Ayushi Makhija <amakhija@qti.qualcomm.com>
-To: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc: Ayushi Makhija <quic_amakhija@quicinc.com>, robdclark@gmail.com,
-        dmitry.baryshkov@oss.qualcomm.com, sean@poorly.run,
-        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
-        conor+dt@kernel.org, andrzej.hajda@intel.com,
-        neil.armstrong@linaro.org, rfoss@kernel.org,
-        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
-        jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com,
-        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
-        quic_jesszhan@quicinc.com,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v7 2/2] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI to DP bridge nodes
-Date: Tue, 13 May 2025 15:56:11 +0530
-Message-Id: <20250513102611.1456868-3-amakhija@qti.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250513102611.1456868-1-amakhija@qti.qualcomm.com>
-References: <20250513102611.1456868-1-amakhija@qti.qualcomm.com>
+	s=arc-20240116; t=1747133616; c=relaxed/simple;
+	bh=z1aLvvW60GQF/e5ODd16orkn/crYxMuD2y2vSiI133g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C9GFOV/Xf+8M7YQUPvx6mQ2D302AtO8t7U5fjc19LRbZxPmZ2jzieaPfYHJJ9KzHwC4LU86jCbDbJ8VVuSIEj2MXmYzRCZ66DBI74hdMCrc2K8qcNOG8dYA9L8WNfBfVJSpCJuRbwuLoO7M2ZE57tDYyxi01Y4t+aJ1DZ+bELrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KIaZlVGy; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43cfebc343dso36440665e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 03:53:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1747133613; x=1747738413; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=E5XqWRuALq+1KPuNnLLJTpIo8i27168N3j9dyvRLwpM=;
+        b=KIaZlVGyBOwMIRZfwIWCoFQ3jksS3hrQ4G4CPCfIfWSEtTgjt2VaS8kele6Ov7/1lv
+         mj2R+HDC04baAG5MW1TeHXI8qYzkW5OMLFUZP07wLsjpewn4KbTetq62dWuCZ5AnNGWW
+         6bsiovql03dWxwwL9uKnrN8ZrGanp0BkF+T3+WNvv/P1+HEZUl2XI6FvuMeUYl9kEZSp
+         b/VMgPTsDqY4y7zh68r/OhHLkjFOyg4F4uegD8dzaxSjiTGHAPmx6FXEMuOwiqPLgmve
+         hvby9CDw+2arr9KTDkDjXIbBiq/568UYj2Ft5M39a807gx0N3pI3vVOwCpU0GzVRIY0M
+         HXOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747133613; x=1747738413;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E5XqWRuALq+1KPuNnLLJTpIo8i27168N3j9dyvRLwpM=;
+        b=blgJVoHnpidK7xr+ndEhN/9Q0qxT3qkyZXsZW/ZYg8HgyMTcEWs2JbHrOs2MoKDg9v
+         16dBb9qUoitUQiCN8msGQzjICEcVjHPrkRabGlnVNJXJaFIXcp6RTrPFnOnM6CUKv+uf
+         IgTeBDlmJEStSSg4xwgnKeDsFuSUJijJVJxn1cPHMAudSwdc8srG0pMc079w8un8EqRI
+         /BKQjhjb+K1get6KNL7VQ9kZ5IYL+YW5uT4gKL6fS5AoRI9ucRusdaPBQKA6UcQHnHVr
+         2j6ZmEcQiFmqQIA1l3ZEzCFZTwbLRJE+IH3xMrVejkRST46uuPGNnN1pRnwAu1WkAHxc
+         Q8kg==
+X-Forwarded-Encrypted: i=1; AJvYcCWKKLxdkTyrVN8+Qnd4c56c0lJ+fDK+3TO9onB2J8NigppeSaz3t73WbPBY5izqrLnlZx3csYM7p50+iiWl@vger.kernel.org
+X-Gm-Message-State: AOJu0YzyXYTwqK8c9G814BqCc4ggnFf0PFIzuBGU8wQue+x5lGxxEDFL
+	j1BVlD901rkY3lec7oMGktyDNzTN9uZDx1xRHERUuisLuIOleS4Sex0KS1IaGg==
+X-Gm-Gg: ASbGncu1LqqPFXcZqdO0bI12UwdhrkmSZygQCuJAIZRqW/qgXddpmsZZnvs1psCc2zc
+	iE+5mPFxQNhVk+Fxn7TIK3f8DoXwQv1VMEudxXPVABWeuCfc/iOhwMU2K2fDgOQWeugRFcmOF5Z
+	2wLVDzvfUvQ0ruvgCWcXz9EZQanjseNWz/m3DrNqNz4hsPXlRFMHNogVYaWEehZN2M79XctmPjs
+	u4ybJkm9NAVDmk4ZBwAnsmCsWEun7ZsfTanLBmol3PuDhL5cBJMW7VIGYigVTuTrwRgrFWoRBY8
+	d10k9vO9h0MIo1O5jurlFyz+Ov24oD7/CN//kVsGng85rOTTMTp/1FMrnm0/VMBBXkM6n/AIKei
+	AW/v3dg1naIRgVg==
+X-Google-Smtp-Source: AGHT+IF4m8noQnB4eGSySi2oqV3PlKbLI8UICKwhBvvGk/TXUW4E0JigYf7vcXqZztR8zC1h2uVMZw==
+X-Received: by 2002:a05:600c:34d5:b0:43c:fe5e:f040 with SMTP id 5b1f17b1804b1-442d6dd21bfmr124187975e9.23.1747133612718;
+        Tue, 13 May 2025 03:53:32 -0700 (PDT)
+Received: from thinkpad (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442d67df5ecsm161692715e9.9.2025.05.13.03.53.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 May 2025 03:53:32 -0700 (PDT)
+Date: Tue, 13 May 2025 11:53:29 +0100
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>, Wilfred Mallawa <wilfred.mallawa@wdc.com>, 
+	Damien Le Moal <dlemoal@kernel.org>, Hans Zhang <18255117159@163.com>, 
+	Laszlo Fiat <laszlo.fiat@proton.me>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] PCI: dwc: Link Up IRQ fixes
+Message-ID: <7zcrjlv5aobb22q5tyexca236gnly6aqhmidx6yri6j7wowteh@mylkqbwehak7>
+References: <20250506073934.433176-6-cassel@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDA5OCBTYWx0ZWRfX9hsTYARWUlc4
- 1FcCTyfMnmFunmfrX/FGhZ0HKzk0uu3k1C7osHesBBemsY+ayD4UpYdRZm1jJw85h4zi5ESqrmo
- Utr8qUcmatEKxqfW1IAnpwndi0zcisC8/NuEXpNwsF1eZcFbrNhBMTlMqFB+HbP1e0NoGMT5C3T
- 2ATBQX/Px++phf81GtWO8YP/pMPmGh6Egr4YBx3G62bYa8qTd09biJnpajqOiSbaZ4+sY26+ERk
- MXhRP+m7e+jSajcj0Xb3qCzpPo8hZySm8sLR2Mtp26sf+44CF/ZLHa67dbxK9tHwkI/jhfG/T0P
- Yb9Gwq2ZcAmGIcdocHRLk8m3oQ79lKIj82ciZsXGlj2Le1W+Q/XbS34M07I9/SMJvVkhNPFPx4A
- eH50f7aqE/3E5IQoLl0xhevvX0WMSQlRaHIDdw9xuUQ6X1f5aIHcH3Mfa0ZkYiPlZvaK/gDq
-X-Proofpoint-GUID: Byozc5x4EjvD1epoPSJEVQ1SKPLUq1hJ
-X-Authority-Analysis: v=2.4 cv=WMV/XmsR c=1 sm=1 tr=0 ts=68231e4e cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=LchG5PTgKyYevX63dD8A:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: Byozc5x4EjvD1epoPSJEVQ1SKPLUq1hJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-12_07,2025-05-09_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 impostorscore=0 bulkscore=0
- spamscore=0 mlxscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2504070000 definitions=main-2505130098
+In-Reply-To: <20250506073934.433176-6-cassel@kernel.org>
 
-From: Ayushi Makhija <quic_amakhija@quicinc.com>
+On Tue, May 06, 2025 at 09:39:35AM +0200, Niklas Cassel wrote:
+> Hello there,
+> 
+> Commit 8d3bf19f1b58 ("PCI: dwc: Don't wait for link up if driver can detect
+> Link Up event") added support for DWC to not wait for link up before
+> enumerating the bus. However, we cannot simply enumerate the bus after
+> receiving a Link Up IRQ, we still need to wait PCIE_T_RRS_READY_MS time
+> to allow a device to become ready after deasserting PERST. To avoid
+> bringing back an conditional delay during probe, perform the wait in the
+> threaded IRQ handler instead.
+> 
 
-Add anx7625 DSI to DP bridge device nodes.
+This wait time is a grey area in the spec tbh. If the Readiness Notification
+(RN) is not supported, then the spec suggests waiting 1s for the device to
+become 'configuration ready'. That's why we have the 1s delay in dwc driver.
 
-Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 232 +++++++++++++++++++++
- 1 file changed, 232 insertions(+)
+Also, it has the below in r6.0, sec 6.6.1:
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index 967913169539..4c942b734897 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -28,6 +28,64 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	vreg_12p0: vreg-12p0-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_12P0";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <12000000>;
-+		regulator-max-microvolt = <12000000>;
-+	};
-+
-+	vreg_5p0: vreg-5p0-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_5P0";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+
-+		vin-supply = <&vreg_12p0>;
-+	};
-+
-+	vreg_1p8: vreg-1p8-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_1P8";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		vin-supply = <&vreg_5p0>;
-+	};
-+
-+	vreg_1p0: vreg-1p0-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_1P0";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <1000000>;
-+		regulator-max-microvolt = <1000000>;
-+
-+		vin-supply = <&vreg_1p8>;
-+	};
-+
-+	vreg_3p0: vreg-3p0-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_3P0";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <3000000>;
-+		regulator-max-microvolt = <3000000>;
-+
-+		vin-supply = <&vreg_12p0>;
-+	};
-+
- 	vreg_conn_1p8: vreg_conn_1p8 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vreg_conn_1p8";
-@@ -128,6 +186,30 @@ dp1_connector_in: endpoint {
- 			};
- 		};
- 	};
-+
-+	dp-dsi0-connector {
-+		compatible = "dp-connector";
-+		label = "DSI0";
-+		type = "full-size";
-+
-+		port {
-+			dp_dsi0_connector_in: endpoint {
-+				remote-endpoint = <&dsi2dp_bridge0_out>;
-+			};
-+		};
-+	};
-+
-+	dp-dsi1-connector {
-+		compatible = "dp-connector";
-+		label = "DSI1";
-+		type = "full-size";
-+
-+		port {
-+			dp_dsi1_connector_in: endpoint {
-+				remote-endpoint = <&dsi2dp_bridge1_out>;
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -517,7 +599,108 @@ &i2c18 {
- 	clock-frequency = <400000>;
- 	pinctrl-0 = <&qup_i2c18_default>;
- 	pinctrl-names = "default";
-+
- 	status = "okay";
-+
-+	io_expander: gpio@74 {
-+		compatible = "ti,tca9539";
-+		reg = <0x74>;
-+		interrupts-extended = <&tlmm 98 IRQ_TYPE_EDGE_BOTH>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		reset-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&io_expander_intr_active>,
-+			    <&io_expander_reset_active>;
-+		pinctrl-names = "default";
-+	};
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9543";
-+		#address-cells = <1>;
-+
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+
-+		i2c@0 {
-+			reg = <0>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			bridge@58 {
-+				compatible = "analogix,anx7625";
-+				reg = <0x58>;
-+				interrupts-extended = <&io_expander 2 IRQ_TYPE_EDGE_FALLING>;
-+				enable-gpios = <&io_expander 1 GPIO_ACTIVE_HIGH>;
-+				reset-gpios = <&io_expander 0 GPIO_ACTIVE_HIGH>;
-+				vdd10-supply = <&vreg_1p0>;
-+				vdd18-supply = <&vreg_1p8>;
-+				vdd33-supply = <&vreg_3p0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+
-+						dsi2dp_bridge0_in: endpoint {
-+							remote-endpoint = <&mdss0_dsi0_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+
-+						dsi2dp_bridge0_out: endpoint {
-+							remote-endpoint = <&dp_dsi0_connector_in>;
-+						};
-+					};
-+				};
-+			};
-+		};
-+
-+		i2c@1 {
-+			reg = <1>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			bridge@58 {
-+				compatible = "analogix,anx7625";
-+				reg = <0x58>;
-+				interrupts-extended = <&io_expander 10 IRQ_TYPE_EDGE_FALLING>;
-+				enable-gpios = <&io_expander 9 GPIO_ACTIVE_HIGH>;
-+				reset-gpios = <&io_expander 8 GPIO_ACTIVE_HIGH>;
-+				vdd10-supply = <&vreg_1p0>;
-+				vdd18-supply = <&vreg_1p8>;
-+				vdd33-supply = <&vreg_3p0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+
-+						dsi2dp_bridge1_in: endpoint {
-+							remote-endpoint = <&mdss0_dsi1_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+
-+						dsi2dp_bridge1_out: endpoint {
-+							remote-endpoint = <&dp_dsi1_connector_in>;
-+						};
-+					};
-+				};
-+			};
-+		};
-+	};
-+
- };
- 
- &mdss0 {
-@@ -564,6 +747,40 @@ &mdss0_dp1_phy {
- 	status = "okay";
- };
- 
-+&mdss0_dsi0 {
-+	vdda-supply = <&vreg_l1c>;
-+
-+	status = "okay";
-+};
-+
-+&mdss0_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&dsi2dp_bridge0_in>;
-+};
-+
-+&mdss0_dsi0_phy {
-+	vdds-supply = <&vreg_l4a>;
-+
-+	status = "okay";
-+};
-+
-+&mdss0_dsi1 {
-+	vdda-supply = <&vreg_l1c>;
-+
-+	status = "okay";
-+};
-+
-+&mdss0_dsi1_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&dsi2dp_bridge1_in>;
-+};
-+
-+&mdss0_dsi1_phy {
-+	vdds-supply = <&vreg_l4a>;
-+
-+	status = "okay";
-+};
-+
- &pmm8654au_0_gpios {
- 	gpio-line-names = "DS_EN",
- 			  "POFF_COMPLETE",
-@@ -712,6 +929,21 @@ ethernet0_mdio: ethernet0-mdio-pins {
- 		};
- 	};
- 
-+	io_expander_intr_active: io-expander-intr-active-state {
-+		pins = "gpio98";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	io_expander_reset_active: io-expander-reset-active-state {
-+		pins = "gpio97";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-high;
-+	};
-+
- 	qup_uart10_default: qup-uart10-state {
- 		pins = "gpio46", "gpio47";
- 		function = "qup1_se3";
+```
+* On the completion of Link Training (entering the DL_Active state, see §
+Section 3.2 ), a component must be able to receive and process TLPs and DLLPs.
+* Following exit from a Conventional Reset of a device, within 1.0 s the device
+must be able to receive a Configuration Request and return a Successful
+Completion if the Request is valid. This period is independent of how quickly
+Link training completes. If Readiness Notifications mechanisms are used (see
+§ Section 6.22 .), this period may be shorter.
+```
+
+As per the first note, once link training is completed, the device should be
+ready to accept configuration requests from the host. So no delay should be
+required.
+
+But the second note says that the 1s delay is independent of how quickly the
+link training completes. This essentially contradicts with the above point.
+
+So I think it is not required to add delay after completing the LTSSM, unless
+someone sees any issue.
+
+- Mani
+
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
 
