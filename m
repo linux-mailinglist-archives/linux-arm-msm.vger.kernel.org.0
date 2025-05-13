@@ -1,73 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-57765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E6ACAB5E12
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 22:47:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1FABAB5E13
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 22:47:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AAF207B28FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 20:46:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A860465397
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 20:47:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF9F720B7F3;
-	Tue, 13 May 2025 20:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FCF420C48E;
+	Tue, 13 May 2025 20:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nRN803rF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MVH7WMgY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AC11F3B97;
-	Tue, 13 May 2025 20:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269B920C484;
+	Tue, 13 May 2025 20:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747169227; cv=none; b=YXz7n+y+/0Jt3IReJG/LVnPNru7WksHilSyTIF7gdWZw7ZyHaFaot2OXYVlA/HlEVKbv/Sd0S+8cMxOKk+WBrBH+fDrOSSLiMEflr2WpWhhgaXURwtyzotqI/qA7u6/NUi6L5o32/3amIqumYW7d2Q3zWcgs+XEY6TRvLwLbgp4=
+	t=1747169230; cv=none; b=NDNZbiJ07aKFI8Ql9kDubwv5hWBWMoH9O318XxDZ7BZBXdyVZZaJv8vQ3gMgZ2QRRhxpLV5dr1Pek4INCQe/ofUP1j5Ese1RnqclDPcvAQw3BJv5V9xgow7YE7IJddEWfqNDe0SwszHfbbU5rUKrpp9y6dLZ9a0QLDQdJgu+n8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747169227; c=relaxed/simple;
-	bh=8n8/bY5LAWpyfxrimtYmM53zT/Z/g9DhZOdMQxbL7qs=;
+	s=arc-20240116; t=1747169230; c=relaxed/simple;
+	bh=xEFTJjM05Gti2SrgXjThZ8Fb4N5pqDHMA0Xso5K3R5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dy827/TidNr8vn7LGvkT36zCaoCMGf28GxVcYNIqoch7h5zTAioXjDTTfQc7tsu8CAjtf+uPFF1fK9oVcLA3fV+Wy2Ir8N6uHoWHEvBsAItA07bJ1rYAJH8K58OKnKQIGBVLJr4UEH61oZPIPdURzIpUrXqSqOIXUK61tjrfzyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nRN803rF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD33C4CEEB;
-	Tue, 13 May 2025 20:47:01 +0000 (UTC)
+	 MIME-Version:Content-Type; b=m9//jwJaG6icBUDoeRv9o5enUyeQ+BUJQLmYprFHTN4553fX6WO919VVIlYlYe2borIXlGt8nH1vf+NgxR7we3D+Exl5vWEO0DP50V7++SsyrJxnbJQukT7oWAgoNCkvUBYz2cHw/pWB+TkRtDE4TXm77NL/QHjrFObrVIlICIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MVH7WMgY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897EBC4CEEF;
+	Tue, 13 May 2025 20:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747169226;
-	bh=8n8/bY5LAWpyfxrimtYmM53zT/Z/g9DhZOdMQxbL7qs=;
+	s=k20201202; t=1747169229;
+	bh=xEFTJjM05Gti2SrgXjThZ8Fb4N5pqDHMA0Xso5K3R5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nRN803rF3MXyZo/sCduaCDqXHx54TbHvRsx8w0qF/iQNvLa/JEtjgSsZTNFXax0m9
-	 EVsxISYB+ng5o4jPweTZk4/SR/01QKV+2x3YATBZjKPFV5muyrq29w++yXuPHjjXuX
-	 AOiYTOoxHnkoQ3QYmsa3abJ3+G+NI80sKbM4fe7DYdNplJ+so0p3v6KGf+Tdw4pwOC
-	 22xRL+O0l7l9eCKips+B/n0rsDupZB9R7bhn0d6BLBMPZ8fz4V0ymDzdTdsSdNVDU9
-	 xxQreElLyMpJUiUw94X0kEc9Dc6x5rFkqXc+UrcfNnRL7TjoaSz7d+QS+yDy3/fNRV
-	 de0w1JcirHYgQ==
+	b=MVH7WMgYnTDLJw69qUmm6zxCJiFQPEzr4Ar0EBEext4wYHmDMLFWL7Zxnq56gjp01
+	 mTZVcks3JdQsNgVzQQQLmYghkrXw9BDzKJtd0phcgZOJPhGaMay7ewVwtJpkGmgjQ2
+	 DLumeyCG+67XInsoRagx2kbUtNBTdu5ukksoY9LZ1853QI5/DOX/UeLagHvxES849+
+	 Jg85BIEuKUebzpCdbPKVXs8h9v7+KBXGr4pbbOFjk13lKZQfDwVzPVZb9OxXaY6u+3
+	 Dqs3cUbU60zOrId1RtmalNX4UyJENLqaM6dvpfsmwuNG5IxcS9/mzyIlacubylof/A
+	 /SERrKNDk+eEA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Srinivas Kandagatla <srini@kernel.org>,
-	Banajit Goswami <bgoswami@quicinc.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Conor Dooley <conor@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org,
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	Melody Olvera <melody.olvera@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: (subset) [PATCH v4 0/5] Add DisplayPort sound support for Fairphone 5 smartphone
-Date: Tue, 13 May 2025 21:46:41 +0100
-Message-ID: <174716895375.39748.1659820530327447413.b4-ty@kernel.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v5 0/4] Introduce LLCC v6 used on the SM8750 SoCs
+Date: Tue, 13 May 2025 21:46:42 +0100
+Message-ID: <174716895368.39748.7918502940727549188.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250507-fp5-dp-sound-v4-0-4098e918a29e@fairphone.com>
-References: <20250507-fp5-dp-sound-v4-0-4098e918a29e@fairphone.com>
+In-Reply-To: <20250512-sm8750_llcc_master-v5-0-d78dca6282a5@oss.qualcomm.com>
+References: <20250512-sm8750_llcc_master-v5-0-d78dca6282a5@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,24 +71,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 07 May 2025 10:01:36 +0200, Luca Weiss wrote:
-> Add the necessary sound card bits and some dts additions to enable sound
-> over DisplayPort-over-USB-C, e.g. to a connected TV or monitor.
+On Mon, 12 May 2025 13:54:40 -0700, Melody Olvera wrote:
+> Add documentation and functionality for LLCC v6 used on
+> the SM8750 SoCs. LLCC v6 rearranges several registers and offsets
+> and supports slice IDs over 31, so new functionality is necessary
+> to program and use LLCC v6.
 > 
-> The UCM files can be found here:
-> https://gitlab.postmarketos.org/postmarketOS/pmaports/-/tree/master/device/testing/device-fairphone-fp5/ucm
-> 
-> This series - in spirit - depends on the series enabling DisplayPort in
-> the first place, but can land pretty independently, especially the ASoC
-> bits:
-> https://lore.kernel.org/linux-arm-msm/20250312-fp5-pmic-glink-dp-v2-0-a55927749d77@fairphone.com/
-> 
-> [...]
 
 Applied, thanks!
 
-[5/5] arm64: dts: qcom: qcm6490-fairphone-fp5: Add DisplayPort sound support
-      commit: 8fc88fbd471044d66cb2fd85dc0d431866ed7448
+[4/4] arm64: dts: qcom: sm8750: Add LLCC node
+      commit: cd81339e68cb11dbec90fd0d7de12a5c307c1fc7
 
 Best regards,
 -- 
