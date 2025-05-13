@@ -1,242 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-57700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56A6EAB55B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 15:14:14 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2B01AB55C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 15:17:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73E24167DBD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 13:14:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7BDA0168299
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 13:17:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 607B728E583;
-	Tue, 13 May 2025 13:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1FFD28E576;
+	Tue, 13 May 2025 13:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="K3WTJ+B5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pRULYFbC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8762424397A;
-	Tue, 13 May 2025 13:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C797B13D2B2
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 13:17:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747142047; cv=none; b=rdIg0iToyxck8TqLa3d3YOmK/NqOoCfjrZ/ArJiivzmna90yxtMRkY4b5zkXPQBAsMkq0n/alyy2KlFKL9FkySrUrRz47XDz68hD5oQpCDr2d6T75ZuCoe1GW1JAlRw31FPQ3bTUIAt078GIChSXebHoZg1QrsA37y5uGZeIW80=
+	t=1747142232; cv=none; b=lIYMA12oMiyMNoZL/sWuVAY0jHI77qHlxzuZMUkYxs2NRtDmDTjHhUTsRYMpMdjRTnzUUt4BNm3n9sfnYYcFijyjpuT8U9MdE/bIO5YB3ZjWSv3x64ja33N5Laq1oJsICDfWZjqz1ySOMgLbwHP0u3ULeKi50eqM6LrDNFGa9uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747142047; c=relaxed/simple;
-	bh=9qYzq2shSFDDkR3f0FiqWCgsrvJDozSPoDj5zHqfdwY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KEVTbkriFnVCcquHC20A9WRMLNknXbxlY8jHTkY9i99svpa7Ykaysu0d+wnAMGISCYPszPkXRKmw1lG8WwQwut/XWUZb5pcIF/UKn7xn+ogTGfIFvNAGd6fkfo8tNzbkTxaX98curuifamNO2oPIKsBjiYzqb10Xz59JC232LOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=K3WTJ+B5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54D6PeRE022722;
-	Tue, 13 May 2025 13:14:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jF6x9fttJR2HbAsgmsB6mkGPnwiACPSiXe3vG6c/vdk=; b=K3WTJ+B5PxbuY0ln
-	t4VMVCjdRPVz0vKvcptH8IpbffceJ3M4pVskKm0Bjvc6uofAje4Vj3xSx8Wh34gR
-	+xh3SNdkKWe9qmJlQHedewdL3l7TxunfNJ6tsTlk2Rz6phahFWCPByUQ2UN2Ln/h
-	ReqoNhhBW2ravjdfL2QvGLHHESsEXn3AfXfNxSOYxzNXqf/ZQbQwpmje2DwbLY8D
-	6LxoxfGigPWswgi6VOGofdYIzyY2ax4oWae3+yH6iYnqXUbF7o9TQ9ULd43Tsaxk
-	6uFHfPOr15sYptGZUAxxyuDBlMYoHwql++tqjFkCnByUcQXZNHiwrJ2RAtZXtjqX
-	u57qkQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46kdsp410g-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 May 2025 13:14:00 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54DDDxl7007677
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 May 2025 13:13:59 GMT
-Received: from [10.50.52.254] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 13 May
- 2025 06:13:56 -0700
-Message-ID: <7e6fc439-b948-6777-0a70-a8ea58b1f7bd@quicinc.com>
-Date: Tue, 13 May 2025 18:43:53 +0530
+	s=arc-20240116; t=1747142232; c=relaxed/simple;
+	bh=HCxtUhV0n5ObKOhNbl1mM0TaQS12Gee1diWbIonF2TM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=InUtuyxtqMbR+m44clRVaydK/EJQQkZvNJOqHqH51WxUcNXggcDazjiWWKLGaWWgKU+IFmgb1FxduCdS/56/oRTHpsij2cydpf2hxyavYF/jZXcm5pgZNikmIwbx84YsrdyUYOpYBE7OUXSUkYUZrgNOoXmGX2dtagSsBEIhjNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pRULYFbC; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43cf628cb14so45470935e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 06:17:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1747142229; x=1747747029; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fSKROeG6WIpVx9D960CzNibMdBJ6VLFhrNLL+i7WoQo=;
+        b=pRULYFbC9AVSyNz2e360366ONMG75W4ysygYHU7YSQxD2xdrnJZPMDutdBHmuLpD/G
+         xhhnr6EJzCIrl0S7MLCg6fsUSJ5cjG1XIVJqKDHcT+lDqt6WidgHTeqpeMmY0YaLU+Ja
+         KnG3rfvc3f5rr5z4L/MPVji6Q3XMGh+5j0dwhui89ccMHrCRiU9jiunTyA+KCwne0etu
+         TpxwFAwgZpMH8UemlzHJsfzeb6gqqNA2jd75NAaOYBg6N5x/UKdytHLOoGGSM6uammZ1
+         OH4JS2pg1xAz6QAl2pAYlHIyqu9NYUmwWs9uPyDoXGgxFB1vV6mzv1fBad3RGfcFEnPb
+         YPxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747142229; x=1747747029;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fSKROeG6WIpVx9D960CzNibMdBJ6VLFhrNLL+i7WoQo=;
+        b=u6cDhp6OamroDudzi76NXBcFN546PwxWPhxvh1K66TrGs2H/GWT7zNojfifrBekA+B
+         i4Qg7R/yVK8OEoP5AT+dC9w4Xu7XMpuBJLrV5Yr4yXwdjaIVGRDpbC+IM9YynYrIRAIZ
+         MNE7sbrbjyBneKZxWF/qcwc0+yLnn5lFk2CZ/0yiDiteIMI3y1PjXVPatHrAVIdeHG5j
+         dmsgcBPKXXkjr9pIYiFHvyMRP7WYfVG2S7Rn0fk3zG2FqL6JSNIP5G8s30l6AKPtzbcu
+         YNbC1MXmIzqy7MBinA9wrMMUMlCNBS7U/yQldsxUe0uqLmcYdoS79LK5DbAa+7n2mAhI
+         lCEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUddGCCMd6M4vJwU4GlTjnM0CRCWnXSq+mcALvyizjTHjfuiJi8+UubXIsOP9XXl6+QuX9UdKYnE4wjYE1W@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6fkPAgcQ+hSlC/ZNt/pCmeWwlT6cNpdLLtTsEIZVoDTeqdejW
+	HBuaGsDuetuBWRb75t5b1tQiKwN98vZwzDOjgjvM6UXg0PeCTqFZuZBI3JMjIU4=
+X-Gm-Gg: ASbGnctHbjPAPYnD4djnsc+CCuFdXhvOPg3ufj2q6ApkzaCvbUfFcJoLPZD78SG2JC6
+	VeMtA1KEKTg7O2/DLirJyNXuiQj9qnN09m6ySqi2p4JDmKS3tT+vwx3evMAfMpEUNF39rZbliPL
+	qFW9TXUgeIxka2fgam5JpIMT9y3uSI6F/InCt0wos+ISA6EB4MgDF7X5njTnnrZAIuOJ7eWr73j
+	QF7cgAzRxIxNpACh5CgXqPc3ElCeIX+sT+RKR7ZiSeQm68Mn7osK4Vz/yHtZqTPtlI9qhw6ZYYI
+	xCJ4KR50weeeVEpm1oMqDaXSkpuP7g5SrrWZatkTL6PqeE+4lUJPLQtFYMbGETB5WAeDk7xwSGA
+	funJPj9aPJg==
+X-Google-Smtp-Source: AGHT+IEXNErNLH6JYcRZtXPTKbltNSbK20Unh3nfkeGF/m82+yZaCLAyjteYTaGHlJ6/REhSJrcoqw==
+X-Received: by 2002:a05:600c:1d86:b0:439:8490:d1e5 with SMTP id 5b1f17b1804b1-442eac9ddb4mr30238655e9.4.1747142229046;
+        Tue, 13 May 2025 06:17:09 -0700 (PDT)
+Received: from linaro.org (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442ebd47d39sm18740035e9.1.2025.05.13.06.17.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 May 2025 06:17:08 -0700 (PDT)
+Date: Tue, 13 May 2025 14:16:59 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-clk@vger.kernel.org, Georgi Djakov <djakov@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH 1/4] dt-bindings: mailbox: qcom,apcs: Add separate node
+ for clock-controller
+Message-ID: <aCNGSwL7043GoJBz@linaro.org>
+References: <20250506-qcom-apcs-mailbox-cc-v1-0-b54dddb150a5@linaro.org>
+ <20250506-qcom-apcs-mailbox-cc-v1-1-b54dddb150a5@linaro.org>
+ <7vszdea2djl43oojvw3vlrip23f7cfyxkyn6jw3wc2f7yowht5@bgsc2pqscujc>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 1/2] media: venus: fix OOB read issue due to double
- read
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vedang Nagar
-	<quic_vnagar@quicinc.com>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250215-venus-security-fixes-v2-0-cfc7e4b87168@quicinc.com>
- <20250215-venus-security-fixes-v2-1-cfc7e4b87168@quicinc.com>
- <79691e26-cddb-47d2-9112-deae3f9aaee6@linaro.org>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <79691e26-cddb-47d2-9112-deae3f9aaee6@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JMjbAZVqLz-G-p7IdoGID5YPt3VsJPva
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDEyNSBTYWx0ZWRfX9sd+Zxee6WqQ
- xJ0dxltk8gIBWP8tw1jbZLKAjOv74DAHc18S3x09MXNVQubWQJ6kZwFjt3whA6mBQiFuQ+USoYF
- fS3Iz7DZLMgpHaoxvAOBrmfVQefKCwXIJZ3yCuBRh3MXTy6uocda4Atel/Dj4EBlv3iswrRUKJb
- eq/igw0pidDCH8Vakkf1n1MP3jo9Y/dlkpTKa+HegO8mL1x479+L2qQoPItuH3tF9flywVr21eq
- v2pEYG5j8akKxPCKZBAAxR7se78AHIJSQf6mSzPUWuAgsngoR8NNEmdWc4cYJrrUBAq8Y1DZ9Yp
- 2wykWJzZzpgPnO8Vdn1bk/qT5HFRI1xY8HbtGCGWuuoqGhre911TtqFn2Kc4RVIjzSgfGF8ojQQ
- g9CoNE1q/RCcrRslzSESMIW9BJSnWLjFvLw0v8AtaYcvXi5dBFHK8WADAG59icoaoNM2hEtP
-X-Authority-Analysis: v=2.4 cv=TrfmhCXh c=1 sm=1 tr=0 ts=68234598 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=RWc0MnvpR_tpw4Xja0UA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: JMjbAZVqLz-G-p7IdoGID5YPt3VsJPva
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-13_01,2025-05-09_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0 mlxlogscore=753
- suspectscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
- mlxscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505130125
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7vszdea2djl43oojvw3vlrip23f7cfyxkyn6jw3wc2f7yowht5@bgsc2pqscujc>
 
+On Sun, May 11, 2025 at 05:48:11PM -0500, Bjorn Andersson wrote:
+> On Tue, May 06, 2025 at 03:10:08PM +0200, Stephan Gerhold wrote:
+> > APCS "global" is sort of a "miscellaneous" hardware block that combines
+> > multiple registers inside the application processor subsystem. Two distinct
+> > use cases are currently stuffed together in a single device tree node:
+> > 
+> >  - Mailbox: to communicate with other remoteprocs in the system.
+> >  - Clock: for controlling the CPU frequency.
+> > 
+> > These two use cases have unavoidable circular dependencies: the mailbox is
+> > needed as early as possible during boot to start controlling shared
+> > resources like clocks and power domains, while the clock controller needs
+> > one of these shared clocks as its parent. Currently, there is no way to
+> > distinguish these two use cases for generic mechanisms like fw_devlink.
+> > 
+> > This is currently blocking conversion of the deprecated custom "qcom,ipc"
+> > properties to the standard "mboxes", see e.g. commit d92e9ea2f0f9
+> > ("arm64: dts: qcom: msm8939: revert use of APCS mbox for RPM"):
+> >   1. remoteproc &rpm needs mboxes = <&apcs1_mbox 8>;
+> >   2. The clock controller inside &apcs1_mbox needs
+> >      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>.
+> >   3. &rpmcc is a child of remoteproc &rpm
+> > 
+> > The mailbox itself does not need any clocks and should probe early to
+> > unblock the rest of the boot process. The "clocks" are only needed for the
+> > separate clock controller. In Linux, these are already two separate drivers
+> > that can probe independently.
+> > 
+> 
+> Why does this circular dependency need to be broken in the DeviceTree
+> representation?
+> 
+> As you describe, the mailbox probes and register the mailbox controller
+> and it registers the clock controller. The mailbox device isn't affected
+> by the clock controller failing to find rpmcc...
+> 
 
+That's right, but the problem is that the probe() function of the
+mailbox driver won't be called at all. The device tree *looks* like the
+mailbox depends on the clock, so fw_devlink tries to defer probing until
+the clock is probed (which won't ever happen, because the mailbox is
+needed to make the clock available).
 
-On 3/4/2025 7:15 PM, Bryan O'Donoghue wrote:
-> On 15/02/2025 17:19, Vedang Nagar wrote:
->> During message queue read, the address is being read twice
->> from the shared memory. The first read is validated against
->> the size of the packet, however the second read is not
->> being validated. Therefore, it's possible for firmware to
->> modify the value to a bigger invalid value which can lead
->> to OOB read access issue while reading the packet.
->> Added fix to reupdate the size of the packet which was
->> read for the first time.
->>
->> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
->> ---
->>   drivers/media/platform/qcom/venus/hfi_venus.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c
->> b/drivers/media/platform/qcom/venus/hfi_venus.c
->> index
->> f9437b6412b91c2483670a2b11f4fd43f3206404..c124db8ac79d18f32289a690ee82145dc93daee6 100644
->> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
->> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
->> @@ -298,6 +298,7 @@ static int venus_read_queue(struct venus_hfi_device
->> *hdev,
->>               memcpy(pkt, rd_ptr, len);
->>               memcpy(pkt + len, queue->qmem.kva, new_rd_idx << 2);
->>           }
->> +        *(u32 *)pkt = dwords << 2;
->>       } else {
->>           /* bad packet received, dropping */
->>           new_rd_idx = qhdr->write_idx;
->>
-> 
-> This is confusing - where is the read
-> 
-> Your previous code
-> 
-> https://lore.kernel.org/lkml/20250104-venus-security-fixes-v1-1-9d0dd4594cb4@quicinc.com/
-> 
-> memcpy(pkt, (u32 *)(queue->qmem.kva + (rd_idx << 2)), sizeof(u32));
-> 
-> V1 then would have been:
-> 
-> if (new_rd_idx < qsize) {
->     memcpy(pkt, rd_ptr, dwords << 2);
-> } else {
->     size_t len;
-> 
->     new_rd_idx -= qsize;
->     len = (dwords - new_rd_idx) << 2;
->     memcpy(pkt, rd_ptr, len);
->     memcpy(pkt + len, queue->qmem.kva, new_rd_idx << 2);
-> }
-> 
-> + memcpy(pkt, (u32 *)(queue->qmem.kva + (rd_idx << 2)), sizeof(u32));
-> 
-> V2 proposed:
-> 
-> if (new_rd_idx < qsize) {
->     memcpy(pkt, rd_ptr, dwords << 2);
-> } else {
->     size_t len;
-> 
->     new_rd_idx -= qsize;
->     len = (dwords - new_rd_idx) << 2;
->     memcpy(pkt, rd_ptr, len);
->     memcpy(pkt + len, queue->qmem.kva, new_rd_idx << 2);
-> }
-> 
-> + *(u32 *)pkt = dwords << 2;
-> 
-> My comment wasn't about use of memcpy() it was about why we are doing this.
-> 
-> For example if new_rd_idx < qsize is true then we literally do
-> 
-> a) memcpy(pkt, rd_ptr, dwords << 2);
-> b) *(u32 *)pkt = dwords << 2;
-> 
-> and the question is why ? That is an unambiguous cast of pkt to the value
-> of dwords << 2;
-> 
-> What is the scope of how the data can change from a to b ?
-> 
-> And why is the data considered potentially invalid @ the memcpy() but valid
-> subsequent the cast ?
-> 
-The concern here is not about the value of dword which will be fixed once
-we read the *rd_ptr first time and validate it.
+I'm not sure why fw_devlink doesn't detect this cycle and tries to probe
+them anyway, but fact is that we need to split this up in order to avoid
+warnings and have the supplies/consumers set up properly. Those device
+links are created based on the device tree and not the drivers.
 
-The concern here is, with the data contents at rd_ptr which could be
-tempered with after validation, because the memory is shared by firmware
-
-So the real problem here is:
-- driver read *rd_ptr, extract dwords = *rd_ptr >> 2, and validate it, lets
-say this value is 10
-- then copy dwords << 2 bytes from rd_ptr to a kernel buffer (pkt).
-- But: the first 4 bytes at rd_ptr (which represent the size field again)
-could have changed in the meantime — now saying 40 instead of the original 10.
-
-security concern here is:
-Even though the outer dwords is correct, the copied content might claim to
-be bigger than what was validated — potentially tricking the rest of the
-system into processing garbage or running past buffer bounds.
-
-This is not a TOCTOU on the dwords, but a TOCTOU on the contents at rd_ptr,
-where the firmware changes the actual data after size is checked, but
-before it's copied.
-
-> Assuming rd_ptr contains the length of dwords << 2 to begin with in the
-> first 4 bytes - why is it necessary to make _really_ _really_ sure by
-> restuffing the data ?
-> 
-> For example if *(u32 *)rd_ptr != dwords << 2 - why shouldn't we just throw
-> the whole frame away as containing junk data ?
-
-Agree with returning error during mismatch instead of forcefully
-overwriting the content.
-
-Thank,
-Dikshita
-> 
-> ---
-> bod
-> 
+Thanks,
+Stephan
 
