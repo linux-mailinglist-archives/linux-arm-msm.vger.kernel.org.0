@@ -1,68 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-57667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76F28AB4E58
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 10:44:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78E69AB4E5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 10:44:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1BA3719E502D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 08:44:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A3B616D821
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 08:44:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6669D210F58;
-	Tue, 13 May 2025 08:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B648F210198;
+	Tue, 13 May 2025 08:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d61P2ej3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VRp7T+p+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BF6210198;
-	Tue, 13 May 2025 08:43:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2AC211A1E;
+	Tue, 13 May 2025 08:43:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747125816; cv=none; b=lFxrf4Kw2KhqHPuPiidpmhgRq44QJCIzonXIUpM/WaQrB/VqoRC9Q+ELFP7VaYnpGuNo2M82aJ8DwSneMrSZKNp9yJciarN3rzZPEQOiUyNOwIeVzZyFrP2xz/PzPztItgQ+snjE02JmZbN+s2QSVfpxwi+kVoLojMyEOrxH/L4=
+	t=1747125820; cv=none; b=CAfK7BStZgGOOSNiZCMy0Lk2QLL5eXphFyy42rRwMkdC42yTZhsUb9JThL66x7NlZs/PQytLQfV+X/fuzDWwuBQ8Qax39lDi7y0h6bwCo1ALk+g2nu4+iRhkEwsupW1LAsAkJ5Ff6Om+xSJr7T7arLmrAOmDzbwdNJnBKKArCs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747125816; c=relaxed/simple;
-	bh=hgCZ/0C7jJ06BTQVGFMVCMLmISVcV8fwkQkVaOFhNc0=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qBs7AeZ6jpco7aELb98zHbSXcoCup8IagDhJUBDaylqjMiimHOTUYyQsIS+5LV1hRxs+cAkAx6FnR08nzIb1HiNMNHklSyb7k4AxGBsYb3tjN9e2yZixjKsQ2xnVSoGjyx6W3+4WzpiI3lx74t0OUOQkWYQrCO538VFMrHwv3Tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d61P2ej3; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1747125820; c=relaxed/simple;
+	bh=sAJtUjO1j+IRyFTkcg7Hhrk+JYUv7qVhZqPx22Bp49U=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PnfCuk94C/+VeZQwERV5z/mlPJwCwGeJxGLeAmwl3jFVQpefMt7rfBe72lS3pV4bgTZqLELce/U7OQcF/xD7TJyGbi+V/FJhSh/Q+mE0shgeRbx0xE/5VCoi54UzrataA7ATefGgLtJDyTu9VUbJjQ7OuGioDuSFf/QrWPYWEi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VRp7T+p+; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54D7OfeU010875;
-	Tue, 13 May 2025 08:43:31 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54D7MQ3g030171;
+	Tue, 13 May 2025 08:43:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:message-id:mime-version:subject:to; s=
-	qcppdkim1; bh=4Q6ZFw/1z6uPmz0aWT7gfHYlT6s3Va4+fE7sP2rRZm4=; b=d6
-	1P2ej3hdZ6ssGhcJBncNhhlVIPQyiR2847NgvXVU/57ow687noRPXy3LmzTaoWcl
-	ulR3dt+L+TgHl/7Qsz3pTbY7BbLOMpoUemeaooZDBzqjjPu4uVETem4K4LawB89N
-	xthl09ndFUVTnfuehPGv/JwR5IrD2M0z++UlV1oGcua9TUGFNBXgRabaLOnB4W8y
-	Fj19trXqdRHQ06dNAn7oajaUSyeBnnRLR3ybhsLYWB8GhDVBocoAEjeQ0T4pxWvD
-	KjgyX6nckzlayTawqCd4pGvUaMO6lO5fbxd4/B4aM+/iF2ngooSZP9+EH89DY9Ry
-	fvJBd4unK1OvaC83oadA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46hyynxyxt-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=DU2YWR9qU+QTqwcarWiHxuOo
+	F0fMbARlrvWolphcCxI=; b=VRp7T+p+jfLQypOX0fE4N7wxdL6dOYNCspQUGWKb
+	eIntdttIkKkS834Gvw6BGG/LrCudDXAzfZJtcprXf49+u9Itw1SAIXfWw6BXXRKt
+	jlt1WXoA6gX7HDgf5gX5yH49vH3xios027ltW6Vw4l2+FN1P2xh66md8IwyQwd+a
+	6HN8mRQ2wK2AVMf5qW51HsXqz6mKCIhx9g/8wAJ+24JoyoF0DLbDHN2+3QPSfofb
+	QVVhJy2roZw4gZMUeqv7IzXq1zcZNvID8HF8nFGzv1O/MlMwCtrzSYYml+eWh5C3
+	f5UOoauK9Fh8fzlTI+FP652rjHO57kqZXR/xKMG1b7pe8Q==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46hx4k73d4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 May 2025 08:43:31 +0000 (GMT)
+	Tue, 13 May 2025 08:43:35 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54D8hUqp024433
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54D8hYpO006239
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 May 2025 08:43:30 GMT
+	Tue, 13 May 2025 08:43:34 GMT
 Received: from hu-sayalil-hyd.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 13 May 2025 01:43:27 -0700
+ 15.2.1544.9; Tue, 13 May 2025 01:43:30 -0700
 From: Sayali Lokhande <quic_sayalil@quicinc.com>
 To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
         <krzk+dt@kernel.org>, <conor+dt@kernel.org>
 CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH 0/2] Add UFS support for qcs9075 IQ-9075-EVK
-Date: Tue, 13 May 2025 14:13:07 +0530
-Message-ID: <20250513084309.10275-1-quic_sayalil@quicinc.com>
+        <linux-kernel@vger.kernel.org>,
+        Rakesh Kota <quic_kotarake@quicinc.com>
+Subject: [PATCH 1/2] arm64: dts: qcom: Add support L4C LDO for qcs9075 IQ-9075-EVK
+Date: Tue, 13 May 2025 14:13:08 +0530
+Message-ID: <20250513084309.10275-2-quic_sayalil@quicinc.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20250513084309.10275-1-quic_sayalil@quicinc.com>
+References: <20250513084309.10275-1-quic_sayalil@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,45 +78,60 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDA4MiBTYWx0ZWRfX51ZeCncmjPQm
- hZSgiryxRw3Gpz4QZICHe1Te+OAOWl5+KfwAZ7J97Ib3sVavZKDGAfQZxI0Ya//+StEaNoI6rQX
- 7enyyOKH2buxIgwdS+EgnUZYwrf17v9gjiJ4+Enf/oXbyefdpV4B31Km0uu/Qh4pZHSHRQu0C1m
- 0Ujrd/TJ1qQAAhKj83AHU7es1qE1T6Aovl2k1JgxS1b1DuDmZahZg8Rocq+VlGQH7wXhQszeRBJ
- SiyQnJBNg4sYsgD7NJFNeFZ+pxX3hmeSSPxewG+k0wrwAotgw/Ru/HQhXXHEtKvuu4P0K8Z7WmV
- h/YqFx7SVEWb6Mt67tNCozqohR6Ek+9Vp2RzDHzVrVVf6f28LwInSOa4YlX9RMP6tOcB+DAMNoL
- XND7aRk/RetHxAhGCrezh1Hsp1Mf7xTIwQhnwZiXTQqgUea4AikhqOD2iHFrvMP3kQTMm25D
-X-Proofpoint-ORIG-GUID: HUPXmn6_pxpzFLN6GEspw_4piHeIW7lq
-X-Authority-Analysis: v=2.4 cv=Uo9jN/wB c=1 sm=1 tr=0 ts=68230633 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=ReqQC0tv c=1 sm=1 tr=0 ts=68230637 cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=fIw0Dn_yeU_uVIYYEQUA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: HUPXmn6_pxpzFLN6GEspw_4piHeIW7lq
+ a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=UysH_iaXXmthhl1OG6QA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: WWyXN18d0YCpXj5-zX26nXLjAouLvpfn
+X-Proofpoint-ORIG-GUID: WWyXN18d0YCpXj5-zX26nXLjAouLvpfn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDA4MiBTYWx0ZWRfXy46pEegDmzQP
+ Ujd//IcpYIpKwrjyX+4Huq2CAHFsa0jy7eXQwRG6p35LKBFoJupCAn+BlUjD9yQ+ObZVwhyKCiN
+ PGZJUAPV6eYHg6gXlm1kEbO0AA6CQ1FTJuvFh19bZ3w0drMWj3cgaWn3la/BFFw9mAmjccwAbIF
+ LS7d+Lk29YfXakKp3jp1Xuy75zs5A3sdm22fqDCnuB54/19VcmejUBwW/vIE2S8gPerh2gA7Muj
+ 41wDX62Trl0UaNnpkv6xFhZsSQEcLB1f1lsiGyU4ZeYjCqEIzZIhNVz5q0zs43dSELRVEsiq4/e
+ lyPESErqAALDI9j2KSUzgKKLqP7CTFkmcH6gYNsJtPHMY2Fi8y/X9d4qdnlAPrDlAmWxmBA3qrs
+ d6OEwRK/XfU7O4sy+Z6smtOEuJyKFVk0TLoJvQnwqRLaPAMhyhGHCPEnrEbn5q1i/JPVlRhc
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-12_07,2025-05-09_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 malwarescore=0 phishscore=0 mlxscore=0 adultscore=0
- impostorscore=0 suspectscore=0 bulkscore=0 spamscore=0 mlxlogscore=661
- lowpriorityscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2504070000 definitions=main-2505130082
+ lowpriorityscore=0 mlxscore=0 mlxlogscore=563 phishscore=0 suspectscore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 clxscore=1015
+ adultscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505130082
 
-Add UFS support for qcs9075 IQ-9075-EVK.
+From: Rakesh Kota <quic_kotarake@quicinc.com>
 
-Rakesh Kota (1):
-  arm64: dts: qcom: Add support L4C LDO for qcs9075 IQ-9075-EVK
+Add support L4C LDO for qcs9075 IQ-9075-EVK.
 
-Sayali Lokhande (1):
-  arm64: dts: qcom: Add UFS support for qcs9075 IQ-9075-EVK
+Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
+Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
- .../boot/dts/qcom/qcs9075-iq-9075-evk.dts     | 27 +++++++++++++++++++
- 1 file changed, 27 insertions(+)
-
-Please note this change is dependent on [1] which add
-qcs9075 IQ-9075-EVK board support.
-
-[1] https://lore.kernel.org/all/20250429054906.113317-5-quic_wasimn@quicinc.com/
-
+diff --git a/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts b/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
+index eadc59739a4b..a3ca62c7eee9 100644
+--- a/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
++++ b/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
+@@ -143,6 +143,16 @@
+ 						   RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
++		vreg_l4c: ldo4 {
++			regulator-name = "vreg_l4c";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
+ 		vreg_l5c: ldo5 {
+ 			regulator-name = "vreg_l5c";
+ 			regulator-min-microvolt = <1100000>;
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
