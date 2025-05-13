@@ -1,66 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-57766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1FABAB5E13
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 22:47:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB0FBAB5E17
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 22:48:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A860465397
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 20:47:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E1D94655B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 20:48:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FCF420C48E;
-	Tue, 13 May 2025 20:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17F092BE110;
+	Tue, 13 May 2025 20:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MVH7WMgY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gSTQvBhu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269B920C484;
-	Tue, 13 May 2025 20:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21C01E990E;
+	Tue, 13 May 2025 20:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747169230; cv=none; b=NDNZbiJ07aKFI8Ql9kDubwv5hWBWMoH9O318XxDZ7BZBXdyVZZaJv8vQ3gMgZ2QRRhxpLV5dr1Pek4INCQe/ofUP1j5Ese1RnqclDPcvAQw3BJv5V9xgow7YE7IJddEWfqNDe0SwszHfbbU5rUKrpp9y6dLZ9a0QLDQdJgu+n8A=
+	t=1747169233; cv=none; b=UUaSy7tgyl+mumwcNRRiTN8G7qOzEXcsmFcSrC6WaYCEhDB1LTSGVDm0oNPWgeb53HOAVC/VKKvhrS81ANrKPGsXQzm85QyBdZjdxRDiMV6JrfQUopfpdgUcj7aKfq4c2ZPBs55zHnE4SBiaKeeZibXzZyZM20mtxDXJNb54g5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747169230; c=relaxed/simple;
-	bh=xEFTJjM05Gti2SrgXjThZ8Fb4N5pqDHMA0Xso5K3R5w=;
+	s=arc-20240116; t=1747169233; c=relaxed/simple;
+	bh=yXvni7+CJdWN0JN/BesqjJ1COLppmWQW1B08UlJWARg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m9//jwJaG6icBUDoeRv9o5enUyeQ+BUJQLmYprFHTN4553fX6WO919VVIlYlYe2borIXlGt8nH1vf+NgxR7we3D+Exl5vWEO0DP50V7++SsyrJxnbJQukT7oWAgoNCkvUBYz2cHw/pWB+TkRtDE4TXm77NL/QHjrFObrVIlICIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MVH7WMgY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897EBC4CEEF;
-	Tue, 13 May 2025 20:47:06 +0000 (UTC)
+	 MIME-Version:Content-Type; b=PX97PejpLVrtlLCetqOGnNYfZj8NTHi/2Gq5lP07bFfR60mjP7OMgOiKoLfJ8YT4WFQLnlHb2J6Ch6v6hsAEIAOoVvKS36YS84X8hsVO6n0VCNYXjIsEppeykQSJra8wExAKgA/5pUewWSCyQFEwW0a+x0TQz4Ux5RLqlFXgS08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gSTQvBhu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16111C4CEE4;
+	Tue, 13 May 2025 20:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747169229;
-	bh=xEFTJjM05Gti2SrgXjThZ8Fb4N5pqDHMA0Xso5K3R5w=;
+	s=k20201202; t=1747169232;
+	bh=yXvni7+CJdWN0JN/BesqjJ1COLppmWQW1B08UlJWARg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVH7WMgYnTDLJw69qUmm6zxCJiFQPEzr4Ar0EBEext4wYHmDMLFWL7Zxnq56gjp01
-	 mTZVcks3JdQsNgVzQQQLmYghkrXw9BDzKJtd0phcgZOJPhGaMay7ewVwtJpkGmgjQ2
-	 DLumeyCG+67XInsoRagx2kbUtNBTdu5ukksoY9LZ1853QI5/DOX/UeLagHvxES849+
-	 Jg85BIEuKUebzpCdbPKVXs8h9v7+KBXGr4pbbOFjk13lKZQfDwVzPVZb9OxXaY6u+3
-	 Dqs3cUbU60zOrId1RtmalNX4UyJENLqaM6dvpfsmwuNG5IxcS9/mzyIlacubylof/A
-	 /SERrKNDk+eEA==
+	b=gSTQvBhu0kbLSUBUIxM+2qdFA7qBiiN6nxAzwmnCCZdiaR7pSTmzJebpRz78nM/pC
+	 IzFB4tMH32cZUXE+QiyxSBbGrjprw+GiKL5QBe2UbMupmY6GjOpVUE3k0xrd9lfV4A
+	 I22JmPk2AbJLRdMcH7PVSqXdqTh2P00w61NZ4SFNaBJuOgGFy2ia2QP5ola2CqXQMP
+	 OlsNQjN9lcPvtFBsbEJrUAotwwj6ENh4hy/dEQWo0nf5t6H98+sGHIpRIVrlvrpr5e
+	 kjgqOrrLRUCqjS9zhNByILY09+zAqqQ6mE2j4bch4sxvW+TPT05UmEYssCowah/wQs
+	 941i7M6rG29Tw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
-	Conor Dooley <conor@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Trilok Soni <quic_tsoni@quicinc.com>,
-	Melody Olvera <melody.olvera@oss.qualcomm.com>
+	Neil Armstrong <neil.armstrong@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v5 0/4] Introduce LLCC v6 used on the SM8750 SoCs
-Date: Tue, 13 May 2025 21:46:42 +0100
-Message-ID: <174716895368.39748.7918502940727549188.b4-ty@kernel.org>
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v4] arm64: dts: qcom: sm8550: add iris DT node
+Date: Tue, 13 May 2025 21:46:43 +0100
+Message-ID: <174716895370.39748.9036624565948583062.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250512-sm8750_llcc_master-v5-0-d78dca6282a5@oss.qualcomm.com>
-References: <20250512-sm8750_llcc_master-v5-0-d78dca6282a5@oss.qualcomm.com>
+In-Reply-To: <20250509-topic-sm8x50-upstream-iris-8550-dt-v4-1-22ced9179da3@linaro.org>
+References: <20250509-topic-sm8x50-upstream-iris-8550-dt-v4-1-22ced9179da3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,17 +68,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 12 May 2025 13:54:40 -0700, Melody Olvera wrote:
-> Add documentation and functionality for LLCC v6 used on
-> the SM8750 SoCs. LLCC v6 rearranges several registers and offsets
-> and supports slice IDs over 31, so new functionality is necessary
-> to program and use LLCC v6.
+On Fri, 09 May 2025 17:31:24 +0200, Neil Armstrong wrote:
+> Add DT entries for the sm8550 iris decoder.
 > 
+> Since the firmware is required to be signed, only enable
+> on Qualcomm development boards where the firmware is
+> publicly distributed.
+> 
+> 
+> [...]
 
 Applied, thanks!
 
-[4/4] arm64: dts: qcom: sm8750: Add LLCC node
-      commit: cd81339e68cb11dbec90fd0d7de12a5c307c1fc7
+[1/1] arm64: dts: qcom: sm8550: add iris DT node
+      commit: 41661853ae8ed3bb89817bd7a9376f7cf12a596f
 
 Best regards,
 -- 
