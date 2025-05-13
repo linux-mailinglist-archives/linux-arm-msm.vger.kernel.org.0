@@ -1,66 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-57759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D6C0AB5DEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 22:42:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C13DFAB5DF6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 22:42:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 365A7189B9DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 20:42:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AE5297B35CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 20:41:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 541BB2BFC7A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC7792C0843;
 	Tue, 13 May 2025 20:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="npmR1eXW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pnAF9fXP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208641FCFE2;
-	Tue, 13 May 2025 20:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6781FBC8C;
+	Tue, 13 May 2025 20:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747168943; cv=none; b=IP/uX8ErMoPVMiz7/ZF/fTvjs+ocbQpvoE1CUyYqt8HKA2NUIpQDZGLLHMOZxX9N4Ff/b6N35bMLaD3KwbmGjFbqYFZMxv7UZdUMbSFqaHtCiPgvfa9yMdC69NSoclCKPwlZicGvulihV7qMZLl9wppqFu3LAzoukQxYq6UFLUg=
+	t=1747168943; cv=none; b=cfkq9dsBhTqDH18uWJvFPB9diIStnXTdf8uQ1DLFUCVnkdE1m9vIC/DTj2VrluMNftDZvLg99E0gO2WKnZWmJkNu4sUwpjnhsGxdom0a+dgsJPQwlcJpYYQdPCCDnQJEitWyMQNKx23WIF3fk2/5FeqrOdd13rzNgWBvplffr9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747168943; c=relaxed/simple;
-	bh=VsYhnwU3HDJy156Q7aQk2LJpAChRBes3GR8H7yXnH6M=;
+	bh=r6q5X22Skq2ZwqXsFmTM4pU0q1u5UYfvrOlfLwpTzLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=izEf1x2VkQIdC6u0AGT4Wk0qChiMdueVtc6hhRB90ZcmvSPaXuGqtgwGhkR3fzIrIrY8E5hDj7pi0qm0maO9Aka4vUYGQaQ8pik0UVjWuG0Sk2Mq7syzCpeYSARfvuVqc1H6/m9dnXR7pLziemx2hif5OABRWh42BdBYxq0kcvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=npmR1eXW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A451AC4CEEF;
-	Tue, 13 May 2025 20:42:21 +0000 (UTC)
+	 MIME-Version:Content-Type; b=ThYCRb26oplfzM+pjLLm5kXGR7mFQSk7Ahb9Aqvxf9BnUsH/yrL8rDE+iehKc7UHoDLZFWyfiS9/0wTJKWjGl+/Iy6+oCRirRApd4APRQwFg5HsbI2VJ3iT1fY0eRJGv33UdOzXe00O0DJrNrTD+CymzSAD492YOFx83JoOH9KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pnAF9fXP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE878C4CEE4;
+	Tue, 13 May 2025 20:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747168942;
-	bh=VsYhnwU3HDJy156Q7aQk2LJpAChRBes3GR8H7yXnH6M=;
+	s=k20201202; t=1747168943;
+	bh=r6q5X22Skq2ZwqXsFmTM4pU0q1u5UYfvrOlfLwpTzLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npmR1eXWa9VMN9VX2yYW0Dw7sE0Leb1h4nsvmiuV9Y6QJsJIW74+P64d7PEhGmftA
-	 gsXNsANKDdJbpqznBHXpsbomBIRgVASBAmxVQS/1BQ80Uhu0r/3kEkvXydPa6Yj6rG
-	 qtwLgQGVLFAj0j8+48K9iCRl8Plbf1uoIlzsATGn9vwXQxyCMBjUPD6lBEhBugZpyp
-	 HPsECq2Q/GWcDJu5vztsax0iMi7AdcV2EctSvIHq4GrF2c37lIPtxFX/XKaJ2JAnJ4
-	 3yTucw7VbUtqilwEohIHsY+qmAHC2rA+4+By9GHpYT1D+hvWyUdqeHrH3uIpiLAiyq
-	 D8kIg+YVONXqg==
+	b=pnAF9fXP4D4plRRSlrPKkhr5l2IERRVc1TPzPqzkz19ZBVJmbQSbsGZTcRKlpMoj7
+	 iBRCn9YUoIebZvwaJUV6Z81rF8T21cfvwnsSUmSSFKoyfLJaLmBaNPeN4AyNplrQBb
+	 0Ywu8wRDx5BvEh/8Lherrqm1g4ynYY1oyYGe3LY2m3/waY6Kqc0VVq8dNsqT4rmeLQ
+	 7HfxW7R8dRT0tCAGSdXFv9TWwk8v3vS9Uog6gs1n8lMklZf/aGihQKTzhjq9pP+QZs
+	 r0E5/ZBJvwEH4FK/z2KD6t/oBY9sY3tM5THoGLKUsDXUq/G72ox8W8fDPBvX5l74vL
+	 3prFSkJjJwr+A==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+To: ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Dmitry Baryshkov <lumag@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org,
+	Luca Weiss <luca@lucaweiss.eu>
+Cc: linux-arm-msm@vger.kernel.org,
 	linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: stable@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: remoteproc: qcom,sm8150-pas: Add missing SC8180X compatible
-Date: Tue, 13 May 2025 15:42:11 -0500
-Message-ID: <174716891498.3696994.12462267803258694149.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] rpmsg: qcom_smd: Improve error handling for qcom_smd_parse_edge
+Date: Tue, 13 May 2025 15:42:12 -0500
+Message-ID: <174716891500.3696994.4790082123092933727.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250428075243.44256-2-krzysztof.kozlowski@linaro.org>
-References: <20250428075243.44256-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20250326-apcs-mboxes-v3-1-e20f39e125f2@lucaweiss.eu>
+References: <20250326-apcs-mboxes-v3-1-e20f39e125f2@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,18 +66,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 28 Apr 2025 09:52:44 +0200, Krzysztof Kozlowski wrote:
-> Commit 4b4ab93ddc5f ("dt-bindings: remoteproc: Consolidate SC8180X and
-> SM8150 PAS files") moved SC8180X bindings from separate file into this
-> one, but it forgot to add actual compatibles in top-level properties
-> section making the entire binding un-selectable (no-op) for SC8180X PAS.
+On Wed, 26 Mar 2025 19:09:29 +0100, Luca Weiss wrote:
+> When the mailbox driver has not probed yet, the error message "failed to
+> parse smd edge" is just going to confuse users, so improve the error
+> prints a bit.
 > 
+> Cover the last remaining exits from qcom_smd_parse_edge with proper
+> error prints, especially the one for the mbox_chan deserved
+> dev_err_probe to handle EPROBE_DEFER nicely. And add one for ipc_regmap
+> also to be complete.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] dt-bindings: remoteproc: qcom,sm8150-pas: Add missing SC8180X compatible
-      commit: b278981b5ac109e6f6986b20a5cb19654aba8f68
+[1/1] rpmsg: qcom_smd: Improve error handling for qcom_smd_parse_edge
+      commit: 75499b3232b6b9194de3cce4ccd60e49c6b70cc0
 
 Best regards,
 -- 
