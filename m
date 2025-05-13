@@ -1,884 +1,274 @@
-Return-Path: <linux-arm-msm+bounces-57673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 458EEAB5077
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 11:54:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D716AB5094
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 11:59:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 87B7D4A273E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 09:53:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 826C01B44AFE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 09:59:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8A8621D3FB;
-	Tue, 13 May 2025 09:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 851F323C4FA;
+	Tue, 13 May 2025 09:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="R3F3OWFk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c8/5xFHk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1DF1EB5E5
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 09:53:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB6E1E9B20;
+	Tue, 13 May 2025 09:58:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747130016; cv=none; b=K060q2kz7T/jrXOBHDf3j2Hu9bQf1K3ADMYHalgQpHX/lx8CTTm/xF4Sqf4A0A7W6Sg3rxSXK2HT/msmJZXFRVjMZVK8hMxnlqsIsQ2xEi0TrIGdP4mVzVLZ0/2+LJqh9OntZ93YdK+Q3tuR+OpFzyK78NGchsllNn4+d/A2FaM=
+	t=1747130340; cv=none; b=EccyNc5qski6Cq2p/M/MfIILhqvuUJQJQN/1VRFxyOF1kULDxGx/XlQGm+FrybzZb4fXBKJ0xKEHpSzUuSVtjVFBGfqtp2Ek85Qa2MkHTph2BFh72yOMrmzwkoQZwOpYWXKRAmdP4CBkMOTmgVTexxGHEsj+aO3QwK30ya9MXBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747130016; c=relaxed/simple;
-	bh=/K4xaNAUTuDSn9HkCkotM1n1jPS/ISZSG+lBC2iVjTc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=L8VEF7krGyuk3U2ST9YgRqOSdMb3PZjpDJDu51eHg5G8+KHnXBwjQ61XFn15mGQwLkkaj+2ZPireRyuohFXFcWZRt4ZHNKYkgw4l+YVjYr2DCebIfNvTf1fh1Sh6vQ0gHg6Sw0kGLprVqiiMtWWqvQnbSdzzl1R2RRPzRrgn2cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=R3F3OWFk; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1747130014; x=1778666014;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=/K4xaNAUTuDSn9HkCkotM1n1jPS/ISZSG+lBC2iVjTc=;
-  b=R3F3OWFkQeeH8TOF5LItamGBQ3as476qINMbu389eon/3Nbb7mhOZiIr
-   MTX96S7ybxm6fMf0k5dJJu/ZWjr0PFHUKiSnnwWhOMOI5Xro/nDfOa2TK
-   R4tnMEh7gjskqTuuA84IMRL5fzdG/k1ozNaD5FTl4xIqZMP4WtCTnGbUz
-   WOv8JfZpHR/xveiaSVW2OTeVYTqAZ81I1Wtt6Wqdoa6R3FGgEm2QgDdOu
-   8+GSTEJMN3oGK/Xh7CMWTTjl2wyvKDBAcabCJ4wCN0BmZYCvtWZIozpk3
-   bEBjVU1i0EQeD+FbULDoDRx506Hm24nBIS8goZb5ooh3iTOOLaBxI/Fr0
-   g==;
-X-CSE-ConnectionGUID: JNJXt1FPRc6AAjy0Hv5Y6g==
-X-CSE-MsgGUID: Te5m74oaTpSSH/a88pixmg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11431"; a="59604680"
-X-IronPort-AV: E=Sophos;i="6.15,284,1739865600"; 
-   d="scan'208";a="59604680"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2025 02:53:33 -0700
-X-CSE-ConnectionGUID: I+xpX303Raai+aZXfHhpBA==
-X-CSE-MsgGUID: 3lWg8KOLSHmjnPRZMF7v2g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,284,1739865600"; 
-   d="scan'208";a="142419523"
-Received: from unknown (HELO [10.217.160.151]) ([10.217.160.151])
-  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2025 02:53:31 -0700
-Message-ID: <8f4b977d-7846-416b-bae4-ac52665fe79c@linux.intel.com>
-Date: Tue, 13 May 2025 11:53:29 +0200
+	s=arc-20240116; t=1747130340; c=relaxed/simple;
+	bh=B87pcQRpmzpPHEK8vQPYMKEGMIo4ra0V4VjOfanRf8E=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=pZi6qgoiBSsC+ACsHUbgUQJuBKycfxRQgRj9wfRf8KRPxrzjNXdNqQRA6LMh8Xh8/l9FLRFHAHTXkMpvgvzd6tv6gHdGY2sYeTsR3MLH9yGol9zIFHYeoM8ZuXd9XV9FuORJ0hFIjrl7i/0hfJtj2+SmJSpq0QTy1gim4gGHOWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c8/5xFHk; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54D7eF06015668;
+	Tue, 13 May 2025 09:58:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Uf6X3Fae8blTULA89wcePA
+	CyyDYZ7nNMjb2MDuKpaEc=; b=c8/5xFHkKxzXJkqYf8bOkRw+qYVIcjbtX8jWzE
+	smjto94vVthAljC3bJAN58MFsNzWmtB+cUmXuDzctDn4v5daHDZk4J2qcsWcFmlq
+	E02D8TBfbVgud0FC+8/DS3AIMUC12vJ1QWdCvrJjtU3psC3Jdh2pyIFqAOk4q9hj
+	TRkXAC26tB+NmrpcfTCehrp8N24VmiqT7v4hrrSDE7US3greU9vaKxoKzAGJlQw8
+	kAiqWDdYl9S9Gr6MSIe/7XXt7oMelZo5XdQn5hZXMnIK6KiQ5p4ciNB74seIhJ+5
+	FXyYyoCgKLUbB2qlecsqziE6suBDvCOQtebceSXuYLGMNPmg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46hwt97a9b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 May 2025 09:58:38 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54D9wait002828
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 May 2025 09:58:36 GMT
+Received: from nsssdc-sh01-lnx.ap.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 13 May 2025 02:58:31 -0700
+From: Luo Jie <quic_luoj@quicinc.com>
+Subject: [PATCH net-next v4 00/14] Add PPE driver for Qualcomm IPQ9574 SoC
+Date: Tue, 13 May 2025 17:58:20 +0800
+Message-ID: <20250513-qcom_ipq_ppe-v4-0-4fbe40cbbb71@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/qaic: Add Reliability, Accessibility,
- Serviceability (RAS)
-To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>, quic_carlv@quicinc.com,
- quic_thanson@quicinc.com, lizhi.hou@amd.com, quic_yabdulra@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
-References: <20250512194937.3530774-1-jeff.hugo@oss.qualcomm.com>
-Content-Language: en-US
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173, 80-298
- Gdansk - KRS 101882 - NIP 957-07-52-316
-In-Reply-To: <20250512194937.3530774-1-jeff.hugo@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAL0XI2gC/22Q2YrDMAxFfyX4eVy8Bcd5mv8YSnBiZaqhtbM1t
+ JT8e1XPxiygB8mXc6/kG5thQphZXdzYBCvOmCIN5qlg3cHHV+AYaGZKqFJIUfGxS6cGh7EZBuD
+ em870XvjWakbIMEGPl2z3wiIsPMJlYXtSDjgvabrmnFVmnSyNkJLKCK13WpW25JKPZ+ya4zm9P
+ T86jN2OErPHqj65f1ZZFRfcamdCG7yVzv3F9TeuhPuFa8JNqcHLKmhl5U98ez9uAnqdcfm48Ou
+ H6iK7Gil5j3AMzSkF7K+80m1ZhdY5UmvK32/bHe4TErlyAQAA
+To: Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller"
+	<davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
+	<kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Lei Wei <quic_leiwei@quicinc.com>,
+        Suruchi Agarwal
+	<quic_suruchia@quicinc.com>,
+        Pavithra R <quic_pavir@quicinc.com>,
+        "Simon
+ Horman" <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        Kees Cook
+	<kees@kernel.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        "Philipp
+ Zabel" <p.zabel@pengutronix.de>
+CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
+        <john@phrozen.org>, Luo Jie <quic_luoj@quicinc.com>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747130310; l=7274;
+ i=quic_luoj@quicinc.com; s=20250209; h=from:subject:message-id;
+ bh=B87pcQRpmzpPHEK8vQPYMKEGMIo4ra0V4VjOfanRf8E=;
+ b=gEIrpjvbJL8BUtsPuOON1IIFGtWu9a5rGvqI5Q1cxXXD5aAlE5QHY9JkGEah5WY7W3JchJRLY
+ QXg/NEleOMlD7k84YBn2eSJVKs2g+fozB+26Bea78SzMhmyUM+DpEQS
+X-Developer-Key: i=quic_luoj@quicinc.com; a=ed25519;
+ pk=pzwy8bU5tJZ5UKGTv28n+QOuktaWuriznGmriA9Qkfc=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDA5NCBTYWx0ZWRfX65CsIaDmY5/N
+ /6Eqt8YqBMLe5UNtpLFLaAXEaHMtkzqEMMxRhX6i65XLz0PGvLqwupR8k3gLWW2E9bpgaRkVUF2
+ TcaksYli1DJ61w717L7DLNDP3EjdIPM2pnjNJOH1PAgqR3jOykKkdgxWrdVb+p3dlM6kevFdbzB
+ I3Xe5j+ob/xun7uNBT7sAk//FFxXpEvGGVJAywVJbr+zKlJ02pqb14gGLi3N7J+YAcB900gj05k
+ ktDz3LDsjKScy2AQl2m59jpXaw2Hhfg0AqKn9yUKi/mlAsoPj7wTmP/qBBWOo7GvJQikiGkoa2h
+ Zthg8gJ7cYtlUD+h/jczLmBup9XByOrDrhQSFXtzsHd2VUzlzh/X1Eg55rvd3zTYYIo4m1Zw/Bu
+ a59ROl8pJK8imyjtQo9VuQtHANF700siNnmrwvuOMiZIhPG4c4kA7GKTw1J8nCxnWTPOQmBx
+X-Proofpoint-ORIG-GUID: 2NKNZh303p1t8pE4uePgDS0cLoNsBp4v
+X-Proofpoint-GUID: 2NKNZh303p1t8pE4uePgDS0cLoNsBp4v
+X-Authority-Analysis: v=2.4 cv=a58w9VSF c=1 sm=1 tr=0 ts=682317ce cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=HAxyLaFxb4ZfO1oSC6kA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-12_07,2025-05-09_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 lowpriorityscore=0 mlxlogscore=999 malwarescore=0
+ clxscore=1011 impostorscore=0 mlxscore=0 spamscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505130094
 
-Hi,
+The PPE (packet process engine) hardware block is available in Qualcomm
+IPQ chipsets that support PPE architecture, such as IPQ9574 and IPQ5332.
+The PPE in the IPQ9574 SoC includes six ethernet ports (6 GMAC and 6
+XGMAC), which are used to connect with external PHY devices by PCS. The
+PPE also includes packet processing offload capabilities for various
+networking functions such as route and bridge flows, VLANs, different
+tunnel protocols and VPN. It also includes an L2 switch function for
+bridging packets among the 6 ethernet ports and the CPU port. The CPU
+port enables packet transfer between the ethernet ports and the ARM
+cores in the SoC, using the ethernet DMA.
 
-On 5/12/2025 9:49 PM, Jeff Hugo wrote:
-> AIC100 devices generates Reliability, Availability, Serviceability events
-> via MHI QAIC_STATUS channel. Support such events and print a structured
-> log with details of the events, and if the event describes an uncorrected
-> error, reset the device to put it back into service. As these events may
-> not all be reported via other mechanisms like AER, maintain counts of
-> the number of errors observed for each type.
-> 
-> Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-> ---
->  Documentation/ABI/testing/sysfs-driver-qaic |  18 +
->  MAINTAINERS                                 |   1 +
->  drivers/accel/qaic/Makefile                 |   1 +
->  drivers/accel/qaic/qaic.h                   |   8 +
->  drivers/accel/qaic/qaic_drv.c               |   6 +
->  drivers/accel/qaic/qaic_ras.c               | 629 ++++++++++++++++++++
->  drivers/accel/qaic/qaic_ras.h               |  11 +
->  7 files changed, 674 insertions(+)
->  create mode 100644 Documentation/ABI/testing/sysfs-driver-qaic
->  create mode 100644 drivers/accel/qaic/qaic_ras.c
->  create mode 100644 drivers/accel/qaic/qaic_ras.h
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-driver-qaic b/Documentation/ABI/testing/sysfs-driver-qaic
-> new file mode 100644
-> index 000000000000..f794fd734163
-> --- /dev/null
-> +++ b/Documentation/ABI/testing/sysfs-driver-qaic
-> @@ -0,0 +1,18 @@
-> +What:		/sys/bus/pci/drivers/qaic/XXXX:XX:XX.X/ce_count
-> +Date:		May 2025
-> +KernelVersion:	6.17
-> +Contact:	dri-devel@lists.freedesktop.org
-> +Description:	Number of correctable errors received from device since driver is loaded.
-> +
-> +What:		/sys/bus/pci/drivers/qaic/XXXX:XX:XX.X/ue_count
-> +Date:		May 2025
-> +KernelVersion:	6.17
-> +Contact:	dri-devel@lists.freedesktop.org
-> +Description:	Number of uncorrectable errors received from device since driver is loaded.
-> +
-> +What:		/sys/bus/pci/drivers/qaic/XXXX:XX:XX.X/ue_nonfatal_count
-> +Date:		May 2025
-> +KernelVersion:	6.17
-> +Contact:	dri-devel@lists.freedesktop.org
-> +Description:	Number of uncorrectable non-fatal errors received from device since driver
-> +		is loaded.
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index fe9773af465a..5801adfe4927 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -19916,6 +19916,7 @@ L:	linux-arm-msm@vger.kernel.org
->  L:	dri-devel@lists.freedesktop.org
->  S:	Supported
->  T:	git https://gitlab.freedesktop.org/drm/misc/kernel.git
-> +F:	Documentation/ABI/testing/sysfs-driver-qaic
->  F:	Documentation/accel/qaic/
->  F:	drivers/accel/qaic/
->  F:	include/uapi/drm/qaic_accel.h
-> diff --git a/drivers/accel/qaic/Makefile b/drivers/accel/qaic/Makefile
-> index 35e883515629..1106b876f737 100644
-> --- a/drivers/accel/qaic/Makefile
-> +++ b/drivers/accel/qaic/Makefile
-> @@ -10,6 +10,7 @@ qaic-y := \
->  	qaic_control.o \
->  	qaic_data.o \
->  	qaic_drv.o \
-> +	qaic_ras.o \
->  	qaic_timesync.o \
->  	sahara.o
->  
-> diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
-> index 0dbb8e32e4b9..3fa47385aae4 100644
-> --- a/drivers/accel/qaic/qaic.h
-> +++ b/drivers/accel/qaic/qaic.h
-> @@ -167,6 +167,14 @@ struct qaic_device {
->  	struct workqueue_struct *bootlog_wq;
->  	/* Synchronizes access of pages in MHI bootlog device */
->  	struct mutex            bootlog_mutex;
-> +	/* MHI RAS channel device */
-> +	struct mhi_device	*ras_ch;
-> +	/* Correctable error count */
-> +	unsigned int		ce_count;
-> +	/* Un-correctable error count */
-> +	unsigned int		ue_count;
-> +	/* Un-correctable non-fatal error count */
-> +	unsigned int		ue_nf_count;
->  };
->  
->  struct qaic_drm_device {
-> diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-> index 3b415e2c9431..e31bcb0ecfc9 100644
-> --- a/drivers/accel/qaic/qaic_drv.c
-> +++ b/drivers/accel/qaic/qaic_drv.c
-> @@ -29,6 +29,7 @@
->  #include "mhi_controller.h"
->  #include "qaic.h"
->  #include "qaic_debugfs.h"
-> +#include "qaic_ras.h"
->  #include "qaic_timesync.h"
->  #include "sahara.h"
->  
-> @@ -695,6 +696,10 @@ static int __init qaic_init(void)
->  	if (ret)
->  		pr_debug("qaic: qaic_bootlog_register failed %d\n", ret);
->  
-> +	ret = qaic_ras_register();
-> +	if (ret)
-> +		pr_debug("qaic: qaic_ras_register failed %d\n", ret);
-> +
->  	return 0;
->  
->  free_mhi:
-> @@ -722,6 +727,7 @@ static void __exit qaic_exit(void)
->  	 * reinitializing the link_up state after the cleanup is done.
->  	 */
->  	link_up = true;
-> +	qaic_ras_unregister();
->  	qaic_bootlog_unregister();
->  	qaic_timesync_deinit();
->  	sahara_unregister();
-> diff --git a/drivers/accel/qaic/qaic_ras.c b/drivers/accel/qaic/qaic_ras.c
-> new file mode 100644
-> index 000000000000..2f8c1f08dbc0
-> --- /dev/null
-> +++ b/drivers/accel/qaic/qaic_ras.c
-> @@ -0,0 +1,629 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +
-> +/* Copyright (c) 2020-2021, The Linux Foundation. All rights reserved. */
-> +/* Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved. */
+This patch series is the first part of a three part series that will
+together enable Ethernet function for IPQ9574 SoC. While support is
+initially being added for IPQ9574 SoC, the driver will be easily
+extendable to enable Ethernet support for other IPQ SoC such as IPQ5332.
+The driver can also be extended later for adding support for L2/L3
+network offload features that the PPE can support. The functionality
+to be enabled by each of the three series (to be posted sequentially)
+is as below:
 
-2025?
+Part 1: The PPE patch series (this series), which enables the platform
+driver, probe and initialization/configuration of different PPE hardware
+blocks.
 
-> +
-> +#include <asm/byteorder.h>
-> +#include <linux/device.h>
-> +#include <linux/kernel.h>
-> +#include <linux/mhi.h>
-> +
-> +#include "qaic.h"
-> +#include "qaic_ras.h"
-> +
-> +#define MAGIC		0x55AA
-> +#define VERSION		0x2
-> +#define HDR_SZ		12
-> +#define NUM_TEMP_LVL	3
-> +#define POWER_BREAK	BIT(0)
-> +
-> +enum msg_type {
-> +	MSG_PUSH, /* async push from device */
-> +	MSG_REQ,  /* sync request to device */
-> +	MSG_RESP, /* sync response from device */
-> +};
-> +
-> +enum err_type {
-> +	CE,	/* correctable error */
-> +	UE,	/* uncorrectable error */
-> +	UE_NF,	/* uncorrectable error that is non-fatal, expect a disruption */
-> +	ERR_TYPE_MAX,
-> +};
-> +
-> +static const char * const err_type_str[] = {
-> +	[CE]    = "Correctable",
-> +	[UE]    = "Uncorrectable",
-> +	[UE_NF] = "Uncorrectable Non-Fatal",
-> +};
-> +
-> +static const char * const err_class_str[] = {
-> +	[CE]    = "Warning",
-> +	[UE]    = "Fatal",
-> +	[UE_NF] = "Warning",
-> +};
-> +
-> +enum err_source {
-> +	SOC_MEM,
-> +	PCIE,
-> +	DDR,
-> +	SYS_BUS1,
-> +	SYS_BUS2,
-> +	NSP_MEM,
-> +	TSENS,
-> +};
-> +
-> +static const char * const err_src_str[TSENS + 1] = {
-> +	[SOC_MEM]	= "SoC Memory",
-> +	[PCIE]		= "PCIE",
-> +	[DDR]		= "DDR",
-> +	[SYS_BUS1]	= "System Bus source 1",
-> +	[SYS_BUS2]	= "System Bus source 2",
-> +	[NSP_MEM]	= "NSP Memory",
-> +	[TSENS]		= "Temperature Sensors",
-> +};
-> +
-> +struct ras_data {
-> +	/* header start */
-> +	/* Magic number to validate the message */
-> +	u16 magic;
-> +	/* RAS version number */
-> +	u16 ver;
-> +	u32 seq_num;
-> +	/* RAS message type */
-> +	u8  type;
-> +	u8  id;
-> +	/* Size of RAS message without the header in byte */
-> +	u16 len;
-> +	/* header end */
-> +	s32 result;
-> +	/*
-> +	 * Error source
-> +	 * 0 : SoC Memory
-> +	 * 1 : PCIE
-> +	 * 2 : DDR
-> +	 * 3 : System Bus source 1
-> +	 * 4 : System Bus source 2
-> +	 * 5 : NSP Memory
-> +	 * 6 : Temperature Sensors
-> +	 */
-> +	u32 source;
-> +	/*
-> +	 * Stores the error type, there are three types of error in RAS
-> +	 * 0 : correctable error (CE)
-> +	 * 1 : uncorrectable error (UE)
-> +	 * 2 : uncorrectable error that is non-fatal (UE_NF)
-> +	 */
-> +	u32 err_type;
-> +	u32 err_threshold;
+Part 2: The PPE MAC patch series, which enables the phylink operations
+for the PPE ethernet ports.
 
-This is unused. Maybe it could be useful?
+Part 3: The PPE EDMA patch series, which enables the Rx/Tx Ethernet DMA
+and netdevice driver for the 6 PPE ethernet ports.
 
-> +	u32 ce_count;
-> +	u32 ue_count;
-> +	u32 intr_num;
-> +	/* Data specific to error source */
-> +	u8  syndrome[64];
-> +} __packed;
-> +
-> +struct soc_mem_syndrome {
-> +	u64 error_address[8];
-> +} __packed;
-> +
-> +struct nsp_mem_syndrome {
-> +	u32 error_address[8];
-> +	u8 nsp_id;
-> +} __packed;
-> +
-> +struct ddr_syndrome {
-> +	u32 count;
-> +	u32 irq_status;
-> +	u32 data_31_0[2];
-> +	u32 data_63_32[2];
-> +	u32 data_95_64[2];
-> +	u32 data_127_96[2];
-> +	u32 addr_lsb;
-> +	u16 addr_msb;
-> +	u16 parity_bits;
-> +	u16 instance;
-> +	u16 err_type;
-> +} __packed;
-> +
-> +struct tsens_syndrome {
-> +	u32 threshold_type;
-> +	s32 temp;
-> +} __packed;
-> +
-> +struct sysbus1_syndrome {
-> +	u32 slave;
-> +	u32 err_type;
-> +	u16 addr[8];
-> +	u8  instance;
-> +} __packed;
-> +
-> +struct sysbus2_syndrome {
-> +	u32 lsb3;
-> +	u32 msb3;
-> +	u32 lsb2;
-> +	u32 msb2;
-> +	u32 ext_id;
-> +	u16 path;
-> +	u16 op_type;
-> +	u16 len;
-> +	u16 redirect;
-> +	u8  valid;
-> +	u8  word_error;
-> +	u8  non_secure;
-> +	u8  opc;
-> +	u8  error_code;
-> +	u8  trans_type;
-> +	u8  addr_space;
-> +	u8  instance;
-> +} __packed;
-> +
-> +struct pcie_syndrome {
-> +	/* CE info */
-> +	u32 bad_tlp;
-> +	u32 bad_dllp;
-> +	u32 replay_rollover;
-> +	u32 replay_timeout;
-> +	u32 rx_err;
-> +	u32 internal_ce_count;
-> +	/* UE_NF info */
-> +	u32 fc_timeout;
-> +	u32 poison_tlp;
-> +	u32 ecrc_err;
-> +	u32 unsupported_req;
-> +	u32 completer_abort;
-> +	u32 completion_timeout;
-> +	/* UE info */
-> +	u32 addr;
-> +	u8  index;
-> +	/*
-> +	 * Flag to indicate specific event of PCIe
-> +	 * BIT(0): Power break (low power)
-> +	 * BIT(1) to BIT(7): Reserved
-> +	 */
-> +	u8 flag;
-> +} __packed;
-> +
-> +static const char * const threshold_type_str[NUM_TEMP_LVL] = {
-> +	[0] = "lower",
-> +	[1] = "upper",
-> +	[2] = "critical",
-> +};
-> +
-> +static void ras_msg_to_cpu(struct ras_data *msg)
-> +{
-> +	struct sysbus1_syndrome *sysbus1_syndrome = (struct sysbus1_syndrome *)&msg->syndrome[0];
-> +	struct sysbus2_syndrome *sysbus2_syndrome = (struct sysbus2_syndrome *)&msg->syndrome[0];
-> +	struct soc_mem_syndrome *soc_syndrome = (struct soc_mem_syndrome *)&msg->syndrome[0];
-> +	struct nsp_mem_syndrome *nsp_syndrome = (struct nsp_mem_syndrome *)&msg->syndrome[0];
-> +	struct tsens_syndrome *tsens_syndrome = (struct tsens_syndrome *)&msg->syndrome[0];
-> +	struct pcie_syndrome *pcie_syndrome = (struct pcie_syndrome *)&msg->syndrome[0];
-> +	struct ddr_syndrome *ddr_syndrome = (struct ddr_syndrome *)&msg->syndrome[0];
-> +	int i;
-> +
-> +	le16_to_cpus(&msg->magic);
-> +	le16_to_cpus(&msg->ver);
-> +	le32_to_cpus(&msg->seq_num);
-> +	le16_to_cpus(&msg->len);
-> +	le32_to_cpus(&msg->result);
-> +	le32_to_cpus(&msg->source);
-> +	le32_to_cpus(&msg->err_type);
-> +	le32_to_cpus(&msg->err_threshold);
-> +	le32_to_cpus(&msg->ce_count);
-> +	le32_to_cpus(&msg->ue_count);
-> +	le32_to_cpus(&msg->intr_num);
-> +
-> +	switch (msg->source) {
-> +	case SOC_MEM:
-> +		for (i = 0; i < 8; i++)
-> +			le64_to_cpus(&soc_syndrome->error_address[i]);
-> +		break;
-> +	case PCIE:
-> +		le32_to_cpus(&pcie_syndrome->bad_tlp);
-> +		le32_to_cpus(&pcie_syndrome->bad_dllp);
-> +		le32_to_cpus(&pcie_syndrome->replay_rollover);
-> +		le32_to_cpus(&pcie_syndrome->replay_timeout);
-> +		le32_to_cpus(&pcie_syndrome->rx_err);
-> +		le32_to_cpus(&pcie_syndrome->internal_ce_count);
-> +		le32_to_cpus(&pcie_syndrome->fc_timeout);
-> +		le32_to_cpus(&pcie_syndrome->poison_tlp);
-> +		le32_to_cpus(&pcie_syndrome->ecrc_err);
-> +		le32_to_cpus(&pcie_syndrome->unsupported_req);
-> +		le32_to_cpus(&pcie_syndrome->completer_abort);
-> +		le32_to_cpus(&pcie_syndrome->completion_timeout);
-> +		le32_to_cpus(&pcie_syndrome->addr);
-> +		break;
-> +	case DDR:
-> +		le16_to_cpus(&ddr_syndrome->instance);
-> +		le16_to_cpus(&ddr_syndrome->err_type);
-> +		le32_to_cpus(&ddr_syndrome->count);
-> +		le32_to_cpus(&ddr_syndrome->irq_status);
-> +		le32_to_cpus(&ddr_syndrome->data_31_0[0]);
-> +		le32_to_cpus(&ddr_syndrome->data_31_0[1]);
-> +		le32_to_cpus(&ddr_syndrome->data_63_32[0]);
-> +		le32_to_cpus(&ddr_syndrome->data_63_32[1]);
-> +		le32_to_cpus(&ddr_syndrome->data_95_64[0]);
-> +		le32_to_cpus(&ddr_syndrome->data_95_64[1]);
-> +		le32_to_cpus(&ddr_syndrome->data_127_96[0]);
-> +		le32_to_cpus(&ddr_syndrome->data_127_96[1]);
-> +		le16_to_cpus(&ddr_syndrome->parity_bits);
-> +		le16_to_cpus(&ddr_syndrome->addr_msb);
-> +		le32_to_cpus(&ddr_syndrome->addr_lsb);
-> +		break;
-> +	case SYS_BUS1:
-> +		le32_to_cpus(&sysbus1_syndrome->slave);
-> +		le32_to_cpus(&sysbus1_syndrome->err_type);
-> +		for (i = 0; i < 8; i++)
-> +			le16_to_cpus(&sysbus1_syndrome->addr[i]);
-> +		break;
-> +	case SYS_BUS2:
-> +		le16_to_cpus(&sysbus2_syndrome->op_type);
-> +		le16_to_cpus(&sysbus2_syndrome->len);
-> +		le16_to_cpus(&sysbus2_syndrome->redirect);
-> +		le16_to_cpus(&sysbus2_syndrome->path);
-> +		le32_to_cpus(&sysbus2_syndrome->ext_id);
-> +		le32_to_cpus(&sysbus2_syndrome->lsb2);
-> +		le32_to_cpus(&sysbus2_syndrome->msb2);
-> +		le32_to_cpus(&sysbus2_syndrome->lsb3);
-> +		le32_to_cpus(&sysbus2_syndrome->msb3);
-> +		break;
-> +	case NSP_MEM:
-> +		for (i = 0; i < 8; i++)
-> +			le32_to_cpus(&nsp_syndrome->error_address[i]);
-> +		break;
-> +	case TSENS:
-> +		le32_to_cpus(&tsens_syndrome->threshold_type);
-> +		le32_to_cpus(&tsens_syndrome->temp);
-> +		break;
-> +	}
-> +}
-> +
-> +static void decode_ras_msg(struct qaic_device *qdev, struct ras_data *msg)
-> +{
-> +	struct sysbus1_syndrome *sysbus1_syndrome = (struct sysbus1_syndrome *)&msg->syndrome[0];
-> +	struct sysbus2_syndrome *sysbus2_syndrome = (struct sysbus2_syndrome *)&msg->syndrome[0];
-> +	struct soc_mem_syndrome *soc_syndrome = (struct soc_mem_syndrome *)&msg->syndrome[0];
-> +	struct nsp_mem_syndrome *nsp_syndrome = (struct nsp_mem_syndrome *)&msg->syndrome[0];
-> +	struct tsens_syndrome *tsens_syndrome = (struct tsens_syndrome *)&msg->syndrome[0];
-> +	struct pcie_syndrome *pcie_syndrome = (struct pcie_syndrome *)&msg->syndrome[0];
-> +	struct ddr_syndrome *ddr_syndrome = (struct ddr_syndrome *)&msg->syndrome[0];
-> +	char *class;
-> +	char *level;
-> +
-> +	if (msg->magic != MAGIC) {
-> +		pci_warn(qdev->pdev, "Dropping RAS message with invalid magic %x\n", msg->magic);
-> +		return;
-> +	}
-> +
-> +	if (!msg->ver || msg->ver > VERSION) {
-> +		pci_warn(qdev->pdev, "Dropping RAS message with invalid version %d\n", msg->ver);
-> +		return;
-> +	}
-> +
-> +	if (msg->type != MSG_PUSH) {
-> +		pci_warn(qdev->pdev, "Dropping non-PUSH RAS message\n");
-> +		return;
-> +	}
-> +
-> +	if (msg->len != sizeof(*msg) - HDR_SZ) {
-> +		pci_warn(qdev->pdev, "Dropping RAS message with invalid len %d\n", msg->len);
-> +		return;
-> +	}
-> +
-> +	if (msg->err_type >= ERR_TYPE_MAX) {
-> +		pci_warn(qdev->pdev, "Dropping RAS message with err type %d\n", msg->err_type);
-> +		return;
-> +	}
-> +
-> +	if (msg->err_type == UE)
-> +		level = KERN_ERR;
-> +	else
-> +		level = KERN_WARNING;
-> +
-> +	switch (msg->source) {
-> +	case SOC_MEM:
-> +		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nSyndrome:\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n",
-> +			   err_class_str[msg->err_type],
-> +			   err_type_str[msg->err_type],
-> +			   "error from",
-> +			   err_src_str[msg->source],
-> +			   soc_syndrome->error_address[0],
-> +			   soc_syndrome->error_address[1],
-> +			   soc_syndrome->error_address[2],
-> +			   soc_syndrome->error_address[3],
-> +			   soc_syndrome->error_address[4],
-> +			   soc_syndrome->error_address[5],
-> +			   soc_syndrome->error_address[6],
-> +			   soc_syndrome->error_address[7]);
-> +		break;
-> +	case PCIE:
-> +		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\n",
-> +			   err_class_str[msg->err_type],
-> +			   err_type_str[msg->err_type],
-> +			   "error from",
-> +			   err_src_str[msg->source]);
-> +
-> +		switch (msg->err_type) {
-> +		case CE:
-> +			printk(KERN_WARNING pr_fmt("Syndrome:\n    Bad TLP count %d\n    Bad DLLP count %d\n    Replay Rollover count %d\n    Replay Timeout count %d\n    Recv Error count %d\n    Internal CE count %d\n"),
-> +			       pcie_syndrome->bad_tlp,
-> +			       pcie_syndrome->bad_dllp,
-> +			       pcie_syndrome->replay_rollover,
-> +			       pcie_syndrome->replay_timeout,
-> +			       pcie_syndrome->rx_err,
-> +			       pcie_syndrome->internal_ce_count);
+A more detailed description of the functions enabled by part 1 is below:
+1. Initialize PPE device hardware functions such as buffer management,
+   queue management, scheduler and clocks in order to bring up PPE
+   device.
+2. Enable platform driver and probe functions
+3. Register debugfs file to provide access to various PPE packet
+   counters. These statistics are recorded by the various hardware
+   process counters, such as port RX/TX, CPU code and hardware queue
+   counters.
+4. A detailed introduction of PPE along with the PPE hardware diagram
+   in the first two patches (dt-bindings and documentation).
 
-Why not pci_printk() that would be conistent with the rest of logging?
-It there is a reson I would prefer pr_warn/pr_err style logs.
+Below is a reference to an earlier RFC discussion with the community
+about enabling ethernet driver support for Qualcomm IPQ9574 SoC. This
+writeup can help provide a higher level architectural view of various
+other drivers that support the PPE such as clock and PCS drivers.
+Topic: RFC: Advice on adding support for Qualcomm IPQ9574 SoC Ethernet.
+https://lore.kernel.org/linux-arm-msm/d2929bd2-bc9e-4733-a89f-2a187e8bf917@quicinc.com/
 
-> +			if (msg->ver > 0x1)
-> +				pr_warn("    Power break %s\n",
-> +					pcie_syndrome->flag & POWER_BREAK ? "ON" : "OFF");
-> +			break;
-> +		case UE:
-> +			printk(KERN_ERR pr_fmt("Syndrome:\n    Index %d\n    Address 0x%x\n"),
-> +			       pcie_syndrome->index, pcie_syndrome->addr);
-> +			break;
-> +		case UE_NF:
-> +			printk(KERN_WARNING pr_fmt("Syndrome:\n    FC timeout count %d\n    Poisoned TLP count %d\n    ECRC error count %d\n    Unsupported request count %d\n    Completer abort count %d\n    Completion timeout count %d\n"),
-> +			       pcie_syndrome->fc_timeout,
-> +			       pcie_syndrome->poison_tlp,
-> +			       pcie_syndrome->ecrc_err,
-> +			       pcie_syndrome->unsupported_req,
-> +			       pcie_syndrome->completer_abort,
-> +			       pcie_syndrome->completion_timeout);
-> +			break;
-> +		default:
-> +			break;
-> +		}
-> +		break;
-> +	case DDR:
-> +		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nSyndrome:\n    Instance %d\n    Count %d\n    Data 31_0 0x%x 0x%x\n    Data 63_32 0x%x 0x%x\n    Data 95_64 0x%x 0x%x\n    Data 127_96 0x%x 0x%x\n    Parity bits 0x%x\n    Address msb 0x%x\n    Address lsb 0x%x\n",
-> +			   err_class_str[msg->err_type],
-> +			   err_type_str[msg->err_type],
-> +			   "error from",
-> +			   err_src_str[msg->source],
-> +			   ddr_syndrome->instance,
-> +			   ddr_syndrome->count,
-> +			   ddr_syndrome->data_31_0[1],
-> +			   ddr_syndrome->data_31_0[0],
-> +			   ddr_syndrome->data_63_32[1],
-> +			   ddr_syndrome->data_63_32[0],
-> +			   ddr_syndrome->data_95_64[1],
-> +			   ddr_syndrome->data_95_64[0],
-> +			   ddr_syndrome->data_127_96[1],
-> +			   ddr_syndrome->data_127_96[0],
-> +			   ddr_syndrome->parity_bits,
-> +			   ddr_syndrome->addr_msb,
-> +			   ddr_syndrome->addr_lsb);
-> +		break;
-> +	case SYS_BUS1:
-> +		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nSyndrome:\n    instance %d\n    %s\n    err_type %d\n    address0 0x%x\n    address1 0x%x\n    address2 0x%x\n    address3 0x%x\n    address4 0x%x\n    address5 0x%x\n    address6 0x%x\n    address7 0x%x\n",
-> +			   err_class_str[msg->err_type],
-> +			   err_type_str[msg->err_type],
-> +			   "error from",
-> +			   err_src_str[msg->source],
-> +			   sysbus1_syndrome->instance,
-> +			   sysbus1_syndrome->slave ? "Slave" : "Master",
-> +			   sysbus1_syndrome->err_type,
-> +			   sysbus1_syndrome->addr[0],
-> +			   sysbus1_syndrome->addr[1],
-> +			   sysbus1_syndrome->addr[2],
-> +			   sysbus1_syndrome->addr[3],
-> +			   sysbus1_syndrome->addr[4],
-> +			   sysbus1_syndrome->addr[5],
-> +			   sysbus1_syndrome->addr[6],
-> +			   sysbus1_syndrome->addr[7]);
-> +		break;
-> +	case SYS_BUS2:
-> +		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nSyndrome:\n    instance %d\n    valid %d\n    word error %d\n    non-secure %d\n    opc %d\n    error code %d\n    transaction type %d\n    address space %d\n    operation type %d\n    len %d\n    redirect %d\n    path %d\n    ext_id %d\n    lsb2 %d\n    msb2 %d\n    lsb3 %d\n    msb3 %d\n",
-> +			   err_class_str[msg->err_type],
-> +			   err_type_str[msg->err_type],
-> +			   "error from",
-> +			   err_src_str[msg->source],
-> +			   sysbus2_syndrome->instance,
-> +			   sysbus2_syndrome->valid,
-> +			   sysbus2_syndrome->word_error,
-> +			   sysbus2_syndrome->non_secure,
-> +			   sysbus2_syndrome->opc,
-> +			   sysbus2_syndrome->error_code,
-> +			   sysbus2_syndrome->trans_type,
-> +			   sysbus2_syndrome->addr_space,
-> +			   sysbus2_syndrome->op_type,
-> +			   sysbus2_syndrome->len,
-> +			   sysbus2_syndrome->redirect,
-> +			   sysbus2_syndrome->path,
-> +			   sysbus2_syndrome->ext_id,
-> +			   sysbus2_syndrome->lsb2,
-> +			   sysbus2_syndrome->msb2,
-> +			   sysbus2_syndrome->lsb3,
-> +			   sysbus2_syndrome->msb3);
-> +		break;
-> +	case NSP_MEM:
-> +		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nSyndrome:\n    NSP ID %d\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n",
-> +			   err_class_str[msg->err_type],
-> +			   err_type_str[msg->err_type],
-> +			   "error from",
-> +			   err_src_str[msg->source],
-> +			   nsp_syndrome->nsp_id,
-> +			   nsp_syndrome->error_address[0],
-> +			   nsp_syndrome->error_address[1],
-> +			   nsp_syndrome->error_address[2],
-> +			   nsp_syndrome->error_address[3],
-> +			   nsp_syndrome->error_address[4],
-> +			   nsp_syndrome->error_address[5],
-> +			   nsp_syndrome->error_address[6],
-> +			   nsp_syndrome->error_address[7]);
-> +		break;
-> +	case TSENS:
-> +		if (tsens_syndrome->threshold_type >= NUM_TEMP_LVL) {
-> +			pci_warn(qdev->pdev, "Dropping RAS message with invalid temp threshold %d\n",
-> +				 tsens_syndrome->threshold_type);
-> +			break;
-> +		}
-> +
-> +		if (msg->err_type)
-> +			class = "Fatal";
-> +		else if (tsens_syndrome->threshold_type)
-> +			class = "Critical";
-> +		else
-> +			class = "Warning";
-> +
-> +		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nSyndrome:\n    %s threshold\n    %d deg C\n",
-> +			   class,
-> +			   err_type_str[msg->err_type],
-> +			   "error from",
-> +			   err_src_str[msg->source],
-> +			   threshold_type_str[tsens_syndrome->threshold_type],
-> +			   tsens_syndrome->temp);
-> +		break;
-> +	}
-> +
-> +	/* Uncorrectable errors are fatal */
-> +	if (msg->err_type == UE)
-> +		mhi_soc_reset(qdev->mhi_cntrl);
-> +
-> +	switch (msg->err_type) {
-> +	case CE:
-> +		if (qdev->ce_count != UINT_MAX)
-> +			qdev->ce_count++;
-> +		break;
-> +	case UE:
-> +		if (qdev->ce_count != UINT_MAX)
-> +			qdev->ue_count++;
-> +		break;
-> +	case UE_NF:
-> +		if (qdev->ce_count != UINT_MAX)
-> +			qdev->ue_nf_count++;
-> +		break;
-> +	default:
-> +		/* not possible */
-> +		break;
-> +	}
-> +}
-> +
-> +static ssize_t ce_count_show(struct device *dev, struct device_attribute *attr, char *buf)
-> +{
-> +	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
-> +
-> +	return snprintf(buf, PAGE_SIZE, "%d\n", qdev->ce_count);
-> +}
-> +
-> +static ssize_t ue_count_show(struct device *dev, struct device_attribute *attr, char *buf)
-> +{
-> +	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
-> +
-> +	return snprintf(buf, PAGE_SIZE, "%d\n", qdev->ue_count);
-> +}
-> +
-> +static ssize_t ue_nonfatal_count_show(struct device *dev, struct device_attribute *attr, char *buf)
-> +{
-> +	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
-> +
-> +	return snprintf(buf, PAGE_SIZE, "%d\n", qdev->ue_nf_count);
-> +}
-> +
-> +static DEVICE_ATTR_RO(ce_count);
-> +static DEVICE_ATTR_RO(ue_count);
-> +static DEVICE_ATTR_RO(ue_nonfatal_count);
-> +
-> +static struct attribute *ras_attrs[] = {
-> +	&dev_attr_ce_count.attr,
-> +	&dev_attr_ue_count.attr,
-> +	&dev_attr_ue_nonfatal_count.attr,
-> +	NULL,
-> +};
-> +
-> +static struct attribute_group ras_group = {
-> +	.attrs = ras_attrs,
-> +};
-> +
-> +static int qaic_ras_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_id *id)
-> +{
-> +	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(mhi_dev->mhi_cntrl->cntrl_dev));
-> +	struct ras_data *resp;
-> +	int ret;
-> +
-> +	ret = mhi_prepare_for_transfer(mhi_dev);
-> +	if (ret)
-> +		return ret;
-> +
-> +	resp = kzalloc(sizeof(*resp), GFP_KERNEL);
-> +	if (!resp) {
-> +		mhi_unprepare_from_transfer(mhi_dev);
-> +		return -ENOMEM;
-> +	}
-> +
-> +	ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, resp, sizeof(*resp), MHI_EOT);
-> +	if (ret) {
-> +		kfree(resp);
-> +		mhi_unprepare_from_transfer(mhi_dev);
-> +		return ret;
-> +	}
-> +
-> +	ret = device_add_group(&qdev->pdev->dev, &ras_group);
-> +	if (ret) {
-> +		mhi_unprepare_from_transfer(mhi_dev);
-> +		pci_dbg(qdev->pdev, "ras add sysfs failed %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	dev_set_drvdata(&mhi_dev->dev, qdev);
-> +	qdev->ras_ch = mhi_dev;
-> +
-> +	return ret;
-> +}
-> +
-> +static void qaic_ras_mhi_remove(struct mhi_device *mhi_dev)
-> +{
-> +	struct qaic_device *qdev;
-> +
-> +	qdev = dev_get_drvdata(&mhi_dev->dev);
-> +	qdev->ras_ch = NULL;
-> +	device_remove_group(&qdev->pdev->dev, &ras_group);
-> +	mhi_unprepare_from_transfer(mhi_dev);
-> +}
-> +
-> +static void qaic_ras_mhi_ul_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result) {}
-> +
-> +static void qaic_ras_mhi_dl_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
-> +{
-> +	struct qaic_device *qdev = dev_get_drvdata(&mhi_dev->dev);
-> +	struct ras_data *msg = mhi_result->buf_addr;
-> +	int ret;
-> +
-> +	if (mhi_result->transaction_status) {
-> +		kfree(msg);
-> +		return;
-> +	}
-> +
-> +	ras_msg_to_cpu(msg);
-> +	decode_ras_msg(qdev, msg);
-> +
-> +	ret = mhi_queue_buf(qdev->ras_ch, DMA_FROM_DEVICE, msg, sizeof(*msg), MHI_EOT);
-> +	if (ret) {
-> +		dev_err(&mhi_dev->dev, "Cannot requeue RAS recv buf %d\n", ret);
-> +		kfree(msg);
+Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+---
+Changes in v4:
+- Simplify statements regarding module load in documentation as per comments.
+- Improve data structure definitions for scheduler patch for clarity.
+- Replace u32p_replace_bits() with FIELD_MODIFY().
+- Enhance the comment of the PPE scheduler for BM and QM configurations.
+- Debugfs improvements:
+    *Remove print related macros and inline the code instead.
+    *Return error codes from register read/write wherever applicable.
+    *Split the hardware counter display file into separate files.
+- Link to v3: https://lore.kernel.org/r/20250209-qcom_ipq_ppe-v3-0-453ea18d3271@quicinc.com
 
-Woudn't error here prevent any future messages from being received?
+Changes in v3:
+- Add the top-level ref ethernet-switch.yaml and remove node definition
+  ethernet-ports in the DT binding file.
+- Remove unnecessary error message for devm_kzalloc().
+- Reverse the mapping of BM ceiling bits.
+- Fix multicast queue start/end configurations.
+- Declare the SoC-specific PPE configuration variables as const.
+- Fix kernel documentation errors.
+- Fix the compile errors reported by gcc-14.
+- Improve the commit message of L2 bridge initialization and debugfs patches.
+- Link to v2: https://lore.kernel.org/r/20250108-qcom_ipq_ppe-v2-0-7394dbda7199@quicinc.com
 
-> +	}
-> +}
-> +
-> +static const struct mhi_device_id qaic_ras_mhi_match_table[] = {
-> +	{ .chan = "QAIC_STATUS", },
-> +	{},
-> +};
-> +
-> +static struct mhi_driver qaic_ras_mhi_driver = {
-> +	.id_table = qaic_ras_mhi_match_table,
-> +	.remove = qaic_ras_mhi_remove,
-> +	.probe = qaic_ras_mhi_probe,
-> +	.ul_xfer_cb = qaic_ras_mhi_ul_xfer_cb,
-> +	.dl_xfer_cb = qaic_ras_mhi_dl_xfer_cb,
-> +	.driver = {
-> +		.name = "qaic_ras",
-> +	},
-> +};
-> +
-> +int qaic_ras_register(void)
-> +{
-> +	return mhi_driver_register(&qaic_ras_mhi_driver);
-> +}
-> +
-> +void qaic_ras_unregister(void)
-> +{
-> +	mhi_driver_unregister(&qaic_ras_mhi_driver);
-> +}
-> diff --git a/drivers/accel/qaic/qaic_ras.h b/drivers/accel/qaic/qaic_ras.h
-> new file mode 100644
-> index 000000000000..5df6cb9dae80
-> --- /dev/null
-> +++ b/drivers/accel/qaic/qaic_ras.h
-> @@ -0,0 +1,11 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only
+Changes in v2:
+- Represent the PPE hardware hierarchy in dtbindings, add PPE hardware diagram.
+- Remove all SoC specific hardware properties from dtbindings since driver
+  maintains them.
+- Move out the PCS (UNIPHY) handling into a separate PCS driver posted
+  separately at below.
+  https://lore.kernel.org/all/20250207-ipq_pcs_6-14_rc1-v5-0-be2ebec32921@quicinc.com
+- Move out the PPE MAC patches into a separate series to limit patch count to
+  15 or less. (PPE MAC patches will be posted sequentially after this series).
+- Rename the hardware initialization related files from ppe_ops.c[h] to
+  ppe_config.c[h]
+- Improve PPE driver documentation and diagram.
+- Fix dtbinding check errors.
+- Link to v1: https://lore.kernel.org/r/20240110114033.32575-1-quic_luoj@quicinc.com
 
-Should be:
-/* SPDX-License-Identifier: GPL-2.0-only */
-or
-// SPDX-License-Identifier: GPL-2.0-only
+---
+Lei Wei (2):
+      docs: networking: Add PPE driver documentation for Qualcomm IPQ9574 SoC
+      net: ethernet: qualcomm: Initialize PPE L2 bridge settings
 
-> + *
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+Luo Jie (12):
+      dt-bindings: net: Add PPE for Qualcomm IPQ9574 SoC
+      net: ethernet: qualcomm: Add PPE driver for IPQ9574 SoC
+      net: ethernet: qualcomm: Initialize PPE buffer management for IPQ9574
+      net: ethernet: qualcomm: Initialize PPE queue management for IPQ9574
+      net: ethernet: qualcomm: Initialize the PPE scheduler settings
+      net: ethernet: qualcomm: Initialize PPE queue settings
+      net: ethernet: qualcomm: Initialize PPE service code settings
+      net: ethernet: qualcomm: Initialize PPE port control settings
+      net: ethernet: qualcomm: Initialize PPE RSS hash settings
+      net: ethernet: qualcomm: Initialize PPE queue to Ethernet DMA ring mapping
+      net: ethernet: qualcomm: Add PPE debugfs support for PPE counters
+      MAINTAINERS: Add maintainer for Qualcomm PPE driver
 
-2025?
+ .../devicetree/bindings/net/qcom,ipq9574-ppe.yaml  |  406 ++++
+ .../networking/device_drivers/ethernet/index.rst   |    1 +
+ .../device_drivers/ethernet/qualcomm/ppe/ppe.rst   |  194 ++
+ MAINTAINERS                                        |    8 +
+ drivers/net/ethernet/qualcomm/Kconfig              |   15 +
+ drivers/net/ethernet/qualcomm/Makefile             |    1 +
+ drivers/net/ethernet/qualcomm/ppe/Makefile         |    7 +
+ drivers/net/ethernet/qualcomm/ppe/ppe.c            |  234 +++
+ drivers/net/ethernet/qualcomm/ppe/ppe.h            |   39 +
+ drivers/net/ethernet/qualcomm/ppe/ppe_config.c     | 2029 ++++++++++++++++++++
+ drivers/net/ethernet/qualcomm/ppe/ppe_config.h     |  317 +++
+ drivers/net/ethernet/qualcomm/ppe/ppe_debugfs.c    |  814 ++++++++
+ drivers/net/ethernet/qualcomm/ppe/ppe_debugfs.h    |   16 +
+ drivers/net/ethernet/qualcomm/ppe/ppe_regs.h       |  556 ++++++
+ 14 files changed, 4637 insertions(+)
+---
+base-commit: acdefab0dcbc3833b5a734ab80d792bb778517a0
+change-id: 20250108-qcom_ipq_ppe-aa4c4fa0ab73
+prerequisite-change-id: 20250411-field_modify-83b58db99025:v3
+prerequisite-patch-id: d67ff5b44b11f3736651f9de10b8c2759111b932
+prerequisite-patch-id: e68fa1f578d6ca2fa1f144339711149408774213
+prerequisite-patch-id: 3975c5efbaba1ce03d97e701acb438575ff8386c
+prerequisite-patch-id: 760d6c0ec2b0e5158bff859ba1ed0d49185c702e
+prerequisite-patch-id: 871c668a11bf3a5959a018b56c474d44dc0e4d7d
+prerequisite-patch-id: c9ad97859dd5a586afa32ad1daac531dfc11d53d
 
-> + */
-> +
-> +#ifndef __QAIC_RAS_H__
-> +#define __QAIC_RAS_H__
-> +
-> +int qaic_ras_register(void);
-> +void qaic_ras_unregister(void);
-
-new line?
-
-> +#endif /* __QAIC_RAS_H__ */
+Best regards,
+-- 
+Luo Jie <quic_luoj@quicinc.com>
 
 
