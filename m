@@ -1,87 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-57698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3A42AB55A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 15:10:06 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79392AB55B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 15:13:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C5D29176D7B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 13:10:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B94F27B4E72
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 13:11:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5BF728DF54;
-	Tue, 13 May 2025 13:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB50328ECCE;
+	Tue, 13 May 2025 13:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BgFcqkIz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IGB1r/v/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4794028DF2C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 13:09:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9F228EA42;
+	Tue, 13 May 2025 13:12:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747141800; cv=none; b=q9/ksX+4hXsB+zsfZ6IEPzn1B4q6gYfB1QTfnTTg4kLCcjVWbfYcggGRQOXp0ucHa9wv1VZK/A3YxayUukW2S6HktuuX4+/VYc2c6/X78e3EFbY1COXuNnSabntejlQE5ZIvrctkqaf9YR1MuZJFKS4G9MS5TjGgaDKu7s/79/s=
+	t=1747141958; cv=none; b=G66Xb9nPIRRlBuaYxRlSjBXZt/I1tYRLqjwYQZkayVB8X+qDdhEaEj1xapnS9JiMWyhaczg/UzcLCqQ74HJknpZ+ilZ2BATemyj/tZM/f2bk7OU+3f91+w9JMvGEXTy3gjPIkCSAYAqex6PiE36iBYWDYViooUUN9SsXuPsQ2Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747141800; c=relaxed/simple;
-	bh=jfCoKS4Br98qE8qMWlnXf8J24ypY3RI8HsC6GR76r4s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XG+HmOWpJT8iT5buVnmEUhRGcJVx/KQ+C0tbmIOXyq8Bw/d1seLFOMALkrEOVk7DbTKn0vEuMkaQhaxlxgIAk8PtXpU2jsKppi/oxayxpLeS2n3ej8nTrgh/V9KCp2QzTmP9Z3WkR/HP4xqc2uULb+tdEUOv08iy2ec4TeUcl5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BgFcqkIz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54DCIKTZ007486
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 13:09:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1747141958; c=relaxed/simple;
+	bh=FD8ON+zcVfRRTenFUww2Qf/g79bXnESntwotq607B/4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=KjqbYFrNeBqBNy+x+gsty9wucuX/mXqZ2U62I9Qp6Q37FvZatRAJKtwOWWzlDB4KrYQyLFQFwucWn+KBlRvEw/4592yK3+EI9WmeMB17cpF9ItH7JQerZXOiJB0Z0gWrNnkUYqTPw/PAlBjN/cizhMPM/+5+pflxpl1Md+X6OoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IGB1r/v/; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54DBdfdD027707;
+	Tue, 13 May 2025 13:12:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dgqQjoXn/mz0+0JWmqaVq0Nb/xIIVOaxCiU1TbW7BVQ=; b=BgFcqkIzTxWWbobU
-	wwihS5T660k7P57/l/N+Aktm/klgf8K5wF/bCO3yxOR6D4EOWUvkOnpqRbuFrPJR
-	tIG7MlCRMPdMMnim4lrWlzmWmzefdHJCsyOEMMsN1yILIGfX1RWvzfLaWGMCnxI1
-	SE0XwMMLjHeIsM5WuJ/FI9yGC5bJ6jpQqTR0nLa7iq5yJ/OF9mMjeOBZR5WLCCHT
-	3afO4dDtPVtU6oZ5tXG1El0kMtJILDbrx8yndvpf2GmW0sN+g+ui360TVndQLNwi
-	OqPwFNamWtJj7SVEdsrUnAfwR8iEZ1jLmz83V95kEZP7LAwsmXHZt0PhGpzn6ecn
-	9zE93g==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46hxvxftcn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 13:09:56 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c54be4b03aso148118285a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 06:09:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747141796; x=1747746596;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dgqQjoXn/mz0+0JWmqaVq0Nb/xIIVOaxCiU1TbW7BVQ=;
-        b=WwWV24JW9Ka4HkeBZs5As8P9EHpHU8w3ScK04oI/S3Pv9mRHVhUKLBY9flXQOBq7+y
-         9zvi/w7FE/WDUfP0Q+ob3YFyt7Xmuxg1sYvnELLNzmiykFLDch6GIu0rFh5SsPheKauG
-         AhEszAu3P5dqTS42fbpIltHvzrwcP5XOv2JyUEXqD13NixmjbaZFCt/OeVvjZ93TcHjQ
-         +kIC+9A7jta7EruxoSERW1c20j7nIik7WSyd8gbm66eMRVPrOO7cfCj9aeYQeGEAGRES
-         FnQ4Hascl/wZQD9e8GFRwB+GKxNaQEJ+YYDdrcUcPjl7VUHnqs92g0nCjV7il5M5cdjz
-         AnSA==
-X-Forwarded-Encrypted: i=1; AJvYcCXsIBx5bYOrxLgfa6c6XZT8rXjSsPMKudBqTDQuv/oEC62talkV/YccpOwOTm1/4Yy8LZX5dUpvYvIyKQKD@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTM3L3CkqR/vRJVq9KL3GduP57jSF3pqLkAs/bHzsq23krN0j2
-	bUHLbEjD4pseu7Ij4UGutCfJehXOxriGHwPv/8r40kWqk9h4z03S+vvkyJDKWbByszh6NGSBP8h
-	XQ3I2z/YTukpfK5yYcBxX6BH8n6XDc3D2vWuWrONw8T8gl+vrwEZxbfn6Ln6sr9Z2
-X-Gm-Gg: ASbGncv/tdUk/+yTnLeFy3GGiwDZC2XEcSYJwSIOSMjNjFuFPBC8tk3iBBofLpEyreZ
-	jj8A0vjgoXK5u2Vw+AfYok3+1cl/OojkJgA/tnxvOa/GEk4BynRzOhGe5KPCq5a7hDLj+fEJKGJ
-	Hai4kOZ/8AEqpvGxifKQPnc00Zhc1tLiNThdsyWIO1B/1cpKUSVrlDHn2LkUcj1gZy4ToabNmoI
-	mbwin1b0T/geG8widKk3xezd4grAG81Lf4IC+gH0m+mQJ/yo5Ls3cxhuqXjRe9PCkUU2rI0WpJs
-	zHq2q3+epR7PNwo7PPcS1joNo0IFLmQrbyCKtSWA/HgoZpeeKyp7/MvFRoPqLAYKbw==
-X-Received: by 2002:a05:620a:4621:b0:7c3:cccc:8790 with SMTP id af79cd13be357-7cd01209dcbmr1133994985a.5.1747141795985;
-        Tue, 13 May 2025 06:09:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHdFtK9juUmc0ai1W7MGI4fFewuXp29EYzh0Mnsqifnw7jvpAjmStbjPMKlcmyqOWJnBAZi1g==
-X-Received: by 2002:a05:620a:4621:b0:7c3:cccc:8790 with SMTP id af79cd13be357-7cd01209dcbmr1133993485a.5.1747141795533;
-        Tue, 13 May 2025 06:09:55 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad22ba47376sm658958666b.53.2025.05.13.06.09.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 May 2025 06:09:55 -0700 (PDT)
-Message-ID: <3f346bdc-81a4-4620-9a31-25c41d591c58@oss.qualcomm.com>
-Date: Tue, 13 May 2025 15:09:52 +0200
+	kCTGJVVj8RmqAo9suFmP593apdKnqfz+TSHKtS17EL8=; b=IGB1r/v/am20F2qI
+	GbK31AjgQF62/53DwIWLHe0YjaJJe3Dmaitjh2ZRZXstvOoXGsxw8UQq+L+NUhBr
+	96t9MHHDrdei0xA0D9N5sRmK/g8dFT7jqvKQSVDi6FEorJzp8WyuIgt1s2W0fE1s
+	/JdBad9iYNIk8qnrqmnBR+377eVd3OTQ4O1SDKx5I1EKiksP6yG6PVNhOskASLQy
+	/HoJJrQYOJgmJrSxw8b3C4OYAGgQdBLtf6uutf3QcnSpakH9Se6gq1fvz8ao3IOR
+	zPYdhQ04aPbXmBZYmAB5YPPtZ91T6g4qo11mc1Rihil4is/PY2qai5Y7gTUUSplk
+	srta5w==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46hvghg3v9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 May 2025 13:12:13 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54DDCDRx030092
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 May 2025 13:12:13 GMT
+Received: from [10.218.7.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 13 May
+ 2025 06:12:08 -0700
+Message-ID: <939d4d07-c055-4e99-9d56-19cb7fdfa1c9@quicinc.com>
+Date: Tue, 13 May 2025 18:42:05 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,137 +65,112 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8750: Add adsp fastrpc support
-To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Alexey Klimov <alexey.klimov@linaro.org>, andersson@kernel.org,
-        konradybcio@kernel.org, linux-arm-msm@vger.kernel.org
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        srini@kernel.org, quic_ekangupt@quicinc.com,
-        krzysztof.kozlowski@linaro.org,
-        "Bharath Kumar (QUIC)" <quic_bkumar@quicinc.com>,
-        "Chenna Kesava Raju (QUIC)" <quic_chennak@quicinc.com>
-References: <20250502011539.739937-1-alexey.klimov@linaro.org>
- <10f69da3-6f94-4249-a8f3-459dc48fa5e1@oss.qualcomm.com>
- <D9R4NCKH46WP.14C8F7W4M58ZQ@linaro.org>
- <3c0fea8d-0715-40e6-bed9-e0961bf034e0@oss.qualcomm.com>
- <bb68da04-ef52-4172-8b6e-f4027bcc2786@oss.qualcomm.com>
+Subject: Re: [PATCH V4 10/11] scsi: ufs: qcom : Introduce phy_power_on/off
+ wrapper function
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <manivannan.sadhasivam@linaro.org>,
+        <James.Bottomley@HansenPartnership.com>, <martin.petersen@oracle.com>,
+        <bvanassche@acm.org>, <andersson@kernel.org>,
+        <neil.armstrong@linaro.org>
+CC: <quic_rdwivedi@quicinc.com>, <quic_cang@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-scsi@vger.kernel.org>
+References: <20250503162440.2954-1-quic_nitirawa@quicinc.com>
+ <20250503162440.2954-11-quic_nitirawa@quicinc.com>
+ <58d913b8-0715-41b0-883a-423f29cb5a8c@oss.qualcomm.com>
+ <be69cd1e-c04c-4976-9be1-390631316d3f@quicinc.com>
+ <4a72ea06-22a8-4f8c-92ad-b5b3afa25b70@oss.qualcomm.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <bb68da04-ef52-4172-8b6e-f4027bcc2786@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <4a72ea06-22a8-4f8c-92ad-b5b3afa25b70@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDEyNSBTYWx0ZWRfX8puSJ93BkTid
- KedBjGEj+6JGzKaOYYvk7Ci+CHLYyGfqzoiqQcdLDDs4V8/B1MXR+naAAkS+MC2RVTPLoOLMIhB
- w+VaBxcd5T94+r0baJKEaeBTpu1E1n1VAQrVLaSgkY2m0D2jpFAo9zyIef6P0GrAjBajh09yydJ
- 39rZ9EhpuT21K2rylNkFHWEOTpzGmlB8t8Ihtkjkxe2RhQHNIqh98yECVdnAlTQSoUrjgOJLj+z
- a6ql0BOA8XzRreoe2BU1WapTaVYC7X2MujlC5Jy4b20D6DVSDKMDRerEi/IJQ+dbiF5SFm0OOdL
- xJ93s6ZHML2vfyqn3iiMvT1P/lg8g/LNdfLq7TT8HYcuVqxQWdenuqnGp2DFoQOYVSehOW1v05C
- FtnVivhDuQQbM8CdBjo9LM4yOxAb8oapQ26/kR9MwgtutIObL7uii7gU5qwZaWssJY27fUuN
-X-Proofpoint-GUID: 5A1lV5LGELYpUTEME46IMIn3qPi1rMT_
-X-Authority-Analysis: v=2.4 cv=WMV/XmsR c=1 sm=1 tr=0 ts=682344a4 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=KKAkSRfTAAAA:8 a=UvE4O2ndLqCJbkWAjTIA:9 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 5A1lV5LGELYpUTEME46IMIn3qPi1rMT_
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0lOilMgDkls3J-Oot3wGBUyIbpmjDo8z
+X-Proofpoint-ORIG-GUID: 0lOilMgDkls3J-Oot3wGBUyIbpmjDo8z
+X-Authority-Analysis: v=2.4 cv=AMDybF65 c=1 sm=1 tr=0 ts=6823452d cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
+ a=sYTkcTt2xfybeOqe0B8A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDEyNiBTYWx0ZWRfX1VY38sj2SPpZ
+ +AcNE40bOCJ8fUVkzZnmmOnQfwyrn2t9rPNKVyIL0OnI4QhBcpWI3CJr45Ky7gXJilN5DCmm+g7
+ 5vFWp0q2MQt79zE6zwfLP0fo0MtBtMGEo/ScNy9OhsCjXKzp/fOqoR9rYv7AanAxPvEKTR3QKSp
+ GDAS61H0kiqS+/Qm9kNffmOD6Jz6CYMW/2CDleXJJRsEooKHLZHwwKFi1r/3xusmir2CwacX5A2
+ nNMosc3zq5RAl4T9o9nP/qtl+JAHHzGPRz2s+j9JCaC37Orvv/RHs0iaomigckuror5qEs3a1wO
+ myadJkgibOuE+rBvHzFj9bIOC8cV2Ss8CKPk+9ZWVGPrrsBGvVv1WaHgP9Eo4YiJJ6uLwk2weu4
+ 8LxK+mYpTzh8Zb4SdOCZSVbTvK1GWAdVTPS8uLPLZr4oIqbV0lYts3aLNHwEsJeaSTyjKNsV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-13_01,2025-05-09_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 impostorscore=0 bulkscore=0
- spamscore=0 mlxscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2504070000 definitions=main-2505130125
+ clxscore=1015 spamscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ phishscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 mlxscore=0
+ mlxlogscore=945 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505130126
 
-On 5/9/25 5:42 AM, Ekansh Gupta wrote:
-> 
-> 
-> On 5/9/2025 4:27 AM, Konrad Dybcio wrote:
->> On 5/9/25 12:20 AM, Alexey Klimov wrote:
->>> On Fri May 2, 2025 at 10:38 AM BST, Konrad Dybcio wrote:
->>>> On 5/2/25 3:15 AM, Alexey Klimov wrote:
->>>>> While at this, also add required memory region for fastrpc.
->>>>>
->>>>> Tested on sm8750-mtp device with adsprpdcd.
->>>>>
->>>>> Cc: Ekansh Gupta <quic_ekangupt@quicinc.com>
->>>>> Cc: Srinivas Kandagatla <srini@kernel.org>
->>>>> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
->>>>> ---
->>>>>  arch/arm64/boot/dts/qcom/sm8750.dtsi | 70 ++++++++++++++++++++++++++++
->>>>>  1 file changed, 70 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>>>> index 149d2ed17641..48ee66125a89 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>>>> @@ -7,6 +7,7 @@
->>>>>  #include <dt-bindings/clock/qcom,sm8750-gcc.h>
->>>>>  #include <dt-bindings/clock/qcom,sm8750-tcsr.h>
->>>>>  #include <dt-bindings/dma/qcom-gpi.h>
->>>>> +#include <dt-bindings/firmware/qcom,scm.h>
->>>>>  #include <dt-bindings/interconnect/qcom,icc.h>
->>>>>  #include <dt-bindings/interconnect/qcom,sm8750-rpmh.h>
->>>>>  #include <dt-bindings/interrupt-controller/arm-gic.h>
->>>>> @@ -523,6 +524,14 @@ llcc_lpi_mem: llcc-lpi@ff800000 {
->>>>>  			reg = <0x0 0xff800000 0x0 0x800000>;
->>>>>  			no-map;
->>>>>  		};
->>>>> +
->>>>> +		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap {
->>>>> +			compatible = "shared-dma-pool";
->>>>> +			alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
->>>>> +			alignment = <0x0 0x400000>;
->>>>> +			size = <0x0 0xc00000>;
->>>>> +			reusable;
->>>>> +		};
->>>>>  	};
->>>>>  
->>>>>  	smp2p-adsp {
->>>>> @@ -2237,6 +2246,67 @@ q6prmcc: clock-controller {
->>>>>  						};
->>>>>  					};
->>>>>  				};
->>>>> +
->>>>> +				fastrpc {
->>>>> +					compatible = "qcom,fastrpc";
->>>>> +					qcom,glink-channels = "fastrpcglink-apps-dsp";
->>>>> +					label = "adsp";
->>>>> +					memory-region = <&adsp_rpc_remote_heap_mem>;
->>>> IIUC the driver only considers this on the sensor DSP
->>> Memory region is required for audio protection domain + adsprpdcd as far as I know.
->> next-20250508
+
+
+On 5/9/2025 5:30 PM, Konrad Dybcio wrote:
+> On 5/9/25 1:49 PM, Nitin Rawat wrote:
 >>
->> rmem_node = of_parse_phandle(rdev->of_node, "memory-region", 0);
->> if (domain_id == SDSP_DOMAIN_ID && rmem_node) {
->> 	// ...
->> }
 >>
->> maybe some driver changes are still pending?
+>> On 5/9/2025 5:07 PM, Konrad Dybcio wrote:
+>>> On 5/3/25 6:24 PM, Nitin Rawat wrote:
+>>>> Introduce ufs_qcom_phy_power_on and ufs_qcom_phy_power_off wrapper
+>>>> functions with mutex protection to ensure safe usage of is_phy_pwr_on
+>>>> and prevent possible race conditions.
+>>>>
+>>>> Co-developed-by: Can Guo <quic_cang@quicinc.com>
+>>>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+>>>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+>>>> ---
+>>>
+>>> The PHY framework does the same thing internally already, this seems
+>>> unnecessary
+>>
+>> Hi Konrad,
+>>
+>> Thanks for the review. There are scenarios where ufshcd_link_startup() can call ufshcd_vops_link_startup_notify() multiple times during retries. This leads to the PHY reference count increasing continuously, preventing proper re-initialization of the PHY.
 > 
-> Would like to add some more details here:
-> 
-> Memory region is required for audio PD for dynamic loading and remote heap memory
-> requirements. Some initial memory(~2MB) is allocated initially when audio daemon
-> is getting attached[1] and this memory is added to audio PD memory pool.
-> 
-> Additionally, if there is some additional memory requirement from audio PD, the
-> PD can request for more memory using remote heap request[2]
-> 
-> The support for SDSP was added sometime back[3] to support SDSP usecases on some old
-> platform as there were no dedicated context banks for SDSP there. On recent platforms,
-> context banks are available wherever SDSP is supported. 
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n1273
-> [2] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n1884
-> [3] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/drivers/misc/fastrpc.c?id=c3c0363bc72d4d0907a6d446d7424b3f022ce82a
+> I'm assuming you're talking about the scenario where it jumps into
+> ufs_qcom_power_up_sequence() - you have a label in there called
+> `out_disable_phy` - add a phy_power_off() after phy_calibrate if
+> things fail and you should be good to go if I'm reading things right.
 
-Ok, this was mildly confusing given there's specific "normal" region
-handling, but the DMA allocator takes care of this one
+Hi Konrad,
 
-Konrad
+I meant, ufs_qcom_power_up_sequence can be called multiple times from 
+ufshcd_link_startup as part of ufshcd_hba_enable calls for each 
+retries(max retries =3) and each attempt of ufs_qcom_power_up_sequence 
+is success increasing the power_count ref to value more than 1.
+But this is handled using the patch 7bac65687510.
+
+Similiar scenarios can be possible in ufs driver , where there can be 2
+phy_power_on calls which may caused caused phy ref count to be more than 
+1 and this inconsistent behaviour may cause issue.
+
+Hence having is_phy_pwr_on flag can help here.
+
+Thanks,
+Nitin
+
+> 
+> Please include something resembling a call stack in the commit message,
+> as currently everyone reviewing this has to make guesses about why this
+> needs to be done
+> 
+> 
+>> Recently, this issue was addressed with patch 7bac65687510 ("scsi: ufs:
+>> qcom: Power off the PHY if it was already powered on in ufs_qcom_power_up_sequence()"). However, I still want to maintain a reference count (ref_cnt) to safeguard against similar conditions in the code. Additionally, this approach helps avoid unnecessary phy_power_on and phy_power_off calls. Please let me know your thoughts.
+> 
+> These unnecessary calls only amount to a couple of jumps and compares,
+> just like your wrappers, as the framework keeps track of the enable
+> count as well
+> 
+> Konrad
+
 
