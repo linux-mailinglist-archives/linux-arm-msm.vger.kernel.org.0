@@ -1,312 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-57747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49BD0AB5C59
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 20:38:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC422AB5C61
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 20:39:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8D3C27AC123
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 18:36:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6FA344A0903
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 18:39:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 009932BF971;
-	Tue, 13 May 2025 18:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17C502BF985;
+	Tue, 13 May 2025 18:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DCMYmHZh"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WksyA/Y+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBFD2BEC4E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 18:37:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A091A23AD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 18:39:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747161471; cv=none; b=WelfX8RrwYF5iQFV19SkV4qaq+dcE3dAYOTe0gAYmddXhf4eUWCSE2n6+aWcgnr5EOjIxTVtlbFey+u7nv2toIg3U3/2ztbY/zbsckXX5xBnvL/XLoRU2Vig13k4gXo8Uc4cfXq0wZiXagTfafN1XxdShOGoM8Z8U1SJWEDqVWA=
+	t=1747161545; cv=none; b=pAoXvH9R2r8Dtz+1UF+MJS5Hx1gYuQNPkAQJalu8U0ynDuccAey899bSBVT0v+3SWF80HiOTHParqdBgU51iqSBy/tWdX3Iaqq3cbY/yQWEGNzNIaPk1uuXhMhlhm7p/D0mLP+rMt/TfkAFjQaZJ5EXY7Qwk+G/Obm1tkBeVIFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747161471; c=relaxed/simple;
-	bh=5nOLHaqyExrxnpuoDJU4PrlfZ8ckzsOVQE2UfnvlHr4=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=VI/EnAWBfdkWNuUZxE/39SgkdvwzBuXzDGqcFK835p6VMW8gQcSkBNQyrFgnhSFYcpQNG5Cpw1gz4WyDuPnDdh9l/OjzNk1xcZwEVxtrf1bvvDpmf4B856z6nc4ApzUdZYtgFstgVjvf3CBslvgE1CCxvdW7EzBiYqGnSq5E5NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DCMYmHZh; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-30c8c9070d2so4824035a91.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 11:37:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747161469; x=1747766269; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=b9MDuR/Dl6kL0FyxL+7OxnJbF8Mp0T3/2fFmI1SGZh0=;
-        b=DCMYmHZhZCawWPXFCa/CunLlYcKp4pXh8Qmgt5pUetr244J9fsS4qh+jgJnPG/KAMc
-         pOdIGBu87PPd092hC9+i7pdWta48kyyrdp9HR8tweSOCGoGpXA5BX9Ic4e3Q/NM83ERe
-         ycNRAoaeOjEMGe5ojZD51fRU3uFyDp644EwECytdgLo1pZzyPKpMHET7Uw7M4jakKSmo
-         9Qqf0bSvw3nsZzm0nkJoG5Tt5NwBIKGbssYfgZXba9IOL79Uw2yFxUXc5PDwA0whig/k
-         UMB3FteMmonIAlBwURCjwtuQzDoXTnKZNdWGpqS1iwNYB0rLEHvIjGiAhjOsclgSt8pf
-         82BQ==
+	s=arc-20240116; t=1747161545; c=relaxed/simple;
+	bh=c3CUAg0HasaSA/PE3Dal6+uZcOy1QkgqJaYpeHte2pc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=VDwk8/PN0bQ5YLvWef0HPikIqb7JuqLyM1C8a7cSldCBIB9AwGhuUFmQNoNjjGj+yulNlfs+XiN3Dl4ZPcIYPc6Ol8PLaYSSt69Jpo0AYcBtZghumGQAyWZeeLWi8ZJ1/NclZLS54IATs8oUqsavw0ZjkLAipwVx3A+R+xlySQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WksyA/Y+; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54DIRdrs006105
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 18:39:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=+lQ/vPOzh1nV31LxscU3xt
+	CwW1jtDDyo2XMZFjX21to=; b=WksyA/Y+47uZF+BlN855cmP0x/0uw/wzT1waLd
+	qhKRNqp+6c1MbZ5+0vU7/bzhxeNIzXAsLarcsU5JlN7dlLbCP7Xh9OywczdXV3Xf
+	WTj52J2NeeK+Zw4o+P/wxlZNBbkQQZcWUNObDudfZJDVXa/ZND7aHj4As5t+mQ08
+	Q894T2yukSHsFSXulLLRam+6PkTlLj95lJazpisuz18twsyN4hwrSWX6QZFI0i5E
+	Q6l+R/XINbhKSpty4oChSrGMGbPAyCgliA8fgs44Rg2ZtiatVqw3W4AHj+5MqeAk
+	aFLEBW5L5GWQJs04WqKCdNC1fAQoILD50Uy0XACqB0i2YkZw==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcnr19j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 18:39:00 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6f6e7c6a3fbso100566816d6.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 11:39:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747161469; x=1747766269;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b9MDuR/Dl6kL0FyxL+7OxnJbF8Mp0T3/2fFmI1SGZh0=;
-        b=ujHY9LMnQB9SZyf5Pcw5EG86MVTEH2D4sUIV6KubYXwy7zrhJracYWgBqc9UZeIF88
-         sdcjjZN/drP9OWBsUUsd9dqpsUsaDB8W0UnfA1LwakBKmluy+V6Ay8NCBMb7kAMajW5Q
-         3IqSZT2tQp3aYG5I79THZ4irLtkfeChyxWPsFAegSQxNLgEpILM3XnydXH0uRWsGtsMy
-         VKVZL5ooNPFmnE22faKorZpfWFBKigEz2wKwfk+dNTBQiG1CXmz12OEs61qjfby5Teos
-         +I3bACdMGeHBPj3O6I8QjuNv3zgWXi0knibbLEMkt/ltgnBYQxOv0noBE0i81+lwTF7X
-         bOrw==
-X-Forwarded-Encrypted: i=1; AJvYcCX7dS+cvQ68haKra3lwf82QqBr2HVUPP73Bkm64QIa3ZvoJl+bfWnhlUhcbkZBr9Wlcps2/mL/R6ZV5TaoZ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxn0uZ5h9xKGmMYx8tryVQwFtEKJa1fGPz4YyONq+R/NjPpfGbU
-	fEzncYnH46dolLhlbea8Au8bRS7d6mx+ESFC7HXJYMhuYLL7bqrHufdYEAStO7TpofpGkqlq+Bu
-	lHXfqDvRasT5W4vUbSeHmTg==
-X-Google-Smtp-Source: AGHT+IHh48dnUNnPj0jVGNHdz5yY1x34jSSkfzq+soIDIBQwcVrmJ1EYujTkYpGapSQ59E8CIvectH0AL1mRigl+MA==
-X-Received: from pjtq3.prod.google.com ([2002:a17:90a:c103:b0:2ff:8471:8e53])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:5590:b0:2ea:7cd5:4ad6 with SMTP id 98e67ed59e1d1-30e2e633695mr794444a91.32.1747161469403;
- Tue, 13 May 2025 11:37:49 -0700 (PDT)
-Date: Tue, 13 May 2025 11:37:48 -0700
-In-Reply-To: <20250513163438.3942405-8-tabba@google.com> (message from Fuad
- Tabba on Tue, 13 May 2025 17:34:28 +0100)
+        d=1e100.net; s=20230601; t=1747161540; x=1747766340;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+lQ/vPOzh1nV31LxscU3xtCwW1jtDDyo2XMZFjX21to=;
+        b=T6iS2ZHfiHdIUrvlCi+XFCVPcV1p+Eh4D3Kyqclpo+Hra5V9uMnC356x/vPEb+aO6v
+         HtFFEMU6u0DFXfIIiP7o4PA1aJ8/PdN0ndSNwiTWdGCloTGgmj6oMR7eyzCdQzZJMyV7
+         PC4TUH34NpXyVrvJ1YQbwRPK/YvUZt6BjVFBbbKn/pQMOg0iRoJAGNlY9AMUb8TOrdOL
+         tK+/9ZHmtV9K2zExe9/zbmz7oKt7CZKfR4xe82qyDQl7aTBR4KYoyhRfcgu4+7CdRR7+
+         GIueBfbBRU3SVJHcDjQahqgWmi6fwGFZ4kwRE2vp/Q+evJAczKwdqMnydLofd+w9DNLF
+         cdLw==
+X-Gm-Message-State: AOJu0YxLiJi+vczmBPyBaJVAF/OA0Uwn/LchB9V/bcEwgkupfeeXRNmi
+	Y/I9HzQG0LdU1iiCJ6oqNAjV+Bd2bHYeRW07ldXz9amK37KyEuHE1psKCIQtl6zoWtkK4ljFWdJ
+	uCgy07z992h/UtRW6LWUXz17m00OqaRy/CxyXtH/7moXRCQUhy6rBr5KkW1cktoWD
+X-Gm-Gg: ASbGncuXW75UnOqttzAqZ9vH4x25PNUyK0Gv+fQ+tFjS4hdmKHecdXnDPgrJebayM3L
+	Ir2AoOTPtiMfJljhhEuy7EzGdTkccKvOZJVVwfWMK3CLJA1R94n8637o680GdnKRvvJbbpkF9iP
+	28kXHLcNG5sgTaHvVn7kiCnDBHF0AcQTxcUtcMacfabOySOt0EyNGhKdtraEJaGVa5ShWvyMZuP
+	coTRQrViw+6msjgWEANVkkiNXTSXShTHUWLzQ9130ZBwTfCCEe3L1ajmMNw3eKu40Rfiq3ce0R2
+	Y+JYeHhIWQj0t3JDQSyhPaCzPVh5V5GQ5b/PbRguDUuaCLYd9rGd/0dZw0nM8hd3tq8yfQuc0ti
+	w1eHSDdQmxYD09thZNB/0iCL/
+X-Received: by 2002:ad4:5ce7:0:b0:6ec:f51f:30e9 with SMTP id 6a1803df08f44-6f896df90b0mr6746716d6.4.1747161540009;
+        Tue, 13 May 2025 11:39:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHzYJSPEfUW6mWY6P3xiKJzFtmy2XLPu3POn1xl6PAmrl/J92bfhsNhVSP4WgBUAToIj3wmxg==
+X-Received: by 2002:ad4:5ce7:0:b0:6ec:f51f:30e9 with SMTP id 6a1803df08f44-6f896df90b0mr6746436d6.4.1747161539625;
+        Tue, 13 May 2025 11:38:59 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-326c33c12b7sm17383921fa.50.2025.05.13.11.38.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 May 2025 11:38:58 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH v2 0/3] pinctrl: qcom: several fixes for the pinctrl-msm
+ code
+Date: Tue, 13 May 2025 21:38:56 +0300
+Message-Id: <20250513-pinctrl-msm-fix-v2-0-249999af0fc1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <diqzsel8pdab.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [PATCH v9 07/17] KVM: guest_memfd: Allow host to map
- guest_memfd() pages
-From: Ackerley Tng <ackerleytng@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
-	pankaj.gupta@amd.com, ira.weiny@intel.com, tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMCRI2gC/3WNzQ6CMBCEX4Xs2SWlgqgn38NwKP2RTSjFLjYaw
+ rtbuXuZ5JtkvlmBbSTLcC1WiDYRU5gyyEMBelDTwyKZzCCFbEQjjjjTpJc4omePjt7YS9k43Vp
+ lpIa8mqPN9W68d5kH4iXEz36Qql/735UqFGjUpW/dqRZnV98Cc/l8qVEH78sc0G3b9gUZ/rott
+ QAAAA==
+X-Change-ID: 20250503-pinctrl-msm-fix-b225fc7ead2c
+To: Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Josh Cartwright <joshc@codeaurora.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Matti Vaittinen <mazziesaccount@gmail.com>,
+        Doug Anderson <dianders@chromium.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3791;
+ i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
+ bh=c3CUAg0HasaSA/PE3Dal6+uZcOy1QkgqJaYpeHte2pc=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoI5HBpZLzHjAdSK7DQFj9CvNEnUbwQkbBUaesB
+ x0JexswuYyJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaCORwQAKCRCLPIo+Aiko
+ 1TdAB/wLAWRvtRldup2CF+4QJA+CpINrBjI9tNtzRBrskSI7a6vngrIm243V00uM/JCo0S81gNg
+ LgR4+jMtR/qiP9rHwLmDN71DoH9P7jG273ftPuJs/nEk7fuzch6e8KvL/CTMVo/xZTVIktSMEu/
+ Ot/964xQzHjhpgLjK0nPI1JhbBLBHRWqJw0ldNXaW4QXMF3TIh2F4Td/RUWbzbVl72nrrWdBH/j
+ NRUu7MJeNsW4vkrzHweg2PkaZdDmxEADr1aMkomZm8MjTaC7uWh5+4om2S80cc2ys4HPxWQSvdG
+ +F+LP8oXaw2pPDcavJFksjM5iSxQZAA13rZ0K7DG0+FZfNQw
+X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Proofpoint-GUID: cvAnJsFmCikPyxNNsmRjLki4i7swaa0E
+X-Proofpoint-ORIG-GUID: cvAnJsFmCikPyxNNsmRjLki4i7swaa0E
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDE3NyBTYWx0ZWRfX8uFPrz94yWuP
+ IChVZaJtwS/n5Hx58oB21JactuFpaziCyoy6wwKT7/klFik6rKt0IZuuNPIxusKwy7Zr7WdAxGl
+ TRpbPE5AVDfBsHyaDJy3bh8KQiZpqI+k0n47QabdwCtd5mN1PpROfTADJMlg10HkHZy9riMdxYq
+ 1ajP26n/S7CN4hTz1f3p+e3InVEURlh0gxUslqvFV83klbOOyQTON0RaMC1vAOnCU4GHXRCXN1W
+ z59fr5NTwR5SW0grVXoYAnyhmaT7XZgjMcu0SDXTfEdN7KOqa8qUrmY5R5HI98fWIvlWrFXLoNh
+ in8YzuRSu5S7TqzWsyPmMohfEd3JsK6MfEwffFSVD9btcjgpp0jqVG+1zQJ0xNkT8aanHAfOxp7
+ eR5YVBB+dVhE653X/nBESAe40Aw1/RN5X8kyc4j3rZDM0pScvxumOUQwqJ+YogTSIcfKPYYN
+X-Authority-Analysis: v=2.4 cv=Gp9C+l1C c=1 sm=1 tr=0 ts=682391c4 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=yL6wTZgN64zhq57P54QA:9
+ a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-13_03,2025-05-09_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 adultscore=0 suspectscore=0 priorityscore=1501 mlxscore=0
+ malwarescore=0 mlxlogscore=846 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505130177
 
-Fuad Tabba <tabba@google.com> writes:
+Fix/rework several issues in the pinctrl-msm common code. The most
+important fix is the one for the gpio-hog handling.
 
-> This patch enables support for shared memory in guest_memfd, including
-> mapping that memory at the host userspace. This support is gated by the
-> configuration option KVM_GMEM_SHARED_MEM, and toggled by the guest_memfd
-> flag GUEST_MEMFD_FLAG_SUPPORT_SHARED, which can be set when creating a
-> guest_memfd instance.
->
-> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
->  arch/x86/include/asm/kvm_host.h | 10 ++++
->  include/linux/kvm_host.h        | 13 +++++
->  include/uapi/linux/kvm.h        |  1 +
->  virt/kvm/Kconfig                |  5 ++
->  virt/kvm/guest_memfd.c          | 88 +++++++++++++++++++++++++++++++++
->  5 files changed, 117 insertions(+)
->
-> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-> index 709cc2a7ba66..f72722949cae 100644
-> --- a/arch/x86/include/asm/kvm_host.h
-> +++ b/arch/x86/include/asm/kvm_host.h
-> @@ -2255,8 +2255,18 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
->  
->  #ifdef CONFIG_KVM_GMEM
->  #define kvm_arch_supports_gmem(kvm) ((kvm)->arch.supports_gmem)
-> +
-> +/*
-> + * CoCo VMs with hardware support that use guest_memfd only for backing private
-> + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
-> + */
-> +#define kvm_arch_vm_supports_gmem_shared_mem(kvm)			\
-> +	(IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM) &&			\
-> +	 ((kvm)->arch.vm_type == KVM_X86_SW_PROTECTED_VM ||		\
-> +	  (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM))
->  #else
->  #define kvm_arch_supports_gmem(kvm) false
-> +#define kvm_arch_vm_supports_gmem_shared_mem(kvm) false
->  #endif
->  
->  #define kvm_arch_has_readonly_mem(kvm) (!(kvm)->arch.has_protected_state)
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index ae70e4e19700..2ec89c214978 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -729,6 +729,19 @@ static inline bool kvm_arch_supports_gmem(struct kvm *kvm)
->  }
->  #endif
->  
-> +/*
-> + * Returns true if this VM supports shared mem in guest_memfd.
-> + *
-> + * Arch code must define kvm_arch_vm_supports_gmem_shared_mem if support for
-> + * guest_memfd is enabled.
-> + */
-> +#if !defined(kvm_arch_vm_supports_gmem_shared_mem) && !IS_ENABLED(CONFIG_KVM_GMEM)
-> +static inline bool kvm_arch_vm_supports_gmem_shared_mem(struct kvm *kvm)
-> +{
-> +	return false;
-> +}
-> +#endif
-> +
->  #ifndef kvm_arch_has_readonly_mem
->  static inline bool kvm_arch_has_readonly_mem(struct kvm *kvm)
->  {
-> diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
-> index b6ae8ad8934b..9857022a0f0c 100644
-> --- a/include/uapi/linux/kvm.h
-> +++ b/include/uapi/linux/kvm.h
-> @@ -1566,6 +1566,7 @@ struct kvm_memory_attributes {
->  #define KVM_MEMORY_ATTRIBUTE_PRIVATE           (1ULL << 3)
->  
->  #define KVM_CREATE_GUEST_MEMFD	_IOWR(KVMIO,  0xd4, struct kvm_create_guest_memfd)
-> +#define GUEST_MEMFD_FLAG_SUPPORT_SHARED	(1UL << 0)
->  
->  struct kvm_create_guest_memfd {
->  	__u64 size;
-> diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
-> index 559c93ad90be..f4e469a62a60 100644
-> --- a/virt/kvm/Kconfig
-> +++ b/virt/kvm/Kconfig
-> @@ -128,3 +128,8 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
->  config HAVE_KVM_ARCH_GMEM_INVALIDATE
->         bool
->         depends on KVM_GMEM
-> +
-> +config KVM_GMEM_SHARED_MEM
-> +       select KVM_GMEM
-> +       bool
-> +       prompt "Enables in-place shared memory for guest_memfd"
-> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> index 6db515833f61..8e6d1866b55e 100644
-> --- a/virt/kvm/guest_memfd.c
-> +++ b/virt/kvm/guest_memfd.c
-> @@ -312,7 +312,88 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
->  	return gfn - slot->base_gfn + slot->gmem.pgoff;
->  }
->  
-> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
-> +
-> +static bool kvm_gmem_supports_shared(struct inode *inode)
-> +{
-> +	uint64_t flags = (uint64_t)inode->i_private;
-> +
-> +	return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> +}
-> +
-> +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
-> +{
-> +	struct inode *inode = file_inode(vmf->vma->vm_file);
-> +	struct folio *folio;
-> +	vm_fault_t ret = VM_FAULT_LOCKED;
-> +
-> +	filemap_invalidate_lock_shared(inode->i_mapping);
-> +
-> +	folio = kvm_gmem_get_folio(inode, vmf->pgoff);
-> +	if (IS_ERR(folio)) {
-> +		int err = PTR_ERR(folio);
-> +
-> +		if (err == -EAGAIN)
-> +			ret = VM_FAULT_RETRY;
-> +		else
-> +			ret = vmf_error(err);
-> +
-> +		goto out_filemap;
-> +	}
-> +
-> +	if (folio_test_hwpoison(folio)) {
-> +		ret = VM_FAULT_HWPOISON;
-> +		goto out_folio;
-> +	}
-> +
-> +	if (WARN_ON_ONCE(folio_test_large(folio))) {
-> +		ret = VM_FAULT_SIGBUS;
-> +		goto out_folio;
-> +	}
-> +
-> +	if (!folio_test_uptodate(folio)) {
-> +		clear_highpage(folio_page(folio, 0));
-> +		kvm_gmem_mark_prepared(folio);
-> +	}
-> +
-> +	vmf->page = folio_file_page(folio, vmf->pgoff);
-> +
-> +out_folio:
-> +	if (ret != VM_FAULT_LOCKED) {
-> +		folio_unlock(folio);
-> +		folio_put(folio);
-> +	}
-> +
-> +out_filemap:
-> +	filemap_invalidate_unlock_shared(inode->i_mapping);
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+---
+Changes in v2:
+- Moved gpiochip validation to gpiochip core (Bartosz, Linus)
+- Squashed two last patches (Bartosz)
+- Link to v1: https://lore.kernel.org/r/20250503-pinctrl-msm-fix-v1-0-da9b7f6408f4@oss.qualcomm.com
 
-Do we need to hold the filemap_invalidate_lock while zeroing? Would
-holding the folio lock be enough?
+---
+Dmitry Baryshkov (3):
+      gpiolib: don't crash on enabling GPIO HOG pins
+      pinctrl: qcom: switch to devm_register_sys_off_handler()
+      pinctrl: qcom: switch to devm_gpiochip_add_data()
 
-> +
-> +	return ret;
-> +}
-> +
-> +static const struct vm_operations_struct kvm_gmem_vm_ops = {
-> +	.fault = kvm_gmem_fault_shared,
-> +};
-> +
-> +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
-> +{
-> +	if (!kvm_gmem_supports_shared(file_inode(file)))
-> +		return -ENODEV;
-> +
-> +	if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
-> +	    (VM_SHARED | VM_MAYSHARE)) {
-> +		return -EINVAL;
-> +	}
-> +
-> +	vma->vm_ops = &kvm_gmem_vm_ops;
-> +
-> +	return 0;
-> +}
-> +#else
-> +#define kvm_gmem_mmap NULL
-> +#endif /* CONFIG_KVM_GMEM_SHARED_MEM */
-> +
->  static struct file_operations kvm_gmem_fops = {
-> +	.mmap		= kvm_gmem_mmap,
->  	.open		= generic_file_open,
->  	.release	= kvm_gmem_release,
->  	.fallocate	= kvm_gmem_fallocate,
-> @@ -463,6 +544,9 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
->  	u64 flags = args->flags;
->  	u64 valid_flags = 0;
->  
-> +	if (kvm_arch_vm_supports_gmem_shared_mem(kvm))
-> +		valid_flags |= GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> +
->  	if (flags & ~valid_flags)
->  		return -EINVAL;
->  
-> @@ -501,6 +585,10 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
->  	    offset + size > i_size_read(inode))
->  		goto err;
->  
-> +	if (kvm_gmem_supports_shared(inode) &&
-> +	    !kvm_arch_vm_supports_gmem_shared_mem(kvm))
-> +		goto err;
-> +
->  	filemap_invalidate_lock(inode->i_mapping);
->  
->  	start = offset >> PAGE_SHIFT;
+ drivers/gpio/gpiolib.c                  |  6 ++++++
+ drivers/pinctrl/qcom/pinctrl-apq8064.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-apq8084.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-ipq4019.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-ipq5018.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-ipq5332.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-ipq5424.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-ipq6018.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-ipq8064.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-ipq8074.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-ipq9574.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-mdm9607.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-mdm9615.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm.c      | 34 +++++++++++++--------------------
+ drivers/pinctrl/qcom/pinctrl-msm.h      |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm8226.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm8660.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm8909.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm8916.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm8917.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm8953.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm8960.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm8976.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm8994.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm8996.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm8998.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-msm8x74.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-qcm2290.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-qcs404.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-qcs615.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-qcs8300.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-qdf2xxx.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-qdu1000.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-sa8775p.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-sar2130p.c |  1 -
+ drivers/pinctrl/qcom/pinctrl-sc7180.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sc7280.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sc8180x.c  |  1 -
+ drivers/pinctrl/qcom/pinctrl-sc8280xp.c |  1 -
+ drivers/pinctrl/qcom/pinctrl-sdm660.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sdm670.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sdm845.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sdx55.c    |  1 -
+ drivers/pinctrl/qcom/pinctrl-sdx65.c    |  1 -
+ drivers/pinctrl/qcom/pinctrl-sdx75.c    |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm4450.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm6115.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm6125.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm6350.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm6375.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm7150.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm8150.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm8250.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm8350.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm8450.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm8550.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm8650.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-sm8750.c   |  1 -
+ drivers/pinctrl/qcom/pinctrl-x1e80100.c |  1 -
+ 59 files changed, 19 insertions(+), 78 deletions(-)
+---
+base-commit: 6ac908f24cd7ddae52c496bbc888e97ee7b033ac
+change-id: 20250503-pinctrl-msm-fix-b225fc7ead2c
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
 
