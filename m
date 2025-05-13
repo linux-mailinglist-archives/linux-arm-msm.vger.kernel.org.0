@@ -1,98 +1,246 @@
-Return-Path: <linux-arm-msm+bounces-57725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29BD3AB591C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 17:53:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF6A1AB597D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 18:13:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CBAFE19E4BE7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 15:53:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64EFD1891A4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 16:13:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D03129E07C;
-	Tue, 13 May 2025 15:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D1991E487;
+	Tue, 13 May 2025 16:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uQDD5Qza"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Yj8VMrHP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1BA1C8632;
-	Tue, 13 May 2025 15:52:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94431A9B40
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 16:13:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747151576; cv=none; b=Hsb10Rr1P7sy1QJjPYeYGWrOVyBC4knc6kk+Qu+X20kTG8E4VycdxLEyU9FYMdrlaPqsiUayR6U6C0yVxLxkflyb/fsPKlO6Lfitp8H8wdj+riUNfWfrZ4ReBmBFXxLJyraOPMD66KvX4ZzXtsVpexaIwRHzoVMu5c987k78+Fo=
+	t=1747152808; cv=none; b=jbxvaeFlB6ts/EwhItUB5pCiq/Bdx+W3TG9vk48dMue6DjucsgsE5i+QP4vN8NZriZtIU0xwVZzFWL6L6mIO5xuWWRe0rO6fbkDIty1O62ozYuU8JS+It3AranFvaXhz/WKb7H5LhgsPdj6P9ZzZtlEZrz//ggtuU0E9TcvMX4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747151576; c=relaxed/simple;
-	bh=v2B2sJq6WJ3s/RGL6l6vpiYq55R11ku6FNcj8XhDOYs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=uG66reE/LeEj86dlnwXVJ/p0xvSG/QabdA4jG0VhqDBdcyWj7qRuQoPQkk2N4CQS9Ugb2sOx+mI6aQh7d96HHYjkx8ThUl8WjZUBz+lvleaV4gZYDVFN7Ujvj5g0VTq87NYVHazaULg8ecPpIJuIF/LpK1WhUS9H0/f8u9YEmfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uQDD5Qza; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64A6C4CEE4;
-	Tue, 13 May 2025 15:52:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747151573;
-	bh=v2B2sJq6WJ3s/RGL6l6vpiYq55R11ku6FNcj8XhDOYs=;
-	h=From:Date:Subject:To:Cc:From;
-	b=uQDD5QzaGwY38/mORsML5hTD7ymUJRSi82cObZr1bNoKvEZxE64MKQ6PLjprwLvqG
-	 W519cOT031KL/YijYCQjQVSP7FtG4rAD4Gi/FDQMYNLfWHBRvkLJjGVJlL5eDn3TjS
-	 tVPocVDgIq177HUzzQjBeGkCMEAWjRVoZAABqxCE7YDxSaIW2+bNp5Defsxfu1nnW3
-	 a5WQzdePTeTEp5S1X5r6NYnLiXDr5Okc/geq9hM871xkUhr6Hw0BOaBfhSLLFqEMTB
-	 6UyBTxagLXo/J+A8tT+k2siXHBjweU7NV2aqhOkKMNbXX+p0Nt3Tg47e5ts4CuoGTO
-	 RyvG4hcVrc1MQ==
-From: Bjorn Andersson <andersson@kernel.org>
-Date: Tue, 13 May 2025 16:52:46 +0100
-Subject: [PATCH] Revert "remoteproc: core: Clear table_sz when
- rproc_shutdown"
+	s=arc-20240116; t=1747152808; c=relaxed/simple;
+	bh=MxD1dfChZd59AS5bpR63vhxBAY0YNIfICb8zYTHa8x8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YsB1oHwspwecy3I8mk5BOHHIwv/4npyWNyMlMz/qNQBVL2gey+WAF4AgMEuOelsbH3q3isXqtq5BIegnFsEFfdC9KhxkXGhkrv/r+0c7nOKKYfGhLo+H2mxTo4uNPoQvxwlO2ltbR64W9HdVz5791OgOpOZlKVEjkmjsdgg9mjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Yj8VMrHP; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1747152806; x=1778688806;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=MxD1dfChZd59AS5bpR63vhxBAY0YNIfICb8zYTHa8x8=;
+  b=Yj8VMrHPTxgu7tn0g+zrtDQElGq7q0nr8P8kyFHRDk1Q/A+beP1sn7RM
+   Ab/R2C+AMeniyrYXtOGvewZ5c3CWrzO+m1+E/uKFK6CVQ8SFcmZ01skFU
+   U0BqI+tDp0Dem/bgezzZlYJ/Nvr5SHcwF+iYC881hxzQPIQ4pW5LwIsRu
+   YqMb1meNnalxN7O4Q7D+BCx5WBYihOWxX6YSExweqVjZbfwJR1klRNv4X
+   jv1N44/Q8gs/jbJMo2gVroHfesnqzLXkTFK0xCAJAemMJTuv88HPNYyoz
+   V1VWmR9CAEhYR8iD/CxxkSYN+Xhk7WvO+4OaQKD0ScomwtMEH2Ph0O404
+   Q==;
+X-CSE-ConnectionGUID: amiPIrgjQe+z55O1/2uyNA==
+X-CSE-MsgGUID: Pl3FXb2LSgW77RoZ64VkZg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11432"; a="52815609"
+X-IronPort-AV: E=Sophos;i="6.15,285,1739865600"; 
+   d="scan'208";a="52815609"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2025 09:13:25 -0700
+X-CSE-ConnectionGUID: 35MzoiR+ThaVvFzj+aq2NA==
+X-CSE-MsgGUID: gEZemlyTSwWOLEDW23oelQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,285,1739865600"; 
+   d="scan'208";a="142516237"
+Received: from llaguna-mobl1.ger.corp.intel.com (HELO [10.245.116.107]) ([10.245.116.107])
+  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2025 09:13:23 -0700
+Message-ID: <157c5d01-e75f-4708-a1c2-0cbec292f671@linux.intel.com>
+Date: Tue, 13 May 2025 18:13:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250513-revert-rproc-table-sz-v1-1-a8c6b5d6f8a7@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAM1qI2gC/x2M0QpAQBQFf0X32S2WpfyKPKx1cEvoriTy7zaPU
- zPzUIAKAjXJQ4pTgmxrhDxNyM9uncAyRCaTGZvZvOAoQQ/WXTfPh+sXcLjZFvCjKWtTOVBsd8U
- o1/9tu/f9ALoYlfxnAAAA
-X-Change-ID: 20250513-revert-rproc-table-sz-53ecf24726ae
-To: Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>
-X-Mailer: b4 0.14.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/qaic: Add Reliability, Accessibility,
+ Serviceability (RAS)
+To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>, quic_carlv@quicinc.com,
+ quic_thanson@quicinc.com, lizhi.hou@amd.com, quic_yabdulra@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20250512194937.3530774-1-jeff.hugo@oss.qualcomm.com>
+ <8f4b977d-7846-416b-bae4-ac52665fe79c@linux.intel.com>
+ <712eb205-a35a-49f4-a91f-ceebb3626108@oss.qualcomm.com>
+Content-Language: en-US
+From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173, 80-298
+ Gdansk - KRS 101882 - NIP 957-07-52-316
+In-Reply-To: <712eb205-a35a-49f4-a91f-ceebb3626108@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Clearing the table_sz on cleanup seemed reasonable, but further
-discussions concluded that this merely working around the issue
-and that the fix is incomplete.
+Hi,
 
-As such, revert commit efdde3d73ab2 ("remoteproc: core: Clear table_sz
-when rproc_shutdown") to avoid carrying a partial fix.
+On 5/13/2025 5:05 PM, Jeff Hugo wrote:
+> On 5/13/2025 3:53 AM, Jacek Lawrynowicz wrote:
+>> Hi,
+>>
+>> On 5/12/2025 9:49 PM, Jeff Hugo wrote:
+>>> diff --git a/drivers/accel/qaic/qaic_ras.c b/drivers/accel/qaic/qaic_ras.c
+>>> new file mode 100644
+>>> index 000000000000..2f8c1f08dbc0
+>>> --- /dev/null
+>>> +++ b/drivers/accel/qaic/qaic_ras.c
+>>> @@ -0,0 +1,629 @@
+>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>> +
+>>> +/* Copyright (c) 2020-2021, The Linux Foundation. All rights reserved. */
+>>> +/* Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved. */
+>>
+>> 2025?
+> 
+> No, we haven't made any changes to this file this year, so our policy would be to omit 2025.  Historically we've experienced that the community wants the file markings like this to track any copyright prior to the inclusion of the code into upstream/mainline, and then to rely on git metadata to track copyright after inclusion. Therefore that is the policy we follow.  However, these markings might be changing based the rest of your feedback.
+> 
+>>> +struct ras_data {
+>>> +    /* header start */
+>>> +    /* Magic number to validate the message */
+>>> +    u16 magic;
+>>> +    /* RAS version number */
+>>> +    u16 ver;
+>>> +    u32 seq_num;
+>>> +    /* RAS message type */
+>>> +    u8  type;
+>>> +    u8  id;
+>>> +    /* Size of RAS message without the header in byte */
+>>> +    u16 len;
+>>> +    /* header end */
+>>> +    s32 result;
+>>> +    /*
+>>> +     * Error source
+>>> +     * 0 : SoC Memory
+>>> +     * 1 : PCIE
+>>> +     * 2 : DDR
+>>> +     * 3 : System Bus source 1
+>>> +     * 4 : System Bus source 2
+>>> +     * 5 : NSP Memory
+>>> +     * 6 : Temperature Sensors
+>>> +     */
+>>> +    u32 source;
+>>> +    /*
+>>> +     * Stores the error type, there are three types of error in RAS
+>>> +     * 0 : correctable error (CE)
+>>> +     * 1 : uncorrectable error (UE)
+>>> +     * 2 : uncorrectable error that is non-fatal (UE_NF)
+>>> +     */
+>>> +    u32 err_type;
+>>> +    u32 err_threshold;
+>>
+>> This is unused. Maybe it could be useful?
+> 
+> The device can be configured to only make a RAS report to the host after a threshold of events has occured - say every 10 DDR ECC events, report to the host (qaic driver). This field basically restates what that configured limit is. I suppose we can include it in the logged reports to signify that this report really represents N incidents on the device.
+> 
+>>> +    case PCIE:
+>>> +        pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\n",
+>>> +               err_class_str[msg->err_type],
+>>> +               err_type_str[msg->err_type],
+>>> +               "error from",
+>>> +               err_src_str[msg->source]);
+>>> +
+>>> +        switch (msg->err_type) {
+>>> +        case CE:
+>>> +            printk(KERN_WARNING pr_fmt("Syndrome:\n    Bad TLP count %d\n    Bad DLLP count %d\n    Replay Rollover count %d\n    Replay Timeout count %d\n    Recv Error count %d\n    Internal CE count %d\n"),
+>>> +                   pcie_syndrome->bad_tlp,
+>>> +                   pcie_syndrome->bad_dllp,
+>>> +                   pcie_syndrome->replay_rollover,
+>>> +                   pcie_syndrome->replay_timeout,
+>>> +                   pcie_syndrome->rx_err,
+>>> +                   pcie_syndrome->internal_ce_count);
+>>
+>> Why not pci_printk() that would be conistent with the rest of logging?
+>> It there is a reson I would prefer pr_warn/pr_err style logs.
+> 
+> This is a special case. This is a continuation of the pci_printk() a few lines up. If we do pci_printk() here, then the entire message gets broken up is a weird way. In the middle of the report, you'll have the "header" that pci_printk() adds (PCI device, driver, etc) repeted.
+> 
+> The way to avoid that would be to restructure this bit of the code to have all the switches/ifs resolved, and have a single pci_printk() for the entire decoded report.  That means we'll have a lot of duplicated code since the common "report header" for the different PCIe reports would need to be duplicated for each report variant.
+> 
+> This felt like the cleaner solution, although it does have its quirks.
+> 
+> Would a comment help?
 
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
----
- drivers/remoteproc/remoteproc_core.c | 1 -
- 1 file changed, 1 deletion(-)
+Sure, comment would make this more readable. I would still consider using a single pci_printk() per event anyway because you could get these messages broken up if there is a lot of dmesg output from other places.
+printk() takes a global lock in case there is VGA or serial console connected, so the messages wouldn't be split but it is up to you if you prefer cleaner code or cleaner logs.
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 48d146e1fa560397c11eeb8f824ae0fb844a022b..81b2ccf988e852ac79cee375c7e3f118c2a4b41a 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -2025,7 +2025,6 @@ int rproc_shutdown(struct rproc *rproc)
- 	kfree(rproc->cached_table);
- 	rproc->cached_table = NULL;
- 	rproc->table_ptr = NULL;
--	rproc->table_sz = 0;
- out:
- 	mutex_unlock(&rproc->lock);
- 	return ret;
+>>> +static void qaic_ras_mhi_dl_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
+>>> +{
+>>> +    struct qaic_device *qdev = dev_get_drvdata(&mhi_dev->dev);
+>>> +    struct ras_data *msg = mhi_result->buf_addr;
+>>> +    int ret;
+>>> +
+>>> +    if (mhi_result->transaction_status) {
+>>> +        kfree(msg);
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    ras_msg_to_cpu(msg);
+>>> +    decode_ras_msg(qdev, msg);
+>>> +
+>>> +    ret = mhi_queue_buf(qdev->ras_ch, DMA_FROM_DEVICE, msg, sizeof(*msg), MHI_EOT);
+>>> +    if (ret) {
+>>> +        dev_err(&mhi_dev->dev, "Cannot requeue RAS recv buf %d\n", ret);
+>>> +        kfree(msg);
+>>
+>> Woudn't error here prevent any future messages from being received?
+> 
+> Sadly, yes. This should only happen if there is some issue with the underlying PCIe link.
+> 
+>>> diff --git a/drivers/accel/qaic/qaic_ras.h b/drivers/accel/qaic/qaic_ras.h
+>>> new file mode 100644
+>>> index 000000000000..5df6cb9dae80
+>>> --- /dev/null
+>>> +++ b/drivers/accel/qaic/qaic_ras.h
+>>> @@ -0,0 +1,11 @@
+>>> +/* SPDX-License-Identifier: GPL-2.0-only
+>>
+>> Should be:
+>> /* SPDX-License-Identifier: GPL-2.0-only */
+>> or
+>> // SPDX-License-Identifier: GPL-2.0-only
+> 
+> The "//" syntax is for C source files (foo.c) and this is a header file, so I don't think that suggestion applies.
+> 
+> https://docs.kernel.org/process/license-rules.html
+> 
+> C style comment ( /* */ ) is the correct syntax for header files. It is unclear to me that the marking needs to be its own comment, instead of included in the body of another comment. I would say that it is typical to have license markings and copyright markings in the same comment block.
+> 
+> Do you have a reference you can point me to that would clarify this? Perhaps a different file in Documentation or another email thread?
 
----
-base-commit: aa94665adc28f3fdc3de2979ac1e98bae961d6ca
-change-id: 20250513-revert-rproc-table-sz-53ecf24726ae
+This is a little bit pedantic but the docs you pointed to and every other .h file in the driver seem to close the comment on the same line.
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+>>> + *
+>>> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+>>
+>> 2025?
+> 
+> No, per the above reasons.
+> 
+>>> + */
+>>> +
+>>> +#ifndef __QAIC_RAS_H__
+>>> +#define __QAIC_RAS_H__
+>>> +
+>>> +int qaic_ras_register(void);
+>>> +void qaic_ras_unregister(void);
+>>
+>> new line?
+> 
+> Ok.
+> 
+>>> +#endif /* __QAIC_RAS_H__ */
+>>
+> 
 
 
