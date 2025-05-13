@@ -1,63 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-57767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB0FBAB5E17
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 22:48:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DCBDAB5E1A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 22:48:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E1D94655B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 20:48:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1131746547E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 20:48:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17F092BE110;
-	Tue, 13 May 2025 20:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 639462C030C;
+	Tue, 13 May 2025 20:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gSTQvBhu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OQLnxYbt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21C01E990E;
-	Tue, 13 May 2025 20:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F451E990E;
+	Tue, 13 May 2025 20:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747169233; cv=none; b=UUaSy7tgyl+mumwcNRRiTN8G7qOzEXcsmFcSrC6WaYCEhDB1LTSGVDm0oNPWgeb53HOAVC/VKKvhrS81ANrKPGsXQzm85QyBdZjdxRDiMV6JrfQUopfpdgUcj7aKfq4c2ZPBs55zHnE4SBiaKeeZibXzZyZM20mtxDXJNb54g5I=
+	t=1747169237; cv=none; b=uM8X+NqjDU3mSGddlhfgVnc199b979yZ6ohsgbOUyH6MgSuHoFOJVUijTy0/7013zqmbeIJ0nVdm83FJHROh1Vbr0/EPdQwEt67GsfB9lFMr91seLaLZtKsGP8xJSMzqyaLuLAHlnmopZ3SiWnYFztZEFn5ESp6jVHKebpkRS+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747169233; c=relaxed/simple;
-	bh=yXvni7+CJdWN0JN/BesqjJ1COLppmWQW1B08UlJWARg=;
+	s=arc-20240116; t=1747169237; c=relaxed/simple;
+	bh=JaFSnOIXrGfm9/UeXhyaKMiVtfJNjZ7NDkVR2M+WpYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PX97PejpLVrtlLCetqOGnNYfZj8NTHi/2Gq5lP07bFfR60mjP7OMgOiKoLfJ8YT4WFQLnlHb2J6Ch6v6hsAEIAOoVvKS36YS84X8hsVO6n0VCNYXjIsEppeykQSJra8wExAKgA/5pUewWSCyQFEwW0a+x0TQz4Ux5RLqlFXgS08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gSTQvBhu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16111C4CEE4;
-	Tue, 13 May 2025 20:47:09 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Kb4zumVp7l1eEfjhbuLLlA4Lq+CMrv58PKfqrXZUdeIL0iDJHUqIMKeSVW69gWMaJp3q9N5hWZf4+vTWu5G6FyHO24nac2t4eq95vaybX11zoQMlcdu0zPBsuyhMsbsh3nsvHYiEHKRAtHl6yifdtL9YItPMjt7cAM2b8HPwjpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OQLnxYbt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBCFC4CEEF;
+	Tue, 13 May 2025 20:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747169232;
-	bh=yXvni7+CJdWN0JN/BesqjJ1COLppmWQW1B08UlJWARg=;
+	s=k20201202; t=1747169235;
+	bh=JaFSnOIXrGfm9/UeXhyaKMiVtfJNjZ7NDkVR2M+WpYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSTQvBhu0kbLSUBUIxM+2qdFA7qBiiN6nxAzwmnCCZdiaR7pSTmzJebpRz78nM/pC
-	 IzFB4tMH32cZUXE+QiyxSBbGrjprw+GiKL5QBe2UbMupmY6GjOpVUE3k0xrd9lfV4A
-	 I22JmPk2AbJLRdMcH7PVSqXdqTh2P00w61NZ4SFNaBJuOgGFy2ia2QP5ola2CqXQMP
-	 OlsNQjN9lcPvtFBsbEJrUAotwwj6ENh4hy/dEQWo0nf5t6H98+sGHIpRIVrlvrpr5e
-	 kjgqOrrLRUCqjS9zhNByILY09+zAqqQ6mE2j4bch4sxvW+TPT05UmEYssCowah/wQs
-	 941i7M6rG29Tw==
+	b=OQLnxYbtuvrPBXMCpoZr3YwY6Z41QeUSlVBAoKMhJVQX3LFQz0t6CQ4Did8MLD/qF
+	 OmtvZiEukozXrYgWa2c56KqGb2/7GlTzNRtCLKClDJclWvHGkRy4IrTa7pC3kZmf3K
+	 0lY/zamjDUkS2AkKEzebYqAqlss/kuX4zbik//hwb/nkTljWDmS1RAtjpJxqCIymGq
+	 wGIV2klsOMB5//VjXgyct/92/LrmtjsiEZRWenFj4HZGmalVtHE87NHe/3LO8/WA5N
+	 Qr50JG+7Nb3l8lqzemTiTFnd9evQNqOjaGqZzIvDW53F4HZTYEelpEkN8pWjtF0jyF
+	 EVBLpbEFxqsQQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: Thara Gopinath <thara.gopinath@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abhinaba Rakshit <quic_arakshit@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v4] arm64: dts: qcom: sm8550: add iris DT node
-Date: Tue, 13 May 2025 21:46:43 +0100
-Message-ID: <174716895370.39748.9036624565948583062.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH v2 0/2] Enable Qualcomm Crypto Engine for QCS615
+Date: Tue, 13 May 2025 21:46:44 +0100
+Message-ID: <174716895382.39748.3928459424707589207.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250509-topic-sm8x50-upstream-iris-8550-dt-v4-1-22ced9179da3@linaro.org>
-References: <20250509-topic-sm8x50-upstream-iris-8550-dt-v4-1-22ced9179da3@linaro.org>
+In-Reply-To: <20250318-enable-qce-for-qcs615-v2-0-c5e05fe22572@quicinc.com>
+References: <20250318-enable-qce-for-qcs615-v2-0-c5e05fe22572@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,20 +70,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 09 May 2025 17:31:24 +0200, Neil Armstrong wrote:
-> Add DT entries for the sm8550 iris decoder.
+On Tue, 18 Mar 2025 15:13:22 +0530, Abhinaba Rakshit wrote:
+> Document QCS615 support for QCrypto driver and add QCE
+> and Crypto BAM DMA nodes.
 > 
-> Since the firmware is required to be signed, only enable
-> on Qualcomm development boards where the firmware is
-> publicly distributed.
+> This patch series depends on the below patch series:
+> https://lore.kernel.org/all/20241104-add_initial_support_for_qcs615-v5-0-9dde8d7b80b0@quicinc.com/ - Reviewed
 > 
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sm8550: add iris DT node
-      commit: 41661853ae8ed3bb89817bd7a9376f7cf12a596f
+[2/2] arm64: dts: qcom: qcs615: add QCrypto nodes
+      commit: 4153eb38970a9f2328b01278c49b65fbdf84d4d2
 
 Best regards,
 -- 
