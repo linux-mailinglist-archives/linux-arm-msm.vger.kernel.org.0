@@ -1,176 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-57699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79392AB55B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 15:13:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56A6EAB55B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 15:14:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B94F27B4E72
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 13:11:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73E24167DBD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 May 2025 13:14:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB50328ECCE;
-	Tue, 13 May 2025 13:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 607B728E583;
+	Tue, 13 May 2025 13:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IGB1r/v/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="K3WTJ+B5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9F228EA42;
-	Tue, 13 May 2025 13:12:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8762424397A;
+	Tue, 13 May 2025 13:14:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747141958; cv=none; b=G66Xb9nPIRRlBuaYxRlSjBXZt/I1tYRLqjwYQZkayVB8X+qDdhEaEj1xapnS9JiMWyhaczg/UzcLCqQ74HJknpZ+ilZ2BATemyj/tZM/f2bk7OU+3f91+w9JMvGEXTy3gjPIkCSAYAqex6PiE36iBYWDYViooUUN9SsXuPsQ2Cg=
+	t=1747142047; cv=none; b=rdIg0iToyxck8TqLa3d3YOmK/NqOoCfjrZ/ArJiivzmna90yxtMRkY4b5zkXPQBAsMkq0n/alyy2KlFKL9FkySrUrRz47XDz68hD5oQpCDr2d6T75ZuCoe1GW1JAlRw31FPQ3bTUIAt078GIChSXebHoZg1QrsA37y5uGZeIW80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747141958; c=relaxed/simple;
-	bh=FD8ON+zcVfRRTenFUww2Qf/g79bXnESntwotq607B/4=;
+	s=arc-20240116; t=1747142047; c=relaxed/simple;
+	bh=9qYzq2shSFDDkR3f0FiqWCgsrvJDozSPoDj5zHqfdwY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KjqbYFrNeBqBNy+x+gsty9wucuX/mXqZ2U62I9Qp6Q37FvZatRAJKtwOWWzlDB4KrYQyLFQFwucWn+KBlRvEw/4592yK3+EI9WmeMB17cpF9ItH7JQerZXOiJB0Z0gWrNnkUYqTPw/PAlBjN/cizhMPM/+5+pflxpl1Md+X6OoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IGB1r/v/; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=KEVTbkriFnVCcquHC20A9WRMLNknXbxlY8jHTkY9i99svpa7Ykaysu0d+wnAMGISCYPszPkXRKmw1lG8WwQwut/XWUZb5pcIF/UKn7xn+ogTGfIFvNAGd6fkfo8tNzbkTxaX98curuifamNO2oPIKsBjiYzqb10Xz59JC232LOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=K3WTJ+B5; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54DBdfdD027707;
-	Tue, 13 May 2025 13:12:14 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54D6PeRE022722;
+	Tue, 13 May 2025 13:14:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kCTGJVVj8RmqAo9suFmP593apdKnqfz+TSHKtS17EL8=; b=IGB1r/v/am20F2qI
-	GbK31AjgQF62/53DwIWLHe0YjaJJe3Dmaitjh2ZRZXstvOoXGsxw8UQq+L+NUhBr
-	96t9MHHDrdei0xA0D9N5sRmK/g8dFT7jqvKQSVDi6FEorJzp8WyuIgt1s2W0fE1s
-	/JdBad9iYNIk8qnrqmnBR+377eVd3OTQ4O1SDKx5I1EKiksP6yG6PVNhOskASLQy
-	/HoJJrQYOJgmJrSxw8b3C4OYAGgQdBLtf6uutf3QcnSpakH9Se6gq1fvz8ao3IOR
-	zPYdhQ04aPbXmBZYmAB5YPPtZ91T6g4qo11mc1Rihil4is/PY2qai5Y7gTUUSplk
-	srta5w==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46hvghg3v9-1
+	jF6x9fttJR2HbAsgmsB6mkGPnwiACPSiXe3vG6c/vdk=; b=K3WTJ+B5PxbuY0ln
+	t4VMVCjdRPVz0vKvcptH8IpbffceJ3M4pVskKm0Bjvc6uofAje4Vj3xSx8Wh34gR
+	+xh3SNdkKWe9qmJlQHedewdL3l7TxunfNJ6tsTlk2Rz6phahFWCPByUQ2UN2Ln/h
+	ReqoNhhBW2ravjdfL2QvGLHHESsEXn3AfXfNxSOYxzNXqf/ZQbQwpmje2DwbLY8D
+	6LxoxfGigPWswgi6VOGofdYIzyY2ax4oWae3+yH6iYnqXUbF7o9TQ9ULd43Tsaxk
+	6uFHfPOr15sYptGZUAxxyuDBlMYoHwql++tqjFkCnByUcQXZNHiwrJ2RAtZXtjqX
+	u57qkQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46kdsp410g-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 May 2025 13:12:13 +0000 (GMT)
+	Tue, 13 May 2025 13:14:00 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54DDCDRx030092
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54DDDxl7007677
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 May 2025 13:12:13 GMT
-Received: from [10.218.7.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+	Tue, 13 May 2025 13:13:59 GMT
+Received: from [10.50.52.254] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 13 May
- 2025 06:12:08 -0700
-Message-ID: <939d4d07-c055-4e99-9d56-19cb7fdfa1c9@quicinc.com>
-Date: Tue, 13 May 2025 18:42:05 +0530
+ 2025 06:13:56 -0700
+Message-ID: <7e6fc439-b948-6777-0a70-a8ea58b1f7bd@quicinc.com>
+Date: Tue, 13 May 2025 18:43:53 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 10/11] scsi: ufs: qcom : Introduce phy_power_on/off
- wrapper function
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <manivannan.sadhasivam@linaro.org>,
-        <James.Bottomley@HansenPartnership.com>, <martin.petersen@oracle.com>,
-        <bvanassche@acm.org>, <andersson@kernel.org>,
-        <neil.armstrong@linaro.org>
-CC: <quic_rdwivedi@quicinc.com>, <quic_cang@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-scsi@vger.kernel.org>
-References: <20250503162440.2954-1-quic_nitirawa@quicinc.com>
- <20250503162440.2954-11-quic_nitirawa@quicinc.com>
- <58d913b8-0715-41b0-883a-423f29cb5a8c@oss.qualcomm.com>
- <be69cd1e-c04c-4976-9be1-390631316d3f@quicinc.com>
- <4a72ea06-22a8-4f8c-92ad-b5b3afa25b70@oss.qualcomm.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 1/2] media: venus: fix OOB read issue due to double
+ read
 Content-Language: en-US
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <4a72ea06-22a8-4f8c-92ad-b5b3afa25b70@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vedang Nagar
+	<quic_vnagar@quicinc.com>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250215-venus-security-fixes-v2-0-cfc7e4b87168@quicinc.com>
+ <20250215-venus-security-fixes-v2-1-cfc7e4b87168@quicinc.com>
+ <79691e26-cddb-47d2-9112-deae3f9aaee6@linaro.org>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <79691e26-cddb-47d2-9112-deae3f9aaee6@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 0lOilMgDkls3J-Oot3wGBUyIbpmjDo8z
-X-Proofpoint-ORIG-GUID: 0lOilMgDkls3J-Oot3wGBUyIbpmjDo8z
-X-Authority-Analysis: v=2.4 cv=AMDybF65 c=1 sm=1 tr=0 ts=6823452d cx=c_pps
+X-Proofpoint-GUID: JMjbAZVqLz-G-p7IdoGID5YPt3VsJPva
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDEyNSBTYWx0ZWRfX9sd+Zxee6WqQ
+ xJ0dxltk8gIBWP8tw1jbZLKAjOv74DAHc18S3x09MXNVQubWQJ6kZwFjt3whA6mBQiFuQ+USoYF
+ fS3Iz7DZLMgpHaoxvAOBrmfVQefKCwXIJZ3yCuBRh3MXTy6uocda4Atel/Dj4EBlv3iswrRUKJb
+ eq/igw0pidDCH8Vakkf1n1MP3jo9Y/dlkpTKa+HegO8mL1x479+L2qQoPItuH3tF9flywVr21eq
+ v2pEYG5j8akKxPCKZBAAxR7se78AHIJSQf6mSzPUWuAgsngoR8NNEmdWc4cYJrrUBAq8Y1DZ9Yp
+ 2wykWJzZzpgPnO8Vdn1bk/qT5HFRI1xY8HbtGCGWuuoqGhre911TtqFn2Kc4RVIjzSgfGF8ojQQ
+ g9CoNE1q/RCcrRslzSESMIW9BJSnWLjFvLw0v8AtaYcvXi5dBFHK8WADAG59icoaoNM2hEtP
+X-Authority-Analysis: v=2.4 cv=TrfmhCXh c=1 sm=1 tr=0 ts=68234598 cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
- a=sYTkcTt2xfybeOqe0B8A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDEyNiBTYWx0ZWRfX1VY38sj2SPpZ
- +AcNE40bOCJ8fUVkzZnmmOnQfwyrn2t9rPNKVyIL0OnI4QhBcpWI3CJr45Ky7gXJilN5DCmm+g7
- 5vFWp0q2MQt79zE6zwfLP0fo0MtBtMGEo/ScNy9OhsCjXKzp/fOqoR9rYv7AanAxPvEKTR3QKSp
- GDAS61H0kiqS+/Qm9kNffmOD6Jz6CYMW/2CDleXJJRsEooKHLZHwwKFi1r/3xusmir2CwacX5A2
- nNMosc3zq5RAl4T9o9nP/qtl+JAHHzGPRz2s+j9JCaC37Orvv/RHs0iaomigckuror5qEs3a1wO
- myadJkgibOuE+rBvHzFj9bIOC8cV2Ss8CKPk+9ZWVGPrrsBGvVv1WaHgP9Eo4YiJJ6uLwk2weu4
- 8LxK+mYpTzh8Zb4SdOCZSVbTvK1GWAdVTPS8uLPLZr4oIqbV0lYts3aLNHwEsJeaSTyjKNsV
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=RWc0MnvpR_tpw4Xja0UA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: JMjbAZVqLz-G-p7IdoGID5YPt3VsJPva
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-13_01,2025-05-09_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 priorityscore=1501 adultscore=0 impostorscore=0
- phishscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 mlxscore=0
- mlxlogscore=945 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0 mlxlogscore=753
+ suspectscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ mlxscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505130126
+ definitions=main-2505130125
 
 
 
-On 5/9/2025 5:30 PM, Konrad Dybcio wrote:
-> On 5/9/25 1:49 PM, Nitin Rawat wrote:
+On 3/4/2025 7:15 PM, Bryan O'Donoghue wrote:
+> On 15/02/2025 17:19, Vedang Nagar wrote:
+>> During message queue read, the address is being read twice
+>> from the shared memory. The first read is validated against
+>> the size of the packet, however the second read is not
+>> being validated. Therefore, it's possible for firmware to
+>> modify the value to a bigger invalid value which can lead
+>> to OOB read access issue while reading the packet.
+>> Added fix to reupdate the size of the packet which was
+>> read for the first time.
 >>
+>> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+>> ---
+>>   drivers/media/platform/qcom/venus/hfi_venus.c | 1 +
+>>   1 file changed, 1 insertion(+)
 >>
->> On 5/9/2025 5:07 PM, Konrad Dybcio wrote:
->>> On 5/3/25 6:24 PM, Nitin Rawat wrote:
->>>> Introduce ufs_qcom_phy_power_on and ufs_qcom_phy_power_off wrapper
->>>> functions with mutex protection to ensure safe usage of is_phy_pwr_on
->>>> and prevent possible race conditions.
->>>>
->>>> Co-developed-by: Can Guo <quic_cang@quicinc.com>
->>>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
->>>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
->>>> ---
->>>
->>> The PHY framework does the same thing internally already, this seems
->>> unnecessary
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c
+>> b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> index
+>> f9437b6412b91c2483670a2b11f4fd43f3206404..c124db8ac79d18f32289a690ee82145dc93daee6 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> @@ -298,6 +298,7 @@ static int venus_read_queue(struct venus_hfi_device
+>> *hdev,
+>>               memcpy(pkt, rd_ptr, len);
+>>               memcpy(pkt + len, queue->qmem.kva, new_rd_idx << 2);
+>>           }
+>> +        *(u32 *)pkt = dwords << 2;
+>>       } else {
+>>           /* bad packet received, dropping */
+>>           new_rd_idx = qhdr->write_idx;
 >>
->> Hi Konrad,
->>
->> Thanks for the review. There are scenarios where ufshcd_link_startup() can call ufshcd_vops_link_startup_notify() multiple times during retries. This leads to the PHY reference count increasing continuously, preventing proper re-initialization of the PHY.
 > 
-> I'm assuming you're talking about the scenario where it jumps into
-> ufs_qcom_power_up_sequence() - you have a label in there called
-> `out_disable_phy` - add a phy_power_off() after phy_calibrate if
-> things fail and you should be good to go if I'm reading things right.
-
-Hi Konrad,
-
-I meant, ufs_qcom_power_up_sequence can be called multiple times from 
-ufshcd_link_startup as part of ufshcd_hba_enable calls for each 
-retries(max retries =3) and each attempt of ufs_qcom_power_up_sequence 
-is success increasing the power_count ref to value more than 1.
-But this is handled using the patch 7bac65687510.
-
-Similiar scenarios can be possible in ufs driver , where there can be 2
-phy_power_on calls which may caused caused phy ref count to be more than 
-1 and this inconsistent behaviour may cause issue.
-
-Hence having is_phy_pwr_on flag can help here.
-
-Thanks,
-Nitin
-
+> This is confusing - where is the read
 > 
-> Please include something resembling a call stack in the commit message,
-> as currently everyone reviewing this has to make guesses about why this
-> needs to be done
+> Your previous code
 > 
+> https://lore.kernel.org/lkml/20250104-venus-security-fixes-v1-1-9d0dd4594cb4@quicinc.com/
 > 
->> Recently, this issue was addressed with patch 7bac65687510 ("scsi: ufs:
->> qcom: Power off the PHY if it was already powered on in ufs_qcom_power_up_sequence()"). However, I still want to maintain a reference count (ref_cnt) to safeguard against similar conditions in the code. Additionally, this approach helps avoid unnecessary phy_power_on and phy_power_off calls. Please let me know your thoughts.
+> memcpy(pkt, (u32 *)(queue->qmem.kva + (rd_idx << 2)), sizeof(u32));
 > 
-> These unnecessary calls only amount to a couple of jumps and compares,
-> just like your wrappers, as the framework keeps track of the enable
-> count as well
+> V1 then would have been:
 > 
-> Konrad
+> if (new_rd_idx < qsize) {
+>     memcpy(pkt, rd_ptr, dwords << 2);
+> } else {
+>     size_t len;
+> 
+>     new_rd_idx -= qsize;
+>     len = (dwords - new_rd_idx) << 2;
+>     memcpy(pkt, rd_ptr, len);
+>     memcpy(pkt + len, queue->qmem.kva, new_rd_idx << 2);
+> }
+> 
+> + memcpy(pkt, (u32 *)(queue->qmem.kva + (rd_idx << 2)), sizeof(u32));
+> 
+> V2 proposed:
+> 
+> if (new_rd_idx < qsize) {
+>     memcpy(pkt, rd_ptr, dwords << 2);
+> } else {
+>     size_t len;
+> 
+>     new_rd_idx -= qsize;
+>     len = (dwords - new_rd_idx) << 2;
+>     memcpy(pkt, rd_ptr, len);
+>     memcpy(pkt + len, queue->qmem.kva, new_rd_idx << 2);
+> }
+> 
+> + *(u32 *)pkt = dwords << 2;
+> 
+> My comment wasn't about use of memcpy() it was about why we are doing this.
+> 
+> For example if new_rd_idx < qsize is true then we literally do
+> 
+> a) memcpy(pkt, rd_ptr, dwords << 2);
+> b) *(u32 *)pkt = dwords << 2;
+> 
+> and the question is why ? That is an unambiguous cast of pkt to the value
+> of dwords << 2;
+> 
+> What is the scope of how the data can change from a to b ?
+> 
+> And why is the data considered potentially invalid @ the memcpy() but valid
+> subsequent the cast ?
+> 
+The concern here is not about the value of dword which will be fixed once
+we read the *rd_ptr first time and validate it.
 
+The concern here is, with the data contents at rd_ptr which could be
+tempered with after validation, because the memory is shared by firmware
+
+So the real problem here is:
+- driver read *rd_ptr, extract dwords = *rd_ptr >> 2, and validate it, lets
+say this value is 10
+- then copy dwords << 2 bytes from rd_ptr to a kernel buffer (pkt).
+- But: the first 4 bytes at rd_ptr (which represent the size field again)
+could have changed in the meantime — now saying 40 instead of the original 10.
+
+security concern here is:
+Even though the outer dwords is correct, the copied content might claim to
+be bigger than what was validated — potentially tricking the rest of the
+system into processing garbage or running past buffer bounds.
+
+This is not a TOCTOU on the dwords, but a TOCTOU on the contents at rd_ptr,
+where the firmware changes the actual data after size is checked, but
+before it's copied.
+
+> Assuming rd_ptr contains the length of dwords << 2 to begin with in the
+> first 4 bytes - why is it necessary to make _really_ _really_ sure by
+> restuffing the data ?
+> 
+> For example if *(u32 *)rd_ptr != dwords << 2 - why shouldn't we just throw
+> the whole frame away as containing junk data ?
+
+Agree with returning error during mismatch instead of forcefully
+overwriting the content.
+
+Thank,
+Dikshita
+> 
+> ---
+> bod
+> 
 
