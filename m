@@ -1,188 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-57875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B03C6AB7173
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 18:33:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54D87AB7178
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 18:33:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 141EB17F96B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 16:33:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 148E81B672C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 16:34:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59C2027A92C;
-	Wed, 14 May 2025 16:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4217927A470;
+	Wed, 14 May 2025 16:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xdSiqa6h"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iNj+4G4e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6649E1C1F21
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 16:33:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB5E1C1F21;
+	Wed, 14 May 2025 16:33:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747240402; cv=none; b=AFJNur90MlMbYq70VUm6a0aOwK+56CACObN0HM0D7o9RVelWTIKf9I9Do00SQApYpMt/7tbBaCrGzuyeposAiL0xtAyQVfn1wQN71SmEUIElqioytu1aIELlXl5d6CTs9pCTdFGsD50TmmGDA+Ykjq2JbS03g/b4as0z33O236A=
+	t=1747240425; cv=none; b=YEbaP2Ir5WvJrW/QA61Z4IFXwQ+KkTrMcLrhvEK2LyGGk1HfmggXVLMq6Ajc9GtSQXc5PruKI3vwKVfo0DtEmGI5VnQJlG/HHR/OWEcyOObycd8Qfk4FyvJ3o1YQgs5tw2iHsL8/GK5KLVlZYCqCNzu0B4BCNXgfaeuvqHO/lAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747240402; c=relaxed/simple;
-	bh=EylYPAhha75brtQOCOFRFeLMtFLPLOh7si42ePDVpmA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p/Y8NFmBeGm5KOzdS0tulMkvYqbOymb4b8R31as9rt7VpdSzEH1E9vn/Rc+z1PCI05BxDvxZmlmpUdoH7LzJwcOCQkVvoKYw7Ee7mHgMaRyP0HwbxZk22p12yAegiCn+AEmbKt6x4w5eiFKaCz1DVOuFbC023+jXCXTh8fIseYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xdSiqa6h; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-442e9c00bf4so92975e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 09:33:19 -0700 (PDT)
+	s=arc-20240116; t=1747240425; c=relaxed/simple;
+	bh=1nwxBKuI5G90u6V3HZVNVHDKHS5z3vUwKMEcOGgc9lc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EBqewVzVd0Jy1U34El8VXqUXMdrtF2a1l/G3gT0aSmgS/JkC6sBoQeoMeF1WPFMp61i6O3k/4mnXdBXoYbdPsbZoWf43zh61Bfr9GeF7nHlzDFKE31UsY4S+kvnOQ5ejRGeeu0r0OnKLiseB18lIa2BM5sLS7kIQPp/l00g2TIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iNj+4G4e; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-879d2e419b9so6544768a12.2;
+        Wed, 14 May 2025 09:33:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747240398; x=1747845198; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=fkj+eXJWD3zKSY4LtYDXeZfa8DE+DGWzE6g5lQpJzPc=;
-        b=xdSiqa6hvuXiOyFBoYrJ/qa8BH0LD5qlfFkrPt4y5a0ArnBUyLelDpzRwxMxJ863MU
-         bukhI4mqSbdo2+9RCPvujtd7i8tVtUwmutj223iNUiDoOHdQbPsUJ2HNj9RHvHUf/M/X
-         TvY+Jq2upBPF5VEGFfLYFKq2xhZCj8BQDvHHxLaBbN/BM2/LgJLt7ilHte78vDlEI1nJ
-         9ykYDL7BHTtCuyU7KyLFUSv/E/lUUj0NmXmZurOCnqVFPMXCVtRPxUDM1dhIELV2gsCm
-         +NCfcfOHkv9mgPw6JfBqPgOv7vKA/1nIS/+kr3oD73KEJCNEYrQkbBsey1n5I7CA+DIt
-         kCZA==
+        d=gmail.com; s=20230601; t=1747240421; x=1747845221; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xVkxVRdg2M/AIh3AWsgwH9hFnfAOA4U3vxBTP/C0R3M=;
+        b=iNj+4G4eyMRZdIDDB6eVdv4zDr0xOTd2S0Ghpla8pK2oIOUl8/BXfMXl0sGXBGVLno
+         ia6vLYbpwlsZdFZmIF70iXC/VupmFFkpOtx6m/YMUdtsiqgtYecB94CQdE04n/LwL9wj
+         SWIlCAd2GDiSve6t862vDXFkO7s2eNMV+d8LhOCgUqVzQ3JFkPmjRe6LMeCgA2ck6Uxy
+         XBAXQmITbz1T/6Vgp2rcP+vcJDcWEyxChe78zHiyaIXsUfq5SmZbJFj7+qfs5NCEEO3P
+         xA396ZIHcB0P81IIZ4QBY9wDpirbCpAcvjTfV9deWqG3eYUd1ijXaIrwlljeDfU0hpvn
+         3mgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747240398; x=1747845198;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fkj+eXJWD3zKSY4LtYDXeZfa8DE+DGWzE6g5lQpJzPc=;
-        b=CcrEJyijHygHSy9i3/r3StTZPP/kuWzrasbZ6MGoRGIRnc5R+Ne+EScVo6FWABYiki
-         phkg6r1mlVemt1wEkpvWGHfGXWxvFE8FuGHCqeInWB8BIybn48bjcaMhh1Vm6nZ5p7to
-         63bxpoDx8MfBAdjh/dblI5YMQrRSlIdBNQtN+DBGN4frTN9c5n8aMzJpteKBC3WNOvc3
-         Q3WEsqrImuCE4vO4ed5Rf+tcD2jWeqjpjhM+Uywf6F0Sk8M+tkUzxj3PkKUtCli0hQB1
-         TFFXcfzVnDCKGYL6PdipEisj/Wadw4oXgsgMn6LFaZ854cssPVlW72JVtWJn6UuaKxii
-         dl1A==
-X-Forwarded-Encrypted: i=1; AJvYcCWnKphvZ3ggfa8gJHLUMkEkm3AuUraKAUSshrV25WttV+phQeo7AhOidId6lmn26vYWCWu//uuZx6WudC9+@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxi7y22FAw5U+BPtjo11DMjWf6CHu0bWU9TbTGoNtTgV3+P5lk9
-	T8Yvpmjfr/zxsfJnGTeOK7ky7vgeI0I/CLCccMl4twZzdJ/92r8SRPCOJ2oR2w==
-X-Gm-Gg: ASbGnctka0s3r4XH0m0pMsYeEiDVCA6+4PTDqIOHrDl+FiTHwvCRTIqCajCQW3ioV+r
-	Z77SVCIohkyGV6JTiNcWSxA/t/MzkeuYHaWEtb/KZTMg7zycKKejrs4BBXE96XqwspDdV4w38s2
-	M9DoTkAiqOHjdWPc1BIWEHg+Kp6/X2CtBk5VTIIu6sfxbI/KkUv7I8jv8lYcUnyPW99EN8BDG9V
-	VvLO7CnY0k4z0LOXVKg3unp0wlt/foiH3TBv7xr1nZmdZ4KfB7n3Bqlm15wFuGuAnfJazddDKPq
-	ACJA2N0PLg5uA7Rk9kOidZAebr7jf4gnbwkZjcBML5sLGYx/zPaUoAmoXId6g8fceweMMmlRXMr
-	oAQRnrEvtfMQQbw==
-X-Google-Smtp-Source: AGHT+IFPC9mL+DlWLaHagO2PQibPE5IAsRnVspZO3QJiVtK+BzyLXCvkMi6qfUPBM+PpkrIO8X/e5g==
-X-Received: by 2002:a05:600c:b8c:b0:43d:94:cfe6 with SMTP id 5b1f17b1804b1-442f4c8fe71mr33161715e9.16.1747240397611;
-        Wed, 14 May 2025 09:33:17 -0700 (PDT)
-Received: from thinkpad (112.8.30.213.rev.vodafone.pt. [213.30.8.112])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f3951b57sm37447745e9.21.2025.05.14.09.33.16
+        d=1e100.net; s=20230601; t=1747240421; x=1747845221;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xVkxVRdg2M/AIh3AWsgwH9hFnfAOA4U3vxBTP/C0R3M=;
+        b=O0FG0oUkPOozMr/1ykvgK12ifFKdktusrCNGKiQkwMG3DEWRhgoHRKnEgBpDJMEk+/
+         6mh56JJlZ/m4Pz5tPQqVF+2tbkGEznmWlS5fNcE3skmhnEg8dhNxztVWSBPad9bT/Bgl
+         UckBvUkNNd2c23TMTmQbBiU6LGz56tZoDAbtgHEOLxe+YmLety5m7lUAmd9PQ10VGAYJ
+         ANcz6oCMVpTnKN6TgJXgtlYKXHI8FIswuW6g8rKvvz2i8f8cessx0olve9ysvIJbbUus
+         FJgfVPOfp3TMbUIE7/K5P3DIW6rJQ5jLScy7C3VTR/kstsCQae6SU+Y3TZeY0JvGQ/+V
+         tSkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXwFMKE3MQs1MV6O8MA8csD0SRj+rwdYD1dRmjKXs6CPzSD7fw6L78F+XEtptaRJdcGgbxr95BbbSKDUPs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxH5nrcqMv1uT429MbGK4krEKxezMDlLUOVBvfNshrKxnCH042k
+	Aur5QdFrVEi2wBwzj3DxWZF/PjhBPerP1ZMT4oBB7XnbkJrTZ/d6T956bQ==
+X-Gm-Gg: ASbGncvy6UgybpF0oMMRSlTE1zW6FZwX0qFmx2NKN070eCbzHtv0HEGW8Ia36o2E5ZQ
+	VRa73QPrEDhOuzCxcUbx3Q6NQRvJRwqzmyjuPYfka7vgG29Wzz8P+iKUjPV9LQ08rpUJyLT948O
+	cK6q12xwvLq5P86UB8cWqFGPi4xyg5w26qi/DtCq7ZpCzhN7NZWY+G0dcTPjLKTpZG0/MeuevHP
+	PFJH1DBgNqo25uZWGgroIjTR4syIYlbn+bDR0B7S8E7Oj3tAKQB+JjvlQ/zz6cK6KmrTvM0YpGd
+	RX9Z+pzAu49W47n45yvBt6HdEEc7Ie5ix4EBmQfpS1a6opJJ1ySZnSMvtafQFiQOFHvkeO92Gfx
+	P4EuMWASZSMABxPtFDgPze46Ewg==
+X-Google-Smtp-Source: AGHT+IHatQ6/wd/syK5i39NkoDdy1R1SzksD0uoYCBe2eTGgXV9Acjls0e/9P3cZzXmWvFE8Ptffeg==
+X-Received: by 2002:a17:90b:4acb:b0:2ee:b4bf:2d06 with SMTP id 98e67ed59e1d1-30e2e6133d8mr5740820a91.19.1747240419803;
+        Wed, 14 May 2025 09:33:39 -0700 (PDT)
+Received: from localhost ([2a00:79e0:3e00:2601:3afc:446b:f0df:eadc])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30e33424d3bsm1759592a91.11.2025.05.14.09.33.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 May 2025 09:33:17 -0700 (PDT)
-Date: Wed, 14 May 2025 17:33:15 +0100
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
-	Oliver O'Halloran <oohall@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Zhou Wang <wangzhou1@hisilicon.com>, 
-	Will Deacon <will@kernel.org>, Robert Richter <rric@kernel.org>, 
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>, Marc Zyngier <maz@kernel.org>, 
-	Conor Dooley <conor.dooley@microchip.com>, Daire McNamara <daire.mcnamara@microchip.com>, 
-	dingwei@marvell.com, cassel@kernel.org, Lukas Wunner <lukas@wunner.de>, 
-	linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v4 4/5] PCI: host-common: Add link down handling for host
- bridges
-Message-ID: <dglc4iqxxrjnbpqazi2xuzdblpcszcdb7q5nlz2ezzzyeujpvc@672myo6djcji>
-References: <20250508-pcie-reset-slot-v4-0-7050093e2b50@linaro.org>
- <20250508-pcie-reset-slot-v4-4-7050093e2b50@linaro.org>
- <8006a0ae-b45d-d22f-65a9-20a65f3224b0@oss.qualcomm.com>
+        Wed, 14 May 2025 09:33:39 -0700 (PDT)
+From: Rob Clark <robdclark@gmail.com>
+To: dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Rob Clark <robdclark@chromium.org>,
+	linux-kernel@vger.kernel.org (open list),
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Sean Paul <sean@poorly.run>
+Subject: [PATCH 0/2] drm/msm: Fix a couple submit leaks
+Date: Wed, 14 May 2025 09:33:31 -0700
+Message-ID: <20250514163334.23544-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <8006a0ae-b45d-d22f-65a9-20a65f3224b0@oss.qualcomm.com>
 
-On Wed, May 14, 2025 at 12:00:11PM +0530, Krishna Chaitanya Chundru wrote:
-> 
-> 
-> On 5/8/2025 12:40 PM, Manivannan Sadhasivam wrote:
-> > The PCI link, when down, needs to be recovered to bring it back. But that
-> > cannot be done in a generic way as link recovery procedure is specific to
-> > host bridges. So add a new API pci_host_handle_link_down() that could be
-> > called by the host bridge drivers when the link goes down.
-> > 
-> > The API will iterate through all the slots and calls the pcie_do_recovery()
-> > function with 'pci_channel_io_frozen' as the state. This will result in the
-> > execution of the AER Fatal error handling code. Since the link down
-> > recovery is pretty much the same as AER Fatal error handling,
-> > pcie_do_recovery() helper is reused here. First the AER error_detected
-> > callback will be triggered for the bridge and the downstream devices. Then,
-> > pci_host_reset_slot() will be called for the slot, which will reset the
-> > slot using 'reset_slot' callback to recover the link. Once that's done,
-> > resume message will be broadcasted to the bridge and the downstream devices
-> > indicating successful link recovery.
-> > 
-> > In case if the AER support is not enabled in the kernel, only
-> > pci_bus_error_reset() will be called for each slots as there is no way we
-> > could inform the drivers about link recovery.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >   drivers/pci/controller/pci-host-common.c | 58 ++++++++++++++++++++++++++++++++
-> >   drivers/pci/controller/pci-host-common.h |  1 +
-> >   drivers/pci/pci.c                        |  1 +
-> >   drivers/pci/pcie/err.c                   |  1 +
-> >   4 files changed, 61 insertions(+)
-> > 
-> > diff --git a/drivers/pci/controller/pci-host-common.c b/drivers/pci/controller/pci-host-common.c
-> > index f93bc7034e697250711833a5151f7ef177cd62a0..f916f0a874a61ddfbfd99f96975c00fb66dd224c 100644
-> > --- a/drivers/pci/controller/pci-host-common.c
-> > +++ b/drivers/pci/controller/pci-host-common.c
-> > @@ -12,9 +12,11 @@
-> >   #include <linux/of.h>
-> >   #include <linux/of_address.h>
-> >   #include <linux/of_pci.h>
-> > +#include <linux/pci.h>
-> >   #include <linux/pci-ecam.h>
-> >   #include <linux/platform_device.h>
-> > +#include "../pci.h"
-> >   #include "pci-host-common.h"
-> >   static void gen_pci_unmap_cfg(void *ptr)
-> > @@ -96,5 +98,61 @@ void pci_host_common_remove(struct platform_device *pdev)
-> >   }
-> >   EXPORT_SYMBOL_GPL(pci_host_common_remove);
-> > +#if IS_ENABLED(CONFIG_PCIEAER)
-> > +static pci_ers_result_t pci_host_reset_slot(struct pci_dev *dev)
-> > +{
-> > +	int ret;
-> > +
-> > +	ret = pci_bus_error_reset(dev);
-> > +	if (ret) {
-> > +		pci_err(dev, "Failed to reset slot: %d\n", ret);
-> > +		return PCI_ERS_RESULT_DISCONNECT;
-> > +	}
-> > +
-> > +	pci_info(dev, "Slot has been reset\n");
-> > +
-> > +	return PCI_ERS_RESULT_RECOVERED;
-> > +}
-> > +
-> > +static void pci_host_recover_slots(struct pci_host_bridge *host)
-> > +{
-> > +	struct pci_bus *bus = host->bus;
-> > +	struct pci_dev *dev;
-> > +
-> > +	for_each_pci_bridge(dev, bus) {
-> > +		if (!pci_is_root_bus(bus))
-> bus here is always constant here, we may need to have check
-> for dev here like if (!pci_is_root_bus(dev->bus))
+From: Rob Clark <robdclark@chromium.org>
 
-Good catch! Ammended it while applying.
+A couple things I found in the process of debugging VM_BIND, with all
+the kernel debug knobs turned on.
 
-- Mani
+Rob Clark (2):
+  drm/msm: Fix a fence leak in submit error path
+  drm/msm: Fix another leak in the submit error path
+
+ drivers/gpu/drm/msm/msm_gem_submit.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.49.0
+
 
