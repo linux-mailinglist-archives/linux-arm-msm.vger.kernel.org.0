@@ -1,98 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-57887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E05BAB7236
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 19:03:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EC02AB723A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 19:04:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A32A864500
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 17:03:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E91831659AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 17:04:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA86E27E1C0;
-	Wed, 14 May 2025 17:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D32C32836BE;
+	Wed, 14 May 2025 17:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NmffRXhA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K1uPtkbS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435EB1F30BB;
-	Wed, 14 May 2025 17:03:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B64D1C84A4;
+	Wed, 14 May 2025 17:03:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747242203; cv=none; b=ISphiweoaGmSX5HyNuY08VVY2R9hsGe6XukILswtZmLQRiKYrpHIjrWHCmmHKmdb43swwhJJM4C5mVtQtxSAEkuyz/TMfebn4kK8F/quqfVhaStmPqizqKfzbh877JQ8cOX04DWCh5QKNW2irhJMjPCXM24Q9wd/HRwiRf4iVcc=
+	t=1747242205; cv=none; b=ROhcqlLnKFZAdd5Dr83FV9S662NLTgnnfHLeLYA3YNHoU4NmhoMFavjjL4YqN97hJKZTV16Ey1SjkBqc668RqTMrgKXezJ+RHx0PmiWDRuq1b/zrQaVg9Cj/tdgvQKjZXPt26p+AaJW/M9098a17NI6UHsShHZHMWT6nAoBrJIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747242203; c=relaxed/simple;
-	bh=HQTYjppayVSe6RMF1/nDWeCVEk0At2uUwSWtYOLEAf8=;
+	s=arc-20240116; t=1747242205; c=relaxed/simple;
+	bh=S70AqtUkK5OmAkeX3+eW3Kz8b90sl271x2qby76umKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a4QMM2Kb3Gh0hYrpX5/ssY3jwnWAaGZdSP3bpzvHwqeNafcwSacJg8fX9g7y/8zRlzwaVWwS6zecOWx9KAPtRxpjyHyd3fHmXD74RX/HnFdmF/LaMGiCGOHhzQYqu8u/sBTKuRVOAVCNvr8KJX5wnQ4SPTJRSMKcmz2KJB8WI2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NmffRXhA; arc=none smtp.client-ip=209.85.210.179
+	 MIME-Version; b=ui3kSj8Z/7Y0UMCNsEQFd3SeG0pGQytkYtU7dlVou3aRYpV3+wpGVOTws0EsQrx0y8Wb3SoGvJyqYfJIdsumFVqxzggqigYrk7oVv8LIWeAqF1LMWV71Eb85RKka6AutlVrHhNr2MX1DY+dBvpok4e2HVYUWfts7dIyaJDIQDOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K1uPtkbS; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7411f65811cso128425b3a.1;
-        Wed, 14 May 2025 10:03:22 -0700 (PDT)
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2301ac32320so689035ad.1;
+        Wed, 14 May 2025 10:03:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747242201; x=1747847001; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747242203; x=1747847003; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bzY7l39Nyf4cERK4w5Xc1S0qyexBdUxlhblg/1kA2ys=;
-        b=NmffRXhAEkGmTe0/BJ4h7/0mWl5rDMwxjgyncfSYcly8T3GgwBhihI909DcpP4HWRQ
-         TqroLSB28H7hL8WlTU+wikjPfOOod+nmp73wsZmAk/GKPs9vRren0mpCT24b9eiqoDOa
-         nS8AQjgYrtrKIATadTV8R0CTvB7T4wWLB19B4n+5Rt3VMFAOmI+ZtkslUmfAWs27M/XF
-         Wc19+9sRWgN/L5dTonmtLYP57+vV5zHN0PKF6DZGxEm+IYhtFwVa8I7Vi7bcWQ4QdpxT
-         aeC3sSEGrogwsUzqIvPherfxpU2VCgjbTTsbILBNlnSTbS19uT5C6LFTc8W/VQt0qYM4
-         R+AQ==
+        bh=m0BW6GR7shhqIiAyRWPQuh4IbH82fM2o3KorXlQUa88=;
+        b=K1uPtkbSok2Rbmj6d2TgwWO2Su5320jWiLn2Jv/SWpNbCNnHfEFn3EJz9HvVOU3xKO
+         qPVeqEe+K6uj8liYQXoQCc1hoQrLVLfWa1za8WvAVKZHfevYj9uB96UnKccRjplMG6Qj
+         0USeDY6NelQzg3q9AP0Ws1FTEylYxmL54GFHhtHr261IULwlMXr3AYrMyXlZu5Qit22b
+         nQHyixf6XQGy/H38WMN/VtJzD4fpn8nH+9tbqM+ygTzE+Gs3fRVVwoLd10ybzAguBWmy
+         LKrXX4ojSPqR3BhkJkREIv5pleKDGGqCExGE9kcD4pxmvRxBfIHRwcdE62fr69DqTn88
+         JOHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747242201; x=1747847001;
+        d=1e100.net; s=20230601; t=1747242203; x=1747847003;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bzY7l39Nyf4cERK4w5Xc1S0qyexBdUxlhblg/1kA2ys=;
-        b=LiZUsrzb13jSh7imTbrogZP7vx4vb/Og1mfLRz0Nnfvrob4KvaBZEy/WGq+8REMPKo
-         v8FtdHejPwoeCHv0LzWYYHlc6314jN6UMrkwrICviUh9LXipRsZDehfsegM+qOqymLn4
-         Kj2hTU3R4i62S/OT9xJ0gMl6CuFpl8XrxMDeSDGH/fxNK06OUT6Yw1jzi4JKB0XGnk02
-         vyzzktqcURPV9gIfMerRxyxu9E32dY8ljsgiZxLxP81pvXZLQg1WguWNavEIMKAAD5b1
-         Ts8+UufW1UxK3FwtpJHpOFzAYm3gciw/dI4fEv14RCs0LeKuzBDDHYUhsANPIc5XlBfa
-         vncw==
-X-Forwarded-Encrypted: i=1; AJvYcCXV36UQBHvwJU/NdIGWGeEANkiEvBEmzaC7py5LrCHu3lDy8ocE50huFWbNtySvpWUXp88m2Hny6KJ7BBeX@vger.kernel.org, AJvYcCXdC+OIeubR8PWZ4SKu3p7uSvoDxx0UBBI99jKiwowBRieuCMJIdTtz6JoEO9Oe3gRTBj9MauwbCmUFTQ5m@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzip0lWIi6B/PTs/g8zYYMNqNPrd4ST+i2ifC5RKB7AvQaeUOXR
-	A8lSEtk3AuCU2Ol9TsZ5NVwKLlwdED8Nb99aW5mUvERatL0p9Bib
-X-Gm-Gg: ASbGncuO1HNqI/YZbLpYAxSAmXc53Uc166yaRcN6bQCgw76GfOOi5FQNkL4u8eWnTQw
-	t5xL8fO8pe5K+lbCe9pUAB+qhMTtB3Gc+Tt1vFEDV3Efy+MSJNqKnLKUeoIlrZzVwe1v8NlwvAZ
-	7J6LxAZ7+aI0YWaYzRXlTfDqQ3jyqbtwYLooafJT4i16lEhsgiJwKaRdHI5iR2xKgeQRojdcEC7
-	5EAl2RsRykeY4Tmu2B4s5IM72jP2PvOX8BKwPEUyg9ero0YISQIF2pfsWQHz64QPyGJj3OV8pQM
-	Tl2G+k0JuQiby17yaZ8Rbs6Y1/voT3e96kjgEa7yQ/CrsL1iRDlEZ/JN+MQdR+Tl4YWkT08JqIy
-	3RwZ7NBpLKFKrRLNiey+v20sGCg==
-X-Google-Smtp-Source: AGHT+IGqdByNX1/PVGLieoBHyvCaoUrIY4UetAMzQyT8J4UNF9vYT1h+KT+vU7nL97fTzkxNSXDxPg==
-X-Received: by 2002:a05:6a00:ac8c:b0:730:9946:5973 with SMTP id d2e1a72fcca58-74289263315mr5321735b3a.5.1747242201464;
-        Wed, 14 May 2025 10:03:21 -0700 (PDT)
+        bh=m0BW6GR7shhqIiAyRWPQuh4IbH82fM2o3KorXlQUa88=;
+        b=sQCa/TV74Ia4k2i/ZGnVYDJxs4YdyOLEEg8vyz9vHPNw4zylLjbOSY2+07v3wSXS9t
+         CAc0VEOq+NQ8OML1imqVS/FbZ3rw3+2UBn/VzPwIczDiIOupKLilvhOroQkhSHxo9xrQ
+         na/oFNhtB4tLVC30hYVDmgOa/hUg0Eh9snsZfoUcAQxfjn79vSbjCJQjVouSXUi0rITT
+         NNDcp550wB/hGD/lp5qEiceP8KdrURFmIhBiZ63OmmKCGeMS5d+w0fFr5AwXcCDq8B2m
+         5ATuz4vgdp+4bbEUVgL869zTiluOTBawBEo9bD+/11pg0MdFyByZXV/biPXvVTxwuool
+         ir5w==
+X-Forwarded-Encrypted: i=1; AJvYcCVDMrXJet9RtZw+XMG71rfk4Of4qle4/zmQo/F8poZ5E7vpN2slJe/IhZclS5/i2gDtFf8ESP2QywHu2lWt@vger.kernel.org, AJvYcCVdKnpddMny5YSBpETq1UoIWxw3+sQyPOJ1LESBOZHFFMC4bv3iUCW6ITGguiPmYVtYjmZoOs1uuEkBj67u@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIRYvOOsCoTMOFTiqfUvCNF+qyMoaxOMi1v8ugpc7yi1MwH2Eh
+	w3QjIglnm/pU+bg5a+kTCnKmvfZoyfxkO9DXFXMiYcJjgqWVBV9P
+X-Gm-Gg: ASbGncsDlIvFErEItBNVpQ71Ehnqqco0UDmo8rFTI51d184/nU/rZnjkKbXlvKucHgJ
+	727c0VLv3a9pRMvshsjob3JqJRQzpppTbMH+r+ZquIbIirFZiQ2/c/h98XTGwDpas3CwfMfiV50
+	5JVIN6p6Tl4Fq1Eu3Qtqx+5L28xlW+zQ0qR7H1KQ5eWtY/Jifg5f/KMVWg23xNZqrH4gFVn3fN9
+	8hUdDI3S9KF/o7S1w35m6EWXpub0aM8dqTAYnvIxx6ZMpWykGD+LeFV4UhDGdap6QC2NB6UbEL6
+	hQVtftzRp8oiBGH9WOu4oL5W5hpULwOmolqvWUmiA511V7cG74YW1oAgo4FbbdNJoO8mxl+DjGv
+	C7V+bP2WtXWWnhZcXM6tSpJx18A==
+X-Google-Smtp-Source: AGHT+IEMlbNWPVZi5ATIDqWBoglqdNPa2F0D1yjNsjCQ8Er4dzqDApT57MV6sxUKMpswBaLnlX+hog==
+X-Received: by 2002:a17:903:230d:b0:22f:a48f:7a99 with SMTP id d9443c01a7336-23198108efamr58781485ad.26.1747242202984;
+        Wed, 14 May 2025 10:03:22 -0700 (PDT)
 Received: from localhost ([2a00:79e0:3e00:2601:3afc:446b:f0df:eadc])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742377279c3sm9637453b3a.43.2025.05.14.10.03.20
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22fc829ea8esm100710345ad.205.2025.05.14.10.03.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 May 2025 10:03:20 -0700 (PDT)
+        Wed, 14 May 2025 10:03:22 -0700 (PDT)
 From: Rob Clark <robdclark@gmail.com>
 To: dri-devel@lists.freedesktop.org
 Cc: freedreno@lists.freedesktop.org,
 	linux-arm-msm@vger.kernel.org,
 	Connor Abbott <cwabbott0@gmail.com>,
 	Rob Clark <robdclark@chromium.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Philipp Stanner <phasta@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>,
 	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	Maxime Ripard <mripard@kernel.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	David Airlie <airlied@gmail.com>,
 	Simona Vetter <simona@ffwll.ch>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 03/40] drm/gem: Add ww_acquire_ctx support to drm_gem_lru_scan()
-Date: Wed, 14 May 2025 09:59:02 -0700
-Message-ID: <20250514170118.40555-4-robdclark@gmail.com>
+Subject: [PATCH v4 04/40] drm/sched: Add enqueue credit limit
+Date: Wed, 14 May 2025 09:59:03 -0700
+Message-ID: <20250514170118.40555-5-robdclark@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250514170118.40555-1-robdclark@gmail.com>
 References: <20250514170118.40555-1-robdclark@gmail.com>
@@ -106,182 +105,158 @@ Content-Transfer-Encoding: 8bit
 
 From: Rob Clark <robdclark@chromium.org>
 
-If the callback is going to have to attempt to grab more locks, it is
-useful to have an ww_acquire_ctx to avoid locking order problems.
+Similar to the existing credit limit mechanism, but applying to jobs
+enqueued to the scheduler but not yet run.
 
-Why not use the drm_exec helper instead?  Mainly because (a) where
-ww_acquire_init() is called is awkward, and (b) we don't really
-need to retry after backoff, we can just move on to the next object.
+The use case is to put an upper bound on preallocated, and potentially
+unneeded, pgtable pages.  When this limit is exceeded, pushing new jobs
+will block until the count drops below the limit.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/gpu/drm/drm_gem.c              | 14 +++++++++++---
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 24 +++++++++++++-----------
- include/drm/drm_gem.h                  | 10 ++++++----
- 3 files changed, 30 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/scheduler/sched_entity.c | 16 ++++++++++++++--
+ drivers/gpu/drm/scheduler/sched_main.c   |  3 +++
+ include/drm/gpu_scheduler.h              | 13 ++++++++++++-
+ 3 files changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-index ee811764c3df..9e3db9a864f8 100644
---- a/drivers/gpu/drm/drm_gem.c
-+++ b/drivers/gpu/drm/drm_gem.c
-@@ -1460,12 +1460,14 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail);
-  * @nr_to_scan: The number of pages to try to reclaim
-  * @remaining: The number of pages left to reclaim, should be initialized by caller
-  * @shrink: Callback to try to shrink/reclaim the object.
-+ * @ticket: Optional ww_acquire_ctx context to use for locking
+diff --git a/drivers/gpu/drm/scheduler/sched_entity.c b/drivers/gpu/drm/scheduler/sched_entity.c
+index dc0e60d2c14b..c5f688362a34 100644
+--- a/drivers/gpu/drm/scheduler/sched_entity.c
++++ b/drivers/gpu/drm/scheduler/sched_entity.c
+@@ -580,11 +580,21 @@ void drm_sched_entity_select_rq(struct drm_sched_entity *entity)
+  * under common lock for the struct drm_sched_entity that was set up for
+  * @sched_job in drm_sched_job_init().
   */
- unsigned long
- drm_gem_lru_scan(struct drm_gem_lru *lru,
- 		 unsigned int nr_to_scan,
- 		 unsigned long *remaining,
--		 bool (*shrink)(struct drm_gem_object *obj))
-+		 bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket),
-+		 struct ww_acquire_ctx *ticket)
+-void drm_sched_entity_push_job(struct drm_sched_job *sched_job)
++int drm_sched_entity_push_job(struct drm_sched_job *sched_job)
  {
- 	struct drm_gem_lru still_in_lru;
- 	struct drm_gem_object *obj;
-@@ -1498,17 +1500,20 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
- 		 */
- 		mutex_unlock(lru->lock);
- 
-+		if (ticket)
-+			ww_acquire_init(ticket, &reservation_ww_class);
+ 	struct drm_sched_entity *entity = sched_job->entity;
++	struct drm_gpu_scheduler *sched = sched_job->sched;
+ 	bool first;
+ 	ktime_t submit_ts;
++	int ret;
 +
- 		/*
- 		 * Note that this still needs to be trylock, since we can
- 		 * hit shrinker in response to trying to get backing pages
- 		 * for this obj (ie. while it's lock is already held)
- 		 */
--		if (!dma_resv_trylock(obj->resv)) {
-+		if (!ww_mutex_trylock(&obj->resv->lock, ticket)) {
- 			*remaining += obj->size >> PAGE_SHIFT;
- 			goto tail;
++	ret = wait_event_interruptible(
++			sched->job_scheduled,
++			atomic_read(&sched->enqueue_credit_count) <=
++			sched->enqueue_credit_limit);
++	if (ret)
++		return ret;
++	atomic_add(sched_job->enqueue_credits, &sched->enqueue_credit_count);
+ 
+ 	trace_drm_sched_job(sched_job, entity);
+ 	atomic_inc(entity->rq->sched->score);
+@@ -609,7 +619,7 @@ void drm_sched_entity_push_job(struct drm_sched_job *sched_job)
+ 			spin_unlock(&entity->lock);
+ 
+ 			DRM_ERROR("Trying to push to a killed entity\n");
+-			return;
++			return -EINVAL;
  		}
  
--		if (shrink(obj)) {
-+		if (shrink(obj, ticket)) {
- 			freed += obj->size >> PAGE_SHIFT;
+ 		rq = entity->rq;
+@@ -626,5 +636,7 @@ void drm_sched_entity_push_job(struct drm_sched_job *sched_job)
  
- 			/*
-@@ -1522,6 +1527,9 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
- 
- 		dma_resv_unlock(obj->resv);
- 
-+		if (ticket)
-+			ww_acquire_fini(ticket);
-+
- tail:
- 		drm_gem_object_put(obj);
- 		mutex_lock(lru->lock);
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index 07ca4ddfe4e3..de185fc34084 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -44,7 +44,7 @@ msm_gem_shrinker_count(struct shrinker *shrinker, struct shrink_control *sc)
- }
- 
- static bool
--purge(struct drm_gem_object *obj)
-+purge(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket)
- {
- 	if (!is_purgeable(to_msm_bo(obj)))
- 		return false;
-@@ -58,7 +58,7 @@ purge(struct drm_gem_object *obj)
- }
- 
- static bool
--evict(struct drm_gem_object *obj)
-+evict(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket)
- {
- 	if (is_unevictable(to_msm_bo(obj)))
- 		return false;
-@@ -79,21 +79,21 @@ wait_for_idle(struct drm_gem_object *obj)
- }
- 
- static bool
--active_purge(struct drm_gem_object *obj)
-+active_purge(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket)
- {
- 	if (!wait_for_idle(obj))
- 		return false;
- 
--	return purge(obj);
-+	return purge(obj, ticket);
- }
- 
- static bool
--active_evict(struct drm_gem_object *obj)
-+active_evict(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket)
- {
- 	if (!wait_for_idle(obj))
- 		return false;
- 
--	return evict(obj);
-+	return evict(obj, ticket);
- }
- 
- static unsigned long
-@@ -102,7 +102,7 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- 	struct msm_drm_private *priv = shrinker->private_data;
- 	struct {
- 		struct drm_gem_lru *lru;
--		bool (*shrink)(struct drm_gem_object *obj);
-+		bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket);
- 		bool cond;
- 		unsigned long freed;
- 		unsigned long remaining;
-@@ -122,8 +122,9 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- 			continue;
- 		stages[i].freed =
- 			drm_gem_lru_scan(stages[i].lru, nr,
--					&stages[i].remaining,
--					 stages[i].shrink);
-+					 &stages[i].remaining,
-+					 stages[i].shrink,
-+					 NULL);
- 		nr -= stages[i].freed;
- 		freed += stages[i].freed;
- 		remaining += stages[i].remaining;
-@@ -164,7 +165,7 @@ msm_gem_shrinker_shrink(struct drm_device *dev, unsigned long nr_to_scan)
- static const int vmap_shrink_limit = 15;
- 
- static bool
--vmap_shrink(struct drm_gem_object *obj)
-+vmap_shrink(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket)
- {
- 	if (!is_vunmapable(to_msm_bo(obj)))
- 		return false;
-@@ -192,7 +193,8 @@ msm_gem_shrinker_vmap(struct notifier_block *nb, unsigned long event, void *ptr)
- 		unmapped += drm_gem_lru_scan(lrus[idx],
- 					     vmap_shrink_limit - unmapped,
- 					     &remaining,
--					     vmap_shrink);
-+					     vmap_shrink,
-+					     NULL);
+ 		drm_sched_wakeup(sched);
  	}
++
++	return 0;
+ }
+ EXPORT_SYMBOL(drm_sched_entity_push_job);
+diff --git a/drivers/gpu/drm/scheduler/sched_main.c b/drivers/gpu/drm/scheduler/sched_main.c
+index 9412bffa8c74..1102cca69cb4 100644
+--- a/drivers/gpu/drm/scheduler/sched_main.c
++++ b/drivers/gpu/drm/scheduler/sched_main.c
+@@ -1217,6 +1217,7 @@ static void drm_sched_run_job_work(struct work_struct *w)
  
- 	*(unsigned long *)ptr += unmapped;
-diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
-index fdae947682cd..0e2c476df731 100644
---- a/include/drm/drm_gem.h
-+++ b/include/drm/drm_gem.h
-@@ -555,10 +555,12 @@ void drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock);
- void drm_gem_lru_remove(struct drm_gem_object *obj);
- void drm_gem_lru_move_tail_locked(struct drm_gem_lru *lru, struct drm_gem_object *obj);
- void drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj);
--unsigned long drm_gem_lru_scan(struct drm_gem_lru *lru,
--			       unsigned int nr_to_scan,
--			       unsigned long *remaining,
--			       bool (*shrink)(struct drm_gem_object *obj));
-+unsigned long
-+drm_gem_lru_scan(struct drm_gem_lru *lru,
-+		 unsigned int nr_to_scan,
-+		 unsigned long *remaining,
-+		 bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket),
-+		 struct ww_acquire_ctx *ticket);
+ 	trace_drm_run_job(sched_job, entity);
+ 	fence = sched->ops->run_job(sched_job);
++	atomic_sub(sched_job->enqueue_credits, &sched->enqueue_credit_count);
+ 	complete_all(&entity->entity_idle);
+ 	drm_sched_fence_scheduled(s_fence, fence);
  
- int drm_gem_evict(struct drm_gem_object *obj);
+@@ -1253,6 +1254,7 @@ int drm_sched_init(struct drm_gpu_scheduler *sched, const struct drm_sched_init_
  
+ 	sched->ops = args->ops;
+ 	sched->credit_limit = args->credit_limit;
++	sched->enqueue_credit_limit = args->enqueue_credit_limit;
+ 	sched->name = args->name;
+ 	sched->timeout = args->timeout;
+ 	sched->hang_limit = args->hang_limit;
+@@ -1308,6 +1310,7 @@ int drm_sched_init(struct drm_gpu_scheduler *sched, const struct drm_sched_init_
+ 	INIT_LIST_HEAD(&sched->pending_list);
+ 	spin_lock_init(&sched->job_list_lock);
+ 	atomic_set(&sched->credit_count, 0);
++	atomic_set(&sched->enqueue_credit_count, 0);
+ 	INIT_DELAYED_WORK(&sched->work_tdr, drm_sched_job_timedout);
+ 	INIT_WORK(&sched->work_run_job, drm_sched_run_job_work);
+ 	INIT_WORK(&sched->work_free_job, drm_sched_free_job_work);
+diff --git a/include/drm/gpu_scheduler.h b/include/drm/gpu_scheduler.h
+index da64232c989d..d830ffe083f1 100644
+--- a/include/drm/gpu_scheduler.h
++++ b/include/drm/gpu_scheduler.h
+@@ -329,6 +329,7 @@ struct drm_sched_fence *to_drm_sched_fence(struct dma_fence *f);
+  * @s_fence: contains the fences for the scheduling of job.
+  * @finish_cb: the callback for the finished fence.
+  * @credits: the number of credits this job contributes to the scheduler
++ * @enqueue_credits: the number of enqueue credits this job contributes
+  * @work: Helper to reschedule job kill to different context.
+  * @id: a unique id assigned to each job scheduled on the scheduler.
+  * @karma: increment on every hang caused by this job. If this exceeds the hang
+@@ -366,6 +367,7 @@ struct drm_sched_job {
+ 
+ 	enum drm_sched_priority		s_priority;
+ 	u32				credits;
++	u32				enqueue_credits;
+ 	/** @last_dependency: tracks @dependencies as they signal */
+ 	unsigned int			last_dependency;
+ 	atomic_t			karma;
+@@ -485,6 +487,10 @@ struct drm_sched_backend_ops {
+  * @ops: backend operations provided by the driver.
+  * @credit_limit: the credit limit of this scheduler
+  * @credit_count: the current credit count of this scheduler
++ * @enqueue_credit_limit: the credit limit of jobs pushed to scheduler and not
++ *                        yet run
++ * @enqueue_credit_count: the current crdit count of jobs pushed to scheduler
++ *                        but not yet run
+  * @timeout: the time after which a job is removed from the scheduler.
+  * @name: name of the ring for which this scheduler is being used.
+  * @num_rqs: Number of run-queues. This is at most DRM_SCHED_PRIORITY_COUNT,
+@@ -518,6 +524,8 @@ struct drm_gpu_scheduler {
+ 	const struct drm_sched_backend_ops	*ops;
+ 	u32				credit_limit;
+ 	atomic_t			credit_count;
++	u32				enqueue_credit_limit;
++	atomic_t			enqueue_credit_count;
+ 	long				timeout;
+ 	const char			*name;
+ 	u32                             num_rqs;
+@@ -550,6 +558,8 @@ struct drm_gpu_scheduler {
+  * @num_rqs: Number of run-queues. This may be at most DRM_SCHED_PRIORITY_COUNT,
+  *	     as there's usually one run-queue per priority, but may be less.
+  * @credit_limit: the number of credits this scheduler can hold from all jobs
++ * @enqueue_credit_limit: the number of credits that can be enqueued before
++ *                        drm_sched_entity_push_job() blocks
+  * @hang_limit: number of times to allow a job to hang before dropping it.
+  *		This mechanism is DEPRECATED. Set it to 0.
+  * @timeout: timeout value in jiffies for submitted jobs.
+@@ -564,6 +574,7 @@ struct drm_sched_init_args {
+ 	struct workqueue_struct *timeout_wq;
+ 	u32 num_rqs;
+ 	u32 credit_limit;
++	u32 enqueue_credit_limit;
+ 	unsigned int hang_limit;
+ 	long timeout;
+ 	atomic_t *score;
+@@ -600,7 +611,7 @@ int drm_sched_job_init(struct drm_sched_job *job,
+ 		       struct drm_sched_entity *entity,
+ 		       u32 credits, void *owner);
+ void drm_sched_job_arm(struct drm_sched_job *job);
+-void drm_sched_entity_push_job(struct drm_sched_job *sched_job);
++int drm_sched_entity_push_job(struct drm_sched_job *sched_job);
+ int drm_sched_job_add_dependency(struct drm_sched_job *job,
+ 				 struct dma_fence *fence);
+ int drm_sched_job_add_syncobj_dependency(struct drm_sched_job *job,
 -- 
 2.49.0
 
