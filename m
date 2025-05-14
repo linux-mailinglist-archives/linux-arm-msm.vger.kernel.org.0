@@ -1,49 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-57862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DEB0AB6F72
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 17:17:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B8F6AB6F67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 17:16:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E4C618C45C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 15:13:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7CA1A163B10
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 15:14:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40239280331;
-	Wed, 14 May 2025 15:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EA5928151A;
+	Wed, 14 May 2025 15:11:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TDnbjE9H"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sFa0ARNG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D0C28031B;
-	Wed, 14 May 2025 15:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA67E28031B;
+	Wed, 14 May 2025 15:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747235506; cv=none; b=kUN4cC0qoLtf6v3yOrXgq9dyCeh2Y4CaOe1OAQIonSvUGb9k0cKZAJkb6k/f9UtFbp5OsfwgcSRkSnUb1V/CDtCoqDIn5ypjZDLerR0VthMCBKM/yo02jV3b0plKgPAbD+bHgU9aaiWNcySXcs1RyvOeWxcxkZzNnE0wJffrzJU=
+	t=1747235509; cv=none; b=b4gOuuAF4HezDUTcxcFhxbM2v6hk380vpOJ/zzWKO10qu1ST8IyY44QsW5vujgYIUxFDyoojD6TnpEpebtUaSxLaastj/jZk0NKBz1U2XedgMQCMVW8AYOk6fvcTJmHXM3FXxSh5lVKG0KlUp4EW/N6sLNJK4/2iXn/kM4NCV4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747235506; c=relaxed/simple;
-	bh=JYsg4GBGu7X8acSehoDPknZmWOwg4HDhvlW5y2u+xS0=;
+	s=arc-20240116; t=1747235509; c=relaxed/simple;
+	bh=JzooyhzkBSW9hiU1yFfTPNeqnr9cyX5PvetIXhtLpb8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hcb+Zv1eXI0ul3PVb+GqLAMbd/o1xSHtNdOY4R+VWQFmCWS+8vNSyXuX5c6H/Op2m9+6UQDkR42hlW6GIhGoWNjBqg/meXU7FNToQ8hT+Hwgz/4ewQ1wekwLwdoJghaKJTNbX3qVj0ddc+OiJjYl3V7szr8xwXbP8BRUc2LzGQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TDnbjE9H; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B556C4CEED;
-	Wed, 14 May 2025 15:11:42 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=Kzb+irW1Rh/GlstcHO/T5m7K9S9jbIBhG90yN0fDGvyRq7O/2zvANtWB0CIoEPWVU0e7fY0H/119sACedbAVkoJt/2JKGOKbwpK3EUfHQkCQ/jDpMREPKOUniGhB93nzJLqBps/K4Y5CeA05HNd+dDApR2Hvd7cc+rVef67rngo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sFa0ARNG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B92C4CEE3;
+	Wed, 14 May 2025 15:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747235506;
-	bh=JYsg4GBGu7X8acSehoDPknZmWOwg4HDhvlW5y2u+xS0=;
+	s=k20201202; t=1747235509;
+	bh=JzooyhzkBSW9hiU1yFfTPNeqnr9cyX5PvetIXhtLpb8=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=TDnbjE9HEDLBe1QaFNmphHhODDrja+c9rBGNtYPBwELIWKQvYscSif2lWi/3sMC8Y
-	 ZcMWEIQ76++TbC11PpxGW3KxTKuGuKOFo4AK2vzerCfLmfA0FDyjwGfoKqMHPKag56
-	 DJUBTIOW9uAnkoMUZGx7gtqn3Y5YzcKrKT5VgFUp9PJm1d1HJN3clPEP5EX6btINl/
-	 o68MQwxWg+FxXr47ajylY5yVX0LZtdeYcAvh3+/0fe4KNvgzFF4VUNeppCUhQ4rOv6
-	 Cp1CaWc8Qi17mQGV99il7fVke1frQLRf7uKg3urwH4N5Ki3tW4Hgt7ghLOGoGsuQip
-	 4ZQoq2wTtol3A==
+	b=sFa0ARNG3D8I23WRX7deZdYMBeXK5Q2foX0/kTvVFbZQ82b0gMpt/XypHMJ9mBQYz
+	 TKT/u5lftZ3Zy7yjGx98AYPZbcUldb+ta34R+YlkCYXxp0wMsAkrlP1h2djXU5x4d4
+	 STrGGqhZ2zLxyXTjptwx5PKpfPRtUGTTvGZFUWUb7KtSeyLG4sAVTkHFtLQjRFIAiD
+	 OaqLhFS23gUWvNRkYCld++vbaidixhezxO7XNYHCVGgmj1DcRvCBRJeOTfhOyBXJ4i
+	 V+tBIl9x/mFdLMaUuoZgM8/epp7MzU27xvPvCE/oOjD/dWTIKKE74BTnnQUXCaolFl
+	 Am4YPQNsQ673g==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Wed, 14 May 2025 17:10:32 +0200
-Subject: [PATCH RFT v2 12/15] drm/msm/a6xx: Drop cfg->ubwc_swizzle override
+Date: Wed, 14 May 2025 17:10:33 +0200
+Subject: [PATCH RFT v2 13/15] soc: qcom: ubwc: Fix SM6125's ubwc_swizzle
+ value
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,7 +53,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250514-topic-ubwc_central-v2-12-09ecbc0a05ce@oss.qualcomm.com>
+Message-Id: <20250514-topic-ubwc_central-v2-13-09ecbc0a05ce@oss.qualcomm.com>
 References: <20250514-topic-ubwc_central-v2-0-09ecbc0a05ce@oss.qualcomm.com>
 In-Reply-To: <20250514-topic-ubwc_central-v2-0-09ecbc0a05ce@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -66,58 +67,41 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1747235442; l=1422;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747235442; l=984;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=02lpGjZZUsNexzqxCrDQcZcbt5CcbZ+U+CYKmP30dAg=;
- b=lRcF9bzG3eYOlJ0ICMbtnj107R5FDgBAYugBbKk6ghiXGqK5sgd3ichMyFbihuMREGoU/oUvq
- BNkGUCoeE5bDu/EXshxpXH/ofR/FjbfrtTU+3XStq6SzRpDAVXuUy0e
+ bh=alnhMVYvqUsDl9VBStZIhfR74aMwsIemObYjxdGrHhQ=;
+ b=kb/pNJE5oczTtgeRkk4h908ZcFLhblgrk+Oi24syoakU4SqD5fOQGD01+P+LVh11yWnBP+K5N
+ rOgmWKXedbODM5i42UgGKhsXF9CVbOomakFszF6LVgJSd3Rpmq7L4uZ
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-On A663 (SA8775P) the value matches exactly.
+The value of 7 (a.k.a. GENMASK(2, 0), a.k.a. disabling levels 1-3 of
+swizzling) is what we want on this platform (and others with a UBWC
+1.0 encoder).
 
-On A610, the value matches on SM6115, but is different on SM6125. That
-turns out not to be a problem, as the bits that differ aren't even
-interpreted.
+Fix it to make mesa happy (the hardware doesn't care about the 2 higher
+bits, as they weren't consumed on this platform).
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/soc/qcom/ubwc_config.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index ae0bb7934e7ed203aa3b81e28767de204f0a4d60..eaf468b67f97ff153e92a73a45581228fcf75e46 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -598,13 +598,10 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
- 	/* Copy the data into the internal struct to drop the const qualifier (temporarily) */
- 	*cfg = *common_cfg;
+diff --git a/drivers/soc/qcom/ubwc_config.c b/drivers/soc/qcom/ubwc_config.c
+index 9caecd071035ccb03f14464e9b7129ba34a7f862..96b94cf01218cce2dacdba22c7573ba6148fcdd1 100644
+--- a/drivers/soc/qcom/ubwc_config.c
++++ b/drivers/soc/qcom/ubwc_config.c
+@@ -103,7 +103,7 @@ static const struct qcom_ubwc_cfg_data sm6115_data = {
+ static const struct qcom_ubwc_cfg_data sm6125_data = {
+ 	.ubwc_enc_version = UBWC_1_0,
+ 	.ubwc_dec_version = UBWC_3_0,
+-	.ubwc_swizzle = 1,
++	.ubwc_swizzle = 7,
+ 	.highest_bank_bit = 14,
+ };
  
--	cfg->ubwc_swizzle = 0x6;
- 	cfg->highest_bank_bit = 15;
- 
--	if (adreno_is_a610(gpu)) {
-+	if (adreno_is_a610(gpu))
- 		cfg->highest_bank_bit = 13;
--		cfg->ubwc_swizzle = 0x7;
--	}
- 
- 	if (adreno_is_a618(gpu))
- 		cfg->highest_bank_bit = 14;
-@@ -631,10 +628,8 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
- 		cfg->highest_bank_bit = 16;
- 	}
- 
--	if (adreno_is_a663(gpu)) {
-+	if (adreno_is_a663(gpu))
- 		cfg->highest_bank_bit = 13;
--		cfg->ubwc_swizzle = 0x4;
--	}
- 
- 	if (adreno_is_7c3(gpu))
- 		cfg->highest_bank_bit = 14;
 
 -- 
 2.49.0
