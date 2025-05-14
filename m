@@ -1,337 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-57985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2A28AB7732
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 22:40:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D11BDAB773F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 22:42:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4DA261BA4745
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 20:41:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F0A0864329
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 20:41:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 242CD2951D2;
-	Wed, 14 May 2025 20:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28C5C29616A;
+	Wed, 14 May 2025 20:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HOVSjksD"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fUb7GOAh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511AD28C871
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 20:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9637B296159
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 20:41:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747255246; cv=none; b=SAcQhU4f9GaOMSPqubK83i3dO0wGXTDpxhN1JOlFvvS7XZtN+0KTDtAYvadbt9BllE1prClyKgUBlRy52jSQGA9OgZLzPbjnQON+9ZXir0JHuMCgwiDwwGLBmw78MKysiQfrBqMNysNox/oH4Kv4a5K5z2mrvzUXQuGn73SLYJM=
+	t=1747255316; cv=none; b=NuqijeNX7jQdhwdmftVHD0AomzQOj4FJ4QxcPiLZSGbMrVfQBzzuLpLY2m6wPDxZDUH09oifvKLfSe0zomOaqImb5yaZiBZii1ubFte8LK5C6Bc4VmKovJI/Nx11hySgvoA5bTH85pXLDKyZ0th5jIOKkcW9sd3HZ75nOXGnJ1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747255246; c=relaxed/simple;
-	bh=vrW2FSdPgIX7PzIoHiNHHY5rcWWp2rmJQgDUkY4gCu8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XhnhkZ8Maq7AAiBYED8llPEfHG9s9XiQQUHke6QhIzCs/cr55ahqcowQKJAvucnC/32Y5u0sOUlAeaRe3lFLkc61hHkr/wMAfxlwOtBmrn+l0SLcm0836tvlDCuVf9Ij2SIY1W/6PBeiL9osxalgbLIzY8GhD72//fipaEi90Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=HOVSjksD; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-708ac7dfc19so2449847b3.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 13:40:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747255243; x=1747860043; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T/7+afizZx7+/RQDjCUDJIpgGk5iqWIyw/rWqCvD/nw=;
-        b=HOVSjksDbdxvAMixpbw5y0ocHbZDqYxtx4UOSZ1YA06S6fed0EDW1EpoI16ZNmkC+D
-         Vl/34dE/Scc/xHUP0mWuyg1ZI16l89wxqUtbJoc82md8CQrihW0qZjA5rT/sz+BO4RN3
-         /db+Y4J+JkxCcyRWT56GroDaLw4/Z8NegddrS03OgQNHhOBfOlvT4adXnAhGPmBtRAvq
-         HouCfc93kug0d3sH/WuAfMTSbKYniK5GeG5imyffsbJRg1gYM5MKk9sjJkaZQTUe7pyM
-         jO9q2SWJu7mn+Z+w0vfXldjUFq7iBJhXW5OVueQqVLh1D2vai3pJE1+tTpQDuhuT2bCz
-         cQOw==
+	s=arc-20240116; t=1747255316; c=relaxed/simple;
+	bh=rUK4scPkzZakFgDXHbi8BfoYHgboRKWeDbAQdsEl4zI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ny8Bo6yGuC241h9p3ckMSSf0iHN8JJbJXG27/ODSLudrcSi53g8D38VE0dRXkHoFrnCg+i2Y2BGF9DAOfvfUlF5wxS9BOsBD0V9Q8iP7foqFEcYbXqzFM27lcTqvWr3CSAwDBxbuimuhrNYRU0Q95Fu6aP1Bt131cxK4I2+GABM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fUb7GOAh; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EAuw8W015190
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 20:41:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=Mjtp2bpakb8zijMOh2vfgyB1
+	1iNvN+koMsm1Lt3WJgA=; b=fUb7GOAhZV2NpdRKbTaWEDI5KuVpmLWMoYGqJqy/
+	pBtd4TeJ5uWbj/95o4bpffcNXZTqRLrUtRlKKdVt0ghSl93kyHSdR496clxjSSPU
+	FrzJXx75Dn/u7A6m4GAoWWLVKTcuBeUrZTk1ETww8r/guLZT6X3JaETba9w0u51L
+	vaH8LHxSAfTGy/CdS7VvfD+XzicvcsLnU1qLbCxueshdrf4K+KWso+ihGXP+Qrw4
+	9o8IQV1Cn2MP9hkif0I9UXTHALEJMe1UjVGnpbx03isCpSJQUPWmAzwAywr9ZOWQ
+	wy2C64awwjjO9dV3X6lYBaUV0i/iI+qIGkUM8XwE6aTK6A==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcr3wmb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 20:41:53 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c5e28d0cc0so31491385a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 13:41:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747255243; x=1747860043;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T/7+afizZx7+/RQDjCUDJIpgGk5iqWIyw/rWqCvD/nw=;
-        b=PEsvpjMfItXyNs9tpWO/shZRqesfxPFXFwjAensrMEcZya+J+MsVUAJmgxpJDZqXN5
-         /o9z7C08+LMif753ytPmtFiQpMKWVQb9WIG/VV4XVzgm6MgooyQXzzmzNfEhEtvamjFA
-         tjOAY/+qooEzHkOJZNlQV4WxEWjaM+XJdLL0MMd6HXg0HWfllJw+jpxV8lCgIUjP7NHJ
-         f5W+Y1wB8l8omAprAVKp7Rhmemx+lDsQwHDl7VOQpV3r88+weNPhFxYd2jWjFVJ54EN8
-         a+m5Ya8pBvjBd+vlpsV9MKjbVub9wqF8XuG6xyUtADPLwwFAJ2LyWiu5THjFXgCWtlsk
-         huIA==
-X-Forwarded-Encrypted: i=1; AJvYcCVEH8rUjp1WpW4HFnpwDsxUwPoMcrGdbdO3bAeW4B28YJt0mln/AZX1UHZYPddGDR8HGAEtV7LeBouJcnaj@vger.kernel.org
-X-Gm-Message-State: AOJu0YyiSxrrss88M3swuBu54NakdaMpBHXcUm6j9hGVMzwnqhMIZSxz
-	DyZvEMBLiiH9dnnpcRJmUxTxGeGkd0t82hNG+SQ6kkoMPSFhhUJ+dgzMl28RYjbnhy6timFg/UG
-	lCyfycI9G2T38kql4WT0fBmegtE8NgUWjAUYt
-X-Gm-Gg: ASbGncsIjpK6htNsuFC8s2JUqz3ar69JtyhN+tN5GUb/monkroFUo/aWWTVqhTic+1v
-	/Q//ArtFQi4vPd4WjBHxVC5R92YTxadSGW46Qh0uO/3GnC7BDtyMGttzsrooJTWpe3X2ltjuFbz
-	JNMUPqqMsI9If7GNQISCsRJKro3hBI/jKdjjW3CknC6rQCS3bdlYXrKtumBDcdrbA=
-X-Google-Smtp-Source: AGHT+IHMOoxxNuOHFNWO8IK0boxKcMaNPhWodorBvd9h9FTfRV8OHIpNfD/gZaEW3uynJG2ygIW8tBaT72OOCtVP8aM=
-X-Received: by 2002:a05:690c:508d:b0:70c:9364:2c61 with SMTP id
- 00721157ae682-70c936433d2mr1717257b3.9.1747255242891; Wed, 14 May 2025
- 13:40:42 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747255308; x=1747860108;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Mjtp2bpakb8zijMOh2vfgyB11iNvN+koMsm1Lt3WJgA=;
+        b=WM9u2tq+CR9Bk1pCltgmUqARM91S4re+cfZMQI3FuEfYerUxsfIE+kTi6leFafIcrs
+         opti063A66RiTapcKg5L06/IxMMWFgVHPcu3bDqZ9MLJBmy0KjXYM2EtJhsSEhhiBxFK
+         vvjNDQBzwk3+kI7V/QJxyoO57yWlkYdvvNF69QJA4td3Yi3fz5e3bFixiN76xULDXFU6
+         w4354X+TkP/sbXMzLJxhktvQ+P+NVYQcJofU86O8tje/yr5QVptt4b0v7sojSJWG1yIY
+         czFiMKZmD2Bg+6pbm7uEdgNaP8aqR3aLD1LkIVwlwsHkqM26qOB3bwxkrfWU/+NGziFp
+         ML0g==
+X-Forwarded-Encrypted: i=1; AJvYcCXzXLu7DA94tlHOVEbdiXsVpPUvFEQ2czp8kIKHPutxWDjhUybdH7Ump2zdFywgvMX6inC4d+ydp60qWeM9@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCPvPxWsibRJb+8gmizFb3gBDhw5aNhYoV9R2DuedW5LPRqSqh
+	X73v8nCOChY9f31/tfwoqLXZwE7r1CQngKHFw/E34TNhsTKRy5eONj5e8AZtsbq5TzWbT+DPgC1
+	ZsvSqZHBBTC/Vvo4dTIBOyRj94437AMCyHGFSsUia3huTAIuHcr33efp4pCtehsKB
+X-Gm-Gg: ASbGncvjL/dYV7/n+5HYDCWTr1kKmHO589q1h5kTI6gfqDEyOJ3TVqFtdzm/pQokeSm
+	eg5foo53Zjd/BdK221ng3IbEb5K2JQ3tbA+IP+L8EPX80rVDo0GH7lj1Ghuff5keinQVDmnniOd
+	dtwoOK5IxGAAPjbx++xe1dRuZFvEhLylXZD9KgfbYM0ENxmF9RYePdGbm+9ovbX/ZEh0E2VoDut
+	XuVT+RFVcmJHSxRxSwWQOSor9k17EUrkZfChURHYbmWby33tNTGGzPKOEmikx5SM+ztNQTde5gn
+	dpwaEaaSGxexSgOB5teEQGFIavJeWhZgv1c0A0PKkp+fMRdu9dlZvgYLLvx39CsodcOyUBXBAhM
+	=
+X-Received: by 2002:a05:620a:2904:b0:7cc:7704:bf87 with SMTP id af79cd13be357-7cd28847321mr718008885a.42.1747255308109;
+        Wed, 14 May 2025 13:41:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFIv0FZP5V22QFAaqy0UmracF7uLbzENjoAZw0LJM2m+3CM+j1fWH7H1eegN8tzKPugcHv6GA==
+X-Received: by 2002:a05:620a:2904:b0:7cc:7704:bf87 with SMTP id af79cd13be357-7cd28847321mr718005185a.42.1747255307745;
+        Wed, 14 May 2025 13:41:47 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54fc64b700dsm2396390e87.130.2025.05.14.13.41.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 May 2025 13:41:46 -0700 (PDT)
+Date: Wed, 14 May 2025 23:41:45 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RESEND] arm64: dts: qcom: x1e001de-devkit: Enable support
+ for both Type-A USB ports
+Message-ID: <knljchftq4rl7ve735jmqso2lhybjrmz2axgd2xrqr3k64g6zy@f2fx6auvb4bj>
+References: <20250514-x1e001de-devkit-dts-enable-usb-a-ports-v1-1-8322ca898314@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250513163438.3942405-1-tabba@google.com> <20250513163438.3942405-8-tabba@google.com>
-In-Reply-To: <20250513163438.3942405-8-tabba@google.com>
-From: James Houghton <jthoughton@google.com>
-Date: Wed, 14 May 2025 13:40:06 -0700
-X-Gm-Features: AX0GCFtK2DyiNvyhImWHSxXTuu1QIux7oSRN4_q-FDUfQ5BDQ4-9OKFnUEDKbWU
-Message-ID: <CADrL8HW+Rv4k-VX2s96n7m8OZ9R_NsHOCvtpAKUiwybiyJ63Pg@mail.gmail.com>
-Subject: Re: [PATCH v9 07/17] KVM: guest_memfd: Allow host to map
- guest_memfd() pages
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250514-x1e001de-devkit-dts-enable-usb-a-ports-v1-1-8322ca898314@linaro.org>
+X-Proofpoint-ORIG-GUID: djf7756ogjgCd5YO-LYFQa9uaKE9L1Zc
+X-Authority-Analysis: v=2.4 cv=Auju3P9P c=1 sm=1 tr=0 ts=68250011 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=-ogRkZ1lWjz2smMNko0A:9
+ a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: djf7756ogjgCd5YO-LYFQa9uaKE9L1Zc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDE5MSBTYWx0ZWRfXzEFIZRWrsdrq
+ b2e4ow7mF0m/h8RA9f26LrnpNQc8jFVLNx2sd9Et3sHUAciDgbJAytvOECH+Us2SoysZWTgB3At
+ Pmeha1DIh1muUAl4OKDg2aGxmlFZhm4Yy6p9ODQGHq+7pHuLWJmw02kYT3pzJEFSwSMlr5x+jXs
+ F4MrRuGC0bSvVK4DCgosm6lk11QhYDDsZbRGHLFlKxDi22TpmaM1kN8UrB8hu2RQXa/bIIqhfJV
+ rvSxIsQPKXIpYCXng59J7vRgetQFPlAgMpgqcXWbO2R5hUbYnrn/9NpXiKU+p9HXBPS3BGMqyKD
+ hSENAwvJF4SBwrN/FQGJiRBE6sUOfiXF25iZGBToITlAKc1qEPcFGOQX+Nsojj0oy9ZC37DULbO
+ 9VzzYzX3qcJM9nM35ZKGwbZ8FYI1UFKqV2ones1P1ltYofp0I9HR6Ky/9XRwOKcY90AtzWbl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-14_04,2025-05-14_03,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 spamscore=0 impostorscore=0 lowpriorityscore=0
+ malwarescore=0 mlxscore=0 adultscore=0 priorityscore=1501 mlxlogscore=404
+ phishscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505140191
 
-,
-
-On Tue, May 13, 2025 at 9:34=E2=80=AFAM Fuad Tabba <tabba@google.com> wrote=
-:
->
-> This patch enables support for shared memory in guest_memfd, including
-> mapping that memory at the host userspace. This support is gated by the
-> configuration option KVM_GMEM_SHARED_MEM, and toggled by the guest_memfd
-> flag GUEST_MEMFD_FLAG_SUPPORT_SHARED, which can be set when creating a
-> guest_memfd instance.
->
-> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
+On Wed, May 14, 2025 at 11:14:30PM +0300, Abel Vesa wrote:
+> The Qualcomm X Elite Devkit has 2 USB-A ports, both connected to the USB
+> multiport controller, each one via a separate NXP PTN3222 eUSB2-to-USB2
+> redriver to the eUSB2 PHY for High-Speed support, with a dedicated QMP
+> PHY for SuperSpeed support.
+> 
+> Describe each redriver and then enable each pair of PHYs and the
+> USB controller itself, in order to enable support for the 2 USB-A ports.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  arch/x86/include/asm/kvm_host.h | 10 ++++
->  include/linux/kvm_host.h        | 13 +++++
->  include/uapi/linux/kvm.h        |  1 +
->  virt/kvm/Kconfig                |  5 ++
->  virt/kvm/guest_memfd.c          | 88 +++++++++++++++++++++++++++++++++
->  5 files changed, 117 insertions(+)
->
-> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_h=
-ost.h
-> index 709cc2a7ba66..f72722949cae 100644
-> --- a/arch/x86/include/asm/kvm_host.h
-> +++ b/arch/x86/include/asm/kvm_host.h
-> @@ -2255,8 +2255,18 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_fo=
-rced_root_level,
->
->  #ifdef CONFIG_KVM_GMEM
->  #define kvm_arch_supports_gmem(kvm) ((kvm)->arch.supports_gmem)
-> +
-> +/*
-> + * CoCo VMs with hardware support that use guest_memfd only for backing =
-private
-> + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enab=
-led.
-> + */
-> +#define kvm_arch_vm_supports_gmem_shared_mem(kvm)                      \
-> +       (IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM) &&                      \
-> +        ((kvm)->arch.vm_type =3D=3D KVM_X86_SW_PROTECTED_VM ||          =
-   \
-> +         (kvm)->arch.vm_type =3D=3D KVM_X86_DEFAULT_VM))
->  #else
->  #define kvm_arch_supports_gmem(kvm) false
-> +#define kvm_arch_vm_supports_gmem_shared_mem(kvm) false
->  #endif
->
->  #define kvm_arch_has_readonly_mem(kvm) (!(kvm)->arch.has_protected_state=
-)
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index ae70e4e19700..2ec89c214978 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -729,6 +729,19 @@ static inline bool kvm_arch_supports_gmem(struct kvm=
- *kvm)
->  }
->  #endif
->
-> +/*
-> + * Returns true if this VM supports shared mem in guest_memfd.
-> + *
-> + * Arch code must define kvm_arch_vm_supports_gmem_shared_mem if support=
- for
-> + * guest_memfd is enabled.
-> + */
-> +#if !defined(kvm_arch_vm_supports_gmem_shared_mem) && !IS_ENABLED(CONFIG=
-_KVM_GMEM)
-> +static inline bool kvm_arch_vm_supports_gmem_shared_mem(struct kvm *kvm)
-> +{
-> +       return false;
-> +}
-> +#endif
-> +
->  #ifndef kvm_arch_has_readonly_mem
->  static inline bool kvm_arch_has_readonly_mem(struct kvm *kvm)
->  {
-> diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
-> index b6ae8ad8934b..9857022a0f0c 100644
-> --- a/include/uapi/linux/kvm.h
-> +++ b/include/uapi/linux/kvm.h
-> @@ -1566,6 +1566,7 @@ struct kvm_memory_attributes {
->  #define KVM_MEMORY_ATTRIBUTE_PRIVATE           (1ULL << 3)
->
->  #define KVM_CREATE_GUEST_MEMFD _IOWR(KVMIO,  0xd4, struct kvm_create_gue=
-st_memfd)
-> +#define GUEST_MEMFD_FLAG_SUPPORT_SHARED        (1UL << 0)
->
->  struct kvm_create_guest_memfd {
->         __u64 size;
-> diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
-> index 559c93ad90be..f4e469a62a60 100644
-> --- a/virt/kvm/Kconfig
-> +++ b/virt/kvm/Kconfig
-> @@ -128,3 +128,8 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
->  config HAVE_KVM_ARCH_GMEM_INVALIDATE
->         bool
->         depends on KVM_GMEM
-> +
-> +config KVM_GMEM_SHARED_MEM
-> +       select KVM_GMEM
-> +       bool
-> +       prompt "Enables in-place shared memory for guest_memfd"
-> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> index 6db515833f61..8e6d1866b55e 100644
-> --- a/virt/kvm/guest_memfd.c
-> +++ b/virt/kvm/guest_memfd.c
-> @@ -312,7 +312,88 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_=
-slot *slot, gfn_t gfn)
->         return gfn - slot->base_gfn + slot->gmem.pgoff;
->  }
->
-> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
-> +
-> +static bool kvm_gmem_supports_shared(struct inode *inode)
-> +{
-> +       uint64_t flags =3D (uint64_t)inode->i_private;
-> +
-> +       return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> +}
-> +
-> +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
-> +{
-> +       struct inode *inode =3D file_inode(vmf->vma->vm_file);
-> +       struct folio *folio;
-> +       vm_fault_t ret =3D VM_FAULT_LOCKED;
-> +
-> +       filemap_invalidate_lock_shared(inode->i_mapping);
-> +
-> +       folio =3D kvm_gmem_get_folio(inode, vmf->pgoff);
-> +       if (IS_ERR(folio)) {
-> +               int err =3D PTR_ERR(folio);
-> +
-> +               if (err =3D=3D -EAGAIN)
-> +                       ret =3D VM_FAULT_RETRY;
-> +               else
-> +                       ret =3D vmf_error(err);
-> +
-> +               goto out_filemap;
-> +       }
-> +
-> +       if (folio_test_hwpoison(folio)) {
-> +               ret =3D VM_FAULT_HWPOISON;
-> +               goto out_folio;
-> +       }
-> +
-> +       if (WARN_ON_ONCE(folio_test_large(folio))) {
-> +               ret =3D VM_FAULT_SIGBUS;
-> +               goto out_folio;
-> +       }
-> +
-> +       if (!folio_test_uptodate(folio)) {
-> +               clear_highpage(folio_page(folio, 0));
-> +               kvm_gmem_mark_prepared(folio);
-> +       }
-> +
-> +       vmf->page =3D folio_file_page(folio, vmf->pgoff);
-> +
-> +out_folio:
-> +       if (ret !=3D VM_FAULT_LOCKED) {
-> +               folio_unlock(folio);
-> +               folio_put(folio);
-> +       }
-> +
-> +out_filemap:
-> +       filemap_invalidate_unlock_shared(inode->i_mapping);
-> +
-> +       return ret;
-> +}
-> +
-> +static const struct vm_operations_struct kvm_gmem_vm_ops =3D {
-> +       .fault =3D kvm_gmem_fault_shared,
-> +};
-> +
-> +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
-> +{
-> +       if (!kvm_gmem_supports_shared(file_inode(file)))
-> +               return -ENODEV;
-> +
-> +       if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=3D
-> +           (VM_SHARED | VM_MAYSHARE)) {
-> +               return -EINVAL;
-> +       }
-> +
-> +       vma->vm_ops =3D &kvm_gmem_vm_ops;
-> +
-> +       return 0;
-> +}
-> +#else
-> +#define kvm_gmem_mmap NULL
-> +#endif /* CONFIG_KVM_GMEM_SHARED_MEM */
-> +
->  static struct file_operations kvm_gmem_fops =3D {
-> +       .mmap           =3D kvm_gmem_mmap,
->         .open           =3D generic_file_open,
->         .release        =3D kvm_gmem_release,
->         .fallocate      =3D kvm_gmem_fallocate,
-> @@ -463,6 +544,9 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_creat=
-e_guest_memfd *args)
->         u64 flags =3D args->flags;
->         u64 valid_flags =3D 0;
->
-> +       if (kvm_arch_vm_supports_gmem_shared_mem(kvm))
-> +               valid_flags |=3D GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> +
->         if (flags & ~valid_flags)
->                 return -EINVAL;
->
-> @@ -501,6 +585,10 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory=
-_slot *slot,
->             offset + size > i_size_read(inode))
->                 goto err;
->
-> +       if (kvm_gmem_supports_shared(inode) &&
+>  arch/arm64/boot/dts/qcom/x1e001de-devkit.dts | 86 ++++++++++++++++++++++++++++
+>  1 file changed, 86 insertions(+)
+> 
 
-When building without CONFIG_KVM_GMEM_SHARED_MEM, my compiler
-complains that kvm_gmem_supports_shared() is not defined.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> 
 
-> +           !kvm_arch_vm_supports_gmem_shared_mem(kvm))
-> +               goto err;
-> +
->         filemap_invalidate_lock(inode->i_mapping);
->
->         start =3D offset >> PAGE_SHIFT;
-> --
-> 2.49.0.1045.g170613ef41-goog
->
+-- 
+With best wishes
+Dmitry
 
