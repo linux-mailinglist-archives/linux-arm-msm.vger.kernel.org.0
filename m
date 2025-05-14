@@ -1,82 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-57941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85112AB7417
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 20:08:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81425AB744B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 20:25:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AC6D67B5703
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 18:07:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0D3F8C213B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 18:24:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8A0E289E3F;
-	Wed, 14 May 2025 18:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4EED28136B;
+	Wed, 14 May 2025 18:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="elpIh2hI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fXq7yA6q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47FE289838;
-	Wed, 14 May 2025 18:05:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036C827A112;
+	Wed, 14 May 2025 18:25:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747245936; cv=none; b=ZX4iLD2CvFtk1lmY2oJoMpK3+5eJj7fkj87Dg+t1euE8VMiHFYh1P+0zl2OSYE86rDFxdtE2B1LSc5rZqllv95Ur4bH+xpsvPzeOkRKxrL9blqZYLK5UWecEojUaPEp/iE2bXxYC9J1t+c649PoVZP2wvyM85XrlMPaIPV73EPA=
+	t=1747247113; cv=none; b=ZDLDQPRHD5rQNL88+FkUqoV+os4BZFWfLNfLqENYf+nAQMO++XDgvf245aFJ2yKH3Jl5NGGAz8J0v8TbKCFMo+azelKv3ZD73jVIz7exA0kPib/yuQ/FZW80ZvJFPlz56LX5oklp0oY2PfL075w8prF/GNJwg2hQEQG+OBGRO8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747245936; c=relaxed/simple;
-	bh=NKLCWMtT9bUeH7wNJNs83ozV84X8TXUuwcufTbcj4lk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fnyXbULSoW7cYjsC2UmVmbKJIkhH6K/2G2a3IIuCY4Q+PRKsRS3g7DBvOZl0rXVjCmcvQwgs4IlM0z0/rTG981CeBhuXgVUHmHKiYl3036IIT2mFuoxA0qnDztGkKQYSQ6ig1gdIO7sNwY8QtOm+ru2l5OvBjpExeH5InSes6+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=elpIh2hI; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-22c336fcdaaso865975ad.3;
-        Wed, 14 May 2025 11:05:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747245934; x=1747850734; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=bdpZ7A9mhCIkEnuwUrHpmchCoydgr+FaDnHXJaGXt58=;
-        b=elpIh2hIECJ+5PFpcHxhf/OyaotXx/i3jk4egJEvt4NlavxdLS7Kg66wEZ3g/XBDIK
-         bVcb9JOz0YXzWFPeInZAi0iIbOu/ki8rUEAj8BkPPh14W1iSTjbULq3xm526i7hS+QVM
-         frsJz2OZyvI9LFee6YjU/ufsGgbrKAJh2PxREVKPtjp9/CMtbfcymThD1NsmXIRZEHRh
-         Au6uFXZ77REDz2pw91hVyqcruUUnhJLjbsClWqNQ1jSPPLsZeuCyEk6j3Sm0jideaOBa
-         ntJ/A2WTC+OJa4eVjUU/iqT2HjAbNCsIHpfn1ySZCumU/Ibo66dg0BVxTjm30pAdHHX2
-         UB6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747245934; x=1747850734;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bdpZ7A9mhCIkEnuwUrHpmchCoydgr+FaDnHXJaGXt58=;
-        b=TPtr8P7w9rzbAo4ssSNbvIgujDO39D559EOZPv6pBm5jWRhWHl3aESxASgSmgcyEFJ
-         2tABqAIb84bdB3hjmEgBLvfFreOz3fNA7DHpZV1zX4rTmqFjSkFUZtt6+L3x6JaAX06F
-         IwxLVMN4To8E7Y1RdpBdXryQGp7HYg4TWn/BbgvEyEdxaoZk1q6Xf2naaSuuVM6555fD
-         hgfzlz7oyhsiqe+VrxSBvlSrm/i0hHYPEdOE3Km7Z4jfbwpJGosHpAhuFArdLl0Vl5MI
-         fOuA2X6JtStgZNkMi1QyF56wAVor9eCtbkWPZDRzpbHC7LmCfhjF+ehYIKCVmqd3734G
-         0djQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUaAQsKONWk7BNvU7XC8Gyhg0k2ejleL/7tO4dL2hz/FtDI+WOrEGOgHz3NchVKJYEhJ7vCJ7zhJ40UaebnXq8=@vger.kernel.org, AJvYcCVz5h1vR7k3kVLzzU80tM1gYEC6ZFmhcdaHzbO2OYhW5Z6s1S6lSAAJ3f+Um8i8I1xpYYmswMxZhKbbOnEO@vger.kernel.org, AJvYcCXVkXIn8Bq6PWCVSdC2iQejQ4wMkjJDAMLWBKSKqU/C//8ozym1mXFbOi+M+z9GMBsvY2dB65mUbSxX@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8i/qHkzVgybBYjSR39MvtNjWRssrRXUSQMn7RlbHEEhxNh4p1
-	EQKcRa370FjLMn/Bhx4ZHIIWNoq9OVacDykLA/tq7lwL4YRJW/qyaWzfoA==
-X-Gm-Gg: ASbGnctVv102hF/DtaSaiqFPkpXc1A/fOnwDK+QRCf7McL1nhDI4FtDDjmhH6SG7/fV
-	QSbWrJELqkU7feCl2Qgfk2Gc3SQsrTx9KUiqRfqt5pN1RMrf0u4zOmH93k8S8wOAT8fJ6bxqOaY
-	DfjA20P9Rtq9T/vlGIGHajbHOSo6mqI9l/u3L94s63DNp5jdSytzY5mUhBUeifKHpYV+nziJZwp
-	CHdujljLHWxlhVsQDwHOVrCykPB0VTsXq9lszG2N7p9GPlHq/AnqAFVM/r+R9v8kXKLqleIvgjs
-	yIdvGL4KOP2Sw+Q6hswSW6EdMJiT7+rrBUoRP8/4+jGDqbJ+SrFBwrrHAOeMoLVXBwJbNfj5iId
-	iSkV8UVhyQHYXNKumJaLKzgwP
-X-Google-Smtp-Source: AGHT+IHOu8dDl8zmaHcg+Jhlmv2CjICYrW/SwrhPLBA/5dt/25XpQEFYQzrfzY4CBzUrzX5L1dlSVg==
-X-Received: by 2002:a17:903:3baf:b0:220:d257:cdbd with SMTP id d9443c01a7336-2319816fad8mr71443675ad.48.1747245933819;
-        Wed, 14 May 2025 11:05:33 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22fc8271f6csm102273595ad.129.2025.05.14.11.05.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 May 2025 11:05:32 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <9b951404-3bcf-4302-a647-3cef86b4bd3b@roeck-us.net>
-Date: Wed, 14 May 2025 11:05:31 -0700
+	s=arc-20240116; t=1747247113; c=relaxed/simple;
+	bh=l4oaE46B7vL0FO5cEYhhQyinrpnk40AbBuyp4cLW2Oo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ISefudo+gtlkInTkjMlcbaGvknUU5mhbKXb+yZf3NfZdvhzpvEFySkeS02q8fqTvTQicDG7E4BR5J2jC3E3mqNksVLUxspRY//Iyi/5+cow12xZYGH91r2X6G5ghzPH1lgC/ZzY413/hR+C7SgNG2mobjMIhSxS08X69lnMvpao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fXq7yA6q; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EAug9i020138;
+	Wed, 14 May 2025 18:24:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	J49uDkCb9HKOce56BSBOkcrkK/RKgG1QwXA27OlhT64=; b=fXq7yA6qg3X9LptV
+	4MUsBu3fv6pYXkzdpX886aCRYl7rz40evf8YpVgY4Lv3HPZynN8rrcwM1K19KOtu
+	A3+a8r/+k2Bg9jex7GogUNc0U0bF0N1SPBXnlPSMJk4h46dKfCXFPneTgszGmv3U
+	mGqmV22doQk8dXtRet/Zf6IbgzIb/LMQZEKNFRWrxAOO5P9t/ylV03lnVu+FUuF4
+	0eChBUsGUQ/fFMFgA21WM60PePO4zI+rwkNsq05zH7nc5Gj1R4nzhIjOVGVTa51T
+	PwMhfUQdXBsnqmgwZc823/yhz1VD4TdbTG771ysuEGL4ePE2ijf0HhclvskY9duw
+	+dItcw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcnknqy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 May 2025 18:24:55 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54EIOsvs026769
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 May 2025 18:24:54 GMT
+Received: from [10.71.113.47] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 14 May
+ 2025 11:24:53 -0700
+Message-ID: <5183b76b-8043-4309-b25d-e1ae505f929e@quicinc.com>
+Date: Wed, 14 May 2025 11:24:48 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,148 +65,109 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] watchdog: qcom: add support to read the restart
- reason from IMEM
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, bod.linux@nxsw.ie,
- Srinivas Kandagatla <srini@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
-References: <20250502-wdt_reset_reason-v3-0-b2dc7ace38ca@oss.qualcomm.com>
- <20250502-wdt_reset_reason-v3-4-b2dc7ace38ca@oss.qualcomm.com>
- <2036ef2f-c7ef-4f42-858d-8d95c430c21a@oss.qualcomm.com>
- <68d280db-f7df-48c8-821d-f7d408c302ad@oss.qualcomm.com>
- <8a763c70-adcf-4a14-bb68-72ddc61fa045@oss.qualcomm.com>
- <8c2a53c2-c11b-4d49-bfb5-b948767ba6c7@oss.qualcomm.com>
- <1e871aed-705f-4142-b72d-4232ae729a37@oss.qualcomm.com>
+Subject: Re: [PATCH v4 06/10] phy: qcom: Add M31 based eUSB2 PHY driver
+To: Vinod Koul <vkoul@kernel.org>
+CC: Melody Olvera <melody.olvera@oss.qualcomm.com>,
+        Kishon Vijay Abraham I
+	<kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20250409-sm8750_usb_master-v4-0-6ec621c98be6@oss.qualcomm.com>
+ <20250409-sm8750_usb_master-v4-6-6ec621c98be6@oss.qualcomm.com>
+ <Z/exOF4T+0vNLQwg@vaman> <0517c37d-b1ba-466e-bffd-9f47b0d458d5@quicinc.com>
+ <aCRVaNDQP/PdAXPR@vaman>
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <1e871aed-705f-4142-b72d-4232ae729a37@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <aCRVaNDQP/PdAXPR@vaman>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: F8I7biqEH_-DftRpl4rk57BfXlJJqFGt
+X-Authority-Analysis: v=2.4 cv=aIbwqa9m c=1 sm=1 tr=0 ts=6824dff8 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
+ a=_9SOoMVj05wlhOc5M30A:9 a=QEXdDO2ut3YA:10 a=aM5GUTHLM7wA:10
+ a=AkvdQnL7tdoA:10
+X-Proofpoint-GUID: F8I7biqEH_-DftRpl4rk57BfXlJJqFGt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDE2NyBTYWx0ZWRfX4isQh/phoKL7
+ gNDYG3ctyr8fuuqzZFPj6IggNXhjWBDL5ogCgcNsGwC5wuF+88+7gNzdLw6ayLccV+mT3DjgQls
+ q5FJwXv5IjmwnnKB+bjItELeLBl3E0HuA8FM5mv4PzZH8goauI610a46plxlu2bVGmgmBmC1xY3
+ BBLUhgfJOrB0pmILepR+8HMOwaJ5eVBHslVs0Lq9ouIg+blN+QljpxL4Q3WslkpHD4/TM4JQmgp
+ mNlbsbLaYxiLV+PRn9OxC1hPkXfHJn8v1QOCSNM1FeCBd6SkrA9fZJ8eZLb7y6uud8boMHxBt3I
+ NgbWnscTxcheU1x99B9dCiesQF/QaCRpgU+jVh5hwd7sldVgBkKUlYAnh9u/UWJ9oVFsE+80asp
+ 3Ko7aMXimriZxwIetQjAUS2CM4ZpVb31IK0YKwgNdGFb9SCDTnD7asGXB9wjpl2oemknpOhC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-14_04,2025-05-14_03,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0 impostorscore=0
+ clxscore=1011 phishscore=0 suspectscore=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505070000 definitions=main-2505140167
 
-On 5/14/25 06:15, Kathiravan Thirumoorthy wrote:
-> 
-> On 5/6/2025 4:31 PM, Kathiravan Thirumoorthy wrote:
+Hi Vinod,
+
+On 5/14/2025 1:33 AM, Vinod Koul wrote:
+> On 16-04-25, 15:45, Wesley Cheng wrote:
+>> Hi Vinod,
 >>
->> On 5/3/2025 3:53 AM, Konrad Dybcio wrote:
->>> On 5/2/25 6:28 PM, Kathiravan Thirumoorthy wrote:
->>>> On 5/2/2025 7:33 PM, Konrad Dybcio wrote:
->>>>>> +static int qcom_wdt_get_restart_reason(struct qcom_wdt *wdt,
->>>>>> +                    const struct qcom_wdt_match_data *data)
->>>>>> +{
->>>>>> +    struct regmap *imem;
->>>>>> +    unsigned int val;
->>>>>> +    int ret;
->>>>>> +
->>>>>> +    imem = syscon_regmap_lookup_by_compatible(data->imem_compatible);
->>>>> Try syscon_regmap_lookup_by_phandle_args() and pass a phandle, see e.g.
->>>>> drivers/phy/qualcomm/phy-qcom-qmp-pcie.c & phy@1bfc000 in x1e80100.dtsi
->>>>>
->>>>> That way all platform specifics will live in the DT, requiring no
->>>>> hardcode-y driver changes on similar platforms
->>>>
->>>> Thanks. I thought about this API but it didn't strike that I can use the args to fetch and match the value.
->>>>
->>>> I need a suggestion here. There is a plan to extend this feature to other IPQ targets and also support WDIOF_POWERUNDER and WDIOF_OVERHEAT cause as well. For IPQ5424, all 3 cause will support and for other IPQ platforms, we are exploring how to integrate WDIOF_OVERHEAT. In any case, can I define the DT entry like below
->>>>
->>>>          imem,phandle = <&imem 0x7b0 <Non secure WDT value> <Power Under value> <Overheat value>>;
->>>>
->>>> and store these in values args[1], args[2] and args[3] respectively and use it for manipulation? If any of the platform doesn't support all 3, I can update the bindings and define the number of args as required.
->>> Let's call the property qcom,restart-reason and only pass the register value
+>> On 4/10/2025 4:53 AM, Vinod Koul wrote:
+>>> On 09-04-25, 10:48, Melody Olvera wrote:
 >>>
->>> Because we may have any number of crazy combinations of various restart
->>> reasons, we can go two paths:
+>>>> +static int m31eusb2_phy_write_readback(void __iomem *base, u32 offset,
+>>>> +					const u32 mask, u32 val)
+>>>> +{
+>>>> +	u32 write_val;
+>>>> +	u32 tmp;
+>>>> +
+>>>> +	tmp = readl_relaxed(base + offset);
+>>>> +	tmp &= ~mask;
+>>>> +	write_val = tmp | val;
+>>>> +
+>>>> +	writel_relaxed(write_val, base + offset);
+>>>> +
+>>>> +	tmp = readl_relaxed(base + offset);
 >>>
->>> 1. promise really really really hard we won't be too crazy with the number
->>>     of possible values and put them in the driver
->>> 2. go all out on DT properties (such as `bootstatus-overheat`,
->>> `bootstatus-fanfault` etc.
->>
->>
->> Thanks Konrad for the suggestions and the offline discussions.
->>
->> @Guenter, I need a suggestion here. Currently as part of this series, we are planning to expose WDIOF_CARDRESET, WDIOF_POWERUNDER, WDIOF_OVERHEAT reasons.
->>
->> Once this is done, we do have the custom reason codes like Kernel Panic, Secure Watchdog Bite, Bus error timeout, Bus error access and few many. Is it okay to expose these values also via the bootstatus sysFS by extending the current list of reasons? Since these are outside the scope of watchdog, need your thoughts on this.
-> 
-> 
-> Konrad / Guenter,
-> 
-> We had a further discussion on this internally. Outcome is, it wouldn't be ideal to hook the custom restart reason codes in watchdog framework, since there is no involvement of watchdog in such cases. Also I don't find any references to hook the custom values in watchdog's bootstatus.
-> 
-Correct. The watchdog subsystem can only handle watchdog triggered reboots/resets.
-
-
-> If this is fine, I'm planning to resend the series to handle only the non secure watchdog timeout case. In that case, as suggested by Konrad, everything will be handled in DT like below to avoid the device data.
-> 
-> imem,phandle = <&phandle <imem_offset> <value>>;
-> 
-> Kindly share your thoughts and inputs on this to proceed further.
-> 
-Sounds good to me.
-
-Guenter
-
-> 
->>
->>
+>>> Why are you using _relaxed version here?
 >>>
->>> I'd much prefer to go with 1 really.. If we used nvmem, we could have a map
->>> of cell names to restart reasons, but we've already established IMEM is
->>> volatile and we shouldn't mess up the convention just because that
->>> subsystem has nicer APIs..
->>>
->>> Unless we rename the subsystem to `fuses`, `magic-values` or something..
->>> +Srini? :P
->>>
->>> Konrad
+>>
+>> No particular reason.  I think someone pointed this out previously, and I
+>> was open to use the non-relaxed variants, but I assume using the relaxed vs
+>> non-relaxed apis comes down to preference in this case.
+> 
+> Nope you cant! There _needs_ to be a specific reasons!
+> When you are doing read, modify, write, it is very important to know the
+> right version to use...
+> 
 
+I mean, its a write readback, which ensures the bus transaction is complete
+based on [1], hence why **in this situation** it is up to preference.
+
+Otherwise, w/o the readback then we'd need to ensure writes are made
+depending on the required sequencing (in spots where the sequence is
+strictly defined), and that can be enforced using barriers.  If you feel
+like using the non-relaxed variant is preferred let me know.  I can replace
+it and remove the readback.
+
+Thanks
+Wesley Cheng
+
+[1] - https://www.kernel.org/doc/html/latest/driver-api/io_ordering.html
 
