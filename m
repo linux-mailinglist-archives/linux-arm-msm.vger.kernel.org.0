@@ -1,97 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-58000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 471CDAB77B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 23:15:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AE6BAB77B9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 23:15:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 60EBC9E366F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 21:14:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 977F83B5EAB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 21:15:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 991F8295503;
-	Wed, 14 May 2025 21:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7449C25C706;
+	Wed, 14 May 2025 21:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kJzgl51T"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="K9fObCbc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66F328CF7B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 21:14:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27C81FC0FA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 21:15:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747257299; cv=none; b=ZrKCwBxzhGRzGbFKoPmhMEv+iFQl0FwBUUkdhUFdu3WPxHu4NH3kq9Duav6cTb8z1d+qC2w15xIUYtTq37LpOdBVNK7Gsum29Zi5+49BYqif37ujQ7BEMeBE85jjll+VhEdsnWZR3uhxHOguVP4eD7oGKvTx0M5FMxYXGUDOdc8=
+	t=1747257339; cv=none; b=iT7mvYteQPp9VbmE2QkWR7Wt4BCJ7OnnOwK8Rr38/5i3k+xTQ0Y3DEEwl1vRHbwTvKr+O8hpaakr636kRo8YLPeWMKeH6kGnmet490LO93Y7TorgQb2aX12ngIrYfjFWHyWLLk264MKkYRvbgP/maY47ncXy3sTFnOYUv+2MWe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747257299; c=relaxed/simple;
-	bh=xy48Ke49o0MQQP+WVGAW8zjJEqic+HLbYecWDxrve5Q=;
+	s=arc-20240116; t=1747257339; c=relaxed/simple;
+	bh=qvjR2XXCGE2xNkWvFLZrOlDwVcZxNCldkgRm3IdHpgo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iTQtChZhA9S5F3PbKXrXp0hkVJ/rTUwRRqECqa3wr60rMYca5DiDudcm/Pn+UxIKzeB4mo6vECaJ4f0+o/4aZzfI+UYlZhntHeAugxu1uNQQSvXlLJJCPcqYmSJinUkPoZtseV7AWaihVvvfNke0JXXqobeujZ/rJ6A4BxEmG8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kJzgl51T; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a0b646eff7so168600f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 14:14:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747257296; x=1747862096; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=K2iv4lSpsksuKGweGaE94y/cYcxuHI7ZTis4Uim2sZI=;
-        b=kJzgl51TFeBusPG/OhqEPkuvDoTglpXcpHZkcn+1oYmEeWxmUgw3xRtbcZcxXdnKd9
-         wMOL/l3sLatPlkr5UjYWeu2KRsyYhBnJhj7kqET1b3Lf/f4snkt/jG9swdnJzJZ4WVUK
-         XDljAQc75lexSQFJJVEEZyMs1d0sFdytQ51pjw09IKS0KevEYSL1I5Ai0W3JqdQe2Tz/
-         ZldWot6J5Nr4Bbs6YgXUZNLH1hu4dCBAITWb6c+Tl24lMeSZtBOjDqG61BUAu4TCRtWF
-         eAj0/kQ6cnqzDoolK0iVBHLWQ//XjgTLbZeLYa3LznH0Ikg31OxfgPCVtVRTMwiFt5s6
-         8ZRw==
+	 Content-Type:Content-Disposition:In-Reply-To; b=GEq2uLdcJ+dWR07/8ygFB5QjxnM+OiRpqWr78nLAeFq55EzmmCQoYCi9TUKzCvYA9AmaUFfcMn1Yn6ucVACgNFh77FK29oYx5wLteMquNirta/vOM3TuYoQzDel4MkZ8iF95h7EwDrXWxnwkhBwNoYRPLGsTYcBj1XTS+wO2PXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=K9fObCbc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EJ9oqk013657
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 21:15:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=CSgSL5tsy6KVjdqsenP3jEhW
+	60sG6ohO+Dj54gdxcXA=; b=K9fObCbc9SloZ7AxXu1IgLDoCgJ2LSlgmEZ4PNhK
+	+16XHDBk3w/Q8RZu9PCyDfqnYfR2enNvfsmLZzjhzW/W6f7HhMlJvz174jxDpB/f
+	pWlFI5HeAwXQrRLjg7mDTn6OPbaMHQXad4agK1kAYAZTmYhGobiYSBEKXlqLH4On
+	ANRQAHux1yfL5fL0VsMr1CUVc1Y05gtyITlefh9ITwFput7Grj5F/Xy6IG/8k3zv
+	3QzfUGDOr8NE9zdmJY56cgpbYq9/nrRqPWHlY0ygEvOl9XUPQqWRP+NUu+uJNlSm
+	iENpWPD4cXg9wZnuIASVIQyXju0TuU9Pb8o/DhrBAfX+yA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcym5my-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 21:15:36 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c790dc38b4so61008085a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 14:15:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747257296; x=1747862096;
+        d=1e100.net; s=20230601; t=1747257335; x=1747862135;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=K2iv4lSpsksuKGweGaE94y/cYcxuHI7ZTis4Uim2sZI=;
-        b=mLlSvsTVQIoKjzCZjRca/uE2QjlPCj5xKFhAQhcgQ+k9bIIuFHxpe+3/ZllCp0Q6Gf
-         GIIaIkueDSWtNsPnqxVSUjDQ/B1hHuqVe90AW+h5IeeKtuK4lpMLguS3K5B7uNe/6MCk
-         fsLYH92Ny40Fy3OmxNmyNdOa8Xx2zp/72+JTJ5U592S4ecOoVfMaqL0EVB9lwbhSBtrx
-         7Pko7R+V93bowpB1AFVGYVPh+P9IRCfO7ckdSZ6F0S3FtfkIi2OYhX8rMO4p9BTECiGA
-         YiH0DI3Zs0+kfmn3qdvBoWaxuXU8Kl2KadtcdBWIIMaZL3GqpL7PGWdZmTbuR8dpIAPu
-         YTjA==
-X-Forwarded-Encrypted: i=1; AJvYcCV6jSzAWkq/18Ejo8WkuA6Wz/519A0+hu5QgBr4DdhU6UdgVTIQjcF9b7c0gkvWYPQZg+GF+N+fuw90DF5F@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXrKWYA3ax/xSlhJKvwkRL5DubiEzGNLgnH57+F+SIGzD1gmD5
-	+whq6z8VwlttI7obcgS/jiizeeMwQ6Q87PeuBtncdmI8od1vZC9LfFFUskl8S3w=
-X-Gm-Gg: ASbGncsmlQRwRB/L7TW/gcZzdfFjsRwpNGyYCxnyddG7xz3uYgODHsNYNVqzVX3RL+m
-	25tXP3tVq/eOYVbJ9hpwRtnQfkck/gowNTWHEUH64RCIdyCGWS9Tvw6DSQ4OTQpaYKdIww1dr88
-	6pfvisJ4DVgdM56QXxCdg+PuFra/4yx8jiQymn1kK742B0EnvWtlWdHrtDXTYpeJeZS1o7sJpBm
-	xcXVMnQGsFXj08X9adnhQ32y9TeC4sDIhLqrmThfnTCUM4yhkYLIb4i/hOvrIUJV8YeezNvxfSk
-	ayn4X37K0qdpZTZp9Xy8QcwYP1tsOtlUuSkxgZKoTSDmNBvlqr9IE5GFfawsOI1O6hyWOSw3o55
-	qc3u5lZ0WCw==
-X-Google-Smtp-Source: AGHT+IGiTo87vlzfm7YxlUUnc8Xs6uMppHhulyIK54p68iyjckl+Nn9ZStWI2jzn16jLSxRNaQVZ4w==
-X-Received: by 2002:a05:6000:438a:b0:39c:2665:2c13 with SMTP id ffacd0b85a97d-3a3537ac263mr52909f8f.54.1747257295851;
-        Wed, 14 May 2025 14:14:55 -0700 (PDT)
-Received: from linaro.org (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f5a4d21esm21038746f8f.99.2025.05.14.14.14.54
+        bh=CSgSL5tsy6KVjdqsenP3jEhW60sG6ohO+Dj54gdxcXA=;
+        b=hiYMRVe/hVSFlp0P3+XG//YqIh98r4gIRW0hW6Thud8E1sQN2LFf6oEqxfADNgtgfe
+         FudrwSPppSQX2lvhc1VGIfm3Zp1dj8wJiGGrAfbyX7g82FLdI9c4/8uDLNvjc7tC+oeZ
+         Kc9etAGt6md+h5UooW5NMC/MToUqO0XPizxn3Syt8XNSFxs55xSuO5Ja+hTyyKe+KRqk
+         E1eSZImAxOs9BVcKjgKa5h6EKL5yifxZobkWYdNFwxIJIN2D2gcNIrbtKc5zYcVGVFdH
+         X16zmWo26XIotlwdqfV0T2qq0sBp9Ty7LK+jfgQ6vBWxAqn9kzoSirvwQI/RNMTjoV1Z
+         rg+A==
+X-Forwarded-Encrypted: i=1; AJvYcCUZDbNv+n4PG9bKY50VTJ82g7O11xiZh122ga9sHD5AzL4E0cv9BEG1WtAEbRJMiccuN/L2MAxywgXgB7Sc@vger.kernel.org
+X-Gm-Message-State: AOJu0YypBUH5v1VC7G2nikoymAL7FpxZZzAwRFo5fqpJtIBlPco9BJgL
+	ASYybTko3tpxjp23wop8zwBwXNFYRQn73/Nd2J+SgpLjX1Mknaf3rBdoyo7aG013YjnNEUbVUhX
+	Uz1sFSAqU4O1AHL6NjA91mrwXxLdGwjCwlUMashVggLHMnSQjV1avngwr6hiSF7yC1mpp
+X-Gm-Gg: ASbGncsWs9ndQIKvyFxm4IzAU/oI+Cul7Si43ziti7BZ0d8zhtvpKEMuj49gri0whgy
+	7Lp1uZ0CVer5oTHdEwQLVbYAdYNtQ2B9h9xYHmQlYPe/yUpz+LJ3zOf9UurphO7vUQ8eEeylWxx
+	9n8SFwKPlGBZS7YBPByn3cDXB4dLLKuKSysefywUyvdBe3bpGHnLT5byRmmPCmKUm2tYRqS5ldH
+	5SXJb3PMvKBHMQG1QUmcKv9/uKIF05YgNayJiKG9eL55X6wcnZaFWLoXhpc8cCXQAXTh3T2AvyZ
+	iXP68q2bEreALt9szqN4od7y9vOu1Sez93+av29tL9DqkXKbiozplfjXgwmQUAsD2qm2uC21QDU
+	=
+X-Received: by 2002:a05:620a:1d0d:b0:7c9:230f:904a with SMTP id af79cd13be357-7cd39de2503mr208510185a.14.1747257335564;
+        Wed, 14 May 2025 14:15:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEF3yZJxhZiWN3ImsNfTVfdXkr/LJlPTcnXcAxIaHup0XQAdoj0fTfNGu52Ukiv4fTDl8MQUg==
+X-Received: by 2002:a05:620a:1d0d:b0:7c9:230f:904a with SMTP id af79cd13be357-7cd39de2503mr208505085a.14.1747257335213;
+        Wed, 14 May 2025 14:15:35 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54fc64cd303sm2398927e87.245.2025.05.14.14.15.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 May 2025 14:14:55 -0700 (PDT)
-Date: Wed, 14 May 2025 22:12:44 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Rob Herring <robh@kernel.org>
+        Wed, 14 May 2025 14:15:32 -0700 (PDT)
+Date: Thu, 15 May 2025 00:15:30 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Jagadeesh Kona <quic_jkona@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org, Georgi Djakov <djakov@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH 1/4] dt-bindings: mailbox: qcom,apcs: Add separate node
- for clock-controller
-Message-ID: <aCUHTJGktLFhXq4Q@linaro.org>
-References: <20250506-qcom-apcs-mailbox-cc-v1-0-b54dddb150a5@linaro.org>
- <20250506-qcom-apcs-mailbox-cc-v1-1-b54dddb150a5@linaro.org>
- <7vszdea2djl43oojvw3vlrip23f7cfyxkyn6jw3wc2f7yowht5@bgsc2pqscujc>
- <aCNGSwL7043GoJBz@linaro.org>
- <20250514160841.GA2427890-robh@kernel.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v4 02/18] dt-bindings: clock: qcom: Update sc8280xp camcc
+ bindings
+Message-ID: <oogbxu2uphyhknr4fjbc4ato6q7r2iermvxbqezyqd2xwamqtr@cddhw4kh6zzx>
+References: <20250515-videocc-pll-multi-pd-voting-v4-0-571c63297d01@quicinc.com>
+ <20250515-videocc-pll-multi-pd-voting-v4-2-571c63297d01@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,72 +111,54 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250514160841.GA2427890-robh@kernel.org>
+In-Reply-To: <20250515-videocc-pll-multi-pd-voting-v4-2-571c63297d01@quicinc.com>
+X-Proofpoint-GUID: YdC94Ce8VNb8XfQhgVitGiHWX68G2czX
+X-Proofpoint-ORIG-GUID: YdC94Ce8VNb8XfQhgVitGiHWX68G2czX
+X-Authority-Analysis: v=2.4 cv=JszxrN4C c=1 sm=1 tr=0 ts=682507f8 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=SIHCAja6ksQgKCh-pUUA:9
+ a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDE5NiBTYWx0ZWRfX05glYqkjCXSx
+ xhrEWgDE9LJggiB72mZ8+dRvv+gmCGMSH1w+YaKqjZ4T1vjk88Tf22XKabITUJfLSukKOjR69HH
+ dr5+hLzEK5NVtGxDcjJGWp+o59wBDLVJrav4dyW/jVjSaoBtMbzJ/y+RN4nG5Q436DYQz22iV7j
+ 4mUy0L2jJ2lwDeV6IjFpSu2Mag0P6T0RPwafkDuWEeD25TvMkinWr1yT2RWBX7ARZNQjZgBDXW4
+ 7zEn8xLhO1j89y0H0uFIV8jcHA7EreYCspPnbs2cNN5Ypgq+GqnKW9uPuPhU5PazUKyVDfhMDSc
+ 8mMUhQnllvmxqOHJM/+6FTm7aZA1QlBAseGBNmzzIulh7jQ56ruVw9tKO8nb3lgYTaXbTTPHZw6
+ FtS7aUn3QAfZx+9d1aEvnMLck6HmnuLqwI9Vw8GDrfpjrwp+UWnq0UMyzFp/qJniuin97Drj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-14_04,2025-05-14_03,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999 bulkscore=0
+ malwarescore=0 mlxscore=0 adultscore=0 phishscore=0 spamscore=0
+ lowpriorityscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505070000 definitions=main-2505140196
 
-On Wed, May 14, 2025 at 11:08:41AM -0500, Rob Herring wrote:
-> On Tue, May 13, 2025 at 02:16:59PM +0100, Stephan Gerhold wrote:
-> > On Sun, May 11, 2025 at 05:48:11PM -0500, Bjorn Andersson wrote:
-> > > On Tue, May 06, 2025 at 03:10:08PM +0200, Stephan Gerhold wrote:
-> > > > APCS "global" is sort of a "miscellaneous" hardware block that combines
-> > > > multiple registers inside the application processor subsystem. Two distinct
-> > > > use cases are currently stuffed together in a single device tree node:
-> > > > 
-> > > >  - Mailbox: to communicate with other remoteprocs in the system.
-> > > >  - Clock: for controlling the CPU frequency.
-> > > > 
-> > > > These two use cases have unavoidable circular dependencies: the mailbox is
-> > > > needed as early as possible during boot to start controlling shared
-> > > > resources like clocks and power domains, while the clock controller needs
-> > > > one of these shared clocks as its parent. Currently, there is no way to
-> > > > distinguish these two use cases for generic mechanisms like fw_devlink.
-> > > > 
-> > > > This is currently blocking conversion of the deprecated custom "qcom,ipc"
-> > > > properties to the standard "mboxes", see e.g. commit d92e9ea2f0f9
-> > > > ("arm64: dts: qcom: msm8939: revert use of APCS mbox for RPM"):
-> > > >   1. remoteproc &rpm needs mboxes = <&apcs1_mbox 8>;
-> > > >   2. The clock controller inside &apcs1_mbox needs
-> > > >      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>.
-> > > >   3. &rpmcc is a child of remoteproc &rpm
-> > > > 
-> > > > The mailbox itself does not need any clocks and should probe early to
-> > > > unblock the rest of the boot process. The "clocks" are only needed for the
-> > > > separate clock controller. In Linux, these are already two separate drivers
-> > > > that can probe independently.
-> > > > 
-> > > 
-> > > Why does this circular dependency need to be broken in the DeviceTree
-> > > representation?
-> > > 
-> > > As you describe, the mailbox probes and register the mailbox controller
-> > > and it registers the clock controller. The mailbox device isn't affected
-> > > by the clock controller failing to find rpmcc...
-> > > 
-> > 
-> > That's right, but the problem is that the probe() function of the
-> > mailbox driver won't be called at all. The device tree *looks* like the
-> > mailbox depends on the clock, so fw_devlink tries to defer probing until
-> > the clock is probed (which won't ever happen, because the mailbox is
-> > needed to make the clock available).
-> > 
-> > I'm not sure why fw_devlink doesn't detect this cycle and tries to probe
-> > them anyway, but fact is that we need to split this up in order to avoid
-> > warnings and have the supplies/consumers set up properly. Those device
-> > links are created based on the device tree and not the drivers.
+On Thu, May 15, 2025 at 12:38:47AM +0530, Jagadeesh Kona wrote:
+> SC8280XP camcc only requires the MMCX power domain, unlike
+> SM8450 camcc which will now support both MMCX and MXC power
+> domains. Hence move SC8280XP camcc bindings from SM8450 to
+> SA8775P camcc.
+
+It requires MX for PLLs. I know that we were not modelling that
+relationship beforehand, but maybe we should start doing that?
+
+> SA8775P camcc doesn't support required-opps property currently
+> but SC8280XP camcc need that property,  so add required-opps
+> based on SC8280XP camcc conditional check in SA8775P camcc
+> bindings.
 > 
-> Does "post-init-providers" providers solve your problem?
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> ---
+>  .../devicetree/bindings/clock/qcom,sa8775p-camcc.yaml     | 15 +++++++++++++++
+>  .../devicetree/bindings/clock/qcom,sm8450-camcc.yaml      |  2 --
+>  2 files changed, 15 insertions(+), 2 deletions(-)
 > 
 
-I would expect that it does, but it feels like the wrong solution to the
-problem to me. The clock is not really a post-init provider: It's not
-consumed at all by the mailbox and needed immediately to initialize the
-clock controller. The real problem in my opinion is that we're
-describing two essentially distinct devices/drivers in a single device
-node, and there is no way to distinguish that.
-
-By splitting up the two distinct components into separate device tree
-nodes, the relation between the providers/consumers is clearly
-described.
-
-Thanks,
-Stephan
+-- 
+With best wishes
+Dmitry
 
