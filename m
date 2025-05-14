@@ -1,50 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-57850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4A55AB6F0A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 17:10:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D76EEAB6F12
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 17:11:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 05E2F7AFBDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 15:09:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1CEA01890012
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 15:11:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 487861C5D4C;
-	Wed, 14 May 2025 15:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 133BB1DAC92;
+	Wed, 14 May 2025 15:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vlapqhv+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gqCJXR4M"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210FD12C499;
-	Wed, 14 May 2025 15:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0CC1AA795;
+	Wed, 14 May 2025 15:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747235448; cv=none; b=JVDTuREUdzh7CuedV4qZLy4ZQSSmBs577yH6gg0MflGuoOWeItibTWvdmqlgeE03+gPFuidpW8tEB6KyzOToF2OVw9/3UmjhJKf9mV8/KxjRw9cG5joEgLWCdqFkqt53oGAtwH59o5+rl8STfkAIEVwXPcbI1h4uy+PahOTe3nk=
+	t=1747235453; cv=none; b=CZjpsKk6Lk4+PjZxv7saJsNMzK8pc22naVWGvyitOLQO8o4wkbj++e3SskNQa2eQDbhhvsFXrxX9cJ+vBYiR3SFBvukvtM8/Tz1EQLisvnym/B1cFGf18FogYfwfbjyJkjCDh3tSsl3it/9kTSls7QTvZ775KfyXvRmtGRLh/NA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747235448; c=relaxed/simple;
-	bh=51s1ugliCZ9y9tBTWNjREJUDvKnLeqgTAYWYYnww7tM=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=daCJYex311VNpiTLw9Q+3Q2QNV+zfabFCZ7W8i9vDoP6+ar7wvsrCUH410AH0s2N6NnL+nN0NJJoKQny7FrMejOkz2xGTKfMC0kp/7lvbVlnoNNELLIozlPJcHP/iS6QQ5POLydDICJxVXNVH4Vtf3SzYmVjVJewqTdhSVxPqXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vlapqhv+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ABA7C4CEE3;
-	Wed, 14 May 2025 15:10:43 +0000 (UTC)
+	s=arc-20240116; t=1747235453; c=relaxed/simple;
+	bh=VttgDU4m0PLua84/J94YsPgTTIVHLyyA0remB3R0YOg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=QjZ23RgyGT7EZiryjZlPGR2m5ZrXTCuBeCQIJ5X3kJ//Hrg73TWfm0BCR/kK9DE6V4FGDwSxOs7771BnVmBLYaWbRoolmmKOfgzwWq3Mb1X79dCFW48Bbtgl4mf1K2p86A/vQqMtVEih7LvU6mb2rxRw4AynOOv7u477CgnwFeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gqCJXR4M; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340BBC4CEE9;
+	Wed, 14 May 2025 15:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747235447;
-	bh=51s1ugliCZ9y9tBTWNjREJUDvKnLeqgTAYWYYnww7tM=;
-	h=From:Subject:Date:To:Cc:From;
-	b=Vlapqhv+gM0aiz94PdoikbsOxJ0CMutLOS/yXoa/V2ibUUfYKeT525Jj6iUVj0VIX
-	 oYpBIvSQjvtL8g5q6BYIofpY1WJyDiwCO0KdkmNhwLlAimM898mAQOCcqvF1zepk3N
-	 WaSM/fa+Fj9xvIxu2kzL18E+Qzzkph7XbWFUggQhNoiCsc6S+EutE5L1rZrBs+Xxjf
-	 86iHfDeaJL9cAq2NEkKUOv4U16KTWyGLrUiFo8n8uoLxH6HPsxal56877w2HVyQ51H
-	 9dC9JclMzjXFEDvWnRTN9hPHEGHTC2phWRU045Jpb3XmkTPsPJPk98+wFuRzJYvOCb
-	 DtXQtf41rDeWA==
+	s=k20201202; t=1747235452;
+	bh=VttgDU4m0PLua84/J94YsPgTTIVHLyyA0remB3R0YOg=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=gqCJXR4MLVFxW35FpOFO7q0LAoF1jtoRnDCpxwd9/Vni8LyoJSS7czrv/V7nDaqk1
+	 xWizIY7krhkJJ/V89Kd8dzq8VT95kdhJQIe+Ww4JlIM60Zm2MiGsBE6gzlNlsNdDn1
+	 IXty99kFU+oiWZp/VygtqYLdZx6EoF3M9Bpbd5B3UUtl6H/7bVkYqwNeXmfcXtFomw
+	 3kq+XYGkTS0APWSXKGXs3BuiUwD8rNVigOMkzaiWlWdzOT5MuwFpHu3xpqLfIEyEpy
+	 jyTqfyYm+C14o4j7+3QsBPNfZAee6V9dgH7ZMP1Rxm1i0pwMKbIW+xfqf+MLjkWt3N
+	 Y0SSmVyHrxbPA==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Subject: [RFT PATCH v2 00/15] Add a single source of truth for UBWC
- configuration data
-Date: Wed, 14 May 2025 17:10:20 +0200
-Message-Id: <20250514-topic-ubwc_central-v2-0-09ecbc0a05ce@oss.qualcomm.com>
+Date: Wed, 14 May 2025 17:10:21 +0200
+Subject: [PATCH RFT v2 01/15] soc: qcom: Add UBWC config provider
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,11 +52,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAFyyJGgC/22NzQ6CMBCEX4Xs2ZLlZxP15HsYYmBdpAlQaAtqC
- O9uhYMXL5N8k8x8CzixWhycowWszNpp0wdIDxFwU/YPUfoeGFJMCfMMlTeDZjVVT76x9N6WraK
- MKccak5MQhOFgpdav7fRa7GxlnMK3/5WNdt7Y9yaek2+7OwiP/xxzolBhRpwzcSWEF+NcPE5ly
- 6br4hBQrOv6AV/4O7HQAAAA
-X-Change-ID: 20250430-topic-ubwc_central-53c540f019e5
+Message-Id: <20250514-topic-ubwc_central-v2-1-09ecbc0a05ce@oss.qualcomm.com>
+References: <20250514-topic-ubwc_central-v2-0-09ecbc0a05ce@oss.qualcomm.com>
+In-Reply-To: <20250514-topic-ubwc_central-v2-0-09ecbc0a05ce@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
@@ -69,86 +66,368 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1747235442; l=3475;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747235442; l=11413;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=51s1ugliCZ9y9tBTWNjREJUDvKnLeqgTAYWYYnww7tM=;
- b=V9qKgWmQlFJZwWodaXCZPfFPpKAnjadFmxqUc6FdCktyOis3bFJK1AqssaDhaLghlADua9Kaf
- CDurEBEKoMuCAGpbIwAPzgfphXX6L/ze492vPPSixmCceby0fZGNzM7
+ bh=M3rpndI9+Ye5wAodM7b0e7V+StqcMyUR6OzzrEGSle4=;
+ b=eoJQ+6xHuYOrbfw+hpOAy7XnxIBxaBW6hUd9qf9islhNFPWnoE+eeyocgBCDXxTp/gqsrqi78
+ 02/QhsflZPBCQJOFOhqu7rnfTl38W+D6ZEuwhxwIyugnPnbuxOTGjw3
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-As discussed a lot in the past, the UBWC config must be coherent across
-a number of IP blocks (currently display and GPU, but it also may/will
-concern camera/video as the drivers evolve).
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-So far, we've been trying to keep the values reasonable in each of the
-two drivers separately, but it really make sense to do so, especially
-given certain fields (see [1]) may need to be gathered dynamically.
-
-This series introduces a Single Source of Truth (SSOT) database to be
-consumed by multimedia drivers as needed.
-
-[1] https://lore.kernel.org/linux-arm-msm/20250410-topic-smem_dramc-v2-0-dead15264714@oss.qualcomm.com/
+Add a file that will serve as a single source of truth for UBWC
+configuration data for various multimedia blocks.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
-Changes in v2:
-- Rearrange some patches
-- Don't zeroalloc a copy of ubwc_config, store a full struct inside
-  adreno_gpu instead (temporary solution until we trust the central db
-  on the HBB value)
-- Improve some commit messages
-- Fix up SM6125's config
-- Don't break userspace abi (hbb value)
-- Don't keep mdss_reg_bus_bw in ubwc_config
-- Add the last patch warning if there are inconsistencies (I don't
-  insist on it getting merged, but I think it's a good idea for the
-  time being)
-- Link to v1: https://lore.kernel.org/r/20250508-topic-ubwc_central-v1-0-035c4c5cbe50@oss.qualcomm.com
+ drivers/soc/qcom/Kconfig       |   8 ++
+ drivers/soc/qcom/Makefile      |   1 +
+ drivers/soc/qcom/ubwc_config.c | 235 +++++++++++++++++++++++++++++++++++++++++
+ include/linux/soc/qcom/ubwc.h  |  67 ++++++++++++
+ 4 files changed, 311 insertions(+)
 
----
-Konrad Dybcio (15):
-      soc: qcom: Add UBWC config provider
-      drm/msm: Offset MDSS HBB value by 13
-      drm/msm: Use the central UBWC config database
-      drm/msm/a6xx: Get a handle to the common UBWC config
-      drm/msm/a6xx: Resolve the meaning of AMSBC
-      drm/msm/a6xx: Simplify uavflagprd_inv detection
-      drm/msm/a6xx: Resolve the meaning of UBWC_MODE
-      drm/msm/a6xx: Replace '2' with BIT(1) in level2_swizzling_dis calc
-      drm/msm/a6xx: Resolve the meaning of rgb565_predicator
-      drm/msm/a6xx: Simplify min_acc_len calculation
-      drm/msm/adreno: Switch to the common UBWC config struct
-      drm/msm/a6xx: Drop cfg->ubwc_swizzle override
-      soc: qcom: ubwc: Fix SM6125's ubwc_swizzle value
-      soc: qcom: ubwc: Add #defines for UBWC swizzle bits
-      [RFC] drm/msm/a6xx: Warn if the highest_bank_bit value is overwritten
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index 58e63cf0036ba8554e4082da5184a620ca807a9e..2caadbbcf8307ff94f5afbdd1481e5e5e291749f 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -296,3 +296,11 @@ config QCOM_PBS
+ 	  PBS trigger event to the PBS RAM.
+ 
+ endmenu
++
++config QCOM_UBWC_CONFIG
++	tristate
++	help
++	  Most Qualcomm SoCs feature a number of Universal Bandwidth Compression
++	  (UBWC) engines across various IP blocks, which need to be initialized
++	  with coherent configuration data. This module functions as a single
++	  source of truth for that information.
+diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+index acbca2ab5cc2a9ab3dce1ff38efd048ba2fab31e..b7f1d2a5736748b8772c090fd24462fa91f321c6 100644
+--- a/drivers/soc/qcom/Makefile
++++ b/drivers/soc/qcom/Makefile
+@@ -39,3 +39,4 @@ obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
+ qcom_ice-objs			+= ice.o
+ obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom_ice.o
+ obj-$(CONFIG_QCOM_PBS) +=	qcom-pbs.o
++obj-$(CONFIG_QCOM_UBWC_CONFIG) += ubwc_config.o
+diff --git a/drivers/soc/qcom/ubwc_config.c b/drivers/soc/qcom/ubwc_config.c
+new file mode 100644
+index 0000000000000000000000000000000000000000..9caecd071035ccb03f14464e9b7129ba34a7f862
+--- /dev/null
++++ b/drivers/soc/qcom/ubwc_config.c
+@@ -0,0 +1,235 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
++
++#include <linux/debugfs.h>
++#include <linux/io.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/of_address.h>
++#include <linux/platform_device.h>
++
++#include <linux/soc/qcom/ubwc.h>
++
++static const struct qcom_ubwc_cfg_data msm8937_data = {
++	.ubwc_enc_version = UBWC_1_0,
++	.ubwc_dec_version = UBWC_1_0,
++	.highest_bank_bit = 14,
++};
++
++static const struct qcom_ubwc_cfg_data msm8998_data = {
++	.ubwc_enc_version = UBWC_1_0,
++	.ubwc_dec_version = UBWC_1_0,
++	.highest_bank_bit = 15,
++};
++
++static const struct qcom_ubwc_cfg_data qcm2290_data = {
++	/* no UBWC */
++	.highest_bank_bit = 15,
++};
++
++static const struct qcom_ubwc_cfg_data sa8775p_data = {
++	.ubwc_enc_version = UBWC_4_0,
++	.ubwc_dec_version = UBWC_4_0,
++	.ubwc_swizzle = 4,
++	.ubwc_bank_spread = true,
++	.highest_bank_bit = 13,
++	.macrotile_mode = true,
++};
++
++static const struct qcom_ubwc_cfg_data sar2130p_data = {
++	.ubwc_enc_version = UBWC_3_0, /* 4.0.2 in hw */
++	.ubwc_dec_version = UBWC_4_3,
++	.ubwc_swizzle = 6,
++	.ubwc_bank_spread = true,
++	.highest_bank_bit = 13,
++	.macrotile_mode = true,
++};
++
++static const struct qcom_ubwc_cfg_data sc7180_data = {
++	.ubwc_enc_version = UBWC_2_0,
++	.ubwc_dec_version = UBWC_2_0,
++	.ubwc_swizzle = 6,
++	.ubwc_bank_spread = true,
++	.highest_bank_bit = 14,
++};
++
++static const struct qcom_ubwc_cfg_data sc7280_data = {
++	.ubwc_enc_version = UBWC_3_0,
++	.ubwc_dec_version = UBWC_4_0,
++	.ubwc_swizzle = 6,
++	.ubwc_bank_spread = true,
++	.highest_bank_bit = 14,
++	.macrotile_mode = true,
++};
++
++static const struct qcom_ubwc_cfg_data sc8180x_data = {
++	.ubwc_enc_version = UBWC_3_0,
++	.ubwc_dec_version = UBWC_3_0,
++	.highest_bank_bit = 16,
++	.macrotile_mode = true,
++};
++
++static const struct qcom_ubwc_cfg_data sc8280xp_data = {
++	.ubwc_enc_version = UBWC_4_0,
++	.ubwc_dec_version = UBWC_4_0,
++	.ubwc_swizzle = 6,
++	.ubwc_bank_spread = true,
++	.highest_bank_bit = 16,
++	.macrotile_mode = true,
++};
++
++static const struct qcom_ubwc_cfg_data sdm670_data = {
++	.ubwc_enc_version = UBWC_2_0,
++	.ubwc_dec_version = UBWC_2_0,
++	.highest_bank_bit = 14,
++};
++
++static const struct qcom_ubwc_cfg_data sdm845_data = {
++	.ubwc_enc_version = UBWC_2_0,
++	.ubwc_dec_version = UBWC_2_0,
++	.highest_bank_bit = 15,
++};
++
++static const struct qcom_ubwc_cfg_data sm6115_data = {
++	.ubwc_enc_version = UBWC_1_0,
++	.ubwc_dec_version = UBWC_2_0,
++	.ubwc_swizzle = 7,
++	.ubwc_bank_spread = true,
++	.highest_bank_bit = 14,
++};
++
++static const struct qcom_ubwc_cfg_data sm6125_data = {
++	.ubwc_enc_version = UBWC_1_0,
++	.ubwc_dec_version = UBWC_3_0,
++	.ubwc_swizzle = 1,
++	.highest_bank_bit = 14,
++};
++
++static const struct qcom_ubwc_cfg_data sm6150_data = {
++	.ubwc_enc_version = UBWC_2_0,
++	.ubwc_dec_version = UBWC_2_0,
++	.highest_bank_bit = 14,
++};
++
++static const struct qcom_ubwc_cfg_data sm6350_data = {
++	.ubwc_enc_version = UBWC_2_0,
++	.ubwc_dec_version = UBWC_2_0,
++	.ubwc_swizzle = 6,
++	.ubwc_bank_spread = true,
++	.highest_bank_bit = 14,
++};
++
++static const struct qcom_ubwc_cfg_data sm7150_data = {
++	.ubwc_enc_version = UBWC_2_0,
++	.ubwc_dec_version = UBWC_2_0,
++	.highest_bank_bit = 14,
++};
++
++static const struct qcom_ubwc_cfg_data sm8150_data = {
++	.ubwc_enc_version = UBWC_3_0,
++	.ubwc_dec_version = UBWC_3_0,
++	.highest_bank_bit = 15,
++};
++
++static const struct qcom_ubwc_cfg_data sm8250_data = {
++	.ubwc_enc_version = UBWC_4_0,
++	.ubwc_dec_version = UBWC_4_0,
++	.ubwc_swizzle = 6,
++	.ubwc_bank_spread = true,
++	/* TODO: highest_bank_bit = 15 for LP_DDR4 */
++	.highest_bank_bit = 16,
++	.macrotile_mode = true,
++};
++
++static const struct qcom_ubwc_cfg_data sm8350_data = {
++	.ubwc_enc_version = UBWC_4_0,
++	.ubwc_dec_version = UBWC_4_0,
++	.ubwc_swizzle = 6,
++	.ubwc_bank_spread = true,
++	/* TODO: highest_bank_bit = 15 for LP_DDR4 */
++	.highest_bank_bit = 16,
++	.macrotile_mode = true,
++};
++
++static const struct qcom_ubwc_cfg_data sm8550_data = {
++	.ubwc_enc_version = UBWC_4_0,
++	.ubwc_dec_version = UBWC_4_3,
++	.ubwc_swizzle = 6,
++	.ubwc_bank_spread = true,
++	/* TODO: highest_bank_bit = 15 for LP_DDR4 */
++	.highest_bank_bit = 16,
++	.macrotile_mode = true,
++};
++
++static const struct qcom_ubwc_cfg_data x1e80100_data = {
++	.ubwc_enc_version = UBWC_4_0,
++	.ubwc_dec_version = UBWC_4_3,
++	.ubwc_swizzle = 6,
++	.ubwc_bank_spread = true,
++	/* TODO: highest_bank_bit = 15 for LP_DDR4 */
++	.highest_bank_bit = 16,
++	.macrotile_mode = true,
++};
++
++static const struct of_device_id qcom_ubwc_configs[] __maybe_unused = {
++	{ .compatible = "qcom,apq8096", .data = &msm8998_data },
++	{ .compatible = "qcom,msm8917", .data = &msm8937_data },
++	{ .compatible = "qcom,msm8937", .data = &msm8937_data },
++	{ .compatible = "qcom,msm8953", .data = &msm8937_data },
++	{ .compatible = "qcom,msm8956", .data = &msm8937_data },
++	{ .compatible = "qcom,msm8976", .data = &msm8937_data },
++	{ .compatible = "qcom,msm8996", .data = &msm8998_data },
++	{ .compatible = "qcom,msm8998", .data = &msm8998_data },
++	{ .compatible = "qcom,qcm2290", .data = &qcm2290_data, },
++	{ .compatible = "qcom,qcm6490", .data = &sc7280_data, },
++	{ .compatible = "qcom,sa8155p", .data = &sm8150_data, },
++	{ .compatible = "qcom,sa8540p", .data = &sc8280xp_data, },
++	{ .compatible = "qcom,sa8775p", .data = &sa8775p_data, },
++	{ .compatible = "qcom,sc7180", .data = &sc7180_data },
++	{ .compatible = "qcom,sc7280", .data = &sc7280_data, },
++	{ .compatible = "qcom,sc8180x", .data = &sc8180x_data, },
++	{ .compatible = "qcom,sc8280xp", .data = &sc8280xp_data, },
++	{ .compatible = "qcom,sdm630", .data = &msm8937_data },
++	{ .compatible = "qcom,sdm636", .data = &msm8937_data },
++	{ .compatible = "qcom,sdm660", .data = &msm8937_data },
++	{ .compatible = "qcom,sdm670", .data = &sdm670_data, },
++	{ .compatible = "qcom,sdm845", .data = &sdm845_data, },
++	{ .compatible = "qcom,sm4250", .data = &sm6115_data, },
++	{ .compatible = "qcom,sm6115", .data = &sm6115_data, },
++	{ .compatible = "qcom,sm6125", .data = &sm6125_data, },
++	{ .compatible = "qcom,sm6150", .data = &sm6150_data, },
++	{ .compatible = "qcom,sm6350", .data = &sm6350_data, },
++	{ .compatible = "qcom,sm6375", .data = &sm6350_data, },
++	{ .compatible = "qcom,sm7125", .data = &sc7180_data },
++	{ .compatible = "qcom,sm7150", .data = &sm7150_data, },
++	{ .compatible = "qcom,sm8150", .data = &sm8150_data, },
++	{ .compatible = "qcom,sm8250", .data = &sm8250_data, },
++	{ .compatible = "qcom,sm8350", .data = &sm8350_data, },
++	{ .compatible = "qcom,sm8450", .data = &sm8350_data, },
++	{ .compatible = "qcom,sm8550", .data = &sm8550_data, },
++	{ .compatible = "qcom,sm8650", .data = &sm8550_data, },
++	{ .compatible = "qcom,x1e80100", .data = &x1e80100_data, },
++	{ .compatible = "qcom,x1p42100", .data = &x1e80100_data, },
++	{ }
++};
++
++const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
++{
++	const struct of_device_id *match;
++	struct device_node *root;
++
++	root = of_find_node_by_path("/");
++	if (!root)
++		return ERR_PTR(-ENODEV);
++
++	match = of_match_node(qcom_ubwc_configs, root);
++	of_node_put(root);
++	if (!match) {
++		pr_err("Couldn't find UBWC config data for this platform!\n");
++		return ERR_PTR(-EINVAL);
++	}
++
++	return match->data;
++}
+diff --git a/include/linux/soc/qcom/ubwc.h b/include/linux/soc/qcom/ubwc.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..30d9744c5d2e06d4aa93b64f7d2bc0e855c7a10b
+--- /dev/null
++++ b/include/linux/soc/qcom/ubwc.h
+@@ -0,0 +1,67 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (c) 2018, The Linux Foundation
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
++
++#ifndef __QCOM_UBWC_H__
++#define __QCOM_UBWC_H__
++
++#include <linux/bits.h>
++#include <linux/types.h>
++
++struct qcom_ubwc_cfg_data {
++	u32 ubwc_enc_version;
++	/* Can be read from MDSS_BASE + 0x58 */
++	u32 ubwc_dec_version;
++
++	/**
++	 * @ubwc_swizzle: Whether to enable level 1, 2 & 3 bank swizzling.
++	 *
++	 * UBWC 1.0 always enables all three levels.
++	 * UBWC 2.0 removes level 1 bank swizzling, leaving levels 2 & 3.
++	 * UBWC 4.0 adds the optional ability to disable levels 2 & 3.
++	 *
++	 * This is a bitmask where BIT(0) enables level 1, BIT(1)
++	 * controls level 2, and BIT(2) enables level 3.
++	 */
++	u32 ubwc_swizzle;
++
++	/**
++	 * @highest_bank_bit: Highest Bank Bit
++	 *
++	 * The Highest Bank Bit value represents the bit of the highest
++	 * DDR bank.  This should ideally use DRAM type detection.
++	 */
++	int highest_bank_bit;
++	bool ubwc_bank_spread;
++
++	/**
++	 * @macrotile_mode: Macrotile Mode
++	 *
++	 * Whether to use 4-channel macrotiling mode or the newer
++	 * 8-channel macrotiling mode introduced in UBWC 3.1. 0 is
++	 * 4-channel and 1 is 8-channel.
++	 */
++	bool macrotile_mode;
++};
++
++#define UBWC_1_0 0x10000000
++#define UBWC_2_0 0x20000000
++#define UBWC_3_0 0x30000000
++#define UBWC_4_0 0x40000000
++#define UBWC_4_3 0x40030000
++
++const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void);
++
++static inline bool qcom_ubwc_get_ubwc_mode(const struct qcom_ubwc_cfg_data *cfg)
++{
++	bool ret = cfg->ubwc_enc_version == UBWC_1_0;
++
++	if (ret && !(cfg->ubwc_swizzle & BIT(0)))
++		pr_err("UBWC config discrepancy - level 1 swizzling enabled on UBWC 1.0\n");
++
++	return ret;
++}
++
++#endif /* __QCOM_UBWC_H__ */
 
- drivers/gpu/drm/msm/Kconfig                 |   1 +
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c       |  20 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 131 +++++------
- drivers/gpu/drm/msm/adreno/adreno_gpu.c     |   6 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.h     |  46 +---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c |   6 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |   4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |   7 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |   2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   |   3 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      |   2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |   2 +-
- drivers/gpu/drm/msm/msm_mdss.c              | 333 +++++-----------------------
- drivers/gpu/drm/msm/msm_mdss.h              |  28 ---
- drivers/soc/qcom/Kconfig                    |   8 +
- drivers/soc/qcom/Makefile                   |   1 +
- drivers/soc/qcom/ubwc_config.c              | 244 ++++++++++++++++++++
- include/linux/soc/qcom/ubwc.h               |  69 ++++++
- 18 files changed, 480 insertions(+), 433 deletions(-)
----
-base-commit: edef457004774e598fc4c1b7d1d4f0bcd9d0bb30
-change-id: 20250430-topic-ubwc_central-53c540f019e5
-
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+2.49.0
 
 
