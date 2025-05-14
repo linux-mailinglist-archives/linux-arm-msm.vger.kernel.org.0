@@ -1,207 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-57804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CF9AAB6448
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 09:27:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83A67AB647F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 09:34:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DD6D24A1184
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 07:27:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4BE9D18831D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 07:34:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAC69217F5C;
-	Wed, 14 May 2025 07:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 510E383A14;
+	Wed, 14 May 2025 07:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Wi7Wuioj"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Hdroa7zU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8501F4639;
-	Wed, 14 May 2025 07:26:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7A4E55B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 07:34:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747207589; cv=none; b=DaJo5MuBD3LtAeMOlNA88ghwyFLK0J2Qxw/Ahr1/Oinp564Jgf4ITwriPGBFvdnAHkny3ZINkH4HGhkyYMNX3iDhTe/ccByiTtuI08jbv6FcliRS6DR807Wsp9c0+YR0qV84Ba2wvoBHDpv2G3IWgPQoDaSUKCtl47aj0eQkGII=
+	t=1747208058; cv=none; b=aZGQ3XMORW9aeOKTTpj0RojowJAWNwNwUwsBgUCdAl6vOo+FKMEpCYLlIlt1g0nw98UgjXoe77NKd+h3w+ok+utWqhFou9IPo3LZJ5e/7Qrg4aEr0U18fRXONlatC/t9SYOinD8RYv0gC3MwxXZEF43Fc/MQ4zlNqLmnl9niolY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747207589; c=relaxed/simple;
-	bh=sm0LNJOmtGN8g+G8nc3LgAZN7j10adbZr0FKkpv6VoI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=I5zi4CbNpLH1AWUqmIGz5mUYc32UmaQMdawC8u/MdPUsUCI3hNM+f+E7FmkM5xLRDIG+yCxM9SGv6mSjU0SwLTKggRncf5ESPNilflCd4SxIcuEiUpekMmnyWpq+AwKcluvhIEUkBGjGZefZzr2NUpBHqqoF/FN4KqM+sAMjCwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Wi7Wuioj; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54E26mZg007826;
-	Wed, 14 May 2025 07:26:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4Bm4yFLJeVj/zJGWYwL7wW/NnhgD3btzMiwSwZpR7Ok=; b=Wi7Wuioj8iPCKbGu
-	OAMlgag16TWjjoew5AtFFKGZ5sATW0lPFiDDCI/Xcc0GnZ1heRWOongbkarJAF3D
-	V0J9Ifo4Kjia8Tkb8Lpx3tXz8anTcIuYIg6C0FTGRj2P+tnK2qKEGoo2SS0XqMxc
-	vnympTKkM5hLpWInLKrgGTUSOGWUsM5mblwtDMPk6Rh5KDGI3OzYogS9awZq1/Wt
-	Lwo3Bc9ciCcVDGDUtjn3/Z/lCVO6juBzllQ30d0psqhDUAbGRkycEyL0XLV11zU9
-	Nsv4M98xIQA9moHO3ijdMrl4joiQUJV/DNg6AUurKrco1pKm7zEObOoQppOoPOta
-	yS7HHg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcnssnd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 May 2025 07:25:59 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54E7PxVt006424
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 May 2025 07:25:59 GMT
-Received: from [10.239.155.136] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 14 May
- 2025 00:25:54 -0700
-Message-ID: <486616b7-9400-4288-b4b4-c56ec628b0f3@quicinc.com>
-Date: Wed, 14 May 2025 15:25:52 +0800
+	s=arc-20240116; t=1747208058; c=relaxed/simple;
+	bh=Zk8AYXc+N9zzRDvLpBlVY2w1heLxebTxSA5YZ2AGjxM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=F8yd8lL1IexewNmVjxWGPK0r9M/whTVt0LCwvpmU8QVGqN/KZeijwav6mQ3fYZcC4TFLdmA0PyPVBxNMVuyiLnpwW/+u/SyLiqAOFAf859bTsI9aczwwXET8R9H5uJbPCqz0RwF0YlTBWNQT3jeNi/0WjlIbn9bjY0s6MbYswOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Hdroa7zU; arc=none smtp.client-ip=209.85.160.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-47666573242so249501cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 00:34:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1747208055; x=1747812855; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+K04p3I7lu9J1Ks0C4ES0/2cH0wDYip+VLHtbctoxbA=;
+        b=Hdroa7zUN4jPhx/Q/Vn7CmDCVrY6kIB2AvlKzXmD+27FKQh5rxWxKkqn7PXBzAy05y
+         uQ2IhNPfsTmwZKk5vXuFYYNbHutdkgVeuSUPM3jxl+Af+ng9immRUvjWm2cxJa7YG0yB
+         BJr2oGFD3Za03sY0lBk1OR2//ZsjrojZs4/mqR7Jk78R6ocDhXanjfpUuvWxXqv68N1O
+         L3SDR5cPxeVhvCa5w7h4ItMhRfVqn1VzvCDyrxARndXdZvfifnPtAQGoikWTBgqG/b9l
+         2P7ew/QlYS75SChVvA4Kqz3vW803OfqfTVwNn8I/8slB1MMeR7xH07GqbDPDWOXwSMvi
+         u0Ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747208055; x=1747812855;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+K04p3I7lu9J1Ks0C4ES0/2cH0wDYip+VLHtbctoxbA=;
+        b=aPHfCpr1aclQMX4SmFpQVgHo8YCCVnaNlx26Py1MBAgehTrAlrubOh3kHvH0xyVUUN
+         UF9QfOylEaY0ZzLnT+kAIPiuOZDrrNl+f/vFXDyQZK+JJ3MS3oN1l5QAf7rL2a2utMK3
+         r9I4Cy7RdUT5GbEVEkKyvS4JN3QGc5R7eJepPraRHJyY4YnhON8t+37iarHVCnsUFujn
+         XijrgL2lbqkrnwTQy2mcYdw4nnfxbKt9tr7GSGBKKxMJvPTBs8S0dQc4ryG8xYOdBlWr
+         9RAw/0kPwW91Lrk5abgQxKhledFo6WJLMq0ZZl5LTV7evn+4L8gWoNKb2vzMOLpiP/Vi
+         LHRA==
+X-Forwarded-Encrypted: i=1; AJvYcCXDyUW20QicAlm2SAFRy4dq8ShOKoEYoqsKGUtfWUklHkdmXHAID04m6WL4Lwc5x013Q9IzT9br3BERhwdY@vger.kernel.org
+X-Gm-Message-State: AOJu0YyoNZ9uhPlUS5djnTfUfOlrHGF8l8kY/uLRMA5IpvUJXZHX9MqD
+	C2wdqOJKAAHokqBy8GFEPX0bcXQdc7SY0YMZN2aLykOg1SvSzcrKwS+Jq41DeSl8cBCfj/aRlTA
+	lpwAN5FI9wGsg7huD9IdH0hPOtJHBhcqIpHOiT1QGmPhBAHueh6zzt3g0lrc=
+X-Gm-Gg: ASbGncswTgZ9r0fIKU1JKyrLGfDY9DgUqF+05pkQv8PVR6HRgsedOiIA+Ovg/bemdss
+	RSu/1+7POBlTY3el0MiU9YpL4zpE6MMgfDQVhLYWcdgJFNwxHMZNC9iPumI1LRNaZah1A8gDTM+
+	LP4JTZy7N6U4ZyDZAkTk2Lmi3Qe4sppo7wOQ==
+X-Google-Smtp-Source: AGHT+IFSOID1ICFA/5WT/TzMHfPgJnDU6FMA0qEBlUg4UzroG9ERy4wAxu21kXkOFoFF7O5R0YHNgip2tFvVC5FLwQQ=
+X-Received: by 2002:a05:622a:10a:b0:477:1f86:178c with SMTP id
+ d75a77b69052e-49496168dcdmr3009381cf.26.1747208055027; Wed, 14 May 2025
+ 00:34:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] scsi: ufs: core: skip UFS clkscale if host
- asynchronous scan in progress
-To: Bart Van Assche <bvanassche@acm.org>, <quic_cang@quicinc.com>,
-        <mani@kernel.org>, <beanhuo@micron.com>, <avri.altman@wdc.com>,
-        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
-        <quic_nguyenb@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_rampraka@quicinc.com>, <neil.armstrong@linaro.org>,
-        <luca.weiss@fairphone.com>, <konrad.dybcio@oss.qualcomm.com>,
-        <peter.wang@mediatek.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        Alim Akhtar
-	<alim.akhtar@samsung.com>,
-        "James E.J. Bottomley"
-	<James.Bottomley@HansenPartnership.com>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20250508093854.3281475-1-quic_ziqichen@quicinc.com>
- <fd13e179-f2d8-4085-86da-c6b0fce2de5b@acm.org>
- <5748d0cc-a603-4b44-bbfc-d39d684b2ea6@quicinc.com>
- <c428f074-c010-4225-960e-56aa65a799d8@acm.org>
-Content-Language: en-US
-From: Ziqi Chen <quic_ziqichen@quicinc.com>
-In-Reply-To: <c428f074-c010-4225-960e-56aa65a799d8@acm.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: AgmqrHl9WlQR8wJ9-mK9bylvzcjOkf-Z
-X-Authority-Analysis: v=2.4 cv=D8dHKuRj c=1 sm=1 tr=0 ts=68244587 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
- a=8xSKCfN-9FFblOZXFZwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDA2MyBTYWx0ZWRfX2sMU9T6XWX15
- eEeeS2YQXLnprr7JwLiVMGygpHMd0VmvW29YXDCZkbaBl9HT2FaQPFdhStS28u9ToqEN2DYznwh
- Mujr4B+7vNwBq9G0PISsZYN2M5uk9UpR5ROQGM9gTD2+Po+nN2y15+g/WpGqZwfm4Yr1WEgCJEI
- gVrMJcl+hfp+bIhYfYht16QgLRi6XRdvz2kyfIzLK0t4SYXRY44tFtOjVEZ6J313UmJ5FF82UjE
- P7p7OkdhVn3fPp4FWzobKwjs7lSHTti0bWxaSe8+oxt6ZiRIHjv3JksT9r3yLJ5jgQ3vyyN4t9I
- UriVKbIVwRxShVGYt+4zshtiyZTRI/Cd8hc/uMopZ3FuA8JpVG2NMhUF52AlPEfT3bgGjSLM1X0
- +Q6Uqmf2L2cmcalduMLL58qMrcs1OCExgUKW66kJwWaczDRpVskTYyLMDghgofVlENCEzT8u
-X-Proofpoint-GUID: AgmqrHl9WlQR8wJ9-mK9bylvzcjOkf-Z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-14_02,2025-05-14_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- suspectscore=0 malwarescore=0 mlxscore=0 adultscore=0 phishscore=0
- clxscore=1015 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505140063
+References: <20250513163438.3942405-1-tabba@google.com> <20250513163438.3942405-9-tabba@google.com>
+ <CADrL8HVikf9OK_j4aUk2NZ-BB2sTdavGnDza9244TMeDWjxbCQ@mail.gmail.com>
+In-Reply-To: <CADrL8HVikf9OK_j4aUk2NZ-BB2sTdavGnDza9244TMeDWjxbCQ@mail.gmail.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Wed, 14 May 2025 08:33:38 +0100
+X-Gm-Features: AX0GCFtAIOxW0CKUqlf7YJqpRk8IDw3vPXES_-izSP0Sdin8tzyjcQYf2tlC9j4
+Message-ID: <CA+EHjTyWOJA8u3iXS9txF8oDKF-soykjJm8HPPEW+6VpM+uvtg@mail.gmail.com>
+Subject: Re: [PATCH v9 08/17] KVM: guest_memfd: Check that userspace_addr and
+ fd+offset refer to same range
+To: James Houghton <jthoughton@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi James,
 
+On Tue, 13 May 2025 at 21:31, James Houghton <jthoughton@google.com> wrote:
+>
+> On Tue, May 13, 2025 at 9:34=E2=80=AFAM Fuad Tabba <tabba@google.com> wro=
+te:
+> >
+> > From: Ackerley Tng <ackerleytng@google.com>
+> >
+> > On binding of a guest_memfd with a memslot, check that the slot's
+> > userspace_addr and the requested fd and offset refer to the same memory
+> > range.
+> >
+> > This check is best-effort: nothing prevents userspace from later mappin=
+g
+> > other memory to the same provided in slot->userspace_addr and breaking
+> > guest operation.
+> >
+> > Suggested-by: David Hildenbrand <david@redhat.com>
+> > Suggested-by: Sean Christopherson <seanjc@google.com>
+> > Suggested-by: Yan Zhao <yan.y.zhao@intel.com>
+> > Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > ---
+> >  virt/kvm/guest_memfd.c | 37 ++++++++++++++++++++++++++++++++++---
+> >  1 file changed, 34 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> > index 8e6d1866b55e..2f499021df66 100644
+> > --- a/virt/kvm/guest_memfd.c
+> > +++ b/virt/kvm/guest_memfd.c
+> > @@ -556,6 +556,32 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_cr=
+eate_guest_memfd *args)
+> >         return __kvm_gmem_create(kvm, size, flags);
+> >  }
+> >
+> > +static bool kvm_gmem_is_same_range(struct kvm *kvm,
+> > +                                  struct kvm_memory_slot *slot,
+> > +                                  struct file *file, loff_t offset)
+> > +{
+> > +       struct mm_struct *mm =3D kvm->mm;
+> > +       loff_t userspace_addr_offset;
+> > +       struct vm_area_struct *vma;
+> > +       bool ret =3D false;
+> > +
+> > +       mmap_read_lock(mm);
+> > +
+> > +       vma =3D vma_lookup(mm, slot->userspace_addr);
+> > +       if (!vma)
+> > +               goto out;
+> > +
+> > +       if (vma->vm_file !=3D file)
+> > +               goto out;
+> > +
+> > +       userspace_addr_offset =3D slot->userspace_addr - vma->vm_start;
+> > +       ret =3D userspace_addr_offset + (vma->vm_pgoff << PAGE_SHIFT) =
+=3D=3D offset;
+> > +out:
+> > +       mmap_read_unlock(mm);
+> > +
+> > +       return ret;
+> > +}
+> > +
+> >  int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+> >                   unsigned int fd, loff_t offset)
+> >  {
+> > @@ -585,9 +611,14 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memo=
+ry_slot *slot,
+> >             offset + size > i_size_read(inode))
+> >                 goto err;
+> >
+> > -       if (kvm_gmem_supports_shared(inode) &&
+> > -           !kvm_arch_vm_supports_gmem_shared_mem(kvm))
+> > -               goto err;
+> > +       if (kvm_gmem_supports_shared(inode)) {
+> > +               if (!kvm_arch_vm_supports_gmem_shared_mem(kvm))
+> > +                       goto err;
+> > +
+> > +               if (slot->userspace_addr &&
+> > +                   !kvm_gmem_is_same_range(kvm, slot, file, offset))
+> > +                       goto err;
+>
+> This is very nit-picky, but I would rather this not be -EINVAL, maybe
+> -EIO instead? Or maybe a pr_warn_once() and let the call proceed?
+>
+> The userspace_addr we got isn't invalid per se, we're just trying to
+> give a hint to the user that their VMAs (or the userspace address they
+> gave us) are messed up. I don't really like lumping this in with truly
+> invalid arguments.
 
-On 5/13/2025 6:31 AM, Bart Van Assche wrote:
-> On 5/8/25 10:02 PM, Ziqi Chen wrote:
->>
->>
->> On 5/9/2025 12:06 AM, Bart Van Assche wrote:
->>> On 5/8/25 2:38 AM, Ziqi Chen wrote:
->>>> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
->>>> index 1c53ccf5a616..04f40677e76a 100644
->>>> --- a/drivers/ufs/core/ufshcd.c
->>>> +++ b/drivers/ufs/core/ufshcd.c
->>>> @@ -1207,6 +1207,9 @@ static bool 
->>>> ufshcd_is_devfreq_scaling_required(struct ufs_hba *hba,
->>>>       if (list_empty(head))
->>>>           return false;
->>>> +    if (hba->host->async_scan)
->>>> +        return false;
->>>
->>> Testing a boolean is never a proper way to synchronize code sections.
->>> As an example, the SCSI core could set hba->host->async_scan after this
->>> check completed and before the code below is executed. I think we need a
->>> better solution.
->>
->> Hi Bart,
->>
->> I get your point, we have also taken this into consideration. That's why
->> we move ufshcd_devfreq_init() out of ufshd_add_lus().
->>
->> Old sequence:
->>
->> | ufshcd_async_scan()
->>    |ufshcd_add_lus()
->>      |ufshcd_devfreq_init()
->>      |  | enable UFS clock scaling
->>      |scsi_scan_host()
->>         |scsi_prep_async_scan()
->>         |    | set host->async_scan to '1'
->>         |async_schedule(do_scan_async, data)
->>
->> With this old sequence , The ufs devfreq monitor started before the
->> scsi_prep_async_scan(),  the SCSI core could set hba->host->async_scan
->> after this check.
->>
->> New sequence:
->>
->> | ufshcd_async_scan()
->>    |ufshcd_add_lus()
->>    | |scsi_scan_host()
->>    |    |scsi_prep_async_scan()
->>    |    |    | set host->async_scan to '1'
->>    |    |async_schedule(do_scan_async, data)
->>    |ufshcd_devfreq_init()
->>    |    |enable UFS clock scaling
->>
->> With the new sequence , it is guaranteed that host->async_scan
->> is set before the UFS clock scaling enabling.
->>
->> I guess you might be worried about out-of-order execution will
->> cause this flag not be set before clock scaling enabling with
->> extremely low probability?
->> If yes, do you have any suggestion on this ?
-> 
-> The new sequence depends on SCSI core internals that may change at
-> any time. SCSI drivers like the UFS drivers shouldn't depend on this
-> behavior since there are no guarantees that this behavior won't change.
-> 
-> Can host->scan_mutex be used to serialize clock scaling and LUN
-> scanning? I think this mutex is already used by a SCSI driver to
-> serialize against LUN addition and removal (storvsc).
-> 
-Hi Bart,
+I don't mind changing the return error, but I don't think that we
+should have a kernel warning (pr_warn_once) for something userspace
+can trigger.
 
-I tried the scan_mutex, from debugging logs, it seems okay for now.
-I will provide to our internal test team for stability test.
-And I will try to collect the extra time spent on clock scaling
-path with applying scan_mutex.
-If everything is fine, I will update a new version.
+It's not an IO error either. I think that this is an invalid argument
+(EINVAL). That said, other than opposing the idea of pr_warn, I am
+happy to change it.
 
-BRs,
-Ziqi
+Cheers,
+/fuad
 
-> Thanks,
-> 
-> Bart.
-
+> > +       }
+> >
+> >         filemap_invalidate_lock(inode->i_mapping);
+> >
+> > --
+> > 2.49.0.1045.g170613ef41-goog
+> >
 
