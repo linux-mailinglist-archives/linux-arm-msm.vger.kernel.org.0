@@ -1,414 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-57791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F6A5AB627C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 07:43:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A93D4AB628D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 07:52:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A66C1B43BF0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 05:43:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 353A1178670
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 05:52:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDF171F461A;
-	Wed, 14 May 2025 05:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFCF81F540F;
+	Wed, 14 May 2025 05:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SpGDP0hM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rsBhoEBI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6ECE1F3FED
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 05:43:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7922F1F429C;
+	Wed, 14 May 2025 05:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747201408; cv=none; b=Os8KxU2PHQVEFF/lYbIcgmC+y7sIzzoX+o2xzkT7XuNUVHZT3lM1AH2pO0rnRTnTyf2DPPFgWVlbEINRSQXVPM/o8YNFe1nNGdwW6ND8mp6vnJw2KCSvhYgb49VbJvFayQD9SVjwgcCIXpdTOR6wJBKxFaDP3uFoMThZ/+Hgo9U=
+	t=1747201954; cv=none; b=XEhe2JsvyZP5D0/+Td8v7Mg4KkAKrpjoZqV86b/YaubropEnxDdDnvF32ZJbCFsSLCdJ5H1rMNJbkAEa5QHBJupZCih0Nq/hk6JaKxSAxQY547KeyUKt1MGcobMMnKZiZ8Ov2/UBZrVzFsIPWft5HyCh/2Hk97kHLxdWpkqpeVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747201408; c=relaxed/simple;
-	bh=ngkdWREDhxJP3Z8+vA88rzmJHoCKElBQPHF6jlZulMU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iB0wNn3DwwAEHUuvrIAUZQH1l8FwrJ/DTX9zEFHytPh69JsdPnTT7PBPRqMu1UTlVP3Hl5S29gdT8oe1h97BdG08ikNvPnAMq1npPTXKeCYMOI1L2I58pPLZjCumt6EIA4KjhOL5XGCJuKw5/FJIPLFP8CbB5YtdtonOA5VUc6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SpGDP0hM; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43cec5cd73bso42756255e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 May 2025 22:43:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747201405; x=1747806205; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WekKOZDHzata3CIxzPDhxW/QBdknDrhZbw8Dut8DkN8=;
-        b=SpGDP0hMCCN7x+CcjdnbDQWm4c22I+5OxLvnAGs1+YekNptlIJtOyz7F7xj+E5+1vu
-         LdyyQUYN9AlxP5AUzRYlHA63N46OyWO+GRi/+YLlRgLFll2L1W1JJ44hxijoCXIVQiUb
-         ZpJlzByS/9OeegoQbKJq5ef66LipTIoo0f6kZDhXOZQodqMTtS8HMUT6DmSM025kRNX0
-         um0G/hSpzdQc9K8w+VMGkaXspr6xIJ8vMbxyyKuXiQxb0nipNNgd2S8iUAuc9ilYJYjY
-         /G8bhnr+O7IhtaP+SyYU4aQZrbqqE5MmcS4QSLJpRW2anrpVgD4jSlqyjl1YxucRSfOG
-         E2VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747201405; x=1747806205;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WekKOZDHzata3CIxzPDhxW/QBdknDrhZbw8Dut8DkN8=;
-        b=oJj95IgxgAouRUQYDg7zvrvdTiJE5HiLtVuwuh6TUgoTiScjkzseLgRRO0f2Ca5wu7
-         JdKLYK1zDOtP4P/hh1OvGivb9Bz73N3GlFPY8cZUamGM93ILqGf3ezahg6phnq23AVYZ
-         7vbldfoclgdVm6HhdINs6zOHBVWfFDPw4QxHJNfldgOcLfdpnvgkvXU4kPXPE+8txp5C
-         gZ0AgYLD7yhnKbYmTmugxGs+njWh9SubUXWhwtR/tRyBDPz3g47Pg7gKUngOhrmBz8uN
-         88PdX0V776vtkUytoRMO72NoizDoV4fxsBlO02b3RPc3VJOlKT6AvWFKgiBD6Fm1HFRJ
-         HdLQ==
-X-Gm-Message-State: AOJu0Yw/yyrc8gkLOm2tSu9XvZYXRc9J2MEbeqhT0Pa1Oteh7YWizVl4
-	B7IoRz4W57XN/noqE9f1HXohGeHoBud6Hu9e38omL6b9pnno+CywJFrHVwWFoH4=
-X-Gm-Gg: ASbGncsAixwEOhzhCRaHG2RcHqlA4mqVb8ElwZlJyrNxdm7n1A6fJ3pJ49jwTObXDDt
-	JGw3fLyc9L1O5EJvYPT63/mHjYShYfSVw1hayhoTfeCXqP1Dq7P4OK1YsXOmvc55LyslIn7v8FR
-	/LQHT0haXWkgoJ6BAoRu4mKw2Xx1yL5iSc7cwQe4EZ3sNKJylxxLkxP2D/C987cPsKFrZdEzMaC
-	2W1yIHcsJ//w/IlOMZZc+R87WRfs/2Tc0HeTM3uzVXPHGAcWXWKzZm46oApMQO3T3fO01OeBudq
-	8w8pu6SRVgrFJorgcLQA+3vFQLaYty4hGZ3Rgw7f06QlHDUa4y3Mqqkh/lkkIVr5mATPlbkR1Qn
-	8zKWhI4Cqt0ph
-X-Google-Smtp-Source: AGHT+IG+3TNrM0TUrHdUyJXWOShIKsXvcyKhriY5sc/GEJhp8byyCrjzheMxPynRGxPI+f0IKwcCeg==
-X-Received: by 2002:a05:600d:1b:b0:442:f4d4:53a with SMTP id 5b1f17b1804b1-442f4d43e20mr4691955e9.2.1747201404948;
-        Tue, 13 May 2025 22:43:24 -0700 (PDT)
-Received: from [10.61.1.70] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f3950bccsm14069945e9.19.2025.05.13.22.43.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 May 2025 22:43:24 -0700 (PDT)
-Message-ID: <2e9d06be-719c-44e4-af14-7839ee5957b7@linaro.org>
-Date: Wed, 14 May 2025 06:43:22 +0100
+	s=arc-20240116; t=1747201954; c=relaxed/simple;
+	bh=JYBar92eDgRdzCqVB/rBN58pQ4Yz9RAYLkmRffz9Il0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ANtPxWLao4IFtgg5kd0JjWe85nhPpqtyCADbHG5UkDWBVDRFDLBANI+oKJDPL3bdvSxFnS4dhy77syHGissiL2kDwAwxgx5Ur/maLDQgIsQHMrBEx5ZHVAEnB7m3xbwjAytgP2fTpwm5xfaFKRnU1c4mLFJbQqchqwlPKA8WOkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rsBhoEBI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D19D2C4CEE9;
+	Wed, 14 May 2025 05:52:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747201953;
+	bh=JYBar92eDgRdzCqVB/rBN58pQ4Yz9RAYLkmRffz9Il0=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=rsBhoEBIQuvrgvscPzB35l2IRl9yDc2akXA7fayVtfkDtKu0f0hN0z7KTNMQPxYI9
+	 2LW6c4JqQokRMRX+Fm9WGxYT5LAeCufGXRnl4l2YFlkpMqx09DxoIMC6GW3b6veBQd
+	 zBIcyFPZZ6IdA3s08/ddC22p0xw4XBA6bVPwIfINVd2VsiKzXIh8nHdLdDgh6/kvq0
+	 8Q+ScFqOg5P+lMEXn/NPVi7UUNJVLPc5q17FNbHLz6sz3c+2D81RssbQFSVxOMLOeu
+	 Nqo96nkMT+RCruBAXpjuhqi8uuW8v/cf58FGJWyRzrx1uWSPZtbTra2IE8ixWXo4Yu
+	 OZBaqsugpkg3w==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC98DC3ABC5;
+	Wed, 14 May 2025 05:52:33 +0000 (UTC)
+From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
+Subject: [PATCH v10 0/2] Enable IPQ5018 PCI support
+Date: Wed, 14 May 2025 09:52:12 +0400
+Message-Id: <20250514-ipq5018-pcie-v10-0-5b42a8eff7ea@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: qcs9075-rb8: Enable IMX577 camera
- sensor
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Vikram Sharma <quic_vikramsa@quicinc.com>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>,
- Andi Shyti <andi.shyti@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-i2c@vger.kernel.org
-References: <20250514-rb8_camera-v1-0-bf4a39e304e9@quicinc.com>
- <20250514-rb8_camera-v1-4-bf4a39e304e9@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250514-rb8_camera-v1-4-bf4a39e304e9@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIwvJGgC/33SS0/DMAwA4L8y5UyqOG1eE0LbGNyQEBwRQm4eL
+ IKtXbtVoGn/nbQ7sAfiFlv5bEfOjrS+ib4l49GONL6LbaxWKQB2NSJ2gat3T6NLCcIZFyznQGO
+ 9Fgw0rW30FFxRYBmY50GQROrGh/g11Ht5TfEitpuq+R7Kd9BnyfxZPT6BeZhprfN7LnI9nao5K
+ 9Qd5LfA+MzM55xPTq5lK1zWjQOT1U3lsmq7+ayqj8xWS9J36cRQ+e8RO0EZRfTcIkIoQE8uuPy
+ Py8RL5aQwqCRn4pKrYy7PuErcg+Y6+MCkNZdc//KCizOuE2e590pYpaSzl9wc8/PuJnEIzFmUN
+ s1envL9YWONX2/T4jeHtZGlb1sc9j4eXR9eBQoYY9xkWgPXkgJNwr512KDDSX+OK9vXvOk/QYm
+ tpylYxs14pJzyCkXIBdqcqVCI0prShDwlOfazSROktWma/Q8wtl9UjgIAAA==
+X-Change-ID: 20250321-ipq5018-pcie-1d44abf0e2f5
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Nitheesh Sekar <quic_nsekar@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Bjorn Helgaas <bhelgaas@google.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Praveenkumar I <quic_ipkumar@quicinc.com>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-pci@vger.kernel.org, George Moussalem <george.moussalem@outlook.com>, 
+ 20250317100029.881286-1-quic_varada@quicinc.com, 
+ 20250317100029.881286-2-quic_varada@quicinc.com, 
+ Sricharan R <quic_srichara@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747201951; l=6158;
+ i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
+ bh=JYBar92eDgRdzCqVB/rBN58pQ4Yz9RAYLkmRffz9Il0=;
+ b=xOS546fWdHJmcuP/ZaAXPLHRwiGqqaYscOEekBgSg/SQAIcmGF2y5oHXz51scqVBTQuCDDbrV
+ g7F/l+02uPYAU7yG4ZiNWJsHehVYfw9xsIkUrQu/R9hLizEIZZIfmTB
+X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
+ pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
+X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
+ with auth_id=364
+X-Original-From: George Moussalem <george.moussalem@outlook.com>
+Reply-To: george.moussalem@outlook.com
 
-On 14/05/2025 03:40, Wenmeng Liu wrote:
-> The qcs9075-iq-9075-evk board has 4 camera CSI interfaces.
-> Enable the third interface with an imx577 sensor for qcs9075-iq-9075-evk.
-> 
-> An example media-ctl pipeline for the imx577 is:
-> 
-> media-ctl --reset
-> media-ctl -V '"imx577 '0-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy3":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy3":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> 
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
-> 
-> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts | 110 +++++++++++++++++++
->   arch/arm64/boot/dts/qcom/sa8775p.dtsi            | 132 +++++++++++++++++++++++
->   2 files changed, 242 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts b/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
-> index eadc59739a4baafedfa456bdb71b72214810b1c1..83c286b3b1428bc90445f41740997f2421824a54 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
-> @@ -20,6 +20,38 @@ aliases {
->   	chosen {
->   		stdout-path = "serial0:115200n8";
->   	};
-> +
-> +	vreg_cam0_1p8: vreg_cam0_1p8 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg_cam0_1p8";
-> +		startup-delay-us = <10000>;
-> +		enable-active-high;
-> +		gpio = <&pmm8654au_0_gpios 7 GPIO_ACTIVE_HIGH>;
-> +	};
-> +
-> +	vreg_cam1_1p8: vreg_cam1_1p8 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg_cam1_1p8";
-> +		startup-delay-us = <10000>;
-> +		enable-active-high;
-> +		gpio = <&pmm8654au_0_gpios 8 GPIO_ACTIVE_HIGH>;
-> +	};
-> +
-> +	vreg_cam2_1p8: vreg_cam2_1p8 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg_cam2_1p8";
-> +		startup-delay-us = <10000>;
-> +		enable-active-high;
-> +		gpio = <&pmm8654au_0_gpios 9 GPIO_ACTIVE_HIGH>;
-> +	};
-> +
-> +	vreg_cam3_1p8: vreg_cam3_1p8 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg_cam3_1p8";
-> +		startup-delay-us = <10000>;
-> +		enable-active-high;
-> +		gpio = <&pmm8654au_0_gpios 10 GPIO_ACTIVE_HIGH>;
-> +	};
->   };
+This patch series adds the relevant phy and controller
+DT configurations for enabling PCI gen2 support
+on IPQ5018. IPQ5018 has two phys and two controllers, 
+one dual-lane and one single-lane.
 
-I would submit the regulators as a separate patch - especially because 
-you only use 1/4 of the regulators you are adding here.
+Last patch series (v3) submitted by qcom dates back to August 30, 2024.
+As I've worked to add IPQ5018 platform support in OpenWrt, I'm
+continuing the efforts to add Linux kernel support.
 
-That in itself deserves a commit log explanation.
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+Changes in v10:
+- Added bus-range property in root port to suppress build warning:
+  Warning (pci_device_bus_num): /soc@0/pcie@a0000000/pcie@0/wifi@0,0: PCI bus number 1 out of range, expected (0 - 0)
+- Link to v9: https://lore.kernel.org/r/20250426-ipq5018-pcie-v9-0-1f0dca6c205b@outlook.com
 
->   &apps_rsc {
-> @@ -241,6 +273,84 @@ vreg_l8e: ldo8 {
->   	};
->   };
->   
-> +&camcc {
-> +	status = "okay";
-> +};
-> +
-> +&camss {
-> +	vdda-pll-supply = <&vreg_l1c>;
-> +	vdda-phy-supply = <&vreg_l4a>;
-> +
-> +	status = "okay";
-> +
-> +	ports {
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		port@3 {
-> +			reg = <3>;
-> +			csiphy3_ep: endpoint {
-> +				clock-lanes = <7>;
-> +				data-lanes = <0 1 2 3>;
-> +				remote-endpoint = <&imx577_ep3>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&cci0 {
-> +	status = "disabled";
-> +	pinctrl-0 = <&cci0_0_default>;
-> +	pinctrl-1 = <&cci0_0_sleep>;
-> +};
-> +
-> +&cci1 {
-> +	status = "disabled";
-> +	pinctrl-0 = <&cci1_0_default>;
-> +	pinctrl-1 = <&cci1_0_sleep>;
-> +};
-> +
-> +&cci2 {
-> +	status = "disabled";
-> +	pinctrl-0 = <&cci2_0_default>;
-> +	pinctrl-1 = <&cci2_0_sleep>;
-> +};
-> +
-> +&cci3 {
-> +	status = "okay";
-> +	pinctrl-0 = <&cci3_0_default>;
-> +	pinctrl-1 = <&cci3_0_sleep>;
-> +};
+Changes in v9:
+- Added whitespace between pcie phy nodes and curly brackets
+- Shortened comment in dtsi to fit on 1 line as per Konrad's suggestion
+- Link to v8: https://lore.kernel.org/r/20250425-ipq5018-pcie-v8-0-03ee75c776dc@outlook.com
 
-You should only have to enable the bus you are using..
+Changes in v8:
+- Updated comment in dtsi to remove superfluous reference to ipq5018 as
+  pointed out by Mani
+- Corrected the size of the 2-lane phy's memory-mapped region as it
+  should be 0x1000 (0x800 per lane).
+- Matched PCI domain to pcie controller instance (pcie0 -> PCI domain 0
+  and pcie1 to PCI domain 1)
+- Link to v7: https://lore.kernel.org/r/20250326-ipq5018-pcie-v7-0-e1828fef06c9@outlook.com
 
-> +
-> +&cci3_i2c0 {
-> +	camera@1a {
-> +		compatible = "sony,imx577";
-> +		reg = <0x1a>;
-> +
-> +		reset-gpios = <&tlmm 135 GPIO_ACTIVE_LOW>;
-> +		pinctrl-names = "default", "suspend";
-> +		pinctrl-0 = <&cam3_default>;
-> +		pinctrl-1 = <&cam3_suspend>;
-> +
-> +		clocks = <&camcc CAM_CC_MCLK3_CLK>;
-> +		assigned-clocks = <&camcc CAM_CC_MCLK3_CLK>;
-> +		assigned-clock-rates = <24000000>;
-> +
-> +		dovdd-supply = <&vreg_s4a>;
-> +		avdd-supply = <&vreg_cam3_1p8>;
-> +		/* dvdd-supply = <&vdc_5v>; */
+Changes in v7:
+- Updated commit log and added comment in dtsi to explain why 
+  max-link-speed is set: IPQ5018 PCIe controllers supports gen3, yet the
+  PHYs support gen2 only.
+- Carried over Ack and RB-tags
+- Added dependency with b4 prep on below series which adds the MHI
+  register space (patch 1) which fixes issues reported by Rob's bot:
+  Depends-on: <20250317100029.881286-1-quic_varada@quicinc.com>
+- Link to v6: https://lore.kernel.org/r/20250321-ipq5018-pcie-v6-0-b7d659a76205@outlook.com
 
-Either include vdc_5v or drop the comment.
+Changes in v6:
+- Fixed issues reported by 'make dt_bindings_check' as per Rob's bot
+- Removed Krzysztof's Ack-tag on:
+  dt-bindings: phy: qcom: uniphy-pcie: Add ipq5018 compatible
+- Link to v5: https://lore.kernel.org/r/20250321-ipq5018-pcie-v5-0-aae2caa1f418@outlook.com
 
-> +
-> +		port {
-> +			imx577_ep3: endpoint {
-> +				clock-lanes = <7>;
-> +				link-frequencies = /bits/ 64 <600000000>;
-> +				data-lanes = <0 1 2 3>;
-> +				remote-endpoint = <&csiphy3_ep>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
->   &qupv3_id_1 {
->   	status = "okay";
->   };
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index a867694b15b307344b72041e972bae6e7543a98f..d50f0d84fdb5130d8386b107702800382bcaac47 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -4756,6 +4756,138 @@ tlmm: pinctrl@f000000 {
->   			gpio-ranges = <&tlmm 0 0 149>;
->   			wakeup-parent = <&pdc>;
->   
-> +			cam0_default: cam0-default {
-> +				mclk {
-> +					pins = "gpio72";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +
-> +				rst {
-> +					pins = "gpio132";
-> +					function = "gpio";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam0_suspend: cam0-suspend {
-> +				mclk {
-> +					pins = "gpio72";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +
-> +				rst {
-> +					pins = "gpio132";
-> +					function = "gpio";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +					output-low;
-> +				};
-> +			};
-> +
-> +			cam1_default: cam1-default {
-> +				mclk {
-> +					pins = "gpio73";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +
-> +				rst {
-> +					pins = "gpio133";
-> +					function = "gpio";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam1_suspend: cam1-suspend {
-> +				mclk {
-> +					pins = "gpio73";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +
-> +				rst {
-> +					pins = "gpio133";
-> +					function = "gpio";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +					output-low;
-> +				};
-> +			};
-> +
-> +			cam2_default: cam2-default {
-> +				mclk {
-> +					pins = "gpio74";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +
-> +				rst {
-> +					pins = "gpio134";
-> +					function = "gpio";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam2_suspend: cam2-suspend {
-> +				mclk {
-> +					pins = "gpio74";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +
-> +				rst {
-> +					pins = "gpio134";
-> +					function = "gpio";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +					output-low;
-> +				};
-> +			};
-> +
-> +			cam3_default: cam3-default {
-> +				mclk {
-> +					pins = "gpio75";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +
-> +				rst {
-> +					pins = "gpio135";
-> +					function = "gpio";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam3_suspend: cam3-suspend {
-> +				mclk {
-> +					pins = "gpio75";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +
-> +				rst {
-> +					pins = "gpio135";
-> +					function = "gpio";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +					output-low;
-> +				};
-> +			};
-> +
->   			cci0_0_default: cci0-0-default-state {
->   					pins = "gpio60", "gpio61";
->   					function = "cci_i2c";
-> 
+Changes in v5:
+- Re-ordered reg and reg-names in dt-bindings and dts to align with
+  other IPQ SoCs
+- Corrected nr of interrupts in dt-bindings: phy: qcom: Add IPQ5018 SoC
+- Corrected ranges property of pcie controller nodes
+- Removed newlines between cells properties in pcie phy nodes
+- Modified dt bindings to add descriptions and separate conditions for
+  ipq5018 and ipq5332 as they have different nr of clocks and resets
+  As such, also removed Krzysztof's RB tag for validation
+- Ran dtbs_check and fixed:
+  interrupt-map property in pcie nodes:
+  /soc@0/pcie@80000000:interrupt-map: Cell 13 is not a phandle(0)
+  /soc@0/pcie@a0000000:interrupt-map: Cell 13 is not a phandle(0)
+- Added missing gpio header file to ipq5018-rdp432-c2.dts
+- Added MHI register requirement to bindings and to PCIe nodes as per:
+  Depends-on: <20250317100029.881286-2-quic_varada@quicinc.com>
+- Link to v4: https://lore.kernel.org/r/DS7PR19MB8883F2538AA7D047E13C102B9DD22@DS7PR19MB8883.namprd19.prod.outlook.com
+
+Changes in v4:
+- removed dependency as the following have been applied:
+	dt-bindings: phy: qcom,uniphy-pcie: Document PCIe uniphy
+	phy: qcom: Introduce PCIe UNIPHY 28LP driver
+	dt-bindings: PCI: qcom: Document the IPQ5332 PCIe controller
+  Link: https://lore.kernel.org/all/20250313080600.1719505-1-quic_varada@quicinc.com/
+- added Mani's RB tag to: PCI: qcom: Add support for IPQ5018
+- Removed power-domains property requirement in dt-bindings for IPQ5018
+  and removed Krzysztof's RB tag from:
+  dt-bindings: PCI: qcom: Add IPQ5018 SoC
+- fixed author chain and retained Sricharan Ramabadhran in SoB tags and
+  kept Nitheesh Sekar as the original author
+- Removed comments as per Konrad's comment in:
+  arm64: dts: qcom: ipq5018: Add PCIe related nodes
+- Link to v3 submitted by Sricharan Ramabadhran:
+  Link: https://lore.kernel.org/all/20240830081132.4016860-1-quic_srichara@quicinc.com/
+- Link to v3, incorrectly versioned:
+  Link: https://lore.kernel.org/all/DS7PR19MB8883BC190797BECAA78EC50F9DCB2@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v3 (incorrectly versioned):
+- Depends on
+  Link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20250220094251.230936-1-quic_varada@quicinc.com/
+- Added 8 MSI SPI and 1 global interrupts (Thanks Mani for confirming)
+- Added hw revision (internal/synopsys) and nr of lanes in patch 4
+  commit msg
+- Sorted reg addresses and moved PCIe nodes accordingly
+- Moved to GIC based interrupts
+- Added rootport node in controller nodes
+- Tested on Linksys devices (MX5500/SPNMX56)
+- Link to v2: https://lore.kernel.org/all/20240827045757.1101194-1-quic_srichara com/
+
+Changes in v3:
+ - Added Reviewed-by tag for patch#1.
+ - Fixed dev_err_probe usage in patch#3.
+ - Added pinctrl/wak pins for pcie1 in patch#6.
+
+Changes in v2:
+ - Fixed all review comments from Krzysztof, Robert Marko,
+   Dmitry Baryshkov, Manivannan Sadhasivam, Konrad Dybcio.
+ - Updated the respective patches for their changes.
+ - Link to v1: https://lore.kernel.org/lkml/32389b66-48f3-8ee8-e2f1-1613feed3cc7@gmail.com/T/
 
 ---
-bod
+Nitheesh Sekar (2):
+      arm64: dts: qcom: ipq5018: Add PCIe related nodes
+      arm64: dts: qcom: ipq5018: Enable PCIe
+
+ arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts |  40 +++++
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi          | 240 ++++++++++++++++++++++++-
+ 2 files changed, 278 insertions(+), 2 deletions(-)
+---
+base-commit: 7d7e7a5f35ac307f45bc9b9f37a52a1f0d69f6cc
+change-id: 20250321-ipq5018-pcie-1d44abf0e2f5
+prerequisite-message-id: <20250317100029.881286-1-quic_varada@quicinc.com>
+prerequisite-patch-id: 210bd857b2a3ce208c6c66389d2845616dafae60
+prerequisite-patch-id: 27a1070861e75cf1dcb03f1e440618bd77b32043
+prerequisite-patch-id: 4dfad74bedd5e7b3b628ead0b23baed7de8b88f7
+prerequisite-patch-id: 79ded164c537cfe947447c920602570626eddb3d
+
+Best regards,
+-- 
+George Moussalem <george.moussalem@outlook.com>
+
 
 
