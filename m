@@ -1,746 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-57836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 857ADAB6BAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 14:44:44 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85E3EAB6C67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 15:16:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ABB293A0749
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 12:44:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 62D557A7448
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 13:14:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2A1B278157;
-	Wed, 14 May 2025 12:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8846A28DD0;
+	Wed, 14 May 2025 13:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="AcLs2TQl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UMg0kXSJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EF51F9A89;
-	Wed, 14 May 2025 12:44:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE32343146
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 13:16:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747226681; cv=none; b=VjZVolWDeO1mEWYPU1WH5qqbZgCsSFJTyVbvnw6hJTr7uh5rvbOWby7GWDWaL83jIW5ycjs7+xYEHkPnLB6tXm829NPtfKFOaSWXf18+hivOZWiAzwV+LWUXOcw8w29QBqaT3/C06gC5K8BjattwJDaEv96gqpAFrnnG41HIfzU=
+	t=1747228562; cv=none; b=hD30j7BKvPex/uNzkAtF50jZfUK22XU9ZYKm10euLDJXdU07pkXXZo5qu7xXyWP3d/UglSijp9cSYLADuEgrqNJbe9A2HqLrVk71Hojbi19uOr69YHeIxtT8Q/Uha/tZptZTqU/QQ+SWNZa3Sg+MaG9sKX5nHCtF2Q0jvhsHv30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747226681; c=relaxed/simple;
-	bh=qiRzZM1epBzHt+4nG3ax71qwi0U09JeMcRMDrDV2hDE=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Y5y4hMF733h2SkGMN5lxJ2C9gQTsT41krO7fKf5DjNs/X0K9BEWi6/Sy0PMVLddfgaSGu35wSLIPvI/Jzd1C4xd/P8cTLgR3ayWAVKezlU12tmf7iAoAXIbkggUBqLaDvkVtCfp+P+ubTdp5QBpr9QyXf1nNQ78kx3Mx7YhDY5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=AcLs2TQl; arc=none smtp.client-ip=80.241.56.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4ZyChr6v6xz9sqF;
-	Wed, 14 May 2025 14:44:28 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1747226669; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=J7+szbWcuLPrE4tr/9Mc/mr2uWVRphXTZYWvCAC4Mi8=;
-	b=AcLs2TQlclOYv2/gwZb5vgvUeyenqzPOjGlpb4HoLru6ozdQ3kS/8lLHFqzs0H8KQ+JfZu
-	gO2tzHU113jV2bcrO9FaxwZHotdgpy3b7GUKh7vh5ZDzcYhpQdcrTmGKHNid5ZT6qkvh4F
-	F1E8UFQebjzQauvrAFos20u2+MD5Zp51MI3VN9JOeNr9frj2eD7Naa5DSyolXsPQ/Dhppg
-	sAGY/db0btAgaBnRSydsk/4VUD/ITNA0Bbaua2YqmvZwHI+NMm1viIGkhK+DoCcVkxh5EZ
-	plmLuoGPup9FZezC/+Yw5qDX0wWUDy+c4Sf0BHFbXwdp/c03uHVUsfFu6xaijQ==
-Message-ID: <d747fef82a50466b2a2f9568f737bd80f5128b77.camel@mailbox.org>
-Subject: Re: [PATCH v9 02/10] drm/sched: store the drm client_id in
- drm_sched_fence
-From: Philipp Stanner <phasta@mailbox.org>
-Reply-To: phasta@kernel.org
-To: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>, Min Ma
- <min.ma@amd.com>, Lizhi Hou <lizhi.hou@amd.com>, Oded Gabbay
- <ogabbay@kernel.org>,  Felix Kuehling <Felix.Kuehling@amd.com>, Alex
- Deucher <alexander.deucher@amd.com>, Christian =?ISO-8859-1?Q?K=F6nig?=
- <christian.koenig@amd.com>, David Airlie <airlied@gmail.com>, Simona Vetter
- <simona@ffwll.ch>, Lucas Stach <l.stach@pengutronix.de>, Russell King
- <linux+etnaviv@armlinux.org.uk>, Christian Gmeiner
- <christian.gmeiner@gmail.com>,  Frank Binns <frank.binns@imgtec.com>, Matt
- Coster <matt.coster@imgtec.com>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
- Thomas Zimmermann <tzimmermann@suse.de>, Qiang Yu <yuq825@gmail.com>, Rob
- Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, Marijn
- Suijten <marijn.suijten@somainline.org>, Lyude Paul <lyude@redhat.com>,
- Danilo Krummrich <dakr@kernel.org>, Boris Brezillon
- <boris.brezillon@collabora.com>, Rob Herring <robh@kernel.org>, Steven
- Price <steven.price@arm.com>, Liviu Dudau <liviu.dudau@arm.com>, Matthew
- Brost <matthew.brost@intel.com>, Philipp Stanner <phasta@kernel.org>,
- Melissa Wen <mwen@igalia.com>, =?ISO-8859-1?Q?Ma=EDra?= Canal
- <mcanal@igalia.com>, Lucas De Marchi <lucas.demarchi@intel.com>, Thomas
- =?ISO-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>, Rodrigo
- Vivi <rodrigo.vivi@intel.com>
-Cc: Christian =?ISO-8859-1?Q?K=F6nig?= <ckoenig.leichtzumerken@gmail.com>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	amd-gfx@lists.freedesktop.org, etnaviv@lists.freedesktop.org, 
-	lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org, 
-	intel-xe@lists.freedesktop.org
-Date: Wed, 14 May 2025 14:44:14 +0200
-In-Reply-To: <20250424083834.15518-3-pierre-eric.pelloux-prayer@amd.com>
-References: <20250424083834.15518-1-pierre-eric.pelloux-prayer@amd.com>
-	 <20250424083834.15518-3-pierre-eric.pelloux-prayer@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1747228562; c=relaxed/simple;
+	bh=v0BP+1zgyodWFIzVNFNOJIwHPfZxIR3qJHaplc/lVec=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=CN6Wq6VVg1qc4zLXzsftzUFKiH/RVEQNcwSGfwZVKB0c8IOO6iXdvqaEe6fLP4naiTFLMPOUI3Rdp9+sZ459bimtm/bZtB1ZIhZVfJfte6GQnrm8Ug3xpEqIjrHdjXZ8nz6rBBJsbPyxeDvf2isEy6mVyhPuERMnZTARU6ZjyS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UMg0kXSJ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EAuqrp012692
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 13:15:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	yILatwHUR+Jh1zWNHOlot8iZKoX8IiPojYOoJQNfo34=; b=UMg0kXSJ2b8RReZ4
+	VTdcPjMNvv14Q++NaKIWl8cFIKa40MmBYlVL0z8KGtTbua9u1BTLvY79tsdagqkZ
+	eG9KWQZBMOP9tTfWzmlGXAWI8DtNIJTXv53Hr1meLbT+CTR/N/5Zuvw607UP3KD7
+	j6LNo9GrtT9B6jtyacfgaGdAMg+SWhOQ3Q+FGzUPS4nsRp5wNKuViD3ETqQgqUE+
+	LtoVCguCBj58cMpuB0Rrxobse8p3g0wtQ41tvq14ruSrn+eY29wyJRIjBlRCAYvC
+	frqXYujniYbXb4/DQn2qxWYV3Dp8POFlI7BFGrTmyNoSwQo9xWgt/n16FIM5ZwwV
+	hnz+GA==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcyjt2h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 13:15:54 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-22fdf1d9fcaso26237465ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 06:15:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747228553; x=1747833353;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yILatwHUR+Jh1zWNHOlot8iZKoX8IiPojYOoJQNfo34=;
+        b=jDuossPnce5cyCeXFKkUJB3k5CI80Qd6ELAxRvj6OJsX4Ydh+kqfx+5p3kDANIh9OR
+         eZZtbIZLCgQmwTcjEz2I//FRwCH41efm+y7C5o1W0YeYLjEp8QAXjoK77AjNL8/yqIyr
+         c4lXzTEnQVtSYE7DPVMC+6bdNNzBcG+PooisEDKeW0qi0+f8HUxWvk4HFwE7XdjpQ1nu
+         hGnVM3oyZlWdsfAeLUdRpwg2akqp9dS3Nx4teISYCS2xETlfnM0zGU7AFVm2JE28uaIB
+         0GJI9YExayZ45+cDE9A9zKzLzaQKG08NF37pPPbhRNRDQ5dCBu2tQiLOnKkH2VAT3wPp
+         6j9Q==
+X-Gm-Message-State: AOJu0YxjmWFZ5TaVuhpoBwXtQmjsBLdZoAYq6giBeP/f77V6bSPyYi0A
+	WRimUSawfcvkmGA7N2pLPNExL3cCT8LcUjaD7vzuy1iHtwPRm8xYUqWGT8pljY4feQEj99mImQ0
+	fZeL2QvYUjdb2hUIcUanUiFjqaQ7CfDWt4eJMN/wU377h/os30Bk38XzSij62K5Z6
+X-Gm-Gg: ASbGnct2SEzBpRdv+L+54iAm7Lh6jvmRlNcf+drzlRQPq6YMcM4jzJBvBK3sDcZoG6K
+	6CKauD46+dJbEjx9KWJNoDEwUTsgLJMGCiMD6pGcBnJktDjeRiJ1J0HcbXNG3uKS7dimjLOo8Si
+	F5mALF85X0bFnJZ8gs+FotnI4Z/iDonAmpSRVLz1N670WQv6qDC4zWm+OQsNHuLjBVf0ytgoq/5
+	KcBEkGNE5bWr+VhbAxXJpXTI8TgKgQz2xq5uBntUzOV4xOZGQ5w5Cs2cDtMQp2GD2RT4gwkuMvI
+	JDZi+56nzisSXNoaAHD9As1oRlEGOy/cHk2sNaxGSGqluH75DTRz
+X-Received: by 2002:a17:903:f86:b0:223:4bd6:3863 with SMTP id d9443c01a7336-231980c7733mr54018495ad.10.1747228553546;
+        Wed, 14 May 2025 06:15:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFTYFWo98SuyRtqUUetHlRQ5KWCgJktTdVRJBORzPUQiavaZT41cx3IqIQIAnIuysE+QhtScw==
+X-Received: by 2002:a17:903:f86:b0:223:4bd6:3863 with SMTP id d9443c01a7336-231980c7733mr54017455ad.10.1747228552334;
+        Wed, 14 May 2025 06:15:52 -0700 (PDT)
+Received: from [192.168.1.4] ([122.164.85.132])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22fc680515esm98921705ad.0.2025.05.14.06.15.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 May 2025 06:15:51 -0700 (PDT)
+Message-ID: <1e871aed-705f-4142-b72d-4232ae729a37@oss.qualcomm.com>
+Date: Wed, 14 May 2025 18:45:45 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MBO-RS-META: h99kyuhbjxsy3fu1x5twy94zkftkntxj
-X-MBO-RS-ID: 1a57556962f3ca048e1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] watchdog: qcom: add support to read the restart
+ reason from IMEM
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck
+ <linux@roeck-us.net>, bod.linux@nxsw.ie,
+        Srinivas Kandagatla <srini@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
+References: <20250502-wdt_reset_reason-v3-0-b2dc7ace38ca@oss.qualcomm.com>
+ <20250502-wdt_reset_reason-v3-4-b2dc7ace38ca@oss.qualcomm.com>
+ <2036ef2f-c7ef-4f42-858d-8d95c430c21a@oss.qualcomm.com>
+ <68d280db-f7df-48c8-821d-f7d408c302ad@oss.qualcomm.com>
+ <8a763c70-adcf-4a14-bb68-72ddc61fa045@oss.qualcomm.com>
+ <8c2a53c2-c11b-4d49-bfb5-b948767ba6c7@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <8c2a53c2-c11b-4d49-bfb5-b948767ba6c7@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: Oy-h7Rdba4Cv6LnY83DF-QDX27CauzCa
+X-Proofpoint-ORIG-GUID: Oy-h7Rdba4Cv6LnY83DF-QDX27CauzCa
+X-Authority-Analysis: v=2.4 cv=JszxrN4C c=1 sm=1 tr=0 ts=6824978a cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=P+HiGktFAnQmcg2NW2se+w==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=kuMuzYqABaI6PAa4Gd8A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDExNiBTYWx0ZWRfXyOZkXhQ9SaF3
+ 11viUKqNB+KovQsOWlB+TV7U7jtDriRd92ANMTImR7NABlppIYnLPF3dZKHBfQcSLdkQmzieI90
+ SJBB+rX5UZmuOl3lrrPaqhHKcClfZGGVduq7awOeTHsi3CAHFdJmvhNLhIudN1yXaDb33/Z6Ua+
+ C9Ek0365tv5wxo8kC0P6hTR0CouVdVgGp1Nle21pZal7cZGX5EtA7pjEa6k6vmpJg5V0b2P8fCe
+ 4h0h6SAGwMrs+mRe8Cn2hjZD6sUCpHUCAyjrA49cXV83cajglE1jqBDnxHyESg/MflrbYUhlUrp
+ iLqfrE79+VgmtSzD55aLU6DxTMLveyPQPrD6kQUTVKu0NDzA4ULDotyXMv9cU+w2UwQ0YzraLOX
+ ubu0pLhhF6x3SwKMwmBEyZuWka2iosFjCeaYMJvVi+W84JYTqw9fZG18B8c9ffhkJWOoCTcq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-14_04,2025-05-14_03,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999 bulkscore=0
+ malwarescore=0 mlxscore=0 adultscore=0 phishscore=0 spamscore=0
+ lowpriorityscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505070000 definitions=main-2505140116
 
-On Thu, 2025-04-24 at 10:38 +0200, Pierre-Eric Pelloux-Prayer wrote:
-> This will be used in a later commit to trace the drm client_id in
-> some of the gpu_scheduler trace events.
->=20
-> This requires changing all the users of drm_sched_job_init to
-> add an extra parameter.
->=20
-> The newly added drm_client_id field in the drm_sched_fence is a bit
-> of a duplicate of the owner one. One suggestion I received was to
-> merge those 2 fields - this can't be done right now as amdgpu uses
-> some special values (AMDGPU_FENCE_OWNER_*) that can't really be
-> translated into a client id. Christian is working on getting rid of
-> those; when it's done we should be able to squash owner/drm_client_id
-> together.
->=20
-> Reviewed-by: Christian K=C3=B6nig <christian.koenig@amd.com>
-> Signed-off-by: Pierre-Eric Pelloux-Prayer
-> <pierre-eric.pelloux-prayer@amd.com>
-> ---
-> =C2=A0drivers/accel/amdxdna/aie2_ctx.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 +=
-+-
-> =C2=A0drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 |=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 ++-
-> =C2=A0drivers/gpu/drm/amd/amdgpu/amdgpu_job.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 8 +++++---
-> =C2=A0drivers/gpu/drm/amd/amdgpu/amdgpu_job.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 ++-
-> =C2=A0drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c=C2=A0=C2=A0=C2=A0=C2=
-=A0 |=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/imagination/pvr_job.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/imagination/pvr_queue.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 5 +++--
-> =C2=A0drivers/gpu/drm/imagination/paac=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 8 +++++---
-> =C2=A0drivers/gpu/drm/nouveau/nouveau_sched.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 ++-
-> =C2=A0drivers/gpu/drm/panfrost/panfrost_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/panthor/panthor_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 ++-
-> =C2=A0drivers/gpu/drm/panthor/panthor_mmu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/panthor/panthor_sched.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 5 +++--
-> =C2=A0drivers/gpu/drm/panthor/panthor_sched.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 ++-
-> =C2=A0drivers/gpu/drm/scheduler/sched_fence.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 ++
-> =C2=A0drivers/gpu/drm/scheduler/sched_internal.h=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 |=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/scheduler/sched_main.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 6 ++++--
-> =C2=A0drivers/gpu/drm/scheduler/tests/mock_scheduler.c |=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/v3d/v3d_submit.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 +=
--
-> =C2=A0drivers/gpu/drm/xe/xe_sched_job.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 ++-
-> =C2=A0include/drm/gpu_scheduler.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 | 10 +++++++++-
-> =C2=A026 files changed, 62 insertions(+), 34 deletions(-)
 
-I think last time I asked about what your merge plan for this is, since
-it touches so many drivers. Should I take that?
+On 5/6/2025 4:31 PM, Kathiravan Thirumoorthy wrote:
+>
+> On 5/3/2025 3:53 AM, Konrad Dybcio wrote:
+>> On 5/2/25 6:28 PM, Kathiravan Thirumoorthy wrote:
+>>> On 5/2/2025 7:33 PM, Konrad Dybcio wrote:
+>>>>> +static int qcom_wdt_get_restart_reason(struct qcom_wdt *wdt,
+>>>>> +                    const struct qcom_wdt_match_data *data)
+>>>>> +{
+>>>>> +    struct regmap *imem;
+>>>>> +    unsigned int val;
+>>>>> +    int ret;
+>>>>> +
+>>>>> +    imem = 
+>>>>> syscon_regmap_lookup_by_compatible(data->imem_compatible);
+>>>> Try syscon_regmap_lookup_by_phandle_args() and pass a phandle, see 
+>>>> e.g.
+>>>> drivers/phy/qualcomm/phy-qcom-qmp-pcie.c & phy@1bfc000 in 
+>>>> x1e80100.dtsi
+>>>>
+>>>> That way all platform specifics will live in the DT, requiring no
+>>>> hardcode-y driver changes on similar platforms
+>>>
+>>> Thanks. I thought about this API but it didn't strike that I can use 
+>>> the args to fetch and match the value.
+>>>
+>>> I need a suggestion here. There is a plan to extend this feature to 
+>>> other IPQ targets and also support WDIOF_POWERUNDER and 
+>>> WDIOF_OVERHEAT cause as well. For IPQ5424, all 3 cause will support 
+>>> and for other IPQ platforms, we are exploring how to integrate 
+>>> WDIOF_OVERHEAT. In any case, can I define the DT entry like below
+>>>
+>>>          imem,phandle = <&imem 0x7b0 <Non secure WDT value> <Power 
+>>> Under value> <Overheat value>>;
+>>>
+>>> and store these in values args[1], args[2] and args[3] respectively 
+>>> and use it for manipulation? If any of the platform doesn't support 
+>>> all 3, I can update the bindings and define the number of args as 
+>>> required.
+>> Let's call the property qcom,restart-reason and only pass the 
+>> register value
+>>
+>> Because we may have any number of crazy combinations of various restart
+>> reasons, we can go two paths:
+>>
+>> 1. promise really really really hard we won't be too crazy with the 
+>> number
+>>     of possible values and put them in the driver
+>> 2. go all out on DT properties (such as `bootstatus-overheat`,
+>> `bootstatus-fanfault` etc.
+>
+>
+> Thanks Konrad for the suggestions and the offline discussions.
+>
+> @Guenter, I need a suggestion here. Currently as part of this series, 
+> we are planning to expose WDIOF_CARDRESET, WDIOF_POWERUNDER, 
+> WDIOF_OVERHEAT reasons.
+>
+> Once this is done, we do have the custom reason codes like Kernel 
+> Panic, Secure Watchdog Bite, Bus error timeout, Bus error access and 
+> few many. Is it okay to expose these values also via the bootstatus 
+> sysFS by extending the current list of reasons? Since these are 
+> outside the scope of watchdog, need your thoughts on this.
 
-Besides one comment below, scheduler bits look fine.
 
->=20
-> diff --git a/drivers/accel/amdxdna/aie2_ctx.c
-> b/drivers/accel/amdxdna/aie2_ctx.c
-> index e04549f64d69..3e38a5f637ea 100644
-> --- a/drivers/accel/amdxdna/aie2_ctx.c
-> +++ b/drivers/accel/amdxdna/aie2_ctx.c
-> @@ -848,7 +848,8 @@ int aie2_cmd_submit(struct amdxdna_hwctx *hwctx,
-> struct amdxdna_sched_job *job,
-> =C2=A0		goto up_sem;
-> =C2=A0	}
-> =C2=A0
-> -	ret =3D drm_sched_job_init(&job->base, &hwctx->priv->entity,
-> 1, hwctx);
-> +	ret =3D drm_sched_job_init(&job->base, &hwctx->priv->entity,
-> 1, hwctx,
-> +				 hwctx->client->filp->client_id);
-> =C2=A0	if (ret) {
-> =C2=A0		XDNA_ERR(xdna, "DRM job init failed, ret %d", ret);
-> =C2=A0		goto free_chain;
-> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-> b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-> index 4cec3a873995..1a77ba7036c9 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-> @@ -639,7 +639,7 @@ int amdgpu_amdkfd_submit_ib(struct amdgpu_device
-> *adev,
-> =C2=A0		goto err;
-> =C2=A0	}
-> =C2=A0
-> -	ret =3D amdgpu_job_alloc(adev, NULL, NULL, NULL, 1, &job);
-> +	ret =3D amdgpu_job_alloc(adev, NULL, NULL, NULL, 1, &job, 0);
-> =C2=A0	if (ret)
-> =C2=A0		goto err;
-> =C2=A0
-> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-> b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-> index 82df06a72ee0..5a231b997d65 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-> @@ -293,7 +293,8 @@ static int amdgpu_cs_pass1(struct
-> amdgpu_cs_parser *p,
-> =C2=A0
-> =C2=A0	for (i =3D 0; i < p->gang_size; ++i) {
-> =C2=A0		ret =3D amdgpu_job_alloc(p->adev, vm, p->entities[i],
-> vm,
-> -				=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 num_ibs[i], &p->jobs[i]);
-> +				=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 num_ibs[i], &p->jobs[i],
-> +				=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 p->filp->client_id);
-> =C2=A0		if (ret)
-> =C2=A0			goto free_all_kdata;
-> =C2=A0		p->jobs[i]->enforce_isolation =3D p->adev-
-> >enforce_isolation[fpriv->xcp_id];
-> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-> b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-> index acb21fc8b3ce..75262ce8db27 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-> @@ -204,7 +204,8 @@ static enum drm_gpu_sched_stat
-> amdgpu_job_timedout(struct drm_sched_job *s_job)
-> =C2=A0
-> =C2=A0int amdgpu_job_alloc(struct amdgpu_device *adev, struct amdgpu_vm
-> *vm,
-> =C2=A0		=C2=A0=C2=A0=C2=A0=C2=A0 struct drm_sched_entity *entity, void *o=
-wner,
-> -		=C2=A0=C2=A0=C2=A0=C2=A0 unsigned int num_ibs, struct amdgpu_job **job=
-)
-> +		=C2=A0=C2=A0=C2=A0=C2=A0 unsigned int num_ibs, struct amdgpu_job **job=
-,
-> +		=C2=A0=C2=A0=C2=A0=C2=A0 u64 drm_client_id)
-> =C2=A0{
-> =C2=A0	if (num_ibs =3D=3D 0)
-> =C2=A0		return -EINVAL;
-> @@ -222,7 +223,8 @@ int amdgpu_job_alloc(struct amdgpu_device *adev,
-> struct amdgpu_vm *vm,
-> =C2=A0	if (!entity)
-> =C2=A0		return 0;
-> =C2=A0
-> -	return drm_sched_job_init(&(*job)->base, entity, 1, owner);
-> +	return drm_sched_job_init(&(*job)->base, entity, 1, owner,
-> +				=C2=A0 drm_client_id);
-> =C2=A0}
-> =C2=A0
-> =C2=A0int amdgpu_job_alloc_with_ib(struct amdgpu_device *adev,
-> @@ -232,7 +234,7 @@ int amdgpu_job_alloc_with_ib(struct amdgpu_device
-> *adev,
-> =C2=A0{
-> =C2=A0	int r;
-> =C2=A0
-> -	r =3D amdgpu_job_alloc(adev, NULL, entity, owner, 1, job);
-> +	r =3D amdgpu_job_alloc(adev, NULL, entity, owner, 1, job, 0);
-> =C2=A0	if (r)
-> =C2=A0		return r;
-> =C2=A0
-> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
-> b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
-> index ce6b9ba967ff..5a8bc6342222 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
-> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
-> @@ -90,7 +90,8 @@ static inline struct amdgpu_ring
-> *amdgpu_job_ring(struct amdgpu_job *job)
-> =C2=A0
-> =C2=A0int amdgpu_job_alloc(struct amdgpu_device *adev, struct amdgpu_vm
-> *vm,
-> =C2=A0		=C2=A0=C2=A0=C2=A0=C2=A0 struct drm_sched_entity *entity, void *o=
-wner,
-> -		=C2=A0=C2=A0=C2=A0=C2=A0 unsigned int num_ibs, struct amdgpu_job **job=
-);
-> +		=C2=A0=C2=A0=C2=A0=C2=A0 unsigned int num_ibs, struct amdgpu_job **job=
-,
-> +		=C2=A0=C2=A0=C2=A0=C2=A0 u64 drm_client_id);
-> =C2=A0int amdgpu_job_alloc_with_ib(struct amdgpu_device *adev,
-> =C2=A0			=C2=A0=C2=A0=C2=A0=C2=A0 struct drm_sched_entity *entity, void
-> *owner,
-> =C2=A0			=C2=A0=C2=A0=C2=A0=C2=A0 size_t size, enum amdgpu_ib_pool_type
-> pool_type,
-> diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
-> b/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
-> index 3c0a5c3e0e3d..76c742328edb 100644
-> --- a/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
-> +++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
-> @@ -534,7 +534,7 @@ int etnaviv_ioctl_gem_submit(struct drm_device
-> *dev, void *data,
-> =C2=A0
-> =C2=A0	ret =3D drm_sched_job_init(&submit->sched_job,
-> =C2=A0				 &ctx->sched_entity[args->pipe],
-> -				 1, submit->ctx);
-> +				 1, submit->ctx, file->client_id);
-> =C2=A0	if (ret)
-> =C2=A0		goto err_submit_put;
-> =C2=A0
-> diff --git a/drivers/gpu/drm/imagination/pvr_job.c
-> b/drivers/gpu/drm/imagination/pvr_job.c
-> index 59b334d094fa..7564b0f21b42 100644
-> --- a/drivers/gpu/drm/imagination/pvr_job.c
-> +++ b/drivers/gpu/drm/imagination/pvr_job.c
-> @@ -446,7 +446,7 @@ create_job(struct pvr_device *pvr_dev,
-> =C2=A0	if (err)
-> =C2=A0		goto err_put_job;
-> =C2=A0
-> -	err =3D pvr_queue_job_init(job);
-> +	err =3D pvr_queue_job_init(job, pvr_file->file->client_id);
-> =C2=A0	if (err)
-> =C2=A0		goto err_put_job;
-> =C2=A0
-> diff --git a/drivers/gpu/drm/imagination/pvr_queue.c
-> b/drivers/gpu/drm/imagination/pvr_queue.c
-> index 5e9bc0992824..5a41ee79fed6 100644
-> --- a/drivers/gpu/drm/imagination/pvr_queue.c
-> +++ b/drivers/gpu/drm/imagination/pvr_queue.c
-> @@ -1073,6 +1073,7 @@ static int pvr_queue_cleanup_fw_context(struct
-> pvr_queue *queue)
-> =C2=A0/**
-> =C2=A0 * pvr_queue_job_init() - Initialize queue related fields in a
-> pvr_job object.
-> =C2=A0 * @job: The job to initialize.
-> + * @drm_client_id: drm_file.client_id submitting the job
-> =C2=A0 *
-> =C2=A0 * Bind the job to a queue and allocate memory to guarantee
-> pvr_queue_job_arm()
-> =C2=A0 * and pvr_queue_job_push() can't fail. We also make sure the
-> context type is
-> @@ -1082,7 +1083,7 @@ static int pvr_queue_cleanup_fw_context(struct
-> pvr_queue *queue)
-> =C2=A0 *=C2=A0 * 0 on success, or
-> =C2=A0 *=C2=A0 * An error code if something failed.
-> =C2=A0 */
-> -int pvr_queue_job_init(struct pvr_job *job)
-> +int pvr_queue_job_init(struct pvr_job *job, u64 drm_client_id)
-> =C2=A0{
-> =C2=A0	/* Fragment jobs need at least one native fence wait on the
-> geometry job fence. */
-> =C2=A0	u32 min_native_dep_count =3D job->type =3D=3D
-> DRM_PVR_JOB_TYPE_FRAGMENT ? 1 : 0;
-> @@ -1099,7 +1100,7 @@ int pvr_queue_job_init(struct pvr_job *job)
-> =C2=A0	if (!pvr_cccb_cmdseq_can_fit(&queue->cccb,
-> job_cmds_size(job, min_native_dep_count)))
-> =C2=A0		return -E2BIG;
-> =C2=A0
-> -	err =3D drm_sched_job_init(&job->base, &queue->entity, 1,
-> THIS_MODULE);
-> +	err =3D drm_sched_job_init(&job->base, &queue->entity, 1,
-> THIS_MODULE, drm_client_id);
-> =C2=A0	if (err)
-> =C2=A0		return err;
-> =C2=A0
-> diff --git a/drivers/gpu/drm/imagination/pvr_queue.h
-> b/drivers/gpu/drm/imagination/pvr_queue.h
-> index 93fe9ac9f58c..fc1986d73fc8 100644
-> --- a/drivers/gpu/drm/imagination/pvr_queue.h
-> +++ b/drivers/gpu/drm/imagination/pvr_queue.h
-> @@ -143,7 +143,7 @@ struct pvr_queue {
-> =C2=A0
-> =C2=A0bool pvr_queue_fence_is_ufo_backed(struct dma_fence *f);
-> =C2=A0
-> -int pvr_queue_job_init(struct pvr_job *job);
-> +int pvr_queue_job_init(struct pvr_job *job, u64 drm_client_id);
-> =C2=A0
-> =C2=A0void pvr_queue_job_cleanup(struct pvr_job *job);
-> =C2=A0
-> diff --git a/drivers/gpu/drm/lima/lima_gem.c
-> b/drivers/gpu/drm/lima/lima_gem.c
-> index 5deec673c11e..9722b847a539 100644
-> --- a/drivers/gpu/drm/lima/lima_gem.c
-> +++ b/drivers/gpu/drm/lima/lima_gem.c
-> @@ -341,7 +341,7 @@ int lima_gem_submit(struct drm_file *file, struct
-> lima_submit *submit)
-> =C2=A0
-> =C2=A0	err =3D lima_sched_task_init(
-> =C2=A0		submit->task, submit->ctx->context + submit->pipe,
-> -		bos, submit->nr_bos, vm);
-> +		bos, submit->nr_bos, vm, file->client_id);
-> =C2=A0	if (err)
-> =C2=A0		goto err_out1;
-> =C2=A0
-> diff --git a/drivers/gpu/drm/lima/lima_sched.c
-> b/drivers/gpu/drm/lima/lima_sched.c
-> index 7934098e651b..954f4325b859 100644
-> --- a/drivers/gpu/drm/lima/lima_sched.c
-> +++ b/drivers/gpu/drm/lima/lima_sched.c
-> @@ -113,7 +113,8 @@ static inline struct lima_sched_pipe
-> *to_lima_pipe(struct drm_gpu_scheduler *sch
-> =C2=A0int lima_sched_task_init(struct lima_sched_task *task,
-> =C2=A0			 struct lima_sched_context *context,
-> =C2=A0			 struct lima_bo **bos, int num_bos,
-> -			 struct lima_vm *vm)
-> +			 struct lima_vm *vm,
-> +			 u64 drm_client_id)
-> =C2=A0{
-> =C2=A0	int err, i;
-> =C2=A0
-> @@ -124,7 +125,8 @@ int lima_sched_task_init(struct lima_sched_task
-> *task,
-> =C2=A0	for (i =3D 0; i < num_bos; i++)
-> =C2=A0		drm_gem_object_get(&bos[i]->base.base);
-> =C2=A0
-> -	err =3D drm_sched_job_init(&task->base, &context->base, 1,
-> vm);
-> +	err =3D drm_sched_job_init(&task->base, &context->base, 1, vm,
-> +				 drm_client_id);
-> =C2=A0	if (err) {
-> =C2=A0		kfree(task->bos);
-> =C2=A0		return err;
-> diff --git a/drivers/gpu/drm/lima/lima_sched.h
-> b/drivers/gpu/drm/lima/lima_sched.h
-> index 85b23ba901d5..1a08faf8a529 100644
-> --- a/drivers/gpu/drm/lima/lima_sched.h
-> +++ b/drivers/gpu/drm/lima/lima_sched.h
-> @@ -88,7 +88,8 @@ struct lima_sched_pipe {
-> =C2=A0int lima_sched_task_init(struct lima_sched_task *task,
-> =C2=A0			 struct lima_sched_context *context,
-> =C2=A0			 struct lima_bo **bos, int num_bos,
-> -			 struct lima_vm *vm);
-> +			 struct lima_vm *vm,
-> +			 u64 drm_client_id);
-> =C2=A0void lima_sched_task_fini(struct lima_sched_task *task);
-> =C2=A0
-> =C2=A0int lima_sched_context_init(struct lima_sched_pipe *pipe,
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c
-> b/drivers/gpu/drm/msm/msm_gem_submit.c
-> index 3e9aa2cc38ef..d9be0fe3d674 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -30,7 +30,7 @@
-> =C2=A0static struct msm_gem_submit *submit_create(struct drm_device *dev,
-> =C2=A0		struct msm_gpu *gpu,
-> =C2=A0		struct msm_gpu_submitqueue *queue, uint32_t nr_bos,
-> -		uint32_t nr_cmds)
-> +		uint32_t nr_cmds, u64 drm_client_id)
-> =C2=A0{
-> =C2=A0	static atomic_t ident =3D ATOMIC_INIT(0);
-> =C2=A0	struct msm_gem_submit *submit;
-> @@ -54,7 +54,8 @@ static struct msm_gem_submit *submit_create(struct
-> drm_device *dev,
-> =C2=A0		return ERR_PTR(ret);
-> =C2=A0	}
-> =C2=A0
-> -	ret =3D drm_sched_job_init(&submit->base, queue->entity, 1,
-> queue);
-> +	ret =3D drm_sched_job_init(&submit->base, queue->entity, 1,
-> queue,
-> +				 drm_client_id);
-> =C2=A0	if (ret) {
-> =C2=A0		kfree(submit->hw_fence);
-> =C2=A0		kfree(submit);
-> @@ -693,7 +694,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev,
-> void *data,
-> =C2=A0		}
-> =C2=A0	}
-> =C2=A0
-> -	submit =3D submit_create(dev, gpu, queue, args->nr_bos, args-
-> >nr_cmds);
-> +	submit =3D submit_create(dev, gpu, queue, args->nr_bos, args-
-> >nr_cmds,
-> +			=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 file->client_id);
-> =C2=A0	if (IS_ERR(submit)) {
-> =C2=A0		ret =3D PTR_ERR(submit);
-> =C2=A0		goto out_post_unlock;
-> diff --git a/drivers/gpu/drm/nouveau/nouveau_sched.c
-> b/drivers/gpu/drm/nouveau/nouveau_sched.c
-> index d326e55d2d24..460a5fb02412 100644
-> --- a/drivers/gpu/drm/nouveau/nouveau_sched.c
-> +++ b/drivers/gpu/drm/nouveau/nouveau_sched.c
-> @@ -87,7 +87,8 @@ nouveau_job_init(struct nouveau_job *job,
-> =C2=A0	}
-> =C2=A0
-> =C2=A0	ret =3D drm_sched_job_init(&job->base, &sched->entity,
-> -				 args->credits, NULL);
-> +				 args->credits, NULL,
-> +				 job->file_priv->client_id);
-> =C2=A0	if (ret)
-> =C2=A0		goto err_free_chains;
-> =C2=A0
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c
-> b/drivers/gpu/drm/panfrost/panfrost_drv.c
-> index b87f83e94eda..d5c2c6530ed8 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
-> +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-> @@ -312,7 +312,7 @@ static int panfrost_ioctl_submit(struct
-> drm_device *dev, void *data,
-> =C2=A0
-> =C2=A0	ret =3D drm_sched_job_init(&job->base,
-> =C2=A0				 &file_priv->sched_entity[slot],
-> -				 1, NULL);
-> +				 1, NULL, file->client_id);
-> =C2=A0	if (ret)
-> =C2=A0		goto out_put_job;
-> =C2=A0
-> diff --git a/drivers/gpu/drm/panthor/panthor_drv.c
-> b/drivers/gpu/drm/panthor/panthor_drv.c
-> index 06fe46e32073..bd8e1900c919 100644
-> --- a/drivers/gpu/drm/panthor/panthor_drv.c
-> +++ b/drivers/gpu/drm/panthor/panthor_drv.c
-> @@ -989,7 +989,8 @@ static int panthor_ioctl_group_submit(struct
-> drm_device *ddev, void *data,
-> =C2=A0		const struct drm_panthor_queue_submit *qsubmit =3D
-> &jobs_args[i];
-> =C2=A0		struct drm_sched_job *job;
-> =C2=A0
-> -		job =3D panthor_job_create(pfile, args->group_handle,
-> qsubmit);
-> +		job =3D panthor_job_create(pfile, args->group_handle,
-> qsubmit,
-> +					 file->client_id);
-> =C2=A0		if (IS_ERR(job)) {
-> =C2=A0			ret =3D PTR_ERR(job);
-> =C2=A0			goto out_cleanup_submit_ctx;
-> diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c
-> b/drivers/gpu/drm/panthor/panthor_mmu.c
-> index 12a02e28f50f..e0c79bd2d173 100644
-> --- a/drivers/gpu/drm/panthor/panthor_mmu.c
-> +++ b/drivers/gpu/drm/panthor/panthor_mmu.c
-> @@ -2516,7 +2516,7 @@ panthor_vm_bind_job_create(struct drm_file
-> *file,
-> =C2=A0	kref_init(&job->refcount);
-> =C2=A0	job->vm =3D panthor_vm_get(vm);
-> =C2=A0
-> -	ret =3D drm_sched_job_init(&job->base, &vm->entity, 1, vm);
-> +	ret =3D drm_sched_job_init(&job->base, &vm->entity, 1, vm,
-> file->client_id);
-> =C2=A0	if (ret)
-> =C2=A0		goto err_put_job;
-> =C2=A0
-> diff --git a/drivers/gpu/drm/panthor/panthor_sched.c
-> b/drivers/gpu/drm/panthor/panthor_sched.c
-> index 446ec780eb4a..2af860c9068a 100644
-> --- a/drivers/gpu/drm/panthor/panthor_sched.c
-> +++ b/drivers/gpu/drm/panthor/panthor_sched.c
-> @@ -3729,7 +3729,8 @@ struct panthor_vm *panthor_job_vm(struct
-> drm_sched_job *sched_job)
-> =C2=A0struct drm_sched_job *
-> =C2=A0panthor_job_create(struct panthor_file *pfile,
-> =C2=A0		=C2=A0=C2=A0 u16 group_handle,
-> -		=C2=A0=C2=A0 const struct drm_panthor_queue_submit *qsubmit)
-> +		=C2=A0=C2=A0 const struct drm_panthor_queue_submit *qsubmit,
-> +		=C2=A0=C2=A0 u64 drm_client_id)
-> =C2=A0{
-> =C2=A0	struct panthor_group_pool *gpool =3D pfile->groups;
-> =C2=A0	struct panthor_job *job;
-> @@ -3801,7 +3802,7 @@ panthor_job_create(struct panthor_file *pfile,
-> =C2=A0
-> =C2=A0	ret =3D drm_sched_job_init(&job->base,
-> =C2=A0				 &job->group->queues[job-
-> >queue_idx]->entity,
-> -				 credits, job->group);
-> +				 credits, job->group,
-> drm_client_id);
-> =C2=A0	if (ret)
-> =C2=A0		goto err_put_job;
-> =C2=A0
-> diff --git a/drivers/gpu/drm/panthor/panthor_sched.h
-> b/drivers/gpu/drm/panthor/panthor_sched.h
-> index e650a445cf50..742b0b4ff3a3 100644
-> --- a/drivers/gpu/drm/panthor/panthor_sched.h
-> +++ b/drivers/gpu/drm/panthor/panthor_sched.h
-> @@ -29,7 +29,8 @@ int panthor_group_get_state(struct panthor_file
-> *pfile,
-> =C2=A0struct drm_sched_job *
-> =C2=A0panthor_job_create(struct panthor_file *pfile,
-> =C2=A0		=C2=A0=C2=A0 u16 group_handle,
-> -		=C2=A0=C2=A0 const struct drm_panthor_queue_submit *qsubmit);
-> +		=C2=A0=C2=A0 const struct drm_panthor_queue_submit *qsubmit,
-> +		=C2=A0=C2=A0 u64 drm_client_id);
-> =C2=A0struct drm_sched_job *panthor_job_get(struct drm_sched_job *job);
-> =C2=A0struct panthor_vm *panthor_job_vm(struct drm_sched_job *sched_job);
-> =C2=A0void panthor_job_put(struct drm_sched_job *job);
-> diff --git a/drivers/gpu/drm/scheduler/sched_fence.c
-> b/drivers/gpu/drm/scheduler/sched_fence.c
-> index e971528504a5..d208d384d38d 100644
-> --- a/drivers/gpu/drm/scheduler/sched_fence.c
-> +++ b/drivers/gpu/drm/scheduler/sched_fence.c
-> @@ -206,7 +206,8 @@ struct drm_sched_fence *to_drm_sched_fence(struct
-> dma_fence *f)
-> =C2=A0EXPORT_SYMBOL(to_drm_sched_fence);
-> =C2=A0
-> =C2=A0struct drm_sched_fence *drm_sched_fence_alloc(struct
-> drm_sched_entity *entity,
-> -					=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 void *owner)
-> +					=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 void *owner,
-> +					=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 u64 drm_client_id)
-> =C2=A0{
-> =C2=A0	struct drm_sched_fence *fence =3D NULL;
-> =C2=A0
-> @@ -215,6 +216,7 @@ struct drm_sched_fence
-> *drm_sched_fence_alloc(struct drm_sched_entity *entity,
-> =C2=A0		return NULL;
-> =C2=A0
-> =C2=A0	fence->owner =3D owner;
-> +	fence->drm_client_id =3D drm_client_id;
-> =C2=A0	spin_lock_init(&fence->lock);
-> =C2=A0
-> =C2=A0	return fence;
-> diff --git a/drivers/gpu/drm/scheduler/sched_internal.h
-> b/drivers/gpu/drm/scheduler/sched_internal.h
-> index 599cf6e1bb74..7ea5a6736f98 100644
-> --- a/drivers/gpu/drm/scheduler/sched_internal.h
-> +++ b/drivers/gpu/drm/scheduler/sched_internal.h
-> @@ -24,7 +24,7 @@ void drm_sched_entity_select_rq(struct
-> drm_sched_entity *entity);
-> =C2=A0struct drm_sched_job *drm_sched_entity_pop_job(struct
-> drm_sched_entity *entity);
-> =C2=A0
-> =C2=A0struct drm_sched_fence *drm_sched_fence_alloc(struct
-> drm_sched_entity *s_entity,
-> -					=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 void *owner);
-> +					=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 void *owner, u64
-> drm_client_id);
-> =C2=A0void drm_sched_fence_init(struct drm_sched_fence *fence,
-> =C2=A0			=C2=A0 struct drm_sched_entity *entity);
-> =C2=A0void drm_sched_fence_free(struct drm_sched_fence *fence);
-> diff --git a/drivers/gpu/drm/scheduler/sched_main.c
-> b/drivers/gpu/drm/scheduler/sched_main.c
-> index 829579c41c6b..60611618f3ab 100644
-> --- a/drivers/gpu/drm/scheduler/sched_main.c
-> +++ b/drivers/gpu/drm/scheduler/sched_main.c
-> @@ -764,6 +764,7 @@ EXPORT_SYMBOL(drm_sched_resubmit_jobs);
-> =C2=A0 * @credits: the number of credits this job contributes to the
-> schedulers
-> =C2=A0 * credit limit
-> =C2=A0 * @owner: job owner for debugging
-> + * @drm_client_id: drm_file.client_id of the owner
+Konrad / Guenter,
 
-For the docu generation to link that properly it must be written as
+We had a further discussion on this internally. Outcome is, it wouldn't 
+be ideal to hook the custom restart reason codes in watchdog framework, 
+since there is no involvement of watchdog in such cases. Also I don't 
+find any references to hook the custom values in watchdog's bootstatus.
 
-&struct drm_file.client_id
+If this is fine, I'm planning to resend the series to handle only the 
+non secure watchdog timeout case. In that case, as suggested by Konrad, 
+everything will be handled in DT like below to avoid the device data.
 
-Besides, if this were an optional parameter, one should document it.
-I'm not sure if it is, I haven't used these client_id's before.
+imem,phandle = <&phandle <imem_offset> <value>>;
 
-P.
+Kindly share your thoughts and inputs on this to proceed further.
 
-> =C2=A0 *
-> =C2=A0 * Refer to drm_sched_entity_push_job() documentation
-> =C2=A0 * for locking considerations.
-> @@ -784,7 +785,8 @@ EXPORT_SYMBOL(drm_sched_resubmit_jobs);
-> =C2=A0 */
-> =C2=A0int drm_sched_job_init(struct drm_sched_job *job,
-> =C2=A0		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct drm_sched_entity *ent=
-ity,
-> -		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 u32 credits, void *owner)
-> +		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 u32 credits, void *owner,
-> +		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint64_t drm_client_id)
-> =C2=A0{
-> =C2=A0	if (!entity->rq) {
-> =C2=A0		/* This will most likely be followed by missing
-> frames
-> @@ -810,7 +812,7 @@ int drm_sched_job_init(struct drm_sched_job *job,
-> =C2=A0
-> =C2=A0	job->entity =3D entity;
-> =C2=A0	job->credits =3D credits;
-> -	job->s_fence =3D drm_sched_fence_alloc(entity, owner);
-> +	job->s_fence =3D drm_sched_fence_alloc(entity, owner,
-> drm_client_id);
-> =C2=A0	if (!job->s_fence)
-> =C2=A0		return -ENOMEM;
-> =C2=A0
-> diff --git a/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
-> b/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
-> index f999c8859cf7..09ffbdb32d76 100644
-> --- a/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
-> +++ b/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
-> @@ -35,7 +35,7 @@ drm_mock_sched_entity_new(struct kunit *test,
-> =C2=A0	ret =3D drm_sched_entity_init(&entity->base,
-> =C2=A0				=C2=A0=C2=A0=C2=A0 priority,
-> =C2=A0				=C2=A0=C2=A0=C2=A0 &drm_sched, 1,
-> -				=C2=A0=C2=A0=C2=A0 NULL);
-> +				=C2=A0=C2=A0=C2=A0 NULL, 1);
-> =C2=A0	KUNIT_ASSERT_EQ(test, ret, 0);
-> =C2=A0
-> =C2=A0	entity->test =3D test;
-> diff --git a/drivers/gpu/drm/v3d/v3d_submit.c
-> b/drivers/gpu/drm/v3d/v3d_submit.c
-> index 4ff5de46fb22..5171ffe9012d 100644
-> --- a/drivers/gpu/drm/v3d/v3d_submit.c
-> +++ b/drivers/gpu/drm/v3d/v3d_submit.c
-> @@ -169,7 +169,7 @@ v3d_job_init(struct v3d_dev *v3d, struct drm_file
-> *file_priv,
-> =C2=A0	job->file =3D file_priv;
-> =C2=A0
-> =C2=A0	ret =3D drm_sched_job_init(&job->base, &v3d_priv-
-> >sched_entity[queue],
-> -				 1, v3d_priv);
-> +				 1, v3d_priv, file_priv->client_id);
-> =C2=A0	if (ret)
-> =C2=A0		return ret;
-> =C2=A0
-> diff --git a/drivers/gpu/drm/xe/xe_sched_job.c
-> b/drivers/gpu/drm/xe/xe_sched_job.c
-> index 1905ca590965..f4679cb9a56b 100644
-> --- a/drivers/gpu/drm/xe/xe_sched_job.c
-> +++ b/drivers/gpu/drm/xe/xe_sched_job.c
-> @@ -113,7 +113,8 @@ struct xe_sched_job *xe_sched_job_create(struct
-> xe_exec_queue *q,
-> =C2=A0	kref_init(&job->refcount);
-> =C2=A0	xe_exec_queue_get(job->q);
-> =C2=A0
-> -	err =3D drm_sched_job_init(&job->drm, q->entity, 1, NULL);
-> +	err =3D drm_sched_job_init(&job->drm, q->entity, 1, NULL,
-> +				 q->xef->drm->client_id);
-> =C2=A0	if (err)
-> =C2=A0		goto err_free;
-> =C2=A0
-> diff --git a/include/drm/gpu_scheduler.h
-> b/include/drm/gpu_scheduler.h
-> index 1a7e377d4cbb..6fe3b4c0cffb 100644
-> --- a/include/drm/gpu_scheduler.h
-> +++ b/include/drm/gpu_scheduler.h
-> @@ -305,6 +305,13 @@ struct drm_sched_fence {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * @owner: job owne=
-r for debugging
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
-> =C2=A0	void				*owner;
-> +
-> +	/**
-> +	 * @drm_client_id:
-> +	 *
-> +	 * The client_id of the drm_file which owns the job.
-> +	 */
-> +	uint64_t			drm_client_id;
-> =C2=A0};
-> =C2=A0
-> =C2=A0struct drm_sched_fence *to_drm_sched_fence(struct dma_fence *f);
-> @@ -629,7 +636,8 @@ drm_sched_pick_best(struct drm_gpu_scheduler
-> **sched_list,
-> =C2=A0
-> =C2=A0int drm_sched_job_init(struct drm_sched_job *job,
-> =C2=A0		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct drm_sched_entity *ent=
-ity,
-> -		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 u32 credits, void *owner);
-> +		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 u32 credits, void *owner,
-> +		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 u64 drm_client_id);
-> =C2=A0void drm_sched_job_arm(struct drm_sched_job *job);
-> =C2=A0void drm_sched_entity_push_job(struct drm_sched_job *sched_job);
-> =C2=A0int drm_sched_job_add_dependency(struct drm_sched_job *job,
 
+>
+>
+>>
+>> I'd much prefer to go with 1 really.. If we used nvmem, we could have 
+>> a map
+>> of cell names to restart reasons, but we've already established IMEM is
+>> volatile and we shouldn't mess up the convention just because that
+>> subsystem has nicer APIs..
+>>
+>> Unless we rename the subsystem to `fuses`, `magic-values` or something..
+>> +Srini? :P
+>>
+>> Konrad
 
