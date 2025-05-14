@@ -1,61 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-57993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DF7BAB7797
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 23:05:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32970AB779C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 23:05:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3787F7B008D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 21:03:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 484779E3045
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 21:05:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 420A1297A4F;
-	Wed, 14 May 2025 21:04:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42628297A75;
+	Wed, 14 May 2025 21:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CiOoMLNi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PfHBHU5B"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1718B297A4D;
-	Wed, 14 May 2025 21:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15613296D14;
+	Wed, 14 May 2025 21:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747256661; cv=none; b=n1gs8b+vHw+ySuyYBdmqtTDIT0ekNlBiZCQXfFKABOxxuVdyrJEtkj76+2ZBvIo9Za33A2Vjz1ypynqYJeqrprkIn0HUBQ0ba0f3/zrFxXoUrVr20F8DpDyyriz8HFHVlwEEU6rVig2N2DFxQGiSxJ+CdDUB4Auecd/PKhfFAAc=
+	t=1747256664; cv=none; b=E7o3zD2g7adQrdd0XmFPlTIqh2kEk5eXdgF4YFecxp4LBf22nuufduuiFL36Wy48djILwikjaj0PXsBKOSJcZtqM6hHXiJH0++zToqR8SvxxAi56qY+f2ptKq/WvBXBjNcSMqUeA5ri+s/GiqivVGGHr+tvbhPrP2pm/thsw8dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747256661; c=relaxed/simple;
-	bh=cN6Cs9jwPNvolfnxzm8tACImCMexiA/MUI9W9fBPDMo=;
+	s=arc-20240116; t=1747256664; c=relaxed/simple;
+	bh=MJfXH/aHqUWWQBLJdPGj36mLklHCP1B98t++b802jdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dUSZGMmRGBLOpoKgCRy+dadSL/4sypGW+uj+OjaYVhaU/odIBCO1sJvFVcuehKZBObM3LKUjnntmjugsuAC1tjze21An0vpQQP930DpdT7WsK4AWskgjtCi5adIQm2EmyYHdRde9yp7WyYxExAOU3cLcN4Ifdow9UdrQIBNwx9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CiOoMLNi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73182C4AF0B;
-	Wed, 14 May 2025 21:04:17 +0000 (UTC)
+	 MIME-Version:Content-Type; b=N4NrLUMcJmYfOj8jycRdi3FnKASo8BjXmtsO79sIBv0dxc2VtuWLGkEFmBSz//X9RxVFZXBepN9t9PCpi34+kNjqbufa98wGeazk+SljhdUKhE6l0Rfn7Y7HMz1EC/pl9Iq31O2ANABBvyjhUgWStOkmYvceRiLnDYNILR1aTz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PfHBHU5B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 336D4C4CEEF;
+	Wed, 14 May 2025 21:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747256660;
-	bh=cN6Cs9jwPNvolfnxzm8tACImCMexiA/MUI9W9fBPDMo=;
+	s=k20201202; t=1747256663;
+	bh=MJfXH/aHqUWWQBLJdPGj36mLklHCP1B98t++b802jdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CiOoMLNi7kZztSrO+1BFYnfG1B5irLw3iVGwW3ACy4dijB4tjmQ1JCd/V6H5v3tf9
-	 rGPY146RoICJarF/e2aFO0XgHerjBH32vQ3PlqL+M2/XYNi8eS02OieJTVPjTdkIFL
-	 WzoYNfD6tGZdFO3nZLH/qthV+2pS0wV6ahhQ4vw++UyiJolKitXIKX1UUjCshu9VJ3
-	 /ZzywL0OOLTXAJ63gYBF6TaLYsVVSjr/d8E5U5juAsuAPchRxXjD4/JbjIZKyzBHj3
-	 ZXidWUeXp7lXOwsH9zKlP43JSHDq1BNkPKCb/A6GXpyAOx0xd1csFwAZIdMCi4FXPE
-	 i3l4xV+X/F+Vg==
+	b=PfHBHU5BmSTAo9NP0uXH9Lhbl0kRej73s26nv9HeN+lT37H6eVvczoRuMwfcXum8n
+	 +N5mvZNCpm3fKlO/2h4M6pkw2SZbCYK6BZgFbshqLyCdv90NxW2dZS+lfTmVGWzVBy
+	 0I07L/npc898hhG0vXqH2xKN8DOIV49eGBHZFOPNkVWExz3GgfNpgANP94rBdbSEoL
+	 rpIziybDbuwQjLMxxDRltw6pQDmxp5SM1pq01LJA0rwoXdvau4EKdeFzHp/Nkh6/2v
+	 ycAt1qdh8IUKNPizl6ZJswe5ASB7GSHXtwc4fUrCNyNxHica1gEawA1hdnO1vUxUtn
+	 pHoS9zBz023QA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Rudraksha Gupta <guptarud@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org,
+To: konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ARM: dts: qcom-msm8960: add missing clocks to the timer node
-Date: Wed, 14 May 2025 22:03:47 +0100
-Message-ID: <174725663048.90041.9540026815042329050.b4-ty@kernel.org>
+	Juerg Haefliger <juerg.haefliger@canonical.com>
+Cc: linux-kernel@vger.kernel.org,
+	jens.glathe@oldschoolsolutions.biz
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-hp-omnibook-x14: Enable SMB2360 0 and 1
+Date: Wed, 14 May 2025 22:03:48 +0100
+Message-ID: <174725663049.90041.11055392730869944737.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250318-expressatt-solve-dts-errors-v1-1-14012a4bc315@gmail.com>
-References: <20250318-expressatt-solve-dts-errors-v1-1-14012a4bc315@gmail.com>
+In-Reply-To: <20250319160509.1812805-1-juerg.haefliger@canonical.com>
+References: <20250319160509.1812805-1-juerg.haefliger@canonical.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,20 +67,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 18 Mar 2025 22:10:47 -0700, Rudraksha Gupta wrote:
-> In order to fix DT schema warning and describe hardware properly, add
-> missing sleep clock to the timer node.
+On Wed, 19 Mar 2025 17:05:09 +0100, Juerg Haefliger wrote:
+> Commit d37e2646c8a5 ("arm64: dts: qcom: x1e80100-pmics: Enable all SMB2360
+> separately") disables all SMB2360s and let the board DTS explicitly enable
+> them. The HP OmniBook DTS is from before this change and is missing the
+> explicit enabling. Add that to get all USB root ports.
 > 
-> Solved by Dmitry Baryshkov on the APQ8064 SoC
-> Link: https://lore.kernel.org/all/20250318-fix-nexus-4-v2-6-bcedd1406790@oss.qualcomm.com/
 > 
-> 
-> [...]
 
 Applied, thanks!
 
-[1/1] ARM: dts: qcom-msm8960: add missing clocks to the timer node
-      commit: b81dcdad43daf10f79ae149826fff9e467b95e8b
+[1/1] arm64: dts: qcom: x1e80100-hp-omnibook-x14: Enable SMB2360 0 and 1
+      commit: 48274b40a3719a950b1062f8125c972a2df5c083
 
 Best regards,
 -- 
