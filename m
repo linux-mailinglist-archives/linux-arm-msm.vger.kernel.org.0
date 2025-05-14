@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-57958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E360CAB7556
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 21:11:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D3F6AB755A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 21:12:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B9A64C8263
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 19:11:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA66F4C820E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 19:12:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 253EB28E5FA;
-	Wed, 14 May 2025 19:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37A312951A6;
+	Wed, 14 May 2025 19:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HROvMVgc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZSezEOXA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4179D28D841;
-	Wed, 14 May 2025 19:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55ECB294A10;
+	Wed, 14 May 2025 19:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747249823; cv=none; b=jw1wUUwhB1A4r0+wWGi8xhVQU2G6trWrLSRTQbj+rJNpiDEaTHMoUoyF5UfqEWXKdhXTvMks6PQMLqiDgdx6JluUfcWp3+auG3NqrhRsjeZjqCnfwF9De5YrHK9l8I6UKHXUt0dgU3rrV/2jkrApZgAOQHMFYTUGW+fvqS7oJCY=
+	t=1747249826; cv=none; b=uucYXB7fHVYI0CoUlanZBIfFb1zubGuf6Zm+ZuHuaYlCDjx2y4wzDTQm038h4hW7MQ7ts7Oq6jD9hvH5+ffwLkO41x39i1xPXyvbDjaqu6CH68OsIpBUekMbX7l7LPMcYAuARB2B12/pAkMwZ2f7UupRD3Obu8GywiwRV4sqIAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747249823; c=relaxed/simple;
-	bh=OM9O5rN2hEwZTYWD5jKJaXPWfcoOJJCe3GQ4ifBPLNQ=;
+	s=arc-20240116; t=1747249826; c=relaxed/simple;
+	bh=oo/xNmzCC3RC/S5zBq4vkPMSowoU+nnPpFDT9gAVQpY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=mz+XXarlsJ9GHAlCSyQx1qPkM71BK8okO5JhN7CRQR4TR2uiVf+OgudLV141VtUvSFk295Xt6XtNw0wjVBi3Cag4YPA/ChyReiJf/9DqdEbGCv/8AbyoVlDzZW4+6c5rV5/jNg6e6XdkVp4DBM4xkBMvg4DJPSDYtZ5Ni7w5nFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HROvMVgc; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:CC; b=CbqI0kEc7JHsdL4D7IvhXBFiUKOV8QMslSldK5mqs0lfzqqDEyWa49GZA2yqtTtLbj6pYxxeSHKKDgYa+PGbA2LfeQSD8T5gjpXpI1pv5PgWxLdUu5jlteCmz/+EJ895nySPqYRiFjcEzBNbXhJR6DhL7rJ9Yib0vCMguie2pRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZSezEOXA; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EIrHDx009124;
-	Wed, 14 May 2025 19:10:14 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EAuwpH003093;
+	Wed, 14 May 2025 19:10:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZOfew9At5DowASXZUCKwu/5FBRh1yV+qsj81GO+ImhY=; b=HROvMVgcwOZxiB99
-	PzY7Smbj5GGU2930lvo6A+mh2XWaP0zrUGRe3XRFa+N/h1s/O3x9cE4Bu3crVaUM
-	2Z4iK2HctfrdI5kA5DzqDGR8Uv2JBKbNlLT7RhhCGkzeIpMVAFA3EeHZYOq/jifz
-	tp4aWN1ORVJq1/r5aoyqnkyMLwUO4h6aijjbrnkjyHS8oGc/G7GdpXMdmo/sLHaq
-	P5SBcFxQ4S4hhr6ibQZrr/Z8OJNMCIqx3etfdaruCCKdbMmIQuBsD91vNHXDEC+a
-	3SUhB11fbccecSQ5lgS36Fii6rGQKxfB64WBsvPiC2nD9rgkZV+fnmJDy6lE4C9b
-	mZK90A==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcputjp-1
+	iYSkoRubM4ZHVhZ8/RhBYyl4K3M1fcDDQZdYzNN+Xhs=; b=ZSezEOXAeKvGygxg
+	SZiSof2GouC0xCMFawdk5okTiSy/267OTo1leIJxRciDq+/pG9w2uT2+W7CF7yvW
+	rMNiBv78oxSZ82thzF3cqpJW1lM9LrI3h7gA+LpGy1dSCmRhONFmpXgGrRzFXdth
+	5iJdyJ/3BjTvo6ncmWTvlbhm4elbH5Eoc5u8YAOj4DshXSkgzwm1XjuFHAYhaT3u
+	ME477vPFRAL9RvxuaQFI1WmrYK1D2tuT7K4TG1HfOaP0YlorwGVd34QWhC2KZD/T
+	5kCtVWmxK37/Bb4nkDhpG/BS618EiiwOTeUxyJllMQo4jmbliv2LiWQroAe6RI+f
+	ddtx+g==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcrbrvt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 May 2025 19:10:14 +0000 (GMT)
+	Wed, 14 May 2025 19:10:20 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54EJADKb029009
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54EJAJIA011003
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 May 2025 19:10:13 GMT
+	Wed, 14 May 2025 19:10:19 GMT
 Received: from [10.213.98.28] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 14 May
- 2025 12:10:07 -0700
+ 2025 12:10:13 -0700
 From: Jagadeesh Kona <quic_jkona@quicinc.com>
-Date: Thu, 15 May 2025 00:38:55 +0530
-Subject: [PATCH v4 10/18] clk: qcom: camcc-sm8550: Move PLL & clk
+Date: Thu, 15 May 2025 00:38:56 +0530
+Subject: [PATCH v4 11/18] clk: qcom: camcc-sm8650: Move PLL & clk
  configuration to really probe
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250515-videocc-pll-multi-pd-voting-v4-10-571c63297d01@quicinc.com>
+Message-ID: <20250515-videocc-pll-multi-pd-voting-v4-11-571c63297d01@quicinc.com>
 References: <20250515-videocc-pll-multi-pd-voting-v4-0-571c63297d01@quicinc.com>
 In-Reply-To: <20250515-videocc-pll-multi-pd-voting-v4-0-571c63297d01@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -95,54 +95,50 @@ CC: Ajit Pandey <quic_ajipan@quicinc.com>,
         Krzysztof Kozlowski
 	<krzysztof.kozlowski@linaro.org>,
         Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@oss.qualcomm.com>
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 X-Mailer: b4 0.14.2
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: g_W9X_lQNXQHD3Jqzsr5sI_q1CHf66Cf
-X-Proofpoint-ORIG-GUID: g_W9X_lQNXQHD3Jqzsr5sI_q1CHf66Cf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDE3NCBTYWx0ZWRfXxs5ScEuzsY7B
- X0pxoWYy+hsCqjQYAliCR6jpCNmEFSmFIOy5B1x4lFxPtGFqkpB0G1KO8NmsGWk2p7Qbzf1MgV8
- fpAKC+TxGcu/jzi9KzUoV3/+AahTrxHEFmnmXEav4D1Nd9CZiybfKybtaDUlX/uEDkLeNMCR6de
- lkSrSxUqn89iByOznI/MqPybpEQb8o5hq54Bd7F0Ikznz/Kdfc18VrDkGuUovltYAuwpipPMNyi
- bVgo8dYerhfPcQOd7sGp6tVBMlofPBdx4GOq5daILCUkTFJVTG23zVX7CaMgX5TizcX0u6VGt7J
- Bm63EFg8YVG0WszuZtO1X39gH5F18woOwacShHG4VwQrAlBpkK9b3188+vffTm4rdktqhTa7LMM
- rBR01d3jRENtU33xPcDP8OUIUVHTmuOIPAFa3Jlmt3yBu1jqhqVISdX8JzLwZO3F5fvzSSFD
-X-Authority-Analysis: v=2.4 cv=KcvSsRYD c=1 sm=1 tr=0 ts=6824ea96 cx=c_pps
+X-Proofpoint-ORIG-GUID: DZm3skdHfXA8EhT00d1d-Jroe3zJgOY9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDE3NCBTYWx0ZWRfX7qS78gXbDXrN
+ PLPCUK312miVqTkIwzd6xuO8gUNLNXrBqNowPyougTUZZRWzyCJe4BVEZcPVS3cgTPJFzBVEZOY
+ +0OF0TI+inYvJ3Mle1JPrnpvZCCbB26/RXcr5+hoW4+eznot0GGR38iqw5yNjXzL3CUFi6N2ZjH
+ o8T0OrBqZvBi3Rl3eNGYGaitJ3yR/mSIgpyBjoI+0P9yZyR9xPimm8HB7PXXRkAjlxR6U4lpAHF
+ z+vaZBsKa2qiDE5VK/+DNakF+e/Hl9jM2meahxvowe6Jx4oTN6g4QVelwEZiXSoeLcbBLCpa17a
+ npItA/i4q1XaijFtdZi4i5mDdjxIOVa83Kbci7b+sPVRDKKkzyj8Qi5OeXKFxY5yzBMwO0ypGxc
+ U15XNVxab4q4uABm6qGSMlKDemKw/LGbBDEy/+TWC/Srtk4gYZGiAkZpulFxduqOJv3zyJ9P
+X-Authority-Analysis: v=2.4 cv=K7UiHzWI c=1 sm=1 tr=0 ts=6824ea9c cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=w1N10yLSh935uVjWeiMA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
+ a=s2paB303WvPZy8Ug-xUA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: DZm3skdHfXA8EhT00d1d-Jroe3zJgOY9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-14_04,2025-05-14_03,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0 phishscore=0
- lowpriorityscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 impostorscore=0
- mlxscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ adultscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 malwarescore=0
+ phishscore=0 mlxlogscore=999 clxscore=1015 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
  definitions=main-2505140174
 
-Camera PLLs on SM8550 require both MMCX and MXC rails to be kept ON to
-configure the PLLs properly. Hence move runtime power management, PLL
-configuration and enabling critical clocks to qcom_cc_really_probe() which
-ensures all required power domains are in enabled state before configuring
-the PLLs or enabling the clocks.
+Camera PLLs on SM8650 require both MMCX and MXC rails to be kept ON
+to configure the PLLs properly. Hence move runtime power management,
+PLL configuration and enabling critical clocks to qcom_cc_really_probe()
+which ensures all required power domains are in enabled state before
+configuring the PLLs or enabling the clocks.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
 ---
- drivers/clk/qcom/camcc-sm8550.c | 85 +++++++++++++++++++++--------------------
- 1 file changed, 44 insertions(+), 41 deletions(-)
+ drivers/clk/qcom/camcc-sm8650.c | 83 +++++++++++++++++++++--------------------
+ 1 file changed, 42 insertions(+), 41 deletions(-)
 
-diff --git a/drivers/clk/qcom/camcc-sm8550.c b/drivers/clk/qcom/camcc-sm8550.c
-index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f292ddf90 100644
---- a/drivers/clk/qcom/camcc-sm8550.c
-+++ b/drivers/clk/qcom/camcc-sm8550.c
+diff --git a/drivers/clk/qcom/camcc-sm8650.c b/drivers/clk/qcom/camcc-sm8650.c
+index 0ccd6de8ba78a3493f8f853a4330d2676b5743d4..8b388904f56fc3b3f77a43a09f735ace24b9fcf7 100644
+--- a/drivers/clk/qcom/camcc-sm8650.c
++++ b/drivers/clk/qcom/camcc-sm8650.c
 @@ -7,7 +7,6 @@
  #include <linux/mod_devicetable.h>
  #include <linux/module.h>
@@ -150,8 +146,8 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
 -#include <linux/pm_runtime.h>
  #include <linux/regmap.h>
  
- #include <dt-bindings/clock/qcom,sm8550-camcc.h>
-@@ -74,6 +73,7 @@ static const struct alpha_pll_config cam_cc_pll0_config = {
+ #include <dt-bindings/clock/qcom,sm8650-camcc.h>
+@@ -72,6 +71,7 @@ static const struct alpha_pll_config cam_cc_pll0_config = {
  
  static struct clk_alpha_pll cam_cc_pll0 = {
  	.offset = 0x0,
@@ -159,7 +155,7 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
  	.vco_table = lucid_ole_vco,
  	.num_vco = ARRAY_SIZE(lucid_ole_vco),
  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
-@@ -151,6 +151,7 @@ static const struct alpha_pll_config cam_cc_pll1_config = {
+@@ -149,6 +149,7 @@ static const struct alpha_pll_config cam_cc_pll1_config = {
  
  static struct clk_alpha_pll cam_cc_pll1 = {
  	.offset = 0x1000,
@@ -167,7 +163,7 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
  	.vco_table = lucid_ole_vco,
  	.num_vco = ARRAY_SIZE(lucid_ole_vco),
  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
-@@ -201,6 +202,7 @@ static const struct alpha_pll_config cam_cc_pll2_config = {
+@@ -199,6 +200,7 @@ static const struct alpha_pll_config cam_cc_pll2_config = {
  
  static struct clk_alpha_pll cam_cc_pll2 = {
  	.offset = 0x2000,
@@ -175,7 +171,7 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
  	.vco_table = rivian_ole_vco,
  	.num_vco = ARRAY_SIZE(rivian_ole_vco),
  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_RIVIAN_EVO],
-@@ -232,6 +234,7 @@ static const struct alpha_pll_config cam_cc_pll3_config = {
+@@ -230,6 +232,7 @@ static const struct alpha_pll_config cam_cc_pll3_config = {
  
  static struct clk_alpha_pll cam_cc_pll3 = {
  	.offset = 0x3000,
@@ -183,7 +179,7 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
  	.vco_table = lucid_ole_vco,
  	.num_vco = ARRAY_SIZE(lucid_ole_vco),
  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
-@@ -286,6 +289,7 @@ static const struct alpha_pll_config cam_cc_pll4_config = {
+@@ -284,6 +287,7 @@ static const struct alpha_pll_config cam_cc_pll4_config = {
  
  static struct clk_alpha_pll cam_cc_pll4 = {
  	.offset = 0x4000,
@@ -191,7 +187,7 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
  	.vco_table = lucid_ole_vco,
  	.num_vco = ARRAY_SIZE(lucid_ole_vco),
  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
-@@ -340,6 +344,7 @@ static const struct alpha_pll_config cam_cc_pll5_config = {
+@@ -338,6 +342,7 @@ static const struct alpha_pll_config cam_cc_pll5_config = {
  
  static struct clk_alpha_pll cam_cc_pll5 = {
  	.offset = 0x5000,
@@ -199,7 +195,7 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
  	.vco_table = lucid_ole_vco,
  	.num_vco = ARRAY_SIZE(lucid_ole_vco),
  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
-@@ -394,6 +399,7 @@ static const struct alpha_pll_config cam_cc_pll6_config = {
+@@ -392,6 +397,7 @@ static const struct alpha_pll_config cam_cc_pll6_config = {
  
  static struct clk_alpha_pll cam_cc_pll6 = {
  	.offset = 0x6000,
@@ -207,7 +203,7 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
  	.vco_table = lucid_ole_vco,
  	.num_vco = ARRAY_SIZE(lucid_ole_vco),
  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
-@@ -448,6 +454,7 @@ static const struct alpha_pll_config cam_cc_pll7_config = {
+@@ -446,6 +452,7 @@ static const struct alpha_pll_config cam_cc_pll7_config = {
  
  static struct clk_alpha_pll cam_cc_pll7 = {
  	.offset = 0x7000,
@@ -215,7 +211,7 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
  	.vco_table = lucid_ole_vco,
  	.num_vco = ARRAY_SIZE(lucid_ole_vco),
  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
-@@ -502,6 +509,7 @@ static const struct alpha_pll_config cam_cc_pll8_config = {
+@@ -500,6 +507,7 @@ static const struct alpha_pll_config cam_cc_pll8_config = {
  
  static struct clk_alpha_pll cam_cc_pll8 = {
  	.offset = 0x8000,
@@ -223,7 +219,7 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
  	.vco_table = lucid_ole_vco,
  	.num_vco = ARRAY_SIZE(lucid_ole_vco),
  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
-@@ -556,6 +564,7 @@ static const struct alpha_pll_config cam_cc_pll9_config = {
+@@ -554,6 +562,7 @@ static const struct alpha_pll_config cam_cc_pll9_config = {
  
  static struct clk_alpha_pll cam_cc_pll9 = {
  	.offset = 0x9000,
@@ -231,7 +227,7 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
  	.vco_table = lucid_ole_vco,
  	.num_vco = ARRAY_SIZE(lucid_ole_vco),
  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
-@@ -610,6 +619,7 @@ static const struct alpha_pll_config cam_cc_pll10_config = {
+@@ -631,6 +640,7 @@ static const struct alpha_pll_config cam_cc_pll10_config = {
  
  static struct clk_alpha_pll cam_cc_pll10 = {
  	.offset = 0xa000,
@@ -239,27 +235,11 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
  	.vco_table = lucid_ole_vco,
  	.num_vco = ARRAY_SIZE(lucid_ole_vco),
  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
-@@ -664,6 +674,7 @@ static const struct alpha_pll_config cam_cc_pll11_config = {
- 
- static struct clk_alpha_pll cam_cc_pll11 = {
- 	.offset = 0xb000,
-+	.config = &cam_cc_pll11_config,
- 	.vco_table = lucid_ole_vco,
- 	.num_vco = ARRAY_SIZE(lucid_ole_vco),
- 	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
-@@ -718,6 +729,7 @@ static const struct alpha_pll_config cam_cc_pll12_config = {
- 
- static struct clk_alpha_pll cam_cc_pll12 = {
- 	.offset = 0xc000,
-+	.config = &cam_cc_pll12_config,
- 	.vco_table = lucid_ole_vco,
- 	.num_vco = ARRAY_SIZE(lucid_ole_vco),
- 	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
-@@ -3479,6 +3491,27 @@ static const struct qcom_reset_map cam_cc_sm8550_resets[] = {
- 	[CAM_CC_SFE_1_BCR] = { 0x133dc },
+@@ -3509,6 +3519,27 @@ static const struct qcom_reset_map cam_cc_sm8650_resets[] = {
+ 	[CAM_CC_SFE_2_BCR] = { 0x130f4 },
  };
  
-+static struct clk_alpha_pll *cam_cc_sm8550_plls[] = {
++static struct clk_alpha_pll *cam_cc_sm8650_plls[] = {
 +	&cam_cc_pll0,
 +	&cam_cc_pll1,
 +	&cam_cc_pll2,
@@ -271,44 +251,44 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
 +	&cam_cc_pll8,
 +	&cam_cc_pll9,
 +	&cam_cc_pll10,
-+	&cam_cc_pll11,
-+	&cam_cc_pll12,
 +};
 +
-+static u32 cam_cc_sm8550_critical_cbcrs[] = {
-+	0x1419c, /* CAM_CC_GDSC_CLK */
-+	0x142cc, /* CAM_CC_SLEEP_CLK */
++static u32 cam_cc_sm8650_critical_cbcrs[] = {
++	0x132ec, /* CAM_CC_GDSC_CLK */
++	0x13308, /* CAM_CC_SLEEP_CLK */
++	0x13314, /* CAM_CC_DRV_XO_CLK */
++	0x13318, /* CAM_CC_DRV_AHB_CLK */
 +};
 +
- static const struct regmap_config cam_cc_sm8550_regmap_config = {
+ static const struct regmap_config cam_cc_sm8650_regmap_config = {
  	.reg_bits = 32,
  	.reg_stride = 4,
-@@ -3487,6 +3520,13 @@ static const struct regmap_config cam_cc_sm8550_regmap_config = {
+@@ -3517,6 +3548,13 @@ static const struct regmap_config cam_cc_sm8650_regmap_config = {
  	.fast_io = true,
  };
  
-+static struct qcom_cc_driver_data cam_cc_sm8550_driver_data = {
-+	.alpha_plls = cam_cc_sm8550_plls,
-+	.num_alpha_plls = ARRAY_SIZE(cam_cc_sm8550_plls),
-+	.clk_cbcrs = cam_cc_sm8550_critical_cbcrs,
-+	.num_clk_cbcrs = ARRAY_SIZE(cam_cc_sm8550_critical_cbcrs),
++static struct qcom_cc_driver_data cam_cc_sm8650_driver_data = {
++	.alpha_plls = cam_cc_sm8650_plls,
++	.num_alpha_plls = ARRAY_SIZE(cam_cc_sm8650_plls),
++	.clk_cbcrs = cam_cc_sm8650_critical_cbcrs,
++	.num_clk_cbcrs = ARRAY_SIZE(cam_cc_sm8650_critical_cbcrs),
 +};
 +
- static const struct qcom_cc_desc cam_cc_sm8550_desc = {
- 	.config = &cam_cc_sm8550_regmap_config,
- 	.clks = cam_cc_sm8550_clocks,
-@@ -3495,6 +3535,8 @@ static const struct qcom_cc_desc cam_cc_sm8550_desc = {
- 	.num_resets = ARRAY_SIZE(cam_cc_sm8550_resets),
- 	.gdscs = cam_cc_sm8550_gdscs,
- 	.num_gdscs = ARRAY_SIZE(cam_cc_sm8550_gdscs),
+ static const struct qcom_cc_desc cam_cc_sm8650_desc = {
+ 	.config = &cam_cc_sm8650_regmap_config,
+ 	.clks = cam_cc_sm8650_clocks,
+@@ -3525,6 +3563,8 @@ static const struct qcom_cc_desc cam_cc_sm8650_desc = {
+ 	.num_resets = ARRAY_SIZE(cam_cc_sm8650_resets),
+ 	.gdscs = cam_cc_sm8650_gdscs,
+ 	.num_gdscs = ARRAY_SIZE(cam_cc_sm8650_gdscs),
 +	.use_rpm = true,
-+	.driver_data = &cam_cc_sm8550_driver_data,
++	.driver_data = &cam_cc_sm8650_driver_data,
  };
  
- static const struct of_device_id cam_cc_sm8550_match_table[] = {
-@@ -3505,46 +3547,7 @@ MODULE_DEVICE_TABLE(of, cam_cc_sm8550_match_table);
+ static const struct of_device_id cam_cc_sm8650_match_table[] = {
+@@ -3535,46 +3575,7 @@ MODULE_DEVICE_TABLE(of, cam_cc_sm8650_match_table);
  
- static int cam_cc_sm8550_probe(struct platform_device *pdev)
+ static int cam_cc_sm8650_probe(struct platform_device *pdev)
  {
 -	struct regmap *regmap;
 -	int ret;
@@ -321,7 +301,7 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
 -	if (ret)
 -		return ret;
 -
--	regmap = qcom_cc_map(pdev, &cam_cc_sm8550_desc);
+-	regmap = qcom_cc_map(pdev, &cam_cc_sm8650_desc);
 -	if (IS_ERR(regmap)) {
 -		pm_runtime_put(&pdev->dev);
 -		return PTR_ERR(regmap);
@@ -338,22 +318,22 @@ index 871155783c798fd9245d735642272eae2a2d3465..63aed9e4c362d523093409f74ef4e57f
 -	clk_lucid_ole_pll_configure(&cam_cc_pll8, regmap, &cam_cc_pll8_config);
 -	clk_lucid_ole_pll_configure(&cam_cc_pll9, regmap, &cam_cc_pll9_config);
 -	clk_lucid_ole_pll_configure(&cam_cc_pll10, regmap, &cam_cc_pll10_config);
--	clk_lucid_ole_pll_configure(&cam_cc_pll11, regmap, &cam_cc_pll11_config);
--	clk_lucid_ole_pll_configure(&cam_cc_pll12, regmap, &cam_cc_pll12_config);
 -
--	/* Keep some clocks always-on */
--	qcom_branch_set_clk_en(regmap, 0x1419c); /* CAM_CC_GDSC_CLK */
--	qcom_branch_set_clk_en(regmap, 0x142cc); /* CAM_CC_SLEEP_CLK */
+-	/* Keep clocks always enabled */
+-	qcom_branch_set_clk_en(regmap, 0x13318); /* CAM_CC_DRV_AHB_CLK */
+-	qcom_branch_set_clk_en(regmap, 0x13314); /* CAM_CC_DRV_XO_CLK */
+-	qcom_branch_set_clk_en(regmap, 0x132ec); /* CAM_CC_GDSC_CLK */
+-	qcom_branch_set_clk_en(regmap, 0x13308); /* CAM_CC_SLEEP_CLK */
 -
--	ret = qcom_cc_really_probe(&pdev->dev, &cam_cc_sm8550_desc, regmap);
+-	ret = qcom_cc_really_probe(&pdev->dev, &cam_cc_sm8650_desc, regmap);
 -
 -	pm_runtime_put(&pdev->dev);
 -
 -	return ret;
-+	return qcom_cc_probe(pdev, &cam_cc_sm8550_desc);
++	return qcom_cc_probe(pdev, &cam_cc_sm8650_desc);
  }
  
- static struct platform_driver cam_cc_sm8550_driver = {
+ static struct platform_driver cam_cc_sm8650_driver = {
 
 -- 
 2.34.1
