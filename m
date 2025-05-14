@@ -1,61 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-57995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FDF2AB779D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 23:05:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00E68AB77A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 23:06:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B18247A32EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 21:04:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73B8217F7C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 21:05:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFFCB297B76;
-	Wed, 14 May 2025 21:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EF4429616D;
+	Wed, 14 May 2025 21:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h4VWOXiz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PF255Sqn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C03297B6E;
-	Wed, 14 May 2025 21:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1300E1E521E;
+	Wed, 14 May 2025 21:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747256666; cv=none; b=Lj6zcXIjiaejebQqTSABl77ybodDD6ra4uk3Yum23v0o/e5AtqW6jDz1qIqu0NJudplPfedpPnP8wk1C6PghMZkmAKBWtQM6AfE0OWeJCegEQCZNerthGvYN5Z3yvAXrq17hHmN52FM1j+HlAgY6dGDSp6c14zm6UELWrN+dEw8=
+	t=1747256676; cv=none; b=o/B7J2Lrbli2JcquKo9vBoWiD099wyinkBRf2+l8Pu6vI7nrd+YsRXD8p0L+TOR92e1omBaYXMb9sa0pFIZzroDWGjrSelr+l4ZIda5Ndu6HgBVOfRY8akmtcAUsa3FZtznv8wIRK1B2FDhxUZ/rbvOrcClxx2tJs6kPuEvO9Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747256666; c=relaxed/simple;
-	bh=gkpN1kX9TMzbWx2V01Bxyovzoq5laiHXucD7H5FY0VA=;
+	s=arc-20240116; t=1747256676; c=relaxed/simple;
+	bh=i+0pCIZslCjadXi7FcFyah5mhdC4qji0JOgJHls0thQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gYAJoA/W25g5x/3dkd9nFwiP/1Hp3dLvaXBLaBDU+z6rO1po9F7i8Qihisr1Qt28nsaxzKhMLgl9pGYFQZ+A7DkPchuWBm/shX8iwkpg4iqy+Q7F8XMhO3phVAOgryw6XEuwlXGwF/kUWzQlwVxBQs99iNv8qUfe6Xg70W2Ydz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h4VWOXiz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C19C4CEED;
-	Wed, 14 May 2025 21:04:23 +0000 (UTC)
+	 MIME-Version:Content-Type; b=CUqn176ep3jk10qqnLhAZzodG0t2r7fvnk3iszR81GLGnNx6bRMlb64qxbiiqdO8sRQgrQXT9DInE8hPw5ZUgZ72oWZCkHh9hG97IOEM3ZQSZ4FH+ZVUt62uZaax8s4CXNlY6MN7WuqLFKiT29c37owhnIVSUpjamYHdYdt8/Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PF255Sqn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA017C4CEE3;
+	Wed, 14 May 2025 21:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747256666;
-	bh=gkpN1kX9TMzbWx2V01Bxyovzoq5laiHXucD7H5FY0VA=;
+	s=k20201202; t=1747256674;
+	bh=i+0pCIZslCjadXi7FcFyah5mhdC4qji0JOgJHls0thQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4VWOXizFaFgE6f4VKvevxEFWtq4L98iktRvyE9zZ7UzLU6MPZnPOSYsuJQ7d75th
-	 Sz6SteiJ+gB3z4c8ystw5EUv4Xku/YihokIpb/SRf0h11tpCHcPzQNRkQmW1K3XOcf
-	 BxoN49rucmp52Op2P/s2nf5Al3mZl4LwvPNKYwycTMyqroX8dv/tASi8jfnYd2A6wa
-	 5aV3lmSHCom1+QcPO+c3NyG0nmCv/UbnTYb/CoLcemE0OsOO7irWcEhiH0zdpNv1M9
-	 l5W9X+pBzGzAkyQ3Np2denX3quvEJM7BM02q3tUELvNUuUdez9ImHYQcE9FzJyLUav
-	 Kr0e0NBNF7qmw==
+	b=PF255SqndfExN/KvHCAy7abdWDvPArmuwqpgaUGbAvLX5P9Q3veSmq/owKJvjxys7
+	 nBSDxtDpDJrYgx3pt04pxabyRP0pLlbLgLFJKCTkqxNKU00VzU8NE0+LW0SggQnD00
+	 oWfiw7Ryov29gIbgomPXBkyjaKJrrrt8mifw854iVZvidHbQml2H7zqn9yf1mJqn7L
+	 VN8Beg5rFZ6lYLv3yD0sp2z7ZQtvjWdTs/TMT0pPqgU2XhcxCpbMrcXMJcQeSXQYna
+	 PuQA5BxeZbOlQ9NfjHe/1S5JeW645jQrCvzu9jKjG4iHfGXq3W83dD+iLLVnam1inR
+	 LmIkkOmWf82Eg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Juerg Haefliger <juerg.haefliger@canonical.com>
-Cc: conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	konradybcio@kernel.org,
-	krzk+dt@kernel.org,
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
 	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	robh@kernel.org
-Subject: Re: (subset) [PATCH v4 0/4] HP EliteBook Ultra G1q support
-Date: Wed, 14 May 2025 22:03:49 +0100
-Message-ID: <174725663060.90041.14895025636416609919.b4-ty@kernel.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-romulus: Enable DP over Type-C
+Date: Wed, 14 May 2025 22:03:50 +0100
+Message-ID: <174725663040.90041.15311752720809065493.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250429144957.2088284-1-juerg.haefliger@canonical.com>
-References: <20250416094236.312079-1-juerg.haefliger@canonical.com> <20250429144957.2088284-1-juerg.haefliger@canonical.com>
+In-Reply-To: <20250514-topic-romu_dp-v1-1-6242d6acb5e5@oss.qualcomm.com>
+References: <20250514-topic-romu_dp-v1-1-6242d6acb5e5@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,29 +67,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 29 Apr 2025 16:49:53 +0200, Juerg Haefliger wrote:
-> Add support for the HP EliteBook Ultra G1q 14" AI laptop.
+On Wed, 14 May 2025 19:47:16 +0200, Konrad Dybcio wrote:
+> Both ports seem to work, just like on other X1E laptops.
 > 
-> Based on HWINFO64 and APCI tables, it seems to be the same HW as the
-> HP OmniBook X 14.
+> Tested with a Type-C-to-HDMI2.0 dock (translating into up to 2 DP lanes
+> worth of bandwidth).
 > 
-> v3->v4:
->   - Bring the sound model back to the node
->   - Split the driver change into a separate commit
-> v2->v3:
->   - Drop status properties from nodes in patch 3/3
->   - Add acked-by-krzk to patch 2/3
-> v1->v2:
->   - Don't rename the X14 dts to dtsi and directly include the dts
->   - Add a label to the sound node and use that to override the model
->   - Reorder the dt doc patch before the dt usage
 > 
-> [...]
 
 Applied, thanks!
 
-[4/4] firmware: qcom: scm: Allow QSEECOM for HP EliteBook Ultra G1q
-      commit: eb47bca4cc8ab06bd25385c87406e0f27ebdbf07
+[1/1] arm64: dts: qcom: x1e80100-romulus: Enable DP over Type-C
+      commit: 781621de1551233f6767976b44e93745ffcfa865
 
 Best regards,
 -- 
