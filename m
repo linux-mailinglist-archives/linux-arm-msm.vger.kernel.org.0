@@ -1,120 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-57821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0593EAB6912
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 12:44:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A293AB6923
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 12:49:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 713C61B64976
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 10:44:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 77F8E7A7E15
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 10:48:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B75227057D;
-	Wed, 14 May 2025 10:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9C2D25E453;
+	Wed, 14 May 2025 10:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ee+kKI1V"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="P5MN/a/l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E562741A0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 10:43:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86F34C9F;
+	Wed, 14 May 2025 10:49:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747219412; cv=none; b=NbIdxOdl7JFeVZtq1DNyXmd9z9f4gDLGxS7SGNZrZgPfwSFTNct+X92Dsnh1EezHvbxW77QonsiS4ge1GRTtnks8hAiA1lvPMl8ZtkAFRv7VfH/pQmK5tOLlEKv4jrnHul3372UbMA77iypSUSLbaU1K7SaSnvazOP2inPuLpPA=
+	t=1747219751; cv=none; b=K2L+LO6X39ekNWrffpwRyPB2lA0ewSUCNOSlX8TH1ePwjk/4n9tj9hfSdN4hwGpt0Uce4Aqd2NxNA5JDo8Cy+VA4i+Q7OFMzo8c6YEUZs0EbLf7Qqr5J9W8mKTeDVBis+IqxV0OHg4VEUeTBPvW/NpDGzx3TmS16GeWTA8lDYHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747219412; c=relaxed/simple;
-	bh=icczPrIZYGv2B6Fk9mhsXabLOVp132e36d3tOVpTinM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pN2VKXPvBiX7GOR9tfJRnH4s5ZmWEcweFAAd/X7w6jdJ4/j+1L5QlZHuSDIXfic2rhsZmrjbe4zUIJegUx4ASF9eyqcjWxzo7WPAzufO0QluVfMKCKBz/hbajwAGCZy60t1qJuqAu83qtJP0XuC5Xv2fX+qaGo7XnBD05l1Ai80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ee+kKI1V; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43cfe63c592so69319955e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 03:43:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747219408; x=1747824208; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=0KB+309i4RxjvcykFikT0JnK/+6UeZWOdqeF0dxsBa8=;
-        b=Ee+kKI1V8Ie7cwPlwgEgEXL8958RQNtMbuyDHfqDse4KK6A5TNQEdv9YRspPThzwbo
-         2wyt+ExFSSHFlp26WXuB0daF/T5Td9Yat50Ut799M3HY0h4FblDxfDW/RAzbqZgF+59o
-         uvWhYocUNrif9iGnUKlcYPHqkYfXLqmNQ8axGx+nRYUABgP4j2kLdD1bdbVdJELzM1cq
-         lMKvbcPvLWzFGMyrf5pEV+HmpIoXhwJktNBSHmzyBxUoUX79D7vFJjc47VN2tfy6D6sM
-         GTT/lJoUlvMbNPwMB2+F3jy4eXkNWxJisFLhyXOBYd37pEXHqwbYjsjUSUWyQM8DO45B
-         zH4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747219408; x=1747824208;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0KB+309i4RxjvcykFikT0JnK/+6UeZWOdqeF0dxsBa8=;
-        b=jheiL9VQUuVX/gTa6KXdiOYO1GCjAsW049B1mM83prQrv1Do4q6uHiwAYZUe7Rl2ip
-         CifIu6eMryhLA7TItbNra6roToI+MepPUuUwOg5a8Yx2WQenQvgEI5W5by3qTZEs7bGu
-         9FwcEab5afihirsdc20LYQ6nc0Qhcby6RM2vNLOcNQERyQU8OBQO3Vw1xyklUfXEMvOs
-         Jo4NvWhfIGMdMrxIDgRyhjJ65bwmnJjfTT3r+/P+/LiDJ9+W7zv+UEg8SCrexDNqND3r
-         Z3PYczHGB3K53Nb1zNpIJt0wReVU0AHGlDvT7oqfNIUQHLzxcYK8pLwwGrkFF05SiIyk
-         6fCA==
-X-Gm-Message-State: AOJu0YzaG1iXFafrkXjxPqj9fj07BGIhCQRaTHn2jbIRn/hLmXiGorQo
-	fQya1eyeZWH2VENWbXpgOMb583izM29qk/njsyeNCe5S3yaD4CSEpBF9G97qF68=
-X-Gm-Gg: ASbGncvMaMH0ZpoX1A97nxyjSm87P+Zf67FgWSSSGy2cguU9c5gMpORMJiKNhKZnXHb
-	FocqSnkw1N9NZ2w8yDGSbnjjXrcJa/iqHyS7j71yj9tYO7eqUEmJSxZTaLJbf6tBSZz01U1cAtp
-	ufwxgYTYyXqioMQagH5GuoRt2zfZd/aG8FcLMUYVArOiCFTSQY+M7iwZIqhVv96ez8yJWH8AhLN
-	4U8mmj1H/b3O2kzKeJnRBl5L+ClTKNI5qgX/vGNBGTIbr+9dUFGTeCPswW20tDN5sgrBMQNTJUI
-	tndhCd8iioRRlpBebE84mUFT0BZPR2jONIArDklpTkkPWz/3LTcqSma/pcmyz9wF5UzMX0b0COk
-	PAVXOacBWwosgAnZXAL0S2f4m
-X-Google-Smtp-Source: AGHT+IGDzh2lHF9+tgixSkp4osRxuBf88vHe1okOKr+0ee4IX09GyQKbdwfBSUBsbvD4311dkhuxWg==
-X-Received: by 2002:a05:600c:1553:b0:43d:45a:8fbb with SMTP id 5b1f17b1804b1-442f2168bd3mr17922085e9.22.1747219408117;
-        Wed, 14 May 2025 03:43:28 -0700 (PDT)
-Received: from mai.linaro.org (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f397b6fbsm24822375e9.39.2025.05.14.03.43.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 May 2025 03:43:27 -0700 (PDT)
-Date: Wed, 14 May 2025 12:43:25 +0200
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
-To: George Moussalem <george.moussalem@outlook.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	devicetree@vger.kernel.org, rafael@kernel.org, amitk@kernel.org,
-	thara.gopinath@gmail.com, dmitry.baryshkov@linaro.org,
-	robh@kernel.org, krzk+dt@kernel.org, quic_srichara@quicinc.com
-Subject: Re: [PATCH v9 0/6] Add support for IPQ5018 tsens
-Message-ID: <aCRzzXkd_qWuN3Fo@mai.linaro.org>
-References: <20250228051521.138214-1-george.moussalem@outlook.com>
- <DS7PR19MB88836DC6965515E12D70BB2C9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com>
+	s=arc-20240116; t=1747219751; c=relaxed/simple;
+	bh=H33ToQ/C0pFqArlWaJwPefzpoYTEl8ndBnbv++E0xvI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=r89xOcX2ThM2caQB9NDJinO0uwJAaAjcdFprhs5QW+wPr58lb0jEL/DwjGb1k5z/efZCmd+xeCGFTkmqYK0xBlkYVMJerqNwFHNbakPPAVedw9zu8UGjxUEkTFYve2Z0YK+Tc4ECOKb4vK1ly0mKjL9rZc0IRXUgQkZufJ4LU/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=P5MN/a/l; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EAKkcs005071;
+	Wed, 14 May 2025 10:48:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	gIm3tAFlHE9z6sSXgKFJxec6FczCa2GoB0pjgCPfrgs=; b=P5MN/a/l6s/N34oe
+	ptnCxnbgHgHWXcoYlbYky4XwAQMaJkhxqh/qJZaGy+SCgr1//rjex3q7XLn02SZY
+	zAnxlRx0ci3013iHU5jAarNtAX9eOdyUzgoiV4CHqDX3Fgk0aIIQK691DxLlmarz
+	3fOgjUf3p3T/baPDclbAdaBgd5Bc7YVfZpCBpXlO/Z2N8zin7gO56kfLVIx/S9oJ
+	oWiqlg8r9vCiJt+UwF+MdNaJc2XaiBc2xYfNBIkb9ymIGIcc/szf5NLs1i34egcY
+	fpjvDbOWmS0lll3wykA4QLEnfECP6x8LmsH+cM4DQ3wvmw+sHrd2AIp8az7DStTq
+	iDveGg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcr2bcd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 May 2025 10:48:58 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54EAmvld001647
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 May 2025 10:48:57 GMT
+Received: from [10.218.0.120] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 14 May
+ 2025 03:48:52 -0700
+Message-ID: <6a1f0cef-d5b6-4b50-98c0-be4af9add3db@quicinc.com>
+Date: Wed, 14 May 2025 16:18:29 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <DS7PR19MB88836DC6965515E12D70BB2C9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1 1/2] mmc: core: Introduce new flag to force hardware
+ reset
+To: Adrian Hunter <adrian.hunter@intel.com>, <ulf.hansson@linaro.org>
+CC: <linux-mmc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_kamasali@quicinc.com>,
+        <quic_rampraka@quicinc.com>, <quic_pragalla@quicinc.com>,
+        <quic_sayalil@quicinc.com>, Jens Axboe <axboe@kernel.dk>,
+        Avri Altman
+	<Avri.Altman@wdc.com>,
+        Chaitanya Kulkarni <kch@nvidia.com>,
+        =?UTF-8?Q?Christian_L=C3=B6hle?= <CLoehle@hyperstone.com>,
+        Bean Huo
+	<beanhuo@micron.com>,
+        Vincent Whitchurch <vincent.whitchurch@axis.com>,
+        Dmitry Osipenko <digetx@gmail.com>, Stephen Boyd <swboyd@chromium.org>
+References: <20220603051534.22672-1-quic_sartgarg@quicinc.com>
+ <20220603051534.22672-2-quic_sartgarg@quicinc.com>
+ <bbcd824b-457a-1009-835d-3e51ed04c1c2@intel.com>
+Content-Language: en-US
+From: Sarthak Garg <quic_sartgarg@quicinc.com>
+In-Reply-To: <bbcd824b-457a-1009-835d-3e51ed04c1c2@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Rw-LTEmRQIZXHC4vcXk0QgwwhHv54qs8
+X-Authority-Analysis: v=2.4 cv=Auju3P9P c=1 sm=1 tr=0 ts=6824751a cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
+ a=QyXUC8HyAAAA:8 a=5c94v814E0oW15qpEbMA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: Rw-LTEmRQIZXHC4vcXk0QgwwhHv54qs8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDA5NCBTYWx0ZWRfXxjtIswERloOp
+ K+Ax2E5qXdNB+FDEhKjwy3dpdhGx8C4gxkTNr2isJXSGCCE6ArMcCp3rCNhWqERPMHXpEnpNJ/n
+ INTdgqf4JQmWcJbD1Hyjf/UtJZItVMc8JiwMZbKQk+H4WGB7Xmc+1EYCCIhHuiFKk7KPU8/uBbu
+ vSMiwobQ6XxXyhB8xSHfALj7CUGYb0L8WlGnAYgeXB2ds7zNBuXIG9JM0UTABWAmxkZxi//EIFX
+ XxAj9x+N3cwySB/mtbOvJv7OyXm8pL7E6sF/QR/2VINNdNdJcWt5C4m9dP2oHvOQlGxOuONtIlI
+ f7/z/7+JlQb1QzHGjg5Yz9y2i5rOELbvEsYZakDUCYGQONJaPjOn2ddijA7Ka9fTd5P071DYVju
+ /eQdpcGLxAo9q0p0+diJPQQ4K6AXa7jUaHIiED/GWUB5p4BaMuIVJiwcn6rvxE0iN3Ozyrcr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-14_03,2025-05-14_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1011 spamscore=0 impostorscore=0 lowpriorityscore=0
+ malwarescore=0 mlxscore=0 adultscore=0 priorityscore=1501 mlxlogscore=999
+ phishscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505140094
 
-On Fri, Feb 28, 2025 at 09:11:33AM +0400, George Moussalem wrote:
-> IPQ5018 has tsens V1.0 IP with 5 sensors, of which 4 are in use,
-> and 1 interrupt. There is no RPM present in the soc to do tsens early
-> enable. Adding support for the same here.
+
+
+On 6/3/2022 11:03 AM, Adrian Hunter wrote:
+> On 3/06/22 08:15, Sarthak Garg wrote:
+>> Introduce new flag cqe_recovery_reset_always to allow vendors to force
+>> hardware reset during cqe recovery.
+>>
+>> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
 > 
-> Last patch series sent by Qualcomm dates back to Sep 22, 2023.
-> Since I'm working on OpenWrt support for IPQ5018 based boards (routers)
-> and Sricharan Ramabadhran <quic_srichara@quicinc.com> in below email
-> confirmed this SoC is still active, I'm continuing the efforts to send
-> patches upstream for Linux kernel support.
-> https://lore.kernel.org/all/63dc4054-b1e2-4e7a-94e7-643beb26a6f3@quicinc.com/
+> You should re-base on top of "mmc: block: Fix CQE recovery reset success"
+> 
+> Also you may want to consider fixes / stable tags.
+> 
+> Otherwise, for both patches:
+> 
+> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+> 
 
-Applied, patches 2,3,4,5
+Missed your minor comment. Seems like above mentioned rebase change is 
+merged now so will repost in V2 by rebasing on the tip.
+Moreover no fixes / stable tag needed.
 
-Thanks!
-
--- 
-
- <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+>> ---
+>>   drivers/mmc/core/block.c | 2 +-
+>>   include/linux/mmc/host.h | 1 +
+>>   2 files changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
+>> index 1259ca22d625..496cdd8a2999 100644
+>> --- a/drivers/mmc/core/block.c
+>> +++ b/drivers/mmc/core/block.c
+>> @@ -1497,7 +1497,7 @@ void mmc_blk_cqe_recovery(struct mmc_queue *mq)
+>>   	pr_debug("%s: CQE recovery start\n", mmc_hostname(host));
+>>   
+>>   	err = mmc_cqe_recovery(host);
+>> -	if (err)
+>> +	if (err || host->cqe_recovery_reset_always)
+>>   		mmc_blk_reset(mq->blkdata, host, MMC_BLK_CQE_RECOVERY);
+>>   	else
+>>   		mmc_blk_reset_success(mq->blkdata, MMC_BLK_CQE_RECOVERY);
+>> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
+>> index c193c50ccd78..3e2fe950b4ec 100644
+>> --- a/include/linux/mmc/host.h
+>> +++ b/include/linux/mmc/host.h
+>> @@ -492,6 +492,7 @@ struct mmc_host {
+>>   	int			cqe_qdepth;
+>>   	bool			cqe_enabled;
+>>   	bool			cqe_on;
+>> +	bool			cqe_recovery_reset_always;
+>>   
+>>   	/* Inline encryption support */
+>>   #ifdef CONFIG_MMC_CRYPTO
+> 
 
