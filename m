@@ -1,317 +1,356 @@
-Return-Path: <linux-arm-msm+bounces-57814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C12F5AB67AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 11:37:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 63686AB67E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 11:47:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B64351B62695
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 09:37:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0CD711884C16
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 09:47:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D29DE22B5AA;
-	Wed, 14 May 2025 09:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47C5D22CBC8;
+	Wed, 14 May 2025 09:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HpBpenUJ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LL6VlOGD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22BE22AE7E;
-	Wed, 14 May 2025 09:37:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4977725C6F1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 09:46:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747215442; cv=none; b=h2X6FWiEHkcRlyzURrXmIQRpTppvVY60ZgAIc+Rw7qSLoK3mpkoB9WPZUteWylA36x7cX453QRNT7VMK8XfsX/dE8P23WJQ6dcQ4ngM0VyL4Q3sPDopna3cOXtQKOsqDpYrzKChgW9RbHgXYisTO+xt7D+he2O9+FSno7q081yQ=
+	t=1747215985; cv=none; b=upFQ0KJGMe5hs+nOqjE7aGMDfDMqQSdB8yRLaBui68GVIWfWj3JpdhP3lMRll6ObDBQ+OlcEeHhPeOOHvYatktN65o0I47G3ggQWJhjn4jSYWCd+547sgWdDMKB1EGaYhAnOeyeFUhhPJlJcRthksvXwB4bob78yp2H0q18Ars8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747215442; c=relaxed/simple;
-	bh=avleXqFdRiHvr/nv0iuJrbDTjUHK6V3QXiYtGVW87k4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VsRl9/jCJLjFxpyZQaK4YyGCYFs5EmE36otu5IGT5Ik3zeM+AqwGJ93mQY3Sme5l/+0PTUEGZWISjnXiw7mpQ+k6BgIJTnFdLtC8UvE97u5k2sAK147ZbbN6eehT0oILUTanI0hwOv6rHcgYFov9pmKQiLqiKJw+RWmJ4y9++sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HpBpenUJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0193C4CEEB;
-	Wed, 14 May 2025 09:37:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747215442;
-	bh=avleXqFdRiHvr/nv0iuJrbDTjUHK6V3QXiYtGVW87k4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HpBpenUJfwFge/x8Pqj6VQG9zPiPfjmW9I+3aewe0J8ufh5Oy8t9z8i5D6DXzrVco
-	 25Hdku+wKOcb8AaMF/UVFwk3jC0VIDnN7RtUmYkQ1kQ7ReojJdAatHfzMj0JNs1lbU
-	 pNaKvpAxXi8reY1IsHoxn65gQGZZrGRSZ6pINFiJIebod1BRlzEs+54w0ePUTqwaVE
-	 a3VxZvR/FVtjwuDav1JUbeL3KUlo1W9Own5EnOcWEu0q1knabx8vPohF42tHxBQumx
-	 JrrKxeCNzNUAFej808sqGsnAwic6ZeFRSi57o+IepkdIH7TfGFWOMnCG/fb1xCY4FH
-	 xaIQZeP0H9EWQ==
-Date: Wed, 14 May 2025 15:07:09 +0530
-From: Sumit Garg <sumit.garg@kernel.org>
-To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-Cc: Jens Wiklander <jens.wiklander@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Apurupa Pattapu <quic_apurupa@quicinc.com>,
-	Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-	linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org,
-	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org,
-	linux-doc@vger.kernel.org
-Subject: Re: [PATCH v4 05/11] firmware: qcom: scm: add support for object
- invocation
-Message-ID: <aCRkRTMFi65zBODh@sumit-X1>
-References: <20250428-qcom-tee-using-tee-ss-without-mem-obj-v4-0-6a143640a6cb@oss.qualcomm.com>
- <20250428-qcom-tee-using-tee-ss-without-mem-obj-v4-5-6a143640a6cb@oss.qualcomm.com>
+	s=arc-20240116; t=1747215985; c=relaxed/simple;
+	bh=J+rly1GbWCb4aI+Mkhoyrk3uNvYxGwd8P3DWWOSoeOs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GYC7L3EBjhksfWlPngmX113DlSYnLOKeKP3Us/0PDsVHicmpss+ZL219mRSXoxpC1TRwSpGCJmfm7XJuCPEKWLZKB+O/VftmEF3iXOPQIhgmxyVSh9JEhqvemuSsFzhtYWZOvcBPIRGIdAa9hniXK8FTwqyErBRwk5aIL5xj6CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LL6VlOGD; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-47666573242so285951cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 02:46:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1747215982; x=1747820782; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=iOR+pgYJTWweXD6yG07hJucbInjcwioB90Ea884+nYE=;
+        b=LL6VlOGDieG4/n39R8hux2U80ctVrVNVAYWQYZ3pWcSNONjP6i+pvfdSMslnuo/1G7
+         5kORU5EpiSlvfMo8J3Nr/2NsmqtyUEKOlP7VjyL9CeY3+d8+j0F+qGxE+5+y0gyjcAlG
+         hzUcdCoQkAL1EE+YMjnlRH4MjxeXexwuc73UwmhEYxki9GBko3/wSVtUPYpCd9LtRatN
+         dpjXMKqNGiJzviOPqF9egxtpicvCgOBB7dBsvzROghDbD6SbE3ob8EljGQOYteeeerEM
+         Dlg2Up/bfXKvSe/LjTUXRzTo9ZhoTVhg5aEI8JpWjpSVLzFVjgJvCljjFrKKSpuK/yDu
+         EClg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747215982; x=1747820782;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iOR+pgYJTWweXD6yG07hJucbInjcwioB90Ea884+nYE=;
+        b=oTH/vPoPEHlOR/9bLU59wcISxaqyZEdKBVPkHlMei1tn6vQ8FOs+UbEDboMHaCpeaN
+         j9QYliUpK4VJdfXeMKDHf/q+up29rKahMa+JmuQQiwMZLLLCsC4PqT/gchsOMwFoHRS+
+         qu8Vz8z8WIWsSKaAIef3tIG3oSFrye2nokbqH/8I86EyIKC4OcF8CLH76hEK38Cniqu1
+         YWvuxQUGEivD5zUhtdkDVYWMeSdGItsL3GqkXV8xwhR9ifMTA6W+Yfe+bjum6ThO7GEg
+         f81gIy8tYOzGrYSlOd4xDRnUCcXInH7IGyutTZgqp/TPI1FN1s0U7KV9TLvfK/OyjNS6
+         NkoA==
+X-Forwarded-Encrypted: i=1; AJvYcCW3WfO72czXoCHySLfX7lg4DUAeusoWUz2SaApkOdTCGqiXGLmr8A+bumThog67pVmG2mJXtszvOoXq0Iz2@vger.kernel.org
+X-Gm-Message-State: AOJu0YyrD+2jXW37fl22AQpdmG9oz8G89iKmN20JS6DqavL0gQp1aB1D
+	PyquBpfTRHZLk0mtPe+ouJBVG3jk0f7LEG4Epo41/ec3UX585kDHvpeVNev6mJt/nFhQKrjSba2
+	viA4OpFxUvFkMNX5w1MNuywIwFA4ICNK2mbDuo2AM
+X-Gm-Gg: ASbGnctCfsyfli3bWRNwIEuv5rBIjOUKU+vbT4plRRAu+Q/rdnpWgyar2U8durfFzUi
+	cyBRkF8YA99VkKNUm9+gt1d9LZ6Rov3DngTTkgqmsE0X2XpBDExbZdPyKV8TFzFeZgdpIcfVXbo
+	Fvu5w3995qiHX6ZTtIpbtYkHg9w9wlEXfB1Q==
+X-Google-Smtp-Source: AGHT+IHyXlMRKjAmg9V7IyA3mOWuDec01j7eEOwdXb9gDqhAhTkKneyeDAXJK2yiqrmn020zaP9OVr8cS2btAa7PV0w=
+X-Received: by 2002:a05:622a:1444:b0:494:58a3:d3d3 with SMTP id
+ d75a77b69052e-494961696a3mr3574791cf.20.1747215981711; Wed, 14 May 2025
+ 02:46:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250428-qcom-tee-using-tee-ss-without-mem-obj-v4-5-6a143640a6cb@oss.qualcomm.com>
+References: <20250513163438.3942405-1-tabba@google.com> <20250513163438.3942405-8-tabba@google.com>
+ <ca08a552-5d9d-4839-9d3e-0d3c73959cf8@amd.com>
+In-Reply-To: <ca08a552-5d9d-4839-9d3e-0d3c73959cf8@amd.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Wed, 14 May 2025 10:45:45 +0100
+X-Gm-Features: AX0GCFvlOF6eIA97TFqNjFliq9ZQWn-Oxff0pXN7KQAMo9uomoYCYAE-vSm4W_I
+Message-ID: <CA+EHjTxwO3gwZJoY_rBxJgvmYEVyT9fw4kaGQF=fbyavdrK5Qw@mail.gmail.com>
+Subject: Re: [PATCH v9 07/17] KVM: guest_memfd: Allow host to map
+ guest_memfd() pages
+To: Shivank Garg <shivankg@amd.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Amir,
+Thanks Shivank,
 
-On Mon, Apr 28, 2025 at 11:06:26PM -0700, Amirreza Zarrabi wrote:
-> Qualcomm TEE (QTEE) hosts Trusted Applications (TAs) and services in
-> the secure world, accessed via objects. A QTEE client can invoke these
-> objects to request services. Similarly, QTEE can request services from
-> the nonsecure world using objects exported to the secure world.
-> 
-> Add low-level primitives to facilitate the invocation of objects hosted
-> in QTEE, as well as those hosted in the nonsecure world.
-> 
-> If support for object invocation is available, the qcom_scm allocates
-> a dedicated child platform device. The driver for this device communicates
-> with QTEE using low-level primitives.
-> 
-> Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-> ---
->  drivers/firmware/qcom/qcom_scm.c       | 128 +++++++++++++++++++++++++++++++++
->  drivers/firmware/qcom/qcom_scm.h       |   7 ++
->  include/linux/firmware/qcom/qcom_scm.h |  27 +++++++
->  3 files changed, 162 insertions(+)
-> 
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index fc4d67e4c4a6..bff1b0d3306e 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -2084,6 +2084,124 @@ static int qcom_scm_qseecom_init(struct qcom_scm *scm)
->  
->  #endif /* CONFIG_QCOM_QSEECOM */
->  
-> +#ifdef CONFIG_QCOMTEE
-> +
-> +/**
-> + * qcom_scm_qtee_invoke_smc() - Invoke a QTEE object.
-> + * @inbuf: start address of memory area used for inbound buffer.
-> + * @inbuf_size: size of the memory area used for inbound buffer.
-> + * @outbuf: start address of memory area used for outbound buffer.
-> + * @outbuf_size: size of the memory area used for outbound buffer.
-> + * @result: result of QTEE object invocation.
-> + * @response_type: response type returned by QTEE.
-> + *
-> + * @response_type determines how the contents of @inbuf and @outbuf
-> + * should be processed.
-> + *
-> + * Return: On success, return 0 or <0 on failure.
-> + */
-> +int qcom_scm_qtee_invoke_smc(phys_addr_t inbuf, size_t inbuf_size,
-> +			     phys_addr_t outbuf, size_t outbuf_size,
-> +			     u64 *result, u64 *response_type)
-> +{
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_SMCINVOKE,
-> +		.cmd = QCOM_SCM_SMCINVOKE_INVOKE,
-> +		.owner = ARM_SMCCC_OWNER_TRUSTED_OS,
-> +		.args[0] = inbuf,
-> +		.args[1] = inbuf_size,
-> +		.args[2] = outbuf,
-> +		.args[3] = outbuf_size,
-> +		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RW, QCOM_SCM_VAL,
-> +					 QCOM_SCM_RW, QCOM_SCM_VAL),
-> +	};
-> +	struct qcom_scm_res res;
-> +	int ret;
-> +
-> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
-> +	if (ret)
-> +		return ret;
-> +
-> +	*response_type = res.result[0];
-> +	*result = res.result[1];
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL(qcom_scm_qtee_invoke_smc);
-> +
-> +/**
-> + * qcom_scm_qtee_callback_response() - Submit response for callback request.
-> + * @buf: start address of memory area used for outbound buffer.
-> + * @buf_size: size of the memory area used for outbound buffer.
-> + * @result: Result of QTEE object invocation.
-> + * @response_type: Response type returned by QTEE.
-> + *
-> + * @response_type determines how the contents of @buf should be processed.
-> + *
-> + * Return: On success, return 0 or <0 on failure.
-> + */
-> +int qcom_scm_qtee_callback_response(phys_addr_t buf, size_t buf_size,
-> +				    u64 *result, u64 *response_type)
-> +{
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_SMCINVOKE,
-> +		.cmd = QCOM_SCM_SMCINVOKE_CB_RSP,
-> +		.owner = ARM_SMCCC_OWNER_TRUSTED_OS,
-> +		.args[0] = buf,
-> +		.args[1] = buf_size,
-> +		.arginfo = QCOM_SCM_ARGS(2, QCOM_SCM_RW, QCOM_SCM_VAL),
-> +	};
-> +	struct qcom_scm_res res;
-> +	int ret;
-> +
-> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
-> +	if (ret)
-> +		return ret;
-> +
-> +	*response_type = res.result[0];
-> +	*result = res.result[1];
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL(qcom_scm_qtee_callback_response);
-> +
-> +static void qcom_scm_qtee_free(void *data)
-> +{
-> +	struct platform_device *qtee_dev = data;
-> +
-> +	platform_device_unregister(qtee_dev);
-> +}
-> +
-> +static int qcom_scm_qtee_init(struct qcom_scm *scm)
-> +{
-> +	struct platform_device *qtee_dev;
-> +	int ret;
-> +
+On Wed, 14 May 2025 at 09:03, Shivank Garg <shivankg@amd.com> wrote:
+>
+> On 5/13/2025 10:04 PM, Fuad Tabba wrote:
+> > This patch enables support for shared memory in guest_memfd, including
+> > mapping that memory at the host userspace. This support is gated by the
+> > configuration option KVM_GMEM_SHARED_MEM, and toggled by the guest_memfd
+> > flag GUEST_MEMFD_FLAG_SUPPORT_SHARED, which can be set when creating a
+> > guest_memfd instance.
+> >
+> > Co-developed-by: Ackerley Tng <ackerleytng@google.com>
+> > Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > ---
+> >  arch/x86/include/asm/kvm_host.h | 10 ++++
+> >  include/linux/kvm_host.h        | 13 +++++
+> >  include/uapi/linux/kvm.h        |  1 +
+> >  virt/kvm/Kconfig                |  5 ++
+> >  virt/kvm/guest_memfd.c          | 88 +++++++++++++++++++++++++++++++++
+> >  5 files changed, 117 insertions(+)
+> >
+> > diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+> > index 709cc2a7ba66..f72722949cae 100644
+> > --- a/arch/x86/include/asm/kvm_host.h
+> > +++ b/arch/x86/include/asm/kvm_host.h
+> > @@ -2255,8 +2255,18 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
+> >
+> >  #ifdef CONFIG_KVM_GMEM
+> >  #define kvm_arch_supports_gmem(kvm) ((kvm)->arch.supports_gmem)
+> > +
+> > +/*
+> > + * CoCo VMs with hardware support that use guest_memfd only for backing private
+> > + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
+> > + */
+> > +#define kvm_arch_vm_supports_gmem_shared_mem(kvm)                    \
+> > +     (IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM) &&                      \
+> > +      ((kvm)->arch.vm_type == KVM_X86_SW_PROTECTED_VM ||             \
+> > +       (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM))
+> >  #else
+> >  #define kvm_arch_supports_gmem(kvm) false
+> > +#define kvm_arch_vm_supports_gmem_shared_mem(kvm) false
+> >  #endif
+> >
+> >  #define kvm_arch_has_readonly_mem(kvm) (!(kvm)->arch.has_protected_state)
+> > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> > index ae70e4e19700..2ec89c214978 100644
+> > --- a/include/linux/kvm_host.h
+> > +++ b/include/linux/kvm_host.h
+> > @@ -729,6 +729,19 @@ static inline bool kvm_arch_supports_gmem(struct kvm *kvm)
+> >  }
+> >  #endif
+> >
+> > +/*
+> > + * Returns true if this VM supports shared mem in guest_memfd.
+> > + *
+> > + * Arch code must define kvm_arch_vm_supports_gmem_shared_mem if support for
+> > + * guest_memfd is enabled.
+> > + */
+> > +#if !defined(kvm_arch_vm_supports_gmem_shared_mem) && !IS_ENABLED(CONFIG_KVM_GMEM)
+> > +static inline bool kvm_arch_vm_supports_gmem_shared_mem(struct kvm *kvm)
+> > +{
+> > +     return false;
+> > +}
+> > +#endif
+> > +
+> >  #ifndef kvm_arch_has_readonly_mem
+> >  static inline bool kvm_arch_has_readonly_mem(struct kvm *kvm)
+> >  {
+> > diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
+> > index b6ae8ad8934b..9857022a0f0c 100644
+> > --- a/include/uapi/linux/kvm.h
+> > +++ b/include/uapi/linux/kvm.h
+> > @@ -1566,6 +1566,7 @@ struct kvm_memory_attributes {
+> >  #define KVM_MEMORY_ATTRIBUTE_PRIVATE           (1ULL << 3)
+> >
+> >  #define KVM_CREATE_GUEST_MEMFD       _IOWR(KVMIO,  0xd4, struct kvm_create_guest_memfd)
+> > +#define GUEST_MEMFD_FLAG_SUPPORT_SHARED      (1UL << 0)
+> >
+> >  struct kvm_create_guest_memfd {
+> >       __u64 size;
+> > diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
+> > index 559c93ad90be..f4e469a62a60 100644
+> > --- a/virt/kvm/Kconfig
+> > +++ b/virt/kvm/Kconfig
+> > @@ -128,3 +128,8 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
+> >  config HAVE_KVM_ARCH_GMEM_INVALIDATE
+> >         bool
+> >         depends on KVM_GMEM
+> > +
+> > +config KVM_GMEM_SHARED_MEM
+> > +       select KVM_GMEM
+> > +       bool
+> > +       prompt "Enables in-place shared memory for guest_memfd"
+>
+> Hi,
+>
+> I noticed following warnings with checkpatch.pl:
+>
+> WARNING: Argument 'kvm' is not used in function-like macro
+> #42: FILE: arch/x86/include/asm/kvm_host.h:2269:
+> +#define kvm_arch_vm_supports_gmem_shared_mem(kvm) false
+>
+> WARNING: please write a help paragraph that fully describes the config symbol with at least 4 lines
+> #91: FILE: virt/kvm/Kconfig:132:
+> +config KVM_GMEM_SHARED_MEM
+> +       select KVM_GMEM
+> +       bool
+> +       prompt "Enables in-place shared memory for guest_memfd"
+>
+> 0003-KVM-Rename-kvm_arch_has_private_mem-to-kvm_arch_supp.patch
+> -----------------------------------------------------------------------------
+> WARNING: Argument 'kvm' is not used in function-like macro
+> #35: FILE: arch/x86/include/asm/kvm_host.h:2259:
+> +#define kvm_arch_supports_gmem(kvm) false
+>
+> total: 0 errors, 1 warnings, 91 lines checked
+>
+> Please let me know if these are ignored intentionally - if so, sorry for the noise.
 
-I am still unable to get the QCOMTEE driver to work on db845c. As I can
-see machine: "qcom,sdm845" is not supported for tzmem based on SHM
-brigde here: drivers/firmware/qcom/qcom_tzmem.c +81. I am still seeing
-following logs from userspace:
+Yes, I did intentionally ignore these.
+kvm_arch_vm_supports_gmem_shared_mem() follows the same pattern as
+kvm_arch_supports_gmem(). As for the comment, I couldn't think of four
+lines to describe the config option that's not just fluff :)
 
-# /mnt/unittest -d
-[test_print_diagnostics_info][31] test_get_client_env_object.
-[test_supplicant_release][65] test_supplicant_worker killed.
+Cheers,
+/fuad
 
-I think you should first check here for SHM bridge support. If available
-then only add a QTEE platform device.
-
--Sumit
-
-> +	/* Setup QTEE interface device. */
-> +	qtee_dev = platform_device_alloc("qcomtee", -1);
-> +	if (!qtee_dev)
-> +		return -ENOMEM;
-> +
-> +	qtee_dev->dev.parent = scm->dev;
-> +
-> +	ret = platform_device_add(qtee_dev);
-> +	if (ret) {
-> +		platform_device_put(qtee_dev);
-> +		return ret;
-> +	}
-> +
-> +	return devm_add_action_or_reset(scm->dev, qcom_scm_qtee_free, qtee_dev);
-> +}
-> +
-> +#else
-> +
-> +static int qcom_scm_qtee_init(struct qcom_scm *scm)
-> +{
-> +	return 0;
-> +}
-> +
-> +#endif /* CONFIG_QCOMTEE */
-> +
->  /**
->   * qcom_scm_is_available() - Checks if SCM is available
->   */
-> @@ -2319,6 +2437,16 @@ static int qcom_scm_probe(struct platform_device *pdev)
->  	ret = qcom_scm_qseecom_init(scm);
->  	WARN(ret < 0, "failed to initialize qseecom: %d\n", ret);
->  
-> +	/*
-> +	 * Initialize the QTEE object interface.
-> +	 *
-> +	 * This only represents the availability for QTEE object invocation
-> +	 * and callback support. On failure, ignore the result. Any subsystem
-> +	 * depending on it may fail if it tries to access this interface.
-> +	 */
-> +	ret = qcom_scm_qtee_init(scm);
-> +	WARN(ret < 0, "failed to initialize qcomtee: %d\n", ret);
-> +
->  	return 0;
->  
->  err:
-> diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
-> index 097369d38b84..a25202e99f7c 100644
-> --- a/drivers/firmware/qcom/qcom_scm.h
-> +++ b/drivers/firmware/qcom/qcom_scm.h
-> @@ -152,6 +152,13 @@ struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void);
->  #define QCOM_SCM_SVC_GPU			0x28
->  #define QCOM_SCM_SVC_GPU_INIT_REGS		0x01
->  
-> +/* ARM_SMCCC_OWNER_TRUSTED_OS calls */
-> +
-> +#define QCOM_SCM_SVC_SMCINVOKE			0x06
-> +#define QCOM_SCM_SMCINVOKE_INVOKE_LEGACY	0x00
-> +#define QCOM_SCM_SMCINVOKE_CB_RSP		0x01
-> +#define QCOM_SCM_SMCINVOKE_INVOKE		0x02
-> +
->  /* common error codes */
->  #define QCOM_SCM_V2_EBUSY	-12
->  #define QCOM_SCM_ENOMEM		-5
-> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
-> index 983e1591bbba..bf5e64f6deba 100644
-> --- a/include/linux/firmware/qcom/qcom_scm.h
-> +++ b/include/linux/firmware/qcom/qcom_scm.h
-> @@ -176,4 +176,31 @@ static inline int qcom_scm_qseecom_app_send(u32 app_id,
->  
->  #endif /* CONFIG_QCOM_QSEECOM */
->  
-> +#ifdef CONFIG_QCOMTEE
-> +
-> +int qcom_scm_qtee_invoke_smc(phys_addr_t inbuf, size_t inbuf_size,
-> +			     phys_addr_t outbuf, size_t outbuf_size,
-> +			     u64 *result, u64 *response_type);
-> +int qcom_scm_qtee_callback_response(phys_addr_t buf, size_t buf_size,
-> +				    u64 *result, u64 *response_type);
-> +
-> +#else /* CONFIG_QCOMTEE */
-> +
-> +static inline int qcom_scm_qtee_invoke_smc(phys_addr_t inbuf, size_t inbuf_size,
-> +					   phys_addr_t outbuf,
-> +					   size_t outbuf_size, u64 *result,
-> +					   u64 *response_type)
-> +{
-> +	return -EINVAL;
-> +}
-> +
-> +static inline int qcom_scm_qtee_callback_response(phys_addr_t buf,
-> +						  size_t buf_size, u64 *result,
-> +						  u64 *response_type)
-> +{
-> +	return -EINVAL;
-> +}
-> +
-> +#endif /* CONFIG_QCOMTEE */
-> +
->  #endif
-> 
-> -- 
-> 2.34.1
-> 
-> 
+> Best Regards,
+> Shivank
+>
+>
+> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> > index 6db515833f61..8e6d1866b55e 100644
+> > --- a/virt/kvm/guest_memfd.c
+> > +++ b/virt/kvm/guest_memfd.c
+> > @@ -312,7 +312,88 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
+> >       return gfn - slot->base_gfn + slot->gmem.pgoff;
+> >  }
+> >
+> > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> > +
+> > +static bool kvm_gmem_supports_shared(struct inode *inode)
+> > +{
+> > +     uint64_t flags = (uint64_t)inode->i_private;
+> > +
+> > +     return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
+> > +}
+> > +
+> > +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
+> > +{
+> > +     struct inode *inode = file_inode(vmf->vma->vm_file);
+> > +     struct folio *folio;
+> > +     vm_fault_t ret = VM_FAULT_LOCKED;
+> > +
+> > +     filemap_invalidate_lock_shared(inode->i_mapping);
+> > +
+> > +     folio = kvm_gmem_get_folio(inode, vmf->pgoff);
+> > +     if (IS_ERR(folio)) {
+> > +             int err = PTR_ERR(folio);
+> > +
+> > +             if (err == -EAGAIN)
+> > +                     ret = VM_FAULT_RETRY;
+> > +             else
+> > +                     ret = vmf_error(err);
+> > +
+> > +             goto out_filemap;
+> > +     }
+> > +
+> > +     if (folio_test_hwpoison(folio)) {
+> > +             ret = VM_FAULT_HWPOISON;
+> > +             goto out_folio;
+> > +     }
+> > +
+> > +     if (WARN_ON_ONCE(folio_test_large(folio))) {
+> > +             ret = VM_FAULT_SIGBUS;
+> > +             goto out_folio;
+> > +     }
+> > +
+> > +     if (!folio_test_uptodate(folio)) {
+> > +             clear_highpage(folio_page(folio, 0));
+> > +             kvm_gmem_mark_prepared(folio);
+> > +     }
+> > +
+> > +     vmf->page = folio_file_page(folio, vmf->pgoff);
+> > +
+> > +out_folio:
+> > +     if (ret != VM_FAULT_LOCKED) {
+> > +             folio_unlock(folio);
+> > +             folio_put(folio);
+> > +     }
+> > +
+> > +out_filemap:
+> > +     filemap_invalidate_unlock_shared(inode->i_mapping);
+> > +
+> > +     return ret;
+> > +}
+> > +
+> > +static const struct vm_operations_struct kvm_gmem_vm_ops = {
+> > +     .fault = kvm_gmem_fault_shared,
+> > +};
+> > +
+> > +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
+> > +{
+> > +     if (!kvm_gmem_supports_shared(file_inode(file)))
+> > +             return -ENODEV;
+> > +
+> > +     if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
+> > +         (VM_SHARED | VM_MAYSHARE)) {
+> > +             return -EINVAL;
+> > +     }
+> > +
+> > +     vma->vm_ops = &kvm_gmem_vm_ops;
+> > +
+> > +     return 0;
+> > +}
+> > +#else
+> > +#define kvm_gmem_mmap NULL
+> > +#endif /* CONFIG_KVM_GMEM_SHARED_MEM */
+> > +
+> >  static struct file_operations kvm_gmem_fops = {
+> > +     .mmap           = kvm_gmem_mmap,
+> >       .open           = generic_file_open,
+> >       .release        = kvm_gmem_release,
+> >       .fallocate      = kvm_gmem_fallocate,
+> > @@ -463,6 +544,9 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
+> >       u64 flags = args->flags;
+> >       u64 valid_flags = 0;
+> >
+> > +     if (kvm_arch_vm_supports_gmem_shared_mem(kvm))
+> > +             valid_flags |= GUEST_MEMFD_FLAG_SUPPORT_SHARED;
+> > +
+> >       if (flags & ~valid_flags)
+> >               return -EINVAL;
+> >
+> > @@ -501,6 +585,10 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+> >           offset + size > i_size_read(inode))
+> >               goto err;
+> >
+> > +     if (kvm_gmem_supports_shared(inode) &&
+> > +         !kvm_arch_vm_supports_gmem_shared_mem(kvm))
+> > +             goto err;
+> > +
+> >       filemap_invalidate_lock(inode->i_mapping);
+> >
+> >       start = offset >> PAGE_SHIFT;
+>
 
