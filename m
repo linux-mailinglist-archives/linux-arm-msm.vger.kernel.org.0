@@ -1,157 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-57939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1803AB7401
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 20:06:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 85112AB7417
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 20:08:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8E55F7AC14C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 18:04:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AC6D67B5703
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 18:07:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85284297B86;
-	Wed, 14 May 2025 17:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8A0E289E3F;
+	Wed, 14 May 2025 18:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bj2N82pB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="elpIh2hI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC01297A7D;
-	Wed, 14 May 2025 17:57:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47FE289838;
+	Wed, 14 May 2025 18:05:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747245452; cv=none; b=FSyNtFFcXZcMs99ATZcrkt8BsUzbkYX461YkGFHjNpc6knPOn3wl98WDCBtOudVbW568KolbiPzZYGuc+5d3+rifGvXgAZ2+knYLdbFYfLHeLl8aqVqAxGGfkYN/brfVHSWUvlHHxOdyhDbQ9Jm71bHVAUf+t/6qS2lDbnnjZVk=
+	t=1747245936; cv=none; b=ZX4iLD2CvFtk1lmY2oJoMpK3+5eJj7fkj87Dg+t1euE8VMiHFYh1P+0zl2OSYE86rDFxdtE2B1LSc5rZqllv95Ur4bH+xpsvPzeOkRKxrL9blqZYLK5UWecEojUaPEp/iE2bXxYC9J1t+c649PoVZP2wvyM85XrlMPaIPV73EPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747245452; c=relaxed/simple;
-	bh=6ziZ+/0+Vud8pxi92QumAEtZxrXg4TC3SoYTqb934rc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMu9kQQsAgcXF/jzftKBfXTAad7YzKk+9m/04of/ZthHWS/eY1fEJD7+TbXRRA9hTh4tc8uin/uKkUce0bNaW1wcdiujSPMs+5LzghnyEROotAnyazJiFC8+zpEh7j34fzN7M4q5hqkeUNIXY939G4m7mUDJGKUM9GtbEJfC5bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bj2N82pB; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1747245936; c=relaxed/simple;
+	bh=NKLCWMtT9bUeH7wNJNs83ozV84X8TXUuwcufTbcj4lk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fnyXbULSoW7cYjsC2UmVmbKJIkhH6K/2G2a3IIuCY4Q+PRKsRS3g7DBvOZl0rXVjCmcvQwgs4IlM0z0/rTG981CeBhuXgVUHmHKiYl3036IIT2mFuoxA0qnDztGkKQYSQ6ig1gdIO7sNwY8QtOm+ru2l5OvBjpExeH5InSes6+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=elpIh2hI; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-7424ccbef4eso148440b3a.2;
-        Wed, 14 May 2025 10:57:30 -0700 (PDT)
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-22c336fcdaaso865975ad.3;
+        Wed, 14 May 2025 11:05:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747245450; x=1747850250; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Y/A/RGPDJpbD6ohkqzZy4WVuOmFQs5dwsGRntfJWp3M=;
-        b=Bj2N82pBNcA8lOmqXB2MiwnuBBrJkc8Wxb2x0Sy+kXHL9HIos8QnDNTKFRjd1xYuRu
-         G4+uU0Ta4ycEzVwY+BeFehIQz4OA/sXuShr4nhoh2U4XHX3z6yvIxylEjcLl2R+eYr0c
-         N+MaGdTovKIy0O33+qnC8xYODaF2QUymrE6Qe7kMMExb4je1EYA5H8LrJ3g6RAoacfD/
-         nU4tjPZdjcoAXJsGJT8IojsvfVbdwlzHFf5cN2N5ISY3d0GgucSH1cz7+Ldn3E3dxZ/e
-         6zBadXCkrM5eI3M26Z5j8kdaZawyAxw9Qh0q/FLQpiEdxIaHsxbS12ofTuon9tQD4KU5
-         UAdg==
+        d=gmail.com; s=20230601; t=1747245934; x=1747850734; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=bdpZ7A9mhCIkEnuwUrHpmchCoydgr+FaDnHXJaGXt58=;
+        b=elpIh2hIECJ+5PFpcHxhf/OyaotXx/i3jk4egJEvt4NlavxdLS7Kg66wEZ3g/XBDIK
+         bVcb9JOz0YXzWFPeInZAi0iIbOu/ki8rUEAj8BkPPh14W1iSTjbULq3xm526i7hS+QVM
+         frsJz2OZyvI9LFee6YjU/ufsGgbrKAJh2PxREVKPtjp9/CMtbfcymThD1NsmXIRZEHRh
+         Au6uFXZ77REDz2pw91hVyqcruUUnhJLjbsClWqNQ1jSPPLsZeuCyEk6j3Sm0jideaOBa
+         ntJ/A2WTC+OJa4eVjUU/iqT2HjAbNCsIHpfn1ySZCumU/Ibo66dg0BVxTjm30pAdHHX2
+         UB6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747245450; x=1747850250;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y/A/RGPDJpbD6ohkqzZy4WVuOmFQs5dwsGRntfJWp3M=;
-        b=r24Bod3AMxd46RfKFz2LTQvUzy8h9x7iie0oMIXcJ7gubBdklaVimgCzdoFpuuKZI7
-         PIJ+WIVYPDSWP1hF+q0wwnNjs3rocb/9O5THumcTblcaN3oMQElxSvhmAACEguJoR8OM
-         PiclMTELUkRvMFmpUk5W8vJSLi8XV3UUu98R3mMg7JJg3qpsWjsbDQnhUuE4ilfB5hD5
-         biE30XvkeqN/blnIISd52d4fQfNFQa0+C4th5nQIsCKmiuQSDAO9IO5v2Ejfwi3I8NU6
-         AFg8P2SyOEyOZIE8ETQs7Ugv+M7/OnXwcprzKumr37DEMJ/vTmuN+5KR39v876yIztS7
-         EiTw==
-X-Forwarded-Encrypted: i=1; AJvYcCVGc4f//LadrTKYv+7qYkrTLhMEKlC8L64IIwHaMlSW5X3RlMImKm5t9/ESWoRwmPmqC6kbVTzPCsQ4pqpu@vger.kernel.org, AJvYcCWNZ/jOSjwX6UvhXA0daV176aaXEtc58vX6Mdv5vqT7m3qUaH1KR0hdePhXe5hGh8HSOlEeXgcRUNSTODXl@vger.kernel.org
-X-Gm-Message-State: AOJu0YzAsBS464/vTzAnaVusAp53rl2VitpSRfsM2W4B5RKNTl97T2qS
-	Bt4jd8mlaEbWfgl4kPGur2v9YliFDJKgYVhB7Np3fV2iVLMGt97R
-X-Gm-Gg: ASbGncsNqDf8/fT8HJRyAnE6E0WvG09JyB4zpWuWrFTC7atsWeoYFzDqKJYYcc4Ee7s
-	GqxqDOn8Y9uMFfExxc0VZNCD/0PoTkHmHsLP0fK2O8Pf1ugDWdMZUFUGck7oPTXWLkBXT8Bq5CI
-	T+PRY5ypXTqMGSWFYYNv0Z8ixPHrU14b8+A99lIoeYR2uYp6QjCufC58HEJeZlcK+dfb36Zp4Dd
-	RiP7zg+dF9fqE1Kokhpa00TFY7BVu69GX7C3tU6h53B8flLqitKw//sUM9V6Cj1xG9SkuUJm4tf
-	X/MC1ktZu3PfY09ii2yCJvgWWln0ZcLs3GpurHy2gMh6D1U6BRbfKEXGbkhsn27M0u7lWCbsSbB
-	hJroSotAqOtktxVuFASiJMrgNsA==
-X-Google-Smtp-Source: AGHT+IEBPsN9kmTr0M4YA45nIruo5l44NuAsME11AdFzUP9aa2BDaGOzNiFa2hh63FW9eSi8T8YPkA==
-X-Received: by 2002:a05:6a00:3022:b0:736:450c:fa54 with SMTP id d2e1a72fcca58-7428928d581mr6647749b3a.6.1747245450421;
-        Wed, 14 May 2025 10:57:30 -0700 (PDT)
-Received: from localhost ([2a00:79e0:3e00:2601:3afc:446b:f0df:eadc])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74237a0cdd7sm10147820b3a.90.2025.05.14.10.57.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 May 2025 10:57:29 -0700 (PDT)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 39/40] drm/msm: use trylock for debugfs
-Date: Wed, 14 May 2025 10:53:53 -0700
-Message-ID: <20250514175527.42488-40-robdclark@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250514175527.42488-1-robdclark@gmail.com>
-References: <20250514175527.42488-1-robdclark@gmail.com>
+        d=1e100.net; s=20230601; t=1747245934; x=1747850734;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bdpZ7A9mhCIkEnuwUrHpmchCoydgr+FaDnHXJaGXt58=;
+        b=TPtr8P7w9rzbAo4ssSNbvIgujDO39D559EOZPv6pBm5jWRhWHl3aESxASgSmgcyEFJ
+         2tABqAIb84bdB3hjmEgBLvfFreOz3fNA7DHpZV1zX4rTmqFjSkFUZtt6+L3x6JaAX06F
+         IwxLVMN4To8E7Y1RdpBdXryQGp7HYg4TWn/BbgvEyEdxaoZk1q6Xf2naaSuuVM6555fD
+         hgfzlz7oyhsiqe+VrxSBvlSrm/i0hHYPEdOE3Km7Z4jfbwpJGosHpAhuFArdLl0Vl5MI
+         fOuA2X6JtStgZNkMi1QyF56wAVor9eCtbkWPZDRzpbHC7LmCfhjF+ehYIKCVmqd3734G
+         0djQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUaAQsKONWk7BNvU7XC8Gyhg0k2ejleL/7tO4dL2hz/FtDI+WOrEGOgHz3NchVKJYEhJ7vCJ7zhJ40UaebnXq8=@vger.kernel.org, AJvYcCVz5h1vR7k3kVLzzU80tM1gYEC6ZFmhcdaHzbO2OYhW5Z6s1S6lSAAJ3f+Um8i8I1xpYYmswMxZhKbbOnEO@vger.kernel.org, AJvYcCXVkXIn8Bq6PWCVSdC2iQejQ4wMkjJDAMLWBKSKqU/C//8ozym1mXFbOi+M+z9GMBsvY2dB65mUbSxX@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz8i/qHkzVgybBYjSR39MvtNjWRssrRXUSQMn7RlbHEEhxNh4p1
+	EQKcRa370FjLMn/Bhx4ZHIIWNoq9OVacDykLA/tq7lwL4YRJW/qyaWzfoA==
+X-Gm-Gg: ASbGnctVv102hF/DtaSaiqFPkpXc1A/fOnwDK+QRCf7McL1nhDI4FtDDjmhH6SG7/fV
+	QSbWrJELqkU7feCl2Qgfk2Gc3SQsrTx9KUiqRfqt5pN1RMrf0u4zOmH93k8S8wOAT8fJ6bxqOaY
+	DfjA20P9Rtq9T/vlGIGHajbHOSo6mqI9l/u3L94s63DNp5jdSytzY5mUhBUeifKHpYV+nziJZwp
+	CHdujljLHWxlhVsQDwHOVrCykPB0VTsXq9lszG2N7p9GPlHq/AnqAFVM/r+R9v8kXKLqleIvgjs
+	yIdvGL4KOP2Sw+Q6hswSW6EdMJiT7+rrBUoRP8/4+jGDqbJ+SrFBwrrHAOeMoLVXBwJbNfj5iId
+	iSkV8UVhyQHYXNKumJaLKzgwP
+X-Google-Smtp-Source: AGHT+IHOu8dDl8zmaHcg+Jhlmv2CjICYrW/SwrhPLBA/5dt/25XpQEFYQzrfzY4CBzUrzX5L1dlSVg==
+X-Received: by 2002:a17:903:3baf:b0:220:d257:cdbd with SMTP id d9443c01a7336-2319816fad8mr71443675ad.48.1747245933819;
+        Wed, 14 May 2025 11:05:33 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22fc8271f6csm102273595ad.129.2025.05.14.11.05.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 May 2025 11:05:32 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <9b951404-3bcf-4302-a647-3cef86b4bd3b@roeck-us.net>
+Date: Wed, 14 May 2025 11:05:31 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] watchdog: qcom: add support to read the restart
+ reason from IMEM
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Wim Van Sebroeck <wim@linux-watchdog.org>, bod.linux@nxsw.ie,
+ Srinivas Kandagatla <srini@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
+References: <20250502-wdt_reset_reason-v3-0-b2dc7ace38ca@oss.qualcomm.com>
+ <20250502-wdt_reset_reason-v3-4-b2dc7ace38ca@oss.qualcomm.com>
+ <2036ef2f-c7ef-4f42-858d-8d95c430c21a@oss.qualcomm.com>
+ <68d280db-f7df-48c8-821d-f7d408c302ad@oss.qualcomm.com>
+ <8a763c70-adcf-4a14-bb68-72ddc61fa045@oss.qualcomm.com>
+ <8c2a53c2-c11b-4d49-bfb5-b948767ba6c7@oss.qualcomm.com>
+ <1e871aed-705f-4142-b72d-4232ae729a37@oss.qualcomm.com>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <1e871aed-705f-4142-b72d-4232ae729a37@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+On 5/14/25 06:15, Kathiravan Thirumoorthy wrote:
+> 
+> On 5/6/2025 4:31 PM, Kathiravan Thirumoorthy wrote:
+>>
+>> On 5/3/2025 3:53 AM, Konrad Dybcio wrote:
+>>> On 5/2/25 6:28 PM, Kathiravan Thirumoorthy wrote:
+>>>> On 5/2/2025 7:33 PM, Konrad Dybcio wrote:
+>>>>>> +static int qcom_wdt_get_restart_reason(struct qcom_wdt *wdt,
+>>>>>> +                    const struct qcom_wdt_match_data *data)
+>>>>>> +{
+>>>>>> +    struct regmap *imem;
+>>>>>> +    unsigned int val;
+>>>>>> +    int ret;
+>>>>>> +
+>>>>>> +    imem = syscon_regmap_lookup_by_compatible(data->imem_compatible);
+>>>>> Try syscon_regmap_lookup_by_phandle_args() and pass a phandle, see e.g.
+>>>>> drivers/phy/qualcomm/phy-qcom-qmp-pcie.c & phy@1bfc000 in x1e80100.dtsi
+>>>>>
+>>>>> That way all platform specifics will live in the DT, requiring no
+>>>>> hardcode-y driver changes on similar platforms
+>>>>
+>>>> Thanks. I thought about this API but it didn't strike that I can use the args to fetch and match the value.
+>>>>
+>>>> I need a suggestion here. There is a plan to extend this feature to other IPQ targets and also support WDIOF_POWERUNDER and WDIOF_OVERHEAT cause as well. For IPQ5424, all 3 cause will support and for other IPQ platforms, we are exploring how to integrate WDIOF_OVERHEAT. In any case, can I define the DT entry like below
+>>>>
+>>>>          imem,phandle = <&imem 0x7b0 <Non secure WDT value> <Power Under value> <Overheat value>>;
+>>>>
+>>>> and store these in values args[1], args[2] and args[3] respectively and use it for manipulation? If any of the platform doesn't support all 3, I can update the bindings and define the number of args as required.
+>>> Let's call the property qcom,restart-reason and only pass the register value
+>>>
+>>> Because we may have any number of crazy combinations of various restart
+>>> reasons, we can go two paths:
+>>>
+>>> 1. promise really really really hard we won't be too crazy with the number
+>>>     of possible values and put them in the driver
+>>> 2. go all out on DT properties (such as `bootstatus-overheat`,
+>>> `bootstatus-fanfault` etc.
+>>
+>>
+>> Thanks Konrad for the suggestions and the offline discussions.
+>>
+>> @Guenter, I need a suggestion here. Currently as part of this series, we are planning to expose WDIOF_CARDRESET, WDIOF_POWERUNDER, WDIOF_OVERHEAT reasons.
+>>
+>> Once this is done, we do have the custom reason codes like Kernel Panic, Secure Watchdog Bite, Bus error timeout, Bus error access and few many. Is it okay to expose these values also via the bootstatus sysFS by extending the current list of reasons? Since these are outside the scope of watchdog, need your thoughts on this.
+> 
+> 
+> Konrad / Guenter,
+> 
+> We had a further discussion on this internally. Outcome is, it wouldn't be ideal to hook the custom restart reason codes in watchdog framework, since there is no involvement of watchdog in such cases. Also I don't find any references to hook the custom values in watchdog's bootstatus.
+> 
+Correct. The watchdog subsystem can only handle watchdog triggered reboots/resets.
 
-This resolves a potential deadlock vs msm_gem_vm_close().  Otherwise for
-_NO_SHARE buffers msm_gem_describe() could be trying to acquire the
-shared vm resv, while already holding priv->obj_lock.  But _vm_close()
-might drop the last reference to a GEM obj while already holding the vm
-resv, and msm_gem_free_object() needs to grab priv->obj_lock, a locking
-inversion.
 
-OTOH this is only for debugfs and it isn't critical if we undercount by
-skipping a locked obj.  So just use trylock() and move along if we can't
-get the lock.
+> If this is fine, I'm planning to resend the series to handle only the non secure watchdog timeout case. In that case, as suggested by Konrad, everything will be handled in DT like below to avoid the device data.
+> 
+> imem,phandle = <&phandle <imem_offset> <value>>;
+> 
+> Kindly share your thoughts and inputs on this to proceed further.
+> 
+Sounds good to me.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem.c | 3 ++-
- drivers/gpu/drm/msm/msm_gem.h | 6 ++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+Guenter
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index abf463d700b2..c8b72f68f807 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -922,7 +922,8 @@ void msm_gem_describe(struct drm_gem_object *obj, struct seq_file *m,
- 	uint64_t off = drm_vma_node_start(&obj->vma_node);
- 	const char *madv;
- 
--	msm_gem_lock(obj);
-+	if (!msm_gem_trylock(obj))
-+		return;
- 
- 	stats->all.count++;
- 	stats->all.size += obj->size;
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index 1e9ef09741eb..733a458cea9e 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -280,6 +280,12 @@ msm_gem_lock(struct drm_gem_object *obj)
- 	dma_resv_lock(obj->resv, NULL);
- }
- 
-+static inline bool __must_check
-+msm_gem_trylock(struct drm_gem_object *obj)
-+{
-+	return dma_resv_trylock(obj->resv);
-+}
-+
- static inline int
- msm_gem_lock_interruptible(struct drm_gem_object *obj)
- {
--- 
-2.49.0
+> 
+>>
+>>
+>>>
+>>> I'd much prefer to go with 1 really.. If we used nvmem, we could have a map
+>>> of cell names to restart reasons, but we've already established IMEM is
+>>> volatile and we shouldn't mess up the convention just because that
+>>> subsystem has nicer APIs..
+>>>
+>>> Unless we rename the subsystem to `fuses`, `magic-values` or something..
+>>> +Srini? :P
+>>>
+>>> Konrad
 
 
