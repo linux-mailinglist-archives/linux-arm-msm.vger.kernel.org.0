@@ -1,296 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-57896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 431AAAB728A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 19:14:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A540AB72FB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 19:39:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F5941B677C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 17:14:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F39A1BA0A3B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 17:39:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7A2528031B;
-	Wed, 14 May 2025 17:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6759E280CCD;
+	Wed, 14 May 2025 17:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VQQraAzy"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="bWEbSAjM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D2227FB3A;
-	Wed, 14 May 2025 17:13:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF7D27FB04
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 17:39:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747242821; cv=none; b=outFewa7EXQr2i79UDHEUenrtRlRdW+I0CKNJEoo55ebCSNy9GcR3P9Rvi0uyKXMCaSuJvLr2Ghp7Fbbno1+X3jDsat4Ikk4E94QRomqYMvGXDR8dk6JuFyGYLZoWKHM3kZjZfCsNYVbdfgx5H4u34mxMHekhG5C1SHncN7C05o=
+	t=1747244372; cv=none; b=jvk4WQPd+Lc40JHWOMxxrGhzSrdcm/YRPWCSc4kswy7EM/rpNF+rlmhVxxLbmXUWg0ENXNCTkzlpc6zgKki9gLDyFnWv3RKAyVC2MspFCzkOKVNkQG4gUEWlpJLIqek79ICHuL8XKAZVxI6zhV+9GCG5OABcQs8XffKZplxxObU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747242821; c=relaxed/simple;
-	bh=Ujrh3uSOn5VinB5VvrwG1pHqcGvMo7e5QbA7xYeJtBk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gAlqcM1/UTAiy2FzOSpKCnATqetCJVelV+eH5x98/ivoHJbeodr6YY4x4nMe6vUN+wQnLfQ2L/psbim2vwchVZPaEQp65P03/hE9+5NBwj4uufM4hDSruO35y3M3D4XaiZTj1znl4mnLu6yJ6U2sRCOH5JKCuKstqACIeF1cZ9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VQQraAzy; arc=none smtp.client-ip=209.85.166.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3da8e1259dfso37845ab.3;
-        Wed, 14 May 2025 10:13:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747242816; x=1747847616; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YfVONBHVtRTPlHRwr1fa3nrvIurV0bZBwrMg9aBjdsY=;
-        b=VQQraAzyI83zqryQgNE+yt81zussiMEJsJnaqdXVVil94zH9aCIuYWbmgEuWeYsKPM
-         ndKxFP+i35Myzk2fmnFFZBziQXkiTnpfqW6RGxHiMqcKUp3grvP3sTF7EFvaV9FnGCn7
-         6PqMJWCFXKYmm7YBQra7Wn+y6RB9xKZHcYC+HY4oKqy9xOFTBu5Wsiu0TQQVEnk2dHmG
-         J1c1Goqm6xV6XAZsN8VMUlipl7kFfrLeGpw2rxijHIyywoutnhBISxrIv3vAvXyx31vY
-         mX+DpeTnzMVIkAOhb6p8p/XC0h2dsGBNflgOnEYalNJB1VmogtQLssCxCGl6VutexzSj
-         QA1w==
+	s=arc-20240116; t=1747244372; c=relaxed/simple;
+	bh=DybxN6tHW3pRqRDzexg5O/mxkhdrtfiw60WByyFkILo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DtiIJhtnBh1ib2LOBgDoHEGKPLBcU0Sk/K0qrU+UAiS7/bcXQHr2tSfU4Zjq/07o5zelc1hl9TlnbEx+ZFWy/U7z4NWKVYQrK6HGCKRj67tvyrgVNed8f5vUCwdvTxk/uUxnrDOtXQHzIM5frRYYEVvdiRTozrNuAdzVhiezwhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=bWEbSAjM; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1747244369;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Vk9Xh8XvArJD+LRx2+377usNjpdXE43bkUgaFQ0lI2A=;
+	b=bWEbSAjMpte0CuRvV0z9tfOLT9SaKpt66VvaM2OWpfH9AqXj9+rA17Al3pUgFqIRujF/2J
+	knKoBkM4ei1nZnRx4Lb9Zp/i7JUBGCE7ypUeDM1FJl3T2rgxZEnPkmNhNv88bqT5ShUjQ+
+	zCX/blkqq93FQYr6vhFqV31C9fJ6oM8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-682-nShaVPKDORaOKd_naI2j2g-1; Wed, 14 May 2025 13:39:27 -0400
+X-MC-Unique: nShaVPKDORaOKd_naI2j2g-1
+X-Mimecast-MFC-AGG-ID: nShaVPKDORaOKd_naI2j2g_1747244366
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-43d209dc2d3so351335e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 10:39:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747242816; x=1747847616;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YfVONBHVtRTPlHRwr1fa3nrvIurV0bZBwrMg9aBjdsY=;
-        b=Scn0btvhna8MF0NMUc3QdRNzTg4uAsJuiN2e4ssPFO+S64Wh1KEnHUBvtDIQ5ej9pa
-         Z28Xcep0m/6wRTbGUF5TqRK/SvP0SmDB5xp/ayK9kBbaddzo443CMWy8uDR/Aw5BHo9c
-         bNFy+uagRXQAi1wxN9RmzN+50dm9Mz4gHEZ2TXwiVlQAUe4TZvG2GCxnQJIxNpJ77BZP
-         oDljSEwlP1AYdSFs8aBM1kXfiRTFF1wvJvZXPnYgi8aMpimfkwD7YmlVoo/xXlhSXYG6
-         QdjR0seqq7JYkgrExDWCmPQQaeXJMII6GNe8bzxRdZLBl41oyHok80kV/t9qT75/w0Do
-         Hh7A==
-X-Forwarded-Encrypted: i=1; AJvYcCVkkjcRYnmhSwAFPY0xSKwdZhn4fnZwG/2XpkaYo5Q5sie/k4Ynd5Vs3KcCkW/w0bt0mO2g2BswUdvZQu7U@vger.kernel.org, AJvYcCWrVZUY0f9ghyemhU6ao2yGaMZdEJNECuJUb6EKI+7WTKlnSZzYJLd7sza2sSefEJPUC2P9iz39LUBQVTW1@vger.kernel.org, AJvYcCXB/1pebBEAtHl0gb51pbjCLMDTErTR4sNxFILu0cMSobOg5yjM0ZY2Uenxbeu/HZiCtMOgeaodwLoQR3k=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxql8zgyBgocUY10CfHxnG4ScKjQ+JA9MzpmR+tTEZlnkcSX2rO
-	UMelNhSbmMe/OHVRt/dmPP2lJTc8lHUvo7bVCy7uT+inTeRU6YadYPjPQBGSgnt+lsMciH506xA
-	zoVF/Qy9YGHjU1lBb5uM9bjNbcuQ=
-X-Gm-Gg: ASbGnctgc7suV4UM4YvEUTQvWoTyI7Dghh26EfTz1orAWDbHPkioPIknvLMWwAAIRDN
-	piTGHYGSCKvjZ6INAgMXasnT8+z7zFjDitO8mAMhfVC844GEzsU59AWMoWGECIIRKTSMR9EpQvN
-	Xpc5othSVycwojpAMiqKuU9QNSOfxdgm1Cx8sVxb4uurqRRFjSSsYCz7K3K/sUgto=
-X-Google-Smtp-Source: AGHT+IGdnAsVW3kt1rSy4GKPI8bMIOEfIFvsaubQbJQ7eRiduk9GI/aaU1w3nrEUXuN5lOaJKQ2zh99tpo1qR+67hEs=
-X-Received: by 2002:a05:6e02:1707:b0:3db:72f7:d7b3 with SMTP id
- e9e14a558f8ab-3db72f7dc1dmr29424625ab.4.1747242815480; Wed, 14 May 2025
- 10:13:35 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747244366; x=1747849166;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Vk9Xh8XvArJD+LRx2+377usNjpdXE43bkUgaFQ0lI2A=;
+        b=XDXfJt25W0C2sP9mvSQ3fZtQHWgqWO2iKjIAtksg36wsUjjWHY0Zh0Q0mRAlRiaBbH
+         kzrnD3Qp25qvdM2iSsex9t3YyC1ovqqD458mDqf1VSb6cFufIAFikHNXrf5KJ7Tbk5SF
+         uTIiI2Daf2NmteSf8lR/KPsaDHF2arqGMCoBo836Qms7D6Xl15vVJANPNpgBWUb2G9x8
+         dkK8Z1bzHO0/wOGo+FSnOGZJlLdJj+8M80LViQVHk2YluhhSMSNKPAtc6qhI2AiwLI4i
+         aO8LypBsLr3xde0Z86YccSJ/4TJNQs5fN4LZyfWQ4vbpFQeSlKkC9JCRq+U1e7n/YTGJ
+         tvsA==
+X-Forwarded-Encrypted: i=1; AJvYcCXCsXjuQ2IUTqwTZxF2jjE24D4O5/GngykipA4WbdW2Xy4PFDjghq3Nd3vZtK0Ghn1hrSnGJzbhFtiyV5kj@vger.kernel.org
+X-Gm-Message-State: AOJu0YxZkLzJH5ChLaT+9/TjyYeoyp+30iC6RPBBglWqrm09f52aaV+F
+	xyKAoJyuS+QcIpyuP5N5jDIQpd/LSUJqn+HzLac7mp2RbrZRsxfgygEJheL9O1INo+OrKQaf7OQ
+	4ansJ/J4TXI/E7CJB4bf4tGhqP1YkRWo1+zhILq5cpRm14fR+CZAOPeZ8OsfE13Q=
+X-Gm-Gg: ASbGncsbmsaN6RoskiK/rp/z7Ej8oj/T/II6dDQb7UgEMTGLKCNBnNXgCNB+BkWj6+5
+	HWWfrHZuFLeLJQ5Y39plaJzas0KwwP6mBsAezNJI3xEvQbh58QBNs5jvS1bpdT09cIo1nzuhSQ6
+	2VM/veVGOjNmYOkHQamHPXs1uISfEsT9FtxdiQgs8/xUvua0DuBlnhgvSnVGYK9GClftoBd+y9e
+	cQZGHGZbs3OeC7bskbEnI9keyRFJ5vj/hMBaQc06Pdf4rLQUC0nMY5qMFENKVJlT4tWz0hINiYi
+	7QhF6ZG1dvHpKbYfXYoUqivosYvILHrZ59K+xWjToa8Fr68AdO98wEn+W/8uhr0/ntt74ncbfsx
+	kbm0Uxm7okM3FVxVwyjgFt911m6GBIEHSgGWfbCs=
+X-Received: by 2002:a05:600c:358b:b0:43d:42b:e186 with SMTP id 5b1f17b1804b1-442f20e8141mr39825345e9.8.1747244365846;
+        Wed, 14 May 2025 10:39:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHQHpSZjD5VZhXH8bp5bUHN2OiSM/BgOW5x2KH7T+UY5v92NfRDDAwGcMz7DinxHmUBaaQbew==
+X-Received: by 2002:a05:600c:358b:b0:43d:42b:e186 with SMTP id 5b1f17b1804b1-442f20e8141mr39825125e9.8.1747244365413;
+        Wed, 14 May 2025 10:39:25 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f15:6200:d485:1bcd:d708:f5df? (p200300d82f156200d4851bcdd708f5df.dip0.t-ipconnect.de. [2003:d8:2f15:6200:d485:1bcd:d708:f5df])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f5a2d96csm20462242f8f.69.2025.05.14.10.39.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 May 2025 10:39:24 -0700 (PDT)
+Message-ID: <d6acaa76-bba7-468f-be19-dc0696409eac@redhat.com>
+Date: Wed, 14 May 2025 19:39:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250514170118.40555-1-robdclark@gmail.com>
-In-Reply-To: <20250514170118.40555-1-robdclark@gmail.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Wed, 14 May 2025 10:13:22 -0700
-X-Gm-Features: AX0GCFvpGGezYiytY2MOS6dtC60ihdSd-WE1u91XYjWUz5Y9tDHJIetJpvazfio
-Message-ID: <CAF6AEGvEsB9F4=qnSvQkiAGdn=60ae-uGLbZVf2qFwfGof2Nkw@mail.gmail.com>
-Subject: Re: [PATCH v4 00/40] drm/msm: sparse / "VM_BIND" support
-To: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, =?UTF-8?Q?Andr=C3=A9_Almeida?= <andrealmeid@igalia.com>, 
-	Arnd Bergmann <arnd@arndb.de>, =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>, 
-	=?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>, 
-	Christopher Snowhill <chris@kode54.net>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Eugene Lepshy <fekz115@gmail.com>, 
-	"open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>, Jason Gunthorpe <jgg@ziepe.ca>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Joao Martins <joao.m.martins@oracle.com>, 
-	Jonathan Marek <jonathan@marek.ca>, Kevin Tian <kevin.tian@intel.com>, 
-	Konrad Dybcio <konradybcio@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	"moderated list:DMA BUFFER SHARING FRAMEWORK:Keyword:bdma_(?:buf|fence|resv)b" <linaro-mm-sig@lists.linaro.org>, 
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
-	open list <linux-kernel@vger.kernel.org>, 
-	"open list:DMA BUFFER SHARING FRAMEWORK:Keyword:bdma_(?:buf|fence|resv)b" <linux-media@vger.kernel.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Nicolin Chen <nicolinc@nvidia.com>, 
-	Robin Murphy <robin.murphy@arm.com>, Sean Paul <sean@poorly.run>, Will Deacon <will@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 08/17] KVM: guest_memfd: Check that userspace_addr and
+ fd+offset refer to same range
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250513163438.3942405-1-tabba@google.com>
+ <20250513163438.3942405-9-tabba@google.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20250513163438.3942405-9-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-hmm, looks like git-send-email died with a TLS error a quarter of the
-way thru this series.. I'll try to resend later
+On 13.05.25 18:34, Fuad Tabba wrote:
+> From: Ackerley Tng <ackerleytng@google.com>
+> 
+> On binding of a guest_memfd with a memslot, check that the slot's
+> userspace_addr and the requested fd and offset refer to the same memory
+> range.
+> 
+> This check is best-effort: nothing prevents userspace from later mapping
+> other memory to the same provided in slot->userspace_addr and breaking
+> guest operation.
+> 
+> Suggested-by: David Hildenbrand <david@redhat.com>
+> Suggested-by: Sean Christopherson <seanjc@google.com>
+> Suggested-by: Yan Zhao <yan.y.zhao@intel.com>
+> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>   virt/kvm/guest_memfd.c | 37 ++++++++++++++++++++++++++++++++++---
+>   1 file changed, 34 insertions(+), 3 deletions(-)
+> 
+> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> index 8e6d1866b55e..2f499021df66 100644
+> --- a/virt/kvm/guest_memfd.c
+> +++ b/virt/kvm/guest_memfd.c
+> @@ -556,6 +556,32 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
+>   	return __kvm_gmem_create(kvm, size, flags);
+>   }
+>   
+> +static bool kvm_gmem_is_same_range(struct kvm *kvm,
+> +				   struct kvm_memory_slot *slot,
+> +				   struct file *file, loff_t offset)
+> +{
+> +	struct mm_struct *mm = kvm->mm;
+> +	loff_t userspace_addr_offset;
+> +	struct vm_area_struct *vma;
+> +	bool ret = false;
+> +
+> +	mmap_read_lock(mm);
+> +
+> +	vma = vma_lookup(mm, slot->userspace_addr);
+> +	if (!vma)
+> +		goto out;
+> +
+> +	if (vma->vm_file != file)
+> +		goto out;
+> +
+> +	userspace_addr_offset = slot->userspace_addr - vma->vm_start;
+> +	ret = userspace_addr_offset + (vma->vm_pgoff << PAGE_SHIFT) == offset;
 
-BR,
--R
+You'd probably have to iterate over the whole range (which might span 
+multiple VMAs), but reading the discussion, I'm fine with dropping this 
+patch for now.
 
-On Wed, May 14, 2025 at 10:03=E2=80=AFAM Rob Clark <robdclark@gmail.com> wr=
-ote:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> Conversion to DRM GPU VA Manager[1], and adding support for Vulkan Sparse
-> Memory[2] in the form of:
->
-> 1. A new VM_BIND submitqueue type for executing VM MSM_SUBMIT_BO_OP_MAP/
->    MAP_NULL/UNMAP commands
->
-> 2. A new VM_BIND ioctl to allow submitting batches of one or more
->    MAP/MAP_NULL/UNMAP commands to a VM_BIND submitqueue
->
-> I did not implement support for synchronous VM_BIND commands.  Since
-> userspace could just immediately wait for the `SUBMIT` to complete, I don=
-'t
-> think we need this extra complexity in the kernel.  Synchronous/immediate
-> VM_BIND operations could be implemented with a 2nd VM_BIND submitqueue.
->
-> The corresponding mesa MR: https://gitlab.freedesktop.org/mesa/mesa/-/mer=
-ge_requests/32533
->
-> Changes in v4:
-> - Various locking/etc fixes
-> - Optimize the pgtable preallocation.  If userspace sorts the VM_BIND ops
->   then the kernel detects ops that fall into the same 2MB last level PTD
->   to avoid duplicate page preallocation.
-> - Add way to throttle pushing jobs to the scheduler, to cap the amount of
->   potentially temporary prealloc'd pgtable pages.
-> - Add vm_log to devcoredump for debugging.  If the vm_log_shift module
->   param is set, keep a log of the last 1<<vm_log_shift VM updates for
->   easier debugging of faults/crashes.
-> - Link to v3: https://lore.kernel.org/all/20250428205619.227835-1-robdcla=
-rk@gmail.com/
->
-> Changes in v3:
-> - Switched to seperate VM_BIND ioctl.  This makes the UABI a bit
->   cleaner, but OTOH the userspace code was cleaner when the end result
->   of either type of VkQueue lead to the same ioctl.  So I'm a bit on
->   the fence.
-> - Switched to doing the gpuvm bookkeeping synchronously, and only
->   deferring the pgtable updates.  This avoids needing to hold any resv
->   locks in the fence signaling path, resolving the last shrinker related
->   lockdep complaints.  OTOH it means userspace can trigger invalid
->   pgtable updates with multiple VM_BIND queues.  In this case, we ensure
->   that unmaps happen completely (to prevent userspace from using this to
->   access free'd pages), mark the context as unusable, and move on with
->   life.
-> - Link to v2: https://lore.kernel.org/all/20250319145425.51935-1-robdclar=
-k@gmail.com/
->
-> Changes in v2:
-> - Dropped Bibek Kumar Patro's arm-smmu patches[3], which have since been
->   merged.
-> - Pre-allocate all the things, and drop HACK patch which disabled shrinke=
-r.
->   This includes ensuring that vm_bo objects are allocated up front, pre-
->   allocating VMA objects, and pre-allocating pages used for pgtable updat=
-es.
->   The latter utilizes io_pgtable_cfg callbacks for pgtable alloc/free, th=
-at
->   were initially added for panthor.
-> - Add back support for BO dumping for devcoredump.
-> - Link to v1 (RFC): https://lore.kernel.org/dri-devel/20241207161651.4105=
-56-1-robdclark@gmail.com/T/#t
->
-> [1] https://www.kernel.org/doc/html/next/gpu/drm-mm.html#drm-gpuvm
-> [2] https://docs.vulkan.org/spec/latest/chapters/sparsemem.html
-> [3] https://patchwork.kernel.org/project/linux-arm-kernel/list/?series=3D=
-909700
->
-> Rob Clark (40):
->   drm/gpuvm: Don't require obj lock in destructor path
->   drm/gpuvm: Allow VAs to hold soft reference to BOs
->   drm/gem: Add ww_acquire_ctx support to drm_gem_lru_scan()
->   drm/sched: Add enqueue credit limit
->   iommu/io-pgtable-arm: Add quirk to quiet WARN_ON()
->   drm/msm: Rename msm_file_private -> msm_context
->   drm/msm: Improve msm_context comments
->   drm/msm: Rename msm_gem_address_space -> msm_gem_vm
->   drm/msm: Remove vram carveout support
->   drm/msm: Collapse vma allocation and initialization
->   drm/msm: Collapse vma close and delete
->   drm/msm: Don't close VMAs on purge
->   drm/msm: drm_gpuvm conversion
->   drm/msm: Convert vm locking
->   drm/msm: Use drm_gpuvm types more
->   drm/msm: Split out helper to get iommu prot flags
->   drm/msm: Add mmu support for non-zero offset
->   drm/msm: Add PRR support
->   drm/msm: Rename msm_gem_vma_purge() -> _unmap()
->   drm/msm: Drop queued submits on lastclose()
->   drm/msm: Lazily create context VM
->   drm/msm: Add opt-in for VM_BIND
->   drm/msm: Mark VM as unusable on GPU hangs
->   drm/msm: Add _NO_SHARE flag
->   drm/msm: Crashdump prep for sparse mappings
->   drm/msm: rd dumping prep for sparse mappings
->   drm/msm: Crashdec support for sparse
->   drm/msm: rd dumping support for sparse
->   drm/msm: Extract out syncobj helpers
->   drm/msm: Use DMA_RESV_USAGE_BOOKKEEP/KERNEL
->   drm/msm: Add VM_BIND submitqueue
->   drm/msm: Support IO_PGTABLE_QUIRK_NO_WARN_ON
->   drm/msm: Support pgtable preallocation
->   drm/msm: Split out map/unmap ops
->   drm/msm: Add VM_BIND ioctl
->   drm/msm: Add VM logging for VM_BIND updates
->   drm/msm: Add VMA unmap reason
->   drm/msm: Add mmu prealloc tracepoint
->   drm/msm: use trylock for debugfs
->   drm/msm: Bump UAPI version
->
->  drivers/gpu/drm/drm_gem.c                     |   14 +-
->  drivers/gpu/drm/drm_gpuvm.c                   |   15 +-
->  drivers/gpu/drm/msm/Kconfig                   |    1 +
->  drivers/gpu/drm/msm/Makefile                  |    1 +
->  drivers/gpu/drm/msm/adreno/a2xx_gpu.c         |   25 +-
->  drivers/gpu/drm/msm/adreno/a2xx_gpummu.c      |    5 +-
->  drivers/gpu/drm/msm/adreno/a3xx_gpu.c         |   17 +-
->  drivers/gpu/drm/msm/adreno/a4xx_gpu.c         |   17 +-
->  drivers/gpu/drm/msm/adreno/a5xx_debugfs.c     |    4 +-
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |   22 +-
->  drivers/gpu/drm/msm/adreno/a5xx_power.c       |    2 +-
->  drivers/gpu/drm/msm/adreno/a5xx_preempt.c     |   10 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c         |   32 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.h         |    2 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c         |   49 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c   |    6 +-
->  drivers/gpu/drm/msm/adreno/a6xx_preempt.c     |   10 +-
->  drivers/gpu/drm/msm/adreno/adreno_device.c    |    4 -
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c       |   99 +-
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h       |   23 +-
->  .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |   14 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   |   18 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h   |    2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   18 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |   14 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h     |    4 +-
->  drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c     |    6 +-
->  drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c      |   28 +-
->  drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c    |   12 +-
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c     |    4 +-
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      |   19 +-
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c    |   12 +-
->  drivers/gpu/drm/msm/dsi/dsi_host.c            |   14 +-
->  drivers/gpu/drm/msm/msm_drv.c                 |  184 +--
->  drivers/gpu/drm/msm/msm_drv.h                 |   35 +-
->  drivers/gpu/drm/msm/msm_fb.c                  |   18 +-
->  drivers/gpu/drm/msm/msm_fbdev.c               |    2 +-
->  drivers/gpu/drm/msm/msm_gem.c                 |  494 +++---
->  drivers/gpu/drm/msm/msm_gem.h                 |  247 ++-
->  drivers/gpu/drm/msm/msm_gem_prime.c           |   15 +
->  drivers/gpu/drm/msm/msm_gem_shrinker.c        |  104 +-
->  drivers/gpu/drm/msm/msm_gem_submit.c          |  295 ++--
->  drivers/gpu/drm/msm/msm_gem_vma.c             | 1471 ++++++++++++++++-
->  drivers/gpu/drm/msm/msm_gpu.c                 |  214 ++-
->  drivers/gpu/drm/msm/msm_gpu.h                 |  144 +-
->  drivers/gpu/drm/msm/msm_gpu_trace.h           |   14 +
->  drivers/gpu/drm/msm/msm_iommu.c               |  302 +++-
->  drivers/gpu/drm/msm/msm_kms.c                 |   18 +-
->  drivers/gpu/drm/msm/msm_kms.h                 |    2 +-
->  drivers/gpu/drm/msm/msm_mmu.h                 |   38 +-
->  drivers/gpu/drm/msm/msm_rd.c                  |   62 +-
->  drivers/gpu/drm/msm/msm_ringbuffer.c          |   10 +-
->  drivers/gpu/drm/msm/msm_submitqueue.c         |   96 +-
->  drivers/gpu/drm/msm/msm_syncobj.c             |  172 ++
->  drivers/gpu/drm/msm/msm_syncobj.h             |   37 +
->  drivers/gpu/drm/scheduler/sched_entity.c      |   16 +-
->  drivers/gpu/drm/scheduler/sched_main.c        |    3 +
->  drivers/iommu/io-pgtable-arm.c                |   27 +-
->  include/drm/drm_gem.h                         |   10 +-
->  include/drm/drm_gpuvm.h                       |   12 +-
->  include/drm/gpu_scheduler.h                   |   13 +-
->  include/linux/io-pgtable.h                    |    8 +
->  include/uapi/drm/msm_drm.h                    |  149 +-
->  63 files changed, 3484 insertions(+), 1251 deletions(-)
->  create mode 100644 drivers/gpu/drm/msm/msm_syncobj.c
->  create mode 100644 drivers/gpu/drm/msm/msm_syncobj.h
->
-> --
-> 2.49.0
->
+I think it's more important to document that thoroughly: what does it 
+mean when we use GUEST_MEMFD_FLAG_SUPPORT_SHARED and then pass that fd 
+in a memslot.
+
+Skimming over patch #15, I assume this is properly documented in there.
+
+-- 
+Cheers,
+
+David / dhildenb
+
 
