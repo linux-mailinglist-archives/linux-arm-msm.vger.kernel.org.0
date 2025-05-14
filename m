@@ -1,186 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-57818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 457E3AB68A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 12:18:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 45012AB68BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 12:26:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 958A4860543
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 10:18:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6EE1C86204C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 10:25:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4F7025DD07;
-	Wed, 14 May 2025 10:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAA1325E461;
+	Wed, 14 May 2025 10:25:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ecTpoxRF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mupcZquT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4072581;
-	Wed, 14 May 2025 10:16:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1D71E04BD;
+	Wed, 14 May 2025 10:25:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747217807; cv=none; b=PskoLSfotJKsuwPXeGtdz/atU1w5X0bfMouobMsFgzj9AWkMoMQA9VIiEtlJnXnd624ZH92Dy1cmlkDnHINkqoM8yNpF1WrW3KjGtBebxSd8nidPOFxfOLEPLHGXIL/Bl/lQyslnAhvW5Ah+Gz7qVgv5Mgvy6w05D3Zh/3qBFvQ=
+	t=1747218358; cv=none; b=PMrRZPlU4RBINiAuYEFIJ39GuhPWzveUsA0G2eTZVKtoSmyvP0/Ibf53NLkUmRHrVVOzE4cw/j8ZJ/JSNwCqPjCZZvSHZHdXDfu23NwNHKwegx0TTv1CqvSgy4Quh//0olJ7dNrWELOZYi5O0N34gDgqZfEAMbt34d27B5aCazU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747217807; c=relaxed/simple;
-	bh=xUrXMqnTLFPEX7yU7U+LYrYTOBZ2oDw/xXihZ9FZOZI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=KZcnV5Hf6nCrceIwui+HPIPUEMuz518dQJN416QgCRcS/d0wlb++HrWBiVSVrOkn6DVBcbOyVhGY1syxHjFV0jRr61evwyfCbe4l+aFnBNNsFVLVjjkJIzseBHxMvUKcbzaNGYadoKrkm67q9rKuONCidR+UDg5JWCrqnKYQjgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ecTpoxRF; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3a1fb17a9beso3093198f8f.3;
-        Wed, 14 May 2025 03:16:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747217804; x=1747822604; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xt5jpPl9R9r3M1DxHFUgl8SbNW1F0avaN7jhoorozrg=;
-        b=ecTpoxRFZNaCn3aLlPtKERKJhTFIquFtUUietKO86PAfMmILiMVZB1vs+BxruOdPxs
-         dmBH3L0fRkb8lcheeDSV5Su0Bqu7j2uBR2gKDqPJ3dXJBLN15mAxs4aEtQskVm1hvdEi
-         ZTa9rc3Xq842PRG+KE9zpqxQsISDcu0A0/NuSredv5xo1J7oO8nNpTk7PgGDHL9HT+hD
-         s7FPg0pfi4C+VOlYUvbLCuoyWBrTGdaX4tHHQMgLJyKKxeDjvIKdnZ/nNudp/kuTIApK
-         xA3pfWtgkV+yrHi1McPMWx1YosvJkdKrkbA/fpNvnlcCHaAbpzg1hNaWaCvRE8wxeSa8
-         hQAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747217804; x=1747822604;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Xt5jpPl9R9r3M1DxHFUgl8SbNW1F0avaN7jhoorozrg=;
-        b=tArKzM0S1jC6anDYbYH+qXz/caiukBnzJgAZMdp9mKqI2WKm4Go/GOwFoz8w4P7HKe
-         4lS3LcedSJSPvZHRjzHGVFv3A+5v3GXX1ZIxXVDw64GMLWvfOBjsBmdBq8iEabHlRG3Q
-         joqGjvmnfUgBkHRDab3vMaG7zQWV/FLJ0ge6YQebGRQst/6Zf1Vo2aQcWBLCZoXUr3WJ
-         8n2jyip8qmVr5YXNmOObcxlaLg2tdvRiXP2omYroSbsnfpTcU8yKh4+OnbyGQfJDstGZ
-         sKdfeznLFGuwgj9LxuVvLTn3h9q7A4jZt9VQuaTIMBbi8U8gyQ3aOJMLZM3Zv5Fmgnh2
-         MNIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUPXGnSQyuHF5L6M41mUd1SbfkrUtFCNUIg8j1vvyWp2xj3b1OBbIitfLcxPAUeqeeWWI4057QmObkxrzL3@vger.kernel.org, AJvYcCWNgvAB+Q4ralDrbkuGn26DKyKTSQwsKG7dooYACVNEfda8/GBpWdCdxW2vYoageCAFg2c/vxa2qrbA1ceW@vger.kernel.org, AJvYcCWWERvLskMTE+bivH88Xcuqdoh0tvDcMXLE+U/2TbgAcELQ6GAWev6b+H0OW01ydF8y9smZUKiFCaWO@vger.kernel.org
-X-Gm-Message-State: AOJu0YyqOabkzmXfi272C2+4KcZ/42spv+6SsXwgFTAyYiXAuge5MrYE
-	o8obNrmsrDLSz05dDXr+Kp97YUBP/hIQsPDJvv0USTcVaAdOhsKv
-X-Gm-Gg: ASbGncvkIKYq8H0/4gTiwNR2NnpaaR33AjpNlPkWRv8khQy9RQPsiToVu2F6JLgFeLo
-	wUEojdz3s08XoNnCWftz3JMgOkTC4acOWNb69OczovuScR0+YYzTzibzZ01E4gldQm+AbPnAOiX
-	RP+uuZRc2kjIlzyqdyhn/RcZZES0iY/scpj3wBB6AdpkGQnNVGFY68HWsyaxnyFt76lCAGTvaxC
-	+NaV3RG6qVZXYhvmsKaVgcr2K3sDFfsLcmbgobPlyaAXtiffN7RG50KC3iAPu9ow1CsmNS5XP/k
-	1rL5ReFg8v/LiwIr3aDdKk4AKO1hGTwy/p70K/HE6ZobF7lXwi3yA/YX4fteLG5Ez9dP03sbESU
-	NyAM6
-X-Google-Smtp-Source: AGHT+IGTBzXJ8khuka4ANfCsJsFYflJ8G0mPpcLcLGB4Y+fmnHYrjMluF3TVeXvhgi5hMkdHZs1XCQ==
-X-Received: by 2002:a05:6000:1a8c:b0:3a2:12a:e637 with SMTP id ffacd0b85a97d-3a34994fee5mr2322746f8f.56.1747217803976;
-        Wed, 14 May 2025 03:16:43 -0700 (PDT)
-Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3a1f57dde27sm19596519f8f.17.2025.05.14.03.16.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 May 2025 03:16:43 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Wed, 14 May 2025 12:16:38 +0200
-Subject: [PATCH] spi: spi-qpic-snand: reuse
- qcom_spi_check_raw_flash_errors()
+	s=arc-20240116; t=1747218358; c=relaxed/simple;
+	bh=e26ACJaJd+Lb8VHz4EGlqdJKjr9bE0sx5UJsIIUHXrE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TPHyPawhFSOVqWbVMHJehHl8tsbonUHLwxTQVsNCm2iEAiYll1kBfCZE013h16JUTCtgxMjpybxH0O1ctBeSIgoEkLGxEboBLBVDUXiJx5ruTMw+QFXJDTb7SMyAD9sDNLzOl7Ath0Mkt2O1uKac7F4lk2JxdwuyvjvSsuXXyQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mupcZquT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC044C4CEE9;
+	Wed, 14 May 2025 10:25:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747218358;
+	bh=e26ACJaJd+Lb8VHz4EGlqdJKjr9bE0sx5UJsIIUHXrE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=mupcZquTAfWOxZ7NZTtaL/C93N60F+0IdLb9ZOd8V1D4sdelIiVdAIs1dlrbkndbR
+	 NHv/ejTbEVzON3MvAnMXLTdX6Jqgi4UNKA2QKXJlg2DCYKE+6n3prRuhM4kCe9VlQ+
+	 FdqynHRCN747EBR79S38TdVGmrn/q/qgQtfI6Xfy8KwcjOoZuqD+pyT25r50jxvS47
+	 VbMpEujzMrOKa+ew3R/7phuAZZR+kjpmE/xf9DOcpLp+QPuU78t7yD2NJKqio2ofh2
+	 oA0xCBr0ZktbeNlfwHJD0E7zJaTawA7YTuH4Zd5KkHoav0tiIKS4jqRf63W/9zqbNO
+	 1GymqPNI5oT6A==
+Message-ID: <959b9c65-50d7-426d-9c2a-64e143e28ded@kernel.org>
+Date: Wed, 14 May 2025 12:25:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] dt-bindings: phy: Add Qualcomm MIPI C-/D-PHY schema
+ for CSIPHY IPs
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hans.verkuil@cisco.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org
+References: <20250513143918.2572689-1-vladimir.zapolskiy@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
+ QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
+ +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
+ ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
+ 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
+ hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
+ tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
+ 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
+ naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
+ hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
+ whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
+ qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
+ RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
+ Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
+ H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
+ dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
+ AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
+ jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
+ zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
+ XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <20250513143918.2572689-1-vladimir.zapolskiy@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250514-qpic-snand-error-check-v1-1-c0ebd3aae72a@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAIVtJGgC/x3MSwqAMAwA0auUrA3Y+gOvIi40jRqEWlMQQby7x
- eVbzDyQWIUT9OYB5UuSHCHDFgZom8LKKD4bXOmasrE1nlEIU5iCR1Y9FGlj2tHNbLu2o8qTgxx
- H5UXufzyM7/sBCVK1amgAAAA=
-X-Change-ID: 20250514-qpic-snand-error-check-2be1767c3dc2
-To: Mark Brown <broonie@kernel.org>
-Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
 
-The qcom_spi_check_raw_flash_errors() function can be used to
-verify the flash status after raw operations.
+On 13/05/2025 16:39, Vladimir Zapolskiy wrote:
+> Add dt-binding schema for the CAMSS CSIPHY IPs, which provides
+> MIPI C-/D-PHY interfaces on Qualcomm SoCs.
+> 
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>  .../devicetree/bindings/phy/qcom,csiphy.yaml  | 110 ++++++++++++++++++
+>  1 file changed, 110 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,csiphy.yaml
 
-Move the function slightly up in the code and change the
-qcom_spi_read_last_cw() function to call it instead of using
-an open coded implementation of the same check.
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
- drivers/spi/spi-qpic-snand.c | 40 +++++++++++++++++++---------------------
- 1 file changed, 19 insertions(+), 21 deletions(-)
+Looks like not tested, so limited review follows.
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 18a8e572434e81b698332aceeff852e88e1d6b13..3ee891fd5b5e334950a8da58221658b62b8378c2 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -492,6 +492,22 @@ static void qcom_spi_config_single_cw_page_read(struct qcom_nand_controller *sna
- 	qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 1, 0);
- }
- 
-+static int qcom_spi_check_raw_flash_errors(struct qcom_nand_controller *snandc, int cw_cnt)
-+{
-+	int i;
-+
-+	qcom_nandc_dev_to_mem(snandc, true);
-+
-+	for (i = 0; i < cw_cnt; i++) {
-+		u32 flash = le32_to_cpu(snandc->reg_read_buf[i]);
-+
-+		if (flash & (FS_OP_ERR | FS_MPU_ERR))
-+			return -EIO;
-+	}
-+
-+	return 0;
-+}
-+
- static int qcom_spi_read_last_cw(struct qcom_nand_controller *snandc,
- 				 const struct spi_mem_op *op)
- {
-@@ -537,11 +553,9 @@ static int qcom_spi_read_last_cw(struct qcom_nand_controller *snandc,
- 		return ret;
- 	}
- 
--	qcom_nandc_dev_to_mem(snandc, true);
--	u32 flash = le32_to_cpu(snandc->reg_read_buf[0]);
--
--	if (flash & (FS_OP_ERR | FS_MPU_ERR))
--		return -EIO;
-+	ret = qcom_spi_check_raw_flash_errors(snandc, 1);
-+	if (ret)
-+		return ret;
- 
- 	bbpos = mtd->writesize - ecc_cfg->cw_size * (num_cw - 1);
- 
-@@ -622,22 +636,6 @@ static int qcom_spi_check_error(struct qcom_nand_controller *snandc, u8 *data_bu
- 	return 0;
- }
- 
--static int qcom_spi_check_raw_flash_errors(struct qcom_nand_controller *snandc, int cw_cnt)
--{
--	int i;
--
--	qcom_nandc_dev_to_mem(snandc, true);
--
--	for (i = 0; i < cw_cnt; i++) {
--		u32 flash = le32_to_cpu(snandc->reg_read_buf[i]);
--
--		if (flash & (FS_OP_ERR | FS_MPU_ERR))
--			return -EIO;
--	}
--
--	return 0;
--}
--
- static int qcom_spi_read_cw_raw(struct qcom_nand_controller *snandc, u8 *data_buf,
- 				u8 *oob_buf, int cw)
- {
+Filename matching compatible.
 
----
-base-commit: d43eef530946783cb5537ee58bec892253b68648
-change-id: 20250514-qpic-snand-error-check-2be1767c3dc2
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,csiphy.yaml b/Documentation/devicetree/bindings/phy/qcom,csiphy.yaml
+> new file mode 100644
+> index 000000000000..ef712c5442ec
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,csiphy.yaml
+
+Please post the driver or any other user. Or explain why this is RFC or
+what you expect here from us.
+
+
+> @@ -0,0 +1,110 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,csiphy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm CSI PHY
+
+SM8250 ?
+
+> +
+> +maintainers:
+> +  - Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> +
+> +description: |
+
+Do not need '|' unless you need to preserve formatting.
+
+> +  Qualcomm SoCs equipped with a number of MIPI CSI PHY IPs, which
+> +  supports D-PHY or C-PHY interfaces to camera sensors.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sm8250-csiphy
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 2
+
+Need to list the items instead
+
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  vdda-csi-0p9-supply:
+> +    description: Voltage supply, 0.9V
+> +
+> +  vdda-csi-1p2-supply:
+> +    description: Voltage supply, 1.2V
+> +
+> +  '#phy-cells':
+> +    const: 0
+> +
+> +  port:
+> +    $ref: /schemas/graph.yaml#/$defs/port-base
+> +    description: CAMSS CSIPHY input port
+> +
+> +    patternProperties:
+> +      "^endpoint@[0-1]$":
+
+Keep consistent quotes, either " or '
+
+> +        $ref: /schemas/media/video-interfaces.yaml#
+> +        unevaluatedProperties: false
+> +
+> +        properties:
+> +          data-lanes:
+> +            minItems: 1
+> +            maxItems: 4
+> +
+> +          bus-type:
+> +            enum:
+> +              - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
+> +              - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
+> +
+> +        required:
+> +          - data-lanes
+> +
+> +    oneOf:
+> +      - required:
+> +          - endpoint
+> +      - required:
+> +          - endpoint@0
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - interrupts
+> +  - '#phy-cells'
+> +
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sm8250-csiphy
+> +    then:
+> +      required:
+> +        - vdda-csi-0p9-supply
+> +        - vdda-csi-1p2-supply
+
+This makes no sense - it is only sm8250 - so this if is always true.
+
 
 Best regards,
--- 
-Gabor Juhos <j4g8y7@gmail.com>
-
+Krzysztof
 
