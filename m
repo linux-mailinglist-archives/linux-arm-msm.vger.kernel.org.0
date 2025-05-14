@@ -1,164 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-57847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-57848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 354E4AB6D66
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 15:54:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D7FEAB6E2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 16:30:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB8CB16296C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 13:54:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F321A1BA1705
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 May 2025 14:30:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6382527B4EE;
-	Wed, 14 May 2025 13:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D477E1A8F82;
+	Wed, 14 May 2025 14:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="P+rcEGXF"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Cg00KlEV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DF727B4ED
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 13:52:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5E31946C8
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 14:30:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747230772; cv=none; b=cu3sFVSmbT5pbkpKfSovI4zkC4/DrSmJWL+/MMHJegjzqyeWTWFiEOunoveibMvqesHTHPrQ1NuMyMVWmFFVmJjBxMVd5/UQddXIagGShuh8KMXQG9VvNc/9cWTjn6Sj4Y52T45Lm4eKZBoLijlGJ21dnGx601CKCJB2e70+vxA=
+	t=1747233039; cv=none; b=qLjYyL9V1SHWq1ito7JEXGj839qRlTZx+CotEh6+TMhBGbqbygl7O9nxQJrv/lRDfQ1Vg011Z/KS4swzJ9RfsbHcSyBb6pubH1E9QIRhEc/PKjARz75NzqnZtbMTaFzQ2LvEHZpJmZmWoGK/RHlwSTRdMPeXM/jpK/ke7C9mYJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747230772; c=relaxed/simple;
-	bh=WbRWswzujG7wOYAXbYBdZrfTqNrxo2bXeYmMrShF5kk=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=lc557HXe1VS6s55EQmMAWeYySHA5kOzet1SSFjEnN3VWPxhPd9O+lYGp4DUUxT7ik6sBB7FmPOOI/QTWw7ZY21WnNdeY1vSUm0YIhn/4JNVDqLQ5rP8BJFQOM1WnjyzTmnReTsnY+Ntnsl6bycfS+Pwuv7yHJ/55MWlWIJHZcWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=P+rcEGXF; arc=none smtp.client-ip=209.85.215.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-b115383fcecso4082513a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 06:52:50 -0700 (PDT)
+	s=arc-20240116; t=1747233039; c=relaxed/simple;
+	bh=TpqI7/UstRjD1t3hPg2je7OSJ+mR5sn9M/MPI9l8Hcw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=vBWKakvXaWDDhsGOCjwrCBzlSO+HK69Tivj45xxAFHg/ISwIAov5MuiXCSpu32IcH7wJXgbXqyNoV9kQirep6MHWWURARpS1HFFgY4laYCIP6F/SDG4X1Jm3O/S0Gz1N0joTltVB28zopT+U+QRZSKPeU+DC6qFyiMMs2AQrWVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Cg00KlEV; arc=none smtp.client-ip=209.85.161.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-609e7f3caf3so218678eaf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 07:30:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747230770; x=1747835570; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eYg4+rpHp33PbS4Itshy4T2HbraqnrFIaURvTmb0+kE=;
-        b=P+rcEGXFltuWwmjg3ccjbahpIE+NQJeMQGLSHJc+MHYfmc7glp07+dvc/kPhnFgQ8+
-         FVImmbAW/InV7VQ0DlMvDAj43H8O3UYxEqmz44Z+2oGehcz8m4ZDDql2QEA1fegQrOKF
-         37XImf/Th44h+U/jJlD7kSmsB7Fl2vS5CCc9rTX462C1XYKDoallVTko0yR4vFnGdt/t
-         c2ArOCF8peVq2D0YTqfxslnA+6+WT9U4bGm+kDQLbZ1L+RGJ+wrVuW/6zAppHVYaN7it
-         6Y7XNHZrsEnGp1kGYCyrbx5jblepg+99x5k5SvHqvljWDgpAEGc3zbK03/dT+ee/oy7q
-         4mag==
+        d=chromium.org; s=google; t=1747233034; x=1747837834; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hmvwNbNh3Td4tVXcEuUfGTCu9MlTY+8OhrY/bE97vRA=;
+        b=Cg00KlEVi3hrMqfohvf+82BgG3JyNSOzl42De/qZuc7+7Wj6H8PM48cyMmPvZTTeYW
+         jbSY6/+vuuY1jOTOk6YsmYraCF9KBbN2kCTs+VUgEgivfzS5PVQK5OAIYwBBhXRZDBEP
+         hMTYk36Dtl4hIJ6zbTKsrOVjIHwcQiZEiCSMc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747230770; x=1747835570;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eYg4+rpHp33PbS4Itshy4T2HbraqnrFIaURvTmb0+kE=;
-        b=cUZjMNXRQCmwsHzd+vmGKVHcYQBC6nDRQRtO8Fvyj/FxcR88g9FUboE3mqYe/Ogk7E
-         TLbnO8/tlruoxceRrbFp6TvWTkb8SZhRIV/URr3iCIYe13GYgsD030yVrsWfJE379xLY
-         IVlYRU1+LTCCImJUT6Js9AtaVqG7fF9sM5EkGvTBVDR7TdFZWt5xnSAutHMy9tmw/hmn
-         Llrq2RG5zMe7L3shBzPbbywzVS/NAEJDjwP51gUARJT/C9gAKIrv7TFDDhcqXBguwKOr
-         02Abmbc4lHNboEXE3j56AJ7I+Mltsibz7DPEiaGNEIRfCSNGcf/cWeQG5xcY28rGxVMW
-         vENw==
-X-Forwarded-Encrypted: i=1; AJvYcCVZBxqjMcUxPXte1iYacLC/pUENWCzmKJ+W8MST8+N9WPnFWMJEdjmC+Pnt46DktCh5sQURl61+5BVeS38q@vger.kernel.org
-X-Gm-Message-State: AOJu0YxtlMR4j7Ytk3dC39c362SIC7midg7SElBG00N6ohTo2mrK0woG
-	eCpSXvTLP/0kiufmY1qKGyPL5ycG7W83g+cXf0MPif8sd8MwuWOBq+KbkwP30hGuisere06ZcKD
-	bTg==
-X-Google-Smtp-Source: AGHT+IHrlpU6TSN8LFEDqLk4N7nyxIXqbtuZg3bjjLval5KFIlyghPAfN3T3Jm+iafOU8Hu0EqUexqT5TWc=
-X-Received: from pjbee11.prod.google.com ([2002:a17:90a:fc4b:b0:2fc:ccfe:368])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:1a89:b0:2fe:85f0:e115
- with SMTP id 98e67ed59e1d1-30e2e65e6e3mr4418434a91.26.1747230769918; Wed, 14
- May 2025 06:52:49 -0700 (PDT)
-Date: Wed, 14 May 2025 06:52:48 -0700
-In-Reply-To: <diqzo6vvpami.fsf@ackerleytng-ctop.c.googlers.com>
+        d=1e100.net; s=20230601; t=1747233034; x=1747837834;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hmvwNbNh3Td4tVXcEuUfGTCu9MlTY+8OhrY/bE97vRA=;
+        b=AFLYQvG1ivVcWZ4H2lR2bDQfoTNtLtM+JhVnLS4PXQs0viKLPUHsuv4x6lPPoMPfqH
+         ebG1aOJYbxsxrHV8U3jFivFvgjyC7iWiJrnwFEcW6kTg9xBUuWKROig99zC38BhF3GmT
+         XWcuYoV9GfYXLT9HI9qmsE+RhXVWYaevKXnNxYkcKXw7h8nMi1RAHHh0x2f9wVrvNfDX
+         S3F9GMmEwnyEyR8nAuyNdk6amjHLQuM08VzaTUyBchK0ICmVIZcVGup9e5VUItEfICB1
+         pLnV6lZMUqYD4R6lgPkdqSHq3iQyi8QOp8zedPGxYPKc/6xsjkHLv+AAwOdcruIDSzpS
+         eGIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVoTYWW9etXHjByJmomTyMz/KsOp9K3x93LAnFTy9y1LbaX9muWfZyIVpRQtzKbEXP4z1B111lSHGOz5aoa@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRJSaI8tFebjrxNHT8fi0XJVnEeek/PRRzriA7aPK7W/AbpX2z
+	Pkhx86sn1GXXL/XK9X2C5rveINEJWFaINszQaAcpL/HgMuvkj3oR/+q+1Y9RFcd+Q8Ok6vMf/aE
+	=
+X-Gm-Gg: ASbGnctFjZUgFGQWjjNIONT6pZQOSkOgn1BF6D1bxZpw4FiYSc1uTO74kVvJv7Ifnq/
+	4pRMVM2m+o2TM4XLt7DeqbCLQRuqrM0FoBu2vbk5AP+keVf9MT8bL2ybZUpMge7ft5Zp8I06928
+	YgLrxyHdWHVqOmLVTigwVVM0LvIIRcvMeigWcWdLNu2K6DlgkP9M0Z1Qg0gTdlqnku3NzTAgVf9
+	mQoEs010njdcLTjNz6X5AG9Xwt/nMGdxtdoImsEUA6A1OkFRbEctAfRtdHYJCfsDtNrrrUIGhfz
+	FPpIv5NaKdXsHp5ihXfZwPoNFTuCZ5slXdu6kdNh1EngrjnjY7zQB2FWrMTGj/tuNMoTuLqdCxj
+	VtXPXLhYLdLqLxG4vCbz/IBA/MYkb7A==
+X-Google-Smtp-Source: AGHT+IEMu5CV0aRFHSqH8MNxQmx/OzFSBnWRVSHnSvvFh3cBiljBJUmoZBLKYxOQiI1ekPH5KUUtKQ==
+X-Received: by 2002:a05:6870:a79c:b0:29e:3c90:148b with SMTP id 586e51a60fabf-2e3487f688dmr1983339fac.26.1747233033816;
+        Wed, 14 May 2025 07:30:33 -0700 (PDT)
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com. [209.85.167.174])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2dba080f0ccsm2821856fac.30.2025.05.14.07.30.30
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 May 2025 07:30:32 -0700 (PDT)
+Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3fbc00143d6so5535884b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 07:30:30 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCW/ZcNhVoPoEQRUDQ0+CKx0+ub+IDsoFK7flidAaIO6EVw16tXcWfTAcJmfy7sjpmiVRrEXh/UjQ3P5MUf1@vger.kernel.org
+X-Received: by 2002:a17:902:f54d:b0:223:6254:b4ba with SMTP id
+ d9443c01a7336-2319811f06bmr51131025ad.13.1747233019581; Wed, 14 May 2025
+ 07:30:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250513163438.3942405-1-tabba@google.com> <20250513163438.3942405-9-tabba@google.com>
- <CADrL8HVikf9OK_j4aUk2NZ-BB2sTdavGnDza9244TMeDWjxbCQ@mail.gmail.com>
- <CA+EHjTyWOJA8u3iXS9txF8oDKF-soykjJm8HPPEW+6VpM+uvtg@mail.gmail.com>
- <aCSbfjoD2_Dj_t6b@google.com> <diqzo6vvpami.fsf@ackerleytng-ctop.c.googlers.com>
-Message-ID: <aCSgMEXrNYgB_Ha4@google.com>
-Subject: Re: [PATCH v9 08/17] KVM: guest_memfd: Check that userspace_addr and
- fd+offset refer to same range
-From: Sean Christopherson <seanjc@google.com>
-To: Ackerley Tng <ackerleytng@google.com>
-Cc: Fuad Tabba <tabba@google.com>, James Houghton <jthoughton@google.com>, kvm@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, pbonzini@redhat.com, 
-	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+References: <20250513-pinctrl-msm-fix-v2-0-249999af0fc1@oss.qualcomm.com> <20250513-pinctrl-msm-fix-v2-1-249999af0fc1@oss.qualcomm.com>
+In-Reply-To: <20250513-pinctrl-msm-fix-v2-1-249999af0fc1@oss.qualcomm.com>
+From: Doug Anderson <dianders@chromium.org>
+Date: Wed, 14 May 2025 07:30:07 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WaiqwZsWJ0JdLrmfm1tVbG9dmi_jN_7one02OdV+ecow@mail.gmail.com>
+X-Gm-Features: AX0GCFvLrY-v4BVXb_MRFpcALF8nRN6RsNjsWBFIx-m74SsDyBv5AvTCKf3v9G4
+Message-ID: <CAD=FV=WaiqwZsWJ0JdLrmfm1tVbG9dmi_jN_7one02OdV+ecow@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] gpiolib: don't crash on enabling GPIO HOG pins
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
+	Guenter Roeck <linux@roeck-us.net>, Josh Cartwright <joshc@codeaurora.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Matti Vaittinen <mazziesaccount@gmail.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 14, 2025, Ackerley Tng wrote:
-> Sean Christopherson <seanjc@google.com> writes:
-> > On Wed, May 14, 2025, Fuad Tabba wrote:
-> >> On Tue, 13 May 2025 at 21:31, James Houghton <jthoughton@google.com> wrote:
-> >> > > @@ -585,9 +611,14 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
-> >> > >             offset + size > i_size_read(inode))
-> >> > >                 goto err;
-> >> > >
-> >> > > -       if (kvm_gmem_supports_shared(inode) &&
-> >> > > -           !kvm_arch_vm_supports_gmem_shared_mem(kvm))
-> >> > > -               goto err;
-> >> > > +       if (kvm_gmem_supports_shared(inode)) {
-> >> > > +               if (!kvm_arch_vm_supports_gmem_shared_mem(kvm))
-> >> > > +                       goto err;
-> >> > > +
-> >> > > +               if (slot->userspace_addr &&
-> >> > > +                   !kvm_gmem_is_same_range(kvm, slot, file, offset))
-> >> > > +                       goto err;
-> >> >
-> >> > This is very nit-picky, but I would rather this not be -EINVAL, maybe
-> >> > -EIO instead? Or maybe a pr_warn_once() and let the call proceed?
-> >
-> > Or just omit the check entirely.  The check isn't binding (ba-dump, ching!),
-> > because the mapping/VMA can change the instant mmap_read_unlock() is called.
-> >
-> >> > The userspace_addr we got isn't invalid per se, we're just trying to
-> >> > give a hint to the user that their VMAs (or the userspace address they
-> >> > gave us) are messed up. I don't really like lumping this in with truly
-> >> > invalid arguments.
-> >> 
-> >> I don't mind changing the return error, but I don't think that we
-> >> should have a kernel warning (pr_warn_once) for something userspace
-> >> can trigger.
-> >
-> > This isn't a WARN, e.g. won't trip panic_on_warn.  In practice, it's not
-> > meaningfully different than pr_info().  That said, I agree that printing anything
-> > is a bad approach.
-> >
-> >> It's not an IO error either. I think that this is an invalid argument
-> >> (EINVAL).
-> >
-> > I agree with James, this isn't an invalid argument.  Having the validity of an
-> > input hinge on the ordering between a KVM ioctl() and mmap() is quite odd.  I
-> > know KVM arm64 does exactly this for KVM_SET_USER_MEMORY_REGION{,2}, but I don't
-> > love the semantics.  And unlike that scenario, where e.g. MTE tags are verified
-> > again at fault-time, KVM won't re-check the VMA when accessing guest memory via
-> > the userspace mapping, e.g. through uaccess.
-> >
-> > Unless I'm forgetting something, I'm leaning toward omitting the check entirely.
-> >
-> 
-> I'm good with dropping this patch. I might have misunderstood the conclusion
-> of the guest_memfd call.
+Hi,
 
-No, I don't think you misunderstood anything.  It's just that sometimes opinions
-different when there's actual code, versus a verbal discussion.  I.e. this sounds
-like a good idea, but when seeing the code and thinking through the effects, it's
-less appealing.
+On Tue, May 13, 2025 at 11:39=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Qualcomm platforms if the board uses GPIO hogs msm_pinmux_request()
+> calls gpiochip_line_is_valid(). After commit 8015443e24e7 ("gpio: Hide
+> valid_mask from direct assignments") gpiochip_line_is_valid() uses
+> gc->gpiodev, which is NULL when GPIO hog pins are being processed.
+> Thus after this commit using GPIO hogs causes the following crash. In
+> order to fix this, verify that gc->gpiodev is not NULL.
+>
+> Note: it is not possible to reorder calls (e.g. by calling
+> msm_gpio_init() before pinctrl registration or by splitting
+> pinctrl_register() into _and_init() and pinctrl_enable() and calling the
+> latter function after msm_gpio_init()) because GPIO chip registration
+> would fail with EPROBE_DEFER if pinctrl is not enabled at the time of
+> registration.
+>
+> pc : gpiochip_line_is_valid+0x4/0x28
+> lr : msm_pinmux_request+0x24/0x40
+> sp : ffff8000808eb870
+> x29: ffff8000808eb870 x28: 0000000000000000 x27: 0000000000000000
+> x26: 0000000000000000 x25: ffff726240f9d040 x24: 0000000000000000
+> x23: ffff7262438c0510 x22: 0000000000000080 x21: ffff726243ea7000
+> x20: ffffab13f2c4e698 x19: 0000000000000080 x18: 00000000ffffffff
+> x17: ffff726242ba6000 x16: 0000000000000100 x15: 0000000000000028
+> x14: 0000000000000000 x13: 0000000000002948 x12: 0000000000000003
+> x11: 0000000000000078 x10: 0000000000002948 x9 : ffffab13f50eb5e8
+> x8 : 0000000003ecb21b x7 : 000000000000002d x6 : 0000000000000b68
+> x5 : 0000007fffffffff x4 : ffffab13f52f84a8 x3 : ffff8000808eb804
+> x2 : ffffab13f1de8190 x1 : 0000000000000080 x0 : 0000000000000000
+> Call trace:
+>  gpiochip_line_is_valid+0x4/0x28 (P)
+>  pin_request+0x208/0x2c0
+>  pinmux_enable_setting+0xa0/0x2e0
+>  pinctrl_commit_state+0x150/0x26c
+>  pinctrl_enable+0x6c/0x2a4
+>  pinctrl_register+0x3c/0xb0
+>  devm_pinctrl_register+0x58/0xa0
+>  msm_pinctrl_probe+0x2a8/0x584
+>  sdm845_pinctrl_probe+0x20/0x88
+>  platform_probe+0x68/0xc0
+>  really_probe+0xbc/0x298
+>  __driver_probe_device+0x78/0x12c
+>  driver_probe_device+0x3c/0x160
+>  __device_attach_driver+0xb8/0x138
+>  bus_for_each_drv+0x84/0xe0
+>  __device_attach+0x9c/0x188
+>  device_initial_probe+0x14/0x20
+>  bus_probe_device+0xac/0xb0
+>  deferred_probe_work_func+0x8c/0xc8
+>  process_one_work+0x208/0x5e8
+>  worker_thread+0x1b4/0x35c
+>  kthread+0x144/0x220
+>  ret_from_fork+0x10/0x20
+> Code: b5fffba0 17fffff2 9432ec27 f9400400 (f9428800)
+>
+> Fixes: 8015443e24e7 ("gpio: Hide valid_mask from direct assignments")
+> Reported-by: Doug Anderson <dianders@chromium.org>
+> Closes: https://lore.kernel.org/r/CAD=3DFV=3DVg8_ZOLgLoC4WhFPzhVsxXFC19Nr=
+F38W6cW_W_3nFjbw@mail.gmail.com
+> Tested-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>  drivers/gpio/gpiolib.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+
+FWIW since it's changed slightly from the last version, I re-tested
+just to be sure. Still works for me. Thanks!
+
+-Doug
 
